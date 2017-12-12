@@ -2,136 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF2801F404
-	for <e@80x24.org>; Tue, 12 Dec 2017 00:18:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B62931F404
+	for <e@80x24.org>; Tue, 12 Dec 2017 00:21:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752134AbdLLASG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 19:18:06 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:46490 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751877AbdLLASF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 19:18:05 -0500
-Received: by mail-it0-f68.google.com with SMTP id t1so20275992ite.5
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 16:18:05 -0800 (PST)
+        id S1751729AbdLLAVZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 19:21:25 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:34121 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751612AbdLLAVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 19:21:24 -0500
+Received: by mail-qt0-f180.google.com with SMTP id 33so43357680qtv.1
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 16:21:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=0/WThyxSAM2qRSXOaTz/T7yVPN24w53kAASy06XaxvM=;
-        b=G5hp87tK3jLnMAsK51GHT1U021XMKqO5/wgEmkiLIsPsVuGt5/Q77hKyhEp1rOy8zz
-         Z+tsEM5+mqY2QS0oKEFnXlIDSxO2o0aTOIPVc3IpNTYFhI8V1UpsJ180xe4ezBGFoAC9
-         N1VWLkXqLduf31R6QEGb8KFXvGXZ2gU0fxADvXoDlbIMXVldys5hrtE00ihDBp4pqtIs
-         1XT7E7UZaBLijO6XQgbspilkAcywmtrRCK/F1dfpgF8d58/22C70IADOcM++jq6852E0
-         7OivBwiMMhCKFrSLagiIDdte6V9uvXDp5pDnij2l+B6XGwlKFQCClCkaEAh5AOvMRfMS
-         tk8g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1EhIJShZBJe0kl3Vc920NE0kik0+OQlHtY+0P/UqBlc=;
+        b=rcCiH1uhyb16/3F3Ka4ACYKcVwlQuG91F7QN6er1qRZp49NpfpcFTRZvOT4WJcpZnc
+         XPJQgYd72nKzCiZGH0Vo7r5QsdkkhA12D/HCrnfBVNjCWjUla3m10HI6derM+qLrt8P+
+         bfudJ8EntOvncADsxlrN8gU5JfMpGcaEkkP3HxAPUSP8Gt2x2JQ4SZpxlOXTc7JU4aks
+         jwXmecMLuqlhBNhPaCWHomJF6/eZj97hGCMWIh/D03/+N0KQ+WrQeJEg1VGvnE1VOnhz
+         bu+bIRMA1rtf0ej++DyLfvWf53JozzzeVlwjRdxpjjB1qL22/i/A7/qFVJUz/9v1taqo
+         ycXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0/WThyxSAM2qRSXOaTz/T7yVPN24w53kAASy06XaxvM=;
-        b=KzEERI1gPs+HWYzchLKfVKR5H8fNZM0R1bCg8zsTeEZj0TYPOft3OuR6H3D6s5Uo1t
-         5FnvLOr0LDyMUcgjh7CuWJhk8sjJiiFHvFMBzjo53XsNQ4KwLJoOGWbDwFDPXZbxxUHQ
-         OlX0oZdwD/dnmpfZK6sS8lGMCkXG73yYnFkw/f4eawlt1b1MZgmO4NKpCBP5pdojtV0I
-         eNA8JJMtuPofIJhwM+ZGRDtWmQE46T8EwFh6+se6h1/4Qh55f9xEKLAg1wQ4f2FrnpE5
-         2ra/2Sadtyb0sV5AC6DyTbYZaUQoWrAMedyC6YEQQdSb5LzjuaUFNYuVDMYCogx75goY
-         CBcQ==
-X-Gm-Message-State: AKGB3mLyf5lEsyNrt5qRdtxt/8oacqyauU+uGokF/WwOgIckgigGIbd4
-        IdRe29kffPMIN5WtCTohGsOOFTBDbno=
-X-Google-Smtp-Source: ACJfBote0Qn4lE/kDZnD6ZbEgJLdtKI5jBNze3RN/M6DZHvJLopN/UKBQPh5qI3F4gEWQ16dGYxb7Q==
-X-Received: by 10.107.183.195 with SMTP id h186mr3138245iof.159.1513037884975;
-        Mon, 11 Dec 2017 16:18:04 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:bdc4:e5a2:2ef4:d600])
-        by smtp.gmail.com with ESMTPSA id q6sm4661063ita.38.2017.12.11.16.18.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 11 Dec 2017 16:18:04 -0800 (PST)
-Date:   Mon, 11 Dec 2017 16:18:02 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>
-Subject: Re: [PATCH] clone: support 'clone --shared' from a worktree
-Message-ID: <20171212001802.GC177995@google.com>
-References: <20171211231612.29275-1-sunshine@sunshineco.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1EhIJShZBJe0kl3Vc920NE0kik0+OQlHtY+0P/UqBlc=;
+        b=bdGMvTRLrKdpWZ+A5AYXk+qP4g0L+9an3JREvse4v8W6iXncjSZSFb+hA54NUNG6JF
+         Z8qh20oxhiUzKeFb5Kb3uNiHYjun1uHJwLHi2fVk/sSvfj+lZR9V67YYlsXVb7Ixxv6y
+         OFW2hDkQOJunYKBJswCASaNRPUX7akSARpwPHrx/OxL7eo9190U00/8NE0bAg6Q1DRoS
+         /mYxcZ0svuld/Bny0a5tZeb8n0IsNeColkWuz428yLqwWbUI60ibofoaD+DUBNzDdl4l
+         0Kv1CdhfU6tvRQ8xYyvVvH9Fi+w+FaHlORtuh1odYLi/t64GHro8RbkBtyKLTi/MG9fR
+         x2VQ==
+X-Gm-Message-State: AKGB3mIzCNChhN+hXh3CtBnQBRNrHHUzJJon5jrHPNZ4bgpsbrHPYRaO
+        U83J87bi2nfFs13bbIk54pmhy/oKy+yOMHtu4Bs52g==
+X-Google-Smtp-Source: ACJfBoul85Dt35Y7Q2Khiaa+jOayRy/o5VWRLdVTMNxnBy/1QBsIhoIEWMSpDWZo2szQsLjdVxYsoIS5mntSU200lV0=
+X-Received: by 10.55.107.65 with SMTP id g62mr3046078qkc.295.1513038083915;
+ Mon, 11 Dec 2017 16:21:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171211231612.29275-1-sunshine@sunshineco.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.140.85.179 with HTTP; Mon, 11 Dec 2017 16:21:23 -0800 (PST)
+In-Reply-To: <xmqqr2s04zxw.fsf@gitster.mtv.corp.google.com>
+References: <20171208002447.20261-1-sbeller@google.com> <20171211195835.57057-1-sbeller@google.com>
+ <20171211195835.57057-2-sbeller@google.com> <xmqqr2s04zxw.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 11 Dec 2017 16:21:23 -0800
+Message-ID: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
+Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/11, Eric Sunshine wrote:
-> When worktree functionality was originally implemented, the possibility
-> of 'clone --local' from within a worktree was overlooked, with the
-> result that the location of the "objects" directory of the source
-> repository was computed incorrectly, thus the objects could not be
-> copied or hard-linked by the clone. This shortcoming was addressed by
-> 744e469755 (clone: allow --local from a linked checkout, 2015-09-28).
-> 
-> However, the related case of 'clone --shared' (despite being handled
-> only a few lines away from the 'clone --local' case) was not fixed by
-> 744e469755, with a similar result of the "objects" directory location
-> being incorrectly computed for insertion into the 'alternates' file.
-> Fix this.
-> 
-> Reported-by: Marc-André Lureau <marcandre.lureau@gmail.com>
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  builtin/clone.c         | 3 ++-
->  t/t2025-worktree-add.sh | 6 ++++++
->  2 files changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index b22845738a..6ad0ab3fa4 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -452,7 +452,8 @@ static void clone_local(const char *src_repo, const char *dest_repo)
->  {
->  	if (option_shared) {
->  		struct strbuf alt = STRBUF_INIT;
-> -		strbuf_addf(&alt, "%s/objects", src_repo);
-> +		get_common_dir(&alt, src_repo);
-> +		strbuf_addstr(&alt, "/objects");
+On Mon, Dec 11, 2017 at 3:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> the information to what is shown. For example:
+>>
+>>   $ ./git log --oneline --blobfind=v2.0.0:Makefile
+>>   b2feb64309 Revert the whole "ask curl-config" topic for now
+>>   47fbfded53 i18n: only extract comments marked with "TRANSLATORS:"
+>
+> This part is a bit stale???
 
-If you wanted to do this in one function call you could either use
-'strbuf_git_common_path()' or either 'strbuf_git_path()' or
-'strbuf_repo_git_path()' which will do the proper path adjustments when
-working on a path which should be shared between worktrees (i.e. part of
-the common git dir).
+fixed in the next reroll :(
 
->  		add_to_alternates_file(alt.buf);
->  		strbuf_release(&alt);
->  	} else {
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> index b5c47ac602..7395973318 100755
-> --- a/t/t2025-worktree-add.sh
-> +++ b/t/t2025-worktree-add.sh
-> @@ -245,6 +245,12 @@ test_expect_success 'local clone from linked checkout' '
->  	( cd here-clone && git fsck )
->  '
->  
-> +test_expect_success 'local clone --shared from linked checkout' '
-> +	git -C bare worktree add --detach ../baretree &&
-> +	git clone --local --shared baretree bare-clone &&
-> +	grep /bare/ bare-clone/.git/objects/info/alternates
-> +'
-> +
->  test_expect_success '"add" worktree with --no-checkout' '
->  	git worktree add --no-checkout -b swamp swamp &&
->  	! test -e swamp/init.t &&
-> -- 
-> 2.15.1.502.gccaef8de57
-> 
+>> +--find-object=<object-id>::
+>> +     Restrict the output such that one side of the diff
+>> +     matches the given object id. The object can be a blob,
+>> +     or gitlink entry.
+>
+> OK.  In principle you should also be able to find a tree, but I do
+> not now how useful it would be.  Extending it to gitlink, which is
+> another kind of leaf node in the reachability DAG, does make tons of
+> sense---it's a no brainer that I feel ashamed not to have thought of
+> myself ;-)
 
--- 
-Brandon Williams
+The current patch under discussion doesn't find trees, though.
+Hence the documentation is accurate saying that only blobs and
+gitlinks work.
+
+>
+>> +LIB_OBJS += diffcore-oidfind.o
+>
+> Just to nitpick, but "blobfind" was to find "blob", and if you are
+> extending it to find any "object", then that should be "objfind".
+> "oid" is _A_ way to refer to an object (i.e. the _name_ of it), and
+> name is *not* the same as the thing the name refers to, so...
+
+obj-find sounds good.
+
+>
+>> +static int parse_oidfind_opt(struct diff_options *opt, const char *arg)
+>> +{
+>> +     struct object_id oid;
+>> +
+>> +     /* We don't even need to have the object, any oid works. */
+>> +     if (get_oid_blob(arg, &oid))
+>> +             return error("unable to resolve '%s'", arg);
+>
+> Should this still be get_oid_blob(), or should it be less specific
+> to blobs?
+
+We could check if it is a tree/commit and die as they are not
+being handled correctly.
