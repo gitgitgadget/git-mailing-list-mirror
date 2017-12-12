@@ -2,90 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 815951F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 21:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 380B01F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 21:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752263AbdLLVGL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 16:06:11 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59365 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751949AbdLLVGJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 16:06:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0515DC19C2;
-        Tue, 12 Dec 2017 16:06:09 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tZgVPJ3IyTJINhFxmOS/fZomzjM=; b=RMw4Yj
-        j26nLFyPUw3BQnggERtzs8o4HNosgM16J2OvHz7p7XTczDBTSTPYoeyHFPOlnZAR
-        QIFr22eUxDkV0fVf98xpKvPPM9nDIbGLyxpCU39qLNPM6o/3YY0LDVzRJZMH/BUH
-        du/2VkQV+FtgAGexucYwix5PxP2ddox5/F6no=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LrccBuA29tjhXLh2vhBUN/6TGNxDlUGU
-        gZUdtXwhPZJ45bjcglu/XPOLKxU4pfWtYqxJLXpkSW0mvEMG7xtVOBsDmrjMR4h+
-        EfEHyfLstktQkd/ZJVVJZCrFdwBRq/+HT5CfFAZFOZgtkvBY1rEEzCZGh8L7KzGx
-        uNtCHszV3ws=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F0EF8C19C1;
-        Tue, 12 Dec 2017 16:06:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5CEF7C19C0;
-        Tue, 12 Dec 2017 16:06:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752408AbdLLVGa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 16:06:30 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:46974 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752346AbdLLVG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 16:06:28 -0500
+Received: by mail-qt0-f195.google.com with SMTP id r39so584386qtr.13
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 13:06:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wR8Ykyuln2u0h569fLaxzSOM4rDlJiyXvDLyzm4EWUo=;
+        b=nwV7FS+nTs1ffTFDHzmOimzVbGFp57DpQsze5gtuZ+5kaGgNEzlUurSuqdxcXzEiX0
+         j07p4MCMmsRTNc+B11nmqW8qyd235bSjxwLzKrRzVHpb03BYlwnwPO/hdeJFb286TQkQ
+         yEMLfXUs+JTlT1bWMYt46Vnspnzoi/f/lV/urzSWSJmHarhf1B03UezsLo77S/E9Xm54
+         NxnM999bLoa3BQibY7O6e39ymOLmRLARve7uzOuV2QBhtSUNmDacUJ1vDT7/kWNKGJrw
+         QzXIbDvPnYmN2ftyn/+FBPqD56PhBa+NJ9CvDEj2AgoShPg0gnBiWtEsBvivI2sGWiKR
+         tl3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wR8Ykyuln2u0h569fLaxzSOM4rDlJiyXvDLyzm4EWUo=;
+        b=GZH0XPdZJg0SkykVMv0xMYD/aAZIz0qslRVh2sJbFcokJWtehQ4cM+9TSDQTrRrEzD
+         05YrFfYFvKd+I0pSjDYQR06a8AiSiO/PXHBgPYRLkTMFm+qyPJPTqnIcMxjJ/LustL9W
+         cFXcGPPccgJ4gHQl/aBTNDnl1uFXOU5SExyESe0+iw6BLIFhtQV5TXvA9JVhPAfAc6dt
+         bsU7zeHySNoFASmTHhhb1g+pl+rXIbfF55yBNOZ37tyxstY6vxnfmOhUclwfknejCGQg
+         P9fg66MnnD4yvojZkmcTA1IYrpTTovNzQg2W+dQUHlE9lsXYsZnWUaXCHRJT/hy7h45a
+         tJ9g==
+X-Gm-Message-State: AKGB3mJ7az0OJGREJl+Gp7X3i1C3qgMuZzFQ9ylv0Az6FDPQAvzXRt6A
+        DCeb39FU9b1mQd9BdosEE9Y=
+X-Google-Smtp-Source: ACJfBouD3WoXw2Jw5CKlcwBKYzFPF5VVR17OoiMbwXK/w6cKZUEZfyhscv/hfKfkvNxeFgIUiPlpYg==
+X-Received: by 10.237.62.202 with SMTP id o10mr7924653qtf.241.1513112787581;
+        Tue, 12 Dec 2017 13:06:27 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id j1sm67141qkc.5.2017.12.12.13.06.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 12 Dec 2017 13:06:26 -0800 (PST)
+Date:   Tue, 12 Dec 2017 16:06:23 -0500
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     dnj@google.com, git@vger.kernel.org, judge.packham@gmail.com,
-        kostix+git@007spb.ru, manschwetus@cs-software-gmbh.de,
-        max@max630.net, peff@peff.net, sunshine@sunshineco.com
+Cc:     gitster@pobox.com, dnj@google.com, git@vger.kernel.org,
+        judge.packham@gmail.com, kostix+git@007spb.ru,
+        manschwetus@cs-software-gmbh.de, max@max630.net, peff@peff.net,
+        sunshine@sunshineco.com
 Subject: Re: [PATCH] t/helper: ignore everything but sources
+Message-ID: <20171212210623.GV3693@zaya.teonanacatl.net>
 References: <xmqqbmj31zve.fsf@gitster.mtv.corp.google.com>
-        <20171212205606.75581-1-sbeller@google.com>
-Date:   Tue, 12 Dec 2017 13:06:07 -0800
-In-Reply-To: <20171212205606.75581-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 12 Dec 2017 12:56:06 -0800")
-Message-ID: <xmqqr2rzzmf4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20171212205606.75581-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 463243AA-DF80-11E7-9515-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171212205606.75581-1-sbeller@google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi Stefan,
 
+Stefan Beller wrote:
+>> If we ignore everything but resurrect *.[ch] with negative exclude
+>> rules, can we do the same without moving things around?
+> 
 > Yes, there is also one lonely shell script in there, which also needs
 > exclusion.
 
-Thanks for catching them.
+There aren't currently any .h files, but I suppose it doesn't hurt to
+include that pattern to be safer for the future.
 
 > +*
 > +!.sh
 > +!.[ch]
 
-I'd use this instead, though.
+The ! patterns are missing a '*'.  I think it should be:
 
--- >8 --
 *
-!*.sh
 !*.[ch]
-!*.gitignore
--- 8< --
+!*.sh
 
-In a dirty repository full of crufts but without any local
-modifications, if you do
+Does it make sense to also include !.gitignore as well?
+It's already committed, so it's not ignored.  But perhaps
+having it listed will save someone from getting their repo
+into a state where local changes to .gitignore aren't picked
+up (I know that's a bit of a stretch).
 
-    $ git rm --cached -r t/helper
-    $ git add t/helper
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How much does it cost to entice a dope-smoking UNIX system guru to
+Dayton?
+    -- Brian Boyle, UNIX/WORLD's First Annual Salary Survey
 
-you should be able to make your index identical to HEAD.  The
-version that was posted did not resurrect .gitignore and none
-of the source files, but the replaced one should.
