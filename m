@@ -7,102 +7,106 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5E0C1F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 19:48:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9628A1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 19:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752361AbdLLTsB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 14:48:01 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62795 "EHLO
+        id S1752310AbdLLTx5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 14:53:57 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55934 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752273AbdLLTsA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 14:48:00 -0500
+        with ESMTP id S1751499AbdLLTx4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 14:53:56 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D7FDC7FB9;
-        Tue, 12 Dec 2017 14:48:00 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70D70C814A;
+        Tue, 12 Dec 2017 14:53:56 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GgU5kQ+LGPWf57BDHs6BNlk1/Ek=; b=FReDbB
-        aE6wm778rR+aIWZDAQuzzB1j8hK35X9wKKA3ut0YBDYz96lEHEuxWzpzBs6oq/aB
-        OA979F9B71CNAmGwmB7uzQlWPhx+kdGsoT6xZHygiKhwpZx8xaELXXJFy1uiV+4A
-        wVaegfKR5nL1owmFaBMyhTiuA6xGn7hX94q3c=
+        :content-type:content-transfer-encoding; s=sasl; bh=2+cYzpFM6XlB
+        7FSLT7Bi9J1kLpw=; b=J61umx4xiy4cIDaYw6kOR1aWee/F+7bG8pGfS5Wyakp9
+        KFKBW/lcPQfshP9jot8hJqRRCzb6pHsVzpgacia5FVL030oGbTYfdy1ml/uASj/r
+        Rjxe1emPOF5IRoIxk33YuuRDbwK0WKvBihELg5I2WXyvQUCeMk34LGG0Ff8XWZo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BUedU/pBceP+QNb6LBhOpW5KeiK3NMwR
-        vVEiU5wSB4koCLZCBREEQoa+6LpUHsfLxoz6ArgdZaBholzMjceRUGDmbuGvcrim
-        6P8O0Ab1BNGBCVEvFGKA4BHfDX6DytvvzVJeO3RXv6beUSQ6bUm8ujGSjWQxwZIw
-        rkJCxe0If+A=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nYN8Ne
+        SzLOF09eRc/h5yizplEJXhmw39Q7ESM0aBtcNNOt2fvM8nUc++Su8j0KlvgOqlcn
+        vL0Ar12H0/o3XDr96PbnpOQRMw6Z9hdljHkAc9QsGn3ZLX3RAd2YasEYntDtLjVo
+        +iAzi1RrD+TyfL9myO0baOHcsPb7yKq8nr/kM=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34664C7FB8;
-        Tue, 12 Dec 2017 14:48:00 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 68846C8149;
+        Tue, 12 Dec 2017 14:53:56 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A82A1C7FB6;
-        Tue, 12 Dec 2017 14:47:59 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5927C8147;
+        Tue, 12 Dec 2017 14:53:55 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>
-Subject: Re: [PATCH] doc: clarify usage of XDG_CONFIG_HOME config file
-References: <1513077862-165-1-git-send-email-jacob.keller@gmail.com>
-Date:   Tue, 12 Dec 2017 11:47:58 -0800
-In-Reply-To: <1513077862-165-1-git-send-email-jacob.keller@gmail.com> (Jacob
-        Keller's message of "Tue, 12 Dec 2017 03:24:22 -0800")
-Message-ID: <xmqqo9n320ep.fsf@gitster.mtv.corp.google.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH] Makefile: allow NO_DC_SHA1_SUBMODULE to be set in config.mak
+References: <7272c221-c1b6-ca41-3be4-329275e94b8a@ramsayjones.plus.com>
+Date:   Tue, 12 Dec 2017 11:53:54 -0800
+In-Reply-To: <7272c221-c1b6-ca41-3be4-329275e94b8a@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Tue, 12 Dec 2017 12:47:25 +0000")
+Message-ID: <xmqqk1xr204t.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5B7AB2DE-DF75-11E7-B045-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2FC84128-DF76-11E7-B4B5-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
->  --global::
-> +	For writing options: write to global user configuration file
-> +	rather than the repository `.git/config`.
->  +
-> +For reading options: read only from global user configuration file
-> +rather than from all available files.
->  +
->  See also <<FILES>>.
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Junio,
+>
+> Could you please add (or squash) this on top of the 'ab/sha1dc-build'
+> branch, so that I can build with NO_DC_SHA1_SUBMODULE=3DNoThanks in my
+> config.mak.
 
-OK.
+Makes sense.  The patch looks scary by appearing to move the
+includes far to the front of the Makefile, but it in fact is moving
+the NO_DC_SHA1_SUBMODULE block slightly down and it is a sensible
+and safe move.
 
-> @@ -237,26 +235,30 @@ See also <<FILES>>.
->  FILES
->  -----
->  
-> +If not set explicitly with `--file`, there are three locations where
->  'git config' will search for configuration options:
->  
-> +System-wide configuration::
-> +	Located at `$(prefix)/etc/gitconfig`.
->  
-> +User-specific configuration::
-> +	One and only one of the following files will be read
+I actually think that the block can go even further down, perhaps
+close to the run of choices "what variant are we building?" we make
+at around we have "ifdef NO_CURL".
 
-We said "will search for" upfront, but this talks about "will be
-read", leaving the reader puzzled as to what should happen when
-writing.  Perhaps "s/read/used/"?
+=C3=86var?
 
-> ++
-> +- `~/.gitconfig`
-> +- `$XDG_CONFIG_HOME/git/config`
-> +- `$HOME/.config/git/config`
-> ++
-> +If `~/.gitconfig` exists, it will be used, and the other files will not be
-> +read. Otherwise, if `$XDG_CONFIG_HOME` is set, then `$XDG_CONFIG_HOME/git/config`
-> +will be used, otherwise `$HOME/.config/git/config` will be used.
-
-And then "and the other files will not be read" can be dropped from
-the first sentence of this paragraph?
-
-Yaroslav on the original thread mentioned that reading codepath
-without --file or --global does not limit to one of the three, and
-this section is about "If not set explicitly with `--file`", so we'd
-need to make sure if the above is what happens in reality (or update
-the proposed clarification to match the reality).
-
-Thanks.
+> diff --git a/Makefile b/Makefile
+> index 929b49b04..91bbb0ed8 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1042,6 +1042,10 @@ EXTLIBS =3D
+> =20
+>  GIT_USER_AGENT =3D git/$(GIT_VERSION)
+> =20
+> +include config.mak.uname
+> +-include config.mak.autogen
+> +-include config.mak
+> +
+>  ifndef NO_DC_SHA1_SUBMODULE
+>  	ifndef DC_SHA1_EXTERNAL
+>  		ifneq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisionde=
+tection/lib/sha1.h)
+> @@ -1053,10 +1057,6 @@ whatever reason define NO_DC_SHA1_SUBMODULE=3DNo=
+Thanks)
+>  	endif
+>  endif
+> =20
+> -include config.mak.uname
+> --include config.mak.autogen
+> --include config.mak
+> -
+>  ifdef DEVELOPER
+>  CFLAGS +=3D $(DEVELOPER_CFLAGS)
+>  endif
