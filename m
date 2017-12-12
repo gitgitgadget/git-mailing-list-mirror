@@ -2,142 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0FF81F419
-	for <e@80x24.org>; Tue, 12 Dec 2017 08:55:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E765E1F419
+	for <e@80x24.org>; Tue, 12 Dec 2017 09:30:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752011AbdLLIzh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 03:55:37 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:41922
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751434AbdLLIzg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2017 03:55:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1513068935;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=evyGG2CZPB07KHKjW777zcrTord/cIjZnD+9xYhC+aA=;
-        b=g24bEztXsVR/86EWC/6iGgCeMNCT+vlifrYpQheA+FFZnR56eYhayUoYOlDXuazD
-        5ZyVpBi8S0TZS+haEsJfheCkqbhWdOrW3nNPzrGh03ZtX/TY9oQhpZ9tAzwEEJpXTpZ
-        /FCHg9l7rKzQc0hDN/kYpAZ7fRIDywhK8xk1h2Ko=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102016049efb823-20513044-7d28-4a27-bbd7-164c05de0b25-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102016049efb7b4-b8dc7cff-5ddf-4692-ba1c-3551720ec28d-000000@eu-west-1.amazonses.com>
-References: <0102016049efb7b4-b8dc7cff-5ddf-4692-ba1c-3551720ec28d-000000@eu-west-1.amazonses.com>
-Subject: [PATCH Outreachy v2 2/2] format: create docs for pretty.h
+        id S1751234AbdLLJaz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 04:30:55 -0500
+Received: from mail-it0-f49.google.com ([209.85.214.49]:44186 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750715AbdLLJax (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 04:30:53 -0500
+Received: by mail-it0-f49.google.com with SMTP id b5so22984094itc.3
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 01:30:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IuQDe0NyCuOKTHkN4FiEOLAHlOPnNy1dF/ljqc2qpKk=;
+        b=NCS/7cYTrlOmw/GGVTvOjkuTIkfxwT0VW8Yaxy61ZV9u4mWzttI16D1xeGV0RZTwkZ
+         F1CjDZnNpAlhPWJZ1JzILI/cpwe7cV/SrHOdDB+PIkwE+kLOVp9XA+0DsZtaBoqk+97O
+         E70Yi2vzQAlGp6Nz8pX23BTF/+qKeivflveP6+LB/FvsIjMYdY0616AMyZDAtreXainR
+         t0I4d66tmHcP8xC81PpObGx2mOuOIguzoHblCDiIhZ7NKonn03KJCkSkruYjWHh7syGZ
+         DqfcBc2yLwgMqDGcBBN6O6C2a9HBzbYE6xeykheeZ1Tkutf7Kl8i3LiN9JG84f8F8o52
+         hxTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IuQDe0NyCuOKTHkN4FiEOLAHlOPnNy1dF/ljqc2qpKk=;
+        b=BfzuPGN0eH5k7R+C/hu0RSUMUqgICHbVZ/4N4A9adRJryZRWYAomr7HlBltrqx7yTv
+         X6H0V/DKTTNOBpfmKdHsQn61Ug2GH20sQE6S/8/knWX8fUVfOh1Ew/qG8lSdyZD2qnBH
+         mzIv08jgCmNfLMQIoNylDOOVFkFTyN3ZDqoK3eg9fAcMiV6oGPFLOKefWk5AQR6SmDzG
+         KFbudKBAz+I7+4PE6SuIjg72N2GM5lV2v4J7MqZNTvqa5VGvnB3vjeUWyScVOUEqDGgT
+         bXnqYWmamHWztUEbnvEw76De8Wwb/C3IQE6t6P9Zn9a+zvwis/T108yQwU4yYN9zZkX7
+         fT1w==
+X-Gm-Message-State: AKGB3mIbwylltGaXadDFS4NbxjwmiOy2zbuCdLSCHT/wMGMElYvVyOgb
+        /RsepeB+kA3HJ0pf0a7cYR4tVidF76hHEWOoAKseyGZn
+X-Google-Smtp-Source: ACJfBouRkMog88DuBZQSqQX/jy8Pg3/XX7G8jwzH1Lrxkk3unbUWjJwFVkeFd0sLT0qeYwyH+aQVDqVvoZE/3e50MzU=
+X-Received: by 10.107.69.3 with SMTP id s3mr2580381ioa.67.1513071052863; Tue,
+ 12 Dec 2017 01:30:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 12 Dec 2017 08:55:35 +0000
-X-SES-Outgoing: 2017.12.12-54.240.7.19
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Received: by 10.79.28.137 with HTTP; Tue, 12 Dec 2017 01:30:52 -0800 (PST)
+In-Reply-To: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com>
+References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 12 Dec 2017 10:30:52 +0100
+Message-ID: <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Write some docs for functions in pretty.h.
-Take it as a first draft, they would be changed later.
+On Thu, Dec 7, 2017 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> * jh/object-filtering (2017-12-05) 9 commits
+>   (merged to 'next' on 2017-12-05 at 3a56b51085)
+>  + rev-list: support --no-filter argument
+>  + list-objects-filter-options: support --no-filter
+>  + list-objects-filter-options: fix 'keword' typo in comment
+>   (merged to 'next' on 2017-11-27 at e5008c3b28)
+>  + pack-objects: add list-objects filtering
+>  + rev-list: add list-objects filtering support
+>  + list-objects: filter objects in traverse_commit_list
+>  + oidset: add iterator methods to oidset
+>  + oidmap: add oidmap iterator methods
+>  + dir: allow exclusions from blob in addition to file
+>  (this branch is used by jh/fsck-promisors and jh/partial-clone.)
+>
+>  In preparation for implementing narrow/partial clone, the object
+>  walking machinery has been taught a way to tell it to "filter" some
+>  objects from enumeration.
+>
+>
+> * jh/fsck-promisors (2017-12-05) 12 commits
+>  - gc: do not repack promisor packfiles
+>  - rev-list: support termination at promisor objects
+>  - fixup: sha1_file: add TODO
+>  - fixup: sha1_file: convert gotos to break/continue
+>  - sha1_file: support lazily fetching missing objects
+>  - introduce fetch-object: fetch one promisor object
+>  - index-pack: refactor writing of .keep files
+>  - fsck: support promisor objects as CLI argument
+>  - fsck: support referenced promisor objects
+>  - fsck: support refs pointing to promisor objects
+>  - fsck: introduce partialclone extension
+>  - extension.partialclone: introduce partial clone extension
+>  (this branch is used by jh/partial-clone; uses jh/object-filtering.)
+>
+>  In preparation for implementing narrow/partial clone, the machinery
+>  for checking object connectivity used by gc and fsck has been
+>  taught that a missing object is OK when it is referenced by a
+>  packfile specially marked as coming from trusted repository that
+>  promises to make them available on-demand and lazily.
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored by: Jeff King <peff@peff.net>
----
- pretty.h | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+I am currently working on integrating this series with my external odb
+series (https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/).
 
-diff --git a/pretty.h b/pretty.h
-index ef5167484fb64..5c85d94e332d7 100644
---- a/pretty.h
-+++ b/pretty.h
-@@ -48,6 +48,7 @@ struct pretty_print_context {
- 	int graph_width;
- };
- 
-+/* Check whether commit format is mail. */
- static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
- {
- 	return (fmt == CMIT_FMT_EMAIL || fmt == CMIT_FMT_MBOXRD);
-@@ -57,31 +58,74 @@ struct userformat_want {
- 	unsigned notes:1;
- };
- 
-+/* Set the flag "w->notes" if there is placeholder %N in "fmt". */
- void userformat_find_requirements(const char *fmt, struct userformat_want *w);
-+
-+/*
-+ * Shortcut for invoking pretty_print_commit if we do not have any context.
-+ * Context would be set empty except "fmt".
-+ */
- void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
- 			struct strbuf *sb);
-+
-+/*
-+ * Get information about user and date from "line", format it and
-+ * put it into "sb".
-+ * Format of "line" must be readable for split_ident_line function.
-+ * The resulting format is "what: name <email> date".
-+ */
- void pp_user_info(struct pretty_print_context *pp, const char *what,
- 			struct strbuf *sb, const char *line,
- 			const char *encoding);
-+
-+/*
-+ * Format title line of commit message taken from "msg_p" and
-+ * put it into "sb".
-+ * First line of "msg_p" is also affected.
-+ */
- void pp_title_line(struct pretty_print_context *pp, const char **msg_p,
- 			struct strbuf *sb, const char *encoding,
- 			int need_8bit_cte);
-+
-+/*
-+ * Get current state of commit message from "msg_p" and continue formatting
-+ * by adding indentation and '>' signs. Put result into "sb".
-+ */
- void pp_remainder(struct pretty_print_context *pp, const char **msg_p,
- 			struct strbuf *sb, int indent);
- 
-+/*
-+ * Create a text message about commit using given "format" and "context".
-+ * Put the result to "sb".
-+ * Please use this function for custom formats.
-+ */
- void format_commit_message(const struct commit *commit,
- 			const char *format, struct strbuf *sb,
- 			const struct pretty_print_context *context);
- 
-+/*
-+ * Parse given arguments from "arg", check it for correctness and
-+ * fill struct rev_info.
-+ */
- void get_commit_format(const char *arg, struct rev_info *);
- 
-+/*
-+ * Make a commit message with all rules from given "pp"
-+ * and put it into "sb".
-+ * Please use this function if you have a context (candidate for "pp").
-+ */
- void pretty_print_commit(struct pretty_print_context *pp,
- 			const struct commit *commit,
- 			struct strbuf *sb);
- 
-+/*
-+ * Change line breaks in "msg" to "line_separator" and put it into "sb".
-+ * Return "msg" itself.
-+ */
- const char *format_subject(struct strbuf *sb, const char *msg,
- 			const char *line_separator);
- 
-+/* Check if "cmit_fmt" will produce an empty output. */
- int commit_format_is_empty(enum cmit_fmt);
- 
- #endif /* PRETTY_H */
+Instead of using an "extension.partialclone" config variable, an odb
+will be configured like using an "odb.<odbname>.promisorRemote" (the
+name might still change) config variable. Other odbs could still be
+configured using "odb.<odbname>.scriptCommand" and
+"odb.<odbname>.subprocessCommand".
 
---
-https://github.com/git/git/pull/439
+The current work is still very much WIP and some tests fail, but you
+can take a look there:
+
+https://github.com/chriscool/git/tree/gl-promisor-external-odb440
