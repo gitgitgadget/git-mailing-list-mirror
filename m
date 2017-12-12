@@ -2,115 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62931F404
-	for <e@80x24.org>; Tue, 12 Dec 2017 00:21:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F89F1F404
+	for <e@80x24.org>; Tue, 12 Dec 2017 00:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751729AbdLLAVZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 19:21:25 -0500
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:34121 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751612AbdLLAVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 19:21:24 -0500
-Received: by mail-qt0-f180.google.com with SMTP id 33so43357680qtv.1
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 16:21:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=1EhIJShZBJe0kl3Vc920NE0kik0+OQlHtY+0P/UqBlc=;
-        b=rcCiH1uhyb16/3F3Ka4ACYKcVwlQuG91F7QN6er1qRZp49NpfpcFTRZvOT4WJcpZnc
-         XPJQgYd72nKzCiZGH0Vo7r5QsdkkhA12D/HCrnfBVNjCWjUla3m10HI6derM+qLrt8P+
-         bfudJ8EntOvncADsxlrN8gU5JfMpGcaEkkP3HxAPUSP8Gt2x2JQ4SZpxlOXTc7JU4aks
-         jwXmecMLuqlhBNhPaCWHomJF6/eZj97hGCMWIh/D03/+N0KQ+WrQeJEg1VGvnE1VOnhz
-         bu+bIRMA1rtf0ej++DyLfvWf53JozzzeVlwjRdxpjjB1qL22/i/A7/qFVJUz/9v1taqo
-         ycXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=1EhIJShZBJe0kl3Vc920NE0kik0+OQlHtY+0P/UqBlc=;
-        b=bdGMvTRLrKdpWZ+A5AYXk+qP4g0L+9an3JREvse4v8W6iXncjSZSFb+hA54NUNG6JF
-         Z8qh20oxhiUzKeFb5Kb3uNiHYjun1uHJwLHi2fVk/sSvfj+lZR9V67YYlsXVb7Ixxv6y
-         OFW2hDkQOJunYKBJswCASaNRPUX7akSARpwPHrx/OxL7eo9190U00/8NE0bAg6Q1DRoS
-         /mYxcZ0svuld/Bny0a5tZeb8n0IsNeColkWuz428yLqwWbUI60ibofoaD+DUBNzDdl4l
-         0Kv1CdhfU6tvRQ8xYyvVvH9Fi+w+FaHlORtuh1odYLi/t64GHro8RbkBtyKLTi/MG9fR
-         x2VQ==
-X-Gm-Message-State: AKGB3mIzCNChhN+hXh3CtBnQBRNrHHUzJJon5jrHPNZ4bgpsbrHPYRaO
-        U83J87bi2nfFs13bbIk54pmhy/oKy+yOMHtu4Bs52g==
-X-Google-Smtp-Source: ACJfBoul85Dt35Y7Q2Khiaa+jOayRy/o5VWRLdVTMNxnBy/1QBsIhoIEWMSpDWZo2szQsLjdVxYsoIS5mntSU200lV0=
-X-Received: by 10.55.107.65 with SMTP id g62mr3046078qkc.295.1513038083915;
- Mon, 11 Dec 2017 16:21:23 -0800 (PST)
+        id S1752559AbdLLA1b convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 11 Dec 2017 19:27:31 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:57979 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752374AbdLLA0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 19:26:55 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vBC0Qqc2074475
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 11 Dec 2017 19:26:52 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <000801d3713a$2f1259d0$8d370d70$@nexbridge.com> <xmqqindc4zhp.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqindc4zhp.fsf@gitster.mtv.corp.google.com>
+Subject: RE: [Proposed] Externalize man/html ref for quick-install-man and quick-install-html
+Date:   Mon, 11 Dec 2017 19:26:46 -0500
+Message-ID: <006301d372df$e82cf410$b886dc30$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 11 Dec 2017 16:21:23 -0800 (PST)
-In-Reply-To: <xmqqr2s04zxw.fsf@gitster.mtv.corp.google.com>
-References: <20171208002447.20261-1-sbeller@google.com> <20171211195835.57057-1-sbeller@google.com>
- <20171211195835.57057-2-sbeller@google.com> <xmqqr2s04zxw.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 11 Dec 2017 16:21:23 -0800
-Message-ID: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
-Subject: Re: [PATCH 1/1] diffcore: add a filter to find a specific blob
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKyKGo4qh2sJ7CV4r7D/ydkuQ0kwQIINdwwoXEtFPA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 11, 2017 at 3:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> the information to what is shown. For example:
->>
->>   $ ./git log --oneline --blobfind=v2.0.0:Makefile
->>   b2feb64309 Revert the whole "ask curl-config" topic for now
->>   47fbfded53 i18n: only extract comments marked with "TRANSLATORS:"
->
-> This part is a bit stale???
+Sorry about the response positioning...
 
-fixed in the next reroll :(
+I can send you a pull request on github, if you want 😉
 
->> +--find-object=<object-id>::
->> +     Restrict the output such that one side of the diff
->> +     matches the given object id. The object can be a blob,
->> +     or gitlink entry.
+-----Original Message-----
+From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Junio C Hamano
+Sent: December 11, 2017 6:27 PM
+To: Randall S. Becker <rsbecker@nexbridge.com>
+Cc: git@vger.kernel.org
+Subject: Re: [Proposed] Externalize man/html ref for quick-install-man and quick-install-html
+
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+
+> diff --git a/Documentation/Makefile b/Documentation/Makefile index 
+> 3e39e28..4f1e6df 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -39,6 +39,8 @@ MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)  
+> MAN_XML = $(patsubst %.txt,%.xml,$(MAN_TXT))  MAN_HTML = $(patsubst 
+> %.txt,%.html,$(MAN_TXT))
 >
-> OK.  In principle you should also be able to find a tree, but I do
-> not now how useful it would be.  Extending it to gitlink, which is
-> another kind of leaf node in the reachability DAG, does make tons of
-> sense---it's a no brainer that I feel ashamed not to have thought of
-> myself ;-)
-
-The current patch under discussion doesn't find trees, though.
-Hence the documentation is accurate saying that only blobs and
-gitlinks work.
-
+> +GIT_MAN_REF = master
+> +
+>  OBSOLETE_HTML += everyday.html
+>  OBSOLETE_HTML += git-remote-helpers.html  DOC_HTML = $(MAN_HTML) 
+> $(OBSOLETE_HTML) @@ -415,14 +417,14 @@ require-manrepo::
+>         then echo "git-manpages repository must exist at $(MAN_REPO)"; 
+> exit 1; fi
 >
->> +LIB_OBJS += diffcore-oidfind.o
->
-> Just to nitpick, but "blobfind" was to find "blob", and if you are
-> extending it to find any "object", then that should be "objfind".
-> "oid" is _A_ way to refer to an object (i.e. the _name_ of it), and
-> name is *not* the same as the thing the name refers to, so...
+>  quick-install-man: require-manrepo
+> -       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO)
+> $(DESTDIR)$(mandir)
+> +       '$(SHELL_PATH_SQ)' ./install-doc-quick.sh $(MAN_REPO)
+> $(DESTDIR)$(mandir) $(GIT_MAN_REF)
 
-obj-find sounds good.
+I suspect that this patch is line-wrapped and unusable for the final application, but I think what the change wants to do makes total sense---we are already letting the builder specify where the other repositories for docs are, and it is not such a big stretch to let them also say which branch or tag they want their documentation from.
 
->
->> +static int parse_oidfind_opt(struct diff_options *opt, const char *arg)
->> +{
->> +     struct object_id oid;
->> +
->> +     /* We don't even need to have the object, any oid works. */
->> +     if (get_oid_blob(arg, &oid))
->> +             return error("unable to resolve '%s'", arg);
->
-> Should this still be get_oid_blob(), or should it be less specific
-> to blobs?
-
-We could check if it is a tree/commit and die as they are not
-being handled correctly.
