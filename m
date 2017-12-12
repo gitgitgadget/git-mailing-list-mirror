@@ -2,106 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F6271F407
-	for <e@80x24.org>; Tue, 12 Dec 2017 10:32:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B881F407
+	for <e@80x24.org>; Tue, 12 Dec 2017 10:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751688AbdLLKcZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 05:32:25 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:14491 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750731AbdLLKcY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 05:32:24 -0500
-Received: from [192.168.2.201] ([92.22.15.141])
-        by smtp.talktalk.net with SMTP
-        id OhrJeD1gImITaOhrJejPbU; Tue, 12 Dec 2017 10:32:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1513074742;
-        bh=yC6YqFmeoK4j82hJ/kFDQ4Z/dkPNFNSAbAils5s9ncY=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=JmVhnvefQs6BUbdx1dh7oapAcHWCHOmkQIJfdd06du90RBpWz3s2AT3SfbBnRMI0l
-         nlMf3Cvs9YgBa40x86lLneBqKf3H7aqtWkkX3JfkidEFV4fLXhNbGjVItGgiJ7b2Ti
-         usg6/h2H82SoN9DXnZHsPj6LxFhThdfyQ3zsWMBQ=
-X-Originating-IP: [92.22.15.141]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=GtR6SX75q4uFXsZmIa626w==:117
- a=GtR6SX75q4uFXsZmIa626w==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=HWhUnGdlhp3S1yQuV7QA:9 a=QEXdDO2ut3YA:10 a=SHUmGpGg8TAA:10
- a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 0/9] sequencer: don't fork git commit
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net>
- <20171211141330.23566-1-phillip.wood@talktalk.net>
- <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <a57362a8-3e55-746f-d25a-56dd24a17278@talktalk.net>
-Date:   Tue, 12 Dec 2017 10:32:16 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1752066AbdLLKvH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 05:51:07 -0500
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:38161 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751625AbdLLKvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 05:51:02 -0500
+Received: by mail-wm0-f50.google.com with SMTP id 64so19380379wme.3
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 02:51:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4SZWT2VjsM1SQ7ilcv6yLnvnmCJZxKr0QSsK1uv9lYg=;
+        b=mX/Ne5Jjn61WySWawrG5SyxigvcPSHYDfq324PZ1zymiYef2QPDCMHo++BN8dAU/kg
+         FKeE8wqTn4F9SrfIgVWPJWbN/2xFaduuWDluYEPg+LEce47biP19zhNz+YhJbDQWbsRY
+         Xr+EDxOOkpifMXIQSuG8b303ncrYtx2ULBRQy5sZvc4HkgAevG581bFtH6CSnZUlO5BH
+         pauRB5vGwGCAYBT5zdjwib8lStywNmXECxJLGQx18Uf4oW6cjFeSa8gRb35k+duaaufw
+         tsQjgecz8WB0LUj5PmlNljkVHK3FAoN8klBW76AiVXkZSwkURUf9QgZkxx+yIl0ctZ1D
+         +buQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4SZWT2VjsM1SQ7ilcv6yLnvnmCJZxKr0QSsK1uv9lYg=;
+        b=TawMuNxr1qIswkvlVfAoZYRfkZputgm93SWiGIPV06+2v0VdyXKE/9FyYqLreE8/fo
+         hqCu5Iyye3mM/DKwP4J5N9sI8TflJagB7ReViI0mkMW8OEJ11UPzc5kZBMrK4mY19KPr
+         6w+iyBUDMVd9kF6F2A/YCmhce6Kf7KjE1KSZlr59JWOaQ+H4AnBcLOeXtHgI6GcTpDfL
+         MOXXLCMFmk6y+I4WQ3cKY+7ZFitq1anzUgHOCtdpI/+xQZmiT6K019TavScolgMAYYJY
+         McoFThu/VySrBQEM5Am/b1GNUhfMx3Q9w/xw4LSY0gEYG7j49rDN5DQhumQs0SwogcWD
+         0Olg==
+X-Gm-Message-State: AKGB3mIKyzKaBaR2CV+zcxcLDcyjrf2jr3b7U6pTC7oIq2c/IxOr4pZW
+        lXYiCC0Wqe1+B2PGE0FHYv2sFOuTiD/a8pIOESk=
+X-Google-Smtp-Source: ACJfBoum/mtvzeH7sS4ME3S4OmckUyirBaZiqC71hmBjQ44E42AkSg30Y95uqouN+Jfb1M7QT3rGH4UkjArc/kvNUHE=
+X-Received: by 10.80.137.147 with SMTP id g19mr2270671edg.293.1513075860567;
+ Tue, 12 Dec 2017 02:51:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDnLlgeKmx57g+WbNQONBfj4X08LUNRIVZXgrA8tBuRNnbxEt9k33URA6M+v0SlWx3ETaexI09D4q7H64CDTvp4oVUAYmdW1nZOgr+Xo+SOVfmGn0UKj
- XlA42zyHWGFk+1v6agpza5ZnE5I58r/kEntzXSj1DQ2UKkYvNIeLX3sEYZFCd3/RXrAnlbJGrbxy2umP+K31qepHjefv2sKkJTz1cZha9u822btegsl6iWYE
- 7N+g643LxXfKWyjr+DBp+yWY5Zv5pCwkkpowUnWun6v8FaCfiLkL/M/dlCaHJ2o+phT+WM/tK1Tm5UVGW069YX1kV23zi9w/1gUStomCMzYvuIFcgd18OjuX
- sVnkJgnKZYRVThZriTa4kKUPHUZ9ow==
+Received: by 10.80.174.252 with HTTP; Tue, 12 Dec 2017 02:50:40 -0800 (PST)
+In-Reply-To: <006301d372df$e82cf410$b886dc30$@nexbridge.com>
+References: <000801d3713a$2f1259d0$8d370d70$@nexbridge.com>
+ <xmqqindc4zhp.fsf@gitster.mtv.corp.google.com> <006301d372df$e82cf410$b886dc30$@nexbridge.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 12 Dec 2017 02:50:40 -0800
+Message-ID: <CA+P7+xq9RHmhKXU=m7iMxZxHWye8VRhUH6thTbPn-AY3nu4H5w@mail.gmail.com>
+Subject: Re: [Proposed] Externalize man/html ref for quick-install-man and quick-install-html
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/12/17 23:44, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> I've reworked the config handling since v4. It now stores the default
->> values in struct replay_opt rather than using global variables and
->> calls git_diff_basic_config(). Unfortunately I've not had time to
->> modify git_gpg_config() to indicate if it successfully handled the key
->> so git_diff_basic_config() is called unnecessarily in that case. Within
->> git_diff_basic_config() userdiff_config() also suffers from the same
->> problem of not indicating if it has handled the key.
-> 
-> Ouch.  I thought we agreed that we were ready to go incremental and
-> the topic was merged to 'next' earlier last week.
+On Mon, Dec 11, 2017 at 4:26 PM, Randall S. Becker
+<rsbecker@nexbridge.com> wrote:
+> Sorry about the response positioning...
+>
+> I can send you a pull request on github, if you want =F0=9F=98=89
+>
 
-Sorry, I thought we were waiting, not to worry.
-> 
-> After scanning the difference between the two rounds, it seems that
-> the more important difference is the rework of the configuration,
-> which looks better thought out than the previous round, and with
-> associated change to use replay_opts fields instead of free variables
-> to carry gpg-sign and cleanup-mode settings around, which also looks
-> sensible to me.
+You can use https://submitgit.herokuapp.com/ to submit to the mailing
+list from a pull request.
 
-Yes the configuration is the major change, I'm glad you think it is an
-improvement
-
-> Can you make these differences into incremental "that earlier one
-> was suboptimal for this and that reasons, let's make it better by
-> doing this" patches to queue them on top?
-
-Will do, though if I don't get round to it today or tomorrow it may be
-the New Year before I send them, I hope that's OK
-
-Best Wishes
-
-Phillip
-
-> Thanks.
-> 
-
+Thanks,
+Jake
