@@ -2,122 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7501F407
-	for <e@80x24.org>; Tue, 12 Dec 2017 11:50:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 214401F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 14:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752375AbdLLLtu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 06:49:50 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:44683 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbdLLLts (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 06:49:48 -0500
-Received: by mail-wm0-f46.google.com with SMTP id t8so20108855wmc.3
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 03:49:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Nw8pVG3+4LkVSRROrpsGWIk9NIQtBVVD/asxm0IVyfo=;
-        b=rSexbpxA4ombSjM2/uJhqeOfR3Vl6XZObpjOmwATeM+lowWGTxRxzoYr23wq+nbPt5
-         UyjdO1lBlMfNazOj07o1UaEllWDBMydCiRJXe5yMPwD53Q4Q1DP8BJNs2dSCSNthZhJ9
-         qpE0/olbA34NECUXXd4b3lkMewBEy3cPy0MysMQrU8Tl7TWsoYM8cs90zAxOEgmRFMYS
-         e+MnM2+Lc0gZkLyC5vJUai4LAYP69/YbtDaTqtPv7JgDaDOYPuMxLQ3Q3U6SylRxhYUA
-         T76O+xZqnFCwKIkjKRv2UONR2ItGaQZC+Y7aYAEGks+CCYY07vsXalFgpyspP9gmf1pJ
-         46KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Nw8pVG3+4LkVSRROrpsGWIk9NIQtBVVD/asxm0IVyfo=;
-        b=KjjSXG76vObBEX9d4RuP/BGhZPQS2lRwfMevZfEpKA4eLNW8IwKpmJLF/j2CG0obWA
-         I/DSkZVmV4I5ZE+VAG5zmPfXOKz48Yi4yLfkFd3deHjRL+J0Sr+iTWbvH05gW0vLnuvh
-         v2UTxIMNdHII1MOE7j9VohhJlQxEJd2MR0ac2nwweJE4tBZulEGRu9SE0Pk1D0ny1ePh
-         pfGeO75Y2SAwDpwR2K4LIhkNqbcGPX2CQo5IMAzc3+Uy5gJ4EPSXQzsZFmbq1vkWkm4u
-         qoKxC/5ZoojA5xcqK+/J3NBlZZ/a7I7jyfSR/6HzlNgR7ZDElDxmUqJrAYoBBmBoF8sy
-         I9GA==
-X-Gm-Message-State: AKGB3mIWm3VIK7WysxeiMdWMbQJHXqMmaSSerjko+Pa7Bhket2M8PVjG
-        Yre+EjXTCUYryTV8wiOzqKk=
-X-Google-Smtp-Source: ACJfBostK2/fZhe6Bs8nB7zgXxQszuQchvrQrdBEg0z6Rjn0GNdiXgI2z5gBK6jtvrQhEout5ZSEYg==
-X-Received: by 10.80.134.213 with SMTP id 21mr2616541edu.83.1513079387230;
-        Tue, 12 Dec 2017 03:49:47 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id u21sm7545401edl.54.2017.12.12.03.49.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 12 Dec 2017 03:49:46 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1eOj4D-0006RK-Cf; Tue, 12 Dec 2017 12:49:45 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Thomas Adam <thomas@xteddy.org>
-Cc:     Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-References: <20171116154814.23785-1-alex.bennee@linaro.org> <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com> <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop> <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com> <87mv2p89wu.fsf@linaro.org> <20171211172615.jfsjthkvs4itjpcn@laptop> <CACBZZX58KpQ7=V8GUFfxuMQq_Ar6cmmoXyPx_umUTbU19+0LCw@mail.gmail.com> <20171212103040.jbgkyet5rapqxi44@laptop>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171212103040.jbgkyet5rapqxi44@laptop>
-Date:   Tue, 12 Dec 2017 12:49:45 +0100
-Message-ID: <87po7kcgiu.fsf@evledraar.gmail.com>
+        id S1752984AbdLLMrb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 07:47:31 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:37343 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752623AbdLLMr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 07:47:28 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id Ojy1evsoqJjiPOjy2eFeXz; Tue, 12 Dec 2017 12:47:26 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=O6ZJhF1W c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=rHGwIfiBvDF-lKYF0EcA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] Makefile: allow NO_DC_SHA1_SUBMODULE to be set in config.mak
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Message-ID: <7272c221-c1b6-ca41-3be4-329275e94b8a@ramsayjones.plus.com>
+Date:   Tue, 12 Dec 2017 12:47:25 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOu3RCGZz4v6d6DYndSxAaH2RCm+aiOXnnfz3LicAnL5FpvPW7qY37OPffcExX5kBjaqkDz7M93vlg80sQkxvw6VWe2WUG9GNpQpp3YYLx2rI3LqDfKC
+ IlCXqeiA3kQh3gvLF+xM4pOtjIIUYTTY4r3jMoBMwB98n0tWh7VBiGwFpXsKZ/efyp8YuTZLPVAjRg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Dec 12 2017, Thomas Adam jotted:
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-> Hi,
->
-> On Mon, Dec 11, 2017 at 08:46:46PM +0100, Ævar Arnfjörð Bjarmason wrote:
->> I.e. we'd just ship a copy of Email::Valid and Mail::Address in
->> perl/Git/FromCPAN/, use a wrapper to load them, and then we wouldn't
->> need to if/else this at the code level, just always use the module,
->> and it would work even on core perl.
->
-> I disagree with the premise of this, Ævar.  As soon as you go down this route,
-> it increases maintenance to ensure we keep up to date with what's on CPAN for
-> a tiny edge-case which I don't believe exists.
->
-> You may as well just use App::FatPacker.
->
-> We're talking about package maintenance here -- and as I said before, there's
-> plenty of it around.  For those distributions which ship Git (and hence also
-> package git-send-email), the dependencies are already there, too.  I just
-> cannot see this being a problem in relying on non-core perl modules.  Every
-> perl program does this, and they don't go down this route of having copies of
-> various CPAN modules just in case.  So why should we?  We're not a special
-> snowflake.
+Hi Junio,
 
-Something like FatPacker wouldn't make sense in this case, we're not
-packing stuff into an archive, but just dropping them during 'make
-install', but yes, it's the same idea of shipping our dependencies with
-us.
+Could you please add (or squash) this on top of the 'ab/sha1dc-build'
+branch, so that I can build with NO_DC_SHA1_SUBMODULE=NoThanks in my
+config.mak.
 
-I wouldn't argue for doing this from first principles, in general I
-think we're way too conservative about adding dependencies to git.git,
-but the general consensus on-list is to do that carefully, that's why we
-have all this stuff in contrib/, and why we're depending on perl core
-only.
+[If I were to get a vote, I would vote no to the submodule. ;-) ]
 
-Users or packagers of git don't care what's normal for perl programs, to
-them the fact that git-send-email is written in perl is an
-implementation detail.
+Thanks!
 
-The maintenance burden of just shipping some CPAN module as a fallback
-is trivial, for example we've shipped Error.pm since 2006-ish, and until
-I sent a patch this month nobody had touched it since 2013.
+ATB,
+Ramsay Jones
 
-It's certainly much easier than maintaining a bunch of if/else code
-ourselves, or maintaining our own stuff purely because we don't want to
-force people to package perl dependencies for git.
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 929b49b04..91bbb0ed8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1042,6 +1042,10 @@ EXTLIBS =
+ 
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+ 
++include config.mak.uname
++-include config.mak.autogen
++-include config.mak
++
+ ifndef NO_DC_SHA1_SUBMODULE
+ 	ifndef DC_SHA1_EXTERNAL
+ 		ifneq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
+@@ -1053,10 +1057,6 @@ whatever reason define NO_DC_SHA1_SUBMODULE=NoThanks)
+ 	endif
+ endif
+ 
+-include config.mak.uname
+--include config.mak.autogen
+--include config.mak
+-
+ ifdef DEVELOPER
+ CFLAGS += $(DEVELOPER_CFLAGS)
+ endif
+-- 
+2.15.0
