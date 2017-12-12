@@ -2,116 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 088171F404
-	for <e@80x24.org>; Mon, 11 Dec 2017 23:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFC191F404
+	for <e@80x24.org>; Tue, 12 Dec 2017 00:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751547AbdLKX6v (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 18:58:51 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:38616 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750836AbdLKX6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 18:58:51 -0500
-Received: by mail-qt0-f196.google.com with SMTP id d4so43200537qtj.5
-        for <git@vger.kernel.org>; Mon, 11 Dec 2017 15:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=4fNDE/75PqRtj3PckNQVcUA82SSR8smSc3hj4cv/hCo=;
-        b=u+PvtPjtSZUmJo60nM9OMz8h7uuSlUbjH6ZkWg+fRIePIoaPlHX65aQ9GZ9C3ptZar
-         1zwuKsyCbyWewc9EnyCROhH3dR3h37Go/MXwM/c2oUrPY21HMgr+xx2somW2AIT/aQbZ
-         PgYF73WQWeykFbGe7Y0kvnPjkSidsvbcgLlSy7Wun6P6RxYRr0Jv0gLwrv9OKWUJC2mK
-         f51N58MwV0wWdSz9duP+k26ozjvtIgR0+btDAd7vJawsRVxPAynWDGt4Dktz3CUoK140
-         DbkDaVRnLEindRguL3NousxlSRvQqNxSDM2TClUCSznul1DGdJdOOR5BdjGDCT4v9NSt
-         efkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=4fNDE/75PqRtj3PckNQVcUA82SSR8smSc3hj4cv/hCo=;
-        b=iY+wJPEQb2AouHXuRDBYGMz24olpMrw07EjxRYC9n1BzdQena4VUePWS6yS+oIta5t
-         YtmudM3ZSdNQWciJ56CRyFdyJZEFK/6MZur9vtDZ6KzvrwnvTytVZV6lDadPhRRYHOEY
-         8Q3tzF7EigBi0Amxwf3HNWQT8+FWIBQ6P8UEoCuV2Rarp9i8fOrP7SEZOQ3SEIQWOUMe
-         1e6TADOBCNERzv8UXb3Y6o44qicgyB8ZulvkfGMJE3IcMucda8GIcT6YyaxjfukFBg81
-         J7V7gUTU3qRV+n74j2pQROP+IGlMXfajFcHrFSJo3HwBRZbfwUEpmnTDK7nM+guNuQOt
-         wvXQ==
-X-Gm-Message-State: AKGB3mJpkRs3tQaHuf9+8JhX8q8tD5N9zKNkTe2RnzppfzTK4sHfIqcu
-        2Jq4AQNi639U5wCiQdwj2zKHBzpEMQmf7N4afwk=
-X-Google-Smtp-Source: ACJfBotz9yVwGVUzrMoT9ybTQYBhRyEvdzgt0ltLG60ZLOxmguSB0Yt8KBVO3kre0Vt01/yLj1faetSURV5P5vgJEgw=
-X-Received: by 10.55.126.7 with SMTP id z7mr3009745qkc.306.1513036730285; Mon,
- 11 Dec 2017 15:58:50 -0800 (PST)
+        id S1751612AbdLLABt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 19:01:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55592 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751289AbdLLABs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 19:01:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AE7C6B3169;
+        Mon, 11 Dec 2017 19:01:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=31i9G34LCUNs
+        CH44qZ1/orlOpJs=; b=KWr0eOguXe+oZGTECH+FRRvcpz8urirQP5mng9CpMCM5
+        IZ04EjRqgM7nbwaOdqvAOyv+AbmdwJr32JjqBKOYL9dn9JImR1yynZkTktH3eXCL
+        3MN7lXOSGix2uMuhaoCQfTx3GXzRZmrIdHwxcKZj0ocawEvqO71PVHOJa/QZsWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=IMA6ec
+        c8we+o72rGTuwAyb6xsogq7IITvTCVJbVaTc3gautUxIzR0xzrzpGipS1wYrc+lH
+        M1+/uMFu5fq+KxgkO9b3ZRqDc4uX1/qlu4QAjCz/fyVuxQLPP+63DsnUVbvtdxiA
+        oWw5X8CQwj0NFXpLupj/DcmaljcC4N0k3ppzs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A68CBB3168;
+        Mon, 11 Dec 2017 19:01:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 18C42B3167;
+        Mon, 11 Dec 2017 19:01:47 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Subject: Re: [PATCH] clone: support 'clone --shared' from a worktree
+References: <20171211231612.29275-1-sunshine@sunshineco.com>
+Date:   Mon, 11 Dec 2017 16:01:45 -0800
+In-Reply-To: <20171211231612.29275-1-sunshine@sunshineco.com> (Eric Sunshine's
+        message of "Mon, 11 Dec 2017 18:16:12 -0500")
+Message-ID: <xmqq4low4xw6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Mon, 11 Dec 2017 15:58:49 -0800 (PST)
-In-Reply-To: <09713FC5-9D71-4B39-BFA3-0CB9C63321A2@gmail.com>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com>
- <CAPig+cQ6VSXXSYJOiZeTqUpwijVhvvUYzXF8U3KCBsOQ91HPZQ@mail.gmail.com> <09713FC5-9D71-4B39-BFA3-0CB9C63321A2@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 11 Dec 2017 18:58:49 -0500
-X-Google-Sender-Auth: p5VEkpHeZhFGBh1kMTEP3rBKj-U
-Message-ID: <CAPig+cRtsCeWZZcj-jRLsqwb5OSHLBQFyGCvpAXeHRmcbTtT+w@mail.gmail.com>
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>, patrick@luehne.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A55027BE-DECF-11E7-B4F9-8EF31968708C-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 11, 2017 at 6:47 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
-> On 11 Dec 2017, at 19:39, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Mon, Dec 11, 2017 at 10:50 AM,  <lars.schneider@autodesk.com> wrote:
->>> From: Lars Schneider <larsxschneider@gmail.com>
->>>
->>> Git and its tools (e.g. git diff) expect all text files in UTF-8
->>> encoding. Git will happily accept content in all other encodings, too,
->>> but it might not be able to process the text (e.g. viewing diffs or
->>> changing line endings).
->>>
->>> Add an attribute to tell Git what encoding the user has defined for a
->>> given file. If the content is added to the index, then Git converts the
->>> content to a canonical UTF-8 representation. On checkout Git will
->>> reverse the conversion.
->>>
->>> Reviewed-by: Patrick L=C3=BChne <patrick@luehne.de>
->>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->>> ---
->>> +static int encode_to_git(const char *path, const char *src, size_t src=
-_len,
->>> +                        struct strbuf *buf, struct encoding *enc)
->>> +{
->>> +       if (enc->to_git =3D=3D invalid_conversion) {
->>> +               enc->to_git =3D iconv_open(default_encoding, encoding->=
-name);
->>> +               if (enc->to_git =3D=3D invalid_conversion)
->>> +                       warning(_("unsupported encoding %s"), encoding-=
->name);
->>> +       }
->>> +
->>> +       if (enc->to_worktree =3D=3D invalid_conversion)
->>> +               enc->to_worktree =3D iconv_open(encoding->name, default=
-_encoding);
->>
->> Do you need to be calling iconv_close() somewhere on the result of the
->> iconv_open() calls? [Answering myself after reading the rest of the
->> patch: You're caching these opened 'iconv' descriptors, so you don't
->> plan on closing them.]
->
-> Should this information go into the commit message to avoid confusing
-> future readers? I think, yes.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Maybe. However, the code which does the actual caching is so distant
-from these iconv_open() invocations that it might be more helpful to
-have an in-code comment here saying that the "missing" iconv_close()
-invocations is intentional.
+> When worktree functionality was originally implemented, the possibility
+> of 'clone --local' from within a worktree was overlooked, with the
+> result that the location of the "objects" directory of the source
+> repository was computed incorrectly, thus the objects could not be
+> copied or hard-linked by the clone. This shortcoming was addressed by
+> 744e469755 (clone: allow --local from a linked checkout, 2015-09-28).
+>
+> However, the related case of 'clone --shared' (despite being handled
+> only a few lines away from the 'clone --local' case) was not fixed by
+> 744e469755, with a similar result of the "objects" directory location
+> being incorrectly computed for insertion into the 'alternates' file.
+> Fix this.
+>
+> Reported-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  builtin/clone.c         | 3 ++-
+>  t/t2025-worktree-add.sh | 6 ++++++
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index b22845738a..6ad0ab3fa4 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -452,7 +452,8 @@ static void clone_local(const char *src_repo, const=
+ char *dest_repo)
+>  {
+>  	if (option_shared) {
+>  		struct strbuf alt =3D STRBUF_INIT;
+> -		strbuf_addf(&alt, "%s/objects", src_repo);
+> +		get_common_dir(&alt, src_repo);
+> +		strbuf_addstr(&alt, "/objects");
+>  		add_to_alternates_file(alt.buf);
+>  		strbuf_release(&alt);
+>  	} else {
+
+Makes sense.  Will queue.
+
+Thanks.
