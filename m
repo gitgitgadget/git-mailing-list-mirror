@@ -2,192 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F1071F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 14:11:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7FFB1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 14:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbdLLOLA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 09:11:00 -0500
-Received: from mx0a-00099f01.pphosted.com ([67.231.149.228]:35972 "EHLO
-        mx0b-00099f01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1752003AbdLLOKy (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 12 Dec 2017 09:10:54 -0500
-Received: from pps.filterd (m0074061.ppops.net [127.0.0.1])
-        by mx0a-00099f01.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vBCEAcqL003457
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 08:10:54 -0600
-Received: from crexpp04.us.aegon.com (email2.aegonusa.com [162.123.17.223])
-        by mx0a-00099f01.pphosted.com with ESMTP id 2et405at7y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 08:10:53 -0600
-Received: from pps.filterd (crexpp04.us.aegon.com [127.0.0.1])
-        by crexpp04.us.aegon.com (8.16.0.21/8.16.0.21) with SMTP id vBCE2tdf004110
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 08:10:53 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Aegon.onmicrosoft.com;
- s=selector1-transamerica-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=MjJFRnAfBO2MxsDTYCW3btNJTDcYZ1i2ZJm1MTg2p60=;
- b=RUZaiQyfE8mlddG18z6BgH8nNOOdDtHeo/PazmUCABiDkIWo98Y14Mk8XNVlAiIokXZOQtSkA+LgF3O+0NsTYlNbY/yJ4pQfUoL5yl/fINIWlOkmTvxBcamm3k56GQwwtKuMJie+ovxihZoFs3KoHKLWiTZgJ2OGK/OHHYBZBI4=
-From:   "Bennett, Brian" <Brian.Bennett@Transamerica.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git svn dcommit error: Cannot accept non-LF line endings in 'svn:log'
- property
-Thread-Topic: git svn dcommit error: Cannot accept non-LF line endings in
- 'svn:log' property
-Thread-Index: AdNzUv68qggNYxDjQ0CejzikxXyuYQ==
-Date:   Tue, 12 Dec 2017 14:10:43 +0000
-Message-ID: <BL2PR05MB2179DEBF7123ACD090E60F2685340@BL2PR05MB2179.namprd05.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [162.123.17.85]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL2PR05MB2179;20:E4fSuCZkXeSGZnWg+7PSEww9QjHZ6iZBqO/u343GN/vtPAeuz5JWQvH/Sd4tp303Hc4VfR2qIIJdind+MQTu0KqpZIMavInWQJS4pcuq1ep4Wz/E+U25QVZV042vQKI5p2g6CSw74tJYL0k7Fl0JNgsTUhWtlqZH8skazO2ERgINH6H2Cu8UmPcTMRhETqbj7Nxn+cpbEyG410TihysAkLhoQLItR1qiSorcodOcVChX+HeZNgfePwKH/n0BgHXo7YZbpH4ORWJ06KUIic+eYh+gpooaNdhpxDm5uGbB4xadBYKGYh6V06CdVcnZClFLRtJdmdFw9dEFOKAAw4tPjthMGdbcCZR3s1FB+uHZHRHaTIT2wtJhTRrsVCCV98FmMJTeHK1PYddIvDofSfWDuMUXr4crI4zk8I7UabWczrd+mg7YzYki/Xoab1BMqpwT0rpC4y5aQGlqmt32FEFJLwycuVfgX7Leq9ila2bMViftnarr/VqByli1NVP/pqlu
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: d851a1b2-d01b-415f-02f3-08d5416a21e9
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(5600026)(4604075)(4534020)(4602075)(4627115)(201703031133081)(201702281549075)(2017052603307);SRVR:BL2PR05MB2179;
-x-ms-traffictypediagnostic: BL2PR05MB2179:
-x-microsoft-antispam-prvs: <BL2PR05MB2179836F7EA914B060E071B785340@BL2PR05MB2179.namprd05.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(83074219007389)(190756311086443)(158342451672863)(166708455590820)(116415991822766)(81227570615382);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040450)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231023)(6041248)(20161123564025)(20161123558100)(20161123562025)(20161123555025)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(6072148)(201708071742011);SRVR:BL2PR05MB2179;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:BL2PR05MB2179;
-x-forefront-prvs: 051900244E
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(366004)(376002)(346002)(199004)(189003)(8936002)(81156014)(68736007)(15974865002)(86362001)(575784001)(106356001)(2351001)(105586002)(7696005)(1730700003)(6116002)(3846002)(99286004)(8676002)(9686003)(81166006)(2501003)(316002)(55016002)(97736004)(6306002)(102836003)(53936002)(5640700003)(25786009)(45080400002)(478600001)(2906002)(14454004)(305945005)(7736002)(66066001)(72206003)(59450400001)(6916009)(3660700001)(74316002)(2900100001)(33656002)(5250100002)(3280700002)(6436002)(6506006)(5660300001)(460985005)(134885004)(19627235001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL2PR05MB2179;H:BL2PR05MB2179.namprd05.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: Transamerica.com does not
- designate permitted sender hosts)
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1752299AbdLLOOE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 09:14:04 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:40649 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751643AbdLLOOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 09:14:03 -0500
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1eOlJo-0000OV-W8; Tue, 12 Dec 2017 09:14:02 -0500
+Date:   Tue, 12 Dec 2017 09:13:55 -0500
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
+        Jeff King <peff@peff.net>
+Message-ID: <20171212141355.7hcuegaopb6hee2l@hopa.kiewit.dartmouth.edu>
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+ <20171211225615.GC214273@aiede.mtv.corp.google.com>
+ <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: d851a1b2-d01b-415f-02f3-08d5416a21e9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2017 14:10:43.2644
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46e16835-c804-41de-be3c-55835d14dee4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR05MB2179
-X-EXCLAIMER-MD-CONFIG: 7562670a-beab-4c6e-8ed2-ab3b5287c042
-X-OriginatorOrg: transamerica.com
-x-crexppdlp-TriggeredRule: module.access.rule.forcepoint_dlp_reroute
-x-crexppdlp-TriggeredRule: module.access.rule.mcafee_dlp_reroute
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-12-12_09:,,
- signatures=0
-X-RCIS-Action: ALLOW
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-12-12_09:,,
- signatures=0
-X-VPM-MSG-ID: 4c1daa04-e129-4edc-9c95-b588051b57a4
-X-VPM-HOST: crexzx02.inet.nogea.local
-X-VPM-GROUP-ID: f0802a61-3a70-4450-a931-b24de5747c25
-X-VPM-ENC-REGIME: Plaintext
-X-VPM-IS-HYBRID: 0
-x-crexpp01-TriggeredRule: module.access.rule.Strip_Receive_HeadersV2
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-12-12_09:,,
- signatures=0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-12-12_09:,,
- signatures=0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: NeoMutt/20170609 (1.8.3)
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org, kyle@kyleam.com, peff@peff.net
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global"
+ or just a bug?
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Environment:
 
-Desktop: Windows 7 Enterprise 64-bit
-svn client (if applicable): 1.8.8 from Apache
-git (https://git-for-windows.github.io/): git version 2.10.1.windows.1
-GitTfs (https://github.com/git-tfs/git-tfs): git-tfs version 0.27.0.0 (TFS =
-client library 14.0.0.0 (MS)) (32-bit)
-Team Foundation Server: 2010
-Visual Studio installation: 2010 and 2015
+On Mon, 11 Dec 2017, Junio C Hamano wrote:
 
-All processing is being done on my desktop described above. My goal is to m=
-igrate Team Foundation Server source into git and then from git into a loca=
-l SVN repository. The specific source from Team Foundation Server has only =
-2 changesets made against it and neither have a commit message associated w=
-ith them.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Steps I'm taking:
+> > I think the documentation
 
-1. Open a Windows (cmd.exe) command shell and put git-tfs into Path:
-Set Path=3DC:\Users\brbennett\Downloads\GitTfs-0.27.0;%Path%
+> > 	~/.gitconfig
+> > 		User-specific configuration file. Also called "global"
+> > 		configuration file.
 
-2. Create empty folder C:\TEMP\gitclone\Project_Elevation_Request and make =
-this the working folder.
+> > should be clarified --- e.g. it could say
 
-3. git-tfs clone -d "http://tfs:8080/tfs/collection" $/Folder1/Production/E=
-levation_Request
-I can see the only 2 TFS changesets being cloned into the local git reposit=
-ory.
-C423 =3D 6dfefb6160b53da7f580f24f2ce41af04f508b8a
-C424 =3D e8d6573b5a6e29db78fd420f843ca7ad7480eda2
+> > 	$XDG_CONFIG_HOME/git/config
+> > 	~/.gitconfig
+> > 		User-specific configuration files. Because options in
+> > 		these files are not specific to any repository, thes
+> > 		are sometimes called global configuration files.
 
-4. Move working folder to C:\TEMP\gitclone\Project_Elevation_Request\Elevat=
-ion_Request
+> Yeah, I think that makes sense.
 
-5. Create empty folder C:\TEMP\SVN\repos and create empty SVN repository:
-svnadmin --compatible-version 1.8 create C:\TEMP\SVN\repos\Elevation_Reques=
-t
+> > As for "git config --global", I think the best thing would be to split
+> > it into two options: something like "git config --user" and "git
+> > config --xdg-user".  That way, it is unambiguous which configuration
+> > file the user intends to inspect or modify.  When a user calls "git
+> > config --global" and both files exist, it could warn that the command
+> > is ambiguous.
 
-6. Start up local SVN server in a different shell:
-svnserve -d -r C:\TEMP\SVN\repos
+> > Thoughts?
 
-7. Create trunk in local=20
-svn mkdir --parents svn:///C:/TEMP/SVN/repos/Elevation_Request/trunk -m "Im=
-porting git repo"
-Committed revision 1.
+> I actually thought that the plan was "you either have this, or the
+> other one, never both at the same time" (and I think those who
+> pushed the XDG thing in to the system made us favor it over the
+> traditional one).  So as long as --global updates the one that
+> exists, and updates XDG one when both or neither do, I think we
+> should be OK.  And from that viewpoint, we definitely do not want
+> two kinds of --global to pretend as if we support use of both at the
+> same time.
 
-8. git svn init svn:///C:/TEMP/SVN/repos/%PROJNAME% -s
+note that atm $XDG_CONFIG_HOME/git/config is read as --global iff
+~/.gitconfig is absent and read always without --global.  So it is
+flipping between "global" and "some kind of non-global but user-specific
+configuration file" (so sounds like  a global to me ;) )
 
-9. git svn fetch
-R1 for the trunk created earlier is retrieved
-r1 =3D 5efc0da5f5af4cd62fde660a4402e3a751c2b003 (refs/remotes/origin/trunk)
-
-10. git rebase origin/trunk
-First, rewinding head to replay your work on top of it...
-Applying:
-Applying:
-
-11. git svn dcommit
-Committing to svn:///C:/TEMP/SVN/repos/Source_elevation_tool/trunk ...
-        A       Source_elevation_tool.sln
-        A       Source_elevation_tool/Form1.Designer.cs
-        A       Source_elevation_tool/Form1.cs
-        A       Source_elevation_tool/Form1.resx
-
-ERROR from SVN:
-Wrong or unexpected property value: Cannot accept non-LF line endings in 's=
-vn:log' property
-W: 40ff09d157bcbbf1e6deefd2222e38ed499ec8ac and refs/remotes/origin/trunk d=
-iffer, using rebase -v:
-:100644 000000 8222efb4e5a055b3b0b41ab91972f07dd71e4b10 0000000000000000000=
-000000000000000000000 D      Source_elevation_tool.sln
-:100644 000000 794f014c920a6aee2f21ee348e30f38a458e9c7d 0000000000000000000=
-000000000000000000000 D      Source_elevation_tool.vssscc
-:040000 000000 0acaa94fa910fe974019ae4c2dcbf9a620437758 0000000000000000000=
-000000000000000000000 D      Source_elevation_tool
-Current branch master is up to date.
-ERROR: Not all changes have been committed into SVN, however the committed
-ones (if any) seem to be successfully integrated into the working tree.
-Please see the above messages for details.
-
-I've researched enough to believe that the commit message being used by git=
- svn contains a carriage return character (x'0D') and that has not been all=
-owed in Subversion since version 1.6 (I can replicate this specific error m=
-essage using an SVN dump file that contains x'0D' characters in the log mes=
-sages.). However, I cannot find where I have any control over the log messa=
-ge that git svn is trying to use nor can I observe it. Note that I've also =
-used the '-v' switch with the 'git svn dcommit', but do not receive anythin=
-g other than what I am showing above.
-
-Brian Bennett | Supv System Admin & Support, TA TECH Change Mgmt/Production=
- Support
-o: 319-355-7602 | c: 319-533-1094
-e: brian.bennett@transamerica.com | w: www.transamerica.com
-
-Transamerica
-6400 C St. SW, Cedar Rapids, IA 52404 MS-2410
-Facebook | LinkedIn
-
-
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
