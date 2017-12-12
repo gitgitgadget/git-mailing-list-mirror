@@ -7,102 +7,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41FCC1F404
-	for <e@80x24.org>; Tue, 12 Dec 2017 00:59:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5A9D1F404
+	for <e@80x24.org>; Tue, 12 Dec 2017 01:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751289AbdLLA7L (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 19:59:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50812 "EHLO
+        id S1751274AbdLLBFG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 20:05:06 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61697 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750759AbdLLA7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 19:59:10 -0500
+        with ESMTP id S1750759AbdLLBFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 20:05:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D4B9BC748;
-        Mon, 11 Dec 2017 19:59:04 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35ED1B3CAA;
+        Mon, 11 Dec 2017 20:05:05 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+lc8cTzAtW3AONo7uI5snYjoE80=; b=B+bs4K
-        gvlhJwi6Mfw49YlfRiVz4WCeAl6TIobc/Nxn6MJYDsfix0BizOHbvYitQVkzJcCf
-        OITFrTYqaqtJlzFi1rlZk8uuBKFdyBZALNiy35UAvNTZpt2IsQLUlpqysJrYCIny
-        vcDDIF22+MLS/36ZX50J+F7Y7vEmWKjwo1iI0=
+        :content-type; s=sasl; bh=yo09ElNII0t15W3twgq/STmboWo=; b=rOHNHk
+        Td96v1AsZD45qnECXTEMxFO04NQwXLqEo5/UPg2vD5disexvmOY+DFJwLGzxvmkE
+        KtCuHrb3/ssn7/EEyeySX/dTLgYh43rubF20iqzC+pUZ6sJuHqOmRFdiEyeb9WEx
+        6i4KRBDwnCi9FVp++K+s0YHQHUzLNgRwDWjWk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bjbHlNp/xJAgmFERsgbSx8hldcm9j7nX
-        /BesmihUAeYzNM2IM6Dcr6t+tLttPImgYN8smjYC1VJvvWteMJU3VornMyFMI+3i
-        K55lIPmogNmU+1RmB2RU8sdCOUHdeqrcf0snwO6+s9iFj7TIa16MfpBSAZkQJ+Xd
-        FQ/nkrwgvR8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 54B74BC747;
-        Mon, 11 Dec 2017 19:59:04 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=uHMqGygwwZhlM9gPKgXnimPg+HV/7PRe
+        ECTblMaPbkn1bufGdudbrBs7lFKpppXS40SoxjNj9ilM8TUUPG27/hLA9oNj8euN
+        bFsylZYztAtv1h2NfcPClMfWIyBHzvp35hMUMeRzY4dUlZWzMtjmaeHPp8nA1/cS
+        NFOEhapfPZM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D460B3CA9;
+        Mon, 11 Dec 2017 20:05:05 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A7EBCBC746;
-        Mon, 11 Dec 2017 19:59:03 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0753EB3C9E;
+        Mon, 11 Dec 2017 20:05:03 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, lars.schneider@autodesk.com,
-        git@vger.kernel.org, tboegi@web.de, peff@peff.net,
-        patrick@luehne.de
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-References: <20171211155023.1405-1-lars.schneider@autodesk.com>
-        <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
-        <0BA27EC9-3836-407A-9A8A-52D06B8052AE@gmail.com>
-Date:   Mon, 11 Dec 2017 16:59:02 -0800
-In-Reply-To: <0BA27EC9-3836-407A-9A8A-52D06B8052AE@gmail.com> (Lars
-        Schneider's message of "Tue, 12 Dec 2017 00:42:23 +0100")
-Message-ID: <xmqqzi6o3go9.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Yaroslav Halchenko <yoh@onerussian.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
+        Jeff King <peff@peff.net>
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or just a bug?
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+        <20171211225615.GC214273@aiede.mtv.corp.google.com>
+Date:   Mon, 11 Dec 2017 17:05:01 -0800
+In-Reply-To: <20171211225615.GC214273@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Mon, 11 Dec 2017 14:56:15 -0800")
+Message-ID: <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A5B7B282-DED7-11E7-A03F-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7C75C9EE-DED8-11E7-9FDC-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I contemplated:
->   - "enc" or "encode" because "eol" and "ident" use abbreviations, too
->     (enc could be confused with encryption. plus, a user might ask
->      what is the difference between "enc" and "encoding" attribute :-)
->   - "wte", "wtenc", or "worktree-encoding" to emphasize that this is 
->     the encoding used in the worktree 
->     (I fear that users think that is git-worktree, the command, related)
+> I think the documentation
+>
+> 	~/.gitconfig
+> 		User-specific configuration file. Also called "global"
+> 		configuration file.
+>
+> should be clarified --- e.g. it could say
+>
+> 	$XDG_CONFIG_HOME/git/config
+> 	~/.gitconfig
+> 		User-specific configuration files. Because options in
+> 		these files are not specific to any repository, thes
+> 		are sometimes called global configuration files.
 
-In the context of Git, the word "worktree" does have a specific
-meaning that is different from working tree.  
+Yeah, I think that makes sense.
 
-Stepping back a bit, what does this thing do you are introducing?
-And what does the other thing do that J6t is using, that would get
-confused with this new one?
+> As for "git config --global", I think the best thing would be to split
+> it into two options: something like "git config --user" and "git
+> config --xdg-user".  That way, it is unambiguous which configuration
+> file the user intends to inspect or modify.  When a user calls "git
+> config --global" and both files exist, it could warn that the command
+> is ambiguous.
+>
+> Thoughts?
 
-What does the other one do?  "Declare that the contents of this path
-is in this encoding"?  As opposed to the new one, which tells Git to
-"run iconv from and to this encoding when checking out and checking
-in"?
-
-If so, any phrase that depends heavily on the word "encode" would
-not help differenciating the two uses.  The phrase needs to be
-something that contrasts the new one, which actively modifies things
-(what is on the filesystem is not what is stored in the object
-store), with the old one, which does not (passed as a declaration to
-a viewer what encoding the contents already use and does not change
-anything).
-
-Do people who will use this feature familiar with the concept of
-smudge/clean?  If you want to avoid "working-tree" (or "worktree",
-which definitely you would want to avoid) because you fear confused
-users, perhaps "smudge-encoding" would work (we declare that the
-result of smudge operations are left in this encoding, so the
-opposite operation "clean" will do the reverse---and we say this
-without explicitly saying that the other end of the conversion is
-always UTF-8)?  Or "checkout-encoding" (the same explanation; we do
-not say the opposite operation "checkin/add" will do the reverse).
-
-I personally do not think "working-tree-encoding" is too horrible,
-but I do agree that some users may be confused.  So I dunno.
-
-
+I actually thought that the plan was "you either have this, or the
+other one, never both at the same time" (and I think those who
+pushed the XDG thing in to the system made us favor it over the
+traditional one).  So as long as --global updates the one that
+exists, and updates XDG one when both or neither do, I think we
+should be OK.  And from that viewpoint, we definitely do not want
+two kinds of --global to pretend as if we support use of both at the
+same time.
 
