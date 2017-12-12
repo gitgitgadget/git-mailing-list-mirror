@@ -2,120 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E765E1F419
-	for <e@80x24.org>; Tue, 12 Dec 2017 09:30:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5180C1F41E
+	for <e@80x24.org>; Tue, 12 Dec 2017 09:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbdLLJaz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 04:30:55 -0500
-Received: from mail-it0-f49.google.com ([209.85.214.49]:44186 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750715AbdLLJax (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 04:30:53 -0500
-Received: by mail-it0-f49.google.com with SMTP id b5so22984094itc.3
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 01:30:53 -0800 (PST)
+        id S1751434AbdLLJgm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 04:36:42 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:43707 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750715AbdLLJgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 04:36:39 -0500
+Received: by mail-wm0-f46.google.com with SMTP id n138so19393545wmg.2
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 01:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=IuQDe0NyCuOKTHkN4FiEOLAHlOPnNy1dF/ljqc2qpKk=;
-        b=NCS/7cYTrlOmw/GGVTvOjkuTIkfxwT0VW8Yaxy61ZV9u4mWzttI16D1xeGV0RZTwkZ
-         F1CjDZnNpAlhPWJZ1JzILI/cpwe7cV/SrHOdDB+PIkwE+kLOVp9XA+0DsZtaBoqk+97O
-         E70Yi2vzQAlGp6Nz8pX23BTF/+qKeivflveP6+LB/FvsIjMYdY0616AMyZDAtreXainR
-         t0I4d66tmHcP8xC81PpObGx2mOuOIguzoHblCDiIhZ7NKonn03KJCkSkruYjWHh7syGZ
-         DqfcBc2yLwgMqDGcBBN6O6C2a9HBzbYE6xeykheeZ1Tkutf7Kl8i3LiN9JG84f8F8o52
-         hxTQ==
+        bh=9GVylMLf9iupamQhUv605jrthr7sKVT34o/VXpqXGTQ=;
+        b=c4Hch+4rxb/XpoaV7b+4UzRJG8BFOFM9AhzoyRCNPiV56ApchTz8hJYAqlBx3DYFme
+         fJF1zb/UiSypsrVPec0g18Bjf0BlgGrpXQsiINRZv73nUjh2pGWDTj/Y1fckx0vvCyVL
+         mADyTFKm+afPwquJleDzAazw0Y7Zh+3olFPeQpqkv0DOWiWs2wTbwKAjq/hzlvaI4tHT
+         8wK7lkYkalBHM80tD53rjMDJBAjCA1y7vsOwMMXzCi2ddqUS/R7DSjFJGF2Up0y/pFD3
+         YV2N+UY2qmfmvUszPoT8c8hqBUr2rzD0bSsUAImBkYxMCv1Zo8g/hKd11ehYCD24dIcP
+         AoYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=IuQDe0NyCuOKTHkN4FiEOLAHlOPnNy1dF/ljqc2qpKk=;
-        b=BfzuPGN0eH5k7R+C/hu0RSUMUqgICHbVZ/4N4A9adRJryZRWYAomr7HlBltrqx7yTv
-         X6H0V/DKTTNOBpfmKdHsQn61Ug2GH20sQE6S/8/knWX8fUVfOh1Ew/qG8lSdyZD2qnBH
-         mzIv08jgCmNfLMQIoNylDOOVFkFTyN3ZDqoK3eg9fAcMiV6oGPFLOKefWk5AQR6SmDzG
-         KFbudKBAz+I7+4PE6SuIjg72N2GM5lV2v4J7MqZNTvqa5VGvnB3vjeUWyScVOUEqDGgT
-         bXnqYWmamHWztUEbnvEw76De8Wwb/C3IQE6t6P9Zn9a+zvwis/T108yQwU4yYN9zZkX7
-         fT1w==
-X-Gm-Message-State: AKGB3mIbwylltGaXadDFS4NbxjwmiOy2zbuCdLSCHT/wMGMElYvVyOgb
-        /RsepeB+kA3HJ0pf0a7cYR4tVidF76hHEWOoAKseyGZn
-X-Google-Smtp-Source: ACJfBouRkMog88DuBZQSqQX/jy8Pg3/XX7G8jwzH1Lrxkk3unbUWjJwFVkeFd0sLT0qeYwyH+aQVDqVvoZE/3e50MzU=
-X-Received: by 10.107.69.3 with SMTP id s3mr2580381ioa.67.1513071052863; Tue,
- 12 Dec 2017 01:30:52 -0800 (PST)
+        bh=9GVylMLf9iupamQhUv605jrthr7sKVT34o/VXpqXGTQ=;
+        b=PryG4F6m6YZtB0WHlpvRJNQwZr+fNYuP3qJD5QFjC0Bur6/z9NcElowUFCU+RFLhhU
+         aHlEyiD5dZ688PZldcG8tbA2/M1o2I9fb+sAVgBBstEUm7h8Xlgdqnua4eaoEYwLtgtq
+         M2g7dNf/pCF6KMerP43YGOgezytb1c8mssB3JkWx6svA6UoFNKVSLztDvVZfv6g74EwS
+         7UB6E6xfqCyUalbMem9WUOO+/DOPJIMMvRBV9qD8E+mk1r8WRdspSvJXsI5yMWtreI0N
+         hFz68oC2IQy4dBTK31qkdHuth/zbYOq3iIQ62+L6OXvx2+pZFsQ8J1TYSEYfLq78701n
+         Jx2w==
+X-Gm-Message-State: AKGB3mLUwd8x+YVg0xDBG/075UjdNKwjrCoNu9ufNaYSnXR0a0Jxe1e/
+        zUTmV9SOwV8auQyoST0WGZS+2GvNtmGHqNx0lmI=
+X-Google-Smtp-Source: ACJfBotUMqXJnzhqRSZaOi9355fABSufb4SfRP4a788VJjZroZDgcM7Bl4uHORBd0gT4UVydEi6fkzDZy4cpZPDzaWg=
+X-Received: by 10.80.217.6 with SMTP id t6mr2014018edj.217.1513071397856; Tue,
+ 12 Dec 2017 01:36:37 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Tue, 12 Dec 2017 01:30:52 -0800 (PST)
-In-Reply-To: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 12 Dec 2017 10:30:52 +0100
-Message-ID: <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
+Received: by 10.80.174.252 with HTTP; Tue, 12 Dec 2017 01:36:17 -0800 (PST)
+In-Reply-To: <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+ <20171211225615.GC214273@aiede.mtv.corp.google.com> <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 12 Dec 2017 01:36:17 -0800
+Message-ID: <CA+P7+xpH6M-FqRJcvsbv=mjj1T04GR6pxz-4NkTmGZUgUKU6wQ@mail.gmail.com>
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or
+ just a bug?
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Yaroslav Halchenko <yoh@onerussian.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 7, 2017 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Dec 11, 2017 at 5:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> * jh/object-filtering (2017-12-05) 9 commits
->   (merged to 'next' on 2017-12-05 at 3a56b51085)
->  + rev-list: support --no-filter argument
->  + list-objects-filter-options: support --no-filter
->  + list-objects-filter-options: fix 'keword' typo in comment
->   (merged to 'next' on 2017-11-27 at e5008c3b28)
->  + pack-objects: add list-objects filtering
->  + rev-list: add list-objects filtering support
->  + list-objects: filter objects in traverse_commit_list
->  + oidset: add iterator methods to oidset
->  + oidmap: add oidmap iterator methods
->  + dir: allow exclusions from blob in addition to file
->  (this branch is used by jh/fsck-promisors and jh/partial-clone.)
+>> I think the documentation
+>>
+>>       ~/.gitconfig
+>>               User-specific configuration file. Also called "global"
+>>               configuration file.
+>>
+>> should be clarified --- e.g. it could say
+>>
+>>       $XDG_CONFIG_HOME/git/config
+>>       ~/.gitconfig
+>>               User-specific configuration files. Because options in
+>>               these files are not specific to any repository, thes
+>>               are sometimes called global configuration files.
 >
->  In preparation for implementing narrow/partial clone, the object
->  walking machinery has been taught a way to tell it to "filter" some
->  objects from enumeration.
+> Yeah, I think that makes sense.
 >
+>> As for "git config --global", I think the best thing would be to split
+>> it into two options: something like "git config --user" and "git
+>> config --xdg-user".  That way, it is unambiguous which configuration
+>> file the user intends to inspect or modify.  When a user calls "git
+>> config --global" and both files exist, it could warn that the command
+>> is ambiguous.
+>>
+>> Thoughts?
 >
-> * jh/fsck-promisors (2017-12-05) 12 commits
->  - gc: do not repack promisor packfiles
->  - rev-list: support termination at promisor objects
->  - fixup: sha1_file: add TODO
->  - fixup: sha1_file: convert gotos to break/continue
->  - sha1_file: support lazily fetching missing objects
->  - introduce fetch-object: fetch one promisor object
->  - index-pack: refactor writing of .keep files
->  - fsck: support promisor objects as CLI argument
->  - fsck: support referenced promisor objects
->  - fsck: support refs pointing to promisor objects
->  - fsck: introduce partialclone extension
->  - extension.partialclone: introduce partial clone extension
->  (this branch is used by jh/partial-clone; uses jh/object-filtering.)
+> I actually thought that the plan was "you either have this, or the
+> other one, never both at the same time" (and I think those who
+> pushed the XDG thing in to the system made us favor it over the
+> traditional one).  So as long as --global updates the one that
+> exists, and updates XDG one when both or neither do, I think we
+> should be OK.  And from that viewpoint, we definitely do not want
+> two kinds of --global to pretend as if we support use of both at the
+> same time.
 >
->  In preparation for implementing narrow/partial clone, the machinery
->  for checking object connectivity used by gc and fsck has been
->  taught that a missing object is OK when it is referenced by a
->  packfile specially marked as coming from trusted repository that
->  promises to make them available on-demand and lazily.
 
-I am currently working on integrating this series with my external odb
-series (https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/).
+It appears that we actually prefer ~/.gitconfig rather than XDG_CONFIG_HOME..
 
-Instead of using an "extension.partialclone" config variable, an odb
-will be configured like using an "odb.<odbname>.promisorRemote" (the
-name might still change) config variable. Other odbs could still be
-configured using "odb.<odbname>.scriptCommand" and
-"odb.<odbname>.subprocessCommand".
+And at least based on current cursory testing on the command line, we
+do both read and write to the proper location, assuming that
+~/.gitconfig is preferred over $XDG_CONFIG_HOME.
 
-The current work is still very much WIP and some tests fail, but you
-can take a look there:
-
-https://github.com/chriscool/git/tree/gl-promisor-external-odb440
+Thanks,
+Jake
