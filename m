@@ -7,89 +7,98 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4AFF1F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 19:03:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA2131F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 19:15:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752455AbdLLTDu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 14:03:50 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53174 "EHLO
+        id S1752102AbdLLTPF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 14:15:05 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55767 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752161AbdLLTDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 14:03:49 -0500
+        with ESMTP id S1751688AbdLLTPE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 14:15:04 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 12B6FBFCCE;
-        Tue, 12 Dec 2017 14:03:49 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6DB31C79AA;
+        Tue, 12 Dec 2017 14:15:03 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Neqv95tHaUoCdxqs1jqE4oc2YXQ=; b=XpeKmG
-        j9B/XjK8pHdo/aF5Yuht3VVjnDP3CfO1zN/nyoulOns6JaHYIrvaT4b7WCEhtQvZ
-        115DTwAzYFkptyMWmfzPHXKosh/FL/DEIHrZphgBWCZ2zOceJDnICmq7PrMcrOl2
-        GexWhEbuO2kuJvMupgnDoXUpJmScdl46wAHO0=
+        :content-type; s=sasl; bh=Yj0lw9Ot7fxENVcutkrcvXmDXrQ=; b=KNM9Vj
+        zyWCcGXlBha+zfhDFXP5KeSNBiUetcrw/IaqEhck+Gf9NhyGbg9Bj5Kc96jJGU3O
+        EkpAvGTdZIp0jTlaG2MI+SV48hsJRLeDdInd6qRF++HkGFyME6HMFC40C4Pp6fx/
+        ZCOW1rHDSQl2BduQ/ylOvXy8hV34zHbCp4b/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sILoVG4jcDbGytvTb0FOZF3xlzywEOjL
-        iPxpbaRBlqtIhgn6+vu+5SWPGHEeifJqD2hIiIff1oL5H7Nb1DwIEg5WwX7X3UPy
-        m1pJeVXeMvZwcv3TJK1k6w8tloivMTJI2DdJVtRw7POKI9KC5+1ZhJKop7u0MPPg
-        wOua0/o6zhI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0962BBFCCC;
-        Tue, 12 Dec 2017 14:03:49 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=qSc1oxs4isQ1ZqjHPjCJFu/H9eKULzfx
+        O6c++zGl1bgccC98siVnE3QY+mX+QaDoIGog8ufQV9NXzLG7Bj9/No+K0sbRZ6EE
+        1u6RpqNY7JLuI62EkrrxV623M2co7TRQLjXOV1qHjlZ/XopkRNofqPLI4ROwam4G
+        lzUwkENdIEU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C2BCC79A8;
+        Tue, 12 Dec 2017 14:15:03 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 748E2BFCCB;
-        Tue, 12 Dec 2017 14:03:48 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 388DBC79A5;
+        Tue, 12 Dec 2017 14:15:02 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH v2 2/2] t: add tests for pull --verify-signatures
-References: <20171209090530.6747-1-hji@dyntopia.com>
-        <20171210065358.8156-1-hji@dyntopia.com>
-        <20171210065358.8156-2-hji@dyntopia.com>
-Date:   Tue, 12 Dec 2017 11:03:47 -0800
-In-Reply-To: <20171210065358.8156-2-hji@dyntopia.com> (Hans Jerry Illikainen's
-        message of "Sun, 10 Dec 2017 06:53:58 +0000")
-Message-ID: <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] travis: run tests with GIT_TEST_SPLIT_INDEX
+References: <20171210212202.28231-4-t.gummerer@gmail.com>
+        <20171211210948.6867-1-szeder.dev@gmail.com>
+        <20171211214255.GA24597@hank>
+        <C5F93DFF-D3DF-4507-8546-941BFA768705@gmail.com>
+Date:   Tue, 12 Dec 2017 11:15:00 -0800
+In-Reply-To: <C5F93DFF-D3DF-4507-8546-941BFA768705@gmail.com> (Lars
+        Schneider's message of "Tue, 12 Dec 2017 16:54:04 +0100")
+Message-ID: <xmqq609b3gi3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2F3C20C8-DF6F-11E7-AFB8-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C0DD3886-DF70-11E7-94A4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> +test_expect_success GPG 'pull unsigned commit with --verify-signatures' '
-> +	test_must_fail git pull --ff-only --verify-signatures unsigned 2>pullerror &&
-> +	test_i18ngrep "does not have a GPG signature" pullerror
-> +'
+>> You're right, it's my first time using travis CI and I got confused
+>> about how the .travis.yml works, thanks for catching that.  Will
+>> re-phrase the commit message.
+>
+> Szeder is spot on. If you fix up the message, then this patch looks
+> perfect! Pragmatic (= very good!) idea to combine GITTEXT_POISON with 
+> GIT_TEST_SPLIT_INDEX :-)
 
-Note that this is without "when-finished"; if 'git pull' got broken
-and does not fail as expected, the next test will start from a state
-that it is not expecting.  Same for the ones that run 'git pull'
-under test_must_fail.
+I am failing to guess the real intent of the smiley here.
 
-Interestingly, the tests that do expect 'git pull' to succeed
-protect themselves with "when-finished" mechanism correctly [*1*],
-like so:
+If split-index code is so easy to break, I do not think it is a good
+idea to combine it into the poison build.  In fact, the poison test
+is useless on a codebase where other/real breakages are expected to
+exist, because it is about seeing messages meant for non-humans are
+not passed to the _() mechanism by sloppy coding, and the way it
+does so is to corrupt all the messages that come through the _()
+mechanism.  If we do not even produce a message when a correct code
+_should_ produce one, poison test would catch nothing useful.
 
-> +test_expect_success GPG 'pull signed commit with --verify-signatures' '
-> +	test_when_finished "git checkout initial" &&
-> +	git pull --verify-signatures signed >pulloutput &&
-> +	test_i18ngrep "has a good GPG signature" pulloutput
-> +'
-> +
+I wonder if it makes more sense to update ci/run-tests.sh so that
+its final step is run twice with different settings, like so?
 
-Other than that, looked nicely done.  Thanks.
+ ci/run-tests.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-
-[Footnote]
-
-*1* I am guessing that the branches that are being pulled in tests
-    are designed in such a way to never produce merge conflicts, and
-    failures are possible only due to signature verification.  If
-    that were not the case, "when-finished" would want to do a hard
-    reset before checking out the initial to go back to a known
-    state.
+diff --git a/ci/run-tests.sh b/ci/run-tests.sh
+index f0c743de94..15a5f5a6cc 100755
+--- a/ci/run-tests.sh
++++ b/ci/run-tests.sh
+@@ -8,3 +8,4 @@
+ mkdir -p $HOME/travis-cache
+ ln -s $HOME/travis-cache/.prove t/.prove
+ make --quiet test
++GIT_TEST_SPLIT_INDEX=LetsTryIt make --quiet test
