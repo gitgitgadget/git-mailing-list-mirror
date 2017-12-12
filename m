@@ -7,43 +7,38 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6FB1F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 16:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F3611F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 16:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752456AbdLLQxR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 11:53:17 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:34519 "EHLO
+        id S1752316AbdLLQ5m (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 11:57:42 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:31031 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751665AbdLLQxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 11:53:14 -0500
+        with ESMTP id S1752134AbdLLQ5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 11:57:42 -0500
 Received: from PhilipOakley ([92.29.14.162])
         by smtp.talktalk.net with SMTP
-        id Onnse53XbAp17OnnsenRYY; Tue, 12 Dec 2017 16:53:13 +0000
+        id OnsCe54DUAp17OnsCenRlg; Tue, 12 Dec 2017 16:57:40 +0000
 X-Originating-IP: [92.29.14.162]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=ybZZDoGAAAAA:8 a=5rxgeBVgAAAA:8 a=dIu3SnmMAAAA:8 a=NEAV23lmAAAA:8
- a=H-5mch-6-YSsrHaLek4A:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
- a=PwKx63F5tFurRwaNxrlG:22 a=Ua9G7VpiFza3u12uuhVB:22
-Message-ID: <5400ED3ACDCF49BA84399FDBFD7DDFF8@PhilipOakley>
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=xtxXYLxNAAAA:8
+ a=5rxgeBVgAAAA:8 a=ybZZDoGAAAAA:8 a=S3yDWP1VWZ5Qt24fTbMA:9 a=wPNLvfGTeEIA:10
+ a=R-AVCXAG9WsA:10 a=xts0dhWdiJbonKbuqhAr:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+Message-ID: <FC22650D36BD4035925DCA978D52A912@PhilipOakley>
 Reply-To: "Philip Oakley" <philipoakley@iee.org>
 From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Christian Couder" <christian.couder@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "git" <git@vger.kernel.org>,
-        "Jonathan Tan" <jonathantanmy@google.com>,
-        "Jeff Hostetler" <git@jeffhostetler.com>,
-        "Ben Peart" <peartben@gmail.com>, "Jeff King" <peff@peff.net>,
-        "Lars Schneider" <larsxschneider@gmail.com>
-References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com> <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
-Date:   Tue, 12 Dec 2017 16:53:11 -0000
+To:     "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+Cc:     <git@vger.kernel.org>
+References: <5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de><5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.de><xmqqtvxd6gu9.fsf@gitster.mtv.corp.google.com><5A1E70AA020000A100029175@gwsmtp1.uni-regensburg.de><7973FF5C21C64E6492828DD0B91F5AF7@PhilipOakley> <xmqq1skcleo7.fsf@gitster.mtv.corp.google.com> <AB9C836772CD4391A8866DC71103CCFE@PhilipOakley> <5A25705C020000A1000292B0@gwsmtp1.uni-regensburg.de> <582105F8768F4DA6AF4EC82888F0BFBE@PhilipOakley> <5A2E4480020000A1000293D8@gwsmtp1.uni-regensburg.de>
+Subject: Re: Re: Re: bug deleting "unmerged" branch (2.12.3)
+Date:   Tue, 12 Dec 2017 16:57:39 -0000
 Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
         format=flowed;
-        charset="UTF-8";
+        charset="iso-8859-1";
         reply-type=original
 Content-Transfer-Encoding: 7bit
 X-Priority: 3
@@ -52,89 +47,126 @@ X-Mailer: Microsoft Outlook Express 6.00.2900.5931
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 X-Antivirus: AVG (VPS 171211-6, 11/12/2017), Outbound message
 X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfPBs4L38l7KQYCx28WWRiErC3wzRWLf0GMz0esFiW304zW/JxVs8VHdrNsv5fkiUZtkiX4bjxjhlJpVIMMYdx5s3cltFpaEaEMw2/ZFZbXv7TPLjCxhA
- 03xxdUV30Kfi2bMBwTR3hcJGrOPer3RKBlL/rmeoQecE1ebC80DdkzDvM2TOduyxZTPsOz0pGojKTRWRZwvzd5gqYSjdi6nKvK4c3eH3HEBoZID3MT2zKrav
- r5p9DwMmEtndnDA7ftL4alSpo4s8vn7hkiNOkhXhLOWE7x07e3OBo8ixdxA5h+xK3FK16UkuXEIeCWZi32EU2bZ2mzNoOxApPvAYf1FYrijn9QxP6s576XC5
- CVXgOjPA9QSzpXelKbzMyFUs/iCH3I/P/LFVk5xmrz6CmpekTEc=
+X-CMAE-Envelope: MS4wfDT9CsgBr3CwPNe2s7KmlAJnVbWI/v23vfI3BOC5Y9U2uLTGRVNfzeXVvL8hrcOEPffnMkQeuOkuLK2KhCHU1QWXSIPdJLOpQU+5x0YGMVoGBx1cpqAO
+ +/rhroE39JWd/+YV9j9TlLukDNWeZea+FqT1sggAraYCsmAw/0wOHBSVgxrUvLLygEp4PnScJw4OP7vwgimQlJYZluux89zcMnU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Christian Couder" <christian.couder@gmail.com>
-> On Thu, Dec 7, 2017 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * jh/object-filtering (2017-12-05) 9 commits
->>   (merged to 'next' on 2017-12-05 at 3a56b51085)
->>  + rev-list: support --no-filter argument
->>  + list-objects-filter-options: support --no-filter
->>  + list-objects-filter-options: fix 'keword' typo in comment
->>   (merged to 'next' on 2017-11-27 at e5008c3b28)
->>  + pack-objects: add list-objects filtering
->>  + rev-list: add list-objects filtering support
->>  + list-objects: filter objects in traverse_commit_list
->>  + oidset: add iterator methods to oidset
->>  + oidmap: add oidmap iterator methods
->>  + dir: allow exclusions from blob in addition to file
->>  (this branch is used by jh/fsck-promisors and jh/partial-clone.)
->>
->>  In preparation for implementing narrow/partial clone, the object
->>  walking machinery has been taught a way to tell it to "filter" some
->>  objects from enumeration.
->>
->>
->> * jh/fsck-promisors (2017-12-05) 12 commits
->>  - gc: do not repack promisor packfiles
->>  - rev-list: support termination at promisor objects
->>  - fixup: sha1_file: add TODO
->>  - fixup: sha1_file: convert gotos to break/continue
->>  - sha1_file: support lazily fetching missing objects
->>  - introduce fetch-object: fetch one promisor object
->>  - index-pack: refactor writing of .keep files
->>  - fsck: support promisor objects as CLI argument
->>  - fsck: support referenced promisor objects
->>  - fsck: support refs pointing to promisor objects
->>  - fsck: introduce partialclone extension
->>  - extension.partialclone: introduce partial clone extension
->>  (this branch is used by jh/partial-clone; uses jh/object-filtering.)
->>
->>  In preparation for implementing narrow/partial clone, the machinery
->>  for checking object connectivity used by gc and fsck has been
->>  taught that a missing object is OK when it is referenced by a
->>  packfile specially marked as coming from trusted repository that
->>  promises to make them available on-demand and lazily.
+From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+> Hi!
 >
-> I am currently working on integrating this series with my external odb
-> series 
-> (https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/).
+> Sorry for the late response:
+> On a somewhat not-up-to date manual:
 >
-I too had seen that, as currently configured, the 'partialClone' could be 
-seen as a method for using the remote as if it were an object database (odb) 
-that was part of an 'always on-line' capability. However I'm cautious about 
-locking out the original DVCS capability of being off-line relative to some, 
-or all, remotes and still needing to work in 'airplane mode'.
+>       -d, --delete
+>           Delete a branch. The branch must be fully merged in its upstream
+>           branch, or in HEAD if no upstream was set with --track or
+>           --set-upstream.
+>
+>
+> Maybe the topic of multiple branches pointing to the same commit could be 
+> mentioned (regarding the status of each such branch being considered to be 
+> merged or not). Also "fully merged" could be made a bit more precise, 
+> maybe.
+>
+> Maybe gitglossary could have definitions for "merged" and "fully merged" 
+> with manual pages referring to it.
 
-It should be OK for the local narrowClone (my term) to be totally off-line 
-for a while and still be able to work when back on line with other suitable 
-remotes, even after the original remote has gone.
+Thanks, I'll add your note to my list of clarifications.
 
-
-> Instead of using an "extension.partialclone" config variable, an odb
-> will be configured like using an "odb.<odbname>.promisorRemote" (the
-> name might still change) config variable. Other odbs could still be
-> configured using "odb.<odbname>.scriptCommand" and
-> "odb.<odbname>.subprocessCommand".
-
-The future work Jeff had indicated, IIRC, should be able to cope with 
-multiple promisor remotes, which it's to be hope this could handle. I'm not 
-sure how the odb code would handle a partial failure where a partition of 
-the odb stops being available.
+Philip
 
 >
-> The current work is still very much WIP and some tests fail, but you
-> can take a look there:
+> Regards,
+> Ulrich
 >
-> https://github.com/chriscool/git/tree/gl-promisor-external-odb440
---
-Philip 
+>
+>>>> "Philip Oakley" <philipoakley@iee.org> schrieb am 08.12.2017 um 21:26 
+>>>> in
+> Nachricht <582105F8768F4DA6AF4EC82888F0BFBE@PhilipOakley>:
+>> From: "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+>>> Hi Philip!
+>>>
+>>> I'm unsure what you are asking for...
+>>>
+>>> Ulrich
+>>
+>> Hi Ulrich,
+>>
+>> I was doing a retrospective follow up (of the second kind [1]).
+>>
+>> In your initial email
+>> https://public-inbox.org/git/5A1D70FD020000A100029137@gwsmtp1.uni-regensburg.d
+>> e/
+>> you said
+>>
+>> "I wanted to delete the temporary branch (which is of no use now), I got 
+>> a
+>> message that the branch is unmerged.
+>> I think if more than one branches are pointing to the same commit, one
+>> should be allowed to delete all but the last one without warning."
+>>
+>> My retrospectives question was to find what what part of the 
+>> documentation
+>> could be improved to assist fellow coders and Git users in gaining a 
+>> better
+>> understanding here. I think it's an easy mistake [2] to make and that we
+>> should try to make the man pages more assistive.
+>>
+>> I suspect that the description for the `git branch -d` needs a few more
+>> words to clarify the 'merged/unmerged' issue for those who recieve the
+>> warning message. Or maybe the git-glossary, etc. I tend to believe that 
+>> most
+>> users will read some of the man pages, and would continue to do so if 
+>> they
+>> are useful.
+>>
+>> I'd welcome any feedback or suggestions you could provide.
+>> --
+>> Philip
+>>
+>>> >>> "Philip Oakley" <philipoakley@iee.org> 04.12.17 0.30 Uhr >>>
+>>> From: "Junio C Hamano" <gitster@pobox.com>
+>>> > "Philip Oakley" <philipoakley@iee.org> writes:
+>>> >
+>>> >> I think it was that currently you are on M, and neither A nor B are
+>>> >> ancestors (i.e. merged) of M.
+>>> >>
+>>> >> As Junio said:- "branch -d" protects branches that are yet to be
+>>> >> merged to the **current branch**.
+>>> >
+>>> > Actually, I think people loosened this over time and removal of
+>>> > branch X is not rejected even if the range HEAD..X is not empty, as
+>>> > long as X is marked to integrate with/build on something else with
+>>> > branch.X.{remote,merge} and the range X@{upstream}..X is empty.
+>>> >
+>>> > So the stress of "current branch" above you added is a bit of a
+>>> > white lie.
+>>>
+>>> Ah, thanks. [I haven't had chance to check the code]
+>>>
+>>> The man page does say:
+>>> .    -d
+>>> .    Delete a branch. The branch must be fully merged in its upstream
+>>> .    branch, or in HEAD if no upstream was set with --track
+>>> .    or --set-upstream.
+>>>
+>>> It's whether or not Ulrich had joined the two aspects together, and if 
+>>> the
+>>> doc was sufficient to help recognise the 'unmerged' issue. Ulrich?
+>>> --
+>>> Philip
+>>>
+>>>
+>>
+>> [1] Retrospective Second Directive, section 3.4.2 of (15th Ed) Agile
+>> Processes in software engineering and extreme programming. ISBN 
+>> 1628251042
+>> (for the perspective of the retrospective..)
+>> [2] 'mistake' colloquial part of the error categories of slips lapses and
+>> mistakes : Human Error, by Reason (James, prof) ISBN 0521314194 
+>> (worthwhile)
+> 
 
