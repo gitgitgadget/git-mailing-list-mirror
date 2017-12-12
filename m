@@ -7,106 +7,74 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9628A1F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 19:53:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B11F1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 19:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752310AbdLLTx5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 14:53:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55934 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751499AbdLLTx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 14:53:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70D70C814A;
-        Tue, 12 Dec 2017 14:53:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=2+cYzpFM6XlB
-        7FSLT7Bi9J1kLpw=; b=J61umx4xiy4cIDaYw6kOR1aWee/F+7bG8pGfS5Wyakp9
-        KFKBW/lcPQfshP9jot8hJqRRCzb6pHsVzpgacia5FVL030oGbTYfdy1ml/uASj/r
-        Rjxe1emPOF5IRoIxk33YuuRDbwK0WKvBihELg5I2WXyvQUCeMk34LGG0Ff8XWZo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=nYN8Ne
-        SzLOF09eRc/h5yizplEJXhmw39Q7ESM0aBtcNNOt2fvM8nUc++Su8j0KlvgOqlcn
-        vL0Ar12H0/o3XDr96PbnpOQRMw6Z9hdljHkAc9QsGn3ZLX3RAd2YasEYntDtLjVo
-        +iAzi1RrD+TyfL9myO0baOHcsPb7yKq8nr/kM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 68846C8149;
-        Tue, 12 Dec 2017 14:53:56 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D5927C8147;
-        Tue, 12 Dec 2017 14:53:55 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH] Makefile: allow NO_DC_SHA1_SUBMODULE to be set in config.mak
-References: <7272c221-c1b6-ca41-3be4-329275e94b8a@ramsayjones.plus.com>
-Date:   Tue, 12 Dec 2017 11:53:54 -0800
-In-Reply-To: <7272c221-c1b6-ca41-3be4-329275e94b8a@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Tue, 12 Dec 2017 12:47:25 +0000")
-Message-ID: <xmqqk1xr204t.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2FC84128-DF76-11E7-B4B5-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1752414AbdLLTyD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 14:54:03 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35263 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752358AbdLLTyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 14:54:02 -0500
+Received: by mail-pg0-f67.google.com with SMTP id q20so30150pgv.2
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 11:54:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=JDYXTndxjVeOmHilMLmwdvvT71vH1m4S1xQ7bf5kQHw=;
+        b=Lv4sn8mBZeE3VfuYBlZbeeF2XyLzojlfeUQi345ZkUo47aW//943R3ImAkxdnFCxp/
+         CLD1btv+cp5Lk/P4g9U/yFR8pmDMCY8ZxE+DGYkrcE5gxhTxJ+PndLnMOLPWa+YSC+lN
+         DThKqmFHo1QbdhMcW4p4iwJTB/kUYlBkPJU1UcRKILSEWjGRvv/Rs1biHQHTZg+XiSqq
+         p3vEMuXX5r7K2kq2cUm2WmsnTpHWxsWZ7OLZKEYFeExdpM8iXICf+5PK9a3J1GTfIlu3
+         GrqqIPwz2K+3wGJ8ybxbjryPuHl55EwPNnn0+Jgetr+s7c3TnTWsXEJdk0uRJV0NiPQt
+         3a/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=JDYXTndxjVeOmHilMLmwdvvT71vH1m4S1xQ7bf5kQHw=;
+        b=HXxhxUq7x9bLUsXQ0jWG37vRoBI89e5/3pGbV+hRLbnWdNzTVOtjYqvzC2zXQ2fBU4
+         TAQ766wZK98Rgj0tqOzSBD90c0LOQEfi8ha6lgjoPc7EptI17FVzQuU3egYLMHsCAfEM
+         6rOXfY9u9/fZCq03ZrwHSiY+xjwABQaQqmgT3ysK9zgT50xib+MM5O6x8x4cXmkgms/6
+         zEGlsbCpm6LtPoiQ9s0/XrD4IKANA6NSs5/qZCiK/NS3q/NWOFsA7mhIV457m+oN/x5t
+         b1KFQQ6QqLS7q6ED1LhixiU5/p8V/mLWs33LPnc8XyzZAmZ49t7wlzLTu5JnIaeiHGcj
+         D95g==
+X-Gm-Message-State: AKGB3mJ2jN3azKBCwn/E376Thqz8E6QDMaSL3DObBL+kdessnBoNNKs9
+        +n/ioafAg2DbXZAVSO0wgfyyscM6yJk=
+X-Google-Smtp-Source: ACJfBov+8NLt3yqy905K70kxax6jVRuF5VUQVzKNIVOREC5czyniz2r64pJzRIsfP7XYtazkeTkexA==
+X-Received: by 10.98.157.67 with SMTP id i64mr3410577pfd.40.1513108441273;
+        Tue, 12 Dec 2017 11:54:01 -0800 (PST)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id h69sm32822565pfe.107.2017.12.12.11.54.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 12 Dec 2017 11:54:00 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Subject: [PATCH 0/3] convert submodule.c to not use the index compat macros
+Date:   Tue, 12 Dec 2017 11:53:49 -0800
+Message-Id: <20171212195352.146675-1-bmwill@google.com>
+X-Mailer: git-send-email 2.15.1.504.g5279b80103-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+This series removes the remaining users of the index compatibility macros and
+ensures that future uses of the macros will result in compiler errors.
 
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->
-> Hi Junio,
->
-> Could you please add (or squash) this on top of the 'ab/sha1dc-build'
-> branch, so that I can build with NO_DC_SHA1_SUBMODULE=3DNoThanks in my
-> config.mak.
+Brandon Williams (3):
+  submodule: convert stage_updated_gitmodules to take a struct
+    index_state
+  submodule: used correct index in is_staging_gitmodules_ok
+  submodule: convert get_next_submodule to not rely on the_index
 
-Makes sense.  The patch looks scary by appearing to move the
-includes far to the front of the Makefile, but it in fact is moving
-the NO_DC_SHA1_SUBMODULE block slightly down and it is a sensible
-and safe move.
+ builtin/fetch.c |  4 +++-
+ builtin/mv.c    |  2 +-
+ builtin/rm.c    |  2 +-
+ submodule.c     | 32 ++++++++++++++++++--------------
+ submodule.h     | 14 ++++++++------
+ 5 files changed, 31 insertions(+), 23 deletions(-)
 
-I actually think that the block can go even further down, perhaps
-close to the run of choices "what variant are we building?" we make
-at around we have "ifdef NO_CURL".
+-- 
+2.15.1.504.g5279b80103-goog
 
-=C3=86var?
-
-> diff --git a/Makefile b/Makefile
-> index 929b49b04..91bbb0ed8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1042,6 +1042,10 @@ EXTLIBS =3D
-> =20
->  GIT_USER_AGENT =3D git/$(GIT_VERSION)
-> =20
-> +include config.mak.uname
-> +-include config.mak.autogen
-> +-include config.mak
-> +
->  ifndef NO_DC_SHA1_SUBMODULE
->  	ifndef DC_SHA1_EXTERNAL
->  		ifneq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisionde=
-tection/lib/sha1.h)
-> @@ -1053,10 +1057,6 @@ whatever reason define NO_DC_SHA1_SUBMODULE=3DNo=
-Thanks)
->  	endif
->  endif
-> =20
-> -include config.mak.uname
-> --include config.mak.autogen
-> --include config.mak
-> -
->  ifdef DEVELOPER
->  CFLAGS +=3D $(DEVELOPER_CFLAGS)
->  endif
