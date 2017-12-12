@@ -2,124 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C882C1F419
-	for <e@80x24.org>; Tue, 12 Dec 2017 00:48:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AD101F404
+	for <e@80x24.org>; Tue, 12 Dec 2017 00:52:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751554AbdLLAsl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Dec 2017 19:48:41 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:59103 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751123AbdLLAsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Dec 2017 19:48:39 -0500
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1eOYkP-0000t2-1B; Mon, 11 Dec 2017 19:48:38 -0500
-Date:   Mon, 11 Dec 2017 19:48:31 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
-        Jeff King <peff@peff.net>
-Message-ID: <20171212004831.2sfscbrlhyokzchz@hopa.kiewit.dartmouth.edu>
-References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
- <20171211225615.GC214273@aiede.mtv.corp.google.com>
+        id S1751585AbdLLAwZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Dec 2017 19:52:25 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:37828 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdLLAwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Dec 2017 19:52:24 -0500
+Received: by mail-pg0-f44.google.com with SMTP id y6so12203324pgp.4
+        for <git@vger.kernel.org>; Mon, 11 Dec 2017 16:52:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=El4W9DmrUvF+AADuMGrMcV4/0hUnZjoFVW5QVBUqy2M=;
+        b=VEyBwtbRVnhBpuZCsTdrfRqEh6H0T5cjEPKY9ibfodDPi2DmiuXCGts0mGw19kccCu
+         1TMQ5Q9ozlDKT+qHrT/xhHpyIgwa0+f2+U9WvUoyKILY6JfSVBo3s8R5PQ0o1osVhhwR
+         WLHGePrflOXkmV2017UKM8oIXmKM9gqgGu5MhVy+lNVYmdXV8PhCGPd2E9PipyPwjMAs
+         jAip2WvUiPF1bvr0M1/Y3XXhTrO8Ot3n9DU+iDbf1U7pHIKrFNPHSH+5k0L2goziq5Vw
+         el+y7JVyFbnMYoOqs6BsSibCYTt13RdPOihOT13/vQoNhC6Fn4TOSm6wuD1LBopHGOXe
+         15xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=El4W9DmrUvF+AADuMGrMcV4/0hUnZjoFVW5QVBUqy2M=;
+        b=fk1ycSJSb6/bm4QXcV22LBUN8+4CeWB+UxsBXA88TZLTeS/ldcnqFzd67/pK/7uymC
+         Y1TjIAhIZGAlIwiwwZz6O3pduwDDIveh0T+09o+GiZ8hziWJrVbRwX93+Gdxqb3Zr8rD
+         mbKdlQyreyvuks7aP4wAhbZcosbB4dtAKd0fH6i6ew1kmXdQMaT0ex4MxN3108t3pBPC
+         osDeFDUSna9jatTkBftyB+cX+o69RD9UGR21VYrpz/mXRM0+EGyKF6kScSp4pLqE0l5o
+         ElRGiDhYBHltEpwCMEHIcM/SkV90VYjMlUep7FmlZUQKru5zRtyapepImMd+p/QsslX9
+         jGBQ==
+X-Gm-Message-State: AKGB3mKlwq/s6n7YbgDG3ZIe29D4cuBvYOFaBM8B84O5JiLHJqMIrUhr
+        NpYfT4ggUBeryy3l+NVePwFFmQ==
+X-Google-Smtp-Source: ACJfBosqdtixQ9EDZ5iwzbEPjvSF64knJjsduOeBYfJ9fc9obkWMpc5H5tjK0q3qAhcIVJ/K+jl9vA==
+X-Received: by 10.101.92.138 with SMTP id a10mr380781pgt.6.1513039943653;
+        Mon, 11 Dec 2017 16:52:23 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:bdc4:e5a2:2ef4:d600])
+        by smtp.gmail.com with ESMTPSA id e26sm24607451pfi.10.2017.12.11.16.52.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 11 Dec 2017 16:52:22 -0800 (PST)
+Date:   Mon, 11 Dec 2017 16:52:21 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>
+Subject: Re: [PATCH] clone: support 'clone --shared' from a worktree
+Message-ID: <20171212005221.GD177995@google.com>
+References: <20171211231612.29275-1-sunshine@sunshineco.com>
+ <20171212001802.GC177995@google.com>
+ <CAPig+cSTsuHdAqdBMvO80ybTSzfxncX8yQODSKd1bmaoNRQOjw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171211225615.GC214273@aiede.mtv.corp.google.com>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: jrnieder@gmail.com, git@vger.kernel.org, kyle@kyleam.com, peff@peff.net
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global"
- or just a bug?
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+In-Reply-To: <CAPig+cSTsuHdAqdBMvO80ybTSzfxncX8yQODSKd1bmaoNRQOjw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/11, Eric Sunshine wrote:
+> On Mon, Dec 11, 2017 at 7:18 PM, Brandon Williams <bmwill@google.com> wrote:
+> > On 12/11, Eric Sunshine wrote:
+> >>               struct strbuf alt = STRBUF_INIT;
+> >> -             strbuf_addf(&alt, "%s/objects", src_repo);
+> >> +             get_common_dir(&alt, src_repo);
+> >> +             strbuf_addstr(&alt, "/objects");
+> >
+> > If you wanted to do this in one function call you could either use
+> > 'strbuf_git_common_path()' or either 'strbuf_git_path()' or
+> > 'strbuf_repo_git_path()' which will do the proper path adjustments when
+> > working on a path which should be shared between worktrees (i.e. part of
+> > the common git dir).
+> 
+> Thanks for the pointers, however, the above fix mirrors the fix made
+> by 744e469755 (clone: allow --local from a linked checkout,
+> 2015-09-28) to code immediately below it in the 'else' arm:
+> 
+>     get_common_dir(&src, src_repo);
+>     get_common_dir(&dest, dest_repo);
+>     strbuf_addstr(&src, "/objects");
+>     strbuf_addstr(&dest, "/objects");
+> 
+> It would be poor form and confusing to use one of the mechanisms you
+> suggest while leaving the 'else' arm untouched.
+> 
+> Re-working both arms of the 'if' to use one of the suggested functions
+> would make a fine follow-on or preparatory patch, however, I'd rather
+> not hold up this fix merely to re-roll for such a minor cleanup. (I
+> also considered a follow-on patch to reduce the duplication between
+> the two cases but decided against it, for the present, since such a
+> patch would almost be noise without much gain.)
 
-On Mon, 11 Dec 2017, Jonathan Nieder wrote:
-> > Example to show that TFM outlines precedence and --global correctly:
+I didn't look close enough at what you were trying to fix, you're right
+I think what you have here is good as the alternative would require a
+lot more reworking I think (at least to change the above part too).
 
-> > $> grep xdg .gitconfig .config/git/config
-> > .gitconfig:    xdg-and-user = user
-> > .config/git/config: xdg = xdg
-> > .config/git/config: xdg-and-user = xdg
-> > $> git config user.xdg ; git config user.xdg-and-user
-> > xdg
-> > user
+Either way though, I'm a little worried about what happens if you have
+GIT_COMMON_DIR set because then both the src and dest repo would share a
+common dir, I don't know if that is expected or not.  Maybe something
+else to consider later.
 
-> I agree, this is confusing.
+> 
+> By the way, is there any documentation explaining the differences
+> between all these similar functions and when one should be used over
+> the others?
 
-> Reverse engineering from source, I find that git reads the following
-> files in sequence:
-
-> 	system:
-> 		/etc/gitconfig
-> 	global:
-> 		$XDG_CONFIG_HOME/git/config
-> 		$HOME/.gitconfig
-> 	repo:
-> 		$GIT_DIR/config
-> 	commandline:
-> 		options passed with -c or GIT_CONFIG_PARAMETERS
-
-> These terms (system, global, repo, etc) are accessible in code as
-> current_config_scope().  I don't think there's any user-visible effect
-> to $XDG_CONFIG_HOME/git/config and $HOME/.gitconfig both being global
-> --- it would probably be a good cleanup to rename the scope for one of
-> them.
-
-Well, we have got at least one user/contributor now who uses
-$XDG_CONFIG_HOME/git/config in favor of ~/.gitconfig since it makes it
-easier for modular user configuration.
-
-> I think the documentation
-
-> 	~/.gitconfig
-> 		User-specific configuration file. Also called "global"
-> 		configuration file.
-
-> should be clarified --- e.g. it could say
-
-> 	$XDG_CONFIG_HOME/git/config
-> 	~/.gitconfig
-> 		User-specific configuration files. Because options in
-> 		these files are not specific to any repository, thes
-> 		are sometimes called global configuration files.
-
-> As for "git config --global", I think the best thing would be to split
-> it into two options: something like "git config --user" and "git
-> config --xdg-user".  That way, it is unambiguous which configuration
-> file the user intends to inspect or modify.  When a user calls "git
-> config --global" and both files exist, it could warn that the command
-> is ambiguous.
-
-why ambiguous?  as long as both are consistently called global, and the
-overloading rules are clear for reading -- nothing ambigous.  The only
-ambigous logic would be for writing.
-
-> Thoughts?
-
-Well -- my main functionality concern that ATM
-$XDG_CONFIG_HOME/git/config is (as of 2.15.0) only --global for writing
-but not for regular reading (as I demonstrated in the original email)
+I wish, I probably should have done a better job documenting it all in
+path.h when I added the repo_* flavor of functions.  I'll add that to my
+list of things to do though :)
 
 -- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Brandon Williams
