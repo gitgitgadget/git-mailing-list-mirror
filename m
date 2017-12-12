@@ -7,112 +7,83 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C705A1F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 22:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE06C1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 22:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752637AbdLLWMx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 17:12:53 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55374 "EHLO
+        id S1752640AbdLLWTX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 17:19:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54299 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752320AbdLLWMw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 17:12:52 -0500
+        with ESMTP id S1752320AbdLLWTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 17:19:22 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7BEECA651;
-        Tue, 12 Dec 2017 17:12:51 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 976F8C2F61;
+        Tue, 12 Dec 2017 17:19:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=+pfK+LWtpFxnzNPIcs6XdkxN/U0=; b=Bmdy3TE3iYTEGP7hdiZH
-        SG3PxNpLYceq/JqiEOdk8dRLuGGdj6oOOTdy5Iq6jhTLvCOxpBdLvRm+3w5E+oji
-        w3MZKp3rLYdjT/ZBfX7VWQxanN7vXa0ab2YTsi7fwUrusZ1zFmQr3VHAbYjY9uvJ
-        8cQmsO2n1EJVC2omR/hAhZk=
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=nh7R3ES6YCZO
+        3s+7LY9onrcUcIQ=; b=K6MMUdwS4INXTsmiyqB64HOcECIJpR2B5TW5K51bhxus
+        VHXPraqNeLI8pMi6m/ZrB6ieK+rKd7aEIjoQEZZNqC4mjx1YlQV0TKcuMUSe37F+
+        8rnuVZ0J+b4Bku4L5VVkkj7XQRapHlxoTkOgA/rcVxVMSfbD5qGH6Uma8R+xUOo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         q=dns; s=sasl; b=EGorjtD/FSPYpNYqQmy1dDxdDRdGz0lY0dZX1WuLNN4ZoK
-        Ua8d2DQ0oOTf6FZX9SOT1zDoVRf23Ei1OSnHUyAHwmmRr1D4UixBbxJcO9sPBX9H
-        s40mgc4ou2XT1xhOfoO8f6D2Jq/Gts28VGAaK0+UkhQ9ZseutzMfAUJktOU4M=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE64FCA650;
-        Tue, 12 Dec 2017 17:12:51 -0500 (EST)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=PWn2t8
+        2wCr8pvPeurqAJUo8Cwuaofbafw0dl5ZvjUPe9gDzDkJs8iUCPGrvTxXeWxeNxtt
+        ufvj3w0Kvw1dnVIFEqTPjAgzw31/rGFkPtKp5GcjZV+62112dBTC9VREWJvEAt6b
+        v4oD9nxdPHqZxa/aqY/lnY6JoS+eGaOLP5AYY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F245C2F60;
+        Tue, 12 Dec 2017 17:19:21 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3747BCA64F;
-        Tue, 12 Dec 2017 17:12:51 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0279CC2F5F;
+        Tue, 12 Dec 2017 17:19:21 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH Outreachy v2 1/2] format: create pretty.h file
-References: <01020160364a23d5-471a2fd0-9fff-4599-86f8-b2f37a4a0a84-000000@eu-west-1.amazonses.com>
-        <0102016049efb7b4-b8dc7cff-5ddf-4692-ba1c-3551720ec28d-000000@eu-west-1.amazonses.com>
-Date:   Tue, 12 Dec 2017 14:12:50 -0800
-Message-ID: <xmqqh8svzjbx.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+        Thomas Adam <thomas@xteddy.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
+Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
+References: <20171116154814.23785-1-alex.bennee@linaro.org>
+        <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com>
+        <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop>
+        <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com>
+        <87mv2p89wu.fsf@linaro.org> <20171211172615.jfsjthkvs4itjpcn@laptop>
+        <CACBZZX58KpQ7=V8GUFfxuMQq_Ar6cmmoXyPx_umUTbU19+0LCw@mail.gmail.com>
+        <20171212103040.jbgkyet5rapqxi44@laptop> <87indb99xy.fsf@linaro.org>
+        <87fu8fddam.fsf@evledraar.gmail.com>
+        <xmqqwp1r20zx.fsf@gitster.mtv.corp.google.com>
+        <87d13jd4fd.fsf@evledraar.gmail.com>
+Date:   Tue, 12 Dec 2017 14:19:19 -0800
+In-Reply-To: <87d13jd4fd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 12 Dec 2017 22:25:42 +0100")
+Message-ID: <xmqqa7ynzj14.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 980A8760-DF89-11E7-99BA-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8068FE56-DF8A-11E7-9161-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->  builtin/notes.c       |  2 +-
->  builtin/reset.c       |  2 +-
->  builtin/show-branch.c |  2 +-
->  commit.h              | 81 +----------------------------------------------
->  pretty.h              | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  revision.h            |  2 +-
->  6 files changed, 92 insertions(+), 84 deletions(-)
->  create mode 100644 pretty.h
+> Ripping out Error.pm for our few internal callers is one thing, trying
+> to maintain bugwards compatibility with how it throws exceptions for
+> users expecting Error.pm objects is another. I think at that point it's
+> easier to just stay with Error.pm.
 >
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index 1a2c7d92ad7e7..7c8176164561b 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -12,7 +12,7 @@
->  #include "builtin.h"
->  #include "notes.h"
->  #include "blob.h"
-> -#include "commit.h"
-> +#include "pretty.h"
->  #include "refs.h"
->  #include "exec_cmd.h"
->  #include "run-command.h"
-> ...
-> diff --git a/commit.h b/commit.h
-> index 99a3fea68d3f6..8c68ca1a5a187 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -7,6 +7,7 @@
->  #include "decorate.h"
->  #include "gpg-interface.h"
->  #include "string-list.h"
-> +#include "pretty.h"
+> Probably easier to stay with it either way, don't poke sleeping dragons
+> and all that, it's working code, even if we wouldn't write it like that
+> today the churn probably isn't worth it.
 
-This is much nicer than what I imagined, which was to just add this
-line here, move decls from commit.h to pretty.h, and do nothing
-else, which would be the absolute safest thing from the point of
-view of other topics in flight.  Separation of "pretty.h" would stay
-to be an implementation detail of the "commit.h" file, where
-everybody expects to find these decls.
+OK, I'm inclined to defer to your judgment.
 
-Instead, this patch inspects each and every .c user of "commit.h"
-and replaces its '#include' with the new one if it only uses things
-declared in "pretty.h", which makes it very clear who have been
-depending on what in the patch.  Those that include "commit.h"
-because they need both the "what is a commit object" aspect and "how
-to pretty print" aspect can keep using their original '#include' to
-ease the transition.
-
-Let's see how well this plays with other topics in flight---I had to
-apply an evil merge to queue the previous one, if I recall right, as
-a user of "commit.h" that did not use pretty-print (hence did not
-get "pretty.h" with the previous round of this patch) gained use of
-pretty-print function, or something like that.
-
-Will queue.
-
-Thanks.
-
- 
+THanks.
