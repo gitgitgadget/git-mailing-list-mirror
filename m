@@ -2,75 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B27201F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 19:59:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 341D61F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 20:09:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752501AbdLLT7g (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 14:59:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54976 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752303AbdLLT7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 14:59:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3EEBEC829C;
-        Tue, 12 Dec 2017 14:59:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VVIHT4s5f+GKwIMHjI8E6k5K5D8=; b=qrmeIe
-        3GCLXaRoWMOjZG7IYoUn7dCr5JMhmGDd5IBQI2fhbTnexICoclirtvNa8qzRMhgA
-        IKYH4adC8SYCYOQJDBTkYsD8+2phFspfEA5Ju5qFQgDl9JTumwq+8zuKlXS9b5v6
-        15XrohwVESDmrRJ7yGn5bZzwyekWo3FIAx2Go=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A/hlbelwP+t3jmhhw/AZTrcYQNszbZsk
-        yqGCC6K7G1p05PN6HrOgfRDZ5dBxLwQlDgrQIsmwXm56V+uuBKRq7SWhwfEcR8q1
-        aoP0oBsM+eAbpjnL87W6/HRevVzEln3HZstKDSx2mODH5uvadwUS8T1Nh+RlAMXL
-        WVXlBsYCCWQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35FF0C829B;
-        Tue, 12 Dec 2017 14:59:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9CE8CC8299;
-        Tue, 12 Dec 2017 14:59:34 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     dnj@google.com, git@vger.kernel.org, judge.packham@gmail.com,
-        kostix+git@007spb.ru, manschwetus@cs-software-gmbh.de,
-        max@max630.net, peff@peff.net, sunshine@sunshineco.com
-Subject: Re: [RFC PATCH] t/helper: Move sources to t/helper-src; gitignore any files in t/helper
-References: <20171212161701.4272-1-dnj@google.com>
-        <20171212190026.17671-1-sbeller@google.com>
-Date:   Tue, 12 Dec 2017 11:59:33 -0800
-In-Reply-To: <20171212190026.17671-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 12 Dec 2017 11:00:26 -0800")
-Message-ID: <xmqqbmj31zve.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752368AbdLLUJG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 15:09:06 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:33753 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752321AbdLLUJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 15:09:00 -0500
+Received: by mail-qt0-f180.google.com with SMTP id e2so264891qti.0
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 12:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=keKgmdkKnT/pmSrzYWJyWOebw4L4Jy4SfvotcuimASc=;
+        b=ROkGGt4Q8Sgw5sHVMfxWs1sA2IhPpvLzg1EtbXF964KUlY8SCxFonTEp1FD+jcsmXC
+         DwMquBD5/zWY/A9kG4AVlloOIxz5Vk6lhJHtZylme8Lne7jKhsQoExNXZmQFmjcXQfuP
+         +aY61ld0jiJwJZCoYpKyl4CmdFhqCQ6LqT7Up/Bvz2nMXdpVD+ESHrPkE5V2uZIoZuos
+         U+R+6MNsuDX2VFa9KKmdQo1pem3hlACXUQ15zluVu7gXomDwLDsXnu4IgV5lPjspn3+k
+         8HD1Dj8ExWI+M/hXuaXCUefQuOB8E3aJuUk4cm95xLBk9q83hM123Z/pugshGKMgY5Yk
+         W+WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=keKgmdkKnT/pmSrzYWJyWOebw4L4Jy4SfvotcuimASc=;
+        b=TWIj47tuV37xjxrfVNwA3oGmEMmD+nwX/H7DQMBtAX5QYJQTjI4QcEL0seq0I8aG0w
+         IyUpitrwyB+xh4rGWgQSewXmG1c7cfMfXUz0j0OkJK1MxxtPtRLRrZYphykK6FmdY50k
+         MFA+jB5Vgom4vWD47UC9Dp98ZTdUUF1xZnbSHaQRBEcKs9dK1OQZ+DqV0yfAAVfpqu4O
+         eljfdTuLYiZ23G3icoaFfBaFpg4PwGEjoH1fn62d9/Nky4zYQgLZo6cI5MmqcuY+qhRN
+         9ivLQEKlywoHceRE/g12t+wV0sawaVkmIxErA7Cyq6dV3HQDg3jfF0mgXla0/VUJI+49
+         /pFA==
+X-Gm-Message-State: AKGB3mILB3JRnFLZMPRwN78MBGNrgrULUE6mAEHLhGAw72LltaZa8t+u
+        pBYRrz/fD6bDGgDpnvQkxFStC3fDEQXYuVOMUymf6Avc
+X-Google-Smtp-Source: ACJfBoso2KAURl0MAF+kE+ddpQ+IA4zpJLe44jEzKOIe0LZJ38w3qE1GmRSZjq0SqHdWSvrgNfiaUXQEm6lyJ04HO5c=
+X-Received: by 10.237.42.22 with SMTP id c22mr7055329qtd.162.1513109339832;
+ Tue, 12 Dec 2017 12:08:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F9BE3956-DF76-11E7-AF5E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.140.85.179 with HTTP; Tue, 12 Dec 2017 12:08:59 -0800 (PST)
+In-Reply-To: <20171212195352.146675-1-bmwill@google.com>
+References: <20171212195352.146675-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 12 Dec 2017 12:08:59 -0800
+Message-ID: <CAGZ79kZsTduEsrC-BWOuT6Y+QGn_SLngO4Fs78q2N8Rp+xnhCg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] convert submodule.c to not use the index compat macros
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Dec 12, 2017 at 11:53 AM, Brandon Williams <bmwill@google.com> wrote:
+> This series removes the remaining users of the index compatibility macros and
+> ensures that future uses of the macros will result in compiler errors.
 
-> Compiled test helpers in t/helper are out of sync with the .gitignore
-> files quite frequently. This can happen when new test helpers are added,
-> but the explicit .gitignore file is not updated in the same commit, or
-> when you forget to 'make clean' before checking out a different version
-> of git, as the different version may have a different explicit list of
-> test helpers to ignore.
->
-> This can be fixed by using overly broad ignore patterns, such as ignoring
-> the whole directory via '//t/helper/*' in .gitignore.
+Thanks for converting the submodule code to avoid these old macros.
+Specifically the submodule code will benefit once we have a repository
+object available throughout the code base, so it is a great start.
 
-If we ignore everything but resurrect *.[ch] with negative exclude
-rules, can we do the same without moving things around?
+I reviewed the series and would call out patch 2 to be a bugfix that could
+go independently, but the whole series is fine as-is with me.
+
+Thanks,
+Stefan
