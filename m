@@ -2,75 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03F811F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 20:17:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 297881F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 20:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752302AbdLLURj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 15:17:39 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:43918 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752263AbdLLURi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 15:17:38 -0500
-Received: by mail-qt0-f195.google.com with SMTP id w10so248104qtb.10
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 12:17:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mWhEOGlpV5d/x923w7MC5KxrbmDngCYq6ZcpXhwzVNw=;
-        b=CQZceina3h2T8R74WMl6uvecNP78qobH9eV91M6o9wGMtFjckZALWtE4XTlh6V6Oma
-         SDPopW7rhjxZX3D71q3K494jYzP112XNUh+SAGZe6K3c7YqHtZXX50QKdWUI2nrGrelW
-         i1EAwj8oNVAXxmum7x4gd0e4w9oE+bNv2PefBfOa5a3TCWd4f9SA6/rTXw1qicFAKXS5
-         yCxiMO7DOp9yknFFXZ6/8p5u0++SNlJSasHU0A/ElAah4iNzaDUdzLXtb7DTr4VBrEgu
-         hBbSPM41hZZfteqV+86ifW+bz1E4Q4nGNUXeDSH9eWlfYpPRcaQieFjkLRpHnJAgM0BO
-         Gbkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mWhEOGlpV5d/x923w7MC5KxrbmDngCYq6ZcpXhwzVNw=;
-        b=sPcVHg9Rwpk4JQGAooCXWtBC+0vGmZ0LKxdsr03ajB5riEBZk2iYQGOAuB4i46e17E
-         pn6uwYGNg/flR9zJIn+2tUy576v1ktcMlGhJWHEQUnJqRczHyyXjXjgoeZuzAofjziF+
-         XxAIKC8wD2GMFVo4UGwm4A4sc1lmw7O1iX3J590Q3fUZCmJOkHfA2w+BIB37UuQVVbPr
-         5ZdagAoc6zrmiClPpQnN5Ef9dTVWPLmnTgyBM2ydGaZp3mCRvj9Uk8CMw7fmm1iw4gnY
-         rjGdxdjeaABIjv10FzI7Xicwc5t8DFWiB9T62T70VKKSBfXADUPQeXLo3cnCQT14d4On
-         2jFQ==
-X-Gm-Message-State: AKGB3mIQqhA7XChU8gb8TTYJCBHW9MjNAcIrVIUgOE/V21uJ0TCohoDK
-        S+xApxF0mW2/y8K8mj3BtSie2hawMlrgHDFn4K9DRw==
-X-Google-Smtp-Source: ACJfBova4PVcrs/bXI4LR24ABgxmUYqAuFJuHyA2E1eSTkjwbJTd4dqO8NTUVHGXWWz1yHrVd2kXY+84+oHPI2/pBQk=
-X-Received: by 10.200.6.76 with SMTP id e12mr7143385qth.217.1513109858164;
- Tue, 12 Dec 2017 12:17:38 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Tue, 12 Dec 2017 12:17:37 -0800 (PST)
-In-Reply-To: <20171212195352.146675-3-bmwill@google.com>
-References: <20171212195352.146675-1-bmwill@google.com> <20171212195352.146675-3-bmwill@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 12 Dec 2017 15:17:37 -0500
-X-Google-Sender-Auth: vK5bmMzabrbiwqa2YHDAnuRGAf0
-Message-ID: <CAPig+cTtFB8ZyqF994TLbEj0Km930W3C758niCXNH5v3=hW5Cw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] submodule: used correct index in is_staging_gitmodules_ok
+        id S1752527AbdLLUix (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 15:38:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53208 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752277AbdLLUiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 15:38:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E74DC1263;
+        Tue, 12 Dec 2017 15:38:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ypGSmsIecW5WdT+PgLHk2A7H1Tg=; b=W3/nXv
+        NOeTgu2rTT1oE2f9APOiErQ0rKtlw6Sm4AEt6HWdLnpwyK/onN64CeRa9VqLvByZ
+        tey80ydfDhGNUlsjJj/ltY2F6NCGmUbVGmTpUmQbsw3FEMd/YdOzPeN2RIC7VgSW
+        96zscnRNVkXrAgTm0ARIxqgReleTd2/YRWphM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=grkqEEzEBDy+Cg6mmHNccLH5yxNU3c2I
+        LEn/OFtGU4XMaJhedTRUhF5IxLTwh42jIhaWNDEc9TTHT2Y94CpP3FBb4s0DhpXI
+        QHUPPRd6sC1NFqmi92FUKTL9YsUNzCtm+CXBdpnQWnyz2cR7qjGArTWviSAOZdNm
+        0wj1S2wiHvQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 76C1BC1262;
+        Tue, 12 Dec 2017 15:38:51 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB388C1261;
+        Tue, 12 Dec 2017 15:38:50 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/3] convert submodule.c to not use the index compat macros
+References: <20171212195352.146675-1-bmwill@google.com>
+Date:   Tue, 12 Dec 2017 12:38:49 -0800
+In-Reply-To: <20171212195352.146675-1-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 12 Dec 2017 11:53:49 -0800")
+Message-ID: <xmqq7etr1y1y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 762E14E8-DF7C-11E7-95CB-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 12, 2017 at 2:53 PM, Brandon Williams <bmwill@google.com> wrote:
-> Commit 883e248b8 (fsmonitor: teach git to optionally utilize a file
-> system monitor to speed up detecting new or changed files., 2017-09-22)
-> introduced a call to 'ce_match_stat()' in 'is_staging_gitmodules_ok()'
-> which implicitly relys on the the global 'the_index' instead of the
+Brandon Williams <bmwill@google.com> writes:
 
-s/relys/relies/
+> This series removes the remaining users of the index compatibility macros and
+> ensures that future uses of the macros will result in compiler errors.
 
-> passed in 'struct index_state'.  Fix this by changing the call to
-> 'ie_match_stat()' and using the passed in index_state struct.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+Nice.  Will queue.
+
+Thanks.
+
