@@ -2,134 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 596E61F407
-	for <e@80x24.org>; Tue, 12 Dec 2017 10:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E2B21F407
+	for <e@80x24.org>; Tue, 12 Dec 2017 11:24:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751665AbdLLK67 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 05:58:59 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33093 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751281AbdLLK65 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 05:58:57 -0500
-Received: by mail-wm0-f67.google.com with SMTP id g130so16948396wme.0
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 02:58:56 -0800 (PST)
+        id S1751547AbdLLLY2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 06:24:28 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:45372 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750749AbdLLLY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 06:24:27 -0500
+Received: by mail-pg0-f68.google.com with SMTP id m25so13193059pgv.12
+        for <git@vger.kernel.org>; Tue, 12 Dec 2017 03:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=W+sIvvAPpmm7hYPXdju/J4gCE2rvDbIyjfGmhbSwb0s=;
-        b=D8xQoZKCZ69XJhkkSrxklhez9PgT/j9eD8OmVTh0HOemNfzxCPKfTAl5S79RqW9fW1
-         sN+NCZ8s++BsvmlESrlAu0rC0a8CTzloDv85BWIyqvhP91ZmyqxLvxlxGHAzqzkhDsKB
-         SgUNieEHhlpFyOuORUvGRZjuJqejo01wrOOYsIgc8lqdcl02AV049T4lu16t8tJaBkJ/
-         6dwM+JPaFlq8+cj7qBOPlGuxuixH+O1j31nXq6+MquX9IgEMMeweSj5eEiGFh6f7o9uK
-         CpCiz8CQ/hL9b2H9d5eWzgsCk65916THTzG1a45ETRaBJiRs/q7w9DQXBdDJ97SYAWCS
-         s+5g==
+        h=from:to:cc:subject:date:message-id;
+        bh=4/ga+S9d9DdSuZNYuqbRY7GZtijW3kRnLNt4rJzSAdc=;
+        b=jPJMYLHA2xMbwlTJWzXLH9NMwq6dbkhhPwUC0+GrsOBApqnZBaJ05D5PAlHDE/kJKf
+         VUxQ8nVp51kP3AEk0AY9I01BHZwooETnB1EqHwAZevjdSQyFDzSTnpxbkrl4KmHuje0j
+         u879DjW1ON8QiP6IansU/qSJn5Ay/j2B90NzqI+iZky+ba2HVmC2HUvC1bzKyS8zpx/t
+         aa72M9iZxnVVRzTFwos/7oJetmNVcrBggh0M7kqPEaF/WFL3T5OH1qUgwgDj8AMKnJdV
+         OgaR7wL41pJEOQE3kjX9RoEC//1G54vsHlAGqbshkOBbCbO46bQbSAA474HDHTOPNrE4
+         Rybw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=W+sIvvAPpmm7hYPXdju/J4gCE2rvDbIyjfGmhbSwb0s=;
-        b=NKEPE9jzoV3wZk/OcV/r/f1/LDmyljEcwjWJ0cJLEaJ6J772ctOYjP3tjcZPXv1zEJ
-         jR6Wtz0/t96pbU4VEZMIGllW4RhnwQFvVDq7cgySqQR96QyZnt2h7Of1INo37gH4ddTw
-         Piw/qdSRJB6iFNmnZxYcjr6N1+x/MONZ9YKHLmHmbfpOzKBWsJetGaEgIURsb+T1B8ZJ
-         ks2VoKbnzEEgjExJV3XFE8qbcYlC5CUmb73MQOLCawQ4mRnjtWOJ9watR+D3A/wZCV90
-         k5lYjssCtJQcRQOa56zl9Q5O5Hfb5mpZ6vTq/wM2T9Ogbcsig/7p7ER5rj1ZF/sbcTDq
-         PwKw==
-X-Gm-Message-State: AKGB3mJM13RCpVt5Fd7ziFBTBwSRMos2/HhMfocDbcf1jVgh5VB2rfSi
-        SCyTmjGZn86FbZ1EQ3usjtQ=
-X-Google-Smtp-Source: ACJfBos/9SsjK5TUDTy85xUnTFymnh/Yuq8ADn2RQ6Brr0oQWUYn7stzbhn0yP43i94egP6fu29Chg==
-X-Received: by 10.28.130.208 with SMTP id e199mr1324346wmd.75.1513076335933;
-        Tue, 12 Dec 2017 02:58:55 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id o2sm10727623wmf.27.2017.12.12.02.58.55
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 12 Dec 2017 02:58:55 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAPig+cRtsCeWZZcj-jRLsqwb5OSHLBQFyGCvpAXeHRmcbTtT+w@mail.gmail.com>
-Date:   Tue, 12 Dec 2017 11:58:55 +0100
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>, patrick@luehne.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3FB29434-D2DE-4215-AD33-69D6BB7DF30A@gmail.com>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com> <CAPig+cQ6VSXXSYJOiZeTqUpwijVhvvUYzXF8U3KCBsOQ91HPZQ@mail.gmail.com> <09713FC5-9D71-4B39-BFA3-0CB9C63321A2@gmail.com> <CAPig+cRtsCeWZZcj-jRLsqwb5OSHLBQFyGCvpAXeHRmcbTtT+w@mail.gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4/ga+S9d9DdSuZNYuqbRY7GZtijW3kRnLNt4rJzSAdc=;
+        b=YIYJgqMam7nLds59Z/yH0SLjSTfZT2cVoV+PruLig3X+LpzAqpsIAFJQR33ttieKnN
+         tG8l6eJZy5JatNr5m/9onEuHbCJBUAJQDhyq1jefR4bHa+QIJqXSkxKl3fC5jtQknY5j
+         6Id42iN94HAjqwHXnjk3HzigZgUKyTWnjyMWqBc4wdW1Bdq5VW8S+vE5GE5vPnLvYo/8
+         Y2TrceOB4vE/3Orip1UyvucaSCj5EYAqc2oV+MVt0cNK3mp/dMFlcvSJvM96Bf5rY5oh
+         NoZ5JjGm2Xct8qXM5EqWYdY9YcWXIr2B772fcykHIl0fCwm5febumXV/fgGSVo1YlvYg
+         Zo0A==
+X-Gm-Message-State: AKGB3mJy2/MWzdyobrXBo2EzLmyb4zyqVVbVgylA1T4FesKsrpBavT/+
+        fxUwMxnbWEPK0KibgnpbqGDvhVmg
+X-Google-Smtp-Source: ACJfBovFIsE99WzuHiw6eNT8WLberHhFYRQVZSeEVBIzEeiXKPkqsrdxkIpLOLtb9XcBFVsqzc6P/g==
+X-Received: by 10.99.178.8 with SMTP id x8mr1729315pge.243.1513077866188;
+        Tue, 12 Dec 2017 03:24:26 -0800 (PST)
+Received: from jekeller-home.localdomain (50-39-169-152.bvtn.or.frontiernet.net. [50.39.169.152])
+        by smtp.gmail.com with ESMTPSA id 68sm29387216pfx.186.2017.12.12.03.24.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 12 Dec 2017 03:24:25 -0800 (PST)
+From:   Jacob Keller <jacob.keller@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] doc: clarify usage of XDG_CONFIG_HOME config file
+Date:   Tue, 12 Dec 2017 03:24:22 -0800
+Message-Id: <1513077862-165-1-git-send-email-jacob.keller@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The documentation for git config and how it reads the user specific
+configuration file is misleading. In some places it implies that
+$XDG_CONFIG_HOME/git/config will always be read. In others, it implies
+that only one of ~/.gitconfig and $XDG_CONFIG_HOME/git/config will be
+read.
 
-> On 12 Dec 2017, at 00:58, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->=20
-> On Mon, Dec 11, 2017 at 6:47 PM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->> On 11 Dec 2017, at 19:39, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->>> On Mon, Dec 11, 2017 at 10:50 AM,  <lars.schneider@autodesk.com> =
-wrote:
->>>> From: Lars Schneider <larsxschneider@gmail.com>
->>>>=20
->>>> Git and its tools (e.g. git diff) expect all text files in UTF-8
->>>> encoding. Git will happily accept content in all other encodings, =
-too,
->>>> but it might not be able to process the text (e.g. viewing diffs or
->>>> changing line endings).
->>>>=20
->>>> Add an attribute to tell Git what encoding the user has defined for =
-a
->>>> given file. If the content is added to the index, then Git converts =
-the
->>>> content to a canonical UTF-8 representation. On checkout Git will
->>>> reverse the conversion.
->>>>=20
->>>> Reviewed-by: Patrick L=C3=BChne <patrick@luehne.de>
->>>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->>>> ---
->>>> +static int encode_to_git(const char *path, const char *src, size_t =
-src_len,
->>>> +                        struct strbuf *buf, struct encoding *enc)
->>>> +{
->>>> +       if (enc->to_git =3D=3D invalid_conversion) {
->>>> +               enc->to_git =3D iconv_open(default_encoding, =
-encoding->name);
->>>> +               if (enc->to_git =3D=3D invalid_conversion)
->>>> +                       warning(_("unsupported encoding %s"), =
-encoding->name);
->>>> +       }
->>>> +
->>>> +       if (enc->to_worktree =3D=3D invalid_conversion)
->>>> +               enc->to_worktree =3D iconv_open(encoding->name, =
-default_encoding);
->>>=20
->>> Do you need to be calling iconv_close() somewhere on the result of =
-the
->>> iconv_open() calls? [Answering myself after reading the rest of the
->>> patch: You're caching these opened 'iconv' descriptors, so you don't
->>> plan on closing them.]
->>=20
->> Should this information go into the commit message to avoid confusing
->> future readers? I think, yes.
->=20
-> Maybe. However, the code which does the actual caching is so distant
-> from these iconv_open() invocations that it might be more helpful to
-> have an in-code comment here saying that the "missing" iconv_close()
-> invocations is intentional.
+Improve the documentation explaining how the various configuration files
+are read, and combined.
 
-Agreed. I will add that in v2.
+Instead of referencing each file individually, reference each type of
+location git will check. When discussing the user configuration, explain
+how we switch between one of three choices. Ensure to note that only one
+of the three choices is used.
 
-Thanks,
-Lars
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ Documentation/git-config.txt | 46 +++++++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
+
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 14da5fc..4299fd6 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -104,13 +104,11 @@ OPTIONS
+ 	list them.  Returns error code 1 if no value is found.
+ 
+ --global::
+-	For writing options: write to global `~/.gitconfig` file
+-	rather than the repository `.git/config`, write to
+-	`$XDG_CONFIG_HOME/git/config` file if this file exists and the
+-	`~/.gitconfig` file doesn't.
++	For writing options: write to global user configuration file
++	rather than the repository `.git/config`.
+ +
+-For reading options: read only from global `~/.gitconfig` and from
+-`$XDG_CONFIG_HOME/git/config` rather than from all available files.
++For reading options: read only from global user configuration file
++rather than from all available files.
+ +
+ See also <<FILES>>.
+ 
+@@ -237,26 +235,30 @@ See also <<FILES>>.
+ FILES
+ -----
+ 
+-If not set explicitly with `--file`, there are four files where
++If not set explicitly with `--file`, there are three locations where
+ 'git config' will search for configuration options:
+ 
+-$(prefix)/etc/gitconfig::
+-	System-wide configuration file.
+-
+-$XDG_CONFIG_HOME/git/config::
+-	Second user-specific configuration file. If $XDG_CONFIG_HOME is not set
+-	or empty, `$HOME/.config/git/config` will be used. Any single-valued
+-	variable set in this file will be overwritten by whatever is in
+-	`~/.gitconfig`.  It is a good idea not to create this file if
+-	you sometimes use older versions of Git, as support for this
+-	file was added fairly recently.
++System-wide configuration::
++	Located at `$(prefix)/etc/gitconfig`.
+ 
+-~/.gitconfig::
+-	User-specific configuration file. Also called "global"
+-	configuration file.
++User-specific configuration::
++	One and only one of the following files will be read
+++
++- `~/.gitconfig`
++- `$XDG_CONFIG_HOME/git/config`
++- `$HOME/.config/git/config`
+++
++If `~/.gitconfig` exists, it will be used, and the other files will not be
++read. Otherwise, if `$XDG_CONFIG_HOME` is set, then `$XDG_CONFIG_HOME/git/config`
++will be used, otherwise `$HOME/.config/git/config` will be used.
+++
++Note that git will only ever use one of these files as the global user
++configuration file at once. Additionally if you sometimes use an older version
++of git, it is best to only rely on `~/.gitconfig` as support for the others was
++added fairly recently.
+ 
+-$GIT_DIR/config::
+-	Repository specific configuration file.
++Repository-specific configuration::
++	Located at `$GIT_DIR/config`.
+ 
+ If no further options are given, all reading options will read all of these
+ files that are available. If the global or the system-wide configuration
+-- 
+2.7.4
 
