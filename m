@@ -2,111 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 426251F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 16:40:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6FB1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 16:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751665AbdLLQkN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 11:40:13 -0500
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:43644 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbdLLQkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 11:40:12 -0500
-Received: by mail-wr0-f181.google.com with SMTP id z34so21761389wrz.10
-        for <git@vger.kernel.org>; Tue, 12 Dec 2017 08:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=wyJvRRotFiIVjTTSoad0uiS62UqZUBQ+UX1IojJFL9U=;
-        b=f7r0fL8nDc+lLUoiKDE70mhimj8PFXxFf63zs/SRmPmE+Yx1kQZuQ13ICbRLflV8t4
-         v5k56UIBF3ghYlpSqYGiN9nkB0u5dwnLWJT2ue7dR9EWKip1q/+TZYjmGV/fNdfbQJI7
-         a0jgh5ePunqYogiYxZSkjc3/LGd0E4ggWaCEM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=wyJvRRotFiIVjTTSoad0uiS62UqZUBQ+UX1IojJFL9U=;
-        b=YNFijIjBr949R2C99MlBqcEazitAS9hfCUUC4C9kiwX0H7VULsffiDaO5g98ePniwz
-         EjWC2sdQOIaGCcp37zq33UX0xz9afA1sMuLPY74EfOcpySOCOuCykE5Pe3QK5opqOmS4
-         VFjI9ob/9ruKN93T96jx1WYuvc2S/F/76062vMzg7T342Lm1HI5LoVx1rYmTl5u6Thwq
-         xalNJvJ4zAPdT4Qqq77BrYmgdidViNFcogXZqEdohfBJHiHHGkr3wL/Dig+DEJy1cuUh
-         0u6DSNSX/FIt21kIhkOV3QQUcSB8p6TxemNR5rQMqsM6cAacjygfCn2E9a1Lt9KXt922
-         pacg==
-X-Gm-Message-State: AKGB3mLVdrtS3OQW9jQKrp9EIIOTJ8zYTRk79wJRD3JQS4ExnamaFIyQ
-        zRE6ROLphQex4oKLhs4k59P/Rf0WAg4=
-X-Google-Smtp-Source: ACJfBouZkX0/RLwznxDrpnDWGruNVdaNQ0+DikRqfLfbf0cBIYaHkWTgjZiP2BxMNrX3pqJ9dDLU+A==
-X-Received: by 10.223.148.69 with SMTP id 63mr4651698wrq.89.1513096810927;
-        Tue, 12 Dec 2017 08:40:10 -0800 (PST)
-Received: from zen.linaro.local ([81.128.185.34])
-        by smtp.gmail.com with ESMTPSA id b16sm22201319wrd.69.2017.12.12.08.40.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Dec 2017 08:40:09 -0800 (PST)
-Received: from zen (localhost [127.0.0.1])
-        by zen.linaro.local (Postfix) with ESMTPS id 7AEE93E009E;
-        Tue, 12 Dec 2017 16:40:09 +0000 (GMT)
-References: <20171116154814.23785-1-alex.bennee@linaro.org> <CAPig+cTXq6jSN9f2_xyj=Jfv_cg2kUFUtA5uVkZDrRRSi2x7vg@mail.gmail.com> <87wp2jwe9o.fsf@linaro.org> <20171121205206.fvwjkkwhil4abmmk@laptop> <xmqq8tezyu3g.fsf@gitster.mtv.corp.google.com> <87mv2p89wu.fsf@linaro.org> <20171211172615.jfsjthkvs4itjpcn@laptop> <CACBZZX58KpQ7=V8GUFfxuMQq_Ar6cmmoXyPx_umUTbU19+0LCw@mail.gmail.com> <20171212103040.jbgkyet5rapqxi44@laptop>
-User-agent: mu4e 1.0-alpha2; emacs 26.0.90
-From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-To:     Thomas Adam <thomas@xteddy.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Remi Lespinet <remi.lespinet@ensimag.grenoble-inp.fr>
-Subject: Re: [PATCH] git-send-email: fix get_maintainer.pl regression
-In-reply-to: <20171212103040.jbgkyet5rapqxi44@laptop>
-Date:   Tue, 12 Dec 2017 16:40:09 +0000
-Message-ID: <87indb99xy.fsf@linaro.org>
+        id S1752456AbdLLQxR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 11:53:17 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:34519 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751665AbdLLQxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 11:53:14 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id Onnse53XbAp17OnnsenRYY; Tue, 12 Dec 2017 16:53:13 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=ybZZDoGAAAAA:8 a=5rxgeBVgAAAA:8 a=dIu3SnmMAAAA:8 a=NEAV23lmAAAA:8
+ a=H-5mch-6-YSsrHaLek4A:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=Ua9G7VpiFza3u12uuhVB:22
+Message-ID: <5400ED3ACDCF49BA84399FDBFD7DDFF8@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Christian Couder" <christian.couder@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "git" <git@vger.kernel.org>,
+        "Jonathan Tan" <jonathantanmy@google.com>,
+        "Jeff Hostetler" <git@jeffhostetler.com>,
+        "Ben Peart" <peartben@gmail.com>, "Jeff King" <peff@peff.net>,
+        "Lars Schneider" <larsxschneider@gmail.com>
+References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com> <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
+Date:   Tue, 12 Dec 2017 16:53:11 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171211-6, 11/12/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfPBs4L38l7KQYCx28WWRiErC3wzRWLf0GMz0esFiW304zW/JxVs8VHdrNsv5fkiUZtkiX4bjxjhlJpVIMMYdx5s3cltFpaEaEMw2/ZFZbXv7TPLjCxhA
+ 03xxdUV30Kfi2bMBwTR3hcJGrOPer3RKBlL/rmeoQecE1ebC80DdkzDvM2TOduyxZTPsOz0pGojKTRWRZwvzd5gqYSjdi6nKvK4c3eH3HEBoZID3MT2zKrav
+ r5p9DwMmEtndnDA7ftL4alSpo4s8vn7hkiNOkhXhLOWE7x07e3OBo8ixdxA5h+xK3FK16UkuXEIeCWZi32EU2bZ2mzNoOxApPvAYf1FYrijn9QxP6s576XC5
+ CVXgOjPA9QSzpXelKbzMyFUs/iCH3I/P/LFVk5xmrz6CmpekTEc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Thomas Adam <thomas@xteddy.org> writes:
-
-> Hi,
+From: "Christian Couder" <christian.couder@gmail.com>
+> On Thu, Dec 7, 2017 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> * jh/object-filtering (2017-12-05) 9 commits
+>>   (merged to 'next' on 2017-12-05 at 3a56b51085)
+>>  + rev-list: support --no-filter argument
+>>  + list-objects-filter-options: support --no-filter
+>>  + list-objects-filter-options: fix 'keword' typo in comment
+>>   (merged to 'next' on 2017-11-27 at e5008c3b28)
+>>  + pack-objects: add list-objects filtering
+>>  + rev-list: add list-objects filtering support
+>>  + list-objects: filter objects in traverse_commit_list
+>>  + oidset: add iterator methods to oidset
+>>  + oidmap: add oidmap iterator methods
+>>  + dir: allow exclusions from blob in addition to file
+>>  (this branch is used by jh/fsck-promisors and jh/partial-clone.)
+>>
+>>  In preparation for implementing narrow/partial clone, the object
+>>  walking machinery has been taught a way to tell it to "filter" some
+>>  objects from enumeration.
+>>
+>>
+>> * jh/fsck-promisors (2017-12-05) 12 commits
+>>  - gc: do not repack promisor packfiles
+>>  - rev-list: support termination at promisor objects
+>>  - fixup: sha1_file: add TODO
+>>  - fixup: sha1_file: convert gotos to break/continue
+>>  - sha1_file: support lazily fetching missing objects
+>>  - introduce fetch-object: fetch one promisor object
+>>  - index-pack: refactor writing of .keep files
+>>  - fsck: support promisor objects as CLI argument
+>>  - fsck: support referenced promisor objects
+>>  - fsck: support refs pointing to promisor objects
+>>  - fsck: introduce partialclone extension
+>>  - extension.partialclone: introduce partial clone extension
+>>  (this branch is used by jh/partial-clone; uses jh/object-filtering.)
+>>
+>>  In preparation for implementing narrow/partial clone, the machinery
+>>  for checking object connectivity used by gc and fsck has been
+>>  taught that a missing object is OK when it is referenced by a
+>>  packfile specially marked as coming from trusted repository that
+>>  promises to make them available on-demand and lazily.
 >
-> On Mon, Dec 11, 2017 at 08:46:46PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> I.e. we'd just ship a copy of Email::Valid and Mail::Address in
->> perl/Git/FromCPAN/, use a wrapper to load them, and then we wouldn't
->> need to if/else this at the code level, just always use the module,
->> and it would work even on core perl.
+> I am currently working on integrating this series with my external odb
+> series 
+> (https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/).
 >
-> I disagree with the premise of this, =C3=86var.  As soon as you go down t=
-his route,
-> it increases maintenance to ensure we keep up to date with what's on CPAN=
- for
-> a tiny edge-case which I don't believe exists.
->
-> You may as well just use App::FatPacker.
->
-> We're talking about package maintenance here -- and as I said before, the=
-re's
-> plenty of it around.  For those distributions which ship Git (and hence a=
-lso
-> package git-send-email), the dependencies are already there, too.  I just
-> cannot see this being a problem in relying on non-core perl modules.  Eve=
-ry
-> perl program does this, and they don't go down this route of having copie=
-s of
-> various CPAN modules just in case.  So why should we?  We're not a special
-> snowflake.
+I too had seen that, as currently configured, the 'partialClone' could be 
+seen as a method for using the remote as if it were an object database (odb) 
+that was part of an 'always on-line' capability. However I'm cautious about 
+locking out the original DVCS capability of being off-line relative to some, 
+or all, remotes and still needing to work in 'airplane mode'.
 
-I less bothered my the potentially shipping a git specific copy than
-ensuring the packagers pick up the dependency when they do their builds.
-Do we already have a mechanism for testing for non-core perl modules
-during the "configure" phase of git?
+It should be OK for the local narrowClone (my term) to be totally off-line 
+for a while and still be able to work when back on line with other suitable 
+remotes, even after the original remote has gone.
 
+
+> Instead of using an "extension.partialclone" config variable, an odb
+> will be configured like using an "odb.<odbname>.promisorRemote" (the
+> name might still change) config variable. Other odbs could still be
+> configured using "odb.<odbname>.scriptCommand" and
+> "odb.<odbname>.subprocessCommand".
+
+The future work Jeff had indicated, IIRC, should be able to cope with 
+multiple promisor remotes, which it's to be hope this could handle. I'm not 
+sure how the odb code would handle a partial failure where a partition of 
+the odb stops being available.
+
+>
+> The current work is still very much WIP and some tests fail, but you
+> can take a look there:
+>
+> https://github.com/chriscool/git/tree/gl-promisor-external-odb440
 --
-Alex Benn=C3=A9e
+Philip 
+
