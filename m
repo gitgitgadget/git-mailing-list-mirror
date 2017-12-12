@@ -7,57 +7,51 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E01021F406
-	for <e@80x24.org>; Tue, 12 Dec 2017 19:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E0C1F406
+	for <e@80x24.org>; Tue, 12 Dec 2017 19:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752495AbdLLTg2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Dec 2017 14:36:28 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64546 "EHLO
+        id S1752361AbdLLTsB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Dec 2017 14:48:01 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62795 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752279AbdLLTgY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Dec 2017 14:36:24 -0500
+        with ESMTP id S1752273AbdLLTsA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Dec 2017 14:48:00 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EA65BC7E75;
-        Tue, 12 Dec 2017 14:36:23 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D7FDC7FB9;
+        Tue, 12 Dec 2017 14:48:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LVOp5pLruZXaVaEpBAO7sQ6W+0U=; b=EUtDr0
-        0O8THF1NtO6GktegqpeDoS/ReOmrUCxCO5+LEmJO+FszGyfBI3ZbpYrmOiBC3eDg
-        PaKK7hkFbP1/0OZnfevO5YvQ0j9GkPijXMNfFkZUOnk3RDj5OjS0GcpcGrv/DOx2
-        rBhWrbz3HWokFyOpjJw7hOvGpQRMxL4oHkjV0=
+        :content-type; s=sasl; bh=GgU5kQ+LGPWf57BDHs6BNlk1/Ek=; b=FReDbB
+        aE6wm778rR+aIWZDAQuzzB1j8hK35X9wKKA3ut0YBDYz96lEHEuxWzpzBs6oq/aB
+        OA979F9B71CNAmGwmB7uzQlWPhx+kdGsoT6xZHygiKhwpZx8xaELXXJFy1uiV+4A
+        wVaegfKR5nL1owmFaBMyhTiuA6xGn7hX94q3c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cu384our+uQpH686XaOyWm2Xk40Da1y5
-        liH8Ia3IDZTEchssuDCkKLqSpQTjGvgzEjQVzlDetoGPs610E26Jb+L0/MEVua2N
-        kb2ijRoYnbGF0vofTFjoLz84K5Yzv/mz4cceN5Z82e8CgxDItGNsMH94CK2cBIzp
-        tf8ulgbZBBU=
+        :content-type; q=dns; s=sasl; b=BUedU/pBceP+QNb6LBhOpW5KeiK3NMwR
+        vVEiU5wSB4koCLZCBREEQoa+6LpUHsfLxoz6ArgdZaBholzMjceRUGDmbuGvcrim
+        6P8O0Ab1BNGBCVEvFGKA4BHfDX6DytvvzVJeO3RXv6beUSQ6bUm8ujGSjWQxwZIw
+        rkJCxe0If+A=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D82B2C7E74;
-        Tue, 12 Dec 2017 14:36:23 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34664C7FB8;
+        Tue, 12 Dec 2017 14:48:00 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 465E7C7E71;
-        Tue, 12 Dec 2017 14:36:23 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A82A1C7FB6;
+        Tue, 12 Dec 2017 14:47:59 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Yaroslav Halchenko <yoh@onerussian.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
-        Jeff King <peff@peff.net>
-Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or just a bug?
-References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
-        <20171211225615.GC214273@aiede.mtv.corp.google.com>
-        <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xpH6M-FqRJcvsbv=mjj1T04GR6pxz-4NkTmGZUgUKU6wQ@mail.gmail.com>
-Date:   Tue, 12 Dec 2017 11:36:22 -0800
-In-Reply-To: <CA+P7+xpH6M-FqRJcvsbv=mjj1T04GR6pxz-4NkTmGZUgUKU6wQ@mail.gmail.com>
-        (Jacob Keller's message of "Tue, 12 Dec 2017 01:36:17 -0800")
-Message-ID: <xmqqshcf20y1.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Yaroslav Halchenko <yoh@onerussian.com>
+Subject: Re: [PATCH] doc: clarify usage of XDG_CONFIG_HOME config file
+References: <1513077862-165-1-git-send-email-jacob.keller@gmail.com>
+Date:   Tue, 12 Dec 2017 11:47:58 -0800
+In-Reply-To: <1513077862-165-1-git-send-email-jacob.keller@gmail.com> (Jacob
+        Keller's message of "Tue, 12 Dec 2017 03:24:22 -0800")
+Message-ID: <xmqqo9n320ep.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BC6F185C-DF73-11E7-A4BD-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5B7AB2DE-DF75-11E7-B045-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,22 +59,50 @@ X-Mailing-List: git@vger.kernel.org
 
 Jacob Keller <jacob.keller@gmail.com> writes:
 
->> I actually thought that the plan was "you either have this, or the
->> other one, never both at the same time" (and I think those who
->> pushed the XDG thing in to the system made us favor it over the
->> traditional one).  So as long as --global updates the one that
->> exists, and updates XDG one when both or neither do, I think we
->> should be OK.  And from that viewpoint, we definitely do not want
->> two kinds of --global to pretend as if we support use of both at the
->> same time.
->
-> It appears that we actually prefer ~/.gitconfig rather than XDG_CONFIG_HOME..
->
-> And at least based on current cursory testing on the command line, we
-> do both read and write to the proper location, assuming that
-> ~/.gitconfig is preferred over $XDG_CONFIG_HOME.
+>  --global::
+> +	For writing options: write to global user configuration file
+> +	rather than the repository `.git/config`.
+>  +
+> +For reading options: read only from global user configuration file
+> +rather than from all available files.
+>  +
+>  See also <<FILES>>.
 
-OK, so I misremembered the details but it seems that the behaviour
-is consistent and there is no ambiguity?  
+OK.
 
-Am I reading you correctly?
+> @@ -237,26 +235,30 @@ See also <<FILES>>.
+>  FILES
+>  -----
+>  
+> +If not set explicitly with `--file`, there are three locations where
+>  'git config' will search for configuration options:
+>  
+> +System-wide configuration::
+> +	Located at `$(prefix)/etc/gitconfig`.
+>  
+> +User-specific configuration::
+> +	One and only one of the following files will be read
+
+We said "will search for" upfront, but this talks about "will be
+read", leaving the reader puzzled as to what should happen when
+writing.  Perhaps "s/read/used/"?
+
+> ++
+> +- `~/.gitconfig`
+> +- `$XDG_CONFIG_HOME/git/config`
+> +- `$HOME/.config/git/config`
+> ++
+> +If `~/.gitconfig` exists, it will be used, and the other files will not be
+> +read. Otherwise, if `$XDG_CONFIG_HOME` is set, then `$XDG_CONFIG_HOME/git/config`
+> +will be used, otherwise `$HOME/.config/git/config` will be used.
+
+And then "and the other files will not be read" can be dropped from
+the first sentence of this paragraph?
+
+Yaroslav on the original thread mentioned that reading codepath
+without --file or --global does not limit to one of the three, and
+this section is about "If not set explicitly with `--file`", so we'd
+need to make sure if the above is what happens in reality (or update
+the proposed clarification to match the reality).
+
+Thanks.
