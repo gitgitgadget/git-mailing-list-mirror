@@ -2,80 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4FC1F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 16:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2AA781F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 16:30:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753337AbdLMQTA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 11:19:00 -0500
-Received: from mail-io0-f180.google.com ([209.85.223.180]:41094 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753039AbdLMQS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 11:18:59 -0500
-Received: by mail-io0-f180.google.com with SMTP id o2so3391017ioe.8
-        for <git@vger.kernel.org>; Wed, 13 Dec 2017 08:18:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gkJxtPPhKlcJE0GE1xcy89+EODS6aTMrvhMTgXasL8s=;
-        b=CkyacjDjroUClxTHhy9Cx7lnokzRxMYlkUIGJXbEEpfBimRkPSSL4R+rMFo8N5OyEr
-         SKKsarzmjyG/SiK0njkWwAwlF8+FeyKI6ZTAgH9dLd7oTiLwbGrIjg4qoWRUM/6+wSCy
-         juOgztuuoPK7ASFnvBpGaqtoxd6nR/Kwct5obQJmnBBJMPDvzECP+8+ptHODzI15eHl7
-         mxE4zN40Q9qPFOrEQz8+JnXd0RJ3VMKor+wxEQgvLe8P6g6ftzHJVuDgh4IHuHUqiloU
-         fVcrAtvuPoLSyJfUYcP2dgYC7tl5/YSZkHPjHeXeafeCHYAjitl1bXSYXc7azUIhWAnZ
-         qSgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gkJxtPPhKlcJE0GE1xcy89+EODS6aTMrvhMTgXasL8s=;
-        b=rwCF3P4V4N7arZUv2ll3adHiiEp3aENDd+e62TiAxxXkB6Lcp0+mdl84jKjIElyEa7
-         TJEWxEkLGWoA8sPoVf5TkKlDSDMtaCIIk6q4gl9+ZO1A5aPeqhCKbDTvKe56vik0UFId
-         vMQGnNdSHwOcLOFOesIBCEZ/VNAsyPi6fpWT9UYNM6AZoiNQooubyDGtRo8wzv/8g1cB
-         HZC9tARzpA0Sx4dduywe1pOZpn8m/DywlTRw/+mCpUYhhHOYEGsg7zOcER9KZPVtXPKI
-         kcXyyMeFwvq3uKZV7sh1/c82DSGw6QnVYy5ZpqDrUA+wj/ECIkQcBjzuYRiBFEVtnvOB
-         jJkQ==
-X-Gm-Message-State: AKGB3mKz4ahtGAPIGIcxAGNa0xGJAbrvShBAr/5TuwkMyYwoNf5gVbvq
-        aqA+/j2z2TVz4D6lvAQwsX1oAFAMMEotPvHA6oA=
-X-Google-Smtp-Source: ACJfBotuauLnUvolIcS0q5ILVunSZBIa6B5D3HfYuzF5xDhtZwJXfPeX1AlF4vAH84s3AyEo2AdDy+ZDQGHXvYsAD7M=
-X-Received: by 10.107.20.21 with SMTP id 21mr3621950iou.116.1513181939258;
- Wed, 13 Dec 2017 08:18:59 -0800 (PST)
+        id S1753269AbdLMQar (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 11:30:47 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:23286 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753041AbdLMQaq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 11:30:46 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id P9vheIP8ICbAZP9vheDPfy; Wed, 13 Dec 2017 16:30:45 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=1XWaLZrsAAAA:8
+ a=Olv5uz_2KpxtjQqyIRMA:9 a=wPNLvfGTeEIA:10
+Message-ID: <63304896830043BF9F076F507000D454@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Brandon Williams" <bmwill@google.com>, <git@vger.kernel.org>
+Cc:     "Brandon Williams" <bmwill@google.com>
+References: <20171020171839.4188-1-bmwill@google.com> <20171204235823.63299-1-bmwill@google.com> <20171204235823.63299-13-bmwill@google.com>
+Subject: Re: [WIP 12/15] ls-refs: introduce ls-refs server command
+Date:   Wed, 13 Dec 2017 16:30:44 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Wed, 13 Dec 2017 08:18:58 -0800 (PST)
-In-Reply-To: <53BD7DB89F12403F974A7D2201CC7307@PhilipOakley>
-References: <20171213151344.2138-1-chriscool@tuxfamily.org> <53BD7DB89F12403F974A7D2201CC7307@PhilipOakley>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 13 Dec 2017 17:18:58 +0100
-Message-ID: <CAP8UFD3Q4h-aYBDABSPOW948LQYVydWZ1hLPAD+kr9ZpXVZiaQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Codespeed perf results
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171212-0, 12/12/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfG/P8LjSTHO0ftIhhxEZy5NTPPfsWv4U11cbD8IPIQ4/S0jqTvYi4hKYkX5xxbpRv6mZX+cafuJORaF6zBVMjsCZXVyNJTfhTrH0Irmd3q2XC6zkYT/W
+ L6ihZi/4cqsv6/Dn4gECCj2g5Woum9nAMtYVI+q9QkXIteU2GXwvAllkAWAVHRhlWB0Jai+IRfCeJ16agieC8JDzQZPqW6cc1XfjSDpnz3QFjmd4KX4fu29a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 13, 2017 at 5:02 PM, Philip Oakley <philipoakley@iee.org> wrote:
+From: "Brandon Williams" <bmwill@google.com>
+Sent: Monday, December 04, 2017 11:58 PM
+> Introduce the ls-refs server command.  In protocol v2, the ls-refs
+> command is used to request the ref advertisement from the server.  Since
+> it is a command which can be requested (as opposed to manditory in v1),
+> a clinet can sent a number of parameters in its request to limit the ref
 
->> The end goal would be to have such a server always available to track
->> how the different git commands perform over time on different kind of
->> repos (small, medium, large, ...) with different optimizations on and
->> off (split-index, libpcre2, BLK_SHA1, ...)
->
-> Dumb question: is this expected to also be able to do a retrospective on the
-> performance of appropriate past releases? That would allow immediate
-> performance comparisons, rather than needing to wait for a few releases to
-> see the trends.
+s/clinet/client/
 
-Yeah, sure. For example in the perf.conf file above there is
-"dirsOrRevs = v2.12.0 v2.13.0" which means that tests will be
-performed on v2.12.0 and v2.13.0.
+> advertisement based on provided ref-patterns.
+> 
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+Philip
