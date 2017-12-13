@@ -2,101 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 946B21F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 15:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6639F1F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 15:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753345AbdLMPOX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 10:14:23 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:46373 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753051AbdLMPOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 10:14:00 -0500
-Received: by mail-wm0-f66.google.com with SMTP id r78so5698144wme.5
-        for <git@vger.kernel.org>; Wed, 13 Dec 2017 07:14:00 -0800 (PST)
+        id S1753051AbdLMPiO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 10:38:14 -0500
+Received: from mail-ua0-f176.google.com ([209.85.217.176]:46200 "EHLO
+        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751975AbdLMPiN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 10:38:13 -0500
+Received: by mail-ua0-f176.google.com with SMTP id t24so1827362uaa.13
+        for <git@vger.kernel.org>; Wed, 13 Dec 2017 07:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4OBB5z6EvOlEJ3x9XBn60AqHUrO7oUjM8gtHIh/2nJY=;
-        b=UtTRU4c+q1LpJr9U9gnnplYFLbmEWrFOSPHHmjHK88z5WTCo0hh8SHGfQz0+7ibb4v
-         etl9iBw4QvyskzVFc8h3PSwCfsARq9OXvLlOXEBM6DYzsBUSGef5ATK8bcJh9URKFA0i
-         BNKoEkelB43BkUrXoQv9yrJeVGicmFFCztpelZ/RUDBYzIF+aG4+fl56tIwg4kLey3AA
-         +L5PKx0716fzaOdyqPvbfSkQcCc3kzAiKEZGnGytb3J4G9hvSI7rXvOxD18o6D87EMPk
-         igE8q0sEjudCWCii6BZqT6IWcH/H9r84RnoASemOlw5ZbPzg8W0KxwSOUqb4lYg80iAA
-         XC6g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n2ojoldjuLfXVZRoTbGjloQioW2DLGPWwGoiw5wiiH0=;
+        b=AhjmWhH9r39S87Cj3HMwI5/EeOfAUnX0qZKudT45lLPfXeOyunSVnp/73GswobCAXw
+         CEuKYc2bo1Ua6yaM7jG1nIiFHd5ILdwtgBg9U6bHlEvp1sO4M9AMR6RQ9sYJgUKZ02cP
+         paR7uv3DUkldyEtirk86Dw5ulfiLExes16dsRZOuvXa2lis8gXUNHhaYgmQv1MrZN+Ef
+         oTTTLZt8Zq4aRmXkyudfUsmqi1e6z4bM16naBhO2CBq4W3AsaaLQ/KS5MtfBSgPy7AJk
+         cPt+7yuvl/6vmOxG424+y6rRD9GwQ9x9r/wQ3C1+PZB84lQsJfPGzFQREJm/lu8KwiQr
+         CLbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4OBB5z6EvOlEJ3x9XBn60AqHUrO7oUjM8gtHIh/2nJY=;
-        b=fyI4cOLzqdws1vZerMReZ3URrLCGl3HqQGLKIwI0K+5YkWZk8liLISmlIHTH75JpWM
-         bFw+aF7rzi1ogDvphnIyX2U5fL6EGmfMBA+grUXSYFuWM5XO9R2v+AlpHyAd6n1mhBn3
-         nuXUda33Quxl8ad5+EAFKAdZhcJNKzLCho476bixkA/ZTSo7NzWgFajt74valcovAa4E
-         AAA0NzD8t9rx68RXVfgd5BChGzZviD/hXJxqwCmMICRBgTU9lF2NAinDVj1xpuLIJF//
-         KMyOrdwmFPBwWNFa19z/XecTJKxi6NB3nhZvzLdqgvQXhMI8tJX62GCqTF2ggn8ZeJeZ
-         0gfQ==
-X-Gm-Message-State: AKGB3mIVE4oWE2MG2LCOl+DLJdgmVd7ql3L0MGu9lSO+cliB2ax3LjRd
-        chovUKQUcCFGLTc1odV8p+7ol/A5
-X-Google-Smtp-Source: ACJfBosj7a9mqVUsachRpeLDnHDRxenLbO9V/WAWiJxjVW9rGerWg1fIprTmPeh4uRpS6/uE5WtiGg==
-X-Received: by 10.80.158.194 with SMTP id a60mr7896603edf.228.1513178039432;
-        Wed, 13 Dec 2017 07:13:59 -0800 (PST)
-Received: from christian-Latitude-E6330.booking.pcln.com ([185.24.142.26])
-        by smtp.gmail.com with ESMTPSA id z56sm1552690edb.72.2017.12.13.07.13.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Dec 2017 07:13:58 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 5/8] perf/run: add conf_opts argument to get_var_from_env_or_config()
-Date:   Wed, 13 Dec 2017 16:13:41 +0100
-Message-Id: <20171213151344.2138-6-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.15.1.361.g8b07d831d0
-In-Reply-To: <20171213151344.2138-1-chriscool@tuxfamily.org>
-References: <20171213151344.2138-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n2ojoldjuLfXVZRoTbGjloQioW2DLGPWwGoiw5wiiH0=;
+        b=smg/MBaim8Oea+0ORETAFFhQ/EVOdEw5cw8Bv1JsmKjtgThGUz/aZ5m5fD5P4dkW3e
+         XfMxmx/0djEt/MD6Xzy4Cfe1PSBIYuZgLY3wlsw2bRfvYWzZFczItGmxCrnFddOo92On
+         orFJjhYF+OrsnHkHTyr2XFTWU0HWKn8exBYkJPmTskfx1O17rlkiofp6mAv/Ng4i/DYn
+         3dDHYGRyUVz03dG8bydk1LsGz0k6lR23jctc7XYBpiZIJIMPfa6c0YqXH6Jedwa8LZ2H
+         ZjtAVgqltz2xvxDtXrRzCgJZWG6A7mWl5YdgeqlJyvQjwFYZhYCyEOQ5WW2CYpgRkPcu
+         UCcw==
+X-Gm-Message-State: AKGB3mKbJ11ecqlWFV57qjOm4BG+j4AS/T8xGItsIBGPnUUw5qFmaE+v
+        iLS6jvOyNRT5wgphUzsEjAjOwDEiVWOhrCT9nFM=
+X-Google-Smtp-Source: ACJfBotZDfj7z8pBNPyCU7P6RcLCAPkmOjg3hZV+9T9kP8dnJP9J3sCsECHhjGwzjvcQCMA/VcvKmi5XQ2aye6WaKQo=
+X-Received: by 10.159.61.90 with SMTP id m26mr8355197uai.40.1513179492465;
+ Wed, 13 Dec 2017 07:38:12 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.70.138 with HTTP; Wed, 13 Dec 2017 07:38:11 -0800 (PST)
+In-Reply-To: <CAPc5daU1b1sJPK37sjMKdr=xY5yg3qaHk9PPdgJ1JH9KvJxatQ@mail.gmail.com>
+References: <20171129014237.32570-1-newren@gmail.com> <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
+ <CAPc5daU1b1sJPK37sjMKdr=xY5yg3qaHk9PPdgJ1JH9KvJxatQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 13 Dec 2017 07:38:11 -0800
+Message-ID: <CABPp-BG8rZtVarrfapWOzOhsS0-WnUS5g8cDZW0hLnUgQhNJ4A@mail.gmail.com>
+Subject: Re: [PATCH v4 00/34] Add directory rename detection to git
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/perf/run | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On Tue, Dec 12, 2017 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> OK, it seems that I managed to make this test pass under poison build
+> (see https://travis-ci.org/git/git/jobs/315658242)
+>
+> Please check https://github.com/git/git/commit/e5c5e24ad91a75b5a70c056fe6c6e3bfb55b56fc
+> and sprinkle its fix to whichever original commits in the series that
+> need fixing.
 
-diff --git a/t/perf/run b/t/perf/run
-index bbd703dc4f..04ea5090f9 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -106,6 +106,7 @@ get_var_from_env_or_config () {
- 	conf_sec="$2"
- 	conf_var="$3"
- 	default_value="$4" # optional
-+	conf_opts="$5" # optional
- 
- 	# Do nothing if the env variable is already set
- 	eval "test -z \"\${$env_var+x}\"" || return
-@@ -116,11 +117,11 @@ get_var_from_env_or_config () {
- 	if test -n "$GIT_PERF_SUBSECTION"
- 	then
- 		var="$conf_sec.$GIT_PERF_SUBSECTION.$conf_var"
--		conf_value=$(git config -f "$GIT_PERF_CONFIG_FILE" "$var") &&
-+		conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
- 		eval "$env_var=\"$conf_value\"" && return
- 	fi
- 	var="$conf_sec.$conf_var"
--	conf_value=$(git config -f "$GIT_PERF_CONFIG_FILE" "$var") &&
-+	conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
- 	eval "$env_var=\"$conf_value\"" && return
- 
- 	test -n "${default_value+x}" && eval "$env_var=\"$default_value\""
--- 
-2.15.1.361.g8b07d831d0
-
+Will do; sorry for the problems.  Thanks for finding and fixing.
