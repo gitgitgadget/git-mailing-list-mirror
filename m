@@ -2,66 +2,42 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13F661F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 21:20:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8EF01F419
+	for <e@80x24.org>; Wed, 13 Dec 2017 22:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753463AbdLMVUc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 16:20:32 -0500
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:41935 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752908AbdLMVUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 16:20:31 -0500
-Received: by mail-wm0-f52.google.com with SMTP id g75so7689212wme.0
-        for <git@vger.kernel.org>; Wed, 13 Dec 2017 13:20:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=W968l95oZEyIj+DB7IB0VMedofV60x+24AKKh2gyRPU=;
-        b=q3Gp5447h31m8yV4/hFVv4Y8uizeac0eRDStAUr4Z4s8FK6+ObCA5EL2XGpmTJyAKr
-         CMoOdRf+CtEd9M5c19c6xNlxkCSIbygoaPZfV5uu5TPq7l8c1RvYaYKDUeFeHeKdZ8dt
-         m4+C32fB4RkuLGqPd5REgoapm6hK9yV0MXtXl1jrailxurNrdwbdU2zBJAQcyAC2mw2L
-         RPBMIJB/rM5NCZMItBY4GyPpfQnu8n3vRw5lXSVb4KEJh+6Hqo/ZvjmKuM37DyvLW4J0
-         NRYQVAP3FfCRN/kfVIQAnDYOTji3LURKaWnxXuY7M2jWyW+A+2+hbD2nvyyrpNN+yLRy
-         q5KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=W968l95oZEyIj+DB7IB0VMedofV60x+24AKKh2gyRPU=;
-        b=HnUKeJbUX4dVc8aV/gmLlwlVVVGTBb23ZmOVBGft9Ra1BWlC53e9g3TuOLdOZCnKn7
-         Jnev1+/hKdiFos60PUmoV9l7t5Eg1Sd+WGxqTUL0uGzY0Ph1+85QuECoBGIHZEPd0oXv
-         di/6Bdb/fjRTNDFET6hBvaK2I1fdI5LHvG3m2SJ9mfujqx0WEm4uTsOswjNY59+0xY1E
-         chV0uYlxy3QP9XQLXcewHeM8KiwMqSMbWI1/KlusMLvQzA9iq4AhFABw2bYbvgY+d57e
-         C5oOWoGuJI80LFnCcaopAWTL7DBpyP5pQGb132hyGwghwk5qsej6XHPBwBxRFU0hXRbu
-         5Qsw==
-X-Gm-Message-State: AKGB3mIhvbC/unMxd2bkRsjzAB5u5M7LNIeydW2+Ee6KncxJM8MtYIiE
-        bfstLW51WxJ3S7fFjAA3Yc8qHGAM
-X-Google-Smtp-Source: ACJfBosL8nCQlvuVjIXziuzqGYmNyTePQJWmplTjc3qa8IteLwv+6NRT0Ck9oSVPscu60wsJlDXiGg==
-X-Received: by 10.80.146.81 with SMTP id j17mr9320852eda.159.1513200030196;
-        Wed, 13 Dec 2017 13:20:30 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id x28sm2251443edd.0.2017.12.13.13.20.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 13 Dec 2017 13:20:29 -0800 (PST)
-Subject: Re: Apparent bug in 'git stash push <subdir>' loses untracked files
-To:     Reid Price <reid.price@gmail.com>
-References: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
-Cc:     git@vger.kernel.org
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <0692d5b8-5fc7-c34c-0712-11a913267441@gmail.com>
-Date:   Wed, 13 Dec 2017 22:20:26 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1752265AbdLMWeo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 17:34:44 -0500
+Received: from siwi.pair.com ([209.68.5.199]:43392 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751938AbdLMWen (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 17:34:43 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A1891844CB;
+        Wed, 13 Dec 2017 17:34:42 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5A837844C6;
+        Wed, 13 Dec 2017 17:34:42 -0500 (EST)
+Subject: Re: [PATCH] partial-clone: design doc
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171208192636.13678-1-git@jeffhostetler.com>
+ <20171208192636.13678-2-git@jeffhostetler.com>
+ <xmqqzi6t6kpe.fsf@gitster.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <f3750af4-1343-65a6-2913-a21840e4db89@jeffhostetler.com>
+Date:   Wed, 13 Dec 2017 17:34:41 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-In-Reply-To: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <xmqqzi6t6kpe.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -69,20 +45,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Reid,
 
-On 13/12/2017 18:32, Reid Price wrote:
+
+On 12/8/2017 3:14 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
 > 
-> When running 'git stash push <subdir>' if there are both tracked and
-> untracked files in this subdirectory, the tracked files are stashed
-> but the untracked files are discarded.
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> First draft of design document for partial clone feature.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+>> ---
+> 
+> Thanks.
+> 
+>> +Non-Goals
+>> +---------
+>> +
+>> +Partial clone is independent of and not intended to conflict with
+>> +shallow-clone, refspec, or limited-ref mechanisms since these all operate
+>> +at the DAG level whereas partial clone and fetch works *within* the set
+>> +of commits already chosen for download.
+> 
+> It probably is not a huge deal (simply because it is about
+> "Non-Goals") but I have no idea what "refspec" and "limited-ref
+> mechanism" refer to in the above sentence, and I suspect many others
+> share the same puzzlement.
 
-I can reproduce this as well (git version 2.15.1.windows.2).
+I'll reword this.  There was a question on the list earlier about
+having a filter for commits in addition to ones for blobs and trees.
 
-For what it`s worth, using `git stash save <subdir>` instead seems to 
-(still) work as expected... but on the other hand, `git-stash`[1] 
-manpage seems not to mention this usage ("save" with "pathspec")?
+I just wanted to emphasize that we already have ways to filter or
+limit commits using --shallow-* or --single-branch in clone and 1 or
+more '<refspec>' args in fetch.
 
-Regards, Buga
+  
+>> +An object may be missing due to a partial clone or fetch, or missing due
+>> +to repository corruption. To differentiate these cases, the local
+>> +repository specially indicates packfiles obtained from the promisor
+>> +remote. These "promisor packfiles" consist of a "<name>.promisor" file
+>> +with arbitrary contents (like the "<name>.keep" files), in addition to
+>> +their "<name>.pack" and "<name>.idx" files. (In the future, this ability
+>> +may be extended to loose objects[a].)
+>> + ...
+>> +Foot Notes
+>> +----------
+>> +
+>> +[a] Remembering that loose objects are promisor objects is mainly
+>> +    important for trees, since they may refer to promisor blobs that
+>> +    the user does not have.  We do not need to mark loose blobs as
+>> +    promisor because they do not refer to other objects.
+> 
+> I fail to see any logical link between the "loose" and "tree".
+> Putting it differently, I do not see why "tree" is so special.
+> 
+> A promisor pack that contains a tree but lacks blobs the tree refers
+> to would be sufficient to let us remember that these missing blobs
+> are not corruption.  A loose commit or a tag that is somehow marked
+> as obtained from a promisor, if it can serve just like a commit or a
+> tag in a promisor pack to promise its direct pointee, would equally
+> be useful (if very inefficient).
+> 
+> In any case, I suspect "since they may refer to promisor blobs" is a
+> typo of "since they may refer to promised blobs".
 
-[1] https://git-scm.com/docs/git-stash
+right. good point. i was only thinking about the tree==>blob
+relationship.
+
+
+> 
+>> +- Currently, dynamic object fetching invokes fetch-pack for each item
+>> +  because most algorithms stumble upon a missing object and need to have
+>> +  it resolved before continuing their work.  This may incur significant
+>> +  overhead -- and multiple authentication requests -- if many objects are
+>> +  needed.
+>> +
+>> +  We need to investigate use of a long-running process, such as proposed
+>> +  in [5,6] to reduce process startup and overhead costs.
+> 
+> Also perhaps in some operations we can enumerate the objects we will
+> need upfront and ask for them in one go (e.g. "git log -p A..B" may
+> internally want to do "rev-list --objects A..B" to enumerate trees
+> and blobs that we may lack upfront).  I do not think having the
+> other side guess is a good idea, though.
+
+right.
+
+> 
+>> +- We currently only promisor packfiles.  We need to add support for
+>> +  promisor loose objects as described earlier.
+> 
+> The earlier description was not convincing enough to feel the need
+> to me; at least not yet.
+
+It seems like we need it if a promisor packfile gets unpacked for any
+reason.  But right, I'm not sure how urgent it is.
+
+
+Thanks
+Jeff
+
+
