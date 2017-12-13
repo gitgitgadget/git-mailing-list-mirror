@@ -7,74 +7,99 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80D161F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 19:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3F071F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 19:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbdLMTFc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 14:05:32 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59057 "EHLO
+        id S1753737AbdLMTOP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 14:14:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50990 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753817AbdLMTFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 14:05:31 -0500
+        with ESMTP id S1753299AbdLMTOP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 14:14:15 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 93792B7194;
-        Wed, 13 Dec 2017 14:05:30 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99CFFB7385;
+        Wed, 13 Dec 2017 14:14:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4W1+Pn/HcXBTV/IFIDp7WL4ExS8=; b=K09Cx3
-        ZBOWbIajuWcDL8Co4K0fhRBFCIKkcfMyVjhP3wNw19y8nNiLJdD6bzcr+jiErJJr
-        tmuRJ/qkfXZKrAh4Sb21Pi1Y9DoCd/RMTinURihQNbA4adI0lEy0JM9TKspaw54f
-        3Z8inh9oz9CFBuqPjUT1ZqojiDtLH+gRh+BXc=
+        :content-type; s=sasl; bh=hkGADRSXybqw3VQXisYzX0q+s4M=; b=uy48O5
+        v3K/pzS0NmsUQsXoWLtv1KWFS93zslAPEcuJX5cZTXp5YJ7PEQsVrjCqPUNbE/ad
+        Mfa6130WBi1C9oocjrajiOBTQj9Auwas+xQzcyZIly7DrNybYWyKHk8e3D/pFpuz
+        jotJFr1DqyEchDJa/Fta+O4gUwPhv5U7YOTvE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ez7vaMeGNFDqRQmt7TrwLzDFuv+x106M
-        nQpP0PVRB9dl8rtpVPaj83O2B7J5aMXonuasojhbSWOd1D1+TgDyPgxHxQYWmS4R
-        YrDfVjxO4YUml7nLLGGrZAgm+/7I62W+DcMq5vU1By/bz8+mKpqxw8xdxLAZvrZu
-        dzWcwH963EI=
+        :content-type; q=dns; s=sasl; b=J4EWE1yzLt2o9E57GKeTz0WUPdnaBLKc
+        Jx1jGoCl5WbhP8vqr16p5Ty6Oy+X1Wgp6pT/TMXriDqviwvBhe6S3M+EKGAzMUXT
+        tsrANzkem6rLYrkYnYj9vTExaB/nCJLiwk4OZO2yT2YIoyq0czNPNg3/58+u2tqM
+        GBGiuR+fHwY=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BE99B7192;
-        Wed, 13 Dec 2017 14:05:30 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92246B7383;
+        Wed, 13 Dec 2017 14:14:14 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 12E47B7191;
-        Wed, 13 Dec 2017 14:05:30 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0DACCB7382;
+        Wed, 13 Dec 2017 14:14:13 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-        sbeller@google.com
-Subject: Re: [PATCH v4 00/34] Add directory rename detection to git
-References: <20171129014237.32570-1-newren@gmail.com>
-        <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
-        <14bf2760-2787-5dd3-e5cc-a2ec0e0d8950@ramsayjones.plus.com>
-Date:   Wed, 13 Dec 2017 11:05:28 -0800
-In-Reply-To: <14bf2760-2787-5dd3-e5cc-a2ec0e0d8950@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Wed, 13 Dec 2017 18:15:49 +0000")
-Message-ID: <xmqqvahawirr.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com
+Subject: Re: [PATCH] path: document path functions
+References: <20171212005221.GD177995@google.com>
+        <20171213182802.114615-1-bmwill@google.com>
+Date:   Wed, 13 Dec 2017 11:14:12 -0800
+In-Reply-To: <20171213182802.114615-1-bmwill@google.com> (Brandon Williams's
+        message of "Wed, 13 Dec 2017 10:28:02 -0800")
+Message-ID: <xmqqr2rywid7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 96349DA4-E038-11E7-9A3F-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CE85BA3E-E039-11E7-8D55-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> On 13/12/17 01:06, Junio C Hamano wrote:
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
 >
->> We may probably want to redirect the output of underlying grep to
->> /dev/null in test_i18ngrep to make this kind of misuse easier to
->> spot.
+> As promised here is an update to the documentation for the path generating
+> functions.
 >
-> I have test-suite failures on the 'pu' branch for t4151-am-abort.sh
-> (#3 and #6) and t5536-fetch-conflicts.sh (#3 and #6-7), which on a
-> very quick inspection seem to be due to this (ie your SQUASH commit
-> e5c5e24ad9).
+>  path.h | 133 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 112 insertions(+), 21 deletions(-)
+>
+> diff --git a/path.h b/path.h
+> index 9541620c7..1ccd0373c 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -4,53 +4,144 @@
+>  struct repository;
+>  
+>  /*
+> - * Return a statically allocated filename, either generically (mkpath), in
+> - * the repository directory (git_path), or in a submodule's repository
+> - * directory (git_path_submodule). In all cases, note that the result
+> - * may be overwritten by another call to _any_ of the functions. Consider
+> - * using the safer "dup" or "strbuf" formats below (in some cases, the
+> - * unsafe versions have already been removed).
+> + * The result to all functions which return statically allocated memory may be
+> + * overwritten by another call to _any_ one of these functions. Consider using
+> + * the safer variants which operate on strbufs or return allocated memory.
+>   */
 
-Yup, sorry for leaving it broken this morning.  I re-pushed after
-dropping the /dev/null experiment to fix it.  In the longer term, I
-think we should make sure that output from test_i18ngrep is never
-used (i.e. t4151 etc. must be fixed), though.
+The result of the update definitely is better, but stepping back a
+bit, it still does not answer some questions the original did not:
 
+ - is the resulting path absolute?  if relative, relative to what (cwd)?
+
+ - what should a caller write in fmt?  can we have a couple of
+   typical calling example?
+
+ - does a caller need to know which hierarchies under $GIT_DIR are
+   common and call git_common_path() for them, or does git_path()
+   do the 'right' thing for the caller?  If latter, what's the use
+   of git_common_path() for callers (outside the implementation of
+   path.c API)?
+
+Will queue.  Thanks.
