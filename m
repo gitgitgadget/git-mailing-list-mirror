@@ -2,73 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6639F1F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 15:38:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 852721F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 15:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753051AbdLMPiO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 10:38:14 -0500
-Received: from mail-ua0-f176.google.com ([209.85.217.176]:46200 "EHLO
-        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751975AbdLMPiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 10:38:13 -0500
-Received: by mail-ua0-f176.google.com with SMTP id t24so1827362uaa.13
-        for <git@vger.kernel.org>; Wed, 13 Dec 2017 07:38:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=n2ojoldjuLfXVZRoTbGjloQioW2DLGPWwGoiw5wiiH0=;
-        b=AhjmWhH9r39S87Cj3HMwI5/EeOfAUnX0qZKudT45lLPfXeOyunSVnp/73GswobCAXw
-         CEuKYc2bo1Ua6yaM7jG1nIiFHd5ILdwtgBg9U6bHlEvp1sO4M9AMR6RQ9sYJgUKZ02cP
-         paR7uv3DUkldyEtirk86Dw5ulfiLExes16dsRZOuvXa2lis8gXUNHhaYgmQv1MrZN+Ef
-         oTTTLZt8Zq4aRmXkyudfUsmqi1e6z4bM16naBhO2CBq4W3AsaaLQ/KS5MtfBSgPy7AJk
-         cPt+7yuvl/6vmOxG424+y6rRD9GwQ9x9r/wQ3C1+PZB84lQsJfPGzFQREJm/lu8KwiQr
-         CLbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=n2ojoldjuLfXVZRoTbGjloQioW2DLGPWwGoiw5wiiH0=;
-        b=smg/MBaim8Oea+0ORETAFFhQ/EVOdEw5cw8Bv1JsmKjtgThGUz/aZ5m5fD5P4dkW3e
-         XfMxmx/0djEt/MD6Xzy4Cfe1PSBIYuZgLY3wlsw2bRfvYWzZFczItGmxCrnFddOo92On
-         orFJjhYF+OrsnHkHTyr2XFTWU0HWKn8exBYkJPmTskfx1O17rlkiofp6mAv/Ng4i/DYn
-         3dDHYGRyUVz03dG8bydk1LsGz0k6lR23jctc7XYBpiZIJIMPfa6c0YqXH6Jedwa8LZ2H
-         ZjtAVgqltz2xvxDtXrRzCgJZWG6A7mWl5YdgeqlJyvQjwFYZhYCyEOQ5WW2CYpgRkPcu
-         UCcw==
-X-Gm-Message-State: AKGB3mKbJ11ecqlWFV57qjOm4BG+j4AS/T8xGItsIBGPnUUw5qFmaE+v
-        iLS6jvOyNRT5wgphUzsEjAjOwDEiVWOhrCT9nFM=
-X-Google-Smtp-Source: ACJfBotZDfj7z8pBNPyCU7P6RcLCAPkmOjg3hZV+9T9kP8dnJP9J3sCsECHhjGwzjvcQCMA/VcvKmi5XQ2aye6WaKQo=
-X-Received: by 10.159.61.90 with SMTP id m26mr8355197uai.40.1513179492465;
- Wed, 13 Dec 2017 07:38:12 -0800 (PST)
+        id S1753503AbdLMP6G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 10:58:06 -0500
+Received: from siwi.pair.com ([209.68.5.199]:38846 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753505AbdLMP6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 10:58:04 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B4E16844F2;
+        Wed, 13 Dec 2017 10:58:03 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5673E844F0;
+        Wed, 13 Dec 2017 10:58:03 -0500 (EST)
+Subject: Re: What's cooking in git.git (Dec 2017, #02; Thu, 7)
+To:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+References: <xmqqfu8me7ot.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <329228e6-bad0-3685-1110-635da044e11b@jeffhostetler.com>
+Date:   Wed, 13 Dec 2017 10:58:02 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.4.0
 MIME-Version: 1.0
-Received: by 10.176.70.138 with HTTP; Wed, 13 Dec 2017 07:38:11 -0800 (PST)
-In-Reply-To: <CAPc5daU1b1sJPK37sjMKdr=xY5yg3qaHk9PPdgJ1JH9KvJxatQ@mail.gmail.com>
-References: <20171129014237.32570-1-newren@gmail.com> <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
- <CAPc5daU1b1sJPK37sjMKdr=xY5yg3qaHk9PPdgJ1JH9KvJxatQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 13 Dec 2017 07:38:11 -0800
-Message-ID: <CABPp-BG8rZtVarrfapWOzOhsS0-WnUS5g8cDZW0hLnUgQhNJ4A@mail.gmail.com>
-Subject: Re: [PATCH v4 00/34] Add directory rename detection to git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAP8UFD3Jt+0Lq9Yx_7x3sJD+jG+A25bAgDg7zp+dZV43+1-vow@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 12, 2017 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> OK, it seems that I managed to make this test pass under poison build
-> (see https://travis-ci.org/git/git/jobs/315658242)
->
-> Please check https://github.com/git/git/commit/e5c5e24ad91a75b5a70c056fe6c6e3bfb55b56fc
-> and sprinkle its fix to whichever original commits in the series that
-> need fixing.
 
-Will do; sorry for the problems.  Thanks for finding and fixing.
+
+On 12/12/2017 4:30 AM, Christian Couder wrote:
+> On Thu, Dec 7, 2017 at 7:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> * jh/object-filtering (2017-12-05) 9 commits
+>>    (merged to 'next' on 2017-12-05 at 3a56b51085)
+>>   + rev-list: support --no-filter argument
+>>   + list-objects-filter-options: support --no-filter
+>>   + list-objects-filter-options: fix 'keword' typo in comment
+>>    (merged to 'next' on 2017-11-27 at e5008c3b28)
+>>   + pack-objects: add list-objects filtering
+>>   + rev-list: add list-objects filtering support
+>>   + list-objects: filter objects in traverse_commit_list
+>>   + oidset: add iterator methods to oidset
+>>   + oidmap: add oidmap iterator methods
+>>   + dir: allow exclusions from blob in addition to file
+>>   (this branch is used by jh/fsck-promisors and jh/partial-clone.)
+>>
+>>   In preparation for implementing narrow/partial clone, the object
+>>   walking machinery has been taught a way to tell it to "filter" some
+>>   objects from enumeration.
+>>
+>>
+>> * jh/fsck-promisors (2017-12-05) 12 commits
+>>   - gc: do not repack promisor packfiles
+>>   - rev-list: support termination at promisor objects
+>>   - fixup: sha1_file: add TODO
+>>   - fixup: sha1_file: convert gotos to break/continue
+>>   - sha1_file: support lazily fetching missing objects
+>>   - introduce fetch-object: fetch one promisor object
+>>   - index-pack: refactor writing of .keep files
+>>   - fsck: support promisor objects as CLI argument
+>>   - fsck: support referenced promisor objects
+>>   - fsck: support refs pointing to promisor objects
+>>   - fsck: introduce partialclone extension
+>>   - extension.partialclone: introduce partial clone extension
+>>   (this branch is used by jh/partial-clone; uses jh/object-filtering.)
+>>
+>>   In preparation for implementing narrow/partial clone, the machinery
+>>   for checking object connectivity used by gc and fsck has been
+>>   taught that a missing object is OK when it is referenced by a
+>>   packfile specially marked as coming from trusted repository that
+>>   promises to make them available on-demand and lazily.
+> 
+> I am currently working on integrating this series with my external odb
+> series (https://public-inbox.org/git/20170916080731.13925-1-chriscool@tuxfamily.org/).
+> 
+> Instead of using an "extension.partialclone" config variable, an odb
+> will be configured like using an "odb.<odbname>.promisorRemote" (the
+> name might still change) config variable. Other odbs could still be
+> configured using "odb.<odbname>.scriptCommand" and
+> "odb.<odbname>.subprocessCommand".
+> 
+> The current work is still very much WIP and some tests fail, but you
+> can take a look there:
+> 
+> https://github.com/chriscool/git/tree/gl-promisor-external-odb440
+> 
+
+In our current V6 patch series, Jonathan Tan and I are using the
+extension.partialclone config variable for 2 purposes.  First, to
+indicate a change in the repository format and stop non-aware clients
+(older versions of git.exe) from operating on the repo -- since they
+won't know how to handle missing objects.   Second, to name the remote
+to help the client later demand load missing objects.  This is a current
+limitation (we only support one promisor remote), so this second usage
+may change.  I haven't had time to look at your branch yet, so I can't
+comment on how it might help/solve our second usage, but we do need to
+keep the first usage in mind.
+
+Jeff
