@@ -7,101 +7,111 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18CD51F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 23:12:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 613EB1F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 23:20:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751011AbdLMXMb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 18:12:31 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:41995 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750785AbdLMXMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 18:12:30 -0500
-Received: by mail-wm0-f49.google.com with SMTP id b199so8104170wme.1
-        for <git@vger.kernel.org>; Wed, 13 Dec 2017 15:12:29 -0800 (PST)
+        id S1751600AbdLMXT7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 18:19:59 -0500
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:33204 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751098AbdLMXTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 18:19:55 -0500
+Received: by mail-wr0-f169.google.com with SMTP id v22so3612203wrb.0
+        for <git@vger.kernel.org>; Wed, 13 Dec 2017 15:19:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=h6HAkLaUNb+zaJB6+Af280gpPQNYspaxUfqZ89fEMtI=;
-        b=jsvHs1KFXQ+iDlPVFVmo6NvqA5StJfGjKPtmQ/S7awN47Pg0mbl0aH5rr3KNlU1IzA
-         wgZ6tdPu2PQ2vGh5D5zObdMwHwuLqJjtURyjXx8bYQ18NHkGxgS0J8MXTXQm/3DINPaO
-         K61sNaLxMA544x8lYQEbqerk55Q5+HqyLOxnzIKJUGj7boSH2IwP1DdOCCyHz9K1o+H+
-         L5wxXOijWc4EYWsGpqGXJIYUhiJgM+J5OQDyKB8xSSAlyKbh2EX7F9l/IJVQ37YJqa2j
-         gUcY/MpXpGXtNFSjJkmVxhdMGUCgvWGB4AGfNwJ3zN1yPhKipyGoTEv6KJOTZzi5Nxix
-         +90g==
+        bh=LfHIa7qw8TX1EY1HP/cqr3eIXhrotpcdxEGlC9BCudw=;
+        b=dGWTVrPgojRPXFmFekj4x6DbXwbxhkqf0oNjh3p1d9AES85UQMOLqMvKRDUStYXaFR
+         Uv6zbe1zDN1Xm+/onmYj+RNSC5vKiYYRRNl9NHTObRgPW81MHAaAc4EHsuu3tEpgXXBn
+         72F1bNIz5InCgsGfBAYa5NzWCJINgwq0wen6JODxXVN5YlZp4bWko4kbeiOKD9Foq3U4
+         Y/7SDX2CdRI9soNmSFelnovYaP4cCnQyZW3EZjCjmV7zS9vfmMmXtq6RS2jB/CxlJ4Xl
+         Hb86vkTksYjZzREwiCFB/6FhKqiMOrBCngVv57EJW0z3LdHcSn6joZZg+hx1z5fbmjaL
+         F54Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=h6HAkLaUNb+zaJB6+Af280gpPQNYspaxUfqZ89fEMtI=;
-        b=b9X27wcorGaZlMHeaHS9CXnV+V2UKWUnTUBzLLDfuCrQ+kMIOSxpS57dCy8cCFXx6i
-         uOvjPX4r3P7ctBL90QXCLkMc1JbaMBNVHcLLD0AQ7ADuREiHm27Yi5nzqCrmCb8CdsL5
-         JDtNnTu0UqTqlyaVyxTP9vPwdZwSHdDBp3epX5hxDj4TsbajHEouYOOvXVwj+e/7G97y
-         hobFtYdd661NB5z0nkoVr2dwGw4+eFB8XL232rSHI/v412B+Pny2X8XOlPFXnMjNQBo3
-         g5DGq/CqRnhV91iIkGfs8/bPcOSyAsX0rSjZtcpanKQNuieJ+WiqoKKxzPqz04I91X3n
-         4Qzg==
-X-Gm-Message-State: AKGB3mJDFp+HqfcabTC4uaO/7NbhHG5OgIqHnLIrk92w/gipQ5u2W8Jc
-        27QJ1YhR/QHlrjXX+R921LQ=
-X-Google-Smtp-Source: ACJfBovkew6UJdhr4oiIc8Pvj5pAEPmx7KDhPHNZGsr+wADYDu0zlKVtit1MaAysnRee6rChn+HjEg==
-X-Received: by 10.28.131.73 with SMTP id f70mr463213wmd.153.1513206749006;
-        Wed, 13 Dec 2017 15:12:29 -0800 (PST)
+        bh=LfHIa7qw8TX1EY1HP/cqr3eIXhrotpcdxEGlC9BCudw=;
+        b=kNjAY3tpeQovPhhwkNU0rwse0e5+ruNqpbGTqzvTMObWavcV0F7WzNe8lDheKH/TkN
+         lBxXrM7PUXhdhCcRRY0wI/w4J4n5yUbACLQkhBEIfjV2ejulg3Zi2XM+CbejEn//Y/OH
+         HDRjTEtE/Ya4VxxJxR1Qbck2s5Qg56LfWxsNAX5H5xzw56Y/kA1WGh20TXLLIk7CLaGP
+         WjfN+2CjRgZrkh7oEEre23tTHIshYp88PWupsEBhwATvCzz3e7SP8vY0QV+LGEJn2b4e
+         BCxNuaN45Bg3/UJY7FtBuQQ5Ln5CXdnKQ5saiyB3Gp2967Sw6wP4QXaL6nk7cvOf+5tC
+         1amA==
+X-Gm-Message-State: AKGB3mJK9B/K//xzyxcdLbtB/x7ffRaB4i3A6PAVcVwt0cRuU+63xj1p
+        p7MMklBhUuiV+e5E1vkF91euYrON
+X-Google-Smtp-Source: ACJfBot6lFObKVTLftqkwBDoNQSRqotw3qG+8T/JO4n9I7Ct7Egg2sGaKjW4tThOxnlFz5r0NzpnHQ==
+X-Received: by 10.223.196.247 with SMTP id o52mr3809917wrf.119.1513207194446;
+        Wed, 13 Dec 2017 15:19:54 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id f90sm3256345wmh.12.2017.12.13.15.12.27
+        by smtp.gmail.com with ESMTPSA id r14sm6568514wrb.43.2017.12.13.15.19.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Dec 2017 15:12:28 -0800 (PST)
-Date:   Wed, 13 Dec 2017 23:14:14 +0000
+        Wed, 13 Dec 2017 15:19:53 -0800 (PST)
+Date:   Wed, 13 Dec 2017 23:21:40 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Reid Price <reid.price@gmail.com>, git@vger.kernel.org
-Subject: Re: Apparent bug in 'git stash push <subdir>' loses untracked files
-Message-ID: <20171213231414.GD24597@hank>
-References: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
- <0692d5b8-5fc7-c34c-0712-11a913267441@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] travis: run tests with GIT_TEST_SPLIT_INDEX
+Message-ID: <20171213232140.GE24597@hank>
+References: <20171210212202.28231-4-t.gummerer@gmail.com>
+ <20171211210948.6867-1-szeder.dev@gmail.com>
+ <20171211214255.GA24597@hank>
+ <C5F93DFF-D3DF-4507-8546-941BFA768705@gmail.com>
+ <xmqq609b3gi3.fsf@gitster.mtv.corp.google.com>
+ <20171212201558.GB24597@hank>
+ <xmqqvahbzn3c.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0692d5b8-5fc7-c34c-0712-11a913267441@gmail.com>
+In-Reply-To: <xmqqvahbzn3c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/13, Igor Djordjevic wrote:
-> Hi Reid,
+On 12/12, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 > 
-> On 13/12/2017 18:32, Reid Price wrote:
-> > 
-> > When running 'git stash push <subdir>' if there are both tracked and
-> > untracked files in this subdirectory, the tracked files are stashed
-> > but the untracked files are discarded.
+> >
+> > The breakages wen the split-index code fails tend to break things in
+> > much more obvious manners than a wrong message, usually git ends up
+> > dying if it gets broken.  Both of the bugs that were fixed here would
+> > have been caught with the change in my patch.
+> >
+> > But yeah I can see the argument that it doesn't give us a guarantee
+> > that it catches all things the test suite could catch.
 > 
-> I can reproduce this as well (git version 2.15.1.windows.2).
+> I think you misunderstood me.  When split index is much easier to
+> break than poison tests, combining them together would hurt the test
+> coverage of poison tests.  If you value poison tests much more than
+> how well split index mode works, that is a worse outcome.
+
+Sorry, indeed I misunderstood you.  I do agree with the above.
+
+> >> I wonder if it makes more sense to update ci/run-tests.sh so that
+> >> its final step is run twice with different settings, like so?
+> >
+> > I kind of wanted to avoid that, because it ends up running the test
+> > suite twice on travis for every test, which seems a bit overkill.  But
+> > I don't exactly how worried we are about cycles on travis (I don't
+> > check it very often personally, so I don't really know).  If we aren't
+> > worried about cycles what you have below would certainly make sense.
 > 
-> For what it`s worth, using `git stash save <subdir>` instead seems to 
-> (still) work as expected...
+> I think 64-bit gcc/clang builds tend to cost us about 10-20 minutes
+> each, and 32-bit linux builds about 10 minutes or so.  I wonder if
+> it makes sense to do the "run twice" for only one of 64-bit builds
+> (perhaps the clang one, as I suspect 32-bit linux one uses gcc) and
+> the 32-bit linux build, and nowhere else.
 
-I think that depends on what you expect ;)  'git stash save <subdir>'
-will create a stash of the whole working directory with the message
-"<subdir>".  So while it would indeed work for the presumably
-simplified example Reid provided, it would not do what you'd expect if
-there are any tracked and modified files outside of the <subdir>.
-
-In that case 'git stash save <subdir>' would include the tracked files
-outside of <subdir>, while what I assume Reid wanted is to keep them
-in place, and only stash the files in <subdir>.
-
-> but on the other hand, `git-stash`[1] 
-> manpage seems not to mention this usage ("save" with "pathspec")?
-
-"stash save" with "pathspec" doesn't exist, and it will probably never
-exist.  We decided to introduce a new "push" verb for 'git stash'
-because the command line for 'git stash save' takes a message as its
-last argument, instead of taking the message with a -m flag like other
-commands do.  Introducing a pathspec argument for "git stash save"
-would have either broken backward compatibility, or it would have had
-some syntax that's very inconsistent with other git commands.
-
-> Regards, Buga
-> 
-> [1] https://git-scm.com/docs/git-stash
+Yeah I'd be happy with something like that.  And I see there's some
+more discussion about it in another part of the thread, will follow up
+there.  Thanks!
