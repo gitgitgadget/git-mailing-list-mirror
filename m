@@ -2,83 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78AFA1F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 18:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0AB1F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 18:15:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753699AbdLMSLL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 13:11:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59122 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753691AbdLMSLJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 13:11:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 92078B64DB;
-        Wed, 13 Dec 2017 13:11:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZEeiHaaJr9ZxjqQXYySIvFhYqhU=; b=U163/I
-        8KRTWpc+OoJZFNYQ5EdURvrc6cjg5Bbmkzwvz3dgnpWmeiIkmrYQKwDTLXfHpVLi
-        iXCcAGwTNw7TX7v4mIWfhgJj/YLzr8zfSk7Y4CGp5E9xezZ98/2HPrrOHQzXFGWp
-        ivMDK2/eN01AnG/qlwOWF51B6YJqE3WbGHjXY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lai4agONvbjLrIS68DvQslhwHdygzv+2
-        6vBRlcbK8WpugTnzhmmdiyvB/USENLaMvPkMWBcuPhGSUyH6Y8wRcpGewUktOnFf
-        5h3MSZY8SR2tmfTRT7k4i4/yhSMaWyZP/3C28hNvf3VnjQtuFTLpjKMLs3moDqDO
-        VaIzodcBg1c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 897BAB64DA;
-        Wed, 13 Dec 2017 13:11:03 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DE8B7B64D7;
-        Wed, 13 Dec 2017 13:11:02 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        peff@peff.net, patrick@luehne.de
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-References: <20171211155023.1405-1-lars.schneider@autodesk.com>
-        <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
-        <0BA27EC9-3836-407A-9A8A-52D06B8052AE@gmail.com>
-        <xmqqzi6o3go9.fsf@gitster.mtv.corp.google.com>
-        <48ebcb7a-2a7f-e790-2613-a1f3e3dc41f9@kdbg.org>
-        <F571AAED-C325-4151-9566-6BA249C1B3D4@gmail.com>
-        <xmqq1sjz3frf.fsf@gitster.mtv.corp.google.com>
-        <D2973852-BDF4-4251-8DE3-CE6AAD303A5F@gmail.com>
-Date:   Wed, 13 Dec 2017 10:11:01 -0800
-In-Reply-To: <D2973852-BDF4-4251-8DE3-CE6AAD303A5F@gmail.com> (Lars
-        Schneider's message of "Wed, 13 Dec 2017 18:57:55 +0100")
-Message-ID: <xmqqzi6mwlai.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753345AbdLMSPx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 13:15:53 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:53200 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753051AbdLMSPw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 13:15:52 -0500
+Received: from [10.0.2.15] ([80.189.70.158])
+        by smtp with ESMTPA
+        id PBZNe0vUlJjiPPBZPeH2m1; Wed, 13 Dec 2017 18:15:51 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=O6ZJhF1W c=1 sm=1 tr=0
+ a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=eWGV9nahu4I5STFbaWYA:9
+ a=KuSy3MWSCYrc93rH:21 a=rAAAV9loPBDV532A:21 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v4 00/34] Add directory rename detection to git
+To:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+References: <20171129014237.32570-1-newren@gmail.com>
+ <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <14bf2760-2787-5dd3-e5cc-a2ec0e0d8950@ramsayjones.plus.com>
+Date:   Wed, 13 Dec 2017 18:15:49 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FADD6D6A-E030-11E7-8EC5-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOOzAKSi1BZpE/iWTs44zfGfM5O7B9nU1AnUZOgRiuyOx4P1AJ3FzVDpbksGl0WbQ0xhB6dpjiI9bFqdukdadRCsiJd3oWPgPUvgzDGRsxCf6laxxTUp
+ q+3imDWhrrHck/drif/Ke/Td00FsOZvi86k49AeE+IhoOEnvcqT5NBP0AfmsnsxTuUCO3eDQfOv8Xw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
 
-> ... In a perfect world I think I would store
-> the encoding of a file in the tree object. I didn't pursue that solution
-> as this would change the Git data model which would open a can of worms
-> for a problem that not that many people have (almost everyone is on
-> UTF-8 anyways).
 
-Having that "encoding" trailt recorded in the tree that contains the
-blob would mean that the same blob can be recorded with one
-"encoding" trait in a tree, and in a different tree it can be
-recorded with a different "encoding" trait.  I doubt it really makes
-sense.
+On 13/12/17 01:06, Junio C Hamano wrote:
+> Elijah Newren <newren@gmail.com> writes:
+> 
+>> This patchset introduces directory rename detection to merge-recursive.
+> 
+> The use of negated form of test_i18ngrep in these patches are all
+> wrong.  Because the helper must say "even though the string does not
+> match (does match), the test expects it to match (does not match),
+> and we know that expectation won't hold simply because we are under
+> poison build", so negating the result of test_i18ngrep won't work.
+> Instead, you would tell test_i18ngrep that we do not expect it to
+> find matching lines.
+> 
+> Even with the attached, test #70 will still fail because you have a
+> construct that greps in output of test_i18ngrep.  That won't work
+> under poison build, because the output of test_i18ngrep won't have
+> the string you are looking for under poison build.
+> 
+> We may probably want to redirect the output of underlying grep to
+> /dev/null in test_i18ngrep to make this kind of misuse easier to
+> spot.
+
+I have test-suite failures on the 'pu' branch for t4151-am-abort.sh
+(#3 and #6) and t5536-fetch-conflicts.sh (#3 and #6-7), which on a
+very quick inspection seem to be due to this (ie your SQUASH commit
+e5c5e24ad9).
+
+For t4151 the test (both 3 & 6) is using test_i18ngrep on the output
+of a previous test_i18ngrep, and t5536 is doing likewise in the
+verify_stderr() helper function.
+
+ATB,
+Ramsay Jones
+
 
