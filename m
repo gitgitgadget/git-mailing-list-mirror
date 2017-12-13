@@ -2,85 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0AB1F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 18:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA9221F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 18:25:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753345AbdLMSPx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 13:15:53 -0500
-Received: from avasout01.plus.net ([84.93.230.227]:53200 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753051AbdLMSPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 13:15:52 -0500
-Received: from [10.0.2.15] ([80.189.70.158])
-        by smtp with ESMTPA
-        id PBZNe0vUlJjiPPBZPeH2m1; Wed, 13 Dec 2017 18:15:51 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=O6ZJhF1W c=1 sm=1 tr=0
- a=bpDj9VLvXCYHU65eeb/Fiw==:117 a=bpDj9VLvXCYHU65eeb/Fiw==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=eWGV9nahu4I5STFbaWYA:9
- a=KuSy3MWSCYrc93rH:21 a=rAAAV9loPBDV532A:21 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4 00/34] Add directory rename detection to git
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-References: <20171129014237.32570-1-newren@gmail.com>
- <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <14bf2760-2787-5dd3-e5cc-a2ec0e0d8950@ramsayjones.plus.com>
-Date:   Wed, 13 Dec 2017 18:15:49 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1753629AbdLMSZP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 13:25:15 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34598 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753477AbdLMSZO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 13:25:14 -0500
+Received: by mail-qk0-f194.google.com with SMTP id d66so3143849qkg.1
+        for <git@vger.kernel.org>; Wed, 13 Dec 2017 10:25:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=4L+N7EkN6ObEVeO33r4fV1XKJO8jFlm64ojP+o8YbEQ=;
+        b=pgNBWqHUq9sbUJV5azLuCI/nfjPnYC8lpptsTdqzu7aa2wvKPs0+pVl+Fg9Bv4AJ2T
+         teuxjNrkqLbx5TaTfdVoo4xS4dyzTsTjBHgqJen2tzPw7dcnK3M53J7r83MsxeJFLTBi
+         SgpB040zodU2XAetv8yknRLNaPCFzKLCJ7clELHCchGEDAqBckOFPIZW0DX1PzGN25fB
+         SMsWZKDKMjBZ+yQrlK+xH504bLIOxFaAcKwXz94rfodEJA/MdtmtPAG3HtoQdslYuXZF
+         d2eYd27asJovX/3Pz1a/eRpwuvQWoFCnCayOUWUoaOdDR3EhYZX0UnePfrhlMyiS42zr
+         eKUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=4L+N7EkN6ObEVeO33r4fV1XKJO8jFlm64ojP+o8YbEQ=;
+        b=ZwYVrTFy0EdRSMDzOfFTZeJnhW3yHoEn9x3q2VMZXJ1Xl/xlbQWJUVbfurNxEgIWyd
+         evZbWKLfkb7xpVXK4awsCctTXFyLBV50g15rHb6dZ8+kgEkWauyIYCGFQgHi9CadGwLu
+         AKEPpD8uomf6idSnsOBPnE/m8ywsSafYVVWT1ynWDJilW+O560+F8domIwsNdAvb9+Z3
+         cId0rScgUUe9B5Iq5Yk4xTTZYG2ZgulZZr9f4wwBvTQg4kGrwsh4RArhwiv3but0NhYv
+         riSWyfYydKh2t6Xsv1McC/QBLjyhGjIlyLbSKvTe0OsGgygQgy2TYEvHD5XETtlarOy9
+         LO7Q==
+X-Gm-Message-State: AKGB3mKW70B+5q1SgWk5vMsIB7mgd/f5wfpX3W6BbdJKMnTSjxMp8hbp
+        fNMFJtgqqBxy+5AE/KPsLS0pKcmol6mHuoafIqs=
+X-Google-Smtp-Source: ACJfBouONmw0hweigmcPezNIZePVh8N7B6S6YvLjPI5GGHC9RfwUyuEKWm5zct6tjhOv5cCkcJUHGj6xszIswBbUY7g=
+X-Received: by 10.55.90.4 with SMTP id o4mr11666716qkb.296.1513189513721; Wed,
+ 13 Dec 2017 10:25:13 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh8svxwpm.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOOzAKSi1BZpE/iWTs44zfGfM5O7B9nU1AnUZOgRiuyOx4P1AJ3FzVDpbksGl0WbQ0xhB6dpjiI9bFqdukdadRCsiJd3oWPgPUvgzDGRsxCf6laxxTUp
- q+3imDWhrrHck/drif/Ke/Td00FsOZvi86k49AeE+IhoOEnvcqT5NBP0AfmsnsxTuUCO3eDQfOv8Xw==
+Received: by 10.12.198.4 with HTTP; Wed, 13 Dec 2017 10:25:13 -0800 (PST)
+In-Reply-To: <20171213151344.2138-4-chriscool@tuxfamily.org>
+References: <20171213151344.2138-1-chriscool@tuxfamily.org> <20171213151344.2138-4-chriscool@tuxfamily.org>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 13 Dec 2017 13:25:13 -0500
+X-Google-Sender-Auth: sH16tV84p_c-o9ogvTfus_rSUXs
+Message-ID: <CAPig+cSev+U9Cchyz1c4uQUsf8O4N8vVGTAsa5FiSA5mTOekxA@mail.gmail.com>
+Subject: Re: [PATCH 3/8] perf/aggregate: implement codespeed JSON output
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 13, 2017 at 10:13 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Codespeed (https://github.com/tobami/codespeed/) is an open source
+> project that can be used to track how some software performs over
+> time. It stores performance test results in a database and can show
+> nice graphs and charts on a web interface.
+>
+> As it can be interesting to Codespeed to see how Git performance
+> evolves over time and releases, let's implement a Codespeed output
+> in "perf/aggregate.perl".
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+> @@ -174,6 +181,63 @@ sub print_default_results {
+> +sub print_codespeed_results {
+> +       my ($results_section) = @_;
+> +
+> +       my $project = "Git";
+> +
+> +       my $executable;
+> +       if ($results_section eq "") {
+> +               $executable = `uname -o -p`;
 
+Option -o is not recognized on MacOS and, on at least a couple of my
+Linux installations, -p returns only "unknown".
 
-On 13/12/17 01:06, Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
-> 
->> This patchset introduces directory rename detection to merge-recursive.
-> 
-> The use of negated form of test_i18ngrep in these patches are all
-> wrong.  Because the helper must say "even though the string does not
-> match (does match), the test expects it to match (does not match),
-> and we know that expectation won't hold simply because we are under
-> poison build", so negating the result of test_i18ngrep won't work.
-> Instead, you would tell test_i18ngrep that we do not expect it to
-> find matching lines.
-> 
-> Even with the attached, test #70 will still fail because you have a
-> construct that greps in output of test_i18ngrep.  That won't work
-> under poison build, because the output of test_i18ngrep won't have
-> the string you are looking for under poison build.
-> 
-> We may probably want to redirect the output of underlying grep to
-> /dev/null in test_i18ngrep to make this kind of misuse easier to
-> spot.
-
-I have test-suite failures on the 'pu' branch for t4151-am-abort.sh
-(#3 and #6) and t5536-fetch-conflicts.sh (#3 and #6-7), which on a
-very quick inspection seem to be due to this (ie your SQUASH commit
-e5c5e24ad9).
-
-For t4151 the test (both 3 & 6) is using test_i18ngrep on the output
-of a previous test_i18ngrep, and t5536 is doing likewise in the
-verify_stderr() helper function.
-
-ATB,
-Ramsay Jones
-
-
+A combination, on the other hand, which seems to work nicely on MacOS,
+Linux, and BSD is: uname -s -m
