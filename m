@@ -2,94 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B0B1F407
-	for <e@80x24.org>; Wed, 13 Dec 2017 20:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13F661F407
+	for <e@80x24.org>; Wed, 13 Dec 2017 21:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753714AbdLMUyr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Dec 2017 15:54:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50195 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752908AbdLMUyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Dec 2017 15:54:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A83FEB8944;
-        Wed, 13 Dec 2017 15:54:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WK4pHzDE19w8UFyfh1ZGwqkvwwc=; b=P5OjmL
-        rdG+HltFN6QZxE/bGnqzD6KpIu/6KABuCn4rZsmYUZlRO4gWxn8irrrhyKcBaDPM
-        hREMRMVFaVyVV1EF2XMXTUc68OQc2jAgGN5J2UE96IOnNERlB6vOyXYlayHZCgaZ
-        4ltS5LDvAKlVqYLNugHb8oekWg2Ljpb0nPnqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V5SUMdtm3Nv3nBVH2XK3m0DKRbKA7ny9
-        znu/iIZUo7HYFHqIgiUc3JhCMg7wdDeHw+hUDY4bIkNcwBji0Bzu8HXAhzKb6dXf
-        u78UzGr3k2NM3ivGJ+0E5DucPrj/8aSDVvLdQlIHhK8Ioy6VLLRgb7bvJBsGm+SJ
-        DUIAyG+SEDo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0EBAB8942;
-        Wed, 13 Dec 2017 15:54:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 07DADB893F;
-        Wed, 13 Dec 2017 15:54:46 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/8] perf/run: use $default_value instead of $4
-References: <20171213151344.2138-1-chriscool@tuxfamily.org>
-        <20171213151344.2138-5-chriscool@tuxfamily.org>
-        <xmqqbmj2wedd.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 13 Dec 2017 12:54:44 -0800
-In-Reply-To: <xmqqbmj2wedd.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 13 Dec 2017 12:40:30 -0800")
-Message-ID: <xmqq4louwdpn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753463AbdLMVUc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Dec 2017 16:20:32 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:41935 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752908AbdLMVUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Dec 2017 16:20:31 -0500
+Received: by mail-wm0-f52.google.com with SMTP id g75so7689212wme.0
+        for <git@vger.kernel.org>; Wed, 13 Dec 2017 13:20:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=W968l95oZEyIj+DB7IB0VMedofV60x+24AKKh2gyRPU=;
+        b=q3Gp5447h31m8yV4/hFVv4Y8uizeac0eRDStAUr4Z4s8FK6+ObCA5EL2XGpmTJyAKr
+         CMoOdRf+CtEd9M5c19c6xNlxkCSIbygoaPZfV5uu5TPq7l8c1RvYaYKDUeFeHeKdZ8dt
+         m4+C32fB4RkuLGqPd5REgoapm6hK9yV0MXtXl1jrailxurNrdwbdU2zBJAQcyAC2mw2L
+         RPBMIJB/rM5NCZMItBY4GyPpfQnu8n3vRw5lXSVb4KEJh+6Hqo/ZvjmKuM37DyvLW4J0
+         NRYQVAP3FfCRN/kfVIQAnDYOTji3LURKaWnxXuY7M2jWyW+A+2+hbD2nvyyrpNN+yLRy
+         q5KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=W968l95oZEyIj+DB7IB0VMedofV60x+24AKKh2gyRPU=;
+        b=HnUKeJbUX4dVc8aV/gmLlwlVVVGTBb23ZmOVBGft9Ra1BWlC53e9g3TuOLdOZCnKn7
+         Jnev1+/hKdiFos60PUmoV9l7t5Eg1Sd+WGxqTUL0uGzY0Ph1+85QuECoBGIHZEPd0oXv
+         di/6Bdb/fjRTNDFET6hBvaK2I1fdI5LHvG3m2SJ9mfujqx0WEm4uTsOswjNY59+0xY1E
+         chV0uYlxy3QP9XQLXcewHeM8KiwMqSMbWI1/KlusMLvQzA9iq4AhFABw2bYbvgY+d57e
+         C5oOWoGuJI80LFnCcaopAWTL7DBpyP5pQGb132hyGwghwk5qsej6XHPBwBxRFU0hXRbu
+         5Qsw==
+X-Gm-Message-State: AKGB3mIhvbC/unMxd2bkRsjzAB5u5M7LNIeydW2+Ee6KncxJM8MtYIiE
+        bfstLW51WxJ3S7fFjAA3Yc8qHGAM
+X-Google-Smtp-Source: ACJfBosL8nCQlvuVjIXziuzqGYmNyTePQJWmplTjc3qa8IteLwv+6NRT0Ck9oSVPscu60wsJlDXiGg==
+X-Received: by 10.80.146.81 with SMTP id j17mr9320852eda.159.1513200030196;
+        Wed, 13 Dec 2017 13:20:30 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id x28sm2251443edd.0.2017.12.13.13.20.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Dec 2017 13:20:29 -0800 (PST)
+Subject: Re: Apparent bug in 'git stash push <subdir>' loses untracked files
+To:     Reid Price <reid.price@gmail.com>
+References: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
+Cc:     git@vger.kernel.org
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <0692d5b8-5fc7-c34c-0712-11a913267441@gmail.com>
+Date:   Wed, 13 Dec 2017 22:20:26 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9E6B370-E047-11E7-AECF-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Reid,
 
-> If you want to be able to use this helper to specify a default value
-> of an empty string (which the orignal that used $4 did), then the
-> previous hunk must be corrected so that it does not unconditionally
-> set default_value to $4.  Perhaps like
->
-> 	if test -n "${4+x}"
-> 	then
-> 		default_value=$4
-> 	else
-> 		unset default_value || :
-> 	fi
->
-> or something.
+On 13/12/2017 18:32, Reid Price wrote:
+> 
+> When running 'git stash push <subdir>' if there are both tracked and
+> untracked files in this subdirectory, the tracked files are stashed
+> but the untracked files are discarded.
 
-And if you do not care about passing an empty string as the default
-value, then the earlier hunk can stay the same
+I can reproduce this as well (git version 2.15.1.windows.2).
 
-	default_value=$4
+For what it`s worth, using `git stash save <subdir>` instead seems to 
+(still) work as expected... but on the other hand, `git-stash`[1] 
+manpage seems not to mention this usage ("save" with "pathspec")?
 
-but the eval part should become something like
+Regards, Buga
 
-	test -n "$default_value" && eval ...
-
-Given that you are planning to add yet another optional argument to
-the helper, and when you pass that variable, you'd probably need to
-pass "" as the "default" that is not exported, perhaps this "give up
-ability to pass an empty string as the default" approach may be the
-only thing you could do.
-
+[1] https://git-scm.com/docs/git-stash
