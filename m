@@ -6,85 +6,95 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACBCC1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 13:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12601F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 14:05:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752479AbdLNN2P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 08:28:15 -0500
-Received: from quechua.inka.de ([193.197.184.2]:34694 "EHLO mail.inka.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752228AbdLNN2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 08:28:14 -0500
-X-Greylist: delayed 1084 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Dec 2017 08:28:14 EST
-Received: from raven.inka.de (uucp@[127.0.0.1])
-        by mail.inka.de with uucp (rmailwrap 0.5) 
-        id 1ePTH7-0004x7-Lb; Thu, 14 Dec 2017 14:10:09 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-        id DAFC1120182; Thu, 14 Dec 2017 14:09:33 +0100 (CET)
-Date:   Thu, 14 Dec 2017 14:09:33 +0100
-From:   Josef Wolf <jw@raven.inka.de>
-To:     git@vger.kernel.org
-Subject: Need help migrating workflow from svn to git.
-Message-ID: <20171214130933.GA18542@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+        id S1753261AbdLNOFg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 09:05:36 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:26781 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753135AbdLNOFf (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 Dec 2017 09:05:35 -0500
+X-IronPort-AV: E=Sophos;i="5.45,400,1508796000"; 
+   d="scan'208";a="305482570"
+Received: from zmbs3.inria.fr ([128.93.142.16])
+  by mail2-relais-roc.national.inria.fr with ESMTP; 14 Dec 2017 15:05:33 +0100
+Date:   Thu, 14 Dec 2017 15:05:33 +0100 (CET)
+From:   Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+To:     PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        ALBERTIN TIMOTHEE p1514771 
+        <timothee.albertin@etu.univ-lyon1.fr>,
+        BENSOUSSAN--BOHM DANIEL p1507430 
+        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Message-ID: <285414621.1144481.1513260333115.JavaMail.zimbra@inria.fr>
+In-Reply-To: <ce70816f94c24754bea9bc8175de4bc4@BPMBX2013-01.univ-lyon1.fr>
+References: <CAGb4CBVcUv111dUy9waScAL2WATkk0LVqJQ55g3-XbH1H228YQ@mail.gmail.com> <ce70816f94c24754bea9bc8175de4bc4@BPMBX2013-01.univ-lyon1.fr>
+Subject: Re: [PATCH] send-email: extract email-parsing code into a
+ subroutine
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [77.136.87.204]
+X-Mailer: Zimbra 8.0.9_GA_6191 (ZimbraWebClient - FF57 (Linux)/8.0.9_GA_6191)
+Thread-Topic: [PATCH] send-email: extract email-parsing code into a subroutine
+Thread-Index: AQHTdMMrYRuOAdSWLEGWkE5ZVx9GcaNCnqKAfNFOGeo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello folks,
+"PAYRE NATHAN p1508475" <nathan.payre@etu.univ-lyon1.fr> wrote:
 
-I am wondering whether/how my mode of work for a specific project
-(currently based on SVN) could be transferred to git.
+> -		print $c2 $_;
+>  	}
+> +
+>  	close $c;
 
-I have a repository for maintaining configuration of hosts. This repository
-contains several hundered scripts. Most of those scripts are don't depend on
-each other.
 
-Every machine has a working copy of the repository in a specific
-directory. A cron job (running every 15 minutes) executes "svn update" and
-executes the scripts which are contained in this working copy.
+Nit: this added newline does not seem necessary to me. Nothing
+serious, but this kind of thing tend to distract the reader when
+reviewing the patch.
 
-This way, I can commit changes to the main repository and all the hosts
-will "download" and adopt by executing the newest revision of those
-scripts. (The scripts need to be idempotent, but this is a different
-topic).
+> +	foreach my $key (keys %parsed_email) {
+> +		next if $key == 'body';
+> +		print $c2 "$key: $parsed_email{$key}";
+> +	}
 
-NORMALLY, there are no local modifications in the working copy. Thus,
-conflicts can not happen. Everything works fine.
+I'd add a comment like
 
-Sometimes, I need to fix a problem on some host or need to implement a new
-feature. For this, I go to the working copy of a host where the change
-needs to be done and start haking. With svn, I don't need to stop the cron
-job. "svn update" will happily merge any in-coming changes and leave alone
-the files which were not modified upstream. Conflicts with my local
-modifications which I am currently hacking on are extremely rare, because
-the scripts are pretty much independent. So I'm pretty much happy with this
-mode of operation.
+	# Preserve unknown headers
 
-With git, by contrast, this won't work. Git will refuse to pull anything as
-long as there are ANY local modifications. The cron job would need to
+at the top of the loop to make it clear what we're doing.
 
-   git stash
-   git pull
-   git stash pop
+On a side note: there's no comment in the code you're adding. This is
+not necessarily a bad thing (beautifully written code does not need
+comments to be readable), but you may re-read your code with the
+question "did I explain everything well-enough?" in mind. The loop
+above is a case where IMHO a short and sweet comment helps the reader.
 
-But this will temporarily remove my local modifications. If I happen to do
-a test run at this time, the test run would NOT contain the local
-modifications which I was about to test. Even worse: if I happen to save
-one of the modified files while the modifications are in the stash, the
-"git stash pop" will definitely cause a conflict, although nothing really
-changed.
+Two potential issues not mentionned in your message but that we
+discussed offlist is that 1) this doesn't preserve the order, and 2)
+this strips duplicate headers. I believe this is not a problem here,
+and trying to solve these points would make the code overkill, but
+this would really deserve being mentionned in the commit message.
+First, so that people reviewing your patch now can confirm (or not)
+that you are taking the right decision by doing this, and also for
+people in the future examining your patch (e.g. after a bisect).
 
-So, how would I get this workflow with git? Is it possible to emulate the
-behavior of "svn update"?
+> +sub parse_header_line {
+> +	my $lines = shift;
+> +	my $parsed_line = shift;
+> +	my $pattern = join "|", qw(To Cc Bcc);
 
-Any ideas?
+Nit: you may want to rename it to something more explicit, like
+$addr_headers_pat.
+
+None of my nit should block the patch inclusion, but I think the
+commit message should be expanded to include a mention of the
+"duplicate headers"/"header order" potential issue.
 
 -- 
-Josef Wolf
-jw@raven.inka.de
+Matthieu Moy
+https://matthieu-moy.fr/
