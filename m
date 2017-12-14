@@ -2,91 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3739E1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 17:55:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 855891F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 18:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753932AbdLNRzk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 12:55:40 -0500
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:39432 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753859AbdLNRzi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 12:55:38 -0500
-Received: by mail-wr0-f176.google.com with SMTP id a41so5855431wra.6
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 09:55:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=5VIsxAaHVKa2+9tS/rP6k8Zbys8sI0fDrmqlHiHbbMQ=;
-        b=QkY+KyeDbDGeYGD4RdqIiI9sTHHSNSMrZKdjCD6/vlwrGc0RhL3LMf37V2H4YO5J0p
-         OIdEZVbdff9Yb0zlms2Zf5T7Z+1uXuvF9aJ2sCIzVGDavYcLZwbX9TDs8Bhuwlt/SteD
-         uWvjl1FvCh967DKMV5Oj4gg4pMNfC3zsltjSJ2xkKOpNtl5QdSzOThJe4G3tYPaKr9Su
-         UEz/un5pESO7W2MJA0rfWsfHM+62KVnimv+MFghZsVVcmWEnjwZnct9WiCR18hD0+C0C
-         ZG/eOxUUqpzNVPU2KbMcRn8OL8pAt/cfz4eH1lkB1b7VJcncb12xgNR8NMkCUD+p7JSV
-         q2TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=5VIsxAaHVKa2+9tS/rP6k8Zbys8sI0fDrmqlHiHbbMQ=;
-        b=Nq6dNKEOs8n3V4IktliGtg7KmjmGSVopJnVNx1EExYsplpy/GzKNTBMqjfHm4PfDVB
-         ZhNfv9HIfug83GcjOsoxIbhdrfm9AVmfuQt4Em1AROyw+KgrX/2GS6Mk9i/Ij+P8l1vr
-         ovLIyP3GMgLqgQcXBHVrAzTXacyIcdA7vaaMWluuS9ZgLcbTL4xTYZYMgjyRrKgpJZ6T
-         i7qv666MeAABFTkdvHzuXocIXTtiRFy20b92nAuFPLsVqc+m1fuzyxcXjXO8ybuCq55V
-         ul2VaRYUsKCE1DhXj22RjGdFq0QIY78Apo3Z7j4WdfRpwjn3qBOl5FsEikUkauz0MoR5
-         l+vw==
-X-Gm-Message-State: AKGB3mJOw4xVP1oKjdRZmlqUloI/QmPP+4+YZqQsLCQIepoIDjN+2/t1
-        adPVrmWCNH7Jlyvb6TNlf+U=
-X-Google-Smtp-Source: ACJfBou+RpsqpmKjpghqXM3iThwXP9DA6JAkKBnhlK883buSZbnTBi25yulDRG/vEr9v+Zzz7SSlpg==
-X-Received: by 10.223.133.68 with SMTP id 62mr7366886wrh.243.1513274137695;
-        Thu, 14 Dec 2017 09:55:37 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id n32sm8625185wrb.62.2017.12.14.09.55.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Dec 2017 09:55:35 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1ePXjK-0006Dp-UJ; Thu, 14 Dec 2017 18:55:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "David A. Wheeler" <dwheeler@dwheeler.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc: Modify git-add doc to say "staging area"
-References: <E1eOwqn-0005Bd-OB@rmmprod05.runbox> <CA+P7+xrWFE+6t-Z8cGQX5WtZP1_EQSa+J7vF65dLDSOnLfFxXQ@mail.gmail.com> <01075529-4B7B-4C05-927F-0504315F2B3F@dwheeler.com> <CACBZZX5XDKwwXWtH8V9QD5v-4i+nHPuZ8x2n_Z3zuexQmg2mgw@mail.gmail.com> <662C691D-7263-4469-87F4-4BA8A50CC4E8@dwheeler.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <662C691D-7263-4469-87F4-4BA8A50CC4E8@dwheeler.com>
-Date:   Thu, 14 Dec 2017 18:55:34 +0100
-Message-ID: <87wp1pb3e1.fsf@evledraar.gmail.com>
+        id S1753786AbdLNSCH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 13:02:07 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61457 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753677AbdLNSCG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 13:02:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41847C7153;
+        Thu, 14 Dec 2017 13:02:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Dk0Q5nBUx/Oc1tjBun76S0a3Efc=; b=Tv/eUe
+        cNXgHOVSzWR8NKuzEimmnbeVaDbCBpyyqYFuEs9jd0M1wnmjkFhUa3m2yZyDEjQs
+        TwmEbqS5apBvm+8lHWqN8hfQMaG6sVxCqpWqKbmAf/VX3qcpxzSNKVWyWGz7Al2V
+        csm2jUvJFBzrYsTNaOdbGltu5fl89oWKbQW5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=l4vSsEq0Qv1IwF7yVEEyMOxfGBa2lZ+Y
+        qfed1CWR2znLyCBqLzCjmPwFs7wVzn+XxR5LEdVJp372TekoeHaQn4cQUm4FjKmG
+        2bcwv/sXN/hcJqLnjrjMH5is8P/pUhVa7I/RGKil6iBvnU5yftL+B3rqnHa26Rn6
+        gmZ+r8mxiuY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 39108C7152;
+        Thu, 14 Dec 2017 13:02:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB95EC7150;
+        Thu, 14 Dec 2017 13:02:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v4 2/2] Doc/check-ref-format: clarify information about @{-N} syntax
+References: <xmqq609olg1p.fsf@gitster.mtv.corp.google.com>
+        <20171214123027.9105-1-kaartic.sivaraam@gmail.com>
+Date:   Thu, 14 Dec 2017 10:02:01 -0800
+In-Reply-To: <20171214123027.9105-1-kaartic.sivaraam@gmail.com> (Kaartic
+        Sivaraam's message of "Thu, 14 Dec 2017 18:00:27 +0530")
+Message-ID: <xmqqa7ylur1i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E33FD3BE-E0F8-11E7-A0AB-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
 
-On Thu, Dec 14 2017, David A. Wheeler jotted:
+>  With the `--branch` option, the command takes a name and checks if
+> -it can be used as a valid branch name (e.g. when creating a new
+> -branch).  The rule `git check-ref-format --branch $name` implements
+> -may be stricter than what `git check-ref-format refs/heads/$name`
+> -says (e.g. a dash may appear at the beginning of a ref component,
+> -but it is explicitly forbidden at the beginning of a branch name).
+> -When run with `--branch` option in a repository, the input is first
+> -expanded for the ``previous branch syntax''
+> -`@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
+> -were on.  This option should be used by porcelains to accept this
+> -syntax anywhere a branch name is expected, so they can act as if you
+> -typed the branch name.
+> +it can be used as a valid branch name e.g. when creating a new branch
+> +(but be cautious when using the previous checkout syntax; it may refer
+> +to a detached HEAD state). The rule `git check-ref-format --branch
+> +$name` implements may be stricter than what `git check-ref-format
+> +refs/heads/$name` says (e.g. a dash may appear at the beginning of a
+> +ref component, but it is explicitly forbidden at the beginning of a
+> +branch name). When run with `--branch` option in a repository, the
+> +input is first expanded for the ``previous checkout syntax''
+> +`@{-n}`.  For example, `@{-1}` is a way to refer the last thing that
+> +was checked out using "git checkout" operation. This option should be
+> +used by porcelains to accept this syntax anywhere a branch name is
+> +expected, so they can act as if you typed the branch name. As an
+> +exception note that, the ``previous checkout operation'' might result
+> +in a commit object name when the N-th last thing checked out was not
+> +a branch.
 
-> On December 13, 2017 7:54:04 AM EST, "Ævar Arnfjörð Bjarmason" <avarab@gmail.com> wrote:
->>After your patch the majority of the docs will still talk about
->>"index", is this part of some larger series, perhaps it would be good
->>to see it all at once...
->
-> Yes, this would be part of a larger series.
->
-> I'm happy to do the work, but I don't want to do it if it's just going to be rejected.
->
-> The work is very straightforward, in almost all cases you simply replace the word index with the phrase staging area.  The change is similar for the word cache.  So I'm not sure what seeing it all at once would do for anybody.
->
-> Are there one or two other files that you would like to see transformed to see as an example?  If you're just looking for a sense of it, that should be enough.
+Looks alright.  
 
-No I get the idea, I'm just wondering if you'll continue to work on
-this, because if not mentioning "staging area" in more places without
-continuing to eradicate "index" isn't going to improve things much, and
-possibly make it worse. I like the direction of this series.
+It was made unnecessarily harder to review because it was marked as
+2/2, even though this no longer applies on top of the copy of 1/2
+that was merged some time ago.  I needed to find that it was rebased
+on top of 'master'; it wouldn't have been necessary if this was sent
+as a single patch (with comment saying that this used to be 2/2
+whose first one already graduated to 'master' under the three-dash
+line).
+
+Also re-wrapping the lines only to squeeze in "but be cautious..."
+and replace s/branch/checkout/ in a few places did not help to make
+it easy to spot what's changed.
+
+This part looked a bit strange.
+
+> +it can be used as a valid branch name e.g. when creating a new branch
+> +(but be cautious when using the previous checkout syntax; it may refer
+> +to a detached HEAD state). The rule `git check-ref-format --branch
+
+I think "e.g. when creating a new branch" is a parenthetical remark,
+so it should be inside parenthesis.  As the last three lines in the
+new text (quoted above) already warns that it may not be a branch name,
+I am not sure if the "but be cautious" adds much value, though.
