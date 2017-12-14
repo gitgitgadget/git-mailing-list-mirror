@@ -7,117 +7,129 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFAE91F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 23:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4976F1F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 23:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754435AbdLNXel (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 18:34:41 -0500
-Received: from mout.gmx.net ([212.227.17.20]:59289 "EHLO mout.gmx.net"
+        id S1754454AbdLNXeo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 18:34:44 -0500
+Received: from mout.gmx.net ([212.227.15.18]:63571 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754420AbdLNXek (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 18:34:40 -0500
-Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MKpQ4-1ePd1Q09WS-0000UX; Fri, 15
- Dec 2017 00:34:36 +0100
-Date:   Fri, 15 Dec 2017 00:34:34 +0100 (STD)
+        id S1754438AbdLNXem (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 18:34:42 -0500
+Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNq8p-1eMbx629CV-007SL9; Fri, 15
+ Dec 2017 00:34:39 +0100
+Date:   Fri, 15 Dec 2017 00:34:38 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
+cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 1/2] version --build-options: also report host CPU
+Subject: [PATCH v2 2/2] version --build-options: report commit, too, if
+ possible
 In-Reply-To: <cover.1513294410.git.johannes.schindelin@gmx.de>
-Message-ID: <a827bc297da7c7dcfa51c07b5fa29dd474fa287e.1513294410.git.johannes.schindelin@gmx.de>
+Message-ID: <9b379e2060ca06e9cac44cdc69df327022be9c80.1513294410.git.johannes.schindelin@gmx.de>
 References: <cover.1512752468.git.johannes.schindelin@gmx.de> <cover.1513294410.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Ol1z+bl9x4YiETU/XMmH0eH+c5vM89l7DUTvec6aQCJ8RbE8Ib0
- e/9yK5hc0gGCccUSHvGmoxuWbDZKf4i3PniCWtOIQZBxeMmCw7bckSo69Rc4nA7pjjErReS
- JwevLN/xCFwVwMOcfSkZY2PDZZICejC/ITa9wEyStl9FTw8ufAHcl24XZQuoyVj4Ssz23tS
- fqQ68WMzqhkT1Dky/gGYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:13Sbs8Y+Lc4=:SlpFiD+ynORjmC8WvExPWf
- 81ldbslF/usta2PNdB9Ow8DVdrFey745PS0CAU0b8S4X7kRcevaFUMhroVLGvFfiM4IulS8AS
- f/PSP0wlF62osiBnc0oByhqU7vbxrcuZsVSkMwR96epXS2nbJlV1zNG1WuBblGLzLO61Z8BN2
- V/YZn5PNC/0k0FvHptNB5M3OjAWEZVi++ySv/mRXPcte+klBbV4guJSfhum1C/F71iut7jfZu
- seu8m52e97znj0JBgKpHtl4W4jYXkoSmJq9Zh9/YSqvOcv/IpD4h6TTbPLOwyWd59dcWiCjH3
- Z22T9m0F95Dal+gtsSAZAPr9l+/d5E4Xjvkjzm8cTWgvRh4l+CWoLwArl2GqFjPvkW7oUyNXJ
- OmGJ8G5b2CRoPYBdSJggjeoSrYcgKR2ZtVwyzbCTi4xa5bjSFCYJYsTbjBFBnRh8X7R1fOiv0
- 4M4zFI97T5RDObTkPWRGLRDFBcDrYfsFevL1WYP27WtZScY6VQCkGx7Pt+JcRVxSmL3bUfI+5
- m6iepzCz3wZeXY194flV/fdGFHZHE+sS+7mww68gf2nlGsbvgCMl2vs/gufdDV2oahwQszP7K
- D1qa+VHM8oyWjujznzU9EfaF1CasHv9ooV2QOqViubAxaf6mq+Yf9ok3oetL+ubAzsad+SbKG
- H60UN/kvhJJuThKLvDSkJfnk2vPcCM85MeB0XGleY6XVJJY/DAxZQoHR7Vi3LZFLN7w/UJOxO
- l2zL2cFKXL+3l0B4LFEeOVWnPK+HdDpSkAyYcpyVuiwNAvXdrtYkJ4lfsqeE8t0/h3PpJ4Pn/
- 8yFdftSvWLkrj7yOovDffG0/5XMqZOYK6tDYUuZ+XT+LqgmBfA=
+X-Provags-ID: V03:K0:ZGDa05pX63a8znXA2TOmsaEzCuLe1WREIA4T0PVVba22xg9lzFu
+ RyI++XOHlHG0/KxP6lryOyPUXfgK2nJmGr4DTozpgyDVN7L5APUjxY6intaQag3KdDPryiq
+ sutu1UiT729tNYV0v9nlT6MTRU/KfOWSUYvGeroen+SMhER1PnjvlagbM4OPg5VHq2nZ55Z
+ 1FqVaea++OvWgTZ3uarLQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t4F+6klsSyE=:JSwu0lQLuTPt6C1B430raG
+ UZyRuI48uk+S2gBBgIqcKNIhViG/L/gvOPufW+k1DHNTdPS32f7eJxn59d760EblGHInO20Un
+ em7IyaWy24KWeNCfWaZlrOvlnBlMUJyNb+tDM0iR+m5yv8eASvvBmFNOJvk3TShZgBswdP5Pk
+ pdtzF5KhtwSjSU1pnXs8nV9WbQHYNTdNk/w8v4RbdiT55BMl2z8wmyIt4TzPPtVZQuUZVmPaG
+ GbRGG3pZwF49k4rza9l0SvovTjit3w3tw2RN2FoBJ4tdU2NXtR1PKkMo93QaB2gT2gBw3W63w
+ nzrCi4FHnxeflhrUu1G9s6fnbLwvU4ce1m/ZoSDZh+xP1+aZk2vcAf4q5CAA/eRsVZPQsXks8
+ RSXBkGNTiDIn2f7zMJbPb3m6eQTMv1VQqNUzDhckJF9OqAM1utJAjpvLhAxPUQ/mNHkv15wp6
+ 71/LqnCQ2j2VIwJSOaPAxRaeXHNzQN/zONTkYLDQeUhrqW3HPPnG3EGnRKFdm1KoagwEGtsKu
+ QFWPCgaKm32I+3Ie0hq/Bs+SlzbgCd/uQdp39IRk/408StQ3zocdbjuMeXysV4O08Z6/rW92Z
+ pgquy2Cm976RTo0NE7Y4qPMYkXeZP+3IKjnpPgbziZrVsBaTD+XPtu4ki0wTrfnTuAncBWFgd
+ eg+5ZC8wlTcQlD4KBSylVu8Bh/S+D/eVQl3nCjtGvI8B3p7qsIT6qRp+wMe/45k5J2WSB2eaZ
+ D4sUwE86ciqueWK7sfzphRgJZQAFluVRYT1AhLAYjDYSPhPyTLUFWbKCRWYjN9ZuBs1j/Igrb
+ 2kIJLRN2+6Er7xH1aOTVsmDAb8QpAWxS3xOwo+hTvCk5Ut6U4Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+In particular when local tags are used (or tags that are pushed to some
+fork) to build Git, it is very hard to figure out from which particular
+revision a particular Git executable was built. It gets worse when those
+tags are deleted, or even updated.
 
-It can be helpful for bug reports to include information about the
-environment in which the bug occurs. "git version --build-options" can
-help to supplement this information. In addition to the size of 'long'
-already reported by --build-options, also report the host's CPU type.
-Example output:
+Let's just report an exact, unabbreviated commit name in our build
+options.
 
-   $ git version --build-options
-   git version 2.9.3.windows.2.826.g06c0f2f
-   cpu: x86_64
-   sizeof-long: 4
+We need to be careful, though, to report when the current commit cannot
+be determined, e.g. when building from a tarball without any associated
+Git repository. This could be the case also when extracting Git's source
+code into an unrelated Git worktree.
 
-New Makefile variable HOST_CPU supports cross-compiling.
-
-Suggested-by: Adric Norris <landstander668@gmail.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile | 9 +++++++++
- help.c   | 1 +
- 2 files changed, 10 insertions(+)
+ Makefile  | 4 +++-
+ help.c    | 5 +++++
+ version.c | 1 +
+ version.h | 1 +
+ 4 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/Makefile b/Makefile
-index fef9c8d2725..5587bccc932 100644
+index 5587bccc932..2ce70d205d9 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -425,6 +425,9 @@ all::
- #
- # to say "export LESS=FRX (and LV=-c) if the environment variable
- # LESS (and LV) is not set, respectively".
-+#
-+# When cross-compiling, define HOST_CPU as the canonical name of the CPU on
-+# which the built Git will run (for instance "x86_64").
+@@ -1902,7 +1902,9 @@ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
+ version.sp version.s version.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_VERSION="$(GIT_VERSION)"' \
+-	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)'
++	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)' \
++	'-DGIT_BUILT_FROM_COMMIT="$(shell GIT_CEILING_DIRECTORIES=\"$(CURDIR)/..\" \
++		git rev-parse -q --verify HEAD || :)"'
  
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1095,6 +1098,12 @@ else
- BROKEN_PATH_FIX = '/^\# @@BROKEN_PATH_FIX@@$$/d'
- endif
- 
-+ifeq (,$(HOST_CPU))
-+	BASIC_CFLAGS += -DGIT_HOST_CPU="\"$(firstword $(subst -, ,$(uname_M)))\""
-+else
-+	BASIC_CFLAGS += -DGIT_HOST_CPU="\"$(HOST_CPU)\""
-+endif
-+
- ifneq (,$(INLINE))
- 	BASIC_CFLAGS += -Dinline=$(INLINE)
- endif
+ $(BUILT_INS): git$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && \
 diff --git a/help.c b/help.c
-index 88a3aeaeb9f..cbcb159f367 100644
+index cbcb159f367..60071a9beaa 100644
 --- a/help.c
 +++ b/help.c
-@@ -412,6 +412,7 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 	printf("git version %s\n", git_version_string);
+@@ -413,6 +413,11 @@ int cmd_version(int argc, const char **argv, const char *prefix)
  
  	if (build_options) {
-+		printf("cpu: %s\n", GIT_HOST_CPU);
+ 		printf("cpu: %s\n", GIT_HOST_CPU);
++		if (git_built_from_commit_string[0])
++			printf("built from commit: %s\n",
++			       git_built_from_commit_string);
++		else
++			printf("no commit associated with this build\n");
  		printf("sizeof-long: %d\n", (int)sizeof(long));
  		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
  	}
+diff --git a/version.c b/version.c
+index 6106a8098c8..41b718c29e1 100644
+--- a/version.c
++++ b/version.c
+@@ -3,6 +3,7 @@
+ #include "strbuf.h"
+ 
+ const char git_version_string[] = GIT_VERSION;
++const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
+ 
+ const char *git_user_agent(void)
+ {
+diff --git a/version.h b/version.h
+index 6911a4f1558..7c62e805771 100644
+--- a/version.h
++++ b/version.h
+@@ -2,6 +2,7 @@
+ #define VERSION_H
+ 
+ extern const char git_version_string[];
++extern const char git_built_from_commit_string[];
+ 
+ const char *git_user_agent(void);
+ const char *git_user_agent_sanitized(void);
 -- 
 2.15.1.windows.2
-
-
