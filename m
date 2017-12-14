@@ -2,78 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB3671F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 21:06:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B16A1F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 21:07:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752852AbdLNVGg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 16:06:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53346 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752361AbdLNVGg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 16:06:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A239EC9952;
-        Thu, 14 Dec 2017 16:06:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7cQePtmQ5w4Cnk8yYAEYd7gNalU=; b=OoNB4v
-        6P5xOV5AzRxefx/6NS1gjS2qXXSfXWGvZhIFEFuGFT6LgCpPko8ydOw9jkjbKeEQ
-        rgWN4xkzyNJW6w0wsM0IgWyrJHBDsz458herg59YVBrQE8F0w3WuGs3HU+bvAfs+
-        5Zb7Q/jGvknHMfn9lWlIdDy1mziyVXIo5TUAs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z1jzxvKCCenJysLD2f2k+k/Ue5m6AL92
-        vhAwR++5vYME8HeLei7jwZtEGjm6biS4CRkcuj6wLZudGKXuqoTnTs/+qqRPFE6t
-        0ahYa3IRe4oSkfjQA24bEGVge01mXuxYx7EKx47cV21BQx/NY8VeXJXd4tjylOIT
-        jSrTecBZaIk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99CE7C9951;
-        Thu, 14 Dec 2017 16:06:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 01C87C9950;
-        Thu, 14 Dec 2017 16:06:34 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
-References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-        <20171214210453.GB32842@aiede.mtv.corp.google.com>
-Date:   Thu, 14 Dec 2017 13:06:33 -0800
-In-Reply-To: <20171214210453.GB32842@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Thu, 14 Dec 2017 13:04:53 -0800")
-Message-ID: <xmqq6099t3xi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753298AbdLNVHe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 16:07:34 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:24843 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753236AbdLNVHV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 16:07:21 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea ([70.25.22.42])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vBEL7F4V050745
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 14 Dec 2017 16:07:16 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Josef Wolf'" <jw@raven.inka.de>, <git@vger.kernel.org>
+References: <20171214130933.GA18542@raven.inka.de>
+In-Reply-To: <20171214130933.GA18542@raven.inka.de>
+Subject: RE: Need help migrating workflow from svn to git.
+Date:   Thu, 14 Dec 2017 16:07:15 -0500
+Message-ID: <005801d3751f$859f6c50$90de44f0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AADB4BF6-E112-11E7-AE1B-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIA5x5KlHQcMIqb62PQwdaAr7U4AKLobwfQ
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+> On December 14, 2017 8:10 AM, Josef Wolf wrote:
+> Subject: Need help migrating workflow from svn to git.
+> 
+> Hello folks,
+> 
+> I am wondering whether/how my mode of work for a specific project
+> (currently based on SVN) could be transferred to git.
+> 
+> I have a repository for maintaining configuration of hosts. This
+repository
+> contains several hundered scripts. Most of those scripts are don't depend
+on
+> each other.
+> 
+> Every machine has a working copy of the repository in a specific
+directory. A
+> cron job (running every 15 minutes) executes "svn update" and executes the
+> scripts which are contained in this working copy.
+> 
+> This way, I can commit changes to the main repository and all the hosts
+will
+> "download" and adopt by executing the newest revision of those scripts.
+> (The sripts need to be idempotent, but this is a different topic).
+> 
+> NORMALLY, there are no local modifications in the working copy. Thus,
+> conflicts can not happen. Everything works fine.
+> 
+> Sometimes, I need to fix a problem on some host or need to implement a
+> new feature. For this, I go to the working copy of a host where the change
+> needs to be done and start haking. With svn, I don't need to stop the cron
+> job. "svn update" will happily merge any in-coming changes and leave alone
+> the files which were not modified upstream. Conflicts with my local
+> modifications which I am currently hacking on are extremely rare, because
+> the scripts are pretty much independent. So I'm pretty much happy with
+this
+> mode of operation.
+> 
+> With git, by contrast, this won't work. Git will refuse to pull anything
+as long
+> as there are ANY local modifications. The cron job would need to
+> 
+>    git stash
+>    git pull
+>    git stash pop
+> 
+> But this will temporarily remove my local modifications. If I happen to do
+a
+> test run at this time, the test run would NOT contain the local
+modifications
+> which I was about to test. Even worse: if I happen to save one of the
+> modified files while the modifications are in the stash, the "git stash
+pop" will
+> definitely cause a conflict, although nothing really changed.
+> 
+> So, how would I get this workflow with git? Is it possible to emulate the
+> behavior of "svn update"?
+> 
+> Any ideas?
 
->> * sb/diff-blobfind (2017-12-12) 1 commit
->>   (merged to 'next' on 2017-12-13 at 9a27a20c5f)
->>  + diffcore: add a filter to find a specific blob
->>
->>  "git diff" family of commands learned --blobfind=<object-name> that
->>  allows you to limit the output only to a change that involves the
->>  named blob object (either changing the contents from or to it).
->>
->>  Will merge to 'master'.
->
-> Sorry, I should have replied about this a long time ago: I love this
-> option but I am not sure that --blobfind is the right name for it.
+You might want to consider a slight modification to your approach as
+follows. 
+Instead of using git pull, use git fetch.
+Have each system on its own branch (sys1 = my-sys1-branch, for example) so
+you can track who has what.
+In your scripts, consider:
+git fetch
+if nothing changed, done
+git status
+if no changes, git merge --ff  master && git push origin my-sys1-branch &&
+done
+if changes, send an email whining about the changes
+your script could then (depending on your environment) git commit -a && git
+merge && git push origin my-sys1-branch && done
 
-Sorry.  I should have updated the description when the option name
-was updated in the latest round.
-Jonathan Nieder <jrnieder@gmail.com> writes:
+This would allow you to track the condition of each system at your single
+upstream repository. 
+
+Just my $0.02
+
+Cheers.
+Randall\
+-- Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)/NonStop(211288444200000000)
+-- In my real life, I talk too much.
+
+
 
