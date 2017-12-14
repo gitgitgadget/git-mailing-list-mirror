@@ -2,104 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2EF1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 23:49:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD8A61F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 23:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754292AbdLNXts (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 18:49:48 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:43214 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754173AbdLNXts (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 18:49:48 -0500
-Received: by mail-qk0-f180.google.com with SMTP id j207so8410916qke.10
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 15:49:47 -0800 (PST)
+        id S1754296AbdLNXvJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 18:51:09 -0500
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:38959 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754246AbdLNXvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 18:51:08 -0500
+Received: by mail-ua0-f181.google.com with SMTP id i20so5107686uak.6
+        for <git@vger.kernel.org>; Thu, 14 Dec 2017 15:51:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YceBEfQRe3YLufLDymqxsywsgwj5+s21HztQvwIbJts=;
-        b=GGRWaykBcMOTjbm9r35jShyOIBmXLVuoj24gLNKZ1DXLsZblZNfuzPfU/ArXX2/YXw
-         lHG03n6xwJZqKrBLAHdNCGEwJi9FDlOmQLr8FexjmAT5CaC6mitCohmyfEHk9haQHNF7
-         gdZ22kVuMAOIoCAgchEn/TQqK/UVctKC+sPUJDWaA+Jj8eFeQWYRvO3tImDaABqjGgoS
-         DMTIQy5du0IJ9UC0kVtWd7B86VqTb3oiLk/U524Bxq0LbiA4u9SD12i1EqUQCbKiftzX
-         CmZBEP3CS+9SZx6N8rZ9hZ0EoAVfMBPnNhv1sLSGYtfgrp4PyH0SmST97Dq7VPWPbFm7
-         8Gvw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9f0+4/8q/WKBivaVk4psKDxNi66qBhN9dhs7p+JibLk=;
+        b=beRhYG3FYQRCtrkoeB8vDST3/blmaaFrCBMMXlq/k37q5bT8fZ+MlVsnV5cKI4FiAO
+         Soe6j3JJKbw0fHOmi3aXNisvQL9Xk4WoVnEDE09+ymOrWRqqspWrW06HfIEpCbi1RoOZ
+         zwGpw3alnXXzBEaK+Jo92QYEiBFPDf+8G1EjtSIIsAbgE9usDffqbIz+hSFsx1C/6N/q
+         AYxIVLHLcmAd6NyMcNFANBcFvQhLm/P5qKfjS4+S4mB9uQ8AcVvD26QA1TPFBznckTZa
+         9bJJeen0ZybX+vk1jbp6XfRxK1yzy3ULH8GwUGQvy9wM5mLpjVLeZJ0PzY4zwdE8guv8
+         El/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YceBEfQRe3YLufLDymqxsywsgwj5+s21HztQvwIbJts=;
-        b=M6K9hvXwAUyxeOuKYR0rDHJh9Sxf6K5LIzamL48GhvLzkLWmrYvJYdWx4fyBl3O6s8
-         fL6UuOrEBxwLea5hO3mw+elfsWaIrlPftFPPd1r0VkJQ8b1qraM/nBWxuO2xnFwr3uLf
-         GYtX6dF/PfgMOER1b6Ovu5Ot3MSr8UXs872xbdFwzrUNKjlCQvGxWgV+bBt4P6p5yjPU
-         VkHETxyqBvHy8Uvo9uO5eEwz2VA/jzKHXXZ8wbtduSffgDwh5S9cQNOd4xF2vWHfwuJx
-         kmUvxHgrkKKjKYFLC4oLk60wdDTfgIH35Xdv/G6r3Uzvi97eKeI6lQqLx+C3AcTwjHYj
-         7UUA==
-X-Gm-Message-State: AKGB3mJ8nq1Zwqfp9e01FiWflRFVXgYUUJV6il8zbxA02zRrw2GTSJme
-        cICOYJhktJXNNA2ATqbIleI=
-X-Google-Smtp-Source: ACJfBot4VbMmITI2tVr5iQuni8gv2v9xrsBbIKXbbQxiXFD04t1qvEWrfu0TSHkjqrUgWALs0NJJRg==
-X-Received: by 10.55.197.81 with SMTP id p78mr19978787qki.56.1513295386922;
-        Thu, 14 Dec 2017 15:49:46 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id z128sm3246984qke.92.2017.12.14.15.49.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 14 Dec 2017 15:49:45 -0800 (PST)
-Date:   Thu, 14 Dec 2017 18:49:43 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "Bennett, Brian" <Brian.Bennett@Transamerica.com>
-Cc:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-svn: convert CRLF to LF in commit message to SVN
-Message-ID: <20171214234943.GF3693@zaya.teonanacatl.net>
-References: <BL2PR05MB2179DEBF7123ACD090E60F2685340@BL2PR05MB2179.namprd05.prod.outlook.com>
- <20171214002050.GA32734@whir>
- <BL2PR05MB217980546899C5B8EFDE06FF850A0@BL2PR05MB2179.namprd05.prod.outlook.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9f0+4/8q/WKBivaVk4psKDxNi66qBhN9dhs7p+JibLk=;
+        b=nL7eO/tPX8exXydojMfe3qAn6h1bkYmglOLSUCOMBjdNuJ3yPJ3lKTOi4paE91Tkeb
+         seo7/t3/YYsmPsPzOIp4zH6tN/dd7Ya4R82Xz4u2G8nuwBsRSCUlflNHGnvium3pc+th
+         wlXtwOjgVS0Y08Mqm8a2Jd5hmxo56mqPDZw2AWPfLvtXLM/MtUJz/+g5excWmHliY/7P
+         xHN1LXAG8u9rVdAg9vLCilw5x5gKvaPPhGre0/6/yQY7wm5asIqwBD6uysJUKrCiHMqw
+         OB//525uNLxrJ3r3be0WlvjMIUIS+wZ9bWbaWQ6b5NJEp0KBS054gK9IpebL1hbCZmm0
+         WPdA==
+X-Gm-Message-State: AKGB3mJBBVM0T1qt17vpPoeJkGG+8r3CpA8yZRIHhnqI82pSdTNdvI0E
+        CL2ioOihWGmMSjbZsuIFX2uwDGRjGCHgcO3gCug=
+X-Google-Smtp-Source: ACJfBou/7vo1xT2EFo4uui1KijTfSmwHiyRtjlNdxoAN7xDy9+AV3VRLEqy5/5P3gKW6vfXh2Y3BlzZ3+HRjfIQjsm4=
+X-Received: by 10.176.29.147 with SMTP id l19mr12706315uak.37.1513295467450;
+ Thu, 14 Dec 2017 15:51:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BL2PR05MB217980546899C5B8EFDE06FF850A0@BL2PR05MB2179.namprd05.prod.outlook.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.176.73.240 with HTTP; Thu, 14 Dec 2017 15:51:07 -0800 (PST)
+In-Reply-To: <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com>
+References: <20171101115535.15074-1-szeder.dev@gmail.com> <20171211233446.10596-1-szeder.dev@gmail.com>
+ <20171211233446.10596-2-szeder.dev@gmail.com> <9AAC2BCC-AA06-46F9-8E6E-1D99CD959FDD@gmail.com>
+ <CAM0VKjkVw8QeDErDg9aXcQ1sAgY34eBEeA0QJGamvEEBOG8y9w@mail.gmail.com> <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 15 Dec 2017 00:51:07 +0100
+Message-ID: <CAM0VKjkv0XqHf8s94Wj2DHsD49gTP0M6HU2AY=36Jj-5SYhS9A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] travis-ci: use 'set -x' in 'ci/*' scripts for extra
+ tracing output
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
+On Thu, Dec 14, 2017 at 12:10 AM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> On 12 Dec 2017, at 19:43, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote=
+:
+>>
+>> On Tue, Dec 12, 2017 at 7:00 PM, Lars Schneider
+>> <larsxschneider@gmail.com> wrote:
+>>>
+>>>> On 12 Dec 2017, at 00:34, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
+te:
+>>>>
+>>>> While the build logic was embedded in our '.travis.yml', Travis CI
+>>>> used to produce a nice trace log including all commands executed in
+>>>> those embedded scriptlets.  Since 657343a60 (travis-ci: move Travis CI
+>>>> code into dedicated scripts, 2017-09-10), however, we only see the
+>>>> name of the dedicated scripts, but not what those scripts are actually
+>>>> doing, resulting in a less useful trace log.  A patch later in this
+>>>> series will move setting environment variables from '.travis.yml' to
+>>>> the 'ci/*' scripts, so not even those will be included in the trace
+>>>> log.
+>>>>
+>>>> Use 'set -x' in 'ci/lib-travisci.sh', which is sourced in most other
+>>>> 'ci/*' scripts, so we get trace log about the commands executed in all
+>>>> of those scripts.
+>>>
+>>> I kind of did that intentionally to avoid clutter in the logs.
+>>> However, I also agree with your reasoning. Therefore, the change
+>>> looks good to me!
+>>
+>> Great, 'cause I'm starting to have second thoughts about this change :)
+>>
+>> It sure helped a lot while I worked on this patch series and a couple of
+>> other Travis CI related patches (will submit them later)...  OTOH it
+>> definitely creates clutter in the trace log.  The worst offender might
+>> be 'ci/print-test-failures.sh', which iterates over all
+>> 't/test-results/*.exit' files to find which tests failed and to show
+>> their output, and 'set -x' makes every iteration visible.  And we have
+>> about 800 tests, which means 800 iterations.  Yuck.
+>>
+>> Perhaps we should use other means to show what's going on instead, e.g.
+>> use more 'echo's and '--verbose' options, or just avoid using '--quiet'.
+>> And if some brave souls really want to tweak '.travis.yml' or the 'ci/*'
+>> scripts, then they can set 'set -x' for themselves during development...
+>> as the patch below shows it's easy enough, just a single character :)
+>
+> Hm... in that case. Would it be an option to "set -x" only in the header
+> of "install-dependencies.sh"?
+>
+> In "lib-travisci.sh" we could keep your "set -x" and execute
+> "set +x" at the end of the file. Wouldn't that give us the
+> interesting traces without much clutter (e.g. what is $PATH etc)?
 
-Bennett, Brian wrote:
-> Thank you for your fast response,
-> 
-> I haven't done a build of this type before (so I could
-> test the patch first) so I'm trying to do that and get
-> this far:
-...
-> I don't want to drag out testing the patch, so if either
-> of you are able to quickly guide me on what I am doing
-> incorrectly I am willing to get the build done so I can
-> test it. If not, could one of you build with the patch and
-> somehow get that to me so I could test?
+Hmm, that's an idea worth considering.
 
-I don't know about building git for windows, but since the
-git-svn command is a perl script, it might be easier to just
-patch that file.  I think you can find the path where
-git-svn is installed using: git --exec-path
+Scripts like 'run-build.sh', 'run-tests.sh' and 'run-static-analysis.sh'
+do basically nothing more than run make with different targets, so on
+one hand 'set -x' doesn't cause any clutter in the trace log, on the
+other hand there is no benefit from it either.
+'run-linux32-docker.sh' runs docker (the command) twice, so it's
+basically in the same boat.
 
-For this one-liner, I'd just manually apply it.
+I think both 'lib-travisci.sh' and 'install-dependencies.sh' benefit
+from 'set -x'.
+So does 'test-documentation.sh': it executes about 15 commands, among
+them a bunch of 'test -s <file>' which fail quietly.  With 'set -x' we
+would see the last executed command and know that that's the one that
+failed.
 
-(If you want to use 'git apply' or the patch command, you'll
-have to edit the patch to adjust the name of the file, as
-it's git-svn.perl in the git tree.  The .perl suffix is
-dropped in the installed version.)
+As mentioned above, 'print-test-failures.sh' definitely suffers from
+'set -x'.
 
-Hopefully that makes it easier for you to test Eric's patch.
+There is a lot going on in 'run-windows-build.sh', so the output of 'set
+-x' might be useful or might be considered too much clutter, I don't
+know.  I put Dscho on Cc, I think it's mainly his call.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I am in shape.  Round is a shape.
+So it seems that there are more scripts that would benefit from tracing
+executed command using 'set -x' than scripts that would suffer because
+of it, and it doesn't matter for the rest.  This means we could issue a
+'set -x' in 'lib-travisci.sh' and disable it only in
+'print-test-failures.sh'.
 
+There is one thing that triggers my OCD: whenever we echo something, it
+ends up being duplicated in the trace log, e.g.:
+
+  + echo foo bar baz
+  foo bar baz
+
+We could workaround it by writing 'echo "<msg>" >/dev/null', but it
+feels hackish and I'm not sure it's worth it.
+
+
+G=C3=A1bor
+
+>>>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>>>> ---
+>>>> ci/lib-travisci.sh | 2 +-
+>>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+>>>> index ac05f1f46..a0c8ae03f 100755
+>>>> --- a/ci/lib-travisci.sh
+>>>> +++ b/ci/lib-travisci.sh
+>>>> @@ -23,7 +23,7 @@ skip_branch_tip_with_tag () {
+>>>>
+>>>> # Set 'exit on error' for all CI scripts to let the caller know that
+>>>> # something went wrong
+>>>> -set -e
+>>>> +set -ex
+>>>>
+>>>> skip_branch_tip_with_tag
+>>>>
+>>>> --
+>>>> 2.15.1.421.gc469ca1de
+>>>>
+>>>
+>
