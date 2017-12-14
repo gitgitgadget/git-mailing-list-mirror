@@ -7,102 +7,88 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77C001F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 23:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A8191F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 23:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754231AbdLNX0F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 18:26:05 -0500
-Received: from mout.gmx.net ([212.227.17.22]:63905 "EHLO mout.gmx.net"
+        id S1754443AbdLNX2D (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 18:28:03 -0500
+Received: from mout.gmx.net ([212.227.17.21]:52713 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754147AbdLNX0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 18:26:04 -0500
+        id S1754358AbdLNX2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 18:28:01 -0500
 Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEo4s-1eE7e32pUw-00G14E; Fri, 15
- Dec 2017 00:25:57 +0100
-Date:   Fri, 15 Dec 2017 00:25:56 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MK0bZ-1eQSOh0iUH-001NMw; Fri, 15
+ Dec 2017 00:27:58 +0100
+Date:   Fri, 15 Dec 2017 00:27:57 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH 2/2] version --build-options: report commit, too, if
  possible
-In-Reply-To: <20171208172733.GC14261@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1712150020400.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <cover.1512752468.git.johannes.schindelin@gmx.de> <908989103a06291e38c8551c447bc73eb781fb26.1512752468.git.johannes.schindelin@gmx.de> <20171208172733.GC14261@aiede.mtv.corp.google.com>
+In-Reply-To: <xmqqy3md85zh.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1712150027360.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <cover.1512752468.git.johannes.schindelin@gmx.de>        <908989103a06291e38c8551c447bc73eb781fb26.1512752468.git.johannes.schindelin@gmx.de>        <20171208172733.GC14261@aiede.mtv.corp.google.com>
+ <xmqqy3md85zh.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Cekf69zLrM3Tql+ZfBJZCnTmAryseKON/t5YoaowJdGHJRPSI8a
- oJ8ejYwn7SXBljcGZHsQGhqSDnXrg1aWmFbPdrFDzJ2pjhfoaXsg9xymnKZ7OfUYHPCz0AJ
- zJhha6C8PN0icImMcg953KOZnvtZPlhPBiAwy1BJ/uKG8MUzPj5/FuRWSBc9qzyFaBw3rFc
- 9+4kkLHqv6Fzw7CeFUvBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YAzDe0ka+4o=:krwyMMoOtdwBZoeTWVFoo6
- AlcuicXeFy1S9rfrztC7v/sc0PG0LTJZUVPl0GoIZHn0TXa60ooE0j3vI4xzXCnAcpycFEkSd
- Y66+l+qiH4BPJSjNd5VbcE0jMuivvYsg14UAYo/5QMyXFMcIEnEzgiqpBsMse5kdmFZ7/lCPW
- NYkuw+OhSVTstSTP5d3nqpldZTNVhJhThIbHkBmxkKvALqMDj2+0SdfMZL6Y8P1R3vnoEeINC
- Vo16OzC2h2iVWkfG+7mt8nIUHgY0wtX1ePCDYSb0D1LZMGZsyTZynvd6l39YI7SCJXHhuXqFA
- fCB2WouTSwsqu360bSZfn/MH/a23lQJQXOaYy6NTPaRF3XIVSItsjjHus/hZ4pEcQk63yEFrS
- DJjjgMOjH5WfKKNL4+OfvIoi9tw5NovRsuYIFUhEtvjdOXPlsw3jgy+ad2g3jNp/Lug6e2Ufw
- WDQeE40a4xdsvC/oqwQNTnT7gGhqIEHW0ryymK+8qNDgAxkmFKiw0H3WlfUeAS2dx/s3LNxqo
- kgv/5o8PB4IhQ3Y7E9200gm5eYdTbBrD7ycP8hQqJi/W7p6chZnjxhvQWxRRx9+PazECddLEA
- qYaGDXQYXuhsuD4K1/p2i3Jis+FZL8NfzQXPjXpZxJnQl0FJqoH8guklbH7B116UOnRII/MXg
- 8CCY8Hi7E42tXWVKPeHa/ZCZj1ij5vDS28OKEwxk+HGuBXFrfCd7sgwiKVTv1B7yNBhRBSRbo
- ON/HSCXfRZYIVviHHdKRQNouH1+s/pXJp92ipv8z3GFMxSBHJszPakshOETq3S01VFzw2gXT2
- cWyhT6/lIYhBsCdLNqWpscClxGBAOBCx0FOjA1x+dJiaCqAO8g=
+X-Provags-ID: V03:K0:8lMuZsFxgA4bNpPZcsLigTE9bA0R0nS4p2kgNMC9ResX/wLCMOd
+ 6C/rOSOoQksfzFoP2JgEvkbAKLTyJ9JZDxSB8sh2AMFwLLtlpPJ5Cf0StYU+guRq/feegXy
+ JgCMSRkvumGTDdSHjqY/VaLZDMv13fPQ5FgJFG4lTaaRj3Nrv99PwrHtV8A1Xoff+lMUm7M
+ 2qNLi/g89abt8qgIJmDqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/OPEA35K3NA=:uKrPSghkAfWzcU/DS7yaSo
+ PW4kgjTcAPLRJ/oQOMW/OaWfJ3/4o9yG5GAo8XiFKFhR+NOG40h5PPVAIOafWSjgW7RuYH0y6
+ a8/Nybpo6gxNGPV121CEl5iJOt9G0arfZAjtIvCuywh4YHbD42IXZOg5yDRDW/Fcpi5at7gaR
+ ExbNkAYvTmIpWYu0p3Z7tu1dxjyICOfTMUE3/UdNSZtTZbnQusxaju5czNUm2nbVdsfdIoP2+
+ e7tNHuLD4MIvem30SgEOdCF4r5mi8Q5UsRiHw84/Knh8oJ9f4iUT1PUlkHj0ier0fNvoWQxwl
+ GouMgjC3J5RTv8vNQbB2f8yELsO9nnPWs1WXdweYqD10UhdJP5E4jdVmS1zM7rnv+qXTNAdbI
+ 5f9pWbWmCXU0JOZv/zf0jHCvZ2JQ9eb6/e7xkxjgNwmbuzqkxgtrCVHrRitIeiprvVIsmtfyL
+ Ys1vsXmH9U5bzXBKmCBbKULoA7q+bYUVuSZzTxFFrBm+gbzVK2w27yd7MY3CKdHC/ILW3dyJK
+ FoIspBq8xSuHaFlVCqaBLJumojwVA1hyh74z3CLlyHC/260JE7WVpKyUBibvfwfID/dTspiw2
+ Nc0wPHFflvUHlcAahuN8SwIYIXoy16sC9krV6SwxlaWcrZlQqcESOWlp4r36ckb8AjfXEtDVB
+ PUYaZByQZc/CrCzl85fB2eU80oS6zs/cZPCHcfRa5psOhDDj8s9rHCirOKGkImiFsRhdB+iUE
+ 5g+iRg3fuVlq+ts+Lk6QYrsNajZq6YK5z4DSpBhy0d441TyT+RCgnAnooATZxEiNHLAQpRTlh
+ x/B9ijg56LA6cPlzF2ukoob/kNDdjp8D7h1zYnIkrffJJu362Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Junio,
 
-On Fri, 8 Dec 2017, Jonathan Nieder wrote:
+On Fri, 8 Dec 2017, Junio C Hamano wrote:
 
-> Johannes Schindelin wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> > In particular when local tags are used (or tags that are pushed to some
-> > fork) to build Git, it is very hard to figure out from which particular
-> > revision a particular Git executable was built.
+> >> We need to be careful, though, to report when the current commit cannot be
+> >> determined, e.g. when building from a tarball without any associated Git
+> >> repository.
+> >
+> > This means that on Debian, it would always print
+> >
+> > 	built from commit: (unknown)
+> >
+> > Maybe I shouldn't care, but I wonder if there's a way to improve on
+> > that. E.g. should there be a makefile knob to allow Debian to specify
+> > what to put there?
 > 
-> Hm, can you say more about how this comes up in practice?
-
-I recently saw a version string on this here list (in a generated patch)
-that looked something like "git v2.14.0.chrome".
-
-I sometimes build custom Git for Windows snapshots from commits that I
-keep in my own fork. I would expect other people to do the same.
-
-With this patch, at least I can verify very easily whether I have access
-to the corresponding commit or not.
-
-> I wonder if we should always augment the version string with the commit
-> hash.
-
-That would probably be more confusing than helpful to the end-users.
-
-> E.g. I am running
+> Another "interesting" possibility is to build from a tarball
+> extracted into a directory hierarchy that is controlled by an
+> unrelated Git repository.  E.g. "my $HOME is under $HOME/.git
+> repository, and then I have a tarball extract in $HOME/src/git".
+> We shouldn't embed the HEAD commit of that $HOME directory project
+> in the resulting executable in such a case.
 > 
-> 	git version 2.15.1.424.g9478a66081
+> We should be able to do this by being a bit more careful than the
+> presented patch.  Make sure that the toplevel is at the same
+> directory as we assumed to be (i.e. where we found that Makefile)
+> and trust rev-parse output only when that is the case, or something
+> like that.
 
-which is currently good enough, but in the future may clash with another
-object, maybe even a commit. Unabbreviated commit names are what I am
-after.
+Cute.
 
-> > We need to be careful, though, to report when the current commit cannot be
-> > determined, e.g. when building from a tarball without any associated Git
-> > repository.
-> 
-> This means that on Debian, it would always print
-> 
-> 	built from commit: (unknown)
-> 
-> Maybe I shouldn't care, but I wonder if there's a way to improve on
-> that. E.g. should there be a makefile knob to allow Debian to specify
-> what to put there?
-
-I changed the text to "no commit associated with this build". Does that
-suffice? If not, what "UI" would you suggest (most likely a new Makefile
-variable? What name would you prefer?).
+I added specific handling for that.
 
 Ciao,
 Dscho
