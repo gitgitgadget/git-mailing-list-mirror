@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5AF81F406
-	for <e@80x24.org>; Thu, 14 Dec 2017 08:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFCE01F424
+	for <e@80x24.org>; Thu, 14 Dec 2017 09:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751076AbdLNI7a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 03:59:30 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:40205 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751091AbdLNI73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 03:59:29 -0500
-Received: by mail-it0-f67.google.com with SMTP id f190so9381129ita.5
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 00:59:28 -0800 (PST)
+        id S1751470AbdLNJAi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 04:00:38 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:44729 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751173AbdLNJAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 04:00:38 -0500
+Received: by mail-it0-f51.google.com with SMTP id b5so9713167itc.3
+        for <git@vger.kernel.org>; Thu, 14 Dec 2017 01:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Imv1535hqjqb9Jw4LwcPIwU0hSp/XaoVG/tM14zUcNA=;
-        b=mxuzg1nKyfERPm+/J6wjz/tt7VMN7VjmcQv3y8yaROwvx7Z289QJZKjG5BGVuA0vNx
-         dR0W4ZG+3P/tcJxv5iMW2jzOf4MUSOY0Vhkbxd5exJps/NIXE9tMDaLc0Tv/qv8orgC7
-         ai4BPvHdAxklfgDLLXysFsVmY33nhZV6rt3spLnEBbCCI/0F4g9WY2gTiliilLYT/zWn
-         DDAjJzkPqx8wrt9wqFZzSeNcKOUQvoDI99a3xX0qZypYDNynjl+K+oKqsVOhZ+uVrkZZ
-         kfJ0T1xRGwqCJGLduwf9WFvUcqGcAmoX+z7t09ngQeSxLvkNKyrsCpno3otx/3ABJkNY
-         EpMA==
+        bh=B4jOXhroZa6XX9OgS1zfMjYMZqBH2RSonwtAtZhh6Xo=;
+        b=JlSZIDYkIfpParhvwDcybplIPdM1hgAif0MVISz6UMcO4J7MxDqvuUEqOda6rix7TT
+         T/QPqzTvo5wqjatnbNL9pDSCdR3MAiZZ5jMpjNOdBgSZlw9rbnhF4TstE8PufJFpaKCp
+         MBX7hwDbhfxqvGXn+UU1i0n+sJpGW7SaczZgdoM4VBvIGDQDh6mOfFqcGtOJqlxpMAcj
+         mX7nUcIHqX974+ydWeG/FpMT3k0IJIvPtet4gYoEBMtJcAzsLqNFvmuo+jee7u7PopUi
+         iDHCHe7q/ZGfTy2hOk9A2n2DZeHXO6r5pKtO16MAWw4zwaSvaPO6+Oh2blXawpJyAZ4B
+         KsPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Imv1535hqjqb9Jw4LwcPIwU0hSp/XaoVG/tM14zUcNA=;
-        b=tZd48afGFXOUR/qMWbZoOgSaanhSzEsaSJ4nLtwJRyGbn/eBxEop+TpUhTbDWzdYPg
-         x48gjLX4sIAlclx9SLwJ/5iT0UFEO0aor+X5+QIjQqkLVZMHCFo+kzD1yHSYHqtEXHXU
-         qtu7/Ggbys5ZzwMuGPy1Itwr9R7W7IeszIT+IxczBXFYUIjgRJ/z5JU8Kwthf0rPGSsI
-         6g/H+9kqYXdjSHbp6p/IBlM4/jM5CYY754nIaERlVZ1aFMfsG9MU07/XOXI4eO61TFhr
-         XdzzVhniD9o+EFLz57W9TA2YuqlI4ckbqXKthRsxyT7Auwic0ueeos0gW9I1GXKBEv51
-         vcEg==
-X-Gm-Message-State: AKGB3mJ+0+E9FTIYmLzAhfK9XsWLQ1MarWf0aogOIO4ROQjxNkprN94P
-        QfaW/ZgWGQpIlyMo/Nge3MovuwakczsSXs+IyFQ=
-X-Google-Smtp-Source: ACJfBovw4+gBX2ucSV7OKk+hOUzRMTf427EkDL3tvzGtQRhDi1nUQ7PsjFV2c2k7PLCYy47BRLgCKXnSVRR/qm7k44E=
-X-Received: by 10.107.47.234 with SMTP id v103mr6034266iov.96.1513241968337;
- Thu, 14 Dec 2017 00:59:28 -0800 (PST)
+        bh=B4jOXhroZa6XX9OgS1zfMjYMZqBH2RSonwtAtZhh6Xo=;
+        b=JdSLESWgv2ShVNyyy7FvnapQXJC+QGR0DIdW3VUpkoybfdXvGe/y94dZo2QUioaSdm
+         +qK6tD9h6hX5xEH4NKsRJPgj9h3BZCNzSrEnQh7CEPEYO0E271CiiJfrj3PF+5Rm792Q
+         fugDw4UE5fUbKW9lOKp1294ogJmHXWXBsICerFJSvSMkVXzKCygn017YVAmVJN2W7Sd4
+         qUIYiK7W2BJrdOUso5O1anhmiJVbQHyBx29w6Rf6op/pfN9g5G/l0PvI7iInBlXN5CDz
+         xv8HeIzmwUxqScqKVD1ITuPn2a4kK08jqJLCiVI55ktzopHhwZHRiBdCdE2w7zNauQVJ
+         dYyQ==
+X-Gm-Message-State: AKGB3mIvZzLFehDJBNrrO1/4q/EXpHm7JyTVRE7/Mv/i2U7GsHa8hZlN
+        oD9DPfcCF01EJm85GfqTWaLKHnZihOZODaQJVIM=
+X-Google-Smtp-Source: ACJfBoueFOfk4yUJXBIuTmMwiJL7AYABk4u2qTik6CkTdjoPBJNlluewZHhQIwSGU5pzO1WXtQX42tTRTqrJzxiXO+c=
+X-Received: by 10.107.81.2 with SMTP id f2mr5888903iob.282.1513242037408; Thu,
+ 14 Dec 2017 01:00:37 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Thu, 14 Dec 2017 00:59:27 -0800 (PST)
-In-Reply-To: <xmqqbmj2wedd.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.28.137 with HTTP; Thu, 14 Dec 2017 01:00:36 -0800 (PST)
+In-Reply-To: <xmqq4louwdpn.fsf@gitster.mtv.corp.google.com>
 References: <20171213151344.2138-1-chriscool@tuxfamily.org>
  <20171213151344.2138-5-chriscool@tuxfamily.org> <xmqqbmj2wedd.fsf@gitster.mtv.corp.google.com>
+ <xmqq4louwdpn.fsf@gitster.mtv.corp.google.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 14 Dec 2017 09:59:27 +0100
-Message-ID: <CAP8UFD3=YCfrZZ0Xq6YSKTwr8e5HV5iwPN4G=Xb0s1yz8RTr6Q@mail.gmail.com>
+Date:   Thu, 14 Dec 2017 10:00:36 +0100
+Message-ID: <CAP8UFD3sCQcp_006AhQXrKicDmuLehRLQDN+X2upRy3sQOKOcQ@mail.gmail.com>
 Subject: Re: [PATCH 4/8] perf/run: use $default_value instead of $4
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
@@ -65,55 +66,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 13, 2017 at 9:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+On Wed, Dec 13, 2017 at 9:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  t/perf/run | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> If you want to be able to use this helper to specify a default value
+>> of an empty string (which the orignal that used $4 did), then the
+>> previous hunk must be corrected so that it does not unconditionally
+>> set default_value to $4.  Perhaps like
 >>
->> diff --git a/t/perf/run b/t/perf/run
->> index 43e4de49ef..bbd703dc4f 100755
->> --- a/t/perf/run
->> +++ b/t/perf/run
->> @@ -105,7 +105,7 @@ get_var_from_env_or_config () {
->>       env_var="$1"
->>       conf_sec="$2"
->>       conf_var="$3"
->> -     # $4 can be set to a default value
->> +     default_value="$4" # optional
+>>       if test -n "${4+x}"
+>>       then
+>>               default_value=$4
+>>       else
+>>               unset default_value || :
+>>       fi
 >>
->>       # Do nothing if the env variable is already set
->>       eval "test -z \"\${$env_var+x}\"" || return
->> @@ -123,7 +123,7 @@ get_var_from_env_or_config () {
->>       conf_value=$(git config -f "$GIT_PERF_CONFIG_FILE" "$var") &&
->>       eval "$env_var=\"$conf_value\"" && return
->>
->> -     test -n "${4+x}" && eval "$env_var=\"$4\""
->> +     test -n "${default_value+x}" && eval "$env_var=\"$default_value\""
+>> or something.
 >
-> This conversion changes the behaviour.  Because default_value is
-> always set by your change in the previous hunk, we end up always
-> doing this eval.
+> And if you do not care about passing an empty string as the default
+> value, then the earlier hunk can stay the same
 >
-> The original says "If $4 is set, then ${4+x} becomes x and if $4 is
-> not set, ${4+x} is empty, so let's check if ${4+x} is a non-empty
-> string to see if $4 is set.  If ${4+x} is a non-empty string, that
-> means $4 was set so we do the eval.
+>         default_value=$4
 >
-> If you want to be able to use this helper to specify a default value
-> of an empty string (which the orignal that used $4 did), then the
-> previous hunk must be corrected so that it does not unconditionally
-> set default_value to $4.  Perhaps like
+> but the eval part should become something like
 >
->         if test -n "${4+x}"
->         then
->                 default_value=$4
->         else
->                 unset default_value || :
->         fi
+>         test -n "$default_value" && eval ...
 >
-> or something.
+> Given that you are planning to add yet another optional argument to
+> the helper, and when you pass that variable, you'd probably need to
+> pass "" as the "default" that is not exported, perhaps this "give up
+> ability to pass an empty string as the default" approach may be the
+> only thing you could do.
 
-Yeah, you are right I will fix this.
+Yeah, thanks for the explanations and suggestions.
