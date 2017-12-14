@@ -2,129 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B16A1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 21:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FBF21F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 21:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753298AbdLNVHe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 16:07:34 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:24843 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753236AbdLNVHV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 16:07:21 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea ([70.25.22.42])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vBEL7F4V050745
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 14 Dec 2017 16:07:16 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Josef Wolf'" <jw@raven.inka.de>, <git@vger.kernel.org>
-References: <20171214130933.GA18542@raven.inka.de>
-In-Reply-To: <20171214130933.GA18542@raven.inka.de>
-Subject: RE: Need help migrating workflow from svn to git.
-Date:   Thu, 14 Dec 2017 16:07:15 -0500
-Message-ID: <005801d3751f$859f6c50$90de44f0$@nexbridge.com>
+        id S1753448AbdLNVIn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 16:08:43 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57251 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753281AbdLNVIm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 16:08:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 612E9C97E8;
+        Thu, 14 Dec 2017 16:08:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aBgiS8jgs2g1fx68moMK0PY5WHQ=; b=Zqwhp9
+        TnS/piAVCTlztkMaDJ3oGnWUrlFVZxVQNzrdeMjQ2K3yV7OtA4uXlINf2/JkeHFC
+        yjvyufpXQxohSPCBtVd4XkQCCpjKudaB7+RuBqUhD+/pK3Xc6Eu5P/GoTUMCmzxS
+        EGhzzNxGatD4wF1hpbWBabmRjKiEBSFBlm8uc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=knKmCRk3zppk2eJhdTfGwtvOThjrfAnv
+        a+ez2xDLz/br3mNsO+gjkQZCG2pG/uTgDutQkVHUCyoMhYsDnfuwsZyyAy+swKqk
+        JZTVlTeBzbzMTyrcqHr+m0wncRTMMIrYk7ewbm0GCG2uo+20ZNnw+gfQ9YnjDPQn
+        mKUAxPmNkTA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57505C97E7;
+        Thu, 14 Dec 2017 16:08:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B4260C97E6;
+        Thu, 14 Dec 2017 16:08:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
+References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
+        <1513255038.6351.2.camel@gmail.com>
+        <xmqqk1xpusyh.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 14 Dec 2017 13:08:40 -0800
+In-Reply-To: <xmqqk1xpusyh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 14 Dec 2017 09:20:38 -0800")
+Message-ID: <xmqq1sjxt3tz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIA5x5KlHQcMIqb62PQwdaAr7U4AKLobwfQ
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: F6647DEA-E112-11E7-B909-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On December 14, 2017 8:10 AM, Josef Wolf wrote:
-> Subject: Need help migrating workflow from svn to git.
-> 
-> Hello folks,
-> 
-> I am wondering whether/how my mode of work for a specific project
-> (currently based on SVN) could be transferred to git.
-> 
-> I have a repository for maintaining configuration of hosts. This
-repository
-> contains several hundered scripts. Most of those scripts are don't depend
-on
-> each other.
-> 
-> Every machine has a working copy of the repository in a specific
-directory. A
-> cron job (running every 15 minutes) executes "svn update" and executes the
-> scripts which are contained in this working copy.
-> 
-> This way, I can commit changes to the main repository and all the hosts
-will
-> "download" and adopt by executing the newest revision of those scripts.
-> (The sripts need to be idempotent, but this is a different topic).
-> 
-> NORMALLY, there are no local modifications in the working copy. Thus,
-> conflicts can not happen. Everything works fine.
-> 
-> Sometimes, I need to fix a problem on some host or need to implement a
-> new feature. For this, I go to the working copy of a host where the change
-> needs to be done and start haking. With svn, I don't need to stop the cron
-> job. "svn update" will happily merge any in-coming changes and leave alone
-> the files which were not modified upstream. Conflicts with my local
-> modifications which I am currently hacking on are extremely rare, because
-> the scripts are pretty much independent. So I'm pretty much happy with
-this
-> mode of operation.
-> 
-> With git, by contrast, this won't work. Git will refuse to pull anything
-as long
-> as there are ANY local modifications. The cron job would need to
-> 
->    git stash
->    git pull
->    git stash pop
-> 
-> But this will temporarily remove my local modifications. If I happen to do
-a
-> test run at this time, the test run would NOT contain the local
-modifications
-> which I was about to test. Even worse: if I happen to save one of the
-> modified files while the modifications are in the stash, the "git stash
-pop" will
-> definitely cause a conflict, although nothing really changed.
-> 
-> So, how would I get this workflow with git? Is it possible to emulate the
-> behavior of "svn update"?
-> 
-> Any ideas?
+Junio C Hamano <gitster@pobox.com> writes:
 
-You might want to consider a slight modification to your approach as
-follows. 
-Instead of using git pull, use git fetch.
-Have each system on its own branch (sys1 = my-sys1-branch, for example) so
-you can track who has what.
-In your scripts, consider:
-git fetch
-if nothing changed, done
-git status
-if no changes, git merge --ff  master && git push origin my-sys1-branch &&
-done
-if changes, send an email whining about the changes
-your script could then (depending on your environment) git commit -a && git
-merge && git push origin my-sys1-branch && done
+> I think you only sent 3/3 in newer rounds, which made it not to
+> apply to my tree.  If you meant to drop changes in 1/3 and 2/3,
+> perhaps because they were needless churn, then 3/3 needs to be
+> updated not to depend on the changes these two made.
 
-This would allow you to track the condition of each system at your single
-upstream repository. 
+Here is what I reconstructed to suit my taste better ;-)
 
-Just my $0.02
+-- >8 --
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Date: Mon, 27 Nov 2017 22:51:02 +0530
+Subject: [PATCH v4 1/3] rebase: consistently use branch_name variable
 
-Cheers.
-Randall\
--- Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
+The variable "branch_name" holds the <branch> parameter in "git
+rebase <upstream> <branch>", but one codepath did not use it after
+assigning $1 to it (instead it kept using $1).  Make it use the
+variable consistently.
 
+Also, update an error message to say there is no such branch or
+commit, as we are expecting either of them, and not limiting
+ourselves to a branch name.
 
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
+ git-rebase.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 60b70f3def..5526b17a36 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -528,15 +528,18 @@ case "$#" in
+ 	branch_name="$1"
+ 	switch_to="$1"
+ 
+-	if git show-ref --verify --quiet -- "refs/heads/$1" &&
+-	   orig_head=$(git rev-parse -q --verify "refs/heads/$1")
++	# Is it a local branch?
++	if git show-ref --verify --quiet -- "refs/heads/$branch_name" &&
++	   orig_head=$(git rev-parse -q --verify "refs/heads/$branch_name")
+ 	then
+-		head_name="refs/heads/$1"
+-	elif orig_head=$(git rev-parse -q --verify "$1")
++		head_name="refs/heads/$branch_name"
++	# If not is it a valid ref (branch or commit)?
++	elif orig_head=$(git rev-parse -q --verify "$branch_name")
+ 	then
+ 		head_name="detached HEAD"
++
+ 	else
+-		die "$(eval_gettext "fatal: no such branch: \$branch_name")"
++		die "$(eval_gettext "fatal: no such branch/commit: \$branch_name")"
+ 	fi
+ 	;;
+ 0)
+@@ -547,7 +550,7 @@ case "$#" in
+ 		branch_name=$(expr "z$branch_name" : 'zrefs/heads/\(.*\)')
+ 	else
+ 		head_name="detached HEAD"
+-		branch_name=HEAD ;# detached
++		branch_name=HEAD
+ 	fi
+ 	orig_head=$(git rev-parse --verify HEAD) || exit
+ 	;;
+-- 
+2.15.1-554-g7ec1e7e2b9
 
