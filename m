@@ -2,77 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3511F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 12:37:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACBCC1F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 13:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752023AbdLNMh2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 07:37:28 -0500
-Received: from mail-it0-f47.google.com ([209.85.214.47]:39894 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751803AbdLNMh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 07:37:27 -0500
-Received: by mail-it0-f47.google.com with SMTP id 68so10749522ite.4
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 04:37:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:in-reply-to:references:date:mime-version
-         :content-transfer-encoding;
-        bh=dx0LBrd5Uv0Pzf+4Cmj6fID9AVbgbqz6oCwqSUI+k9g=;
-        b=k814LHIc6f9D92gcXQt4WX/h2JJ8b/wzPWo2dRT5b0E7OOIfBij0US9Rm3y8AkMI4f
-         f6YW3gZOQTmn8MlzX9ekG5oEuA938Jjekl22FNGUB6BFgqWxLZheUUd2XtyOLtzy7T3f
-         1kdQeHCyfZruujrwB+kdvZAtABmzeW3ArEMYJW3zT5e3X7irzzyOH3GBRmYzga+duQfL
-         mgF9aPy6myzeBc+ob5SnLnvO6QtCC1ZXA9re29KM2l2gIJPSSAla9OdfYEVkWkenZCve
-         dEQshZ9FvjqdII0O9uALucwX1wBMCs4ZXAhh4V4rp4Gbc/V6+XhFFT09FqHbHjtnzlr4
-         eogw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=dx0LBrd5Uv0Pzf+4Cmj6fID9AVbgbqz6oCwqSUI+k9g=;
-        b=hjPlJmSqPFHP2labGbN2GZcfmTNSaSLzI7Aky77Zjciv7HbiBnlHrpePdoXUh7EBWN
-         bEcrODugwGvD35iHE5hJA9hyv9k5gwAHKgOILU/VUCBeXHzQc9kRX2kYNBV/1EkBq+Z+
-         evRKohvRkxUx03+SSJzwNxzL4uQ3xneOxsdTEvJvA5zIOT1XPS80MNo4MBRi+cBuwCI2
-         rYWfWDVMxQ1jdSgnHfz38pUT0u/kWvMlKhY2x2QfPgIBn8jlQRKuLJOUbokz8PUQiyZw
-         /5X/qc2Q+dmMXUBOtgwE0sCTgrDR3dHqbib5TdEMarCTGepsm4aMFfX54YAd5uClHuX+
-         BuPA==
-X-Gm-Message-State: AKGB3mKJQT/sDZSk6BFzrVTqL4rJPls3koq5xHkJxzEoYn5zx/BdmTSH
-        Hkzad4leir5DrUtrot04SBM=
-X-Google-Smtp-Source: ACJfBoso0NH7q7j/Yu6YYEKP/Acc6X1XYUC4WTpgrMwj7odEyciEt7OH24Wkwrr0h82C8H9TJLC3bQ==
-X-Received: by 10.107.20.129 with SMTP id 123mr7175135iou.36.1513255047101;
-        Thu, 14 Dec 2017 04:37:27 -0800 (PST)
-Received: from unique-pc ([106.203.33.3])
-        by smtp.gmail.com with ESMTPSA id v9sm2822722itv.35.2017.12.14.04.37.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Dec 2017 04:37:26 -0800 (PST)
-Message-ID: <1513255038.6351.2.camel@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-In-Reply-To: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Thu, 14 Dec 2017 18:07:18 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-Content-Transfer-Encoding: 7bit
+        id S1752479AbdLNN2P (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 08:28:15 -0500
+Received: from quechua.inka.de ([193.197.184.2]:34694 "EHLO mail.inka.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752228AbdLNN2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 08:28:14 -0500
+X-Greylist: delayed 1084 seconds by postgrey-1.27 at vger.kernel.org; Thu, 14 Dec 2017 08:28:14 EST
+Received: from raven.inka.de (uucp@[127.0.0.1])
+        by mail.inka.de with uucp (rmailwrap 0.5) 
+        id 1ePTH7-0004x7-Lb; Thu, 14 Dec 2017 14:10:09 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+        id DAFC1120182; Thu, 14 Dec 2017 14:09:33 +0100 (CET)
+Date:   Thu, 14 Dec 2017 14:09:33 +0100
+From:   Josef Wolf <jw@raven.inka.de>
+To:     git@vger.kernel.org
+Subject: Need help migrating workflow from svn to git.
+Message-ID: <20171214130933.GA18542@raven.inka.de>
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It seems my series that fixes an error message in 'git-rebase'[1]
-(apart from a little cleanups) is missing. I guess I addressed the
-issue that was raised in 3/3 as a v3 for that patch[2]. Are any more
-changes needed?
+Hello folks,
 
-[1]: <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
-[2]: <20171201060935.19749-1-kaartic.sivaraam@gmail.com>
+I am wondering whether/how my mode of work for a specific project
+(currently based on SVN) could be transferred to git.
 
+I have a repository for maintaining configuration of hosts. This repository
+contains several hundered scripts. Most of those scripts are don't depend on
+each other.
+
+Every machine has a working copy of the repository in a specific
+directory. A cron job (running every 15 minutes) executes "svn update" and
+executes the scripts which are contained in this working copy.
+
+This way, I can commit changes to the main repository and all the hosts
+will "download" and adopt by executing the newest revision of those
+scripts. (The scripts need to be idempotent, but this is a different
+topic).
+
+NORMALLY, there are no local modifications in the working copy. Thus,
+conflicts can not happen. Everything works fine.
+
+Sometimes, I need to fix a problem on some host or need to implement a new
+feature. For this, I go to the working copy of a host where the change
+needs to be done and start haking. With svn, I don't need to stop the cron
+job. "svn update" will happily merge any in-coming changes and leave alone
+the files which were not modified upstream. Conflicts with my local
+modifications which I am currently hacking on are extremely rare, because
+the scripts are pretty much independent. So I'm pretty much happy with this
+mode of operation.
+
+With git, by contrast, this won't work. Git will refuse to pull anything as
+long as there are ANY local modifications. The cron job would need to
+
+   git stash
+   git pull
+   git stash pop
+
+But this will temporarily remove my local modifications. If I happen to do
+a test run at this time, the test run would NOT contain the local
+modifications which I was about to test. Even worse: if I happen to save
+one of the modified files while the modifications are in the stash, the
+"git stash pop" will definitely cause a conflict, although nothing really
+changed.
+
+So, how would I get this workflow with git? Is it possible to emulate the
+behavior of "svn update"?
+
+Any ideas?
 
 -- 
-Kaartic
+Josef Wolf
+jw@raven.inka.de
