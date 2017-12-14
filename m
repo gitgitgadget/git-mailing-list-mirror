@@ -2,86 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 617B41F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 18:08:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBC751F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 18:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753942AbdLNSIt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 13:08:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50091 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753698AbdLNSIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 13:08:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F514C72BD;
-        Thu, 14 Dec 2017 13:08:48 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=fVHnO+XstMvM
-        1BRlRYMXsar4Kzk=; b=YXBPrUezmXqJZhN1VSjb8zqR0wWEOwmGvdMUBTU8Ju5u
-        1WfCEnLRO21QDJpHbFMpQcESJUuyceyvQinh9LlH2KNXHPmN+5h352M17AWYlZyI
-        vsuuoFBIpJ4qk0ycT4tP4DpErCyIwGaQf5yR+zVul/s8yP9HU4dQlGscKcPLMqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=n+vnXR
-        7+TOp1yMQAsHF+EaD9TRPU6Dg2hgyFlopTgrFwA8d2oknNjYR6W8x6+r1crvlbGO
-        cW9Y+Zzpbqxq2Ol9T7SlWWeV5e1RiofHkeb3XOKTqM1d3kEXvPpO03XPlZ2bDLNb
-        SlS508lyHMrwe9wdkoz/fae4DMvkUKJHT56ss=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 47D1CC72BC;
-        Thu, 14 Dec 2017 13:08:48 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ACD96C72BB;
-        Thu, 14 Dec 2017 13:08:47 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "David A. Wheeler" <dwheeler@dwheeler.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH] doc: Modify git-add doc to say "staging area"
-References: <E1eOwqn-0005Bd-OB@rmmprod05.runbox>
-        <CA+P7+xrWFE+6t-Z8cGQX5WtZP1_EQSa+J7vF65dLDSOnLfFxXQ@mail.gmail.com>
-        <01075529-4B7B-4C05-927F-0504315F2B3F@dwheeler.com>
-        <CACBZZX5XDKwwXWtH8V9QD5v-4i+nHPuZ8x2n_Z3zuexQmg2mgw@mail.gmail.com>
-Date:   Thu, 14 Dec 2017 10:08:46 -0800
-In-Reply-To: <CACBZZX5XDKwwXWtH8V9QD5v-4i+nHPuZ8x2n_Z3zuexQmg2mgw@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 13 Dec
- 2017 13:54:04
-        +0100")
-Message-ID: <xmqq6099uqq9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753677AbdLNSST (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 13:18:19 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:45470 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753389AbdLNSSS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 13:18:18 -0500
+Received: by mail-qt0-f173.google.com with SMTP id g10so9033362qtj.12
+        for <git@vger.kernel.org>; Thu, 14 Dec 2017 10:18:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=rVCXv5XDBxrmqCviZpipO+dr1zIcF+Zs7v/PLroMkIw=;
+        b=u64OHjL7aWl5t9WggIShc5QS5rhchwarz3f9c7Baimh0Y51lhBImYXOQoTA9RvXzT9
+         0JmNTt4IDq67rdurtkNgzJ7UJwTio1czKLUBMk2m+yWJXUXPJzmvpgALc1cRTCaSbPL0
+         w8IhPUcR3bxGg874AHbBz5uVYxtuQDQtT6haceCycwXQYvkZf3RsX0rhjB/KPl1a03IU
+         kTq8kcb/DCmQxwS6YFRcUgoaH6ZWcdCCNyIRRSmwPYjAMLTpr5L+J4/753XJay5jCxhX
+         CK740dSjMbL6YJHerojM928/5VxWdsrgQNcdQYViJTdiPXwIoMOI8TtHHz2U5r59NuUC
+         BOZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=rVCXv5XDBxrmqCviZpipO+dr1zIcF+Zs7v/PLroMkIw=;
+        b=iQ7mqt0zy9JYapn9gnrLNmH8nM4CzYoYWaXIqDVU7AK1sM8PlfRbffUJrm3GYDtyLD
+         wP1ArWGgyKHF+9bASWFTDu3iXXXKra+RRAMDqK4SanlW3Y9hvAocrw2KxJjvgQGnYE77
+         jda74v1RP9mN3N1G7sOyXAbMVLqhK+iqa0GT+Si2Q0VfXrPLNrG2exGgilv+GDCQXbBE
+         iOWmLUj+SpJi5nKSJYr/ZAhyvZVL2DhvfHzYwOiL+JO1Id/O0V+oTFbaixcbyfsUTyXH
+         QjTlOee0aILQwE+nBn+lCJjhP4nNO35WS7+6OD+jIJ4+0qkVXe4d0xils2sR75ZM8Ln7
+         LCDw==
+X-Gm-Message-State: AKGB3mJ3hjG1wAgAS7pTJYFLA8INVyEBiWK1JJoy8sbTfcmpRzOrLmZz
+        1B8vMDWWulDINYTqduzJuq9F/3prQt4aKT+VbWU=
+X-Google-Smtp-Source: ACJfBovuXkSYJAU3Sixmpgi/aY7KNoKlEJBwiikG9hzoJBthrzezY60j+I3yW7vx+GWhAUZziM58lqX4BceFqG9BW6Y=
+X-Received: by 10.237.37.162 with SMTP id x31mr18343785qtc.58.1513275497896;
+ Thu, 14 Dec 2017 10:18:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D4A6FF8E-E0F9-11E7-99B4-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.12.198.4 with HTTP; Thu, 14 Dec 2017 10:18:17 -0800 (PST)
+In-Reply-To: <87o9n16145.fsf%l.stelmach@samsung.com>
+References: <CGME20171214104348eucas1p2921cdc8df00c90055927ec99eba3040a@eucas1p2.samsung.com>
+ <CAPig+cTYYGRynG8r_2DR53u77eCFDGe1BEDcEK3_cJQxT3yncQ@mail.gmail.com> <87o9n16145.fsf%l.stelmach@samsung.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 14 Dec 2017 13:18:17 -0500
+X-Google-Sender-Auth: da11wj8Hyp8qDITAbKFcrlozMHk
+Message-ID: <CAPig+cR1AErh7b7RO+==W=QqkCS7vBkF5O9-cuwYK9MYDF2TNA@mail.gmail.com>
+Subject: Re: [PATCH v4] git-gui: Prevent double UTF-8 conversion
+To:     =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Wed, Dec 13, 2017 at 6:46 AM, David A. Wheeler <dwheeler@dwheeler.co=
-m> wrote:
->> On December 13, 2017 12:40:12 AM EST, Jacob Keller <jacob.keller@gmail=
-.com> wrote:
->>>I know we've used various terms for this concept across a lot of the
->>>documentation. However, I was under the impression that we most
->>>explicitly used "index" rather than "staging area".
+On Thu, Dec 14, 2017 at 5:43 AM, =C5=81ukasz Stelmach <l.stelmach@samsung.c=
+om> wrote:
+> It was <2017-12-14 czw 10:42>, when Eric Sunshine wrote:
+>> No need to re-send. If you consult Junio's latest "What's cooking"[1],
+>> you'll find that your patch has already graduated from his 'pu' branch
+>> to 'next' and is slated to graduate to 'master' (at some point).
 >>
->> I think "staging area" is the better term. It focuses on its purpose, =
-and it is also less confusing ("index" and "cache" have other meanings in=
- many of the repos managed by git).
+>> [1]: https://public-inbox.org/git/xmqqzi6mutcc.fsf@gitster.mtv.corp.goog=
+le.com/
 >
-> After your patch the majority of the docs will still talk about
-> "index", is this part of some larger series, perhaps it would be good
-> to see it all at once...
+> I am sorry. I didn't get any notifiaction by mail and I haven't studied
+> Documentation/SubmittingPatches throughly enough.
 
-... or none of it.  I do not quite see a point of spending list
-bandwidth on a change like this one.
+No need for an apology. My response was just a simple informational
+message to help you (and perhaps other newcomers reading this thread)
+get up to speed.
