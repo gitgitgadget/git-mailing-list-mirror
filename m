@@ -2,96 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A826D1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 17:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891961F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 17:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753947AbdLNRlM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 12:41:12 -0500
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:43275 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753684AbdLNRlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 12:41:11 -0500
-Received: by mail-wr0-f176.google.com with SMTP id z34so5828304wrz.10
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 09:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=0j9SPQDUA0nb5teMcLYGn5/x4jgwkB7KnUvJnPCCYbs=;
-        b=Afsmz2yRG04YjbHdxWGRXg3OlBMhoHMMu8HZPV65T6FK0FIToSNxrIKQ6U4oKCbX/v
-         wkhUoN2JogTdH10qh3ut652a5TxH31GjctHHw2lWq55z4iseoVBJ+4M8Xhn0kh3tWCUi
-         f9EGCwJrDaePEaVKPXAjX5/V1i4nEL74TXvVLGgJ6lPHwvIX7DdyeXLjAsX1uhLAj1ci
-         DlXX0scePI3hguyQAmXuu4noecq39K+rBqJzw61f0FJ4/4lUHUSvnTuvR+iBIlmNCpAr
-         7Af4np9Y+91yZ6SFE/d8+Pgl07fgfmG3HcgyRICnyN3Tn/xAw37pSR0Ngy41XyJphjG5
-         Iuag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=0j9SPQDUA0nb5teMcLYGn5/x4jgwkB7KnUvJnPCCYbs=;
-        b=rx0lzQwn0cJM0rlyNfK7LGi4ZQ9ARGxWpi7erl3xQPvsMf6yNfOHyWdMbA8TEF4ovD
-         74IKI69R/JCrG+4w6QiLFX7MnxrLkvVLe3RAPEsaeRQb3XbFKGZtD/xpKiK2uvuHZ1Pi
-         +4hS4hsB4NsCkkVgNR7phi3x8ZDz4xwAQZbYF1zg3X/aBffMCL+/bYjl5V0G2V3FE/Z1
-         jsx6nQRyAoCuFe4ozlM7Y4byECe8uMuyDTSAbp7CnrXhT3BpaqCkrIV/j3MYlyDhXkXU
-         s2M4Y9L/x/56UafpcBpEPRS8yeMITuQyaSqb++j004UqT0VHb0m3xsXGqLkUSJqFCokM
-         ZMSQ==
-X-Gm-Message-State: AKGB3mJRRkIZwFLURZ0mZUDmM3ekbqYqjluEjRKioH1846k7G4dvSx8Q
-        /483az9OUE3uIndl/GWmQlY=
-X-Google-Smtp-Source: ACJfBotln++cu5HWG173nI2r9HqlGmzGML8NlMEbvGMCiJG/Od8XgWusLGdnZ91qeVcMvi9ukBS0oA==
-X-Received: by 10.223.182.19 with SMTP id f19mr6508443wre.81.1513273269856;
-        Thu, 14 Dec 2017 09:41:09 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id k5sm6514286wmg.21.2017.12.14.09.41.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Dec 2017 09:41:08 -0800 (PST)
-Received: from avar by evledraar with local (Exim 4.89)
-        (envelope-from <avarab@gmail.com>)
-        id 1ePXVL-00061m-TX; Thu, 14 Dec 2017 18:41:07 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
-References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.2 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 14 Dec 2017 18:41:07 +0100
-Message-ID: <87zi6lb424.fsf@evledraar.gmail.com>
+        id S1754419AbdLNRsc convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 14 Dec 2017 12:48:32 -0500
+Received: from aibo.runbox.com ([91.220.196.211]:40378 "EHLO aibo.runbox.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754377AbdLNRsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 12:48:30 -0500
+Received: from [10.9.9.211] (helo=mailfront11.runbox.com)
+        by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+        (envelope-from <dwheeler@dwheeler.com>)
+        id 1ePXcT-0004a2-4w; Thu, 14 Dec 2017 18:48:29 +0100
+Received: from [198.97.200.97] (helo=[172.16.31.97])
+        by mailfront11.runbox.com with esmtpsa  (uid:258406 )  (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.82)
+        id 1ePXcJ-0004iy-EV; Thu, 14 Dec 2017 18:48:19 +0100
+Date:   Thu, 14 Dec 2017 12:48:10 -0500
+In-Reply-To: <CACBZZX5XDKwwXWtH8V9QD5v-4i+nHPuZ8x2n_Z3zuexQmg2mgw@mail.gmail.com>
+References: <E1eOwqn-0005Bd-OB@rmmprod05.runbox> <CA+P7+xrWFE+6t-Z8cGQX5WtZP1_EQSa+J7vF65dLDSOnLfFxXQ@mail.gmail.com> <01075529-4B7B-4C05-927F-0504315F2B3F@dwheeler.com> <CACBZZX5XDKwwXWtH8V9QD5v-4i+nHPuZ8x2n_Z3zuexQmg2mgw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH] doc: Modify git-add doc to say "staging area"
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+CC:     Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>
+From:   "David A. Wheeler" <dwheeler@dwheeler.com>
+Message-ID: <662C691D-7263-4469-87F4-4BA8A50CC4E8@dwheeler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On December 13, 2017 7:54:04 AM EST, "Ævar Arnfjörð Bjarmason" <avarab@gmail.com> wrote:
+>After your patch the majority of the docs will still talk about
+>"index", is this part of some larger series, perhaps it would be good
+>to see it all at once...
 
-On Wed, Dec 13 2017, Junio C. Hamano jotted:
+Yes, this would be part of a larger series.
 
->
-> * ab/simplify-perl-makefile (2017-12-11) 1 commit
->   (merged to 'next' on 2017-12-13 at 1b791d2503)
->  + Makefile: replace perl/Makefile.PL with simple make rules
->
->  The build procedure for perl/ part has been greatly simplified by
->  weaning ourselves off of MakeMaker.
->
->  Will merge to 'master'.
+I'm happy to do the work, but I don't want to do it if it's just going to be rejected.
 
-I noticed this tiny grammar error in the commit message which you may
-want to amend (or maybe it's not worth it since it's in next already):
+The work is very straightforward, in almost all cases you simply replace the word index with the phrase staging area.  The change is similar for the word cache.  So I'm not sure what seeing it all at once would do for anybody.
 
-    As a side-effect of these general changes the perl documentation
-    now only installed by install-{doc,man}, not a mere "install" as
-    before
+Are there one or two other files that you would like to see transformed to see as an example?  If you're just looking for a sense of it, that should be enough.
 
-That should be:
 
-    As a side-effect of these general changes the perl documentation is
-    now only installed by install-{doc,man}, not a mere "install" as
-    before
 
-I.e. it's missing an "is" between "documentation" and "now".
+
+--- David A.Wheeler
