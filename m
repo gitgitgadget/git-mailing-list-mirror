@@ -2,94 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA581F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 21:05:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB3671F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 21:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753312AbdLNVE6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 16:04:58 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:39058 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753012AbdLNVE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 16:04:57 -0500
-Received: by mail-it0-f68.google.com with SMTP id 68so14234882ite.4
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 13:04:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=jMowfmfPsPOd0ARLS5r7Tri/c5XHI3VCSO0ToXeBGiA=;
-        b=TH/M91KhLQY9K3euQB+ybkubgcMq/tPSl5+nPJtMthdtoLhssTXGhBuLz8gG1D0B34
-         rGD3UEJX6ZUsxKDAhcZdkwwTB9jfvbhx52h2m4adN6uF+8lyRBn4g+I9jA9yDgZ4/Ooi
-         oXxIup+sfQFggtft35vybjdWQwvl+gBePAg8n5WAF9ZoXvokYtEEVxuO7h8YbTjYS+Nu
-         q+xOlzX1HOkTWKyu0C2DzexmQSQz+w6jytkpXAfFTwn6BhD7uc8kxfwMG2YxJkO57SRk
-         aUcBJoKTHuzLi3L0N7U6aMmLa6VIxfJE8g4XA5YTcYKcJVNvpdCqp705bUTOYyifkUE3
-         5dmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jMowfmfPsPOd0ARLS5r7Tri/c5XHI3VCSO0ToXeBGiA=;
-        b=qxYmqAm4h71qPIPul3n2BxbLFbtHGNfoRCVi700ID3wboEve30DaaY55oSp6pdvyAp
-         EBPpd9BbQb3aisCGhZFhsHdOQeoWF5chZ6kWQqXtPFhlm6TO9QpsdMZX5OII/UEM/3bt
-         I5tMEIYb+CnwY2SS8pIXeF8cPUgJEqMSk+6jvexJAGI64kMI7OdJrtEStp+mwgM6K4e5
-         URVYM8uwlNJjljTbKR8k3C+Ba9BqdJNe+rpqWNFSSMKJ5B9I1f8Y3Zfec1D3C4Wz+VtF
-         SIhbye8uUr0xCXiyyumherT/upIqOencREe8LraZOaMxKqSBKQQfJg0a5iYl+iWxR5AP
-         7ZRw==
-X-Gm-Message-State: AKGB3mLap2tK37Qf7PinbjskPpXfLIBDboaznyWYR8hl5ucPc3jMj+XH
-        R4Mm4H0RUF3a+WpYyj2L460=
-X-Google-Smtp-Source: ACJfBosm3KBZJwYtfGXwzqoda2YC4j7Qm62yr917v12dTHy711YzxU2xzjfWTiBps0jtyxycpF9LSA==
-X-Received: by 10.107.16.82 with SMTP id y79mr129303ioi.200.1513285496769;
-        Thu, 14 Dec 2017 13:04:56 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id d128sm2681235iod.35.2017.12.14.13.04.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 14 Dec 2017 13:04:55 -0800 (PST)
-Date:   Thu, 14 Dec 2017 13:04:53 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1752852AbdLNVGg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 16:06:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53346 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752361AbdLNVGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 16:06:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A239EC9952;
+        Thu, 14 Dec 2017 16:06:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7cQePtmQ5w4Cnk8yYAEYd7gNalU=; b=OoNB4v
+        6P5xOV5AzRxefx/6NS1gjS2qXXSfXWGvZhIFEFuGFT6LgCpPko8ydOw9jkjbKeEQ
+        rgWN4xkzyNJW6w0wsM0IgWyrJHBDsz458herg59YVBrQE8F0w3WuGs3HU+bvAfs+
+        5Zb7Q/jGvknHMfn9lWlIdDy1mziyVXIo5TUAs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Z1jzxvKCCenJysLD2f2k+k/Ue5m6AL92
+        vhAwR++5vYME8HeLei7jwZtEGjm6biS4CRkcuj6wLZudGKXuqoTnTs/+qqRPFE6t
+        0ahYa3IRe4oSkfjQA24bEGVge01mXuxYx7EKx47cV21BQx/NY8VeXJXd4tjylOIT
+        jSrTecBZaIk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99CE7C9951;
+        Thu, 14 Dec 2017 16:06:35 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 01C87C9950;
+        Thu, 14 Dec 2017 16:06:34 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
 Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
-Message-ID: <20171214210453.GB32842@aiede.mtv.corp.google.com>
 References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
+        <20171214210453.GB32842@aiede.mtv.corp.google.com>
+Date:   Thu, 14 Dec 2017 13:06:33 -0800
+In-Reply-To: <20171214210453.GB32842@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Thu, 14 Dec 2017 13:04:53 -0800")
+Message-ID: <xmqq6099t3xi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: text/plain
+X-Pobox-Relay-ID: AADB4BF6-E112-11E7-AE1B-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Junio C Hamano wrote:
-
-> * sb/diff-blobfind (2017-12-12) 1 commit
->   (merged to 'next' on 2017-12-13 at 9a27a20c5f)
->  + diffcore: add a filter to find a specific blob
+>> * sb/diff-blobfind (2017-12-12) 1 commit
+>>   (merged to 'next' on 2017-12-13 at 9a27a20c5f)
+>>  + diffcore: add a filter to find a specific blob
+>>
+>>  "git diff" family of commands learned --blobfind=<object-name> that
+>>  allows you to limit the output only to a change that involves the
+>>  named blob object (either changing the contents from or to it).
+>>
+>>  Will merge to 'master'.
 >
->  "git diff" family of commands learned --blobfind=<object-name> that
->  allows you to limit the output only to a change that involves the
->  named blob object (either changing the contents from or to it).
->
->  Will merge to 'master'.
+> Sorry, I should have replied about this a long time ago: I love this
+> option but I am not sure that --blobfind is the right name for it.
 
-Sorry, I should have replied about this a long time ago: I love this
-option but I am not sure that --blobfind is the right name for it.
-If we can think of a better name quickly then it would be nice to
-change it before people start relying on it, so I'd rather hold off
-on merging this to 'master' for the moment.
+Sorry.  I should have updated the description when the option name
+was updated in the latest round.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-That said, if we don't have any better ideas for the option name
-within a few days then my objection goes away.
-
-I'll reply in the patch thread.
-
-Thanks,
-Jonathan
