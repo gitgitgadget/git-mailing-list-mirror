@@ -2,184 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C90E1F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 22:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9CC1F404
+	for <e@80x24.org>; Thu, 14 Dec 2017 22:44:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753968AbdLNWaZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 17:30:25 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:40947 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753794AbdLNWaY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 17:30:24 -0500
-Received: by mail-qk0-f173.google.com with SMTP id b123so8232264qkg.7
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 14:30:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lYQbNERg1Yjgqe6iHCtz6O2JneQUqVLeS1e3vPEJHH0=;
-        b=IdRoRRF2QWvo1nIsLhv6LFssrNGj6OoPLuzUttU3ikoAlSYKC1oROJp1cNSBjq/fY4
-         ja5dTpLH9tO/Us42zKEeG16A6qI9nV7C1qKmIoLrP3hQ+tuiiKh4dhUWEWQUWAwrY8Hd
-         +4zUTsh2tCUq0FFktkjxucdUxnJnttL3mJEtDwE7RXD+aP3O9SUhJ03Ks1uSeP6ZYZz7
-         JXn51haFaMxDMhPvOj6piXXo6qouJht7ggWnJSG0GNlQF9ykQnp4lVyn71f+l/HX46dp
-         +BqRw0L1XE5vgIQKtkZEwDZRpPN+UX0uD/RMq5r9cZTYD7Equn6l6+ueN9LsUxwnWQig
-         dEsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lYQbNERg1Yjgqe6iHCtz6O2JneQUqVLeS1e3vPEJHH0=;
-        b=bpdPyF2ZgDOteRixN99t5Uu3wgybHi60fBi/0mxv9pESg5G6LPvn3RQ27pvfyTffoZ
-         2Fxv/ShjmJUi1gg0AvRCs6vQMxrkEatGsj81Dlx/+G+RqzoKvPIicTLHlIb8IRu9igmM
-         g8kAJxxVBJ20di0Qz/5562a1D9vBbu/m/RP8+PvyCB4jPfUTngROsjJD6yGNsaQAczP4
-         YKWCW7tcBV4NSJKHcqROfT92v85EOJiNBLexTQu2m0REsk1lCYsigwoK5KXsN9Ph9vSu
-         ISKSp5PCdE+YbazujBfbX05O/ye4oE5ldnmbWFhQXwCXoZx5r7GiGgjV3TdjBvS0CcVJ
-         hiRg==
-X-Gm-Message-State: AKGB3mL+Vw/dj/WVpWMrrDe79HJ1tYcyRkTwPUDiN298WeYeWVDDMcDL
-        rHMFXG8cycfUJsj2rdMlDD2CH5mW0hxtZomKKbolCA==
-X-Google-Smtp-Source: ACJfBov8cJiXzmkYpugrNToUqkLKqxELQdVGYVjWEkZTiI99I6+xCYlft4KNqSM6jsT9JxX0T2bekP+fy3PSJYEYu+Y=
-X-Received: by 10.55.26.35 with SMTP id a35mr18235351qka.40.1513290623574;
- Thu, 14 Dec 2017 14:30:23 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Thu, 14 Dec 2017 14:30:22 -0800 (PST)
-In-Reply-To: <20171214212234.GC32842@aiede.mtv.corp.google.com>
-References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
- <20171212012422.123332-1-sbeller@google.com> <20171214212234.GC32842@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 14 Dec 2017 14:30:22 -0800
-Message-ID: <CAGZ79kZdUuoM79n09ziG0F7WCWNLpZ2AiFA6fb_qgND1b3_F9A@mail.gmail.com>
-Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+        id S1754194AbdLNWok (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 17:44:40 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58630 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754064AbdLNWok (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 17:44:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EEDACACA5;
+        Thu, 14 Dec 2017 17:44:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=s7vgV+irnKP6CJYz6F1YnylO2ho=; b=eOhoBd
+        lewhpWTrkB4Bv1m6AwMxBqmD9+k7RMIjpoVw2yUpFLJoTONld9CGiFJGfwzwPGKx
+        iVrWekv14/1xEWhpJ5q7WQ00FGjG09L1gc0qLV01OMpyqgqmRs7TXlwqikLEDH9w
+        eDhzgmwGf247CeRtUomP6ZcJifHujeuMo/4b0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TGd6IarR7LVXIoP2o3bfXvfP/wRg2FfI
+        5b9mrdMW2i2PZEQZMWziFStY5DEPRLZI+2FcvqvW6hXYeIZaEfD/YaOHzvvuQqLL
+        IeRSynk4N2rWDA6/2jjyKDbfvnIeGzHEio28nSF3k1hOT3YTgferxBVqrq6RrOWB
+        vM8ESYlloSY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 76D2CCACA4;
+        Thu, 14 Dec 2017 17:44:39 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB2F0CACA3;
+        Thu, 14 Dec 2017 17:44:38 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
+        <20171212012422.123332-1-sbeller@google.com>
+        <20171214212234.GC32842@aiede.mtv.corp.google.com>
+Date:   Thu, 14 Dec 2017 14:44:37 -0800
+In-Reply-To: <20171214212234.GC32842@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Thu, 14 Dec 2017 13:22:34 -0800")
+Message-ID: <xmqqefnxrktm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5DF7F7C2-E120-11E7-97AA-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 14, 2017 at 1:22 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> - what about mode changes?  If the file became executable but the
->   blob content didn't change, does that commit match?
-
-./git log --find-object=$(git rev-parse ba67504f:t/perf/p3400-rebase.sh)
-
-claims it does find the mode change (commit ba67504f is just a mode
-change)
-
-> - are copies and renames shown (if I am passing -M -C)?
-
-It restricts the commits shown, not the renamed files. But I assume
-you mean it the same way as with mode changes.
-I did not find a good commit in gits history to demonstrate, but as
-it is orthogonal to the object id restrictions, I would think it works
-
-> Nit, not related to this change: it would be nice to have a long
-> option to go along with the short name '-t' --- e.g. --include-trees.
-
-follow up patches welcome. :)
-
->
-> Another nit: s/gitlink entry/submodule commit/, perhaps.  The commit
-> object is not a gitlink entry: it is pointed to by a gitlink entry.
-
-Well, what if the user doesn't have a submodule, but uses gitlinks
-for other purposes? We do inspect the gitlink, so it is correct IMHO.
-
-> Another documentation idea: it may be nice to point out that this
-> is only about the preimage and postimage submodule commit and that
-> it doesn't look at the history in between.
-
-That is sensible. One might be tempted to ask: "Which superproject
-commit contains a submodule pointer, that has commit $X in the
-submodule history?", but this new option is totally not answering this.
-
->>                                                          The
->> reason why these commits both occur prior to v2.0.0 are evil
->> merges that are not found using this new mechanism.
->
-> Would it be worth the doc mentioning that this doesn't look at merges
-> unless you use one of the -m/-c/--cc options, or does that go without
-> saying?
-
-I assumed it goes without saying, just like the lacking -t could mean
-to ignore trees. ;)
-
-
->
-> [...]
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -500,6 +500,12 @@ information.
->>  --pickaxe-regex::
->>       Treat the <string> given to `-S` as an extended POSIX regular
->>       expression to match.
->> +
->> +--find-object=<object-id>::
->> +     Restrict the output such that one side of the diff
->> +     matches the given object id. The object can be a blob,
->> +     gitlink entry or tree (when `-t` is given).
->
-> I like this name --find-object more than --blobfind!  I am not sure it
-> quite matches what the user is looking for, though.  We are not
-> looking for all occurences of the object; we only care about when the
-> object appears (was added or removed) in the diff.
-
-Thanks! Yes, but the 'edges' are so few commits that a further walk
-will reveal all you need to know?
-
-
->
 > Putting it in context, we have:
 >
->         pickaxe options:
->         -S: detect changes in occurence count of a string
->         -G: grep lines in diff for a string
+> 	pickaxe options:
+> 	-S: detect changes in occurence count of a string
+> 	-G: grep lines in diff for a string
 >
->         --pickaxe-all:
->                 do not filter the diff when the patch matches pickaxe
->                 conditions.
+> 	--pickaxe-all:
+> 		do not filter the diff when the patch matches pickaxe
+> 		conditions.
 >
->                 kind of like log --full-diff, but restricted to pickaxe
->                 options.
->         --pickaxe-regex: treat -S argument as a regex, not a string
+> 		kind of like log --full-diff, but restricted to pickaxe
+> 		options.
+> 	--pickaxe-regex: treat -S argument as a regex, not a string
 >
 > Is this another kind of pickaxe option?  It feels similar to -S, but
 > at an object level instead of a substring level, so in a way it would
 > be appealing to call it --pickaxe-object.  Does --pickaxe-all affect
 > it like it affects -S and -G?
->
+
+It does feel quite close to -S, but is slightly different.
+
+Instead of spelling out the exact contents to pass as the argument
+to the -S option, you are giving a blob object name instead.
+
+However, if you rename path F to G without any modification, or if
+you flip only the mode bits, -S would reject such a filepair, as
+both sides have the same number of the sought-after string, I think.
+Unlike -S, this new thing should show such a filepair because it is
+designed to show any filepair with either (or both) side has the
+sought-after object.
+
+We could make this identical to -S, i.e. only when a filepair has
+sought-after object on either (or both) sides *and* its pre and post
+image sides do not talk about the same object.
+
+    Note.  I am phrasing the above awkwardly because we can ask for
+    more than one object, and a filepair that changes a path from
+    object A to object B, both of which are what we are looking for,
+    want to be caught.  If I phrased the above as "only when only
+    one side of a filepair has an object we are looking for and the
+    other side does not", such a filepair would not be shown.
+
+I have a suspicion that such a change may be worthwhile.
+
 > Another context to put it in is:
 >
->         --diff-filter:
->                 limit paths (but not commits?) to those with a change
->                 matching optarg
->
-> If I understand correctly, then --diff-filter does not interact with
-> --pickaxe-all, or in other words it is a different filtering
-> condition.  Is this another kind of diff filter?  In that context, it
-> may be appealing to call it something like --object-filter.
->
-> --diff-filter is an example where it seems appealing to have a
-> --full-diff option to diff-tree that could apply to all filters and
-> not just pickaxe.
->
-> [... implementation snipped ...]
->
-> The implementation looks lovely and I'm especially happy about the
-> tests.  Thanks for writing it.
->
-> Thoughts?
-> Jonathan
+> 	--diff-filter:
+> 		limit paths (but not commits?) to those with a change
+> 		matching optarg
 
-Regarding finding a better name, I would want to hear from others,
-I am happy with --find-object, though I can see --pickaxe-object
-or --object--filter to be a good narrative as well.
+IIUC, this is applied at the output phase after all of the rename,
+pickaxe etc. are done (e.g. "Now you have the diff to give me, show
+me only the additions in it").  It is a poor match for this new
+thing, as "Now you have the diff to give me, show me only the ones
+that involve these blobs" does not sound all that useful.
 
-Stefan
+
+
