@@ -2,100 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFCE01F424
-	for <e@80x24.org>; Thu, 14 Dec 2017 09:00:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 361FF1F406
+	for <e@80x24.org>; Thu, 14 Dec 2017 09:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751470AbdLNJAi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 04:00:38 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:44729 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751173AbdLNJAi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 04:00:38 -0500
-Received: by mail-it0-f51.google.com with SMTP id b5so9713167itc.3
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 01:00:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B4jOXhroZa6XX9OgS1zfMjYMZqBH2RSonwtAtZhh6Xo=;
-        b=JlSZIDYkIfpParhvwDcybplIPdM1hgAif0MVISz6UMcO4J7MxDqvuUEqOda6rix7TT
-         T/QPqzTvo5wqjatnbNL9pDSCdR3MAiZZ5jMpjNOdBgSZlw9rbnhF4TstE8PufJFpaKCp
-         MBX7hwDbhfxqvGXn+UU1i0n+sJpGW7SaczZgdoM4VBvIGDQDh6mOfFqcGtOJqlxpMAcj
-         mX7nUcIHqX974+ydWeG/FpMT3k0IJIvPtet4gYoEBMtJcAzsLqNFvmuo+jee7u7PopUi
-         iDHCHe7q/ZGfTy2hOk9A2n2DZeHXO6r5pKtO16MAWw4zwaSvaPO6+Oh2blXawpJyAZ4B
-         KsPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B4jOXhroZa6XX9OgS1zfMjYMZqBH2RSonwtAtZhh6Xo=;
-        b=JdSLESWgv2ShVNyyy7FvnapQXJC+QGR0DIdW3VUpkoybfdXvGe/y94dZo2QUioaSdm
-         +qK6tD9h6hX5xEH4NKsRJPgj9h3BZCNzSrEnQh7CEPEYO0E271CiiJfrj3PF+5Rm792Q
-         fugDw4UE5fUbKW9lOKp1294ogJmHXWXBsICerFJSvSMkVXzKCygn017YVAmVJN2W7Sd4
-         qUIYiK7W2BJrdOUso5O1anhmiJVbQHyBx29w6Rf6op/pfN9g5G/l0PvI7iInBlXN5CDz
-         xv8HeIzmwUxqScqKVD1ITuPn2a4kK08jqJLCiVI55ktzopHhwZHRiBdCdE2w7zNauQVJ
-         dYyQ==
-X-Gm-Message-State: AKGB3mIvZzLFehDJBNrrO1/4q/EXpHm7JyTVRE7/Mv/i2U7GsHa8hZlN
-        oD9DPfcCF01EJm85GfqTWaLKHnZihOZODaQJVIM=
-X-Google-Smtp-Source: ACJfBoueFOfk4yUJXBIuTmMwiJL7AYABk4u2qTik6CkTdjoPBJNlluewZHhQIwSGU5pzO1WXtQX42tTRTqrJzxiXO+c=
-X-Received: by 10.107.81.2 with SMTP id f2mr5888903iob.282.1513242037408; Thu,
- 14 Dec 2017 01:00:37 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Thu, 14 Dec 2017 01:00:36 -0800 (PST)
-In-Reply-To: <xmqq4louwdpn.fsf@gitster.mtv.corp.google.com>
-References: <20171213151344.2138-1-chriscool@tuxfamily.org>
- <20171213151344.2138-5-chriscool@tuxfamily.org> <xmqqbmj2wedd.fsf@gitster.mtv.corp.google.com>
- <xmqq4louwdpn.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 14 Dec 2017 10:00:36 +0100
-Message-ID: <CAP8UFD3sCQcp_006AhQXrKicDmuLehRLQDN+X2upRy3sQOKOcQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] perf/run: use $default_value instead of $4
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1750941AbdLNJdF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 04:33:05 -0500
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:55138 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750737AbdLNJdD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 04:33:03 -0500
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20171214093301euoutp0112b35162d68b0129f9704b32f90c2923~AH2I5WH3O1695016950euoutp01W;
+        Thu, 14 Dec 2017 09:33:01 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20171214093301euoutp0112b35162d68b0129f9704b32f90c2923~AH2I5WH3O1695016950euoutp01W
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1513243981;
+        bh=tOFz+lqLynA4o6Ce7eQZs64wQhTxWNsvafiflSGyEEA=;
+        h=From:To:Cc:Subject:Date:In-reply-to:References:From;
+        b=cB1T3SRGy3dppDxVu1hRx90pJgIiSnwSzw0mnFPUv/ROgM0sA7Jm+gBYWrZMdI8Pu
+         zDAVQzyoYEisI9RNRG0NVZWpRi3eKjGT3UouW5m+hb+WILCJO1pGrttU0mo8wiKDcY
+         hNWi0BI5H070pxdX7zE6/IwxHgls+OAuvEh7sPZA=
+Received: from eusmges4.samsung.com (unknown [203.254.199.244]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20171214093300eucas1p1a32cc91c7580095abc32820e022f2820~AH2IQAVVk1045510455eucas1p11;
+        Thu, 14 Dec 2017 09:33:00 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges4.samsung.com (EUCPMTA) with SMTP id EA.9D.30163.C45423A5; Thu, 14
+        Dec 2017 09:33:00 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20171214093300eucas1p28ed9bf0261a43a12978b6a3bfe908321~AH2HkQ-tu3133231332eucas1p2-;
+        Thu, 14 Dec 2017 09:33:00 +0000 (GMT)
+X-AuditID: cbfec7f4-f790c6d0000075d3-00-5a32454c4a47
+Received: from eusync3.samsung.com ( [203.254.199.213]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 41.31.18832.C45423A5; Thu, 14
+        Dec 2017 09:33:00 +0000 (GMT)
+MIME-version: 1.0
+Content-transfer-encoding: 8BIT
+Content-type: text/plain; charset="UTF-8"
+Received: from localhost ([106.116.147.110]) by eusync3.samsung.com (Oracle
+        Communications Messaging Server 7.0.5.31.0 64bit (built May  5 2014)) with
+        ESMTPA id <0P0Y001LD2IZEO10@eusync3.samsung.com>; Thu, 14 Dec 2017 09:33:00
+        +0000 (GMT)
+From:   =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>
+To:     gitster@pobox.com
+Cc:     =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+        git@vger.kernel.org, patthoyts@users.sourceforge.net,
+        Johannes.Schindelin@gmx.de
+Subject: [PATCH v4] git-gui: Prevent double UTF-8 conversion
+Date:   Thu, 14 Dec 2017 10:32:57 +0100
+Message-id: <20171214093257.15826-1-l.stelmach@samsung.com>
+X-Mailer: git-send-email 2.11.0
+In-reply-to: <20171205142326.6140-1-l.stelmach@samsung.com>
+Organization: Samsung R&D Institute Poland
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjleLIzCtJLcpLzFFi42LZduzneV0fV6MogwOnFSy6rnQzWTT0XmG2
+        6F/exWZx89AKRot3nbdZHFg9PnyM87h4Sdmjb8sqRo+mU+2sHp83yQWwRnHZpKTmZJalFunb
+        JXBlzD7ayVzwSbDiy9dTzA2MP3i7GDk5JARMJCZO6WCEsMUkLtxbz9bFyMUhJLCUUeLb5y9Q
+        zmdGiba9p1hgOma8vAOVWMYocWv9PbAEr4CgxI/JIDYHB7OAvMSRS9kgYWYBTYmtu9ezQ9R/
+        YZQ4uPYFE0iCTcBRon/pCVYQW0RAVOLI/EVgQ5kFpjJK3O7fBJYQFrCROPxnK9h9LAKqEot3
+        NbNCLLOWeDl9KdTd8hK72i6CxTmB4tdu/gOL8wtoSaxpus4CMlRCYA+bxN4fDWwQDS4Si4+t
+        h2oWlnh1fAs7hC0j0dlxkAmioZ9R4vD871CJKYwSixc6QNjWEn9WTWSD+I1PYtK26cwgL0sI
+        8Ep0tAlBlHhIzP+zkBXCdpSY//UsE8T7fYwSC2bdY53AKD8LKcRmIUJsFlKILWBkXsUoklpa
+        nJueWmyiV5yYW1yal66XnJ+7iRGYOk7/O/5lB+PiY1aHGAU4GJV4eCO0DaOEWBPLiitzDzFK
+        cDArifCqTQQK8aYkVlalFuXHF5XmpBYfYpTmYFES57WNaosUEkhPLEnNTk0tSC2CyTJxcEo1
+        MFauOui4si0oawEnQ29t0MGZnvGK1dP5o0w3K27UOhg2d/Vb43dWmbL+p75PMHh8L7H6puhX
+        k6hIdq3SzUl32b3qj8x+UHTzkuFO999R3uHn23zD/rtlsmndMmn7omhredRGa2K7bcns12qt
+        L29G8DTaTDbY5BWS3vZHsePmUR9/j5b7bjxSSizFGYmGWsxFxYkAtRCnHxkDAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFLMWRmVeSWpSXmKPExsVy+t/xq7o+rkZRBhMus1h0XelmsmjovcJs
+        0b+8i83i5qEVjBbvOm+zOLB6fPgY53HxkrJH35ZVjB5Np9pZPT5vkgtgjeKySUnNySxLLdK3
+        S+DKmH20k7ngk2DFl6+nmBsYf/B2MXJySAiYSMx4eYcNwhaTuHBvPZDNxSEksIRRYtL+jywg
+        CV4BQYkfk+8B2RwczALyEkcuZYOEmQXUJSbNW8QMUf+NUWLy0TNg9WwCjhL9S0+wgtgiAqIS
+        R+YvAhvKLDCVUeLH6kZ2kISwgI3E4T9bGUFsFgFVicW7mlkhlllLvJy+lBHiInmJXW0XweKc
+        QPFrN/+BxYUErCSurznLBGLzC2hJrGm6zjKBUXAWkltnIdw6C8mtCxiZVzGKpJYW56bnFhvq
+        FSfmFpfmpesl5+duYgSG+LZjPzfvYLy0MfgQowAHoxIP7wZdwygh1sSy4srcQ4wSHMxKIrxq
+        E4FCvCmJlVWpRfnxRaU5qcWHGKU5WJTEeXv3rI4UEkhPLEnNTk0tSC2CyTJxcEo1MMbzZK5w
+        MDIsNHCRsfvA+jTh8HV1ieymy1/2MedtFbs5U/Tkhgrr2xMWZZ2wUrgpVH59X50CF5vk7PCW
+        vdfi3grsSfBgj5P6st/I6Ixag7qn9YSC3fJdPTm/Z65MPHi1PMlt4tmJkxOzWhJmzxNZKnnp
+        uPbakn17m8t1jssZuKgqHXr9f8+HZCWW4oxEQy3mouJEAMnfqo5tAgAA
+X-CMS-MailID: 20171214093300eucas1p28ed9bf0261a43a12978b6a3bfe908321
+X-Msg-Generator: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20171214093300eucas1p28ed9bf0261a43a12978b6a3bfe908321
+X-RootMTR: 20171214093300eucas1p28ed9bf0261a43a12978b6a3bfe908321
+References: <20171205142326.6140-1-l.stelmach@samsung.com>
+        <CGME20171214093300eucas1p28ed9bf0261a43a12978b6a3bfe908321@eucas1p2.samsung.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 13, 2017 at 9:54 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> If you want to be able to use this helper to specify a default value
->> of an empty string (which the orignal that used $4 did), then the
->> previous hunk must be corrected so that it does not unconditionally
->> set default_value to $4.  Perhaps like
->>
->>       if test -n "${4+x}"
->>       then
->>               default_value=$4
->>       else
->>               unset default_value || :
->>       fi
->>
->> or something.
->
-> And if you do not care about passing an empty string as the default
-> value, then the earlier hunk can stay the same
->
->         default_value=$4
->
-> but the eval part should become something like
->
->         test -n "$default_value" && eval ...
->
-> Given that you are planning to add yet another optional argument to
-> the helper, and when you pass that variable, you'd probably need to
-> pass "" as the "default" that is not exported, perhaps this "give up
-> ability to pass an empty string as the default" approach may be the
-> only thing you could do.
+Convert author's name and e-mail address from the UTF-8 (or any other)
+encoding in load_last_commit function the same way commit message is
+converted.
 
-Yeah, thanks for the explanations and suggestions.
+Amending commits in git-gui without such conversion breaks UTF-8
+strings. For example, "\305\201ukasz" (as written by git cat-file) becomes
+"\303\205\302\201ukasz" in an amended commit.
+
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+Reviewed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+Changes since v3:
+
+- Added Reviewed-by footer. Thank you Johannes Schindelin, for review.
+
+ git-gui/lib/commit.tcl | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index 83620b7cb..75ea965da 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -25,6 +25,8 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 	set msg {}
+ 	set parents [list]
+ 	if {[catch {
++			set name ""
++			set email ""
+ 			set fd [git_read cat-file commit $curHEAD]
+ 			fconfigure $fd -encoding binary -translation lf
+ 			# By default commits are assumed to be in utf-8
+@@ -34,9 +36,7 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 					lappend parents [string range $line 7 end]
+ 				} elseif {[string match {encoding *} $line]} {
+ 					set enc [string tolower [string range $line 9 end]]
+-				} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} {
+-					set commit_author [list name $name email $email date $time]
+-				}
++				} elseif {[regexp "author (.*)\\s<(.*)>\\s(\\d.*$)" $line all name email time]} { }
+ 			}
+ 			set msg [read $fd]
+ 			close $fd
+@@ -44,7 +44,13 @@ You are currently in the middle of a merge that has not been fully completed.  Y
+ 			set enc [tcl_encoding $enc]
+ 			if {$enc ne {}} {
+ 				set msg [encoding convertfrom $enc $msg]
++				set name [encoding convertfrom $enc $name]
++				set email [encoding convertfrom $enc $email]
+ 			}
++			if {$name ne {} && $email ne {}} {
++				set commit_author [list name $name email $email date $time]
++			}
++
+ 			set msg [string trim $msg]
+ 		} err]} {
+ 		error_popup [strcat [mc "Error loading commit data for amend:"] "\n\n$err"]
+-- 
+2.11.0
+
