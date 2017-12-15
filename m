@@ -2,98 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F14491F407
-	for <e@80x24.org>; Fri, 15 Dec 2017 15:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDB681F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 15:34:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932229AbdLOPc7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 10:32:59 -0500
-Received: from mout.gmx.net ([212.227.17.22]:57659 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932072AbdLOPc6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 10:32:58 -0500
-Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNf1y-1eN7tS0g1q-007BLc; Fri, 15
- Dec 2017 16:32:56 +0100
-Date:   Fri, 15 Dec 2017 16:32:55 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 1/4] travis-ci: use 'set -x' in 'ci/*' scripts for extra
- tracing output
-In-Reply-To: <CAM0VKjmpJ_J+GjJ3PyU_pxsWx85L6cPa2tLM0xJx3cJu2T87Zg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1712151632140.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <20171101115535.15074-1-szeder.dev@gmail.com> <20171211233446.10596-1-szeder.dev@gmail.com> <20171211233446.10596-2-szeder.dev@gmail.com> <9AAC2BCC-AA06-46F9-8E6E-1D99CD959FDD@gmail.com> <CAM0VKjkVw8QeDErDg9aXcQ1sAgY34eBEeA0QJGamvEEBOG8y9w@mail.gmail.com>
- <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com> <CAM0VKjkv0XqHf8s94Wj2DHsD49gTP0M6HU2AY=36Jj-5SYhS9A@mail.gmail.com> <alpine.DEB.2.21.1.1712151308230.406@MININT-6BKU6QN.europe.corp.microsoft.com>
- <CAM0VKjmpJ_J+GjJ3PyU_pxsWx85L6cPa2tLM0xJx3cJu2T87Zg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S932275AbdLOPeH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 10:34:07 -0500
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:53883 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932337AbdLOPdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 10:33:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id CF0AFA01E1;
+        Fri, 15 Dec 2017 16:33:50 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 5L1oq98yxhij; Fri, 15 Dec 2017 16:33:49 +0100 (CET)
+Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 84778A01CC;
+        Fri, 15 Dec 2017 16:33:49 +0100 (CET)
+Received: from Laptops-nathan.univ-lyon1.fr (134.214.126.172) by
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
+ id 15.0.1263.5; Fri, 15 Dec 2017 16:33:49 +0100
+From:   Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+To:     <git@vger.kernel.org>
+CC:     Nathan Payre <nathan.payre@etu.univ-lyon1.fr>,
+        Matthieu Moy <matthieu.moy@univ-lyon1.fr>,
+        Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>,
+        Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] send-email: extract email-parsing code into a subroutine
+Date:   Fri, 15 Dec 2017 16:33:39 +0100
+Message-ID: <20171215153339.12368-1-nathan.payre@etu.univ-lyon1.fr>
+X-Mailer: git-send-email 2.15.0.318.g784315b6b.dirty
+In-Reply-To: <285414621.1144481.1513260333115.JavaMail.zimbra@inria.fr>
+References: <285414621.1144481.1513260333115.JavaMail.zimbra@inria.fr>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-639650515-1513351976=:406"
-X-Provags-ID: V03:K0:AIxG4PFCUYjJ5U+s9OPE18STVTa3NcIi67nJno4Apcy6YOvFsGT
- epBFjpEE8yk4eFSrfYGlI7UvbBGvTDpU7Hklg2Wc5QY2mlgtsYMlbcF5Fz72j4VdHwOk3YH
- 6hBwkIynnt+ldEEAy5NSsjFJmiywTpzjFZLR+c/DB2Qt/g72kWrW7JWocETz/2bQrfjKpve
- yNK2C7XuP+pkyG2jA2XsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CG6474DzWUk=:jekDi0V8hiThA98LqqWOP/
- taeZMULVy6mbZi6oWG3g1AM40ye+f1UwtWasbD7uLncJ/YOTeCT9qpKazrHGRE+YDAb1Jw8vF
- x9W9zzbdEMKlFZkjnptu+YdC4asVzcSHJTrU1oVmQeuOjw2nLk22h8A7PuYnSWefQj1WqWskR
- rXjw8MU2+S35kJrgpV//AcuMEy8pf3mS5NquhXlBUoliKsO+si38+4YIjWbhlZYOGeY9k0E+e
- RmiYmezEoFQXS6VceDClE0O7q62dufB7DxGy2OlG0kkdJXV03coqkQVpBlC83eMQYPc6MOmF+
- xsx30c8w39l7FyGFDsf9i8Edil0yj1YrkByt83205Y6Edgn3DXsM3UcDc0ovmMczQT9CNRMWN
- MBqe2x2HXlIH8xTuY0BccRJoSSmdXIE1Q/ArqWgNFm3jjLdadNfAJMXJR/SAuJZ1LzGIX6YZ9
- wot+EWc1pQypVx1bQnEpUedb65tw+5nDfgd7/DVn0wbgQ4GCUzFIZ5YeNRciOqfmND1z1X0Xb
- BfUsCtsdbslJOlOVZmq/k9Cr1fB3Vkih87+npcFhsgELanApCSnffUL3M9ffn8xkINJ42lPX/
- QBf9Hu/4KJxYAthqmd8zowj9cZrO5+DDfBKzfUnqnoj4NJ4ybZsGS5RWgce/nQKtt1U4haAdT
- 7janCNGS8ft153KQxsodTMKBp4XC4IaIu3xTaoZzeC1FRvUmS0JP5kHXOc+OIIZbuzfQgYnDe
- T/ZJ7uTZi64cnvj3LZAjLB+cKlPEdH/+LlI8SOGwadfrnokS0mc2EIo/IlCfmpn12FTBL13BH
- nM9q+ks7HT1XcOP1YlAcUvkL7ki5iKmtC+GUz3a5oI/IArcZOQ=
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [134.214.126.172]
+X-ClientProxiedBy: JEMBX2013-02.univ-lyon1.fr (134.214.201.250) To
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The existing code mixes parsing of email header with regular
+expression and actual code. Extract the parsing code into a new
+subroutine "parse_header_line()". This improves the code readability
+and make parse_header_line reusable in other place.
 
---8323329-639650515-1513351976=:406
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+"parsed_header_line()" and "filter_body()" could be used for
+refactoring the part of code which parses the header to prepare the
+email and send it.
 
-Hi G=C3=A1bor,
+In contrast to the previous version it doesn't keep the header order
+and strip duplicate headers.
 
-On Fri, 15 Dec 2017, SZEDER G=C3=A1bor wrote:
+Signed-off-by: Nathan Payre <nathan.payre@etu.univ-lyon1.fr>
+Signed-off-by: Matthieu Moy <matthieu.moy@univ-lyon1.fr>
+Signed-off-by: Timothee Albertin <timothee.albertin@etu.univ-lyon1.fr>
+Signed-off-by: Daniel Bensoussan <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Thanks-to: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-> On Fri, Dec 15, 2017 at 1:10 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> >> There is a lot going on in 'run-windows-build.sh', so the output of
-> >> 'set -x' might be useful or might be considered too much clutter, I
-> >> don't know.  I put Dscho on Cc, I think it's mainly his call.
-> >
-> > Certainly it might be useful.
-> >
-> > However, please make sure that the secret token is not leaked that
-> > way.  Like, *really* sure. Due to the failure of Git to use a portable
-> > and performant test suite, it does take about 90 minutes to build and
-> > test a revision, therefore it would be very easy to DOS my build
-> > system, and I really, really need it not to be DOSed because I use it
-> > in my day job, too.
->=20
-> Ugh, I was completely unaware of this issue, and the first version of
-> this patch is already in 'pu'...  **runs to check the trace logs**
->=20
-> Great, it seems we are in luck, as the secret token was specified as an
-> encrypted environment variable in git/git repository settings on Travis
-> CI.  It's redacted in the trace log [...]
+>> +sub parse_header_line {
+>> +     my $lines = shift;
+>> +     my $parsed_line = shift;
+>> +     my $pattern = join "|", qw(To Cc Bcc);
+>
+> Nit: you may want to rename it to something more explicit, like
+> $addr_headers_pat.
 
-That's good enough.
+I find "$addr_headers_pat" too long that's why I've choose rename it
+into "$addr_pat", in addition to that, because the variable is in the
+subroutine "parse_header_line" it does not require to include
+"headers" in the variable name.
 
-Thanks for making sure,
-Dscho
---8323329-639650515-1513351976=:406--
+ git-send-email.perl | 115 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 77 insertions(+), 38 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 2208dcc21..e6e813041 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -703,57 +703,70 @@ EOT3
+ 		do_edit($compose_filename);
+ 	}
+ 
+-	open my $c2, ">", $compose_filename . ".final"
+-		or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
+-
+ 	open $c, "<", $compose_filename
+ 		or die sprintf(__("Failed to open %s: %s"), $compose_filename, $!);
+ 
+-	my $need_8bit_cte = file_has_nonascii($compose_filename);
+-	my $in_body = 0;
+-	my $summary_empty = 1;
+ 	if (!defined $compose_encoding) {
+ 		$compose_encoding = "UTF-8";
+ 	}
+-	while(<$c>) {
+-		next if m/^GIT:/;
+-		if ($in_body) {
+-			$summary_empty = 0 unless (/^\n$/);
+-		} elsif (/^\n$/) {
+-			$in_body = 1;
+-			if ($need_8bit_cte) {
+-				print $c2 "MIME-Version: 1.0\n",
+-					 "Content-Type: text/plain; ",
+-					   "charset=$compose_encoding\n",
+-					 "Content-Transfer-Encoding: 8bit\n";
+-			}
+-		} elsif (/^MIME-Version:/i) {
+-			$need_8bit_cte = 0;
+-		} elsif (/^Subject:\s*(.+)\s*$/i) {
+-			$initial_subject = $1;
+-			my $subject = $initial_subject;
+-			$_ = "Subject: " .
+-				quote_subject($subject, $compose_encoding) .
+-				"\n";
+-		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+-			$initial_reply_to = $1;
+-			next;
+-		} elsif (/^From:\s*(.+)\s*$/i) {
+-			$sender = $1;
+-			next;
+-		} elsif (/^(?:To|Cc|Bcc):/i) {
+-			print __("To/Cc/Bcc fields are not interpreted yet, they have been ignored\n");
+-			next;
++
++	my %parsed_email;
++	while (my $line = <$c>) {
++		next if $line =~ m/^GIT:/;
++		parse_header_line($line, \%parsed_email);
++		if ($line =~ /^$/) {
++			$parsed_email{'body'} = filter_body($c);
+ 		}
+-		print $c2 $_;
+ 	}
+ 	close $c;
+-	close $c2;
+ 
+-	if ($summary_empty) {
++	open my $c2, ">", $compose_filename . ".final"
++	or die sprintf(__("Failed to open %s.final: %s"), $compose_filename, $!);
++
++
++	if ($parsed_email{'From'}) {
++		$sender = delete($parsed_email{'From'});
++	}
++	if ($parsed_email{'In-Reply-To'}) {
++		$initial_reply_to = delete($parsed_email{'In-Reply-To'});
++	}
++	if ($parsed_email{'Subject'}) {
++		$initial_subject = delete($parsed_email{'Subject'});
++		print $c2 "Subject: " .
++			quote_subject($initial_subject, $compose_encoding) .
++			"\n";
++	}
++
++	if ($parsed_email{'MIME-Version'}) {
++		print $c2 "MIME-Version: $parsed_email{'MIME-Version'}\n",
++				"Content-Type: $parsed_email{'Content-Type'};\n",
++				"Content-Transfer-Encoding: $parsed_email{'Content-Transfer-Encoding'}\n";
++		delete($parsed_email{'MIME-Version'});
++		delete($parsed_email{'Content-Type'});
++		delete($parsed_email{'Content-Transfer-Encoding'});
++	} elsif (file_has_nonascii($compose_filename)) {
++		my $content_type = (delete($parsed_email{'Content-Type'}) or
++			"text/plain; charset=$compose_encoding");
++		print $c2 "MIME-Version: 1.0\n",
++			"Content-Type: $content_type\n",
++			"Content-Transfer-Encoding: 8bit\n";
++	}
++	# Preserve unknown headers
++	foreach my $key (keys %parsed_email) {
++		next if $key eq 'body';
++		print $c2 "$key: $parsed_email{$key}";
++	}
++
++	if ($parsed_email{'body'}) {
++		print $c2 "\n$parsed_email{'body'}\n";
++		delete($parsed_email{'body'});
++	} else {
+ 		print __("Summary email is empty, skipping it\n");
+ 		$compose = -1;
+ 	}
++
++	close $c2;
++
+ } elsif ($annotate) {
+ 	do_edit(@files);
+ }
+@@ -792,6 +805,32 @@ sub ask {
+ 	return;
+ }
+ 
++sub parse_header_line {
++	my $lines = shift;
++	my $parsed_line = shift;
++	my $addr_pat = join "|", qw(To Cc Bcc);
++	
++	foreach (split(/\n/, $lines)) {
++		if (/^($addr_pat):\s*(.+)$/i) {
++		        $parsed_line->{$1} = [ parse_address_line($2) ];
++		} elsif (/^([^:]*):\s*(.+)\s*$/i) {
++		        $parsed_line->{$1} = $2;
++		}
++	}
++}
++
++sub filter_body {
++	my $c = shift;
++	my $body = "";
++	while (my $body_line = <$c>) {
++		if ($body_line !~ m/^GIT:/) {
++			$body .= $body_line;
++		}
++	}
++	return $body;
++}
++
++
+ my %broken_encoding;
+ 
+ sub file_declares_8bit_cte {
+-- 
+2.15.1
+
