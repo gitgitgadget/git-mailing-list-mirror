@@ -2,148 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E89041F406
-	for <e@80x24.org>; Fri, 15 Dec 2017 10:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C45B1F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 12:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755593AbdLOKlM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 05:41:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40540 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755450AbdLOKlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 05:41:03 -0500
-Received: (qmail 2275 invoked by uid 109); 15 Dec 2017 10:41:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Dec 2017 10:41:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8285 invoked by uid 111); 15 Dec 2017 10:41:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 15 Dec 2017 05:41:27 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Dec 2017 05:41:01 -0500
-Date:   Fri, 15 Dec 2017 05:41:01 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 4/4] t/Makefile: introduce TEST_SHELL_PATH
-Message-ID: <20171215104101.GA11637@sigill.intra.peff.net>
-References: <20171208104647.GA4016@sigill.intra.peff.net>
- <20171208104722.GD4939@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1712081602570.4318@virtualbox>
- <20171208220046.GA26270@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1712091443560.4318@virtualbox>
- <20171210142309.GA19453@sigill.intra.peff.net>
- <xmqq4lox57c9.fsf@gitster.mtv.corp.google.com>
+        id S1755064AbdLOMK7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 07:10:59 -0500
+Received: from mout.gmx.net ([212.227.17.20]:65464 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754672AbdLOMK5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 07:10:57 -0500
+Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWPOI-1eVsIP1RCk-00XgIM; Fri, 15
+ Dec 2017 13:10:55 +0100
+Date:   Fri, 15 Dec 2017 13:10:54 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH 1/4] travis-ci: use 'set -x' in 'ci/*' scripts for extra
+ tracing output
+In-Reply-To: <CAM0VKjkv0XqHf8s94Wj2DHsD49gTP0M6HU2AY=36Jj-5SYhS9A@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1712151308230.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <20171101115535.15074-1-szeder.dev@gmail.com> <20171211233446.10596-1-szeder.dev@gmail.com> <20171211233446.10596-2-szeder.dev@gmail.com> <9AAC2BCC-AA06-46F9-8E6E-1D99CD959FDD@gmail.com> <CAM0VKjkVw8QeDErDg9aXcQ1sAgY34eBEeA0QJGamvEEBOG8y9w@mail.gmail.com>
+ <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com> <CAM0VKjkv0XqHf8s94Wj2DHsD49gTP0M6HU2AY=36Jj-5SYhS9A@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4lox57c9.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kV6vWxMq2keArStgrv3+Yo7RcKmrjPbC+DwuPR2qqcMUaZatFUw
+ Pb+ZcwNL/tHEHHYw/aUqzoyIuFk/spxheei/IzTu9aD1r7OXnafyLe9JauCIuKW0PI6GWOd
+ +zUU5G0qAGffrsPUwgNl3FNvXw8cEabSZaKfqoAS3ujyNP9J5U6QGYt+0A81PypOWbHdaL5
+ i48qvQST0bHMfjBvF/pGg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pa0gWEUHJ9M=:d/XoEOZF8ZZpj+Ha3Kg5j+
+ MNjnDr51v5tWaXMkDWH1THPY6ZXCP/MauLUfi/2SE71sFDcEt8FUAsyTaBv5FijRhEIZFtHP3
+ pW5B7+5nrONdpru0CQExKnv5A1ttt6f+Pqq6vGzx95SYU7F2sca18WgM/Tq6xSsTT6M/FjX4u
+ 9U119bPTXxcJfvVdPtzI9YOWqp0x24CVLIQmsT7Bi3nBnEDRMnoMmc/fEdmIIXkiBZzVoLRc3
+ mALODTVi0jBXF1KCnTnZHATIz4EBqV2xMPbfcjHCpF0d2zrfw7c5keH+r6a2aaiLaNS0Ny/BI
+ vhecWErVzfhGcCz+KU7tqIKsuZAX6YUgRWApQzHqXxgLW/vtuaZRbswyiHVc8aK4llEisP0Tv
+ LXj5pSNsFsqe3q7kfiqz0qOJ9sF+8mbzful9ku8Rki06YwHS1/m9wS8Q5eYmXk9/yfiJ4aKu9
+ IzpxcxhGRSy+4il3DBcsMwLMbKZqObaG/tYKyD2h8O6e40RonzSiZliAi9+6AbW+iKrAO/bac
+ 2tfMyFt+sChz9zb6W+973cOcuF08ReSEYJW1Xb6VS612B8zJ2Dn4B036b8edGiqu4yD4kv1rv
+ LQrH/xklQFjHOZ+OivqlUcFw+NVUtohhVIos2s0W0tq6/CWq9rwjDKYjbJepXvkSumB6ijAgS
+ bd8VbHX1plYdwVxA2ASkP2h/+flVcuWEU8UivXswvdFt+AOvQhe9dTW4taeS0JbRNAlNxCinE
+ EqYPOlkTSRAuX6DYBJoPt5xLFDkbXKHfik7ZXOzoCvkCLxJs49cXj11VDBOr/SLG4IhblsOHF
+ yzhbL0DxBNvWUNBcf/MJAinpqvKyPj4wWBlW/nFMbEhpi2LZPk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 11, 2017 at 12:37:42PM -0800, Junio C Hamano wrote:
+Hi,
 
-> > Interestingly, many of those do something like this in the Makefile:
-> >
-> >   ifdef GIT_TEST_CMP
-> > 	@echo GIT_TEST_OPTS=... >>$@+
-> >   endif
-> >
-> > which seems utterly confusing to me. Because it means that if you build
-> > with those options set, then they will override anything in the
-> > environment. But if you don't, then you _may_ override them in the
-> > environment. In other words:
-> >
-> >   make
-> >   cd t
-> >   GIT_TEST_CMP=foo ./t0000-*
-> >
-> > will respect that variable. But:
-> >
-> >   make GIT_TEST_CMP=foo
-> >   cd t
-> >   GIT_TEST_CMP=bar ./t0000-*
-> >
-> > will not. Which seems weird.  But I guess we could follow that pattern
-> > with TEST_SHELL_PATH.
-> 
-> Or perhaps we can start setting a better example with the new
-> variable, and migrate those weird existing ones over to the new way
-> of not forbidding run-time overriding?
+> There is a lot going on in 'run-windows-build.sh', so the output of 'set
+> -x' might be useful or might be considered too much clutter, I don't
+> know.  I put Dscho on Cc, I think it's mainly his call.
 
-This turns out to be quite tricky, because GIT-BUILD-OPTIONS must be
-parsed as both a Makefile and shell-script.
+Certainly it might be useful.
 
-So we can do:
+However, please make sure that the secret token is not leaked that way.
+Like, *really* sure. Due to the failure of Git to use a portable and
+performant test suite, it does take about 90 minutes to build and test a
+revision, therefore it would be very easy to DOS my build system, and I
+really, really need it not to be DOSed because I use it in my day job, too.
 
-  1. Omit them from GIT-BUILD-OPTIONS, which means they don't work for
-     cases where the tests aren't started from the Makefile (which would
-     have put them in the environment). I think this is a non-starter.
-
-  2. Add a Makefile-level ifdef when generating GIT-BUILD-OPTIONS, so
-     that unused options can be overridden by the environment That's the
-     "weird" thing above that we do now for some variables.
-
-  3. Add something like:
-
-       test -z "$FOO" && FOO=...
-
-     when building GIT-BUILD-OPTIONS (instead of just FOO=...). But that
-     doesn't work because it must parse as Makefile.
-
-  4. In test-lib.sh, save and restore each such variable so that the
-     existing environment takes precedence. Like:
-
-       FOO_save=$FOO
-       BAR_save=$BAR
-       ...etc for each...
-
-       . GIT-BUILD-OPTIONS
-
-       test -n "$FOO_save" && FOO=$FOO_save
-       test -n "$BAR_save" && BAR=$BAR_save
-       ...etc...
-
-      We have to do the save/restore dance rather than just reordering
-      the assignments, because the existing environment is being passed
-      into us (so we can't just "assign" it to overwrite what's in the
-      build options file).
-
-      This could be made slightly less tedious with a loop and an eval.
-      It could possibly be made very succinct but very magical with
-      something like:
-
-        saved=$(export)
-	. GIT-BUILD-OPTIONS
-	eval "$saved"
-
-  5. Give up on the dual nature of GIT-BUILD-OPTIONS, and generate two
-     such files (with identical values but different syntax).
-
-I think (4) and (5) are the only things that actually change the
-behavior in a meaningful way. But they're a bit more hacky and
-repetitive than I'd like. Especially given that I'm not really sure
-we're solving an interesting problem. I'm happy enough with the patch as
-shown, and I do not recall anybody complaining about the current
-behavior of these options.
-
-> There is a long outstanding NEEDSWORK comment in help.c that wonders
-> if we want to embed contents from GIT-BUILD-OPTIONS in the resulting
-> binary, and the distinction Dscho brought up between "build" and
-> "test" phases would start to matter even more once we go in that
-> direction.
-
-I guess you're implying having a GIT-BUILD-OPTIONS and a
-GIT-TEST-OPTIONS here. But that doesn't save us from the Makefile/shell
-duality, unfortunately. Some of the test options need to be read by
-t/Makefile, and some need to be read by test-lib.sh (and I suspect there
-are some needed in both places).
-
--Peff
+Ciao,
+Dscho
