@@ -2,132 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9BC1F407
-	for <e@80x24.org>; Fri, 15 Dec 2017 18:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 428461F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 18:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755853AbdLOSY1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 13:24:27 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:44959 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932136AbdLOSYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 13:24:09 -0500
-Received: by mail-wm0-f54.google.com with SMTP id t8so19123253wmc.3
-        for <git@vger.kernel.org>; Fri, 15 Dec 2017 10:24:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=q55r9sHZWgX+KgUws820wOJ4mvu8LYA/G6viCBh9WkU=;
-        b=kX9dz3QJOa/JOrav+Xx5STmKmkfYlBCOEYjdsKE/FMUpz8k/VW8wuA3LPAuuVjbsBg
-         JcV1xYf33bOWbXsUy0cFd0OetWmvwJmr/0zkBDuWKzqj88C2kic1/T3XG8dR/t3zWmcu
-         317O4CQ+64IiBAFthTveA5crGuUg2Rvv79JRsY1JdGM+YJ9P5DiHaShd6y4HE+2YqGjf
-         bs+J5qWVeM1ZN7B0NasN+g0GZfT+gc/iiQlb9ZMmRjNxeJMQKBVpoKJNTNr7R2OGtGaQ
-         4bRyB1LVN0uKfqnmIJmkDQ7kzGOyePK+GTElECqQCamECJoyJQ3POcBqL1CYGYltxzyb
-         q/MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=q55r9sHZWgX+KgUws820wOJ4mvu8LYA/G6viCBh9WkU=;
-        b=FsVavOFaGxCRX/JK8Ynxc3jch/rcylJek6rZ3Y1J7dyBckBYP1yhTyoyNoGeka09wW
-         2H/qWZNGVFo+9AZcTrngBeqwMJZEdzCfiGbPMuPbbg5IdM6/+2/HXEtIe2DA2ZKdyOnG
-         ngiwwHjpukmIlDNmEG2UFtrf2L75rCh6mkSVLpK0NijAQMXbtthCaH1N2+bdmMCUad0w
-         Qe0NpFIl4hVglhPxKshWZ9g68MF+oQbk7nptyMS1TH/QipTfhj24NCc9KDl9PQFbwy1v
-         VnSYj0kgBXblvuJsJLAF7s7fJtxQD2clBrtJdXyFgLX58+Q6SHPtOLepmmASplE5ZkFZ
-         vYdg==
-X-Gm-Message-State: AKGB3mIPvYipkgXnFeOmI7wAP7cgvsIOnVyZumziiU0yQi1J2WuBpPQH
-        tNkCsIb67yHrWwrtOANGmyh4E7U1
-X-Google-Smtp-Source: ACJfBouABS8MwXCWA+ccsEFO+t+QktjvihUnL55xdYBSW2S0Qa/yTC2mSt3GclBqzbZ/WS7yM3W8KQ==
-X-Received: by 10.80.222.73 with SMTP id a9mr18772150edl.214.1513362247897;
-        Fri, 15 Dec 2017 10:24:07 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id h56sm6063067eda.97.2017.12.15.10.24.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Dec 2017 10:24:07 -0800 (PST)
-Subject: Re: Need help migrating workflow from svn to git.
-To:     Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-References: <20171214130933.GA18542@raven.inka.de>
- <5eb3fe18-864d-0b04-223e-d9e5cbf2c81e@gmail.com>
- <20171215124739.GC18542@raven.inka.de>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <0c0867d8-73d7-3577-be26-2a9a7691d58b@gmail.com>
-Date:   Fri, 15 Dec 2017 19:24:03 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1755554AbdLOSam (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 13:30:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64411 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755419AbdLOSal (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 13:30:41 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4AF18B9763;
+        Fri, 15 Dec 2017 13:30:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vlXsg2lfqCpQ8wYV9aKeUk1XTH4=; b=rhI8Dx
+        V3E6wKYKKvXdNVmirZ+w5bBc0bGG7wxK8D/k0NFNW5aK/aV8oucUSTlg4Io2bv6B
+        6Gd3K/AIxuWiCV2rtWcw/IeJKpeqpqlwDdP8eIi8i0DA/AOQ6ctggHZbyxG27eVF
+        s5sIgiWPPEEwpt+5s6W/0gNmEM41yah0xgKUA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uJ9G/P3mIRrtHRPyQMF+FtUXaPWFLI9W
+        2ToUGlZZ3OLWiScuj2bdGYv1lKqcfU/WpouHLuauI2Oj5G+dFu0WXE20AGY4H3sb
+        Awefo5Ab4ojTnFVqdG2a8NAkZnAJDL8pHbWqs2WjtCZ62ZKo7mN6sa2aFTpQaujh
+        T/0D4NPlWzk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 41593B9762;
+        Fri, 15 Dec 2017 13:30:40 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B536DB9760;
+        Fri, 15 Dec 2017 13:30:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>,
+        Jameson Miller <jameson.miller81@gmail.com>
+Subject: Re: Question about the ahead-behind computation and status
+References: <030bf57c-7a23-3391-4fc0-93efee791543@jeffhostetler.com>
+        <20171215100835.GC3567@sigill.intra.peff.net>
+        <88175f57-082d-ad61-c2dd-53ae50540460@jeffhostetler.com>
+        <d16339e0-54bd-073b-fa4a-7c3a84a025e9@gmail.com>
+Date:   Fri, 15 Dec 2017 10:30:38 -0800
+In-Reply-To: <d16339e0-54bd-073b-fa4a-7c3a84a025e9@gmail.com> (Derrick
+        Stolee's message of "Fri, 15 Dec 2017 10:43:34 -0500")
+Message-ID: <xmqqa7yjrghd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171215124739.GC18542@raven.inka.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0D189FA4-E1C6-11E7-97D2-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Josef,
+Derrick Stolee <stolee@gmail.com> writes:
 
-Thank you for your patient answers. From what you said here and in 
-that other reply[1], it looks like you know what you`re doing, you`re 
-aware of circumstances, and you still prefer doing it that way.
+> The biggest reason for the 20 seconds is not just the number of
+> commits in the ahead/behind but how many commits are walked (including
+> common to both branches) before paint_down_to_common() breaks its
+> while loop due to queue_has_nonstale().
 
-So, here it goes... :)
+Hmm, queue_has_nonstale() looks to see if any element is not STALE
+(where the definition of STALE is "known to be a common ancestor")
+by potentially checking all elements in the queue.  I wonder if we
+have an opportunity for a trivial optimization?  When the caller
+knows that it dug one level and added the parents that are not
+stale, it does not have to ask queue_has_nonstale() if there is any
+non stale element, for example.
 
-On 15/12/2017 13:47, Josef Wolf wrote:
-> 
-> > I`m thinking of a workflow involving (scripted) creation of a 
-> > temporary branch at fetched remote branch position, and using 
-> > something like `git checkout --merge <temp_branch>` to merge your 
-> > local modifications to latest changes fetched from remote (ending
-> > up with conflicts inside working tree, if any),
-> 
-> But this would require local modifications to be committed?
- 
-Nope :) Here`s a script you can test to see if it works for you, 
-simulating `svn update` (at least how I perceived it).
+What do you exactly mean by "not just the number of commits in the
+ahead/behind"?  Aren't the number of these commits pretty much
+proportional to the number of commits we need to paint down to
+common ancestors?  Is the latter a lot larger than the former
+(i.e. are we somehow not stopping when we _could_ notice that we
+can with better information)?
 
-Feel free to adapt as you feel like it (I used local "master" branch 
-and remote "origin/master", for example), or to speak up if any 
-additional info is needed.
 
-    git checkout -b temp &&               #1
-    git fetch &&                          #2
-    git branch -f master origin/master && #3
-    git checkout -m master &&             #4
-    git add -u &&                         #5
-    git reset &&                          #6
-    git branch -d temp                    #7
-
-Explanation:
- 1. Create temporary branch where we are, switching to it, so we can 
-    update "master" without local modifications
- 2. Fetch latest updates
- 3. Update "master" to fetched "origin/master"
- 4. Switch to updated "master", merging local modifications
- 5. Mark any pending merge conflicts as resolved by staging them...
- 6. ... and unstage them right away
- 7. Delete temporary branch
-
-Step (4) is what merges your local modifications with remote updates 
-(leaving conflicts, if any), where steps (5) and (6) are not needed 
-for a single run, but in case you don`t resolve conflicts before next 
-cron job executes this script again, step (1) will now fail without 
-them because of (still) unresolved merge conflicts.
-
-So, as you seem to be pretty at ease with your flow, you might prefer 
-leaving those two steps (5, 6) in.
-
-This does seem ugly and hacky, but if it works for you, I don`t judge :) 
-Please note that there might be better ways to accomplish this, I 
-repeat, I`m not an expert, but hopefully this could do the job.
-
-Also, if I missed something, I hope someone will correct me.
-
-Regards, Buga
-
-[1] https://public-inbox.org/git/20171215130645.GD18542@raven.inka.de/
