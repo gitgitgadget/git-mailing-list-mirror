@@ -2,127 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,URI_HEX
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E02B11F419
-	for <e@80x24.org>; Fri, 15 Dec 2017 15:09:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B97C31F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 15:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932190AbdLOPJQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 10:09:16 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:37606 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932091AbdLOPJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 10:09:15 -0500
-Received: by mail-qt0-f196.google.com with SMTP id f2so12428063qtj.4
-        for <git@vger.kernel.org>; Fri, 15 Dec 2017 07:09:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A/BMOv+la9/rxq61k3RCmkP9UH0qV6+uJnkHmgp5OsM=;
-        b=gNzmUQFjz8kZxiRDWYwoK1j8Mw/rRcgmmhLBmOqfaK6Wajv3N9fUt7p2CC32A2fppq
-         gWb/OKZxJkFNNLl1B3Vx7/qVnHuXCRIxd71I5S70PdEXZa9C1U492KezLq0V9Ik8DRDd
-         iN9SJ0XbY3iLzTCY9uSTQhUNobY8HHg+RwPtajW48mET0nddUyedO6vWUHOp1oLelqrs
-         57lwy7waX+rUEYTGAbhzwM3NeRIW3iO0wsOSgzslECcoWWqA/1w92P2q8qIJbaCsEGUW
-         PPVHvzvvtS9Odq03bIJrP64eNNkmYH7WuVd850UfXdtPlsqo5uHwneEXFWG1eVpwLoHs
-         t7PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A/BMOv+la9/rxq61k3RCmkP9UH0qV6+uJnkHmgp5OsM=;
-        b=b7ImvDml4HhJI/9Oh4xQIeKbYvi+Vt1bvLU3+hDnucrZAdtW5bSgkW6RquhyyIDhyc
-         s1ZCDldqiHl8N1hS8teL2Nxoea3ifKD5D4/+1N5gDOfwD/k3+xirlkXh6XG6Szd3v5D5
-         qRQVWo8jrdvdSX6mVGV4M2kFwid8hKpjaSO1fkYUoLX8PLN85C/FrkNpL4BnPIC5pWrQ
-         dNAWOy9p0hhFa1iVbIHKWM2eRDBZfezfV9Os79V62MSO7vKYUKvtrfe5wjfAC5lV4VrU
-         vcLL/WA77q9UimMANFKOqfGIcot7sV8ZVbe85HQqTEisDdyt3NH4dbB/+ZWmEPfkKcrA
-         CaNg==
-X-Gm-Message-State: AKGB3mJ3QjkupWCTZh4rGZFANNbuCOQ8y00+qcy+emmDid7hfbps6RaX
-        2Ec91+XIDKucGSV9uCb8t3E=
-X-Google-Smtp-Source: ACJfBov46QAL+MPH5QqZ9gSMYY8a+BjLeRfLhGLtDgxfuoZkJwuZdrtfgf8FvTR3ysssdqF+uleUwA==
-X-Received: by 10.200.52.137 with SMTP id w9mr22484319qtb.290.1513350554258;
-        Fri, 15 Dec 2017 07:09:14 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id s189sm4155718qke.68.2017.12.15.07.09.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 15 Dec 2017 07:09:12 -0800 (PST)
-Date:   Fri, 15 Dec 2017 10:09:10 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org,
-        'Junio C Hamano' <gitster@pobox.com>,
-        'Jeff King' <peff@peff.net>, 'Dan Jacques' <dnj@google.com>,
-        'Alex Riesen' <alexander.riesen@cetitec.com>,
-        'Jonathan Nieder' <jrnieder@gmail.com>,
-        'Brandon Casey' <drafnel@gmail.com>,
-        'Petr Baudis' <pasky@ucw.cz>, 'Gerrit Pape' <pape@smarden.org>,
-        "'martin f . krafft'" <madduck@madduck.net>,
-        'Eric Wong' <e@80x24.org>,
-        'Ramsay Jones' <ramsay@ramsayjones.plus.com>,
-        'Joachim Schmitz' <jojo@schmitz-digital.de>,
-        Bill Honaker <bhonaker@xid.com>
-Subject: Re: [PATCH v3] Makefile: replace perl/Makefile.PL with simple make
- rules
-Message-ID: <20171215150910.GI3693@zaya.teonanacatl.net>
-References: <20171129195430.10069-1-avarab@gmail.com>
- <20171210211333.9820-1-avarab@gmail.com>
- <003f01d37390$ed0e0440$c72a0cc0$@nexbridge.com>
- <87a7ynd1ml.fsf@evledraar.gmail.com>
- <b8b4534f-1eda-ee52-faed-ec5188c2ad35@grubix.eu>
+        id S932260AbdLOPSr convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 15 Dec 2017 10:18:47 -0500
+Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:52539 "EHLO
+        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932250AbdLOPSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 10:18:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 07A60A0181;
+        Fri, 15 Dec 2017 16:18:43 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
+Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
+        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 4FbFnriqNItE; Fri, 15 Dec 2017 16:18:42 +0100 (CET)
+Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 45AA4A015B;
+        Fri, 15 Dec 2017 16:18:42 +0100 (CET)
+Received: from BEMBX2013-01.univ-lyon1.fr (134.214.201.247) by
+ BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
+ id 15.0.1263.5; Fri, 15 Dec 2017 16:18:41 +0100
+Received: from BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd]) by
+ BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd%15]) with mapi id
+ 15.00.1263.000; Fri, 15 Dec 2017 16:18:41 +0100
+From:   ALBERTIN TIMOTHEE p1514771 <timothee.albertin@etu.univ-lyon1.fr>
+To:     MOY MATTHIEU <matthieu.moy@univ-lyon1.fr>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
+        "PAYRE NATHAN p1508475" <nathan.payre@etu.univ-lyon1.fr>,
+        "BENSOUSSAN--BOHM DANIEL p1507430" 
+        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
+Subject: RE: [PATCH v2] doc: add triangular workflow
+Thread-Topic: [PATCH v2] doc: add triangular workflow
+Thread-Index: AQHTdOzJb7DwFrQEtUaHSO/jj67o3KNEhgCG
+Date:   Fri, 15 Dec 2017 15:18:41 +0000
+Message-ID: <1513354712419.77557@etu.univ-lyon1.fr>
+References: <1512034932-14499-1-git-send-email-timothee.albertin@etu.univ-lyon1.fr>
+ <9a0556ac403845f39a564bbc55df5b3a@BPMBX2013-01.univ-lyon1.fr>,<1547311095.1194033.1513263844281.JavaMail.zimbra@inria.fr>
+In-Reply-To: <1547311095.1194033.1513263844281.JavaMail.zimbra@inria.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [134.214.126.172]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b8b4534f-1eda-ee52-faed-ec5188c2ad35@grubix.eu>
-User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michael,
 
-Michael J Gruber wrote:
-> This patch (currently in origin/next) makes a ton of tests from our test
-> suite fail for me on pretty standard systems (Fedora 27, CentOS 7.4.1708).
-> 
-> Is there anything I'm supposed to do differently now to make our test
-> suite run? If yes then a clear and short hint in the patch description
-> would me more than approriate.
+>> +
+>> +........................................
+>> +------------------               -----------------
+>> +| UPSTREAM       |  maintainer   | PUBLISH       |
+>> +|                |- - - - - - - -|               |
+>> +------------------      <-       -----------------
+>> +              \                     /
+>> +               \                   /
+>> +        fetch | \                 / ^ push
+>> +              v  \               /  |
+>> +                  \             /
+>> +                   -------------
+>> +                   |   LOCAL   |
+>> +                   -------------
 
-Interesting.  I'll have to try building next.  I was going
-to wait until the first 2.16.0 rc for a full test.
+>This kind of diagram deserves a bit of text to explain the situation.
+>For example, LOCAL is local only for the contributor (the maintainer
+>doesn't need to know about it for example). I'd add a sentence to
+>explain that this gives the overall view on the flow, from the point
+>of view of a contributor.
 
-I did apply this patch on top of 2.15.1 on 12/10 and built
-an rpm locally for fedora (only f26 though).  I didn't see
-any test failures, which is why I thought I'd wait for
-2.16.0-rc0 to test further.
+Ok, we'll do that
 
-FWIW, the minor spec file changes I made (against fedora's
-git package master branch) are here:
+>> +* `git push`
 
-    https://src.fedoraproject.org/fork/tmz/rpms/git/branch/perl-makefile
+>This will push to UPSTREAM, right?
 
-The only change in the patch since I tested it is: 
+Yes, we will specify it.
 
-+-modules += Git/Packet
+>> +Adding **UPSTREAM** remote:
+>> +
+>> +===================================
+>> +`git remote add upstream <UPSTREAM_url>`
+>> +===================================
 
-in perl/Makefile.
+>In which circumstance shall one write this? If you don't say it, the
+>reader will probably assume that this is to be done after the commands
+>you specified right above. But then: it doesn't make sense. You've
+>just cloned from UPSTREAM, you already have the UPSTREAM remote.
 
-I don't think any of these changes to the rpm spec file or
-the Git/Packet addition in modules look like they'd affect
-the test suite, but it's early here and I could be wrong.
+Indeed, we just remove it.
 
-I'll try to test a build of next soon to see if I get
-similar failures on Fedora/CentOS.
+>> +For each branch requiring a triangular workflow, set
+>> +`branch.<branch>.remote` and `branch.<branch>.pushRemote` to set up
+>> +the **UPSTREAM** and **PUBLISH** repositories.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-After one look at this planet any visitor from outer space would say
-"I want to see the manager."
-    -- William S. Burroughs
+>This neither tells me how to set the variables, nor what the effect
+>will be ("set up"?).
 
+We'll fix that in the next patch.
+
+>> +Example with master as <branch>:
+>> +===================================
+>> +* `git config branch.master.remote upstream`
+>> +* `git config branch.master.pushRemote origin`
+>> +===================================
+
+>origin is the remote you've cloned from. From the text above, I guess
+>you meant it to point to PUBLISH. But all the examples "git clone" you
+>gave are from UPSTREAM.
+
+>You're mixing the case where one "git clone"s from UPSTREAM and "git
+>remode add"s PUBLISH, and the converse. Both are possible, but the
+>"origin" remote will be different depending on which one you chose.
+
+I think I don't really get it. IMHO UPSTREAM is name from the repository
+you pull from and PUBLISH from the repositiry you push to.
+
+>> +Making your work available
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> +
+>> +The `git push` command sends commits to the **PUBLISH** repository and not to
+>> +the **UPSTREAM** thanks to the configuration you did earlier with the
+>> +`git config remote.pushdefault origin` command.
+
+>This explanation should be next to the place where you recommend
+>setting remote.pushdefault.
+
+Done.
+
+>> +When a contributor pushes something, the `git config push.default
+>> +current` command can be used to specify that the name of the
+>> +**PUBLISH** branch is the same as the name of the **LOCAL** one.
+
+>I already said it multiple times, but I don't think it's a good idea
+>to recommend changing push.default. The default, "simple", was
+>specifically designed to be appropriate for triangular workflow:
+
+  >http://git.661346.n2.nabble.com/PATCH-0-6-push-default-in-the-triangular-world-td7589907.html
+  >(PATCH 3/6 in particular)
+
+>You may disagree with me, but then please explain your motivation (by
+>replying to my messages and/or by explaining the rationale in the
+>commit message).
+
+I read this discussion and so I understand the point here. I agree we
+shouldn't recommend this.
+
+>> +=================================
+>> +`git rev-parse --abbrev-ref @{push}`
+>> +=================================
+>> +
+>> +.Display the fetch remote's name:
+>> +[caption="Recipe: "]
+>> +
+>> +===================================
+>> +`git rev-parse --abbrev-ref @{upstream}`
+>> +===================================
+
+>I don't think "rev-parse" is the best example to give.
+
+>I use @{upstream} all the time to see what commits I have which aren't
+>in upstream yet:
+
+  >git log @{upstream}..
+
+git log seems a better exemple.
+
+We are ok we the rest of the review
+
+
+Thank you for your time
+
+Timothée Albertin
