@@ -2,152 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27DA01F407
-	for <e@80x24.org>; Fri, 15 Dec 2017 19:40:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730C31F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 19:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755593AbdLOTkb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 14:40:31 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:37090 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755406AbdLOTkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 14:40:31 -0500
-Received: by mail-qt0-f179.google.com with SMTP id f2so13451592qtj.4
-        for <git@vger.kernel.org>; Fri, 15 Dec 2017 11:40:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=FYygtf+LM1gmzOrNk5K6xZfTYVcThoEZ80n16o4cFc4=;
-        b=pqiDNRFuBbIIpF0RFL2HwVVdEAaQcQojRfm1spMwL4jLw7gPW5PvVbMiUbhCAm1yCM
-         OllGXei7MQdCY6bjuYL2OdjEkoOsycVC8XEknJYHZXQXWg12Jo6bMoCfvWWX7Ytj41ri
-         ATXWnCoxKcx7MHQRBAPVQkVFILK3uovMlviNl938eJ+XemhL4F1PD6/scLb2lDeY6RKo
-         lUdpqBQfjWdMhiVfz+SgAGiiot+l3UaYStu0cBayemcbI7rLPqNGUq0DoWO45fGsmAuG
-         mJLRkkD3kNj2L/cyO0xufABoViKmsXuT3nq/rnAbQ8i9NMwRtXgyB3WjGzXUmuLDUJwP
-         LmOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=FYygtf+LM1gmzOrNk5K6xZfTYVcThoEZ80n16o4cFc4=;
-        b=Hbx8YScfJzRHHx7TmYdCIjcx9DX4sorEXKoDEenSnm9/vvXvyYjsF56jmX7VwAb82r
-         gpOVHps0GmTyZfZpfNvkMOPLuBPASCpIjblbSqs6ff32Hb1cR7wAV48Y1P091W5EQZWP
-         QbsYX7CJwafZoEnvOG3yDNdlB/TL861dDxsH3P1yVVPsxkJEBk+UvsmSqKwYlUGkiV3Z
-         44sJPo4s2B5PwBX8pBrRnC/BAZUnaAGRC7D28FwEBg2KjQoMSkUuCetiEi+VnQW/5cps
-         yiGjR6GuIpehpRaoVzrWoDIDMzRnHBUypvJoMZ7opM9R6awKwkyUsez9kBGjvcMhWIFi
-         Qbdw==
-X-Gm-Message-State: AKGB3mKnyDMmHi+hTo1UAFKz+bwAOHKaGaffzBMkKsOia5ga2z1lgOTf
-        9yK8qmcXTeugiGlS2FZHEPQ=
-X-Google-Smtp-Source: ACJfBot/dVrS9dSnwwLOvURExT9dx95UgyZTx8SdJPzaHIiNG0rt13mimOmCbkTZh52CX8kVT9DWHg==
-X-Received: by 10.200.4.44 with SMTP id v44mr24243023qtg.80.1513366830002;
-        Fri, 15 Dec 2017 11:40:30 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id n73sm4413635qka.79.2017.12.15.11.40.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Dec 2017 11:40:29 -0800 (PST)
-Subject: Re: Question about the ahead-behind computation and status
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>,
-        Jameson Miller <jameson.miller81@gmail.com>
-References: <030bf57c-7a23-3391-4fc0-93efee791543@jeffhostetler.com>
- <20171215100835.GC3567@sigill.intra.peff.net>
- <88175f57-082d-ad61-c2dd-53ae50540460@jeffhostetler.com>
- <d16339e0-54bd-073b-fa4a-7c3a84a025e9@gmail.com>
- <xmqqa7yjrghd.fsf@gitster.mtv.corp.google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5fd76b6f-15d0-b8ca-710b-d6289a63b9b4@gmail.com>
-Date:   Fri, 15 Dec 2017 14:40:28 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1755638AbdLOTsc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 14:48:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57431 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1755419AbdLOTsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 14:48:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57425BAA54;
+        Fri, 15 Dec 2017 14:48:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4duZRbADiDmun6HFfklztPAWpkk=; b=kxmXxt
+        wEYAh5ItpQHttcgXmtvfdw3jntX4zNE/yR1VeUoH3aPS0wtpf2onyGloJ/+1ALFV
+        lH+w6UFY4SW6sfArX1TRprsirbdKOKcABgZhEh0M5yzSdBb4OHvFUJs8A7tZwaa+
+        V4eHTwQhRJZ0LxzIl/y1dzDsDsyQxbHGMIR2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NARg85XRf4JjlNqSn8t1l2/SOUIZE7AL
+        naAeiYjzoAg9iVXdT/ZMWJQ4B4wfrEkaCTdTL40yVqJiJLvVrVP8a4Upp4iPRXLH
+        VVtK96dbX2d4efcU0tlpFZvY1nFZ40xtoDyKM2BRUrGH4BlRFTWiOy6Q0wz4bKEl
+        WtU5+aZK1iE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F87DBAA53;
+        Fri, 15 Dec 2017 14:48:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BFBFFBAA51;
+        Fri, 15 Dec 2017 14:48:30 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>
+Subject: Re* [PATCH v2 2/2] t: add tests for pull --verify-signatures
+References: <20171209090530.6747-1-hji@dyntopia.com>
+        <20171210065358.8156-1-hji@dyntopia.com>
+        <20171210065358.8156-2-hji@dyntopia.com>
+        <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 15 Dec 2017 11:48:29 -0800
+In-Reply-To: <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Tue, 12 Dec 2017 11:03:47 -0800")
+Message-ID: <xmqqmv2jpyb6.fsf_-_@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa7yjrghd.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
+X-Pobox-Relay-ID: ED40EE38-E1D0-11E7-93BC-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/15/2017 1:30 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Interestingly, the tests that do expect 'git pull' to succeed
+> protect themselves with "when-finished" mechanism correctly [*1*],
+> like so:
 >
->> The biggest reason for the 20 seconds is not just the number of
->> commits in the ahead/behind but how many commits are walked (including
->> common to both branches) before paint_down_to_common() breaks its
->> while loop due to queue_has_nonstale().
-> Hmm, queue_has_nonstale() looks to see if any element is not STALE
-> (where the definition of STALE is "known to be a common ancestor")
-> by potentially checking all elements in the queue.  I wonder if we
-> have an opportunity for a trivial optimization?  When the caller
-> knows that it dug one level and added the parents that are not
-> stale, it does not have to ask queue_has_nonstale() if there is any
-> non stale element, for example.
-
-I thought this, too, but my tracing did not show significant time spent 
-in this method. 99% of the time is spent unzipping and parsing commits.
-
-If this was taking too long, then we could track a minimum timestamp for 
-a commit that entered the queue in a non-stale state, but this will 
-delay the termination condition a bit since commits can be marked stale 
-after they enter the queue.
-
-> What do you exactly mean by "not just the number of commits in the
-> ahead/behind"?  Aren't the number of these commits pretty much
-> proportional to the number of commits we need to paint down to
-> common ancestors?  Is the latter a lot larger than the former
-> (i.e. are we somehow not stopping when we _could_ notice that we
-> can with better information)?
+>> +test_expect_success GPG 'pull signed commit with --verify-signatures' '
+>> +	test_when_finished "git checkout initial" &&
+>> +	git pull --verify-signatures signed >pulloutput &&
+>> +	test_i18ngrep "has a good GPG signature" pulloutput
+>> +'
+>> +
 >
->
+> Other than that, looked nicely done.  Thanks.
 
-With the wide history, there is actually a large set of commits that are 
-in the common history but have newer commit times than the oldest commit 
-in only one history. Consider the following ASCII art:
+Here is what I would propose as a follow-up polishing.
 
-   A
-   |
-   1
-   |
-   2
-   |
-   3
-   |\
-   4 B
-   |\|
-   5 C
-   |\|
-   6 D
-   |\|
-    .
-    .
-    .
-   |\|
-   N Z
-   |/
-   0
+-- >8 --
+Subject: [PATCH 3/2] t5573: clean up after unexpected success of 'pull', too
 
-Between A and B, A is ahead by commits {A,1,2,3,4,5,6,...,N}. Meanwhile, 
-commits B,C,D,...,Z are in the common history, but still must be walked.
+The previous step added test_when_finished to tests that run 'git
+pull' with expectation of success, so that the test after them can
+start from a known state even when their 'git pull' invocation
+unexpectedly fails.  However, tests that run 'git pull' expecting
+it not to succeed forgot to protect later tests the same way---if
+they unexpectedly succeed, the test after them would start from an
+unexpected state.
 
-Now imagine these two sets are actually much MUCH wider (thousands of 
-commits that are pairwise non-ancestors). This causes the number of 
-walked commits to be larger than just the number of commits in the 
-symmetric difference of the histories.
+Reset and checkout the initial commit after all these tests, whether
+they expect their 'git pull' invocations to succeed or fail.
 
-Unfortunately, generation numbers are not the only optimization needed 
-to make this call be sub-100ms. A graph data structure that lists the 
-edges between commits would prevent the time spent in zlib decompressing 
-and parsing commits. I'm working on investigating how such a data 
-structure (and corresponding file format) could integrate in the 
-commit-walking code.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5573-pull-verify-signatures.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-Thanks,
--Stolee
+diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+index 8ae331f40e..9594e891f4 100755
+--- a/t/t5573-pull-verify-signatures.sh
++++ b/t/t5573-pull-verify-signatures.sh
+@@ -43,33 +43,36 @@ test_expect_success GPG 'create repositories with signed commits' '
+ '
+ 
+ test_expect_success GPG 'pull unsigned commit with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures unsigned 2>pullerror &&
+ 	test_i18ngrep "does not have a GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures bad 2>pullerror &&
+ 	test_i18ngrep "has a bad GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull signed commit with --verify-signatures' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git pull --verify-signatures signed >pulloutput &&
+ 	test_i18ngrep "has a good GPG signature" pulloutput
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature without verification' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git pull --ff-only bad 2>pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature with --no-verify-signatures' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	test_config pull.verifySignatures true &&
+ 	git pull --ff-only --no-verify-signatures bad 2>pullerror
+-- 
+2.15.1-558-ged696bbdd8
+
