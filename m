@@ -2,90 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0CD91F407
-	for <e@80x24.org>; Fri, 15 Dec 2017 16:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34F41F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 16:33:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932441AbdLOQFX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 11:05:23 -0500
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:56299 "EHLO
-        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932359AbdLOQFW (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 15 Dec 2017 11:05:22 -0500
-X-IronPort-AV: E=Sophos;i="5.45,405,1508796000"; 
-   d="scan'208";a="305677523"
-Received: from orange.lip.ens-lyon.fr ([140.77.14.54])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/AES128-GCM-SHA256; 15 Dec 2017 17:04:57 +0100
-From:   Matthieu Moy <Matthieu.Moy@univ-lyon1.fr>
-To:     ALBERTIN TIMOTHEE p1514771 <timothee.albertin@etu.univ-lyon1.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        BENSOUSSAN--BOHM DANIEL p1507430 
-        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
-        PAYRE NATHAN p1508475 <nathan.payre@etu.univ-lyon1.fr>
-Subject: Re: [PATCH v2] doc: add triangular workflow
-References: <1512034932-14499-1-git-send-email-timothee.albertin@etu.univ-lyon1.fr>
-        <9a0556ac403845f39a564bbc55df5b3a@BPMBX2013-01.univ-lyon1.fr>
-        <1547311095.1194033.1513263844281.JavaMail.zimbra@inria.fr>
-        <xmqqbmj1t4tp.fsf@gitster.mtv.corp.google.com>
-        <eca47dd3598045a1a3fac94f9df8e972@BPMBX2013-01.univ-lyon1.fr>
-Date:   Fri, 15 Dec 2017 17:04:57 +0100
-In-Reply-To: <eca47dd3598045a1a3fac94f9df8e972@BPMBX2013-01.univ-lyon1.fr>
-        (ALBERTIN TIMOTHEE's message of "Fri, 15 Dec 2017 15:46:47 +0000")
-Message-ID: <q7h9vah8kmdy.fsf@orange.lip.ens-lyon.fr>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1756733AbdLOQdZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 11:33:25 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53090 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756697AbdLOQdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 11:33:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DB04B2693;
+        Fri, 15 Dec 2017 11:33:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+yj4RZ78odilgLS+WsszOKxJtD8=; b=pLqEHe
+        HsMXXf5CUnA7q3r0i2YHwxq3XV0ZXeL/C6qqQZEnGLiWipAplbC2sp812sM06gAw
+        qfMAH1UY7VqLJqO8cqwPBgfNwrSNjkqjEdXaJiBSbmFGX0YXofWath8AcSZpYuvX
+        2rn5aanYSN7MszKg8FRTYgxEa3n2wYPBtK3JE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tJ5n6StlqV2v1k/eByWbzquEeirepsD4
+        DbS2Jd4Lw+JmgXJUwG7pCHmiK+ZAYVGCh4tROv5ON/lvUjjlW+a+DMGZUrBK0oHu
+        Ho3TZJ9QHJUNnRCo6usaMk8EsX6Moy1H9mTxIqETomrFp2Zj5e3ZB3QPacRS8zXz
+        jkqAvilqI7I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 827FCB2692;
+        Fri, 15 Dec 2017 11:33:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EE178B2691;
+        Fri, 15 Dec 2017 11:33:20 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josef Wolf <jw@raven.inka.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Need help migrating workflow from svn to git.
+References: <20171214130933.GA18542@raven.inka.de>
+Date:   Fri, 15 Dec 2017 08:33:19 -0800
+In-Reply-To: <20171214130933.GA18542@raven.inka.de> (Josef Wolf's message of
+        "Thu, 14 Dec 2017 14:09:33 +0100")
+Message-ID: <xmqqvah8q7cg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: A9A9F9BE-E1B5-11E7-87C1-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ALBERTIN TIMOTHEE p1514771 <timothee.albertin@etu.univ-lyon1.fr> writes:
+Josef Wolf <jw@raven.inka.de> writes:
 
->>>> +This workflow is commonly used on different platforms like BitBucket,
->>>> +GitHub or GitLab which provide a dedicated mechanism for requesting merges.
->>>
->>> As a user, I find it terribly frustrating when reading documentation
->>> telling me that "there's a dedicated mechanism" for something without
->>> telling me actually how to do it.
+> With git, by contrast, this won't work. Git will refuse to pull anything as
+> long as there are ANY local modifications. The cron job would need to
 >
->>Also I think the description is backwards from end-user's point of
->>view.  It's not that it is common to use the workflow on these
->>hosting sites.  It's more like people use the workflow and adopt use
->>of these hosting sites as one building block of the workflow.
+>    git stash
+>    git pull
+>    git stash pop
+
+I'd assume that this "pull" is expected to be fast-forward, as
+otherwise you have no way of dealing with conflicted merges.
+
+> But this will temporarily remove my local modifications. If I happen to do
+> a test run at this time, the test run would NOT contain the local
+> modifications which I was about to test. Even worse: if I happen to save
+> one of the modified files while the modifications are in the stash, the
+> "git stash pop" will definitely cause a conflict, although nothing really
+> changed.
 >
-> I'm wondering if this sentence is really useful. It's not essential
-> and it will take lot of time and space to talk about it properly.
-> So, if you agree, we'll erase it.
+> So, how would I get this workflow with git? Is it possible to emulate the
+> behavior of "svn update"?
 
-I think it is useful. My guess is that most people don't know the
-wording "triangular workflow", but most people know about GitHub for
-example. See e.g.
-https://trends.google.com/trends/explore?q=%22triangular%20workflow%22,github,gitlab,bitbucket
+You do not mind a temporary inconsistency while "svn update" runs
+(it starts to update a file you may have local changes, but your
+test may run while the update is in the middle of it).  So perhaps
+something along the lines of this would help.  Assuming
 
-So the hope here is that the reader reading this feels "Ah, OK, this is
-about how to do pull-requests on GitHub". OTOH, I wouldn't like a Git
-official documentation to be biaised towards a single hosting site.
+    <remote> <branch>: the branch at the remote you are pulling from
+    <master>: whatever branch you are using
 
-> In the case of a triangular workflow, if the project already exists,
-> PUBLISH will already exist too.
+are in your three-command example above:
 
-No.
+    $ git fetch <remote> <branch>
+    $ git checkout -m -B <master> FETCH_HEAD
 
-If the project already exists, then UPSTREAM exists, and the contributor
-will create his or her own PUBLISH. There's generally two ways to do it:
+should give you pretty-much identical result as
 
-* On platforms supporting this, use the platform's mechanism to create a
-  fork (e.g. fork button on GitHub/GitLab's web UI).
+    $ git stash && git pull --ff-only && git stash pop
 
-* One can create an empty PUBLISH, clone UPSTREAM, and push to PUBLISH.
-
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+including a possible merge conflicts at 'git stash pop' stage.
