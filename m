@@ -7,180 +7,91 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD8A61F404
-	for <e@80x24.org>; Thu, 14 Dec 2017 23:51:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4BA1F404
+	for <e@80x24.org>; Fri, 15 Dec 2017 01:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754296AbdLNXvJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 18:51:09 -0500
-Received: from mail-ua0-f181.google.com ([209.85.217.181]:38959 "EHLO
-        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754246AbdLNXvI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 18:51:08 -0500
-Received: by mail-ua0-f181.google.com with SMTP id i20so5107686uak.6
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 15:51:08 -0800 (PST)
+        id S1754542AbdLOBSH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 20:18:07 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:39751 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754580AbdLOBRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 20:17:45 -0500
+Received: by mail-wm0-f54.google.com with SMTP id i11so14660015wmf.4
+        for <git@vger.kernel.org>; Thu, 14 Dec 2017 17:17:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9f0+4/8q/WKBivaVk4psKDxNi66qBhN9dhs7p+JibLk=;
-        b=beRhYG3FYQRCtrkoeB8vDST3/blmaaFrCBMMXlq/k37q5bT8fZ+MlVsnV5cKI4FiAO
-         Soe6j3JJKbw0fHOmi3aXNisvQL9Xk4WoVnEDE09+ymOrWRqqspWrW06HfIEpCbi1RoOZ
-         zwGpw3alnXXzBEaK+Jo92QYEiBFPDf+8G1EjtSIIsAbgE9usDffqbIz+hSFsx1C/6N/q
-         AYxIVLHLcmAd6NyMcNFANBcFvQhLm/P5qKfjS4+S4mB9uQ8AcVvD26QA1TPFBznckTZa
-         9bJJeen0ZybX+vk1jbp6XfRxK1yzy3ULH8GwUGQvy9wM5mLpjVLeZJ0PzY4zwdE8guv8
-         El/g==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rG7ERJu4auVGLYc/s4P/7ydasACgz8n2zzE0lG1xr+Y=;
+        b=j6nkq0PYnjksw8uxAu1F2Nr1hGGW8wY6O82lt1zSx8umPvIpTwhlfMLuxn6rlkBmeJ
+         7U250i8YkpTGSN7GlOmfiYcBiFlruk4jbcaQElPpBA8HlztG8xxf0/MwxhrfOIqoK7oE
+         4KC1l4W19kJyEBrQsYMeg0aw++NcfRm4ckyesX3MW8JyNCj+shB7/dUxVdeZ+s6eypCg
+         y9I2EKKx0nUhG2qUSpgdQ7XS4bQ94ea1MC2sOPi/h/XdzoRrFOUNxMVopSH6xGb/0IaY
+         Xb06gkeaOtx4hbgzd/9aj+7bmcUNLmTbnMz9/2Sku0PNFUFJbD6+1XXrM3UibjJBjex5
+         0sTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9f0+4/8q/WKBivaVk4psKDxNi66qBhN9dhs7p+JibLk=;
-        b=nL7eO/tPX8exXydojMfe3qAn6h1bkYmglOLSUCOMBjdNuJ3yPJ3lKTOi4paE91Tkeb
-         seo7/t3/YYsmPsPzOIp4zH6tN/dd7Ya4R82Xz4u2G8nuwBsRSCUlflNHGnvium3pc+th
-         wlXtwOjgVS0Y08Mqm8a2Jd5hmxo56mqPDZw2AWPfLvtXLM/MtUJz/+g5excWmHliY/7P
-         xHN1LXAG8u9rVdAg9vLCilw5x5gKvaPPhGre0/6/yQY7wm5asIqwBD6uysJUKrCiHMqw
-         OB//525uNLxrJ3r3be0WlvjMIUIS+wZ9bWbaWQ6b5NJEp0KBS054gK9IpebL1hbCZmm0
-         WPdA==
-X-Gm-Message-State: AKGB3mJBBVM0T1qt17vpPoeJkGG+8r3CpA8yZRIHhnqI82pSdTNdvI0E
-        CL2ioOihWGmMSjbZsuIFX2uwDGRjGCHgcO3gCug=
-X-Google-Smtp-Source: ACJfBou/7vo1xT2EFo4uui1KijTfSmwHiyRtjlNdxoAN7xDy9+AV3VRLEqy5/5P3gKW6vfXh2Y3BlzZ3+HRjfIQjsm4=
-X-Received: by 10.176.29.147 with SMTP id l19mr12706315uak.37.1513295467450;
- Thu, 14 Dec 2017 15:51:07 -0800 (PST)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rG7ERJu4auVGLYc/s4P/7ydasACgz8n2zzE0lG1xr+Y=;
+        b=rgdgWkEa5tZwOsiMJFGTVLc04WnrdsuN6z0CsqTLZNdrJodFQ9rC6SJmpAkh9R6B4P
+         zFjklRwsEv8BbX2+thNmMvACQAbjH9wsVyDL2R1C25Gc6tU0cJBe7sJ+DK6zDDDfE284
+         GyA22Sn+FEOpoI+cPl50qZ8XHafsqRh1X5o8uKRvyciElJG/sXyjAo5GVz5NEcekFU1K
+         Q3fyrjFS1oklc6d8N1TRDoeRC20CVaTT4ZVxPmxh/datCAjobPGz0TUhsvhrzXKiFHzs
+         VcsyOHoXLI0W4lbZu8UVaB5kJ3u/h4ybbyy1qcrFVowseww5zJEhTxnC+vL+T7UTtDST
+         g58w==
+X-Gm-Message-State: AKGB3mLnpvlKe4YHqPdYkRxC0DVL+fcB4g6s6RKY2YXoaYv7MhjLaL1h
+        WG+NqY3Fdwiw1RWdSDGoRUsbYFNI
+X-Google-Smtp-Source: ACJfBoubF39Q0q7ObW2oxvMWiQWjBSDjwJMxxwZmIsOnBHtu7AWkpU7itC/0Upon0Z+jR/EQnvfoeQ==
+X-Received: by 10.28.61.135 with SMTP id k129mr3527398wma.81.1513300664412;
+        Thu, 14 Dec 2017 17:17:44 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id 127sm8981586wmk.14.2017.12.14.17.17.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 14 Dec 2017 17:17:43 -0800 (PST)
+Subject: Re: Need help migrating workflow from svn to git.
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     Josef Wolf <jw@raven.inka.de>
+Cc:     git@vger.kernel.org
+References: <20171214130933.GA18542@raven.inka.de>
+ <5eb3fe18-864d-0b04-223e-d9e5cbf2c81e@gmail.com>
+Message-ID: <b25a828f-3f0a-7c0e-6722-9521238ce7f3@gmail.com>
+Date:   Fri, 15 Dec 2017 02:17:40 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Received: by 10.176.73.240 with HTTP; Thu, 14 Dec 2017 15:51:07 -0800 (PST)
-In-Reply-To: <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com>
-References: <20171101115535.15074-1-szeder.dev@gmail.com> <20171211233446.10596-1-szeder.dev@gmail.com>
- <20171211233446.10596-2-szeder.dev@gmail.com> <9AAC2BCC-AA06-46F9-8E6E-1D99CD959FDD@gmail.com>
- <CAM0VKjkVw8QeDErDg9aXcQ1sAgY34eBEeA0QJGamvEEBOG8y9w@mail.gmail.com> <77E6AE23-44FF-42E0-94FF-C4B35D913D5B@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 15 Dec 2017 00:51:07 +0100
-Message-ID: <CAM0VKjkv0XqHf8s94Wj2DHsD49gTP0M6HU2AY=36Jj-5SYhS9A@mail.gmail.com>
-Subject: Re: [PATCH 1/4] travis-ci: use 'set -x' in 'ci/*' scripts for extra
- tracing output
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <5eb3fe18-864d-0b04-223e-d9e5cbf2c81e@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 14, 2017 at 12:10 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
->> On 12 Dec 2017, at 19:43, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote=
-:
->>
->> On Tue, Dec 12, 2017 at 7:00 PM, Lars Schneider
->> <larsxschneider@gmail.com> wrote:
->>>
->>>> On 12 Dec 2017, at 00:34, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
-te:
->>>>
->>>> While the build logic was embedded in our '.travis.yml', Travis CI
->>>> used to produce a nice trace log including all commands executed in
->>>> those embedded scriptlets.  Since 657343a60 (travis-ci: move Travis CI
->>>> code into dedicated scripts, 2017-09-10), however, we only see the
->>>> name of the dedicated scripts, but not what those scripts are actually
->>>> doing, resulting in a less useful trace log.  A patch later in this
->>>> series will move setting environment variables from '.travis.yml' to
->>>> the 'ci/*' scripts, so not even those will be included in the trace
->>>> log.
->>>>
->>>> Use 'set -x' in 'ci/lib-travisci.sh', which is sourced in most other
->>>> 'ci/*' scripts, so we get trace log about the commands executed in all
->>>> of those scripts.
->>>
->>> I kind of did that intentionally to avoid clutter in the logs.
->>> However, I also agree with your reasoning. Therefore, the change
->>> looks good to me!
->>
->> Great, 'cause I'm starting to have second thoughts about this change :)
->>
->> It sure helped a lot while I worked on this patch series and a couple of
->> other Travis CI related patches (will submit them later)...  OTOH it
->> definitely creates clutter in the trace log.  The worst offender might
->> be 'ci/print-test-failures.sh', which iterates over all
->> 't/test-results/*.exit' files to find which tests failed and to show
->> their output, and 'set -x' makes every iteration visible.  And we have
->> about 800 tests, which means 800 iterations.  Yuck.
->>
->> Perhaps we should use other means to show what's going on instead, e.g.
->> use more 'echo's and '--verbose' options, or just avoid using '--quiet'.
->> And if some brave souls really want to tweak '.travis.yml' or the 'ci/*'
->> scripts, then they can set 'set -x' for themselves during development...
->> as the patch below shows it's easy enough, just a single character :)
->
-> Hm... in that case. Would it be an option to "set -x" only in the header
-> of "install-dependencies.sh"?
->
-> In "lib-travisci.sh" we could keep your "set -x" and execute
-> "set +x" at the end of the file. Wouldn't that give us the
-> interesting traces without much clutter (e.g. what is $PATH etc)?
+On 14/12/2017 23:27, Igor Djordjevic wrote:
+> 
+> As you basically have a flow where two users (you and cron job) can 
+> edit same files at the same time, desired outcome might be a bit 
+> ambiguous, especially when scheduled execution of those files is 
+> added to the mix.
 
-Hmm, that's an idea worth considering.
+This said, and without having you to change your habits too much (nor 
+use Git in possibly awkward ways), I`m thinking you may actually 
+benefit of using `git worktree add <temp_copy_path>`[1] to create a 
+temporary working tree ("working copy", as you say), alongside a 
+temporary branch, where you could hack and test as much as you want, 
+unaffected by cron job updating and executing the original working 
+copy/branch (also not stepping on cron job`s toes yourself).
 
-Scripts like 'run-build.sh', 'run-tests.sh' and 'run-static-analysis.sh'
-do basically nothing more than run make with different targets, so on
-one hand 'set -x' doesn't cause any clutter in the trace log, on the
-other hand there is no benefit from it either.
-'run-linux32-docker.sh' runs docker (the command) twice, so it's
-basically in the same boat.
+Once you`re satisfied and you commit/merge/push your changes from 
+within the temporary working copy/branch, you can just delete it 
+(both temporary working copy and its branch), and you`re good :)
 
-I think both 'lib-travisci.sh' and 'install-dependencies.sh' benefit
-from 'set -x'.
-So does 'test-documentation.sh': it executes about 15 commands, among
-them a bunch of 'test -s <file>' which fail quietly.  With 'set -x' we
-would see the last executed command and know that that's the one that
-failed.
+p.s. Even if you`re not familiar with Git branching and merging, it 
+shouldn`t take too much effort to wrap your head around it, and it`s 
+definitely worth it - and actually pretty easy, even more if you`re 
+working alone.
 
-As mentioned above, 'print-test-failures.sh' definitely suffers from
-'set -x'.
-
-There is a lot going on in 'run-windows-build.sh', so the output of 'set
--x' might be useful or might be considered too much clutter, I don't
-know.  I put Dscho on Cc, I think it's mainly his call.
-
-So it seems that there are more scripts that would benefit from tracing
-executed command using 'set -x' than scripts that would suffer because
-of it, and it doesn't matter for the rest.  This means we could issue a
-'set -x' in 'lib-travisci.sh' and disable it only in
-'print-test-failures.sh'.
-
-There is one thing that triggers my OCD: whenever we echo something, it
-ends up being duplicated in the trace log, e.g.:
-
-  + echo foo bar baz
-  foo bar baz
-
-We could workaround it by writing 'echo "<msg>" >/dev/null', but it
-feels hackish and I'm not sure it's worth it.
-
-
-G=C3=A1bor
-
->>>> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->>>> ---
->>>> ci/lib-travisci.sh | 2 +-
->>>> 1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
->>>> index ac05f1f46..a0c8ae03f 100755
->>>> --- a/ci/lib-travisci.sh
->>>> +++ b/ci/lib-travisci.sh
->>>> @@ -23,7 +23,7 @@ skip_branch_tip_with_tag () {
->>>>
->>>> # Set 'exit on error' for all CI scripts to let the caller know that
->>>> # something went wrong
->>>> -set -e
->>>> +set -ex
->>>>
->>>> skip_branch_tip_with_tag
->>>>
->>>> --
->>>> 2.15.1.421.gc469ca1de
->>>>
->>>
->
+[1] https://git-scm.com/docs/git-worktree
