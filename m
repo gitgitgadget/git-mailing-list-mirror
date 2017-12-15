@@ -2,96 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4BA1F404
-	for <e@80x24.org>; Fri, 15 Dec 2017 01:18:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C1D91F404
+	for <e@80x24.org>; Fri, 15 Dec 2017 02:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754542AbdLOBSH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Dec 2017 20:18:07 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:39751 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754580AbdLOBRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Dec 2017 20:17:45 -0500
-Received: by mail-wm0-f54.google.com with SMTP id i11so14660015wmf.4
-        for <git@vger.kernel.org>; Thu, 14 Dec 2017 17:17:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rG7ERJu4auVGLYc/s4P/7ydasACgz8n2zzE0lG1xr+Y=;
-        b=j6nkq0PYnjksw8uxAu1F2Nr1hGGW8wY6O82lt1zSx8umPvIpTwhlfMLuxn6rlkBmeJ
-         7U250i8YkpTGSN7GlOmfiYcBiFlruk4jbcaQElPpBA8HlztG8xxf0/MwxhrfOIqoK7oE
-         4KC1l4W19kJyEBrQsYMeg0aw++NcfRm4ckyesX3MW8JyNCj+shB7/dUxVdeZ+s6eypCg
-         y9I2EKKx0nUhG2qUSpgdQ7XS4bQ94ea1MC2sOPi/h/XdzoRrFOUNxMVopSH6xGb/0IaY
-         Xb06gkeaOtx4hbgzd/9aj+7bmcUNLmTbnMz9/2Sku0PNFUFJbD6+1XXrM3UibjJBjex5
-         0sTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rG7ERJu4auVGLYc/s4P/7ydasACgz8n2zzE0lG1xr+Y=;
-        b=rgdgWkEa5tZwOsiMJFGTVLc04WnrdsuN6z0CsqTLZNdrJodFQ9rC6SJmpAkh9R6B4P
-         zFjklRwsEv8BbX2+thNmMvACQAbjH9wsVyDL2R1C25Gc6tU0cJBe7sJ+DK6zDDDfE284
-         GyA22Sn+FEOpoI+cPl50qZ8XHafsqRh1X5o8uKRvyciElJG/sXyjAo5GVz5NEcekFU1K
-         Q3fyrjFS1oklc6d8N1TRDoeRC20CVaTT4ZVxPmxh/datCAjobPGz0TUhsvhrzXKiFHzs
-         VcsyOHoXLI0W4lbZu8UVaB5kJ3u/h4ybbyy1qcrFVowseww5zJEhTxnC+vL+T7UTtDST
-         g58w==
-X-Gm-Message-State: AKGB3mLnpvlKe4YHqPdYkRxC0DVL+fcB4g6s6RKY2YXoaYv7MhjLaL1h
-        WG+NqY3Fdwiw1RWdSDGoRUsbYFNI
-X-Google-Smtp-Source: ACJfBoubF39Q0q7ObW2oxvMWiQWjBSDjwJMxxwZmIsOnBHtu7AWkpU7itC/0Upon0Z+jR/EQnvfoeQ==
-X-Received: by 10.28.61.135 with SMTP id k129mr3527398wma.81.1513300664412;
-        Thu, 14 Dec 2017 17:17:44 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id 127sm8981586wmk.14.2017.12.14.17.17.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Dec 2017 17:17:43 -0800 (PST)
-Subject: Re: Need help migrating workflow from svn to git.
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-To:     Josef Wolf <jw@raven.inka.de>
-Cc:     git@vger.kernel.org
-References: <20171214130933.GA18542@raven.inka.de>
- <5eb3fe18-864d-0b04-223e-d9e5cbf2c81e@gmail.com>
-Message-ID: <b25a828f-3f0a-7c0e-6722-9521238ce7f3@gmail.com>
-Date:   Fri, 15 Dec 2017 02:17:40 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1754729AbdLOCS6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Dec 2017 21:18:58 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53645 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754594AbdLOCS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Dec 2017 21:18:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 476D5CCF55;
+        Thu, 14 Dec 2017 21:18:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+OsQ8dsygcu510M/X24E4j5PYpM=; b=Y0Zv23
+        OZaqWAu0MuceLyi2wXPXn08p8h3BK3DZVCSpo3KXlT/5koinwpe2dlfPx6a1nXFC
+        soOSI9PoGXUZH5cZKL9EgkU1og27XNmoVj7kNUAlnnRaLzrr4OHLpEtBc2IdvWAq
+        KCmEORUD7bVTONmRtoZuaT6J4wk+kHOohoh6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NWiOGe42Yu7D4dfw5g78nRbp3ME622n1
+        bSaVyS71wz2QQEiHduQn3dYE6kxScFC0RNIP5j/GBwi/VHzb1fdbkZfkxucJ+Nz1
+        NxU9s2QnfzKmJMVsL74GkgmV8jKlYGxxHP8y7qPI9PCkVSUKjIbrJ6w6lR3c0I16
+        rD9YIAzrpVs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F8D7CCF54;
+        Thu, 14 Dec 2017 21:18:57 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B5016CCF53;
+        Thu, 14 Dec 2017 21:18:56 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
+        <20171212012422.123332-1-sbeller@google.com>
+        <20171214212234.GC32842@aiede.mtv.corp.google.com>
+        <CAGZ79kZdUuoM79n09ziG0F7WCWNLpZ2AiFA6fb_qgND1b3_F9A@mail.gmail.com>
+        <20171214225200.GA44616@aiede.mtv.corp.google.com>
+Date:   Thu, 14 Dec 2017 18:18:55 -0800
+In-Reply-To: <20171214225200.GA44616@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Thu, 14 Dec 2017 14:52:00 -0800")
+Message-ID: <xmqq374cspgw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <5eb3fe18-864d-0b04-223e-d9e5cbf2c81e@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4DCC4948-E13E-11E7-89EB-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/12/2017 23:27, Igor Djordjevic wrote:
-> 
-> As you basically have a flow where two users (you and cron job) can 
-> edit same files at the same time, desired outcome might be a bit 
-> ambiguous, especially when scheduled execution of those files is 
-> added to the mix.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-This said, and without having you to change your habits too much (nor 
-use Git in possibly awkward ways), I`m thinking you may actually 
-benefit of using `git worktree add <temp_copy_path>`[1] to create a 
-temporary working tree ("working copy", as you say), alongside a 
-temporary branch, where you could hack and test as much as you want, 
-unaffected by cron job updating and executing the original working 
-copy/branch (also not stepping on cron job`s toes yourself).
+>> Regarding finding a better name, I would want to hear from others,
+>> I am happy with --find-object, though I can see --pickaxe-object
+>> or --object--filter to be a good narrative as well.
+>
+> Drat, I was hoping for an opinion.
 
-Once you`re satisfied and you commit/merge/push your changes from 
-within the temporary working copy/branch, you can just delete it 
-(both temporary working copy and its branch), and you`re good :)
+I think it would make it a better companion to --pickaxe but we need
+to align its behaviour a little bit so that it plays better with the
+"--pickaxe-all" option, and also needs to hide mode and name only
+changes just like pickaxe.  
 
-p.s. Even if you`re not familiar with Git branching and merging, it 
-shouldn`t take too much effort to wrap your head around it, and it`s 
-definitely worth it - and actually pretty easy, even more if you`re 
-working alone.
-
-[1] https://git-scm.com/docs/git-worktree
+After all, the diffcore-blobfind code was written while looking at
+the diffcore-pickaxe's code in another window shown in the pager,
+and I tend to agree with your earlier message that this is an
+extreme case of -S<contents> where the contents happens to be the
+whole file.
