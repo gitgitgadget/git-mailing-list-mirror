@@ -2,189 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,URI_HEX
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B97C31F407
-	for <e@80x24.org>; Fri, 15 Dec 2017 15:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 326F41F407
+	for <e@80x24.org>; Fri, 15 Dec 2017 15:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932260AbdLOPSr convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 15 Dec 2017 10:18:47 -0500
-Received: from cisrsmtp.univ-lyon1.fr ([134.214.188.146]:52539 "EHLO
-        cisrsmtp.univ-lyon1.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932250AbdLOPSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 10:18:44 -0500
-Received: from localhost (localhost [127.0.0.1])
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTP id 07A60A0181;
-        Fri, 15 Dec 2017 16:18:43 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at cisrsmtp.univ-lyon1.fr
-Received: from cisrsmtp.univ-lyon1.fr ([127.0.0.1])
-        by localhost (cisrsmtp.univ-lyon1.fr [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 4FbFnriqNItE; Fri, 15 Dec 2017 16:18:42 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (bembx2013-01.univ-lyon1.fr [134.214.201.247])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cisrsmtp.univ-lyon1.fr (Postfix) with ESMTPS id 45AA4A015B;
-        Fri, 15 Dec 2017 16:18:42 +0100 (CET)
-Received: from BEMBX2013-01.univ-lyon1.fr (134.214.201.247) by
- BEMBX2013-01.univ-lyon1.fr (134.214.201.247) with Microsoft SMTP Server (TLS)
- id 15.0.1263.5; Fri, 15 Dec 2017 16:18:41 +0100
-Received: from BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd]) by
- BEMBX2013-01.univ-lyon1.fr ([fe80::b1ea:14ef:61b9:d4cd%15]) with mapi id
- 15.00.1263.000; Fri, 15 Dec 2017 16:18:41 +0100
-From:   ALBERTIN TIMOTHEE p1514771 <timothee.albertin@etu.univ-lyon1.fr>
-To:     MOY MATTHIEU <matthieu.moy@univ-lyon1.fr>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jordan DE GEA <jordan.de-gea@grenoble-inp.org>,
-        "PAYRE NATHAN p1508475" <nathan.payre@etu.univ-lyon1.fr>,
-        "BENSOUSSAN--BOHM DANIEL p1507430" 
-        <daniel.bensoussan--bohm@etu.univ-lyon1.fr>
-Subject: RE: [PATCH v2] doc: add triangular workflow
-Thread-Topic: [PATCH v2] doc: add triangular workflow
-Thread-Index: AQHTdOzJb7DwFrQEtUaHSO/jj67o3KNEhgCG
-Date:   Fri, 15 Dec 2017 15:18:41 +0000
-Message-ID: <1513354712419.77557@etu.univ-lyon1.fr>
-References: <1512034932-14499-1-git-send-email-timothee.albertin@etu.univ-lyon1.fr>
- <9a0556ac403845f39a564bbc55df5b3a@BPMBX2013-01.univ-lyon1.fr>,<1547311095.1194033.1513263844281.JavaMail.zimbra@inria.fr>
-In-Reply-To: <1547311095.1194033.1513263844281.JavaMail.zimbra@inria.fr>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [134.214.126.172]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S932183AbdLOP3k (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 10:29:40 -0500
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:42140 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932072AbdLOP3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 10:29:39 -0500
+Received: by mail-pg0-f51.google.com with SMTP id e14so5998157pgr.9
+        for <git@vger.kernel.org>; Fri, 15 Dec 2017 07:29:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=S/Yj1jgVc/03zM/WUgzZ9huSCJ+LE1av47fv+7BoOfw=;
+        b=TQbdrG5hrbkG6Q6KkBlkCpqaVeGU2r4ggEj8goUq24+PU2bflM5rcAaYN/A38lm3TT
+         RmvVWR7se4mUWPwi89VOkn6L9ypEcW/togn9gkjPnvfpOmPVSLmyVQhSoFgj2rK8R5qO
+         nsrbbqg8Fz9dqtihOCxV0spQx1Wz6VyKLQFdqd9PWu7swvSk+m7JR50Bli9labaz6tvc
+         2L+1/TtLpjjiPPU8rw9mDlIju9M3I00pShc0c9VibtT9Z0T6bHlOnv227t/+PkrH1CyW
+         5Nx7jSfMTBZbA9l44r0a4e4VFGW6xJ/xrienNlrsfzgytwZxVO5DUSPNkJ4QQp5oQX9H
+         KRCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=S/Yj1jgVc/03zM/WUgzZ9huSCJ+LE1av47fv+7BoOfw=;
+        b=uND7K6moxLgZxvyVmy5dJ+eLQGdZDm9VIkinJlhmkuyBPE5CYW8LHY3GrzbW+Bnmvy
+         fGHatJ6rHbm/UlXK+geJbVOEDOCL74/QVZtDD3wf+MkfJb+hm8dLRDZAv2xq1+nGaLK4
+         EfH235bGCP0x9UAJuuRZWzhnIKudhm8R4bWyCg0KPNxYfxpt0u0jRWyJ1XUfV9NpHK97
+         V7Kkl9VhS+lQws7PqARrvqzflz8wigUnV6sghg76/v+3p2G/7TJ2W7rkAiXWePslEEDk
+         1sU9CMj+mOaugAYUp0WUGgATHKrQLDYGxVIfkF5bZ5USxeLRh151SFAwhQ1qZilvnCKj
+         EUcw==
+X-Gm-Message-State: AKGB3mKBZpAQWWCDgFzmJ54gymuP4OczGUbQfm/zTf1dFf7lSqBUai1R
+        JJxj3YGxlFl9ujece4PqVbAIDrDN
+X-Google-Smtp-Source: ACJfBovw2ETJzSiAx2Q+6Jhu/P1aetHEbNmlZQpp5DF0MIdfTyaCR0cBl+Kg/CQqq8q/N1qBIaS5Rg==
+X-Received: by 10.99.185.28 with SMTP id z28mr12739732pge.212.1513351778382;
+        Fri, 15 Dec 2017 07:29:38 -0800 (PST)
+Received: from [10.4.2.238] ([14.102.72.147])
+        by smtp.gmail.com with ESMTPSA id z63sm14408351pfd.71.2017.12.15.07.29.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 15 Dec 2017 07:29:37 -0800 (PST)
+Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
+ <1513255038.6351.2.camel@gmail.com>
+ <xmqqk1xpusyh.fsf@gitster.mtv.corp.google.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <fc2d03d1-ad76-21ae-2880-8a74644b8b80@gmail.com>
+Date:   Fri, 15 Dec 2017 20:59:32 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqk1xpusyh.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thursday 14 December 2017 10:50 PM, Junio C Hamano wrote:
+> Kaartic Sivaraam <kaartic.sivaraam@gmail.com> writes:
+> 
+>> It seems my series that fixes an error message in 'git-rebase'[1]
+>> (apart from a little cleanups) is missing. I guess I addressed the
+>> issue that was raised in 3/3 as a v3 for that patch[2]. Are any more
+>> changes needed?
+>>
+>> [1]: <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
+>> [2]: <20171201060935.19749-1-kaartic.sivaraam@gmail.com>
+> 
+> I think you only sent 3/3 in newer rounds, which made it not to
+> apply to my tree.  
 
->> +
->> +........................................
->> +------------------               -----------------
->> +| UPSTREAM       |  maintainer   | PUBLISH       |
->> +|                |- - - - - - - -|               |
->> +------------------      <-       -----------------
->> +              \                     /
->> +               \                   /
->> +        fetch | \                 / ^ push
->> +              v  \               /  |
->> +                  \             /
->> +                   -------------
->> +                   |   LOCAL   |
->> +                   -------------
-
->This kind of diagram deserves a bit of text to explain the situation.
->For example, LOCAL is local only for the contributor (the maintainer
->doesn't need to know about it for example). I'd add a sentence to
->explain that this gives the overall view on the flow, from the point
->of view of a contributor.
-
-Ok, we'll do that
-
->> +* `git push`
-
->This will push to UPSTREAM, right?
-
-Yes, we will specify it.
-
->> +Adding **UPSTREAM** remote:
->> +
->> +===================================
->> +`git remote add upstream <UPSTREAM_url>`
->> +===================================
-
->In which circumstance shall one write this? If you don't say it, the
->reader will probably assume that this is to be done after the commands
->you specified right above. But then: it doesn't make sense. You've
->just cloned from UPSTREAM, you already have the UPSTREAM remote.
-
-Indeed, we just remove it.
-
->> +For each branch requiring a triangular workflow, set
->> +`branch.<branch>.remote` and `branch.<branch>.pushRemote` to set up
->> +the **UPSTREAM** and **PUBLISH** repositories.
-
->This neither tells me how to set the variables, nor what the effect
->will be ("set up"?).
-
-We'll fix that in the next patch.
-
->> +Example with master as <branch>:
->> +===================================
->> +* `git config branch.master.remote upstream`
->> +* `git config branch.master.pushRemote origin`
->> +===================================
-
->origin is the remote you've cloned from. From the text above, I guess
->you meant it to point to PUBLISH. But all the examples "git clone" you
->gave are from UPSTREAM.
-
->You're mixing the case where one "git clone"s from UPSTREAM and "git
->remode add"s PUBLISH, and the converse. Both are possible, but the
->"origin" remote will be different depending on which one you chose.
-
-I think I don't really get it. IMHO UPSTREAM is name from the repository
-you pull from and PUBLISH from the repositiry you push to.
-
->> +Making your work available
->> +~~~~~~~~~~~~~~~~~~~~~~~~~~
->> +
->> +The `git push` command sends commits to the **PUBLISH** repository and not to
->> +the **UPSTREAM** thanks to the configuration you did earlier with the
->> +`git config remote.pushdefault origin` command.
-
->This explanation should be next to the place where you recommend
->setting remote.pushdefault.
-
-Done.
-
->> +When a contributor pushes something, the `git config push.default
->> +current` command can be used to specify that the name of the
->> +**PUBLISH** branch is the same as the name of the **LOCAL** one.
-
->I already said it multiple times, but I don't think it's a good idea
->to recommend changing push.default. The default, "simple", was
->specifically designed to be appropriate for triangular workflow:
-
-  >http://git.661346.n2.nabble.com/PATCH-0-6-push-default-in-the-triangular-world-td7589907.html
-  >(PATCH 3/6 in particular)
-
->You may disagree with me, but then please explain your motivation (by
->replying to my messages and/or by explaining the rationale in the
->commit message).
-
-I read this discussion and so I understand the point here. I agree we
-shouldn't recommend this.
-
->> +=================================
->> +`git rev-parse --abbrev-ref @{push}`
->> +=================================
->> +
->> +.Display the fetch remote's name:
->> +[caption="Recipe: "]
->> +
->> +===================================
->> +`git rev-parse --abbrev-ref @{upstream}`
->> +===================================
-
->I don't think "rev-parse" is the best example to give.
-
->I use @{upstream} all the time to see what commits I have which aren't
->in upstream yet:
-
-  >git log @{upstream}..
-
-git log seems a better exemple.
-
-We are ok we the rest of the review
+That's surprising, let me check.
 
 
-Thank you for your time
+> If you meant to drop changes in 1/3 and 2/3,
+> perhaps because they were needless churn, then 3/3 needs to be
+> updated not to depend on the changes these two made.
+> 
 
-Timothée Albertin
+2/3 is for sure not needless. But 1/3 might be. Though I think it 
+improves the communicativity of the variable name. In case you think 
+it's completely useless, then I can drop it as we won't lose much anyway ??
+
+
+---
+Kaartic
