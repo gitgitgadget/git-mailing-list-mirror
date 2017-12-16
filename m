@@ -2,133 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3F041F406
-	for <e@80x24.org>; Sat, 16 Dec 2017 22:02:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4E81F406
+	for <e@80x24.org>; Sat, 16 Dec 2017 22:49:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756904AbdLPWBa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Dec 2017 17:01:30 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56658 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756877AbdLPWB2 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 Dec 2017 17:01:28 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C915A6045C;
-        Sat, 16 Dec 2017 22:01:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1513461687;
-        bh=+s9vDxebyrveHcQ/D+R4Z1GpV1arBbAlVfpAq8N61xs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=eNsl7xUQpHjVBoRrJVmnuNZK+hQEe+YomybDpGv3kY7i5BdmGJqAChHuneGSBEgSZ
-         2wuc6q2Ylk/MszQkTdFxVuHUJBJJnjT+mvLpnfO0wgYIs4DMiN+4omD87ph1BnI269
-         4ZqYX3AaSQITCIgiGfj91utTbdHBrdydnb09Sp5C/5RfBZjUtKgF2OziM3wRRj3oxr
-         xBR0o9g1y6lNsrDkk7S1jSFTe4N8Uyzin7bNIhUkh8XZFVGWtcT+J58FPy3fsOFhIz
-         YIGvI/s6YHQQEEPTGA4ZcI0JWlGw6qi+6AkgbpC6glAg3VtQh+R2hZP/kXqRomkgh8
-         ONQ1+CMXVsi56AYvLxnPpqQ8vDb7eK+S3zK1g5jUC2pnJ6AHcBRIO85jPipQfidyWd
-         1MF79vuskutzecvbvtIJzPfhne6Zd8Ps9GiPEDh/ePU9gxhN/nRUs7B2kv+T/fi7wa
-         4oAVDiqU+j5sXY+HJacvFh/qmuKM7nbdCzSi1k2+WKHOBzbeQYh
-Date:   Sat, 16 Dec 2017 22:01:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Yaroslav Halchenko <yoh@onerussian.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
-        Jeff King <peff@peff.net>
-Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global"
- or just a bug?
-Message-ID: <20171216220120.GB6217@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Yaroslav Halchenko <yoh@onerussian.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
-        Jeff King <peff@peff.net>
-References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
- <20171211225615.GC214273@aiede.mtv.corp.google.com>
- <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+        id S1756826AbdLPWtD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Dec 2017 17:49:03 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:36451 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756532AbdLPWtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Dec 2017 17:49:02 -0500
+Received: by mail-wm0-f52.google.com with SMTP id b76so23551086wmg.1
+        for <git@vger.kernel.org>; Sat, 16 Dec 2017 14:49:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=DGtt2iAD7J4rFKWsxjyEQtUWRxD4PNyQVTRriLF8enU=;
+        b=hYxXkKeugAdAFYcc+cT/fVoh/c4nCLjF2AJKM0TkJ7F24uDCSB4EnPalT5xkgULW9D
+         aRmr3xC0iicBjnE/Pq60ljaTsOfxm+HayNwiPm7xqZ+LqhVrpVde8O294zlHHLqkI/g2
+         oEZTOVyf63Z7x5iLWn7pLvXG7olb+efenWNPSqiM7BYThY55fblC9rrIqiZIVwoLlgmC
+         K/CIVnv1C+sUxBdg1NDXjcoCY/CD5Mrplwtfcww9bJEgP9EGTFyDee03VuPq9kINxSFN
+         lSiuTK2435f8oGqtrKpOas3f/NprzFaGYlgk+Yg8mi/j5IdKPRM4wArLc4eX7m91udmh
+         HBbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=DGtt2iAD7J4rFKWsxjyEQtUWRxD4PNyQVTRriLF8enU=;
+        b=d6+mL0X606/zkwirDhTAFE5hAhYNDYO4PNsDg0n5NK3GeXAd2XzKh4Ph4Gn+ll6OSc
+         0mt6cRwTs0XGDHsRoD8ggN0ys2FODM/AKojXgYmRPmvYyp9RYbHEKlN5t6OBb1Ht/f7u
+         luPMCuywF6x2s9/n/D3F6YUAa9yeCrDUecd3w4KxtJkzNypPM8xnwJR+YbSipp0WE+Nk
+         hFlYcjgUCEEHt77/zIkP389HCgma5NdNYjtxIUpEXJEaOpyfMhkiRTREmZe3qHSzUwLw
+         yayDj7dHEp7vI1btU7tMxLKdnWiD2ttBGJNnCsYTWs1MFhnlj0HpFMlqvGRQ1RstUIz7
+         B6pg==
+X-Gm-Message-State: AKGB3mL4GpXQAGAOki+1ayGNtUNTD1NkmsGD62m/j4n69El30RXNiidZ
+        xxww4p0VseJrAGYEXNVay5HUeA==
+X-Google-Smtp-Source: ACJfBos+jplMalxCdXP2LUeen+JKvKzADTqOVzg1HjL6+YZFtF2Jw7hAxW+SU8/7pBs6tYPct5kfIg==
+X-Received: by 10.28.31.137 with SMTP id f131mr7653708wmf.110.1513464541048;
+        Sat, 16 Dec 2017 14:49:01 -0800 (PST)
+Received: from localhost.localdomain (x590e5997.dyn.telefonica.de. [89.14.89.151])
+        by smtp.gmail.com with ESMTPSA id p15sm2695888wre.24.2017.12.16.14.48.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 16 Dec 2017 14:49:00 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 8/8] travis-ci: only print test failures if there are
+Date:   Sat, 16 Dec 2017 23:48:39 +0100
+Message-Id: <20171216224839.11372-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.15.1.429.ga000dd9c7
+In-Reply-To: <CAPig+cTL5hU6R=L3M2i0kfM6_zMLvcHWvNooAr8BU3VQ=X0_Ww@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="uQr8t48UFsdbeI+V"
-Content-Disposition: inline
-In-Reply-To: <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.14.0-1-amd64)
-User-Agent: Mutt/1.9.1 (2017-09-22)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---uQr8t48UFsdbeI+V
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Sat, Dec 16, 2017 at 7:58 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+> rote:
 
-On Mon, Dec 11, 2017 at 05:05:01PM -0800, Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> > As for "git config --global", I think the best thing would be to split
-> > it into two options: something like "git config --user" and "git
-> > config --xdg-user".  That way, it is unambiguous which configuration
-> > file the user intends to inspect or modify.  When a user calls "git
-> > config --global" and both files exist, it could warn that the command
-> > is ambiguous.
-> >
-> > Thoughts?
->=20
-> I actually thought that the plan was "you either have this, or the
-> other one, never both at the same time" (and I think those who
-> pushed the XDG thing in to the system made us favor it over the
-> traditional one).  So as long as --global updates the one that
-> exists, and updates XDG one when both or neither do, I think we
-> should be OK.  And from that viewpoint, we definitely do not want
-> two kinds of --global to pretend as if we support use of both at the
-> same time.
+> > +if test t/test-results/*.exit =3D "t/test-results/*.exit"
+> 
+> Isn't the above going to cause 'test' to error out?
+>
+>     $ mkdir -p t/test-results
+>     $ >t/test-results/a.exit
+>     $ >t/test-results/b.exit
+>     $ test t/test-results/*.exit =3D 't/test-results/*.exit'
+>     -bash: test: too many arguments
 
-Sorry for coming late to the discussion, but I actually use both.
+Indeed it does, though Travis CI's /bin/sh gives a different error
+message.  Thanks for pointin it out, I didn't notice the error msg,
+because the script as a whole still did the right thing and then I
+didn't look close enough.
 
-~/.gitconfig is checked into my Git repo for my home directory and
-contains settings I preserve across all systems, and the XDG dir is not
-checked in and contains per-system settings (currently just
-commit.gpgsign).  On my main systems I have a key and sign commits; if
-it's just some server I log into, I don't.
+> I'd think you'd want to capture the result of the expansion of
+> t/test-result/*.exit as a string and compare that instead.
 
-Now, I don't use git config to set options, so I'm happy as long as git
-config can read both, which it does.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+I'm not sure how the result of the expansion could be captured in the
+shell, because the shell performs the expansion only just before it
+executes a command.  And if we do have to execute a command anyway,
+then we can simply rely on the command exiting with an error code upon
+not finding any files, and there's no need to capture the expansion or
+for the comparison for that matter.
 
---uQr8t48UFsdbeI+V
-Content-Type: application/pgp-signature; name="signature.asc"
+So I propose this updated patch, using 'ls' instead of 'test':
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.3 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlo1l7AACgkQv1NdgR9S
-9osTqw//QIVTXm1uqRelsp7p3/G/UGsis9Ws06OBqtuNEuQyRc1cC9LuFdpvP9Yi
-6YM6nTuA239SufmrBqvZUH+yo7fIUkiU4KhtFomu2B1y06ZwSKxTXpxBd3XLXn65
-SO8L59uNtHUO1NK8JLmC8NDTc/Zvtnu2RaucMbcUgvGCRfv8Cil/QNyNLp1aaLrI
-CsEo8e+6ZWSkHk9oybi4CpZ6SnSA7S7guK+wb7nmFWd/qUGEowm3MF2cHLOXRCAd
-CFCn92rJkFP2R3Blgz3mh7zJ8+8nnR/o3rmp03VRm9w8dWBPaCpzzq164bwFqt1m
-ekpPizG02zMZOknbfs9pf0oD5BYUZRgBA1/O3BE3biQi1/nWn26RFZPEeCZcwuVR
-gweebgnJsm0GrLF2XxjfKAj+tDg0NvA17CoTw92svH6R8bR2dZAnogbzLhRb0CmE
-cWxyfK+UICNwGFi7JuD/CUeiV8LUOUBFaPp3deOqO3BjQJr6TjvJ9D4ZljtGiTFg
-aoYhYYmB6piGIWgg7sIT7Nx2Ro5SK9VHKF9snR5hXMoER67pDQO6RZpvNadJicot
-urgsqSLVLs2OSIJp6B+WTxR535HyjN8JQYLH8IRXPiW0I2rB/0mq3FosDXZdTORO
-oiNXbQBYj40/RZpVc55lkMEXieb6kHdJ0qpqGIcy+f2NijBZnuc=
-=PBxm
------END PGP SIGNATURE-----
+  -- >8 --
 
---uQr8t48UFsdbeI+V--
+Subject: [PATCH v2.1 8/8] travis-ci: only print test failures if there are test results available
+
+When a build job running the test suite fails, our
+'ci/print-test-failures.sh' script scans all 't/test-results/*.exit'
+files to find failed tests and prints their verbose output.  However,
+if a build job were to fail before it ever gets to run the test suite,
+then there will be no files to match the above pattern and the shell
+will take the pattern literally, resulting in errors like this in the
+trace log:
+
+  cat: t/test-results/*.exit: No such file or directory
+  ------------------------------------------------------------------------
+  t/test-results/*.out...
+  ------------------------------------------------------------------------
+  cat: t/test-results/*.out: No such file or directory
+
+Check upfront and proceed only if there are any such files present.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ ci/print-test-failures.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index f757e616c..b4a62ef98 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -8,6 +8,12 @@
+ # Tracing executed commands would produce too much noise in this script.
+ set +x
+ 
++if ! ls t/test-results/*.exit >/dev/null 2>/dev/null
++then
++	echo "Build job failed before the tests could have been run"
++	exit
++fi
++
+ for TEST_EXIT in t/test-results/*.exit
+ do
+ 	if [ "$(cat "$TEST_EXIT")" != "0" ]
+-- 
+2.15.1.429.ga000dd9c7
+
