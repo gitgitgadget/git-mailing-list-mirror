@@ -7,112 +7,80 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D87F41F404
-	for <e@80x24.org>; Sat, 16 Dec 2017 09:04:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 794661F404
+	for <e@80x24.org>; Sat, 16 Dec 2017 09:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752251AbdLPJEL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Dec 2017 04:04:11 -0500
-Received: from mail-pl0-f47.google.com ([209.85.160.47]:44912 "EHLO
-        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750850AbdLPJEF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Dec 2017 04:04:05 -0500
-Received: by mail-pl0-f47.google.com with SMTP id n13so1864731plp.11
-        for <git@vger.kernel.org>; Sat, 16 Dec 2017 01:04:04 -0800 (PST)
+        id S1752834AbdLPJE0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Dec 2017 04:04:26 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36424 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752388AbdLPJES (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Dec 2017 04:04:18 -0500
+Received: by mail-pg0-f68.google.com with SMTP id k134so7245019pga.3
+        for <git@vger.kernel.org>; Sat, 16 Dec 2017 01:04:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=zhcfJj5FmguSbV93t2b5JMPzYWs6rlI7dgUz9Y6ADlw=;
-        b=S1KB8MlRmy73KdQcCeLkLJujpTb4MzbYhauihpbH3CuEwn8PK3DvDamBGq8ljkrPBl
-         fcy+8TdTIceohPYR1xxi6pgCPP9tzPuFuvp20S0QCFYW35Bk88zQATironNGO//7ND/g
-         P8wwdSmtgG9acmgJKteQ9E9aMv7bfGXDuBbc/puSQsxdBWsgyeh7VLxgOWKlKkRZpYHA
-         MLHU0h7h6VpY97r/uPsmosOoO5Nje2Gec8VyM61jd0+EvyLVu7lLERUoLLpuWvh0rvAn
-         hzt6zq6I/pyqxzaQaknaYl0ee6We4JV+zWqSJdvnG/nSAONp4ZIvi7l1EKNrdeGJmNZx
-         bjQg==
+        bh=UQQL7kGA29Y7BsmgOaLppRkDLIbAlR9JkZhl6IX0zxc=;
+        b=mZekQTpR4DPM7bn4eFcZxJRYi+aARrHV++K94scCw01WZqKByQ+pLTayhwJhmFU8Pr
+         cyDqh8DIe7mq9lEG0lmCs6luLrRcAC5fFfAmEaDiV4/KQ0tc/+tI1U7eTiZRIIr/+PGG
+         ORtSI46+79JJwGGfYHILufcpnmhn62AT9zADdjxHdf317nkG/27Jboxutt4m4/NlrTPt
+         SN+5RSSp0nEx4np0aU6TQJEallmSaUBC+UANFJlky+4r+N4WLfOsOUyMeZel27N65436
+         cIhjJFELcxnASrIrp1gtZkj9aVywYIzkI73vjdxJY1ZBUg2WMiH9i12cV9/2c53piM+0
+         NRjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=zhcfJj5FmguSbV93t2b5JMPzYWs6rlI7dgUz9Y6ADlw=;
-        b=HbEeUklVxxdt0FLoJYUCrZsCdOMs5L8o+4FcodCsCSjdqZd+Q8LJ/ra867gJgXYLbf
-         1cNoY4jqI5eodf1R+yUzNdqfbX9QEpRnwdZAiETIEwPIAcF/yLjOyfaZU7bjP1f2QhPQ
-         WP2MYrIaatEvv/MBFi4SzcMVfQdBuptKvfyAX5dP9BcOFsDrzUxOJUv+mngx2IgTTBYP
-         ZjusSJxz6/8+Oc+eWMbv6+xNQpjHDw5OwSEkSO89va/uvjE5wqtSbfWFxKtxzxlT+k2f
-         mkUpD75fMEOqCG7/fvqgWOwfXettyRdko6qniFHpgttck8Q+wr4D0mNROtV8qGZOMmgb
-         JKHQ==
-X-Gm-Message-State: AKGB3mJ59/xj/oR0bNhbomw4uFvdzMBHnczPMt2JF8vhWXb2bjHQfBMW
-        dyoAluI+Q1g6277pJ4lSfw+B+DsN
-X-Google-Smtp-Source: ACJfBovEYu54Q3Ro5TvL4UN6GZgZDgVYBt6EUoRlnQIJhPARN4vjYMBpX5msyqw06o//HRErZReggw==
-X-Received: by 10.159.207.136 with SMTP id z8mr16294468plo.223.1513415044013;
-        Sat, 16 Dec 2017 01:04:04 -0800 (PST)
+        bh=UQQL7kGA29Y7BsmgOaLppRkDLIbAlR9JkZhl6IX0zxc=;
+        b=WD7XUlZzTzYAEvBtSXU/KGby5UXoXFJTHYJRpOSQu58F2T+/ffaWbVU2hDblyRjyiT
+         UqmPGCUSok4dZD6efkYwMAmZimqPvat/Tm+ruZd3fKKXON7xhk6/SrSUg2CFvLjvvrbO
+         XwVxGJ6B+AlGVYJjMXdwPUNnQATi7hbpEKuGJt13sd3bNGnYVD+/LMv+9HFHyoMIn9JK
+         oekSINdBF9IXdxu/J9KR1e5rN9ryhvrL7XxoD6/KR2m6Bh97Tor7BasHwjgkaGQb7njh
+         MGwKaO68klfwR9Mi7afZacwwFh3aHz6H+qgk2vRKHlbjJC6vnSc7cWRG6v2dNbnmaT6K
+         N2Nw==
+X-Gm-Message-State: AKGB3mJy/nrVf4SCAgiU0CSiYz1cLnGcGnzkB5SUIxmH7kFbpEKlASO+
+        Kj5sDvWpUHc8pIaGfheuMwodaLHZ
+X-Google-Smtp-Source: ACJfBosEYmiGtMzP6c0OnQKdowPxhr8Rtgv3nxj/6PGZ4xcBSebyGnYQfsCixpTOGpWcilFqEtBiag==
+X-Received: by 10.98.147.215 with SMTP id r84mr16174500pfk.17.1513415057794;
+        Sat, 16 Dec 2017 01:04:17 -0800 (PST)
 Received: from localhost.localdomain ([117.249.248.104])
-        by smtp.gmail.com with ESMTPSA id u68sm15775852pfu.17.2017.12.16.01.04.00
+        by smtp.gmail.com with ESMTPSA id u68sm15775852pfu.17.2017.12.16.01.04.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 16 Dec 2017 01:04:03 -0800 (PST)
+        Sat, 16 Dec 2017 01:04:16 -0800 (PST)
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 0/3] rebase: give precise error messages
-Date:   Sat, 16 Dec 2017 14:33:16 +0530
-Message-Id: <20171216090319.11902-1-kaartic.sivaraam@gmail.com>
+Subject: [PATCH v5 1/3] rebase: consistently use branch_name variable
+Date:   Sat, 16 Dec 2017 14:33:17 +0530
+Message-Id: <20171216090319.11902-2-kaartic.sivaraam@gmail.com>
 X-Mailer: git-send-email 2.15.0.531.g2ccb3012c
-In-Reply-To: <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
+In-Reply-To: <20171216090319.11902-1-kaartic.sivaraam@gmail.com>
 References: <20171127172104.5796-1-kaartic.sivaraam@gmail.com>
+ <20171216090319.11902-1-kaartic.sivaraam@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tip of the v4 of this patch can be found at [1]. It was a revamp
-sent by Junio mostly touching [PATCH v2 1/3] of the series. I've updated
-it a little to add in something of my taste ;-)
+The variable "branch_name" holds the <branch> parameter in "git
+rebase <upstream> <branch>", but one codepath did not use it after
+assigning $1 to it (instead it kept using $1).  Make it use the
+variable consistently.
 
-There's only one concern that still bothers me a little. With the current
-code you would see the following,
+Also, update an error message to say there is no such branch or
+commit, as we are expecting either of them, and not limiting
+ourselves to a branch name.
 
-    $ git rebase origin/maint 3013dff86
-    Current branch 3013dff86 is up to date.
-
-That doesn't look good, does it? How about we overcome the issue of
-handling this case and the HEAD case done in 3/3 by simplifying the
-message as shown in the following diff,
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 0f379ba2b..4d5400034 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -601,11 +601,11 @@ then
-                test -z "$switch_to" ||
-                GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to" \
-                        git checkout -q "$switch_to" --
--               say "$(eval_gettext "Current branch \$branch_name is up to date.")"
-+               say "$(eval_gettext "\$branch_name is up to date.")"
-                finish_rebase
-                exit 0
-        else
--               say "$(eval_gettext "Current branch \$branch_name is up to date, rebase forced.")"
-+               say "$(eval_gettext "\$branch_name is up to date, rebase forced.")"
-        fi
- fi
-
-I guess this one is much better than 3/3 of this series as it handles
-any kind of case by making no assumptions.
-
-Thoughts ??
-
-
-Note: In case you're wondering where's v3 of this series, there wasn't
-a v3 series but there was a v3 PATCH of 3/3 [2].
-
-References:
-
-[1]: <xmqq1sjxt3tz.fsf@gitster.mtv.corp.google.com>
-
-[2]: <20171201060935.19749-1-kaartic.sivaraam@gmail.com>
-
-Here's the interdiff between v4 and v5,
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+---
+ git-rebase.sh | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/git-rebase.sh b/git-rebase.sh
-index f3dd86443..fd72a35c6 100755
+index 60b70f3de..a299bcc52 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
 @@ -518,7 +518,7 @@ case "$onto_name" in
@@ -124,35 +92,39 @@ index f3dd86443..fd72a35c6 100755
  # $orig_head -- commit object name of tip of the branch before rebasing
  # $head_name -- refs/heads/<that-branch> or "detached HEAD"
  switch_to=
-@@ -602,7 +602,7 @@ then
-                GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $switch_to" \
-                        git checkout -q "$switch_to" --
-                if test "$branch_name" = "HEAD" &&
--                        !(git symbolic-ref -q HEAD)
-+                        ! git symbolic-ref -q HEAD
-                then
-                        say "$(eval_gettext "HEAD is up to date.")"
-                else
-@@ -612,7 +612,7 @@ then
-                exit 0
-        else
-                if test "$branch_name" = "HEAD" &&
--                        !(git symbolic-ref -q HEAD)
-+                        ! git symbolic-ref -q HEAD
-                then
-                        say "$(eval_gettext "HEAD is up to date, rebase forced.")"
-                else
-
-
-
-Kaartic Sivaraam (3):
-  rebase: consistently use branch_name variable
-  rebase: distinguish user input by quoting it
-  rebase: rebasing can also be done when HEAD is detached
-
- git-rebase.sh | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
-
+@@ -528,15 +528,18 @@ case "$#" in
+ 	branch_name="$1"
+ 	switch_to="$1"
+ 
+-	if git show-ref --verify --quiet -- "refs/heads/$1" &&
+-	   orig_head=$(git rev-parse -q --verify "refs/heads/$1")
++	# Is it a local branch?
++	if git show-ref --verify --quiet -- "refs/heads/$branch_name" &&
++	   orig_head=$(git rev-parse -q --verify "refs/heads/$branch_name")
+ 	then
+-		head_name="refs/heads/$1"
+-	elif orig_head=$(git rev-parse -q --verify "$1")
++		head_name="refs/heads/$branch_name"
++	# If not is it a valid ref (branch or commit)?
++	elif orig_head=$(git rev-parse -q --verify "$branch_name")
+ 	then
+ 		head_name="detached HEAD"
++
+ 	else
+-		die "$(eval_gettext "fatal: no such branch: \$branch_name")"
++		die "$(eval_gettext "fatal: no such branch/commit: \$branch_name")"
+ 	fi
+ 	;;
+ 0)
+@@ -547,7 +550,7 @@ case "$#" in
+ 		branch_name=$(expr "z$branch_name" : 'zrefs/heads/\(.*\)')
+ 	else
+ 		head_name="detached HEAD"
+-		branch_name=HEAD ;# detached
++		branch_name=HEAD
+ 	fi
+ 	orig_head=$(git rev-parse --verify HEAD) || exit
+ 	;;
 -- 
 2.15.0.531.g2ccb3012c
 
