@@ -2,119 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71ADE1F428
-	for <e@80x24.org>; Fri, 15 Dec 2017 20:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E25331F42B
+	for <e@80x24.org>; Sat, 16 Dec 2017 01:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756090AbdLOUsL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Dec 2017 15:48:11 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:46235 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756296AbdLOUsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Dec 2017 15:48:08 -0500
-Received: by mail-pg0-f47.google.com with SMTP id b11so6538913pgu.13
-        for <git@vger.kernel.org>; Fri, 15 Dec 2017 12:48:08 -0800 (PST)
+        id S1755977AbdLPBbf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Dec 2017 20:31:35 -0500
+Received: from mail-io0-f170.google.com ([209.85.223.170]:33308 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755802AbdLPBbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Dec 2017 20:31:34 -0500
+Received: by mail-io0-f170.google.com with SMTP id t196so4468725iof.0
+        for <git@vger.kernel.org>; Fri, 15 Dec 2017 17:31:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DvoeTj2ZYFJsf40lUHwZrDIL674PwOYvKbZCRrnyqiU=;
-        b=AYO6pe/n/55Gj0UIx3zuXslWDt2xFMGJmZNo437RVpJWmyY9xFV5VuhfQwpGmF5hSB
-         mPewEJy/vw87DANgX5IODbqrD9ubdnjYDXYlpC9SvaIE8qu/Qaeigz5cze6Kfgs5ZLj1
-         /zIZ08KqSn8Ggayw4USsJeAvJHfVpPdfXvJTVfUhH9nMj+couYfIEKmAhR+Vz0gslWwv
-         nrEs8wVGwlEdcaZmAAq+NkuGa5Qw7UHIaphMDYB7jPa1gxQ/kK6P+towq9YTlUhSzBUJ
-         hGy3Ljd3uG4KZ8u4yyRrTvZQxFOAu6c34mZfJYMz+P3AvFywanuwy2k0hGkqaaodxmD3
-         lT4w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=KKx5cM2JT8/WQGKkwSjW+udIkQEqicz4Q4WQvIUt51g=;
+        b=TsClIngJE+LGudBki1ZJJOhUt+ZEmQlXFeZlNOFuZPDIXcgRJMgs5OpT0bugRCDVVA
+         CgxtY5/aJb+WN7yxyyOSzfLA80aaFiKPpd6vi0HiYVhae2e/5ljnBfSz4HbBH5GclTx4
+         UV2uAkMh5Idhj9jYLgWyKYEnRH2zzQCfkl/MSfLykPeGy9eVICU40BjsaWBqVys+BOWr
+         /FYBb/4+ujplLxzO9nPU57na91vEsAF20VpFBG7yTV699F2fvzuA7FnVNZDuK8sSdtdJ
+         tdcMdUavhadDTu690U/LMPQE/HQSzroQEihTysocD0nYWlqnOdC1NzT23DojK5Kf/y0T
+         mS6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DvoeTj2ZYFJsf40lUHwZrDIL674PwOYvKbZCRrnyqiU=;
-        b=gzMtB6IsR1DBSWdg85t417OVkUAaoU5McOhWA99hqEPAar+0/KDCFN2qq8qJk6ikMO
-         oH1Evo924s9nEv0A9GHuxNdOmuPV4xT0AvaaPjptI8vfOMjKt+lECYqgFoHDNSmAGsVj
-         oeHA/WIkhbhhAQxPD+GiujoIcaMs1w5AYvKcWPqtiPiPIqFTVplMHCItJ6B4qk5mFzG8
-         FMOtKM2JpMXN24lH0wj8S9UCD+oCkgbDQIPe1FJT1bGwXzRRtDJxFFC1iv/QrxfBCX+n
-         sEfXzmBGHSDYTpfyhdFiuIs/rQaeUCUyzjMFP1sWYKCtrSqE5WhKmPzQoT3Wuub+Ohgc
-         HKgA==
-X-Gm-Message-State: AKGB3mKpxNxIwRqs40r6Zvb6YttRMDPIj4R1SSOMLJxtJmWvRp9hu1PS
-        dLV3x1174w44spN+VMDq9T/c1QWTHzblAF4s70Y=
-X-Google-Smtp-Source: ACJfBou1wU4bbNVBzkZ4G1BBvF/r3naGOkyivcMaq9PX8ukH5zMQfjhUinWAQTuV4OApZBquBcIGQDYLFJLV6tei7HE=
-X-Received: by 10.98.19.92 with SMTP id b89mr14764119pfj.124.1513370887623;
- Fri, 15 Dec 2017 12:48:07 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=KKx5cM2JT8/WQGKkwSjW+udIkQEqicz4Q4WQvIUt51g=;
+        b=C7EJf9UPNGXDVsafMcSSphFkxlwDkACjIL6X072DbN/nw7K2XIhbJBUzrrj9lYisrF
+         wLzbQaexq2iZnAHlJEIrRPYVUyX+Gudjkq+CzOG4PXDIPcgxPrBPZAiWLtqYQ5DF7gXB
+         inqKXVLIsIYfk9rXcdhN1/GPNzp/VWoy6rZagEity4lS3vFwD56UfzwNDUdJT67sIDXz
+         GmsPkRbGxlHWn/yiMdgJ5Np6MNWPPecO4VoxclWYH/W6mJyTGRBjFjqYKiU4wokDeAoW
+         oKcETj+VGRDxtr/bzd0KaDcH4A0mCJM3xv/TZ3f09NtlOITjdnh6wmkefwvgLR4nWyVE
+         hQcQ==
+X-Gm-Message-State: AKGB3mL6Oq/yTLiKJpiohcHv8Ba2BOO6K2eGIlLUFL9Fpb6h9+Adh2f2
+        BOWunGcQQmKXWk1Edlh4V8ePgHfl
+X-Google-Smtp-Source: ACJfBouO0TD05kXT9J1JAP45b0Cn6/IxgX8Q78vh6rG0riVzTyOEi5lpRVQxMTQp0vfPzWGVKfos9Q==
+X-Received: by 10.107.152.137 with SMTP id a131mr14094029ioe.168.1513387893758;
+        Fri, 15 Dec 2017 17:31:33 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id g79sm4420076itb.29.2017.12.15.17.31.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 15 Dec 2017 17:31:32 -0800 (PST)
+Date:   Fri, 15 Dec 2017 17:31:30 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Simon Doodkin <helpmepro1@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: feature-request: git "cp" like there is git mv.
+Message-ID: <20171216013130.GB188893@aiede.mtv.corp.google.com>
+References: <CANaQPdK4xWek3PhiFZrURBBTgPBwsC3d3watd-cWVNBVZRqZRA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.236.189.1 with HTTP; Fri, 15 Dec 2017 12:48:07 -0800 (PST)
-In-Reply-To: <CAGyf7-F8cCprvK-e2S0kO0Wo+6n4m_gigpSQjCjSj-dhozMsMw@mail.gmail.com>
-References: <CAMZug24WGWS3TaNPOVWPufGZ+67EbLggr4W3pxJtis9X375mag@mail.gmail.com>
- <CAGyf7-F8cCprvK-e2S0kO0Wo+6n4m_gigpSQjCjSj-dhozMsMw@mail.gmail.com>
-From:   Satyakiran Duggina <satya0521@gmail.com>
-Date:   Fri, 15 Dec 2017 12:48:07 -0800
-Message-ID: <CAMZug26A0e=AunMOjZNC_xH2E5uqHe46mt6=jawWe7ozF=Jn0Q@mail.gmail.com>
-Subject: Re: Git Hooks
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANaQPdK4xWek3PhiFZrURBBTgPBwsC3d3watd-cWVNBVZRqZRA@mail.gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, Bryan.
+Hi Simon,
 
-To give the code pullers a chance to review, can we not have a
-`trusted-hooks: default` and `trusted-SHA: <some sha>` field in .git/.
-I'm assuming githooks/ are source tracked here.
+Simon Doodkin wrote:
 
-When developer tries to execute `git commit`, git can ask developer to
-change `trusted-hooks` field to true or false. Let's say developer
-sets it to true, git can record the SHA. If any latest pull has the
-hooks changed, git can revert the `trusted-hook` to default.
-
-This way there is not much hassle for developers to manually copy
-hooks all the time. And at the same time, they are not running scripts
-that they haven't reviewed.
-
-Will this work?
-
-
-
-On Fri, Dec 15, 2017 at 11:23 AM, Bryan Turner <bturner@atlassian.com> wrote:
-> On Fri, Dec 15, 2017 at 11:12 AM, Satyakiran Duggina
-> <satya0521@gmail.com> wrote:
->> I see that `git init` creates a .git directory and hooks are to be
->> placed in that directory and these hooks are not tracked by version
->> control. To achieve tracked hooks, either each developer has to copy
->> the hooks or use tools like overcommit, pre-commit, husky etc.
->>
->> I'm wondering why hooks are not made external like .gitignore. I guess
->> it would be better to have two git configuration directories in a
->> repo, one hosting all the metadata managed by git and the other with
->> user configured data (hooks, ignore/exclude, repo config etc).
+> please develop a new feature, git "cp" like there is git mv tomovefile1 tofile2
+> (to save space).
 >
-> Hooks are not external because they're not trusted. It essentially
-> amounts to allowing someone to download an arbitrary script or program
-> onto your computer which you then execute. It's extremely unsafe, and
-> is intentionally not possible. To get hooks in your instance, you have
-> to _manually_ install them. This gives you a chance to _review_ them
-> before they start executing on your system. Any other approach and the
-> hooks become an attack vector.
->
->>
->> Kindly let me know why the current design choice is made and if the
->> proposed change would introduce unseen issues.
->>
->>
->> Thanks,
->> Satya
->
-> Hope this helps!
-> Bryan Turner
+> there is a solution in https://stackoverflow.com/a/44036771/466363
+> however, it is not single easy command.
 
+This sounds like a reasonable thing to add.  See builtin/mv.c for how
+"git mv" works if you're looking for inspiration.
 
+cmd_mv in that file looks rather long, so I'd also be happy if someone
+interested refactors to break it into multiple self-contained pieces
+for easier reading (git mostly follows
+https://www.kernel.org/doc/html/latest/process/coding-style.html#functions).
 
--- 
-Regards & Thanks
-Satya Kiran Duggina
+Thanks,
+Jonathan
