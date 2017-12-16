@@ -7,61 +7,58 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5191F406
-	for <e@80x24.org>; Sat, 16 Dec 2017 12:54:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9BC71F406
+	for <e@80x24.org>; Sat, 16 Dec 2017 12:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754397AbdLPMyj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Dec 2017 07:54:39 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:45322 "EHLO
+        id S1756506AbdLPMzm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Dec 2017 07:55:42 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36404 "EHLO
         mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752724AbdLPMyh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Dec 2017 07:54:37 -0500
-Received: by mail-wr0-f194.google.com with SMTP id h1so10213228wre.12
-        for <git@vger.kernel.org>; Sat, 16 Dec 2017 04:54:37 -0800 (PST)
+        with ESMTP id S1756321AbdLPMzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Dec 2017 07:55:41 -0500
+Received: by mail-wr0-f194.google.com with SMTP id u19so3864469wrc.3
+        for <git@vger.kernel.org>; Sat, 16 Dec 2017 04:55:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0Ex2EM/jrDqt11UViuVne8a5T8zKZcXQUgnRejK7isE=;
-        b=PM98cGMXj6JlTRMRf9qbMVL9rKEnQJVHAdK+h/QXTvwmlNCAWNYFE/vFedNIhqB4Yt
-         OORTyFu977bY45Ei3apX5E6qk6UptgLLHYXNspAuUQFFXCH8bQ/Ilrde/dp4co7ID/Pg
-         snKZWnJVFFNNSE/NIIFEqnatRoNwbHSnKL5oBzBV+4jOW9WEN+eZ7zXv3Av5rn3KsbY5
-         5fPgcRDNerEPW2lE73qON9rTX3CNGDM6sBvlcMxuM/PpohJ45wrnITGvAuMYZyQpxBv2
-         8hI//UtMXVCdDXEpUfGaVhqJJfJec1iMDBR+A8/u20HwrtcfJi/W63fiCCl2CCQkfUog
-         O6/g==
+        bh=ajG8Yol+bys67Ybnn3CnPw984DV2QDYIyoWMk5ZJGqk=;
+        b=GUjfT6ukkIbi2QXKrko0sh1dKlMX63+gpphMUQceu+7MhoYODzwkmXvzAVBCpDgXf/
+         eksiyU27OBqUX16gSavHv9Vdei59ekckxcv7X8hFSroGiVBZGzKEghQH/8XsUKyqKVpR
+         mI0Tgrw+LLqnDk+eqRQycbj0djA2aX9/f6jFfS6ZrEVu/1nEA4GF/rQ7xQK/pBytAomj
+         ztkBBkJZZDpRGBw/IB9pbJEQFFEAjLEGjAlAjeJlWj7t1kkhT2b3qwaZtj9HOV/AcoO3
+         olJLP5mwOoKC29cuAdP/4dH/5ih3nBTSlkPycjpTjPoQEEJRf2yNgv+TP3q42HigcRG2
+         E6Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0Ex2EM/jrDqt11UViuVne8a5T8zKZcXQUgnRejK7isE=;
-        b=BikBhDZwSqE/4HEXP4IFT4srHeO4llImftNc8PDxCn5KMUZWAhx2jxA/3ZWNCwnkqb
-         g/ryS2B0tR2guMeuhT6U6SKIOV+esZiObr3liX0V6mGas43KX2G3Sm1eH7IG+3eNcoEh
-         JkoiDOiQtBBHo+V5WT41xkzVxOcmu84UELbCexdSq3UpROqZWtQqR53d5Wmw/Y/Zx180
-         PNPEti514/hHTbxutdj+JgxuT1ysy6D3/9kg+kJOAUhRy91OFhMVOmd3UcaiWVaLkGy9
-         bh1e3KUuJGsqVJIwPhBv9hlIb7AXSL18alqIr8H3Q7YbfkESMzwM+Bw5jweTxocYsuQQ
-         Q77g==
-X-Gm-Message-State: AKGB3mJWWQU47UHYgrfPrbAYzvh6p8UX8X9hWelEHDHH+jZYeT8yGAiZ
-        9M/MbpYpvgAe1dN5UBZNJrI=
-X-Google-Smtp-Source: ACJfBot/BbcPsbxGvi4TKD3mYjFiNF8foFwpyHytJ2VfJSPwGGluUXa9G1G41yHAzxBVdew18VpdLQ==
-X-Received: by 10.223.167.3 with SMTP id c3mr13044579wrd.127.1513428876592;
-        Sat, 16 Dec 2017 04:54:36 -0800 (PST)
+        bh=ajG8Yol+bys67Ybnn3CnPw984DV2QDYIyoWMk5ZJGqk=;
+        b=Sh7SxTj1Qm5Hzm6PvQA1mrwChXBRpd9DSo+tbZNqqWNqYLBxIZRnFAjIHSJqFrJKMV
+         wk9QpLcJ4V+UWi8ZBHaRSfS3IL8Krvsd8BXhWOWCvn5W620ah82pp1fGmPu80724n9fH
+         1PBRuw2NSMfhJk7KES2cqGdrwMOQU328MYSJJT/SWRUpV4w7vu8wu7Dc2+wuaJ/8wGzd
+         OeJxswkG8f8OidY287E3d60ubmFWeLUkH3n84KqaPgv9suMXwapUqF4gqk+u6r/E6jZ4
+         tQxKix23+AwVp10RpuRhjwV6Dms1/4ynnGL2vYGF/fjR67KhVehdrVl7p3KFEKMVPSgS
+         7bUg==
+X-Gm-Message-State: AKGB3mLxYdxGSb4M4WwhgaQP7ZhfRSbEwk1GvH2hWG6649Jl9tpLi2GS
+        R0CLTw1SBZQevPBeXyK0v60=
+X-Google-Smtp-Source: ACJfBotXZS//5odPIjcUAB1HAg+skbg9kmOSHB+fGaqmvCcROKCWsx+tln+XHHk83fHtSG6e7kLsQA==
+X-Received: by 10.223.176.242 with SMTP id j47mr1428398wra.178.1513428940144;
+        Sat, 16 Dec 2017 04:55:40 -0800 (PST)
 Received: from localhost.localdomain (x590e5997.dyn.telefonica.de. [89.14.89.151])
-        by smtp.gmail.com with ESMTPSA id u33sm11236485wrb.68.2017.12.16.04.54.35
+        by smtp.gmail.com with ESMTPSA id x52sm9790912wrb.25.2017.12.16.04.55.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 16 Dec 2017 04:54:36 -0800 (PST)
+        Sat, 16 Dec 2017 04:55:39 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org,
+Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 1/8] travis-ci: use 'set -x' in select 'ci/*' scripts for extra tracing
-Date:   Sat, 16 Dec 2017 13:54:18 +0100
-Message-Id: <20171216125418.10743-2-szeder.dev@gmail.com>
+Subject: [PATCH v2 2/8] travis-ci: introduce a $jobname variable for 'ci/*' scripts
+Date:   Sat, 16 Dec 2017 13:55:32 +0100
+Message-Id: <20171216125532.10826-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.15.1.429.ga000dd9c7
-In-Reply-To: <20171216125418.10743-1-szeder.dev@gmail.com>
-References: <20171211233446.10596-1-szeder.dev@gmail.com>
- <20171216125418.10743-1-szeder.dev@gmail.com>
+In-Reply-To: <20171216125418.10743-2-szeder.dev@gmail.com>
+References: <20171216125418.10743-2-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,80 +67,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the build logic was embedded in our '.travis.yml', Travis CI
-used to produce a nice trace log including all commands executed in
-those embedded scriptlets.  Since 657343a60 (travis-ci: move Travis CI
-code into dedicated scripts, 2017-09-10), however, we only see the
-name of the dedicated scripts, but not what those scripts are actually
-doing, resulting in a less useful trace log about e.g. installing
-dependencies.  A patch later in this series will move setting
-environment variables from '.travis.yml' to 'ci/lib-travisci.sh', so
-not even those will be included in the trace log.  Unrelated to
-657343a60, 'ci/test-documentation.sh' runs a bunch of 'test -s <file>'
-checks which would fail quietly if something were wrong, leaving no
-clue about which one of those checks triggered the failure.
+A couple of 'ci/*' scripts are shared between different build jobs:
+'ci/lib-travisci.sh', being a common library, is sourced from almost
+every script, while 'ci/install-dependencies.sh', 'ci/run-build.sh'
+and 'ci/run-tests.sh' are shared between the "regular" GCC and Clang
+Linux and OSX build jobs, and the latter two scripts are used in the
+GETTEXT_POISON Linux build job as well.
 
-Use 'set -x' in 'ci/lib-travisci.sh' to get more detailed trace log
-about the commands executed in the 'ci/*' scripts.  Use it in
-'ci/run-linux32-build.sh' as well, which is run in a Docker container
-and therefore doesn't source 'ci/lib-travisci.sh'.  The secret token
-used for the Windows builds is specified as an encrypted environment
-variable in git/git repository settings on Travis CI and it's redacted
-in the trace logs even with 'set -x'.  However, disable this tracing
-in 'ci/print-test-failures.sh', as it produces far too much noise in
-the output of that script.
+Our builds could benefit from these shared scripts being able to
+easily tell which build job they are taking part in.  Now, it's
+already quite easy to tell apart Linux vs OSX and GCC vs Clang build
+jobs, but it gets trickier with all the additional Linux-based build
+jobs included explicitly in the build matrix.
+
+Unfortunately, Travis CI doesn't provide much help in this regard.
+The closest we've got is the $TRAVIS_JOB_NUMBER variable, the value of
+which is two dot-separated integers, where the second integer
+indicates a particular build job.  While it would be possible to use
+that second number to identify the build job in our shared scripts, it
+doesn't seem like a good idea to rely on that:
+
+  - Though the build job numbering sequence seems to be stable so far,
+    Travis CI's documentation doesn't explicitly states that it is
+    indeed stable and will remain so in the future.  And even if it
+    were stable,
+
+  - if we were to remove or insert a build job in the middle, then the
+    job numbers of all subsequent build jobs would change accordingly.
+
+So roll our own means of simple build job identification and introduce
+the $jobname environment variable in our builds, setting it in the
+environments of the explicitly included jobs in '.travis.yml', while
+constructing one in 'ci/lib-travisci.sh' as the combination of the OS
+and compiler name for the GCC and Clang Linux and OSX build jobs.  Use
+$jobname instead of $TRAVIS_OS_NAME in scripts taking different
+actions based on the OS and build job (when installing P4 and Git LFS
+dependencies and including them in $PATH).  The following two patches
+will also rely on $jobname.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- ci/lib-travisci.sh        | 6 ++++--
- ci/print-test-failures.sh | 3 +++
- ci/run-linux32-build.sh   | 2 ++
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ .travis.yml                | 10 +++++-----
+ ci/install-dependencies.sh |  6 +++---
+ ci/lib-travisci.sh         |  9 +++++++--
+ 3 files changed, 15 insertions(+), 10 deletions(-)
 
+diff --git a/.travis.yml b/.travis.yml
+index 281f101f3..88435e11c 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -39,12 +39,12 @@ env:
+ 
+ matrix:
+   include:
+-    - env: GETTEXT_POISON=YesPlease
++    - env: jobname=GETTEXT_POISON GETTEXT_POSION=YesPlease
+       os: linux
+       compiler:
+       addons:
+       before_install:
+-    - env: Windows
++    - env: jobname=Windows
+       os: linux
+       compiler:
+       addons:
+@@ -55,7 +55,7 @@ matrix:
+           test "$TRAVIS_REPO_SLUG" != "git/git" ||
+           ci/run-windows-build.sh $TRAVIS_BRANCH $(git rev-parse HEAD)
+       after_failure:
+-    - env: Linux32
++    - env: jobname=Linux32
+       os: linux
+       compiler:
+       services:
+@@ -63,7 +63,7 @@ matrix:
+       before_install:
+       before_script:
+       script: ci/run-linux32-docker.sh
+-    - env: Static Analysis
++    - env: jobname=StaticAnalysis
+       os: linux
+       compiler:
+       addons:
+@@ -74,7 +74,7 @@ matrix:
+       before_script:
+       script: ci/run-static-analysis.sh
+       after_failure:
+-    - env: Documentation
++    - env: jobname=Documentation
+       os: linux
+       compiler:
+       addons:
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 5bd06fe90..468788566 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -8,8 +8,8 @@
+ P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
+ LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+ 
+-case "${TRAVIS_OS_NAME:-linux}" in
+-linux)
++case "$jobname" in
++linux-clang|linux-gcc)
+ 	export GIT_TEST_HTTPD=YesPlease
+ 
+ 	mkdir --parents "$P4_PATH"
+@@ -26,7 +26,7 @@ linux)
+ 		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
+ 	popd
+ 	;;
+-osx)
++osx-clang|osx-gcc)
+ 	brew update --quiet
+ 	# Uncomment this if you want to run perf tests:
+ 	# brew install gnu-time
 diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index ac05f1f46..2d0d1d613 100755
+index 2d0d1d613..4b3c5fdd0 100755
 --- a/ci/lib-travisci.sh
 +++ b/ci/lib-travisci.sh
-@@ -22,8 +22,10 @@ skip_branch_tip_with_tag () {
- }
- 
- # Set 'exit on error' for all CI scripts to let the caller know that
--# something went wrong
--set -e
-+# something went wrong.
-+# Set tracing executed commands, primarily setting environment variables
-+# and installing dependencies.
-+set -ex
+@@ -29,8 +29,13 @@ set -ex
  
  skip_branch_tip_with_tag
  
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 8c8973cbf..f757e616c 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -5,6 +5,9 @@
- 
- . ${0%/*}/lib-travisci.sh
- 
-+# Tracing executed commands would produce too much noise in this script.
-+set +x
+-case "${TRAVIS_OS_NAME:-linux}" in
+-linux)
++if test -z "$jobname"
++then
++	jobname="$TRAVIS_OS_NAME-$CC"
++fi
 +
- for TEST_EXIT in t/test-results/*.exit
- do
- 	if [ "$(cat "$TEST_EXIT")" != "0" ]
-diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-index e30fb2cdd..a8518eddf 100755
---- a/ci/run-linux32-build.sh
-+++ b/ci/run-linux32-build.sh
-@@ -6,6 +6,8 @@
- #   run-linux32-build.sh [host-user-id]
- #
- 
-+set -x
-+
- # Update packages to the latest available versions
- linux32 --32bit i386 sh -c '
-     apt update >/dev/null &&
++case "$jobname" in
++linux-clang|linux-gcc)
+ 	P4_PATH="$(pwd)/custom/p4"
+ 	GIT_LFS_PATH="$(pwd)/custom/git-lfs"
+ 	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
 -- 
 2.15.1.429.ga000dd9c7
 
