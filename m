@@ -2,77 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF4351F406
-	for <e@80x24.org>; Sun, 17 Dec 2017 06:18:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 933721F428
+	for <e@80x24.org>; Sun, 17 Dec 2017 10:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750832AbdLQGSu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Dec 2017 01:18:50 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54752 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750789AbdLQGSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Dec 2017 01:18:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12E27CFB1D;
-        Sun, 17 Dec 2017 01:18:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Nw2glQcerJcRcsqt+31QRO5mYMY=; b=ccwl17
-        eoywbD/g2X/IFpeYBrbdutavZNlSIJtEDFJMJkZxQ3FvsIJ6LBH8yBRCvF65Dd6U
-        ixGfjP9KC1uNiQbzWgIAzOPhbDv54h+andwyPlw0DDAk1AeA74l3xOq7G8dagD7B
-        obqjRzXebzSfwpBYeQAGuh4S8mESTUiYUbOJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rGntjKnxGw0LT91Tme5hxhUcWgR8xBKo
-        8p26GIhM5Z5H0psmc50gtzHdeUyE//VgLOsKcRjJbTeUn+NzMSVUXcoEeOjOJhA4
-        DGl21Oy5rSIYPp5ZMYEbQLb/dxWSptPQxHBBPeChZCn8y1F7TDW02X0raadENsMt
-        IMaPp89LPxI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09DABCFB1C;
-        Sun, 17 Dec 2017 01:18:49 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6967DCFB1B;
-        Sun, 17 Dec 2017 01:18:48 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
-Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>
-Subject: Re: Re* [PATCH v2 2/2] t: add tests for pull --verify-signatures
-References: <20171209090530.6747-1-hji@dyntopia.com>
-        <20171210065358.8156-1-hji@dyntopia.com>
-        <20171210065358.8156-2-hji@dyntopia.com>
-        <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com>
-        <xmqqmv2jpyb6.fsf_-_@gitster.mtv.corp.google.com>
-        <20171216093440.GB5617@darpa.mil>
-Date:   Sat, 16 Dec 2017 22:18:47 -0800
-In-Reply-To: <20171216093440.GB5617@darpa.mil> (Hans Jerry Illikainen's
-        message of "Sat, 16 Dec 2017 09:34:40 +0000")
-Message-ID: <xmqqzi6hop14.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752101AbdLQKUX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Dec 2017 05:20:23 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:45574 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751676AbdLQKUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Dec 2017 05:20:21 -0500
+Received: by mail-pg0-f68.google.com with SMTP id m25so8034151pgv.12
+        for <git@vger.kernel.org>; Sun, 17 Dec 2017 02:20:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VFcxw8nfSJOwEFOVU6REs/jBZ6xdFe6fbOwXMOhAdZI=;
+        b=DPpx7O8kM+dltgmEmfxd57r2pL+dy48sgdJ4mGmaiNQcdjAzVk1f0s+6xnVN+p+ise
+         +vHcom8bKP13roi7OVfflJwZi7Ob2kANV2X9j3u4Am+CeK/MlPfNZpYHvkhurzFQ/vwL
+         0DWsjyQ94JHKQ9l4cKBI1EhFns0gcidfa+UY0DDV7akUuOii/jJpG5R+ZniPJyDDM35G
+         RyHsnXb+IonsCXSj1eGE1HOzjw7L2eMTceJQRevxzdWz7NmD/MYaPSWxxx+1EeZ0M5vm
+         apcASCI3waicaqTGOSPCD/qx/DJuTJtZAMV+sErdrGrBoMyKzDBSuiXeA3go5bD69kLT
+         jXcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VFcxw8nfSJOwEFOVU6REs/jBZ6xdFe6fbOwXMOhAdZI=;
+        b=EeKHM6Q5mhEthOcvyqBg/zGaIRQ8iyZk9XDGMhodtjbJ4DtF4rcUdXTRk9Q3ONUTqA
+         YbPEx+ucUZMT5Szk6EYrrRdp97zw+6t/wHz93vZTAe8sPefgiP/v94DyDsYdj3ibORId
+         wDEJDj90Ebo8sDyaSpODvP6/tqSb/RVfnTlFqnjxcq0tcb6jo2KRG2So9rrguI+LT+xq
+         IfiTHHCIIAahiRqGKRvIF0xmku7Pw4jWI30GA2Ybi3qpoR3317+e/j+Zqd+qAGLQ61OE
+         FnfDAQC6nLx1DkLkHD0DLY6K7oWWEwO+UtofvV0mkAzs47G7qsuWWaRL3CPVNexxqIlv
+         rbMA==
+X-Gm-Message-State: AKGB3mJW5vyW3NXNSm3xRCWaOFgQZKsQ8diduDUsPoGRbNPtOeigw2x1
+        2m8BtUXCFgynhQ+UdqEA64oUDSVeBzAVtBNV70E=
+X-Google-Smtp-Source: ACJfBovCzfz/Fou4TUZ/fXs7jv7Y/1xqk9DYDQxIYqrvsFo3Gl9olhYrsYPGYwCIINIcNTWLMVkCAquPJmiZd7xXOlM=
+X-Received: by 10.101.65.129 with SMTP id a1mr16903750pgq.203.1513506020728;
+ Sun, 17 Dec 2017 02:20:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24BDF49C-E2F2-11E7-8EB4-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.179.136 with HTTP; Sun, 17 Dec 2017 02:20:20 -0800 (PST)
+In-Reply-To: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 17 Dec 2017 11:20:20 +0100
+Message-ID: <CAN0heSom46uJMmf2ST5PBqUYv7=9xG=J0ndEv5A=vT3EQCWzSQ@mail.gmail.com>
+Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+On 16 December 2017 at 13:12, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> prepare_revision_walk() allows callers to take ownership of the array of
+> pending objects by setting the rev_info flag "leak_pending" and copying
+> the object_array "pending".  They use it to clear commit marks after
+> setup is done.  This interface is brittle enough that it requires
+> extensive comments.
+>
+> Provide an easier way by adding a function that can hand over the array
+> to a caller-supplied output parameter and converting all users of the
+> flag "leak_pending" to call prepare_revision_walk_extended() instead.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  Documentation/technical/api-revision-walking.txt |  6 ++++++
+>  bisect.c                                         | 17 +++++------------
+>  builtin/checkout.c                               |  9 +--------
+>  bundle.c                                         |  9 +--------
+>  revision.c                                       | 10 +++++++++-
+>  revision.h                                       | 14 ++------------
+>  6 files changed, 24 insertions(+), 41 deletions(-)
+>
+> diff --git a/Documentation/technical/api-revision-walking.txt b/Documenta=
+tion/technical/api-revision-walking.txt
+> index 55b878ade8..9dc573d2ec 100644
+> --- a/Documentation/technical/api-revision-walking.txt
+> +++ b/Documentation/technical/api-revision-walking.txt
+> @@ -50,6 +50,12 @@ function.
+>         returns any error (non-zero return code) and if it does not, you =
+can
+>         start using get_revision() to do the iteration.
+>
+> +`prepare_revision_walk_extended`::
+> +
+> +       Like prepare_revision_walk(), but allows callers to take ownershi=
+p
+> +       of the array of pending objects by passing an object_array pointe=
+r
+> +       as the second parameter; passing NULL clears the array.
 
-> Thanks!  t7612-merge-verify-signatures.sh also lacks cleanup for
-> test_must_fail brokenness.  Would you prefer test_when_finished to be
-> included in the two patches as a v3?
+This might make someone wonder what the difference between passing NULL
+and using `prepare_revision_walk()` is. Perhaps: "passing NULL clears
+the array, just as prepare_revision_walk() would." Possibly only matters
+once we gain more parameters, and maybe not even then...
 
-No, I do not want a v3 as these are already in 'next'.  Just like my
-follow-up clean-up you are responding to is [PATCH 3/2], if you want
-further work on it, the preferred method from now on is to send in
-incremental updates on top of what has already been accepted.
+The name of your new function ("..._extended") doesn't describe the
+nature of the extended behavior and made me wonder if it was too
+generic. But that genericness might be a good thing. When/If we need to
+tweak the behavior along some other axis, we can add a third parameter
+to ..._extended and pass NULL/0 as appropriate. The simple cases will
+stay simple and we won't gain lots of functions with minor differences.
 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index e1e157d205..1f04f5d5e5 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -796,14 +796,7 @@ static void orphaned_commit_warning(struct commit *o=
+ld, struct commit *new)
+>         add_pending_oid(&revs, "HEAD", &new->object.oid, UNINTERESTING);
+>
+>         /* Save pending objects, so they can be cleaned up later. */
+> -       refs =3D revs.pending;
+> -       revs.leak_pending =3D 1;
+> -
+> -       /*
+> -        * prepare_revision_walk (together with .leak_pending =3D 1) make=
+s us
+> -        * the sole owner of the list of pending objects.
+> -        */
+> -       if (prepare_revision_walk(&revs))
+> +       if (prepare_revision_walk_extended(&revs, &refs))
+>                 die(_("internal error in revision walk"));
+>         if (!(old->object.flags & UNINTERESTING))
+>                 suggest_reattach(old, &revs);
+> diff --git a/bundle.c b/bundle.c
+> index 93290962c9..6af6e38c40 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -158,14 +158,7 @@ int verify_bundle(struct bundle_header *header, int =
+verbose)
+>         setup_revisions(2, argv, &revs, NULL);
+>
+>         /* Save pending objects, so they can be cleaned up later. */
+> -       refs =3D revs.pending;
+> -       revs.leak_pending =3D 1;
+> -
+> -       /*
+> -        * prepare_revision_walk (together with .leak_pending =3D 1) make=
+s us
+> -        * the sole owner of the list of pending objects.
+> -        */
+> -       if (prepare_revision_walk(&revs))
+> +       if (prepare_revision_walk_extended(&revs, &refs))
+>                 die(_("revision walk setup failed"));
+>
+>         i =3D req_nr;
 
-Thanks.
+This copy-paste coding that you get rid of here can be attributed to me.
+I obviously like your cleaned-up version much better.
 
+> diff --git a/revision.h b/revision.h
+> index 54761200ad..5d4b475334 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -150,18 +150,6 @@ struct rev_info {
+>                         date_mode_explicit:1,
+>                         preserve_subject:1;
+>         unsigned int    disable_stdin:1;
+> -       /*
+> -        * Set `leak_pending` to prevent `prepare_revision_walk()` from c=
+learing
+> -        * the array of pending objects (`pending`). It will still forget=
+ about
+> -        * the array and its entries, so they really are leaked. This can=
+ be
+> -        * useful if the `struct object_array` `pending` is copied before
+> -        * calling `prepare_revision_walk()`. By setting `leak_pending`, =
+you
+> -        * effectively claim ownership of the old array, so you should mo=
+st
+> -        * likely call `object_array_clear(&pending_copy)` once you are d=
+one.
+> -        * Observe that this is about ownership of the array and its entr=
+ies,
+> -        * not the commits referenced by those entries.
+> -        */
+> -       unsigned int    leak_pending:1;
+>         /* --show-linear-break */
+>         unsigned int    track_linear:1,
+>                         track_first_time:1,
+
+The commit message doesn't mention that you drop `leak_pending`, but
+maybe that's obvious enough since you convert all users.
+
+Thanks for tidying up,
+Martin
