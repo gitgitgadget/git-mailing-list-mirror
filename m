@@ -2,92 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDFA11F406
-	for <e@80x24.org>; Sun, 17 Dec 2017 00:06:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF4351F406
+	for <e@80x24.org>; Sun, 17 Dec 2017 06:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756929AbdLQAGm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Dec 2017 19:06:42 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:36410 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751512AbdLQAGm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Dec 2017 19:06:42 -0500
-Received: by mail-qk0-f195.google.com with SMTP id 8so14528600qkj.3
-        for <git@vger.kernel.org>; Sat, 16 Dec 2017 16:06:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=hBChpgQAsMkF+WjiByrzqVdHB3+wiTSF8BHIjxslyrU=;
-        b=q4Dxabj/lD0i+/0nhJsQMh1XaEFUd5kFkAY81faPeCpu4YgV3TF8pycedEm8JW+gfs
-         1mc7RpfHIxF5E4ZZu9HuCeHsArSVFAZV8YziCYEf8XUGkNFI0UZpZOxVR74gFN5H3HzI
-         kr3k7hTymFPOyCl/lX+SvnHosUCUUGgLt1jeOc5/QmXy8phuL5aQUvk9WsqMyJu3pCNs
-         5dpR+0lF6l9kZAciLDypTDF4kvHbefsX0yUAnqsmzHueBMhaC9mNluv9+R6en+aU7pLM
-         HpVIJn7UBGY9YIk5hprZ+6jgzW/58XmRtQM4d/i5oJ+ETs9sBd/LTul1a9L1UXHADz7W
-         flww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=hBChpgQAsMkF+WjiByrzqVdHB3+wiTSF8BHIjxslyrU=;
-        b=FhqZ6kJT5hDBxhk1c7BjJiLfDPa97RfLcTHo2Vseduoj02KcoMPWcD7HtGVWWwM8tR
-         tccjtikAzRv/+NGuAejIYYD/7Eg9Ifte8bOL3iKent1oYYRzablJ6oYRIwS/tmBUgBPf
-         NnSOfCU3l3gKY3ivceOdBTPEu1p1oy6clzuYu+SBJRtk2YwYNXW5aT0SMEUgtAS8DMeo
-         LUZCtdvtkafDXrq6d5m2w0iKZSvvwAMdjapzKw860mtNNHav7p2EzpcT/jZQqsc5YEmY
-         zIyX8DEXumkRp1Yh7CfYxh9fDFzWNzflf25c7dJfhR24dUvM0pJPqXV6VrgZYaBWw7+q
-         yBCA==
-X-Gm-Message-State: AKGB3mLyl+y6QAZgT85NLzo+0Zm/Qwh3Of37aAdXfmAo+fO9hEWl+gdX
-        9a3If/KhpZA3jREWHMJbciHxIGy7kWY0woh4k8U=
-X-Google-Smtp-Source: ACJfBostMFjeC1KC6INEkAbOKMgI59ua/Z1hyzEM4/+MqX5pWXngNj0IuwMS9Pt8o1e0gOd21BryxXA8eckSKDfKrB0=
-X-Received: by 10.55.130.194 with SMTP id e185mr27041100qkd.357.1513469201352;
- Sat, 16 Dec 2017 16:06:41 -0800 (PST)
+        id S1750832AbdLQGSu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Dec 2017 01:18:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54752 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750789AbdLQGSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Dec 2017 01:18:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12E27CFB1D;
+        Sun, 17 Dec 2017 01:18:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Nw2glQcerJcRcsqt+31QRO5mYMY=; b=ccwl17
+        eoywbD/g2X/IFpeYBrbdutavZNlSIJtEDFJMJkZxQ3FvsIJ6LBH8yBRCvF65Dd6U
+        ixGfjP9KC1uNiQbzWgIAzOPhbDv54h+andwyPlw0DDAk1AeA74l3xOq7G8dagD7B
+        obqjRzXebzSfwpBYeQAGuh4S8mESTUiYUbOJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rGntjKnxGw0LT91Tme5hxhUcWgR8xBKo
+        8p26GIhM5Z5H0psmc50gtzHdeUyE//VgLOsKcRjJbTeUn+NzMSVUXcoEeOjOJhA4
+        DGl21Oy5rSIYPp5ZMYEbQLb/dxWSptPQxHBBPeChZCn8y1F7TDW02X0raadENsMt
+        IMaPp89LPxI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 09DABCFB1C;
+        Sun, 17 Dec 2017 01:18:49 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6967DCFB1B;
+        Sun, 17 Dec 2017 01:18:48 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>
+Subject: Re: Re* [PATCH v2 2/2] t: add tests for pull --verify-signatures
+References: <20171209090530.6747-1-hji@dyntopia.com>
+        <20171210065358.8156-1-hji@dyntopia.com>
+        <20171210065358.8156-2-hji@dyntopia.com>
+        <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com>
+        <xmqqmv2jpyb6.fsf_-_@gitster.mtv.corp.google.com>
+        <20171216093440.GB5617@darpa.mil>
+Date:   Sat, 16 Dec 2017 22:18:47 -0800
+In-Reply-To: <20171216093440.GB5617@darpa.mil> (Hans Jerry Illikainen's
+        message of "Sat, 16 Dec 2017 09:34:40 +0000")
+Message-ID: <xmqqzi6hop14.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Sat, 16 Dec 2017 16:06:40 -0800 (PST)
-In-Reply-To: <20171216195246.10445-1-tboegi@web.de>
-References: <xmqqh8t2ckgw.fsf@gitster.mtv.corp.google.com> <20171216195246.10445-1-tboegi@web.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Dec 2017 19:06:40 -0500
-X-Google-Sender-Auth: xpy9eD-4Hmq-L6kNWx-ioEjk3gM
-Message-ID: <CAPig+cQtcNhz3Z+iZRWx1PjnJwWeeo19gUNQRHOcJyxEgfUDsQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] check-non-portable-shell.pl: Quoted `wc -l` is not portable
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24BDF49C-E2F2-11E7-8EB4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 16, 2017 at 2:52 PM,  <tboegi@web.de> wrote:
-> [...]
-> Add a check in check-non-portable-shell.pl to find '"' between
-> `wc -l` and '=3D' and hint the user about test_line_count().
->
-> Reviewed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
-> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.p=
-l
-> index 03dc9d2852..fadbb1e5a7 100755
-> --- a/t/check-non-portable-shell.pl
-> +++ b/t/check-non-portable-shell.pl
-> @@ -21,6 +21,7 @@ while (<>) {
->         /^\s*declare\s+/ and err 'arrays/declare not portable';
->         /^\s*[^#]\s*which\s/ and err 'which is not portable (please use t=
-ype)';
->         /\btest\s+[^=3D]*=3D=3D/ and err '"test a =3D=3D b" is not portab=
-le (please use =3D)';
-> +       /\bwc -l.*"\s*=3D/ and err '`"$(wc -l)"` is not portable, please =
-use test_line_count';
+Hans Jerry Illikainen <hji@dyntopia.com> writes:
 
-Nit: Every other "please use" suggestion is parenthesized; for
-consistency, this probably ought to be, as well.
+> Thanks!  t7612-merge-verify-signatures.sh also lacks cleanup for
+> test_must_fail brokenness.  Would you prefer test_when_finished to be
+> included in the two patches as a v3?
 
->         /\bexport\s+[A-Za-z0-9_]*=3D/ and err '"export FOO=3Dbar" is not =
-portable (please use FOO=3Dbar && export FOO)';
+No, I do not want a v3 as these are already in 'next'.  Just like my
+follow-up clean-up you are responding to is [PATCH 3/2], if you want
+further work on it, the preferred method from now on is to send in
+incremental updates on top of what has already been accepted.
+
+
+Thanks.
+
