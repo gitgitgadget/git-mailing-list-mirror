@@ -7,202 +7,184 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B7A31F404
-	for <e@80x24.org>; Sun, 17 Dec 2017 18:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1A71F404
+	for <e@80x24.org>; Sun, 17 Dec 2017 22:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757306AbdLQSD0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Dec 2017 13:03:26 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33205 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757207AbdLQSDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Dec 2017 13:03:25 -0500
-Received: by mail-wr0-f196.google.com with SMTP id v21so1423618wrc.0
-        for <git@vger.kernel.org>; Sun, 17 Dec 2017 10:03:24 -0800 (PST)
+        id S932180AbdLQWtk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Dec 2017 17:49:40 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:45934 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932111AbdLQWtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Dec 2017 17:49:39 -0500
+Received: by mail-wm0-f66.google.com with SMTP id 9so26032628wme.4
+        for <git@vger.kernel.org>; Sun, 17 Dec 2017 14:49:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IBEVJEiK+RgVbZb/m1PUGTlNT280LRJMdB2nMCizLAg=;
-        b=TOv22g77s+u54AhVHksO6jjdfh+I8D+Ir5adAPToW4dLaVoonA2YxlSflN7pHmq9b+
-         /69ech8t5TmdEnAcBrXjMpdraCaZwEpHplEYsONMdb6gMZYxbvGv18/AHT1xYFnArw2C
-         SBiaUVYuck5FvnJ1JPYc2cU0Tex88eZ/1Ra7EN+VRh2yyiwyt9FJ5RtUlEX3N18bHC8+
-         Hgeq5LIzVD6YDcqxbcI39UQ5MZO1YLLyTiectjvEZHhIbEdjt083eKghkTjwpHZXa03z
-         g5W9DH+W7NYiptQlCctHOcE/Kvk9JUVgH+Qml7IXMSarA36gvgHNLdauCq81xhDAP02c
-         byEg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ZMtgbn0JZJp8CQ23RPoStG0uUu4GMAxUJFRcudkEk6c=;
+        b=Y/i+iUVnatUqFmtIHE0w5tPaDZ5fiZiuX3FaQLT4GHxv1dXf1PK58Y6jc5Kr0Cqy2c
+         /hl9O+SEXiJg+8XwPTZ1nKWIhl0VHn0biGU/4XpNJsze49B/AC2c39aH0klYPBFSwSWM
+         V0WDqdmmscZFZ5Ugs730v3duGtlvRtspRspCDhi9M3uWTG5tdV8j8mKboLAzQBn7Kel2
+         UACLDsC9Hnu64XFUJa3GM5IhrwAQe1piEzgisIFMA9ggLB95r+4ziMHdFicadouE8AOb
+         WwHXquahBS5Ymd2tCDtPkqOzmMfqRRt1OI0hVbH9CPEmN/UBm9ml5ccPYJDO+M+FCi6l
+         38Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IBEVJEiK+RgVbZb/m1PUGTlNT280LRJMdB2nMCizLAg=;
-        b=JY6Z+tys7DAqX9fAN1SlJ+FWhKlTkYnDQ4YqFk9BmhM7wX0uWFZc0TtNBQAQ4ZEVci
-         MIV/o5lm9QKgWHvYuogj5SaQQ7qDQ4rRM0luV6z0DXpA5Kj6NoFtvX5S9vDDWoT9gBiN
-         evUJqVpP7u9RySHPLpzQgr0vhJeKZthsQgj1jJz2+jznYcBpnwXT0m2j0vQXUgqQshyK
-         xC1IboJJEe8jZDQsbXdJpTBl0BNBMVxToJhK82eNKpqrKNpaIeGCsyaWGbTe53+5RJvC
-         1QGRUCtt39j0RekUshQn9++Ij3de6oZk5SO8loESS9hZfLrbFkhQvAdzNltUeAM+f9Ot
-         dFfg==
-X-Gm-Message-State: AKGB3mIZRYubodIW28moK4mPHom2z5K+f70QhS7Q3Qg/1xzktNvMe4aI
-        frPiyMSuyV6Mu4AJJlceOZ0=
-X-Google-Smtp-Source: ACJfBovv/NGYObgwkVQW6xBzGOnXfk9DWFgHixokvc49CJzgcvavk1JBmxZQBZc/6SPaj6yP9vLGzw==
-X-Received: by 10.223.163.133 with SMTP id l5mr16334998wrb.83.1513533803954;
-        Sun, 17 Dec 2017 10:03:23 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ZMtgbn0JZJp8CQ23RPoStG0uUu4GMAxUJFRcudkEk6c=;
+        b=NvZHMNT9J38TymVhIPqRgNpani3BOPZrGvPx7JDW44/isx/dZq7wYl8xTe4tTHpDyk
+         V5OLUvBpRDL+0oQpMiEWqWZetwrg/JcNB/CHgEkWKFBinQzt8nM+p9/9bMDQLmfIUI7z
+         uKf7PZJgAQlcKLaKkaFUgKFiTKg3S80wOJNCsU+SI4eUtP5reHgYmikuftMYgBpXVKml
+         Akvck5U4lo0jP4hFeguWYyjdzIPR/t+2xGO2SfdWiAmqAdFS+yizNOg4h9Oxkqxb7pst
+         G/pCIliRJs9rLN+uPZY1e3TQJMqXUEEQW4X7o4uZYh1HJs50+80KLwSBKJc+j77BYND/
+         V97Q==
+X-Gm-Message-State: AKGB3mI7Tgvwg+YZDknVqs5E2b2eXK0aUpzm1I7AesreMecBF+1tDg6n
+        AvnecKw/JCLPTAAKGAzZdTmaW4PB
+X-Google-Smtp-Source: ACJfBosq+EttVFiH+A3RsIEW9taice946acA9vkkcraVQ6rcmS1+PdnvocCSzfq4FDw2p88Gh28oJQ==
+X-Received: by 10.28.6.148 with SMTP id 142mr9797969wmg.26.1513550978135;
+        Sun, 17 Dec 2017 14:49:38 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id 59sm5017907wrs.41.2017.12.17.10.03.21
+        by smtp.gmail.com with ESMTPSA id k19sm26652wre.92.2017.12.17.14.49.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 17 Dec 2017 10:03:22 -0800 (PST)
-Date:   Sun, 17 Dec 2017 18:05:11 +0000
+        Sun, 17 Dec 2017 14:49:36 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Reid Price <reid.price@gmail.com>, git@vger.kernel.org
-Subject: Re: Apparent bug in 'git stash push <subdir>' loses untracked files
-Message-ID: <20171217180511.GA2641@hank>
-References: <CA+HNv10i7AvWXjrQjxxy1LNJTmhr7LE4TwxhHUYBiWtmJCOf_A@mail.gmail.com>
- <20171213230547.GC24597@hank>
- <xmqq4loqplou.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4loqplou.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v2 0/3] fixes for split index mode
+Date:   Sun, 17 Dec 2017 22:51:19 +0000
+Message-Id: <20171217225122.28941-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670
+In-Reply-To: <20171210212202.28231-1-t.gummerer@gmail.com>
+References: <20171210212202.28231-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/16, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > Maybe the best solution would be to introduce 'git reset --hard --
-> > <pathspec>', or maybe someone who knows shell programming a little
-> > better than me has an idea? 
-> >
-> > diff --git a/git-stash.sh b/git-stash.sh
-> > index 1114005ce2..01bf74015e 100755
-> > --- a/git-stash.sh
-> > +++ b/git-stash.sh
-> > @@ -322,10 +322,15 @@ push_stash () {
-> >  
-> >                 if test $# != 0
-> >                 then
-> > +                       git ls-files -z >"$(git rev-parse --git-dir)"/stash-to-remove
-> >                         git reset -q -- "$@"
-> >                         git ls-files -z --modified -- "$@" |
-> >                         git checkout-index -z --force --stdin
-> > -                       git clean --force -q -d -- "$@"
-> > +                       while read -r -d '' to_delete
-> > +                       do
-> > +                               git clean --force -q -d -- "$to_delete"
-> > +                       done <"$(git rev-parse --git-dir)"/stash-to-remove
-> > +                       rm "$(git rev-parse --git-dir)"/stash-to-remove
-> >                 else
-> >                         git reset --hard -q
-> >                 fi
-> 
-> Hmph.  I personally did not care (nor use) pathspec limited stash
-> creation, so I admit that I do not offhand know what this code
-> (before or after the above fix) is trying to do, even though it has
-> been in our tree for some time X-<.
+The previous round was at <20171210212202.28231-1-t.gummerer@gmail.com>.
 
-Yeah unfortunately this has been broken for pathspecs that match
-untracked files since I introduced it :(
+Thanks Brandon, Eric, Szeder, Lars and Junio for the comments on the
+previous round.  
 
-> But judging from the fact that
-> the other side is a mere "git reset --hard" (for the whole tree), I
-> guess for each and every path in the index and/or in the HEAD that
-> match pathspec "$@", you are trying to
-> 
->  - remove it from the index if it is not in HEAD;
-> 
->  - add it to the index if it is not in the index but is in HEAD; or
-> 
->  - reset the index to the version in HEAD if it is in the index.
-> 
-> and then match the working tree version to that of the index?
+Changes since the previous round:
 
-That's correct.  That's how I would have imagined 'git reset --hard --
-<pathspec>'.
+- pass in the_repository to do_read_index_from, so we don't have to
+  special case NULL anymore.
+- free struct repository properly after allocating it in revision.c
+- run the travis tests in the linux-gcc and linux 32-bit builds, to
+  avoid clashes with the GETTEXT_POISON tests.
 
-> I am not convinced that "git reset --hard -- <pathspec>" is a good
-> UI [*1*] but I agree that a low level facility that does these would
-> be quite helpful to implement the then-clause of the above.
+The travis tests now depend on sg/travis-fixes, as running the split
+index tests separately gets simplified with the introduction of the
+'$jobname' variable.  The script falls back gracefully to not runing
+the split index test under linux with gcc and only running the
+"normal" tests there, while the split index tests would still get run
+in the linux 32-bit build.
 
-Thanks a lot for spelling this out below.  After reading that I
-definitely agree that 'git reset --hard -- <pathspec>' wouldn't be a
-good UI, and something like that would belong in checkout.
+Because it's a "soft" dependency I thought having this dependency
+would be okay, but let me know if you it's getting to complicated and
+we can use the environment variables set by travis for now, and then
+switch to the '$jobname' variable when it's merged to next/master.
 
-> But I suspect that you do not have to do shell "logic" nor low-level
-> plumbing update in this case.  Would the attached work?
+I kept the usage of struct repository for worktrees, as I didn't hear
+anything back after my last reply in <20171211213948.GC25616@hank>,
+and don't see a better way of doing it.
 
-Ah interesting, what you have below looks good to me indeed, it
-matches what I'd expect it to do and fixes the bug that was reported.
-Thanks! 
-
-I've taken the liberty to take what you have below and turned into a
-proper patch, giving you authorship of it, as you wrote the code for
-the fix.  Hope that's the appropriate credit for you for this patch.
-
-[...]
-
---- >8 ---
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] stash: don't delete untracked files that match pathspec
-
-Currently when 'git stash push -- <pathspec>' is used, untracked files
-that match the pathspec will be deleted, even though they do not end up
-in a stash anywhere.
-
-Untracked files should be left along by 'git stash push -- <pathspec>'
-unless the --untracked or --all flags are given.  Fix that.
-
-Reported-by: Reid Price <reid.price@gmail.com>
-Test-by: Thomas Gummerer <t.gummerer@gmail.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- git-stash.sh     |  5 ++---
- t/t3903-stash.sh | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 1114005ce2..a979bfb665 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -322,10 +322,9 @@ push_stash () {
+Interdiff below:
+diff --git a/.travis.yml b/.travis.yml
+index c83c766dee..281f101f31 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -39,7 +39,7 @@ env:
  
- 		if test $# != 0
- 		then
--			git reset -q -- "$@"
--			git ls-files -z --modified -- "$@" |
-+			git ls-files -z -- "$@" |
- 			git checkout-index -z --force --stdin
--			git clean --force -q -d -- "$@"
-+			git diff-index -p HEAD -- "$@" | git apply --index -R
- 		else
- 			git reset --hard -q
- 		fi
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 39c7f2ebd7..6952a031b2 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1064,4 +1064,20 @@ test_expect_success 'stash -k -- <pathspec> leaves unstaged files intact' '
- 	test foo,bar = $(cat foo),$(cat bar)
+ matrix:
+   include:
+-    - env: GETTEXT_POISON=YesPlease GIT_TEST_SPLIT_INDEX=YesPlease
++    - env: GETTEXT_POISON=YesPlease
+       os: linux
+       compiler:
+       addons:
+diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
+index e30fb2cddc..f173c9cf2a 100755
+--- a/ci/run-linux32-build.sh
++++ b/ci/run-linux32-build.sh
+@@ -27,4 +27,5 @@ linux32 --32bit i386 su -m -l $CI_USER -c '
+     cd /usr/src/git &&
+     make --jobs=2 &&
+     make --quiet test
++    GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
  '
+diff --git a/ci/run-tests.sh b/ci/run-tests.sh
+index f0c743de94..c7aee5b9ff 100755
+--- a/ci/run-tests.sh
++++ b/ci/run-tests.sh
+@@ -8,3 +8,7 @@
+ mkdir -p $HOME/travis-cache
+ ln -s $HOME/travis-cache/.prove t/.prove
+ make --quiet test
++if test "$jobname" = "linux-gcc"
++then
++	GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
++fi
+diff --git a/read-cache.c b/read-cache.c
+index 4d5c4ad79b..70357febdc 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1898,10 +1898,7 @@ static int do_read_index_from(struct index_state *istate, const char *path,
+ 		split_index->base = xcalloc(1, sizeof(*split_index->base));
  
-+test_expect_success 'stash -- <subdir> leaves untracked files in subdir intact' '
-+	git reset &&
-+	>subdir/untracked &&
-+	>subdir/tracked1 &&
-+	>subdir/tracked2 &&
-+	git add subdir/tracked* &&
-+	git stash -- subdir/ &&
-+	test_path_is_missing subdir/tracked1 &&
-+	test_path_is_missing subdir/tracked2 &&
-+	test_path_is_file subdir/untracked &&
-+	git stash pop &&
-+	test_path_is_file subdir/tracked1 &&
-+	test_path_is_file subdir/tracked2 &&
-+	test_path_is_file subdir/untracked
-+'
-+
- test_done
+ 	base_sha1_hex = sha1_to_hex(split_index->base_sha1);
+-	if (repo)
+-		base_path = repo_git_path(repo, "sharedindex.%s", base_sha1_hex);
+-	else
+-		base_path = git_path("sharedindex.%s", base_sha1_hex);
++	base_path = repo_git_path(repo, "sharedindex.%s", base_sha1_hex);
+ 	ret = do_read_index(split_index->base, base_path, 1);
+ 	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
+ 		die("broken index, expect %s in %s, got %s",
+@@ -1921,7 +1918,7 @@ int read_index_for_repo(const struct repository *repo)
+ 
+ int read_index_from(struct index_state *istate, const char *path)
+ {
+-	return do_read_index_from(istate, path, NULL);
++	return do_read_index_from(istate, path, the_repository);
+ }
+ 
+ int is_index_unborn(struct index_state *istate)
+diff --git a/revision.c b/revision.c
+index 9d8d9b96d1..34e1e4b799 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1358,6 +1358,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
+ 		if (repo_read_index(repo) > 0)
+ 			do_add_index_objects_to_pending(revs, repo->index);
+ 		discard_index(repo->index);
++		free(repo);
+ 	}
+ 	free_worktrees(worktrees);
+ }
+
+Thomas Gummerer (3):
+  repository: fix repo_read_index with submodules
+  prune: fix pruning with multiple worktrees and split index
+  travis: run tests with GIT_TEST_SPLIT_INDEX
+
+ cache.h                 |  1 +
+ ci/run-linux32-build.sh |  1 +
+ ci/run-tests.sh         |  1 +
+ read-cache.c            | 16 ++++++++++++++--
+ repository.c            | 13 ++++++++++++-
+ repository.h            |  2 ++
+ revision.c              | 14 +++++++++-----
+ 7 files changed, 40 insertions(+), 8 deletions(-)
+
 -- 
-2.15.1.390.ga48b24a585.dirty
+2.15.1.620.gb9897f4670
 
