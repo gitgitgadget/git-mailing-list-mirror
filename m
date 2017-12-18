@@ -2,87 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24BC21F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 21:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 477B81F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 21:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934737AbdLRVez (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 16:34:55 -0500
-Received: from mail-io0-f182.google.com ([209.85.223.182]:44311 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934193AbdLRVey (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 16:34:54 -0500
-Received: by mail-io0-f182.google.com with SMTP id w127so11364502iow.11
-        for <git@vger.kernel.org>; Mon, 18 Dec 2017 13:34:54 -0800 (PST)
+        id S935438AbdLRVqF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 16:46:05 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:42997 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933574AbdLRVqE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 16:46:04 -0500
+Received: by mail-wm0-f47.google.com with SMTP id b199so472531wme.1
+        for <git@vger.kernel.org>; Mon, 18 Dec 2017 13:46:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=sjKhwUBlE0CeQUTvqpzkLle6nNyqBbAM718Dwrsl8W4=;
-        b=SitB+aMb8uORPWPJlAke1830TRty9Cqt+kIxq+265qPoSOhz+j36NlIQifx1lICNPK
-         iAq12tKxnVnyOv90mAyYgwIRlSC48KBs/R/JNwjQZ7UuHuLHg57r5uGx7qJ3uu5sM+X3
-         leXkZRlMxufLPyaquCqzyGfF6o2Z4rYAovvJfuXu+j/zrYb9Y40h3Oa5kD908gbHGVFS
-         1Jl2T10yusQ91c9drcdI2xSsqL1+wbZ5zBymQzwJLN/yFGPyDeBpJJbcoo7WGPLGce+G
-         cl+v1GYR9sf6+AXpA/MheqiKISzv/MzmLXjvIpyPzvfBqIWPLeHaFaEVIyU+9DxMjUHj
-         D+sg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RX6H8NmJEIls7txdl55kUNpf/bWbLukVYYnHyjykdXU=;
+        b=gqRLX6rFvsO48dwKIkFt2JGq5Ww8CvleO/Gk+oW97FdRXmXz8k0zE5lDcSMtP2dS2M
+         4F40QpIc347vsyLORXo8HWtFwX1o8if/v2sFi6Hv7OSaDgWDFgE2KV+6H6qqeVcTocPE
+         rfqz8NjhBvtgElMx1s5ch3YxebtALR3wgvAAHZtISsydk07ivAson/UZofH1/GJksDVb
+         R96Cn9Sm9tSheHoaqnmuifgifNtLo32Wc0w+i9KIG80Idfdvfvi/GwdaPmoi47Krqf7E
+         AtraUpFwi78COFOHp5W7kENK+dx+z/owIfYmCx9I0BSBVq8FoOsxOHpumh0DSXrsDLAf
+         pvmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=sjKhwUBlE0CeQUTvqpzkLle6nNyqBbAM718Dwrsl8W4=;
-        b=s2VOBAODZo5+MRZCLMh/GHHXA9NMkNB0x/5q65/X1XrYLnPLE7+ayqXbNCMuawiqMf
-         pt9t/ynIHNlndO5GGHZ0SgNC+Om0HRG3OFaAi+c4LfKoS4dxPMuTuiJFqhEIjVqYW6/v
-         tkFSLSZIxYop54jGs2cJr8cR9Izfb91yzQ2e4gK30MucQYtL74Nm4z1PzF9SWQVY6GrZ
-         qLw76A3kJuuhKZIzfkID5ILE8Pd3Jb8O7EHzHwRQ/cyHxVuy6SY//6W/dSCXX8nthICL
-         J81FY8Lu4SOiYhEzNvmEUbcBP4JiNl+EzUpZoqYsjPtrZdlfMVGGGmZ2eXQDOdzE3VWE
-         Wxnw==
-X-Gm-Message-State: AKGB3mLrnaJPkZ4kd4qnAi2wj/VCeXjQD1Zv8dnxB6D8bC9n58iEEJwo
-        eZY7gLRnP9mQKzYI+ywwq9R3d5ZdHwdLtdqDF1E=
-X-Google-Smtp-Source: ACJfBouzC80PYdf9FzbPyomuREREolSuqIWte5DnwG9VpW46Aq96OZLjdkWXkkIIeF2gYUDyVkArkILX6aEdraX8eG0=
-X-Received: by 10.107.47.162 with SMTP id v34mr1320804iov.255.1513632893572;
- Mon, 18 Dec 2017 13:34:53 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.2.118.74 with HTTP; Mon, 18 Dec 2017 13:34:23 -0800 (PST)
-In-Reply-To: <CAPig+cTmRiSfY9+DsvEB7X_cL4AiAmq0FUb-CoDyc3HNDJLtow@mail.gmail.com>
-References: <CAJ4+5mHMD+yW1ZDD6KJSnMtyygLUGiHzNPgPDZUi7+KUvOczkg@mail.gmail.com>
- <CAPig+cTmRiSfY9+DsvEB7X_cL4AiAmq0FUb-CoDyc3HNDJLtow@mail.gmail.com>
-From:   Seth Raymond <seth.c.raymond@gmail.com>
-Date:   Mon, 18 Dec 2017 16:34:23 -0500
-Message-ID: <CAJ4+5mHt-oJTYEeRUeTynbZ5MRNT_CXWQSHoTUP_i-gWeqvmuA@mail.gmail.com>
-Subject: Re: commit-msg hook possible bad behavior with -F <file>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=RX6H8NmJEIls7txdl55kUNpf/bWbLukVYYnHyjykdXU=;
+        b=pueXm+bg/9DU8Lnr67KHD+VjsvewhMeC7+0y9b9/hGpOLz5eNQq0uA2LCqA5O2Ocp7
+         NZTKA3qdtpuiAnNSKTxlFwfhCpC98fwltEY2iGYcOWaL2h1aUXWlpjXVnb69xOf7gTwy
+         B/WSwJtJjCmgpja+hjmchN4jX/N9AI8IeOiQcPcqW8UxMFzE9qdnoYV4X8aJUntXB23v
+         u+J6I/gxu+XKjjS8DDLFn/LDdXC9f207t3qmejMO7Yx9QjsaF85CjFdG2CK5hKED8mW+
+         yvnYDBtzVIgsHoR9b4GJOQEz9x68l5dSG/42VUj781R+9NNuIiMZn16gtNI0hYb1RP/S
+         eCWw==
+X-Gm-Message-State: AKGB3mKTHx2tqnIxxaPX44c3k6Xlv6+UjWBpLvT9XL3MRz5Fe+G8TyRh
+        Lkw+PamHOFOsrCAbdeEKfTw=
+X-Google-Smtp-Source: ACJfBovOqUcKaC8mDw8ZHSfyUBdRo6BnRxKQvv53YW7E8teJmDuJEYlt0eQ9mc3rp5XWfCGbT6D2Pg==
+X-Received: by 10.28.35.4 with SMTP id j4mr655493wmj.55.1513633563185;
+        Mon, 18 Dec 2017 13:46:03 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB5261.dip0.t-ipconnect.de. [93.219.82.97])
+        by smtp.gmail.com with ESMTPSA id m25sm4392958wrf.56.2017.12.18.13.46.02
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 18 Dec 2017 13:46:02 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2 0/8] Travis CI cleanups
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20171216125418.10743-1-szeder.dev@gmail.com>
+Date:   Mon, 18 Dec 2017 22:46:02 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E20A2A7B-232D-4873-A026-E8CB104A84BF@gmail.com>
+References: <20171211233446.10596-1-szeder.dev@gmail.com> <20171216125418.10743-1-szeder.dev@gmail.com>
+To:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I see that line of thinking, and agree that it makes sense. I'm having
-problems with an IDE (Qt Creator) and I think I know where the problem
-lies now. I believe Qt Creator doesn't actually call git commit until
-after the user generates a message in the message box, meaning my
-prepare-commit-msg hook is run after I've already written a message
-out to <file>.
 
-I don't think there's a fix to it due to the IDE's seemingly-poor
-implementation of the git plugin. Thanks for the clarification!
+> On 16 Dec 2017, at 13:54, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+>=20
+> This is a reroll of 'sg/travis-fixes'.
+>=20
+> Changes since the previous round:
+>=20
+> - Patch 1 got updated following the discussion:
+>=20
+>   - I went with enabling tracing executed commands everywhere,
+>     including the Windows build job, except where we know it causes =
+way
+>     too much clutter, which is currently only
+>     'ci/print-test-failures.sh'.
+>=20
+>   - Also enable this tracing in 'ci/run-linux32-build.sh', which
+>     doesn't source 'ci/lib-travisci.sh' as it's run inside a Docker
+>     container.
+>=20
+>   - The commit message got updated accordingly, including a note about
+>     the Windows build job's secret token.
+>     I would like to get an Acked-by: from Dscho on this patch before =
+it
+>     gets merged.
+>=20
+> - Patches 5-8 are new.  They are various fixes/cleanups unrelated to
+>   the Travis CI scriptification, but I don't think it's worth to have
+>   them in separate patch series.
 
-On Mon, Dec 18, 2017 at 1:31 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Dec 18, 2017 at 11:43 AM, Seth Raymond <seth.c.raymond@gmail.com> wrote:
->> If a commit is invoked with -F <file>, indicating that the commit
->> message should be read from an existing file, the the
->> prepare-commit-msg and commit-msg hooks do not operate on <file>. The
->> first argument to the hook is always <git_repo>/COMMIT_EDITMSG, rather
->> than <file>.
->>
->> Am I wrong in this line of thinking?
->
-> The content of <file> gets copied into COMMIT_EDITMSG, so the hook
-> does see the supplied message, as expected. Given that the hook is
-> allowed to edit the message, it makes sense that it works on
-> COMMIT_EDITMSG rather than on <file> directly.
+This cleanup series looks very good. ACK. Thank you, Gabor!
+
+The is the only potential nit I see:
+=
+https://public-inbox.org/git/8F53EF33-6FDA-484C-91A4-49CF24C0B417@gmail.co=
+m/
+
+- Lars
+
+>=20
+> SZEDER G=C3=A1bor (8):
+>  travis-ci: use 'set -x' in select 'ci/*' scripts for extra tracing
+>  travis-ci: introduce a $jobname variable for 'ci/*' scripts
+>  travis-ci: move setting environment variables to 'ci/lib-travisci.sh'
+>  travis-ci: set GIT_TEST_HTTPD in 'ci/lib-travisci.sh'
+>  travis-ci: don't install default addon packages for the 32 bit Linux
+>    build
+>  travis-ci: don't install 'language-pack-is' package
+>  travis-ci: save prove state for the 32 bit Linux build
+>  travis-ci: only print test failures if there are test results
+>    available
+>=20
+> .travis.yml                | 28 ++++++----------------------
+> ci/install-dependencies.sh |  8 +++-----
+> ci/lib-travisci.sh         | 38 ++++++++++++++++++++++++++++++++++----
+> ci/print-test-failures.sh  |  9 +++++++++
+> ci/run-linux32-build.sh    |  3 +++
+> ci/run-linux32-docker.sh   |  1 +
+> 6 files changed, 56 insertions(+), 31 deletions(-)
+>=20
+> --=20
+> 2.15.1.429.ga000dd9c7
+>=20
+
