@@ -6,68 +6,95 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A30F91F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 14:21:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A716E1F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 15:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758232AbdLROVP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 09:21:15 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:40138 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752858AbdLROVO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 09:21:14 -0500
-Received: from [10.31.178.4] (helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1eQwHx-0004yF-Fe; Mon, 18 Dec 2017 09:21:07 -0500
-Date:   Mon, 18 Dec 2017 09:21:00 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com
-Message-ID: <20171218142100.3mhshemnooc3sykv@hopa.kiewit.dartmouth.edu>
-References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
- <20171211225615.GC214273@aiede.mtv.corp.google.com>
- <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
- <20171216220120.GB6217@genre.crustytoothpaste.net>
- <CA+P7+xpFyD0zuOz7XSCc6cV1T1zu6j-gZD=EMQs-t2WPxi1EMA@mail.gmail.com>
- <20171218064042.GA25733@sigill.intra.peff.net>
+        id S1752943AbdLRPKv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 10:10:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42186 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752799AbdLRPKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 10:10:50 -0500
+Received: (qmail 7174 invoked by uid 109); 18 Dec 2017 15:10:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Dec 2017 15:10:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26415 invoked by uid 111); 18 Dec 2017 15:11:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Mon, 18 Dec 2017 10:11:10 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Dec 2017 10:10:43 -0500
+Date:   Mon, 18 Dec 2017 10:10:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
+Message-ID: <20171218151043.GA9449@sigill.intra.peff.net>
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20171218064042.GA25733@sigill.intra.peff.net>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-SA-Exim-Connect-IP: 10.31.178.4
-X-SA-Exim-Rcpt-To: peff@peff.net, jacob.keller@gmail.com, sandals@crustytoothpaste.net, gitster@pobox.com, jrnieder@gmail.com, git@vger.kernel.org, kyle@kyleam.com
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global"
- or just a bug?
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Dec 16, 2017 at 01:12:16PM +0100, René Scharfe wrote:
 
-On Mon, 18 Dec 2017, Jeff King wrote:
+> prepare_revision_walk() allows callers to take ownership of the array of
+> pending objects by setting the rev_info flag "leak_pending" and copying
+> the object_array "pending".  They use it to clear commit marks after
+> setup is done.  This interface is brittle enough that it requires
+> extensive comments.
+> 
+> Provide an easier way by adding a function that can hand over the array
+> to a caller-supplied output parameter and converting all users of the
+> flag "leak_pending" to call prepare_revision_walk_extended() instead.
 
-> To complete that abstraction it seems like reading via "--global" should
-> read from both (in the same precedence order that normal config lookup
-> uses).
+I think this is _better_, but it's still kind of a funny interface.
 
-FWIW +1 from me on that ;)
+The root of the matter is that the revision-walking code doesn't clean
+up after itself. In every case, the caller is just saving these to clean
+up commit marks, isn't it?
 
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Could we instead have an interface like:
+
+  revs.clear_commit_marks = 1;
+  prepare_revision_walk(&revs);
+  ...
+  finish_revision_walk(&revs);
+
+where that final function would do any cleanup, including clearing the
+commit marks. I suspect there are other small bits that get leaked
+because there's not really any "destructor" for a revision walk.
+
+It's not as flexible as this whole "make a copy of the pending tips"
+thing, but it keeps all of the details abstracted away from the callers.
+
+Alternatively:
+
+> +`prepare_revision_walk_extended`::
+> +
+> +	Like prepare_revision_walk(), but allows callers to take ownership
+> +	of the array of pending objects by passing an object_array pointer
+> +	as the second parameter; passing NULL clears the array.
+
+What if we just got rid of this function and had callers do:
+
+  object_array_copy(&old_pending, &revs);
+  prepare_revision_walk(&revs);
+  ...
+  clear_commit_marks_for_object_array(&old_pending);
+
+That sidesteps all of the memory ownership issues by just creating a
+copy. That's less efficient, but I'd be surprised if it matters in
+practice (we tend to do one or two revisions per process, there don't
+tend to be a lot of pending tips, and we're really just talking about
+copying some pointers here).
+
+-Peff
