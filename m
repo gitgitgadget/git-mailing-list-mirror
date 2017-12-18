@@ -7,145 +7,124 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DEF41F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 19:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 169561F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 19:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935327AbdLRTS3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 14:18:29 -0500
-Received: from mout.web.de ([212.227.15.3]:55835 "EHLO mout.web.de"
+        id S935361AbdLRTSb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 14:18:31 -0500
+Received: from mout.web.de ([212.227.15.3]:65431 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932756AbdLRTS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S935172AbdLRTS2 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 18 Dec 2017 14:18:28 -0500
 Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2ZtN-1fJOAL3t8H-00sNqo; Mon, 18
- Dec 2017 20:18:20 +0100
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
- <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
- <20171208101455.GC1899@sigill.intra.peff.net>
- <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
- <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
- <20171208212832.GC7355@sigill.intra.peff.net>
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M5Jip-1fDKgT22n9-00zYab; Mon, 18
+ Dec 2017 20:18:22 +0100
+Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+ <20171218151043.GA9449@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f1584860-d0d6-db82-0a49-021924c3e2b7@web.de>
-Date:   Mon, 18 Dec 2017 20:18:17 +0100
+Message-ID: <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
+Date:   Mon, 18 Dec 2017 20:18:19 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.0
 MIME-Version: 1.0
-In-Reply-To: <20171208212832.GC7355@sigill.intra.peff.net>
+In-Reply-To: <20171218151043.GA9449@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:RN5mnbxAiVibKwj53faG9JHg21NpquugcQpUeZSOrWoTSiYOEev
- mANvSwf+tDqizRyi4zDBSyAJ/vIKdxnAtIj91AIJCajfQlMLowzeNicmeYXQFkpaqmNLfay
- dulSfLCS3E0bsLjEmPKkh4synU6vExPDVGcSoJc8TPk4yJrMR0rtcZCzaqfokoVqduLUiaO
- ggQYng9weWn3w7Uovj1Hw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LYoW/Yry/zw=:6rrUnKK2EGVgV2zzvIw5yF
- dpni9D/fcKXm7zJ8iI+5keSx1PxCnUITDCnKDlUAUgJYbq+vG6b/GE34ljPwz8oosGAfWFnzR
- Nlkiihbk+MlQvVZKLWA3YiYfczPWdOoSWMj1pbFhcNXF5tEFYbSVOi8gP7QvDX5ep3pe2NKEI
- tTxj626uS8Z/1z6+OMIoT41EQYseYhiUzslQZEmDekCTmZ6aSBOsLcsH+J+XEcKXEANyK6zOH
- Vo3sYr7QGUYa1NzNEy9mYvcU5CVHQoKRqe3OCK699T5O3p28fS6YE3bnz8aa44EdCzGy9v+wB
- EHYrVItUOtpWa+ddNTAKkNrMO4M44BdqP4GO9Xw+VktRBc0XV+ZIhArgqVRI5vrNyCf4hj1ec
- 88DYfbQ4CLccKih1J577CAI1ASd4kmGJXUfEpkepFktyTjkzOYsAXHooA8cxJmoDiIMFObQFr
- WSNi1DP4zkHfg3gBBByeEjUO+R75S9hHnPrauf+FycLNIwmb1R2t7JUrpkp7hCfKwSWp0Ondc
- pVCgc2Lmb8bWhyQMvqokFwDLaRwQJJMdb6o2VoBVyG3cY/uApb2zgf2nDr2qVqQj60LIK6ZGw
- PTtg7HMvtupY2CTCDPCF9CxIdeGc/1XtejzlHmJfClml0gHzsTJcpN1p92bPLXSO7Heos2pHD
- v4h+OHjFiLKVKkmzjUz4fsQRhQ4AEux1ls3fiM/mLQtG8RVAVOu65kztuqPwMnvAmamqW+dnD
- PaExUmVEeuZ7xZTJ6FXOKCKtld9YWWnbhbSdDFp4lhCSD6kYB2N5Catp9bfvOOPWQbgZ8S7Us
- CNEG47kKHlq5039W1mveFay326Q4b8gkvyRKFa52AvzY9FEH5c=
+X-Provags-ID: V03:K0:N7BNAf4GaOEIHidFv2eMHXMB48yZjvinIoit22/qZO7DPfH+y/p
+ TF55nhrPOIyJwVKyE/+F58/pcsfRuliFthxdjXe2qQg0hPLXgSGkaDHLVS/UU0o5wInFI0W
+ Ro0bUHzqkABO8V60pvMnFdoOrUvC4lOjKJsZGlDhYdkL/r1LyJ5p6L/OkY3owzhMFBgjDFf
+ wxDEAzDTaq15q2udNfAaw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qefV3qY5NV8=:31DHe4Y1ydAAHvuc2Zgofm
+ 6Mh6mFJUrF/ph/xlTOk+OfebKB2uXYPQ/IDanOz2Vb0aq5RWNW8fQpmqeNxfY8dq9Xe5+Mgca
+ LSRSmjLkEI0aiOjsDF1uOE/MjvEWsFGdu7evLWVef02tY8IH7ZyFittpaFKO8nfkvAwybOjPi
+ EuIGDw2StzHEz9zdp5Dfcw6bGhVSnMBJjlx9a3aPAO4Q2G090rePpOiyF1SWRCHIcY3YIJ91i
+ Id/HcyqS1IlKNmTU5UVJukXS7gljsFu/vVXhELcvx3T2P9wTggK0OIzZ8VMjVHGjNUdXXEjHA
+ u0z39Tf1LQP8lPU9NH00PYZHjcbkkAv40eolwiPalCAE1+6kKDulUkHWHwsub8Q/We6oxhAWt
+ n1dNwLWixD/YtTEfgyL+BhPQqyX1EOnfHd6P2MbNUCMAVzHyorLaQYFnW7hlQCl83SAR/8MJ2
+ FZEuqY4gTROTvC6zPXvsyKGDIj/KrTRwY1vFU0elqr0qOns+9T2JZon7SrGJg2/0yA/bUE5lO
+ VbO++2zrlvpMvehX7USYnMyhAQBs5f0PX34tWE2hZhFOxE5ECb3OCNIWi1QQ+oEpR1Xi1BVlp
+ /E2nW4JjzM2+odXcwXodoVp7VSIBkXwFtoi89t3FFweCJoW8PJV3n0UDLrfVJOatiylS4mSYU
+ KUhPkHqI994aSnwVtx/GyEghI9GUjwWn5hTTu9xbs+PgoLcJRZH/yym6MHYUM9vAy2KQrc4Z3
+ guyOy0BE55L2t5REipH9kj8kpfNcH/KbNUVzSRdX4bDtyVbrxb13WtPS6dAvNSivnm0LSuqK6
+ HIg0FkGxZO+NxiHugAvSO/2SHmOekK7cLAG3NbCzGmq47FeBfc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.12.2017 um 22:28 schrieb Jeff King:
-> On Fri, Dec 08, 2017 at 10:37:08AM -0800, Junio C Hamano wrote:
+Am 18.12.2017 um 16:10 schrieb Jeff King:
+> On Sat, Dec 16, 2017 at 01:12:16PM +0100, René Scharfe wrote:
 > 
->>> The two modes (dup/nodup) make string_list code tricky.  Not sure
->>> how far we'd get with something simpler (e.g. an array of char pointers),
->>> but having the caller do all string allocations would make the code
->>> easier to analyze.
+>> prepare_revision_walk() allows callers to take ownership of the array of
+>> pending objects by setting the rev_info flag "leak_pending" and copying
+>> the object_array "pending".  They use it to clear commit marks after
+>> setup is done.  This interface is brittle enough that it requires
+>> extensive comments.
 >>
->> Yes.
->>
->> It probably would have been more sensible if the API did not have
->> two modes (instead, have the caller pass whatever string to be
->> stored, *and* make the caller responsible for freeing them *if* it
->> passed an allocated string).
+>> Provide an easier way by adding a function that can hand over the array
+>> to a caller-supplied output parameter and converting all users of the
+>> flag "leak_pending" to call prepare_revision_walk_extended() instead.
 > 
-> I'd actually argue the other way: the simplest interface is one where
-> the string list owns all of its pointers. That keeps the
-> ownership/lifetime issues clear, and it's one less step for the caller
-> to have to remember to do at the end (they do have to clear() the list,
-> but they must do that anyway to free the array of items).
+> I think this is _better_, but it's still kind of a funny interface.
 > 
-> It does mean that some callers may have to remember to free a temporary
-> buffer right after adding its contents to the list. But that's a lesser
-> evil, I think, since the memory ownership issues are all clearly
-> resolved at the time of add.
-> 
-> The big cost is just extra copies/allocations.
+> The root of the matter is that the revision-walking code doesn't clean
+> up after itself. In every case, the caller is just saving these to clean
+> up commit marks, isn't it?
 
-An interface requiring callers to allocate can be used to implement a
-wrapper that does all allocations for them -- the other way around is
-harder.  It can be used to avoid object duplication, but duplicates
-functions.  No idea if that's worth it.
- 
->> For the push_refs_with_push() patch you sent, another possible fix
->> would be to make cas_options a nodup kind so that the result of
->> strbuf_detach() does not get an extra strdup to be lost when placed
->> in cas_options.  With the current string-list API that would not
->> quite work, because freeing done in _release() is tied to the
->> "dup/nodup" ness of the string list.  I think there even is a
->> codepath that initializes a string_list as nodup kind, stuffs string
->> in it giving the ownership, and then flips it into dup kind just
->> before calling _release() only to have it free the strings, or
->> something silly/ugly like that.
-> 
-> Yes, the first grep hit for NODUP is bisect_clean_state(), which does
-> this. I think it would be more clear if we could do:
-> 
-> diff --git a/bisect.c b/bisect.c
-> index 0fca17c02b..7c59408a13 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -1060,8 +1060,7 @@ static int mark_for_removal(const char *refname, const struct object_id *oid,
->   			    int flag, void *cb_data)
->   {
->   	struct string_list *refs = cb_data;
-> -	char *ref = xstrfmt("refs/bisect%s", refname);
-> -	string_list_append(refs, ref);
-> +	string_list_appendf(refs, "refs/bisect%s", refname);
->   	return 0;
->   }
->   
-> @@ -1070,11 +1069,10 @@ int bisect_clean_state(void)
->   	int result = 0;
->   
->   	/* There may be some refs packed during bisection */
-> -	struct string_list refs_for_removal = STRING_LIST_INIT_NODUP;
-> +	struct string_list refs_for_removal = STRING_LIST_INIT_DUP;
->   	for_each_ref_in("refs/bisect", mark_for_removal, (void *) &refs_for_removal);
->   	string_list_append(&refs_for_removal, xstrdup("BISECT_HEAD"));
+bundle also checks if the pending objects exists.
 
-The xstrdup() here would have to go.
-
->   	result = delete_refs("bisect: remove", &refs_for_removal, REF_NO_DEREF);
-> -	refs_for_removal.strdup_strings = 1;
->   	string_list_clear(&refs_for_removal, 0);
->   	unlink_or_warn(git_path_bisect_expected_rev());
->   	unlink_or_warn(git_path_bisect_ancestors_ok());
+> Could we instead have an interface like:
 > 
+>    revs.clear_commit_marks = 1;
+>    prepare_revision_walk(&revs);
+>    ...
+>    finish_revision_walk(&revs);
 > 
-> Having a "format into a string" wrapper doesn't cover _every_ string you
-> might want to add to a list, but my experience with argv_array_pushf
-> leads me to believe that it covers quite a lot of cases.
+> where that final function would do any cleanup, including clearing the
+> commit marks. I suspect there are other small bits that get leaked
+> because there's not really any "destructor" for a revision walk.
+> 
+> It's not as flexible as this whole "make a copy of the pending tips"
+> thing, but it keeps all of the details abstracted away from the callers.
+> 
+> Alternatively:
+> 
+>> +`prepare_revision_walk_extended`::
+>> +
+>> +	Like prepare_revision_walk(), but allows callers to take ownership
+>> +	of the array of pending objects by passing an object_array pointer
+>> +	as the second parameter; passing NULL clears the array.
+> 
+> What if we just got rid of this function and had callers do:
+> 
+>    object_array_copy(&old_pending, &revs);
+>    prepare_revision_walk(&revs);
+>    ...
+>    clear_commit_marks_for_object_array(&old_pending);
+> 
+> That sidesteps all of the memory ownership issues by just creating a
+> copy. That's less efficient, but I'd be surprised if it matters in
+> practice (we tend to do one or two revisions per process, there don't
+> tend to be a lot of pending tips, and we're really just talking about
+> copying some pointers here).
 
-It would fit in with the rest of the API -- we have string_list_append()
-as a wrapper for string_list_append_nodup()+xstrdup() already.  We also
-have similar functions for strbuf and argv_array.  I find it a bit sad
-to reimplement xstrfmt() yet again instead of using it directly, though.
+This was done before I added the leak_pending flag.
+
+t5502 and t5571 have test cases with ca. 1000 pending objects, t5551
+and t5541 with ca. 2000, p5310 more than 8000.  That's just a few KB.
+
+I don't know if there can be real-world use cases with millions of
+entries (when it would start to hurt).
+
+Why does prepare_revision_walk() clear the list of pending objects at
+all?  Assuming the list is append-only then perhaps remembering the
+last handled index would suffice.
 
 René
