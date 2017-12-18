@@ -2,99 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5420C1F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 18:19:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B77E51F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 18:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937852AbdLRSR1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 13:17:27 -0500
-Received: from mail-io0-f169.google.com ([209.85.223.169]:44073 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933403AbdLRSQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 13:16:57 -0500
-Received: by mail-io0-f169.google.com with SMTP id w127so10774380iow.11
-        for <git@vger.kernel.org>; Mon, 18 Dec 2017 10:16:57 -0800 (PST)
+        id S1760040AbdLRSWV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 13:22:21 -0500
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:44055 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760032AbdLRSWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 13:22:16 -0500
+Received: by mail-qk0-f180.google.com with SMTP id h19so19500411qkj.11
+        for <git@vger.kernel.org>; Mon, 18 Dec 2017 10:22:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NJ1wC3nWSnHFAbnFJLYtsp69hASDdd3nginsyaXmrMQ=;
-        b=WqYEtMr+WUCZP068x9wZj+HbYEnR7Tb908Z+k3cbbPgc0XiFWbAGRxnP1wAXSdynY8
-         UmuMJilp814qD1hL1JeB2ARAY1G3EIH2bCyYOhkZcWef+/+AX+/tPDvxtxBw9UR/84Ad
-         VrrvAjfzcbXsAQogvljnsfE2gYHsulQvBa7Ji/gOBdYDhRi+Bty7DK3Ec5mvPkWRLJTU
-         qEVTX5apNT/GziXBjmwT1sthLCSUpJilTDGuikRQ4kHKVG4juY0An2bTplu8KJeqCPok
-         YVpmxd77hBMIfnMeDzHRR/VeMze+HwzCjSUupeIKIXZbjziuYZuLOdkus7HynJr0kRDV
-         m97g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=r72uhj1khnkh2ja3dPzocP0QNwvZVPneZ95gVvs2TdE=;
+        b=NNyBxPRovWPAq3Dfy+DpNaqSdH/7sTOBKSZe5sfq3u2RM6dPZFhcjD5CH0nqcgYfmQ
+         ed7e4eAIYZ5Q5NOLXFDPxgj8hS1mPHl8Sl8JiD5H3wSBcJ2LN3QWlXN2TOMQthwa1bGb
+         2++GYBiZg5fwPO/76FrkBN+APaawajj9xCKNiCRXpsVDaD3t3W5Vhee9eVU9CkNel60B
+         Kz6dh5im3NE2Pv8a6bAtTBUdeGYjwwHO6SHgKiUSAzvXEJevaLmSqUC6slIH8H9ETfXE
+         kwn/KcEGkOeWuKC5FvAFAVPeZhBK4VWEJmJk6N0122XECGMarpPa1xkYJhxs5e5mnsiP
+         ZJTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NJ1wC3nWSnHFAbnFJLYtsp69hASDdd3nginsyaXmrMQ=;
-        b=d1Mg89pwgofZQ+9aP/S8GwDLAbD3+ZMo++ebMTkYUWA5sldyt/UkHjD7677zRVV900
-         7vmpeOq3Xwnm6tX0LYrxxGMD5C9viCV0GvJu+MZv8torMJ7bKA+xgpSOKBxwvhvJAp4S
-         N0ShBJSFeczFFwnAkGTVQov/Q/QOD0M/7wjIrDpWo+2v8OQ3U4HW3uQdyovoxMSX14t6
-         xKlsljdc+4k+TeXO9evnl5TTwCDD0S/OdqQCKefKqu3gaBr3Sr3q4b6T+LwQdI/rFg1E
-         l/hlKRtLALmeYUINocLE0cgZNNPrk7X/UC8Ni+mXBuotreU8/eE4xt4npxWWhay5EsI/
-         eUXw==
-X-Gm-Message-State: AKGB3mLvK93ix0ld2E++W+wVTfr1M3rGdNc3AKzMpZMNdAKqAug1TEbV
-        YKyRf1Afj4rSugJ7ax3nz03q8A==
-X-Google-Smtp-Source: ACJfBovBcEFMCfQpNWeWVlrtYt+tlxeGg5BaLbFbIIHXqXSb4yl/R2yDsATpzm7VJvblfKPHCZ81Tg==
-X-Received: by 10.107.83.19 with SMTP id h19mr792938iob.208.1513621016450;
-        Mon, 18 Dec 2017 10:16:56 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:1883:9083:6c1f:dfbe])
-        by smtp.gmail.com with ESMTPSA id e82sm6761467iof.34.2017.12.18.10.16.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Dec 2017 10:16:55 -0800 (PST)
-Date:   Mon, 18 Dec 2017 10:16:55 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "Carlsson, Magnus" <Magnus.Carlsson@arris.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Fetching commit instead of ref
-Message-Id: <20171218101655.16105728beb82d38732e48a0@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=r72uhj1khnkh2ja3dPzocP0QNwvZVPneZ95gVvs2TdE=;
+        b=YwHs6b5vuKOTAjQAdF7DODsHqPDX3yZVCQdZDu9iC6Cg9rsrs8KIqeM4W5xwxTGsWr
+         5CeVhokhz2eM022O287eXsITDmGBH1BWlOMK9e4KfPpcHOJ30SY5pz9SU7f1C9iERArr
+         8SbDZ/e7pioEJDGTgeUtsUhHhgvS3oqAoOjZkYbdybYn+DS20L0rv6iPAj2Ya2fBlTq+
+         oSvfbhA75vXuSdQUGH1qS8Ip5l1831Sy3Kx3KEA897zlJL3NJzukczCll1sPnFx7UMWU
+         j5ZB32J137/bJp8nchzX1hc+23cxkrL550OyD2TtZ1tG3p1SN7u7HsC7oSnR+5td2Zex
+         +C+g==
+X-Gm-Message-State: AKGB3mJLB0VrOg4NjqFKLcJ6B4YL7PpWxGkwKHR7w3elmudd7R1xztkk
+        TZ44kBAahRMigGfp+GSx7coaupV4Hu08Z6FYLg4utQ==
+X-Google-Smtp-Source: ACJfBovCpK/oAI48LrV6ojwot8azcb/4o4uLcPJyl/GseOQLGwcOYtQtzvwdmRGHfEpDnMowwQBokc2y7eVkDbQj/L4=
+X-Received: by 10.55.9.145 with SMTP id 139mr931646qkj.336.1513621335768; Mon,
+ 18 Dec 2017 10:22:15 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.140.85.179 with HTTP; Mon, 18 Dec 2017 10:22:15 -0800 (PST)
 In-Reply-To: <1513600223353.28799@arris.com>
 References: <1513600223353.28799@arris.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 18 Dec 2017 10:22:15 -0800
+Message-ID: <CAGZ79kaePjuN3fEOAj=0-qn=_3B_3AQXDMnNPPEbNLOVSWS0mQ@mail.gmail.com>
+Subject: Re: Fetching commit instead of ref
+To:     "Carlsson, Magnus" <Magnus.Carlsson@arris.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 18 Dec 2017 12:30:23 +0000
-"Carlsson, Magnus" <Magnus.Carlsson@arris.com> wrote:
-
-> In a certain situation I would really need to fetch all commits
-> related to a specific commit (SHA). I have read the git fetch
-> documentation and found nothing regarding this. It only seems to
-> support fetching references.
-
-The documentation has been updated in version 2.15.0 to describe this.
-But as the commit message of commit 83558a412afa ("fetch doc: src side
-of refspec could be full SHA-1", 2017-10-18) says, this functionality
-was available earlier.
-
+On Mon, Dec 18, 2017 at 4:30 AM, Carlsson, Magnus
+<Magnus.Carlsson@arris.com> wrote:
+> Hi
+>
+> I am involved in the git-subrepo project (https://github.com/ingydotnet/g=
+it-subrepo/). It's an attempt to simplify the inclusion of repos into other=
+ repos.
+>
+> In a certain situation I would really need to fetch all commits related t=
+o a specific commit (SHA). I have read the git fetch documentation and foun=
+d nothing regarding this. It only seems to support fetching references.
+>
 > I found some traces on stack overflow:
-> https://stackoverflow.com/questions/14872486/retrieve-specific-commit-from-a-remote-git-repository
-> 
+> https://stackoverflow.com/questions/14872486/retrieve-specific-commit-fro=
+m-a-remote-git-repository
+>
 > Following that recommendation it feels like it almost works:
-> $ git fetch subrepo 50f730db793e0733b159326c5a3e78fd48cedfec:refs/remote/subrepo/foo-commit
+> $ git fetch subrepo 50f730db793e0733b159326c5a3e78fd48cedfec:refs/remote/=
+subrepo/foo-commit
 > remote: Counting objects: 2311, done.
 > remote: Total 2311 (delta 0), reused 0 (delta 0), pack-reused 2311
 > Receiving objects: 100% (2311/2311), 703.64 KiB | 0 bytes/s, done.
 > Resolving deltas: 100% (1174/1174), done.
 > ----> So far so good, but then an error message appear:
-> error: Server does not allow request for unadvertised object 50f730db793e0733b159326c5a3e78fd48cedfec
+> error: Server does not allow request for unadvertised object 50f730db793e=
+0733b159326c5a3e78fd48cedfec
 > ----> And nothing seems to be fetched.
-> 
-> Is there a way to fetch a commit and any ancestors to that commit based on a SHA?
+>
+> Is there a way to fetch a commit and any ancestors to that commit based o=
+n a SHA?
 
-You'll need to set uploadpack.allowTipSHA1InWant,
-uploadpack.allowReachableSHA1InWant, or uploadpack.allowAnySHA1InWant on
-the server. (This might need to be better documented - I see this
-documented for fetch-pack, but not fetch.)
+Ask the server operator to configure the server to allow fetching commits,
+specifically "git config uploadpack.allowReachableSHA1InWant 1"
+
+
+>
+> Why do I need this?
+> In git-subrepo we try to recreate another repo within our main repo. Crea=
+ting the necessary parent references when they appear. In some cases we nee=
+d to make sure that we have access to the correct commits from the subrepo,=
+ but we don't have any references except a SHA.
+
+A very similar issue happens with submodules, which tries to fetch the
+branch(es) first and then by SHA1 as a fallback, but this fallback may
+fail as well due to the miss-configured server, at that point
+submodules just error out.
