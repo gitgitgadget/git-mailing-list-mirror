@@ -2,133 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 477B81F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 21:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB131F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 21:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935438AbdLRVqF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 16:46:05 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:42997 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933574AbdLRVqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 16:46:04 -0500
-Received: by mail-wm0-f47.google.com with SMTP id b199so472531wme.1
-        for <git@vger.kernel.org>; Mon, 18 Dec 2017 13:46:03 -0800 (PST)
+        id S937410AbdLRVuB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 16:50:01 -0500
+Received: from mail-io0-f193.google.com ([209.85.223.193]:33327 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935216AbdLRVty (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 16:49:54 -0500
+Received: by mail-io0-f193.google.com with SMTP id t196so11395590iof.0
+        for <git@vger.kernel.org>; Mon, 18 Dec 2017 13:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RX6H8NmJEIls7txdl55kUNpf/bWbLukVYYnHyjykdXU=;
-        b=gqRLX6rFvsO48dwKIkFt2JGq5Ww8CvleO/Gk+oW97FdRXmXz8k0zE5lDcSMtP2dS2M
-         4F40QpIc347vsyLORXo8HWtFwX1o8if/v2sFi6Hv7OSaDgWDFgE2KV+6H6qqeVcTocPE
-         rfqz8NjhBvtgElMx1s5ch3YxebtALR3wgvAAHZtISsydk07ivAson/UZofH1/GJksDVb
-         R96Cn9Sm9tSheHoaqnmuifgifNtLo32Wc0w+i9KIG80Idfdvfvi/GwdaPmoi47Krqf7E
-         AtraUpFwi78COFOHp5W7kENK+dx+z/owIfYmCx9I0BSBVq8FoOsxOHpumh0DSXrsDLAf
-         pvmg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1bOqZTIgNfYaGearpUu/NTtFHtC7CcEpqwb4HBh3SiI=;
+        b=YChruQvjj2XudOs0rw7ChvfVDhVFP/1+CFb7b/xAMOjTqinOT2OH9RqVWrpUWGwwPZ
+         PNPQ3MkBtOnaOtZUn4TN1H+IbDrRqgXS5GVg5oXHgMoav6L+8yqOV6Uydn0bojf9MWOH
+         aPwz1x2++S84sRVyhEgNvL0SczoKKym/PjzaIzGkp788stZbc0UyLt/jVVMYDt5wCcv9
+         e5s5CPtxi+QgfGO3xWBSBMCdYKqYynHcr0VfyX8CxRslmtJm/i0Ez6caXBk2vRltPUET
+         duOHn5wF4ZXq4Yr0R4XPPZ9qFccDzOxO7RdOt8wyi7c1/nIbqMZH6o9zqPgG7fRmawQy
+         IHMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RX6H8NmJEIls7txdl55kUNpf/bWbLukVYYnHyjykdXU=;
-        b=pueXm+bg/9DU8Lnr67KHD+VjsvewhMeC7+0y9b9/hGpOLz5eNQq0uA2LCqA5O2Ocp7
-         NZTKA3qdtpuiAnNSKTxlFwfhCpC98fwltEY2iGYcOWaL2h1aUXWlpjXVnb69xOf7gTwy
-         B/WSwJtJjCmgpja+hjmchN4jX/N9AI8IeOiQcPcqW8UxMFzE9qdnoYV4X8aJUntXB23v
-         u+J6I/gxu+XKjjS8DDLFn/LDdXC9f207t3qmejMO7Yx9QjsaF85CjFdG2CK5hKED8mW+
-         yvnYDBtzVIgsHoR9b4GJOQEz9x68l5dSG/42VUj781R+9NNuIiMZn16gtNI0hYb1RP/S
-         eCWw==
-X-Gm-Message-State: AKGB3mKTHx2tqnIxxaPX44c3k6Xlv6+UjWBpLvT9XL3MRz5Fe+G8TyRh
-        Lkw+PamHOFOsrCAbdeEKfTw=
-X-Google-Smtp-Source: ACJfBovOqUcKaC8mDw8ZHSfyUBdRo6BnRxKQvv53YW7E8teJmDuJEYlt0eQ9mc3rp5XWfCGbT6D2Pg==
-X-Received: by 10.28.35.4 with SMTP id j4mr655493wmj.55.1513633563185;
-        Mon, 18 Dec 2017 13:46:03 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB5261.dip0.t-ipconnect.de. [93.219.82.97])
-        by smtp.gmail.com with ESMTPSA id m25sm4392958wrf.56.2017.12.18.13.46.02
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 Dec 2017 13:46:02 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v2 0/8] Travis CI cleanups
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20171216125418.10743-1-szeder.dev@gmail.com>
-Date:   Mon, 18 Dec 2017 22:46:02 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E20A2A7B-232D-4873-A026-E8CB104A84BF@gmail.com>
-References: <20171211233446.10596-1-szeder.dev@gmail.com> <20171216125418.10743-1-szeder.dev@gmail.com>
-To:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1bOqZTIgNfYaGearpUu/NTtFHtC7CcEpqwb4HBh3SiI=;
+        b=CqOocxHKF/ds07XcBWjAxlQT54SsoiTyeEXkaysXRI0bnBO1A8nn8NU/i4udfqCUIf
+         yHQ7RMGpKyYoGHEEmxEIW/V13Jfd5kQKqJG24UCH9AmYXb5kZj4kTDWN+ZN8Sx7AbBn6
+         1sBeXOwqp/gLT/XYozvB+oKblnTq6MdF3MTTbxLGc+Xz6us+IyN83uqedGypXqvQ9sKd
+         Gw0MnLqXXcIw3OJRw6jNPc7yC/+K0B+atkcZbiR5VUqhgejScMVVDuxpj/fEm68Rq79U
+         TGuhVBIBeGQvblH6MjIWVoh7/BgzoPNAfPkXhZOJatX15lib3TMeqKNivr82350YeBbv
+         WCyQ==
+X-Gm-Message-State: AKGB3mKQglMmAUkn/N313cg8XMyv366iImE6CL8Cycs4Fe/JkJBBPOIc
+        w/Nc8/HYqoIKhIvGIK8S6Sl+5+Zo7Gs=
+X-Google-Smtp-Source: ACJfBovdh6HuyguKtWlyD3HKT907PFE8HsuXzMYOgJC5q52TGf66q19vzkRLdPIa/JibHwce0qMcXg==
+X-Received: by 10.107.170.148 with SMTP id g20mr1397807ioj.175.1513633792758;
+        Mon, 18 Dec 2017 13:49:52 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id e132sm146229ite.41.2017.12.18.13.49.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 18 Dec 2017 13:49:50 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [FYI PATCH] t/helper/test-lazy-name-hash: fix compilation
+Date:   Mon, 18 Dec 2017 13:49:47 -0800
+Message-Id: <20171218214947.210042-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I was compiling origin/master today with stricter compiler flags today
+and was greeted by
 
-> On 16 Dec 2017, at 13:54, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
->=20
-> This is a reroll of 'sg/travis-fixes'.
->=20
-> Changes since the previous round:
->=20
-> - Patch 1 got updated following the discussion:
->=20
->   - I went with enabling tracing executed commands everywhere,
->     including the Windows build job, except where we know it causes =
-way
->     too much clutter, which is currently only
->     'ci/print-test-failures.sh'.
->=20
->   - Also enable this tracing in 'ci/run-linux32-build.sh', which
->     doesn't source 'ci/lib-travisci.sh' as it's run inside a Docker
->     container.
->=20
->   - The commit message got updated accordingly, including a note about
->     the Windows build job's secret token.
->     I would like to get an Acked-by: from Dscho on this patch before =
-it
->     gets merged.
->=20
-> - Patches 5-8 are new.  They are various fixes/cleanups unrelated to
->   the Travis CI scriptification, but I don't think it's worth to have
->   them in separate patch series.
+t/helper/test-lazy-init-name-hash.c: In function ‘cmd_main’:
+t/helper/test-lazy-init-name-hash.c:172:5: error: ‘nr_threads_used’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+     printf("avg [size %8d] [single %f] %c [multi %f %d]\n",
+     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr,
+         ~~~
+         (double)avg_single/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (avg_single < avg_multi ? '<' : '>'),
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (double)avg_multi/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr_threads_used);
+         ~~~~~~~~~~~~~~~~
+t/helper/test-lazy-init-name-hash.c:115:6: note: ‘nr_threads_used’ was declared here
+  int nr_threads_used;
+      ^~~~~~~~~~~~~~~
 
-This cleanup series looks very good. ACK. Thank you, Gabor!
+I do not see how we can arrive at that line without having `nr_threads_used`
+initialized, as we'd have `count > 1`  (which asserts that we ran the
+loop above at least once, such that it *should* be initialized).
 
-The is the only potential nit I see:
-=
-https://public-inbox.org/git/8F53EF33-6FDA-484C-91A4-49CF24C0B417@gmail.co=
-m/
+I do not have time to dive into further analysis.
 
-- Lars
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/helper/test-lazy-init-name-hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->=20
-> SZEDER G=C3=A1bor (8):
->  travis-ci: use 'set -x' in select 'ci/*' scripts for extra tracing
->  travis-ci: introduce a $jobname variable for 'ci/*' scripts
->  travis-ci: move setting environment variables to 'ci/lib-travisci.sh'
->  travis-ci: set GIT_TEST_HTTPD in 'ci/lib-travisci.sh'
->  travis-ci: don't install default addon packages for the 32 bit Linux
->    build
->  travis-ci: don't install 'language-pack-is' package
->  travis-ci: save prove state for the 32 bit Linux build
->  travis-ci: only print test failures if there are test results
->    available
->=20
-> .travis.yml                | 28 ++++++----------------------
-> ci/install-dependencies.sh |  8 +++-----
-> ci/lib-travisci.sh         | 38 ++++++++++++++++++++++++++++++++++----
-> ci/print-test-failures.sh  |  9 +++++++++
-> ci/run-linux32-build.sh    |  3 +++
-> ci/run-linux32-docker.sh   |  1 +
-> 6 files changed, 56 insertions(+), 31 deletions(-)
->=20
-> --=20
-> 2.15.1.429.ga000dd9c7
->=20
+diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
+index 6368a89345..297fb01d61 100644
+--- a/t/helper/test-lazy-init-name-hash.c
++++ b/t/helper/test-lazy-init-name-hash.c
+@@ -112,7 +112,7 @@ static void analyze_run(void)
+ {
+ 	uint64_t t1s, t1m, t2s, t2m;
+ 	int cache_nr_limit;
+-	int nr_threads_used;
++	int nr_threads_used = 0;
+ 	int i;
+ 	int nr;
+ 
+-- 
+2.15.1.620.gb9897f4670-goog
 
