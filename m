@@ -2,103 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C63E41F406
-	for <e@80x24.org>; Mon, 18 Dec 2017 08:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648741F406
+	for <e@80x24.org>; Mon, 18 Dec 2017 10:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758137AbdLRIqw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 03:46:52 -0500
-Received: from mail-it0-f54.google.com ([209.85.214.54]:35502 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757927AbdLRIqv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 03:46:51 -0500
-Received: by mail-it0-f54.google.com with SMTP id f143so26776008itb.0
-        for <git@vger.kernel.org>; Mon, 18 Dec 2017 00:46:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=wHgDu3bBb9e3TuYVDhTBYBg1v+ngKXiu6BXRvAku/zg=;
-        b=qjzXVrqsKqao6XeFQ+QUXn0afsfjd7aCWAzAFACPKhiTRJw/0x9hIXyVfc26+HuJ84
-         eX/BhGTehCX0IJxgpuE/8WPr0dPIYaLRn4LZmKi53Mbt5clE+kjcztoZwOdNSlJ34DRM
-         7qAl60FIIYkD8kTDSl2NdJmSkW//HY5ciQ59i8ovC52x2NIe0RO125SuP7ToeYgcSxPO
-         uBzjkPFIQGGtO9te1VXllrfy3HSqBqcgJZ/997RvQMq2uXcOGvxyOTR8IuZEn16oGGC+
-         NND9AFcu//IHlfoTvxYB4pIdWB9Qhqc/j6BpFBMY6H2KZPbDMxUhy2jyW0GSCRLQ8Klk
-         zv9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=wHgDu3bBb9e3TuYVDhTBYBg1v+ngKXiu6BXRvAku/zg=;
-        b=YSGI5SJqUO8Szic1T8QxsazYUtgzuATCqTDYdgxcEEQW09LLWQCcKN9Zs5PI+Ss4R9
-         pXLEoNaEZ+qBAFsFh70LJ88IW3EGTt4FsbWzY0kIiau1ntqneXMV5oaMWiYYCBG4SKOI
-         PFuPZGWmRmSNIknzEn+FDgfg7Pea553az/nm3vLHijtpsG/UuX2h7qDqKVKSbYq8xJHM
-         heqY+nGPQ/MAF0cLMheqxCOGlJ8GubLRa18q8cK93FQ+8B+TXGHp5eSwmWAV7L2G3F9c
-         Uwsz2mDDGWRkN/FQKOpWrNjk46bEvaOd0gXJRF60nQSxVaZT78GxuVCHNPtCCLFEpTm2
-         Ea1w==
-X-Gm-Message-State: AKGB3mIxjyDmEF1qAi4cdJw8DdMKm7m7DfckR8Zgr77eKwILcobKgTS0
-        DMdba+uuWfgUnv0IkuxmF5lMhtG8TFm5zHjduH0XFpbt
-X-Google-Smtp-Source: ACJfBovruu63aSWZlt8MGtpATwglK2CsO0WjJ8Yz4Lzn6J/EwG2Fx7AhAAci0t80ZvVs4WwWHEN8jeHklJtRrg4yyiM=
-X-Received: by 10.36.124.197 with SMTP id a188mr357398itd.63.1513586810386;
- Mon, 18 Dec 2017 00:46:50 -0800 (PST)
+        id S1758121AbdLRKNx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 05:13:53 -0500
+Received: from mout.web.de ([212.227.17.12]:54365 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750841AbdLRKNw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 05:13:52 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2uWg-1fFx4w0b4w-00seVi; Mon, 18
+ Dec 2017 11:13:36 +0100
+Date:   Mon, 18 Dec 2017 11:13:34 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net, patrick@luehne.de,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
+Message-ID: <20171218101334.GA20685@tor.lan>
+References: <20171211155023.1405-1-lars.schneider@autodesk.com>
+ <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
 MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Mon, 18 Dec 2017 00:46:49 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 18 Dec 2017 09:46:49 +0100
-Message-ID: <CAP8UFD2Wjf_8jjc2Hhi4nKCscEix-Swn66JTXBWSOD+5PGrArQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 34
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, Charles Bailey <charles@hashpling.org>,
-        Henry Kleynhans <hkleynhans@bloomberg.net>,
-        Haaris <hsed@unimetic.com>, Kevin Daudt <me@ikke.info>,
-        Marc Branchaud <marcnarc@xiplink.com>,
-        Heiko Voigt <hvoigt@hvoigt.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
-        Daniel Stenberg <daniel@haxx.se>,
-        Doron Behar <doron.behar@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:1X3PF1XHQGNMtdfwljdyjJ6YQUP/OkH4CrHNCOovxHdxVt+xNb5
+ zBqJSVgub3rrP94cancW2SPfCvE2zNvAAiMk7eRxobvC2ibSfY1/5t+D3hququRmoubQApk
+ 7mN3WeyJYJZ4SOY6wM591729AyYpfPRWjO+eVKEn3mBN5vHQiyPN0z+uhRW05H9xKjmOECb
+ evjN1dJG8wpi7p4kDGLLw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HugX1EovreQ=:RaRo4WqhiZ+JmMwIxlZ50h
+ 3Xxyph1gceI6Es3Nq0wlOU9L3ghqrqEpGoqAAB+g2cEjRuUqzWe8HjoWxQnS3LhKggYtV4Bue
+ vZHCa4NnKJ2khy3iH+g/7fbSxE+V+9Hnpdx0gGNpNi8YTBO4urgkKU5SFXO3fZVl1J10q/ZHt
+ nt7hyMDeNjhs4ss8XKrnQ1Mk0ESwXSiHHfAY2mWwtCX+zc4Mxgjb1Ddr8LeXoUIws6QHUJcHL
+ tSqFCB2UfoqZKhABtE5Oh5Fa4eHJIUoijma/2v5iApEUPKf14ZL86AxgQcm7qw8rCrnY1hKaS
+ s0epCC83TtMlJ3E/91mrqRuWt2XxzD9Ec4wvgueYIZlxhl8OugoWMQBn1nPh/8IGlFk62yh2W
+ Omk5kVh6VThbQtz13+WDB6sCmt/sXHtkUouQNwBmbmfKSOz/VQU2Gwgv42c6eM7D/U5SnWvzu
+ x7R5TyPUIFG3MTNsmPx2K+oUFupNiBdRPh4b/QvdTtlukfIP4dB3S4m9keY6Flmv8FMJVMqRy
+ 1P+PKRINiEcCPbQoc/93bjqRyEuBU1VS8rIHdKaaCaP1ysZjb9uvZcXu2YX9mqIqNVCwibk7l
+ uXDxVE1kvucTO6Fg1aIlc5oDyaEjextN1C8YPjC7OIJv5ns6hHvqagPQOMuzY/Ni+taV8ZPt1
+ r1HbhdRa4qD1/Szxc+3QnDa4A78DWyQvjp8AWAWNa0wixcZh+yBnPidDJFZKY3lq8mKdioa5b
+ hO32D8xph+hEeb+hkVs9MJ9OjyS+67FU5FT7BziGkKt9EZPuL/xoKEvrGbAP2MEnf6yv8rPBq
+ wgSM2OlKV3vMyIYmSGi1aEMUQipdg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Dec 11, 2017 at 09:47:24PM +0100, Johannes Sixt wrote:
+> Am 11.12.2017 um 16:50 schrieb lars.schneider@autodesk.com:
+> >From: Lars Schneider <larsxschneider@gmail.com>
+> >
+> >Git and its tools (e.g. git diff) expect all text files in UTF-8
+> >encoding. Git will happily accept content in all other encodings, too,
+> >but it might not be able to process the text (e.g. viewing diffs or
+> >changing line endings).
+> >
+> >Add an attribute to tell Git what encoding the user has defined for a
+> >given file. If the content is added to the index, then Git converts the
+> >content to a canonical UTF-8 representation. On checkout Git will
+> >reverse the conversion.
+> >
+> >Reviewed-by: Patrick Lühne <patrick@luehne.de>
+> >Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> >---
+> >
+> >Hi,
+> >
+> >here is a WIP patch to add text encoding support for files encoded with
+> >something other than UTF-8 [RFC].
+> >
+> >The 'encoding' attribute is already used to view blobs in gitk. That
+> >could be a problem as the content is stored in Git with the defined
+> >encoding. This patch would interpret the content as UTF-8 encoded and
+> 
+> This will be a major drawback for me because my code base stores text files
+> that are not UTF-8 encoded. And I do use the existing 'encoding' attribute
+> to view the text in git-gui and gitk. Repurposing this attribute name is not
+> an option, IMO.
 
-A draft of a new Git Rev News edition is available here:
+Just to confirm my missing knowledge here:
+Does this mean, that git-gui and gitk can decode/reencode
+the content of a file/blob, when the .gitattributes say so ?
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-34.md
+If yes, would it make sense to enhance the "git diff" instead ?
+"git diff --encoding" will pick up the commited encoding from
+.attributes, convert it into UTF-8, and run the diff ?
+We actually could enhance the "git diff" output with a single
+line saying
+"Git index-encoding=cp1251"
+or so, which can be picked up by "git apply".
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+The advantage would be that we could continue to commit in UTF-16
+as before, and avoid the glitches with .gitattributes, that Peff
+pointed out.
 
-  https://github.com/git/git.github.io/issues/267
+Does this make sense ?
 
-You can also reply to this email.
+> 
+> >it would try to reencode it to the defined encoding on checkout > Plus,
+> >many repos define the attribute very broad (e.g. "*
+> encoding=cp1251").
 
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated. This is even more relevant than
-usual  as Thomas is stepping down from editing the "Releases" and
-"Other News" sections (see the draft for more information).
+Is this a user mistake ?
 
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus and myself plan to publish this edition on
-Wednesday December 20th.
-
-Thanks,
-Christian.
+> >These folks would see errors like these with my patch:
+> >     error: failed to encode 'foo.bar' from utf-8 to cp1251
+> 
+> -- Hannes
