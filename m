@@ -2,129 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 169561F424
-	for <e@80x24.org>; Mon, 18 Dec 2017 19:18:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 739A71F424
+	for <e@80x24.org>; Mon, 18 Dec 2017 19:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935361AbdLRTSb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 14:18:31 -0500
-Received: from mout.web.de ([212.227.15.3]:65431 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935172AbdLRTS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 14:18:28 -0500
-Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M5Jip-1fDKgT22n9-00zYab; Mon, 18
- Dec 2017 20:18:22 +0100
-Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
- <20171218151043.GA9449@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
-Date:   Mon, 18 Dec 2017 20:18:19 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1759486AbdLRT5I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 14:57:08 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:46994 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758334AbdLRT5H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 14:57:07 -0500
+Received: by mail-wr0-f180.google.com with SMTP id g17so6269174wrd.13
+        for <git@vger.kernel.org>; Mon, 18 Dec 2017 11:57:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tE+4KXN+bTsikMTh+tCs0NMyodx/NfVquHia4ox/PEQ=;
+        b=mM89xHllgbrAnKjd9Zo0xRQioU69Kvv7OitVYV/GIMurAs0t3ltCFZV3fE3VG2l3j5
+         gswbodzUR7OzXUyPkK5Y8KyBJ8yTXFKMukazCe7Uo+iSq6F59w7RU+pD7ds5OihFsRbd
+         2qRdLA7TYWaC0jIr0T9Y2KerMqzcGrOjOWM8JJ4+rGjjjkQ/pJ1CFrLPoxOx1oq0Cla4
+         EXPz4R32BcphytYudRXkisB5qXaX0e6+Vpwiwjgr122dAKL6161910hx1uGiwRJMOjuk
+         qC1ZbPShlBtpZF1Jxpm03n/HTMSD/SP2SmTgllVp0GbG26PQyFDriCBrfSURyC1Y/4lL
+         14Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tE+4KXN+bTsikMTh+tCs0NMyodx/NfVquHia4ox/PEQ=;
+        b=mbNZNO7MpfNJlRNvysdhOD+iqCw1HYmMcuzJpV/Jw7FyXbIwEl8HmtFV2QlyYoSsBJ
+         IeTxGwaxpnQumnYTI8txDb8h+lEGNVFEPBudtv7fpbbMR7wKOPlpQT/qGirBCtKGiOV/
+         B6CaE9O/Weo/gL4d5mXhbG7e27dGo+6KcN9e9Ww9XuQkQVP0wYPAjCBkQUE9jrhsIM5Y
+         XuYsjAWUmTXiuq6Z4q63HTWEYn6Zm+9U25YN6UtFuW+CMPjFLuJaRrMzZRVqooN3ebYs
+         KGPIqsZbQXw85/RULTp1oRign3UNOXoQW+exZwdKzmykFDM/6BqC9Q1eCwBZb11RBjN6
+         FFpw==
+X-Gm-Message-State: AKGB3mKD9joXNxzWvy9z71GiySoKk6IQGOTAsV8kwPc5KTRuxRryfwgh
+        Xqmd6QJd9Jw0N5H4UkAsQTBDPYZPO+Ju1P32V6rfrw==
+X-Google-Smtp-Source: ACJfBosYHDA0WwsjR449RD1SbqNl9LSxoHSGKClqoQMMXk1zz/m/v45jo7Oltp41VGYiv9ofYnVVrd14zOB4sa2nPQg=
+X-Received: by 10.223.157.206 with SMTP id q14mr1221208wre.223.1513627025584;
+ Mon, 18 Dec 2017 11:57:05 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171218151043.GA9449@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:N7BNAf4GaOEIHidFv2eMHXMB48yZjvinIoit22/qZO7DPfH+y/p
- TF55nhrPOIyJwVKyE/+F58/pcsfRuliFthxdjXe2qQg0hPLXgSGkaDHLVS/UU0o5wInFI0W
- Ro0bUHzqkABO8V60pvMnFdoOrUvC4lOjKJsZGlDhYdkL/r1LyJ5p6L/OkY3owzhMFBgjDFf
- wxDEAzDTaq15q2udNfAaw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qefV3qY5NV8=:31DHe4Y1ydAAHvuc2Zgofm
- 6Mh6mFJUrF/ph/xlTOk+OfebKB2uXYPQ/IDanOz2Vb0aq5RWNW8fQpmqeNxfY8dq9Xe5+Mgca
- LSRSmjLkEI0aiOjsDF1uOE/MjvEWsFGdu7evLWVef02tY8IH7ZyFittpaFKO8nfkvAwybOjPi
- EuIGDw2StzHEz9zdp5Dfcw6bGhVSnMBJjlx9a3aPAO4Q2G090rePpOiyF1SWRCHIcY3YIJ91i
- Id/HcyqS1IlKNmTU5UVJukXS7gljsFu/vVXhELcvx3T2P9wTggK0OIzZ8VMjVHGjNUdXXEjHA
- u0z39Tf1LQP8lPU9NH00PYZHjcbkkAv40eolwiPalCAE1+6kKDulUkHWHwsub8Q/We6oxhAWt
- n1dNwLWixD/YtTEfgyL+BhPQqyX1EOnfHd6P2MbNUCMAVzHyorLaQYFnW7hlQCl83SAR/8MJ2
- FZEuqY4gTROTvC6zPXvsyKGDIj/KrTRwY1vFU0elqr0qOns+9T2JZon7SrGJg2/0yA/bUE5lO
- VbO++2zrlvpMvehX7USYnMyhAQBs5f0PX34tWE2hZhFOxE5ECb3OCNIWi1QQ+oEpR1Xi1BVlp
- /E2nW4JjzM2+odXcwXodoVp7VSIBkXwFtoi89t3FFweCJoW8PJV3n0UDLrfVJOatiylS4mSYU
- KUhPkHqI994aSnwVtx/GyEghI9GUjwWn5hTTu9xbs+PgoLcJRZH/yym6MHYUM9vAy2KQrc4Z3
- guyOy0BE55L2t5REipH9kj8kpfNcH/KbNUVzSRdX4bDtyVbrxb13WtPS6dAvNSivnm0LSuqK6
- HIg0FkGxZO+NxiHugAvSO/2SHmOekK7cLAG3NbCzGmq47FeBfc=
+Received: by 10.80.174.252 with HTTP; Mon, 18 Dec 2017 11:56:45 -0800 (PST)
+In-Reply-To: <20171218064042.GA25733@sigill.intra.peff.net>
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+ <20171211225615.GC214273@aiede.mtv.corp.google.com> <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+ <20171216220120.GB6217@genre.crustytoothpaste.net> <CA+P7+xpFyD0zuOz7XSCc6cV1T1zu6j-gZD=EMQs-t2WPxi1EMA@mail.gmail.com>
+ <20171218064042.GA25733@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 18 Dec 2017 11:56:45 -0800
+Message-ID: <CA+P7+xoH=wxYntERNiC4g32Kd9VmHmrBTCka-GCw+v6OsyjZ3w@mail.gmail.com>
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or
+ just a bug?
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Yaroslav Halchenko <yoh@onerussian.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.12.2017 um 16:10 schrieb Jeff King:
-> On Sat, Dec 16, 2017 at 01:12:16PM +0100, René Scharfe wrote:
-> 
->> prepare_revision_walk() allows callers to take ownership of the array of
->> pending objects by setting the rev_info flag "leak_pending" and copying
->> the object_array "pending".  They use it to clear commit marks after
->> setup is done.  This interface is brittle enough that it requires
->> extensive comments.
->>
->> Provide an easier way by adding a function that can hand over the array
->> to a caller-supplied output parameter and converting all users of the
->> flag "leak_pending" to call prepare_revision_walk_extended() instead.
-> 
-> I think this is _better_, but it's still kind of a funny interface.
-> 
-> The root of the matter is that the revision-walking code doesn't clean
-> up after itself. In every case, the caller is just saving these to clean
-> up commit marks, isn't it?
+On Sun, Dec 17, 2017 at 10:40 PM, Jeff King <peff@peff.net> wrote:
+> On Sun, Dec 17, 2017 at 08:03:41PM -0800, Jacob Keller wrote:
+>
+>> I do find it a bit weird that --global writes to one of either file,
+>> and doesn't read from both. I'd rather have --global "only" be
+>> .gitconfig, and instead add a new option for handling XDG file, and
+>> then have it such that it reads them in system -> xdg ->
+>> home/.gitconfig -> local, which allows for local .gitconfig to
+>> override XDG config, but logically treat them just like we do any
+>> other files.
+>
+> I find it weird, too, but I'm not sure that's the right direction. It
+> means that users have to start caring about using "--xdg" instead of
+> "--global" if that's what they want to write to. The original idea was
+> that the transition to xdg should be fairly seamless, and that --global
+> would be an abstraction over both.
+>
+> To complete that abstraction it seems like reading via "--global" should
+> read from both (in the same precedence order that normal config lookup
+> uses). If you only use one, there wouldn't be any change in behavior.
+> And if you use both, then the behavior makes sense as a subset of the
+> normal config lookup. I.e., it could even be explained as:
+>
+>   If you give no "source", normal config lookup is similar to checking
+>   "--system", then "--global", then "--local".
+>
+> The only person who might be affected is somebody who carries both files
+> _and_ really wanted "--global" to read from one specific file (though I
+> have no idea from which without looking at the source, and from reading
+> this thread it seems I am not the only one who would be confused). So
+> I'd be OK calling that an unintended and unsupported behavior, and the
+> right thing all along should have been to use "--file=" if you really
+> want to avoid "--global" automagic.
+>
+> -Peff
 
-bundle also checks if the pending objects exists.
+I think this end game is fine with me too, it's definitely better than
+what we have now.
 
-> Could we instead have an interface like:
-> 
->    revs.clear_commit_marks = 1;
->    prepare_revision_walk(&revs);
->    ...
->    finish_revision_walk(&revs);
-> 
-> where that final function would do any cleanup, including clearing the
-> commit marks. I suspect there are other small bits that get leaked
-> because there's not really any "destructor" for a revision walk.
-> 
-> It's not as flexible as this whole "make a copy of the pending tips"
-> thing, but it keeps all of the details abstracted away from the callers.
-> 
-> Alternatively:
-> 
->> +`prepare_revision_walk_extended`::
->> +
->> +	Like prepare_revision_walk(), but allows callers to take ownership
->> +	of the array of pending objects by passing an object_array pointer
->> +	as the second parameter; passing NULL clears the array.
-> 
-> What if we just got rid of this function and had callers do:
-> 
->    object_array_copy(&old_pending, &revs);
->    prepare_revision_walk(&revs);
->    ...
->    clear_commit_marks_for_object_array(&old_pending);
-> 
-> That sidesteps all of the memory ownership issues by just creating a
-> copy. That's less efficient, but I'd be surprised if it matters in
-> practice (we tend to do one or two revisions per process, there don't
-> tend to be a lot of pending tips, and we're really just talking about
-> copying some pointers here).
-
-This was done before I added the leak_pending flag.
-
-t5502 and t5571 have test cases with ca. 1000 pending objects, t5551
-and t5541 with ca. 2000, p5310 more than 8000.  That's just a few KB.
-
-I don't know if there can be real-world use cases with millions of
-entries (when it would start to hurt).
-
-Why does prepare_revision_walk() clear the list of pending objects at
-all?  Assuming the list is append-only then perhaps remembering the
-last handled index would suffice.
-
-René
+Thanks,
+Jake
