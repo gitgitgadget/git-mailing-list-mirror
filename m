@@ -2,76 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 981D01F404
-	for <e@80x24.org>; Mon, 18 Dec 2017 02:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64FF31F404
+	for <e@80x24.org>; Mon, 18 Dec 2017 04:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757872AbdLRC6m (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Dec 2017 21:58:42 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:40005 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757685AbdLRC6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Dec 2017 21:58:42 -0500
-Received: by mail-qt0-f194.google.com with SMTP id u42so18428223qte.7
-        for <git@vger.kernel.org>; Sun, 17 Dec 2017 18:58:41 -0800 (PST)
+        id S932415AbdLREEE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Dec 2017 23:04:04 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:37374 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932168AbdLREED (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Dec 2017 23:04:03 -0500
+Received: by mail-wm0-f45.google.com with SMTP id f140so26796078wmd.2
+        for <git@vger.kernel.org>; Sun, 17 Dec 2017 20:04:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=jUXkYJtwVMkuPpOxMaSNblOfXyisP+VkjRbaEVq74ag=;
-        b=t/+gYCZNS0kmq+jYA2Mo86SyZ+S6v17jrXIKHDvkKa7FvZL/DBCItFNV5KzOFj+S/C
-         FJuWzM5ijh2tENIxNH0DqICCHzUbmwWMHH6TF3v/RNtipDJwnB9RM7HXMx4VUhMeRnD2
-         68t9UG++dgjzaMx6myJRdvwlOUD2ma6J4aMgALG1o8NQZCnxDzCiPgeRzdxK400PpsGn
-         SVpZhy+wkjZGbvI6rmCqHzuSdzMSKFRH1vecq1/QdyRvzNI/JHx7wt0DWRX4yhXEcKqM
-         GMO8Z9GJ0RZThKqgOEVtvNDRqC26Zmy85eiTeOXC/Z4DmUEpWcYfKfNrUSG2MV0zN3xX
-         /QiA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=lHtT2KVbcQpEfNrFDPwOn/+iUkspl1ST1bOyw6lZrwM=;
+        b=bhoOtgvZEhLXB6ZVcMYGeDtyc41t8mKP8n6LXJX4S8qhieURywf0n0fEfmiMxngppj
+         xezL/1Qoc837LSx0uTpWiWpe/0PTjtq9E+pUDCHLjZVtDs4XrklBNkV1DwcJsXp1Pebn
+         sen4k7Oomm/++ilyESoxeAW1iAYeXk9tlNLCxsr+58AqrBa8jcOzqPt1aAkrXrIpB+ND
+         e36ntSkLbSGaRH/NucsTx4d8v88fIM4QghSb/rs/z6tioV7F2l7JUbBbo/NP0TLV33X9
+         bO+G4ptMurjqSgGkkURCjjtdUhoGJQZwME357KXghYTv/EI6ixXORW9qspcPzcFXBIyO
+         Waxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=jUXkYJtwVMkuPpOxMaSNblOfXyisP+VkjRbaEVq74ag=;
-        b=it2YcIJL2g+jOP+IAFGomCvbLUKBrdhYc9geZfSPF9BH+Osb/U5sbZVmyjthvxXXnK
-         cVdcvbb9MXFjbEK8EDF6/FMLejZkk95gs33yHRHs0cenjKjxgSx862h84Xus8QROkfuA
-         J4TKcqEz3yEwGNFGG2L7TJr02BF8J2qW7ahfLIYX4FlTjpq3JezW0i74mrcB/WtuBkgK
-         21qEeNIrZjV0CU428AYkTnKshhJbDoo4NjbosKu7Rxs/jjyDrAqb/Am+8XMgJfXbKP+J
-         M7Prtdo17GMPWyi3WKs6LpQsOAr/jDdk2qlc0lGNdUq4zLjkFW1JanGsVLamgBcKxKjc
-         pF9w==
-X-Gm-Message-State: AKGB3mIrPiiQeRWDZVBwxwW0AMAMRTEAsxIjwsZkHejgzfr5Qam43G/k
-        3vSkbIg1lgqsZKba+b6YVjWBHxWx3B00sj0ZZWM=
-X-Google-Smtp-Source: ACJfBos3xy4wS9J+PovGFryCUTwmd2Z+X4+9094m8AxEoJU3nfPjYeLDeVhZG6swBvVOZWAzRy6xZMKGoyUPUFJUs7w=
-X-Received: by 10.200.35.28 with SMTP id a28mr35628064qta.51.1513565921444;
- Sun, 17 Dec 2017 18:58:41 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=lHtT2KVbcQpEfNrFDPwOn/+iUkspl1ST1bOyw6lZrwM=;
+        b=BxAGrTeQ3Gmo68SNt9uA9RzuSQlxnE6JzsC07q0YvYD2bfjgHKDtdUQ/XotXao7VFo
+         ssaY943Yjxkreq74m6pMn+EKdq7XWTxDrMxcOeuIz99MALGpibrTFKcovP5RDSCvkI9m
+         jAuOPE2vQgpAj1XyFV8NZcnm8Pxezmv/CTDk165b9axjZH/b2bguQOPUg2THbLf9F4V2
+         jW0ZBkrQwOa0+YSLWVnw9DQ12jH7az9Wxy5nVUfM/sfp7mlM4PTMH6spiTetZekkZ+4I
+         aKuVWeGUhS0PVOygYq5AIndwR29w2M8vItD5xYp0mXWfFksUd8F5XbmcTGzX/4xBJTti
+         BWvg==
+X-Gm-Message-State: AKGB3mK65qPUgxFF7uuDDbqxbgIA048XtChKpqEKMaYrIHUf932gAopl
+        h3pigha21OhnclI3Y6/B816jQ9/W6h2Ow9sgDRQ=
+X-Google-Smtp-Source: ACJfBou6Xqh5ck9k7cK9gr6ghDT9KxmS3dmm3h762EiVgMCF7zvTbMwf5k+q5PvBE1nFsgEmGkW344jbmHAmfn23e98=
+X-Received: by 10.80.137.106 with SMTP id f39mr20082353edf.148.1513569841654;
+ Sun, 17 Dec 2017 20:04:01 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.198.4 with HTTP; Sun, 17 Dec 2017 18:58:41 -0800 (PST)
-In-Reply-To: <7aff934e-c26a-8259-17e0-436104f377cf@urbanec.net>
-References: <20171211004848.13048-1-git.user@urbanec.net> <7aff934e-c26a-8259-17e0-436104f377cf@urbanec.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 17 Dec 2017 21:58:41 -0500
-X-Google-Sender-Auth: 0CSoAnnqiQCWc1sb67nq83lwP8c
-Message-ID: <CAPig+cRSPyR9dwbA7rHhYGorKQFr2Kh64PQtgQK3nxoQXvUGhw@mail.gmail.com>
-Subject: Re: [PATCH] git-gui: Make push remote combobox full width
-To:     Peter Urbanec <git.user@urbanec.net>
-Cc:     Git List <git@vger.kernel.org>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
+Received: by 10.80.174.252 with HTTP; Sun, 17 Dec 2017 20:03:41 -0800 (PST)
+In-Reply-To: <20171216220120.GB6217@genre.crustytoothpaste.net>
+References: <20171211211102.rrxqd6yscnd33efd@hopa.kiewit.dartmouth.edu>
+ <20171211225615.GC214273@aiede.mtv.corp.google.com> <xmqqtvww3gea.fsf@gitster.mtv.corp.google.com>
+ <20171216220120.GB6217@genre.crustytoothpaste.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 17 Dec 2017 20:03:41 -0800
+Message-ID: <CA+P7+xpFyD0zuOz7XSCc6cV1T1zu6j-gZD=EMQs-t2WPxi1EMA@mail.gmail.com>
+Subject: Re: Q: rational for $XDG_CONFIG_HOME/git/config to be "non global" or
+ just a bug?
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Yaroslav Halchenko <yoh@onerussian.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>, kyle@kyleam.com,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 17, 2017 at 8:49 AM, Peter Urbanec <git.user@urbanec.net> wrote:
-> Just wondering if I submitted this patch correctly and to the right place.
+On Sat, Dec 16, 2017 at 2:01 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Dec 11, 2017 at 05:05:01PM -0800, Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> > As for "git config --global", I think the best thing would be to split
+>> > it into two options: something like "git config --user" and "git
+>> > config --xdg-user".  That way, it is unambiguous which configuration
+>> > file the user intends to inspect or modify.  When a user calls "git
+>> > config --global" and both files exist, it could warn that the command
+>> > is ambiguous.
+>> >
+>> > Thoughts?
+>>
+>> I actually thought that the plan was "you either have this, or the
+>> other one, never both at the same time" (and I think those who
+>> pushed the XDG thing in to the system made us favor it over the
+>> traditional one).  So as long as --global updates the one that
+>> exists, and updates XDG one when both or neither do, I think we
+>> should be OK.  And from that viewpoint, we definitely do not want
+>> two kinds of --global to pretend as if we support use of both at the
+>> same time.
+>
+> Sorry for coming late to the discussion, but I actually use both.
+>
+> ~/.gitconfig is checked into my Git repo for my home directory and
+> contains settings I preserve across all systems, and the XDG dir is not
+> checked in and contains per-system settings (currently just
+> commit.gpgsign).  On my main systems I have a key and sign commits; if
+> it's just some server I log into, I don't.
+>
+> Now, I don't use git config to set options, so I'm happy as long as git
+> config can read both, which it does.
+> --
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> https://www.crustytoothpaste.net/~bmc | My opinion only
+> OpenPGP: https://keybase.io/bk2204
 
-You sent it to the right place. Unfortunately, Pat hasn't been around
-much lately, so the git-gui project is apparently slumbering.
 
-Junio has accepted a few patches for git-gui recently[1,2,3]; whether
-he's interested in doing the same for your patch is unknown.
+Ok, so my patch documentation is wrong. Perhaps we could further
+clarify in the documentation how it works, but I'm not really sure
+what the best approach is.
 
-[1]: https://github.com/patthoyts/git-gui/pull/17
-[2]: https://github.com/patthoyts/git-gui/pull/16
-[3]: https://github.com/patthoyts/git-gui/pull/15
+I do find it a bit weird that --global writes to one of either file,
+and doesn't read from both. I'd rather have --global "only" be
+.gitconfig, and instead add a new option for handling XDG file, and
+then have it such that it reads them in system -> xdg ->
+home/.gitconfig -> local, which allows for local .gitconfig to
+override XDG config, but logically treat them just like we do any
+other files.
+
+Thanks,
+Jake
