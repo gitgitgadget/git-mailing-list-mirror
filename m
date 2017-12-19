@@ -2,75 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D05721F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:19:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114071F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752653AbdLSWTu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 17:19:50 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60926 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751820AbdLSWTs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:19:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD455B08F6;
-        Tue, 19 Dec 2017 17:19:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9SkH7RG3/ZkB6Na529/DQq8U5Gc=; b=Fr2iWP
-        co6OBzrpnaknPw3vLxj8wQjr8Y0XkSw7Bt3Xh0wb0L8yWb/q0Cks/1pDbZqBWaF4
-        +hePD+XQX/2Mxm9CD+dhKKA7/3TL5K6+Iw+Br3EP7TrnK+cUsH7m/dk1xDHVhC9x
-        AzkYu41/TiBipfDfztvwevYyY1dFnLTjNYQW8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RzreUDk9W4uJAI+GHt6npjacwxGnHV6/
-        J3vxqarRILEh4uFoRUQQftiEmhnRXtsPQUQBzaG6DG/bCHtoSDW9aWc3Fwaayini
-        uvTwT+4R+I6JSqSfDsri7uIAKiHZaPew2Tj8W4p44j2yU63NnMQMdXPKD2O9O2yM
-        isOYUWx58Yg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D424CB08F5;
-        Tue, 19 Dec 2017 17:19:47 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 50DA1B08F4;
-        Tue, 19 Dec 2017 17:19:47 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     arurke@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] Re: Bug with "git submodule update" + subrepo with differing path/name?
-References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
-        <20171219180230.254881-1-sbeller@google.com>
-Date:   Tue, 19 Dec 2017 14:19:46 -0800
-In-Reply-To: <20171219180230.254881-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 19 Dec 2017 10:02:30 -0800")
-Message-ID: <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B8F3B3D0-E50A-11E7-BEB7-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1752298AbdLSW0t (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:26:49 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:44495 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbdLSW0s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 17:26:48 -0500
+Received: by mail-it0-f45.google.com with SMTP id b5so4540225itc.3
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:26:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=yMfuUJffbiK2Q/89ShLjQ1ZtyPF3FX6AeadPj7Mk5AA=;
+        b=JHS/z98YO/NiFIysgqZQ0mBs9i9uq96mbSuedKkzDwNyY726d+uDQp3dsF0RLmmab8
+         c54kuj+otqpI9mrgjwOgJ3POb9KroHiSYeFiOsACENQQFSCzyyfq+iJD2H7TPGJ7Yku9
+         sd6VYv9DBFLuED6K+AxOFI2rjBIRAHXz/58K68JTY4j65s5rJdV2REMbQSnKvvztp6jN
+         fvcD3vxY2FkCfu7+snliZvAwcdHuRU3ACge3Vr/xuTsBPfH50OIHWLrl+G61Wbze54MJ
+         WWIeoQ4Wgvgu4eCdUqfS/FC0DYu9G7h+5yE7EE3CookmJIEytHVyruaPHCgMpm0cycW4
+         yapw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=yMfuUJffbiK2Q/89ShLjQ1ZtyPF3FX6AeadPj7Mk5AA=;
+        b=DZ+qZGw0RzzrtfM6U4hGv3zXWjdxUthrAmjOfJS91D3lHhLKA2Gvxpx3ZCUmfKS37Q
+         xKZwvtw3X0G4qRtw7gwAk6rIpYGdPeIOx8JCvNSaFYzKisYw7Se6XEyvjQW+pmB8fJbi
+         XsTH1TXWxOL1L5vLQgsMZQIPy7ThDy0uunEodvmW3378sHVFaR++7aMHhil6nO11aonV
+         3QyjEsa7P1+6HNuADgTspj/ndi7iNKVshzXM5hTIUs1GBUPFnc+3DdaJ29bw3MyrQgnP
+         hcd5s7Bt1I4mvfaeXbeuNaUxyB2BD62UZcJFbjiKOHipWERxVa6+gEetGBG0Q+1BP7G5
+         g2OA==
+X-Gm-Message-State: AKGB3mL9VZBniX5XFantjlDQftPSErL7DFClfiHYYUnXDQTwQAf+0izS
+        H8UMTzM0CtBRyM4Na7y2e3tZx1eoVpg=
+X-Google-Smtp-Source: ACJfBosOJ/eu5tHNS5hedNASdFEAffwaHEKETyTfKOCqUcGStU1GQRpUOT2QwOAXVEbiqaBrqyNGng==
+X-Received: by 10.36.249.132 with SMTP id l126mr5423786ith.52.1513722407462;
+        Tue, 19 Dec 2017 14:26:47 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id 139sm4580897itm.2.2017.12.19.14.26.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Dec 2017 14:26:46 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH 0/5] Fix --recurse-submodules for submodule worktree changes
+Date:   Tue, 19 Dec 2017 14:26:31 -0800
+Message-Id: <20171219222636.216001-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+The fix is in the last patch, the first patches are just massaging the code
+base to make the fix easy.
 
-> I tried reproducing the issue (based on the `next` branch, not 2.15,
-> but I do not recall any changes in the submodule area lately), and
-> could not come up with a reproduction recipe,...
+The second patch fixes a bug in the test, which was ineffective at testing.
+The third patch shows the problem this series addresses,
+the fourth patch is a little refactoring, which I want to keep separate
+as I would expect it to be a performance regression[1].
+The first patch is unrelated, but improves the readability of submodule test
+cases, which we'd want to improve further.
 
-I do not offhand recall anything; the closest I can think of is the
-three-patch series <20171016135623.GA12756@book.hvoigt.net> that
-taught the on-demand recursive fetch to pay attention to the location
-in the superproject tree a submodule is bound to.
+Thanks,
+Stefan
 
-    4b4acedd61 submodule: simplify decision tree whether to or not to fetch
-    c68f837576 implement fetching of moved submodules
-    01ce12252c fetch: add test to make sure we stay backwards compatible
+[1] The performance should improve once we don't use so many processes
+    any more, but that repository series is stalled for now.
 
-But IIRC, "submodule update" uses a separate codepath?
+Stefan Beller (5):
+  t/lib-submodule-update.sh: clarify test
+  t/lib-submodule-update.sh: Fix test ignoring ignored files in
+    submodules
+  t/lib-submodule-update.sh: add new test for submodule internal change
+  unpack-trees: Fix same() for submodules
+  submodule: submodule_move_head omits old argument in forced case
+
+ submodule.c               |  4 +++-
+ t/lib-submodule-update.sh | 16 ++++++++++++++--
+ unpack-trees.c            |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
+
+-- 
+2.15.1.620.gb9897f4670-goog
+
