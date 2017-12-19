@@ -2,105 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DEA41F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 16:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48461F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 16:25:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751032AbdLSQQW convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 19 Dec 2017 11:16:22 -0500
-Received: from mail10.clearstream.com ([194.36.229.253]:8451 "EHLO
-        mail10.clearstream.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750763AbdLSQQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 11:16:21 -0500
-X-IronPort-AV: E=McAfee;i="5700,7163,8750"; a="3136116"
-X-IronPort-AV: E=Sophos;i="5.45,427,1508796000"; 
-   d="scan'208";a="3136116"
-Received: from unknown (HELO FRPGBS03.oa.pnrad.net) ([172.20.221.250])
-  by cinkc039.nw.lan with ESMTP; 19 Dec 2017 17:16:19 +0100
-Received: from mail pickup service by FRPGBS03.oa.pnrad.net with Microsoft SMTPSVC;
-         Tue, 19 Dec 2017 17:16:19 +0100
-Received: from frpdlpm01.nw.lan ([172.20.221.130]) by FRPGBS03.oa.pnrad.net with Microsoft SMTPSVC(8.5.9600.16384);
-         Tue, 19 Dec 2017 17:16:19 +0100
-Received: from mailp3.deutsche-boerse.de (unknown [172.20.221.130])
-        by Forcepoint Email with ESMTPS id 97D3FEC07B9932492BE6;
-        Tue, 19 Dec 2017 17:16:19 +0100 (CET)
-Received: from FRPEXCH04.oa.pnrad.net ()
-          by mailhub.deutsche-boerse.de (V2)
-          id vBJGGJDH021600; Tue, 19 Dec 2017 17:16:19 +0100
-Received: from FRPEXCH03.oa.pnrad.net (10.250.16.251) by
- FRPEXCH04.oa.pnrad.net (10.250.16.243) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1261.35; Tue, 19 Dec 2017 17:16:19 +0100
-Received: from FRPEXCH03.oa.pnrad.net ([fe80::dd2b:f5ff:fe75:fbcc]) by
- FRPEXCH03.oa.pnrad.net ([fe80::dd2b:f5ff:fe75:fbcc%22]) with mapi id
- 15.01.1261.035; Tue, 19 Dec 2017 17:16:19 +0100
-From:   Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: difftool uses hardcoded perl shebang
-Thread-Topic: difftool uses hardcoded perl shebang
-Thread-Index: AdN4ynjtgQyTw2MFQ5+aXKvEwXrtnAAApmkQAAXJE+MAABGxUA==
-Date:   Tue, 19 Dec 2017 16:16:19 +0000
-Message-ID: <4d6ef097827c434e8c2474fec1e1b9c7@deutsche-boerse.com>
+        id S1751315AbdLSQZb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 11:25:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43214 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750763AbdLSQZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 11:25:30 -0500
+Received: (qmail 14411 invoked by uid 109); 19 Dec 2017 16:25:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Dec 2017 16:25:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3738 invoked by uid 111); 19 Dec 2017 16:25:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 19 Dec 2017 11:25:56 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Dec 2017 11:25:28 -0500
+Date:   Tue, 19 Dec 2017 11:25:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: difftool uses hardcoded perl shebang
+Message-ID: <20171219162528.GA5804@sigill.intra.peff.net>
 References: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com>
- <xmqqpo7awvbe.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqpo7awvbe.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-bjprotectivemarking: <?xml version="1.0" encoding="us-ascii"?><sisl
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:xsd="http://www.w3.org/2001/XMLSchema" sislVersion="0"
- policy="5e216652-7cb1-42d3-a22f-fb5c7f348db5" origin="defaultValue"
- xmlns="http://www.boldonjames.com/2008/01/sie/internal/label"><element
- uid="id_classification_nonbusiness" value="" /></sisl>
-dbg_attribute_name: 
-dbg_classification_id: 1
-dbg_classification_name: Public
-x-originating-ip: [10.250.0.103]
-Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-X-OriginalArrivalTime: 19 Dec 2017 16:16:19.0366 (UTC) FILETIME=[B41EA460:01D378E4]
-X-GBS-PROC: NH7GXT9RhmXy/d1QnTSi3WRPVXIg/1BHplLkRx9xCSE=
-X-GRP-TAN: FRPGBS03@8B01F5413825477993F2D08C3B5E1A06
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please disregard that line, it just a mailing client attachment. It is completely irrelevant to the matter. 
+On Tue, Dec 19, 2017 at 01:28:09PM +0000, Jakub Zaverka wrote:
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: 19 December 2017 17:13
-To: Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
-Cc: git@vger.kernel.org
-Subject: Re: difftool uses hardcoded perl shebang
+> When running git difftool:
+> 
+> >git difftool
+> Perl lib version (5.10.0) doesn't match executable version (v5.16.3)
+> Compilation failed in require at <path>/git-difftool line 2.
+> 
+> First line in my git-difftool is:
+> #!/usr/bin/perl
+> 
+> I am using a specific perl that I cannot change. Similarly, I cannot change the git-difftool file. I would like the difftool to use the perl form my PATH. 
+> 
+> Maybe it would be better to use #!/usr/bin/env perl?
 
-Jakub Zaverka <jakub.zaverka@deutsche-boerse.com> writes:
+This is a build-time knob. When you build git, try:
 
-> The below email is classified: Internal
+  make PERL_PATH='/usr/bin/env perl'
 
-Internal to what?
------------------------------------------
-Diese E-Mail enthaelt vertrauliche oder rechtlich geschuetzte Informationen.
-Wenn Sie nicht der beabsichtigte Empfaenger sind, informieren Sie bitte
-sofort den Absender und loeschen Sie diese E-Mail. Das unbefugte Kopieren
-dieser E-Mail oder die unbefugte Weitergabe der enthaltenen Informationen
-ist nicht gestattet.
+(If you don't build your own git, then you might raise the issue with
+whomever packages your binary).
 
-The information contained in this message is confidential or protected by
-law. If you are not the intended recipient, please contact the sender and
-delete this message. Any unauthorised copying of this message or
-unauthorised distribution of the information contained herein is prohibited.
+As an aside, git-difftool is now a C builtin these days, so the problem
+might also go away if you upgrade. ;)
 
-Legally required information for business correspondence/
-Gesetzliche Pflichtangaben fuer Geschaeftskorrespondenz:
-http://deutsche-boerse.com/letterhead
-
+-Peff
