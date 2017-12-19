@@ -2,143 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1D451F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 18:26:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82AE51F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 18:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751098AbdLSS0V (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 13:26:21 -0500
-Received: from mout.web.de ([217.72.192.78]:54465 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750808AbdLSS0U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 13:26:20 -0500
-Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfYn9-1ecXoK0xA3-00P7kX; Tue, 19
- Dec 2017 19:26:07 +0100
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
+        id S1751110AbdLSSeC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 13:34:02 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58138 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751098AbdLSSeA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 13:34:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E25BD5575;
+        Tue, 19 Dec 2017 13:33:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lGOprcpBdJV5
+        rNjQ0Ohd0Z5BerY=; b=m7Phogdq3VHcfaTXTKTCGdoslv6qqrY5Idky20Say/EK
+        kdfqKnj4miMxpnEdHeU7Ezea+L5njyhoVcnVhtlKCsFZUo7HOAmg8r5a74aH79qW
+        LmGY7z8R65s7pADlfp88o6MWQVXaCJNkAr5ciMBsoaz7ly+HzjXQ5rksgz3TXkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=S8IwNV
+        k/el+21uloFWhdm6fGXKZQOIIMM2JNV0lGRfKnXMHga2Muqx10VaqH797TnydUmn
+        hD8vc9loJrSCYzUkfy9i1vVbI2ArWmqrb4ToyZkLxKFu7SJAMmBi3D9bHPcGIB2+
+        TPQQHxqRLhIeDs37cFPqN5GS6cAAEjwCF7/pE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36250D5574;
+        Tue, 19 Dec 2017 13:33:57 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9F714D5573;
+        Tue, 19 Dec 2017 13:33:56 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
- <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
- <20171208101455.GC1899@sigill.intra.peff.net>
- <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
- <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
- <20171208212832.GC7355@sigill.intra.peff.net>
- <f1584860-d0d6-db82-0a49-021924c3e2b7@web.de>
- <20171219113855.GA24558@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f79ae9a3-de47-c41e-fea6-6a0fedf4ef63@web.de>
-Date:   Tue, 19 Dec 2017 19:26:06 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+        <20171218151043.GA9449@sigill.intra.peff.net>
+        <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
+        <20171219114906.GB24558@sigill.intra.peff.net>
+Date:   Tue, 19 Dec 2017 10:33:55 -0800
+In-Reply-To: <20171219114906.GB24558@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 19 Dec 2017 06:49:06 -0500")
+Message-ID: <xmqq7etiworw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20171219113855.GA24558@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:jEBEAY1u8ZtC7cuRJBt77aL3rRi31qLoHfCdEg1UlSGwTUI6Urj
- bIsxCtpIPo2HV9xu3ivlwBloqtEFjjKZnGL4D0PLXrO0tjpV/2vPcWINtezw60P+s2adQog
- P7uPlFZ+XbfUutYKPFRkRWSrXXPY5hI9ffjgx1JwwY4uHXe0B2jvpfrZrkakCfOMWSfEHlM
- qXF4nvYJw8tQcxerGfScQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OH4IbX5uAXY=:yCDqOfgOpcLNG4bYmfVRse
- Z4K3sZXgYeHQRnfIAzkpgbjB3RsHneSGerGZOvg7SvyMiLBZAnJAaxS1gy4JgVEVFHdAaKVlw
- fLXqNroSb1tcKzv+I0U/pju18kRNs5lzfHSFOndE8mwhg9swLX5gWoxRKEpCY6ovaWwHJ1Zfy
- /3L0oKQssnF8763JtMuGfuGdn4T891JZB+mHGQnGbgSsLqVVoep4H/LCa3UDwuGbRlvGjadet
- ioG+CvrvQGIT4Mnyyuo252VrMtI0qk0mceFLnwmrSS6LjP4q1sW+1TY1jsReRvDwocyFWn49r
- baqgi/5WVUv2wM/tTAtUemj4uwzTfHpKuzpvFnKWRFwvRVHJdJQDk0Fy0X2/His6k+oihzSxf
- I7qZra46UmybnVbXDVYxVs2VQY2a3hyq2g0WZ/tjd4HLSBA+rJCmrehZxg8ULC6hqZ8vLtJ3Q
- mWvKB2Xu/HWdWfxir0rTqkg8UcC+hWSBQrbUclQ+w1fMBBGhDHbq6w0kXSiDM8LR90oZLff9Q
- KTQoNNLKnzJo3V6pS/KWQuGMxOHCKvy9bXNq50UhYNV3RpT33fZhfNUYbvzll9l7y7QDAmea5
- jdJJY40l36iuUX68RBJPmrf9DVx5327RgTCQQvfiRXH8/IMRwztUSfZ+5ZNLa4nZ0SQY51BpA
- 35KYAHV2YqhvFFcmtiZon+gRRVBaT/XLvlpW6yHmqxatJV1RNvYts5pyzH2zWXPBohgidI+Hj
- DyEeqm4ZoTIpDjP3xJYduoQqChBVE1vE1BfkxXnJ2UtMI6tUgeAhLGOuPFDoKRsh3iAx82VFN
- 7KZj1WFKIpwypNitasFnGtwQEEKHxlWz1SSVFx8dhxw2Mj1bUs=
+X-Pobox-Relay-ID: 2C1D84DC-E4EB-11E7-8AC7-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.12.2017 um 12:38 schrieb Jeff King:
-> On Mon, Dec 18, 2017 at 08:18:17PM +0100, René Scharfe wrote:
-> 
->>> I'd actually argue the other way: the simplest interface is one where
->>> the string list owns all of its pointers. That keeps the
->>> ownership/lifetime issues clear, and it's one less step for the caller
->>> to have to remember to do at the end (they do have to clear() the list,
->>> but they must do that anyway to free the array of items).
->>>
->>> It does mean that some callers may have to remember to free a temporary
->>> buffer right after adding its contents to the list. But that's a lesser
->>> evil, I think, since the memory ownership issues are all clearly
->>> resolved at the time of add.
->>>
->>> The big cost is just extra copies/allocations.
->>
->> An interface requiring callers to allocate can be used to implement a
->> wrapper that does all allocations for them -- the other way around is
->> harder.  It can be used to avoid object duplication, but duplicates
->> functions.  No idea if that's worth it.
-> 
-> Sure, but would anybody actually want to _use_ the non-wrapped version?
+Jeff King <peff@peff.net> writes:
 
-Not sure, but cases that currently use STRING_LIST_INIT_NODUP probably
-apply.  Apropos: apply.c::write_out_results() looks like it might, too.
+> On Mon, Dec 18, 2017 at 08:18:19PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> > The root of the matter is that the revision-walking code doesn't cle=
+an
+>> > up after itself. In every case, the caller is just saving these to c=
+lean
+>> > up commit marks, isn't it?
+>>=20
+>> bundle also checks if the pending objects exists.
+>
+> Thanks, I missed that one. So just adding a feature to clean up commit
+> marks wouldn't be sufficient to cover that case.
 
-Another question is how much it would cost to let them duplicate strings
-as well in order to simplify the code.
+OK.
 
-> That's the same duality we have now with string_list.
+>> > That sidesteps all of the memory ownership issues by just creating a
+>> > copy. That's less efficient, but I'd be surprised if it matters in
+>> > practice (we tend to do one or two revisions per process, there don'=
+t
+>> > tend to be a lot of pending tips, and we're really just talking abou=
+t
+>> > copying some pointers here).
+>> [...]
+>> I don't know if there can be real-world use cases with millions of
+>> entries (when it would start to hurt).
+>
+> I've seen repos which have tens of thousands of tags. Something like
+> "rev-list --all" would have tens of thousands of pending objects.
+> I think in practice it's limited to the number of objects (though in
+> practice more like the number of commits).
+> ...
 
-Hmm, I thought we *were* discussing string_list?
+OK again; that is an argument against "let's copy the array".
 
->>> Having a "format into a string" wrapper doesn't cover _every_ string you
->>> might want to add to a list, but my experience with argv_array_pushf
->>> leads me to believe that it covers quite a lot of cases.
->>
->> It would fit in with the rest of the API -- we have string_list_append()
->> as a wrapper for string_list_append_nodup()+xstrdup() already.  We also
->> have similar functions for strbuf and argv_array.  I find it a bit sad
->> to reimplement xstrfmt() yet again instead of using it directly, though.
-> 
-> I dunno, I think could provide some safety and some clarity. IOW, why
-> _don't_ we like:
-> 
->    string_list_append_nodup(list, xstrfmt(fmt, ...));
-> 
-> ? I think because:
-> 
->    1. It's a bit long and ugly.
-> 
->    2. It requires a magic "nodup", because we're violating the memory
->       ownership boundary.
-> 
->    3. It doesn't provide any safety for the case where strdup_strings is
->       not set, making it easy to leak accidentally.
+>> Why does prepare_revision_walk() clear the list of pending objects at
+>> all?  Assuming the list is append-only then perhaps remembering the
+>> last handled index would suffice.
 
-Right, and at least 2 and 3 would be solved by having distinct types for
-the plain and the duplicating variants.  The plain one would always
-"nodup" and would have no flags that need to be checked.
+For that matter, why does it copy, instead of using revs->pending
+directly?  I do not think I can answer this, as I think the design
+decisions led to this code predates me.
 
-> Doing:
-> 
->    string_list_appendf(list, fmt, ...);
-> 
-> pushes the memory ownership semantics "under the hood" of the
-> string_list API. And as opposed to being a simple wrapper, it could
-> assert that strdup_strings is set (we already do some similar assertions
-> in the split functions).
+In any case, it seems that the discussion has veered into an
+interesting tangent but at this point it seems to me that it is not
+likely to produce an immediate improvement over the posted patch.
 
-Yes, that check would guard against leaks.
-
-Having few functions that can be combined looks like a cleaner interface
-to me than having additional shortcuts for specific combinations -- less
-duplication, smaller surface.
-
-That said I'm not against adding string_list_appendf(); we already have
-similar functions for other types.
-
-René
+Should we take the patch posted as-is and move forward?
