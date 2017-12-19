@@ -2,92 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C66E81F404
-	for <e@80x24.org>; Tue, 19 Dec 2017 11:49:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C51731F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 12:22:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762400AbdLSLtM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 06:49:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43006 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1762392AbdLSLtJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 06:49:09 -0500
-Received: (qmail 1970 invoked by uid 109); 19 Dec 2017 11:49:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Dec 2017 11:49:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1389 invoked by uid 111); 19 Dec 2017 11:49:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 19 Dec 2017 06:49:34 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Dec 2017 06:49:06 -0500
-Date:   Tue, 19 Dec 2017 06:49:06 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
-Message-ID: <20171219114906.GB24558@sigill.intra.peff.net>
-References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
- <20171218151043.GA9449@sigill.intra.peff.net>
- <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
+        id S1751797AbdLSMWq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 07:22:46 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:45802 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751753AbdLSMWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 07:22:44 -0500
+Received: by mail-vk0-f53.google.com with SMTP id o16so11339245vke.12
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 04:22:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=V8C0PPlYx3vmIE9vz6ep4K/84LV+m5gx8k3whqdlwaE=;
+        b=ez9maNgfoyoRLyqHrqvOrOBqfQxRaYunn3C6iBoCVXCiDuTyMMy4fjofyeSP/NnJWR
+         SJlRwxbQKBLRbkpl1YEHS9+HX5rWnm5Z1pPflWQs7pgdjaDAqKxiBF8iSv2Ag5oKPNHb
+         1KtyzKSVKacvroLvfxn0pfHVayovVAl/9cWcqwTJRL4/WRPbgoRXiMz/w04kBk8AEIhE
+         9SgrqnkiSOaud7+HNLyp8YCvki5dnx1Lr4qNpOU048Vgw7vpwsUOvHexlutUIAVsshG5
+         HZjt6Maw4obMHjeAWaZuOhO2ePiWqrBMSKwuk3xBeJMgzPLxLCnhMYyg0Vr0wwFmg1kc
+         JJ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=V8C0PPlYx3vmIE9vz6ep4K/84LV+m5gx8k3whqdlwaE=;
+        b=Saje/YP03d9pw+sL4+5sZycgxBo3/56ri9EVhMDz1qFEA6hq4vrTXM3k65RrHqt+wl
+         kqaCte0JgdTxcTISmTHI5VZVj0VAfuI/2MUFjWS44PYGFTiJWHgjtw6E/RBDS7humHRL
+         CuXd0tQJsGVQMZA8/b60vOvHkpXX7TrMozUSpNwvrb0rrCOnGirpatLKGr1ZyPquXosG
+         j+gr6CFztYSmQs+VyDdpLxmOxrGMwQzGwuU/Ir0onPxdo4sO0RLBj6rK/qV3Jm2kIBUV
+         RBKqym+EhLb+75DKzNog/9YNasebik3364jnU8/CK0QYd+YUpjXE7JTzxO6bdwUuSVmI
+         IjvQ==
+X-Gm-Message-State: AKGB3mIV/sQb9cduqBjQNd1FF4V8upKy7CBhonmP4apNoMwQ+EybsYF9
+        zseIO3vPP0HbYnoJ6NAUfERESI5fRaBAiNgrQZk=
+X-Google-Smtp-Source: ACJfBoubv14GcYu6jMp40PnQVEZLqI9ObixPAC4gyQewagRpNQ6s5590aRqd6SECw1lpLHJB6e5kQ6E/q4rf5tOGW+4=
+X-Received: by 10.31.139.201 with SMTP id n192mr3049998vkd.132.1513686163321;
+ Tue, 19 Dec 2017 04:22:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
+Received: by 10.176.73.240 with HTTP; Tue, 19 Dec 2017 04:22:42 -0800 (PST)
+In-Reply-To: <CAM0VKj=xVfCd5qR4jXwFGDxSABgyAeZY5qJxUP3GHvUE7gjw6A@mail.gmail.com>
+References: <20171216125418.10743-2-szeder.dev@gmail.com> <20171216125758.11120-1-szeder.dev@gmail.com>
+ <8F53EF33-6FDA-484C-91A4-49CF24C0B417@gmail.com> <CAM0VKj=xVfCd5qR4jXwFGDxSABgyAeZY5qJxUP3GHvUE7gjw6A@mail.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Tue, 19 Dec 2017 13:22:42 +0100
+Message-ID: <CAM0VKjnctWRatbjB7EPHH+5zLjZLY+1umgFwz=bcV=g25eTD4w@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] travis-ci: don't install 'language-pack-is' package
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 18, 2017 at 08:18:19PM +0100, René Scharfe wrote:
+On Mon, Dec 18, 2017 at 11:04 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
 
-> > The root of the matter is that the revision-walking code doesn't clean
-> > up after itself. In every case, the caller is just saving these to clean
-> > up commit marks, isn't it?
-> 
-> bundle also checks if the pending objects exists.
+>   $ sudo apt-get install language-pack-is
+>   [...]
+>   $ ./t0204-gettext-reencode-sanity.sh
+>   # lib-gettext: Found 'is_IS.utf8' as an is_IS UTF-8 locale
+>   # lib-gettext: No is_IS ISO-8859-1 locale available
+>   ok 1 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Icelandic
+>   ok 2 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes
+>   ok 3 # skip gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files /
+> Icelandic (missing GETTEXT_ISO_LOCALE)
+>   ok 4 # skip gettext: impossible ISO-8859-1 output (missing GETTEXT_ISO_=
+LOCALE)
+>   ok 5 - gettext: Fetching a UTF-8 msgid -> UTF-8
+>   ok 6 # skip gettext: Fetching a UTF-8 msgid -> ISO-8859-1 (missing
+> GETTEXT_ISO_LOCALE)
+>   ok 7 - gettext.c: git init UTF-8 -> UTF-8
+>   ok 8 # skip gettext.c: git init UTF-8 -> ISO-8859-1 (missing
+> GETTEXT_ISO_LOCALE)
+>   # passed all 8 test(s)
+>   1..8
+>
+> I'd expect something like this in the Travis CI build jobs as well, but
+> prove hides the detailed output.
+>
+> It seems we would loose coverage with this patch, so it should be
+> dropped.
 
-Thanks, I missed that one. So just adding a feature to clean up commit
-marks wouldn't be sufficient to cover that case.
+Not so fast!
 
-> > That sidesteps all of the memory ownership issues by just creating a
-> > copy. That's less efficient, but I'd be surprised if it matters in
-> > practice (we tend to do one or two revisions per process, there don't
-> > tend to be a lot of pending tips, and we're really just talking about
-> > copying some pointers here).
-> [...]
-> I don't know if there can be real-world use cases with millions of
-> entries (when it would start to hurt).
+Notice how there are still a few tests skipped above, because of missing
+GETTEXT_ISO_LOCALE.
 
-I've seen repos which have tens of thousands of tags. Something like
-"rev-list --all" would have tens of thousands of pending objects.
-I think in practice it's limited to the number of objects (though in
-practice more like the number of commits).
+  # grep is_IS /etc/locale.gen
+  # is_IS ISO-8859-1
+  # is_IS.UTF-8 UTF-8
+  # sed -i -e 's/^# is_IS/is_IS/' /etc/locale.gen
+  # locale-gen
+  Generating locales (this might take a while)...
+  [...]
+  is_IS.ISO-8859-1... done
+  is_IS.UTF-8... done
+  Generation complete.
 
-I'd note also that for most uses we don't need a full object_array. You
-really just need a pointer to the "struct object" to wipe its flags.
+Both UTF-8 and ISO Icelandic locales are generated, good.
 
-So there we might waste 8 bytes per object in the worst case. But bear
-in mind that the process is wasting a lot more than that per "struct
-commit" that we're holding. And versus the existing scheme, it's only
-for the moment until prepare_revision_walk() frees the old pending list.
+  $ $ ./t0204-gettext-reencode-sanity.sh
+  # lib-gettext: Found 'is_IS.utf8' as an is_IS UTF-8 locale
+  # lib-gettext: Found 'is_IS.iso88591' as an is_IS ISO-8859-1 locale
+  ok 1 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Icelandic
+  ok 2 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes
+  ok 3 - gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Icelandic
+  ok 4 - gettext: impossible ISO-8859-1 output
+  ok 5 - gettext: Fetching a UTF-8 msgid -> UTF-8
+  ok 6 - gettext: Fetching a UTF-8 msgid -> ISO-8859-1
+  ok 7 - gettext.c: git init UTF-8 -> UTF-8
+  ok 8 - gettext.c: git init UTF-8 -> ISO-8859-1
+  # passed all 8 test(s)
 
-> Why does prepare_revision_walk() clear the list of pending objects at
-> all?  Assuming the list is append-only then perhaps remembering the
-> last handled index would suffice.
+And now all those tests are run, great!
+But look what happens without the language pack:
 
-I assume it was mostly to clean up after itself, since there's no
-explicit "I'm done with the traversal" function. But as I said earlier,
-I'd be surprised of a revision walk doesn't leave some allocated cruft
-in rev_info these days (e.g., pathspec cruft). In practice it doesn't
-matter much because we don't do arbitrary numbers of traversals in
-single process.
+  # dpkg -P language-pack-is{,-base}
+  [...]
+  # grep is_IS /etc/locale.gen
+  is_IS ISO-8859-1
+  is_IS.UTF-8 UTF-8
+  buzz ~# locale-gen
+  Generating locales (this might take a while)...
+  [...]
+  is_IS.ISO-8859-1... done
+  is_IS.UTF-8... done
+  Generation complete.
 
--Peff
+Still both Icelandic locales are generated.
+
+  $ ./t0204-gettext-reencode-sanity.sh
+  # lib-gettext: Found 'is_IS.utf8' as an is_IS UTF-8 locale
+  # lib-gettext: Found 'is_IS.iso88591' as an is_IS ISO-8859-1 locale
+  ok 1 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Icelandic
+  ok 2 - gettext: Emitting UTF-8 from our UTF-8 *.mo files / Runes
+  ok 3 - gettext: Emitting ISO-8859-1 from our UTF-8 *.mo files / Icelandic
+  ok 4 - gettext: impossible ISO-8859-1 output
+  ok 5 - gettext: Fetching a UTF-8 msgid -> UTF-8
+  ok 6 - gettext: Fetching a UTF-8 msgid -> ISO-8859-1
+  ok 7 - gettext.c: git init UTF-8 -> UTF-8
+  ok 8 - gettext.c: git init UTF-8 -> ISO-8859-1
+  # passed all 8 test(s)
+
+And still all those tests are run!
+
+I did run all test scripts sourcing 'lib-gettext.sh' with both locales
+generated and didn't see any errors, independently from whether the
+language pack was installed or not.  I still have a few skipped tests
+(because of no GETTEXT_POISON and something PCRE-related), but those,
+too, are independent from the language pack.
+
+So it seems that we don't need 'language-pack-is' after all; what we do
+need are the ISO and UTF-8 Icelandic locales.  Not sure we can modify
+/etc/locale.gen without sudo in the Travis CI build job, though, and
+I've run out of time to try.
+
+
+G=C3=A1bor
