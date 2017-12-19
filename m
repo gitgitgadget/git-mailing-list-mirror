@@ -2,150 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F08111F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:44:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88E021F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752995AbdLSWof (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 17:44:35 -0500
-Received: from mail-it0-f43.google.com ([209.85.214.43]:40243 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751496AbdLSWof (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:44:35 -0500
-Received: by mail-it0-f43.google.com with SMTP id f190so4638980ita.5
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:44:34 -0800 (PST)
+        id S1753013AbdLSWy4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:54:56 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:39574 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752680AbdLSWyz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 17:54:55 -0500
+Received: by mail-qk0-f174.google.com with SMTP id u184so24583291qkd.6
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:54:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qxeedEloUolk3gwIVmADRisWNbJfxyVXLK+g4mmCF8Q=;
-        b=WnIL6scFJIb1TczYwlAP6wtgX3g62PwQEexAvVAh0urFzrm8gx3sKXRI0i0do3xwDd
-         E7kl8gFPrgq2KXCP7PxZJmX194gtq45mthiSPE2wUEGd9u4o4RJEHjHgBOF46kx1N3La
-         PDo96Dk+CTYTKRQgnZUIVBHp8Gc2qzQx8XRpUIT4xhkTEfSV8FhToZWzvMJm6Vr1EQJV
-         lSXluRcdVHFvAeeInujuFZe1K99D9O8x8U/v16kHSkTe4+/P6PR64eC1JhE3iyT08QfI
-         cW0FLf1yP3nwYexMwJdiqfS8oheIYZSxduAvYq0o1S347Q0UE/DS0y56wJa+PcIyF138
-         1w5A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8BVIG4/RcVYfvX0EOfyMmCNozuqudzowzvCsi461Bew=;
+        b=ExR86PFBHUtumh2DmYxFNXD/uzGD55KXVjph1qvLaSGCdtiVqNuBd7DdjDCMa1um+q
+         7MfzgD6qdfFsf/5CZNB5XZYGbQDxSikn+U1u+mPZH3Wa8F74wUMXFP3a9q3aBaS3Z6Om
+         BftrGx5Gev1Vbsken477AvKvjmoql4B31jPoqdqZtPQCyAg1/7VbBck4yGhV1TcJ+mJU
+         lDuFmsZ63EI2evO/KwUf57YBZrHDhG3N7dTZ+NdtJNfd99VL+qiLISk28MZxxk9TwU2T
+         yxlJYeT8SOKsWnL1alh5Zj6+r+LCqZfwIblOanzQVDxeq30mYqY9NRuiL9fUJWU4gKlh
+         NQBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qxeedEloUolk3gwIVmADRisWNbJfxyVXLK+g4mmCF8Q=;
-        b=TN/o7NbefT8mX9LyOgGj2AfJaGqAaFMgC1VoSZPnyF38AdLRj3YOscK1yX+8MtEVnz
-         fSO3VeRmo+Dd/CFXAlmqOqUFVYvq5R8eeRAxvFkitaB354yTxfMhUpFOaJ7fkiuyOVbZ
-         Ely5/gIoe90iz1QdL6rvbq05lAN5UB7wr9YDYqHU8MtcBFKKng1EFRBhopM5H8VJj+JH
-         6DH4OGs4RIHO4FfYv0Lc5Bcpe7CzMGXmTEzR1ttGmjvGYt2GnjJnm5YDCxuwv0ZaGNU5
-         EfaCt/7G2BQ/RfNgl1M9XQeboiqHC8jgTohHeTei2R4xE+N2kJ6ykFgL2si9gNP+zZmU
-         vYng==
-X-Gm-Message-State: AKGB3mJdtzHN19KxCZctfKUvsCvZi+vb6EzRHvN4Kkj2hUkKBbYVmeIs
-        1Hgm2AdoDG5N61l+ufn9UavfP4ST
-X-Google-Smtp-Source: ACJfBoupQCE6kevHKlBEtHp4aeB/x1VgDVuUKgirFAVYLmYmdxwdykGO5FLfcLns8A8N+dDSAikbjw==
-X-Received: by 10.36.108.212 with SMTP id w203mr5393704itb.148.1513723474132;
-        Tue, 19 Dec 2017 14:44:34 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s2sm8329244ioa.45.2017.12.19.14.44.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 14:44:33 -0800 (PST)
-Date:   Tue, 19 Dec 2017 14:44:31 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8BVIG4/RcVYfvX0EOfyMmCNozuqudzowzvCsi461Bew=;
+        b=eyMavrbo8uZhRp6ZcVrzMYPz15YKi3D4b7/II67YoSH2f8bILCw97nQQ9mqqz5X7Uy
+         wWo7DCkIRJcAATPeCSe0Dd3pGjLEmelKl1lNrSP3pJiyCsIR6EZI4dcKCHk6LkUVT1hc
+         pAED4e32tktJYcgYsk8p6JSboKVE87W68y+sg801AoFkk3DUR7OdEtyo5G1jmLjk0Ip4
+         tjmmpe0+iuI3P3RL2dWRA1mcARmmWyWK7lcY3Z1/kp7QjHAGKi7zffciVDpW/y7t10Sg
+         RpD+Zh63ieoZM3qXJzJP+ICr2cpslE7C1MsjdU4yeFduQT7c/4WVUlQRxLR27V7iZeYZ
+         IHUw==
+X-Gm-Message-State: AKGB3mJMVTQnx5sdgHsat5oEFwCm8fGy2uG8QdVyR1ImxLohqaATPcU8
+        QUllC5POFneD6wVVcmx4JTU8wrRlZ+8Adfzho7Lw0w==
+X-Google-Smtp-Source: ACJfBovT78lx4ih2S91TL2Ge6L5O9leQpCQ4wkAkA9jdhuWXFXRG0YHHSLfByTtiiB8J2XYMAJgSuYxSp9JWxEMjq7g=
+X-Received: by 10.55.124.7 with SMTP id x7mr804499qkc.133.1513724094820; Tue,
+ 19 Dec 2017 14:54:54 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.140.85.179 with HTTP; Tue, 19 Dec 2017 14:54:53 -0800 (PST)
+In-Reply-To: <20171219224431.GG240141@aiede.mtv.corp.google.com>
+References: <20171219222636.216001-1-sbeller@google.com> <20171219222636.216001-6-sbeller@google.com>
+ <20171219224431.GG240141@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 19 Dec 2017 14:54:53 -0800
+Message-ID: <CAGZ79kake8k2dM=NPwNoqB5Vkxy+k67PACz01-aXx6-njcisgQ@mail.gmail.com>
 Subject: Re: [PATCH 5/5] submodule: submodule_move_head omits old argument in
  forced case
-Message-ID: <20171219224431.GG240141@aiede.mtv.corp.google.com>
-References: <20171219222636.216001-1-sbeller@google.com>
- <20171219222636.216001-6-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171219222636.216001-6-sbeller@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Dec 19, 2017 at 2:44 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi,
+>
+> I had trouble understanding what this fixes, so I'll try nitpicking a
+> bit as a sideways way to address that.
+>
+> Stefan Beller wrote:
+>
+>> With the previous patch applied (fix of the same() function),
+>
+> This tripped me up a bit.  Usually commits assume that all previous
+> patches have already been applied, since that allows the maintainer to
+> apply the early part of a series on one day and the later part another
+> day without losing too much context.
+>
+> I think this intends to say something like
+>
+>         Now that we allow recursing into an unchanged submodule (see
+>         "unpack-trees: Fix same() for submodules", 2017-12-19), it is
+>         possible for ...
 
-I had trouble understanding what this fixes, so I'll try nitpicking a
-bit as a sideways way to address that.
 
-Stefan Beller wrote:
+yup
 
-> With the previous patch applied (fix of the same() function),
+>
+>>                                                               the
+>> function `submodule_move_head` may be invoked with the same argument
+>> for the `old` and `new` state of a submodule, for example when you
+>> run `reset --hard --recurse-submodules` in the superproject that has no
+>> change in the gitlink entry, but only worktree related change in the
+>> submodule. The read-tree call in the submodule is not amused about
+>> the duplicate argument.
+>
+> What is the symptom of read-tree being unamused?  Is that a sign that
+> these patches are out of order (i.e. that we should prepare to handle an
+> unchanged submodule first, and then adjust the caller to pass in
+> unchanged submodules)?
+>
+>> It turns out that we can omit the duplicate old argument in all forced
+>> cases anyway, so let's do that.
+>
+> What is the end-user visibile effect of such a change?  E.g. what
+> becomes possible to a user that wasn't possible before?
+>
+> Among the commands you mentioned before:
+>
+>   checkout -f
+>         I think I would expect this not to touch a submodule that
+>         hasn't changed, since that would be consistent with its
+>         behavior on files that haven't changed.
+>
+>   reset --hard
+>         Nice!  Yes, recursing into unchanged submodules is a big part
+>         of the psychological comfort of being able to say "you can
+>         always use reset --hard <commit> to get back to a known
+>         state".
 
-This tripped me up a bit.  Usually commits assume that all previous
-patches have already been applied, since that allows the maintainer to
-apply the early part of a series on one day and the later part another
-day without losing too much context.
+I may have a different understanding of git commands than you do,
+but a plain "checkout -f" with no further arguments is the same as
+a hard reset IMHO, and could be used interchangeably?
 
-I think this intends to say something like
+Rehashing the "What is a submodule?" discussion, I would claim
+that when its worktree is changed, we'd want checkout to restore
+the submodules worktree back, so I disagree with your assessment
+of checkout -f.
 
-	Now that we allow recursing into an unchanged submodule (see
-	"unpack-trees: Fix same() for submodules", 2017-12-19), it is
-	possible for ...
+>   read-tree -u --reset
+>         This is essentially the plumbing equivalent of reset --hard,
+>         so it makes sense for them to be consistent.  Ok.
+>
+> Based on the checkout -f case, if I've understood correctly then patch
+> 4/5 goes too far on it (but I could easily be convinced otherwise).
 
->                                                               the
-> function `submodule_move_head` may be invoked with the same argument
-> for the `old` and `new` state of a submodule, for example when you
-> run `reset --hard --recurse-submodules` in the superproject that has no
-> change in the gitlink entry, but only worktree related change in the
-> submodule. The read-tree call in the submodule is not amused about
-> the duplicate argument.
+Without 4/5 we cannot implement hard reset recursing into submodules
+as it is functionally the same as forced checkout except when we
+differentiate them
+on a higher layer?
 
-What is the symptom of read-tree being unamused?  Is that a sign that
-these patches are out of order (i.e. that we should prepare to handle an
-unchanged submodule first, and then adjust the caller to pass in
-unchanged submodules)?
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  submodule.c               | 4 +++-
+>>  t/lib-submodule-update.sh | 2 +-
+>>  2 files changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/submodule.c b/submodule.c
+>> index fa25888783..db0f7ac51e 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -1653,7 +1653,9 @@ int submodule_move_head(const char *path,
+>>       else
+>>               argv_array_push(&cp.args, "-m");
+>>
+>> -     argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
+>> +     if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
+>> +             argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
+>
+> Interesting.  What is the effect when old != new?
 
-> It turns out that we can omit the duplicate old argument in all forced
-> cases anyway, so let's do that.
-
-What is the end-user visibile effect of such a change?  E.g. what
-becomes possible to a user that wasn't possible before?
-
-Among the commands you mentioned before:
-
-  checkout -f
-	I think I would expect this not to touch a submodule that
-	hasn't changed, since that would be consistent with its
-	behavior on files that haven't changed.
-
-  reset --hard
-	Nice!  Yes, recursing into unchanged submodules is a big part
-	of the psychological comfort of being able to say "you can
-	always use reset --hard <commit> to get back to a known
-	state".
-
-  read-tree -u --reset
-	This is essentially the plumbing equivalent of reset --hard,
-	so it makes sense for them to be consistent.  Ok.
-
-Based on the checkout -f case, if I've understood correctly then patch
-4/5 goes too far on it (but I could easily be convinced otherwise).
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  submodule.c               | 4 +++-
->  t/lib-submodule-update.sh | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/submodule.c b/submodule.c
-> index fa25888783..db0f7ac51e 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1653,7 +1653,9 @@ int submodule_move_head(const char *path,
->  	else
->  		argv_array_push(&cp.args, "-m");
->  
-> -	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-> +	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
-> +		argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-
-Interesting.  What is the effect when old != new?
+when the force flag is set we mostly pass in old="HEAD", which is
+technically correct,
+but not a sha1. (I assume you want to know what happens when two unequal sha1s
+are given; for that it will perform a 2 way merge instead of a complete reset)
 
 Thanks,
-Jonathan
+Stefan
