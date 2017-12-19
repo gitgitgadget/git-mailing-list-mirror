@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 114071F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:26:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64FDD1F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbdLSW0t (ORCPT <rfc822;e@80x24.org>);
+        id S1753147AbdLSW0x (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:26:53 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:36881 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbdLSW0t (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 19 Dec 2017 17:26:49 -0500
-Received: from mail-it0-f45.google.com ([209.85.214.45]:44495 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751820AbdLSW0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:26:48 -0500
-Received: by mail-it0-f45.google.com with SMTP id b5so4540225itc.3
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:26:48 -0800 (PST)
+Received: by mail-it0-f66.google.com with SMTP id d137so4615231itc.2
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=yMfuUJffbiK2Q/89ShLjQ1ZtyPF3FX6AeadPj7Mk5AA=;
-        b=JHS/z98YO/NiFIysgqZQ0mBs9i9uq96mbSuedKkzDwNyY726d+uDQp3dsF0RLmmab8
-         c54kuj+otqpI9mrgjwOgJ3POb9KroHiSYeFiOsACENQQFSCzyyfq+iJD2H7TPGJ7Yku9
-         sd6VYv9DBFLuED6K+AxOFI2rjBIRAHXz/58K68JTY4j65s5rJdV2REMbQSnKvvztp6jN
-         fvcD3vxY2FkCfu7+snliZvAwcdHuRU3ACge3Vr/xuTsBPfH50OIHWLrl+G61Wbze54MJ
-         WWIeoQ4Wgvgu4eCdUqfS/FC0DYu9G7h+5yE7EE3CookmJIEytHVyruaPHCgMpm0cycW4
-         yapw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+ZRZdPETG3ekF+KypkLsJRq/T/bpHyUZ39aRFkE3hI0=;
+        b=Ug4KC6w0lCX6QYf8OdmJUFMCiJeOKp3+YaJ0NBRcz0p1dgj8hq07rRkLLxiMQnsoRK
+         2zYPUYRVxjsguIBJQuNNXUzpY2FGqK1e32d8gnYkeF+OIOa4XQfL745nHX2lTm6z/HgZ
+         Tbe/Q4fanoj3abcjEJxwEGu8IGNGM1/ebOIWoK9TWm22pFTfm5Tce02WDb/pHRfTaObI
+         firkip4RVmPsI4oikM5qI/b/NAgUefuLSuoNEU0dmxgg090F2ifJNVnaBLLcOKS9ECC0
+         Bn5ypLbJfNfZp+L6rI54xuy6MJE6EVFXBHcS5WheseLZjtrcsngMpsjrSFgllZdmaVqe
+         AWIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=yMfuUJffbiK2Q/89ShLjQ1ZtyPF3FX6AeadPj7Mk5AA=;
-        b=DZ+qZGw0RzzrtfM6U4hGv3zXWjdxUthrAmjOfJS91D3lHhLKA2Gvxpx3ZCUmfKS37Q
-         xKZwvtw3X0G4qRtw7gwAk6rIpYGdPeIOx8JCvNSaFYzKisYw7Se6XEyvjQW+pmB8fJbi
-         XsTH1TXWxOL1L5vLQgsMZQIPy7ThDy0uunEodvmW3378sHVFaR++7aMHhil6nO11aonV
-         3QyjEsa7P1+6HNuADgTspj/ndi7iNKVshzXM5hTIUs1GBUPFnc+3DdaJ29bw3MyrQgnP
-         hcd5s7Bt1I4mvfaeXbeuNaUxyB2BD62UZcJFbjiKOHipWERxVa6+gEetGBG0Q+1BP7G5
-         g2OA==
-X-Gm-Message-State: AKGB3mL9VZBniX5XFantjlDQftPSErL7DFClfiHYYUnXDQTwQAf+0izS
-        H8UMTzM0CtBRyM4Na7y2e3tZx1eoVpg=
-X-Google-Smtp-Source: ACJfBosOJ/eu5tHNS5hedNASdFEAffwaHEKETyTfKOCqUcGStU1GQRpUOT2QwOAXVEbiqaBrqyNGng==
-X-Received: by 10.36.249.132 with SMTP id l126mr5423786ith.52.1513722407462;
-        Tue, 19 Dec 2017 14:26:47 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+ZRZdPETG3ekF+KypkLsJRq/T/bpHyUZ39aRFkE3hI0=;
+        b=aysIU8+SCFblI/U4GQgMmPvyTGppsyKCZ9QBMpGnEhwZ5zInzOPR5nadzx9E5DDqqu
+         MRllKwzlO3zEEMUsg8ri/fclnHIKIVPLgg5M5HWtmE6fjcphfkFmNkm5zGhm5uMFYipn
+         fJTIbAep+1hjeGIumSrmis1umAaIn4grun+1tTsZXZ2JibLPDUtN2sDyoGRoFQp6vgck
+         HgN0+3ytSyvSlSEnS7nOO6W1QM5pcuQXVkwk5jBbbR5o5zUu5HAbOY1wWJ3QmolC3Q0O
+         nRUkTMb+tAs5qqe0vGjkxbksUFB7xpTd9ndB+okWor/lUGdDBCtgnuGtb1SGsCsEJTgK
+         4HeQ==
+X-Gm-Message-State: AKGB3mLn9Hb+fQvRsmfYq8/A1QEylSFmizTmpKQ/UVXL269Qe4tql0xU
+        UKwNrwfbwEe5RDxQ5bi2OI1+HHFxAaI=
+X-Google-Smtp-Source: ACJfBovOx5qqcEmmVUDe3+tdzM5shbj5cw8WMEjte9KZyZ+VyuWlldG6oSX20Omm3yKYX3obnf8BVg==
+X-Received: by 10.36.172.73 with SMTP id m9mr5084983iti.120.1513722409003;
+        Tue, 19 Dec 2017 14:26:49 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id 139sm4580897itm.2.2017.12.19.14.26.46
+        by smtp.gmail.com with ESMTPSA id r67sm2685211iod.58.2017.12.19.14.26.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 14:26:46 -0800 (PST)
+        Tue, 19 Dec 2017 14:26:48 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/5] Fix --recurse-submodules for submodule worktree changes
-Date:   Tue, 19 Dec 2017 14:26:31 -0800
-Message-Id: <20171219222636.216001-1-sbeller@google.com>
+Subject: [PATCH 1/5] t/lib-submodule-update.sh: clarify test
+Date:   Tue, 19 Dec 2017 14:26:32 -0800
+Message-Id: <20171219222636.216001-2-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+In-Reply-To: <20171219222636.216001-1-sbeller@google.com>
+References: <20171219222636.216001-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The fix is in the last patch, the first patches are just massaging the code
-base to make the fix easy.
+Keep the local branch name as the upstream branch name to avoid confusion.
 
-The second patch fixes a bug in the test, which was ineffective at testing.
-The third patch shows the problem this series addresses,
-the fourth patch is a little refactoring, which I want to keep separate
-as I would expect it to be a performance regression[1].
-The first patch is unrelated, but improves the readability of submodule test
-cases, which we'd want to improve further.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/lib-submodule-update.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
-Stefan
-
-[1] The performance should improve once we don't use so many processes
-    any more, but that repository series is stalled for now.
-
-Stefan Beller (5):
-  t/lib-submodule-update.sh: clarify test
-  t/lib-submodule-update.sh: Fix test ignoring ignored files in
-    submodules
-  t/lib-submodule-update.sh: add new test for submodule internal change
-  unpack-trees: Fix same() for submodules
-  submodule: submodule_move_head omits old argument in forced case
-
- submodule.c               |  4 +++-
- t/lib-submodule-update.sh | 16 ++++++++++++++--
- unpack-trees.c            |  2 ++
- 3 files changed, 19 insertions(+), 3 deletions(-)
-
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 38dadd2c29..d7699046f6 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -664,8 +664,8 @@ test_submodule_recursing_with_args_common() {
+ 			cd submodule_update &&
+ 			git -C sub1 checkout -b keep_branch &&
+ 			git -C sub1 rev-parse HEAD >expect &&
+-			git branch -t check-keep origin/modify_sub1 &&
+-			$command check-keep &&
++			git branch -t modify_sub1 origin/modify_sub1 &&
++			$command modify_sub1 &&
+ 			test_superproject_content origin/modify_sub1 &&
+ 			test_submodule_content sub1 origin/modify_sub1 &&
+ 			git -C sub1 rev-parse keep_branch >actual &&
 -- 
 2.15.1.620.gb9897f4670-goog
 
