@@ -7,88 +7,86 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88C371F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:33:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1C41F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752854AbdLSWdU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 17:33:20 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:42808 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751820AbdLSWdT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:33:19 -0500
-Received: by mail-qk0-f179.google.com with SMTP id a193so15844622qkc.9
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:33:19 -0800 (PST)
+        id S1753175AbdLSWfF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:35:05 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:41946 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752880AbdLSWfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 17:35:04 -0500
+Received: by mail-qt0-f170.google.com with SMTP id i40so26164287qti.8
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:35:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=84jHUyWiS7I3nj8Auxoaz7Yayboe2UatFhxnKC0zYDA=;
-        b=FHvcT9bNbToNkYkC2su1X0JI+F7FqDdMqvSW9mK2nEqpDMva1AtflT8iypnPHooFah
-         /KJ64Mvww+hwrXcH3I7ENdoOvhan4XhOuPf/kGuIfYw9iC574CjExywbRyINwm18xi41
-         Bqo5Fm8OD5y2VZVLMNgPMmjdE3XKFI/ROC1676MgREhzAWXx8VfRehzMSEYIZJfcyb0B
-         gF3vas0/J5mqkcxLrr+vqHTCAoy/+Hpo21GvcndjGt0A1QOgS9jmnlF2JQZWQQRDDeWd
-         JdOIlxkx6YjM8vVZa4ufxb3l44QUs/LtLls8NtDuUciqsvUfTWXf4ouk9YWk+k1Ts+ii
-         NOwQ==
+        bh=USZEdnyltwmYP3kWoquyQXON4mal6cJQuonEg6R2tjc=;
+        b=BDT3QbHB8A796WP/jRZ2wLCUItU5TwbZAsAUF6kXAiGj48twe0tnAN+f/RoIcrlWVl
+         zHoOR5zu0GKRNj0SHLMzQ421epGnLg3BYxgDWvmDH0TBLYP6DoP0aC9K69wJOP89/da3
+         18jYSkGa8KhcaWfxHcR/O8YgBXU63ZcoAB+yjCCOGfHhA+Tk1GhSmHiotXwHXOGzdgvs
+         QkFmW9PmkdPkdLY9A1vhXiOMq/Y21/TWG2BfGqnOnGq9UkL4RqdvGLc81YUE4CJQXSez
+         S2MQLnqp6vrGxcWS711F16L7iF0F/AGf2nc4uNUZN2Q67PUf5vU9Zg4pdgqxsfBdDI1e
+         hHzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=84jHUyWiS7I3nj8Auxoaz7Yayboe2UatFhxnKC0zYDA=;
-        b=CnlSyqgodDt94M2iS3IZtSR4F+m6D66ucH1RgXswsR+D2PkcyWkLNbfuWffQlyrI1d
-         gbvyu/uEleoQa/VY6GcBwNyRGP/9mixOzvWI+dT5jCo/bDUp2sNtw74QCN9FvXZ/0Prp
-         yNvnJ3MFQmaw6sYMBX/7bLJqN7meqf56COhEN049V8dUY4KJJGqPqVYacTIbBH4FBUtX
-         9ge90oR4xf5+s1EuNHpryY1WHQYLj/Fw3+mR0mr96rdHs2xai17kO+hGg+7NXAHhMSoI
-         S53jQa+iU7BlN7wsSq72V5AcYJRNfGSUFp84pJ1r7Bp/koIvumAPvXWgkx/hn5IIsi4n
-         JS7A==
-X-Gm-Message-State: AKGB3mJqqNNuJrkPNhle0qVMBATmNe+6bFm4DgcsYw6H7bs7ZecqsX+u
-        bBSuDgLwH/qtgi6HIvPcNqrYdaETk7t3gFbiIsi9fVbLlzs=
-X-Google-Smtp-Source: ACJfBouAkp/Vh1DRTjUFb3uBy8ryXUFMixCSWm7vleGj2obrdCeDlLKsKRSGsBYnOaMNkGWaJjZzQ7FhlTX8qp3vOXI=
-X-Received: by 10.55.27.104 with SMTP id b101mr7248577qkb.353.1513722798763;
- Tue, 19 Dec 2017 14:33:18 -0800 (PST)
+        bh=USZEdnyltwmYP3kWoquyQXON4mal6cJQuonEg6R2tjc=;
+        b=YqsmWrx7643pwMVAhARlofFgPqn8Ihqh+LJ71luKFpb5+N7Wn95KG0KTYCHUrmoImx
+         AKDPnMis8/t/iSMI2CX4Y2kMURc3XR4UrA41UTdxQPE59489TXl+HNg1DXIC8ez/xQUu
+         goHfln6h7vBDvpTTn1GRHqJZOS9PPxkwx9za7jAdf9WzE2fWhhNG87f3kZm5FW+dZ98y
+         qjfzfRjNdychN3uusFLloI1hYlh9JWSM1cvqIxyI6QwXyZIMmq0/wxHlWLm2j8+IAG8z
+         DgKWc1mdgZDgSPmgffOkzO2agsE7rLv2siwMF7JNTv3buJ3z/uPhcb1/l/IOpOuedfUC
+         N8mQ==
+X-Gm-Message-State: AKGB3mKVrX+DgEN9tMnP+w4cF3B58KBX25KEOByW6NKS1lh02B/yIrHC
+        vGZB/DizDvzPapheRxTpbor5T8YeSDJ0CLWfXPZGORYC
+X-Google-Smtp-Source: ACJfBotkxktqVHq4RRRoQSzcCSFyrLNVIZZ00oOhBvJt+tI8y7b+/s41Ta0mK5P/QTTfE/+sM5ZFgpS4PH803AC9mtM=
+X-Received: by 10.200.35.215 with SMTP id r23mr6934306qtr.174.1513722903550;
+ Tue, 19 Dec 2017 14:35:03 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 19 Dec 2017 14:33:18 -0800 (PST)
-In-Reply-To: <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
-References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
- <20171219180230.254881-1-sbeller@google.com> <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
+Received: by 10.140.85.179 with HTTP; Tue, 19 Dec 2017 14:35:02 -0800 (PST)
+In-Reply-To: <20171219223130.GF240141@aiede.mtv.corp.google.com>
+References: <20171219222636.216001-1-sbeller@google.com> <20171219222636.216001-4-sbeller@google.com>
+ <20171219223130.GF240141@aiede.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 19 Dec 2017 14:33:18 -0800
-Message-ID: <CAGZ79kbqntXuYuLGF7zjXfQ5X998QdEba20yy8A0cqS=DaRxFA@mail.gmail.com>
-Subject: Re: [PATCH] Re: Bug with "git submodule update" + subrepo with
- differing path/name?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     arurke@gmail.com, git <git@vger.kernel.org>
+Date:   Tue, 19 Dec 2017 14:35:02 -0800
+Message-ID: <CAGZ79kZhiX8jqz-LxpeMp92caqU6urxS3T8gxoB4toDkGw0g6w@mail.gmail.com>
+Subject: Re: [PATCH 3/5] t/lib-submodule-update.sh: add new test for submodule
+ internal change
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 19, 2017 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, Dec 19, 2017 at 2:31 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi,
 >
->> I tried reproducing the issue (based on the `next` branch, not 2.15,
->> but I do not recall any changes in the submodule area lately), and
->> could not come up with a reproduction recipe,...
+> Stefan Beller wrote:
 >
-> I do not offhand recall anything; the closest I can think of is the
-> three-patch series <20171016135623.GA12756@book.hvoigt.net> that
-> taught the on-demand recursive fetch to pay attention to the location
-> in the superproject tree a submodule is bound to.
-
-I tried the same test on 2.15 and cannot reproduce there either.
-
+>> The test is marked as a failure as the fix comes in a later patch.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  t/lib-submodule-update.sh | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
 >
->     4b4acedd61 submodule: simplify decision tree whether to or not to fetch
->     c68f837576 implement fetching of moved submodules
->     01ce12252c fetch: add test to make sure we stay backwards compatible
->
-> But IIRC, "submodule update" uses a separate codepath?
+> I think I'd find this easier to undrestand if it were squashed with the
+> patch that fixes it.
 
-Yes, any portion of git-submodule.sh that calls out to C is going
-through the submodule--helper. I want to revive the port of that
-shell script to C again.
+ok, let's squash this into the last patch then.
 
-The "submodule update" uses the submodule helper to obtain
-the list of submodules and then does a "git -C $sub fetch" in there.
+> This is part of test_submodule_foced_switch --- does that mean it
+> affects both checkout -f and reset --hard, or only the latter?
 
+All of
+  checkout -f
+  reset --hard (and not reset --keep ;)
+  read-tree -u --reset
+
+Thanks,
 Stefan
