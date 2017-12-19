@@ -2,63 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 721E21F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 16:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DEA41F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 16:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751225AbdLSQMl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 11:12:41 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64353 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751122AbdLSQMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 11:12:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0BA5D3AFF;
-        Tue, 19 Dec 2017 11:12:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tPb4I7Q4I96VUA0V+9KYu+Sekbw=; b=mXtr7v
-        LK/H/ja+nEp1YPt+Q6CKHXUVldkiCi0gvBWKfKxF2WgNL/fKlIyCpZq8V1yTZlMp
-        LV1+fkfLjOpbtry3isW6ZIE9UVFFvQnN1vB3xoQu4QvsdyfyCqR3972CpmTzm6iR
-        VRFGrJX7nT5uvLmGp1cTT5IhmUcIVBeUgYIlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EtV5JlbWoAgp4mMJ2H+SDFoQraDXYngO
-        e2FZ9Fo7du33tQeF7a/7uixZe5yYmN6agN16PEBQQJj7QH/aZX8P17wA8vfZZwxr
-        rpOKNd1U+MFDhQodqjGXNJ53dIOSpED38in0aMFQLLtqnTKJXkMlIF2ylPrKCp6W
-        0iIODWdgwRM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9871AD3AFE;
-        Tue, 19 Dec 2017 11:12:39 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FCB4D3AFD;
-        Tue, 19 Dec 2017 11:12:38 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: difftool uses hardcoded perl shebang
+        id S1751032AbdLSQQW convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 19 Dec 2017 11:16:22 -0500
+Received: from mail10.clearstream.com ([194.36.229.253]:8451 "EHLO
+        mail10.clearstream.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750763AbdLSQQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 11:16:21 -0500
+X-IronPort-AV: E=McAfee;i="5700,7163,8750"; a="3136116"
+X-IronPort-AV: E=Sophos;i="5.45,427,1508796000"; 
+   d="scan'208";a="3136116"
+Received: from unknown (HELO FRPGBS03.oa.pnrad.net) ([172.20.221.250])
+  by cinkc039.nw.lan with ESMTP; 19 Dec 2017 17:16:19 +0100
+Received: from mail pickup service by FRPGBS03.oa.pnrad.net with Microsoft SMTPSVC;
+         Tue, 19 Dec 2017 17:16:19 +0100
+Received: from frpdlpm01.nw.lan ([172.20.221.130]) by FRPGBS03.oa.pnrad.net with Microsoft SMTPSVC(8.5.9600.16384);
+         Tue, 19 Dec 2017 17:16:19 +0100
+Received: from mailp3.deutsche-boerse.de (unknown [172.20.221.130])
+        by Forcepoint Email with ESMTPS id 97D3FEC07B9932492BE6;
+        Tue, 19 Dec 2017 17:16:19 +0100 (CET)
+Received: from FRPEXCH04.oa.pnrad.net ()
+          by mailhub.deutsche-boerse.de (V2)
+          id vBJGGJDH021600; Tue, 19 Dec 2017 17:16:19 +0100
+Received: from FRPEXCH03.oa.pnrad.net (10.250.16.251) by
+ FRPEXCH04.oa.pnrad.net (10.250.16.243) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.1261.35; Tue, 19 Dec 2017 17:16:19 +0100
+Received: from FRPEXCH03.oa.pnrad.net ([fe80::dd2b:f5ff:fe75:fbcc]) by
+ FRPEXCH03.oa.pnrad.net ([fe80::dd2b:f5ff:fe75:fbcc%22]) with mapi id
+ 15.01.1261.035; Tue, 19 Dec 2017 17:16:19 +0100
+From:   Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: difftool uses hardcoded perl shebang
+Thread-Topic: difftool uses hardcoded perl shebang
+Thread-Index: AdN4ynjtgQyTw2MFQ5+aXKvEwXrtnAAApmkQAAXJE+MAABGxUA==
+Date:   Tue, 19 Dec 2017 16:16:19 +0000
+Message-ID: <4d6ef097827c434e8c2474fec1e1b9c7@deutsche-boerse.com>
 References: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com>
-Date:   Tue, 19 Dec 2017 08:12:37 -0800
-In-Reply-To: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com> (Jakub
-        Zaverka's message of "Tue, 19 Dec 2017 13:28:09 +0000")
-Message-ID: <xmqqpo7awvbe.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <xmqqpo7awvbe.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqpo7awvbe.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-bjprotectivemarking: <?xml version="1.0" encoding="us-ascii"?><sisl
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" sislVersion="0"
+ policy="5e216652-7cb1-42d3-a22f-fb5c7f348db5" origin="defaultValue"
+ xmlns="http://www.boldonjames.com/2008/01/sie/internal/label"><element
+ uid="id_classification_nonbusiness" value="" /></sisl>
+dbg_attribute_name: 
+dbg_classification_id: 1
+dbg_classification_name: Public
+x-originating-ip: [10.250.0.103]
+Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6F146C7E-E4D7-11E7-9AE8-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-OriginalArrivalTime: 19 Dec 2017 16:16:19.0366 (UTC) FILETIME=[B41EA460:01D378E4]
+X-GBS-PROC: NH7GXT9RhmXy/d1QnTSi3WRPVXIg/1BHplLkRx9xCSE=
+X-GRP-TAN: FRPGBS03@8B01F5413825477993F2D08C3B5E1A06
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+Please disregard that line, it just a mailing client attachment. It is completely irrelevant to the matter. 
+
+-----Original Message-----
+From: Junio C Hamano [mailto:gitster@pobox.com] 
+Sent: 19 December 2017 17:13
+To: Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>
+Cc: git@vger.kernel.org
+Subject: Re: difftool uses hardcoded perl shebang
 
 Jakub Zaverka <jakub.zaverka@deutsche-boerse.com> writes:
 
 > The below email is classified: Internal
 
 Internal to what?
+-----------------------------------------
+Diese E-Mail enthaelt vertrauliche oder rechtlich geschuetzte Informationen.
+Wenn Sie nicht der beabsichtigte Empfaenger sind, informieren Sie bitte
+sofort den Absender und loeschen Sie diese E-Mail. Das unbefugte Kopieren
+dieser E-Mail oder die unbefugte Weitergabe der enthaltenen Informationen
+ist nicht gestattet.
+
+The information contained in this message is confidential or protected by
+law. If you are not the intended recipient, please contact the sender and
+delete this message. Any unauthorised copying of this message or
+unauthorised distribution of the information contained herein is prohibited.
+
+Legally required information for business correspondence/
+Gesetzliche Pflichtangaben fuer Geschaeftskorrespondenz:
+http://deutsche-boerse.com/letterhead
+
