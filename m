@@ -6,101 +6,88 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2058E1F404
-	for <e@80x24.org>; Tue, 19 Dec 2017 11:39:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C66E81F404
+	for <e@80x24.org>; Tue, 19 Dec 2017 11:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964956AbdLSLjC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 06:39:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42994 "HELO cloud.peff.net"
+        id S1762400AbdLSLtM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 06:49:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43006 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751578AbdLSLi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 06:38:58 -0500
-Received: (qmail 1480 invoked by uid 109); 19 Dec 2017 11:38:57 -0000
+        id S1762392AbdLSLtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 06:49:09 -0500
+Received: (qmail 1970 invoked by uid 109); 19 Dec 2017 11:49:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Dec 2017 11:38:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Dec 2017 11:49:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1350 invoked by uid 111); 19 Dec 2017 11:39:23 -0000
+Received: (qmail 1389 invoked by uid 111); 19 Dec 2017 11:49:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 19 Dec 2017 06:39:23 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 19 Dec 2017 06:49:34 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Dec 2017 06:38:56 -0500
-Date:   Tue, 19 Dec 2017 06:38:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Dec 2017 06:49:06 -0500
+Date:   Tue, 19 Dec 2017 06:49:06 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
-Message-ID: <20171219113855.GA24558@sigill.intra.peff.net>
-References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
- <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
- <20171208101455.GC1899@sigill.intra.peff.net>
- <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
- <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
- <20171208212832.GC7355@sigill.intra.peff.net>
- <f1584860-d0d6-db82-0a49-021924c3e2b7@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
+Message-ID: <20171219114906.GB24558@sigill.intra.peff.net>
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+ <20171218151043.GA9449@sigill.intra.peff.net>
+ <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f1584860-d0d6-db82-0a49-021924c3e2b7@web.de>
+In-Reply-To: <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 18, 2017 at 08:18:17PM +0100, René Scharfe wrote:
+On Mon, Dec 18, 2017 at 08:18:19PM +0100, René Scharfe wrote:
 
-> > I'd actually argue the other way: the simplest interface is one where
-> > the string list owns all of its pointers. That keeps the
-> > ownership/lifetime issues clear, and it's one less step for the caller
-> > to have to remember to do at the end (they do have to clear() the list,
-> > but they must do that anyway to free the array of items).
-> > 
-> > It does mean that some callers may have to remember to free a temporary
-> > buffer right after adding its contents to the list. But that's a lesser
-> > evil, I think, since the memory ownership issues are all clearly
-> > resolved at the time of add.
-> > 
-> > The big cost is just extra copies/allocations.
+> > The root of the matter is that the revision-walking code doesn't clean
+> > up after itself. In every case, the caller is just saving these to clean
+> > up commit marks, isn't it?
 > 
-> An interface requiring callers to allocate can be used to implement a
-> wrapper that does all allocations for them -- the other way around is
-> harder.  It can be used to avoid object duplication, but duplicates
-> functions.  No idea if that's worth it.
+> bundle also checks if the pending objects exists.
 
-Sure, but would anybody actually want to _use_ the non-wrapped version?
-That's the same duality we have now with string_list.
+Thanks, I missed that one. So just adding a feature to clean up commit
+marks wouldn't be sufficient to cover that case.
 
-> > Having a "format into a string" wrapper doesn't cover _every_ string you
-> > might want to add to a list, but my experience with argv_array_pushf
-> > leads me to believe that it covers quite a lot of cases.
-> 
-> It would fit in with the rest of the API -- we have string_list_append()
-> as a wrapper for string_list_append_nodup()+xstrdup() already.  We also
-> have similar functions for strbuf and argv_array.  I find it a bit sad
-> to reimplement xstrfmt() yet again instead of using it directly, though.
+> > That sidesteps all of the memory ownership issues by just creating a
+> > copy. That's less efficient, but I'd be surprised if it matters in
+> > practice (we tend to do one or two revisions per process, there don't
+> > tend to be a lot of pending tips, and we're really just talking about
+> > copying some pointers here).
+> [...]
+> I don't know if there can be real-world use cases with millions of
+> entries (when it would start to hurt).
 
-I dunno, I think could provide some safety and some clarity. IOW, why
-_don't_ we like:
+I've seen repos which have tens of thousands of tags. Something like
+"rev-list --all" would have tens of thousands of pending objects.
+I think in practice it's limited to the number of objects (though in
+practice more like the number of commits).
 
-  string_list_append_nodup(list, xstrfmt(fmt, ...));
+I'd note also that for most uses we don't need a full object_array. You
+really just need a pointer to the "struct object" to wipe its flags.
 
-? I think because:
+So there we might waste 8 bytes per object in the worst case. But bear
+in mind that the process is wasting a lot more than that per "struct
+commit" that we're holding. And versus the existing scheme, it's only
+for the moment until prepare_revision_walk() frees the old pending list.
 
-  1. It's a bit long and ugly.
+> Why does prepare_revision_walk() clear the list of pending objects at
+> all?  Assuming the list is append-only then perhaps remembering the
+> last handled index would suffice.
 
-  2. It requires a magic "nodup", because we're violating the memory
-     ownership boundary.
-
-  3. It doesn't provide any safety for the case where strdup_strings is
-     not set, making it easy to leak accidentally.
-
-Doing:
-
-  string_list_appendf(list, fmt, ...);
-
-pushes the memory ownership semantics "under the hood" of the
-string_list API. And as opposed to being a simple wrapper, it could
-assert that strdup_strings is set (we already do some similar assertions
-in the split functions).
+I assume it was mostly to clean up after itself, since there's no
+explicit "I'm done with the traversal" function. But as I said earlier,
+I'd be surprised of a revision walk doesn't leave some allocated cruft
+in rev_info these days (e.g., pathspec cruft). In practice it doesn't
+matter much because we don't do arbitrary numbers of traversals in
+single process.
 
 -Peff
