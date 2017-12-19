@@ -2,103 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50B891F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 18:02:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1D451F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 18:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751472AbdLSSCk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 13:02:40 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36886 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750945AbdLSSCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 13:02:35 -0500
-Received: by mail-io0-f196.google.com with SMTP id d16so14506323iob.4
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 10:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=O6/QUsX1uiw2XUi0sEvaTAjcG+F04aKT+N7l6XI5W0s=;
-        b=a5yOaeSV/JP8M0VRDBcmF54UxQpLLGbwFOTUSyB0eJbSYOOEkgoYup+zQTBvEo+fRi
-         s5j5QrUmaowU1gDBzCGginfCFTnIrftHfCHOzc91EPaX+QEr1uzhiAjd66ZCxTr2kk6q
-         yK6Suy1KSTVBclbXWWvM7vBt35q5DjI9zpsfUUMZzBFh0L0kzYJRkErWatzprOYr8pw+
-         n0CkSEdvl1UD6XtMdOixTr+QT3dJ21icPor9ph3LSr25Tu6AMP/Vl3kjFZetU5Pknshl
-         46zs/7nTaRH+HbX7xmJ1W/0n2jGYE2qxWPsIBrnKihJm0Iw4z+qc4L5YPZQB/iQyl8wJ
-         y8JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=O6/QUsX1uiw2XUi0sEvaTAjcG+F04aKT+N7l6XI5W0s=;
-        b=C+KiuxQn3vAAuczOIQdDerj+0DL5YfGDfKfuV1K3PzX9hElI/AJ4bD2ZPoOKV2Ufla
-         KW/q4K2yKwnAY0W2qkiiafqZ8kv8NuJ+0jvoJZ/RYAEmxyH7neWSaDLZC7azEp+mJVlj
-         +sD66OcJDMxw+WCGjw94DIpkgPiDQwDBXojopewj0qozm54sdEOSQ/7k0SDvdSC87LmO
-         AVuWmkq4SJx52fji+vfxIEGbZ8YE9jyU8KZRLmZThGesbwgIOSAH0OenhRrauFbJuanj
-         azoBlZokZPhmIe/04ntcA2zANjDNcOjpMJMlXGM0eaAWTAoVlxVtktaluaRpbxzJ6JJU
-         EadA==
-X-Gm-Message-State: AKGB3mKjxDzLqotvlyWslRSKah1S89KXdLgahvW4iTxsUQI1cypP5yTt
-        L0HWffqo75OCPZZkT6OdhjZ6uw==
-X-Google-Smtp-Source: ACJfBouFiKKSe3zrxfaRmXnIMWLxtyTG9MMtZgOt8OprfVb+tmvkr3xCcFMVxBpTxBuoX8UMzndYeQ==
-X-Received: by 10.107.132.75 with SMTP id g72mr1779726iod.46.1513706554021;
-        Tue, 19 Dec 2017 10:02:34 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id x85sm7194212ioi.57.2017.12.19.10.02.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 10:02:33 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     arurke@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] Re: Bug with "git submodule update" + subrepo with differing path/name?
-Date:   Tue, 19 Dec 2017 10:02:30 -0800
-Message-Id: <20171219180230.254881-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
-In-Reply-To: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
-References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
+        id S1751098AbdLSS0V (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 13:26:21 -0500
+Received: from mout.web.de ([217.72.192.78]:54465 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750808AbdLSS0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 13:26:20 -0500
+Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfYn9-1ecXoK0xA3-00P7kX; Tue, 19
+ Dec 2017 19:26:07 +0100
+Subject: Re: [PATCH] fmt-merge-msg: avoid leaking strbuf in shortlog()
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+References: <b2238da3-9eba-1521-f4ca-3b805f103555@web.de>
+ <xmqq4lp2cisd.fsf@gitster.mtv.corp.google.com>
+ <20171208101455.GC1899@sigill.intra.peff.net>
+ <1654a696-73d5-c9ef-0fc2-bd82aaf2cabb@web.de>
+ <xmqqd13p83sb.fsf@gitster.mtv.corp.google.com>
+ <20171208212832.GC7355@sigill.intra.peff.net>
+ <f1584860-d0d6-db82-0a49-021924c3e2b7@web.de>
+ <20171219113855.GA24558@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f79ae9a3-de47-c41e-fea6-6a0fedf4ef63@web.de>
+Date:   Tue, 19 Dec 2017 19:26:06 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
+MIME-Version: 1.0
+In-Reply-To: <20171219113855.GA24558@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:jEBEAY1u8ZtC7cuRJBt77aL3rRi31qLoHfCdEg1UlSGwTUI6Urj
+ bIsxCtpIPo2HV9xu3ivlwBloqtEFjjKZnGL4D0PLXrO0tjpV/2vPcWINtezw60P+s2adQog
+ P7uPlFZ+XbfUutYKPFRkRWSrXXPY5hI9ffjgx1JwwY4uHXe0B2jvpfrZrkakCfOMWSfEHlM
+ qXF4nvYJw8tQcxerGfScQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OH4IbX5uAXY=:yCDqOfgOpcLNG4bYmfVRse
+ Z4K3sZXgYeHQRnfIAzkpgbjB3RsHneSGerGZOvg7SvyMiLBZAnJAaxS1gy4JgVEVFHdAaKVlw
+ fLXqNroSb1tcKzv+I0U/pju18kRNs5lzfHSFOndE8mwhg9swLX5gWoxRKEpCY6ovaWwHJ1Zfy
+ /3L0oKQssnF8763JtMuGfuGdn4T891JZB+mHGQnGbgSsLqVVoep4H/LCa3UDwuGbRlvGjadet
+ ioG+CvrvQGIT4Mnyyuo252VrMtI0qk0mceFLnwmrSS6LjP4q1sW+1TY1jsReRvDwocyFWn49r
+ baqgi/5WVUv2wM/tTAtUemj4uwzTfHpKuzpvFnKWRFwvRVHJdJQDk0Fy0X2/His6k+oihzSxf
+ I7qZra46UmybnVbXDVYxVs2VQY2a3hyq2g0WZ/tjd4HLSBA+rJCmrehZxg8ULC6hqZ8vLtJ3Q
+ mWvKB2Xu/HWdWfxir0rTqkg8UcC+hWSBQrbUclQ+w1fMBBGhDHbq6w0kXSiDM8LR90oZLff9Q
+ KTQoNNLKnzJo3V6pS/KWQuGMxOHCKvy9bXNq50UhYNV3RpT33fZhfNUYbvzll9l7y7QDAmea5
+ jdJJY40l36iuUX68RBJPmrf9DVx5327RgTCQQvfiRXH8/IMRwztUSfZ+5ZNLa4nZ0SQY51BpA
+ 35KYAHV2YqhvFFcmtiZon+gRRVBaT/XLvlpW6yHmqxatJV1RNvYts5pyzH2zWXPBohgidI+Hj
+ DyEeqm4ZoTIpDjP3xJYduoQqChBVE1vE1BfkxXnJ2UtMI6tUgeAhLGOuPFDoKRsh3iAx82VFN
+ 7KZj1WFKIpwypNitasFnGtwQEEKHxlWz1SSVFx8dhxw2Mj1bUs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I tried reproducing the issue (based on the `next` branch, not 2.15,
-but I do not recall any changes in the submodule area lately), and
-could not come up with a reproduction recipe, but here is what I got so
-far, maybe you can take it from here (i.e. either make the test case
-more like your environment such that it fails, or rather bisect git
-to tell us the offending commit) ?
+Am 19.12.2017 um 12:38 schrieb Jeff King:
+> On Mon, Dec 18, 2017 at 08:18:17PM +0100, René Scharfe wrote:
+> 
+>>> I'd actually argue the other way: the simplest interface is one where
+>>> the string list owns all of its pointers. That keeps the
+>>> ownership/lifetime issues clear, and it's one less step for the caller
+>>> to have to remember to do at the end (they do have to clear() the list,
+>>> but they must do that anyway to free the array of items).
+>>>
+>>> It does mean that some callers may have to remember to free a temporary
+>>> buffer right after adding its contents to the list. But that's a lesser
+>>> evil, I think, since the memory ownership issues are all clearly
+>>> resolved at the time of add.
+>>>
+>>> The big cost is just extra copies/allocations.
+>>
+>> An interface requiring callers to allocate can be used to implement a
+>> wrapper that does all allocations for them -- the other way around is
+>> harder.  It can be used to avoid object duplication, but duplicates
+>> functions.  No idea if that's worth it.
+> 
+> Sure, but would anybody actually want to _use_ the non-wrapped version?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t7406-submodule-update.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Not sure, but cases that currently use STRING_LIST_INIT_NODUP probably
+apply.  Apropos: apply.c::write_out_results() looks like it might, too.
 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 6f083c4d68..d957305c38 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -978,4 +978,20 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
- 	rm -rf super4
- '
- 
-+test_expect_success 'git submodule update works with submodules with name/path difference' '
-+	test_create_repo super6 &&
-+	(
-+		cd super6 &&
-+		git submodule add ../submodule sub1 &&
-+		git submodule add --name testingname ../submodule sub2 &&
-+		git commit -m initial &&
-+		git -C sub1 checkout HEAD^ &&
-+		git -C sub2 checkout HEAD^ &&
-+
-+		git submodule update >actual &&
-+		grep sub1 actual &&
-+		grep sub2 actual
-+	)
-+'
-+
- test_done
--- 
-2.15.1.620.gb9897f4670-goog
+Another question is how much it would cost to let them duplicate strings
+as well in order to simplify the code.
 
+> That's the same duality we have now with string_list.
+
+Hmm, I thought we *were* discussing string_list?
+
+>>> Having a "format into a string" wrapper doesn't cover _every_ string you
+>>> might want to add to a list, but my experience with argv_array_pushf
+>>> leads me to believe that it covers quite a lot of cases.
+>>
+>> It would fit in with the rest of the API -- we have string_list_append()
+>> as a wrapper for string_list_append_nodup()+xstrdup() already.  We also
+>> have similar functions for strbuf and argv_array.  I find it a bit sad
+>> to reimplement xstrfmt() yet again instead of using it directly, though.
+> 
+> I dunno, I think could provide some safety and some clarity. IOW, why
+> _don't_ we like:
+> 
+>    string_list_append_nodup(list, xstrfmt(fmt, ...));
+> 
+> ? I think because:
+> 
+>    1. It's a bit long and ugly.
+> 
+>    2. It requires a magic "nodup", because we're violating the memory
+>       ownership boundary.
+> 
+>    3. It doesn't provide any safety for the case where strdup_strings is
+>       not set, making it easy to leak accidentally.
+
+Right, and at least 2 and 3 would be solved by having distinct types for
+the plain and the duplicating variants.  The plain one would always
+"nodup" and would have no flags that need to be checked.
+
+> Doing:
+> 
+>    string_list_appendf(list, fmt, ...);
+> 
+> pushes the memory ownership semantics "under the hood" of the
+> string_list API. And as opposed to being a simple wrapper, it could
+> assert that strdup_strings is set (we already do some similar assertions
+> in the split functions).
+
+Yes, that check would guard against leaks.
+
+Having few functions that can be combined looks like a cleaner interface
+to me than having additional shortcuts for specific combinations -- less
+duplication, smaller surface.
+
+That said I'm not against adding string_list_appendf(); we already have
+similar functions for other types.
+
+René
