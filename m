@@ -2,96 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73B731F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 17:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50B891F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 18:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750799AbdLSRrK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 12:47:10 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60334 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750737AbdLSRrJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 12:47:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BFB02D20F5;
-        Tue, 19 Dec 2017 12:47:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1TzeHy6vrJdbtSH4e8M49TUh14A=; b=BWuo2i
-        9LtgOFRCz8KyZLfwTcTWXlEqu+c9zbvdnLCLFhrdzsIdKW1ykL/xM4qreP8Fwjp7
-        vMR/jNdTSKTkR62FrkEeq1O2glgYqCfRkNlc7ud6LE3otphAyHnXQ4elekJTRXvp
-        VxLm8blN+msdX6F4709BWZRbqbo+moBPEWSIs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UFnNadgWmifE88xXIbHVqpSv1a1kQEuO
-        gZF2h9HJLPeWmxP35Q+iimraZJHVcoggc0oI6Tfmz3GI2d7J8CPt42y7iG8RRptc
-        BLijVT8tz3aBwlz1MYWfD+0uto4QejIfM6mfUsWebLRWqyCiWaim2NEbuX6OW46O
-        gdZJtahoUQE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5ECED20F4;
-        Tue, 19 Dec 2017 12:47:08 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37BF4D20F1;
-        Tue, 19 Dec 2017 12:47:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: difftool uses hardcoded perl shebang
-References: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com>
-        <20171219162528.GA5804@sigill.intra.peff.net>
-        <xmqqlghywuct.fsf@gitster.mtv.corp.google.com>
-        <20171219164532.GA6745@sigill.intra.peff.net>
-        <xmqqh8smwspv.fsf@gitster.mtv.corp.google.com>
-        <20171219171253.GA7526@sigill.intra.peff.net>
-Date:   Tue, 19 Dec 2017 09:47:06 -0800
-In-Reply-To: <20171219171253.GA7526@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 19 Dec 2017 12:12:53 -0500")
-Message-ID: <xmqqd13awqxx.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A229E60E-E4E4-11E7-A5A0-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1751472AbdLSSCk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 13:02:40 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:36886 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750945AbdLSSCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 13:02:35 -0500
+Received: by mail-io0-f196.google.com with SMTP id d16so14506323iob.4
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 10:02:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=O6/QUsX1uiw2XUi0sEvaTAjcG+F04aKT+N7l6XI5W0s=;
+        b=a5yOaeSV/JP8M0VRDBcmF54UxQpLLGbwFOTUSyB0eJbSYOOEkgoYup+zQTBvEo+fRi
+         s5j5QrUmaowU1gDBzCGginfCFTnIrftHfCHOzc91EPaX+QEr1uzhiAjd66ZCxTr2kk6q
+         yK6Suy1KSTVBclbXWWvM7vBt35q5DjI9zpsfUUMZzBFh0L0kzYJRkErWatzprOYr8pw+
+         n0CkSEdvl1UD6XtMdOixTr+QT3dJ21icPor9ph3LSr25Tu6AMP/Vl3kjFZetU5Pknshl
+         46zs/7nTaRH+HbX7xmJ1W/0n2jGYE2qxWPsIBrnKihJm0Iw4z+qc4L5YPZQB/iQyl8wJ
+         y8JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=O6/QUsX1uiw2XUi0sEvaTAjcG+F04aKT+N7l6XI5W0s=;
+        b=C+KiuxQn3vAAuczOIQdDerj+0DL5YfGDfKfuV1K3PzX9hElI/AJ4bD2ZPoOKV2Ufla
+         KW/q4K2yKwnAY0W2qkiiafqZ8kv8NuJ+0jvoJZ/RYAEmxyH7neWSaDLZC7azEp+mJVlj
+         +sD66OcJDMxw+WCGjw94DIpkgPiDQwDBXojopewj0qozm54sdEOSQ/7k0SDvdSC87LmO
+         AVuWmkq4SJx52fji+vfxIEGbZ8YE9jyU8KZRLmZThGesbwgIOSAH0OenhRrauFbJuanj
+         azoBlZokZPhmIe/04ntcA2zANjDNcOjpMJMlXGM0eaAWTAoVlxVtktaluaRpbxzJ6JJU
+         EadA==
+X-Gm-Message-State: AKGB3mKjxDzLqotvlyWslRSKah1S89KXdLgahvW4iTxsUQI1cypP5yTt
+        L0HWffqo75OCPZZkT6OdhjZ6uw==
+X-Google-Smtp-Source: ACJfBouFiKKSe3zrxfaRmXnIMWLxtyTG9MMtZgOt8OprfVb+tmvkr3xCcFMVxBpTxBuoX8UMzndYeQ==
+X-Received: by 10.107.132.75 with SMTP id g72mr1779726iod.46.1513706554021;
+        Tue, 19 Dec 2017 10:02:34 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id x85sm7194212ioi.57.2017.12.19.10.02.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 19 Dec 2017 10:02:33 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     arurke@gmail.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] Re: Bug with "git submodule update" + subrepo with differing path/name?
+Date:   Tue, 19 Dec 2017 10:02:30 -0800
+Message-Id: <20171219180230.254881-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+In-Reply-To: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
+References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+I tried reproducing the issue (based on the `next` branch, not 2.15,
+but I do not recall any changes in the submodule area lately), and
+could not come up with a reproduction recipe, but here is what I got so
+far, maybe you can take it from here (i.e. either make the test case
+more like your environment such that it fails, or rather bisect git
+to tell us the offending commit) ?
 
-> On Tue, Dec 19, 2017 at 09:08:44AM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > In the meantime, pointing to the actual build-time perl is a workaround
->> > (but obviously not if it's being done by a third-party packager who has
->> > no idea where your perl is).
->> 
->> Is such a binary packaging scheme actually in use that deliberately
->> leaves it up to the end user where/if a perl is installed and if it
->> is an appropriately recent version?  It sounds rather irresponsible
->> to me.
->
-> No, I mean that the user can do:
->
->   make PERL_PATH=/path/to/perl/in/my/PATH
->
-> but if they are not building Git themselves, that is not an option for
-> them. And a binary packager cannot help them there, because they do not
-> know that path.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7406-submodule-update.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-I think we are saying the same thing.  A third-party binary packager
-cannot guess where your custom Perl is nor if it is recent enough.
-I just was wondering if such an irresponsible packaging scheme is in
-use that lets you install Git without somehow making sure that the
-box also has a version of Perl that can be used with the version of
-Git.  Then the presence of /path/to/perl/in/my/PATH does not matter,
-as it does not have to be used with Git.
-
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 6f083c4d68..d957305c38 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -978,4 +978,20 @@ test_expect_success 'git clone passes the parallel jobs config on to submodules'
+ 	rm -rf super4
+ '
+ 
++test_expect_success 'git submodule update works with submodules with name/path difference' '
++	test_create_repo super6 &&
++	(
++		cd super6 &&
++		git submodule add ../submodule sub1 &&
++		git submodule add --name testingname ../submodule sub2 &&
++		git commit -m initial &&
++		git -C sub1 checkout HEAD^ &&
++		git -C sub2 checkout HEAD^ &&
++
++		git submodule update >actual &&
++		grep sub1 actual &&
++		grep sub2 actual
++	)
++'
++
+ test_done
+-- 
+2.15.1.620.gb9897f4670-goog
 
