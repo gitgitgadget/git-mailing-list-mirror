@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39F171F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:27:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0531F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753421AbdLSW07 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 17:26:59 -0500
-Received: from mail-it0-f68.google.com ([209.85.214.68]:40501 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753175AbdLSW0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:26:54 -0500
-Received: by mail-it0-f68.google.com with SMTP id f190so4594269ita.5
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:26:53 -0800 (PST)
+        id S1753356AbdLSW1E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:27:04 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:43404 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753342AbdLSW0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 17:26:55 -0500
+Received: by mail-io0-f194.google.com with SMTP id k202so6986884ioe.10
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:26:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=m5guzOqG3TqpfZvuSQjnagfKjdAx7NpeS/ivYzxLVos=;
-        b=Ax4bS+f9Gv5YzdcIZaurEr5B3CuyVjsCixygpiwemSb+rY03PN9ISWJOkBZBVya+sQ
-         7t/1ZfUNCj0xiGknycV2WUVnob5qKOpD1Y9zrCu74p6xUJItxbrwrjJrDn0UEcyo2VzW
-         XHeGbS1xejfI07txZZl2eCLxNg4k3LwlBeO293E4KPIuylWK/w96Nko0NhpNtS6S4kAa
-         wpscjgwiYp9GHxvefcdtdyhxXEWSabyWDW4yS+J2+gRY7JoRy79ufQkunHda3bU0KsAO
-         sRnOjgMEkkhKL+aiHrtVqiCE/3XkZ6A7d6+j8tbs1gCNazw8+OIa3f3RsbHx3PwnShCx
-         0tmg==
+        bh=RaK4YIuob2H0wji9r4QdZOyg7WRn1AE9f3KfrZCwDTs=;
+        b=DoSVVfJqKOMM9mpt6VEa4Df7ouoYu8h3w8yTx3TDl/L0d79mN5k8mgjTKa7f9BVjVq
+         AruiMa+vGLx6MMzSV/CSrZ11FpLkTQ0Gmajy+BjoisnvHtWj1Kmx88/4//lY93dPAUd1
+         xZcinElsor/8ho3somxW1URCrvc4/NtPTfYQ4HxBifRjZyHyun/UqlsBuXNat13sw/1V
+         L/Fpt+C4l470U8ccknDbHNAjfmi7z0yRoaaLoXbu4b65g6OtiQuae8DnDSp1UnmgB9kr
+         lfkCVqh5mGJ06Ub/wgijBfNvOZ5vZ76cxDDP4POHCEBCUjN51FD2CviHQZOIFh4ZL51j
+         84oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=m5guzOqG3TqpfZvuSQjnagfKjdAx7NpeS/ivYzxLVos=;
-        b=EBMBIcYYKtU0SCQNCVa+QW/qoHF1mJpN4Osw0Hw+VqFLtv/OaquFKzTssxvQQ4mxJE
-         ZRQ8utC4+LdGf/oo094kWBNHMh1k3Mv/d3AtCzdrXCcgw4JdJmjT1JWJ36Kd4IpbMkQn
-         UFHcl6vGOSbs8J/0YyNB+KoyBRwPcYD0Fqix0p5xWbbFrTg6JmGIl0+YMoCiq1MN9V21
-         5FiLaojvB7+o0trR5CKMagXJUL9icibXYwy+ZvZ4FQcJxI9KVBVEkFON5kqxysIksGjx
-         WJRl4MHU9VUrh0zTgMzeHqcitTaTxPPJQ6FHdAk4lsSp5c1yPctoTGBFZcmEIR3MutPE
-         rEaQ==
-X-Gm-Message-State: AKGB3mLlJz7fSKOKlNIauP9SXNB30JKe3PQh+9TCN8QcdWjIA823AODT
-        0pwdLd6ds7Lm8AdjEN+DiV2/WcyiaUg=
-X-Google-Smtp-Source: ACJfBovyG/s21GrWr9BmS8iEBMQi1LJPAL9D2s2JsEGWcBcSjxFJMQHIxFY7E/WfGnnwo3QOEkusCA==
-X-Received: by 10.36.19.132 with SMTP id 126mr4839688itz.21.1513722413227;
-        Tue, 19 Dec 2017 14:26:53 -0800 (PST)
+        bh=RaK4YIuob2H0wji9r4QdZOyg7WRn1AE9f3KfrZCwDTs=;
+        b=YlGS8ZpJ4Uxsjwd0xPzUXEsQPvup9LgJDorZ8E+C1kM1gB0vBVjrsipwErx1HL7rXw
+         spr/f8OXRNfJVexFygkvNHB0HUDrX1VCDrodPknNtvCH4TfMdzjJZMUsEbFzB5nVuUC8
+         gM+azRH6CvkCC1yLYVsaidHZjpNWKzSvSgjfsKaaKILTCWsAlO6R7lwpeh2mXUSDnQHj
+         M+3LnLZC9UFi9+jV/k9wJhgdsAJNjEQKxEv/fToA1afwDGQwnMZ0K38siDlHzGXpOMZd
+         /Ju9HGIL/R3NuX9MctSoV5xqzeTkDMmmULyZMZVdEUNhIRhh+aPxOTxkUK9ZMdIXE2pC
+         3D8g==
+X-Gm-Message-State: AKGB3mInDMhxZXk1k1hfPeOnnpMx+SF6XqTo9q2ocvyaOdYsICBAu+cp
+        WKi2qFP0OTqwFC2y6yQSPtdC5Xsv/hs=
+X-Google-Smtp-Source: ACJfBosNCtrewLwK6G5L5BDsyxhSgpxkNW/N+vsBIzTunN6bnOvOIvpQoI8qN9RONSTBrbjXzM3sqw==
+X-Received: by 10.107.6.208 with SMTP id f77mr5752364ioi.54.1513722414618;
+        Tue, 19 Dec 2017 14:26:54 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id s2sm8315626ioa.45.2017.12.19.14.26.52
+        by smtp.gmail.com with ESMTPSA id d14sm1652837itj.11.2017.12.19.14.26.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 14:26:52 -0800 (PST)
+        Tue, 19 Dec 2017 14:26:54 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/5] unpack-trees: Fix same() for submodules
-Date:   Tue, 19 Dec 2017 14:26:35 -0800
-Message-Id: <20171219222636.216001-5-sbeller@google.com>
+Subject: [PATCH 5/5] submodule: submodule_move_head omits old argument in forced case
+Date:   Tue, 19 Dec 2017 14:26:36 -0800
+Message-Id: <20171219222636.216001-6-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20171219222636.216001-1-sbeller@google.com>
 References: <20171219222636.216001-1-sbeller@google.com>
@@ -62,39 +62,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function same(a, b) is used to check if two entries a and b are the
-same.  As the index contains the staged files the same() function can be
-used to check if files between a given revision and the index are the same.
+With the previous patch applied (fix of the same() function), the
+function `submodule_move_head` may be invoked with the same argument
+for the `old` and `new` state of a submodule, for example when you
+run `reset --hard --recurse-submodules` in the superproject that has no
+change in the gitlink entry, but only worktree related change in the
+submodule. The read-tree call in the submodule is not amused about
+the duplicate argument.
 
-In case of submodules, the gitlink entry is showing up as not modified
-despite potential changes inside the submodule.
-
-Fix the function to examine submodules by looking inside the submodule.
-This patch alone doesn't affect any correctness garantuees, but in
-combination with the next patch this fixes the new test introduced
-earlier in this series.
-
-This may be a slight performance regression as now we have to
-inspect any submodule thouroughly.
+It turns out that we can omit the duplicate old argument in all forced
+cases anyway, so let's do that.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- unpack-trees.c | 2 ++
- 1 file changed, 2 insertions(+)
+ submodule.c               | 4 +++-
+ t/lib-submodule-update.sh | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index bf8b602901..4d839e8edb 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1427,6 +1427,8 @@ static int same(const struct cache_entry *a, const struct cache_entry *b)
- 		return 1;
- 	if ((a->ce_flags | b->ce_flags) & CE_CONFLICTED)
- 		return 0;
-+	if (S_ISGITLINK(b->ce_mode) && should_update_submodules())
-+		return !oidcmp(&a->oid, &b->oid) && !is_submodule_modified(b->name, 0);
- 	return a->ce_mode == b->ce_mode &&
- 	       !oidcmp(&a->oid, &b->oid);
- }
+diff --git a/submodule.c b/submodule.c
+index fa25888783..db0f7ac51e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1653,7 +1653,9 @@ int submodule_move_head(const char *path,
+ 	else
+ 		argv_array_push(&cp.args, "-m");
+ 
+-	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
++	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
++		argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
++
+ 	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
+ 
+ 	if (run_command(&cp)) {
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 15cf3e0b8b..7b6661cc84 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -1016,7 +1016,7 @@ test_submodule_forced_switch_recursing_with_args () {
+ 		)
+ 	'
+ 
+-	test_expect_failure "$command: changed submodule worktree is reset" '
++	test_expect_success "$command: changed submodule worktree is reset" '
+ 		prolog &&
+ 		reset_work_tree_to_interested add_sub1 &&
+ 		(
 -- 
 2.15.1.620.gb9897f4670-goog
 
