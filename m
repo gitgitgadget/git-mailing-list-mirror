@@ -2,108 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE3501F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 20:59:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B264F1F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 21:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752253AbdLSU7m (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 15:59:42 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:47072 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751559AbdLSU7l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 15:59:41 -0500
-Received: by mail-pl0-f66.google.com with SMTP id i6so7716142plt.13
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 12:59:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RHurwBHg4CNqFpbJH1oVA4pQWBnmraSdhHa/PyO7B3w=;
-        b=YplZAK/F5jzNXozFJ3kPFfEyopZ2z8oibzPnIuRiDMPFKn6oJrCWb+Xx6kkR11u7I+
-         en4Fuyro2NJQVyt4MwXKLZJUXi4Z8H5n0dluqnnGKdOYV9RUyBtSUZtNxPuEm083M1wu
-         RvWmoqMKxCit4BAwMqngBLt499cREu050aJ64TBKaFozXsJLxO8CpM25pumbaJvVmbWo
-         uZB27t4zEMK10ImSessPPOvtyvbrECK3XwhQrwg8YaEl4aulzRqEsaG+bPfjF9BkgI5T
-         YRrLkP7MEum7UH1dysERqrgdCAudk8yjh74IvusF6PLmFjIgJ3Ze1mbIFMpwlJGhLFZh
-         bZ1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RHurwBHg4CNqFpbJH1oVA4pQWBnmraSdhHa/PyO7B3w=;
-        b=IxY3rDs+xUGsXxj1cbYevpdLTUkEdAu5ujU56yL6oD1dTxfMbVknlDPcU00wy6gvLh
-         PHNn1fVlckZ8whneZGONE1vOVlhRTUZ19op31BIKJc8vsgborB1TgyzBBdv28Mc0YHAj
-         q/aFl6DfRxO4M/ggffIAU0aIn6S37n8PdHiVFxjb7DOKSYAehgJjKZXkPQljmDYT2Os9
-         /BwRf99KlD4h12mKO9t76Iry0hmqnpoJAUSIIE6XwnHPOYtZtS0W1b35qz14yEunspdf
-         GAHCsUHjMgpsmUDI5geZ5ao2+7EXdyzmOKbWB3sXfqwPQoK3PDWl1dQbidND/qW51bRI
-         01kw==
-X-Gm-Message-State: AKGB3mJKdh1F1ywLh5EOi6Wzp4Icxi7YKaU6GhA/UCWYbgiLwonJj+GE
-        PmXOPueQRiaPdgDPMkocbxlINRI+
-X-Google-Smtp-Source: ACJfBos5BdQHS9YFvmT24WryAIbb6MHfLIhGN2krDYdCOIzY+8hFIcu1gaSBKieTBQiUZh2uq3pdGw==
-X-Received: by 10.159.195.69 with SMTP id z5mr4545746pln.180.1513717180723;
-        Tue, 19 Dec 2017 12:59:40 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id y7sm30905220pfy.96.2017.12.19.12.59.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 12:59:40 -0800 (PST)
-Date:   Tue, 19 Dec 2017 12:59:21 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Wei Shuyu <wsy@dogben.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http: support CURLPROXY_HTTPS
-Message-ID: <20171219205807.GC240141@aiede.mtv.corp.google.com>
-References: <20171219172401.5263-1-wsy@dogben.com>
+        id S1752521AbdLSVBX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 16:01:23 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55303 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751461AbdLSVBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 16:01:22 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 90ECAAFD7E;
+        Tue, 19 Dec 2017 16:01:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2bA3Ojh7p2+zxyEF6mAYiIEzopo=; b=uiEg4u
+        eYTXe2Ir0UdFLH3ybLiMRxjzawtDpx6XZCGDM5UcvO5m+QL6v9wJQU0FVuK/YOHz
+        ihEGKFYAusaqlC7ACs4UBLl5Ui+bR5xydAb5geLJesDOYEAnCBtA6oUKGVangiPU
+        8zV4/XlZpsCi4iDDy1hXNdBhoKGQGXFDtoiD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=quzVG+QTxzXE4lhjaSk60QPtEnxvNDYD
+        MrWyw3nEDYrcQKQC9N2tP9HAxzr+3qLqvksWc1IkmnfhMkFxBIQVSA+EQBIIt93b
+        /LOB4cvhJb3xwFA+XhJR709co0bpp/MTaWATNIFohQS+wncIZjAok7KKR/76mDgs
+        y41lS5ijh70=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 888E1AFD7D;
+        Tue, 19 Dec 2017 16:01:16 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CF4B9AFD7B;
+        Tue, 19 Dec 2017 16:01:15 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
+Cc:     git@vger.kernel.org, Kevin Daudt <me@ikke.info>
+Subject: [PATCH v2 3/2] t5573, t7612: clean up after unexpected success of 'pull' and 'merge'
+References: <20171209090530.6747-1-hji@dyntopia.com>
+        <20171210065358.8156-1-hji@dyntopia.com>
+        <20171210065358.8156-2-hji@dyntopia.com>
+        <xmqqbmj33h0s.fsf@gitster.mtv.corp.google.com>
+        <xmqqmv2jpyb6.fsf_-_@gitster.mtv.corp.google.com>
+Date:   Tue, 19 Dec 2017 13:01:08 -0800
+In-Reply-To: <xmqqmv2jpyb6.fsf_-_@gitster.mtv.corp.google.com> (Junio
+        C. Hamano's message of "Fri, 15 Dec 2017 11:48:29 -0800")
+Message-ID: <xmqqfu86v3e3.fsf_-_@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171219172401.5263-1-wsy@dogben.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: C0B08A18-E4FF-11E7-B5DF-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The previous steps added test_when_finished to tests that run 'git
+pull' or 'git merge' with expectation of success, so that the test
+after them can start from a known state even when their 'git pull'
+invocation unexpectedly fails.  However, tests that run 'git pull'
+or 'git merge' expecting it not to succeed forgot to protect later
+tests the same way---if they unexpectedly succeed, the test after
+them would start from an unexpected state.
 
-Wei Shuyu wrote:
+Reset and checkout the initial commit after all these tests, whether
+they expect their invocations to succeed or fail.
 
-> HTTP proxy over SSL is supported by curl since 7.52.0.
-> This is very useful for networks with protocol whitelist.
->
-> Signed-off-by: Wei Shuyu <wsy@dogben.com>
-> ---
->  http.c | 5 +++++
->  1 file changed, 5 insertions(+)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Thanks for writing this.  Can you give an example of how I'd use it
-(ideally in the form of a test in t/ so we avoid this functionality
-regressing, but if that's not straightforward then an example for the
-commit message is fine as well)?
+ * Let's do this and move the whole thing forward.
 
-> diff --git a/http.c b/http.c
-> index 215bebef1..32d33261c 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -865,6 +865,11 @@ static CURL *get_curl_handle(void)
->  		else if (starts_with(curl_http_proxy, "socks"))
->  			curl_easy_setopt(result,
->  				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
-> +#endif
-> +#if LIBCURL_VERSION_NUM >= 0x073400
+ t/t5573-pull-verify-signatures.sh  |  9 ++++++---
+ t/t7612-merge-verify-signatures.sh | 16 +++++++++++-----
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-Can this use #ifdef CURLPROXY_HTTPS instead?  That way, if someone's
-copy of curl has backported support then they get the benefit of this
-change as well.
+diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+index 8ae331f40e..9594e891f4 100755
+--- a/t/t5573-pull-verify-signatures.sh
++++ b/t/t5573-pull-verify-signatures.sh
+@@ -43,33 +43,36 @@ test_expect_success GPG 'create repositories with signed commits' '
+ '
+ 
+ test_expect_success GPG 'pull unsigned commit with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures unsigned 2>pullerror &&
+ 	test_i18ngrep "does not have a GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures bad 2>pullerror &&
+ 	test_i18ngrep "has a bad GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" pullerror
+ '
+ 
+ test_expect_success GPG 'pull signed commit with --verify-signatures' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git pull --verify-signatures signed >pulloutput &&
+ 	test_i18ngrep "has a good GPG signature" pulloutput
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature without verification' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git pull --ff-only bad 2>pullerror
+ '
+ 
+ test_expect_success GPG 'pull commit with bad signature with --no-verify-signatures' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	test_config pull.verifySignatures true &&
+ 	git pull --ff-only --no-verify-signatures bad 2>pullerror
+diff --git a/t/t7612-merge-verify-signatures.sh b/t/t7612-merge-verify-signatures.sh
+index 2344995a11..e797c74112 100755
+--- a/t/t7612-merge-verify-signatures.sh
++++ b/t/t7612-merge-verify-signatures.sh
+@@ -35,64 +35,70 @@ test_expect_success GPG 'create signed commits' '
+ '
+ 
+ test_expect_success GPG 'merge unsigned commit with verification' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git merge --ff-only --verify-signatures side-unsigned 2>mergeerror &&
+ 	test_i18ngrep "does not have a GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge unsigned commit with merge.verifySignatures=true' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	test_must_fail git merge --ff-only side-unsigned 2>mergeerror &&
+ 	test_i18ngrep "does not have a GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge commit with bad signature with verification' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git merge --ff-only --verify-signatures $(cat forged.commit) 2>mergeerror &&
+ 	test_i18ngrep "has a bad GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=true' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	test_must_fail git merge --ff-only $(cat forged.commit) 2>mergeerror &&
+ 	test_i18ngrep "has a bad GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge commit with untrusted signature with verification' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_must_fail git merge --ff-only --verify-signatures side-untrusted 2>mergeerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge commit with untrusted signature with merge.verifySignatures=true' '
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	test_must_fail git merge --ff-only side-untrusted 2>mergeerror &&
+ 	test_i18ngrep "has an untrusted GPG signature" mergeerror
+ '
+ 
+ test_expect_success GPG 'merge signed commit with verification' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git merge --verbose --ff-only --verify-signatures side-signed >mergeoutput &&
+ 	test_i18ngrep "has a good GPG signature" mergeoutput
+ '
+ 
+ test_expect_success GPG 'merge signed commit with merge.verifySignatures=true' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	git merge --verbose --ff-only side-signed >mergeoutput &&
+ 	test_i18ngrep "has a good GPG signature" mergeoutput
+ '
+ 
+ test_expect_success GPG 'merge commit with bad signature without verification' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git merge $(cat forged.commit)
+ '
+ 
+ test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=false' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures false &&
+ 	git merge $(cat forged.commit)
+ '
+ 
+ test_expect_success GPG 'merge commit with bad signature with merge.verifySignatures=true and --no-verify-signatures' '
+-	test_when_finished "git checkout initial" &&
++	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+ 	git merge --no-verify-signatures $(cat forged.commit)
+ '
+-- 
+2.15.1-574-g4ecdd25846
 
-> +		else if (starts_with(curl_http_proxy, "https"))
-> +			curl_easy_setopt(result,
-> +				CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
->  #endif
->  		if (strstr(curl_http_proxy, "://"))
->  			credential_from_url(&proxy_auth, curl_http_proxy);
-
-Thanks and hope that helps,
-Jonathan
