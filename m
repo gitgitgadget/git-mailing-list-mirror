@@ -7,80 +7,82 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDEC91F424
-	for <e@80x24.org>; Tue, 19 Dec 2017 00:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4BB1F424
+	for <e@80x24.org>; Tue, 19 Dec 2017 00:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936816AbdLSA3j (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Dec 2017 19:29:39 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:43050 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934385AbdLSA3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Dec 2017 19:29:36 -0500
-Received: by mail-pl0-f66.google.com with SMTP id z5so5884141plo.10
-        for <git@vger.kernel.org>; Mon, 18 Dec 2017 16:29:36 -0800 (PST)
+        id S966056AbdLSA3l (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Dec 2017 19:29:41 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:33576 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936200AbdLSA3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Dec 2017 19:29:37 -0500
+Received: by mail-pl0-f65.google.com with SMTP id 1so4429335plv.0
+        for <git@vger.kernel.org>; Mon, 18 Dec 2017 16:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1UcQBBBAkWKREHZFxNIrwR/XIJBGHIJqh3saU6IxT/c=;
-        b=gBJOZ89AzE1rHQafIumhjJJXx/ODvBwYZyVObOVJwoLgc4VzFurUfu+4COXfyMZkIC
-         O+pDy2J5F+cdJcQ5CnhPgwN6pz3g0pW+MubgIkTD8bwv6nTi8eC9yGpMjsQt5GfsYdZ5
-         lmdm9Y/Wgycf5Wd9Wv8b9JQ9W49q2Rcd9JYkA=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=XRo0qA4+I29FQoO4r8ZbCGqYryMhNTKk9F2i9AAWXI8=;
+        b=j20E5PKUm76QWg3OLRb2ObFwWeJYI1BNwE2kT5KbNrqyGpDqcOA5g50XZNmcV9Hj/S
+         p2BAJVGF/wiVNz2ZW31zANiSMpwy0g1lTJhms2I5xkPCOrDqgIH8ceFwcX8akfKOqo7Z
+         NUZ90JY7UMptKipfRHlGDhCRbTE6W2PUmDxq4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=1UcQBBBAkWKREHZFxNIrwR/XIJBGHIJqh3saU6IxT/c=;
-        b=BjHlOpBlcpzlyMEDj4Rr/sIrsm+VdIfsQD6Rj3hsTnStpJNB7BVcIFLJtsT/OeVHp5
-         +8mzmV6EZFc5QxEHc5Wug6GVwzVZKtv5abg+Gcx7+CwtcU6BcAYOrPrMmZFbap8rA1am
-         U1YH9R0QVEqzbhL27STWFUkvRvnX5VmX/x8NX7ZfL7pci0rVhJgWU8hfcAX4QH+hVvkF
-         M5JGXRenrx7Q0n+NpZPZTAM44lm+UWwOSZSyz4BTJ6PGGgZOc7CGtNenN/nu819U20l1
-         yFv4aNW67AoRM5Hd5D1fbvQCDEYO1ROSpJLXt4gDH8E3EZkks0Fr/p5pVhgPn9Sx+JHJ
-         0hTA==
-X-Gm-Message-State: AKGB3mLPDiRU06tjdHv6q1rMU+skAJoDTKqoxpCu1E4IyPS1J7mwOR1M
-        15UXUCoUwgCGQ79O4qcN2c2fjuHiFfk=
-X-Google-Smtp-Source: ACJfBot7llSIDdz48VRYrsS6KqbQ9M6/pfHxvCnSJo+uBmG3sj8Cr719G5a2CaBv818GnbN6uUzjCw==
-X-Received: by 10.84.252.140 with SMTP id y12mr1423976pll.13.1513643375042;
-        Mon, 18 Dec 2017 16:29:35 -0800 (PST)
+         :references:in-reply-to:references;
+        bh=XRo0qA4+I29FQoO4r8ZbCGqYryMhNTKk9F2i9AAWXI8=;
+        b=RfwPSFJqF4txHcIi6hknaVLFymt6m5JOVi7Y2v5hdBs5uxYv+qwg07+K5TM3bN29Te
+         N82WToGtBdJ4+34O5KJzYB/IhUHwTB9vU5y1uTGPjD0mEUQfh9ujSzgf6kydLgm0BPZd
+         Sh1NiymFaZnYnfnMoHD9BC6iIE1rVDzybx3tEZXLhzDdk3ApAltzfiN21Q9iuMHMU8e4
+         n0R4SrFwJYtS67G4NzjLjvCspoJevqI+Cnpw1caR1xzaoIzYrqSJjpk1P44U7Q5T+tNH
+         lfjhrEdiKywxjpQ3qt2j33SOIq2TrrGhkGLAzfzZoZkkQYxYVOoJfr38R1ihGaAp0B/d
+         zkOA==
+X-Gm-Message-State: AKGB3mLsFCCWCvqaHwUtDAYFFj1c0tiyR8OZyUO7cyV4Dl1YiOPAaY+u
+        iZyyUdsV5J3Tf0HOdSgSMjYjBe4U92A=
+X-Google-Smtp-Source: ACJfBos+Y3MQteNzf8vDRJBixXs4iGJ+QRRrxV5LIfYCIZkScxpPuK50oRlQgx1Zzm99u5i5b+Gsww==
+X-Received: by 10.84.233.1 with SMTP id j1mr1417289plk.311.1513643376258;
+        Mon, 18 Dec 2017 16:29:36 -0800 (PST)
 Received: from alexmv-linux.corp.dropbox.com (v160-sfo11-br01.corp.dropbox.com. [205.189.0.163])
-        by smtp.gmail.com with ESMTPSA id b10sm26056581pfj.20.2017.12.18.16.29.34
+        by smtp.gmail.com with ESMTPSA id b10sm26056581pfj.20.2017.12.18.16.29.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 18 Dec 2017 16:29:34 -0800 (PST)
+        Mon, 18 Dec 2017 16:29:35 -0800 (PST)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: [PATCH 1/6] Fix comments to agree with argument name
-Date:   Mon, 18 Dec 2017 16:28:53 -0800
-Message-Id: <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com>
+Subject: [PATCH 2/6] fsmonitor: Add dir.h include, for untracked_cache_invalidate_path
+Date:   Mon, 18 Dec 2017 16:28:54 -0800
+Message-Id: <c8cf261d9d620d8123e8bfa5aa952fa55685a8db.1513642743.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.1.626.gc4617b774
 In-Reply-To: <20171219002858.22214-1-alexmv@dropbox.com>
 References: <20171219002858.22214-1-alexmv@dropbox.com>
+In-Reply-To: <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com>
+References: <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This missing include is currently hidden by dint of the fact that
+dir.h is already included by all things that currently include
+fsmonitor.h
+
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 ---
- dir.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fsmonitor.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/dir.c b/dir.c
-index 7c4b45e30..cf05b1da0 100644
---- a/dir.c
-+++ b/dir.c
-@@ -790,9 +790,9 @@ static int add_excludes_from_buffer(char *buf, size_t size,
-  * an index if 'istate' is non-null), parse it and store the
-  * exclude rules in "el".
-  *
-- * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
-+ * If sha1_stat is not NULL, compute SHA-1 of the exclude file and fill
-  * stat data from disk (only valid if add_excludes returns zero). If
-- * ss_valid is non-zero, "ss" must contain good value as input.
-+ * sha1_stat.valid is non-zero, sha1_stat must contain good value as input.
-  */
- static int add_excludes(const char *fname, const char *base, int baselen,
- 			struct exclude_list *el,
+diff --git a/fsmonitor.h b/fsmonitor.h
+index cd3cc0ccf..5f68ca4d2 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -1,5 +1,6 @@
+ #ifndef FSMONITOR_H
+ #define FSMONITOR_H
++#include "dir.h"
+ 
+ extern struct trace_key trace_fsmonitor;
+ 
 -- 
 2.15.1.626.gc4617b774
 
