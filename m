@@ -2,88 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEAE31F428
-	for <e@80x24.org>; Tue, 19 Dec 2017 22:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88C371F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 22:33:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752361AbdLSWbe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 17:31:34 -0500
-Received: from mail-pl0-f50.google.com ([209.85.160.50]:42707 "EHLO
-        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750859AbdLSWbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 17:31:33 -0500
-Received: by mail-pl0-f50.google.com with SMTP id bd8so7838833plb.9
-        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:31:33 -0800 (PST)
+        id S1752854AbdLSWdU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 17:33:20 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:42808 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbdLSWdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 17:33:19 -0500
+Received: by mail-qk0-f179.google.com with SMTP id a193so15844622qkc.9
+        for <git@vger.kernel.org>; Tue, 19 Dec 2017 14:33:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YUkLQK2zemivbtHc9myghraw45WbC6o1QMgceMTC6ss=;
-        b=VoAbXA4Nf1qyOgdphi3rFBXB+JKVRWW6omiFJXfVhXLk+kobz5ZjitMLyeSJs4dMm/
-         eYN611ny73jjeK5zL1AWihRg+04K4BTiXUyMoU2LwPBknh8t09BRDa2CnQz97jTqXeX8
-         TBA3raks0bEfCC9EoD28GvTk4PFTNgzyMK2p7kagEA5kmuSA3jj2soEFTFcJSLqITo8q
-         suz2Pn/dwCabOz5vIYxz8jv7HrQhOolLvUwH1LaFTdTBC9ZOruFJUEgqYBz9HWUiHlYU
-         yjijZqoU460+wAGegc7Vq0NGCsiEfK0E+u55D4aw8ljGccI0ffLWqT6fV7j/R0YThkeA
-         rXOQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=84jHUyWiS7I3nj8Auxoaz7Yayboe2UatFhxnKC0zYDA=;
+        b=FHvcT9bNbToNkYkC2su1X0JI+F7FqDdMqvSW9mK2nEqpDMva1AtflT8iypnPHooFah
+         /KJ64Mvww+hwrXcH3I7ENdoOvhan4XhOuPf/kGuIfYw9iC574CjExywbRyINwm18xi41
+         Bqo5Fm8OD5y2VZVLMNgPMmjdE3XKFI/ROC1676MgREhzAWXx8VfRehzMSEYIZJfcyb0B
+         gF3vas0/J5mqkcxLrr+vqHTCAoy/+Hpo21GvcndjGt0A1QOgS9jmnlF2JQZWQQRDDeWd
+         JdOIlxkx6YjM8vVZa4ufxb3l44QUs/LtLls8NtDuUciqsvUfTWXf4ouk9YWk+k1Ts+ii
+         NOwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YUkLQK2zemivbtHc9myghraw45WbC6o1QMgceMTC6ss=;
-        b=pUqIJoMNQdNUC9jT0PkUpU1kEvexP4yb7XpbZicdqn8jlSa0jtasFZ2nT4I1d2gEdH
-         Aak5ZWnHMCJdoTmBdPNM5wmDvQdB0Wm7kkw1+ly5SaWyAKqjwLhTP9UJbnSslHNvB3j9
-         yFT6Lw8HGc1vS4H1s8ZwSH3lautY5AgsRb0QsTRcs+6MQfSvnipDVdqkbB0w4TXzFVTc
-         5mj1OHcomGakGXDc6vVMLSrwOgze+LYMw30HPTOh46htwlEfbJ4FMvNQhEPxEqe6DxQX
-         6UUnDwf6O31yu9FfnpEjMj7tW39DCuqHd8SPWl8kV4Le3j9Hm7u8m9ZcftqpwLtJ9FM9
-         AyFA==
-X-Gm-Message-State: AKGB3mJLbF0VDTbFzEG+g2x6JrgbhdFTHRyhYTFF4PRBjvizrvxUtDQD
-        aoNjlS3CtyeUNNk6gNfoSH2DLG75
-X-Google-Smtp-Source: ACJfBotev+JD8Ljh5jW9hQsUPUqN+VlRojdH2p/Wg+sE42mUt66B7Ocy4sIe5mRdPx3JekalgxgDYQ==
-X-Received: by 10.159.218.150 with SMTP id w22mr4524966plp.91.1513722692946;
-        Tue, 19 Dec 2017 14:31:32 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id t2sm3456390pgb.88.2017.12.19.14.31.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Dec 2017 14:31:32 -0800 (PST)
-Date:   Tue, 19 Dec 2017 14:31:30 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/5] t/lib-submodule-update.sh: add new test for
- submodule internal change
-Message-ID: <20171219223130.GF240141@aiede.mtv.corp.google.com>
-References: <20171219222636.216001-1-sbeller@google.com>
- <20171219222636.216001-4-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=84jHUyWiS7I3nj8Auxoaz7Yayboe2UatFhxnKC0zYDA=;
+        b=CnlSyqgodDt94M2iS3IZtSR4F+m6D66ucH1RgXswsR+D2PkcyWkLNbfuWffQlyrI1d
+         gbvyu/uEleoQa/VY6GcBwNyRGP/9mixOzvWI+dT5jCo/bDUp2sNtw74QCN9FvXZ/0Prp
+         yNvnJ3MFQmaw6sYMBX/7bLJqN7meqf56COhEN049V8dUY4KJJGqPqVYacTIbBH4FBUtX
+         9ge90oR4xf5+s1EuNHpryY1WHQYLj/Fw3+mR0mr96rdHs2xai17kO+hGg+7NXAHhMSoI
+         S53jQa+iU7BlN7wsSq72V5AcYJRNfGSUFp84pJ1r7Bp/koIvumAPvXWgkx/hn5IIsi4n
+         JS7A==
+X-Gm-Message-State: AKGB3mJqqNNuJrkPNhle0qVMBATmNe+6bFm4DgcsYw6H7bs7ZecqsX+u
+        bBSuDgLwH/qtgi6HIvPcNqrYdaETk7t3gFbiIsi9fVbLlzs=
+X-Google-Smtp-Source: ACJfBouAkp/Vh1DRTjUFb3uBy8ryXUFMixCSWm7vleGj2obrdCeDlLKsKRSGsBYnOaMNkGWaJjZzQ7FhlTX8qp3vOXI=
+X-Received: by 10.55.27.104 with SMTP id b101mr7248577qkb.353.1513722798763;
+ Tue, 19 Dec 2017 14:33:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171219222636.216001-4-sbeller@google.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.140.85.179 with HTTP; Tue, 19 Dec 2017 14:33:18 -0800 (PST)
+In-Reply-To: <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
+References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
+ <20171219180230.254881-1-sbeller@google.com> <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 19 Dec 2017 14:33:18 -0800
+Message-ID: <CAGZ79kbqntXuYuLGF7zjXfQ5X998QdEba20yy8A0cqS=DaRxFA@mail.gmail.com>
+Subject: Re: [PATCH] Re: Bug with "git submodule update" + subrepo with
+ differing path/name?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     arurke@gmail.com, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Stefan Beller wrote:
-
-> The test is marked as a failure as the fix comes in a later patch.
+On Tue, Dec 19, 2017 at 2:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  t/lib-submodule-update.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>> I tried reproducing the issue (based on the `next` branch, not 2.15,
+>> but I do not recall any changes in the submodule area lately), and
+>> could not come up with a reproduction recipe,...
+>
+> I do not offhand recall anything; the closest I can think of is the
+> three-patch series <20171016135623.GA12756@book.hvoigt.net> that
+> taught the on-demand recursive fetch to pay attention to the location
+> in the superproject tree a submodule is bound to.
 
-I think I'd find this easier to undrestand if it were squashed with the
-patch that fixes it.
+I tried the same test on 2.15 and cannot reproduce there either.
 
-This is part of test_submodule_foced_switch --- does that mean it
-affects both checkout -f and reset --hard, or only the latter?
+>
+>     4b4acedd61 submodule: simplify decision tree whether to or not to fetch
+>     c68f837576 implement fetching of moved submodules
+>     01ce12252c fetch: add test to make sure we stay backwards compatible
+>
+> But IIRC, "submodule update" uses a separate codepath?
 
-Thanks,
-Jonathan
+Yes, any portion of git-submodule.sh that calls out to C is going
+through the submodule--helper. I want to revive the port of that
+shell script to C again.
+
+The "submodule update" uses the submodule helper to obtain
+the list of submodules and then does a "git -C $sub fetch" in there.
+
+Stefan
