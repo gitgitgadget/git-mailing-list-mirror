@@ -2,68 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B664C1F406
-	for <e@80x24.org>; Tue, 19 Dec 2017 17:12:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 073B31F406
+	for <e@80x24.org>; Tue, 19 Dec 2017 17:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753109AbdLSRM4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Dec 2017 12:12:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43272 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753071AbdLSRMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Dec 2017 12:12:55 -0500
-Received: (qmail 16714 invoked by uid 109); 19 Dec 2017 17:12:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Dec 2017 17:12:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4173 invoked by uid 111); 19 Dec 2017 17:13:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 19 Dec 2017 12:13:20 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Dec 2017 12:12:53 -0500
-Date:   Tue, 19 Dec 2017 12:12:53 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jakub Zaverka <jakub.zaverka@deutsche-boerse.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: difftool uses hardcoded perl shebang
-Message-ID: <20171219171253.GA7526@sigill.intra.peff.net>
-References: <f5d4c8e7bceb410a95a34a8cce4c31dd@deutsche-boerse.com>
- <20171219162528.GA5804@sigill.intra.peff.net>
- <xmqqlghywuct.fsf@gitster.mtv.corp.google.com>
- <20171219164532.GA6745@sigill.intra.peff.net>
- <xmqqh8smwspv.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh8smwspv.fsf@gitster.mtv.corp.google.com>
+        id S1751078AbdLSRYj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Dec 2017 12:24:39 -0500
+Received: from dogben.com ([172.104.80.166]:45176 "EHLO dogben.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750808AbdLSRYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Dec 2017 12:24:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=dogben.com;
+         s=main; h=Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:MIME-Version:
+        Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=fuuZfqUhBnyvVU0Z9AlM+JsugyWW2d6BPD0p5Gx/lOE=; b=qrhH/7wp7tv2Zk5FalsSJWOG+2
+        h2yzO3JyYR/43J3AiWUYlN8a0Ve/PeZYOwiZ1/jfYA5KWDkcnsCAcFAfF+pA8ItDkAlkp9CKvpaes
+        XW0j6y8FILelHdrM4k3Tztrc5efW3fGX9BZBlWHr9KWtPAGuFRfXwcmEDLW43JuCKiSN0xMhB7Oyt
+        hqntpQAwqHLNNS/biwl2KOw6tYkamMCXKH2MYBdfEbgcZASBiNmzZq77/eHzhWtVXSGPZLvqIQO5D
+        m9yQCTRhmK5c+CPgEtUIs1+Xc4jEbjzXYv3rR0zqa0vz40VyFM9LcHIiv8/HX1xCoaOX/Si5Z8r2V
+        vwp3JMQw==;
+Received: from home.dogben.com ([2400:8902:e001:30:e221:c60b:10c8:13bd])
+        by dogben.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_RC4)
+        (envelope-from <wsy@dogben.com>)
+        id 1eRLd6-000241-Et; Tue, 19 Dec 2017 17:24:36 +0000
+Received: from wsy by home.dogben.com with local (Exim 4.90_RC4)
+        (envelope-from <wsy@home.dogben.com>)
+        id 1eRLd5-0001O0-4M; Wed, 20 Dec 2017 01:24:35 +0800
+From:   Wei Shuyu <wsy@dogben.com>
+To:     git@vger.kernel.org
+Cc:     Wei Shuyu <wsy@dogben.com>, gitster@pobox.com
+Subject: [PATCH] http: support CURLPROXY_HTTPS
+Date:   Wed, 20 Dec 2017 01:24:01 +0800
+Message-Id: <20171219172401.5263-1-wsy@dogben.com>
+X-Mailer: git-send-email 2.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 19, 2017 at 09:08:44AM -0800, Junio C Hamano wrote:
+HTTP proxy over SSL is supported by curl since 7.52.0.
+This is very useful for networks with protocol whitelist.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > In the meantime, pointing to the actual build-time perl is a workaround
-> > (but obviously not if it's being done by a third-party packager who has
-> > no idea where your perl is).
-> 
-> Is such a binary packaging scheme actually in use that deliberately
-> leaves it up to the end user where/if a perl is installed and if it
-> is an appropriately recent version?  It sounds rather irresponsible
-> to me.
+Signed-off-by: Wei Shuyu <wsy@dogben.com>
+---
+ http.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-No, I mean that the user can do:
+diff --git a/http.c b/http.c
+index 215bebef1..32d33261c 100644
+--- a/http.c
++++ b/http.c
+@@ -865,6 +865,11 @@ static CURL *get_curl_handle(void)
+ 		else if (starts_with(curl_http_proxy, "socks"))
+ 			curl_easy_setopt(result,
+ 				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
++#endif
++#if LIBCURL_VERSION_NUM >= 0x073400
++		else if (starts_with(curl_http_proxy, "https"))
++			curl_easy_setopt(result,
++				CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
+ #endif
+ 		if (strstr(curl_http_proxy, "://"))
+ 			credential_from_url(&proxy_auth, curl_http_proxy);
+-- 
+2.15.1
 
-  make PERL_PATH=/path/to/perl/in/my/PATH
-
-but if they are not building Git themselves, that is not an option for
-them. And a binary packager cannot help them there, because they do not
-know that path.
-
--Peff
