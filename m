@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFFF1F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 20:59:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6521F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 21:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755989AbdLTU7r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 15:59:47 -0500
-Received: from mail-pl0-f49.google.com ([209.85.160.49]:45445 "EHLO
-        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755637AbdLTU7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 15:59:46 -0500
-Received: by mail-pl0-f49.google.com with SMTP id o2so9709879plk.12
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 12:59:46 -0800 (PST)
+        id S1756020AbdLTVNN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 16:13:13 -0500
+Received: from mail-pl0-f46.google.com ([209.85.160.46]:35745 "EHLO
+        mail-pl0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755747AbdLTVNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 16:13:12 -0500
+Received: by mail-pl0-f46.google.com with SMTP id b96so9726861pli.2
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 13:13:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
         h=date:from:to:cc:subject:in-reply-to:message-id:references
          :user-agent:mime-version;
-        bh=edto1bK3JBo5kUsWuoYFXPMfXM5inOQoZxpbs5x1juY=;
-        b=tbsXDNhGb7ZCan2f2eLDM5sMBBD6CrgoDsC7cyj5QE5hFRSWUWZLQgdzTwcIWBHXln
-         QnwGRm9BxFv33SfvZ5Hsql4lj/0mDIKBk55oZdUyuz4rlqyMd/mHbhAvd0huxhRI/sl0
-         Z5pN9W4yFwdcqpYcIgFrtkrJEJb6ILd9Rip6E=
+        bh=KlVv4qULMPHJfEd8lJyG3s9ruYGO3V1BV7bWeYmygkY=;
+        b=FtkpLEHCoWZpDPDpGXt5X0xdBNLUG9hLUPercP4iobQddhQBPlpTm2vPAxSBmNr3Ow
+         H2mRcTJaV0edK60vgKYk5vrP3JUc209gfahvIlbo5ZeQdrTfdExTRFVKNJpsN71zevJu
+         S8Kvb9DOo2u6hTxJoG44uyMeLljBmY9Ic7M4I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
          :references:user-agent:mime-version;
-        bh=edto1bK3JBo5kUsWuoYFXPMfXM5inOQoZxpbs5x1juY=;
-        b=CRRXQYAyiPMnrcQGt4DCa++DdauqXPeLTg6FEtDnzEEMMUdllf72AmJSYMjc9kjA2L
-         hj+kJ5gHzMz2Fwg70xsizwPZJABXhDEGHtDh6smfs34jBMc8+CuSj4GO5kFViBRqJb+C
-         WhFqyLZD/Jk+HLIGakip5hXriGDk3ydfLsOs4wUYv8ecCTLV3KYuHjEsCuYZorOqWkoW
-         6Ew5J3NK8jLoP2hL5DCmv3coMIBflwD5iGT7qmL5e7WdU0HeMcyUWKDoXO4V+2ukltrQ
-         Y8ER72m/tsTJNxMadpCICzdqSx46Zg15Aju/rHXVYRLBgVblGi5vHHk+SNUAQ6p5+XZl
-         KzFQ==
-X-Gm-Message-State: AKGB3mJV2V0CUdOhQvbI3UQcCn4Gpix1o6DB16shmAFG2ZmVpcJ3naak
-        SGh9K+RqXqcAp8dn67EU5ek6yU1oHEA=
-X-Google-Smtp-Source: ACJfBouu2slYqkM99Ukhh0uyQ+ILPQ5SaQTNJeR4ZD0t+AEfoIpyjRlrtQP+VQSVCun4zDs3qsKASw==
-X-Received: by 10.84.246.140 with SMTP id m12mr8226786pll.74.1513803585648;
-        Wed, 20 Dec 2017 12:59:45 -0800 (PST)
-Received: from alexmv-linux.corp.dropbox.com (v160-vrrp2.corp.dropbox.com. [205.189.0.162])
-        by smtp.gmail.com with ESMTPSA id c191sm37412525pfg.24.2017.12.20.12.59.44
+        bh=KlVv4qULMPHJfEd8lJyG3s9ruYGO3V1BV7bWeYmygkY=;
+        b=I2pmbT4l0BJEqM7zhN0YaJEwAOzAHHE0atiEKl2+qeeNu8StEw2P/iCoXKi0OyiaMI
+         9cCx86I1lodKEn/Cdpb2gD44nQPhB3W0meEd4RyP4rSQxszqqmOth8Dl6yIXH65JAxg9
+         yTtF7EOUt+wmoZdBOJiX7bXHdzx/y/o+9C3W1g16u8EmeFXi/HV5DYx/eOSXby7c1yBS
+         gsRDBP6CrFav/8EM58gIFTuJGiUZV5Sfz42GILZDzMQgqZdRvSX+IIHYLdsyROXwTmru
+         Of4SFwzaOwRtrhIN9GALRFeCNxnzYIbBkebudU9IkjTb1AGMUrJowW4+tPQFxdgxOFE7
+         cKDw==
+X-Gm-Message-State: AKGB3mLwsQWhyngIiprP9W0/KbfGfHLtfNMGDLsLO1hognzJeOCRmnZv
+        KUCvILTaIVM1J5+XrtXjaAXSVSaj8z0=
+X-Google-Smtp-Source: ACJfBovIcGGe6iBrrOfCwVbN3NodX1a2MPV9ZjdpiQcX6pkOD2S+j9nIYulgpSNw6FV1Fpd/EOcBrA==
+X-Received: by 10.84.248.148 with SMTP id q20mr8413290pll.110.1513804391441;
+        Wed, 20 Dec 2017 13:13:11 -0800 (PST)
+Received: from alexmv-linux.corp.dropbox.com (Guest-GW2.corp.dropbox.com. [205.189.0.166])
+        by smtp.gmail.com with ESMTPSA id a23sm34579089pfa.177.2017.12.20.13.13.10
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Dec 2017 12:59:45 -0800 (PST)
-Date:   Wed, 20 Dec 2017 12:59:31 -0800 (PST)
+        Wed, 20 Dec 2017 13:13:10 -0800 (PST)
+Date:   Wed, 20 Dec 2017 13:12:56 -0800 (PST)
 From:   Alex Vandiver <alexmv@dropbox.com>
 X-X-Sender: alexmv@alexmv-linux
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     git@vger.kernel.org
+cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 2/6] fsmonitor: Add dir.h include, for
- untracked_cache_invalidate_path
-In-Reply-To: <xmqqtvwmv5fl.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.10.1712201108190.10810@alexmv-linux>
-References: <20171219002858.22214-1-alexmv@dropbox.com> <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com> <c8cf261d9d620d8123e8bfa5aa952fa55685a8db.1513642743.git.alexmv@dropbox.com> <xmqqtvwmv5fl.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 3/6] fsmonitor: Update helper tool, now that flags are
+ filled later
+In-Reply-To: <e3246bad10b891d8e3f751b6ed368a9e3f37c425.1513642743.git.alexmv@dropbox.com>
+Message-ID: <alpine.DEB.2.10.1712201259520.10810@alexmv-linux>
+References: <20171219002858.22214-1-alexmv@dropbox.com> <e3246bad10b891d8e3f751b6ed368a9e3f37c425.1513642743.git.alexmv@dropbox.com>
 User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
@@ -66,31 +65,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 19 Dec 2017, Junio C Hamano wrote:
-> Alex Vandiver <alexmv@dropbox.com> writes:
-> 
-> > Subject: Re: [PATCH 2/6] fsmonitor: Add dir.h include, for untracked_cache_invalidate_path
-> 
-> Perhaps
-> 
-> "Subject: fsmonitor.h: include dir.h"
+On Mon, 18 Dec 2017, Alex Vandiver wrote:
+> dd9005a0a ("fsmonitor: delay updating state until after split index is
+> merged", 2017-10-27) began deferring the setting of the
+> CE_FSMONITOR_VALID flag until later, such that do_read_index() does
+> not perform those steps.  This means that t/helper/test-dump-fsmonitor
+> showed all bits as always unset.
 
-Certainly more concise.
+This isn't the right fix, actually.  With split indexes, this puts us
+right back into "only shows a few bits" territory, because
+do_read_index doesn't know about split indexes.
 
-> But I am not sure if this is a right direction to go in.  If a .C
-> user of fsmonitor needs (does not need) things from dir.h, that file
-> can (does not need to) include dir.h itself.
+Which means we need a way to do the whole index load but _not_
+add/remove the fsmonitor cache, even if the config says to do so.
 
-Hm; I was patterning based on existing .h files, which don't seem shy
-about pulling in other .h files.
+The best I'm coming up with is the below -- but I'm not happy with
+it, because 'keep' is meaningless as a configuration value outside of
+testing, since it's normally treated as an executable path.  This uses
+the fact that fsmonitor.c currently has a:
 
-> I think this header does excessive "static inline" as premature
-> optimization, so a better "fix" to your perceived problem may be to
-> make them not "static inline".
+        switch (fsmonitor_enabled) {
+        case -1: /* keep: do nothing */
+                break;
 
-Yeah, quite possibly.  Ben, do you recall your rationale for inlining
-them in 6a6da08f6 ("fsmonitor: teach git to optionally utilize a file
-system monitor to speed up detecting new or changed files.",
-2017-09-22) ?
+...despite get_config_get_fsmonitor() havong no way to return -1 at
+present.
 
+Is this sort of testing generally done via environment variables,
+rather than magic config values?
  - Alex
+
+---------------------8<----------------
+diff --git a/config.c b/config.c
+index 6fb06c213..75fcf1a52 100644
+--- a/config.c
++++ b/config.c
+@@ -2164,8 +2164,13 @@ int git_config_get_fsmonitor(void)
+        if (core_fsmonitor && !*core_fsmonitor)
+                core_fsmonitor = NULL;
+
+-       if (core_fsmonitor)
+-               return 1;
++
++       if (core_fsmonitor) {
++               if (!strcasecmp(core_fsmonitor, "keep"))
++                       return -1;
++               else
++                       return 1;
++       }
+
+        return 0;
+ }
+diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
+index ad452707e..12e131530 100644
+--- a/t/helper/test-dump-fsmonitor.c
++++ b/t/helper/test-dump-fsmonitor.c
+@@ -5,8 +5,9 @@ int cmd_main(int ac, const char **av)
+        struct index_state *istate = &the_index;
+        int i;
+
++       git_config_push_parameter("core.fsmonitor=keep");
+        setup_git_directory();
+-       if (do_read_index(istate, get_index_file(), 0) < 0)
++       if (read_index_from(istate, get_index_file()) < 0)
+                die("unable to read index file");
+        if (!istate->fsmonitor_last_update) {
+                printf("no fsmonitor\n");
+-----------------8<---------------------
