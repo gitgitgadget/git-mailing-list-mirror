@@ -2,101 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 345A31F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 22:19:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A181F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 22:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755715AbdLTWT2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 17:19:28 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:45463 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932314AbdLTWRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 17:17:30 -0500
-Received: by mail-io0-f174.google.com with SMTP id e204so18941718iof.12
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:17:29 -0800 (PST)
+        id S1756463AbdLTWV6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 17:21:58 -0500
+Received: from mail-io0-f180.google.com ([209.85.223.180]:36637 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756407AbdLTWV5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 17:21:57 -0500
+Received: by mail-io0-f180.google.com with SMTP id l10so18950976ioc.3
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LVlhfgRnXkz+Xj6iBLPr3r5GgChc4/V3mRIRO7BFmmc=;
-        b=T2NgNFb55CeUuUpCV0C3SYt40/VqUqU9tixHNbRpN8XPBQLvVzGD1X+dGcRaC4ofWj
-         PrJOLUfXHbXyzB0PqUO/LjzVAW3xWAYVEetMQzyd7C5HLV1ARNV6efkOItIpIHug1vyI
-         v6SLs7/+fm8TZDIwuFBimZ6LULIOyJCz88qe74GA/ordgaPcNiJuKZWEddEGw2eBZKyR
-         bTA2wjJB41lVRfDBnpKBwwlmlKRKPKjb2jCjw+NFZWp8zZiBp4g0L3lfSB2rfCQ/9b6W
-         fqoGKIg26K4iKJ5QKp5qGgdyRK79BIu2I5Md4pZqCtkcz7v/UwFf7CpB3R6UEToGX7bR
-         nKOQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UJTXCFt9BKRkLdyg8EQWJpI5tRbRG7fVWv08Oy2UUPg=;
+        b=G6J8vkr8Mi6rg8qUMln16pBq/q1qJGSMxc/nNt9XNPapwpgydNQUZxHDqKE4bXD+vv
+         zliFrLOazWqNhN6ZuJ0ResIwuosgjVAzZGnrpE/4/HME7PvQZuN55nzKyZWP9bEDw7XG
+         XLONxS3xGJpKKkfW9/ZyfMsyP539NDUqbzQOM+q4jlkTWIKX+tyK2GhThqjf1ILrdT98
+         fPsvqfqHlC/zlibswhsO9Y9VZIfLa8FmFRmel9smhEAXduebfcb1n1TLx1+3xvy/HFJl
+         PibrolbUzBv/yL6UQQNsYGkX0uar+xoGoyf3LngOPwAOkCPTA2oZt3NHQze/bMTWP2p8
+         eKhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LVlhfgRnXkz+Xj6iBLPr3r5GgChc4/V3mRIRO7BFmmc=;
-        b=tmx7UH+EjAFpFGgp/W+5/SJn9o2L/YLXCBJI9K8fUtnsmW9TAOw8pXsMDFlPR0+4Vq
-         hVErvD70ufhfT5EbOuQz8aBrFp4A+IrEAb3opeQUNxmli/LBXgQHOijDLsXEqAkqnnYe
-         Ti7T189/jJCWbfSrMo98S4+1zoQa1DOUZxbZXx/oJwyf4cGtyChTP2rrWo6SA7qLrYRT
-         b/jxJOR5j6PtgGAc/HqGG22XGAyPABOWvo+Ey3ttLtWkkyuXvGT3kO93FQ2ST/ek4OHZ
-         V2tktnO64jAkED84KPbtyV3Icp+MshOR5ynv/hiSCMI/eNfRKyfIl57ND36essnhoGFw
-         nSwA==
-X-Gm-Message-State: AKGB3mJl0SPi1I4BlTq9qFIJ+NFUuiijx8DPDGwG3f2RsP6tqVn5Wv3K
-        UKoTDHBSkCAxky6u8meRLJjatA==
-X-Google-Smtp-Source: ACJfBouQCvrT7bmdvz0XbPIrp27KSyheZH6IZ4vR1lF0BpkbVDPJFEX3SlJ5LF4fgiM5stQwPHXzQw==
-X-Received: by 10.107.154.79 with SMTP id c76mr10243248ioe.79.1513808249169;
-        Wed, 20 Dec 2017 14:17:29 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id t188sm3193894ita.23.2017.12.20.14.17.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Dec 2017 14:17:28 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     jrnieder@gmail.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 0/4] Fix --recurse-submodules for submodule worktree changes
-Date:   Wed, 20 Dec 2017 14:17:21 -0800
-Message-Id: <20171220221725.129162-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UJTXCFt9BKRkLdyg8EQWJpI5tRbRG7fVWv08Oy2UUPg=;
+        b=kUKWuQ0sf8XF4WUPhF/LZoHNCuE5QHKQEQ9HTwx5iVYhtUwP1/3OtoBy/H27rhgFG/
+         Ed+PpArcvFLN6Ht+GTTGxyh8uOaSLt41Kvf7B0JFdwv9DQjApc3kdUENHyOjdqTs3vJy
+         GEK+AwY1GOQ4/uOIMMUW1vU/VqmDZIvbhCUwVHzv3izyfFV+xG0qY7DH/vQWReT7GX5M
+         jvoqDg4yM5jjh2WI38ToOFnWAwEYAwFdKHQelSRmfiECasVibrxyPnSn1G5GSyxY9rfo
+         BKJHjqQWUcBG+dVahI7C+3HhcurT0nIpFbCFWkOtqLymVyeq3Knwn1kiFZAhKR6soAs2
+         hvpw==
+X-Gm-Message-State: AKGB3mIfDBXqn8dtZGoaoT8bsFwqYU+Ul9xvlck4SsTWpNeca4OefBwV
+        gkR/zZj5odyIZQv781VK2byIwQUdPPvIFc9M/tg=
+X-Google-Smtp-Source: ACJfBotMK3jmeHOL2rtG+kbfosOGL2qxXsKrP0vYPh2WIbovrYTWdp3BakGBFGr9SgQJLo/32R4pmjWbcNTysFcYObE=
+X-Received: by 10.107.164.147 with SMTP id d19mr10505209ioj.204.1513808516860;
+ Wed, 20 Dec 2017 14:21:56 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.107.6.14 with HTTP; Wed, 20 Dec 2017 14:21:36 -0800 (PST)
+In-Reply-To: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 20 Dec 2017 23:21:36 +0100
+Message-ID: <CACBZZX7N+8yt2MsFJ7xsAQEMNkJvutX47VOED0SumsOzQK9tbg@mail.gmail.com>
+Subject: Re: Usability outrage as far as I am concerned
+To:     Cristian Achim <brancoliticus@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2:
-* squashed the test patch and the bugfix, rewriting the commit message entirely.
-  This might not the way Jonathan imagined how I address the potential user
-  confusion[1], but I think it does the job.
+On Wed, Dec 20, 2017 at 5:40 PM, Cristian Achim <brancoliticus@gmail.com> wrote:
+> All I will do is paste the stackoverflow question below. It covers the
+> commands I made in chronological order and the way I would have
+> expected git to behave differently.
+>
+> So I did
+>
+> git pull home_subfolder
+>
+> while in usb_subfolder. Can't remember the immediate output, but it
+> included a part about two repos having no commits in common. Would
+> have been wiser for git to just error out with a message that in one
+> of the folders there is not git repository.
+>
+> At all times
+>
+> git status
+>
+> in home_subfolder gives
+>
+> branch master
+> Working directory clean
+>
+> This is so stupid considering the circumstances.
+>
+> Doing again
+>
+> git pull home_subfolder
+>
+> at all times from usb_folder now returns U in front of 2 files in
+> home_folder and A in front of another file and then says
+>
+> Pull is not possible because you have unmerged files
+>
+> Had the bright idea to do
+>
+> git clone home_subfolder
+>
+> from the usb_subfolder because of my worries going away when
+>
+> git status
+>
+> in home_subfolder conforted me that there must be nothing bad about
+> the situation. Therefore I suspect that now doing
+>
+> git pull usb_subfolder
+>
+> from home_subfolder will do the same broken result as above.
+>
+> I do not want to resolve merge conflicts because git doesn't error out
+> with a sane message of the situation when it should. I just want to
+> get the home_subfolder and usb_subfolder repositories state to where
+> it was before my breakage generating git pull and git clone commands.
+>
+> Ubuntu 14.04 64 bit, git 1.9.1.
 
-[1] https://public-inbox.org/git/20171220000148.GJ240141@aiede.mtv.corp.google.com/
+Hi. While I'm sure you'll still find some fault with git's UI could you please:
 
-v1:
+1) Try to see if the latest git version (or some approximation) fixes
+some of this, as you said you're on 1.9.1 which was released in 2014,
+there's been a lot of UI work since then, including some that by my
+reading of your mail should address some of your concerns
 
-The fix is in the last patch, the first patches are just massaging the code
-base to make the fix easy.
+2) It would be really useful if you could distill the complaints you
+have down to some sequence of commands to run, preferably just a small
+shellscript with comments saying "the message at this point is bad for
+such-and-such a reason". I may have just misread what you said (or
+maybe it's since been fixed), but per my reading we're already doing
+some of what you've pointed out we should be doing, and if not maybe
+that's because I'm not imagining how you're running git exactly, a
+reproducible recipe would really help.
 
-The second patch fixes a bug in the test, which was ineffective at testing.
-The third patch shows the problem this series addresses,
-the fourth patch is a little refactoring, which I want to keep separate
-as I would expect it to be a performance regression[1].
-The first patch is unrelated, but improves the readability of submodule test
-cases, which we'd want to improve further.
-
-Thanks,
-Stefan
-
-[1] The performance should improve once we don't use so many processes
-    any more, but that repository series is stalled for now.
-
-
-Stefan Beller (4):
-  t/lib-submodule-update.sh: clarify test
-  t/lib-submodule-update.sh: Fix test ignoring ignored files in
-    submodules
-  unpack-trees: Fix same() for submodules
-  submodule: submodule_move_head omits old argument in forced case
-
- submodule.c               |  4 +++-
- t/lib-submodule-update.sh | 16 ++++++++++++++--
- unpack-trees.c            |  2 ++
- 3 files changed, 19 insertions(+), 3 deletions(-)
-
--- 
-2.15.1.620.gb9897f4670-goog
-
+Thanks.
