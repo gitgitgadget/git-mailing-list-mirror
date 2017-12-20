@@ -2,131 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C66A71F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 20:17:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFFF1F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 20:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932320AbdLTURS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 15:17:18 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:46897 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932479AbdLTURJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 15:17:09 -0500
-Received: by mail-qt0-f196.google.com with SMTP id r39so29794117qtr.13
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 12:17:08 -0800 (PST)
+        id S1755989AbdLTU7r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 15:59:47 -0500
+Received: from mail-pl0-f49.google.com ([209.85.160.49]:45445 "EHLO
+        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755637AbdLTU7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 15:59:46 -0500
+Received: by mail-pl0-f49.google.com with SMTP id o2so9709879plk.12
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 12:59:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=w+rAZLGT1keqxvn+eu3yyzdGoVrojUo+Z2XdxG39kTA=;
-        b=JHA+gMiXbPrjAYV8CYQnWIIb7oLaYtURSUGqY3k2Gz7SKP8c2NBx3ABtRybMiYaH6t
-         u7HXJIc+c5qW/8CwJhoihZmnWZzwW623I45kFqjH3BH99/Q9X16jqMjy1XmQCggLYlNq
-         8G8/gDw2ogiAbbsJLVSEpNj5+kOa7s1J8a1xksohYzxnSJESNV1uaVuAGXSH26ampQmw
-         FFa4LnSxJHNgMFcwGvxGx8ZGnSnaZEJ4qUvU/nwp2s31+x0HnCI6TuyDhAH8Bh6HVXoi
-         5dfHEqct7bVa7w3JbdQpzCJ/1GcXiJJUEEs6g2MVIEqA0e1+ZmryougaAoR/1Itnw9VO
-         Mbtg==
+        d=dropbox.com; s=corp;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version;
+        bh=edto1bK3JBo5kUsWuoYFXPMfXM5inOQoZxpbs5x1juY=;
+        b=tbsXDNhGb7ZCan2f2eLDM5sMBBD6CrgoDsC7cyj5QE5hFRSWUWZLQgdzTwcIWBHXln
+         QnwGRm9BxFv33SfvZ5Hsql4lj/0mDIKBk55oZdUyuz4rlqyMd/mHbhAvd0huxhRI/sl0
+         Z5pN9W4yFwdcqpYcIgFrtkrJEJb6ILd9Rip6E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=w+rAZLGT1keqxvn+eu3yyzdGoVrojUo+Z2XdxG39kTA=;
-        b=q6j7sW+JqiiMQGKPWFIlF3/KYBIdKhmaXBP7pWKLsNgdet+0YAtSYaO07CRogW2NcE
-         mPMOzqtU18Gbr34/s35E+/HdGYl0646N6HNingoStLKjp4ydghNKUpSu/+7cyhzyEI6r
-         Gho8ZDA69AJS+X3IZHSTtvQiZ95zZFe9dLF+ZbYk6LlFSX3n3DHTkXAOU4wWBxONRFFu
-         Ug05mXKvVEeDXcjTMDmlOdIzjvzj82spD1WRXF6slErH5GH1w4mMX6hqx0U8PRCTxYv8
-         09uuztS19eEoYEulmhjiUhrTvh6F5cQQH6XLPXXnKsGFk+RiISLpcLRI8BKkRPgHlH84
-         pWLw==
-X-Gm-Message-State: AKGB3mJmBlfMuU+D6qskeWwwVTONCRPRNb3IpwsoKA6Iq1l+H5CwpeZo
-        HFvfQXFKJDtpPIfJydaK2h8=
-X-Google-Smtp-Source: ACJfBos5YK1nJxQRuPtjIGfyN3/JYo6jnH3EfJXymraz3M96CvnYMRPQIfcayAyGaLf63ANIq5MgAQ==
-X-Received: by 10.200.3.194 with SMTP id z2mr12023505qtg.309.1513801028181;
-        Wed, 20 Dec 2017 12:17:08 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id x10sm11368884qkl.47.2017.12.20.12.17.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Dec 2017 12:17:06 -0800 (PST)
-Date:   Wed, 20 Dec 2017 15:17:04 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
-        Alex Riesen <alexander.riesen@cetitec.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-        Gerrit Pape <pape@smarden.org>,
-        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>,
-        Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH v6] Makefile: replace perl/Makefile.PL with simple make
- rules
-Message-ID: <20171220201703.GI3693@zaya.teonanacatl.net>
-References: <20171220174147.GG3693@zaya.teonanacatl.net>
- <20171220182419.16865-1-avarab@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version;
+        bh=edto1bK3JBo5kUsWuoYFXPMfXM5inOQoZxpbs5x1juY=;
+        b=CRRXQYAyiPMnrcQGt4DCa++DdauqXPeLTg6FEtDnzEEMMUdllf72AmJSYMjc9kjA2L
+         hj+kJ5gHzMz2Fwg70xsizwPZJABXhDEGHtDh6smfs34jBMc8+CuSj4GO5kFViBRqJb+C
+         WhFqyLZD/Jk+HLIGakip5hXriGDk3ydfLsOs4wUYv8ecCTLV3KYuHjEsCuYZorOqWkoW
+         6Ew5J3NK8jLoP2hL5DCmv3coMIBflwD5iGT7qmL5e7WdU0HeMcyUWKDoXO4V+2ukltrQ
+         Y8ER72m/tsTJNxMadpCICzdqSx46Zg15Aju/rHXVYRLBgVblGi5vHHk+SNUAQ6p5+XZl
+         KzFQ==
+X-Gm-Message-State: AKGB3mJV2V0CUdOhQvbI3UQcCn4Gpix1o6DB16shmAFG2ZmVpcJ3naak
+        SGh9K+RqXqcAp8dn67EU5ek6yU1oHEA=
+X-Google-Smtp-Source: ACJfBouu2slYqkM99Ukhh0uyQ+ILPQ5SaQTNJeR4ZD0t+AEfoIpyjRlrtQP+VQSVCun4zDs3qsKASw==
+X-Received: by 10.84.246.140 with SMTP id m12mr8226786pll.74.1513803585648;
+        Wed, 20 Dec 2017 12:59:45 -0800 (PST)
+Received: from alexmv-linux.corp.dropbox.com (v160-vrrp2.corp.dropbox.com. [205.189.0.162])
+        by smtp.gmail.com with ESMTPSA id c191sm37412525pfg.24.2017.12.20.12.59.44
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 Dec 2017 12:59:45 -0800 (PST)
+Date:   Wed, 20 Dec 2017 12:59:31 -0800 (PST)
+From:   Alex Vandiver <alexmv@dropbox.com>
+X-X-Sender: alexmv@alexmv-linux
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH 2/6] fsmonitor: Add dir.h include, for
+ untracked_cache_invalidate_path
+In-Reply-To: <xmqqtvwmv5fl.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.10.1712201108190.10810@alexmv-linux>
+References: <20171219002858.22214-1-alexmv@dropbox.com> <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com> <c8cf261d9d620d8123e8bfa5aa952fa55685a8db.1513642743.git.alexmv@dropbox.com> <xmqqtvwmv5fl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171220182419.16865-1-avarab@gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Wed, Dec 20, 2017 at 6:41 PM, Todd Zullinger <tmz@pobox.com> wrote:
->> /usr/share/perl5/vendor_perl/Git
->> /usr/share/perl5/vendor_perl/Git.pm
->> /usr/share/perl5/vendor_perl/Git/Error.pm
->> [...]
->> /usr/share/perl5/vendor_perl/build
->> /usr/share/perl5/vendor_perl/build/lib
->> /usr/share/perl5/vendor_perl/build/lib/Git
->> /usr/share/perl5/vendor_perl/build/lib/Git.pm
->> /usr/share/perl5/vendor_perl/build/lib/Git/Error.pm
->> [...]
->> Note that not all of the .pm files are matched, which I
->> believe is due to the glob matches only going 4 levels deep
->> under the perl dir.
+On Tue, 19 Dec 2017, Junio C Hamano wrote:
+> Alex Vandiver <alexmv@dropbox.com> writes:
 > 
-> Ouch, that's a stupid mistake of mine. Didn't consider that changing
-> it from *.pm to *.pmc would of course impact that glob match.
+> > Subject: Re: [PATCH 2/6] fsmonitor: Add dir.h include, for untracked_cache_invalidate_path
 > 
-> This fixes it, changes against v5:
+> Perhaps
 > 
->     @@ -224,7 +224,7 @@
->       po/build/locale/%/LC_MESSAGES/git.mo: po/%.po
->         $(QUIET_MSGFMT)mkdir -p $(dir $@) && $(MSGFMT) -o $@ $<
->       
->     -+LIB_PERL := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
->     ++LIB_PERL := $(wildcard perl/Git.pm perl/Git/*.pm perl/Git/*/*.pm perl/Git/*/*/*.pm)
->      +LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
->      +
->      +ifndef NO_PERL
-> 
-> I.e. let's keep calling it "build" for consistency with other stuff
-> and so "ls" will show it, but just alter the glob so we'll only match
-> modules like Git{,::*}. I don't think we'll ever add anything outside
-> that namespace, so this seems like the best solution.
+> "Subject: fsmonitor.h: include dir.h"
 
-Sounds good.  While it might not have been too bad to have a
-hidden dir for build artifacts, using the more explicit glob
-pattern is much nicer.
+Certainly more concise.
 
-I'll use this locally and let you know if I notice any
-issues.  Thanks for working on this.
+> But I am not sure if this is a right direction to go in.  If a .C
+> user of fsmonitor needs (does not need) things from dir.h, that file
+> can (does not need to) include dir.h itself.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Some people never go crazy. What truly horrible lives they must
-live.
-    -- Charles Bukowski
+Hm; I was patterning based on existing .h files, which don't seem shy
+about pulling in other .h files.
 
+> I think this header does excessive "static inline" as premature
+> optimization, so a better "fix" to your perceived problem may be to
+> make them not "static inline".
+
+Yeah, quite possibly.  Ben, do you recall your rationale for inlining
+them in 6a6da08f6 ("fsmonitor: teach git to optionally utilize a file
+system monitor to speed up detecting new or changed files.",
+2017-09-22) ?
+
+ - Alex
