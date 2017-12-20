@@ -2,135 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0A181F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 22:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C3E21F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 22:24:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756463AbdLTWV6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 17:21:58 -0500
-Received: from mail-io0-f180.google.com ([209.85.223.180]:36637 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756407AbdLTWV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 17:21:57 -0500
-Received: by mail-io0-f180.google.com with SMTP id l10so18950976ioc.3
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:21:57 -0800 (PST)
+        id S1756151AbdLTWYV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 17:24:21 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:45139 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755711AbdLTWYU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 17:24:20 -0500
+Received: by mail-it0-f67.google.com with SMTP id z6so8485631iti.4
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:24:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UJTXCFt9BKRkLdyg8EQWJpI5tRbRG7fVWv08Oy2UUPg=;
-        b=G6J8vkr8Mi6rg8qUMln16pBq/q1qJGSMxc/nNt9XNPapwpgydNQUZxHDqKE4bXD+vv
-         zliFrLOazWqNhN6ZuJ0ResIwuosgjVAzZGnrpE/4/HME7PvQZuN55nzKyZWP9bEDw7XG
-         XLONxS3xGJpKKkfW9/ZyfMsyP539NDUqbzQOM+q4jlkTWIKX+tyK2GhThqjf1ILrdT98
-         fPsvqfqHlC/zlibswhsO9Y9VZIfLa8FmFRmel9smhEAXduebfcb1n1TLx1+3xvy/HFJl
-         PibrolbUzBv/yL6UQQNsYGkX0uar+xoGoyf3LngOPwAOkCPTA2oZt3NHQze/bMTWP2p8
-         eKhg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JSrEWawZJ1KRlrW9GSiiRMhuM1tlHpByk4nd3bc01Ns=;
+        b=psg3NjhNN+/FqYHoEDihv8hdbp98hw1z9p7OCGdTV1T4IG0cyE6Cq7Wi38wpLjxpe4
+         rSR0u2aJxq1Y8OGYWugKg+CzC/qt5+wJNREehGBBNMm1d0YuZkXTU4lGkgqiuTK7VcKV
+         ZBgigrGDNwplyFi0zbPIgSVQaxi+qYBBEJ8OrBXxPXp8+K001ERjAV35QPYFsq7SEkD8
+         QZs6KzxuYYTl14sd/VUJm51Q6heQt0k1NTwsfnGu74TEyO3IeERwqLIfwu89OONR8fY4
+         waKZxm3btmA8mJjs+bnjlpvnaRkcTYla3zcAAscRcUiRxrDaFVtemWiYkLCNNiEzNo+j
+         u0Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UJTXCFt9BKRkLdyg8EQWJpI5tRbRG7fVWv08Oy2UUPg=;
-        b=kUKWuQ0sf8XF4WUPhF/LZoHNCuE5QHKQEQ9HTwx5iVYhtUwP1/3OtoBy/H27rhgFG/
-         Ed+PpArcvFLN6Ht+GTTGxyh8uOaSLt41Kvf7B0JFdwv9DQjApc3kdUENHyOjdqTs3vJy
-         GEK+AwY1GOQ4/uOIMMUW1vU/VqmDZIvbhCUwVHzv3izyfFV+xG0qY7DH/vQWReT7GX5M
-         jvoqDg4yM5jjh2WI38ToOFnWAwEYAwFdKHQelSRmfiECasVibrxyPnSn1G5GSyxY9rfo
-         BKJHjqQWUcBG+dVahI7C+3HhcurT0nIpFbCFWkOtqLymVyeq3Knwn1kiFZAhKR6soAs2
-         hvpw==
-X-Gm-Message-State: AKGB3mIfDBXqn8dtZGoaoT8bsFwqYU+Ul9xvlck4SsTWpNeca4OefBwV
-        gkR/zZj5odyIZQv781VK2byIwQUdPPvIFc9M/tg=
-X-Google-Smtp-Source: ACJfBotMK3jmeHOL2rtG+kbfosOGL2qxXsKrP0vYPh2WIbovrYTWdp3BakGBFGr9SgQJLo/32R4pmjWbcNTysFcYObE=
-X-Received: by 10.107.164.147 with SMTP id d19mr10505209ioj.204.1513808516860;
- Wed, 20 Dec 2017 14:21:56 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JSrEWawZJ1KRlrW9GSiiRMhuM1tlHpByk4nd3bc01Ns=;
+        b=s8KZ7g8nw3RJ+n+9RekbwJa5TCvX+JNF/oiRLSdfxDj4DeiWbcnF+WoiLnlLC48T64
+         wHLc5tx/EtpwiNuoO+YWXdPwS4VuVHJH1/T1HixM3upe8+hi/VLPOMuyebN8NwX6hxKa
+         Lwfe1YsWpWSYWJfbBAGM0rNC088buUKYc+/C7zUk42C4halUE+Qh77NTO0Hm6bPuhDHV
+         /L/+bSSiZMHh9WOKxsju0DDE8qWCJG4dyHOfMzyX4DYGfkl7Rv1hdod17ESro5tr4AXd
+         ssKmJoD1w5y1L12Xgg4Mkh2yZfTzIxlnSKveLTx4PsttMWFHM/4AvgsGk116FMz44tjk
+         41Rg==
+X-Gm-Message-State: AKGB3mJVGpPgCKdlwlNTjssGPVJGhRoC7HSf2MDOYZIw12BvWtpeyaa+
+        nAAlifPxKh4W14AExBydztu1Dw==
+X-Google-Smtp-Source: ACJfBosIxWuqx33Rq/BI1g1atW1d+dy1neQo/c1rDvRnElCnwDPHdFG0UO2yFZ+k1a213/WmOPHbJg==
+X-Received: by 10.36.48.82 with SMTP id q79mr11022673itq.75.1513808659663;
+        Wed, 20 Dec 2017 14:24:19 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id i63sm3148577itb.35.2017.12.20.14.24.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 20 Dec 2017 14:24:19 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH] t/helper/test-lazy-name-hash: fix compilation
+Date:   Wed, 20 Dec 2017 14:24:16 -0800
+Message-Id: <20171220222416.130872-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+In-Reply-To: <39238da4-c2b8-050d-51e3-675f5515776e@jeffhostetler.com>
+References: <39238da4-c2b8-050d-51e3-675f5515776e@jeffhostetler.com>
 MIME-Version: 1.0
-Received: by 10.107.6.14 with HTTP; Wed, 20 Dec 2017 14:21:36 -0800 (PST)
-In-Reply-To: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
-References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 20 Dec 2017 23:21:36 +0100
-Message-ID: <CACBZZX7N+8yt2MsFJ7xsAQEMNkJvutX47VOED0SumsOzQK9tbg@mail.gmail.com>
-Subject: Re: Usability outrage as far as I am concerned
-To:     Cristian Achim <brancoliticus@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 20, 2017 at 5:40 PM, Cristian Achim <brancoliticus@gmail.com> wrote:
-> All I will do is paste the stackoverflow question below. It covers the
-> commands I made in chronological order and the way I would have
-> expected git to behave differently.
->
-> So I did
->
-> git pull home_subfolder
->
-> while in usb_subfolder. Can't remember the immediate output, but it
-> included a part about two repos having no commits in common. Would
-> have been wiser for git to just error out with a message that in one
-> of the folders there is not git repository.
->
-> At all times
->
-> git status
->
-> in home_subfolder gives
->
-> branch master
-> Working directory clean
->
-> This is so stupid considering the circumstances.
->
-> Doing again
->
-> git pull home_subfolder
->
-> at all times from usb_folder now returns U in front of 2 files in
-> home_folder and A in front of another file and then says
->
-> Pull is not possible because you have unmerged files
->
-> Had the bright idea to do
->
-> git clone home_subfolder
->
-> from the usb_subfolder because of my worries going away when
->
-> git status
->
-> in home_subfolder conforted me that there must be nothing bad about
-> the situation. Therefore I suspect that now doing
->
-> git pull usb_subfolder
->
-> from home_subfolder will do the same broken result as above.
->
-> I do not want to resolve merge conflicts because git doesn't error out
-> with a sane message of the situation when it should. I just want to
-> get the home_subfolder and usb_subfolder repositories state to where
-> it was before my breakage generating git pull and git clone commands.
->
-> Ubuntu 14.04 64 bit, git 1.9.1.
+I was compiling origin/master today with the DEVELOPER compiler flags
+today and was greeted by
 
-Hi. While I'm sure you'll still find some fault with git's UI could you please:
+t/helper/test-lazy-init-name-hash.c: In function ‘cmd_main’:
+t/helper/test-lazy-init-name-hash.c:172:5: error: ‘nr_threads_used’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+     printf("avg [size %8d] [single %f] %c [multi %f %d]\n",
+     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr,
+         ~~~
+         (double)avg_single/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (avg_single < avg_multi ? '<' : '>'),
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (double)avg_multi/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr_threads_used);
+         ~~~~~~~~~~~~~~~~
+t/helper/test-lazy-init-name-hash.c:115:6: note: ‘nr_threads_used’ was declared here
+  int nr_threads_used;
+      ^~~~~~~~~~~~~~~
 
-1) Try to see if the latest git version (or some approximation) fixes
-some of this, as you said you're on 1.9.1 which was released in 2014,
-there's been a lot of UI work since then, including some that by my
-reading of your mail should address some of your concerns
+Fix this issue by assigning 0 to 'nr_threads_used'.
 
-2) It would be really useful if you could distill the complaints you
-have down to some sequence of commands to run, preferably just a small
-shellscript with comments saying "the message at this point is bad for
-such-and-such a reason". I may have just misread what you said (or
-maybe it's since been fixed), but per my reading we're already doing
-some of what you've pointed out we should be doing, and if not maybe
-that's because I'm not imagining how you're running git exactly, a
-reproducible recipe would really help.
+Acked-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Thanks.
+Slightly reworded the commit message. I'd really like this patch to be included
+such that I can compile git with the DEVELOPER_CFLAGS flags.
+
+ t/helper/test-lazy-init-name-hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
+index 6368a89345..297fb01d61 100644
+--- a/t/helper/test-lazy-init-name-hash.c
++++ b/t/helper/test-lazy-init-name-hash.c
+@@ -112,7 +112,7 @@ static void analyze_run(void)
+ {
+ 	uint64_t t1s, t1m, t2s, t2m;
+ 	int cache_nr_limit;
+-	int nr_threads_used;
++	int nr_threads_used = 0;
+ 	int i;
+ 	int nr;
+ 
+-- 
+2.15.1.620.gb9897f4670-goog
+
