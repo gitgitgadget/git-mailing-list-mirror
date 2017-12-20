@@ -2,100 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67E151F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 19:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34541F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 19:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755474AbdLTTii (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 14:38:38 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:40757 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755501AbdLTTih (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 14:38:37 -0500
-Received: by mail-qk0-f174.google.com with SMTP id q14so15346668qke.7
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 11:38:37 -0800 (PST)
+        id S1756058AbdLTTjA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 14:39:00 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37106 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755740AbdLTTi7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 14:38:59 -0500
+Received: by mail-wm0-f65.google.com with SMTP id f140so11820818wmd.2
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 11:38:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=dVL0P+hyOCnlLwueFqtys9m1fK4zSrZ+9ZVkdVTJLg8=;
-        b=TfYukuGAd4YumCXMYBKUDL5H0QQMXo/Kiiiz7qoZcSnzp6HvS4VPGNLJ3pSTfgfTIS
-         e/juTaT5IdvObeglyeeTnSDhRnesFqevKEiJ88U0zM/bBaKu6aEUb/d2D8aEanQEuZY9
-         Gd1b6gVyDNTHsjQIDuC/XVamVMMteoytStirIVSmO/ni26hMHpwCq6WVrWqFyOfoJADg
-         A+aGxDYa//oF6nJFhAuRCplpmrvXUOQ/SmE1YbD68ZruBlsHYrs87QqpS5PuOzXLvwBg
-         5kfLkbxgKKdX4KvQ1+Li9c7ytH1TxWsBAaK8ynUaFHn1kqU0JtJar+63e5LE3llbgOsk
-         LVmw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9QqV2v91aHFb/Jtgl3zr0stsDQ6xWgmsfBeEC0kWqSA=;
+        b=bNyxxs3MEdJsb6TixZo10PCQcYJb5JXvZTfduH7O4JLITumYiB//2RcUVgAo6SBB1L
+         XD0MlCeovErnyCwtVUmoeMeKxD1QHLfD4IQy4htr2TGxHNmUNCypgf1n1Ym2XojwFIrj
+         cuSNqFarqsfE+4izVJ9LXueWDrN35NHjtJZVopWhVQJvXiTFNaw7/NuLL9r2To9C7m5i
+         OI4P3sxq11o6l5zLzpEx6fv4khsEsf0dy62OJZjWLhlYsFOz1+i+QLHKBV+RKV5NuWxT
+         9ZNk6zY13d6x3djg10F9cF0uxL27zVQBVl/tRYtJmMd6l2S+TZsCbzWZKWO3lX44zX5B
+         NVrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=dVL0P+hyOCnlLwueFqtys9m1fK4zSrZ+9ZVkdVTJLg8=;
-        b=ZNSNg8FYrTAB06wzQ8xPHNoa2xkchLcUS4C3UdzAOcvGuo5DiAZ6GeWhtU7y5NehNG
-         QdOQEA5uvrfU58EwBPXj12N8qu5yT2L0qeY8YxNFMlhAUOU/QBCJaFktmoOamIDdrLaG
-         a2RMhSSBGmQrBoi4OwePGttBSMiiDZcz2frYCnig+xH+ER2epCNEE1GtirpRNCqoVRJZ
-         WQe7kzWHdi7t0JhfknE0YrBMXslp7kU497Mm3KC7HnQorAFmPxBXGn5RbOB87bYp2rNZ
-         UAkNqaifTVK/wAFcJhcJ3uMADJufRLwXk7RzTpKVpu4+XcQOI+fezSZUdGNh5pgBACU1
-         eq+g==
-X-Gm-Message-State: AKGB3mJM13lFwn9JtBM1uuDmECZYOC1XgZwubqy3ypbEL22eNxUC0t3I
-        a7Y+E9a3hM1MYP0DmR9mQTYrzZn7tXP/QBJk9JOItA==
-X-Google-Smtp-Source: ACJfBoupb7UGDTgw0DeNvyf5LOVhRS2qSOCliiKDUVb5QE7nT3eXI0jKCGeWaJYm3YgwP/JjchOqIhvEdn1Xgim3G9I=
-X-Received: by 10.55.76.10 with SMTP id z10mr5523298qka.346.1513798716277;
- Wed, 20 Dec 2017 11:38:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9QqV2v91aHFb/Jtgl3zr0stsDQ6xWgmsfBeEC0kWqSA=;
+        b=TAMTqqVkYvKhwbk8/gGBBQT1XYnr/Pz2wa1ZcG+oPFXNo0p1at3ASAIRtvGWUp9v/J
+         YZ04YlF2bebUsh/JRNBCw5txFtqltv+JF19K5AyNN71VJOd8hpbvB/DRDh2Wy+1X4I++
+         2+h0mtDG+7+7s8uoHnv10phpscJNbcjN/dXrXEnqP7lBk4kB99ZGB4pZlW5LSVZ+4Gxq
+         PJRUgX6bsIaeitAFCAFlE41H6nFMaomf1gqPr9EmcZK2f6b8gRyWiM7iEYAkAKeqiluE
+         yl82ewbQ8gpDsmKI81NtWg6JlcvitDUU6RqXpc//Z2T+/iDrd3oyz/J9nxt0RTiYlX8R
+         ogXg==
+X-Gm-Message-State: AKGB3mK4Uu0VKEbwtiXbhArw+DN3eNB/1A2NOcgPi5AeIX9qwN7hsx/q
+        wFA9FxhdaKGz2wKeDJL4KIFgasJW
+X-Google-Smtp-Source: ACJfBov53mDGJ6Zg9wOdIFCUKYdApmDU33Q5gpvm8TCJPrOkXn11xgHmGrYsH55ekEJyM84x0JPdmQ==
+X-Received: by 10.80.240.80 with SMTP id u16mr7004588edl.5.1513798738401;
+        Wed, 20 Dec 2017 11:38:58 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id k42sm15509500edb.94.2017.12.20.11.38.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Dec 2017 11:38:56 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Pat Notz <patnotz@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 1/2] commit doc: document that -c, -C, -F and --fixup with -m error
+Date:   Wed, 20 Dec 2017 19:38:44 +0000
+Message-Id: <20171220193845.11754-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.1.424.g9478a66081
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 20 Dec 2017 11:38:35 -0800 (PST)
-In-Reply-To: <CAGZ79kZpY8iXhCUOB=KuwGPOr7zvV7z+Q-L43p28=7ydaTvutg@mail.gmail.com>
-References: <20171219222636.216001-1-sbeller@google.com> <20171219222636.216001-6-sbeller@google.com>
- <20171219224431.GG240141@aiede.mtv.corp.google.com> <CAGZ79kake8k2dM=NPwNoqB5Vkxy+k67PACz01-aXx6-njcisgQ@mail.gmail.com>
- <20171220000148.GJ240141@aiede.mtv.corp.google.com> <CAGZ79kZpY8iXhCUOB=KuwGPOr7zvV7z+Q-L43p28=7ydaTvutg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 20 Dec 2017 11:38:35 -0800
-Message-ID: <CAGZ79kZ37hwHtu=n3He9P5p6mXkoRgL6yVo5Xz07yrUYKm7p7A@mail.gmail.com>
-Subject: Re: [PATCH 5/5] submodule: submodule_move_head omits old argument in
- forced case
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 20, 2017 at 11:36 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Dec 19, 2017 at 4:01 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Stefan Beller wrote:
->>> On Tue, Dec 19, 2017 at 2:44 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->>
->>>>   checkout -f
->>>>         I think I would expect this not to touch a submodule that
->>>>         hasn't changed, since that would be consistent with its
->>>>         behavior on files that haven't changed.
->> [...]
->>> I may have a different understanding of git commands than you do,
->>> but a plain "checkout -f" with no further arguments is the same as
->>> a hard reset IMHO, and could be used interchangeably?
->>
->> A kind person pointed out privately that you were talking about
->> "git checkout -f" with no further arguments, not "git checkout -f
->> <commit>".  In that context, the competing meanings I mentioned in
->> https://crbug.com/git/5 don't exist: either a given entry in the
->> worktree matches the index or it doesn't.
->>
->> So plain "git checkout -f" is similar to plain "git reset --hard"
->> in that it means "make the worktree (and index, in the reset case)
->> look just like this".
->
-> with "this" == the argument that was given, if the argument
-> was omitted, HEAD is assumed.
->
->>  checkout -f makes the worktree look like the index;
->
-> No, here is what my installation of git (recent master) does:
+Document that providing any of -c, -C, -F and --fixup along with -m
+will result in an error. Some variant of this has been errored about
+explicitly since 0c091296c0 ("git-commit: log parameter updates.",
+2005-08-08), but the documentation was never updated to reflect this.
 
-Well, you are technically correct, the worktree is made look like the index,
-but prior to that the index is reset to the HEAD, so for me it is
-easier to understand
-as "make worktree and index like HEAD"
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-commit.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 8c74a2ca03..df83176314 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -144,6 +144,9 @@ OPTIONS
+ 	Use the given <msg> as the commit message.
+ 	If multiple `-m` options are given, their values are
+ 	concatenated as separate paragraphs.
+++
++Combining the `-m` option and any of `-c`, `-C`, `-F` or `--fixup`
++will result in an error.
+ 
+ -t <file>::
+ --template=<file>::
+-- 
+2.15.1.424.g9478a66081
+
