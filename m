@@ -2,175 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA0A21F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 17:41:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8551F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 17:43:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755852AbdLTRlw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 12:41:52 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34142 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755732AbdLTRlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 12:41:51 -0500
-Received: by mail-qt0-f194.google.com with SMTP id 33so29301419qtv.1
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 09:41:51 -0800 (PST)
+        id S1755869AbdLTRnf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 12:43:35 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:42676 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755856AbdLTRnd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 12:43:33 -0500
+Received: by mail-it0-f67.google.com with SMTP id p139so7656875itb.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 09:43:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=LthRFVP6hz9V4JGQJo/BMVgXNStDFvczl5bC34Cfmrc=;
-        b=HUC308+FIeY3VHOqidv4EgG+rpRG9O0H88CcX2dYrSKB/gy6b1e8v1yBVJgSAG3/sx
-         CWlsKGgr/nyhi3+VSXCTpvHvAbVcF8OEeipmoL0qhJ14XYmWdsVMJ/dHGMQ8QzXP/6PN
-         BIeNzq2N8U3dZaTmp1yI08j4ysY9rcMePT/LyOO9LAfzPw6stN0QV7v4DbL5b2r3ahvC
-         sHStniPm6nPc55d6RZmy7WyJR2itqdNJBTTrKnjjA9Dw7tM/h/TA3/DWVT0QLrHNnwyk
-         qj/+ZxtDWXPg+KpqwU2MJT3Z0cC0YHyPIZAdg3H3+9PE5FpzCka4eRR6cwpXRHniD4PK
-         dOvw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=4map2rkfZ7DrviqHX0woGZX2lDbsZ6qJjRBSN/T84QE=;
+        b=M1VAzpNi4Mqoc4e1uhMUFpzneNWyQgMkJxXT1teH7NJIQny7EQKXmbkPJMH+1fReoT
+         FEjv9jRJxwgIoEt/1EsKg74stL1GTVkpcSecjVyUSZB1SiG7UqAMtXClgWFcXKKug8Uc
+         XXPar6MAdN2nYvD3lQQdib/bxH5ClW6HKnQkMRyUvcrAOSIcml4RwjG/okMXMSYUcO2M
+         AuQEhoMF6rUfrl3PcKO8G8bxfrgyB5SRk798zEtCdlzcFg6s8/6nDNues26sc5za1eB2
+         03MT7z4GnYN/NQGCYJRo7W2iyDpCQee20VVm92TGllyz7hNLOYJDgAL5rwr7V5VhThG3
+         S3/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=LthRFVP6hz9V4JGQJo/BMVgXNStDFvczl5bC34Cfmrc=;
-        b=ugdHq6tjaO4WnhXnQJGFTolaDSBcggKqP1Mqp5PyawaIQ0KKTktNcrGXtNGoVwHbTM
-         cp04N0Z51v48KYW/NlI/pLY34o13EKj9ZDbIUK7HHV1MAqLEgB9nKnIdi/DzSxXb43Iz
-         Bgt6JchLKHUNZTz+zaSa8cDxekXCUda4sG25CaDm2Rms7nhr8gvUuJT77sDqI9EXl3XR
-         yf+WBjq3D5ywD0+H5eq69987sagED2xRLNjn3a6qgN4F71MxdbVClqJmsKzN0kPuaMzu
-         7aOZqpS6THQpdO/KYEdxZH1ySdL2lNzNwVXKVECzI1q85LQsuCslkEuPsFS/ATLiAqt7
-         NZLQ==
-X-Gm-Message-State: AKGB3mK5aH2o6FI/6fwkZTPuN+ZPQn59GzJKuKi0+1QG3KI37RdBaQpl
-        uvGrtF+dMSl2eWIGPMg3CLw=
-X-Google-Smtp-Source: ACJfBosJDDH7Q6Q5zOfqsS8+M284rOnZoAHZlf/Rdcy1KNW/AQTNoo/dki2IfiA1kvZPA+J/TLx8PQ==
-X-Received: by 10.200.53.201 with SMTP id l9mr4152709qtb.155.1513791710627;
-        Wed, 20 Dec 2017 09:41:50 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id h32sm11485488qtk.8.2017.12.20.09.41.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 20 Dec 2017 09:41:49 -0800 (PST)
-Date:   Wed, 20 Dec 2017 12:41:47 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
-        Alex Riesen <alexander.riesen@cetitec.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-        Gerrit Pape <pape@smarden.org>,
-        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>,
-        Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH v5] Makefile: replace perl/Makefile.PL with simple make
- rules
-Message-ID: <20171220174147.GG3693@zaya.teonanacatl.net>
-References: <20171220061545.GF3693@zaya.teonanacatl.net>
- <20171220115240.19510-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=4map2rkfZ7DrviqHX0woGZX2lDbsZ6qJjRBSN/T84QE=;
+        b=KhwNmg/ZwmWNwHlcXzNs8bc3mRQ/sAze3QyJwd+1GqFZEnuS1Hl1p2ike381SG8wec
+         YAZ6RBAix0EG+CpOoCdQCDsmcZ4KNX1ZgI9k1/vmLsh1m8uyk+qGITF6m+MObLMI97fu
+         nZjHhw4KjsCWsnK3cJVdxhQV2X4rocZJF8yfAWc39SpGrzuqEfd9rCgNDQCCUfy/Ux7u
+         Dcz4TCC1Cb5E2SRtM7gNsY0MipqDc5drWW+Jfci1Di+zCaXVDEa6yOzi4WTHGOUiWy00
+         HqQYSfFWC3tihqCZ7C73zMn0M2k/c4ByVA+knbqshWf/ZCQ9d6HpQ6LK9zQxGrRHAKEb
+         jU8g==
+X-Gm-Message-State: AKGB3mIdj51PpYIRkQEvBzhPCNcuebZN+daUVgmKempBNaUMq2F1pAmV
+        I4ITr1MiEiCEt/r+5laDOuMxfsKh+Ly6dLgCEvQ39mA3
+X-Google-Smtp-Source: ACJfBou8GgZP4bFtNEXWw/KoNZhaAzkUTRI9bOX9zeZyKn4WGvw1udmM9Lc/U4fe2VXwXQwOtyybVnFU+RX8ktYT/Iw=
+X-Received: by 10.36.192.2 with SMTP id u2mr8979907itf.119.1513791812229; Wed,
+ 20 Dec 2017 09:43:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171220115240.19510-1-avarab@gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.79.28.137 with HTTP; Wed, 20 Dec 2017 09:43:31 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 20 Dec 2017 18:43:31 +0100
+Message-ID: <CAP8UFD1ctYSMkxKk1gHG83Y6RUVz5TyrYegXm2q6LR8RrMgA7Q@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 34
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
+        Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Charles Bailey <charles@hashpling.org>,
+        Henry Kleynhans <hkleynhans@bloomberg.net>,
+        Haaris <hsed@unimetic.com>, Kevin Daudt <me@ikke.info>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        Heiko Voigt <hvoigt@hvoigt.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Nicolas Morey-Chaisemartin <nicolas@morey-chaisemartin.com>,
+        Daniel Stenberg <daniel@haxx.se>,
+        Doron Behar <doron.behar@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> [Sorry for not CC-ing you on the last version. Forgot to update the
-> giant send-email line I'm juggling for this series].
+Hi everyone,
 
-No worries.  It is a rather large CC list at this point. :)
+The 34th edition of Git Rev News is now published:
 
-> This *.pmc thing is just me being overly clever. Here's a v5 that gets
-> rid of it. Diff with v4:
+  https://git.github.io/rev_news/2017/12/20/edition-34/
 
-Ahh, thanks for the additional details on this.
+Thanks a lot to all the contributors and helpers!
 
->         -+PMFILES := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
->         -+PMCFILES := $(patsubst perl/%.pm,perl/build/lib/%.pmc,$(PMFILES))
->         ++LIB_PERL := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
->         ++LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
->          +
->          +ifndef NO_PERL
->         -+all:: $(PMCFILES)
->         ++all:: $(LIB_PERL_GEN)
->          +endif
->          +
->         -+perl/build/lib/%.pmc: perl/%.pm
->         ++perl/build/lib/%.pm: perl/%.pm
->          +  $(QUIET_GEN)mkdir -p $(dir $@) && \
->          +  sed -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' < $< > $@
->          +
-
-Without the .pmc extensions, rpm picks up the perl
-dependencies, which is good.  But an additional build/lib
-dir is created, which ends up in $perllibdir after install.
-
-Here's an extract from a local build:
-
-mkdir -p perl/build/lib/build/lib/ && \
-sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git.pm > perl/build/lib/build/lib/Git.pm
-mkdir -p perl/build/lib/build/lib/Git/ && \
-sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/IndexInfo.pm > perl/build/lib/build/lib/Git/IndexInfo.pm
-mkdir -p perl/build/lib/build/lib/Git/ && \
-sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/SVN.pm > perl/build/lib/build/lib/Git/SVN.pm
-mkdir -p perl/build/lib/build/lib/Git/ && \
-sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/Error.pm > perl/build/lib/build/lib/Git/Error.pm
-mkdir -p perl/build/lib/build/lib/Git/ && \
-sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/I18N.pm > perl/build/lib/build/lib/Git/I18N.pm
-
-When PMFILES and PMCFILES matched .pm and .pmc respectively,
-the glob didn't match duplicated files under build/lib, so
-this wasn't an issue.  I'm not sure where this is best
-fixed.  The build/lib dir could be moved outside of perl or
-it could be made .build/lib to avoid the wildcard match,
-perhaps.
-
-Building with perllibdir=/usr/share/perl5/vendor_perl
-results in:
-
-/usr/share/perl5/vendor_perl/Git
-/usr/share/perl5/vendor_perl/Git.pm
-/usr/share/perl5/vendor_perl/Git/Error.pm
-/usr/share/perl5/vendor_perl/Git/FromCPAN
-/usr/share/perl5/vendor_perl/Git/FromCPAN/Error.pm
-/usr/share/perl5/vendor_perl/Git/I18N.pm
-/usr/share/perl5/vendor_perl/Git/IndexInfo.pm
-/usr/share/perl5/vendor_perl/Git/SVN
-/usr/share/perl5/vendor_perl/Git/SVN.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Editor.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Fetcher.pm
-/usr/share/perl5/vendor_perl/Git/SVN/GlobSpec.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Log.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Memoize
-/usr/share/perl5/vendor_perl/Git/SVN/Memoize/YAML.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Migration.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Prompt.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Ra.pm
-/usr/share/perl5/vendor_perl/Git/SVN/Utils.pm
-/usr/share/perl5/vendor_perl/build
-/usr/share/perl5/vendor_perl/build/lib
-/usr/share/perl5/vendor_perl/build/lib/Git
-/usr/share/perl5/vendor_perl/build/lib/Git.pm
-/usr/share/perl5/vendor_perl/build/lib/Git/Error.pm
-/usr/share/perl5/vendor_perl/build/lib/Git/I18N.pm
-/usr/share/perl5/vendor_perl/build/lib/Git/IndexInfo.pm
-/usr/share/perl5/vendor_perl/build/lib/Git/SVN.pm
-
-Note that not all of the .pm files are matched, which I
-believe is due to the glob matches only going 4 levels deep
-under the perl dir.
-
-Thanks,
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Never do today that which will become someone else's responsibility
-tomorrow.
-
+Enjoy,
+Christian, Jakub and Markus.
