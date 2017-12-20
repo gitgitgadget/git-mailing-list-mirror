@@ -2,77 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 971691F428
-	for <e@80x24.org>; Wed, 20 Dec 2017 19:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5F191F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 19:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756588AbdLTToY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 14:44:24 -0500
-Received: from siwi.pair.com ([209.68.5.199]:15355 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756545AbdLTToO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 14:44:14 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6601084532;
-        Wed, 20 Dec 2017 14:44:13 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 31E7F8452A;
-        Wed, 20 Dec 2017 14:44:13 -0500 (EST)
-Subject: Re: [PATCH 1/4] status: add --no-ahead-behind to porcelain V2
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171220144245.39401-1-git@jeffhostetler.com>
- <20171220144245.39401-2-git@jeffhostetler.com>
- <20171220163358.GE31149@sigill.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <7e2a4626-5b59-d70b-a172-4a190216b2cc@jeffhostetler.com>
-Date:   Wed, 20 Dec 2017 14:44:12 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1756712AbdLTTpc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 14:45:32 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:46074 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755583AbdLTTpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 14:45:31 -0500
+Received: by mail-qt0-f194.google.com with SMTP id g10so29693518qtj.12
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 11:45:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=yEAZwowxl3eh2kkx1KdfEymeqcnEB3ltOB/By3NyTTA=;
+        b=jWpJYBFWu7JP3fvwFNw4HoBVuaM4HdIaabEoixC3lqFPvVW7i1KeUPRhr24PhTopR+
+         v/QfQgPo68alParywMIQEC0P+fRmtBkYdLainYRdYapA3lzHRUYxxGbNDOHum3OQUZqE
+         vSfx1SbNEda0DwM3kkL6aoutMg20BBtRepUVlajLCo/i8yDzPoJSD3zN63jWoK8eZzws
+         6e/pLJ3pYDAJ1HjQUjccIv5ns9WErNFge8CeK/aU0WfJ8H6SsYVbIHJkEoBANX4BHtYU
+         IvrclL3OHFtpEDa6lFd2KORCbEg1pCmhGTFpJR9HWa9urBYew2aYK+S6OiwOvu/qo8+g
+         VcXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=yEAZwowxl3eh2kkx1KdfEymeqcnEB3ltOB/By3NyTTA=;
+        b=hs4Ts0XIrBlC/s2+k9sdDUcanVorgqluANipn26PF+ZbjQmutVUbdUDXdGik2liaXz
+         O2FrkY7VMoSIkNkpj5thZXRBIyzFucOxGpbPupV/dgalDzNUHgxMf1lIubkKJ+hn0gXB
+         b3WY2zRI4yqtzlbIeJ4Y16x2hmrjLaL+8NjfUoce+TyElmM++ZSjFOFbQWfCg1jyJp32
+         K6dcTRs1E4uypmZzrGEJUFFr7Vi8hDjseaYJkUvjIsQjA3+YPfxNv7ZwxWJGmhtK/w/u
+         5IFzjtG1U4ifuMrhn12oRjPCSL/EsVF6J3+V2I5HNMMCLnm81W60LexkJqDECkcVnTlf
+         WiWg==
+X-Gm-Message-State: AKGB3mL3TtgtcNbmBOcau8LQ+vS0K6JVsAjA/xpKrMZH9TOloG1p8VdG
+        jI6ZdoEtNtYPjMV53P052Mth8NG/YiyLhPVwEn09Ww==
+X-Google-Smtp-Source: ACJfBou6a4ifmN2dlK/I8iqc4I/nQKY/yUs2u5FCjOlE/QjMkWoPyqu0NjbmfR1a1VNlKzWwxBJPmNHSe6gkPR0+6EA=
+X-Received: by 10.237.35.37 with SMTP id h34mr12108161qtc.9.1513799130709;
+ Wed, 20 Dec 2017 11:45:30 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20171220163358.GE31149@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.198.2 with HTTP; Wed, 20 Dec 2017 11:45:30 -0800 (PST)
+In-Reply-To: <20171220193845.11754-1-avarab@gmail.com>
+References: <20171220193845.11754-1-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 20 Dec 2017 14:45:30 -0500
+X-Google-Sender-Auth: nV2HDExQOR3-rdqAE-AslN78bDU
+Message-ID: <CAPig+cR_erp_U5GJKBcoBnQ+xhWpS4KjTu3sNgRTTO4V==DCsA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] commit doc: document that -c, -C, -F and --fixup with
+ -m error
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Pat Notz <patnotz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 20, 2017 at 2:38 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Document that providing any of -c, -C, -F and --fixup along with -m
+> will result in an error. Some variant of this has been errored about
+> explicitly since 0c091296c0 ("git-commit: log parameter updates.",
+> 2005-08-08), but the documentation was never updated to reflect this.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> @@ -144,6 +144,9 @@ OPTIONS
+> ++
+> +Combining the `-m` option and any of `-c`, `-C`, `-F` or `--fixup`
+> +will result in an error.
 
+This sounds a bit scary, as if there is something wrong with Git.
+Perhaps say instead that they are "mutually exclusive":
 
-On 12/20/2017 11:33 AM, Jeff King wrote:
-> On Wed, Dec 20, 2017 at 02:42:42PM +0000, Jeff Hostetler wrote:
-> 
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 9593bfa..9ccdf2b 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -3082,6 +3082,11 @@ status.submoduleSummary::
->>   	submodule summary' command, which shows a similar output but does
->>   	not honor these settings.
->>   
->> +status.noaheadbehind::
->> +	Do not compute ahead/behind counts for a branch relative to its
->> +	upstream branch.  This can be used to avoid a possibly very
->> +	expensive computation on extremely large repositories.
-> 
-> I got tripped up by double-negatives here while testing something out
-> with your series. Could this be "status.aheadbehind", and default to
-> true?
-> 
-> -Peff
-> 
+    The `-m` option is mutually exclusive with `-c`, `-C`, `-F`, and
+    `--fixup`.
 
-Yeah, we debated internally how to name it and that was the least bad.
-I'll change it to the positive and (based on later comments) move it
-to "core." so that we can pick up "branch -vv" in this round.
-
-Thanks
-Jeff
+Or something.
