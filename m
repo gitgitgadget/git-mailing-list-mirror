@@ -7,110 +7,96 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8791F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 22:17:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 345A31F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 22:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756232AbdLTWRm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 17:17:42 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:37385 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755715AbdLTWRh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 17:17:37 -0500
-Received: by mail-it0-f66.google.com with SMTP id d137so8603588itc.2
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:17:37 -0800 (PST)
+        id S1755715AbdLTWT2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 17:19:28 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:45463 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932314AbdLTWRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 17:17:30 -0500
+Received: by mail-io0-f174.google.com with SMTP id e204so18941718iof.12
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Gv57sPYRvD6vcI4cRiXxSoZgKhAyf4moJ6t+xcu4+JU=;
-        b=CiBdKAOs0sZ6pBTKK4OXm+VeDfygET1qDxMtGyLamFqOpYQyZepf8z10iETIehewbX
-         gpo7FSjxXjS7cl91TJfQJ+WmRp0ZiQ4eWu6v3EYBvMos5rU3nCZ4z1pF+6mT1ac7tvTG
-         FXNT+uWaX/4mM+rmuInTxHRG5dFWtjoKRblvQMhHQyTEKvLgL4dnM08buR6Hq8ZAMS7r
-         a6es1RJfVifMVCAj1n0ness8edSZIlYZ3VwOogN2fwNz3t9/HLiNbV9FHjNn94gg/bD9
-         9Gu2xqHu2wzDYwgFaN03DENPW360wHqFVjk6FoII99hiEeCRzFSYGMpvJvctMtxGORZc
-         3GAg==
+        h=from:to:cc:subject:date:message-id;
+        bh=LVlhfgRnXkz+Xj6iBLPr3r5GgChc4/V3mRIRO7BFmmc=;
+        b=T2NgNFb55CeUuUpCV0C3SYt40/VqUqU9tixHNbRpN8XPBQLvVzGD1X+dGcRaC4ofWj
+         PrJOLUfXHbXyzB0PqUO/LjzVAW3xWAYVEetMQzyd7C5HLV1ARNV6efkOItIpIHug1vyI
+         v6SLs7/+fm8TZDIwuFBimZ6LULIOyJCz88qe74GA/ordgaPcNiJuKZWEddEGw2eBZKyR
+         bTA2wjJB41lVRfDBnpKBwwlmlKRKPKjb2jCjw+NFZWp8zZiBp4g0L3lfSB2rfCQ/9b6W
+         fqoGKIg26K4iKJ5QKp5qGgdyRK79BIu2I5Md4pZqCtkcz7v/UwFf7CpB3R6UEToGX7bR
+         nKOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Gv57sPYRvD6vcI4cRiXxSoZgKhAyf4moJ6t+xcu4+JU=;
-        b=EKkkLKZa3JR6Iiw61x7nlET4Z8YgID3A6JKINj6bkohSUzctJVL8NlB5OgvpieFjti
-         wF/qS1gJmMKvUEi8jLK5efJ+tzXNPCJlMGTzLvNh/J0qyAk1DrP5eX7MbnzEagl598F5
-         KEhozoYXn98Ikywt02eSkxE674Zvrm70qGb1xGCtcUscGIbg2/h7ZWUF+xyqSeVHN3ky
-         EzYhBEWyrW5hcKm5g1BlCZwYox02gVzGhutGl5fjd5BENGJa01kGksmIGapNeKc8pJRQ
-         ZQZyIUUEmcgJUQ9naF3tPEAJkkmwzBIZDZ3sIc8R963j4msbddGUj84A9NN5YOgJKu+N
-         e6nQ==
-X-Gm-Message-State: AKGB3mLfZB5SYPocWgdggzlveio8G5Ofav14i4HVr3nbwTIXLI4UMFZI
-        3Bbj8TZEadFVhc1KTzrCIOff9Q==
-X-Google-Smtp-Source: ACJfBoulJ3RCd96xSVz3mMTNTySNULzyXiQ6NX60wAPC66wKtLj9kILG11Gr3LHkL1MSqhq82t3BGg==
-X-Received: by 10.36.123.134 with SMTP id q128mr10378257itc.80.1513808255399;
-        Wed, 20 Dec 2017 14:17:35 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LVlhfgRnXkz+Xj6iBLPr3r5GgChc4/V3mRIRO7BFmmc=;
+        b=tmx7UH+EjAFpFGgp/W+5/SJn9o2L/YLXCBJI9K8fUtnsmW9TAOw8pXsMDFlPR0+4Vq
+         hVErvD70ufhfT5EbOuQz8aBrFp4A+IrEAb3opeQUNxmli/LBXgQHOijDLsXEqAkqnnYe
+         Ti7T189/jJCWbfSrMo98S4+1zoQa1DOUZxbZXx/oJwyf4cGtyChTP2rrWo6SA7qLrYRT
+         b/jxJOR5j6PtgGAc/HqGG22XGAyPABOWvo+Ey3ttLtWkkyuXvGT3kO93FQ2ST/ek4OHZ
+         V2tktnO64jAkED84KPbtyV3Icp+MshOR5ynv/hiSCMI/eNfRKyfIl57ND36essnhoGFw
+         nSwA==
+X-Gm-Message-State: AKGB3mJl0SPi1I4BlTq9qFIJ+NFUuiijx8DPDGwG3f2RsP6tqVn5Wv3K
+        UKoTDHBSkCAxky6u8meRLJjatA==
+X-Google-Smtp-Source: ACJfBouQCvrT7bmdvz0XbPIrp27KSyheZH6IZ4vR1lF0BpkbVDPJFEX3SlJ5LF4fgiM5stQwPHXzQw==
+X-Received: by 10.107.154.79 with SMTP id c76mr10243248ioe.79.1513808249169;
+        Wed, 20 Dec 2017 14:17:29 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i27sm2522947iod.29.2017.12.20.14.17.34
+        by smtp.gmail.com with ESMTPSA id t188sm3193894ita.23.2017.12.20.14.17.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Dec 2017 14:17:34 -0800 (PST)
+        Wed, 20 Dec 2017 14:17:28 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     jrnieder@gmail.com, gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 4/4] submodule: submodule_move_head omits old argument in forced case
-Date:   Wed, 20 Dec 2017 14:17:25 -0800
-Message-Id: <20171220221725.129162-5-sbeller@google.com>
+Subject: [PATCHv2 0/4] Fix --recurse-submodules for submodule worktree changes
+Date:   Wed, 20 Dec 2017 14:17:21 -0800
+Message-Id: <20171220221725.129162-1-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
-In-Reply-To: <20171220221725.129162-1-sbeller@google.com>
-References: <20171220221725.129162-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using hard reset or forced checkout with the option to recurse into
-submodules, the submodules need to be reset, too.
+v2:
+* squashed the test patch and the bugfix, rewriting the commit message entirely.
+  This might not the way Jonathan imagined how I address the potential user
+  confusion[1], but I think it does the job.
 
-It turns out that we need to omit the duplicate old argument to read-tree
-in all forced cases to omit the 2 way merge and use the more assertive
-behavior of reading the specific new tree into the index and updating
-the working tree.
+[1] https://public-inbox.org/git/20171220000148.GJ240141@aiede.mtv.corp.google.com/
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+v1:
+
+The fix is in the last patch, the first patches are just massaging the code
+base to make the fix easy.
+
+The second patch fixes a bug in the test, which was ineffective at testing.
+The third patch shows the problem this series addresses,
+the fourth patch is a little refactoring, which I want to keep separate
+as I would expect it to be a performance regression[1].
+The first patch is unrelated, but improves the readability of submodule test
+cases, which we'd want to improve further.
+
+Thanks,
+Stefan
+
+[1] The performance should improve once we don't use so many processes
+    any more, but that repository series is stalled for now.
+
+
+Stefan Beller (4):
+  t/lib-submodule-update.sh: clarify test
+  t/lib-submodule-update.sh: Fix test ignoring ignored files in
+    submodules
+  unpack-trees: Fix same() for submodules
+  submodule: submodule_move_head omits old argument in forced case
+
  submodule.c               |  4 +++-
- t/lib-submodule-update.sh | 11 +++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ t/lib-submodule-update.sh | 16 ++++++++++++++--
+ unpack-trees.c            |  2 ++
+ 3 files changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index fa25888783..db0f7ac51e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1653,7 +1653,9 @@ int submodule_move_head(const char *path,
- 	else
- 		argv_array_push(&cp.args, "-m");
- 
--	argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-+	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
-+		argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-+
- 	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
- 
- 	if (run_command(&cp)) {
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index fb0173ea87..380ef4b4ae 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -1015,4 +1015,15 @@ test_submodule_forced_switch_recursing_with_args () {
- 			test_submodule_content sub1 origin/modify_sub1
- 		)
- 	'
-+
-+	test_expect_success "$command: changed submodule worktree is reset" '
-+		prolog &&
-+		reset_work_tree_to_interested add_sub1 &&
-+		(
-+			cd submodule_update &&
-+			rm sub1/file1 &&
-+			$command HEAD &&
-+			test_path_is_file sub1/file1
-+		)
-+	'
- }
 -- 
 2.15.1.620.gb9897f4670-goog
 
