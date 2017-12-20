@@ -2,105 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877531F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 17:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA0A21F404
+	for <e@80x24.org>; Wed, 20 Dec 2017 17:41:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755822AbdLTRfl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 12:35:41 -0500
-Received: from mout.gmx.net ([212.227.15.19]:57250 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755607AbdLTRfj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 12:35:39 -0500
-Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lj1Cw-1ez6oy1yAw-00dC4C; Wed, 20
- Dec 2017 18:35:34 +0100
-Date:   Wed, 20 Dec 2017 18:35:36 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
-        Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 5/6] fsmonitor: Remove debugging lines from
- t/t7519-status-fsmonitor.sh
-In-Reply-To: <xmqqpo7av5au.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1712201833420.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <20171219002858.22214-1-alexmv@dropbox.com> <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com> <0e1b58795c3cfe2a6a64ae8ab0f87f46e5716da4.1513642743.git.alexmv@dropbox.com> <xmqqpo7av5au.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755852AbdLTRlw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 12:41:52 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34142 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755732AbdLTRlv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 12:41:51 -0500
+Received: by mail-qt0-f194.google.com with SMTP id 33so29301419qtv.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 09:41:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=LthRFVP6hz9V4JGQJo/BMVgXNStDFvczl5bC34Cfmrc=;
+        b=HUC308+FIeY3VHOqidv4EgG+rpRG9O0H88CcX2dYrSKB/gy6b1e8v1yBVJgSAG3/sx
+         CWlsKGgr/nyhi3+VSXCTpvHvAbVcF8OEeipmoL0qhJ14XYmWdsVMJ/dHGMQ8QzXP/6PN
+         BIeNzq2N8U3dZaTmp1yI08j4ysY9rcMePT/LyOO9LAfzPw6stN0QV7v4DbL5b2r3ahvC
+         sHStniPm6nPc55d6RZmy7WyJR2itqdNJBTTrKnjjA9Dw7tM/h/TA3/DWVT0QLrHNnwyk
+         qj/+ZxtDWXPg+KpqwU2MJT3Z0cC0YHyPIZAdg3H3+9PE5FpzCka4eRR6cwpXRHniD4PK
+         dOvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=LthRFVP6hz9V4JGQJo/BMVgXNStDFvczl5bC34Cfmrc=;
+        b=ugdHq6tjaO4WnhXnQJGFTolaDSBcggKqP1Mqp5PyawaIQ0KKTktNcrGXtNGoVwHbTM
+         cp04N0Z51v48KYW/NlI/pLY34o13EKj9ZDbIUK7HHV1MAqLEgB9nKnIdi/DzSxXb43Iz
+         Bgt6JchLKHUNZTz+zaSa8cDxekXCUda4sG25CaDm2Rms7nhr8gvUuJT77sDqI9EXl3XR
+         yf+WBjq3D5ywD0+H5eq69987sagED2xRLNjn3a6qgN4F71MxdbVClqJmsKzN0kPuaMzu
+         7aOZqpS6THQpdO/KYEdxZH1ySdL2lNzNwVXKVECzI1q85LQsuCslkEuPsFS/ATLiAqt7
+         NZLQ==
+X-Gm-Message-State: AKGB3mK5aH2o6FI/6fwkZTPuN+ZPQn59GzJKuKi0+1QG3KI37RdBaQpl
+        uvGrtF+dMSl2eWIGPMg3CLw=
+X-Google-Smtp-Source: ACJfBosJDDH7Q6Q5zOfqsS8+M284rOnZoAHZlf/Rdcy1KNW/AQTNoo/dki2IfiA1kvZPA+J/TLx8PQ==
+X-Received: by 10.200.53.201 with SMTP id l9mr4152709qtb.155.1513791710627;
+        Wed, 20 Dec 2017 09:41:50 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id h32sm11485488qtk.8.2017.12.20.09.41.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 20 Dec 2017 09:41:49 -0800 (PST)
+Date:   Wed, 20 Dec 2017 12:41:47 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>,
+        Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH v5] Makefile: replace perl/Makefile.PL with simple make
+ rules
+Message-ID: <20171220174147.GG3693@zaya.teonanacatl.net>
+References: <20171220061545.GF3693@zaya.teonanacatl.net>
+ <20171220115240.19510-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:e3K2s3ZWGF1cscDzXrhwiH0TrCflwAamwajWbxXa4jgyPcnuyrA
- gc0Ph7w816k/NNmS0PuHw1PIUGkhCn6kdddx9I0UeEavwVWZs/+AvIt/bKV2UfscewZPr0Y
- Uiu/8/W3SyPEhvXMICBRsBPMLZi05QJuPpF96skpB7ZesRQ59fvJBROz0qIRbie/bFwJakz
- 8wDm90X9aKjp8KV0Y2Ptg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VCEg1qPEj3Q=:qXNN+VYOL4aSCyoJBN1Ffx
- Uozyb08tlQmno/At6KsERGjkE8d+9n56qTM/4ICxbXYtDxJa5+SXsAUGZiyzNeRKe1QZbP8LU
- j8hyW4No+N8w7cCz2WyJvbxJbRmOq9LkQTdVzTN3SbIYLSfc1IkAT5SEeB+LrZ+FBfiDBPJ9H
- 9qZZND1gZ01xOxKRmDBe8/kNl+eLGlKKnHncDGpgQDywXjFToGE8Cn9dAp6RF0x+FtPrba9mD
- gAuLGklC1zsxkImvFhMiL3sqSbqg7m1vnWFRAlGdMLmdipOkMxHH3tIYBg5p5nfc58xl5i9zX
- 2W/6yXYyOygiZJwOM2/9/5SZmA/BpxJst9OYtQ4vgUKZVRz8b6l2q2+Kt7gpiQ9AZnsav2zWS
- EUDQq/rluTE7EtZvhEtwfybdQNQqOPi0YqwLUhN53HYTlNCNjkfZwkihVBv06/SzTZmOIKeSm
- v5VDaJ5dQWphvWzJMZ9tc8nqY7pd1ZjzdBen+6PFDUo35AB310xWBuql6ltXO4bkEmlAd8OU/
- 3FXFvbO9ViuLU4kj89UEdnz2rO6LlTVaSexb3hz5a0dGUIElPovpecx54rIPGYQZXWW6tE6qX
- RP4Dlw7ppCyDQveFavhdG1JZf55vPqHA9/hobgdes67dkhnXk0eRm7L8Yz+xEL/YtvDwGW1Rv
- eVix8GbRAPp4RMWGGd46jtipOKhReyhut8yzQ9S/PusD/15jXNNpmw8OEB0Thb/gaupcHrEvK
- PwmJQFMLmTGZqB4oI1/+lg9nMaE7XDmwRYkJ3UFar0nSa5cIIOz6/tEVH01mhl/OaQZCYJHfP
- lP7772lMnqeZDRlYUbA2rZSmUNy6/6x+aIzoOglxAZaVA3syBw=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171220115240.19510-1-avarab@gmail.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Ævar Arnfjörð Bjarmason wrote:
+> [Sorry for not CC-ing you on the last version. Forgot to update the
+> giant send-email line I'm juggling for this series].
 
-On Tue, 19 Dec 2017, Junio C Hamano wrote:
+No worries.  It is a rather large CC list at this point. :)
 
-> Alex Vandiver <alexmv@dropbox.com> writes:
-> 
-> > These were mistakenly left in when the test was introduced, in
-> > 1487372d3 ("fsmonitor: store fsmonitor bitmap before splitting index",
-> > 2017-11-09)
-> >
-> > Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
-> > ---
-> >  t/t7519-status-fsmonitor.sh | 2 --
-> >  1 file changed, 2 deletions(-)
-> >
-> > diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-> > index eb2d13bbc..19b2a0a0f 100755
-> > --- a/t/t7519-status-fsmonitor.sh
-> > +++ b/t/t7519-status-fsmonitor.sh
-> > @@ -307,9 +307,7 @@ test_expect_success 'splitting the index results in the same state' '
-> >  	dirty_repo &&
-> >  	git update-index --fsmonitor  &&
-> >  	git ls-files -f >expect &&
-> > -	test-dump-fsmonitor >&2 && echo &&
-> >  	git update-index --fsmonitor --split-index &&
-> > -	test-dump-fsmonitor >&2 && echo &&
-> >  	git ls-files -f >actual &&
-> >  	test_cmp expect actual
-> >  '
-> 
-> Hmph, by default the standard output and standard error streams are
-> not shown in the test output, and it would help while debugging test
-> failures, so I am not sure if this is a good change.  With the
-> previous step [4/6], we can lose the "echo", of course, and I do not
-> think we need >&2 redirection there, either.
+> This *.pmc thing is just me being overly clever. Here's a v5 that gets
+> rid of it. Diff with v4:
 
-I think you got it backwards. Sure, this helps debugging, but it hurts
-runtime of the entire test suite (which I might have happened to mention a
-couple of times takes way too long on Windows, thanks to our choice of
-test "framework").
+Ahh, thanks for the additional details on this.
 
-And in the bigger picture, I think that it is very, very easy to insert
-those debugging statements when something breaks (we have to do that with
-other tests, anyways).
+>         -+PMFILES := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
+>         -+PMCFILES := $(patsubst perl/%.pm,perl/build/lib/%.pmc,$(PMFILES))
+>         ++LIB_PERL := $(wildcard perl/*.pm perl/*/*.pm perl/*/*/*.pm perl/*/*/*/*.pm)
+>         ++LIB_PERL_GEN := $(patsubst perl/%.pm,perl/build/lib/%.pm,$(LIB_PERL))
+>          +
+>          +ifndef NO_PERL
+>         -+all:: $(PMCFILES)
+>         ++all:: $(LIB_PERL_GEN)
+>          +endif
+>          +
+>         -+perl/build/lib/%.pmc: perl/%.pm
+>         ++perl/build/lib/%.pm: perl/%.pm
+>          +  $(QUIET_GEN)mkdir -p $(dir $@) && \
+>          +  sed -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' < $< > $@
+>          +
 
-So I am in favor of this patch, and disagree with your assessment, Junio.
+Without the .pmc extensions, rpm picks up the perl
+dependencies, which is good.  But an additional build/lib
+dir is created, which ends up in $perllibdir after install.
 
-Ciao,
-Dscho
+Here's an extract from a local build:
+
+mkdir -p perl/build/lib/build/lib/ && \
+sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git.pm > perl/build/lib/build/lib/Git.pm
+mkdir -p perl/build/lib/build/lib/Git/ && \
+sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/IndexInfo.pm > perl/build/lib/build/lib/Git/IndexInfo.pm
+mkdir -p perl/build/lib/build/lib/Git/ && \
+sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/SVN.pm > perl/build/lib/build/lib/Git/SVN.pm
+mkdir -p perl/build/lib/build/lib/Git/ && \
+sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/Error.pm > perl/build/lib/build/lib/Git/Error.pm
+mkdir -p perl/build/lib/build/lib/Git/ && \
+sed -e 's|@@LOCALEDIR@@|/usr/share/locale|g' < perl/build/lib/Git/I18N.pm > perl/build/lib/build/lib/Git/I18N.pm
+
+When PMFILES and PMCFILES matched .pm and .pmc respectively,
+the glob didn't match duplicated files under build/lib, so
+this wasn't an issue.  I'm not sure where this is best
+fixed.  The build/lib dir could be moved outside of perl or
+it could be made .build/lib to avoid the wildcard match,
+perhaps.
+
+Building with perllibdir=/usr/share/perl5/vendor_perl
+results in:
+
+/usr/share/perl5/vendor_perl/Git
+/usr/share/perl5/vendor_perl/Git.pm
+/usr/share/perl5/vendor_perl/Git/Error.pm
+/usr/share/perl5/vendor_perl/Git/FromCPAN
+/usr/share/perl5/vendor_perl/Git/FromCPAN/Error.pm
+/usr/share/perl5/vendor_perl/Git/I18N.pm
+/usr/share/perl5/vendor_perl/Git/IndexInfo.pm
+/usr/share/perl5/vendor_perl/Git/SVN
+/usr/share/perl5/vendor_perl/Git/SVN.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Editor.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Fetcher.pm
+/usr/share/perl5/vendor_perl/Git/SVN/GlobSpec.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Log.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Memoize
+/usr/share/perl5/vendor_perl/Git/SVN/Memoize/YAML.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Migration.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Prompt.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Ra.pm
+/usr/share/perl5/vendor_perl/Git/SVN/Utils.pm
+/usr/share/perl5/vendor_perl/build
+/usr/share/perl5/vendor_perl/build/lib
+/usr/share/perl5/vendor_perl/build/lib/Git
+/usr/share/perl5/vendor_perl/build/lib/Git.pm
+/usr/share/perl5/vendor_perl/build/lib/Git/Error.pm
+/usr/share/perl5/vendor_perl/build/lib/Git/I18N.pm
+/usr/share/perl5/vendor_perl/build/lib/Git/IndexInfo.pm
+/usr/share/perl5/vendor_perl/build/lib/Git/SVN.pm
+
+Note that not all of the .pm files are matched, which I
+believe is due to the glob matches only going 4 levels deep
+under the perl dir.
+
+Thanks,
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Never do today that which will become someone else's responsibility
+tomorrow.
+
