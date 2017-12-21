@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F75D1F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 19:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBCFD1F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 19:09:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755116AbdLUTJ1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 14:09:27 -0500
-Received: from siwi.pair.com ([209.68.5.199]:46534 "EHLO siwi.pair.com"
+        id S1755000AbdLUTJZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 14:09:25 -0500
+Received: from siwi.pair.com ([209.68.5.199]:46518 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752678AbdLUTJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 14:09:20 -0500
+        id S1752222AbdLUTJS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 14:09:18 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id F173E844E9;
-        Thu, 21 Dec 2017 14:09:19 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 31879844E6;
+        Thu, 21 Dec 2017 14:09:18 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 891A0844E1;
-        Thu, 21 Dec 2017 14:09:19 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id BBC94844E1;
+        Thu, 21 Dec 2017 14:09:17 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 5/5] status: support --no-ahead-behind in long format
-Date:   Thu, 21 Dec 2017 19:09:09 +0000
-Message-Id: <20171221190909.62995-6-git@jeffhostetler.com>
+Subject: [PATCH v2 2/5] stat_tracking_info: return +1 when branches are not equal
+Date:   Thu, 21 Dec 2017 19:09:06 +0000
+Message-Id: <20171221190909.62995-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20171221190909.62995-1-git@jeffhostetler.com>
 References: <20171221190909.62995-1-git@jeffhostetler.com>
@@ -40,142 +40,159 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach long (normal) status format to respect the --no-ahead-behind
-argument and skip the possibly expensive ahead/behind computation
-between the branch and the upstream.
+Extend stat_tracking_info() return +1 when the branches are not equal
+and to take a new "enum ahead_behind_flag" ABF_QUICK to avoid the
+expensive ahead/behind computation when requested.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/checkout.c       |  2 +-
- remote.c                 | 16 +++++++++++++---
- remote.h                 |  3 ++-
- t/t6040-tracking-info.sh | 29 +++++++++++++++++++++++++++++
- wt-status.c              |  2 +-
- 5 files changed, 46 insertions(+), 6 deletions(-)
+ ref-filter.c |  4 ++--
+ remote.c     | 24 ++++++++++++++++--------
+ remote.h     |  7 ++++++-
+ wt-status.c  |  9 +++++----
+ 4 files changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index fc4f8fd..b005139 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -605,7 +605,7 @@ static void report_tracking(struct branch_info *new)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct branch *branch = branch_get(new->name);
+diff --git a/ref-filter.c b/ref-filter.c
+index e728b15..6191cb4 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1239,7 +1239,7 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		*s = show_ref(&atom->u.remote_ref.refname, refname);
+ 	else if (atom->u.remote_ref.option == RR_TRACK) {
+ 		if (stat_tracking_info(branch, &num_ours,
+-				       &num_theirs, NULL)) {
++				       &num_theirs, NULL, ABF_FULL) < 0) {
+ 			*s = xstrdup(msgs.gone);
+ 		} else if (!num_ours && !num_theirs)
+ 			*s = "";
+@@ -1257,7 +1257,7 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+ 		}
+ 	} else if (atom->u.remote_ref.option == RR_TRACKSHORT) {
+ 		if (stat_tracking_info(branch, &num_ours,
+-				       &num_theirs, NULL))
++				       &num_theirs, NULL, ABF_FULL) < 0)
+ 			return;
  
--	if (!format_tracking_info(branch, &sb))
-+	if (!format_tracking_info(branch, &sb, ABF_FULL))
- 		return;
- 	fputs(sb.buf, stdout);
- 	strbuf_release(&sb);
+ 		if (!num_ours && !num_theirs)
 diff --git a/remote.c b/remote.c
-index 91b5afb..76fa96c 100644
+index b220f0d..91b5afb 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -2065,14 +2065,17 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+@@ -1977,16 +1977,22 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+ }
+ 
  /*
-  * Return true when there is anything to report, otherwise false.
+- * Compare a branch with its upstream, and save their differences (number
+- * of commits) in *num_ours and *num_theirs. The name of the upstream branch
+- * (or NULL if no upstream is defined) is returned via *upstream_name, if it
+- * is not itself NULL.
++ * Compare a branch with its upstream and report on their differences.
++ * If abf is ABF_FULL, save their differences (number of commits) in
++ * *num_ours and *num_theirs.
++ * If abf is ABF_QUICK, skip the (possibly expensive) ahead/behind
++ * computation (and leave *num_ours and *num_theirs undefined).
++ *
++ * The name of the upstream branch (or NULL if no upstream is defined) is
++ * returned via *upstream_name, if it is not itself NULL.
+  *
+  * Returns -1 if num_ours and num_theirs could not be filled in (e.g., no
+- * upstream defined, or ref does not exist), 0 otherwise.
++ * upstream defined, or ref does not exist).
++ * Returns 0 if the commits are the same.
++ * Returns 1 if the commits are different (ahead, behind, or both).
   */
--int format_tracking_info(struct branch *branch, struct strbuf *sb)
-+int format_tracking_info(struct branch *branch, struct strbuf *sb,
-+			 enum ahead_behind_flags abf)
+ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+-		       const char **upstream_name)
++		       const char **upstream_name, enum ahead_behind_flags abf)
  {
- 	int ours, theirs;
- 	const char *full_base;
+ 	struct object_id oid;
+ 	struct commit *ours, *theirs;
+@@ -2019,6 +2025,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 		*num_theirs = *num_ours = 0;
+ 		return 0;
+ 	}
++	if (abf == ABF_QUICK)
++		return 1;
+ 
+ 	/* Run "rev-list --left-right ours...theirs" internally... */
+ 	argv_array_push(&argv, ""); /* ignored */
+@@ -2051,7 +2059,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	clear_commit_marks(theirs, ALL_REV_FLAGS);
+ 
+ 	argv_array_clear(&argv);
+-	return 0;
++	return 1;
+ }
+ 
+ /*
+@@ -2064,7 +2072,7 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
  	char *base;
  	int upstream_is_gone = 0;
-+	int sti;
  
--	if (stat_tracking_info(branch, &ours, &theirs, &full_base, ABF_FULL) < 0) {
-+	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, abf);
-+	if (sti < 0) {
+-	if (stat_tracking_info(branch, &ours, &theirs, &full_base) < 0) {
++	if (stat_tracking_info(branch, &ours, &theirs, &full_base, ABF_FULL) < 0) {
  		if (!full_base)
  			return 0;
  		upstream_is_gone = 1;
-@@ -2086,10 +2089,17 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 		if (advice_status_hints)
- 			strbuf_addstr(sb,
- 				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
--	} else if (!ours && !theirs) {
-+	} else if (!sti) {
- 		strbuf_addf(sb,
- 			_("Your branch is up to date with '%s'.\n"),
- 			base);
-+	} else if (abf == ABF_QUICK) {
-+		strbuf_addf(sb,
-+			    _("Your branch and '%s' refer to different commits.\n"),
-+			    base);
-+		if (advice_status_hints)
-+			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
-+				    "git status --ahead-behind");
- 	} else if (!theirs) {
- 		strbuf_addf(sb,
- 			Q_("Your branch is ahead of '%s' by %d commit.\n",
 diff --git a/remote.h b/remote.h
-index 1e12dfb..33f88de 100644
+index 2ecf4c8..1e12dfb 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -263,7 +263,8 @@ enum ahead_behind_flags {
+@@ -255,9 +255,14 @@ enum match_refs_flags {
+ 	MATCH_REFS_FOLLOW_TAGS	= (1 << 3)
+ };
+ 
++enum ahead_behind_flags {
++	ABF_QUICK = 0,  /* just eq/neq reporting */
++	ABF_FULL  = 1,  /* traditional ahead/behind reporting */
++};
++
  /* Reporting of tracking info */
  int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 		       const char **upstream_name, enum ahead_behind_flags abf);
--int format_tracking_info(struct branch *branch, struct strbuf *sb);
-+int format_tracking_info(struct branch *branch, struct strbuf *sb,
-+			 enum ahead_behind_flags abf);
+-		       const char **upstream_name);
++		       const char **upstream_name, enum ahead_behind_flags abf);
+ int format_tracking_info(struct branch *branch, struct strbuf *sb);
  
  struct ref *get_local_heads(void);
- /*
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 0190220..716283b 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -160,6 +160,35 @@ test_expect_success 'status -s -b --no-ahead-behind (diverged from upstream)' '
- '
- 
- cat >expect <<\EOF
-+On branch b1
-+Your branch and 'origin/master' have diverged,
-+and have 1 and 1 different commits each, respectively.
-+EOF
-+
-+test_expect_success 'status --long --branch' '
-+	(
-+		cd test &&
-+		git checkout b1 >/dev/null &&
-+		git status --long -b | head -3
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+cat >expect <<\EOF
-+On branch b1
-+Your branch and 'origin/master' refer to different commits.
-+EOF
-+
-+test_expect_success 'status --long --branch --no-ahead-behind' '
-+	(
-+		cd test &&
-+		git checkout b1 >/dev/null &&
-+		git status --long -b --no-ahead-behind | head -2
-+	) >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+cat >expect <<\EOF
- ## b5...brokenbase [gone]
- EOF
- 
 diff --git a/wt-status.c b/wt-status.c
-index 3235ec2..4a4c7b7 100644
+index 94e5eba..80c23ba 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -1005,7 +1005,7 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
- 	if (!skip_prefix(s->branch, "refs/heads/", &branch_name))
- 		return;
- 	branch = branch_get(branch_name);
--	if (!format_tracking_info(branch, &sb))
-+	if (!format_tracking_info(branch, &sb, s->ab_flags))
- 		return;
+@@ -1791,7 +1791,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
  
- 	i = 0;
+ 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+ 
+-	if (stat_tracking_info(branch, &num_ours, &num_theirs, &base) < 0) {
++	if (stat_tracking_info(branch, &num_ours, &num_theirs, &base, ABF_FULL) < 0) {
+ 		if (!base)
+ 			goto conclude;
+ 
+@@ -1896,7 +1896,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+ 	const char *base;
+ 	const char *branch_name;
+ 	struct wt_status_state state;
+-	int ab_info, nr_ahead, nr_behind;
++	int have_ab_info, nr_ahead, nr_behind;
+ 	char eol = s->null_termination ? '\0' : '\n';
+ 
+ 	memset(&state, 0, sizeof(state));
+@@ -1928,13 +1928,14 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+ 		/* Lookup stats on the upstream tracking branch, if set. */
+ 		branch = branch_get(branch_name);
+ 		base = NULL;
+-		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind, &base) == 0);
++		have_ab_info = (stat_tracking_info(branch, &nr_ahead,
++						   &nr_behind, &base, ABF_FULL) >= 0);
+ 		if (base) {
+ 			base = shorten_unambiguous_ref(base, 0);
+ 			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
+ 			free((char *)base);
+ 
+-			if (ab_info)
++			if (have_ab_info)
+ 				fprintf(s->fp, "# branch.ab +%d -%d%c", nr_ahead, nr_behind, eol);
+ 		}
+ 	}
 -- 
 2.9.3
 
