@@ -2,112 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1428B1F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 13:10:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0251F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 14:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751472AbdLUNKw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 08:10:52 -0500
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:42993 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751328AbdLUNKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 08:10:51 -0500
-Received: by mail-qk0-f202.google.com with SMTP id a2so17843560qkb.9
-        for <git@vger.kernel.org>; Thu, 21 Dec 2017 05:10:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=1m2UafG4BJ8+AHM1ulNS5zhE3Yz2f7tUpWDZrCZexMw=;
-        b=WL9Bpd63CfpjGBIsef+AV4BNbmgKfD5e8skF2tas6EnqHr1lLVmyZsCy7zVvXTAMkw
-         H4QNm5IZf4zcf0RZWhFL019F4gIbI15cbTzkGz+HKs60iOv8o+NUS02NYxrOe6z0EppB
-         bboO6aUORjbjShRHhMRBd3Sl22b9OajE4pocvA4/hlbWTvMrY76bulxFoC5Qcur01OR7
-         YNOylWzw34FwACbQ/yU6CMlqCYjn7WML5DElHIamtyuBXPQZ/TFnwO/6RiF4+EIegPtE
-         9/3J/zN6WzjXsj9LaU7E+LLZr74uZASYqmpZQbttDzTAMTadnf0Fii/vJcUU2NXCd6Ls
-         q1Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=1m2UafG4BJ8+AHM1ulNS5zhE3Yz2f7tUpWDZrCZexMw=;
-        b=PiR0zY90mKJxCOSZysH8zieblpp1W6hCDlv+DUC3FzY9FUYefJR9I1Vl6R9WBIN1g2
-         4UYajbB7dli7aAgvWuvOBcNEw6kQ23GnbU/r3r9mn1Ts7vIa8NPWSfwuPhmu3x/RvP3c
-         zNCNefwxbvX0FXbug3a/mMh7VAqS/FI/gyfvEQDFeLQLYEP9O4mBBS+z4C1ADSKlCxVa
-         dLrMj6wcSizhEtbicDxpgk+vy4OgJzfeTlHIi381pRpxp/PY6Hs7LnN1vAzpG8Q2R/49
-         eG6BGvjdWUIziF/mK7OQur6aAB5I5RiwZJYt7Cp669XExX46SUxGjLRzj3kjULemsbF2
-         iADQ==
-X-Gm-Message-State: AKGB3mLOYy8FNsRHn8XF0J4Vq6l4QUjaz0KLsIcGKaR+v4erspdQI2Vg
-        OGL53ZWbFGWsEoKYkPQVePfizdcZzxzvcJIDWw9dMbPsWUdFTOIgOMFMXDKaOfwRXarlVmCL8Dm
-        WjDem2kTQFE8dJrCjU5Sg6YP1CQtKPMwSE6WoQoWrPiH4/pS1zHn50inkYN9VYp9pPQ==
-X-Google-Smtp-Source: ACJfBosfovNTfeCS3hjypJVx9bxH9dOXOPvtuRgQqGVAN1FmFIMFEU3wPPrelW1SGRRsGZtTrmkecW67Mgk28M8=
+        id S1751608AbdLUOGL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 09:06:11 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51150 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751381AbdLUOGK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 09:06:10 -0500
+Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lh7sF-1eo6En1HlP-00oVp8; Thu, 21
+ Dec 2017 15:06:02 +0100
+Date:   Thu, 21 Dec 2017 15:06:04 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Error in `git': free(): invalid pointer (was Re: [PATCH] sequencer:
+ improve config handling)
+In-Reply-To: <1513794792.9785.2.camel@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1712211442470.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>  <20171213114621.30250-1-phillip.wood@talktalk.net> <1513794792.9785.2.camel@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-Received: by 10.55.18.90 with SMTP id c87mr6854363qkh.43.1513861850602; Thu,
- 21 Dec 2017 05:10:50 -0800 (PST)
-Date:   Thu, 21 Dec 2017 08:10:42 -0500
-Message-Id: <20171221131042.91107-1-dborowitz@google.com>
-X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
-Subject: [PATCH] config.txt: Document behavior of backslashes in subsections
-From:   Dave Borowitz <dborowitz@google.com>
-To:     git@vger.kernel.org
-Cc:     jrn@google.com, Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:AU5YBOSSAU6S/Slp/dpVRmojRaEZspAr0Xz/V1/9f3s/RF2Ci86
+ pr0JwtfRU21oCVQ/83KEzMEc/+D7F8zZlNnDXwJ7pjFWyCsfcVQ0HpfDiudIO5cHhL8fNSD
+ LzbTolkloovZBZRvHmsOTG5OvcAZFxlrymMqEZ/SD67B7uTzVMFNSryk674X8AdLijMVwQw
+ WkzIMNR74Ej/qMVNi7c/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uJKTTVPZykw=:8Jy6+70E2JZZLT/AWpFcvg
+ tQqkkHW4chCDmHS6ptvLBsCL3ReLcTDTS5hRklH9YPkYx+KrlFF2yDVhUoqd4N806cN+9HKeA
+ NVLTJqFEqLUzbWBs49qL65YN6edjSPx7ZCPfQrDgTSkmJtYLE8sj97uaNvawPhHB3838+Yrvv
+ ohfL81zvPOSGllaEXe/To31UkRDEbzfxEKOZFcEuMV5QjkxRc6h1jG129ee2ZggR3ZVeRV09l
+ arQN+jCLx7MFEImHQOyGbPow/uFK4/qfDkU5k65CMXJXAZ9INuTNIVmteJAdP107ziAXYJzGq
+ htgsP0cqP18g/nqdVRxTQ2Pt7Du5m75iRbZvsJrs79m5uY+tk94DCpTAUXZcjGR6V8i10Av5J
+ UVhnmDNknsY4hpFU4jfFWopkccaM4BHmYni7qFVImdoJZ0jDVBGv/xSSc30WOe/IY+JQYNQwo
+ +xfnBmhOFmooTOSy/ilby72wc9T4YZEEQ+aQkipL3g5xj03cy0XYxHKO4Nc7kAtIuwPKs6AyT
+ rbdibzrfkunKLFjyz022WetlyMgicMDkaWanltEItGx8fBwKg1cvvx2DO4PBCcg+V+gQf45Vl
+ gZP/kT/ohRh8NBX3lp5NtCRYRtheidcJCLH+YQZ0IurguUcJj4++EMywX5dkBdjLKnHsFz9CG
+ sTWIW4ArDniQ1UmfZHaVWx3aaSaHc13HebmjYwJMJmCrnxh3n96Lt+e7uPjCzr/DzyLEuah4S
+ +qtaHmxBx0LJiapxIF8mN2cXPV2RmPVOg970UxTqShxmtQFUdXpPafgWMX5BSm1Gk7FJvmnOC
+ 20EWnPgaa6Hp4y3pgN0U2AXhpCOMYj1252gXf4AIqtazSf1VOU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unrecognized escape sequences are invalid in values:
+Hi Kaartic,
 
-  $ git config -f - --list <<EOF
-  [foo]
-    bar = "\t\\\y\"\u"
-  EOF
-  fatal: bad config line 2 in standard input
+On Thu, 21 Dec 2017, Kaartic Sivaraam wrote:
 
-But in subsection names, the backslash is simply dropped if the
-following character does not produce a recognized escape sequence:
+> I recently encountered that error when trying to do an interactive
+> rebase after using filter-branch to remove a file completely in a
+> repository. I bisected this issue which pointed at this patch. I'm not
+> sure how it is related as I'm not too familiar with the sequencer code.
+> I could help in case any specific information is needed. As a first
+> step, I've posted the output of "strace /mnt/Source//Git/git rebase -i
+> HEAD~10" below.
 
-  $ git config -f - --list <<EOF
-  [foo "\t\\\y\"\u"]
-    bar = baz
-  EOF
-  foo.t\y"u.bar=baz
+I fear that the strace does not cover the `git-rebase` process nor the
+`git-rebase--helper` process (which must have been part of your run, as
+the commit affected only that part of the rebase operation).
 
-Although it would be nice for subsection names and values to have
-consistent behavior, changing the behavior for subsection names is a
-nonstarter since it would cause existing, valid config files to
-suddenly be interpreted differently.
+If you have valgrind installed, you may want to give it a try. Since
+git-rebase is (still, much to my dislike) a Unix shell script, you will
+have to work quite hard to get it to valgrind correctly.
 
-Signed-off-by: Dave Borowitz <dborowitz@google.com>
----
- Documentation/config.txt | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+This is how I typically do it: I edit the
+/home/unique/.local/libexec/git-core/git-rebase file directly (it is in a
+different path for me, of course), first adding a `set -x` as 2nd or 3rd
+line (not the 1st, to avoid messing with Git for Windows' shell script
+detection that requires a shebang, and I do that also on other platforms
+to spare some brain cycles), then treat git-rebase--interactive
+identically, then run the offending command to figure out which call
+really fails.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b18c0f97fe..f772186c44 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -41,11 +41,13 @@ in the section header, like in the example below:
- --------
- 
- Subsection names are case sensitive and can contain any characters except
--newline (doublequote `"` and backslash can be included by escaping them
--as `\"` and `\\`, respectively).  Section headers cannot span multiple
--lines.  Variables may belong directly to a section or to a given subsection.
--You can have `[section]` if you have `[section "subsection"]`, but you
--don't need to.
-+newline and the null byte. Doublequote `"` and backslash can be included
-+by escaping them as `\"` and `\\`, respectively. Backslashes preceding
-+other characters are dropped when reading; for example, `\t` is read as
-+`t` and `\0` is read as `0` Section headers cannot span multiple lines.
-+Variables may belong directly to a section or to a given subsection. You
-+can have `[section]` if you have `[section "subsection"]`, but you don't
-+need to.
- 
- There is also a deprecated `[section.subsection]` syntax. With this
- syntax, the subsection name is converted to lower-case and is also
--- 
-2.15.1.620.gb9897f4670-goog
+Then, I look for that call (I imagine it is the `exec git rebase--helper
+${force_rebase:+--no-ff} --continue` line), then copy-edit it and guard it
+by an environment variable:
 
+	test -z "$DDDD" || {
+		valgrind git rebase--helper ${force_rebase:+--no-ff} \
+			--continue
+		exit
+	}
+	exec git rebase--helper ${force_rebase:+--no-ff} --continue
+
+After that, you can run the same command, and trigger the new code path by
+that environment variable:
+
+	DDDD=1 /mnt/Source/Git/git rebase -i HEAD~10
+
+That way, you can keep the rest of your Git calls be unaffected by the
+patch.
+
+BTW from your invocation, I imagine that you wanted to actually run your
+Git just-built-from-source, in-place. But for that, you would need to pass
+the --exec-path option, too, like so:
+
+	DDDD=1 /mnt/Source/Git/git --exec-path=/mnt/Source/Git \
+		rebase -i HEAD~10
+
+That way, you could edit the git-rebase--interactive file that is *not*
+installed, and avoid affecting other Git operations (you would also not
+need to guard the new code path behind a conditional).
+
+Ciao,
+Dscho
