@@ -7,121 +7,111 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 627FB1F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 20:44:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C4F61F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 20:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755297AbdLUUoE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 15:44:04 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:44102 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753611AbdLUUoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 15:44:03 -0500
-Received: by mail-it0-f67.google.com with SMTP id b5so12076458itc.3
-        for <git@vger.kernel.org>; Thu, 21 Dec 2017 12:44:03 -0800 (PST)
+        id S1755698AbdLUUsq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 15:48:46 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:46372 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755689AbdLUUsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 15:48:42 -0500
+Received: by mail-io0-f195.google.com with SMTP id x129so22407111iod.13
+        for <git@vger.kernel.org>; Thu, 21 Dec 2017 12:48:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Q22kM+cvTdXQlQy9468oe7lehu0By2ICNN5FNusqdsk=;
-        b=FimQJVd/Vi0wZzpE2rwr5exAuod5yHe7eFJ/MmGYcA2oJ0LsraqNaOThnMaQKENxAi
-         2h6XGUkptFoexwxS3zYwBUiqti+h1Lh+X72j99Oy3hsk8zmYrwDvfRQUP+UsvGD2xa/h
-         hjgQMtiy6C//aYPEPYNcRJq8rmwW/VC9qpCwxuCqNkuzJeYdPKX622IERxpZkrTJDFvz
-         ZrxWtYGMcfUT0Qhbydg0I9MOgUfG0OSirETJ0sosz/I+gAPUs5E084OkJcfMsUHlvDoM
-         gJt5Xth3eoLXzRLlPDNr6Q8SbNWmehQbSv66Rl1x6H6m66WZq45vLeE/sKquP41vPHi9
-         nCUg==
+        bh=lqljw7mGo9zaVj3qcwymytlMU1kfCRi7Tmg6EfDuPyU=;
+        b=WEfaZ8zpK9t0/G6X3/txC/cusRFDaC3qp6Nj0Dkd41oGFjPh9FoOk+8DXeCbXoTv3c
+         n93jZc4qYimHHHsznCy4gQjEvvokCjO97T3E10y5JPQYeI7zY7+fZQe6kXWj3Jaaz6G8
+         4LUkPTAqdPPvM6jtwzWVA6YL2QXYDwB7LQOqTSSNzgcnADxnYrBMbSn0ZzLiRME7YYp9
+         X+WuAYA7cqKNtu+Iz6Hfjz3vZmgnrdbP2eyU3NRVtbJpQobNb3zqtNM6f7ZzCDCRJnPO
+         jdGxyRTVTXeeeC/fOOuX/B4OE6+MyaUqkVvM1b3r21aNkhZDB+bWBqbYSTkBKwNF4PeU
+         RuLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q22kM+cvTdXQlQy9468oe7lehu0By2ICNN5FNusqdsk=;
-        b=Ar8bAkmZJdWSsNBYqFVuFSXqrOjsY5w6M/ImNchzsqujifnjcPfcyi25a+I51+iEaW
-         9jrIB/8CsNg0N8x2fF+eQRvKe/f+ggjZChLs8Sq/R4BXLVT1xIkgp0M3Y63cAR/ErrI0
-         yK+MmfSLjyxEA7tDQPKXVajLS03PGFeGsD5IPNCw1Tg9DD0Rt3IxlTxhG6syjn446EfS
-         lou12GN8R9b88ah+QjPM9qZuiFQi86owtN/z2BjhHYl08nHaaqZSlxKQiCvt++20nTB3
-         HB9TKM72eYx4hVeXHw9I2sDb2B3njeUN1Y6025JkhLd4n3ePQmRb+N9VesooL2FMR9Ni
-         2Y0Q==
-X-Gm-Message-State: AKGB3mKUyl9N3wkujxXJ1hDni1jmhFL610EwcbAHluzBpqh4VwGYHX9d
-        zMZ+hUpJW+Gjyafg1CX5oOU=
-X-Google-Smtp-Source: ACJfBouqggxmgJI0pnd/DpL2dlhR9viXkVD0BKRsR1llyopTV1UtlwM6l5xTbg1ywXpXYhTMv9OWbg==
-X-Received: by 10.36.244.78 with SMTP id u14mr14734732iti.151.1513889042779;
-        Thu, 21 Dec 2017 12:44:02 -0800 (PST)
+        bh=lqljw7mGo9zaVj3qcwymytlMU1kfCRi7Tmg6EfDuPyU=;
+        b=M3RR1Zp9raYyrZY75lA+/0RNFiyBjvXOqcYNJjzwEWUj0/e/Z+c16mMOmxbxkNJpBT
+         7jSoUksm20Y+M/wyhIKFQZdnwe8EBvBhWJCgxvs9vHyO4tciBsjJrNGywIzN5Yop5tJH
+         c8lJhucr7itv9g4z75ZG+fl+w73ZvRXZU91Aoht0Ubl80lue2ZXdII/0FL+VYONgBNPK
+         BNLAwxm32mDRZ/cjtPdVFMZ9GrLXpy28+emE2aASm24Yi3X7Vo6MEVPAlD8nIDWtkBNn
+         5wUj26yESdVb10QDcr9xJiu24oK51CcSXC2XFjlInnHliINbV+MHhnfzSJT1F8DYHcBC
+         qmaA==
+X-Gm-Message-State: AKGB3mK8yh5oYWOsjDOvrmvseWCvbUlyphrRTr37csJ2fjxekCeQrO6h
+        O+g15onMattG9jLr9GhivJw=
+X-Google-Smtp-Source: ACJfBovhFuOc/JXk7rL+pOuA55RJj3ARaxDNCDJb72sPmJaDnB+7dlgKt3ExdDTB+Stb2ST3omu//g==
+X-Received: by 10.107.137.146 with SMTP id t18mr1924765ioi.258.1513889321210;
+        Thu, 21 Dec 2017 12:48:41 -0800 (PST)
 Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a202sm4672932ita.3.2017.12.21.12.44.01
+        by smtp.gmail.com with ESMTPSA id v9sm5078880itv.35.2017.12.21.12.48.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Dec 2017 12:44:01 -0800 (PST)
-Date:   Thu, 21 Dec 2017 12:43:56 -0800
+        Thu, 21 Dec 2017 12:48:40 -0800 (PST)
+Date:   Thu, 21 Dec 2017 12:48:38 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
-Message-ID: <20171221204356.GA58971@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH v2 2/5] stat_tracking_info: return +1 when branches are
+ not equal
+Message-ID: <20171221204838.GB58971@aiede.mtv.corp.google.com>
 References: <20171221190909.62995-1-git@jeffhostetler.com>
- <20171221190909.62995-2-git@jeffhostetler.com>
+ <20171221190909.62995-3-git@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171221190909.62995-2-git@jeffhostetler.com>
+In-Reply-To: <20171221190909.62995-3-git@jeffhostetler.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
 Jeff Hostetler wrote:
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1239,7 +1239,7 @@ static void fill_remote_ref_details(struct used_atom *atom, const char *refname,
+>  		*s = show_ref(&atom->u.remote_ref.refname, refname);
+>  	else if (atom->u.remote_ref.option == RR_TRACK) {
+>  		if (stat_tracking_info(branch, &num_ours,
+> -				       &num_theirs, NULL)) {
+> +				       &num_theirs, NULL, ABF_FULL) < 0) {
 
-> Created core.aheadbehind config setting and core_ahead_behind
-> global variable.  This value defaults to true.
->
-> This value will be used in the next few commits as the default value
-> for the --ahead-behind parameter.
->
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  Documentation/config.txt | 8 ++++++++
->  cache.h                  | 1 +
->  config.c                 | 5 +++++
->  environment.c            | 1 +
->  4 files changed, 15 insertions(+)
+What does ABF stand for?  It made me think of airport codes.
 
-Not a reason to reroll on its own, but this seems out of order: the
-series is easier to explain and easier to merge down in stages if the
-patch for --ahead-behind comes first, then the config setting.
-
-More generally, new commandline flags tend to be less controversial
-than new config settings since they cannot affect a script by mistake,
-and for that reason, they can go earlier in the series.
-
-As a bonus, that makes it possible to include tests.  It's probably
-worth adding a test or two for this new config setting.
+Would a name like AHEADBEHIND_FULL work?
 
 [...]
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 9593bfa..c78d6be 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -895,6 +895,14 @@ core.abbrev::
->  	abbreviated object names to stay unique for some time.
->  	The minimum length is 4.
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1977,16 +1977,22 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
+>  }
 >  
-> +core.aheadbehind::
-> +	If true, tells commands like status and branch to print ahead and
-> +	behind counts for the branch relative to its upstream branch.
-> +	This computation may be very expensive when there is a great
-> +	distance between the two branches.  If false, these commands
-> +	only print that the two branches refer to different commits.
-> +	Defaults to true.
+>  /*
+> - * Compare a branch with its upstream, and save their differences (number
+> - * of commits) in *num_ours and *num_theirs. The name of the upstream branch
+> - * (or NULL if no upstream is defined) is returned via *upstream_name, if it
+> - * is not itself NULL.
+> + * Compare a branch with its upstream and report on their differences.
+> + * If abf is ABF_FULL, save their differences (number of commits) in
+> + * *num_ours and *num_theirs.
+> + * If abf is ABF_QUICK, skip the (possibly expensive) ahead/behind
 
-This doesn't seem like a particularly core feature to me.  Should it be
-e.g. status.aheadbehind (even though it also affects "git branch") or
-even something like diff.aheadbehind?  I'm not sure.
+Please format these comments as paragraphs, with a consistent
+line-width and a "blank" (space-star-newline) line between paragraphs.
+That makes them much easier to read.
 
-I also wonder if there's a way to achieve the same benefit without
-having it be configurable.  E.g. if a branch is way behind, couldn't
-we terminate the walk early to get the same bounded cost per branch
-without requiring configuration?
+[...]
+> @@ -2019,6 +2025,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+>  		*num_theirs = *num_ours = 0;
+>  		return 0;
+>  	}
+> +	if (abf == ABF_QUICK)
+> +		return 1;
 
-Thanks,
+nit: I think this is missing a blank line before the 'if'.
+
+Thanks and hope that helps,
 Jonathan
