@@ -2,100 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868341F404
-	for <e@80x24.org>; Thu, 21 Dec 2017 01:55:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F373D1F404
+	for <e@80x24.org>; Thu, 21 Dec 2017 02:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756536AbdLUBz0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 20:55:26 -0500
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:41370 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755928AbdLUBzZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 20:55:25 -0500
-Received: by mail-pf0-f182.google.com with SMTP id j28so13342257pfk.8
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 17:55:25 -0800 (PST)
+        id S1756443AbdLUCaK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 21:30:10 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:34550 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755868AbdLUCaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 21:30:09 -0500
+Received: by mail-wm0-f51.google.com with SMTP id y82so18134112wmg.1
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 18:30:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version;
-        bh=6IlMv6UfY0gzJXuXRTs47o1WOFPN/5CAaOdQKDzDBZ8=;
-        b=lNGM2VIGHGbWh5CqdUqqHGGWJ7bC0MOzndo1WUBFtXkbkW9TOiwNsuYqLocdC7F+bO
-         HFBXbsj3Ib7SFSx8a+YVHG42kCn+z6PIuFP97KtI+4Hn6uYdBTXaoKGmF1jaAQ5SVNU3
-         ke+dfh45Nhll/ZfolJYnXIr6Iy0PFijLzQyZY=
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iveVxSti2I+S3sKODpVEbUdpkcyztonDdvJPDVhL8VY=;
+        b=VQ8vx2IocKfErXZB9gJqqUxkCHbfHZVgf5ZsgWMqXl1xqyOr1RM1YdSoS5YYdsqVi9
+         2VVymVgtgWXj7hxallR1oBDQMUFcOtVtaFheM82auLx2B0x0K1Vq7ZOfy3US/9U0z/vl
+         rNLCwMkrXoxHzTGu5uoXP5X7LJMF2StOqt9xf4wRMjM9jPRrEPyEcV/fZ5zTqlnPFrpE
+         9zFYeM7TGsHQT5T1xGVgJCCFzRY9WtSjZcLolRcj1L5w8OalURA68nbm98azECInlDM4
+         pLYG058f3BY2H/DcrLMyVjcRsXeUL7YAAUqE3F8zgskyHcddz3f2PtCh/kOWz0uIH1FI
+         vKEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version;
-        bh=6IlMv6UfY0gzJXuXRTs47o1WOFPN/5CAaOdQKDzDBZ8=;
-        b=LlN8ShH7tpkoC5a0x9sNcwHtD+h70yul0+rgCO8BCt12M7jwdeqbOnPri1WbT65KJm
-         3xYFTJMXgPa5XZhjQ9GUPFiD0JhNpRbr5SURxWp4x3ofGY99yU9wUxFFqBhN+C/uUbHN
-         zYSeV2Kt6g58ZhJfud+J9jEx0NbsL+RZmdIzuAUt+GCDrMYDTSEe9+H8zHgt5Uuj9O/J
-         ZFyii1GFxbH8SPjuiWTlM6z2n4+AaqRA4Exo8nOiLsiStA0RNeQPEmOGovXIwi0VcarO
-         8WUH6lQeUw5zIHcG8g/kUmeMaySbbeE8AgJFmcULgUWPlsylvT+CbfDqzKy4FtmgB5dG
-         uqvg==
-X-Gm-Message-State: AKGB3mICyIpSxgDN68fxi/C0PWJCjHFpdr7DgOEe7zcSiLfYkHczfDFv
-        ZEdlBCarpoYBRTfsW8CedcO47Q==
-X-Google-Smtp-Source: ACJfBousLeXr4PAM+NLg2rx3RqyF4joG2XP8FQ5zGcApuzaySreOOrwixc3zzY/5Hah738nhc90tvw==
-X-Received: by 10.98.163.73 with SMTP id s70mr8712942pfe.64.1513821324470;
-        Wed, 20 Dec 2017 17:55:24 -0800 (PST)
-Received: from alexmv-linux.corp.dropbox.com (v160-sfo11-br01.corp.dropbox.com. [205.189.0.163])
-        by smtp.gmail.com with ESMTPSA id s14sm40398566pfe.36.2017.12.20.17.55.23
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 20 Dec 2017 17:55:23 -0800 (PST)
-Date:   Wed, 20 Dec 2017 17:55:09 -0800 (PST)
-From:   Alex Vandiver <alexmv@dropbox.com>
-X-X-Sender: alexmv@alexmv-linux
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 4/6] fsmonitor: Add a trailing newline to
- test-dump-fsmonitor
-In-Reply-To: <xmqqlghyv4wz.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.10.1712201744270.15915@alexmv-linux>
-References: <20171219002858.22214-1-alexmv@dropbox.com> <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com> <dab89f071d22a21b85dff5d31e9e9a8ceb6458e3.1513642743.git.alexmv@dropbox.com> <xmqqlghyv4wz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iveVxSti2I+S3sKODpVEbUdpkcyztonDdvJPDVhL8VY=;
+        b=gfyG2j7AGvuf3ERNooTFdZZQSsytsOEqeVc+lKJ8mSD+Jgo7zluvk3w3SXlsty65VC
+         dtfoitSk0vCGsE+4nn0CE3+28y412SSkZggPLECUztVRNnZE9nR4voBQNPnIj12xBTxu
+         CsxvfYEEzcg5qU00PauN9rv/niRRwX+3+QyaG5KvwPZS1K8i3CZ/+P4LzB4L6AtQJnVe
+         hWJ+jGqJxJSD2rT/3Rwq6awmJDoeUDiaAf760JnDOoEHhL0TlEirAMU5FFYCuWA2wE1D
+         ycIVdBsxiUOcQg6lyW7fDGEJedW7Q1wGAqKVJYt7YumTIs9IJf6LGbuNY6gt5PK2m30B
+         EQbg==
+X-Gm-Message-State: AKGB3mKyxIRnJsmP7ujzWfHw3jiqceRyId0RWC+J+oEcFG3fORffzTJA
+        IEpL6ThMrBPA6Ej0HKx7zDE7gEZTxiBvm+Kn0R4=
+X-Google-Smtp-Source: ACJfBotwQSf2oTj/hmzU6TnLpCWW3R5uGE1ZbYLpb1tNMSCoCQ4w+W9VU5PXpiBNZhoc00Tt4V8/JXbPQiCWVYXzsgA=
+X-Received: by 10.80.137.106 with SMTP id f39mr8323416edf.148.1513823408512;
+ Wed, 20 Dec 2017 18:30:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Received: by 10.80.174.252 with HTTP; Wed, 20 Dec 2017 18:29:47 -0800 (PST)
+In-Reply-To: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 20 Dec 2017 18:29:47 -0800
+Message-ID: <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
+Subject: Re: Usability outrage as far as I am concerned
+To:     Cristian Achim <brancoliticus@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 20, 2017 at 8:40 AM, Cristian Achim <brancoliticus@gmail.com> wrote:
+> All I will do is paste the stackoverflow question below. It covers the
+> commands I made in chronological order and the way I would have
+> expected git to behave differently.
+>
+> So I did
+>
+> git pull home_subfolder
+>
 
-On Tue, 19 Dec 2017, Junio C Hamano wrote:
-> That (and existing) uses of printf() all feel a bit overkill ;-)
-> Perhaps putchar() would suffice.
-> 
-> I am not sure if the above wants to become something like
-> 
-> 	for (i = 0; i < istate->cache_nr; i++) {
->         	putchar(istate->cache[i]->ce_flags & CE_FSMONITOR_VALID ? '+' : '-');
-> 		quote_c_style(istate->cache[i]->name, NULL, stdout, 0);
-> 		putchar('\n');
-> 	}
-> 
-> instead of "a single long incomplete line" in the first place.  Your
-> "fix" merely turns it into "a single long complete line", which does
-> not quite feel big enough an improvement, at least to me.
+This by itself should be attempting to pull from a remote named
+home_subfolder. Can you show the output of "git remote" and also
+clearly explain with details the layout of what the folders are and
+what is or is not a repository? I can't really make heads or tails of
+your problem without more details.
 
-The more user-digestable form like you describe already exists by way
-of `git ls-files -f`.  I am not sure it is worth replicating it.
+> I do not want to resolve merge conflicts because git doesn't error out
+> with a sane message of the situation when it should. I just want to
+> get the home_subfolder and usb_subfolder repositories state to where
+> it was before my breakage generating git pull and git clone commands.
+>
+> Ubuntu 14.04 64 bit, git 1.9.1.
+>
+> Thank you for your time.
 
-The only current uses of this tool are in tests, which only examine
-the first ("no fsmonitor" / "fsmonitor last update ...") line.  I find
-it useful as a brief summary view of the fsmonitor bits, but I suppose
-I'd also be happy with just presence/absence and a count of set/unset
-bits.
+So you have home_subfolder and usb_subfolder which are repositories?
+Are they submodules within a parent project? Are they simply folders?
+Were you trying to merge the two together?
 
-Barring objections from Dscho or Ben, I'll reroll with a version that
-shows something like:
+Without knowing more of what you intended to do, vs what you did, and
+without more information about the setup it's not really possible to
+understand the situation or what broke.
 
-    fsmonitor last update 1513821151547101894 (5 seconds ago)
-    5 files valid / 10 files invalid
+From the looks of it, I think you might have tried to do something
+like try to pull from usb_subfolder directly into the home_subfolder.
 
- - Alex
+Are these two repositories nested? ie: you have "home_subfolder" as
+"/home/subfolder" and you have usb_subfolder as
+"/home/subfolder/usb/subfolder"?
+
+That might explain why git pull would interpret such a command as a
+path from which to do a file based pull...
+
+Thanks,
+Jake
