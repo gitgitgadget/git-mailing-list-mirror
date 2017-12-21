@@ -2,80 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00EF41F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 21:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F352E1F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 22:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753199AbdLUVt7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 16:49:59 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55991 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750920AbdLUVt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 16:49:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 545DDD1654;
-        Thu, 21 Dec 2017 16:49:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=e0WepCpc/M/rpqXLrpIsf+/b7qQ=; b=E2A/1O
-        1hiU4Y7dF3RVPifLYVVSs15/nxX8eWCSPp16KW94cLh2Zk4S0fNibz4Eh7cj32k6
-        4WCUNlFeZtRJ4WE3K1osBedUpZXbVoNNunz7caTd5JBSrnGIdhGDkMOv7y9wZdMY
-        4q3cCwoKX0qvGqFR851K7A14FIwLSYlkod64c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=l+rqaneuHy0iclR9sSONCow7yumiOdSh
-        NvzwjWyXG1IXKK5ArAQv5YmALVvILr5t+Ct2eLyA0k54N7gaM/nCW54thRnn2gNF
-        s0EPU2qKMP9HRR79noBMBwhrbpAc15Xo3nt8r/GHKt1S9veV/9OASMQsrMoQIp/6
-        cZlsGwzOmOM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B8DFD1653;
-        Thu, 21 Dec 2017 16:49:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C025AD1652;
-        Thu, 21 Dec 2017 16:49:57 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Vandiver <alexmv@dropbox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 4/6] fsmonitor: Add a trailing newline to test-dump-fsmonitor
-References: <20171219002858.22214-1-alexmv@dropbox.com>
-        <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com>
-        <dab89f071d22a21b85dff5d31e9e9a8ceb6458e3.1513642743.git.alexmv@dropbox.com>
-        <xmqqlghyv4wz.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.10.1712201744270.15915@alexmv-linux>
-Date:   Thu, 21 Dec 2017 13:49:56 -0800
-In-Reply-To: <alpine.DEB.2.10.1712201744270.15915@alexmv-linux> (Alex
-        Vandiver's message of "Wed, 20 Dec 2017 17:55:09 -0800 (PST)")
-Message-ID: <xmqqbmiru4xn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753819AbdLUWEQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 17:04:16 -0500
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:39845 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751024AbdLUWEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 17:04:15 -0500
+Received: by mail-wm0-f53.google.com with SMTP id i11so18414413wmf.4
+        for <git@vger.kernel.org>; Thu, 21 Dec 2017 14:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=bC7Wi8hwx+o+Zn1KcsOQ6MwxvcwAHCceRSC5Phamysk=;
+        b=bn9oFBq+GdFAyE47bmwJk14BkKIyjbaxGNLo0UitHF7Slo3neiufQq0LB+eeldrPTi
+         oUTkEq5CXvSfW0xEO6y+U38g+JONTtIsqUgKOUhbCpd+SHWb48WxGtEP+PW8aNfvRh9d
+         SX7LjMIb53PVuTpu7ZtSNE+RaFxJWaePVbziYzfNcH2MDdf7mSh+iB7DdU46Zt0CpeL8
+         ulmhtb/6t7+yPrRzY/2L+5M414cBbzsREX7wuD0lhLVMaaFe5Y0jrfNnAXEnrw0IiMc9
+         eqoUHnDsp5j3JCFiS3DgXixQdtMMOfUudoFU5AmP2oLNXSyOwaEvNG3LKXtIRPUDl8rE
+         E0Dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bC7Wi8hwx+o+Zn1KcsOQ6MwxvcwAHCceRSC5Phamysk=;
+        b=EMJVqXT9I4LTCo0/BJzQoL7hFUIclAVw4GncCrddVQGg2q74CvKl6BB7/F+edh5t6L
+         Mf4B+jJWWC5eUMafaS4x3ePSf2lbB8agQCGudhmoLG+N7DuQ9bNM2Hn0eOx9CsKkyA3t
+         3R85a/+Q7KZQ1YIRoAtPb0HVhD4z/o8gsNe5uAqkF6vDOvWPPufeZ3P6fPvKZ9KBAgr6
+         cwa1y9Txlplqds9c7vusWjzlWYzQMyvp/gYCVCqcSt8U7gGQnCRe7p+C1+e7deK8N81r
+         BfvU+qXSEyln3zpIZOYy8IMGQskBZbE4fAnQF8TIV7rJWlbIY47mosDNCMyAK1L8Pq98
+         zvzg==
+X-Gm-Message-State: AKGB3mITIycSVxm910JvbEkeW3D1Y6mR6NsjoF3ECBUuKsjLL9WqtJUD
+        eLg6UmdGDSJK0GbiTi2Y6Q/K47L6
+X-Google-Smtp-Source: ACJfBouQ9cH4iQSIFwhci3StxhQUSsgfxEQ+3Hpklw4zuIxZPsLpGVSajco8sUSeG7/d/fG2J/BitQ==
+X-Received: by 10.28.133.4 with SMTP id h4mr11206300wmd.35.1513893853708;
+        Thu, 21 Dec 2017 14:04:13 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id o98sm33318604wrb.40.2017.12.21.14.04.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Dec 2017 14:04:12 -0800 (PST)
+Subject: Re: Need help migrating workflow from svn to git.
+To:     Josef Wolf <jw@raven.inka.de>
+References: <20171214130933.GA18542@raven.inka.de>
+ <xmqqvah8q7cg.fsf@gitster.mtv.corp.google.com>
+ <19d67f01-5e7d-3792-52f4-52da86bca5e5@gmail.com>
+ <20171220114337.GE18542@raven.inka.de>
+Cc:     git@vger.kernel.org
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <fdf75150-eca0-dde5-a305-ae5fd5c35369@gmail.com>
+Date:   Thu, 21 Dec 2017 23:04:09 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E31FE982-E698-11E7-8960-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20171220114337.GE18542@raven.inka.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Vandiver <alexmv@dropbox.com> writes:
+Hi Josef,
 
-> The only current uses of this tool are in tests, which only examine
-> the first ("no fsmonitor" / "fsmonitor last update ...") line.  I find
-> it useful as a brief summary view of the fsmonitor bits, but I suppose
-> I'd also be happy with just presence/absence and a count of set/unset
-> bits.
->
-> Barring objections from Dscho or Ben, I'll reroll with a version that
-> shows something like:
->
->     fsmonitor last update 1513821151547101894 (5 seconds ago)
->     5 files valid / 10 files invalid
+On 20/12/2017 12:43, Josef Wolf wrote:
+> 
+>>     $ git add -u
+>>     $ git reset
+> 
+> This would be added after the "git checkout -m -B master FETCH_HEAD" 
+> command?
 
-As I agree that this is test/debug only, I do not care too deeply
-either way, as long as it does not end with an incomplete line ;-)
+Yes, so it would be something like this:
+
+    git fetch origin master &&              #1
+    git checkout -m -B master FETCH_HEAD && #2
+    git add -u &&                           #3
+    git reset                               #4
+
+But it actually depends on what kind of default `git diff` output 
+you prefer.
+
+In order to avoid failure on subsequent script runs, in case where 
+conflicts still exist, you need to ensure #3 and #4 are executed 
+before #1 and #2 are executed _again_.
+
+So you may put #3 and #4 in front of #1 and #2, too, that would work 
+just as well, where `git diff` would now be showing "combined diff"[2] 
+as long as the script isn`t executed again (and it would keep showing 
+new "combined diff" from that point on).
+
+>> Yes, `git diff` won`t be the same as if conflicts were still in, but 
+>> it might be worth it in this specific case, conflicting parts still 
+>> easily visible between conflict markers.
+> 
+> That means, the conflict is still there, but git would think this is 
+> an ordinary modification?
+
+Yes, as by that `git add -u` you confirm all merge conflicts are 
+resolved, and `git diff` output changes accordingly. You can read 
+more about "diff format for merges"[1] and "combined diff format"[2] 
+from `git-diff`[3] documentation.
+
+Here are some examples from my test repositories. Local repo 
+introduces line "A1" (local modification, uncommitted), where remote 
+repo introduced line "B1" (commit). Steps #1 and #2 get executed, merge 
+conflicts shown with `git diff`, before `git add -u` and `git reset`:
+
+    $ git diff
+    diff --cc A
+    index 5314b4f,1e2b966..0000000
+    --- a/A
+    +++ b/A
+    @@@ -12,5 -12,5 +12,9 @@@
+      2
+      3
+      4
+    ++<<<<<<< FETCH_HEAD
+     +B1
+    ++=======
+    + A1
+    ++>>>>>>> local
+      5
+
+... and after `git add -u` and `git reset` (note line "B1" not 
+showing as changed anymore):
+
+    $ git diff
+    diff --git a/A b/A
+    index 5314b4f..8ea9600 100644
+    --- a/A
+    +++ b/A
+    @@ -12,5 +12,9 @@ A
+     2
+     3
+     4
+    +<<<<<<< FETCH_HEAD
+     B1
+    +=======
+    +A1
+    +>>>>>>> local
+     5
+
+
+Now, without any commits yet made locally (except commit pulled from 
+remote repo), local repo adds line "A2" where remote repo introduces 
+line "B2" (commit). Steps #1 and #2 get executed again, merge 
+conflicts shown with `git diff`, before `git add -u` and `git reset`:
+
+    $ git diff
+    diff --cc A
+    index 424ae9e,4aac880..0000000
+    --- a/A
+    +++ b/A
+    @@@ -2,7 -2,7 +2,11 @@@
+      1
+      2
+      3
+    ++<<<<<<< FETCH_HEAD
+     +B2
+    ++=======
+    + A2
+    ++>>>>>>> local
+      4
+      5
+      6
+
+... and after `git add -u` and `git reset` (note showing line "B2" as 
+unchanged, and now showing leftover "conflicts" around "A1" here as 
+well, where previous "combined" diff discarded it as uninteresting 
+due to implied "--cc"[4] flag):
+
+    $ git diff
+    diff --git a/A b/A
+    index 424ae9e..77ad8e6 100644
+    --- a/A
+    +++ b/A
+    @@ -2,7 +2,11 @@ A
+     1
+     2
+     3
+    +<<<<<<< FETCH_HEAD
+     B2
+    +=======
+    +A2
+    +>>>>>>> local
+     4
+     5
+     6
+    @@ -13,5 +17,9 @@ A3
+     2
+     3
+     4
+    +<<<<<<< FETCH_HEAD
+     B1
+    +=======
+    +A1
+    +>>>>>>> local
+     5
+
+
+Hope that helps. As usual, best to give it some try on your own :)
+
+Regards, Buga
+
+[1] https://git-scm.com/docs/git-diff#_diff_format_for_merges
+[2] https://git-scm.com/docs/git-diff#_combined_diff_format
+[3] https://git-scm.com/docs/git-diff
+[4] https://git-scm.com/docs/git-diff-tree#git-diff-tree---cc
