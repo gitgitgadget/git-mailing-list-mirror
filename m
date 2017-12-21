@@ -7,113 +7,95 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C3E21F404
-	for <e@80x24.org>; Wed, 20 Dec 2017 22:24:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 868341F404
+	for <e@80x24.org>; Thu, 21 Dec 2017 01:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756151AbdLTWYV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 20 Dec 2017 17:24:21 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:45139 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755711AbdLTWYU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Dec 2017 17:24:20 -0500
-Received: by mail-it0-f67.google.com with SMTP id z6so8485631iti.4
-        for <git@vger.kernel.org>; Wed, 20 Dec 2017 14:24:20 -0800 (PST)
+        id S1756536AbdLUBz0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 20 Dec 2017 20:55:26 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:41370 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755928AbdLUBzZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Dec 2017 20:55:25 -0500
+Received: by mail-pf0-f182.google.com with SMTP id j28so13342257pfk.8
+        for <git@vger.kernel.org>; Wed, 20 Dec 2017 17:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JSrEWawZJ1KRlrW9GSiiRMhuM1tlHpByk4nd3bc01Ns=;
-        b=psg3NjhNN+/FqYHoEDihv8hdbp98hw1z9p7OCGdTV1T4IG0cyE6Cq7Wi38wpLjxpe4
-         rSR0u2aJxq1Y8OGYWugKg+CzC/qt5+wJNREehGBBNMm1d0YuZkXTU4lGkgqiuTK7VcKV
-         ZBgigrGDNwplyFi0zbPIgSVQaxi+qYBBEJ8OrBXxPXp8+K001ERjAV35QPYFsq7SEkD8
-         QZs6KzxuYYTl14sd/VUJm51Q6heQt0k1NTwsfnGu74TEyO3IeERwqLIfwu89OONR8fY4
-         waKZxm3btmA8mJjs+bnjlpvnaRkcTYla3zcAAscRcUiRxrDaFVtemWiYkLCNNiEzNo+j
-         u0Cw==
+        d=dropbox.com; s=corp;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version;
+        bh=6IlMv6UfY0gzJXuXRTs47o1WOFPN/5CAaOdQKDzDBZ8=;
+        b=lNGM2VIGHGbWh5CqdUqqHGGWJ7bC0MOzndo1WUBFtXkbkW9TOiwNsuYqLocdC7F+bO
+         HFBXbsj3Ib7SFSx8a+YVHG42kCn+z6PIuFP97KtI+4Hn6uYdBTXaoKGmF1jaAQ5SVNU3
+         ke+dfh45Nhll/ZfolJYnXIr6Iy0PFijLzQyZY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JSrEWawZJ1KRlrW9GSiiRMhuM1tlHpByk4nd3bc01Ns=;
-        b=s8KZ7g8nw3RJ+n+9RekbwJa5TCvX+JNF/oiRLSdfxDj4DeiWbcnF+WoiLnlLC48T64
-         wHLc5tx/EtpwiNuoO+YWXdPwS4VuVHJH1/T1HixM3upe8+hi/VLPOMuyebN8NwX6hxKa
-         Lwfe1YsWpWSYWJfbBAGM0rNC088buUKYc+/C7zUk42C4halUE+Qh77NTO0Hm6bPuhDHV
-         /L/+bSSiZMHh9WOKxsju0DDE8qWCJG4dyHOfMzyX4DYGfkl7Rv1hdod17ESro5tr4AXd
-         ssKmJoD1w5y1L12Xgg4Mkh2yZfTzIxlnSKveLTx4PsttMWFHM/4AvgsGk116FMz44tjk
-         41Rg==
-X-Gm-Message-State: AKGB3mJVGpPgCKdlwlNTjssGPVJGhRoC7HSf2MDOYZIw12BvWtpeyaa+
-        nAAlifPxKh4W14AExBydztu1Dw==
-X-Google-Smtp-Source: ACJfBosIxWuqx33Rq/BI1g1atW1d+dy1neQo/c1rDvRnElCnwDPHdFG0UO2yFZ+k1a213/WmOPHbJg==
-X-Received: by 10.36.48.82 with SMTP id q79mr11022673itq.75.1513808659663;
-        Wed, 20 Dec 2017 14:24:19 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i63sm3148577itb.35.2017.12.20.14.24.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 20 Dec 2017 14:24:19 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, sbeller@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH] t/helper/test-lazy-name-hash: fix compilation
-Date:   Wed, 20 Dec 2017 14:24:16 -0800
-Message-Id: <20171220222416.130872-1-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
-In-Reply-To: <39238da4-c2b8-050d-51e3-675f5515776e@jeffhostetler.com>
-References: <39238da4-c2b8-050d-51e3-675f5515776e@jeffhostetler.com>
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version;
+        bh=6IlMv6UfY0gzJXuXRTs47o1WOFPN/5CAaOdQKDzDBZ8=;
+        b=LlN8ShH7tpkoC5a0x9sNcwHtD+h70yul0+rgCO8BCt12M7jwdeqbOnPri1WbT65KJm
+         3xYFTJMXgPa5XZhjQ9GUPFiD0JhNpRbr5SURxWp4x3ofGY99yU9wUxFFqBhN+C/uUbHN
+         zYSeV2Kt6g58ZhJfud+J9jEx0NbsL+RZmdIzuAUt+GCDrMYDTSEe9+H8zHgt5Uuj9O/J
+         ZFyii1GFxbH8SPjuiWTlM6z2n4+AaqRA4Exo8nOiLsiStA0RNeQPEmOGovXIwi0VcarO
+         8WUH6lQeUw5zIHcG8g/kUmeMaySbbeE8AgJFmcULgUWPlsylvT+CbfDqzKy4FtmgB5dG
+         uqvg==
+X-Gm-Message-State: AKGB3mICyIpSxgDN68fxi/C0PWJCjHFpdr7DgOEe7zcSiLfYkHczfDFv
+        ZEdlBCarpoYBRTfsW8CedcO47Q==
+X-Google-Smtp-Source: ACJfBousLeXr4PAM+NLg2rx3RqyF4joG2XP8FQ5zGcApuzaySreOOrwixc3zzY/5Hah738nhc90tvw==
+X-Received: by 10.98.163.73 with SMTP id s70mr8712942pfe.64.1513821324470;
+        Wed, 20 Dec 2017 17:55:24 -0800 (PST)
+Received: from alexmv-linux.corp.dropbox.com (v160-sfo11-br01.corp.dropbox.com. [205.189.0.163])
+        by smtp.gmail.com with ESMTPSA id s14sm40398566pfe.36.2017.12.20.17.55.23
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 20 Dec 2017 17:55:23 -0800 (PST)
+Date:   Wed, 20 Dec 2017 17:55:09 -0800 (PST)
+From:   Alex Vandiver <alexmv@dropbox.com>
+X-X-Sender: alexmv@alexmv-linux
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH 4/6] fsmonitor: Add a trailing newline to
+ test-dump-fsmonitor
+In-Reply-To: <xmqqlghyv4wz.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.10.1712201744270.15915@alexmv-linux>
+References: <20171219002858.22214-1-alexmv@dropbox.com> <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com> <dab89f071d22a21b85dff5d31e9e9a8ceb6458e3.1513642743.git.alexmv@dropbox.com> <xmqqlghyv4wz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was compiling origin/master today with the DEVELOPER compiler flags
-today and was greeted by
 
-t/helper/test-lazy-init-name-hash.c: In function ‘cmd_main’:
-t/helper/test-lazy-init-name-hash.c:172:5: error: ‘nr_threads_used’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
-     printf("avg [size %8d] [single %f] %c [multi %f %d]\n",
-     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         nr,
-         ~~~
-         (double)avg_single/1000000000,
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         (avg_single < avg_multi ? '<' : '>'),
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         (double)avg_multi/1000000000,
-         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-         nr_threads_used);
-         ~~~~~~~~~~~~~~~~
-t/helper/test-lazy-init-name-hash.c:115:6: note: ‘nr_threads_used’ was declared here
-  int nr_threads_used;
-      ^~~~~~~~~~~~~~~
+On Tue, 19 Dec 2017, Junio C Hamano wrote:
+> That (and existing) uses of printf() all feel a bit overkill ;-)
+> Perhaps putchar() would suffice.
+> 
+> I am not sure if the above wants to become something like
+> 
+> 	for (i = 0; i < istate->cache_nr; i++) {
+>         	putchar(istate->cache[i]->ce_flags & CE_FSMONITOR_VALID ? '+' : '-');
+> 		quote_c_style(istate->cache[i]->name, NULL, stdout, 0);
+> 		putchar('\n');
+> 	}
+> 
+> instead of "a single long incomplete line" in the first place.  Your
+> "fix" merely turns it into "a single long complete line", which does
+> not quite feel big enough an improvement, at least to me.
 
-Fix this issue by assigning 0 to 'nr_threads_used'.
+The more user-digestable form like you describe already exists by way
+of `git ls-files -f`.  I am not sure it is worth replicating it.
 
-Acked-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+The only current uses of this tool are in tests, which only examine
+the first ("no fsmonitor" / "fsmonitor last update ...") line.  I find
+it useful as a brief summary view of the fsmonitor bits, but I suppose
+I'd also be happy with just presence/absence and a count of set/unset
+bits.
 
-Slightly reworded the commit message. I'd really like this patch to be included
-such that I can compile git with the DEVELOPER_CFLAGS flags.
+Barring objections from Dscho or Ben, I'll reroll with a version that
+shows something like:
 
- t/helper/test-lazy-init-name-hash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    fsmonitor last update 1513821151547101894 (5 seconds ago)
+    5 files valid / 10 files invalid
 
-diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
-index 6368a89345..297fb01d61 100644
---- a/t/helper/test-lazy-init-name-hash.c
-+++ b/t/helper/test-lazy-init-name-hash.c
-@@ -112,7 +112,7 @@ static void analyze_run(void)
- {
- 	uint64_t t1s, t1m, t2s, t2m;
- 	int cache_nr_limit;
--	int nr_threads_used;
-+	int nr_threads_used = 0;
- 	int i;
- 	int nr;
- 
--- 
-2.15.1.620.gb9897f4670-goog
-
+ - Alex
