@@ -2,138 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFF411F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 19:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0634E1F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 19:30:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755168AbdLUTU2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 14:20:28 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:53688 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755117AbdLUTU0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Dec 2017 14:20:26 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vBLJITZs001389;
-        Thu, 21 Dec 2017 11:19:08 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ew18q872j-1;
-        Thu, 21 Dec 2017 11:19:07 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8FC29220F5E9;
-        Thu, 21 Dec 2017 11:19:07 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 85F202CDE6C;
-        Thu, 21 Dec 2017 11:19:07 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     a.krey@gmx.de, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/3] t6044: recursive can silently incorporate dirty changes in a merge
-Date:   Thu, 21 Dec 2017 11:19:05 -0800
-Message-Id: <20171221191907.4251-1-newren@gmail.com>
-X-Mailer: git-send-email 2.15.1.436.g63a861020b
-In-Reply-To: <CABPp-BGy3_RyVQfCm+9O_AAfKA0_CZ5ajJE7NuLbToERWyWmqQ@mail.gmail.com>
-References: <CABPp-BGy3_RyVQfCm+9O_AAfKA0_CZ5ajJE7NuLbToERWyWmqQ@mail.gmail.com>
+        id S1753175AbdLUTaC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 14:30:02 -0500
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:45620 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752522AbdLUTaC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 14:30:02 -0500
+Received: by mail-pf0-f182.google.com with SMTP id u19so14328495pfa.12
+        for <git@vger.kernel.org>; Thu, 21 Dec 2017 11:30:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dropbox.com; s=corp;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version;
+        bh=hQ7Aoc3X6KSBZ1/gRoEYwuXQVa3XOi/3o3BiIqaDFVE=;
+        b=yqLvTQl98LugfZ3dO5Qx4c34Ji1pP3csAgjD7wHMnA2dQyTjGSRL0+CL+lWYyeNNYF
+         xXRm23zbRL02gyAocKykyigfOUU4mFGXd4AleMoYmciteEdme7/HjFIVmQ+d9Em0jasR
+         kQ8sliJjNTISyz8v51zCYjs9VCgWPiHo4H77g=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version;
+        bh=hQ7Aoc3X6KSBZ1/gRoEYwuXQVa3XOi/3o3BiIqaDFVE=;
+        b=VUiUKI6yYRFNRoeutd7dLzFv9UIAM3wwC+qI6S/nzdZuTW4ytKgER14eyoVREIU+m+
+         vjLqaGjykRvEnYrCNQKjQpaiE9PSb/Vvc0un42aT/pEOjimGJvI5XXq+3WxKhJwioyYj
+         6lnHH4yVMMpA2irXGwCb4FcDQav0kCdYqKC3mddk7RHMR/uhVGrB84yhUDliulymlxTD
+         0aOf7YuALlOhODb/IcUh4Bu5FRCHfRTcuShr3lMj+MG1uPyXXF1ja7IOhvjrCd+Ca2+r
+         tHiE0fPyBlWoHLsRFxBru9f2YOlB/F8QE0pbNA/4B3u3gbj3wRFmq5mgdUpXNbKomqOb
+         ajqA==
+X-Gm-Message-State: AKGB3mI4G+vhLkLF3jvzl30k/85g01eFaqSLivTs4IG9Y4UeVm2Qz5A/
+        hwWIxCXtFh0bzGjg6nKhBqqH6Q==
+X-Google-Smtp-Source: ACJfBosj1b/3hEgJwCzCVnvcAF1TH21JIHanh0EtLCXJwbcsZKUM4EiFbjGRNdIeo3SfOmgolge7Rg==
+X-Received: by 10.99.36.195 with SMTP id k186mr10162892pgk.171.1513884601409;
+        Thu, 21 Dec 2017 11:30:01 -0800 (PST)
+Received: from alexmv-linux.corp.dropbox.com (v160-sfo11-br01.corp.dropbox.com. [205.189.0.163])
+        by smtp.gmail.com with ESMTPSA id l14sm34194238pgn.9.2017.12.21.11.30.00
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 21 Dec 2017 11:30:00 -0800 (PST)
+Date:   Thu, 21 Dec 2017 11:29:46 -0800 (PST)
+From:   Alex Vandiver <alexmv@dropbox.com>
+X-X-Sender: alexmv@alexmv-linux
+To:     Jeff King <peff@peff.net>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Dan Jacques <dnj@google.com>,
+        Alex Riesen <alexander.riesen@cetitec.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+        Gerrit Pape <pape@smarden.org>,
+        "martin f . krafft" <madduck@madduck.net>
+Subject: Re: [PATCH] Makefile: replace perl/Makefile.PL with simple make
+ rules
+In-Reply-To: <20171130213105.GA8861@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.10.1712211126470.4980@alexmv-linux>
+References: <20171129153436.24471-1-avarab@gmail.com> <20171129195430.10069-1-avarab@gmail.com> <20171130213105.GA8861@sigill.intra.peff.net>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-12-21_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=808 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1712210263
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-723938442-1513884587=:4980"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The recursive merge strategy has some special handling when the tree for
-the merge branch exactly matches the merge base, but that code path is
-missing checks for the index having changes relative to HEAD.  Add a
-testcase covering this scenario.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Reported-by: Andreas Krey <a.krey@gmx.de>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t6044-merge-unrelated-index-changes.sh | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+--8323329-723938442-1513884587=:4980
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unr=
-elated-index-changes.sh
-index 01023486c5..5e472be92b 100755
---- a/t/t6044-merge-unrelated-index-changes.sh
-+++ b/t/t6044-merge-unrelated-index-changes.sh
-@@ -6,18 +6,21 @@ test_description=3D"merges with unrelated index changes=
-"
-=20
- # Testcase for some simple merges
- #   A
--#   o-----o B
-+#   o-------o B
- #    \
--#     \---o C
-+#     \-----o C
- #      \
--#       \-o D
-+#       \---o D
- #        \
--#         o E
-+#         \-o E
-+#          \
-+#           o F
- #   Commit A: some file a
- #   Commit B: adds file b, modifies end of a
- #   Commit C: adds file c
- #   Commit D: adds file d, modifies beginning of a
- #   Commit E: renames a->subdir/a, adds subdir/e
-+#   Commit F: empty commit
-=20
- test_expect_success 'setup trivial merges' '
- 	test_seq 1 10 >a &&
-@@ -29,6 +32,7 @@ test_expect_success 'setup trivial merges' '
- 	git branch C &&
- 	git branch D &&
- 	git branch E &&
-+	git branch F &&
-=20
- 	git checkout B &&
- 	echo b >b &&
-@@ -52,7 +56,10 @@ test_expect_success 'setup trivial merges' '
- 	git mv a subdir/a &&
- 	echo e >subdir/e &&
- 	git add subdir &&
--	test_tick && git commit -m E
-+	test_tick && git commit -m E &&
-+
-+	git checkout F &&
-+	test_tick && git commit --allow-empty -m F
- '
-=20
- test_expect_success 'ff update' '
-@@ -105,6 +112,15 @@ test_expect_success 'recursive' '
- 	test_must_fail git merge -s recursive C^0
- '
-=20
-+test_expect_failure 'recursive, when merge branch matches merge base' '
-+	git reset --hard &&
-+	git checkout B^0 &&
-+
-+	touch random_file && git add random_file &&
-+
-+	test_must_fail git merge -s recursive F^0
-+'
-+
- test_expect_success 'octopus, unrelated file touched' '
- 	git reset --hard &&
- 	git checkout B^0 &&
---=20
-2.15.1.436.g63a861020b
+On Thu, 30 Nov 2017, Jeff King wrote:
+> On Wed, Nov 29, 2017 at 07:54:30PM +0000, Ævar Arnfjörð Bjarmason wrote:
+> 
+> > Replace the perl/Makefile.PL and the fallback perl/Makefile used under
+> > NO_PERL_MAKEMAKER=NoThanks with a much simpler implementation heavily
+> > inspired by how the i18n infrastructure's build process works[1].
+> 
+> I'm very happy to see the recursive make invocation go away. The perl
+> makefile generation was one of the few places where parallel make could
+> racily get confused (though I haven't seen that for a while, so maybe it
+> was fixed alongside some of the other .stamp work you did).
 
+As a datapoint, I've seen it fairly regularly with -j8 in 2.15.1
+builds from a clean tree that I've been doing recently.  I'm looking
+forward to not having to make the choice between "maybe run it twice"
+or "compile slower" -- this looks great!
+- Alex
+--8323329-723938442-1513884587=:4980--
