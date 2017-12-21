@@ -2,85 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D67F1F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 15:40:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2E641F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 16:21:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753255AbdLUPkB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 10:40:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44946 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752732AbdLUPj6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 10:39:58 -0500
-Received: (qmail 8444 invoked by uid 109); 21 Dec 2017 15:39:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Dec 2017 15:39:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20152 invoked by uid 111); 21 Dec 2017 15:40:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 21 Dec 2017 10:40:19 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Dec 2017 10:39:51 -0500
-Date:   Thu, 21 Dec 2017 10:39:51 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 3/4] status: update short status to use --no-ahead-behind
-Message-ID: <20171221153950.GA14411@sigill.intra.peff.net>
-References: <20171220144245.39401-1-git@jeffhostetler.com>
- <20171220144245.39401-4-git@jeffhostetler.com>
- <20171220162637.GC31149@sigill.intra.peff.net>
- <1c019725-7715-496e-bad6-9d47d2bae834@jeffhostetler.com>
+        id S1753517AbdLUQVs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 11:21:48 -0500
+Received: from mail-pl0-f42.google.com ([209.85.160.42]:40755 "EHLO
+        mail-pl0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751655AbdLUQVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 11:21:47 -0500
+Received: by mail-pl0-f42.google.com with SMTP id 62so9778070pld.7
+        for <git@vger.kernel.org>; Thu, 21 Dec 2017 08:21:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2aOD6BG1cGZ88aw/MW2jnF6XCy5BhQKjNjvGT1pN9Y0=;
+        b=SdxwGqDytFHEFHc88zK7cPs1b0kB+iM39Gao1uxHJMNxhBjnl/M5o0lZpOcUwL5f5Q
+         AQ3irM9JBonBEbjki7KmcNJgLM8zF8srNrCln1o1bZ5WScsUFNBavkC1Agr0nzmDfDsw
+         lRQ4WSM8SHwLC4T/fVhhkjmG20W0Bg84xVr/ey8rKX0QFhXbf2brqnLRYkiG0Xikt6gs
+         7MNOvKzgaaKoz+duiK1CQSYACJ5aMlH5xCWmn0ukag0cHTynjNuGLXGizE6PW2UamiKU
+         Sn9k+cvIUkHxCZYgOqsV+4LCwEqUZFZXEyrJaXJN/OSdnhiYt7GeQf4UHlo1rkmkgFIN
+         G1sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2aOD6BG1cGZ88aw/MW2jnF6XCy5BhQKjNjvGT1pN9Y0=;
+        b=G/0g74grtf61DfuM6fO9vpTv79F8GKxoIJnYvoUVsI9ReMaKTN1RvJalXZU9/PQCOz
+         YV5knvD2VONe9TSkyrPpC7l4VJ+QRsiWVhcWoJY27b0eOdygNhdu3DY1Fwg1+V0CTt+K
+         qp93raqoHPHoKcz8mGv8TgXT20BvV5SoHEBdegu2vX5qV9ODj1YchJ8jFojFBWymRH+J
+         Zaamiuui5VLOBuyHHZuom3IuE2utozlEZRHcu/BprvHdccba1czE+f0xQJUFYqR/nqQo
+         FFRwzCmZzJ25BhBAfAsEFB0TETxs/YlT3mrzEr2VRfZeGOMOXC4R3JgReXVTehTien3E
+         LqAQ==
+X-Gm-Message-State: AKGB3mLUNkg2R5FF1DIt4VpzhPGP1V6KyQPHYNq6ehWo+8P0b+K+mL6t
+        83pAyckz4fZC9Gd6RiRMoknQEh84Xj4pjb31UjG0AdOf
+X-Google-Smtp-Source: ACJfBoswT+0wrUl5U/+/oecPmis9tHAg3xiK3NVSqEAePaCJPeeUhndImZik7dIhTbZ7Gp8Jpll2Ty2eIwAHGzQgAm8=
+X-Received: by 10.84.229.5 with SMTP id b5mr11222080plk.405.1513873306476;
+ Thu, 21 Dec 2017 08:21:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1c019725-7715-496e-bad6-9d47d2bae834@jeffhostetler.com>
+Received: by 10.100.129.8 with HTTP; Thu, 21 Dec 2017 08:21:26 -0800 (PST)
+In-Reply-To: <CAGZ79kZf8GL1DY6Vmc-byEOOy+hrKF8X8qRPM6jNO-La+rD4uw@mail.gmail.com>
+References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
+ <20171219180230.254881-1-sbeller@google.com> <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kbqntXuYuLGF7zjXfQ5X998QdEba20yy8A0cqS=DaRxFA@mail.gmail.com>
+ <CAFBGMVO+P99hJ_nKgCJ4OqhMEdRdc3m8KHNS1pPrrhU_0wS6=A@mail.gmail.com> <CAGZ79kZf8GL1DY6Vmc-byEOOy+hrKF8X8qRPM6jNO-La+rD4uw@mail.gmail.com>
+From:   Andreas Urke <arurke@gmail.com>
+Date:   Thu, 21 Dec 2017 17:21:26 +0100
+Message-ID: <CAFBGMVMmLX4BjkQ8Xd4bQBCgoYYxWTU-p2pNF=b8JNsUsKXwUA@mail.gmail.com>
+Subject: Re: [PATCH] Re: Bug with "git submodule update" + subrepo with
+ differing path/name?
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 21, 2017 at 09:18:17AM -0500, Jeff Hostetler wrote:
+If I am entering into undefined behavior territory with the renaming
+then there might not be any point to pursue this further, but in any
+case, script below:
 
-> > This patch will affect "git status --porcelain", too. That's not
-> > supposed to change in incompatible ways. I guess it's up for debate
-> > whether callers are meant to handle any arbitrary string inside the []
-> > (we already show "[gone]" for some cases), since AFAICT the format of
-> > the tracking info is left completely vague in the documentation.
-> > 
-> > (I'd also hope that everybody is using --porcelain=v2 if they can, but
-> > we should still avoid breaking v1).
-> 
-> I hadn't intended to alter V1 output.  I'll disable the new feature
-> when V1 is selected.
+Apologies up-front for the verbosity, there are probably a lot of
+unnecessary steps and git shortcuts missed - I just wanted it to
+exactly match my scenario. Note that it is divided into two parts as
+it requires you to edit .gitmodules.
 
-To be clear, I am on the fence regarding the "is it a breaking change"
-line. Certainly if the caller says "--no-ahead-behind", I don't see any
-harm in doing what they asked.
+Part 1:
 
-But one further complication is that this may be triggered by config.
-And that goes for --porcelain=v2, as well. Even though the v2
-documentation specifically says "ignore headers you don't recognize",
-would any callers be confused if a header is omitted due to a user's
-config?
+cd ~/
+# Make sub repos and add a commit to each
+mkdir super && cd super
+mkdir sub1 && mkdir sub2
+cd sub1
+git init && touch first && git add . && git commit -m "first"
+cd ../sub2
+git init && touch first && git add . && git commit -m "first"
+cd ..
 
-I guess for "branch.ab", the answer is "probably not", since it is
-already documented to appear only if certain conditions are met. So
-probably "omit branch.ab" is an OK change, as is "add a new header".
-But I just wonder if it would be simpler to ignore the config entirely
-for porcelain outputs (and require the explicit command-line option).
+# Make super repo, add subrepos, and commit
+git init
+git submodule add ./sub1
+git submodule add ./sub2
+git add .
+git commit -m "first"
 
-Personally, I am not a purist when it comes to config and plumbing, and
-I'd be fine with having the config impact v2 (it is a hint from the user
-that they do not want to spend time on the computation, so having
-scripts respect that would be what the user wants). If you really have a
-script that is unhappy missing "branch.ab", then you can either choose
-not to set that config, or you can fix the script to use "--ahead-behind"
-to override the config. But I'm not sure everybody in the community
-would necessarily agree with me.
+# Edit .gitmodules, change sub2 name and path to sub2_newname:
+# $ cat .gitmodules
+# [submodule "sub1"]
+# path = sub1
+# url = ./sub1
+# [submodule "sub2_newname"]
+# path = sub2
+# url = ./sub2_newname
 
--Peff
+Part 2:
+
+cd ~/
+# Sync submodule after we edited .gitmodules
+cd super
+git submodule sync
+
+# Commit in subrepos and commit this to superrepo
+cd sub1
+touch second && git add . && git commit -m "second"
+cd ../sub2
+touch second && git add . && git commit -m "second"
+cd ..
+git add .
+git commit -m "second"
+
+# Commit in subrepos and commit this to superrepo
+cd sub1
+touch third && git add . && git commit -m "third"
+cd ../sub2
+touch third && git add . && git commit -m "third"
+cd ..
+git add .
+git commit -m "third"
+
+git checkout HEAD^
+git status
+git submodule update
+git status # Observe only sub1 repo was updated
+
+On 20 December 2017 at 18:54, Stefan Beller <sbeller@google.com> wrote:
+> On Wed, Dec 20, 2017 at 12:22 AM, Andreas Urke <arurke@gmail.com> wrote:
+>> Thanks for looking into this.
+>>
+>> I was able to reproduce it from scratch, but I followed my earlier
+>> workflow where I first created the subrepos, and then later renamed
+>> it. At the time I was not able to find any command to rename without
+>> changing the path (and I was not able find one now either, is there
+>> any?), so I edited name and path in .gitmodules and ran git submodule
+>> sync. Am I asking for trouble doing it that way?
+>
+> "rename without changing the path" sounds like a red flag to me,
+> as the submodule name was introduced specifically to be a constant
+> as the path may change, whereas the name ought to never change.
+>
+>
+>
+>
+>>
+>> Let me know if you need the exact steps I followed.
+>
+> Well yes, ideally as a shell script (or even embedded into our test suite).
