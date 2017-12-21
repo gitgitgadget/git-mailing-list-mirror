@@ -2,89 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563DB1F406
-	for <e@80x24.org>; Thu, 21 Dec 2017 09:47:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00FBF1F406
+	for <e@80x24.org>; Thu, 21 Dec 2017 11:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751727AbdLUJr4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 04:47:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44706 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750884AbdLUJrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 04:47:52 -0500
-Received: (qmail 25029 invoked by uid 109); 21 Dec 2017 09:47:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Dec 2017 09:47:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18595 invoked by uid 111); 21 Dec 2017 09:48:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 21 Dec 2017 04:48:17 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 21 Dec 2017 04:47:49 -0500
-Date:   Thu, 21 Dec 2017 04:47:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2 4/4] t/Makefile: introduce TEST_SHELL_PATH
-Message-ID: <20171221094749.GA23160@sigill.intra.peff.net>
-References: <20171208104647.GA4016@sigill.intra.peff.net>
- <20171208104722.GD4939@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1712081602570.4318@virtualbox>
- <20171208220046.GA26270@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1712091443560.4318@virtualbox>
- <20171210142309.GA19453@sigill.intra.peff.net>
- <xmqq4lox57c9.fsf@gitster.mtv.corp.google.com>
- <20171215104101.GA11637@sigill.intra.peff.net>
- <xmqqmv2kq66p.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmv2kq66p.fsf@gitster.mtv.corp.google.com>
+        id S1751884AbdLULLw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 06:11:52 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:37512 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751702AbdLULLu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 06:11:50 -0500
+Received: by mail-pf0-f194.google.com with SMTP id n6so13827142pfa.4
+        for <git@vger.kernel.org>; Thu, 21 Dec 2017 03:11:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=PyILdMmJ0BSWaP+2H4WOvMhi1Wvj/+wBZQYkI513lSs=;
+        b=BuAVMZrmTpb1inZYjgEfk65Kb4xGjaKy1Y/cXrbx+QfesC/ysC5rQtuNyh4+DDa/gU
+         bxk/t+84D0OnuFH1vRPEjB2TEhkMW0jrn3ZoE6vSrlCLbmFYVUIYnIrIl0CNqJ8sSZAU
+         nEXTHt3Pzm67/zgVJ0h8WPpVTRxVfO0C87ZHU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=PyILdMmJ0BSWaP+2H4WOvMhi1Wvj/+wBZQYkI513lSs=;
+        b=akZrvxEk2ggtOC0JBQagcJuN4xT67qJ/ljUMLtwCkFutoyDZNkU0VpJCYAm26T/7ks
+         xMuaTbaHf5a0qG8Ug7OEE/kl6SbRc7CdNNzUnvIV7GdryFupMNPxXkc5Wx+TWv5v2Q0A
+         kaG5/h3U58+rVJdb/t/n5os/+N/Y8MELVKgVItInwRdaDLReqC1g/v/jfCi09tDz7j/8
+         Ye/iDUGY29yYKEPULsKpLgNl/XxhghabM16N7tq/iFQokMxgJM4h/JaSQpAHX6OIawIK
+         FZb6/tEeNA1z8ftZI9GOgjyRWKvxTkqIJSMOVgR766aSCSUuj51LXg7k+9x2NbD2FEqc
+         7tHA==
+X-Gm-Message-State: AKGB3mJZf1kYBOy+VWIkuLIYhJ+MyamO1+tCOzXx9T5syTOncBdbmRYo
+        0vMFILvFf0DPDBJFchAAVQ9wmRdG
+X-Google-Smtp-Source: ACJfBoszpKB0mKi9eY/Xj90Gbhjjb9WWEZ4e63eIPv+6FIQznhN9Hs4w9KfwaRSuxRVzrGntndHxvA==
+X-Received: by 10.101.72.76 with SMTP id i12mr9209575pgs.436.1513854709794;
+        Thu, 21 Dec 2017 03:11:49 -0800 (PST)
+Received: from ldiamand-t3610.corp.roku ([81.145.207.254])
+        by smtp.gmail.com with ESMTPSA id n3sm33705912pgq.30.2017.12.21.03.11.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 21 Dec 2017 03:11:48 -0800 (PST)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     viniciusalexandre@gmail.com, miguel.torroja@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>,
+        gvanburgh@bloomberg.net, Luke Diamand <luke@diamand.org>
+Subject: [PATCH 0/1] git-p4: update multiple shelved change lists
+Date:   Thu, 21 Dec 2017 11:06:13 +0000
+Message-Id: <20171221110614.29300-1-luke@diamand.org>
+X-Mailer: git-send-email 2.15.0.276.g89ea799.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 15, 2017 at 08:58:22AM -0800, Junio C Hamano wrote:
+This change lets you update several P4 changelists in sequence. Say
+you have several git commits which are all somehow related. You would
+start by shelving them (e.g. for a review), something like this:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think (4) and (5) are the only things that actually change the
-> > behavior in a meaningful way. But they're a bit more hacky and
-> > repetitive than I'd like. Especially given that I'm not really sure
-> > we're solving an interesting problem. I'm happy enough with the patch as
-> > shown, and I do not recall anybody complaining about the current
-> > behavior of these options.
-> 
-> OK.  Thanks for thinking it through.
+ git p4 submit --origin HEAD^2 --shelve
 
-I took one final look at this, wondering if it ought to follow the
-"write to BUILD-OPTIONS only if set" pattern that some other variables
-do. But I think that just ends up more confusing, because of the way we
-use the variable from both the Makefile and test-lib.sh. So it makes
-this work:
+You then make changes to these commits (in git) and now need to re-shelve
+them. Before this change you would need to cherry-pick each change onto
+a clean branch and do "git p4 --update-shelve", then remove the tip and
+repeat.
 
-  make
-  make -C t TEST_SHELL_PATH=whatever
+With this change, you can just do:
 
-but not quite this:
+ git p4 submit --origin HEAD^2 --update-shelve $CL1 --update-shelve $CL2
 
-  make TEST_SHELL_PATH=one
-  make -C t TEST_SHELL_PATH=two
+If the shelved changelists overlap (one changelist touches the same line
+as another) then this won't work, but that problem already exists with
+the --shelve option. Solving that is pretty hard to do as P4 really
+only understands files, not changes. Despite this shortcoming, it's
+very useful to be able to do update shelved changelists like this.
 
-because in the second case, we use "two" to invoke the test script, but
-a "--tee" re-exec would use "one". Which is pretty subtle.
+Luke Diamand (1):
+  git-p4: update multiple shelved change lists
 
-I really wish there was a way for a shell script to find out which
-interpreter it was currently using, but I couldn't come up with a
-portable way to do so (on some systems, /proc/$$/exe works, but that's
-obviously not something we should count on).
+ Documentation/git-p4.txt |  8 +++++++-
+ git-p4.py                | 41 ++++++++++++++++++++++++++---------------
+ t/t9807-git-p4-submit.sh | 24 ++++++++++++++----------
+ 3 files changed, 47 insertions(+), 26 deletions(-)
 
-So anyway. I think I'm OK with the series as-is.
+-- 
+2.15.0.276.g89ea799.dirty
 
--Peff
