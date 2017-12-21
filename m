@@ -2,96 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD4B11F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 21:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A2E41F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 21:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755365AbdLUV0v (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 16:26:51 -0500
-Received: from mout.web.de ([212.227.17.12]:63690 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753593AbdLUV0u (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 16:26:50 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1o86-1fHUh81CNG-00tlZ3; Thu, 21
- Dec 2017 22:26:48 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3 1/1] check-non-portable-shell.pl: Quoted `wc -l` is not portable
-Date:   Thu, 21 Dec 2017 22:26:46 +0100
-Message-Id: <20171221212646.24461-1-tboegi@web.de>
-X-Mailer: git-send-email 2.15.1.271.g1a4e40aa5d
-In-Reply-To: <xmqqh8t2ckgw.fsf@gitster.mtv.corp.google.com>
-References: <xmqqh8t2ckgw.fsf@gitster.mtv.corp.google.com>
+        id S1754760AbdLUVr1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 16:47:27 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52838 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754637AbdLUVrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 16:47:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C37AD1C85;
+        Thu, 21 Dec 2017 16:47:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7FeAy/ZFKgg/JWQ5DomRIW9l9ks=; b=sKQQZp
+        Dz7/a4EO/HGopfxA0ifmM4vMkm5+JS3UC/dp7Oe6tSzsImwkx6UOjjXDMwFof8Ud
+        YwZ76y4gikbvwEKc3eQR1lqgA8/vNktXH48urQuJqy16Kz9rwh+EU2tJeqF/fmBD
+        v404jxS5li9ZhU/M6MeufUvePzMwDOVHAHroQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ECMeoy2sPlLxu1YEazs0TS+HZouUR0Ih
+        nCQK4ASrnruHdVKaNAxhkOQyfBlRJmQSKSHTgS48eTTqjLUC4/nm/QFoiAtfeuKk
+        Z8D6ub2GYxlQr9kYBXYuGvbRQer8iTmxHvCYMrzBM9gURWxj1JQD9GPDNAHGJ1Dd
+        w2Nemti/w/g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8405ED1C84;
+        Thu, 21 Dec 2017 16:47:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F23ECD1C83;
+        Thu, 21 Dec 2017 16:47:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alex Vandiver <alexmv@dropbox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH 2/6] fsmonitor: Add dir.h include, for untracked_cache_invalidate_path
+References: <20171219002858.22214-1-alexmv@dropbox.com>
+        <95804e03dec9bd9d1a28ab92ed4356c37950468f.1513642743.git.alexmv@dropbox.com>
+        <c8cf261d9d620d8123e8bfa5aa952fa55685a8db.1513642743.git.alexmv@dropbox.com>
+        <xmqqtvwmv5fl.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.10.1712201108190.10810@alexmv-linux>
+Date:   Thu, 21 Dec 2017 13:47:17 -0800
+In-Reply-To: <alpine.DEB.2.10.1712201108190.10810@alexmv-linux> (Alex
+        Vandiver's message of "Wed, 20 Dec 2017 12:59:31 -0800 (PST)")
+Message-ID: <xmqqfu83u522.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:R+KChyDp4wyA6Q2FDBpt4BKHqqe+m0XpoTywtzv0NZj6lHqTedu
- sMRAKVprqJsxUT0tH5clWN0S5ygmHEb8DnIOvhIKKyvL+I2KvpWrvZVGA3XeFUkQPFPF+OS
- 8eWh3Fj6UfDPHK+CyRAjMwT+PbxrHjFV2mGOE3XLs8yexWo4ubH/Hv/uGp+7WVF1wOIdQIs
- h/TCsxLQB94mZSLsle8YQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GJ7Xc7Gxj5E=:6jX/1pOplm1QhZuSBDNvIS
- OdcUv+sbQggZ6+RRrFIo/notaVwPfBdq7gh+qgZRsMfyT7jKd5IuG1TxEiyQNhjyslaYPpVQT
- 77csLEA2wr5fFF2EN/5YKudzS1dd8f3OYZbbiLzfdL67u77VDqG24HPSFZUCjob9BD6BHd/EX
- ajzyRdy/h6gWgfC0gCax/UY5PFNrMkjSURgpFMvhXeimjjo6dn9HJXcsuoCOnuPyxmXCr+DIi
- uUpxaPUyvovac0St9AHtkMrlsTYrHaJk3Q5BInAS5jkmbhp5uqgWD/CgFs+xEDiAS5rcPojJp
- Pwpepo77zrcR/ryaohtBIXuZSAp+17DTgcB034aoqzOOEj53ChYpt6aIFA5VfrrIkXsY1/8KO
- 0vpQjSYR6NHAqjXeXaJN4szsoeDtvPLJTp6U/v9nlZSpTbS1ZsIWZVysKfMdjmcTM1OXbFrB8
- AEZFZnKTAAmg+EaO9yXcmTfgGvjHzRBWIeyfGjiMgldhDep15RnmhKdvyccg9nPRuyu6+JsEb
- gc+WVJ/pamao8mrkbhTWqQCLv21r6MqiKw2P4x8EB9avRtvwsHybNUadNsPvgff5wVlvx/OUk
- OxLFqmN8++7WiHh5NUKSIOS8KlS861I8/o/N1F/pH0UQHbpd14HQHtvJ7ScnOYebFsIq8OCT6
- YgFQIK/+VYw5dcJoUzxxsAs30y/TJhS42eix+4NNbljhDUL1VyBaJ4N1dYqt0PNHeXI31Vixj
- S0TSAnJoTsJQqHLkUDZgdKf0rnZctuSqhSU38z+9IMteqMGKPyaE9MQsPJSKQH7QFZqwmqAgu
- JjCqn3H5QI01qDc8Dg8nSQrofUcF9x5Xvqxpr0zDZ9G8Sq186DoFVPggZT5IXJ67zb3P8Av
+Content-Type: text/plain
+X-Pobox-Relay-ID: 847974C0-E698-11E7-B6A5-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+Alex Vandiver <alexmv@dropbox.com> writes:
 
-wc -l was used to count the number if lines in test scripts.
-$ wc -l Makefile
-gives a line like this:
-105 Makefile
-while Mac OS has 4 leading spaces:
-     105 Makefile
+>> But I am not sure if this is a right direction to go in.  If a .C
+>> user of fsmonitor needs (does not need) things from dir.h, that file
+>> can (does not need to) include dir.h itself.
+>
+> Hm; I was patterning based on existing .h files, which don't seem shy
+> about pulling in other .h files.
 
-And this means that shell expressions like
-test "$(wc -l <expect)" = "4" don't work under Mac OS,
-
-Commit fb3340a6 introduced test_line_count() as a portable solution.
-
-Add a check in check-non-portable-shell.pl to find '"' between
-`wc -l` and '=' and hint the user about test_line_count().
-
-Reviewed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
- t/check-non-portable-shell.pl | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index 03dc9d285..e07f02843 100755
-
-Use () around the hint.
-Thanks to Eric for the sharp eyes.
-
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -21,6 +21,7 @@ while (<>) {
- 	/^\s*declare\s+/ and err 'arrays/declare not portable';
- 	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)';
- 	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (please use =)';
-+	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (please use test_line_count)';
- 	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
- 	# this resets our $. for each file
- 	close ARGV if eof;
--- 
-2.15.1.271.g1a4e40aa5d
+IIUC, existing X.h do pull in Y.h when X.h uses a structure or a
+typedef defined in Y.h (but using pointer to such a structure or a
+type does not count) defined in Y.h; in such a case, a user of X.h
+that wants to use what is defined in X.h would not be able to use
+it without somehow knowing the shape of such a structure or type and
+would be forced to pull in Y.h itself.  "static inline" falls into
+the same category---as it stands, anybody that includes fsmonitor.h
+and wants to use one of these static inline functions would need to
+have definitions from dir.h, which I agree is wrong and I understand
+that you want to include dir.h there.
 
