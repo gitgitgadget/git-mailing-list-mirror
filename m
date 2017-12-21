@@ -2,103 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1390D1F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 17:14:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB011F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 17:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753752AbdLUROT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 12:14:19 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33140 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751766AbdLUROS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 12:14:18 -0500
-Received: by mail-pf0-f171.google.com with SMTP id y89so14206300pfk.0
-        for <git@vger.kernel.org>; Thu, 21 Dec 2017 09:14:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references:date
-         :mime-version:content-transfer-encoding;
-        bh=O+FxQJb+4dqlIfgNhDNNIHLHDh1wUO3aeeV6Y/40Hvw=;
-        b=i6SPv31kyZjTyftTEgQrvUKZ72ebVEPeu/jkUqVoozMLdnHvr0tXawu0YbCbjE5pCv
-         1u1oUcNhl37rW4TDR4qTqa+fCTRZatICqt2x1Xk5WEOB1+rV6VwJWgpvcVRvbSBuJR5t
-         FDDVngA6pHcayb2TLneH+/aqrWj91XJyruXjzbihVNn4uGijIJNVoUPrnuf0RNeV5DU1
-         ivRifyleWtz9cFvSbzeLFm+E8oowEFupcWFpDcdLVl28YaQ0nIlza78gOZwlPHshqs/Z
-         Cs9C+G+3TLX7D6bvYbJD1CW4B4NNJxuWV0fvaQcxMRpLEEHeuTIHBEqcHb/WywiGviRV
-         NTww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:date:mime-version:content-transfer-encoding;
-        bh=O+FxQJb+4dqlIfgNhDNNIHLHDh1wUO3aeeV6Y/40Hvw=;
-        b=gqhbW6Mu3u2EMWDauttVshXBPqM8W08qXwjpNz8AwM+APKMoacKKZee0En1dQTsnFc
-         kl4Qk4wf3K8xPzMeuYgAilkBDF9gvInIVt06hCpL7y8IB7Oie7Rxhva+dmVO3oDYtXwj
-         /IMHu9ODA6A1C0K+bD8/AoMzATSsTFMpyFlGg0hpqPPdJI9XObAqnLOJrX6X5BDEe0qS
-         e5C/oeji4gVQ9+euVtQ0p8CbDtZBlEkPuwKflXOPv5SM3aoioo3iuA5CIk8ijeDcJuMA
-         XMuBO0w1XQEdzRe3HXyWsa+GxrYu/q0X71SW2tJdwvCsUWIq3x/d7gEDt6Ai4NzArate
-         ndSA==
-X-Gm-Message-State: AKGB3mIzy/MyMuju3Bl8wTzOpkHjgInXxVklQu+tvTiF3GfPLtPy4XNQ
-        Ku4TdoGknj+gsSmQvvZNikA=
-X-Google-Smtp-Source: ACJfBov58jl9FLf3gunGsjwIToBxy9wSdc9tZkMfNryfv/Dw60MwyN7E5CK88MD8qzjgoqMWdL7aeQ==
-X-Received: by 10.99.64.68 with SMTP id n65mr10132441pga.312.1513876458263;
-        Thu, 21 Dec 2017 09:14:18 -0800 (PST)
-Received: from unique-pc ([117.246.179.102])
-        by smtp.gmail.com with ESMTPSA id i186sm37635913pfg.178.2017.12.21.09.14.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Dec 2017 09:14:17 -0800 (PST)
-Message-ID: <1513876450.9646.6.camel@gmail.com>
-Subject: Re: Error in `git': free(): invalid pointer (was Re: [PATCH]
- sequencer: improve config handling)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     "phillip.wood@talktalk.net" <phillip.wood@talktalk.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <25620501.1048091513875229038.JavaMail.defaultUser@defaultHost>
-References: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
-         <20171213114621.30250-1-phillip.wood@talktalk.net>
-         <1513794792.9785.2.camel@gmail.com>
-         <25620501.1048091513875229038.JavaMail.defaultUser@defaultHost>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Thu, 21 Dec 2017 22:44:10 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
+        id S1753535AbdLURrN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 12:47:13 -0500
+Received: from siwi.pair.com ([209.68.5.199]:44164 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753199AbdLURrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Dec 2017 12:47:13 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 516E7844D4;
+        Thu, 21 Dec 2017 12:47:12 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 14ABF844C3;
+        Thu, 21 Dec 2017 12:47:12 -0500 (EST)
+Subject: Re: [PATCH 3/4] status: update short status to use --no-ahead-behind
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171220144245.39401-1-git@jeffhostetler.com>
+ <20171220144245.39401-4-git@jeffhostetler.com>
+ <20171220162637.GC31149@sigill.intra.peff.net>
+ <1c019725-7715-496e-bad6-9d47d2bae834@jeffhostetler.com>
+ <20171221153950.GA14411@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <54aad332-cb74-345d-4bed-96f0814a804f@jeffhostetler.com>
+Date:   Thu, 21 Dec 2017 12:47:11 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
+MIME-Version: 1.0
+In-Reply-To: <20171221153950.GA14411@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2017-12-21 at 16:53 +0000, phillip.wood@talktalk.net wrote:
-> Hm, There is a problem with sequencer_remove_state() which does 
+
+
+On 12/21/2017 10:39 AM, Jeff King wrote:
+> On Thu, Dec 21, 2017 at 09:18:17AM -0500, Jeff Hostetler wrote:
 > 
-> free(opts->gpg_sign)
+>>> This patch will affect "git status --porcelain", too. That's not
+>>> supposed to change in incompatible ways. I guess it's up for debate
+>>> whether callers are meant to handle any arbitrary string inside the []
+>>> (we already show "[gone]" for some cases), since AFAICT the format of
+>>> the tracking info is left completely vague in the documentation.
+>>>
+>>> (I'd also hope that everybody is using --porcelain=v2 if they can, but
+>>> we should still avoid breaking v1).
+>>
+>> I hadn't intended to alter V1 output.  I'll disable the new feature
+>> when V1 is selected.
 > 
-> however unless a gpg key was given on the commandline, opts->gpg is 
-> initialized to "" which is statically allocated. 
+> To be clear, I am on the fence regarding the "is it a breaking change"
+> line. Certainly if the caller says "--no-ahead-behind", I don't see any
+> harm in doing what they asked.
 > 
-> This untested diff should fix that,
-
-It did seem to. I don't get that error any more.
-
-
->  but I'm not sure if you're problem 
-> is related to it
-
-As the fix you suggested did work, I think the problem is related. Did
-you have anything else in mind when you said you're not sure whether or
-not it's related?
-
-
-> also I'm on webmail so apologies if the patch is 
-> mangled)
+> But one further complication is that this may be triggered by config.
+> And that goes for --porcelain=v2, as well. Even though the v2
+> documentation specifically says "ignore headers you don't recognize",
+> would any callers be confused if a header is omitted due to a user's
+> config?
 > 
+> I guess for "branch.ab", the answer is "probably not", since it is
+> already documented to appear only if certain conditions are met. So
+> probably "omit branch.ab" is an OK change, as is "add a new header".
+> But I just wonder if it would be simpler to ignore the config entirely
+> for porcelain outputs (and require the explicit command-line option).
 
-No issues. The patch seems quite small :)
+I like that actually.  Have the porcelain versions only use the
+command line option and do what is asked.  And let the short/long
+forms use both the command line option and the config setting.
+That makes it explicit for scripts that parse the output.
 
+Thanks!
 
-Thanks,
-Kaartic
+> 
+> Personally, I am not a purist when it comes to config and plumbing, and
+> I'd be fine with having the config impact v2 (it is a hint from the user
+> that they do not want to spend time on the computation, so having
+> scripts respect that would be what the user wants). If you really have a
+> script that is unhappy missing "branch.ab", then you can either choose
+> not to set that config, or you can fix the script to use "--ahead-behind"
+> to override the config. But I'm not sure everybody in the community
+> would necessarily agree with me.
+> 
+> -Peff
+> 
