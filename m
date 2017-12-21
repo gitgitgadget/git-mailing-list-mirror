@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B5171F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 19:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3E461F424
+	for <e@80x24.org>; Thu, 21 Dec 2017 19:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755076AbdLUTTu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 14:19:50 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:56348 "EHLO
+        id S1755153AbdLUTUX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 21 Dec 2017 14:20:23 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:53680 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754544AbdLUTTt (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 21 Dec 2017 14:19:49 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vBLJJ7Tt012166;
-        Thu, 21 Dec 2017 11:19:07 -0800
+        by vger.kernel.org with ESMTP id S1755114AbdLUTUX (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 21 Dec 2017 14:20:23 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.21/8.16.0.21) with SMTP id vBLJIK7I001381;
+        Thu, 21 Dec 2017 11:19:08 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2ew27n83x1-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2ew18q872k-1;
         Thu, 21 Dec 2017 11:19:07 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id A0672220F5EE;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 97229220F5EB;
         Thu, 21 Dec 2017 11:19:07 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 97BF32CDE6C;
+        by smtp.yojoe.local (Postfix) with ESMTP id 904DA2CDE83;
         Thu, 21 Dec 2017 11:19:07 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     a.krey@gmx.de, Elijah Newren <newren@gmail.com>
-Subject: [PATCH 3/3] merge-recursive: Avoid incorporating uncommitted changes in a merge
-Date:   Thu, 21 Dec 2017 11:19:07 -0800
-Message-Id: <20171221191907.4251-3-newren@gmail.com>
+Subject: [PATCH 2/3] move index_has_changes() from builtin/am.c to merge.c for reuse
+Date:   Thu, 21 Dec 2017 11:19:06 -0800
+Message-Id: <20171221191907.4251-2-newren@gmail.com>
 X-Mailer: git-send-email 2.15.1.436.g63a861020b
 In-Reply-To: <20171221191907.4251-1-newren@gmail.com>
 References: <CABPp-BGy3_RyVQfCm+9O_AAfKA0_CZ5ajJE7NuLbToERWyWmqQ@mail.gmail.com>
@@ -56,64 +56,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-builtin/merge.c contains this important requirement for merge strategies:
-	/*
-	 * At this point, we need a real merge.  No matter what strategy
-	 * we use, it would operate on the index, possibly affecting the
-	 * working tree, and when resolved cleanly, have the desired
-	 * tree in the index -- this means that the index must be in
-	 * sync with the head commit.  The strategies are responsible
-	 * to ensure this.
-	 */
-
-merge-recursive does not do this check directly, instead it relies on
-unpack_trees() to do it.  However, merge_trees() has a special check for
-the merge branch exactly matching the merge base; when it detects that
-situation, it returns early without calling unpack_trees(), because it
-knows that the HEAD commit already has the correct result.  Unfortunately=
-,
-it didn't check that the index matched HEAD, so after it returned, the
-outer logic ended up creating a merge commit that included something
-other than HEAD.
+index_has_changes() is a function we want to reuse outside of just am,
+making it also available for merge-recursive and merge-ort.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                        | 7 +++++++
- t/t6044-merge-unrelated-index-changes.sh | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ builtin/am.c | 37 -------------------------------------
+ cache.h      |  9 +++++++++
+ merge.c      | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 37 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 2ecf495cc2..780f81a8bd 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1952,6 +1952,13 @@ int merge_trees(struct merge_options *o,
- 	}
+diff --git a/builtin/am.c b/builtin/am.c
+index 3d98e52085..a02d5186cb 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1142,43 +1142,6 @@ static void refresh_and_write_cache(void)
+ 		die(_("unable to write index file"));
+ }
 =20
- 	if (oid_eq(&common->object.oid, &merge->object.oid)) {
-+		struct strbuf sb =3D STRBUF_INIT;
+-/**
+- * Returns 1 if the index differs from HEAD, 0 otherwise. When on an unb=
+orn
+- * branch, returns 1 if there are entries in the index, 0 otherwise. If =
+an
+- * strbuf is provided, the space-separated list of files that differ wil=
+l be
+- * appended to it.
+- */
+-static int index_has_changes(struct strbuf *sb)
+-{
+-	struct object_id head;
+-	int i;
+-
+-	if (!get_oid_tree("HEAD", &head)) {
+-		struct diff_options opt;
+-
+-		diff_setup(&opt);
+-		opt.flags.exit_with_status =3D 1;
+-		if (!sb)
+-			opt.flags.quick =3D 1;
+-		do_diff_cache(&head, &opt);
+-		diffcore_std(&opt);
+-		for (i =3D 0; sb && i < diff_queued_diff.nr; i++) {
+-			if (i)
+-				strbuf_addch(sb, ' ');
+-			strbuf_addstr(sb, diff_queued_diff.queue[i]->two->path);
+-		}
+-		diff_flush(&opt);
+-		return opt.flags.has_changes !=3D 0;
+-	} else {
+-		for (i =3D 0; sb && i < active_nr; i++) {
+-			if (i)
+-				strbuf_addch(sb, ' ');
+-			strbuf_addstr(sb, active_cache[i]->name);
+-		}
+-		return !!active_nr;
+-	}
+-}
+-
+ /**
+  * Dies with a user-friendly message on how to proceed after resolving t=
+he
+  * problem. This message can be overridden with state->resolvemsg.
+diff --git a/cache.h b/cache.h
+index a2ec8c0b55..d8b975a571 100644
+--- a/cache.h
++++ b/cache.h
+@@ -644,6 +644,15 @@ extern int write_locked_index(struct index_state *, =
+struct lock_file *lock, unsi
+ extern int discard_index(struct index_state *);
+ extern void move_index_extensions(struct index_state *dst, struct index_=
+state *src);
+ extern int unmerged_index(const struct index_state *);
 +
-+		if (index_has_changes(&sb)) {
-+			err(o, _("Dirty index: cannot merge (dirty: %s)"),
-+			    sb.buf);
-+			return 0;
++/**
++ * Returns 1 if the index differs from HEAD, 0 otherwise. When on an unb=
+orn
++ * branch, returns 1 if there are entries in the index, 0 otherwise. If =
+an
++ * strbuf is provided, the space-separated list of files that differ wil=
+l be
++ * appended to it.
++ */
++extern int index_has_changes(struct strbuf *sb);
++
+ extern int verify_path(const char *path);
+ extern int strcmp_offset(const char *s1, const char *s2, size_t *first_c=
+hange);
+ extern int index_dir_exists(struct index_state *istate, const char *name=
+, int namelen);
+diff --git a/merge.c b/merge.c
+index e5d796c9f2..195b578700 100644
+--- a/merge.c
++++ b/merge.c
+@@ -1,4 +1,6 @@
+ #include "cache.h"
++#include "diff.h"
++#include "diffcore.h"
+ #include "lockfile.h"
+ #include "commit.h"
+ #include "run-command.h"
+@@ -15,6 +17,37 @@ static const char *merge_argument(struct commit *commi=
+t)
+ 		return EMPTY_TREE_SHA1_HEX;
+ }
+=20
++int index_has_changes(struct strbuf *sb)
++{
++	struct object_id head;
++	int i;
++
++	if (!get_oid_tree("HEAD", &head)) {
++		struct diff_options opt;
++
++		diff_setup(&opt);
++		opt.flags.exit_with_status =3D 1;
++		if (!sb)
++			opt.flags.quick =3D 1;
++		do_diff_cache(&head, &opt);
++		diffcore_std(&opt);
++		for (i =3D 0; sb && i < diff_queued_diff.nr; i++) {
++			if (i)
++				strbuf_addch(sb, ' ');
++			strbuf_addstr(sb, diff_queued_diff.queue[i]->two->path);
 +		}
- 		output(o, 0, _("Already up to date!"));
- 		*result =3D head;
- 		return 1;
-diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unr=
-elated-index-changes.sh
-index 5e472be92b..23b86fb977 100755
---- a/t/t6044-merge-unrelated-index-changes.sh
-+++ b/t/t6044-merge-unrelated-index-changes.sh
-@@ -112,7 +112,7 @@ test_expect_success 'recursive' '
- 	test_must_fail git merge -s recursive C^0
- '
-=20
--test_expect_failure 'recursive, when merge branch matches merge base' '
-+test_expect_success 'recursive, when merge branch matches merge base' '
- 	git reset --hard &&
- 	git checkout B^0 &&
-=20
++		diff_flush(&opt);
++		return opt.flags.has_changes !=3D 0;
++	} else {
++		for (i =3D 0; sb && i < active_nr; i++) {
++			if (i)
++				strbuf_addch(sb, ' ');
++			strbuf_addstr(sb, active_cache[i]->name);
++		}
++		return !!active_nr;
++	}
++}
++
+ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 		      const char **xopts, struct commit_list *common,
+ 		      const char *head_arg, struct commit_list *remotes)
 --=20
 2.15.1.436.g63a861020b
 
