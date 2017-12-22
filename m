@@ -7,88 +7,80 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3EB71F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 23:55:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4B81F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 23:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756906AbdLVXzk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 18:55:40 -0500
-Received: from mout.gmx.net ([212.227.17.21]:61814 "EHLO mout.gmx.net"
+        id S1756923AbdLVXzp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 18:55:45 -0500
+Received: from mout.gmx.net ([212.227.17.22]:55075 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756902AbdLVXzj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 18:55:39 -0500
+        id S1756902AbdLVXzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 18:55:44 -0500
 Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyA2L-1f4hxw42rt-015Y02; Sat, 23
- Dec 2017 00:55:34 +0100
-Date:   Sat, 23 Dec 2017 00:55:33 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MJGFi-1eQsCX2Azi-002qae; Sat, 23
+ Dec 2017 00:55:39 +0100
+Date:   Sat, 23 Dec 2017 00:55:38 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH 0/5] A couple of sequencer cleanups
-Message-ID: <cover.1513986836.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 1/5] rebase: do not continue when the todo list generation
+ failed
+In-Reply-To: <cover.1513986836.git.johannes.schindelin@gmx.de>
+Message-ID: <834ea65b997a052dc47f1bcda5d95865d79a20c9.1513986836.git.johannes.schindelin@gmx.de>
+References: <cover.1513986836.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Qt8yG6rg3JDSZlbBE0/nn+Okz5nySqfchRiQzSpI/G2bRvEy2gl
- Uz+fh8OfHUn1VfFaKNZoIQ/swthCbcU3eMAGvIPOcyDp4YjuoI5jz3SSo5fbbU8Dd+ufyin
- NhmooTUfeDOW25NC3z98qSsF9WOvEunRx8fpsJxv4wDleGWOusay23X3l/vxf9EcqpQ2aav
- yFnRUt50p5iGhYe1ZPv6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:M0DLS5awT1s=:kr5i+BG+DNYTpliyv1zMyL
- 14yFe0f1Da9KEHl848wJ2lAFTNeaPOxTF07GTyLYABwspYtsPbkmLkmQ0I010MPDTN971hLzI
- Rvd8fN8T+ut2NwsS+fChB6b2yHJ4RnrG+ffnHRzMFMf8DlHx5DOUxPHWeXrgzEXcPBSuzIKZQ
- ab7xNqRC5UkSXr7BwyzWU3EeWAu4Uz/WIzUkR4SbiNYZg9XIlIIhLDusqALZdY84yAjtTaCrI
- PmxixldNV7potx77+0ItSZAmh9er6/lDxkQC/53qht6k+5wjLNcK4unqwNeVeMg/zOkq3jmeA
- eqyQj5ANH9/XHsS075K6PwS7/tjmzdC1e0XokrW0NXM/zaXIgOw2URkTSeqHpCk94Vza6Xpi0
- gtMw6auxeWKuZ8Wr594ac56B+GJuBQFt8LLmv10Njg+0qVryJWGo0FNRUvA/nPm3odXptA1Cm
- ku1wlQcjDwmUDjg2Wml/6Qg4XlFG7SyJnv8E9pZLNwjpbw5bIWht0IA6ShOPXlxADZvrinVOR
- FB+DaZQnmTwjqT5Aaa9WhM6x8UFnrrNobbFIuKSZefPrKp0ZC0+nTc/ZbxgR3T6nAvGjxhzqm
- lhLOnUs6SKD03h/b4CyCwlDMEGD02NGcq58KpK5dy6pu/bxdzNqG0R5IHzhpPIGmI4i0f7Eu8
- evVQxbuE9K2YU6Lt9qeKmktOgWaFeLaADgGQjKMUbqwpcIIc5DJEIlU7vVktmh2MyaEsW2FBX
- Wph+9HmEpuIhzYBuEZzj1o6WAMSsf02bQrUW2bhP7jrF5XeagyApN1a+Mysws+qZduUIQI0LF
- JKeY4UshLiVBGKYZUchfpV4yVJ/ixEGBH0lZfrOB5Sk2j6rE98=
+X-Provags-ID: V03:K0:E09h8uvNv/nPXSYeoEjX3N1FgKNG9syFyNcX0FUN193+P0HjdPh
+ adUvwqqrb8zPFXENpr2a8TKOOPUTIz8dLp5qBcuYQamfPduxbbZM9zrnF0l2ISfqrhEeqKo
+ o/rFL37K8PNK52u3YxCBPSB8yRZq7Kq1FnvOjvePRZCDgziXoJ/oic9XwIJO7qmLcBRfgAo
+ sx2vbXynlQ3NaJTeJq4GA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4LZ/0bHWdwE=:U/giGQkkuoCfw4han5Rgrp
+ dndxiRUR/R7j8Tf97Pbws1NmaF+ybtOMvbVOikmMGZK7Rv23Gnt+EWEdzasphb6ir1uJtv3iD
+ 0bOM05n4pCxsfoJT8YPwmhfQtbfi2OwhBjU2HbHAx3p3xm8jvw/7kiWTrv1Z/3vbfNkh2p+3M
+ VVdiKu4hB7QhtYWnZ2WTo00TS6M1C0RIxJegGMtgT0bjG7r7BAecIWSztnGHdgUX9n1cHRX1y
+ JIo09UpS05+nZFsH/2UHvmQsdF8fj5Fr4ItON3UyKnvRIgjurXPtFcIt5B0kzrP1QW+JJPJN1
+ SFZpfTb4b5sWD190XtbtGq4CNP1ytZORZpW5N/gqBgzW096/L2FeYFAeVKA31LJb0flMBp8Si
+ 504xiK1zYjSvhhtyhuBukwxGm60L8VcniU+xet2MWzRQ2j5p/VVVmkFOQmtUL15bjGCOE+eaE
+ X6yQRExJ/UEHTOgpEsto5QUVcOEz6iH+QGC5un1TWQ+uA8d8MyRhI9RKsk4jJxqwiYs9qOtbO
+ /jK6PY1aSxOC6ZhVid8C9hGrH+GghvBHxEIeYpwe7m7IJbBX0NSCZvzhSD6bNRxFAqV4IRXPZ
+ JfhOQFX42wf1fdBErcHYxPHG+Ey9DguKaMyGUkj33hzPIc95Zn1/CjexanxwQLgAuPYQOf0HZ
+ dDu4nc2AZM1RWuxe1frpZwL3uC7abPMQqFBKjhtsIjXF8fonoUgnEpWC76YV7VfPah0pIdX0i
+ lOd4BUu9YvjVMwAe/q4xxbqk6i7sa3S16o4xA9m+FA0azQeZDg/oih1Sg84W0BuqP6nvr3nKz
+ EATxwBy9a4jTyYuQQipIuBvVibdV4b+WnxUyvBnWEKgQ7IY1Pc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While working on patches to teach `git rebase -i` to recreate branch topology
-properly, i.e. replace the design of `--preserve-merges` by something much
-better, I stumbled across a couple of issues that I thought I should fix on the
-way.
+This is a *really* long-standing bug. As a matter of fact, this bug has
+been with us from the very beginning of `rebase -i`: 1b1dce4bae7 (Teach
+rebase an interactive mode, 2007-06-25), where the output of `rev-list`
+was piped to `sed` (and any failure of the `rev-list` process would go
+completely undetected).
 
-The patches are based on lb/rebase-i-short-command-names, mainly because the
-new `--recreate-merges` patches benefit from the patch "rebase -i: update
-functions to use a flags parameter", and I was too lazy to resolve the merge
-conflicts while rebasing the patch "sequencer: do not invent whitespace when
-transforming OIDs" to the current `master` branch.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-rebase--interactive.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Oh, and by the way, the `--recreate-merges` feature already works. I used it
-to develop the patches themselves. I do not have time to pass one last time
-over them, so they'll have to wait for next year to see the Git mailing list.
-If anyone wants to have a look over them, play with them, or even wants to
-review the patches:
-
-	https://github.com/git/git/compare/master...dscho:sequencer-shears
-
-
-Johannes Schindelin (5):
-  rebase: do not continue when the todo list generation failed
-  sequencer: strip bogus LF at end of error messages
-  sequencer: remove superfluous conditional
-  sequencer: report when noop has an argument
-  sequencer: do not invent whitespace when transforming OIDs
-
- git-rebase--interactive.sh |  3 ++-
- sequencer.c                | 30 ++++++++++++++++++------------
- 2 files changed, 20 insertions(+), 13 deletions(-)
-
-
-base-commit: 1795993488bef1b48e4224db096e9d12df075db2
-Based-On: lb/rebase-i-short-command-names at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git lb/rebase-i-short-command-names
-Published-As: https://github.com/dscho/git/releases/tag/sequencer-cleanups-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-cleanups-v1
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index e3f5a0abf3c..b7f95672bd9 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -893,7 +893,8 @@ fi
+ if test t != "$preserve_merges"
+ then
+ 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+-		$revisions ${restrict_revision+^$restrict_revision} >"$todo"
++		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
++	die "$(gettext "Could not generate todo list")"
+ else
+ 	format=$(git config --get rebase.instructionFormat)
+ 	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
 -- 
 2.15.1.windows.2
+
 
