@@ -2,113 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D54111F404
-	for <e@80x24.org>; Fri, 22 Dec 2017 11:51:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF1B1F404
+	for <e@80x24.org>; Fri, 22 Dec 2017 11:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754013AbdLVLvC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 06:51:02 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60852 "EHLO mout.gmx.net"
+        id S1752964AbdLVL5I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 06:57:08 -0500
+Received: from mout.web.de ([212.227.17.12]:64656 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751770AbdLVLu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 06:50:58 -0500
-Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LkP8Z-1f02u802Id-00cNHT; Fri, 22
- Dec 2017 12:50:51 +0100
-Date:   Fri, 22 Dec 2017 12:50:50 +0100 (STD)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: [PATCH] sequencer: assign only free()able strings to gpg_sign
-Message-ID: <f4420880aa4ee73b7c8e435de1efccf9a969fd41.1513943347.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751522AbdLVL5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 06:57:06 -0500
+Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M3SxQ-1fIwbF28qO-00r0bu; Fri, 22
+ Dec 2017 12:57:01 +0100
+Subject: [PATCH v2] http: use internal argv_array of struct child_process
+To:     Git List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
+ <CAPig+cQaQ9ae1e4eMfJMG4wykXe2tTgtvpxB1_Z=3XbitYeQyw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6bebb8a0-31ec-b20c-2430-2d69daa63dea@web.de>
+Date:   Fri, 22 Dec 2017 12:56:59 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:c4S5J7PHDDkT03M2LLmA7qQ0od9f6hZOmdHd512zQ9MwHBMndjD
- LviQuVj6hQu81wX4od/1nSTuan+YuBCGpSHfn/OG9T/ct03HFuyKbFNs0YgYJIidsRulRNm
- IguhESLsLZoR6YlzvIk6L0sLBHXVa69ZKBaRX90DllatmL1dYTNL+SQxsmzSFQeLjtKa+Kf
- eGLw0KVaEZWVNsDJ+R1tA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G/A58KGOwO4=:umGObzMuYd185OADwTaXNY
- bvD2HBOToHU76VKpyyShHICjDN/VVzs4/MSNfyXruiOWncs2EtuSw3UYuLnvbFgyvNgtbljwL
- vXuVtYbwWrNutHtaLSoDLy3uHTwyqYwZ2PLzmLc2cR6Ww0yHrD0MjW3Ng5K5c2UZx2EF7ZKuy
- Epfa1tFoxbW4Ncup0C6D8J42T67w6ue/tlm4jgq0vJC5Kz0RXbvlDfhddcrwJqoUmFHze8z25
- P6wLd+Qz+XBDyHBkKiK/fCCjjsj+iH7SbXZsbPpXe4xyZCaYKZrwXf5DXzhtRdU8mgoangjBd
- cPw9P0y0fJyTRJda82ivNPz4TWi7BuTqrNyhQJxaViXOhH+ZUb5FJl51IUvUDRLPWbSYzqLU+
- b4+UL6aAw2/uR5q1VH7Elf69QdtZMWtWVuvPL5n6eShEraJvU2xGIKuvbSb0FkJzDXpM2mwE4
- ghwspJVU0OvOWmB4NIY9EjEkIPxFHR8uSDL8m3sgRSxfG39Aa+I2C/nsSAQB8dujpkZYeNN8Y
- peswtVk5YezRPHnFnQK3eFM8rFjDiM0egtLw3GTu4ECrqTHdh+bWFTfz8OKIB7wLOQknqRZc7
- 64lXkiWhv4e3J9OOQ7VhhopSQERv1yxMsS5NNdQYqt6zzrgnzEG0IlG/3asa7omPvAQ/zHLlA
- h+lIxS8fLScdqL7g2EyVf1nSjmJO6u2v5LQ1suLBpX54vfmDde5/0A6ldGsPhaXbs7AOdrAgx
- RoQ/9vzqCKE7OMF/txbxCe/xQqIMMGL3bVcVNhXeAZfhp7rT20rG+fgBgED/UfA2KT5O/M+8v
- wSX6vk4CA6x0hKjoTS/EnOPhRIfh8C/APgYonsJibIxs9/bfTc=
+In-Reply-To: <CAPig+cQaQ9ae1e4eMfJMG4wykXe2tTgtvpxB1_Z=3XbitYeQyw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:pZRzbjN6e3wT8Xc8KXt8TCx3J/SARokx/VvVdToffzLVtq4Csxu
+ CMfHNL9BXrL5LHCTRMotYXxsJb8XxeP0+4fkooj8ITHFdQfHYwEJkPuIOj+TaFV9v46B+u3
+ OXVOMoFvyVp0zy3u1rDG2YdRTUbqGzFcnSKXSvhm1sOj9KqguaSI8QAHZI6vc4XjwMqYv6t
+ 8tEpO7huVnyK1Aik/Lexw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XrOuobjdgoA=:RDiaBLhRWHlEQPnxYJbZTn
+ 3/x22Et+T2lfZYVdqvi+/gDVJOgTJUdcLwa7VuoL4qUQdGBfoBbWPON8oqrnnCdw2FL4+sA73
+ xnYTGGLOCzzEaEVrmlIypQU2KCu1DCkmd5tceaj90ddU4CnXsdLyCSCAj9jGW/Dxl81fcZMDX
+ OwWLysFOlWyQc3dY6OOn4H76SZ0UrvUlvAZllD//QoB4MlBJW0uttEIBJMbsaPgwSGQxT8PJO
+ xPIMUxg5XY6d515kgSwT2STX76aMq6foKqaoIZjLMZziw+7TDT6jZyOC6ERYIY7XmOmP/fyHp
+ 9LTa0scfMdHKXMAgXpOUmN1BTNNxd3pJUkSdX4XXU/ap49+Gr0eZua6mSnuU/UiduTEkCKQuO
+ fPimh3aKA9kT9JFnVCusscMgtkQ6ldGaYs5EY0kXBfVMYbScuNgsprw4TIOC+x9Qqhgp1P8m/
+ HO4wonOTmF120FclvQhVOrzgN3qXjfyl84VaNDvyP+oAoQMSfpqKjgAfGox9LsnIaNVzeWV9j
+ /Bv1Mq8vpHD48x1VK1Ivi1B88UJA5hofa17fM6MMumlTBZ3CTY7uJ/xleSQ5WbfV0+z/P+ge5
+ sYIXohnEksffd2McqYBkTYcXFovmp0hzG6zp0tIh0/YJ0mJOOS44CeI78ZGlZVjPxc0Se5mp2
+ k/ZHz15jAC4o+XIHAOdAPxJPJmPjJeivIIJ+ulg/EVWwBzDQY7ebtiJkVwHodAKtrK0cvz0l8
+ fPjqSomeg82ZXekrkBbrBU+uJus5UZSyylFjoqrmBKaSwoc5ZY8wM6l5Fbt6HVA6V7oxHSKyh
+ YQ2JmcI2ec6/zekeVI2MLVCsQkhe4gEk2Dz2bnOmwZAGGrEfDBJ5tv/aOHYD0lI2V7Mr4Pz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The gpg_sign member of the replay_opts structure is of type `char *`,
-meaning that the sequencer deems the string to which gpg_sign points to
-be under its custody, i.e. it needs to be free()d by the sequencer.
+Avoid a strangely magic array size (it's slightly too big) and explicit
+index numbers by building the command line for index-pack using the
+embedded argv_array of the child_process.  Add the flag -o and its
+argument with argv_array_pushl() to make it obvious that they belong
+together.  The resulting code is shorter and easier to extend.
 
-Therefore, let's only assign malloc()ed buffers to it.
-
-Reported-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
+Change from v1: use argv_array_pushl for -o and tmp_idx.
 
-	Phillip, if you want to squash these changes into your patches,
-	I'd totally fine with that.
+Thanks, Eric, good idea!
 
-Based-On: pw/sequencer-in-process-commit at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git pw/sequencer-in-process-commit
-Published-As: https://github.com/dscho/git/releases/tag/sequencer-owns-gpg-sign-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-owns-gpg-sign-v1
- sequencer.c                   |  2 +-
- t/t3404-rebase-interactive.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ http.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 7051b20b762..1b2599668f5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -160,7 +160,7 @@ static int git_sequencer_config(const char *k, const char *v, void *cb)
- 	}
+diff --git a/http.c b/http.c
+index 215bebef1b..9f2fcc9ec4 100644
+--- a/http.c
++++ b/http.c
+@@ -2025,7 +2025,6 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	char *tmp_idx;
+ 	size_t len;
+ 	struct child_process ip = CHILD_PROCESS_INIT;
+-	const char *ip_argv[8];
  
- 	if (!strcmp(k, "commit.gpgsign")) {
--		opts->gpg_sign = git_config_bool(k, v) ? "" : NULL;
-+		opts->gpg_sign = git_config_bool(k, v) ? xstrdup("") : NULL;
- 		return 0;
- 	}
+ 	close_pack_index(p);
  
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 9ed0a244e6c..040ef1a4dbc 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1318,6 +1318,16 @@ test_expect_success 'editor saves as CR/LF' '
+@@ -2041,13 +2040,9 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 		die("BUG: pack tmpfile does not end in .pack.temp?");
+ 	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile);
  
- SQ="'"
- test_expect_success 'rebase -i --gpg-sign=<key-id>' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	set_fake_editor &&
-+	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
-+		>out 2>err &&
-+	test_i18ngrep "$SQ-S\"S I Gner\"$SQ" err
-+'
-+
-+test_expect_success 'rebase -i --gpg-sign=<key-id> overrides commit.gpgSign' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	test_config commit.gpgsign true &&
- 	set_fake_editor &&
- 	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
- 		>out 2>err &&
-
-base-commit: 28d6daed4f119940ace31e523b3b272d3d153d04
+-	ip_argv[0] = "index-pack";
+-	ip_argv[1] = "-o";
+-	ip_argv[2] = tmp_idx;
+-	ip_argv[3] = preq->tmpfile;
+-	ip_argv[4] = NULL;
+-
+-	ip.argv = ip_argv;
++	argv_array_push(&ip.args, "index-pack");
++	argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
++	argv_array_push(&ip.args, preq->tmpfile);
+ 	ip.git_cmd = 1;
+ 	ip.no_stdin = 1;
+ 	ip.no_stdout = 1;
 -- 
-2.15.1.windows.2
+2.15.1
