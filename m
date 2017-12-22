@@ -2,95 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86C841F404
-	for <e@80x24.org>; Fri, 22 Dec 2017 09:54:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8171F404
+	for <e@80x24.org>; Fri, 22 Dec 2017 10:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933539AbdLVI75 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 03:59:57 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:44299 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933524AbdLVI7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 03:59:54 -0500
-Received: by mail-qt0-f194.google.com with SMTP id m59so35456601qte.11
-        for <git@vger.kernel.org>; Fri, 22 Dec 2017 00:59:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=7kP8HRDSG269FSPolSwbogUS+hWTvQWrGoRx2XXb2bI=;
-        b=OO4wEmXIEnzwzCCA6QK0N4mT3MWY62JaD8EH/Ruz7phSIDtXitAaUtvrX6OUIplf8u
-         TrMjhOLK66C1gKqfroqnhYF4agNUdxa76WscaMOKZSyGbIaXN1OabOZaI5qHx96RXnQU
-         dVhgczfzrvpPW1oR3+2Fv2Ple43xjVGTc3DmXfDnnxdrMW1SBcIz1YbH0JfmrHImJQKX
-         xnSF67ScHJWlF51+KsC4NzdgHjmVP/Y+U0tsKCK9jbMn4us+r/dWN5f7GtQXoujm3H/n
-         quFHs/3u6rw3zzfm7cdLWQgzk4tTQIMioqf4TLxNKvxdRVmJF8/qyhTvGfiDQZDt8y19
-         AbQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=7kP8HRDSG269FSPolSwbogUS+hWTvQWrGoRx2XXb2bI=;
-        b=NkuZQ5CmH6JKgCva7vkGwVxynO0PP7QRZN0rvtuhls7vCkr/h/hlOPZCKmZn//loXM
-         HFS5m5rZQlmvuQh0DvCNl3DRtV3yvhfrclTtY8n2WVDGKo4iymJsAa4JfpnhDNPPrECK
-         NB0ekhZRdlf36iCNMpGQ4eHHGuq50fAFJxWMazm3rGvj6XvfyJnaAloxKkH8yFjrgC8I
-         lfboH6V/eyaXxHUlOe742AOkYX3txD3nboH30zTnhb/newLRc+lHZw2S789fOYrwmmjr
-         7oJQgAOGaOe+YhExqdqNWGc9ockiL3t/dnCYvQSpg2f4T3XAGIbryT72t+3EKwd+fPh6
-         Mb5Q==
-X-Gm-Message-State: AKGB3mJz/IfmDhtEHDHiK9u//iWX2WtCEUYt8AWzWuFHbC7b+cJxuJME
-        n2dO5Si3HA+2m9u+lcZsOICL9FT7DuLGXw+TsSs=
-X-Google-Smtp-Source: ACJfBosLempHX+HENjrnABGo+STqYLz6vaK8a3DLPDiOSB96kRKRqQwHvLcG2Y3Iy9c2zkbqc+MWuP/RFE3UbqKOyxw=
-X-Received: by 10.237.59.22 with SMTP id p22mr18691779qte.34.1513933193319;
- Fri, 22 Dec 2017 00:59:53 -0800 (PST)
+        id S1756086AbdLVKrr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 05:47:47 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:3764 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755906AbdLVKrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 05:47:43 -0500
+Received: from ms26nec.int.opaltelecom.net ([10.103.251.104])
+        by smtp.talktalk.net with SMTP
+        id SKrbedUJ4CbAZSKrbeKneo; Fri, 22 Dec 2017 10:47:40 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1513939660;
+        bh=UJW5HgHMnHsoHDBur6ulRwUDXbW+y2NiHqQJoOZmNNQ=;
+        h=Date:From:To:Subject:Cc:In-Reply-To:References;
+        b=oF7y2HvXzNnZLcs6nAApKWg5QhassMTR9QJ5L3YEn4Kus86virt1w9Ht3yHwpiD7v
+         8gzy379ohaOoRK2Gb23TnzV+RSYkONdt5X2v4FoZcfPAtMXkPfdTsNmyFCiR0A/7X3
+         HSyRLK9IoHyQjBGcLItIlVlzc0F0pQ3/Ky34crZk=
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=gCN1RMym0MIDZSr+K0TJSQ==:117
+ a=wcpVQE0W4qLcfTC1YB9uxQ==:17 a=9Ui_ZxslVaMA:10 a=IkcTkHD0fZMA:10
+ a=ocR9PWop10UA:10 a=pGLkceISAAAA:8 a=nN7BH9HXAAAA:8 a=evINK-nbAAAA:8
+ a=KPMBK_wALK_Xt_9ds-MA:9 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Received: from (82.10.83.37) by webmail.talktalk.co.uk;  Fri, 22 Dec 2017 10:47:39 +0000
+Message-ID: <23359630.1065831513939659692.JavaMail.defaultUser@defaultHost>
+Date:   Fri, 22 Dec 2017 10:47:39 +0000 (GMT)
+From:   "phillip.wood@talktalk.net" <phillip.wood@talktalk.net>
+To:     <kaartic.sivaraam@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Error in `git': free(): invalid pointer (was Re: [PATCH]
+ sequencer: improve config handling)
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <1513876450.9646.6.camel@gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.198.2 with HTTP; Fri, 22 Dec 2017 00:59:52 -0800 (PST)
-In-Reply-To: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
-References: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 22 Dec 2017 03:59:52 -0500
-X-Google-Sender-Auth: dcUgU_TIayWp3b3xIT6SQ34W7d0
-Message-ID: <CAPig+cQaQ9ae1e4eMfJMG4wykXe2tTgtvpxB1_Z=3XbitYeQyw@mail.gmail.com>
-Subject: Re: [PATCH] http: use internal argv_array of struct child_process
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+References: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
+         <20171213114621.30250-1-phillip.wood@talktalk.net>
+         <1513794792.9785.2.camel@gmail.com>
+         <25620501.1048091513875229038.JavaMail.defaultUser@defaultHost> <1513876450.9646.6.camel@gmail.com>
+X-Originating-IP: 82.10.83.37
+X-Username: phillip.wood@talktalk.net
+X-CMAE-Envelope: MS4wfGLEbWDt0RgdPvEE6JIpTJBc0ixU/fA+WW9gE2oWe3tmp0pI6EqH5XgzhPdVzWSgHLr+QQn8/ByRE9SMOghYWmllLclDw6tVe/eKLMHGVewOSoLPjbat
+ Hl5z1BVFlGxqvNEVsZAH8XVilvGc+oOJIVq8CF9IwPeuKh9Q2yMsCVUrgY/S3w7OVnWcq4kZIwQ0M4X8r71E4g5+VbtKqyRKTzDqa4uFW7QyN5xYAbVd4yzO
+ UohgTX3o0kGFkZu/SbWhXMBUWP6pnDRSFlkajTdLt4yIdYbtTMNo2JqV7N+yyhCx6WHEN7l2U6YrEOpDmDh+pw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 22, 2017 at 3:14 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Avoid a strangely magic array size (it's slightly too big) and explicit
-> index numbers by building the command line for index-pack using the
-> embedded argv_array of the child_process.  The resulting code is shorter
-> and easier to extend.
+>----Original Message----
+>From: kaartic.sivaraam@gmail.com
+>Date: 21/12/2017 17:14 
+>To: "phillip.wood@talktalk.net"<phillip.wood@talktalk.net>, "Phillip 
+Wood"<phillip.wood@dunelm.org.uk>, "Git Mailing List"<git@vger.kernel.
+org>
+>Cc: "Johannes Schindelin"<Johannes.Schindelin@gmx.de>
+>Subj: Re: Error in `git&#39;: free(): invalid pointer (was Re: [PATCH] 
+sequencer: improve config handling)
 >
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> diff --git a/http.c b/http.c
-> @@ -2041,13 +2040,10 @@ int finish_http_pack_request(struct http_pack_req=
-uest *preq)
-> -       ip_argv[0] =3D "index-pack";
-> -       ip_argv[1] =3D "-o";
-> -       ip_argv[2] =3D tmp_idx;
-> -       ip_argv[3] =3D preq->tmpfile;
-> -       ip_argv[4] =3D NULL;
-> -
-> -       ip.argv =3D ip_argv;
-> +       argv_array_push(&ip.args, "index-pack");
-> +       argv_array_push(&ip.args, "-o");
-> +       argv_array_push(&ip.args, tmp_idx);
-> +       argv_array_push(&ip.args, preq->tmpfile);
+>On Thu, 2017-12-21 at 16:53 +0000, phillip.wood@talktalk.net wrote:
+>> Hm, There is a problem with sequencer_remove_state() which does 
+>> 
+>> free(opts->gpg_sign)
+>> 
+>> however unless a gpg key was given on the commandline, opts->gpg is 
+>> initialized to "" which is statically allocated. 
+>> 
+>> This untested diff should fix that,
+>
+>It did seem to. I don't get that error any more.
 
-Not necessarily worth a re-roll, but using the "pushl" variant would
-make it clear that "-o" and tmp_idx are related and would ensure that
-they don't accidentally get split up if someone inserts a new "push"
-in the sequence in the future.
+That's good, thanks for testing it
 
-    argv_array_push(&ip.args, "index-pack");
-    argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
-    argv_array_push(&ip.args, preq->tmpfile);
+>>  but I'm not sure if you're problem 
+>> is related to it
+>
+>As the fix you suggested did work, I think the problem is related. Did
+>you have anything else in mind when you said you're not sure whether 
+or
+>not it's related?
+
+I didn't have anything else in mind, but at that point I hadn't noticed 
+that one of your previous messages said you had gpg signing turned on - 
+as you do it makes sense that the patch fixed it.
+
+
+Thanks again for reporting this and testing the fix - it seems the test 
+suite has a bit of a blind spot when it comes to gpg signing, I guess 
+it's difficult to set up a key for tests
+
+I'll send a proper patch when I have time in a few days
+
+Best Wishes
+
+Phillip
