@@ -7,70 +7,124 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 628C21F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 20:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58D9B1F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 20:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756799AbdLVUME (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 15:12:04 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61416 "EHLO
+        id S1756322AbdLVUiY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 15:38:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55194 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755940AbdLVUMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 15:12:03 -0500
+        with ESMTP id S1755941AbdLVUiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 15:38:23 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CD94BC5AA;
-        Fri, 22 Dec 2017 15:12:03 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 820C8BE9C4;
+        Fri, 22 Dec 2017 15:38:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aSGBWMQz+gxzOxNSthBb/sqoLp0=; b=UrVQ2t
-        6jdWcvzd3GIQonZDJQADuQE4RfWTicoCKuT8AwUOTtrXbHD2/BL5O1X8eDAITS/W
-        wCS4QYM1pBYFGkwDVMDqr+d+bEenN5GmhCKbXq8upiPlIXlQnkYDYxgQ1JwmZXpZ
-        fh8GvFCVRIkab8ZJTo124aB7I6OjZ2FSiY4lg=
+        :content-type; s=sasl; bh=WCmNy+WzPKPYVmIYeVzuhV4Zfog=; b=lbY2x3
+        /Vl1jXwq7iVgIWxVJUUHEC4Jn5V81xyVTpTclXYTq7BE9KwYEPn32Hs6ixX0vFrk
+        GimwA8YsZNjcU2sAZU6Pzc43YMQo0YOPn38Sunp8hI1/NGHigSJ+eW/uiiRLn8L2
+        kCXokgYa2QfdbIJCUoa8yfpjjDoMEJ9ceHlXA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yKJ56sh2hD1Yj5tBw8tLWpHMH13sGFkT
-        dGmxCLXnLS5Zipv99c8spRuY2FSEgmZYuRfBI2Zmt5gw1nIz2Y++8m5JdsWA/k8e
-        VlbuCQSpwIQYw4hmEIpWT6MrcGgjfUex9Vbvq3pywn1YMf3A23QIamOcxvgVpKSl
-        scBgn7ECQzs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 25EF8BC5A9;
-        Fri, 22 Dec 2017 15:12:03 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=SnHCijibLi+eGIS3MyWWtLF6g+rxgbxR
+        fn/iL8zgvhNTUBmFjSHIovxVDzpLGYXe6nHZAjqeeEjBFO1x4oMPrvpJrZA3Q2Fp
+        jBu7CAlyJ4x2jvERQLzlX55+Lnj2uHVnDmJ9pK/RgocsNX8IDDC7yiaTyJZnjnFw
+        n/5UyX3wmoc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 79A31BE9C3;
+        Fri, 22 Dec 2017 15:38:22 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 85510BC5A8;
-        Fri, 22 Dec 2017 15:12:02 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E33D3BE9C2;
+        Fri, 22 Dec 2017 15:38:21 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] oidmap.h: strongly discourage using OIDMAP_INIT directly
-References: <940d8daa8eb8d42b9f0a3ebf4c25fb6417e71bc8.1513940345.git.johannes.schindelin@gmx.de>
-        <20171222171635.GA230194@google.com>
-Date:   Fri, 22 Dec 2017 12:12:00 -0800
-In-Reply-To: <20171222171635.GA230194@google.com> (Brandon Williams's message
-        of "Fri, 22 Dec 2017 09:16:35 -0800")
-Message-ID: <xmqqlghur08f.fsf@gitster.mtv.corp.google.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, a.krey@gmx.de
+Subject: Re: [PATCH 3/3] merge-recursive: Avoid incorporating uncommitted changes in a merge
+References: <CABPp-BGy3_RyVQfCm+9O_AAfKA0_CZ5ajJE7NuLbToERWyWmqQ@mail.gmail.com>
+        <20171221191907.4251-1-newren@gmail.com>
+        <20171221191907.4251-3-newren@gmail.com>
+Date:   Fri, 22 Dec 2017 12:38:20 -0800
+In-Reply-To: <20171221191907.4251-3-newren@gmail.com> (Elijah Newren's message
+        of "Thu, 21 Dec 2017 11:19:07 -0800")
+Message-ID: <xmqqh8siqz0j.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5F9F93B6-E754-11E7-92E3-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 0D02559A-E758-11E7-B066-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
->> -#define OIDMAP_INIT { { NULL } }
->> +/*
->> + * This macro initializes the data structure only incompletely, just enough
->> + * to call oidmap_get() on an empty map. Use oidmap_init() instead.
->> + */
->> +#define OIDMAP_INIT_INCOMPLETELY { { NULL } }
+> builtin/merge.c contains this important requirement for merge strategies:
+> 	/*
+> 	 * At this point, we need a real merge.  No matter what strategy
+> 	 * we use, it would operate on the index, possibly affecting the
+> 	 * working tree, and when resolved cleanly, have the desired
+> 	 * tree in the index -- this means that the index must be in
+> 	 * sync with the head commit.  The strategies are responsible
+> 	 * to ensure this.
+> 	 */
 >
-> This is one way of approaching the problem.  Couldn't we also take the
-> approach like we have with oidset and ensure that when oidmap_get() or
-> _put() are called that if the oidmap isn't initialized, we simply do
-> that then?
+> merge-recursive does not do this check directly, instead it relies on
+> unpack_trees() to do it.  However, merge_trees() has a special check for
+> the merge branch exactly matching the merge base; when it detects that
+> situation, it returns early without calling unpack_trees(), because it
+> knows that the HEAD commit already has the correct result.  Unfortunately,
+> it didn't check that the index matched HEAD, so after it returned, the
+> outer logic ended up creating a merge commit that included something
+> other than HEAD.
 
-Hmph.  Can you show how the alternative code would look like?
+Good.
+
+I actually was imagining that you would shoot for creating an empty
+commit and leaving a working tree and the index that are both dirty,
+but I do not think it is worth the effort.  Besides, "you have to
+start from a clean index" is a much simpler rule to explain than
+with "unless the resulting tree is the same as HEAD", especially
+when that "unless" is highly unlikely to happen anyway.
+
+Thanks.
+
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c                        | 7 +++++++
+>  t/t6044-merge-unrelated-index-changes.sh | 2 +-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 2ecf495cc2..780f81a8bd 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -1952,6 +1952,13 @@ int merge_trees(struct merge_options *o,
+>  	}
+>  
+>  	if (oid_eq(&common->object.oid, &merge->object.oid)) {
+> +		struct strbuf sb = STRBUF_INIT;
+> +
+> +		if (index_has_changes(&sb)) {
+> +			err(o, _("Dirty index: cannot merge (dirty: %s)"),
+> +			    sb.buf);
+> +			return 0;
+> +		}
+>  		output(o, 0, _("Already up to date!"));
+>  		*result = head;
+>  		return 1;
+> diff --git a/t/t6044-merge-unrelated-index-changes.sh b/t/t6044-merge-unrelated-index-changes.sh
+> index 5e472be92b..23b86fb977 100755
+> --- a/t/t6044-merge-unrelated-index-changes.sh
+> +++ b/t/t6044-merge-unrelated-index-changes.sh
+> @@ -112,7 +112,7 @@ test_expect_success 'recursive' '
+>  	test_must_fail git merge -s recursive C^0
+>  '
+>  
+> -test_expect_failure 'recursive, when merge branch matches merge base' '
+> +test_expect_success 'recursive, when merge branch matches merge base' '
+>  	git reset --hard &&
+>  	git checkout B^0 &&
