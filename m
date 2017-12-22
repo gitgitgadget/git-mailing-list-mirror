@@ -2,101 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0C991F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 19:34:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54F651F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 19:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756218AbdLVTeQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 14:34:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59171 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752224AbdLVTeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 14:34:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30EC0BBEA0;
-        Fri, 22 Dec 2017 14:34:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/rZXc1uA60DS4Pvkc5Nr6s4DwIA=; b=QEoWLp
-        GCJfjQtjEGDpY+3id67TrNp5/qQX1AnO33Y/SBYpBn5F7MlPGlFsHQLJC/Ejpcjy
-        OsmvxGdsQ2F/8I4WCNnDTQIHlxEKmmaJkp4hSR6j2LRm5j69CwR+3L68gBwEJgdg
-        ZRWv8Ittyx99ln6Lz2tWpWhtxCwDeCHZpQRMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iM96m1HYJuccVcKGDweSpfwoN+W+WQqu
-        7Xgicyv0ye9RfrbqPC7+g6Ed6OKDCo2kWj6XvJU48Cs5W3VuWDJcq7PZMbuhHFhr
-        zvYyOq5KwuHmF8dJO27rZHeMmL1S0mIeb4pLzN7XzFNmrS22Mgtwzx3xV1A2bI3/
-        1LVwWCHVSxo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 28214BBE9F;
-        Fri, 22 Dec 2017 14:34:15 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A0A11BBE9E;
-        Fri, 22 Dec 2017 14:34:14 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH 2/5] t/lib-submodule-update.sh: Fix test ignoring ignored files in submodules
-References: <20171219222636.216001-1-sbeller@google.com>
-        <20171219222636.216001-3-sbeller@google.com>
-Date:   Fri, 22 Dec 2017 11:34:13 -0800
-In-Reply-To: <20171219222636.216001-3-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 19 Dec 2017 14:26:33 -0800")
-Message-ID: <xmqq7etesgju.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1756149AbdLVTx2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 14:53:28 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:44315 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752224AbdLVTx1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 14:53:27 -0500
+Received: by mail-qk0-f196.google.com with SMTP id v188so8614206qkh.11
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 11:53:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=URZCWO4byRemBqkIMiFjlvDso1t3RGQrESxeYDggXyA=;
+        b=bgf6qaZo/hklMZdqhMz/bX5joYTi9I6hEvND+VAo8HztY5g2A9LTjj2oscPDprYpo0
+         wayqeRlAkhGgkbEBG3HzksQpodpIk4/COzkQvfD1p+BKNXfWzurubLJr1JhiM6EigkU6
+         dxLODsurlSmrLuLJBytpQwZPWHSgwsMS1BIA7SPD8nSxhPzPQIPakGjxqsaFYYTjWoCR
+         qYhP3H4Nxn87C1oDoECoM6KgvvrnRz8hXuBulHSZZvJ3NgFARgDjDdXmJUp19SWJmt6s
+         kalafVQLdEQGZum/X13RHFdiIXNmVdCmXWNAcO6VCTDxJ5XqLjbvy1D7s8//7f66Mb/k
+         6bYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=URZCWO4byRemBqkIMiFjlvDso1t3RGQrESxeYDggXyA=;
+        b=kmd8e1LwU07l3X8IdkO8Wxb+zVkTDArE57xketPhAlvl7E9G79T/QUU0245WatvXHy
+         F1HTqqiHqh3xpw6K/ms5R9JYWKC9sez0ipg2/n9il83otKzRIsxFdVvLGfW4NanEGR9y
+         pVSqmW7ahnYt4MiKpFO8XqAGrnc8VV4qz2H/utmsh8hN4qO2BRw2SJCsA1sny2344r5T
+         uv+A7cB54pWgEO6xcYP3BuGDkzTBWdyg5u2HtANBJn/t/SXWItFDXtvfXNBUGBMxpllb
+         Bk0mDPmdTSlSsk8ahasHilVk+YENpwlM56Prv3xU/3KwdJ8Zcu29g7IvxRUQenIDOAjd
+         qsaQ==
+X-Gm-Message-State: AKGB3mJ54xcz+c/InqNr6oVazPOxWJMpS59jIUps0cWBpmIhoMQp8gv/
+        wJSHjHyTM79RdL+XGjYpJwiCWLQT3wV8ugiayG8=
+X-Google-Smtp-Source: ACJfBos0fMqCHBhmHACMn4DSWq+BlyaWkkSoGOneErCxa2xoAVUU6/AHWc41eyx/ihLjRjl/T2iglKdR1mgmNH3k5vA=
+X-Received: by 10.55.130.194 with SMTP id e185mr20047777qkd.357.1513972406596;
+ Fri, 22 Dec 2017 11:53:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 17DA6F24-E74F-11E7-A49A-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.12.198.2 with HTTP; Fri, 22 Dec 2017 11:53:26 -0800 (PST)
+In-Reply-To: <20171222160056.10102-1-avarab@gmail.com>
+References: <CAPig+cRDi14Rez+6ZJAEdxHpo0Mw7JQFkcuG2oVqv2pP_ZbvhQ@mail.gmail.com>
+ <20171222160056.10102-1-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 22 Dec 2017 14:53:26 -0500
+X-Google-Sender-Auth: x4FVLFr4jpdmk3gKHP7CN3irt-k
+Message-ID: <CAPig+cQj8=YFRBQZ3+9NJAsr2rNq0GvxrUpmt18ttvmVu1Nyhg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] support -m"<msg>" combined with commit --fixup
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Pat Notz <patnotz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> It turns out that this buggy test passed due to the buggy implementation,
-> which will soon be corrected.  Let's fix the test first.
-
-Please clarify "buggy test".  Without the original discussion (I am
-imagining there is something that happened on the list recently),
-here is my guess:
-
-    We tried to make sure that an ignored file is $distimmed by
-    $gostak, but forgot to tell the exclude mechanism that the path
-    'sub1'ignored' we use for the test is actually ignored, so the
-    fact that the file was not $distimmed when $gostak did its thing
-    meant nothing---mark any path whose name is 'ignored' as ignored
-    to really test the condition we want to test.
-
-but I do not exactly know what verb to replace $distim and what noun
-to replace $gostak above ;-)
-
-Also, wouldn't this expose a bug in the implementation if that is
-the case?
-
-Thanks.
-
+On Fri, Dec 22, 2017 at 11:00 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Here's a hopefully ready to apply v2 incorporating feedback from Eric
+> (thanks!). A tbdiff with v1 follows below.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  t/lib-submodule-update.sh | 1 +
->  1 file changed, 1 insertion(+)
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+>   commit doc: document that -c, -C, -F and --fixup with -m error
+>   commit: add support for --fixup <commit> -m"<extra message>"
+
+Patch 2/2 doesn't seem to have made it to the list...
+
+> 2: bd78a211ed ! 2: 780de6e042 commit: add support for --fixup <commit> -m=
+"<extra message>"
+>     @@ -22,6 +22,21 @@
+>             In such a case you might want to leave a small message,
+>             e.g. "forgot this part, which broke XYZ".
 >
-> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-> index d7699046f6..fb0173ea87 100755
-> --- a/t/lib-submodule-update.sh
-> +++ b/t/lib-submodule-update.sh
-> @@ -885,6 +885,7 @@ test_submodule_switch_recursing_with_args () {
->  		(
->  			cd submodule_update &&
->  			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
-> +			echo ignored >.git/modules/sub1/info/exclude &&
->  			: >sub1/ignored &&
->  			$command replace_sub1_with_file &&
->  			test_superproject_content origin/replace_sub1_with_file &&
+>     +    With this, --fixup <commit> -m"More" -m"Details" will result in =
+a
+>     +    commit message like:
+>     +
+>     +        !fixup <subject of <commit>>
+>     +
+>     +        More
+>     +
+>     +        Details
+>     +
+>     +    The reason the test being added here seems to squash "More" at t=
+he end
+>     +    of the subject line of the commit being fixed up is because the =
+test
+>     +    code is using "%s%b" so the body immediately follows the subject=
+, it's
+>     +    not a bug in this code, and other tests t7500-commit.sh do the s=
+ame
+>     +    thing.
+
+Did you also intend to mention something about --edit still working
+with -m? (Or do we assume that people will understand automatically
+that it does?)
