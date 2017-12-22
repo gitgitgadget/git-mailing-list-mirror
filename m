@@ -2,106 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8171F404
-	for <e@80x24.org>; Fri, 22 Dec 2017 10:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717C21F404
+	for <e@80x24.org>; Fri, 22 Dec 2017 10:59:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756086AbdLVKrr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 05:47:47 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:3764 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755906AbdLVKrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 05:47:43 -0500
-Received: from ms26nec.int.opaltelecom.net ([10.103.251.104])
-        by smtp.talktalk.net with SMTP
-        id SKrbedUJ4CbAZSKrbeKneo; Fri, 22 Dec 2017 10:47:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1513939660;
-        bh=UJW5HgHMnHsoHDBur6ulRwUDXbW+y2NiHqQJoOZmNNQ=;
-        h=Date:From:To:Subject:Cc:In-Reply-To:References;
-        b=oF7y2HvXzNnZLcs6nAApKWg5QhassMTR9QJ5L3YEn4Kus86virt1w9Ht3yHwpiD7v
-         8gzy379ohaOoRK2Gb23TnzV+RSYkONdt5X2v4FoZcfPAtMXkPfdTsNmyFCiR0A/7X3
-         HSyRLK9IoHyQjBGcLItIlVlzc0F0pQ3/Ky34crZk=
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=gCN1RMym0MIDZSr+K0TJSQ==:117
- a=wcpVQE0W4qLcfTC1YB9uxQ==:17 a=9Ui_ZxslVaMA:10 a=IkcTkHD0fZMA:10
- a=ocR9PWop10UA:10 a=pGLkceISAAAA:8 a=nN7BH9HXAAAA:8 a=evINK-nbAAAA:8
- a=KPMBK_wALK_Xt_9ds-MA:9 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Received: from (82.10.83.37) by webmail.talktalk.co.uk;  Fri, 22 Dec 2017 10:47:39 +0000
-Message-ID: <23359630.1065831513939659692.JavaMail.defaultUser@defaultHost>
-Date:   Fri, 22 Dec 2017 10:47:39 +0000 (GMT)
-From:   "phillip.wood@talktalk.net" <phillip.wood@talktalk.net>
-To:     <kaartic.sivaraam@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Error in `git': free(): invalid pointer (was Re: [PATCH]
- sequencer: improve config handling)
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <1513876450.9646.6.camel@gmail.com>
+        id S1756257AbdLVK7d (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 05:59:33 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50623 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753466AbdLVK73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 05:59:29 -0500
+Received: from [192.168.0.129] ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LinyL-1eyNPN1Wfd-00cv9P; Fri, 22
+ Dec 2017 11:59:24 +0100
+Date:   Fri, 22 Dec 2017 11:59:23 +0100 (STD)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] oidmap.h: strongly discourage using OIDMAP_INIT directly
+Message-ID: <940d8daa8eb8d42b9f0a3ebf4c25fb6417e71bc8.1513940345.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-References: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
-         <20171213114621.30250-1-phillip.wood@talktalk.net>
-         <1513794792.9785.2.camel@gmail.com>
-         <25620501.1048091513875229038.JavaMail.defaultUser@defaultHost> <1513876450.9646.6.camel@gmail.com>
-X-Originating-IP: 82.10.83.37
-X-Username: phillip.wood@talktalk.net
-X-CMAE-Envelope: MS4wfGLEbWDt0RgdPvEE6JIpTJBc0ixU/fA+WW9gE2oWe3tmp0pI6EqH5XgzhPdVzWSgHLr+QQn8/ByRE9SMOghYWmllLclDw6tVe/eKLMHGVewOSoLPjbat
- Hl5z1BVFlGxqvNEVsZAH8XVilvGc+oOJIVq8CF9IwPeuKh9Q2yMsCVUrgY/S3w7OVnWcq4kZIwQ0M4X8r71E4g5+VbtKqyRKTzDqa4uFW7QyN5xYAbVd4yzO
- UohgTX3o0kGFkZu/SbWhXMBUWP6pnDRSFlkajTdLt4yIdYbtTMNo2JqV7N+yyhCx6WHEN7l2U6YrEOpDmDh+pw==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:j438khtZ2l5MdcD0bW6e/SbC/ISJF/1IJRZjBPPVw+h+7Pt2MDJ
+ I2EqNNkh6AzdL6fqKB1hb0XK0nolV1rz41B69YP/SdcmHbHLnyl/TH0uWbe9MRCRsl+ZCqe
+ bibkvSog9dORU3VVcp6iY9+T/EYyuqLXJ67wHXKYOfAxBq/rIFKeU91UGjBIM3qkOsUI0BB
+ 6rQwNWwzrHvmjKiRBRvTQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LDuAKKC0ru0=:PdJKEKe3hg4pLxySxFxRm6
+ IJqYPtFWnINyFYQxZ3P/bUHseMzh9bp2aHiP6yPGJ5pMNmX8bnMJVwhJqSiMr5umNdH7gY5DO
+ NGoanZwjrUWI+1GUtFWsWPA4CkXtq7Bqwpvlr0eYanivb8PXCnxOVWTlIhq+/he0fIxzesYae
+ 0wLHUs9P8q264ga1KAloREIM09TOQR36Ezt60R+bstXXmgl8mSe3gmIk4VuojhWkQPBH4p/qD
+ WTBu0wmoztrwPiHQCcqnuvC4lCJAlHfP8MOGVkhmwm67yXFeqpTF1eotDpylR74p0xcjOB3+u
+ MN0NG5JPih9/HDbBU/LgD3Qp+eGrWzPdbb9SMwvkKUTVHR9MNuRHd5nyvw0YfKe5r8IoHKKRg
+ wv9i2ZvWOkMCj39aVUcevO33T+x4YSzio9P0BlQ5SooPhWg7NZ3Za/9PLxzKxNANyicsLoKKO
+ AsIgbzORwH0/T0vH1htl+7CizWJ0G6/EjCBKii8fX8QzQ9PAeclbILT+KPU4QnIJRjKxrunbw
+ 82hP8rH9g1cpbIVmTadfWuzO33HXH6MGCJfFZbJ9SotoCPko7TMIGUyZgp1tsIHEl291JtUGO
+ VoInH6hDl6sHY0p7clV8tGRewZeBIfqN52YfuKtJrP6As9HJp4nTZA3WXSqdYhIThkLEMka/o
+ 5m2GGJMEoa7vWzwpV1LGseE83nw0Xcx8D1wHneeQW/dk5qQ+sQ+VqPhPhcSPRq7fiLz0i30/U
+ exglQIGgjHPeBWJGO1ntFp8ecyA9RkB8XxyrsLaEMMjikHrKXfXCgaXdUzn/gCRfKaQuHfLFs
+ UPqHB3JlmFQjEtReqZZbo3hH7ACNo5pW9wrYz7C1gzMLM8S2HM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->----Original Message----
->From: kaartic.sivaraam@gmail.com
->Date: 21/12/2017 17:14 
->To: "phillip.wood@talktalk.net"<phillip.wood@talktalk.net>, "Phillip 
-Wood"<phillip.wood@dunelm.org.uk>, "Git Mailing List"<git@vger.kernel.
-org>
->Cc: "Johannes Schindelin"<Johannes.Schindelin@gmx.de>
->Subj: Re: Error in `git&#39;: free(): invalid pointer (was Re: [PATCH] 
-sequencer: improve config handling)
->
->On Thu, 2017-12-21 at 16:53 +0000, phillip.wood@talktalk.net wrote:
->> Hm, There is a problem with sequencer_remove_state() which does 
->> 
->> free(opts->gpg_sign)
->> 
->> however unless a gpg key was given on the commandline, opts->gpg is 
->> initialized to "" which is statically allocated. 
->> 
->> This untested diff should fix that,
->
->It did seem to. I don't get that error any more.
+In Git's source code, we have this convention that quite a few data
+structures can be initialized using a macro *_INIT while defining an
+instance (instead of having to call a function to initialize the data
+structure). You will see that idiom quite a bit, e.g. `struct strbuf buf
+= STRBUF_INIT;`
 
-That's good, thanks for testing it
+This works for oidsets, too: `struct oidset oids = OIDSET_INIT;` is
+perfectly legal and you can use that data structure right away, without
+having to call `oidset_init()` first.
 
->>  but I'm not sure if you're problem 
->> is related to it
->
->As the fix you suggested did work, I think the problem is related. Did
->you have anything else in mind when you said you're not sure whether 
-or
->not it's related?
+That pattern is violated by OIDMAP_INIT, though. The first call to
+oidmap_put() or oidmap_get() will succeed, but by mistake rather than by
+design: The underlying hashmap is not initialized correctly, as the
+cmpfn function pointer still points to NULL, but since there are no
+entries to be compared, cmpfn will not be called. Things break down,
+though, as soon as there is even one entry.
 
-I didn't have anything else in mind, but at that point I hadn't noticed 
-that one of your previous messages said you had gpg signing turned on - 
-as you do it makes sense that the patch fixed it.
+Rather than causing confusion, frustration and needless loss of time due
+to pointless debugging, let's *rename* OIDMAP_INIT so that developers
+who have gotten used to the pattern `struct xyz a = XYZ_INIT;` won't do
+that with oidmaps.
 
+An alternative would be to introduce a HASHMAP_INIT(cmp_fn) and use that
+in oidmap.h. However, there are *no* call sites in Git's source code
+that would benefit from that macro, i.e. this would be premature
+optimization (and cost a lot more time than this here trivial patch).
 
-Thanks again for reporting this and testing the fix - it seems the test 
-suite has a bit of a blind spot when it comes to gpg signing, I guess 
-it's difficult to set up a key for tests
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/discourage-OIDMAP_INIT-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git discourage-OIDMAP_INIT-v1
+ oidmap.h | 6 +++++-
+ oidset.h | 7 ++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-I'll send a proper patch when I have time in a few days
+diff --git a/oidmap.h b/oidmap.h
+index 18f54cde143..1a73c392b79 100644
+--- a/oidmap.h
++++ b/oidmap.h
+@@ -21,7 +21,11 @@ struct oidmap {
+ 	struct hashmap map;
+ };
+ 
+-#define OIDMAP_INIT { { NULL } }
++/*
++ * This macro initializes the data structure only incompletely, just enough
++ * to call oidmap_get() on an empty map. Use oidmap_init() instead.
++ */
++#define OIDMAP_INIT_INCOMPLETELY { { NULL } }
+ 
+ /*
+  * Initializes an oidmap structure.
+diff --git a/oidset.h b/oidset.h
+index f4c9e0f9c04..a11d88edc1d 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -22,7 +22,12 @@ struct oidset {
+ 	struct oidmap map;
+ };
+ 
+-#define OIDSET_INIT { OIDMAP_INIT }
++/*
++ * It is okay to initialize the map incompletely here because oidset_insert()
++ * will call oidset_init() (which will call oidmap_init()), and
++ * oidset_contains() works as intended even before oidset_init() was called.
++ */
++#define OIDSET_INIT { OIDMAP_INIT_INCOMPLETELY }
+ 
+ /**
+  * Returns true iff `set` contains `oid`.
 
-Best Wishes
-
-Phillip
+base-commit: 936d1b989416a95f593bf81ccae8ac62cd83f279
+-- 
+2.15.1.windows.2
