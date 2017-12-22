@@ -2,120 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14D451F424
-	for <e@80x24.org>; Thu, 21 Dec 2017 23:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9DD61F404
+	for <e@80x24.org>; Fri, 22 Dec 2017 08:14:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754695AbdLUXIM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 21 Dec 2017 18:08:12 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:34562 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754544AbdLUXII (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Dec 2017 18:08:08 -0500
-Received: by mail-qt0-f178.google.com with SMTP id 33so34412807qtv.1
-        for <git@vger.kernel.org>; Thu, 21 Dec 2017 15:08:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Lt9QAfRfsKqUoylEc0sbkkwAUvw9SCwILwCPZX4KZ0M=;
-        b=uBKttTLNirO6Iq03uI3MJkoVxYic85/SHy6G81QpQWi1T/oo4/l2JePJqY+MILRQWG
-         qiuoGwvbsFZkiSjaHL0odjCKWEJXi5IX0NX3ASiF71er0gm6dxBW04eJgNGlnFIzZHdQ
-         r9iGKvq7ywDD8/m2lkkX35nH+iMbiO8KpCywQ9GpaTyQKYCvvX7yxbfj/4Qm0MJiL8pn
-         DYAhx/EloKZzitEBm/RqLu2q9w4VSfnqpa/4RD6uWVZ9o1uzcZBjZ0TuU4Fxot2WeXp6
-         mYSRrxBBslaoIMDLosR0xG6OVSGgBanYSzlkCF1yJb1tE7sL++jTBGbBfzpgpNa18O8k
-         m/CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Lt9QAfRfsKqUoylEc0sbkkwAUvw9SCwILwCPZX4KZ0M=;
-        b=ubjnDijIkGFUeBiVUjFXRzv0VXdDftbTMImzMPTDgsPvL69lp811oR1dDNpm9qiEMs
-         1P5Qv36NaxAvgg8Ojwh2boIxdp0VPrqAKeOzRJNLpikVXS11XEv8j0OdKhj7CZQtuTek
-         EOCEhuK9kW4HBB3/6zK00D53y0Bnj/ZdXm/Xg044r/2NSah1FX9ZAHcImJsCKVGUEKx1
-         Gsyy2oDqEz4BheDF5+VNub4w1bz19MtxDureCc0McwJavQFTQ+y1kKJgAt2yEcbxTGGC
-         OveA9PhRp0aq05PBWupyvz0ZGyEArPdGiKlq6NSKVSLuarK/HSZJ3nekFVWdaIpqJUns
-         M0xA==
-X-Gm-Message-State: AKGB3mJlj0vxCk2XeQIOto70syP+VTyUOHazwQCrrUk1+HVW2bQ1duaR
-        J93n9XAPEp8YyqXsJ+8ouyKv3WmRpQSuR2h0VTkpGcW0O94=
-X-Google-Smtp-Source: ACJfBouDQWv7s83zT5sSn2PTErT2AL+cM+5+Q0KscGSmFacb2xY3Ngg3mYPq/P2hl+B2f9+k+nAqTk6Pa/5d8JfIfz8=
-X-Received: by 10.200.36.22 with SMTP id c22mr17587126qtc.207.1513897687706;
- Thu, 21 Dec 2017 15:08:07 -0800 (PST)
+        id S1751764AbdLVIOI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 03:14:08 -0500
+Received: from mout.web.de ([212.227.15.14]:52822 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751390AbdLVIOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 03:14:07 -0500
+Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LjrU9-1ezQME2cnZ-00bp28; Fri, 22
+ Dec 2017 09:14:03 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] http: use internal argv_array of struct child_process
+Message-ID: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
+Date:   Fri, 22 Dec 2017 09:14:02 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Thu, 21 Dec 2017 15:08:07 -0800 (PST)
-In-Reply-To: <CAFBGMVOjCK_XnqJpTvPs=joXgfOH9SDWe0pJwmgYx-5-+FL+uA@mail.gmail.com>
-References: <CAFBGMVPBwxeSXCTcoBdxDbYtJo-38w=tf4T6-rNWuys=3drP+A@mail.gmail.com>
- <20171219180230.254881-1-sbeller@google.com> <xmqqk1xitl6l.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kbqntXuYuLGF7zjXfQ5X998QdEba20yy8A0cqS=DaRxFA@mail.gmail.com>
- <CAFBGMVO+P99hJ_nKgCJ4OqhMEdRdc3m8KHNS1pPrrhU_0wS6=A@mail.gmail.com>
- <CAGZ79kZf8GL1DY6Vmc-byEOOy+hrKF8X8qRPM6jNO-La+rD4uw@mail.gmail.com>
- <CAFBGMVMmLX4BjkQ8Xd4bQBCgoYYxWTU-p2pNF=b8JNsUsKXwUA@mail.gmail.com>
- <CAGZ79kauYRLaPKsUKxvsc-T+KzMt2UsyoDLzdyZON_vjp6y28w@mail.gmail.com> <CAFBGMVOjCK_XnqJpTvPs=joXgfOH9SDWe0pJwmgYx-5-+FL+uA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 21 Dec 2017 15:08:07 -0800
-Message-ID: <CAGZ79kY1=TysCagomHaqzV4w+3DMpdTQ2ki9tVHbL4pYRecXMw@mail.gmail.com>
-Subject: Re: [PATCH] Re: Bug with "git submodule update" + subrepo with
- differing path/name?
-To:     Andreas Urke <arurke@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:hYPo/NkJLWaGIGVufucxw+1FE+clqQBYtJY1VMJJYA3gjDaFgRj
+ JRIbG/wFm/WA0WiiFtNP/HA4EiRvRHZ2odpWpJz9QELm6UWOyOa+haOM65KMb81DfvsEO0x
+ sxUZyujMWFERCBtNTLp7X3nfKv4jWW52KEsnIFjSgBsuriWbmt01jZ5csrcCebwS9HjB/2j
+ +1NW90DQmJXg1JBErVa5Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8pZrTJkkgkc=:C4rlO7HMwqCyPxdDKQkfqs
+ kFso3qYVfsS/38f9uK5eh0qnSDjeGQF4Q/8n3hujNDiEJrnxFabyQcSrcDggOT++24qejmi45
+ UrN1ITy+blDLMz5eZG4fJAzrv8JjOxbyPbZuK7IOSUQo14dSrZkFXl9NVrtM1nd3tjYNKExdE
+ Ig8KtSp9XMVLlRjkR8ReGaWOGmF08IZ1t+AV4X77TUyf7KvLnFtLUgPmQPpG2WCuKIFG7o0Is
+ F0EghbivtjEV+gjM/7wkpKHciI/D8lnSxko4rE9PNNDqkxBvGdjssllGRHc7IMWJr3JSYZdS1
+ CZjjHMD9yxwC9Rv8qrD9ARi/rHfmPUzDq8tcMPWXFKcQxJHC2iD4wY1RZqycEuH7wxk3AyFXb
+ +W+nVrCcp23GOs473GLq/6mwWoMlygKN5+sJ7/RT/LPd/WT/FqhHC5T4SGCDh0pCsMWhYhEbC
+ vVGNqxaDgIVo3+3JJH/7TqA1wCT3bPMah6oi1VVwoyugXalErZDQyPf0lC7639kM3is8tlxUU
+ xQ8+y6PFSMMF+mKUeyGaYSzGrfF03F1vLsBKkcxzoBZF1jineL6EtYtCt/m9QwAC8g9lf1LGT
+ KatsFrlzcJzJk+KyCG8gPyOMObxmlOt75ap+f5UzkujFsB1oTdWApkumnRusbzwfuuSQq0hQP
+ TxS3/mI1U7dNDotF5wmObQyHYwZBzmxF8TayXqrJGoo+6v7J7d6XqswjBgQmN/2W2y1sW5g7T
+ AsLAJy5XaVv0jQyjnMe068ObQ0yRRl/tB2Q0nZWtYsTf5jcG8XDr0/EkLRTy6887GUKqIdmXa
+ 6mOY34KJFiMwb4ajWCV1N19LfDlt8E8vatLTnfR5ZNvxIm77hGLQpstvayaPbEtbnfg8QVm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 21, 2017 at 2:17 PM, Andreas Urke <arurke@gmail.com> wrote:
-> Thanks for the detailed explanation. Although I am not too git savvy,
-> I believe I got the gist of it.
->
-> Regarding your question,
-> I would say the term "name" in an IT context makes me primarily think
-> of something that is specified by a user (as opposed to e.g. an "id"),
+Avoid a strangely magic array size (it's slightly too big) and explicit
+index numbers by building the command line for index-pack using the
+embedded argv_array of the child_process.  The resulting code is shorter
+and easier to extend.
 
-ID sounds great.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ http.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-> and can be altered by a user. Also, the manual mention it as a
-> "logical name", which would further strengthen my belief that it is an
-> abstraction which can be changed (as opposed to something "physical").
-> I would be much more reluctant to change the id of something than its
-> name.
-
-If you changed the name in all places, it would have been no problem. ;)
-So once you did the "git config -f .gitmodules --rename-section ...",
-you'd also have to "mv .git/modules/<old-name> .git/modules/<new-name>"
-and then it would work fine for you. (You would also need to instruct
-any collaborators to run the move command when they pull your changes.
-So it is more of a "in theory it works", rather than practical advice here)
-
-> In terms of the commands...In an ideal world I would obviously ask for
-> a --rename or mv command which would achieve what I wanted to do.
-> Other than that, maybe a word about this in the man for "git mv"? Or
-
-git-mv moves the path, not the name of the submodule, though.
-
-> perhaps "git submodule sync" could give me some kind of warning that I
-> did something strange/illegal.
-
-That is harder than thought, because it is normal that a submodule
-worktree doesn't exist at the given path (not initialized).
-Also it is totally valid to have outdated entries in the .gitmodules file. :/
-
-> Can I ask you, now that I have made this mess, do you have any
-> suggestion on how to rectify it or some other way to achieve my goal?
-
-Looking at the script you had above, I would think you need to init
-the renamed submodule again, not sure if anything else needs
-to be done, as now you'd have essentially two repositories inside
-the superprojects .git/modules/ for just one logical submodule.
-
-So I would assume if you were to re-clone the superproject
-everything works out fine again (except for bisection/checkout
-before that rename. ;) But for that you can symlink the
-oldname to the newname inside the .git/modules/ of the superproject
-I would assume.
-
-Stefan
+diff --git a/http.c b/http.c
+index 215bebef1b..b22b4ada58 100644
+--- a/http.c
++++ b/http.c
+@@ -2025,7 +2025,6 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 	char *tmp_idx;
+ 	size_t len;
+ 	struct child_process ip = CHILD_PROCESS_INIT;
+-	const char *ip_argv[8];
+ 
+ 	close_pack_index(p);
+ 
+@@ -2041,13 +2040,10 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ 		die("BUG: pack tmpfile does not end in .pack.temp?");
+ 	tmp_idx = xstrfmt("%.*s.idx.temp", (int)len, preq->tmpfile);
+ 
+-	ip_argv[0] = "index-pack";
+-	ip_argv[1] = "-o";
+-	ip_argv[2] = tmp_idx;
+-	ip_argv[3] = preq->tmpfile;
+-	ip_argv[4] = NULL;
+-
+-	ip.argv = ip_argv;
++	argv_array_push(&ip.args, "index-pack");
++	argv_array_push(&ip.args, "-o");
++	argv_array_push(&ip.args, tmp_idx);
++	argv_array_push(&ip.args, preq->tmpfile);
+ 	ip.git_cmd = 1;
+ 	ip.no_stdin = 1;
+ 	ip.no_stdout = 1;
+-- 
+2.15.1
