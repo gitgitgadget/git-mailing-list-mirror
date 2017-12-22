@@ -2,180 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1CE01F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 14:00:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EABB1F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 15:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752313AbdLVOAp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 09:00:45 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35720 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751980AbdLVOAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 09:00:44 -0500
-Received: by mail-wm0-f66.google.com with SMTP id f9so21946077wmh.0
-        for <git@vger.kernel.org>; Fri, 22 Dec 2017 06:00:43 -0800 (PST)
+        id S1756410AbdLVP5G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 10:57:06 -0500
+Received: from mail-ua0-f195.google.com ([209.85.217.195]:41796 "EHLO
+        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdLVP5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 10:57:05 -0500
+Received: by mail-ua0-f195.google.com with SMTP id q13so19931366uaq.8
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 07:57:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d8t/eU5kj8p6MNl4tYlSsBqH4eDzqc1LIWiE3u0Tvic=;
-        b=mBo1LCON4fyl3BEhWwwksBupubo5WeRJKj5OjU9FcyqxDlwcNZ4flUP4K4BZUV+TdD
-         YVSxtQcuvferKHs2nU3GaYeo7iEnKg9ozRgR7Km5vReGUVTFp7aw7Vx2r1X+CR7FNd8x
-         p4htuv+Wd4y38qTktQBrXczvYi3RBsUATAedWmvuN9lk4CqhlkejIrCDK9BIPihonYtc
-         oR6Sr/mZTQjJTCOBiiIsej4jLawOtcmU/aL7vJBh3ZcxGaLVvS0oli74VBKZZ3RgBBY/
-         cWnIo2SE5MwVLd8gyHOr/STkUP40/xxtvwn4V4cHFcvQtlxC5kTa0//ewe9Df8pw0uNq
-         KGNw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TQtPHcDCL3WwBXL/0+9AQ35WJMcMrkfS16lvGZh5oYA=;
+        b=PVvrS7zHgw+DMGUPsKiYlY4wmLeKc0I9Ht8mkwZki+c/uNjnYANdAP5jO7NXQvKsKa
+         2+cIgQoRWlBKSjC4ngx+CIo9p55x6VIIcWtFyeBvnFD3m4ayqiQnb1l5ibSaFfPSUPUX
+         xF0IRRNZvmC3R0JuINEb3GrRUEunSwNqLxY1aKuHe3ne2dKI0WyjpOAtceysIzUY/skv
+         Q2XXxfnAwMAzG8L3iQV6x/RBtwX7yvYjsRDKnlcYpzFcAUfsY7f07g4N2L+mlN6XrKUi
+         QzFT8ji9Yg3MALdjkuFGJOu7I1KFAer7l+ke7gsrbtvhkRFDwFxb2I2o+1pQE+61Oymn
+         wJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d8t/eU5kj8p6MNl4tYlSsBqH4eDzqc1LIWiE3u0Tvic=;
-        b=eZcgDAidumHyXj6dIV5H825xfKhNiTXKple9uwegORWmmryqdflzURjdq0IsLFgJ6L
-         XNx5YKpNJijqFOwO3HoUd9HVgU5wLN3nJs4kpW1hOwANLUzuyAIfUCsbPmxbL8XPQtuq
-         p10gXbZJbERwDsYeQXUksrToTj0oMpvpv27QA8U8Qi6mr0a063E6FUPuC7+JPQnqP9ed
-         WxhFDwiPRQjLOY3CgTMbM03NBiMxDFCdRZ472ykMMNiBuQO3u90ygzujycydpVuxsvw7
-         GvnkGeH9PizTNpICbOyaGeDvjClCAdCaCnvwqeq0pIU/tOiZEthk2ZGl6De8QGarG1gD
-         Svzg==
-X-Gm-Message-State: AKGB3mLVFzX6dPrH6Rigy5bkBNJ+/iN2UTy6WhKzREVr/sEcR7rlIZXG
-        MFFBPDc3Cip9FtM1BwH5gs0pVi4j
-X-Google-Smtp-Source: ACJfBosfcjEZCtBK4TgCeCWeb8+OJ/R16ZGrJQOb+zdDPNF+r/50poNcPuazsPuDNkTlzC5ly4btCA==
-X-Received: by 10.80.192.5 with SMTP id r5mr15316473edb.138.1513951242344;
-        Fri, 22 Dec 2017 06:00:42 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a52sm21056749eda.92.2017.12.22.06.00.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Dec 2017 06:00:41 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] status: add a failing test showing a core.untrackedCache bug
-Date:   Fri, 22 Dec 2017 14:00:32 +0000
-Message-Id: <20171222140032.21180-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TQtPHcDCL3WwBXL/0+9AQ35WJMcMrkfS16lvGZh5oYA=;
+        b=oOUmHhDGdtdk+o257/lVjIjO6ERiDaGyNiM22a4pD7E2sGoTxhd4lOPRh3NbPTE3BL
+         ULd5gLAqesyN5N0JzAVFQ9nnVyDJ5QYmKJzKzPtSgNDziuQCFfSGFIDS516D5adMBwU9
+         vhI5UzKzGH8TEjJbwb4kca8vW/y2o8Nj/Pb3IJK7zSsVEz5bo5ruWq6zdmKbZ30YAb4a
+         Sqj4pFUcvgYckTlOSjmn4Sbm/jCQHs4Tfp2ttQ3gMF+Jt96ObfL1Voq8SJLX3Vh75TMJ
+         UNPHeIopa75977sVrmL/joUIuTmH7zAjD4ag/1DZ6jBFEFR0l3eV43bBIUjXctek+jvM
+         Z8og==
+X-Gm-Message-State: AKGB3mJCmBDRYKtS7BQiPAY4MxVUQwGpIHXYf7JQ0nnQyMnfe/c8MXY0
+        heEeWsdZjYDfVLikyR3YzDKMKzmgZNPorAsBXAw=
+X-Google-Smtp-Source: ACJfBotkuTQdp9gR0/X9jZQmLkq4HLwpsrpTJRWU7FGDUZI8j/Pu2eU7LlA5sL89GmCRBAwA16aAotC86dHqzuCNWm8=
+X-Received: by 10.176.25.199 with SMTP id r7mr15715936uai.62.1513958224336;
+ Fri, 22 Dec 2017 07:57:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.103.112.3 with HTTP; Fri, 22 Dec 2017 07:57:03 -0800 (PST)
+In-Reply-To: <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
+References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+ <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
+From:   Cristian Achim <brancoliticus@gmail.com>
+Date:   Fri, 22 Dec 2017 17:57:03 +0200
+Message-ID: <CAEW+b66pCqTBz6o_aTK0byyKsDc8HRfHuqKf64Ob6pBtL9w2Lw@mail.gmail.com>
+Subject: Re: Usability outrage as far as I am concerned
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The untracked cache gets confused when a directory is swapped out for
-a symlink to another directory. Whatever files are inside the target
-of the symlink will be incorrectly shown as untracked. This issue does
-not happen if the symlink links to another file, only if it links to
-another directory.
+> Can you show the output of "git remote"
 
-A stand-alone testcase for copying into a terminal:
+# in usb_subfolder
+$git remote
+origin
+$
 
-    (
-        rm -rf /tmp/testrepo &&
-        git init /tmp/testrepo &&
-        cd /tmp/testrepo &&
-        mkdir x y &&
-        touch x/a y/b &&
-        git add x/a y/b &&
-        git commit -msnap &&
-        git rm -rf y &&
-        ln -s x y &&
-        git add y &&
-        git commit -msnap2 &&
-        git checkout HEAD~ &&
-        git status &&
-        git checkout master &&
-        sleep 1 &&
-        git status &&
-        git status
-    )
+#in home_subfolder
+$git remote
+$
 
-This will incorrectly show y/a as an untracked file. Both the "git
-status" call right before "git checkout master" and the "sleep 1"
-after the "checkout master" are needed to reproduce this, presumably
-due to the untracked cache tracking on the basis of cached whole
-seconds from stat(2).
+> and also
+> clearly explain with details the layout of what the folders are and
+> what is or is not a repository?
 
-When git gets into this state, a workaround to fix it is to issue a
-one-off:
+Take the following update into consideration and then reread my first
+email hopefully with improved clarity:
 
-    git -c core.untrackedCache=false status
+'home_subfolder' is the path on disk inside my user account home
+folder in the 'home' root folder to the initial repo from which I
+meant to do a backup.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t7063-status-untracked-cache.sh | 45 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+'usb_subfolder' is the path on disk in the 'media' root folder to the
+initial empty folder into which I wanted to do the backup above that
+points into a usb stick I mounted in the default Kubuntu KDE file
+manager way of mounting usb stick folder hierarchies.
 
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index e5fb892f95..7cf1e2c091 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -22,6 +22,12 @@ avoid_racy() {
- 	sleep 1
- }
- 
-+status_is_clean() {
-+	>../status.expect &&
-+	git status --porcelain >../status.actual &&
-+	test_cmp ../status.expect ../status.actual
-+}
-+
- test_lazy_prereq UNTRACKED_CACHE '
- 	{ git update-index --test-untracked-cache; ret=$?; } &&
- 	test $ret -ne 1
-@@ -683,4 +689,43 @@ test_expect_success 'untracked cache survives a commit' '
- 	test_cmp ../before ../after
- '
- 
-+test_expect_success 'teardown worktree' '
-+    cd ..
-+'
-+
-+test_expect_success 'setup worktree for symlink test' '
-+	git init worktree-symlink &&
-+	cd worktree-symlink &&
-+	git config core.untrackedCache true &&
-+	mkdir one two &&
-+	touch one/file two/file &&
-+	git add one/file two/file &&
-+	git commit -m"first commit" &&
-+	git rm -rf one &&
-+	ln -s two one &&
-+	git add one &&
-+	git commit -m"second commit"
-+'
-+
-+test_expect_failure '"status" after symlink replacement should be clean with UC=true' '
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	status_is_clean
-+'
-+
-+test_expect_success '"status" after symlink replacement should be clean with UC=false' '
-+	git config core.untrackedCache false &&
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	status_is_clean
-+'
-+
- test_done
--- 
-2.15.1.424.g9478a66081
-
+Current situation is that 'git log' in both home_subfolder and
+usb_subfolder show the same hash with only one branch in both. From
+usb_subfolder 'git pull home_subfolder' is broken as in the original
+message.
