@@ -2,92 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60BF91F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 23:10:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 990D11F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 23:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756798AbdLVXK0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 18:10:26 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64711 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756734AbdLVXKY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 18:10:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 90D47C05DC;
-        Fri, 22 Dec 2017 18:10:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pJaaLCY7v0vx0H/C1eJq7QMk7Z8=; b=EeWTED
-        Yc0g3xvjMeYg3o2RKfwQALtTwjDiaIv6BdW7ZzqsdMHneCRK3Q7QGYTkhhL8cPAe
-        RGLFLNX+IZezlG9esn3XTA82bg8jLaZmjCQB++k+7V8t+CfdiEz05uJNEtLf5lT4
-        4J5aH/B3+hFd2ZpddGGsIiQvWsxwD/+8yJOeU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Wdo3RJS7/bXEqaEnXAsdl0mWBAnzZwxU
-        qULtX5qINaclgy2lcNG0CdOA54U/ZBF/DmX6Ta4DXWismOBEQid22IV6s8XfwZGr
-        l9cM7A7Kfn0DgFOAceVdn+9l+McLs1Ow5rMFU2EpBNDyyeWIyy+Ki9OEGJ8lPwAh
-        W8M+GHPQXoQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BDFFC05DB;
-        Fri, 22 Dec 2017 18:10:23 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F19E0C05DA;
-        Fri, 22 Dec 2017 18:10:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCHv5 7/7] builtin/describe.c: describe a blob
-References: <20171116020039.17810-1-sbeller@google.com>
-        <20171116020039.17810-8-sbeller@google.com>
-        <xmqqy3lyv7yt.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79ka8PRbiHggTADNDwwO_=8rysK3sDP7tV4qerbc8C5yaSQ@mail.gmail.com>
-Date:   Fri, 22 Dec 2017 15:10:21 -0800
-In-Reply-To: <CAGZ79ka8PRbiHggTADNDwwO_=8rysK3sDP7tV4qerbc8C5yaSQ@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 19 Dec 2017 11:39:47 -0800")
-Message-ID: <xmqqbmiqpdeq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4994E24C-E76D-11E7-A4FF-8EF31968708C-77302942!pb-smtp1.pobox.com
+        id S1755934AbdLVX1h (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 18:27:37 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:46132 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753008AbdLVX1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 18:27:35 -0500
+Received: by mail-pl0-f65.google.com with SMTP id i6so13695775plt.13
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 15:27:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=GW3BFJDlqie7fwuPVykPXDpcMuExgaDaV7v7XZ+PaiY=;
+        b=ilddkSJuj8fRTg4NmewQ5/BhVtUJJaEs7moSMvzYlkJEQfM9RBX/c982QpgHCTjUue
+         JXCXfFgKRlZMbJXETATj25DSgXZwkg9PPCijQhJx/HDENbQ6GW9Xyx3MIWCyJLhoePRS
+         X/tSmH+CoIvG98/JYXZmG3OxnpCmv13FyqL1T4gXMDxOq6SHF+9r312WPW5fznVeH3k7
+         /x1LPOT+p6UDkFVDQPew5QGqNclDlB1qNPaZqIGgpep8Hv2acrkU5EiyLrOQhZl1fhS+
+         om0wHUviP9f2qQ1Oh09N1q+KRuMgZtGrVMLVvafNo0ADNn9moxejQg3cSH3HqxOf0f6p
+         hzIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=GW3BFJDlqie7fwuPVykPXDpcMuExgaDaV7v7XZ+PaiY=;
+        b=mCDfEd+HvFMsCl/IzHxRJd+yr+zd26YVIOCd0gMIZ33XQcfN9g5uCVHyBCkaYWG+im
+         VlhSD6wYsfPQtGCYSxBie3efcd1yez7zXBBHW4LwQOxcAbm2AugzpWvBoeXyRD39+Mkc
+         2N4sy9/U/gVb6zszEfFIWfibZ7GcqyJERGMlIjPN4bhCb1lmrfVeV6KhtzxSDwbABCqA
+         nlqqWbi0cMLf4eSM1mLukWNLYxDO1+NhqvqSa9hFXdzC3XnRVNqwCgHMs9yLxBdCPd+C
+         Hq6MUh2YXItL8WDBBL+LUaWLiy4ICOpxjXUE9aQSfLl0zImcv+X2AgYaquwjHn67GFlD
+         gpXQ==
+X-Gm-Message-State: AKGB3mIBJRyxDHDRIZIhR67gfVEuoR6/C93vLtnwwUwGMBM5WZjgYbyK
+        bDhXKQLvMY2VGpYuL6jMxnpXBnM2Z2M=
+X-Google-Smtp-Source: ACJfBosJtWGJx9Q7U3GPkvWkYdgslg1+imzDgAXBqsoXVRYAAWqyX3imqYk6yMuvpA64CQBQaDADJA==
+X-Received: by 10.124.22.132 with SMTP id v4mr15729551ply.158.1513985254093;
+        Fri, 22 Dec 2017 15:27:34 -0800 (PST)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id 13sm47502275pfs.112.2017.12.22.15.27.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 22 Dec 2017 15:27:33 -0800 (PST)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH] oidmap: ensure map is initialized
+Date:   Fri, 22 Dec 2017 15:27:29 -0800
+Message-Id: <20171222232729.253936-1-bmwill@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+In-Reply-To: <xmqqlghur08f.fsf@gitster.mtv.corp.google.com>
+References: <xmqqlghur08f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Ensure that an oidmap is initialized before attempting to add, remove,
+or retrieve an entry by simply performing the initialization step
+before accessing the underlying hashmap.
 
-> On Tue, Dec 19, 2017 at 11:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> I had to squash in the following to make 'pu' pass under
->> gettext-poison build.  Is this ready for 'next' otherwise?
->
-> I saw that in pu, thanks for squashing. I should have spoken
-> up earlier confirming it.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ oidmap.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-So is this ready for 'next' if it is squashed?
+diff --git a/oidmap.c b/oidmap.c
+index 6db4fffcd..d9fb19ba6 100644
+--- a/oidmap.c
++++ b/oidmap.c
+@@ -33,12 +33,19 @@ void oidmap_free(struct oidmap *map, int free_entries)
+ 
+ void *oidmap_get(const struct oidmap *map, const struct object_id *key)
+ {
++	if (!map->map.cmpfn)
++		return NULL;
++
+ 	return hashmap_get_from_hash(&map->map, hash(key), key);
+ }
+ 
+ void *oidmap_remove(struct oidmap *map, const struct object_id *key)
+ {
+ 	struct hashmap_entry entry;
++
++	if (!map->map.cmpfn)
++		oidmap_init(map, 0);
++
+ 	hashmap_entry_init(&entry, hash(key));
+ 	return hashmap_remove(&map->map, &entry, key);
+ }
+@@ -46,6 +53,10 @@ void *oidmap_remove(struct oidmap *map, const struct object_id *key)
+ void *oidmap_put(struct oidmap *map, void *entry)
+ {
+ 	struct oidmap_entry *to_put = entry;
++
++	if (!map->map.cmpfn)
++		oidmap_init(map, 0);
++
+ 	hashmap_entry_init(&to_put->internal_entry, hash(&to_put->oid));
+ 	return hashmap_put(&map->map, to_put);
+ }
+-- 
+2.15.1.620.gb9897f4670-goog
 
->> With the "log --find-object" thing, it may be that this no longer is
->> needed, but then again we haven't done anything with the other
->> Jonathan's idea to unify the --find-object thing into the --pickaxe
->> framework.
->
-> I'll look into that after I finish looking at a submodule related bug.
-
-Thanks.
-
->> It seems that we tend to open and then abandon new interests without
->> seeing them through completion, leaving too many loose ends untied.
->> This has to stop.
->
-> I'll try to find my balance again.
-
-Sorry, but this was not really about you, but was more about me.  
-
-I probably should more aggressively drop a topic that stalled and
-also merge a topic that reached the point of diminishing returns to
-'next'.
