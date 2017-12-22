@@ -2,116 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C7F71F404
-	for <e@80x24.org>; Fri, 22 Dec 2017 08:14:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86C841F404
+	for <e@80x24.org>; Fri, 22 Dec 2017 09:54:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752039AbdLVIOO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 03:14:14 -0500
-Received: from mout.web.de ([212.227.15.14]:49602 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751887AbdLVION (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 03:14:13 -0500
-Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkyXt-1f0WpD2bCP-00aqK2; Fri, 22
- Dec 2017 09:14:10 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] send-pack: use internal argv_array of struct child_process
-Message-ID: <d532a23f-cf73-615c-976d-f4fe83309feb@web.de>
-Date:   Fri, 22 Dec 2017 09:14:10 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S933539AbdLVI75 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 03:59:57 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:44299 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933524AbdLVI7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 03:59:54 -0500
+Received: by mail-qt0-f194.google.com with SMTP id m59so35456601qte.11
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 00:59:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=7kP8HRDSG269FSPolSwbogUS+hWTvQWrGoRx2XXb2bI=;
+        b=OO4wEmXIEnzwzCCA6QK0N4mT3MWY62JaD8EH/Ruz7phSIDtXitAaUtvrX6OUIplf8u
+         TrMjhOLK66C1gKqfroqnhYF4agNUdxa76WscaMOKZSyGbIaXN1OabOZaI5qHx96RXnQU
+         dVhgczfzrvpPW1oR3+2Fv2Ple43xjVGTc3DmXfDnnxdrMW1SBcIz1YbH0JfmrHImJQKX
+         xnSF67ScHJWlF51+KsC4NzdgHjmVP/Y+U0tsKCK9jbMn4us+r/dWN5f7GtQXoujm3H/n
+         quFHs/3u6rw3zzfm7cdLWQgzk4tTQIMioqf4TLxNKvxdRVmJF8/qyhTvGfiDQZDt8y19
+         AbQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=7kP8HRDSG269FSPolSwbogUS+hWTvQWrGoRx2XXb2bI=;
+        b=NkuZQ5CmH6JKgCva7vkGwVxynO0PP7QRZN0rvtuhls7vCkr/h/hlOPZCKmZn//loXM
+         HFS5m5rZQlmvuQh0DvCNl3DRtV3yvhfrclTtY8n2WVDGKo4iymJsAa4JfpnhDNPPrECK
+         NB0ekhZRdlf36iCNMpGQ4eHHGuq50fAFJxWMazm3rGvj6XvfyJnaAloxKkH8yFjrgC8I
+         lfboH6V/eyaXxHUlOe742AOkYX3txD3nboH30zTnhb/newLRc+lHZw2S789fOYrwmmjr
+         7oJQgAOGaOe+YhExqdqNWGc9ockiL3t/dnCYvQSpg2f4T3XAGIbryT72t+3EKwd+fPh6
+         Mb5Q==
+X-Gm-Message-State: AKGB3mJz/IfmDhtEHDHiK9u//iWX2WtCEUYt8AWzWuFHbC7b+cJxuJME
+        n2dO5Si3HA+2m9u+lcZsOICL9FT7DuLGXw+TsSs=
+X-Google-Smtp-Source: ACJfBosLempHX+HENjrnABGo+STqYLz6vaK8a3DLPDiOSB96kRKRqQwHvLcG2Y3Iy9c2zkbqc+MWuP/RFE3UbqKOyxw=
+X-Received: by 10.237.59.22 with SMTP id p22mr18691779qte.34.1513933193319;
+ Fri, 22 Dec 2017 00:59:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:XFwvJ80V4M5CmBPXS+L1zzhMrjeF518/TWmr07qhB3C9USp1hfP
- IleUeRkn+9SdCs3kd1BxOITMgUUXeqKf9+t5XzfeA20g3OsUyr2M9f0o6AEYVmAqTYqWbLX
- tTYYMhJXzDgcDcW/g4DtKHr54EZbfpo8mT4eZCYxvgR8Uy4fAdiwbq6lLCBO5l1fJ2MX4Vb
- YyjaVTm2yzLv2u1FtGTSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jDPgLJ30ZXY=:TZ2207gwl1RwLq2T99Uzsm
- y7nts9HQ1ow8drBeObkVQaTAQRH98eEsyfTEKsgQGSbIC4wCLuKxY5ruO491SuCKxh9syokj9
- kLDQjG0zoSAWptSDGLbx5SOJMhbpnKTBIea4Mwf/s/ki06AEHntmDh/1NJr0B0eT/o7qkVAgT
- 1sA+qJHEGFXNKhTBRehlDXuXzEdh3/HesO22hCwKtTnfaePO5en1HSICWG/43oDv+T5VhVMKP
- v0GRZfGP0OKnMMDIDf7Q8LMxfxfjC1eGJIQAxZ32feMLnYB6QskfXUFDWvIaDdLKfkM7Vsf8r
- AFYRWtZ8DAAY9DU+gfg8lgbeIeATq1/PmOxSJsA+BK3MiNCBDBFPg4sJzzOGNIncwtXUz5tGg
- AMRPeT6mcZQJkHSSgBudBWuy9Ojw0HUgiAFkVLkf9m+v7wJuVF0/53spOnubeRgrRr2Up7Gmy
- v3kEFRGmmdePOGjdxMD8wiqw9J1xHw0FKR6g90nSX9zEjcUmMq951rgdCkSmWFB7rcS9CkRwF
- O1VYFP34dkMcrbbdDoFPgvtZ+YUkfvkDWtR+tcIzTc/Y59Qn/EsX90cnonoYShj0fkc6wZeGQ
- MPODHXYRwclcOWi1KWtng3UfZxTi8FSVfh4iLgUEP2H8bT0noFkmIz6fH5mBqcf21LDa54W4G
- ZDRjb/1+LFeVRcPOpHsGsMyWmFHpfJA0YbIQ40GfB2d4fj7fCVqeryMqKRXXncjLQtl+Cpu0I
- xJY/FlsD0omwOGbJXL31xucRKP+Ahw83bcNejBdg6Bk3WyDBxBSzh3L1tZMnyoD2OtEqqN6C/
- 8TxjLd6jpr8HSrE4l7oM2emtEtJmIDqHtiWLU0H8aB7luMng2CLTfIv51s+sTtJ0Cj8tZ9x
+Received: by 10.12.198.2 with HTTP; Fri, 22 Dec 2017 00:59:52 -0800 (PST)
+In-Reply-To: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
+References: <504cafe3-2960-af2d-10fe-51e8ba3d2213@web.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 22 Dec 2017 03:59:52 -0500
+X-Google-Sender-Auth: dcUgU_TIayWp3b3xIT6SQ34W7d0
+Message-ID: <CAPig+cQaQ9ae1e4eMfJMG4wykXe2tTgtvpxB1_Z=3XbitYeQyw@mail.gmail.com>
+Subject: Re: [PATCH] http: use internal argv_array of struct child_process
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid a magic number of NULL placeholder values and a magic index by
-constructing the command line for pack-objects using the embedded
-argv_array of the child_process.  The resulting code is shorter and
-easier to extend.
+On Fri, Dec 22, 2017 at 3:14 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Avoid a strangely magic array size (it's slightly too big) and explicit
+> index numbers by building the command line for index-pack using the
+> embedded argv_array of the child_process.  The resulting code is shorter
+> and easier to extend.
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> diff --git a/http.c b/http.c
+> @@ -2041,13 +2040,10 @@ int finish_http_pack_request(struct http_pack_req=
+uest *preq)
+> -       ip_argv[0] =3D "index-pack";
+> -       ip_argv[1] =3D "-o";
+> -       ip_argv[2] =3D tmp_idx;
+> -       ip_argv[3] =3D preq->tmpfile;
+> -       ip_argv[4] =3D NULL;
+> -
+> -       ip.argv =3D ip_argv;
+> +       argv_array_push(&ip.args, "index-pack");
+> +       argv_array_push(&ip.args, "-o");
+> +       argv_array_push(&ip.args, tmp_idx);
+> +       argv_array_push(&ip.args, preq->tmpfile);
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- send-pack.c | 28 +++++++++-------------------
- 1 file changed, 9 insertions(+), 19 deletions(-)
+Not necessarily worth a re-roll, but using the "pushl" variant would
+make it clear that "-o" and tmp_idx are related and would ensure that
+they don't accidentally get split up if someone inserts a new "push"
+in the sequence in the future.
 
-diff --git a/send-pack.c b/send-pack.c
-index a8cc6b266e..2112d3b27a 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -58,35 +58,25 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *extra, struc
- 	 * the revision parameters to it via its stdin and
- 	 * let its stdout go back to the other end.
- 	 */
--	const char *argv[] = {
--		"pack-objects",
--		"--all-progress-implied",
--		"--revs",
--		"--stdout",
--		NULL,
--		NULL,
--		NULL,
--		NULL,
--		NULL,
--		NULL,
--	};
- 	struct child_process po = CHILD_PROCESS_INIT;
- 	FILE *po_in;
- 	int i;
- 	int rc;
- 
--	i = 4;
-+	argv_array_push(&po.args, "pack-objects");
-+	argv_array_push(&po.args, "--all-progress-implied");
-+	argv_array_push(&po.args, "--revs");
-+	argv_array_push(&po.args, "--stdout");
- 	if (args->use_thin_pack)
--		argv[i++] = "--thin";
-+		argv_array_push(&po.args, "--thin");
- 	if (args->use_ofs_delta)
--		argv[i++] = "--delta-base-offset";
-+		argv_array_push(&po.args, "--delta-base-offset");
- 	if (args->quiet || !args->progress)
--		argv[i++] = "-q";
-+		argv_array_push(&po.args, "-q");
- 	if (args->progress)
--		argv[i++] = "--progress";
-+		argv_array_push(&po.args, "--progress");
- 	if (is_repository_shallow())
--		argv[i++] = "--shallow";
--	po.argv = argv;
-+		argv_array_push(&po.args, "--shallow");
- 	po.in = -1;
- 	po.out = args->stateless_rpc ? -1 : fd;
- 	po.git_cmd = 1;
--- 
-2.15.1
+    argv_array_push(&ip.args, "index-pack");
+    argv_array_pushl(&ip.args, "-o", tmp_idx, NULL);
+    argv_array_push(&ip.args, preq->tmpfile);
