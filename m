@@ -2,154 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B52371F406
-	for <e@80x24.org>; Fri, 22 Dec 2017 12:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1CE01F406
+	for <e@80x24.org>; Fri, 22 Dec 2017 14:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752039AbdLVM6b (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 07:58:31 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:21288 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751465AbdLVM6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 07:58:30 -0500
-Received: from ms17nec.int.opaltelecom.net ([10.103.251.117])
-        by smtp.talktalk.net with SMTP
-        id SMuBeT1FpAp17SMuBeuwa9; Fri, 22 Dec 2017 12:58:28 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1513947508;
-        bh=POoItAZrFLW9g2gDmgFIn8WQ2kMfGkU4yhGBq67ihRA=;
-        h=Date:From:To:Subject:Cc:In-Reply-To:References;
-        b=GPRacnmoE31J9Zl0L8vhcr4LjtxGS8O8bZeNawWQXDYv/Grd2CYkWUdSxXV4MjI2a
-         a+tU4gg2Re4jP9xnRJmzpozKj+iqLD8AB1ySGYdQt9C5xHsd5f00qeAQT3caNwQcw0
-         pehPb4RKMaGdZoI+D6ujP8e2aL+XbHgp+X2KlN9A=
-X-Spam: 0
-X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=EGPEdrDQpk0PV5/BYmBFfw==:117
- a=wcpVQE0W4qLcfTC1YB9uxQ==:17 a=9Ui_ZxslVaMA:10 a=IkcTkHD0fZMA:10
- a=ocR9PWop10UA:10 a=VwQbUJbxAAAA:8 a=ybZZDoGAAAAA:8 a=evINK-nbAAAA:8
- a=pGLkceISAAAA:8 a=NEAV23lmAAAA:8 a=b6Kcit8S0wAJPAic8eEA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=0RhZnL1DYvcuLYC8JZ5M:22 a=RfR_gqz1fSpA9VikTjo0:22
-Received: from (82.10.83.37) by webmail.talktalk.co.uk;  Fri, 22 Dec 2017 12:58:27 +0000
-Message-ID: <17655681.1077671513947507373.JavaMail.defaultUser@defaultHost>
-Date:   Fri, 22 Dec 2017 12:58:27 +0000 (GMT)
-From:   "phillip.wood@talktalk.net" <phillip.wood@talktalk.net>
-To:     <johannes.schindelin@gmx.de>, <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer: assign only free()able strings to gpg_sign
+        id S1752313AbdLVOAp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 22 Dec 2017 09:00:45 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35720 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751980AbdLVOAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Dec 2017 09:00:44 -0500
+Received: by mail-wm0-f66.google.com with SMTP id f9so21946077wmh.0
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 06:00:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=d8t/eU5kj8p6MNl4tYlSsBqH4eDzqc1LIWiE3u0Tvic=;
+        b=mBo1LCON4fyl3BEhWwwksBupubo5WeRJKj5OjU9FcyqxDlwcNZ4flUP4K4BZUV+TdD
+         YVSxtQcuvferKHs2nU3GaYeo7iEnKg9ozRgR7Km5vReGUVTFp7aw7Vx2r1X+CR7FNd8x
+         p4htuv+Wd4y38qTktQBrXczvYi3RBsUATAedWmvuN9lk4CqhlkejIrCDK9BIPihonYtc
+         oR6Sr/mZTQjJTCOBiiIsej4jLawOtcmU/aL7vJBh3ZcxGaLVvS0oli74VBKZZ3RgBBY/
+         cWnIo2SE5MwVLd8gyHOr/STkUP40/xxtvwn4V4cHFcvQtlxC5kTa0//ewe9Df8pw0uNq
+         KGNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=d8t/eU5kj8p6MNl4tYlSsBqH4eDzqc1LIWiE3u0Tvic=;
+        b=eZcgDAidumHyXj6dIV5H825xfKhNiTXKple9uwegORWmmryqdflzURjdq0IsLFgJ6L
+         XNx5YKpNJijqFOwO3HoUd9HVgU5wLN3nJs4kpW1hOwANLUzuyAIfUCsbPmxbL8XPQtuq
+         p10gXbZJbERwDsYeQXUksrToTj0oMpvpv27QA8U8Qi6mr0a063E6FUPuC7+JPQnqP9ed
+         WxhFDwiPRQjLOY3CgTMbM03NBiMxDFCdRZ472ykMMNiBuQO3u90ygzujycydpVuxsvw7
+         GvnkGeH9PizTNpICbOyaGeDvjClCAdCaCnvwqeq0pIU/tOiZEthk2ZGl6De8QGarG1gD
+         Svzg==
+X-Gm-Message-State: AKGB3mLVFzX6dPrH6Rigy5bkBNJ+/iN2UTy6WhKzREVr/sEcR7rlIZXG
+        MFFBPDc3Cip9FtM1BwH5gs0pVi4j
+X-Google-Smtp-Source: ACJfBosfcjEZCtBK4TgCeCWeb8+OJ/R16ZGrJQOb+zdDPNF+r/50poNcPuazsPuDNkTlzC5ly4btCA==
+X-Received: by 10.80.192.5 with SMTP id r5mr15316473edb.138.1513951242344;
+        Fri, 22 Dec 2017 06:00:42 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id a52sm21056749eda.92.2017.12.22.06.00.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Dec 2017 06:00:41 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <f4420880aa4ee73b7c8e435de1efccf9a969fd41.1513943347.git.johannes.schindelin@gmx.de>
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] status: add a failing test showing a core.untrackedCache bug
+Date:   Fri, 22 Dec 2017 14:00:32 +0000
+Message-Id: <20171222140032.21180-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.1.424.g9478a66081
 MIME-Version: 1.0
-Content-Type: text/plain;charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-References: <f4420880aa4ee73b7c8e435de1efccf9a969fd41.1513943347.git.johannes.schindelin@gmx.de>
-X-Originating-IP: 82.10.83.37
-X-Username: phillip.wood@talktalk.net
-X-CMAE-Envelope: MS4wfCaXMF9P/zfdyzsXSKfEJidbKIRbvSn2SzAxsH9xpnhzCS8ZhwZN3CBxxpSgDP9ewL/xZCFj1kHEbRfdMjSjFDbXhy+YyAZ7ci6AQbQ0GH5aOb4cFb4L
- x8FU3LmFzaOyk5RPd0ib35By5E9j4b65VapiwbovQESTdSg5+YFAnAEYl1LGSOR0/2I1KBlmkOxPhW8k5PGepNKYKQg/dPjA/oFK1NzUfmBhdCQErnNAQqR+
- J08x93pUntLTBZ2NYPQGUnnifG1Q7nB376+9cREgNbuiVSpTFyBXP0xXsyR9urT0XgmJ3vWZoSsSPuNqOWgwkZy3wjKQ77Fvmc/Igii1/qKFArY32+XIfC5v
- Eazsp7d/
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The untracked cache gets confused when a directory is swapped out for
+a symlink to another directory. Whatever files are inside the target
+of the symlink will be incorrectly shown as untracked. This issue does
+not happen if the symlink links to another file, only if it links to
+another directory.
 
+A stand-alone testcase for copying into a terminal:
 
->----Original Message----
->From: johannes.schindelin@gmx.de
->Date: 22/12/2017 11:50 
->To: <git@vger.kernel.org>
->Cc: "Junio C Hamano"<gitster@pobox.com>, "Phillip Wood"<phillip.
-wood@dunelm.org.uk>, "Kaartic Sivaraam"<kaartic.sivaraam@gmail.com>
->Subj: [PATCH] sequencer: assign only free()able strings to gpg_sign
->
->The gpg_sign member of the replay_opts structure is of type `char *`,
->meaning that the sequencer deems the string to which gpg_sign points 
-to
->be under its custody, i.e. it needs to be free()d by the sequencer.
->
->Therefore, let's only assign malloc()ed buffers to it.
->
->Reported-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
->Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->---
->
->	Phillip, if you want to squash these changes into your patches,
->	I'd totally fine with that.
->
+    (
+        rm -rf /tmp/testrepo &&
+        git init /tmp/testrepo &&
+        cd /tmp/testrepo &&
+        mkdir x y &&
+        touch x/a y/b &&
+        git add x/a y/b &&
+        git commit -msnap &&
+        git rm -rf y &&
+        ln -s x y &&
+        git add y &&
+        git commit -msnap2 &&
+        git checkout HEAD~ &&
+        git status &&
+        git checkout master &&
+        sleep 1 &&
+        git status &&
+        git status
+    )
 
-Hi Johannes, thanks for putting this together, the patch it fixes is 
-already in next so I think it'd be best to leave this one separate. I 
-wonder if it would be worth adding another test, see below.
+This will incorrectly show y/a as an untracked file. Both the "git
+status" call right before "git checkout master" and the "sleep 1"
+after the "checkout master" are needed to reproduce this, presumably
+due to the untracked cache tracking on the basis of cached whole
+seconds from stat(2).
 
-Best Wishes
+When git gets into this state, a workaround to fix it is to issue a
+one-off:
 
+    git -c core.untrackedCache=false status
 
-Phillip
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t7063-status-untracked-cache.sh | 45 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
->Based-On: pw/sequencer-in-process-commit at https://github.com/dscho/git
-
->Fetch-Base-Via: git fetch https://github.com/dscho/git pw/sequencer-
-in-process-commit
->Published-As: https://github.com/dscho/git/releases/tag/sequencer-owns-gpg-sign-v1
-
->Fetch-It-Via: git fetch https://github.com/dscho/git sequencer-owns-
-gpg-sign-v1
-> sequencer.c                   |  2 +-
-> t/t3404-rebase-interactive.sh | 10 ++++++++++
-> 2 files changed, 11 insertions(+), 1 deletion(-)
->
->diff --git a/sequencer.c b/sequencer.c
->index 7051b20b762..1b2599668f5 100644
->--- a/sequencer.c
->+++ b/sequencer.c
->@@ -160,7 +160,7 @@ static int git_sequencer_config(const char *k, 
-const char *v, void *cb)
-> 	}
-> 
-> 	if (!strcmp(k, "commit.gpgsign")) {
->-		opts->gpg_sign = git_config_bool(k, v) ? "" : NULL;
->+		opts->gpg_sign = git_config_bool(k, v) ? xstrdup("") : NULL;
-> 		return 0;
-> 	}
-> 
->diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-
-interactive.sh
->index 9ed0a244e6c..040ef1a4dbc 100755
->--- a/t/t3404-rebase-interactive.sh
->+++ b/t/t3404-rebase-interactive.sh
->@@ -1318,6 +1318,16 @@ test_expect_success 'editor saves as CR/LF' '
-> 
-> SQ="'"
-> test_expect_success 'rebase -i --gpg-sign=<key-id>' '
->+	test_when_finished "test_might_fail git rebase --abort" &&
->+	set_fake_editor &&
->+	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
->+		>out 2>err &&
->+	test_i18ngrep "$SQ-S\"S I Gner\"$SQ" err
->+'
->+
->+test_expect_success 'rebase -i --gpg-sign=<key-id> overrides commit.
-gpgSign' '
->+	test_when_finished "test_might_fail git rebase --abort" &&
->+	test_config commit.gpgsign true &&
-> 	set_fake_editor &&
-> 	FAKE_LINES="edit 1" git rebase -i --gpg-sign="\"S I Gner\"" HEAD^ \
-> 		>out 2>err &&
-
-
-I thought the bug could be triggered when commit.gpgsign was true and 
-it was not overriden on the commandline, is it worth adding a test for 
-that?
-
-
->base-commit: 28d6daed4f119940ace31e523b3b272d3d153d04
->-- 
->2.15.1.windows.2
->
-
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index e5fb892f95..7cf1e2c091 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -22,6 +22,12 @@ avoid_racy() {
+ 	sleep 1
+ }
+ 
++status_is_clean() {
++	>../status.expect &&
++	git status --porcelain >../status.actual &&
++	test_cmp ../status.expect ../status.actual
++}
++
+ test_lazy_prereq UNTRACKED_CACHE '
+ 	{ git update-index --test-untracked-cache; ret=$?; } &&
+ 	test $ret -ne 1
+@@ -683,4 +689,43 @@ test_expect_success 'untracked cache survives a commit' '
+ 	test_cmp ../before ../after
+ '
+ 
++test_expect_success 'teardown worktree' '
++    cd ..
++'
++
++test_expect_success 'setup worktree for symlink test' '
++	git init worktree-symlink &&
++	cd worktree-symlink &&
++	git config core.untrackedCache true &&
++	mkdir one two &&
++	touch one/file two/file &&
++	git add one/file two/file &&
++	git commit -m"first commit" &&
++	git rm -rf one &&
++	ln -s two one &&
++	git add one &&
++	git commit -m"second commit"
++'
++
++test_expect_failure '"status" after symlink replacement should be clean with UC=true' '
++	git checkout HEAD~ &&
++	status_is_clean &&
++	status_is_clean &&
++	git checkout master &&
++	avoid_racy &&
++	status_is_clean &&
++	status_is_clean
++'
++
++test_expect_success '"status" after symlink replacement should be clean with UC=false' '
++	git config core.untrackedCache false &&
++	git checkout HEAD~ &&
++	status_is_clean &&
++	status_is_clean &&
++	git checkout master &&
++	avoid_racy &&
++	status_is_clean &&
++	status_is_clean
++'
++
+ test_done
+-- 
+2.15.1.424.g9478a66081
 
