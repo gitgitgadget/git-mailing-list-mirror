@@ -2,95 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2345A1F406
-	for <e@80x24.org>; Sat, 23 Dec 2017 03:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA91F1F406
+	for <e@80x24.org>; Sat, 23 Dec 2017 06:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757267AbdLWDP1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 22 Dec 2017 22:15:27 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:42974 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756885AbdLWDP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Dec 2017 22:15:26 -0500
-Received: by mail-it0-f44.google.com with SMTP id p139so16216558itb.1
-        for <git@vger.kernel.org>; Fri, 22 Dec 2017 19:15:26 -0800 (PST)
+        id S1750842AbdLWGKl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Dec 2017 01:10:41 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:43353 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750800AbdLWGKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Dec 2017 01:10:41 -0500
+Received: by mail-io0-f177.google.com with SMTP id k202so18329274ioe.10
+        for <git@vger.kernel.org>; Fri, 22 Dec 2017 22:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=93R96vOjUtmWy2ScnMkBYWMOcdqmgKD04FEKXSEJV38=;
-        b=G8emjB3oRe6yip+y3dVc/3zocaQN/hFApn6W55bfRzyAFlGlsaJCHIFRH6TCqIThJz
-         QSvbf99EkT/mUCslo1zeyiHoaezgTQktfa8mc6xtYyXBe4aiSZTFMEmXLkL4tBuUv/kD
-         v53rzUnQvsCbFyuCH47gkepUuS0wMznA+8NLqOIEuq2ZQGnvkCh0Fkz1AkJjnDRCKRB8
-         62d5+l2P9O5chge4CQkYjK5kFLXy8B+yHzkagZle3t9OADiuNlUWJYb+Qo6HIPrlRKCC
-         QvqofZmwNbbBGTcgvx94kvoaj8C1YUaY54qTsGFGakc+hEtVd/gBFSu5QBG5cgQaK7at
-         AD9w==
+        d=ecbaldwin.net; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QJy5NOKNFO9ZKu6ZPwUH49nDqQjEZmd+2HpqxaKLbxc=;
+        b=YmpZHR3QU80FiItPQARzVueFdWIR/VQWVw9jpYcUG9PbHdLT3SCGmBahSXP+KEp8//
+         3bq+krqaFG3/vV/VWewxQDopcpapvRqS6JY8oUQY3/iFFKshl9fSfxGpy0C+GFZEIoDz
+         8V2/+kgY0PETEhw3z74tz4EkCKuDozKu0K3VQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=93R96vOjUtmWy2ScnMkBYWMOcdqmgKD04FEKXSEJV38=;
-        b=tmODgKiDCgJXOSzlHaZC1oSepfia7I5+ZbcX8YyTwFMVOj4hQKFX2Ey0ruFr81mmSf
-         N4R4ymFPQZ0AtfqPk26u6cXWxFe44jPvfVSQMQ3I3lgwNBW7ljXdH8934INQ0jl51TjE
-         JbJBK6l/5JxAuvUXeaggV8Ve1WPEuv/lfjNqxU+ITofQkO8+/Ku1XUxmZ78pB1ntgmKb
-         WEu4qTgen+tNJVGWc8i87x4RP76n3ThtrPXFxHNQnh2tsjTCXdMiEP8DVLyACYZ3e4i+
-         Dgmov414S3NYQLdZ4Iohyk9WLQrbzVxqS7hKTqzEg7mlQNnPlZK2fQCnNsKtQFYuXUPj
-         VfLQ==
-X-Gm-Message-State: AKGB3mLV4o51zSlkxoJ15SRMp/aB0r8fFfUJsdq0GDohT6lzW5JSEWkL
-        Ls5GrUmuQe44y8Kun/kfFTuOPB8VWn5aa1i5m9Y=
-X-Google-Smtp-Source: ACJfBotGe+oKaVKUgjuxDc4v4uNb0CQ4Ya+idfuHEmQKRhypVXH5mDeetLw/dOJHHgHQTcdv0xll7J9ZnpLyvf+1Psw=
-X-Received: by 10.36.84.143 with SMTP id t137mr19948969ita.94.1513998925537;
- Fri, 22 Dec 2017 19:15:25 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QJy5NOKNFO9ZKu6ZPwUH49nDqQjEZmd+2HpqxaKLbxc=;
+        b=W+2qqd78VCSq0yl2ngjQ5pqtAr8b2mUUuDj7cXInw17z/eXnWX6vE13mkVi/Lu1w7O
+         6gfVgnf8rSV/WvzRfumXROZlxiJ1Dry87KVBnvX1wIAoafrHyisO/a9XjQsLdWQTa/Ti
+         fYPyWPjmz71UDSSSxrKyqqMUGeeTS73CUsh+5aNLbMxMyAlLC+AY+zOIU4uMqnf3lHYp
+         s+75DSxzSgGRFPl7eTDyi0JRfYLKbDSAE2uRjINJIDObbd27gGUVx2GgM22qNuhG2Erq
+         twGpQWPM0HdWtUYyloXN4LLUIgUa0wwrHOFpkoIIi8HltoSlboeDXmt3qDj5jWjaX3L/
+         T5RA==
+X-Gm-Message-State: AKGB3mKDF3dmuFHekylg+kcuBbb3yvL2ED6OwhdnyeaFjmhY02fmIWLt
+        AY773R+Fn4IgftReuhzZW8tUU7pVW6dQNLGff+iENGFR
+X-Google-Smtp-Source: ACJfBoshzb0DgaC8ePfVF0S4z2/2iY2J6jzhTurTUFtLOgBxHdkMvI2e/5WTCUSlcBHiwBN0Zr0YrHrEwbLmDr3v/WM=
+X-Received: by 10.107.43.75 with SMTP id r72mr20497098ior.89.1514009439938;
+ Fri, 22 Dec 2017 22:10:39 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.107.150 with HTTP; Fri, 22 Dec 2017 19:15:05 -0800 (PST)
-In-Reply-To: <CA+P7+xpt1cW-uokayYFJ5cr88FKBcn_RT3v7iLHyu7kZaS=wbg@mail.gmail.com>
-References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
- <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
- <CAEW+b66pCqTBz6o_aTK0byyKsDc8HRfHuqKf64Ob6pBtL9w2Lw@mail.gmail.com> <CA+P7+xpt1cW-uokayYFJ5cr88FKBcn_RT3v7iLHyu7kZaS=wbg@mail.gmail.com>
-From:   Anatolii Borodin <anatoly.borodin@gmail.com>
-Date:   Sat, 23 Dec 2017 04:15:05 +0100
-X-Google-Sender-Auth: AiR6is0TdHeAW3TedqHo3TPD9lM
-Message-ID: <CACNzp2mdEmAj_6an-4is6_1LnqAZs=huakJhUQrJ+DxyJWY0mA@mail.gmail.com>
-Subject: Re: Usability outrage as far as I am concerned
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Cristian Achim <brancoliticus@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.2.153.108 with HTTP; Fri, 22 Dec 2017 22:10:19 -0800 (PST)
+From:   Carl Baldwin <carl@ecbaldwin.net>
+Date:   Fri, 22 Dec 2017 23:10:19 -0700
+Message-ID: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+Subject: Bring together merge and rebase
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jacob,
+The big contention among git users is whether to rebase or to merge
+changes [2][3] while iterating. I used to firmly believe that merging
+was the way to go and rebase was harmful. More recently, I have worked
+in some environments where I saw rebase used very effectively while
+iterating on changes and I relaxed my stance a lot. Now, I'm on the
+fence. I appreciate the strengths and weaknesses of both approaches. I
+waffle between the two depending on the situation, the tools being
+used, and I guess, to some extent, my mood.
 
-On Sat, Dec 23, 2017 at 12:05 AM, Jacob Keller <jacob.keller@gmail.com> wro=
-te:
-> If you wish to update it later, you can mount hte usb stick, and then
-> just run git pull from inside the new subfolder. Note that you do
-> *not* run "git pull home_subfolder", as git pull expects the name of a
-> remote, which in this case is just origin (since the default remote
-> name you clone from is origin)
+I think what git needs is something brand new that brings the two
+together and has all of the advantages of both approaches. Let me
+explain what I've got in mind...
 
-From git-fetch(8):
+I've been calling this proposal `git replay` or `git replace` but I'd
+like to hear other suggestions for what to name it. It works like
+rebase except with one very important difference. Instead of orphaning
+the original commit, it keeps a pointer to it in the commit just like
+a `parent` entry but calls it `replaces` instead to distinguish it
+from regular history. In the resulting commit history, following
+`parent` pointers shows exactly the same history as if the commit had
+been rebased. Meanwhile, the history of iterating on the change itself
+is available by following `replaces` pointers. The new commit replaces
+the old one but keeps it around to record how the change evolved.
 
-       <repository>
-           The "remote" repository that is the source of a fetch or
-pull operation.
-           This parameter can be either a URL (see the section GIT URLS bel=
-ow)
-           or the name of a remote (see the section REMOTES below).
+The git history now has two dimensions. The first shows a cleaned up
+history where fix ups and code review feedback have been rolled into
+the original changes and changes can possibly be ordered in a nice
+linear progression that is much easier to understand. The second
+drills into the history of a change. There is no loss and you don't
+change history in a way that will cause problems for others who have
+the older commits.
 
-You can run git fetch / git pull with a URL or a local path to a
-repository, not only origin etc.
+Replay handles collaboration between multiple authors on a single
+change. This is difficult and prone to accidental loss when using
+rebase and it results in a complex history when done with merge. With
+replay, collaborators could merge while collaborating on a single
+change and a record of each one's contributions can be preserved.
+Attempting this level of collaboration caused me many headaches when I
+worked with the gerrit workflow (which in many ways, I like a lot).
 
+I blogged about this proposal earlier this year when I first thought
+of it [1]. I got busy and didn't think about it for a while. Now with
+a little time off of work, I've come back to revisit it. The blog
+entry has a few examples showing how it works and how the history will
+look in a few examples. Take a look.
 
---=20
-Mit freundlichen Gr=C3=BC=C3=9Fen,
-Anatolii Borodin
+Various git commands will have to learn how to handle this kind of
+history. For example, things like fetch, push, gc, and others that
+move history around and clean out orphaned history should treat
+anything reachable through `replaces` pointers as precious. Log and
+related history commands may need new switches to traverse the history
+differently in different situations. Bisect is a interesting one. I
+tend to think that bisect should prefer the regular commit history but
+have the ability to drill into the change history if necessary.
+
+In my opinion, this proposal would bring together rebase and merge in
+a powerful way and could end the contention. Thanks for your
+consideration.
+
+Carl Baldwin
+
+[1] http://blog.episodicgenius.com/post/merge-or-rebase--neither/
+[2] https://git-scm.com/book/en/v2/Git-Branching-Rebasing
+[3] http://changelog.complete.org/archives/586-rebase-considered-harmful
