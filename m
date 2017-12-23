@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACA481F404
-	for <e@80x24.org>; Sat, 23 Dec 2017 12:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E91881F404
+	for <e@80x24.org>; Sat, 23 Dec 2017 13:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752080AbdLWMtz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Dec 2017 07:49:55 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:45151 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750842AbdLWMty (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Dec 2017 07:49:54 -0500
-Received: by mail-wm0-f54.google.com with SMTP id 9so25967696wme.4
-        for <git@vger.kernel.org>; Sat, 23 Dec 2017 04:49:53 -0800 (PST)
+        id S1752828AbdLWNeK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Dec 2017 08:34:10 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:42778 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751052AbdLWNeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Dec 2017 08:34:09 -0500
+Received: by mail-wm0-f51.google.com with SMTP id b199so26253800wme.1
+        for <git@vger.kernel.org>; Sat, 23 Dec 2017 05:34:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=uu8ihit0IdldML1svrJQ2yiexX3e/GX1rag3a5hhUPI=;
-        b=jXnnnic3yt8lU8Pql9xfsPVhBUhSBqHInzDULyijFIPh/9Jo8VO5Z5HMxGLfVruQXv
-         IQjqu5g98B8tSTjar5OZ9egOEqZ+4gJBNKUDi3EBuz5K9HVGJNGQOywlGt4fylswcvMn
-         JNdD/zYRfdpamB/qR7jMGq8CzeSNaCWyWaNLqPzsb+ceKlWGbmPjAwZ6EMuYJ3Ekw09t
-         2rneij8uOF0xV8D0OwbvevyECl97W0RvbForblGqHmDvLmyrNtB89EMDU6ppY2JcbISi
-         4BiDykZKfu04mqJ3vc1J5Xj+Nq61YXPPcP7EkgHMo8BQcO3QsjZAhVxfz66NnuI2Rbjt
-         oQlw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Xo/Q8T53C4AL/wuFOj/GpD4LLjUSsbGQmQeGJp2S358=;
+        b=stoNtTXAvkJGICTwt6vp8jRlJAkmGZeIqHCeT3V3oNvn/HinKCGjGzzlVQZxOEp6f2
+         zIwSVeNTN6VedkBCs4Y5OT1lmW53BsdOReBWYhCZyR1k4RwP1ZJGTmwleWcxlhENan7z
+         LSy47RI7EvX7bjGs7RJetraPsQUXWjb/ckbXsk6ZyUo4hBO8hXWwdnaCogqF0KC69Ky9
+         6fi4D0LkxGLbhwybAUR0w8Q0JCly6pW9NDxHqxhyysyczOkfe16MuYZNrmOCzxr/oq1s
+         C99jZiqh2uwZHvCaElv7WdQioE2W0ZA6meKIfUmP926yIXkiVF2iC2/lRKcPIyv0wH6A
+         hHOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=uu8ihit0IdldML1svrJQ2yiexX3e/GX1rag3a5hhUPI=;
-        b=W8mEIr8d/9paWQkyTszoQVGjzFj6EzIWBtn9kk7mVN6S8Z7u3Lu6UDK15jZbNh8Ph5
-         5yV2uVWTW07kB1zCg/xv1gsEubmfhu4qmuhI/EepyHszGEw7yASVjCl+1m4sti4q84D8
-         92pzs8iGgVmA3Mfp9wCtED9bgdGBbYYNBn5KsR1Nt/vz+zeFE80G6kxNZ3O6E+H9WF8j
-         Xbud2+d2dXaIkYcqoDF9B2X17ti0CCeOR2Acr7mF9bHBqptbswupKFcm5KCdE/TlZ6x0
-         xGe0a1OkkjAPzpnQckeixiX1Ptw74xUQtJUisWkffeRFZHhLWzl0GpY5bjGwBVNopNun
-         81JQ==
-X-Gm-Message-State: AKGB3mIF+vwJIQQfm2AIAXiQoYRbObE7yT0kzjqJYT3+zTuaLycVQfaJ
-        KE3rm1HYd5/vYsdvFht30B4=
-X-Google-Smtp-Source: ACJfBouG/8FfEZoUpDP6Zd9iRG+2Vrcoj644Bt8xEAzxcPhSt75Nak7wEZqhlbFlhnlnkf4kV2J2iA==
-X-Received: by 10.80.134.18 with SMTP id o18mr19187534edo.306.1514033393057;
-        Sat, 23 Dec 2017 04:49:53 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id w13sm20720603eda.63.2017.12.23.04.49.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 23 Dec 2017 04:49:52 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Pat Notz <patnotz@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 2/2] commit: add support for --fixup <commit> -m"<extra message>"
-References: <CAPig+cRDi14Rez+6ZJAEdxHpo0Mw7JQFkcuG2oVqv2pP_ZbvhQ@mail.gmail.com> <20171222204152.4822-1-avarab@gmail.com> <xmqqzi6api5a.fsf@gitster.mtv.corp.google.com> <87h8sis9w5.fsf@evledraar.gmail.com> <xmqqfu82pgdg.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqfu82pgdg.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 23 Dec 2017 13:49:51 +0100
-Message-ID: <87a7y9sj68.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Xo/Q8T53C4AL/wuFOj/GpD4LLjUSsbGQmQeGJp2S358=;
+        b=W4by/cRQsOlNBDnVHW4OXdNezgdSX32mIcgOhj7ryibZGmgO+5+eN3IACfNn08Q7GY
+         1RflRhTqN8uiTlTOcyqLwkp3Mw/MXSZoHj3f5WoW5NkBdInroy19AbB/W9A8+4O+uvvW
+         gqVmjjLDT1xKv+6Fik4b3XC+ngCVhaGK0+HGdhC5KdC4DMoM4RzWj6CT5UpnHy98+gMO
+         PuNDCIRel2aRCdDsb7jJAfGf0ulRfZCytRIn48GsTV66Aa+Tf1Ka4wfwiJcsbaS1Hx22
+         0t16GWlUNwa7q/oBncWP7vGSWSQfOc0CuqLhSpHW6q55yNQxqPa9/WvLBid9fLxsnz0R
+         IqiQ==
+X-Gm-Message-State: AKGB3mJZy4GRR91/kOAjFqi+j+P71jcJ3J3HN3RTsEuDkukUJ60kNuQ2
+        3bENhm001wKVL6MJ9niiSgQRL7cTie9P0zAztyI=
+X-Google-Smtp-Source: ACJfBotSqeYYqnWJLPuisuJFXEXYN3D4pkyAAUmlSQTIJbUE0orX9VDLhJ8kToPSyMfDHSe4UTr8np6FTGU2ZqENiVw=
+X-Received: by 10.28.196.194 with SMTP id u185mr16220187wmf.133.1514036048833;
+ Sat, 23 Dec 2017 05:34:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.28.151.203 with HTTP; Sat, 23 Dec 2017 05:33:48 -0800 (PST)
+In-Reply-To: <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+References: <CAPkN8x+MELCnttE+xptKzYXsYPWqbiE59LABrwNBhFroayc+wQ@mail.gmail.com>
+ <ec4be1c2-a0cc-cec8-a566-06c11c8abe06@gmail.com> <xmqqh8u1efh5.fsf@gitster.mtv.corp.google.com>
+From:   anatoly techtonik <techtonik@gmail.com>
+Date:   Sat, 23 Dec 2017 16:33:48 +0300
+Message-ID: <CAPkN8x+tFDSum1jqgm6Q+Z2YS9BdGttyruc4rAywqinzbP033g@mail.gmail.com>
+Subject: Re: Unify annotated and non-annotated tags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Dec 22 2017, Junio C. Hamano jotted:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Sat, Nov 11, 2017 at 5:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Igor Djordjevic <igor.d.djordjevic@gmail.com> writes:
 >
->> I don't agree that git as a tool should be so opinionated. You can edit
->> these --fixup messages right now with --edit, and I do. That it doesn't
->> work with -m"" as it should is a longstanding UI wart.
+>> If you would like to mimic output of "git show-ref", repeating
+>> commits for each tag pointing to it and showing full tag name as
+>> well, you could do something like this, for example:
+>>
+>>       for tag in $(git for-each-ref --format="%(refname)" refs/tags)
+>>       do
+>>               printf '%s %s\n' "$(git rev-parse $tag^0)" "$tag"
+>>       done
+>>
+>>
+>> Hope that helps a bit.
 >
-> I think you missed the point.
-
-I did, yes. Sorry, I was being a bit touchy and argumentative there.
-
-> I was expressing my opinion, not an opinion of Git as a tool, that I
-> think one of these two "use case" scenario was a bad way not to be
-> encouraged.
+> If you use for-each-ref's --format option, you could do something
+> like (pardon a long line):
 >
-> That is totally different from allowing --fixup and -m working
-> together.  That is a good thing that helps the other "good" use case.
+> git for-each-ref --format='%(if)%(*objectname)%(then)%(*objectname)%(else)%(objectname)%(end) %(refname)' refs/tags
+>
+> without any loop, I would think.
+
+This doesn't work with git 1.9.1
+https://github.com/rtfd/readthedocs.org/pull/3441#issuecomment-353567756
+When it was added? I searched through GitHub and docs, but can't find any
+historical records.
+
+-- 
+anatoly t.
