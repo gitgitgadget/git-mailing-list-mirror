@@ -7,71 +7,82 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BEAA1F404
-	for <e@80x24.org>; Sat, 23 Dec 2017 12:22:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACA481F404
+	for <e@80x24.org>; Sat, 23 Dec 2017 12:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752157AbdLWMWy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Dec 2017 07:22:54 -0500
-Received: from mail-ua0-f174.google.com ([209.85.217.174]:40348 "EHLO
-        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750949AbdLWMWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Dec 2017 07:22:53 -0500
-Received: by mail-ua0-f174.google.com with SMTP id i92so21246479uad.7
-        for <git@vger.kernel.org>; Sat, 23 Dec 2017 04:22:52 -0800 (PST)
+        id S1752080AbdLWMtz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Dec 2017 07:49:55 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:45151 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750842AbdLWMty (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Dec 2017 07:49:54 -0500
+Received: by mail-wm0-f54.google.com with SMTP id 9so25967696wme.4
+        for <git@vger.kernel.org>; Sat, 23 Dec 2017 04:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UCrvw82d/NnthR7ETINfUMODEOjMsk8ERtzMeE9bAyg=;
-        b=D4QcZWv9evVL91fv36VIWpfOs6/9RPJS1aRntqE1+bO5HS5UbbkMBQgKZMZ1jLhGwy
-         jxeZnpOm0xVoarS2/1OVjW297ky0JAz3u548pvUoHB5oH9GAyAIwAR/5JQxfmhsjz3q9
-         DDTakpGQXVZu2w73+ZnPKtrUbP3pG1vdAQnrRF4y8zo71m1uiQQw1YessJ0m0mAHiM99
-         62OLR/8evfK6s4zrOIDe4tdReXOakcXWcsQzaJFoot4VUPTQ9OftuzRy+zL0cWknKdqw
-         krrlZ8KWd4Ct28BkcX+Y7d6wIi16sWNdjYgrI1KY5aCfMubKi5l67Ygqml5QOnZjs/Gu
-         ufjQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=uu8ihit0IdldML1svrJQ2yiexX3e/GX1rag3a5hhUPI=;
+        b=jXnnnic3yt8lU8Pql9xfsPVhBUhSBqHInzDULyijFIPh/9Jo8VO5Z5HMxGLfVruQXv
+         IQjqu5g98B8tSTjar5OZ9egOEqZ+4gJBNKUDi3EBuz5K9HVGJNGQOywlGt4fylswcvMn
+         JNdD/zYRfdpamB/qR7jMGq8CzeSNaCWyWaNLqPzsb+ceKlWGbmPjAwZ6EMuYJ3Ekw09t
+         2rneij8uOF0xV8D0OwbvevyECl97W0RvbForblGqHmDvLmyrNtB89EMDU6ppY2JcbISi
+         4BiDykZKfu04mqJ3vc1J5Xj+Nq61YXPPcP7EkgHMo8BQcO3QsjZAhVxfz66NnuI2Rbjt
+         oQlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UCrvw82d/NnthR7ETINfUMODEOjMsk8ERtzMeE9bAyg=;
-        b=WnlIqnskGdX0CJOy/AANsWfeCnoOz1nkrMDY+9tZH5sS58ABI/Ov2323hDBklkxI5O
-         p0OOwD6lN5Ag3DiTUxXm9G02Vq0uqD1yPYpKtSSbobFiPU7xKkfKXXjvGMRQyJVzx2zh
-         hcVcSPW09zaBK58uObJ4P8fZ59Ez1WhLSUN/vTIWUID204T/KINPuyQnJTVEur+p8BMt
-         Nh9ao3A8V0CiPJE0pmosya7HO/mxOPile+a5Bp1gLIONR9aBA2DM725P3wl5So7++V8k
-         kJ9gLvuaHg5n/g4F/DdO87HWW5Q56DEiWYauBKG+qcjv4WRsrh7MjPPGqVyNJRLjVX8g
-         XXPw==
-X-Gm-Message-State: AKGB3mJXukrsLvHy5a2P2r97RAl9Rr0pcYUWy5axSviYQBvf7L8qj2ZW
-        7gFsQ5K5ioM2C5w995lWwiUdZzFWL0wTNhZ4Vw8=
-X-Google-Smtp-Source: ACJfBotmQ2A+A8oW9DNukuO+FUK1ewyyVrIG6xTwlUWvW36OYmBNMcI9wSrhkuMplerVobcZh1Psye76SHQj3p/LTXM=
-X-Received: by 10.176.1.134 with SMTP id 6mr17879733ual.180.1514031772339;
- Sat, 23 Dec 2017 04:22:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=uu8ihit0IdldML1svrJQ2yiexX3e/GX1rag3a5hhUPI=;
+        b=W8mEIr8d/9paWQkyTszoQVGjzFj6EzIWBtn9kk7mVN6S8Z7u3Lu6UDK15jZbNh8Ph5
+         5yV2uVWTW07kB1zCg/xv1gsEubmfhu4qmuhI/EepyHszGEw7yASVjCl+1m4sti4q84D8
+         92pzs8iGgVmA3Mfp9wCtED9bgdGBbYYNBn5KsR1Nt/vz+zeFE80G6kxNZ3O6E+H9WF8j
+         Xbud2+d2dXaIkYcqoDF9B2X17ti0CCeOR2Acr7mF9bHBqptbswupKFcm5KCdE/TlZ6x0
+         xGe0a1OkkjAPzpnQckeixiX1Ptw74xUQtJUisWkffeRFZHhLWzl0GpY5bjGwBVNopNun
+         81JQ==
+X-Gm-Message-State: AKGB3mIF+vwJIQQfm2AIAXiQoYRbObE7yT0kzjqJYT3+zTuaLycVQfaJ
+        KE3rm1HYd5/vYsdvFht30B4=
+X-Google-Smtp-Source: ACJfBouG/8FfEZoUpDP6Zd9iRG+2Vrcoj644Bt8xEAzxcPhSt75Nak7wEZqhlbFlhnlnkf4kV2J2iA==
+X-Received: by 10.80.134.18 with SMTP id o18mr19187534edo.306.1514033393057;
+        Sat, 23 Dec 2017 04:49:53 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id w13sm20720603eda.63.2017.12.23.04.49.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 23 Dec 2017 04:49:52 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Pat Notz <patnotz@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 2/2] commit: add support for --fixup <commit> -m"<extra message>"
+References: <CAPig+cRDi14Rez+6ZJAEdxHpo0Mw7JQFkcuG2oVqv2pP_ZbvhQ@mail.gmail.com> <20171222204152.4822-1-avarab@gmail.com> <xmqqzi6api5a.fsf@gitster.mtv.corp.google.com> <87h8sis9w5.fsf@evledraar.gmail.com> <xmqqfu82pgdg.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqfu82pgdg.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 23 Dec 2017 13:49:51 +0100
+Message-ID: <87a7y9sj68.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.112.3 with HTTP; Sat, 23 Dec 2017 04:22:51 -0800 (PST)
-In-Reply-To: <CACNzp2mdEmAj_6an-4is6_1LnqAZs=huakJhUQrJ+DxyJWY0mA@mail.gmail.com>
-References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
- <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
- <CAEW+b66pCqTBz6o_aTK0byyKsDc8HRfHuqKf64Ob6pBtL9w2Lw@mail.gmail.com>
- <CA+P7+xpt1cW-uokayYFJ5cr88FKBcn_RT3v7iLHyu7kZaS=wbg@mail.gmail.com> <CACNzp2mdEmAj_6an-4is6_1LnqAZs=huakJhUQrJ+DxyJWY0mA@mail.gmail.com>
-From:   Cristian Achim <brancoliticus@gmail.com>
-Date:   Sat, 23 Dec 2017 14:22:51 +0200
-Message-ID: <CAEW+b64=CiUg97xJN2k_hvxYf9coo+VfPZ+REEyj0bR6x1nprA@mail.gmail.com>
-Subject: Re: Usability outrage as far as I am concerned
-To:     Anatolii Borodin <anatoly.borodin@gmail.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Basically somehow at the point when I investigated stuff on the usb
-stick I found the repository at the top level of the usb folder
-hierarchy. Therefore git got confused by what I was doing at
-usb_subfolder which is lower in the folder hierarchy and that is way
-it was having amasement inducing reports when trying to do a pull
-saying that pull is not possible because of unmerged and newly added
-files.
 
-Thank you to all that replied.
+On Fri, Dec 22 2017, Junio C. Hamano jotted:
+
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> I don't agree that git as a tool should be so opinionated. You can edit
+>> these --fixup messages right now with --edit, and I do. That it doesn't
+>> work with -m"" as it should is a longstanding UI wart.
+>
+> I think you missed the point.
+
+I did, yes. Sorry, I was being a bit touchy and argumentative there.
+
+> I was expressing my opinion, not an opinion of Git as a tool, that I
+> think one of these two "use case" scenario was a bad way not to be
+> encouraged.
+>
+> That is totally different from allowing --fixup and -m working
+> together.  That is a good thing that helps the other "good" use case.
