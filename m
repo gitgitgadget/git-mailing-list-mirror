@@ -3,78 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC7141F404
-	for <e@80x24.org>; Sat, 23 Dec 2017 14:17:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 460FD1F404
+	for <e@80x24.org>; Sat, 23 Dec 2017 15:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750842AbdLWORw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Dec 2017 09:17:52 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:40983 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750802AbdLWORv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Dec 2017 09:17:51 -0500
-Received: by mail-io0-f174.google.com with SMTP id o2so27212678ioe.8
-        for <git@vger.kernel.org>; Sat, 23 Dec 2017 06:17:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=dnUenSTa03PMpGQvNj8ANrqqtyIT3W8+wDPwwFNk3Mg=;
-        b=XWWA6qqjxi+v9bTmUhn3BjAGvhIGQsnM7f1YMvtx9LLiw3GS2nS1Nm6zNcKOyFaWGp
-         eZv8ROYjZ+1Fc8coHwr8B60NUSdZCmvmWCdMnQjOi6WeNrxLi7VXb6ZYtclZlSppjd3s
-         crQt61gWz2q0hpoiaZaPcpplsEwH9zeZNbVGat/CIgOn8JLoJfLM0GsUflF2oo0gYXGp
-         widuj7A6j2ObSsFS2J3ASpbIDslKE0vOgp4vzxrQzVHyLv064ADiS599/U2mVLp9LW+Q
-         74muu1TmfmMER3crLl/HQvavs4E51iTTERW5el9MCfpE3J4lRPtrN8JrV9YHCXqkep86
-         7erQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=dnUenSTa03PMpGQvNj8ANrqqtyIT3W8+wDPwwFNk3Mg=;
-        b=ai3kzcENA+VgrIeKsYo6ycMuhi0109oScuFZ/Kua4Q78bl2km09lVFQUleZiBrmc9w
-         S7lRzNUWENORwINEw3AyH8k4ssxxO2Afc//GOVQhm9rHnDZP7ItBNZZ1I9p4tvfhjBQ8
-         9xLWQTFFj/9/KGsi5rrkPzBCsjickR3Szefs6ZpnXXbVUX6RVMXsWohOtcZBJ8r/LiCj
-         S8a3ucu5yLHV5BT7qKhbICW8YNCtrZddbxY2hjy80j/Tn7KFs8Pyz9YY1LX7qdeJL6HC
-         MSzjr91sGrIDXXYbB6E7lig79ucaWHv/LiPW5cIs/Zc/rHUaw+TS3dHZUNYcZ47xvrJc
-         vaOw==
-X-Gm-Message-State: AKGB3mK00+wYzf4c51iTuqah0sGim+Jsp8SoAQ0Xrgeq8d/3L3TUBWSN
-        7q9s8YMfaRlDGPIQFK8g3efXbLnxDkRks7dYq70=
-X-Google-Smtp-Source: ACJfBouP/S9wmStLw1cWdedn9m7RWoqj+NFmhUwNdkT3oz7oetyVH2VZ38toXZTpquhk24jcoJ4HTvcLZlwQQ9GoicU=
-X-Received: by 10.107.201.2 with SMTP id z2mr9590940iof.287.1514038671213;
- Sat, 23 Dec 2017 06:17:51 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.109.73 with HTTP; Sat, 23 Dec 2017 06:17:30 -0800 (PST)
-From:   Daniel Knittl-Frank <knittl89@googlemail.com>
-Date:   Sat, 23 Dec 2017 15:17:30 +0100
-Message-ID: <CACx-yZ3VAaPQ4dU40_JFm_=WGH5ZX-28bXKqGqVnj39-6_9duw@mail.gmail.com>
-Subject: [RFC] Prepend "tags/" when describing tags with embedded name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1753025AbdLWPCu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Dec 2017 10:02:50 -0500
+Received: from dogben.com ([172.104.80.166]:49506 "EHLO dogben.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752216AbdLWPCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Dec 2017 10:02:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=dogben.com;
+         s=main; h=Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:MIME-Version:
+        Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=3WTFp6MvoMjY9/WORhmQstu/VbWOk59Bpk2GrGqcqsw=; b=RBUWlhbnDcUnd6KjOMiiPEOIdy
+        cb2xOiIE8E54Kiw3NxVmqWHbjviLl3ln2yglspwMSGIGxrQVq2T4Cy0xFNvnv+lqn/mRFFPLhXkxT
+        6uNHNWfTDeRNKWZhErzZKeLrg5ybKcVBw+BOMNOrdIRgcH8Zt8e6QYRyS/DT+OGY4a2dgQ+tIwUpD
+        AK/bcEewzScVpoF9mO3BcWmc4w49wxQ+GBD1Q2AsbuAw/9eA7xJ/En4UwabcdtkIvAOAzRAHWEnh/
+        N7Rj5NPBA3LD6BxgxralWV6PQz8R18zm9ODKFqrSXwOgo2SDyUybR2Urzlqvx+aB8e3/Z3/pn8gA6
+        t1Wy6LkQ==;
+Received: from home.dogben.com ([2400:8902:e001:30:e221:c60b:10c8:13bd])
+        by dogben.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_RC4)
+        (envelope-from <wsy@dogben.com>)
+        id 1eSlK1-0007md-TK; Sat, 23 Dec 2017 15:02:45 +0000
+Received: from wsy by home.dogben.com with local (Exim 4.90_RC4)
+        (envelope-from <wsy@home.dogben.com>)
+        id 1eSlJz-0002Fk-Vp; Sat, 23 Dec 2017 23:02:43 +0800
+From:   Wei Shuyu <wsy@dogben.com>
+To:     git@vger.kernel.org
+Cc:     Wei Shuyu <wsy@dogben.com>, jrnieder@gmail.com, gitster@pobox.com,
+        peff@peff.net
+Subject: [RFC PATCH v2] http: support CURLPROXY_HTTPS
+Date:   Sat, 23 Dec 2017 23:02:15 +0800
+Message-Id: <20171223150215.8615-1-wsy@dogben.com>
+X-Mailer: git-send-email 2.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 15, 2017 at 8:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I think the code makes sense, but it won't be understandable by
-> those who do not know what you discussed in the original thread.
->
-> A proper commit log message, with a new test or two in t6120, would
-> be an appropriate way to fix that.
->
-> Care to follow through, along the lines in
-> Documentation/SubmittingPatches?
+Git has been taught to support an https:// used for http.proxy when
+using recent versions of libcurl.
 
-The updated branch including tests can be found at:
-http://repo.or.cz/git/dkf.git/shortlog/refs/heads/bugfix/describe-all
+To use https proxy with self-signed certs, we need a way to
+unset CURLOPT_PROXY_SSL_VERIFYPEER and CURLOPT_PROXY_SSL_VERIFYHOST
+just like direct SSL connection. This is required if we want
+use t/lib-httpd to test proxy.
 
-One existing test in t6210 needed updating to match the new behavior,
-three new tests have been added: annotated tags, lightweight tags, and
-branches.
+In this patch I reuse http.sslverify to do this, do we need an
+independent option like http.sslproxyverify?
 
-Daniel
+To fully support https proxy, we also need ways to set more options
+such as CURLOPT_PROXY_SSLCERT. However, I'm not sure if we need to
+support them.
 
+Signed-off-by: Wei Shuyu <wsy@dogben.com>
+---
+ http.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/http.c b/http.c
+index 215bebef1..d8a5e48f0 100644
+--- a/http.c
++++ b/http.c
+@@ -708,6 +708,10 @@ static CURL *get_curl_handle(void)
+ 	if (!curl_ssl_verify) {
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
++#if LIBCURL_VERSION_NUM >= 0x073400
++		curl_easy_setopt(result, CURLOPT_PROXY_SSL_VERIFYPEER, 0);
++		curl_easy_setopt(result, CURLOPT_PROXY_SSL_VERIFYHOST, 0);
++#endif
+ 	} else {
+ 		/* Verify authenticity of the peer's certificate */
+ 		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
+@@ -865,6 +869,11 @@ static CURL *get_curl_handle(void)
+ 		else if (starts_with(curl_http_proxy, "socks"))
+ 			curl_easy_setopt(result,
+ 				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
++#endif
++#if LIBCURL_VERSION_NUM >= 0x073400
++		else if (starts_with(curl_http_proxy, "https"))
++			curl_easy_setopt(result,
++				CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
+ #endif
+ 		if (strstr(curl_http_proxy, "://"))
+ 			credential_from_url(&proxy_auth, curl_http_proxy);
 -- 
-typed with http://neo-layout.org
+2.15.1
+
