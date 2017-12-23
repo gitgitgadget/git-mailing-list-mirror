@@ -2,108 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C25321F424
-	for <e@80x24.org>; Sat, 23 Dec 2017 08:09:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BEAA1F404
+	for <e@80x24.org>; Sat, 23 Dec 2017 12:22:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750800AbdLWIJQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 23 Dec 2017 03:09:16 -0500
-Received: from mout.web.de ([212.227.15.3]:52653 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750747AbdLWIJP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Dec 2017 03:09:15 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MXYjm-1eVWQj3dOY-00WZJP; Sat, 23
- Dec 2017 09:08:55 +0100
-Date:   Sat, 23 Dec 2017 09:08:54 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>, lars.schneider@autodesk.com,
-        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-Message-ID: <20171223080854.GA30360@tor.lan>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com>
- <a07a0b5c-453a-f644-d5e5-7d185a943088@kdbg.org>
- <20171218101334.GA20685@tor.lan>
- <20171218131249.GB4665@sigill.intra.peff.net>
+        id S1752157AbdLWMWy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 23 Dec 2017 07:22:54 -0500
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:40348 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750949AbdLWMWx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Dec 2017 07:22:53 -0500
+Received: by mail-ua0-f174.google.com with SMTP id i92so21246479uad.7
+        for <git@vger.kernel.org>; Sat, 23 Dec 2017 04:22:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UCrvw82d/NnthR7ETINfUMODEOjMsk8ERtzMeE9bAyg=;
+        b=D4QcZWv9evVL91fv36VIWpfOs6/9RPJS1aRntqE1+bO5HS5UbbkMBQgKZMZ1jLhGwy
+         jxeZnpOm0xVoarS2/1OVjW297ky0JAz3u548pvUoHB5oH9GAyAIwAR/5JQxfmhsjz3q9
+         DDTakpGQXVZu2w73+ZnPKtrUbP3pG1vdAQnrRF4y8zo71m1uiQQw1YessJ0m0mAHiM99
+         62OLR/8evfK6s4zrOIDe4tdReXOakcXWcsQzaJFoot4VUPTQ9OftuzRy+zL0cWknKdqw
+         krrlZ8KWd4Ct28BkcX+Y7d6wIi16sWNdjYgrI1KY5aCfMubKi5l67Ygqml5QOnZjs/Gu
+         ufjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UCrvw82d/NnthR7ETINfUMODEOjMsk8ERtzMeE9bAyg=;
+        b=WnlIqnskGdX0CJOy/AANsWfeCnoOz1nkrMDY+9tZH5sS58ABI/Ov2323hDBklkxI5O
+         p0OOwD6lN5Ag3DiTUxXm9G02Vq0uqD1yPYpKtSSbobFiPU7xKkfKXXjvGMRQyJVzx2zh
+         hcVcSPW09zaBK58uObJ4P8fZ59Ez1WhLSUN/vTIWUID204T/KINPuyQnJTVEur+p8BMt
+         Nh9ao3A8V0CiPJE0pmosya7HO/mxOPile+a5Bp1gLIONR9aBA2DM725P3wl5So7++V8k
+         kJ9gLvuaHg5n/g4F/DdO87HWW5Q56DEiWYauBKG+qcjv4WRsrh7MjPPGqVyNJRLjVX8g
+         XXPw==
+X-Gm-Message-State: AKGB3mJXukrsLvHy5a2P2r97RAl9Rr0pcYUWy5axSviYQBvf7L8qj2ZW
+        7gFsQ5K5ioM2C5w995lWwiUdZzFWL0wTNhZ4Vw8=
+X-Google-Smtp-Source: ACJfBotmQ2A+A8oW9DNukuO+FUK1ewyyVrIG6xTwlUWvW36OYmBNMcI9wSrhkuMplerVobcZh1Psye76SHQj3p/LTXM=
+X-Received: by 10.176.1.134 with SMTP id 6mr17879733ual.180.1514031772339;
+ Sat, 23 Dec 2017 04:22:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171218131249.GB4665@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:zldqms+BC+kQp2qkDwsB//iQkoeLOXPDgPs0Bo9+hL+PXHYGW4s
- HZ31oNnckiYMq7JHl/lqEtpDPB8bCnpGgkwbpSLS4+ek+LNeynk+P/wSqAi18kAEcSOor1m
- TErZ6FC3ZBQ4VqUNxlWeVTfG/ZlSgz6GxPicylxYnoU71UfPIC+8LTQcj7O3NuC+URe7ZTq
- wW+2tNdc/evBQqVW2pxTw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YuPyCPEaMoU=:2wSY1jKoMusZlwIv9LBCEh
- CYp9BziWi7zXKynWS0XaCwV+dy9XE2SYTjva/sLJwJHE9l7b9dvSRRrXBvr40qArMpBPzUAxd
- oZEwFFex9QCAoyD9lXEoK/B9dYgLWyUEr6EpHHswBChx5IL7Txv6dfmRm8mvQAnmVOsEfKR7L
- RAsPvHeMQfflDyTtgCxHI1NOd7yuF/K3NCqDhxQfgi+O3PDIsBjUZ5FBBjQibrxV8TL/Qjd0p
- TWvc4qgMz9P+/FVl2SpBXohWFKNWgk5RCrRocmup1opnCfPPuBZFhjMjuW4rN5fZTvS83N913
- 9KTQMR6D1Q0apt97V9egC9BqHfYrVIZr1WpkA+xW8zelxUefQ9Q1TjjS/ycHJ30NwT2C1EVi+
- TPsWSZFGoNVW8B2UkN6lrwWNuyoIDkoDwOp81FUbKQ96MJY8yOWUnQNnz44BKpjzqBVhLQkyK
- NYV5pMYkKHe/mZ3KnqvqKrDZqeyguNXx7VVq6xQdHp4sjO2G9iMKNLESug4kMBOLCoRt7amzc
- owepEMhFBG1BBt9O9PJy2ImbFudKJFKrzelnyFEPxyYQx4j2aE/tSbhauP75y9xK0VhwzvIwa
- 1mhIi2YpFUMf/wRq8iptFrmGVFXGYiMWiLGRYuvk2HM32CVpq9h486u+7ig03/s8oZ2e03+Fa
- PN1lEEVRgcxYZZLlxt5miHMIHsIRfQ0F07JSPyUWEfhKwrucZzmlVtZGDQkkqGzUKAYcbXfTQ
- GS0TBfVrOsd2RSmfYACx5sspy/EZda2mlPlBV+GM8bCJDudgqknVJzh2Ek3d5gr/l2L9poqrx
- yVSER94TMzkfZDLgd8wGs/rpgtTPrqqSseUSERob/+9PSsKoQU=
+Received: by 10.103.112.3 with HTTP; Sat, 23 Dec 2017 04:22:51 -0800 (PST)
+In-Reply-To: <CACNzp2mdEmAj_6an-4is6_1LnqAZs=huakJhUQrJ+DxyJWY0mA@mail.gmail.com>
+References: <CAEW+b659_v02v8z_dgWzVayb8ArBOD+O_Oky-F50JbJSP8vCKQ@mail.gmail.com>
+ <CA+P7+xojknncFrP5qCB4EKG0MAoTUqFWS5g3Bj+Jq2_RO0fA3A@mail.gmail.com>
+ <CAEW+b66pCqTBz6o_aTK0byyKsDc8HRfHuqKf64Ob6pBtL9w2Lw@mail.gmail.com>
+ <CA+P7+xpt1cW-uokayYFJ5cr88FKBcn_RT3v7iLHyu7kZaS=wbg@mail.gmail.com> <CACNzp2mdEmAj_6an-4is6_1LnqAZs=huakJhUQrJ+DxyJWY0mA@mail.gmail.com>
+From:   Cristian Achim <brancoliticus@gmail.com>
+Date:   Sat, 23 Dec 2017 14:22:51 +0200
+Message-ID: <CAEW+b64=CiUg97xJN2k_hvxYf9coo+VfPZ+REEyj0bR6x1nprA@mail.gmail.com>
+Subject: Re: Usability outrage as far as I am concerned
+To:     Anatolii Borodin <anatoly.borodin@gmail.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 18, 2017 at 08:12:49AM -0500, Jeff King wrote:
-> On Mon, Dec 18, 2017 at 11:13:34AM +0100, Torsten Bögershausen wrote:
-> 
-> > Just to confirm my missing knowledge here:
-> > Does this mean, that git-gui and gitk can decode/reencode
-> > the content of a file/blob, when the .gitattributes say so ?
-> 
-> That's my impression, yes.
-> 
-> > If yes, would it make sense to enhance the "git diff" instead ?
-> > "git diff --encoding" will pick up the commited encoding from
-> > .attributes, convert it into UTF-8, and run the diff ?
-> 
-> You can do something like this already:
-> 
->   git config diff.utf16.textconv 'iconv -f utf16 -t utf8'
->   echo file diff=utf16 >.gitattributes
-> 
-> I have no objection to teaching it that "encoding" means roughly the
-> same thing, which would have two advantages:
-> 
->  - we could do it in-process, which would be much faster
-> 
->  - we could skip the extra config step, which is a blocker for
->    server-side diffs on sites like GitHub
-> 
-> I don't think you'd really need "--encoding". This could just be
-> triggered by the normal "--textconv" rules (i.e., just treat this "as
-> if" the textconv above was configured when we see an encoding
-> attribute).
+Basically somehow at the point when I investigated stuff on the usb
+stick I found the repository at the top level of the usb folder
+hierarchy. Therefore git got confused by what I was doing at
+usb_subfolder which is lower in the folder hierarchy and that is way
+it was having amasement inducing reports when trying to do a pull
+saying that pull is not possible because of unmerged and newly added
+files.
 
-I can probably come up with a patch the next weeks or so.
-
-> 
-> > We actually could enhance the "git diff" output with a single
-> > line saying
-> > "Git index-encoding=cp1251"
-> > or so, which can be picked up by "git apply".
-> 
-> That extends it beyond what textconv can do (we assume that textconv
-> patches are _just_ for human consumption, and can't be applied). And it
-> would mean you'd potentially want to trigger it in more places. On the
-> other hand, I don't know that we're guaranteed that a round-trip
-> between encodings will produce a byte-wise identical result. The nice
-> thing about piggy-backing on textconv is that it's already dealt with
-> that problem.
-> 
-> -Peff
+Thank you to all that replied.
