@@ -6,93 +6,78 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48D901F424
-	for <e@80x24.org>; Sun, 24 Dec 2017 14:33:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CAC31F424
+	for <e@80x24.org>; Sun, 24 Dec 2017 14:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752523AbdLXOdV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 09:33:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46482 "HELO cloud.peff.net"
+        id S1752727AbdLXOie (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 09:38:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46506 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751029AbdLXOdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 09:33:20 -0500
-Received: (qmail 11802 invoked by uid 109); 24 Dec 2017 14:33:20 -0000
+        id S1751029AbdLXOie (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 09:38:34 -0500
+Received: (qmail 12207 invoked by uid 109); 24 Dec 2017 14:38:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:33:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:38:33 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3501 invoked by uid 111); 24 Dec 2017 14:33:47 -0000
+Received: (qmail 3530 invoked by uid 111); 24 Dec 2017 14:39:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:33:47 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:39:01 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:33:18 -0500
-Date:   Sun, 24 Dec 2017 09:33:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:38:32 -0500
+Date:   Sun, 24 Dec 2017 09:38:32 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
-Message-ID: <20171224143318.GC23648@sigill.intra.peff.net>
-References: <20171221190909.62995-1-git@jeffhostetler.com>
- <20171221190909.62995-2-git@jeffhostetler.com>
- <20171221204356.GA58971@aiede.mtv.corp.google.com>
- <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>, Jakub Narebski <jnareb@gmail.com>,
+        Petr Baudis <pasky@suse.cz>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC/PATCH] perl: bump the required Perl version to 5.10.0 from
+ 5.8.0
+Message-ID: <20171224143831.GD23648@sigill.intra.peff.net>
+References: <20171223174400.26668-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171223174400.26668-1-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 22, 2017 at 10:21:23AM -0800, Junio C Hamano wrote:
+On Sat, Dec 23, 2017 at 05:44:00PM +0000, Ævar Arnfjörð Bjarmason wrote:
 
-> >> +core.aheadbehind::
-> >> +	If true, tells commands like status and branch to print ahead and
-> >> +	behind counts for the branch relative to its upstream branch.
-> >> +	This computation may be very expensive when there is a great
-> >> +	distance between the two branches.  If false, these commands
-> >> +	only print that the two branches refer to different commits.
-> >> +	Defaults to true.
-> >
-> > This doesn't seem like a particularly core feature to me.  Should it be
-> > e.g. status.aheadbehind (even though it also affects "git branch") or
-> > even something like diff.aheadbehind?  I'm not sure.
+> This is similar to Jeff King's jk/drop-ancient-curl series in that
+> we're dropping perl releases that are rarely tested anymore, however
+> unlike those patches git still works on e.g. 5.8.8 (I couldn't build
+> anything older).
+
+Heh, I'm not sure if those are the best prior art to justify this, since
+I stopped posting them after getting complaints (though I'll admit I was
+considering re-posting them since AFAICT nobody has stepped up to fix
+the breakage after many months).
+
+This may be more like the recent C99 weather-balloon patches, in that
+we're not using the new features yet, but want to see if anybody screams
+at this first change.
+
+> The reason to do this is to be able to use features released with perl
+> in the last decade, 5.10 was a major feature release including things
+> like new regex features, state variables, the defined-or operator
+> etc.[3]
 > 
-> FWIW, I do not think it is core at all, either; sorry for not
-> anticipating that a wrong name will be picked without a proper
-> guidance when I saw the "not limited to status" mentioned in the
-> discussion, but I was sick and offline for a few days, so...
+> I expect this to be more controversial as since the 5.8 release stayed
+> along for longer in various distributions, e.g. it's the version
+> shipped with RHEL 5, replaced by 5.10 in RHEL 6 released in late 2010,
+> similarly the first Debian release to include 5.10 was 5.0 (Lenny)
+> released in early 2009. The release history for other distributions
+> can be seen on CPAN's "Perl Binaries" page[3].
 
-I, too, had a funny feeling about calling this "core". But I didn't have
-a better name, as I'm not sure what other place we have for config
-options that cross many command boundaries. "diff" and "status" don't
-seem quite right to me. While you can argue they are subsystems, it
-seems too easy for users to confuse them with the commands of the same
-names.
-
-Maybe there should be a "ui.*" config hierarchy for these kinds of
-cross-command interface options?
-
-> > I also wonder if there's a way to achieve the same benefit without
-> > having it be configurable.  E.g. if a branch is way behind, couldn't
-> > we terminate the walk early to get the same bounded cost per branch
-> > without requiring configuration?
-> 
-> Hmm, that is an interesting thought.
-
-Yes, it is. Two thoughts:
-
-  - It probably doesn't let us punt on the config naming, because we'd
-    probably still want a knob for "how much work".
-
-  - I wondered if we could give a better answer than "these two are
-    different" based on a partial walk. But certainly not in the general
-    case. E.g., imagine:
-
-      ... -- master -- A -- B -- ... -- Y -- Z -- origin/master
-
-    If we walk back from origin/master and give up somewhere in the
-    middle, we can't say anything intelligent about the relationship.
+As far as this actual perl change goes, I don't have a strong opinion. I
+agree it would be nice to eventually move forward, and your reasoning
+about what constitutes "old" seems sane. But we also don't write much
+perl in this project these days, and I don't see a lack of modern perl
+features causing a lot of headaches.
 
 -Peff
