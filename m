@@ -2,101 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C893F1F424
-	for <e@80x24.org>; Sun, 24 Dec 2017 15:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52EA51F42B
+	for <e@80x24.org>; Sun, 24 Dec 2017 16:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752064AbdLXPqV convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 24 Dec 2017 10:46:21 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:17089 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750923AbdLXPqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 10:46:20 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vBOFju9t084901
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 24 Dec 2017 10:45:57 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>, "'Johannes Sixt'" <j6t@kdbg.org>
-Cc:     "'Simon Ruderich'" <simon@ruderich.org>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        "=?utf-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        "'Git List'" <git@vger.kernel.org>,
-        "'Ralf Thielow'" <ralf.thielow@gmail.com>
-References: <alpine.DEB.2.21.1.1711012240500.6482@virtualbox> <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net> <20171103103248.4p45r4klojk5cf2g@ruderich.org> <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com> <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net> <20171104183643.akaazwswysphzuoq@ruderich.org> <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net> <20171106161315.dmftp6ktk6bu7cah@ruderich.org> <20171117223345.s3ihubgda3qdb2j6@sigill.intra.peff.net> <c50ac174-15bd-60bc-490c-d231e3eb501d@kdbg.org> <20171224145427.GG23648@sigill.intra.peff.net>
-In-Reply-To: <20171224145427.GG23648@sigill.intra.peff.net>
-Subject: RE: Improved error handling (Was: [PATCH 1/2] sequencer: factor out rewrite_file())
-Date:   Sun, 24 Dec 2017 10:45:50 -0500
-Message-ID: <000c01d37cce$49bd0d30$dd372790$@nexbridge.com>
+        id S1751674AbdLXQK7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 11:10:59 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:47018 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750975AbdLXQK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 11:10:58 -0500
+Received: by mail-wm0-f45.google.com with SMTP id r78so29494453wme.5
+        for <git@vger.kernel.org>; Sun, 24 Dec 2017 08:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=gScJMbMkwnCova1EB/o3AOIdkzhjk8XBMIP5NJkk2w8=;
+        b=UvEYFRwIINZUi/n8YlX49YglNj8j7z5dW76AFsy7ShMpZAWWkCXM58MYCQLLwMHgei
+         FcBBLRX19uWcpRJ0a9/4PzMyq+V4DHWXY5oUtiTga/N9dP6Uw8RsM1o/5BtMMQC16WvJ
+         surF3ofXayqUy/0EsLIIB+1JTmjQHmtxm3GKnaVqv5ndRSjX3136fX8Cc2zcUbogzIAP
+         allyYQDu+yHnz2G3f+PGft9ymIuuLjj3Fl0nEMwOj+hEbxPPlKenkdF9gd98sBeEr2HC
+         Vb4Qq7FszGf/ex3FQ6BHuPuAlU2Nivqqyq1e3AV4X5krszQtR2Y83tS9vYPx3UxVZTne
+         wWCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=gScJMbMkwnCova1EB/o3AOIdkzhjk8XBMIP5NJkk2w8=;
+        b=hLr3RfjpmMij6Na5q4IgdAw8jnY9lS2+s0HYe+I5TFSRUmDPUs7mwwDyGGSL41iDg1
+         XGV5/pQjD1vhjI1nqlvrbbGl95kq4wTzge2Xdj5ic9pQVhts1a1zVZQfJUe16B1vyetn
+         yeQC5Uq1XcqtuJOf0YCC+yu8CRg2OuyUreh1MIRwFF73/o+XLnahjr6GrUAPIZ49/PAQ
+         73O1DoLE6k4yibFity3RF3sWnvihOLioWiRFDQ/611pTCFtXJrWQWur1Xo9Ara1PWDxD
+         rEl+qUeMHc8O4Jqtg/1CVWrlVPcoablIV3WQdsp+rk+fEmXLEwBIfrKmQQH6sWBbgxFF
+         /rgA==
+X-Gm-Message-State: AKGB3mLbvM2ue+Cwzk/LxpIvTFpP74qc6Q6GNlpQRZwSHvPmNqL4in4h
+        Ng4wRY0LFdIFXtTbihBE7jw=
+X-Google-Smtp-Source: ACJfBovOCieSSoMRgkK8fPpUTAmgzdY3A9UK084EVTpueZVXBBW5EYifPkv4B7fOPDqK9OSYpkAYsA==
+X-Received: by 10.80.174.230 with SMTP id f35mr23350658edd.25.1514131857323;
+        Sun, 24 Dec 2017 08:10:57 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id g61sm21977050edd.48.2017.12.24.08.10.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 24 Dec 2017 08:10:55 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Wong <e@80x24.org>, Jakub Narebski <jnareb@gmail.com>,
+        Petr Baudis <pasky@suse.cz>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [RFC/PATCH] perl: bump the required Perl version to 5.10.0 from 5.8.0
+References: <20171223174400.26668-1-avarab@gmail.com> <20171224143831.GD23648@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20171224143831.GD23648@sigill.intra.peff.net>
+Date:   Sun, 24 Dec 2017 17:10:53 +0100
+Message-ID: <871sjkrtrm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQETHqd4M/Yxdik5gTXmtSY045bMKQGfmX4lAbGNbzEBcmz+twKiDQJsAV6CvMYBOrfZGwJ6ckLjAQD7QWkCL84szwIBIf+ipEX/75A=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 24, 2017 9:54 AM, Jeff King wrote:
-> Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor
-> out rewrite_file())
-> 
-> On Sat, Nov 18, 2017 at 10:01:45AM +0100, Johannes Sixt wrote:
-> 
-> > > Yeah, I have mixed feelings on that. I think it does make the
-> > > control flow less clear. At the same time, what I found was that
-> > > handlers like die/ignore/warn were the thing that gave the most
-> > > reduction in complexity in the callers.
-> >
-> > Would you not consider switching over to C++? With exceptions, you get
-> > the error context without cluttering the API. (Did I mention that
-> > librarification would become a breeze? Do not die in library routines:
-> > not a problem anymore, just catch the exception. die_on_error
-> > parameters? Not needed anymore. Not to mention that resource leaks
-> > would be much, MUCH simpler to treat.)
-> 
-> I threw this email on my todo pile since I was traveling when it came, but I
-> think it deserves a response (albeit quite late).
-> 
-> It's been a long while since I've done any serious C++, but I did really like the
-> RAII pattern coupled with exceptions. That said, I think it's dangerous to do it
-> half-way, and especially to retrofit an existing code base. It introduces a
-> whole new control-flow pattern that is invisible to the existing code, so
-> you're going to get leaks and variables in unexpected states whenever you
-> see an exception.
-> 
-> I also suspect there'd be a fair bit of in converting the existing code to
-> something that actually compiles as C++.
-> 
-> So if we were starting the project from scratch and thinking about using
-> C++ with RAII and exceptions, sure, that's something I'd entertain[1]
-> (and maybe even Linus has softened on his opinion of C++ these days ;) ).
-> But at this point, it doesn't seem like the tradeoff for switching is there.
 
-While I'm a huge fan of OO, you really need a solid justification for going there, and a good study of your target audience for Open Source C++. My comments are based on porting experience outside of Linux/Windows:
+On Sun, Dec 24 2017, Jeff King jotted:
 
-1. Conversion to C++ just to pick up exceptions is a lot like "One does not simply walk to Mordor", as Peff hinted at above.
-2. Moving to C++ generally involves a **complete** redesign. While Command Patterns (and and...)  may be very helpful in one level, the current git code base is very procedural in nature.
-3. From a porting perspective, applications written in with C++ generally (there are exceptions) are significantly harder than C. The POSIX APIs are older and more broadly supported/emulated than what is available in C++. Once you start getting into "my favourite C++ library is...", or "version2 or version3", or smart pointers vs. scope allocation, things get pretty argumentative. It is (arguably) much easier to disable a section of code that won't function on a platform in C without having to rework an OO model, making subsequent merges pretty much impossible and the port unsustainable. That is unless the overall design really factors in platform differences right into the OO model from the beginning of incubation.
-4. I really hate making these points because I am an OO "fanspert", just not when doing portable code. Even in java, which is more port-stable than C++ (arguably, but in my experience), you tend to hit platform library differences than can invalidate ports.
+> On Sat, Dec 23, 2017 at 05:44:00PM +0000, Ævar Arnfjörð Bjarmason wrote:
+>
+>> This is similar to Jeff King's jk/drop-ancient-curl series in that
+>> we're dropping perl releases that are rarely tested anymore, however
+>> unlike those patches git still works on e.g. 5.8.8 (I couldn't build
+>> anything older).
+>
+> Heh, I'm not sure if those are the best prior art to justify this, since
+> I stopped posting them after getting complaints (though I'll admit I was
+> considering re-posting them since AFAICT nobody has stepped up to fix
+> the breakage after many months).
 
-My take is "oh my please don't go there" for the git project, for a component that has become/is becoming required core infrastructure for so many platforms.
+Less of a justification, more of a "this is going to be a similar sort
+of dumpster fire" :)
 
-With Respect,
-Randall
+> This may be more like the recent C99 weather-balloon patches, in that
+> we're not using the new features yet, but want to see if anybody screams
+> at this first change.
+>
+>> The reason to do this is to be able to use features released with perl
+>> in the last decade, 5.10 was a major feature release including things
+>> like new regex features, state variables, the defined-or operator
+>> etc.[3]
+>>
+>> I expect this to be more controversial as since the 5.8 release stayed
+>> along for longer in various distributions, e.g. it's the version
+>> shipped with RHEL 5, replaced by 5.10 in RHEL 6 released in late 2010,
+>> similarly the first Debian release to include 5.10 was 5.0 (Lenny)
+>> released in early 2009. The release history for other distributions
+>> can be seen on CPAN's "Perl Binaries" page[3].
+>
+> As far as this actual perl change goes, I don't have a strong opinion. I
+> agree it would be nice to eventually move forward, and your reasoning
+> about what constitutes "old" seems sane. But we also don't write much
+> perl in this project these days, and I don't see a lack of modern perl
+> features causing a lot of headaches.
 
--- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
--- In my real life, I talk too much.
-
-
-
+Yes, unlike with the curl patches it's not a big PITA to maintain
+compatibility with 5.8, it would just be easier to write new code &
+maintain old code and not have to be on guard about not using features
+one takes for grantend, and maintain compatibility with 5.8 versions of
+core modules.
