@@ -6,78 +6,89 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CAC31F424
-	for <e@80x24.org>; Sun, 24 Dec 2017 14:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DF041F424
+	for <e@80x24.org>; Sun, 24 Dec 2017 14:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752727AbdLXOie (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 09:38:34 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46506 "HELO cloud.peff.net"
+        id S1752405AbdLXOyb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 09:54:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46532 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751029AbdLXOie (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 09:38:34 -0500
-Received: (qmail 12207 invoked by uid 109); 24 Dec 2017 14:38:33 -0000
+        id S1751029AbdLXOya (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 09:54:30 -0500
+Received: (qmail 13277 invoked by uid 109); 24 Dec 2017 14:54:29 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:38:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:54:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3530 invoked by uid 111); 24 Dec 2017 14:39:01 -0000
+Received: (qmail 3659 invoked by uid 111); 24 Dec 2017 14:54:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:39:01 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:54:57 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:38:32 -0500
-Date:   Sun, 24 Dec 2017 09:38:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:54:28 -0500
+Date:   Sun, 24 Dec 2017 09:54:28 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>, Jakub Narebski <jnareb@gmail.com>,
-        Petr Baudis <pasky@suse.cz>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC/PATCH] perl: bump the required Perl version to 5.10.0 from
- 5.8.0
-Message-ID: <20171224143831.GD23648@sigill.intra.peff.net>
-References: <20171223174400.26668-1-avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Simon Ruderich <simon@ruderich.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: Improved error handling (Was: [PATCH 1/2] sequencer: factor out
+ rewrite_file())
+Message-ID: <20171224145427.GG23648@sigill.intra.peff.net>
+References: <alpine.DEB.2.21.1.1711012240500.6482@virtualbox>
+ <20171101221618.4ioog7jlp7n2nd53@sigill.intra.peff.net>
+ <20171103103248.4p45r4klojk5cf2g@ruderich.org>
+ <xmqqpo8zpjdj.fsf@gitster.mtv.corp.google.com>
+ <20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net>
+ <20171104183643.akaazwswysphzuoq@ruderich.org>
+ <20171105020700.2p4nguemzdrwiila@sigill.intra.peff.net>
+ <20171106161315.dmftp6ktk6bu7cah@ruderich.org>
+ <20171117223345.s3ihubgda3qdb2j6@sigill.intra.peff.net>
+ <c50ac174-15bd-60bc-490c-d231e3eb501d@kdbg.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171223174400.26668-1-avarab@gmail.com>
+In-Reply-To: <c50ac174-15bd-60bc-490c-d231e3eb501d@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 23, 2017 at 05:44:00PM +0000, Ævar Arnfjörð Bjarmason wrote:
+On Sat, Nov 18, 2017 at 10:01:45AM +0100, Johannes Sixt wrote:
 
-> This is similar to Jeff King's jk/drop-ancient-curl series in that
-> we're dropping perl releases that are rarely tested anymore, however
-> unlike those patches git still works on e.g. 5.8.8 (I couldn't build
-> anything older).
-
-Heh, I'm not sure if those are the best prior art to justify this, since
-I stopped posting them after getting complaints (though I'll admit I was
-considering re-posting them since AFAICT nobody has stepped up to fix
-the breakage after many months).
-
-This may be more like the recent C99 weather-balloon patches, in that
-we're not using the new features yet, but want to see if anybody screams
-at this first change.
-
-> The reason to do this is to be able to use features released with perl
-> in the last decade, 5.10 was a major feature release including things
-> like new regex features, state variables, the defined-or operator
-> etc.[3]
+> > Yeah, I have mixed feelings on that. I think it does make the control
+> > flow less clear. At the same time, what I found was that handlers like
+> > die/ignore/warn were the thing that gave the most reduction in
+> > complexity in the callers.
 > 
-> I expect this to be more controversial as since the 5.8 release stayed
-> along for longer in various distributions, e.g. it's the version
-> shipped with RHEL 5, replaced by 5.10 in RHEL 6 released in late 2010,
-> similarly the first Debian release to include 5.10 was 5.0 (Lenny)
-> released in early 2009. The release history for other distributions
-> can be seen on CPAN's "Perl Binaries" page[3].
+> Would you not consider switching over to C++? With exceptions, you get the
+> error context without cluttering the API. (Did I mention that
+> librarification would become a breeze? Do not die in library routines: not a
+> problem anymore, just catch the exception. die_on_error parameters? Not
+> needed anymore. Not to mention that resource leaks would be much, MUCH
+> simpler to treat.)
 
-As far as this actual perl change goes, I don't have a strong opinion. I
-agree it would be nice to eventually move forward, and your reasoning
-about what constitutes "old" seems sane. But we also don't write much
-perl in this project these days, and I don't see a lack of modern perl
-features causing a lot of headaches.
+I threw this email on my todo pile since I was traveling when it came,
+but I think it deserves a response (albeit quite late).
+
+It's been a long while since I've done any serious C++, but I did really
+like the RAII pattern coupled with exceptions. That said, I think it's
+dangerous to do it half-way, and especially to retrofit an existing code
+base. It introduces a whole new control-flow pattern that is invisible
+to the existing code, so you're going to get leaks and variables in
+unexpected states whenever you see an exception.
+
+I also suspect there'd be a fair bit of in converting the existing code
+to something that actually compiles as C++.
+
+So if we were starting the project from scratch and thinking about using
+C++ with RAII and exceptions, sure, that's something I'd entertain[1]
+(and maybe even Linus has softened on his opinion of C++ these days ;) ).
+But at this point, it doesn't seem like the tradeoff for switching is
+there.
 
 -Peff
+
+[1] I'd also consider Rust, though I'm not too experienced with it
+    myself.
