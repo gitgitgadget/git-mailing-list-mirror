@@ -6,121 +6,93 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 568CA1F424
-	for <e@80x24.org>; Sun, 24 Dec 2017 14:22:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48D901F424
+	for <e@80x24.org>; Sun, 24 Dec 2017 14:33:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752157AbdLXOWu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 09:22:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46464 "HELO cloud.peff.net"
+        id S1752523AbdLXOdV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 09:33:21 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46482 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751042AbdLXOWt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 09:22:49 -0500
-Received: (qmail 10966 invoked by uid 109); 24 Dec 2017 14:22:48 -0000
+        id S1751029AbdLXOdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 09:33:20 -0500
+Received: (qmail 11802 invoked by uid 109); 24 Dec 2017 14:33:20 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:22:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 24 Dec 2017 14:33:20 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3472 invoked by uid 111); 24 Dec 2017 14:23:15 -0000
+Received: (qmail 3501 invoked by uid 111); 24 Dec 2017 14:33:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:23:15 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Sun, 24 Dec 2017 09:33:47 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:22:46 -0500
-Date:   Sun, 24 Dec 2017 09:22:46 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 24 Dec 2017 09:33:18 -0500
+Date:   Sun, 24 Dec 2017 09:33:18 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
-Message-ID: <20171224142246.GA23648@sigill.intra.peff.net>
-References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
- <20171218151043.GA9449@sigill.intra.peff.net>
- <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
- <20171219114906.GB24558@sigill.intra.peff.net>
- <xmqq7etiworw.fsf@gitster.mtv.corp.google.com>
- <20171220130811.GD17569@sigill.intra.peff.net>
- <c8980a2c-24e2-a877-fa66-31206123ce49@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
+Message-ID: <20171224143318.GC23648@sigill.intra.peff.net>
+References: <20171221190909.62995-1-git@jeffhostetler.com>
+ <20171221190909.62995-2-git@jeffhostetler.com>
+ <20171221204356.GA58971@aiede.mtv.corp.google.com>
+ <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8980a2c-24e2-a877-fa66-31206123ce49@web.de>
+In-Reply-To: <xmqq3742tyho.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 21, 2017 at 07:41:44PM +0100, René Scharfe wrote:
+On Fri, Dec 22, 2017 at 10:21:23AM -0800, Junio C Hamano wrote:
 
-> Am 20.12.2017 um 14:08 schrieb Jeff King:
-> > On Tue, Dec 19, 2017 at 10:33:55AM -0800, Junio C Hamano wrote:
-> > 
-> >> Should we take the patch posted as-is and move forward?
-> > 
-> > I suppose so.  I don't really have anything against the patch. My main
-> > complaint was just that I don't think it's actually cleaning up the
-> > gross parts of the interface. It's just substituting one gross thing (a
-> > funny struct flag) for another (a special version of the prepare
-> > function that takes a funny out-parameter).
+> >> +core.aheadbehind::
+> >> +	If true, tells commands like status and branch to print ahead and
+> >> +	behind counts for the branch relative to its upstream branch.
+> >> +	This computation may be very expensive when there is a great
+> >> +	distance between the two branches.  If false, these commands
+> >> +	only print that the two branches refer to different commits.
+> >> +	Defaults to true.
+> >
+> > This doesn't seem like a particularly core feature to me.  Should it be
+> > e.g. status.aheadbehind (even though it also affects "git branch") or
+> > even something like diff.aheadbehind?  I'm not sure.
 > 
-> If this is a fair description (and I have to admit that it is) then I
-> don't understand why you aren't against the patch.  Let's drop it.
+> FWIW, I do not think it is core at all, either; sorry for not
+> anticipating that a wrong name will be picked without a proper
+> guidance when I saw the "not limited to status" mentioned in the
+> discussion, but I was sick and offline for a few days, so...
 
-Heh, I almost wrote more on this. My thinking was two-fold:
+I, too, had a funny feeling about calling this "core". But I didn't have
+a better name, as I'm not sure what other place we have for config
+options that cross many command boundaries. "diff" and "status" don't
+seem quite right to me. While you can argue they are subsystems, it
+seems too easy for users to confuse them with the commands of the same
+names.
 
-  - while I think the fundamental gross-ness is still there after your
-    patch, it does smooth some of the rough edges. So it's a slight
-    improvement over the status quo.
+Maybe there should be a "ui.*" config hierarchy for these kinds of
+cross-command interface options?
 
-  - I read an article a while back (which unfortunately I can't find
-    now) about the idea of "default to yes" in open source. I.e., the
-    idea that if somebody bothered to cook up a patch and there is no
-    good reason to reject it, you should take it.
+> > I also wonder if there's a way to achieve the same benefit without
+> > having it be configurable.  E.g. if a branch is way behind, couldn't
+> > we terminate the walk early to get the same bounded cost per branch
+> > without requiring configuration?
+> 
+> Hmm, that is an interesting thought.
 
-    Certainly there are cases where that can go too far: obvious ones
-    like bad ideas where it is not really "default" anymore, but also
-    subtle ones where the changes are code churn whose fallouts will
-    be dealt with by others. But this patch is a good example. I'm not
-    convinced it makes things better, but I don't think it makes things
-    worse. If you, who looked a lot closer at the problem than I did,
-    still think it's a good idea after our discussion, it's probably
-    worth applying.
+Yes, it is. Two thoughts:
 
-So my comments weren't really "this is a bad idea" as much as "is there
-a better idea". We didn't come up with one after some discussion, and
-I'm willing to let it go there for now.
+  - It probably doesn't let us punt on the config naming, because we'd
+    probably still want a knob for "how much work".
 
-But if you want to keep thinking on it, I'm game. ;)
+  - I wondered if we could give a better answer than "these two are
+    different" based on a partial walk. But certainly not in the general
+    case. E.g., imagine:
 
-> Can we do better?  How about something this?  It reverts bundle to
-> duplicate the object_array, but creates just a commit_list in the other
-> two cases.  As a side-effect this allows clearing flags for all entries
-> with a single traversal.
+      ... -- master -- A -- B -- ... -- Y -- Z -- origin/master
 
-I think this is basically the "copy it before-hand" thing from earlier
-in the thread. Switching to just keeping commits seems like a nice
-change. It's an easy (if minor) optimization, and it makes clear exactly
-which part of the data we need to keep around.
-
-The single-traversal thing I suspect doesn't matter much in practice. In
-both cases if we would visit commit X twice, we'd immediately see on the
-second visit that it has already been cleared and not do anymore work.
-
-  Side note: Another question is whether it would simply be faster to
-  clear the flags for _all_ objects that we've touched in the current
-  process (we have clear_object_flags() for this already). Then we know
-  that we touch each one once, and we as a bonus we don't even have to
-  keep the previous tips. The downsides are:
-
-    - if another traversal in the process looked at many objects, but
-      our current traversal looked at few, then we would examine more
-      objects than we need to (albeit with lower cost per object)
-
-    - it's possible there's another traversal in the same process whose
-      flags we would want to have saved. I suspect such a setup is
-      broken already, though, unless there's a guarantee that the two
-      traversals don't overlap.
-
-So anyway, I think this is a reasonable approach, unless we're really
-worried about the extra O(# of pending) allocation.
+    If we walk back from origin/master and give up somewhere in the
+    middle, we can't say anything intelligent about the relationship.
 
 -Peff
