@@ -2,111 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0D041F406
-	for <e@80x24.org>; Sun, 24 Dec 2017 11:57:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3981F424
+	for <e@80x24.org>; Sun, 24 Dec 2017 12:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbdLXL5H (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 06:57:07 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40745 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752157AbdLXL5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 06:57:06 -0500
-Received: by mail-wm0-f68.google.com with SMTP id f206so28566035wmf.5
-        for <git@vger.kernel.org>; Sun, 24 Dec 2017 03:57:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0BuU342BlNX07rGVyE/xbRIM4gwYM71tDMsin4VaTnM=;
-        b=FLU7zaRIWM7Jo1/Fkx7o1hc/EfEFTTdDjXxBphWcZV3dxdmJjhbtiviHj3L9s0WWz6
-         jdKPKNfF/oh5HuOQwLMpUxB1tjI+A6R7fe8dBv0146fG3Q2LBNZW97+b8NNRpWqdEc5v
-         NCKbqe7+TcJD5diIfUi3RxJDcJ3N0UfAxLZvM3P4CvoWwVhNEi+/0T035MVO43HoCac/
-         NCO6Hr8yTtGCTofNbU/IQJLLFzdAC6nRiWwr4pkIR6RD3ZN294RLFlH6hqRxI+ldILie
-         +zUEu4v/haXSXJZ57c3FwQEawzRULcMRsj47N6pq7Ab/9Mu1pBunucnxexreX3eMhYNM
-         omOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0BuU342BlNX07rGVyE/xbRIM4gwYM71tDMsin4VaTnM=;
-        b=lTDlYAtH06NFPos3Z+jSFfLOVeB/q5BuyC0jR9PDwNvKaKbuqL7zaq8slko/c9hQ8W
-         wfd1jqDd/++WKMbLBLtPpPvlej3CjX5KXxlL/7zFpJZpKp5jK/XDMmxv57THEGyizklE
-         pmLFYfvemKap13x6SB7p8eOE9iNmbHDIh9J2jeA0ytJve6Qu/Jec9fcAx/cwqrD3nI9l
-         B1d8He3eMcA/inpVuYYYJHl0DaaVRu9g4CmIOjepCHP+nnFWx4efIAGEMGR515o2rOtI
-         MgWBsYUhqUYmjSbbtuNy6vzWLIjFIOTmqljh3CQHRNGEkbgR8088/Zks4GRIsPBR/kPK
-         fCLg==
-X-Gm-Message-State: AKGB3mLj+SpRMeYEcIxgM+zEcYT/vmD6/c1YglyomYP0csH6Vnz5qVX5
-        WmdolO4xz5JvGXnBc9VSYS4=
-X-Google-Smtp-Source: ACJfBos1vVvBMRE3Y3Q3QqUKT76JeOp1d0NENsR0kbVHodUNleKaewTD3kTMxvhdrUJN4PBQ1BEL8w==
-X-Received: by 10.80.143.163 with SMTP id y32mr22591366edy.167.1514116625177;
-        Sun, 24 Dec 2017 03:57:05 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id u21sm20237779edl.54.2017.12.24.03.57.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 24 Dec 2017 03:57:04 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Wong <e@80x24.org>, Jakub Narebski <jnareb@gmail.com>,
-        Petr Baudis <pasky@suse.cz>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC/PATCH] perl: bump the required Perl version to 5.10.0 from 5.8.0
-References: <20171223174400.26668-1-avarab@gmail.com> <20171223231742.GF6217@genre.crustytoothpaste.net>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171223231742.GF6217@genre.crustytoothpaste.net>
-Date:   Sun, 24 Dec 2017 12:57:03 +0100
-Message-ID: <873740s5io.fsf@evledraar.gmail.com>
+        id S1752902AbdLXMdu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 07:33:50 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:26791 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751882AbdLXMdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 07:33:49 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id T5TOehC9oCbAZT5TOeMHhH; Sun, 24 Dec 2017 12:33:47 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JvuBlIwC c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=EWPDJS0nAAAA:8 a=Xohx2MEitNktA-VSL-4A:9 a=QEXdDO2ut3YA:10
+Message-ID: <99FE6DCAB81A4510ACF961290988C094@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "anatoly techtonik" <techtonik@gmail.com>
+Cc:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, "Randall S. Becker" <rsbecker@nexbridge.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Git Mailing List" <git@vger.kernel.org>,
+        "Igor Djordjevic" <igor.d.djordjevic@gmail.com>
+References: <201711231458.vANEwUMK048049@elephants.elehost.com> <003c01d3646c$df78fc50$9e6af4f0$@nexbridge.com> <CAPkN8xJBWRs-2DxViBACLKzAbD1_EBA2MvmWVZmWgL+Sg72znw@mail.gmail.com> <CACBZZX4SM45hgA=PW0MEP9Ea0OG_8OTb5U7JCOX7xnd=hT5n3A@mail.gmail.com> <CAPkN8xKDQrf+LMpj9GHw9n_crJ1UUwq7Zek+Z1dgQ0n2Jz5U6g@mail.gmail.com> <FF34D4C2058D44E990BF149F3AB1E010@PhilipOakley> <CAPkN8xL1tUszvMuwwrc1ym6B6R5TzE4G9jKQ08oY2O_VPc8K_w@mail.gmail.com>
+Subject: Re: Re: Unify annotated and non-annotated tags
+Date:   Sun, 24 Dec 2017 12:31:36 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 171224-0, 24/12/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfHAXIvEm/Z4hSjw1feUfXZlUr7svf3yxor/86teal9wMorS72Ulu8OeIAZAvlQJEfX8bipn6M+uSVaSVOLUX2XjFAnWj5f92Uv+3CDtnwQZGEfq2pKU2
+ U8VRUsJKC6VKteqbNr0pNCUskbQfWNvY6HReecvlwcXvwvp72bzRJm+cAveTPMUvQShJK+6Gg2tXAZ5EoEfeJsPun6XYOzzbSDOzoI/n35cxCNySuIygz7f8
+ CMVdkFHitp1uqOuZEaLO8YCAjr1qouXK2pQWb2JR02ME3YGHPI/ye6pRjxkD/TTxDvmlw+LKYBUVEKSOUJ16PpMRpy/xkEsm1VonP/YdzcY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Dec 23 2017, brian m. carlson jotted:
-
-> On Sat, Dec 23, 2017 at 05:44:00PM +0000, Ævar Arnfjörð Bjarmason wrote:
->> The reason to do this is to be able to use features released with perl
->> in the last decade, 5.10 was a major feature release including things
->> like new regex features, state variables, the defined-or operator
->> etc.[3]
->>
->> I expect this to be more controversial as since the 5.8 release stayed
->> along for longer in various distributions, e.g. it's the version
->> shipped with RHEL 5, replaced by 5.10 in RHEL 6 released in late 2010,
->> similarly the first Debian release to include 5.10 was 5.0 (Lenny)
->> released in early 2009. The release history for other distributions
->> can be seen on CPAN's "Perl Binaries" page[3].
+From: "anatoly techtonik" <techtonik@gmail.com>
+> From: Philip Oakley
+> > So if I understand correctly, the hope is that `git show-ref --tags` 
+> > could
+> > get an alternate option `--all-tags` [proper option name required...] 
+> > such
+> > that the user would not have to develop the rather over the complicated
+> > expression that used a newish capability of a different command.
 >
-> This is fine by me.  As far as I know, 5.10.1 is the oldest version of
-> Perl still security-supported by a major Linux vendor.
->
-> Feature-wise, the release I'd much rather see is 5.14, since it provides
-> the r modifier to s/// and tr/// and undef-transparent length, but that
-> simply won't be possible until RHEL 6 and CentOS 6 go EOL.  Upgrading to
-> 5.10 is better than nothing, and it does get us defined-or, which is one
-> of the only 5.10 features I ever see used.
+> > Would that be right?
 
-Indeed, but as you point out it's not going to happen for some time
-given the burden we can reasonably place on downstream packagers.
+> That's correct.
 
-> I'm curious, though, is there some reason you went with the "v5.10.0"
-> syntax other than "5.010"?  I believe the latter provides a better error
-> message on older Perls, although I agree the former is more readable.
+> > Or at least update the man page docs to clarify the annotated vs
+> > non-annotated tags issue (many SO questions!).
 
-It would only provide confusing errors on 5.6 and older, which as noted
-we haven't supported at all since before 2010, so people are unlikely to
-be running it.
+> Are there stats how many users read man pages and what is their
+> reading session length? I mean docs may not help much,
 
-I'll note why I did that in a non-RFC commit message, FWIW this wording
-was also confusing in perl's own documentation, which I fixed the other
-day: https://github.com/Perl/perl5/commit/f1546a83e7
+The "reading the manual" question is fairly well answered in the Human Error 
+literature in terms of clarity and effectiveness, and the normal human error 
+rates (for interest search for "Panko" "Spreadsheet errors" [1]). Typical 
+human error rate is 1%. Most pilot error ends up being, in part, caused by 
+confusing / incomplete manuals (i.e. we fail to support them).
+
+If the manuals are the peak of perfection then they are well visited and the 
+supporting material is usually good. If manuals are a sprawling upland with 
+bogs, fissure, islands of inaccessability, then they are rarely used.
+
+Git does suffer from having a lot of separate commands, which makes seeing 
+the woods for the trees difficult sometimes, especially as its core concepts 
+are not always well understood.
+
+Improving the manuals (as reference material) will always help, even if the 
+trickle down effect is slow (made worse by alternate sources of error - 
+Stackoverflow and blogs... ;-)
+
+> > And indicate if the --dereference and/or --hash options would do the 
+> > trick!
+> > - maybe the "^{}" appended would be part of the problem (and need that 
+> > new
+> > option "--objectreference" ).
+
+> --dereference would work if it didn't require extra processing.
+> It is hard to think about other option name that would give
+> desired result.
+> ---
+> anatoly t.
+--
+Philip
+
+[1] https://arxiv.org/abs/1602.02601  https://arxiv.org/pdf/1602.02601
+"This paper reviews human cognition processes and shows first that humans 
+cannot be error free no matter how hard they try, and second that our 
+intuition about errors and how we can reduce them is based on appallingly 
+bad knowledge." 
+
