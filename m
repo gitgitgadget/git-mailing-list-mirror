@@ -2,137 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B5401F406
-	for <e@80x24.org>; Sun, 24 Dec 2017 08:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 995161F406
+	for <e@80x24.org>; Sun, 24 Dec 2017 09:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750989AbdLXIXL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 03:23:11 -0500
-Received: from forward3j.cmail.yandex.net ([5.255.227.21]:37277 "EHLO
-        forward3j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750805AbdLXIXK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 24 Dec 2017 03:23:10 -0500
-X-Greylist: delayed 452 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Dec 2017 03:23:10 EST
-Received: from mxback9g.mail.yandex.net (mxback9g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:170])
-        by forward3j.cmail.yandex.net (Yandex) with ESMTP id 7EEEA203C4;
-        Sun, 24 Dec 2017 11:15:36 +0300 (MSK)
-Received: from web45o.yandex.ru (web45o.yandex.ru [2a02:6b8:0:1a2d::5:225])
-        by mxback9g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id EmqbHNGGPX-FZmm00qu;
-        Sun, 24 Dec 2017 11:15:36 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1514103336;
-        bh=GVbQJYnsVVc/0rJIJCrLi6osXWf3pgnw5dKP2X5AJUU=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date;
-        b=ZvyCPZEwH6vxsiRHs/9OZxUQf7GMmuwKThaCgbtVy88HLkOL9Nxa8UwH/OMZA+b/t
-         mPi4j/s+5D17N4+LYo/NbQAnNtDCK87PUt+wEbBDG6B2yd9Cb+FBQ541rEEnMU5A4n
-         A4IDjFEYcwbiEUJPdWFJvyC1NArSIcn3o4HfI4gQ=
-Authentication-Results: mxback9g.mail.yandex.net; dkim=pass header.i=@yandex.ru
-Received: by web45o.yandex.ru with HTTP;
-        Sun, 24 Dec 2017 11:15:35 +0300
-From:   Vadim Petrov <tridronet@yandex.ru>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-In-Reply-To: <alpine.DEB.2.21.1.1712232332000.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <3853941514059379@web42g.yandex.ru> <alpine.DEB.2.21.1.1712232332000.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-Subject: Re: [PATCH] setup.c: move statement under condition
+        id S1751040AbdLXJZA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 24 Dec 2017 04:25:00 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:62989 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750860AbdLXJY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Dec 2017 04:24:56 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3z4Gzp04R5z5tlC;
+        Sun, 24 Dec 2017 10:24:53 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 3173141E2;
+        Sun, 24 Dec 2017 10:24:53 +0100 (CET)
+Subject: Re: [PATCH 6/6] wildmatch test: create & test files on disk in
+ addition to in-memory
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Anthony Ramine <n.oxyde@gmail.com>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+References: <20171223213012.1962-1-avarab@gmail.com>
+ <20171223213012.1962-7-avarab@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <8f4cdb23-8e2e-144a-1f70-99776b027166@kdbg.org>
+Date:   Sun, 24 Dec 2017 10:24:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Message-Id: <1483761514103335@web45o.yandex.ru>
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date:   Sun, 24 Dec 2017 12:15:35 +0400
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
+In-Reply-To: <20171223213012.1962-7-avarab@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your replay.
+Am 23.12.2017 um 22:30 schrieb Ævar Arnfjörð Bjarmason:
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   a[]b                 |   0
+>   t/t3070-wildmatch.sh | 336 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>   2 files changed, 319 insertions(+), 17 deletions(-)
+>   create mode 100644 a[]b
+> 
+> diff --git a/a[]b b/a[]b
+> new file mode 100644
+> index 0000000000..e69de29bb2
 
-> I have to be honest: this commit message (including the subject) left me
-> quite puzzled as to the intent of this patch.
+A big no-no! This file can't be created on Windows!
 
-I still only learn English and correctly express my thoughts while somewhat difficult.
+> diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+> index 47b479e423..d423bb01f3 100755
+> --- a/t/t3070-wildmatch.sh
+> +++ b/t/t3070-wildmatch.sh
+> @@ -4,31 +4,146 @@ test_description='wildmatch tests'
+>   
+>   . ./test-lib.sh
+>   
+> +create_test_file() {
+> +	file=$1
+> +
+> +	# `touch .` will succeed but obviously not do what we intend
+> +	# here.
+> +	test "$file" = "." && return 1
+> +	# We cannot create a file with an empty filename.
+> +	test "$file" = "" && return 1
+> +	# The tests that are testing that e.g. foo//bar is matched by
+> +	# foo/*/bar can't be tested on filesystems since there's no
+> +	# way we're getting a double slash.
+> +	echo "$file" | grep -q -F '//' && return 1
+> +	# When testing the difference between foo/bar and foo/bar/ we
+> +	# can't test the latter.
+> +	echo "$file" | grep -q -E '/$' && return 1
+> +
+> +	dirs=$(echo "$file" | sed -r 's!/[^/]+$!!')
 
-> If you also have a background story that motivated you to work on this
-> patch (for example, if you hit a huge performance bottleneck with some
-> tool that fed thousands of absolute paths to Git that needed to be turned
-> into paths relative to the worktree's top-level directory), I would
-> definitely put that into the commit message, too, if I were you.
+Booh! Booh! So many fork()s! ;)
 
-I have no such reason. I just saw it and wanted to change it.
+	case "$file" in
+	*//*)
+		# The tests that are testing that e.g. foo//bar is matched by
+		# foo/*/bar can't be tested on filesystems since there's no
+		# way we're getting a double slash.
+		return 1;;
+	*/)
+		# When testing the difference between foo/bar and foo/bar/ we
+		# can't test the latter.
+		return 1;;
+	esac
 
-> Up until recently, we encouraged dropping the curly brackets from
-> single-line statements, but apparently that changed. It is now no longer
-> clear, and often left to the taste of the contributor. But not always.
-> Sometimes we start a beautiful thread discussion the pros and cons of
-> curly brackets in the middle of patch review, and drop altogether
-> reviewing the actual patch.
+	dirs=${file%/*}
 
-I was guided by the rule from the Documentation/CodingGuidelines:
-	When there are multiple arms to a conditional and some of them
-	require braces, enclose even a single line block in braces for
-	consistency.
-And other code from setup.c:
-	from function get_common_dir:
-		if (!has_common) {
-			/* several commands */
-		} else {
-			free(candidate->work_tree);
-		}
-	from function get_common_dir_noenv:
-		if (file_exists(path.buf)) {
-			/* several commands */
-		} else {
-			strbuf_addstr(sb, gitdir);
-		}
+> +
+> +	# We touch "./$file" instead of "$file" because even an
+> +	# escaped "touch -- -" means something different.
+> +	if test "$file" != "$dirs"
+> +	then
+> +		mkdir -p -- "$dirs" 2>/dev/null &&
+> +		touch -- "./$file" 2>/dev/null &&
+> +		return 0
+> +	else
+> +		touch -- "./$file" 2>/dev/null &&
+> +		return 0
+> +	fi
+> +	return 1
+> +}
+> +
+>   wildtest() {
+> -	match_w_glob=$1
+> -	match_w_globi=$2
+> -	match_w_pathmatch=$3
+> -	match_w_pathmatchi=$4
+> -	text=$5
+> -	pattern=$6
+> +	if test "$#" = 6
+> +	then
+> +		# When test-wildmatch and git ls-files produce the same
+> +		# result.
+> +		match_w_glob=$1
+> +		match_f_w_glob=$match_w_glob
+> +		match_w_globi=$2
+> +		match_f_w_globi=$match_w_globi
+> +		match_w_pathmatch=$3
+> +		match_f_w_pathmatch=$match_w_pathmatch
+> +		match_w_pathmatchi=$4
+> +		match_f_w_pathmatchi=$match_w_pathmatchi
+> +		text=$5
+> +		pattern=$6
+> +	elif test "$#" = 10
+> +	then
+> +		match_w_glob=$1
+> +		match_w_globi=$2
+> +		match_w_pathmatch=$3
+> +		match_w_pathmatchi=$4
+> +		match_f_w_glob=$5
+> +		match_f_w_globi=$6
+> +		match_f_w_pathmatch=$7
+> +		match_f_w_pathmatchi=$8
+> +		text=$9
+> +		pattern=$10
+> +	fi
+>   
+> +	# $1: Case sensitive glob match: test-wildmatch
+>   	if test "$match_w_glob" = 1
+>   	then
+> -		test_expect_success "wildmatch:     match '$text' '$pattern'" "
+> +		test_expect_success "wildmatch: match '$text' '$pattern'" "
+>   			test-wildmatch wildmatch '$text' '$pattern'
+>   		"
+>   	elif test "$match_w_glob" = 0
+>   	then
+> -		test_expect_success "wildmatch:  no match '$text' '$pattern'" "
+> +		test_expect_success "wildmatch: no match '$text' '$pattern'" "
+>   			! test-wildmatch wildmatch '$text' '$pattern'
+>   		"
+>   	else
+>   		test_expect_success "PANIC: Test framework error. Unknown matches value $match_w_glob" 'false'
 
-> In short: I think your patch does the right thing, and I hope that you
-> find my suggestions to improve the patch useful.
+I think you can write this as 'say ...; exit 1'. See t0000*.
 
-I fixed the patch according to your suggestions.
+>   	fi
+>   
+> +	# $1: Case sensitive glob match: ls-files
+> +	if test "$match_f_w_glob" = 'E'
+> +	then
+> +		if create_test_file "$text"
+> +		then
+> +			test_expect_success "wildmatch(ls): match dies on '$pattern' '$text'" "
+> +				test_when_finished \"
+> +					rm -rf -- * &&
 
+Can we be a bit more careful with this rm -rf, please?
+There is only one similarly loose case in t/t7003-filter-branch.sh,
+and it is outside test_when_finished, i.e., it is well under control;
+this instance here inside test_when_finished is not.
 
-Signed-off-by: Vadim Petrov <tridronet@yandex.ru>
----
- setup.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> +					git reset
+> +				\" &&
+> +				git add -A &&
+> +				>expect.err &&
+> +				printf '%s' '$text' >expect &&
+> +				test_must_fail git --glob-pathspecs ls-files -z -- '$pattern'
+> +			"
+> +		else
+> +			test_expect_failure "wildmatch(ls): match skip '$pattern' '$text'" 'false'
+> +		fi
+> +	elif test "$match_f_w_glob" = 1
+> +	then
+> +		if create_test_file "$text"
+> +		then
+> +			test_expect_success "wildmatch(ls): match '$pattern' '$text'" "
+> +				test_when_finished \"
+> +					rm -rf -- * &&
+> +					git reset
+> +				\" &&
+> +				git add -A &&
+> +				>expect.err &&
+> +				printf '%s' '$text' >expect &&
 
-diff --git a/setup.c b/setup.c
-index 8cc34186c..1a414c256 100644
---- a/setup.c
-+++ b/setup.c
-@@ -27,26 +27,26 @@ static int abspath_part_inside_repo(char *path)
- {
- 	size_t len;
- 	size_t wtlen;
- 	char *path0;
- 	int off;
- 	const char *work_tree = get_git_work_tree();
- 
- 	if (!work_tree)
- 		return -1;
- 	wtlen = strlen(work_tree);
- 	len = strlen(path);
--	off = offset_1st_component(path);
- 
--	/* check if work tree is already the prefix */
--	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
-+	if (wtlen > len || strncmp(path, work_tree, wtlen))
-+		off = offset_1st_component(path);
-+	else { /* check if work tree is already the prefix */
- 		if (path[wtlen] == '/') {
- 			memmove(path, path + wtlen + 1, len - wtlen);
- 			return 0;
- 		} else if (path[wtlen - 1] == '/' || path[wtlen] == '\0') {
- 			/* work tree is the root, or the whole path */
- 			memmove(path, path + wtlen, len - wtlen + 1);
- 			return 0;
- 		}
- 		/* work tree might match beginning of a symlink to work tree */
- 		off = wtlen;
- 	}
--- 
-2.15.1.433.g936d1b989
+There are no single-quotes in any $text instances, right?
+
+> +				git --glob-pathspecs ls-files -z -- '$pattern' 2>actual.err | tr -d '\0' >actual &&
+
+If possible, do not put git commands in the upstream of a pipe.
+It does not detect failures.
+
+Unfortunately, printf '%s\0' foo is not portable. If it were,
+you could omit the tr invocation alltogether.
+
+> +				test_cmp expect.err actual.err &&
+> +				test_cmp expect actual
+> +			"
+> +		else
+> +			test_expect_failure "wildmatch(ls): match skip '$pattern' '$text'" 'false'
+> +		fi
+
+-- Hannes
