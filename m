@@ -2,158 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5BD1F406
-	for <e@80x24.org>; Mon, 25 Dec 2017 19:45:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 038FC1F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 20:09:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752737AbdLYTp1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 14:45:27 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:33576 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752210AbdLYTp0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 14:45:26 -0500
-Received: by mail-wm0-f41.google.com with SMTP id g130so33941268wme.0
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 11:45:25 -0800 (PST)
+        id S1752794AbdLYUFP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 15:05:15 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:37916 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752667AbdLYUFO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 15:05:14 -0500
+Received: by mail-it0-f41.google.com with SMTP id r6so21229099itr.3
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 12:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Js/apjscxcHAVvy2kdPKW4YkbQUgPwUetWPFpE6JdN4=;
-        b=In1QqZlLltZu/+IxLdTWzSffZA55C5QHdNktUW9X+4FSwbO0pydIDDRSdIMHfDzRjg
-         /9mjfhiCWcvmscVf5u4o9dUbp0exv2+p4Q9eLyinvfnivtkdpeEcKc8HNSPEDk65UgA8
-         d8V4ZDuBpMVfXpa0BD456YVXfAjjOx4N/NgEgb15xYBBKC4wZJ/YqPYJ6TItYtBsrx+8
-         CYwsl70Nsdi/kBrx/pGaysXTlMVYBTWZIb6ESHefEvs8XwF3Oz8FHukGwz03mbZXFO9/
-         SMn5gLQt2Mzfx1xMA9c/K77GOdn5T2b1SHqk7+pGyv/barBsqb+19Edk5Tr5/tXCAw6J
-         FB7Q==
+        d=ecbaldwin.net; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=HeKVmKTuE5rIs8U2FDznT029b43gxvKkR71JyLc3MH0=;
+        b=RzmpynU/+pF7P2gx1HCTu7J2S+2Sq5L1PrD84RyqyYzT8WrDFRwq+cMJf0wIOY2hV9
+         ZX3FhFogtr+iCwuhZt0SlRu+/L5tqYjqEJNiiJSxiwXZe+mH/w9fkQivRf+aDiTcYjxU
+         ZMg4RDJkG6AWSzTLn1pRctA98xqirMB7FR2Pc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Js/apjscxcHAVvy2kdPKW4YkbQUgPwUetWPFpE6JdN4=;
-        b=JnG12riOIgf9UyLrAyY56miblN4MEk1zuHtHkR0aKBKjmZSxwg6PHzLd/Zf9Am18rn
-         RrHcbLz2+RvDPgWmc1Bh26n6W92vEaF/O6iNcEw1ym56U8XJ6RzUiva8XWfExtXE9UiD
-         ViNFTE72ZUMn2Eb5CDw2uOkcMKYJT/YezDcylMWM2cPUCbDGPoHU2m7I9be+KaDPNexU
-         8bqu494YQXi7F2xZGPPAe0XXHkefKQxJrdJlAnCcyhChc+VtcJ2Shl7uhZ06OlrFk/Nt
-         KUBeIXhRQ8Y60D0eMsRznM6TPcBbX6wurYbUBvDVhNCFlOnBqPpyOtSHo7oLk6ZR9/7R
-         bXvw==
-X-Gm-Message-State: AKGB3mLRP/t+bRlvbWqtgQiJvDgfhJLMXPpuCvpfzIhsJkQ/twD11yRd
-        2IJL3MCh2FS7EpNKcrkI7UFT5M/W
-X-Google-Smtp-Source: ACJfBouV6Ka/ZXT3Y7jvO2EKD09kux2WXjwQ/fcaFJhH++Q6Ro86YxBZjxdBAX8F9eSn0B4JRpFsJQ==
-X-Received: by 10.80.181.49 with SMTP id y46mr27511756edd.29.1514231124568;
-        Mon, 25 Dec 2017 11:45:24 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id b2sm28243090edd.26.2017.12.25.11.45.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=HeKVmKTuE5rIs8U2FDznT029b43gxvKkR71JyLc3MH0=;
+        b=dterEaareWq1ZHEa1d4be0FvrsP9eaDPOwvKGA/sKhjUHB8k6d0SJ1qVsNRySzWcrO
+         viPjWDLOZQ3jD9J0qiVqrlphQnZK1mRENbNaRvYChuK2utWg6HxmaEHuQd07P3hwhjO6
+         n25+5Us1LvsoIiHIqxVE0KdztnLz5CiTmq3Tcj48n1hzCGYSNyypXEbpJlL2ngb7WQvb
+         ZCGnnsTotGNs28/HjGPMXMBgJjJT65iGRAhump3ANNgbd9FHgRhJFFT30KLpHQMmT8Qt
+         OfeitD6WLKv9PMTgy9WHbtlebBjzf0bVOBElREu6CfnqmSFeBgAXDVMXVxy+wGXZdwjL
+         P1bw==
+X-Gm-Message-State: AKGB3mJS6bPvXdLuI+/D1pqMDN0Gtlt+y+9XPeNn1eISoyoQfFMzxqRR
+        jPlylNzs1P++dYJUQ3L5O9n3/w==
+X-Google-Smtp-Source: ACJfBotXpRyjnxRvvLU0jvuNaEGCvu513UF8zHPypUvREHX7L2lenLl2UOJxkLV9/uxSQ5daA7VTcw==
+X-Received: by 10.36.65.83 with SMTP id x80mr29136566ita.130.1514232313433;
+        Mon, 25 Dec 2017 12:05:13 -0800 (PST)
+Received: from hpz.ecbaldwin.net (c-73-14-102-153.hsd1.co.comcast.net. [73.14.102.153])
+        by smtp.gmail.com with ESMTPSA id 191sm8578277itx.16.2017.12.25.12.05.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Dec 2017 11:45:23 -0800 (PST)
-Subject: Re: [PATCH] status: handle worktree renames
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     alexmv@dropbox.com, git@vger.kernel.org
-References: <alpine.DEB.2.10.1712221829430.29746@alexmv-linux>
- <20171225103718.24443-1-pclouds@gmail.com>
- <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
-Message-ID: <86b4d2af-18ce-36eb-4823-105757a196fc@gmail.com>
-Date:   Mon, 25 Dec 2017 20:45:15 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        Mon, 25 Dec 2017 12:05:12 -0800 (PST)
+Date:   Mon, 25 Dec 2017 13:05:11 -0700
+From:   Carl Baldwin <carl@ecbaldwin.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     =?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason' 
+        <avarab@gmail.com>, 'Git Mailing List' <git@vger.kernel.org>
+Subject: Re: Bring together merge and rebase
+Message-ID: <20171225200509.GA24104@hpz.ecbaldwin.net>
+References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+ <877etds220.fsf@evledraar.gmail.com>
+ <20171223210141.GA24715@hpz.ecbaldwin.net>
+ <000d01d37c3c$207d7050$617850f0$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <000d01d37c3c$207d7050$617850f0$@nexbridge.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/12/2017 19:26, Igor Djordjevic wrote:
+On Sat, Dec 23, 2017 at 05:19:35PM -0500, Randall S. Becker wrote:
+> No matter how this plays out, let's please make very sure to provide
+> sufficient user documentation so that those of us who have to explain
+> the differences to users have a decent reference. Even now, explaining
+> rebase vs. merge is difficult enough for people new to git to choose
+> which to use when (sometimes pummeling is involved to get the point
+> across 😉 ), even though it should be intuitive to most of us. I am
+> predicting that adding this capability is going to further confuse the
+> *new* user community a little. Entirely out of enlighted
+> self-interest, I am offering to help document
+> (edits/contribution//whatever) this once we get to that point in
+> development.
+
+I agree. I have a feeling that it may take a while for this to play out.
+This has been on my mind for a while and think there will be some more
+discussion before anything gets started.
+
+Carl
+
+> Something else to consider is how (or if) this capability is going to
+> be presented in front-ends and in Cloud services. GitK is a given, of
+> course. I'm still impatiently waiting for worktree support from some
+> other front-ends.
+
+It all takes time. :)
+
+> Cheers,
+> Randall
 > 
-> But I`ve noticed that "--porcelain=v2" output might still be buggy - 
-> this is what having both files staged shows:
-> 
->     $ git status --porcelain=v2
->     2 R. N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 R100 new-file	original-file
-> 
-> ..., where having old/deleted file unstaged, and new/created file 
-> staged with `git add -N` shows this:
-> 
->     $ git status --porcelain=v2
->     1 .R N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 new-file
-> 
-> So even though unstaged value is correctly recognized as "R" (renamed), 
-> first number is "1" (instead of "2" to signal rename/copy), and both 
-> rename score and original file name are missing.
-
-As an exercise, might be something like this as a fixup on top of 
-your patch could work.
-
-I`ve tried to follow your lead on what you did yourself, but please 
-note that, besides being relatively new to Git codebase, this is my 
-first C code for almost 10 years (since university), so... :)
-
-I guess an additional test for this would be good, too.
-
-Regards, Buga
-
----
- wt-status.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index f0b5b3d46..55c0ad249 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2050,7 +2050,7 @@ static void wt_porcelain_v2_print_changed_entry(
- 	const char *path_head = NULL;
- 	char key[3];
- 	char submodule_token[5];
--	char sep_char, eol_char;
-+	char sep_char, eol_char, score_char;
- 
- 	wt_porcelain_v2_fix_up_changed(it, s);
- 	wt_porcelain_v2_submodule_state(d, submodule_token);
-@@ -2059,6 +2059,8 @@ static void wt_porcelain_v2_print_changed_entry(
- 	key[1] = d->worktree_status ? d->worktree_status : '.';
- 	key[2] = 0;
- 
-+	path_head = d->head_path ? d->head_path : d->worktree_path;
-+	score_char = d->index_status ? key[0] : key[1];
- 	if (s->null_termination) {
- 		/*
- 		 * In -z mode, we DO NOT C-quote pathnames.  Current path is ALWAYS first.
-@@ -2067,7 +2069,6 @@ static void wt_porcelain_v2_print_changed_entry(
- 		sep_char = '\0';
- 		eol_char = '\0';
- 		path_index = it->string;
--		path_head = d->head_path;
- 	} else {
- 		/*
- 		 * Path(s) are C-quoted if necessary. Current path is ALWAYS first.
-@@ -2078,8 +2079,8 @@ static void wt_porcelain_v2_print_changed_entry(
- 		sep_char = '\t';
- 		eol_char = '\n';
- 		path_index = quote_path(it->string, s->prefix, &buf_index);
--		if (d->head_path)
--			path_head = quote_path(d->head_path, s->prefix, &buf_head);
-+		if (path_head)
-+			path_head = quote_path(path_head, s->prefix, &buf_head);
- 	}
- 
- 	if (path_head)
-@@ -2087,7 +2088,7 @@ static void wt_porcelain_v2_print_changed_entry(
- 				key, submodule_token,
- 				d->mode_head, d->mode_index, d->mode_worktree,
- 				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
--				key[0], d->score,
-+				score_char, d->score,
- 				path_index, sep_char, path_head, eol_char);
- 	else
- 		fprintf(s->fp, "1 %s %s %06o %06o %06o %s %s %s%c",
--- 
-2.15.1.windows.2
+> -- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
+> -- In my real life, I talk too much.
