@@ -2,234 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42A1E1FADF
-	for <e@80x24.org>; Mon, 25 Dec 2017 03:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F3C21F404
+	for <e@80x24.org>; Mon, 25 Dec 2017 08:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751520AbdLYDwU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 24 Dec 2017 22:52:20 -0500
-Received: from imap.thunk.org ([74.207.234.97]:53988 "EHLO imap.thunk.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751287AbdLYDwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Dec 2017 22:52:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=cWcLJ1Bwv9gJsAScOFmeqr7rXn1dxxQm5CZVDYjkmL0=; b=hbGwxyR/m2PbUvRVuTPbgHPUVz
-        fHdRTaoiMwUcrvw1W1jVuWgdw6RgwSx1QmflxlqUjk422Hsnk5ji5UOvWcCPzVeph/ILDMHNFEdhb
-        YyhAt/p1ueziEt76eUWIKGiPxcO4CFAW1BnJ5dlLIWnhzNjkMK7uuvdZKeJTVMr/XZqs=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1eTJoI-0004Fj-2O; Mon, 25 Dec 2017 03:52:18 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 8E253C00723; Sun, 24 Dec 2017 22:52:15 -0500 (EST)
-Date:   Sun, 24 Dec 2017 22:52:15 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Carl Baldwin <carl@ecbaldwin.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20171225035215.GC1257@thunk.org>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+        id S1750831AbdLYIwG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 03:52:06 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:46350 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750806AbdLYIwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 03:52:05 -0500
+Received: by mail-pg0-f52.google.com with SMTP id r2so1428453pgq.13
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 00:52:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=YwPd20fit+9LZw2j7jp75R2Ug/y1Gffu8tO2X0AapKw=;
+        b=lolnbi/WhHEp6qhusgyS2DJtIX2tF7RhdQCau4BzzsEnkSFavE3j0MUA8AtmCc/KeW
+         G+/IRDN1WXMGBa+/xu3fl4Fc73q7E1ygPbdN6+AT9MAy6sgnq+B/p4rAUF9pmNVu3Jo2
+         S/ZXmxfPaGRuttHmAKyXg74t/dXjRZvZyktLULay/CHjUTelGC1pN0H86Y+J9/abH4fU
+         pZsmAgJu2xHt2RK3ojBRG4fjO1VLhL0Ev9EcKhkjUXY5wNFqujL41557p21HcWZbXSTJ
+         GZwGDjdyJjXffY423/tJfMYhh4e0+sN4D+tM6E5t8WOwf3Rtc8Orxk1XlcZ6H3MGujsH
+         VWrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=YwPd20fit+9LZw2j7jp75R2Ug/y1Gffu8tO2X0AapKw=;
+        b=Ogxlep77RwlpusD/JEqnN51MKKQ43O9wGz/UISYOurh6oyxVpaHH7gyaDMJlOEshDI
+         iGKUMxsKIv/6xOdjzU8NEtu4/tZBo4qtVfPtBCj5qFTbwp8ITObrgLSQDfhq9hXWNfNy
+         FGkFtoPaJtqglbh/C5z97trA5BBEteNz/Sgcq3XxExWLSEPtBxA0j8Pp3vKEx9dr/kyd
+         iyPfBEji5s7UsIRgx1wfdOakUVokLPgmFE6/DBrUrLkzPljh/2HDtQvv5E+6BLsHK27C
+         cBUwfgKfj3VmEy4H2T/ryhwBB85CFa4wgjREMWtGGdqiS8TwGRo2KUR/8AGuPxZdr7it
+         UoOw==
+X-Gm-Message-State: AKGB3mLqmV8k7U19ohU4TcqcTXaU9gB82YVqj05z3qP3z9B92YApbNbd
+        2ueyZhlieosCU5+Pv5Hjbsg=
+X-Google-Smtp-Source: ACJfBovAi+VqB0DCt4qxQqAFIUHGHGW+DGZDquWMR9epYf9vJ+Pen1Z6dBf07ahEt/f6wa8jxdkA1A==
+X-Received: by 10.101.85.78 with SMTP id t14mr1247846pgr.362.1514191924492;
+        Mon, 25 Dec 2017 00:52:04 -0800 (PST)
+Received: from ?IPv6:2405:204:718f:c16b:a7c:cd30:39f3:e3e3? ([2405:204:718f:c16b:a7c:cd30:39f3:e3e3])
+        by smtp.gmail.com with ESMTPSA id s68sm56624801pfj.81.2017.12.25.00.51.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Dec 2017 00:52:03 -0800 (PST)
+Subject: Re: Error in `git': free(): invalid pointer (was Re: [PATCH]
+ sequencer: improve config handling)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqq8te84yo6.fsf@gitster.mtv.corp.google.com>
+ <20171213114621.30250-1-phillip.wood@talktalk.net>
+ <1513794792.9785.2.camel@gmail.com>
+ <alpine.DEB.2.21.1.1712211442470.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+ <1513874528.9646.2.camel@gmail.com>
+ <alpine.DEB.2.21.1.1712221201210.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <71f9236c-9e55-8489-54b2-5d7c7df1eb0c@gmail.com>
+Date:   Mon, 25 Dec 2017 14:21:39 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <alpine.DEB.2.21.1.1712221201210.406@MININT-6BKU6QN.europe.corp.microsoft.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 22, 2017 at 11:10:19PM -0700, Carl Baldwin wrote:
-> I've been calling this proposal `git replay` or `git replace` but I'd
-> like to hear other suggestions for what to name it. It works like
-> rebase except with one very important difference. Instead of orphaning
-> the original commit, it keeps a pointer to it in the commit just like
-> a `parent` entry but calls it `replaces` instead to distinguish it
-> from regular history. In the resulting commit history, following
-> `parent` pointers shows exactly the same history as if the commit had
-> been rebased. Meanwhile, the history of iterating on the change itself
-> is available by following `replaces` pointers. The new commit replaces
-> the old one but keeps it around to record how the change evolved.
+On Friday 22 December 2017 05:19 PM, Johannes Schindelin wrote:
+> Hi Kaartic,
+> 
+>>
+>> I think I didn't mention I've set `commit.gpgsign` to `true` for that
+>> repo, did I?
+> 
+> Hah! I had troubles to associate the correct line in my versions of Git's
+> source code (the line numbers alone are only reliable if you also have a
+> commit from which the Git binaries were built), 
 
-As a suggestion, before diving into the technical details of your
-proposal, it might be useful consider the usage scenario you are
-targetting.  Things like "git rebase" and "git merge" and your
-proposed "git replace/replay" are *mechanisms*.
-
-But how they fit into a particular workflow is much more important
-from a design perspective, and given that there are many different git
-workflows which are used by different projects, and by different
-developers within a particular project.
-
-For example, rebase gets used in many different ways, and many of the
-debates when people talk about "git rebase" being evil generally
-presuppose a particular workflow that that the advocate has in mind.
-If someone is using git rebase or git commit --amend before git
-commits have ever been pushed out to a public repository, or to anyone
-else, that's a very different case where it has been visible
-elsewhere.  Even the the most strident, "you must never rewrite a
-commit and all history must be preserved" generally don't insist that
-every single edit must be preserved on the theory that "all history is
-valuable".
-
-> The git history now has two dimensions. The first shows a cleaned up
-> history where fix ups and code review feedback have been rolled into
-> the original changes and changes can possibly be ordered in a nice
-> linear progression that is much easier to understand. The second
-> drills into the history of a change. There is no loss and you don't
-> change history in a way that will cause problems for others who have
-> the older commits.
-
-If your goal is to preserve the history of the change, one of the
-problems with any git-centric solution is that you generally lose the
-code review feedback and the discussions that are involved with a
-commit.  Just simply preserving the different versions of the commits
-is going to lose a huge amount of the context that makes the history
-valuable.
-
-So for example, I would claim that if *that* is your goal, a better
-solution is to use Gerrit, so that all of the different versions of
-the commits are preserved along with the line-by-line comments and
-discussions that were part of the code review.  In that model, each
-commit has something like this in the commit trailer:
-
-Change-Id: I8d89b33683274451bcd6bfbaf75bce98
-
-You can then cut and paste the Change-Id into the Gerrit user
-interface, and see the different commits, more important, the
-discussion surrounding each change.
+Should have mentioned that, sorry.
 
 
-If the complaint about Gerrit is that it's not a core part of Git, the
-challenge is (a) how to carry the code review comments in the git
-repository, and (b) do so in a while that it doesn't bloat the core
-repository, since most of the time, you *don't* want or need to keep a
-local copy of all of the code review comments going back since the
-beginning of the project.
+> but I did this free() at
+> (https://github.com/git/git/blob/cd54ea2b18/sequencer.c#L1975:
+> 
+> 	if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
+> 		if (!starts_with(buf.buf, "-S"))
+> 			strbuf_reset(&buf);
+> 		else {
+> 			free(opts->gpg_sign);
+> 			^^^^^^^^^^^^^^^^^^^^^
+> 			opts->gpg_sign = xstrdup(buf.buf + 2);
+> 		}
+> 		strbuf_reset(&buf);
+> 	}
+> 
 
--------------
-
-Here's another potential use case.  The stable kernels (e.g., 3.18.y,
-4.4.y, 4.9.y, etc.) have cherry picks from the the upstream kernel,
-and this is handled by putting in the commit body something like this:
-
-    [ Upstream commit 3a4b77cd47bb837b8557595ec7425f281f2ca1fe ]
-
-----
-
-And here's yet another use case.  For internal Google kernel
-development, we maintain a kernel that has a large number of patches
-on top of a kernel version.  When we backport an upstream fix (say,
-one that first appeared in the 4.12 version of the upstream kernel),
-we include a line in the commit body that looks like this:
-
-Upstream-4.12-SHA1: 5649645d725c73df4302428ee4e02c869248b4c5
-
-This is useful, because when we switch to use a newer upstream kernel,
-we need make sure we can account for all patches that were built on
-top of the 3xx kernel (which might have been using 4.10, for the sake
-of argument), to the 4xx kernel series (which might be using 4.15 ---
-the version numbers have been changed to protect the innocent).  This
-means going through each and every patch that was on top of the 3xx
-kernel, and if it has a line such as "Upstream 4.12-SHA1", we know
-that it will already be included in a 4.15 based kernel, so we don't
-need to worry about carrying that patch forward.
-
-In other cases, we might decide that the patch is no longer needed.
-It could be because the patch has already be included upstream, in
-which case we might check in a commit with an empty patch body, but
-whose header contains something like this in the 4xx kernel:
-
-Origin-3xx-SHA1: fe546bdfc46a92255ebbaa908dc3a942bc422faa
-Upstream-Dropped-4.11-SHA1: d90dc0ae7c264735bfc5ac354c44ce2e
-
-Or we could decide that the commit is no longer no longer needed ---
-perhaps because the relevant subsystem was completely rewritten and
-the functionality was added in a different way.  Then we might have
-just have an empty commit with an explanation of why the commit is no
-longer needed and the commit body would have the metadata:
-
-Origin-Dropped-3xx-SHA1: 26f49fcbb45e4bc18ad5b52dc93c3afe
-
-Or perhaps the commit is still needed, and for various reasons the
-commit was never upstreamed; perhaps because it's only useful for
-Google-specific hardware, or the patch was rejected upstream.  The we
-will have a cherry-pick that would include in the body:
-
-Origin-3xx-SHA1: 8f3b6df74b9b4ec3ab615effb984c1b5
+Seems you got the right one, regardless. :)
 
 
-(Note: all commits that are added in the rebase workflow, even the
-empty commits that just have the Origin-Dropped-3xx-SHA1 or
-Upstream-Droped-4.11-SHA1 headers, are patch reviewed through Gerrit,
-so we have an audited, second-engineer review to make sure each commit
-in the 3xx kernel that Google had been carrying had the correct
-disposition when rebasing to the 4xx kernel.)
+> The culprit is that we have these really unclear ownership rules, where it
+> is not at all clear who is responsible for releasing allocated memory:
+> caller or callee? (Hannes would not rightfully point out that this would
+> be a non-issue if we would switch to C++). In C, the common pattern is to
+> use `const char *` for users that are *not* supposed to take ownership,
+> and `char *` for users that are supposed to take custody. And in this
+> instance, `gpg_sign` should be owned by `struct replay_opts` because of
+> this (https://github.com/git/git/blob/cd54ea2b18/sequencer.h#L38):
+> 
+> 	char *gpg_sign;
+> 
+> Technically, using `char *` (instead of `const char *`) does not say
+> "you're now responsible for de-allocating this memory", of course, but in
+> practice it is often used like this (and the signature of `free(void *)`
+> certainly encourages that type of interpreting the `const` qualifier).
+> 
 
-The point is that for this much more complex, real-world workflow, we
-need much *more* metadata than a simple "Replaces" metadata.  (And we
-also have other metadata --- for example, we have a "Tested: " trailer
-that explains how to test the commit, or which unit test can and
-should be used to test this commit, combined with a link to the test
-log in our automated unit tester that has the test run, and a
-"Rebase-Tested-4xx: " trailer that might just have the URL to the test
-log when the commit was rebased since the testing instructions in the
-Tested: trailer is still relevant.)
-
-And since this metadata is not really needed by the core git
-machinery, we just use text trailers in the commit body; it's not hard
-to write code which parses this out of the git commit.
-
-> Various git commands will have to learn how to handle this kind of
-> history. For example, things like fetch, push, gc, and others that
-> move history around and clean out orphaned history should treat
-> anything reachable through `replaces` pointers as precious. Log and
-> related history commands may need new switches to traverse the history
-> differently in different situations.
-
-I'd encourage you to think very hard about how exactly "git log" and
-"gitk" might actually deal with these links.  In the Google kernel
-development use cases, we use different repos for the 3xx and 4xx
-kernels.  It would be possible to make hot links for the
-Original-3xx-SHA1: trailers, but you couldn't do it using gitk.  It
-would actually have to be a completely new tool.  (And we do have new
-tools, most especially a dashboard so we can keep track of how many
-commits in the 3xx kernel still have to be rebased to the 4xx kernel,
-or can be confirmed to be in the upstream kernel, or can be confirmed
-to be dropped.  We have a *large* number of patches that we carry, so
-it's a multi-month effort involving a large number of engineers
-working together to do a kernel rebase operation from a 4.x upstream
-kernel to a 4.y upstream kernel.  So having a dashboard is useful
-because we can see whether a particular subsystem team is ahead or
-behind the curve in terms of handling those commits which are their
-responsibility.)
+Nice explanation.
 
 
-My experience, from seeing these much more complex use cases ---
-starting with something as simple as the Linux Kernel Stable Kernel
-Series, and extending to something much more complex such as the
-workflow that is used to support a Google Kernel Rebase, is that using
-just a simple extra "Replaces" pointer in the commit header is not
-nearly expressive enough.  And, if you make it a core part of the
-commit data structure, there are all sorts of compatibility headaches
-with older versions of git that wouldn't know about it.  And if it
-then turns out it's not sufficient more the more complex workflows
-*anyway*, maybe adding a new "replace" pointer in the core git data
-structures isn't worth it.  It might be that just keeping such things
-as trailers in the commit body might be the better way to go.
+> I spent a little quality time with the code and came up with a patch that
+> I will send out in a moment.
+>
 
-Cheers,
+That relieves Philip of the burden, I guess. :)
 
-						- Ted
+
+> By the way, Kaartic, thank you so much for focusing on correctness before
+> focusing on style issues. I know it is harder to review patches for
+> correctness than it is to concentrate on style issues, but in my mind it
+> is not only much more work, but also a lot more valuable.
+> 
+
+Though it's good to hear these words and I do like to focus on 
+correctness, there wasn't much I did to focus on correctness in this 
+case ;-) It was you actually, after seeing such a clear explanation!.
+
+I just used Git built from 'next' for my personal use and encountered 
+the issue I stated in the start of this sub-thread.
+
+
+-- 
+Kaartic
