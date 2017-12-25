@@ -2,102 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 038FC1F406
-	for <e@80x24.org>; Mon, 25 Dec 2017 20:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC9661F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 21:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752794AbdLYUFP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 15:05:15 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:37916 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752667AbdLYUFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 15:05:14 -0500
-Received: by mail-it0-f41.google.com with SMTP id r6so21229099itr.3
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 12:05:14 -0800 (PST)
+        id S1753017AbdLYVtR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 16:49:17 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:42382 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752910AbdLYVtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 16:49:16 -0500
+Received: by mail-wm0-f45.google.com with SMTP id b199so33102784wme.1
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 13:49:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecbaldwin.net; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=HeKVmKTuE5rIs8U2FDznT029b43gxvKkR71JyLc3MH0=;
-        b=RzmpynU/+pF7P2gx1HCTu7J2S+2Sq5L1PrD84RyqyYzT8WrDFRwq+cMJf0wIOY2hV9
-         ZX3FhFogtr+iCwuhZt0SlRu+/L5tqYjqEJNiiJSxiwXZe+mH/w9fkQivRf+aDiTcYjxU
-         ZMg4RDJkG6AWSzTLn1pRctA98xqirMB7FR2Pc=
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VxvXkqzEDa7VaXxRzgyUgt94mQI+dl0KEgG9wY77djM=;
+        b=cJd0ixO/V/ezDmYC3PkEWXFMHNqMDjlnc/WuMbjLChCPxt8XUNIAZRwppNr28x7L4e
+         FUy8dpjAWAJlVQcbYKy3RTL5jiRWbnv92XdNhiFsM/ZPXwFKmJmio8fUt2EGffCnq7dQ
+         tNCknP+F1CytI+1jTHNy2RMMmyemsZ5Qxn+Gj2yiEFFkFIXizg9zb/KfB6D1OLEXustZ
+         jmKNcBlxZbQYMq6Qa6H2l+FJqKDe61E4ZciwDanHDA7f21Ua25r3vWAVLjz6BBeiv6w/
+         eZi+5gz3mD+VZBS7nAln/zaxYx7VHL+4ndHqiCk+xZXC6vq1yeUEC8AvtiPiiU9n6BVR
+         Z3Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HeKVmKTuE5rIs8U2FDznT029b43gxvKkR71JyLc3MH0=;
-        b=dterEaareWq1ZHEa1d4be0FvrsP9eaDPOwvKGA/sKhjUHB8k6d0SJ1qVsNRySzWcrO
-         viPjWDLOZQ3jD9J0qiVqrlphQnZK1mRENbNaRvYChuK2utWg6HxmaEHuQd07P3hwhjO6
-         n25+5Us1LvsoIiHIqxVE0KdztnLz5CiTmq3Tcj48n1hzCGYSNyypXEbpJlL2ngb7WQvb
-         ZCGnnsTotGNs28/HjGPMXMBgJjJT65iGRAhump3ANNgbd9FHgRhJFFT30KLpHQMmT8Qt
-         OfeitD6WLKv9PMTgy9WHbtlebBjzf0bVOBElREu6CfnqmSFeBgAXDVMXVxy+wGXZdwjL
-         P1bw==
-X-Gm-Message-State: AKGB3mJS6bPvXdLuI+/D1pqMDN0Gtlt+y+9XPeNn1eISoyoQfFMzxqRR
-        jPlylNzs1P++dYJUQ3L5O9n3/w==
-X-Google-Smtp-Source: ACJfBotXpRyjnxRvvLU0jvuNaEGCvu513UF8zHPypUvREHX7L2lenLl2UOJxkLV9/uxSQ5daA7VTcw==
-X-Received: by 10.36.65.83 with SMTP id x80mr29136566ita.130.1514232313433;
-        Mon, 25 Dec 2017 12:05:13 -0800 (PST)
-Received: from hpz.ecbaldwin.net (c-73-14-102-153.hsd1.co.comcast.net. [73.14.102.153])
-        by smtp.gmail.com with ESMTPSA id 191sm8578277itx.16.2017.12.25.12.05.12
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VxvXkqzEDa7VaXxRzgyUgt94mQI+dl0KEgG9wY77djM=;
+        b=aKyUTmS6ehJt6m8fXMXuUEM/94V1P10xa1osm5QkC3z+6KWdJKYJ1LMC2JF0xrwpe5
+         yKN8Yy0HOldIPCY57KCnXA+udGF3K59btq7jrCRnrNycQD6+TWriAkhWHs38wurYi2ta
+         HgtLEmpBu70v1m3ugHo5B8BioREn90cu5bwpVt+pnEJ8hgma/KDYM3dy7i/aBexymX7d
+         JSxS6cYcxIHY8xJp651j/rweqgCSd/VVS0DD1ELDHkWUf7ByCgHoqyyl+XOQE0AMDtLY
+         SyzFJaaelF56vYHxgxBFIO2zakC/QxZ1LgDus5GMdWF8i0VfZfIzdBdqfmSmwFcz1x/3
+         HPvQ==
+X-Gm-Message-State: AKGB3mJDNRPbqOixc5dO0pi0grTwTSDalUiRo1I6Tx3/7ExjhYoNgscg
+        tsc5SpJ90F0Ox3S0/QkCHBjP5aRV
+X-Google-Smtp-Source: ACJfBote8J1vQGeu+d9Vwi4t3kpQ+2KUGJwkm9yMzMC07Ee3l6Y1AvXGishVEm0NfNyuOp1tQJ5/EQ==
+X-Received: by 10.28.58.15 with SMTP id h15mr18843308wma.150.1514238555073;
+        Mon, 25 Dec 2017 13:49:15 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id f4sm38763921wra.75.2017.12.25.13.49.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Dec 2017 12:05:12 -0800 (PST)
-Date:   Mon, 25 Dec 2017 13:05:11 -0700
-From:   Carl Baldwin <carl@ecbaldwin.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     =?iso-8859-1?Q?'=C6var_Arnfj=F6r=F0?= Bjarmason' 
-        <avarab@gmail.com>, 'Git Mailing List' <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20171225200509.GA24104@hpz.ecbaldwin.net>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <877etds220.fsf@evledraar.gmail.com>
- <20171223210141.GA24715@hpz.ecbaldwin.net>
- <000d01d37c3c$207d7050$617850f0$@nexbridge.com>
+        Mon, 25 Dec 2017 13:49:14 -0800 (PST)
+Subject: Re: [PATCH] status: handle worktree renames
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     alexmv@dropbox.com, git@vger.kernel.org
+References: <alpine.DEB.2.10.1712221829430.29746@alexmv-linux>
+ <20171225103718.24443-1-pclouds@gmail.com>
+ <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
+ <86b4d2af-18ce-36eb-4823-105757a196fc@gmail.com>
+Message-ID: <fd0eb127-39b6-94fc-86c7-46fa750ec2e3@gmail.com>
+Date:   Mon, 25 Dec 2017 22:49:05 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
+In-Reply-To: <86b4d2af-18ce-36eb-4823-105757a196fc@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <000d01d37c3c$207d7050$617850f0$@nexbridge.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 23, 2017 at 05:19:35PM -0500, Randall S. Becker wrote:
-> No matter how this plays out, let's please make very sure to provide
-> sufficient user documentation so that those of us who have to explain
-> the differences to users have a decent reference. Even now, explaining
-> rebase vs. merge is difficult enough for people new to git to choose
-> which to use when (sometimes pummeling is involved to get the point
-> across 😉 ), even though it should be intuitive to most of us. I am
-> predicting that adding this capability is going to further confuse the
-> *new* user community a little. Entirely out of enlighted
-> self-interest, I am offering to help document
-> (edits/contribution//whatever) this once we get to that point in
-> development.
-
-I agree. I have a feeling that it may take a while for this to play out.
-This has been on my mind for a while and think there will be some more
-discussion before anything gets started.
-
-Carl
-
-> Something else to consider is how (or if) this capability is going to
-> be presented in front-ends and in Cloud services. GitK is a given, of
-> course. I'm still impatiently waiting for worktree support from some
-> other front-ends.
-
-It all takes time. :)
-
-> Cheers,
-> Randall
+On 25/12/2017 20:45, Igor Djordjevic wrote:
 > 
-> -- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
-> -- In my real life, I talk too much.
+> I guess an additional test for this would be good, too.
+
+... aaand here it is. Again based on your test, but please double 
+check, I`m not sure if it`s ok to compare file modes like that, 
+expecting them to be the same (hashes should be fine, I guess).
+
+---
+ t/t2203-add-intent.sh | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+index 41a8874e6..394b1047c 100755
+--- a/t/t2203-add-intent.sh
++++ b/t/t2203-add-intent.sh
+@@ -165,5 +165,20 @@ test_expect_success 'rename detection finds the right names' '
+ 	)
+ '
+ 
++test_expect_success 'rename detection finds the right names (porcelain v2)' '
++	git init rename-detection-v2 &&
++	(
++		cd rename-detection-v2 &&
++		echo contents > original-file &&
++		git add original-file &&
++		git commit -m first-commit &&
++		mv original-file new-file &&
++		git add -N new-file &&
++		git status --porcelain=v2 | grep -v actual >actual &&
++		echo "2 .R N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 R100 new-file	original-file" >expected &&
++		test_cmp expected actual
++	)
++'
++
+ test_done
+ 
+-- 
+2.15.1.windows.2
