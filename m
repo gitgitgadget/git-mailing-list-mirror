@@ -2,81 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 287251F404
-	for <e@80x24.org>; Mon, 25 Dec 2017 11:26:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83BD51F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 12:48:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752508AbdLYL0i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 06:26:38 -0500
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:40724 "EHLO
-        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752455AbdLYL0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 06:26:38 -0500
-Received: by mail-oi0-f49.google.com with SMTP id w125so22498797oie.7
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 03:26:37 -0800 (PST)
+        id S1752671AbdLYMsc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 07:48:32 -0500
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:35771 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751681AbdLYMsb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 07:48:31 -0500
+Received: by mail-ot0-f179.google.com with SMTP id q5so7371440oth.2
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 04:48:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lMCqr03/XAzqEnLPJMK4eF+6Juc9phVl52f/T8FeZTs=;
-        b=Ia4VmKl3+Cy7W94/98pZ9+FJ0sLjq9rWy4+WiY7Huk/vt9ALnEDBRz+XTXWOmPgemg
-         4q413aODphv2ZlRD961yxLM63IHIS9ZSqMZAKytdpP65hQt0qr+lz12ltbeRMLFXjmqV
-         ysYXQczahXDwGirYf7xVwXSxKhs9Q9cZ9ypO9FYVsKy0JYtHYklLX6q7/TA9vuppImAB
-         3yHrmdxrZZs9uh9+MUJPvVzm5GaMU9QqgoBljGdXsWge14Z0jSzFDdCIxmDfT7eyatBn
-         fH0yHsncaWxRNjE9moDKjY23DXCEHpR2ghFjlaNXjUQlqUyELQA2GxrpkYKJVGMUhd0d
-         KneA==
+         :cc;
+        bh=uPzstSZB8z48uLhZe9ACynIq2bRI7/XGNx1ND2aVmpA=;
+        b=ISYz2A/lv2LubTCo/s2f8kiq6YISMkUsfxsDhcoJFDtgukobXHL2IkEKNdOTKflXCX
+         omeqV0OcIwUeDWmh9cXSDopLv0HhJarVeslxJM205B1OF0e0NLnM9oMhmK45qfQfzao5
+         yakQAPGqf97pdnh9XxApvyvw2hHhhVzaPLsAEit6h+KS3RlMBHUcXCePfvsPrSviBnEt
+         BZ1gAOSs/SbkkhF2hNRQxfEUjA4KayLhWI32y7rBblMiV1Ya7YDwH4rcuDztj93ee25d
+         KOgc0jZ67JlJxKaAv3dfPP4/OfIKYNEDoA4WcYMAvQ+UUqHkHsiTroCI1jqVGaGjxuxr
+         BDDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lMCqr03/XAzqEnLPJMK4eF+6Juc9phVl52f/T8FeZTs=;
-        b=fVkzIFyblK+PK2Tnv29eXf6RFVnbXSRpRtzJs62ly7qWJ5u4o3Ya+S7awQJj/DHIaC
-         jWuWkTGvSCFXd02TIFgvZERavITJRAF0PCXvVy+dTDdLAjL5WASuulkEz3yCXYFymny8
-         7WzzNA0SnIwJl0mhh1oaMXuhq7c6QTZtrV3AD8CQyG+bm9KrK/V0YKlvRXV8wcuoKom+
-         /otKbadOnPs4wWP7p0ma0VGLse3eo0bZGtpv3c0hwitrQbABbx7M3HzvAqvUaXLf9jhE
-         Cuir5htcbBWi8ZSEMUAELJ+cjTv7OEgOknZWEGt21rCRFSvv7XfNaIzoLqJvS+sVd1TP
-         5k8w==
-X-Gm-Message-State: AKGB3mIKDUGI5vbS7jZkA2ps4fphC3zkTNVJZKXiQnE+YgqYpxJH7Xws
-        L1DoRWP5Jx0tTQqUW97zxQ9vNshRH0KlYQR74ys=
-X-Google-Smtp-Source: ACJfBotJds2+0nm6k2DauubFKs2qi5on0pkWdZiU9JqW5sWZHAojgXO+DEUf5I74aD7g9q5GF8p4hZhpITOyPEkclVY=
-X-Received: by 10.202.82.196 with SMTP id g187mr9511010oib.183.1514201197369;
- Mon, 25 Dec 2017 03:26:37 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=uPzstSZB8z48uLhZe9ACynIq2bRI7/XGNx1ND2aVmpA=;
+        b=cmed7OE1ZPlgUq5LvaXdJh3q7sNDSvVB+bNKepewto5i6qXLmOXVk56mwcrTc0Es3z
+         xA7+8gkvn919zfilwyjaSdm26uHIwgYKv+Xz2ep86rB8kN7qW/2yUkEXYGbgQStw40KO
+         z3QfEMn5mpE0nvEDODnb3Y0eaW6WS7ycXypGeeY/jqJf0MRii9k+Wzi6GfxOQlulsRJ7
+         Aq1cMTCJj9y6EQjvxtMaJv3aZ7CaSYd+4F3gJJfuJoACShtZViYkN92HZuAInroZLI8G
+         XFsGzxAqaz/UE0SUK6l/LOlCViYkOpUifQgmYhxDZHaazZV44/sY4JyIT/9ClYA/BzMw
+         MiEQ==
+X-Gm-Message-State: AKGB3mKnQlTZpFz46CTO3ab7G5xYWN5kS8jXJOAqLFIbUxcucPM1luLG
+        EsclDyDuxWtVR0OtXKd1MHNlexj4ZpEzBKm3NDg=
+X-Google-Smtp-Source: ACJfBovC44l22SZZ8aAHY/waaJxXnQ5IEETe+mpAYblgDmcrNPkZMIWCxoyMmk7juDLjZus8NsQEbfbcZsJ4RqLdsqo=
+X-Received: by 10.157.49.92 with SMTP id v28mr10637115otd.151.1514206111013;
+ Mon, 25 Dec 2017 04:48:31 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Mon, 25 Dec 2017 03:26:06 -0800 (PST)
-In-Reply-To: <20171222140032.21180-1-avarab@gmail.com>
-References: <20171222140032.21180-1-avarab@gmail.com>
+Received: by 10.74.141.5 with HTTP; Mon, 25 Dec 2017 04:48:00 -0800 (PST)
+In-Reply-To: <20171203221721.16462-9-liambeguin@gmail.com>
+References: <20171127045514.25647-1-liambeguin@gmail.com> <20171203221721.16462-1-liambeguin@gmail.com>
+ <20171203221721.16462-9-liambeguin@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 25 Dec 2017 18:26:06 +0700
-Message-ID: <CACsJy8B1FNpq-AYJdcs_gVOxdPSnh-kNaeVykLSSDL1+EW9YjA@mail.gmail.com>
-Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache bug
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 25 Dec 2017 19:48:00 +0700
+Message-ID: <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
+Subject: Re: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
+To:     Liam Beguin <liambeguin@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 22, 2017 at 9:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> The untracked cache gets confused when a directory is swapped out for
-> a symlink to another directory. Whatever files are inside the target
-> of the symlink will be incorrectly shown as untracked. This issue does
-> not happen if the symlink links to another file, only if it links to
-> another directory.
+On Mon, Dec 4, 2017 at 5:17 AM, Liam Beguin <liambeguin@gmail.com> wrote:
+> +static const char command_to_char(const enum todo_command command)
+> +{
+> +       if (command < TODO_COMMENT && todo_command_info[command].c)
+> +               return todo_command_info[command].c;
+> +       return comment_line_char;
+> +}
 
-Sounds about right (I completely forgot about dir symlinks). Since
-I've been away for some time and have not caught up (probably cannot)
-with the mailing list yet, is anyone working on this? It may be
-easiest to just detect symlinksand disable  the cache for now.
---=20
+    CC sequencer.o
+sequencer.c:798:19: error: type qualifiers ignored on function return
+type [-Werror=ignored-qualifiers]
+ static const char command_to_char(const enum todo_command command)
+                   ^
+
+Maybe drop the first const.
+-- 
 Duy
