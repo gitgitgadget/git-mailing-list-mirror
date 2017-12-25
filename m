@@ -2,253 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406B21F406
-	for <e@80x24.org>; Mon, 25 Dec 2017 17:53:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 707F91F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 18:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753143AbdLYRxI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 12:53:08 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:44160 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753138AbdLYRxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 12:53:06 -0500
-Received: by mail-wr0-f171.google.com with SMTP id l41so21036183wre.11
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 09:53:05 -0800 (PST)
+        id S1752593AbdLYS0k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 13:26:40 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37619 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751672AbdLYS0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 13:26:39 -0500
+Received: by mail-wm0-f48.google.com with SMTP id f140so32408699wmd.2
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 10:26:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=as00q7ydlC0JIrGz+4SIO7Q+O2IDemGHSlCR3470jr0=;
-        b=or9vZj316wP2rgJ+IvoWW3/lTSurW3/fva0FhF3nXKlGQPPrwohozOkDZBh+b838k8
-         Ie6HlrTDW3quaGNZyiFtnIfCOJqyqBeEpaaI0XJEq3DpQ8sdfuxSmE3J9UTKpvokO9MT
-         pByVj6V+YVrqnDcOH2zjvyK7rhlHIajsV5B6gMunNtDDF3aCBjBakbs5R0w9PJtQAdRX
-         kkoOhC8KFt9Wcw4ovjjGeMsN3NDPfyvRJznoVdON7GxNeGqKV0lkGnNerqaJeFfjQuRk
-         dmjPIGebAMCA3oVhntPMGvzfLzqtyLUH+fgqywop0tbQtwnF/SLoARA60briPsDrcRLL
-         9GaQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VK9s1+7U76/P0iU86pSk1N5mB1jLcf6RrNie1pZBBus=;
+        b=h3puiZd6H+xvU2gPXhnvxMsJw6ebCyGMCbnM7UPWsN/MLGGIdVxZ1gtQgaw/xD4/u9
+         H9PI3lmMcGPpvqVV/qcqus6icj0abzvneILLpGDMx54sbQmBfzH3ihblhEdDf1iomCL4
+         AgA1cm/uNiq+MOypjf+0dPQLkaeonF8qsqxRDeSU6SMakvjOR5pWN3Y/moNvWzDoGnIc
+         EitMNYd7ZLAn80P7Uif88+7jlouQtKgw9zl1cy07IJpDyh3SnPLieMMhsFFQuaywa62r
+         DUtpFv8AR/PMRbvT1amXV7wZqbWgA8vK3DhpmvHPXB8UgwvVINbWJe43OrzdQzTSfLGM
+         JVyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=as00q7ydlC0JIrGz+4SIO7Q+O2IDemGHSlCR3470jr0=;
-        b=GCpE/Q0gDD8H50L8ad07ifjC1jPOHfhxh0LPWtw/I50pYj4xlqbjECDo0eHXxfbSAK
-         rZZswrqac47NLF8PMwjo2YL84yEEzPKVllBT850jQr6euhyOMpagXHIor5qjiZsZ54+H
-         35Sk4PFATsBsM9jDEC2jEx/uCxLT3+omaOeobb8N0xnxEJidxncIEMpztmPhjQt7e1n1
-         5ZwuD1UmTRKiivxSz9+MMiw2Q9Gy29NeJiwwhCVurHjZsFW5hFvzceE6OMzZ5qijmzB6
-         xiPe+mZ3npZ4gEMwpmE16x/v10NzV7Q26Bsuha1vQWm+kZsYnsWkGYHGPLI5G2ymfFZi
-         gUbQ==
-X-Gm-Message-State: AKGB3mItcjmbOTPejSP5mhZNvWwgLTBvVbAzuCAOCGkOJNGYbicoyrZL
-        OI/tWpPrDrg9KJBtrR+7EU0xdGxbqwPSawmfdRg=
-X-Google-Smtp-Source: ACJfBotQjOv0IHPHwRyNGa7KKYS6rJdRvBTAwRgGH/MvJgKclGlCEH0NCZCLCoaEZ8QkgPRcLEYWu2ucy52rxlVz4n4=
-X-Received: by 10.223.133.210 with SMTP id 18mr16701552wru.199.1514224384988;
- Mon, 25 Dec 2017 09:53:04 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VK9s1+7U76/P0iU86pSk1N5mB1jLcf6RrNie1pZBBus=;
+        b=TcrEw0UR0nzOc+EiSsCEX9DuXfMxMc8rrj0MCrgaMeQ0zfdH8Mi6IFzztp1YonJfoS
+         5fUYwWVNFMOTBq3DlI5eF+WBDn8+sQb7wkNm/tj5iKVya38fOjZk1A+G+EsjBXkC893f
+         LtG8rTsBzkbDTyPHMsFjoTD8c9gWNjEHwuIf3Eau7NdvM2U2LwkMhJaq8ijtmw0n5FRb
+         GQkJ9t9etM4/jXQWw4TIR2RmYe6l316h8r6M8D7PfUsqYRL1UEkk4O4EEKazF0sxAqii
+         YyxYPxQj0VeJnZhySPRlwOoICMbSYd9975T8+7HyMssdeVfggnZi34OfdfSTjXJbq64e
+         aGAw==
+X-Gm-Message-State: AKGB3mKmrM/ontyt+jHY3e3Xr7g1Shacc4K3FZHmHXvlwroxK4odSchA
+        SQ8wpS3Blq06YuSjdjFX/2HFx0fr
+X-Google-Smtp-Source: ACJfBos1KjTmFSYYR1MQ3ZDbHkeU44m7Wj/QqU6LYFItq3AfBGEoLCGoV2WMbJaBrraN9vfuymLWtw==
+X-Received: by 10.28.1.14 with SMTP id 14mr20351859wmb.51.1514226397620;
+        Mon, 25 Dec 2017 10:26:37 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id a203sm9523843wmh.45.2017.12.25.10.26.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Dec 2017 10:26:36 -0800 (PST)
+Subject: Re: [PATCH] status: handle worktree renames
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     alexmv@dropbox.com, git@vger.kernel.org
+References: <alpine.DEB.2.10.1712221829430.29746@alexmv-linux>
+ <20171225103718.24443-1-pclouds@gmail.com>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
+Date:   Mon, 25 Dec 2017 19:26:27 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Received: by 10.223.163.195 with HTTP; Mon, 25 Dec 2017 09:52:44 -0800 (PST)
-In-Reply-To: <87zi67rkab.fsf@evledraar.gmail.com>
-References: <3853941514059379@web42g.yandex.ru> <alpine.DEB.2.21.1.1712232332000.406@MININT-6BKU6QN.europe.corp.microsoft.com>
- <1483761514103335@web45o.yandex.ru> <20171224171118.GD27280@alpha.vpn.ikke.info>
- <87zi67rkab.fsf@evledraar.gmail.com>
-From:   Martin Werner <martinerikwerner@gmail.com>
-Date:   Mon, 25 Dec 2017 18:52:44 +0100
-Message-ID: <CABW-mG0R8aFmHc+ka_8ZtQ=iz8wnp9D6G64V25=2SS6rVYc=7A@mail.gmail.com>
-Subject: Re: [PATCH] setup.c: move statement under condition
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Kevin Daudt <me@ikke.info>, Vadim Petrov <tridronet@yandex.ru>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20171225103718.24443-1-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 24, 2017 at 8:35 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Sun, Dec 24 2017, Kevin Daudt jotted:
->
->> On Sun, Dec 24, 2017 at 12:15:35PM +0400, Vadim Petrov wrote:
->>> Thank you for your replay.
->>>
->>> > I have to be honest: this commit message (including the subject) left=
- me
->>> > quite puzzled as to the intent of this patch.
->>>
->>> I still only learn English and correctly express my thoughts while some=
-what difficult.
->>>
->>> > If you also have a background story that motivated you to work on thi=
-s
->>> > patch (for example, if you hit a huge performance bottleneck with som=
-e
->>> > tool that fed thousands of absolute paths to Git that needed to be tu=
-rned
->>> > into paths relative to the worktree's top-level directory), I would
->>> > definitely put that into the commit message, too, if I were you.
->>>
->>> I have no such reason. I just saw it and wanted to change it.
->>
->> A commit message contains the reason why this is a good change to make.
->> It lets others know what problems it's trying to solve or what usecase
->> it tries to satisfy.
->>
->> The commit message basically needs to convince others why the change is
->> necessary / desired, now, and in the future.
->>
->> This will help others to follow your thought process and it gives you
->> the possiblity to communicate trade-offs you made, all which cannot
->> inferred from the patch.
->>
->> For simple changes, the motivation can be simple too.
->
-> ...and a good example would be 6127ff63cf which introduced this logic
-> Vadim is trying to change, i.e. does this still retain the fix for
-> whatever issue that was trying to address?
->
-> It's also good to CC the people who've directly worked on the code
-> you're changing in the past, I've CC'd Martin.
->
->> To make it concrete: You are talking about a condition. What condition?
->> And you say that the previously obtained value will not be necessary.
->> What do you do with that value then? Why does this change improve the
->> situation?
->>
->> These are things you can state in your commit message.
->>
->> Hope this helps, Kevin
->>
->>> > Up until recently, we encouraged dropping the curly brackets from
->>> > single-line statements, but apparently that changed. It is now no lon=
-ger
->>> > clear, and often left to the taste of the contributor. But not always=
-.
->>> > Sometimes we start a beautiful thread discussion the pros and cons of
->>> > curly brackets in the middle of patch review, and drop altogether
->>> > reviewing the actual patch.
->>>
->>> I was guided by the rule from the Documentation/CodingGuidelines:
->>>      When there are multiple arms to a conditional and some of them
->>>      require braces, enclose even a single line block in braces for
->>>      consistency.
->>> And other code from setup.c:
->>>      from function get_common_dir:
->>>              if (!has_common) {
->>>                      /* several commands */
->>>              } else {
->>>                      free(candidate->work_tree);
->>>              }
->>>      from function get_common_dir_noenv:
->>>              if (file_exists(path.buf)) {
->>>                      /* several commands */
->>>              } else {
->>>                      strbuf_addstr(sb, gitdir);
->>>              }
->>>
->>> > In short: I think your patch does the right thing, and I hope that yo=
-u
->>> > find my suggestions to improve the patch useful.
->>>
->>> I fixed the patch according to your suggestions.
->>>
->>>
->>> Signed-off-by: Vadim Petrov <tridronet@yandex.ru>
->>> ---
->>>  setup.c | 6 +++---
->>>  1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/setup.c b/setup.c
->>> index 8cc34186c..1a414c256 100644
->>> --- a/setup.c
->>> +++ b/setup.c
->>> @@ -27,26 +27,26 @@ static int abspath_part_inside_repo(char *path)
->>>  {
->>>      size_t len;
->>>      size_t wtlen;
->>>      char *path0;
->>>      int off;
->>>      const char *work_tree =3D get_git_work_tree();
->>>
->>>      if (!work_tree)
->>>              return -1;
->>>      wtlen =3D strlen(work_tree);
->>>      len =3D strlen(path);
->>> -    off =3D offset_1st_component(path);
->>>
->>> -    /* check if work tree is already the prefix */
->>> -    if (wtlen <=3D len && !strncmp(path, work_tree, wtlen)) {
->>> +    if (wtlen > len || strncmp(path, work_tree, wtlen))
->>> +            off =3D offset_1st_component(path);
->>> +    else { /* check if work tree is already the prefix */
->>>              if (path[wtlen] =3D=3D '/') {
->>>                      memmove(path, path + wtlen + 1, len - wtlen);
->>>                      return 0;
->>>              } else if (path[wtlen - 1] =3D=3D '/' || path[wtlen] =3D=
-=3D '\0') {
->>>                      /* work tree is the root, or the whole path */
->>>                      memmove(path, path + wtlen, len - wtlen + 1);
->>>                      return 0;
->>>              }
->>>              /* work tree might match beginning of a symlink to work tr=
-ee */
->>>              off =3D wtlen;
->>>      }
+Hi Duy,
 
-As far as I can tell this retains existing functionality.
+On 25/12/2017 11:37, Nguyễn Thái Ngọc Duy wrote:
+> Before 425a28e0a4 (diff-lib: allow ita entries treated as "not yet exist
+> in index" - 2016-10-24) there are never "new files" in the index, which
+> essentially disables rename detection because we only detect renames
+> when a new file appears in a diff pair.
+> 
+> After that commit, an i-t-a entry can appear as a new file in "git
+> diff-files". But the diff callback function in wt-status.c does not
+> handle this case and produces incorrect status output.
+> 
+> Handle this rename case. While at there make sure unhandled diff status
+> code is reported to catch cases like this easier in the future.
+> 
+> The reader may notice that this patch adds a new xstrdup() but not a
+> free(). Yes we leak memory (the same for head_path). But wt_status so
+> far has been short lived, this leak should not matter in practice.
+> 
+> Noticed-by: Alex Vandiver <alexmv@dropbox.com>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  t/t2203-add-intent.sh | 15 +++++++++++++++
+>  wt-status.c           | 24 +++++++++++++++++++-----
+>  wt-status.h           |  1 +
+>  3 files changed, 35 insertions(+), 5 deletions(-)
+> 
+> diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
+> index 1bdf38e80d..41a8874e60 100755
+> --- a/t/t2203-add-intent.sh
+> +++ b/t/t2203-add-intent.sh
+> @@ -150,5 +150,20 @@ test_expect_success 'commit: ita entries ignored in empty commit check' '
+>  	)
+>  '
+>  
+> +test_expect_success 'rename detection finds the right names' '
+> +	git init rename-detection &&
+> +	(
+> +		cd rename-detection &&
+> +		echo contents > original-file &&
+> +		git add original-file &&
+> +		git commit -m first-commit &&
+> +		mv original-file new-file &&
+> +		git add -N new-file &&
+> +		git status --porcelain | grep -v actual >actual &&
+> +		echo " R original-file -> new-file" >expected &&
+> +		test_cmp expected actual
+> +	)
+> +'
+> +
+>  test_done
+>  
+> diff --git a/wt-status.c b/wt-status.c
+> index ef26f07446..f0b5b3d46a 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -376,6 +376,8 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+>  			strbuf_addch(&extra, ')');
+>  		}
+>  		status = d->worktree_status;
+> +		if (d->worktree_path)
+> +			one_name = d->worktree_path;
+>  		break;
+>  	default:
+>  		die("BUG: unhandled change_type %d in wt_longstatus_print_change_data",
+> @@ -432,7 +434,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+>  		struct wt_status_change_data *d;
+>  
+>  		p = q->queue[i];
+> -		it = string_list_insert(&s->change, p->one->path);
+> +		it = string_list_insert(&s->change, p->two->path);
+>  		d = it->util;
+>  		if (!d) {
+>  			d = xcalloc(1, sizeof(*d));
+> @@ -459,6 +461,12 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+>  			/* mode_worktree is zero for a delete. */
+>  			break;
+>  
+> +		case DIFF_STATUS_COPIED:
+> +		case DIFF_STATUS_RENAMED:
+> +			d->worktree_path = xstrdup(p->one->path);
+> +			d->score = p->score * 100 / MAX_SCORE;
+> +			/* fallthru */
+> +
+>  		case DIFF_STATUS_MODIFIED:
+>  		case DIFF_STATUS_TYPE_CHANGED:
+>  		case DIFF_STATUS_UNMERGED:
+> @@ -467,8 +475,8 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+>  			oidcpy(&d->oid_index, &p->one->oid);
+>  			break;
+>  
+> -		case DIFF_STATUS_UNKNOWN:
+> -			die("BUG: worktree status unknown???");
+> +		default:
+> +			die("BUG: unhandled worktree status '%c'", p->status);
+>  			break;
+>  		}
+>  
+> @@ -548,6 +556,10 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
+>  			 * values in these fields.
+>  			 */
+>  			break;
+> +
+> +		default:
+> +			die("BUG: unhandled worktree status '%c'", p->status);
+> +			break;
+>  		}
+>  	}
+>  }
+> @@ -1724,8 +1736,10 @@ static void wt_shortstatus_status(struct string_list_item *it,
+>  	} else {
+>  		struct strbuf onebuf = STRBUF_INIT;
+>  		const char *one;
+> -		if (d->head_path) {
+> -			one = quote_path(d->head_path, s->prefix, &onebuf);
+> +
+> +		one = d->head_path ? d->head_path : d->worktree_path;
+> +		if (one) {
+> +			one = quote_path(one, s->prefix, &onebuf);
+>  			if (*one != '"' && strchr(one, ' ') != NULL) {
+>  				putchar('"');
+>  				strbuf_addch(&onebuf, '"');
+> diff --git a/wt-status.h b/wt-status.h
+> index fe27b465e2..572a720123 100644
+> --- a/wt-status.h
+> +++ b/wt-status.h
+> @@ -48,6 +48,7 @@ struct wt_status_change_data {
+>  	int mode_head, mode_index, mode_worktree;
+>  	struct object_id oid_head, oid_index;
+>  	char *head_path;
+> +	char *worktree_path;
+>  	unsigned dirty_submodule       : 2;
+>  	unsigned new_submodule_commits : 1;
+>  };
+> 
 
-Is this intended as just a style change or a speculative performance
-change?
+Thanks, I`ve tested it and the reported case seems to work correctly, 
+indeed.
 
-So the general concept is:
+But I`ve noticed that "--porcelain=v2" output might still be buggy - 
+this is what having both files staged shows:
 
-x =3D fa();
+    $ git status --porcelain=v2
+    2 R. N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 R100 new-file	original-file
 
-if (...) {
-  if (...) {
-    return 0;
-  }
-  x =3D fb();
-}
+..., where having old/deleted file unstaged, and new/created file 
+staged with `git add -N` shows this:
 
-being rewritten as
+    $ git status --porcelain=v2
+    1 .R N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 new-file
 
-if (...) {
-  if (...) {
-    return 0;
-  }
-  x =3D fb();
-} else {
-  x =3D fa();
-}
+So even though unstaged value is correctly recognized as "R" (renamed), 
+first number is "1" (instead of "2" to signal rename/copy), and both 
+rename score and original file name are missing.
 
-or, in the last iteration
+Not sure if this is a bug, but it seems so, as `git status` "Porcelain 
+Format Version 2"[1] says the last path is "pathname in the commit at 
+HEAD" (in case of copy/rename), which is missing here.
 
-if (!...) {
-  x =3D fa();
-} else {
-  if (...) {
-    return 0;
-  }
-  x =3D fb();
-}
+Regards, Buga
 
-which (at least conceptually) avoids setting x unnecessarily when we do
-the early return.
-
-I think the last iteration might suffer a bit from the condition
-inversion, since the comment feels a bit odd placed there at the
-"} else {" line, and if it were to be placed at the top, it would have
-to be negated "check if work tree is NOT already the prefix". Therefore
-I think the original or the first iteration might be a tad better from a
-readability perspective.
-
-
-(Going down this path, We could potentially also remove the 'off'
-variable completely, increment the 'path' pointer directly, and set
-the 'path0' pointer before, not sure if that's a good idea though...)
-
---
-Martin Erik Werner <martinerikwerner@gmail.com>
+[1] https://git-scm.com/docs/git-status#_porcelain_format_version_2
