@@ -7,190 +7,153 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC3D41F406
-	for <e@80x24.org>; Mon, 25 Dec 2017 19:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A5BD1F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 19:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752512AbdLYSpL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 13:45:11 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:43094 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751672AbdLYSpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 13:45:10 -0500
-Received: by mail-wm0-f53.google.com with SMTP id n138so32557635wmg.2
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 10:45:09 -0800 (PST)
+        id S1752737AbdLYTp1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 14:45:27 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33576 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752210AbdLYTp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 14:45:26 -0500
+Received: by mail-wm0-f41.google.com with SMTP id g130so33941268wme.0
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 11:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MirILfRAmewA+YIqyWSJcs0PcRFhOnEx4dJElbd0xeU=;
-        b=Xona8/GKV2VgPoPzyAJTLdKoZM35jJ2fH5eou6tql4ccy270BfZbbZLB8j5u8Bj4yH
-         IaVdvRQQI4DgCvv3ZwfUScHqUIq7sSCrsnRmwG52/PwnPbBLMShEQxGj0RnnN1soMjDZ
-         Inq2pj84gPyDrymL6pKiN2SMYwHvW/h5QvEsT2nD7HWGqTd2AHlOofc09BVoW1p3tt/Q
-         LM5DRi52KAxmJNs1jYtKRbzkxRv3wiUM7o3LT+exkOYYNx/PywqdBJ0jU9ictz0tf/ug
-         NA7JIyq9GdOGaBzeg1jbv+SN9JZt9D9eZXLBiXu8hIKBNaUF3dxx85bJsBlxAUBbsFvW
-         3MeA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Js/apjscxcHAVvy2kdPKW4YkbQUgPwUetWPFpE6JdN4=;
+        b=In1QqZlLltZu/+IxLdTWzSffZA55C5QHdNktUW9X+4FSwbO0pydIDDRSdIMHfDzRjg
+         /9mjfhiCWcvmscVf5u4o9dUbp0exv2+p4Q9eLyinvfnivtkdpeEcKc8HNSPEDk65UgA8
+         d8V4ZDuBpMVfXpa0BD456YVXfAjjOx4N/NgEgb15xYBBKC4wZJ/YqPYJ6TItYtBsrx+8
+         CYwsl70Nsdi/kBrx/pGaysXTlMVYBTWZIb6ESHefEvs8XwF3Oz8FHukGwz03mbZXFO9/
+         SMn5gLQt2Mzfx1xMA9c/K77GOdn5T2b1SHqk7+pGyv/barBsqb+19Edk5Tr5/tXCAw6J
+         FB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=MirILfRAmewA+YIqyWSJcs0PcRFhOnEx4dJElbd0xeU=;
-        b=AtIlEByv1ML5jNyEZrWvrtpLQ9SFbnKRLBKmjnsoIs0eBpNIkjXvga6tyWxyhn3iVp
-         IgKy2dTwSKF0UwDbAY5LnjX5TYFDoAIj15UCMrsONutIpnDUoseRSpK+Up8Xjiy/2stY
-         PIeBlIYilwwTKkOqfQE7ota8cxNOkfn0+vVAwJPEpLHtCV5UTm2uwLFJg0bIZpg2Uo4c
-         pO0T0hKRFbZXDJiKQEyYkqv+vifczhr6dqN4DIfkR5kDGqc0y643X8mO76qEyTbm5ceb
-         Fm3ZKazyTMauUm51xZMtcxtPg5yO2QF12GPGmYPYCtdKNjHGK+ZfP/rjltkWM/V6MpK1
-         bI1g==
-X-Gm-Message-State: AKGB3mKmHdeeRUiELz9TrQtHNqV4bk8N9Z+N/jKDGjUpENqounhjDJXe
-        Xnwfl1epmckhkTcxzAD+tXlf1c1P
-X-Google-Smtp-Source: ACJfBouvlO6Pi7ehmwdNmupDbcaOcxy802ZQDVqzOKpC2waX7Xui7+oP+wbydgVRw3yrlnE6FuOg7g==
-X-Received: by 10.80.182.5 with SMTP id b5mr27748460ede.227.1514227508264;
-        Mon, 25 Dec 2017 10:45:08 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id l9sm20406946edi.58.2017.12.25.10.45.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 25 Dec 2017 10:45:07 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache bug
-References: <20171222140032.21180-1-avarab@gmail.com> <CACsJy8B1FNpq-AYJdcs_gVOxdPSnh-kNaeVykLSSDL1+EW9YjA@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CACsJy8B1FNpq-AYJdcs_gVOxdPSnh-kNaeVykLSSDL1+EW9YjA@mail.gmail.com>
-Date:   Mon, 25 Dec 2017 19:45:06 +0100
-Message-ID: <87wp1ar6j1.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Js/apjscxcHAVvy2kdPKW4YkbQUgPwUetWPFpE6JdN4=;
+        b=JnG12riOIgf9UyLrAyY56miblN4MEk1zuHtHkR0aKBKjmZSxwg6PHzLd/Zf9Am18rn
+         RrHcbLz2+RvDPgWmc1Bh26n6W92vEaF/O6iNcEw1ym56U8XJ6RzUiva8XWfExtXE9UiD
+         ViNFTE72ZUMn2Eb5CDw2uOkcMKYJT/YezDcylMWM2cPUCbDGPoHU2m7I9be+KaDPNexU
+         8bqu494YQXi7F2xZGPPAe0XXHkefKQxJrdJlAnCcyhChc+VtcJ2Shl7uhZ06OlrFk/Nt
+         KUBeIXhRQ8Y60D0eMsRznM6TPcBbX6wurYbUBvDVhNCFlOnBqPpyOtSHo7oLk6ZR9/7R
+         bXvw==
+X-Gm-Message-State: AKGB3mLRP/t+bRlvbWqtgQiJvDgfhJLMXPpuCvpfzIhsJkQ/twD11yRd
+        2IJL3MCh2FS7EpNKcrkI7UFT5M/W
+X-Google-Smtp-Source: ACJfBouV6Ka/ZXT3Y7jvO2EKD09kux2WXjwQ/fcaFJhH++Q6Ro86YxBZjxdBAX8F9eSn0B4JRpFsJQ==
+X-Received: by 10.80.181.49 with SMTP id y46mr27511756edd.29.1514231124568;
+        Mon, 25 Dec 2017 11:45:24 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id b2sm28243090edd.26.2017.12.25.11.45.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Dec 2017 11:45:23 -0800 (PST)
+Subject: Re: [PATCH] status: handle worktree renames
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     alexmv@dropbox.com, git@vger.kernel.org
+References: <alpine.DEB.2.10.1712221829430.29746@alexmv-linux>
+ <20171225103718.24443-1-pclouds@gmail.com>
+ <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
+Message-ID: <86b4d2af-18ce-36eb-4823-105757a196fc@gmail.com>
+Date:   Mon, 25 Dec 2017 20:45:15 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
+In-Reply-To: <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 25/12/2017 19:26, Igor Djordjevic wrote:
+> 
+> But I`ve noticed that "--porcelain=v2" output might still be buggy - 
+> this is what having both files staged shows:
+> 
+>     $ git status --porcelain=v2
+>     2 R. N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 R100 new-file	original-file
+> 
+> ..., where having old/deleted file unstaged, and new/created file 
+> staged with `git add -N` shows this:
+> 
+>     $ git status --porcelain=v2
+>     1 .R N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 new-file
+> 
+> So even though unstaged value is correctly recognized as "R" (renamed), 
+> first number is "1" (instead of "2" to signal rename/copy), and both 
+> rename score and original file name are missing.
 
-On Mon, Dec 25 2017, Duy Nguyen jotted:
+As an exercise, might be something like this as a fixup on top of 
+your patch could work.
 
-> On Fri, Dec 22, 2017 at 9:00 PM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> The untracked cache gets confused when a directory is swapped out for
->> a symlink to another directory. Whatever files are inside the target
->> of the symlink will be incorrectly shown as untracked. This issue does
->> not happen if the symlink links to another file, only if it links to
->> another directory.
->
-> Sounds about right (I completely forgot about dir symlinks). Since
-> I've been away for some time and have not caught up (probably cannot)
-> with the mailing list yet, is anyone working on this? It may be
-> easiest to just detect symlinksand disable  the cache for now.
+I`ve tried to follow your lead on what you did yourself, but please 
+note that, besides being relatively new to Git codebase, this is my 
+first C code for almost 10 years (since university), so... :)
 
-I haven't yet, I wanted to see what you had to say about it,
-i.e. whether it was a "do'h here's a fix" or if it was more involved
-than that.
+I guess an additional test for this would be good, too.
 
-Being completely unfamiliar with this code, I hacked up [1] to add some
-ad-hoc tracing to this. It has some bugs and doesn't actually work, but
-is injecting something into valid_cached_dir() and checking if the
-directory in question is a symlink the right approach?
+Regards, Buga
 
-Although surely a better solution is to just see that y is a symlink to
-x, and use the data we get for x.
+---
+ wt-status.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-I also see that the the untracked_cache_dir struct has a stat_data field
-which contains a subset of what we get from stat(), but it doesn't have
-st_mode, so you can't see from that if the thing was a symlink (but it
-could be added).
-
-Is that the right approach? I.e. saving away whether it was a symlink
-and if it changes invalidate the cache, although it could be a symlink
-to something else, so may it needs to be keyed on st_ino (but that may
-be chagned in-place?).
-
-1.
-
-    diff --git a/dir.c b/dir.c
-    index 3c54366a17..8afe068c72 100644
-    --- a/dir.c
-    +++ b/dir.c
-    @@ -1730,10 +1730,13 @@ static int valid_cached_dir(struct dir_struct *dir,
-                                int check_only)
-     {
-            struct stat st;
-    +       struct stat st2;
-
-            if (!untracked)
-                    return 0;
-
-    +       fprintf(stderr, "Checking <%s>\n", path->buf);
-    +
-            /*
-             * With fsmonitor, we can trust the untracked cache's valid field.
-             */
-    @@ -1742,6 +1745,7 @@ static int valid_cached_dir(struct dir_struct *dir,
-                    if (stat(path->len ? path->buf : ".", &st)) {
-                            invalidate_directory(dir->untracked, untracked);
-                            memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
-    +                       fprintf(stderr, "Ret #1 = 0\n");
-                            return 0;
-                    }
-                    if (!untracked->valid ||
-    @@ -1749,12 +1753,14 @@ static int valid_cached_dir(struct dir_struct *dir,
-                            if (untracked->valid)
-                                    invalidate_directory(dir->untracked, untracked);
-                            fill_stat_data(&untracked->stat_data, &st);
-    +                       fprintf(stderr, "Ret #2 = 0\n");
-                            return 0;
-                    }
-            }
-
-            if (untracked->check_only != !!check_only) {
-                    invalidate_directory(dir->untracked, untracked);
-    +               fprintf(stderr, "Ret #3 = 0\n");
-                    return 0;
-            }
-
-    @@ -1772,6 +1778,28 @@ static int valid_cached_dir(struct dir_struct *dir,
-            } else
-                    prep_exclude(dir, istate, path->buf, path->len);
-
-    +       if (path->len && path->buf[path->len - 1] == '/') {
-    +               struct strbuf dirbuf = STRBUF_INIT;
-    +               strbuf_add(&dirbuf, path->buf, path->len - 1);
-    +               fprintf(stderr, "Just dir = <%s>\n", dirbuf.buf);
-    +
-    +               if (lstat(dirbuf.buf, &st2)) {
-    +                       fprintf(stderr, "Ret #4 = 0\n");
-    +                       return 0;
-    +               } else if (S_ISLNK(st2.st_mode)) {
-    +                       invalidate_directory(dir->untracked, untracked);
-    +                       memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
-    +                       fill_stat_data(&untracked->stat_data, &st);
-    +                       fprintf(stderr, "Is link = <%s>\n", dirbuf.buf);
-    +                       return 0;
-    +               } else {
-    +                       fprintf(stderr, "Is not link = <%s> but <%d>\n", dirbuf.buf, st2.st_mode);
-    +               }
-    +       }
-    +
-    +       fprintf(stderr, "Falling through for <%s>\n", path->buf);
-    +
-    +
-            /* hopefully prep_exclude() haven't invalidated this entry... */
-            return untracked->valid;
-     }
-    @@ -1783,9 +1811,12 @@ static int open_cached_dir(struct cached_dir *cdir,
-                               struct strbuf *path,
-                               int check_only)
-     {
-    +       int valid;
-            memset(cdir, 0, sizeof(*cdir));
-            cdir->untracked = untracked;
-    -       if (valid_cached_dir(dir, untracked, istate, path, check_only))
-    +       valid = valid_cached_dir(dir, untracked, istate, path, check_only);
-    +       fprintf(stderr, "Checked <%s>, valid? <%d>\n", path->buf, valid);
-    +       if (valid)
-                    return 0;
-            cdir->fdir = opendir(path->len ? path->buf : ".");
-            if (dir->untracked)
+diff --git a/wt-status.c b/wt-status.c
+index f0b5b3d46..55c0ad249 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2050,7 +2050,7 @@ static void wt_porcelain_v2_print_changed_entry(
+ 	const char *path_head = NULL;
+ 	char key[3];
+ 	char submodule_token[5];
+-	char sep_char, eol_char;
++	char sep_char, eol_char, score_char;
+ 
+ 	wt_porcelain_v2_fix_up_changed(it, s);
+ 	wt_porcelain_v2_submodule_state(d, submodule_token);
+@@ -2059,6 +2059,8 @@ static void wt_porcelain_v2_print_changed_entry(
+ 	key[1] = d->worktree_status ? d->worktree_status : '.';
+ 	key[2] = 0;
+ 
++	path_head = d->head_path ? d->head_path : d->worktree_path;
++	score_char = d->index_status ? key[0] : key[1];
+ 	if (s->null_termination) {
+ 		/*
+ 		 * In -z mode, we DO NOT C-quote pathnames.  Current path is ALWAYS first.
+@@ -2067,7 +2069,6 @@ static void wt_porcelain_v2_print_changed_entry(
+ 		sep_char = '\0';
+ 		eol_char = '\0';
+ 		path_index = it->string;
+-		path_head = d->head_path;
+ 	} else {
+ 		/*
+ 		 * Path(s) are C-quoted if necessary. Current path is ALWAYS first.
+@@ -2078,8 +2079,8 @@ static void wt_porcelain_v2_print_changed_entry(
+ 		sep_char = '\t';
+ 		eol_char = '\n';
+ 		path_index = quote_path(it->string, s->prefix, &buf_index);
+-		if (d->head_path)
+-			path_head = quote_path(d->head_path, s->prefix, &buf_head);
++		if (path_head)
++			path_head = quote_path(path_head, s->prefix, &buf_head);
+ 	}
+ 
+ 	if (path_head)
+@@ -2087,7 +2088,7 @@ static void wt_porcelain_v2_print_changed_entry(
+ 				key, submodule_token,
+ 				d->mode_head, d->mode_index, d->mode_worktree,
+ 				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
+-				key[0], d->score,
++				score_char, d->score,
+ 				path_index, sep_char, path_head, eol_char);
+ 	else
+ 		fprintf(s->fp, "1 %s %s %06o %06o %06o %s %s %s%c",
+-- 
+2.15.1.windows.2
