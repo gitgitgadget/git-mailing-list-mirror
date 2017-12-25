@@ -7,96 +7,96 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6360E1F406
-	for <e@80x24.org>; Mon, 25 Dec 2017 17:37:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C54241F406
+	for <e@80x24.org>; Mon, 25 Dec 2017 17:41:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752846AbdLYRhP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 12:37:15 -0500
-Received: from mout.web.de ([217.72.192.78]:52735 "EHLO mout.web.de"
+        id S1752511AbdLYRla (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 12:41:30 -0500
+Received: from mout.web.de ([212.227.17.12]:51191 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752164AbdLYRhO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 12:37:14 -0500
+        id S1751456AbdLYRl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 12:41:29 -0500
 Received: from [192.168.178.36] ([91.20.60.211]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LudKu-1eu64Y2Jm4-00zjmw; Mon, 25
- Dec 2017 18:36:50 +0100
-Subject: Re: [PATCH] revision: introduce prepare_revision_walk_extended()
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Marpe-1eEjxS1sQk-00KObC; Mon, 25
+ Dec 2017 18:41:20 +0100
+Subject: [PATCH v2 0/9] revision: get rid of the flag leak_pending
+To:     Git List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
- <20171218151043.GA9449@sigill.intra.peff.net>
- <39581cd0-0bfd-c8d1-642b-1245cf425ab4@web.de>
- <20171219114906.GB24558@sigill.intra.peff.net>
- <xmqq7etiworw.fsf@gitster.mtv.corp.google.com>
- <20171220130811.GD17569@sigill.intra.peff.net>
- <c8980a2c-24e2-a877-fa66-31206123ce49@web.de>
- <20171224142246.GA23648@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <7cb39d8a-2ef2-b7eb-d0cd-6931b2fda951@web.de>
-Date:   Mon, 25 Dec 2017 18:36:48 +0100
+Message-ID: <ac4c77a1-6403-ca20-2021-50c99201915a@web.de>
+Date:   Mon, 25 Dec 2017 18:41:18 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <20171224142246.GA23648@sigill.intra.peff.net>
+In-Reply-To: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:qC3vqOYOquEtzrd7pb6VGlHSoclIaWEGqvY0EjMkfUPMO/N9Inn
- ife1yJrnvzzetpdBc90T95rB4kiq9gRYj7WfIWSV0LqPoEP0BOE06qLifFKhcJhMvChIrS4
- sp5U1seLTIVWNEzZR2WdBWG2ooLnL1v1bqTbfJS8J+8IVnn8WVKJoIC1m1I360nVsKZf0ni
- udsLvsKSvt2AEhh2e5Lqg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:K7KXEz2CMV8=:i5wfz3Y4bwd4Zxin6KPTWa
- Hc7P8+tfV6KUPxVC1PYDbj4Yyks1A3KqjYr21tcnYgC6xP8XbW2GRAeUfstKkTZ4bilbs9opO
- h0GNzMHfZX4Q282PPmcDZzIWobIq7i1NZ9+TZBeS+2MrBj6fitzL/KzTYol6A6R5snY/UzOnA
- ATsW+k2s07Zwsg4Z4n49ZT4y6UlWzHOOEL554cLrGA16UmSkNcAqSy8XM56BgAmElTSZu2KcR
- /tjNJm4Cba0DEDokVLs56WhBePai4B78ymaelU5LWWxokbMdxoABosLrxvkjvTg4pRmUqAOZi
- OVOidBsNWekObNa0SY3BkGsoFTkgF4ojPW466Mw3hZo05V3+Lf30oaRjjAaNCP2XhC1YfuWkT
- FX4bqyfgE1+li4eJI//483e2f0TZ4dKbxiOIvTQH50fdPD59ddTHxFFnEzDy9J97Yu96lgfqT
- xLy/G51fpxDeKp8dY4SmIAjZgFwVsAAC3m4Ad7t+Q7tBjYBsXDAzuac3rexFGJ0zMf9x5i+ss
- 4oywR1h3qzccUJ8NKpqTXKfxltqThdsVVxZ4m+/xfoWTSUp/DNqr+MZvvzJzBY3hyI9cPHvzK
- KVBuOIFPTLcvJROOb87j1Vk8LpwuGjgqPGgjaMo7+ex1ayhbdkDXMOJACCIyhLhq66Wqdudu7
- aoNbn/gLvkLjCCUmkqkv9GFPpDIKwJEt2EbD0pRfUX2Rg0cVdTrapZt5SYKvrh5EYzs6ETRft
- RjVTJb5zjze1ERy0SBtDHxxc6W+Ze61nYvB+fJOaCsWdVkmCppvRu0I9mHsGWjBgrEikXOSYj
- MpnuqJ235qL5az07NHXGQYfVL5fHcF2jiIXDTaSx8nHpb0Uqh8=
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:OcaktMI2UmtM93C/7cgRiulkF42nQkBaJO/PME2H/iqT62+2aXC
+ a8+8MwcGPSxFx8WE6X2H0L0kbeziILetcguoNc17I0GnNTXCBgw+SEP8GnogVNZwZqCe9uB
+ YTr0FSux98Rl97cPD2oVaMeP+8HhHBb9JlBw5lLg/qlC8wo/AO9FYSEpdFmIik0p4XBL4t4
+ oODBqrEIeK/tNa5uQ0lkg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r3wQOJ8nz7I=:wKlJzNTmgf6O3K7BwvYQaC
+ RwN+D9ZQuCTxVW18Va3o7TfvhCr8PhIUmjbSTmz6BdbrlyzvO2wJLfZhM7BmuIe9a2yiixDvN
+ Zuh2Dedt4FsB5UdiDTWswP3QyXlSXO05NFJ1f0c0lFhOQmIiCvrGkYEHzvWQmsXlK8ljFCro4
+ 2oHJkPi6Q8D6gKE50YmLiaXByumsAb2PPOH02ofE5r2+VBkjVr5gm/QEjdO1R0KbjWHjO283E
+ yi+0rgjpbThHG42WNolnGRs11YmlF/HFDqXRRb3wCmz2rSJAzWUsj2rewVGx5ERWkws7qBdC6
+ s2HkZihQZClHSwt4UODfNHmuVsybvb1h0CeZlrDkOZXqhzm/xhyZz/YGf1WPjq9BzbFHVyy9Z
+ gUwONJunTiVTdpCVlcNU3hlcLfYJ7IkrQZgTxx/rL3tBoD3lvCvpzCZPJegALJ0AiVpeLNFK3
+ vW0p9CqOXBmuJavw1dWORnldhzBnudlymNY1c965dWacJUf0qc6iwmziHp6qWloAVqy82TnUi
+ p/JSiHOwSiWq72gxosXDhpPAlYiPhzNO7hN79JDXpNArXAmSzRFQ3XvgXrA/SQu9pV676HKYq
+ I6RsC0zoof+xYOHMBG2NAs3dXzZ4hm2V9FADlu/dTck3wOn8ZIdEQkRCZNIgs98daKrrnRw/V
+ SGQg4FalzkGZYLYsUj1irfhRUtor578xtZGtsOjXE8rDlxJJQR6HCxHUB4Ry/CKtcZLDVFkTs
+ EIcDqerJTs3+sg4v01Z+QvsYlQsSXccZp8DfFUB9lZe4+1vB3avUf+U7nnpNvN0B3l4Kxof1t
+ tnywPIIn9LLzY6ZQH2HvUKtgsPVraVcsKSdRTIev+VfNBSGl4c=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.12.2017 um 15:22 schrieb Jeff King:
-> The single-traversal thing I suspect doesn't matter much in practice. In
-> both cases if we would visit commit X twice, we'd immediately see on the
-> second visit that it has already been cleared and not do anymore work.
+The flag leak_pending is weird, let's get rid of it.
 
-Good point.  That makes clear_commit_marks_many() less useful than
-advertised in e895cb5135, though.
+Changes from v1: Everything.
 
->    Side note: Another question is whether it would simply be faster to
->    clear the flags for _all_ objects that we've touched in the current
->    process (we have clear_object_flags() for this already). Then we know
->    that we touch each one once, and we as a bonus we don't even have to
->    keep the previous tips. The downsides are:
-> 
->      - if another traversal in the process looked at many objects, but
->        our current traversal looked at few, then we would examine more
->        objects than we need to (albeit with lower cost per object)
-> 
->      - it's possible there's another traversal in the same process whose
->        flags we would want to have saved. I suspect such a setup is
->        broken already, though, unless there's a guarantee that the two
->        traversals don't overlap.
+An independent optimization found while working on this series:
 
-I thought about that nuclear option as well.  It might be a good idea
-for code in cmd_* and similar leaf functions for cleaning up between
-unrelated stages (e.g. between parts that had been separate external
-git command calls before).  They probably only load potentially
-interesting objects into memory and don't need to bother much about
-interactions with other functions.
+  commit: avoid allocation in clear_commit_marks_many()
 
-But clear_object_flags() makes me nervous because it clears the flags
-of all kinds of objects, not just for commits, and I can't easily
-convince myself that this is safe.  Adding a version that checks the
-object type would be an easy way out.
+Trivial unrelated conversions (included as bonus patches):
 
-René
+  commit: use clear_commit_marks_many() in remove_redundant()
+  ref-filter: use clear_commit_marks_many() in do_merge_filter()
+
+A new function is introduced, will be used by checkout:
+
+  object: add clear_commit_marks_all()
+
+The users of leak_pending are are converted to use alternatives:
+
+  bisect: avoid using the rev_info flag leak_pending
+  bundle: avoid using the rev_info flag leak_pending
+  checkout: avoid using the rev_info flag leak_pending
+
+Cleanups:
+
+  revision: remove the unused flag leak_pending
+  commit: remove unused function clear_commit_marks_for_object_array()
+
+ bisect.c           | 30 +++++++++---------------------
+ builtin/checkout.c | 13 +------------
+ bundle.c           | 35 ++++++++++++++++-------------------
+ commit.c           | 19 ++-----------------
+ commit.h           |  1 -
+ object.c           | 11 +++++++++++
+ object.h           |  5 +++++
+ ref-filter.c       |  3 +--
+ revision.c         |  3 +--
+ revision.h         | 12 ------------
+ 10 files changed, 46 insertions(+), 86 deletions(-)
+
+-- 
+2.15.1
