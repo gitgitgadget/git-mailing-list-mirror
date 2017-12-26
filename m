@@ -2,92 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 911641F406
-	for <e@80x24.org>; Tue, 26 Dec 2017 01:48:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB411F406
+	for <e@80x24.org>; Tue, 26 Dec 2017 02:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750814AbdLZBsS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 20:48:18 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:43210 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750806AbdLZBsR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 20:48:17 -0500
-Received: by mail-wm0-f42.google.com with SMTP id n138so33257286wmg.2
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 17:48:17 -0800 (PST)
+        id S1751416AbdLZCL5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 21:11:57 -0500
+Received: from mail-pl0-f48.google.com ([209.85.160.48]:37070 "EHLO
+        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751362AbdLZCL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 21:11:56 -0500
+Received: by mail-pl0-f48.google.com with SMTP id s3so17203713plp.4
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 18:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=XNtfJQObvTkjiW9CNxow+cV1OL0GOac1uB5WNe3CClA=;
-        b=rq1LbgaTf4QFRdIQakUcCOvsMNsqUNwqoeQJCDrsuo6zGxc8FMPSe6eqGRCLSOzkai
-         DO8liljSw84QeQR58emYPrEdbifIsrvrfhcWOsZY2xWqGEFRMpWWZK2uucpPaTmTx2Zu
-         Hr1+y88gmsDUi1Gnqt8SBTLonPpEjuxjbhfwtchGFVl86mHu0XkxBdRuX3/Tby4HUejK
-         Ul02MtIYg0cJ62m2gd3WrR2qew5hdqQmwRlGZ7UJQa4piTjNGp5YFTNDskBUn0XDsLNW
-         2HMwcKW2xaSk5cFQ6XqCaaqAOOn/QFnlQzoMvcf3fML+M9tyEtAyfwgfeTBWxtt4v1+p
-         ufIQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=dhHNl8lOz+4dwlU32Ip9uIfnMgjxNEkcEgbsS+TWJtA=;
+        b=XInRURluO3KoEbD3Dijyl1L2wrJhrIYFl439k3/DBO+LhMNMnASar4bCr8vLGpaRnZ
+         jQqRJfQ/mYIDJbKmALiIkH+ReRid6M4QmvoZSKh+UnBOfJCJiy5I22XYfcHSakkBkBWE
+         EGKHO2WWkeHo177qhb5GH5LugUv3WMVgn9vUERyUHtGo1HHand8Dx2XCPklgirM9uO1V
+         yc6i5Kkit6QaBmBZ4ZPNZHqZuGLoaHa9x9DhkWHWoADq6rwjc+erXkGIAcibse4rEDGR
+         W0uNxJ5iBQzi/6Nk0y7//ct9G4h+exFKigqRqkG9tGMhTzNUJ5fsGPvJq/QYtjgxwrQR
+         7/CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=XNtfJQObvTkjiW9CNxow+cV1OL0GOac1uB5WNe3CClA=;
-        b=VwwIq2CltKWXyvk6DCz2Mz8QKdYj9upX1eKBVGFcID2PwgFfQDZhf3dqpM2ecj4dNh
-         hoH6W2XpcSQ3L71QV6jKPRM2GpoV1J5rmE9BSSKoWkl+2wTOmhXxEVCJ6fJSAYwp9NVw
-         FBaWJ0JrcOI6cgOOkdEU6h+dcXBYE2xtdYJp3xt71XhxpFkfEy4pomJJpK51DPerPwzF
-         cYgjE56UCDc01vbumnGK71Q1le9Dse7fpbU9BV7gZj+F4NCPa/pUBoAtgGXFsCLoEute
-         58U2nmOtXHKsGJ+nRdOUtEYsRFWSDKoBgCmYrxZaDSYH5e8o46up0S5SwSG/vhYKxw+g
-         wD+g==
-X-Gm-Message-State: AKGB3mLIs1I7r/ZIpp4EHKDS0wN2ztCFsN2Jah3l9PBsoP8ksADQzesd
-        JgaoJ2sTrWNisYFx7wM0FRlwuZXUGMZi7wHFLpc=
-X-Google-Smtp-Source: ACJfBou4AI89LYNa6Cdm5/zOkTtY/KjqJa8vWZgM+I3TeadXvXDS9ANE6rAQgZsjQ3xpOd0HMEnHd+bHDEAcWsZMs5A=
-X-Received: by 10.80.182.217 with SMTP id f25mr29769254ede.104.1514252896552;
- Mon, 25 Dec 2017 17:48:16 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=dhHNl8lOz+4dwlU32Ip9uIfnMgjxNEkcEgbsS+TWJtA=;
+        b=iHtJ9SfPtdRzKP0WROCSFrlA4AfUKX63SG2GHqtzAoeiRxWEecqy0Ae8sl/W6k1sco
+         ZeogIatrYPwpWTgNQRIFRIHfJSmPkrfZh/gno7R8qchlq8V5ZDfA7FOI5Ef2jygpC5WD
+         nfR3snBvBBhVBqaVVpJHV6nlV1MC8U2sRURkiWbmS6RwQlZUdXZegf0dSdwZvDCyDow+
+         /9orOpXpV+p5jP2UGoUNnvt8ODTa5vlZl2DUu1nfhBUoO7zuZ67QGKdoyLmL75qnjgcC
+         CcpZ6M7esZa1but7wcXpC628qthq9EQvoyQPK22DfAkLCHx1X4xy5Ib6ZaWZaZg0x/3C
+         IgGw==
+X-Gm-Message-State: AKGB3mLB1FiM56y4TZDe1+eEKLSsq7qaSeRmFJ161VIYk1b9T+GNBYM0
+        x0U0CBOfOtYD7HSAyRLqUCbL3A==
+X-Google-Smtp-Source: ACJfBovDQtqBVzSN54gFJ9/hfZZHh8Z1t32odub+nJv+MXu0tTsq5yEu/IDdPgIvB4pNtEm5aiFxHg==
+X-Received: by 10.159.246.20 with SMTP id b20mr23436018pls.95.1514254315766;
+        Mon, 25 Dec 2017 18:11:55 -0800 (PST)
+Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id k9sm46446634pgo.53.2017.12.25.18.11.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 25 Dec 2017 18:11:55 -0800 (PST)
+Date:   Tue, 26 Dec 2017 09:11:50 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     alexmv@dropbox.com, git@vger.kernel.org
+Subject: Re: [PATCH] status: handle worktree renames
+Message-ID: <20171226021150.GA10059@duynguyen.vn.dektech.internal>
+References: <alpine.DEB.2.10.1712221829430.29746@alexmv-linux>
+ <20171225103718.24443-1-pclouds@gmail.com>
+ <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
 MIME-Version: 1.0
-Received: by 10.80.174.252 with HTTP; Mon, 25 Dec 2017 17:47:55 -0800 (PST)
-In-Reply-To: <20171226011638.GA16552@Carl-MBP.ecbaldwin.net>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <20171225035215.GC1257@thunk.org> <20171226011638.GA16552@Carl-MBP.ecbaldwin.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Mon, 25 Dec 2017 17:47:55 -0800
-Message-ID: <CA+P7+xpj4o+N3uy2ea7DM-Y0oY_scayUARZMWP5QCwJEG02bZg@mail.gmail.com>
-Subject: Re: Bring together merge and rebase
-To:     Carl Baldwin <carl@ecbaldwin.net>
-Cc:     "Theodore Ts'o" <tytso@mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b3e90960-d743-3299-ba43-150849b591d2@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 25, 2017 at 5:16 PM, Carl Baldwin <carl@ecbaldwin.net> wrote:
-> Anyway, now I am compelled to use github which is also a fine tool and I
-> appreciate all of the work that has gone into it. About 80% of the time,
-> I rebase and force push to my branch to update a pull request. I've come
-> to like the end product of the rebase workflow. However, github doesn't
-> excel at this approach. For one, it doesn't preserve older revisions
-> which were already reviewed which makes it is difficult for reviewers to
-> pick up where they left off the last time. If it preserved them, as
-> gerrit does, the reviewer can compare a new revision with the most
-> recent older revision they reviewed to see just what has been addressed
-> since then.
+On Mon, Dec 25, 2017 at 07:26:27PM +0100, Igor Djordjevic wrote:
+> But I`ve noticed that "--porcelain=v2" output might still be buggy -
+> this is what having both files staged shows:
+>
+>     $ git status --porcelain=v2
+>     2 R. N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 R100 new-file	original-file
+>
+> ..., where having old/deleted file unstaged, and new/created file
+> staged with `git add -N` shows this:
+>
+>     $ git status --porcelain=v2
+>     1 .R N... 100644 100644 100644 12f00e90b6ef79117ce6e650416b8cf517099b78 12f00e90b6ef79117ce6e650416b8cf517099b78 new-file
+>
+> So even though unstaged value is correctly recognized as "R" (renamed),
+> first number is "1" (instead of "2" to signal rename/copy), and both
+> rename score and original file name are missing.
+>
+> Not sure if this is a bug, but it seems so, as `git status` "Porcelain
+> Format Version 2"[1] says the last path is "pathname in the commit at
+> HEAD" (in case of copy/rename), which is missing here.
 
-A bit of a tangent here, but a thought I didn't wanna lose: In the
-general case where a patch was rebased and the original parent pointer
-was changed, it is actually quite hard to show a diff of what changed
-between versions.
+Yeah v2 looks problematic. The way the document is written, it's not
+prepared to deal with a rename pair coming from comparing the index
+(with intent-to-add entries) with worktree, only from comparing with
+HEAD. So either we could ajust v2 semantics slightly like this
 
-The best I've found is to do something like a 4-way --cc merge diff,
-which mostly works, but has a few awkward cases, and ends up usually
-showing double ++ and -- notation.
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 81cab9aefb..3da10020aa 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -309,13 +309,13 @@ Renamed or copied entries have the following format:
+ 		of similarity between the source and target of the
+ 		move or copy). For example "R100" or "C75".
+     <path>      The pathname.  In a renamed/copied entry, this
+-		is the path in the index and in the working tree.
++		is the path in the index.
+     <sep>       When the `-z` option is used, the 2 pathnames are separated
+ 		with a NUL (ASCII 0x00) byte; otherwise, a tab (ASCII 0x09)
+ 		byte separates them.
+-    <origPath>  The pathname in the commit at HEAD.  This is only
+-		present in a renamed/copied entry, and tells
+-		where the renamed/copied contents came from.
++    <origPath>  The pathname in the commit at HEAD or in the worktree.
++		This is only present in a renamed/copied entry, and
++		tells where the renamed/copied contents came from.
+     --------------------------------------------------------
+ 
+ Unmerged entries have the following format; the first character is
 
-Just something I've thought about a fair bit, trying to come up with
-some good way to show "what changed between A1 and A2, but ignore all
-changes between parent P1 and P2 which you don't care that much about
-in this context.
+The problem is, you cannot know if it's a rename from HEAD or from
+worktree with this updated v2 (or perhaps you could because HEAD name
+should be all zero?).
 
-Thanks,
-Jake
+Or we disable rename-from-worktree when porcelain v2 is requested (and
+optionally introduce v3 to support it). Jeff, any preference?
+--
+Duy
