@@ -2,76 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8A61F406
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A94A1F406
 	for <e@80x24.org>; Tue, 26 Dec 2017 00:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750831AbdLYX6g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 18:58:36 -0500
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:41135 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750811AbdLYX6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 18:58:35 -0500
-Received: by mail-oi0-f45.google.com with SMTP id t78so22975424oie.8
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 15:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iAeVg+teMOCmuDuYopmGX3z8GzjpnZgUBwXTjgY0tTw=;
-        b=Q96aQJEbaVw7nCxrh0VYeWlNAaWO+3tRruaxA3JlT+0cWxX7WGK32JynhUOmR6jHq1
-         bBGbw9V/NY7vfn1GCiVpiHLz3x/q/DJrXSiZZd0q1TJ/8ynP5iGpuXVbwEQhxD9ZIlgX
-         oo6J4r3/+KVlGOsb0kdvzQJVszuRLItbODrNQodqbw3eavPqCvFSR9mwPGks3loEjN0T
-         Zu5yaMTDzW9CPqaV5zb5WxfZDCUsOZ+5C2Y5+NBmLTLzI9RbQ51OR2hGEbTd/3l7NHod
-         fcC7RQIgoSxW6HmF/HXpCg49tCjHNL/qW7X0JYFlirpVzacQBtsuCcDw3OounH+byUtU
-         dLCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iAeVg+teMOCmuDuYopmGX3z8GzjpnZgUBwXTjgY0tTw=;
-        b=aRSHhVQTYF7DMGXv0XdbvAHTAnochuwd6iTTwSyZmXjWIjG2spp8h2CGC0ugv+0cfM
-         gEOrZ3q2SxAkE0Yecy/N9mkgbrEegSfywBZLE7Guw3Y00OaqB8B4CVM4R/tJIsGZTxSW
-         IgvZxSANQBmOHF5vI+WQxlMbWy+s0LjhKNHfBclhHJqsqfHWfRJaAUfD03enB2otW6T9
-         Ia/necDsSRJ4J7vJuMXdLjKLD1rwzDcv3GDMyYQc2ZG7Ok6FNzDqKy+Ve5NQlv96Pry9
-         djgUL8jT7yWM4TZHhRn5vo5beI8RG00kztReH8un3LfbGz5xMOFPMMLkGG9Mr2yFj2FQ
-         rt+A==
-X-Gm-Message-State: AKGB3mJB/8qsT2rX4vOenRuNy332SLbYMop2JpbtDO+ZVWT74iX5jBH0
-        bfMWmFgJPe6k/eQ78FEWnw5j0sxGGV1cHn6u5C4=
-X-Google-Smtp-Source: ACJfBovHbx3vq3zWwIrs5OkKp2YeABCpv/cleVtqV1oWkcJD8ckz6J3yzVQE1/FsLbXBN8JdmjD8VXqXAnzimb5brdA=
-X-Received: by 10.202.208.147 with SMTP id j19mr18060228oiy.268.1514246314420;
- Mon, 25 Dec 2017 15:58:34 -0800 (PST)
+        id S1750860AbdLZABW convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 25 Dec 2017 19:01:22 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:33208 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750811AbdLZABV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 19:01:21 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id vBQ01GXw002086
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 25 Dec 2017 19:01:17 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Carl Baldwin'" <carl@ecbaldwin.net>,
+        "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Git Mailing List'" <git@vger.kernel.org>
+References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com> <877etds220.fsf@evledraar.gmail.com> <20171223210141.GA24715@hpz.ecbaldwin.net> <alpine.DEB.2.21.1.1712232353390.406@MININT-6BKU6QN.europe.corp.microsoft.com> <20171225234334.GB24104@hpz.ecbaldwin.net>
+In-Reply-To: <20171225234334.GB24104@hpz.ecbaldwin.net>
+Subject: RE: Bring together merge and rebase
+Date:   Mon, 25 Dec 2017 19:01:10 -0500
+Message-ID: <004e01d37ddc$a6683280$f3389780$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Mon, 25 Dec 2017 15:58:03 -0800 (PST)
-In-Reply-To: <CAKm4OoWgB7tz0HJorDzL9Xy+fX0LVE1eOVngrfMTMDQQUTDk4Q@mail.gmail.com>
-References: <20171127045514.25647-1-liambeguin@gmail.com> <20171203221721.16462-1-liambeguin@gmail.com>
- <20171203221721.16462-9-liambeguin@gmail.com> <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
- <CAKm4OoWgB7tz0HJorDzL9Xy+fX0LVE1eOVngrfMTMDQQUTDk4Q@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 26 Dec 2017 06:58:03 +0700
-Message-ID: <CACsJy8CS8Zub=XyzU5VJtVZqcttN0v8TKShbH6cgWxN03y33ew@mail.gmail.com>
-Subject: Re: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
-To:     Liam Beguin <liambeguin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQI18OgN1v/82y7ic0+xgGKqnzs/QQHFBa0pAqjYdLgBvYCSRwFbh0wdolOeqSA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 25, 2017 at 10:39 PM, Liam Beguin <liambeguin@gmail.com> wrote:
-> I'm curious, how did you build to get this error to show?
-> I tried with the DEVELOPER 'flag' but nothing showed and -Wextra gave
-> way too much messages...
-> Did you just add -Wignored-qualifiers to CFLAGS?
+On December 25, 2017 6:44 PM Carl Baldwin wrote:
+> On Sun, Dec 24, 2017 at 12:01:38AM +0100, Johannes Schindelin wrote:
+> > On Sat, 23 Dec 2017, Carl Baldwin wrote:
+> > > I imagine that a "git commit --amend" would also insert a "replaces"
+> > > reference to the original commit but I failed to mention that in my
+> > > original post.
+> >
+> > And cherry-pick, too, of course.
+> 
+> This brings up a good point. I do think this can be applied to cherry-pick, but
+> as someone else pointed out, the name "replaces"
+> doesn't seem right in the context of a cherry-pick. So, maybe "replaces"
+> is not the right name. I'm open to suggestions.
 
-I have a custom CFLAGS, created before DEVELOPER flag was added, which
-is -Wextra -Werror plus about 5  -Wno-xxx to shut gcc up.
--- 
-Duy
+Just an off the wall suggestion: what about "stitch" or "suture" since this is now way beyond a band-aid solution (sorry 😉 , but only a little). I was thinking along the lines of "blend" but that seems less graphic and doesn't apply to cherry-picking.
+
+Holiday Cheers,
+Randall
+
+-- Brief whoami: NonStop&UNIX developer since approximately UNIX(421664400)/NonStop(211288444200000000)
+-- In my real life, I talk too much.
+
+
+
