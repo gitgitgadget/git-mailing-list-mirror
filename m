@@ -2,123 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2201E1F404
-	for <e@80x24.org>; Tue, 26 Dec 2017 19:44:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A0C31F404
+	for <e@80x24.org>; Tue, 26 Dec 2017 20:32:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751091AbdLZToN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Dec 2017 14:44:13 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:46338 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750822AbdLZToN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Dec 2017 14:44:13 -0500
-Received: by mail-it0-f53.google.com with SMTP id t1so23176046ite.5
-        for <git@vger.kernel.org>; Tue, 26 Dec 2017 11:44:12 -0800 (PST)
+        id S1751091AbdLZUb7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Dec 2017 15:31:59 -0500
+Received: from mail-io0-f169.google.com ([209.85.223.169]:39715 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbdLZUb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Dec 2017 15:31:58 -0500
+Received: by mail-io0-f169.google.com with SMTP id g70so20923116ioj.6
+        for <git@vger.kernel.org>; Tue, 26 Dec 2017 12:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ecbaldwin.net; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/BhQUDnIwpMf+hCH0SLipqRzt2pZJVNEbQlirPlryJs=;
-        b=fKbbjjVw3i5doKc1dPgYDiJqHtmihGV5MoGOenVxwHWfUR7jb1KIM/Gu009i+IlsbH
-         Cy3gELZ7z8IKSmA24kZq1M8KHaS/DotZ5z4jarFHRmQQ27jZhJhs6zNOLg1PloTGUZcR
-         CIwIjDkY/Zc2r1WxUqZb7UblrKz0GkZouDcBk=
+         :content-disposition:in-reply-to:user-agent;
+        bh=SxIwNL7ReuPutsAUqlozoFiyeB5osy6h9mJhJUOaIWM=;
+        b=M4+jeRYKczYO3Ok03CqxCAwUce6WpXEY7TDmBeOMGcIjmMFzlYzvdX7xSLEscz33/h
+         LnVNnk/qD34411xuddrQ0VKLQfhXVv4JfKunYoCAIt87XGFF/LU0nNbseBssgTF8UWCy
+         YSq5taaklEt4TKrPWKW71Bu01+igyPCV7MVtQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/BhQUDnIwpMf+hCH0SLipqRzt2pZJVNEbQlirPlryJs=;
-        b=AjGUGG4C70XbSKltn8YQJ2XYFZuG84yN0UW1ffUTcbxrCyDZirQxahIQnZ1GDUZcjh
-         lshQ+18RB3jaQR+3e8qO4HBy0OoMtBVHvJ/cZlLMzOlCIbzZ6iPWicA7DHYuj3fle8bO
-         tuEZ92AhtN553j460S3e+7YYZooPB0E5YfemR20YU6xjiE9ZEkeD0Ofhs1RzV4Xwbxfh
-         XoosKzZ7jM1NHS8ICt2Q+heJ4D2Ax1oWq57jIqmgb4/E3zRi8dmOEPTfu/Baaw6Dyn6s
-         vf3unl5+YvlmUhRnDIjFUQku9eYy9SEELkXnO2SxiXFnoljQIepVJXw1H0zLeRJzOBBw
-         isGw==
-X-Gm-Message-State: AKGB3mIcCm1TdDF70nuX9+wmQ3hOSoqtYIeL1EQLzjAUrLpY8hRpCOnY
-        4eSzoL6fI37JQB9pNIZho4yQ4w==
-X-Google-Smtp-Source: ACJfBotTkTJ1rNBDh1H1XkdVtLWSY83BXzjdFHWGkQM/ZDKGVshqOisWph4i9QJXcpAINQSIDnpowg==
-X-Received: by 10.36.118.195 with SMTP id z186mr35266039itb.106.1514317452260;
-        Tue, 26 Dec 2017 11:44:12 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=SxIwNL7ReuPutsAUqlozoFiyeB5osy6h9mJhJUOaIWM=;
+        b=KIJSJjOLuJg5IY90JdtL4YhcLpI0AHGtk5cZtTzhDrI8y1PWXl+8wNTj+fmjRWr2nt
+         wjUpdeKXA32T5SU1Ny60yjSyg0vAPfm0fM1tzwrH3B9/QqByH0JbmIW/8tDpAbfaoI6T
+         S2TuZnXwx4pJ5WAk4jRMpv44q6n+YWNwM5DOAzQm09ZK0sjYWIO2UoICMmz3nsEwwHkm
+         Q3xtwNPXnZwXerlQEA0yJT31cYFJ7UZwiZZyM5JXOZMO11MDj2CsjYZB3CikO6RVO1On
+         wvF8Gk1n602dbdUS+Bq78ijbkyhS4z59QS1yPdOehLjtZ60e7WjXhOuPH3UnpjxlI2lY
+         KFFg==
+X-Gm-Message-State: AKGB3mK05TA7Zkyr56OQ+/nZrABtaKAZpcD0qKYjvU+hYUhhCRZ6hWVA
+        /nBmjG+D58trIL7rQs3O1u4chQ==
+X-Google-Smtp-Source: ACJfBovp+kvj36HyKLoG8q6OkOQtLl9afdNhPpW+qBYrM16mnmgXI/7tfopRqzAI2XuvxXk8pwA1WQ==
+X-Received: by 10.107.222.21 with SMTP id v21mr16786352iog.24.1514320317743;
+        Tue, 26 Dec 2017 12:31:57 -0800 (PST)
 Received: from Carl-MBP.ecbaldwin.net ([2601:282:8001:ffba:59aa:140c:4d30:a473])
-        by smtp.gmail.com with ESMTPSA id t23sm9765698ite.36.2017.12.26.11.44.11
+        by smtp.gmail.com with ESMTPSA id 124sm9815648itw.30.2017.12.26.12.31.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Dec 2017 11:44:11 -0800 (PST)
-Date:   Tue, 26 Dec 2017 12:44:09 -0700
+        Tue, 26 Dec 2017 12:31:56 -0800 (PST)
+Date:   Tue, 26 Dec 2017 13:31:55 -0700
 From:   Carl Baldwin <carl@ecbaldwin.net>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+To:     Theodore Ts'o <tytso@mit.edu>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: Bring together merge and rebase
-Message-ID: <20171226194408.GA22855@Carl-MBP.ecbaldwin.net>
+Message-ID: <20171226203153.GA21429@Carl-MBP.ecbaldwin.net>
 References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <877etds220.fsf@evledraar.gmail.com>
- <20171223210141.GA24715@hpz.ecbaldwin.net>
- <87608xrt8o.fsf@evledraar.gmail.com>
- <20171226001622.GA16219@Carl-MBP.ecbaldwin.net>
- <87vagtqszf.fsf@evledraar.gmail.com>
+ <20171225035215.GC1257@thunk.org>
+ <20171226011638.GA16552@Carl-MBP.ecbaldwin.net>
+ <20171226180436.GA28565@thunk.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87vagtqszf.fsf@evledraar.gmail.com>
+In-Reply-To: <20171226180436.GA28565@thunk.org>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 26, 2017 at 06:49:56PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> New headers should be added after existing headers, but other than
-> that it won't choke on it. See 4b2bced559 when the encoding header was
-> added, this also passes most tests:
+On Tue, Dec 26, 2017 at 01:04:36PM -0500, Theodore Ts'o wrote:
+> On Mon, Dec 25, 2017 at 06:16:40PM -0700, Carl Baldwin wrote:
+> > At this point, you might wonder why I'm not proposing to simply add a
+> > "change-id" to the commit object. The short answer is that the
+> > "change-id" Gerrit uses in the commit messages cannot stand on its own.
+> > It depends on data stored on the server which maintains a relationship
+> > of commits to a review number and a linear ordering of commits within
+> > the review (hopefully I'm not over simplifying this). The "replaces"
+> > reference is an attempt to make something which can stand on its own. I
+> > don't think we need to solve the problem of where to keep comments at
+> > this point.
 > 
->     diff --git a/commit.c b/commit.c
->     index cab8d4455b..cd2bafbaa0 100644
->     --- a/commit.c
->     +++ b/commit.c
->     @@ -1565,6 +1565,8 @@ int commit_tree_extended(const char *msg, size_t msg_len,
->             if (!encoding_is_utf8)
->                     strbuf_addf(&buffer, "encoding %s\n", git_commit_encoding);
-> 
->     +       strbuf_addf(&buffer, "replaces 0000000000000000000000000000000000000000\n");
->     +
->             while (extra) {
->                     add_extra_header(&buffer, extra);
->                     extra = extra->next;
-> 
-> Only "most" since of course this changes the sha1 of every commit git
-> creates from what you get now.
-> 
-> > Even if core git code does not simply choke on it, I would like push and
-> > pull to follow these pointers and transfer the history behind them. I
-> > assumed that git would not do this today. I would also like gc to
-> > preserve e8aa79baf6 as if it were referenced by a parent pointer so that
-> > it doesn't purge it from the history.
-> 
-> It won't pay any attention to them if "replaces" is something entirely
-> new, what I was pointing out in my earlier reply is that you can simply
-> *also* create the parent pointers to these no-op merge commits that hide
-> away the previous history the "replaces" headers will be referencing.
-> 
-> The reason to do that is 100% backwards compatibility, and and only
-> needing to make minor UI changes to have this feature (to e.g. history
-> walking), as opposed to needing to hack everything that now follows
-> "parent" or constructs a commit graph.
+> I strongly disagree, and one way to see that is by doing a real-life
+> experiment.  If you take a look at a gerrit change that, which in my
+> experience can have up to ten or twelve revisions, and strip out the
+> comments, so all you get to look at it is half-dozen or more
+> revisions.  How useful is it *really*?  How does it get used in
+> practice?  What development problem does it help to solve?
 
-Thank you for clarifying this. I have learned something.
+I didn't mean to imply that we need to get along without the comments. I
+was only pointing out that gerrit, github, other code review UIs have
+already figured out how to store comments archored to specific revisions
+of files in the repository. I'm suggesting that we let them continue to
+do that part while we take the first step of specifying how the
+intermediate revisions are kept.
 
-> Sure, it could be opt in, be a new format etc. But you haven't
-> explained why you think a feature like this would need to rely on an
-> entirely new parent structure and side-DAG, as opposed to just the
-> more minor changes I'm pointing out above, and which I think will give
-> you what you need from a UX level.
+If the various code review servers adopted this then we'd have a client
+side which could push up revisions for review to any of them. In
+addition, they'd all get the collaborative functionality that I
+described in my reply to your previous message.
 
-I have not wrapped my head around it enough to convince myself that it
-gives what I'm after. Let me spend a little more time with it to get a
-feel for it.
+What we get with this proposal is if I push up a review and that review
+is changed by someone (maybe even me) outside of my original workspace,
+my client gives me the tools to detect it and merge with it. If I try to
+push over (clobber) that work then I get an error that the remote cannot
+be fast-forwarded and I'm forced to fetch it and merge it.
+
+I get this while using the rebase methodology I've grown to enjoy having
+since using gerrit and I end up with a mainline history that looks
+exactly the way I want it to.
+
+> And when you say that it is a bug that the Gerrit Change-Id does not
+> stand alone, consider that it can also be a *feature*.  If you keep
+> all of this in the main repo, the number of commits can easily grow by
+> an order of magnitude.  And these are commits that you have to keep
+> forever, which means it slows down every subsequent git clone, git gc
+> operation, git tag --contains search, etc.
+
+I didn't say it was a bug; just that it is at odds with what I'm hoping
+to do.
+
+I agree that the number of commits in the repository will go up.
+However, I think there will be ways to mitigate the costs.
+
+The commits are not in the mainline history. So, I wouldn't expect a git
+tag --contains or most other commands that traverse history to consider
+them at all.
+
+It could be possible to make the default git clone skip them all and
+only fetch them on demand for specific changes.
+
+> So what are the benefits, and what are the costs?  If the benefits
+> were huge, then perhaps it would be worthwhile.  But if you lose a
+> huge amount of the value because you are missing the *why* between the
+> half-dozen to dozen past revisions of the commit, then is it really
+> worth it to adopt that particular workflow?
+> 
+> It seems to me your argument is contrasting a "replaces" pointer
+> versus the github PR.  But compared to the Gerrit solution, I don't
+> think the "replaces" pointer proposal is as robust or as featureful.
+> Also, please keep in mind that just because it's in core git doesn't
+> guarantee that Github will support it.  As far as I know github has
+> zero support notes, for example.
+
+What I propose is that gerrit and github could end up more robust,
+featureful, and interoperable if they had this feature to build from.
+
+With gerrit specifically, adopting this feature would make the "change"
+concept richer than it is now because it could supersede the change-id
+in the commit message and allow a change to evolve in a distributed
+non-linear way with protection against clobbering work.
+
+I have no intention to disparage either tool. I love them both. They've
+both made my career better in different ways. I know there is no
+guarantee that github, gerrit, or any other tool will do anything to
+adopt this. But, I'm hoping they are reading this thread and that they
+recognize how this feature can make them a little bit better and jump in
+and help. I know it is a lot to hope for but I think it could be great
+if it happened.
 
 Carl
