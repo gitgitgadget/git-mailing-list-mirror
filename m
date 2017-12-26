@@ -2,103 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39C481F404
-	for <e@80x24.org>; Tue, 26 Dec 2017 21:34:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 412941F404
+	for <e@80x24.org>; Tue, 26 Dec 2017 21:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751421AbdLZVeB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Dec 2017 16:34:01 -0500
-Received: from ns332406.ip-37-187-123.eu ([37.187.123.207]:35794 "EHLO
-        glandium.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751299AbdLZVeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Dec 2017 16:34:00 -0500
-X-Greylist: delayed 889 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Dec 2017 16:33:59 EST
-Received: from glandium by mitsuha.glandium.org with local (Exim 4.90_RC4)
-        (envelope-from <mh@glandium.org>)
-        id 1eTgXl-0006CP-80; Tue, 26 Dec 2017 13:08:45 +0900
-Date:   Tue, 26 Dec 2017 13:08:45 +0900
-From:   Mike Hommey <mh@glandium.org>
-To:     Carl Baldwin <carl@ecbaldwin.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20171226040843.h7o6txkrp6zlv7u5@glandium.org>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-User-Agent: NeoMutt/20171215
+        id S1751278AbdLZV7N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Dec 2017 16:59:13 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:37890 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbdLZV7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Dec 2017 16:59:12 -0500
+Received: by mail-wm0-f47.google.com with SMTP id 64so36613102wme.3
+        for <git@vger.kernel.org>; Tue, 26 Dec 2017 13:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=V2/BMX9uV0DRaZOVQfHTVRuY4Ylg9yY1N99AJlmg5o4=;
+        b=aDj3KJLIwKh2tO+oKKoTAS+BTMC8Bxhe+qVfccwusJTUSDibuMEOZk0WOL05xJBUsJ
+         IBdjiOuGA9yxtNyXW2lnMaGZ+nvFJUHg75b4qeA65K5N3U6sNpOwoD9Ewb7U7rFEmQ8m
+         9PNQS1PBcUNxJ1eW7grKlceV2i93M+9PEaruHtXFEAK5+vBUetdYP+Qs/2PXVvhDL/wQ
+         QeGHx2NlBowo2WJg0c+UiN9qC9j/f9rm/O9Evllj7SvPtKlcLGuLqV7xKhG4u5YsN0cP
+         bW/jR2FtHrCRXk50F1+UDeEQxrpkUaH90PClCayleolIa8YxZqXEJqwr/lcz8qHmvFB4
+         Da0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=V2/BMX9uV0DRaZOVQfHTVRuY4Ylg9yY1N99AJlmg5o4=;
+        b=ncY8zQqkl4ILmp6L+KQZnf66RB4OKP+wCTWhY1PnRUrFfTcKlh5oNhTFhipEIKC+ts
+         i4zMLFjoEDTd/sXZRDUp/ZLaciYKME/NiM0SZUNPQzkkQw9IT6KLUgWWWt4z5OKL+Fyy
+         X7FPNyFa3E7T8xVzuLS/rWg7+SKl1Cfa7xpGcLCnP6agdSnNLWUAm4y6kVfrSFa4uRU/
+         mXs524jwfrJz0l4Ij8gUhUIVz6Fxtc8IR9Mmjva9H6Ej3R0FYnvWvx0UrwCX6b6VsaBX
+         NP+eJzXgi2Df7DCbEV6Y5QaMOiwZQ+YDhg7rBlS1aM4GZX8EZHFnQUFhComm4ooreaQe
+         nS2A==
+X-Gm-Message-State: AKGB3mJ3fSbJAC8l308XAdikBY+0r5ejTF4igzVQcWPOlGGlX9k3sSdU
+        hazlNrY+KROsjoMyD2FVFY/Fny3l
+X-Google-Smtp-Source: ACJfBosE2uX3fL6XcD0mXIKYSpINwv6xmz/TeD5yrFTSqinSqGtVBBg0ch2WumvgDhHss/m7n+1U9Q==
+X-Received: by 10.28.232.208 with SMTP id f77mr20463317wmi.155.1514325550741;
+        Tue, 26 Dec 2017 13:59:10 -0800 (PST)
+Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id d71sm24516204wma.7.2017.12.26.13.59.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 26 Dec 2017 13:59:10 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v2 0/7] Codespeed perf results
+Date:   Tue, 26 Dec 2017 22:59:01 +0100
+Message-Id: <20171226215908.425-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.15.1.361.g8b07d831d0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 22, 2017 at 11:10:19PM -0700, Carl Baldwin wrote:
-> The big contention among git users is whether to rebase or to merge
-> changes [2][3] while iterating. I used to firmly believe that merging
-> was the way to go and rebase was harmful. More recently, I have worked
-> in some environments where I saw rebase used very effectively while
-> iterating on changes and I relaxed my stance a lot. Now, I'm on the
-> fence. I appreciate the strengths and weaknesses of both approaches. I
-> waffle between the two depending on the situation, the tools being
-> used, and I guess, to some extent, my mood.
-> 
-> I think what git needs is something brand new that brings the two
-> together and has all of the advantages of both approaches. Let me
-> explain what I've got in mind...
-> 
-> I've been calling this proposal `git replay` or `git replace` but I'd
-> like to hear other suggestions for what to name it. It works like
-> rebase except with one very important difference. Instead of orphaning
-> the original commit, it keeps a pointer to it in the commit just like
-> a `parent` entry but calls it `replaces` instead to distinguish it
-> from regular history. In the resulting commit history, following
-> `parent` pointers shows exactly the same history as if the commit had
-> been rebased. Meanwhile, the history of iterating on the change itself
-> is available by following `replaces` pointers. The new commit replaces
-> the old one but keeps it around to record how the change evolved.
-> 
-> The git history now has two dimensions. The first shows a cleaned up
-> history where fix ups and code review feedback have been rolled into
-> the original changes and changes can possibly be ordered in a nice
-> linear progression that is much easier to understand. The second
-> drills into the history of a change. There is no loss and you don't
-> change history in a way that will cause problems for others who have
-> the older commits.
-> 
-> Replay handles collaboration between multiple authors on a single
-> change. This is difficult and prone to accidental loss when using
-> rebase and it results in a complex history when done with merge. With
-> replay, collaborators could merge while collaborating on a single
-> change and a record of each one's contributions can be preserved.
-> Attempting this level of collaboration caused me many headaches when I
-> worked with the gerrit workflow (which in many ways, I like a lot).
-> 
-> I blogged about this proposal earlier this year when I first thought
-> of it [1]. I got busy and didn't think about it for a while. Now with
-> a little time off of work, I've come back to revisit it. The blog
-> entry has a few examples showing how it works and how the history will
-> look in a few examples. Take a look.
-> 
-> Various git commands will have to learn how to handle this kind of
-> history. For example, things like fetch, push, gc, and others that
-> move history around and clean out orphaned history should treat
-> anything reachable through `replaces` pointers as precious. Log and
-> related history commands may need new switches to traverse the history
-> differently in different situations. Bisect is a interesting one. I
-> tend to think that bisect should prefer the regular commit history but
-> have the ability to drill into the change history if necessary.
-> 
-> In my opinion, this proposal would bring together rebase and merge in
-> a powerful way and could end the contention. Thanks for your
-> consideration.
+This patch series is built on top of cc/perf-run-config which recently
+graduated to master.
 
-FWIW, your proposal has a lot in common (but is not quite equivalent) to
-mercurial's obsolescence markers and changeset evolution features.
+It makes it possible to send perf results to a Codespeed server. See
+https://github.com/tobami/codespeed/ and web sites like
+http://speed.pypy.org/ which are using Codespeed.
 
-Mike
+The end goal would be to have such a server always available to track
+how the different git commands perform over time on different kind of
+repos (small, medium, large, ...) with different optimizations on and
+off (split-index, libpcre2, BLK_SHA1, ...)
+
+With this series and a config file like:
+
+$ cat perf.conf
+[perf]
+        dirsOrRevs = v2.12.0 v2.13.0
+        repeatCount = 10
+	sendToCodespeed = http://localhost:8000
+	repoName = Git repo
+[perf "with libpcre"]
+        makeOpts = "DEVELOPER=1 USE_LIBPCRE=YesPlease"
+[perf "without libpcre"]
+        makeOpts = "DEVELOPER=1"
+
+One should be able to just launch:
+
+$ ./run --config perf.conf p7810-grep.sh
+
+and then get nice graphs in a Codespeed instance running on
+http://localhost:8000.
+
+Caveat
+~~~~~~
+
+For now one has to create the "Git repo" environment in the Codespeed
+admin interface. (We send the perf.repoName config variable in the
+"environment" Codespeed field.) This is because Codespeed requires the
+environment fields to be created and does not provide a simple way to
+create these fields programmatically.
+
+There are discussions on a Codespeed issue
+(https://github.com/tobami/codespeed/issues/232) about creating a
+proper API for Codespeed that could address this problem in the
+future.
+
+Changes since previous version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  - Fixed the way the 'executable' field sent to Codespeed is set in
+    `perf/aggregate.perl` in patch 3/7. We now use `uname -s -m` to
+    which we concatenate the perf.repoName config value if it is set,
+    as suggested by Junio and Eric.
+
+  - Fixed the name of the GIT_PERF_REPO_NAME variable in patches 3/7
+    and 7/7. It was GIT_TEST_REPO_NAME in some places.
+
+  - Fixed how the conf_opt argument is added to the
+    get_var_from_env_or_config() function in patch 4/7. It was added
+    as the last, so fifth, argument, but it is simpler and makes more
+    sense to keep the default value argument as the last argument, so
+    now the conf_opt argument is added as the fourth argument.
+
+  - What patch 4/7 did was previously done in 2 patches in the
+    previous version (patches 4/8 and 5/8), but as we are not doing
+    exactly the same thing (see the above item) it is simpler to do it
+    in only one patch instead of two.
+
+  - We now use the --int type specifier when getting the
+    perf.repeatCount config variable in patch 4/7.
+
+Links
+~~~~~
+
+This patch series:
+
+https://github.com/chriscool/git/commits/codespeed
+
+Previous version (v1):
+
+https://github.com/chriscool/git/commits/codespeed1
+
+Discussions about v1:
+
+https://public-inbox.org/git/CAP8UFD3Q4h-aYBDABSPOW948LQYVydWZ1hLPAD+kr9ZpXVZiaQ@mail.gmail.com/
+
+Discussions about the cc/perf-run-config patch series:
+
+v1: https://public-inbox.org/git/20170713065050.19215-1-chriscool@tuxfamily.org/
+v2: https://public-inbox.org/git/CAP8UFD2j-UFh+9awz91gtZ-jusq7EUOExMgURO59vpf29jXS4A@mail.gmail.com/
+
+Christian Couder (7):
+  perf/aggregate: fix checking ENV{GIT_PERF_SUBSECTION}
+  perf/aggregate: refactor printing results
+  perf/aggregate: implement codespeed JSON output
+  perf/run: add conf_opts argument to get_var_from_env_or_config()
+  perf/run: learn about perf.codespeedOutput
+  perf/run: learn to send output to codespeed server
+  perf/run: read GIT_TEST_REPO_NAME from perf.repoName
+
+ t/perf/aggregate.perl | 163 +++++++++++++++++++++++++++++++++++---------------
+ t/perf/run            |  31 ++++++++--
+ 2 files changed, 140 insertions(+), 54 deletions(-)
+
+-- 
+2.15.1.361.g8b07d831d0
+
