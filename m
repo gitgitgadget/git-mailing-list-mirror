@@ -3,109 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1BE51F404
-	for <e@80x24.org>; Tue, 26 Dec 2017 20:42:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9E61F404
+	for <e@80x24.org>; Tue, 26 Dec 2017 21:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751083AbdLZUmJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Dec 2017 15:42:09 -0500
-Received: from gproxy2-pub.mail.unifiedlayer.com ([69.89.18.3]:38632 "EHLO
-        gproxy2-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750822AbdLZUmJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 26 Dec 2017 15:42:09 -0500
-Received: from cmgw4 (unknown [10.0.90.85])
-        by gproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id 62CA41E17CE
-        for <git@vger.kernel.org>; Tue, 26 Dec 2017 13:19:07 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmgw4 with 
-        id qkK31w00Z0QvKlu01kK7Nr; Tue, 26 Dec 2017 13:19:07 -0700
-X-Authority-Analysis: v=2.2 cv=G85sK5s5 c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=ocR9PWop10UA:10 a=eYjMWUKC9XtOimOw-toA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=0iarmrG87l2tSE38PEynXn5V6dZUZGKmvlKR1gEGpR0=; b=HGGhVeKbE1ELNgqYaWv3LN8bns
-        OgIJ1InGcyOMC1QZvKz5z3dSn62x4f3ewqJHqrMKbsdBDPRjTlptm0SkKUtG6K00YjohO7hlZGIzZ
-        M45vKHyaqD48wjiJ6v7E+2nnf;
-Received: from pool-74-104-137-100.bstnma.fios.verizon.net ([74.104.137.100]:34846 helo=homebase)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1eTvgl-0037To-HR; Tue, 26 Dec 2017 13:19:03 -0700
-Message-ID: <1514319542.2717.406.camel@mad-scientist.net>
+        id S1751266AbdLZVHc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Dec 2017 16:07:32 -0500
+Received: from mail-io0-f173.google.com ([209.85.223.173]:39970 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbdLZVHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Dec 2017 16:07:32 -0500
+Received: by mail-io0-f173.google.com with SMTP id v30so1798032iov.7
+        for <git@vger.kernel.org>; Tue, 26 Dec 2017 13:07:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ecbaldwin.net; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7gdcf/xDjv9xi1KwVkwJ5C9xC8133u08RZ0H3aaOWz8=;
+        b=bU07bV0VslDy2IeUMEnjAf2d59+rxt6QeoqPTJVgSIahGwHoqugWpyi8BRXbovFWy/
+         uwInut8ht3DwPTtOv5DmxSqIa5K9Z1WqqPjz5w9rCKt6f0QK/V4AjTAb2ZshyOqjYOd3
+         hr+v+M6ZS+JpBOXYIPhklvGtzHTrZRCnPyvoE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7gdcf/xDjv9xi1KwVkwJ5C9xC8133u08RZ0H3aaOWz8=;
+        b=TE3BDirTrzadxxxZkbU3UMvZ3Z6PKkk/yjeiRMi7Gi5OabGqjeLFuBtzw/u/7BcH8I
+         kNIEaG5XA8YB4MODzgI5t+Wv7XFKedHV74JJuXPOHtsfDnyo7NvlAW7j8cISnpu4p5IC
+         TbOncDfIHutMjzvAAs1DBT86KP31GGOstd0FK9lATQMW5Sy1t9XosSDSwQDyx7PVoIDO
+         Nbel/mO/7NLjLXPhEkRCfun4CGl1Y/UK3+0nQ9+sZqcU0Jwgz2p4TzO1egAiauv/s0Ba
+         XHpXXVEOodNFMgbDULUr1HAaSjy8IuiPdWpc1wLnwcKOTnai6lNwwVRB8PjFvdx4DlRJ
+         2M7g==
+X-Gm-Message-State: AKGB3mJX5QIL0wWeIv3lFiNJzrY8Lh9MYVVwTN97Nr/aXCU3WgzgDr69
+        YNOynx9IzEG2Oro6sVbVRXaHhw==
+X-Google-Smtp-Source: ACJfBosV1Bao7jDjlB2mPrMmX/PoipVt026d27w5fCDHlBs3hhuQP3hl1ZgHMjHqzVdJCtvuLv5QQQ==
+X-Received: by 10.107.158.193 with SMTP id h184mr35205099ioe.256.1514322451231;
+        Tue, 26 Dec 2017 13:07:31 -0800 (PST)
+Received: from Carl-MBP.ecbaldwin.net ([2601:282:8001:ffba:59aa:140c:4d30:a473])
+        by smtp.gmail.com with ESMTPSA id j81sm6944147ioi.9.2017.12.26.13.07.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 26 Dec 2017 13:07:30 -0800 (PST)
+Date:   Tue, 26 Dec 2017 14:07:29 -0700
+From:   Carl Baldwin <carl@ecbaldwin.net>
+To:     Paul Smith <paul@mad-scientist.net>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: Bring together merge and rebase
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Carl Baldwin <carl@ecbaldwin.net>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Date:   Tue, 26 Dec 2017 15:19:02 -0500
-In-Reply-To: <20171226194408.GA22855@Carl-MBP.ecbaldwin.net>
+Message-ID: <20171226210727.GB22855@Carl-MBP.ecbaldwin.net>
 References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
-         <877etds220.fsf@evledraar.gmail.com>
-         <20171223210141.GA24715@hpz.ecbaldwin.net>
-         <87608xrt8o.fsf@evledraar.gmail.com>
-         <20171226001622.GA16219@Carl-MBP.ecbaldwin.net>
-         <87vagtqszf.fsf@evledraar.gmail.com>
-         <20171226194408.GA22855@Carl-MBP.ecbaldwin.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 74.104.137.100
-X-Exim-ID: 1eTvgl-0037To-HR
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: pool-74-104-137-100.bstnma.fios.verizon.net (homebase) [74.104.137.100]:34846
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+ <877etds220.fsf@evledraar.gmail.com>
+ <20171223210141.GA24715@hpz.ecbaldwin.net>
+ <87608xrt8o.fsf@evledraar.gmail.com>
+ <20171226001622.GA16219@Carl-MBP.ecbaldwin.net>
+ <87vagtqszf.fsf@evledraar.gmail.com>
+ <20171226194408.GA22855@Carl-MBP.ecbaldwin.net>
+ <1514319542.2717.406.camel@mad-scientist.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1514319542.2717.406.camel@mad-scientist.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-12-26 at 12:44 -0700, Carl Baldwin wrote:
-> > Sure, it could be opt in, be a new format etc. But you haven't
-> > explained why you think a feature like this would need to rely on
-> > an entirely new parent structure and side-DAG, as opposed to just
-> > the more minor changes I'm pointing out above, and which I think
-> > will give you what you need from a UX level.
-> 
-> I have not wrapped my head around it enough to convince myself that
-> it gives what I'm after. Let me spend a little more time with it to
-> get a feel for it.
+On Tue, Dec 26, 2017 at 03:19:02PM -0500, Paul Smith wrote:
+> As someone working in an environment where we do a lot of rebasing and
+> very little merging, I read these proposals with interest.  I'm not
+> convinced that we would switch to using a "replaces"-type feature, but
+> I'm pretty sure that the "null-merge and rebase" trick described
+> previously would not be something we're interested in using.
 
-As someone working in an environment where we do a lot of rebasing and
-very little merging, I read these proposals with interest.  I'm not
-convinced that we would switch to using a "replaces"-type feature, but
-I'm pretty sure that the "null-merge and rebase" trick described
-previously would not be something we're interested in using.
+In the near term, maybe. I'm still working with it to be sure I
+understand it right.
 
-Although "git log" doesn't follow these merges (unless requested), all
-the graphical tools that are used to display history WOULD show all
-those branches.  In a "replaces"-type environment I think the point is
-that we would not want to see them (certainly not by default) as they
-would be used mainly for deeper spelunking, but since they just seem
-like normal merges I don't see any way to turn them off.
+> Although "git log" doesn't follow these merges (unless requested), all
+> the graphical tools that are used to display history WOULD show all
+> those branches.  In a "replaces"-type environment I think the point is
+> that we would not want to see them (certainly not by default) as they
+> would be used mainly for deeper spelunking, but since they just seem
+> like normal merges I don't see any way to turn them off.
 
-If "replaces" was a separate capability then it could be treated
-differently by history browsing tools, and shown or not shown as
-desired.  For example, a commit that had a "replaces" element could be
-selected somehow and you could expand that set of commits that were
-replaced, or something like that.
+You've touched on some of my concerns with the null-merge approach. I
+want the end result to be as clean as possible which I think is what
+lures many to the rebase methodology in the first place.
+
+> If "replaces" was a separate capability then it could be treated
+> differently by history browsing tools, and shown or not shown as
+> desired.  For example, a commit that had a "replaces" element could be
+> selected somehow and you could expand that set of commits that were
+> replaced, or something like that.
+
+Exactly!
+
+Carl
