@@ -2,234 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCC431F406
-	for <e@80x24.org>; Tue, 26 Dec 2017 01:24:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E08C11F406
+	for <e@80x24.org>; Tue, 26 Dec 2017 01:28:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750815AbdLZBQp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 25 Dec 2017 20:16:45 -0500
-Received: from mail-it0-f45.google.com ([209.85.214.45]:42900 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750806AbdLZBQo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Dec 2017 20:16:44 -0500
-Received: by mail-it0-f45.google.com with SMTP id p139so21171311itb.1
-        for <git@vger.kernel.org>; Mon, 25 Dec 2017 17:16:44 -0800 (PST)
+        id S1750814AbdLZB2c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 25 Dec 2017 20:28:32 -0500
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:41968 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750806AbdLZB2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Dec 2017 20:28:32 -0500
+Received: by mail-wm0-f42.google.com with SMTP id g75so33445240wme.0
+        for <git@vger.kernel.org>; Mon, 25 Dec 2017 17:28:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecbaldwin.net; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fw6IAzhao3ghizyAG+cWkYqjlmvDK5d0LtEddbdQDPE=;
-        b=LU60m9RUH0dYajvfwoIEYMk+VSX7YRR2/t99jlhFXDm49gfTWk3XXr/kt3+xZAjQPK
-         yEls7uEHi4+Ncj7VRam0ffU5ZILoSeLTKredNPTggODie4BmESMCEa3kWOw487u4ZxfU
-         hYIfiD673mJAUqxq9u5IwWqR/7b11QfNqu3Rg=
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2qBkZHZ+Q1Ii4W5IwJV3GQyA5CWyXP42eDy52HUg+40=;
+        b=bc2HKKZqyBmTfc6VP6HmKuWv/hMLiNhgU04RyXtTaYPr62FHvvNxv38oPWxq+j/PI6
+         DkLhesQ0d+TwzhGDciTPXOL2zwL7vddh7FEupz+NhzSD2BBSB6c4P8nNWcnKjaNy+eqX
+         kKk//2TKYs9rwm6x+R9RPo0xBIsOzcT3bSHoEn4hxoorySrkC9tNWJZRjSp8LfYy8fwm
+         R1inKMJ5OlwlaPbAOhESO332aQBySukke38lOOeKXuU6z5ircfTpZ9uH9HpTvW8Hd/nx
+         MABk2y1XZP9oyhiokih5TL0BJP39RC4mPjM66CLMiFuGfGx9WSx/pzc4oy4RVYr0z9+s
+         Od9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fw6IAzhao3ghizyAG+cWkYqjlmvDK5d0LtEddbdQDPE=;
-        b=C8ELmQwxORL1bo+V6oBBvD/IAgLDl30jci6RuhN+YsXUY07IcztT2iuCZOmScY1m9h
-         vF88py/sJInQbT4bQ6yVevt5e+aJuXER1yn7mkpaN33blkGGdbL0ck2KyT3ANFZgZ7HD
-         HG+Dy7Sw4yFkQhg5Vr0OkVdSsqMsEtTJn7lsNELyAAULAXYkn4PNBb2XAsu3+u3xxmP+
-         zRLCnOcoC29NSX2AO0qi7b35ukzgZIk+B9/Mf/SvY8GQbsrqvFaYHoilK2OzBNfSkFH8
-         VFZlHN88ZZFu6eByrIrnV8Er6pHF9cVlAJwolD2RultgesErzG+sPkpIeS3KD570ufTF
-         HIOw==
-X-Gm-Message-State: AKGB3mLLAWfCeIaU/Hthdav5n1zdyIqn3xeMX9eiyufHaTSW/WZnEYjD
-        QoPYnJjbTZjWO2AocEqyYGcsew==
-X-Google-Smtp-Source: ACJfBovNSaHFMsrhWJsEasttYoW+CGs7ZvAAQUhhY86GoP/3K+z0OXXBsGXgDLJVEBQQvsFKFnh6Ww==
-X-Received: by 10.36.221.147 with SMTP id t141mr30578588itf.140.1514251003262;
-        Mon, 25 Dec 2017 17:16:43 -0800 (PST)
-Received: from Carl-MBP.ecbaldwin.net ([2601:282:8001:ffba:86f:967d:39c5:9c84])
-        by smtp.gmail.com with ESMTPSA id c8sm8626902itg.15.2017.12.25.17.16.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Dec 2017 17:16:42 -0800 (PST)
-Date:   Mon, 25 Dec 2017 18:16:40 -0700
-From:   Carl Baldwin <carl@ecbaldwin.net>
-To:     Theodore Ts'o <tytso@mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20171226011638.GA16552@Carl-MBP.ecbaldwin.net>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <20171225035215.GC1257@thunk.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2qBkZHZ+Q1Ii4W5IwJV3GQyA5CWyXP42eDy52HUg+40=;
+        b=cVkaBqIDM3EOOFkU97dQCYeGQtdk/4BLDbtp5qUVwGHVetilzdJAYv0YzcWZzYigH0
+         fju2lpQwd3a7hemBZWh6o269VkHf597HCiHcEGwS7komGT/Yl8Sgr5LraWfHE3WSPKlE
+         at//SIn79MicWJcyo5k1FxQ/9OKsQSXFfPDL7t+SrfEau1efDQQt5TRTU3q9hud2U0T6
+         uE+WeTB/c7A0Bzx8jdcwJm+T++uXBF8Zd483VAWfyKcsyKPwxHj+eF+tQHCuXpdskrCm
+         0geYM2S37z4wm0zgM04TGE4OI7bcysF1sFHnc5FQJysCuMscoxj47ielj4VNMOkIbR7z
+         g7Rw==
+X-Gm-Message-State: AKGB3mIAFeybYgiC2O8WG8a1mAEq3ymcQu64s32efovgQ3VvCBexx/T9
+        9Vmb7d7VuPYE3NmZgr+ltzglr8pQFlYUgzGdlONl11Hi
+X-Google-Smtp-Source: ACJfBov/zEnjRmnSiMh0t0+NM8M8i8hapbopVZhcEt/WiceJ1S9PSLOdrKedvj1QcBd/7+2KotS7/2+T8ac10x9AoJg=
+X-Received: by 10.80.149.152 with SMTP id w24mr29385516eda.76.1514251710626;
+ Mon, 25 Dec 2017 17:28:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171225035215.GC1257@thunk.org>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.80.174.252 with HTTP; Mon, 25 Dec 2017 17:28:10 -0800 (PST)
+In-Reply-To: <20171226001622.GA16219@Carl-MBP.ecbaldwin.net>
+References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+ <877etds220.fsf@evledraar.gmail.com> <20171223210141.GA24715@hpz.ecbaldwin.net>
+ <87608xrt8o.fsf@evledraar.gmail.com> <20171226001622.GA16219@Carl-MBP.ecbaldwin.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 25 Dec 2017 17:28:10 -0800
+Message-ID: <CA+P7+xp9v8adrbF7JUYa3X+PvurHiW1QNTnodJt6-vyB3_dWAQ@mail.gmail.com>
+Subject: Re: Bring together merge and rebase
+To:     Carl Baldwin <carl@ecbaldwin.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 24, 2017 at 10:52:15PM -0500, Theodore Ts'o wrote:
-> As a suggestion, before diving into the technical details of your
-> proposal, it might be useful consider the usage scenario you are
-> targetting.  Things like "git rebase" and "git merge" and your
-> proposed "git replace/replay" are *mechanisms*.
-> 
-> But how they fit into a particular workflow is much more important
-> from a design perspective, and given that there are many different git
-> workflows which are used by different projects, and by different
-> developers within a particular project.
-> 
-> For example, rebase gets used in many different ways, and many of the
-> debates when people talk about "git rebase" being evil generally
-> presuppose a particular workflow that that the advocate has in mind.
-> If someone is using git rebase or git commit --amend before git
-> commits have ever been pushed out to a public repository, or to anyone
-> else, that's a very different case where it has been visible
-> elsewhere.  Even the the most strident, "you must never rewrite a
-> commit and all history must be preserved" generally don't insist that
-> every single edit must be preserved on the theory that "all history is
-> valuable".
-> 
-> > The git history now has two dimensions. The first shows a cleaned up
-> > history where fix ups and code review feedback have been rolled into
-> > the original changes and changes can possibly be ordered in a nice
-> > linear progression that is much easier to understand. The second
-> > drills into the history of a change. There is no loss and you don't
-> > change history in a way that will cause problems for others who have
-> > the older commits.
-> 
-> If your goal is to preserve the history of the change, one of the
-> problems with any git-centric solution is that you generally lose the
-> code review feedback and the discussions that are involved with a
-> commit.  Just simply preserving the different versions of the commits
-> is going to lose a huge amount of the context that makes the history
-> valuable.
-> 
-> So for example, I would claim that if *that* is your goal, a better
-> solution is to use Gerrit, so that all of the different versions of
-> the commits are preserved along with the line-by-line comments and
-> discussions that were part of the code review.  In that model, each
-> commit has something like this in the commit trailer:
-> 
-> Change-Id: I8d89b33683274451bcd6bfbaf75bce98
+On Mon, Dec 25, 2017 at 4:16 PM, Carl Baldwin <carl@ecbaldwin.net> wrote:
+> On Sat, Dec 23, 2017 at 11:09:59PM +0100, =C4=98var Arnfj=C3=B6r=C5=A1 Bj=
+armason wrote:
+>> >> But I don't see why you think this needs a new "replaces" parent
+>> >> pointer orthagonal to parent pointers, i.e. something that would
+>> >> need to be a new field in the commit object (I may have misread the
+>> >> proposal, it's not heavy on technical details).
+>> >
+>> > Just to clarify, I am proposing a new "replaces" pointer in the commit
+>> > object. Imagine starting with rebase exactly as it works today. This n=
+ew
+>> > field would be inserted into any new commit created by a rebase comman=
+d
+>> > to reference the original commit on which it was based. Though, I'm no=
+t
+>> > sure if it would be better to change the behavior of the existing reba=
+se
+>> > command, provide a switch or config option to turn it on, or provide a
+>> > new command entirely (e.g. git replay or git replace) to avoid
+>> > compatibility issues with the existing rebase.
+>>
+>> Yeah that sounds fine, I thought you meant that this "replaces" field
+>> would replace the "parent" field, which would require some rather deep
+>> incompatible changes to all git clients.
+>>
+>> But then I don't get why you think fetch/pull/gc would need to be
+>> altered, if it's because you thought that adding arbitrary *new* fields
+>> to the commit object would require changes to those that's not the case.
+>
+> Thank you again for your reply. Following is the kind of commit that I
+> would like to create.
+>
+>     tree fcce2f309177c7da9c795448a3e392a137434cf1
+>     parent b3758d9223b63ebbfbc16c9b23205e42272cd4b9
+>     replaces e8aa79baf6aef573da930a385e4db915187d5187
+>     author Carl Baldwin <carl@ecbaldwin.net> 1514057225 -0700
+>     committer Carl Baldwin <carl@ecbaldwin.net> 1514058444 -0700
+>
+> What will happen if I create this today? I assumed git would just choke
+> on it but I'm not certain. It has been a long time since I attempted to
+> get into the internals of git.
+>
+> Even if core git code does not simply choke on it, I would like push and
+> pull to follow these pointers and transfer the history behind them. I
+> assumed that git would not do this today. I would also like gc to
+> preserve e8aa79baf6 as if it were referenced by a parent pointer so that
+> it doesn't purge it from the history.
+>
+> I'm currently thinking of an example of the workflow that I'm after in
+> response to Theodore Ts'o's message from yesterday. Stay tuned, I hope
+> it makes it clearer why I want it this way.
+>
+> [snip]
+>
+>> Instead, if I understand what you're actually trying to do, it could
+>> also be done as:
+>>
+>>  1) Just add a new replaces <sha1> field to new commit objects
+>>
+>>  2) Make git-rebase know how to write those, e.g. add two of those
+>>     pointing to A & B when it squashes them into AB.
+>>
+>>  3) Write a history traversal mechanism similar to --full-history
+>>     that'll ignore any commits on branches that yield no changes, or
+>>     only those whose commits are referenced by this "replaces" field.
+>>
+>> You'd then end up with:
+>>
+>>  A) A way to "stash" these commits in the permanent history
+>>
+>>  B) ... that wouldn't be visble in "git log" by default
+>>
+>>  C) Would require no underlying changes to the commit model, i.e. it
+>>     would work with all past & future git clients, if they didn't know
+>>     about the "replaces" field they'd just show more verbose history.
+>
+> I get this point. I don't underestimate how difficult making such a
+> change to the core model is. I know there are older clients which cannot
+> simply be updated. There are also alternate implementations (e.g. jgit)
+> that also need to be considered. This is the thing I worry about the
+> most. I think at the very least, this new feature will have to be an
+> opt-in feature for teams who can easily ensure a minimum version of git
+> will be used. Maybe the core.repositoryformatversion config or something
+> like that would have to play into it. There may also be some minimal
+> amount that could be backported to older clients to at least avoid
+> choking on new repos (I know this doesn't guarantee older clients will
+> be updated). Just throwing a few ideas out.
+>
+> I want to be sure that the implications have been explored before giving
+> up and doing something external to git.
+>
+> Carl
 
-Thank you for your reply. I agree that discussing the workflows is very
-valuable and I certainly haven't done that justice yet.
+What about some way to take the reflog and turn it into a commit-based
+linkage and export that? Rather than tying it into the individual
+commit history, keep track of it outside the commit, possibly via
+something like notes, or some other mechanism.
 
-Gerrit is the tool that got me thinking about my proposal in the first
-place. I spent a few years developing and doing a significant number of
-code reviews using it. I've since changed to an environment where I no
-longer have it. It turns out that "a better solution is to use Gerrit"
-is not helpful to me now because it isn't up to me. Gerrit is not nearly
-as ubiquitous as git itself.
+This also ties into work done by Josh Triplett on git series [1] and
+some previous mail discussions that I remember. He had some mechanism
+for tracking series history which works ok, but can cause problems you
+mentioned when simply adding a second parent commit.
 
-In my opinion, Gerrit has shown us the power of the "change". As you
-point out, it introduced the change-id embedded into the commit message
-and uses it to track a change's progress as a "review." I think these
-are powerful concepts and Gerrit did a nice job with them. I guess one
-of my goals with my proposal here is to formalize the "change" idea so
-that any git-based tool understands it and can interoperate. This is why
-I want it in the core git commit object and I want push, pull, gc, and
-other commands to understand it.
+I tend to think some mechanism to store both patch/commit history and
+review based comments would be a very useful thing to integrate so
+that multiple platforms had a more generic way of sharing things such
+as line-based commentary, and so on. It could even be some sort of
+unformatted method to at least get the mechanism of "how to share this
+among clients" to be stable across tools, even if each review tool
+made its own format (thus we don't lock the *type* of review comments
+in stone).
 
-At this point, you might wonder why I'm not proposing to simply add a
-"change-id" to the commit object. The short answer is that the
-"change-id" Gerrit uses in the commit messages cannot stand on its own.
-It depends on data stored on the server which maintains a relationship
-of commits to a review number and a linear ordering of commits within
-the review (hopefully I'm not over simplifying this). The "replaces"
-reference is an attempt to make something which can stand on its own. I
-don't think we need to solve the problem of where to keep comments at
-this point.
+I definitely think that storing just the history of commits isn't as
+valuable without storing the comments made in the review process.
 
-An unbroken chain of "replaces" references obviates the need for the
-change id in the commit message. From any given commit in the chain, we
-can follow the references to the first commit which started the review.
-However, the chain is even more useful because it is not limited to a
-linear progression of revisions. Let me try to explain how this can
-solve some of the most common issues I ran into with the rebase type
-workflow.
+-Jake
 
-Look at what happens in a rebase type workflow in any of the following
-scenarios. All of these came up regularly in my time with Gerrit.
-
-    1. Make a quick edit through the web UI then later work on the
-       change again in your local clone. It is easy to forget to pull
-       down the change made through the UI before starting to work on it
-       again. If that happens, the change made through the UI will
-       almost certainly be clobbered.
-
-    2. You or someone else creates a second change that is dependent on
-       yours and works on it while yours is still evolving. If the
-       second change gets rebased with an older copy of the base change
-       and then posted back up for review, newer work in the base change
-       has just been clobbered.
-
-    3. As a reviewer, you decide the best way to explain how you'd like
-       to see something done differently is to make the quick change
-       yourself and push it up. If the author fails to fetch what you
-       pushed before continuing onto something else, it gets clobbered.
-
-    4. You want to collaborate on a single change with someone else in
-       any way and for whatever reason. As soon as that change starts
-       hitting multiple work spaces, there are synchronization issues
-       that currently take careful manual intervention.
-
-These kinds of scenarios usually end up being used as arguments against
-a rebased based workflow. On the other hand, with a chain of "replaces"
-references, these scenarios end up branching the change. This is where
-it will be useful for my local git command to be able to pull down the
-upstream state, understand what branched, help me merge, and then push
-the result upstream. I really think this brings the power and benefits
-of branching and merging to the rebase workflow.
-
-Anyway, now I am compelled to use github which is also a fine tool and I
-appreciate all of the work that has gone into it. About 80% of the time,
-I rebase and force push to my branch to update a pull request. I've come
-to like the end product of the rebase workflow. However, github doesn't
-excel at this approach. For one, it doesn't preserve older revisions
-which were already reviewed which makes it is difficult for reviewers to
-pick up where they left off the last time. If it preserved them, as
-gerrit does, the reviewer can compare a new revision with the most
-recent older revision they reviewed to see just what has been addressed
-since then.
-
-I think it would be great if git standardized the way that revisions of
-"changes" are preserved in the repository as commits. Preserving the
-comments attached to each commit could be left up to each of the tools,
-in my opinion. Or, at least left to a later discussion.
-
-The other 20% of the time, I revert to branching and merging only. This
-helps reviewers with the problem of picking up where they left off. It
-is also an absolute necessity if another developer is going to be
-collaborating with me on the pr or basing a dependent pr on it. However,
-it leaves the history in a more complex state in the end. Github offers
-"squash merge" and "rebase merge" to help out with this but these don't
-give me the control I want over what goes into each change when I want
-to end up with more than one. They also cause problems if there is a
-dependent pr.
-
-After a pull request in github has progressed, it can be difficult for a
-new reviewer to jump on. They may want to review a large pr commit by
-commit from the bottom up instead of trying to tackle the entire thing
-at once. However, if fixups have been made in later commits, they will
-be looking at the old stuff first, seeing all the bugs and issues that
-have already been addressed.
-
-> You can then cut and paste the Change-Id into the Gerrit user
-> interface, and see the different commits, more important, the
-> discussion surrounding each change.
-> 
-> 
-> If the complaint about Gerrit is that it's not a core part of Git, the
-> challenge is (a) how to carry the code review comments in the git
-> repository, and (b) do so in a while that it doesn't bloat the core
-> repository, since most of the time, you *don't* want or need to keep a
-> local copy of all of the code review comments going back since the
-> beginning of the project.
-> 
-> -------------
-
-I need to give your kernel patching use cases some thought. I once
-designed a process to do similar patching against a different project so
-I think I know what you're getting at. I just need a little more time to
-think about it. Hopefully, I'll have a little more time to post another
-reply.
-
-Carl
+[1] https://github.com/git-series/git-series
