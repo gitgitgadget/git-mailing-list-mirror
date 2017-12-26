@@ -2,283 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 825A61F424
-	for <e@80x24.org>; Tue, 26 Dec 2017 09:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6331F424
+	for <e@80x24.org>; Tue, 26 Dec 2017 10:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750985AbdLZJLE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Dec 2017 04:11:04 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:39526 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750705AbdLZJLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Dec 2017 04:11:03 -0500
-Received: by mail-pl0-f68.google.com with SMTP id bi12so17607474plb.6
-        for <git@vger.kernel.org>; Tue, 26 Dec 2017 01:11:03 -0800 (PST)
+        id S1750928AbdLZKrv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Dec 2017 05:47:51 -0500
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:42509 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750705AbdLZKru (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Dec 2017 05:47:50 -0500
+Received: by mail-oi0-f45.google.com with SMTP id o64so23512482oia.9
+        for <git@vger.kernel.org>; Tue, 26 Dec 2017 02:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JRWxBO0MqSO+3xfUCBQTJUDxZuyzV8ZTVlGmg7qYSYQ=;
-        b=SdtrH6CaB/Orbhz54hxfhyy00gD3JBzQXCZzrvWnq7cFeyXDn3doL8v+XExIGKOAAK
-         9eSbtuCDTjIeetd4c1CFX7mg8i5YobAu+Ly8mLYUWCznREPuNzSlw89Vcw6wkwh7Y3zV
-         T8lV9XHuW4BxfWKTpTuGVL5H5wiDohThQ0YEDCDpVsNzB9EG6pJ/qAUJ77lIhTnWIpLh
-         /9e7OMALM2zcQlXbIHmSeBsunbP0dAydH+LugGiHFxXYeKNOnoJi6o8UaUgQH8b3Ctkb
-         QKLSeoX2DhuJNcBLp/K8VqTjHKNtKgVqVFobP8dUdvod7VUFrpD/fbW8dScB1gv+/ITg
-         xEmQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=iBmWJnnR1yR3KYx5n9NrCp8uawqFnb0yO5M2URc6P/c=;
+        b=jP15lXbEgmBbBhUTJjc27k5oRoqxthnbOXfFCAy+aor+u4VoU1vurZJXTb3oHtbGm0
+         XV3Oae8+LRxkxT2/uVCkDeiRullCkb7B+pZFk6w0d0DQXC7aPnFRTHrN34JO7hyG6fSL
+         kBYeGYq+1SX5Dxp9VQh8CcJAZJLHTgudYYDzgCMYVZ/rh8WPvLQMBSWe+cNKGNP3+0sK
+         u9YTxWHCnM5TMscSKI+q/G/zLllZ/KwuBIubI63KKAq98pbQqJ+TTLjv7njk4BoENn94
+         K5yHsyFHa8zBgoq3YEJRnF8V38O1EU0bsy5swePeopqSPOvxJik0SIB83HTIVGD+9WzC
+         x+KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JRWxBO0MqSO+3xfUCBQTJUDxZuyzV8ZTVlGmg7qYSYQ=;
-        b=AAxm39kAp7dRw0lMjSLT2qL21QiMxSOmB9Cg8IzCKxh5TwMu615dwBygeQ21V3Aw92
-         C+6LftOTtqhAZtYj1SXJM4h01ruDbAK1mnJcFgC3mvM7H6GqhcQeTRNZ5cZV4HjqgqJk
-         fm+QZhtcpx0qYGnKyGSd+3/KdU5SI0oQJiQHbHPgGEglef6O+QMRlCiR0ZE8zw1Di6KL
-         ym6tYmPwE6MQAuGFePkNu2brYYVA/L1erev/+83J9m/8DAaM3YWLsh1Baau6k/0Pxwag
-         BrS1XsY8pSDA364EE0WJghytjUwe/Aqz/61KrftWXTnEC2gVyG04DSfzGvP+/LMc7Ayd
-         0PtA==
-X-Gm-Message-State: AKGB3mJICX11CPCYmeUI2r6XZGrQWpNOPACbn8dRODtvnVPkr3Phtxi/
-        JaPwq/Js5B+unQ1yy4cWCYycrg==
-X-Google-Smtp-Source: ACJfBos4UeTu8WswAN68dyJKHfp9MXHkugTvh8VejCJ1bh64tqlmioE9ESeZAc4XN3E/J+Q5R1T2eg==
-X-Received: by 10.84.240.139 with SMTP id z11mr24646905plk.348.1514279463079;
-        Tue, 26 Dec 2017 01:11:03 -0800 (PST)
-Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id p87sm61584432pfi.95.2017.12.26.01.11.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Dec 2017 01:11:02 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 26 Dec 2017 16:10:57 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     alexmv@dropbox.com, igor.d.djordjevic@gmail.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 7/7] wt-status.c: avoid double renames in short/porcelain format
-Date:   Tue, 26 Dec 2017 16:10:12 +0700
-Message-Id: <20171226091012.24315-8-pclouds@gmail.com>
-X-Mailer: git-send-email 2.15.0.320.g0453912d77
-In-Reply-To: <20171226091012.24315-1-pclouds@gmail.com>
-References: <20171225103718.24443-1-pclouds@gmail.com>
- <20171226091012.24315-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=iBmWJnnR1yR3KYx5n9NrCp8uawqFnb0yO5M2URc6P/c=;
+        b=PhVqibH1P4OsKIpOZh86l9PQ+Dkpr+AoeDBF4aSZ9p+wb67QPkvdjKRY5vumKDelRw
+         aPLRuMCBMQF4AYNIZJdIiw1qHJWdainBk7FgpZ82ypaiVHEXusztTy70gQ1YU14LhNbd
+         ESfdeOiNo5++pOvV9nrnRQrUtmafM+XmN6hsqbVWOAMkZHwdWpE6afMZBeACjxypydFQ
+         jgkimMdcIvjFPvLb8ZozApG6cNRyJRr4t2uWBlO7i2ilTJ8ORqyNPkn1gEERPx2Pn6gr
+         IJXQd3fhhMoTDarxU3GqPPyZgGkicvHQz5oGEZh3o9zXhB5XVwdbx7hPqk/x2OwPdttY
+         9pwA==
+X-Gm-Message-State: AKGB3mJl/6r/xqRuFREHiunljYF0QoIVTYnBGyjp/jL0JZJpuqTmcXxW
+        Va/uC9XtzCuET1zC79Zn5IWsH40VTCk5Z3cnN0w=
+X-Google-Smtp-Source: ACJfBosoq3alnnD+28Fs99PPh8ntvk1rEFda/JUC03BykZXQMYxFX8pRYUkpJUSQYaPIsPzLtZ7o9LFWMYuUuCJjG1E=
+X-Received: by 10.202.208.147 with SMTP id j19mr18829267oiy.268.1514285269531;
+ Tue, 26 Dec 2017 02:47:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.141.5 with HTTP; Tue, 26 Dec 2017 02:47:19 -0800 (PST)
+In-Reply-To: <87wp1ar6j1.fsf@evledraar.gmail.com>
+References: <20171222140032.21180-1-avarab@gmail.com> <CACsJy8B1FNpq-AYJdcs_gVOxdPSnh-kNaeVykLSSDL1+EW9YjA@mail.gmail.com>
+ <87wp1ar6j1.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 26 Dec 2017 17:47:19 +0700
+Message-ID: <CACsJy8AmbKSp0mDLRaDCWn45veeNc03B-Gq8r8PQPrDt9bM_EA@mail.gmail.com>
+Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache bug
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The presence of worktree rename leads to an interesting situation,
-what if the same index entry is renamed twice, compared to HEAD and to
-worktree? We can have that with this setup
+On Tue, Dec 26, 2017 at 1:45 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Mon, Dec 25 2017, Duy Nguyen jotted:
+>
+>> On Fri, Dec 22, 2017 at 9:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> The untracked cache gets confused when a directory is swapped out for
+>>> a symlink to another directory. Whatever files are inside the target
+>>> of the symlink will be incorrectly shown as untracked. This issue does
+>>> not happen if the symlink links to another file, only if it links to
+>>> another directory.
+>>
+>> Sounds about right (I completely forgot about dir symlinks). Since
+>> I've been away for some time and have not caught up (probably cannot)
+>> with the mailing list yet, is anyone working on this? It may be
+>> easiest to just detect symlinksand disable  the cache for now.
+>
+> I haven't yet, I wanted to see what you had to say about it,
+> i.e. whether it was a "do'h here's a fix" or if it was more involved
+> than that.
 
-    echo first > first && git add first && git commit -m first
-    git mv first second  # rename reported in "diff --cached"
-    mv second third      # rename reported in "diff-files"
+OK I have more time to actually read your test and play with it (last
+time I stopped at the word "symlink").
 
-For the long format this is fine because we print two "->" rename
-lines, one in the "updated" section, one in "changed" one.
+First thing out of the way first, I think the stat() call in
+valid_cached_dir() is wrong. We don't want to automatically follow a
+symlink, we want stat of the symlink itself.
 
-For other output formats, it gets tricky because they combine both
-diffs in one line but can only display one rename per line. The result
-"XY" column of short format, for example, would be "RR" in that case.
+OK back to the test. If you insert test-dump-untracked-cached around
+the "git checkout master" line, then we get the data that the
+next/faulty git status uses. For me it shows this
 
-This case either needs some extension in short/porcelain format
-to show something crazy like
 
-    RR first -> second -> third
+...
+/ 0000000000000000000000000000000000000000 recurse
+/one/ 0000000000000000000000000000000000000000 recurse valid
+/two/ 0000000000000000000000000000000000000000 recurse valid
 
-or we could show renames as two lines instead of one, for example
-something like this for short form:
+OK so we have two uptodate cached dirs for "one" and "two". Strangely,
+root dir is not cached (no valid flag). I don't know why but that's ok
+we'll roll with it. It means we will ignore "/" content and do the
+opendir() and readdir() dance instead.
 
-    R  first -> second
-     R second -> third
+This is where it gets fun, when readdir() returns "one", we hit this
+code in treat_one_path() and correctly ignores it
 
-But for now it's safer and simpler to just break the "second -> third"
-rename pair and show
+    /* Always exclude indexed files */
+    if (dtype !=3D DT_DIR && has_path_in_index)
+        return path_none;
 
-    RD first -> second
-     A third
+and we do _nothing_ towards the cached version of "one". In constrast,
+when readdir() returns "two" we are able to get further and invalidate
+it, deleting the cached data.
 
-like we have been showing until now.
+After the readdir() dance is complete, dir.c is confident that it has
+all the good data in the world in its cache and notes down "from now
+on uses the cached data for /". Another test-dump-... after the
+second-to-last git-status can show this "valid" flag. Unfortunately
+the "one" dir is NOT invalidated.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- t/t2203-add-intent.sh | 33 +++++++++++++++++++++++++++++
- wt-status.c           | 58 ++++++++++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 84 insertions(+), 7 deletions(-)
+So the last git-status sees that cached "/" is good, it skips
+opendir() and goes with the cached directories which are "two" and the
+bad "one". In short, we fail to invalidate bad data in some case.
 
-diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index e5bfda1853..79aca93810 100755
---- a/t/t2203-add-intent.sh
-+++ b/t/t2203-add-intent.sh
-@@ -190,5 +190,38 @@ test_expect_success 'rename detection finds the right names' '
- 	)
- '
- 
-+test_expect_success 'double rename detection in status' '
-+	git init rename-detection-2 &&
-+	(
-+		cd rename-detection-2 &&
-+		echo contents > first &&
-+		git add first &&
-+		git commit -m first &&
-+		git mv first second &&
-+		mv second third &&
-+		git add -N third &&
-+
-+		git status | grep -v "^?" >actual.1 &&
-+		test_i18ngrep "renamed: *first -> second" actual.1 &&
-+		test_i18ngrep "renamed: *second -> third" actual.1 &&
-+
-+
-+		git status --porcelain | grep -v "^?" >actual.2 &&
-+		cat >expected.2 <<-\EOF &&
-+		RD first -> second
-+		 A third
-+		EOF
-+		test_cmp expected.2 actual.2 &&
-+
-+		oid=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
-+		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
-+		cat >expected.3 <<-EOF &&
-+		2 RD N... 100644 100644 000000 $oid $oid R100 second	first
-+		1 .A N... 000000 000000 100644 $_z40 $_z40 third
-+		EOF
-+		test_cmp expected.3 actual.3
-+	)
-+'
-+
- test_done
- 
-diff --git a/wt-status.c b/wt-status.c
-index d5bdf4c2e9..e62853f748 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -419,6 +419,47 @@ static char short_submodule_status(struct wt_status_change_data *d)
- 	return d->worktree_status;
- }
- 
-+static struct string_list_item * break_double_rename(
-+		struct wt_status *s, struct string_list_item *it,
-+		int *status, struct diff_filepair *p)
-+{
-+	struct wt_status_change_data *d;
-+	struct string_list_item *new_it;
-+
-+	d = it->util;
-+	/*
-+	 * _collect_index_changes() must have been called or
-+	 * d->head_path does not contain a real value.
-+	 */
-+	if (!d || !d->head_path)
-+		return it;
-+
-+	switch (s->status_format) {
-+	case STATUS_FORMAT_SHORT:
-+	case STATUS_FORMAT_PORCELAIN:
-+	case STATUS_FORMAT_PORCELAIN_V2:
-+		break;
-+	case STATUS_FORMAT_LONG:
-+	case STATUS_FORMAT_NONE:
-+		/* this output can handle double renames ok */
-+		return it;
-+	default:
-+		die("BUG: finalize_deferred_config() should have been called");
-+	}
-+
-+	switch (*status) {
-+	case DIFF_STATUS_RENAMED:
-+		d->worktree_status = DIFF_STATUS_DELETED;
-+		/* fallthru */
-+	case DIFF_STATUS_COPIED:
-+		*status = DIFF_STATUS_ADDED;
-+		new_it = string_list_insert(&s->change, p->two->path);
-+		return new_it;
-+	}
-+
-+	return it;
-+}
-+
- static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 					 struct diff_options *options,
- 					 void *data)
-@@ -433,16 +474,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 		struct diff_filepair *p;
- 		struct string_list_item *it;
- 		struct wt_status_change_data *d;
-+		int status;
- 
- 		p = q->queue[i];
-+		status = p->status;
- 		it = string_list_insert(&s->change, p->one->path);
-+		it = break_double_rename(s, it, &status, p);
- 		d = it->util;
- 		if (!d) {
- 			d = xcalloc(1, sizeof(*d));
- 			it->util = d;
- 		}
- 		if (!d->worktree_status)
--			d->worktree_status = p->status;
-+			d->worktree_status = status;
- 		if (S_ISGITLINK(p->two->mode)) {
- 			d->dirty_submodule = p->two->dirty_submodule;
- 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
-@@ -451,7 +495,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 				d->worktree_status = short_submodule_status(d);
- 		}
- 
--		switch (p->status) {
-+		switch (status) {
- 		case DIFF_STATUS_ADDED:
- 			d->mode_worktree = p->two->mode;
- 			break;
-@@ -477,7 +521,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 			break;
- 
- 		default:
--			die("BUG: unhandled diff-files status '%c'", p->status);
-+			die("BUG: unhandled diff-files status '%c'", status);
- 			break;
- 		}
- 
-@@ -710,12 +754,12 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 
- void wt_status_collect(struct wt_status *s)
- {
--	wt_status_collect_changes_worktree(s);
--
- 	if (s->is_initial)
- 		wt_status_collect_changes_initial(s);
- 	else
-+		/* must be called before _collect_changes_worktree() */
- 		wt_status_collect_changes_index(s);
-+	wt_status_collect_changes_worktree(s);
- 	wt_status_collect_untracked(s);
- }
- 
-@@ -1733,7 +1777,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 	putchar(' ');
- 
- 	if (d->head_path && d->worktree_path)
--		die("BUG: to be addressed in the next patch");
-+		die("BUG: break_double_rename() fails to break this pair");
- 
- 	if (d->head_path) {
- 		from = d->head_path;
-@@ -2077,7 +2121,7 @@ static void wt_porcelain_v2_print_changed_entry(
- 	key[2] = 0;
- 
- 	if (d->head_path && d->worktree_path)
--		die("BUG: to be addressed in the next patch");
-+		die("BUG: break_double_rename() fails to break this pair");
- 
- 	if (d->head_path) {
- 		path_other = d->head_path;
--- 
-2.15.0.320.g0453912d77
-
+An invalidate_directory() call before the "return path_none" above
+might be the solution...
+--=20
+Duy
