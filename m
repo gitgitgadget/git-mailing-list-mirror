@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D25211F424
-	for <e@80x24.org>; Tue, 26 Dec 2017 09:11:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825A61F424
+	for <e@80x24.org>; Tue, 26 Dec 2017 09:11:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750980AbdLZJK7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 26 Dec 2017 04:10:59 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:46104 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbdLZJK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Dec 2017 04:10:58 -0500
-Received: by mail-pg0-f67.google.com with SMTP id r2so2211338pgq.13
-        for <git@vger.kernel.org>; Tue, 26 Dec 2017 01:10:58 -0800 (PST)
+        id S1750985AbdLZJLE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 26 Dec 2017 04:11:04 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:39526 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750705AbdLZJLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Dec 2017 04:11:03 -0500
+Received: by mail-pl0-f68.google.com with SMTP id bi12so17607474plb.6
+        for <git@vger.kernel.org>; Tue, 26 Dec 2017 01:11:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ex2STq7HRG2XRWMRs3bVuIgyPukVNbmwWwpZFVa+xFk=;
-        b=Uc9cKmr8II5jDG8TGhEIvDYbPwLiY2jQOeTr6sU5YjYviqajbFiaKi+Hb6VaHTuAgg
-         PzsRGx0vOxlBxHpvf0I+kCVR0TpcTDl7I0hDDHKUUoZ1Obrl71S64+BkztLkbiBLjFmb
-         5aYQKIYjos4YCycerERFWIDJUkmyc+xhljEc168EdXo8DWWBG4pGDhMwd+9xv6r+25Rb
-         5Rj+KIKbJVj91z9WqQIDU9qetquobfK+uxnkb0U8EtvdMYPoOUIXVxrhZFe3i3Bemsdl
-         rtETvQwYSfdc/+B7271qWXMXHGksX22vgNeNcFsafqBC9waznVqxPWyrLswnNR3bG2es
-         Y+VA==
+        bh=JRWxBO0MqSO+3xfUCBQTJUDxZuyzV8ZTVlGmg7qYSYQ=;
+        b=SdtrH6CaB/Orbhz54hxfhyy00gD3JBzQXCZzrvWnq7cFeyXDn3doL8v+XExIGKOAAK
+         9eSbtuCDTjIeetd4c1CFX7mg8i5YobAu+Ly8mLYUWCznREPuNzSlw89Vcw6wkwh7Y3zV
+         T8lV9XHuW4BxfWKTpTuGVL5H5wiDohThQ0YEDCDpVsNzB9EG6pJ/qAUJ77lIhTnWIpLh
+         /9e7OMALM2zcQlXbIHmSeBsunbP0dAydH+LugGiHFxXYeKNOnoJi6o8UaUgQH8b3Ctkb
+         QKLSeoX2DhuJNcBLp/K8VqTjHKNtKgVqVFobP8dUdvod7VUFrpD/fbW8dScB1gv+/ITg
+         xEmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ex2STq7HRG2XRWMRs3bVuIgyPukVNbmwWwpZFVa+xFk=;
-        b=h6uSp1h4L1FsQ2TMnRTFDO1eYsQ/xnyLwRCl/AK+cnBZ2VI7db864IFS/ZJarfc4pa
-         bDEwiuTvZ8Ln4NSpgZktJGCe/tBAhHCU1EbYxvydsUankDJ6vJKSjgv53GltaHEdQegM
-         LgbYIxXCklmvnRJ/hbTli2oOXR+vutv0ddEdsMUydg3n1MpvWzbvEcaCxXo3HjiDVSw8
-         iSpMzIa1Dr3uGeNjbmgd5xoip674+ZogRGM4LcBt4u2jsRuPG2cPOejdvxzwF6CfV4rX
-         Q4Y1f1sMsaSrp95rjPrQrex43FcDHVWZI/zdKwfCoE8QuHIqQ2KSSM+pyWzxwmXJVME9
-         IotQ==
-X-Gm-Message-State: AKGB3mJ19slPv9tIF1FzQFq7QyzslURWML9GlDzYv/YIBz6SRBEB3jt1
-        5VdQF4P1NVpcZi/W/pL/Mwp1cg==
-X-Google-Smtp-Source: ACJfBosNxThJYRLsRFujAqEPz5MEyhfxjjpALk4wPF0OwFDpA0SRHoPQ/tRQEeo32rluRBz45oqETg==
-X-Received: by 10.99.95.135 with SMTP id t129mr21787631pgb.161.1514279458149;
-        Tue, 26 Dec 2017 01:10:58 -0800 (PST)
+        bh=JRWxBO0MqSO+3xfUCBQTJUDxZuyzV8ZTVlGmg7qYSYQ=;
+        b=AAxm39kAp7dRw0lMjSLT2qL21QiMxSOmB9Cg8IzCKxh5TwMu615dwBygeQ21V3Aw92
+         C+6LftOTtqhAZtYj1SXJM4h01ruDbAK1mnJcFgC3mvM7H6GqhcQeTRNZ5cZV4HjqgqJk
+         fm+QZhtcpx0qYGnKyGSd+3/KdU5SI0oQJiQHbHPgGEglef6O+QMRlCiR0ZE8zw1Di6KL
+         ym6tYmPwE6MQAuGFePkNu2brYYVA/L1erev/+83J9m/8DAaM3YWLsh1Baau6k/0Pxwag
+         BrS1XsY8pSDA364EE0WJghytjUwe/Aqz/61KrftWXTnEC2gVyG04DSfzGvP+/LMc7Ayd
+         0PtA==
+X-Gm-Message-State: AKGB3mJICX11CPCYmeUI2r6XZGrQWpNOPACbn8dRODtvnVPkr3Phtxi/
+        JaPwq/Js5B+unQ1yy4cWCYycrg==
+X-Google-Smtp-Source: ACJfBos4UeTu8WswAN68dyJKHfp9MXHkugTvh8VejCJ1bh64tqlmioE9ESeZAc4XN3E/J+Q5R1T2eg==
+X-Received: by 10.84.240.139 with SMTP id z11mr24646905plk.348.1514279463079;
+        Tue, 26 Dec 2017 01:11:03 -0800 (PST)
 Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id l13sm59805575pfj.73.2017.12.26.01.10.55
+        by smtp.gmail.com with ESMTPSA id p87sm61584432pfi.95.2017.12.26.01.11.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 26 Dec 2017 01:10:57 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 26 Dec 2017 16:10:52 +0700
+        Tue, 26 Dec 2017 01:11:02 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 26 Dec 2017 16:10:57 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     alexmv@dropbox.com, igor.d.djordjevic@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 6/7] wt-status.c: handle worktree renames
-Date:   Tue, 26 Dec 2017 16:10:11 +0700
-Message-Id: <20171226091012.24315-7-pclouds@gmail.com>
+Subject: [PATCH v2 7/7] wt-status.c: avoid double renames in short/porcelain format
+Date:   Tue, 26 Dec 2017 16:10:12 +0700
+Message-Id: <20171226091012.24315-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.0.320.g0453912d77
 In-Reply-To: <20171226091012.24315-1-pclouds@gmail.com>
 References: <20171225103718.24443-1-pclouds@gmail.com>
@@ -72,60 +72,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before 425a28e0a4 (diff-lib: allow ita entries treated as "not yet exist
-in index" - 2016-10-24) there are never "new files" in the index, which
-essentially disables rename detection because we only detect renames
-when a new file appears in a diff pair.
+The presence of worktree rename leads to an interesting situation,
+what if the same index entry is renamed twice, compared to HEAD and to
+worktree? We can have that with this setup
 
-After that commit, an i-t-a entry can appear as a new file in "git
-diff-files". But the diff callback function in wt-status.c does not
-handle this case and produces incorrect status output.
+    echo first > first && git add first && git commit -m first
+    git mv first second  # rename reported in "diff --cached"
+    mv second third      # rename reported in "diff-files"
 
-PS. The reader may notice that this patch adds a new xstrdup() but not
-a free(). Yes we leak memory (the same for head_path). But wt_status
-so far has been short lived, this leak should not matter in
-practice.
+For the long format this is fine because we print two "->" rename
+lines, one in the "updated" section, one in "changed" one.
 
-Noticed-by: Alex Vandiver <alexmv@dropbox.com>
-Helped-by: Igor Djordjevic <igor.d.djordjevic@gmail.com>
+For other output formats, it gets tricky because they combine both
+diffs in one line but can only display one rename per line. The result
+"XY" column of short format, for example, would be "RR" in that case.
+
+This case either needs some extension in short/porcelain format
+to show something crazy like
+
+    RR first -> second -> third
+
+or we could show renames as two lines instead of one, for example
+something like this for short form:
+
+    R  first -> second
+     R second -> third
+
+But for now it's safer and simpler to just break the "second -> third"
+rename pair and show
+
+    RD first -> second
+     A third
+
+like we have been showing until now.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t2203-add-intent.sh | 28 ++++++++++++++++++++
- wt-status.c           | 72 +++++++++++++++++++++++++++++++++++++++------------
- wt-status.h           |  4 +--
- 3 files changed, 85 insertions(+), 19 deletions(-)
+ t/t2203-add-intent.sh | 33 +++++++++++++++++++++++++++++
+ wt-status.c           | 58 ++++++++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 84 insertions(+), 7 deletions(-)
 
 diff --git a/t/t2203-add-intent.sh b/t/t2203-add-intent.sh
-index 878e73fe98..e5bfda1853 100755
+index e5bfda1853..79aca93810 100755
 --- a/t/t2203-add-intent.sh
 +++ b/t/t2203-add-intent.sh
-@@ -162,5 +162,33 @@ test_expect_success 'commit: ita entries ignored in empty commit check' '
+@@ -190,5 +190,38 @@ test_expect_success 'rename detection finds the right names' '
  	)
  '
  
-+test_expect_success 'rename detection finds the right names' '
-+	git init rename-detection &&
++test_expect_success 'double rename detection in status' '
++	git init rename-detection-2 &&
 +	(
-+		cd rename-detection &&
++		cd rename-detection-2 &&
 +		echo contents > first &&
 +		git add first &&
 +		git commit -m first &&
-+		mv first third &&
++		git mv first second &&
++		mv second third &&
 +		git add -N third &&
 +
 +		git status | grep -v "^?" >actual.1 &&
-+		test_i18ngrep "renamed: *first -> third" actual.1 &&
++		test_i18ngrep "renamed: *first -> second" actual.1 &&
++		test_i18ngrep "renamed: *second -> third" actual.1 &&
++
 +
 +		git status --porcelain | grep -v "^?" >actual.2 &&
 +		cat >expected.2 <<-\EOF &&
-+		 R first -> third
++		RD first -> second
++		 A third
 +		EOF
 +		test_cmp expected.2 actual.2 &&
 +
 +		oid=12f00e90b6ef79117ce6e650416b8cf517099b78 &&
 +		git status --porcelain=v2 | grep -v "^?" >actual.3 &&
 +		cat >expected.3 <<-EOF &&
-+		2 .R N... 100644 100644 100644 $oid $oid R100 first	third
++		2 RD N... 100644 100644 000000 $oid $oid R100 second	first
++		1 .A N... 000000 000000 100644 $_z40 $_z40 third
 +		EOF
 +		test_cmp expected.3 actual.3
 +	)
@@ -134,181 +156,129 @@ index 878e73fe98..e5bfda1853 100755
  test_done
  
 diff --git a/wt-status.c b/wt-status.c
-index c124d7589c..d5bdf4c2e9 100644
+index d5bdf4c2e9..e62853f748 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -376,6 +376,8 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
- 			strbuf_addch(&extra, ')');
- 		}
- 		status = d->worktree_status;
-+		if (d->worktree_path)
-+			two_name = d->worktree_path;
- 		break;
- 	default:
- 		die("BUG: unhandled change_type %d in wt_longstatus_print_change_data",
-@@ -460,6 +462,12 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 			/* mode_worktree is zero for a delete. */
- 			break;
- 
-+		case DIFF_STATUS_COPIED:
-+		case DIFF_STATUS_RENAMED:
-+			d->worktree_path = xstrdup(p->two->path);
-+			d->worktree_score = p->score * 100 / MAX_SCORE;
-+			/* fallthru */
-+
- 		case DIFF_STATUS_MODIFIED:
- 		case DIFF_STATUS_TYPE_CHANGED:
- 		case DIFF_STATUS_UNMERGED:
-@@ -1712,6 +1720,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 			 struct wt_status *s)
- {
- 	struct wt_status_change_data *d = it->util;
-+	const char *from, *to;
- 
- 	if (d->index_status)
- 		color_fprintf(s->fp, color(WT_STATUS_UPDATED, s), "%c", d->index_status);
-@@ -1722,15 +1731,30 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 	else
- 		putchar(' ');
- 	putchar(' ');
-+
-+	if (d->head_path && d->worktree_path)
-+		die("BUG: to be addressed in the next patch");
-+
-+	if (d->head_path) {
-+		from = d->head_path;
-+		to = it->string;
-+	} else if (d->worktree_path) {
-+		from = it->string;
-+		to = d->worktree_path;
-+	} else {
-+		from = it->string;
-+		to = NULL;
-+	}
- 	if (s->null_termination) {
--		fprintf(stdout, "%s%c", it->string, 0);
--		if (d->head_path)
--			fprintf(stdout, "%s%c", d->head_path, 0);
-+		fprintf(stdout, "%s%c", from, 0);
-+		if (to)
-+			fprintf(stdout, "%s%c", to, 0);
- 	} else {
- 		struct strbuf onebuf = STRBUF_INIT;
- 		const char *one;
--		if (d->head_path) {
--			one = quote_path(d->head_path, s->prefix, &onebuf);
-+
-+		if (to) {
-+			one = quote_path(from, s->prefix, &onebuf);
- 			if (*one != '"' && strchr(one, ' ') != NULL) {
- 				putchar('"');
- 				strbuf_addch(&onebuf, '"');
-@@ -1738,8 +1762,9 @@ static void wt_shortstatus_status(struct string_list_item *it,
- 			}
- 			printf("%s -> ", one);
- 			strbuf_release(&onebuf);
--		}
--		one = quote_path(it->string, s->prefix, &onebuf);
-+			one = quote_path(to, s->prefix, &onebuf);
-+		} else
-+			one = quote_path(from, s->prefix, &onebuf);
- 		if (*one != '"' && strchr(one, ' ') != NULL) {
- 			putchar('"');
- 			strbuf_addch(&onebuf, '"');
-@@ -2036,12 +2061,13 @@ static void wt_porcelain_v2_print_changed_entry(
- {
- 	struct wt_status_change_data *d = it->util;
- 	struct strbuf buf_index = STRBUF_INIT;
--	struct strbuf buf_head = STRBUF_INIT;
-+	struct strbuf buf_other = STRBUF_INIT;
- 	const char *path_index = NULL;
--	const char *path_head = NULL;
--	char key[3];
-+	const char *path_other = NULL;
-+	char key[3], status_other;
- 	char submodule_token[5];
- 	char sep_char, eol_char;
-+	int score;
- 
- 	wt_porcelain_v2_fix_up_changed(it, s);
- 	wt_porcelain_v2_submodule_state(d, submodule_token);
-@@ -2050,6 +2076,19 @@ static void wt_porcelain_v2_print_changed_entry(
- 	key[1] = d->worktree_status ? d->worktree_status : '.';
- 	key[2] = 0;
- 
-+	if (d->head_path && d->worktree_path)
-+		die("BUG: to be addressed in the next patch");
-+
-+	if (d->head_path) {
-+		path_other = d->head_path;
-+		status_other = d->index_status;
-+		score = d->head_score;
-+	} else if (d->worktree_path) {
-+		path_other = d->worktree_path;
-+		status_other = d->worktree_status;
-+		score = d->worktree_score;
-+	}
-+
- 	if (s->null_termination) {
- 		/*
- 		 * In -z mode, we DO NOT C-quote pathnames.  Current path is ALWAYS first.
-@@ -2058,7 +2097,6 @@ static void wt_porcelain_v2_print_changed_entry(
- 		sep_char = '\0';
- 		eol_char = '\0';
- 		path_index = it->string;
--		path_head = d->head_path;
- 	} else {
- 		/*
- 		 * Path(s) are C-quoted if necessary. Current path is ALWAYS first.
-@@ -2069,17 +2107,17 @@ static void wt_porcelain_v2_print_changed_entry(
- 		sep_char = '\t';
- 		eol_char = '\n';
- 		path_index = quote_path(it->string, s->prefix, &buf_index);
--		if (d->head_path)
--			path_head = quote_path(d->head_path, s->prefix, &buf_head);
-+		if (path_other)
-+			path_other = quote_path(path_other, s->prefix, &buf_other);
- 	}
- 
--	if (path_head)
-+	if (path_other)
- 		fprintf(s->fp, "2 %s %s %06o %06o %06o %s %s %c%d %s%c%s%c",
- 				key, submodule_token,
- 				d->mode_head, d->mode_index, d->mode_worktree,
- 				oid_to_hex(&d->oid_head), oid_to_hex(&d->oid_index),
--				key[0], d->head_score,
--				path_index, sep_char, path_head, eol_char);
-+				status_other, score,
-+				path_index, sep_char, path_other, eol_char);
- 	else
- 		fprintf(s->fp, "1 %s %s %06o %06o %06o %s %s %s%c",
- 				key, submodule_token,
-@@ -2088,7 +2126,7 @@ static void wt_porcelain_v2_print_changed_entry(
- 				path_index, eol_char);
- 
- 	strbuf_release(&buf_index);
--	strbuf_release(&buf_head);
-+	strbuf_release(&buf_other);
+@@ -419,6 +419,47 @@ static char short_submodule_status(struct wt_status_change_data *d)
+ 	return d->worktree_status;
  }
  
- /*
-diff --git a/wt-status.h b/wt-status.h
-index f9330982ac..332ff545aa 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -44,10 +44,10 @@ struct wt_status_change_data {
- 	int worktree_status;
- 	int index_status;
- 	int stagemask;
--	int head_score;
-+	int head_score, worktree_score;
- 	int mode_head, mode_index, mode_worktree;
- 	struct object_id oid_head, oid_index;
--	char *head_path;
-+	char *head_path, *worktree_path;
- 	unsigned dirty_submodule       : 2;
- 	unsigned new_submodule_commits : 1;
- };
++static struct string_list_item * break_double_rename(
++		struct wt_status *s, struct string_list_item *it,
++		int *status, struct diff_filepair *p)
++{
++	struct wt_status_change_data *d;
++	struct string_list_item *new_it;
++
++	d = it->util;
++	/*
++	 * _collect_index_changes() must have been called or
++	 * d->head_path does not contain a real value.
++	 */
++	if (!d || !d->head_path)
++		return it;
++
++	switch (s->status_format) {
++	case STATUS_FORMAT_SHORT:
++	case STATUS_FORMAT_PORCELAIN:
++	case STATUS_FORMAT_PORCELAIN_V2:
++		break;
++	case STATUS_FORMAT_LONG:
++	case STATUS_FORMAT_NONE:
++		/* this output can handle double renames ok */
++		return it;
++	default:
++		die("BUG: finalize_deferred_config() should have been called");
++	}
++
++	switch (*status) {
++	case DIFF_STATUS_RENAMED:
++		d->worktree_status = DIFF_STATUS_DELETED;
++		/* fallthru */
++	case DIFF_STATUS_COPIED:
++		*status = DIFF_STATUS_ADDED;
++		new_it = string_list_insert(&s->change, p->two->path);
++		return new_it;
++	}
++
++	return it;
++}
++
+ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 					 struct diff_options *options,
+ 					 void *data)
+@@ -433,16 +474,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 		struct diff_filepair *p;
+ 		struct string_list_item *it;
+ 		struct wt_status_change_data *d;
++		int status;
+ 
+ 		p = q->queue[i];
++		status = p->status;
+ 		it = string_list_insert(&s->change, p->one->path);
++		it = break_double_rename(s, it, &status, p);
+ 		d = it->util;
+ 		if (!d) {
+ 			d = xcalloc(1, sizeof(*d));
+ 			it->util = d;
+ 		}
+ 		if (!d->worktree_status)
+-			d->worktree_status = p->status;
++			d->worktree_status = status;
+ 		if (S_ISGITLINK(p->two->mode)) {
+ 			d->dirty_submodule = p->two->dirty_submodule;
+ 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
+@@ -451,7 +495,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 				d->worktree_status = short_submodule_status(d);
+ 		}
+ 
+-		switch (p->status) {
++		switch (status) {
+ 		case DIFF_STATUS_ADDED:
+ 			d->mode_worktree = p->two->mode;
+ 			break;
+@@ -477,7 +521,7 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 			break;
+ 
+ 		default:
+-			die("BUG: unhandled diff-files status '%c'", p->status);
++			die("BUG: unhandled diff-files status '%c'", status);
+ 			break;
+ 		}
+ 
+@@ -710,12 +754,12 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 
+ void wt_status_collect(struct wt_status *s)
+ {
+-	wt_status_collect_changes_worktree(s);
+-
+ 	if (s->is_initial)
+ 		wt_status_collect_changes_initial(s);
+ 	else
++		/* must be called before _collect_changes_worktree() */
+ 		wt_status_collect_changes_index(s);
++	wt_status_collect_changes_worktree(s);
+ 	wt_status_collect_untracked(s);
+ }
+ 
+@@ -1733,7 +1777,7 @@ static void wt_shortstatus_status(struct string_list_item *it,
+ 	putchar(' ');
+ 
+ 	if (d->head_path && d->worktree_path)
+-		die("BUG: to be addressed in the next patch");
++		die("BUG: break_double_rename() fails to break this pair");
+ 
+ 	if (d->head_path) {
+ 		from = d->head_path;
+@@ -2077,7 +2121,7 @@ static void wt_porcelain_v2_print_changed_entry(
+ 	key[2] = 0;
+ 
+ 	if (d->head_path && d->worktree_path)
+-		die("BUG: to be addressed in the next patch");
++		die("BUG: break_double_rename() fails to break this pair");
+ 
+ 	if (d->head_path) {
+ 		path_other = d->head_path;
 -- 
 2.15.0.320.g0453912d77
 
