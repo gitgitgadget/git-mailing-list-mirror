@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7254F1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 23:01:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4953D1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 23:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753030AbdL0XBQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 18:01:16 -0500
-Received: from mail-ua0-f174.google.com ([209.85.217.174]:44079 "EHLO
-        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752910AbdL0XAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 18:00:45 -0500
-Received: by mail-ua0-f174.google.com with SMTP id k4so6563582ual.11
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:00:44 -0800 (PST)
+        id S1752052AbdL0XYC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 18:24:02 -0500
+Received: from mail-ua0-f181.google.com ([209.85.217.181]:43228 "EHLO
+        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751963AbdL0XYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 18:24:01 -0500
+Received: by mail-ua0-f181.google.com with SMTP id g4so19850505ual.10
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:24:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=bOGiLxu25tuX79VZqpP84QROxGm3Q6s6RD/n7GwvD3w=;
-        b=YP0fNrqu/poa21WMFK4B0Y9kpBw7CxToh32HyhCHd0nww5+UHJN31g3EFcAuW8KfHC
-         wXPFZLV6kj+MGiaPJCMoybBuxleDkCgqVVZ7PcIbp+F4idGj6XRtNZMQdG7e/0lhBp1z
-         oqSeNJAIOu0n60dTQgT+2IWf08cw3q1Np8zEKSKNJugkOZmfDMB+EBFKtIOz+hmVi7GN
-         7qzrHdOsBSNoStnarzqnYWuK9xB0x+c/rIaamN3VuxUevZZ09r5kGID4gdx0Tj0WXPjx
-         7Xrq6HhtekRmuim5i5TSxfvSVFdXYfbKTV8AE5PsqovOYqPeO/wZjrsoNa1emF8NBxBV
-         UBTA==
+        bh=8v2fv1ghUFiNuGt1650JB/7vZVa9Q4hxl64JfWYPvtY=;
+        b=gxF0Fp6PTPmpcvSd3xzMK8dZQnkqvUNTY93FXerWiy+D4Q+BH4kLDiw2vabOUFSZ8u
+         KgRWjaT1POc8asX2J/VVn3gULYXabANbUqpNvuxgCLUdSCLLivf2qJS9RNfuVsank8ws
+         aidnBEls4BuuzCqsc10ODNwadTR0hjIBAlw3GiGnicRRnaZvLwzPeuddhfOJ1nYAlWIR
+         OpV3EHledET9rmniQF6y59H7VcLs/xt1A6NNQgxvPR3gSQrwqYR41p1BULS8gNCJkZVR
+         2ZnX42jVPTCJ+Uezd7FfSGLDvq2GHzBNwn/9ejHL7VKptc05wMp6wAiiL3YRRh9Y9QLh
+         t4Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bOGiLxu25tuX79VZqpP84QROxGm3Q6s6RD/n7GwvD3w=;
-        b=Oq5UdikWCWaokYfHo+MYVeG+3hOZqfrA3aHBYw8JgpIlACdW5E6oHnWu0p/Zo+N/4g
-         Bk+S8z9O8AxQHDDogkQJl5ZV4wnCw6zm4QerbgyPSwRGTkffcHBzx3mprSBPz3u9JljM
-         fyW7Iyd4zAenqvJ7QdZj607ZEAYV3idL//OxgkJwUkGVLGvKrbns53/5fdg8wm6UepBL
-         /DxOdB/TggT7692lbalJa2HruvgTnC8OrFvWnDG6CiWH0o5p/adKenYFnmu4XaZyKzsw
-         1YTFf1s0Rk0VdRDtpxye0A9DG41K+9cEFwXnOUzYy+lrAVWtpFeukXV4dS1hnKG1c9a7
-         pNKg==
-X-Gm-Message-State: AKGB3mJP57McKRyLGvsh5GyeR6egoooDgHpcauqUgJW98VIIOgAWFkbR
-        7GE3mHsxR60uqlaDUf6GtG/H4+jT8ezbOtEJB94=
-X-Google-Smtp-Source: ACJfBosnJLkuoLq4pu+886ZXC+bm1GWtnBw/HU3Rvwp5D/N0x6Gl2dClDewLhnOe4mYi1FGcmj8Yomy9eCYIWDIIs2Q=
-X-Received: by 10.176.90.202 with SMTP id x10mr26632966uae.83.1514415644315;
- Wed, 27 Dec 2017 15:00:44 -0800 (PST)
+        bh=8v2fv1ghUFiNuGt1650JB/7vZVa9Q4hxl64JfWYPvtY=;
+        b=DteR2M+Fqc1oMWqRspdANFL81DtqeX24j27hEy4dM2tVyNhrAwhbNQ05WZc9zoFqNm
+         xLp/laiMASlBbvwR9TMZw+LWsaHceAgLTs/y+I1SaZTi84yRkyeRlbAmKMienSQEbisa
+         VBmXOXvLRKDqkBiZOvvAoPtkANsV8rAJlOuVCHSjWtKM7Btrpu4If50NyxQPUtkagG9c
+         pfEaOFOZogN/buvN4etNFtHXIS0hkPWg+XgAUvcadC5CQsklyfvcFUdeB9RcbrxtTS4J
+         tb7gOeQkYYF6d9yvjFyYlnUfGyzu7rqtJIYWpFnBmbCdE414uwsAjQUO3HYsJtelBoN0
+         YPgQ==
+X-Gm-Message-State: AKGB3mJQvx+l4JG6YJQDN4g/DHDuWVWXrFTOP/+o3/rXUlgWFzgHMZKv
+        9icDTK2DknMkOFD/xGS7CckVFdnZVsKwjMZq6n4=
+X-Google-Smtp-Source: ACJfBovf6ekYuKlMCLcvop0yfUiyaG0OEGv4HMx/6k7PKVfTx/Hybs44ywhQeLeRrK+PCmQJ1XAvLJS0cmC7VhxFgZc=
+X-Received: by 10.159.38.98 with SMTP id 89mr30470195uag.37.1514417040848;
+ Wed, 27 Dec 2017 15:24:00 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.83.46 with HTTP; Wed, 27 Dec 2017 15:00:43 -0800 (PST)
-In-Reply-To: <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com>
+Received: by 10.176.83.46 with HTTP; Wed, 27 Dec 2017 15:24:00 -0800 (PST)
+In-Reply-To: <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
 References: <20171227164905.13872-1-szeder.dev@gmail.com> <20171227164905.13872-3-szeder.dev@gmail.com>
- <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com>
+ <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com> <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
 From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 28 Dec 2017 00:00:43 +0100
-Message-ID: <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
+Date:   Thu, 28 Dec 2017 00:24:00 +0100
+Message-ID: <CAM0VKj=sqOzjNRxdqCa4Nwg0B=3sxzbG-WhVC_n+anjDwD2J-Q@mail.gmail.com>
 Subject: Re: [PATCH 2/2] travis-ci: record and skip successfully built trees
 To:     Lars Schneider <larsxschneider@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -64,71 +64,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 27, 2017 at 8:15 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
+On Thu, Dec 28, 2017 at 12:00 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+> On Wed, Dec 27, 2017 at 8:15 PM, Lars Schneider <larsxschneider@gmail.com=
+> wrote:
+>>> +             then
+>>> +                     cat <<-EOF
+>>> +                     Skipping build job for commit $TRAVIS_COMMIT.
+>>> +                     This commit has already been built and tested suc=
+cessfully by this build job.
+>>> +                     To force a re-build delete the branch's cache and=
+ then hit 'Restart job'.
+>>> +                     EOF
+>>> +             else
+>>> +                     cat <<-EOF
+>>> +                     Skipping build job for commit $TRAVIS_COMMIT.
+>>> +                     This commit's tree has already been built and tes=
+ted successfully in build job $prev_good_job_number for commit $prev_good_c=
+ommit.
+>>> +                     The log of that build job is available at https:/=
+/travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
+>>> +                     To force a re-build delete the branch's cache and=
+ then hit 'Restart job'.
+>>> +                     EOF
+>>
+>> Maybe add a few newlines before and after EOF to make the text more stan=
+d out?
+>> Or print it in a different color? Maybe red?
+>>
+>> See: https://travis-ci.org/szeder/git/jobs/322247836#L622-L625
 >
->> On 27 Dec 2017, at 17:49, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote=
-:
->> +# Skip the build job if the same tree has already been built and tested
->> +# successfully before (e.g. because the branch got rebased, changing on=
-ly
->> +# the commit messages).
->> +skip_good_tree () {
->> +     if ! good_tree_info=3D"$(grep "^$(git rev-parse $TRAVIS_COMMIT^{tr=
-ee}) " "$good_trees_file")"
->> +     then
->> +             # haven't seen this tree yet; continue the build job
->> +             return
->> +     fi
->> +
->> +     echo "$good_tree_info" | {
->> +             read tree prev_good_commit prev_good_job_number prev_good_=
-job_id
->> +
->> +             if test "$TRAVIS_JOB_ID" =3D  "$prev_good_job_id"
->
-> Under what circumstances would that be true?
+> I considered using color for the first line, but then didn't do it,
+> because I didn't want to decide the color :)
+> Anyway, red is the general error/failure color, but this is neither.  It
+> could either be green, to match the color of the build job's result, or
+> something neutral like blue or yellow.
 
-When the user hits 'Restart job' on the Travis CI web interface,
-$TRAVI_JOB_NUMBER and _ID remain the same in the restarted build job as
-they were in the original.
-So the condition is true when the user hits 'Restart job' on a build job
-that was the first to successfully build and test the current tree.
-
-> Nit: One unintended space after =3D ?!
-
-Ok.
-
->> +             then
->> +                     cat <<-EOF
->> +                     Skipping build job for commit $TRAVIS_COMMIT.
->> +                     This commit has already been built and tested succ=
-essfully by this build job.
->> +                     To force a re-build delete the branch's cache and =
-then hit 'Restart job'.
->> +                     EOF
->> +             else
->> +                     cat <<-EOF
->> +                     Skipping build job for commit $TRAVIS_COMMIT.
->> +                     This commit's tree has already been built and test=
-ed successfully in build job $prev_good_job_number for commit $prev_good_co=
-mmit.
->> +                     The log of that build job is available at https://=
-travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
->> +                     To force a re-build delete the branch's cache and =
-then hit 'Restart job'.
->> +                     EOF
->
-> Maybe add a few newlines before and after EOF to make the text more stand=
- out?
-> Or print it in a different color? Maybe red?
->
-> See: https://travis-ci.org/szeder/git/jobs/322247836#L622-L625
-
-I considered using color for the first line, but then didn't do it,
-because I didn't want to decide the color :)
-Anyway, red is the general error/failure color, but this is neither.  It
-could either be green, to match the color of the build job's result, or
-something neutral like blue or yellow.
-
-G=C3=A1bor
+OTOH, the message printed in skip_branch_tip_with_tag() is not
+colorized, either.
