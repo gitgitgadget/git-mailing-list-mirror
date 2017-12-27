@@ -2,139 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AB4D1F424
-	for <e@80x24.org>; Wed, 27 Dec 2017 18:49:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B5E1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 18:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752087AbdL0StD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 13:49:03 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:45588 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751187AbdL0StC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 13:49:02 -0500
-Received: by mail-qt0-f174.google.com with SMTP id g10so48777577qtj.12
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 10:49:01 -0800 (PST)
+        id S1752016AbdL0Sud (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 13:50:33 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:33763 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751184AbdL0Suc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 13:50:32 -0500
+Received: by mail-wr0-f180.google.com with SMTP id v21so26741020wrc.0
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 10:50:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VwET4nu3rMkdn2iBTS/hTqE0I7iRU+3P2q+rNhKmxo4=;
-        b=ebSkcxtp1cm9Oa6jj1Znxg2z+Bv/7aNUXzr51P0L4eFKUcsvS/uKOf+CS6gDINWN0K
-         eQp8nc6+d9MecJxt3Ge+/nq5kh4ezbEHJDyE3e3BvNunQi+PTgathum5T1L/Shql3sQX
-         gyoqRXx0T0PwoFoH01Eeq3UyvEjDMgcHhfetrzVjipiCyAPh2/H8aRpcAXVjmAifneSP
-         x1tSSv6ICAsH9NhsGjPPA2bJJcvShg7/Z0MtqvXynuvPQr1R3ndrtLRDReWMKAcoyYSP
-         5HihtLQoRLb4HvlCrneWxrQHUm4qke+FQ2xJmxJF61NsQsRUt0H0xi7iwFTSkPPAYWk9
-         Cl3w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ZLZZsSS89scaDLZMg3Z9BaCzhpj0f4hEtXiebCDnpOM=;
+        b=Sokln7Rw9bpEV3SYPreNJw3+3QleVJkGbjikJOpzy4egY4JYWjhAUvs5CinqGFUWWv
+         gRo4vMtTBKxBvnb4uBwqQ4QijxAauujeqB/qcfb6aJU8CP+w/0/ReUKDajSGY6UAthnc
+         eQOigSnsn2+begGWIT1Xbp1GbELZt5rsSi/0yd6cR98Krna6I57uwDI3P3R5w8SAk9xm
+         sKVOzDN4ZNRAM4nQVubktLOrPeLRa0oLGoEczn8ZMRMYIsm9ID2lGhUPUZrp2jCAMyAz
+         4M+fEWTZwDzpoCvWFRTlY9swkPurS5/HYWp431NXl6EwU9kJRUzafCkeJ3OgCOtFalOY
+         WN0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VwET4nu3rMkdn2iBTS/hTqE0I7iRU+3P2q+rNhKmxo4=;
-        b=D+XhAvrM/VJQuLxTAMUEFCI+s/aCOvUlSrSBGb0PET5Stb+O4943FL3fF9iwUFNTPF
-         wrGSMU7Dbx7uFt3uaa2umvhZXWmSkRb62RU37/VwMWg4hf5TyxGRjUbSa/LAcJS3exnS
-         JLQmVVkpWTWYLx2r/Z6Nh8k1NdtfmkTg4778s2dvm3TxRfDEgFNN2RD8UWR4N98X31Oc
-         b+JsmXXBNW4bE5hMD+x4ngCqYcuNDhogCD3uuOov/+WrCyz0fJx0opDqQKRM1mn9k3tr
-         UHk+jCmO8RxPjUpMjAwS0QrTVILah8CQjuxH9th3yvGg2U717Wnu3n7qkevTXQslZVo3
-         ComA==
-X-Gm-Message-State: AKGB3mLWewuecqsEa2rDl60C93AK+ed8Ojf9XBz/jTqEPFe8bzQ114FQ
-        ECWwDCk+xIJPE0jjNpXEyTpDVSRvtGWwnjYVYG8JIlYjrOA=
-X-Google-Smtp-Source: ACJfBotbLOrnn93rqE2XSOQ11wACz9N/dV1j6qD3w2h0Pr2krxwJz86+buHOvjYdc7ucJrlgdK5XAoyrU84qA6zDGvs=
-X-Received: by 10.200.36.22 with SMTP id c22mr39896583qtc.207.1514400541058;
- Wed, 27 Dec 2017 10:49:01 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 27 Dec 2017 10:49:00 -0800 (PST)
-In-Reply-To: <xmqq374cspgw.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
- <20171212012422.123332-1-sbeller@google.com> <20171214212234.GC32842@aiede.mtv.corp.google.com>
- <CAGZ79kZdUuoM79n09ziG0F7WCWNLpZ2AiFA6fb_qgND1b3_F9A@mail.gmail.com>
- <20171214225200.GA44616@aiede.mtv.corp.google.com> <xmqq374cspgw.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 27 Dec 2017 10:49:00 -0800
-Message-ID: <CAGZ79kYiL0St-600sjxN5gjLSfyRodS1=AqxyALsidntXkg_xA@mail.gmail.com>
-Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=ZLZZsSS89scaDLZMg3Z9BaCzhpj0f4hEtXiebCDnpOM=;
+        b=uL0IPe0JnlCWi/ZMuUnJGezXNgkXxIsi5j8mfmyoNir49p28Dtg6FePL+SJjhdC8O1
+         QhJ+AcEjhglmdp5ITFeeJG40SyeMPo+UhOSvFZRhxRsyOw23ehfijUfX4HGFNpzh3mbA
+         IAs8lITawj6xc+IMHDJ8U5Bg6d3EedWcJrlHW7XZ4f2sQ5peEX9LYqUjWb37GecJSVv4
+         lV/+IzWiBXYyymVh5JzrZahHnx+WhJ3MT+PwV4/zHMc6mppPLmmQNH/vGWzNwgbifm5N
+         /Qo/vfTc9YUj+i/4MLVZGqli6cRNU9Nsqq78SyuOu/0zmaF0uxceXMThq1E7xGpPteyD
+         VVpA==
+X-Gm-Message-State: AKGB3mIT/SpLyq7aLy2aKgoVvP91hSpNl3/weoyF2YLO3dGn4yKVg/xt
+        kBY722ss1WfVlV5a2L/f9Tw=
+X-Google-Smtp-Source: ACJfBoswDCfOaJn034QW8Y7N4lwRo9FPE586EikVjmc7lDEk7TO/FOaAjkBdHV10L/JN0Bqc5HVM2g==
+X-Received: by 10.223.132.37 with SMTP id 34mr30192029wrf.94.1514400631622;
+        Wed, 27 Dec 2017 10:50:31 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id x13sm12965411wre.65.2017.12.27.10.50.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Dec 2017 10:50:30 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache bug
+References: <20171222140032.21180-1-avarab@gmail.com> <xmqqlghoniuk.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqlghoniuk.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 27 Dec 2017 19:50:29 +0100
+Message-ID: <87mv24qa2y.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 14, 2017 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+On Wed, Dec 27 2017, Junio C. Hamano jotted:
+
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 >
->>> Regarding finding a better name, I would want to hear from others,
->>> I am happy with --find-object, though I can see --pickaxe-object
->>> or --object--filter to be a good narrative as well.
+>> +status_is_clean() {
+>> +	>../status.expect &&
+>> +	git status --porcelain >../status.actual &&
+>> +	test_cmp ../status.expect ../status.actual
+>> +}
+>> +
+>>  test_lazy_prereq UNTRACKED_CACHE '
+>>  	{ git update-index --test-untracked-cache; ret=$?; } &&
+>>  	test $ret -ne 1
+>> @@ -683,4 +689,43 @@ test_expect_success 'untracked cache survives a commit' '
+>>  	test_cmp ../before ../after
+>>  '
 >>
->> Drat, I was hoping for an opinion.
+>> +test_expect_success 'teardown worktree' '
+>> +    cd ..
+>> +'
 >
-> I think it would make it a better companion to --pickaxe but we need
-> to align its behaviour a little bit so that it plays better with the
-> "--pickaxe-all" option, and also needs to hide mode and name only
-> changes just like pickaxe.
+> Funny indentation.
 
-I looked into this, and the small changes needed led me to thinking
-it could be integrated into the diffcore-pickaxe code completely,
-roughly like (spaces mangled):
+Thanks. I'll submit a new series with all 3 patches with the issues you
+brought up mentioned...
 
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 9476bd2108..46f875a7b4 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -124,13 +124,21 @@ static int pickaxe_match(struct diff_filepair
-*p, struct diff_options *o,
-        mmfile_t mf1, mf2;
-        int ret;
+>> +test_expect_success 'setup worktree for symlink test' '
+>> +	git init worktree-symlink &&
+>> +	cd worktree-symlink &&
+>> +	git config core.untrackedCache true &&
+>> +	mkdir one two &&
+>> +	touch one/file two/file &&
+>> +	git add one/file two/file &&
+>> +	git commit -m"first commit" &&
+>> +	git rm -rf one &&
+>> +	ln -s two one &&
+>> +	git add one &&
+>> +	git commit -m"second commit"
+>> +'
+>
+> This needs SYMLINKS prereq, which in turn means it cannot be tested
+> on certain platforms.  I thought Duy's answer was that this does not
+> need to involve a symbolic link at all?  If so, perhaps we can have
+> another test that does not need symlink?
 
--       if (!o->pickaxe[0])
--               return 0;
--
-        /* ignore unmerged */
-        if (!DIFF_FILE_VALID(p->one) && !DIFF_FILE_VALID(p->two))
-                return 0;
+... as soon as I figure out how to add such a non-symlink test as well
+(seems sensible to test both), but I can't bring it to fail without
+symlinks, I just adjusted my test script to do this instead:
 
-+       if (options->objfind) {
-+               if ((DIFF_FILE_VALID(p->one) &&
-+                    oidset_contains(options->objfind, &p->one->oid)) ||
-+                   (DIFF_FILE_VALID(p->two) &&
-+                    oidset_contains(options->objfind, &p->two->oid)))
-+                       return 1;
-+       }
-+
-+       if (!o->pickaxe[0])
-+               return 0;
-+
-        if (o->flags.allow_textconv) {
-                textconv_one = get_textconv(p->one);
-                textconv_two = get_textconv(p->two);
----8<---
+    (
+        rm -rf /tmp/testrepo &&
+        git init /tmp/testrepo &&
+        cd /tmp/testrepo &&
+        mkdir x y &&
+        touch x/a y/b &&
+        git add x/a y/b &&
+        git commit -msnap &&
+        git rm -rf y &&
+        mkdir y &&
+        touch y/c &&
+        git add y &&
+        git commit -msnap2 &&
+        git checkout HEAD~ &&
+        git status &&
+        git checkout master &&
+        sleep 1 &&
+        git status &&
+        git status
+    )
 
-But then, it seems as if any pickaxe option is incompatible with
-any other, i.e. from reading the code, you cannot combine -S
-and -G, or even give one of them twice.
-
-I guess that would be not a big deal for the --pickaxe-object,
-but just want to point it out.
-
-> After all, the diffcore-blobfind code was written while looking at
-> the diffcore-pickaxe's code in another window shown in the pager,
-> and I tend to agree with your earlier message that this is an
-> extreme case of -S<contents> where the contents happens to be the
-> whole file.
-
-I disagree, as the user doesn't have the content, but the hash
-over the content only and wants to know more about it. The new
-option cannot be used to find a file whose partial content hashes to
-the given sha1, either.
-
-So with these considerations, I would keep the patch as currently\
-queued at sb/diff-blobfind.
-
-Thanks,
-Stefan
+Duy, what am I missing here?
