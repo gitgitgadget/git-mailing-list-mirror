@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 747161F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 16:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 786841F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 16:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752023AbdL0Qg0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 11:36:26 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:45352 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbdL0QgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 11:36:25 -0500
-Received: by mail-wm0-f43.google.com with SMTP id 9so40211319wme.4
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 08:36:25 -0800 (PST)
+        id S1752046AbdL0Qga (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 11:36:30 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33132 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751028AbdL0Qg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 11:36:29 -0500
+Received: by mail-wm0-f66.google.com with SMTP id g130so40152207wme.0
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 08:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7VI1iiOz+Hd/qsV0wCiDqWI7/3r0j6etwJT9zmyLg4Y=;
-        b=t2tjmbfYyGGK0QnOTow/eXcRQZyxojJMbukU/bD/yMdXOMPhbLiRQ5CatL2ORqOFzy
-         T9yKwKDP/TGBBLZTTZP9RQkgGovtBqRsQbYIuYmdDMlI2oH6/13wrQsYF0JWwgVuazaR
-         bL3KfR9Xi2kA2EUN+5AnpKn+FGpgu0cnjfvVMvotudoRk5/cgYt5APMKtQsSfUTeOczp
-         0aDeyDbf1LhvTayHblMaOeN2BAgp+xBMo6isfsSBhSK/78+IwNzfBMPhROhiWP9OSROl
-         T+9heSARh5VaEqVxGeKhJaiJeOS0BPnUR455KSTkq8mF36raN0Q3jo+4M2LAap1Z4gUd
-         6mMg==
+        bh=DHSwjW02oGmQW9XYBwdnqDzxYCgv4nzhve6wRuOSK9c=;
+        b=tm3MAcTL2vUfGF57Q4Brs4uxir02Xv6nqCgDc8nK1BCVVzT8Qgj212Xe4JhU/AS1kX
+         ROvAUASLS1zmK8KRmMBcQvVNkyZMb2IZ9EHsKkbostBV2SUMp/ItpjCplhqHeHmHJpND
+         v158nN4LdjlEDXJcoTEdPmpk8l7CxXAXvHCIP5elb7qEoAEfC4cwjjSXQFH0psIpMzuv
+         LAQr83n3u5gh2y3uO4FF+uf2CCNvPXIAIC/TQBtTTqoQViVga+b5JFZpdS/MKtkuyjSV
+         6Y9W2SoNbhhAKED9NH5paYbPiht6HmknU9+G6tRu95h02zlje7NA67kyWq43oWkz0Cef
+         CUUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7VI1iiOz+Hd/qsV0wCiDqWI7/3r0j6etwJT9zmyLg4Y=;
-        b=e8pHRKwxkvR5Vvx0wmwgRCwcEU/hH5mAyB7xsdh0wts4lomoU6O7+mHhkNTntp9xaB
-         aCuDVdtZsEi3hNPliK0NJ7KTH0C+ywxFj0Tk4adt3F/yyDJ9t92H1rAkyXF8Ve7+xEVB
-         g6ooYfGwmfDv7N9ViQjnFoCCRRWw1ICtDfsyrdKax95Bhee/jGBGjoBDRSOfLgDQ+2Xq
-         4B/4geQZmAfGLYU5hc9SYgB3t4QnLBvJOSznXGq0si2YeWRGYNpZU+gIi1yGyBjOggq9
-         HVpA4YeMBxARtS+9GgEgBBNR/vxk+20oHnuqUQb2mU54GRzjqUd1VG3dOP7vP/yfgehF
-         +puQ==
-X-Gm-Message-State: AKGB3mIN8/Awi+MsmLkg2YZ4tZr3wIC3W0r5wKPkAxnzVo5P3at1hBqj
-        rW/mDF+FmHU8wqCwlItEdYY=
-X-Google-Smtp-Source: ACJfBosaW4SpnuagL1Aj6Ej7+pOA5/so23k8Yq9PJMHopqXOnOhgvgBim+CM5q9gBI4obiGfkgZLCg==
-X-Received: by 10.28.45.151 with SMTP id t145mr21946519wmt.108.1514392584352;
-        Wed, 27 Dec 2017 08:36:24 -0800 (PST)
+        bh=DHSwjW02oGmQW9XYBwdnqDzxYCgv4nzhve6wRuOSK9c=;
+        b=tFsNjXwDlzK2TSnYivyfcwXKhfxQysGsOfGoaRZ7DTtThqE6sV+QYNS3veKKAKSrBt
+         brQcZsFAyZu8Ij0CK9PmjUsAAENiXvH/cLnnQqCnNcbRh6dSEaXkxi5wLqHC4Tuh2dN8
+         5QLCc1FYN0CqCaIVDPQboGI2uP34RgvbFI9HEtH6Y7Wk8goiWvnFnDVrjiJ61HUHrPYJ
+         OyrPNdaYKs23eMH8ipJ65pEGLEo17pXzopEnwqX6hlQeuyNvb1XqZh8UbTPsj0f/B6Dr
+         GCLNFzmNDwDD6OypmPcUn6k25S1eTGGuESf2ZIHnyqIoFAxgr6G2qUusi1ZItEIT8LXn
+         /b1A==
+X-Gm-Message-State: AKGB3mI58r8vkrT1+5TZUoTdcaZQbdCVCdX8iRI7X6IJJqjRdo8lIJaK
+        6s2oQdhJdWvfcUHPpHVMkeo=
+X-Google-Smtp-Source: ACJfBovqZPBxbZcF3eq3hIdjxBr89OvFLKZUR/bFrI8Xku3czKcOGk7nYfTQ3d1llqwlHmKo1foNtw==
+X-Received: by 10.28.181.209 with SMTP id e200mr23175444wmf.68.1514392588219;
+        Wed, 27 Dec 2017 08:36:28 -0800 (PST)
 Received: from localhost.localdomain (62-165-236-58.pool.digikabel.hu. [62.165.236.58])
-        by smtp.gmail.com with ESMTPSA id l1sm8400557wmh.13.2017.12.27.08.36.23
+        by smtp.gmail.com with ESMTPSA id l1sm8400557wmh.13.2017.12.27.08.36.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 Dec 2017 08:36:23 -0800 (PST)
+        Wed, 27 Dec 2017 08:36:27 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 1/4] travis-ci: fine tune the use of 'set -x' in 'ci/*' scripts
-Date:   Wed, 27 Dec 2017 17:36:00 +0100
-Message-Id: <20171227163603.13313-2-szeder.dev@gmail.com>
+Subject: [PATCH v3 2/4] travis-ci: don't install default addon packages for the 32 bit Linux build
+Date:   Wed, 27 Dec 2017 17:36:01 +0100
+Message-Id: <20171227163603.13313-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.15.1.500.g54ea76cc4
 In-Reply-To: <20171227163603.13313-1-szeder.dev@gmail.com>
 References: <20171216125418.10743-1-szeder.dev@gmail.com>
@@ -68,98 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The change in commit 4f2636667 (travis-ci: use 'set -x' in 'ci/*'
-scripts for extra tracing output, 2017-12-12) left a couple of rough
-edges:
+The 32 bit Linux build job compiles Git and runs the test suite in a
+Docker container, while the additional packages (apache2, git-svn,
+language-pack-is) are installed on the host, therefore don't have
+any effect and are unnecessary.
 
-  - 'ci/run-linux32-build.sh' is executed in a Docker container and
-    therefore doesn't source 'ci/lib-travisci.sh', which would enable
-    tracing executed commands.  Enable 'set -x' in this script, too.
-
-  - 'ci/print-test-failures.sh' iterates over all the files containing
-    the exit codes of all the execued test scripts.  Since there are
-    over 800 such files, the loop produces way too much noise with
-    tracing executed commands enabled, so disable 'set -x' for this
-    script.
-
-  - 'ci/run-windows-build.sh' busily waits in a loop for the result of
-    the Windows build, producing too much noise with tracing executed
-    commands enabled as well.  Disable 'set -x' for the duration of
-    that loop.
-
-igned-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- ci/lib-travisci.sh        | 4 +++-
- ci/print-test-failures.sh | 3 +++
- ci/run-linux32-build.sh   | 2 ++
- ci/run-windows-build.sh   | 5 +++++
- 4 files changed, 13 insertions(+), 1 deletion(-)
+ .travis.yml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index 331d3eb3a..348fe3c3c 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -22,7 +22,9 @@ skip_branch_tip_with_tag () {
- }
- 
- # Set 'exit on error' for all CI scripts to let the caller know that
--# something went wrong
-+# something went wrong.
-+# Set tracing executed commands, primarily setting environment variables
-+# and installing dependencies.
- set -ex
- 
- skip_branch_tip_with_tag
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 8c8973cbf..97cc05901 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -5,6 +5,9 @@
- 
- . ${0%/*}/lib-travisci.sh
- 
-+# Tracing executed commands would produce too much noise in the loop below.
-+set +x
-+
- for TEST_EXIT in t/test-results/*.exit
- do
- 	if [ "$(cat "$TEST_EXIT")" != "0" ]
-diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-index e30fb2cdd..a8518eddf 100755
---- a/ci/run-linux32-build.sh
-+++ b/ci/run-linux32-build.sh
-@@ -6,6 +6,8 @@
- #   run-linux32-build.sh [host-user-id]
- #
- 
-+set -x
-+
- # Update packages to the latest available versions
- linux32 --32bit i386 sh -c '
-     apt update >/dev/null &&
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-index 8757b3a97..86999268a 100755
---- a/ci/run-windows-build.sh
-+++ b/ci/run-windows-build.sh
-@@ -69,6 +69,10 @@ esac
- 
- echo "Visual Studio Team Services Build #${BUILD_ID}"
- 
-+# Tracing execued commands would produce too much noise in the waiting
-+# loop below.
-+set +x
-+
- # Wait until build job finished
- STATUS=
- RESULT=
-@@ -90,6 +94,7 @@ done
- # Print log
- echo ""
- echo ""
-+set -x
- gfwci "action=log&buildId=$BUILD_ID" | cut -c 30-
- 
- # Set exit code for TravisCI
+diff --git a/.travis.yml b/.travis.yml
+index 7c9aa0557..4684b3f4f 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -42,6 +42,7 @@ matrix:
+     - env: jobname=Linux32
+       os: linux
+       compiler:
++      addons:
+       services:
+         - docker
+       before_install:
 -- 
 2.15.1.500.g54ea76cc4
 
