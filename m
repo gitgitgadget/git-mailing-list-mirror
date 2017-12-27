@@ -7,98 +7,148 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4953D1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 23:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24BC31F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 23:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752052AbdL0XYC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 18:24:02 -0500
-Received: from mail-ua0-f181.google.com ([209.85.217.181]:43228 "EHLO
-        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751963AbdL0XYB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 18:24:01 -0500
-Received: by mail-ua0-f181.google.com with SMTP id g4so19850505ual.10
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:24:01 -0800 (PST)
+        id S1752767AbdL0XjR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 18:39:17 -0500
+Received: from mail-it0-f65.google.com ([209.85.214.65]:47009 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752757AbdL0XjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 18:39:16 -0500
+Received: by mail-it0-f65.google.com with SMTP id c16so2430807itc.5
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:39:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8v2fv1ghUFiNuGt1650JB/7vZVa9Q4hxl64JfWYPvtY=;
-        b=gxF0Fp6PTPmpcvSd3xzMK8dZQnkqvUNTY93FXerWiy+D4Q+BH4kLDiw2vabOUFSZ8u
-         KgRWjaT1POc8asX2J/VVn3gULYXabANbUqpNvuxgCLUdSCLLivf2qJS9RNfuVsank8ws
-         aidnBEls4BuuzCqsc10ODNwadTR0hjIBAlw3GiGnicRRnaZvLwzPeuddhfOJ1nYAlWIR
-         OpV3EHledET9rmniQF6y59H7VcLs/xt1A6NNQgxvPR3gSQrwqYR41p1BULS8gNCJkZVR
-         2ZnX42jVPTCJ+Uezd7FfSGLDvq2GHzBNwn/9ejHL7VKptc05wMp6wAiiL3YRRh9Y9QLh
-         t4Vg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=D7fZyFLvbwbhEoYkae7X5gDGsee5wHJnuINaTxaLgPo=;
+        b=TLlw5hEbgDOuQNGrYz/y1avWec+syj76GpBfj+FliAig5TsbYISLSszPEOuCw9silf
+         HKxT+uWdVvzlD/QVJrdWbEzlPlW6Jgf/AUEiInuF1z78/afaWWKhjfs5BZRgXnLHVI7w
+         dP2HxSVlOnW9Q8dim93FK00G90pT7VEvMqlhagul+0Tk6ip+BMRcqis+Tm91sYIWFeeL
+         /KB9zYhux/JVSzaVx0tgQvyVNyUi18fUje6xgIhNO8s6HtmQvHxQj3TDaYNWbiIu15H2
+         40DHPRY/9BMrFkc9jnLwPCqc+rTv3zQTbRCaOI4OMDqokFxHQ/stG6ltImQhEEympnmi
+         8lEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8v2fv1ghUFiNuGt1650JB/7vZVa9Q4hxl64JfWYPvtY=;
-        b=DteR2M+Fqc1oMWqRspdANFL81DtqeX24j27hEy4dM2tVyNhrAwhbNQ05WZc9zoFqNm
-         xLp/laiMASlBbvwR9TMZw+LWsaHceAgLTs/y+I1SaZTi84yRkyeRlbAmKMienSQEbisa
-         VBmXOXvLRKDqkBiZOvvAoPtkANsV8rAJlOuVCHSjWtKM7Btrpu4If50NyxQPUtkagG9c
-         pfEaOFOZogN/buvN4etNFtHXIS0hkPWg+XgAUvcadC5CQsklyfvcFUdeB9RcbrxtTS4J
-         tb7gOeQkYYF6d9yvjFyYlnUfGyzu7rqtJIYWpFnBmbCdE414uwsAjQUO3HYsJtelBoN0
-         YPgQ==
-X-Gm-Message-State: AKGB3mJQvx+l4JG6YJQDN4g/DHDuWVWXrFTOP/+o3/rXUlgWFzgHMZKv
-        9icDTK2DknMkOFD/xGS7CckVFdnZVsKwjMZq6n4=
-X-Google-Smtp-Source: ACJfBovf6ekYuKlMCLcvop0yfUiyaG0OEGv4HMx/6k7PKVfTx/Hybs44ywhQeLeRrK+PCmQJ1XAvLJS0cmC7VhxFgZc=
-X-Received: by 10.159.38.98 with SMTP id 89mr30470195uag.37.1514417040848;
- Wed, 27 Dec 2017 15:24:00 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=D7fZyFLvbwbhEoYkae7X5gDGsee5wHJnuINaTxaLgPo=;
+        b=hxVWvypxQq48x+lxAsdX1iOldxa6oWyisf0qSi9StWqsD5CuFV7wELXpgVl4y0imqn
+         Wox4imYwIE7+R86LMhakjej0Y7ascE14O/ogYofENXTrpEhawrJMWYTub9/rrl68uTaR
+         ud6QrUZ4zhghVAtffMYNwg/M2MqQLmm4ujgYQHA/dK5NH4mRPFyqh7WyVLqxtB1g4EyQ
+         1QN/Hh3w+oQQJVnOlIrG9JBH2sjJ9ZX7Yvgpg8Iq0yyvso5qC4XJWFYfJI94Ua+vRJFc
+         WaPpYhFUAQyQabQo7d1NgUTDqzm1chgay4SM3Fongn8GwSksBbWacTiAcP+GlkLWDI0L
+         9rvQ==
+X-Gm-Message-State: AKGB3mInG6NHJpDCXrnIf7lOLCQCM5qdL+/jwf6RoerT0DvIznJChOR0
+        SOOmPrDkCxX+dyYC3yHQWFM=
+X-Google-Smtp-Source: ACJfBovjINYkveZIY4jQEMSQ2hHkJqY/WsVc1QhgW/67a3WaF8Eii/GafEeMJn0r2bDtVyxAsXK4EQ==
+X-Received: by 10.36.172.81 with SMTP id m17mr39659116iti.151.1514417955613;
+        Wed, 27 Dec 2017 15:39:15 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v142sm11073115ita.32.2017.12.27.15.39.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Dec 2017 15:39:14 -0800 (PST)
+Date:   Wed, 27 Dec 2017 15:39:12 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/2] Makefile: NO_OPENSSL=1 should no longer imply
+ BLK_SHA1=1
+Message-ID: <20171227233912.GB181628@aiede.mtv.corp.google.com>
+References: <20171227230038.14386-1-avarab@gmail.com>
+ <20171227230038.14386-2-avarab@gmail.com>
 MIME-Version: 1.0
-Received: by 10.176.83.46 with HTTP; Wed, 27 Dec 2017 15:24:00 -0800 (PST)
-In-Reply-To: <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
-References: <20171227164905.13872-1-szeder.dev@gmail.com> <20171227164905.13872-3-szeder.dev@gmail.com>
- <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com> <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 28 Dec 2017 00:24:00 +0100
-Message-ID: <CAM0VKj=sqOzjNRxdqCa4Nwg0B=3sxzbG-WhVC_n+anjDwD2J-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] travis-ci: record and skip successfully built trees
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20171227230038.14386-2-avarab@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 28, 2017 at 12:00 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
-> On Wed, Dec 27, 2017 at 8:15 PM, Lars Schneider <larsxschneider@gmail.com=
-> wrote:
->>> +             then
->>> +                     cat <<-EOF
->>> +                     Skipping build job for commit $TRAVIS_COMMIT.
->>> +                     This commit has already been built and tested suc=
-cessfully by this build job.
->>> +                     To force a re-build delete the branch's cache and=
- then hit 'Restart job'.
->>> +                     EOF
->>> +             else
->>> +                     cat <<-EOF
->>> +                     Skipping build job for commit $TRAVIS_COMMIT.
->>> +                     This commit's tree has already been built and tes=
-ted successfully in build job $prev_good_job_number for commit $prev_good_c=
-ommit.
->>> +                     The log of that build job is available at https:/=
-/travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
->>> +                     To force a re-build delete the branch's cache and=
- then hit 'Restart job'.
->>> +                     EOF
->>
->> Maybe add a few newlines before and after EOF to make the text more stan=
-d out?
->> Or print it in a different color? Maybe red?
->>
->> See: https://travis-ci.org/szeder/git/jobs/322247836#L622-L625
->
-> I considered using color for the first line, but then didn't do it,
-> because I didn't want to decide the color :)
-> Anyway, red is the general error/failure color, but this is neither.  It
-> could either be green, to match the color of the build job's result, or
-> something neutral like blue or yellow.
+Hi,
 
-OTOH, the message printed in skip_branch_tip_with_tag() is not
-colorized, either.
+Ævar Arnfjörð Bjarmason wrote:
+
+> Stop supplying BLK_SHA1=YesPlease when NO_OPENSSL=UnfortunatelyYes is
+> supplied. This has been done ever since [1], when switching to DC_SHA1
+> by default in [2] this should have been changed as well.
+
+I had trouble parsing this, I think for a few reasons:
+
+ 1. Too much 'this', so I end up not being able to keep track of what
+    has been done ever since (1) and (2)
+
+ 2. The ',' should be a ';'
+
+ 3. Can the commit names go inline in the message instead of being
+    footnotes?  That way, my eye doesn't have to chase so far to
+    find what kind of dates you are talking about.
+
+ 4. Why should switching to DC_SHA1 by default have resulted in
+    simply dropping the NO_OPENSSL => BLK_SHA1 behavior?  At first
+    glance it would be more intuitive to change it to
+    NO_OPENSSL => DC_SHA1 instead.
+
+Putting those all together, I end up with
+
+ Use the collision detecting SHA-1 implementation by default even
+ when NO_OPENSSL is set.
+
+ Setting NO_OPENSSL=UnfortunatelyYes has implied BLK_SHA1=1 ever since
+ the former was introduced in dd53c7ab29 (Support for NO_OPENSSL,
+ 2005-07-29).  That implication should have been removed when the
+ default SHA-1 implementation changed from OpenSSL to DC_SHA1 in
+ e6b07da278 (Makefile: make DC_SHA1 the default, 2017-03-17).  Finish
+ what that commit started by removing the BLK_SHA1 fallback setting so
+ the default DC_SHA1 implementation can be used.
+
+What happens if I set both OPENSSL_SHA1 and NO_OPENSSL?  Should this
+block set
+
+	OPENSSL_SHA1 =
+
+so that the latter wins, or should we detect it as an error?
+
+[...]
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -23,7 +23,6 @@ all::
+>  # it at all).
+>  #
+>  # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+> -# This also implies BLK_SHA1.
+>  #
+>  # Define USE_LIBPCRE if you have and want to use libpcre. Various
+>  # commands such as log and grep offer runtime options to use
+> @@ -1260,7 +1259,6 @@ ifndef NO_OPENSSL
+>  	endif
+>  else
+>  	BASIC_CFLAGS += -DNO_OPENSSL
+> -	BLK_SHA1 = 1
+>  	OPENSSL_LIBSSL =
+>  endif
+>  ifdef NO_OPENSSL
+> diff --git a/configure.ac b/configure.ac
+> index 2f55237e65..7f8415140f 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -241,7 +241,6 @@ AC_MSG_NOTICE([CHECKS for site configuration])
+>  # a bundled SHA1 routine optimized for PowerPC.
+>  #
+>  # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+> -# This also implies BLK_SHA1.
+
+With or without some of those commit message tweaks
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks,
+Jonathan
