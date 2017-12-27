@@ -2,124 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABC641F406
-	for <e@80x24.org>; Wed, 27 Dec 2017 11:29:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0DBB1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 13:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751358AbdL0L3K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 06:29:10 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34181 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751151AbdL0L3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 06:29:07 -0500
-Received: by mail-wm0-f42.google.com with SMTP id y82so39024314wmg.1
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 03:29:06 -0800 (PST)
+        id S1751115AbdL0NgD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 08:36:03 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:42015 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751000AbdL0NgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 08:36:02 -0500
+Received: by mail-lf0-f67.google.com with SMTP id e27so7545736lfb.9
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 05:36:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aX6NP/KOsYt6KC1B0AXbeHdqc6bbJujj0fh+FMqBuG8=;
-        b=ZdtF6NCpbSWv5BOq5bhIJ4xM3EH2BSGw9rDJhmUuRA7ppp0sESPbpCF0myo3AC9Lqy
-         ox4wHvILhAg6v/xLF5hzNNtmStwH0YNoPsah9e58d2Sdo7mTcvoKZR/5WK5rMiLZ57Kp
-         UZ5MXK1rwT8nq/lF3posqNBOoC9gv0q9xUVAY0DSF6usW1ColRkhdkeSVZVnlNJjTCT2
-         qpVP7yXn86ZMasp8/EqtpRpcyX3fzNFTL/qrKtgGLpYcsESj0FGx1E5Frg0WtuHJULNN
-         sz8F9FucUMb0ghiiX9QJDfb9Swu699QsMh85gA/7CYBuw0Ep8ScK5hnaT+oUjixp4ktQ
-         30tA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=UMAfB6dZzgCWdYELua0+QO7ssT6hiPezN8ZdFvk9fgs=;
+        b=NdkiO//+m4NgyBADQB9/L6xZU2+EGY8C/AxlD5OcYMNayp/7BnO5rcD5Zp5z84qBmZ
+         smGA5M4kK5JrP8zT6Wj4YJV4ZwdoLDAJv2cjtLc/nbsvzgIX3atT0zh/k+iTiZU5yrzH
+         x2XCUvYa93NZ3gYclj3C65hca3axt1oHxPfRZYQxeNakimuQM8izn27G4SnbRG+L8djc
+         h7EZoobVsmy8h8w5+t2UNkyf8IOJxqO9N/xL/ZIn2kN7xgqE9JkSgfv9cigiIaN5tsKo
+         4oD3DrqNKhv2IiyOzqiMBNn8BkH3NqDebFcHoua79FVfOxPs1J/mL/7Pco59ho3V6+us
+         zKCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aX6NP/KOsYt6KC1B0AXbeHdqc6bbJujj0fh+FMqBuG8=;
-        b=fGFOTQAo5yNyJSTNcsuN4Un8enaR9b0MYXnMqOVJ/tw+sUmPO99SdXQaFGfQVI6Odn
-         XxDvxjhD/JN4ZFxo2c4tUeYPh7Sl6FTYu92EzeCadVl3VY7B7B90Gr5QS8aLq9UF/smJ
-         IQMyLR2fo0K8fA6AdXg4uOGCS+kH7ir1wlaGgHpCkdve/ik9RaKN0GeeXe1ZeZAEdHmd
-         U2uQ68+LwaAMBz9dyoL8lu89arcT5oKMAuFGeA1QOslS4/kJugTIgilOOlqxyfj/Z2ex
-         HJnybESdIT4DbB0GF9MvciLGcv3nmNAABZ93UzW1V6wmt9eAfQ5Xln9dmuObrn8Zbt7Y
-         ngZA==
-X-Gm-Message-State: AKGB3mKS5PhR1GN5No0pi1WYVW2o3wz9MNBN68N1LdS/kh61hm6TVRUC
-        nPTnaL04w6L6pKM6M6w51hDpMNu5
-X-Google-Smtp-Source: ACJfBotAiKKq7peqN35xlaMqbAD8NZVNzT8XB05UfPEIGonRY+WhFXo3bftXxkhp7Wrn7Qaw891Ypw==
-X-Received: by 10.80.138.34 with SMTP id i31mr33994756edi.193.1514374145852;
-        Wed, 27 Dec 2017 03:29:05 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id f53sm28376470ede.86.2017.12.27.03.29.04
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=UMAfB6dZzgCWdYELua0+QO7ssT6hiPezN8ZdFvk9fgs=;
+        b=dPwhuZaAl05gha//DtNwT4HIbAcA2NT9cOpCU+AGVzgKmKIc3+E0c7iyvIvqLLEH24
+         0QK1QhX4nDkY4BjgskBmTHT18gG7Z8oRQOUuz2Pf5NgkVtsWl0UdZJNeFZpCRCAj4sTE
+         kI76syxgyC4vsH5OLSr5K5SKRsdMv+jDQawEah2byYymZIvCmaQwVZfQgSvK3NzIcqEM
+         rOlldpwzoFJScEI4ebd5TUFqOcAoOiBVOrNJGQ1bsnqozDSRErWhk/HibITdp6SVvHxu
+         EW02fShkDxGw7TQF7CJZQ+KVEZ5BE+/CEJrRulHujjUMhXz7PFOuTrSlRm91PiGh2JZO
+         XksA==
+X-Gm-Message-State: AKGB3mJT9OF+MElZn2z/GkuPd7qW59wgcSm4OKZp4U3BiXOOcZKFemNc
+        nS5pPVPPRMXCxTof2onLJ/UyUswm
+X-Google-Smtp-Source: ACJfBotZCUJDL4f7/VGtVnN7fJxngBQnRcarPEos1jzQrB5TZJNbXcHNmkosL+A9tbwGMKYAZvupCA==
+X-Received: by 10.46.15.25 with SMTP id 25mr16516171ljp.119.1514381761229;
+        Wed, 27 Dec 2017 05:36:01 -0800 (PST)
+Received: from [192.168.0.102] ([46.98.30.228])
+        by smtp.gmail.com with ESMTPSA id s65sm1845762lfi.76.2017.12.27.05.35.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Dec 2017 03:29:04 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/1] update-index doc: note a fixed bug in the untracked cache
-Date:   Wed, 27 Dec 2017 11:28:54 +0000
-Message-Id: <20171227112854.1322-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
-In-Reply-To: <20171227102551.GA26616@ash>
-References: <20171227102551.GA26616@ash>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 27 Dec 2017 05:36:00 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Re: Bring together merge and rebase
+From:   Alexei Lozovsky <a.lozovsky@gmail.com>
+In-Reply-To: <20171227043544.GB26579@Carl-MBP.ecbaldwin.net>
+Date:   Wed, 27 Dec 2017 15:35:58 +0200
+Cc:     Theodore Ts'o <tytso@mit.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <C82A30ED-D608-4F79-B824-C23DDB078DD9@gmail.com>
+References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+ <20171225035215.GC1257@thunk.org>
+ <20171227043544.GB26579@Carl-MBP.ecbaldwin.net>
+To:     Carl Baldwin <carl@ecbaldwin.net>
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document the bug tested for in my "status: add a failing test showing
-a core.untrackedCache bug" and fixed in Duy's "dir.c: fix missing dir
-invalidation in untracked code".
+On Dec 27, 2017, at 06:35, Carl Baldwin <carl@ecbaldwin.net> wrote:
+> 
+> On Sun, Dec 24, 2017 at 10:52:15PM -0500, Theodore Ts'o wrote:
+>> 
+>> My experience, from seeing these much more complex use cases ---
+>> starting with something as simple as the Linux Kernel Stable Kernel
+>> Series, and extending to something much more complex such as the
+>> workflow that is used to support a Google Kernel Rebase, is that using
+>> just a simple extra "Replaces" pointer in the commit header is not
+>> nearly expressive enough.  And, if you make it a core part of the
+>> commit data structure, there are all sorts of compatibility headaches
+>> with older versions of git that wouldn't know about it.  And if it
+> 
+> The more I think about this, the less I worry. Be sure that you're using 
+> 
+>> then turns out it's not sufficient more the more complex workflows
+>> *anyway*, maybe adding a new "replace" pointer in the core git data
+>> structures isn't worth it.  It might be that just keeping such things
+>> as trailers in the commit body might be the better way to go.
+> 
+> It doesn't need to be everything to everyone to be useful. I hope to
+> show in this thread that it is useful enough to be a compelling addition
+> to git. I think I've also shown that it could be used as a part of your
+> more complex workflow. Maybe even a bigger part of it than you had
+> realized.
 
-Since this is very likely something others will encounter in the
-future on older versions, and it's not obvious how to fix it let's
-document both that it exists, and how to "fix" it with a one-off
-command.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-> On Tue, Dec 26, 2017 at 05:47:19PM +0700, Duy Nguyen wrote:
->> Strangely, root dir is not cached (no valid flag). I don't know why
->> but that's ok we'll roll with it.
->
-> I figured this out. Which is good because now I know how/why the bug
-> happens.
-
-Thanks a lot. I think it's probably good to apply something like this
-on top of this now 3-patch series.
-
- Documentation/git-update-index.txt | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index bdb0342593..bc6c32002f 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -464,6 +464,17 @@ command reads the index; while when `--[no-|force-]untracked-cache`
- are used, the untracked cache is immediately added to or removed from
- the index.
- 
-+Before 2.16, the untracked cache had a bug where replacing a directory
-+with a symlink to another directory could cause it to incorrectly show
-+files tracked by git as untracked. See the "status: add a failing test
-+showing a core.untrackedCache bug" commit to git.git. A workaround for
-+that was (and this might work for other undiscoverd bugs in the
-+future):
-+
-+----------------
-+$ git -c core.untrackedCache=false status
-+----------------
-+
- File System Monitor
- -------------------
- 
--- 
-2.15.1.424.g9478a66081
-
+I think the reasoning behind Theo's words is that it would be better to
+first implement the commit relationship tracking as an add-in which uses
+commit messages for data storage, then evaluate its usefulness when it's
+actually available (including extensions to gitk and stuff to support the
+new metadata), and then it could be moved into core git data structures,
+when it has proven itself useful. It's not a trivial feature which warrants
+immediate addition to git and its design can change when faced with real-
+world use-cases, so it would be bad for compatibility to rush its addition.
+Storage location for metadata seems to be an implementation detail which
+could be technically changed more or less easily. But it's much easier to
+ignore a trailer in commit message in the favor of a commit header field
+than to replace a deprecated commit header field with a better one, which
+could cause massive headache for all git repositories in the world.
