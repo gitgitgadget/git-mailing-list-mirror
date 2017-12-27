@@ -2,140 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBA921F424
-	for <e@80x24.org>; Wed, 27 Dec 2017 18:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6D1A1F424
+	for <e@80x24.org>; Wed, 27 Dec 2017 18:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751877AbdL0So7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 13:44:59 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56517 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751145AbdL0So6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 13:44:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37FDEB6D5C;
-        Wed, 27 Dec 2017 13:44:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=oEn7O8f69Qer
-        NIbNhRukXBl1evQ=; b=wp3DwiuYWw0rbz6LMcfGRfAPsnnH+ewsioI8Qw8DUa8I
-        D+nrAqhB0/ToSdxOdvmBOH6ZhtMCLe9nquVi7Ohj0T6WFY43x4A6YgbONC6RPwYp
-        bc4MsGN01zQ3AFj3Cbegh/6FRsVV/mmOZ6K9v1l3qoy96M6XQP0GUBVYFRDFv10=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=N/BT3w
-        yFO1XNdY0z58ACwBWZPrwgKHYCKWdPJh4TO+y29qObcSvU8WEJa4CPZgjZyVDs74
-        yxl0VvO/ZTe20fK6g+5DSpbt1K2Y3L/O3QeweMKjoL9pfrl1GAQADHS5Gm79jWGy
-        N/FKpAAyg7n9wEv09N+BHEDZvf0E08ZgqHbQ8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 305DDB6D5A;
-        Wed, 27 Dec 2017 13:44:58 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A4D39B6D59;
-        Wed, 27 Dec 2017 13:44:57 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Wei Shuyu <wsy@dogben.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net
-Subject: Re: [RFC PATCH v2] http: support CURLPROXY_HTTPS
-References: <20171223150215.8615-1-wsy@dogben.com>
-        <878tdts5c0.fsf@evledraar.gmail.com>
-Date:   Wed, 27 Dec 2017 10:44:56 -0800
-In-Reply-To: <878tdts5c0.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 23 Dec 2017 18:48:47 +0100")
-Message-ID: <xmqq4locnh7b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
+        id S1752374AbdL0SrJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 13:47:09 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:39652 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751184AbdL0Sq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 13:46:57 -0500
+Received: by mail-wr0-f195.google.com with SMTP id o101so8792964wrb.6
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 10:46:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hOzaFgfOx/C7vmVDILRv+KMsXk8nlC3Ib7AzOTh7GLA=;
+        b=FLj+nWGK5nzd3/f9wOCWEkZvUxXO48O99+JjpKSk6hl4GvEMWUd/m0kX9Wd6IkQgXl
+         Dl/pRZeETRv9hpsQAfijjTzHM1E2VtfQ2w+Rl225I7cec3lDczjLtTqFOxuSlfJ2iRSa
+         lUe8KEn5X87XmEojNMtB3f15ULm/dkTkR2uyScNXn7jl6Dj7pD23S6WnEq4JKpzjqU7Q
+         xFsEfFxRF0wvhc9yMabw3haZWoec0fW9upAQ9QVzAbchoo7OWGtCMJl8yWHJM4loQTSW
+         tzGqBZZpkjBCSCvfZvWXPQs7G5nNFYrACvDz5i9aH9fgAhAZ2UnJkeO1dbkR0UrqbV8N
+         +kxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hOzaFgfOx/C7vmVDILRv+KMsXk8nlC3Ib7AzOTh7GLA=;
+        b=gNoeKvRSBDSh6pkCcYRByW1vcBzdZ9WrzeDx+2dzvRJpW9NhjrW6DWf3YcU0nykuHv
+         3RQh3Fhmq7iGTXPgouSnciPD6lAgctpO5YYch2XdlYKyxfjqZCuLi98Ok5KaMqcoQPXa
+         s1LNX7WNP+1hsNNDDzrhImc8/XTuNqG8lqB5Fwwef9pglakmRAIlSodpql1YQuFgw9VK
+         jrUI9p0bXsZARW3iyj1EISyEUMVHtDoc8IhInE1fvhY92Itg5fYwzkF6JZDVvgyGbwP3
+         0w46Bx+VK29OMoN11a75mlIYi+xRBMuBB7VnV0K56kq22qPQqqdXv8MaFrzbOPu6Gg2U
+         OdGg==
+X-Gm-Message-State: AKGB3mI6eGMTF11Q8FJp52gtQ6zKBb1ys/vxN5ZJZntvSAEoXGVz0WJP
+        JylbSqvF14Jllmmn3YZNXc4=
+X-Google-Smtp-Source: ACJfBou9kelVohtfaPRvxxWcUNPDDRwM27BKbB0fuc8UKBd9pHb9tN8ai9OVXJdzKP9XzqD5HsAaEw==
+X-Received: by 10.223.148.194 with SMTP id 60mr25816727wrr.39.1514400416475;
+        Wed, 27 Dec 2017 10:46:56 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB5682.dip0.t-ipconnect.de. [93.219.86.130])
+        by smtp.gmail.com with ESMTPSA id e197sm85882253wmf.4.2017.12.27.10.46.55
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 27 Dec 2017 10:46:55 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 096BDA96-EB36-11E7-8E5E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 3/4] travis-ci: save prove state for the 32 bit Linux build
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20171227163603.13313-4-szeder.dev@gmail.com>
+Date:   Wed, 27 Dec 2017 19:46:56 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <DB47DCB3-DF66-437A-BF0B-4DF1838C2F7F@gmail.com>
+References: <20171216125418.10743-1-szeder.dev@gmail.com> <20171227163603.13313-1-szeder.dev@gmail.com> <20171227163603.13313-4-szeder.dev@gmail.com>
+To:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Sat, Dec 23 2017, Wei Shuyu jotted:
->
->> Git has been taught to support an https:// used for http.proxy when
->> using recent versions of libcurl.
->>
->> To use https proxy with self-signed certs, we need a way to
->> unset CURLOPT_PROXY_SSL_VERIFYPEER and CURLOPT_PROXY_SSL_VERIFYHOST
->> just like direct SSL connection. This is required if we want
->> use t/lib-httpd to test proxy.
->>
->> In this patch I reuse http.sslverify to do this, do we need an
->> independent option like http.sslproxyverify?
->>
->> To fully support https proxy, we also need ways to set more options
->> such as CURLOPT_PROXY_SSLCERT. However, I'm not sure if we need to
->> support them.
->
-> It would be good to add a link to
-> https://daniel.haxx.se/blog/2016/11/26/https-proxy-with-curl/ to the
-> commit message, since it explains in great detail what this is for and
-> how it compares to what we were doing before.
+> On 27 Dec 2017, at 17:36, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+>=20
+> This change follows suit of 6272ed319 (travis-ci: run previously
+> failed tests first, then slowest to fastest, 2016-01-26), which did
+> this for the Linux and OSX build jobs.  Travis CI build jobs run the
+> tests parallel, which is sligtly faster when tests are run in slowest
+> to fastest order, shortening the overall runtime of this build job by
+> about a minute / 10%.
+>=20
+> Note, that the 32 bit Linux build job runs the tests suite in a Docker
+> container and we have to share the Travis CI cache directory with the
+> container as a second volume.  Otherwise we couldn't use a symlink
+> pointing to the prove state file in the cache directory, because
+> that's outside of the directory hierarchy accessible from within the
+> container.
+>=20
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+> ci/run-linux32-build.sh  | 1 +
+> ci/run-linux32-docker.sh | 1 +
+> 2 files changed, 2 insertions(+)
+>=20
+> diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
+> index a8518eddf..c19c50c1c 100755
+> --- a/ci/run-linux32-build.sh
+> +++ b/ci/run-linux32-build.sh
+> @@ -27,6 +27,7 @@ test -z $HOST_UID || (CI_USER=3D"ci" && useradd -u =
+$HOST_UID $CI_USER) &&
+> # Build and test
+> linux32 --32bit i386 su -m -l $CI_USER -c '
+>     cd /usr/src/git &&
+> +    ln -s /tmp/travis-cache/.prove t/.prove &&
+>     make --jobs=3D2 &&
+>     make --quiet test
+> '
+> diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
+> index 0edf63acf..3a8b2ba42 100755
+> --- a/ci/run-linux32-docker.sh
+> +++ b/ci/run-linux32-docker.sh
+> @@ -19,5 +19,6 @@ docker run \
+> 	--env GIT_TEST_OPTS \
+> 	--env GIT_TEST_CLONE_2GB \
+> 	--volume "${PWD}:/usr/src/git" \
+> +	--volume "${HOME}/travis-cache:/tmp/travis-cache" \
 
-Yeah, I found it a quite readable explanation.
+I assume "${HOME}/travis-cache:/usr/src/git/t/.prove" would not
+work because that would be a mapping in another mapping?
 
-It appears to me that the configuration for the proxy would have to
-be different from the configuration for the hosts in the outside
-world.  You may want to be a lot more strongly suspicious to the
-latter while trusting the former a bit more.  I also suspect that
-we'd need options like PROXY_SSLCERT that are parallel to the main
-SSL support in the final form, but it may be OK to leave it to a
-follow-up series.
+Thanks,
+Lars
 
-And in order to start small and grow later, I think it is not a good
-idea to repurpose http.sslverify to imply http.sslproxyverify; you
-are declaring "when you disable peer verification, you also disable
-proxy verification", and need to worry about backward compatibility
-when you later introduce http.sslproxyverify that can control these
-independently.  It probably is less bad than usual b/c issues in
-that it probably is much more common to disable verification for
-proxy than target hosts, though.
+> 	daald/ubuntu32:xenial \
+> 	/usr/src/git/ci/run-linux32-build.sh $(id -u $USER)
+> --=20
+> 2.15.1.500.g54ea76cc4
+>=20
 
-In any case, thanks for working on this.
-
->
->> Signed-off-by: Wei Shuyu <wsy@dogben.com>
->> ---
->>  http.c | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/http.c b/http.c
->> index 215bebef1..d8a5e48f0 100644
->> --- a/http.c
->> +++ b/http.c
->> @@ -708,6 +708,10 @@ static CURL *get_curl_handle(void)
->>  	if (!curl_ssl_verify) {
->>  		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
->>  		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
->> +#if LIBCURL_VERSION_NUM >=3D 0x073400
->> +		curl_easy_setopt(result, CURLOPT_PROXY_SSL_VERIFYPEER, 0);
->> +		curl_easy_setopt(result, CURLOPT_PROXY_SSL_VERIFYHOST, 0);
->> +#endif
->>  	} else {
->>  		/* Verify authenticity of the peer's certificate */
->>  		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
->> @@ -865,6 +869,11 @@ static CURL *get_curl_handle(void)
->>  		else if (starts_with(curl_http_proxy, "socks"))
->>  			curl_easy_setopt(result,
->>  				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
->> +#endif
->> +#if LIBCURL_VERSION_NUM >=3D 0x073400
->> +		else if (starts_with(curl_http_proxy, "https"))
->> +			curl_easy_setopt(result,
->> +				CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
->>  #endif
->>  		if (strstr(curl_http_proxy, "://"))
->>  			credential_from_url(&proxy_auth, curl_http_proxy);
