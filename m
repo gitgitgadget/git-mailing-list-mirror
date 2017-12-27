@@ -2,166 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99A3A1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 18:57:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C64A61F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 18:59:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752393AbdL0S5Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 13:57:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63903 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752310AbdL0S5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 13:57:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 55AA5BCB3E;
-        Wed, 27 Dec 2017 13:57:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GFafCOvDGHAqXZM1jgI5A/HUAJo=; b=Ynp0Zl
-        XBsgdB8Fxf/cnmnh/yAYq2DFkBMLWynQrEc643pRDqpClg4gow/6OLajjl0bLcY9
-        AemsAUuabjTcd6sqyyHU2Hnqmk+Lu5AtOtyR/BHWKoX4lFVZHYF2Si/nPuv8uLrS
-        UveP0hzSbNX8MKYBVOa/KKIVZDhmDEB/gPSSY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ARtLMHtkPaPJY9g0AqFUe16kLsTvgGtj
-        1/SPbIqVWjySQJB9tWDrpgAMsJrvgFIDuFUqzPe0lEJoIMZ4h2cZ/GJdDer4jApg
-        /1MI2HC5m6FVIshP+vUBofgciTkCbMvkeAGtvQYOrf4a9BoTC+og0CpsFeFIzEQS
-        Qv789mee+nk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CE7BBCB3D;
-        Wed, 27 Dec 2017 13:57:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC82FBCB3B;
-        Wed, 27 Dec 2017 13:57:21 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Vadim Petrov <tridronet@yandex.ru>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] setup.c: move statement under condition
-References: <3853941514059379@web42g.yandex.ru>
-        <alpine.DEB.2.21.1.1712232332000.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-Date:   Wed, 27 Dec 2017 10:57:20 -0800
-In-Reply-To: <alpine.DEB.2.21.1.1712232332000.406@MININT-6BKU6QN.europe.corp.microsoft.com>
-        (Johannes Schindelin's message of "Sat, 23 Dec 2017 23:48:18 +0100
-        (STD)")
-Message-ID: <xmqqvagsm227.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752170AbdL0S7L (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 13:59:11 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:45530 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751187AbdL0S7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 13:59:10 -0500
+Received: by mail-it0-f66.google.com with SMTP id z6so25996617iti.4
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 10:59:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=K3ecfqjcLqBeK8g0ceDT1ymTDQn7J4LKbbqxJXmcMn4=;
+        b=t8lkUNAQy2pS1bJicFT80sexVnorh63AsG7vb7x1Vsm5gqmC7SWt1yxRiBMQ7rVdNO
+         MXi0P+ras/ncEozXSlrPhpaUKMrZVNgSOcw/3lmYsN+ws4YaB7MFGw8929jvyHfizvcK
+         /00Vb4cGraO0lcG76sdi+9X2H5f00r3FMaLYMEtPvhcuTnAk+Y4faekCyUe1MLsK2gd1
+         zxc8dVb+Qx934/bnwCQXqtQWA5x32gNUsr2zGjmr9Cew3ATOWQrNSUv5F5AvVhehG+8u
+         4Z/QRGSDm8/fXoE8GVxWusJKveSpzZfKIlAZAuBt31L7aYBzB2XdcQ3Z6PGUa0aRxNmG
+         Cb9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=K3ecfqjcLqBeK8g0ceDT1ymTDQn7J4LKbbqxJXmcMn4=;
+        b=T2Y3/vr8vYLG2PsThRUWy8NzK193d1C+EP5tF3WWfJVGJay98Bl0meGx8nA+xOEZna
+         /zalDn/pDZ6O3xstDzVAcGTSu8C0qB6KkCNgeksmTuc+bMsW5lCXzFyvW4LQU9Li0QTO
+         omzV7zjZaBoPrmcRaFTM5vwDbbHGdQzjTKcxTaKsFzZiXoS8aIkJNu8c0p5H5bnF2p80
+         p3NYztG2qnPypn7kV/2NADdMFCuJHfx5uzbPVshd2HWnRBytMQTXmvc3imbISn4MAZRP
+         VxxgctpW6uE2AXynjL9fB3YXGlU1QeoqEe9IweP8/PkxOhHj+7exmp6umNkurefSsSdo
+         mIUg==
+X-Gm-Message-State: AKGB3mLjsPsGraJJAQYMa5BLM5tFrkicd4Vats1eGYa7AwvMTAcZHGUi
+        ZrpLSHiyjGeHKNOj3eHNGNxHCCM6
+X-Google-Smtp-Source: ACJfBou1qjcYjR3EVRRS3M+hQk0umdbaSDceekqR31qV4tZxWe+WQo82mIV3p+fiW6wnzIXld/Yj5A==
+X-Received: by 10.36.128.212 with SMTP id g203mr16102278itd.108.1514401149833;
+        Wed, 27 Dec 2017 10:59:09 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 189sm10766272iof.72.2017.12.27.10.59.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 27 Dec 2017 10:59:09 -0800 (PST)
+Date:   Wed, 27 Dec 2017 10:59:07 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+Message-ID: <20171227185907.GE149622@aiede.mtv.corp.google.com>
+References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
+ <20171212012422.123332-1-sbeller@google.com>
+ <20171214212234.GC32842@aiede.mtv.corp.google.com>
+ <CAGZ79kZdUuoM79n09ziG0F7WCWNLpZ2AiFA6fb_qgND1b3_F9A@mail.gmail.com>
+ <20171214225200.GA44616@aiede.mtv.corp.google.com>
+ <xmqq374cspgw.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYiL0St-600sjxN5gjLSfyRodS1=AqxyALsidntXkg_xA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C4EF8262-EB37-11E7-ABF9-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYiL0St-600sjxN5gjLSfyRodS1=AqxyALsidntXkg_xA@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stefan Beller wrote:
+> On Thu, Dec 14, 2017 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
->> I suppose that if the condition is fulfilled then the previously
->> obtained value will not be necessary.
+>> I think it would make it a better companion to --pickaxe but we need
+>> to align its behaviour a little bit so that it plays better with the
+>> "--pickaxe-all" option, and also needs to hide mode and name only
+>> changes just like pickaxe.
 >
-> I have to be honest: this commit message (including the subject) left me
-> quite puzzled as to the intent of this patch.
+> I looked into this, and the small changes needed led me to thinking
+> it could be integrated into the diffcore-pickaxe code completely,
+> roughly like (spaces mangled):
+
+Nice, this looks promising.
+
+[...]
+> But then, it seems as if any pickaxe option is incompatible with
+> any other, i.e. from reading the code, you cannot combine -S
+> and -G, or even give one of them twice.
 >
-> Maybe something like this would have spared me that puzzlement:
+> I guess that would be not a big deal for the --pickaxe-object,
+> but just want to point it out.
+
+Agreed that that's not a big deal for --pickaxe-object.
+
+>> After all, the diffcore-blobfind code was written while looking at
+>> the diffcore-pickaxe's code in another window shown in the pager,
+>> and I tend to agree with your earlier message that this is an
+>> extreme case of -S<contents> where the contents happens to be the
+>> whole file.
 >
-> 	Avoid unnecessary offset_1st_component() when prefixing filenames
+> I disagree, as the user doesn't have the content, but the hash
+> over the content only and wants to know more about it. The new
+> option cannot be used to find a file whose partial content hashes to
+> the given sha1, either.
 >
-> 	In the abspath_part_inside_repo() function that is called
-> 	somewhere deep in the call-chain when prefixing paths, we
-> 	calculate the offset of the first component, but under certain
-> 	circumstances, the result is not even used.
->
-> 	This patch changes the code to avoid that.
+> So with these considerations, I would keep the patch as currently\
+> queued at sb/diff-blobfind.
 
-Sensible.
+Interesting --- I come to the opposite conclusion.
 
->> diff --git a/setup.c b/setup.c
->> index 8cc34186c..1ce0189fa 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -35,7 +35,6 @@ static int abspath_part_inside_repo(char *path)
->>  		return -1;
->>  	wtlen = strlen(work_tree);
->>  	len = strlen(path);
->> -	off = offset_1st_component(path);
->>  
->>  	/* check if work tree is already the prefix */
->>  	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
->> @@ -49,6 +48,8 @@ static int abspath_part_inside_repo(char *path)
->>  		}
->>  		/* work tree might match beginning of a symlink to work tree */
->>  		off = wtlen;
->> +	} else {
->> +		off = offset_1st_component(path);
->>  	}
->
-> Up until recently, we encouraged dropping the curly brackets from
-> single-line statements, but apparently that changed. 
+The pickaxe-style behavior seems more consistent and simpler to
+explain and better matches the use cases I can think of.
 
-That is not quite correct.  We do encourage 
-
-	if (...)
-		single statement;
-
-with or without
-
-	else
-		another single statement;
-
-IOW, when both sides do not need curlies, we save vertical space.
-On the other hand, when one side needs curlies, we tend to add to
-both to make it easier to spot the correspondence, i.e.
-
-	if (...) {
-		compond statement;
-		compond statement;
-	} else {
-		single statement;
-	}
-
-or the other way around.
-
-
-	if (...) {
-		single statement;
-	} else {
-		compond statement;
-		compond statement;
-	}
-
-> However, we still encourage to put shorter alternative code paths
-> (i.e. the blocks after `if` and `else`) first, in your case:
->
-> @@ -35,18 +35,19 @@ static int abspath_part_inside_repo(char *path)
->  		return -1;
->  	wtlen = strlen(work_tree);
->  	len = strlen(path);
-> -	off = offset_1st_component(path);
->  
->  	/* check if work tree is already the prefix */
-> - 	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
-> +	if (wtlen > len || strncmp(path, work_tree, wtlen))
-> +		off = offset_1st_component(path);
-> +	else {
->  		if (path[wtlen] == '/') {
->  			memmove(path, path + wtlen + 1, len - wtlen);
->  			return 0;
-> 		} else if (path[wtlen - 1] == '/' || path[wtlen] == '\0') {
-> 			/* work tree is the root, or the whole path */
-> 			memmove(path, path + wtlen, len - wtlen + 1);
-> 			return 0;
-> 		}
-> 		/* work tree might match beginning of a symlink to work * tree */
-> 		off = wtlen;
-> 	}
-
-This also may allow you to further dedent the if/else chain and make
-the result easier to follow.  I dunno.
-
-Thanks for a review.
+Thanks,
+Jonathan
