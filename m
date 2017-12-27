@@ -2,93 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7009F1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 19:46:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F24E51F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 19:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752024AbdL0TqU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 14:46:20 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:37051 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbdL0TqT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 14:46:19 -0500
-Received: by mail-io0-f193.google.com with SMTP id n14so13035180iob.4
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 11:46:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=bkNc5ofteKOe3F044GF1dS4fiGfehGf7DH6drd2fi1Y=;
-        b=rbrw7n4jn/MoDFe2dk8RFOzImJE0gP8LWF8xdq2bNM84v7UWGK9RpugcGkBpIPvpfG
-         GeYiQS+13Su2xUSk2E8c4UsOf2fAi574Ep4sOQ6uhqkNnRNAMO8tpvZkIa+ul3vs9POp
-         vklSAHBPiUid3jwcxKjcTsvyFDMSIMbbCEUg8oFDr7fyAiOlozgcQvQvJs3lInQT3gy1
-         eVWcqTJAfmSxvuBWqtSUmWVNSw4bnqTKE9aHzwz53JomArJpzlOBwqlVc5106eyKzFm4
-         b4PAiGfaVJjF9Zi+rHCQyk8Qr6fB7t+sp5sxPpn8TXOstLGKd0ebBPipWrDvQ6N9/5E2
-         K0tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=bkNc5ofteKOe3F044GF1dS4fiGfehGf7DH6drd2fi1Y=;
-        b=cCM6+CeWa4YhKYCAGm3zyD1Qxg3JwMTzbW0A6vMFFp79/Cz2rWsY/t/BnTJ9Y9jklo
-         8earCCuNrQkGFtKSKEGmv7A+sZqaCnC/mwdqHrKmAnpj8+UWz96c4PiEnY3l5FqHi0va
-         VE8xemarf2cGrZm/mlT0HO5f5gBw8MXfnmOrL/zgMmOjHKpnb0tPZQxBGB71JFqirwSU
-         qxJDiz81HmZEDaejm+RFYA1sdJRujbaIIIw/Ji6pO9Da6mlSkhlYTxYo8eSN81i/JXxS
-         u/1NshdqBMUX6FJ/y1yQg4iMhYP3aKLiIv8GUSsglII88tN35JNrHq7LCQPaT+mg6QxW
-         23VQ==
-X-Gm-Message-State: AKGB3mLnvzr/B4QLg5sHeFQDBBJ2t5gWm3NgN/Vyszbk+kTi7ocH4ubl
-        TpQEmTeitxNj+javgtmYooI=
-X-Google-Smtp-Source: ACJfBosnZJGdrpNyMMOVYZoQRvq9LfG+U6PBNwxPSRrocjbjQWjz9OnrMZQXxRkcFrqQqPyVKCPzRg==
-X-Received: by 10.107.129.200 with SMTP id l69mr37541070ioi.158.1514403978733;
-        Wed, 27 Dec 2017 11:46:18 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id z27sm11069845ita.13.2017.12.27.11.46.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 11:46:18 -0800 (PST)
-Date:   Wed, 27 Dec 2017 11:46:01 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] travis-ci: don't try to create the cache directory
- unnecessarily
-Message-ID: <20171227194601.GA181628@aiede.mtv.corp.google.com>
-References: <20171227164905.13872-1-szeder.dev@gmail.com>
- <20171227164905.13872-2-szeder.dev@gmail.com>
+        id S1751964AbdL0T5c (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 14:57:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65361 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751184AbdL0T5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 14:57:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9CAAAB7B17;
+        Wed, 27 Dec 2017 14:57:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=k9UzrdQYlMJBtoGzOC4KzCClLJ0=; b=xu2pQU
+        6qJcPABD6N5D7PyWVr+PMJumKuCOc8EKysDKjrX70D5edB9bgx8Fh6y3MoH8dQAg
+        f3zo8tO3FUFsHXjKbGMvB9LkJXLqsQ0sE6yVFfJkGv5UG8i6WWbWMTlKfsFGWNA4
+        OOqNIGehdr6e+Zf1jafDO8goOiCjXXwRG2+3U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Gw6oMtPPxhtc5rP7I1QzNeuK6kAlcMyf
+        5t2zS0vxQbocX+XvphhPwXDpYO/qcrkSCPdin0GpKLbi87I2VgfTrUUnaaUgHtEM
+        NacatFj9gfGrFvpiYVtMgZYYtc/L1OLkcjNrLOIDmyV9qu8rze9YzLFKJtr1q+Df
+        VVJxlDo6nSQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 903B6B7B15;
+        Wed, 27 Dec 2017 14:57:31 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 135C4B7B14;
+        Wed, 27 Dec 2017 14:57:31 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diffcore: add a filter to find a specific blob
+References: <CAGZ79kaJgCchQKcRMkW-cjRmx_7eYQDqLs5GgDOgLEb1H=w-0g@mail.gmail.com>
+        <20171212012422.123332-1-sbeller@google.com>
+        <20171214212234.GC32842@aiede.mtv.corp.google.com>
+        <CAGZ79kZdUuoM79n09ziG0F7WCWNLpZ2AiFA6fb_qgND1b3_F9A@mail.gmail.com>
+        <20171214225200.GA44616@aiede.mtv.corp.google.com>
+        <xmqq374cspgw.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYiL0St-600sjxN5gjLSfyRodS1=AqxyALsidntXkg_xA@mail.gmail.com>
+        <20171227185907.GE149622@aiede.mtv.corp.google.com>
+Date:   Wed, 27 Dec 2017 11:57:29 -0800
+In-Reply-To: <20171227185907.GE149622@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 27 Dec 2017 10:59:07 -0800")
+Message-ID: <xmqqefnglz9y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171227164905.13872-2-szeder.dev@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C402900-EB40-11E7-AEC3-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Travis CI creates that directory for us anyway, even when a previous
-> cache doesn't exist for the current build job.
+> Stefan Beller wrote:
+>> On Thu, Dec 14, 2017 at 6:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> In itself it doesn't hurt to try, of course, but the following patch
-> will access the Travis CI cache much earlier in the build process, and
-> then creating the cache directory this late might cause confusion.
+>>> I think it would make it a better companion to --pickaxe but we need
+>>> to align its behaviour a little bit so that it plays better with the
+>>> "--pickaxe-all" option, and also needs to hide mode and name only
+>>> changes just like pickaxe.
+>>
+>> I looked into this, and the small changes needed led me to thinking
+>> it could be integrated into the diffcore-pickaxe code completely,
+>> roughly like (spaces mangled):
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->  ci/run-tests.sh | 1 -
->  1 file changed, 1 deletion(-)
+> Nice, this looks promising.
 
-Is this behavior documented anywhere?
-https://docs.travis-ci.com/user/caching#Arbitrary-directories doesn't
-say anything about it.
+Indeed it is very simple, straight-forward and nice ;-)
 
-Thanks,
-Jonathan
+>> I disagree, as the user doesn't have the content, but the hash
+>> over the content only and wants to know more about it....
+
+(correcting Stefan)  The user can do "git cat-file blob $oid" to
+learn about the contents, so from end user's point of view, the
+"pickaxe with object ID" can be seen as merely a short-hand for
+
+    git log -S"$(git cat-file blob $oid)"
+
+almost.
+
+But that is a tangent in this response.
+
+> Interesting --- I come to the opposite conclusion.
+>
+> The pickaxe-style behavior seems more consistent and simpler to
+> explain and better matches the use cases I can think of.
+
+Yeah, I am more leaning toward agreeing with you.
