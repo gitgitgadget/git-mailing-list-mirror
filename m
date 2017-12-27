@@ -7,78 +7,121 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BE0F1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 19:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 613411F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 19:15:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751964AbdL0THr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 14:07:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63608 "EHLO
+        id S1751335AbdL0TPZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 14:15:25 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64302 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751145AbdL0THq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 14:07:46 -0500
+        with ESMTP id S1751145AbdL0TPY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 14:15:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5549FBCCBD;
-        Wed, 27 Dec 2017 14:07:46 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C6668BCE8E;
+        Wed, 27 Dec 2017 14:15:23 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PbfmeX9RVbfB
-        LkWxQppeBoTBjdY=; b=k6SSBh9dZj2+G+mr/foqIKRUO+VtUJ7pbNSKf9VGUIEl
-        XOCpcAw2SN7IHLhGMkJWpPxvBnWkDmF7ZpyxApl7Ve9ra4lMwyEveGomMmpbK+DT
-        iA1aVmFFW/V1Pzu0oyTIjHMxcfHjHOXKGqFaXQmeNicYO0VZZy0GNJJZAt4JRV4=
+        :content-type:content-transfer-encoding; s=sasl; bh=EwMAkEDgHvsk
+        dkaVbvkYPz8sVh0=; b=tanW/KJF7Cj3oDtJ7DNorsl5+YxR8Qv/HfUVHnFtVeVl
+        eRM4huncVS5mRl3MwqkjzRvCEs5OVLJQhuliW3QSUsX98A/y2Sb6KSTh7/onvcSW
+        JvjqGxgbraZjpZ5kde2Z1WXRgW7SeGTlqCGddPNT3a+jrg89s1V2p1ZiHh+lxSo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=py1aYv
-        gQzR/gGZgZ9Ckmb3VLd1X9a5K2qIy50ZGeSf+6vyJjijjsnz/VX6fAsFhtO9pcZJ
-        RiW5zrXHOZ8JUSSQMfRZSSkP39r1DvzcZ1Pw4NB3t88BDQnelW5LqRs0ntVhPvRD
-        0yHD0wkwhhS7S4WppZR01y9mgaTVbixHhbFkE=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rWJadw
+        7iQvc6lpgS4ISx8G7KK6oATzLsn1To2cDyapyLOvhY5om1EjLUIlHukadvlezLMs
+        34TU74E5kSOuUQ7Pu2z0c0b7rwFBKiHy59ExrBDlu+JZysDb5iUEe20Yeb2ImYnv
+        hldxG/K8lVd5kFIhXSXo1Mt2zGDHxuCoGAAtI=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B204BCCBB;
-        Wed, 27 Dec 2017 14:07:46 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BE7E9BCE8D;
+        Wed, 27 Dec 2017 14:15:23 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9CE61BCCBA;
-        Wed, 27 Dec 2017 14:07:45 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29CB7BCE8C;
+        Wed, 27 Dec 2017 14:15:23 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Anthony Ramine <n.oxyde@gmail.com>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 7/7] wildmatch test: create & test files on disk in addition to in-memory
-References: <20171225002835.29005-1-avarab@gmail.com>
-        <20171223213012.1962-1-avarab@gmail.com>
-        <20171225002835.29005-8-avarab@gmail.com>
-Date:   Wed, 27 Dec 2017 11:07:44 -0800
-In-Reply-To: <20171225002835.29005-8-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 25 Dec 2017 00:28:35 +0000")
-Message-ID: <xmqqr2rgm1kv.fsf@gitster.mtv.corp.google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Liam Beguin <liambeguin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+        <20171203221721.16462-1-liambeguin@gmail.com>
+        <20171203221721.16462-9-liambeguin@gmail.com>
+        <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
+Date:   Wed, 27 Dec 2017 11:15:21 -0800
+In-Reply-To: <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 25 Dec 2017 19:48:00 +0700")
+Message-ID: <xmqqmv24m186.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 38D4D3CA-EB39-11E7-A9D7-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 4989C918-EB3A-11E7-8BC9-8EF31968708C-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> +	# Turn foo/bar/baz into foo/bar to create foo/bar as a
-> +	# directory structure.
-> +	dirs=3D$(echo "$file" | sed -r 's!/[^/]+$!!')
+> On Mon, Dec 4, 2017 at 5:17 AM, Liam Beguin <liambeguin@gmail.com> wrot=
+e:
+>> +static const char command_to_char(const enum todo_command command)
+>> +{
+>> +       if (command < TODO_COMMENT && todo_command_info[command].c)
+>> +               return todo_command_info[command].c;
+>> +       return comment_line_char;
+>> +}
+>
+>     CC sequencer.o
+> sequencer.c:798:19: error: type qualifiers ignored on function return
+> type [-Werror=3Dignored-qualifiers]
+>  static const char command_to_char(const enum todo_command command)
+>                    ^
+>
+> Maybe drop the first const.
 
-Let's not limit this script to GNUism systems.
+Thanks.  This topic has been in 'next' for quite some time and I
+wanted to merge it down to 'master' soonish, so I've added the
+following before doing so.
 
-You want to see if $file has a slash followed by one or more non-slash
-letters to the end and strip the whole thing.  We further know that
-at this point $file does not end with a slash.  So perhaps
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Wed, 27 Dec 2017 11:12:45 -0800
+Subject: [PATCH] sequencer.c: drop 'const' from function return type
 
-	dirs=3D${file%/*}
+With -Werror=3Dignored-qualifiers, a function that claims to return
+"const char" gets this error:
 
-is sufficient?
+    CC sequencer.o
+sequencer.c:798:19: error: type qualifiers ignored on function return
+type [-Werror=3Dignored-qualifiers]
+ static const char command_to_char(const enum todo_command command)
+                   ^
 
-Thanks.
+Reported-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 115085d39c..2a407cbe54 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -795,7 +795,7 @@ static const char *command_to_string(const enum todo_=
+command command)
+ 	die("Unknown command: %d", command);
+ }
+=20
+-static const char command_to_char(const enum todo_command command)
++static char command_to_char(const enum todo_command command)
+ {
+ 	if (command < TODO_COMMENT && todo_command_info[command].c)
+ 		return todo_command_info[command].c;
+--=20
+2.15.1-597-g62d91a8972
+
