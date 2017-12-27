@@ -7,116 +7,128 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 960A21F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 23:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7254F1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 23:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752991AbdL0XBA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 18:01:00 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35386 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752936AbdL0XAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 18:00:51 -0500
-Received: by mail-wr0-f193.google.com with SMTP id l19so25505041wrc.2
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:00:51 -0800 (PST)
+        id S1753030AbdL0XBQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 18:01:16 -0500
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:44079 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752910AbdL0XAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 18:00:45 -0500
+Received: by mail-ua0-f174.google.com with SMTP id k4so6563582ual.11
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 15:00:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hz+FoN5HPhGaZVa90yEkmR1hyAbi/OUuU4I1JjQnnnM=;
-        b=NxxfYWBCI6RqacoSZ3trfvFvRnINgDLUZJWk/RriN/xnKjHn4yrIpRICBzN+kCkpOS
-         jqmmbqNmANcDk7+6g4jA+Q/fS3JoA78Tjg3ymSc+bMhXis9lzrz9TfdfhSQ1XmgNkU3X
-         6x3FYHeII10y7fIDf1uYM/ZhtXXkdj6SIiCMPRHx9LRTttJdalvtqO6uJLZXXXGv6Gci
-         mtP8XvAAoIkCfAnHr7LjEi4NrlFZb/oh/NdxnViiPoek6VqX+XCArbx3N9SgKIoUn73e
-         l4TOsdyh32hct+6JMIYtRQkC2O5iw2uP0QyhX8gp7yYz9ff0T428PoU+gDU0O6WaV084
-         XnRg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bOGiLxu25tuX79VZqpP84QROxGm3Q6s6RD/n7GwvD3w=;
+        b=YP0fNrqu/poa21WMFK4B0Y9kpBw7CxToh32HyhCHd0nww5+UHJN31g3EFcAuW8KfHC
+         wXPFZLV6kj+MGiaPJCMoybBuxleDkCgqVVZ7PcIbp+F4idGj6XRtNZMQdG7e/0lhBp1z
+         oqSeNJAIOu0n60dTQgT+2IWf08cw3q1Np8zEKSKNJugkOZmfDMB+EBFKtIOz+hmVi7GN
+         7qzrHdOsBSNoStnarzqnYWuK9xB0x+c/rIaamN3VuxUevZZ09r5kGID4gdx0Tj0WXPjx
+         7Xrq6HhtekRmuim5i5TSxfvSVFdXYfbKTV8AE5PsqovOYqPeO/wZjrsoNa1emF8NBxBV
+         UBTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hz+FoN5HPhGaZVa90yEkmR1hyAbi/OUuU4I1JjQnnnM=;
-        b=WzPPIrHQIRdhYvlHwrQyhPCNOZ6UMg9RpanoA3zB0YcwSfLLd3Og5AiJxcmzRb+i+H
-         oKdDb28TJG6sHo8tD9nZfqBHP2ziGUlpSxkwUbib6WXA7ymRQsSP9yUFYD1rzlvvirma
-         +mlRI38H9CUjmpYhi1rG/bhBNVhngN68wIKSMClQHMdBfncNtc8oRA0TK/Kzr9bJAVAE
-         CYpc6nh673YM5MIrMCWu3zwEph8l5NmNa69ByGD8rRImAL2eKtJyVSWZcFfVXv1dWBdd
-         IKp/CJeYRt56OZN48gftwiZXagiwG2FyAsv9CtnMWqT8mLHHEWSf30ZbcjFcYqmqZ+KD
-         y2UQ==
-X-Gm-Message-State: AKGB3mLdKv7EcmB8Ay0FommHuRzby7q5WI7xepBT45Vu3p4ZWfkywMk3
-        y6q8nPBe27toNsrIwgUqGtU0DIfR
-X-Google-Smtp-Source: ACJfBouYD0GAeIvijihIqrUUR8q56PAVCfpSGCE67WUt21k4v8vt6filz9gxcRaMBxWpkCb123cSPw==
-X-Received: by 10.223.153.151 with SMTP id y23mr30748741wrb.130.1514415650404;
-        Wed, 27 Dec 2017 15:00:50 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k61sm21467411wrc.84.2017.12.27.15.00.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Dec 2017 15:00:49 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 1/2] Makefile: NO_OPENSSL=1 should no longer imply BLK_SHA1=1
-Date:   Wed, 27 Dec 2017 23:00:37 +0000
-Message-Id: <20171227230038.14386-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
-In-Reply-To: <20171227230038.14386-1-avarab@gmail.com>
-References: <20171227230038.14386-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bOGiLxu25tuX79VZqpP84QROxGm3Q6s6RD/n7GwvD3w=;
+        b=Oq5UdikWCWaokYfHo+MYVeG+3hOZqfrA3aHBYw8JgpIlACdW5E6oHnWu0p/Zo+N/4g
+         Bk+S8z9O8AxQHDDogkQJl5ZV4wnCw6zm4QerbgyPSwRGTkffcHBzx3mprSBPz3u9JljM
+         fyW7Iyd4zAenqvJ7QdZj607ZEAYV3idL//OxgkJwUkGVLGvKrbns53/5fdg8wm6UepBL
+         /DxOdB/TggT7692lbalJa2HruvgTnC8OrFvWnDG6CiWH0o5p/adKenYFnmu4XaZyKzsw
+         1YTFf1s0Rk0VdRDtpxye0A9DG41K+9cEFwXnOUzYy+lrAVWtpFeukXV4dS1hnKG1c9a7
+         pNKg==
+X-Gm-Message-State: AKGB3mJP57McKRyLGvsh5GyeR6egoooDgHpcauqUgJW98VIIOgAWFkbR
+        7GE3mHsxR60uqlaDUf6GtG/H4+jT8ezbOtEJB94=
+X-Google-Smtp-Source: ACJfBosnJLkuoLq4pu+886ZXC+bm1GWtnBw/HU3Rvwp5D/N0x6Gl2dClDewLhnOe4mYi1FGcmj8Yomy9eCYIWDIIs2Q=
+X-Received: by 10.176.90.202 with SMTP id x10mr26632966uae.83.1514415644315;
+ Wed, 27 Dec 2017 15:00:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.83.46 with HTTP; Wed, 27 Dec 2017 15:00:43 -0800 (PST)
+In-Reply-To: <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com>
+References: <20171227164905.13872-1-szeder.dev@gmail.com> <20171227164905.13872-3-szeder.dev@gmail.com>
+ <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 28 Dec 2017 00:00:43 +0100
+Message-ID: <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] travis-ci: record and skip successfully built trees
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stop supplying BLK_SHA1=YesPlease when NO_OPENSSL=UnfortunatelyYes is
-supplied. This has been done ever since [1], when switching to DC_SHA1
-by default in [2] this should have been changed as well.
+On Wed, Dec 27, 2017 at 8:15 PM, Lars Schneider
+<larsxschneider@gmail.com> wrote:
+>
+>> On 27 Dec 2017, at 17:49, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote=
+:
+>> +# Skip the build job if the same tree has already been built and tested
+>> +# successfully before (e.g. because the branch got rebased, changing on=
+ly
+>> +# the commit messages).
+>> +skip_good_tree () {
+>> +     if ! good_tree_info=3D"$(grep "^$(git rev-parse $TRAVIS_COMMIT^{tr=
+ee}) " "$good_trees_file")"
+>> +     then
+>> +             # haven't seen this tree yet; continue the build job
+>> +             return
+>> +     fi
+>> +
+>> +     echo "$good_tree_info" | {
+>> +             read tree prev_good_commit prev_good_job_number prev_good_=
+job_id
+>> +
+>> +             if test "$TRAVIS_JOB_ID" =3D  "$prev_good_job_id"
+>
+> Under what circumstances would that be true?
 
-1. dd53c7ab29 ("[PATCH] Support for NO_OPENSSL", 2005-07-29)
+When the user hits 'Restart job' on the Travis CI web interface,
+$TRAVI_JOB_NUMBER and _ID remain the same in the restarted build job as
+they were in the original.
+So the condition is true when the user hits 'Restart job' on a build job
+that was the first to successfully build and test the current tree.
 
-2. e6b07da278 ("Makefile: make DC_SHA1 the default", 2017-03-17)
+> Nit: One unintended space after =3D ?!
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile     | 2 --
- configure.ac | 1 -
- 2 files changed, 3 deletions(-)
+Ok.
 
-diff --git a/Makefile b/Makefile
-index 32c170687c..7e1da28b6f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -23,7 +23,6 @@ all::
- # it at all).
- #
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
--# This also implies BLK_SHA1.
- #
- # Define USE_LIBPCRE if you have and want to use libpcre. Various
- # commands such as log and grep offer runtime options to use
-@@ -1260,7 +1259,6 @@ ifndef NO_OPENSSL
- 	endif
- else
- 	BASIC_CFLAGS += -DNO_OPENSSL
--	BLK_SHA1 = 1
- 	OPENSSL_LIBSSL =
- endif
- ifdef NO_OPENSSL
-diff --git a/configure.ac b/configure.ac
-index 2f55237e65..7f8415140f 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -241,7 +241,6 @@ AC_MSG_NOTICE([CHECKS for site configuration])
- # a bundled SHA1 routine optimized for PowerPC.
- #
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
--# This also implies BLK_SHA1.
- #
- # Define OPENSSLDIR=/foo/bar if your openssl header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
--- 
-2.15.1.424.g9478a66081
+>> +             then
+>> +                     cat <<-EOF
+>> +                     Skipping build job for commit $TRAVIS_COMMIT.
+>> +                     This commit has already been built and tested succ=
+essfully by this build job.
+>> +                     To force a re-build delete the branch's cache and =
+then hit 'Restart job'.
+>> +                     EOF
+>> +             else
+>> +                     cat <<-EOF
+>> +                     Skipping build job for commit $TRAVIS_COMMIT.
+>> +                     This commit's tree has already been built and test=
+ed successfully in build job $prev_good_job_number for commit $prev_good_co=
+mmit.
+>> +                     The log of that build job is available at https://=
+travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
+>> +                     To force a re-build delete the branch's cache and =
+then hit 'Restart job'.
+>> +                     EOF
+>
+> Maybe add a few newlines before and after EOF to make the text more stand=
+ out?
+> Or print it in a different color? Maybe red?
+>
+> See: https://travis-ci.org/szeder/git/jobs/322247836#L622-L625
 
+I considered using color for the first line, but then didn't do it,
+because I didn't want to decide the color :)
+Anyway, red is the general error/failure color, but this is neither.  It
+could either be green, to match the color of the build job's result, or
+something neutral like blue or yellow.
+
+G=C3=A1bor
