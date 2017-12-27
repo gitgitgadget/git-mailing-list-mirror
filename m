@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 777D21F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 22:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EB951F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 22:57:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752640AbdL0W5Q (ORCPT <rfc822;e@80x24.org>);
+        id S1752647AbdL0W5S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 17:57:18 -0500
+Received: from mail-it0-f46.google.com ([209.85.214.46]:44895 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752473AbdL0W5Q (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Dec 2017 17:57:16 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36699 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752540AbdL0W5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 17:57:15 -0500
-Received: by mail-io0-f193.google.com with SMTP id i143so16575943ioa.3
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 14:57:14 -0800 (PST)
+Received: by mail-it0-f46.google.com with SMTP id b5so26514908itc.3
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 14:57:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+ZRZdPETG3ekF+KypkLsJRq/T/bpHyUZ39aRFkE3hI0=;
-        b=u3ZyvDi7atjpV8Ka21KDTnK+Zd5BiRPexGFnBG0sOIEfToV79RRKEFaKybkDlNIYp8
-         R+bFJOt6v6bDBgdhxdUVXfpX3qYJpggU4OApZ9aXgAbwf6kcEVQ1ANCkOj6RFh4Q9n97
-         IyIc6srsldjUqKw/sYGoEXDYJVzK7kyXsTkOqpOGFEpZNVsgTrQhmn3odyJMby1paDIF
-         YS6+/SyyOCVb64YP4INt0rgITpWI+hnp9MMNk1v1aKI6IH0wJkc0qVU1IZJKuZbtCILQ
-         ny6klI9YtyyMLmFB921GzsuGe+3b2eOQepEhIYBq9k3HCcdmu8DduNqNs+KNmoqRSxIU
-         kAZQ==
+        bh=iWX9tKx3+c8soSvj4NzQFKjRR0skHvVWcNO9WnxbSOI=;
+        b=kyiIlNiyXWWEtMlS9x6musg2AK7ALs5MZaS3+BVQAEo0rvL9JnfB5MqkGRK1abhreM
+         DKBG/R2KqqeQpZUo3ZpmlXcyZEbHdsxetqfof6yThEuKOltJBl5GcSwxax5LkW+KNgCI
+         VtewqFw8cg7rI/CAklb8K4en5UP6CvdNgse09M7fPASDNu0I2EuigGgZBaMMXE8jpvYc
+         PemiNxuMjLLbb0H5chB7lu8H5RvNHMLTCrVdxhkpk3UU9CTbkN6zRaceuuZ+8yya7Okz
+         UHyYQLOPXFbJuRCCRp+d8uRZAWwWCca8A3IeL9+2QA6Q5S/gNkL3KhGtP/oyosU5Xufe
+         UcKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+ZRZdPETG3ekF+KypkLsJRq/T/bpHyUZ39aRFkE3hI0=;
-        b=HsjeI1Gr+CpkdzSIzFb9jvzXkEg2/nm6MQTRzCF4fSTxdbQBwkoSVcWT7xj6Tsa9Yi
-         tfJTq9rdPVA0Ioa4wqvuuqM4GZPglLlljXVQHyIbqYCGZwLDrjhOtgzXuJixpagmpYbw
-         9qIYqFOZYDS3Fa1FN2uVceRtozf7awcBEvTJer9tZhbqCa7H1h15MYGkD4F7536+ReFb
-         Mfp+4txtiJu1Z8ZniXEK3YGT4AtKsYmYhRXIIe7GeBWF7gVD+SdzSlpCArkaLWW+RCBy
-         Uu2m24D0120UeJE3vp6vq2ppOFJf1bzfxo6KBqMOpWRtLsXTBfeOKRUa2inYYGntPRzB
-         RvqA==
-X-Gm-Message-State: AKGB3mLcwgIBTXHetpfzm4CCfLF/+jfeqOSWcXKSLdPmoxQ19NU4gjqB
-        WjGaB5wiTumdM3vo9Fh9zi0lZA==
-X-Google-Smtp-Source: ACJfBovChVJ0EtBIcoIPiWqHClXWDCMEqNt0l+cXZWWetagqHkuE4sV/Ou20KsicGOjAvgcBu4tG8Q==
-X-Received: by 10.107.53.67 with SMTP id c64mr29011515ioa.113.1514415434329;
-        Wed, 27 Dec 2017 14:57:14 -0800 (PST)
+        bh=iWX9tKx3+c8soSvj4NzQFKjRR0skHvVWcNO9WnxbSOI=;
+        b=GVfdNXEnHKUzrtRCKJ5OQ/fPbmdg6IMXBLuMzS5Rxz64HkBXu1KfonjMD2/yc39/a4
+         NW6ugbQOwyBKzSdqYOqADo+lPHpMeJ4rwDpxRGB+ukc5LrNcgjEgD3wD5OGoBtv3hVJn
+         UnU9oHyG9fvKcSa5HCxTXvW1DUrg0kPFFGu+jzI8oAWTtukK/gee8AlKbx8TCjwL+3tq
+         9UyCz4478Ginl0vbFPYAanYGEJasnGI6fgO8CqUtc3+SodL+R3Khe2GlO0o1/0gInOf5
+         RjNW/gACYLEgug6WGhlWCXhPBqcIpIYKLFVnR7mAoaIC4MK8/pDy/dZybj0gl0YV1a41
+         aGMA==
+X-Gm-Message-State: AKGB3mK8tdP0+dnvu/1PmCv8U86lovjeZDDQqmP5+SpvgYGbXCmUn/nB
+        ctcJDdJL5WANwprhPqRHmTqV+A==
+X-Google-Smtp-Source: ACJfBosXRtoPTLgOz0BQ35k4QLYskD45Zx7idhBtduvERxYXJKnycGO5Zwms2r2ysY0VDkIq0S4sIg==
+X-Received: by 10.36.253.73 with SMTP id m70mr39016252ith.49.1514415435795;
+        Wed, 27 Dec 2017 14:57:15 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id h187sm18211437ioe.17.2017.12.27.14.57.13
+        by smtp.gmail.com with ESMTPSA id y19sm18131515iod.46.2017.12.27.14.57.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 14:57:13 -0800 (PST)
+        Wed, 27 Dec 2017 14:57:15 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: [PATCHv2 2/5] t/lib-submodule-update.sh: clarify test
-Date:   Wed, 27 Dec 2017 14:57:02 -0800
-Message-Id: <20171227225705.73235-3-sbeller@google.com>
+Subject: [PATCHv2 3/5] t/lib-submodule-update.sh: Fix test ignoring ignored files in submodules
+Date:   Wed, 27 Dec 2017 14:57:03 -0800
+Message-Id: <20171227225705.73235-4-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20171227225705.73235-1-sbeller@google.com>
 References: <20171219222636.216001-1-sbeller@google.com>
@@ -63,28 +63,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Keep the local branch name as the upstream branch name to avoid confusion.
+It turns out that the test replacing a submodule with a file with
+the submodule containing an ignored file is incorrectly titled,
+because the test put the file in place, but never ignored that file.
+When having an untracked file Instead of an ignored file in the
+submodule, git should refuse to remove the submodule, but that is
+a bug in the implementation of recursing into submodules, such that
+the test just passed, removing the untracked file.
+
+Fix the test first; in a later patch we'll fix gits behavior,
+that will make sure untracked files are not deleted.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/lib-submodule-update.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/lib-submodule-update.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 38dadd2c29..d7699046f6 100755
+index d7699046f6..fb0173ea87 100755
 --- a/t/lib-submodule-update.sh
 +++ b/t/lib-submodule-update.sh
-@@ -664,8 +664,8 @@ test_submodule_recursing_with_args_common() {
+@@ -885,6 +885,7 @@ test_submodule_switch_recursing_with_args () {
+ 		(
  			cd submodule_update &&
- 			git -C sub1 checkout -b keep_branch &&
- 			git -C sub1 rev-parse HEAD >expect &&
--			git branch -t check-keep origin/modify_sub1 &&
--			$command check-keep &&
-+			git branch -t modify_sub1 origin/modify_sub1 &&
-+			$command modify_sub1 &&
- 			test_superproject_content origin/modify_sub1 &&
- 			test_submodule_content sub1 origin/modify_sub1 &&
- 			git -C sub1 rev-parse keep_branch >actual &&
+ 			git branch -t replace_sub1_with_file origin/replace_sub1_with_file &&
++			echo ignored >.git/modules/sub1/info/exclude &&
+ 			: >sub1/ignored &&
+ 			$command replace_sub1_with_file &&
+ 			test_superproject_content origin/replace_sub1_with_file &&
 -- 
 2.15.1.620.gb9897f4670-goog
 
