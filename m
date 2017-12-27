@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FBD41F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 22:57:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 655C51F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 22:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752382AbdL0W5N (ORCPT <rfc822;e@80x24.org>);
+        id S1752569AbdL0W5P (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 17:57:15 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:45664 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752473AbdL0W5N (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Dec 2017 17:57:13 -0500
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34514 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752122AbdL0W5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 17:57:12 -0500
-Received: by mail-io0-f181.google.com with SMTP id q188so12434415iod.1
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 14:57:12 -0800 (PST)
+Received: by mail-io0-f194.google.com with SMTP id e204so36660865iof.12
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 14:57:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=UL3FCIZKLzzQus1qAx7yV6sXtbc4EUcJMO6jqTXPvh4=;
-        b=YYvInETsNk6DRBU+6roiirlyWzjzIM7LTh6QfJS2w5hVVMZUU0PDUbiLEkTMATKLJ9
-         j1i8J8IhORriTN0SP1m8Xnlo24TSANnsa7TTqxu3bvyZSPFzA5T3gRojAmdoNVQK6ani
-         gI3pXNLgUgbAoBcTwf/75bc9FpLrRJ6Oqzh2AatHPJPlPsUkrHoodEIL9Wrj245N0IkM
-         CKqZcRAwuS14dY/puuWvu5Iv58XRYIuu9ZG+pyuDXE/6b4365Ee4PlyIJONeEyr2MGib
-         6cVWes5+zrdHoHZCECCOTb912dLYYqJ2SATdXockBPAMffvXGVAAplVLTm/IBObnCCy5
-         PTcw==
+        bh=1bOqZTIgNfYaGearpUu/NTtFHtC7CcEpqwb4HBh3SiI=;
+        b=qUC9SfjUukDKvsbmYPSe6T27Bi1sJp2dJs8cmy/inmo8X2xrhw4RSpgKmKr0s+ut43
+         hsNxoNTEF9PKQC6+sTuW0oUq9cIPENsVpkWFPexaQYKzFwvClw2l+xLABM057EDaIRaP
+         34QUcHuxu9XWOI1715LVvrY8UDIq4gk3Idiuw0zA9nbnhETkUdAJskWnWn9Ej4iHxtaN
+         zphENduap0BRp0VFvokbvrMO/s8WcTLLw09K4sV6gI41iKRruifZwXKUaAfK1UP/KC/U
+         v6ErAfGOX2l4CHLi/sV9oGgcYFRk/KKfioTorOGCxwYhoPm2JCkE5BMvQ/lEFHkUMIuO
+         BM9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UL3FCIZKLzzQus1qAx7yV6sXtbc4EUcJMO6jqTXPvh4=;
-        b=dGfy9L9WclwBNjuim6I8YG77bnD6G+VNShGolGmxHa41zaB5/3++PhHpL/bGl+SzOQ
-         OuF7dKChLfJpZaj8zAa9Z2IEghkFMP8jGhTLjL5d8SQRH+qOitZy7zbK16urp3qMmyf1
-         p7GS/oOaC16+EeIcvdnffhx77V62VZuPIKMaJRWvrDgH1qORQ4LNHG1VZm5+5or5ykiA
-         BvRFtPhV6/65EIjSxH2U/HsNghP6HFGsPIWdbJNvyQ/5h4SDG4ZIbZnPe8Mn+38VtFq4
-         UV2awakFQUUcFtURw77GVUWKsdouwFZ25KSZP89txc88olGHnfVtBXOPQVqyCJKxzMix
-         0fYA==
-X-Gm-Message-State: AKGB3mLl/dVBDiUbpix31K4MNEWETFw6frxYXcVFj8tQbaRFBxHBfSqq
-        VEAlI3SDPO0kcoXlQQ4SeHfv1w==
-X-Google-Smtp-Source: ACJfBovSF8GHqc5EoXTfXTnq6F2JcNN6SwsH/LfV6neDM+qI8nLrgNG8CnrRO1dSzAB2WhO5TXS2jQ==
-X-Received: by 10.107.111.5 with SMTP id k5mr20280755ioc.72.1514415431568;
-        Wed, 27 Dec 2017 14:57:11 -0800 (PST)
+        bh=1bOqZTIgNfYaGearpUu/NTtFHtC7CcEpqwb4HBh3SiI=;
+        b=IgPL/+lJsjr33J3XNrmWHfdxcIu5kPegojyn6c8/ooK5RFp8nqC/qLXmNJqSiBsRqh
+         KXv8sAWMfnNtYbcvvY+6SlLijzQJAtGsTkjnG+qNEYKrVkztrJ6R0J/nTRNaBvYf5Jk0
+         nduaaRotOMotM4aPbvLZskmw7PlwBjEBCuq0tTTGJTVrGaq709QMze8Pww0ERZg2ptCv
+         n3v2EI2j+zF+99I3VJEZ9pJZRZ8+9hzcq6/ARUiMToHuojTBIXzpXhYJt3t04K+oJVE1
+         1COdPLvjI1eONkXyX2ZuKX+HQsP3cYfPFv+ZpPdkxismslk1vtMeZnX5hFZe7TkmRieo
+         Rh+A==
+X-Gm-Message-State: AKGB3mLyr9/90CFYOnC2ZHBibko2sH+JDaqo8mhnnz+Rjo954Tjq+x72
+        lNq+jhX4PJ4zt+urh1WyvUOzxg==
+X-Google-Smtp-Source: ACJfBotI6p/NiH3USUzCPjGdba2wFEYHNwknG30ejvMUcHoUVXo9qTUm6PgxAOLahpKDaFiKKKRezQ==
+X-Received: by 10.107.56.4 with SMTP id f4mr39894111ioa.71.1514415432922;
+        Wed, 27 Dec 2017 14:57:12 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i68sm18174810ioi.24.2017.12.27.14.57.10
+        by smtp.gmail.com with ESMTPSA id 3sm11034453itk.19.2017.12.27.14.57.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 14:57:11 -0800 (PST)
+        Wed, 27 Dec 2017 14:57:12 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: [PATCHv2 0/5] Fix --recurse-submodules for submodule worktree changes
-Date:   Wed, 27 Dec 2017 14:57:00 -0800
-Message-Id: <20171227225705.73235-1-sbeller@google.com>
+Subject: [PATCHv2 1/5] t/helper/test-lazy-name-hash: fix compilation
+Date:   Wed, 27 Dec 2017 14:57:01 -0800
+Message-Id: <20171227225705.73235-2-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
-In-Reply-To: <20171219222636.216001-1-sbeller@google.com>
+In-Reply-To: <20171227225705.73235-1-sbeller@google.com>
 References: <20171219222636.216001-1-sbeller@google.com>
+ <20171227225705.73235-1-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,42 +67,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I dropped the patch to `same()` as I realized we only need to fix the
-oneway_merge function, the others (two, three way merge) are fine as
-they have the checks already in place.
+I was compiling origin/master today with stricter compiler flags today
+and was greeted by
 
-The test added in the last patch got slightly larger as now we also test for
-newly staged files to be blown away in the submodule.
+t/helper/test-lazy-init-name-hash.c: In function ‘cmd_main’:
+t/helper/test-lazy-init-name-hash.c:172:5: error: ‘nr_threads_used’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+     printf("avg [size %8d] [single %f] %c [multi %f %d]\n",
+     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr,
+         ~~~
+         (double)avg_single/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (avg_single < avg_multi ? '<' : '>'),
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         (double)avg_multi/1000000000,
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         nr_threads_used);
+         ~~~~~~~~~~~~~~~~
+t/helper/test-lazy-init-name-hash.c:115:6: note: ‘nr_threads_used’ was declared here
+  int nr_threads_used;
+      ^~~~~~~~~~~~~~~
 
-v1:
+I do not see how we can arrive at that line without having `nr_threads_used`
+initialized, as we'd have `count > 1`  (which asserts that we ran the
+loop above at least once, such that it *should* be initialized).
 
-The fix is in the last patch, the first patches are just massaging the code
-base to make the fix easy.
+I do not have time to dive into further analysis.
 
-The second patch fixes a bug in the test, which was ineffective at testing.
-The third patch shows the problem this series addresses,
-the fourth patch is a little refactoring, which I want to keep separate
-as I would expect it to be a performance regression[1].
-The first patch is unrelated, but improves the readability of submodule test
-cases, which we'd want to improve further.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/helper/test-lazy-init-name-hash.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Stefan
-
-Stefan Beller (5):
-  t/helper/test-lazy-name-hash: fix compilation
-  t/lib-submodule-update.sh: clarify test
-  t/lib-submodule-update.sh: Fix test ignoring ignored files in
-    submodules
-  unpack-trees: oneway_merge to update submodules
-  submodule: submodule_move_head omits old argument in forced case
-
- submodule.c                         |  4 +++-
- t/helper/test-lazy-init-name-hash.c |  2 +-
- t/lib-submodule-update.sh           | 19 +++++++++++++++++--
- unpack-trees.c                      |  3 +++
- 4 files changed, 24 insertions(+), 4 deletions(-)
-
+diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
+index 6368a89345..297fb01d61 100644
+--- a/t/helper/test-lazy-init-name-hash.c
++++ b/t/helper/test-lazy-init-name-hash.c
+@@ -112,7 +112,7 @@ static void analyze_run(void)
+ {
+ 	uint64_t t1s, t1m, t2s, t2m;
+ 	int cache_nr_limit;
+-	int nr_threads_used;
++	int nr_threads_used = 0;
+ 	int i;
+ 	int nr;
+ 
 -- 
 2.15.1.620.gb9897f4670-goog
 
