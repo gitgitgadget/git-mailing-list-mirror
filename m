@@ -7,58 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C642A1F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 16:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A6C1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 16:59:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752698AbdL0Q64 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 11:58:56 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:42639 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753020AbdL0QtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 11:49:14 -0500
-Received: by mail-wm0-f65.google.com with SMTP id b199so40489216wme.1
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 08:49:13 -0800 (PST)
+        id S1753216AbdL0Q7F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 11:59:05 -0500
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:45840 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752991AbdL0QtM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 11:49:12 -0500
+Received: by mail-wr0-f170.google.com with SMTP id o15so4982188wrf.12
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 08:49:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yWH7a/kuHwNH6CTOAXDbs2TA94XkP/4P2RTNK9Er+hQ=;
-        b=JGP6XjmueRrS3CdDbnQvCmVzCzQJM+v0GLCu49+Xouq2T6OcvHwXcUfoevHt0xq2m7
-         ed1CbDMGzXam7JN5DuqPuPIsDd65NS0VQvnu7RHiqyYozcu1+PNVq1xoBKzia24DM6te
-         wEGReoXor9oi/cgquTjrJioaIvtTQm6cbQnXgKf1hyCicMpfL5MKv1BkGhR7WxR+gfyO
-         SNo7y3VBquMgwlNtRHOXvqR6FSHbjE91pYJMt2k6js5pSXQw6wdc1NfeXy312BZ/BAvV
-         JxSlUs9VhE8Rjir2CzA3AtinLCpbf6yAm3Om2xCx/OYzxs8P7wS44jbvwASPrrzaDLVN
-         a3hg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=or7IuMBA33mMeietDF81Sv0d7WCC0XdA3q6SX5kXg/4=;
+        b=Vlfac4prla3c54oHSmdqAZz63iJGa3rXCTSNlAYoLsVxrdsIS9SqGuk/W5YgiKcxwJ
+         VXHoLYxNs0VPlmaSS+AkrbNBsida+UxqJkoz83KKCqnS+HCBJ4AFfOijbqaDNaXMgmZz
+         5LSfEjmbpMHb2ahqd3CPzNan0cbpoLivgFpS2SBZrwjJ/XzKoukmTKXF0G9AXmGaMfrj
+         OFHxh3r2/w9/6/2Yow6vhf+AgDA2azTBAnC3H82kwZXLF2Jn5G+1Lv2F0Jqy/M6bwlSV
+         2cGtZ3BQ2SCHEh79Y5fFKDd0MxGoWH1HNnupzXFfapYroB0T5ZSURoZ24QGtmrLXc4wQ
+         1fYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yWH7a/kuHwNH6CTOAXDbs2TA94XkP/4P2RTNK9Er+hQ=;
-        b=ugh1PZvM0HJzY0jmxzKOXlvZLkvXXYUNRHwJlY4/I33FsiCDBzECK+X8do/H4U4IMI
-         /rrIg+Id1tN2c7yUqIRV55MMt189+KX6ZMQ4cJzaHAzrPNofBGnprbwmnlTHHNs7IO4m
-         mNeJYG6eiCC6NCeQ4BkGrn94ZZPETn9YVR4+X3EykekEiXhx9GgPHZrGKhgl3Osg9b07
-         ry5u/APECYkGtM+wWIHlKWB+M7CqivumECjmYsbEr4aLVZV+sRgIs2BmE+0JJ/3uKuXK
-         qodwUPtjgYVmLSjV09061SGU2Tui7KlE0YE+tGxQKvXRFS3TKZAA0H8gd5rEug16YElu
-         JBcg==
-X-Gm-Message-State: AKGB3mIEPmbD3imorKk9RG87Ml5wYnjqEYxeGArSw33hv7xxbbfPy9C5
-        NjSjl41pv3dMHxaSE7xT3Nw=
-X-Google-Smtp-Source: ACJfBov6NrsUf84ZsEd8wpkEI+4vGPjnO8Lg23TNUNK+3rQfJGOd7FIq4pJyhGPA8P2GYfCL0hAmEw==
-X-Received: by 10.28.247.15 with SMTP id v15mr22636939wmh.152.1514393353143;
-        Wed, 27 Dec 2017 08:49:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=or7IuMBA33mMeietDF81Sv0d7WCC0XdA3q6SX5kXg/4=;
+        b=a+M7d3bSJ2DUtQ4nCDCON56Wgb/aqxzARk3wgdX1aLrWIzf1pBO0rs5hX/BOvsK1RW
+         oBCat2gse8QmzjtM4ZKgiVzlSVMGbz33WLbk6QM/ywqiofaCf3ndD5a+HqlhKySYk240
+         fw3PJb1UhTckn4SaVunVdS/TT1wJ1FZhRA73AGy1FCncIggyEKcYUsmdai3NaLr2VzXI
+         3hnn55cXXS8uez6Rp36B1u/EpeLT/LZQ+/Zfb7yzRJEzxMlroFISrINqXuz5+uHRZ9fJ
+         k2VOjb4WZjwSAsCl7gxZ8xawtq/n4fzbyKbPh17/wzlpZJwM9+cGLTjYrRj0lIkLo2sc
+         oQdA==
+X-Gm-Message-State: AKGB3mKoIfXM+Y6UcRz/+3Zw5WGcBWP3BGeBdWHOEQbkpFELGVmqcpyK
+        +uCCx4BZUwT1luy/LtUsxTU=
+X-Google-Smtp-Source: ACJfBos8+yjtg+83tPT9Tg7GUVUU5c88XTeFqEopL84o1nWQbanK33ogJ0fgDu7kDXgfb+v3grOiJw==
+X-Received: by 10.223.153.233 with SMTP id y96mr28718583wrb.216.1514393350844;
+        Wed, 27 Dec 2017 08:49:10 -0800 (PST)
 Received: from localhost.localdomain (62-165-236-58.pool.digikabel.hu. [62.165.236.58])
-        by smtp.gmail.com with ESMTPSA id f132sm10948305wmf.17.2017.12.27.08.49.12
+        by smtp.gmail.com with ESMTPSA id f132sm10948305wmf.17.2017.12.27.08.49.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 27 Dec 2017 08:49:12 -0800 (PST)
+        Wed, 27 Dec 2017 08:49:10 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 1/2] travis-ci: don't try to create the cache directory unnecessarily
-Date:   Wed, 27 Dec 2017 17:49:04 +0100
-Message-Id: <20171227164905.13872-2-szeder.dev@gmail.com>
+Subject: [PATCH 0/2] Travis CI: skip commits with successfully built and tested trees
+Date:   Wed, 27 Dec 2017 17:49:03 +0100
+Message-Id: <20171227164905.13872-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.15.1.500.g54ea76cc4
-In-Reply-To: <20171227164905.13872-1-szeder.dev@gmail.com>
-References: <20171227164905.13872-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,29 +65,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Travis CI creates that directory for us anyway, even when a previous
-cache doesn't exist for the current build job.
+Travis CI dutifully builds and tests each new branch tip, even if its
+tree has previously been successfully built and tested.  This happens
+often enough in contributors' workflows, when a work-in-progress
+branch is rebased changing e.g. only commit messages or the order or
+number of commits while leaving the resulting code intact, and is then
+pushed to a Travis CI-enabled GitHub fork.
 
-In itself it doesn't hurt to try, of course, but the following patch
-will access the Travis CI cache much earlier in the build process, and
-then creating the cache directory this late might cause confusion.
+This is wasting Travis CI's resources and is sometimes scary-annoying
+when the new tip commit with a tree identical to the previous,
+successfully tested one is suddenly reported in red, because one of
+the OSX build jobs happened to exceed the time limit yet again.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/run-tests.sh | 1 -
- 1 file changed, 1 deletion(-)
+These two patches extend our Travis CI build scripts to skip building
+commits whose trees have previously been successfully built and tested.
 
-diff --git a/ci/run-tests.sh b/ci/run-tests.sh
-index f0c743de9..ccdfc2b9d 100755
---- a/ci/run-tests.sh
-+++ b/ci/run-tests.sh
-@@ -5,6 +5,5 @@
- 
- . ${0%/*}/lib-travisci.sh
- 
--mkdir -p $HOME/travis-cache
- ln -s $HOME/travis-cache/.prove t/.prove
- make --quiet test
+
+These patches should go on top of the "Rest of the Travis CI fixes" patch
+series, just posted at:
+
+  https://public-inbox.org/git/20171227163603.13313-1-szeder.dev@gmail.com/
+
+
+SZEDER Gábor (2):
+  travis-ci: don't try to create the cache directory unnecessarily
+  travis-ci: record and skip successfully built trees
+
+ ci/lib-travisci.sh        | 43 +++++++++++++++++++++++++++++++++++++++++++
+ ci/run-linux32-docker.sh  |  2 ++
+ ci/run-static-analysis.sh |  2 ++
+ ci/run-tests.sh           |  3 ++-
+ ci/run-windows-build.sh   |  2 ++
+ ci/test-documentation.sh  |  2 ++
+ 6 files changed, 53 insertions(+), 1 deletion(-)
+
 -- 
 2.15.1.500.g54ea76cc4
 
