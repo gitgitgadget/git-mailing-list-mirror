@@ -7,140 +7,96 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44271F404
-	for <e@80x24.org>; Wed, 27 Dec 2017 21:58:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B438C1F404
+	for <e@80x24.org>; Wed, 27 Dec 2017 22:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752474AbdL0V6l (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 16:58:41 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:45587 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751964AbdL0V6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 16:58:40 -0500
-Received: by mail-yw0-f195.google.com with SMTP id y187so7953724ywd.12
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 13:58:40 -0800 (PST)
+        id S1752004AbdL0WTt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 17:19:49 -0500
+Received: from mail-yw0-f172.google.com ([209.85.161.172]:44956 "EHLO
+        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751871AbdL0WTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 17:19:48 -0500
+Received: by mail-yw0-f172.google.com with SMTP id m129so7968392ywb.11
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 14:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YT5G6DBwnQL8j+QPo2krWS5IPl7oNQ8w1qGNyFjDso0=;
-        b=BO5KUM5oFlHYuzPkakbh3+Y6hnpa9ZseZ0JJKvbaWKFyanzSGh/QED9fMxGW9OnwZF
-         /fLRqYSjo8uSL3tusf5CYt/ur4EtmYvAkA2PZDtFf6pWAqmhOtlFxcisp0gnPAm8zPA1
-         421ALskVmvVHwsMAtS3uRNg8noPEQCJbgHjrZ22Ph4HUokMnBIzXk1ttpVXD8aan39FX
-         ksJrRFUugON1msTl8ZqWymbN4Pb8aQvWk4ckAGRaIjmPn3LD/+/yC1Krs+x0sFKZijih
-         9JHj2HkLLFilVkBwxvb1sOGboNutl85oQ2HQ9p+RAbPWMiOV5dnv37KTOEos0nUaPI1L
-         vDJA==
+         :cc;
+        bh=1VnQ7UzFJRZ9xXR4saZzpjI3aK/4Pr0BaRm2JXHN2NA=;
+        b=l5wirpOoiZNpOc0Bjh2EGiqNQxgTxXNHG+yVNPzCWCtZTxF5pswvHBKleIcSH3LuPe
+         6rPL2Xjp3te6yH/GFqmiI7wtgN7Kf8J7KFIJDFO5bZ7TvTu0XQZp3iOcZ0h3MFgmHo9A
+         WCk6iILXIRDh6H2EDE9WINQzv6hwM9yC/fPn9jXLAczog7/cPkjpOmCUvaAAJXGIThbn
+         IC8vX+iG69N4PIz+MaMpo4vtr+Hzxao/8GXZx/NJf0eeSN/hbwEdJL83S1B7YAM/W3Lm
+         TzS4QBD2Z8aBU1v3AVyGqulPd06XmDZksKLuOS+n/Y8fntMFbj3ce8rWLA1sRcXnshgW
+         NVlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YT5G6DBwnQL8j+QPo2krWS5IPl7oNQ8w1qGNyFjDso0=;
-        b=O7yp+ktSVFZEO6SRxQcb/XWNM0v5HMddoZa9pSZ2KCVI9yT/WIDnENqK/YKyO/Qs16
-         J2J1Ku2BTU4tLGgcG1XMW8pn+cHwRBA6pQiP66REI6gDYFUoLiBC1C5tlP6hF1ujGTNB
-         djN65UMU1AOW2NcVwgBAGrd5v0oxRLCLjB4DkIdTSLh0EIzJlEtqPF4ZID2j/0wcb5qn
-         XsHOIPKPE3xfUEp4elgqEyjRoc9KOePUEhWMZFvdCPqfDky940oJbnvn4FavcIy8nQ5J
-         pAdnZxEvvPXpZ7JdSaq/TfgyLEj7BbyENNo4jaKQJO7gPXcRq6h7pKuL4gCnHu7to48w
-         uj5A==
-X-Gm-Message-State: AKGB3mLDlLzGMxone7WBbmA2qPvD+CBMvfzB81HlaaN9+tbW7LBvSxsh
-        lNwSs7bvtl+UakkV+EgekPrJxrJ6YHIgxOw1Cbo=
-X-Google-Smtp-Source: ACJfBotL1rl1VnyQ6O7h71n2CaM5CHH+u0rvCZGRr/W0C8iYzggba9TUsHrUQdUJvSIm5pQJTUb/W8EfSa8+oti6LwQ=
-X-Received: by 10.129.175.25 with SMTP id n25mr13174983ywh.189.1514411920034;
- Wed, 27 Dec 2017 13:58:40 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=1VnQ7UzFJRZ9xXR4saZzpjI3aK/4Pr0BaRm2JXHN2NA=;
+        b=UX6FkDqCWNPkYAh4v+a5zB2zs9LyV3GYYOeQ9WxF28Jb7kUHknOLCF1Y1zfyLiSGKN
+         z3d+9dpa5Sa7IDnQIkYuhxmqVBeoO34HPjT2Ujg6+eARixm03bIHOfjGWW19gxuMtad/
+         7ZQRZ2jXSdce3aOA36c1Ifrs3SQm/A/cGklmnUohklo2dAcP759ywSChjS0jl5M45D4U
+         M570ElmM+4sTXcjH/tzBrzS3O6dirqImxYBmIdwgI2MYm9sJGvHhiJ2/16J0K2n1ELiE
+         SsXLfDmd3fB+VktlhxeRpP2yKq6FbGSCNubFtjJeA52shfYIRjEk4l6AoqdKLFBauJBO
+         KhJg==
+X-Gm-Message-State: AKGB3mJZndBtR9iLeLe//YvB8X6o8WJtNrY359ti4H82RYA8/GmPgBGg
+        dIEqLoHOlvF/VDqMgZKvYKRLMM2rErPl2T3j36M=
+X-Google-Smtp-Source: ACJfBovH4drNaVZDmkd71wk8bEoAsvxbK3EqxNZVoDCqCvRTKyHG+v8+kbE/y3DrpKo1I4wHVvQGAWOzHzlu70/Ao8A=
+X-Received: by 10.129.128.66 with SMTP id q63mr20407969ywf.411.1514413188188;
+ Wed, 27 Dec 2017 14:19:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.129.172.93 with HTTP; Wed, 27 Dec 2017 13:58:19 -0800 (PST)
-In-Reply-To: <xmqqmv24m186.fsf@gitster.mtv.corp.google.com>
-References: <20171127045514.25647-1-liambeguin@gmail.com> <20171203221721.16462-1-liambeguin@gmail.com>
- <20171203221721.16462-9-liambeguin@gmail.com> <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
- <xmqqmv24m186.fsf@gitster.mtv.corp.google.com>
+Received: by 10.129.172.93 with HTTP; Wed, 27 Dec 2017 14:19:27 -0800 (PST)
+In-Reply-To: <da288dac49ac1e54db99349a50a7cd684956671c.1513986836.git.johannes.schindelin@gmx.de>
+References: <cover.1513986836.git.johannes.schindelin@gmx.de> <da288dac49ac1e54db99349a50a7cd684956671c.1513986836.git.johannes.schindelin@gmx.de>
 From:   Liam Beguin <liambeguin@gmail.com>
-Date:   Wed, 27 Dec 2017 22:58:19 +0100
-Message-ID: <CAKm4OoVMRd-ZkaB9Z8Mxnavfy077=LifJq9OEeg-mvjEGz4K6A@mail.gmail.com>
-Subject: Re: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
+Date:   Wed, 27 Dec 2017 23:19:27 +0100
+Message-ID: <CAKm4OoX+S47iQnBogvU9j4k3pUBtn0uVWkjOKt-M+D6-O+4BzA@mail.gmail.com>
+Subject: Re: [PATCH 5/5] sequencer: do not invent whitespace when transforming OIDs
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Johannes,
 
-
-On 27 December 2017 at 20:15, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+On 23 December 2017 at 00:56, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> For commands that do not have an argument, there is no need to append a
+> trailing space at the end of the line.
 >
->> On Mon, Dec 4, 2017 at 5:17 AM, Liam Beguin <liambeguin@gmail.com> wrote=
-:
->>> +static const char command_to_char(const enum todo_command command)
->>> +{
->>> +       if (command < TODO_COMMENT && todo_command_info[command].c)
->>> +               return todo_command_info[command].c;
->>> +       return comment_line_char;
->>> +}
->>
->>     CC sequencer.o
->> sequencer.c:798:19: error: type qualifiers ignored on function return
->> type [-Werror=3Dignored-qualifiers]
->>  static const char command_to_char(const enum todo_command command)
->>                    ^
->>
->> Maybe drop the first const.
->
-> Thanks.  This topic has been in 'next' for quite some time and I
-> wanted to merge it down to 'master' soonish, so I've added the
-> following before doing so.
-
-Thanks for taking the time. I had prepared the patch but was waiting to get
-home to send it.
-Only comment I have, maybe s/sequencer.c/rebase -i/ in the subject line
-so it matches with the rest.
-
-Since this came up, would it be a good thing to add -Wignored-qualifiers
-to the DEVELOPER flags?
-
->
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Date: Wed, 27 Dec 2017 11:12:45 -0800
-> Subject: [PATCH] sequencer.c: drop 'const' from function return type
->
-> With -Werror=3Dignored-qualifiers, a function that claims to return
-> "const char" gets this error:
->
->     CC sequencer.o
-> sequencer.c:798:19: error: type qualifiers ignored on function return
-> type [-Werror=3Dignored-qualifiers]
->  static const char command_to_char(const enum todo_command command)
->                    ^
->
-> Reported-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  sequencer.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  sequencer.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
 > diff --git a/sequencer.c b/sequencer.c
-> index 115085d39c..2a407cbe54 100644
+> index 5632415ea2d..970842e3fcc 100644
 > --- a/sequencer.c
 > +++ b/sequencer.c
-> @@ -795,7 +795,7 @@ static const char *command_to_string(const enum todo_=
-command command)
->         die("Unknown command: %d", command);
->  }
+> @@ -2584,7 +2584,10 @@ int transform_todos(unsigned flags)
+>                         strbuf_addf(&buf, " %s", oid);
+>                 }
+>                 /* add all the rest */
+> -               strbuf_addf(&buf, " %.*s\n", item->arg_len, item->arg);
+> +               if (!item->arg_len)
+> +                       strbuf_addch(&buf, '\n');
+> +               else
+> +                       strbuf_addf(&buf, " %.*s\n", item->arg_len, item->arg);
+
+I also went with that when I was working on this but I thought leaving the
+extra whitespace would make the code a little shorter.
+Other than that, this change and the others look good.
+
+>         }
 >
-> -static const char command_to_char(const enum todo_command command)
-> +static char command_to_char(const enum todo_command command)
->  {
->         if (command < TODO_COMMENT && todo_command_info[command].c)
->                 return todo_command_info[command].c;
+>         i = write_message(buf.buf, buf.len, todo_file, 0);
 > --
-> 2.15.1-597-g62d91a8972
->
+> 2.15.1.windows.2
 
 Thanks,
 Liam
