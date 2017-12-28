@@ -2,59 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C11A1F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5041F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753328AbdL1EOV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 23:14:21 -0500
-Received: from mail-it0-f45.google.com ([209.85.214.45]:41159 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753284AbdL1EOL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 23:14:11 -0500
-Received: by mail-it0-f45.google.com with SMTP id x28so26998482ita.0
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:11 -0800 (PST)
+        id S1753325AbdL1EOU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 23:14:20 -0500
+Received: from mail-it0-f48.google.com ([209.85.214.48]:46042 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753281AbdL1EOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 23:14:12 -0500
+Received: by mail-it0-f48.google.com with SMTP id z6so26969576iti.4
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gYQhCEgfnLLk7qqDZFFcJ6xrim/2b8JyKzHCDqANOqs=;
-        b=FHw2iPCW+XlSc0iy3TMThKO0iO1SgJpI1o9h/kwhKkerT+1sQzMSN31YpaW4k8eWyH
-         2nfhh4wh3zy9hsdZKWKLvNxZ36mror27Il9ERzCCYkALGTt3s+iF0/xTilwTj8Mk2kM4
-         YsZYsJwSs7/Etz4KAv5SWt/Fp7qfhtEnK+QbeAE+tNTKb4DamNjVinwOOclHJLkOk7NE
-         E2yxqusRiFWmG1UBrIr35GJaxHlLZttsiHUVh0zxodI2yCL86U83sBDWzX/GrSAbAxBP
-         chtxidlE398x45ezYtzqeeSyr+/B46tPJdIbgblyd85nmJhyR6GFq3rNi6QKjNfgBvJq
-         RTeA==
+        bh=R/stZ/vrp+wLW/SoKCqcD9Jes6pSAkI54a/FFawfkVI=;
+        b=tyirpkh72jM6D5ReZ5bgvp6HDMolqo+OaEajDVH29Ba+vllquap1wSgG/dMAl5D+VV
+         XqrvHT2KOOxSjJjbG/VQAEmUlwng5+5b5+4NtcnYmi8whMaAB6ZNqEu276QLmziJPer+
+         lxdW+CAT8TYV1DoC88yh82QaLwvvB9Pi0xZRUH5kdGDWePfml1HgEzZRRZnzxfBYBb/B
+         hl4WCvgfl5rCpMDIbx01nuqpyunjJAkx+3yo/7e9UKn/CaJvlXNAWtt+gp4gBtF8m7+G
+         nTbRqAYb1sVITrDjkq+WvX8m0sHQhymMl7gm/65EV4rhC9Onb+7z57MAL65nwE2uaapE
+         c7fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gYQhCEgfnLLk7qqDZFFcJ6xrim/2b8JyKzHCDqANOqs=;
-        b=EEEaCyLOBWD04PMQR9NabSL5OCgOh4aReC31iG04HayugRnBjqBJaVrMT3iT1Bcxhz
-         TTgN4fFTXOOTu8c88hjJnSvCbzwNvng0eyzkjQciWR4cVvuq6s5yiw7EpOzXuH/3vs+4
-         zK8sWkPSrnD0uI97yc4ZaXebc7KOXYF6s8RyXpqeta6ErmjpTcAi9GuFtCrAb7TwqL7h
-         rTQgM4Sd1YB7gJbgaOoHCtG9y/CAdLVFRcQTYxQM+EtjbN7RHLAQ4kL/RErHb3C9C9M2
-         VwBUfMAEcoZDIEGVWXMBErVuO7ordLtalhqXALfi5L3WXTTvZ9X9GG1x1au/j65eGZ3g
-         eTUg==
-X-Gm-Message-State: AKGB3mIRJiEK3epKJa0kuTKPJWGGnhs2LcM7EFlO6AxNbU5JgS/p+VdH
-        j0tq9qsHrFYSLJTcYLbGClr1tQ==
-X-Google-Smtp-Source: ACJfBovI2IrvhxnJj0TbrJaDYHEf7JSwr5Amh/sVvBsuxefHN/JBvduaQWBYye3BVvRAqLns+w16Lw==
-X-Received: by 10.36.217.21 with SMTP id p21mr37115877itg.92.1514434450346;
-        Wed, 27 Dec 2017 20:14:10 -0800 (PST)
+        bh=R/stZ/vrp+wLW/SoKCqcD9Jes6pSAkI54a/FFawfkVI=;
+        b=TfdUfsbevEaSAVVAj4eAlQ9XtTM/55aL1xoRLLint/ArReSTi5Nvc0Msr0+Flym/69
+         nfOkxuCndJ68FH22KJyOTQplwoGcrBZ9v6PdBZI7O0mqZn8reB1hwnBGakzflojzaL4z
+         pk/uZeB/WyKXP5eCe6A63fx3yO22rDXHtNrcKrHJ/EtKD8hMPVrkCaKciiOrlZogAdi4
+         LrYfRkLo4wPE2FSNhPa248M5E7FLw944GsIKSB90h8/XmM8C4BI/0uyF3ODz+4HsvMk5
+         ZJFrmedjklMCvmzQ77pLgY8uXpQH20CM8FTRX0pVLBmU7yva9DqTYKE+zBxUt4hPLuM3
+         wWlA==
+X-Gm-Message-State: AKGB3mK/GZftgyblycdLhl405pKfJBKhHWu+vBWk6eg9OTgQgjVH0QIZ
+        9dMGzrDgW1kTNxuvahC9B8wPEQ==
+X-Google-Smtp-Source: ACJfBovCtP2YYQhiCoxR+hKT0t46yYhqQI2ncjwbez78WdKNYXdJRYcsONHRX5jIl151oRCWl+xkxw==
+X-Received: by 10.36.91.15 with SMTP id g15mr39035600itb.141.1514434451114;
+        Wed, 27 Dec 2017 20:14:11 -0800 (PST)
 Received: from localhost.localdomain (170-72-6-219.ut.vivintwireless.net. [170.72.6.219])
-        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.09
+        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 20:14:09 -0800 (PST)
+        Wed, 27 Dec 2017 20:14:10 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 10/34] directory rename detection: more involved edge/corner testcases
-Date:   Wed, 27 Dec 2017 20:13:28 -0800
-Message-Id: <20171228041352.27880-11-newren@gmail.com>
+Subject: [PATCH v5 11/34] directory rename detection: testcases exploring possibly suboptimal merges
+Date:   Wed, 27 Dec 2017 20:13:29 -0800
+Message-Id: <20171228041352.27880-12-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g8e199d483
 In-Reply-To: <20171228041352.27880-1-newren@gmail.com>
 References: <20171228041352.27880-1-newren@gmail.com>
@@ -65,54 +64,350 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 381 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 381 insertions(+)
+ t/t6043-merge-rename-directories.sh | 394 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 394 insertions(+)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-index 50fb8f41e..cfb53295b 100755
+index cfb53295b..7c75363e5 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -1459,4 +1459,385 @@ test_expect_success '6e-check: Add/add from one side' '
- #   side of history is the one doing the renaming.
- ###########################################################################
+@@ -1840,4 +1840,398 @@ test_expect_failure '7e-check: transitive rename in rename/delete AND dirs in th
+ 	)
+ '
  
-+
 +###########################################################################
-+# SECTION 7: More involved Edge/Corner cases
++# SECTION 8: Suboptimal merges
 +#
-+# The ruleset we have generated in the above sections seems to provide
-+# well-defined merges.  But can we find edge/corner cases that either (a)
-+# are harder for users to understand, or (b) have a resolution that is
-+# non-intuitive or suboptimal?
++# As alluded to in the last section, the ruleset we have built up for
++# detecting directory renames unfortunately has some special cases where it
++# results in slightly suboptimal or non-intuitive behavior.  This section
++# explores these cases.
 +#
-+# The testcases in this section dive into cases that I've tried to craft in
-+# a way to find some that might be surprising to users or difficult for
-+# them to understand (the next section will look at non-intuitive or
-+# suboptimal merge results).  Some of the testcases are similar to ones
-+# from past sections, but have been simplified to try to highlight error
-+# messages using a "modified" path (due to the directory rename).  Are
-+# users okay with these?
-+#
-+# In my opinion, testcases that are difficult to understand from this
-+# section is due to difficulty in the testcase rather than the directory
-+# renaming (similar to how t6042 and t6036 have difficult resolutions due
-+# to the problem setup itself being complex).  And I don't think the
-+# error messages are a problem.
-+#
-+# On the other hand, the testcases in section 8 worry me slightly more...
++# To be fair, we already had non-intuitive or suboptimal behavior for most
++# of these cases in git before introducing implicit directory rename
++# detection, but it'd be nice if there was a modified ruleset out there
++# that handled these cases a bit better.
 +###########################################################################
 +
-+# Testcase 7a, rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file
++# Testcase 8a, Dual-directory rename, one into the others' way
++#   Commit O. x/{a,b},   y/{c,d}
++#   Commit A. x/{a,b,e}, y/{c,d,f}
++#   Commit B. y/{a,b},   z/{c,d}
++#
++# Possible Resolutions:
++#   w/o dir-rename detection: y/{a,b,f},   z/{c,d},   x/e
++#   Currently expected:       y/{a,b,e,f}, z/{c,d}
++#   Optimal:                  y/{a,b,e},   z/{c,d,f}
++#
++# Note: Both x and y got renamed and it'd be nice to detect both, and we do
++# better with directory rename detection than git did without, but the
++# simple rule from section 5 prevents me from handling this as optimally as
++# we potentially could.
++
++test_expect_success '8a-setup: Dual-directory rename, one into the others way' '
++	test_create_repo 8a &&
++	(
++		cd 8a &&
++
++		mkdir x &&
++		mkdir y &&
++		echo a >x/a &&
++		echo b >x/b &&
++		echo c >y/c &&
++		echo d >y/d &&
++		git add x y &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		echo e >x/e &&
++		echo f >y/f &&
++		git add x/e y/f &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv y z &&
++		git mv x y &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '8a-check: Dual-directory rename, one into the others way' '
++	(
++		cd 8a &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/a HEAD:y/b HEAD:y/e HEAD:y/f HEAD:z/c HEAD:z/d &&
++		git rev-parse >expect \
++			O:x/a O:x/b A:x/e A:y/f O:y/c O:y/d &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 8b, Dual-directory rename, one into the others' way, with conflicting filenames
++#   Commit O. x/{a_1,b_1},     y/{a_2,b_2}
++#   Commit A. x/{a_1,b_1,e_1}, y/{a_2,b_2,e_2}
++#   Commit B. y/{a_1,b_1},     z/{a_2,b_2}
++#
++#   w/o dir-rename detection: y/{a_1,b_1,e_2}, z/{a_2,b_2}, x/e_1
++#   Currently expected:       <same>
++#   Scary:                    y/{a_1,b_1},     z/{a_2,b_2}, CONFLICT(add/add, e_1 vs. e_2)
++#   Optimal:                  y/{a_1,b_1,e_1}, z/{a_2,b_2,e_2}
++#
++# Note: Very similar to 8a, except instead of 'e' and 'f' in directories x and
++# y, both are named 'e'.  Without directory rename detection, neither file
++# moves directories.  Implement directory rename detection suboptimally, and
++# you get an add/add conflict, but both files were added in commit A, so this
++# is an add/add conflict where one side of history added both files --
++# something we can't represent in the index.  Obviously, we'd prefer the last
++# resolution, but our previous rules are too coarse to allow it.  Using both
++# the rules from section 4 and section 5 save us from the Scary resolution,
++# making us fall back to pre-directory-rename-detection behavior for both
++# e_1 and e_2.
++
++test_expect_success '8b-setup: Dual-directory rename, one into the others way, with conflicting filenames' '
++	test_create_repo 8b &&
++	(
++		cd 8b &&
++
++		mkdir x &&
++		mkdir y &&
++		echo a1 >x/a &&
++		echo b1 >x/b &&
++		echo a2 >y/a &&
++		echo b2 >y/b &&
++		git add x y &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		echo e1 >x/e &&
++		echo e2 >y/e &&
++		git add x/e y/e &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv y z &&
++		git mv x y &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '8b-check: Dual-directory rename, one into the others way, with conflicting filenames' '
++	(
++		cd 8b &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 6 -eq $(git ls-files -s | wc -l) &&
++		test 0 -eq $(git ls-files -u | wc -l) &&
++		test 0 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/a HEAD:y/b HEAD:z/a HEAD:z/b HEAD:x/e HEAD:y/e &&
++		git rev-parse >expect \
++			O:x/a O:x/b O:y/a O:y/b A:x/e A:y/e &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 8c, rename+modify/delete
++#   (Related to testcases 5b and 8d)
++#   Commit O: z/{b,c,d}
++#   Commit A: y/{b,c}
++#   Commit B: z/{b,c,d_modified,e}
++#   Expected: y/{b,c,e}, CONFLICT(rename+modify/delete: x/d -> y/d or deleted)
++#
++#   Note: This testcase doesn't present any concerns for me...until you
++#         compare it with testcases 5b and 8d.  See notes in 8d for more
++#         details.
++
++test_expect_success '8c-setup: rename+modify/delete' '
++	test_create_repo 8c &&
++	(
++		cd 8c &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		test_seq 1 10 >z/d &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git rm z/d &&
++		git mv z y &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo 11 >z/d &&
++		test_chmod +x z/d &&
++		echo e >z/e &&
++		git add z/d z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '8c-check: rename+modify/delete' '
++	(
++		cd 8c &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (rename/delete).* z/d.*y/d" out &&
++
++		test 4 -eq $(git ls-files -s | wc -l) &&
++		test 1 -eq $(git ls-files -u | wc -l) &&
++		test 1 -eq $(git ls-files -o | wc -l) &&
++
++		git rev-parse >actual \
++			:0:y/b :0:y/c :0:y/e :3:y/d &&
++		git rev-parse >expect \
++			O:z/b O:z/c B:z/e B:z/d &&
++		test_cmp expect actual &&
++
++		test_must_fail git rev-parse :1:y/d &&
++		test_must_fail git rev-parse :2:y/d &&
++		git ls-files -s y/d | grep ^100755 &&
++		test -f y/d
++	)
++'
++
++# Testcase 8d, rename/delete...or not?
++#   (Related to testcase 5b; these may appear slightly inconsistent to users;
++#    Also related to testcases 7d and 7e)
++#   Commit O: z/{b,c,d}
++#   Commit A: y/{b,c}
++#   Commit B: z/{b,c,d,e}
++#   Expected: y/{b,c,e}
++#
++#   Note: It would also be somewhat reasonable to resolve this as
++#             y/{b,c,e}, CONFLICT(rename/delete: x/d -> y/d or deleted)
++#   The logic being that the only difference between this testcase and 8c
++#   is that there is no modification to d.  That suggests that instead of a
++#   rename/modify vs. delete conflict, we should just have a rename/delete
++#   conflict, otherwise we are being inconsistent.
++#
++#   However...as far as consistency goes, we didn't report a conflict for
++#   path d_1 in testcase 5b due to a different file being in the way.  So,
++#   we seem to be forced to have cases where users can change things
++#   slightly and get what they may perceive as inconsistent results.  It
++#   would be nice to avoid that, but I'm not sure I see how.
++#
++#   In this case, I'm leaning towards: commit A was the one that deleted z/d
++#   and it did the rename of z to y, so the two "conflicts" (rename vs.
++#   delete) are both coming from commit A, which is illogical.  Conflicts
++#   during merging are supposed to be about opposite sides doing things
++#   differently.
++
++test_expect_success '8d-setup: rename/delete...or not?' '
++	test_create_repo 8d &&
++	(
++		cd 8d &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		test_seq 1 10 >z/d &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git rm z/d &&
++		git mv z y &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo e >z/e &&
++		git add z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '8d-check: rename/delete...or not?' '
++	(
++		cd 8d &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		test 3 -eq $(git ls-files -s | wc -l) &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:y/e &&
++		git rev-parse >expect \
++			O:z/b O:z/c B:z/e &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 8e, Both sides rename, one side adds to original directory
 +#   Commit O: z/{b,c}
 +#   Commit A: y/{b,c}
-+#   Commit B: w/b, x/c, z/d
-+#   Expected: y/d, CONFLICT(rename/rename for both z/b and z/c)
-+#   NOTE: There's a rename of z/ here, y/ has more renames, so z/d -> y/d.
++#   Commit B: w/{b,c}, z/d
++#
++# Possible Resolutions:
++#   w/o dir-rename detection: z/d, CONFLICT(z/b -> y/b vs. w/b),
++#                                  CONFLICT(z/c -> y/c vs. w/c)
++#   Currently expected:       y/d, CONFLICT(z/b -> y/b vs. w/b),
++#                                  CONFLICT(z/c -> y/c vs. w/c)
++#   Optimal:                  ??
++#
++# Notes: In commit A, directory z got renamed to y.  In commit B, directory z
++#        did NOT get renamed; the directory is still present; instead it is
++#        considered to have just renamed a subset of paths in directory z
++#        elsewhere.  Therefore, the directory rename done in commit A to z/
++#        applies to z/d and maps it to y/d.
++#
++#        It's possible that users would get confused about this, but what
++#        should we do instead?  Silently leaving at z/d seems just as bad or
++#        maybe even worse.  Perhaps we could print a big warning about z/d
++#        and how we're moving to y/d in this case, but when I started thinking
++#        about the ramifications of doing that, I didn't know how to rule out
++#        that opening other weird edge and corner cases so I just punted.
 +
-+test_expect_success '7a-setup: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
-+	test_create_repo 7a &&
++test_expect_success '8e-setup: Both sides rename, one side adds to original directory' '
++	test_create_repo 8e &&
 +	(
-+		cd 7a &&
++		cd 8e &&
 +
 +		mkdir z &&
 +		echo b >z/b &&
@@ -131,329 +426,46 @@ index 50fb8f41e..cfb53295b 100755
 +		git commit -m "A" &&
 +
 +		git checkout B &&
-+		mkdir w &&
-+		mkdir x &&
-+		git mv z/b w/ &&
-+		git mv z/c x/ &&
-+		echo d > z/d &&
++		git mv z w &&
++		mkdir z &&
++		echo d >z/d &&
 +		git add z/d &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_failure '7a-check: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
++test_expect_failure '8e-check: Both sides rename, one side adds to original directory' '
 +	(
-+		cd 7a &&
++		cd 8e &&
 +
 +		git checkout A^0 &&
 +
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*z/b.*y/b.*w/b" out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*z/c.*y/c.*x/c" out &&
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
 +
 +		test 7 -eq $(git ls-files -s | wc -l) &&
 +		test 6 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
++		test 2 -eq $(git ls-files -o | wc -l) &&
 +
 +		test $(git rev-parse :0:y/d) = $(git rev-parse B:z/d) &&
 +
 +		git rev-parse >actual \
-+			:1:z/b :2:y/b :3:w/b :1:z/c :2:y/c :3:x/c &&
++			:1:z/b :2:y/b :3:w/b :1:z/c :2:y/c :3:w/c &&
 +		git rev-parse >expect \
 +			O:z/b O:z/b O:z/b O:z/c O:z/c O:z/c &&
 +		test_cmp expect actual &&
 +
 +		git hash-object >actual \
-+			y/b w/b y/c x/c &&
++			y/b w/b y/c w/c &&
 +		git rev-parse >expect \
 +			O:z/b O:z/b O:z/c O:z/c &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7b, rename/rename(2to1), but only due to transitive rename
-+#   (Related to testcase 1d)
-+#   Commit O: z/{b,c},     x/d_1, w/d_2
-+#   Commit A: y/{b,c,d_2}, x/d_1
-+#   Commit B: z/{b,c,d_1},        w/d_2
-+#   Expected: y/{b,c}, CONFLICT(rename/rename(2to1): x/d_1, w/d_2 -> y_d)
-+
-+test_expect_success '7b-setup: rename/rename(2to1), but only due to transitive rename' '
-+	test_create_repo 7b &&
-+	(
-+		cd 7b &&
-+
-+		mkdir z &&
-+		mkdir x &&
-+		mkdir w &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d1 > x/d &&
-+		echo d2 > w/d &&
-+		git add z x w &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git mv w/d y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7b-check: rename/rename(2to1), but only due to transitive rename' '
-+	(
-+		cd 7b &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+		test 2 -eq $(git ls-files -u | wc -l) &&
-+		test 3 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :2:y/d :3:y/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:w/d O:x/d &&
 +		test_cmp expect actual &&
 +
-+		test ! -f y/d &&
-+		test -f y/d~HEAD &&
-+		test -f y/d~B^0 &&
++		test ! -f z/b &&
++		test ! -f z/c &&
 +
-+		git hash-object >actual \
-+			y/d~HEAD y/d~B^0 &&
-+		git rev-parse >expect \
-+			O:w/d O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7c, rename/rename(1to...2or3); transitive rename may add complexity
-+#   (Related to testcases 3b and 5c)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: y/{b,c}, w/d
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(x/d -> w/d vs. y/d)
-+#   NOTE: z/ was renamed to y/ so we do want to report
-+#         neither CONFLICT(x/d -> w/d vs. z/d)
-+#         nor CONFLiCT x/d -> w/d vs. y/d vs. z/d)
-+
-+test_expect_success '7c-setup: rename/rename(1to...2or3); transitive rename may add complexity' '
-+	test_create_repo 7c &&
-+	(
-+		cd 7c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git mv x w &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7c-check: rename/rename(1to...2or3); transitive rename may add complexity' '
-+	(
-+		cd 7c &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*x/d.*w/d.*y/d" out &&
-+
-+		test 5 -eq $(git ls-files -s | wc -l) &&
-+		test 3 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :1:x/d :2:w/d :3:y/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:x/d O:x/d O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7d, transitive rename involved in rename/delete; how is it reported?
-+#   (Related somewhat to testcases 5b and 8d)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(delete x/d vs rename to y/d)
-+#   NOTE: z->y so NOT CONFLICT(delete x/d vs rename to z/d)
-+
-+test_expect_success '7d-setup: transitive rename involved in rename/delete; how is it reported?' '
-+	test_create_repo 7d &&
-+	(
-+		cd 7d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git rm -rf x &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7d-check: transitive rename involved in rename/delete; how is it reported?' '
-+	(
-+		cd 7d &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :3:y/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7e, transitive rename in rename/delete AND dirs in the way
-+#   (Very similar to 'both rename source and destination involved in D/F conflict' from t6022-merge-rename.sh)
-+#   (Also related to testcases 9c and 9d)
-+#   Commit O: z/{b,c},     x/d_1
-+#   Commit A: y/{b,c,d/g}, x/d/f
-+#   Commit B: z/{b,c,d_1}
-+#   Expected: rename/delete(x/d_1->y/d_1 vs. None) + D/F conflict on y/d
-+#             y/{b,c,d/g}, y/d_1~B^0, x/d/f
-+
-+#   NOTE: The main path of interest here is d_1 and where it ends up, but
-+#         this is actually a case that has two potential directory renames
-+#         involved and D/F conflict(s), so it makes sense to walk through
-+#         each step.
-+#
-+#         Commit A renames z/ -> y/.  Thus everything that B adds to z/
-+#         should be instead moved to y/.  This gives us the D/F conflict on
-+#         y/d because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.
-+#
-+#         Further, commit B renames x/ -> z/, thus everything A adds to x/
-+#         should instead be moved to z/...BUT we removed z/ and renamed it
-+#         to y/, so maybe everything should move not from x/ to z/, but
-+#         from x/ to z/ to y/.  Doing so might make sense from the logic so
-+#         far, but note that commit A had both an x/ and a y/; it did the
-+#         renaming of z/ to y/ and created x/d/f and it clearly made these
-+#         things separate, so it doesn't make much sense to push these
-+#         together.  Doing so is what I'd call a doubly transitive rename;
-+#         see testcases 9c and 9d for further discussion of this issue and
-+#         how it's resolved.
-+
-+test_expect_success '7e-setup: transitive rename in rename/delete AND dirs in the way' '
-+	test_create_repo 7e &&
-+	(
-+		cd 7e &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d1 >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git rm x/d &&
-+		mkdir -p x/d &&
-+		mkdir -p y/d &&
-+		echo f >x/d/f &&
-+		echo g >y/d/g &&
-+		git add x/d/f y/d/g &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7e-check: transitive rename in rename/delete AND dirs in the way' '
-+	(
-+		cd 7e &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+		test 5 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 2 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:x/d/f :0:y/d/g :0:y/b :0:y/c :3:y/d &&
-+		git rev-parse >expect \
-+			A:x/d/f A:y/d/g O:z/b O:z/c O:x/d &&
-+		test_cmp expect actual &&
-+
-+		test $(git hash-object y/d~B^0) = $(git rev-parse O:x/d)
++		test_i18ngrep CONFLICT.*rename/rename.*z/c.*y/c.*w/c out &&
++		test_i18ngrep CONFLICT.*rename/rename.*z/b.*y/b.*w/b out
 +	)
 +'
 +
