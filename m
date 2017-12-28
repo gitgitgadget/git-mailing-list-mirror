@@ -2,77 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690DA1F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 22:45:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A1FD1F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 22:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754160AbdL1Wp0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 17:45:26 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:38452 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751169AbdL1WpY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 17:45:24 -0500
-Received: by mail-qt0-f173.google.com with SMTP id d4so52639225qtj.5
-        for <git@vger.kernel.org>; Thu, 28 Dec 2017 14:45:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=aGC8Io5tRQsqjS9a/41xnBHNlLSMhi9mVD8ASmnTrL0=;
-        b=NCMEtsbsYrmhvShj6pQS5IIzLCjmLODHPdk2x2Y5zsalNizzt41ImWsi2Z3GhcjzWJ
-         hrt7IKbv4+t3oKf6c1XH45sKa8vsJXWs6OH+f2h7joIrDOnf6NiTRj6YrvS5aNbi+S56
-         H3VDen6Px5W1Tdid90unah2JW6Nh5GvRb3DQeHaXy9uXPS0GgZgJUf8C61NCFxt/Zp40
-         Uxf7QsBiGIAHXG6RH4Ss4qcLG6+nxhLcZPVmltx9ffQnqe6bnoRp8wXePzLSYqlTsxH/
-         +JOE4gpP/24XBnCcRHbZaOUiQXggnlWLvT7j4dIe3XZsX+xB8cW8v/XQNQbjUEgBKS6e
-         L7CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=aGC8Io5tRQsqjS9a/41xnBHNlLSMhi9mVD8ASmnTrL0=;
-        b=OPDJFvSFI2sYhD01Y57tKAixDlIIiwT5F5TwwO9QRf4MVx8IUm/rmQJRsCfHjHSCp8
-         LsxwH0OSF8BaKSTF1+fLZjAqrUqz4kSFER0sbCsku89cogmBDfdU05Swdxiqn+em22zE
-         ZS7Ws0OInAEFw9vsVRQmL524exYhv+mvqR0cCuWNjyIKSvGG2FY8dwLYfyb36fYz5dM0
-         dfzjc95BVMtJLA/6z1TTa5rjk6LAPldJjkX2ay5rUQKP/TMS6y4K90UOC20JV0x76foZ
-         sb5EBtGz3oE3kvs69SOTgu4sTZ23jUI/S17VxvO0H5G+eoHCxCfbYtunO3LK000EKDb8
-         wm6w==
-X-Gm-Message-State: AKGB3mKQeCEWwZcJ7OzeCplOlO+2cwdSUPtE9BegzwXLjVh3BSwfsIoH
-        +io0DnQu2h56Ti9XR1whKrUDCgizdpERlfa9W88=
-X-Google-Smtp-Source: ACJfBotIJK4zAkjgM/Hbo3QU2u3DtxCXIPByQEREUoTH8JEZZQPUpgPsPpe23wpj5aKJhjAEh9ExShOpwhuBXeD/h3k=
-X-Received: by 10.237.35.37 with SMTP id h34mr46612980qtc.9.1514501123899;
- Thu, 28 Dec 2017 14:45:23 -0800 (PST)
+        id S1753829AbdL1WsU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 17:48:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55963 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751169AbdL1WsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 17:48:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18170CCD73;
+        Thu, 28 Dec 2017 17:48:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lqRwQRfdpvoN
+        5WusilgfeN5xCXk=; b=ZtTm+jJ+9yDTTQg/HcZSMWUZMIDTov6vGKp6RDNmeV1p
+        BQNqM42vaQli/OCYsiCabpSRRzhE/Esmoc+Sw3cYCIK+f2epenZmhb/VLDhnkRtQ
+        ymu9jIl7Hc8RHiurdWbaLdf0nPU3SwlCajAsVZhLk24zwY62s3CJJOG4nMtXLlI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dRSEor
+        vNEXeuHmiw9MLSpmTarhN3I4qldFQhKw+RDuuzSou3RKZBtzgHg1BammcpdVoqIR
+        D5AvN4zIFqgPbjR/Y8U+4aFURcWdmHxGF9Tao7GtUxPtyWSoM6SShSkeQ1/zXgUY
+        uWPWDJ0qi4mq3BTqHZxJyLZHXBFNc59SvNc5w=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0FFEACCD72;
+        Thu, 28 Dec 2017 17:48:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89598CCD6F;
+        Thu, 28 Dec 2017 17:48:18 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Anthony Ramine <n.oxyde@gmail.com>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 0/7] increase wildmatch test coverage
+References: <20171223213012.1962-1-avarab@gmail.com>
+        <20171225002835.29005-1-avarab@gmail.com>
+Date:   Thu, 28 Dec 2017 14:48:17 -0800
+In-Reply-To: <20171225002835.29005-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 25 Dec 2017 00:28:28 +0000")
+Message-ID: <xmqqr2reii4u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.198.2 with HTTP; Thu, 28 Dec 2017 14:45:23 -0800 (PST)
-In-Reply-To: <20171228210345.205300-5-sbeller@google.com>
-References: <20171228210345.205300-1-sbeller@google.com> <20171228210345.205300-5-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 28 Dec 2017 17:45:23 -0500
-X-Google-Sender-Auth: 4Hkl8v-2PfiuCbahahtLex5kX5E
-Message-ID: <CAPig+cSSzqdACu45tMraB7fzD=h+RMrf7WZ4s454i9qys7ATJA@mail.gmail.com>
-Subject: Re: [PATCH 4/4] builtin/blame: highlight recently changed lines
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 32A4364C-EC21-11E7-84A4-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 28, 2017 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
-> Choose a different color for dates and imitate a 'temperature cool down'
-> for the dates.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-s/for the dates/depending upon age/
+> This v2 addresses comments by Johannes Sixt in
+> <8f4cdb23-8e2e-144a-1f70-99776b027166@kdbg.org> and there's osme other
+> cleanups as noted below.
 
-> [...]
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> @@ -777,6 +847,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
-> +               OPT_BIT(0, "heated-lines", &output_option, N_("color lines by date"), OUTPUT_HEATED_LINES),
+One thing I found "interesting" (because it is usually the other way
+around) is that about two dozens of the tests in this fail when your
+shell is bash and all of them pass when your shell is dash.
 
-s/date/age/
