@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 752121F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 11:16:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 510BC1F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 11:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753354AbdL1LQS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 06:16:18 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:41634 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752905AbdL1LQR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 06:16:17 -0500
-Received: by mail-wm0-f53.google.com with SMTP id g75so43653218wme.0
-        for <git@vger.kernel.org>; Thu, 28 Dec 2017 03:16:17 -0800 (PST)
+        id S1753335AbdL1LRv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 06:17:51 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:41128 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752905AbdL1LRu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 06:17:50 -0500
+Received: by mail-wr0-f193.google.com with SMTP id p69so30080176wrb.8
+        for <git@vger.kernel.org>; Thu, 28 Dec 2017 03:17:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=e74nD0WF9LeWzIHH/hHILb4N91SsC7W6XrE380/lppY=;
-        b=qBCAPNVnCYS6lRox+SEsAlIlDgdcFWAOvWGe4pQAmWopF0hP0+3lqhp/OW+R9Oveu+
-         grM+ZODsO9FjKkLGy2sWvWxRVPorcl1P1lzX9jsdGf175DvjMXYA6YgtXAEjGdf3yXbc
-         R/hofgKVy2WyoLKzcgHq/6o9xOb2zvpeqbkAp8HfR+AcHXpaWV2aEFafFqumFOg3l0A+
-         P5TNJiTZ1bWN5mxKfLEA5wjlUB5TZ0XvY7Dr8YVjqmvwzw5J2BqS9uiTEI6RBv01Olfo
-         MZXmpf1Tf+asSxP5XVp5eKLYHZBFEodK6CfTsaHcWx7fJ2bgd7XJYa2bIX6xF3zVEIZe
-         BjUQ==
+        bh=ETdhiSJ8IfYZL/klxwSVxOL/QHbBuaFi0rO0lmh8hok=;
+        b=GOyOeHa+Lmkq2uBpZH/e0QHZ9jSf8ngmZ62gESoHiz/OGYC8mLe5jHycw+nEUnQssH
+         CpoKu8kXn5PprUYTgC0qYML8OPf0DMesMy292xGUxDnRhEbb11KBvpJJZuKxvboUK9r4
+         G/wQjhO2MgkUtkT5VHKEXFIP0eqkpl1cKOKhrkF+/SEwSthuyFm4eAkeFywaK6MnzWQW
+         YjfJ2d0WJhErdl8rr+tPJIp2ZSQpOU5vO68OJXqEEb5VvHUYBdJRL67jGlZz9+rKPDej
+         4al50VLimqxCOOSd3D8z0bN8SlkcPStNB+N0N194djMcfMnaFQDZ15BtcYCcFXfnTxUJ
+         gxbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=e74nD0WF9LeWzIHH/hHILb4N91SsC7W6XrE380/lppY=;
-        b=gDK+gCpNwoJNq8akJdRqFHQB4Cwa1Jg6EZT54lHPlzR9DE9DsDh1OG6OVkhT/xhItZ
-         AgxA56Sn63c4vd8GfO0X4ZHAFhhUvLeXI6b4G4nNM8kVsTVsfCa+TMlxVYjipVNEpyPy
-         UK1J26N9+A2Yqcu9urp0wLFKhKvFHoc9JfwsUCRCPHU39Z3ZapchuRsVuM+pUMsaB8bq
-         kU4K2Eu+qXRTkJM/3J7L/XkeVyrTKoLooMIvICDwSMsTO13dPZzGkG2syehz0sZDtdxQ
-         nRZZGxzrRR6H6kksLQVe85vIcykL5Fpt1AhEPNArkVf6j93D6LdKM7zSOmc0mW0RLC/f
-         Yf/w==
-X-Gm-Message-State: AKGB3mKTlwIoViaQJN0xP46+0xvP1LLSNsxQqRQHy3yYpeuzAGqcxUlw
-        +hclrj2nU64ri8/Sd9+mABc=
-X-Google-Smtp-Source: ACJfBos7q8P6SEzaa+C1IuyIyLz76Gf5ExX+UQRpd9mkAD0gihKlqGjAZTMhx+ihjac9vE0wOgx02Q==
-X-Received: by 10.28.105.14 with SMTP id e14mr24075911wmc.74.1514459776403;
-        Thu, 28 Dec 2017 03:16:16 -0800 (PST)
+        bh=ETdhiSJ8IfYZL/klxwSVxOL/QHbBuaFi0rO0lmh8hok=;
+        b=mOmzbclOpPEVcakSrJIjdsX/jmiUMvwFFdefqEPVnOMHCyw7ONalQISTDcH5QIrCwh
+         aPSNVz93h/CW2DwNNMnneVpLSKADQ1pqicNPEbPA1aEQuAxZdH3N34M1+NrV7RsUbgP6
+         WrXxBrui74sv0eRqdSvzwSr2Tv3Kr7yLctMe3gdiqWT+QWzjG5M46A/JO1kM6IsGSvs0
+         KsBA2j5+FqOZE6Trfad31jjqHpEEasRIC5xkiFTiltT24PtF3yIISiiXCO5yfR6fmcyu
+         BJakBmsk9sL+s7LAeEzxRXOXclSkhLwN4rm30w8z0x/FJn6rwQVyWbq+VgMffMxY6Lal
+         bGVw==
+X-Gm-Message-State: AKGB3mJXE3qZq+2guNhAQMR2VEN38NbA1XETGvU5JPoNYRkGT6EXMRje
+        il19jm2VCMo89/uO97uAcYnXeB6n
+X-Google-Smtp-Source: ACJfBos5PmnYKbITPyeQkNx2Narkcr9kzZutvO7MCTuQ2TCKkoJOEA7emJY8nEsm3x+Nbu3NOZeh2Q==
+X-Received: by 10.223.160.40 with SMTP id k37mr25652918wrk.66.1514459869682;
+        Thu, 28 Dec 2017 03:17:49 -0800 (PST)
 Received: from [10.32.248.174] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id b18sm34410293wra.44.2017.12.28.03.16.15
+        by smtp.gmail.com with ESMTPSA id g92sm79051993wrd.72.2017.12.28.03.17.48
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 28 Dec 2017 03:16:15 -0800 (PST)
+        Thu, 28 Dec 2017 03:17:49 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 2/2] travis-ci: record and skip successfully built trees
+Subject: Re: [PATCH v3 3/4] travis-ci: save prove state for the 32 bit Linux build
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
-Date:   Thu, 28 Dec 2017 12:16:14 +0100
+In-Reply-To: <CAM0VKj=3ZQhjwtUFXFsMPzFrs7CYntrjJOcdQfOZ+0jjVVGVog@mail.gmail.com>
+Date:   Thu, 28 Dec 2017 12:17:47 +0100
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Git mailing list <git@vger.kernel.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <EFD040CE-E88C-4893-A304-4514BF221AC5@gmail.com>
-References: <20171227164905.13872-1-szeder.dev@gmail.com> <20171227164905.13872-3-szeder.dev@gmail.com> <35D78E08-1D27-4DDF-BCD3-F6B984D811AF@gmail.com> <CAM0VKj=U5fSHo=na0FqOJNWZLoN6VVC77vj989L+4PgQqMGzWw@mail.gmail.com>
+Message-Id: <A3474967-F081-4CD5-8A7E-81615EC5B3B7@gmail.com>
+References: <20171216125418.10743-1-szeder.dev@gmail.com> <20171227163603.13313-1-szeder.dev@gmail.com> <20171227163603.13313-4-szeder.dev@gmail.com> <DB47DCB3-DF66-437A-BF0B-4DF1838C2F7F@gmail.com> <CAM0VKj=3ZQhjwtUFXFsMPzFrs7CYntrjJOcdQfOZ+0jjVVGVog@mail.gmail.com>
 To:     =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
@@ -68,85 +68,20 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 28 Dec 2017, at 00:00, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+> On 27 Dec 2017, at 22:42, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
 wrote:
 >=20
-> On Wed, Dec 27, 2017 at 8:15 PM, Lars Schneider
+> On Wed, Dec 27, 2017 at 7:46 PM, Lars Schneider
 > <larsxschneider@gmail.com> wrote:
+>>> +     --volume "${HOME}/travis-cache:/tmp/travis-cache" \
 >>=20
->>> On 27 Dec 2017, at 17:49, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
->>> +# Skip the build job if the same tree has already been built and =
-tested
->>> +# successfully before (e.g. because the branch got rebased, =
-changing only
->>> +# the commit messages).
->>> +skip_good_tree () {
->>> +     if ! good_tree_info=3D"$(grep "^$(git rev-parse =
-$TRAVIS_COMMIT^{tree}) " "$good_trees_file")"
->>> +     then
->>> +             # haven't seen this tree yet; continue the build job
->>> +             return
->>> +     fi
->>> +
->>> +     echo "$good_tree_info" | {
->>> +             read tree prev_good_commit prev_good_job_number =
-prev_good_job_id
->>> +
->>> +             if test "$TRAVIS_JOB_ID" =3D  "$prev_good_job_id"
->>=20
->> Under what circumstances would that be true?
+>> I assume "${HOME}/travis-cache:/usr/src/git/t/.prove" would not
+>> work because that would be a mapping in another mapping?
 >=20
-> When the user hits 'Restart job' on the Travis CI web interface,
-> $TRAVI_JOB_NUMBER and _ID remain the same in the restarted build job =
-as
-> they were in the original.
-> So the condition is true when the user hits 'Restart job' on a build =
-job
-> that was the first to successfully build and test the current tree.
+> 't/.prove' is a file, but '.../travis-cache' is a directory.  It must
+> be, because Travis CI caches whole directories.
 
-I think I would prefer it if Travis would rerun all jobs if I hit the
-"refresh" button. What is your intention here?
+Of course. Your solution is the right one.
 
-
->=20
->>> +             then
->>> +                     cat <<-EOF
->>> +                     Skipping build job for commit $TRAVIS_COMMIT.
->>> +                     This commit has already been built and tested =
-successfully by this build job.
->>> +                     To force a re-build delete the branch's cache =
-and then hit 'Restart job'.
->>> +                     EOF
->>> +             else
->>> +                     cat <<-EOF
->>> +                     Skipping build job for commit $TRAVIS_COMMIT.
->>> +                     This commit's tree has already been built and =
-tested successfully in build job $prev_good_job_number for commit =
-$prev_good_commit.
->>> +                     The log of that build job is available at =
-https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
->>> +                     To force a re-build delete the branch's cache =
-and then hit 'Restart job'.
->>> +                     EOF
->>=20
->> Maybe add a few newlines before and after EOF to make the text more =
-stand out?
->> Or print it in a different color? Maybe red?
->>=20
->> See: https://travis-ci.org/szeder/git/jobs/322247836#L622-L625
->=20
-> I considered using color for the first line, but then didn't do it,
-> because I didn't want to decide the color :)
-> Anyway, red is the general error/failure color, but this is neither.  =
-It
-> could either be green, to match the color of the build job's result, =
-or
-> something neutral like blue or yellow.
-
-You are right about red. I think I like yellow to express "warning".
-But this is just a nit.
-
-"skip_branch_tip_with_tag" could print its output yellow, too.
-
-- Lars=
+Thanks,
+Lars=
