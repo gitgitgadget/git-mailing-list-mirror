@@ -2,109 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 903781F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 20:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 350BE1F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 21:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754135AbdL1Ucg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 15:32:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59461 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751296AbdL1Ucf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 15:32:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 107D3CB5DE;
-        Thu, 28 Dec 2017 15:32:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ok1bmt+B9neN
-        /rF4RUwkn1Duanw=; b=OwH4gBKRlL3wGMy5Ty5syf+b1aRKqHSVCA0dYqUOw3Ui
-        xBlsJzIYbXQc1kFj/sXDan9E0B3yW4tpl+gviUztH146f14WW1Xgo7/XBYHhWykf
-        iFUJMPfVe86e9zWTyISHypAmhMVH9vhuaMhyzRTX89bgW/XEU93BaJ2AW2Jojhk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Qj9OWa
-        JnUx/eaYlLP73TurCtb3aRXptvmrq/ZJ+XdRh2e4BvbBt8jAzgEEw16246b3xObw
-        SbWsleWTB1yyUkdDnT9NSc3C8xLL/74Rt0l09LUcOR/2upNmfFe2AzxVVWiuDRCa
-        /klDVrlJ417pTM92nWKV7sOv51RM9WE0aroEE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0760FCB5DC;
-        Thu, 28 Dec 2017 15:32:35 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81B10CB5DB;
-        Thu, 28 Dec 2017 15:32:34 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 0/9] revision: get rid of the flag leak_pending
-References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
-        <ac4c77a1-6403-ca20-2021-50c99201915a@web.de>
-Date:   Thu, 28 Dec 2017 12:32:33 -0800
-In-Reply-To: <ac4c77a1-6403-ca20-2021-50c99201915a@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 25 Dec 2017 18:41:18 +0100")
-Message-ID: <xmqqd12yk2zi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3C6BA4F2-EC0E-11E7-A628-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1754736AbdL1VD7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 16:03:59 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:38148 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753843AbdL1VD6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 16:03:58 -0500
+Received: by mail-it0-f68.google.com with SMTP id r6so29867038itr.3
+        for <git@vger.kernel.org>; Thu, 28 Dec 2017 13:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=q+LHeOmQKQVTlLXcfw34VptlpJpScsWcfZKe4hp0m/M=;
+        b=eKXuMQ4PmdrVR8C9WwRvB1d8M9MhUF488RdzPl6Fo4ak+N+0fEmrhX3eWOJ4vENV3A
+         5p2l7BKKgbINkbwB7NaAfWjU2CREk3LEHReRVa+kymlrmXKh9Bz5seLu7oNb9M/F/9qW
+         dNCO0EmlnH7Ho6EIIB40flHYQwumJMZeqs4EXdJ5c3zM/mqYQpm0SkR+HD8E4Oh3OOtP
+         2fIKmJdiiFo5h7l/yK4UJ31t/DIIvkplFSvGq99ST72+TwPkXjxnDNUn918cdWEL3UpV
+         DaAV+KnqgaTPE3ol+n7KhCtRIfShZdqaC120PPg/R8US7VpI/ygJGC8bt+S+xmwaZSSO
+         tQyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=q+LHeOmQKQVTlLXcfw34VptlpJpScsWcfZKe4hp0m/M=;
+        b=udTz0lXkPDXIqVryzzqeOuqKlPSkH7+qukSR1U6j4m66CiwkV7hbF34jjfTjh/xWpU
+         EKGi4q8dSBEELC8kYCBx3BfX+OsheKimHqXuy68j94yVlw70T3W3LVTLwkmRwnkCITbd
+         +MnPNPqxpPszpKFcjhF5E99t8Ryc/5MkE8nDG+54lTz1Rt5Dp0nDjBEx92rxXrBX1Fkj
+         QFVdKpZGF/HqE3NghMIEle+OjgvDfpLFC/ZGHB+Z3xs+urMK//ilpw9JpFvnqKZ/Jj5M
+         cZyzPZBgzr63uqlUq9ALXIHNPUtBKfr72FkAE8OxIEsMaEH+zwrRVhbNiJscH6wOLnCf
+         uHQw==
+X-Gm-Message-State: AKGB3mLz0JQS0wf7X2y5jUXYTSS3gLqF+m/PM6t/sqLDJ0zINIk0G79N
+        uvl/l7i6TuSAS0W4grO9NmHPm1mDPBM=
+X-Google-Smtp-Source: ACJfBotf1XaA1qAM/uvwd3jTKkgr2yWQVXpPDAzOm8/HrVMFM6/y3Dq/GYUwslJKd1sh+DkQsbjcsw==
+X-Received: by 10.36.112.69 with SMTP id f66mr45030346itc.51.1514495037670;
+        Thu, 28 Dec 2017 13:03:57 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id d1sm12258697iti.18.2017.12.28.13.03.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 28 Dec 2017 13:03:56 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [PATCHv2 0/4] blame: (dim rep. metadata lines or fields, decay date coloring) 
+Date:   Thu, 28 Dec 2017 13:03:41 -0800
+Message-Id: <20171228210345.205300-1-sbeller@google.com>
+X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+This is picking up [1], but presenting it in another approach,
+as I realized these are orthogonal features:
+* dimming repeated lines/fields of information
+* giving a quick visual information how old (as a proxy for 'well tested')
+  a line of code is.
+  
+Both features are configurable.
 
-> The flag leak_pending is weird, let's get rid of it.
->
-> Changes from v1: Everything.
+Changes from sending it out in November:
+* better commit messages
+* rebased on master
 
-;-)
+Any feedback welcome.
 
-> An independent optimization found while working on this series:
->
->   commit: avoid allocation in clear_commit_marks_many()
->
-> Trivial unrelated conversions (included as bonus patches):
->
->   commit: use clear_commit_marks_many() in remove_redundant()
->   ref-filter: use clear_commit_marks_many() in do_merge_filter()
->
-> A new function is introduced, will be used by checkout:
->
->   object: add clear_commit_marks_all()
->
-> The users of leak_pending are are converted to use alternatives:
->
->   bisect: avoid using the rev_info flag leak_pending
->   bundle: avoid using the rev_info flag leak_pending
->   checkout: avoid using the rev_info flag leak_pending
->
-> Cleanups:
->
->   revision: remove the unused flag leak_pending
->   commit: remove unused function clear_commit_marks_for_object_array()
+Thanks,
+Stefan
 
-Will take a look at.  Thanks.
+[1] https://public-inbox.org/git/20171110011002.10179-1-sbeller@google.com/
 
->
->  bisect.c           | 30 +++++++++---------------------
->  builtin/checkout.c | 13 +------------
->  bundle.c           | 35 ++++++++++++++++-------------------
->  commit.c           | 19 ++-----------------
->  commit.h           |  1 -
->  object.c           | 11 +++++++++++
->  object.h           |  5 +++++
->  ref-filter.c       |  3 +--
->  revision.c         |  3 +--
->  revision.h         | 12 ------------
->  10 files changed, 46 insertions(+), 86 deletions(-)
+Stefan Beller (4):
+  color.h: document and modernize header
+  builtin/blame: dim uninteresting metadata
+  builtin/blame: add option to color metadata fields separately
+  builtin/blame: highlight recently changed lines
+
+ Documentation/config.txt |  23 +++++
+ builtin/blame.c          | 216 ++++++++++++++++++++++++++++++++++++++++++-----
+ color.c                  |   2 -
+ color.h                  |  49 ++++++++---
+ t/t8012-blame-colors.sh  |  56 ++++++++++++
+ 5 files changed, 311 insertions(+), 35 deletions(-)
+ create mode 100755 t/t8012-blame-colors.sh
+
+-- 
+2.15.1.620.gb9897f4670-goog
+
