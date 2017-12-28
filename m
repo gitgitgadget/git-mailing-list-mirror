@@ -2,282 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6AED1F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 16:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1281F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 18:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751008AbdL1QOa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 11:14:30 -0500
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:39268 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750899AbdL1QO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 11:14:29 -0500
-Received: by mail-wr0-f175.google.com with SMTP id o101so10937642wrb.6
-        for <git@vger.kernel.org>; Thu, 28 Dec 2017 08:14:28 -0800 (PST)
+        id S1754301AbdL1SOh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 13:14:37 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:41076 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754585AbdL1SOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 13:14:21 -0500
+Received: by mail-it0-f66.google.com with SMTP id x28so28954302ita.0
+        for <git@vger.kernel.org>; Thu, 28 Dec 2017 10:14:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4iM4bkAZzTCykP95Zgq0W5QRvMMN5eIXnhCXVez1TVo=;
-        b=QL83WuTpUmE23nUazPui+48sUo37iYwN6J0xGAbV9pzANWEZfA0oTNtQtjNHRW/707
-         uJVz42MxhyOf6dPa/Eo6aTzqfbDnL6lOUH/KIXKVguC7Va1dg7Ev88Pq8tZjrbbdtvRV
-         6qXnFxIVbYWHwAKK+Gy+ZvEPjcRsSoTM2x3dURRII94Fv/tcE0AH+GxAE+82mpxVAScp
-         4OJNSJ1p54pBHaq8J/exoH7tOYJBcKY6NmHs8VNobnCa4ZqucnJwlm7nneXIUC6PUwHN
-         xzzrdc/+lT8TRMsQLBLOUl3Z/o27aKpJTK1ZgWZVHwgP5rqz1c2hP+0TjLxSRoiGq7X5
-         WX/w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zXqPEseqo/a50vnd7iusvjnU/m+h684bLRWUF0Vxvis=;
+        b=GxBnYlMf8Bxg1w4TEYSVbu68/NOPqBsjBxOneb6WJzTaca1BpGvmkX1GhrgJDDQ0Ly
+         69JbJSNwJQVLhQm6sbJPdtydFD13c62NJ2JWBR9EUFS/ipE5vUmEf/sxOvalqZpk4wgt
+         g3Hn3vCzE1rVm8E//a/fp+5GkseYg/ZrhkkhPlw/9vy1WC7M1nLDKO5vw38WbJ9xsql9
+         FVCavRLZaJdNv64nHbzr/lDvZ0T8CLnKr0SkFFkuaYrEyHqrummvcRUebcGiubv3nzpk
+         mZLEP1tUd6vmCMYksZWUz6e0ri3tnchRKmz2sdOUoNfIzrTrLgHFMln5LqT3OAbQBrMY
+         wxdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4iM4bkAZzTCykP95Zgq0W5QRvMMN5eIXnhCXVez1TVo=;
-        b=AleEzVuxSphmdFadug9K5m8voBNvXJ/yEjs+8Df/e3YpIJk1stwJ1ZuA+m/sEUGQYp
-         NF26azk2QuloDg/RcNPspIt1z63No+lZvc4qnZTsJnRAtWkAzu7ipMmOJzdCvgCi9B+s
-         XDN7TgOS8oFslU3mW6VXh4ICNOKRIYNlUhNO4b/BQpWKN1JzzJM2vDjd8tXJv9E+sadG
-         KOVnOFZXU7YEZ+wmCzwALkqRrbhYPk2fxhc8OPirfp6/hNYpFtl0uJEL+yDW77sZqUJk
-         SocazhavbiO0gooQHvDTpz00GdrXSs9vJflkny712/Uj1sNWZcJa9aJ7QrclRF2yY16i
-         fGbQ==
-X-Gm-Message-State: AKGB3mJlawzPEnEnJ743sxP/Zwx2d/MO4nhnkV1vzl7+0pPiHuQXzOed
-        wBP27O/PqvzI/1D4XOU45vw=
-X-Google-Smtp-Source: ACJfBotxBF0J3DKMMF1IrJ5TioW0IQgjgAJpK17rqlzz7+WiCyTA9ReoywQ93pgtUIKqxVwfdeGYLQ==
-X-Received: by 10.223.135.171 with SMTP id b40mr31912672wrb.278.1514477668161;
-        Thu, 28 Dec 2017 08:14:28 -0800 (PST)
-Received: from [10.32.248.174] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id m134sm19196543wmg.6.2017.12.28.08.14.26
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 28 Dec 2017 08:14:27 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zXqPEseqo/a50vnd7iusvjnU/m+h684bLRWUF0Vxvis=;
+        b=ZzEAJZIW8jNuHrvHYJpRZcFrCQrcZa8Fjpg3bUTNB8BUaZIQZ99go1xupagSrMJnmU
+         zQH0ehQbDRn6z2drzE+E9SQKSe+OhfGHn/UCGH+zUy2F7fNaO/beavYyHWW49hoWcSPd
+         3Jh62kZh43UYXMMtGFKSeBC7Q6qwTyxI7de9o0NP7GZ3FAVz8v1EtScME3NwFKSjWs2l
+         3bmeoUDnCOU61AZz1rTWxHKiYOE4EZHPf3k+1EW7opXwjjfeiBwU9MoJbLQximKiKxdq
+         D+cB45+fJ7eDFnZX90V1RMAO4gDuGu2IuWIhj0xtI5NmLmjSwUrsfOHhX6CjtrxCoRhi
+         MzSQ==
+X-Gm-Message-State: AKGB3mJztWfJBBSLMIkJYd2Hi1bb0lk6yYMkHEgw8/0syM2fl1q0wy4z
+        ktTymVu41pU3xJhmwSj8NRw=
+X-Google-Smtp-Source: ACJfBosr0Vo/9JCF2vze7nBlLYDpsS3IPVp1417/wE0jyiWA8polx4iYDGPmo2UPqtba7NpSUxApHA==
+X-Received: by 10.36.4.72 with SMTP id 69mr41227398itb.33.1514484860736;
+        Thu, 28 Dec 2017 10:14:20 -0800 (PST)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 125sm18616099ioo.68.2017.12.28.10.14.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 28 Dec 2017 10:14:20 -0800 (PST)
+Date:   Thu, 28 Dec 2017 10:13:47 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] travis-ci: don't try to create the cache directory
+ unnecessarily
+Message-ID: <20171228181347.GA92530@aiede.mtv.corp.google.com>
+References: <20171227164905.13872-1-szeder.dev@gmail.com>
+ <20171227164905.13872-2-szeder.dev@gmail.com>
+ <20171227194601.GA181628@aiede.mtv.corp.google.com>
+ <CAM0VKjm+TBerXFzrqVmKdoVk=hWpnN2m62a-v-_Yrp8Onidu1w@mail.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20171217171404.GA18175@tor.lan>
-Date:   Thu, 28 Dec 2017 17:14:25 +0100
-Cc:     Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>, gitster@pobox.com,
-        peff@peff.net, patrick@luehne.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BF5C58AC-C1E6-4AD5-A4F8-C4CC5C9108F7@gmail.com>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com> <20171217171404.GA18175@tor.lan>
-To:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKjm+TBerXFzrqVmKdoVk=hWpnN2m62a-v-_Yrp8Onidu1w@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SZEDER Gábor wrote:
+> On Wed, Dec 27, 2017 at 8:46 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > SZEDER Gábor wrote:
 
-> On 17 Dec 2017, at 18:14, Torsten B=F6gershausen <tboegi@web.de> =
-wrote:
->=20
-> On Mon, Dec 11, 2017 at 04:50:23PM +0100, lars.schneider@autodesk.com =
-wrote:
->> From: Lars Schneider <larsxschneider@gmail.com>
->>=20
+>>> Travis CI creates that directory for us anyway, even when a previous
+>>> cache doesn't exist for the current build job.
+>>>
+>>> In itself it doesn't hurt to try, of course, but the following patch
+>>> will access the Travis CI cache much earlier in the build process, and
+>>> then creating the cache directory this late might cause confusion.
+[...]
+>> Is this behavior documented anywhere?
+>> https://docs.travis-ci.com/user/caching#Arbitrary-directories doesn't
+>> say anything about it.
+>
+> No, I'm afraid it isn't explicitly mentioned.
+> I seem to remember an example implicitly relying on it, though, but
+> can't find it anymore, so either misremembered or misunderstood one of
+> the examples.
+> OK, then I'll move this 'mkdir' to 'ci/lib-travisci.sh', to ensure that
+> the cache directory exists in all build jobs.
 
->> +`encoding`
->> +^^^^^^^^^^
->> +
->> +By default Git assumes UTF-8 encoding for text files.  The =
-`encoding`
->=20
-> This is probably "ASCII" and it's supersets like ISO-8859-1 or UTF-8.
+Thanks.  Sounds good to me.
 
-I am not sure I understand what you want to tell me here.
-Do you think UTF-8 encoding is not correct in the sentence above?
+Another alternative would be to contact Travis CI folks to get the
+behavior documented more clearly.  But here an early 'mkdir' doesn't
+hurt, so it seems simplest to do it.
 
->=20
->> +attribute sets the encoding to be used in the working directory.
->> +If the path is added to the index, then Git encodes the content to
->> +UTF-8.  On checkout the content is encoded back to the original
->> +encoding.  Consequently, you can use all built-in Git text =
-processing
->> +tools (e.g. git diff, line ending conversions, etc.) with your
->> +non-UTF-8 encoded file.
->> +
->> +Please note that re-encoding content can cause errors and requires
->> +resources. Use the `encoding` attribute only if you cannot store
->> +a file in UTF-8 encoding and if you want Git to be able to process
->> +the text.
->> +
->> +------------------------
->> +*.txt		text encoding=3DUTF-16
->> +------------------------
->=20
-> I think that encoding (or worktree-encoding as said elsewhere) must =
-imply text.
-> (That is not done in convert.c, but assuming binary or even auto
-> does not make much sense to me)
-
-"text" only means "LF". "-text" means CRLF which would be perfectly fine
-for UTF-16. Therefore I don't think we need to imply text.
-Does this make sense?
-
->=20
->=20
->> +
->> +All `iconv` encodings with a stable round-trip conversion to and =
-from
->> +UTF-8 are supported.  You can see a full list with the following =
-command:
->> +
->> +------------------------
->> +iconv --list
->> +------------------------
->> +
->> `eol`
->> ^^^^^
->>=20
->> diff --git a/convert.c b/convert.c
->> index 20d7ab67bd..ee19c17104 100644
->> --- a/convert.c
->> +++ b/convert.c
->> @@ -7,6 +7,7 @@
->> #include "sigchain.h"
->> #include "pkt-line.h"
->> #include "sub-process.h"
->> +#include "utf8.h"
->>=20
->> /*
->>  * convert.c - convert a file when checking it out and checking it =
-in.
->> @@ -256,6 +257,149 @@ static int will_convert_lf_to_crlf(size_t len, =
-struct text_stat *stats,
->>=20
->> }
->=20
-> I would avoid to use these #ifdefs here.
-> All functions can be in strbuf.c (and may have #ifdefs there), but not =
-here.
-
-I'll try that. But wouldn't it make more sense to move the functions to =
-utf.c?
-
->=20
->>=20
->> +#ifdef NO_ICONV
->> +#ifndef _ICONV_T
->> +/* The type is just a placeholder and not actually used. */
->> +typedef void* iconv_t;
->> +#endif
->> +#endif
->> +
->> +static struct encoding {
->> +	const char *name;
->> +	iconv_t to_git;       /* conversion to Git's canonical encoding =
-(UTF-8) */
->> +	iconv_t to_worktree;  /* conversion to user-defined encoding */
->> +	struct encoding *next;
->> +} *encoding, **encoding_tail;
->=20
-> This seems like an optimazation, assuning that iconv_open() eats a lot =
-of ressources.
-> I don't think this is the case. (Undere MacOS we run iconv_open() =
-together with
-> every opendir(), and optimizing this out did not show any measurable =
-improvements)
-
-True, but then I would need to free() the memory in a lot of places.
-Therefore I thought it is easier to keep the object. OK for you?
-
-
->> +static const char *default_encoding =3D "utf-8";
->=20
-> The most portable form is "UTF-8" (correct me if that is wrong)
-
-It shouldn't matter. But I've changed it to uppercase to be on the safe =
-side.
-
-
->> +static iconv_t invalid_conversion =3D (iconv_t)-1;
->> +
->> +static int encode_to_git(const char *path, const char *src, size_t =
-src_len,
->> +			 struct strbuf *buf, struct encoding *enc)
->> +{
->> +#ifndef NO_ICONV
->> +	char *dst, *re_src;
->> +	int dst_len, re_src_len;
->> +
->> +	/*
->> +	 * No encoding is specified or there is nothing to encode.
->> +	 * Tell the caller that the content was not modified.
->> +	 */
->> +	if (!enc || (src && !src_len))
->> +		return 0;
->> +
->> +	/*
->> +	 * Looks like we got called from "would_convert_to_git()".
->> +	 * This means Git wants to know if it would encode (=3D modify!)
->> +	 * the content. Let's answer with "yes", since an encoding was
->> +	 * specified.
->> +	 */
->> +	if (!buf && !src)
->> +		return 1;
->> +
->> +	if (enc->to_git =3D=3D invalid_conversion) {
->> +		enc->to_git =3D iconv_open(default_encoding, =
-encoding->name);
->> +		if (enc->to_git =3D=3D invalid_conversion)
->> +			warning(_("unsupported encoding %s"), =
-encoding->name);
->> +	}
->=20
-> 	/* There are 2 different types of reaction:
-> 	      Either users  know what that a warning means: You asked =
-for problems,
-> 	      	        and do the right thing. Other may may ignore the =
-warning
-> 			       - in both cases an error is useful */
-
-Agreed!
-
-
->> +	if (enc->to_worktree =3D=3D invalid_conversion)
->> +		enc->to_worktree =3D iconv_open(encoding->name, =
-default_encoding);
->> +
->> +	/*
->> +	 * Do nothing if the encoding is not supported. This could =
-happen in
->> +	 * two cases:
->> +	 *   (1) The encoding is garbage. That is no problem as we would =
-not
->> +	 *       encode the content to UTF-8 on "add" and we would not =
-encode
->> +	 *       it back on "checkout".
->> +	 *   (2) Git users use different iconv versions that support =
-different
->> +	 *       encodings. This could lead to problems, as the content =
-might
->> +	 *       not be encoded on "add" but encoded back on "checkout" =
-(or
->> +	 *       the other way around).
->> +	 * We print a one-time warning to the user in both cases above.
->> +	 */
->=20
-> Isn't an error better than "garbage in -> garbage out" ?
-
-Agreed. I changed the warning to an error.
-
-
->> diff --git a/t/t0028-encoding.sh b/t/t0028-encoding.sh
->=20
-> (I didn't review the test yet)
->=20
-> Another comment for a possible improvement:
-> "git diff"  could be told to write the worktree-encoding into the =
-diff,
-> and "git apply" can pick that up.=20
-
-Yes, we could do that. However, I would tackle that in a separate =
-series.
-
-
-Thanks,
-Lars
-
-
-
+Sincerely,
+Jonathan
