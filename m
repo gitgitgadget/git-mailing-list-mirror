@@ -2,168 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C65111F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 05:23:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 224A41F428
+	for <e@80x24.org>; Thu, 28 Dec 2017 06:10:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbdL1FXO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 00:23:14 -0500
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:44885 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751100AbdL1FXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 00:23:13 -0500
-Received: by mail-ot0-f175.google.com with SMTP id g59so10162544otg.11
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 21:23:13 -0800 (PST)
+        id S1751409AbdL1GKh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 01:10:37 -0500
+Received: from mail-pl0-f48.google.com ([209.85.160.48]:41502 "EHLO
+        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750862AbdL1GKf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 01:10:35 -0500
+Received: by mail-pl0-f48.google.com with SMTP id g2so20672965pli.8
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 22:10:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ecbaldwin.net; s=google;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Q8ttULBlTo4AxbH28SRN43ML3PdYzB6jtWarhRmbceM=;
-        b=XdD3YzobwbaRHyCxtxdaGtsxNl5NNbZLamdJKwcv9OQIb6Om+ywTn3Qur3Y0zznxSC
-         8pbWtosMDeZxhPpwo4sWw64zIhzpScfU/W8o2nQaXzZy7lnist08jvwWGnWskrb99ePp
-         XK5Bf0D9oQN01l1+mcPaVESbjeXLHsZCaBY+c=
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=bdRT4pfsoPllLUVIwKGufBB5NWpjxkDzf7lr1iCU9FY=;
+        b=tfaX/YPnc//R5haUkyLBhvlqVmoJ6D33uUhUcEnphPqEbVNJLakkBJy5W1rXFnlNNf
+         ZKZjBktOkPyyBF33w4Mk/U1/KGWGkVsp+sqOm0wquSDGKOb409AYLcdQFkq+P+RPhBkb
+         VLFmYKQELh8QZDkDmetIKZ6ij1hGSjC9faaNm8/VMsUj3NNbdKa9IPGBoU0rkWht3yTj
+         Rv0p19SJJ4Gt3Z/7U9XReylb6iFiSsZUtiLrJT9QeWaXJLR5lukB+En0dtz4/umkskmN
+         FCkauCnkCPGgqtvdf/uBhEY4+vJ4DQ1QbKvDYhkFjOJqaI62FDhT3SAryZsoDznQyB5S
+         YKJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q8ttULBlTo4AxbH28SRN43ML3PdYzB6jtWarhRmbceM=;
-        b=WHVaifarBmWYNrGsaSKXcMtYLB7h05o0v0WqD0GZv2n5UDnAHhDRH4c5M6XiCzYvAK
-         FZQSAi9n1f9gMEjvDfQCkLH/1/jsAD9iS+74TgLorWJZ1lusV/jsTJ3gokZqXLweqqRg
-         q8NE1fsXoLlwfSeJbBRLd/U6Vni0zgwiQrgf+oQ/yeX+IzHQnnzRHKxY6VF5amEOcllK
-         ZAJ02sT+M+1eGoj5PPcTftaIy9oICoOgMslYwXKFdo/ijbuMdhmnCw9UGFD+PB1JOaoE
-         r2dDaaM8kDur1qmIh71cuodzcvsRmmwRSsHQzsoRIIVH/meI06z1FKW1K+UXSLMXaoYe
-         vS/A==
-X-Gm-Message-State: AKGB3mKlF4jQQrPy+/AmXuDJlLkzUKanzkv3dY5a4nghdc9jTwNLvmV3
-        1qomba7NtkaKJqHYh4woxGQT+A==
-X-Google-Smtp-Source: ACJfBostycBdmb6zcshVWd7VAddgTuAQ+W2jOnViZX+8Ablldo1AlJRipdrI+D4u51RBXgHOG1AE4g==
-X-Received: by 10.157.51.168 with SMTP id u40mr10791731otc.162.1514438592517;
-        Wed, 27 Dec 2017 21:23:12 -0800 (PST)
-Received: from Carl-MBP ([2600:100e:b02c:f23f:78c2:1eba:9743:953f])
-        by smtp.gmail.com with ESMTPSA id x21sm12068004ote.71.2017.12.27.21.23.09
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=bdRT4pfsoPllLUVIwKGufBB5NWpjxkDzf7lr1iCU9FY=;
+        b=E7RYkAhHGeV1mW3oTCyyJK2UrJxKtHs2HVYjPrFitWM3lTQJm7lX6FeuJQhCbn8mvD
+         pz2EP9dY30BGdwhk2NS+UeT/R76gEynPUynqgVkg7+bdA58omaGykTjzLlAkloITajer
+         om2FXrdxh5ajHCMzW0mJYmNou/7O3qkR/dKQItuVpUyX5FQtaFRl/x8GW3hwKG8rP1x5
+         /+VcKn/H0szTrMihirwpPtnmSgDiGoqmtpIg84WMGWmq2RlMhAXOyR3/O4BKPsyQXEOJ
+         UamUaVAtXphLyXaXgM/x8RLfc9swg730hMXvJ4Od7z9meHMbdiJ0WlYyXiWCcjnCaYrc
+         Xy1Q==
+X-Gm-Message-State: AKGB3mKKc7LzWLtUS6p6YaULWYqkUA4Ebwx1xGvyuAg+IB8XcZLZFapg
+        w2ng0cZd+XqBT/dciPSRIhQ=
+X-Google-Smtp-Source: ACJfBosiep3TKwLuH3pYYalrTP8rxdirg86rwwshuUm/F9X97j4Wp7vbqHOYVWXwiYGkJXAp1B9a1w==
+X-Received: by 10.84.245.15 with SMTP id i15mr31805213pll.402.1514441434892;
+        Wed, 27 Dec 2017 22:10:34 -0800 (PST)
+Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id r1sm69827575pfg.98.2017.12.27.22.10.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Dec 2017 21:23:11 -0800 (PST)
-Date:   Wed, 27 Dec 2017 22:23:08 -0700
-From:   Carl Baldwin <carl@ecbaldwin.net>
-To:     Alexei Lozovsky <a.lozovsky@gmail.com>
-Cc:     Theodore Ts'o <tytso@mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20171228052303.GA33027@Carl-MBP>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <20171225035215.GC1257@thunk.org>
- <20171227043544.GB26579@Carl-MBP.ecbaldwin.net>
- <C82A30ED-D608-4F79-B824-C23DDB078DD9@gmail.com>
+        Wed, 27 Dec 2017 22:10:33 -0800 (PST)
+Date:   Thu, 28 Dec 2017 13:10:27 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache
+ bug
+Message-ID: <20171228061027.GA22308@duynguyen.vn.dektech.internal>
+References: <20171222140032.21180-1-avarab@gmail.com>
+ <xmqqlghoniuk.fsf@gitster.mtv.corp.google.com>
+ <87mv24qa2y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <C82A30ED-D608-4F79-B824-C23DDB078DD9@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87mv24qa2y.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 27, 2017 at 03:35:58PM +0200, Alexei Lozovsky wrote:
-> I think the reasoning behind Theo's words is that it would be better
-> to first implement the commit relationship tracking as an add-in which
-> uses commit messages for data storage, then evaluate its usefulness
-> when it's actually available (including extensions to gitk and stuff
-> to support the new metadata), and then it could be moved into core git
-> data structures, when it has proven itself useful. It's not a trivial
-> feature which warrants immediate addition to git and its design can
-> change when faced with real- world use-cases, so it would be bad for
-> compatibility to rush its addition. Storage location for metadata
-> seems to be an implementation detail which could be technically
-> changed more or less easily. But it's much easier to ignore a trailer
-> in commit message in the favor of a commit header field than to
-> replace a deprecated commit header field with a better one, which
-> could cause massive headache for all git repositories in the world.
+On Wed, Dec 27, 2017 at 07:50:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > This needs SYMLINKS prereq, which in turn means it cannot be tested
+> > on certain platforms.  I thought Duy's answer was that this does not
+> > need to involve a symbolic link at all?  If so, perhaps we can have
+> > another test that does not need symlink?
+> 
+> ... as soon as I figure out how to add such a non-symlink test as well
+> (seems sensible to test both), but I can't bring it to fail without
+> symlinks, I just adjusted my test script to do this instead:
+> 
+>     (
+>         rm -rf /tmp/testrepo &&
+>         git init /tmp/testrepo &&
+>         cd /tmp/testrepo &&
+>         mkdir x y &&
+>         touch x/a y/b &&
+>         git add x/a y/b &&
+>         git commit -msnap &&
+>         git rm -rf y &&
+>         mkdir y &&
+>         touch y/c &&
+>         git add y &&
+>         git commit -msnap2 &&
+>         git checkout HEAD~ &&
+>         git status &&
+>         git checkout master &&
+>         sleep 1 &&
+>         git status &&
+>         git status
+>     )
+> 
+> Duy, what am I missing here?
 
-Yeah, this is a point that everyone is eager to make instead of really
-trying to understand what I'm trying to do and offering constructive
-suggestions. It's not that I'm not listening. I'm not really concerned
-about headers vs trailers or the asthetics of the whole thing as much as
-I'm concerned about how the server / client interaction will be. I worry
-that anything that I come up with that isn't implemented in the regular
-git core push and fetch will end up being awkward or end up needing to
-reimplement a lot of what's already in git. But, maybe it just needs a
-little more thought. Let me try to think through it...
+The problem is there, it's just easier to see or verify with
+symlinks. Below is my test patch on top of your original one. Two
+points:
 
-Imagine John posts a new change up for review to a review server. The
-current master points at commit A and so he grabs it and drafts his
-first proposal, B1.
+- if you look at the test-dump-untracked-cache output, you can see the
+  saved cache is wrong. The line
 
-    digraph history {
-        B1 -> A
-    }
+    /one/ 0000000000000000000000000000000000000000 recurse valid
 
-Soon after posting, he notices a couple of simple errors and uses the
-web UI to correct them. This creates B2. (Dashed edges are replaces
-references).
+  should not be there because that implies that cached travesal of
+  root includes the directory "one" which does not exist on disk
+  anymore. With the fix, this line is gone.
 
-    digraph history {
-        B1 -> A
-        B2 -> A
-        B2 -> B1 [ style="dashed"; ]
-    }
+- We silently ignore opendir() error, the changes in dir.c shows this
 
-Anna reviews B2 and finds a small nit. She asks John if she can just fix
-it and push up a new review. He agrees. She pushes up B3.
+    warning: could not open directory 'one/': Not a directory
 
-    digraph history {
-        B1 -> A
-        B2 -> A
-        B3 -> A
-        B2 -> B1 [ style="dashed"; ]
-        B3 -> B2 [ style="dashed"; ]
-    }
+  It opendir() again because it finds out the stat data of directory
+  "one" in the cache does not match stat data of the (real) file
+  "one".
 
-John goes back to his workspace and does a little more work on B. He
-creates the fourth revision, B4 but since he didn't update his workspace
-with the other two most recent revisions, his new revision is derived
-from B1.
+  If "one" is a symlink, opendir() would be succesful and we go in
+  anyway. If it's a file, we ignore it, accidentally make the second
+  git-status output clean and pass the test.
 
-    digraph history {
-        B1 -> A
-        B2 -> A
-        B3 -> A
-        B4 -> A
-        B2 -> B1 [ style="dashed"; ]
-        B3 -> B2 [ style="dashed"; ]
-        B4 -> B1 [ style="dashed"; ]
-    }
+Report opendir() errors is a good and should be done regardless (i'm
+just not sure if it should be a fatal error or a warning like this, I
+guess die() is a bit too much).
 
-John then pushes to the server. I imagined that would be a command
-similar to what gerrit does.
+The remaining question is how we write this test. Verify with
+test-dump-untracked-cache is easiest but less intuitive, I
+guess. While using symlinks shows the problem clearly but not
+portable. Or the third option, if we error something out, you could
+check that git-status has clean stderr.
 
-    git push codereview refs/for/master
+Which way to go?
 
-At this point, I want a couple of things to happen. First, the server
-should be able to match the new revision to the change by following the
-replaces references to the commits it already has. Then it should
-recognize that this is not a fast forward update to the change and
-reject it on those grounds.
-
-After that, John needs to be able to fetch B2 and B3 so that his local
-client can perform a merge. I guess John needs to know what change he's
-trying to fetch. In this case, he needs to fetch both B2 and B3 in order
-get the full history graph of the change. The problem I see here is that
-today's git fetch would see B2 and B3 as unrelated branches. There could
-be any number of them to fetch. So, how does he ask for everything
-related to the change? Does he do a wild card or something?
-
-    git fetch codereview refs/changes/123/*
-
-Or does he just fetch all refs (this could be many on a busy review
-server)? Or do we need to do something out of band to discover the list
-of references that need to be fetched?
-
-I've been thinking out loud a bit. I guess this could be a path forward.
-I guess to make gc happy, I've got to keep around a ref pointing at each
-new revision so that it doesn't get garbage collected.
-
-Carl
+-- 8< --
+diff --git a/dir.c b/dir.c
+index 3c54366a17..868f544d72 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1783,15 +1783,20 @@ static int open_cached_dir(struct cached_dir *cdir,
+ 			   struct strbuf *path,
+ 			   int check_only)
+ {
++	const char *c_path;
++
+ 	memset(cdir, 0, sizeof(*cdir));
+ 	cdir->untracked = untracked;
+ 	if (valid_cached_dir(dir, untracked, istate, path, check_only))
+ 		return 0;
+-	cdir->fdir = opendir(path->len ? path->buf : ".");
++	c_path = path->len ? path->buf : ".";
++	cdir->fdir = opendir(c_path);
+ 	if (dir->untracked)
+ 		dir->untracked->dir_opened++;
+-	if (!cdir->fdir)
++	if (!cdir->fdir) {
++		warning_errno(_("could not open directory '%s'"), c_path);
+ 		return -1;
++	}
+ 	return 0;
+ }
+ 
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 7cf1e2c091..ca63b80ca7 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -702,7 +702,7 @@ test_expect_success 'setup worktree for symlink test' '
+ 	git add one/file two/file &&
+ 	git commit -m"first commit" &&
+ 	git rm -rf one &&
+-	ln -s two one &&
++	cp two/file one &&
+ 	git add one &&
+ 	git commit -m"second commit"
+ '
+@@ -714,6 +714,7 @@ test_expect_failure '"status" after symlink replacement should be clean with UC=
+ 	git checkout master &&
+ 	avoid_racy &&
+ 	status_is_clean &&
++	test-dump-untracked-cache &&
+ 	status_is_clean
+ '
+ 
+-- 8< --
