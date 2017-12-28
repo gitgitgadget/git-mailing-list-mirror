@@ -7,78 +7,75 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A11C1F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 18:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0B2A1F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 18:55:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754617AbdL1SgS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 13:36:18 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53813 "EHLO
+        id S1754152AbdL1SzP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 13:55:15 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58930 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754347AbdL1SgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 13:36:14 -0500
+        with ESMTP id S1751220AbdL1SzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 13:55:14 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E67C9FA9;
-        Thu, 28 Dec 2017 13:36:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E57FCA35A;
+        Thu, 28 Dec 2017 13:55:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=QIgPt5LpnFPD
-        uvRmynlE4Yllbb4=; b=jAqBpuuOAt5raNpD7cjhADo0P9hOfX0aXiiv4vuOcRls
-        sJZFz9gP3/JlHeOyMIr2LoY/QcOcZ9xh4E5g5YzqUUl1go4wpSjb5Rr6IK3uQalG
-        NrsDm18VsmBWnzhoGATY7QYU3X4ZoVThwKK6XgZlD8GrbX57eRHkK3LTS6EmRaI=
+        :content-type; s=sasl; bh=4QmQvCMpXd0EOoFR1E2X7Jidqv8=; b=GOdGZm
+        tk2lxVEzGjPv3aGFsZw00A9BFSoBHlOwWErhdqFVIim7h3PZPWeSv0vw6EVNj5CW
+        GcTe2+kscqF408Qb2GSI8fQKrZQSNtb8yO6wivT80rfRGldpF+Wzv4CjjT7dLTs9
+        g8bsi+2goRCWwqv+2jct78ad5OLffOkgoQcTg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Zhm9F4
-        Obewa3sCDxpTpIgNff89rUYC3Vhtrz7uSOv0nVPf30GIgykG8tt99qUjJzUf8swX
-        +2fKcjGK/3mgSjpY6XtSsyQF0RBUbe5wU4lyKzlr/+OqGFV59Ht7UQZzSRP6ngb5
-        timDxHDo5c0ZNgEvRWtkyAd80ATm/4c+TAJGA=
+        :content-type; q=dns; s=sasl; b=ATv2YfFzu9Mr6em6Wvjz/p+BgvwkE348
+        Ll0dPKBJlSti6dSGbEXAo57m/ZdtaN/FzZvX5kehnjvw2BePf5UNJvFi5rTsoLck
+        4rKpl3o1hqQVKX4z1mRPOuC2YKPkjKIpYRVFQfdnHlj1QgW5ypMtdKws6ZTaqyxy
+        rCH6rsjKr8A=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A7C5CC9FA8;
-        Thu, 28 Dec 2017 13:36:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 24BF0CA359;
+        Thu, 28 Dec 2017 13:55:14 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 216A9C9FA7;
-        Thu, 28 Dec 2017 13:36:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9BACACA358;
+        Thu, 28 Dec 2017 13:55:13 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Dan Jacques <dnj@google.com>,
-        Alex Riesen <alexander.riesen@cetitec.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>, Petr Baudis <pasky@ucw.cz>,
-        Gerrit Pape <pape@smarden.org>,
-        "martin f . krafft" <madduck@madduck.net>, Eric Wong <e@80x24.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>,
-        Michael J Gruber <git@grubix.eu>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v6] Makefile: replace perl/Makefile.PL with simple make rules
-References: <20171220174147.GG3693@zaya.teonanacatl.net>
-        <20171220182419.16865-1-avarab@gmail.com>
-        <xmqqefnmshsm.fsf@gitster.mtv.corp.google.com>
-        <87lghnrerd.fsf@evledraar.gmail.com>
-Date:   Thu, 28 Dec 2017 10:36:12 -0800
-In-Reply-To: <87lghnrerd.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 27 Dec 2017 23:24:06 +0100")
-Message-ID: <xmqqwp16lmxv.fsf@gitster.mtv.corp.google.com>
+To:     Liam Beguin <liambeguin@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 8/9] rebase -i: learn to abbreviate command names
+References: <20171127045514.25647-1-liambeguin@gmail.com>
+        <20171203221721.16462-1-liambeguin@gmail.com>
+        <20171203221721.16462-9-liambeguin@gmail.com>
+        <CACsJy8B3U0_sJeEt+gLy9HJKszO5-uRZsssL3ZFdkKbSM9yWDg@mail.gmail.com>
+        <xmqqmv24m186.fsf@gitster.mtv.corp.google.com>
+        <CAKm4OoVMRd-ZkaB9Z8Mxnavfy077=LifJq9OEeg-mvjEGz4K6A@mail.gmail.com>
+Date:   Thu, 28 Dec 2017 10:55:12 -0800
+In-Reply-To: <CAKm4OoVMRd-ZkaB9Z8Mxnavfy077=LifJq9OEeg-mvjEGz4K6A@mail.gmail.com>
+        (Liam Beguin's message of "Wed, 27 Dec 2017 22:58:19 +0100")
+Message-ID: <xmqqpo6ylm27.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FB38CFA6-EBFD-11E7-9369-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A2FA1450-EC00-11E7-8799-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Liam Beguin <liambeguin@gmail.com> writes:
 
->> Here is the difference as I see between what we already have and
->> this update, and a proposed summary.
->> ...
->
-> When I read this back on the 22nd I missed that you were waiting on my
-> feedback on this. Just saw What's Cooking now. Yes, LGTM:
+> Since this came up, would it be a good thing to add -Wignored-qualifiers
+> to the DEVELOPER flags?
 
-Thanks!
+Quite frankly, I am not sure if catching that particular warning
+violation buys us much. As a return value from a function is never
+an lvalue, what triggers the warning may certainly be an indication
+of a sloppy coding, but otherwise I do not see it as diagnosing a
+potential error.  "The programmer thought that the returned value
+will only be assigned to a const variable and will never be
+modified, but the language does not guarantee such a behaviour out
+of the caller"---does such an incorrect expectation lead to an error
+in the codepath that involves such a function?
