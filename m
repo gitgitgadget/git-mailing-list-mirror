@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AA511F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 23:28:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5C651F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 23:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754773AbdL1X2o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 18:28:44 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:43370 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754415AbdL1X2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 18:28:42 -0500
-Received: by mail-wr0-f196.google.com with SMTP id w68so27994301wrc.10
-        for <git@vger.kernel.org>; Thu, 28 Dec 2017 15:28:41 -0800 (PST)
+        id S1754634AbdL1X2n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 18:28:43 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37592 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754783AbdL1X2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 18:28:40 -0500
+Received: by mail-wr0-f194.google.com with SMTP id f8so29635958wre.4
+        for <git@vger.kernel.org>; Thu, 28 Dec 2017 15:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=XKk0jwHPM7lQSapfNdtwsqBriQe42B8bEE7PCoAzPXA=;
-        b=aRE5yzWuJruHwaPjcUzHMsfSsK2ZYGiNIylRhXFb0KH8pRXQDFYdHKGvZipRzlpa0s
-         yvfN/H8vKYpIkRwzV+UaF/S2GOlasVbfLyq4KG4H8f6vOK0O3YTt2c31dNxhUW+9Zuva
-         usQ8MXot90bO8GpMoexSijA97m9dit02ovdQ8pEgMXVZAddhMFkD3CRmvoGjRtx1ceui
-         ADriSBpMAXFlMgROwrZDBQ0w0TLcC8lIbaWwGTI53ZnHjA/AfInQvQ5x0ZidQWPnikfe
-         5M+DyuQJ6m13G2Q5+y97eekgv7iJ/ezVFiPHlHwWmUyiVnrIRqaak64xVuhU3u1sipCB
-         5jMw==
+        bh=Z2/9XnMnCMnc82QOsAk7k3P1m05Maj1z4QMb7qwvNA8=;
+        b=EEkE0zypWrACBAa58Rbr82/e06A7nsXEyuTL0VKPJ/vmuelcq5gaKnfQYL0dib6FLb
+         QnHyoPThubz5e6RUmmxl4TLQoHUZB0o4uo7pDCkBESGmrLx2dXnNHht/n3ZNJAt2mxTR
+         EyBuFNNiJZp+WVfgg93whGmho4F8qguqhULt9u0t69F8t4dszQja+IecSmV4YLYYuMXr
+         ZgtgXCTQFuEIhdogZmk5APfhVd5MAttJIVFE/7zN3n1SlZ+hvviWYSXAm1x/acspizYV
+         HCE8U4SXv9usZlA71+k6d5ty19K7qlKHtKsiPIxAoG1pu9tN171peISbICX0B8KKeRNd
+         b6tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=XKk0jwHPM7lQSapfNdtwsqBriQe42B8bEE7PCoAzPXA=;
-        b=ieiChlA652XGr1+ZBQm4KkDLSQDjHOniaUiPFLKQ+P/l3BenHeWw64p+X9xW0p7/df
-         a5rXi+zIzq9/tR0E6qUlN+StRh2VxzAKtn5nXvcCMr40TX8unCXdYQ7uNKRWK3XdOZXn
-         NpOafq4m17uM9ExLWj+xjzl3/lUrkM8JsObLo08+iPoku3QePB06IUizbxF/+re2ybnZ
-         1wycoxUAWlW8unpvWiIHrwLESEfUSCmvedn5Ps8dXUrIwTF9ZcTgq2MCoaVs5gBlhu5D
-         EjAuGrm7WBrIFsSIfeSpZOFQzvFzP7QzfoUBlE2eZa7x6Lh5esoqkulGA36uqg8tetNc
-         tUgQ==
-X-Gm-Message-State: AKGB3mKSTkaQw60r9z/sUu+lLXmvk0+MHQhtuwesYX+nW22y8UCuZvqe
-        9YISqgvoZXysKXa0Z6J8hFD3ECmN
-X-Google-Smtp-Source: ACJfBose9C6VYeGweQfoQzGxPxwuE5EtWjinzY0BNlM18D9cmo5Znn7cupsIZoFp2/8XSo/JkTQS6Q==
-X-Received: by 10.223.199.70 with SMTP id b6mr21361326wrh.223.1514503720743;
-        Thu, 28 Dec 2017 15:28:40 -0800 (PST)
+        bh=Z2/9XnMnCMnc82QOsAk7k3P1m05Maj1z4QMb7qwvNA8=;
+        b=fwOshctoWpzfNJi2xyNN5rn0GxMXNxyiTxb/oXKEkP2pfhLQku1kjYsiWTm9jCg9I2
+         PeP2Bv5P/i5s+WprzUAbumW8/h40E4JdFtHnEQJZjfh1Bw+A41iOi2uOLSWaGa2JY2j6
+         ZxlQV8rbC1ngjwjCWje6CTn23WZrhhfzcczVmt5fBcJXHJHWl5uKXKMLRXs6hRrg7tyI
+         ApgT0hJb7Tpu+6CPERgaG333H3UcfYzg+kL6K9LRnrS0F7NXqRDknuKANZDEpaEw37oU
+         wFn0nzokaI9gfEJY95iERFLyPhNqflCaIIyCfckatfIFDUyM0C3m40HT3QGCF5nAbUWf
+         evlw==
+X-Gm-Message-State: AKGB3mLVOqo3jFp+oNOn5klPrpofS0ymfsOr+IXVDuMA/1/YNkERyzp5
+        0HaVYVrazffyToGSZn1eV8h2oX97
+X-Google-Smtp-Source: ACJfBouLck8IsvM9fjhK2AC/lEWg8gaAY6OMf8wEUO/IVaND/EOAoQ9w19gZ2gPyvD6y9+ANCnXd/g==
+X-Received: by 10.223.193.141 with SMTP id x13mr24461860wre.239.1514503718976;
+        Thu, 28 Dec 2017 15:28:38 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id c53sm23187346wrg.10.2017.12.28.15.28.39
+        by smtp.gmail.com with ESMTPSA id c53sm23187346wrg.10.2017.12.28.15.28.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Dec 2017 15:28:39 -0800 (PST)
+        Thu, 28 Dec 2017 15:28:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/7] wildmatch test: don't try to vertically align our output
-Date:   Thu, 28 Dec 2017 23:28:19 +0000
-Message-Id: <20171228232823.14450-4-avarab@gmail.com>
+Subject: [PATCH v3 2/7] wildmatch test: use more standard shell style
+Date:   Thu, 28 Dec 2017 23:28:18 +0000
+Message-Id: <20171228232823.14450-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20171228232823.14450-1-avarab@gmail.com>
 References: <20171228232823.14450-1-avarab@gmail.com>
@@ -76,59 +76,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't try to vertically align the test output, which is futile anyway
-under the TAP output where we're going to be emitting a number for
-each test without aligning the test count.
-
-This makes subsequent changes of mine where I'm not going to be
-aligning this output as I add new tests easier.
+Change the wildmatch test to use more standard shell style, usually we
+use "if test" not "if [".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3070-wildmatch.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t3070-wildmatch.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index 4d589d1f9a..19ea64bba9 100755
+index 27fa878f6e..4d589d1f9a 100755
 --- a/t/t3070-wildmatch.sh
 +++ b/t/t3070-wildmatch.sh
-@@ -7,11 +7,11 @@ test_description='wildmatch tests'
+@@ -5,7 +5,8 @@ test_description='wildmatch tests'
+ . ./test-lib.sh
+ 
  match() {
- 	if test "$1" = 1
- 	then
--		test_expect_success "wildmatch:     match '$3' '$4'" "
-+		test_expect_success "wildmatch: match '$3' '$4'" "
+-	if [ $1 = 1 ]; then
++	if test "$1" = 1
++	then
+ 		test_expect_success "wildmatch:     match '$3' '$4'" "
  			test-wildmatch wildmatch '$3' '$4'
  		"
- 	else
--		test_expect_success "wildmatch:  no match '$3' '$4'" "
-+		test_expect_success "wildmatch: no match '$3' '$4'" "
- 			! test-wildmatch wildmatch '$3' '$4'
- 		"
- 	fi
-@@ -20,7 +20,7 @@ match() {
+@@ -17,7 +18,8 @@ match() {
+ }
+ 
  imatch() {
- 	if test "$1" = 1
- 	then
--		test_expect_success "iwildmatch:    match '$2' '$3'" "
-+		test_expect_success "iwildmatch: match '$2' '$3'" "
+-	if [ $1 = 1 ]; then
++	if test "$1" = 1
++	then
+ 		test_expect_success "iwildmatch:    match '$2' '$3'" "
  			test-wildmatch iwildmatch '$2' '$3'
  		"
- 	else
-@@ -33,11 +33,11 @@ imatch() {
+@@ -29,7 +31,8 @@ imatch() {
+ }
+ 
  pathmatch() {
- 	if test "$1" = 1
- 	then
--		test_expect_success "pathmatch:     match '$2' '$3'" "
-+		test_expect_success "pathmatch: match '$2' '$3'" "
+-	if [ $1 = 1 ]; then
++	if test "$1" = 1
++	then
+ 		test_expect_success "pathmatch:     match '$2' '$3'" "
  			test-wildmatch pathmatch '$2' '$3'
  		"
- 	else
--		test_expect_success "pathmatch:  no match '$2' '$3'" "
-+		test_expect_success "pathmatch: no match '$2' '$3'" "
- 			! test-wildmatch pathmatch '$2' '$3'
- 		"
- 	fi
 -- 
 2.15.1.424.g9478a66081
 
