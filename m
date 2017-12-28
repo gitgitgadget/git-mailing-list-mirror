@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5041F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91DC81F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753325AbdL1EOU (ORCPT <rfc822;e@80x24.org>);
+        id S1753335AbdL1EOZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 23:14:25 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:36579 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753321AbdL1EOU (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Dec 2017 23:14:20 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:46042 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753281AbdL1EOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 23:14:12 -0500
-Received: by mail-it0-f48.google.com with SMTP id z6so26969576iti.4
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:12 -0800 (PST)
+Received: by mail-io0-f194.google.com with SMTP id i143so17043770ioa.3
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=R/stZ/vrp+wLW/SoKCqcD9Jes6pSAkI54a/FFawfkVI=;
-        b=tyirpkh72jM6D5ReZ5bgvp6HDMolqo+OaEajDVH29Ba+vllquap1wSgG/dMAl5D+VV
-         XqrvHT2KOOxSjJjbG/VQAEmUlwng5+5b5+4NtcnYmi8whMaAB6ZNqEu276QLmziJPer+
-         lxdW+CAT8TYV1DoC88yh82QaLwvvB9Pi0xZRUH5kdGDWePfml1HgEzZRRZnzxfBYBb/B
-         hl4WCvgfl5rCpMDIbx01nuqpyunjJAkx+3yo/7e9UKn/CaJvlXNAWtt+gp4gBtF8m7+G
-         nTbRqAYb1sVITrDjkq+WvX8m0sHQhymMl7gm/65EV4rhC9Onb+7z57MAL65nwE2uaapE
-         c7fA==
+        bh=zbWZPTiZ0LmzKiC8HQIUejF7Rp1fD6Y1I/8gRn3k+mI=;
+        b=LdbNWAat3B9kesMcZOYLGW3pZNXxCWlkmEKoNenEsbA61JLJaUaD2gJ4VTJS/PVYsa
+         pXwC8DqeGM/I5OAd5x4GQe6eKoWSafn+agqmGapUEpQc1kFZEslFpUKQUJuk4Ud5OxsI
+         sxoVAMMcsItLeyYwlylhq8TIlSilqJM4e7b9S3tg1ZOdZVC4fFn/DXbFwoNGeR37r80D
+         X92FUf06WoWdMg0Ch1QVQLH5g2W8sJ394sA/OJspjMqdW/I23WkBoNzeWg/20Tp/1DYQ
+         B1q0Auy6Y9ceckB0YQsXcedXICysQRks3o5pYV0iA/YSJ1KUpdQRvn9vKEyamcVh/eWk
+         SRig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=R/stZ/vrp+wLW/SoKCqcD9Jes6pSAkI54a/FFawfkVI=;
-        b=TfdUfsbevEaSAVVAj4eAlQ9XtTM/55aL1xoRLLint/ArReSTi5Nvc0Msr0+Flym/69
-         nfOkxuCndJ68FH22KJyOTQplwoGcrBZ9v6PdBZI7O0mqZn8reB1hwnBGakzflojzaL4z
-         pk/uZeB/WyKXP5eCe6A63fx3yO22rDXHtNrcKrHJ/EtKD8hMPVrkCaKciiOrlZogAdi4
-         LrYfRkLo4wPE2FSNhPa248M5E7FLw944GsIKSB90h8/XmM8C4BI/0uyF3ODz+4HsvMk5
-         ZJFrmedjklMCvmzQ77pLgY8uXpQH20CM8FTRX0pVLBmU7yva9DqTYKE+zBxUt4hPLuM3
-         wWlA==
-X-Gm-Message-State: AKGB3mK/GZftgyblycdLhl405pKfJBKhHWu+vBWk6eg9OTgQgjVH0QIZ
-        9dMGzrDgW1kTNxuvahC9B8wPEQ==
-X-Google-Smtp-Source: ACJfBovCtP2YYQhiCoxR+hKT0t46yYhqQI2ncjwbez78WdKNYXdJRYcsONHRX5jIl151oRCWl+xkxw==
-X-Received: by 10.36.91.15 with SMTP id g15mr39035600itb.141.1514434451114;
-        Wed, 27 Dec 2017 20:14:11 -0800 (PST)
+        bh=zbWZPTiZ0LmzKiC8HQIUejF7Rp1fD6Y1I/8gRn3k+mI=;
+        b=E9X3ZBs7C6MToiHDvQJLWw+BnwQhCL/h8z83taS+ZmoGM8fSaJa2jBSFFBPQ06ErkN
+         RiKkqZMPb0o5/krojS0DtdjTnembWUgSMxozBijguJvJn7c8Gmhi2AYCuMzmHQWlK+FZ
+         6LFsIjhShoFQqMexEjDzsBuGoacrYPCtgppiAGdLjPxeDdJ02669PdA/KsRXYSOfrjdq
+         jE9RiBz4D0ENX6Hpp9KxxchMa6FuJ86WhLzk8zFu42Ff46lozg1NUJyW1j/Ymkqxm+b3
+         hYmVemKvcGZxy3KVlZUEyBPGEJmYXsiMCrMf4JpAasIHyIV2BZpSJlPQgq78xAWUCE2d
+         YyKg==
+X-Gm-Message-State: AKGB3mJpU7UVeuz1FdSoaYRrnwOe6Ad4c5+6xMhZvY/Hf9DP7Hci/UqU
+        +yoKDkFsN7I+SNhPBIjh9JSWSg==
+X-Google-Smtp-Source: ACJfBotcB0OG3K/xCOQ9xRLy65cgNRjSlk7p9yv8J1IZa/y39LcXJSYPYqmdHQxJIEbsz7xKzKihQw==
+X-Received: by 10.107.175.144 with SMTP id p16mr32461511ioo.199.1514434459917;
+        Wed, 27 Dec 2017 20:14:19 -0800 (PST)
 Received: from localhost.localdomain (170-72-6-219.ut.vivintwireless.net. [170.72.6.219])
-        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.10
+        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 20:14:10 -0800 (PST)
+        Wed, 27 Dec 2017 20:14:19 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 11/34] directory rename detection: testcases exploring possibly suboptimal merges
-Date:   Wed, 27 Dec 2017 20:13:29 -0800
-Message-Id: <20171228041352.27880-12-newren@gmail.com>
+Subject: [PATCH v5 19/34] merge-recursive: split out code for determining diff_filepairs
+Date:   Wed, 27 Dec 2017 20:13:37 -0800
+Message-Id: <20171228041352.27880-20-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g8e199d483
 In-Reply-To: <20171228041352.27880-1-newren@gmail.com>
 References: <20171228041352.27880-1-newren@gmail.com>
@@ -62,414 +62,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Create a new function, get_diffpairs() to compute the diff_filepairs
+between two trees.  While these are currently only used in
+get_renames(), I want them to be available to some new functions.  No
+actual logic changes yet.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 394 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 394 insertions(+)
+ merge-recursive.c | 86 +++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 64 insertions(+), 22 deletions(-)
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-index cfb53295b..7c75363e5 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -1840,4 +1840,398 @@ test_expect_failure '7e-check: transitive rename in rename/delete AND dirs in th
- 	)
- '
+diff --git a/merge-recursive.c b/merge-recursive.c
+index da7c67eb8..4adff2d53 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1312,24 +1312,15 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+ }
  
-+###########################################################################
-+# SECTION 8: Suboptimal merges
-+#
-+# As alluded to in the last section, the ruleset we have built up for
-+# detecting directory renames unfortunately has some special cases where it
-+# results in slightly suboptimal or non-intuitive behavior.  This section
-+# explores these cases.
-+#
-+# To be fair, we already had non-intuitive or suboptimal behavior for most
-+# of these cases in git before introducing implicit directory rename
-+# detection, but it'd be nice if there was a modified ruleset out there
-+# that handled these cases a bit better.
-+###########################################################################
+ /*
+- * Get information of all renames which occurred between 'o_tree' and
+- * 'tree'. We need the three trees in the merge ('o_tree', 'a_tree' and
+- * 'b_tree') to be able to associate the correct cache entries with
+- * the rename information. 'tree' is always equal to either a_tree or b_tree.
++ * Get the diff_filepairs changed between o_tree and tree.
+  */
+-static struct string_list *get_renames(struct merge_options *o,
+-				       struct tree *tree,
+-				       struct tree *o_tree,
+-				       struct tree *a_tree,
+-				       struct tree *b_tree,
+-				       struct string_list *entries)
++static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
++					       struct tree *o_tree,
++					       struct tree *tree)
+ {
+-	int i;
+-	struct string_list *renames;
++	struct diff_queue_struct *ret;
+ 	struct diff_options opts;
+ 
+-	renames = xcalloc(1, sizeof(struct string_list));
+-
+ 	diff_setup(&opts);
+ 	opts.flags.recursive = 1;
+ 	opts.flags.rename_empty = 0;
+@@ -1345,10 +1336,43 @@ static struct string_list *get_renames(struct merge_options *o,
+ 	diffcore_std(&opts);
+ 	if (opts.needed_rename_limit > o->needed_rename_limit)
+ 		o->needed_rename_limit = opts.needed_rename_limit;
+-	for (i = 0; i < diff_queued_diff.nr; ++i) {
 +
-+# Testcase 8a, Dual-directory rename, one into the others' way
-+#   Commit O. x/{a,b},   y/{c,d}
-+#   Commit A. x/{a,b,e}, y/{c,d,f}
-+#   Commit B. y/{a,b},   z/{c,d}
-+#
-+# Possible Resolutions:
-+#   w/o dir-rename detection: y/{a,b,f},   z/{c,d},   x/e
-+#   Currently expected:       y/{a,b,e,f}, z/{c,d}
-+#   Optimal:                  y/{a,b,e},   z/{c,d,f}
-+#
-+# Note: Both x and y got renamed and it'd be nice to detect both, and we do
-+# better with directory rename detection than git did without, but the
-+# simple rule from section 5 prevents me from handling this as optimally as
-+# we potentially could.
++	ret = malloc(sizeof(struct diff_queue_struct));
++	ret->queue = diff_queued_diff.queue;
++	ret->nr = diff_queued_diff.nr;
++	/* Ignore diff_queued_diff.alloc; we won't be changing size at all */
 +
-+test_expect_success '8a-setup: Dual-directory rename, one into the others way' '
-+	test_create_repo 8a &&
-+	(
-+		cd 8a &&
++	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
++	diff_queued_diff.nr = 0;
++	diff_queued_diff.queue = NULL;
++	diff_flush(&opts);
++	return ret;
++}
 +
-+		mkdir x &&
-+		mkdir y &&
-+		echo a >x/a &&
-+		echo b >x/b &&
-+		echo c >y/c &&
-+		echo d >y/d &&
-+		git add x y &&
-+		test_tick &&
-+		git commit -m "O" &&
++/*
++ * Get information of all renames which occurred in 'pairs', making use of
++ * any implicit directory renames inferred from the other side of history.
++ * We need the three trees in the merge ('o_tree', 'a_tree' and 'b_tree')
++ * to be able to associate the correct cache entries with the rename
++ * information; tree is always equal to either a_tree or b_tree.
++ */
++static struct string_list *get_renames(struct merge_options *o,
++				       struct diff_queue_struct *pairs,
++				       struct tree *tree,
++				       struct tree *o_tree,
++				       struct tree *a_tree,
++				       struct tree *b_tree,
++				       struct string_list *entries)
++{
++	int i;
++	struct string_list *renames;
 +
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
++	renames = xcalloc(1, sizeof(struct string_list));
 +
-+		git checkout A &&
-+		echo e >x/e &&
-+		echo f >y/f &&
-+		git add x/e y/f &&
-+		test_tick &&
-+		git commit -m "A" &&
++	for (i = 0; i < pairs->nr; ++i) {
+ 		struct string_list_item *item;
+ 		struct rename *re;
+-		struct diff_filepair *pair = diff_queued_diff.queue[i];
++		struct diff_filepair *pair = pairs->queue[i];
+ 
+ 		if (pair->status != 'R') {
+ 			diff_free_filepair(pair);
+@@ -1373,9 +1397,6 @@ static struct string_list *get_renames(struct merge_options *o,
+ 		item = string_list_insert(renames, pair->one->path);
+ 		item->util = re;
+ 	}
+-	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+-	diff_queued_diff.nr = 0;
+-	diff_flush(&opts);
+ 	return renames;
+ }
+ 
+@@ -1646,15 +1667,36 @@ static int handle_renames(struct merge_options *o,
+ 			  struct string_list *entries,
+ 			  struct rename_info *ri)
+ {
++	struct diff_queue_struct *head_pairs, *merge_pairs;
++	int clean;
 +
-+		git checkout B &&
-+		git mv y z &&
-+		git mv x y &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
+ 	ri->head_renames = NULL;
+ 	ri->merge_renames = NULL;
+ 
+ 	if (!o->detect_rename)
+ 		return 1;
+ 
+-	ri->head_renames  = get_renames(o, head, common, head, merge, entries);
+-	ri->merge_renames = get_renames(o, merge, common, head, merge, entries);
+-	return process_renames(o, ri->head_renames, ri->merge_renames);
++	head_pairs = get_diffpairs(o, common, head);
++	merge_pairs = get_diffpairs(o, common, merge);
 +
-+test_expect_failure '8a-check: Dual-directory rename, one into the others way' '
-+	(
-+		cd 8a &&
++	ri->head_renames  = get_renames(o, head_pairs, head,
++					 common, head, merge, entries);
++	ri->merge_renames = get_renames(o, merge_pairs, merge,
++					 common, head, merge, entries);
++	clean = process_renames(o, ri->head_renames, ri->merge_renames);
 +
-+		git checkout A^0 &&
++	/*
++	 * Some cleanup is deferred until cleanup_renames() because the
++	 * data structures are still needed and referenced in
++	 * process_entry().  But there are a few things we can free now.
++	 */
 +
-+		git merge -s recursive B^0 &&
++	free(head_pairs->queue);
++	free(head_pairs);
++	free(merge_pairs->queue);
++	free(merge_pairs);
 +
-+		test 6 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/a HEAD:y/b HEAD:y/e HEAD:y/f HEAD:z/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:x/a O:x/b A:x/e A:y/f O:y/c O:y/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 8b, Dual-directory rename, one into the others' way, with conflicting filenames
-+#   Commit O. x/{a_1,b_1},     y/{a_2,b_2}
-+#   Commit A. x/{a_1,b_1,e_1}, y/{a_2,b_2,e_2}
-+#   Commit B. y/{a_1,b_1},     z/{a_2,b_2}
-+#
-+#   w/o dir-rename detection: y/{a_1,b_1,e_2}, z/{a_2,b_2}, x/e_1
-+#   Currently expected:       <same>
-+#   Scary:                    y/{a_1,b_1},     z/{a_2,b_2}, CONFLICT(add/add, e_1 vs. e_2)
-+#   Optimal:                  y/{a_1,b_1,e_1}, z/{a_2,b_2,e_2}
-+#
-+# Note: Very similar to 8a, except instead of 'e' and 'f' in directories x and
-+# y, both are named 'e'.  Without directory rename detection, neither file
-+# moves directories.  Implement directory rename detection suboptimally, and
-+# you get an add/add conflict, but both files were added in commit A, so this
-+# is an add/add conflict where one side of history added both files --
-+# something we can't represent in the index.  Obviously, we'd prefer the last
-+# resolution, but our previous rules are too coarse to allow it.  Using both
-+# the rules from section 4 and section 5 save us from the Scary resolution,
-+# making us fall back to pre-directory-rename-detection behavior for both
-+# e_1 and e_2.
-+
-+test_expect_success '8b-setup: Dual-directory rename, one into the others way, with conflicting filenames' '
-+	test_create_repo 8b &&
-+	(
-+		cd 8b &&
-+
-+		mkdir x &&
-+		mkdir y &&
-+		echo a1 >x/a &&
-+		echo b1 >x/b &&
-+		echo a2 >y/a &&
-+		echo b2 >y/b &&
-+		git add x y &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		echo e1 >x/e &&
-+		echo e2 >y/e &&
-+		git add x/e y/e &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv y z &&
-+		git mv x y &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '8b-check: Dual-directory rename, one into the others way, with conflicting filenames' '
-+	(
-+		cd 8b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 6 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 0 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/a HEAD:y/b HEAD:z/a HEAD:z/b HEAD:x/e HEAD:y/e &&
-+		git rev-parse >expect \
-+			O:x/a O:x/b O:y/a O:y/b A:x/e A:y/e &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 8c, rename+modify/delete
-+#   (Related to testcases 5b and 8d)
-+#   Commit O: z/{b,c,d}
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d_modified,e}
-+#   Expected: y/{b,c,e}, CONFLICT(rename+modify/delete: x/d -> y/d or deleted)
-+#
-+#   Note: This testcase doesn't present any concerns for me...until you
-+#         compare it with testcases 5b and 8d.  See notes in 8d for more
-+#         details.
-+
-+test_expect_success '8c-setup: rename+modify/delete' '
-+	test_create_repo 8c &&
-+	(
-+		cd 8c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		test_seq 1 10 >z/d &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git rm z/d &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo 11 >z/d &&
-+		test_chmod +x z/d &&
-+		echo e >z/e &&
-+		git add z/d z/e &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '8c-check: rename+modify/delete' '
-+	(
-+		cd 8c &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).* z/d.*y/d" out &&
-+
-+		test 4 -eq $(git ls-files -s | wc -l) &&
-+		test 1 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :0:y/e :3:y/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/e B:z/d &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse :1:y/d &&
-+		test_must_fail git rev-parse :2:y/d &&
-+		git ls-files -s y/d | grep ^100755 &&
-+		test -f y/d
-+	)
-+'
-+
-+# Testcase 8d, rename/delete...or not?
-+#   (Related to testcase 5b; these may appear slightly inconsistent to users;
-+#    Also related to testcases 7d and 7e)
-+#   Commit O: z/{b,c,d}
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d,e}
-+#   Expected: y/{b,c,e}
-+#
-+#   Note: It would also be somewhat reasonable to resolve this as
-+#             y/{b,c,e}, CONFLICT(rename/delete: x/d -> y/d or deleted)
-+#   The logic being that the only difference between this testcase and 8c
-+#   is that there is no modification to d.  That suggests that instead of a
-+#   rename/modify vs. delete conflict, we should just have a rename/delete
-+#   conflict, otherwise we are being inconsistent.
-+#
-+#   However...as far as consistency goes, we didn't report a conflict for
-+#   path d_1 in testcase 5b due to a different file being in the way.  So,
-+#   we seem to be forced to have cases where users can change things
-+#   slightly and get what they may perceive as inconsistent results.  It
-+#   would be nice to avoid that, but I'm not sure I see how.
-+#
-+#   In this case, I'm leaning towards: commit A was the one that deleted z/d
-+#   and it did the rename of z to y, so the two "conflicts" (rename vs.
-+#   delete) are both coming from commit A, which is illogical.  Conflicts
-+#   during merging are supposed to be about opposite sides doing things
-+#   differently.
-+
-+test_expect_success '8d-setup: rename/delete...or not?' '
-+	test_create_repo 8d &&
-+	(
-+		cd 8d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		test_seq 1 10 >z/d &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git rm z/d &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo e >z/e &&
-+		git add z/e &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '8d-check: rename/delete...or not?' '
-+	(
-+		cd 8d &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/e &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/e &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 8e, Both sides rename, one side adds to original directory
-+#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: w/{b,c}, z/d
-+#
-+# Possible Resolutions:
-+#   w/o dir-rename detection: z/d, CONFLICT(z/b -> y/b vs. w/b),
-+#                                  CONFLICT(z/c -> y/c vs. w/c)
-+#   Currently expected:       y/d, CONFLICT(z/b -> y/b vs. w/b),
-+#                                  CONFLICT(z/c -> y/c vs. w/c)
-+#   Optimal:                  ??
-+#
-+# Notes: In commit A, directory z got renamed to y.  In commit B, directory z
-+#        did NOT get renamed; the directory is still present; instead it is
-+#        considered to have just renamed a subset of paths in directory z
-+#        elsewhere.  Therefore, the directory rename done in commit A to z/
-+#        applies to z/d and maps it to y/d.
-+#
-+#        It's possible that users would get confused about this, but what
-+#        should we do instead?  Silently leaving at z/d seems just as bad or
-+#        maybe even worse.  Perhaps we could print a big warning about z/d
-+#        and how we're moving to y/d in this case, but when I started thinking
-+#        about the ramifications of doing that, I didn't know how to rule out
-+#        that opening other weird edge and corner cases so I just punted.
-+
-+test_expect_success '8e-setup: Both sides rename, one side adds to original directory' '
-+	test_create_repo 8e &&
-+	(
-+		cd 8e &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z w &&
-+		mkdir z &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '8e-check: Both sides rename, one side adds to original directory' '
-+	(
-+		cd 8e &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+
-+		test 7 -eq $(git ls-files -s | wc -l) &&
-+		test 6 -eq $(git ls-files -u | wc -l) &&
-+		test 2 -eq $(git ls-files -o | wc -l) &&
-+
-+		test $(git rev-parse :0:y/d) = $(git rev-parse B:z/d) &&
-+
-+		git rev-parse >actual \
-+			:1:z/b :2:y/b :3:w/b :1:z/c :2:y/c :3:w/c &&
-+		git rev-parse >expect \
-+			O:z/b O:z/b O:z/b O:z/c O:z/c O:z/c &&
-+		test_cmp expect actual &&
-+
-+		git hash-object >actual \
-+			y/b w/b y/c w/c &&
-+		git rev-parse >expect \
-+			O:z/b O:z/b O:z/c O:z/c &&
-+		test_cmp expect actual &&
-+
-+		test ! -f z/b &&
-+		test ! -f z/c &&
-+
-+		test_i18ngrep CONFLICT.*rename/rename.*z/c.*y/c.*w/c out &&
-+		test_i18ngrep CONFLICT.*rename/rename.*z/b.*y/b.*w/b out
-+	)
-+'
-+
- test_done
++	return clean;
+ }
+ 
+ static void cleanup_rename(struct string_list *rename)
 -- 
 2.15.0.408.g8e199d483
 
