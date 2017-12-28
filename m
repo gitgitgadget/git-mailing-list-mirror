@@ -2,83 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45E2E1F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 01:09:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E0841F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 02:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752670AbdL1BJg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 20:09:36 -0500
-Received: from mail-ua0-f178.google.com ([209.85.217.178]:34475 "EHLO
-        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752016AbdL1BJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 20:09:36 -0500
-Received: by mail-ua0-f178.google.com with SMTP id v22so9518546uaj.1
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 17:09:35 -0800 (PST)
+        id S1752840AbdL1CO5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 21:14:57 -0500
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:40959 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752757AbdL1CO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Dec 2017 21:14:56 -0500
+Received: by mail-wr0-f169.google.com with SMTP id p17so14370737wre.7
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 18:14:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Y7oJLp7iBCAIiZFWWU6ZEMXeNoTf1LvzZX53ivyVOm8=;
-        b=dx8ybtX3M7N9ALdaDow9MCFjVUNOo1LJEUdVuGWomdlS0cFBW6udbwuH/45Eh+DlxL
-         FBWZQ9peMEkKNmcuaNtqxIYgxsVDtO+NTf1Eg3PT8ri3mgGFYLcfHbrbAFzFsLum/TW3
-         mUBW/uBEfUj30hv6FxN0a1AhM0SnvynZ3S1IVZEYI88r9McDKia02nbwmwkfD7dXgMJT
-         vFQ/9sfY1l3ZAgiNmKJjWUJ1NFqlriiEXfetYveMh448EmG1XN9TsvmJQhIkxCxpkv9i
-         xGpm8X9X4q+d566Zcu7owjcRa12K5S29jj5Uf4IGaQuxmnaw1S3Cr16lWc5ZnYbl/Xvd
-         QCyA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=CD+zgXhKFqT3rDFfvSplVQLefiY4Hr6eHggw6WqhwWA=;
+        b=B/pEe/Pt7HC+I0/ZGMdhvCDcc2W814fAEMYfcLd6YOLzhtAgB+s9PL+czDoXhLzEvO
+         CtovDHQsIp4IB+LcTvw5P92U3L5NUmplgtbXem2VIdicZKZzfDdHtGPw+Ytd55jXBOBI
+         6VLyqvhucX6FnC3mZY7r7JBZachUu+BMfPh4fUqIQvCc2hJ/fXhAiZzHeJQwsDprtYm6
+         5YFGjvG6PhUFQV4m0OOlHyzN6lvLvcvqSPHmv2/cgNJSb6fcCB3irXImfcOPkDQFDLFp
+         oJLzJefIRopclXBYXZaGRBFVjLLXP/FMaoqTQ7uusg6JtAS6hDoJ1+w8QUeRXqa3hT2P
+         sjfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Y7oJLp7iBCAIiZFWWU6ZEMXeNoTf1LvzZX53ivyVOm8=;
-        b=ERNrKcRCbZ41abWysXQEzII14gQQTzaJ89bGtM7U2KPrnncvNzTEyqVSVbpGoqH0u9
-         MGSGe2ebsWskdI46TTFmXZICswCQ2MlM6tHkBe0V68QSPFs/n9o2Z03/3tERna14GqB4
-         xnqNCJ8Gf91fJVP00x7F3LxMPj5EIGmbBoxRr84SI6iaWMPkfn4LZpZnroWx+7aQLgbn
-         MEDsFvSfK2TkJ9IEIBJ1rMwa7b7hjqxuLPjpnSb/tMdNRRcdMRnaTnSSubXMWsr2Hg6W
-         WyDuiK1Su4M9Go1p+DjaYa3YD/ArRei3QwQ6av/76x5kvgjeYOS+jYPh+IQzzZZ9CT77
-         Qg6w==
-X-Gm-Message-State: AKGB3mLyLimSyaQO+Ds6y6FLIpyUdlgg/9RK8+GsQ1kJm609VxJ/Eb4U
-        GpKzRLYAy2RxLM3nULPYNAVbh3OlHKHSQz8Lo3Y=
-X-Google-Smtp-Source: ACJfBotQAckBeJCOaya29Tbxru0xCeIM4M0peVbMhygp1OnpwWe+zUM/Unx8dRuUmzqYCgnLSifOXSJuWfTRTap6fIc=
-X-Received: by 10.176.65.135 with SMTP id 7mr22171333uap.127.1514423375095;
- Wed, 27 Dec 2017 17:09:35 -0800 (PST)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CD+zgXhKFqT3rDFfvSplVQLefiY4Hr6eHggw6WqhwWA=;
+        b=ZBPdLfKrplE1rUR943HWUq2bnzD2lLnhZMNOzoYkrjnxwSSkVzM4cPnKr3VaS69Ydm
+         i9yEZLICnKxy+jJ6jatoBEPWJs2IxxAWt8Qqys2/nENmr/85PCFWVCSHT9dxuJ0PqWqA
+         wUAPhrbCvILLHyrE2bjx21DNr4HuOiMrecLYOOguph/TSSXMcXL6izLe7GUX/yUdYsak
+         APdUfCCviJmhu5NlT7y5a7q1ulK/WtcO5wOsmckxXlF+e4bz6fy9lcPeUshahXBwCLYG
+         CScx0lwIsLONJCcbqmJLe6I+5Clw0ycTW4ugLtU66Lu/HyFQTkj0A9YWMXK8vWxK4Yob
+         lNcQ==
+X-Gm-Message-State: AKGB3mK3ksCH8lGsN+A5yw5QAf1HsRSMXJsPrvZrfEQ7E06Jw2RJSg7Q
+        us+qz83+V9Dyw4UO8Ozw7Gk=
+X-Google-Smtp-Source: ACJfBovyPxF9Dum16Ve/TKfLcszMV22ltnZWN0nnNJGeftLe/4cl/ij1xUCNMiGRJGnEec6dzVzn2w==
+X-Received: by 10.223.142.202 with SMTP id q68mr7974690wrb.262.1514427295763;
+        Wed, 27 Dec 2017 18:14:55 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id p13sm33344774wrc.61.2017.12.27.18.14.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Dec 2017 18:14:54 -0800 (PST)
+Subject: Re: [PATCH v2 6/7] wt-status.c: handle worktree renames
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Alex Vandiver <alexmv@dropbox.com>
+References: <20171225103718.24443-1-pclouds@gmail.com>
+ <20171226091012.24315-1-pclouds@gmail.com>
+ <20171226091012.24315-7-pclouds@gmail.com>
+ <d0f2055c-e0c4-32af-6371-53d0e9a5fbc5@gmail.com>
+ <CACsJy8Dn_XKA8=iLRZpj2EKYOSZqHT0jw9o_HzPH_vncGGeCCQ@mail.gmail.com>
+ <fb29d5bf-daae-fa8b-b787-e536cd5f98c8@gmail.com>
+Message-ID: <1e89cabf-c6ca-de43-fac0-399da9a9776d@gmail.com>
+Date:   Thu, 28 Dec 2017 03:14:41 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Received: by 10.176.82.5 with HTTP; Wed, 27 Dec 2017 17:09:34 -0800 (PST)
-In-Reply-To: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
-References: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 27 Dec 2017 17:09:34 -0800
-Message-ID: <CABPp-BHxcFU+e4OgccWb+LgLbMo5sJsNjYFQb=WnxViTFdOu=g@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2017, #05; Wed, 27)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <fb29d5bf-daae-fa8b-b787-e536cd5f98c8@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 27, 2017 at 1:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+p.s. An extra note for the casual reader, just in case:
 
-> * ew/empty-merge-with-dirty-index (2017-12-22) 1 commit
->  - Merge branch 'ew/empty-merge-with-dirty-index-maint' into ew/empty-merge-with-dirty-index
->  (this branch uses ew/empty-merge-with-dirty-index-maint.)
-<snip>
-> * ew/empty-merge-with-dirty-index-maint (2017-12-22) 3 commits
->  - merge-recursive: avoid incorporating uncommitted changes in a merge
->  - move index_has_changes() from builtin/am.c to merge.c for reuse
->  - t6044: recursive can silently incorporate dirty changes in a merge
->  (this branch is used by ew/empty-merge-with-dirty-index.)
->
->  "git merge -s recursive" did not correctly abort when the index is
->  dirty, if the merged tree happened to be the same as the current
->  HEAD, which has been fixed.
+On 28/12/2017 01:50, Igor Djordjevic wrote:
+> 
+> ... it totally slipped me that documentation is/was pretty strict 
+> about <origPath> being HEAD path (exclusively), where I was still 
+> expecting it to show renamed working tree "from" value as <origPath> 
+> in case of working tree (double) rename, too - where that exact 
+> (already renamed in index) path wasn`t to be found inside HEAD at 
+> all, so the working tree rename couldn`t really be shown as "source" 
+> and "target" rename pair, strictly following the "porcelain v2" 
+> specification... :/
+> 
+> ...
+> 
+> I repeat that this looks like the correct approach, making fully 
+> described working tree rename detection possible in porcelain in the 
+> first place, but also aligning output of "status" --porcelain 
+> variants with its default (--long) form.
 
-As promised, I looked through both to check for mis-merges or problems
-in applying to maint.  The changes all look good to me.  I was
-surprised by the branch name, though.  Was 'ew/' a typo, or does that
-part of the branch name mean something other than what I always
-assumed?
+Wherever "working tree rename detection" is discussed above, it`s all 
+still about renamed file `git add -N` case only (where old name, 
+appearing "deleted" from HEAD/index, is not staged yet), not some new 
+functionality where renamed file inside working tree is instantly / 
+magically recognized without being staged in the first place.
