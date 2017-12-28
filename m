@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E68381F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43A6D1F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 04:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753346AbdL1EOb (ORCPT <rfc822;e@80x24.org>);
+        id S1753351AbdL1EOd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 27 Dec 2017 23:14:33 -0500
+Received: from mail-io0-f172.google.com ([209.85.223.172]:44044 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753330AbdL1EOb (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 27 Dec 2017 23:14:31 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:36584 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753329AbdL1EOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 23:14:24 -0500
-Received: by mail-io0-f194.google.com with SMTP id i143so17043839ioa.3
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:23 -0800 (PST)
+Received: by mail-io0-f172.google.com with SMTP id w127so37163809iow.11
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dt8E/zmO9R1WHOLNrdwlwXW0lXKZp42KcJ22D2hj83I=;
-        b=gsEQvYeVeBN60xkJ3BTyP7wI/+wQ1OHnOJYSk0ZKitU/DOEXCfz/3+k0Tuv0a2Fn6i
-         t4Z9W5kF/XD5Qg/7vUHrPMLlK85KPyN9lDzjd5hnG5DIChRPILeOJgNwa3wSXboRwc3V
-         gjqu2SXcPCsUAsfCNRr8GVxceZfaGDQYSoq57sV4KY8SQ5RPZasYXLtK17VRF0oj9kib
-         SxyGAHvfodRE10AhbFWHn2QGETsd/T8d/JCOZU4DYY7J4B/jwguRz110aTnM0Hd3nFYG
-         D90jPYgB5QdNC8GCWmC2i0zRbWFobmu1rHw4dEI91YBnC+ZcVy6c4kTwTZFcMbu6dx6I
-         VEhw==
+        bh=kBouW0xQWEmT2Ggg5+b3/qxWP2NEZDIar7wI2QaiIec=;
+        b=fyBmy5cV+rAJo3zEqoA3mgYvGgX9MNMJmuhLQuLAVo4+AijjAscwyAfMwjp0Vx8H/h
+         pXEBFONguGxVxYRqS6SqQO6U5DcreHPd/Il2TNImETwRT+v3jid0e5ivHHu6+3FdYqoR
+         Bk6uPsBncJ8GOdncVmI+5UmEO9SE6BGxPTI8Xv1uPfnlvAvAElktwwh7lhemtaLZegRt
+         6p4kFc4kQFrvQsxLy7oySA9+abbqRtS4Sgj8UNrklmzVrvfMth2SUjoCf3JE4s7D0dAO
+         HNkTd2S5BAHixIlPwzsh0Y6hYElPVbz58r8yZv/VVz8OD6XeUnRfHX0soHo87nLRNu7M
+         LHDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dt8E/zmO9R1WHOLNrdwlwXW0lXKZp42KcJ22D2hj83I=;
-        b=VN6h9cFe2p44e0z+ddqCVrr5o+NfPbjOoR3Ql9RB7zl5T05yFxF6jQV+/JKLqd2l4f
-         QMPZ+uOKJC32oaCdQ+4r/rwBLzkO4pafZcS29TBAdkKCnkf2lstqEMbKKsm66K2Uv5xK
-         MZrMYiamjb1f4qwQqeJLr6GMGdn/JH7pQvoS47Tbv2wchnp7DDnjrqbxh88zWRMDlwPb
-         PCaFGlN5eEHiyCSYl3jOlusARXDwb7BRI7HJqsiLvw6OcNY8F1gCIhWi+46WgXI3ieVV
-         CfHgWuiS29n5m7wdXgPasQCQiEH18UOyhPo+SeTrvdao447EYTZ3QPXY0xzL6Uu6HZ14
-         03MQ==
-X-Gm-Message-State: AKGB3mJrHBi4B4H41epDwgsJbmCl1qsAYe5z0TjFibFY8z+nyPgoSvMS
-        bLcdXy+i7zDfJPSlDIkiIjxfkg==
-X-Google-Smtp-Source: ACJfBove6ViVHjpbcWIsMUnCzT6/Tw8v6/fofYioSSqSWNLHezLVN5+DrW3TtfAsQ+3bz0uMj2ohvA==
-X-Received: by 10.107.146.9 with SMTP id u9mr39125954iod.37.1514434462994;
-        Wed, 27 Dec 2017 20:14:22 -0800 (PST)
+        bh=kBouW0xQWEmT2Ggg5+b3/qxWP2NEZDIar7wI2QaiIec=;
+        b=R3g6uL8aAAnBR2kuITk/x0QocAcFSp7wjyF/qan5lmqaWTl16OoJG+jddsZ7fFmjrk
+         2qlbRNoiSrPQo0SZ86oKaQ9to4BLMIqnNu1Pr7ye4TSxmJqH18/h4S7j1a1QU8Alaugj
+         zCN9MX94SDXLumRzI95XuIDfpjlq13QCblS41qLpdT7KIlmww5UpFMIwMS3z7olAizFD
+         8gACJ8jR5oE+T+tMrjhEc2U7bzsKWV0TuTFW2u8wPgUs6z9jV+6iR1feiaGbg5JJhxVa
+         xp8bsDkMOffeYqV/qVOW6uYVqQU1LSCzz0BCVmhZcaj0xt051RLpvqYyyyDiQ2vSQvgx
+         FU1g==
+X-Gm-Message-State: AKGB3mK0aABYnuIzhDqOEepm1MzaWx6UeNMz0EGmouA4BBaHQgLTAYwH
+        mR6qfNk4ED+PRj9rg/cG7xGf4w==
+X-Google-Smtp-Source: ACJfBouHg+TNos0qjHI8lfdqSO+vQcZNY/SxGGN6MAmZK9ZEGYaTiHl4uBRuWiQ15YBMGOu/qbmyUw==
+X-Received: by 10.107.200.143 with SMTP id y137mr40891095iof.106.1514434470008;
+        Wed, 27 Dec 2017 20:14:30 -0800 (PST)
 Received: from localhost.localdomain (170-72-6-219.ut.vivintwireless.net. [170.72.6.219])
-        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.21
+        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 20:14:22 -0800 (PST)
+        Wed, 27 Dec 2017 20:14:29 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 22/34] merge-recursive: add get_directory_renames()
-Date:   Wed, 27 Dec 2017 20:13:40 -0800
-Message-Id: <20171228041352.27880-23-newren@gmail.com>
+Subject: [PATCH v5 28/34] merge-recursive: apply necessary modifications for directory renames
+Date:   Wed, 27 Dec 2017 20:13:46 -0800
+Message-Id: <20171228041352.27880-29-newren@gmail.com>
 X-Mailer: git-send-email 2.15.0.408.g8e199d483
 In-Reply-To: <20171228041352.27880-1-newren@gmail.com>
 References: <20171228041352.27880-1-newren@gmail.com>
@@ -62,209 +62,506 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This populates a list of directory renames for us.  The list of
-directory renames is not yet used, but will be in subsequent commits.
+This commit hooks together all the directory rename logic by making the
+necessary changes to the rename struct, it's dst_entry, and the
+diff_filepair under consideration.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 155 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 152 insertions(+), 3 deletions(-)
+ merge-recursive.c                   | 187 +++++++++++++++++++++++++++++++++++-
+ t/t6043-merge-rename-directories.sh |  50 +++++-----
+ 2 files changed, 211 insertions(+), 26 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index c5932d5c5..6aef357e7 100644
+index 01934bc1e..cdf8588c7 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1384,6 +1384,138 @@ static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
- 	return ret;
+@@ -177,6 +177,7 @@ static int oid_eq(const struct object_id *a, const struct object_id *b)
+ 
+ enum rename_type {
+ 	RENAME_NORMAL = 0,
++	RENAME_DIR,
+ 	RENAME_DELETE,
+ 	RENAME_ONE_FILE_TO_ONE,
+ 	RENAME_ONE_FILE_TO_TWO,
+@@ -607,6 +608,7 @@ struct rename {
+ 	 */
+ 	struct stage_data *src_entry;
+ 	struct stage_data *dst_entry;
++	unsigned add_turned_into_rename:1;
+ 	unsigned processed:1;
+ };
+ 
+@@ -641,6 +643,27 @@ static int update_stages(struct merge_options *opt, const char *path,
+ 	return 0;
  }
  
-+static void get_renamed_dir_portion(const char *old_path, const char *new_path,
-+				    char **old_dir, char **new_dir)
++static int update_stages_for_stage_data(struct merge_options *opt,
++					const char *path,
++					const struct stage_data *stage_data)
 +{
-+	char *end_of_old, *end_of_new;
-+	int old_len, new_len;
++	struct diff_filespec o, a, b;
 +
-+	*old_dir = NULL;
-+	*new_dir = NULL;
++	o.mode = stage_data->stages[1].mode;
++	oidcpy(&o.oid, &stage_data->stages[1].oid);
 +
-+	/* For
-+	 *    "a/b/c/d/foo.c" -> "a/b/something-else/d/foo.c"
-+	 * the "d/foo.c" part is the same, we just want to know that
-+	 *    "a/b/c" was renamed to "a/b/something-else"
-+	 * so, for this example, this function returns "a/b/c" in
-+	 * *old_dir and "a/b/something-else" in *new_dir.
-+	 *
-+	 * Also, if the basename of the file changed, we don't care.  We
-+	 * want to know which portion of the directory, if any, changed.
-+	 */
-+	end_of_old = strrchr(old_path, '/');
-+	end_of_new = strrchr(new_path, '/');
++	a.mode = stage_data->stages[2].mode;
++	oidcpy(&a.oid, &stage_data->stages[2].oid);
 +
-+	if (end_of_old == NULL || end_of_new == NULL)
-+		return;
-+	while (*--end_of_new == *--end_of_old &&
-+	       end_of_old != old_path &&
-+	       end_of_new != new_path)
-+		; /* Do nothing; all in the while loop */
-+	/*
-+	 * We've found the first non-matching character in the directory
-+	 * paths.  That means the current directory we were comparing
-+	 * represents the rename.  Move end_of_old and end_of_new back
-+	 * to the full directory name.
-+	 */
-+	if (*end_of_old == '/')
-+		end_of_old++;
-+	if (*end_of_old != '/')
-+		end_of_new++;
-+	end_of_old = strchr(end_of_old, '/');
-+	end_of_new = strchr(end_of_new, '/');
++	b.mode = stage_data->stages[3].mode;
++	oidcpy(&b.oid, &stage_data->stages[3].oid);
 +
-+	/*
-+	 * It may have been the case that old_path and new_path were the same
-+	 * directory all along.  Don't claim a rename if they're the same.
-+	 */
-+	old_len = end_of_old - old_path;
-+	new_len = end_of_new - new_path;
-+
-+	if (old_len != new_len || strncmp(old_path, new_path, old_len)) {
-+		*old_dir = xstrndup(old_path, old_len);
-+		*new_dir = xstrndup(new_path, new_len);
-+	}
++	return update_stages(opt, path,
++			     is_null_sha1(o.oid.hash) ? NULL : &o,
++			     is_null_sha1(a.oid.hash) ? NULL : &a,
++			     is_null_sha1(b.oid.hash) ? NULL : &b);
 +}
 +
-+static struct hashmap *get_directory_renames(struct diff_queue_struct *pairs,
-+					     struct tree *tree)
+ static void update_entry(struct stage_data *entry,
+ 			 struct diff_filespec *o,
+ 			 struct diff_filespec *a,
+@@ -1108,6 +1131,18 @@ static int merge_file_one(struct merge_options *o,
+ 	return merge_file_1(o, &one, &a, &b, branch1, branch2, mfi);
+ }
+ 
++static int conflict_rename_dir(struct merge_options *o,
++			       struct diff_filepair *pair,
++			       const char *rename_branch,
++			       const char *other_branch)
 +{
-+	struct hashmap *dir_renames;
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *entry;
-+	int i;
++	const struct diff_filespec *dest = pair->two;
 +
-+	dir_renames = malloc(sizeof(struct hashmap));
-+	dir_rename_init(dir_renames);
-+	for (i = 0; i < pairs->nr; ++i) {
-+		struct string_list_item *item;
-+		int *count;
-+		struct diff_filepair *pair = pairs->queue[i];
-+		char *old_dir, *new_dir;
++	if (update_file(o, 1, &dest->oid, dest->mode, dest->path))
++		return -1;
++	return 0;
++}
 +
-+		/* File not part of directory rename if it wasn't renamed */
-+		if (pair->status != 'R')
-+			continue;
-+
-+		get_renamed_dir_portion(pair->one->path, pair->two->path,
-+					&old_dir,        &new_dir);
-+		if (!old_dir)
-+			/* Directory didn't change at all; ignore this one. */
-+			continue;
-+
-+		entry = dir_rename_find_entry(dir_renames, old_dir);
-+		if (!entry) {
-+			entry = xmalloc(sizeof(struct dir_rename_entry));
-+			dir_rename_entry_init(entry, old_dir);
-+			hashmap_put(dir_renames, entry);
-+		} else {
-+			free(old_dir);
-+		}
-+		item = string_list_lookup(&entry->possible_new_dirs, new_dir);
-+		if (!item) {
-+			item = string_list_insert(&entry->possible_new_dirs,
-+						  new_dir);
-+			item->util = xcalloc(1, sizeof(int));
-+		} else {
-+			free(new_dir);
-+		}
-+		count = item->util;
-+		*count += 1;
-+	}
-+
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		int max = 0;
-+		int bad_max = 0;
-+		char *best = NULL;
-+
-+		for (i = 0; i < entry->possible_new_dirs.nr; i++) {
-+			int *count = entry->possible_new_dirs.items[i].util;
-+
-+			if (*count == max)
-+				bad_max = max;
-+			else if (*count > max) {
-+				max = *count;
-+				best = entry->possible_new_dirs.items[i].string;
-+			}
-+		}
-+		if (bad_max == max)
-+			entry->non_unique_new_dir = 1;
-+		else {
-+			assert(entry->new_dir.len == 0);
-+			strbuf_addstr(&entry->new_dir, best);
-+		}
-+		/* Strings were xstrndup'ed before inserting into string-list,
-+		 * so ask string_list to remove the entries for us.
+ static int handle_change_delete(struct merge_options *o,
+ 				 const char *path, const char *old_path,
+ 				 const struct object_id *o_oid, int o_mode,
+@@ -1377,6 +1412,24 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
+ 		if (!ret)
+ 			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
+ 					  new_path2);
++		/*
++		 * unpack_trees() actually populates the index for us for
++		 * "normal" rename/rename(2to1) situtations so that the
++		 * correct entries are at the higher stages, which would
++		 * make the call below to update_stages_for_stage_data
++		 * unnecessary.  However, if either of the renames came
++		 * from a directory rename, then unpack_trees() will not
++		 * have gotten the right data loaded into the index, so we
++		 * need to do so now.  (While it'd be tempting to move this
++		 * call to update_stages_for_stage_data() to
++		 * apply_directory_rename_modifications(), that would break
++		 * our intermediate calls to would_lose_untracked() since
++		 * those rely on the current in-memory index.  See also the
++		 * big "NOTE" in update_stages()).
 +		 */
-+		entry->possible_new_dirs.strdup_strings = 1;
-+		string_list_clear(&entry->possible_new_dirs, 1);
++		if (update_stages_for_stage_data(o, path, ci->dst_entry1))
++			ret = -1;
++
+ 		free(new_path2);
+ 		free(new_path1);
+ 	}
+@@ -1910,6 +1963,111 @@ static char *check_for_directory_rename(struct merge_options *o,
+ 	return new_path;
+ }
+ 
++static void apply_directory_rename_modifications(struct merge_options *o,
++						 struct diff_filepair *pair,
++						 char *new_path,
++						 struct rename *re,
++						 struct tree *tree,
++						 struct tree *o_tree,
++						 struct tree *a_tree,
++						 struct tree *b_tree,
++						 struct string_list *entries,
++						 int *clean)
++{
++	struct string_list_item *item;
++	int stage = (tree == a_tree ? 2 : 3);
++
++	/*
++	 * In all cases where we can do directory rename detection,
++	 * unpack_trees() will have read pair->two->path into the
++	 * index and the working copy.  We need to remove it so that
++	 * we can instead place it at new_path.  It is guaranteed to
++	 * not be untracked (unpack_trees() would have errored out
++	 * saying the file would have been overwritten), but it might
++	 * be dirty, though.
++	 */
++	remove_file(o, 1, pair->two->path, 0 /* no_wd */);
++
++	/* Find or create a new re->dst_entry */
++	item = string_list_lookup(entries, new_path);
++	if (item) {
++		/*
++		 * Since we're renaming on this side of history, and it's
++		 * due to a directory rename on the other side of history
++		 * (which we only allow when the directory in question no
++		 * longer exists on the other side of history), the
++		 * original entry for re->dst_entry is no longer
++		 * necessary...
++		 */
++		re->dst_entry->processed = 1;
++
++		/*
++		 * ...because we'll be using this new one.
++		 */
++		re->dst_entry = item->util;
++	} else {
++		/*
++		 * re->dst_entry is for the before-dir-rename path, and we
++		 * need it to hold information for the after-dir-rename
++		 * path.  Before creating a new entry, we need to mark the
++		 * old one as unnecessary (...unless it is shared by
++		 * src_entry, i.e. this didn't use to be a rename, in which
++		 * case we can just allow the normal processing to happen
++		 * for it).
++		 */
++		if (pair->status == 'R')
++			re->dst_entry->processed = 1;
++
++		re->dst_entry = insert_stage_data(new_path,
++						  o_tree, a_tree, b_tree,
++						  entries);
++		item = string_list_insert(entries, new_path);
++		item->util = re->dst_entry;
 +	}
 +
-+	return dir_renames;
++	/*
++	 * Update the stage_data with the information about the path we are
++	 * moving into place.  That slot will be empty and available for us
++	 * to write to because of the collision checks in
++	 * handle_path_level_conflicts().  In other words,
++	 * re->dst_entry->stages[stage].oid will be the null_oid, so it's
++	 * open for us to write to.
++	 *
++	 * It may be tempting to actually update the index at this point as
++	 * well, using update_stages_for_stage_data(), but as per the big
++	 * "NOTE" in update_stages(), doing so will modify the current
++	 * in-memory index which will break calls to would_lose_untracked()
++	 * that we need to make.  Instead, we need to just make sure that
++	 * the various conflict_rename_*() functions update the index
++	 * explicitly rather than relying on unpack_trees() to have done it.
++	 */
++	get_tree_entry(tree->object.oid.hash,
++		       pair->two->path,
++		       re->dst_entry->stages[stage].oid.hash,
++		       &re->dst_entry->stages[stage].mode);
++
++	/* Update pair status */
++	if (pair->status == 'A') {
++		/*
++		 * Recording rename information for this add makes it look
++		 * like a rename/delete conflict.  Make sure we can
++		 * correctly handle this as an add that was moved to a new
++		 * directory instead of reporting a rename/delete conflict.
++		 */
++		re->add_turned_into_rename = 1;
++	}
++	/*
++	 * We don't actually look at pair->status again, but it seems
++	 * pedagogically correct to adjust it.
++	 */
++	pair->status = 'R';
++
++	/*
++	 * Finally, record the new location.
++	 */
++	pair->two->path = new_path;
 +}
 +
  /*
   * Get information of all renames which occurred in 'pairs', making use of
   * any implicit directory renames inferred from the other side of history.
-@@ -1695,8 +1827,21 @@ struct rename_info {
- 	struct string_list *merge_renames;
- };
+@@ -1959,6 +2117,7 @@ static struct string_list *get_renames(struct merge_options *o,
  
--static void initial_cleanup_rename(struct diff_queue_struct *pairs)
-+static void initial_cleanup_rename(struct diff_queue_struct *pairs,
-+				   struct hashmap *dir_renames)
- {
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *e;
-+
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((e = hashmap_iter_next(&iter))) {
-+		free(e->dir);
-+		strbuf_release(&e->new_dir);
-+		/* possible_new_dirs already cleared in get_directory_renames */
-+	}
-+	hashmap_free(dir_renames, 1);
-+	free(dir_renames);
-+
- 	free(pairs->queue);
- 	free(pairs);
- }
-@@ -1709,6 +1854,7 @@ static int handle_renames(struct merge_options *o,
- 			  struct rename_info *ri)
- {
- 	struct diff_queue_struct *head_pairs, *merge_pairs;
-+	struct hashmap *dir_re_head, *dir_re_merge;
- 	int clean;
+ 		re = xmalloc(sizeof(*re));
+ 		re->processed = 0;
++		re->add_turned_into_rename = 0;
+ 		re->pair = pair;
+ 		item = string_list_lookup(entries, re->pair->one->path);
+ 		if (!item)
+@@ -1975,6 +2134,12 @@ static struct string_list *get_renames(struct merge_options *o,
+ 			re->dst_entry = item->util;
+ 		item = string_list_insert(renames, pair->one->path);
+ 		item->util = re;
++		if (new_path)
++			apply_directory_rename_modifications(o, pair, new_path,
++							     re, tree, o_tree,
++							     a_tree, b_tree,
++							     entries,
++							     clean_merge);
+ 	}
  
- 	ri->head_renames = NULL;
-@@ -1720,6 +1866,9 @@ static int handle_renames(struct merge_options *o,
- 	head_pairs = get_diffpairs(o, common, head);
- 	merge_pairs = get_diffpairs(o, common, merge);
+ 	hashmap_iter_init(&collisions, &iter);
+@@ -2144,7 +2309,19 @@ static int process_renames(struct merge_options *o,
+ 			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
+ 			try_merge = 0;
  
-+	dir_re_head = get_directory_renames(head_pairs, head);
-+	dir_re_merge = get_directory_renames(merge_pairs, merge);
-+
- 	ri->head_renames  = get_renames(o, head_pairs, head,
- 					 common, head, merge, entries);
- 	ri->merge_renames = get_renames(o, merge_pairs, merge,
-@@ -1731,8 +1880,8 @@ static int handle_renames(struct merge_options *o,
- 	 * data structures are still needed and referenced in
- 	 * process_entry().  But there are a few things we can free now.
- 	 */
--	initial_cleanup_rename(head_pairs);
--	initial_cleanup_rename(merge_pairs);
-+	initial_cleanup_rename(head_pairs, dir_re_head);
-+	initial_cleanup_rename(merge_pairs, dir_re_merge);
+-			if (oid_eq(&src_other.oid, &null_oid)) {
++			if (oid_eq(&src_other.oid, &null_oid) &&
++			    ren1->add_turned_into_rename) {
++				setup_rename_conflict_info(RENAME_DIR,
++							   ren1->pair,
++							   NULL,
++							   branch1,
++							   branch2,
++							   ren1->dst_entry,
++							   NULL,
++							   o,
++							   NULL,
++							   NULL);
++			} else if (oid_eq(&src_other.oid, &null_oid)) {
+ 				setup_rename_conflict_info(RENAME_DELETE,
+ 							   ren1->pair,
+ 							   NULL,
+@@ -2561,6 +2738,14 @@ static int process_entry(struct merge_options *o,
+ 						    o_oid, o_mode, a_oid, a_mode, b_oid, b_mode,
+ 						    conflict_info);
+ 			break;
++		case RENAME_DIR:
++			clean_merge = 1;
++			if (conflict_rename_dir(o,
++						conflict_info->pair1,
++						conflict_info->branch1,
++						conflict_info->branch2))
++				clean_merge = -1;
++			break;
+ 		case RENAME_DELETE:
+ 			clean_merge = 0;
+ 			if (conflict_rename_delete(o,
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index c269aa793..b12193e75 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -69,7 +69,7 @@ test_expect_success '1a-setup: Simple directory rename detection' '
+ 	)
+ '
  
- 	return clean;
- }
+-test_expect_failure '1a-check: Simple directory rename detection' '
++test_expect_success '1a-check: Simple directory rename detection' '
+ 	(
+ 		cd 1a &&
+ 
+@@ -131,7 +131,7 @@ test_expect_success '1b-setup: Merge a directory with another' '
+ 	)
+ '
+ 
+-test_expect_failure '1b-check: Merge a directory with another' '
++test_expect_success '1b-check: Merge a directory with another' '
+ 	(
+ 		cd 1b &&
+ 
+@@ -188,7 +188,7 @@ test_expect_success '1c-setup: Transitive renaming' '
+ 	)
+ '
+ 
+-test_expect_failure '1c-check: Transitive renaming' '
++test_expect_success '1c-check: Transitive renaming' '
+ 	(
+ 		cd 1c &&
+ 
+@@ -256,7 +256,7 @@ test_expect_success '1d-setup: Directory renames cause a rename/rename(2to1) con
+ 	)
+ '
+ 
+-test_expect_failure '1d-check: Directory renames cause a rename/rename(2to1) conflict' '
++test_expect_success '1d-check: Directory renames cause a rename/rename(2to1) conflict' '
+ 	(
+ 		cd 1d &&
+ 
+@@ -332,7 +332,7 @@ test_expect_success '1e-setup: Renamed directory, with all files being renamed t
+ 	)
+ '
+ 
+-test_expect_failure '1e-check: Renamed directory, with all files being renamed too' '
++test_expect_success '1e-check: Renamed directory, with all files being renamed too' '
+ 	(
+ 		cd 1e &&
+ 
+@@ -397,7 +397,7 @@ test_expect_success '1f-setup: Split a directory into two other directories' '
+ 	)
+ '
+ 
+-test_expect_failure '1f-check: Split a directory into two other directories' '
++test_expect_success '1f-check: Split a directory into two other directories' '
+ 	(
+ 		cd 1f &&
+ 
+@@ -875,7 +875,7 @@ test_expect_success '5a-setup: Merge directories, other side adds files to origi
+ 	)
+ '
+ 
+-test_expect_failure '5a-check: Merge directories, other side adds files to original and target' '
++test_expect_success '5a-check: Merge directories, other side adds files to original and target' '
+ 	(
+ 		cd 5a &&
+ 
+@@ -949,7 +949,7 @@ test_expect_success '5b-setup: Rename/delete in order to get add/add/add conflic
+ 	)
+ '
+ 
+-test_expect_failure '5b-check: Rename/delete in order to get add/add/add conflict' '
++test_expect_success '5b-check: Rename/delete in order to get add/add/add conflict' '
+ 	(
+ 		cd 5b &&
+ 
+@@ -1026,7 +1026,7 @@ test_expect_success '5c-setup: Transitive rename would cause rename/rename/renam
+ 	)
+ '
+ 
+-test_expect_failure '5c-check: Transitive rename would cause rename/rename/rename/add/add/add' '
++test_expect_success '5c-check: Transitive rename would cause rename/rename/rename/add/add/add' '
+ 	(
+ 		cd 5c &&
+ 
+@@ -1108,7 +1108,7 @@ test_expect_success '5d-setup: Directory/file/file conflict due to directory ren
+ 	)
+ '
+ 
+-test_expect_failure '5d-check: Directory/file/file conflict due to directory rename' '
++test_expect_success '5d-check: Directory/file/file conflict due to directory rename' '
+ 	(
+ 		cd 5d &&
+ 
+@@ -1526,7 +1526,7 @@ test_expect_success '7a-setup: rename-dir vs. rename-dir (NOT split evenly) PLUS
+ 	)
+ '
+ 
+-test_expect_failure '7a-check: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
++test_expect_success '7a-check: rename-dir vs. rename-dir (NOT split evenly) PLUS add-other-file' '
+ 	(
+ 		cd 7a &&
+ 
+@@ -1597,7 +1597,7 @@ test_expect_success '7b-setup: rename/rename(2to1), but only due to transitive r
+ 	)
+ '
+ 
+-test_expect_failure '7b-check: rename/rename(2to1), but only due to transitive rename' '
++test_expect_success '7b-check: rename/rename(2to1), but only due to transitive rename' '
+ 	(
+ 		cd 7b &&
+ 
+@@ -1670,7 +1670,7 @@ test_expect_success '7c-setup: rename/rename(1to...2or3); transitive rename may
+ 	)
+ '
+ 
+-test_expect_failure '7c-check: rename/rename(1to...2or3); transitive rename may add complexity' '
++test_expect_success '7c-check: rename/rename(1to...2or3); transitive rename may add complexity' '
+ 	(
+ 		cd 7c &&
+ 
+@@ -1731,7 +1731,7 @@ test_expect_success '7d-setup: transitive rename involved in rename/delete; how
+ 	)
+ '
+ 
+-test_expect_failure '7d-check: transitive rename involved in rename/delete; how is it reported?' '
++test_expect_success '7d-check: transitive rename involved in rename/delete; how is it reported?' '
+ 	(
+ 		cd 7d &&
+ 
+@@ -1818,7 +1818,7 @@ test_expect_success '7e-setup: transitive rename in rename/delete AND dirs in th
+ 	)
+ '
+ 
+-test_expect_failure '7e-check: transitive rename in rename/delete AND dirs in the way' '
++test_expect_success '7e-check: transitive rename in rename/delete AND dirs in the way' '
+ 	(
+ 		cd 7e &&
+ 
+@@ -1904,7 +1904,7 @@ test_expect_success '8a-setup: Dual-directory rename, one into the others way' '
+ 	)
+ '
+ 
+-test_expect_failure '8a-check: Dual-directory rename, one into the others way' '
++test_expect_success '8a-check: Dual-directory rename, one into the others way' '
+ 	(
+ 		cd 8a &&
+ 
+@@ -2043,7 +2043,7 @@ test_expect_success '8c-setup: rename+modify/delete' '
+ 	)
+ '
+ 
+-test_expect_failure '8c-check: rename+modify/delete' '
++test_expect_success '8c-check: rename+modify/delete' '
+ 	(
+ 		cd 8c &&
+ 
+@@ -2127,7 +2127,7 @@ test_expect_success '8d-setup: rename/delete...or not?' '
+ 	)
+ '
+ 
+-test_expect_failure '8d-check: rename/delete...or not?' '
++test_expect_success '8d-check: rename/delete...or not?' '
+ 	(
+ 		cd 8d &&
+ 
+@@ -2201,7 +2201,7 @@ test_expect_success '8e-setup: Both sides rename, one side adds to original dire
+ 	)
+ '
+ 
+-test_expect_failure '8e-check: Both sides rename, one side adds to original directory' '
++test_expect_success '8e-check: Both sides rename, one side adds to original directory' '
+ 	(
+ 		cd 8e &&
+ 
+@@ -2288,7 +2288,7 @@ test_expect_success '9a-setup: Inner renamed directory within outer renamed dire
+ 	)
+ '
+ 
+-test_expect_failure '9a-check: Inner renamed directory within outer renamed directory' '
++test_expect_success '9a-check: Inner renamed directory within outer renamed directory' '
+ 	(
+ 		cd 9a &&
+ 
+@@ -2355,7 +2355,7 @@ test_expect_success '9b-setup: Transitive rename with content merge' '
+ 	)
+ '
+ 
+-test_expect_failure '9b-check: Transitive rename with content merge' '
++test_expect_success '9b-check: Transitive rename with content merge' '
+ 	(
+ 		cd 9b &&
+ 
+@@ -2444,7 +2444,7 @@ test_expect_success '9c-setup: Doubly transitive rename?' '
+ 	)
+ '
+ 
+-test_expect_failure '9c-check: Doubly transitive rename?' '
++test_expect_success '9c-check: Doubly transitive rename?' '
+ 	(
+ 		cd 9c &&
+ 
+@@ -2530,7 +2530,7 @@ test_expect_success '9d-setup: N-way transitive rename?' '
+ 	)
+ '
+ 
+-test_expect_failure '9d-check: N-way transitive rename?' '
++test_expect_success '9d-check: N-way transitive rename?' '
+ 	(
+ 		cd 9d &&
+ 
+@@ -2606,7 +2606,7 @@ test_expect_success '9e-setup: N-to-1 whammo' '
+ 	)
+ '
+ 
+-test_expect_failure C_LOCALE_OUTPUT '9e-check: N-to-1 whammo' '
++test_expect_success C_LOCALE_OUTPUT '9e-check: N-to-1 whammo' '
+ 	(
+ 		cd 9e &&
+ 
+@@ -2681,7 +2681,7 @@ test_expect_success '9f-setup: Renamed directory that only contained immediate s
+ 	)
+ '
+ 
+-test_expect_failure '9f-check: Renamed directory that only contained immediate subdirs' '
++test_expect_success '9f-check: Renamed directory that only contained immediate subdirs' '
+ 	(
+ 		cd 9f &&
+ 
 -- 
 2.15.0.408.g8e199d483
 
