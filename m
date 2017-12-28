@@ -2,196 +2,365 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 224A41F428
-	for <e@80x24.org>; Thu, 28 Dec 2017 06:10:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B86B51F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 09:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751409AbdL1GKh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 01:10:37 -0500
-Received: from mail-pl0-f48.google.com ([209.85.160.48]:41502 "EHLO
-        mail-pl0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750862AbdL1GKf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 01:10:35 -0500
-Received: by mail-pl0-f48.google.com with SMTP id g2so20672965pli.8
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 22:10:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=bdRT4pfsoPllLUVIwKGufBB5NWpjxkDzf7lr1iCU9FY=;
-        b=tfaX/YPnc//R5haUkyLBhvlqVmoJ6D33uUhUcEnphPqEbVNJLakkBJy5W1rXFnlNNf
-         ZKZjBktOkPyyBF33w4Mk/U1/KGWGkVsp+sqOm0wquSDGKOb409AYLcdQFkq+P+RPhBkb
-         VLFmYKQELh8QZDkDmetIKZ6ij1hGSjC9faaNm8/VMsUj3NNbdKa9IPGBoU0rkWht3yTj
-         Rv0p19SJJ4Gt3Z/7U9XReylb6iFiSsZUtiLrJT9QeWaXJLR5lukB+En0dtz4/umkskmN
-         FCkauCnkCPGgqtvdf/uBhEY4+vJ4DQ1QbKvDYhkFjOJqaI62FDhT3SAryZsoDznQyB5S
-         YKJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=bdRT4pfsoPllLUVIwKGufBB5NWpjxkDzf7lr1iCU9FY=;
-        b=E7RYkAhHGeV1mW3oTCyyJK2UrJxKtHs2HVYjPrFitWM3lTQJm7lX6FeuJQhCbn8mvD
-         pz2EP9dY30BGdwhk2NS+UeT/R76gEynPUynqgVkg7+bdA58omaGykTjzLlAkloITajer
-         om2FXrdxh5ajHCMzW0mJYmNou/7O3qkR/dKQItuVpUyX5FQtaFRl/x8GW3hwKG8rP1x5
-         /+VcKn/H0szTrMihirwpPtnmSgDiGoqmtpIg84WMGWmq2RlMhAXOyR3/O4BKPsyQXEOJ
-         UamUaVAtXphLyXaXgM/x8RLfc9swg730hMXvJ4Od7z9meHMbdiJ0WlYyXiWCcjnCaYrc
-         Xy1Q==
-X-Gm-Message-State: AKGB3mKKc7LzWLtUS6p6YaULWYqkUA4Ebwx1xGvyuAg+IB8XcZLZFapg
-        w2ng0cZd+XqBT/dciPSRIhQ=
-X-Google-Smtp-Source: ACJfBosiep3TKwLuH3pYYalrTP8rxdirg86rwwshuUm/F9X97j4Wp7vbqHOYVWXwiYGkJXAp1B9a1w==
-X-Received: by 10.84.245.15 with SMTP id i15mr31805213pll.402.1514441434892;
-        Wed, 27 Dec 2017 22:10:34 -0800 (PST)
-Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id r1sm69827575pfg.98.2017.12.27.22.10.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Dec 2017 22:10:33 -0800 (PST)
-Date:   Thu, 28 Dec 2017 13:10:27 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH] status: add a failing test showing a core.untrackedCache
- bug
-Message-ID: <20171228061027.GA22308@duynguyen.vn.dektech.internal>
-References: <20171222140032.21180-1-avarab@gmail.com>
- <xmqqlghoniuk.fsf@gitster.mtv.corp.google.com>
- <87mv24qa2y.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87mv24qa2y.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S1752892AbdL1JhA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 04:37:00 -0500
+Received: from huc12-ckmail02.hiroshima-u.ac.jp ([133.41.12.55]:56026 "HELO
+        huc12-ckmail02.hiroshima-u.ac.jp" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1751442AbdL1Jg6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 28 Dec 2017 04:36:58 -0500
+X-Greylist: delayed 1858 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Dec 2017 04:36:48 EST
+Received: from huc12-ckmail02.hiroshima-u.ac.jp (localhost [127.0.0.1])
+        by dummy.hiroshima-u.ac.jp (Postfix) with ESMTP id B4055A8B62A;
+        Thu, 28 Dec 2017 18:05:48 +0900 (JST)
+Received: from huc12-smtp02.hiroshima-u.ac.jp (huc12-smtp02.hiroshima-u.ac.jp [133.41.12.53])
+        by huc12-ckmail02.hiroshima-u.ac.jp (Postfix) with ESMTP id A93194E39;
+        Thu, 28 Dec 2017 18:05:48 +0900 (JST)
+Received: from localhost.localdomain (flavor1.ipc.hiroshima-u.ac.jp [133.41.117.25])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by huc12-smtp02.hiroshima-u.ac.jp (Postfix) with ESMTPSA id A5319D317A;
+        Thu, 28 Dec 2017 18:05:48 +0900 (JST)
+From:   suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
+To:     git@vger.kernel.org
+Cc:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
+Subject: [PATCH] git-archive: accepts --owner --group aslike GNU tar.
+Date:   Thu, 28 Dec 2017 18:05:27 +0900
+Message-Id: <20171228090527.25056-1-mpsuzuki@hiroshima-u.ac.jp>
+X-Mailer: git-send-email 2.15.1.501.g29533fb16
+X-TM-AS-MML: disable
+X-TM-AS-Product-Ver: IMSS-7.1.0.1808-8.1.0.1062-23558.003
+X-TM-AS-Result: No--13.305-10.0-31-10
+X-imss-scan-details: No--13.305-10.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+X-TMASE-MatchedRID: mJt40tgS0QBITndh1lLRAdTXZe7/fokgcx5k3wffojP9Ez/5IpHqp2wq
+        STpOVkRPMEUFB3L4QxUroSXEo28yS4Z2q4ASQIldRlqShqb35p4mdFfLQflbre9Jtzyqge7R+Vi
+        hXqn9xLGamE2YeLQqiMcIK6S4JS2iakeT4pIvkQ1SGsgQwHevX73gm8md8WsedpzrD6s6VCiOnr
+        itHUsGhHZWeyxNH9jKiBG7WL/69SqLAgDrDJFDvGMGiV639iF0Ct4iaV1DkEMLigFCwAAoVq6O1
+        xWv/DI8bBgMLgONATUqTmX/lEbtGpShxRaS8Dn1jtK7dC6UBnn1Mhmn7sQBMLlmMfLNiukan1iz
+        PVW7z4EdxbzhTwelwDXlui1+0TfQEuficaCabpdIcJTn2HkqseiY+s2L3xQE/rvU1dGgVf7yjSl
+        ymkf4R8Gc2UXB/wr1hbIOTDeUqBuR9GF2J2xqMxRFJJyf5BJeMM4ioayl4t2g5oovEWFmKY6HM5
+        rqDwqtlZatA0BS5F3zNVxW8PiYAFl1yfWb0Q+GRCQ9jrtZuPt+sjWzXRy/6g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 27, 2017 at 07:50:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > This needs SYMLINKS prereq, which in turn means it cannot be tested
-> > on certain platforms.  I thought Duy's answer was that this does not
-> > need to involve a symbolic link at all?  If so, perhaps we can have
-> > another test that does not need symlink?
-> 
-> ... as soon as I figure out how to add such a non-symlink test as well
-> (seems sensible to test both), but I can't bring it to fail without
-> symlinks, I just adjusted my test script to do this instead:
-> 
->     (
->         rm -rf /tmp/testrepo &&
->         git init /tmp/testrepo &&
->         cd /tmp/testrepo &&
->         mkdir x y &&
->         touch x/a y/b &&
->         git add x/a y/b &&
->         git commit -msnap &&
->         git rm -rf y &&
->         mkdir y &&
->         touch y/c &&
->         git add y &&
->         git commit -msnap2 &&
->         git checkout HEAD~ &&
->         git status &&
->         git checkout master &&
->         sleep 1 &&
->         git status &&
->         git status
->     )
-> 
-> Duy, what am I missing here?
+Current tar output by git-archive has always root:root.
+To generate tar output with non-root owner/group,
+the options like GNU tar are added.
 
-The problem is there, it's just easier to see or verify with
-symlinks. Below is my test patch on top of your original one. Two
-points:
+* archive.h: add members 'uid', 'gid', 'uname', 'gname'
+  to struct archiver_args.
 
-- if you look at the test-dump-untracked-cache output, you can see the
-  saved cache is wrong. The line
+* archive.c: add functions to reflect the operands of
+  '--owner' and '--group' to archiver_args.
 
-    /one/ 0000000000000000000000000000000000000000 recurse valid
+* archive-tar.c: copy 'uid', 'gid', 'uname', 'gname'
+  from archiver_args to the entry headers in tar archive.
 
-  should not be there because that implies that cached travesal of
-  root includes the directory "one" which does not exist on disk
-  anymore. With the fix, this line is gone.
+* t/parse-tar-file.py: a script to dump uid, gid, uname,
+  gname fields from a tar archive.
 
-- We silently ignore opendir() error, the changes in dir.c shows this
+* t/t5005-archive-uid-gid.sh: a test script comparing
+  uid, gid, uname, gname between the options and
+  generated tar file.
+---
+ archive-tar.c              |  8 +++---
+ archive.c                  | 66 ++++++++++++++++++++++++++++++++++++++++++
+ archive.h                  |  4 +++
+ t/parse-tar-file.py        | 56 ++++++++++++++++++++++++++++++++++++
+ t/t5005-archive-uid-gid.sh | 71 ++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 201 insertions(+), 4 deletions(-)
+ create mode 100755 t/parse-tar-file.py
+ create mode 100755 t/t5005-archive-uid-gid.sh
 
-    warning: could not open directory 'one/': Not a directory
-
-  It opendir() again because it finds out the stat data of directory
-  "one" in the cache does not match stat data of the (real) file
-  "one".
-
-  If "one" is a symlink, opendir() would be succesful and we go in
-  anyway. If it's a file, we ignore it, accidentally make the second
-  git-status output clean and pass the test.
-
-Report opendir() errors is a good and should be done regardless (i'm
-just not sure if it should be a fatal error or a warning like this, I
-guess die() is a bit too much).
-
-The remaining question is how we write this test. Verify with
-test-dump-untracked-cache is easiest but less intuitive, I
-guess. While using symlinks shows the problem clearly but not
-portable. Or the third option, if we error something out, you could
-check that git-status has clean stderr.
-
-Which way to go?
-
--- 8< --
-diff --git a/dir.c b/dir.c
-index 3c54366a17..868f544d72 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1783,15 +1783,20 @@ static int open_cached_dir(struct cached_dir *cdir,
- 			   struct strbuf *path,
- 			   int check_only)
- {
-+	const char *c_path;
+diff --git a/archive-tar.c b/archive-tar.c
+index c6ed96ee7..8546a6229 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -204,10 +204,10 @@ static void prepare_header(struct archiver_args *args,
+ 	xsnprintf(header->size, sizeof(header->size), "%011lo", S_ISREG(mode) ? size : 0);
+ 	xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsigned long) args->time);
+ 
+-	xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
+-	xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
+-	strlcpy(header->uname, "root", sizeof(header->uname));
+-	strlcpy(header->gname, "root", sizeof(header->gname));
++	xsnprintf(header->uid, sizeof(header->uid), "%07o", args->uid);
++	xsnprintf(header->gid, sizeof(header->gid), "%07o", args->gid);
++	strlcpy(header->uname, args->uname ? args->uname : "root", sizeof(header->uname));
++	strlcpy(header->gname, args->gname ? args->gname : "root", sizeof(header->gname));
+ 	xsnprintf(header->devmajor, sizeof(header->devmajor), "%07o", 0);
+ 	xsnprintf(header->devminor, sizeof(header->devminor), "%07o", 0);
+ 
+diff --git a/archive.c b/archive.c
+index 0b7b62af0..db69041f1 100644
+--- a/archive.c
++++ b/archive.c
+@@ -8,6 +8,7 @@
+ #include "parse-options.h"
+ #include "unpack-trees.h"
+ #include "dir.h"
++#include "git-compat-util.h"
+ 
+ static char const * const archive_usage[] = {
+ 	N_("git archive [<options>] <tree-ish> [<path>...]"),
+@@ -417,6 +418,57 @@ static void parse_treeish_arg(const char **argv,
+ 	{ OPTION_SET_INT, (s), NULL, (v), NULL, "", \
+ 	  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN, NULL, (p) }
+ 
++static void set_args_uname_uid(struct archiver_args *args,
++		const char* tar_owner, int set_gid_too)
++{
++	if (!args || !tar_owner)
++		return;
 +
- 	memset(cdir, 0, sizeof(*cdir));
- 	cdir->untracked = untracked;
- 	if (valid_cached_dir(dir, untracked, istate, path, check_only))
- 		return 0;
--	cdir->fdir = opendir(path->len ? path->buf : ".");
-+	c_path = path->len ? path->buf : ".";
-+	cdir->fdir = opendir(c_path);
- 	if (dir->untracked)
- 		dir->untracked->dir_opened++;
--	if (!cdir->fdir)
-+	if (!cdir->fdir) {
-+		warning_errno(_("could not open directory '%s'"), c_path);
- 		return -1;
++	const char* col_pos = strchr(tar_owner, ':');
++	struct passwd* pw = NULL;
++
++	if (col_pos) {
++		args->uname = xstrndup(tar_owner, col_pos - tar_owner);
++		args->uid = atoi(col_pos + 1);
++		return;
 +	}
- 	return 0;
++
++	args->uname = xstrndup(tar_owner, strlen(tar_owner));
++	pw = getpwnam(tar_owner);
++	if (!pw)
++		return;
++
++	args->uid = pw->pw_uid;
++	if (set_gid_too)
++		args->gid = pw->pw_gid;
++
++	return;
++}
++
++static void set_args_gname_gid(struct archiver_args *args,
++		const char* tar_group)
++{
++	if (!args || !tar_group)
++		return;
++
++	const char* col_pos = strchr(tar_group, ':');
++	struct group* gr = NULL;
++
++	if (col_pos) {
++		args->gname = xstrndup(tar_group, col_pos - tar_group);
++		args->gid = atoi(col_pos + 1);
++		return;
++	}
++
++	args->gname = xstrndup(tar_group, strlen(tar_group));
++	gr = getgrnam(tar_group);
++	if (!gr)
++		return;
++
++	args->gid = gr->gr_gid;
++	return;
++}
++
+ static int parse_archive_args(int argc, const char **argv,
+ 		const struct archiver **ar, struct archiver_args *args,
+ 		const char *name_hint, int is_remote)
+@@ -431,6 +483,8 @@ static int parse_archive_args(int argc, const char **argv,
+ 	int i;
+ 	int list = 0;
+ 	int worktree_attributes = 0;
++	char *tar_owner = NULL;
++	char *tar_group = NULL;
+ 	struct option opts[] = {
+ 		OPT_GROUP(""),
+ 		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
+@@ -459,6 +513,8 @@ static int parse_archive_args(int argc, const char **argv,
+ 			N_("retrieve the archive from remote repository <repo>")),
+ 		OPT_STRING(0, "exec", &exec, N_("command"),
+ 			N_("path to the remote git-upload-archive command")),
++		OPT_STRING(0, "owner", &tar_owner, N_("owner"), N_("<name[:uid]> in tar")),
++		OPT_STRING(0, "group", &tar_group, N_("group"), N_("<name[:gid]> in tar")),
+ 		OPT_END()
+ 	};
+ 
+@@ -507,6 +563,16 @@ static int parse_archive_args(int argc, const char **argv,
+ 	args->baselen = strlen(base);
+ 	args->worktree_attributes = worktree_attributes;
+ 
++	args->uname = NULL;
++	args->gname = NULL;
++	args->uid = 0;
++	args->gid = 0;
++	set_args_uname_uid(args,
++		tar_owner,
++		1 /* init args->gid by pw, if resolved */);
++	set_args_gname_gid(args,
++		tar_group);
++
+ 	return argc;
  }
  
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 7cf1e2c091..ca63b80ca7 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -702,7 +702,7 @@ test_expect_success 'setup worktree for symlink test' '
- 	git add one/file two/file &&
- 	git commit -m"first commit" &&
- 	git rm -rf one &&
--	ln -s two one &&
-+	cp two/file one &&
- 	git add one &&
- 	git commit -m"second commit"
- '
-@@ -714,6 +714,7 @@ test_expect_failure '"status" after symlink replacement should be clean with UC=
- 	git checkout master &&
- 	avoid_racy &&
- 	status_is_clean &&
-+	test-dump-untracked-cache &&
- 	status_is_clean
- '
+diff --git a/archive.h b/archive.h
+index 62d1d82c1..fad4a5d3e 100644
+--- a/archive.h
++++ b/archive.h
+@@ -15,6 +15,10 @@ struct archiver_args {
+ 	unsigned int worktree_attributes : 1;
+ 	unsigned int convert : 1;
+ 	int compression_level;
++	int uid;
++	int gid;
++	const char *uname;
++	const char *gname;
+ };
  
--- 8< --
+ #define ARCHIVER_WANT_COMPRESSION_LEVELS 1
+diff --git a/t/parse-tar-file.py b/t/parse-tar-file.py
+new file mode 100755
+index 000000000..c240a8676
+--- /dev/null
++++ b/t/parse-tar-file.py
+@@ -0,0 +1,56 @@
++#!/usr/bin/env python
++
++import sys
++import getopt
++import tarfile
++
++optlist, args = getopt.getopt( sys.argv[1:], "", [
++				"print=", "show=",
++				"uniq",
++				"fail-if-multi",
++		] )
++
++infos_to_print = []
++uniq = False
++fail_if_multi = False
++
++for opt in optlist:
++  if opt[0] == "--print":
++    infos_to_print.append(opt[1])
++  elif opt[0] == "--show":
++    infos_to_print.append(opt[1])
++  elif opt[0] == "--uniq":
++    uniq = True
++  elif opt[0] == "--fail-if-multi":
++    uniq = True
++    fail_if_multi = True
++
++if len(infos_to_print) == 0:
++  infos_to_print = ["uid", "gid", "uname", "gname", "name"]
++
++tar = tarfile.open( args[0] )
++out_lines = []
++for tarinfo in tar:
++  infos = []
++  for info_tag in infos_to_print:
++    if info_tag == "uid":
++      infos.append( str(tarinfo.uid) )
++    elif info_tag == "gid":
++      infos.append( str(tarinfo.gid) )
++    elif info_tag == "uname" or info_tag == "owner":
++      infos.append( tarinfo.uname )
++    elif info_tag == "gname" or info_tag == "group":
++      infos.append( tarinfo.gname )
++    elif info_tag == "name" or info_tag == "pathname":
++      infos.append( tarinfo.name )
++  out_lines.append( "\t".join(infos) )
++tar.close()
++
++if uniq:
++  out_lines = list(set(out_lines))
++  if fail_if_multi and (len(out_lines) > 1):
++    sys.stderr.write("*** not unique value, " + str(len(out_lines)) + " values found\n")
++    sys.exit(len(out_lines))
++
++for line in out_lines:
++  print line
+diff --git a/t/t5005-archive-uid-gid.sh b/t/t5005-archive-uid-gid.sh
+new file mode 100755
+index 000000000..2b2a694d8
+--- /dev/null
++++ b/t/t5005-archive-uid-gid.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++test_description='test --owner --group options for git-archive'
++. ./test-lib.sh
++
++check_uid_gid_uname_gname_in_tar() {
++	# $1 tar pathname
++	# $2 uid (digit in string)
++	# $3 gid (digit in string)
++	# $4 uname (string)
++	# $5 gname (string)
++	uid=`./parse-tar-file.py --print=uid --fail-if-multi $1`
++	if test $? != 0 -o x"${uid}" != "x"$2
++	then
++	  echo "(some) uid differs from the specified value"
++	  return $?
++        fi
++
++	gid=`./parse-tar-file.py --print=gid --fail-if-multi $1`
++	if test $? != 0 -o x"${gid}" != "x"$3
++	then
++	  echo "(some) gid differs from the specified value"
++	  return $?
++	  exit $?
++        fi
++
++	uname=`./parse-tar-file.py --print=uname --fail-if-multi $1`
++	if test $? != 0 -o x"${uname}" != "x"$4
++	then
++	  echo "(some) uname differs from the specified value"
++	  return $?
++        fi
++
++	gname=`./parse-tar-file.py --print=gname --fail-if-multi $1`
++	if test $? != 0 -o x"${gname}" != "x"$5
++	then
++	  echo "(some) gname differs from the specified value"
++	  return $?
++        fi
++
++	return 0
++}
++
++git init . 1>/dev/null 2>/dev/null
++touch uid-gid-test.001
++mkdir uid-gid-test.002
++mkdir uid-gid-test.002/uid-gid-test.003
++git add uid-gid-test.001
++git add uid-gid-test.002
++git add uid-gid-test.002/uid-gid-test.003
++git commit -m "uid-gid-test" 2>/dev/null 1>/dev/null
++
++test_expect_success 'test a case with explicitly specified name/id, owner=nobody:1234 group=nogroup:5678' '
++	git archive --format=tar --owner nobody:1234 --group nogroup:5678 HEAD > uid-gid-test1.tar &&
++	check_uid_gid_uname_gname_in_tar uid-gid-test1.tar 1234 5678 nobody nogroup &&
++	test_result=$? &&
++	return ${test_result}
++'
++
++test_expect_success 'test a case with only name is specified, owner=(current my name) group=(current my group)' '
++	my_uid=`id -u` &&
++	my_gid=`id -g` &&
++	my_uname=`id -u -n` &&
++	my_gname=`id -g -n` &&
++	git archive --format=tar --owner ${my_uname} --group ${my_gname} HEAD > uid-gid-test2.tar &&
++	check_uid_gid_uname_gname_in_tar uid-gid-test2.tar ${my_uid} ${my_gid} ${my_uname} ${my_gname} &&
++	test_result=$? &&
++	return ${test_result}
++'
++
++test_done
+-- 
+2.11.0
+
+
