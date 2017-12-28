@@ -2,217 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A84BE1F404
-	for <e@80x24.org>; Thu, 28 Dec 2017 04:15:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C65111F404
+	for <e@80x24.org>; Thu, 28 Dec 2017 05:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753400AbdL1EPr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 27 Dec 2017 23:15:47 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:37478 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753225AbdL1EOF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Dec 2017 23:14:05 -0500
-Received: by mail-io0-f195.google.com with SMTP id n14so13892033iob.4
-        for <git@vger.kernel.org>; Wed, 27 Dec 2017 20:14:05 -0800 (PST)
+        id S1751167AbdL1FXO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 00:23:14 -0500
+Received: from mail-ot0-f175.google.com ([74.125.82.175]:44885 "EHLO
+        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751100AbdL1FXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 00:23:13 -0500
+Received: by mail-ot0-f175.google.com with SMTP id g59so10162544otg.11
+        for <git@vger.kernel.org>; Wed, 27 Dec 2017 21:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=H8/IncnGGbE9QOeeDr/Jc48CXkxG72A4Q3NbT4P+6tg=;
-        b=a3s5PdhsmvjrCEdmQo5JCJZZb9DgbF6BqwU+s7MkUZuv4/t3kM8x2FsqvqHiJIYouV
-         GgVaa6FXCWIgA0CjXfkcuNYZ6kQFbdJRtQcTbOJ1jQujSM8zgVk/HCjtPyBURjNbvtcY
-         z7EX3SCY5N6YerKlxcdyJUum9cWCVK4mwWxkXiNUTC51wce119se/xv4fUy8GgsngGz5
-         jRBs+0/CAUgdBSerpepILij9A9WJXrpuPSKqD2cGa8qv5aXNyb8ntjc9XAgpGX5Gl0GZ
-         juQ0DSJvGkMlellQGzfsNLQnc1rJH8rMTrFP2CQXCDYzwKZ9Fv3kOZkAIPKtiyan5kGj
-         Eweg==
+        d=ecbaldwin.net; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q8ttULBlTo4AxbH28SRN43ML3PdYzB6jtWarhRmbceM=;
+        b=XdD3YzobwbaRHyCxtxdaGtsxNl5NNbZLamdJKwcv9OQIb6Om+ywTn3Qur3Y0zznxSC
+         8pbWtosMDeZxhPpwo4sWw64zIhzpScfU/W8o2nQaXzZy7lnist08jvwWGnWskrb99ePp
+         XK5Bf0D9oQN01l1+mcPaVESbjeXLHsZCaBY+c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=H8/IncnGGbE9QOeeDr/Jc48CXkxG72A4Q3NbT4P+6tg=;
-        b=o5TMy37XCJ1i/Of3oWkcwR1IEILE4Lxa6I82a6QxTo3ijMiItEa3Cu5l4jgobz8FAn
-         pPUvQscUahGWLZ/ESJyMMn0r0n6pbIOdgZjY786knn1A/fSAcPFsSrMm1BpoX5u6v3X9
-         78WpmPd9b6Xj+W2/p0kff9vEO08LP4QJswgPVZWF5AV38J+kkuOULoIFUJY6umtMr2GZ
-         E7H6L4HK1TaiTpqvIK+k0/Lfsg75Jb24cU6oZ1Xgp+BOT7VI5duhn2dIPs1DC8jB2GtY
-         +PAugUQQBMJEWR11dyxcoCbv1hgsrA4SrTqgPQdaH7Olgdxh7oFnuhk0ICG06juVz33O
-         AG+g==
-X-Gm-Message-State: AKGB3mK+I8vtt81rspWs3c8nne5m5ukV21P2P9y0hoNPbTSBRqBVdoug
-        SHS4Un0k30KcYGzqovB7mpb1DQ==
-X-Google-Smtp-Source: ACJfBotMysLtgvBbWajXbXH/wjiwPYWb+Y5osYY8y7WePdhhZoHfxlSuNhDG7aXVdChU0KyqscBgZw==
-X-Received: by 10.107.25.132 with SMTP id 126mr39726841ioz.173.1514434444691;
-        Wed, 27 Dec 2017 20:14:04 -0800 (PST)
-Received: from localhost.localdomain (170-72-6-219.ut.vivintwireless.net. [170.72.6.219])
-        by smtp.gmail.com with ESMTPSA id f207sm11201841ita.26.2017.12.27.20.14.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 27 Dec 2017 20:14:03 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH v5 05/34] directory rename detection: directory splitting testcases
-Date:   Wed, 27 Dec 2017 20:13:23 -0800
-Message-Id: <20171228041352.27880-6-newren@gmail.com>
-X-Mailer: git-send-email 2.15.0.408.g8e199d483
-In-Reply-To: <20171228041352.27880-1-newren@gmail.com>
-References: <20171228041352.27880-1-newren@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q8ttULBlTo4AxbH28SRN43ML3PdYzB6jtWarhRmbceM=;
+        b=WHVaifarBmWYNrGsaSKXcMtYLB7h05o0v0WqD0GZv2n5UDnAHhDRH4c5M6XiCzYvAK
+         FZQSAi9n1f9gMEjvDfQCkLH/1/jsAD9iS+74TgLorWJZ1lusV/jsTJ3gokZqXLweqqRg
+         q8NE1fsXoLlwfSeJbBRLd/U6Vni0zgwiQrgf+oQ/yeX+IzHQnnzRHKxY6VF5amEOcllK
+         ZAJ02sT+M+1eGoj5PPcTftaIy9oICoOgMslYwXKFdo/ijbuMdhmnCw9UGFD+PB1JOaoE
+         r2dDaaM8kDur1qmIh71cuodzcvsRmmwRSsHQzsoRIIVH/meI06z1FKW1K+UXSLMXaoYe
+         vS/A==
+X-Gm-Message-State: AKGB3mKlF4jQQrPy+/AmXuDJlLkzUKanzkv3dY5a4nghdc9jTwNLvmV3
+        1qomba7NtkaKJqHYh4woxGQT+A==
+X-Google-Smtp-Source: ACJfBostycBdmb6zcshVWd7VAddgTuAQ+W2jOnViZX+8Ablldo1AlJRipdrI+D4u51RBXgHOG1AE4g==
+X-Received: by 10.157.51.168 with SMTP id u40mr10791731otc.162.1514438592517;
+        Wed, 27 Dec 2017 21:23:12 -0800 (PST)
+Received: from Carl-MBP ([2600:100e:b02c:f23f:78c2:1eba:9743:953f])
+        by smtp.gmail.com with ESMTPSA id x21sm12068004ote.71.2017.12.27.21.23.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Dec 2017 21:23:11 -0800 (PST)
+Date:   Wed, 27 Dec 2017 22:23:08 -0700
+From:   Carl Baldwin <carl@ecbaldwin.net>
+To:     Alexei Lozovsky <a.lozovsky@gmail.com>
+Cc:     Theodore Ts'o <tytso@mit.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Bring together merge and rebase
+Message-ID: <20171228052303.GA33027@Carl-MBP>
+References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
+ <20171225035215.GC1257@thunk.org>
+ <20171227043544.GB26579@Carl-MBP.ecbaldwin.net>
+ <C82A30ED-D608-4F79-B824-C23DDB078DD9@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C82A30ED-D608-4F79-B824-C23DDB078DD9@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t6043-merge-rename-directories.sh | 137 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 137 insertions(+)
+On Wed, Dec 27, 2017 at 03:35:58PM +0200, Alexei Lozovsky wrote:
+> I think the reasoning behind Theo's words is that it would be better
+> to first implement the commit relationship tracking as an add-in which
+> uses commit messages for data storage, then evaluate its usefulness
+> when it's actually available (including extensions to gitk and stuff
+> to support the new metadata), and then it could be moved into core git
+> data structures, when it has proven itself useful. It's not a trivial
+> feature which warrants immediate addition to git and its design can
+> change when faced with real- world use-cases, so it would be bad for
+> compatibility to rush its addition. Storage location for metadata
+> seems to be an implementation detail which could be technically
+> changed more or less easily. But it's much easier to ignore a trailer
+> in commit message in the favor of a commit header field than to
+> replace a deprecated commit header field with a better one, which
+> could cause massive headache for all git repositories in the world.
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-index d8ead7c56..acf49d6b4 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -427,4 +427,141 @@ test_expect_failure '1f-check: Split a directory into two other directories' '
- #   in section 2, plus testcases 3a and 4a.
- ###########################################################################
- 
-+
-+###########################################################################
-+# SECTION 2: Split into multiple directories, with equal number of paths
-+#
-+# Explore the splitting-a-directory rules a bit; what happens in the
-+# edge cases?
-+#
-+# Note that there is a closely related case of a directory not being
-+# split on either side of history, but being renamed differently on
-+# each side.  See testcase 8e for that.
-+###########################################################################
-+
-+# Testcase 2a, Directory split into two on one side, with equal numbers of paths
-+#   Commit O: z/{b,c}
-+#   Commit A: y/b, w/c
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/b, w/c, z/d, with warning about z/ -> (y/ vs. w/) conflict
-+test_expect_success '2a-setup: Directory split into two on one side, with equal numbers of paths' '
-+	test_create_repo 2a &&
-+	(
-+		cd 2a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir y &&
-+		mkdir w &&
-+		git mv z/b y/ &&
-+		git mv z/c w/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '2a-check: Directory split into two on one side, with equal numbers of paths' '
-+	(
-+		cd 2a &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:w/c :0:z/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:z/d &&
-+		test_cmp expect actual &&
-+		test_i18ngrep "CONFLICT.*directory rename split" out
-+	)
-+'
-+
-+# Testcase 2b, Directory split into two on one side, with equal numbers of paths
-+#   Commit O: z/{b,c}
-+#   Commit A: y/b, w/c
-+#   Commit B: z/{b,c}, x/d
-+#   Expected: y/b, w/c, x/d; No warning about z/ -> (y/ vs. w/) conflict
-+test_expect_success '2b-setup: Directory split into two on one side, with equal numbers of paths' '
-+	test_create_repo 2b &&
-+	(
-+		cd 2b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir y &&
-+		mkdir w &&
-+		git mv z/b y/ &&
-+		git mv z/c w/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add x/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '2b-check: Directory split into two on one side, with equal numbers of paths' '
-+	(
-+		cd 2b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 >out &&
-+
-+		test 3 -eq $(git ls-files -s | wc -l) &&
-+		test 0 -eq $(git ls-files -u | wc -l) &&
-+		test 1 -eq $(git ls-files -o | wc -l) &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:w/c :0:x/d &&
-+		git rev-parse >expect \
-+			O:z/b O:z/c B:x/d &&
-+		test_cmp expect actual &&
-+		test_i18ngrep ! "CONFLICT.*directory rename split" out
-+	)
-+'
-+
-+###########################################################################
-+# Rules suggested by section 2:
-+#
-+#   None; the rule was already covered in section 1.  These testcases are
-+#   here just to make sure the conflict resolution and necessary warning
-+#   messages are handled correctly.
-+###########################################################################
-+
- test_done
--- 
-2.15.0.408.g8e199d483
+Yeah, this is a point that everyone is eager to make instead of really
+trying to understand what I'm trying to do and offering constructive
+suggestions. It's not that I'm not listening. I'm not really concerned
+about headers vs trailers or the asthetics of the whole thing as much as
+I'm concerned about how the server / client interaction will be. I worry
+that anything that I come up with that isn't implemented in the regular
+git core push and fetch will end up being awkward or end up needing to
+reimplement a lot of what's already in git. But, maybe it just needs a
+little more thought. Let me try to think through it...
 
+Imagine John posts a new change up for review to a review server. The
+current master points at commit A and so he grabs it and drafts his
+first proposal, B1.
+
+    digraph history {
+        B1 -> A
+    }
+
+Soon after posting, he notices a couple of simple errors and uses the
+web UI to correct them. This creates B2. (Dashed edges are replaces
+references).
+
+    digraph history {
+        B1 -> A
+        B2 -> A
+        B2 -> B1 [ style="dashed"; ]
+    }
+
+Anna reviews B2 and finds a small nit. She asks John if she can just fix
+it and push up a new review. He agrees. She pushes up B3.
+
+    digraph history {
+        B1 -> A
+        B2 -> A
+        B3 -> A
+        B2 -> B1 [ style="dashed"; ]
+        B3 -> B2 [ style="dashed"; ]
+    }
+
+John goes back to his workspace and does a little more work on B. He
+creates the fourth revision, B4 but since he didn't update his workspace
+with the other two most recent revisions, his new revision is derived
+from B1.
+
+    digraph history {
+        B1 -> A
+        B2 -> A
+        B3 -> A
+        B4 -> A
+        B2 -> B1 [ style="dashed"; ]
+        B3 -> B2 [ style="dashed"; ]
+        B4 -> B1 [ style="dashed"; ]
+    }
+
+John then pushes to the server. I imagined that would be a command
+similar to what gerrit does.
+
+    git push codereview refs/for/master
+
+At this point, I want a couple of things to happen. First, the server
+should be able to match the new revision to the change by following the
+replaces references to the commits it already has. Then it should
+recognize that this is not a fast forward update to the change and
+reject it on those grounds.
+
+After that, John needs to be able to fetch B2 and B3 so that his local
+client can perform a merge. I guess John needs to know what change he's
+trying to fetch. In this case, he needs to fetch both B2 and B3 in order
+get the full history graph of the change. The problem I see here is that
+today's git fetch would see B2 and B3 as unrelated branches. There could
+be any number of them to fetch. So, how does he ask for everything
+related to the change? Does he do a wild card or something?
+
+    git fetch codereview refs/changes/123/*
+
+Or does he just fetch all refs (this could be many on a busy review
+server)? Or do we need to do something out of band to discover the list
+of references that need to be fetched?
+
+I've been thinking out loud a bit. I guess this could be a path forward.
+I guess to make gc happy, I've got to keep around a ref pointing at each
+new revision so that it doesn't get garbage collected.
+
+Carl
