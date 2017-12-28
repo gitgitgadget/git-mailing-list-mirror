@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBDED1F406
-	for <e@80x24.org>; Thu, 28 Dec 2017 21:04:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B8A71F406
+	for <e@80x24.org>; Thu, 28 Dec 2017 21:04:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754779AbdL1VED (ORCPT <rfc822;e@80x24.org>);
-        Thu, 28 Dec 2017 16:04:03 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:38575 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754759AbdL1VEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Dec 2017 16:04:01 -0500
-Received: by mail-io0-f195.google.com with SMTP id 87so35272308ior.5
-        for <git@vger.kernel.org>; Thu, 28 Dec 2017 13:04:01 -0800 (PST)
+        id S1754813AbdL1VEG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 28 Dec 2017 16:04:06 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:39009 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754759AbdL1VEE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Dec 2017 16:04:04 -0500
+Received: by mail-io0-f177.google.com with SMTP id g70so26899220ioj.6
+        for <git@vger.kernel.org>; Thu, 28 Dec 2017 13:04:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P35rgS/vPyrTcwqP+zEa5v4Us8jwwqU8eyuDi1f8PXg=;
-        b=YEFOHZ48LCj13q1s4acdtWXh0CXHurxXj6W4s1xJPM/ghRzAKsEiAvHALOiWxWd8p3
-         vMO/lYJtqVacf/OcUU4ml1Dy9l8bjLu80tKqu9C8TJn+0gaAVDjmjlg69U08ZqMnDh+W
-         0ZGsYBAchvEdCC5mBHbkQ33CwPcTDz1Zlxg9UZ6bq4wnCMITjFYm0f4O6Wqtabef2Saz
-         blxxVjgfmpcBYWnoDVExoWAOMQ8T+pujGiwPhx2OoqXbPIeX53Nx3vp/ybYq4KVqTYVu
-         1YgTshESNINZplrfnreQGQ3hoIbXlCfEMAm8dZufZNjdDw4cnlQQMEufYrCVvidzTu/K
-         t+Aw==
+        bh=MeM834fXIpUE7/6HY4DZ/5glLaEXrzGsOkWgTPNerZw=;
+        b=Hn9s7bMvZBUh74eccjm+pgdU1SMNTCAJH07cJBgT7TgZ8VWtfyGJePck5spE+mLd/w
+         CA8+vRw1xhNTO1X2BtUnYCA5cAI5eR5MLFEdsICRdQ3daev+vYjvz6TWk9Biwz02TCBC
+         LxpX9EYW89MFK7JI0K2Tt/BWhEQR3P0hribBpf9WqBUQc3xV1wkrff5yMVh0nJHzKgfF
+         m5ptA2s68dcq7f43hde2kraPqO2QogEUlKGghYZa4M//rpZxbp0E+RSxdvzHe/JhRsrX
+         hAQez840Afjq6Ux3OVE4rd4mzJARpiQ3s9rgjVkbTK+CBIl6Yd5mT4VTlkketOpAQY5W
+         GLDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=P35rgS/vPyrTcwqP+zEa5v4Us8jwwqU8eyuDi1f8PXg=;
-        b=V+kNZXRuImIk91ivBaS1Wl2Q90mGNOb4k8uQKQCsqJm3xEwRkhf4OEBKq1Dan1W8it
-         RFkrwDFN4lxTbVpNf+JZUE3h7fIIVkov15l8dJmEZ5Y8Z+PAUEFEWG/ApDvfeahU2W1h
-         QYl+rifnAksyc84i5XLkaw2JES0Oj2GIl6XhzMZNQBLjnLZYsC0QYGC8PXIafFqS/0N0
-         e/37rPwF0mS7K3E6HUDKQvT3aRKyrIQ+3OXfPdkgmX+JinNesd/F4AqsdPZRPppN3KGJ
-         4QB1v+/WmboVCAy2mSosjlLDeKvYRvy5SfCywvPGv7Dcq0vioRmCpfolehKDhkywDU5t
-         GsLw==
-X-Gm-Message-State: AKGB3mK6btb3ROkuFf5YvTm5QtJGTBSkY0okquOZT8Pl4hQBQY7gnWsy
-        7DtcECoVyI7qC3YFrqWbM6yihRNUbuY=
-X-Google-Smtp-Source: ACJfBouJZhpQ7Km5VHa/CUvpIcIFcjGsbyCyTW3nYCo/2tIqh9ukKA7d7g3LUZZDJDboIHvKuTzfRA==
-X-Received: by 10.107.104.20 with SMTP id d20mr16019286ioc.238.1514495040361;
-        Thu, 28 Dec 2017 13:04:00 -0800 (PST)
+        bh=MeM834fXIpUE7/6HY4DZ/5glLaEXrzGsOkWgTPNerZw=;
+        b=qusAINTmkCyCaKeAIx/KmcwgScQYPLS8e4q54UFXq214lAonDAXJH+0oEcFHLMEy6L
+         DLLGDWQJ/zH/IMnLphRMsDwavTyowhQXl8f4mrSK9m+GOyNr8hVEOiTv/JTVHPwxWRzW
+         yGCO4IwYXiEB5tQlBQLLKIh32qP3TXlQWcbKo8wQ2zANkDkoM4T6UJH5X8jRZcxe63fb
+         0LLXNm7KCRQYQPxZKlFmBf0fuJtYT2MLmT9g/rXeQ4797xFqoUnmKWIqteBWua53MsnH
+         ooX3ntsBoExhi5TkGKzknLLIYI09kuqncRbnc8dq2FehoqgUV4BGnJ6mBEEtocNx6qQw
+         sQvA==
+X-Gm-Message-State: AKGB3mJHPvQmkXVAK9ulfOSIJk+28j1v/sY9SKL1wNkr2u3qK4Q7Ievl
+        niuq8OOz1dNkp9SWDo0kojUGmbRO1WY=
+X-Google-Smtp-Source: ACJfBos2w2fVT/AL+nKc1YxwbdClbZvfy1o8/7/ub/fPh7RB3j1wB6/fAcKS0/kgiJNx+58KKO6+Cg==
+X-Received: by 10.107.183.5 with SMTP id h5mr36519478iof.25.1514495043327;
+        Thu, 28 Dec 2017 13:04:03 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id o66sm8115496iod.87.2017.12.28.13.03.59
+        by smtp.gmail.com with ESMTPSA id k23sm12350687iti.22.2017.12.28.13.04.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 28 Dec 2017 13:03:59 -0800 (PST)
+        Thu, 28 Dec 2017 13:04:02 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/4] builtin/blame: dim uninteresting metadata
-Date:   Thu, 28 Dec 2017 13:03:43 -0800
-Message-Id: <20171228210345.205300-3-sbeller@google.com>
+Subject: [PATCH 4/4] builtin/blame: highlight recently changed lines
+Date:   Thu, 28 Dec 2017 13:03:45 -0800
+Message-Id: <20171228210345.205300-5-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20171228210345.205300-1-sbeller@google.com>
 References: <20171228210345.205300-1-sbeller@google.com>
@@ -62,230 +62,198 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using git-blame lots of lines contain redundant information, for
-example in hunks that consist of multiple lines, the metadata (commit
-name, author, date) are repeated. A reader may not be interested in those,
-so offer an option to color the information that is repeated from the
-previous line differently.
+Choose a different color for dates and imitate a 'temperature cool down'
+for the dates.
+
+Originally I had planned to have the temperature cooldown dependent on
+the age of the project or file for example, as that might scale better,
+but that can be added on top of this commit, e.g. instead of giving a
+date, you could imagine giving a percentage that would be the linearly
+interpolated between now and the beginning of the file.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt |  5 ++++
- builtin/blame.c          | 68 ++++++++++++++++++++++++++++++++++++++----------
- color.h                  |  1 +
- t/t8012-blame-colors.sh  | 18 +++++++++++++
- 4 files changed, 78 insertions(+), 14 deletions(-)
- create mode 100755 t/t8012-blame-colors.sh
+ Documentation/config.txt | 18 ++++++++++++
+ builtin/blame.c          | 74 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 91 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b18c0f97fe..2c211b6e7d 100644
+index 2c211b6e7d..52f27b2ced 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1216,6 +1216,11 @@ color.status.<slot>::
- 	status short-format), or
- 	`unmerged` (files which have unmerged changes).
+@@ -1221,6 +1221,24 @@ color.blame.repeatedMeta::
+ 	is repeated meta information per line (such as commit id,
+ 	author name, date and timezone). Defaults to dark gray.
  
-+color.blame.repeatedMeta::
-+	Use the customized color for the part of git-blame output that
-+	is repeated meta information per line (such as commit id,
-+	author name, date and timezone). Defaults to dark gray.
++color.blame.highlightRecent::
++	This can be used to color the author and date of a blame line.
++	This overrides `color.blame.repeatedMeta` setting, which colors
++	repetitions.
+++
++This setting should be set to a comma-separated list of color and date settings,
++starting and ending with a color, the dates should be set from oldest to newest.
++The metadata will be colored given the colors if the the line was introduced
++before the given timestamp, overwriting older timestamped colors.
+++
++Instead of an absolute timestamp relative timestamps work as well, e.g.
++2.weeks.ago is valid to address anything older than 2 weeks.
+++
++It defaults to "blue,12 month ago,white,1 month ago,red", which colors
++everything older than one year blue, recent changes between one month and
++one year old are kept white, and lines introduced within the last month are
++colored red.
 +
  color.ui::
  	This variable determines the default value for variables such
  	as `color.diff` and `color.grep` that control the use of color
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 005f55aaa2..09afb4d3ea 100644
+index 39e8c0b222..b23e98e2ac 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -7,6 +7,7 @@
+@@ -24,6 +24,7 @@
+ #include "dir.h"
+ #include "progress.h"
+ #include "blame.h"
++#include "string-list.h"
  
- #include "cache.h"
- #include "config.h"
-+#include "color.h"
- #include "builtin.h"
- #include "commit.h"
- #include "diff.h"
-@@ -46,6 +47,7 @@ static int xdl_opts;
- static int abbrev = -1;
- static int no_whole_file_rename;
- static int show_progress;
-+static char *repeated_meta_color;
+ static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
  
- static struct date_mode blame_date_mode = { DATE_ISO8601 };
- static size_t blame_date_width;
-@@ -316,10 +318,11 @@ static const char *format_time(timestamp_t time, const char *tz_str,
- #define OUTPUT_PORCELAIN	010
- #define OUTPUT_SHOW_NAME	020
- #define OUTPUT_SHOW_NUMBER	040
--#define OUTPUT_SHOW_SCORE      0100
--#define OUTPUT_NO_AUTHOR       0200
-+#define OUTPUT_SHOW_SCORE	0100
-+#define OUTPUT_NO_AUTHOR	0200
- #define OUTPUT_SHOW_EMAIL	0400
--#define OUTPUT_LINE_PORCELAIN 01000
-+#define OUTPUT_LINE_PORCELAIN 	01000
-+#define OUTPUT_COLOR_LINE	02000
+@@ -324,6 +325,7 @@ static const char *format_time(timestamp_t time, const char *tz_str,
+ #define OUTPUT_LINE_PORCELAIN 	01000
+ #define OUTPUT_COLOR_LINE	02000
+ #define OUTPUT_COLOR_FIELDS	04000
++#define OUTPUT_HEATED_LINES	010000
  
  static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
  {
-@@ -367,6 +370,28 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 		putchar('\n');
+@@ -436,6 +438,61 @@ static void setup_line_color(int opt, int cnt,
+ 		colors_set(use_color, reset_color);
  }
  
-+static inline void colors_unset(const char **use_color, const char **reset_color)
++static struct color_field {
++	timestamp_t hop;
++	char col[COLOR_MAXLEN];
++} *colorfield;
++static int colorfield_nr, colorfield_alloc;
++
++static void parse_color_fields(const char *s)
 +{
-+	*use_color = "";
-+	*reset_color = "";
++	struct string_list l = STRING_LIST_INIT_DUP;
++	struct string_list_item *item;
++	enum { EXPECT_DATE, EXPECT_COLOR } next = EXPECT_COLOR;
++
++	/* Ideally this would be stripped and split at the same time? */
++	string_list_split(&l, s, ',', -1);
++	ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
++
++	for_each_string_list_item(item, &l) {
++		switch (next) {
++		case EXPECT_DATE:
++			colorfield[colorfield_nr].hop = approxidate(item->string);
++			next = EXPECT_COLOR;
++			colorfield_nr++;
++			ALLOC_GROW(colorfield, colorfield_nr + 1, colorfield_alloc);
++			break;
++		case EXPECT_COLOR:
++			if (color_parse(item->string, colorfield[colorfield_nr].col))
++				die(_("expecting a color: %s"), item->string);
++			next = EXPECT_DATE;
++			break;
++		}
++	}
++
++	if (next == EXPECT_COLOR)
++		die (_("must end with a color"));
++
++	colorfield[colorfield_nr].hop = TIME_MAX;
 +}
 +
-+static inline void colors_set(const char **use_color, const char **reset_color)
++static void setup_default_colorfield(void)
 +{
-+	*use_color = repeated_meta_color;
-+	*reset_color = GIT_COLOR_RESET;
++	parse_color_fields("blue,12 month ago,white,1 month ago,red");
 +}
 +
-+static void setup_line_color(int opt, int cnt,
-+			     const char **use_color,
-+			     const char **reset_color)
++static void determine_line_heat(struct blame_entry *ent, const char **dest_color)
 +{
-+	colors_unset(use_color, reset_color);
++	int i = 0;
++	struct commit_info ci;
++	get_commit_info(ent->suspect->commit, &ci, 1);
 +
-+	if ((opt & OUTPUT_COLOR_LINE) && cnt > 0)
-+		colors_set(use_color, reset_color);
++	while (i < colorfield_nr && ci.author_time > colorfield[i].hop)
++		i++;
++
++	*dest_color = colorfield[i].col;
 +}
 +
- static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int opt)
+ static void emit_other(struct blame_scoreboard *sb,
+ 		       struct blame_entry *ent,
+ 		       struct blame_entry *prev,
+@@ -443,6 +500,7 @@ static void emit_other(struct blame_scoreboard *sb,
  {
  	int cnt;
-@@ -383,6 +408,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
+ 	const char *cp;
++	const char *heatcolor = NULL;
+ 	struct blame_origin *suspect = ent->suspect;
+ 	struct commit_info ci;
+ 	char hex[GIT_MAX_HEXSZ + 1];
+@@ -452,6 +510,10 @@ static void emit_other(struct blame_scoreboard *sb,
+ 	oid_to_hex_r(hex, &suspect->commit->object.oid);
+ 
+ 	cp = blame_nth_line(sb, ent->lno);
++
++	if (opt & OUTPUT_HEATED_LINES)
++		determine_line_heat(ent, &heatcolor);
++
  	for (cnt = 0; cnt < ent->num_lines; cnt++) {
  		char ch;
  		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? GIT_SHA1_HEXSZ : abbrev;
-+		const char *col, *rcol;
- 
- 		if (suspect->commit->object.flags & UNINTERESTING) {
- 			if (blank_boundary)
-@@ -393,7 +419,8 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 			}
- 		}
- 
--		printf("%.*s", length, hex);
-+		setup_line_color(opt, cnt, &col, &rcol);
-+		printf("%s%.*s%s", col, length, hex, rcol);
- 		if (opt & OUTPUT_ANNOTATE_COMPAT) {
- 			const char *name;
- 			if (opt & OUTPUT_SHOW_EMAIL)
-@@ -406,16 +433,17 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 			       ent->lno + 1 + cnt);
- 		} else {
- 			if (opt & OUTPUT_SHOW_SCORE)
--				printf(" %*d %02d",
-+				printf(" %s%*d %02d%s", col,
- 				       max_score_digits, ent->score,
--				       ent->suspect->refcnt);
-+				       ent->suspect->refcnt, rcol);
- 			if (opt & OUTPUT_SHOW_NAME)
--				printf(" %-*.*s", longest_file, longest_file,
--				       suspect->path);
-+				printf(" %s%-*.*s%s", col, longest_file,
-+						      longest_file,
-+						      suspect->path,
-+						      rcol);
- 			if (opt & OUTPUT_SHOW_NUMBER)
--				printf(" %*d", max_orig_digits,
--				       ent->s_lno + 1 + cnt);
--
-+				printf(" %s%*d%s", col, max_orig_digits,
-+				       ent->s_lno + 1 + cnt, rcol);
+@@ -503,6 +565,7 @@ static void emit_other(struct blame_scoreboard *sb,
  			if (!(opt & OUTPUT_NO_AUTHOR)) {
  				const char *name;
  				int pad;
-@@ -424,11 +452,12 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
++				int hcolor = opt & OUTPUT_HEATED_LINES;
+ 				if (opt & OUTPUT_SHOW_EMAIL)
+ 					name = ci.author_mail.buf;
  				else
- 					name = ci.author.buf;
+@@ -510,7 +573,10 @@ static void emit_other(struct blame_scoreboard *sb,
  				pad = longest_author - utf8_strwidth(name);
--				printf(" (%s%*s %10s",
-+				printf(" %s(%s%*s %10s%s", col,
+ 				setup_field_color(opt, cnt, OUTPUT_NO_AUTHOR,
+ 						  ent, prev, &col, &rcol);
+-				printf(" %s(%s%*s %10s%s", col,
++				if (hcolor)
++					rcol = GIT_COLOR_RESET;
++				printf(" %s(%s%*s %10s%s",
++				       hcolor ? heatcolor : col,
  				       name, pad, "",
  				       format_time(ci.author_time,
  						   ci.author_tz.buf,
--						   show_raw_time));
-+						   show_raw_time),
-+				       rcol);
- 			}
- 			printf(" %*d) ",
- 			       max_digits, ent->lno + 1 + cnt);
-@@ -607,6 +636,12 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 		parse_date_format(value, &blame_date_mode);
+@@ -701,6 +767,10 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+ 				value);
  		return 0;
  	}
-+	if (!strcmp(var, "color.blame.repeatedmeta")) {
-+		if (color_parse_mem(value, strlen(value), repeated_meta_color))
-+			warning(_("ignore invalid color '%s' in color.blame.repeatedMeta"),
-+				value);
++	if (!strcmp(var, "color.blame.highlightrecent")) {
++		parse_color_fields(value);
 +		return 0;
 +	}
  
  	if (git_diff_heuristic_config(var, value, cb) < 0)
  		return -1;
-@@ -681,6 +716,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('s', NULL, &output_option, N_("Suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
- 		OPT_BIT('e', "show-email", &output_option, N_("Show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
+@@ -777,6 +847,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
  		OPT_BIT('w', NULL, &xdl_opts, N_("Ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-+		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line"), OUTPUT_COLOR_LINE),
+ 		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line"), OUTPUT_COLOR_LINE),
+ 		OPT_BIT(0, "color-fields", &output_option, N_("color redundant metadata fields from previous line"), OUTPUT_COLOR_FIELDS),
++		OPT_BIT(0, "heated-lines", &output_option, N_("color lines by date"), OUTPUT_HEATED_LINES),
  
  		/*
  		 * The following two options are parsed by parse_revision_opt()
-@@ -940,8 +976,12 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+@@ -801,6 +872,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	unsigned int range_i;
+ 	long anchor;
  
- 	blame_coalesce(&sb);
- 
--	if (!(output_option & OUTPUT_PORCELAIN))
-+	if (!(output_option & OUTPUT_PORCELAIN)) {
- 		find_alignment(&sb, &output_option);
-+		if ((output_option & OUTPUT_COLOR_LINE) &&
-+		    !repeated_meta_color)
-+			repeated_meta_color = GIT_COLOR_DARK;
-+	}
- 
- 	output(&sb, output_option);
- 	free((void *)sb.final_buf);
-diff --git a/color.h b/color.h
-index 6cd632c0d8..fce5588df9 100644
---- a/color.h
-+++ b/color.h
-@@ -30,6 +30,7 @@ struct strbuf;
- #define GIT_COLOR_BLUE		"\033[34m"
- #define GIT_COLOR_MAGENTA	"\033[35m"
- #define GIT_COLOR_CYAN		"\033[36m"
-+#define GIT_COLOR_DARK		"\033[1;30m"
- #define GIT_COLOR_BOLD_RED	"\033[1;31m"
- #define GIT_COLOR_BOLD_GREEN	"\033[1;32m"
- #define GIT_COLOR_BOLD_YELLOW	"\033[1;33m"
-diff --git a/t/t8012-blame-colors.sh b/t/t8012-blame-colors.sh
-new file mode 100755
-index 0000000000..b2de03b777
---- /dev/null
-+++ b/t/t8012-blame-colors.sh
-@@ -0,0 +1,18 @@
-+#!/bin/sh
-+
-+test_description='colored git blame'
-+. ./test-lib.sh
-+
-+PROG='git blame -c'
-+. "$TEST_DIRECTORY"/annotate-tests.sh
-+
-+test_expect_success 'colored blame colors continuous lines' '
-+	git blame --abbrev=12 --color-lines hello.c >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	grep "<BOLD;BLACK>(F" actual > F.expect &&
-+	grep "<BOLD;BLACK>(H" actual > H.expect &&
-+	test_line_count = 2 F.expect &&
-+	test_line_count = 3 H.expect
-+'
-+
-+test_done
++	setup_default_colorfield();
+ 	git_config(git_blame_config, &output_option);
+ 	init_revisions(&revs, NULL);
+ 	revs.date_mode = blame_date_mode;
 -- 
 2.15.1.620.gb9897f4670-goog
 
