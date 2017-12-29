@@ -2,96 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D147D1F404
-	for <e@80x24.org>; Fri, 29 Dec 2017 22:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F0421F404
+	for <e@80x24.org>; Fri, 29 Dec 2017 22:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750924AbdL2WF4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 17:05:56 -0500
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:36805 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750860AbdL2WFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 17:05:55 -0500
-Received: by mail-wr0-f172.google.com with SMTP id u19so36184929wrc.3
-        for <git@vger.kernel.org>; Fri, 29 Dec 2017 14:05:54 -0800 (PST)
+        id S1750794AbdL2Wsl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Dec 2017 17:48:41 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:43742 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdL2Wsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Dec 2017 17:48:40 -0500
+Received: by mail-wm0-f52.google.com with SMTP id n138so50159791wmg.2
+        for <git@vger.kernel.org>; Fri, 29 Dec 2017 14:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=i6RZeECzx+K+wrWu1nJCftIqjxirblYQz0vBezlwNlA=;
-        b=lwVKojRXHg7HiiB7d72uuhVPCscuet8Le87tbcaiN+H76RhcGydYJeiyB+kCdjQdPn
-         8KMx6ry3k+d7fqDq5Lf51xJEy35SjmPgTbi2AppRskSzRpkjPNiemaYmqGz1ZuFf7MwG
-         hUgT/NjgyAorJrOCzYAHYa5h/0fhwXAqvh08JadggitJ3SpbAiu4hoJQp61bdWjXtwG/
-         P2HeoXSN3zBmEW2tOxFQ5BpZ62rXD68deDkGRe0K+5gL5LaR64h0kLPOrOQs3CHEQ0N1
-         +/QZhIYc4fdN3R/uxEqLmCyO59bGPVnD+drniWONgBOgPdIH+jq/DvGWB0DaCpe1Xu0Q
-         khSw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=EWkLu++MQ5PKcJ7Kp4WipctyIV4T0UFNHPm1Hv2iuhE=;
+        b=KaeGrnmMj6IiPjJndyBXFHBkZLxYwF9XV75t46fKL4EhUCHnLVeqLAA/ApYPjSqgWo
+         pE7m61co3e/173Lic7BS5V3fqNW97VNOc5e9HIAJhx+YIK1vmASi0thycifoahxrBdul
+         Kq1nWp8jRs3C3EQYMiKY0iavYgweXl2yLOCGVMHioWQ9cJfS48AfbdhaImWDmWxsQzSj
+         XT7KTy97W+T3K/DJrtHM4JzqlmT/idfnVT5lOFVP9FlJ1/ok07/rJV9u4GDg3Ngi/NVs
+         C0YP3/xM6d5Pl3Q2SwfYp3wy54gVwJFZOO7oe8yMqJsXxOXR3ZVeqZsazErGT7TBV9ah
+         69GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=i6RZeECzx+K+wrWu1nJCftIqjxirblYQz0vBezlwNlA=;
-        b=aMYgXWn2TL7R+axW1d1Gcxm8p+8AoWefehJbvJE8LToy3FzSRJTge8QSBfcHSifUbD
-         Z7avuKE4ucsiht90cAENbSgnFr+Mu9KRuGjW7JS1THD++8adRYbiezSrROXnmp7+Xsdb
-         xhz1X/oZwAZY/6rWJM/QwTyrTu01DWw07vUZn80ux8HpQDieRT/vWf528h1H0gF8yYnI
-         A5wfzuSlKaen4psZnLoYq6+RwfaImdqGocIktY8FYsDYWMCix9Tlvfyat7GNLRM4YQXe
-         0yFI5OYv5KVBAUM4gd2KoT4YPx2bimp3znofXyhdvPFluEX+FshHX1SVSIXgcfJbr96Z
-         UOrw==
-X-Gm-Message-State: AKGB3mJcBVvkAS/GY1miElhQ9xL6VnEn5X783scrSAkffOl75NKUjpBL
-        XTJDIDZ8/oNNydtX94i7LXYMdS1m
-X-Google-Smtp-Source: ACJfBovO9ZOFmdi2vqj0Z1HhDkb7+HjSnsBxL8wqrvx5Q3hoj1ZQ9p5OjiHLiWygt/ox8azRo/R2sw==
-X-Received: by 10.223.136.184 with SMTP id f53mr34648296wrf.143.1514585154054;
-        Fri, 29 Dec 2017 14:05:54 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id t61sm56717098wrc.21.2017.12.29.14.05.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 29 Dec 2017 14:05:52 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Zefram <zefram@fysh.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git bisect colour output contrary to configuration
-References: <20171229194712.GA15930@fysh.org>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171229194712.GA15930@fysh.org>
-Date:   Fri, 29 Dec 2017 23:05:52 +0100
-Message-ID: <87zi616vgf.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=EWkLu++MQ5PKcJ7Kp4WipctyIV4T0UFNHPm1Hv2iuhE=;
+        b=NmnwItPKjcHqn8c9pAqVmzjv9UC9beCDZi5TIbsf9xWmR3NllXPONfu1+r2Vahaz9U
+         oNVk73Z36lXmJJxbj6cLE9PkPiaJXa/RgMfBTDvCfhnGgv5wxrwAFsaApajQKs/91kIh
+         jEwcO64M8tCCavzqL7/7VO4TJGjG22E08pPTyVeYwpkN9u7f8e0Y0aCpsvswafc0ZQnl
+         hbxOrOIi8sTbdB4wR4QjbHXyvyHAvfe68LMnYs7CGiWv627uyAvHV2lc5BSlkcR6Njg5
+         PO5XsE0QGq8XhHSZ3agQpk0/zTF4wBNHEpEX2pAVef9k3FZp6QpyJm9ic9HGcR9nTtz7
+         Gu/g==
+X-Gm-Message-State: AKGB3mJufFmj84e9GrzoNZhQtcnKXTJgOl9vF3yp1DrhNO2EgcU1OhT4
+        977awa/hD8A0DDi7UUY0EMs=
+X-Google-Smtp-Source: ACJfBotuKZSD6v+dyPqhnDMynCx890pGFhGkVWWLi6C4myZgBbtU0e4ML0CYRrKeBjKo0nw/zhj9Hg==
+X-Received: by 10.28.131.73 with SMTP id f70mr30835833wmd.153.1514587719287;
+        Fri, 29 Dec 2017 14:48:39 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
+        by smtp.gmail.com with ESMTPSA id h27sm24491054wrb.35.2017.12.29.14.48.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 29 Dec 2017 14:48:38 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Keith Smiley <k@keith.so>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Kevin Daudt <me@ikke.info>
+Subject: Re: [PATCH] Add shell completion for git remote rm
+Date:   Fri, 29 Dec 2017 23:48:25 +0100
+Message-Id: <20171229224825.31062-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
+In-Reply-To: <20171229135240.GQ3693@zaya.teonanacatl.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> Keith Smiley wrote:
+> > It looks like that was just about preferring remove in documentation
+> > and the like, I think it would still make sense to have both for
+> > completion since rm is still supported.
+> 
+> I read it as a first step in a long process to eventually
+> remove 'remote rm', but if that's never intended, then sure,
+> restoring completion for it seems reasonable.
+> 
+> It would be good to hear from those who know or recall the
+> intention.
+> 
+> I think we should only complete the preferred subcommand.
+> That encourages use of 'remote remove' even if 'remote rm'
+> will stay forever to avoid breaking existing scripts.
 
-On Fri, Dec 29 2017, zefram@fysh.org jotted:
+Quoting from the commit message of e17dba8fe1 ("remote: prefer
+subcommand name 'remove' to 'rm'", 2012-09-06):
 
-> My ~/.gitconfig sets color.ui=never, which should prevent attempts
-> at colouring output from all git commands.  I do not have any git
-> configuration enabling colour in any situation (such as for specific
-> commands).  But when a git bisect completes, the output identifying
-> the first bad commit includes escape sequences to colour the "commit
-> 3e6..." line yellow.  Excerpt of strace output (with many irrelevant
-> lines omitted):
->
-> 23851 write(1, "3e6fc602e433dbd76941ac0ef7a438a77fbe9a05 is the first bad commit\n", 65) = 65
-> 23851 open("/home/zefram/.gitconfig", O_RDONLY) = 3
-> 23851 read(3, "[user]\n\tname = Zefram\n\temail = zefram@fysh.org\n\tsigningkey = 0x8E1E1EC1\n\n[color]\n\tui = never\n", 4096) = 93
-> 23851 write(1, "\33[33mcommit 3e6fc602e433dbd76941ac0ef7a438a77fbe9a05\33[m\n", 56) = 56
->
-> Given the configuration, that line should be free of escape sequences.
->
-> I'm mainly using git 2.1.4 via Debian, but I've also
-> reproduced this problem with the latest from git.git (commit
-> 1eaabe34fc6f486367a176207420378f587d3b48, tagged v2.16.0-rc0).
+  'rm' is still supported and used in the test suite. It's just not
+  widely advertised.
 
-This issue is a bug, but has nothing do do with bisect per-se, but is a
-bug in diff-tree, compare these two:
+I think adding 'rm' to completion definitely counts as advertisement.
+It doesn't have much practical use, after all: typing 'rm' with
+completion is actually one more keystroke than without (r<TAB>m vs. rm).
 
-    git -c color.ui=never diff-tree --pretty --stat HEAD
-    git -c color.ui=never show --pretty --stat HEAD
 
-diff-tree will incorrectly show colored output here despite
-ui.color=never.
+Gábor
+
