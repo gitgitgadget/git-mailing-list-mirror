@@ -2,299 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 986511F404
-	for <e@80x24.org>; Fri, 29 Dec 2017 13:28:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7191F404
+	for <e@80x24.org>; Fri, 29 Dec 2017 13:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751105AbdL2N2t (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 08:28:49 -0500
-Received: from mout.web.de ([212.227.17.11]:63981 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750869AbdL2N2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 08:28:44 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpNC-1fFqpf2St4-00oBfX; Fri, 29
- Dec 2017 14:28:29 +0100
-From:   tboegi@web.de
-To:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
-        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
-        larsxschneider@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH/RFC 1/2] convert_to_git(): checksafe becomes an integer
-Date:   Fri, 29 Dec 2017 14:28:28 +0100
-Message-Id: <20171229132828.17594-1-tboegi@web.de>
-X-Mailer: git-send-email 2.15.1.271.g1a4e40aa5d
-In-Reply-To: <20171218131249.GB4665@sigill.intra.peff.net>
-References: <20171218131249.GB4665@sigill.intra.peff.net>
+        id S1751106AbdL2Nwp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Dec 2017 08:52:45 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:41602 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750878AbdL2Nwo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Dec 2017 08:52:44 -0500
+Received: by mail-qk0-f179.google.com with SMTP id a8so15483457qkb.8
+        for <git@vger.kernel.org>; Fri, 29 Dec 2017 05:52:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rtkywx1s+wGG5GycW+nMRCKjKYFoysemyy6xsjUhXsg=;
+        b=Y01EL4rZfnEdph240UbaSIXz2mvQ4mJ+MNEbk/J4+9Z2ZXzNi8T1XWL5jJUXMZ4pBm
+         HCqR0R7hlhnBKQNgVsASF7JPo06lPIw4FwGAlGIs4ANpBvicZ4RXjsSJTNLzOi18x4n7
+         F3JHSC4bnodC442y6AP3EHY6cfFiIsXlmAUEeU7h1JlpK+F9y26SAJ2CbgyWzntMrejW
+         ncW8XNhGXlOs5aM48EQhrmsd/oYykGO/oRvYUS+2jMhf3ddv2gOJWsoKt61934TwcpcU
+         cIyMEDfKbVvP2wCSDSVQJ4FJ644Hz10uf2+qpZ4cqVDMPhPMrp3WxuHUwyfINYIHXy5V
+         pvZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rtkywx1s+wGG5GycW+nMRCKjKYFoysemyy6xsjUhXsg=;
+        b=Rhs3kVrIQPCGHMk7USJb1dx6dfL6tpE6qJvIWod9GKqiRaG5pHg7HajhecTBZnPser
+         98uUt4vG3ttWn5wjOPiEkKj8I5yvjTl2yCKfOb6qy2/uEvGyYYffTtQPC0iB20hXt0MG
+         ZBYO0kySMF0lZOWJtGllltx0prGucXF+SqHmUk59VoMmGhEqkDy0J7mRvgGGpt9ynfmi
+         w0J6LjG5sW0zzkCaPYEt6LZc2zwikCnlFXn2F5C5vEfbz/NfGQpHdnZqjnYEf7iIdj66
+         krRGHopc6ClaGaIEtJ+wQKCFfih7MW+Ii16nS+BkxZHWXd3bRWyllfIwnxATWED+mHxV
+         LZBQ==
+X-Gm-Message-State: AKGB3mL1+41aa9mW/bYXbdRvM3S+lmQHD+ZWbAQY0O/DZQFxanbpWoyW
+        MoGMeon81/iKmJYNPI4OslQ=
+X-Google-Smtp-Source: ACJfBouAxWp9SgpHxYDVCxN7u15AWikMDXXgRm0fzTZmoMbZIqLtBWvx4HGXQjj4bXmJ7Ojfh/b4Ww==
+X-Received: by 10.233.223.133 with SMTP id t127mr3460390qkf.38.1514555563929;
+        Fri, 29 Dec 2017 05:52:43 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id s58sm23817224qtb.41.2017.12.29.05.52.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 29 Dec 2017 05:52:42 -0800 (PST)
+Date:   Fri, 29 Dec 2017 08:52:40 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Keith Smiley <k@keith.so>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Kevin Daudt <me@ikke.info>
+Subject: Re: [PATCH] Add shell completion for git remote rm
+Message-ID: <20171229135240.GQ3693@zaya.teonanacatl.net>
+References: <01020160a0004473-277c3d7c-4e3b-4c50-9d44-4a106f37f1d9-000000@eu-west-1.amazonses.com>
+ <20171229032927.GN3693@zaya.teonanacatl.net>
+ <20171229041927.GA83931@bryant.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:AGx/ffuXGXKqZ7zspryOYHYFFx4A7YoVJmylKo+Tz5N37XvIoDy
- A1hCQDthyNcLv2QYcs3chXq8zidNtTFj6uQoVha3JmR278GbTvQaL9WwuKRYekm5nhhlbmb
- F8MQDBubYE7+lvj5J4NWuUMZaBXrdbA8j+4hKwL9oGB/nIhevYtd5yGI3lV8ZCPwryNKFOP
- HkcqQRXMrooUuXzDlnypw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5I2N/E/FM/M=:A89aaiD/mmDHY4SgfNJ4cE
- QCxGwZuoCa5lVfqQq9eRoTwkql+QPMWLUBGbpiDVK4A99LJWukZTckdcKwhYFn6hedO7qto4i
- Pg7X+pwH2HY4DZl0mIkj7kHD5TOVXxJxCnPpmwRjpeqSEGK24uaTRHIFNB4Au6H4AZ0O6IzCL
- CcZtEfkzCMwsh6+dci5T9EcNOpdxKPq/FRI9lNwId8kFSIwbZOqSXDANBlsfaT4o80hnMJzwY
- a8ZCA1qU4sIh8yzILN6WYhJaOc7Hc46INm6fEcaehWnYaCJm0HLNRHQiFQ5/3ncYcHk1Zyomw
- QXn4jUhhH/d2f8uvzDMhL094O0jl1BZTlYKUkV/BbRckEPihF4lcAIBggJbby9nogZavynxjK
- s20AACEqi4ipGqk2S1e8vAi1vpltTAzwnHGRstbzSgIofwzb2uudpliX/4qknTiLg8THXFEb7
- a56a4JDEwTJXN9XLVVZCX9rVSvdyIweGs4DEtbu+Y/H//2UMOCWlRqXsJu57i/t9bHpNDSlba
- yX4MRR4kdP7op6LfRx1afH2wD4cS5KyiIx6HWVvtDGL0Y2bLNxOjYzhgbWMHsS49d0IA73Otj
- DNh3v7+Amdby6DJBJfKrLrDZwsK85YO7rDZaeBCgi9bUrywxJMX9hPw04rblqRZIqrQBVbI0O
- SfuMmb4IXTr06eqDaLJQlIpTVOBCvfCUkbiw13X26GCR4KbEkT+jW+ahDIMkVG7W+qTQlUov8
- 0tdo526zpKfEz42sm38eix0MrHuwEUWOS18u002KzHkCP7NGSLxjK/86dWX7zYJRC1FTxlhBD
- cBPVPUwiUACobIPZ6UvVKpMkbIi3+IgrZK2UsnZj2Hphio7/hc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20171229041927.GA83931@bryant.local>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+Keith Smiley wrote:
+> It looks like that was just about preferring remove in documentation
+> and the like, I think it would still make sense to have both for
+> completion since rm is still supported.
 
-When calling convert_to_git(), the checksafe parameter has been used to
-check if commit would give a non-roundtrip conversion of EOL.
+I read it as a first step in a long process to eventually
+remove 'remote rm', but if that's never intended, then sure,
+restoring completion for it seems reasonable.
 
-When checksafe was introduced, 3 values had been in use:
-SAFE_CRLF_FALSE: no warning
-SAFE_CRLF_FAIL:  reject the commit if EOL do not roundtrip
-SAFE_CRLF_WARN:  warn the user if EOL do not roundtrip
+It would be good to hear from those who know or recall the
+intention.
 
-Today a small flaw is found in the code base:
-An integer with the value 0 is passed as the parameter checksafe
-instead of the correct enum value SAFE_CRLF_FALSE.
+I think we should only complete the preferred subcommand.
+That encourages use of 'remote remove' even if 'remote rm'
+will stay forever to avoid breaking existing scripts.
 
-In the next commit there is a need to turn checksafe into a bitmap, which
-allows to tell convert_to_git() to obey the encoding attribute or not.
+If it does make sense to restore completion, adding a link
+back to e17dba8fe1 and explaining why the completion is
+being restored would be good.  Reading the commit message
+now makes it sound like 'remote rm' was never present and is
+being added to correct an oversight.
 
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
- apply.c       |  4 ++--
- convert.c     | 20 ++++++++++----------
- convert.h     | 18 ++++++++----------
- diff.c        |  4 ++--
- environment.c |  2 +-
- sha1_file.c   |  6 +++---
- 6 files changed, 26 insertions(+), 28 deletions(-)
+Maybe something like:
 
-diff --git a/apply.c b/apply.c
-index 321a9fa68d..a422516062 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2263,7 +2263,7 @@ static void show_stats(struct apply_state *state, struct patch *patch)
- static int read_old_data(struct stat *st, struct patch *patch,
- 			 const char *path, struct strbuf *buf)
- {
--	enum safe_crlf safe_crlf = patch->crlf_in_old ?
-+	int checksafe = patch->crlf_in_old ?
- 		SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_RENORMALIZE;
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFLNK:
-@@ -2281,7 +2281,7 @@ static int read_old_data(struct stat *st, struct patch *patch,
- 		 * should never look at the index when explicit crlf option
- 		 * is given.
- 		 */
--		convert_to_git(NULL, path, buf->buf, buf->len, buf, safe_crlf);
-+		convert_to_git(NULL, path, buf->buf, buf->len, buf, checksafe);
- 		return 0;
- 	default:
- 		return -1;
-diff --git a/convert.c b/convert.c
-index 1a41a48e15..5efcc3b73b 100644
---- a/convert.c
-+++ b/convert.c
-@@ -195,13 +195,13 @@ static enum eol output_eol(enum crlf_action crlf_action)
- 
- static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
- 			    struct text_stat *old_stats, struct text_stat *new_stats,
--			    enum safe_crlf checksafe)
-+			    int checksafe)
- {
- 	if (old_stats->crlf && !new_stats->crlf ) {
- 		/*
- 		 * CRLFs would not be restored by checkout
- 		 */
--		if (checksafe == SAFE_CRLF_WARN)
-+		if (checksafe & SAFE_CRLF_WARN)
- 			warning(_("CRLF will be replaced by LF in %s.\n"
- 				  "The file will have its original line"
- 				  " endings in your working directory."), path);
-@@ -211,7 +211,7 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
- 		/*
- 		 * CRLFs would be added by checkout
- 		 */
--		if (checksafe == SAFE_CRLF_WARN)
-+		if (checksafe & SAFE_CRLF_WARN)
- 			warning(_("LF will be replaced by CRLF in %s.\n"
- 				  "The file will have its original line"
- 				  " endings in your working directory."), path);
-@@ -268,7 +268,7 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- static int crlf_to_git(const struct index_state *istate,
- 		       const char *path, const char *src, size_t len,
- 		       struct strbuf *buf,
--		       enum crlf_action crlf_action, enum safe_crlf checksafe)
-+		       enum crlf_action crlf_action, int checksafe)
- {
- 	struct text_stat stats;
- 	char *dst;
-@@ -298,12 +298,12 @@ static int crlf_to_git(const struct index_state *istate,
- 		 * unless we want to renormalize in a merge or
- 		 * cherry-pick.
- 		 */
--		if ((checksafe != SAFE_CRLF_RENORMALIZE) &&
-+		if ((!(checksafe & SAFE_CRLF_RENORMALIZE)) &&
- 		    has_crlf_in_index(istate, path))
- 			convert_crlf_into_lf = 0;
- 	}
--	if ((checksafe == SAFE_CRLF_WARN ||
--	    (checksafe == SAFE_CRLF_FAIL)) && len) {
-+	if (((checksafe & SAFE_CRLF_WARN) ||
-+	     ((checksafe & SAFE_CRLF_FAIL) && len))) {
- 		struct text_stat new_stats;
- 		memcpy(&new_stats, &stats, sizeof(new_stats));
- 		/* simulate "git add" */
-@@ -1129,7 +1129,7 @@ const char *get_convert_attr_ascii(const char *path)
- 
- int convert_to_git(const struct index_state *istate,
- 		   const char *path, const char *src, size_t len,
--                   struct strbuf *dst, enum safe_crlf checksafe)
-+		   struct strbuf *dst, int checksafe)
- {
- 	int ret = 0;
- 	struct conv_attrs ca;
-@@ -1144,7 +1144,7 @@ int convert_to_git(const struct index_state *istate,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	if (checksafe != SAFE_CRLF_KEEP_CRLF) {
-+	if (!(checksafe & SAFE_CRLF_KEEP_CRLF)) {
- 		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
- 		if (ret && dst) {
- 			src = dst->buf;
-@@ -1156,7 +1156,7 @@ int convert_to_git(const struct index_state *istate,
- 
- void convert_to_git_filter_fd(const struct index_state *istate,
- 			      const char *path, int fd, struct strbuf *dst,
--			      enum safe_crlf checksafe)
-+			      int checksafe)
- {
- 	struct conv_attrs ca;
- 	convert_attrs(&ca, path);
-diff --git a/convert.h b/convert.h
-index 4f2da225a8..532af00423 100644
---- a/convert.h
-+++ b/convert.h
-@@ -8,15 +8,13 @@
- 
- struct index_state;
- 
--enum safe_crlf {
--	SAFE_CRLF_FALSE = 0,
--	SAFE_CRLF_FAIL = 1,
--	SAFE_CRLF_WARN = 2,
--	SAFE_CRLF_RENORMALIZE = 3,
--	SAFE_CRLF_KEEP_CRLF = 4
--};
-+#define SAFE_CRLF_FALSE       0
-+#define SAFE_CRLF_FAIL        (1<<0)
-+#define SAFE_CRLF_WARN        (1<<1)
-+#define SAFE_CRLF_RENORMALIZE (1<<2)
-+#define SAFE_CRLF_KEEP_CRLF   (1<<3)
- 
--extern enum safe_crlf safe_crlf;
-+extern int safe_crlf;
- 
- enum auto_crlf {
- 	AUTO_CRLF_FALSE = 0,
-@@ -66,7 +64,7 @@ extern const char *get_convert_attr_ascii(const char *path);
- /* returns 1 if *dst was used */
- extern int convert_to_git(const struct index_state *istate,
- 			  const char *path, const char *src, size_t len,
--			  struct strbuf *dst, enum safe_crlf checksafe);
-+			  struct strbuf *dst, int checksafe);
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int async_convert_to_working_tree(const char *path, const char *src,
-@@ -85,7 +83,7 @@ static inline int would_convert_to_git(const struct index_state *istate,
- extern void convert_to_git_filter_fd(const struct index_state *istate,
- 				     const char *path, int fd,
- 				     struct strbuf *dst,
--				     enum safe_crlf checksafe);
-+				     int checksafe);
- extern int would_convert_to_git_filter_fd(const char *path);
- 
- /*****************************************************************
-diff --git a/diff.c b/diff.c
-index fb22b19f09..5e3aaea6e0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3524,7 +3524,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 	 * demote FAIL to WARN to allow inspecting the situation
- 	 * instead of refusing.
- 	 */
--	enum safe_crlf crlf_warn = (safe_crlf == SAFE_CRLF_FAIL
-+	int checksafe = (safe_crlf == SAFE_CRLF_FAIL
- 				    ? SAFE_CRLF_WARN
- 				    : safe_crlf);
- 
-@@ -3603,7 +3603,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		/*
- 		 * Convert from working tree format to canonical git format
- 		 */
--		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
-+		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, checksafe)) {
- 			size_t size = 0;
- 			munmap(s->data, s->size);
- 			s->should_munmap = 0;
-diff --git a/environment.c b/environment.c
-index 63ac38a46f..10ee89a28d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,7 +49,7 @@ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- int check_replace_refs = 1;
- char *git_replace_ref_base;
- enum eol core_eol = EOL_UNSET;
--enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
-+int safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
-diff --git a/sha1_file.c b/sha1_file.c
-index 3da70ac650..78e002392e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -133,7 +133,7 @@ static struct cached_object *find_cached_object(const unsigned char *sha1)
- }
- 
- 
--static enum safe_crlf get_safe_crlf(unsigned flags)
-+static int get_checksafe(unsigned flags)
- {
- 	if (flags & HASH_RENORMALIZE)
- 		return SAFE_CRLF_RENORMALIZE;
-@@ -1752,7 +1752,7 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	if ((type == OBJ_BLOB) && path) {
- 		struct strbuf nbuf = STRBUF_INIT;
- 		if (convert_to_git(&the_index, path, buf, size, &nbuf,
--				   get_safe_crlf(flags))) {
-+				   get_checksafe(flags))) {
- 			buf = strbuf_detach(&nbuf, &size);
- 			re_allocated = 1;
- 		}
-@@ -1786,7 +1786,7 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
- 	assert(would_convert_to_git_filter_fd(path));
- 
- 	convert_to_git_filter_fd(&the_index, path, fd, &sbuf,
--				 get_safe_crlf(flags));
-+				 get_checksafe(flags));
- 
- 	if (write_object)
- 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+    completion: restore 'remote rm'
+
+    e17dba8fe1 ("remote: prefer subcommand name 'remove' to
+    'rm'", 2012-09-06) removed the 'rm' subcommand from
+    completion.  The 'remote rm' subcommand is still supported
+    and not planned to be removed.  Offer completions for it.
+
+I also noticed that in your original commit that you say
+"list of removes as remove does." That should be "remotes"
+instead of "removes" there. -- I've made that typo myself
+quite often. :)
+
 -- 
-2.15.1.271.g1a4e40aa5d
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+There are no stupid questions, but there are a LOT of inquisitive
+idiots.
+    -- Demotivators (www.despair.com)
 
