@@ -2,99 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDFB1F404
-	for <e@80x24.org>; Fri, 29 Dec 2017 13:22:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4F41F404
+	for <e@80x24.org>; Fri, 29 Dec 2017 13:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751070AbdL2NWk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 08:22:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49156 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750744AbdL2NWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 08:22:40 -0500
-Received: (qmail 23481 invoked by uid 109); 29 Dec 2017 13:22:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 29 Dec 2017 13:22:39 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32184 invoked by uid 111); 29 Dec 2017 13:23:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 29 Dec 2017 08:23:08 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Dec 2017 08:22:37 -0500
-Date:   Fri, 29 Dec 2017 08:22:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Rewrite cat-file.c : need help to find a bug
-Message-ID: <20171229132237.GA12561@sigill.intra.peff.net>
-References: <CAL21BmnycG4=Wm_e1S85QVPfs3vV_Q=TAjTAG-sv+f2mK6wbBQ@mail.gmail.com>
+        id S1750864AbdL2N2n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Dec 2017 08:28:43 -0500
+Received: from mout.web.de ([217.72.192.78]:54215 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750708AbdL2N2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Dec 2017 08:28:42 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LilJB-1f5dZO2pJt-00cyCb; Fri, 29
+ Dec 2017 14:28:27 +0100
+From:   tboegi@web.de
+To:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
+        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
+        larsxschneider@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH/RFC 0/2] git diff --UTF-8
+Date:   Fri, 29 Dec 2017 14:28:24 +0100
+Message-Id: <20171229132824.17551-1-tboegi@web.de>
+X-Mailer: git-send-email 2.15.1.271.g1a4e40aa5d
+In-Reply-To: <20171218131249.GB4665@sigill.intra.peff.net>
+References: <20171218131249.GB4665@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL21BmnycG4=Wm_e1S85QVPfs3vV_Q=TAjTAG-sv+f2mK6wbBQ@mail.gmail.com>
+X-Provags-ID: V03:K0:/RQQjBBlX2+/+ZaUL+Kxrr3e8wZTHlq+DDYO6Nbhutt03+CQC0h
+ vD7aT85ok/9zTV3xVZcN5NwIYQuJM+p1ev/a+sm4Xs0e+jJVP66QAAV4SGyTlDVfJXICrzu
+ IDYHg3cx0qsu8HXBoU7MXytR3UPkjirv6ptn18MbnsSIqJlUC7cdfX2IwzWmY9k39ZoUfF9
+ 1RdC+l9cZRtxTG5cgx2Ow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uF0XYPUdzhA=:LeFwGxWSVTUluxelUUY/9+
+ gvzo2QtML6lOdTvdpz6t9zb1331P8594SfcFo7yR8P2i/QglUgYj5W+lhxwylu/5sfaQTW75+
+ PM958cx5Ga4pbf7BqGlQ/vdRiYAXimfJL1nhNY1saCCi029cJfM6+qTSgMbiSW/QT4gfjOdTO
+ c0XPCuWoafoDLrfVvZBJ6Ow2Fw79goh+kXV7NGhA0HHJPJXczmrkTuXz54SjrFmZm4VFlaQ1Y
+ RPhxjE0kwDTuU5FJrqgNmjlMPPeKX6BI+eGvglCeve0QQvl3xLZ5gBsMFL2fTYVfETOhDWwXF
+ x1bZ03wkJ+ygroj/BZ2Sw0WuA+3b5naOfYp5qSZLm71qt5wt5QD/HB1aJVqeyaG61h7ukj5VT
+ 4CcZF2hI5HMJcaNr9N6AG1JswB4Jjd7X6fag658DnclZc+FwEL7WvEzQf0/PSjLsa995v5MGX
+ qEeQK5QBSobBTGjxpWpMXRBv69ib/xCj+ffnP2ZThciCdvbD3dJMYFJ8iA7Run/CEBxC+C2Vg
+ iN8bJoBRichNiOW+EqYSirDQI53AdlwoGMQ8USvfYJEROnQK7Vn7FyXlukIynsRfs+fsAnozv
+ or1NBoAl7QKOetsvMqP+lZ/whc4drnboFOk/VlFSQJMTVlbENXlUtSy4+UuGcThylHiEzzHoT
+ k69OTVw2PLuXb5Fl9EsCw0HLgb7LiNix0L2IERFL129GoeFDCb8j9C8ML84WHIPOAu80libuj
+ MIecQRIQGhMrAt0KXsB1lD187jqhRhaMiFyzYEDWS5bo+6ATKQwm+9u4/8Mtva+Njkt95i6PP
+ YwFIM2oSX/sDehWiEMcgRWRHfyEpQeqlINF11o9Yixlp/RKCXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 29, 2017 at 01:05:50PM +0300, Оля Тележная wrote:
+From: Torsten Bögershausen <tboegi@web.de>
 
-> Hi everyone,
-> I am trying to reuse formatting logic from ref-filter in cat-file
-> command. Now cat-file uses its own formatting code.
-> I am trying to achieve that step-by-step, now I want to invoke
-> populate_value function, and I have a bug somewhere.
-> My code is here.
-> https://github.com/telezhnaya/git/commits/catfile
-> All commits that starts from "cat-file: " are successfully passing all tests.
-> So for now my last commit fails, and I am tired of searching for the
-> error. Actually, I just copied some values to another variable and
-> move some code to other place. All "intelligent" work will go further,
-> but now I need to fix current situation.
+RFC patch: convert files from e.g. UTF-16 into UTF-8 while running
+"git diff".
+The diff must be called with "git diff --UTF-8" and the "encoding"
+attribute must be set for the file(s).
 
-The problem is that "cat_file_info" is NULL when you get to
-populate_value(), so the moved code doesn't trigger.
+The commit messages may need some improvements, and a closer look
+at diff.c, how command line options are forwared, is appreciated.
 
-That variable is usually pulled from format->cat_file_data during
-verify_ref_format(). But it triggers only when there's an actual format
-atom to parse, and in this particular test the format is empty! But
-cat-file is somewhat special here, in that even without any atoms it
-needs to make sure the object exists.
+It may even be possible to integrate t4066 somewhere...
 
-So the patch below makes the test pass, though I think in the long run
-all of this cat_file_info stuff would just get folded into regular
-atoms, and you'd want cat-file to pass a special flag to ask ref-filter
-to make sure the object exists.
+Torsten Bögershausen (2):
+  convert_to_git(): checksafe becomes an integer
+  git diff: Allow to reencode into UTF-8
 
--Peff
+ Documentation/diff-options.txt  |  4 ++
+ Documentation/gitattributes.txt |  9 +++++
+ apply.c                         |  4 +-
+ convert.c                       | 60 +++++++++++++++++++++++-----
+ convert.h                       | 20 +++++-----
+ diff.c                          | 40 +++++++++++++++++--
+ diff.h                          |  1 +
+ diffcore.h                      |  3 ++
+ environment.c                   |  2 +-
+ sha1_file.c                     |  6 +--
+ t/t4066-diff-encoding.sh        | 86 +++++++++++++++++++++++++++++++++++++++++
+ 11 files changed, 205 insertions(+), 30 deletions(-)
+ create mode 100755 t/t4066-diff-encoding.sh
 
----
-diff --git a/ref-filter.c b/ref-filter.c
-index 62ca83807f..3acea4d2ef 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -742,6 +742,10 @@ int verify_ref_format(struct ref_format *format)
- {
- 	const char *cp, *sp;
- 
-+	/* do this unconditionally, even if we have no atoms! */
-+	if (format->cat_file_data)
-+		cat_file_info = format->cat_file_data;
-+
- 	format->need_color_reset_at_eol = 0;
- 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
- 		const char *color, *ep = strchr(sp, ')');
-@@ -753,7 +757,6 @@ int verify_ref_format(struct ref_format *format)
- 
- 		if (format->cat_file_data)
- 		{
--			cat_file_info = format->cat_file_data;
- 			at = parse_ref_filter_atom(format, valid_cat_file_atoms,
- 						   ARRAY_SIZE(valid_cat_file_atoms), sp + 2, ep);
- 		} else
+-- 
+2.15.1.271.g1a4e40aa5d
+
