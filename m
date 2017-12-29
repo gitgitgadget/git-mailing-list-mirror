@@ -2,89 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2CC11F404
-	for <e@80x24.org>; Fri, 29 Dec 2017 14:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B54681F404
+	for <e@80x24.org>; Fri, 29 Dec 2017 14:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751245AbdL2OEF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 09:04:05 -0500
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:39461 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750905AbdL2OEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 09:04:04 -0500
-Received: by mail-qk0-f178.google.com with SMTP id u184so52925245qkd.6
-        for <git@vger.kernel.org>; Fri, 29 Dec 2017 06:04:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qYifjUXgkFx3bvvVazmX1oJFncJilWK9xIiLg8jqajI=;
-        b=TrAsv5CXceyllpa+3swWAUK81X3CjuponO1cbw8BMm1elWZtSY88YlVD4jpGMylIrw
-         sqS9illLOnvXu7OhHlYW2oBQv7wbbu9pyoe99XSerqc/eFF7sU879OqRGE+dZiWd8Lml
-         Z0lTmfIFFc8sip9p/z2VSuCGQqesztDvCOWvCHjZY7yjc1PAk5uzA9XkhQGI7qHQQDq3
-         EUjit7Y5fWpoBudlo6LJE3Z8OejqwQCw6jW91xi0kgMt+A622FUJcn1qtWpBlxYSFjF0
-         e2i2FEe60Pw7bQzpl+mzBDZ1CUoFL47W7y0ITdAkRnbYLs8dponJfZ3G5BAPjsNJHJkt
-         nqvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qYifjUXgkFx3bvvVazmX1oJFncJilWK9xIiLg8jqajI=;
-        b=GRlYoek3BqyUwFMPnI92Jxr6piRRrODik2YZEUAd/jBXfbFnhgz8zpgJO2AGIlgP8H
-         RvrxaGMTYBA1bLCuC4PHAdPzHY0PpezZyznLrwo8LIfGxBdNac8gg3QLJaSSfcuQWBaN
-         +R1p4JkJaqQUZ6K1ZGriYMVgbieB84M52uT69L2AiZU/kpsW24e6M1mFlJkM+tlpwOB2
-         0b60r7ZcOr9X6XTdGI9cM0p+hE7Q+QMRRlFzyLHPLmZSc7HQqRBDGoHGqh8wT0Hz/lLE
-         +Idf68ImozswPiZwkaHcawzcagI+m/Lg19t1F/R3eeo1JC2cIH4nVWfkHLFnRcH/jzeD
-         I7Jg==
-X-Gm-Message-State: AKGB3mJK0XYpehqCE2YwnrEmkSKxL2lmoI0si+fkH4GDtKauvv53jUwr
-        9fv1Gwnja+iaaZcoCp7ISVdOMmT6T2W8tnp3P/Y=
-X-Google-Smtp-Source: ACJfBot08z9WqI8X90C95f3pSnsD/1GVQjXnoftQrt0O0KZT/qB4Qt3Zl8PmAl9JYp2nYASmsYgBABTYjfNblC7itPw=
-X-Received: by 10.55.97.15 with SMTP id v15mr46014046qkb.71.1514556243676;
- Fri, 29 Dec 2017 06:04:03 -0800 (PST)
+        id S1751254AbdL2OEX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 29 Dec 2017 09:04:23 -0500
+Received: from huc12-ckmail02.hiroshima-u.ac.jp ([133.41.12.55]:27801 "HELO
+        huc12-ckmail02.hiroshima-u.ac.jp" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1750905AbdL2OEW (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 29 Dec 2017 09:04:22 -0500
+Received: from huc12-ckmail02.hiroshima-u.ac.jp (localhost [127.0.0.1])
+        by dummy.hiroshima-u.ac.jp (Postfix) with ESMTP id 1C0A5167029;
+        Fri, 29 Dec 2017 23:04:21 +0900 (JST)
+Received: from huc12-smtp01.hiroshima-u.ac.jp (huc12-smtp01.hiroshima-u.ac.jp [133.41.12.52])
+        by huc12-ckmail02.hiroshima-u.ac.jp (Postfix) with ESMTP id 1129A4E39;
+        Fri, 29 Dec 2017 23:04:21 +0900 (JST)
+Received: from [133.41.217.107] (217-107.cup.hiroshima-u.ac.jp [133.41.217.107])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by huc12-smtp01.hiroshima-u.ac.jp (Postfix) with ESMTPSA id 09906D3471;
+        Fri, 29 Dec 2017 23:04:21 +0900 (JST)
+Message-ID: <5A464B6D.1010102@hiroshima-u.ac.jp>
+Date:   Fri, 29 Dec 2017 23:04:29 +0900
+From:   suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
+User-Agent: Mozilla-Thunderbird 2.0.0.24 (X11/20100329)
 MIME-Version: 1.0
-Received: by 10.200.16.154 with HTTP; Fri, 29 Dec 2017 06:04:03 -0800 (PST)
-In-Reply-To: <20171229132237.GA12561@sigill.intra.peff.net>
-References: <CAL21BmnycG4=Wm_e1S85QVPfs3vV_Q=TAjTAG-sv+f2mK6wbBQ@mail.gmail.com>
- <20171229132237.GA12561@sigill.intra.peff.net>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Fri, 29 Dec 2017 17:04:03 +0300
-Message-ID: <CAL21BmkcDK+VRc2CBTKnV5eubLh8u37THYjXhuTgFKR4Z=VtTA@mail.gmail.com>
-Subject: Re: Rewrite cat-file.c : need help to find a bug
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     Junio C Hamano <gitster@pobox.com>, avarab@gmail.com
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] git-archive: accepts --owner --group aslike GNU tar.
+References: <20171228090527.25056-1-mpsuzuki@hiroshima-u.ac.jp> <548d442f05e24e22a1cf4e0074f23f16@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+In-Reply-To: <548d442f05e24e22a1cf4e0074f23f16@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-MML: disable
+X-TM-AS-Product-Ver: IMSS-7.1.0.1808-8.1.0.1062-23560.003
+X-TM-AS-Result: No--12.258-10.0-31-10
+X-imss-scan-details: No--12.258-10.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+X-TMASE-MatchedRID: 7bm+sNYxqsZITndh1lLRAe5i6weAmSDKp/xyq10Na6cbIszkLg3+MeFC
+        kwH4BI1v4Zg/Bawpaj2Wx/CoW9y5jNuMXzh4YuvyBEfU2vugRF0UqWKocoJo6SUUPaRV5do4Oq7
+        cUynyolVeL0AIhlwMMjwLILmNaFe8ZCSBV6VCLjXx5KZMlKYS/cdvO1Rp+sgmmI1RpP/+oMmoBf
+        Cx2HzmBpbTSn0tZbEP79qQreYAxVf96A2LlkWhmHQEQEU5OIef7f6JAS2hKPgL/50zj0KL7Pz8v
+        ajouc6XY1S8Eynlu8Jfm5yulXbrRZYeam+R4okHMQFn2MESINE2Ag6nbdtNWd14Aqe8EzF8pmLG
+        Y/BSLFLrPvoOyguoo09AnH5ZaFw7mOB2bikpqTBKNzbmytc2CBeN8ZMPETMt+y7yU0OquytRTU0
+        EGTEAlZmOWQgbks9H6iZnFJHRET7cx97ZZVZcMp4CIKY/Hg3AnCGS1WQEGtCduxHPxofvNpYzX8
+        0HJ4XXRHBmOnaJEu/EQdG7H66TyH4gKq42LRYkn4VdUfOfvspoEpxr0691PpRnQzsd7HzEPc8L6
+        xPKWZZ+3BndfXUhXQ==
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-12-29 16:22 GMT+03:00 Jeff King <peff@peff.net>:
-> On Fri, Dec 29, 2017 at 01:05:50PM +0300, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=
-=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F wrote:
->
->> Hi everyone,
->> I am trying to reuse formatting logic from ref-filter in cat-file
->> command. Now cat-file uses its own formatting code.
->> I am trying to achieve that step-by-step, now I want to invoke
->> populate_value function, and I have a bug somewhere.
->> My code is here.
->> https://github.com/telezhnaya/git/commits/catfile
->> All commits that starts from "cat-file: " are successfully passing all t=
-ests.
->> So for now my last commit fails, and I am tired of searching for the
->> error. Actually, I just copied some values to another variable and
->> move some code to other place. All "intelligent" work will go further,
->> but now I need to fix current situation.
->
-> The problem is that "cat_file_info" is NULL when you get to
-> populate_value(), so the moved code doesn't trigger.
->
+Dear Junio, Ævar
 
- Thanks a lot!
+Thank you very much for your reviews, in spite of my many
+overlooking of the requirements written in the documents.
+
+To classify various cases, I modified my patch heavily.
+It would be posted soon.
+
+I found that some Python scripts are included in the git
+repository, but nothing in t/ directories. A helper written
+in Python is not welcomed? If so, I would rewrite the
+helper in C (perl's standard library does not have a parse
+of tarfile). So, please do not review parse-tar-file.py.
+
+Regards,
+mpsuzuki
+
+Junio C Hamano wrote:
+> suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp> writes:
+> 
+>> Current tar output by git-archive has always root:root.
+> 
+> Thanks for a patch.  On top of Ævar's comments...
+> 
+>> ...
+>> * t/t5005-archive-uid-gid.sh: a test script comparing
+>>   uid, gid, uname, gname between the options and
+>>   generated tar file.
+>> ---
+> 
+> Before the "---" line, we need to get the patch signed off by the
+> author (see Documentation/SubmittingPatches).
+> 
+>> diff --git a/archive-tar.c b/archive-tar.c
+>> index c6ed96ee7..8546a6229 100644
+>> --- a/archive-tar.c
+>> +++ b/archive-tar.c
+>> @@ -204,10 +204,10 @@ static void prepare_header(struct archiver_args *args,
+>>  	xsnprintf(header->size, sizeof(header->size), "%011lo", S_ISREG(mode) ? size : 0);
+>>  	xsnprintf(header->mtime, sizeof(header->mtime), "%011lo", (unsigned long) args->time);
+>>  
+>> -	xsnprintf(header->uid, sizeof(header->uid), "%07o", 0);
+>> -	xsnprintf(header->gid, sizeof(header->gid), "%07o", 0);
+>> -	strlcpy(header->uname, "root", sizeof(header->uname));
+>> -	strlcpy(header->gname, "root", sizeof(header->gname));
+>> +	xsnprintf(header->uid, sizeof(header->uid), "%07o", args->uid);
+>> +	xsnprintf(header->gid, sizeof(header->gid), "%07o", args->gid);
+>> +	strlcpy(header->uname, args->uname ? args->uname : "root", sizeof(header->uname));
+>> +	strlcpy(header->gname, args->gname ? args->gname : "root", sizeof(header->gname));
+> 
+> Would it be cleaner to make sure aregs->[gu]name is always set
+> (i.e. stuff "root" when it is not given)?
+> 
+>>  	xsnprintf(header->devmajor, sizeof(header->devmajor), "%07o", 0);
+>>  	xsnprintf(header->devminor, sizeof(header->devminor), "%07o", 0);
+>>  
+>> diff --git a/archive.c b/archive.c
+>> index 0b7b62af0..db69041f1 100644
+>> --- a/archive.c
+>> +++ b/archive.c
+>> @@ -8,6 +8,7 @@
+>>  #include "parse-options.h"
+>>  #include "unpack-trees.h"
+>>  #include "dir.h"
+>> +#include "git-compat-util.h"
+> 
+> The coding guideline says that "git-compat-util.h" (or one of the
+> well-known header that includes it) should be the first file to be
+> included, and we already include "cache.h" as the first thing, so
+> I do not think you want this addition here.
+> 
+>> @@ -417,6 +418,57 @@ static void parse_treeish_arg(const char **argv,
+>>  	{ OPTION_SET_INT, (s), NULL, (v), NULL, "", \
+>>  	  PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_HIDDEN, NULL, (p) }
+>>  
+>> +static void set_args_uname_uid(struct archiver_args *args,
+>> +		const char* tar_owner, int set_gid_too)
+> 
+> The asterisk sticks to the variable name, not the type name, i.e.
+> 
+> 	const char *tar_owner
+> 
+>> +{
+>> +	if (!args || !tar_owner)
+>> +		return;
+>> +
+>> +	const char* col_pos = strchr(tar_owner, ':');
+>> +	struct passwd* pw = NULL;
+> 
+> Decl after statement.
+> 
+>> +	if (col_pos) {
+>> +		args->uname = xstrndup(tar_owner, col_pos - tar_owner);
+>> +		args->uid = atoi(col_pos + 1);
+>> +		return;
+>> +	}
+>> +
+>> +	args->uname = xstrndup(tar_owner, strlen(tar_owner));
+>> +	pw = getpwnam(tar_owner);
+>> +	if (!pw)
+>> +		return;
+> 
+> This means that upon error, the caller gets a half-filled args
+> structure and without any indication.
+> 
+>> diff --git a/t/parse-tar-file.py b/t/parse-tar-file.py
+> 
+> Hmph.  Do we still use Python around here?
+> 
+
