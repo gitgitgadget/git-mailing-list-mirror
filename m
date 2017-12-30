@@ -2,193 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A59F91F404
-	for <e@80x24.org>; Sat, 30 Dec 2017 00:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A443A1F404
+	for <e@80x24.org>; Sat, 30 Dec 2017 01:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750996AbdL3Aw2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 19:52:28 -0500
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:47008 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750946AbdL3Aw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 19:52:27 -0500
-Received: by mail-qt0-f181.google.com with SMTP id r39so55732531qtr.13
-        for <git@vger.kernel.org>; Fri, 29 Dec 2017 16:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=SBqRPQ+9N0LYNg4KByd9k9em2n7QtEH41pdkvxNXJMs=;
-        b=MkYXu1iND0+TDiMHyvqGXAX6jOdfGgUMJ2IzIPjQ/P/IKJQnkHphE3zjTw5D/Omh9C
-         TBHjnf7wdOZ9DVALB8z2ARJzY69DBkwxmKv02QZUk1Oum0Ef8k3SwxMOh3AuPML8pwbt
-         5DPwnv0pmm5iNQsEWWZotNibv/Ij0x0BhwJc27N/Kj9VvtrnlDtynvd5SHIOVvaJ2ts+
-         RQp6tzqKsQ+hpgDlghlTxShBIiVMYQhET3FHvNNwa/h28exo+n2OVwrxxJ4g57bZPTzF
-         v6FyIpxTNvQ0Ps8+BArTI3gwcDPkK/fY9iJgsaEeeak0qz/3yUPFZMAxBO8WA/3vfiX1
-         3uxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=SBqRPQ+9N0LYNg4KByd9k9em2n7QtEH41pdkvxNXJMs=;
-        b=E/ns3qkZ6KCUSiOHp+KA6L5BAkr0bLjM5pMtYMemBGTCgm4wSGLZAKwDSZ9IPklTjF
-         InnylMqrHq9L5apY9uN47QZmJI6bJnr8ZLjouoNfvwJFnTr14gEfN8AO0jTeFmsdEm+f
-         WxolXGVIC9XOAcLagy3ssMq5f0d6llUA6aSGds+GI1N/JZYEC6b2YCrA7t83qMrD43Cz
-         my5DPlkw8GCzjq/3VDyaFSdyaix7C4HPtBHb9FJqayoXnEQwuHe6LUmRkBRzF2pdwQap
-         c0/JC0EknY7oHQAr3AVNkjIQaY0YcpWGcFVKZf4CsY4qD5rqx92nSBGaVkAzNvNaGor9
-         AlOw==
-X-Gm-Message-State: AKGB3mJZz7gvgrO5BmuMdWyuCGlWJNiRy0Xj1zpHPN/mjpYZEVL0U7bh
-        HhfqFQH5Abxerbhs3JruPVtnOZCi7Jg=
-X-Google-Smtp-Source: ACJfBosJcn9pdZsAiB70NQWBQnaSgijKVFHs+qU5ggPRo+wg33Pd9DQqF9T+gWwBm7bQ4QYD8WzfeQ==
-X-Received: by 10.237.37.85 with SMTP id w21mr29846019qtc.268.1514595146476;
-        Fri, 29 Dec 2017 16:52:26 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id k63sm2245587qkc.42.2017.12.29.16.52.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 29 Dec 2017 16:52:24 -0800 (PST)
-Date:   Fri, 29 Dec 2017 19:52:22 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Keith Smiley <k@keith.so>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH] Add shell completion for git remote rm
-Message-ID: <20171230005222.GT3693@zaya.teonanacatl.net>
-References: <20171229135240.GQ3693@zaya.teonanacatl.net>
- <20171229224825.31062-1-szeder.dev@gmail.com>
- <87y3ll6s0e.fsf@evledraar.gmail.com>
+        id S1750794AbdL3Bzg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 29 Dec 2017 20:55:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49470 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750741AbdL3Bzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Dec 2017 20:55:35 -0500
+Received: (qmail 23655 invoked by uid 109); 30 Dec 2017 01:55:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Dec 2017 01:55:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2722 invoked by uid 111); 30 Dec 2017 01:56:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 29 Dec 2017 20:56:04 -0500
+Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Dec 2017 20:55:33 -0500
+Date:   Fri, 29 Dec 2017 20:55:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Zefram <zefram@fysh.org>
+Subject: Re: [PATCH] diff-tree: obey the color.ui configuration
+Message-ID: <20171230015533.GA27130@sigill.intra.peff.net>
+References: <87zi616vgf.fsf@evledraar.gmail.com>
+ <20171229225121.13805-1-avarab@gmail.com>
+ <20171229231631.GS3693@zaya.teonanacatl.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y3ll6s0e.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+In-Reply-To: <20171229231631.GS3693@zaya.teonanacatl.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
->> I think adding 'rm' to completion definitely counts as advertisement.
->> It doesn't have much practical use, after all: typing 'rm' with
->> completion is actually one more keystroke than without (r<TAB>m vs. rm).
+On Fri, Dec 29, 2017 at 06:16:31PM -0500, Todd Zullinger wrote:
+
+> Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
+> > No idea how to test this, in particular trying to pipe the output of
+> > color.ui=never v.s. color.ui=auto to a file as "auto" will disable
+> > coloring when it detects a pipe, but this fixes the issue.
 > 
-> This is only one use of the completion interface, maybe you only use it
-> like that, but not everyone does.
+> You might be able to use similar methods as those Jeff used
+> in the series merged from jk/ui-color-always-to-auto:
 > 
-> The completion interface has two uses, one is to actually save you
-> typing, the other is subcommand discovery, and maybe someone who has a
-> use neither you or I have thought of is about to point out a third.
-> 
-> I'll type "git $whatever $subcommand<TAB>" as *validation* that I've
-> found the right command, not to complete it for me. This is a thing
-> that's in my muscle memory for everything.
+> https://github.com/gitster/git/tree/jk/ui-color-always-to-auto
 
-Is that meant to be in favor of including rm in the
-completion results or against? :)
+Yeah, test_terminal is the solution to testing. But...
 
-> Since I've been typing "git remote rm<TAB>" for a while (started before
-> this deprecation happened) I've actually been meaning to submit
-> completion for "rm" since it works, not knowing about Duy's patch until
-> now.
-> 
-> Now, even if someone disagrees that we should have "rm" at all I think
-> that in general we should not conflate two different things, one is
-> whether:
-> 
->     git remote <TAB>
-> 
-> shows both "rm" and "remove" in the list, and the other is whether:
-> 
->     git remote rm<TAB>
-> 
-> Should yield:
-> 
->     git remote rm<SPACE>
-> 
-> Or, as now happens:
-> 
->     git remote rm<NOTHING AND ÆVAR THINKS IT'S BROKEN>
-> 
-> I can see why we'd, in general, we'd like to not advertise certain
-> options for completion (due to deprecation, or just to avoid verbosity),
-> but complete them once they're unambiguously typed out.
-> 
-> I don't know whether the bash completion interface supports making that
-> distinction, but it would be useful.
+> He may also have some ideas about this issue in general.
+> (Or they could be tramatic memories, depending on how
+> painful it was to dig into the color code.)
 
-It can be done, though I think that it's probably better to
-subtly lead people to use 'git remote remove' going forward,
-to keep things consistent.  I don't have a strong preference
-for or against the rm -> remove change, but since that's
-been done I think there's a benefit to keeping things
-consistent in the UI.  And I think that should also apply to
-not offering completion for commands/subcommands/options
-which are only kept for backward compatibility.
+Yep. If we make diff-tree support color.ui, it's going to break a bunch
+of other stuff (like add--interactive) for people who set color.ui=always.
+I know this empirically, because we did that in v2.13, and a bunch of
+people complained. ;)
 
-Here's one way to make 'git remote rm <TAB>' work without
-including it in the output of 'git remote <TAB>':
+The root of the problem is that the plumbing diff-tree defaults its
+internal color variable to "auto" in the first place. In theory the best
+way forward is fixing that, but it's likely to have a bunch of fallouts
+itself (scripts which use plumbing and where the user _does_ want color
+will stop showing it). This bug has been around since v1.8.4, I think,
+so it's hard to say how many people are depending on it at this point.
 
-diff --git i/contrib/completion/git-completion.bash w/contrib/completion/git-completion.bash
-index 3683c772c5..aa63f028ab 100644
---- i/contrib/completion/git-completion.bash
-+++ w/contrib/completion/git-completion.bash
-@@ -2668,7 +2668,9 @@ _git_remote ()
- 		add rename remove set-head set-branches
- 		get-url set-url show prune update
- 		"
--	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	# Don't advertise rm by including it in subcommands, but complete
-+	# remotes if it is used.
-+	local subcommand="$(__git_find_on_cmdline "$subcommands rm")"
- 	if [ -z "$subcommand" ]; then
- 		case "$cur" in
- 		--*)
+A hackier option which would probably make most people happy would be to
+have plumbing respect "color.ui=never", but not any other values.
 
-Keeping 'git remote rm' working to avoid breaking scripts is
-one thing, but having it in the completion code makes it
-more likely that it will continue to be seen as a
-recommended subcommand.
+I think the history of the back and forth is:
 
-This leads to patches like this one, where it's presumed
-that the lack of completion is simply an oversight or a bug.
-Of course, the lack of completion hasn't caused everyone to
-forget that 'remote rm' was changed to 'remote remove', so
-that reasoning may be full of hot air (or worse). ;)
+  - 4c7f1819b3 (make color.ui default to 'auto', 2013-06-10) introduced
+    the problem of plumbing defaulting to "auto". This was in v1.8.4.
 
-The current result of 'git remote rm <TAB>' isn't so great.
-It's arguably worse to have it pretend that no subcommand
-was given than to list the remotes.
+  - we did something similar to Ã†var's patch in 136c8c8b8f (color: check
+    color.ui in git_default_config(), 2017-07-13). That shipped in
+    v2.14.2, and people with color.ui=always complained, because things
+    like add--interactive broke for them.
 
-$ git remote rm <TAB>
-add            remove         set-head       update
-get-url        rename         set-url
-prune          set-branches   show
+  - we tried fixing it with 6be4595edb (color: make "always" the same as
+    "auto" in config, 2017-10-03), but that broke people doing "git -c
+    color.ui=always" as an equivalent of "--color". We talked about
+    making the "-c" config behave differently from on-disk config, but
+    got pretty disgusted at the weird hacks. And so...
 
-I think completing nothing or completing the remotes
-(without offering rm in the subcommand list) would be
-better, after looking at it a bit.
+  - we ended up with 33c643bb08 (Revert "color: check color.ui in
+    git_default_config()", 2017-10-13), which just reverts the whole
+    mess back to the pre-v2.14 state. This shipped in v2.15.
 
-I don't know how to disable file completion, but I'm not
-intimately familiar with the git completion script (thanks
-to it working so damn well).  I'm guessing there's a way to
-do that, if there's a strong desire to not complete the
-remotes at all.
+So I don't think we want to go down that road again. If anything, we
+want to either fix the original sin from 4c7f1819b3, or we want to do
+the "respect only never" hack.
 
-I don't think we should include rm in 'git remote <TAB>'
-completion, but I don't care much either way what 'git
-remote rm <TAB>' includes.  But it should be better than
-including the other subcommands.
-
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-There, I've gone and soiled myself, are you happy now?!
-    -- Stewie Griffin
-
+-Peff
