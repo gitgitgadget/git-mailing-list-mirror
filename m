@@ -2,146 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86E831F428
-	for <e@80x24.org>; Sat, 30 Dec 2017 12:33:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE1AB1F428
+	for <e@80x24.org>; Sat, 30 Dec 2017 14:21:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750806AbdL3MdL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Dec 2017 07:33:11 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34587 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750759AbdL3MdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Dec 2017 07:33:09 -0500
-Received: by mail-wm0-f65.google.com with SMTP id y82so8175334wmg.1
-        for <git@vger.kernel.org>; Sat, 30 Dec 2017 04:33:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:cc:subject:references:wfrom:user-agent:in-reply-to:from:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=MpjcoHb95Z0ATJGw88gdp97pA3MOcpuW951w8iR7Juw=;
-        b=pX3Cz9jfox8b8wNtlI/o3zbfkeJtXh9EkmhRwRWMkYg49FRDIYoKHdpAL9SoxjcJKx
-         blLFB77ju8U0DP54h1ErXDvzF7k1gRx6gIjdzM/oRhekAgPrC4v83t4coszkGy0owcXr
-         1b/JavC+xv2vNVSJ3024w1ljESR9olr+d9OJQ4JJOnKdUPppU2fDwsZRI1PrDCJvbzUQ
-         1QC3oEs6+OuzThbc7MMbqTBsySeYOdYXbKPJs87JfpEbsBsQ/oeNcYSY2+wo58BFvSAH
-         NRHIYFzk2vK/08cF22t1Z8j1zKuYFNj7BsWOSsBJDnwNpoPf5+v4H6NIdcEfXXXi7DP4
-         s+Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:cc:subject:references:wfrom:user-agent
-         :in-reply-to:from:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MpjcoHb95Z0ATJGw88gdp97pA3MOcpuW951w8iR7Juw=;
-        b=jFWDNrFUYTGWRh2Xee/ZuvoA7y4iqrVooxa/tpE88oOCdmQMoZsVlSOkwuYZmN9nal
-         Zog3tMfpiCfnnuxNqE1vzSjTDTkB7wNPWFNPhI7YB4FwUQqgiWmwxWTQ2wrzocawzSO0
-         rmPBbXqP/3pEErkxPAuacneJvwlO9XpGxEFKGCUNwoHCt/GXX3jc5rzUOi+JNOfAoeYW
-         LtM9Z9bZ6yEgOU7RRX5PjitvxZ4N+lHDoZXg6P9FDY1+XT1iRyfzauD3MVILARp6KJoc
-         YTjSXIa5N8RPfUcc3fp/V1/4S1cVLlhRUIW3pAk7BP/MhRLEzc1LXma+X7Pooe80lxen
-         YjWQ==
-X-Gm-Message-State: AKGB3mKzAwjEBX/IhTV/Ivmzai1Jjjp7PyCYHXZlHaAN6ueRuF/Eq3Ru
-        UbxGy4lwxew1wQlGWgSiVQY=
-X-Google-Smtp-Source: ACJfBoueNus9pzihGUaTR2bE2ZsAnqpdJlj2DvJt3uF4Jj8id+9oQ1KINUw3WyjSKjrAyB26ORIGVg==
-X-Received: by 10.28.63.14 with SMTP id m14mr29634041wma.116.1514637188446;
-        Sat, 30 Dec 2017 04:33:08 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id 47sm68182131wru.27.2017.12.30.04.33.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 30 Dec 2017 04:33:07 -0800 (PST)
-To:     Jeff King <peff@peff.net>
-Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, Zefram <zefram@fysh.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] diff-tree: obey the color.ui configuration
-References: <87zi616vgf.fsf@evledraar.gmail.com> <20171229225121.13805-1-avarab@gmail.com> <20171229231631.GS3693@zaya.teonanacatl.net> <20171230015533.GA27130@sigill.intra.peff.net>
-wFrom:  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20171230015533.GA27130@sigill.intra.peff.net>
-From:   avarab@gmail.com (=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason)
-Date:   Sat, 30 Dec 2017 13:33:06 +0100
-Message-ID: <87tvw875vh.fsf@evledraar.gmail.com>
+        id S1750985AbdL3OV1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Dec 2017 09:21:27 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:56514 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750949AbdL3OV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Dec 2017 09:21:26 -0500
+Received: from [10.0.2.15] ([80.189.70.206])
+        by smtp with ESMTPA
+        id VI0peW1fWUnu3VI0qeyODk; Sat, 30 Dec 2017 14:21:24 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=DY5nkrlW c=1 sm=1 tr=0
+ a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
+ a=IkcTkHD0fZMA:10 a=A1X0JdhQAAAA:8 a=MajcE8fYuQYblhCy17sA:9 a=QEXdDO2ut3YA:10
+ a=Df3jFdWbhGDLdZNm0fyq:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Test failure for v2.16.0-rc0 on cygwin
+Message-ID: <519ac918-6b5f-bca3-05a0-0114683b9724@ramsayjones.plus.com>
+Date:   Sat, 30 Dec 2017 14:21:23 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfFgb9YopjQYends2YCxe0C0aZTKVEFIU2TY5+mIpUxQp0GxmUn1bADW4e1I0nJe+kyCwcfO2eN1hEzT7nu4H7ztL/ELx4km5mpHy2gmaMkAE6k+CWpfz
+ oiCFQlkcnepszm23Ldf84tssQVIa5GaLmztWiAJHjRjEgurOAoz3ZrwlF/84HCq2BZPtp/qJJ/erFA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio, Adam,
 
-On Sat, Dec 30 2017, Jeff King jotted:
+Just a quick note about the failure of the test-suite on cygwin.
+In particular, test t5580-clone-push-unc.sh #3, like so:
 
-> On Fri, Dec 29, 2017 at 06:16:31PM -0500, Todd Zullinger wrote:
->
->> Ævar Arnfjörð Bjarmason wrote:
->> > No idea how to test this, in particular trying to pipe the output of
->> > color.ui=never v.s. color.ui=auto to a file as "auto" will disable
->> > coloring when it detects a pipe, but this fixes the issue.
->>
->> You might be able to use similar methods as those Jeff used
->> in the series merged from jk/ui-color-always-to-auto:
->>
->> https://github.com/gitster/git/tree/jk/ui-color-always-to-auto
->
-> Yeah, test_terminal is the solution to testing. But...
->
->> He may also have some ideas about this issue in general.
->> (Or they could be tramatic memories, depending on how
->> painful it was to dig into the color code.)
->
-> Yep. If we make diff-tree support color.ui, it's going to break a bunch
-> of other stuff (like add--interactive) for people who set color.ui=always.
-> I know this empirically, because we did that in v2.13, and a bunch of
-> people complained. ;)
->
-> The root of the problem is that the plumbing diff-tree defaults its
-> internal color variable to "auto" in the first place. In theory the best
-> way forward is fixing that, but it's likely to have a bunch of fallouts
-> itself (scripts which use plumbing and where the user _does_ want color
-> will stop showing it). This bug has been around since v1.8.4, I think,
-> so it's hard to say how many people are depending on it at this point.
->
-> A hackier option which would probably make most people happy would be to
-> have plumbing respect "color.ui=never", but not any other values.
->
-> I think the history of the back and forth is:
->
->   - 4c7f1819b3 (make color.ui default to 'auto', 2013-06-10) introduced
->     the problem of plumbing defaulting to "auto". This was in v1.8.4.
->
->   - we did something similar to Ævar's patch in 136c8c8b8f (color: check
->     color.ui in git_default_config(), 2017-07-13). That shipped in
->     v2.14.2, and people with color.ui=always complained, because things
->     like add--interactive broke for them.
->
->   - we tried fixing it with 6be4595edb (color: make "always" the same as
->     "auto" in config, 2017-10-03), but that broke people doing "git -c
->     color.ui=always" as an equivalent of "--color". We talked about
->     making the "-c" config behave differently from on-disk config, but
->     got pretty disgusted at the weird hacks. And so...
->
->   - we ended up with 33c643bb08 (Revert "color: check color.ui in
->     git_default_config()", 2017-10-13), which just reverts the whole
->     mess back to the pre-v2.14 state. This shipped in v2.15.
+  $ ./t5580-clone-push-unc.sh -i -v
 
-Thanks. What a mess.
+  ...
 
-I haven't tried that add-interactive case you mentioned, an earlier
-version of this patch where I tried adding the color detection in
-git_diff_basic_config() did break one of its tests, but not my ptch, but
-it's probably still broken with =always (haven't tested.
+  ok 2 - clone
+  
+  expecting success: 
+  	(
+  		cd clone &&
+  		git checkout -b to-push &&
+  		test_commit to-push &&
+  		git push origin HEAD
+  	) &&
+  	rev="$(git -C clone rev-parse --verify refs/heads/to-push)" &&
+  	test "$rev" = "$(git rev-parse --verify refs/heads/to-push)"
+  
+  Switched to a new branch 'to-push'
+  [to-push 0adccbe] to-push
+   Author: A U Thor <author@example.com>
+   1 file changed, 1 insertion(+)
+   create mode 100644 to-push.t
+  Counting objects: 3, done.
+  Delta compression using up to 4 threads.
+  Compressing objects: 100% (2/2), done.
+  Writing objects: 100% (3/3), 289 bytes | 289.00 KiB/s, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  error: remote unpack failed: unable to create temporary object directory
+  To file:////localhost/C$/\cygwin64\home\ramsay\git\t\trash directory.t5580-clone-push-unc
+   ! [remote rejected] HEAD -> to-push (unpacker error)
+  error: failed to push some refs to 'file:////localhost/C$/\cygwin64\home\ramsay\git\t\trash directory.t5580-clone-push-unc'
+  not ok 3 - push
+  #	
+  #		(
+  #			cd clone &&
+  #			git checkout -b to-push &&
+  #			test_commit to-push &&
+  #			git push origin HEAD
+  #		) &&
+  #		rev="$(git -C clone rev-parse --verify refs/heads/to-push)" &&
+  #		test "$rev" = "$(git rev-parse --verify refs/heads/to-push)"
+  #	
+  $ 
 
-> So I don't think we want to go down that road again. If anything, we
-> want to either fix the original sin from 4c7f1819b3, or we want to do
-> the "respect only never" hack.
+My first, knee-jerk, reaction on seeing the backslashes in the 'local' part
+of the pathname (despite what it says in commit f21d60b429) was to replace
+the 'cygpath -aw .' with 'cygpath -am .'. This leads to exactly the same
+error display as above, except '\\' replaced by '/' in the pathname! Hmm.
 
-Getting back to the bug report that prompted this whole thing, wouldn't
-the easiest solution just to run "git show --stat $commit" instead of
-"git diff-tree --pretty $commit" when bisect wants to report the commit
-it found?
+Note:
 
-I've always thought the output was a bit ugly, it's plumbing command, so
-why wouldn't we just show the commit as the user usually prefers to see
-commits?
+  $ ls '//localhost/C$/\cygwin64\home\ramsay\git\t\trash directory.t5580-clone-push-unc'
+  clone/  initial.t
+  $ ls '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc'
+  clone/  initial.t
+  $ ls //localhost/C$/\\cygwin64\\home\\ramsay\\git\\t\\trash\ directory.t5580-clone-push-unc
+  clone/  initial.t
+  $ 
+ 
+So, after some debugging (using the 'cygpath -am .' version), it seems that
+the error message is caused by the mkdtemp() call in tmp_objdir_create()
+function (tmp-objdir.c:123), failing with an errno of 'permission denied'. 
+
+At the time of the call to mkdtemp, the current working directory is given by
+'//localhost/C$/cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git',
+and the parameter to mkdtemp is (for example) "./objects/incoming-MgZCkI".
+
+  $ cd trash\ directory.t5580-clone-push-unc/
+  $ ls
+  clone/  initial.t
+  $ ls .git
+  branches/       config       HEAD             index  logs/     refs/
+  COMMIT_EDITMSG  description  hooks-disabled/  info/  objects/
+  $ ls .git/objects
+  24/  93/  e7/  info/  pack/
+  $ mkdir '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git/./objects/incoming-MgZCkI'
+  mkdir: cannot create directory ‘//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git/./objects/incoming-MgZCkI’: Permission denied
+    $ 
+
+So, when 'doing it by hand', I get the same result. ;-)
+
+Looking at the permissions:
+
+  $ ls -ld '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git/./objects'
+  drwxr-xr-x+ 1 ramsay None 0 Dec 30 13:51 '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git/./objects'/
+
+  $ ls -ld '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git'
+  drwxr-xr-x+ 1 ramsay None 0 Dec 30 13:51 '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc/.git'/
+
+  $ ls -ld '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc'
+  drwxr-xr-x+ 1 ramsay None 0 Dec 30 13:51 '//localhost/C$//cygwin64/home/ramsay/git/t/trash directory.t5580-clone-push-unc'/
+
+  ... and so on, until:
+
+  $ ls -ld '//localhost/C$'
+  d---r-x---+ 1 TrustedInstaller TrustedInstaller 0 Oct 28 16:16 '//localhost/C$'/
+  $ 
+
+Doing a quick web-search on '//localhost/C$' lead me to several posts which
+seem to suggest the problem could be related to UAC filtering on remote
+shares (and the fact that I am on Windows 10), along with a registry setting
+for 'LocalAccountTokenFilterPolicy'. However, I have not had time to look
+into any of that.
+
+Adam, are you running the tests on Windows 10?
+
+I have to go now, so I can't look at this further today. Just FYI.
+
+ATB,
+Ramsay Jones
+
