@@ -2,104 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A443A1F404
-	for <e@80x24.org>; Sat, 30 Dec 2017 01:55:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F96A1F406
+	for <e@80x24.org>; Sat, 30 Dec 2017 08:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750794AbdL3Bzg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 29 Dec 2017 20:55:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49470 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750741AbdL3Bzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Dec 2017 20:55:35 -0500
-Received: (qmail 23655 invoked by uid 109); 30 Dec 2017 01:55:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 30 Dec 2017 01:55:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2722 invoked by uid 111); 30 Dec 2017 01:56:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Fri, 29 Dec 2017 20:56:04 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Dec 2017 20:55:33 -0500
-Date:   Fri, 29 Dec 2017 20:55:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Zefram <zefram@fysh.org>
-Subject: Re: [PATCH] diff-tree: obey the color.ui configuration
-Message-ID: <20171230015533.GA27130@sigill.intra.peff.net>
-References: <87zi616vgf.fsf@evledraar.gmail.com>
- <20171229225121.13805-1-avarab@gmail.com>
- <20171229231631.GS3693@zaya.teonanacatl.net>
+        id S1750855AbdL3I2T (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Dec 2017 03:28:19 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:37793 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750815AbdL3I2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Dec 2017 03:28:18 -0500
+Received: by mail-wm0-f48.google.com with SMTP id f140so50811170wmd.2
+        for <git@vger.kernel.org>; Sat, 30 Dec 2017 00:28:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=wujB0ukYzNW504sGIHuGABIysqp3bTUNnx+acxwY5vE=;
+        b=l4wUKZQnXcl0mT1Ff6UZrSxilWoGkrTZSFX9fJDYuP5jcLMvXm1paC9cJiRO4ub6aA
+         fYRl65ZqGtQ5yXGsaN9sSHnigkT3PmrEJpaZZRJjRUixBY01+J1ZiHs7V11i+hdDMe8z
+         fgBEdyQ9MAxOt4VL+pRept/H3pCcqhE/9bf9aac8/0yeeLPdrdXdkde0pYhq36vANxCI
+         zQaRXMnbHgsBftgsfv5WGqNchk5hfC+akrpEPsOsu+FSxpAaAVHTZscloGfMmqMtxZQD
+         P6nbcBoaj/6kL08JR9pRJJ8LoWItpTG1P9dezSUhmGwt1TOc61oGod3Gl9T3qZ0TM5Ge
+         rX+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=wujB0ukYzNW504sGIHuGABIysqp3bTUNnx+acxwY5vE=;
+        b=ubnaFRYJ39EzW6q0TAFC+KGi850F16KXLOVK1gTQQ0tURENWnAQEEBQ2cSuu1ftmoF
+         bd8EA/hWtBDFp1v/3RK7Z3nU1gPRIgNoJAcwS7Ct0UrJJLRwrEkiyFzAf/DNfMPspRzT
+         giue0b6skr7JL4b1pnvSL2KRj5ZZB6u0yVLqU4IFbUkrdHizhJP8yUsl0FK/k0/zUoLp
+         wfWQyT8p/n4qtfmnFti78k7WKVYV77WWkYPPXt9EYBl7MIzZApL0HMcihTbZwwicCyP2
+         vIEOJBXiUNknYy8NiqOfvn2goH6C4p0XXB2clpY5PMVbTRIG3QJJbd7J5nIhomnipSG2
+         0cbw==
+X-Gm-Message-State: AKGB3mJ7duUciM3bA63zbMOFJcwTjHErwOGHOzONe+5D50gsUA4DfhT2
+        Yeadb7Kz3lpnwkOHn/b5yik=
+X-Google-Smtp-Source: ACJfBouWSFqv1HaL//v4W5wdlWZEdsIvcliivQ25JtHlHwtgGXaIwjZ52E+/MVIArKHm6cgG4jWhig==
+X-Received: by 10.28.224.137 with SMTP id x131mr29793183wmg.49.1514622497319;
+        Sat, 30 Dec 2017 00:28:17 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
+        by smtp.gmail.com with ESMTPSA id p17sm20932126wma.23.2017.12.30.00.28.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 30 Dec 2017 00:28:16 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Ernesto Alfonso <erjoalgo@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: possible completion bug with --set-upstream-to=
+Date:   Sat, 30 Dec 2017 09:28:06 +0100
+Message-Id: <20171230082806.6303-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
+In-Reply-To: <87bmih83iu.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171229231631.GS3693@zaya.teonanacatl.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 29, 2017 at 06:16:31PM -0500, Todd Zullinger wrote:
 
-> Ævar Arnfjörð Bjarmason wrote:
-> > No idea how to test this, in particular trying to pipe the output of
-> > color.ui=never v.s. color.ui=auto to a file as "auto" will disable
-> > coloring when it detects a pipe, but this fixes the issue.
+> Whenever I type the last <TAB> to complete origin/master, as in below:
 > 
-> You might be able to use similar methods as those Jeff used
-> in the series merged from jk/ui-color-always-to-auto:
+> > git branch --set-upstream-to=orig<TAB>
 > 
-> https://github.com/gitster/git/tree/jk/ui-color-always-to-auto
+> what I get is:
+> 
+> > git branch origin/master
 
-Yeah, test_terminal is the solution to testing. But...
+Yeah, this shouldn't happen. 
 
-> He may also have some ideas about this issue in general.
-> (Or they could be tramatic memories, depending on how
-> painful it was to dig into the color code.)
+> instead of the expected:
+> 
+> > git branch --set-upstream-to=origin/master
 
-Yep. If we make diff-tree support color.ui, it's going to break a bunch
-of other stuff (like add--interactive) for people who set color.ui=always.
-I know this empirically, because we did that in v2.13, and a bunch of
-people complained. ;)
+And indeed this is the expected behavior.
 
-The root of the problem is that the plumbing diff-tree defaults its
-internal color variable to "auto" in the first place. In theory the best
-way forward is fixing that, but it's likely to have a bunch of fallouts
-itself (scripts which use plumbing and where the user _does_ want color
-will stop showing it). This bug has been around since v1.8.4, I think,
-so it's hard to say how many people are depending on it at this point.
+> git version and OS:
+> 
+> >git version 2.1.4
 
-A hackier option which would probably make most people happy would be to
-have plumbing respect "color.ui=never", but not any other values.
+I couldn't reproduce the wrong behavior you saw using v2.1.4 in a
+regular setup.
+ 
+However, I could reproduce it after I removed the '=' character from
+the set of characters in $COMP_WORDBREAKS, but then all completions
+after an '--option=' are affected, e.g. 'pulseaudio --daemonize=t<TAB>
+becomes 'pulseaudio true', too.
 
-I think the history of the back and forth is:
+Could you tell us the content of your $COMP_WORDBREAKS using the
+output of the following command (to make the included space, tab and
+newline visible):
 
-  - 4c7f1819b3 (make color.ui default to 'auto', 2013-06-10) introduced
-    the problem of plumbing defaulting to "auto". This was in v1.8.4.
+  printf "$COMP_WORDBREAKS" |tr ' \t\n' STN ; echo
 
-  - we did something similar to Ævar's patch in 136c8c8b8f (color: check
-    color.ui in git_default_config(), 2017-07-13). That shipped in
-    v2.14.2, and people with color.ui=always complained, because things
-    like add--interactive broke for them.
+If it's indeed the case that $COMP_WORDBREAKS is missing the '=', then
+you should add it back and check whether it fixed the issue.  If it
+did fix it, then you should try to figure out how the '=' got removed
+from there.  Perhaps you used a program that ships its own completion
+script whose developers changed $COMP_WORDBREAKS to their liking, not
+knowing about its effect on other completion scripts.
 
-  - we tried fixing it with 6be4595edb (color: make "always" the same as
-    "auto" in config, 2017-10-03), but that broke people doing "git -c
-    color.ui=always" as an equivalent of "--color". We talked about
-    making the "-c" config behave differently from on-disk config, but
-    got pretty disgusted at the weird hacks. And so...
 
-  - we ended up with 33c643bb08 (Revert "color: check color.ui in
-    git_default_config()", 2017-10-13), which just reverts the whole
-    mess back to the pre-v2.14 state. This shipped in v2.15.
+Gábor
 
-So I don't think we want to go down that road again. If anything, we
-want to either fix the original sin from 4c7f1819b3, or we want to do
-the "respect only never" hack.
-
--Peff
