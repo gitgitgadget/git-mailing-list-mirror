@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 602DA1F404
-	for <e@80x24.org>; Sun, 31 Dec 2017 08:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9B71F404
+	for <e@80x24.org>; Sun, 31 Dec 2017 08:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750923AbdLaIGL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Dec 2017 03:06:11 -0500
-Received: from mout.web.de ([217.72.192.78]:54582 "EHLO mout.web.de"
+        id S1751002AbdLaIGZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Dec 2017 03:06:25 -0500
+Received: from mout.web.de ([212.227.17.12]:65038 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750739AbdLaIGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Dec 2017 03:06:10 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2dTd-1eoT5i3oXN-00sKl9; Sun, 31
- Dec 2017 09:05:56 +0100
+        id S1750946AbdLaIGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Dec 2017 03:06:14 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LyljP-1f2ET13XdP-01682D; Sun, 31
+ Dec 2017 09:06:00 +0100
 From:   tboegi@web.de
 To:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
         git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
         larsxschneider@gmail.com
 Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH 2/5] strbuf: add xstrdup_toupper()
-Date:   Sun, 31 Dec 2017 09:05:54 +0100
-Message-Id: <20171231080554.22301-1-tboegi@web.de>
+Subject: [PATCH 4/5] utf8: add function to detect a missing UTF-16/32 BOM
+Date:   Sun, 31 Dec 2017 09:05:58 +0100
+Message-Id: <20171231080558.22401-1-tboegi@web.de>
 X-Mailer: git-send-email 2.16.0.rc0.4.ga4e00d4fa4
 In-Reply-To: <20171229152222.39680-1-lars.schneider@autodesk.com>
 References: <20171229152222.39680-1-lars.schneider@autodesk.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:WE1c8qhNkA1EM7SjqaTJyeEQwCTAcgmegYUNPoe7L0HLL/uKYw+
- DuP7yvvvZ4MXBCFEZboxs5yaEOz/+B/mtKrPh3soN/YgtsTe6d4E0tWxLl3dbIBgyjS5foC
- AQ8d0df7HUwVI5OaT4txYE8BJvKCiwlFE/QEG4+1x07M4P+BuUkJAI9l0F+u2ztli9Dst95
- Foer8+6huOF1HtVE9dGxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eKzRTouMods=:+PzzPyHODQdb++sjfj/pV5
- qVQnvo7RIo616VForCsu47cHpHWdNDs4plLEevSdnBfDpBeoSRrrRuTpjPV7jwL5XKJpIiHz2
- o1HM7iNkop0HxRwcSduYCGnGWq6sKyRZ9WAoeGON6IpdIWklzIlY2eRDtILEoRRhbwqOzHrkm
- NbuF+0ohCqbDsOG2hQy9pSj1o/5Py0nMvpZOYzwrX/UXb+aDJjaTi+iMrrIc5AAfmiV+I0RcE
- ohi5xYArmsItwbcHi/blpAZB38TzpcYZ5/1EKf2pmRAYY8hddSVqVC5YQ1038z4ZCML8yQBep
- 14ii+Bo8y1/fqUsSliX+u5ZiBmD7EkxhtDhdXg5DinxkVMfPVyO2DAacbEKTpXQ/Y148F+viD
- AW2AI7oU2jaTEHx2PdOSoUT/Z7sb5OV0+cnSWN9mSURj3HiHEhL/IJpjUabBj0Hmrin4s5HEZ
- HFVADOOSV0vIJ3/Gf5CLT1VkxVZkgPDvVGFL73ue2q367gW6XIVE8g29LD3ZFnfbLX89gFn+o
- puXDl7nFvQ+Z2P9fsoen1AW3HuShmLsLqsP0TqPN/xKDIRDGwja1BVzEDkOHosVC5P/mcJv4v
- c2KsSufiu3gX6qf1YWFWFrGnOmUukb4f3QjTkpgz9sb3vSiz0u1FjDjKhCXXxz+WInYM8dfmG
- e6hx7Qhe1i8nV70b0/mmmZmMI6E89WsVpn+cQ5uy+IE4YYAjHbNyTrojxbNtKqAmfPw34HxUv
- 1LyRK7M0mS6wZjEnZDXDZwizJwUBlHv2qtkPumRhsBUv+bjs/f14tS1VI38XFYmyohH68itJM
- cIBMQ0cJHw/evkz6yVgs1ODBfZZGnAilqiCKmnsl/4DR05qPmE=
+X-Provags-ID: V03:K0:E8rvryJVX0tRaHj+7lK9gmoN3WjtFoGUgsi3L5GimTxZdP8+p4l
+ 4bGtq3U7dznjHK0xZoHeszHMfW3DHFczPjZ/w/pRbfE45uabRscX+bwFl1+iZtgIkaEBgZ9
+ pFpftcyu+jHsWZtklQ9ic5TAYhvP4LgCNXjJDhF7jw3uWR2qLgGHQNB1TWQTfz1zy7EVQ6L
+ AWEhsAcYDvIl5mCYsCR7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DcjD2FEmG0s=:wXb17JmfsbjeGh/0BVoXnu
+ uFjntIF3BrF+Ll21Rdn3X+yjJU2P4Zqtnkk+1pY8Y3xJtRPOSL6OBw7zRXSyY5QOAl8ClI14b
+ eu0kkIJEnsKnzk78TC+UvlDIllRRg/KY/c3hKDffv/T5+9gq3UMa9iejRYLcl4gakHomZ1ECR
+ upsr+Ah7aIy7QSgDifm81R6ntOUPYg2qk7Dt+1OqwdPIIjrIAE22nvipWzaIESkk/x/A1iNx2
+ yedagz0jdR+0F0z+tKDzKDbUIk9qKGUTLxQfLuELM2TrjwLplvzdU+DjSzI1snHf6qmBzEv5z
+ Ijjr/A/wGbAqvmimhC+fzza9PLKOC0IvTdC4Y9AG7JI3YOoi7crLfyRPh42uMjEvE9jyiyw0I
+ eVAT5pcNrl81c45YfxMKh16aGzXTPI51l/4tsIABIHWmRjkABib7ydvUm8KrvzsMtkYWjlGko
+ huBXBr80oeTnsiLp7bNNLvhPmwLhlF8OYZNnC8WsjTIGyqvOXi1FqKSwjclYMi7NSlDrXWOs+
+ 3W59+wo9m4lM0kO6WXjPkfcEn58yQyddi/H2MJwrw8cE0Vy4ILgTPNSXkPpMqtdDaRVxsPVvR
+ aWaX504fsxBnTl/+pswIsNCgSdcrFiJfl4hFfglX6fvOninqRl1bdXRwAByQ450NbmiYv+NvC
+ 6xbnYXgls2OCTV3jN4YqDnjhsMeBYlVX8ewn5lUtsC+l6DivthzcKRmw+pkwpuSrnbamilwCf
+ Aeew35W3ZOllOJiPMUNNr8rn34Q0MhOZcqEhLwllOzLXDeWeJWUnb7keRe0RA5GyhYM1DMqfu
+ KQVciNifqgCgKaDIUxGsMAo8uHsalumQxLJcxyfn+ZLHOk3byI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,54 +57,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Create a copy of an existing string and make all characters upper case.
-Similar xstrdup_tolower().
+If the endianness is not defined in the encoding name, then let's
+be strict and require a BOM to avoid any encoding confusion. The
+has_missing_utf_bom() function returns true if a required BOM is
+missing.
+
+The Unicode standard instructs to assume big-endian if there in no BOM
+for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
+in HTML5 recommends to assume little-endian to "deal with deployed
+content" [3]. Strictly requiring a BOM seems to be the safest option
+for content in Git.
 
 This function is used in a subsequent commit.
+
+[1] http://unicode.org/faq/utf_bom.html#gen6
+[2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
+     Section 3.10, D98, page 132
+[3] https://encoding.spec.whatwg.org/#utf-16le
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Torsten Bögershausen <tboegi@web.de>
 ---
- strbuf.c | 13 +++++++++++++
- strbuf.h |  1 +
- 2 files changed, 14 insertions(+)
+ utf8.c | 13 +++++++++++++
+ utf8.h | 16 ++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/strbuf.c b/strbuf.c
-index 8007be8fba..ee05626dc1 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -785,6 +785,19 @@ char *xstrdup_tolower(const char *string)
- 	return result;
+diff --git a/utf8.c b/utf8.c
+index 776660ee12..1978d6c42a 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -562,6 +562,19 @@ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
+ 	);
  }
  
-+char *xstrdup_toupper(const char *string)
++int has_missing_utf_bom(const char *enc, const char *data, size_t len)
 +{
-+	char *result;
-+	size_t len, i;
-+
-+	len = strlen(string);
-+	result = xmallocz(len);
-+	for (i = 0; i < len; i++)
-+		result[i] = toupper(string[i]);
-+	result[i] = '\0';
-+	return result;
++	return (
++	   !strcmp(enc, "UTF-16") &&
++	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
++	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
++	) || (
++	   !strcmp(enc, "UTF-32") &&
++	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
++	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
++	);
 +}
 +
- char *xstrvfmt(const char *fmt, va_list ap)
- {
- 	struct strbuf buf = STRBUF_INIT;
-diff --git a/strbuf.h b/strbuf.h
-index 14c8c10d66..df7ced53ed 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -607,6 +607,7 @@ __attribute__((format (printf,2,3)))
- extern int fprintf_ln(FILE *fp, const char *fmt, ...);
+ /*
+  * Returns first character length in bytes for multi-byte `text` according to
+  * `encoding`.
+diff --git a/utf8.h b/utf8.h
+index 4711429af9..26b5e91852 100644
+--- a/utf8.h
++++ b/utf8.h
+@@ -79,4 +79,20 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
+  */
+ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len);
  
- char *xstrdup_tolower(const char *);
-+char *xstrdup_toupper(const char *);
- 
- /**
-  * Create a newly allocated string using printf format. You can do this easily
++/*
++ * If the endianness is not defined in the encoding name, then we
++ * require a BOM. The function returns true if a required BOM is missing.
++ *
++ * The Unicode standard instructs to assume big-endian if there
++ * in no BOM for UTF-16/32 [1][2]. However, the W3C/WHATWG
++ * encoding standard used in HTML5 recommends to assume
++ * little-endian to "deal with deployed content" [3].
++ *
++ * [1] http://unicode.org/faq/utf_bom.html#gen6
++ * [2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
++ *     Section 3.10, D98, page 132
++ * [3] https://encoding.spec.whatwg.org/#utf-16le
++ */
++int has_missing_utf_bom(const char *enc, const char *data, size_t len);
++
+ #endif
 -- 
 2.16.0.rc0.4.ga4e00d4fa4
 
