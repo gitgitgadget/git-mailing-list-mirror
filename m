@@ -2,173 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B25E71F428
-	for <e@80x24.org>; Sat, 30 Dec 2017 23:01:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ABD01F428
+	for <e@80x24.org>; Sun, 31 Dec 2017 02:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750970AbdL3XBF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Dec 2017 18:01:05 -0500
-Received: from mail-it0-f53.google.com ([209.85.214.53]:39750 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750917AbdL3XBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Dec 2017 18:01:04 -0500
-Received: by mail-it0-f53.google.com with SMTP id 68so34668419ite.4
-        for <git@vger.kernel.org>; Sat, 30 Dec 2017 15:01:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RkDsVlS9DZUShmIkbt5UXXZY17pp+RtdN8myyFVu45Y=;
-        b=OuUL3mEnjVPTWDoTej6wEqyXopeEL2VZzuUTY3T/RrniYbSJ2PlgxsX42afd+SnARd
-         3mn1naDmrHxD+5cLopfPuYGzV7WqwS+czud0eoABPhdb0G8z7Ok+iDqXqcXZ7vSAxzSU
-         tcsx2VQzYTMRkZOh2BQBMgOEA13zGCpXScierBHbXYsTuPzJNj10ijOu253vL9/lpm/E
-         qTa6JWd1z4XDnWTsMOXAZbrCdjA1Lm+nUc8RdS5A33gaS8zRjp14TeE5SFJXfL/TiaWX
-         bbjKhzssqB1tQnI6iJb951qqN5+LduY4BZuWLmae0U8BaNY//XPEVxwsxW6PehUWUMV2
-         KMxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RkDsVlS9DZUShmIkbt5UXXZY17pp+RtdN8myyFVu45Y=;
-        b=rFUXrf38ry+Bnt0fqzgnie74DoZH0YGg2SNfVjF/sdffzh3uGxc/oA6nqZg3Nr5FKG
-         df3ouLTr4dqnTZBhK30oCF/tl5b/ZNof0CoZVnBtUNzCs+SsFOhd0+3K1Gs4E93bkYPz
-         L7UwC6oyGc5nl63d2VRhlne1/uXDKR5gBzT+nxPBVEWpauUUuzw7MdVwBn2+Lh3riOxM
-         bcrohtw1oLbR4IK6RCONGxnQSvoEB6IkqV6RG3zd/cc/ck7nhbAlvrK/SWU7eE/l1qnp
-         XQaOa5ctEMnw5fUmtdeHXbsiv15zQcq8+jZeigSoXDhZl3UWpCiwA53BjTBfOwqXjZiP
-         t5yw==
-X-Gm-Message-State: AKGB3mJQ7MwJjLa7GRRkUqobN5anze+chIzAaB2STYdvzv45zSEeOa9a
-        VPBW5IsXNeHaklF/0ATxIkxlgZxjIk8UtjxM4HM=
-X-Google-Smtp-Source: ACJfBouxMe6YB6Q2JIndUqzRzofHGEiEH8KMxKKMmOCybiJXYMc/dWe9yh7zvKCcml4GpQhTyElz/k1JGiGLxknbBRQ=
-X-Received: by 10.36.124.197 with SMTP id a188mr50652791itd.63.1514674863233;
- Sat, 30 Dec 2017 15:01:03 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.79.28.137 with HTTP; Sat, 30 Dec 2017 15:01:02 -0800 (PST)
-In-Reply-To: <20171230181557.GA30351@sigill.intra.peff.net>
-References: <87zi616vgf.fsf@evledraar.gmail.com> <20171229225121.13805-1-avarab@gmail.com>
- <20171229231631.GS3693@zaya.teonanacatl.net> <20171230015533.GA27130@sigill.intra.peff.net>
- <87tvw875vh.fsf@evledraar.gmail.com> <20171230144505.GA29252@sigill.intra.peff.net>
- <87po6w6yul.fsf@evledraar.gmail.com> <20171230181557.GA30351@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 31 Dec 2017 00:01:02 +0100
-Message-ID: <CAP8UFD3QhTUj+j3vBGrm0sTQ2dSOLS-m2_PwFj6DZS4VZHKRTQ@mail.gmail.com>
-Subject: Re: [PATCH] diff-tree: obey the color.ui configuration
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Zefram <zefram@fysh.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1750917AbdLaCcj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 30 Dec 2017 21:32:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56585 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750806AbdLaCci (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Dec 2017 21:32:38 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C52AC2362;
+        Sat, 30 Dec 2017 21:32:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=QRzve56ptuh5eMcSXOmmK8Fzm4E
+        =; b=YwSw1NZsJ/mJ55Qe4dgsbo0+23azYvds6SjnN8M6Iu+LBAU6MVZOIsKMoGG
+        Ythi82H2Bm1F2oXHP2kE21beXWlpk/Q7oFbqdBzhPU/Q4e11hkQE9BR8WolE1Nxb
+        rXJ30hme6gK1cxBfiStxpGLkK36HdZBlo7wsJ65DZ9SR1irc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; q=dns; s=sasl; b=UZvFnZB2888D6X4N8BoFV
+        rZyJvyqrqYDLMdgglnspuB02+YCeQsKx+i88qgmWRZzpg6bx8FdRhrqut7b+QgUJ
+        GpJkZ6xumgbWQPn89YTQpn7ynpVHL7Hbod8UCZ4rmIa1GCqBu0hK0XKlgyLK9bzF
+        p97pGzDOosL45+PRQ/XXvA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55243C2361;
+        Sat, 30 Dec 2017 21:32:37 -0500 (EST)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.86.113])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AA30EC2360;
+        Sat, 30 Dec 2017 21:32:36 -0500 (EST)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] http: fix v1 protocol tests with apache httpd < 2.4
+Date:   Sat, 30 Dec 2017 21:32:34 -0500
+Message-Id: <20171231023234.21215-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.16.0.rc0
+X-Pobox-Relay-ID: DD3DDF24-EDD2-11E7-80E9-575F0C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 30, 2017 at 7:15 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Dec 30, 2017 at 04:04:50PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > I do like the idea of using "show", though. We know the point is to sh=
-ow
->> > the output to the user, so we don't mind at all if the behavior or
->> > output of show changes in future versions (unless we consider the fina=
-l
->> > output of bisect to be machine-readable, but I certainly don't).
+The apache config used by tests was updated to use the SetEnvIf
+directive to set the Git-Protocol header in 19113a26b6 ("http: tell
+server that the client understands v1", 2017-10-16).
 
-I think that the first line that gives the sha1 of the first bad
-commit (XXX is the first bad commit) should be machine-readable,
-because there have been people writing scripts on top of git bisect.
-Below that I am ok if it is more fancy, especially because it looks
-like it already used some coloring.
+Setting the Git-Protocol header is restricted to httpd >= 2.4, but
+mod_setenvif and the SetEnvIf directive work with lower versions, at
+least as far back as 2.0, according to the httpd documentation:
 
->> Not knowing the internal APIs for that well, is this basically a matter
->> of copy/pasting (or factoring out into a function), some of this:
->>
->>     git grep -W cmd_show -- builtin/log.c
->>
->> I.e. boilerplate + calling cmd_log_walk() to yield a result similar to
->> e22278c0a0 ("bisect: display first bad commit without forking a new
->> process", 2009-05-28).
->>
->> Or is it preferred to just fake up argc/argv and call cmd_show()
->> directly? I haven't seen many examples of that in the codebase:
->>
->>     git grep -W '(return|=3D)\s*cmd.*argc' -- '*.c'
->>
->> But I don't see why it wouldn't work, the cmd_show() doesn't call exit()
->> itself, and we're right about to call exit anyway when our current
->> diff-tree invocation is called.
->
-> Hmm, I just assumed we were actually calling diff-tree. But looking at
-> that code in bisect, it literally is calling log_tree_commit(), which is
-> the same thing that git-show is doing.
+    https://httpd.apache.org/docs/2.0/mod/mod_setenvif.html
 
-Nice. This means that we should be able to make small changes to move
-from a diff-tree like output to a show like output.
+Drop the restriction.  Tested with httpd 2.2 and 2.4.
 
-> So yet another option is to just set up our options similarly:
->
-> diff --git a/bisect.c b/bisect.c
-> index 0fca17c02b..1eadecd42a 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -893,9 +893,11 @@ static void show_diff_tree(const char *prefix, struc=
-t commit *commit)
->
->         /* diff-tree init */
->         init_revisions(&opt, prefix);
-> -       git_config(git_diff_basic_config, NULL); /* no "diff" UI options =
-*/
-> +       git_config(git_diff_ui_config, NULL);
->         opt.abbrev =3D 0;
->         opt.diff =3D 1;
-> +       opt.combine_merges =3D 1;
-> +       opt.dense_combined_merges =3D 1;
->
->         /* This is what "--pretty" does */
->         opt.verbose_header =3D 1;
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
 
-I am ok with that kind of changes.
+These tests fail with 2.16.0-rc0 on CentOS-6, which uses
+httpd-2.2.
 
-> Though I do kind of like the idea of just delegating to git-show.
-> There's no real need for us to have our own logic.
+I removed the version restriction entirely rather than adjust
+the version.  I believe SetEnvIf works on httpd >= 2.0.  I'm
+not sure if we aim to support anything less than httpd 2.0,
+but I'm betting not.  If that's incorrect, I can add some
+IfVersion conditions.
 
-I don't think there is a lot of logic in the above. We are mostly just
-setting parameters before calling setup_revisions() and
-log_tree_commit().
+As noted in the commit message, I only tested with httpd 2.2
+and 2.4 (on CentOS 6/7 and Fedora 26-28).  If anyone has older
+httpd systems which need support, it would be great if they
+could test this before 2.16.0 is finalized, so we can avoid
+shipping with any failing tests.
 
-If we think that the above is too much "logic", then we should
-probably try to refactor the revision walking interface to make it
-simpler, so that not as much "logic" is needed to call it. If this
-succeeds, then this could help simplify a lot of things throughout the
-code base.
+ t/lib-httpd/apache.conf | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-> I think calling cmd_show() from bisect.c is supposed to be forbidden
-> (library code shouldn't call up to builtin code). I was going to suggest
-> just using run_command() to call git-show. After all, we do this only
-> once at the very end of the bisection (which is pretty heavy-weight, as
-> it surely has forked a lot of processes to do the actual testing).
->
-> But that would be directly undoing Christian's e22278c0a0 (bisect:
-> display first bad commit without forking a new process, 2009-05-28). I'm
-> of the opinion that would be OK, but maybe Christian has input. :)
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index df19436314..724d9ae462 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -25,6 +25,9 @@ ErrorLog error.log
+ <IfModule !mod_headers.c>
+ 	LoadModule headers_module modules/mod_headers.so
+ </IfModule>
++<IfModule !mod_setenvif.c>
++	LoadModule setenvif_module modules/mod_setenvif.so
++</IfModule>
+ 
+ <IfVersion < 2.4>
+ LockFile accept.lock
+@@ -67,9 +70,6 @@ LockFile accept.lock
+ <IfModule !mod_unixd.c>
+ 	LoadModule unixd_module modules/mod_unixd.so
+ </IfModule>
+-<IfModule !mod_setenvif.c>
+-	LoadModule setenvif_module modules/mod_setenvif.so
+-</IfModule>
+ </IfVersion>
+ 
+ PassEnv GIT_VALGRIND
+@@ -79,9 +79,7 @@ PassEnv ASAN_OPTIONS
+ PassEnv GIT_TRACE
+ PassEnv GIT_CONFIG_NOSYSTEM
+ 
+-<IfVersion >= 2.4>
+-	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
+-</IfVersion>
++SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
+ 
+ Alias /dumb/ www/
+ Alias /auth/dumb/ www/auth/dumb/
+-- 
+2.16.0.rc0
 
-In general I am against adding forks that are not necessary and not
-specially useful, as they don't perform well on some platforms or some
-machines (like big servers where new processes tend to be allocated to
-a different CPU).
-
-I know that in this case it happens only once after usually a lot of
-processing and forking, but I don't think it gives a good example and
-goes in the right direction.
-
-Yes, it looks ugly to have 10 or 20 lines of code to just set
-parameters for setup_revisions() and log_tree_commit(), and yes I
-don't like the revision walking interface, but I think this is a
-different problem that we should take care of separately.
-
-Thanks for working on this.
