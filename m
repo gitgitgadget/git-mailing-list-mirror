@@ -2,135 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9B71F404
-	for <e@80x24.org>; Sun, 31 Dec 2017 08:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0261B1F404
+	for <e@80x24.org>; Sun, 31 Dec 2017 08:59:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751002AbdLaIGZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Dec 2017 03:06:25 -0500
-Received: from mout.web.de ([212.227.17.12]:65038 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750946AbdLaIGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Dec 2017 03:06:14 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LyljP-1f2ET13XdP-01682D; Sun, 31
- Dec 2017 09:06:00 +0100
-From:   tboegi@web.de
-To:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
-        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
-        larsxschneider@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH 4/5] utf8: add function to detect a missing UTF-16/32 BOM
-Date:   Sun, 31 Dec 2017 09:05:58 +0100
-Message-Id: <20171231080558.22401-1-tboegi@web.de>
-X-Mailer: git-send-email 2.16.0.rc0.4.ga4e00d4fa4
-In-Reply-To: <20171229152222.39680-1-lars.schneider@autodesk.com>
-References: <20171229152222.39680-1-lars.schneider@autodesk.com>
+        id S1750915AbdLaI7F (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Dec 2017 03:59:05 -0500
+Received: from mail-qt0-f171.google.com ([209.85.216.171]:36009 "EHLO
+        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750724AbdLaI7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Dec 2017 03:59:04 -0500
+Received: by mail-qt0-f171.google.com with SMTP id a16so58257379qtj.3
+        for <git@vger.kernel.org>; Sun, 31 Dec 2017 00:59:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=gmu98UhL/11xSHJM9nOtZJwdXNGX+J8ZMblBgJVPYnA=;
+        b=gSb/pI7d9tz1fm+qPEPFFZj3lubkk/7mbzw8UPnIji4xg9ulmctWfRugyqheEBI7Dy
+         95IE2AE9cdObSdszhHlwhGmBMDqKGQS7SJdPibFCydQSEEjQBdOhbqAp9sabIvSE/F4X
+         29oENC1x2v7wTa8EZKmrpxLnwg2xW70Vlp7ipQuwPNbJljKJo7Mrfsn0rYZz7Yiu3M0l
+         OzWZXmCb6IdXK/XHV0IYW5Js18s2siKNIrOW84saMGDxM8mdgV1/dbuN4bLoyuGo6d6S
+         un9tZYQEKj4xMt0SV1/hHmR4YKhdriQw8luofhfMPLuHYIVTZ44/FlkI827cb+PXUs4W
+         AYMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=gmu98UhL/11xSHJM9nOtZJwdXNGX+J8ZMblBgJVPYnA=;
+        b=l/yNgct8RfkKmKiAsEjC6Qgs0U4MLAhejicBUNBHXxw1s05Xg3JuovNfIsu8KdAhOd
+         ig2wueUcxyV5gSakZp0rxTk6NmzzzM8D+1Pf4i1t0+o2xszKMMMCppUAA/nFQ8Qnlzca
+         CeG+p/gdMcjnzgGo7PxqM6gJob2tVRUS54NhhUpo+5nOo/pb4TjuAlpWSBPe0pFPk8zD
+         BLkz9ng+TMnT49+GnIAC+TBHFYG3ecDjBg0sXH0H+d2A+R8ciBVz2JjOtNX2sPu2lBsY
+         S9KJBvwaXNkXNOP+0rn4lWE+23ZicS8o+PK6OYLK91Q/2DfjawLZQQW1/3Kk0fLTYYfP
+         59ig==
+X-Gm-Message-State: AKGB3mLhHpjgpt0Yo0VpoCWL384D/pWkfMzfNZ5J5tuCfJixpJCKaAUz
+        8jGAo7dQCdPiJpFXePLnpMbMtWxGePdm0Rvc7is=
+X-Google-Smtp-Source: ACJfBottiTfH534EzjkZNigReBSODYnCjNJ5PnOK7TX8Rm679BAutCESGgA63Oi0dkB4nkK8+k+LPtJxpsOzt8oZ+S4=
+X-Received: by 10.200.35.28 with SMTP id a28mr56884953qta.51.1514710743919;
+ Sun, 31 Dec 2017 00:59:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:E8rvryJVX0tRaHj+7lK9gmoN3WjtFoGUgsi3L5GimTxZdP8+p4l
- 4bGtq3U7dznjHK0xZoHeszHMfW3DHFczPjZ/w/pRbfE45uabRscX+bwFl1+iZtgIkaEBgZ9
- pFpftcyu+jHsWZtklQ9ic5TAYhvP4LgCNXjJDhF7jw3uWR2qLgGHQNB1TWQTfz1zy7EVQ6L
- AWEhsAcYDvIl5mCYsCR7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DcjD2FEmG0s=:wXb17JmfsbjeGh/0BVoXnu
- uFjntIF3BrF+Ll21Rdn3X+yjJU2P4Zqtnkk+1pY8Y3xJtRPOSL6OBw7zRXSyY5QOAl8ClI14b
- eu0kkIJEnsKnzk78TC+UvlDIllRRg/KY/c3hKDffv/T5+9gq3UMa9iejRYLcl4gakHomZ1ECR
- upsr+Ah7aIy7QSgDifm81R6ntOUPYg2qk7Dt+1OqwdPIIjrIAE22nvipWzaIESkk/x/A1iNx2
- yedagz0jdR+0F0z+tKDzKDbUIk9qKGUTLxQfLuELM2TrjwLplvzdU+DjSzI1snHf6qmBzEv5z
- Ijjr/A/wGbAqvmimhC+fzza9PLKOC0IvTdC4Y9AG7JI3YOoi7crLfyRPh42uMjEvE9jyiyw0I
- eVAT5pcNrl81c45YfxMKh16aGzXTPI51l/4tsIABIHWmRjkABib7ydvUm8KrvzsMtkYWjlGko
- huBXBr80oeTnsiLp7bNNLvhPmwLhlF8OYZNnC8WsjTIGyqvOXi1FqKSwjclYMi7NSlDrXWOs+
- 3W59+wo9m4lM0kO6WXjPkfcEn58yQyddi/H2MJwrw8cE0Vy4ILgTPNSXkPpMqtdDaRVxsPVvR
- aWaX504fsxBnTl/+pswIsNCgSdcrFiJfl4hFfglX6fvOninqRl1bdXRwAByQ450NbmiYv+NvC
- 6xbnYXgls2OCTV3jN4YqDnjhsMeBYlVX8ewn5lUtsC+l6DivthzcKRmw+pkwpuSrnbamilwCf
- Aeew35W3ZOllOJiPMUNNr8rn34Q0MhOZcqEhLwllOzLXDeWeJWUnb7keRe0RA5GyhYM1DMqfu
- KQVciNifqgCgKaDIUxGsMAo8uHsalumQxLJcxyfn+ZLHOk3byI=
+Received: by 10.12.198.2 with HTTP; Sun, 31 Dec 2017 00:59:03 -0800 (PST)
+In-Reply-To: <CAO2669gb9+VEEkS2Pa=ZNbA9FsZT2t-7MmG9Nc=-nmB3Rcicig@mail.gmail.com>
+References: <CAO2669gb9+VEEkS2Pa=ZNbA9FsZT2t-7MmG9Nc=-nmB3Rcicig@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 31 Dec 2017 03:59:03 -0500
+X-Google-Sender-Auth: OZqeaJjuumVlnwQyohxgF8quzP8
+Message-ID: <CAPig+cQhL-r-V8tMtmn3cTB90=2sxFAk65zpzEvMM5rRHdH3Ow@mail.gmail.com>
+Subject: Re: Segfault
+To:     Andrew Tsykhonya <andrew.tsykhonya@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lars Schneider <larsxschneider@gmail.com>
+On Fri, Dec 29, 2017 at 4:04 AM, Andrew Tsykhonya
+<andrew.tsykhonya@gmail.com> wrote:
+> git stash pop resulted in crash:
+> /usr/local/Cellar/git/2.10.2/libexec/git-core/git-stash: line 470:
+> 14946 Segmentation fault: 11 git merge-recursive $b_tree -- $c_tree
+> $w_tree
+> although, the changes have been applied successfully.
 
-If the endianness is not defined in the encoding name, then let's
-be strict and require a BOM to avoid any encoding confusion. The
-has_missing_utf_bom() function returns true if a required BOM is
-missing.
+Thanks for the problem report. Can you come up with a reproduction
+recipe in order to help debug the problem?
 
-The Unicode standard instructs to assume big-endian if there in no BOM
-for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
-in HTML5 recommends to assume little-endian to "deal with deployed
-content" [3]. Strictly requiring a BOM seems to be the safest option
-for content in Git.
-
-This function is used in a subsequent commit.
-
-[1] http://unicode.org/faq/utf_bom.html#gen6
-[2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
-     Section 3.10, D98, page 132
-[3] https://encoding.spec.whatwg.org/#utf-16le
-
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
- utf8.c | 13 +++++++++++++
- utf8.h | 16 ++++++++++++++++
- 2 files changed, 29 insertions(+)
-
-diff --git a/utf8.c b/utf8.c
-index 776660ee12..1978d6c42a 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -562,6 +562,19 @@ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
- 	);
- }
- 
-+int has_missing_utf_bom(const char *enc, const char *data, size_t len)
-+{
-+	return (
-+	   !strcmp(enc, "UTF-16") &&
-+	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
-+	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
-+	) || (
-+	   !strcmp(enc, "UTF-32") &&
-+	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
-+	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
-+	);
-+}
-+
- /*
-  * Returns first character length in bytes for multi-byte `text` according to
-  * `encoding`.
-diff --git a/utf8.h b/utf8.h
-index 4711429af9..26b5e91852 100644
---- a/utf8.h
-+++ b/utf8.h
-@@ -79,4 +79,20 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
-  */
- int has_prohibited_utf_bom(const char *enc, const char *data, size_t len);
- 
-+/*
-+ * If the endianness is not defined in the encoding name, then we
-+ * require a BOM. The function returns true if a required BOM is missing.
-+ *
-+ * The Unicode standard instructs to assume big-endian if there
-+ * in no BOM for UTF-16/32 [1][2]. However, the W3C/WHATWG
-+ * encoding standard used in HTML5 recommends to assume
-+ * little-endian to "deal with deployed content" [3].
-+ *
-+ * [1] http://unicode.org/faq/utf_bom.html#gen6
-+ * [2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
-+ *     Section 3.10, D98, page 132
-+ * [3] https://encoding.spec.whatwg.org/#utf-16le
-+ */
-+int has_missing_utf_bom(const char *enc, const char *data, size_t len);
-+
- #endif
--- 
-2.16.0.rc0.4.ga4e00d4fa4
-
+Also, what happens if you update to a newer version of Git? You appear
+to be running 2.10.2, whereas the latest version in Homebrew seems to
+be 2.15.1.
