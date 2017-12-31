@@ -2,123 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ABD01F428
-	for <e@80x24.org>; Sun, 31 Dec 2017 02:32:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6CDA1F404
+	for <e@80x24.org>; Sun, 31 Dec 2017 08:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750917AbdLaCcj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 30 Dec 2017 21:32:39 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56585 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750806AbdLaCci (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Dec 2017 21:32:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5C52AC2362;
-        Sat, 30 Dec 2017 21:32:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; s=sasl; bh=QRzve56ptuh5eMcSXOmmK8Fzm4E
-        =; b=YwSw1NZsJ/mJ55Qe4dgsbo0+23azYvds6SjnN8M6Iu+LBAU6MVZOIsKMoGG
-        Ythi82H2Bm1F2oXHP2kE21beXWlpk/Q7oFbqdBzhPU/Q4e11hkQE9BR8WolE1Nxb
-        rXJ30hme6gK1cxBfiStxpGLkK36HdZBlo7wsJ65DZ9SR1irc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; q=dns; s=sasl; b=UZvFnZB2888D6X4N8BoFV
-        rZyJvyqrqYDLMdgglnspuB02+YCeQsKx+i88qgmWRZzpg6bx8FdRhrqut7b+QgUJ
-        GpJkZ6xumgbWQPn89YTQpn7ynpVHL7Hbod8UCZ4rmIa1GCqBu0hK0XKlgyLK9bzF
-        p97pGzDOosL45+PRQ/XXvA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55243C2361;
-        Sat, 30 Dec 2017 21:32:37 -0500 (EST)
-Received: from morphine.paradise.teonanacatl.net (unknown [47.202.86.113])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AA30EC2360;
-        Sat, 30 Dec 2017 21:32:36 -0500 (EST)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] http: fix v1 protocol tests with apache httpd < 2.4
-Date:   Sat, 30 Dec 2017 21:32:34 -0500
-Message-Id: <20171231023234.21215-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.16.0.rc0
-X-Pobox-Relay-ID: DD3DDF24-EDD2-11E7-80E9-575F0C78B957-09356542!pb-smtp2.pobox.com
+        id S1750943AbdLaIGM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Dec 2017 03:06:12 -0500
+Received: from mout.web.de ([212.227.17.11]:57387 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750854AbdLaIGK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Dec 2017 03:06:10 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MSaZk-1eNxtU0YOC-00RYjY; Sun, 31
+ Dec 2017 09:05:52 +0100
+From:   tboegi@web.de
+To:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
+        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de,
+        larsxschneider@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 0/5] V2B: simplify convert.c/h
+Date:   Sun, 31 Dec 2017 09:05:48 +0100
+Message-Id: <20171231080548.22215-1-tboegi@web.de>
+X-Mailer: git-send-email 2.16.0.rc0.4.ga4e00d4fa4
+In-Reply-To: <20171229152222.39680-1-lars.schneider@autodesk.com>
+References: <20171229152222.39680-1-lars.schneider@autodesk.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:UICf2vhBmhPd9hWj5efBXmljf67j69ooTC+j4pVMYadTvjhF2iF
+ rWdCfLuyEnwODxKlKl4mSNCv3zxojLpJByuCPxV0FvzSVa59g6NsOheU8nADmN3tltOK7oF
+ ADuYUBooQu1CGDsgfDPMtodjqhu8WXfXOgKAekefucQpNLbWTq6EN5BGxYWXQ1+8eJeAYKh
+ z47+Ym+z21OcF4SH+t97g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NrIl3McYQ9M=:dXlDMt/+UGpbPpBJEkQskC
+ j6RuAeJUkd1tXqCbuO2ouw9Z7cnjayyXtHwG8KiNPWLigOMdaT+TvpHiZMNDwVuSB4ESB39Pw
+ qIDaivWutXOQfF4g76StF3IMUoiVs76uQvUsSHmwOd0AtlXy0r0e+qkrgTwD/5iwNo+aMKUZ4
+ r2NvedaVK/ULHUiERxncON0JxVoQMDwuHKWyeXKWN9y0pLQETc2oxuPSqT8iBiTFH+b5AZVGy
+ xi8S6K3efXscUKrvbGLH1TQzCL9TvBoOOTVLJbQlkAspp7tEsbdCGLf/FZN8tx95r6dYdR7CP
+ JNN7hSIjpTRWGNDoi6dOyyqHerIWWe17BzqF5iaKdvA3pY9tkYdc7zvf4M3OBjTZKjTFI//UI
+ Q3lBTorUniDQKM493CFatEveaZgumHlmrTBjjk2IlR4VEYgevEcRRGqrFyuWPZ6apfLqIOns6
+ 1K5R+b2kSDvruy1S4yIo8qzSPiEFTYsSYMqXMLl1FyLQwd6FobdRJymj7JgVS574Ihj4vxGV9
+ Yz0YQW667XJvfgGlOQNWIGph3O+MKj/5jXdea+5QfOggDJj+63ZMZrcXBIwuKTfpAWm6M7tSf
+ sRblxcj+hIkkoRt68tdjBBuHaTfiH2fG52/XQeMxLnqHfm78xA79AtHbHFaHLsUObRLzYv3VV
+ auXvnRDa/RdAizqkwZTrto7rInV+VkZj8RFGqX6/Ce7uFQcc9yyLTzCMDB5JGNElQfGxxGP41
+ kDMnL0rkTXM6Hak+H5E388JqnVJEUO+sPiy+cW6hNucjMslgo72T/OWIS1orrzu/v3ogcp7ky
+ /9Lj/TDU2P4NPHdkPHJ70qNmLQDPoY/8+6zxJYGBUWSl/RnZ0U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The apache config used by tests was updated to use the SetEnvIf
-directive to set the Git-Protocol header in 19113a26b6 ("http: tell
-server that the client understands v1", 2017-10-16).
+From: Torsten Bögershausen <tboegi@web.de>
 
-Setting the Git-Protocol header is restricted to httpd >= 2.4, but
-mod_setenvif and the SetEnvIf directive work with lower versions, at
-least as far back as 2.0, according to the httpd documentation:
+Simplify the convert.h/convert.c logic amd don't touch convert_to_git()
+The rest is v2 from Lars
 
-    https://httpd.apache.org/docs/2.0/mod/mod_setenvif.html
+Lars Schneider (4):
+  strbuf: add xstrdup_toupper()
+  utf8: add function to detect prohibited UTF-16/32 BOM
+  utf8: add function to detect a missing UTF-16/32 BOM
+  convert: add support for 'checkout-encoding' attribute
 
-Drop the restriction.  Tested with httpd 2.2 and 2.4.
+Torsten Bögershausen (1):
+  convert_to_git(): checksafe becomes an integer
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+ Documentation/gitattributes.txt |  59 +++++++++++
+ apply.c                         |   4 +-
+ convert.c                       | 210 +++++++++++++++++++++++++++++++++++++---
+ convert.h                       |  19 ++--
+ diff.c                          |   4 +-
+ environment.c                   |   2 +-
+ sha1_file.c                     |   8 +-
+ strbuf.c                        |  13 +++
+ strbuf.h                        |   1 +
+ t/t0028-checkout-encoding.sh    | 197 +++++++++++++++++++++++++++++++++++++
+ utf8.c                          |  37 +++++++
+ utf8.h                          |  25 +++++
+ 12 files changed, 549 insertions(+), 30 deletions(-)
+ create mode 100755 t/t0028-checkout-encoding.sh
 
-These tests fail with 2.16.0-rc0 on CentOS-6, which uses
-httpd-2.2.
-
-I removed the version restriction entirely rather than adjust
-the version.  I believe SetEnvIf works on httpd >= 2.0.  I'm
-not sure if we aim to support anything less than httpd 2.0,
-but I'm betting not.  If that's incorrect, I can add some
-IfVersion conditions.
-
-As noted in the commit message, I only tested with httpd 2.2
-and 2.4 (on CentOS 6/7 and Fedora 26-28).  If anyone has older
-httpd systems which need support, it would be great if they
-could test this before 2.16.0 is finalized, so we can avoid
-shipping with any failing tests.
-
- t/lib-httpd/apache.conf | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index df19436314..724d9ae462 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -25,6 +25,9 @@ ErrorLog error.log
- <IfModule !mod_headers.c>
- 	LoadModule headers_module modules/mod_headers.so
- </IfModule>
-+<IfModule !mod_setenvif.c>
-+	LoadModule setenvif_module modules/mod_setenvif.so
-+</IfModule>
- 
- <IfVersion < 2.4>
- LockFile accept.lock
-@@ -67,9 +70,6 @@ LockFile accept.lock
- <IfModule !mod_unixd.c>
- 	LoadModule unixd_module modules/mod_unixd.so
- </IfModule>
--<IfModule !mod_setenvif.c>
--	LoadModule setenvif_module modules/mod_setenvif.so
--</IfModule>
- </IfVersion>
- 
- PassEnv GIT_VALGRIND
-@@ -79,9 +79,7 @@ PassEnv ASAN_OPTIONS
- PassEnv GIT_TRACE
- PassEnv GIT_CONFIG_NOSYSTEM
- 
--<IfVersion >= 2.4>
--	SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
--</IfVersion>
-+SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
- 
- Alias /dumb/ www/
- Alias /auth/dumb/ www/auth/dumb/
 -- 
-2.16.0.rc0
+2.16.0.rc0.4.ga4e00d4fa4
 
