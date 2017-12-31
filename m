@@ -2,95 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05D161F406
-	for <e@80x24.org>; Sun, 31 Dec 2017 13:29:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C0331F406
+	for <e@80x24.org>; Sun, 31 Dec 2017 16:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750913AbdLaN32 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Dec 2017 08:29:28 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:41577 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750762AbdLaN31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Dec 2017 08:29:27 -0500
-Received: by mail-qt0-f195.google.com with SMTP id i40so58543582qti.8
-        for <git@vger.kernel.org>; Sun, 31 Dec 2017 05:29:27 -0800 (PST)
+        id S1751027AbdLaQC3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Dec 2017 11:02:29 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:33448 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750985AbdLaQC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Dec 2017 11:02:28 -0500
+Received: by mail-wm0-f67.google.com with SMTP id g130so11158807wme.0
+        for <git@vger.kernel.org>; Sun, 31 Dec 2017 08:02:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2MVk+euhcelE4qvYwGiBe8N6yGdQoLrVVa9eO0yYTAM=;
-        b=uOnHCqDsFueJRa8/nOdf6oRj1eUjTeEfhXiN9g9jsx+KAgUXfFTSOmyYy3eXg7ra58
-         Mp3JqMY6A/DXmLkZ7Ch7kihzAuS97nVT/+Dah7g7GIEoha+mJhAjDEjoifgfu6NIFbL8
-         sULWBJaPpRRPb0HGG/K3TaI4OBXHbMqtoz/CRnSw2TCK1vI4T0WcEZWU3upHcDMBTjED
-         8ck2eVOjEoU5aolPOZplN26HBzhhEfbm/kKOc8fZjlcrk5l7iRagOZeVETFlC43Z8JGP
-         nviGkUBxzKFVDmwJYSHNqKXZg79B/7GxQU6jrOb39eMIgaK64AAfbwMdoNps7O14iCwN
-         /iQA==
+        bh=LH/LZ9x6B7dTWyA+COGSOKRoNXIE38KAyv6SvT6lyzU=;
+        b=n9vYq4kClOijs7EmmshX5y/LNIRTUJ9a+ZEW+iWRvIITiOM4ra0cPlA5FAYSvBshW9
+         76ds2mk671PRS03oMNdNug4W8N03WqnYEdEr7i6e+KBAxhyjm0JWruTKCPzvysKYAh1D
+         h9cXziKv3cds8q6p29oXk2+I1eBBxQtpy+lj2JsnCSvX91ATB0+R2na/BzKbhUishF2R
+         zj1ZAu2rxQeH6PXO6sQ/INW7cTytL+YE/iDVaCGTZuf3bDeBjbViYMq2vut99EB0RMyz
+         8qSnUeZ2FqXAoPHsQhE4wg9RECTH1tpRKShpdS9Rf8ln+vpb8zrTMcAJllEvZHN10N/u
+         ypfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2MVk+euhcelE4qvYwGiBe8N6yGdQoLrVVa9eO0yYTAM=;
-        b=XGsfzb6TKBSq38NBHviYesY54IfNSEhDxoFsFpWwF0wTqfiv//enDkHwT8fp1tvtDV
-         fRgOhehIqKwDbXw0+WrBuP5UkujDtfG9ceCh/yIHd4ROYMDfR80eynBa8ki3uXAvmM4J
-         uVNC+DbVxrcy/VilVu6N9w2xNWnXaYito6s0qLtKrfWGUPafY69KUgzNhy+hnUz6fnPD
-         xCrYSydrCZY0pmPQbd/FVi3S1wK9BKSU5feJrfXp3hlP9fqjTXrCUfE4B9CjaHvReBdP
-         RyJgXZ9r1Q5s7LboMbpDqlxZg4YaanqbQb9XBL66rxDfZ/CxdVv1gMnUqFpK4LINUfE7
-         QLew==
-X-Gm-Message-State: AKGB3mLlsULnld3kcI8fFNKwc22Z6Q43gAbq13UCkGYjRtf8JrtO7Igz
-        5I+FrKj0u0J+Vn5Ub0FrdDHSO0Eym2xbiJd4n88=
-X-Google-Smtp-Source: ACJfBoue4ywHgqlXHIskFGVroS8BUiEzJgZSpmzboMGDeXEO1LgtoBM37JuKYid2kJz/Uev41fJV9L9MM5yN7yMvZOk=
-X-Received: by 10.200.37.253 with SMTP id f58mr50797985qtf.60.1514726966927;
- Sun, 31 Dec 2017 05:29:26 -0800 (PST)
+        bh=LH/LZ9x6B7dTWyA+COGSOKRoNXIE38KAyv6SvT6lyzU=;
+        b=FqbcqHOQqdFprjgS0pQImPuEJHUL3/S+GfcM/NxN+hEDx1RwwzNhY7bAdsQ7GBVoLM
+         HRfogIe90R8FLGHYJpTH2eMrJPXRYpp2wto8nEFusy/IoYVAUGslXmK35BQ0wkD4ysNP
+         GSmu8QQ/16ARqj06N2OZCJehjcdj4RbjpU1868lIPZ+vfBCFqpS1p1AY4S8yRQd7MvRh
+         QRjOWT7C/XXkpqTZcdujdAmRAEn3vUSS+UnSrrdntlDIaawCQJMqAjhYkJ3QYFEDxGtG
+         FBZvYl/2H5er1F+e73tIxhBRY7GnDo2uNzMyowKS+ZNyCQ4zjPCRun/YMhpX1asCxiZ8
+         m3AA==
+X-Gm-Message-State: AKGB3mKXjqO5QleY8H5YBhxYfmNbL6l56C9xYj8R6f3+/hFu5ZMIZkOw
+        THqA3AJWbHu51hFOQljcDmpfsg==
+X-Google-Smtp-Source: ACJfBosrUcD1oYmZvY7O3YRKTCajKJnvZtluWFWE3zz5PCP0zzz0M3leIOYbNjGEqyOYJWbQsWc9kA==
+X-Received: by 10.28.142.75 with SMTP id q72mr31594400wmd.45.1514736146904;
+        Sun, 31 Dec 2017 08:02:26 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
+        by smtp.gmail.com with ESMTPSA id x88sm12906174wrb.4.2017.12.31.08.02.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 31 Dec 2017 08:02:26 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/2] Travis CI: check unignored build artifacts
+Date:   Sun, 31 Dec 2017 17:02:04 +0100
+Message-Id: <20171231160206.19481-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
 MIME-Version: 1.0
-Received: by 10.12.208.108 with HTTP; Sun, 31 Dec 2017 05:29:26 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Sun, 31 Dec 2017 21:29:26 +0800
-Message-ID: <CANYiYbFPADn6LFawQoR+r9tcrvJccpCDG2UYHtJHT3j5w6E7JQ@mail.gmail.com>
-Subject: [L10N] Kickoff of translation for Git 2.16.0 round 1
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi guys,
+Every once in a while our explicit .gitignore files get out of sync when
+our build process learns to create new artifacts, but the .gitignore
+files are not updated accordingly.  It was recently that we got a report
+about unignored test helper executables, see 44103f419 (t/helper: ignore
+everything but sources, 2017-12-12).
 
-Happy new year.
+This short patch series teaches our Travis CI build scripts to detect
+unignored build artifacts at the end of builds, in the hope to catch
+these issues earlier.
 
-New round of Git l10n is coming. It's time to start l10n for Git 2.16.0.
-This time there are 64 updated messages need to be translated since last
-update:
+These patches should go on top 'sg/travis-skip-identical-test'.  The two
+patch series are conceptually independent, but would have a couple of
+conflicts when applied separately and then merged together, and I don't
+think it's worth carrying them in separate branches.
 
-    l10n: git.pot: v2.16.0 round 1 (64 new, 25 removed)
 
-    Generate po/git.pot from v2.16.0-rc0 for git v2.16.0 l10n round 1.
+SZEDER Gábor (2):
+  travis-ci: don't store P4 and Git LFS in the working tree
+  travis-ci: check that all build artifacts are .gitignore-d
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+ ci/lib-travisci.sh       | 14 ++++++++++++--
+ ci/run-linux32-docker.sh |  2 ++
+ ci/run-tests.sh          |  2 ++
+ ci/test-documentation.sh |  6 ++++++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
-You can get it from the usual place:
+-- 
+2.16.0.rc0.67.g3a46dbca7
 
-    https://github.com/git-l10n/git-po/
-
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
-
---
-Jiang Xin
