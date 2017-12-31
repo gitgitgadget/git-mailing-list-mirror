@@ -2,77 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0261B1F404
-	for <e@80x24.org>; Sun, 31 Dec 2017 08:59:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 993EC1F404
+	for <e@80x24.org>; Sun, 31 Dec 2017 10:12:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750915AbdLaI7F (ORCPT <rfc822;e@80x24.org>);
-        Sun, 31 Dec 2017 03:59:05 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:36009 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750724AbdLaI7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 31 Dec 2017 03:59:04 -0500
-Received: by mail-qt0-f171.google.com with SMTP id a16so58257379qtj.3
-        for <git@vger.kernel.org>; Sun, 31 Dec 2017 00:59:04 -0800 (PST)
+        id S1750910AbdLaKMT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 31 Dec 2017 05:12:19 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:37983 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750739AbdLaKMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 31 Dec 2017 05:12:18 -0500
+Received: by mail-wr0-f196.google.com with SMTP id y9so2697030wrb.5
+        for <git@vger.kernel.org>; Sun, 31 Dec 2017 02:12:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=gmu98UhL/11xSHJM9nOtZJwdXNGX+J8ZMblBgJVPYnA=;
-        b=gSb/pI7d9tz1fm+qPEPFFZj3lubkk/7mbzw8UPnIji4xg9ulmctWfRugyqheEBI7Dy
-         95IE2AE9cdObSdszhHlwhGmBMDqKGQS7SJdPibFCydQSEEjQBdOhbqAp9sabIvSE/F4X
-         29oENC1x2v7wTa8EZKmrpxLnwg2xW70Vlp7ipQuwPNbJljKJo7Mrfsn0rYZz7Yiu3M0l
-         OzWZXmCb6IdXK/XHV0IYW5Js18s2siKNIrOW84saMGDxM8mdgV1/dbuN4bLoyuGo6d6S
-         un9tZYQEKj4xMt0SV1/hHmR4YKhdriQw8luofhfMPLuHYIVTZ44/FlkI827cb+PXUs4W
-         AYMg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ElIdr+GOCTYTyLo86O/YnZMFNQlQo/xYlYxfSjc/dlI=;
+        b=h0Vv0ax6hLfK8JSOvBVjeHFCJ8NHqEW6dSnGCgmPFljIJ4glPhCZB9IBYaiMWjP6L7
+         gYGAQ3gegw4uwVlHtUVLObusdgXN8gAhPGHebSRbVxHcFHQmERDHbq8no2/wdDxF9BRq
+         BoDFKdKRBjaZNdyiD95cpi4d6fc5zLWRwVbpKqajQ+c7jYjAqAIyXog7AMvn0OS0R8qv
+         rx2TQ6kex9H7b2zaxKzTjYwYM8U+lYnhTTOWW1uKTnW7T9myOA88PgdN2o985171n2eP
+         v2pTCB99pW9gLxX46XX2PGht0QzMsLQCBI2SM+t1OyjGxcK6zJS6XvXWxGleIheD9x0X
+         VN6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=gmu98UhL/11xSHJM9nOtZJwdXNGX+J8ZMblBgJVPYnA=;
-        b=l/yNgct8RfkKmKiAsEjC6Qgs0U4MLAhejicBUNBHXxw1s05Xg3JuovNfIsu8KdAhOd
-         ig2wueUcxyV5gSakZp0rxTk6NmzzzM8D+1Pf4i1t0+o2xszKMMMCppUAA/nFQ8Qnlzca
-         CeG+p/gdMcjnzgGo7PxqM6gJob2tVRUS54NhhUpo+5nOo/pb4TjuAlpWSBPe0pFPk8zD
-         BLkz9ng+TMnT49+GnIAC+TBHFYG3ecDjBg0sXH0H+d2A+R8ciBVz2JjOtNX2sPu2lBsY
-         S9KJBvwaXNkXNOP+0rn4lWE+23ZicS8o+PK6OYLK91Q/2DfjawLZQQW1/3Kk0fLTYYfP
-         59ig==
-X-Gm-Message-State: AKGB3mLhHpjgpt0Yo0VpoCWL384D/pWkfMzfNZ5J5tuCfJixpJCKaAUz
-        8jGAo7dQCdPiJpFXePLnpMbMtWxGePdm0Rvc7is=
-X-Google-Smtp-Source: ACJfBottiTfH534EzjkZNigReBSODYnCjNJ5PnOK7TX8Rm679BAutCESGgA63Oi0dkB4nkK8+k+LPtJxpsOzt8oZ+S4=
-X-Received: by 10.200.35.28 with SMTP id a28mr56884953qta.51.1514710743919;
- Sun, 31 Dec 2017 00:59:03 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ElIdr+GOCTYTyLo86O/YnZMFNQlQo/xYlYxfSjc/dlI=;
+        b=aLBttwAelgSv1CA1X31MMjWtcWnwbT5/R2adygVcp2/WhlHaVj+P4ihyPZJlxbUUIE
+         +WrB397tYFlXTRLGdT8bZyTu1N6hGgxQytaImQ+9s3f+mMsj3jdefKuf4DsGNh1vcDob
+         bEs7jNz0LTHghYVLqLmWu+fwqdIejycQ7zb2Q51wcVUASZPRBNAyICqOOx3Dyhsrtv1M
+         iqvjpLTX7R1jRt/Y78+fZSdxD20bGyXZFAiCLE3OR0Ffuy2cKgETmLfpF86tng9NakCN
+         03VqzioDY+OXSUBQPaANn7p25yGQa9hWP6zlUiCytKdpz/YxUgyav9pYZEC38RU1LjnT
+         IBOg==
+X-Gm-Message-State: AKGB3mKavDSEZwufOn1lGJSkteCXFpx4sf//0MLX7lCcY5AV22ZcGuF5
+        q67ig7s7JJf8pHKRbnfJTuA=
+X-Google-Smtp-Source: ACJfBovjdjLFf0CUrKDJB1A53WkcdeBzU8nDPd7DJ9zUeWNZuI6kg4xinuWAP9qvDOy1GXl1ISkW+w==
+X-Received: by 10.223.170.138 with SMTP id h10mr13173182wrc.171.1514715136695;
+        Sun, 31 Dec 2017 02:12:16 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
+        by smtp.gmail.com with ESMTPSA id 11sm16357779wrx.73.2017.12.31.02.12.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 31 Dec 2017 02:12:16 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCHv2 0/3] Travis CI: skip commits with successfully built and tested trees
+Date:   Sun, 31 Dec 2017 11:12:02 +0100
+Message-Id: <20171231101205.7466-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
+In-Reply-To: <20171227164905.13872-1-szeder.dev@gmail.com>
+References: <20171227164905.13872-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.198.2 with HTTP; Sun, 31 Dec 2017 00:59:03 -0800 (PST)
-In-Reply-To: <CAO2669gb9+VEEkS2Pa=ZNbA9FsZT2t-7MmG9Nc=-nmB3Rcicig@mail.gmail.com>
-References: <CAO2669gb9+VEEkS2Pa=ZNbA9FsZT2t-7MmG9Nc=-nmB3Rcicig@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 31 Dec 2017 03:59:03 -0500
-X-Google-Sender-Auth: OZqeaJjuumVlnwQyohxgF8quzP8
-Message-ID: <CAPig+cQhL-r-V8tMtmn3cTB90=2sxFAk65zpzEvMM5rRHdH3Ow@mail.gmail.com>
-Subject: Re: Segfault
-To:     Andrew Tsykhonya <andrew.tsykhonya@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 29, 2017 at 4:04 AM, Andrew Tsykhonya
-<andrew.tsykhonya@gmail.com> wrote:
-> git stash pop resulted in crash:
-> /usr/local/Cellar/git/2.10.2/libexec/git-core/git-stash: line 470:
-> 14946 Segmentation fault: 11 git merge-recursive $b_tree -- $c_tree
-> $w_tree
-> although, the changes have been applied successfully.
+This is the second iteration of 'sg/travis-skip-identical-test',
+addressing the comments of Lars and Jonathan:
 
-Thanks for the problem report. Can you come up with a reproduction
-recipe in order to help debug the problem?
+  - Colorize the "Tip of $TRAVIS_BRANCH is exactly at $TAG" message
+    in the new patch 1/3.
 
-Also, what happens if you update to a newer version of Git? You appear
-to be running 2.10.2, whereas the latest version in Homebrew seems to
-be 2.15.1.
+  - Create the cache directory at the beginning of the build process
+    (patch 2/3).
+
+  - Limit the the cached good trees file size to 1000 records, to
+    prevent it from growing too large for git/git's forever living
+    integration branches (patch 3/3).
+
+  - Colorize the first line of the "skip build job because this tree has
+    been tested".  Green it is (3/3).
+
+  - Removed stray whitespace (3/3).
+
+  - Updated an in-code comment, to make clear which code path deals with
+    a non-existing good trees file (3/3).
+
+SZEDER Gábor (3):
+  travis-ci: print the "tip of branch is exactly at tag" message in
+    color
+  travis-ci: create the cache directory early in the build process
+  travis-ci: record and skip successfully built trees
+
+ ci/lib-travisci.sh        | 51 ++++++++++++++++++++++++++++++++++++++++++++++-
+ ci/run-linux32-docker.sh  |  2 ++
+ ci/run-static-analysis.sh |  2 ++
+ ci/run-tests.sh           |  3 ++-
+ ci/run-windows-build.sh   |  2 ++
+ ci/test-documentation.sh  |  2 ++
+ 6 files changed, 60 insertions(+), 2 deletions(-)
+
+-- 
+2.16.0.rc0.67.g3a46dbca7
+
+
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index 05e73123f..bade71617 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -16,7 +16,7 @@ skip_branch_tip_with_tag () {
+ 	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
+ 		test "$TAG" != "$TRAVIS_BRANCH"
+ 	then
+-		echo "Tip of $TRAVIS_BRANCH is exactly at $TAG"
++		echo "$(tput setaf 2)Tip of $TRAVIS_BRANCH is exactly at $TAG$(tput sgr0)"
+ 		exit 0
+ 	fi
+ }
+@@ -28,6 +28,9 @@ good_trees_file="$HOME/travis-cache/good-trees"
+ # message.
+ save_good_tree () {
+ 	echo "$(git rev-parse $TRAVIS_COMMIT^{tree}) $TRAVIS_COMMIT $TRAVIS_JOB_NUMBER $TRAVIS_JOB_ID" >>"$good_trees_file"
++	# limit the file size
++	tail -1000 "$good_trees_file" >"$good_trees_file".tmp
++	mv "$good_trees_file".tmp "$good_trees_file"
+ }
+ 
+ # Skip the build job if the same tree has already been built and tested
+@@ -36,23 +39,24 @@ save_good_tree () {
+ skip_good_tree () {
+ 	if ! good_tree_info="$(grep "^$(git rev-parse $TRAVIS_COMMIT^{tree}) " "$good_trees_file")"
+ 	then
+-		# haven't seen this tree yet; continue the build job
++		# Haven't seen this tree yet, or no cached good trees file yet.
++		# Continue the build job.
+ 		return
+ 	fi
+ 
+ 	echo "$good_tree_info" | {
+ 		read tree prev_good_commit prev_good_job_number prev_good_job_id
+ 
+-		if test "$TRAVIS_JOB_ID" =  "$prev_good_job_id"
++		if test "$TRAVIS_JOB_ID" = "$prev_good_job_id"
+ 		then
+ 			cat <<-EOF
+-			Skipping build job for commit $TRAVIS_COMMIT.
++			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
+ 			This commit has already been built and tested successfully by this build job.
+ 			To force a re-build delete the branch's cache and then hit 'Restart job'.
+ 			EOF
+ 		else
+ 			cat <<-EOF
+-			Skipping build job for commit $TRAVIS_COMMIT.
++			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
+ 			This commit's tree has already been built and tested successfully in build job $prev_good_job_number for commit $prev_good_commit.
+ 			The log of that build job is available at https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
+ 			To force a re-build delete the branch's cache and then hit 'Restart job'.
+@@ -69,6 +73,8 @@ skip_good_tree () {
+ # and installing dependencies.
+ set -ex
+ 
++mkdir -p "$HOME/travis-cache"
++
+ skip_branch_tip_with_tag
+ skip_good_tree
+ 
