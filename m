@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F31021F404
-	for <e@80x24.org>; Mon,  1 Jan 2018 22:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 289431F404
+	for <e@80x24.org>; Mon,  1 Jan 2018 22:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752320AbeAAWy6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jan 2018 17:54:58 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:39700 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752307AbeAAWyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jan 2018 17:54:55 -0500
-Received: by mail-wm0-f47.google.com with SMTP id i11so58290113wmf.4
-        for <git@vger.kernel.org>; Mon, 01 Jan 2018 14:54:54 -0800 (PST)
+        id S1752336AbeAAWzH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jan 2018 17:55:07 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37794 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752296AbeAAWyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jan 2018 17:54:53 -0500
+Received: by mail-wm0-f68.google.com with SMTP id f140so58290497wmd.2
+        for <git@vger.kernel.org>; Mon, 01 Jan 2018 14:54:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2CPY/fTLXKK6chtqZ5QXZisYYZMkt1oq+sd5lSmySk8=;
-        b=mUTNudWiGIV8GExdTmjp+ucvpzP1CD/TO1CQ/OBarj5ZHeoUozvFIrFgi6eypyJCG6
-         T1sZ6diQyNyuyIxf95xdtIXfYYILPpxJfM+9rMHQIXRmaokRwfO81lGCypkfyRdIkTY0
-         Npupaf/Vx8OMpdpV51K5pKewfMNJtdpcp0DCdVbn8ANzKKtcj7FcEzMnsAlrMk8mdrY7
-         bl80grf4VBybWJd7KN2EtWtcCfh2NvaILn5fDzdow0k3G91T4UNIL47ImBT+rWMMyzun
-         BIYXcuevt+zQRVFWL1NoR271GJ8VEOnWljO0/6W28O43ZdY93jZ1ghO7l2QnzAfuh/ww
-         LEKQ==
+        bh=wosXIb8419TCHOOFSsY3h2KIXeHdTBLETaSlfHCCWGk=;
+        b=L5nnocwfDlWOqSDnWAV8wcHvXyNg92LMz0KcI8phbfd9jJI5PE+JJXodZC6rb4U/P2
+         cLixLRAH/ZJEFCjxDvAnuTKXM2z1lc6G/Y/dmj7bO+zgTZIou6cgg/YaUIAoI7ojvhaT
+         qnz+fFmDdRSAiKsu4RqTEn7ddOYWjgy1JdOThcB+jz1SKBtnZHxPGcVPsQiXZ7t7c06E
+         dOO+ecLTwjOgKjyxdr2V/QpSQvlJyDB9ai0c3Wi1/hVYESgcOQTvt6PUxH7uk+uJTwVW
+         O042fvfDanlC3InEoFAJ73G6HnoYqH5Z32wKgRcnGXgWTROyxkKj7hCWY/24LXTcCGoY
+         fQXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2CPY/fTLXKK6chtqZ5QXZisYYZMkt1oq+sd5lSmySk8=;
-        b=LpcJt4rFEtVgEonOf+m5yd+0x7Lfauk7ZL4caVgaM3KaSQvO+2QMLRxAuyV6aJ34D3
-         GCbnHxtVZ/+yZ+zwdqJZ1UvndeTjNQNXopz/1ctOt1objID22RcVgfw1IvzAnyNfiRHH
-         9Qu1D7ASvIJ22Tz12F1rwgTdx1VRGja+sk/aJ7tfaFF2FgCVMyxA/GFb9VbB7hLnjvCm
-         3Ds5BEIGumo6hD6dTGw4CB1xm1G2JhLJ9NRcFCoIp0mbqqe2z8F1szfyl2LEnJnIZIiv
-         lVwUhFUTMbxND0VZwBInbfL6N5kHYu1Sn/Jr3X6QP9s3YaihcJ/CzEgEs4UkKjb5nvWB
-         vkoQ==
-X-Gm-Message-State: AKGB3mKybxZo+Xqchh5llLpppwSxDBXOkP4LLCP/bmtFDsAG/ewYhY2q
-        0oVABRpJ7MLdfUkASSfdrMc=
-X-Google-Smtp-Source: ACJfBosxfrwCtAUsg+h2JZROVb3xeS+I2pZ/+eqobzWnqGe3fX7FD9M56OuIN6FGaWGc6Vw3IzpZwA==
-X-Received: by 10.28.132.72 with SMTP id g69mr15106654wmd.22.1514847294337;
-        Mon, 01 Jan 2018 14:54:54 -0800 (PST)
+        bh=wosXIb8419TCHOOFSsY3h2KIXeHdTBLETaSlfHCCWGk=;
+        b=iKj2ABRtFztBRh4peWCeD7nsGshEUwNxpy6w5HKi2GvfPjz+E7amrsmaMUG2Jt4Dlg
+         vzSlMbUpqPKlqbX87vCIEaLNI8Kk2TH5/RvOPdZyaeqYQmTUmoYmLuf2nm6pKXuH5VJE
+         kDKz9JZHbNuwILvGucj5PShQ5DfhCgd1jRzv37kCbYJ/qKhD4UVKhe4oU5WdpbkliK2B
+         w0+Emdn7ZREnWZ8mpg79k8qulyyJOlhwp6+sfdGNVpb3WBwJep+25t3yxCWdOVHrEF4B
+         qN2kIDh0Td8CoIGyxt6jkG7vIR8NtnOG4CVXxbnws2GZHQ865W2rWICfjddt/fpQ28WQ
+         r6Ig==
+X-Gm-Message-State: AKGB3mK6c9Oz20TST2Fgxy+sglsHAUXotsdCbZ2VywuWHkWbO34ySKca
+        u2URoIkeBQgDnhV9hSlY3Z4=
+X-Google-Smtp-Source: ACJfBoviB5K8bj9D3biBTlnKz27RstOqn2hWUvWqCX+dAgvK2Gh+BftzJmwOE1iC054I3fyoUxPzYw==
+X-Received: by 10.28.6.21 with SMTP id 21mr31967524wmg.73.1514847292552;
+        Mon, 01 Jan 2018 14:54:52 -0800 (PST)
 Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
-        by smtp.gmail.com with ESMTPSA id d7sm54186061wrd.54.2018.01.01.14.54.53
+        by smtp.gmail.com with ESMTPSA id d7sm54186061wrd.54.2018.01.01.14.54.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 01 Jan 2018 14:54:53 -0800 (PST)
+        Mon, 01 Jan 2018 14:54:52 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/4] t3200: restore branch after "unborn --edit-description" test
-Date:   Mon,  1 Jan 2018 23:54:47 +0100
-Message-Id: <20180101225448.2561-4-szeder.dev@gmail.com>
+Subject: [PATCH 1/4] branch: '--edit-description' is incompatible with other options
+Date:   Mon,  1 Jan 2018 23:54:45 +0100
+Message-Id: <20180101225448.2561-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
 In-Reply-To: <20180101225448.2561-1-szeder.dev@gmail.com>
 References: <20180101225448.2561-1-szeder.dev@gmail.com>
@@ -67,33 +67,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test 'refuse --edit-description on unborn branch for now' switches
-to an orphan branch and leaves the test repository in that state.
-This might badly influence the subsequent test expecting 'git branch
---merged' to error out, by hiding a potential regression with an error
-triggered by the unborn branch.  Furthermore, a new test that will be
-added later in this series failed first because of this.
+'--edit-description' is incompatible with 'git branch's other options,
+but the check for conflicting options doesn't look for this option.
+As a result 'git branch' doesn't error out showing usage when
+'--edit-description' is used in combination with other options, but
+e.g. 'git branch --list --edit-description' lists all branches and
+doesn't edit any branch descriptions, while 'git branch
+--edit-description --list' edits the current branch's description but
+doesn't list the branches.
 
-Use test_when_finished to switch back to the master branch at the end
-of the test in question.
+Look for '--edit-description', too, when looking for conflicting
+options.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t3200-branch.sh | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/branch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index e9f55ac04..427ad490d 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1234,6 +1234,7 @@ test_expect_success 'refuse --edit-description on unborn branch for now' '
- 	write_script editor <<-\EOF &&
- 		echo "New contents" >"$1"
- 	EOF
-+	test_when_finished git checkout master &&
- 	git checkout --orphan unborn &&
- 	test_must_fail env EDITOR=./editor git branch --edit-description
- '
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 8dcc2ed05..32531aa44 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -662,7 +662,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		list = 1;
+ 
+ 	if (!!delete + !!rename + !!copy + !!new_upstream +
+-	    list + unset_upstream > 1)
++	    list + unset_upstream + edit_description > 1)
+ 		usage_with_options(builtin_branch_usage, options);
+ 
+ 	if (filter.abbrev == -1)
 -- 
 2.16.0.rc0.67.g3a46dbca7
 
