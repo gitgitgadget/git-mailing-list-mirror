@@ -2,92 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 312361F428
-	for <e@80x24.org>; Mon,  1 Jan 2018 11:29:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72BCC1F404
+	for <e@80x24.org>; Mon,  1 Jan 2018 15:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751251AbeAAL3O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 Jan 2018 06:29:14 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:42214 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751088AbeAAL3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jan 2018 06:29:13 -0500
-Received: by mail-ot0-f172.google.com with SMTP id 14so13480531oth.9
-        for <git@vger.kernel.org>; Mon, 01 Jan 2018 03:29:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=z+V/RsGv+ulh10D07lneLJNtTSa8Xz9P+LFZK7fkedU=;
-        b=Flvi5d7K4IErwsZfzVNk0W/hfAgiNeUTV9bWvZ1FOBqN/S9rdl3ddoENuEQzAdWyLO
-         Jme9srjXZGtMJfQt5wDok4XXR3Od5kbWTwLtPPAHSqpuzQkhtwbHKbemCXu2PHq/pkBg
-         ZDtG6f5da2yiPrzJlVQSLbXpQ49hNccnIVUQvgm4wRtZoeN20ZEqItXLrjYBb8Sih6OT
-         LuEAf5LUNbkZBA4rPM/MHTaEuTndpzM5j8YWNUI4byeoQrnqunJ5fhI1QoaMLXohAZgq
-         vNR9J3Y73Z7JZUyx9OpVUclVkOPDg5jSSzaqeZ8MbiEDFyZC2rEzltw6V/LT080ln0ED
-         aB1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=z+V/RsGv+ulh10D07lneLJNtTSa8Xz9P+LFZK7fkedU=;
-        b=tCGMnp7dhz2cK8idlwAEEYfUYRG9TwN1UhiKKmPCSL7Z5YZ3XwXtyzYbKbaM2sdNy7
-         AVEWsZh5BXq5g7diG1O/3r8H7qFgpic+VN5KwGb7EaLsSpauP0GWaGDbF3T4u8tvpEei
-         BSqx5ELBafuAimSnPHshGAgIg/jjwPH21TcUgTDkoiGC9dTe24pu2dRCDm9gc62PefsT
-         AJEbg84tB4FqOxr3ulEHPUiPllWNI9RKznfV7s5Qwde6Emsod4+k8fXPQcAaOacuy57S
-         n8S10mgTmHYEVy5HQ+VINI0zXRg5CFci8o+ThPIDk5Ozl+3kbgWToq074W5WEvJIBnk/
-         1zxg==
-X-Gm-Message-State: AKGB3mLBh4U8p+cYQ2oV+iCzuKzCMTDrEu44IRk2AqYSFGhE/Ql6r35g
-        IpzoQX3pXkEtegGBTVwgmct5OA4WZwOmD27QyNE=
-X-Google-Smtp-Source: ACJfBotriMc1Gc/yLCWCm/DtAP/66X3VHRz1QQd2RaqpPCXkhP6nTLMftS/Kr0vJiGEL2npUeSZ/infnxwd3RigXP7Y=
-X-Received: by 10.157.64.188 with SMTP id n57mr36656554ote.331.1514806152872;
- Mon, 01 Jan 2018 03:29:12 -0800 (PST)
+        id S1752276AbeAAPdM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jan 2018 10:33:12 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:63497 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752212AbeAAPdK (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 1 Jan 2018 10:33:10 -0500
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Jan 2018 10:33:10 EST
+X-AuditID: 1207440d-973ff70000000c05-9e-5a4a530c4a08
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 15.5E.03077.D035A4A5; Mon,  1 Jan 2018 10:26:05 -0500 (EST)
+Received: from mail-io0-f177.google.com (mail-io0-f177.google.com [209.85.223.177])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w01FQ3ah011298
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Mon, 1 Jan 2018 10:26:04 -0500
+Received: by mail-io0-f177.google.com with SMTP id q188so22544202iod.1
+        for <git@vger.kernel.org>; Mon, 01 Jan 2018 07:26:04 -0800 (PST)
+X-Gm-Message-State: AKGB3mItf0ixLIbTkVQ6xgoe/44Y+BYEaR+K8WC9h3pe0TKQ729O7hxU
+        3C1tN2PLkCf/naEQXzLbS6wNTTt2vy3z8kUpL48=
+X-Google-Smtp-Source: ACJfBov07w+IQCQ1Y8uJ1PloNZpeIHQ1Job0ncpO5bF/RGiSLalebr42+ntIVxb4eRPNFpS2o8hnXg7hDKYtdClzugE=
+X-Received: by 10.107.6.9 with SMTP id 9mr57600541iog.200.1514820363647; Mon,
+ 01 Jan 2018 07:26:03 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.157.73.21 with HTTP; Mon, 1 Jan 2018 03:28:52 -0800 (PST)
-In-Reply-To: <9e4ffb63-59de-a020-fee8-6cefae3b3dda@gmail.com>
-References: <9e4ffb63-59de-a020-fee8-6cefae3b3dda@gmail.com>
-From:   "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-Date:   Mon, 1 Jan 2018 14:28:52 +0300
-Message-ID: <CAJs94Eakp6kaD=+imH2cZdB-=2NCBJNu0Rt=MmRtWiM60QGBSA@mail.gmail.com>
-Subject: Fwd: Unknown option for merge-recursive: -X'diff-algorithm=patience'
-To:     git@vger.kernel.org
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.79.108.143 with HTTP; Mon, 1 Jan 2018 07:26:02 -0800 (PST)
+In-Reply-To: <20171208112222.GA6094@sigill.intra.peff.net>
+References: <20171208112222.GA6094@sigill.intra.peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Mon, 1 Jan 2018 16:26:02 +0100
+X-Gmail-Original-Message-ID: <CAMy9T_HiK-DkJRrNUCK+9ffcOcEgd9qc_F2taO8--jv9gQrs5A@mail.gmail.com>
+Message-ID: <CAMy9T_HiK-DkJRrNUCK+9ffcOcEgd9qc_F2taO8--jv9gQrs5A@mail.gmail.com>
+Subject: Re: [PATCH] refs: drop "clear packed-refs while locked" assertion
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrJKsWRmVeSWpSXmKPExsUixO6iqMsb7BVl8P+9hUXXlW4mB0aPz5vk
+        AhijuGxSUnMyy1KL9O0SuDK+nX7NVLBFrOLx0VXsDYw9gl2MnBwSAiYS916uYeti5OIQEtjB
+        JNG3qpsVwnnCJNF9dw8LhDOBUWL/vFdMEC3lEkfnLGSDsIsklrfdYYGwCyROrLrKCmLzCghK
+        nJz5BCwuJCAn8WrDDUYI20viwoFuoF4ODk4BK4lL89whwpYS/05fAitnE9CVWNTTDLaKRUBF
+        YvHy88wQ4xMl3p1YxQwxPkBizqxNrCBjhIFGntzpAxIWEZCV+H54I9gmZgEtic0/v7FD2JoS
+        rdt/s09gFJmF5LhZSFILGJlWMcol5pTm6uYmZuYUpybrFicn5uWlFuka6eVmluilppRuYoSE
+        Nu8Oxv/rZA4xCnAwKvHwagR5RgmxJpYVV+YeYpTkYFIS5fX09IoS4kvKT6nMSCzOiC8qzUkt
+        PsQowcGsJMJbqwhUzpuSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk9Xg4BBouXjy
+        IJMUS15+XqqSBK9gENACwaLU9NSKtMycEoRSJg5OkEU8QIsuBgLV8BYXJOYWZ6ZD5E8xWnJc
+        uHPpDxPHgT23gOSzma8bmIXAhkqJ8zaANAiANGSU5sHNhKWwV4ziQO8K82aArOYBpj+4qa+A
+        FjIBLfxzHuSz4pJEhJRUA6NPUQ7LBGXp3zaNX3a/jL+iy32y90GP/o1sW41zvbsEDtoaF2hd
+        4ys/zm13XqTOa/exrefvbNcJ0n1u52GWlT0v1333X7f4hP6JU8PLGQu2G4Rk2147Vs7O+cnx
+        itb/WpWP8578TnWb39zI8yjS75vYBYaq1GOevdcN/YLzltm55O0qzV24TomlOCPRUIu5qDgR
+        AAmjGbw8AwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Dec 8, 2017 at 12:22 PM, Jeff King <peff@peff.net> wrote:
+> This patch fixes a regression in v2.14.0. It's actually fixed already in
+> v2.15.0 because all of the packed-ref code there was rewritten. So
+> there's no point in applying this on "master" or even "maint". But I
+> figured it was worth sharing here in case somebody else runs across it,
+> and in case we ever do a v2.14.4 release.
 
-I am running git 2.15.1 and facing the following issue with linux kernel
-tree.
+I forgot to respond to this. +1
 
-# git checkout v3.8
-# git branch abc-3.8
-# git checkout v3.9
-# git branch abc-3.9
-# git checkout abc-3.8
+Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 
-Introduce new commit on top of abc-3.8. Here, I edit README.
+Michael
 
-# vim README
-# git commit -a -v
-[abc-3.8 4bf088b5d341] Hello world
-
-Then I try to rebase abc-3.9 on top of abc-3.8 as the following:
-
-# git rebase --preserve-merges -s recursive -Xdiff-algorithm=patience
---onto abc-3.8 v3.8 abc-3.9
-
-And then I see:
-
-fatal: Unknown option for merge-recursive: -X'diff-algorithm=patience'
-Error redoing merge e84cf5d0fd53badf3a93c790e280cc92a69ed999
-
-Attached here is GIT_TRACE=1 output.
-
--- 
-With best regards,
-Matwey V. Kornilov
+> -- >8 --
+> In clear_packed_ref_cache(), we assert that we're not
+> currently holding the packed-refs lock. But in each of the
+> three code paths that can hit this, the assertion is either
+> a noop or actively does the wrong thing:
+>
+>  1. in rollback_packed_refs(), we will have just released
+>     the lock before calling the function, and so the
+>     assertion can never trigger.
+>
+>  2. get_packed_ref_cache() can reach this assertion via
+>     validate_packed_ref_cache(). But it calls the validate
+>     function only when it knows that we're not holding the
+>     lock, so again, the assertion can never trigger.
+>
+>  3. lock_packed_refs() also calls validate_packed_ref_cache().
+>     In this case we're _always_ holding the lock, which
+>     means any time the validate function has to clear the
+>     cache, we'll trigger this assertion and die.
+>
+>     This doesn't happen often in practice because the
+>     validate function clears the cache only if we find that
+>     somebody else has racily rewritten the packed-refs file
+>     between the time we read it and the time we took the lock.
+>
+>     So most of the time we don't reach the assertion at all
+>     (nobody has racily written the file so there's no need
+>     to clear the cache). And when we do, it is not actually
+>     indicative of a bug; clearing the cache while holding
+>     the lock is the right thing to do here.
+>
+> This final case is relatively new, being triggerd by the
+> extra validation added in fed6ebebf1 (lock_packed_refs():
+> fix cache validity check, 2017-06-12).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  refs/files-backend.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index f21a954ce7..dd41e1d382 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -99,8 +99,6 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
+>         if (refs->packed) {
+>                 struct packed_ref_cache *packed_refs = refs->packed;
+>
+> -               if (is_lock_file_locked(&refs->packed_refs_lock))
+> -                       die("BUG: packed-ref cache cleared while locked");
+>                 refs->packed = NULL;
+>                 release_packed_ref_cache(packed_refs);
+>         }
+> --
+> 2.15.1.659.g8bd2eae3ea
