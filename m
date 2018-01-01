@@ -2,58 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFB581F404
-	for <e@80x24.org>; Mon,  1 Jan 2018 22:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B22781F404
+	for <e@80x24.org>; Mon,  1 Jan 2018 22:54:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752193AbeAAWMS convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 1 Jan 2018 17:12:18 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:41683 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751927AbeAAWMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 Jan 2018 17:12:17 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w01MC966037438
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 1 Jan 2018 17:12:09 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Eric Sunshine'" <sunshine@sunshineco.us>
-Cc:     "'git mailing list'" <git@vger.kernel.org>
-References: <004701d38346$7dd4be00$797e3a00$@nexbridge.com> <CAPig+cQ_H20ON0usig-FWj7YVF_AOR_yvBRhXJeFmRv_w7pZAw@mail.gmail.com>
-In-Reply-To: <CAPig+cQ_H20ON0usig-FWj7YVF_AOR_yvBRhXJeFmRv_w7pZAw@mail.gmail.com>
-Subject: RE: [Bug] NO_INTPTR_T not being honoured in compat/regex/regcomp.c
-Date:   Mon, 1 Jan 2018 17:12:04 -0500
-Message-ID: <004a01d3834d$91bf2520$b53d6f60$@nexbridge.com>
+        id S1752303AbeAAWyx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 Jan 2018 17:54:53 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45316 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752294AbeAAWyw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 Jan 2018 17:54:52 -0500
+Received: by mail-wr0-f194.google.com with SMTP id o15so15001791wrf.12
+        for <git@vger.kernel.org>; Mon, 01 Jan 2018 14:54:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1EjxNb8/000pTvsa3tI3i3ZC/vFI4eDlQCfP70HI7mY=;
+        b=dsy2mXP3ZfRoWbgjbakhTuO2oDgz6u0BS3nfB+OWCqFSkCZat0ZIY0XOxGLtRvLy+E
+         1Ur9c9gX/00sgJTzKITCYJQIHBz5VqJC9g+l2w6isvSEYTLM5rm62luIzxZpNVyM1lHq
+         4MJIRruSZxILmhEiOrqliLSDuaRU71AWUdWRNePHlfRPbtb0g1egRaoaeVibHOXWKrc1
+         JqI4FNIaUsQeyOMM6sHmPJWjdfo+badtF1PXvWEwK13V9WdBRVbfbuiF6MlJq0MKnNT9
+         4qtCNn8PrEB33NWtXl1CBnDGY0wqKbFF5Tp17fZieqqgKmPOoeCznBF4JJ8lBSiOQcg3
+         fKMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1EjxNb8/000pTvsa3tI3i3ZC/vFI4eDlQCfP70HI7mY=;
+        b=Mm+8Aup5qz8lqgtBgQqqXG5ZYcLN3FIxH5Z6/oPA7CcL6qvw/cMLRrZZ+BglF8qLJO
+         c8bDqzXZWh2kNioGSGUu4Ajfv5WTWnizzjpgTMbNtlOgn+cT45uW3INWdzLZZvrtaiRQ
+         T8JSBFN7UpMcwlWHwKo4SK9y/d6FEwBvBdQ0NjbfNddU+Kh8m+IQ8LUzVmJ4hq56uotc
+         aBKxnpd4rnV8VpCDVkEI8Ru1h3HqlaYnvBmGEZvVwGue3P4oCXmkpr0RAktn9jP70h+/
+         V19ZNK5X96oqR+8hFyFQmnXJLK4MubwCoB66vMRN7iZpHHh0dtuOHOhH7ieBOixxpxT1
+         qnkg==
+X-Gm-Message-State: AKGB3mJdIrR9HOLn1cgtQ3Bz/0Cu6PwrHbiU1e3hVq7ht3alkC+nWJbG
+        t89a5pgpZxjV+GOLNGOLDiY=
+X-Google-Smtp-Source: ACJfBou1k6t0dgW689q1azCItKZJutkZEi631wgJ76P4+VD0f/UyWuNM0KPVSNJ1T5pIl5Z9QVaLqw==
+X-Received: by 10.223.139.16 with SMTP id n16mr38471013wra.84.1514847291787;
+        Mon, 01 Jan 2018 14:54:51 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
+        by smtp.gmail.com with ESMTPSA id d7sm54186061wrd.54.2018.01.01.14.54.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 01 Jan 2018 14:54:51 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH 0/4] branch: add '--show-description' option
+Date:   Mon,  1 Jan 2018 23:54:44 +0100
+Message-Id: <20180101225448.2561-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc0.67.g3a46dbca7
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE3cxGYCsV/QOaTOLXHLdw3/n0bvAJDGDFipIWa4uA=
-Content-Language: en-ca
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 1, 2018 4:51 PM Eric Sunshine wrote:
-> On Mon, Jan 1, 2018 at 4:21 PM, Randall S. Becker
-> <rsbecker@nexbridge.com> wrote:
-> > * I have defined NO_INTPTR_T = UnfortunatelyYes in config.mak.uname
-> > for my platform. The c99 compiler I have does not define it.
-> > * The code compiles except for compat/regex/regcomp.c - not sure why
-> > this is being used since I have also *not* defined NO_REGEX because
-> > regex is sane here.
-> 
-> Presumably you're compiling for NonStop? config.mak.uname defines
-> NO_REGEX for that platform (it also defines NO_INTPTR_T). git-blame points
-> at 6c109904bc (Port to HP NonStop, 2012-09-19).
+'git branch' has an option to edit a branch's description, but lacks the
+option to show that description.  The last patch adds the option to do
+just that.  The first three patches are while-at-it minor cleanups and
+fixes in the area.
 
-I got rid of that entry 3 years ago but did not contribute the updates because there are many other platform dependencies including FLOSS. Caution: that particular commit is not usable or useful on current NonStop operating systems.
+
+SZEDER Gábor (4):
+  branch: '--edit-description' is incompatible with other options
+  t3200: fix a misindented line
+  t3200: restore branch after "unborn --edit-description" test
+  branch: add '--show-description' option
+
+ Documentation/git-branch.txt           |  6 +++++-
+ builtin/branch.c                       | 39 +++++++++++++++++++++++++++++++---
+ contrib/completion/git-completion.bash |  4 ++--
+ t/t3200-branch.sh                      | 26 ++++++++++++++++++++++-
+ 4 files changed, 68 insertions(+), 7 deletions(-)
+
+-- 
+2.16.0.rc0.67.g3a46dbca7
 
