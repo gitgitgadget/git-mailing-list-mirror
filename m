@@ -2,231 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A589B1F428
-	for <e@80x24.org>; Tue,  2 Jan 2018 21:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41C3C1F428
+	for <e@80x24.org>; Tue,  2 Jan 2018 21:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750873AbeABVgi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 16:36:38 -0500
-Received: from mout.web.de ([212.227.15.4]:53728 "EHLO mout.web.de"
+        id S1750819AbeABVyi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 16:54:38 -0500
+Received: from siwi.pair.com ([209.68.5.199]:30738 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750726AbeABVgh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 16:36:37 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M9XbT-1edJrf2D8R-00CzfW; Tue, 02
- Jan 2018 22:36:28 +0100
-Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
-To:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
- <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <5A4B2DA5.907@hiroshima-u.ac.jp>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <e45b654e-4fa5-2ad0-4a38-cf853ab2f0df@web.de>
-Date:   Tue, 2 Jan 2018 22:36:27 +0100
+        id S1750745AbeABVyh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 16:54:37 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A1E66844DF;
+        Tue,  2 Jan 2018 16:54:36 -0500 (EST)
+Received: from [10.160.98.77] (unknown [167.220.148.77])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 523F6844DC;
+        Tue,  2 Jan 2018 16:54:36 -0500 (EST)
+Subject: Re: [PATCH v2 1/5] core.aheadbehind: add new config setting
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20171221190909.62995-1-git@jeffhostetler.com>
+ <20171221190909.62995-2-git@jeffhostetler.com>
+ <20171221204356.GA58971@aiede.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <2a5eb18a-d1b4-da2d-c2c8-5798d8627617@jeffhostetler.com>
+Date:   Tue, 2 Jan 2018 16:54:35 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <5A4B2DA5.907@hiroshima-u.ac.jp>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20171221204356.GA58971@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:JmhML5/Sj5F+ZuRerkDiOn5Wf1FQD6VxAnccacHA+UfyfwFyOkW
- oqYIF6hBnQ9j5c7NZRSGgr24xU6jejf/M59EwJs1EDaqD1GVOZC01shDARYFMpKchTgw5sn
- QFMtrXzzBc9k63COm+2MKGcKdaW4bUOCsHaoFpIr8jBR+u0m0eaGyzMuwTevxoNpFkYtiW/
- CyT/edMxFR71SNDm/1yyA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:huNs5Ma4lqY=:MRTcrKJxWMyjuP/MUBQR6B
- mKdQ1nIWsN6HDKxLybZlZ4eipRBRkDpvdFeFNkTu3zLO1FHA7XIk9MFq9/ldusELxC4qQ+bFT
- Vjulj7Bwa48Wy4uMca5SoVtzcANNDCANtUpOCeODAPxZ2iLf9uUZrBxipt1wuLOK8ATfvpJb0
- ujdLMGH92td1zWjA/b8tJok7Udewf8+H42Aec5quG7i4q8svhERCsljIXNblc8ahUG7TxAmOX
- 9JmoPXZVgXMcc5QR/I+NqrHatsqwe3UquGQpS72A42VGnDiMP8EI7jpk7DztbPBSMm/oSbYbG
- O2K6YyyGbtpWfCyCM49kNm1qyB+vNIKqJLifM3s5uEHvGjz8OuUIImqy6iMXfJniWtddyQwV9
- MIAJa8pxqtfmrN9u8Zwn9oP7047Wif2Cf7p2k6FvqyQn8RHYMVbRXJFOBsZhzv8qh9kfHNaXI
- AO8k6bS+KHStw7jrIWiNcuhoEwouvJkAM4R+yhK8ci55LLThINvEOqQ2vyGFheZAT+4WjZ3oy
- sqNotkU58whYHBsIVo4mXITKM72KvfpoICbNJGK7IV8/i2loMezumDJxft4YMqVXaHUjdiqAR
- Gqb/N4bLzYMUZFYkI/1FeSOa+hrWwXgbb1N8mILnC7epXxz9ETvfkPfJXgzU5ZEm8sJd5SVcU
- /hz869o8z1seZLLIG9vZyRGfobt4UtW6TRGSb3ThYOhFPqcJyb61Ddz2saXo6AYx7vRVHU6Ux
- 4trrQSAjodOwC1CbmasYA3oDDFdEAr7qUEri896isq/kbYUueCjyvOINBXjApb4RV+0EpxRke
- bJpFS2yV9mrEDvHDEu8aJU3StNcCnCPVnAhFTn5G1HNV6R2Js0=
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.01.2018 um 07:58 schrieb suzuki toshiya:
-> Dear René ,
+
+
+On 12/21/2017 3:43 PM, Jonathan Nieder wrote:
+> Hi,
 > 
-> René Scharfe wrote:
->> Am 29.12.2017 um 15:05 schrieb suzuki toshiya:
->>> The ownership of files created by git-archive is always
->>> root:root. Add --owner and --group options which work
->>> like the GNU tar equivalent to allow overriding these
->>> defaults.
+> Jeff Hostetler wrote:
+> 
+>> Created core.aheadbehind config setting and core_ahead_behind
+>> global variable.  This value defaults to true.
 >>
->> In which situations do you use the new options?
+>> This value will be used in the next few commits as the default value
+>> for the --ahead-behind parameter.
 >>
->> (The sender would need to know the names and/or IDs on the receiving
->> end.  And the receiver would need to be root to set both IDs, or be a
->> group member to set the group ID; I guess the latter is more common.)
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>   Documentation/config.txt | 8 ++++++++
+>>   cache.h                  | 1 +
+>>   config.c                 | 5 +++++
+>>   environment.c            | 1 +
+>>   4 files changed, 15 insertions(+)
 > 
-> Thank you for asking the background.
+> Not a reason to reroll on its own, but this seems out of order: the
+> series is easier to explain and easier to merge down in stages if the
+> patch for --ahead-behind comes first, then the config setting.
 > 
-> In the case that additional contents are appended to the tar file
-> generated by git-archive, the part by git-archive and the part
-> appended by common tar would have different UID/GID, because common
-> tar preserves the UID/GID of the original files.
+> More generally, new commandline flags tend to be less controversial
+> than new config settings since they cannot affect a script by mistake,
+> and for that reason, they can go earlier in the series.
 > 
-> Of cource, both of GNU tar and bsdtar have the options to set
-> UID/GID manually, but their syntax are different.
+> As a bonus, that makes it possible to include tests.  It's probably
+> worth adding a test or two for this new config setting.
+
+I'll look at restacking the commits and make this later in the
+series.  I have tests in a later commit that uses the config setting,
+but at this point nothing uses it, so I didn't add any tests for it.
+So maybe with a restacking, I can split up the tests to go with this
+change.
+
 > 
-> In the recent source package of poppler (poppler.freedesktop.org),
-> there are 2 sets of UID/GIDs are found:
-> https://poppler.freedesktop.org/poppler-0.62.0.tar.xz
+> [...]
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> index 9593bfa..c78d6be 100644
+>> --- a/Documentation/config.txt
+>> +++ b/Documentation/config.txt
+>> @@ -895,6 +895,14 @@ core.abbrev::
+>>   	abbreviated object names to stay unique for some time.
+>>   	The minimum length is 4.
+>>   
+>> +core.aheadbehind::
+>> +	If true, tells commands like status and branch to print ahead and
+>> +	behind counts for the branch relative to its upstream branch.
+>> +	This computation may be very expensive when there is a great
+>> +	distance between the two branches.  If false, these commands
+>> +	only print that the two branches refer to different commits.
+>> +	Defaults to true.
 > 
-> I've discussed with the maintainers of poppler, and there was a
-> suggestion to propose a feature to git.
-> https://lists.freedesktop.org/archives/poppler/2017-December/012739.html
+> This doesn't seem like a particularly core feature to me.  Should it be
+> e.g. status.aheadbehind (even though it also affects "git branch") or
+> even something like diff.aheadbehind?  I'm not sure.
 
-So this is in the context of generating release tarballs that contain
-untracked files as well.  That's done in Git's own Makefile, too:
+I wasn't sure where to put it after the earlier conversation in V1.
 
-  dist: git-archive$(X) configure
-          ./git-archive --format=tar \
-                  --prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
-          @mkdir -p $(GIT_TARNAME)
-          @cp configure $(GIT_TARNAME)
-          @echo $(GIT_VERSION) > $(GIT_TARNAME)/version
-          @$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
-          $(TAR) rf $(GIT_TARNAME).tar \
-                  $(GIT_TARNAME)/configure \
-                  $(GIT_TARNAME)/version \
-                  $(GIT_TARNAME)/git-gui/version
-          @$(RM) -r $(GIT_TARNAME)
-          gzip -f -9 $(GIT_TARNAME).tar
+> I also wonder if there's a way to achieve the same benefit without
+> having it be configurable.  E.g. if a branch is way behind, couldn't
+> we terminate the walk early to get the same bounded cost per branch
+> without requiring configuration?
 
-Having files with different owners and groups is a non-issue when
-extracting with --no-same-owner, which is the default for regular users.
-I assume this covers most use cases in the wild.
+I created a config setting because we don't want to force users to
+type "git status --no-ahead-behind" on every interactive command to
+get the benefit of it.  I guess we could ask them to alias it, if we
+don't want a config setting.
 
-The generated archive leaks the IDs of the user preparing the archive in
-the appended entries for untracked files.  I think that's more of a
-concern.  Publishing a valid non-root username on your build system may
-invite attackers.
-
-Changing the build procedure to set owner and group to root as well as
-UID and GID to zero seems like a better idea.  This is complicated by
-the inconsistent command line options for GNU tar and bsdtar, as you
-mentioned.
-
-So how about making it possible to append untracked files using git
-archive?  This could simplify the dist target for Git as well.  It's
-orthogonal to adding the ability to explicitly specify owner and group,
-but might suffice in most (all?) cases.
-
-Not sure what kind of file name transformation abilities would be
-needed and how to package them nicely.  The --transform option of GNU
-tar with its sed replace expressions seems quite heavy for me.  With
-poppler it's only used to add the --prefix string; I'd expect that to
-be done for all appended files anyway.
-
-Perhaps something like --append-file=<FILE> with no transformation
-feature is already enough for most cases?
-
->> Would it make sense to support the new options for ZIP files as well?
-> 
-> I was not aware of the availability of UID/GID in pkzip file format...
-> Oh, checking APPNOTE.TXT ( https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT ),
-> there is a storage! (see 4.5.7-Unix Extra Field). But it seems
-> that current git-archive emits pkzip without the field.
-
-Indeed.  Git doesn't track owners and groups, so it doesn't make
-sense to emit that kind of information so far.  If git archive grows
-options to specify such meta-information then it should be supported
-by all archive formats (or documented to be tar-specific).
-
-However, the UNIX Extra Field in ZIP archives only allows to store
-UID and GID (no names), which is useless unless the sender knows the
-ID range of the receiver -- which is unlikely when distributing
-software on the Internet.  And even then it won't work with Windows,
-which has long Security Identifiers (SIDs) instead.
-
-So these are more advantages for letting git archive append untracked
-files: It's format-agnostic and more portable.
+Also, I didn't want to change the time-tested behavior that users see,
+so I didn't want to change the algorithm in any way -- just not call it.
 
 
-[snipped interesting history of security-related tar options]
+Would it make more sense to name this something like "status.aheadBehindLimit"
+where 0 would mean no limit and match existing behavior and a positive
+number be the number of commits we are allowed to search before giving up.
+A value of 1 would match the "different" case in the current patch series.
+For most users, a value of say 1000 would be sufficient most of the time
+(and report at most a 999 a/b value), but keep us from going off into the
+weeds for those ridiculous cases with very old branches.
 
-Btw. I like how bsdtar has --insecure as a synonym for -p (preserve
-file permissions when extracting).  It's a bit sad that this is still
-the default for root, though.  OpenBSD cut that behavior out of their
-tar almost 20 years ago.  (An evil tar archive could be used to fill
-the quota of unsuspecting users, or add setuid executables.)
 
->>> +#if ULONG_MAX > 0xFFFFFFFFUL
->>> +    /*
->>> +     * --owner, --group rejects uid/gid greater than 32-bit
->>> +     * limits, even on 64-bit platforms.
->>> +     */
->>> +    if (ul > 0xFFFFFFFFUL)
->>> +        return STR_IS_DIGIT_TOO_LARGE;
->>> +#endif
->>
->> The #if is not really necessary, is it?  Compilers should be able to
->> optimize the conditional out on 32-bit platforms.
-> 
-> Thanks for finding this, I'm glad to have a chance to ask a
-> question; git is not needed to care for 16-bit platforms?
+Thanks,
+Jeff
 
-I'm not aware of attempts to compile Git on 16-bit systems, but I
-doubt it would be much fun to use the result anyway.  It couldn't
-handle files bigger than 64KB for a start.
-
->> GNU tar and bsdtar show the names of owner and group with -t -v at
->> least, albeit in slightly different formats.  Can this help avoid
->> parsing the archive on our own?
-> 
-> Yeah, writing yet another tar archive parser in C, to avoid the additional
-> dependency to Python or newer Perl (Archive::Tar since perl-5.10), is
-> painful, I feel (not only for me but also for the maintainers).
-> If tar command itself works well, it would be the best.
-> 
-> But, I'm not sure whether the format of "tar tv" output is stably
-> standardized. It's the reason why I wrote Python tool. If I execute
-> git-archive with sufficently long randomized username & uid in
-> several times, it would be good test?
-
-The append-untracked feature would avoid that issue as well.
-
-A unique username doesn't have to be long or random if you control all
-other strings that "tar tv" would show (in particular file names).  You
-could e.g. use "UserName" and then simply grep for it.
-
-Checking that git archive doesn't add unwanted characters is harder if
-the format isn't strictly known -- how to reliably recognize it sneaking
-in an extra space or slash?  Not sure if such a test is really needed,
-though.
-
->> But getting a short program like zipdetails for tar would be nice as
->> well of course. :)
-> 
-> I wrote something in C:
-> https://github.com/mpsuzuki/git/blob/pullreq-20171227-c/t/helper/test-parse-tar-file.c
-
-OK.  (But the append-untracked feature could be tested without such a
-helper. :)
-
-Just some loose comments instead of a real review: You could get the
-line count down by including Git's tar.h and parse-options.h
-(Documentation/technical/api-parse-options.txt).
-
-> but if somebody wants the support of other tar variants,
-> he/she would have some headache :-)
-
-Yeah, the history of tar and its various platform-specific formats
-fills volumes, no doubt.
-
-René
