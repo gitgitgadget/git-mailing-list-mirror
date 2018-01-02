@@ -2,102 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EEC71F428
-	for <e@80x24.org>; Tue,  2 Jan 2018 22:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B29A1F42B
+	for <e@80x24.org>; Tue,  2 Jan 2018 22:49:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750984AbeABWTV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 17:19:21 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:44543 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750865AbeABWTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 17:19:20 -0500
-Received: by mail-io0-f194.google.com with SMTP id k18so221154ioc.11
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 14:19:19 -0800 (PST)
+        id S1751100AbeABWtr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 17:49:47 -0500
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:44490 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751021AbeABWtq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 17:49:46 -0500
+Received: by mail-qt0-f181.google.com with SMTP id m59so65012785qte.11
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 14:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uB3PenATI/IDq9H9VgEwC32//lQyhg04UxUSNwoSrWw=;
-        b=e74O9x4MVTr8+UoEO16Qt/U40pZE/b2awCKPPAPGAasJMPRfUk5xHMfL26TV+6b1wJ
-         dgJki5ZQdplEtKqt+Zj5ZUEFd5adcEitF8eFCVUjhHfejHcMKRKGWICckSI7eyG5wkbE
-         NDAYeh7gKVK/pNvjNm4h8H5k3uWF8nK4VC1zscRBu4Eqg1ge47HZ/10xP6sRNTmMtJMW
-         AReNyFs9YSyqPLeEUh3B8cnNIzv1sfIOcn0m+kyMwpnr+XA5K7kC88gNV9bH5diWPbaN
-         vfkIrxvsu7DJW1nQz/Q20aIYXxDZemyoWJx9hMZhAcux9menZPD1bq3FTAlCMNZXjIxq
-         JyDQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=QMPFiQAdWsI/2mmX/gOmSj5OT1bP9tkonxyEMT2JuBY=;
+        b=V6jG9Ocw8F+bD1RwPmM/MO+FdUDOQXC92wseKmh3/wgvvevYjJ69DvtrXHvFdmvhwa
+         bJ7doAufMCKechrF9yzAGAD9cR1KfNPMuCBZx84WLdS2ZhiLO14zbgH1kHWvirs9MBR4
+         3REz4oC1XV1aeweFuFV4dHJQKQ94BOBn7gvtxqRwZ2BgNN9S1h+cQt9a5BpWlI865Nzb
+         Ydq2YufUx34l9n+eW9tMPE1r9s7UQMCxxwa8H90Yzwwzv9nh8TbnOJhNBtp38nh/G0MK
+         RGz2fVadifkwECv654CnYFLgqzeJboxGOoXMa1QeiKrhW3PQJ2/H5gqvqD9fHyYiTT4D
+         aA/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uB3PenATI/IDq9H9VgEwC32//lQyhg04UxUSNwoSrWw=;
-        b=pCWLC8Gcq3A0Wpc7f7dnVpSMYtXMZ/OswYqrUsoqGKrVfvyykP3pWK4erKT3D6nH8i
-         5PJCyasspyjpyWM1IFn6fPJe9jNruy2kKPQuG4Snm3jWZt7XvVbGTckQ/UG2HvmL+pXF
-         fxDxa21e9b5Is7umiyScJZ6Wfj5eoLOsj9ulFKEfpBcUHW7DYtzNwrfKi2/RW07pbDM9
-         YHiSPz5UQ6Fuwr4vwz4GB+YkzexsNE1/hTFpsQu/eZTVLnK1TkoKLwqHCQxg5ixU2nGw
-         4ix1DRnumUgQUYiUbySAf1Gez9H1fRWNcWOryOdGH9X8fJyarrfP8LWcBAw6l4FzeUc0
-         Zk+w==
-X-Gm-Message-State: AKGB3mL9EsRKO554wtA2KbpFqcEl9gsD7Y/uirR8EEItJz3inbY5rnXK
-        lGIJ+eWxy6mlLbiDNI2AJkQ=
-X-Google-Smtp-Source: ACJfBoujy4PFKivxSxYmFHm56O6kmB4viOmtmnLg3AGqdUTZII2GadMQCnxynslCrSe4MYdlW+hx7Q==
-X-Received: by 10.107.175.144 with SMTP id p16mr53824079ioo.199.1514931559384;
-        Tue, 02 Jan 2018 14:19:19 -0800 (PST)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e103sm9718800iod.26.2018.01.02.14.19.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 02 Jan 2018 14:19:18 -0800 (PST)
-Date:   Tue, 2 Jan 2018 14:19:16 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2017, #05; Wed, 27)
-Message-ID: <20180102221916.GE131371@aiede.mtv.corp.google.com>
-References: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
- <CABPp-BHxcFU+e4OgccWb+LgLbMo5sJsNjYFQb=WnxViTFdOu=g@mail.gmail.com>
- <xmqqh8sallqs.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kapuEKLO4RUUPVS6_-aeBERDhjpBAtmK=gycT8GaK2bFg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=QMPFiQAdWsI/2mmX/gOmSj5OT1bP9tkonxyEMT2JuBY=;
+        b=g/SsFBPnyp1a4HPMq+bCTE9L08/ELQUU8YP4rWNzBO2zntOetf3f3/M43lM6ckfc4l
+         VrhSkJgg2BJ0SHkyx2ZsRkaBorZYjaZlewfTFU0CwGr5+Gi+xgdRg3CVRQhortNVVHYH
+         9IkKRZJ/MyRn0w0U90lKrcIRr2aPXfhRdl+Oqs3X9344/2p1a8918ZmNF5AqMMhparZX
+         iJf1dQyh39J/MpnF/wBiFBJIRrejAx8m5vBpkICXTgGWWhd4slXBLH36pzmhus8K3sMj
+         qcloMyZEBvzlbwqCMToy1NboyoUtHl62nD9o5EdJJCzoEQFKAbqelHqbrwvaae66MMiu
+         StgQ==
+X-Gm-Message-State: AKGB3mLFSv37ljQsTugeEatF5HFrzyn3llfENUGCKJhm9DoIluIcpJ9F
+        7+XpnPAs42AD0EI5DxhBaiA697O0QKhb9R8Rn+E=
+X-Google-Smtp-Source: ACJfBot07Lprbei+C0GhDHPJqeuf67bb/g+Rq0oQr7HLMKsSM8/BRRi8aEufkLLGEZ/ZzturrfEQUh5OEcejMd+rzYk=
+X-Received: by 10.55.126.7 with SMTP id z7mr58804485qkc.306.1514933386093;
+ Tue, 02 Jan 2018 14:49:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kapuEKLO4RUUPVS6_-aeBERDhjpBAtmK=gycT8GaK2bFg@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Received: by 10.12.198.2 with HTTP; Tue, 2 Jan 2018 14:49:45 -0800 (PST)
+In-Reply-To: <20180102211139.GD22556@sigill.intra.peff.net>
+References: <20180102210753.GA10430@sigill.intra.peff.net> <20180102211139.GD22556@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 2 Jan 2018 17:49:45 -0500
+X-Google-Sender-Auth: QH4BEro_XCSKIdG5Qqc-Gj7lkyc
+Message-ID: <CAPig+cQOU7d21kDELtFAkM0qJh8pvj7F56oWVYw+kYiUftQEuA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] clone: do not clean up directories we didn't create
+To:     Jeff King <peff@peff.net>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Stephan Janssen <sjanssen@you-get.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-> On Thu, Dec 28, 2017 at 11:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Elijah Newren <newren@gmail.com> writes:
-
->>> surprised by the branch name, though.  Was 'ew/' a typo,
->>
->> Blush X-<.  Yes it is a typo.
+On Tue, Jan 2, 2018 at 4:11 PM, Jeff King <peff@peff.net> wrote:
+> [...]
+> Because we know that the only directory we'll write into is
+> an empty one, we can handle this case by just passing the
+> KEEP_TOPLEVEL flag to our recursive delete (if we could
+> write into populated directories, we'd have to keep track of
+> what we wrote and what we did not, which would be much
+> harder).
 >
-> Note on that series:
-> I have reviewed the first three patches (which could form an independent series)
-> that it would warrant a Reviewed-By: Stefan Beller <sbeller@google.com>
+> Note that we need to handle the work-tree and git-dir
+> separately, though, as only one might exist (and the new
+> tests in t5600 cover all cases).
 >
-> While I reviewed the earlier versions of the later patches, I would
-> prefer if there is another reviewer for these as it seems like a bigger
-> contribution at a core functionality.
->
-> I cc'd some people who were active in some form of rename detection
-> work earlier; could you review this series, please?
+> Reported-by: Stephan Janssen <sjanssen@you-get.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
+> @@ -42,13 +53,48 @@ test_expect_success 'successful clone must leave the directory' '
+> +test_expect_success 'failed clone into empty leaves directory (separate, git)' '
+> +       mkdir -p empty-git &&
+> +       corrupt_repo &&
+> +       test_must_fail git clone --separate-git-dir empty-git foo no-wt &&
+> +       test_dir_is_empty empty-git &&
+> +       test_path_is_missing no-wt
+> +'
+> +
+> +test_expect_success 'failed clone into empty leaves directory (separate, git)' '
+> +       mkdir -p empty-wt &&
+> +       corrupt_repo &&
+> +       test_must_fail git clone --separate-git-dir no-git foo empty-wt &&
+> +       test_path_is_missing no-git &&
+> +       test_dir_is_empty empty-wt
+> +'
 
-I'm missing context about which series you mean (though I think I can
-guess).  Do you mind resending this request-for-review in a reply to
-the patch thread?
-
-That way, the request would be in context where my mail reader can
-bring up the thread and it's easy for others to see that the request
-happened, all in one place.
-
-Thanks,
-Jonathan
+The final two tests seem to have the same title...
