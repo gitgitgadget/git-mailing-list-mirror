@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563301F428
-	for <e@80x24.org>; Tue,  2 Jan 2018 21:09:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 826B51F428
+	for <e@80x24.org>; Tue,  2 Jan 2018 21:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750984AbeABVJD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 16:09:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51032 "HELO cloud.peff.net"
+        id S1751047AbeABVKR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 16:10:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51040 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750800AbeABVJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 16:09:02 -0500
-Received: (qmail 11154 invoked by uid 109); 2 Jan 2018 21:09:02 -0000
+        id S1750787AbeABVKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 16:10:16 -0500
+Received: (qmail 11214 invoked by uid 109); 2 Jan 2018 21:10:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jan 2018 21:09:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jan 2018 21:10:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19437 invoked by uid 111); 2 Jan 2018 21:09:32 -0000
+Received: (qmail 19456 invoked by uid 111); 2 Jan 2018 21:10:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 02 Jan 2018 16:09:32 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 02 Jan 2018 16:10:46 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jan 2018 16:09:00 -0500
-Date:   Tue, 2 Jan 2018 16:09:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jan 2018 16:10:14 -0500
+Date:   Tue, 2 Jan 2018 16:10:14 -0500
 From:   Jeff King <peff@peff.net>
 To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
 Cc:     Stephan Janssen <sjanssen@you-get.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH 2/4] t5600: modernize style
-Message-ID: <20180102210859.GB22556@sigill.intra.peff.net>
+Subject: [PATCH 3/4] clone: factor out dir_exists() helper
+Message-ID: <20180102211014.GC22556@sigill.intra.peff.net>
 References: <20180102210753.GA10430@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,102 +41,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an old script which could use some updating before
-we add to it:
+Two parts of git-clone's setup logic check whether a
+directory exists, and they both call stat directly with the
+same scratch "struct stat" buffer. Let's pull that into a
+helper, which has a few advantages:
 
-  - use the standard line-breaking:
+  - it makes the purpose of the stat calls more obvious
 
-      test_expect_success 'title' '
-              body
-      '
+  - it makes it clear that we don't care about the
+    information in "buf" remaining valid
 
-  - run all code inside test_expect blocks to catch
-    unexpected failures in setup steps
+  - if we later decide to make the check more robust (e.g.,
+    complaining about non-directories), we can do it in one
+    place
 
-  - use "test_commit -C" instead of manually entering
-    sub-repo
-
-  - use test_when_finished for cleanup steps
-
-  - test_path_is_* as appropriate
+Note that we could just use file_exists() for this, which
+has identical code. But we specifically care about
+directories, so this future-proofs us against that function
+later getting more picky about seeing actual files.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/t5600-clone-fail-cleanup.sh | 48 ++++++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+ builtin/clone.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
-index f23f92e5a7..7b2a8052f8 100755
---- a/t/t5600-clone-fail-cleanup.sh
-+++ b/t/t5600-clone-fail-cleanup.sh
-@@ -11,42 +11,44 @@ remove the directory before attempting a clone again.'
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2da71db107..04b0d7283f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -863,10 +863,15 @@ static void dissociate_from_references(void)
+ 	free(alternates);
+ }
  
- . ./test-lib.sh
++static int dir_exists(const char *path)
++{
++	struct stat sb;
++	return !stat(path, &sb);
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+-	struct stat buf;
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+ 	int dest_exists;
+@@ -938,7 +943,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		dir = guess_dir_name(repo_name, is_bundle, option_bare);
+ 	strip_trailing_slashes(dir);
  
--test_expect_success \
--    'clone of non-existent source should fail' \
--    'test_must_fail git clone foo bar'
-+test_expect_success 'clone of non-existent source should fail' '
-+	test_must_fail git clone foo bar
-+'
+-	dest_exists = !stat(dir, &buf);
++	dest_exists = dir_exists(dir);
+ 	if (dest_exists && !is_empty_dir(dir))
+ 		die(_("destination path '%s' already exists and is not "
+ 			"an empty directory."), dir);
+@@ -949,7 +954,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		work_tree = NULL;
+ 	else {
+ 		work_tree = getenv("GIT_WORK_TREE");
+-		if (work_tree && !stat(work_tree, &buf))
++		if (work_tree && dir_exists(work_tree))
+ 			die(_("working tree '%s' already exists."), work_tree);
+ 	}
  
--test_expect_success \
--    'failed clone should not leave a directory' \
--    '! test -d bar'
-+test_expect_success 'failed clone should not leave a directory' '
-+	test_path_is_missing bar
-+'
- 
--# Need a repo to clone
--test_create_repo foo
-+test_expect_success 'create a repo to clone' '
-+	test_create_repo foo
-+'
- 
--# create some objects so that we can corrupt the repo later
--(cd foo && touch file && git add file && git commit -m 'add file' >/dev/null 2>&1)
-+test_expect_success 'create objects in repo for later corruption' '
-+	test_commit -C foo file
-+'
- 
- # source repository given to git clone should be relative to the
- # current path not to the target dir
--test_expect_success \
--    'clone of non-existent (relative to $PWD) source should fail' \
--    'test_must_fail git clone ../foo baz'
-+test_expect_success 'clone of non-existent (relative to $PWD) source should fail' '
-+	test_must_fail git clone ../foo baz
-+'
- 
--test_expect_success \
--    'clone should work now that source exists' \
--    'git clone foo bar'
-+test_expect_success 'clone should work now that source exists' '
-+	git clone foo bar
-+'
- 
--test_expect_success \
--    'successful clone must leave the directory' \
--    'test -d bar'
-+test_expect_success 'successful clone must leave the directory' '
-+	test_path_is_dir bar
-+'
- 
- test_expect_success 'failed clone --separate-git-dir should not leave any directories' '
-+	test_when_finished "rmdir foo/.git/objects.bak" &&
- 	mkdir foo/.git/objects.bak/ &&
-+	test_when_finished "mv foo/.git/objects.bak/* foo/.git/objects/" &&
- 	mv foo/.git/objects/* foo/.git/objects.bak/ &&
- 	test_must_fail git clone --separate-git-dir gitdir foo worktree &&
--	test_must_fail test -e gitdir &&
--	test_must_fail test -e worktree &&
--	mv foo/.git/objects.bak/* foo/.git/objects/ &&
--	rmdir foo/.git/objects.bak
-+	test_path_is_missing gitdir &&
-+	test_path_is_missing worktree
- '
- 
- test_done
 -- 
 2.16.0.rc0.384.gc477e89267
 
