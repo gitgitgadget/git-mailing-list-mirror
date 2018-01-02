@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66A311F406
-	for <e@80x24.org>; Tue,  2 Jan 2018 10:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43B7A1F406
+	for <e@80x24.org>; Tue,  2 Jan 2018 10:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752247AbeABKjP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 05:39:15 -0500
-Received: from mail-vk0-f54.google.com ([209.85.213.54]:34283 "EHLO
-        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752189AbeABKjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 05:39:14 -0500
-Received: by mail-vk0-f54.google.com with SMTP id j192so29977945vkc.1
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 02:39:13 -0800 (PST)
+        id S1752560AbeABKlZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 05:41:25 -0500
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:40815 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752117AbeABKlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 05:41:24 -0500
+Received: by mail-ua0-f180.google.com with SMTP id d37so12715047uae.7
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 02:41:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=zQ/8ENZ4JA7KE7ZuWjq4+XloT6MaEsUXitSbNUSj5xg=;
-        b=PqDqn5tFKESRugK6xi0CoX7AG9dzAUnfAejR1N6LpI1RC46iE5YScu5O4M8yg1f8uO
-         y+73pOcW+Yz0BDP5RMoianKPno4jIg2u4VJPHzcA9X2oDv3LkiHQoroMOMG0WSndUBdb
-         6+J+Kb1Em3py/Orq3+XCk7fgY6YwLfMzPGaj5OKv8QjKMDpcZAerznvmpNsSnRu5+G/1
-         79c6uqOgHTQvHLAojC66AfJOmxi7SUU9jKjinOclZwjbcpseZ5tLws2/1I8883Og4wDy
-         p908hpvuhvaa3Cdt998cYbtK8gzKWqVvN47tTLzGUMzqK5PzTlYf9CoaL5vsdob4WC+R
-         +hXg==
+        bh=lfVneZLrAgxs6ZqFYybOeBb1emzQpXgRtsZaX4f0dW4=;
+        b=dCHzkNkIFp6uhlc/XMXeQQdlovQpzXpo6YaPvDxvx5s1pHW3/SQVvD/Cl0fmxeJsbz
+         nRC5/uuG73Q2icPrc8ggNgnYA5KmaOmAM6WcSkIby6o/MPTvqnDaJtfh1WkusmMu/fge
+         pes0ZQxCapbuJTIW7Y08tjLaxxWU07CGvzomZbmmFrUy6POm+vq+BdGh98XK5p3IMx84
+         yi3fz+yTF73yVltZebFj57xaAMaq3Fyu/M/YNI656CBoKwhfmAo0yEi1CWG1C5peCFxv
+         afIRPc8mJlVtI29rLug8sfLmyM1TvGREdbYIM9NZZx70i4VhEemljk4AgQ2T5UPR5sZH
+         gZkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zQ/8ENZ4JA7KE7ZuWjq4+XloT6MaEsUXitSbNUSj5xg=;
-        b=Q5tngtTzTV7rpKIomRUWScZyRLnUHnOkfwJ3Cb4kia+TSVuzB7RI72gMegumLf5xmm
-         9kJAOexYNmzOv0ENet2dgVHIWY5DY36dYXaTbbfuBg1LnnzAe82hSI86rwMyp6Q0J58J
-         8WA5D7PDG0kCsyBj3fAhuyvcmXEpM8zlIKpDJD6aCEMQOToDDZ0Cluh+hsDeAl+4PnLU
-         rUDl9J9hWBzYaBWliTc8kvxSGTF9x3OJRIAgNFPrgMYh/rfclX3MoAoL17RWvnvGU/vH
-         Kg/27KIiVBv7PlA87Qtj9b/PC+MYymRAAuhP2KFJ3TMt0YVz/HxcyEUwSN9zEfj1PyC3
-         uncA==
-X-Gm-Message-State: AKGB3mIpjCW4DMpSf54brnKRWnNckT5+XIPjpDe/eITeneLs+Zpo83rO
-        bC5lSu4wg8GQwGaNA/r0NjHOcTT8dGui1gGKUZePkQ==
-X-Google-Smtp-Source: ACJfBouyATGMpgNzMXrluYlpIRMCyrkBNyZZnCZ9WAMVAE27gpy3tY78lw/93vN6by/hIRhINriP0qLUT2kO54ny4Yk=
-X-Received: by 10.31.124.205 with SMTP id x196mr27456044vkc.119.1514889553358;
- Tue, 02 Jan 2018 02:39:13 -0800 (PST)
+        bh=lfVneZLrAgxs6ZqFYybOeBb1emzQpXgRtsZaX4f0dW4=;
+        b=rfdr1spHvTj3Ar+KigE5A//1ap+R/uNckyczU9se1W6AeKy+gx0mnTm+sdDt/oYq21
+         9fje7gQXgl/EN3PBnTd1pS39nFbwxTJ8sFJifJvP2nSwZb44vjX7d3H7+23hUvoLeBU2
+         SF141B3SKXji2/syYM/Hvc+o13uSEBlbfu9GQmHgUpX48UXE1lHnpO6JGIh6YxOId5mX
+         88wMQbyQCkXV7WbiCXVmVJabjRSRlN0IfR5AClR3b3y9IRfV8M2spbW6drwkmO97acsk
+         YUAcmSPc1RNJZWUozUNDIhUbDBYogJvBuJ8Z2cH9tFjnGOzAwSQ3tbRfc+G9uE2IY83E
+         oMrg==
+X-Gm-Message-State: AKGB3mKALHdGFlyWrX/S+uxgUwPJkuTMGxyEB1j/AKm319ZrOzBiDkhT
+        Tdf7dulc5ahClEAvkCmrcUcpDx75wm0gp2ap/Iw=
+X-Google-Smtp-Source: ACJfBov7e2gcLou5e90CCrfnM4LiJWlgUJ4Ual0Ii4N85ljJmNuguGEbFDcwOsMOZYvLs+1VD7edNl9YBxj2ZDEKA60=
+X-Received: by 10.176.13.129 with SMTP id i1mr5241571uak.139.1514889683473;
+ Tue, 02 Jan 2018 02:41:23 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.83.15 with HTTP; Tue, 2 Jan 2018 02:39:13 -0800 (PST)
-In-Reply-To: <CAPig+cQ=Fj-sWrxDH1RV=PnYT01LGapzJjrRT5QdqUTkyc0rfg@mail.gmail.com>
+Received: by 10.176.83.15 with HTTP; Tue, 2 Jan 2018 02:41:23 -0800 (PST)
+In-Reply-To: <c3937260-1ffd-797b-7f25-53a6a4bf3676@kdbg.org>
 References: <20180101225448.2561-1-szeder.dev@gmail.com> <20180101225448.2561-5-szeder.dev@gmail.com>
- <CAPig+cQ=Fj-sWrxDH1RV=PnYT01LGapzJjrRT5QdqUTkyc0rfg@mail.gmail.com>
+ <c3937260-1ffd-797b-7f25-53a6a4bf3676@kdbg.org>
 From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 2 Jan 2018 11:39:13 +0100
-Message-ID: <CAM0VKjm0WMDm_AETogX7ygMgeqY28YQLJLoM+dxtkfQfnT3aww@mail.gmail.com>
+Date:   Tue, 2 Jan 2018 11:41:23 +0100
+Message-ID: <CAM0VKj=HNvd_wvZMJSGB7hCrjnUj+J+Q17zpbV1ju=rvbDLPrQ@mail.gmail.com>
 Subject: Re: [PATCH 4/4] branch: add '--show-description' option
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,47 +64,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 2, 2018 at 6:17 AM, Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
-> On Mon, Jan 1, 2018 at 5:54 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
+On Tue, Jan 2, 2018 at 10:32 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 01.01.2018 um 23:54 schrieb SZEDER G=C3=A1bor:
 
-> s/exit/exist/
-
-Thanks.
-
->>     query does).
->>
->> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->> ---
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> @@ -737,6 +741,35 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
->> +       } else if (show_description) {
->> +               [...]
->> +               if (!argc) {
->> +                       if (filter.detached)
->> +                               die(_("cannot show description on detach=
-ed HEAD"));
->> +                       branch_name =3D head;
->> +               } else if (argc =3D=3D 1)
->> +                       branch_name =3D argv[0];
->> +               else
->> +                       die(_("cannot show description of more than one =
-branch"));
+>>    - errors out with a proper error message when the given branch
+>>      doesn't exist (but exits quietly with an error code when the
+>>      branch does exit but has no description, just like the 'git config'
+>>      query does).
 >
-> Aside from paralleling the single branch accepted by
-> --edit-description, why this limitation? (Just curious; I don't feel
-> strongly one way or the other.)
+>
+>> +test_expect_success '--show-description with no description errors
+>> quietly' '
+>> +       git config --unset branch.master.description &&
+>> +       test_must_fail git branch --show-description >actual 2>actual.er=
+r
+>> &&
+>> +       test_must_be_empty actual &&
+>> +       test_must_be_empty actual.err
+>> +'
+>
+>
+> Checking the exact contents of stderr typically fails when tests are run
+> under -x. Perhaps
+>
+>         test_i18ngrep ! "fatal: " actual.err &&"
+>         test_i18ngrep ! "error: " actual.err &&
+>         test_i18ngrep ! "warning: " actual.err
+>
+> Which makes me wonder: Why would --show-description have to error out
+> silently? This is not 'git config' after all.
 
-It's not just '--edit-description', most other options won't accept
-multiple branches either.  As far as I can tell only deleting branches
-can deal with multiple branches in one go.
+I figured it would be beneficial if it were a drop-in replacement for
+the original 'git config' query.
 
-Furthermore, branch descriptions are likely more lines long, so we
-can't just dump them one after the other, but we we would have to
-separate the descriptions of different branches in the output.
-Considering that 'git branch' mostly works only with a single branch at
-a time, I didn't feel the need to do so.
+I don't have a strong opinion about this, and certainly wouldn't mind
+adding an error message instead.
 
 G=C3=A1bor
