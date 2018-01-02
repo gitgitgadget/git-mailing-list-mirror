@@ -2,118 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 326C11F428
-	for <e@80x24.org>; Tue,  2 Jan 2018 15:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D043F1F428
+	for <e@80x24.org>; Tue,  2 Jan 2018 15:33:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751342AbeABPcc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 10:32:32 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:57993 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751409AbeABPcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 10:32:31 -0500
-Received: from [10.0.2.15] ([80.189.70.206])
-        by smtp with ESMTPA
-        id WOYGe5yFtCEdVWOYHeOWWo; Tue, 02 Jan 2018 15:32:29 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Nc2W7yL4 c=1 sm=1 tr=0
- a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
- a=IkcTkHD0fZMA:10 a=2btJ15sR6H2mbiPwlrUA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: Test failure for v2.16.0-rc0 on cygwin
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <519ac918-6b5f-bca3-05a0-0114683b9724@ramsayjones.plus.com>
- <20171230144019.GB29210@dinwoodie.org> <20180102113649.GC29210@dinwoodie.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <3616d866-9a53-6e32-0a62-488342ae214f@ramsayjones.plus.com>
-Date:   Tue, 2 Jan 2018 15:32:27 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
-MIME-Version: 1.0
-In-Reply-To: <20180102113649.GC29210@dinwoodie.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPwmcRi1dAy+/W6rTBepiwhLj/wxsF86znCn1Dgy7dhLDIK1ctXA0x5/yi/FEqKsdML3suGxUYYlrRPf9v6D8kB6vsvOVCIusqXxMP5rRvTNb8/lLR/j
- 1lgF/8WX/gBm5rqLycXyi8rVcrCRbLOUYnaEk4gCaBZEJ53OxIxvKWt8vUmhBaY4u1J9Pb4g+31/Fw==
+        id S1751584AbeABPdy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 10:33:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59391 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751300AbeABPdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 10:33:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C1A7CE75F;
+        Tue,  2 Jan 2018 10:33:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=WbKOOaaU52loIWgKqgDsJt8c2tg
+        =; b=xEyLzbvlZcCDX2exd0kfiIc7uXEe69l1QGgVE7DKruqbVvDvY/wqxlxGo6T
+        mchJ9gcvozh36k1Ha6m7tNQVWvKKmK9ZQsdAleqS4RIJSotbOW9nuK7DFFP7aG0S
+        DG1GMPMaxEFXCZY8g9oLzVKO8P1vDkRVaTDCs4MEKPKFqta4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; q=dns; s=sasl; b=pix5D6S1HJ25077EAqAqu
+        n5bgg/9QzNlRXpwq6PrUmQsqs3ArPQylr1VhrMcfz8KgMMSvuEHYDAVuAi3oEPNd
+        pXA/2/Hnudy+IC4ZwpckpkmUqigUIfbChGjS4Ce0USbtCTy8k5gcLEz2B/LoGfrr
+        VvgU+WrX/rOImjUaZ2Bk+8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51EFACE75E;
+        Tue,  2 Jan 2018 10:33:52 -0500 (EST)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.86.113])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B6E5CE75D;
+        Tue,  2 Jan 2018 10:33:51 -0500 (EST)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] doc/SubmittingPatches: improve text formatting
+Date:   Tue,  2 Jan 2018 10:33:50 -0500
+Message-Id: <20180102153350.11723-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.16.0.rc0
+X-Pobox-Relay-ID: 55AFFF90-EFD2-11E7-820E-8EF31968708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+049e64aa50 ("Documentation: convert SubmittingPatches to AsciiDoc",
+2017-11-12) changed the `git blame` and `git shortlog` examples given in
+the section on sending your patches.
 
+In order to italicize the `$path` argument the commands are enclosed in
+plus characters as opposed to backticks.  The difference between the
+quoting methods is that backtick enclosed text is not subject to further
+expansion.  This formatting makes reading SubmittingPatches in a git
+clone a little more difficult.  In addition to the underscores around
+`$path` the `--` chars in `git shortlog --no-merges` must be replaced
+with `{litdd}`.
 
-On 02/01/18 11:36, Adam Dinwoodie wrote:
-> On Saturday 30 December 2017 at 02:40 pm +0000, Adam Dinwoodie wrote:
->> On Saturday 30 December 2017 at 02:21 pm +0000, Ramsay Jones wrote:
->>> Hi Junio, Adam,
->>>
->>> Just a quick note about the failure of the test-suite on cygwin.
->>> In particular, test t5580-clone-push-unc.sh #3, like so:
->>>
->>> <snip>
->>>
->>> Adam, are you running the tests on Windows 10?
->>
->> I'm only routinely testing on Windows 10 x86_64, but between holidays
->> various, I've not had the tests running for the past couple of weeks.
->> I'm kicking off a build now in the name of verifying I see the same
->> problem.
-> 
-> I'm not able to reproduce this: t5580 is passing on both my Windows 10
-> test systems on v2.16.0-rc0.
+Use backticks to quote these commands.  The italicized `$path` is lost
+from the html version but the commands can be read (and copied) more
+easily by users reading the text version.  These readers are more likely
+to use the commands while submitting patches.  Make it easier for them.
 
-Hmm, interesting. BTW, I should have noted which version I'm on (just
-in case it matters): Windows 10 Home, Version 1709, OS Build 16299.125.
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
 
-I am reasonably up-to-date on cygwin:
+I missed this in the initial discussion.  It was mentioned by
+Junio and brian explained the reasoning for using it in
+<20171031012710.jfemqb6ybiog4sbz@genre.crustytoothpaste.net>:
 
-  $ uname -a
-  CYGWIN_NT-10.0 satellite 2.9.0(0.318/5/3) 2017-09-12 10:18 x86_64 Cygwin
-  $ 
+> > The +fixed width with _italics_ mixed in+ mark-up is something not
+> > exactly new, but it is rarely used in our documentation set, so I
+> > had to double check by actually seeing how it got rendered, and it
+> > looked alright.
+>
+> I thought it provided some hint to the reader that this wasn't meant to
+> be typed literally.  It's a preference of mine and I think it aids in
+> readability, but it can be changed if we want.
 
-[I only recently updated to the creator's update (I'm not signed up to
-the 'insider program'), and so could not try out WSL until now. I would
-not recommend it to anyone who wants to develop software - a Linux VM
-is an _order of magnitude_ faster, so ... ]
+That's what I had guessed before I looked back at the list
+archives.  I understand the desire to make it clear that $path
+isn't a literal value.  I think that it's worth losing that subtle
+hint in order to make the plain text SubmittingPatches file a
+little easier to read.
 
-> Looking at your output, it sounds like there's something slightly odd
-> with your directory permissions.  I agree the mixed slashes look odd,
-> but given the test is passing on both my systems, I don't think that can
-> be the problem.
+Whether the people most likely to be considering sending a patch
+for git.git are will read the document from a git clone or the
+rendered html output is the main question.  Though even readers of
+the installed text file in their packaged git will suffer a bit.
 
-The directory permissions look fine to me (except for //localhost/C$).
+It's great having the document in HTML to aid in sharing it's
+guidance with others, no doubt.  I've wanted to symlink to
+portions of the document numerous times.  I hope a small change to
+make it more legible to those who also like plain text will be
+welcome.
 
-> I suspect you're going to need to do some more digging yourself given
-> this appears to be a permissions issue on your system.  For a start,
-> when you get to the failing `mkdir` with a UNC path, are you able to
-> create the equivalent directory using Cygwin's `mkdir` but specifying a
-> regular non-UNC path, 
+I considered using backticks for the commands and then +_$path_+
+for the argument.  Maybe that's a reasonable compromise?  I.e.:
 
-yes, this is not a problem.
+-+git blame _$path_+ and +git shortlog {litdd}no-merges _$path_+ would help to
++`git blame` +_$path_+ and `git shortlog --no-merges` +_$path_+ would help to
 
-                        or by opening the UNC path in Explorer and
-> creating the directory there?
+The text version is still a bit strange with that method, but it
+certainly separates "$path" from the rest of the command in both
+the text and html output. :)
 
-I didn't get to this because ...
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I just tried running the test again by hand, and I can't get it to fail!
-
-Hmm, I have just set off a complete test-suite run, so I won't be able
-to report on that for a while ... ;-)
-
-I have an idea: when running the failing tests the other day, I was
-remotely logged in via ssh (I have cygwin sshd running on my win10
-box), but today I was logged in directly. The sshd daemon is run by
-a privileged user, so maybe that could be related ... dunno.
-
-I will have to investigate some more. (If you have any ideas ... :-D )
-
-ATB,
-Ramsay Jones
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 3ef30922ec..a1d0feca36 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -261,7 +261,7 @@ not a text/plain, it's something else.
+ 
+ Send your patch with "To:" set to the mailing list, with "cc:" listing
+ people who are involved in the area you are touching (the output from
+-+git blame _$path_+ and +git shortlog {litdd}no-merges _$path_+ would help to
++`git blame $path` and `git shortlog --no-merges $path` would help to
+ identify them), to solicit comments and reviews.
+ 
+ :1: footnote:[The current maintainer: gitster@pobox.com]
+-- 
+2.16.0.rc0
 
