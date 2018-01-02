@@ -2,102 +2,333 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AA561F404
-	for <e@80x24.org>; Tue,  2 Jan 2018 05:17:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 121131F406
+	for <e@80x24.org>; Tue,  2 Jan 2018 06:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751379AbeABFRj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 00:17:39 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:38904 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751273AbeABFRi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 00:17:38 -0500
-Received: by mail-qt0-f196.google.com with SMTP id d4so61579106qtj.5
-        for <git@vger.kernel.org>; Mon, 01 Jan 2018 21:17:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=H3xspAjzG0XxXtRdC7cpeEQgMM/96MrS4akRialBvHM=;
-        b=lkqr6wW6//mSPBW3EL9B7zfhEKjy2jC6ZWO87rbMxYT4HwGBF/ZkgNRPZ42fgfdpvZ
-         /OnoNOxYb8enpTU2zyefNr23NhaZqehLANYTmDuIkAbYAlp9+i5LNYTzuGgr53YXcyF4
-         FoRixaI7vuamJj92g4T6UovWCqRbeE3fad3MC0DX6mp3V34BqPHqR7WHeZ0JKiDMXDeg
-         Iv4OZLZrCsRf7it2dHdb+kxTnShmwgDniYvN/Xy4CqWsUgaownFdAPDCsiz40QTD5Rym
-         V8BSaKAagIGCgBAgl05NV1hiPat0hBF0VOyixqkUSNIY5URLnRRWOwpl12/O+qhSRPD5
-         TGhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=H3xspAjzG0XxXtRdC7cpeEQgMM/96MrS4akRialBvHM=;
-        b=dv5BIAn3wDZzvLhE2sU6WHXDmmk2bxnw3QVq4sWAWNoDm1J8pGzCxMPYsaVqEF/7re
-         TylgU1ajouMlZoJSOF8+mH3fjETXG8B26wMEugUqsobbDN+QxQFuBTWUm5jCYu1/TAga
-         aAvhEG8HZSRZY/1t8wAJBOZGHhyTg8Z1uJd+IZF+4q7JTu/hMRtsC4W7TqIcwdypJvBA
-         H/SC0/Qbi+H1J/Lj8K+4wtYxO2ODaHGwTvewhmZVdHsPG6JnDCnEszdqtZGfemSTmz9v
-         u2rhQZzSVmnXBMk2eCVNYIGXSB3wlC/MW7bmEDMWCTUNp9yjRgIXtxRdNJZHmREM3YrM
-         V0dw==
-X-Gm-Message-State: AKGB3mKPJUUKhXIFdFF67vtGDYMcEVzv7PZZZf7NZNgSnAN8lDIF3XTi
-        8gC3F89cM6+AkjR2OiBmkujX+d9PA5PxuB7Rets=
-X-Google-Smtp-Source: ACJfBouC26bHrigroY4kHteDEUkiBzgkg9JpsaS87n2e6ZsEtGi5r4gMeWEcFXHvB3Jf7KR6UPaNnxWQndwHk7QY/0A=
-X-Received: by 10.237.59.22 with SMTP id p22mr58921448qte.34.1514870257208;
- Mon, 01 Jan 2018 21:17:37 -0800 (PST)
+        id S1751273AbeABG6t convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 2 Jan 2018 01:58:49 -0500
+Received: from huc12-ckmail02.hiroshima-u.ac.jp ([133.41.12.55]:46690 "HELO
+        huc12-ckmail02.hiroshima-u.ac.jp" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1750787AbeABG6s (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 2 Jan 2018 01:58:48 -0500
+Received: from huc12-ckmail02.hiroshima-u.ac.jp (localhost [127.0.0.1])
+        by dummy.hiroshima-u.ac.jp (Postfix) with ESMTP id 16932199DB3;
+        Tue,  2 Jan 2018 15:58:46 +0900 (JST)
+Received: from huc12-smtp01.hiroshima-u.ac.jp (huc12-smtp01.hiroshima-u.ac.jp [133.41.12.52])
+        by huc12-ckmail02.hiroshima-u.ac.jp (Postfix) with ESMTP id 0BC2AD312F;
+        Tue,  2 Jan 2018 15:58:46 +0900 (JST)
+Received: from [133.41.177.137] (177-137.cup.hiroshima-u.ac.jp [133.41.177.137])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by huc12-smtp01.hiroshima-u.ac.jp (Postfix) with ESMTPSA id EFA80D3471;
+        Tue,  2 Jan 2018 15:58:45 +0900 (JST)
+Message-ID: <5A4B2DA5.907@hiroshima-u.ac.jp>
+Date:   Tue, 02 Jan 2018 15:58:45 +0900
+From:   suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
+User-Agent: Mozilla-Thunderbird 2.0.0.24 (X11/20100329)
 MIME-Version: 1.0
-Received: by 10.12.198.2 with HTTP; Mon, 1 Jan 2018 21:17:36 -0800 (PST)
-In-Reply-To: <20180101225448.2561-5-szeder.dev@gmail.com>
-References: <20180101225448.2561-1-szeder.dev@gmail.com> <20180101225448.2561-5-szeder.dev@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 2 Jan 2018 00:17:36 -0500
-X-Google-Sender-Auth: cm8sAtkviDiYTxf4BO_rHCyuTMg
-Message-ID: <CAPig+cQ=Fj-sWrxDH1RV=PnYT01LGapzJjrRT5QdqUTkyc0rfg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] branch: add '--show-description' option
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
+References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp> <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+In-Reply-To: <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-MML: disable
+X-TM-AS-Product-Ver: IMSS-7.1.0.1808-8.1.0.1062-23568.003
+X-TM-AS-Result: No--19.462-10.0-31-10
+X-imss-scan-details: No--19.462-10.0-31-10
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+X-TMASE-MatchedRID: 6i9BTbUAHf1ITndh1lLRAe5i6weAmSDKp/xyq10Na6eUfu4IW1e8qPmi
+        jj3XOLVK1Fc61VCGvh3Y+xVZVcrfzsdC5q7C34VcZg1i2wTmScMxmbT6wQT2axnqZmOmN1+Hfwk
+        x2nDMrPjE+xnJKGLUxFOUgDirwI2V7h1xPdlpOhy4jAucHcCqnSY4cnRoFw7UMxVjmK1sOgPGN8
+        n6L6dsdDtrBd9pl2588lx+nREINZqLgXghGVLQkglojktAVaJIKaRmDCmXszdVbFClxBANxnjhn
+        ZsAD4ZccDo4qe58ugxfMrorr76P9jNOHUEerGdV9UVHiwLx0/Li00wyvVXZxSjHl/RT2yXlxhH6
+        LU2YFCU85Tgtbo4jPd5eI8xeRQK8F/w4LTrCmySjrlYm3WTU7/Zy7UNdXqxO8cWgFw6wp7OAEap
+        d1DGem2p4ftHbD5QnwBtMIsVRuOK9APXZcWoc05wXYGHCnPlEOkDbNlgmO/U67wHukzcC5Q2USH
+        X0M3a0pLjVW7izcSBv6loOABk8LxiQc5OixN2zFhQfbPNnjNvytP1eS/VAvRHfiujuTbedPZUwG
+        nRaHpPcfOMNoN/HOEiIxpDG2R9HHDs1ZGdf7ZxIOSHptb5tx6cJxWZ5/lR8jU56jjASCeEVNHod
+        S/ntkNIHCO4ffu/Y80G+3X3NbUe9m85LuhaMZjnU1V+NaXs97R/xxoXs7/DghX8qKz2JrvvWWHy
+        AUWphFp1/6tEDSID/43vjWm8LhsPlDt/vDJ7EqVdeuk7LerQPaWzG/2S2hjASEdbkpUDP/IAc7d
+        XVIpPpyBaZoEPcrE4Zjul1NCUgx6xxiVdVGbKeAiCmPx4NwFkMvWAuahr85irsTF7QAiiWM1/NB
+        yeF10RwZjp2iRLvxEHRux+uk8jpP8tMOyYmaA==
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 1, 2018 at 5:54 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
-> 'git branch' has an option to edit a branch's description, but lacks
-> the option to show that description.
->
-> Therefore, add a new '--show-description' option to do just that, as a
-> more user-friendly alternative to 'git config --get
-> branch.$branchname.description':
->   [...]
->   - errors out with a proper error message when the given branch
->     doesn't exist (but exits quietly with an error code when the
->     branch does exit but has no description, just like the 'git config'
+Dear René ,
 
-s/exit/exist/
+René Scharfe wrote:
+> Am 29.12.2017 um 15:05 schrieb suzuki toshiya:
+>> The ownership of files created by git-archive is always
+>> root:root. Add --owner and --group options which work
+>> like the GNU tar equivalent to allow overriding these
+>> defaults.
+> 
+> In which situations do you use the new options?
+> 
+> (The sender would need to know the names and/or IDs on the receiving
+> end.  And the receiver would need to be root to set both IDs, or be a
+> group member to set the group ID; I guess the latter is more common.)
 
->     query does).
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> @@ -737,6 +741,35 @@ int cmd_branch(int argc, const char **argv, const ch=
-ar *prefix)
-> +       } else if (show_description) {
-> +               [...]
-> +               if (!argc) {
-> +                       if (filter.detached)
-> +                               die(_("cannot show description on detache=
-d HEAD"));
-> +                       branch_name =3D head;
-> +               } else if (argc =3D=3D 1)
-> +                       branch_name =3D argv[0];
-> +               else
-> +                       die(_("cannot show description of more than one b=
-ranch"));
+Thank you for asking the background.
 
-Aside from paralleling the single branch accepted by
---edit-description, why this limitation? (Just curious; I don't feel
-strongly one way or the other.)
+In the case that additional contents are appended to the tar file
+generated by git-archive, the part by git-archive and the part
+appended by common tar would have different UID/GID, because common
+tar preserves the UID/GID of the original files.
+
+Of cource, both of GNU tar and bsdtar have the options to set
+UID/GID manually, but their syntax are different.
+
+In the recent source package of poppler (poppler.freedesktop.org),
+there are 2 sets of UID/GIDs are found:
+https://poppler.freedesktop.org/poppler-0.62.0.tar.xz
+
+I've discussed with the maintainers of poppler, and there was a
+suggestion to propose a feature to git.
+https://lists.freedesktop.org/archives/poppler/2017-December/012739.html
+
+So now I'm trying.
+
+> Would it make sense to support the new options for ZIP files as well?
+
+I was not aware of the availability of UID/GID in pkzip file format...
+Oh, checking APPNOTE.TXT ( 
+https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT ),
+there is a storage! (see 4.5.7-Unix Extra Field). But it seems
+that current git-archive emits pkzip without the field.
+
+The background why I propose the options for tar format was described
+in above. Similar things are hoped by pkzip users? If it's required,
+I will try.
+
+>> +--owner=<name>[:<uid>]::
+>> +	Force <name> as owner and <uid> as uid for the files in the tar
+>> +	archive.  If <uid> is not supplied, <name> can be either a user
+>> +	name or numeric UID.  In this case the missing part (UID or
+>> +	name) will be inferred from the current host's user database.
+>> +
+>> +--group=<name>[:<gid>]::
+>> +	Force <name> as group and <gid> as gid for the files in the tar
+>> +	archive.  If <gid> is not supplied, <name> can be either a group
+>> +	name or numeric GID.  In this case the missing part (GID or
+>> +	name) will be inferred from the current host's group database.
+>> +
+> 
+> IIUC the default behavior is kept, i.e. without these options the
+> archive entries appear to be owned by root:root.  I think it's a good
+> idea to mention this here.
+
+Indeed. The default behaviour of git-archive without these options
+(root:root) would be different from that of (common) tar (preserving
+uid/gid of the files to be archived), it should be clarified.
+
+> bsdtar has --uname, --uid, --gname, and -gid, which seem simpler.  At
+> least you could use OPT_STRING and OPT_INTEGER with them (plus a range
+> check).  And they should be easier to explain.
+
+Thank you very much for proposing good alternative. Indeed, such well-
+separated options make the code simple & stable. However, according
+to the manual search systems of FreeBSD ( https://www.freebsd.org/cgi/man.cgi ),
+the options for such functionalities are not always same.
+
+FreeBSD 8.2 and earlier: --uname, --gname, --uid, --gid are unavailable.
+it seems that using "mtree" was the preferred way to specify such).
+
+FreeBSD 8.3 and later: --uname, --gname, --uid, --gid are available.
+the manual says follows:
+
+      --uid id
+	     Use the provided user id number and ignore	the user name from the
+	     archive.  On create, if --uname is	not also specified, the	user
+	     name will be set to match the user	id.
+
+      --uname name
+	     Use the provided user name.  On extract, this overrides the user
+	     name in the archive; if the provided user name does not exist on
+	     the system, it will be ignored and	the user id (from the archive
+	     or	from the --uid option) will be used instead.  On create, this
+	     sets the user name	that will be stored in the archive; the	name
+	     is	not verified against the system	user database.
+
+Thus, to emulate (post 2012-) bsdtar perfectly, getpwnam(), getpwuid() etc
+would be still needed to implement "--uid" X-(.
+
+Tracking the history of bsdtar, maybe I should track the history of GNU
+tar. According to ChangeLog, even --owner --group are rather newer option
+since 1.13.18 (released on 2000-10-29). The original syntax was like this.
+
+`--owner=USER'
+      Specifies that `tar' should use USER as the owner of members when
+      creating archives, instead of the user associated with the source
+      file.  USER is first decoded as a user symbolic name, but if this
+      interpretation fails, it has to be a decimal numeric user ID.
+
+      There is no value indicating a missing number, and `0' usually
+      means `root'.  Some people like to force `0' as the value to offer
+      in their distributions for the owner of files, because the `root'
+      user is anonymous anyway, so that might as well be the owner of
+      anonymous archives.
+
+      This option does not affect extraction from archives.
+
+Oh, there is no colon separated syntax! According to ChangeLog, the
+introduction of colon separated syntax was on 2011-08-13 and
+released as GNU tar-1.27 (2013-10-06).
+
+`--owner=USER'
+      Specifies that `tar' should use USER as the owner of members when
+      creating archives, instead of the user associated with the source
+      file.  USER can specify a symbolic name, or a numeric ID, or both
+      as NAME:ID.  *Note override::.
+
+      This option does not affect extraction from archives.
+
+Comparing the original --owner and current --owner description, a
+strange point is that the original description says "USER is first
+decoded as a user symbolic name, but if this interpretation fails,
+it has to be a decimal numeric user ID." What? It seems that
+"checking whether the specified username is known by the host system
+and its numerical uid is resolvable - if unresolvable, try to
+parse as decimal value - if failed, take it as fatal error". Here
+I quote the related part.
+
+tar-1.14/src/names.c
+
+     119 /* Given UNAME, set the corresponding UID and return 1, or else, return 
+0.  */
+     120 int
+     121 uname_to_uid (char const *uname, uid_t *uidp)
+     122 {
+     123   struct passwd *passwd;
+     124
+     125   if (cached_no_such_uname
+     126       && strcmp (uname, cached_no_such_uname) == 0)
+     127     return 0;
+     128
+     129   if (!cached_uname
+     130       || uname[0] != cached_uname[0]
+     131       || strcmp (uname, cached_uname) != 0)
+     132     {
+     133       passwd = getpwnam (uname);
+     134       if (passwd)
+     135         {
+     136           cached_uid = passwd->pw_uid;
+     137           assign_string (&cached_uname, passwd->pw_name);
+     138         }
+     139       else
+     140         {
+     141           assign_string (&cached_no_such_uname, uname);
+     142           return 0;
+     143         }
+     144     }
+     145   *uidp = cached_uid;
+     146   return 1;
+     147 }   1087       case OWNER_OPTION:
+
+tar-1.14/src/tar.c
+    1088         if (! (strlen (optarg) < UNAME_FIELD_SIZE
+    1089                && uname_to_uid (optarg, &owner_option)))
+    1090           {
+    1091             uintmax_t u;
+    1092             if (xstrtoumax (optarg, 0, 10, &u, "") == LONGINT_OK
+    1093                 && u == (uid_t) u)
+    1094               owner_option = u;
+    1095             else
+    1096               FATAL_ERROR ((0, 0, "%s: %s", quotearg_colon (optarg),
+    1097                             _("Invalid owner")));
+    1098           }
+    1099         break;
+
+In summary, there are following types.
+
+a) older GNU tar
+--owner must match with the host database, no option to set
+uname & uid separately.
+
+b) newer GNU tar
+--owner accepts unknown username and/or uid.
+if only one part is given and known by the host system,
+the missing part is deduced by it.
+if only one part is given and unknown by the host system,
+the missing part is unchanged from the file to be archived.
+
+c) newer bsd tar
+--uname/--uid accept unknown username and/or uid.
+username is just used to override uname entry of the archive,
+but uid is used to override both of uid and uname entries,
+if uid is known and username is not specified.
+If uid is unknown, uid is overriden, but the username entry
+is unchanged from the file to be archived.
+
+which behaviour is to be simulated? I want to propose
+yet another one, similar to c) but incompatble.
+
+d) --uname, --uid, --gname, --gid check only the syntax
+(to kick the username starting with digit, non-digit
+uid, etc) and no check for known/unknown.
+
+>> +#if ULONG_MAX > 0xFFFFFFFFUL
+>> +	/*
+>> +	 * --owner, --group rejects uid/gid greater than 32-bit
+>> +	 * limits, even on 64-bit platforms.
+>> +	 */
+>> +	if (ul > 0xFFFFFFFFUL)
+>> +		return STR_IS_DIGIT_TOO_LARGE;
+>> +#endif
+> 
+> The #if is not really necessary, is it?  Compilers should be able to
+> optimize the conditional out on 32-bit platforms.
+
+Thanks for finding this, I'm glad to have a chance to ask a
+question; git is not needed to care for 16-bit platforms?
+
+>> +	/* the operand is known to be non-digit */
+>> +
+>> +	args->uname = xstrdup(tar_owner);
+>> +	pw = getpwnam(tar_owner);
+> 
+> How well does this work on Windows?  In daemon.c we avoid calling
+> getpwnam(3), getgrnam(3) etc. if NO_POSIX_GOODIES is not defined.
+
+OK, I can enclose them by ifdefs of NO_POSIX_GOODIES. But,
+maybe the design the options would be discussed for first.
+
+Both of latest GNU and BSD tar call getpwnam() or getpwuid(),
+but designing as all of --uname --uid --gname --gid as "only syntax
+is checked (non-digit UID/GID should be refused), but known/unknown
+is not checked" would be the most portable.
+
+> GNU tar and bsdtar show the names of owner and group with -t -v at
+> least, albeit in slightly different formats.  Can this help avoid
+> parsing the archive on our own?
+
+Yeah, writing yet another tar archive parser in C, to avoid the additional
+dependency to Python or newer Perl (Archive::Tar since perl-5.10), is
+painful, I feel (not only for me but also for the maintainers).
+If tar command itself works well, it would be the best.
+
+But, I'm not sure whether the format of "tar tv" output is stably
+standardized. It's the reason why I wrote Python tool. If I execute
+git-archive with sufficently long randomized username & uid in
+several times, it would be good test?
+
+> But getting a short program like zipdetails for tar would be nice as
+> well of course. :)
+
+I wrote something in C:
+https://github.com/mpsuzuki/git/blob/pullreq-20171227-c/t/helper/test-parse-tar-file.c
+
+but if somebody wants the support of other tar variants,
+he/she would have some headache :-)
+
+Regards,
+mpsuzuki
+
