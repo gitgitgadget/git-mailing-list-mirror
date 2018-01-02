@@ -6,61 +6,69 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109F01F428
-	for <e@80x24.org>; Tue,  2 Jan 2018 21:07:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E7C31F428
+	for <e@80x24.org>; Tue,  2 Jan 2018 21:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751018AbeABVH4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 16:07:56 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51002 "HELO cloud.peff.net"
+        id S1750917AbeABVIf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 16:08:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51020 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750865AbeABVH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 16:07:56 -0500
-Received: (qmail 11081 invoked by uid 109); 2 Jan 2018 21:07:55 -0000
+        id S1750726AbeABVIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 16:08:34 -0500
+Received: (qmail 11109 invoked by uid 109); 2 Jan 2018 21:08:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jan 2018 21:07:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 02 Jan 2018 21:08:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19361 invoked by uid 111); 2 Jan 2018 21:08:25 -0000
+Received: (qmail 19419 invoked by uid 111); 2 Jan 2018 21:09:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 02 Jan 2018 16:08:25 -0500
+ by peff.net (qpsmtpd/0.94) with ESMTPA; Tue, 02 Jan 2018 16:09:05 -0500
 Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jan 2018 16:07:53 -0500
-Date:   Tue, 2 Jan 2018 16:07:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Jan 2018 16:08:33 -0500
+Date:   Tue, 2 Jan 2018 16:08:33 -0500
 From:   Jeff King <peff@peff.net>
 To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
 Cc:     Stephan Janssen <sjanssen@you-get.com>,
         "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH 0/4] Git removes existing folder when cancelling clone
-Message-ID: <20180102210753.GA10430@sigill.intra.peff.net>
-References: <FE0E0877-B77D-4BD6-A513-435C251D920A@you-get.com>
- <alpine.LFD.2.21.1801020610400.14363@localhost.localdomain>
- <20180102200443.GA1703@sigill.intra.peff.net>
+Subject: [PATCH 1/4] t5600: fix outdated comment about unborn HEAD
+Message-ID: <20180102210832.GA22556@sigill.intra.peff.net>
+References: <20180102210753.GA10430@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180102200443.GA1703@sigill.intra.peff.net>
+In-Reply-To: <20180102210753.GA10430@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 02, 2018 at 03:04:43PM -0500, Jeff King wrote:
+Back when this test was written, git-clone could not handle
+a repository without any commits. These days it works fine,
+and this comment is out of date.
 
-> So I don't think there's an urgent data-loss bug here; we will only ever
-> destroy an empty directory. However, the original intent was to leave
-> the filesystem as we found it on a failed or aborted clone, and we
-> obviously don't do that in this case. So it might be nice if we could
-> restore it to an empty directory.
+At first glance it seems like we could just drop this code
+entirely now, but it's necessary for the final test, which
+was added later. That test corrupts the repository by
+temporarily removing its objects, which means we need to
+have some objects to move.
 
-Here's a patch series to do that. The first three are just preparatory
-cleanups; the last one is the interesting bit.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5600-clone-fail-cleanup.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  [1/4]: t5600: fix outdated comment about unborn HEAD
-  [2/4]: t5600: modernize style
-  [3/4]: clone: factor out dir_exists() helper
-  [4/4]: clone: do not clean up directories we didn't create
+diff --git a/t/t5600-clone-fail-cleanup.sh b/t/t5600-clone-fail-cleanup.sh
+index 4435693bb2..f23f92e5a7 100755
+--- a/t/t5600-clone-fail-cleanup.sh
++++ b/t/t5600-clone-fail-cleanup.sh
+@@ -22,7 +22,7 @@ test_expect_success \
+ # Need a repo to clone
+ test_create_repo foo
+ 
+-# clone doesn't like it if there is no HEAD. Is that a bug?
++# create some objects so that we can corrupt the repo later
+ (cd foo && touch file && git add file && git commit -m 'add file' >/dev/null 2>&1)
+ 
+ # source repository given to git clone should be relative to the
+-- 
+2.16.0.rc0.384.gc477e89267
 
- builtin/clone.c               |  31 ++++++++++---
- t/t5600-clone-fail-cleanup.sh | 100 +++++++++++++++++++++++++++++++-----------
- 2 files changed, 98 insertions(+), 33 deletions(-)
-
--Peff
