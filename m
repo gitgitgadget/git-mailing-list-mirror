@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 344FF1F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:36:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51B301F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 16:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751448AbeACQgm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:36:42 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40861 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751141AbeACQej (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:34:39 -0500
-Received: by mail-wm0-f68.google.com with SMTP id f206so3622249wmf.5
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:39 -0800 (PST)
+        id S1751451AbeACQgn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 11:36:43 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:42666 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751237AbeACQe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 11:34:27 -0500
+Received: by mail-wm0-f66.google.com with SMTP id b141so3671405wme.1
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yIbu/9U/4415rpcJl4hvoaMWtx2zJBs7JqdaJ9Gzt8M=;
-        b=Wxm7LDqqW0dsCORfDga9vPMHyLXub0bYJ6W+9e81v8lU8IOwDjXzkMjD57wuKfN6fa
-         FoZ75Kl30k0g9rvqFcGoRVHpEWvuRbV0IrjW1swwoeVgTJcK0wEXPMXAZUvcqa/Y7Ayr
-         7t49s5IqqVreHnqJL1HWXuB3avrFug+0poYw0CPlE4qHEKUfRJId9urhbZujr+1xfI+i
-         +pZE4B1n8/QiywLe8lyBYKAQaU9GvEbfyZjyTuqyyu1KdvFoJVHt8Ab1sIyE+OwSxpbv
-         yvTtzaUdyD3c6e8+fkLjvx1eRb1E4Dt7fW4+vnuKK6icgGK7tmIzTrgQZu0Ftm1AHf/O
-         /iug==
+        bh=LYp2bAow2442hTMuQsiErMtlz/HOu9iWaqhS/t3wF3I=;
+        b=VORdVo3YpERMibOnacni1tF6BaUrwK4NX2jgWOVfYAh4e0HN9QORpQHYgNgmV46tTk
+         R+ClBHNiWWWRclamIRgWeIv4mDb1IjiXeQzlwK0A8E0GeGKPZ1a1eJg7OQrNR1ho/vh0
+         pqd9G0pT3L6Cq5D0X/AdMfBrYUmopnqiT8QA8jxQfMvX3x1RS5Bwcp5Qt1U2AWps+nMu
+         AJ89ZJD+WFs1tskca4PpHoOIenGomcrD6wz0BGJrF2V5DAO1mvWkihJOTyyUIrBRmGUg
+         /Q4Owl1UEP6f9S6e99NXhWJX27c66bxtBXADOKNVB02MLFO5yre1RTn686oOxMfjwXyH
+         E0sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yIbu/9U/4415rpcJl4hvoaMWtx2zJBs7JqdaJ9Gzt8M=;
-        b=ahMYN1074Cd78tykWeyKgVccr+HCs8C4EJBRuIMxJWbFw2Y/OjbnD8Euz6Uidn1ZEG
-         YuXtlKtyA3AkyT2o6GFVPICJ7n9eQIfmubvbmfmHAQdTDow6cv7GxLFpCctKqMqgcrTw
-         F7IyCDfX+CEEicRU1ZLxXLji3nSkVsQN/D5Q4E4vB8DQgP1u9F6o3cuHOyqJf6ltHro7
-         v0ELMoue/43uZ6EzVZvwfK0M1owTODfybTCv3j1rysZ5xGCuf22VTdL6CnaVvk0EPolU
-         RpYmY8kc88qs2LLywtmgxt8qSLz4E3Nbx+DaAYbqN1iyDaVVmICuu2dyXrbxM9Jvz3Hk
-         yUuw==
-X-Gm-Message-State: AKGB3mKiNt/EE/Xznpq81DgTmFMx8O0uQH7Ksu6r26oXjIsHSqP9hQBZ
-        x1DX1sy2Eu1UxrK5v4cgPPi1YIHJ
-X-Google-Smtp-Source: ACJfBosSstgRjPquIlOQGqTE5NOuSxNGE+yzWYs00MTWsFop5PwdZG+JONc2B5vClf5LkO6HqqXwGw==
-X-Received: by 10.28.35.4 with SMTP id j4mr1714009wmj.55.1514997278045;
-        Wed, 03 Jan 2018 08:34:38 -0800 (PST)
+        bh=LYp2bAow2442hTMuQsiErMtlz/HOu9iWaqhS/t3wF3I=;
+        b=l+lvZPK/3UX4FkbuqMx4xVgKTOvG7chRSye1IM8phQA2p+SZ84WsQXsRwW+Xz6fvqv
+         XHefQ7R18vCF1qIu4pIIFnQPJbUxvy5LWPOA4bP3H1p6lTfzOHYBj5DFwfVvV3odf/Ve
+         n/4/IscVURbQYao9gOAHvhN7OrHEYQGXDvh6fGbvIq4SrhrNqbpB2fX4DsODMC9Nexyc
+         VwHakyQEoNZCC90eM2H0ejeYQF8haqoDQxMGX0dkFjiTVPnnjgiQGUnrOGui3IVu/FOp
+         KVMqJje63D76h39UhgcPlI7rXA/MmDtkah37fwR42K867Zrk2s8tGy3rdgDuCfc7Jqy/
+         WViQ==
+X-Gm-Message-State: AKGB3mI2Fm2bH+1e6IS8GXPffWJS1PGW7zbBLEOZ/h0as/qtXH6Sms5J
+        PJGiqVKdP7QxRTip/XnFnwICJ1HJ
+X-Google-Smtp-Source: ACJfBou0kfipjqRrxAjQkwGxA2TEKs+jJHn6qrKmzfGdyCXMolAK97raRMunzdpMJL9Z6Z14IzaIbQ==
+X-Received: by 10.28.45.193 with SMTP id t184mr1961131wmt.140.1514997266172;
+        Wed, 03 Jan 2018 08:34:26 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.36
+        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 08:34:37 -0800 (PST)
+        Wed, 03 Jan 2018 08:34:25 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 14/40] sha1_file: prepare for external odbs
-Date:   Wed,  3 Jan 2018 17:33:37 +0100
-Message-Id: <20180103163403.11303-15-chriscool@tuxfamily.org>
+Subject: [PATCH 07/40] fsck: support promisor objects as CLI argument
+Date:   Wed,  3 Jan 2018 17:33:30 +0100
+Message-Id: <20180103163403.11303-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.16.g82191dbc6c.dirty
 In-Reply-To: <20180103163403.11303-1-chriscool@tuxfamily.org>
 References: <20180103163403.11303-1-chriscool@tuxfamily.org>
@@ -71,157 +71,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the following commits we will need some functions that were
-internal to sha1_file.c, so let's first make them non static
-and declare them in "cache.h". While at it, let's rename
-'create_tmpfile()' to 'create_object_tmpfile()' to make its
-name less generic.
+From: Jonathan Tan <jonathantanmy@google.com>
 
-Let's also split out 'sha1_file_name_alt()' from
-'sha1_file_name()' and 'open_sha1_file_alt()' from
-'open_sha1_file()', as we will need both of these new
-functions too.
+Teach fsck to not treat missing promisor objects provided on the CLI as
+an error when extensions.partialclone is set.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h     |  8 ++++++++
- sha1_file.c | 47 +++++++++++++++++++++++++++++------------------
- 2 files changed, 37 insertions(+), 18 deletions(-)
+ builtin/fsck.c           |  2 ++
+ t/t0410-partial-clone.sh | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 3fabf998ce..f41c102cb4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -964,6 +964,12 @@ extern void check_repository_format(void);
-  */
- extern const char *sha1_file_name(const unsigned char *sha1);
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index b8bcb0e40c..a6fa6d6482 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -750,6 +750,8 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 			struct object *obj = lookup_object(oid.hash);
  
-+/*
-+ * Like sha1_file_name, but return the filename within a specific alternate
-+ * object directory. Shares the same static buffer with sha1_file_name.
-+ */
-+extern const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1);
+ 			if (!obj || !(obj->flags & HAS_OBJ)) {
++				if (is_promisor_object(&oid))
++					continue;
+ 				error("%s: object missing", oid_to_hex(&oid));
+ 				errors_found |= ERROR_OBJECT;
+ 				continue;
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 46c88e8dfa..a0f901fa1d 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -125,4 +125,17 @@ test_expect_success 'missing object, but promised, passes fsck' '
+ 	git -C repo fsck
+ '
+ 
++test_expect_success 'missing CLI object, but promised, passes fsck' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo my_commit &&
 +
- /*
-  * Return an abbreviated sha1 unique within this repository's object database.
-  * The result will be at least `len` characters long, and will be NUL
-@@ -1251,6 +1257,8 @@ extern int parse_sha1_header(const char *hdr, unsigned long *sizep);
- 
- extern int check_sha1_signature(const unsigned char *sha1, void *buf, unsigned long size, const char *type);
- 
-+extern int create_object_tmpfile(struct strbuf *tmp, const char *filename);
-+extern void close_sha1_file(int fd);
- extern int finalize_object_file(const char *tmpfile, const char *filename);
- 
- /*
-diff --git a/sha1_file.c b/sha1_file.c
-index 261baf800f..785e8dda03 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -322,17 +322,22 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
- 	}
- }
- 
--const char *sha1_file_name(const unsigned char *sha1)
-+const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1)
- {
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
--	strbuf_addf(&buf, "%s/", get_object_directory());
-+	strbuf_addf(&buf, "%s/", objdir);
- 
- 	fill_sha1_path(&buf, sha1);
- 	return buf.buf;
- }
- 
-+const char *sha1_file_name(const unsigned char *sha1)
-+{
-+	return sha1_file_name_alt(get_object_directory(), sha1);
-+}
++	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
++	promise_and_delete "$A" &&
 +
- struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
- {
- 	strbuf_setlen(&alt->scratch, alt->base_len);
-@@ -902,24 +907,14 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
- 	return -1;
- }
- 
--/*
-- * Like stat_sha1_file(), but actually open the object and return the
-- * descriptor. See the caveats on the "path" parameter above.
-- */
--static int open_sha1_file(const unsigned char *sha1, const char **path)
-+static int open_sha1_file_alt(const unsigned char *sha1, const char **path)
- {
--	int fd;
- 	struct alternate_object_database *alt;
--	int most_interesting_errno;
--
--	*path = sha1_file_name(sha1);
--	fd = git_open(*path);
--	if (fd >= 0)
--		return fd;
--	most_interesting_errno = errno;
-+	int most_interesting_errno = errno;
- 
- 	prepare_alt_odb();
- 	for (alt = alt_odb_list; alt; alt = alt->next) {
-+		int fd;
- 		*path = alt_sha1_path(alt, sha1);
- 		fd = git_open(*path);
- 		if (fd >= 0)
-@@ -931,6 +926,22 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
- 	return -1;
- }
- 
-+/*
-+ * Like stat_sha1_file(), but actually open the object and return the
-+ * descriptor. See the caveats on the "path" parameter above.
-+ */
-+static int open_sha1_file(const unsigned char *sha1, const char **path)
-+{
-+	int fd;
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
++	git -C repo fsck "$A"
++'
 +
-+	*path = sha1_file_name(sha1);
-+	fd = git_open(*path);
-+	if (fd >= 0)
-+		return fd;
-+
-+	return open_sha1_file_alt(sha1, path);
-+}
-+
- /*
-  * Map the loose object at "path" if it is not NULL, or the path found by
-  * searching for a loose object named "sha1".
-@@ -1527,7 +1538,7 @@ int hash_sha1_file(const void *buf, unsigned long len, const char *type,
- }
- 
- /* Finalize a file on disk, and close it. */
--static void close_sha1_file(int fd)
-+void close_sha1_file(int fd)
- {
- 	if (fsync_object_files)
- 		fsync_or_die(fd, "sha1 file");
-@@ -1551,7 +1562,7 @@ static inline int directory_size(const char *filename)
-  * We want to avoid cross-directory filename renames, because those
-  * can have problems on various filesystems (FAT, NFS, Coda).
-  */
--static int create_tmpfile(struct strbuf *tmp, const char *filename)
-+int create_object_tmpfile(struct strbuf *tmp, const char *filename)
- {
- 	int fd, dirlen = directory_size(filename);
- 
-@@ -1591,7 +1602,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
- 	static struct strbuf tmp_file = STRBUF_INIT;
- 	const char *filename = sha1_file_name(sha1);
- 
--	fd = create_tmpfile(&tmp_file, filename);
-+	fd = create_object_tmpfile(&tmp_file, filename);
- 	if (fd < 0) {
- 		if (errno == EACCES)
- 			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
+ test_done
 -- 
 2.16.0.rc0.16.g82191dbc6c.dirty
 
