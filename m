@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D605F1F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 21:47:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE0561F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 21:47:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751305AbeACVrq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 16:47:46 -0500
+        id S1751394AbeACVr4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 16:47:56 -0500
 Received: from siwi.pair.com ([209.68.5.199]:65520 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751014AbeACVrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 16:47:45 -0500
+        id S1751258AbeACVrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 16:47:46 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 27843844E1;
-        Wed,  3 Jan 2018 16:47:45 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 4A984844E0;
+        Wed,  3 Jan 2018 16:47:46 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A3709844DC;
-        Wed,  3 Jan 2018 16:47:44 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id D586B844DC;
+        Wed,  3 Jan 2018 16:47:45 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v3 2/5] status: add --[no-]ahead-behind to status and commit for V2 format.
-Date:   Wed,  3 Jan 2018 21:47:30 +0000
-Message-Id: <20180103214733.797-3-git@jeffhostetler.com>
+Subject: [PATCH v3 4/5] status: support --no-ahead-behind in long format
+Date:   Wed,  3 Jan 2018 21:47:32 +0000
+Message-Id: <20180103214733.797-5-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20180103214733.797-1-git@jeffhostetler.com>
 References: <20180103214733.797-1-git@jeffhostetler.com>
@@ -40,328 +40,163 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach "git status" and "git commit" to accept "--no-ahead-behind"
-and "--ahead-behind" arguments to request quick or full ahead/behind
-reporting.
+Teach long (normal) status format to respect the --no-ahead-behind
+parameter and skip the possibly expensive ahead/behind computation
+between the branch and the upstream.
 
-When "--no-ahead-behind" is given, the existing porcelain V2 line
-"branch.ab x y" is replaced with a new "branch equal eq|neq" line.
-This indicates that the branch and its upstream are or are not equal
-without the expense of computing the full ahead/behind values.
-
-Added "status.aheadBehind" config setting.  This is only used by
-non-porcelain format for backward-compatibility.
+Long status also respects "status.aheadBehind" config setting.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Documentation/config.txt     |  6 ++++
- Documentation/git-status.txt |  5 ++++
- builtin/commit.c             | 18 +++++++++++-
- remote.c                     |  2 ++
- remote.h                     |  5 ++--
- t/t7064-wtstatus-pv2.sh      | 69 ++++++++++++++++++++++++++++++++++++++++++++
- wt-status.c                  | 27 +++++++++++++----
- wt-status.h                  |  2 ++
- 8 files changed, 125 insertions(+), 9 deletions(-)
+ builtin/checkout.c       |  2 +-
+ remote.c                 | 18 +++++++++++++-----
+ remote.h                 |  3 ++-
+ t/t6040-tracking-info.sh | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ wt-status.c              |  2 +-
+ 5 files changed, 64 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9593bfa..affb0d6 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3035,6 +3035,12 @@ status.branch::
- 	Set to true to enable --branch by default in linkgit:git-status[1].
- 	The option --no-branch takes precedence over this variable.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index fc4f8fd..655dac2 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -605,7 +605,7 @@ static void report_tracking(struct branch_info *new)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct branch *branch = branch_get(new->name);
  
-+status.aheadBehind::
-+	Set to true to enable --ahead-behind and to false to enable
-+	--no-ahead-behind by default in linkgit:git-status[1] for
-+	non-porcelain formats.  This setting is ignored by porcelain
-+	formats for backwards compatibility.
-+
- status.displayCommentPrefix::
- 	If set to true, linkgit:git-status[1] will insert a comment
- 	prefix before each output line (starting with
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 9f3a78a..603bf40 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -111,6 +111,11 @@ configuration variable documented in linkgit:git-config[1].
- 	without options are equivalent to 'always' and 'never'
- 	respectively.
- 
-+--ahead-behind::
-+--no-ahead-behind::
-+	Display or do not display detailed ahead/behind counts for the
-+	branch relative to its upstream branch.  Defaults to true.
-+
- <pathspec>...::
- 	See the 'pathspec' entry in linkgit:gitglossary[7].
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index be370f6..416fe2c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1109,9 +1109,11 @@ static const char *read_commit_message(const char *name)
- static struct status_deferred_config {
- 	enum wt_status_format status_format;
- 	int show_branch;
-+	enum ahead_behind_flags ahead_behind;
- } status_deferred_config = {
- 	STATUS_FORMAT_UNSPECIFIED,
--	-1 /* unspecified */
-+	-1, /* unspecified */
-+	AHEAD_BEHIND_UNSPECIFIED,
- };
- 
- static void finalize_deferred_config(struct wt_status *s)
-@@ -1137,6 +1139,12 @@ static void finalize_deferred_config(struct wt_status *s)
- 		s->show_branch = status_deferred_config.show_branch;
- 	if (s->show_branch < 0)
- 		s->show_branch = 0;
-+
-+	if (use_deferred_config &&
-+	    s->ahead_behind_flags == AHEAD_BEHIND_UNSPECIFIED)
-+		s->ahead_behind_flags = status_deferred_config.ahead_behind;
-+	if (s->ahead_behind_flags == AHEAD_BEHIND_UNSPECIFIED)
-+		s->ahead_behind_flags = AHEAD_BEHIND_FULL;
- }
- 
- static int parse_and_validate_options(int argc, const char *argv[],
-@@ -1297,6 +1305,10 @@ static int git_status_config(const char *k, const char *v, void *cb)
- 		status_deferred_config.show_branch = git_config_bool(k, v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "status.aheadbehind")) {
-+		status_deferred_config.ahead_behind = git_config_bool(k, v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "status.showstash")) {
- 		s->show_stash = git_config_bool(k, v);
- 		return 0;
-@@ -1351,6 +1363,8 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 			 N_("show branch information")),
- 		OPT_BOOL(0, "show-stash", &s.show_stash,
- 			 N_("show stash information")),
-+		OPT_BOOL(0, "ahead-behind", &s.ahead_behind_flags,
-+			 N_("compute full ahead/behind values")),
- 		{ OPTION_CALLBACK, 0, "porcelain", &status_format,
- 		  N_("version"), N_("machine-readable output"),
- 		  PARSE_OPT_OPTARG, opt_parse_porcelain },
-@@ -1628,6 +1642,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		OPT_SET_INT(0, "short", &status_format, N_("show status concisely"),
- 			    STATUS_FORMAT_SHORT),
- 		OPT_BOOL(0, "branch", &s.show_branch, N_("show branch information")),
-+		OPT_BOOL(0, "ahead-behind", &s.ahead_behind_flags,
-+			 N_("compute full ahead/behind values")),
- 		OPT_SET_INT(0, "porcelain", &status_format,
- 			    N_("machine-readable output"), STATUS_FORMAT_PORCELAIN),
- 		OPT_SET_INT(0, "long", &status_format,
+-	if (!format_tracking_info(branch, &sb))
++	if (!format_tracking_info(branch, &sb, AHEAD_BEHIND_FULL))
+ 		return;
+ 	fputs(sb.buf, stdout);
+ 	strbuf_release(&sb);
 diff --git a/remote.c b/remote.c
-index ca5a416..32706bc 100644
+index 32706bc..bbbe3e5 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -2028,6 +2028,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	}
- 	if (abf == AHEAD_BEHIND_QUICK)
- 		return 1;
-+	if (abf != AHEAD_BEHIND_FULL)
-+		BUG("stat_tracking_info: invalid abf '%d'", abf);
+@@ -2068,15 +2068,16 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ /*
+  * Return true when there is anything to report, otherwise false.
+  */
+-int format_tracking_info(struct branch *branch, struct strbuf *sb)
++int format_tracking_info(struct branch *branch, struct strbuf *sb,
++			 enum ahead_behind_flags abf)
+ {
+-	int ours, theirs;
++	int ours, theirs, sti;
+ 	const char *full_base;
+ 	char *base;
+ 	int upstream_is_gone = 0;
  
- 	/* Run "rev-list --left-right ours...theirs" internally... */
- 	argv_array_push(&argv, ""); /* ignored */
+-	if (stat_tracking_info(branch, &ours, &theirs, &full_base,
+-			       AHEAD_BEHIND_FULL) < 0) {
++	sti = stat_tracking_info(branch, &ours, &theirs, &full_base, abf);
++	if (sti < 0) {
+ 		if (!full_base)
+ 			return 0;
+ 		upstream_is_gone = 1;
+@@ -2090,10 +2091,17 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 		if (advice_status_hints)
+ 			strbuf_addstr(sb,
+ 				_("  (use \"git branch --unset-upstream\" to fixup)\n"));
+-	} else if (!ours && !theirs) {
++	} else if (!sti) {
+ 		strbuf_addf(sb,
+ 			_("Your branch is up to date with '%s'.\n"),
+ 			base);
++	} else if (abf == AHEAD_BEHIND_QUICK) {
++		strbuf_addf(sb,
++			    _("Your branch and '%s' refer to different commits.\n"),
++			    base);
++		if (advice_status_hints)
++			strbuf_addf(sb, _("  (use \"%s\" for details)\n"),
++				    "git status --ahead-behind");
+ 	} else if (!theirs) {
+ 		strbuf_addf(sb,
+ 			Q_("Your branch is ahead of '%s' by %d commit.\n",
 diff --git a/remote.h b/remote.h
-index 00932f5..27feb63 100644
+index 27feb63..b2fa5cc 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -257,8 +257,9 @@ enum match_refs_flags {
- 
- /* Flags for --ahead-behind option. */
- enum ahead_behind_flags {
--	AHEAD_BEHIND_QUICK = 0,  /* just eq/neq reporting */
--	AHEAD_BEHIND_FULL  = 1,  /* traditional a/b reporting */
-+	AHEAD_BEHIND_UNSPECIFIED = -1,
-+	AHEAD_BEHIND_QUICK       =  0,  /* just eq/neq reporting */
-+	AHEAD_BEHIND_FULL        =  1,  /* traditional a/b reporting */
- };
- 
+@@ -265,7 +265,8 @@ enum ahead_behind_flags {
  /* Reporting of tracking info */
-diff --git a/t/t7064-wtstatus-pv2.sh b/t/t7064-wtstatus-pv2.sh
-index e319fa2..67b90cd 100755
---- a/t/t7064-wtstatus-pv2.sh
-+++ b/t/t7064-wtstatus-pv2.sh
-@@ -390,6 +390,75 @@ test_expect_success 'verify upstream fields in branch header' '
- 	)
+ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 		       const char **upstream_name, enum ahead_behind_flags abf);
+-int format_tracking_info(struct branch *branch, struct strbuf *sb);
++int format_tracking_info(struct branch *branch, struct strbuf *sb,
++			 enum ahead_behind_flags abf);
+ 
+ struct ref *get_local_heads(void);
+ /*
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 053dff3..febf63f 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -173,6 +173,53 @@ test_expect_success 'status.aheadbehind=false status -s -b (diverged from upstre
  '
  
-+test_expect_success 'verify --[no-]ahead-behind with V2 format' '
-+	git checkout master &&
-+	test_when_finished "rm -rf sub_repo" &&
-+	git clone . sub_repo &&
+ cat >expect <<\EOF
++On branch b1
++Your branch and 'origin/master' have diverged,
++and have 1 and 1 different commits each, respectively.
++EOF
++
++test_expect_success 'status --long --branch' '
 +	(
-+		## Confirm local master tracks remote master.
-+		cd sub_repo &&
-+		HUF=$(git rev-parse HEAD) &&
-+
-+		# Confirm --no-ahead-behind reports branch.equal with "eq".
-+		cat >expect <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.equal eq
-+		EOF
-+
-+		git status --no-ahead-behind --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual &&
-+
-+		# Confirm --ahead-behind reports traditional branch.ab with 0/0.
-+		cat >expect <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +0 -0
-+		EOF
-+
-+		git status --ahead-behind --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual &&
-+
-+		# Confirm that porcelain=v2 format does not inherit status.aheadBehind value.
-+		git -c status.aheadbehind=false status --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual &&
-+
-+		git -c status.aheadbehind=true status --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual &&
-+
-+		## Test ahead/behind.
-+		echo xyz >file_xyz &&
-+		git add file_xyz &&
-+		git commit -m xyz &&
-+
-+		HUF=$(git rev-parse HEAD) &&
-+
-+		# Confirm --no-ahead-behind reports branch.equal with "neq".
-+		cat >expect <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.equal neq
-+		EOF
-+
-+		git status --no-ahead-behind --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual &&
-+
-+		# Confirm --ahead-behind reports traditional branch.ab with 1/0.
-+		cat >expect <<-EOF &&
-+		# branch.oid $HUF
-+		# branch.head master
-+		# branch.upstream origin/master
-+		# branch.ab +1 -0
-+		EOF
-+
-+		git status --ahead-behind --porcelain=v2 --branch --untracked-files=all >actual &&
-+		test_cmp expect actual
-+	)
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git status --long -b | head -3
++	) >actual &&
++	test_i18ncmp expect actual
 +'
 +
- test_expect_success 'create and add submodule, submodule appears clean (A. S...)' '
- 	git checkout master &&
- 	git clone . sub_repo &&
++test_expect_success 'status --long --branch' '
++	(
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git -c status.aheadbehind=true status --long -b | head -3
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
++cat >expect <<\EOF
++On branch b1
++Your branch and 'origin/master' refer to different commits.
++EOF
++
++test_expect_success 'status --long --branch --no-ahead-behind' '
++	(
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git status --long -b --no-ahead-behind | head -2
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
++test_expect_success 'status.aheadbehind=false status --long --branch' '
++	(
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git -c status.aheadbehind=false status --long -b | head -2
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
++cat >expect <<\EOF
+ ## b5...brokenbase [gone]
+ EOF
+ 
 diff --git a/wt-status.c b/wt-status.c
-index 8f7fdc6..3959d31 100644
+index df6cc33..0a40b85 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -136,6 +136,7 @@ void wt_status_prepare(struct wt_status *s)
- 	s->ignored.strdup_strings = 1;
- 	s->show_branch = -1;  /* unspecified */
- 	s->show_stash = 0;
-+	s->ahead_behind_flags = AHEAD_BEHIND_UNSPECIFIED;
- 	s->display_comment_prefix = 0;
- }
+@@ -1006,7 +1006,7 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
+ 	if (!skip_prefix(s->branch, "refs/heads/", &branch_name))
+ 		return;
+ 	branch = branch_get(branch_name);
+-	if (!format_tracking_info(branch, &sb))
++	if (!format_tracking_info(branch, &sb, s->ahead_behind_flags))
+ 		return;
  
-@@ -1866,7 +1867,8 @@ static void wt_porcelain_print(struct wt_status *s)
-  *    # branch.oid <commit><eol>
-  *    # branch.head <head><eol>
-  *   [# branch.upstream <upstream><eol>
-- *   [# branch.ab +<ahead> -<behind><eol>]]
-+ *   [# branch.ab +<ahead> -<behind><eol>]
-+ *   [# branch.equal <equal><eol>]]
-  *
-  *      <commit> ::= the current commit hash or the the literal
-  *                   "(initial)" to indicate an initialized repo
-@@ -1884,12 +1886,16 @@ static void wt_porcelain_print(struct wt_status *s)
-  *      <behind> ::= integer behind value, when upstream set
-  *                   and commit is present.
-  *
-+ *       <equal> ::= literal string "eq" or "neq".
-  *
-  * The end-of-line is defined by the -z flag.
-  *
-  *                 <eol> ::= NUL when -z,
-  *                           LF when NOT -z.
-  *
-+ * When an upstream is set and present, the 'branch.ab' line will
-+ * be printed when the ahead_behind_flags are set to _FULL and
-+ * the 'branch.equal' line will be printed when set to _QUICK.
-  */
- static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- {
-@@ -1897,7 +1903,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- 	const char *base;
- 	const char *branch_name;
- 	struct wt_status_state state;
--	int ab_info, nr_ahead, nr_behind;
-+	int sti, nr_ahead, nr_behind;
- 	char eol = s->null_termination ? '\0' : '\n';
- 
- 	memset(&state, 0, sizeof(state));
-@@ -1929,15 +1935,24 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- 		/* Lookup stats on the upstream tracking branch, if set. */
- 		branch = branch_get(branch_name);
- 		base = NULL;
--		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind,
--					      &base, AHEAD_BEHIND_FULL) >= 0);
-+		sti = stat_tracking_info(branch, &nr_ahead, &nr_behind,
-+					 &base, s->ahead_behind_flags);
- 		if (base) {
- 			base = shorten_unambiguous_ref(base, 0);
- 			fprintf(s->fp, "# branch.upstream %s%c", base, eol);
- 			free((char *)base);
- 
--			if (ab_info)
--				fprintf(s->fp, "# branch.ab +%d -%d%c", nr_ahead, nr_behind, eol);
-+			if (sti >= 0) {
-+				if (s->ahead_behind_flags == AHEAD_BEHIND_FULL)
-+					fprintf(s->fp, "# branch.ab +%d -%d%c",
-+						nr_ahead, nr_behind, eol);
-+				else if (s->ahead_behind_flags == AHEAD_BEHIND_QUICK)
-+					fprintf(s->fp, "# branch.equal %s%c",
-+						sti ? "neq" : "eq", eol);
-+				else
-+					BUG("invalid ahead_behind_flag '%d'",
-+					    s->ahead_behind_flags);
-+			}
- 		}
- 	}
- 
-diff --git a/wt-status.h b/wt-status.h
-index 64f4d33..b450b53 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -5,6 +5,7 @@
- #include "string-list.h"
- #include "color.h"
- #include "pathspec.h"
-+#include "remote.h"
- 
- struct worktree;
- 
-@@ -80,6 +81,7 @@ struct wt_status {
- 	int show_branch;
- 	int show_stash;
- 	int hints;
-+	enum ahead_behind_flags ahead_behind_flags;
- 
- 	enum wt_status_format status_format;
- 	unsigned char sha1_commit[GIT_MAX_RAWSZ]; /* when not Initial */
+ 	i = 0;
 -- 
 2.9.3
 
