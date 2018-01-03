@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAC881F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:36:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C62571F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 16:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751408AbeACQgR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:36:17 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33324 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbeACQer (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:34:47 -0500
-Received: by mail-wm0-f68.google.com with SMTP id g130so20902303wme.0
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:46 -0800 (PST)
+        id S1751262AbeACQem (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 11:34:42 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:41566 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750831AbeACQei (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 11:34:38 -0500
+Received: by mail-wr0-f194.google.com with SMTP id p69so2141381wrb.8
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5NJvW5kqrntok1Hhs1k+V9apW3n8bwIKLDQQthG5mjI=;
-        b=aVoPpZpSVFLKasv2psk/Cm8wsd6drdx/Ft7VjBzzSVqOvJgiXs8ptC5QRm4KrlL+4r
-         dYD4EksInzQGj/5/xctLr7Sx2K1fmCqcemB5PWT7DZW/PqQNY9WZyWVsgYkQZ125GQC5
-         MMkhSQ6Y5lW4OVna/9yr6cXzBhhdldk8ATr8FGmBIf3Rj/vxmIfgHUws6dM9qxlw5035
-         OBbFUwh7MZILtk38p0UttikYc+AtDLdWsJTuGRM811HoGR0wmM/kBjN4Dr5+KXGI2udX
-         ei+lCPrKcx7OUPS194gprHcgDuKh9I/8/LJJrCntXB9WlHww/0Sq/w6d+dpswLnfvQEA
-         XG9w==
+        bh=wP3U1xM93sY/U+aBkYgb2muCBEKDN5f7mcuvwEvYA50=;
+        b=Af1YJMXfvchi13kWUyV/pvz0stsVJHvapipHAjCfBO2y8hdB5p8P2Z6XZep/GSIWVT
+         G3v2YIQriJHLQ/AmvMC2TW9NlBV16bAQSD+N6cn2l5w+m1c70Ssoogcq4AYPVQzp+61D
+         KUDaZoSGTq/qHzMLf1ArjMb4J2x90XsQIFWkwa03/TJUHHHJs3nZGdlKeoFaNiPZ0nC0
+         tQxgD+XxRGVpKhaVbK4nhCoz7Ci/hguJkphwO0rqEIUruQr2QpGQI4EFLJfPTZF31Gt3
+         NeQM0BiWAgc+ViFkGS5YX8m8xCVbuZIGBuoyO/gqTzWPpK4ibf+bY8nk0DDXvnHzlQib
+         FIKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5NJvW5kqrntok1Hhs1k+V9apW3n8bwIKLDQQthG5mjI=;
-        b=FUJJ4J/p379x+1SmG/TMcEkofe7hhGSFQZwb8p769snT8Li/8krmmD3Nbupus1NAm4
-         OktmIyqj4xd88/VHU95Uzl4wwm0LXAy8Ekxpe5v3GiZ9E0rT+N++iq3t8GZkDToUh2fa
-         +pkdI/noet7lZ/UYZiqY/rVF6fL+GtWxzX6FkzwK6+xNxBrCZ0bV3OgQiGg9GUrxqx0p
-         YOfC0pW8mlf1x0Pg9WSwzoe6p/PkHHbIui21VasFPHSDzVwXlM4sULcs0WmNTZoJxsIr
-         6UioCdfODqGY69NY8CKMJoPYOR9afmTk/Hwshu/SpOtndtSe32P2ZX34hwurVrROKbuk
-         u6Ug==
-X-Gm-Message-State: AKGB3mICjUjYia4swOZA/YP3+UmRPn27eGOG8Hhhbf6lCPRDYELQg7vc
-        yOj3fY0Dx++Kw4hdoVljXISsfC8L
-X-Google-Smtp-Source: ACJfBouYJFRRf9RL+NLQXMvHo8kImAAC8WNb78Hxqf2F9F0U4BuV0sR2g9PClH5ebPoYM8opzv3RRw==
-X-Received: by 10.28.120.19 with SMTP id t19mr1993386wmc.64.1514997285494;
-        Wed, 03 Jan 2018 08:34:45 -0800 (PST)
+        bh=wP3U1xM93sY/U+aBkYgb2muCBEKDN5f7mcuvwEvYA50=;
+        b=cRCrvFoLN+42zzecu3oCTyY1xI06YSdyTixnESzkCSAkaZCNIJZbGHga4ba4i2vyde
+         9rRm5T4znN1ytPAnt38Q+5O3oSnROPADVsHZfoBhovO8guBP3wsgrS72L0Pq9WdwsY9X
+         DCGT0k7d190idTEVY6MsY/cFqmzaLpCfXckg13yoYaDH6oiiZh8FgyedzLWedayn7VOC
+         /8bI/BVmnleUCLBMOvGTqGADTisavll3F74anFxwJvS1cYCg3XLf6It1noXrD6k2u6XW
+         oEWoFNwfx/0l+DJQdGSqgWTWh95ubTDEBEl55vRjVk3HA+tTejRmnSYdG21d+DrkDwIO
+         IhnA==
+X-Gm-Message-State: AKGB3mLM6XCgaIMMwFQOj9Y5KXKabRQUHgJwUIM7yZj8bxEwW/9vPtkS
+        e1di+WirmGwzZA2Ikgbs7W26jxNF
+X-Google-Smtp-Source: ACJfBotI4uYSxRMe2jF+FEaL/DUrTiVWtyuW2cbjoPjbRkviw+TQiZB8iHhu83MyV5YpKIkc9+tUYA==
+X-Received: by 10.223.152.129 with SMTP id w1mr2232108wrb.20.1514997276353;
+        Wed, 03 Jan 2018 08:34:36 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.44
+        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 08:34:44 -0800 (PST)
+        Wed, 03 Jan 2018 08:34:35 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 19/40] external odb: add 'put_raw_obj' support
-Date:   Wed,  3 Jan 2018 17:33:42 +0100
-Message-Id: <20180103163403.11303-20-chriscool@tuxfamily.org>
+Subject: [PATCH 13/40] gc: do not repack promisor packfiles
+Date:   Wed,  3 Jan 2018 17:33:36 +0100
+Message-Id: <20180103163403.11303-14-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.16.g82191dbc6c.dirty
 In-Reply-To: <20180103163403.11303-1-chriscool@tuxfamily.org>
 References: <20180103163403.11303-1-chriscool@tuxfamily.org>
@@ -71,172 +71,306 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add support for a 'put_raw_obj' capability/instruction to send new
-objects to an external odb. Objects will be sent as they are (in
-their 'raw' format). They will not be converted to Git objects.
+From: Jonathan Tan <jonathantanmy@google.com>
 
-For now any new Git object (blob, tree, commit, ...) would be sent
-if 'put_raw_obj' is supported by an odb helper. This is not a great
-default, but let's leave it to following commits to tweak that.
+Teach gc to stop traversal at promisor objects, and to leave promisor
+packfiles alone. This has the effect of only repacking non-promisor
+packfiles, and preserves the distinction between promisor packfiles and
+non-promisor packfiles.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- external-odb.c | 15 +++++++++++++++
- external-odb.h |  2 ++
- odb-helper.c   | 43 ++++++++++++++++++++++++++++++++++++++-----
- odb-helper.h   |  3 +++
- sha1_file.c    |  2 ++
- 5 files changed, 60 insertions(+), 5 deletions(-)
+ Documentation/git-pack-objects.txt | 11 ++++++++
+ builtin/gc.c                       |  4 +++
+ builtin/pack-objects.c             | 37 ++++++++++++++++++++++++--
+ builtin/prune.c                    |  7 +++++
+ builtin/repack.c                   |  9 +++++--
+ t/t0410-partial-clone.sh           | 54 ++++++++++++++++++++++++++++++++++++--
+ 6 files changed, 116 insertions(+), 6 deletions(-)
 
-diff --git a/external-odb.c b/external-odb.c
-index 2622c12853..337bdd2540 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -151,3 +151,18 @@ int external_odb_get_direct(const unsigned char *sha1)
- 
- 	return -1;
- }
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index aa403d02f3..81bc490ac5 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -255,6 +255,17 @@ a missing object is encountered.  This is the default action.
+ The form '--missing=allow-any' will allow object traversal to continue
+ if a missing object is encountered.  Missing objects will silently be
+ omitted from the results.
+++
++The form '--missing=allow-promisor' is like 'allow-any', but will only
++allow object traversal to continue for EXPECTED promisor missing objects.
++Unexpected missing object will raise an error.
 +
-+int external_odb_put_object(const void *buf, size_t len,
-+			    const char *type, unsigned char *sha1)
++--exclude-promisor-objects::
++	Omit objects that are known to be in the promisor remote.  (This
++	option has the purpose of operating only on locally created objects,
++	so that when we repack, we still maintain a distinction between
++	locally created objects [without .promisor] and objects from the
++	promisor remote [with .promisor].)  This is used with partial clone.
+ 
+ SEE ALSO
+ --------
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 3c5eae0edf..cef1461d1a 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -20,6 +20,7 @@
+ #include "argv-array.h"
+ #include "commit.h"
+ #include "packfile.h"
++#include "external-odb.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+@@ -458,6 +459,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			argv_array_push(&prune, prune_expire);
+ 			if (quiet)
+ 				argv_array_push(&prune, "--no-progress");
++			if (has_external_odb())
++				argv_array_push(&prune,
++						"--exclude-promisor-objects");
+ 			if (run_command_v_opt(prune.argv, RUN_GIT_CMD))
+ 				return error(FAILED_RUN, prune.argv[0]);
+ 		}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 6b9cfc289d..6c71552cdf 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -75,6 +75,8 @@ static int use_bitmap_index = -1;
+ static int write_bitmap_index;
+ static uint16_t write_bitmap_options;
+ 
++static int exclude_promisor_objects;
++
+ static unsigned long delta_cache_size = 0;
+ static unsigned long max_delta_cache_size = 256 * 1024 * 1024;
+ static unsigned long cache_max_small_delta_size = 1000;
+@@ -84,8 +86,9 @@ static unsigned long window_memory_limit = 0;
+ static struct list_objects_filter_options filter_options;
+ 
+ enum missing_action {
+-	MA_ERROR = 0,    /* fail if any missing objects are encountered */
+-	MA_ALLOW_ANY,    /* silently allow ALL missing objects */
++	MA_ERROR = 0,      /* fail if any missing objects are encountered */
++	MA_ALLOW_ANY,      /* silently allow ALL missing objects */
++	MA_ALLOW_PROMISOR, /* silently allow all missing PROMISOR objects */
+ };
+ static enum missing_action arg_missing_action;
+ static show_object_fn fn_show_object;
+@@ -2578,6 +2581,20 @@ static void show_object__ma_allow_any(struct object *obj, const char *name, void
+ 	show_object(obj, name, data);
+ }
+ 
++static void show_object__ma_allow_promisor(struct object *obj, const char *name, void *data)
 +{
-+	struct odb_helper *o;
++	assert(arg_missing_action == MA_ALLOW_PROMISOR);
 +
-+	external_odb_init();
++	/*
++	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
++	 * staging them now and getting an odd error later.
++	 */
++	if (!has_object_file(&obj->oid) && is_promisor_object(&obj->oid))
++		return;
 +
-+	for (o = helpers; o; o = o->next) {
-+		int r = odb_helper_put_object(o, buf, len, type, sha1);
-+		if (r <= 0)
-+			return r;
-+	}
-+	return 1;
++	show_object(obj, name, data);
 +}
-diff --git a/external-odb.h b/external-odb.h
-index fb8b94972f..26bb931685 100644
---- a/external-odb.h
-+++ b/external-odb.h
-@@ -6,5 +6,7 @@ extern const char *external_odb_root(void);
- extern int external_odb_has_object(const unsigned char *sha1);
- extern int external_odb_get_object(const unsigned char *sha1);
- extern int external_odb_get_direct(const unsigned char *sha1);
-+extern int external_odb_put_object(const void *buf, size_t len,
-+				   const char *type, unsigned char *sha1);
- 
- #endif /* EXTERNAL_ODB_H */
-diff --git a/odb-helper.c b/odb-helper.c
-index ea642fd438..6f56f07b38 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -72,9 +72,10 @@ static void prepare_helper_command(struct argv_array *argv, const char *cmd,
- 	strbuf_release(&buf);
- }
- 
--__attribute__((format (printf,3,4)))
-+__attribute__((format (printf,4,5)))
- static int odb_helper_start(struct odb_helper *o,
- 			    struct odb_helper_cmd *cmd,
-+			    int use_stdin,
- 			    const char *fmt, ...)
++
+ static int option_parse_missing_action(const struct option *opt,
+ 				       const char *arg, int unset)
  {
- 	va_list ap;
-@@ -91,7 +92,10 @@ static int odb_helper_start(struct odb_helper *o,
+@@ -2592,10 +2609,18 @@ static int option_parse_missing_action(const struct option *opt,
  
- 	cmd->child.argv = cmd->argv.argv;
- 	cmd->child.use_shell = 1;
--	cmd->child.no_stdin = 1;
-+	if (use_stdin)
-+		cmd->child.in = -1;
-+	else
-+		cmd->child.no_stdin = 1;
- 	cmd->child.out = -1;
- 
- 	if (start_command(&cmd->child) < 0) {
-@@ -120,7 +124,7 @@ int odb_helper_init(struct odb_helper *o)
- 	FILE *fh;
- 	struct strbuf line = STRBUF_INIT;
- 
--	if (odb_helper_start(o, &cmd, "init") < 0)
-+	if (odb_helper_start(o, &cmd, 0, "init") < 0)
- 		return -1;
- 
- 	fh = xfdopen(cmd.child.out, "r");
-@@ -180,7 +184,7 @@ static void odb_helper_load_have(struct odb_helper *o)
- 		return;
- 	o->have_valid = 1;
- 
--	if (odb_helper_start(o, &cmd, "have") < 0)
-+	if (odb_helper_start(o, &cmd, 0, "have") < 0)
- 		return;
- 
- 	fh = xfdopen(cmd.child.out, "r");
-@@ -235,7 +239,7 @@ int odb_helper_get_object(struct odb_helper *o, const unsigned char *sha1,
- 	if (!obj)
- 		return -1;
- 
--	if (odb_helper_start(o, &cmd, "get_git_obj %s", sha1_to_hex(sha1)) < 0)
-+	if (odb_helper_start(o, &cmd, 0, "get_git_obj %s", sha1_to_hex(sha1)) < 0)
- 		return -1;
- 
- 	memset(&stream, 0, sizeof(stream));
-@@ -335,3 +339,32 @@ int odb_helper_get_direct(struct odb_helper *o,
- 
- 	return res;
- }
-+
-+int odb_helper_put_object(struct odb_helper *o,
-+			  const void *buf, size_t len,
-+			  const char *type, unsigned char *sha1)
-+{
-+	struct odb_helper_cmd cmd;
-+
-+	if (odb_helper_start(o, &cmd, 1, "put_raw_obj %s %"PRIuMAX" %s",
-+			     sha1_to_hex(sha1), (uintmax_t)len, type) < 0)
-+		return -1;
-+
-+	do {
-+		int w = xwrite(cmd.child.in, buf, len);
-+		if (w < 0) {
-+			error("unable to write to odb helper '%s': %s",
-+			      o->name, strerror(errno));
-+			close(cmd.child.in);
-+			close(cmd.child.out);
-+			odb_helper_finish(o, &cmd);
-+			return -1;
-+		}
-+		len -= w;
-+	} while (len > 0);
-+
-+	close(cmd.child.in);
-+	close(cmd.child.out);
-+	odb_helper_finish(o, &cmd);
-+	return 0;
-+}
-diff --git a/odb-helper.h b/odb-helper.h
-index f8eac7f44c..4a9cc7f07b 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -46,5 +46,8 @@ extern int odb_helper_get_object(struct odb_helper *o,
- 				 int fd);
- extern int odb_helper_get_direct(struct odb_helper *o,
- 				 const unsigned char *sha1);
-+extern int odb_helper_put_object(struct odb_helper *o,
-+				 const void *buf, size_t len,
-+				 const char *type, unsigned char *sha1);
- 
- #endif /* ODB_HELPER_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index f1d688c10a..8c873554b2 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1695,6 +1695,8 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
- 	 * it out into .git/objects/??/?{38} file.
- 	 */
- 	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
-+	if (!external_odb_put_object(buf, len, type, sha1))
-+		return 0;
- 	if (freshen_packed_object(sha1) || freshen_loose_object(sha1))
+ 	if (!strcmp(arg, "allow-any")) {
+ 		arg_missing_action = MA_ALLOW_ANY;
++		fetch_if_missing = 0;
+ 		fn_show_object = show_object__ma_allow_any;
  		return 0;
- 	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
+ 	}
+ 
++	if (!strcmp(arg, "allow-promisor")) {
++		arg_missing_action = MA_ALLOW_PROMISOR;
++		fetch_if_missing = 0;
++		fn_show_object = show_object__ma_allow_promisor;
++		return 0;
++	}
++
+ 	die(_("invalid value for --missing"));
+ 	return 0;
+ }
+@@ -3009,6 +3034,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "missing", NULL, N_("action"),
+ 		  N_("handling for missing objects"), PARSE_OPT_NONEG,
+ 		  option_parse_missing_action },
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("do not pack objects in promisor packfiles")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -3054,6 +3081,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		argv_array_push(&rp, "--unpacked");
+ 	}
+ 
++	if (exclude_promisor_objects) {
++		use_internal_rev_list = 1;
++		fetch_if_missing = 0;
++		argv_array_push(&rp, "--exclude-promisor-objects");
++	}
++
+ 	if (!reuse_object)
+ 		reuse_delta = 0;
+ 	if (pack_compression_level == -1)
+diff --git a/builtin/prune.c b/builtin/prune.c
+index d2fdae680a..4cfec82f40 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -101,12 +101,15 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+ 	struct progress *progress = NULL;
++	int exclude_promisor_objects = 0;
+ 	const struct option options[] = {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("expire objects older than <time>")),
++		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
++			 N_("limit traversal to objects outside promisor packfiles")),
+ 		OPT_END()
+ 	};
+ 	char *s;
+@@ -139,6 +142,10 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 		show_progress = isatty(2);
+ 	if (show_progress)
+ 		progress = start_delayed_progress(_("Checking connectivity"), 0);
++	if (exclude_promisor_objects) {
++		fetch_if_missing = 0;
++		revs.exclude_promisor_objects = 1;
++	}
+ 
+ 	mark_reachable_objects(&revs, 1, expire, progress);
+ 	stop_progress(&progress);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index f17a68a17d..a6d9cfb92c 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -8,6 +8,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "argv-array.h"
++#include "external-odb.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -83,7 +84,8 @@ static void remove_pack_on_signal(int signo)
+ 
+ /*
+  * Adds all packs hex strings to the fname list, which do not
+- * have a corresponding .keep file.
++ * have a corresponding .keep or .promisor file. These packs are not to
++ * be kept if we are going to pack everything into one file.
+  */
+ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ {
+@@ -101,7 +103,8 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ 
+ 		fname = xmemdupz(e->d_name, len);
+ 
+-		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
++		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)) &&
++		    !file_exists(mkpath("%s/%s.promisor", packdir, fname)))
+ 			string_list_append_nodup(fname_list, fname);
+ 		else
+ 			free(fname);
+@@ -232,6 +235,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	argv_array_push(&cmd.args, "--all");
+ 	argv_array_push(&cmd.args, "--reflog");
+ 	argv_array_push(&cmd.args, "--indexed-objects");
++	if (has_external_odb())
++		argv_array_push(&cmd.args, "--exclude-promisor-objects");
+ 	if (window)
+ 		argv_array_pushf(&cmd.args, "--window=%s", window);
+ 	if (window_memory)
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 4dc02459a5..6af4712da8 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -10,14 +10,16 @@ delete_object () {
+ 
+ pack_as_from_promisor () {
+ 	HASH=$(git -C repo pack-objects .git/objects/pack/pack) &&
+-	>repo/.git/objects/pack/pack-$HASH.promisor
++	>repo/.git/objects/pack/pack-$HASH.promisor &&
++	echo $HASH
+ }
+ 
+ promise_and_delete () {
+ 	HASH=$(git -C repo rev-parse "$1") &&
+ 	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
+ 	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
+-	git -C repo tag -d my_annotated_tag &&
++	# tag -d prints a message to stdout, so redirect it
++	git -C repo tag -d my_annotated_tag >/dev/null &&
+ 	delete_object repo "$HASH"
+ }
+ 
+@@ -261,6 +263,54 @@ test_expect_success 'rev-list accepts missing and promised objects on command li
+ 	git -C repo rev-list --exclude-promisor-objects --objects "$COMMIT" "$TREE" "$BLOB"
+ '
+ 
++test_expect_success 'gc does not repack promisor objects' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo my_commit &&
++
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(printf "$TREE_HASH\n" | pack_as_from_promisor) &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
++	git -C repo gc &&
++
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
++
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
++'
++
++test_expect_success 'gc stops traversal when a missing but promised object is reached' '
++	rm -rf repo &&
++	test_create_repo repo &&
++	test_commit -C repo my_commit &&
++
++	TREE_HASH=$(git -C repo rev-parse HEAD^{tree}) &&
++	HASH=$(promise_and_delete $TREE_HASH) &&
++
++	git -C repo config core.repositoryformatversion 1 &&
++	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
++	git -C repo gc &&
++
++	# Ensure that the promisor packfile still exists, and remove it
++	test -e repo/.git/objects/pack/pack-$HASH.pack &&
++	rm repo/.git/objects/pack/pack-$HASH.* &&
++
++	# Ensure that the single other pack contains the commit, but not the tree
++	ls repo/.git/objects/pack/pack-*.pack >packlist &&
++	test_line_count = 1 packlist &&
++	git verify-pack repo/.git/objects/pack/pack-*.pack -v >out &&
++	grep "$(git -C repo rev-parse HEAD)" out &&
++	! grep "$TREE_HASH" out
++'
++
+ LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
 -- 
 2.16.0.rc0.16.g82191dbc6c.dirty
 
