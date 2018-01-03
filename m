@@ -2,83 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 553791F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:07:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C24291F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 16:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751756AbeACQH0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:07:26 -0500
-Received: from mail-it0-f50.google.com ([209.85.214.50]:39171 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751422AbeACQHY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:07:24 -0500
-Received: by mail-it0-f50.google.com with SMTP id 68so2315109ite.4
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:07:24 -0800 (PST)
+        id S1751159AbeACQVv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 11:21:51 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:39784 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750857AbeACQVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 11:21:50 -0500
+Received: by mail-qt0-f174.google.com with SMTP id k19so2711772qtj.6
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:21:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Rq9sOajsZ/0bvQ3Tbg1f/7bjHoMAEN+khk4OaCHlZu0=;
-        b=hFqsQwM+tQsSPiLiRAUzoBDeSs5XmFatG5VxF7gFpM4SiWqCSa/whkThd0zzNUf51M
-         LTr3wOPj3JDJPBdG+52D+EWIqK976OCB26GbJ6yaFDryzIfsJ9CxlmGKB82Y3yQd+TmP
-         2kdaJ7wNc4vLFoKwh3lGIQikFRBCTgZrB7nwDkjFpUPi8yTIHJZCf/CFSrWZR1BluYb1
-         DZhmJ6jXNK1GhdF11SzAL4rxAo6f/I/4ZHRXJkG3iHNc14OKcuJQU742EAPp5karB+uj
-         bZdFgXULiZBRLrkjVYokdYNw4lRb5BZiYT5fw1w2Ct2vLbQ2oZBtxUQLF1+X7AZ7U2zz
-         /ZNg==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wILLUsr3F5NjxgW0JAmzCp86P7rTAQO+4zVFQnQpPKs=;
+        b=kJtLWmfrtOKnlpDxetW0OoqHk0g6hR2MurILkgaYGuH5xBoJMXLYarIirBx+pzaSOT
+         qmHNWNKsfraKLauLlma5xCVpJFtjGdFInRFQECzVgSKq7M2P3t7YXWn1nWL8e6AROANI
+         xRPUBPx0bCELTJ4zSyeO2hFnNaA5G2BNHSNEbQSds8vjmgHD4U7XQv1qaZ0N0afxE0NX
+         0+ucTP5tv38teuEOBj0iAecG//TMS6EZBMqx7jHRmR0IwJOMPlUNtNkSaobCufS3YkGd
+         fuMD2xMv6gjsDTDT2Jg0TXQkbg65ppfm/HtXSDcZZaEW+Vnn8wM47IwFlMehaP0AfAuP
+         oCfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Rq9sOajsZ/0bvQ3Tbg1f/7bjHoMAEN+khk4OaCHlZu0=;
-        b=lL0q759oOkHJjulj4WSS3g0At5C6h7kZF5HnDOI3wOd7FaS0+kRxch65BEtpP4jInF
-         1iuu7oEWhvfu2AxVDmg4XqDb2P02Is4dFNmmaxirbklSMG0VIpeS428vn1yWhXDCuoLT
-         wKseyRN+YdPgRG0YfO8bM78AhMIKJRlZ+NN00pj20Zf9VTrho5/DED/fx8rPJa8jqZF6
-         19gf7NtcRT/8LP7i3dam3ACZMoa1lFMl0eDtx+JBIEhCxT4QsFJZrNhjclAuOaxRHaVc
-         FSd0IkSqge/2p7xnESQ5HT2J8k0CiBQfzTw5TKgiTYxiYCqgB6fiVuBhpnf9FfFO1Rle
-         larA==
-X-Gm-Message-State: AKGB3mLS5G06a542s29mIhU9Wmx/+l0oR0pUC7yMqPc842a/SW2Z0Cz0
-        oxBh6k5FG4FMgqXvaa+CcdDi0rMIkvefAQZlYptMdRGo
-X-Google-Smtp-Source: ACJfBouLM1i4r57v6mDNu9ynGTlYxiCPwCrXGvRz0pjCKXI5bZjVmivmIr6m3N1kNmIiSPQFp2PYvd6hcF/l7R0n/zA=
-X-Received: by 10.36.137.137 with SMTP id s131mr2242705itd.22.1514995643873;
- Wed, 03 Jan 2018 08:07:23 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wILLUsr3F5NjxgW0JAmzCp86P7rTAQO+4zVFQnQpPKs=;
+        b=q53gJvbwXuacMQegCq9KQrl1Fk2FrnsxobjnjcGsNwYexIbmvaNWRT/Os6CJRQduHk
+         Rf8bkbyZt+ASEnp8ivODH4b/2ZHvgOSicy2HA6hMwKv3fTHDjBVytZhvNgNiT+qicVQY
+         2Ms7/+AhSsIm7FvmEKcX70Eqh99v7LK4qdPPlEWdGHf5CIHVwkw6VD2JRAc4kDed0d6s
+         XB/P3g/SYIult4w5pUBfjOkCK3i8GeNcTirykw8RLXWrfCSoTVPc/Qq81HLHeOzeVSRl
+         uJZZAB/KJtFiH76AHXLjDk9Btu+KDCXRazJdkdNEbWOJCOfYQ/GAs79oSVk3OtfTYsVB
+         9DNQ==
+X-Gm-Message-State: AKGB3mKEJgENJ+5Ir1CmTBnThL0gylpTzCTKNK0X+lhu0yW2gC6PUTX0
+        QDF5tg3JOfHwu/hqaspBRpQ=
+X-Google-Smtp-Source: ACJfBou5J17A14DUf+5TjyykuAmBtgpkBJk8DOwrcIiLarq+VNHZLynqhn6TKuoKBzr7NN9pFgf/hA==
+X-Received: by 10.237.55.74 with SMTP id i68mr2415548qtb.237.1514996509799;
+        Wed, 03 Jan 2018 08:21:49 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id a67sm820964qkg.64.2018.01.03.08.21.48
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 03 Jan 2018 08:21:48 -0800 (PST)
+Date:   Wed, 3 Jan 2018 11:21:46 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http: fix v1 protocol tests with apache httpd < 2.4
+Message-ID: <20180103162146.GJ12108@zaya.teonanacatl.net>
+References: <20171231023234.21215-1-tmz@pobox.com>
+ <20180103002145.GA242551@google.com>
+ <20180103003946.GC12108@zaya.teonanacatl.net>
+ <20180103061703.GB25752@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.2.62.3 with HTTP; Wed, 3 Jan 2018 08:07:03 -0800 (PST)
-From:   John Cheng <johnlicheng@gmail.com>
-Date:   Wed, 3 Jan 2018 08:07:03 -0800
-Message-ID: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
-Subject: Misleading documentation for git-diff-files (diff-filter)
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180103061703.GB25752@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I originally asked this question on stackoverflow
-(https://stackoverflow.com/q/48039277).
+Jeff King wrote:
+> On Tue, Jan 02, 2018 at 07:39:46PM -0500, Todd Zullinger wrote:
+>> I don't know if there's a clean way to do that
+>> automatically, short of parsing the output of 'httpd -v'
+>> should we ever need to add such a prereq.
+> 
+> In the general case, we could probably define an endpoint within an <If>
+> block, and then try to access the endpoint from the test script.
+> 
+> E.g., something like:
+> 
+>     <IfVersion >= 2.4>
+>     Alias /have-2.4.txt www/yes.txt
+>     </IfVersion>
+> 
+> in the apache config, and then:
+> 
+>   test_lazy_prereq APACHE24 '
+>         echo yes >"$HTTPD_DOCUMENT_ROOT_PATH/yes.txt" &&
+>         curl -f "$HTTPD_URL/have-2.4.txt"
+>   '
+> 
+> in the test script (of course we may not want to depend on having
+> command-line curl, but we could replace that with "git ls-remote" or
+> similar).
+> 
+> One nice thing about that approach is that it can be extended to other
+> "If" blocks, like if we have a particular module available, or if ssl is
+> configured.
 
-I wanted to know if git diff-files shows files that are not in the
-index but are in the working tree. The documentation says you can
-supply --diff-filter=A, which will select file "that are added".
-However, git-diff-files (appears) to never show any files with the
-status of "A".
-
-It seems like the cause is that git diff-files includes
-diff-options.txt which uses a standard template for --diff-filter
-which includes the "A" option. Perhaps a clarification can be added?
-
-Compares the files in the working tree and the index.  When paths
-are specified, compares only those named paths.  Otherwise all
-entries in the index are compared.  The output format is the
-same as for 'git diff-index' and 'git diff-tree'. Files not in the index are
-not compared.
-
-
-
-
+That's quite elegant.  I even modified an IfVersion block
+and didn't think about using it that way to create a prereq.
+Neat!
 
 -- 
----
-John L Cheng
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You're not drunk if you can lie on the floor without holding on.
+    -- Dean Martin
+
