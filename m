@@ -7,76 +7,80 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 604971F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 804971F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751470AbeACDFf (ORCPT <rfc822;e@80x24.org>);
+        id S1751583AbeACDFi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 22:05:38 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:37623 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751343AbeACDFf (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Jan 2018 22:05:35 -0500
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:42135 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751149AbeACDFe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 22:05:34 -0500
-Received: by mail-pf0-f174.google.com with SMTP id d23so215369pfe.9
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:34 -0800 (PST)
+Received: by mail-pg0-f67.google.com with SMTP id o13so204839pgp.4
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
-        h=from:to:cc:subject:date:message-id;
-        bh=/rUMAy8VIGXIznJXZV+l0mHUgdjA5cgIw4eUa1xCf+o=;
-        b=luPgQBemvDP/i3Drb5AjvkgXcgkRsyaEWPXzJJztNRetx9+P0mM4QY0NXAFWnedA4/
-         hEKC/u5hu3iLAhToXer0va6oo6+Zw+VyQAqXi49y0POuz84pHuUigxzdGAMdojKOx59x
-         I/B3cpVPRW/OOB3oc41dWK/hHhOxO6HmZp4N0=
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YDdJdMKaO0J5nWRJ7FsBZ1i9Kw9mljQLbDuu0BIBW/M=;
+        b=JGnBQjKrAMldWjWHeBSfrAX+bes1sX+Z4Ck8uYZpTXFE33PIpvgIKdsn9Gzao1/aoz
+         bEiE5Iod5S0ysGQpMN2xOBq77gpVdT9kFBrcrW4DKR6bbmRJjGZRiU7qDMtAIcgvojCv
+         0GahDwMOBuNI3JK69WN5FAbFHw9B3BgLKTcNg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/rUMAy8VIGXIznJXZV+l0mHUgdjA5cgIw4eUa1xCf+o=;
-        b=UM10pZ4AKYALkG1rTI/wOjy/wXG9pTf7q0zVdqMDIw2YUdcbP+ev/bdIvNyy6txFW1
-         TwCKZiyFUsBPFpbQ34SVPuzzOVdSsFEPX95e4n7Bv1jh6MoBoMFeaFppbyXwWYlf2pMu
-         JF2A7MgiL8AOP3j2/wBFaJBFtgDn8HMDI8rCHHVFuvwwc2/uGQ6BLelvYqLCnKfu5NvG
-         TYqamK17repkTHtFVPYp7qcQNf0sl/ewiev4OgLnQKpfp25OlCfVQYaUyzW9Vod1jVim
-         oTxvtN8CQF7DpSMWe9o8kaGiETtdIUr126e4RZqZ5l82ECJkxi+eJgK6kh6nfEXY/Nao
-         rEcA==
-X-Gm-Message-State: AKGB3mJ+fTy6lA9PlFTRM+JECbethbE4TGsFobb0khCaQQCqxVxW9C8w
-        lXIuHDpyr/BDa9oAWi8JHMlUDuCaDLg=
-X-Google-Smtp-Source: ACJfBovACnJ2n+/U8OP0SC1RAetcbl7jG5YTAEmuyirPkhwCMu9zy313oFDnAcl+Sz2ROWRfErcvlg==
-X-Received: by 10.98.72.130 with SMTP id q2mr98771pfi.99.1514948733435;
-        Tue, 02 Jan 2018 19:05:33 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=YDdJdMKaO0J5nWRJ7FsBZ1i9Kw9mljQLbDuu0BIBW/M=;
+        b=c8d2/2J8mjhpsnYbW3VtHY1grOo6ZqbIlAJaxfKLHsE8nLRPWfnOCGOUr8A5y+6xns
+         zziKhSJM5GAo6uAisqfB6+Q7emAsqzslBW93XBWUiuPdAtIb8YHN6lNdD0/yooeGQwRf
+         Fy0Jeo+i6hB/GQjLoAl560GuGNkjSjcFe+9HFXtG/sKPlN41M851oMaCyStAQ014wIUu
+         5LKf+daaeG16w4bwuFgRDojVjv8Xv6UMh1Ptitz0CzVU6YpOjc7D5QBOmkHny9KmocmI
+         T30XQ/iatA6esheoH3EA3Fed11aLDNIzC2hswvbUOoty07Ewpy83d/poDUsvN2OzsEgp
+         AQYQ==
+X-Gm-Message-State: AKGB3mImy5wXydK0p+ieLZ1bBRbUkscZ+3TC+zeFDGTG4cO5swmcidli
+        WhVr3DBoD1QYSYcIz8AqXNeQoqf/kpI=
+X-Google-Smtp-Source: ACJfBou1N4aN+wj8tesvE91ifJ8fl+ohqynifA3B5wdimCWuHwrTxa6+eqbRMnAt5lQfaiuz/txiqw==
+X-Received: by 10.98.11.71 with SMTP id t68mr100497pfi.79.1514948734220;
+        Tue, 02 Jan 2018 19:05:34 -0800 (PST)
 Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
-        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.32
+        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Jan 2018 19:05:32 -0800 (PST)
+        Tue, 02 Jan 2018 19:05:33 -0800 (PST)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: [PATCH v2 0/6] Minor fsmonitor bugfixes, use with `git diff`
-Date:   Tue,  2 Jan 2018 19:04:50 -0800
-Message-Id: <20180103030456.8181-1-alexmv@dropbox.com>
+Subject: [PATCH 1/6] Fix comments to agree with argument name
+Date:   Tue,  2 Jan 2018 19:04:51 -0800
+Message-Id: <023b0090bc7dc0ff9c3bee1efce8c85fdba27de3.1514948078.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.1.31.gddce0adfe
+In-Reply-To: <20180103030456.8181-1-alexmv@dropbox.com>
+References: <20180103030456.8181-1-alexmv@dropbox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes in this reroll:
- - Instead of including dir.h from fsmonitor.h, stop inlining the
-   functions that made that necessary.
+Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
+---
+ dir.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- - test-dump-fsmonitor sets a config variable soas to be able to
-   access the fsmonitor state (after it has been un-split if using the
-   split index) from the index without modifying it.  I'm least sure
-   of this change, but I'm short on ideas for a cleaner
-   implementation.
-
- - test-dump-fsmonitor now outputs a more concise output, with a
-   trailing newline, instead of just patching over the lack of
-   trailing newline on the old format.
-
-
-Somehow patch 6/6 didn't get included in Junio's
-av/fsmonitor-updates.  That's really the most useful patch of the
-series, and the original impetus for it, as it turns out. :)
-
-Best,
- - Alex
-
+diff --git a/dir.c b/dir.c
+index 7c4b45e30..cf05b1da0 100644
+--- a/dir.c
++++ b/dir.c
+@@ -790,9 +790,9 @@ static int add_excludes_from_buffer(char *buf, size_t size,
+  * an index if 'istate' is non-null), parse it and store the
+  * exclude rules in "el".
+  *
+- * If "ss" is not NULL, compute SHA-1 of the exclude file and fill
++ * If sha1_stat is not NULL, compute SHA-1 of the exclude file and fill
+  * stat data from disk (only valid if add_excludes returns zero). If
+- * ss_valid is non-zero, "ss" must contain good value as input.
++ * sha1_stat.valid is non-zero, sha1_stat must contain good value as input.
+  */
+ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			struct exclude_list *el,
+-- 
+2.15.1.31.gddce0adfe
 
