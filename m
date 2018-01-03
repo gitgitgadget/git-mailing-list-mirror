@@ -2,110 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E98E71F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 05:37:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80F381F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 05:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751202AbeACFhJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 00:37:09 -0500
-Received: from mout.web.de ([212.227.17.11]:63891 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751036AbeACFhJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 00:37:09 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVu1U-1ePufQ2azo-00X1zD; Wed, 03
- Jan 2018 06:36:56 +0100
-Date:   Wed, 3 Jan 2018 06:36:54 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     peff@peff.net, j6t@kdbg.org, lars.schneider@autodesk.com,
-        git@vger.kernel.org, gitster@pobox.com, patrick@luehne.de
-Subject: Re: [PATCH v3 1/1] convert_to_git(): checksafe becomes int conv_flags
-Message-ID: <20180103053654.GA428@tor.lan>
-References: <96B6CD4C-0A0C-47F5-922D-B8BAFB832FD1@gmail.com>
- <20180101215959.1460-1-tboegi@web.de>
- <37D4996F-CC42-4D01-B15E-6287F1F5BF83@gmail.com>
+        id S1751320AbeACFlq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 00:41:46 -0500
+Received: from mail-ua0-f179.google.com ([209.85.217.179]:40710 "EHLO
+        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751255AbeACFlo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 00:41:44 -0500
+Received: by mail-ua0-f179.google.com with SMTP id d37so371696uae.7
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 21:41:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Uu9qBp4AUu8iwTZX6fw0xhFiGOf25Nf/yXmMPqEnutk=;
+        b=UvI35RFGz/2dmBFGMPWOgQ5RpqLKZqFKoB/4qdlJ8lADUFKAsKkitEEnXxby7UiQDh
+         ZveFvJy6MzpRMKqUBpFMZJ5f+XDn0Q8/YnFdyY60juBhK6kdhi+eRCK5TR2bUvqoctup
+         IEe7/4dbeJCEDbHvmt7wlyJHNap3G10zeYGxTWh4tG2DNqtYfybFOLvRMM+80UUl5kAN
+         PVtl5fnj35ig8C8vAGai7cEMV+pf35Bu9XqhtG6I130H2SoLyYUducEIkbcJSgdtudjY
+         oLM4QtBF810ZcMAU9wrkJiN9q5N+QC2QTHSH0h2oA7iOKBaWJGVqJqSSilrBM/ZDBHtV
+         P0tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Uu9qBp4AUu8iwTZX6fw0xhFiGOf25Nf/yXmMPqEnutk=;
+        b=GyUyj2x6rRSDeABzU6/ALm8BxyrsGn5JQQYsZpIOgR7ef2P1BH9NOOfJse0QoJr3Nj
+         zoN3X85xUkif2LKhwWnSDnoKiEKZOL8FmrgkH3vcAVbqck2th3Wm4l/Ri57jDCdPplWt
+         rLR56BKJ1VyOuRCn3bqPj6w4s8047YBN9PTB41NGNXmD80inRsb4hNDxbYseFmy+JUNm
+         c5ZUtJY0d7/HsDB8GmYQTJJurrY7WWfEWOMhXQhr8zeh4c+ngt44heuhTzwm1gGabQAS
+         DtvOQeIhl69PE0DzQlx8+fFQEmnel6HJOuFJpO5gw7gnJgrOBFa3AOujyGGRiSAAy2Ex
+         Ih/w==
+X-Gm-Message-State: AKGB3mJUb1JzZmvJ9hDQK6hLJLJI5o9mykqysyxuUHO0g7A8f6qKHDqv
+        rVhh4p2PYfYvVggtTSVduQdZwekH1E17BB/Paf6YPg==
+X-Google-Smtp-Source: ACJfBosuGcJpuM5TXEWvzK/aBRhJ0W6XmsaZ0Rf52uFEjTuc6sjH2XINYx23S3ld6W5tTGgy1ejjrEIyIZ6RmKahxw8=
+X-Received: by 10.176.86.88 with SMTP id z24mr323972uaa.142.1514958103637;
+ Tue, 02 Jan 2018 21:41:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37D4996F-CC42-4D01-B15E-6287F1F5BF83@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:dlHgtfG1iQg4wC3uA1uJBUWx/ok0ptftdXPo0zMu+Awe8XBm2jB
- V3GHVZaazSCEzJlLQqF6owl6NquRT3JlZsa2cqLDGHOmhTzrbx/HX/+yjyst4bEM1Dc9pzB
- kFW2qznMaocVpQAYmeXc9ZvjYpoF8ylat8FIQ3l0revBtu+LNVOhDLQTSNmGuFDuy8E7yfP
- ld91WAMX3MPWUDbtmjy/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:x8X9NGOQn6A=:yKAo0xOfx2wvECwVxVa4Wu
- GJyo+P0seGr1iE2Hj8aYrMw8OB4Pmtr0OiS8XoUMn2nuYcreJu1iokLK+3tUts3cKCT7q/L6w
- awv3T7wTAxk1EPvwj0wCsbzpTcG+CKoajZ2VfjCO3MerZx5KxKbh0MkfLmbMGVBmMrRmdKWxS
- ZCSdpu7YrHEilU9jc4SWiAPM21poRt/d5f3h1ns8xjGJLuCFund+4lL5egCe2LEMX5A12R1K3
- Dh+Z0euah4z4EEH8b6bXyy0h5BE9ZpcPq0biQETr3xBweoAMPgJfSwTSlQKtCVtLUzKPaygHH
- QvJtZzBd2B/AVdDBN0Z+JDa4ScT5X5CTHFRhOam6F8ybixO3koSirpB9H9FRQqUsxfZCLuNYV
- lakO8kmNuiRU4Lr596nKyizugPa+UVUoaltZcKVhLWhfrvMScnxnD2v6xY1COJnwfVRrZVzTD
- pz/VIuXA3SuZOX/p0eguZbDQ/2SXFXzz5Nc8yHZxnW7n4JFieCY82dN3LVCYb52NReMfTqGl7
- 5U0y9/mo907k+IJTbTqjv7bLRtAZf3721gUjYvHhoWufTTZYp8SL+Tna1ltQ5g9SiigSGGCFA
- t+RoZ/ONVkuGFKSVBGhGU0+eL+7+wr7yMgDOIMKU8/pwB4HZJEsPK/GgPDlHFnU+HVSqRRwFY
- XXIDw7Z6rYi96ccVn6x03yfLlQz/2x3z7rsThOpnhNYilpYKbzCIhqjYDQIaZpLsrr/PkSCs0
- l7c6zzSDsoxRZI5hHAimxtpES4nzczFtrAm+Kcr10ACk/xtDRTnLm5o/vg+YAgTgx3+oREN8n
- 5zr9tvvNvXtvT5wcddOvSDeKfqXEQ==
+Received: by 10.176.20.37 with HTTP; Tue, 2 Jan 2018 21:41:43 -0800 (PST)
+In-Reply-To: <20180103050730.GA87855@aiede.mtv.corp.google.com>
+References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com> <CAGyf7-FQp4q2vvH1ponQvmVDTu0hiMSK1JKytQZ4O1i0MCnz7g@mail.gmail.com>
+ <20180103050730.GA87855@aiede.mtv.corp.google.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 2 Jan 2018 21:41:43 -0800
+Message-ID: <CAGyf7-EeBHwg50+MnUGF6=aE91TJY_iYSrg5gF1rp8ApsTsrvw@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Ben Humphreys <behumphreys@atlassian.com>,
+        Git Users <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 02, 2018 at 08:11:51PM +0100, Lars Schneider wrote:
- 
-[snip]
+On Tue, Jan 2, 2018 at 9:07 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Bryan,
+>
+> Bryan Turner wrote:
+>
+>> Our test environment is still on Ubuntu 12.04 LTS (it's a long story,
+>> but one I doubt is unique to us), which means it's using OpenSSH 5.9.
+>> ssh -G was added in OpenSSH 6.8 [1], circa March 2015, which means the
+>> "auto" detection "fails" and chooses "simple" instead of "ssh". But
+>> OpenSSH 5.9 _does_ support -4, -6 and -p. As a result, commands which
+>> have been working without issue on all previous versions of Git start
+>> to fail saying
+>>
+>> git -c gc.auto=0 -c credential.helper= fetch --force --prune --progress ssh://localhost:64281/repo.git +refs/*:refs/*' exited with code 128 saying: fatal: ssh variant 'simple' does not support setting port
+>
+> Hm, that's not expected.  git-config(1) says:
+>
+>         By default, Git determines the command line arguments to use
+>         based on the basename of the configured SSH command
+>         (configured using the environment variable GIT_SSH or
+>         GIT_SSH_COMMAND or the config setting core.sshCommand). If the
+>         basename is unrecognized, Git will attempt to detect support
+>         of OpenSSH options by [...]
+>
+> So my first question is why the basename detection is not working for
+> you.  What value of GIT_SSH, GIT_SSH_COMMAND, or core.sshCommand are
+> you using?
 
-> > /*****************************************************************
-> > diff --git a/diff.c b/diff.c
-> > index fb22b19f09..2470af52b2 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -3524,9 +3524,9 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
-> > 	 * demote FAIL to WARN to allow inspecting the situation
-> > 	 * instead of refusing.
-> > 	 */
-> > -	enum safe_crlf crlf_warn = (safe_crlf == SAFE_CRLF_FAIL
-> > -				    ? SAFE_CRLF_WARN
-> > -				    : safe_crlf);
-> > +	int conv_flags = (conv_flags_eol == CONV_EOL_RNDTRP_DIE
-> > +				    ? CONV_EOL_RNDTRP_WARN
-> > +				    : conv_flags_eol);
-> 
-> If there is garbage in conv_flags_eol then we would not demote the DIE
-> flag here.
-> 
-> How about something like that:
-> int conv_flags = conv_flags_eol & ~CONV_EOL_RNDTRP_DIE;
+So I'd been digging further into this for the last hour because I
+wasn't seeing quite the behavior I was expecting when I ran Git from
+the command line on Ubuntu 12.04 or 14.04, and this nudged me to the
+right answer: We're setting GIT_SSH to a wrapper script. In our case,
+that wrapper script is just calling OpenSSH's ssh with all the
+provided arguments (plus a couple extra ones), but because we're
+setting GIT_SSH at all, that's why the auto variant code is running.
+That being the case, explicitly setting GIT_SSH_VARIANT=ssh may be the
+correct thing to do, to tell Git that we want to be treated like
+"normal" OpenSSH, as opposed to expecting Git to assume we behave like
+OpenSSH (when the Android repo use case clearly shows that assumption
+also doesn't hold).
 
-The next version will probably look like this:
+Based on that, I'm not sure if you _actually_ need to change anything,
+and I apologize for not turning up that we were setting GIT_SSH before
+I bothered you.
 
-int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
-{
-	int size_only = flags & CHECK_SIZE_ONLY;
-	int err = 0;
-	int conv_flags = conv_flags_eol;
-	/*
-	 * demote FAIL to WARN to allow inspecting the situation
-	 * instead of refusing.
-	 */
-	if (conv_flags & CONV_EOL_RNDTRP_DIE)
-		conv_flags =CONV_EOL_RNDTRP_WARN;
-
-> 
-> ---
-> 
-> In general I like the patch as I think the variables are a bit easier to understand. 
-> One thing I stumbled over while reading the patch:
-> 
-> The global variable "conv_flags_eol". I think the Git coding guidelines
-> have no recommendation for naming global variables. I think a "global_conv_flags_eol"
-> or something would have helped me. I can also see how others might frown upon such 
-> a naming scheme.
-
-I don't have a problem with "global_conv_flags_eol".
-Thank for the comments, let's wait for more comments before I send out V4.
+Thanks immensely for looking into it, Jonathan, and my apologies again
+for wasting your time!
+Bryan Turner
