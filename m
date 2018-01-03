@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12FB91F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 20:49:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ADDC1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 20:49:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751429AbeACUtt (ORCPT <rfc822;e@80x24.org>);
+        id S1751452AbeACUty (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 15:49:54 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:41345 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751410AbeACUtt (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 3 Jan 2018 15:49:49 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:47087 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbeACUtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 15:49:47 -0500
-Received: by mail-wm0-f66.google.com with SMTP id r78so4841130wme.5
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:49:47 -0800 (PST)
+Received: by mail-wr0-f196.google.com with SMTP id p69so3014079wrb.8
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:49:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rU1YlcLsRTPvOoTjrcXcNAhbZILS2t2F+6mLUr/tXQI=;
-        b=dgVqydRUVu179OdL5NrdP3kyl6ijx7fH9LKyyjqlXPvbHtMcEoTX/HE7VsfzJ2i+c4
-         PrBro1kxkMjf+J4pkSJsr6xanC2mzqUcK54sWSs/N+ACvD0HYBz1rN4jJDbMNpCn18us
-         qxyYnShu/9fu9gRCM3oXXbu3zt2J0lDWj7qKyujNhnzZgly1u3wTKUVwdtKj7T2WL0UN
-         5J0yWKYdTfCBH46gBCHFu/t25UH81imSfPvbdqE6FrdqzMKiGmiQjMC42RRNCzt+UPFe
-         nhvRNR8qt5HhejBrXkJtL1Ddc5aKQKtBu6jKs5NmiVLDLMseb26D/zxm3BOoMLRKN7Fs
-         rgHg==
+        bh=olxd02ArNVNeDAKLhRya3NoFoHwiSSvCT0kuZcxHwGo=;
+        b=XC01loA0k5qPN2ZGgqTOEBQnirABODv+TK9w/wOrFn9g7CU/7vK+/pRuUQ0DyvuX8d
+         0fnfcwxUVKlD/2afm5hoxdFkc5rFyu80RvWKybXDgR3THHdsCwqc6ZjE9/NK1znMhRMU
+         2BMVvHeeMk5ZXL/IIfALv5dacixhcCncHySFlvhX0xezFth+18xVQ0ncA0mUA35e5n4L
+         F768umIQ6s0JjLUMffA4Do03EW48Y5A9+5f79ObOy7sYMrJr5iy/d6NnORx76+djfDkU
+         sJIGZf4GTOStd9XoepErhNfS74BVXBwhfIlFxUeNXxrDKU8EnmvlLTPOsqE0Z8iYHb5o
+         FoWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=rU1YlcLsRTPvOoTjrcXcNAhbZILS2t2F+6mLUr/tXQI=;
-        b=EC7b85tesf8qME+f6GbJggEAttIAP/cdLjK8zFjdEFC+RZUqrx4fh123AhIMbIsTrs
-         FPnj4dO94sXYoN0wQsPmpOi5yj+WDELw1hwXZjDO7y8iKrrdFJnBb/bXWB1fMtc1q4CF
-         oqB0Utc4G/Yp04TVtMw/F4sbjby31cT3qp1KtwlGZq8qcK5cqqeV7fG2IdtBFnG2Ie+7
-         8tpDHucii7eMvpgCQFrnPQElOaP1z1WgtmxaY0wv8V7AlGOfYuCY/MFJW04TkjtEaSl/
-         ECxMejz0SAEFGSaD7Nyfz2VNuKl1N21+AVtlAuQaEVzewMB/I/KcgGHEWRyOGqIXm5mz
-         vfGA==
-X-Gm-Message-State: AKGB3mI8xururnkUEVfWFuea4eE36b8EUsmbEKmXDv/4r9pKuyUcIVFn
-        P3NFdp2JIY/t4/8F6xQ5v4Ecrlh5
-X-Google-Smtp-Source: ACJfBouZwCUzcQGqjoEIRj0yz2yYdfFJSHdTVFHjaj10zfqI74uLadxibwLqKSPByMZNJbv4bSdc7g==
-X-Received: by 10.28.48.4 with SMTP id w4mr2386283wmw.16.1515012585756;
-        Wed, 03 Jan 2018 12:49:45 -0800 (PST)
+        bh=olxd02ArNVNeDAKLhRya3NoFoHwiSSvCT0kuZcxHwGo=;
+        b=KgPj35vI0kPlMl+e3Jvzw1Ch0cm7uFxmnIB8yws+V0xPOxywF1dAd41/Lo9eCYwv7j
+         Ew/j9a/aCIrdWUweDTPQ9FQR+q32KQW84y0UQcuZPi215LHwhABvQUT9ip/hnFjbfsCG
+         6PbRoud2uO2RE8KmbotdMLoTYv+UYgPKM9kryCqkvxy3r3XwAqP9J1BPerGd4plm4M11
+         N2+FF4SPQYLDcAw55z9YpNaxLUxvcr2UpD8e4lFCRtW5kLFh4g/fgWC+1ciDmEchKYdL
+         uJVtQ4s8fgPD0ULwRjbpW8LfTEcOfNReZSJov/jSAzqW3qVFJcVLKZlJvcxs4pQ0bDYx
+         XSCw==
+X-Gm-Message-State: AKGB3mKyP4kCy0G20DoZ09nWBNvn+aV24d33zyT0HnvpJ4Lw5rnH+mex
+        89UoGmhD0pNVP1HTigW4efb73oMZ
+X-Google-Smtp-Source: ACJfBotU8ONB4D0XUSPr1PO2jSUYLb2tMqtYpZKMcrjRDlXLgHx6WYWOHyBRkkR3/E1LyAsMhdL9lQ==
+X-Received: by 10.223.131.132 with SMTP id 4mr2454397wre.217.1515012587743;
+        Wed, 03 Jan 2018 12:49:47 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l9sm1908443wrb.45.2018.01.03.12.49.44
+        by smtp.gmail.com with ESMTPSA id l9sm1908443wrb.45.2018.01.03.12.49.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 12:49:44 -0800 (PST)
+        Wed, 03 Jan 2018 12:49:46 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/5] update-index doc: note a fixed bug in the untracked cache
-Date:   Wed,  3 Jan 2018 20:49:27 +0000
-Message-Id: <20180103204928.3769-5-avarab@gmail.com>
+Subject: [PATCH v2 5/5] dir.c: stop ignoring opendir() error in open_cached_dir()
+Date:   Wed,  3 Jan 2018 20:49:28 +0000
+Message-Id: <20180103204928.3769-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180103204928.3769-1-avarab@gmail.com>
 References: <20180103204928.3769-1-avarab@gmail.com>
@@ -77,51 +77,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document the bug tested for in my "status: add a failing test showing
-a core.untrackedCache bug" and fixed in Duy's "dir.c: fix missing dir
-invalidation in untracked code".
+From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-Since this is very likely something others will encounter in the
-future on older versions, and it's not obvious how to fix it let's
-document both that it exists, and how to "fix" it with a one-off
-command.
+A follow-up to the recently fixed bugs in the untracked
+invalidation. If opendir() fails it should show a warning, perhaps
+this should die, but if this ever happens the error is probably
+recoverable for the user, and dying would just make things worse.
 
-As noted in that commit, even though this bug gets the untracked cache
-into a bad state, we have not yet found a case where this is user
-visible, and thus it makes sense for these docs to focus on the
-symlink case only.
-
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-update-index.txt | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ dir.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index bdb0342593..128e0c671f 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -464,6 +464,22 @@ command reads the index; while when `--[no-|force-]untracked-cache`
- are used, the untracked cache is immediately added to or removed from
- the index.
- 
-+Before 2.16, the untracked cache had a bug where replacing a directory
-+with a symlink to another directory could cause it to incorrectly show
-+files tracked by git as untracked. See the "status: add a failing test
-+showing a core.untrackedCache bug" commit to git.git. A workaround for
-+that was (and this might work for other undiscoverd bugs in the
-+future):
+diff --git a/dir.c b/dir.c
+index 163ca69df0..a605e01692 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1857,17 +1857,22 @@ static int open_cached_dir(struct cached_dir *cdir,
+ 			   struct strbuf *path,
+ 			   int check_only)
+ {
++	const char *c_path;
 +
-+----------------
-+$ git -c core.untrackedCache=false status
-+----------------
-+
-+This bug has also been shown to affect non-symlink cases of replacing
-+a directory with a file when it comes to the internal structures of
-+the untracked cache, but no case has been found where this resulted in
-+wrong "git status" output.
-+
- File System Monitor
- -------------------
+ 	memset(cdir, 0, sizeof(*cdir));
+ 	cdir->untracked = untracked;
+ 	if (valid_cached_dir(dir, untracked, istate, path, check_only))
+ 		return 0;
+-	cdir->fdir = opendir(path->len ? path->buf : ".");
++	c_path = path->len ? path->buf : ".";
++	cdir->fdir = opendir(c_path);
+ 	if (dir->untracked) {
+ 		invalidate_directory(dir->untracked, untracked);
+ 		dir->untracked->dir_opened++;
+ 	}
+-	if (!cdir->fdir)
++	if (!cdir->fdir) {
++		warning_errno(_("could not open directory '%s'"), c_path);
+ 		return -1;
++	}
+ 	return 0;
+ }
  
 -- 
 2.15.1.424.g9478a66081
