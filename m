@@ -2,217 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 558F61F404
-	for <e@80x24.org>; Wed,  3 Jan 2018 10:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE1D31F404
+	for <e@80x24.org>; Wed,  3 Jan 2018 10:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751255AbeACK2x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 05:28:53 -0500
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:40171 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750861AbeACK2v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 05:28:51 -0500
-Received: by mail-wr0-f182.google.com with SMTP id p17so1051890wre.7
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 02:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m9Cnzu1j1JxVxZj1RMFE0CrlE6FsqsJFpPegnuycLNE=;
-        b=rES/0dQGvGRWjOuzzyQSwfWNec5zjylabbhYFhtZouHcmDq6tZMTI795xGPxe1ox0b
-         VfqmqGEVrTu0dItgeheWzm3GfrNAHMmnEN5kUT6J0TxVNFw/OW24oJ24sF0O6ZxDOTOo
-         NCgEtCtVezMASx+sDQGe4b8CURe97yoSPZdbzUov5MgQFbBZD1HM/8Acc25rJgMY6mAk
-         f41/zn6If3hdZobX+cADqpxlnti7ej4UMjWwFCBFAe2tJEH8wrq7fVtu0u873fEQBJgC
-         PPXIx0FosZA5f5es91b21EXjR7ulTel6v4Oy3j0wtqKzCJGa7lPuGdTzXKRRFrGTIgWb
-         Cq3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=m9Cnzu1j1JxVxZj1RMFE0CrlE6FsqsJFpPegnuycLNE=;
-        b=CIPIHLCo1Accg9yX0jxHQjhdJdvBLsRGtLwUno2gWiMlAN1O74Qbgluvrxzl5zluE9
-         o38Sz6kdY2O5GGpt5A5y97BNstrZ79bVx+tg1OrLQ/qJ1R1PRSmKtv0Q81qHRTgQexX+
-         20NEIszQxFt082YW9At9qzRJzZKb06AepN1F9aip2yqG9K0tRp9ynOp+YwUN4Nj4YcvY
-         0HXcodAUCB3Q/+U48t2lrlzgbqrNGjw/Z8OHmuaE3ajxGxN7SdagqVP+s3ZRQwUjFSdj
-         a7b6Igvbx6NpK/sQxTXbc4bUmuGCi3KJZEm6riXPsD5cJZyfFDPpghcu7ErDVziI+XHo
-         v9TQ==
-X-Gm-Message-State: AKGB3mL23IFfXJb8JtPmSdsJgHbRQTZ+h1VPMeGlJVXTMrKA/bKP1sN7
-        LOUyLMLJWOS+BDSpzqN4Ffpdk7tS
-X-Google-Smtp-Source: ACJfBovJd2gRmL5xrVNk2rj5ElmO9EBMTS71djW0lwtfB6IAFQAa5YQJkSMxKYOovv2lIA1nyDK/kA==
-X-Received: by 10.223.157.36 with SMTP id k36mr936664wre.153.1514975329423;
-        Wed, 03 Jan 2018 02:28:49 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id r3sm872179wmg.31.2018.01.03.02.28.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 02:28:48 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1751897AbeACK5V (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 05:57:21 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:57442 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751653AbeACK5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 05:57:20 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zBSYp4Zywz5tlJ;
+        Wed,  3 Jan 2018 11:57:18 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 0C9F141F8;
+        Wed,  3 Jan 2018 11:57:17 +0100 (CET)
+Subject: Re: [PATCH v5 00/34] Add directory rename detection to git
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, Segev Finer <segev208@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC/PATCH] connect: add GIT_SSH_{SEND,RECEIVE}{,_COMMAND} env variables
-Date:   Wed,  3 Jan 2018 10:28:40 +0000
-Message-Id: <20180103102840.27897-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Jeff King <peff@peff.net>
+References: <20171228041352.27880-1-newren@gmail.com>
+ <CABPp-BEnpm=OEXZXMeuaxBaOLimucoEKH643jm516YufrtQ-iA@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <7ecea1b4-d713-7298-1697-ae25532e26e0@kdbg.org>
+Date:   Wed, 3 Jan 2018 11:57:17 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABPp-BEnpm=OEXZXMeuaxBaOLimucoEKH643jm516YufrtQ-iA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the long-standing logic for overriding the ssh command with
-GIT_SSH or GIT_SSH_COMMAND to also support
-e.g. GIT_SSH_SEND_COMMAND. The new specific send/receive variables
-take priority over the old ones, and fall back to the older ones if
-they exist.
+Am 03.01.2018 um 01:02 schrieb Elijah Newren:
+> On Wed, Dec 27, 2017 at 8:13 PM, Elijah Newren <newren@gmail.com> wrote:
+>> This patchset introduces directory rename detection to merge-recursive.  See
+>>    https://public-inbox.org/git/20171110190550.27059-1-newren@gmail.com/
+>> for the first series (including design considerations, etc.), and follow-up
+>> series can be found at
+>>    https://public-inbox.org/git/20171120220209.15111-1-newren@gmail.com/
+>>    https://public-inbox.org/git/20171121080059.32304-1-newren@gmail.com/
+>>    https://public-inbox.org/git/20171129014237.32570-1-newren@gmail.com/
+>>
+>> Changes since v4:
+>>    * Squashed Junio's GETTEXT_POISON fixes into the appropriate commits
+> 
+> As per Jonathan's request[1], shamelessly re-sending Stefan's request
+> for further review.  :-)
+> 
+> Quoting Stefan:
+> 
+> "I have reviewed the first three patches (which could form an
+> independent series)
+> that it would warrant a Reviewed-By: Stefan Beller <sbeller@google.com>
+> 
+> While I reviewed the earlier versions of the later patches, I would
+> prefer if there is another reviewer for these as it seems like a bigger
+> contribution at a core functionality.
+> 
+> I cc'd some people who were active in some form of rename detection
+> work earlier; could you review this series, please?"
+> 
+> My note: Stefan also looked through the testcases pretty closely and
+> even suggested additional tests, which would account for another 11
+> patches or so, but extra eyes on any part of the series always
+> welcome.
 
-This is useful for talking to systems such as Github or Gitlab that
-identify user accounts (or deploy keys) by ssh keys. Normally, ssh
-could do this itself by supplying multiple keys via -i, but that trick
-doesn't work on these systems as the connection will have already been
-accepted when the "wrong" key gets rejected.
+I tested the series on Windows recently. It requires the patch below.
+I don't know whether this is indicating some portability issues of grep
+(^ being used in the middle of a RE instead of at the very beginning) or
+just a quirk in my setup.
 
-This new feature is redundant to and less general than setting the
-GIT_SSH_COMMAND to the path of a script that's going to dispatch to
-ssh depending on what the second argument to the script is, e.g.:
+But it still does not pass the test suite because the system does not
+like file names such as y/c~HEAD:
 
-    $ cat ./git-ssh-command
-    #!/usr/bin/perl
-    if ($ARGV[1] =~ /^git-upload-pack /) {
-       system qw(ssh -i /some/ro/key) => @ARGV;
-    } elsif ($ARGV[1] =~ /^git-receive-pack /) {
-       system qw(ssh -i /some/rw/key) => @ARGV;
-    } else { ... }
-    $ GIT_TRACE=1 GIT_SSH_COMMAND="./git-ssh-command" git fetch
-    10:22:39.415684 git.c:344               trace: built-in: git 'fetch'
-    10:22:39.432192 run-command.c:627       trace: run_command: './git-ssh-command' '-G' 'git@github.com'
-    10:22:39.434156 run-command.c:627       trace: run_command: './git-ssh-command' 'git@github.com' 'git-upload-pack '\''git/git.git'\'''
-    Warning: Identity file /some/ro/key not accessible: No such file or directory.
+++ grep 'Refusing to lose dirty file at z/c' out
+Refusing to lose dirty file at z/c
+++ grep -q stuff x/b y/a y/c y/c~HEAD z/c
+grep: y/c: Invalid request code
+error: last command exited with $?=2
+not ok 94 - 11d-check: Avoid losing not-uptodate with rename + D/F conflict
 
-However, I feel that this is a common enough case to be worth
-supporting explicitly, and such a script will also need to deal with
-arbitrary arguments fed via git-fetch's --upload-pack="...", and
-git-push's corresponding --receive-pack argument.
+I haven't debugged this any further, yet.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---- 8< ----
+From: Johannes Sixt <j6t@kdbg.org>
+Date: Fri, 22 Dec 2017 09:33:13 +0100
+Subject: [PATCH] fixup directory rename tests
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
+ t/t6043-merge-rename-directories.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-I'm not 100% sure about this one myself, but am leaning towards
-inclusion for the reasons explained above, and the patch is trivial
-enough that I think we can discuss whether it's worthwhile without
-test / documentation.
-
- builtin/fetch-pack.c |  2 +-
- builtin/send-pack.c  |  3 ++-
- connect.c            | 21 ++++++++++++++++++---
- connect.h            |  2 ++
- 4 files changed, 23 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index 366b9d13f9..dae10f8419 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -189,7 +189,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 		if (args.diag_url)
- 			flags |= CONNECT_DIAG_URL;
- 		conn = git_connect(fd, dest, args.uploadpack,
--				   flags);
-+				   flags | CONNECT_RECEIVE);
- 		if (!conn)
- 			return args.diag_url ? 0 : 1;
- 	}
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index fc4f0bb5fb..2374d2b29c 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -252,8 +252,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		fd[0] = 0;
- 		fd[1] = 1;
- 	} else {
-+		int flags = args.verbose ? CONNECT_VERBOSE : 0;
- 		conn = git_connect(fd, dest, receivepack,
--			args.verbose ? CONNECT_VERBOSE : 0);
-+			flags | CONNECT_SEND);
- 	}
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+index f0af66b8a9..b8cd428341 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -2940,8 +2940,8 @@ test_expect_success '10b-check: Overwrite untracked with dir rename + delete' '
+ 		echo contents >y/e &&
  
- 	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL,
-diff --git a/connect.c b/connect.c
-index c3a014c5ba..2a35924292 100644
---- a/connect.c
-+++ b/connect.c
-@@ -774,13 +774,23 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
- 	return protocol;
- }
+ 		test_must_fail git merge -s recursive B^0 >out 2>err &&
+-		test_i18ngrep "CONFLICT (rename/delete).*Version B^0 of y/d left in tree at y/d~B^0" out &&
+-		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B^0 instead" out &&
++		test_i18ngrep "CONFLICT (rename/delete).*Version B\^0 of y/d left in tree at y/d~B\^0" out &&
++		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B\^0 instead" out &&
  
--static const char *get_ssh_command(void)
-+static const char *get_ssh_command(int flags)
- {
- 	const char *ssh;
+ 		test 3 -eq $(git ls-files -s | wc -l) &&
+ 		test 2 -eq $(git ls-files -u | wc -l) &&
+@@ -3010,7 +3010,7 @@ test_expect_success '10c-check: Overwrite untracked with dir rename/rename(1to2)
  
-+	if (flags & CONNECT_SEND && (ssh = getenv("GIT_SSH_SEND_COMMAND")))
-+		return ssh;
-+	else if (flags & CONNECT_RECEIVE && (ssh = getenv("GIT_SSH_RECEIVE_COMMAND")))
-+		return ssh;
- 	if ((ssh = getenv("GIT_SSH_COMMAND")))
- 		return ssh;
+ 		test_must_fail git merge -s recursive B^0 >out 2>err &&
+ 		test_i18ngrep "CONFLICT (rename/rename)" out &&
+-		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B^0 instead" out &&
++		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B\^0 instead" out &&
  
-+	if (flags & CONNECT_SEND &&
-+	    !git_config_get_string_const("core.sshsendcommand", &ssh))
-+		return ssh;
-+	else if (flags & CONNECT_RECEIVE &&
-+	    !git_config_get_string_const("core.sshreceivecommand", &ssh))
-+		return ssh;
- 	if (!git_config_get_string_const("core.sshcommand", &ssh))
- 		return ssh;
- 
-@@ -997,7 +1007,7 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
- 	if (looks_like_command_line_option(ssh_host))
- 		die("strange hostname '%s' blocked", ssh_host);
- 
--	ssh = get_ssh_command();
-+	ssh = get_ssh_command(flags);
- 	if (ssh) {
- 		variant = determine_ssh_variant(ssh, 1);
- 	} else {
-@@ -1008,7 +1018,12 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
- 		 */
- 		conn->use_shell = 0;
- 
--		ssh = getenv("GIT_SSH");
-+		if (flags & CONNECT_SEND)
-+			ssh = getenv("GIT_SSH_SEND");
-+		else if (flags & CONNECT_RECEIVE)
-+			ssh = getenv("GIT_SSH_RECEIVE");
-+		if (!ssh)
-+			ssh = getenv("GIT_SSH");
- 		if (!ssh)
- 			ssh = "ssh";
- 		variant = determine_ssh_variant(ssh, 0);
-diff --git a/connect.h b/connect.h
-index 01f14cdf3f..e3ff0d5838 100644
---- a/connect.h
-+++ b/connect.h
-@@ -5,6 +5,8 @@
- #define CONNECT_DIAG_URL      (1u << 1)
- #define CONNECT_IPV4          (1u << 2)
- #define CONNECT_IPV6          (1u << 3)
-+#define CONNECT_SEND          (1u << 4)
-+#define CONNECT_RECEIVE       (1u << 5)
- extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
- extern int finish_connect(struct child_process *conn);
- extern int git_connection_is_socket(struct child_process *conn);
+ 		test 6 -eq $(git ls-files -s | wc -l) &&
+ 		test 3 -eq $(git ls-files -u | wc -l) &&
 -- 
-2.15.1.424.g9478a66081
-
+2.14.2.808.g3bc32f2729
