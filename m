@@ -2,94 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 717021F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 20:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47D6E1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 20:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751134AbeACUkD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 15:40:03 -0500
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:44663 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750831AbeACUkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 15:40:02 -0500
-Received: by mail-yw0-f169.google.com with SMTP id m129so1005990ywb.11
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:40:02 -0800 (PST)
+        id S1751119AbeACUpS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 15:45:18 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:37642 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750831AbeACUpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 15:45:18 -0500
+Received: by mail-wr0-f177.google.com with SMTP id f8so2999602wre.4
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=O6tZiRRh+ydBbNpl9KKt1OM6oT91vUNW9gmJTjtrl+8=;
-        b=bDd2TSRZZKHSGQgx53JLR3hBMMxoH1JH8BDN76fkHjA4QxFZ95ogUdW2YpbnELNtAS
-         V7/zGIJjVJK2Fo+Q10BxKbErCyyoO/+QTWD8HGuJWmDi1R6aquR5fOEi3JicQRmiq6/C
-         yFH9nhQgON957/Zp10JKyYnqaIsffQH97Ez/u7G+IAX7UJ6k3eYuQJNQb1YHPATB/Jad
-         CPiPqiHgJ54SGoPEz27CCsaVyU/Z88JVaOit61wAB9vadFmWO9o6qk7ipxhl2a2kfJqx
-         a/+h4mCPx4KQzrmT0+++NuT/Zcl40R2fk19VbhntenXuWqSRDowfeoHP4l291i4emE+o
-         MEmg==
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=L9Z87ouR11Kv/wBOwD8B/1xBjYR8FTuA5o851vGChOc=;
+        b=pMhQ2N0jozGODPLv5CjTUy4J1TrFoRhyneYTklqYNil4kHGBrFd5IaDVtFsQCYVOix
+         xwNv1e1go1KvMXzga630hRKSpmPHCFZUqn2w5v8qDfaIwsWwJAA3eI0H7nkZ6xmIasGU
+         mUfMidlI0twN1/359PBQNEVYFf5Y0S5z3SvvkvNg7WeLHxCmpE1QMBBsBi8FngHY2HR4
+         ML6/pcz/v5Ro39cb/mnPtWEMaA15bXmQ8I8udGE6b6D11zisaPHRW++zEA7DREbyDXbD
+         J5ChnGENFsjucREAaHnmRFiR8hRcJHIz+bw/cWk3tMKQqnSeDeBArKPnc+Sj0H8kZbaZ
+         +h3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=O6tZiRRh+ydBbNpl9KKt1OM6oT91vUNW9gmJTjtrl+8=;
-        b=kNu7QxWKxuq/mEHqhECp9SOgwKKVWapOJHxvkErYivmJLTc/KN3nQjElWKZYiWt82U
-         +c1X/uHMN4cRSWYCYbIb4Z073w0jKN7W6MdmFCR2ZXkJG0v6RimJ8qQi9/k8NHYcdE0L
-         PoL5ymxvcMz7dkGHl1mji8/JEW9t22arg9KpBIH2QHk9FaY2tEUeTVWf3MMtYTroNDiO
-         Ep98P9PNJRfLrUw4hWUs0w7UgEV+FjYbJcQultmmfoIT1U/qiHGQnx/0rlqrO8m1Qqt7
-         TkwM6p6aSBUCv9zaLaM4bIJ0XpLISfPNQybVFA3gbstcC2VZlzVCNqcwah+9QBw34oUl
-         Lkkw==
-X-Gm-Message-State: AKGB3mIkKTMKh/RFyVNnPDXG15luTJHHzxBUyxcaVHvDrV2kiif0imHW
-        wW3r0WKwQaknU6MJDQaNJ7aQiw==
-X-Google-Smtp-Source: ACJfBoseCEwEoa4NdAa/XO1B+Aiw0cCN3e/L2S9cg6YJPKj6rk/lau+KUaP67vIrVb73SCKpVhZu4w==
-X-Received: by 10.129.137.68 with SMTP id z65mr2410205ywf.176.1515012001307;
-        Wed, 03 Jan 2018 12:40:01 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:9072:375d:b2f1:696e])
-        by smtp.gmail.com with ESMTPSA id v192sm731491ywa.2.2018.01.03.12.39.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 Jan 2018 12:39:58 -0800 (PST)
-Date:   Wed, 3 Jan 2018 12:39:56 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/26] upload-pack: convert to a builtin
-Message-ID: <20180103203956.GA44365@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-5-bmwill@google.com>
- <CAGZ79kb2=uU0_K8wr27gNdNX-T+P+7gVdgc5EBdYc3zBobsR8w@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kb2=uU0_K8wr27gNdNX-T+P+7gVdgc5EBdYc3zBobsR8w@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=L9Z87ouR11Kv/wBOwD8B/1xBjYR8FTuA5o851vGChOc=;
+        b=CvADyUgASHjGgtCExoMr9i5N+bqbhtNk7ZRlUMfFpZw7Gnfh6hQr8IJEvFIr4TphDb
+         VF7OpWALsYOuJXRYhawn8lRMunCXA6D6fKLpP8SRo0zBcKb5hH0A0yw3Yd3kalkSX9/s
+         Sv5e7aMb7r3D8O+DhvdpDOIH70Plin/cYBVJACFk5m6KHG7Xwc/erSS+msp+GgnP8sr9
+         FnXnEXQjafTLcSFVDWscUEyEtPDevUSpf399z2cZ1ySCjUKIktlE9l1Cw96TYqYhqOy6
+         8GCSvjCJXQbsMahc84xptzh1Poo+6UxZknpg8JJVEw2BPQBYZ+Vdaz8TWRbxwuf4MKMW
+         6HCg==
+X-Gm-Message-State: AKGB3mJz+R0dRmMQ0h+WbeQGKfbeGhnwiYuvUu1jkuQNFU8Njs94G9ff
+        HDkmknKRBDoz0JmCdidTFAY=
+X-Google-Smtp-Source: ACJfBoshy6iPGarBf0G1/Z4GmUP7kD60ZPxG1lkIIVs/uKVJok9P6mbhg4foIZr0WSZbKvIh0cVKyA==
+X-Received: by 10.223.143.54 with SMTP id p51mr2585998wrb.104.1515012316876;
+        Wed, 03 Jan 2018 12:45:16 -0800 (PST)
+Received: from slxbook3.fritz.box (p5DDB59EF.dip0.t-ipconnect.de. [93.219.89.239])
+        by smtp.gmail.com with ESMTPSA id g78sm2638688wmc.30.2018.01.03.12.45.15
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 03 Jan 2018 12:45:16 -0800 (PST)
+Content-Type: text/plain; charset=iso-8859-1
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq7esyiwju.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 3 Jan 2018 21:45:13 +0100
+Cc:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>, peff@peff.net,
+        patrick@luehne.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <31DC76F1-7D11-4EDE-96C4-97F3AE50EDE9@gmail.com>
+References: <20171211155023.1405-1-lars.schneider@autodesk.com> <20171217171404.GA18175@tor.lan> <BF5C58AC-C1E6-4AD5-A4F8-C4CC5C9108F7@gmail.com> <20171229125954.GA9772@tor.lan> <xmqq7esyiwju.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.1878.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/03, Stefan Beller wrote:
-> On Tue, Jan 2, 2018 at 4:18 PM, Brandon Williams <bmwill@google.com> wrote:
-> > In order to allow for code sharing with the server-side of fetch in
-> > protocol-v2 convert upload-pack to be a builtin.
-> 
-> What is the security aspect of this patch?
-> 
-> By making upload-pack builtin, it gains additional abilities,
-> such as answers to '-h' or '--help' (which would start a pager).
-> Is there an easy way to sooth my concerns? (best put into the
-> commit message)
 
-receive-pack is already a builtin, so theres that.
+On 03 Jan 2018, at 20:15, Junio C Hamano <gitster@pobox.com> wrote:
 
-> 
-> Thanks,
-> Stefan
-> 
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>=20
+>> May be.
+>> Originally utf8.c was about encoding and all kind of UTF-8 related =
+stuff.
+>> Especially it didn't know anything about strbuf.
+>> I don't know why strbuf.h and other functions had been added here,
+>>=20
+>> I once moved them into strbuf.c without any problems, but never send =
+out
+>> a patch, because of possible merge conflicts in ongoing patches.
+>>=20
+>> In any case, if it is about strbuf, I would try to put it into =
+strbuf.c
+>=20
+> Please don't.
+>=20
+> A code that happens to use strbuf as a container and about
+> manipulating the contents is quite different from a code about
+> strbuf.  The latter is to enhance and extend how the strbuf as a
+> container behaves.  An operation about character encoding for a
+> string that happens to be stored in strbuf is more about the
+> encoding, and much much less about strbuf.
+>=20
+> convert.c is about massaging contents coming from the outside world
+> into a shape stored in Git and the other way around, and there are
+> multiple ways the contents are massaged.  EOL convention may be
+> adjusted, characters may be reencoded, end-user defined conversion
+> may be applied.  Some of these operations may use helpers specific
+> for the task from other more library-ish files, like checking if a
+> string looks like encoded in UTF-8 from utf8.[ch].
 
--- 
-Brandon Williams
+Agreed. I did that in v2. See these patches:
+
+=
+https://public-inbox.org/git/20171229152222.39680-3-lars.schneider@autodes=
+k.com/
+=
+https://public-inbox.org/git/20171229152222.39680-4-lars.schneider@autodes=
+k.com/
+
+- Lars=
