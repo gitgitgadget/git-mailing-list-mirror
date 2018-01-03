@@ -7,129 +7,113 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF7721F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 21:16:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B18F1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 21:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751014AbeACVQX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 16:16:23 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:41292 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750873AbeACVQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 16:16:22 -0500
-Received: by mail-qk0-f173.google.com with SMTP id a8so3223896qkb.8
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 13:16:21 -0800 (PST)
+        id S1751219AbeACVUX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 16:20:23 -0500
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34569 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751207AbeACVUW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 16:20:22 -0500
+Received: by mail-qt0-f193.google.com with SMTP id 33so3799308qtv.1
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 13:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=3p5QeiN7oSjuKY4C2phkBgenVQxS1okYeqUsY56PhPw=;
-        b=BqXIm6ky8ctFeRgDOJBz47wNHVTQEvpDNA3tumxamD7f+1+kb1BZAvro7Q36zKREyB
-         7EYodHyONvi5TE07K3kIaelICx0yMIyGvIfrJeU4ZtynytpAxVuo64A1vL/xA3VafiaF
-         6KGy1yqO6fWUl5t2w/37pt3ri44I/IQZrAHIY8p6pVi/3AgTyCP/78GiXhkZqq18W0R0
-         qYucmlFuzlui3zalOvLGcGp/JCGiuvrnPtankSmcmKDLMi5x3K3mB1K4bNmMrw8x6e3s
-         5ljd9hI90jBkVRGWOEbYrZvAiInIt5+rIEI8zXWheTXOa9nz6ze8PLfjirw3p4jLcStR
-         ZC/Q==
+        bh=dRba7EIbNKhHp19M5t/V8XWh4VVJmgdSk0zTNZiQ+P0=;
+        b=gKY6IQqtQK7IptCW7nwh8O8DsK+KIipJAfZVqTN8WQmKkXmJrLO/zl/DYUoVn/M1GV
+         VkZP7FWIlh5PRnrnFPdO5vkJb0hoa79nWQoxxus4BQwF2k/IDXB5c5K9GaSfO/wUynzu
+         /ljqbtJi6FC3mgF46lZ+akJQ5rInQYEBEACp6+iPPbfIiCjU4lS3Sn2YCBWBRfbF1XTI
+         AnB5iI9qphoI6KNaqcaiOhR999Xv8tgj+hsGU+/pbZ8tEALMC9XUUKJMjnR5KvvJ7FOn
+         Or7v/rMP1PrPdiFba9CBb3OYMPl0BFk7lqeDJvguINJA9QDGuU73oMp7NgmQ2bzMq0xf
+         sujQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=3p5QeiN7oSjuKY4C2phkBgenVQxS1okYeqUsY56PhPw=;
-        b=lZzxUQEATo39JY20rprBgamrKjKACoTiX+KNMfeR1gGgiPKEn4Q9esiqOyoD1dNa5L
-         XOQRbL3kkUT5nn01N9lbzvRh2g/S6xhneKgtryfuGwfUI9sZA9TCKYz9j242A70duGM8
-         m3uIqdi7Foa/tXwLdhPfzfb7wBGeQMLf4KPk8O8sWAk21kl6AtBZl579Uia2faAI89g9
-         hbabm16UC1UXnbjtKxFLtyGKj/3iK5oCVFN8XwSBSdUHThXxpghxaeN7EYcWSX8XWNXd
-         mNjGSVVM/IOpU6VvjfVSxH5ZRhwc925xE9VE88m+7YXjnn5tY9ZHx9NaDYzQo7x6g8Kj
-         vJNA==
-X-Gm-Message-State: AKGB3mLifJXiRISqHIMCHoktkKeu79dov8ri3UfKteCcori17OKViCv0
-        wZdKGUv8bW8BBxGZURLRp7e50UpJJRZ4YjBu1KhP5w==
-X-Google-Smtp-Source: ACJfBosLQOfhV+pPH21DN2XIYvXvlTDP6RIEbRO21fog7BiRhlDtdjbBGXfHVSoSJEIkA03+ST6eZuhY7Ez/IWmGNiE=
-X-Received: by 10.55.107.129 with SMTP id g123mr3554089qkc.353.1515014181139;
- Wed, 03 Jan 2018 13:16:21 -0800 (PST)
+        bh=dRba7EIbNKhHp19M5t/V8XWh4VVJmgdSk0zTNZiQ+P0=;
+        b=JBgXBhK7Jw04WLSJJJYEMvC9FhhKVAGmTvqO29CA8SCiUGTETL331oM8Ke+zDJlVnH
+         hVQ4J3xQy8BBNfB4SsZ4St+j/gUBZ+jMrVbfgJ3iLs1W2QViwT9A2J1UJP9F30rBGt4v
+         APu65dQZ9h5Y1d93Qd3VYL6gcK9wyo7z9UXIMS4GJBi6pWgxG7F4/xJn6RYk5XmjbqkE
+         e4aNmARq3lOrX9sl/EASNkEr7B05yFzJ06rsxRj0OWyUQydoWdqd+Q7QQ/heZi/Ki9r7
+         MP3bk9ONaSn84/9oXhq6HUeBEsF8w8RvqaC2LKeR1M+OCpnGbgwSY7IGPwVzgd9GOcch
+         YJZA==
+X-Gm-Message-State: AKGB3mJMWfft5d4MkoX3O5P5o5k0zJ1r10o6ZlLGXAAQkU7MVVsgHlaY
+        APSnIay1oS3pSuxnUTd+jFt52hR0GwevMpjlQYYlXA==
+X-Google-Smtp-Source: ACJfBouirGwmOC0QTKefiq2pcLtMFO4Bsqru0apYK/SQl7kRv+BehnlrG47BfmUU6WKcTRXxImthgUqpAYJEKHp9mr0=
+X-Received: by 10.200.36.105 with SMTP id d38mr3655793qtd.180.1515014421339;
+ Wed, 03 Jan 2018 13:20:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 3 Jan 2018 13:16:20 -0800 (PST)
-In-Reply-To: <xmqqo9mahdll.fsf@gitster.mtv.corp.google.com>
-References: <xmqqbmichws2.fsf@gitster.mtv.corp.google.com> <20180103011226.160185-1-sbeller@google.com>
- <xmqqo9mahdll.fsf@gitster.mtv.corp.google.com>
+Received: by 10.140.85.179 with HTTP; Wed, 3 Jan 2018 13:20:20 -0800 (PST)
+In-Reply-To: <20180103001828.205012-7-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com> <20180103001828.205012-7-bmwill@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 3 Jan 2018 13:16:20 -0800
-Message-ID: <CAGZ79kbC5tsL8R-tUBxHoZzxYiqiWwYS61F7cLfTZeb0Wu1LGA@mail.gmail.com>
-Subject: Re: [PATCHv3 0/5] Fix --recurse-submodules for submodule worktree changes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+Date:   Wed, 3 Jan 2018 13:20:20 -0800
+Message-ID: <CAGZ79kbLJp=FDssowayYzyyHmRK65hDXeznvPbHLx5f6i0u3_w@mail.gmail.com>
+Subject: Re: [PATCH 06/26] transport: use get_refs_via_connect to get refs
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 3, 2018 at 12:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, Jan 2, 2018 at 4:18 PM, Brandon Williams <bmwill@google.com> wrote:
+> Remove code duplication and use the existing 'get_refs_via_connect()'
+> function to retrieve a remote's heads in 'fetch_refs_via_pack()' and
+> 'git_transport_push()'.
 >
->> Thanks Junio for review of this series!
->> The only change in this version of the series is
->>
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -2140,7 +2140,7 @@ int oneway_merge(const struct cache_entry * const *src,
->>                                 update |= CE_UPDATE;
->>                 }
->>                 if (S_ISGITLINK(old->ce_mode) && should_update_submodules() &&
->> -                   !verify_uptodate(old, o))
->> +                   o->update && !verify_uptodate(old, o))
->>                         update |= CE_UPDATE;
->>                 add_entry(o, old, update, 0);
->>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+
+Reviewed-by: Stefan Beller <sbeller@google.com>
+
+> ---
+>  transport.c | 18 ++++--------------
+>  1 file changed, 4 insertions(+), 14 deletions(-)
 >
-> Sounds OK.
+> diff --git a/transport.c b/transport.c
+> index fc802260f..8e8779096 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -230,12 +230,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+>         args.cloning = transport->cloning;
+>         args.update_shallow = data->options.update_shallow;
 >
-> I wonder why o->update is not at the very beginning of the &&-chain,
-> though.  After all, the one above this addition begins with o->reset
-> && o->update *not* because of the performance concern, but primarily
-> due to logic flow.  I.e. "if we are resetting and updating the
-> working tree, then..." comes first before saying "we may need to
-> flip CE_UPDATE bit in update variable if the file in the working
-> tree is not up to date and it is within a narrow checkout area".
-
-It shows that I work too much with submodules. ;)
-"If we have a submodule and ..." seemed to be the important
-part when writing the patch.
-
-> Of course, because verify_uptodate() is rather expensive, checking
-> o->update before that makes sense from micro-optimization's point of
-> view, too.
-
-I would think S_ISGITLINK, should_update_submodules as well
-as o->update are all on the same order of magnitude of costs
-(some couple number of operations)  when
-compared to verify_uptodate (spawning processes),
-so as long as verify_uptodate goes last we'd be fine.
-
+> -       if (!data->got_remote_heads) {
+> -               connect_setup(transport, 0);
+> -               get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
+> -                                NULL, &data->shallow);
+> -               data->got_remote_heads = 1;
+> -       }
+> +       if (!data->got_remote_heads)
+> +               refs_tmp = get_refs_via_connect(transport, 0);
 >
-> So after thinking aloud like the above, I am reasonably sure that
-> you want to check o->update as the very first thing in this new if
-> statement.
-
-Thanks for double checking and thinking about the code base with
-a less submodule centric point of view.
-
-Mind to squash it locally or want me to resend?
-For a resend I'll wait a couple of days to see if there are more
-comments needing to be addressed.
-
-
+>         refs = fetch_pack(&args, data->fd, data->conn,
+>                           refs_tmp ? refs_tmp : transport->remote_refs,
+> @@ -541,14 +537,8 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+>         struct send_pack_args args;
+>         int ret;
 >
->> v2:
->> I dropped the patch to `same()` as I realized we only need to fix the
->> oneway_merge function, the others (two, three way merge) are fine as
->> they have the checks already in place.
+> -       if (!data->got_remote_heads) {
+> -               struct ref *tmp_refs;
+> -               connect_setup(transport, 1);
+> -
+> -               get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
+> -                                NULL, &data->shallow);
+> -               data->got_remote_heads = 1;
+> -       }
+> +       if (!data->got_remote_heads)
+> +               get_refs_via_connect(transport, 1);
 >
-> This is a bit flawed argument, no?  Checking working tree paths
-> unconditionally in same(), which does not even know if we are
-> touching the working tree paths, is broken.  Unless "they have the
-> checks already in place" refers to checks that bypasses calls to
-> same() when we are not touching working tree paths, that is, but
-> obviously that is not what is going on.
->
-> Will queue.  Thanks for working on this.
->
+>         memset(&args, 0, sizeof(args));
+>         args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
+> --
+> 2.15.1.620.gb9897f4670-goog
 >
