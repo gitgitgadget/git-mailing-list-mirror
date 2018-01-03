@@ -2,115 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47D6E1F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 20:45:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE2481F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 20:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751119AbeACUpS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 15:45:18 -0500
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:37642 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750831AbeACUpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 15:45:18 -0500
-Received: by mail-wr0-f177.google.com with SMTP id f8so2999602wre.4
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:45:17 -0800 (PST)
+        id S1751392AbeACUtm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 15:49:42 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45159 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751098AbeACUtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 15:49:40 -0500
+Received: by mail-wr0-f194.google.com with SMTP id o15so3008461wrf.12
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:49:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=L9Z87ouR11Kv/wBOwD8B/1xBjYR8FTuA5o851vGChOc=;
-        b=pMhQ2N0jozGODPLv5CjTUy4J1TrFoRhyneYTklqYNil4kHGBrFd5IaDVtFsQCYVOix
-         xwNv1e1go1KvMXzga630hRKSpmPHCFZUqn2w5v8qDfaIwsWwJAA3eI0H7nkZ6xmIasGU
-         mUfMidlI0twN1/359PBQNEVYFf5Y0S5z3SvvkvNg7WeLHxCmpE1QMBBsBi8FngHY2HR4
-         ML6/pcz/v5Ro39cb/mnPtWEMaA15bXmQ8I8udGE6b6D11zisaPHRW++zEA7DREbyDXbD
-         J5ChnGENFsjucREAaHnmRFiR8hRcJHIz+bw/cWk3tMKQqnSeDeBArKPnc+Sj0H8kZbaZ
-         +h3w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=K91cvmj2WxPCU5bZfiIf0ZbAFCP/UQreHeo5Qr5PLhk=;
+        b=udY4jUexcWin6f69vNx4036XplT5UfI6d/Hk5rW6RSiwQcKsfxZwLJhYcLjO3ay9aq
+         J9mPNBEZ4OoIHoYPM3g3HfbRzKXq/itIp5B6WDrLWXS+fdJAtOlsg49fman2KAZl8eS9
+         x5V0RDj4Cd13k8Sh5fezkVnzpmzgkg8KgGTYlEbdjVg0+ve3b3gj3NK1jFAokXafHTm5
+         fMftYr/6kvIKJGG/Jpb0/rOxArM2A/rewH8gtdQgi8ZsR/9rDduhgQEJInFDzMAcSUZ4
+         qhPMCI3sLa/pKeDROuqEvysWn1Mrgb1N5R97wiqmJMpEn4fNIaUnIxAKew3It3ZlzcsK
+         DK3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=L9Z87ouR11Kv/wBOwD8B/1xBjYR8FTuA5o851vGChOc=;
-        b=CvADyUgASHjGgtCExoMr9i5N+bqbhtNk7ZRlUMfFpZw7Gnfh6hQr8IJEvFIr4TphDb
-         VF7OpWALsYOuJXRYhawn8lRMunCXA6D6fKLpP8SRo0zBcKb5hH0A0yw3Yd3kalkSX9/s
-         Sv5e7aMb7r3D8O+DhvdpDOIH70Plin/cYBVJACFk5m6KHG7Xwc/erSS+msp+GgnP8sr9
-         FnXnEXQjafTLcSFVDWscUEyEtPDevUSpf399z2cZ1ySCjUKIktlE9l1Cw96TYqYhqOy6
-         8GCSvjCJXQbsMahc84xptzh1Poo+6UxZknpg8JJVEw2BPQBYZ+Vdaz8TWRbxwuf4MKMW
-         6HCg==
-X-Gm-Message-State: AKGB3mJz+R0dRmMQ0h+WbeQGKfbeGhnwiYuvUu1jkuQNFU8Njs94G9ff
-        HDkmknKRBDoz0JmCdidTFAY=
-X-Google-Smtp-Source: ACJfBoshy6iPGarBf0G1/Z4GmUP7kD60ZPxG1lkIIVs/uKVJok9P6mbhg4foIZr0WSZbKvIh0cVKyA==
-X-Received: by 10.223.143.54 with SMTP id p51mr2585998wrb.104.1515012316876;
-        Wed, 03 Jan 2018 12:45:16 -0800 (PST)
-Received: from slxbook3.fritz.box (p5DDB59EF.dip0.t-ipconnect.de. [93.219.89.239])
-        by smtp.gmail.com with ESMTPSA id g78sm2638688wmc.30.2018.01.03.12.45.15
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Jan 2018 12:45:16 -0800 (PST)
-Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Subject: Re: [PATCH v1] convert: add support for 'encoding' attribute
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq7esyiwju.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 3 Jan 2018 21:45:13 +0100
-Cc:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>, peff@peff.net,
-        patrick@luehne.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <31DC76F1-7D11-4EDE-96C4-97F3AE50EDE9@gmail.com>
-References: <20171211155023.1405-1-lars.schneider@autodesk.com> <20171217171404.GA18175@tor.lan> <BF5C58AC-C1E6-4AD5-A4F8-C4CC5C9108F7@gmail.com> <20171229125954.GA9772@tor.lan> <xmqq7esyiwju.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.1878.6)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=K91cvmj2WxPCU5bZfiIf0ZbAFCP/UQreHeo5Qr5PLhk=;
+        b=YdrIivum2vmRW86sQWmUcIO9UPk6xqgWyeZPKRzCRbGT/MjNIOx/8GiWzd2wgpFnEe
+         hMxCwgCKYqb6/smels7qMnJwXvaKXpIb6Xp2Rpees2I14C+6ZGhRs+CaESiNexuBTPTj
+         3CwmWN9Oj4ZnulH8sHHMWvz5Dhj54whBK877vDixwdc/DFltmk82ei6wQHrY77JkOkSh
+         ozJYyDpUSd/FAZQ1zED86w2jnmyLfJKzj4BjgqPF/JvAi7jgVI4s5iGUAemxpHESQL3w
+         D2XjeDcSK6N5ulxkgw3Ov/2yWQCpYcryWFF/pl9ZEaHvSfRso0q2A3bbTx1sS/poKNxq
+         ruNQ==
+X-Gm-Message-State: AKGB3mJP31dn7diihNNLW1Gm3xF7hRH6ZSWylmEnHugmXHECbgK+6hHL
+        HpxdsV/StxGxRqMdEMqh8Bt0txUu
+X-Google-Smtp-Source: ACJfBotBLXvcqApsHTdOxOkVfD9OT9Y43U7YuUucUxZjfwOSuSMEPiopuqj2vHQ3OOtt6uCLI4qhsA==
+X-Received: by 10.223.159.82 with SMTP id f18mr2382704wrg.219.1515012578106;
+        Wed, 03 Jan 2018 12:49:38 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l9sm1908443wrb.45.2018.01.03.12.49.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jan 2018 12:49:36 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/5] untracked cache bug fixes
+Date:   Wed,  3 Jan 2018 20:49:23 +0000
+Message-Id: <20180103204928.3769-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.1.424.g9478a66081
+In-Reply-To: <CACsJy8BnxOz9brnkyZ58guTsUhgKKN_XQvbYaZJz17888pgHoQ@mail.gmail.com>
+References: <CACsJy8BnxOz9brnkyZ58guTsUhgKKN_XQvbYaZJz17888pgHoQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Took me a while to get around to this. This is a replacement for the
+patches Duy and I have floating around on the list so far related to
+the untracked cache bugs raised recently.
 
-On 03 Jan 2018, at 20:15, Junio C Hamano <gitster@pobox.com> wrote:
+Part of this has been me incorporating Duy's work and writing commit
+messages etc. for him.
 
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->=20
->> May be.
->> Originally utf8.c was about encoding and all kind of UTF-8 related =
-stuff.
->> Especially it didn't know anything about strbuf.
->> I don't know why strbuf.h and other functions had been added here,
->>=20
->> I once moved them into strbuf.c without any problems, but never send =
-out
->> a patch, because of possible merge conflicts in ongoing patches.
->>=20
->> In any case, if it is about strbuf, I would try to put it into =
-strbuf.c
->=20
-> Please don't.
->=20
-> A code that happens to use strbuf as a container and about
-> manipulating the contents is quite different from a code about
-> strbuf.  The latter is to enhance and extend how the strbuf as a
-> container behaves.  An operation about character encoding for a
-> string that happens to be stored in strbuf is more about the
-> encoding, and much much less about strbuf.
->=20
-> convert.c is about massaging contents coming from the outside world
-> into a shape stored in Git and the other way around, and there are
-> multiple ways the contents are massaged.  EOL convention may be
-> adjusted, characters may be reencoded, end-user defined conversion
-> may be applied.  Some of these operations may use helpers specific
-> for the task from other more library-ish files, like checking if a
-> string looks like encoded in UTF-8 from utf8.[ch].
+Nguyễn Thái Ngọc Duy (3):
+  dir.c: avoid stat() in valid_cached_dir()
+  dir.c: fix missing dir invalidation in untracked code
+  dir.c: stop ignoring opendir() error in open_cached_dir()
 
-Agreed. I did that in v2. See these patches:
+Ævar Arnfjörð Bjarmason (2):
+  status: add a failing test showing a core.untrackedCache bug
+  update-index doc: note a fixed bug in the untracked cache
 
-=
-https://public-inbox.org/git/20171229152222.39680-3-lars.schneider@autodes=
-k.com/
-=
-https://public-inbox.org/git/20171229152222.39680-4-lars.schneider@autodes=
-k.com/
+ Documentation/git-update-index.txt | 16 +++++++
+ dir.c                              | 33 ++++++++++-----
+ t/t7063-status-untracked-cache.sh  | 87 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 125 insertions(+), 11 deletions(-)
 
-- Lars=
+-- 
+2.15.1.424.g9478a66081
+
