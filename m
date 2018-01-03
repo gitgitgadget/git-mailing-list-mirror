@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A71C1F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 00:20:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA331F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 00:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751301AbeACAUD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 19:20:03 -0500
-Received: from mail-io0-f178.google.com ([209.85.223.178]:44283 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbeACATH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 19:19:07 -0500
-Received: by mail-io0-f178.google.com with SMTP id k18so453523ioc.11
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:19:07 -0800 (PST)
+        id S1751208AbeACAS6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 19:18:58 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:44469 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751176AbeACASu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 19:18:50 -0500
+Received: by mail-it0-f66.google.com with SMTP id b5so43305itc.3
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:18:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/mBT6p3Y0ZQ/WyXd1jFURZ9PprfA9M6l39hvRT1CLMg=;
-        b=AIFGB/apxJR4aqIb+AgQgg4J32Lngx8KAwf1J1XMK6/pvt6rWEnk5pahzbX6yNfhit
-         klYRn12GE02vJZ7sQ53bHXWskvHFYA7m9LmpsT8zpkYegfBQ66QGiVqTijXcxMx2C96v
-         M6yYcBQUGyR5G6owmY9CH6lRa/157qZocF3p/MHAJxiY+iL/1EGYiKAqbSYtBg5f77yA
-         Tnyz4Ff1qnXQv88KrenC7eBKF710MKUYNCfNm8k4H8YsBmUsJT8qprfuocXeoI5rQjt+
-         TBqi01pMnrhDp2zIdEic24fEZo5OPDIOwJwJXvAJjUcpm6vs08jFJbxyZulRouASLdBy
-         b8Dw==
+        bh=2zdkuPdMcXBKLFGqoQyYAQJ7H+so2+fmJ9XssbbiID8=;
+        b=sc+eOZ2905OHS+Sp2L3iTP8SX7J7x4acLkf1ehImRmOvkg3oKWFVOZcMBUzjrXH5y2
+         1AgA9VcfzGb1JjuHQg62/gmzCQvINaGEIX2lie87cf0cwz3/vqVAMHDrTJH7Eozb+T1y
+         oRfRjlIR0KoOdWaoYDdlmcWu1GGLYyrs/dA5/ql8fSMDgdGE941y9LIExSZBolpuc9Og
+         Hh7b1C8W89X5LRhXx3BAsyqg+h91U1ZUqpsjcqDCqd1EvWLNFRBOkd3TexPIS+2wktHO
+         nP8atzi2MwKS7HmD9fK8LksAJGoZCV3LNxQbpKF6zLaRtD/2SwG43KKm8V+gr/6/Bjp3
+         i7yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/mBT6p3Y0ZQ/WyXd1jFURZ9PprfA9M6l39hvRT1CLMg=;
-        b=DmjH3oAv4TP3obGihwPkbBiaVeK7QWldTQdFjgtU5WBrnBB08P7h3iiuMVdr9Gw9qH
-         0gMqBt44mmR7ak/25D2eFD4vhvnMi2oeTc1wjOY5iNnK/CUWUtOV3fM9jgr3AubtZXmC
-         L3CBOnI93nvUv6r+RZeNo4OpF0YeMrJYRfzxqMDI1BLD1wprHA+C+xE8sPOFywAZF5s3
-         A+R9uf0+01lvbcX2D0xcPrj0jX9GIg8s7OfhbVD28s0Z3tlPRf4tMYunbfEZrq3b/iBF
-         L2RYXG6pQvjetIl/L10u11RIjznZI6s8tgk5U5TVo4EJsilv9xkZUZ829tfX/dO7gLJo
-         +znA==
-X-Gm-Message-State: AKGB3mJuE26wr7lhTSW7KD6if72t7db3QOltxrR2FHM9/ht6FOTzwROG
-        UHblmIYUTdEufnIW8yvOan4LkzwZQOQ=
-X-Google-Smtp-Source: ACJfBovxXIb+2xV7BgxpccBfjXPDAsMdP3ijWkURncB7ZxuN8qTT/iK3WsAZxxVG2esVzfhWrGbn3Q==
-X-Received: by 10.107.83.1 with SMTP id h1mr48537938iob.288.1514938746321;
-        Tue, 02 Jan 2018 16:19:06 -0800 (PST)
+        bh=2zdkuPdMcXBKLFGqoQyYAQJ7H+so2+fmJ9XssbbiID8=;
+        b=FwIGU1/MWl1rq+zVKqLns94q9Hvwb0+1ufWW89/+0WKghRmyMCpjulAtKfZa+j1FlU
+         f4ceX8n8zmPUPGjUEaCCsDpV0ITlvK3nWAJllJ7P1g8EJMmJCGXlhZ7Qz1cMDsmRHS9J
+         HH0p4TCUMJ4Vr8x2wnIgPp5b2EuuUXaLfNybigt3XMMAVfB/geP5URg/bByeMsReaG/2
+         qUYHA9dgil+nYZJV/fW07CLMxGh01DMOQmhFkz3Gs4lqfVwyol8Yxg/06KUA9SGsgmb2
+         MisG1Rpepl7Y55rOsqtnHQ7dHRNV8VzIZUN9MxTl6/42nIHTvvpmmI5rwJeguSxBWuB3
+         wDmA==
+X-Gm-Message-State: AKGB3mKNmT47Y/wpVd90kWK8zoG2Mp6ARyD4pIdZEKdqmgIrD7mJT1Hk
+        +9r/ko716mMT5B1F/hIvPwDQrxAmmrY=
+X-Google-Smtp-Source: ACJfBouL/nHX+VM6a+7dOXZyujNTN1e4jikMqe2gmoiQipAFQXqoIvONT8GyK7xSiOd43em4Mdr8XA==
+X-Received: by 10.36.94.202 with SMTP id h193mr84687itb.129.1514938729243;
+        Tue, 02 Jan 2018 16:18:49 -0800 (PST)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.19.04
+        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.18.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Jan 2018 16:19:05 -0800 (PST)
+        Tue, 02 Jan 2018 16:18:48 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
         philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 17/26] fetch: pass ref patterns when fetching
-Date:   Tue,  2 Jan 2018 16:18:19 -0800
-Message-Id: <20180103001828.205012-18-bmwill@google.com>
+Subject: [PATCH 06/26] transport: use get_refs_via_connect to get refs
+Date:   Tue,  2 Jan 2018 16:18:08 -0800
+Message-Id: <20180103001828.205012-7-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
 References: <20180103001828.205012-1-bmwill@google.com>
@@ -64,43 +64,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Construct a list of ref patterns to be passed to
-'transport_get_remote_refs()' from the refspec to be used during the
-fetch.  This list of ref patterns will be used to allow the server to
-filter the ref advertisement when communicating using protocol v2.
+Remove code duplication and use the existing 'get_refs_via_connect()'
+function to retrieve a remote's heads in 'fetch_refs_via_pack()' and
+'git_transport_push()'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/fetch.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ transport.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 850382f55..8128450bf 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -332,11 +332,21 @@ static struct ref *get_ref_map(struct transport *transport,
- 	struct ref *rm;
- 	struct ref *ref_map = NULL;
- 	struct ref **tail = &ref_map;
-+	struct argv_array ref_patterns = ARGV_ARRAY_INIT;
+diff --git a/transport.c b/transport.c
+index fc802260f..8e8779096 100644
+--- a/transport.c
++++ b/transport.c
+@@ -230,12 +230,8 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.cloning = transport->cloning;
+ 	args.update_shallow = data->options.update_shallow;
  
- 	/* opportunistically-updated references: */
- 	struct ref *orefs = NULL, **oref_tail = &orefs;
+-	if (!data->got_remote_heads) {
+-		connect_setup(transport, 0);
+-		get_remote_heads(data->fd[0], NULL, 0, &refs_tmp, 0,
+-				 NULL, &data->shallow);
+-		data->got_remote_heads = 1;
+-	}
++	if (!data->got_remote_heads)
++		refs_tmp = get_refs_via_connect(transport, 0);
  
--	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
-+	const struct ref *remote_refs;
-+
-+	for (i = 0; i < refspec_count; i++) {
-+		if (!refspecs[i].exact_sha1)
-+			argv_array_push(&ref_patterns, refspecs[i].src);
-+	}
-+
-+	remote_refs = transport_get_remote_refs(transport, &ref_patterns);
-+
-+	argv_array_clear(&ref_patterns);
+ 	refs = fetch_pack(&args, data->fd, data->conn,
+ 			  refs_tmp ? refs_tmp : transport->remote_refs,
+@@ -541,14 +537,8 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	struct send_pack_args args;
+ 	int ret;
  
- 	if (refspec_count) {
- 		struct refspec *fetch_refspec;
+-	if (!data->got_remote_heads) {
+-		struct ref *tmp_refs;
+-		connect_setup(transport, 1);
+-
+-		get_remote_heads(data->fd[0], NULL, 0, &tmp_refs, REF_NORMAL,
+-				 NULL, &data->shallow);
+-		data->got_remote_heads = 1;
+-	}
++	if (!data->got_remote_heads)
++		get_refs_via_connect(transport, 1);
+ 
+ 	memset(&args, 0, sizeof(args));
+ 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
 -- 
 2.15.1.620.gb9897f4670-goog
 
