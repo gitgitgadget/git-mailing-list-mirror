@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B0631F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 20:49:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABF21F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 20:49:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751066AbeACUtq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 15:49:46 -0500
-Received: from mail-wr0-f180.google.com ([209.85.128.180]:43673 "EHLO
-        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751388AbeACUtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 15:49:42 -0500
-Received: by mail-wr0-f180.google.com with SMTP id w68so3015422wrc.10
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:49:41 -0800 (PST)
+        id S1751436AbeACUtv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 15:49:51 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:34151 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751403AbeACUtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 15:49:45 -0500
+Received: by mail-wr0-f177.google.com with SMTP id 36so3027488wrh.1
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 12:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=77DpaZFl7/g6Ufv5MVrKpwo81rztHU2/eMF351cjCV0=;
-        b=MieRHuhEEWSKDWUij7hWxZUFamx9anHyCgs//Q6jJcU/wVxuiBx8Kroz5wjqFkzy0O
-         +tkGPitpxT2sHwAQ4zpcSDFdwo4J5JNljMogGbekyD6F9VzW14vP3FLj7q5xwIObPEDx
-         qpmoaFJsZMt3ze9CaAWZYqTqYLHLT/XTvanHWIMug90BBnc0R3G1IBGDVGmzVnq5nnHp
-         v6um0uEG7YgW+HLVjCBguz4NycHz8Voc5UExPUv4vs1XrTbijR6CHgSBRZ9l4nQUQ0CF
-         j7u7uF5XYm2LK+RXq/1/ZFtblgFnKhdY8Mv0arGlxsCxkbyK6f9YAnxdfjihghsCBF7n
-         4inA==
+        bh=yMmwYrgCyAhXi+gnh83rRDhJ+uQ9eVCfPy3OHmkaAvQ=;
+        b=rZc+aNJmvxSN5Tp/9/w/8UM0hvWGvcpVU4/XUcuUaq/XtehaFDHiVFNXe3J5Ygl26j
+         1PBlXjOYRcYrBWu32erUYgfN0dRS6ATyeSOLF6wIpLTAIugMB70myNVcD5hUl3RH8f7O
+         uUxlHF9Iyxsm3wxCYnJS3aaxtIEy0rlbgix+I6Vdc484mrWHGrHUGVk0UNfoRXe8i2F7
+         OSVbueKgOogQssQ4u6w0hT5d00ZB2sHqorsWRUs9nAsh5kMo/1DJhg4nlWkBA5FxjErd
+         uuT62BTmLBQ3zgECQeCXgnKiHIpAbevdl5eMXQbggw/u+x+++samXAgVNT6mXp8YqCa2
+         Ud2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=77DpaZFl7/g6Ufv5MVrKpwo81rztHU2/eMF351cjCV0=;
-        b=kT+7NMKbgNO3RWpUtcBJm2WZOt1TpzwAf5uAD/ReEPFdqCVAYEfj4/a0Th0KvUA5O7
-         R1MDngFXuNA4xLFhpZkML0Ffl5CIk7qlhXTvRswCUv8ktNCxzRQ4EaYx+aR/E6HcvBRc
-         YyYJvXtWuiBTYhAs2Q7KHXzrQpLf1HFalEE382DAs8ZzooUccmNLrQVQsYOP7LPc7GAe
-         /8vJonoU/8x+8gDYRYawCShgwgcpCYT/UWVvpmt6dfh300hpNya/nHpSCok12GKcOwqs
-         XdLrk1uhx28VElci9243ieKGhI/84EjDacxTGqWI15YGIfgd1ZmtTGfT9HfqxH6gqc89
-         XjFA==
-X-Gm-Message-State: AKGB3mKA8Th4GtuOj5aotWFTQDoa69UYwvO8lKGrFFI6ce7AntgF+rFF
-        zN1museB4NNNYZiwHz0WUAwhoHZ0
-X-Google-Smtp-Source: ACJfBot3CmF6J3rMyHgUf/VdfpBxB0GpenQkOmzCJoxstYKfnJSCOgjVCR0/bG73eFCqxGYh2dcIrA==
-X-Received: by 10.223.190.135 with SMTP id i7mr2795429wrh.184.1515012580140;
-        Wed, 03 Jan 2018 12:49:40 -0800 (PST)
+        bh=yMmwYrgCyAhXi+gnh83rRDhJ+uQ9eVCfPy3OHmkaAvQ=;
+        b=K+hnEIyH6WCqjg7UcKno1Pb/QhralG2+FeHIdDOM2diGPO7C3vJH/bibsqBFs0WL+/
+         xFMI5qkMtKIOqR/9RQNbJe/TU3NnZvxgZrrv2ZX+bs0EBwHHhJrm/gGb556RMfeT9F/u
+         wsnk6oArUOjZnuovkD/cQIjpVTNMftNp6q2bl4unip7RlkELtkKXOBT5Cfbn2d4922/w
+         vo2FR5swbe7K0XY9ySf7F6kJW5GIJoo+IPwhrtXyTsXteV1UnbwySw95G22yg0ru/ULy
+         vOeSsLDsdkx1YEYmeChMPw6/tZUafaLvx+OfCw8VXviJqmaqx0BUfnEWT0mfPTYdsW9O
+         FuBg==
+X-Gm-Message-State: AKGB3mKkKYS+LMo+XsTbqP6rqMrejRTN4wweKLRcTHEQeXX/kfp8Rqp7
+        ByEpE5aJOzCRCW4lqDc1wDQIVT10
+X-Google-Smtp-Source: ACJfBouTuTCTiOGKz0aNeOEt2Ce4eBThjWOrE7eQqxhM7CJFHtQKbXTaQByU9QVJkwPnCQCO/D6JPQ==
+X-Received: by 10.223.161.27 with SMTP id o27mr2808841wro.254.1515012583937;
+        Wed, 03 Jan 2018 12:49:43 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l9sm1908443wrb.45.2018.01.03.12.49.38
+        by smtp.gmail.com with ESMTPSA id l9sm1908443wrb.45.2018.01.03.12.49.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 12:49:39 -0800 (PST)
+        Wed, 03 Jan 2018 12:49:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/5] status: add a failing test showing a core.untrackedCache bug
-Date:   Wed,  3 Jan 2018 20:49:24 +0000
-Message-Id: <20180103204928.3769-2-avarab@gmail.com>
+Subject: [PATCH v2 3/5] dir.c: fix missing dir invalidation in untracked code
+Date:   Wed,  3 Jan 2018 20:49:26 +0000
+Message-Id: <20180103204928.3769-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180103204928.3769-1-avarab@gmail.com>
 References: <20180103204928.3769-1-avarab@gmail.com>
@@ -77,168 +77,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The untracked cache gets confused when a directory is swapped out for
-a file. It is easiest to reproduce this by swapping out a directory
-with a symlink to another directory, and as the tests show the symlink
-case is the only case we've found where "git status" will subsequently
-report incorrect information, even though it's possible to otherwise
-get the untracked cache into a state where its internal data
-structures don't reflect reality.
+From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-In the symlink case, whatever files are inside the target of the
-symlink will be incorrectly shown as untracked. This issue does not
-happen if the symlink links to another file, only if it links to
-another directory.
+Let's start with how create a new directory cache after the last one
+becomes invalid (e.g. because its dir mtime has changed...). In
+open_cached_dir():
 
-A stand-alone testcase for copying into a terminal:
+1. We start out with valid_cached_dir() returning false, which should
+   call invalidate_directory() to put a directory state back to
+   initial state, no untracked entries (untracked_nr zero), no sub
+   directory traversal (dirs[].recurse zero).
 
-    (
-        rm -rf /tmp/testrepo &&
-        git init /tmp/testrepo &&
-        cd /tmp/testrepo &&
-        mkdir x y &&
-        touch x/a y/b &&
-        git add x/a y/b &&
-        git commit -msnap &&
-        git rm -rf y &&
-        ln -s x y &&
-        git add y &&
-        git commit -msnap2 &&
-        git checkout HEAD~ &&
-        git status &&
-        git checkout master &&
-        sleep 1 &&
-        git status &&
-        git status
-    )
+2. Since the cache cannot be used, we go the slow path opendir() and
+   go through items one by one via readdir(). All the directories on
+   disk will be added back to the cache (if not already exist in
+   dirs[]) and its flag "recurse" gets changed to one to note that
+   it's part of the cached dir travesal next time.
 
-This will incorrectly show y/a as an untracked file. Both the "git
-status" call right before "git checkout master" and the "sleep 1"
-after the "checkout master" are needed to reproduce this, presumably
-due to the untracked cache tracking on the basis of cached whole
-seconds from stat(2).
+3. By the time we reach close_cached_dir() we should have a good
+   subdir list in dirs[]. Those with "recurse" flag set are the ones
+   present in the on-disk directory. The directory is now marked
+   "valid".
 
-When git gets into this state, a workaround to fix it is to issue a
-one-off:
+Next time read_directory() is called, since the directory is marked
+valid, it will skip readdir(), go fast path and traverse through
+dirs[] array instead.
 
-    git -c core.untrackedCache=false status
+Steps one and two need some tight cooperation. If a subdir is removed,
+readdir() will not find it and of course we cannot examine/invalidate
+it. To make sure removed directories on disk are gone from the cache,
+step one must make sure recurse flag of all subdirs are zero.
 
-For the non-symlink case, the bug is that the output of
-test-dump-untracked-cache should not include:
+But that's not true. If "valid" flag is already false, there is a
+chance we go straight to the end of valid_cached_dir() without calling
+invalidate_directory(). Or we fail to meet the "if (untracked-valid)"
+condition and skip over the invalidate_directory().
 
-   /one/ 0000000000000000000000000000000000000000 recurse valid
+After step 3, we mark the cache valid. Any stale subdir with incorrect
+recurse flag becomes a real subdir next time we traverse the directory
+using dirs[] array.
 
-It being in the output implies that cached traversal of root includes
-the directory "one" which does not exist on disk anymore.
+We could avoid this by making sure invalidate_directory() is always
+called (therefore dirs[].recurse cleared) at the beginning of
+open_cached_dir(). Which is what this patch does.
 
+As to how we get into this situation, the key in the test is this
+command
+
+    git checkout master
+
+where "one/file" is replaced with "one" in the index. This index
+update triggers untracked_cache_invalidate_path(), which clears valid
+flag of the root directory while keeping "recurse" flag on the subdir
+"one" on. On the next git-status, we go through steps 1-3 above and
+save an incorrect cache on disk. The second git-status blindly follows
+the bad cache data and shows the problem.
+
+This is arguably because of a bad design where "recurse" flag plays
+double roles: whether a directory should be saved on disk, and whether
+it is part of a directory traversal.
+
+We need to keep recurse flag set at "checkout master" because of the
+first role: we need to keep subdir caches (dir "two" for example has
+not been touched at all, no reason to throw its cache away).
+
+As long as we make sure to ignore/reset "recurse" flag at the
+beginning of a directory traversal, we're good. But maybe eventually
+we should separate these two roles.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7063-status-untracked-cache.sh | 87 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 87 insertions(+)
+ dir.c                             | 22 ++++++++++++++--------
+ t/t7063-status-untracked-cache.sh |  4 ++--
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
+diff --git a/dir.c b/dir.c
+index edcb7bb462..163ca69df0 100644
+--- a/dir.c
++++ b/dir.c
+@@ -774,7 +774,16 @@ static void invalidate_directory(struct untracked_cache *uc,
+ 				 struct untracked_cache_dir *dir)
+ {
+ 	int i;
+-	uc->dir_invalidated++;
++
++	/*
++	 * Invalidation increment here is just roughly correct. If
++	 * untracked_nr or any of dirs[].recurse is non-zero, we
++	 * should increment dir_invalidated too. But that's more
++	 * expensive to do.
++	 */
++	if (dir->valid)
++		uc->dir_invalidated++;
++
+ 	dir->valid = 0;
+ 	dir->untracked_nr = 0;
+ 	for (i = 0; i < dir->dirs_nr; i++)
+@@ -1810,23 +1819,18 @@ static int valid_cached_dir(struct dir_struct *dir,
+ 	refresh_fsmonitor(istate);
+ 	if (!(dir->untracked->use_fsmonitor && untracked->valid)) {
+ 		if (lstat(path->len ? path->buf : ".", &st)) {
+-			invalidate_directory(dir->untracked, untracked);
+ 			memset(&untracked->stat_data, 0, sizeof(untracked->stat_data));
+ 			return 0;
+ 		}
+ 		if (!untracked->valid ||
+ 			match_stat_data_racy(istate, &untracked->stat_data, &st)) {
+-			if (untracked->valid)
+-				invalidate_directory(dir->untracked, untracked);
+ 			fill_stat_data(&untracked->stat_data, &st);
+ 			return 0;
+ 		}
+ 	}
+ 
+-	if (untracked->check_only != !!check_only) {
+-		invalidate_directory(dir->untracked, untracked);
++	if (untracked->check_only != !!check_only)
+ 		return 0;
+-	}
+ 
+ 	/*
+ 	 * prep_exclude will be called eventually on this directory,
+@@ -1858,8 +1862,10 @@ static int open_cached_dir(struct cached_dir *cdir,
+ 	if (valid_cached_dir(dir, untracked, istate, path, check_only))
+ 		return 0;
+ 	cdir->fdir = opendir(path->len ? path->buf : ".");
+-	if (dir->untracked)
++	if (dir->untracked) {
++		invalidate_directory(dir->untracked, untracked);
+ 		dir->untracked->dir_opened++;
++	}
+ 	if (!cdir->fdir)
+ 		return -1;
+ 	return 0;
 diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index e5fb892f95..dba7f50bbb 100755
+index dba7f50bbb..46b947824f 100755
 --- a/t/t7063-status-untracked-cache.sh
 +++ b/t/t7063-status-untracked-cache.sh
-@@ -22,6 +22,12 @@ avoid_racy() {
- 	sleep 1
- }
- 
-+status_is_clean() {
-+	>../status.expect &&
-+	git status --porcelain >../status.actual &&
-+	test_cmp ../status.expect ../status.actual
-+}
-+
- test_lazy_prereq UNTRACKED_CACHE '
- 	{ git update-index --test-untracked-cache; ret=$?; } &&
- 	test $ret -ne 1
-@@ -683,4 +689,85 @@ test_expect_success 'untracked cache survives a commit' '
- 	test_cmp ../before ../after
+@@ -707,7 +707,7 @@ test_expect_success SYMLINKS 'setup worktree for symlink test' '
+ 	git commit -m"second commit"
  '
  
-+test_expect_success 'teardown worktree' '
-+	cd ..
-+'
-+
-+test_expect_success SYMLINKS 'setup worktree for symlink test' '
-+	git init worktree-symlink &&
-+	cd worktree-symlink &&
-+	git config core.untrackedCache true &&
-+	mkdir one two &&
-+	touch one/file two/file &&
-+	git add one/file two/file &&
-+	git commit -m"first commit" &&
-+	git rm -rf one &&
-+	ln -s two one &&
-+	git add one &&
-+	git commit -m"second commit"
-+'
-+
-+test_expect_failure SYMLINKS '"status" after symlink replacement should be clean with UC=true' '
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	status_is_clean
-+'
-+
-+test_expect_success SYMLINKS '"status" after symlink replacement should be clean with UC=false' '
-+	git config core.untrackedCache false &&
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	status_is_clean
-+'
-+
-+test_expect_success 'setup worktree for non-symlink test' '
-+	git init worktree-non-symlink &&
-+	cd worktree-non-symlink &&
-+	git config core.untrackedCache true &&
-+	mkdir one two &&
-+	touch one/file two/file &&
-+	git add one/file two/file &&
-+	git commit -m"first commit" &&
-+	git rm -rf one &&
-+	cp two/file one &&
-+	git add one &&
-+	git commit -m"second commit"
-+'
-+
-+test_expect_failure '"status" after file replacement should be clean with UC=true' '
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	test-dump-untracked-cache >../actual &&
-+	grep -F "recurse valid" ../actual >../actual.grep &&
-+	cat >../expect.grep <<EOF &&
-+/ 0000000000000000000000000000000000000000 recurse valid
-+/two/ 0000000000000000000000000000000000000000 recurse valid
-+EOF
-+	status_is_clean &&
-+	test_cmp ../expect.grep ../actual.grep
-+'
-+
-+test_expect_success '"status" after file replacement should be clean with UC=false' '
-+	git config core.untrackedCache false &&
-+	git checkout HEAD~ &&
-+	status_is_clean &&
-+	status_is_clean &&
-+	git checkout master &&
-+	avoid_racy &&
-+	status_is_clean &&
-+	status_is_clean
-+'
-+
- test_done
+-test_expect_failure SYMLINKS '"status" after symlink replacement should be clean with UC=true' '
++test_expect_success SYMLINKS '"status" after symlink replacement should be clean with UC=true' '
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
+@@ -742,7 +742,7 @@ test_expect_success 'setup worktree for non-symlink test' '
+ 	git commit -m"second commit"
+ '
+ 
+-test_expect_failure '"status" after file replacement should be clean with UC=true' '
++test_expect_success '"status" after file replacement should be clean with UC=true' '
+ 	git checkout HEAD~ &&
+ 	status_is_clean &&
+ 	status_is_clean &&
 -- 
 2.15.1.424.g9478a66081
 
