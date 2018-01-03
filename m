@@ -2,171 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07D201F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 21:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78BBC1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 21:15:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751192AbeACVCc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 16:02:32 -0500
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:45392 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751099AbeACVCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 16:02:30 -0500
-Received: by mail-vk0-f67.google.com with SMTP id o16so1620872vke.12
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 13:02:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=emux8+jJ6sv+BqFeWFM6rqx3R2ZnXk9HCSXQ+jcH5oY=;
-        b=MAVFSTostzbstPAmtS7pLucPfdSO/gSOClc8aF53YiLrfehPvbcVk1UrKasoWPQOrR
-         +fkhOnXzm1OtRUi9QOi6R6wZLf6Qh60Lr243xPNS3fafQkFzAVHcaMHwUi6zj07uvKNN
-         9ahKTf514JuO9W/ktKd/3idWq2T5lcM7bnl5zSgDys4/1jxxAmUYExGp5vKFWS2qoa8e
-         m6jvNIJZIMTPYsIAY18rREqR94hEjRP9TTYAfLmHLrjV/FoaMFQGZ/7xkAfGJJJW6rQV
-         SL9hOZs89/wtWUs6UkzNlTss4ho4S85ytV1Jxcde9MTijCYm3J9HSo6G+vZe1Zipii/c
-         ylPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=emux8+jJ6sv+BqFeWFM6rqx3R2ZnXk9HCSXQ+jcH5oY=;
-        b=fPC4WHxTuq84HGFZ7A8E4kf19uKujs2MkZAxOfJhEa0pkgm2/zTVzk9gAhLMxkvhRa
-         AOakdMu9A48ZuOTaFJ+tIdKUoLQIsxEzH83ICueDeOXYZjFGlkGAou9pbGly5m99RpbR
-         iGwXr4HILZx2hpLq6DMNy0nY41MPwr3l7zMe/yDF1I0+nRcH+4V3KOWNinm6SJnfHNUt
-         vs6aXtJwm5zDyWjedGzBsXt1huyVeTSe8UMzK3FW2uGkHvV9ONcd8b569zjOYrcSL0qo
-         TmncT3ZN7ZHDWbYXY2PWfN0aIAFROLKEcXn2uJtU3AxU/xYw/7JL2LOS/snPjwC24+sk
-         YDYw==
-X-Gm-Message-State: AKGB3mLV8Kd4zj5IQdc1Z7OD40t0/VJCC5QsrPZ1c6T8Uck2Xyjo/0mk
-        CySC149nIRvvrfjabqsODHBCsmNF0t2/kutzdIE=
-X-Google-Smtp-Source: ACJfBou6moef9QpmX1DMqNd4k/lqfpbk46Py2A0wI6J+WfyVcWOnHRsIK9NIJ/De/bWIOzCaItiftmcDdMnnH69EEA0=
-X-Received: by 10.31.150.79 with SMTP id y76mr2406691vkd.183.1515013349792;
- Wed, 03 Jan 2018 13:02:29 -0800 (PST)
+        id S1751078AbeACVPV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 16:15:21 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60778 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750996AbeACVPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 16:15:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA02CD15F3;
+        Wed,  3 Jan 2018 16:15:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=N1usp4+nksRVz8dxfyPmtvpJnK0=; b=tPd/YS
+        UNV2LpDjmuitMSO6ZAHsf7McckhdsXEniaFbqYLE4LA1xD700VUKw/wQ55b37uaV
+        jD7iQ77kk0zkoVn2A++/ZwcZ1ELDYtKAkQ8vCQ0hufgM+I191EAXwKjeS8flYiOm
+        3vIz//x2hZeuMvBOAjTI6vk13RjoDv8iiIbpo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ftVTNp4d4I5Ls5NWXzliYpugIUQP2L0H
+        SXLY0025jYpD0H3h3jAjPdK/2OmBM6OlHX+eny77J2xaJJY3RDudv4Q8wLfEQnA0
+        zZoSlg/eCKH01QxLu8cu9a0/fT1MNqbKyDc4UzoMr/RWJvYTdUeEtwVrnMvevEY4
+        xJ5lDlMKgHQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8127D15F0;
+        Wed,  3 Jan 2018 16:15:19 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 24CE9D15EF;
+        Wed,  3 Jan 2018 16:15:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Brandon Williams <bmwill@google.com>,
+        Ben Humphreys <behumphreys@atlassian.com>,
+        Git Users <git@vger.kernel.org>, git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
+References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
+        <CAGyf7-FQp4q2vvH1ponQvmVDTu0hiMSK1JKytQZ4O1i0MCnz7g@mail.gmail.com>
+        <20180103050730.GA87855@aiede.mtv.corp.google.com>
+Date:   Wed, 03 Jan 2018 13:15:17 -0800
+In-Reply-To: <20180103050730.GA87855@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 2 Jan 2018 21:07:30 -0800")
+Message-ID: <xmqqk1wyhcey.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.82.5 with HTTP; Wed, 3 Jan 2018 13:02:29 -0800 (PST)
-In-Reply-To: <7ecea1b4-d713-7298-1697-ae25532e26e0@kdbg.org>
-References: <20171228041352.27880-1-newren@gmail.com> <CABPp-BEnpm=OEXZXMeuaxBaOLimucoEKH643jm516YufrtQ-iA@mail.gmail.com>
- <7ecea1b4-d713-7298-1697-ae25532e26e0@kdbg.org>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 3 Jan 2018 13:02:29 -0800
-Message-ID: <CABPp-BF0Tby4+Va_MV-j3kC-phV8D84PJboBhE-AR2pXQMwL2g@mail.gmail.com>
-Subject: Re: [PATCH v5 00/34] Add directory rename detection to git
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 338858FA-F0CB-11E7-B99B-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 3, 2018 at 2:57 AM, Johannes Sixt <j6t@kdbg.org> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I tested the series on Windows recently. It requires the patch below.
-> I don't know whether this is indicating some portability issues of grep
-> (^ being used in the middle of a RE instead of at the very beginning) or
-> just a quirk in my setup.
+> It's good you caught this flaw in the detection.  Would something like
+> the following make sense?  If so, I can resend with a commit message
+> and tests tomorrow or the day after.
 
-Thanks for testing it out.  What version of Windows were you running
-on?  With cygwin or without?  I tested previously on cygwin (I think
-on Windows Server 2012??) and got all the tests passing there,
-eventually[1].  I'm not sure I can find access to any other Windows
-systems, but I'd be happy to take a look if I can.
+So the idea is to keep the 'simple' for implementations that do not
+support OpenSSH options, but declare that the auto-detection was
+overly conservative and assume that -4/6/p are supported by
+everybody?
 
-[1] https://public-inbox.org/git/CABPp-BEJ6-mrY0OCz1WWetrtG_iehKzOdCUOn_PUuKVywaU9Zw@mail.gmail.com/
+This change means that those who were meant to be helped by the
+original change, that introduced 'simple' and made the (overly
+conservative) auto-detection, would now have to explicitly set
+ssh.variant to simple, because otherwise they will be passed one of
+these three options.  Am I reading the intention of the change
+correctly?  If so, I tend to agree that it is lesser of the two
+evils to make sure things continue to work for older openssh users
+with their current setting like this patch does, even with the cost
+of telling users with implementations that do not honor -4/6/p to
+set things up manually, I guess.
 
-The need to backslash escape a caret for a literal match when it
-appears in the middle of the string makes sense.  Thanks for sending
-along the patch.  Would you prefer I squashed it into the series
-(still sitting in 'pu'), or keep your patch separate?  I'm fine with
-either, I'm just unsure the protocol here.
-
-> But it still does not pass the test suite because the system does not
-> like file names such as y/c~HEAD:
->
-> ++ grep 'Refusing to lose dirty file at z/c' out
-> Refusing to lose dirty file at z/c
-> ++ grep -q stuff x/b y/a y/c y/c~HEAD z/c
-> grep: y/c: Invalid request code
-> error: last command exited with $?=2
-> not ok 94 - 11d-check: Avoid losing not-uptodate with rename + D/F conflict
-
-This is exceptionally odd.  The actual line from the testsuite was
-  grep -q stuff */*
-
-which suggests your shell is both doing the pathname expansion and
-treating the resulting filename not as a string but as something to be
-interpreted that happens to have some kind of special
-characters/commands, and then choking on the result.  Super weird.  I
-could probably work around this by just running
-  grep -q stuff z/c
-
-I think I had the asterisks in there because I was thinking in terms
-of directory rename detection potentially moving the file, but that's
-probably just overkill.  Does the test pass for you with that change?
-(If so, there are also two similar tests that I'd need to make similar
-changes to.)
-
-However, although that might fix this particular case, it suggests
-some fragility of the tests and filenames for whatever system you
-happen to be using.  merge-recursive.c's unique_path has created
-filenames with tilde's in them for many years, it may just be that I'm
-the first to use the resulting file in combination with grep to ensure
-the contents are as we expect.  There may be other issues lurking
-(even if not yet appearing in the testsuite) for your system when
-dealing with merge conflicts.
-
-
-Thanks,
-Elijah
-
-
-
-
-
-
-
-
+Thanks, both, for digging this issue through.
 
 >
-> ---- 8< ----
-> From: Johannes Sixt <j6t@kdbg.org>
-> Date: Fri, 22 Dec 2017 09:33:13 +0100
-> Subject: [PATCH] fixup directory rename tests
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t6043-merge-rename-directories.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-> index f0af66b8a9..b8cd428341 100755
-> --- a/t/t6043-merge-rename-directories.sh
-> +++ b/t/t6043-merge-rename-directories.sh
-> @@ -2940,8 +2940,8 @@ test_expect_success '10b-check: Overwrite untracked with dir rename + delete' '
->                 echo contents >y/e &&
->
->                 test_must_fail git merge -s recursive B^0 >out 2>err &&
-> -               test_i18ngrep "CONFLICT (rename/delete).*Version B^0 of y/d left in tree at y/d~B^0" out &&
-> -               test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B^0 instead" out &&
-> +               test_i18ngrep "CONFLICT (rename/delete).*Version B\^0 of y/d left in tree at y/d~B\^0" out &&
-> +               test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B\^0 instead" out &&
->
->                 test 3 -eq $(git ls-files -s | wc -l) &&
->                 test 2 -eq $(git ls-files -u | wc -l) &&
-> @@ -3010,7 +3010,7 @@ test_expect_success '10c-check: Overwrite untracked with dir rename/rename(1to2)
->
->                 test_must_fail git merge -s recursive B^0 >out 2>err &&
->                 test_i18ngrep "CONFLICT (rename/rename)" out &&
-> -               test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B^0 instead" out &&
-> +               test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B\^0 instead" out &&
->
->                 test 6 -eq $(git ls-files -s | wc -l) &&
->                 test 3 -eq $(git ls-files -u | wc -l) &&
-> --
-> 2.14.2.808.g3bc32f2729
+> diff --git i/Documentation/config.txt w/Documentation/config.txt
+> index 64c1dbba94..75eafd8db6 100644
+> --- i/Documentation/config.txt
+> +++ w/Documentation/config.txt
+> @@ -2118,8 +2118,8 @@ ssh.variant::
+>  	unrecognized, Git will attempt to detect support of OpenSSH
+>  	options by first invoking the configured SSH command with the
+>  	`-G` (print configuration) option and will subsequently use
+> -	OpenSSH options (if that is successful) or no options besides
+> -	the host and remote command (if it fails).
+> +	OpenSSH options if that is successful or a conservative set of
+> +	OpenSSH-style options if it fails.
+>  +
+>  The config variable `ssh.variant` can be set to override this detection.
+>  Valid values are `ssh` (to use OpenSSH options), `plink`, `putty`,
+> diff --git i/connect.c w/connect.c
+> index c3a014c5ba..3784c2be53 100644
+> --- i/connect.c
+> +++ w/connect.c
+> @@ -941,10 +941,9 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+>  
+>  	if (flags & CONNECT_IPV4) {
+>  		switch (variant) {
+> -		case VARIANT_AUTO:
+> -			BUG("VARIANT_AUTO passed to push_ssh_options");
+>  		case VARIANT_SIMPLE:
+>  			die("ssh variant 'simple' does not support -4");
+> +		case VARIANT_AUTO:
+>  		case VARIANT_SSH:
+>  		case VARIANT_PLINK:
+>  		case VARIANT_PUTTY:
+> @@ -953,10 +952,9 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+>  		}
+>  	} else if (flags & CONNECT_IPV6) {
+>  		switch (variant) {
+> -		case VARIANT_AUTO:
+> -			BUG("VARIANT_AUTO passed to push_ssh_options");
+>  		case VARIANT_SIMPLE:
+>  			die("ssh variant 'simple' does not support -6");
+> +		case VARIANT_AUTO:
+>  		case VARIANT_SSH:
+>  		case VARIANT_PLINK:
+>  		case VARIANT_PUTTY:
+> @@ -970,10 +968,9 @@ static void push_ssh_options(struct argv_array *args, struct argv_array *env,
+>  
+>  	if (port) {
+>  		switch (variant) {
+> -		case VARIANT_AUTO:
+> -			BUG("VARIANT_AUTO passed to push_ssh_options");
+>  		case VARIANT_SIMPLE:
+>  			die("ssh variant 'simple' does not support setting port");
+> +		case VARIANT_AUTO:
+>  		case VARIANT_SSH:
+>  			argv_array_push(args, "-p");
+>  			break;
+> @@ -1026,7 +1023,7 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+>  				 VARIANT_SSH, port, flags);
+>  		argv_array_push(&detect.args, ssh_host);
+>  
+> -		variant = run_command(&detect) ? VARIANT_SIMPLE : VARIANT_SSH;
+> +		variant = run_command(&detect) ? VARIANT_AUTO : VARIANT_SSH;
+>  	}
+>  
+>  	argv_array_push(&conn->args, ssh);
+> diff --git i/t/t5601-clone.sh w/t/t5601-clone.sh
+> index 0f895478f0..0224edc85b 100755
+> --- i/t/t5601-clone.sh
+> +++ w/t/t5601-clone.sh
+> @@ -365,6 +365,11 @@ test_expect_success 'OpenSSH variant passes -4' '
+>  	expect_ssh "-4 -p 123" myhost src
+>  '
+>  
+> +test_expect_success 'OpenSSH passes GIT_PROTOCOL envvar' '
+> +	git -c protocol.version=1 clone [myhost:123]:src ssh-v1-clone &&
+> +	expect_ssh "-o SendEnv=GIT_PROTOCOL -p 123" myhost src
+> +'
+> +
+>  test_expect_success 'variant can be overridden' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/putty" &&
+>  	git -c ssh.variant=putty clone -4 "[myhost:123]:src" ssh-putty-clone &&
+> @@ -377,19 +382,32 @@ test_expect_success 'variant=auto picks based on basename' '
+>  	expect_ssh "-4 -P 123" myhost src
+>  '
+>  
+> -test_expect_success 'simple does not support -4/-6' '
+> +test_expect_success 'variant=simple does not support -4/-6' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
+> -	test_must_fail git clone -4 "myhost:src" ssh-4-clone-simple
+> +	test_must_fail git -c ssh.variant=simple clone -4 "myhost:src" ssh-4-clone-simple
+>  '
+>  
+> -test_expect_success 'simple does not support port' '
+> +test_expect_success 'variant=simple does not support port' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/simple" &&
+> -	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-simple
+> +	test_must_fail git -c ssh.variant=simple clone "[myhost:123]:src" ssh-bracket-clone-simple
+> +'
+> +
+> +test_expect_success 'old OpenSSH passes -4 and -p' '
+> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/old" &&
+> +	git -c ssh.variant=auto clone -4 "[myhost:123]:src" old-ssh-clone &&
+> +	expect_ssh "-4 -p 123" myhost src
+>  '
+>  
+> -test_expect_success 'uplink is treated as simple' '
+> +test_expect_success 'old OpenSSH does not pass GIT_PROTOCOL envvar' '
+> +	copy_ssh_wrapper_as "$TRASH_DIRECTORY/old" &&
+> +	git -c protocol.version=1 -c ssh.variant=auto clone "[myhost:123]:src" old-ssh-protocol-v1 &&
+> +	expect_ssh "-p 123" myhost src
+> +'
+> +
+> +test_expect_success 'uplink is treated as old OpenSSH' '
+>  	copy_ssh_wrapper_as "$TRASH_DIRECTORY/uplink" &&
+> -	test_must_fail git clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
+> +	git -c protocol.version=1 clone "[myhost:123]:src" ssh-bracket-clone-uplink &&
+> +	expect_ssh "-p 123" myhost src &&
+>  	git clone "myhost:src" ssh-clone-uplink &&
+>  	expect_ssh myhost src
+>  '
+> @@ -405,8 +423,8 @@ test_expect_success 'OpenSSH-like uplink is treated as ssh' '
+>  	test_when_finished "rm -f \"\$TRASH_DIRECTORY/uplink\"" &&
+>  	GIT_SSH="$TRASH_DIRECTORY/uplink" &&
+>  	test_when_finished "GIT_SSH=\"\$TRASH_DIRECTORY/ssh\$X\"" &&
+> -	git clone "[myhost:123]:src" ssh-bracket-clone-sshlike-uplink &&
+> -	expect_ssh "-p 123" myhost src
+> +	git -c protocol.version=1 clone "[myhost:123]:src" ssh-bracket-clone-sshlike-uplink &&
+> +	expect_ssh "-o SendEnv=GIT_PROTOCOL -p 123" myhost src
+>  '
+>  
+>  test_expect_success 'plink is treated specially (as putty)' '
