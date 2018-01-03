@@ -2,128 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 127071F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:55:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 096851F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 18:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751099AbeACQzA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:55:00 -0500
-Received: from mout.gmx.net ([212.227.17.20]:64641 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751059AbeACQy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:54:58 -0500
-Received: from ggw-xinxiao-xx.fareast.corp.microsoft.com ([37.201.193.20]) by
- mail.gmx.com (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MdFwl-1eFWPd3CLL-00ITCL; Wed, 03 Jan 2018 17:54:54 +0100
-Date:   Wed, 3 Jan 2018 17:54:54 +0100 (STD)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] t0302 & t3900: add forgotten quotes
-In-Reply-To: <cover.1514998470.git.johannes.schindelin@gmx.de>
-Message-ID: <2b7912156d94eff38c130403fcf831b5f8d5bd4d.1514998471.git.johannes.schindelin@gmx.de>
-References: <cover.1514998470.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751099AbeACS0I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 13:26:08 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:43202 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750864AbeACS0H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 13:26:07 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e3so1062136pfi.10
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 10:26:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=P2pCKrwDPFKOK32oREx+weimd/ctvN2Zdf6lvX+U/8I=;
+        b=qKmQi7Vt0idNnDb6kYqAnHS+8fSjLZTYBEeQSkYe+1g/F9IZd2FsLob1OC0k+08Bnb
+         NXl1pjdef/KhEj+7L4HuA0mHZQrefomuUug4LUMwz7r0jnsOX2a1+WyZtx26zSUHLkT4
+         qNGRn7ZJ8JbWK1JTkceZM07XeDrJRM1yKuMGmnV3KEC9RA9LXCcpdW8txKJRNsxN2QoQ
+         hxfPmr5qvILG7ZNZbH87+27q0soIaIO1Q5crF8V0yENX2MrUBNRcXOPS1LdpTPUPXqyE
+         JBbSBElkBvqJyYCSE73o93GJGhtWZNM+I3keUSuEXUmsfaMFscrrL92plH+RKZX/Oc4X
+         QXow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=P2pCKrwDPFKOK32oREx+weimd/ctvN2Zdf6lvX+U/8I=;
+        b=sYQPpXP15qj/9sV37XcnzOtQjbGaKakw02eaQL/QACG2kmx88/Kc0L5pyzr2ILvv+H
+         2ptjtNvzvYutFou9rcSgZ0FkxO4aK8ZxSOmJYjROaM4t7iL4KUJasINZH0dHvKgrMT5d
+         tetnzRAxlAGOD41YJ4iOlBmYB6ZFkSg7MWXPqVcVjxBnT/33QZWAmU6rVTMz5Fr4ejeK
+         OmNPFiDKdt3Z4tf8Ufkbv0OJk2sRfTyo1N85nk3riRK0wpnG9rDoxryAPkkHVSxX9yNa
+         aPY4YHp77KsA7GpGKQBvRV6mVuGvE03ISjG0QcMTEmYwdMasW+PfsSQ7nlqlAvBB44TA
+         ljvA==
+X-Gm-Message-State: AKGB3mL+z1Zef7qeYNxBbuFL4iaQFQAMmuqI6qbzkTS1Bu6F7pQYW6x5
+        ZhnTrm8sKklB9LCIicNd1mrkLoJS0GV1QyHg7rs=
+X-Google-Smtp-Source: ACJfBoseNU3g/xJsI+CgJvBb/9NH7xv8c/Qpf2dyUE5m4U1lTF/cb0HwzIdZDFL1x+cLac/R/5Xq6bro9Nbz8gSSgAM=
+X-Received: by 10.101.65.205 with SMTP id b13mr1995597pgq.30.1515003967108;
+ Wed, 03 Jan 2018 10:26:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:E7sJGK1cQGScxaYSjLLJ0eqPsmf+O+Dow1XIRAYWico1SBQYUrV
- hF9omeiy0l1UdsTjugC+UK4v3QF+lYinrdZW7FGhm+6dxbORupjPhE/Q4YxLNiCvxWePDKY
- Ki9XUHB5cD7/62G6sylQMUVCkGIcSZEQKwq5X63fBIu+j1H/MMnUgNIpIbC9qo9r1TiqVmt
- V+/g52m0LAXv8DBVb54hg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R29uzScujIw=:fEEZcR7NQkhZcH0vAWdXeL
- UYuQFZBXU59i77LtKEvz4AiH9MzQQxjJHd3Kf4adJOFmMbEjCze3UMEqJ8GBket4dm76ZIPLP
- vCz9E1QhL8brfQx5c+IPsg/hbZF+UOdC1WY9+XlItRUAMlXA0cdkpmw4eSR98O6zdDbCYOjhU
- cvr5W5SgSegPJddCzxzSIIuH8YuHwkb9LJP1WwUGLGoX4BkMATBTdjOkxk/eJfPTUPMPD9Drq
- s/KgSnhdbYJrx6O3CR3Gq6gT14IYbeixZoNIaodnMf8LMxpBSyDNEfw+zcq253FLCY5NV8OiM
- cy+9JkgGHW8a5KIR5m/0K3rvAkIe9n9jchjNRPIf56vv5q9FT/1TV5BQJFVbOgf78BN5Ts8ke
- PP8vHPIRSmqipy8cjyRKLw88XOYVaz14yyU0CTnV+DgUTAmHI0TqExuUR5JqnmKc7znPpLPF4
- kjbS6v4Sn9mdoUa4OeioJ4ixU6CXrFfvnlCAZ3ScfyYwhVaeVSvj5yltsVEUHPzdJWmTWwrXt
- pZYfQUY9Nt4jeuJlQFtf/Xvp0/gN9KOWydot5U5GL60584XcSitb7KlPZI5GWIHUSfpa7upI5
- Yb9U3sk9ZnhZ2vJxTvuYXUcv91zEH1JVt4HgmX74U8uyQqEz1He3l0EYEeIrw+EgDNwoajfJh
- kHCRMNLo6uSmAtX9AZVo+FoKwX71lS7sjmFfyXYDuHQ5K60i4pEopMX0COJG6jpxrdnDtQRDY
- heCaV3QjK5b1jHP8UeB+HHNKZBl7DfdEpLGZ0O2NdlA0UgIgZQvQkd7zkX3W30hvbPnaQEFmz
- RSP8wPpogL/n7g+WOKw7MO9h+ZV+V1ZwhUgyhigEkKqs7ZSOZvnRwemVR3Pps/HDtaDKe/l
+Received: by 10.100.179.136 with HTTP; Wed, 3 Jan 2018 10:26:06 -0800 (PST)
+In-Reply-To: <87fu7nc9a2.fsf@evledraar.gmail.com>
+References: <CAELBRWKYZK2tVhGZSExXRXrRB94jFN-4N3d=iKARzEsqLu7k1g@mail.gmail.com>
+ <87fu7nc9a2.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 3 Jan 2018 19:26:06 +0100
+Message-ID: <CAN0heSrZ4dEFqNX69PgtGCERJKabokz88v-vnNZkUBXfK118mg@mail.gmail.com>
+Subject: Re: [BUG] v2.16.0-rc0 seg faults when git bisect skip
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Yasushi SHOJI <yasushi.shoji@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cleaning up files in the $HOME directory, it really makes sense to
-quote the path, especially in Git's test suite, where the HOME directory
-is *guaranteed* to contain spaces in its name.
+On 3 January 2018 at 15:21, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@=
+gmail.com> wrote:
+>
+> On Wed, Jan 03 2018, Yasushi SHOJI jotted:
+>
+>> Hi,
+>>
+>> git version 2.16.0.rc0 seg faults on my machine when I
+>> [...]
+>> Program terminated with signal SIGSEGV, Segmentation fault.
+>> #0  0x000055a73107f900 in best_bisection_sorted (list=3D0x0, nr=3D0) at =
+bisect.c:232
+>> 232 free_commit_list(p->next);
+>> (gdb) bt
+>> #0  0x000055a73107f900 in best_bisection_sorted (list=3D0x0, nr=3D0) at =
+bisect.c:232
+>> #1  0x000055a73107fc0f in do_find_bisection (list=3D0x0, nr=3D0,
+>> weights=3D0x55a731b6ffd0, find_all=3D1) at bisect.c:361
+>> #2  0x000055a73107fcf4 in find_bisection (commit_list=3D0x7ffe8750d4d0,
+>> reaches=3D0x7ffe8750d4c4, all=3D0x7ffe8750d4c0, find_all=3D1) at
+>> bisect.c:400
+>> #3  0x000055a73108128d in bisect_next_all (prefix=3D0x0, no_checkout=3D0=
+)
+>> at bisect.c:969
+>> #4  0x000055a730fd5238 in cmd_bisect__helper (argc=3D0,
+>> argv=3D0x7ffe8750e230, prefix=3D0x0) at builtin/bisect--helper.c:140
+>> #5  0x000055a730fcbc76 in run_builtin (p=3D0x55a73145c778
+>> <commands+120>, argc=3D2, argv=3D0x7ffe8750e230) at git.c:346
+>> #6  0x000055a730fcbf40 in handle_builtin (argc=3D2, argv=3D0x7ffe8750e23=
+0)
+>> at git.c:554
+>> #7  0x000055a730fcc0e8 in run_argv (argcp=3D0x7ffe8750e0ec,
+>> argv=3D0x7ffe8750e0e0) at git.c:606
+>> #8  0x000055a730fcc29b in cmd_main (argc=3D2, argv=3D0x7ffe8750e230) at =
+git.c:683
+>> #9  0x000055a731068d9e in main (argc=3D3, argv=3D0x7ffe8750e228) at comm=
+on-main.c:43
+>> (gdb) p p
+>> $1 =3D (struct commit_list *) 0x0
+>>
+>> As you can see, the code dereferences to the 'next' while 'p' is NULL.
+>>
+>> I'm sure I did 'git bisect good' after git _found_ bad commit.  Then I
+>> typed 'git bisect skip' on the commit 726804874 of guile repository.
+>> If that matters at all.
+>>
+>> I haven't touched guile repo to preserve the current state.
+>
+> I can't reproduce this myself, but looking at the backtrace it seems
+> pretty obvious that 7c117184d7 ("bisect: fix off-by-one error in
+> `best_bisection_sorted()`", 2017-11-05) is the culprit.
+>
+> That changed more careful code added by Christian in 50e62a8e70
+> ("rev-list: implement --bisect-all", 2007-10-22) to free a pointer which
+> as you can see can be NULL.
+>
+> If you can test a patch to see if it works this should fix it:
+>
+> diff --git a/bisect.c b/bisect.c
+> index 0fca17c02b..2f3008b078 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -229,8 +229,10 @@ static struct commit_list *best_bisection_sorted(str=
+uct commit_list *list, int n
+>                 if (i < cnt - 1)
+>                         p =3D p->next;
+>         }
+> -       free_commit_list(p->next);
+> -       p->next =3D NULL;
+> +       if (p) {
+> +               free_commit_list(p->next);
+> +               p->next =3D NULL;
+> +       }
+>         strbuf_release(&buf);
+>         free(array);
+>         return list;
+>
+> But given the commit message by Martin maybe there's some deeper bug here=
+.
 
-It would appear that those two tests pass even without cleaning up the
-files, but really more by pure chance than by design (the cleanup seems
-not actually to be necessary).
+I haven't tried to reproduce, or tested the patch, but from the looks of
+it, your analysis and fix are both spot on. The special case that yashi
+has hit is that `list` is NULL. The old code handled that very well, the
+code after my patch ... not so well. The loop-sort-loop pattern reduces
+to a no-op, both before and after my patch. But what I failed to realize
+was that `list` could be NULL.
 
-However, if anybody would have a left-over `trash/` directory in Git's
-`t/` directory, these tests would fail, because they would all of a
-sudden try to delete that directory, but without the `-r` (recursive)
-flag. That is how this issue was found.
+This could be fixed by an early return if `list` is NULL, but that would
+also need some memory-handling. So I think your patch is just as good or
+better, since it can be seen as restoring what was lost in 7c117184d7.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t0302-credential-store.sh | 2 +-
- t/t3900-i18n-commit.sh      | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-index 1d8d1f210b9..d6b54e8c65a 100755
---- a/t/t0302-credential-store.sh
-+++ b/t/t0302-credential-store.sh
-@@ -37,7 +37,7 @@ helper_test store
- unset XDG_CONFIG_HOME
- 
- test_expect_success 'if custom xdg file exists, home and xdg files not created' '
--	test_when_finished "rm -f $HOME/xdg/git/credentials" &&
-+	test_when_finished "rm -f \"$HOME/xdg/git/credentials\"" &&
- 	test -s "$HOME/xdg/git/credentials" &&
- 	test_path_is_missing "$HOME/.git-credentials" &&
- 	test_path_is_missing "$HOME/.config/git/credentials"
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 3b94283e355..9e4e694d939 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
- '
- 
- test_expect_success 'UTF-8 invalid characters refused' '
--	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
-+	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
- 	echo "UTF-8 characters" >F &&
- 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
- 		>"$HOME/invalid" &&
-@@ -49,7 +49,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
- '
- 
- test_expect_success 'UTF-8 overlong sequences rejected' '
--	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
-+	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
- 	rm -f "$HOME/stderr" "$HOME/invalid" &&
- 	echo "UTF-8 overlong" >F &&
- 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
-@@ -59,7 +59,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
-+	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
- 	echo "UTF-8 non-character 1" >F &&
- 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
- 		>"$HOME/invalid" &&
-@@ -68,7 +68,7 @@ test_expect_success 'UTF-8 non-characters refused' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f $HOME/stderr $HOME/invalid" &&
-+	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
- 	echo "UTF-8 non-character 2." >F &&
- 	printf "Commit message\n\nNon-character:\357\267\220\n" \
- 		>"$HOME/invalid" &&
--- 
-2.15.1.windows.2.391.g0b42e3c56de
+Thanks both, and sorry for this.
+Martin
