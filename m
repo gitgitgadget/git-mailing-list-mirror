@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A2921F42B
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:35:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E35261F42B
+	for <e@80x24.org>; Wed,  3 Jan 2018 16:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbeACQfH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:35:07 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:32871 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751339AbeACQfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:35:02 -0500
-Received: by mail-wm0-f43.google.com with SMTP id g130so20903180wme.0
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:35:02 -0800 (PST)
+        id S1751342AbeACQfD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 11:35:03 -0500
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:40619 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750861AbeACQe6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 11:34:58 -0500
+Received: by mail-wr0-f173.google.com with SMTP id p17so2149126wre.7
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gVOsNltboCRgZoq6tEb3ApJwphiMDJh1cAGrXwjPskI=;
-        b=aQBmt06iqfZ6X8hIuZHDCRYa6++u53t6V4zVRB9MWA36x0gQh+K8B82JKmFUcKEDJ6
-         ZUM9AWOMc3LK7zftcI8kRNpI1T6uIzxdA3etruiUYIcYOMpmIcCNPGZqw3+5y/Xe1ejq
-         lpvj7PCiq3RMu1+Q1cOOCTSWxk+OGM0gEGoHCqqm4aHr3fb8JdCenQbNMTrZN1Rw+G1w
-         1cSySwd9GOFajt6ZNtFazEN4tGd25hMOALmUmTnnPzw8CAMYBQd3CtB9K22WFl0zZDbh
-         TZADZomD/4kINdgdmVDBleE8kJe63pG/DMRSrRO8hpza7/6rEZXM5fqou2l/pnkQgfHb
-         9ooA==
+        bh=MTaPKUl9PZBW3hwHEcNB3xIA3pT2gjUXoipas1Hf5zk=;
+        b=J8e8yEt5ZSh/KcTgRflnCz2LiFIvUyHGJ6ypryVJDCLDZfjH8able3NtVTdYKzuDLV
+         kS0RzWUDc1jIA1OR+HjsWcNJGO+s+82I4yR8w8CUY5oYRb+MY29L/ZPKfg0PQNaKvXkP
+         5hts3ttRuI+0nCFVnJ0ejo3J4ckITDv13nhS1bIKl3EY1gXn+abTWOjpElcAVVfQfkqw
+         5CLJzhGwdAFV4Nz9QZogRdc38ykuYXgMXvaI7DkILyDyxziIkXgdHtxZDQgmomLPH1nx
+         yJik+yBRgJOVNzVgplPcZGIHMad9vPJ0PF2QTf9+XC0zWw13nGhLx/PrLhurkADWdqWC
+         sGqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gVOsNltboCRgZoq6tEb3ApJwphiMDJh1cAGrXwjPskI=;
-        b=U6+6Q904MQy9TMxi+w3HMy64FYTK1WCkQ5N9YEDx2nN90tzqnuE0S9qyf5sU5Cm4qW
-         EKrYbB/myPurN4YiW6Iik+IZo9D1DelcrtCNCQLCP4dk3dmJNbtvtDvdDj2vlEmL1jho
-         e35eIlyoimUkgLdLb56VqT1sUXphoas6pCy7svQ4kq/BX/PrfLw7PA8yP4l5JI2UYRRQ
-         OwSLg+9YUUlpz1cP6M/43P5e7UvoUKFrOi3OObss3SHJYk9FzyiHvg1wsC9+kC+Uj8Ta
-         2GT04yBrRxFR+Hmg907f/kT8wscRPxsYa4QU/GvU8z/xj9hvzJlEUYyekS7EUZq0p6XW
-         7NXw==
-X-Gm-Message-State: AKGB3mLtIN8EcjXRjffYMHBe0SIM68jFvEQJhJgR2/Nkxrdg/6GQl5/m
-        TTeLOl7Nc3I2GFT2zYcqsSGBx3fW
-X-Google-Smtp-Source: ACJfBotnNPYNrIM6E4vnerkHgPrnmOiZEE5c7Ugr7BOj6wg8SN9cDdLE0Oev9Gjxr2f8hPvGNap/1Q==
-X-Received: by 10.28.91.74 with SMTP id p71mr1941362wmb.61.1514997300992;
-        Wed, 03 Jan 2018 08:35:00 -0800 (PST)
+        bh=MTaPKUl9PZBW3hwHEcNB3xIA3pT2gjUXoipas1Hf5zk=;
+        b=PpCj4UEN7xcqrRDtffuekDiUpvqtIGmLkqVAk77z6OTbc8H6NeAXv0R6sA5doIYsIv
+         2DTe/H7olnYv15nee50ofhchYt1vhXGdeM6CmhFMHpTwz+bbqRvw3ZY/sU0jdnU6AwRo
+         A/T+mxEwAb5IgevrLfLNdjI+QGey9kKbFpGjcFT/mNEVYo+kpx88wxNJZepvxTGvEVyv
+         Yd3FloEk5tPEBjJ09GKWvEffA1GURwHmwnr+nVDFhsx4ENiF0Tj0gzNFnOMqf/X3Asnp
+         6w3BT7jyZ0gsxSDWTGExpWBHnlsYMrsViRvYUvmI7LdGrcbdMmBB1izhUdhrOo3N3Re5
+         uyzg==
+X-Gm-Message-State: AKGB3mJWM/qnOGl1lUBH4foImovq1P8PK7GoRB+vuT3As84XAfRRlOPH
+        PkBsYlTk7bPJKjrZcWAsDJhEUIwA
+X-Google-Smtp-Source: ACJfBos7wKXAkNtW6joHot/yYhuvPfHNo55n9kwN3KcNr7wASMknlMs46JRdZ0uy+WJ/LvTDBC9WlA==
+X-Received: by 10.223.169.8 with SMTP id u8mr2174156wrc.232.1514997296507;
+        Wed, 03 Jan 2018 08:34:56 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.59
+        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 08:35:00 -0800 (PST)
+        Wed, 03 Jan 2018 08:34:55 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 29/40] Add t0420 to test transfer to HTTP external odb
-Date:   Wed,  3 Jan 2018 17:33:52 +0100
-Message-Id: <20180103163403.11303-30-chriscool@tuxfamily.org>
+Subject: [PATCH 26/40] lib-httpd: add apache-e-odb.conf
+Date:   Wed,  3 Jan 2018 17:33:49 +0100
+Message-Id: <20180103163403.11303-27-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.16.g82191dbc6c.dirty
 In-Reply-To: <20180103163403.11303-1-chriscool@tuxfamily.org>
 References: <20180103163403.11303-1-chriscool@tuxfamily.org>
@@ -71,164 +71,236 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This tests that an apache web server can be used as an
-external object database and store files in their native
-format instead of converting them to a Git object.
+This is an apache config file to test external object databases.
+It uses the upload.sh and list.sh cgi that have been added
+previously to make apache store external objects.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0420-transfer-http-e-odb.sh | 142 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
- create mode 100755 t/t0420-transfer-http-e-odb.sh
+ t/lib-httpd/apache-e-odb.conf | 214 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 214 insertions(+)
+ create mode 100644 t/lib-httpd/apache-e-odb.conf
 
-diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
-new file mode 100755
-index 0000000000..f84fe950ec
+diff --git a/t/lib-httpd/apache-e-odb.conf b/t/lib-httpd/apache-e-odb.conf
+new file mode 100644
+index 0000000000..19a1540c82
 --- /dev/null
-+++ b/t/t0420-transfer-http-e-odb.sh
-@@ -0,0 +1,142 @@
-+#!/bin/sh
++++ b/t/lib-httpd/apache-e-odb.conf
+@@ -0,0 +1,214 @@
++ServerName dummy
++PidFile httpd.pid
++DocumentRoot www
++LogFormat "%h %l %u %t \"%r\" %>s %b" common
++CustomLog access.log common
++ErrorLog error.log
++<IfModule !mod_log_config.c>
++	LoadModule log_config_module modules/mod_log_config.so
++</IfModule>
++<IfModule !mod_alias.c>
++	LoadModule alias_module modules/mod_alias.so
++</IfModule>
++<IfModule !mod_cgi.c>
++	LoadModule cgi_module modules/mod_cgi.so
++</IfModule>
++<IfModule !mod_env.c>
++	LoadModule env_module modules/mod_env.so
++</IfModule>
++<IfModule !mod_rewrite.c>
++	LoadModule rewrite_module modules/mod_rewrite.so
++</IFModule>
++<IfModule !mod_version.c>
++	LoadModule version_module modules/mod_version.so
++</IfModule>
++<IfModule !mod_headers.c>
++	LoadModule headers_module modules/mod_headers.so
++</IfModule>
 +
-+test_description='tests for transfering external objects to an HTTPD server'
++<IfVersion < 2.4>
++LockFile accept.lock
++</IfVersion>
 +
-+. ./test-lib.sh
++<IfVersion < 2.1>
++<IfModule !mod_auth.c>
++	LoadModule auth_module modules/mod_auth.so
++</IfModule>
++</IfVersion>
 +
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
++<IfVersion >= 2.1>
++<IfModule !mod_auth_basic.c>
++	LoadModule auth_basic_module modules/mod_auth_basic.so
++</IfModule>
++<IfModule !mod_authn_file.c>
++	LoadModule authn_file_module modules/mod_authn_file.so
++</IfModule>
++<IfModule !mod_authz_user.c>
++	LoadModule authz_user_module modules/mod_authz_user.so
++</IfModule>
++<IfModule !mod_authz_host.c>
++	LoadModule authz_host_module modules/mod_authz_host.so
++</IfModule>
++</IfVersion>
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
++<IfVersion >= 2.4>
++<IfModule !mod_authn_core.c>
++	LoadModule authn_core_module modules/mod_authn_core.so
++</IfModule>
++<IfModule !mod_authz_core.c>
++	LoadModule authz_core_module modules/mod_authz_core.so
++</IfModule>
++<IfModule !mod_access_compat.c>
++	LoadModule access_compat_module modules/mod_access_compat.so
++</IfModule>
++<IfModule !mod_mpm_prefork.c>
++	LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
++</IfModule>
++<IfModule !mod_unixd.c>
++	LoadModule unixd_module modules/mod_unixd.so
++</IfModule>
++</IfVersion>
 +
-+start_httpd apache-e-odb.conf
++PassEnv GIT_VALGRIND
++PassEnv GIT_VALGRIND_OPTIONS
++PassEnv GNUPGHOME
++PassEnv ASAN_OPTIONS
++PassEnv GIT_TRACE
++PassEnv GIT_CONFIG_NOSYSTEM
 +
-+# odb helper script must see this
-+export HTTPD_URL
++Alias /dumb/ www/
++Alias /auth/dumb/ www/auth/dumb/
 +
-+write_script odb-http-helper <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
-+}
-+echo >&2 "odb-http-helper args:" "$@"
-+case "$1" in
-+init)
-+	echo "capability=get_raw_obj"
-+	echo "capability=put_raw_obj"
-+	echo "capability=have"
-+	;;
-+have)
-+	list_url="$HTTPD_URL/list/"
-+	curl "$list_url" ||
-+	die "curl '$list_url' failed"
-+	;;
-+get_raw_obj)
-+	get_url="$HTTPD_URL/list/?sha1=$2"
-+	curl "$get_url" ||
-+	die "curl '$get_url' failed"
-+	;;
-+put_raw_obj)
-+	sha1="$2"
-+	size="$3"
-+	kind="$4"
-+	upload_url="$HTTPD_URL/upload/?sha1=$sha1&size=$size&type=$kind"
-+	curl --data-binary @- --include "$upload_url" >out ||
-+	die "curl '$upload_url' failed"
-+	ref_hash=$(echo "$sha1 $size $kind" | GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) || exit
-+	git update-ref refs/odbs/magic/"$sha1" "$ref_hash"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
-+esac
-+EOF
-+HELPER="\"$PWD\"/odb-http-helper"
++<LocationMatch /smart/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
++<LocationMatch /smart_noexport/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++</LocationMatch>
++<LocationMatch /smart_custom_env/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	SetEnv GIT_COMMITTER_NAME "Custom User"
++	SetEnv GIT_COMMITTER_EMAIL custom@example.com
++</LocationMatch>
++<LocationMatch /smart_namespace/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	SetEnv GIT_NAMESPACE ns
++</LocationMatch>
++<LocationMatch /smart_cookies/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	Header set Set-Cookie name=value
++</LocationMatch>
++<LocationMatch /smart_headers/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++</LocationMatch>
++ScriptAlias /upload/ upload.sh/
++ScriptAlias /list/ list.sh/
++<Directory ${GIT_EXEC_PATH}>
++	Options FollowSymlinks
++</Directory>
++<Files upload.sh>
++  Options ExecCGI
++</Files>
++<Files list.sh>
++  Options ExecCGI
++</Files>
++<Files ${GIT_EXEC_PATH}/git-http-backend>
++	Options ExecCGI
++</Files>
 +
-+test_expect_success 'setup repo with a root commit and the helper' '
-+	test_commit zero &&
-+	git config odb.magic.scriptCommand "$HELPER"
-+'
++RewriteEngine on
++RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
++RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
++RewriteRule ^/smart-redir-auth/(.*)$ /auth/smart/$1 [R=301]
++RewriteRule ^/smart-redir-limited/(.*)/info/refs$ /smart/$1/info/refs [R=301]
++RewriteRule ^/ftp-redir/(.*)$ ftp://localhost:1000/$1 [R=302]
 +
-+test_expect_success 'setup another repo from the first one' '
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
++RewriteRule ^/loop-redir/x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-(.*) /$1 [R=302]
++RewriteRule ^/loop-redir/(.*)$ /loop-redir/x-$1 [R=302]
 +
-+UPLOADFILENAME="hello_apache_upload.txt"
++# Apache 2.2 does not understand <RequireAll>, so we use RewriteCond.
++# And as RewriteCond does not allow testing for non-matches, we match
++# the desired case first (one has abra, two has cadabra), and let it
++# pass by marking the RewriteRule as [L], "last rule, do not process
++# any other matching RewriteRules after this"), and then have another
++# RewriteRule that matches all other cases and lets them fail via '[F]',
++# "fail the request".
++RewriteCond %{HTTP:x-magic-one} =abra
++RewriteCond %{HTTP:x-magic-two} =cadabra
++RewriteRule ^/smart_headers/.* - [L]
++RewriteRule ^/smart_headers/.* - [F]
 +
-+UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
++<IfDefine SSL>
++LoadModule ssl_module modules/mod_ssl.so
 +
-+test_expect_success 'can upload a file' '
-+	echo "Hello Apache World!" >hello_to_send.txt &&
-+	echo "How are you?" >>hello_to_send.txt &&
-+	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
-+'
++SSLCertificateFile httpd.pem
++SSLCertificateKeyFile httpd.pem
++SSLRandomSeed startup file:/dev/urandom 512
++SSLRandomSeed connect file:/dev/urandom 512
++SSLSessionCache none
++SSLMutex file:ssl_mutex
++SSLEngine On
++</IfDefine>
 +
-+LIST_URL="$HTTPD_URL/list/"
++<Location /auth/>
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</Location>
 +
-+test_expect_success 'can list uploaded files' '
-+	curl --include "$LIST_URL" >out_list &&
-+	grep "$UPLOADFILENAME" out_list
-+'
++<LocationMatch "^/auth-push/.*/git-receive-pack$">
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</LocationMatch>
 +
-+test_expect_success 'can delete uploaded files' '
-+	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
-+	curl --include "$LIST_URL" >out_list2 &&
-+	! grep "$UPLOADFILENAME" out_list2
-+'
++<LocationMatch "^/auth-fetch/.*/git-upload-pack$">
++	AuthType Basic
++	AuthName "git-auth"
++	AuthUserFile passwd
++	Require valid-user
++</LocationMatch>
 +
-+FILES_DIR="httpd/www/files"
++RewriteCond %{QUERY_STRING} service=git-receive-pack [OR]
++RewriteCond %{REQUEST_URI} /git-receive-pack$
++RewriteRule ^/half-auth-complete/ - [E=AUTHREQUIRED:yes]
 +
-+test_expect_success 'new blobs are transfered to the http server' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	echo "$hash1-4-blob" >expected &&
-+	ls "$FILES_DIR" >actual &&
-+	test_cmp expected actual
-+'
++<Location /half-auth-complete/>
++  Order Deny,Allow
++  Deny from env=AUTHREQUIRED
 +
-+test_expect_success 'blobs can be retrieved from the http server' '
-+	git cat-file blob "$hash1" &&
-+	git log -p >expected
-+'
++  AuthType Basic
++  AuthName "Git Access"
++  AuthUserFile passwd
++  Require valid-user
++  Satisfy Any
++</Location>
 +
-+test_expect_success 'update other repo from the first one' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 git config odb.magic.scriptCommand "$HELPER" &&
-+	 git cat-file blob "$hash1" &&
-+	 git pull origin master)
-+'
++<IfDefine DAV>
++	LoadModule dav_module modules/mod_dav.so
++	LoadModule dav_fs_module modules/mod_dav_fs.so
 +
-+test_expect_success 'local clone from the first repo' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone .. . &&
-+	 git cat-file blob "$hash1")
-+'
++	DAVLockDB DAVLock
++	<Location /dumb/>
++		Dav on
++	</Location>
++	<Location /auth/dumb>
++		Dav on
++	</Location>
++</IfDefine>
 +
-+test_expect_success 'no-local clone from the first repo fails' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 test_must_fail git clone --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
++<IfDefine SVN>
++	LoadModule dav_svn_module modules/mod_dav_svn.so
 +
-+test_expect_success 'no-local clone from the first repo with helper succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git clone -c odb.magic.scriptCommand="$HELPER" \
-+		--no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+stop_httpd
-+
-+test_done
++	<Location /${LIB_HTTPD_SVN}>
++		DAV svn
++		SVNPath "${LIB_HTTPD_SVNPATH}"
++	</Location>
++</IfDefine>
 -- 
 2.16.0.rc0.16.g82191dbc6c.dirty
 
