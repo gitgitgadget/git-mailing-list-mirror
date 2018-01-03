@@ -7,92 +7,89 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0491F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 00:46:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD6E1F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 00:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751099AbeACAqa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 19:46:30 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:34887 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750928AbeACAq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 19:46:29 -0500
-Received: by mail-it0-f66.google.com with SMTP id f143so103470itb.0
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:46:29 -0800 (PST)
+        id S1751121AbeACAqc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 19:46:32 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:35129 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750928AbeACAqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 19:46:31 -0500
+Received: by mail-io0-f195.google.com with SMTP id 14so529662iou.2
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:46:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=wpFVWN4PWM8KAUSM+5Kxg47b0ztz2TS6l0eyBGvtRMw=;
-        b=inLv6lk5TcEOfncn8DAdV87BQGrC+wxa8PiNewlaKTwzMZIvtIUuPjZMPx23lUR+Jt
-         lYMGY/2mUFp7sLiVcb8dqI2//H6nvb/7HOcsc2yFWHX07pP0kZrUPTjQHJiHXGCBT+YG
-         aBM8Whs4IGet1I1r8ziYzyovVCrTI6d/rH4BpI7nk2NEYa9QdANKkJaCC8gdTeF1xgIQ
-         MmhY0jW0EbLMFQQlAcfi/PGJb8ulpcis1pJmb498EJlrXB570qJrNrJZeWptuTach0S9
-         efvXxIxJZn2VN0AHIcZbQ3TNE6d3Lkt/HWgeMP04lUAKES8G08xBtZDWPuCRwCZSb/l9
-         KGkg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2on/PEF+NAIfI4gnCBOetlcvBK3EGzDYO/XuSbbzrB0=;
+        b=ElBwhYisuZw0EK6G2ifBv6tToJ/YMFzsXGKL0v5JHsDaNGusVgo6cMtCi5PIjqtj/j
+         wW9O99c+cnlFnme0b++ygv9Ff80CsUgZMzIAdGAetKyRnW1niP3xqK5UHrkhEB9lY8Gm
+         iZXYlg9vhcarpzxxvScCykFsWYKTb9/GkMQnkePKj2ZeIvmQ35ryAK5biIUHas6s18/T
+         NVa6SYlxM8OXyQi96o7o5PCr6Q0asPBxnSGfv8R4fuo4fhVRaFxztJObj5UCKHLieW0c
+         gfcPFUnx+xq85gn3zcjWnV2Y0uW8vArVZEW07SjL+4zKTIuGdUekJAe+Az6X8ulaWs3H
+         ZexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=wpFVWN4PWM8KAUSM+5Kxg47b0ztz2TS6l0eyBGvtRMw=;
-        b=Q2VERVgs+/B396t0AZ+qWeDHoSb5/aohkHkBQNSYA7C8QIr/OC69IZ+ScGmTDBVNry
-         oduPHbLYPvdt+y4qijnWEoinZQeGaiZpdoD7DGFGc4jd8sKW88mZjHgfF5fazC6qUG7F
-         zTIWPXQ48v4Vn8xNWbWxXmVmgN23spLfzE2oikPsttCqQPKEWV6fwS9sIkFjtWF/WiU0
-         wP/3Q+0tomBjVZeJpTEPm5D951ylNSRSEGMhsXKKHbZxC8MeBH0PLxxo8q4uIvfHT/aN
-         tKtO6MGb8Cyrs7HHP5ugy3ySS9gHiZ0NZVfNOZF+38WBpEJuf/8OEaHOz0sL0HNZZthh
-         Ixlw==
-X-Gm-Message-State: AKGB3mLVOfIrfT8T1Opg5C+zZldq6viQIihlikvvMUk8ea7yEy33SeM2
-        yd5EAQ93z3SSRNdcKjFHdudDn2t26+w=
-X-Google-Smtp-Source: ACJfBotZ4BMGUTjrhVq+iQloxf6DCPORQwAFa0euEvoNglgViPGhiczDriFC2DExp+arVbi12lltsw==
-X-Received: by 10.36.17.15 with SMTP id 15mr54297itf.53.1514940388827;
-        Tue, 02 Jan 2018 16:46:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=2on/PEF+NAIfI4gnCBOetlcvBK3EGzDYO/XuSbbzrB0=;
+        b=aEghsIfhmjX9cxF+rhXPDUA0zPAo4qLYIaEGw6l9RiQwuyggJmuqiQ7eEHJj9FHZJo
+         1B9jJ4QqdP0NzynS1JeTIClzKuFLme4Dr6SKB1Cbetvif8PRuKiUiL76VTwlEl0EYV8i
+         dR+882DusQnfdPqPJItTM5M3zsvA43jAHdFd2Ga5YZRU93KYZD2BEPtdrD/j0RhHvLmM
+         zhtD8sxdQunRip5IuN6MHpzVTQkgCjnMZFQsgjqHXpLCtoKh9AfRd2/F/n6f5oUM3Gr1
+         hshInkrWwrFBg6IFH08aq/8BfBM635SveapJxvOELULY7jpQpa4n2AOWYLx6JV8eS6t0
+         4eEg==
+X-Gm-Message-State: AKGB3mJCgdIvOgXh//VsuKY9n/dfBybItweAn0BRgoty6hGw34l9Owv4
+        FUJ6bW0cvr3trmQdFWlW5rg65imTrvs=
+X-Google-Smtp-Source: ACJfBovA0cecEHPLqeVGV0Q7KFt+v78xFUibtcX320D0RCzd400PFRdSnNlR/CNi97L2gdkrqNmtog==
+X-Received: by 10.107.150.18 with SMTP id y18mr13274164iod.166.1514940390289;
+        Tue, 02 Jan 2018 16:46:30 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id 191sm33089itx.16.2018.01.02.16.46.28
+        by smtp.gmail.com with ESMTPSA id f207sm30239ita.26.2018.01.02.16.46.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 02 Jan 2018 16:46:28 -0800 (PST)
+        Tue, 02 Jan 2018 16:46:29 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 0/5] pickaxe refactorings and a new mode to find blobs (WAS: diffcore: add a pickaxe option to find a specific blob)
-Date:   Tue,  2 Jan 2018 16:46:19 -0800
-Message-Id: <20180103004624.222528-1-sbeller@google.com>
+Subject: [PATCH 1/5] diff.h: Make pickaxe_opts an unsigned bit field
+Date:   Tue,  2 Jan 2018 16:46:20 -0800
+Message-Id: <20180103004624.222528-2-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
+In-Reply-To: <20180103004624.222528-1-sbeller@google.com>
+References: <20180103004624.222528-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After some discussion [1], we're convinced that the original approach for
-adding in just another pickaxe mode to find blobs was too hacky.
+This variable is used as a bit field[1], and as we are about to add more
+fields, indicate its usage as a bit field by making it unsigned.
 
-So I went the less hacky way and did some refactoring first (patches 1-3),
-Then we'll have the new pickaxe mode to find blobs in patch 4. It grew
-slightly larger as it had issues with the setup (we neither have a regex
-nor a KWS to init) in this new world, so there are a few more lines in there.
+[1] containing the bits
 
-The last patch is just the cherry on the cake, helping to keep users sane by
-warning when they try to use different pickaxe modes at the same time.
+    #define DIFF_PICKAXE_ALL	1
+    #define DIFF_PICKAXE_REGEX	2
+    #define DIFF_PICKAXE_KIND_S	4
+    #define DIFF_PICKAXE_KIND_G	8
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ diff.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-[1] https://public-inbox.org/git/CAGZ79kaB0G9zetF6QtC45+ZGLM3gOsYWV7e+gkCe2yKOhb0Ssg@mail.gmail.com/
-
-
-Stefan Beller (5):
-  diff.h: Make pickaxe_opts an unsigned bit field
-  diff: migrate diff_flags.pickaxe_ignore_case to a pickaxe_opts bit
-  diff: introduce DIFF_PICKAXE_KINDS_MASK
-  diffcore: add a pickaxe option to find a specific blob
-  diff: properly error out when combining multiple pickaxe options
-
- Documentation/diff-options.txt | 10 +++++++++
- builtin/log.c                  |  4 ++--
- combine-diff.c                 |  2 +-
- diff.c                         | 35 +++++++++++++++++++++++++++---
- diff.h                         | 13 ++++++++++--
- diffcore-pickaxe.c             | 48 ++++++++++++++++++++++++------------------
- revision.c                     |  7 ++++--
- 7 files changed, 89 insertions(+), 30 deletions(-)
-
+diff --git a/diff.h b/diff.h
+index 0fb18dd735..ea310f76fd 100644
+--- a/diff.h
++++ b/diff.h
+@@ -146,7 +146,7 @@ struct diff_options {
+ 	int skip_stat_unmatch;
+ 	int line_termination;
+ 	int output_format;
+-	int pickaxe_opts;
++	unsigned pickaxe_opts;
+ 	int rename_score;
+ 	int rename_limit;
+ 	int needed_rename_limit;
 -- 
 2.15.1.620.gb9897f4670-goog
 
