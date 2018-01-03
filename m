@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A78CA1F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE681F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751599AbeACDFl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 22:05:41 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:36612 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751343AbeACDFk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 22:05:40 -0500
-Received: by mail-pl0-f67.google.com with SMTP id b12so376073plm.3
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:39 -0800 (PST)
+        id S1751580AbeACDFh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 22:05:37 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:33048 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751149AbeACDFg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 22:05:36 -0500
+Received: by mail-pl0-f66.google.com with SMTP id 1so383289plv.0
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=ecCwm8PKlwj8g/lBcebKhcGBehi2DL2PSHwdHEKM2o8=;
-        b=J79ge9DelQ2GCdZo8FUm8tFR1b6RHcqjJxQmUOMPaCzrvsxdUJ0moqO5xacWIU0Y1a
-         p0H74yXjRVeCefTIvRHeEiH8f11FLPvF6czrH4b622zs+WIbMA8QOMLjviebAvgN5WyY
-         0rw0Q3yGNH8l2iFAy7xnyku4umE4StjypIKWc=
+        bh=b3vE9vILgTFMnfdaOsqxsjQokzM1ECLJ19GB0HGJ1OI=;
+        b=su7ZqxP5/eFVWDDX1LA5urThO3scyA05aNWkYZhtvUH9Lf/pNRL+wPWRVQuyoLhKJq
+         IZfQG0HMvBhWC5puG1ItcQW+REo77r0aNUpxxLWPRAHKOgJi/mE9IPmcmuBb2tVZUZ35
+         XO5aSc7Z+ssfCRTZOEGMkZ61TYnFxXlrUL/4Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=ecCwm8PKlwj8g/lBcebKhcGBehi2DL2PSHwdHEKM2o8=;
-        b=QijaSNeum1wusXqURL/gbMQLsR9thSO/fxmkb6pmGU7nA0t28zH1PDI93y7+29zZ1s
-         LeIDrkAfE/rrlnWtpyfAJg5xK5dspuYi6pqCuY7L84I6cUKPI5S+5QOT8QRfybZavwcx
-         Dh36j55E0N9CMrfr5yGbsBYkSLiVlcS+ci9UtFqRh4ch9HoMvLGJNfPumGEjeb4UGHKz
-         +2qvSrkEPOVm0lY0NlHXCcnTFZxiwHcXJzYh2tkhd01Pa5SOAT7aHmwfXBb8T6zH9Ekv
-         uIZ2u57Ha9zhk5xrzYLA5zjorEUXxUCWeLRAQvbTb+59NIPE05QNk/ZXhcNVdUq2myAk
-         gKZQ==
-X-Gm-Message-State: AKGB3mKeD9gg5YKzPML1/TT4ZqHOICX3WeCOOugQh4yVc/Ty+T1SAPOz
-        lhIFJS184Da0wy/n0M6BCnhb7GqKRpU=
-X-Google-Smtp-Source: ACJfBosiFlN5+v9c+2zxbgOwe5uLI9oSRYSZzWX20RlSuNmcElSDPFULDBiKDDznlJpgRMy5cZTGFA==
-X-Received: by 10.84.214.136 with SMTP id j8mr119114pli.408.1514948738185;
-        Tue, 02 Jan 2018 19:05:38 -0800 (PST)
+        bh=b3vE9vILgTFMnfdaOsqxsjQokzM1ECLJ19GB0HGJ1OI=;
+        b=CQwN8/mMvaPtYHMHVmkPvHQbmlSJm/DXTnPVRFtTAU9KNaclWTW6eqfuU33n++pBXj
+         Sd2Rn7gSJ5QWqxGubcCQ6velng2ZzL8z7OYB9LASpzEuVV9k9yAZRrs511yH3RWdA3jo
+         Mg3R4+fLod7dpcRtdhw/LH8/32cR0BhMZS6+UnJ/SD0WcbgMLeCbSOhzjb8HoZxWjY+U
+         2XHFFZdKxqUVaV727Tnd3WN5EGASZXFsV/Pw5AFv1K3xb3eiyu1qZAmcPCHnYG8X0i0D
+         jg/wOxE+E12efSWjOp993/HdT+BG1LAAOGI8oUMnOVwaWnDeuWVKET8w7j8b0iJYaeiH
+         eNaA==
+X-Gm-Message-State: AKGB3mJGSpTL9+eo+FmTFs9PdxW/8n30RNqJyIFcoObGI/Tpq7Ov45PG
+        9UK88lhmL9Jqz31ZtfZE4hw8LGX+Hss=
+X-Google-Smtp-Source: ACJfBott6hKc5u4fe46AdVkQkJtmOVIZumrF1TG7mgI47rMD0djVHL+4Bq+SuSfaNJu9bBXuwdwbWg==
+X-Received: by 10.84.129.9 with SMTP id 9mr133474plb.138.1514948735140;
+        Tue, 02 Jan 2018 19:05:35 -0800 (PST)
 Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
-        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.37
+        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Jan 2018 19:05:37 -0800 (PST)
+        Tue, 02 Jan 2018 19:05:34 -0800 (PST)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: [PATCH 5/6] fsmonitor: Remove debugging lines from t/t7519-status-fsmonitor.sh
-Date:   Tue,  2 Jan 2018 19:04:55 -0800
-Message-Id: <0ee51f4baaf07f388782e7a5904dcc6360e86f3d.1514948078.git.alexmv@dropbox.com>
+Subject: [PATCH 2/6] fsmonitor: Stop inline'ing mark_fsmonitor_valid / _invalid
+Date:   Tue,  2 Jan 2018 19:04:52 -0800
+Message-Id: <9bb36cea369530b980f6542e3e0f24dc142a20a8.1514948078.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.1.31.gddce0adfe
 In-Reply-To: <20180103030456.8181-1-alexmv@dropbox.com>
 References: <20180103030456.8181-1-alexmv@dropbox.com>
@@ -63,29 +63,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These were mistakenly left in when the test was introduced, in
-1487372d3 ("fsmonitor: store fsmonitor bitmap before splitting index",
-2017-11-09)
+These were inline'd when they were first introduced, presumably as an
+optimization for cases when they were called in tight loops.  This
+complicates using these functions, as untracked_cache_invalidate_path
+is defined in dir.h.
+
+Leave the inline'ing up to the compiler's decision, for ease of use.
 
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 ---
- t/t7519-status-fsmonitor.sh | 2 --
- 1 file changed, 2 deletions(-)
+ fsmonitor.c | 18 ++++++++++++++++++
+ fsmonitor.h | 17 ++---------------
+ 2 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index eb2d13bbc..19b2a0a0f 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -307,9 +307,7 @@ test_expect_success 'splitting the index results in the same state' '
- 	dirty_repo &&
- 	git update-index --fsmonitor  &&
- 	git ls-files -f >expect &&
--	test-dump-fsmonitor >&2 && echo &&
- 	git update-index --fsmonitor --split-index &&
--	test-dump-fsmonitor >&2 && echo &&
- 	git ls-files -f >actual &&
- 	test_cmp expect actual
- '
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 0af7c4edb..df084235b 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -194,6 +194,24 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	istate->fsmonitor_last_update = last_update;
+ }
+ 
++void mark_fsmonitor_valid(struct cache_entry *ce)
++{
++	if (core_fsmonitor) {
++		ce->ce_flags |= CE_FSMONITOR_VALID;
++		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
++	}
++}
++
++void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
++{
++	if (core_fsmonitor) {
++		ce->ce_flags &= ~CE_FSMONITOR_VALID;
++		untracked_cache_invalidate_path(istate, ce->name);
++		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
++	}
++}
++
++
+ void add_fsmonitor(struct index_state *istate)
+ {
+ 	int i;
+diff --git a/fsmonitor.h b/fsmonitor.h
+index cd3cc0ccf..6328745b2 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -46,13 +46,7 @@ extern void refresh_fsmonitor(struct index_state *istate);
+  * called any time the cache entry has been updated to reflect the
+  * current state of the file on disk.
+  */
+-static inline void mark_fsmonitor_valid(struct cache_entry *ce)
+-{
+-	if (core_fsmonitor) {
+-		ce->ce_flags |= CE_FSMONITOR_VALID;
+-		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
+-	}
+-}
++extern void mark_fsmonitor_valid(struct cache_entry *ce);
+ 
+ /*
+  * Clear the given cache entry's CE_FSMONITOR_VALID bit and invalidate
+@@ -61,13 +55,6 @@ static inline void mark_fsmonitor_valid(struct cache_entry *ce)
+  * trigger an lstat() or invalidate the untracked cache for the
+  * corresponding directory
+  */
+-static inline void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce)
+-{
+-	if (core_fsmonitor) {
+-		ce->ce_flags &= ~CE_FSMONITOR_VALID;
+-		untracked_cache_invalidate_path(istate, ce->name);
+-		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
+-	}
+-}
++extern void mark_fsmonitor_invalid(struct index_state *istate, struct cache_entry *ce);
+ 
+ #endif
 -- 
 2.15.1.31.gddce0adfe
 
