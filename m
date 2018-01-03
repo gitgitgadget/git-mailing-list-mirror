@@ -2,137 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB431F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 14:22:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6E921F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 14:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752753AbeACOWC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 09:22:02 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33855 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752332AbeACOWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 09:22:01 -0500
-Received: by mail-wm0-f68.google.com with SMTP id y82so20367925wmg.1
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 06:22:01 -0800 (PST)
+        id S1753163AbeACOl4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 09:41:56 -0500
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:32922 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753162AbeACOly (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 09:41:54 -0500
+Received: by mail-wr0-f178.google.com with SMTP id v21so1798903wrc.0
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 06:41:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=fnSMASJ2UEVYjcYBOpbWUjgql/fYy5L+G5UnzE1PWH4=;
-        b=me1Ik1iAlec8wAj0wiyH0Qe+JCzy6eS2ZJUGFr8owlUMGT+zCSTm/Qu2Evm4iDVwwu
-         fcVHETv5Exyu41fIg9rv+nDa8HVOGCdGRUn1widqKh8/Nm5kl/r3YsCHD7d9vMlaZ0UA
-         fz6BWQhwXnh5GBCSmf+2Umbfu7DDEhrg5V17jQLmMLhdx4fKXtlSlQOcF2AYM8j5xDef
-         70jPPw/5V0EdOmm+ZhhtcKalJuWJbTSmI+nFtMCEezhoVjlqX76B9IKMYhwFMgS8hQ+k
-         +veCBkgSuPPrBuGgUmDSniICqCrCAc+HXZFGgZ1fAH1K9qzPaKpvGcgwLWyaPIMSucIl
-         HXRA==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=3vvsvJ7T3EQ4MdYVQ1x91BYcWYsje1u72eg7sAk0dwA=;
+        b=m2VnCZ7jlcj3b/XLYd1dl8xjBUQWnk080LQkISb8HvgZFTgJ1LXCEKX9oKX1BRFn/z
+         CMPB+TOv4iL/GKMJ5UVYqeVVyKHWYzoN6iicGWWIV/FGIaNMxGOEWp+56Ly7BNT1s5D1
+         zmSIG17gHBBBOHFur8TXjsAWofEGCoANYC3Eg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=fnSMASJ2UEVYjcYBOpbWUjgql/fYy5L+G5UnzE1PWH4=;
-        b=nB+r2skKnQPGx+hw0j4smhlk5OSbxIPF05XrlQrF+AJjCXp/hQPiUHSeE1aki8/QWH
-         UdKt3IZY15Q3Ilf6ALP/GjAGysP+LfrgeM+JeJsaSV9INbCAno7hIowItTUkXDX+ik0T
-         5a9fCfLWMtCclzK0Kzi6PVXllUFhEmGMdMN++y3Ej+ijJrGdfo3BsSaSPrsCNUAsnnH8
-         DSnRFiJhk/NWwuyGTzt+R4/cLEGYu+LAyhIT8alsC3TSTU+gT0zmEKxFETlMbgytRi3n
-         xZI7r03NxjW1W80Wov5gD1/8VAXUmKtNsccgZIrwzWMKFGbocvbe58H2UGtdk5rk4E/K
-         Jp0g==
-X-Gm-Message-State: AKGB3mLJ7wBWu8/oX4fX5StoUJzL4sJd4n2IMJ7MIFsSnDZ66yEqdzwa
-        x9LMhWIN0wP1puslQU6uwks82oZ1
-X-Google-Smtp-Source: ACJfBotLa1eVTLije5jTppSP8AZwmwoTlWU3BtqZZgIm/75HZAQi3LqN+EikGZ2Y46j1xiBy5pxI+g==
-X-Received: by 10.80.136.49 with SMTP id b46mr2899346edb.155.1514989319939;
-        Wed, 03 Jan 2018 06:21:59 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id e29sm812433edd.44.2018.01.03.06.21.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 03 Jan 2018 06:21:58 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Yasushi SHOJI <yasushi.shoji@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [BUG] v2.16.0-rc0 seg faults when git bisect skip
-References: <CAELBRWKYZK2tVhGZSExXRXrRB94jFN-4N3d=iKARzEsqLu7k1g@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CAELBRWKYZK2tVhGZSExXRXrRB94jFN-4N3d=iKARzEsqLu7k1g@mail.gmail.com>
-Date:   Wed, 03 Jan 2018 15:21:57 +0100
-Message-ID: <87fu7nc9a2.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=3vvsvJ7T3EQ4MdYVQ1x91BYcWYsje1u72eg7sAk0dwA=;
+        b=M/1ynn4PXbIid/zz4DL2UMYXzESM6YPXn34omFKzerBFUjgWe5F68MQd9U3hx89N8P
+         TCLVYXnUeEyJHoA2b8ivgAH1KfErXPMPg7Ycp6ikmY2bQJZPF6WcLAfSVEAdVi0Qg3if
+         T/0Hn8pQeyYLAN9Q95adBFCpDitPPHjAPowYL8+Sq/oknVkm2hI1qCb/M66YTKrYYCdP
+         AsnziURF+aQyqoR4GVeR2nsvt+brzLZjUgoQ6uQ8BhitMV7ohPDDHuYvY/ZvqTYn4jZT
+         +AEGd8K0msvhiYgIDFLPlHaJ2RtpZX/h22dj5myayN684BWs4fzmqvJS65w/bTgrmsJ3
+         y4eg==
+X-Gm-Message-State: AKGB3mIknmC0pFThLG2PVjUH3NuVzd62H+oZK1hd9uiCBz7ipvW6Xw2t
+        7fIfoD/CxN5zI8TP2Gmc7nbPYw==
+X-Google-Smtp-Source: ACJfBosKp5gGjmlRtDxlBJDsA5BmgFMJdatuNiHlmMQKDYxy6lJPICosqEyTObVi7m3V5WM18ruUAA==
+X-Received: by 10.223.133.4 with SMTP id 4mr1657412wrh.192.1514990512855;
+        Wed, 03 Jan 2018 06:41:52 -0800 (PST)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id a16sm1746125wrc.7.2018.01.03.06.41.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 03 Jan 2018 06:41:51 -0800 (PST)
+Date:   Wed, 3 Jan 2018 14:41:49 +0000
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Anthony Ramine <n.oxyde@gmail.com>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 7/7] wildmatch test: create & test files on disk in
+ addition to in-memory
+Message-ID: <20180103144149.GE29210@dinwoodie.org>
+References: <20171223213012.1962-1-avarab@gmail.com>
+ <20171225002835.29005-8-avarab@gmail.com>
+ <20180103130232.GD29210@dinwoodie.org>
+ <87h8s3cbmn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h8s3cbmn.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wednesday 03 January 2018 at 02:31 pm +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Jan 03 2018, Adam Dinwoodie jotted:
+> 
+> > On Monday 25 December 2017 at 12:28 am +0000, Ævar Arnfjörð Bjarmason wrote:
+> >> There has never been any full roundtrip testing of what git-ls-files
+> >> and other functions that use wildmatch() actually do, rather we've
+> >> been satisfied with just testing the underlying C function.
+> >>
+> >> Due to git-ls-files and friends having their own codepaths before they
+> >> call wildmatch() there's sometimes differences in the behavior between
+> >> the two, and even when we test for those (as with
+> >> 9e4e8a64c2 ("pathspec: die on empty strings as pathspec", 2017-06-06))
+> >> there was no one place where you can review how these two modes
+> >> differ.
+> >>
+> >> Now there is. We now attempt to create a file called $haystack and
+> >> match $needle against it for each pair of $needle and $haystack that
+> >> we were passing to test-wildmatch.
+> >>
+> >> If we can't create the file we skip the test. This ensures that we can
+> >> run this on all platforms and not maintain some infinitely growing
+> >> whitelist of e.g. platforms that don't support certain characters in
+> >> filenames.
+> >>
+> >> As a result of doing this we can now see the cases where these two
+> >> ways of testing wildmatch differ:
+> >>
+> >>  * Creating a file called 'a[]b' and running ls-files 'a[]b' will show
+> >>    that file, but wildmatch("a[]b", "a[]b") will not match
+> >>
+> >>  * wildmatch() won't match a file called \ against \, but ls-files
+> >>    will.
+> >>
+> >>  * `git --glob-pathspecs ls-files 'foo**'` will match a file
+> >>    'foo/bba/arr', but wildmatch won't, however pathmatch will.
+> >>
+> >>    This seems like a bug to me, the two are otherwise equivalent as
+> >>    these tests show.
+> >>
+> >> This also reveals the case discussed in 9e4e8a64c2 above, where '' is
+> >> now an error as far as ls-files is concerned, but wildmatch() itself
+> >> happily accepts it.
+> >>
+> >> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> >
+> > I'm seeing this test script failing on the pu branch as a result of this
+> > commit when building on Cygwin.  Specifically, the test fails at
+> > 9d45e1ca4 ("Merge branch 'bw/oidmap-autoinit' into pu", 2017-12-28), and
+> > bisecting points the blame at 2ee0c785a ("wildmatch test: create & test
+> > files on disk in addition to in-memory", 2017-12-25).
+> >
+> > I've copied the verbose error output for the first error below, and
+> > uploaded the full output, including verbose and trace output for the
+> > unexpectedly failing tests, at [0].  (With 42 failures among 1512 tests,
+> > there's a lot of it, so I didn't want to include it in an email.)
+> 
+> Does the fixup above in <878tdm8k2d.fsf@evledraar.gmail.com> work for
+> you, i.e. changing $10 in the script to ${10}?
 
-On Wed, Jan 03 2018, Yasushi SHOJI jotted:
+This fixes some but not all of the failures: I'm now down from 42 to 24
+failures.
 
-> Hi,
->
-> git version 2.16.0.rc0 seg faults on my machine when I
-> [...]
-> Program terminated with signal SIGSEGV, Segmentation fault.
-> #0  0x000055a73107f900 in best_bisection_sorted (list=0x0, nr=0) at bisect.c:232
-> 232 free_commit_list(p->next);
-> (gdb) bt
-> #0  0x000055a73107f900 in best_bisection_sorted (list=0x0, nr=0) at bisect.c:232
-> #1  0x000055a73107fc0f in do_find_bisection (list=0x0, nr=0,
-> weights=0x55a731b6ffd0, find_all=1) at bisect.c:361
-> #2  0x000055a73107fcf4 in find_bisection (commit_list=0x7ffe8750d4d0,
-> reaches=0x7ffe8750d4c4, all=0x7ffe8750d4c0, find_all=1) at
-> bisect.c:400
-> #3  0x000055a73108128d in bisect_next_all (prefix=0x0, no_checkout=0)
-> at bisect.c:969
-> #4  0x000055a730fd5238 in cmd_bisect__helper (argc=0,
-> argv=0x7ffe8750e230, prefix=0x0) at builtin/bisect--helper.c:140
-> #5  0x000055a730fcbc76 in run_builtin (p=0x55a73145c778
-> <commands+120>, argc=2, argv=0x7ffe8750e230) at git.c:346
-> #6  0x000055a730fcbf40 in handle_builtin (argc=2, argv=0x7ffe8750e230)
-> at git.c:554
-> #7  0x000055a730fcc0e8 in run_argv (argcp=0x7ffe8750e0ec,
-> argv=0x7ffe8750e0e0) at git.c:606
-> #8  0x000055a730fcc29b in cmd_main (argc=2, argv=0x7ffe8750e230) at git.c:683
-> #9  0x000055a731068d9e in main (argc=3, argv=0x7ffe8750e228) at common-main.c:43
-> (gdb) p p
-> $1 = (struct commit_list *) 0x0
->
-> As you can see, the code dereferences to the 'next' while 'p' is NULL.
->
-> I'm sure I did 'git bisect good' after git _found_ bad commit.  Then I
-> typed 'git bisect skip' on the commit 726804874 of guile repository.
-> If that matters at all.
->
-> I haven't touched guile repo to preserve the current state.
+Updated verbose test output is at
+https://gist.github.com/me-and/04443bcb00e12436f0eacce079b56d02
 
-I can't reproduce this myself, but looking at the backtrace it seems
-pretty obvious that 7c117184d7 ("bisect: fix off-by-one error in
-`best_bisection_sorted()`", 2017-11-05) is the culprit.
+Thanks!
 
-That changed more careful code added by Christian in 50e62a8e70
-("rev-list: implement --bisect-all", 2007-10-22) to free a pointer which
-as you can see can be NULL.
-
-If you can test a patch to see if it works this should fix it:
-
-diff --git a/bisect.c b/bisect.c
-index 0fca17c02b..2f3008b078 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -229,8 +229,10 @@ static struct commit_list *best_bisection_sorted(struct commit_list *list, int n
-                if (i < cnt - 1)
-                        p = p->next;
-        }
--       free_commit_list(p->next);
--       p->next = NULL;
-+       if (p) {
-+               free_commit_list(p->next);
-+               p->next = NULL;
-+       }
-        strbuf_release(&buf);
-        free(array);
-        return list;
-
-But given the commit message by Martin maybe there's some deeper bug here.
+Adam
