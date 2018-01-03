@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 572631F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 00:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1991F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 00:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751272AbeACATf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 19:19:35 -0500
-Received: from mail-io0-f196.google.com ([209.85.223.196]:37981 "EHLO
+        id S1751234AbeACATI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 19:19:08 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:37584 "EHLO
         mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751074AbeACATR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 19:19:17 -0500
-Received: by mail-io0-f196.google.com with SMTP id 87so471254ior.5
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:19:17 -0800 (PST)
+        with ESMTP id S1751215AbeACATE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 19:19:04 -0500
+Received: by mail-io0-f196.google.com with SMTP id n14so469286iob.4
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=i0CaELZwld/RgmZyfIcwReMs01fcs6piIRAeibnVjV8=;
-        b=GMRXmjATBhHi2MpH7kkG8YrsOINGU2UyFfZYzpturWZNWwBHHstuK+TZo9bpTEmfD9
-         5RE3OZefb6xDqIKED+zgxEv9CqcW2B5ITV5dTwcV9lofsm2xq9/EOrtFeyp418sySVrR
-         64aHS03+aQWKLWHDwCJ0xRVErWRYh7/8cfIe+Z4ljjbAG8xATKmtB2TZNz38o1eVvFp/
-         +PBTuEIEhHXk5waG3qCCcEf6Bp2z38nVIYZ1GDNb1f7D7Iz6E/nqXk/227mfrbqujvUJ
-         kOsaZkHFGz3Qu6ddNqVK9yC4y69e3n6wf0iNkojNQQTXJ7lsTzjn0ApmwfJBNxwsGAP7
-         xw7Q==
+        bh=UXPJUzHM3cBrNFY8vmL8XKJDeamixynt3+qihD/zz5k=;
+        b=WUhCRdUDta8wZQKHVlkhiEj87mslvu4Os8zKkxx5T0dJYv9a4jcxQJYuBnzXsM2YFD
+         +MVm6LudWPddt/u/qU1yPwkTnhUDnPCWHT+1BLS3xVgTYD4Oz/ugvR56ge7A3HACOazv
+         j6PgX0aisbix4T/lZ6/zo23H3jblO1OCul0CN6c9uz1UlSYs1YNnGKbSzedrHfqzsRaX
+         NXkTqKTNCSwGf1qGJ4gz5akW9ZEybGThRppv/IIqDJslDWh9Rczby8JqhsDt17yc42cR
+         XWjjcGOpAFrbWksXhg3EXLg71L50VVrZXQk6IYRJ00USl2vIBr7O0r5xVrPDpAr5QrwR
+         XHlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=i0CaELZwld/RgmZyfIcwReMs01fcs6piIRAeibnVjV8=;
-        b=jbOgIYnSOSMW7l2ejbC2Sqs+Fm8DF6UZO/3hvQThgeQ+0+rATRqYQeKBJDg8po5o/u
-         AFbojjClA7cAr/P29QeOTQ6DTWwaYXo9tNoTIqHpomf3/t4XEKTx72WUpZvPDZwR9Nwj
-         hgWaybeF6II6V5rHucQuqKH+ptSYDPa/uyYY9KVedQVnY7zwh2ZNanVo9fgUTn/hgkMD
-         K0jo9O5ckuDBx1SvOPWGGShXryx0YnStKQXs4JCXLzeMcm4oX7kqaoOve2NWHXUdPo+o
-         GKeYRDFaZavz9eCzimlICu4Rzc88RctQzLqa3s/W1cFT/6nYicNjXtnRrbBMcobOfnpM
-         ZR8Q==
-X-Gm-Message-State: AKGB3mJQ5dnoaB8v0/FzS6UGDGjkZFg3aVnD+6imc1kn7pxvZFrjMRea
-        66Nd4J+VTNMC7+PIN68oPx0Pt3zXujg=
-X-Google-Smtp-Source: ACJfBovpl90YkqjfJJlUFOyigJ8o7YMcjiwL90ZQ9ovOaMRTWe1QgSZswqZ/eBJbMd1fu2cauIYkNQ==
-X-Received: by 10.107.160.209 with SMTP id j200mr64576951ioe.212.1514938756888;
-        Tue, 02 Jan 2018 16:19:16 -0800 (PST)
+        bh=UXPJUzHM3cBrNFY8vmL8XKJDeamixynt3+qihD/zz5k=;
+        b=JnBIjI3ApFt0NCI5STOVE2kDzQrGIql8uj1cs8AuRgxjXPRypGdDWfLV0JOgweUfvU
+         oqaHVEXHfc2Vx7pFYG5H1ImvrE2OUcj3SbFADc3NfJLCPfq0r9L6mlji9K6+gAmtI718
+         JYNxEa+5YzDWr0Wc7Gi4+L/L1Rwp2O2Ak9JyZLmuashQBj+Sv3USdF1Pik69/1ODwFlS
+         xBGWVF+W6STrHHStpd3jGjbQjCnBcmP8pkBXsaXWPlO6t3dg9+VF44TRpxhAFcGns/ff
+         RG40bU2d7GspgbcSTOI98zpDmnjp8XPN0u0vTke0TD7DQfGY8CfCuiLjScmt2XdlPzxl
+         YYTw==
+X-Gm-Message-State: AKGB3mJIW/R7xvTrgQJV2WpEoBjF2fuovPHYIbp79j146CN0q9XL5dbW
+        Q5N1LojMvyLJGrt0dtgdNCdazvHNDzY=
+X-Google-Smtp-Source: ACJfBosNIMF0M96MPSbBbfBkZrlIrcx3vTMdhgBoYtP1kF1VMbcmKcgdXoQ1nWYCJ22g/FY3/MyfOQ==
+X-Received: by 10.107.36.71 with SMTP id k68mr10933165iok.9.1514938743335;
+        Tue, 02 Jan 2018 16:19:03 -0800 (PST)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.19.15
+        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.19.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Jan 2018 16:19:16 -0800 (PST)
+        Tue, 02 Jan 2018 16:19:02 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
         philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 24/26] pkt-line: add packet_buf_write_len function
-Date:   Tue,  2 Jan 2018 16:18:26 -0800
-Message-Id: <20180103001828.205012-25-bmwill@google.com>
+Subject: [PATCH 15/26] transport: convert transport_get_remote_refs to take a list of ref patterns
+Date:   Tue,  2 Jan 2018 16:18:17 -0800
+Message-Id: <20180103001828.205012-16-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
 References: <20180103001828.205012-1-bmwill@google.com>
@@ -64,55 +64,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the 'packet_buf_write_len()' function which allows for writing an
-arbitrary length buffer into a 'struct strbuf' and formatting it in
-packet-line format.
+Convert 'transport_get_remote_refs()' to optionally take a list of ref
+patterns.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 16 ++++++++++++++++
- pkt-line.h |  1 +
- 2 files changed, 17 insertions(+)
+ builtin/clone.c     | 2 +-
+ builtin/fetch.c     | 4 ++--
+ builtin/ls-remote.c | 2 +-
+ builtin/remote.c    | 2 +-
+ transport.c         | 7 +++++--
+ transport.h         | 3 ++-
+ 6 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index 3159cbe10..e9968b7df 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -215,6 +215,22 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- 	va_end(args);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 2da71db10..4db3079ac 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1104,7 +1104,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (transport->smart_options && !deepen)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
+ 
+-	refs = transport_get_remote_refs(transport);
++	refs = transport_get_remote_refs(transport, NULL);
+ 
+ 	if (refs) {
+ 		mapped_refs = wanted_peer_refs(refs, refspec);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7bbcd26fa..850382f55 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -250,7 +250,7 @@ static void find_non_local_tags(struct transport *transport,
+ 	struct string_list_item *item = NULL;
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+-	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
++	for (ref = transport_get_remote_refs(transport, NULL); ref; ref = ref->next) {
+ 		if (!starts_with(ref->name, "refs/tags/"))
+ 			continue;
+ 
+@@ -336,7 +336,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
+ 
+-	const struct ref *remote_refs = transport_get_remote_refs(transport);
++	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
+ 
+ 	if (refspec_count) {
+ 		struct refspec *fetch_refspec;
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index c4be98ab9..c6e9847c5 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -96,7 +96,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (uploadpack != NULL)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
+ 
+-	ref = transport_get_remote_refs(transport);
++	ref = transport_get_remote_refs(transport, NULL);
+ 	if (transport_disconnect(transport))
+ 		return 1;
+ 
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c..d0b6ff6e2 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -862,7 +862,7 @@ static int get_remote_ref_states(const char *name,
+ 	if (query) {
+ 		transport = transport_get(states->remote, states->remote->url_nr > 0 ?
+ 			states->remote->url[0] : NULL);
+-		remote_refs = transport_get_remote_refs(transport);
++		remote_refs = transport_get_remote_refs(transport, NULL);
+ 		transport_disconnect(transport);
+ 
+ 		states->queried = 1;
+diff --git a/transport.c b/transport.c
+index c54a44630..dfc603b36 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1136,10 +1136,13 @@ int transport_push(struct transport *transport,
+ 	return 1;
  }
  
-+void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
-+{
-+	size_t orig_len, n;
-+
-+	orig_len = buf->len;
-+	strbuf_addstr(buf, "0000");
-+	strbuf_add(buf, data, len);
-+	n = buf->len - orig_len;
-+
-+	if (n > LARGE_PACKET_MAX)
-+		die("protocol error: impossibly long line");
-+
-+	set_packet_header(&buf->buf[orig_len], n);
-+	packet_trace(buf->buf + orig_len + 4, n - 4, 1);
-+}
-+
- int write_packetized_from_fd(int fd_in, int fd_out)
+-const struct ref *transport_get_remote_refs(struct transport *transport)
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_patterns)
  {
- 	static char buf[LARGE_PACKET_DATA_MAX];
-diff --git a/pkt-line.h b/pkt-line.h
-index 97b6dd1c7..d411fcb30 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -26,6 +26,7 @@ void packet_buf_flush(struct strbuf *buf);
- void packet_buf_delim(struct strbuf *buf);
- void packet_write(int fd_out, const char *buf, size_t size);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int write_packetized_from_fd(int fd_in, int fd_out);
+ 	if (!transport->got_remote_refs) {
+-		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
++		transport->remote_refs =
++			transport->vtable->get_refs_list(transport, 0,
++							 ref_patterns);
+ 		transport->got_remote_refs = 1;
+ 	}
+ 
+diff --git a/transport.h b/transport.h
+index 731c78b67..4b656f315 100644
+--- a/transport.h
++++ b/transport.h
+@@ -178,7 +178,8 @@ int transport_push(struct transport *connection,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   unsigned int * reject_reasons);
+ 
+-const struct ref *transport_get_remote_refs(struct transport *transport);
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_patterns);
+ 
+ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
 -- 
 2.15.1.620.gb9897f4670-goog
 
