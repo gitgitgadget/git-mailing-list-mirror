@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B3F01F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 16:37:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBB451F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 16:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751134AbeACQhZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 11:37:25 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36344 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751037AbeACQeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 11:34:25 -0500
-Received: by mail-wm0-f67.google.com with SMTP id b76so3684460wmg.1
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:24 -0800 (PST)
+        id S1751246AbeACQh0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 11:37:26 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:44986 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751195AbeACQeV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 11:34:21 -0500
+Received: by mail-wr0-f194.google.com with SMTP id l41so2141183wre.11
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 08:34:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1mPqFeFBoHEV/mI/l3LfXupZEPipaRl2APONM95BcVk=;
-        b=AYlH2/5ek8aM4LsmqyHMj98eQrFutMQyDrjox5/j/rvAyZRJF2nWOGaFw9y0q/2mOf
-         Ee6GnbhRA+Y1FejESnomVPqiaEOus4TNb8cp0OUKwnFqtUIUrY12DMPtSUdkoeuYRnPW
-         XT3atCkk4a/Njnt1AzSotKk+Bm1tGqYx9v/54V/4mJQkPjxFdjcjFI+vROs7YI+DiaR0
-         XnkTRphJODpd6hmiWTfPfnxcxbdy42uHbWhY3c9geIr3DlYUbxtzDO/qP6Yp8HIGJWlQ
-         a+vLbtOnjFBSPWXPXpkVV6FDNpaZVwvXjoQQIFtIouZHAz9rfwkaUMsiucMQU8/pdgV1
-         35Aw==
+        bh=DhcpIuEWcwxYHIb7TrlE1HI2cYfrqZnQCPXYlbIX5SY=;
+        b=Ve5wbMTaw92i+ijg4o2dgwSr4ibtVFp92Hj8DXd5+vPBbx3FwwFzvYlEtlIPywvoQG
+         UNeklpsNEf1t8IntKGSoDyQT+dT89cV5XWOkjG6xv8AiGk7JxexY7uEwVqjqjno8vI1E
+         cCDgkrcu6l8ze803BogjsicwauWUymAheTIegJPrd+xpGTzkoYGFBo+bJ+B+tb6P6HoY
+         wtP6Ce4ABgUjJeGJjANHecYu/KAR0u6z2L32L5WEni7VmFilzpOAmwMGz+XUa0Wxc/VJ
+         Xhp+VibEnNOrY0Uv8rpajA3EuMrRhqVMLNjYsRVpfv80kMbB6Hqruha3Ja0lxQrmaO1w
+         Cvtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1mPqFeFBoHEV/mI/l3LfXupZEPipaRl2APONM95BcVk=;
-        b=gc1u1Br9rx8cjSvDTu+1B3LDp/kADHQoaSDSWWA9+XYc7qkjBgjbysmRiYDKTZJt5/
-         eBVP+TY2bknjrbXEGTjpWEpRKf360bK3PwXuc6Y0Mq6CASQ5XhVAEZwaTjHzgmZaxbbC
-         qzIBhlJ3RkJF2ActzjakSSWvVPkc/zl7Uw82WyWQWsbeiQ6taQV/81k17ncGOuEMVTac
-         MnJuL2edTV45VnFHUnBxvaX27irQ76gMfW3e08/RvW+MDhQxgV2DCkVj31JEPdveCduG
-         w54rTm5cMFI9ozxafS+b2Gvt3IqBVkPnuiLpxWujgI21nkEYU2e1VeSbqOmphezGdkLu
-         R5QA==
-X-Gm-Message-State: AKGB3mJnIPT9ubQD7YjZyq1HPJd7byLFIpYQdpVyFH7L7BoPveeORcLr
-        MVJaq3Orxbh9i9C1qdy/wBpWrP4G
-X-Google-Smtp-Source: ACJfBosSe6T+gHCOJ9vTThHCgfoh9wYMjut93kFw1jYcKdYHsC3f7U466gbS+gNHONDmQ0DeJCtHDQ==
-X-Received: by 10.28.110.26 with SMTP id j26mr1786135wmc.46.1514997263167;
-        Wed, 03 Jan 2018 08:34:23 -0800 (PST)
+        bh=DhcpIuEWcwxYHIb7TrlE1HI2cYfrqZnQCPXYlbIX5SY=;
+        b=ss4OeGekompoMljjhESlNTZef2v1qGdY+87satCq9mQF3TBrKkmNinheKDKOtxyeGF
+         BbyY1pyxzwV01lIGkqaQUJCdbgn0xVIgonmAnT5mL0sfNMIRMGb0cmnrLAYnhAcAB5vy
+         ah1e+/hE8pl2pLkPYYpYtg81kogyns9rayGfiwLWR1ThtNLt1cwElHLtG+JG14zmOi7C
+         T4ob16jpjQZhjMH376d1wnwyyVpfltcfODALfxvecnlAf5f7KX577NqfVogzccOA/AQl
+         i99/oxB1qWag3NxrIubhtkiiHfvmbRlUmoZvNxEh0f9NZChK9hxkb6klusJoHzdpixxB
+         gDyA==
+X-Gm-Message-State: AKGB3mJnOTmFf0gQ0v+umxHnt8EkrFrfqgo9J4OM4rn/DBDYGiYK64FI
+        ygzoYYqBeZ/XOLZ295u/ETgEa31H
+X-Google-Smtp-Source: ACJfBovAIBb9XW0wIO4Viril1ymOsaHQJ8J65YZWGzvR0PwIRwqBTRvObuC1h0lVGJLEXT5Q6unv1Q==
+X-Received: by 10.223.160.233 with SMTP id n38mr2149391wrn.45.1514997258515;
+        Wed, 03 Jan 2018 08:34:18 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.21
+        by smtp.gmail.com with ESMTPSA id s11sm1356384wrb.30.2018.01.03.08.34.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 08:34:22 -0800 (PST)
+        Wed, 03 Jan 2018 08:34:17 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 05/40] fsck: support refs pointing to promisor objects
-Date:   Wed,  3 Jan 2018 17:33:28 +0100
-Message-Id: <20180103163403.11303-6-chriscool@tuxfamily.org>
+Subject: [PATCH 02/40] Add GIT_NO_EXTERNAL_ODB env variable
+Date:   Wed,  3 Jan 2018 17:33:25 +0100
+Message-Id: <20180103163403.11303-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.16.g82191dbc6c.dirty
 In-Reply-To: <20180103163403.11303-1-chriscool@tuxfamily.org>
 References: <20180103163403.11303-1-chriscool@tuxfamily.org>
@@ -71,80 +71,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Tan <jonathantanmy@google.com>
+This new environment variable will be used to perform git
+commands without involving any external odb mechanism.
 
-Teach fsck to not treat refs referring to missing promisor objects as an
-error when extensions.partialclone is set.
+This makes it possible for example to create new blobs that
+will not be sent to an external odb even if the external odb
+supports "put_*" instructions.
 
-For the purposes of warning about no default refs, such refs are still
-treated as legitimate refs.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/fsck.c           |  8 ++++++++
- t/t0410-partial-clone.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ cache.h        | 9 +++++++++
+ environment.c  | 4 ++++
+ external-odb.c | 3 +--
+ sha1_file.c    | 3 +++
+ 4 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 793d289367..c6bb29d242 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -434,6 +434,14 @@ static int fsck_handle_ref(const char *refname, const struct object_id *oid,
+diff --git a/cache.h b/cache.h
+index 21af6442af..7b27abac35 100644
+--- a/cache.h
++++ b/cache.h
+@@ -437,6 +437,7 @@ static inline enum object_type object_type(unsigned int mode)
+ #define CEILING_DIRECTORIES_ENVIRONMENT "GIT_CEILING_DIRECTORIES"
+ #define NO_REPLACE_OBJECTS_ENVIRONMENT "GIT_NO_REPLACE_OBJECTS"
+ #define GIT_REPLACE_REF_BASE_ENVIRONMENT "GIT_REPLACE_REF_BASE"
++#define NO_EXTERNAL_ODB_ENVIRONMENT "GIT_NO_EXTERNAL_ODB"
+ #define GITATTRIBUTES_FILE ".gitattributes"
+ #define INFOATTRIBUTES_FILE "info/attributes"
+ #define ATTRIBUTE_MACRO_PREFIX "[attr]"
+@@ -813,6 +814,14 @@ void reset_shared_repository(void);
+ extern int check_replace_refs;
+ extern char *git_replace_ref_base;
  
- 	obj = parse_object(oid);
- 	if (!obj) {
-+		if (is_promisor_object(oid)) {
-+			/*
-+			 * Increment default_refs anyway, because this is a
-+			 * valid ref.
-+			 */
-+			 default_refs++;
-+			 return 0;
-+		}
- 		error("%s: invalid sha1 pointer %s", refname, oid_to_hex(oid));
- 		errors_found |= ERROR_REACHABLE;
- 		/* We'll continue with the rest despite the error.. */
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 9257b8c885..c4639e1134 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -13,6 +13,14 @@ pack_as_from_promisor () {
- 	>repo/.git/objects/pack/pack-$HASH.promisor
++/*
++ * Do external odbs need to be used this run?  This variable is
++ * initialized to true unless $GIT_NO_EXTERNAL_ODB is set, but it
++ * maybe set to false by some commands that do not want external
++ * odbs to be active.
++ */
++extern int use_external_odb;
++
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
+diff --git a/environment.c b/environment.c
+index 63ac38a46f..b3bd0daae2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -48,6 +48,7 @@ const char *excludes_file;
+ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
+ int check_replace_refs = 1;
+ char *git_replace_ref_base;
++int use_external_odb = 1;
+ enum eol core_eol = EOL_UNSET;
+ enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+@@ -117,6 +118,7 @@ const char * const local_repo_env[] = {
+ 	INDEX_ENVIRONMENT,
+ 	NO_REPLACE_OBJECTS_ENVIRONMENT,
+ 	GIT_REPLACE_REF_BASE_ENVIRONMENT,
++	NO_EXTERNAL_ODB_ENVIRONMENT,
+ 	GIT_PREFIX_ENVIRONMENT,
+ 	GIT_SUPER_PREFIX_ENVIRONMENT,
+ 	GIT_SHALLOW_FILE_ENVIRONMENT,
+@@ -156,6 +158,8 @@ void setup_git_env(void)
+ 	free(git_replace_ref_base);
+ 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
+ 							  : "refs/replace/");
++	if (getenv(NO_EXTERNAL_ODB_ENVIRONMENT))
++		use_external_odb = 0;
+ 	free(namespace);
+ 	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+diff --git a/external-odb.c b/external-odb.c
+index f3ea491333..390958dbfe 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -43,7 +43,7 @@ static void external_odb_init(void)
+ {
+ 	static int initialized;
+ 
+-	if (initialized)
++	if (initialized || !use_external_odb)
+ 		return;
+ 	initialized = 1;
+ 
+@@ -69,4 +69,3 @@ int external_odb_has_object(const unsigned char *sha1)
+ 			return 1;
+ 	return 0;
  }
+-
+diff --git a/sha1_file.c b/sha1_file.c
+index 3f5ff274e2..cba6b2a537 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -675,6 +675,9 @@ void prepare_external_alt_odb(void)
+ 	static int linked_external;
+ 	const char *path;
  
-+promise_and_delete () {
-+	HASH=$(git -C repo rev-parse "$1") &&
-+	git -C repo tag -a -m message my_annotated_tag "$HASH" &&
-+	git -C repo rev-parse my_annotated_tag | pack_as_from_promisor &&
-+	git -C repo tag -d my_annotated_tag &&
-+	delete_object repo "$HASH"
-+}
++	if (!use_external_odb)
++		return;
 +
- test_expect_success 'missing reflog object, but promised by a commit, passes fsck' '
- 	test_create_repo repo &&
- 	test_commit -C repo my_commit &&
-@@ -78,4 +86,20 @@ test_expect_success 'missing reflog object alone fails fsck, even with extension
- 	test_must_fail git -C repo fsck
- '
+ 	if (linked_external)
+ 		return;
  
-+test_expect_success 'missing ref object, but promised, passes fsck' '
-+	rm -rf repo &&
-+	test_create_repo repo &&
-+	test_commit -C repo my_commit &&
-+
-+	A=$(git -C repo commit-tree -m a HEAD^{tree}) &&
-+
-+	# Reference $A only from ref
-+	git -C repo branch my_branch "$A" &&
-+	promise_and_delete "$A" &&
-+
-+	git -C repo config core.repositoryformatversion 1 &&
-+	git -C repo config odb.magic.promisorRemote "arbitrary string" &&
-+	git -C repo fsck
-+'
-+
- test_done
 -- 
 2.16.0.rc0.16.g82191dbc6c.dirty
 
