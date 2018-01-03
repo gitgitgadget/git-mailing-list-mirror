@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71CE41F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 00:19:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 572631F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 00:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751298AbeACATg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 19:19:36 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:41441 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751105AbeACATK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 Jan 2018 19:19:10 -0500
-Received: by mail-io0-f173.google.com with SMTP id f6so459929ioh.8
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:19:10 -0800 (PST)
+        id S1751272AbeACATf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 19:19:35 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:37981 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751074AbeACATR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 Jan 2018 19:19:17 -0500
+Received: by mail-io0-f196.google.com with SMTP id 87so471254ior.5
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 16:19:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yqPaIVyIYjGffOATE+NHxiQI8s4aPnUSLDwFES2XROo=;
-        b=CnoiiKs7EQf6F6qF72krf9xRa8vDpYaLj1UsO7ghzmtCMcMjDnHLJDDubX0k65MwtF
-         VEtL9JwLzKrGWRGECaXl9jNtsk4hla6VK4OggvP2PsusqgKdSAHfOZSmKUSjTGS047cx
-         bxfzAHm/drtse8plLy0j0ZHj1PJopZ0Ze+483CVpCi/lzyup3V2gtIZEU6pzBVW70kaW
-         5xiIhTDaeiHj0Z22NalRBOPj4PQ5byU2sq4nCvzrgy1tb0qxpmMXAJW1iTJjL3BSFJhV
-         gCXYwykP7CYIGOQLxE+E03BSgrI9Clfn89Yxv7rrWTSGnuAz1Q6FtyvmrFD7KWDVkmNc
-         8huA==
+        bh=i0CaELZwld/RgmZyfIcwReMs01fcs6piIRAeibnVjV8=;
+        b=GMRXmjATBhHi2MpH7kkG8YrsOINGU2UyFfZYzpturWZNWwBHHstuK+TZo9bpTEmfD9
+         5RE3OZefb6xDqIKED+zgxEv9CqcW2B5ITV5dTwcV9lofsm2xq9/EOrtFeyp418sySVrR
+         64aHS03+aQWKLWHDwCJ0xRVErWRYh7/8cfIe+Z4ljjbAG8xATKmtB2TZNz38o1eVvFp/
+         +PBTuEIEhHXk5waG3qCCcEf6Bp2z38nVIYZ1GDNb1f7D7Iz6E/nqXk/227mfrbqujvUJ
+         kOsaZkHFGz3Qu6ddNqVK9yC4y69e3n6wf0iNkojNQQTXJ7lsTzjn0ApmwfJBNxwsGAP7
+         xw7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yqPaIVyIYjGffOATE+NHxiQI8s4aPnUSLDwFES2XROo=;
-        b=DCIKKf1C5YMlO+dENH6oqGaykYbGCsxTBZCWvSRn7QxP+/b3EOR52ORTP4LPCxBFcH
-         Hc8osd7CZW2iNYuwJkfVh1TaU9ObhRRd5fIxK7ptXV+u79U+HxpxCKhdbfvqEEfZoFG+
-         lxaEnS/AsX2AE57NIOSxbfL8YpLTBE8gaPCwOEA5wzgPgv3iJMsu1M+Ynl+v3RucqYOR
-         jbv+tDib0w4gl/qeTgVOWolUBBqASQ00STVv+DSgzbdfUE8tfIXWjAkiTU0xkO6E8Q2l
-         SbZepzLfq+AyhJByHZ4rvKSq+oQFVHNBdy5OfxXrCs2pma55Jz+J/6X+c7NbVcZamAja
-         pkaQ==
-X-Gm-Message-State: AKGB3mICCcGdeFRl/6cu5KQOzpZmD/gjNmVksfKTTE53+iir5M1KUsP+
-        137YJnvgnyQ2iAqQa1v4SvmI6fq9MKw=
-X-Google-Smtp-Source: ACJfBovduVjYVi5mStS/3KQguWf+3gV+eJYNPuweqPM9bfba2ECt0+LgHV01XDgxgZ9bYHjuT6AuIw==
-X-Received: by 10.107.53.67 with SMTP id c64mr51744617ioa.113.1514938749518;
-        Tue, 02 Jan 2018 16:19:09 -0800 (PST)
+        bh=i0CaELZwld/RgmZyfIcwReMs01fcs6piIRAeibnVjV8=;
+        b=jbOgIYnSOSMW7l2ejbC2Sqs+Fm8DF6UZO/3hvQThgeQ+0+rATRqYQeKBJDg8po5o/u
+         AFbojjClA7cAr/P29QeOTQ6DTWwaYXo9tNoTIqHpomf3/t4XEKTx72WUpZvPDZwR9Nwj
+         hgWaybeF6II6V5rHucQuqKH+ptSYDPa/uyYY9KVedQVnY7zwh2ZNanVo9fgUTn/hgkMD
+         K0jo9O5ckuDBx1SvOPWGGShXryx0YnStKQXs4JCXLzeMcm4oX7kqaoOve2NWHXUdPo+o
+         GKeYRDFaZavz9eCzimlICu4Rzc88RctQzLqa3s/W1cFT/6nYicNjXtnRrbBMcobOfnpM
+         ZR8Q==
+X-Gm-Message-State: AKGB3mJQ5dnoaB8v0/FzS6UGDGjkZFg3aVnD+6imc1kn7pxvZFrjMRea
+        66Nd4J+VTNMC7+PIN68oPx0Pt3zXujg=
+X-Google-Smtp-Source: ACJfBovpl90YkqjfJJlUFOyigJ8o7YMcjiwL90ZQ9ovOaMRTWe1QgSZswqZ/eBJbMd1fu2cauIYkNQ==
+X-Received: by 10.107.160.209 with SMTP id j200mr64576951ioe.212.1514938756888;
+        Tue, 02 Jan 2018 16:19:16 -0800 (PST)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.19.08
+        by smtp.gmail.com with ESMTPSA id q2sm12679ite.17.2018.01.02.16.19.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 02 Jan 2018 16:19:08 -0800 (PST)
+        Tue, 02 Jan 2018 16:19:16 -0800 (PST)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
         philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 19/26] upload-pack: introduce fetch server command
-Date:   Tue,  2 Jan 2018 16:18:21 -0800
-Message-Id: <20180103001828.205012-20-bmwill@google.com>
+Subject: [PATCH 24/26] pkt-line: add packet_buf_write_len function
+Date:   Tue,  2 Jan 2018 16:18:26 -0800
+Message-Id: <20180103001828.205012-25-bmwill@google.com>
 X-Mailer: git-send-email 2.15.1.620.gb9897f4670-goog
 In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
 References: <20180103001828.205012-1-bmwill@google.com>
@@ -64,382 +64,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the 'fetch' server command.
+Add the 'packet_buf_write_len()' function which allows for writing an
+arbitrary length buffer into a 'struct strbuf' and formatting it in
+packet-line format.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/technical/protocol-v2.txt |  14 ++
- serve.c                                 |   2 +
- upload-pack.c                           | 290 ++++++++++++++++++++++++++++++++
- upload-pack.h                           |   9 +
- 4 files changed, 315 insertions(+)
- create mode 100644 upload-pack.h
+ pkt-line.c | 16 ++++++++++++++++
+ pkt-line.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index 5f4d0e719..2a8e2f226 100644
---- a/Documentation/technical/protocol-v2.txt
-+++ b/Documentation/technical/protocol-v2.txt
-@@ -115,3 +115,17 @@ The output of ls-refs is as follows:
- 
-     symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
-     shallow = PKT-LINE("shallow" SP obj-id LF)
-+
-+ Fetch
-+-------
-+
-+Fetch will need to be a modified version of the v1 fetch protocol.  Some
-+potential areas for improvement are: Ref-in-want, CDN offloading,
-+Fetch-options.
-+
-+Since we'll have an 'ls-ref' service we can eliminate the need of fetch
-+to perform a ref-advertisement, instead a client can run the 'ls-refs'
-+service first, in order to find out what refs the server has, and then
-+request those refs directly using the fetch service.
-+
-+//TODO Flesh out the design
-diff --git a/serve.c b/serve.c
-index 88d548410..ca3bb7190 100644
---- a/serve.c
-+++ b/serve.c
-@@ -6,6 +6,7 @@
- #include "argv-array.h"
- #include "ls-refs.h"
- #include "serve.h"
-+#include "upload-pack.h"
- 
- static int always_advertise(struct repository *r,
- 			    struct strbuf *value)
-@@ -46,6 +47,7 @@ static struct protocol_capability capabilities[] = {
- 	{ "agent", agent_advertise, NULL },
- 	{ "stateless-rpc", always_advertise, NULL },
- 	{ "ls-refs", always_advertise, ls_refs },
-+	{ "fetch", always_advertise, upload_pack_v2 },
- };
- 
- static void advertise_capabilities(void)
-diff --git a/upload-pack.c b/upload-pack.c
-index 2ca60d27c..c41f6f528 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -20,6 +20,7 @@
- #include "prio-queue.h"
- #include "protocol.h"
- #include "serve.h"
-+#include "upload-pack.h"
- 
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -1040,6 +1041,295 @@ static void upload_pack(void)
- 	}
+diff --git a/pkt-line.c b/pkt-line.c
+index 3159cbe10..e9968b7df 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -215,6 +215,22 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	va_end(args);
  }
  
-+struct upload_pack_data {
-+	struct object_array wants;
-+	struct oid_array haves;
-+
-+	unsigned stateless_rpc : 1;
-+
-+	unsigned use_thin_pack : 1;
-+	unsigned use_ofs_delta : 1;
-+	unsigned no_progress : 1;
-+	unsigned use_include_tag : 1;
-+	unsigned done : 1;
-+};
-+
-+#define UPLOAD_PACK_DATA_INIT { OBJECT_ARRAY_INIT, OID_ARRAY_INIT, 0, 0, 0, 0, 0, 0 }
-+
-+static void upload_pack_data_clear(struct upload_pack_data *data)
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
 +{
-+	object_array_clear(&data->wants);
-+	oid_array_clear(&data->haves);
++	size_t orig_len, n;
++
++	orig_len = buf->len;
++	strbuf_addstr(buf, "0000");
++	strbuf_add(buf, data, len);
++	n = buf->len - orig_len;
++
++	if (n > LARGE_PACKET_MAX)
++		die("protocol error: impossibly long line");
++
++	set_packet_header(&buf->buf[orig_len], n);
++	packet_trace(buf->buf + orig_len + 4, n - 4, 1);
 +}
 +
-+static int parse_want(const char *line)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "want ", &arg)) {
-+		struct object_id oid;
-+		struct object *o;
-+
-+		if (get_oid_hex(arg, &oid))
-+			die("git upload-pack: protocol error, "
-+			    "expected to get oid, not '%s'", line);
-+
-+		o = parse_object(&oid);
-+		if (!o) {
-+			packet_write_fmt(1,
-+					 "ERR upload-pack: not our ref %s",
-+					 oid_to_hex(&oid));
-+			die("git upload-pack: not our ref %s",
-+			    oid_to_hex(&oid));
-+		}
-+
-+		if (!(o->flags & WANTED)) {
-+			o->flags |= WANTED;
-+			add_object_array(o, NULL, &want_obj);
-+		}
-+
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int parse_have(const char *line, struct oid_array *haves)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "have ", &arg)) {
-+		struct object_id oid;
-+
-+		if (get_oid_hex(arg, &oid))
-+			die("git upload-pack: expected SHA1 object, got '%s'", arg);
-+		oid_array_append(haves, &oid);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static void process_args(struct argv_array *args, struct upload_pack_data *data)
-+{
-+	int i;
-+
-+	for (i = 0; i < args->argc; i++) {
-+		const char *arg = args->argv[i];
-+
-+		/* process want */
-+		if (parse_want(arg))
-+			continue;
-+		/* process have line */
-+		if (parse_have(arg, &data->haves))
-+			continue;
-+
-+		/* process args like thin-pack */
-+		if (!strcmp(arg, "thin-pack")) {
-+			use_thin_pack = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "ofs-delta")) {
-+			use_ofs_delta = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "no-progress")) {
-+			no_progress = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "include-tag")) {
-+			use_include_tag = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "done")) {
-+			data->done = 1;
-+			continue;
-+		}
-+
-+		/* ignore unknown lines maybe? */
-+		die("unexpect line: '%s'", arg);
-+	}
-+}
-+
-+static void read_haves(struct upload_pack_data *data)
-+{
-+	struct packet_reader reader;
-+	packet_reader_init(&reader, 0, NULL, 0,
-+			   PACKET_READ_CHOMP_NEWLINE);
-+
-+	while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
-+
-+		if (parse_have(reader.line, &data->haves))
-+			continue;
-+		if (!strcmp(reader.line, "done")) {
-+			data->done = 1;
-+			continue;
-+		}
-+	}
-+	if (reader.status != PACKET_READ_FLUSH)
-+		die("ERROR");
-+}
-+
-+static int process_haves(struct oid_array *haves, struct oid_array *common)
-+{
-+	int i;
-+
-+	/* Process haves */
-+	for (i = 0; i < haves->nr; i++) {
-+		const struct object_id *oid = &haves->oid[i];
-+		struct object *o;
-+		int we_knew_they_have = 0;
-+
-+		if (!has_object_file(oid))
-+			continue;
-+
-+		oid_array_append(common, oid);
-+
-+		o = parse_object(oid);
-+		if (!o)
-+			die("oops (%s)", oid_to_hex(oid));
-+		if (o->type == OBJ_COMMIT) {
-+			struct commit_list *parents;
-+			struct commit *commit = (struct commit *)o;
-+			if (o->flags & THEY_HAVE)
-+				we_knew_they_have = 1;
-+			else
-+				o->flags |= THEY_HAVE;
-+			if (!oldest_have || (commit->date < oldest_have))
-+				oldest_have = commit->date;
-+			for (parents = commit->parents;
-+			     parents;
-+			     parents = parents->next)
-+				parents->item->object.flags |= THEY_HAVE;
-+		}
-+		if (!we_knew_they_have)
-+			add_object_array(o, NULL, &have_obj);
-+	}
-+
-+	return 0;
-+}
-+
-+static int send_acks(struct oid_array *acks, struct strbuf *response)
-+{
-+	int i;
-+	/* Send Acks */
-+	if (!acks->nr)
-+		packet_buf_write(response, "NAK\n");
-+
-+	for (i = 0; i < acks->nr; i++) {
-+		packet_buf_write(response, "ACK %s common\n",
-+				 oid_to_hex(&acks->oid[i]));
-+	}
-+
-+	if (ok_to_give_up()) {
-+		/* Send Ready */
-+		packet_buf_write(response, "ACK %s ready\n",
-+				 oid_to_hex(&acks->oid[i-1]));
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int process_haves_and_send_acks(struct upload_pack_data *data)
-+{
-+	struct oid_array common = OID_ARRAY_INIT;
-+	struct strbuf response = STRBUF_INIT;
-+	int ret = 0;
-+
-+	process_haves(&data->haves, &common);
-+	if (data->done) {
-+		ret = 1;
-+	} else if (send_acks(&common, &response)) {
-+		packet_buf_delim(&response);
-+		ret = 1;
-+	} else {
-+		/* Add Flush */
-+		packet_buf_flush(&response);
-+		ret = 0;
-+	}
-+
-+	/* Send response */
-+	write_or_die(1, response.buf, response.len);
-+	strbuf_release(&response);
-+
-+	oid_array_clear(&data->haves);
-+	oid_array_clear(&common);
-+	return ret;
-+}
-+
-+#define FETCH_PROCESS_ARGS 0
-+#define FETCH_READ_HAVES 1
-+#define FETCH_SEND_ACKS 2
-+#define FETCH_SEND_PACK 3
-+#define FETCH_DONE 4
-+
-+int upload_pack_v2(struct repository *r, struct argv_array *keys,
-+		   struct argv_array *args)
-+{
-+	int state = FETCH_PROCESS_ARGS;
-+	struct upload_pack_data data = UPLOAD_PACK_DATA_INIT;
-+	const char *out;
-+	use_sideband = LARGE_PACKET_MAX;
-+
-+	/* Check if cmd is being run as a stateless-rpc */
-+	if (has_capability(keys, "stateless-rpc", &out))
-+		if (!strcmp(out, "true"))
-+			data.stateless_rpc = 1;
-+
-+	while (state != FETCH_DONE) {
-+		switch (state) {
-+		case FETCH_PROCESS_ARGS:
-+			process_args(args, &data);
-+
-+			if (!want_obj.nr) {
-+				/*
-+				 * Request didn't contain any 'want' lines,
-+				 * guess they didn't want anything.
-+				 */
-+				state = FETCH_DONE;
-+			} else if (data.haves.nr) {
-+				/*
-+				 * Request had 'have' lines, so lets ACK them.
-+				 */
-+				state = FETCH_SEND_ACKS;
-+			} else {
-+				/*
-+				 * Request had 'want's but no 'have's so we can
-+				 * immedietly go to construct and send a pack.
-+				 */
-+				state = FETCH_SEND_PACK;
-+			}
-+			break;
-+		case FETCH_READ_HAVES:
-+			read_haves(&data);
-+			state = FETCH_SEND_ACKS;
-+			break;
-+		case FETCH_SEND_ACKS:
-+			if (process_haves_and_send_acks(&data))
-+				state = FETCH_SEND_PACK;
-+			else if (data.stateless_rpc)
-+				/*
-+				 * Request was made via stateless-rpc and a
-+				 * packfile isn't ready to be created and sent.
-+				 */
-+				state = FETCH_DONE;
-+			else
-+				state = FETCH_READ_HAVES;
-+			break;
-+		case FETCH_SEND_PACK:
-+			create_pack_file();
-+			state = FETCH_DONE;
-+			break;
-+		case FETCH_DONE:
-+			break;
-+		default:
-+			BUG("invalid state");
-+		}
-+	}
-+
-+	upload_pack_data_clear(&data);
-+	return 0;
-+}
-+
- static int upload_pack_config(const char *var, const char *value, void *unused)
+ int write_packetized_from_fd(int fd_in, int fd_out)
  {
- 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
-diff --git a/upload-pack.h b/upload-pack.h
-new file mode 100644
-index 000000000..54c429563
---- /dev/null
-+++ b/upload-pack.h
-@@ -0,0 +1,9 @@
-+#ifndef UPLOAD_PACK_H
-+#define UPLOAD_PACK_H
-+
-+struct repository;
-+struct argv_array;
-+extern int upload_pack_v2(struct repository *r, struct argv_array *keys,
-+			  struct argv_array *args);
-+
-+#endif /* UPLOAD_PACK_H */
+ 	static char buf[LARGE_PACKET_DATA_MAX];
+diff --git a/pkt-line.h b/pkt-line.h
+index 97b6dd1c7..d411fcb30 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -26,6 +26,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_delim(struct strbuf *buf);
+ void packet_write(int fd_out, const char *buf, size_t size);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int write_packetized_from_fd(int fd_in, int fd_out);
 -- 
 2.15.1.620.gb9897f4670-goog
 
