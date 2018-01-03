@@ -2,104 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C10491F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 19:24:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68C7E1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 19:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751021AbeACTYI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 14:24:08 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52630 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750912AbeACTYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 14:24:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67BE3C952E;
-        Wed,  3 Jan 2018 14:24:06 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=94Q0sBi7yCOs
-        lOD6CozEooaNces=; b=Ue+p8c0K3JWDxraBaHpkMLRbxL16w7y7kgiWcek+BH4I
-        bs9EMs33XAh99lDze7MPf7zY0BBO+qBm6yGtds+3l0EgWPpgBdIl/HuBTw0OhOhB
-        t+iMb3kZn4mV3o5Av2k7mZFlf+/DvurSxRnj08Puf3N/4F+NFB/WM49i6BS9HkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=P80+tI
-        R5BdqZoeZRLkoR/pm6zUTS5nIMTTp78VXaDN0ZsY08tYG13koZTk1ZHy5V9p/oPI
-        YLVhZV+xOm+JYMVPkfnTn5f7g7+NvedIWMbO6Vpd3siu28h5yNMZf7pHF7j0rKVy
-        0QcHHZnVujsHJ/D38kh3Nsm/oMKQNagV/C+aA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DA0EC952D;
-        Wed,  3 Jan 2018 14:24:06 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B373FC952C;
-        Wed,  3 Jan 2018 14:24:05 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Keith Smiley <k@keith.so>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH] Add shell completion for git remote rm
-References: <20171229135240.GQ3693@zaya.teonanacatl.net>
-        <20171229224825.31062-1-szeder.dev@gmail.com>
-        <87y3ll6s0e.fsf@evledraar.gmail.com>
-        <20171230005222.GT3693@zaya.teonanacatl.net>
-        <87vago76i8.fsf@evledraar.gmail.com>
-Date:   Wed, 03 Jan 2018 11:24:04 -0800
-In-Reply-To: <87vago76i8.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 30 Dec 2017 13:19:27 +0100")
-Message-ID: <xmqq373miw4r.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751007AbeACT1u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 14:27:50 -0500
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:45195 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750912AbeACT1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 14:27:49 -0500
+Received: by mail-wr0-f178.google.com with SMTP id o15so2631843wrf.12
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 11:27:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OpER2ILIXP00s1E1xb9THf0NG2pWG/hGJkfgl4nJwNQ=;
+        b=pHsNdP36NPZryZ+eJ+cSyXTXaCistn2gKkLXepWVjkns/BajZ1CyTnhJOVEVMNM22S
+         M32kQLME9JnCpqPisWKWLSYPI+VAgZIkaApe7VKszOQr7Vjq4njF7kuE7ldI/rmcsSbI
+         lTitftXQDHiUgCS0dAtRz5R37m2On3qEYW6VkK/ms4LZnta5d8XqHkBDP4iwFHar4vMK
+         Zbzn/HlVtwlCkNNO4+rydSWvi7Hl7pm5457VsBmPwUj5qvukOnsqB1kdooDrftN97IZ6
+         fs8p/U3EVW5pcJ1RNNpuzqQlMh4QfbUteKSs4TRESnlmlAjWLef8dN4Q7HT5jXYCvl+I
+         +MZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OpER2ILIXP00s1E1xb9THf0NG2pWG/hGJkfgl4nJwNQ=;
+        b=lSts3BNimiDHirl5FpjFeLAvMWaSyriC96zwZg8rBZp/NjcExn/E6oZMnZ2N6OsGhQ
+         dX4rOiAkfNMGA5hPkJVtTA8hY4g/swpzGKCGZKW7AivjtIZSMvUQclRcINgmJsgu3/17
+         2SURqFf4Nyr7dpZSRFcXjoLW3bx9U+v7XryAv5lQg7gLhJH+Da7WEzzGouqnEXEZSdre
+         HSH65eOALUahEc5ZQIxbfaI3Gfw0qkS/lLVTqeIenIyzge6nmBRJZCKH/npXyLHuojts
+         FkfuS545kTaqDvjxxpgW2W1jU/APMhKbe6kZxMl7MyzAldXiSf03NlKzH7PdAjxLBP7Y
+         yjRQ==
+X-Gm-Message-State: AKGB3mJefdO8NDTKmNFd3+imL721lFipwnkKlK/Kax/s/40OHNhciH5M
+        s1/z6RYlDJ47f1BZ+BgBlwkuLBynIFE6NmE9geie0V0ATgg=
+X-Google-Smtp-Source: ACJfBouRjNN5kXXmr7bxDn3X/TQqOWEQ8nm2lsDjEL92/oowT4E7Dq/1g+9tuU+nck/ZikZtsX0MlAWuLAPf800ukuM=
+X-Received: by 10.223.169.231 with SMTP id b94mr2637569wrd.63.1515007667754;
+ Wed, 03 Jan 2018 11:27:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A9E6B6E6-F0BB-11E7-9561-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.223.195.101 with HTTP; Wed, 3 Jan 2018 11:27:47 -0800 (PST)
+In-Reply-To: <20180103001828.205012-2-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com> <20180103001828.205012-2-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 3 Jan 2018 11:27:47 -0800
+Message-ID: <CAGZ79kbd1_nnYEJVN8a_NuwrEfHbT0wiwEfdkUz-kZRdpstqHA@mail.gmail.com>
+Subject: Re: [PATCH 01/26] pkt-line: introduce packet_read_with_status
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Sat, Dec 30 2017, Todd Zullinger jotted:
+On Tue, Jan 2, 2018 at 4:18 PM, Brandon Williams <bmwill@google.com> wrote:
+> The current pkt-line API encodes the status of a pkt-line read in the
+> length of the read content.  An error is indicated with '-1', a flush
+> with '0' (which can be confusing since a return value of '0' can also
+> indicate an empty pkt-line), and a positive integer for the length of
+> the read content otherwise.  This doesn't leave much room for allowing
+> the addition of additional special packets in the future.
 >
->> And I think that should also apply to
->> not offering completion for commands/subcommands/options
->> which are only kept for backward compatibility.
+> To solve this introduce 'packet_read_with_status()' which reads a packet
+> and returns the status of the read encoded as an 'enum packet_status'
+> type.  This allows for easily identifying between special and normal
+> packets as well as errors.  It also enables easily adding a new special
+> packet in the future.
 >
-> Yeah I think it makes sense to at some point stop completing things if
-> we're going to remove stuff, if we decide to remove it.
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  pkt-line.c | 55 ++++++++++++++++++++++++++++++++++++++++++-------------
+>  pkt-line.h | 15 +++++++++++++++
+>  2 files changed, 57 insertions(+), 13 deletions(-)
 >
->> Here's one way to make 'git remote rm <TAB>' work without
->> including it in the output of 'git remote <TAB>':
->>
->> diff --git i/contrib/completion/git-completion.bash w/contrib/completi=
-on/git-completion.bash
->> index 3683c772c5..aa63f028ab 100644
->> --- i/contrib/completion/git-completion.bash
->> +++ w/contrib/completion/git-completion.bash
->> @@ -2668,7 +2668,9 @@ _git_remote ()
->>  		add rename remove set-head set-branches
->>  		get-url set-url show prune update
->>  		"
->> -	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
->> +	# Don't advertise rm by including it in subcommands, but complete
->> +	# remotes if it is used.
->> +	local subcommand=3D"$(__git_find_on_cmdline "$subcommands rm")"
->>  	if [ -z "$subcommand" ]; then
->>  		case "$cur" in
->>  		--*)
+> diff --git a/pkt-line.c b/pkt-line.c
+> index 2827ca772..8d7cd389f 100644
+> --- a/pkt-line.c
+> +++ b/pkt-line.c
+> @@ -280,28 +280,33 @@ static int packet_length(const char *linelen)
+>         return (val < 0) ? val : (val << 8) | hex2chr(linelen + 2);
+>  }
 >
-> Neat!
+> -int packet_read(int fd, char **src_buf, size_t *src_len,
+> -               char *buffer, unsigned size, int options)
+> +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
+> +                                               char *buffer, unsigned size, int *pktlen,
+> +                                               int options)
+>  {
+> -       int len, ret;
+> +       int len;
+>         char linelen[4];
+>
+> -       ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
+> -       if (ret < 0)
+> -               return ret;
+> +       if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0)
+> +               return PACKET_READ_EOF;
+> +
+>         len = packet_length(linelen);
+>         if (len < 0)
+>                 die("protocol error: bad line length character: %.4s", linelen);
+> -       if (!len) {
+> +
+> +       if (len == 0) {
+>                 packet_trace("0000", 4, 0);
+> -               return 0;
+> +               return PACKET_READ_FLUSH;
+> +       } else if (len >= 1 && len <= 3) {
+> +               die("protocol error: bad line length character: %.4s", linelen);
 
-Yes, indeed it is nice.
+I wonder how much libified code we want here already, maybe we could
+have PACKET_READ_ERROR as a return value here instead of die()ing.
+There could also be an option that tells this code to die on error, this reminds
+me of the repository discovery as well as the refs code, both of which have
+this pattern.
 
+Currently this series is only upgrading commands that use the network
+anyway, so I guess die()ing in an ls-remote or fetch is no big deal,
+but it could
+be interesting to keep going once we have more of the partial clone
+stuff working
+(e.g. remote assisted log/blame would want to gracefully fall back instead of
+die()ing without any useful output, I would think.)
 
+>         }
+> +
+>         len -= 4;
+> -       if (len >= size)
+> +       if ((len < 0) || ((unsigned)len >= size))
+>                 die("protocol error: bad line length %d", len);
+> -       ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
+> -       if (ret < 0)
+> -               return ret;
+> +
+> +       if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0)
+> +               return PACKET_READ_EOF;
+>
+>         if ((options & PACKET_READ_CHOMP_NEWLINE) &&
+>             len && buffer[len-1] == '\n')
+> @@ -309,7 +314,31 @@ int packet_read(int fd, char **src_buf, size_t *src_len,
+>
+>         buffer[len] = 0;
+>         packet_trace(buffer, len, 0);
+> -       return len;
+> +       *pktlen = len;
+> +       return PACKET_READ_NORMAL;
+> +}
+> +
+> +int packet_read(int fd, char **src_buffer, size_t *src_len,
+> +               char *buffer, unsigned size, int options)
+> +{
+> +       enum packet_read_status status;
+> +       int pktlen;
+> +
+> +       status = packet_read_with_status(fd, src_buffer, src_len,
+> +                                        buffer, size, &pktlen,
+> +                                        options);
+> +       switch (status) {
+> +       case PACKET_READ_EOF:
+> +               pktlen = -1;
+> +               break;
+> +       case PACKET_READ_NORMAL:
+> +               break;
+> +       case PACKET_READ_FLUSH:
+> +               pktlen = 0;
+> +               break;
+> +       }
+> +
+> +       return pktlen;
+>  }
+>
+>  static char *packet_read_line_generic(int fd,
+> diff --git a/pkt-line.h b/pkt-line.h
+> index 3dad583e2..06c468927 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -65,6 +65,21 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+>  int packet_read(int fd, char **src_buffer, size_t *src_len, char
+>                 *buffer, unsigned size, int options);
+>
+> +/*
+> + * Read a packetized line into a buffer like the 'packet_read()' function but
+> + * returns an 'enum packet_read_status' which indicates the status of the read.
+> + * The number of bytes read will be assigined to *pktlen if the status of the
+> + * read was 'PACKET_READ_NORMAL'.
+> + */
+> +enum packet_read_status {
+> +       PACKET_READ_EOF = -1,
+> +       PACKET_READ_NORMAL,
+> +       PACKET_READ_FLUSH,
+> +};
+> +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
+> +                                               char *buffer, unsigned size, int *pktlen,
+> +                                               int options);
+> +
+>  /*
+>   * Convenience wrapper for packet_read that is not gentle, and sets the
+>   * CHOMP_NEWLINE option. The return value is NULL for a flush packet,
+> --
+> 2.15.1.620.gb9897f4670-goog
+>
