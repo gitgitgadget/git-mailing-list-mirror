@@ -2,151 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 306211F404
-	for <e@80x24.org>; Wed,  3 Jan 2018 09:57:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 558F61F404
+	for <e@80x24.org>; Wed,  3 Jan 2018 10:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752086AbeACJ5V (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 04:57:21 -0500
-Received: from mail-io0-f182.google.com ([209.85.223.182]:42766 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752005AbeACJ5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 04:57:18 -0500
-Received: by mail-io0-f182.google.com with SMTP id x67so1554036ioi.9
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 01:57:18 -0800 (PST)
+        id S1751255AbeACK2x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 05:28:53 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:40171 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750861AbeACK2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 05:28:51 -0500
+Received: by mail-wr0-f182.google.com with SMTP id p17so1051890wre.7
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 02:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:cc:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/M0ptBQIecFdUADyazYYcqcZCxpmZzVkCmLvI+8HDBc=;
-        b=PxjLuCgLpJUT7Q2NwK6KWdT1BRDlq6mFekCmrhfFWVTv7C1ebzT4V9cGAgBULmA/ZJ
-         Qrr481l65Uq5MlIpirtEvt92r1OQq8U75mj+KLFlI4Im4fVtzTg7YZ5vsMbw7dKudOON
-         buew/d8RBdga+HbLer1OPXsnYUF71cLdnAwLsiBRmOYyPsfQKFo3MYffS7MIJ9aeJ65g
-         zPcaqjaDtteY51Jk4Mpf3b8gEP3mLpeAFTMFRPXuBNfV4X4JD791Rz0CgWR/QvPGSOMb
-         +vDg/dwQfiRHPFII4rmI0Ed/V9ZCGNkmy++oq0wddlDH1lYWl5rk3FDIeAzM/MdVC9oq
-         3nqw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=m9Cnzu1j1JxVxZj1RMFE0CrlE6FsqsJFpPegnuycLNE=;
+        b=rES/0dQGvGRWjOuzzyQSwfWNec5zjylabbhYFhtZouHcmDq6tZMTI795xGPxe1ox0b
+         VfqmqGEVrTu0dItgeheWzm3GfrNAHMmnEN5kUT6J0TxVNFw/OW24oJ24sF0O6ZxDOTOo
+         NCgEtCtVezMASx+sDQGe4b8CURe97yoSPZdbzUov5MgQFbBZD1HM/8Acc25rJgMY6mAk
+         f41/zn6If3hdZobX+cADqpxlnti7ej4UMjWwFCBFAe2tJEH8wrq7fVtu0u873fEQBJgC
+         PPXIx0FosZA5f5es91b21EXjR7ulTel6v4Oy3j0wtqKzCJGa7lPuGdTzXKRRFrGTIgWb
+         Cq3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:cc:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=/M0ptBQIecFdUADyazYYcqcZCxpmZzVkCmLvI+8HDBc=;
-        b=s63Rsn/CPMa8ov7hNeq7z0wtBkGGLOgOo4CsI7P04ZPfhhq5sWFWGZ+QQwsMahumN9
-         Tlnu2JC12CVu4bShJmH8zMEYl5OWobwJMhxLBu0RsaVYXDXJR9YC9yFS/nlMEPaUfKOK
-         ErmGD2y+6+EfMLbx5MeSMrmW+XonHgzCgHfX0g1wft0l4Vug0ZB8j9+aFHyyWc676nql
-         Au0/6p4SvzkVa8MLaBbR7R0hzt60ahisIJc0sQgc9uAziZmnbrf3V6OmcQOWBKEUXjec
-         wk98GRveBIKqs9iRCjnyPvEODr88t1Mx7hG9T5QZEvbWN+OTNd+9Df+lNhj4oeAWk8lJ
-         PlAQ==
-X-Gm-Message-State: AKGB3mINk5/2SP4ya+wKu+Q0yUnLp7O6cwxZMq4hkNP142MXsc8NEG7J
-        rtBZoGc0J36REY0J+G0GE9c=
-X-Google-Smtp-Source: ACJfBourwLoH3dcWLPtJNTjgwOOvCYA74aqTP1Ca6bBfpj7rw1Kxym11uHu55yg0ka4COECCCGZnyQ==
-X-Received: by 10.107.101.26 with SMTP id z26mr849158iob.41.1514973437676;
-        Wed, 03 Jan 2018 01:57:17 -0800 (PST)
-Received: from [192.168.206.100] ([117.246.167.101])
-        by smtp.gmail.com with ESMTPSA id k67sm494135iod.6.2018.01.03.01.57.14
+        bh=m9Cnzu1j1JxVxZj1RMFE0CrlE6FsqsJFpPegnuycLNE=;
+        b=CIPIHLCo1Accg9yX0jxHQjhdJdvBLsRGtLwUno2gWiMlAN1O74Qbgluvrxzl5zluE9
+         o38Sz6kdY2O5GGpt5A5y97BNstrZ79bVx+tg1OrLQ/qJ1R1PRSmKtv0Q81qHRTgQexX+
+         20NEIszQxFt082YW9At9qzRJzZKb06AepN1F9aip2yqG9K0tRp9ynOp+YwUN4Nj4YcvY
+         0HXcodAUCB3Q/+U48t2lrlzgbqrNGjw/Z8OHmuaE3ajxGxN7SdagqVP+s3ZRQwUjFSdj
+         a7b6Igvbx6NpK/sQxTXbc4bUmuGCi3KJZEm6riXPsD5cJZyfFDPpghcu7ErDVziI+XHo
+         v9TQ==
+X-Gm-Message-State: AKGB3mL23IFfXJb8JtPmSdsJgHbRQTZ+h1VPMeGlJVXTMrKA/bKP1sN7
+        LOUyLMLJWOS+BDSpzqN4Ffpdk7tS
+X-Google-Smtp-Source: ACJfBovJd2gRmL5xrVNk2rj5ElmO9EBMTS71djW0lwtfB6IAFQAa5YQJkSMxKYOovv2lIA1nyDK/kA==
+X-Received: by 10.223.157.36 with SMTP id k36mr936664wre.153.1514975329423;
+        Wed, 03 Jan 2018 02:28:49 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id r3sm872179wmg.31.2018.01.03.02.28.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 Jan 2018 01:57:16 -0800 (PST)
-Subject: Re: What's cooking in git.git (Dec 2017, #05; Wed, 27)
-To:     Daniel Knittl-Frank <knittl89@googlemail.com>, git@vger.kernel.org
-References: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
- <CACx-yZ3MPN1Fw4s=mV9n=zibVm9Z_OE1eSg+4PBtUsqxTTvwXQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Message-ID: <fc20d692-8a01-5f96-25bf-41549620d2c5@gmail.com>
-Date:   Wed, 3 Jan 2018 15:27:11 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        Wed, 03 Jan 2018 02:28:48 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Segev Finer <segev208@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC/PATCH] connect: add GIT_SSH_{SEND,RECEIVE}{,_COMMAND} env variables
+Date:   Wed,  3 Jan 2018 10:28:40 +0000
+Message-Id: <20180103102840.27897-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.1.424.g9478a66081
 MIME-Version: 1.0
-In-Reply-To: <CACx-yZ3MPN1Fw4s=mV9n=zibVm9Z_OE1eSg+4PBtUsqxTTvwXQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 03 January 2018 02:56 PM, Daniel Knittl-Frank wrote:
-> On Wed, Dec 27, 2017 at 10:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> * dk/describe-all-output-fix (2017-12-27) 1 commit
->>   - describe: prepend "tags/" when describing tags with embedded name
->>
->>   An old regression in "git describe --all $annotated_tag^0" has been
->>   fixed.
->>
->>   Will merge to 'next'.
-> 
-> Shouldn't this be merged to 'maint' since it is a bugfix (for a long
-> standing bug)? Or am I misinterpreting the meaning of the 'maint'
-> branch?
-> 
+Amend the long-standing logic for overriding the ssh command with
+GIT_SSH or GIT_SSH_COMMAND to also support
+e.g. GIT_SSH_SEND_COMMAND. The new specific send/receive variables
+take priority over the old ones, and fall back to the older ones if
+they exist.
 
-IIUC, the pipe line here is something like,
+This is useful for talking to systems such as Github or Gitlab that
+identify user accounts (or deploy keys) by ssh keys. Normally, ssh
+could do this itself by supplying multiple keys via -i, but that trick
+doesn't work on these systems as the connection will have already been
+accepted when the "wrong" key gets rejected.
 
-                   [PATCH]
+This new feature is redundant to and less general than setting the
+GIT_SSH_COMMAND to the path of a script that's going to dispatch to
+ssh depending on what the second argument to the script is, e.g.:
 
-                      |
+    $ cat ./git-ssh-command
+    #!/usr/bin/perl
+    if ($ARGV[1] =~ /^git-upload-pack /) {
+       system qw(ssh -i /some/ro/key) => @ARGV;
+    } elsif ($ARGV[1] =~ /^git-receive-pack /) {
+       system qw(ssh -i /some/rw/key) => @ARGV;
+    } else { ... }
+    $ GIT_TRACE=1 GIT_SSH_COMMAND="./git-ssh-command" git fetch
+    10:22:39.415684 git.c:344               trace: built-in: git 'fetch'
+    10:22:39.432192 run-command.c:627       trace: run_command: './git-ssh-command' '-G' 'git@github.com'
+    10:22:39.434156 run-command.c:627       trace: run_command: './git-ssh-command' 'git@github.com' 'git-upload-pack '\''git/git.git'\'''
+    Warning: Identity file /some/ro/key not accessible: No such file or directory.
 
-      (after the patch gets some consensus
-           when it's not trivial)
+However, I feel that this is a common enough case to be worth
+supporting explicitly, and such a script will also need to deal with
+arbitrary arguments fed via git-fetch's --upload-pack="...", and
+git-push's corresponding --receive-pack argument.
 
-                      |
-                      V
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-                Merge to 'pu'
+I'm not 100% sure about this one myself, but am leaning towards
+inclusion for the reasons explained above, and the patch is trivial
+enough that I think we can discuss whether it's worthwhile without
+test / documentation.
 
+ builtin/fetch-pack.c |  2 +-
+ builtin/send-pack.c  |  3 ++-
+ connect.c            | 21 ++++++++++++++++++---
+ connect.h            |  2 ++
+ 4 files changed, 23 insertions(+), 5 deletions(-)
 
-                      |
-
-  (after waiting for some time to see if someone
-   shouts about a build failing or complaining
-    a regression about the PATCH in 'pu')
-
-                      |
-                      V
-
-                Merge to 'next'
-
-                      |
-
-  (after waiting for some time to see if someone
-   shouts about a build failing or complaining
-    a regression about the PATCH in 'next')
-
-                      |
-                     / \
-                    /   \
-                   /     \
-                  /       \
-                 |         |
-
-   (if it's a bugfix for  (if it's a new feature or
-    an already released    an enhancement)
-    version of Git)
-
-                 |         |
-                 V         V
-       Merge to 'maint'    Merge to 'master'
-
-
-
-Of course 'maint' and 'master' are not diverged completely. They are 
-'synced' at times.
-
-Disclaimer: I won't say I'm 100% correct with the pipeline. This is just 
-what I've understood in observing the mailing list, the "What's cooking" 
-emails and the history of 'git' in the short time that I've been here. 
-So, there are possibilities that I've said something incorrectly. I 
-guess the "Documentation/howto/maintain-git.txt" document covers it more 
-comprehensively especially "The Policy" section describes the branches 
-more clearly.
-
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index 366b9d13f9..dae10f8419 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -189,7 +189,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 		if (args.diag_url)
+ 			flags |= CONNECT_DIAG_URL;
+ 		conn = git_connect(fd, dest, args.uploadpack,
+-				   flags);
++				   flags | CONNECT_RECEIVE);
+ 		if (!conn)
+ 			return args.diag_url ? 0 : 1;
+ 	}
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index fc4f0bb5fb..2374d2b29c 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -252,8 +252,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		fd[0] = 0;
+ 		fd[1] = 1;
+ 	} else {
++		int flags = args.verbose ? CONNECT_VERBOSE : 0;
+ 		conn = git_connect(fd, dest, receivepack,
+-			args.verbose ? CONNECT_VERBOSE : 0);
++			flags | CONNECT_SEND);
+ 	}
+ 
+ 	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL,
+diff --git a/connect.c b/connect.c
+index c3a014c5ba..2a35924292 100644
+--- a/connect.c
++++ b/connect.c
+@@ -774,13 +774,23 @@ static enum protocol parse_connect_url(const char *url_orig, char **ret_host,
+ 	return protocol;
+ }
+ 
+-static const char *get_ssh_command(void)
++static const char *get_ssh_command(int flags)
+ {
+ 	const char *ssh;
+ 
++	if (flags & CONNECT_SEND && (ssh = getenv("GIT_SSH_SEND_COMMAND")))
++		return ssh;
++	else if (flags & CONNECT_RECEIVE && (ssh = getenv("GIT_SSH_RECEIVE_COMMAND")))
++		return ssh;
+ 	if ((ssh = getenv("GIT_SSH_COMMAND")))
+ 		return ssh;
+ 
++	if (flags & CONNECT_SEND &&
++	    !git_config_get_string_const("core.sshsendcommand", &ssh))
++		return ssh;
++	else if (flags & CONNECT_RECEIVE &&
++	    !git_config_get_string_const("core.sshreceivecommand", &ssh))
++		return ssh;
+ 	if (!git_config_get_string_const("core.sshcommand", &ssh))
+ 		return ssh;
+ 
+@@ -997,7 +1007,7 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+ 	if (looks_like_command_line_option(ssh_host))
+ 		die("strange hostname '%s' blocked", ssh_host);
+ 
+-	ssh = get_ssh_command();
++	ssh = get_ssh_command(flags);
+ 	if (ssh) {
+ 		variant = determine_ssh_variant(ssh, 1);
+ 	} else {
+@@ -1008,7 +1018,12 @@ static void fill_ssh_args(struct child_process *conn, const char *ssh_host,
+ 		 */
+ 		conn->use_shell = 0;
+ 
+-		ssh = getenv("GIT_SSH");
++		if (flags & CONNECT_SEND)
++			ssh = getenv("GIT_SSH_SEND");
++		else if (flags & CONNECT_RECEIVE)
++			ssh = getenv("GIT_SSH_RECEIVE");
++		if (!ssh)
++			ssh = getenv("GIT_SSH");
+ 		if (!ssh)
+ 			ssh = "ssh";
+ 		variant = determine_ssh_variant(ssh, 0);
+diff --git a/connect.h b/connect.h
+index 01f14cdf3f..e3ff0d5838 100644
+--- a/connect.h
++++ b/connect.h
+@@ -5,6 +5,8 @@
+ #define CONNECT_DIAG_URL      (1u << 1)
+ #define CONNECT_IPV4          (1u << 2)
+ #define CONNECT_IPV6          (1u << 3)
++#define CONNECT_SEND          (1u << 4)
++#define CONNECT_RECEIVE       (1u << 5)
+ extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
+ extern int finish_connect(struct child_process *conn);
+ extern int git_connection_is_socket(struct child_process *conn);
 -- 
-Kaartic
+2.15.1.424.g9478a66081
 
-Quote: "Be creative. Be adventurous. Be original. And above all else, be 
-young." - Wonder Woman
