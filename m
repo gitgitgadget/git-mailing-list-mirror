@@ -2,133 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE1D31F404
-	for <e@80x24.org>; Wed,  3 Jan 2018 10:57:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA251F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 12:36:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751897AbeACK5V (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 05:57:21 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:57442 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751653AbeACK5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 05:57:20 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zBSYp4Zywz5tlJ;
-        Wed,  3 Jan 2018 11:57:18 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 0C9F141F8;
-        Wed,  3 Jan 2018 11:57:17 +0100 (CET)
-Subject: Re: [PATCH v5 00/34] Add directory rename detection to git
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Jeff King <peff@peff.net>
-References: <20171228041352.27880-1-newren@gmail.com>
- <CABPp-BEnpm=OEXZXMeuaxBaOLimucoEKH643jm516YufrtQ-iA@mail.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7ecea1b4-d713-7298-1697-ae25532e26e0@kdbg.org>
-Date:   Wed, 3 Jan 2018 11:57:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1751733AbeACMgY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 07:36:24 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:37398 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751335AbeACMgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 07:36:23 -0500
+Received: by mail-wr0-f177.google.com with SMTP id f8so1423156wre.4
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 04:36:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=0Q+LDSDbqbUr3dlYhyASugOWA6C09Y6r/kRyPsG6ENc=;
+        b=JfhBMtMl58PrRpXP32ugyL86Nbu/QlTVFdaDbM6mcW0XasTNDy5oWCJHBQ/MGmjFx0
+         zwoLxDEH0Rrhjz6+BiSWyM/B5IciNm+2M56C+CR9QZuoKFW1sHif3qLnQNNqizTV+0Ej
+         uaFi4ZHbfA58ULC+9qO/sdupxPs/Ac7u4U/LioP++P1fg7wcnT4XhC1SgdAHYXIvGAZL
+         W6NtZILrB2WM4fwAg63qK4d3KWPBq9Swh430FUz2HLwbVq++oz9IFCXJpJbwaT0CL7BQ
+         0vqq92hPr3yhT42KTBr7w4xMxbqHdShZUjSduhx5LCg4/CYWSwHTcpe4YmVAPtUqF547
+         4A8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=0Q+LDSDbqbUr3dlYhyASugOWA6C09Y6r/kRyPsG6ENc=;
+        b=pz0D3LdmJMSkGXYiy4KCaLpSqyHHe49unyzHdJqlG//QBDgeSiKXR1FqJHLroDu1m6
+         gDnaglSgWoCILnLVddGg0vrS9J2YQjEHcd6bDIx3HBv9ykvqCQ2+clZ+AYKsk2sjSm3f
+         UWc3NBhIWC53j9YW9jJJTrhBS+3WQPE0qovBSBsjiQO8ZEZQIg6iK4wu7sFydnmBFgZh
+         ytTfORTfioVIT0/KnkE7PrX22gHwBhJ/xSQygeC8NJTa76ShhUSjDnpmBUztjK5DNB6m
+         iIj2BnzygWfr5W3xcbMIieaqhH6R1rqBhjB6V9pxANNOTiep8mRmkauzJHpJ28be+NN4
+         6RCA==
+X-Gm-Message-State: AKGB3mLi2wpFkZw0BMKbO7mO2sgAtAeO2MFhTGdPnhDN+K95pIUS+yax
+        +ZbZqY4oDmoVDRMSF5hCuoAqIrangjZBJYqeWuTZkA==
+X-Google-Smtp-Source: ACJfBovdtXAOO2M0RJDQPQmWEXLDD7h+LW3etzoJf6jcybBBen4SkXNq1SfFGi3sR6OA0fPaM+o4rIWlBN1NeTzz10w=
+X-Received: by 10.223.146.199 with SMTP id 65mr1453256wrn.259.1514982982261;
+ Wed, 03 Jan 2018 04:36:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BEnpm=OEXZXMeuaxBaOLimucoEKH643jm516YufrtQ-iA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.223.197.193 with HTTP; Wed, 3 Jan 2018 04:36:21 -0800 (PST)
+From:   Yasushi SHOJI <yasushi.shoji@gmail.com>
+Date:   Wed, 3 Jan 2018 21:36:21 +0900
+Message-ID: <CAELBRWKYZK2tVhGZSExXRXrRB94jFN-4N3d=iKARzEsqLu7k1g@mail.gmail.com>
+Subject: [BUG] v2.16.0-rc0 seg faults when git bisect skip
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.01.2018 um 01:02 schrieb Elijah Newren:
-> On Wed, Dec 27, 2017 at 8:13 PM, Elijah Newren <newren@gmail.com> wrote:
->> This patchset introduces directory rename detection to merge-recursive.  See
->>    https://public-inbox.org/git/20171110190550.27059-1-newren@gmail.com/
->> for the first series (including design considerations, etc.), and follow-up
->> series can be found at
->>    https://public-inbox.org/git/20171120220209.15111-1-newren@gmail.com/
->>    https://public-inbox.org/git/20171121080059.32304-1-newren@gmail.com/
->>    https://public-inbox.org/git/20171129014237.32570-1-newren@gmail.com/
->>
->> Changes since v4:
->>    * Squashed Junio's GETTEXT_POISON fixes into the appropriate commits
-> 
-> As per Jonathan's request[1], shamelessly re-sending Stefan's request
-> for further review.  :-)
-> 
-> Quoting Stefan:
-> 
-> "I have reviewed the first three patches (which could form an
-> independent series)
-> that it would warrant a Reviewed-By: Stefan Beller <sbeller@google.com>
-> 
-> While I reviewed the earlier versions of the later patches, I would
-> prefer if there is another reviewer for these as it seems like a bigger
-> contribution at a core functionality.
-> 
-> I cc'd some people who were active in some form of rename detection
-> work earlier; could you review this series, please?"
-> 
-> My note: Stefan also looked through the testcases pretty closely and
-> even suggested additional tests, which would account for another 11
-> patches or so, but extra eyes on any part of the series always
-> welcome.
+Hi,
 
-I tested the series on Windows recently. It requires the patch below.
-I don't know whether this is indicating some portability issues of grep
-(^ being used in the middle of a RE instead of at the very beginning) or
-just a quirk in my setup.
+git version 2.16.0.rc0 seg faults on my machine when I
 
-But it still does not pass the test suite because the system does not
-like file names such as y/c~HEAD:
+git bisect skip
 
-++ grep 'Refusing to lose dirty file at z/c' out
-Refusing to lose dirty file at z/c
-++ grep -q stuff x/b y/a y/c y/c~HEAD z/c
-grep: y/c: Invalid request code
-error: last command exited with $?=2
-not ok 94 - 11d-check: Avoid losing not-uptodate with rename + D/F conflict
+Here is a back trace:
 
-I haven't debugged this any further, yet.
+$ /opt/mygit/bin/git --version
+git version 2.16.0.rc0
 
----- 8< ----
-From: Johannes Sixt <j6t@kdbg.org>
-Date: Fri, 22 Dec 2017 09:33:13 +0100
-Subject: [PATCH] fixup directory rename tests
+$ /opt/mygit/bin/git bisect skip
+Segmentation fault (core dumped)
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t6043-merge-rename-directories.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+$ gdb /opt/mygit/bin/git core
+GNU gdb (Debian 7.12-6+b1) 7.12.0.20161007-git
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /opt/mygit/bin/git...done.
+[New LWP 5211]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Core was generated by `git bisect--helper --next-all'.
+Program terminated with signal SIGSEGV, Segmentation fault.
+#0  0x000055a73107f900 in best_bisection_sorted (list=0x0, nr=0) at bisect.c:232
+232 free_commit_list(p->next);
+(gdb) bt
+#0  0x000055a73107f900 in best_bisection_sorted (list=0x0, nr=0) at bisect.c:232
+#1  0x000055a73107fc0f in do_find_bisection (list=0x0, nr=0,
+weights=0x55a731b6ffd0, find_all=1) at bisect.c:361
+#2  0x000055a73107fcf4 in find_bisection (commit_list=0x7ffe8750d4d0,
+reaches=0x7ffe8750d4c4, all=0x7ffe8750d4c0, find_all=1) at
+bisect.c:400
+#3  0x000055a73108128d in bisect_next_all (prefix=0x0, no_checkout=0)
+at bisect.c:969
+#4  0x000055a730fd5238 in cmd_bisect__helper (argc=0,
+argv=0x7ffe8750e230, prefix=0x0) at builtin/bisect--helper.c:140
+#5  0x000055a730fcbc76 in run_builtin (p=0x55a73145c778
+<commands+120>, argc=2, argv=0x7ffe8750e230) at git.c:346
+#6  0x000055a730fcbf40 in handle_builtin (argc=2, argv=0x7ffe8750e230)
+at git.c:554
+#7  0x000055a730fcc0e8 in run_argv (argcp=0x7ffe8750e0ec,
+argv=0x7ffe8750e0e0) at git.c:606
+#8  0x000055a730fcc29b in cmd_main (argc=2, argv=0x7ffe8750e230) at git.c:683
+#9  0x000055a731068d9e in main (argc=3, argv=0x7ffe8750e228) at common-main.c:43
+(gdb) p p
+$1 = (struct commit_list *) 0x0
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-index f0af66b8a9..b8cd428341 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -2940,8 +2940,8 @@ test_expect_success '10b-check: Overwrite untracked with dir rename + delete' '
- 		echo contents >y/e &&
- 
- 		test_must_fail git merge -s recursive B^0 >out 2>err &&
--		test_i18ngrep "CONFLICT (rename/delete).*Version B^0 of y/d left in tree at y/d~B^0" out &&
--		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B^0 instead" out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*Version B\^0 of y/d left in tree at y/d~B\^0" out &&
-+		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B\^0 instead" out &&
- 
- 		test 3 -eq $(git ls-files -s | wc -l) &&
- 		test 2 -eq $(git ls-files -u | wc -l) &&
-@@ -3010,7 +3010,7 @@ test_expect_success '10c-check: Overwrite untracked with dir rename/rename(1to2)
- 
- 		test_must_fail git merge -s recursive B^0 >out 2>err &&
- 		test_i18ngrep "CONFLICT (rename/rename)" out &&
--		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B^0 instead" out &&
-+		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B\^0 instead" out &&
- 
- 		test 6 -eq $(git ls-files -s | wc -l) &&
- 		test 3 -eq $(git ls-files -u | wc -l) &&
+As you can see, the code dereferences to the 'next' while 'p' is NULL.
+
+I'm sure I did 'git bisect good' after git _found_ bad commit.  Then I
+typed 'git bisect skip' on the commit 726804874 of guile repository.
+If that matters at all.
+
+I haven't touched guile repo to preserve the current state.
+
+Let me know if you need any other info.
 -- 
-2.14.2.808.g3bc32f2729
+          yashi
