@@ -7,75 +7,65 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96C1B1F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 23:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5B7B1F42B
+	for <e@80x24.org>; Wed,  3 Jan 2018 23:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751378AbeACXcP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 18:32:15 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53416 "EHLO
+        id S1751204AbeACXxS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 18:53:18 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56776 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751268AbeACXcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 18:32:14 -0500
+        with ESMTP id S1750913AbeACXxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 18:53:17 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E2E9D451E;
-        Wed,  3 Jan 2018 18:32:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 19D64D4C8B;
+        Wed,  3 Jan 2018 18:53:17 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8qu3WHHP5C8W
-        ayHHACfJI2YRRLI=; b=Lm+Mf6kimzILJ1KlY7kk9qaV45cO0U1iiJCxVjrvEC6J
-        FhQyU2h4TZFCZRSj0NRe6MHUr3ZOJscHw+r1IQ6nu6RGRNVU24ddvivmb3Qb2/Zh
-        MzhoujInmo2ax1lKN1uaA/P2Nn1cUZsOu2Hreugyg0+JGnG02wBPfkAFSK4mn10=
+        :content-type; s=sasl; bh=ebhLBbd44kWs36dOr5lpZWF2suk=; b=jlRAyy
+        burEu1/UNwhXXkiEoQgi/VrkYLiBs1uj/jF2PAuZJWkejG16QAWhH5Ubhh4mfZ4z
+        gLlnYwJtBLn6jE9W2EM+Xw0g/zGmSvGuufs5h2g64bQ4TcR/mbMrrocaOgJhoOny
+        pDV/+22nqgKbub5XHaavB+dMgqZJ7l4iovMkQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YdJas/
-        npLuC4IXlnCpIZdcAu97EDqAMs9b0G0Gvaj+hfiHOR8QXK10a/gRRe48R0SijFgQ
-        xwP+NWqUSnEDcCvCj9l8qr6DE2rGz5xU5j5fH7xzwy9n8hFuPqGGPedoWURp1TQC
-        pqZn1IHWLneTFkRHpBs2THH/9Y7GTAh6MLZAY=
+        :content-type; q=dns; s=sasl; b=g0P8MuRRe8DgQB0JaX/ntLxBU9jFUrrr
+        1GcwrzBxnwbK38aK8yJRiUGgNK5nBZQm7FbdqqzQIKBA/N4iPsCqs/LSc0etIlCM
+        HamT/0FCtaEXj8+1SgANSTU2Z4XtzLwrbqon+LbhWSKgI3vaMsRe7K7CfJQC6U6M
+        iRQsofmUtDc=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 350A3D451D;
-        Wed,  3 Jan 2018 18:32:14 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1226FD4C8A;
+        Wed,  3 Jan 2018 18:53:17 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A9D4D4515;
-        Wed,  3 Jan 2018 18:32:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8992AD4C89;
+        Wed,  3 Jan 2018 18:53:16 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, Segev Finer <segev208@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] connect: add GIT_SSH_{SEND,RECEIVE}{,_COMMAND} env variables
-References: <20180103102840.27897-1-avarab@gmail.com>
-Date:   Wed, 03 Jan 2018 15:32:12 -0800
-In-Reply-To: <20180103102840.27897-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 3 Jan 2018 10:28:40 +0000")
-Message-ID: <xmqq373mh62r.fsf@gitster.mtv.corp.google.com>
+To:     John Cheng <johnlicheng@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Misleading documentation for git-diff-files (diff-filter)
+References: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
+Date:   Wed, 03 Jan 2018 15:53:15 -0800
+In-Reply-To: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
+        (John Cheng's message of "Wed, 3 Jan 2018 08:07:03 -0800")
+Message-ID: <xmqqvagifqj8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 53C80C1A-F0DE-11E7-B321-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 44828340-F0E1-11E7-BD05-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+John Cheng <johnlicheng@gmail.com> writes:
 
-> This is useful for talking to systems such as Github or Gitlab that
-> identify user accounts (or deploy keys) by ssh keys. Normally, ssh
-> could do this itself by supplying multiple keys via -i, but that trick
-> doesn't work on these systems as the connection will have already been
-> accepted when the "wrong" key gets rejected.
+> I wanted to know if git diff-files shows files that are not in the
+> index but are in the working tree.
 
-You need to explain this a lot better than the above. =20
-
-I am sure systems such as Github have more than dozens of users who
-push over ssh and these users identify themselves by which key to
-use when establishing connection just fine (presumably by using a
-"Host" entry for the github URL in ~/.ssh/config), and presumably we
-are not sending "wrong" keys over there.  So there needs to be a lot
-more clear description of the problem you are trying to solve in the
-first place.
+At least in the original design of Git, that would fundamentally be
+impossible, as Git _only_ cares about paths that are in the index,
+so a new file won't be in the picture until it is added.  Because a
+change is shown as "A"dded by the diff family of commands only when
+the old side lacks a path that appears in the new side, there is no
+way "diff-files" that compares the index and the working tree would
+see a path that is missing from the old (i.e. the index) side.
