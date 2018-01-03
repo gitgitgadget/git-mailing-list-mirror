@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE1FC1F428
-	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A78CA1F428
+	for <e@80x24.org>; Wed,  3 Jan 2018 03:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751614AbeACDFm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 Jan 2018 22:05:42 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34526 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751515AbeACDFk (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751599AbeACDFl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 Jan 2018 22:05:41 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:36612 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751343AbeACDFk (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 2 Jan 2018 22:05:40 -0500
-Received: by mail-pf0-f194.google.com with SMTP id a90so224191pfk.1
-        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:40 -0800 (PST)
+Received: by mail-pl0-f67.google.com with SMTP id b12so376073plm.3
+        for <git@vger.kernel.org>; Tue, 02 Jan 2018 19:05:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dropbox.com; s=corp;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=JYaqmPMtAvvrbbfdWqHVLBy6UI8+jSEeDUhox9Qn7G8=;
-        b=VCmf+ENflZShsHyJfn01eLZPgW/qNNbHVi+1GUYpyNWDw2gyuBTiX+KuBM3xi17QFj
-         zVTJaL5Aij8sL3uztNIFhfzN89hH+JQe+De2m8H5WyAJjomESjn/4LeajHcOF+BoEV82
-         rR11YhLGhft7ciB5+smSeUShWOBLN02gIs3uY=
+        bh=ecCwm8PKlwj8g/lBcebKhcGBehi2DL2PSHwdHEKM2o8=;
+        b=J79ge9DelQ2GCdZo8FUm8tFR1b6RHcqjJxQmUOMPaCzrvsxdUJ0moqO5xacWIU0Y1a
+         p0H74yXjRVeCefTIvRHeEiH8f11FLPvF6czrH4b622zs+WIbMA8QOMLjviebAvgN5WyY
+         0rw0Q3yGNH8l2iFAy7xnyku4umE4StjypIKWc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=JYaqmPMtAvvrbbfdWqHVLBy6UI8+jSEeDUhox9Qn7G8=;
-        b=q+ymPzXfDmlL5Jnh3XfMSR5MDp7xv38SiQ+VZmjTV04I5M7eJaXjvX+pL4AaUJ+UCv
-         iWmJhippG7Vf3yc/ht5WeLASRKsa4AMBrz4HuwhhQSpZsW4ZJqkx+nDMoQqgKRGXl8GO
-         OWxf3dRUTIenyflp9rSuQlPKFKI4GhMdIAb60GpNgft2eDacGydeyQr0AsOOtqmMs30k
-         /Aq0O0qx0Or9ng5ioZhR+oMfdlyxRWUZAEyVgl+P8b5yoXEn0ItmjOs3s8DwBH6HDxEH
-         lqJ60MrMp7woHjdpD6L50GpdBXOTZlqaCveUQebasmzEmI8WZjBJmtChZR+OZjqk+Rav
-         n1kQ==
-X-Gm-Message-State: AKGB3mJknl63VfoJem/xcLxJ4ocE+fYQA27rV0RA4qDd+VLjfBBEWEVs
-        mlWbM7h8TciKdmEk+fGuqcAYMC//52U=
-X-Google-Smtp-Source: ACJfBotammTR+9G1ddDi7K2MUShu8CZJcTYLveqD5teaC8Yy8vHfLMyePubk4W0QoSIwLZb2HVaPrw==
-X-Received: by 10.99.108.4 with SMTP id h4mr92446pgc.113.1514948739156;
-        Tue, 02 Jan 2018 19:05:39 -0800 (PST)
-Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
-        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=ecCwm8PKlwj8g/lBcebKhcGBehi2DL2PSHwdHEKM2o8=;
+        b=QijaSNeum1wusXqURL/gbMQLsR9thSO/fxmkb6pmGU7nA0t28zH1PDI93y7+29zZ1s
+         LeIDrkAfE/rrlnWtpyfAJg5xK5dspuYi6pqCuY7L84I6cUKPI5S+5QOT8QRfybZavwcx
+         Dh36j55E0N9CMrfr5yGbsBYkSLiVlcS+ci9UtFqRh4ch9HoMvLGJNfPumGEjeb4UGHKz
+         +2qvSrkEPOVm0lY0NlHXCcnTFZxiwHcXJzYh2tkhd01Pa5SOAT7aHmwfXBb8T6zH9Ekv
+         uIZ2u57Ha9zhk5xrzYLA5zjorEUXxUCWeLRAQvbTb+59NIPE05QNk/ZXhcNVdUq2myAk
+         gKZQ==
+X-Gm-Message-State: AKGB3mKeD9gg5YKzPML1/TT4ZqHOICX3WeCOOugQh4yVc/Ty+T1SAPOz
+        lhIFJS184Da0wy/n0M6BCnhb7GqKRpU=
+X-Google-Smtp-Source: ACJfBosiFlN5+v9c+2zxbgOwe5uLI9oSRYSZzWX20RlSuNmcElSDPFULDBiKDDznlJpgRMy5cZTGFA==
+X-Received: by 10.84.214.136 with SMTP id j8mr119114pli.408.1514948738185;
         Tue, 02 Jan 2018 19:05:38 -0800 (PST)
+Received: from alexmv-linux.corp.dropbox.com (V160-vrrp.corp.dropbox.com. [205.189.0.161])
+        by smtp.gmail.com with ESMTPSA id 82sm107742pfm.136.2018.01.02.19.05.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 02 Jan 2018 19:05:37 -0800 (PST)
 From:   Alex Vandiver <alexmv@dropbox.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ben Peart <peartben@gmail.com>
-Subject: [PATCH 6/6] fsmonitor: Use fsmonitor data in `git diff`
-Date:   Tue,  2 Jan 2018 19:04:56 -0800
-Message-Id: <121828fc14bc6f3096d16005feffb58bf68f070a.1514948078.git.alexmv@dropbox.com>
+Subject: [PATCH 5/6] fsmonitor: Remove debugging lines from t/t7519-status-fsmonitor.sh
+Date:   Tue,  2 Jan 2018 19:04:55 -0800
+Message-Id: <0ee51f4baaf07f388782e7a5904dcc6360e86f3d.1514948078.git.alexmv@dropbox.com>
 X-Mailer: git-send-email 2.15.1.31.gddce0adfe
 In-Reply-To: <20180103030456.8181-1-alexmv@dropbox.com>
 References: <20180103030456.8181-1-alexmv@dropbox.com>
@@ -63,69 +63,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes use of the fsmonitor extension to skip lstat() calls on
-files that fsmonitor judged as unmodified.  We skip use of the
-fsmonitor extension when called by "add" because the format_callback
-in such cases expects to be called even when the file is believed to
-be "up to date" with the index.
+These were mistakenly left in when the test was introduced, in
+1487372d3 ("fsmonitor: store fsmonitor bitmap before splitting index",
+2017-11-09)
 
 Signed-off-by: Alex Vandiver <alexmv@dropbox.com>
 ---
- builtin/add.c | 2 +-
- diff-lib.c    | 6 ++++++
- diff.h        | 2 ++
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ t/t7519-status-fsmonitor.sh | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index bf01d89e2..bba20b46e 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -119,7 +119,7 @@ int add_files_to_cache(const char *prefix,
- 	rev.diffopt.format_callback_data = &data;
- 	rev.diffopt.flags.override_submodule_config = 1;
- 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
--	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
-+	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED | DIFF_SKIP_FSMONITOR);
- 	clear_pathspec(&rev.prune_data);
- 	return !!data.add_errors;
- }
-diff --git a/diff-lib.c b/diff-lib.c
-index 8104603a3..13ff00d81 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -95,6 +95,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 
- 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
- 
-+	if (!(option & DIFF_SKIP_FSMONITOR))
-+		refresh_fsmonitor(&the_index);
-+
- 	if (diff_unmerged_stage < 0)
- 		diff_unmerged_stage = 2;
- 	entries = active_nr;
-@@ -197,6 +200,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
- 		if (ce_uptodate(ce) || ce_skip_worktree(ce))
- 			continue;
- 
-+		if (ce->ce_flags & CE_FSMONITOR_VALID && !(option & DIFF_SKIP_FSMONITOR))
-+			continue;
-+
- 		/* If CE_VALID is set, don't look at workdir for file removal */
- 		if (ce->ce_flags & CE_VALID) {
- 			changed = 0;
-diff --git a/diff.h b/diff.h
-index 7cf276f07..5cf5866bd 100644
---- a/diff.h
-+++ b/diff.h
-@@ -392,6 +392,8 @@ extern const char *diff_aligned_abbrev(const struct object_id *sha1, int);
- #define DIFF_SILENT_ON_REMOVED 01
- /* report racily-clean paths as modified */
- #define DIFF_RACY_IS_MODIFIED 02
-+/* skip loading the fsmonitor data */
-+#define DIFF_SKIP_FSMONITOR 04
- extern int run_diff_files(struct rev_info *revs, unsigned int option);
- extern int run_diff_index(struct rev_info *revs, int cached);
- 
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index eb2d13bbc..19b2a0a0f 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -307,9 +307,7 @@ test_expect_success 'splitting the index results in the same state' '
+ 	dirty_repo &&
+ 	git update-index --fsmonitor  &&
+ 	git ls-files -f >expect &&
+-	test-dump-fsmonitor >&2 && echo &&
+ 	git update-index --fsmonitor --split-index &&
+-	test-dump-fsmonitor >&2 && echo &&
+ 	git ls-files -f >actual &&
+ 	test_cmp expect actual
+ '
 -- 
 2.15.1.31.gddce0adfe
 
