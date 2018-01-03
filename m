@@ -2,87 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 799961F406
-	for <e@80x24.org>; Wed,  3 Jan 2018 22:45:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96C1B1F406
+	for <e@80x24.org>; Wed,  3 Jan 2018 23:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751066AbeACWo7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 17:44:59 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:44192 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751053AbeACWo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 17:44:57 -0500
-Received: by mail-wm0-f42.google.com with SMTP id t8so379442wmc.3
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 14:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shabtay.com; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7qXv4OLxcwMSMRTpJ5SUzRoo6wTnsu1t2soaF3651nc=;
-        b=Ewu00cbIKl5AUcVvB21Jz+6N/iUk9dCmC6lucD08l4YHk4/wKWRkIW+5lcKR7VPAHk
-         CnRnohDZpnPhHF2CLLU2Dl2k/0Y3Z/FK6pEJxXyetgL6HDsgy/sQc1INVb7yxN34xrFY
-         qf5vc/n6FzVVD8OYYNgjMwaS3p61l20gwzwbU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7qXv4OLxcwMSMRTpJ5SUzRoo6wTnsu1t2soaF3651nc=;
-        b=Ut95ucEDtUoOxkYssC2Plfs1lnxvfimYgUl4D77t9OylZGDW13OkR+CWEVRHesuqSD
-         74A4YyJaejk/QOa4F/CXzvv+ca88QKn+L49JGmw4vFMhzmYaqZP9jdSIzKzYVUwjc2Im
-         FH2y34i5CjVpgoL87Ch44+BxZWvFSprTuMgwtv+svaKsgmIvaCIrkBOIUh8p6vJd9lMq
-         p/qdY8+1IvNyM7P9T+njqNx2rbi99k8//uDm/EPMABsuDbsEeOvR37khvg8hF1VpOeVM
-         C487COB6X0kmjSRe6bZEza3LOV4FoeYzbr4cP2t1aXXtLaxBVVh87ofva8rw8OWfsgQs
-         SnGw==
-X-Gm-Message-State: AKGB3mLj7ylyVHAAgyPMCJ9YRuKH+agvCz6er98R89ywU+khhNdWJbDf
-        n/rVq9VuRuWzQ0bQ6U3S47eXNmpOmb3Q2dc05txXKg==
-X-Google-Smtp-Source: ACJfBov+H0rdNvds5DAGApbEcxXY7pNAzKGYlvQtXGI4AtaoLA8Lx/uNOSSG09a6yB7mQBrIFMPlUrMA8cREFh2s0ho=
-X-Received: by 10.80.171.89 with SMTP id t25mr4496320edc.224.1515019496395;
- Wed, 03 Jan 2018 14:44:56 -0800 (PST)
+        id S1751378AbeACXcP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 18:32:15 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53416 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751268AbeACXcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 18:32:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E2E9D451E;
+        Wed,  3 Jan 2018 18:32:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=8qu3WHHP5C8W
+        ayHHACfJI2YRRLI=; b=Lm+Mf6kimzILJ1KlY7kk9qaV45cO0U1iiJCxVjrvEC6J
+        FhQyU2h4TZFCZRSj0NRe6MHUr3ZOJscHw+r1IQ6nu6RGRNVU24ddvivmb3Qb2/Zh
+        MzhoujInmo2ax1lKN1uaA/P2Nn1cUZsOu2Hreugyg0+JGnG02wBPfkAFSK4mn10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YdJas/
+        npLuC4IXlnCpIZdcAu97EDqAMs9b0G0Gvaj+hfiHOR8QXK10a/gRRe48R0SijFgQ
+        xwP+NWqUSnEDcCvCj9l8qr6DE2rGz5xU5j5fH7xzwy9n8hFuPqGGPedoWURp1TQC
+        pqZn1IHWLneTFkRHpBs2THH/9Y7GTAh6MLZAY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 350A3D451D;
+        Wed,  3 Jan 2018 18:32:14 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9A9D4D4515;
+        Wed,  3 Jan 2018 18:32:13 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Segev Finer <segev208@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH] connect: add GIT_SSH_{SEND,RECEIVE}{,_COMMAND} env variables
+References: <20180103102840.27897-1-avarab@gmail.com>
+Date:   Wed, 03 Jan 2018 15:32:12 -0800
+In-Reply-To: <20180103102840.27897-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 3 Jan 2018 10:28:40 +0000")
+Message-ID: <xmqq373mh62r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.80.170.203 with HTTP; Wed, 3 Jan 2018 14:44:16 -0800 (PST)
-In-Reply-To: <20180103222821.GA32287@sigill.intra.peff.net>
-References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com>
- <20180103222821.GA32287@sigill.intra.peff.net>
-From:   Isaac Shabtay <isaac@shabtay.com>
-Date:   Wed, 3 Jan 2018 14:44:16 -0800
-Message-ID: <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com>
-Subject: Re: Bug report: git clone with dest
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 53C80C1A-F0DE-11E7-B321-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Indeed interesting... this one's for the books...
-Thanks for the patches. Any idea when these are going to make it to
-the official Git client builds? (specifically the Windows one)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On 3 January 2018 at 14:28, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 03, 2018 at 12:59:48PM -0800, Isaac Shabtay wrote:
->
->> Target directory is deleted on clone failures.
->>
->> Steps to reproduce, for example on Windows:
->>
->> cd /d %TEMP%
->> mkdir dest
->> git clone https://some-fake-url/whatever-makes-git-clone-fail dest
->>
->> Of course, the clone will fail as it should. But looks like the Git
->> client also ends up deleting the "dest" directory.
->
-> Interesting. AFAICT Git has behaved this way for almost 9 years, and now
-> we have two reports in two days. Serendipity, or did something else
-> change? :)
->
-> Anyway, you might be interested in the patch series I posted yesterday:
->
->   https://public-inbox.org/git/20180102210753.GA10430@sigill.intra.peff.net/
->
-> -Peff
+> This is useful for talking to systems such as Github or Gitlab that
+> identify user accounts (or deploy keys) by ssh keys. Normally, ssh
+> could do this itself by supplying multiple keys via -i, but that trick
+> doesn't work on these systems as the connection will have already been
+> accepted when the "wrong" key gets rejected.
+
+You need to explain this a lot better than the above. =20
+
+I am sure systems such as Github have more than dozens of users who
+push over ssh and these users identify themselves by which key to
+use when establishing connection just fine (presumably by using a
+"Host" entry for the github URL in ~/.ssh/config), and presumably we
+are not sending "wrong" keys over there.  So there needs to be a lot
+more clear description of the problem you are trying to solve in the
+first place.
