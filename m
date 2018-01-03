@@ -2,195 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7D831F404
-	for <e@80x24.org>; Wed,  3 Jan 2018 08:31:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9F141F404
+	for <e@80x24.org>; Wed,  3 Jan 2018 09:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751145AbeACIby (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 03:31:54 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51710 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750748AbeACIbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 03:31:53 -0500
-Received: (qmail 12240 invoked by uid 109); 3 Jan 2018 08:31:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 03 Jan 2018 08:31:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25071 invoked by uid 111); 3 Jan 2018 08:32:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Wed, 03 Jan 2018 03:32:18 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Jan 2018 03:31:46 -0500
-Date:   Wed, 3 Jan 2018 03:31:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Damien =?utf-8?B?TWFyacOp?= <damien@dam.io>
-Subject: Re: [PATCH v3] run-command: add hint when a hook is ignored
-Message-ID: <20180103083145.GA7049@sigill.intra.peff.net>
-References: <xmqqh8vcx1nh.fsf@gitster.mtv.corp.google.com>
- <0102015ef0ba0273-ed29c030-7cdc-4535-a411-6cc443bd5f43-000000@eu-west-1.amazonses.com>
- <xmqqy3ojpr9f.fsf@gitster.mtv.corp.google.com>
- <xmqqmv4ymc7w.fsf@gitster.mtv.corp.google.com>
+        id S1751930AbeACJ0b (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 04:26:31 -0500
+Received: from mail-io0-f177.google.com ([209.85.223.177]:42731 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751245AbeACJ0a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 04:26:30 -0500
+Received: by mail-io0-f177.google.com with SMTP id x67so1476142ioi.9
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 01:26:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=sH5DWqLEgIUuZRyN8oeROy4w+qlswaB9oK+WEao1v8o=;
+        b=sSXPjAQSeEfF7kabfYEpwsgq3hGNNSg4V+FXHdKB/kE1j1E8RZiZQahRRBB89xGB1f
+         sQ+PdlgK1GTyCE5K/A/AucLnGvojuMM5z9JGv5w4rERr0snLAeHGFbVWtnW/JXiWRHqK
+         VTZUZbegAhfZmvWoMQ8Fq0um24PiZYlgiFCXjAoLRo4yxZcf1fYRZuyNBRXRGwsiOxVI
+         /xhIWMoLL5rhGD4wBsfkWmCYeE038EBeOyNresVPH5ErO0dMb70boD4x4AFN6mbso56c
+         tiIRcTVXcBLy3TNtiC1A/bHiHznbj/W79aeBSgRDaO4ILyOFms6mtkbFiCO16pjFbHzM
+         ovoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=sH5DWqLEgIUuZRyN8oeROy4w+qlswaB9oK+WEao1v8o=;
+        b=TD9lY4US+nDd6wP2bPdr17V3ndpUJViQ3zxLNDv/6RHnbe4oiextI6U0jDPb75p60e
+         hiihcRDH8BdW0IB2nULrYcvVr0Nyhm3ABnam8bkyGXPImgeSfk8qhVu9zMfTbgt0ej9I
+         OwiCebe1jATOf5N0vHX43fZ+eem5bkTUGEIUa3tK7HEYSOKpmSta+F9jANW/5UAPU7Ne
+         On2pkzQu2pGvltETi3G4K430+9M/DCeuVTvszX8vx0dHkzmCcHEBokdFot2TfNzwtYFh
+         j97ftOtL1CUGjmj/01UWOOwr6w0d1N+Zb3L5DrLHIB+GmC1EEBECXc4HD7huvL+KS9U5
+         88NA==
+X-Gm-Message-State: AKGB3mKzo+LcAgt2tFErVYuxrsM/2R4rp3T9KIFXTz/OL/xzdVSXTpts
+        FlO4QTr3bfiXavm8pBSR5eEC+4guaeTbq1+dlhE=
+X-Google-Smtp-Source: ACJfBotx8W27cgdq3SF5mBj0YWwweqYNXIr/ujglMDcFlgLamhGUncoXkFzUF6YpsyKHNLYf82JxOnbrRJtWw3KA31Y=
+X-Received: by 10.107.129.40 with SMTP id c40mr784980iod.169.1514971589511;
+ Wed, 03 Jan 2018 01:26:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqmv4ymc7w.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.109.73 with HTTP; Wed, 3 Jan 2018 01:26:08 -0800 (PST)
+In-Reply-To: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
+References: <xmqq608rn9ca.fsf@gitster.mtv.corp.google.com>
+From:   Daniel Knittl-Frank <knittl89@googlemail.com>
+Date:   Wed, 3 Jan 2018 10:26:08 +0100
+Message-ID: <CACx-yZ3MPN1Fw4s=mV9n=zibVm9Z_OE1eSg+4PBtUsqxTTvwXQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2017, #05; Wed, 27)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 11, 2017 at 03:26:43PM +0900, Junio C Hamano wrote:
+On Wed, Dec 27, 2017 at 10:34 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> * dk/describe-all-output-fix (2017-12-27) 1 commit
+>  - describe: prepend "tags/" when describing tags with embedded name
+>
+>  An old regression in "git describe --all $annotated_tag^0" has been
+>  fixed.
+>
+>  Will merge to 'next'.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Quite honestly, I do not particulary think this is confusing, and I
-> > expect that this change will irritate many people by forcing them to
-> > either set the advise config or move the ones that they deliberately
-> > left unexecutable by renaming them by adding ".disabled" at the end.
-> >
-> > But these remedies are easy enough, so let's see how well it works
-> > by merging it to 'next' and cooking it there for a while.
-> 
-> Well, it turns out that I am among those who are irritated, as all
-> the repositories I work with were rather old, dating back to 2005,
-> back when it was a norm to have these sample files installed without
-> executable bit, to make it easy for those who choose to use them
-> as-is to enable them by flipping the executable bit.
-> [...]
-> Anyway, I am not merging this topic to the upcoming release, so
-> hopefully we'll hear from others who try 'next'.
+Shouldn't this be merged to 'maint' since it is a bugfix (for a long
+standing bug)? Or am I misinterpreting the meaning of the 'maint'
+branch?
 
-This bit me today in a funny way: t5523 started failing.
+Daniel
 
-The problem is that I was bisecting an unrelated change in old code, and
-I built a commit which predates f98f8cbac0 (Ship sample hooks with .sample
-suffix, 2008-06-24). That wrote a bare "update" file into templates/blt
-(without the ".sample" suffix). After that, the cruft is forever in my
-build directory until I "git clean -x".
-
-The t5523 script tries to run "git push --quiet" and make sure that it
-produces no output, but with this setup it produces a round of "hint"
-lines (actually, they come from receive-pack on the remote end but still
-end up on stderr).
-
-So that raises a few interesting questions to me:
-
-  1. Should receive-pack generate these hints? They get propagated by
-     the client, but there's a reasonable chance that the user can't
-     actually fix the situation.
-
-  2. Should these hints be suppressed with --quiet? I can see an
-     argument that "--quiet" only applies to non-errors. And while these
-     are not fatal errors, they're outside the realm of the usual
-     chattiness.
-
-  3. Should our tests be more careful about not looking at the
-     template hooks? I think test_create_repo already disables the hooks
-     directory manually, but many repos will be created by "git clone"
-     during the tests.
-
-  4. Should our build system be more clever about dropping non-existent
-     files from templates/blt?
-
-I started down the road of saying "--quiet should disable all advice",
-and that patch is below. But I'm having second thoughts on it. It fixes
-the case in receive-pack, but what should "commit --quiet" do? It's
-documented only to suppress the status output after commit. Should it
-cover this case? For that matter, the "quiet" protocol extension which
-is passed to receive-pack is generally used only for progress reporting,
-and is sent automatically when stderr isn't a tty (which is why the
-tests below must go through some contortions with test_terminal). I'm
-not sure if it should actually apply to advice.
-
----
- advice.c                        |  8 ++++++++
- advice.h                        |  6 ++++++
- builtin/receive-pack.c          |  4 +++-
- t/t7520-ignored-hook-warning.sh | 15 +++++++++++++++
- 4 files changed, 32 insertions(+), 1 deletion(-)
-
-diff --git a/advice.c b/advice.c
-index 406efc183b..f754af8abe 100644
---- a/advice.c
-+++ b/advice.c
-@@ -137,3 +137,11 @@ void detach_advice(const char *new_name)
- 
- 	fprintf(stderr, fmt, new_name);
- }
-+
-+void disable_advice(void)
-+{
-+	size_t i;
-+
-+	for (i = 0; i < ARRAY_SIZE(advice_config); i++)
-+		*advice_config[i].preference = 0;
-+}
-diff --git a/advice.h b/advice.h
-index 70568fa792..4895554ef3 100644
---- a/advice.h
-+++ b/advice.h
-@@ -30,4 +30,10 @@ extern void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
- void detach_advice(const char *new_name);
- 
-+/*
-+ * Turn off all advice flags; this can be used to centrally enforce a --quiet
-+ * option.
-+ */
-+void disable_advice(void);
-+
- #endif /* ADVICE_H */
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index b7ce7c7f52..f257c16776 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1601,8 +1601,10 @@ static struct command *read_head_info(struct oid_array *shallow)
- 				report_status = 1;
- 			if (parse_feature_request(feature_list, "side-band-64k"))
- 				use_sideband = LARGE_PACKET_MAX;
--			if (parse_feature_request(feature_list, "quiet"))
-+			if (parse_feature_request(feature_list, "quiet")) {
- 				quiet = 1;
-+				disable_advice();
-+			}
- 			if (advertise_atomic_push
- 			    && parse_feature_request(feature_list, "atomic"))
- 				use_atomic = 1;
-diff --git a/t/t7520-ignored-hook-warning.sh b/t/t7520-ignored-hook-warning.sh
-index 634fb7f23a..1d27d3e3f0 100755
---- a/t/t7520-ignored-hook-warning.sh
-+++ b/t/t7520-ignored-hook-warning.sh
-@@ -3,6 +3,7 @@
- test_description='ignored hook warning'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- test_expect_success setup '
- 	hookdir="$(git rev-parse --git-dir)/hooks" &&
-@@ -38,4 +39,18 @@ test_expect_success 'no warning if unset advice.ignoredHook and hook removed' '
- 	test_i18ngrep ! -e "hook was ignored" message
- '
- 
-+test_expect_success TTY,POSIXPERM 'push --quiet silences remote hook warnings' '
-+	git init --bare dst.git &&
-+	echo "exit 0" >dst.git/hooks/update &&
-+	chmod -x dst.git/hooks/update &&
-+
-+	git commit --allow-empty -m one &&
-+	test_terminal git push dst.git HEAD 2>message &&
-+	test_i18ngrep -e "hook was ignored" message &&
-+
-+	git commit --allow-empty -m two &&
-+	test_terminal git push --quiet dst.git HEAD 2>message &&
-+	test_i18ngrep ! -e "hook was ignored" message
-+'
-+
- test_done
--- 
-2.16.0.rc0.384.gc477e89267
-
+--
+typed with http://neo-layout.org
