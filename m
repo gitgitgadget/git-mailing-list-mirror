@@ -7,146 +7,78 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB2E51F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 20:11:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35E481F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 20:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752715AbeADULG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 15:11:06 -0500
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:42208 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbeADULF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 15:11:05 -0500
-Received: by mail-wr0-f172.google.com with SMTP id w107so2563760wrb.9
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 12:11:05 -0800 (PST)
+        id S1752109AbeADUP5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 15:15:57 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33397 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751829AbeADUP5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 15:15:57 -0500
+Received: by mail-wr0-f193.google.com with SMTP id p6so2592372wrd.0
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 12:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=NPvuKISLr5WL7cBmvLeJJxr1PW4g5gOWsS65VEdrfhk=;
-        b=dqKrWwakLFH8wT4zBCa7kVWcA4yj1YEt3MmJnI7j+3vlz7BicozpjN2jPDHOm1w+tp
-         1Vpf4uOihN7yDJnn/dAtGC9thtHROc7I/6GZKn0OdjR4ZjNDx6AV2quiKOAgNz1KjJy1
-         PjecxBipaoGWw8/XF0WIi/y6GSzankNlGN20IWx1AQhZTUPE/F9r/YC5JoBx3/L5B4WA
-         OwyhyuNW6LSYiWKnNqznHFKCx/zExPbeIPdsw9ivCjTAMB8QgLJiRcSe+IUmedBEimde
-         uHvOxxp4+/WNNcWMPUTcpaRmr4u1PE+vG8m5fFDNY2C4aMpfXaQAL2960nOnZLzgVD8Y
-         9dZg==
+        bh=/WapJIX0u2OukBmSBSUAKTT0UGW3kGKR5z3BotWCVpM=;
+        b=OoPxdSTwAqLvn8kjAcCyzJMZ1LAD5R1LPSUTkMwsRQDqxvoxT2dXunGxOa0K/aHxT4
+         R2ginS7R7Xj9Lw7C23abZESBFzKY22jlJzvIhWcYmwE3Kofda5bwpmf7aB0qnsAvwP/L
+         tvv/IS/2rfjnM6vabzxT5bqqNHfEk+wDZB1k/8sR32ukV//7G4MTbpyPYfMdrVHyAhEn
+         8bjYNbh/8FkVMw+FUDNP68PARMUg+WQNbRxJ2Y6e4iRkmznTeAvKJvi6mZzZIod0CM/a
+         FdTVPeQ1eTO2MVfKtl1eVxYXF4LqbJU9EBelrtAUmK4dVeXeuDRy8EBWvX+T4LSKUJ8j
+         esWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NPvuKISLr5WL7cBmvLeJJxr1PW4g5gOWsS65VEdrfhk=;
-        b=afcJmgAgGFUYZXyH5HW8I86L5YxLs8WU7gDepJ2Z+6H9psl6bdoKGBejLgGOEaUBIs
-         XdShWyeMOoRiGr+UP/hJWs2MQoHLZR1Ihvah8uQd2pyxJmBOvWzetuRJ3TlBAYtzbs7J
-         PB8f4lvywS5IcFFqemJDjGm6T7v2myuI8OwmMyxrItKESAxKPUfdzTOMEGTPwGFA6rKO
-         +yMf99CDcxZv3TvwNNv1VUbuy2oSFQf2ZpnVCUkYmYUEj/KWT7rpE6M/8osLMv9CaLMZ
-         LwVXfTzo9cum3QTBUHz9z2/L2qs9L5nxDC2U+gkMpEu9m2HKAhgwS2n8Xow9v4RY8833
-         LSqA==
-X-Gm-Message-State: AKGB3mLcaml7Sn1txUWXMmZ9OriZr5VQG+oCB62kECSJuOAbP/ZdHGv/
-        2QyGGn7hbe7+o2ymCQ8Uq7M=
-X-Google-Smtp-Source: ACJfBot5cUOPGIFWUa9CTzw89LaJ4AvTSEmYyBYYd71nKR8Lz8bo3GTB94w3FT4rp9Bi/cc+8OrRbA==
-X-Received: by 10.223.166.99 with SMTP id k90mr627968wrc.114.1515096664263;
-        Thu, 04 Jan 2018 12:11:04 -0800 (PST)
+        bh=/WapJIX0u2OukBmSBSUAKTT0UGW3kGKR5z3BotWCVpM=;
+        b=W6bm8JiRdIOuFHWq9nICbPqPWobv1lBAl/3MopiW/D1OOEOnJvVMvjDzh9z6QJMy9e
+         vV2xXw1RD2EgLR3RArBj771LaDJQlmUsXM4+G2wRcNgmS8JLq73+bVXvIVIqZwRvrMIc
+         xuBbt8gbBOVmVkyhhsRyk0IIgJ6nQ7+qvk0eZJ6cVrch3oQA/k6OujiFLiRnsoiP9Wv+
+         xmW0gKJ2O1MFqwINhb7eOg8AadSkzbw5kj1JbeB11qeKITfuG9j4KHI0JVjRray1uo1N
+         dlnrq+pQYdr0oPsrZzyNrrqiuuqt9RvX3eChtTuf5pyZRRQDMzOAqia9h1IFmbvfpfQA
+         q/CQ==
+X-Gm-Message-State: AKGB3mKSWvSXsDzuesnup6aHRnx0QLmFneKCMEAS5mB6bWOlsR9Ue4o1
+        zS9TpujvTVkWqLe1SxV5qHyJ22eO
+X-Google-Smtp-Source: ACJfBounLs/p6aNkR4vgKzdH7ug0DnmFvkVVUnhDN8/EyZ/YVJykntYw6WXoX2iROzkz0BNMNZVQsg==
+X-Received: by 10.223.164.148 with SMTP id g20mr671375wrb.177.1515096955984;
+        Thu, 04 Jan 2018 12:15:55 -0800 (PST)
 Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id y124sm4079809wmb.42.2018.01.04.12.11.03
+        by smtp.gmail.com with ESMTPSA id f125sm3289056wme.45.2018.01.04.12.15.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jan 2018 12:11:03 -0800 (PST)
-Date:   Thu, 4 Jan 2018 20:13:12 +0000
+        Thu, 04 Jan 2018 12:15:55 -0800 (PST)
+Date:   Thu, 4 Jan 2018 20:18:04 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 3/3] travis: run tests with GIT_TEST_SPLIT_INDEX
-Message-ID: <20180104201312.GD2641@hank>
-References: <20171210212202.28231-1-t.gummerer@gmail.com>
- <20171217225122.28941-1-t.gummerer@gmail.com>
- <20171217225122.28941-4-t.gummerer@gmail.com>
- <CA6C93AD-B24D-43A2-8AAA-DE98A4C9E719@gmail.com>
+To:     Paul Smith <paul@mad-scientist.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
+Message-ID: <20180104201804.GE2641@hank>
+References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
+ <1514567611.3270.28.camel@mad-scientist.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA6C93AD-B24D-43A2-8AAA-DE98A4C9E719@gmail.com>
+In-Reply-To: <1514567611.3270.28.camel@mad-scientist.net>
 User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/18, Lars Schneider wrote:
+On 12/29, Paul Smith wrote:
+> On Thu, 2017-12-28 at 20:30 -0800, Junio C Hamano wrote:
+> >  * The way "git worktree add" determines what branch to create from
+> >    where and checkout in the new worktree has been updated a bit.
 > 
-> > On 17 Dec 2017, at 23:51, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > 
-> > Split index mode only has a few dedicated tests, but as the index is
-> > involved in nearly every git operation, this doesn't quite cover all the
-> > ways repositories with split index can break.  To use split index mode
-> > throughout the test suite a GIT_TEST_SPLIT_INDEX environment variable
-> > can be set, which makes git split the index at random and thus
-> > excercises the functionality much more thoroughly.
-> > 
-> > As this is not turned on by default, it is not executed nearly as often
-> > as the test suite is run, so occationally breakages slip through.  Try
-> > to counteract that by running the test suite with GIT_TEST_SPLIT_INDEX
-> > mode turned on on travis.
-> > 
-> > To avoid using too many cycles on travis only run split index mode in
-> > the linux-gcc and the linux 32-bit gcc targets.
-> 
-> I am surprised to see the split index mode test for the linux 32-bit
-> target. Is it likely that a split index bug appears only on 32-bit? 
-> Wouldn't the linux-gcc target be sufficient to save resources/time?
+> Does this include the enhancements published a few weeks ago to allow
+> worktrees to be created directly from remote branches without first
+> checking out the branch locally? I'm really looking forward to that
+> change...
 
-I'm not sure it's particularly likely for a bug to appear only on
-32-bit builds.  It also doesn't seem to take too long to run, so I
-thought I'd add it just in case, but I'm happy running the tests only
-in the 64-bit builds if that's preferred.
+Yes, this release will include that.  It would be awesome if you could
+test the rc, now is the best time to scream if something about it is
+not as you'd expect :)
 
-> >  The Linux builds were
-> > chosen over the Mac OS builds because they tend to be much faster to
-> > complete.
-> > 
-> > The linux gcc build was chosen over the linux clang build because the
-> > linux clang build is the fastest build, so it can serve as an early
-> > indicator if something is broken and we want to avoid spending the extra
-> > cycles of running the test suite twice for that.
-> > 
-> > Helped-by: Lars Schneider <larsxschneider@gmail.com>
-> > Helped-by: Junio C Hamano <gitster@pobox.com>
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> > ci/run-linux32-build.sh | 1 +
-> > ci/run-tests.sh         | 4 ++++
-> > 2 files changed, 5 insertions(+)
-> > 
-> > diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-> > index e30fb2cddc..f173c9cf2a 100755
-> > --- a/ci/run-linux32-build.sh
-> > +++ b/ci/run-linux32-build.sh
-> > @@ -27,4 +27,5 @@ linux32 --32bit i386 su -m -l $CI_USER -c '
-> >     cd /usr/src/git &&
-> >     make --jobs=2 &&
-> >     make --quiet test
-> > +    GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
-> > '
-> > diff --git a/ci/run-tests.sh b/ci/run-tests.sh
-> > index f0c743de94..c7aee5b9ff 100755
-> > --- a/ci/run-tests.sh
-> > +++ b/ci/run-tests.sh
-> > @@ -8,3 +8,7 @@
-> > mkdir -p $HOME/travis-cache
-> > ln -s $HOME/travis-cache/.prove t/.prove
-> > make --quiet test
-> > +if test "$jobname" = "linux-gcc"
-> > +then
-> > +	GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
-> > +fi
-> 
-> For now I think that looks good. Maybe we could define additional test 
-> configurations with an environment variable. That could be an array variable
-> defined in the lib-travis.ci "case" statement:
-> https://github.com/git/git/blob/1229713f78cd2883798e95f33c19c81b523413fd/ci/lib-travisci.sh#L42-L65
-
-That sounds like a good idea.  I'll try to see if I can come up with
-something.
-
-> - Lars
+> Thanks!
