@@ -2,150 +2,467 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1D141F406
-	for <e@80x24.org>; Thu,  4 Jan 2018 00:52:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F197B1F406
+	for <e@80x24.org>; Thu,  4 Jan 2018 01:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751300AbeADAws (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 19:52:48 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40348 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750994AbeADAwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 19:52:47 -0500
-Received: by mail-wm0-f68.google.com with SMTP id f206so661708wmf.5
-        for <git@vger.kernel.org>; Wed, 03 Jan 2018 16:52:47 -0800 (PST)
+        id S1751441AbeADBHK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 20:07:10 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:43278 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750945AbeADBHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 20:07:09 -0500
+Received: by mail-qt0-f170.google.com with SMTP id w10so186439qtb.10
+        for <git@vger.kernel.org>; Wed, 03 Jan 2018 17:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :signed-off-by:content-transfer-encoding;
-        bh=wUrQdtetHnvfwRkmIcIWzf1VvDYn3+5TUtJ+X+Oc4yI=;
-        b=k4+49QYcEoiH5WCc3QaYIcvFOfn1dx7C/cis/1oIiJEYahxlvMnsqK4o5iEJnaEpm9
-         YYkHYEtYGbVneQR4cMzcCbHHSaVcGr0nH6UOxjekEH3r1NFU0HmzhFOMQxSxglDobCuS
-         XdXEEUXJ8thBfbfyJSB+l9fhkz/DxJaCpXDpymV1C0A5GGP8GSOZzzya+MgY8S4HLV/T
-         TjFhkwb6wsS8/KovmAzbcPw5Ma0gK1F1X9jzpOHdqggID0GZmqUr2fmabvMAPBDkClxU
-         27Y+7XgQSR9jS9L7IEVFZvlgQ2z7Sn0N9ttzGtfsmBoLwZnBM8/6TCbDwsXvTXu/hMf5
-         IClg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Jec3pncx0zjcqP5728KpJHA2OGFcpQ69wdlLjxxD72I=;
+        b=PZHurLNo72JV174Y8uIBNmyVSCMGsLtUKc9muVeZXz5/N0+73/7gOqe6VrK5obavmn
+         ww/7dKCbZNSQL+kuDxo/TvH0/e/HQgywqAO5JU0T84j+66qGhPDMnmU6s2rtgyyp7533
+         +WwbaN88+qJhtUqxtAcrjSEoawiKgNTXkdx/bEml9eJlk7JHq0MnYN/nX7l4qwMUXTw8
+         DFsPtLzCg1hP/iBYuBB8+5LeSDCDUSv/ctH8M/fJ+TIAL36epLnupVJ23AtwkNWCSJkP
+         XizXH+KqQa5pEcomnbvc8/ITVZssFevtZEyc8oFzvxgY53R37j747xF8MYnhCEX3+eC4
+         G/pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:signed-off-by:content-transfer-encoding;
-        bh=wUrQdtetHnvfwRkmIcIWzf1VvDYn3+5TUtJ+X+Oc4yI=;
-        b=tL9tNC7ramHsrF4Nv1g/S3q584iwWj5DvNcpjYfanY1K5zLoeO3UV+sPs+uhatyxgS
-         v03dpXZkItkgj6OvmbReYFw5pocr5K6duW4/1LiFsAyYSXngti0hTC4VzOzukJinTNd+
-         Y32+/BS2H+HdArWPznlaEHxT82jox7uLzmY0c1j1M5SWxyqI823gsjbalJamEw5ibHgV
-         XhP5ztn+m4Jc28+D+k48GUfqDYVJ7i/vu0vd0g3F4vmKwIdGoNR9DrTr0oq5B3gp+bQr
-         Q1EBbnjGiNmA0/eJrZK2l3l6U05BFISasu66odWVQYd9+/nKIXZwHniEzCM7dc08fYVQ
-         mj9w==
-X-Gm-Message-State: AKGB3mLbOnH33Vpo+LVg8Lo3uZKXh/1Iid20nqO9fgr6vuGTK00C0pOx
-        YiyeifR6FMpz0enRNcwm7VY=
-X-Google-Smtp-Source: ACJfBotCOnp819q5qEuDECcoPvjnYvOE4NRwMHDmmJJwep7huc3fIccUnPHTJqGbr0SskoqHqpKbFQ==
-X-Received: by 10.28.136.66 with SMTP id k63mr2835959wmd.50.1515027166454;
-        Wed, 03 Jan 2018 16:52:46 -0800 (PST)
-Received: from localhost.localdomain (94-21-23-100.pool.digikabel.hu. [94.21.23.100])
-        by smtp.gmail.com with ESMTPSA id s86sm2220477wma.29.2018.01.03.16.52.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 03 Jan 2018 16:52:45 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5 13/34] directory rename detection: tests for handling overwriting untracked files
-Date:   Thu,  4 Jan 2018 01:52:23 +0100
-Message-Id: <20180104005223.13566-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.0.rc0.67.ge0c5f1248
-In-Reply-To: <20171228041352.27880-14-newren@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Jec3pncx0zjcqP5728KpJHA2OGFcpQ69wdlLjxxD72I=;
+        b=qTW/yZ9QX3YAym/7VIE1kgacvso/wDqkC5ENvYrqPMLAt8nHT1GuvL94ag9SJ7GDT+
+         Rg16exRugLhuurUTDGNdf687DFq0Vn5CWlcSLKMbgmxwszQvsdsXqQsBbZwWHmwjhyf/
+         +Lwo7LwN9C8UTxtjaVpEFfv0F44MRd2a9OFd0fooP0qL+MrgkSVLeAiuurm76D/Y+Zd8
+         f9McsZ2rACqGD2uQSy0dVFZSpM2S9zTJY8D4aiN8/N9/tU0hnGYBRcjsWOeILNPhnsfJ
+         1P+i6aihrhk6dYCnkTEEdF0BnvAFVhA2pRPx844fZaz1s46k3p6hvLJRmCYZHww5RxkY
+         3AgA==
+X-Gm-Message-State: AKGB3mK5fgIvaK78TeZYkXVNOxznS0evGXwWwVzTdrPlCdm6rJY1QiP5
+        I/BL84sRvkQD7WmYAPkZanxSmdKqqrGpmfSN7r6XvQ==
+X-Google-Smtp-Source: ACJfBovj9odM1ukXf0PKOrv7Bon/jzOoavVC4zuSR3peRKM3g16SMchxKMPDe7yDTHxvKV6r9UFiytp2Q9kfIOQt8Pg=
+X-Received: by 10.200.35.215 with SMTP id r23mr4037060qtr.174.1515028028581;
+ Wed, 03 Jan 2018 17:07:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Content-Transfer-Encoding: 8bit
+Received: by 10.140.85.179 with HTTP; Wed, 3 Jan 2018 17:07:07 -0800 (PST)
+In-Reply-To: <20180103001828.205012-20-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com> <20180103001828.205012-20-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 3 Jan 2018 17:07:07 -0800
+Message-ID: <CAGZ79kYVeKS26qMEiu=2tP0t18no9CtEoAMeBO-rSt+66=fnGQ@mail.gmail.com>
+Subject: Re: [PATCH 19/26] upload-pack: introduce fetch server command
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
+On Tue, Jan 2, 2018 at 4:18 PM, Brandon Williams <bmwill@google.com> wrote:
+> Introduce the 'fetch' server command.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 > ---
->  t/t6043-merge-rename-directories.sh | 337 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 337 insertions(+)
-
-> +test_expect_failure '10b-check: Overwrite untracked with dir rename + delete' '
-> +	(
-> +		cd 10b &&
+>  Documentation/technical/protocol-v2.txt |  14 ++
+>  serve.c                                 |   2 +
+>  upload-pack.c                           | 290 ++++++++++++++++++++++++++++++++
+>  upload-pack.h                           |   9 +
+>  4 files changed, 315 insertions(+)
+>  create mode 100644 upload-pack.h
+>
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index 5f4d0e719..2a8e2f226 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -115,3 +115,17 @@ The output of ls-refs is as follows:
+>
+>      symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
+>      shallow = PKT-LINE("shallow" SP obj-id LF)
 > +
-> +		git checkout A^0 &&
-> +		echo very >y/c &&
-> +		echo important >y/d &&
-> +		echo contents >y/e &&
+> + Fetch
+> +-------
 > +
-> +		test_must_fail git merge -s recursive B^0 >out 2>err &&
-> +		test_i18ngrep "CONFLICT (rename/delete).*Version B^0 of y/d left in tree at y/d~B^0" out &&
-> +		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing to y/e~B^0 instead" out &&
+> +Fetch will need to be a modified version of the v1 fetch protocol.  Some
+> +potential areas for improvement are: Ref-in-want, CDN offloading,
+> +Fetch-options.
 > +
-> +		test 3 -eq $(git ls-files -s | wc -l) &&
-> +		test 2 -eq $(git ls-files -u | wc -l) &&
-> +		test 5 -eq $(git ls-files -o | wc -l) &&
+> +Since we'll have an 'ls-ref' service we can eliminate the need of fetch
+> +to perform a ref-advertisement, instead a client can run the 'ls-refs'
+> +service first, in order to find out what refs the server has, and then
+> +request those refs directly using the fetch service.
 > +
-> +		test $(git rev-parse :0:y/b) = $(git rev-parse O:z/b) &&
+> +//TODO Flesh out the design
 
-There is a test helper for that :)
+TODO: actually do it. ;)
 
-  test_cmp_rev :0:y/b O:z/b
-
-Note, that this is not only a matter of useful output on failure, but
-also that of correctness and robustness.  A failing command inside
-those command substitutions won't cause the whole command above to
-fail, and if both 'git rev-parse' were to fail without writing
-anything to stdout, the whole condition would still be fulfilled:
-
-  $ test $(false) = $(false) && echo true
-  true
-
-I noticed that this patch series adds several similar
-
-  test $(git hash-object this) = $(git rev-parse that)
-
-conditions.  Well, for that we don't have a test helper
-function.  Similar 'hash-object = rev-parse' comparisons are already
-present in two other test scripts, so perhaps it's worth adding a
-helper function.  Or you could perhaps
-
-  git cat-file -p that >out &&
-  test_cmp this out
-
-I also noticed that all existing 'hash-object = rev-parse' conditions
-came from you, so I would leave it up to you to decide which is easier
-to work with and whether it's worth it.
+a couple notes from the discussion in office:
+* Could we split fetch into multiple phases
+  (negotiation + getting the pack)
+* negotiation could be reused in forced push to
+  minimize the pack to be sent
+* negotiation in a half duplex is actually better
+  called 'discovery', which discovers about the set
+  of objects available on the remote side.
+  (the opposite would be reveal, or 'ask-for-discovery', which
+  is could be used for a symmetric design of fetch and push)
 
 
-> +		test "very" = "$(cat y/c)" &&
+> diff --git a/serve.c b/serve.c
+> index 88d548410..ca3bb7190 100644
+> --- a/serve.c
+> +++ b/serve.c
+> @@ -6,6 +6,7 @@
+>  #include "argv-array.h"
+>  #include "ls-refs.h"
+>  #include "serve.h"
+> +#include "upload-pack.h"
+>
+>  static int always_advertise(struct repository *r,
+>                             struct strbuf *value)
+> @@ -46,6 +47,7 @@ static struct protocol_capability capabilities[] = {
+>         { "agent", agent_advertise, NULL },
+>         { "stateless-rpc", always_advertise, NULL },
+>         { "ls-refs", always_advertise, ls_refs },
+> +       { "fetch", always_advertise, upload_pack_v2 },
+>  };
+>
+>  static void advertise_capabilities(void)
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 2ca60d27c..c41f6f528 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -20,6 +20,7 @@
+>  #include "prio-queue.h"
+>  #include "protocol.h"
+>  #include "serve.h"
+> +#include "upload-pack.h"
+>
+>  static const char * const upload_pack_usage[] = {
+>         N_("git upload-pack [<options>] <dir>"),
+> @@ -1040,6 +1041,295 @@ static void upload_pack(void)
+>         }
+>  }
+>
+> +struct upload_pack_data {
+> +       struct object_array wants;
+> +       struct oid_array haves;
 > +
-> +		test "important" = "$(cat y/d)" &&
-
-The 'verbose' helper could make conditions like these more, well,
-verbose about their failure:
-
-  verbose test "very" = "$(cat y/c)" &&
-
-> +		test "important" != "$(git rev-parse :3:y/d)" &&
-
-I'm not sure what this condition is supposed to check.
-
-I'm not particularly well versed in the intricacies of 'git rev-parse'
-operating on different stages of the index, but to my understanding
-'git rev-parse rev' either outputs the object name pointed by 'rev',
-or 'rev' verbatim if that doesn't resolve to a valid object.  IOW, it
-would never output "important" and the condition would always be
-fulfilled.
-What am I missing?
-
-> +		test $(git rev-parse :3:y/d) = $(git rev-parse O:z/c) &&
+> +       unsigned stateless_rpc : 1;
 > +
-> +		test "contents" = "$(cat y/e)" &&
-> +		test "contents" != "$(git rev-parse :3:y/e)" &&
-> +		test $(git rev-parse :3:y/e) = $(git rev-parse B:z/e)
-> +	)
-> +'
+> +       unsigned use_thin_pack : 1;
+> +       unsigned use_ofs_delta : 1;
+> +       unsigned no_progress : 1;
+> +       unsigned use_include_tag : 1;
+> +       unsigned done : 1;
+> +};
+> +
+> +#define UPLOAD_PACK_DATA_INIT { OBJECT_ARRAY_INIT, OID_ARRAY_INIT, 0, 0, 0, 0, 0, 0 }
+> +
+> +static void upload_pack_data_clear(struct upload_pack_data *data)
+> +{
+> +       object_array_clear(&data->wants);
+> +       oid_array_clear(&data->haves);
+> +}
+> +
+> +static int parse_want(const char *line)
+> +{
+> +       const char *arg;
+> +       if (skip_prefix(line, "want ", &arg)) {
+> +               struct object_id oid;
+> +               struct object *o;
+> +
+> +               if (get_oid_hex(arg, &oid))
+> +                       die("git upload-pack: protocol error, "
+> +                           "expected to get oid, not '%s'", line);
+> +
+> +               o = parse_object(&oid);
+> +               if (!o) {
+> +                       packet_write_fmt(1,
+> +                                        "ERR upload-pack: not our ref %s",
+> +                                        oid_to_hex(&oid));
+> +                       die("git upload-pack: not our ref %s",
+> +                           oid_to_hex(&oid));
+> +               }
+> +
+> +               if (!(o->flags & WANTED)) {
+> +                       o->flags |= WANTED;
+> +                       add_object_array(o, NULL, &want_obj);
+> +               }
+> +
+> +               return 1;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int parse_have(const char *line, struct oid_array *haves)
+> +{
+> +       const char *arg;
+> +       if (skip_prefix(line, "have ", &arg)) {
+> +               struct object_id oid;
+> +
+> +               if (get_oid_hex(arg, &oid))
+> +                       die("git upload-pack: expected SHA1 object, got '%s'", arg);
+> +               oid_array_append(haves, &oid);
+> +               return 1;
+> +       }
+
+The same stylistic nit as in an earlier patch: Maybe
+shortcircuit by inverting the condition?
+
+
+
+> +
+> +       return 0;
+> +}
+> +
+> +static void process_args(struct argv_array *args, struct upload_pack_data *data)
+> +{
+> +       int i;
+> +
+> +       for (i = 0; i < args->argc; i++) {
+> +               const char *arg = args->argv[i];
+> +
+> +               /* process want */
+> +               if (parse_want(arg))
+> +                       continue;
+> +               /* process have line */
+> +               if (parse_have(arg, &data->haves))
+> +                       continue;
+> +
+> +               /* process args like thin-pack */
+> +               if (!strcmp(arg, "thin-pack")) {
+> +                       use_thin_pack = 1;
+> +                       continue;
+> +               }
+> +               if (!strcmp(arg, "ofs-delta")) {
+> +                       use_ofs_delta = 1;
+> +                       continue;
+> +               }
+> +               if (!strcmp(arg, "no-progress")) {
+> +                       no_progress = 1;
+> +                       continue;
+> +               }
+> +               if (!strcmp(arg, "include-tag")) {
+> +                       use_include_tag = 1;
+> +                       continue;
+> +               }
+> +               if (!strcmp(arg, "done")) {
+> +                       data->done = 1;
+> +                       continue;
+> +               }
+> +
+> +               /* ignore unknown lines maybe? */
+> +               die("unexpect line: '%s'", arg);
+> +       }
+> +}
+> +
+> +static void read_haves(struct upload_pack_data *data)
+> +{
+> +       struct packet_reader reader;
+> +       packet_reader_init(&reader, 0, NULL, 0,
+> +                          PACKET_READ_CHOMP_NEWLINE);
+> +
+> +       while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
+> +
+> +               if (parse_have(reader.line, &data->haves))
+> +                       continue;
+> +               if (!strcmp(reader.line, "done")) {
+> +                       data->done = 1;
+> +                       continue;
+> +               }
+> +       }
+> +       if (reader.status != PACKET_READ_FLUSH)
+> +               die("ERROR");
+> +}
+> +
+> +static int process_haves(struct oid_array *haves, struct oid_array *common)
+> +{
+> +       int i;
+> +
+> +       /* Process haves */
+> +       for (i = 0; i < haves->nr; i++) {
+> +               const struct object_id *oid = &haves->oid[i];
+> +               struct object *o;
+> +               int we_knew_they_have = 0;
+> +
+> +               if (!has_object_file(oid))
+> +                       continue;
+> +
+> +               oid_array_append(common, oid);
+> +
+> +               o = parse_object(oid);
+> +               if (!o)
+> +                       die("oops (%s)", oid_to_hex(oid));
+> +               if (o->type == OBJ_COMMIT) {
+> +                       struct commit_list *parents;
+> +                       struct commit *commit = (struct commit *)o;
+> +                       if (o->flags & THEY_HAVE)
+> +                               we_knew_they_have = 1;
+> +                       else
+> +                               o->flags |= THEY_HAVE;
+> +                       if (!oldest_have || (commit->date < oldest_have))
+> +                               oldest_have = commit->date;
+> +                       for (parents = commit->parents;
+> +                            parents;
+> +                            parents = parents->next)
+> +                               parents->item->object.flags |= THEY_HAVE;
+> +               }
+> +               if (!we_knew_they_have)
+> +                       add_object_array(o, NULL, &have_obj);
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int send_acks(struct oid_array *acks, struct strbuf *response)
+> +{
+> +       int i;
+> +       /* Send Acks */
+> +       if (!acks->nr)
+> +               packet_buf_write(response, "NAK\n");
+> +
+> +       for (i = 0; i < acks->nr; i++) {
+> +               packet_buf_write(response, "ACK %s common\n",
+> +                                oid_to_hex(&acks->oid[i]));
+> +       }
+> +
+> +       if (ok_to_give_up()) {
+> +               /* Send Ready */
+> +               packet_buf_write(response, "ACK %s ready\n",
+> +                                oid_to_hex(&acks->oid[i-1]));
+> +               return 1;
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int process_haves_and_send_acks(struct upload_pack_data *data)
+> +{
+> +       struct oid_array common = OID_ARRAY_INIT;
+> +       struct strbuf response = STRBUF_INIT;
+> +       int ret = 0;
+> +
+> +       process_haves(&data->haves, &common);
+> +       if (data->done) {
+> +               ret = 1;
+> +       } else if (send_acks(&common, &response)) {
+> +               packet_buf_delim(&response);
+> +               ret = 1;
+> +       } else {
+> +               /* Add Flush */
+> +               packet_buf_flush(&response);
+> +               ret = 0;
+> +       }
+> +
+> +       /* Send response */
+> +       write_or_die(1, response.buf, response.len);
+> +       strbuf_release(&response);
+> +
+> +       oid_array_clear(&data->haves);
+> +       oid_array_clear(&common);
+> +       return ret;
+> +}
+> +
+> +#define FETCH_PROCESS_ARGS 0
+> +#define FETCH_READ_HAVES 1
+> +#define FETCH_SEND_ACKS 2
+> +#define FETCH_SEND_PACK 3
+> +#define FETCH_DONE 4
+> +
+> +int upload_pack_v2(struct repository *r, struct argv_array *keys,
+> +                  struct argv_array *args)
+> +{
+> +       int state = FETCH_PROCESS_ARGS;
+> +       struct upload_pack_data data = UPLOAD_PACK_DATA_INIT;
+> +       const char *out;
+> +       use_sideband = LARGE_PACKET_MAX;
+> +
+> +       /* Check if cmd is being run as a stateless-rpc */
+> +       if (has_capability(keys, "stateless-rpc", &out))
+> +               if (!strcmp(out, "true"))
+> +                       data.stateless_rpc = 1;
+> +
+> +       while (state != FETCH_DONE) {
+> +               switch (state) {
+> +               case FETCH_PROCESS_ARGS:
+> +                       process_args(args, &data);
+> +
+> +                       if (!want_obj.nr) {
+> +                               /*
+> +                                * Request didn't contain any 'want' lines,
+> +                                * guess they didn't want anything.
+> +                                */
+> +                               state = FETCH_DONE;
+> +                       } else if (data.haves.nr) {
+> +                               /*
+> +                                * Request had 'have' lines, so lets ACK them.
+> +                                */
+> +                               state = FETCH_SEND_ACKS;
+> +                       } else {
+> +                               /*
+> +                                * Request had 'want's but no 'have's so we can
+> +                                * immedietly go to construct and send a pack.
+> +                                */
+> +                               state = FETCH_SEND_PACK;
+> +                       }
+> +                       break;
+> +               case FETCH_READ_HAVES:
+> +                       read_haves(&data);
+> +                       state = FETCH_SEND_ACKS;
+> +                       break;
+> +               case FETCH_SEND_ACKS:
+> +                       if (process_haves_and_send_acks(&data))
+> +                               state = FETCH_SEND_PACK;
+> +                       else if (data.stateless_rpc)
+> +                               /*
+> +                                * Request was made via stateless-rpc and a
+> +                                * packfile isn't ready to be created and sent.
+> +                                */
+> +                               state = FETCH_DONE;
+> +                       else
+> +                               state = FETCH_READ_HAVES;
+> +                       break;
+> +               case FETCH_SEND_PACK:
+> +                       create_pack_file();
+> +                       state = FETCH_DONE;
+> +                       break;
+> +               case FETCH_DONE:
+> +                       break;
+> +               default:
+> +                       BUG("invalid state");
+> +               }
+> +       }
+> +
+> +       upload_pack_data_clear(&data);
+> +       return 0;
+> +}
+> +
+>  static int upload_pack_config(const char *var, const char *value, void *unused)
+>  {
+>         if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
+> diff --git a/upload-pack.h b/upload-pack.h
+> new file mode 100644
+> index 000000000..54c429563
+> --- /dev/null
+> +++ b/upload-pack.h
+> @@ -0,0 +1,9 @@
+> +#ifndef UPLOAD_PACK_H
+> +#define UPLOAD_PACK_H
+> +
+> +struct repository;
+> +struct argv_array;
+> +extern int upload_pack_v2(struct repository *r, struct argv_array *keys,
+> +                         struct argv_array *args);
+> +
+> +#endif /* UPLOAD_PACK_H */
+> --
+> 2.15.1.620.gb9897f4670-goog
+>
