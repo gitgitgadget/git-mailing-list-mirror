@@ -2,82 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED4C81F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 17:00:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 024C11F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 17:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752587AbeADRAB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 12:00:01 -0500
-Received: from mout.web.de ([212.227.17.12]:49708 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751952AbeADRAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 12:00:00 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LvBMs-1ex5z62MJ0-010NLj; Thu, 04
- Jan 2018 17:59:54 +0100
-Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
-To:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
- <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <5A4B2DA5.907@hiroshima-u.ac.jp>
- <59a1fc058278463996ed68c970a5e08a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <955dae095d504b00b3e1c8a956ba852a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <5A4D9089.3050209@hiroshima-u.ac.jp>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de>
-Date:   Thu, 4 Jan 2018 17:59:50 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1751401AbeADRUQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 12:20:16 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:51402 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750770AbeADRUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 12:20:16 -0500
+Received: from [10.0.2.15] ([80.189.70.206])
+        by smtp with ESMTPA
+        id X9BdelrjoUnu3X9Bee0qRY; Thu, 04 Jan 2018 17:20:14 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=DY5nkrlW c=1 sm=1 tr=0
+ a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=N_ErAeJL6OySSau_Fn0A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] utf8.c: mark utf{16,32}_{be,le}_bom symbols static
+Message-ID: <e96a7a50-9d4f-c1d6-ecd7-f967b102b58a@ramsayjones.plus.com>
+Date:   Thu, 4 Jan 2018 17:20:13 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-In-Reply-To: <5A4D9089.3050209@hiroshima-u.ac.jp>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:JZUg5gs3UONKj9oW1IIDmEe07nxEg1zP6dNImFSHDr5M54S149K
- nhAhgQnfoaSEwxUQ1435A/xTA8mWm9HMCsQ/PzK53VHla0UgB6gshr3QyFXMQv39Llw1t00
- fsNXqDOmXVxeqTX2JfLOAcJijwYw3Fed5129u+B4jCJTQZVNvQEHBfZeiurFDjzIUOxK4L9
- XEt3NvlaoxDvcOHHvDdeQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:GAg+7rsFLos=:DOkJQvyI+egmJo53Dm0PZj
- r4AcP5mp5LeprIZdGbdtWkRYPFr1FISXiDH5ZROxByr81nyvppmPU6caFsTUaEqjCx8kCU/ec
- 9lWIvKxSzbERHc59RYIzAiDwBrwXF3XjqyGyNG5c6UxAqnz0+uk1k+wM9+GCIDwRVUayl6FfD
- OzZOsi+aYfb+hfQRhULcpclizvWfGX7SefPPW1McKvMbH4xYhHnpM4B+fGWQs5CJil+7nu256
- g6jF97rghg/BufIByF3qxbPJt1WnSULYXV7+LMQ27i3agNdm6hFPdWQ4sYl75zNGIL2YN/XmF
- oqDJDuDRdQ6c+gDos34abQkeooeeTuxc41z5Krp6AIVPYtUHDpDqYO+Hh1bCJ1jfyeBwoIQPn
- X4L8IixZozuL09eKzgasR4LPXUkz4470dP1nZ401YXymdkNKzOr21GriUTtQexgzaLG/cJAl2
- cD/KRsM2L2K8jlTwnyo/rHPHKx97iPU+oEq3jT72s9TjZD2oQyRFOGsEStQfgiMhRgZKt3YV1
- qn6A4Nw6wmoUS3TcE6FLZms1AfS4x/ZtUpD3+k/mV780kfB8cMc/jjrugcTHnW2R5eTDM6OP7
- oyvul1iG23oe4HAmT4OekZw7ao6qqemwbPckjwi2iP3ZYdHcD+rz68FPaI8PJRtlIwxoDsY5w
- g1AVXwMj53E2Psuqt0rovAFe8b7MYwxMRYS/SE00nrNj1WIZmUdL6dDAUFDKe1OKzFmSb9XvQ
- VSrQeYlLPPp4g5WohH2a/sehzjTweOEi+rIYmleRZdpYT/vblPTr05of2wDD5zVi77YkBI3Ei
- uTPHkOKm6YWQ3MHx70gY08bLc7yUDr7UyCr4LfoWr3A4pkuPhE=
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIz1UGLVEDeavAo+UG63vZNGpa1ekWKJehFa9IPVMMVg4vJSN3a/0cVsQwln/2Z34ozkcQ2KgAR5U9LW0lTBHBdQS4P1RZTMCTzTblU0gE0RgZXRvgVt
+ 3qCNcax1iuB7Ep+oJZfXD1q76DXK18JrFVWAu4nf8H5OLRT5Nu4DrrBfD+0GuKfSe6QYA6uTxtjh2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.01.2018 um 03:25 schrieb suzuki toshiya:
-> Taking a glance on parse-options.h, I could not find the
-> existing class collecting the operands as an array (or
-> linked list) from multiple "--xxx=yyy" options. Similar
-> things might be the collecting the pathnames to pathspec
-> structure. Should I write something with OPTION_CALLBACK?
 
-There is OPT_STRING_LIST; Documentation/technical/api-parse-options.txt
-says:
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-  `OPT_STRING_LIST(short, long, &struct string_list, arg_str, description)`::
-      Introduce an option with string argument.
-      The string argument is stored as an element in `string_list`.
-      Use of `--no-option` will clear the list of preceding values.
+Hi Lars,
 
-I don't know if it's a good idea, but perhaps we don't even need a new
-option.  We could change how pathspecs of untracked files are handled:
-Instead of aborting we could include them in the archive.  (Sounds like
-the simplest possible interface, but may have practical problems.)
+If you need to re-roll your 'ls/checkout-encoding' branch, could you
+please squash this into the relevant patch (commit d5318db2d0,
+"utf8: add function to detect prohibited UTF-16/32 BOM", 2017-12-31).
 
-René
+[yes, noticed by sparse].
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ utf8.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/utf8.c b/utf8.c
+index 1978d6c42..f033fec1c 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -544,10 +544,10 @@ static int has_bom_prefix(const char *data, size_t len,
+ 	return (len >= bom_len) && !memcmp(data, bom, bom_len);
+ }
+ 
+-const char utf16_be_bom[] = {0xFE, 0xFF};
+-const char utf16_le_bom[] = {0xFF, 0xFE};
+-const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
+-const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
++static const char utf16_be_bom[] = {0xFE, 0xFF};
++static const char utf16_le_bom[] = {0xFF, 0xFE};
++static const char utf32_be_bom[] = {0x00, 0x00, 0xFE, 0xFF};
++static const char utf32_le_bom[] = {0xFF, 0xFE, 0x00, 0x00};
+ 
+ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
+ {
+-- 
+2.15.0
