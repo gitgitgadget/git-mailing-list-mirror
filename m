@@ -2,115 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA85D1F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 20:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB2E51F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 20:11:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752496AbeADUGa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 15:06:30 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:53668 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbeADUG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 15:06:29 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id F220B6032D; Thu,  4 Jan 2018 20:06:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1515096389;
-        bh=f/Jxj8PiHEsWa0IbZ356nd49+jxA2IlfiQrcDDcUj0U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nbl5FIUUjEDU2pKpR1chaxROh593eNI7YNtjkmv/qKg4J7Eg++D3al+Y1zOYl1f1o
-         Y8IILO7I1ddhozjocR5A9PZDvJJ5eXSVyhzZ8wyikHHuUqJb4+ye9EwderIo1aa0en
-         LKeEYZkMDEiW7dFq5064bqZwijRQvZCQaDxAJhJo=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8E32C602B9;
-        Thu,  4 Jan 2018 20:06:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1515096388;
-        bh=f/Jxj8PiHEsWa0IbZ356nd49+jxA2IlfiQrcDDcUj0U=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hfkxlL2+lxq3ZMhYr3BbUsqAu8A8DI3KQevjC1jnqgzBmbxO9FOops8OtAShBefXZ
-         HQQh9WNDmMGg4dp8ju6qQhQKmD6L5ExzOfsQ7w3XLZe8lbjCJO7aILD33z51weARck
-         +Y4qP2SzTAFK08MVvcHEBZvdI9xolTH+g3MPavo0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8E32C602B9
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Carl Baldwin <carl@ecbaldwin.net>
-Cc:     Theodore Ts'o <tytso@mit.edu>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Date:   Thu, 04 Jan 2018 13:06:27 -0700
-Message-ID: <45915667.ye9M3CbBo5@mfick-lnx>
-User-Agent: KMail/4.13.3 (Linux/3.13.0-125-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <20171226203153.GA21429@Carl-MBP.ecbaldwin.net>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com> <20171226180436.GA28565@thunk.org> <20171226203153.GA21429@Carl-MBP.ecbaldwin.net>
+        id S1752715AbeADULG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 15:11:06 -0500
+Received: from mail-wr0-f172.google.com ([209.85.128.172]:42208 "EHLO
+        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751829AbeADULF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 15:11:05 -0500
+Received: by mail-wr0-f172.google.com with SMTP id w107so2563760wrb.9
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 12:11:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NPvuKISLr5WL7cBmvLeJJxr1PW4g5gOWsS65VEdrfhk=;
+        b=dqKrWwakLFH8wT4zBCa7kVWcA4yj1YEt3MmJnI7j+3vlz7BicozpjN2jPDHOm1w+tp
+         1Vpf4uOihN7yDJnn/dAtGC9thtHROc7I/6GZKn0OdjR4ZjNDx6AV2quiKOAgNz1KjJy1
+         PjecxBipaoGWw8/XF0WIi/y6GSzankNlGN20IWx1AQhZTUPE/F9r/YC5JoBx3/L5B4WA
+         OwyhyuNW6LSYiWKnNqznHFKCx/zExPbeIPdsw9ivCjTAMB8QgLJiRcSe+IUmedBEimde
+         uHvOxxp4+/WNNcWMPUTcpaRmr4u1PE+vG8m5fFDNY2C4aMpfXaQAL2960nOnZLzgVD8Y
+         9dZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NPvuKISLr5WL7cBmvLeJJxr1PW4g5gOWsS65VEdrfhk=;
+        b=afcJmgAgGFUYZXyH5HW8I86L5YxLs8WU7gDepJ2Z+6H9psl6bdoKGBejLgGOEaUBIs
+         XdShWyeMOoRiGr+UP/hJWs2MQoHLZR1Ihvah8uQd2pyxJmBOvWzetuRJ3TlBAYtzbs7J
+         PB8f4lvywS5IcFFqemJDjGm6T7v2myuI8OwmMyxrItKESAxKPUfdzTOMEGTPwGFA6rKO
+         +yMf99CDcxZv3TvwNNv1VUbuy2oSFQf2ZpnVCUkYmYUEj/KWT7rpE6M/8osLMv9CaLMZ
+         LwVXfTzo9cum3QTBUHz9z2/L2qs9L5nxDC2U+gkMpEu9m2HKAhgwS2n8Xow9v4RY8833
+         LSqA==
+X-Gm-Message-State: AKGB3mLcaml7Sn1txUWXMmZ9OriZr5VQG+oCB62kECSJuOAbP/ZdHGv/
+        2QyGGn7hbe7+o2ymCQ8Uq7M=
+X-Google-Smtp-Source: ACJfBot5cUOPGIFWUa9CTzw89LaJ4AvTSEmYyBYYd71nKR8Lz8bo3GTB94w3FT4rp9Bi/cc+8OrRbA==
+X-Received: by 10.223.166.99 with SMTP id k90mr627968wrc.114.1515096664263;
+        Thu, 04 Jan 2018 12:11:04 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id y124sm4079809wmb.42.2018.01.04.12.11.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Jan 2018 12:11:03 -0800 (PST)
+Date:   Thu, 4 Jan 2018 20:13:12 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 3/3] travis: run tests with GIT_TEST_SPLIT_INDEX
+Message-ID: <20180104201312.GD2641@hank>
+References: <20171210212202.28231-1-t.gummerer@gmail.com>
+ <20171217225122.28941-1-t.gummerer@gmail.com>
+ <20171217225122.28941-4-t.gummerer@gmail.com>
+ <CA6C93AD-B24D-43A2-8AAA-DE98A4C9E719@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA6C93AD-B24D-43A2-8AAA-DE98A4C9E719@gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday, December 26, 2017 01:31:55 PM Carl Baldwin 
-wrote:
-...
-> What I propose is that gerrit and github could end up more
-> robust, featureful, and interoperable if they had this
-> feature to build from.
+On 12/18, Lars Schneider wrote:
+> 
+> > On 17 Dec 2017, at 23:51, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > 
+> > Split index mode only has a few dedicated tests, but as the index is
+> > involved in nearly every git operation, this doesn't quite cover all the
+> > ways repositories with split index can break.  To use split index mode
+> > throughout the test suite a GIT_TEST_SPLIT_INDEX environment variable
+> > can be set, which makes git split the index at random and thus
+> > excercises the functionality much more thoroughly.
+> > 
+> > As this is not turned on by default, it is not executed nearly as often
+> > as the test suite is run, so occationally breakages slip through.  Try
+> > to counteract that by running the test suite with GIT_TEST_SPLIT_INDEX
+> > mode turned on on travis.
+> > 
+> > To avoid using too many cycles on travis only run split index mode in
+> > the linux-gcc and the linux 32-bit gcc targets.
+> 
+> I am surprised to see the split index mode test for the linux 32-bit
+> target. Is it likely that a split index bug appears only on 32-bit? 
+> Wouldn't the linux-gcc target be sufficient to save resources/time?
 
-I agree (assuming we come up with a well defined feature)
+I'm not sure it's particularly likely for a bug to appear only on
+32-bit builds.  It also doesn't seem to take too long to run, so I
+thought I'd add it just in case, but I'm happy running the tests only
+in the 64-bit builds if that's preferred.
 
-> With gerrit specifically, adopting this feature would make
-> the "change" concept richer than it is now because it
-> could supersede the change-id in the commit message and
-> allow a change to evolve in a distributed non-linear way
-> with protection against clobbering work.
+> >  The Linux builds were
+> > chosen over the Mac OS builds because they tend to be much faster to
+> > complete.
+> > 
+> > The linux gcc build was chosen over the linux clang build because the
+> > linux clang build is the fastest build, so it can serve as an early
+> > indicator if something is broken and we want to avoid spending the extra
+> > cycles of running the test suite twice for that.
+> > 
+> > Helped-by: Lars Schneider <larsxschneider@gmail.com>
+> > Helped-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> > ci/run-linux32-build.sh | 1 +
+> > ci/run-tests.sh         | 4 ++++
+> > 2 files changed, 5 insertions(+)
+> > 
+> > diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
+> > index e30fb2cddc..f173c9cf2a 100755
+> > --- a/ci/run-linux32-build.sh
+> > +++ b/ci/run-linux32-build.sh
+> > @@ -27,4 +27,5 @@ linux32 --32bit i386 su -m -l $CI_USER -c '
+> >     cd /usr/src/git &&
+> >     make --jobs=2 &&
+> >     make --quiet test
+> > +    GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
+> > '
+> > diff --git a/ci/run-tests.sh b/ci/run-tests.sh
+> > index f0c743de94..c7aee5b9ff 100755
+> > --- a/ci/run-tests.sh
+> > +++ b/ci/run-tests.sh
+> > @@ -8,3 +8,7 @@
+> > mkdir -p $HOME/travis-cache
+> > ln -s $HOME/travis-cache/.prove t/.prove
+> > make --quiet test
+> > +if test "$jobname" = "linux-gcc"
+> > +then
+> > +	GIT_TEST_SPLIT_INDEX=YesPlease make --quiet test
+> > +fi
+> 
+> For now I think that looks good. Maybe we could define additional test 
+> configurations with an environment variable. That could be an array variable
+> defined in the lib-travis.ci "case" statement:
+> https://github.com/git/git/blob/1229713f78cd2883798e95f33c19c81b523413fd/ci/lib-travisci.sh#L42-L65
 
-We (the Gerrit maintainers) would like changes to be able to 
-evolve non-linearly so that we can eventually support 
-distributed Gerrit reviews, and the amended-commit pointer 
-is one way I have thought to resolve this.
+That sounds like a good idea.  I'll try to see if I can come up with
+something.
 
-> I have no intention to disparage either tool. I love them
-> both. They've both made my career better in different
-> ways. I know there is no guarantee that github, gerrit,
-> or any other tool will do anything to adopt this. But,
-> I'm hoping they are reading this thread and that they
-> recognize how this feature can make them a little bit
-> better and jump in and help. I know it is a lot to hope
-> for but I think it could be great if it happened.
-
-We (the Gerrit maintainers) do recognize it, and I am glad 
-that someone is pushing for solutions in this space.  I am 
-not sure what the right solution is, and how to modify 
-workflows to deal better with this.  I do think that starting 
-by making your local repo track pointers to amended-commits, 
-likely with various git hooks and notes (as also proposed by 
-Johannes Schindelin), would be a good start.   With that in 
-place, then you can attack various specific workflows.
-
-If you want to then attack the Gerrit workflow, it would be 
-good if you could prevent pushing new patchests that are 
-amended versions of patchsets that are out of date.  While 
-it would be great if Gerrit could reject such pushes, I 
-wonder if to start, git could detect and it prevent the push 
-in this situation?  Could a git push hook analyze the ref 
-advertisements and figure this out (all the patchsets are in 
-the advertisement)?  Can a git hook look at the ref 
-advertisement?
-
--Martin
-
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
+> - Lars
