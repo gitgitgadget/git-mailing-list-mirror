@@ -2,125 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6F431F42B
-	for <e@80x24.org>; Thu,  4 Jan 2018 10:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A75371F428
+	for <e@80x24.org>; Thu,  4 Jan 2018 11:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752401AbeADKKW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 05:10:22 -0500
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:40324 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752133AbeADKKV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 05:10:21 -0500
-Received: by mail-wr0-f174.google.com with SMTP id p17so997344wre.7
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 02:10:20 -0800 (PST)
+        id S1752954AbeADLvD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 06:51:03 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:46861 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752947AbeADLvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 06:51:02 -0500
+Received: by mail-wm0-f41.google.com with SMTP id r78so2996018wme.5
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 03:51:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=3bT78suujeF8Bz9FNvB7+b5RdkAb7wckmFKzhPEEFjA=;
-        b=WZAuANdpFKKLarArxvIalJyLEgei8pUR4Y3w4cssB1OovX6IFn/swaPyXJICyr6fff
-         r0/nhO4Wsnwyxkj6/uryMoZTivXzeOwtQ1qTsYskZxj/b1katuAgDahqrYrOmRhL1QI3
-         VXr1naojgi09vBVO1kIljLXZEXHBqcmZ457UoLafhAR+g0EUoZ7gyYkj0KDD69dp9px6
-         0DozRFrZ1zdS1Rz5iKJcJdVgyYAymyn9Jxr2yXsEs0I+VzrTzc7X5lQ2m8pbUV6bHQBD
-         YhbQBIpsJuilwSRNI3H1wuFRoOOul9J06aaatKkS9k+J9f1B/iBGtTGvlJDJ0MX1qtt9
-         Duaw==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ThNYIRvucQk5hhJuu8M69IWgz4Q21SEuk0hm+DjXXxY=;
+        b=n3fFHWFP3ntdmN8qGcsv23/6gJwMyRs9xLNWKpfgrYqdPNyehoZ/lQ5E8c+ctXVL0f
+         Ji0AlE8gtkg0hcMC9Xe/JKDlnmXcC7y69no4/wIt42UKQN/eVcmR8yc3MpxOoQrcZlTW
+         zfcALMBbFKvMlLgi6JBlwah571dI8N73nFnDc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=3bT78suujeF8Bz9FNvB7+b5RdkAb7wckmFKzhPEEFjA=;
-        b=eXQHToGDoXNn0W/6RCa2w/e7HEQjSrrbeb+IQpdXMSNUH/Sf6P4uhOkf7SvAcIdXdu
-         DiDemoq1ckQ/TLHve2NJZo2xwsjO5cEC6aQufu99s+CHLHZ2ZUMKp7lf40cLocNp6Dit
-         hWDGWjbc669oApEyvHyCr6cJesqWdryizXA2mVfhNJus83J97k6u7gU/esrGk3chhKyM
-         FWnDw2XQyxwGHFtrf13sMBeAlrziLx/4BtU0tUSeobgSXG1KzGpv++VaSvrNSDwII0Ve
-         UQ2wKx9fCEk4OEgBeZFHFGETdh9/l86upoG1xMbhKNOnQG4jKdC+GUYt9yODXGhMEopB
-         Z7eg==
-X-Gm-Message-State: AKGB3mKT1OErUDNWQ3tpFT4bIJ7aqYnsZhjRP3AxOmd69AXiVwEWZKMP
-        T4Ck773GIBfaMThl/X/4fK63s/9B
-X-Google-Smtp-Source: ACJfBov/mgY9q+AyWx36wVfm9lIbuyEcgCE/lHHCjnwely43eVUFbYier4y1Wy/4gZEtchO3nHb01w==
-X-Received: by 10.223.186.72 with SMTP id t8mr4373444wrg.169.1515060619930;
-        Thu, 04 Jan 2018 02:10:19 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id i65sm10952968wme.20.2018.01.04.02.10.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jan 2018 02:10:18 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Segev Finer <segev208@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCH] connect: add GIT_SSH_{SEND,RECEIVE}{,_COMMAND} env variables
-References: <20180103102840.27897-1-avarab@gmail.com> <xmqq373mh62r.fsf@gitster.mtv.corp.google.com> <87bmiacwoz.fsf@evledraar.gmail.com> <20180104044230.GA12113@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20180104044230.GA12113@sigill.intra.peff.net>
-Date:   Thu, 04 Jan 2018 11:10:17 +0100
-Message-ID: <87a7xuc4ty.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ThNYIRvucQk5hhJuu8M69IWgz4Q21SEuk0hm+DjXXxY=;
+        b=JIfJ9RJ+rp1SK+skTvFNd6qtmmVxviiKL1O67ORIFdePnZR6BzbAnqQjzVib/RYM9e
+         hT7gsggs46e2DOSJqZbHEflWIRRG5uW7jD9kiXqOE+/Dda+tj029iZnrBZVa/sOJ516F
+         2cvSwXWU4e5fZDiDfMPkv2MQrEEBDeUBXaBXFSszw8lZ6NAPQh4bJwElNQsyzNYadzNp
+         ZlLl0+itTxMvMYDyZL6f57hFOU0SLtnq48EjKae+2Bh8FySlJ+3bbUGpO4Cs90+ELLxS
+         c9NXDffAJRpmh7nMZnFC8AmoDReHwc6d15LRIKsX3qv1pLaDhang6J7MKCM+qP20/Glq
+         uIJw==
+X-Gm-Message-State: AKGB3mJPyETpRilgWFWBoS1Y/CAsjOvxScvH5jz+7ZfkpVEIiAiZLjtQ
+        +uTa0vUM62RtlOlnC4xoFLCNag==
+X-Google-Smtp-Source: ACJfBosp5OUcYZlBzWmNapgwdaJa2DhXuV2JJypi5J+NoujQ/ZQNIolkXTgyeXfOjosTgRIfvltUCg==
+X-Received: by 10.28.142.75 with SMTP id q72mr3758273wmd.45.1515066661168;
+        Thu, 04 Jan 2018 03:51:01 -0800 (PST)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id e197sm10891120wmf.4.2018.01.04.03.50.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Jan 2018 03:51:00 -0800 (PST)
+Date:   Thu, 4 Jan 2018 11:50:58 +0000
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Anthony Ramine <n.oxyde@gmail.com>,
+        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 7/7] wildmatch test: create & test files on disk in
+ addition to in-memory
+Message-ID: <20180104115058.GF29210@dinwoodie.org>
+References: <20171223213012.1962-1-avarab@gmail.com>
+ <20171225002835.29005-8-avarab@gmail.com>
+ <20180103130232.GD29210@dinwoodie.org>
+ <87h8s3cbmn.fsf@evledraar.gmail.com>
+ <20180103144149.GE29210@dinwoodie.org>
+ <87d12qdaa5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87d12qdaa5.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wednesday 03 January 2018 at 08:14 pm +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Jan 03 2018, Adam Dinwoodie jotted:
+> 
+> > On Wednesday 03 January 2018 at 02:31 pm +0100, Ævar Arnfjörð Bjarmason wrote:
+> >> Does the fixup above in <878tdm8k2d.fsf@evledraar.gmail.com> work for
+> >> you, i.e. changing $10 in the script to ${10}?
+> >
+> > This fixes some but not all of the failures: I'm now down from 42 to 24
+> > failures.
+> >
+> > Updated verbose test output is at
+> > https://gist.github.com/me-and/04443bcb00e12436f0eacce079b56d02
+> 
+> Thanks lot, looking through our own commit logs I believe the rest
+> should be fixed by this (prior art in 6fd1106aa4), it would be great if
+> you could test it, I don't have access to a Windows machine:
+> 
+>     diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+>     index f985139b6f..5838fcb77d 100755
+>     --- a/t/t3070-wildmatch.sh
+>     +++ b/t/t3070-wildmatch.sh
+>     @@ -23,6 +23,15 @@ create_test_file() {
+>             *//*)
+>                     return 1
+>                     ;;
+>     +       # On Windows, \ in paths is silently converted to /, which
+>     +       # would result in the "touch" below working, but the test
+>     +       # itself failing.
+>     +       *\\*)
+>     +               if ! test_have_prereq BSLASHPSPEC
+>     +               then
+>     +                       return 1
+>     +               fi
+>     +               ;;
+>             # When testing the difference between foo/bar and foo/bar/ we
+>             # can't test the latter.
+>             */)
 
-On Thu, Jan 04 2018, Jeff King jotted:
-
-> On Thu, Jan 04, 2018 at 01:08:28AM +0100, Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
->
->> Hopefully this is clearer, and depending on how the rest of the
->> discussion goes I'll submit v2 with something like this in the commit
->> message:
->>
->> SSH keys A and B are known to the remote service, and used to identify
->> two different users.
->>
->> A can only push to repository X, and B can only fetch from repository Y.
->>
->> Thus, if you have a script that does:
->>
->>     GIT_SSH_COMMAND="ssh -i A -i B" git ...
->>
->> It'll always fail for pulling from X, and pushing to Y. Supply:
->>
->>     GIT_SSH_COMMAND="ssh -i B -i A" git ...
->>
->> And now pulling will work, but pushing won't.
->
-> I get that you may have two different keys to go with two different
-> identities on a remote system. But I'm not sure I understand why
-> "sending" or "receiving" is the right way to split those up. Wouldn't
-> you also sometimes want to fetch from repository X? IOW, wouldn't you
-> want to tie identity "A" to repository "X", and "B" to repository "Y?
-
-That's badly explained, sorry, when I say "push" I mean "push and/or
-pull".
-
-I don't know about Github, but on Gitlab when you provision a deploy key
-and associate it with a repo it must be *globally* rw or ro, there's no
-way to on a per-repo basis say it should be rw ro.
-
-I have a job that's fetching a bunch of repos to review code in them
-(for auditing purposes). It then commits the results of that review to
-other git repos.
-
-Thus I want to have a ro key to all those reviewed repos, but rw keys to
-the audit repo itself (and it'll also pull with the rw key).
-
-Hence this patch, I thought *maybe* others would be interested in this
-since it seems to me to be an easy thing to run into with these ssh-key
-based hosting providers, but maybe not.
-
->> So now I just have a GIT_SSH_COMMAND that dispatches to different keys
->> depending on the operation, as noted in the commit message, and I can
->> assure you that without that logic it doesn't work.
->
-> You mentioned host aliases later, which is the solution I've seen in the
-> wild. And then you can map each remote to a different host alias.
+Confirmed this fixes all the outstanding test failures.  Thank you!
