@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D088A1F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 19:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59D0A1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 19:27:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752996AbeADT1t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 14:27:49 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37321 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752933AbeADT1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 14:27:47 -0500
-Received: by mail-wm0-f67.google.com with SMTP id f140so5248073wmd.2
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 11:27:47 -0800 (PST)
+        id S1753033AbeADT1w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 14:27:52 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:40885 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752933AbeADT1u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 14:27:50 -0500
+Received: by mail-wm0-f65.google.com with SMTP id f206so5222875wmf.5
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 11:27:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=7HmH0TMcpRt4CIevBk65iPw1X7A9/u4oggg87H5nspc=;
-        b=PssrmB4F9yaN+qHTiQ14oBdrhsQpd1ReTfB4YTg/anLrq05bOcQLk4cMzV564z/sWO
-         w9INh8GJgACqG3m92sj3xC4/Tx9wJvfPMCNX6AFnK6fmH0suat226u6bFYi4FCsmo2An
-         29UcjzoZDmRKbEi56AG/ealCRminHXC3m40PBAe46n6EhL9e1A0fbqp3k9P0OCTJ3FTY
-         upPF+r0WA5I/V41MCnuFRinh66c6lj1v7NL2bYlpJmeh/Mq4+7+Ic4HcxZ03e9F8/PYg
-         0EnrLsmLyVDoDnKNbxskUeXOWsGcSSwTPjl0MagOjR5TeySKZJLEXK24fM6/3S2y5dcj
-         zo+A==
+        bh=aLpetw69Vg0rPI1/XGXH5CZQzwA2dfgmm9dRIZDyRpM=;
+        b=HhFT2fMMt+U7daROQSpP+PdVIQFW7ycjqdGDjxv419YfQEsLRJcbwz+vtjLWRHm7Yw
+         NCYGIXunbtl2mTiuVnse1y2fDZdAi6uBpJCccqrv6yjf+Nv0XSAx8mE7nWcpXjkkP+OY
+         Y8C47AHQ7TPiZGt+snBds1eFK1YPWkNFq58l+NX+6DIll87846StMuaNb011cJGnAntQ
+         DvH5FRiMm4SJjbCppzL5L3Rx8q9F5TkV4QyAjqVg/6L9Qm3MSkOoJsKtogVq3/6UjGrD
+         BsAUmuvgCDeeDeJ3qNa76WrVoSfdJkmzPVwW+Z6wUFUnsHoGh3ke5TffKhyTcTsmx+Bw
+         tgbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=7HmH0TMcpRt4CIevBk65iPw1X7A9/u4oggg87H5nspc=;
-        b=pQLCDcwV7X7SLkaORGd+Fs7XgVTh681IHbeb3yxpE66SOlDg9a6OFDaz1ekG5SpoPi
-         +nYb5WiCll2/67A2S85gcctKoooKCR6bYqcAHI2GkS6b5p5Syfsh0XwlJ+gdRBAA2pi2
-         6+Hl3T+11id9KHUNG/Kf79LqdEjTI+FUNXVrQciMPWbnuoVmzMPWYWvA11f4gqJw4wlk
-         aEfNwTViPDldauaP0SK+QWQHszCsuB1LFGn8YqmrmFwA6aanJ5XOlgRNMCj6/u7wSoy9
-         ZJdlmcpmG5/c+r2m1J2hsXhBc2PRssKdcucGzVub6Ps9RGcDZT0D66LPwSg55RpiwYqZ
-         hiFg==
-X-Gm-Message-State: AKGB3mJ/TFnB4nVbfTiIHrdt1OE8ar/rPhkGtxcjn1xXaKamV/nwvBMb
-        mw8FCW5I75vey8e1pfbJM6f2JOPT
-X-Google-Smtp-Source: ACJfBovmUipJjX5P4s+fYFfHyxRi8MjDvC4GCtynexrWzCRnllKBYbaBsMPDcXDk7Go9ZWgS/TwkAQ==
-X-Received: by 10.28.156.11 with SMTP id f11mr432721wme.11.1515094066453;
-        Thu, 04 Jan 2018 11:27:46 -0800 (PST)
+        bh=aLpetw69Vg0rPI1/XGXH5CZQzwA2dfgmm9dRIZDyRpM=;
+        b=TSWGnooi0ZQfgvvaozstMY12cyiYaozUIIEKKJAYHYQPAm9MqzFyDdNoQEz7y51+js
+         y0mrXtC3XyaySgkUYFYkS/QHxopKnIoZwIBS255LqsplAFBQlAHwHhoP7vnM6mtimZvn
+         n+JHli6JoWDkwNiT1YEnm50L/yUmy+npgUsCZjRPWZPxHiiI659/epWfglxWyvvDuBsT
+         cgyYaaV7AyeaUEDW5avSp/8Uvi1SiaepFk4cgYheBPl9q20gZGMaQoXRGA/U0ApZPgi1
+         FVC0V7H+Y4bZMvBxANtWsqSa7n7/n46XtG8GG51o6qhfihBTLdRi8S+4PveNauCGa16p
+         RfAg==
+X-Gm-Message-State: AKGB3mKBKW8hs9LP5Knxzl98B8uLi54yIzQ96Ur9jhm83apmDzGkmN5A
+        p7AuCaudv/lF7NO05tBh1n0Lewtp
+X-Google-Smtp-Source: ACJfBotOsHTwKIk4QrPuZXXaUe/n8cZkZYsUpgu/wG3xCgFZzpMTZNPS1gfxbluk69nVd0N20scvNQ==
+X-Received: by 10.28.74.72 with SMTP id x69mr482118wma.126.1515094068347;
+        Thu, 04 Jan 2018 11:27:48 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k19sm2783838wre.92.2018.01.04.11.27.45
+        by smtp.gmail.com with ESMTPSA id k19sm2783838wre.92.2018.01.04.11.27.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 Jan 2018 11:27:45 -0800 (PST)
+        Thu, 04 Jan 2018 11:27:47 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 4/7] wildmatch test: use a paranoia pattern from nul_match()
-Date:   Thu,  4 Jan 2018 19:26:54 +0000
-Message-Id: <20180104192657.28019-5-avarab@gmail.com>
+Subject: [PATCH v4 5/7] wildmatch test: remove dead fnmatch() test code
+Date:   Thu,  4 Jan 2018 19:26:55 +0000
+Message-Id: <20180104192657.28019-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180104192657.28019-1-avarab@gmail.com>
 References: <20180104192657.28019-1-avarab@gmail.com>
@@ -76,74 +76,412 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use a pattern from the nul_match() function in t7008-grep-binary.sh to
-make sure that we don't just fall through to the "else" if there's an
-unknown parameter.
+Remove the unused fnmatch() test parameter from the wildmatch
+test. The code that used to test this was removed in 70a8fc999d ("stop
+using fnmatch (either native or compat)", 2014-02-15).
 
-This is something I added in commit 77f6f4406f ("grep: add a test
-helper function for less verbose -f \0 tests", 2017-05-20) to grep
-tests, which were modeled on these wildmatch tests, and I'm now
-porting back to the original wildmatch tests.
-
-I am not using the "say '...'; exit 1" pattern from t0000-basic.sh
-because if I fail I want to run the rest of the tests (unless under
--i), and doing this makes sure we do that and don't exit right away
-without fully reporting our errors.
+As a --word-diff shows the only change to the body of the tests is the
+removal of the second out of four parameters passed to match().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3070-wildmatch.sh | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ t/t3070-wildmatch.sh | 356 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 178 insertions(+), 178 deletions(-)
 
 diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-index 19ea64bba9..9691d8eda3 100755
+index 9691d8eda3..2f8a681c72 100755
 --- a/t/t3070-wildmatch.sh
 +++ b/t/t3070-wildmatch.sh
-@@ -10,10 +10,13 @@ match() {
- 		test_expect_success "wildmatch: match '$3' '$4'" "
- 			test-wildmatch wildmatch '$3' '$4'
+@@ -7,13 +7,13 @@ test_description='wildmatch tests'
+ match() {
+ 	if test "$1" = 1
+ 	then
+-		test_expect_success "wildmatch: match '$3' '$4'" "
+-			test-wildmatch wildmatch '$3' '$4'
++		test_expect_success "wildmatch: match '$2' '$3'" "
++			test-wildmatch wildmatch '$2' '$3'
  		"
--	else
-+	elif test "$1" = 0
-+	then
- 		test_expect_success "wildmatch: no match '$3' '$4'" "
- 			! test-wildmatch wildmatch '$3' '$4'
+ 	elif test "$1" = 0
+ 	then
+-		test_expect_success "wildmatch: no match '$3' '$4'" "
+-			! test-wildmatch wildmatch '$3' '$4'
++		test_expect_success "wildmatch: no match '$2' '$3'" "
++			! test-wildmatch wildmatch '$2' '$3'
  		"
-+	else
-+		test_expect_success "PANIC: Test framework error. Unknown matches value $1" 'false'
- 	fi
+ 	else
+ 		test_expect_success "PANIC: Test framework error. Unknown matches value $1" 'false'
+@@ -53,176 +53,176 @@ pathmatch() {
  }
  
-@@ -23,10 +26,13 @@ imatch() {
- 		test_expect_success "iwildmatch: match '$2' '$3'" "
- 			test-wildmatch iwildmatch '$2' '$3'
- 		"
--	else
-+	elif test "$1" = 0
-+	then
- 		test_expect_success "iwildmatch: no match '$2' '$3'" "
- 			! test-wildmatch iwildmatch '$2' '$3'
- 		"
-+	else
-+		test_expect_success "PANIC: Test framework error. Unknown matches value $1" 'false'
- 	fi
- }
+ # Basic wildmat features
+-match 1 1 foo foo
+-match 0 0 foo bar
+-match 1 1 '' ""
+-match 1 1 foo '???'
+-match 0 0 foo '??'
+-match 1 1 foo '*'
+-match 1 1 foo 'f*'
+-match 0 0 foo '*f'
+-match 1 1 foo '*foo*'
+-match 1 1 foobar '*ob*a*r*'
+-match 1 1 aaaaaaabababab '*ab'
+-match 1 1 'foo*' 'foo\*'
+-match 0 0 foobar 'foo\*bar'
+-match 1 1 'f\oo' 'f\\oo'
+-match 1 1 ball '*[al]?'
+-match 0 0 ten '[ten]'
+-match 0 1 ten '**[!te]'
+-match 0 0 ten '**[!ten]'
+-match 1 1 ten 't[a-g]n'
+-match 0 0 ten 't[!a-g]n'
+-match 1 1 ton 't[!a-g]n'
+-match 1 1 ton 't[^a-g]n'
+-match 1 x 'a]b' 'a[]]b'
+-match 1 x a-b 'a[]-]b'
+-match 1 x 'a]b' 'a[]-]b'
+-match 0 x aab 'a[]-]b'
+-match 1 x aab 'a[]a-]b'
+-match 1 1 ']' ']'
++match 1 foo foo
++match 0 foo bar
++match 1 '' ""
++match 1 foo '???'
++match 0 foo '??'
++match 1 foo '*'
++match 1 foo 'f*'
++match 0 foo '*f'
++match 1 foo '*foo*'
++match 1 foobar '*ob*a*r*'
++match 1 aaaaaaabababab '*ab'
++match 1 'foo*' 'foo\*'
++match 0 foobar 'foo\*bar'
++match 1 'f\oo' 'f\\oo'
++match 1 ball '*[al]?'
++match 0 ten '[ten]'
++match 0 ten '**[!te]'
++match 0 ten '**[!ten]'
++match 1 ten 't[a-g]n'
++match 0 ten 't[!a-g]n'
++match 1 ton 't[!a-g]n'
++match 1 ton 't[^a-g]n'
++match 1 'a]b' 'a[]]b'
++match 1 a-b 'a[]-]b'
++match 1 'a]b' 'a[]-]b'
++match 0 aab 'a[]-]b'
++match 1 aab 'a[]a-]b'
++match 1 ']' ']'
  
-@@ -36,10 +42,13 @@ pathmatch() {
- 		test_expect_success "pathmatch: match '$2' '$3'" "
- 			test-wildmatch pathmatch '$2' '$3'
- 		"
--	else
-+	elif test "$1" = 0
-+	then
- 		test_expect_success "pathmatch: no match '$2' '$3'" "
- 			! test-wildmatch pathmatch '$2' '$3'
- 		"
-+	else
-+		test_expect_success "PANIC: Test framework error. Unknown matches value $1" 'false'
- 	fi
- }
+ # Extended slash-matching features
+-match 0 0 'foo/baz/bar' 'foo*bar'
+-match 0 0 'foo/baz/bar' 'foo**bar'
+-match 0 1 'foobazbar' 'foo**bar'
+-match 1 1 'foo/baz/bar' 'foo/**/bar'
+-match 1 0 'foo/baz/bar' 'foo/**/**/bar'
+-match 1 0 'foo/b/a/z/bar' 'foo/**/bar'
+-match 1 0 'foo/b/a/z/bar' 'foo/**/**/bar'
+-match 1 0 'foo/bar' 'foo/**/bar'
+-match 1 0 'foo/bar' 'foo/**/**/bar'
+-match 0 0 'foo/bar' 'foo?bar'
+-match 0 0 'foo/bar' 'foo[/]bar'
+-match 0 0 'foo/bar' 'foo[^a-z]bar'
+-match 0 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+-match 1 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+-match 1 0 'foo' '**/foo'
+-match 1 x 'XXX/foo' '**/foo'
+-match 1 0 'bar/baz/foo' '**/foo'
+-match 0 0 'bar/baz/foo' '*/foo'
+-match 0 0 'foo/bar/baz' '**/bar*'
+-match 1 0 'deep/foo/bar/baz' '**/bar/*'
+-match 0 0 'deep/foo/bar/baz/' '**/bar/*'
+-match 1 0 'deep/foo/bar/baz/' '**/bar/**'
+-match 0 0 'deep/foo/bar' '**/bar/*'
+-match 1 0 'deep/foo/bar/' '**/bar/**'
+-match 0 0 'foo/bar/baz' '**/bar**'
+-match 1 0 'foo/bar/baz/x' '*/bar/**'
+-match 0 0 'deep/foo/bar/baz/x' '*/bar/**'
+-match 1 0 'deep/foo/bar/baz/x' '**/bar/*/*'
++match 0 'foo/baz/bar' 'foo*bar'
++match 0 'foo/baz/bar' 'foo**bar'
++match 0 'foobazbar' 'foo**bar'
++match 1 'foo/baz/bar' 'foo/**/bar'
++match 1 'foo/baz/bar' 'foo/**/**/bar'
++match 1 'foo/b/a/z/bar' 'foo/**/bar'
++match 1 'foo/b/a/z/bar' 'foo/**/**/bar'
++match 1 'foo/bar' 'foo/**/bar'
++match 1 'foo/bar' 'foo/**/**/bar'
++match 0 'foo/bar' 'foo?bar'
++match 0 'foo/bar' 'foo[/]bar'
++match 0 'foo/bar' 'foo[^a-z]bar'
++match 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
++match 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
++match 1 'foo' '**/foo'
++match 1 'XXX/foo' '**/foo'
++match 1 'bar/baz/foo' '**/foo'
++match 0 'bar/baz/foo' '*/foo'
++match 0 'foo/bar/baz' '**/bar*'
++match 1 'deep/foo/bar/baz' '**/bar/*'
++match 0 'deep/foo/bar/baz/' '**/bar/*'
++match 1 'deep/foo/bar/baz/' '**/bar/**'
++match 0 'deep/foo/bar' '**/bar/*'
++match 1 'deep/foo/bar/' '**/bar/**'
++match 0 'foo/bar/baz' '**/bar**'
++match 1 'foo/bar/baz/x' '*/bar/**'
++match 0 'deep/foo/bar/baz/x' '*/bar/**'
++match 1 'deep/foo/bar/baz/x' '**/bar/*/*'
  
+ # Various additional tests
+-match 0 0 'acrt' 'a[c-c]st'
+-match 1 1 'acrt' 'a[c-c]rt'
+-match 0 0 ']' '[!]-]'
+-match 1 x 'a' '[!]-]'
+-match 0 0 '' '\'
+-match 0 x '\' '\'
+-match 0 x 'XXX/\' '*/\'
+-match 1 x 'XXX/\' '*/\\'
+-match 1 1 'foo' 'foo'
+-match 1 1 '@foo' '@foo'
+-match 0 0 'foo' '@foo'
+-match 1 1 '[ab]' '\[ab]'
+-match 1 1 '[ab]' '[[]ab]'
+-match 1 x '[ab]' '[[:]ab]'
+-match 0 x '[ab]' '[[::]ab]'
+-match 1 x '[ab]' '[[:digit]ab]'
+-match 1 x '[ab]' '[\[:]ab]'
+-match 1 1 '?a?b' '\??\?b'
+-match 1 1 'abc' '\a\b\c'
+-match 0 0 'foo' ''
+-match 1 0 'foo/bar/baz/to' '**/t[o]'
++match 0 'acrt' 'a[c-c]st'
++match 1 'acrt' 'a[c-c]rt'
++match 0 ']' '[!]-]'
++match 1 'a' '[!]-]'
++match 0 '' '\'
++match 0 '\' '\'
++match 0 'XXX/\' '*/\'
++match 1 'XXX/\' '*/\\'
++match 1 'foo' 'foo'
++match 1 '@foo' '@foo'
++match 0 'foo' '@foo'
++match 1 '[ab]' '\[ab]'
++match 1 '[ab]' '[[]ab]'
++match 1 '[ab]' '[[:]ab]'
++match 0 '[ab]' '[[::]ab]'
++match 1 '[ab]' '[[:digit]ab]'
++match 1 '[ab]' '[\[:]ab]'
++match 1 '?a?b' '\??\?b'
++match 1 'abc' '\a\b\c'
++match 0 'foo' ''
++match 1 'foo/bar/baz/to' '**/t[o]'
+ 
+ # Character class tests
+-match 1 x 'a1B' '[[:alpha:]][[:digit:]][[:upper:]]'
+-match 0 x 'a' '[[:digit:][:upper:][:space:]]'
+-match 1 x 'A' '[[:digit:][:upper:][:space:]]'
+-match 1 x '1' '[[:digit:][:upper:][:space:]]'
+-match 0 x '1' '[[:digit:][:upper:][:spaci:]]'
+-match 1 x ' ' '[[:digit:][:upper:][:space:]]'
+-match 0 x '.' '[[:digit:][:upper:][:space:]]'
+-match 1 x '.' '[[:digit:][:punct:][:space:]]'
+-match 1 x '5' '[[:xdigit:]]'
+-match 1 x 'f' '[[:xdigit:]]'
+-match 1 x 'D' '[[:xdigit:]]'
+-match 1 x '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
+-match 1 x '.' '[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space:][:upper:][:xdigit:]]'
+-match 1 x '5' '[a-c[:digit:]x-z]'
+-match 1 x 'b' '[a-c[:digit:]x-z]'
+-match 1 x 'y' '[a-c[:digit:]x-z]'
+-match 0 x 'q' '[a-c[:digit:]x-z]'
++match 1 'a1B' '[[:alpha:]][[:digit:]][[:upper:]]'
++match 0 'a' '[[:digit:][:upper:][:space:]]'
++match 1 'A' '[[:digit:][:upper:][:space:]]'
++match 1 '1' '[[:digit:][:upper:][:space:]]'
++match 0 '1' '[[:digit:][:upper:][:spaci:]]'
++match 1 ' ' '[[:digit:][:upper:][:space:]]'
++match 0 '.' '[[:digit:][:upper:][:space:]]'
++match 1 '.' '[[:digit:][:punct:][:space:]]'
++match 1 '5' '[[:xdigit:]]'
++match 1 'f' '[[:xdigit:]]'
++match 1 'D' '[[:xdigit:]]'
++match 1 '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
++match 1 '.' '[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space:][:upper:][:xdigit:]]'
++match 1 '5' '[a-c[:digit:]x-z]'
++match 1 'b' '[a-c[:digit:]x-z]'
++match 1 'y' '[a-c[:digit:]x-z]'
++match 0 'q' '[a-c[:digit:]x-z]'
+ 
+ # Additional tests, including some malformed wildmats
+-match 1 x ']' '[\\-^]'
+-match 0 0 '[' '[\\-^]'
+-match 1 x '-' '[\-_]'
+-match 1 x ']' '[\]]'
+-match 0 0 '\]' '[\]]'
+-match 0 0 '\' '[\]]'
+-match 0 0 'ab' 'a[]b'
+-match 0 x 'a[]b' 'a[]b'
+-match 0 x 'ab[' 'ab['
+-match 0 0 'ab' '[!'
+-match 0 0 'ab' '[-'
+-match 1 1 '-' '[-]'
+-match 0 0 '-' '[a-'
+-match 0 0 '-' '[!a-'
+-match 1 x '-' '[--A]'
+-match 1 x '5' '[--A]'
+-match 1 1 ' ' '[ --]'
+-match 1 1 '$' '[ --]'
+-match 1 1 '-' '[ --]'
+-match 0 0 '0' '[ --]'
+-match 1 x '-' '[---]'
+-match 1 x '-' '[------]'
+-match 0 0 'j' '[a-e-n]'
+-match 1 x '-' '[a-e-n]'
+-match 1 x 'a' '[!------]'
+-match 0 0 '[' '[]-a]'
+-match 1 x '^' '[]-a]'
+-match 0 0 '^' '[!]-a]'
+-match 1 x '[' '[!]-a]'
+-match 1 1 '^' '[a^bc]'
+-match 1 x '-b]' '[a-]b]'
+-match 0 0 '\' '[\]'
+-match 1 1 '\' '[\\]'
+-match 0 0 '\' '[!\\]'
+-match 1 1 'G' '[A-\\]'
+-match 0 0 'aaabbb' 'b*a'
+-match 0 0 'aabcaa' '*ba*'
+-match 1 1 ',' '[,]'
+-match 1 1 ',' '[\\,]'
+-match 1 1 '\' '[\\,]'
+-match 1 1 '-' '[,-.]'
+-match 0 0 '+' '[,-.]'
+-match 0 0 '-.]' '[,-.]'
+-match 1 1 '2' '[\1-\3]'
+-match 1 1 '3' '[\1-\3]'
+-match 0 0 '4' '[\1-\3]'
+-match 1 1 '\' '[[-\]]'
+-match 1 1 '[' '[[-\]]'
+-match 1 1 ']' '[[-\]]'
+-match 0 0 '-' '[[-\]]'
++match 1 ']' '[\\-^]'
++match 0 '[' '[\\-^]'
++match 1 '-' '[\-_]'
++match 1 ']' '[\]]'
++match 0 '\]' '[\]]'
++match 0 '\' '[\]]'
++match 0 'ab' 'a[]b'
++match 0 'a[]b' 'a[]b'
++match 0 'ab[' 'ab['
++match 0 'ab' '[!'
++match 0 'ab' '[-'
++match 1 '-' '[-]'
++match 0 '-' '[a-'
++match 0 '-' '[!a-'
++match 1 '-' '[--A]'
++match 1 '5' '[--A]'
++match 1 ' ' '[ --]'
++match 1 '$' '[ --]'
++match 1 '-' '[ --]'
++match 0 '0' '[ --]'
++match 1 '-' '[---]'
++match 1 '-' '[------]'
++match 0 'j' '[a-e-n]'
++match 1 '-' '[a-e-n]'
++match 1 'a' '[!------]'
++match 0 '[' '[]-a]'
++match 1 '^' '[]-a]'
++match 0 '^' '[!]-a]'
++match 1 '[' '[!]-a]'
++match 1 '^' '[a^bc]'
++match 1 '-b]' '[a-]b]'
++match 0 '\' '[\]'
++match 1 '\' '[\\]'
++match 0 '\' '[!\\]'
++match 1 'G' '[A-\\]'
++match 0 'aaabbb' 'b*a'
++match 0 'aabcaa' '*ba*'
++match 1 ',' '[,]'
++match 1 ',' '[\\,]'
++match 1 '\' '[\\,]'
++match 1 '-' '[,-.]'
++match 0 '+' '[,-.]'
++match 0 '-.]' '[,-.]'
++match 1 '2' '[\1-\3]'
++match 1 '3' '[\1-\3]'
++match 0 '4' '[\1-\3]'
++match 1 '\' '[[-\]]'
++match 1 '[' '[[-\]]'
++match 1 ']' '[[-\]]'
++match 0 '-' '[[-\]]'
+ 
+ # Test recursion and the abort code (use "wildtest -i" to see iteration counts)
+-match 1 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 1 1 'XXX/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 0 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n*t'
+-match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*n*t'
+-match 0 x foo '*/*/*'
+-match 0 x foo/bar '*/*/*'
+-match 1 x foo/bba/arr '*/*/*'
+-match 0 x foo/bb/aa/rr '*/*/*'
+-match 1 x foo/bb/aa/rr '**/**/**'
+-match 1 x abcXdefXghi '*X*i'
+-match 0 x ab/cXd/efXg/hi '*X*i'
+-match 1 x ab/cXd/efXg/hi '*/*X*/*/*i'
+-match 1 x ab/cXd/efXg/hi '**/*X*/**/*i'
++match 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 1 'XXX/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 1 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n*t'
++match 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*n*t'
++match 0 foo '*/*/*'
++match 0 foo/bar '*/*/*'
++match 1 foo/bba/arr '*/*/*'
++match 0 foo/bb/aa/rr '*/*/*'
++match 1 foo/bb/aa/rr '**/**/**'
++match 1 abcXdefXghi '*X*i'
++match 0 ab/cXd/efXg/hi '*X*i'
++match 1 ab/cXd/efXg/hi '*/*X*/*/*i'
++match 1 ab/cXd/efXg/hi '**/*X*/**/*i'
+ 
+ pathmatch 1 foo foo
+ pathmatch 0 foo fo
+@@ -248,20 +248,20 @@ pathmatch 1 ab/cXd/efXg/hi '*/*X*/*/*i'
+ pathmatch 1 ab/cXd/efXg/hi '*Xg*i'
+ 
+ # Case-sensitivity features
+-match 0 x 'a' '[A-Z]'
+-match 1 x 'A' '[A-Z]'
+-match 0 x 'A' '[a-z]'
+-match 1 x 'a' '[a-z]'
+-match 0 x 'a' '[[:upper:]]'
+-match 1 x 'A' '[[:upper:]]'
+-match 0 x 'A' '[[:lower:]]'
+-match 1 x 'a' '[[:lower:]]'
+-match 0 x 'A' '[B-Za]'
+-match 1 x 'a' '[B-Za]'
+-match 0 x 'A' '[B-a]'
+-match 1 x 'a' '[B-a]'
+-match 0 x 'z' '[Z-y]'
+-match 1 x 'Z' '[Z-y]'
++match 0 'a' '[A-Z]'
++match 1 'A' '[A-Z]'
++match 0 'A' '[a-z]'
++match 1 'a' '[a-z]'
++match 0 'a' '[[:upper:]]'
++match 1 'A' '[[:upper:]]'
++match 0 'A' '[[:lower:]]'
++match 1 'a' '[[:lower:]]'
++match 0 'A' '[B-Za]'
++match 1 'a' '[B-Za]'
++match 0 'A' '[B-a]'
++match 1 'a' '[B-a]'
++match 0 'z' '[Z-y]'
++match 1 'Z' '[Z-y]'
+ 
+ imatch 1 'a' '[A-Z]'
+ imatch 1 'A' '[A-Z]'
 -- 
 2.15.1.424.g9478a66081
 
