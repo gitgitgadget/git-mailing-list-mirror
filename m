@@ -2,282 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78E701F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 19:29:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16D661F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 19:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752103AbeADT3e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 14:29:34 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:55814 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751946AbeADT3d (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 4 Jan 2018 14:29:33 -0500
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-mua-02.web4all.fr)
-        by mut-mta1-se01c-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1eXAh7-0006Qo-Da; Thu, 04 Jan 2018 19:56:51 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 77A8960EAF;
-        Thu,  4 Jan 2018 19:56:47 +0100 (CET)
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id PNpu6KQcomgg; Thu,  4 Jan 2018 19:56:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 72D9360E7D;
-        Thu,  4 Jan 2018 19:56:43 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id y0VVs_0ovvf8; Thu,  4 Jan 2018 19:56:43 +0100 (CET)
-Received: from gaming.numericable.fr (3.136.192.77.rev.sfr.net [77.192.136.3])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTPA id CDA2C60EAF;
-        Thu,  4 Jan 2018 19:56:41 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com,
-        =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Thomas Adam <thomas@xteddy.org>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [RFC PATCH 2/2] Remove now useless email-address parsing code
-Date:   Thu,  4 Jan 2018 19:55:51 +0100
-Message-Id: <1515092151-14423-2-git-send-email-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.8.1.116.g7b0d47b
-In-Reply-To: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
-References: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: SB/global_tokens (0.000232367156933)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5qR8rx0ojioK2+gZA8vxqu3j1g3/PwYZaTCzSym8uE9HPImhfA8k5/zW
- UdbqUfA/+atZAIrjsCRyglG39ay7s40zkSakW8+kgCjGkeOx1qmz3ywmUacsjxjAsJqLMS98bO5z
- ycA319z5HV3CMmoHwxoemuNNL7GGp+zW501rEhQ5LqisX5+l+fRB3wYlhH1KyOfHzJ6mVE7ewsip
- SVIfs4Zik5h5cfq5kshJIuNnM926ZoJMI94JyDNTYfA50Otxn/jk0+YoVjbPYBbwrj5eWUnOiXFL
- iKIvpft9mm8OdmYqEPKqj4wpSPprxfaL4KUPa+d7ax+3+Jf/9S3laQAPwF4OOPS2BLJ6Do0LA2bx
- tTWVqi2fY8oW0hCeiKrXsIHuXDVcbwW2vZRbwlTsaou4YdkkTMgPdccxEqDs1YXBmdsdph+zJwql
- Pd7TjGfWxGLgmXGIZgivQPDIYm4WSM8blQV7LjJv6mzjqKuJJhZmAO87f5jxqIuHmumvO07FITnq
- MT3dKxLhoxcmaInYbR5vlqHMyA/lkPBbC6c0vlSRGDQGZ79loFWGs6aHjUJ9h7NVQthDlN3ZFexZ
- fYgAG9qTPTpp5PS1j/T/np9d21JHIowhxzFHIp09+LXjBI7tFUvo6Ni0le2DVmUTXV7P/TeeGAek
- BKaNY2u6NrDcpfKOVnv1JcqaANbLHasxeXJYXsXLuRYyV5KHfiKBno8OsMogRnWlQ9fDAeXihC1X
- mRU9VPw70z6bhalFEM/pjPCQA+BAlngHvY0q9Gw5NOloxVW0K/tO3saCFey4hE3JznGRzrizu129
- acHYDxLXrLFZ27x/icIiSXdKbZ3gWbXhpATPyTVc9aUV1oY4fX3W5eOCNA39aaEeNVeYHTQ4qc4p
- rBw6OWxEnZ+B9jntbFMsB5h9L3Pcq6EXKX3cZxLzrCA9pYo1HvE2dZcCZBCEfYvQUHiJ0yEw/ggH
- k6NxP0mFXr1FslXeNHk15VolAGHS5rCXQKDyHv3TiDImoWFJv2x8Vhm7/dDfeKdHWm+j+q2hZS63
- ia/tIkSE0ngbX0T3LvR1Khr2Eo2bTut7ztDdNHV3VH6Kds23J7LHDHZzGBAiCeuHbrg=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+        id S1753193AbeADTt2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 14:49:28 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:40743 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752109AbeADTtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 14:49:25 -0500
+Received: by mail-qk0-f176.google.com with SMTP id q14so3338686qke.7
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 11:49:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=N0/kfVuke3AOjuHzbLiD2mJUyTk+4DoUCFOHEtYH+Xw=;
+        b=noe9Z81z06K9FNK2ShnvLfXf3wx4cJsoysbcdPSW/7V2YxykFdYJtFM0nAqklYi7PX
+         pV8KdqhdQtDH+2DZHqNI9YL9//jbe3Gc37ELUF43uq+uzm8mrmlwsDT+EfZNQipDIeRc
+         0ltyumnbvrst1HYghtBk1oszYgi+HeiMlH9UP/yilaooWScrZcsnYP5jW/ttRODS6MMj
+         8Eo9fIPSlfMr/Vx+eizO3rEtpJRbXc7wd5mBQbhZvOwadeuFqAX6mmheN+iGqG2vwL5y
+         CWzPngiE4Q3cIleVCKGpth5sNUffav6LZ8XuRVHu10aDek0RN//8rtC8Xt7/ZttQLGGh
+         ZN9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=N0/kfVuke3AOjuHzbLiD2mJUyTk+4DoUCFOHEtYH+Xw=;
+        b=bNDSVy4+PgRfu5BjewWISkejLed6pnjipogbbPksQxFllDPBd3PjHIDWEIcD4ncmSJ
+         zCodXUevtPe7KTWbUIeLrC6VsesGzaeCOyFMou/k8g5bWKWGhuvVcRy6prJpeKVEFTCS
+         DswWuJ0drWsDbUtfVpNj6CY3APYU0hncC2orZ6S0PgIwlcc44nmC+kxX9xNnoUcsLXSn
+         5TdZoahRJmuPP9fVXne/qprr/TzAleT3a5poMmnEtn9dcwwvgditWlz+XGz927NXy+t/
+         Ci3kPB4NcIQpsMySBMOQ43DrMVl5vl85OEDK00StH2fSFRtzfENjSUSBD35eZtzPlSvk
+         W9aQ==
+X-Gm-Message-State: AKwxytfTcmudLg1NJkC7k1JVmAFJiN5Mf/609YmjK1dQhCY9dDBEnKE4
+        66fnf4WID0uoHGBGiT7FKWbXwzfu4YAHk8GJ8axLUA==
+X-Google-Smtp-Source: ACJfBosiBot+p1jSljkgAcBVYyCO4CDVTdSolqLIOKdIIr5+rmR2JGoUZfOEMj43h+yQpND8FyuDAE90qZh6bp9MXCE=
+X-Received: by 10.55.77.142 with SMTP id a136mr934748qkb.320.1515095363990;
+ Thu, 04 Jan 2018 11:49:23 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.140.85.179 with HTTP; Thu, 4 Jan 2018 11:49:23 -0800 (PST)
+In-Reply-To: <CAPig+cQVGsQk3tj43V6f3rFTD8smDxqWvug_u4__EWxOQG90xA@mail.gmail.com>
+References: <20171228210345.205300-1-sbeller@google.com> <20171228210345.205300-2-sbeller@google.com>
+ <CAPig+cQVGsQk3tj43V6f3rFTD8smDxqWvug_u4__EWxOQG90xA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 4 Jan 2018 11:49:23 -0800
+Message-ID: <CAGZ79kZJq1Y-R_Wx8w6raNFHE4snOgfHtfBh=gbH4pA0uOEF5w@mail.gmail.com>
+Subject: Re: [PATCH 1/4] color.h: document and modernize header
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We now use Mail::Address unconditionaly, hence parse_mailboxes is now
-dead code. Remove it and its tests.
+On Thu, Dec 28, 2017 at 2:00 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, Dec 28, 2017 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
+>> Add documentation explaining the functions in color.h.
+>> While at it, mark them extern.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>> diff --git a/color.h b/color.h
+>> @@ -72,26 +72,48 @@ extern int color_stdout_is_tty;
+>>  /*
+>> - * Set the color buffer (which must be COLOR_MAXLEN bytes)
+>> - * to the raw color bytes; this is useful for initializing
+>> + * Set the color buffer `dst` (which must be COLOR_MAXLEN bytes)
+>> + * to the raw color bytes `color_bytes`; this is useful for initializing
+>>   * default color variables.
+>>   */
+>> -void color_set(char *dst, const char *color_bytes);
+>> +extern void color_set(char *dst, const char *color_bytes);
+>
+> I don't see an explanation of what "color bytes" are. From where does
+> one obtain such bytes? How is this function used? The function comment
+> does not particularly answer these questions.
 
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
----
- perl/Git.pm          | 71 ----------------------------------------------------
- t/t9000-addresses.sh | 27 --------------------
- t/t9000/test.pl      | 67 -------------------------------------------------
- 3 files changed, 165 deletions(-)
- delete mode 100755 t/t9000-addresses.sh
- delete mode 100755 t/t9000/test.pl
+Right. This description is bad.
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 02a3871..9d60d79 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -880,77 +880,6 @@ sub ident_person {
- 	return "$ident[0] <$ident[1]>";
- }
- 
--=item parse_mailboxes
--
--Return an array of mailboxes extracted from a string.
--
--=cut
--
--# Very close to Mail::Address's parser, but we still have minor
--# differences in some cases (see t9000 for examples).
--sub parse_mailboxes {
--	my $re_comment = qr/\((?:[^)]*)\)/;
--	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
--	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
--
--	# divide the string in tokens of the above form
--	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
--	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
--	my $end_of_addr_seen = 0;
--
--	# add a delimiter to simplify treatment for the last mailbox
--	push @tokens, ",";
--
--	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
--	foreach my $token (@tokens) {
--		if ($token =~ /^[,;]$/) {
--			# if buffer still contains undeterminated strings
--			# append it at the end of @address or @phrase
--			if ($end_of_addr_seen) {
--				push @phrase, @buffer;
--			} else {
--				push @address, @buffer;
--			}
--
--			my $str_phrase = join ' ', @phrase;
--			my $str_address = join '', @address;
--			my $str_comment = join ' ', @comment;
--
--			# quote are necessary if phrase contains
--			# special characters
--			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
--				$str_phrase =~ s/(^|[^\\])"/$1/g;
--				$str_phrase = qq["$str_phrase"];
--			}
--
--			# add "<>" around the address if necessary
--			if ($str_address ne "" && $str_phrase ne "") {
--				$str_address = qq[<$str_address>];
--			}
--
--			my $str_mailbox = "$str_phrase $str_address $str_comment";
--			$str_mailbox =~ s/^\s*|\s*$//g;
--			push @addr_list, $str_mailbox if ($str_mailbox);
--
--			@phrase = @address = @comment = @buffer = ();
--			$end_of_addr_seen = 0;
--		} elsif ($token =~ /^\(/) {
--			push @comment, $token;
--		} elsif ($token eq "<") {
--			push @phrase, (splice @address), (splice @buffer);
--		} elsif ($token eq ">") {
--			$end_of_addr_seen = 1;
--			push @address, (splice @buffer);
--		} elsif ($token eq "@" && !$end_of_addr_seen) {
--			push @address, (splice @buffer), "@";
--		} else {
--			push @buffer, $token;
--		}
--	}
--
--	return @addr_list;
--}
--
- =item hash_object ( TYPE, FILENAME )
- 
- Compute the SHA1 object id of the given C<FILENAME> considering it is
-diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-deleted file mode 100755
-index a1ebef6..0000000
---- a/t/t9000-addresses.sh
-+++ /dev/null
-@@ -1,27 +0,0 @@
--#!/bin/sh
--
--test_description='compare address parsing with and without Mail::Address'
--. ./test-lib.sh
--
--if ! test_have_prereq PERL; then
--	skip_all='skipping perl interface tests, perl not available'
--	test_done
--fi
--
--perl -MTest::More -e 0 2>/dev/null || {
--	skip_all="Perl Test::More unavailable, skipping test"
--	test_done
--}
--
--perl -MMail::Address -e 0 2>/dev/null || {
--	skip_all="Perl Mail::Address unavailable, skipping test"
--	test_done
--}
--
--test_external_has_tap=1
--
--test_external_without_stderr \
--	'Perl address parsing function' \
--	perl "$TEST_DIRECTORY"/t9000/test.pl
--
--test_done
-diff --git a/t/t9000/test.pl b/t/t9000/test.pl
-deleted file mode 100755
-index dfeaa9c..0000000
---- a/t/t9000/test.pl
-+++ /dev/null
-@@ -1,67 +0,0 @@
--#!/usr/bin/perl
--use lib (split(/:/, $ENV{GITPERLLIB}));
--
--use 5.008;
--use warnings;
--use strict;
--
--use Test::More qw(no_plan);
--use Mail::Address;
--
--BEGIN { use_ok('Git') }
--
--my @success_list = (q[Jane],
--	q[jdoe@example.com],
--	q[<jdoe@example.com>],
--	q[Jane <jdoe@example.com>],
--	q[Jane Doe <jdoe@example.com>],
--	q["Jane" <jdoe@example.com>],
--	q["Doe, Jane" <jdoe@example.com>],
--	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
--	q[Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>],
--	q["<jdoe@example.com>"],
--	q["Jane jdoe@example.com"],
--	q[Jane Doe <jdoe    @   example.com  >],
--	q[Jane       Doe <  jdoe@example.com  >],
--	q[Jane @ Doe @ Jane @ Doe],
--	q["Jane, 'Doe'" <jdoe@example.com>],
--	q['Doe, "Jane' <jdoe@example.com>],
--	q["Jane" "Do"e <jdoe@example.com>],
--	q["Jane' Doe" <jdoe@example.com>],
--	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
--	q["Jane\" Doe" <jdoe@example.com>],
--	q[Doe, jane <jdoe@example.com>],
--	q["Jane Doe <jdoe@example.com>],
--	q['Jane 'Doe' <jdoe@example.com>],
--	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
--	q[Jane <jdoe@example.com> Doe],
--	q[<jdoe@example.com> Jane Doe]);
--
--my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
--	q["Doe, Ja"ne <jdoe@example.com>],
--	q["Doe, Katarina" Jane <jdoe@example.com>],
--	q[Jane jdoe@example.com],
--	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
--	q[Jane Doe],
--	q[Jane "Doe <jdoe@example.com>"],
--	q[\"Jane Doe <jdoe@example.com>],
--	q[Jane\"\" Doe <jdoe@example.com>],
--	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
--
--foreach my $str (@success_list) {
--	my @expected = map { $_->format } Mail::Address->parse("$str");
--	my @actual = Git::parse_mailboxes("$str");
--	is_deeply(\@expected, \@actual, qq[same output : $str]);
--}
--
--TODO: {
--	local $TODO = "known breakage";
--	foreach my $str (@known_failure_list) {
--		my @expected = map { $_->format } Mail::Address->parse("$str");
--		my @actual = Git::parse_mailboxes("$str");
--		is_deeply(\@expected, \@actual, qq[same output : $str]);
--	}
--}
--
--my $is_passing = eval { Test::More->is_passing };
--exit($is_passing ? 0 : 1) unless $@ =~ /Can't locate object method/;
--- 
-2.8.1.116.g7b0d47b
 
+It's implementation is just
+
+    xsnprintf(dst, COLOR_MAXLEN, "%s", color_bytes);
+
+Apparently this function is only ever used by grep.c which uses
+it to fill in struct grep_opt {
+    ...
+    char color_context[COLOR_MAXLEN];
+    char color_filename[COLOR_MAXLEN];
+    char color_function[COLOR_MAXLEN];
+    char color_lineno[COLOR_MAXLEN];
+    char color_match_context[COLOR_MAXLEN];
+    char color_match_selected[COLOR_MAXLEN];
+    char color_selected[COLOR_MAXLEN];
+    char color_sep[COLOR_MAXLEN];
+    ...
+}
+
+I guess I'll drop the documentation for color_set, and put a NEEDSWORK
+comment there as I'd think we don't need to copy around the colors
+using snprintf, but either can keep pointers or use xmemdup.
+
+>
+>> +/*
+>> + * Parses a config option, which can be a boolean or one of
+>> + * "never", "auto", "always". Returns the constant for the given setting.
+>> + */
+>> +extern int git_config_colorbool(const char *var, const char *value);
+>
+> I suppose that "constant for the given setting" means one of
+> GIT_COLOR_NEVER , GIT_COLOR_AUTO, GIT_COLOR_ALWAYS? Perhaps say so
+> explicitly?
+
+Maybe I should fix the code as well. Currently it only returns one of
+0 (=GIT_COLOR_NEVER), 1 (=GIT_COLOR_ALWAYS) and
+GIT_COLOR_AUTO.
+
+> Would it also make sense to say that boolean "true" ("yes", etc.)
+> results in GIT_COLOR_ALWAYS and "false" ("no", etc.)" results in
+> GIT_COLOR_NEVER?
+
+done.
+
+>
+> Finally, for grammatical consistency with other comments:
+>     s/Parses/Parse
+>     s/Returns/Return/
+
+done
+
+>
+>> +/* Is the output supposed to be colored? Resolve and cache the 'auto' setting */
+>> +extern int want_color(int var);
+>
+> What is the 'var' argument? How is it interpreted? (...goes and checks
+> implementation...) I guess this documentation should explain that the
+> caller would pass in the result of git_config_colorbool().
+>
+> Also, the meaning of "Resolve and cache 'auto' setting" stumped me for
+> a while since it's not clear why it's here (or why it's missing the
+> full stop), but I eventually realized that it's describing an
+> implementation detail, which probably doesn't belong in API
+> documentation.
+
+done
+
+>
+>> +/*
+>> + * Translate the human readable color string from `value` and into
+>> + * terminal color codes and store them in `dst`
+>> + */
+>> +extern int color_parse(const char *value, char *dst);
+>> +extern int color_parse_mem(const char *value, int len, char *dst);
+>
+> What does "human readable" mean in this context? Is it talking about
+> color names or RGB(A) tuples or what?
+>
+> Also, how does the caller know how large to make 'dst'? At minimum,
+> you should say something about COLOR_MAXLEN.
+>
+> Finally, for the 'len' case, what happens if 'dst' is too small? This
+> should be documented.
+>
+> And, the return value of these functions should be discussed.
+>
+>> +/*
+>> + * Print the format string `fmt`, encapsulated by setting and resetting the
+>> + * color. Omits the color encapsulation if `color` is NULL.
+>
+> The "encapsulated by setting and resetting the color" bit is hard to
+> grok. Perhaps instead say something along the lines of:
+>
+>     Output the formatted string in the specified color (and
+>     then reset to normal color so subsequent output is
+>     uncolored).
+
+sounds good.
+
+>
+>> + * The `color_fprintf_ln` prints a new line after resetting the color.
+>> + * The `color_print_strbuf` prints the given pre-formatted strbuf instead.
+>
+> Should the strbuf variation warn that it only outputs content up to
+> the first embedded NUL? (Or should that bug/misfeature be fixed?)
+
+added.
+
+>
+>> + */
+>>  __attribute__((format (printf, 3, 4)))
+>> +extern int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
+>>  __attribute__((format (printf, 3, 4)))
+>> +extern int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...);
+>> +extern void color_print_strbuf(FILE *fp, const char *color, const struct strbuf *sb);
+>>
+>> -int color_is_nil(const char *color);
+>> +/*
+>> + * Check if the given color is GIT_COLOR_NIL that means "no color selected".
+>> + * The application needs to replace the color with the actual desired color.
+>
+> Maybe: s/application/caller/
+
+done
+
+>
+>> + */
+>> +extern int color_is_nil(const char *color);
