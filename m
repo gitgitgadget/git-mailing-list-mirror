@@ -2,83 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35E481F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 20:16:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6660F1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 20:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752109AbeADUP5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 15:15:57 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:33397 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbeADUP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 15:15:57 -0500
-Received: by mail-wr0-f193.google.com with SMTP id p6so2592372wrd.0
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 12:15:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/WapJIX0u2OukBmSBSUAKTT0UGW3kGKR5z3BotWCVpM=;
-        b=OoPxdSTwAqLvn8kjAcCyzJMZ1LAD5R1LPSUTkMwsRQDqxvoxT2dXunGxOa0K/aHxT4
-         R2ginS7R7Xj9Lw7C23abZESBFzKY22jlJzvIhWcYmwE3Kofda5bwpmf7aB0qnsAvwP/L
-         tvv/IS/2rfjnM6vabzxT5bqqNHfEk+wDZB1k/8sR32ukV//7G4MTbpyPYfMdrVHyAhEn
-         8bjYNbh/8FkVMw+FUDNP68PARMUg+WQNbRxJ2Y6e4iRkmznTeAvKJvi6mZzZIod0CM/a
-         FdTVPeQ1eTO2MVfKtl1eVxYXF4LqbJU9EBelrtAUmK4dVeXeuDRy8EBWvX+T4LSKUJ8j
-         esWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/WapJIX0u2OukBmSBSUAKTT0UGW3kGKR5z3BotWCVpM=;
-        b=W6bm8JiRdIOuFHWq9nICbPqPWobv1lBAl/3MopiW/D1OOEOnJvVMvjDzh9z6QJMy9e
-         vV2xXw1RD2EgLR3RArBj771LaDJQlmUsXM4+G2wRcNgmS8JLq73+bVXvIVIqZwRvrMIc
-         xuBbt8gbBOVmVkyhhsRyk0IIgJ6nQ7+qvk0eZJ6cVrch3oQA/k6OujiFLiRnsoiP9Wv+
-         xmW0gKJ2O1MFqwINhb7eOg8AadSkzbw5kj1JbeB11qeKITfuG9j4KHI0JVjRray1uo1N
-         dlnrq+pQYdr0oPsrZzyNrrqiuuqt9RvX3eChtTuf5pyZRRQDMzOAqia9h1IFmbvfpfQA
-         q/CQ==
-X-Gm-Message-State: AKGB3mKSWvSXsDzuesnup6aHRnx0QLmFneKCMEAS5mB6bWOlsR9Ue4o1
-        zS9TpujvTVkWqLe1SxV5qHyJ22eO
-X-Google-Smtp-Source: ACJfBounLs/p6aNkR4vgKzdH7ug0DnmFvkVVUnhDN8/EyZ/YVJykntYw6WXoX2iROzkz0BNMNZVQsg==
-X-Received: by 10.223.164.148 with SMTP id g20mr671375wrb.177.1515096955984;
-        Thu, 04 Jan 2018 12:15:55 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id f125sm3289056wme.45.2018.01.04.12.15.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jan 2018 12:15:55 -0800 (PST)
-Date:   Thu, 4 Jan 2018 20:18:04 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Paul Smith <paul@mad-scientist.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
-Message-ID: <20180104201804.GE2641@hank>
-References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
- <1514567611.3270.28.camel@mad-scientist.net>
+        id S1752498AbeADU2Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 15:28:24 -0500
+Received: from mout.gmx.net ([212.227.17.20]:62737 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751829AbeADU2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 15:28:23 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTO3f-1eN7Le1CkR-00SK30; Thu, 04
+ Jan 2018 21:28:21 +0100
+Date:   Thu, 4 Jan 2018 21:28:21 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     "Kevin A. Mitchell" <kam@kamit.com>
+cc:     git@vger.kernel.org
+Subject: =?UTF-8?Q?Re=3A_Bug=2Ffeature_request=3A_Can=E2=80=99t_disable_?=
+ =?UTF-8?Q?fsck_warnings_during_clone?=
+In-Reply-To: <CAF1p0HimkxVydxL3cfRXX0=oaBrmARzYqCbqiarWn1yvh+H-EA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1801042125430.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <CAF1p0HimkxVydxL3cfRXX0=oaBrmARzYqCbqiarWn1yvh+H-EA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1514567611.3270.28.camel@mad-scientist.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: multipart/mixed; boundary="8323329-154039943-1515097702=:32"
+X-Provags-ID: V03:K0:oFaf9/gUq+tzYA0ibepdHFMHf+2dvYhQwEKWiov/ns0Ryqn2B/M
+ 7uhv0RQZG7XBAxSHElIdrpbAmvYFXMlkGoXES6P5xZacYOW4vr1671/5zCivpAXV67Gejd+
+ MhMTlg1fWOdk+hEYFKM6rY1HAzbPb3jkwrYyOgtBtUHb4WIbbqzneDAjhrJdR1UdZA2i+0G
+ DLKa4LDUaFJhFKDjbGj8w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pGBngiqXqho=:lOeTABo00WZwZQmfM9KsjG
+ YLfG2zh9YQOgvA8+0oQI5gBItiCaoK6Zy6D141vdfiD9Fw8Jiy+CJ0zFNnxSYGfEkXekVvIGz
+ qD/gruYaCEVtfoi+xWpU1GYkUo63LX1NZf6TvLQ1vWW+M7259odVev9egNdYc6SJ50CAxxoVR
+ TH1d0OaVeM/oDbzb2ZYSJ9fxxYCVgtpeMIhgDlqrkNmy0CibopRf7EeTu1Pd+wFGvTQ1Y/XPT
+ 42WZ7c8kWcBKR33xb0aCWXlMM+/4RiaX0UMQIApwlThKrj/NNEs+cOtxo5pVk4+DDtz029ydi
+ J+QdtoFfiACVJL3gbyysWOgQR+9qjBzhFW9BH8ot+te9cBz9kRoN+MciraCH8NQh3sCiMY0y4
+ iuLHevbcIFUrPlLw56NCNPvvJCS9+eoANua26DbeGbU3cnAcjI0mcAyvZ2mNQ205cCdEiI50N
+ FrHVhLObThA/MYpxHdFpOi/EuqsR8Z9bABCUfi2pFKG21tIB8o512mGvqNt/x5qq6lz15o9Oz
+ h2y2RSOM6dP3tSLqTTMrhIln593cs0rbhdH8+RELTSyBRewaLZ3CFQ0bsi6DxlFNG9yC6IEA/
+ UTtfEyJA0TDZOR/uYfBCWanAjPIbb8eUwLpAFLWdsYEar6Lwp9zrwI7e1myXQFvWTgtA6jFDr
+ wzAl7KpQaLfdQHdCDy8fedS5ZU2jtlbIXeLuju0CRVPyjkBQdJ9DTa4FDixp9G5imNiQnUkg8
+ lvTB2ixfQxpZqb9bmuQa+LCLdQB8HBZjZBROb865T81OBoGo7/AUVfW/GxwFr9I9kpKScSXL2
+ Bwc7oxeCzOyUbOfcE6TYEUYJrRh/qerSfNiSW6G21GANdRLblwMrHV1eOJTBVAjQNxFf726
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/29, Paul Smith wrote:
-> On Thu, 2017-12-28 at 20:30 -0800, Junio C Hamano wrote:
-> >  * The way "git worktree add" determines what branch to create from
-> >    where and checkout in the new worktree has been updated a bit.
-> 
-> Does this include the enhancements published a few weeks ago to allow
-> worktrees to be created directly from remote branches without first
-> checking out the branch locally? I'm really looking forward to that
-> change...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Yes, this release will include that.  It would be awesome if you could
-test the rc, now is the best time to scream if something about it is
-not as you'd expect :)
+--8323329-154039943-1515097702=:32
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Thanks!
+Hi Kevin,
+
+On Thu, 28 Dec 2017, Kevin A. Mitchell wrote:
+
+> I=E2=80=99ve set transfer.fsckObjects to true globally, for safety.
+> Unfortunately, this messed up my Spacevim install.
+>=20
+> Doing some digging, I found that some of the repos had a warning. I
+> can turn the warning off, but that only affects git fsck, not git
+> clone. Turning off transfer.fsckObjects also fixes the problem. I=E2=80=
+=99d
+> rather have it on for my development work.
+>=20
+> Tested with the =E2=80=9Cnext=E2=80=9D branch as well.
+>=20
+> $ git -c transfer.fsckObjects=3Dtrue -c fsck.zeroPaddedFilemode=3Dignore
+> clone https://github.com/albfan/ag.vim
+> Cloning into 'ag.vim'...
+> remote: Counting objects: 1879, done.
+> error: object 65e1a0027644b6625b32d30ba5ccf1c4d483480a:
+> zeroPaddedFilemode: contains zero-padded file modes
+> fatal: Error in object
+> fatal: index-pack failed
+> $ git =E2=80=94version
+> git version 2.15.1.501.g29533fb16
+>=20
+> but this works as expected:
+>=20
+> $ git clone https://github.com/albfan/ag.vim
+> Cloning into 'ag.vim'...
+> remote: Counting objects: 1879, done.
+> remote: Total 1879 (delta 0), reused 0 (delta 0), pack-reused 1879
+> Receiving objects: 100% (1879/1879), 1.23 MiB | 2.76 MiB/s, done.
+> Resolving deltas: 100% (938/938), done.
+> $ cd ag.vim
+> $ git -c transfer.fsckObjects=3Dtrue -c fsck.zeroPaddedFilemode=3Dignore =
+fsck
+> Checking object directories: 100% (256/256), done.
+> Checking objects: 100% (1879/1879), done.
+> $ git -c transfer.fsckObjects=3Dtrue fsck
+> Checking object directories: 100% (256/256), done.
+> warning in tree 65e1a0027644b6625b32d30ba5ccf1c4d483480a:
+> zeroPaddedFilemode: contains zero-padded file modes
+> Checking objects: 100% (1879/1879), done.
+>=20
+> It would be useful to be able to turn off individual warnings during
+> cloning. Is there something I=E2=80=99m missing in the config? Or, is thi=
+s
+> something that could be fixed?
+
+Well, you can apparently have your cake and eat it too (see
+https://git-scm.com/docs/git-config#git-config-receivefsckltmsg-idgt):
+
+receive.fsck.<msg-id>::
+        When `receive.fsckObjects` is set to true, errors can be switched
+        to warnings and vice versa by configuring the `receive.fsck.<msg-id=
+>`
+        setting where the `<msg-id>` is the fsck message ID and the value
+        is one of `error`, `warn` or `ignore`. For convenience, fsck prefix=
+es
+        the error/warning with the message ID, e.g. "missingEmail: invalid
+        author/committer line - missing email" means that setting
+        `receive.fsck.missingEmail =3D ignore` will hide that issue.
+
+In your case, use receive.fsck.zeroPaddedFilemode=3Dignore=3Dwarn (or
+=3Dignore).
+
+Ciao,
+Johannes
+--8323329-154039943-1515097702=:32--
