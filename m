@@ -2,70 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F16351F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 22:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B80A1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 22:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753395AbeADWdi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 17:33:38 -0500
-Received: from mout.gmx.net ([212.227.17.21]:59134 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751952AbeADWdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 17:33:37 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MaIw0-1eDUIg2hZo-00JuNC; Thu, 04
- Jan 2018 23:33:34 +0100
-Date:   Thu, 4 Jan 2018 23:33:35 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Alex Vandiver <alexmv@dropbox.com>
-cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 4/6] fsmonitor: Make output of test-dump-fsmonitor more
- concise
-In-Reply-To: <36db77ccb5c025a73bf3f5841cd11607427ffdc0.1514948078.git.alexmv@dropbox.com>
-Message-ID: <alpine.DEB.2.21.1.1801042331590.32@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <20180103030456.8181-1-alexmv@dropbox.com> <36db77ccb5c025a73bf3f5841cd11607427ffdc0.1514948078.git.alexmv@dropbox.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ajQGipo7ydsFN1mUtX2nunpiZaDXrRnCCuIgicmbFCyUix1WAtk
- vLu8OT47BYVD8s7qtmU+5QP2ushzVWNT3teohWRW3hBH195uUDHmUZb18JMPA1tOOwC6255
- hbqF9A4C0+P2wNrFHNZBxEmQUPClSvZX2gVcIsSwTOHoqx6ab5pOeCZalVTquXwDfHObrhc
- 28dQG80cJqD9y1ZqnbZqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Mi5HM/hyi2o=:7/IKDFMWm3hr50CF1u8DPl
- W6bq4tevWzSmBX2OtVfAY3YYpU5s3XtxfcMMDTwluRYwPKCnvccf337PgHzTna/20tHwsaSm7
- Pe3w5Ip5FRR46R9gOSweo87rgJ6sSCGp8m6suQtXuJC6jCqmpL5UtDgjFG8PDCck3+nJSPWw3
- rS+QfSXaq5doJhPij04zBNc+IE9PasMpTXg/Si7vzpt+97g2Lh6rqPxVYpvmxKOPjMwoVGnQz
- 5vaxrpr/s/HoFQpDmuJXLQP2tmDYnkCXHIIYI07XS1HMIvcUXRXWP+NWNjJb8SxdZpL4xSXtD
- wQ33/dQirgSbepGOOH8QwsiWtmrLBab/lOGJWA4AHhKfFPKURYRzku46zxxHUN/8ch95lLcVv
- /ZW6c/4vdRSUZo/XR1qK/J92EWo4RxrHoV5utUt4+U1lVPKh+dJBidlh6xGNOs8dX3iiZp2pk
- 5IHxsnc5UkwmzC1vOlpsr8i2hcZK/0SJ1bkIHtyVeAWC0mTunxUYBJcNPd3Eq4LF1614UQ9Vq
- L8XXniVuHepTCe+CSd3HaaOSwxf81coXhTSuH6IFP0Z3Ul9cDOqSHlvceGV+U33qXysTQG2hv
- GzGuEu81essXskdazoE8llURzfSrLdNUxvh+Kg5UK7aItv2NbxKoaBy/MDgpyZ40b22twJS8c
- 8ClppHfDvkmmDN1kX1dXKsM9zX2xgNG6bTkOCOAYAY2Rc8zo3deBP2tWk79cpX96dGG4pAG3p
- TOnRUrikdBIRGLrbLVem/4qwN88/NzYSIlx8WAKad2R/k6qTYC4U8nu4I3V7SBflJJQm073yE
- JcwDrYUSskvjf4V7JNLxhczcPT2lRguVa92ewQkJTKYnZZyIXv3r1MYc6xWdMCg1T8Dz7BN
+        id S1753185AbeADWkM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 17:40:12 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:43212 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752552AbeADWkL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 17:40:11 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e3so1383417pfi.10
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 14:40:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=BvboDrLvqgI5l/HD4EP/qUyJyo94+uYhJgWUDDaa6JE=;
+        b=Ei4HfvhrY6j6nTvm1sOzjbGigL6dpuqfn7JqlB0M75RIB9IKgAfvVUHom/uvh72yKU
+         ZPa1LZpG1WJ+TfFeVn9fAVOrVuLFs5GTXsjPMxmYarroNbPZ84rp8BHMci6B8I7B/XGo
+         UnpuEiQy2VfXarTZl4lln0Mo8mtTev0QDMtA58c2BBtQ06zWwCF0Sur11/fwohCIAs3a
+         bVR3hpzUtXl7efrTmU9gyD6H0b1c0/4Zd1y1w+Rksut6QAgOn8sUMdIJYLeD2HuXiMel
+         OyD6Pn5XWNR0iW7yEK5n+9vw9vP183UJ0ysvtXlGUWg+ch7SS1WIT3pqMM9YlDSuNK7M
+         xDKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=BvboDrLvqgI5l/HD4EP/qUyJyo94+uYhJgWUDDaa6JE=;
+        b=NvWcLR2YGXmorbozyKNeWP6PtEReHyukW0BsJVaIxhoGDC8VpT7iCgIJPi88YeNMOL
+         pSONaMmePHgV2oBQ/8AC2EoCMQlQJ15CM+IdIg72XlrU9rg1VbdSQ/uFblTeVFagHDJ4
+         IxyudIuyb7X2UXCbE4r9TIKYKbMAAuZLxrxBp9suVoQWm1qm8ZhC7uyWEfYQvhKXTOc4
+         KZE+BvlfZh8FdgEDCPXdXjlQEc4ER++QxBkFm9i05VFD+TY4BvnEISFYr+4lhwli6L5N
+         EHmcp+EUpg8VsyypIlZ/CC/PiWQ2+tPYiDDBtmmkelH21g5Pjb1EM0qe7RmQj4LnfBG1
+         O1qg==
+X-Gm-Message-State: AKGB3mLJTl4I7IOiidioSra3NzXfhxxuPTOguaauj/2D1Jp+RbfFfQGe
+        jhy550fFhFUhyrODf5JDYzYdJZ6EBRE=
+X-Google-Smtp-Source: ACJfBosJg0JCmZDFp+l0f8cHH5gfSoIlPDc/1U4yXYJdwNDLqUvWfNyPF8Jbsco6OU+1wmqlew3nvA==
+X-Received: by 10.101.77.195 with SMTP id q3mr826073pgt.436.1515105610722;
+        Thu, 04 Jan 2018 14:40:10 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id e87sm10385259pfd.165.2018.01.04.14.40.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Jan 2018 14:40:10 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com, sunshine@sunshineco.com
+Cc:     git@vger.kernel.org
+Subject: [PATCHv3 0/4] blame: (dim rep. metadata lines or fields, decay date coloring)
+Date:   Thu,  4 Jan 2018 14:40:03 -0800
+Message-Id: <20180104224007.214548-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.0.rc0.223.g4a4ac83678-goog
+In-Reply-To: <20171110011002.10179-1-sbeller@google.com>
+References: <20171110011002.10179-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex,
+v3:
 
-On Tue, 2 Jan 2018, Alex Vandiver wrote:
+Thanks Eric for feedback, I implemented all of the suggestions.
+Specifically I dropped the abstractions in patch2 but keep around a similar
+abstraction in patch 3 as that still looks like it benefits (the condition
+is just growing large).
 
-> Rather than display one very long line, summarize the contents of that
-> line.  The tests do not currently rely on any content except the first
-> line ("no fsmonitor" / "fsmonitor last update").
+Thanks,
+Stefan
 
-The more interesting part would be the entries with outdated ("invalid")
-information. I thought that this information was pretty useful for
-debugging. Maybe we could still keep at least that part, or at least
-trigger outputting it via a command-line flag?
+v2:
+This is picking up [1], but presenting it in another approach,
+as I realized these are orthogonal features:
+* dimming repeated lines/fields of information
+* giving a quick visual information how old (as a proxy for 'well tested')
+  a line of code is.
 
-Ciao,
-Johannes
+Both features are configurable.
+
+Changes from sending it out in November:
+* better commit messages
+* rebased on master
+
+Any feedback welcome.
+
+Thanks,
+Stefan
+
+[1] https://public-inbox.org/git/20171110011002.10179-1-sbeller@google.com/
+
+Stefan Beller (4):
+  color.h: document and modernize header
+  builtin/blame: dim uninteresting metadata
+  builtin/blame: add option to color metadata fields separately
+  builtin/blame: highlight recently changed lines
+
+ Documentation/config.txt |  23 ++++++
+ builtin/blame.c          | 201 ++++++++++++++++++++++++++++++++++++++++++-----
+ color.c                  |   2 -
+ color.h                  |  59 ++++++++++----
+ t/t8012-blame-colors.sh  |  56 +++++++++++++
+ 5 files changed, 305 insertions(+), 36 deletions(-)
+ create mode 100755 t/t8012-blame-colors.sh
+
+-- 
+2.16.0.rc0.223.g4a4ac83678-goog
+
