@@ -2,78 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F9441F406
-	for <e@80x24.org>; Thu,  4 Jan 2018 00:22:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34D781F406
+	for <e@80x24.org>; Thu,  4 Jan 2018 00:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751394AbeADAWm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 Jan 2018 19:22:42 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50486 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751204AbeADAWm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 Jan 2018 19:22:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2318D560F;
-        Wed,  3 Jan 2018 19:22:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HrOiADFE88je6pDfsLo9vPUpG5Y=; b=Hk/aeh
-        Al4F8iTA2Ov8ZI2YcWb/aOfXXZzg5MbVAmheor/S2SNsQ/5gi3wuT6ANVUs7mp1m
-        DcMS3J/zgA4UI+vgqiZpB1FD8b73YOlj5W6iCX55ifWZ8eODUsT96qr6RiLCTk/z
-        zR/Gnk+2Kn2PlgkYmmh8IFQ0KZXTFAWys1gzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=L4kSGOg0xBKdv+ZyrjN13Tq4E1K4WFYQ
-        gca9EpXmA1v6driLXUfHwWwOnp4ZMbvZLx6MpSWYjDcJkwNplg3eJCoS4M7rd5Kh
-        6EhOuQVJVrfYGRYGp6yOM0r4F8qzys4S1ayAneGzrhnVsAeS1iJ0FJkFDG2OVZMI
-        AGBxiKTro3Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA94ED560E;
-        Wed,  3 Jan 2018 19:22:41 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DEC9D560D;
-        Wed,  3 Jan 2018 19:22:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Several fixes for the test suite related to spaces in filenames
-References: <cover.1514998470.git.johannes.schindelin@gmx.de>
-        <20180103190844.GA30781@sigill.intra.peff.net>
-Date:   Wed, 03 Jan 2018 16:22:39 -0800
-In-Reply-To: <20180103190844.GA30781@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 3 Jan 2018 14:08:45 -0500")
-Message-ID: <xmqqr2r6fp68.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751294AbeADAnf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 Jan 2018 19:43:35 -0500
+Received: from mout.web.de ([212.227.15.4]:54408 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750994AbeADAnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 Jan 2018 19:43:35 -0500
+Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MhDRB-1eJKz3135N-00ML0u; Thu, 04
+ Jan 2018 01:43:28 +0100
+Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
+Cc:     git@vger.kernel.org, mpsuzuki@hiroshima-u.ac.jp
+References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
+ <81b882a5-0c35-f3c4-78e2-d3e36290fec1@web.de>
+ <5a4ad314.C6wihAr5rEC8jRkB%perryh@pluto.rain.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <24162f60-d6bf-8ab4-ee69-9834292fadae@web.de>
+Date:   Thu, 4 Jan 2018 01:43:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 604E4DE4-F0E5-11E7-9BED-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <5a4ad314.C6wihAr5rEC8jRkB%perryh@pluto.rain.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:sOGA0w9hKtbIrOncBlZFHlkDTHBXhVcd+/w28CBBD/TZe0WryH9
+ YQoI4HifuRuVc5bh17cunrJOEldq6r7wwk01dLHnklasaLkuqf49AdIp2scUHSTCOg6ch81
+ NkxO11ZBZAO+CJOcCfJ/9N0ehKPcTIS3Jh7nw8TDK1mFpv4tlVBrAA7W+Xg7Tv4As7IoITS
+ VCo75YBnFB2naRj2bXWxQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:j9ohyxJE9wg=:86oKA+1vrRmSA4ZAkB1rCH
+ 6XcuvKvnNGiYdesJJvxJLlTwSOthaG1yU0ry4usL3ImT7IGHmAWLKn3vR8IzLN86UGROTkvi6
+ 9R3ZbLO6OG3Qy6Fjz1+n8QcksOniPGqV0nsvpTY9dqDcMr/N8IGdxG1qUrpNpGdBJOWi+/Quj
+ CoK8JtomlM9WjjwNcOk5J01sNIWQSeDXN9aVUoH5QxtVCvDmtBVSaHDqmMUQbWckNFz7oGbYA
+ OHzL4DiYVYYCVZw+runsd/zOzdZkK8ZHd7Wh33e9Y8QtoUAq1rWWcv9JISQRiXhXgkjc0G8Jt
+ A7bWT1s7s+l9Hp0xY3PMCkOmHa8vMfRTNJVB39DxKzZBhMwpeI53ChfwJ3biUUHQ2/r3yOBfE
+ LOi1WTxE0K+hj266LFkGb63ZX5X2C2ttxznY82HWTktMRInF3pxIo+BnLiHmYlihuDFaYwo1n
+ AAGixsvLpo+nV6z86nz3iT44GTlBZ3ieHgG9y/JFAecIINghb2EjmxPkddgAg+BPtohu/lm9E
+ pmc5KtieJV5U2WUsmhLcMAMXgeWIsxLkR8WVfl6XiQe/P5CCxwrx/1IMIOpIeWIqKBMDUIvCv
+ juzK88h/YK+FbfakHOyvW9A6+qbJ9fLM1lpDLaVZOcUdw/7oeLM/pqTez/eM8FccGBXbwQT9R
+ 94A7b4LKOvWlwfdxD+1plIgpZ3VhtdtarEtrEiqtkHXeCvdXPcFPU+47Nj7PhZD2m7uC8hofL
+ PqqOGOFuCQwfWRVdYM3xr75+bwqXGfkTbdDukujpD6YLDOzkmxf/uEepXdcPRE5hADmh0Bx4K
+ ls5j2nUdVvnN9xg/OOCNAa7ac2MljtQmh+z2992aZ4/6PYCn+Q=
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+[replying only to the list because emails to perryh@pluto.rain.com
+ are rejected by my mail server with the following error message:
+ "Requested action not taken: mailbox unavailable
+  invalid DNS MX or A/AAAA resource record."]
 
-> On Wed, Jan 03, 2018 at 05:54:44PM +0100, Johannes Schindelin wrote:
->
->> The second issue was found long ago, and the patch carried in Git for
->> Windows, although nothing about it is specific to Windows.
->> 
->> The first patch was developed today, when I tried to verify that Git's
->> test suite passes if Git is cloned to a directory called `with spaces/`.
->
-> Heh, the whole point of the space in the trash directory was to find
-> these issues early, but obviously it is not foolproof. :)
+Am 02.01.2018 um 01:32 schrieb Perry Hutchison:
+> Ren?? Scharfe <l.s.r@web.de> wrote:
+>> Am 29.12.2017 um 15:05 schrieb suzuki toshiya:
+>>> The ownership of files created by git-archive is always
+>>> root:root. Add --owner and --group options which work
+>>> like the GNU tar equivalent to allow overriding these
+>>> defaults.
+>> ... the receiver would need to be root to set both IDs, or be a
+>> group member to set the group ID; I guess the latter is more common.
+> 
+> If the received files are owned by root:root as stated, I guess the
+> receiver must be running as root, no?
 
-Exactly.
+That depends on what you mean with "must".  Users who want the files
+they extract to be owned by root need root permissions on Unix and
+Linux.  If they are OK with owning the files themselves then regular
+user accounts suffice.  I assume the latter is much more common.
 
-> The patches themselves look good to me from inspection. Thanks.
-
-Yes, these changes look good.  Thanks both.
+René
