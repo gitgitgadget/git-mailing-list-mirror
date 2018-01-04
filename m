@@ -2,112 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 018241F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 18:00:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34C8E1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 18:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752553AbeADSA2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 13:00:28 -0500
-Received: from siwi.pair.com ([209.68.5.199]:29899 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751957AbeADSA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 13:00:27 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2B099844D7;
-        Thu,  4 Jan 2018 13:00:27 -0500 (EST)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1751770AbeADSWu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 13:22:50 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50098 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751563AbeADSWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 13:22:49 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A1B3EC9977;
+        Thu,  4 Jan 2018 13:22:48 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ergYFGNxCiPJ
+        +fMEsPoRP7PR5JY=; b=wYriQ4auNn2JQFCOpHkm0IlP6mvsFYYXOY/4kEs7AZ5I
+        FPxJ2OSTN2kTKoCeRzbKG8HZL7+CwVFBv4tkhZFw1VC+2dYI6HsU+stzAxqgLkAX
+        /Bi/9pQ1S4ckugyKNTb9dzJt3Z9ZrXBAAEQ/xPF1WDpIjD1fYMkHh2tJmtocFlk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FzZwBf
+        D53KI1CHqk0EgY6h0uo7yuGConGzddxjxK/gUiRoa0d4nXUIvr6ZnrAMqwEmbcNk
+        o5xakNvV8DwtLouDxermoOZXEQtkEIOvW4yXQ+04ey2fbQv6mo903KE1Wc2g1vLC
+        cOlvh3VmM0cC2wk1T2LK832bz/5p+r+iN/M/M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99863C9976;
+        Thu,  4 Jan 2018 13:22:48 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9B551844B0;
-        Thu,  4 Jan 2018 13:00:26 -0500 (EST)
-Subject: Re: [PATCH 14/40] sha1_file: prepare for external odbs
-To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180103163403.11303-1-chriscool@tuxfamily.org>
- <20180103163403.11303-15-chriscool@tuxfamily.org>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <33af3206-b15d-3b01-e121-796cd31eb743@jeffhostetler.com>
-Date:   Thu, 4 Jan 2018 13:00:26 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 19A12C9975;
+        Thu,  4 Jan 2018 13:22:48 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
+References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
+        <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+        <5A4B2DA5.907@hiroshima-u.ac.jp>
+        <59a1fc058278463996ed68c970a5e08a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+        <955dae095d504b00b3e1c8a956ba852a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+        <5A4D9089.3050209@hiroshima-u.ac.jp>
+        <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de>
+Date:   Thu, 04 Jan 2018 10:22:46 -0800
+In-Reply-To: <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 4 Jan 2018 17:59:50 +0100")
+Message-ID: <xmqqmv1tfpqh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180103163403.11303-15-chriscool@tuxfamily.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 443D2E30-F17C-11E7-9525-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
+> I don't know if it's a good idea, but perhaps we don't even need a new
+> option.  We could change how pathspecs of untracked files are handled:
+> Instead of aborting we could include them in the archive.  (Sounds like
+> the simplest possible interface, but may have practical problems.)
 
-On 1/3/2018 11:33 AM, Christian Couder wrote:
-> In the following commits we will need some functions that were
-> internal to sha1_file.c, so let's first make them non static
-> and declare them in "cache.h". While at it, let's rename
-> 'create_tmpfile()' to 'create_object_tmpfile()' to make its
-> name less generic.
-> 
-> Let's also split out 'sha1_file_name_alt()' from
-> 'sha1_file_name()' and 'open_sha1_file_alt()' from
-> 'open_sha1_file()', as we will need both of these new
-> functions too.
-[...]
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 261baf800f..785e8dda03 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -322,17 +322,22 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
->   	}
->   }
->   
-> -const char *sha1_file_name(const unsigned char *sha1)
-> +const char *sha1_file_name_alt(const char *objdir, const unsigned char *sha1)
->   {
->   	static struct strbuf buf = STRBUF_INIT;
+One practical problem is that users who do this
 
-While we are refactoring sha1_file_name() and adding
-sha1_file_name_alt(), could we also change the API and
-pass in the strbuf so we can get rid of the static buffer?
-Granted, it is a little off topic, but it will help out
-in the long run.
+    $ git archive HEAD Documentation/ | tar tf -
 
-[...]
-> @@ -1551,7 +1562,7 @@ static inline int directory_size(const char *filename)
->    * We want to avoid cross-directory filename renames, because those
->    * can have problems on various filesystems (FAT, NFS, Coda).
->    */
-> -static int create_tmpfile(struct strbuf *tmp, const char *filename)
-> +int create_object_tmpfile(struct strbuf *tmp, const char *filename)
->   {
->   	int fd, dirlen = directory_size(filename);
->   
-> @@ -1591,7 +1602,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
->   	static struct strbuf tmp_file = STRBUF_INIT;
+would be expecting (at least) two different things, depending on the
+situation they are in.
 
-Same thing here, since we are renaming the function anyway, could we
-add a strbuf arg and get rid of the static one?
-
-
->   	const char *filename = sha1_file_name(sha1);
->   
-> -	fd = create_tmpfile(&tmp_file, filename);
-> +	fd = create_object_tmpfile(&tmp_file, filename);
->   	if (fd < 0) {
->   		if (errno == EACCES)
->   			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
-> 
-
-Jeff
+So at least you'd need an "--include-untracked" option, I guess.
