@@ -2,104 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5E741F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 22:53:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E78801F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 23:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753701AbeADWxS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 17:53:18 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37340 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753668AbeADWw5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 17:52:57 -0500
-Received: by mail-pg0-f65.google.com with SMTP id o13so1275276pgp.4
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 14:52:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=025ZItdkO7VhUgTnVxRwxyPD9nRW7wWvMIXfFKCs0Cw=;
-        b=EjhzKHTjGwI+zNew3ljlf4Y1RoJzSA05JIV9i8mfRCrNZOoJPt1nE6jJ94WW1eBeQL
-         fGN6YGhY7WBgR1OXco+eMb0ojnA4F+ArgBSGXLjXoyAcucUI8k+McnXXe1US3e/C3vM4
-         vMeIUwV9xUNsjCYJFtE65LE0WoipGYN5ls6pVtlgUhDxfTxVO9h34lraDIwBaCn3/ZCi
-         oEUUXg7y/sG/PIqT30w+wOj4fduDR/o5NGSjXimO+lk9m25QUQkzO3SoDwcxKQEuNXWV
-         wNumb6OVFiy8YCcW4KkNJHZihpDCdqxgjSJnSPeaZFe0mN576c6WyLWQ+uWmkgIE/pe8
-         gpng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=025ZItdkO7VhUgTnVxRwxyPD9nRW7wWvMIXfFKCs0Cw=;
-        b=Z96YExhHfg4F3CEvkhBRWwK7xeP3xnIDHrWfDnsKzFIIzE8Kw2Mg5e7S3lVsu62xlR
-         fVGedwAAjSWAVVEyAZo14LJay577ocwvk2cXd9+YSJNGCFboPZLQhMkUa+bJ0Lk0ECWe
-         SxAnYvWbjIsS6JI5CX/IYP99eXrYEuoWsIUvrcy/1EF2DR2qy5vPdmXdGcLxpzlDnbfD
-         5t4mIDQxJYuwPG/2J0h/P7TcyPI8SxXVXGmkVxQuOBdxv48I/InKv1DDvY8r291TNMZ6
-         UeTa4llc5cjhLXXUJOT4i/RXaI2Q5fK6IHvRzayX9Ho8K1ystZ+5Xy9hZ+7tNAfzVl0t
-         PPtA==
-X-Gm-Message-State: AKGB3mIDJXY1X8aRGSdCIHDD1SkMhMnZxH/YYlAqPjsHSzl6dpRGAa33
-        v83jWbEpNOk59zB+WN1cfPNByQ==
-X-Google-Smtp-Source: ACJfBovmJ0EASJlPtBFkvg3HzL3iSRSZZfHwwcgqyrz+bXiDPxl1qe6DMj9renDPboeFY4pfZra3RA==
-X-Received: by 10.99.54.143 with SMTP id d137mr846863pga.160.1515106377035;
-        Thu, 04 Jan 2018 14:52:57 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id p24sm9105496pfh.170.2018.01.04.14.52.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jan 2018 14:52:56 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com
-Subject: [PATCHv2 6/6] diff: use HAS_MULTI_BITS instead of counting bits manually
-Date:   Thu,  4 Jan 2018 14:50:44 -0800
-Message-Id: <20180104225044.191220-7-sbeller@google.com>
-X-Mailer: git-send-email 2.16.0.rc0.223.g4a4ac83678-goog
-In-Reply-To: <20180104225044.191220-1-sbeller@google.com>
-References: <20180103004624.222528-1-sbeller@google.com>
- <20180104225044.191220-1-sbeller@google.com>
+        id S1751128AbeADXD0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 18:03:26 -0500
+Received: from mout.gmx.net ([212.227.15.15]:58296 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751029AbeADXDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 18:03:25 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbd9v-1fCah61zqd-00lHc5; Fri, 05
+ Jan 2018 00:03:23 +0100
+Date:   Fri, 5 Jan 2018 00:03:24 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Alex Vandiver <alexmv@dropbox.com>
+cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH 3/6] fsmonitor: Update helper tool, now that flags are
+ filled later
+In-Reply-To: <fb10a998d5a8250f26d3504a1d1f5ca6723160d7.1514948078.git.alexmv@dropbox.com>
+Message-ID: <alpine.DEB.2.21.1.1801042348500.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <20180103030456.8181-1-alexmv@dropbox.com> <fb10a998d5a8250f26d3504a1d1f5ca6723160d7.1514948078.git.alexmv@dropbox.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5WGfjTpxqSDbpCHCZwLOtpbZfHIXdkEBPkttCl0B9EHkn+rqMi4
+ GCdWDLXBYMr8NM6mxh12MQWAugIcRi5Lyn1em+TNFu1mFaC4Hm46hxXaGd4NyAQbYJBCB+/
+ btYdDftoLK0I4OONAk3UKDmynEuLI8mxckA3IaXVkrV4pSPWa56pKURf7ErgZ9FQ950lVSC
+ Kjto+bw15NSRTykaRAoCQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W0qxZRLn+7c=:uOTwCE21zwlLiJiFE9XGn6
+ 0Vh+HN49TlY/awUFXct2Cnv9EAQB01sk4BsVZivy9WpUXjnUzDynqu5Mg9q6RvH9uQ6hyXhg+
+ dthJRA/kc14io79YPsq2bKDSOz7wJikt9FhyMgbk/2Q350JaBPXFEK+HI0StgGGag1cIOnUQe
+ iWMjw7I+JbfPvjEJd/ATDo/GD4fW1QFOb7ISd9lAtX87Z19qOi7UAjNZgG2EMVqGhFt5kZ1Az
+ eyjLaL+kF5Ue398GZedfkK2TZPIgbtVHrbHvkWyqJU4ZiL7c7CV+tUkc7qZn+L9lYVZzOfp7V
+ J98OhUCxb32XoOFCh3yGjxDpwgzHxxdgANbhuldUqLWGuXAWe1d4KBHwA8G9l9REMjgMxqAG3
+ j7DpRWqvrOJdSOv6MZETndukJMlJ95MbHLdO1zBfB8IwKVcsNqtG0mXRqhILfpl3fwGJjN6En
+ vhoMb6SAbC5Isa6cQtpZleXnmC0J1GHrMNLjFfgzB1oDUPgqtr4wCdel5QjYw2S8OZLX3y2qY
+ nh+Hwa4ugTlct4yc/6VJjo7sxaJY1FCOaxte5M2xITZV6Ner41cxozCDWrUCQFSm8TIj2KOHH
+ ojFT1tkoQKEFRcTUEruJ5KA5/khitF/u2JE35i5AfS/7A/Dgl9NbT6CXTe/BwCMXuGrZ7ncUC
+ neqqT7xxKQgJoYE/o38NfyliV5i9at3DD1Z//nh4kNmIbcJkF0huyLdVwmG+2nh8HJxWrwKiY
+ J7U/aCNNkIvw9dYO9TBJZRpgNRUq48PgFLfT3BiMfiVmpGFR6rrk18IWvJbQQzWVhqwCiH4jF
+ lVmqSsN8jZ7fAnfzlW40sfPlwv4KKkB1mjqSo1ZaQXk5uc9HtL1nP2RiTRCySMHiDKkOvrm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This aligns the style to the previous patch.
+Hi Alex,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- diff.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+On Tue, 2 Jan 2018, Alex Vandiver wrote:
 
-diff --git a/diff.c b/diff.c
-index 42858d4c7d..c2ee81a1fa 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4107,20 +4107,15 @@ void diff_setup(struct diff_options *options)
- 
- void diff_setup_done(struct diff_options *options)
- {
--	int count = 0;
-+	unsigned check_mask = DIFF_FORMAT_NAME |
-+			      DIFF_FORMAT_NAME_STATUS |
-+			      DIFF_FORMAT_CHECKDIFF |
-+			      DIFF_FORMAT_NO_OUTPUT;
- 
- 	if (options->set_default)
- 		options->set_default(options);
- 
--	if (options->output_format & DIFF_FORMAT_NAME)
--		count++;
--	if (options->output_format & DIFF_FORMAT_NAME_STATUS)
--		count++;
--	if (options->output_format & DIFF_FORMAT_CHECKDIFF)
--		count++;
--	if (options->output_format & DIFF_FORMAT_NO_OUTPUT)
--		count++;
--	if (count > 1)
-+	if (HAS_MULTI_BITS(options->output_format & check_mask))
- 		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
- 
- 	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
--- 
-2.16.0.rc0.223.g4a4ac83678-goog
+> diff --git a/config.c b/config.c
+> index e617c2018..7c6ed888e 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2174,8 +2174,13 @@ int git_config_get_fsmonitor(void)
+>  	if (core_fsmonitor && !*core_fsmonitor)
+>  		core_fsmonitor = NULL;
+>  
+> -	if (core_fsmonitor)
+> -		return 1;
+> +
+> +	if (core_fsmonitor) {
+> +		if (!strcasecmp(core_fsmonitor, "keep"))
+> +			return -1;
+> +		else
+> +			return 1;
+> +	}
 
+It took me a while to reason about this:
+
+- there is no existing code path that can return -1 from
+  git_config_get_fsmonitor(),
+
+- the callers in builtin/update-index.c (testing explicitly for 0 and 1)
+  do not matter because they only trigger warnings.
+
+- the remaining two callers are in fsmonitor.c:
+
+  - tweak_fsmonitor() (which handles -1 specifically), and
+
+  - inflate_fsmonitor_ewah(), which only tests whether
+    git_config_get_fsmonitor() returned a non-zero value, but that test is
+    inside a code block that is only triggered if the index has an
+    fsmonitor_dirty array, meaning: it already had fsmonitor enabled.
+    Therefore the test is legitimate.
+
+This would take the next reader as much time, I would wager a bet. So
+maybe you can include this information (or at least the information about
+inflate_fsmonitor_ewah()) in the commit message?
+
+> diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
+> index ad452707e..48c4bab0b 100644
+> --- a/t/helper/test-dump-fsmonitor.c
+> +++ b/t/helper/test-dump-fsmonitor.c
+> @@ -1,12 +1,14 @@
+>  #include "cache.h"
+> +#include "config.h"
+>  
+>  int cmd_main(int ac, const char **av)
+>  {
+>  	struct index_state *istate = &the_index;
+>  	int i;
+>  
+> +	git_config_push_parameter("core.fsmonitor=keep");
+
+The alternative would be to use an environment variable. We already use
+GIT_FSMONITOR_TEST.
+
+However, I wonder why we need this. Do we really update the index anywhere
+in the tests, then *toggle* the core.fsmonitor setting, and *then* call
+test-dump-fsmonitor?
+
+And if we do, can't we simply avoid it?
+
+Ciao,
+Johannes
