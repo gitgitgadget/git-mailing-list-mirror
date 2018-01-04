@@ -2,121 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB96E1F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 16:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED4C81F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 17:00:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753394AbeADQto (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 11:49:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53136 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752344AbeADQto (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 11:49:44 -0500
-Received: (qmail 5055 invoked by uid 109); 4 Jan 2018 16:49:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 04 Jan 2018 16:49:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5642 invoked by uid 111); 4 Jan 2018 16:50:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with ESMTPA; Thu, 04 Jan 2018 11:50:15 -0500
-Authentication-Results: peff.net; auth=pass (cram-md5) smtp.auth=relayok
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Jan 2018 11:49:42 -0500
-Date:   Thu, 4 Jan 2018 11:49:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     John Cheng <johnlicheng@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Misleading documentation for git-diff-files (diff-filter)
-Message-ID: <20180104164941.GB18376@sigill.intra.peff.net>
-References: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
- <xmqqvagifqj8.fsf@gitster.mtv.corp.google.com>
- <CAJzZBAQ_T3JDqsxy=s7gbrRQjDsdZODB8XsBb4TUCs1K1Bmnjw@mail.gmail.com>
+        id S1752587AbeADRAB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 12:00:01 -0500
+Received: from mout.web.de ([212.227.17.12]:49708 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751952AbeADRAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 12:00:00 -0500
+Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LvBMs-1ex5z62MJ0-010NLj; Thu, 04
+ Jan 2018 17:59:54 +0100
+Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
+To:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
+ <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+ <5A4B2DA5.907@hiroshima-u.ac.jp>
+ <59a1fc058278463996ed68c970a5e08a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+ <955dae095d504b00b3e1c8a956ba852a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
+ <5A4D9089.3050209@hiroshima-u.ac.jp>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de>
+Date:   Thu, 4 Jan 2018 17:59:50 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
+In-Reply-To: <5A4D9089.3050209@hiroshima-u.ac.jp>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJzZBAQ_T3JDqsxy=s7gbrRQjDsdZODB8XsBb4TUCs1K1Bmnjw@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:JZUg5gs3UONKj9oW1IIDmEe07nxEg1zP6dNImFSHDr5M54S149K
+ nhAhgQnfoaSEwxUQ1435A/xTA8mWm9HMCsQ/PzK53VHla0UgB6gshr3QyFXMQv39Llw1t00
+ fsNXqDOmXVxeqTX2JfLOAcJijwYw3Fed5129u+B4jCJTQZVNvQEHBfZeiurFDjzIUOxK4L9
+ XEt3NvlaoxDvcOHHvDdeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:GAg+7rsFLos=:DOkJQvyI+egmJo53Dm0PZj
+ r4AcP5mp5LeprIZdGbdtWkRYPFr1FISXiDH5ZROxByr81nyvppmPU6caFsTUaEqjCx8kCU/ec
+ 9lWIvKxSzbERHc59RYIzAiDwBrwXF3XjqyGyNG5c6UxAqnz0+uk1k+wM9+GCIDwRVUayl6FfD
+ OzZOsi+aYfb+hfQRhULcpclizvWfGX7SefPPW1McKvMbH4xYhHnpM4B+fGWQs5CJil+7nu256
+ g6jF97rghg/BufIByF3qxbPJt1WnSULYXV7+LMQ27i3agNdm6hFPdWQ4sYl75zNGIL2YN/XmF
+ oqDJDuDRdQ6c+gDos34abQkeooeeTuxc41z5Krp6AIVPYtUHDpDqYO+Hh1bCJ1jfyeBwoIQPn
+ X4L8IixZozuL09eKzgasR4LPXUkz4470dP1nZ401YXymdkNKzOr21GriUTtQexgzaLG/cJAl2
+ cD/KRsM2L2K8jlTwnyo/rHPHKx97iPU+oEq3jT72s9TjZD2oQyRFOGsEStQfgiMhRgZKt3YV1
+ qn6A4Nw6wmoUS3TcE6FLZms1AfS4x/ZtUpD3+k/mV780kfB8cMc/jjrugcTHnW2R5eTDM6OP7
+ oyvul1iG23oe4HAmT4OekZw7ao6qqemwbPckjwi2iP3ZYdHcD+rz68FPaI8PJRtlIwxoDsY5w
+ g1AVXwMj53E2Psuqt0rovAFe8b7MYwxMRYS/SE00nrNj1WIZmUdL6dDAUFDKe1OKzFmSb9XvQ
+ VSrQeYlLPPp4g5WohH2a/sehzjTweOEi+rIYmleRZdpYT/vblPTr05of2wDD5zVi77YkBI3Ei
+ uTPHkOKm6YWQ3MHx70gY08bLc7yUDr7UyCr4LfoWr3A4pkuPhE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 04, 2018 at 07:53:53AM -0800, John Cheng wrote:
+Am 04.01.2018 um 03:25 schrieb suzuki toshiya:
+> Taking a glance on parse-options.h, I could not find the
+> existing class collecting the operands as an array (or
+> linked list) from multiple "--xxx=yyy" options. Similar
+> things might be the collecting the pathnames to pathspec
+> structure. Should I write something with OPTION_CALLBACK?
 
-> To be clear, I don't mean to imply that diff-files should include
-> files that are not the index. I was trying to say that as a user, the
-> documentation gave me a different impression.
-> 
-> For background, my intent was to have a script to look for local git
-> repos that with unstaged changes. After some trial and error, I found
-> that git-ls-files gave me what I needed. However, I wanted to point
-> out why I initially believed git-diff-files with show "added files".
+There is OPT_STRING_LIST; Documentation/technical/api-parse-options.txt
+says:
 
-I took your original mail to be a suggestion that the documentation
-could be more clear. :)
+  `OPT_STRING_LIST(short, long, &struct string_list, arg_str, description)`::
+      Introduce an option with string argument.
+      The string argument is stored as an element in `string_list`.
+      Use of `--no-option` will clear the list of preceding values.
 
-So maybe something like the patch below?
+I don't know if it's a good idea, but perhaps we don't even need a new
+option.  We could change how pathspecs of untracked files are handled:
+Instead of aborting we could include them in the archive.  (Sounds like
+the simplest possible interface, but may have practical problems.)
 
-It actually would be an interesting feature for a diff from the index to
-the working tree to include untracked files as new entries. I don't
-think we'd want to do that by default (since the actions a user needs to
-take are quite different between a modified file, one marked
-intent-to-add, and an untracked one). But I could see it being useful
-for a caller to want to consider the whole tree as a single diff.
-
--- >8 --
-Subject: [PATCH] docs/diff-options: clarify scope of diff-filter types
-
-The same document for "--diff-filter" is included by many
-programs in the diff family. Because it mentions all
-possible types (added, removed, etc), this may imply to the
-reader that all types can be generated by a particular
-command. But this isn't necessarily the case; "diff-files"
-cannot generally produce an "Added" entry, since the diff is
-limited to what is already in the index.
-
-Let's make it clear that the list here is the full one, and
-does not imply anything about what a particular invocation
-may produce.
-
-Note that conditionally including items (e.g., omitting
-"Added" in the git-diff-files manpage) isn't the right
-solution here for two reasons:
-
-  - The problem isn't diff-files, but doing an index to
-    working tree diff. "git diff" can do the same diff, but
-    also has other modes where "Added" does show up.
-
-  - The direction of the diff matters. Doing "diff-files -R"
-    can get you Added entries (but not Deleted ones).
-
-So it's best just to explain that the set of available types
-depends on the specific diff invocation.
-
-Reported-by: John Cheng <johnlicheng@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/diff-options.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9d1586b956..743af97b06 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -469,6 +469,12 @@ ifndef::git-format-patch[]
- +
- Also, these upper-case letters can be downcased to exclude.  E.g.
- `--diff-filter=ad` excludes added and deleted paths.
-++
-+Note that not all diffs can feature all types. For instance, diffs
-+from the index to the working tree can never have Added entries
-+(because the set of paths included in the diff is limited by what is in
-+the index).  Similarly, copied and renamed entries cannot appear if
-+detection for those types is disabled.
- 
- -S<string>::
- 	Look for differences that change the number of occurrences of
--- 
-2.16.0.rc0.391.gbd38408415
-
+René
