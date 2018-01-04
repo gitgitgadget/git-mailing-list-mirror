@@ -2,79 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA4171F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 19:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4241F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 19:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753167AbeADTJZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 14:09:25 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55142 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbeADTJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 14:09:24 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5620BC4EE6;
-        Thu,  4 Jan 2018 14:09:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pR/LFClEJ6w8rHI3mdPToPdpIrY=; b=VGFJOn
-        Nr1lx1tSsio28VmIuwsO0CMFo08War7jSyS0yhDWf8qGSeJurlp2px23Pe+GWeYP
-        rMGnzICXqNgO4RuOF8Ui/he0IryhJtPaN0wIi9mL7LSKh9zeWBYE/jEFce//e/GI
-        RKDtBL/RHubWjXrosn9IwnCzuHQoefmmR9aOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=EF4pF8eWaSLlgMyVAAtnGoANx3AzhkXz
-        /Vyuk8EzRrT/2Is6rTbWcTsj3w3YTMb7Qwo8/ztGYxuevGDn5OZhg03l35wLl1ji
-        EU2OTDCP4Eaqi7WWoEERbF3eK2ns+ocOmlsWEJOOGWH5/8dWve39N0OwO81OCyfM
-        fL9IW6qfjh0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4B28CC4EE5;
-        Thu,  4 Jan 2018 14:09:24 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B34E5C4EE4;
-        Thu,  4 Jan 2018 14:09:23 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     John Cheng <johnlicheng@gmail.com>, git@vger.kernel.org
-Subject: Re: Misleading documentation for git-diff-files (diff-filter)
-References: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
-        <xmqqvagifqj8.fsf@gitster.mtv.corp.google.com>
-        <CAJzZBAQ_T3JDqsxy=s7gbrRQjDsdZODB8XsBb4TUCs1K1Bmnjw@mail.gmail.com>
-        <20180104164941.GB18376@sigill.intra.peff.net>
-Date:   Thu, 04 Jan 2018 11:09:22 -0800
-In-Reply-To: <20180104164941.GB18376@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 4 Jan 2018 11:49:42 -0500")
-Message-ID: <xmqq1sj5fnkt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752360AbeADTMR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 14:12:17 -0500
+Received: from mail-io0-f174.google.com ([209.85.223.174]:36706 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751294AbeADTMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 14:12:17 -0500
+Received: by mail-io0-f174.google.com with SMTP id i143so3304307ioa.3
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 11:12:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ek/L7FjIIJU8sQuAQlR5RvEP+36SNdepUiWbDjhhlT4=;
+        b=exPoj00Kcfx5UdU36DUBZ8HDyjXanGU6G6gAmV/59fSGBCj9DDfJIg9PJ3UsjyYnba
+         TJe/fWRELyq1YuZohww5fe2kVkOaFEzY4h3569bSOtN+YnS/8IJxhzs5Xmn8yXXcb/ye
+         E0rWB1Yi15Qt7tsypgeQlZTA09hI4TOnVnwNh4+7UQ2lwRKeLdRDDdUji6vqaLfpZCDJ
+         Y9ioPAa2lOJDj3ywCLm0jrQ4vZ2eZY+QZ0bnP9Il4AF10nSMUd0ViW6RVM3AVdECVCOH
+         E/Ay11fn68mkbksm24wuIVOwtlGI2TUdtp36Uldcg5EjiqtID8t1/nYgFS0iQmqo1weq
+         FBBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ek/L7FjIIJU8sQuAQlR5RvEP+36SNdepUiWbDjhhlT4=;
+        b=uQKEKVTgExogtXKnkG4ek34msJMfe0IcOi6Gt89XDN2kVQtMa6zxLlAiH9pwaBnUry
+         tzH9i0E3wNlCUvEXgJ4AIxOMbi5grhHZRTqRYHeuuvHJ84TRoYgfedzft9u9ivWn91NL
+         lOAzeEQjpoKBCtjKoMU2idB/HHCmRAvg4pttUnmIcCyIaK8lXuSbNnLTb8w7pootu/g6
+         6ggayzk0INOwBZy1/7LdktjpM8ahH4LRlp+so3HfYMTkRrJFdSBEY8hVSFsCpnLwx0uq
+         rft3ObfLmAPFqMkZd3/5KBL84hddTwgccg0oFmDQwLC4qAuVW0d93WQfutrMzHvyyPTK
+         X9qQ==
+X-Gm-Message-State: AKGB3mLxf0bTJIoGUE3oOdtIOHzV/+zniUhOLwFwr3mtff7QnS2A8DA5
+        Jb97TrWTeF4PHvVNbfhip5/fM5pIhXBEg2h3vxtgeg==
+X-Google-Smtp-Source: ACJfBouMNzOCix4PnF635179luxe+UwWDAoWawlHVqDfB0jkbEBbROA+3Z7POHQr2kjQW6H5vnjrb/aVpLLuLCeTGvE=
+X-Received: by 10.107.5.12 with SMTP id 12mr687832iof.54.1515093136185; Thu,
+ 04 Jan 2018 11:12:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C69078BE-F182-11E7-9C22-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.2.62.3 with HTTP; Thu, 4 Jan 2018 11:11:55 -0800 (PST)
+In-Reply-To: <xmqq1sj5fnkt.fsf@gitster.mtv.corp.google.com>
+References: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
+ <xmqqvagifqj8.fsf@gitster.mtv.corp.google.com> <CAJzZBAQ_T3JDqsxy=s7gbrRQjDsdZODB8XsBb4TUCs1K1Bmnjw@mail.gmail.com>
+ <20180104164941.GB18376@sigill.intra.peff.net> <xmqq1sj5fnkt.fsf@gitster.mtv.corp.google.com>
+From:   John Cheng <johnlicheng@gmail.com>
+Date:   Thu, 4 Jan 2018 11:11:55 -0800
+Message-ID: <CAJzZBARFyadScz_ovhtDrh3NFJwD=RSTMNRtLXj9DRDFGYVd3A@mail.gmail.com>
+Subject: Re: Misleading documentation for git-diff-files (diff-filter)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Thanks for the clarification! I also didn't realize that diff-files -R
+will show added files. You learn something new everyday ;)
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 9d1586b956..743af97b06 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -469,6 +469,12 @@ ifndef::git-format-patch[]
->  +
->  Also, these upper-case letters can be downcased to exclude.  E.g.
->  `--diff-filter=ad` excludes added and deleted paths.
-> ++
-> +Note that not all diffs can feature all types. For instance, diffs
-> +from the index to the working tree can never have Added entries
-> +(because the set of paths included in the diff is limited by what is in
-> +the index).  Similarly, copied and renamed entries cannot appear if
-> +detection for those types is disabled.
+On Thu, Jan 4, 2018 at 11:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+>> index 9d1586b956..743af97b06 100644
+>> --- a/Documentation/diff-options.txt
+>> +++ b/Documentation/diff-options.txt
+>> @@ -469,6 +469,12 @@ ifndef::git-format-patch[]
+>>  +
+>>  Also, these upper-case letters can be downcased to exclude.  E.g.
+>>  `--diff-filter=ad` excludes added and deleted paths.
+>> ++
+>> +Note that not all diffs can feature all types. For instance, diffs
+>> +from the index to the working tree can never have Added entries
+>> +(because the set of paths included in the diff is limited by what is in
+>> +the index).  Similarly, copied and renamed entries cannot appear if
+>> +detection for those types is disabled.
+>
+> Makes sense; thanks.
 
-Makes sense; thanks.
+
+
+-- 
+---
+John L Cheng
