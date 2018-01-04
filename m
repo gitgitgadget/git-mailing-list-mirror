@@ -2,97 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2E681F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 22:46:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EECE1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 22:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753721AbeADWqb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 17:46:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53295 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753616AbeADWq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 17:46:29 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3R1g-1eol623tjM-00r38a; Thu, 04
- Jan 2018 23:46:27 +0100
-Date:   Thu, 4 Jan 2018 23:46:27 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Alex Vandiver <alexmv@dropbox.com>
-cc:     git@vger.kernel.org, Ben Peart <peartben@gmail.com>
-Subject: Re: [PATCH 6/6] fsmonitor: Use fsmonitor data in `git diff`
-In-Reply-To: <121828fc14bc6f3096d16005feffb58bf68f070a.1514948078.git.alexmv@dropbox.com>
-Message-ID: <alpine.DEB.2.21.1.1801042335130.32@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <20180103030456.8181-1-alexmv@dropbox.com> <121828fc14bc6f3096d16005feffb58bf68f070a.1514948078.git.alexmv@dropbox.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sQVSAXSA/tSkFq3glrEiIvbNhgw5CWEG+Y3HNq1YplHl2vaAtsd
- +MATF4t+e9WLIFwTGC0iGQO6kA4BKIWcJxzjU+HqLDmNiM57sCPQWvSSHtaVrjepfNcLs03
- C42/C08zPhl6uYKpIqS0/uw5xvC7MP1Wp7XT231TUSxfv6UOij1fVwRiXV9Vx47NNGpx91A
- t64hnaq8ztlPEZbu2DXVg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ldMIba+afX4=:z7GdeJczrW1AxKqzKIRUxy
- 9j7DgQpWzz7JsaiJ4IZSrY5PjY7WmaMNsGJSWY3uO7izD8xnGZtkIN6e3JH5DnvPWFjd+mfrX
- D5HVbTEBwI51p98llWvZGKEQhRr0AeAemqBEKCVl0iUICgWqNPXCGqfhIInQrsUQ1Ir1OWYaH
- 6W0kzca9IG493o7k2/rpcJXpE6gQcNZorwbaL0PmoKql3HYyURfVHEiJLzdp39PhvTSSP6s0U
- fyC1wjCSO4PrK6XmFDFzWn6XvAbi+x8niWCnGABEQybwBW/sKE0lQ8XN0njxdxdVdZbNd0QvU
- MB+853MLXUT8IVDJywBzpuNmJ19fGaBcmbWOSRC7HRz6eGY/dZeaIFJXSWUinoOoLjNhDOmeZ
- u6z3CJBSYJoul4esznXWVzjrXj5CqDfW5LZEWwwP/ITbTGMwI8irGVFgLRNluGtxxdMzVqt8i
- drhcqD4N52VYnpQVVzZNmysgCNwUBcKtPkzuTjwd8OuoHpRnSioaKZVau8qmNz81vpWdh6iOn
- FBbxO2rAgG0VaAo1bK+kBAY7WJ/HPe6T9rvzIzYywhL9DWkGOjdVbW8tbH1sB42OQSmXaK1UZ
- TheMFUsO+XxDiAHxrTUcUoFBw4AkDC8FrCpv0mZJDqmAZHXKIlTGJghgi2Ws6XpfSkNL8ePU0
- dt2TiWEzJQguUW9Nqtu8LIPvasQchGNeGeKCyHOWCV9y2y2dsXV8V5E1ljjHxUZCLv9LrA7SY
- VOHmXVmiEXGMcwVMpkDtqlDq17/+vAsjY29divmPwFuLzchfC1djUyNv2naLX456+MUllUl3M
- PS+CSWcAskefCkJMZO+BSOOy8puACZQRXwkaLlXqqlQlSGgKNADF0yQwG9JOb9Q8gdKNG5P
+        id S1753644AbeADWwu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 17:52:50 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:38329 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753307AbeADWwt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 17:52:49 -0500
+Received: by mail-pg0-f54.google.com with SMTP id t67so1274230pgc.5
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 14:52:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=LMyCsLOTDlPnWhu3hWV1wMJwWejLYlcCpCeBVX08C+s=;
+        b=ZcdPOy4rNvYfCO4AI3Pad/c8k0VQY/KzLW+l4sS74R+J6XDNHrJKF5RjhNpWAmNW6Y
+         mbH6iaP+glXxpURQUPN39FLlxgcVwOtWm8o2gyQr7QvaA1oNCC5metc+OCtEfIaikD9L
+         fWRkbdsGLgO6I0mQ0Mow9x+iuWu0tl3hLuK0/THnwhxPS0pwvJrRqpfp6VNTimtZhkO/
+         5tNLRiqqdqw872QBPC1o4ZYuJazXZibG4Pn6DWk4d0cGGvzqZGrI+U7stNQlsS5VtslR
+         m0NHOBHiKd+afP2HlMvevtXLnwj4IER/3rdhY8bdM++sW9pOcxzzSgzFYaLVZ0KY6EKV
+         lmVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=LMyCsLOTDlPnWhu3hWV1wMJwWejLYlcCpCeBVX08C+s=;
+        b=i4Ag3nJ7bBQ8SDs1KFIAwlagTpBBQaEOZCW5vEOjCdR6MtY8ys+Rze+cWdngn37yFY
+         QI3mDii2908b4O6LK+v6Iyjh9dxLrrj4F22ov1yfSlYt9LertMtdlrKp/bMhhVMcxM13
+         e/Rnkog2/w1VTxp5OoIZjcSJ3cBxCokIrbFUEPaAhe+0KIzCySFuDdMxxHS26kuu/Yug
+         8dvhGNkJabd1F4vZtcUa1eoednghUS/at9EojKCu7/trsIU77ij2t1Ug3hRB0mjaaDRb
+         JpFXfpbNj2GMR4SozCXEsuFvhOj1cDrVAGe7BTNV2kNuAxgXwaGlI27Jpy/tw9YFsrjv
+         v/YA==
+X-Gm-Message-State: AKGB3mJ68Xxw1cv8QOFgOJ0lNSsttX2kEAR5uxjnC5nwtiqpRkHDwrgt
+        D/qHFFr82+be4TK/z+TmPQoO7g==
+X-Google-Smtp-Source: ACJfBosiRjiQG4jIbUxMeOzzagIXWkTqpRYQ+Dd5hr3bvGHosCOGKrbucrI49bjwhZAWiOZKTahdCA==
+X-Received: by 10.99.63.141 with SMTP id m135mr831052pga.367.1515106368810;
+        Thu, 04 Jan 2018 14:52:48 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id j3sm8187615pgp.74.2018.01.04.14.52.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 04 Jan 2018 14:52:48 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com
+Subject: [PATCHv2 0/6] pickaxe refactorings and a new mode to find blobs (WAS: diffcore: add a pickaxe option to find a specific blob)
+Date:   Thu,  4 Jan 2018 14:50:38 -0800
+Message-Id: <20180104225044.191220-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.0.rc0.223.g4a4ac83678-goog
+In-Reply-To: <20180103004624.222528-1-sbeller@google.com>
+References: <20180103004624.222528-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex,
+v2:
+Thanks Junio and Jacob for review!
+* fixed up the last patch to rephrase the error message to contain an 'and'
+* use HAS_MULTI_BITS as well
+* a bonus patch that uses HAS_MULTI_BITS for the existing code, too.
 
-On Tue, 2 Jan 2018, Alex Vandiver wrote:
+v1
+After some discussion [1], we're convinced that the original approach for
+adding in just another pickaxe mode to find blobs was too hacky.
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index 8104603a3..13ff00d81 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -95,6 +95,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
->  
->  	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
->  
-> +	if (!(option & DIFF_SKIP_FSMONITOR))
-> +		refresh_fsmonitor(&the_index);
-> +
->  	if (diff_unmerged_stage < 0)
->  		diff_unmerged_stage = 2;
+So I went the less hacky way and did some refactoring first (patches 1-3),
+Then we'll have the new pickaxe mode to find blobs in patch 4. It grew
+slightly larger as it had issues with the setup (we neither have a regex
+nor a KWS to init) in this new world, so there are a few more lines in there.
 
-I read over this hunk five times, and only now am I able to wrap my head
-around this: if we do *not* want to skip the fsmonitor data, we refresh
-the fsmonitor data in the index.
-
-That feels a bit like an unneeded double negation. Speaking for myself, I
-would prefore `DIFF_IGNORE_FSMONITOR` instead, it would feel less like a
-double negation then. But I am not a native speaker, so I might be wrong.
-
-> +               if (ce->ce_flags & CE_FSMONITOR_VALID && !(option & DIFF_SKIP_FSMONITOR))
-> +                       continue;
-
-Since we do expect this to be called without the DIFF_SKIP_FSMONITOR flag,
-I guess it makes sense to order it this way.
-
-I still have troubles to understand why we ignore the fsmonitor data with
-`git add`, though... we want to add only modified files, right? I thought
-that the fsmonitor data could help performance exactly there (I am
-thinking of a certain insanely large code base where a developer might
-want to change only one or maybe 3 files out of an entire machine workshop
-of files, and with fsmonitor it should be a really fast operation because
-it should ignore all but those few files, right?)... Could you maybe try
-to help me understand that better?
+The last patch is just the cherry on the cake, helping to keep users sane by
+warning when they try to use different pickaxe modes at the same time.
 
 Thanks,
-Johannes
+Stefan
+
+
+[1] https://public-inbox.org/git/CAGZ79kaB0G9zetF6QtC45+ZGLM3gOsYWV7e+gkCe2yKOhb0Ssg@mail.gmail.com/
+
+
+Stefan Beller (6):
+  diff.h: Make pickaxe_opts an unsigned bit field
+  diff: migrate diff_flags.pickaxe_ignore_case to a pickaxe_opts bit
+  diff: introduce DIFF_PICKAXE_KINDS_MASK
+  diffcore: add a pickaxe option to find a specific blob
+  diff: properly error out when combining multiple pickaxe options
+  diff: use HAS_MULTI_BITS instead of counting bits manually
+
+ Documentation/diff-options.txt | 10 +++++++
+ builtin/log.c                  |  4 +--
+ combine-diff.c                 |  2 +-
+ diff.c                         | 43 ++++++++++++++++++--------
+ diff.h                         | 13 ++++++--
+ diffcore-pickaxe.c             | 48 ++++++++++++++++-------------
+ revision.c                     |  7 +++--
+ t/t4064-diff-oidfind.sh        | 68 ++++++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 155 insertions(+), 40 deletions(-)
+ create mode 100755 t/t4064-diff-oidfind.sh
+
+-- 
+2.16.0.rc0.223.g4a4ac83678-goog
+
