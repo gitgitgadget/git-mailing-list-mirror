@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4241F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 19:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 810CB1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 19:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752360AbeADTMR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 14:12:17 -0500
-Received: from mail-io0-f174.google.com ([209.85.223.174]:36706 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751294AbeADTMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 14:12:17 -0500
-Received: by mail-io0-f174.google.com with SMTP id i143so3304307ioa.3
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 11:12:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ek/L7FjIIJU8sQuAQlR5RvEP+36SNdepUiWbDjhhlT4=;
-        b=exPoj00Kcfx5UdU36DUBZ8HDyjXanGU6G6gAmV/59fSGBCj9DDfJIg9PJ3UsjyYnba
-         TJe/fWRELyq1YuZohww5fe2kVkOaFEzY4h3569bSOtN+YnS/8IJxhzs5Xmn8yXXcb/ye
-         E0rWB1Yi15Qt7tsypgeQlZTA09hI4TOnVnwNh4+7UQ2lwRKeLdRDDdUji6vqaLfpZCDJ
-         Y9ioPAa2lOJDj3ywCLm0jrQ4vZ2eZY+QZ0bnP9Il4AF10nSMUd0ViW6RVM3AVdECVCOH
-         E/Ay11fn68mkbksm24wuIVOwtlGI2TUdtp36Uldcg5EjiqtID8t1/nYgFS0iQmqo1weq
-         FBBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ek/L7FjIIJU8sQuAQlR5RvEP+36SNdepUiWbDjhhlT4=;
-        b=uQKEKVTgExogtXKnkG4ek34msJMfe0IcOi6Gt89XDN2kVQtMa6zxLlAiH9pwaBnUry
-         tzH9i0E3wNlCUvEXgJ4AIxOMbi5grhHZRTqRYHeuuvHJ84TRoYgfedzft9u9ivWn91NL
-         lOAzeEQjpoKBCtjKoMU2idB/HHCmRAvg4pttUnmIcCyIaK8lXuSbNnLTb8w7pootu/g6
-         6ggayzk0INOwBZy1/7LdktjpM8ahH4LRlp+so3HfYMTkRrJFdSBEY8hVSFsCpnLwx0uq
-         rft3ObfLmAPFqMkZd3/5KBL84hddTwgccg0oFmDQwLC4qAuVW0d93WQfutrMzHvyyPTK
-         X9qQ==
-X-Gm-Message-State: AKGB3mLxf0bTJIoGUE3oOdtIOHzV/+zniUhOLwFwr3mtff7QnS2A8DA5
-        Jb97TrWTeF4PHvVNbfhip5/fM5pIhXBEg2h3vxtgeg==
-X-Google-Smtp-Source: ACJfBouMNzOCix4PnF635179luxe+UwWDAoWawlHVqDfB0jkbEBbROA+3Z7POHQr2kjQW6H5vnjrb/aVpLLuLCeTGvE=
-X-Received: by 10.107.5.12 with SMTP id 12mr687832iof.54.1515093136185; Thu,
- 04 Jan 2018 11:12:16 -0800 (PST)
+        id S1752573AbeADTMx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 14:12:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55404 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751899AbeADTMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 14:12:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 62C0CCAFE1;
+        Thu,  4 Jan 2018 14:12:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sMxCpfQ0XILJbj2bdUVvJn2ckBw=; b=nH2s8i
+        I69oOc2sZ/zigqaLoGEUJT2Ljb40oOgnLJvM3bQXdy6WDFW5qAQICt/rYfAeNtmH
+        THBu72HqGpzEfFBZvfIvEMzoD6Ijk7hY+Gjt9rifkl0G8bKPEWlKRg1RcWNRCBjC
+        XuUg9hD+idSJ+fRFSt7f6tAzodWNKIkeNIDJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=LcCDN22g0DrOR0TbXrZSDVg/uIPK7t0R
+        XBhbDMmR1yxcorPfsGHOFDfgW1TiLfeGb2fRf8UwIi2HQZhP5chWK6AuRxIlOQPK
+        fQkpfesQJpUR3WTA3GRf+Olw5u8KSNMOFzidn01dXPf4O/T3lf3uJVit4Bl1SJnI
+        xzO9OcNgYQc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A922CAFE0;
+        Thu,  4 Jan 2018 14:12:52 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB625CAFDF;
+        Thu,  4 Jan 2018 14:12:51 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v2 2/3] prune: fix pruning with multiple worktrees and split index
+References: <20171210212202.28231-1-t.gummerer@gmail.com>
+        <20171217225122.28941-1-t.gummerer@gmail.com>
+        <20171217225122.28941-3-t.gummerer@gmail.com>
+        <20171218181913.GB147973@google.com> <20180103221849.GC2641@hank>
+Date:   Thu, 04 Jan 2018 11:12:50 -0800
+In-Reply-To: <20180103221849.GC2641@hank> (Thomas Gummerer's message of "Wed,
+        3 Jan 2018 22:18:49 +0000")
+Message-ID: <xmqqwp0xe8ul.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.2.62.3 with HTTP; Thu, 4 Jan 2018 11:11:55 -0800 (PST)
-In-Reply-To: <xmqq1sj5fnkt.fsf@gitster.mtv.corp.google.com>
-References: <CAJzZBAT--X8GXg_knege_pZ8A=_Qk9nyMCLaoRMvjhUFGQYsZA@mail.gmail.com>
- <xmqqvagifqj8.fsf@gitster.mtv.corp.google.com> <CAJzZBAQ_T3JDqsxy=s7gbrRQjDsdZODB8XsBb4TUCs1K1Bmnjw@mail.gmail.com>
- <20180104164941.GB18376@sigill.intra.peff.net> <xmqq1sj5fnkt.fsf@gitster.mtv.corp.google.com>
-From:   John Cheng <johnlicheng@gmail.com>
-Date:   Thu, 4 Jan 2018 11:11:55 -0800
-Message-ID: <CAJzZBARFyadScz_ovhtDrh3NFJwD=RSTMNRtLXj9DRDFGYVd3A@mail.gmail.com>
-Subject: Re: Misleading documentation for git-diff-files (diff-filter)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4299875C-F183-11E7-AD7F-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the clarification! I also didn't realize that diff-files -R
-will show added files. You learn something new everyday ;)
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-On Thu, Jan 4, 2018 at 11:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+> [sorry for the late reply.  I was on Christmas holidays until today
+> and am still catching up on the mailing list.  It will probably take
+> me untill the weekend to send a re-roll]
 >
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> index 9d1586b956..743af97b06 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -469,6 +469,12 @@ ifndef::git-format-patch[]
->>  +
->>  Also, these upper-case letters can be downcased to exclude.  E.g.
->>  `--diff-filter=ad` excludes added and deleted paths.
->> ++
->> +Note that not all diffs can feature all types. For instance, diffs
->> +from the index to the working tree can never have Added entries
->> +(because the set of paths included in the diff is limited by what is in
->> +the index).  Similarly, copied and renamed entries cannot appear if
->> +detection for those types is disabled.
+> On 12/18, Brandon Williams wrote:
+>> On 12/17, Thomas Gummerer wrote:
+>> > be489d02d2 ("revision.c: --indexed-objects add objects from all
+>> > worktrees", 2017-08-23) made sure that pruning takes objects from all
+>> > worktrees into account.
+>> > 
+>> > It did that by reading the index of every worktree and adding the
+>> > necessary index objects to the set of pending objects.  The index is
+>> > read by read_index_from.  As mentioned in the previous commit,
+>> > read_index_from depends on the CWD for the location of the split index,
+>> 
+>> As I mentioned before this doesn't actually depend on the CWD but
+>> rather the per-worktree gitdir.
 >
-> Makes sense; thanks.
+> Right, will fix.
 
-
-
--- 
----
-John L Cheng
+Thanks.
