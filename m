@@ -2,68 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 987C71F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 20:34:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8DB71F42B
+	for <e@80x24.org>; Thu,  4 Jan 2018 20:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752978AbeADUeB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 15:34:01 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49737 "EHLO mout.gmx.net"
+        id S1752606AbeADUyJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 15:54:09 -0500
+Received: from siwi.pair.com ([209.68.5.199]:48749 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751829AbeADUeA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 15:34:00 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1FAK-1emW8g3JdY-00tF9L; Thu, 04
- Jan 2018 21:33:54 +0100
-Date:   Thu, 4 Jan 2018 21:33:55 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com, git-for-windows@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc0
-In-Reply-To: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1801042132540.32@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <xmqqfu7ui2af.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752550AbeADUyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 15:54:08 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id CA4B1844D9;
+        Thu,  4 Jan 2018 15:54:07 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5CB3E844C7;
+        Thu,  4 Jan 2018 15:54:06 -0500 (EST)
+Subject: Re: [PATCH 28/40] pack-objects: don't pack objects in external odbs
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180103163403.11303-1-chriscool@tuxfamily.org>
+ <20180103163403.11303-29-chriscool@tuxfamily.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8de3597a-01bd-a721-fffb-20769701d0af@jeffhostetler.com>
+Date:   Thu, 4 Jan 2018 15:54:05 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:5rUBUIPrTLyZNb2d7MN9NEJhW6cmLe573pL94o40jQUVIKyXb7X
- bu+E+xzLCooh6FsgfVl9xpv0PWofRW81RzGdlcQ7dVUJlorvKfaBeUSPivg0C520ZG8Jg8e
- Bqait6AYK4N1ikPmmTVDHfUNlKOlw00U0vmQI6oCHGZrHDOIj/yNIueRjUmGm156Vi08NGM
- KMmbvLwtn+0BUQf3HoUFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Xr9m7qV6PUQ=:IcBb0QehIwCuLOdQ6re+Iq
- U04idjOIvDpkqvK5ZiKOohNca8FedM5fZ/LVLyK3pbOFmJI/4GN0n1cqy/M2mET9fYxWWNph8
- 8nXooOCjJNwa8/RIsAkimIs/vQT8BILsOzrYEOb65DJtyG6hnAzrWVYYMreYXZPb21Whli72Q
- nwx17CRAhrX7ATTUwY0NBbxi8QNkuyz/vAoPeBYzx4mMLTSXwf9K/Qm9Gc4HGmdVD9ixEpsCo
- isBjCrLThq9JuByti3cpzyC3/sMoZ1cBaqbpdrfx629vbLit0miUPc8d5x8Udg1St0hJYpVF/
- NfPKTKqEbCb3pvgETnnXkdqZrGyqQ9ATthqDnpt2U5irlVUi1F7n3gYjQwxgSDx8ypxyiDh3R
- q1pMYj3DBVVStgZHSg2njr1Pg6ZXuXksXYHbxxP88VPKa70gcaq3j+fnCbylEciY9yBXCjYkF
- YGDKo/rku0902Z3oQovMG9GeH5o2OPAFWiv7FWjc7ensfLhCJv3l//orzqUQo3cdZIWHL2/hz
- BDCV8aEufJ97BRu+cPOx5/GymiHUPmn+KY2/KRBV521geWgPfnMFuxxKyQlegDw6EI3xqhFtG
- sMDWdJC9dyomJ9A1loaQKz+/oiQSqTqHEXFiiSjZSk5iAm8OGV5WmQRLnrXRGKOK12Arxp+Bp
- fJHamioiQ/B+ZaxxkJN/pXuvbcwDygezpPA5xjj7iSB/oKfKV+D5+/8SRkhHGJrTdUqqv5Pa6
- 3ZI55DFWOJoKQxtOmSE66W2UxQf++82jzPSIPR1iVgLdeOlDsxDq5SVxVAjL7LJAHc5nJRn+Z
- kjHg88NcyfZjYuhk+Q90qP6ckZflePitjClegL6KNMusg4U+q0CO8Q7LQldhEiOvFJlrJNH
+In-Reply-To: <20180103163403.11303-29-chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Thu, 28 Dec 2017, Junio C Hamano wrote:
 
-> An early preview release Git v2.16.0-rc0 is now available for
-> testing at the usual places.
+On 1/3/2018 11:33 AM, Christian Couder wrote:
+> Objects managed by an external ODB should not be put into
+> pack files. They should be transfered using other mechanism
+> that can be specific to the external odb.
+> 
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>   builtin/pack-objects.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 6c71552cdf..4ed66c7677 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -28,6 +28,7 @@
+>   #include "argv-array.h"
+>   #include "mru.h"
+>   #include "packfile.h"
+> +#include "external-odb.h"
+>   
+>   static const char *pack_usage[] = {
+>   	N_("git pack-objects --stdout [<options>...] [< <ref-list> | < <object-list>]"),
+> @@ -1026,6 +1027,9 @@ static int want_object_in_pack(const struct object_id *oid,
+>   			return want;
+>   	}
+>   
+> +	if (external_odb_has_object(oid->hash))
+> +		return 0;
+> +
 
-And a corresponding Git for Windows prerelease is also available:
+I worry about the performance of this in light of my comments
+earlier in the patch series about the expense of building the
+"have" sets.
 
-https://github.com/git-for-windows/git/releases/tag/v2.16.0-rc0.windows.1
+Since we've already checked for a loose object and we are about
+to walk thru the local packfiles, so if we don't find it in any
+of them, then we don't have it locally.  Only then do we need
+to worry about external odbs.
 
-Ciao,
-Johannes
+If we don't have it locally, does the caller of this function
+have sufficient "promisor" infomation infer that the object
+should exist on the promisor remote?   Since you're going to
+omit it from the packfile anyway, you don't really need to know
+if the remote actually has it.
+
+
+>   	for (entry = packed_git_mru.head; entry; entry = entry->next) {
+>   		struct packed_git *p = entry->item;
+>   		off_t offset;
+> 
+
+Jeff
