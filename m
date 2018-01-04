@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 749871F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 22:53:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 392DE1F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 22:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753675AbeADWw7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 17:52:59 -0500
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:41455 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753652AbeADWw4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 17:52:56 -0500
-Received: by mail-pg0-f45.google.com with SMTP id 77so1272191pgd.8
-        for <git@vger.kernel.org>; Thu, 04 Jan 2018 14:52:56 -0800 (PST)
+        id S1753658AbeADWwy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 17:52:54 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:44541 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753650AbeADWww (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 17:52:52 -0500
+Received: by mail-pg0-f67.google.com with SMTP id i5so1272917pgq.11
+        for <git@vger.kernel.org>; Thu, 04 Jan 2018 14:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8qGJtj1PDGQSVH9vFt1CtKdKyr18YKA6JHMNcY0TUfg=;
-        b=VwIMcw3cn3LEAZjwNwQ5Ogo1rH+d1r0vP4I56NT4wj96PaY+Y2P3znfYw5XlpocT+N
-         NCXg7v96w0pwxpCBmNCQYJEwMIFpEA2/PCRSXhClZFNfKz1I79JTwnKd2RXpHtFRgQCH
-         lfTemBR1bDsMtCoIlJoSHjj3fX+7Mi04O3WFEv8dzO1CUxECCqShrh+484EsB3hUtfAZ
-         4J1p+N1Z2cn27DV+8wpDOuptZGBrTk/bCPWuqKQSEO6/1gHNrlwYhkn/MEcYFnKsoZEU
-         WjGTT3qn9/nXOY5YBJdVc9YcZdG8RWkgKqJvRAu54cF3Gza8FQBOYdmTk/sZcHu6nxMx
-         FMNQ==
+        bh=++Rj9DVIStHzXqrq/ZvId9jGkHm5CWkDb6F5VYsf0lQ=;
+        b=f+A3zkX9Lc4CcW6D7hCMnp6OhemcosO+U/j7nOqGWeMNS/0ce1hltt+7GYbeVB53lQ
+         Ca9j9PBmOTxJQB1OuGDE78VRZowkjuBPh+oGPqLmUgznh0AlToN1N7Z9I/WwH+fAjN6J
+         zU8m8lLSIWkr1mlGrWiJpU3a+0Q5gNd6g8yFRCgFJP/GZGTb69vQEb2QOEtfNxaU/NJx
+         xM/5eOEArfXAqd2brY/HFUCaLeGpwt2i9uF7X2dW9WbcArPEjPIqBCJRn3zPx+gQjz+v
+         wBinGn+SsZpuxycsuRKpWOHK0+2iEALQPZ+POwjVkv1v9Se7vR3RoOApMWJGh807YhCB
+         cOCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=8qGJtj1PDGQSVH9vFt1CtKdKyr18YKA6JHMNcY0TUfg=;
-        b=UpqZqfKlP3R78aAQORMkJip1KeX8A9VfZChQVSa/4wp1jMpRv7tCXR++Bcz5REnQ+X
-         Y8Igg3cp1c/451Zc8jlrDbig0pm/gOxp1LpWp6PMYfIpojnr2G4DUd2RFo+0aFoLCGLx
-         b3lavI5b3o86U78OG4y2mynau/AwKAoH3irUBePz/SM9wYRA80ew+Lpomfd3EQT6LBcn
-         xzPpiYeEeZk0vcfkgcPSCnCxRtFDlrUU1TYC9inhnxvlKlBxcgsaKZ5mdngTsTXr6gst
-         iiwohXsROSP1uO+6VxbAU1wuP9Z2CjKE06fdmBDH7j3NUqoaEs2Ahl//6XyB+X01vmM0
-         uehw==
-X-Gm-Message-State: AKGB3mI7f/7CEuoMdWcelcep6lvOu9bZXhlHw1GhQgNL3Il59Xc4jZ/q
-        U5d+TU6jX+W6YyLCB6Dss+lnYg==
-X-Google-Smtp-Source: ACJfBou4ohc9BdgE2+4iqaS1ZE7rhPqzOPlbheSEm0Lu3GdcAXKYG8gxdlj2dHZAzMdQXJhJ4WdjYQ==
-X-Received: by 10.99.112.75 with SMTP id a11mr848477pgn.140.1515106375704;
-        Thu, 04 Jan 2018 14:52:55 -0800 (PST)
+        bh=++Rj9DVIStHzXqrq/ZvId9jGkHm5CWkDb6F5VYsf0lQ=;
+        b=HxpzdZe7x6mR0iWiPpufGRkdSX6Z5EmwKsCqCq9aCzMLcan219y7OJRolw+Cqh2egn
+         zmBrIpUWMUEz9WRlWo8boCRLC/7i45F9ChM0u+Ye6mwCLmZdKX5d6CqBww8S5HmOHztw
+         xzxXGa+HqYs74Fg8FtwADCRYack/UrHIfzMxroe6ZkyeU1UIxPWBRN2AvTFg4/OSnEtF
+         o51yasc+l/4awnJsL5s+Enhrd/ovX1VUp3BnNTqdMgZYdq4YbiqH6WUb722QmwiujRnr
+         Hzu2diHw++5Le8buzBt/5NWm5DAlh+c+fcAzp0jKJmCi9a3JWPkDryMBgpJIFxG8q+Dl
+         Zh0g==
+X-Gm-Message-State: AKGB3mLFm4CL51bT2N5z57OSKsR3ZUbyzVVoqa0fh8e9V9mJ0FzN4s/Z
+        qVlnxgK69cYw11p8ONeBTmWTxA==
+X-Google-Smtp-Source: ACJfBot2EBn1jYiW/Pl+gLhTjTozyPhpNa0Jfei1eBOTBRZP3nPCG3JOqN6BXb6bngDg/tFo8na+IA==
+X-Received: by 10.98.200.130 with SMTP id i2mr983437pfk.57.1515106371640;
+        Thu, 04 Jan 2018 14:52:51 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id x3sm7473478pgv.73.2018.01.04.14.52.54
+        by smtp.gmail.com with ESMTPSA id r62sm10101975pfi.184.2018.01.04.14.52.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 Jan 2018 14:52:55 -0800 (PST)
+        Thu, 04 Jan 2018 14:52:51 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com
-Subject: [PATCHv2 5/6] diff: properly error out when combining multiple pickaxe options
-Date:   Thu,  4 Jan 2018 14:50:43 -0800
-Message-Id: <20180104225044.191220-6-sbeller@google.com>
+Subject: [PATCHv2 2/6] diff: migrate diff_flags.pickaxe_ignore_case to a pickaxe_opts bit
+Date:   Thu,  4 Jan 2018 14:50:40 -0800
+Message-Id: <20180104225044.191220-3-sbeller@google.com>
 X-Mailer: git-send-email 2.16.0.rc0.223.g4a4ac83678-goog
 In-Reply-To: <20180104225044.191220-1-sbeller@google.com>
 References: <20180103004624.222528-1-sbeller@google.com>
@@ -63,44 +63,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In f506b8e8b5 (git log/diff: add -G<regexp> that greps in the patch text,
-2010-08-23) we were hesitant to check if the user requests both -S and
--G at the same time. Now that the pickaxe family also offers --find-object,
-which looks slightly more different than the former two, let's add a check
-that those are not used at the same time.
+Currently flags for pickaxing are found in different places. Unify the
+flags into the `pickaxe_opts` field, which will contain any pickaxe related
+flags.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c             | 3 +++
- diffcore-pickaxe.c | 1 -
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ diff.h             | 3 ++-
+ diffcore-pickaxe.c | 6 +++---
+ revision.c         | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index a872bdcac1..42858d4c7d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4123,6 +4123,9 @@ void diff_setup_done(struct diff_options *options)
- 	if (count > 1)
- 		die(_("--name-only, --name-status, --check and -s are mutually exclusive"));
+diff --git a/diff.h b/diff.h
+index ea310f76fd..8af1213684 100644
+--- a/diff.h
++++ b/diff.h
+@@ -91,7 +91,6 @@ struct diff_flags {
+ 	unsigned override_submodule_config:1;
+ 	unsigned dirstat_by_line:1;
+ 	unsigned funccontext:1;
+-	unsigned pickaxe_ignore_case:1;
+ 	unsigned default_follow_renames:1;
+ };
  
-+	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
-+		die(_("-G, -S and --find-object are mutually exclusive"));
+@@ -327,6 +326,8 @@ extern void diff_setup_done(struct diff_options *);
+ #define DIFF_PICKAXE_KIND_S	4 /* traditional plumbing counter */
+ #define DIFF_PICKAXE_KIND_G	8 /* grep in the patch */
+ 
++#define DIFF_PICKAXE_IGNORE_CASE	32
 +
- 	/*
- 	 * Most of the time we can say "there are changes"
- 	 * only by checking if there are changed paths, but
+ extern void diffcore_std(struct diff_options *);
+ extern void diffcore_fix_diff_index(struct diff_options *);
+ 
 diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 72bb5a9514..239ce5122b 100644
+index 9476bd2108..4b5d88ea46 100644
 --- a/diffcore-pickaxe.c
 +++ b/diffcore-pickaxe.c
-@@ -251,7 +251,6 @@ void diffcore_pickaxe(struct diff_options *o)
- 		}
- 	}
+@@ -222,11 +222,11 @@ void diffcore_pickaxe(struct diff_options *o)
  
--	/* Might want to warn when both S and G are on; I don't care... */
- 	pickaxe(&diff_queued_diff, o, regexp, kws,
- 		(opts & DIFF_PICKAXE_KIND_G) ? diff_grep : has_changes);
- 
+ 	if (opts & (DIFF_PICKAXE_REGEX | DIFF_PICKAXE_KIND_G)) {
+ 		int cflags = REG_EXTENDED | REG_NEWLINE;
+-		if (o->flags.pickaxe_ignore_case)
++		if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE)
+ 			cflags |= REG_ICASE;
+ 		regcomp_or_die(&regex, needle, cflags);
+ 		regexp = &regex;
+-	} else if (o->flags.pickaxe_ignore_case &&
++	} else if (o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE &&
+ 		   has_non_ascii(needle)) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		int cflags = REG_NEWLINE | REG_ICASE;
+@@ -236,7 +236,7 @@ void diffcore_pickaxe(struct diff_options *o)
+ 		strbuf_release(&sb);
+ 		regexp = &regex;
+ 	} else {
+-		kws = kwsalloc(o->flags.pickaxe_ignore_case
++		kws = kwsalloc(o->pickaxe_opts & DIFF_PICKAXE_IGNORE_CASE
+ 			       ? tolower_trans_tbl : NULL);
+ 		kwsincr(kws, needle, strlen(needle));
+ 		kwsprep(kws);
+diff --git a/revision.c b/revision.c
+index e2e691dd5a..ccf1d212ce 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2076,7 +2076,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_ERE;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+ 		revs->grep_filter.ignore_case = 1;
+-		revs->diffopt.flags.pickaxe_ignore_case = 1;
++		revs->diffopt.pickaxe_opts |= DIFF_PICKAXE_IGNORE_CASE;
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_FIXED;
+ 	} else if (!strcmp(arg, "--perl-regexp") || !strcmp(arg, "-P")) {
 -- 
 2.16.0.rc0.223.g4a4ac83678-goog
 
