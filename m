@@ -2,109 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39A4F1F404
-	for <e@80x24.org>; Thu,  4 Jan 2018 17:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 017671F404
+	for <e@80x24.org>; Thu,  4 Jan 2018 17:44:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752062AbeADRfn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 Jan 2018 12:35:43 -0500
-Received: from mout.gmx.net ([212.227.15.18]:55320 "EHLO mout.gmx.net"
+        id S1752398AbeADRoX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 Jan 2018 12:44:23 -0500
+Received: from siwi.pair.com ([209.68.5.199]:43230 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752036AbeADRfl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 Jan 2018 12:35:41 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MY7dI-1eSfII1pi4-00UofB; Thu, 04
- Jan 2018 18:35:30 +0100
-Date:   Thu, 4 Jan 2018 18:35:30 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Johannes Sixt <j6t@kdbg.org>, git-for-windows@googlegroups.com
-Subject: Re: [PATCH 2/2] Windows: stop supplying BLK_SHA1=YesPlease by
- default
-In-Reply-To: <87k1x7q800.fsf@evledraar.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1801041833410.31@MININT-6BKU6QN.europe.corp.microsoft.com>
-References: <20171227230038.14386-1-avarab@gmail.com> <20171227230038.14386-3-avarab@gmail.com> <20171227234237.GC181628@aiede.mtv.corp.google.com> <87k1x7q800.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751656AbeADRoW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 Jan 2018 12:44:22 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id F20E7844DA;
+        Thu,  4 Jan 2018 12:44:20 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 64468844C7;
+        Thu,  4 Jan 2018 12:44:20 -0500 (EST)
+Subject: Re: [PATCH 10/40] external-odb: implement external_odb_get_direct
+To:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180103163403.11303-1-chriscool@tuxfamily.org>
+ <20180103163403.11303-11-chriscool@tuxfamily.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <4ce872c0-8f4b-602a-9ee3-cf429cc6a146@jeffhostetler.com>
+Date:   Thu, 4 Jan 2018 12:44:19 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1482691442-1515087331=:31"
-X-Provags-ID: V03:K0:Hvu62ZyqwLq26tULkKuYpX4GiE00YX8z3e9FlhPI0gqHDz1sxvn
- zMO4PJsJ02v60G/UJQS4+AExYmwSfYDZLDXiOm6zjjoa47e7da2bv9wMHZ8VUIxi+1f0SZ2
- RkTb1jvnvjFI6B1QSWwq5WzJZdzjzNYef0wl1zMkFjIFq+qoZnfh+mdMOZ0Hvh76JtBMQ7Z
- xEaY5ovxWXOOP1Vej4tIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W7wZR/Q2iRs=:pL7OuQvlPTg9Tbs7xgnZY2
- V9C8QyWtmLo8RaaftF3ThVVv66r8HdGsz1cEnQZ9UawwwWKD6f4JZhKpU9dprf/OQFR4gaBQa
- Ns3C020TyMA3zORUKHkccFBud6GJFHnta3MNK+QmiC4TsLrE7begwciqeIhJhFjORLlk0Cm0p
- BF3zA1SVSV4q7m52xN10uAcyE0O8voRZ4aAgq+AFJy2DKfCTIg5EfMj3Ze9uf1B+mOV8JWT9r
- /2upUQ89ckJIAy4GKi3BlgbszwjDQjCSVyaOpfPwB3jCp7JLmf9aczeTOz8+qe5Xe2FcbFXdj
- sMZk+28zXeBxs4WcTjt5I53/kAH6TSBFr1inwpiLks1LJlCCRy+krxAVNb8P+6Z5ImrPy/7fu
- gHlBdr8khnsnQFwq41bG/JGGW6tzPyAs2EOOxMjdUg20dTDM90DNj8HfWVYNYaeEN2zrhQvaM
- 31ieq8Bcbh+YwyhKfBw23q+mTTM+cbjW8v+lrjezlCAqDtE6df2GW/mFYyWbwUbNr6lSph8WH
- 5Zu2gri0SqOQpjg/82InmQ2WdOUYBvDAivhGR4BHzDP072RNSPrwgCC9GmdRpZPD3RkxLvFDV
- e2uRZyFU4YN/tVhD3K49/TjuWzFLwNnn5FxSVLHF/HRMkHaiAC3VnYKc/oa32vB3acLmVrhdb
- l+/ST+N4ZMr2hWBBSy2B8vEZdoKJG/aeKgLbliGsLDEUIHc+jXs9jYoRWiJRfncVQa2VxuDMr
- fGa/eh+6XUypyLhelKGjKz+FVD3Z65+AiZBGDF7FGQcZ3DB7exQYbfSol2zW4eGOVNzZuLkfi
- Q1EJ/NJURoxljsQcNMaJ9HEP891HpxXAwUtOpU/z12joqHRdKnNU/veGZTEd3xz47QirynH
+In-Reply-To: <20180103163403.11303-11-chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1482691442-1515087331=:31
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi,
+On 1/3/2018 11:33 AM, Christian Couder wrote:
+> This is implemented only in the promisor remote mode
+> for now by calling fetch_object().
+> 
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>   external-odb.c | 15 +++++++++++++++
+>   external-odb.h |  1 +
+>   odb-helper.c   | 13 +++++++++++++
+>   odb-helper.h   |  3 ++-
+>   4 files changed, 31 insertions(+), 1 deletion(-)
+> 
+> diff --git a/external-odb.c b/external-odb.c
+> index d26e63d8b1..5d0afb9762 100644
+> --- a/external-odb.c
+> +++ b/external-odb.c
+> @@ -76,3 +76,18 @@ int external_odb_has_object(const unsigned char *sha1)
+>   			return 1;
+>   	return 0;
+>   }
+> +
+> +int external_odb_get_direct(const unsigned char *sha1)
+> +{
+> +	struct odb_helper *o;
+> +
+> +	external_odb_init();
+> +
+> +	for (o = helpers; o; o = o->next) {
+> +		if (odb_helper_get_direct(o, sha1) < 0)
+> +			continue;
+> +		return 0;
+ > +	}
 
-On Thu, 28 Dec 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Would this be simpler said as:
+	for (o = ...)
+		if (!odb_helper_get_direct(...))
+			return 0;
 
-> On Wed, Dec 27 2017, Jonathan Nieder jotted:
->=20
-> > +git-for-windows
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >
-> >> Using BLK_SHA1 in lieu of the OpenSSL routines was done in [1], but
-> >> since DC_SHA1 is now the default for git in general it makes sense for
-> >> Windows to use that too, this looks like something that was missed
-> >> back in [2].
-> >>
-> >> As noted in [3] OpenSSL has a performance benefit compared to BLK_SHA1
-> >> on MinGW, so perhaps that and the Windows default should be changed
-> >> around again, but that's a topic for another series, it seems clear
-> >> that this specific flag is nobody's explicit intention.
-> >
-> > I have some memory of performance issues on Windows when DC_SHA1 was
-> > introduced leading to interest in a mixed configuration with DC_SHA1
-> > only being used where it is security sensitive (e.g. for object naming
-> > but not for packfile trailers).
-> >
-> > Did anything come of that?
->=20
-> This was Johannes Schindelin (CC'd) on-list when the sha1dc discussion
-> first came up earlier this year. I.e. it's slower, so we could use
-> openssl on trusted data and sha1dc on untrusted data, but nothing came
-> of that.
 
-The performance degradation is noticeable, as far as I can see. And no, we
-have not yet worked on the hyprid SHA-1-DC solution, as we expect bigger
-benefits from trying to avoid unnecessary SHA-1 calculation to begin with
-(read: we will try to catch bigger fish first).
+> +
+> +	return -1;
+> +}
+> diff --git a/external-odb.h b/external-odb.h
+> index 9a3c2f01b3..fd6708163e 100644
+> --- a/external-odb.h
+> +++ b/external-odb.h
+> @@ -4,5 +4,6 @@
+>   extern int has_external_odb(void);
+>   extern const char *external_odb_root(void);
+>   extern int external_odb_has_object(const unsigned char *sha1);
+> +extern int external_odb_get_direct(const unsigned char *sha1);
+>   
+>   #endif /* EXTERNAL_ODB_H */
+> diff --git a/odb-helper.c b/odb-helper.c
+> index 1404393807..4b70b287af 100644
+> --- a/odb-helper.c
+> +++ b/odb-helper.c
+> @@ -4,6 +4,7 @@
+>   #include "odb-helper.h"
+>   #include "run-command.h"
+>   #include "sha1-lookup.h"
+> +#include "fetch-object.h"
+>   
+>   struct odb_helper *odb_helper_new(const char *name, int namelen)
+>   {
+> @@ -52,3 +53,15 @@ int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1)
+>   	return !!odb_helper_lookup(o, sha1);
+>   }
+>   
+> +int odb_helper_get_direct(struct odb_helper *o,
+> +			  const unsigned char *sha1)
+> +{
+> +	int res = 0;
+> +	uint64_t start = getnanotime();
+> +
+> +	fetch_object(o->dealer, sha1);
+> +
+> +	trace_performance_since(start, "odb_helper_get_direct");
+> +
+> +	return res;
 
-All of this may also become moot if we ever get off the ground with
-SHA-256 (or whatever we will use then).
+'res' will always be 0, so the external_odb_get_direct() will
+only do the first helper.  i haven't looked at the rest of the
+series yet, so maybe you've already addressed this.
 
-Ciao,
-Dscho
---8323329-1482691442-1515087331=:31--
+Also, I put a TODO comment in the fetch_object() header to
+consider returning an error/success, so maybe that could help
+here too.
+
+> +}
+> diff --git a/odb-helper.h b/odb-helper.h
+> index 9395e606ce..f4bc66b0ef 100644
+> --- a/odb-helper.h
+> +++ b/odb-helper.h
+> @@ -20,5 +20,6 @@ struct odb_helper {
+>   extern struct odb_helper *odb_helper_new(const char *name, int namelen);
+>   extern int odb_helper_has_object(struct odb_helper *o,
+>   				 const unsigned char *sha1);
+> -
+> +extern int odb_helper_get_direct(struct odb_helper *o,
+> +				 const unsigned char *sha1);
+>   #endif /* ODB_HELPER_H */
+> 
