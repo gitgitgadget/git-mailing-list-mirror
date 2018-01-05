@@ -2,137 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87BE11F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 18:38:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C14C31F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 18:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752455AbeAESh6 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 5 Jan 2018 13:37:58 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:39580 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752418AbeAESh5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Jan 2018 13:37:57 -0500
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-mua-02.web4all.fr)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1eXWsM-000KRX-DU; Fri, 05 Jan 2018 19:37:56 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 7819A60E4A;
-        Fri,  5 Jan 2018 19:37:53 +0100 (CET)
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id h9mKapslL5CK; Fri,  5 Jan 2018 19:37:51 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id C9C9860E62;
-        Fri,  5 Jan 2018 19:37:51 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id TfJ5SgWJ_dO4; Fri,  5 Jan 2018 19:37:51 +0100 (CET)
-Received: from moylip.numericable.fr (3.136.192.77.rev.sfr.net [77.192.136.3])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTPSA id A0E8860E4A;
-        Fri,  5 Jan 2018 19:37:49 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Thomas Adam <thomas@xteddy.org>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH v2 3/3] send-email: add test for Linux's get_maintainer.pl
-Date:   Fri,  5 Jan 2018 19:36:53 +0100
-Message-Id: <1515177413-12526-3-git-send-email-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1515177413-12526-1-git-send-email-git@matthieu-moy.fr>
-References: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
- <1515177413-12526-1-git-send-email-git@matthieu-moy.fr>
+        id S1752582AbeAESsd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 13:48:33 -0500
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:39041 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752327AbeAESsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 13:48:32 -0500
+Received: by mail-pf0-f181.google.com with SMTP id l24so2516359pfj.6
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 10:48:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=D7cLwsxqQxD34pri8FE4Gtgk5kktiK/O1zE8rKDA5YQ=;
+        b=s/Ee+5CN0AL0gjWKuJRqoeVti0dXVNCi9ndgFjf8yxOlv4E2E89p8QHeZBh+QJHjtK
+         cbE7KmEXjXMv2sw45M3lKjToRIA4FgDgfvWItr5zdJJihFfUCN75FxKjQfwhc7mPblZ7
+         HKGGuh0AewOl1z4cOwP0Q8H//0rsb/pDT776pPxIk9iZjebNJ6EkHHZLtEFJDULxgDBy
+         1gIVbCIe2dqKs+y4Ha/AgLIpumjY4A63FFv2LWsDiUUj5yL0eUPdvtWalgyDaok8R0Ed
+         mBR03ld29rjc2sFq5dME3toXfeoDZ+6m7LZ412teiN8JBzcst7KTVN6bCq7PzqHbbZro
+         jj3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=D7cLwsxqQxD34pri8FE4Gtgk5kktiK/O1zE8rKDA5YQ=;
+        b=U0RwdhgeHf/ZPnuYp6kWeX4qDrrPArlUNWU16v8gPka/ppFVimy/odEwi+Dwj9PJdl
+         UbZxbv78Hf2/p5BKOtEPahXQGWg9EXkQaMjj6lnkWuGXL5KBLbL93xBNNKymrIifRHEQ
+         SEIp1z/dxAA06i5TMKJ0zVQmhrxvcoEmQZfJjddzscFyK9j0U6d1HMEDdV6QEvkyTRJN
+         Wou3PymBeGvZk74nTe1cXzJ7u9l++WlonNLoT6469Rt6lrMMiZ2HNzEObdVoiRNWuys+
+         gz2V28X3qZ8FqmDYVlLDtowpF/Y59+EfVEXBdcEd4NzhKwr50dGwOy94i83zaryh8slO
+         Dt+A==
+X-Gm-Message-State: AKGB3mIM9Rczf3uPluNrbS7i1ZgymqzhqLZJyO4C4q6ouP6wWJxlRyEM
+        dVBQkkV8l29+Q2InZSVEbl47yBwg
+X-Google-Smtp-Source: ACJfBotUCdy6nVO3wdaUXLjjHV0wfoZNW2s6R1HsRYCvi7Q6wrDxKbAWdnXNdxJGnjMCi0rahywCgg==
+X-Received: by 10.101.80.139 with SMTP id r11mr3166593pgp.383.1515178111636;
+        Fri, 05 Jan 2018 10:48:31 -0800 (PST)
+Received: from dtor-ws ([2620:0:1000:1611:da80:8749:c06f:9515])
+        by smtp.gmail.com with ESMTPSA id h192sm14616243pfc.139.2018.01.05.10.48.30
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Jan 2018 10:48:31 -0800 (PST)
+Date:   Fri, 5 Jan 2018 10:48:29 -0800
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     git@vger.kernel.org
+Subject: prepare-commit-msg hook no longer run for cherry-pick?
+Message-ID: <CAKdAkRQuj1hfKeckjuR2oP+8C1i+ZR36O-+aRYif4ufaS_zs+w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: SB/global_tokens (0.00222433117345)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5vqK+KGm1OfiCAefGeV3fhDj1g3/PwYZaTCzSym8uE9HPImhfA8k5/zW
- UdbqUfA/+atZAIrjsCRyglG39ay7s40zkSakW8+kgCjGkeOx1qmz3ywmUacsjxjAsJqLMS98bO5z
- ycA319z5HV3CMmoHwxoemuNNL7GGp+zW501rEhQ5LqisX5+l+fRB3wYlhH1KyOfHzJ6mVE7ewsip
- SVIfs4YHwULuSfncWQQCZFmav+TpZoJMI94JyDNTYfA50Otxn/jk0+YoVjbPYBbwrj5eWUnn05F9
- RrS4QR520oMvm0hNEPKqj4wpSPprxfaL4KUPa+d7ax+3+Jf/9S3laQAPwF4OOPS2BLJ6Do0LA2bx
- tTWVqi2fY8oW0hCeiKrXsIHuXDVcbwW2vZRbwlTsaou4YdkkTMgPdccxEqDs1YXBmdsdph+zJwql
- Pd7TjGfWxGLgmXGIZgivQPDIYm4WSM8blQV7LjJv6mzjqKuJJhZmAO87f5jxqIuHmumvO07FITnq
- MT3dKxLhoxcmaInYbR5vlqHMyA/lkPBbC6c0vlSRGDQGZ79loFWGs6aHjUJ9h7NVQthDlN3ZFexZ
- fYgAG9qTPTpp5PS1j/T/np9d21JHIowhCFJI24wA8tcqtUtSzhOuQi6pUSf119XuQl7jsFm5sSbk
- Q6XsptULZibxtxGZ3EQ6uHDPXwCws/YtYuVwh7rZNxYyV5KHfiKBno8OsMogRnWlQ9fDAeXihC1X
- mRU9VPw70z6bhalFEM/pjPCQA+BAlngHvY0q9Gw5NOloxVW0K/tO3saCFey4hE3JznGRzrizu129
- acHYDxLXrLFZ27x/iUDXTg3+zEtPhPK6l993q4Vc9aUV1oY4fX3W5eOCNA39aaEeNVeYHTQ4qc4p
- rBw6OWxEnZ+B9jntbFMsB5h9L3Pcq6EXKX3cZxLzrCA9pYo1HvE2dZcCZBCEfYvQUHiJ0yEw/ggH
- k6NxP0mFXr1FslXeNHk15VolAGHS5rCXQKDyHv3TiDImoWFJv2x8Vhm7/dDfeKdHWm+j+q2hZS63
- ia/tIkSE0ngbX0T3LvR1Khr2Eo2bTut7ztDdNHV3VH6Kds23J7LHDHZzGBAiCeuHbrg=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received: by 10.176.11.153 with HTTP; Fri, 5 Jan 2018 10:44:23 -0800 (PST)
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Hi,
 
-We had a regression that broke Linux's get_maintainer.pl. Using
-Mail::Address to parse email addresses fixed it, but let's protect
-against future regressions.
+I had prepare-commit-msg hook that would scrub "Patchwork-ID: NNNN" tags
+form commit messages and would update input mailing list patchwork to
+mark corresponding patches as "accepted" when I cherry pick form
+WIP/review queue into branches that I publish, but that recently stopped
+working if I do a simple cherry-pick. If I specify that I want to edit
+the message, then the hook is executed:
 
-Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
----
-Change since v1: fixed proposed by Eric Sunshine and pointed out by
-Alex Bennée.
+dtor@dtor-ws:~/kernel/master (for-linus)$ GIT_TRACE=2 git cherry-pick ff162c1554efe951ba6c7a19a228fc76a91fe1ed    
+10:43:12.832426 git.c:344               trace: built-in: git 'cherry-pick' 'ff162c1554efe951ba6c7a19a228fc76a91fe1ed'
+[for-linus 48bc600a3659] Input: raydium_i2c_ts - include hardware version in firmware name
+Author: Jeffrey Lin <jeffrey.lin@rad-ic.com>
+Date: Thu Jan 4 21:35:23 2018 -0800
+1 file changed, 12 insertions(+), 2 deletions(-)
+dtor@dtor-ws:~/kernel/master (for-linus)$ gti reset --hard HEAD^            
+HEAD is now at 02a0d9216d4d Input: xen-kbdfront - do not advertise multi-touch pressure support
+dtor@dtor-ws:~/kernel/master (for-linus)$ GIT_TRACE=2 git cherry-pick -e ff162c1554efe951ba6c7a19a228fc76a91fe1ed
+10:43:24.433162 git.c:344               trace: built-in: git 'cherry-pick' '-e' 'ff162c1554efe951ba6c7a19a228fc76a91fe1ed'
+10:43:24.782355 run-command.c:627       trace: run_command: 'commit' '-n' '-e'
+10:43:24.786460 git.c:344               trace: built-in: git 'commit' '-n' '-e'
+10:43:25.082164 run-command.c:627       trace: run_command: '.git/hooks/prepare-commit-msg' '.git/COMMIT_EDITMSG' 'merge'
+hint: Waiting for your editor to close the file...
+10:43:31.491551 run-command.c:627       trace: run_command: 'vim' '/usr/local/goo gle/home/dtor/kernel/master/.git/COMMIT_EDITMSG'
+[for-linus 039c57df0ec8] Input: raydium_i2c_ts - include hardware version in firmware name
+Author: Jeffrey Lin <jeffrey.lin@rad-ic.com>
+Date: Thu Jan 4 21:35:23 2018 -0800
+1 file changed, 12 insertions(+), 2 deletions(-)
+dtor@dtor-ws:~/kernel/master (for-linus)$
 
-Eric pointed out that using --cc-cmd=$(pwd)/expected-cc-script.sh did
-not work because $(pwd) had spaces in it, but I already turned it into
-./expected-cc-script.sh.
+Also note that the argument to the hook is "merge" whereas I think it
+used to be "cherry-pick" earlier.
 
- t/t9001-send-email.sh | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Is this behavior intentional? dpkg reports version as 2.16.0~rc0+next.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4d261c2..d13d8c3 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -172,6 +172,26 @@ test_expect_success $PREREQ 'cc trailer with various syntax' '
- 	test_cmp expected-cc commandline1
- '
- 
-+test_expect_success $PREREQ 'setup fake get_maintainer.pl script for cc trailer' "
-+	write_script expected-cc-script.sh <<-EOF &&
-+	echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
-+	echo 'Two Person <two@example.com> (maintainer:THIS THING)'
-+	echo 'Third List <three@example.com> (moderated list:THIS THING (FOO/bar))'
-+	echo '<four@example.com> (moderated list:FOR THING)'
-+	echo 'five@example.com (open list:FOR THING (FOO/bar))'
-+	echo 'six@example.com (open list)'
-+	EOF
-+	chmod +x expected-cc-script.sh
-+"
-+
-+test_expect_success $PREREQ 'cc trailer with get_maintainer.pl output' '
-+	clean_fake_sendmail &&
-+	git send-email -1 --to=recipient@example.com \
-+		--cc-cmd="./expected-cc-script.sh" \
-+		--smtp-server="$(pwd)/fake.sendmail" &&
-+	test_cmp expected-cc commandline1
-+'
-+
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-show-all-headers <<\EOF
- 0001-Second.patch
+Thanks!
+
 -- 
-2.7.4
-
+Dmitry
