@@ -2,75 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1FC11F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 20:44:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9241F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 20:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752713AbeAEUoa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 15:44:30 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35800 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751884AbeAEUoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 15:44:30 -0500
-Received: (qmail 30330 invoked by uid 109); 5 Jan 2018 20:43:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Jan 2018 20:43:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10941 invoked by uid 111); 5 Jan 2018 20:45:01 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Jan 2018 15:45:01 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Jan 2018 15:44:28 -0500
-Date:   Fri, 5 Jan 2018 15:44:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1752830AbeAEUpH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 15:45:07 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51236 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752766AbeAEUpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 15:45:06 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D2E09CED4A;
+        Fri,  5 Jan 2018 15:45:05 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rPEa4eSkBAC9P/9HraCSRFXj5XY=; b=NZKKIh
+        YCjGMI3HzSWRMNCuMn7AgYxKsfFIyBBAhayKLdX1pJISXoHMh5JZb7nRrewmO7/q
+        HFAm/W2o8y7kwdZUDBdKtZwtcNDclC7luylZvoSMkx5zMnnZKv8/6ZVEZNM/JDn7
+        95CTZ+pXHMXkg6vZlFLm+vp0W5OEy+eK3UT4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YEc9zlxql+qGu2ecBeBxKoYrICmG0Th5
+        spioQYcHxB4VaqapyD8Fz00/fpaJ0xVLX7VJuHeK82NbD9sKv9PgNI8oYkNyVMK4
+        zHxDrvselnbFpSbg7snmv51s4w4CvPsRAlwY3JZ8hhwRj2Hg6SXPUvFWztOTxrca
+        5ZePYRYcrO0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CA662CED49;
+        Fri,  5 Jan 2018 15:45:05 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2CD09CED44;
+        Fri,  5 Jan 2018 15:45:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
 Cc:     Isaac Shabtay <isaac@shabtay.com>, git@vger.kernel.org
 Subject: Re: Bug report: git clone with dest
-Message-ID: <20180105204427.GA6515@sigill.intra.peff.net>
 References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com>
- <20180103222821.GA32287@sigill.intra.peff.net>
- <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com>
- <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
- <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com>
- <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com>
- <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+        <20180103222821.GA32287@sigill.intra.peff.net>
+        <CAK2k7nQcY+QQBfda6CHM8tFo3i4XX2tXxHKv73t6SJ4rRvWo1w@mail.gmail.com>
+        <20180104040124.GA11626@sigill.intra.peff.net>
+        <xmqqfu7kcca9.fsf@gitster.mtv.corp.google.com>
+        <20180105195705.GA5217@sigill.intra.peff.net>
+Date:   Fri, 05 Jan 2018 12:45:03 -0800
+In-Reply-To: <20180105195705.GA5217@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 5 Jan 2018 14:57:05 -0500")
+Message-ID: <xmqqmv1savcg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4F25A5EC-F259-11E7-A9AD-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 05, 2018 at 09:22:07PM +0100, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Fri, 5 Jan 2018, Isaac Shabtay wrote:
-> 
-> > Done: https://github.com/git-for-windows/git/pull/1421
-> > 
-> > I added credit to Jeff in the PR's description.
-> 
-> Sadly, the PR's description won't make it into the commit history, and the
-> authorship really should have been retained.
-> 
-> I found Peff's topic branch in his fork and force-pushed, to demonstrate
-> what I wanted to have. Currently the test suite is running (I test 64-bit
-> builds of the three major platforms Windows, macOS and Linux), and once
-> that is done and passed, I will merge the Pull Request.
+> Out of curiosity, did this change at some point? I thought the process
+> used to be to merge to maint, and then pick up topics in master by
+> merging maint to master.
 
-I think the discussion has ended at "don't do anything else", but note
-that Junio and I were musing on whether to update the series around the
-dir_exists() function. Which would then create headaches for you later
-when you try to merge a subtly-different series that makes it upstream.
+If you look at "Sync with maint" merges made to 'master', you'd
+notice that most of them are only updating Documentation/RelNotes/*
+and otherwise no-effect merges, simply because when such an up-merge
+is made, everything in 'maint' is already in 'master' because topics
+are merged to the latter first.  Security fixes that go through
+embargoes are excempt for obvious reasons ;-)
 
-Like I said, I think we've resolved not to do anything, but I wanted to
-point out a potential pitfall with this kind of "pick up a topic early"
-strategy (I'm intimately familiar with this pitfall because I do it all
-the time for the fork we run on our servers at GitHub).
+I do not recall how it was before 2012.
 
--Peff
