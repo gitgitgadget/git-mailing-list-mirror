@@ -2,73 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C05F1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 19:57:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFDB11F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 19:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752592AbeAET5I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 14:57:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35430 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751814AbeAET5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 14:57:07 -0500
-Received: (qmail 26891 invoked by uid 109); 5 Jan 2018 19:55:48 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Jan 2018 19:55:48 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8510 invoked by uid 111); 5 Jan 2018 19:57:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Jan 2018 14:57:39 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Jan 2018 14:57:05 -0500
-Date:   Fri, 5 Jan 2018 14:57:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Isaac Shabtay <isaac@shabtay.com>, git@vger.kernel.org
-Subject: Re: Bug report: git clone with dest
-Message-ID: <20180105195705.GA5217@sigill.intra.peff.net>
-References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com>
- <20180103222821.GA32287@sigill.intra.peff.net>
- <CAK2k7nQcY+QQBfda6CHM8tFo3i4XX2tXxHKv73t6SJ4rRvWo1w@mail.gmail.com>
- <20180104040124.GA11626@sigill.intra.peff.net>
- <xmqqfu7kcca9.fsf@gitster.mtv.corp.google.com>
+        id S1752539AbeAET71 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 14:59:27 -0500
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:44118 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751731AbeAET70 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 14:59:26 -0500
+Received: by mail-yb0-f174.google.com with SMTP id h189so2279922ybc.11
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 11:59:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=tiu3bRpffq70z3DGlxXnpCzUrFMGcARquw+qlr7kMvE=;
+        b=cjpp0R27MaExj5YYrgG9OcA/Y8vtcA5QsrRvs/9VswEO22B85fTnVXorL9V/5FDHsd
+         DJdzHCSbZk1SooFQqXeKu5+/fDOwIDlZWIZQQUD0zSF0BSG6W9po63DuRpSyGAVNOXIM
+         YSCOXhKlM6vdSECniXVgXPTG5guQcSgI114Z1w47KbwOluoRan1FwXEZQNaxOpBpldQv
+         p3JvO5WVTfcTgiUGtUewoIdlf6weFM6ncJk0mtu8IHvHadAV6gKW585ICBy7dSg5VOR1
+         SmaQl2e01NWkm0G8ffF8aMGZ6rarwTaYjT/vyDvEH+RpKsG57azZYkdvGeZATV6ygOXJ
+         h1wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=tiu3bRpffq70z3DGlxXnpCzUrFMGcARquw+qlr7kMvE=;
+        b=OjTmNXE4iAzWq593vLRh83JENVoLDZbuTlVSOvykWtqa3X+neMo5Jzcm/OtpGcZrsz
+         eEYq4tw5VzaHjNhJoTTjVELJOyyExt2Tq8wGASTKl60deZkVsif/LEpQ0b3hhJ3Tu9Vf
+         DYfu9sXvr9hWVmQ8YcTGkE4q+J27fMqmKN7nJhlA3D7vVjPUJFKDikrqbBDC8PtmvQlE
+         ILtV7EZnUdrJ7v5dVZqrtxGBlYoynYgv53F7HelkQOD6ofUBrVyOxaa5vdzBozxlsyMR
+         cHQYYali5t8zEXTpN3QZ5Pi2ch2SYQVQooQUD02hz9ButcFts2JCGIOFnYiPYMXNFyxj
+         titg==
+X-Gm-Message-State: AKGB3mJdn9gBiB26F15c6qOFp6zhQJjKC81HKvLxTahTDrnORSdRzee5
+        ue9WhrXnCMSodGIDZuxDGxN1ugMxZ1ZYf3vrEjLOzOpN
+X-Google-Smtp-Source: ACJfBovRnAzKABE258E7qkqZd7FNwmsRWbABDLeDlLbeh+JZAUq2S5qGnpq+uNK/3dysLCFawHY/TXMu/GrzCv3utFw=
+X-Received: by 10.37.162.131 with SMTP id c3mr3925678ybi.213.1515182365843;
+ Fri, 05 Jan 2018 11:59:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfu7kcca9.fsf@gitster.mtv.corp.google.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.129.103.65 with HTTP; Fri, 5 Jan 2018 11:59:25 -0800 (PST)
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 5 Jan 2018 13:59:25 -0600
+X-Google-Sender-Auth: 3ITGHuJ9h0C_yIMSFnYMGyPs-TI
+Message-ID: <CAHd499C=3Y-ykgYZhSJzk=e-Pi6BUFeN8C89krd5T7T5fRB91g@mail.gmail.com>
+Subject: Can't squash merge with merge.ff set to false
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 05, 2018 at 11:53:50AM -0800, Junio C Hamano wrote:
+Not sure if this is intended or a bug, but with the following configuration:
 
-> > They haven't even been reviewed yet. If they get good feedback, then the
-> > maintainer will pick them up, then merge them to 'next', and then
-> > eventually to 'master', after which they'd become part of the next
-> > major release. For a pure bug-fix, it may instead go to 'maint' and
-> > become part of the next minor release.
-> 
-> Even a pure bug-fix, unless it is something no longer needed on the
-> 'master' front, goes thru 'pu'->'next'->'master' avenue first, and
-> is recorded in the RelNotes with the notes like "(merge d45420c1c8
-> jk/abort-clone-with-existing-dest later to maint)" when it happens.
-> 
-> 	side note: in fact "grep -e 'later to maint' RelNotes" is
-> 	how I remind myself what to merge down to 'maint'; the
-> 	actual procedure is a bit more involved (those interested in
-> 	the details can find the 'ML' script on the 'todo' branch;
-> 	its name stands for 'merge later')
-> 
-> Later, after not hearing from people that the "fix" breaks things,
-> the topic is also mreged to 'maint' and becomes part of the next
-> minor release.
+$ git config --global merge.ff false
 
-Out of curiosity, did this change at some point? I thought the process
-used to be to merge to maint, and then pick up topics in master by
-merging maint to master.
+I am not able to merge my topic branch into master with squash option:
 
--Peff
+$ git checkout master
+$ git merge --squash topic
+fatal: You cannot combine --squash with --no-ff.
+
+I'm not sure why a non-fast-forward merge would prevent a squash
+merge, since by its very nature a squashed merge is not a fast forward
+merge (or maybe it is if you only have one commit).
+
+Is there an issue here? I like fast forward merges to be off by
+default, since I want to control when they happen. Most of my merges
+do not use --squash, so I'm catering to the common case.
+
+Need advice on how to get past this issue. Thanks in advance.
