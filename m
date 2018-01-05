@@ -2,127 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35C9E1F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 10:12:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF851F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 10:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750989AbeAEKMF convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 5 Jan 2018 05:12:05 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:48294 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750927AbeAEKMD (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 5 Jan 2018 05:12:03 -0500
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-mua-02.web4all.fr)
-        by mut-mta1-se01c-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1eXOyl-0005Kp-AR; Fri, 05 Jan 2018 11:12:02 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id A971660E3E;
-        Fri,  5 Jan 2018 11:11:58 +0100 (CET)
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id GgWfz5cMTKlg; Fri,  5 Jan 2018 11:11:58 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 355B960EA1;
-        Fri,  5 Jan 2018 11:11:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id zXOdeg5PdPBh; Fri,  5 Jan 2018 11:11:58 +0100 (CET)
-Received: from moylip.lip.ens-lyon.fr (dhcp-13-157.lip.ens-lyon.fr [140.77.13.157])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTPSA id 7F44A60E3E;
-        Fri,  5 Jan 2018 11:11:56 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH] send-email: add test for Linux's get_maintainer.pl
-Date:   Fri,  5 Jan 2018 11:11:49 +0100
-Message-Id: <1515147109-8077-1-git-send-email-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <q7h9wp0wod8y.fsf@orange.lip.ens-lyon.fr>
-References: <q7h9wp0wod8y.fsf@orange.lip.ens-lyon.fr>
+        id S1751470AbeAEKds (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 05:33:48 -0500
+Received: from mout.gmx.net ([212.227.15.19]:53901 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751312AbeAEKdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 05:33:46 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lux3h-1exdPn3wfZ-0101GZ; Fri, 05
+ Jan 2018 11:33:39 +0100
+Date:   Fri, 5 Jan 2018 11:33:39 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Isaac Shabtay <isaac@shabtay.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: Bug report: git clone with dest
+In-Reply-To: <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com> <20180103222821.GA32287@sigill.intra.peff.net> <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com> <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+ <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: SB/global_tokens (0.0040945877455)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5nA/+f02enMjDxyuczw7JJHj1g3/PwYZaTCzSym8uE9H5V9HS/UjyLh5
- Xg9Z20I+ldOdd+K3aOwUtzTIWGGP7CJTYi2bf0F0JzgUQ/o6tR7CXAQiOAisNwrWhTdeG2lEVlPJ
- qZFwGwHl8QHr1SLrR7t9/HimTUzho/rtpZDweBNDYUMLLqJKWLPbFSEIeeCq8YrDEAERDCV0j+28
- 5vMyfZdSmYTQ2HQKwfzkOhXcruVNQuMb7P+4hoAyoWeOQ+b4oY325TySbVTF/fiZ7sskqjrVzPEq
- DILMAa0/AwU6ZTYeCdOOuHrTVxzlPuSm9ELht2wEzz/Xni1guZA8Hje3K7ExCtgMTZKWSEGrKAYn
- 74P6cVfdKD+w8s7W83fx+SGwJPBjHpXVtOBlF5TvPbH7W+s6rDn0tTOVcmJwqI8Ju2neb8/dDrnw
- 22i185WXA/1j10quS8oNOhSFq235dUaodchFGyeJ0IY0Cr1pZR+LLwvQ7LEu2Y9ouXVMXhi4QD47
- R6lb3jSUvyQBw3jj+H4QpBh/P5Timil8RVEoPuUQQ8kRB1sAul7ieF3TwxbJWD0kX7pMm9ThlSCL
- bAqHU+dQwbJf7YSuADBwlX2p8sVzMfgtuBJ+lX3YYpnkKenVX8OM0ME8K4C1VqzFsEEStoE8cXs9
- llqvvHoJNZZn5rjYxZbXpMdNZTIboPE3gH54KaWkmew+6aOK8jyQors6UZX4b3UP/tHCXl9v5T0a
- XYg6H3OeP2Zg5Hr0gRillw/EoELJUtD5c2vhBTJk3PS4u9EpjFmnH1Pnd9bYnQBiABUxHI9Cp3Jk
- DxukdsNDStzVrxK4r+WG98Qt1L9FDY0yO5V/pgIMvERvSqxL+j1wLSMV1DUC7WFms/r3CECVl6WL
- sD+XmLXHYVRW5JYrFz37w7dzlfvWkz1VSMJJ9RdNUuHlKJPYT4wPt/OpIKGz7i7CIVU4wkFDmz24
- WKkPfOYR2dD7CCpu6ispy1B40ZjzQhlkSE67cs6ShRaQD4LfvLL2NCokPg==
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:x36fVs9IYglUBUkAviO+OFsrPQNuuuegX9OjqH5TJvC+FQ83BXu
+ FFX/K5Ct2wb0qr4myMp4lQbyxi4t4P6VB9xokYUCuutj259enyBw62XW+BGaYhXY1w4bObs
+ WpQ5vtvdBo6tf1dIdkFptZjqmj/3Qn/nc/J4oRJsXFmRdBJIwuBxMzpzy468bNKwDbNQSpU
+ fTuWiXBAn2lqW4P18l3EQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fq8yz/lUF24=:5MGF2LLtyPVig6rld+nmPr
+ Msaw3rASLvr4L0rk1EgBUYMDTr7c1vPlhIjNQAMMb9DXdhwK25VScJTgHihJ9g2Vgognl+pd6
+ //pegOpRGh0aLNMZNjZnu8DkD7SBkge36NV1VA+spCcm2mUdrL/gxR4JWmGBaYmbhZggc5oW6
+ ckoR5Jt9Ltp98VrCvbxrA3x8SRq7nWPC+U3+V1wEgfB/UAJTqEjdZvffNpI8IsF5exBzdFGfa
+ d0Y9VmcKxC0LWCPJ3l2T66Q0sLXyJGqVAJlxCtAwi3Zfqn5Mtqp+IcRRDpbitc0VVXkj3GCkG
+ fOlRqhuvWyVUPZ4C5WbZMZ+0gQbqNwpWfxKirZsvFPXqmOAg0x3vvSvEv/oHQnWD8Na3u9V/l
+ icYrUeeDX6BwJMjGkrkCVmNYwWT/6gYxm+/WksXcC8xGiTH8fmUIKLxBPaXJi1sy24YMAAWCd
+ wmzjreDC33EIs/Gfd8l5VKN0PsRJQJQz6OERQJUXa4fdRODxBI3vpJOwtIyUs/djLWrZykj45
+ FrVPUQTD1PfB4YD35VSzm2EJLcvH5WrdDTczG+16eH8nPCGd7+e4ZPIvkxl8439TBSbOKv0sc
+ EFDLcQaDeORvbgy0L7/hhuwBwJy0WsLZbMufzPPTZTGklmvTfazSvmcDIL/QmAx9BuX6WsCtT
+ RuUgbx9jNRmUqNXmEfpwmah4eq0kJXIOIM3e6p6fJJEzFPlVxCqBI4rRAF/UsNDbKwB0C9K1J
+ Hizx4SeiwjzaahCG7ddLg4uUYMS5KGVpr96sxGwSiNOxzKzTcdvmgMQmbTZdPWwI+vr1N/SWE
+ 2DkVa+Kmo2eTc4k/pMFy2FKmOFDALu/WRp+nn1CCTBjmcBjSUEZofuj+seOD5wuNy3kZnha
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Hi Isaac,
 
-We had a regression that broke Linux's get_maintainer.pl. Using
-Mail::Address to parse email addresses fixed it, but let's protect
-against future regressions.
+On Thu, 4 Jan 2018, Isaac Shabtay wrote:
 
-Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
----
- t/t9001-send-email.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+> I cloned git's codebase, applied the four patches on master, built and
+> tested on Ubuntu Trusty. (After verifying that master indeed exhibits
+> this behaviour on Linux as well. Just checking).
+> Seems to work fine.
+> I also looked at the code. Most of the patched lines relate to tests,
+> and the one for clone.c seems reasonable to me. Added tests seem to
+> have very good coverage too.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 4d261c2..f126177 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -172,6 +172,28 @@ test_expect_success $PREREQ 'cc trailer with various syntax' '
- 	test_cmp expected-cc commandline1
- '
- 
-+test_expect_success $PREREQ 'setup fake get_maintainer.pl script for cc trailer' "
-+	cat >expected-cc-script.sh <<-EOF &&
-+	#!/bin/sh
-+	echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
-+	echo 'Two Person <two@example.com> (maintainer:THIS THING)'
-+	echo 'Third List <three@example.com> (moderated list:THIS THING (FOO/bar))'
-+	echo '<four@example.com> (moderated list:FOR THING)'
-+	echo 'five@example.com (open list:FOR THING (FOO/bar))'
-+	echo 'six@example.com (open list)'
-+	EOF
-+	chmod +x expected-cc-script.sh
-+"
-+
-+test_expect_success $PREREQ 'cc trailer with get_maintainer.pl output' '
-+	test_commit cc-trailer-getmaint &&
-+	clean_fake_sendmail &&
-+	git send-email -1 --to=recipient@example.com \
-+		--cc-cmd="./expected-cc-script.sh" \
-+		--smtp-server="$(pwd)/fake.sendmail" &&
-+	test_cmp expected-cc commandline1
-+'
-+
- test_expect_success $PREREQ 'setup expect' "
- cat >expected-show-all-headers <<\EOF
- 0001-Second.patch
--- 
-2.7.4
+Thanks.
 
+> I qualify everything I had written above by saying that it's my first
+> time ever looking at Git's source code.
+
+We all started at some point.
+
+Now, if you want to make this easier for me, could you please apply those
+patches on top of Git for Windows' master branch and open a Pull Request
+at https://github.com/git-for-windows/git?
+
+Thank you,
+Johannes
