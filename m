@@ -2,126 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8C2F1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 20:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE6E91F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 20:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752237AbeAEUgB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 15:36:01 -0500
-Received: from mail-yw0-f171.google.com ([209.85.161.171]:42040 "EHLO
-        mail-yw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751699AbeAEUgA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 15:36:00 -0500
-Received: by mail-yw0-f171.google.com with SMTP id z132so2205271ywd.9
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 12:36:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=VB0lFJXARi/4LzJYifEf6YZnSeDWpvJoDWTQRk8Pyhw=;
-        b=itmo70x60zuNBkzof1HT9UNaMYiCgTR41yhO5GKhJMhfmlZWC/Cg7FrGlh0/KaIukd
-         irZmCnACWELdji/n5O9hqUTz3wZv2Js4v6HSIYcZXEtEeiIvVL43lBQtLv2CHn/ssgJh
-         iunImnOD0h2SOpUmQjZrvjEgTHZOejfv/fdUeXaisK0hdRNsDdbYXlS5mTDDslM9GifK
-         1YwtbQRZ7lfJzw7Cl5PcmRCp157TlYFFrBcqEmcwCXdsJk0L94pyU+FY+9H9fwubxrsZ
-         ZhSqJVGFiPzETMT1OT90vfLe3m3vvjK1G7dQkVMrDdP5aZITmvyURTwEe2wZ8x00iUCt
-         5DwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=VB0lFJXARi/4LzJYifEf6YZnSeDWpvJoDWTQRk8Pyhw=;
-        b=q1/CIo23b48Rja7PQuMRUAw2MAwi9fuEpvI2xdf5dOQ8BjDySt1sKqA222GGSII2fb
-         6gNo/pSP4KirXxBqace/Y44n2PL5aMFj3mFyQbsVnVZ+DwWcRfrdil37igkE03qR46Ju
-         SnahrbPLGBBqKXTq6Ybn5sX21oA2cbMI2w9N75oKTHccN1YfTtPXpgg6TzKJGN0QDvqF
-         23WdXc+FiuorltfUVXQ1gNukpCmLEp177ZFmof7am9BO6FNnfwG1Y1ol+Fm2vpuAqet9
-         1OVPGEA3El+EXbQtXX2Y03IuTOh0Xtw1k8t7SIzDvRm9f8U6lkffUTjCZfvUtEd02rUd
-         7q8Q==
-X-Gm-Message-State: AKGB3mJut+3/ZjH/ji/lSO7y4wcbKgOwjAjP0sXqRVNdxBUk7sDpK0KK
-        3nJRwQybCnEj6b4t2popCk2P905IgCZPtd2QBJsxQA==
-X-Google-Smtp-Source: ACJfBosPFXl+z89US1UObA/RIu3KI+z0ZITeIXeiExSKEMhwjxUYwzzfCd00fLWsdjyy8u2nNSbWhJsPVeXYdzNxUTI=
-X-Received: by 10.129.93.65 with SMTP id r62mr3849501ywb.49.1515184559959;
- Fri, 05 Jan 2018 12:35:59 -0800 (PST)
+        id S1752842AbeAEUiQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 15:38:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62562 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751718AbeAEUiP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 15:38:15 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 66EC0CEA4B;
+        Fri,  5 Jan 2018 15:38:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4Oti2ABL5hqwtt3Ps+qNtAnjC4c=; b=j+Y7za
+        gFy6HbG4Y/cbOB8oQBtBOVbnLgLKKjPjDN0J1pDZxJTKq8ObluY1c/JcdbpPXE2W
+        M6mdqlq+Kctw/yVoGXdr8zehjp9HrbKrIb8khGua2g8abGWX4fehLEL9G/00EVpU
+        0c0EQp96nGQjbbKS/6vW2QsXj7qHme5emi5bg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gyaP5yESsPTpI7Be1CGsG/5ziXbRJjXs
+        gUCKonJaUSR29cKbgdHCVfxwMxEkD0vDbFwpyP1QufJwyt1SsP8VIHEZThNRnglS
+        Z+cFwW7E+e6BfeCFwEMB8EZrGrUOI04LV3xxlaR+/gvdp66sN9QtJ5jAUivZ+MkS
+        a2jgt7Krxsk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DD02CEA4A;
+        Fri,  5 Jan 2018 15:38:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C6A02CEA49;
+        Fri,  5 Jan 2018 15:38:14 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Isaac Shabtay <isaac@shabtay.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: Bug report: git clone with dest
+References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com>
+        <20180103222821.GA32287@sigill.intra.peff.net>
+        <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com>
+        <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+        <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com>
+        <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+        <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+Date:   Fri, 05 Jan 2018 12:38:13 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Fri, 5 Jan 2018 21:22:07 +0100
+        (STD)")
+Message-ID: <xmqqr2r4avnu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.129.103.65 with HTTP; Fri, 5 Jan 2018 12:35:59 -0800 (PST)
-In-Reply-To: <1515183976.21764.114.camel@mad-scientist.net>
-References: <CAHd499C=3Y-ykgYZhSJzk=e-Pi6BUFeN8C89krd5T7T5fRB91g@mail.gmail.com>
- <CAGyf7-FHyO9pkEFFguea+B+VMTodF=mg8wJNedvjYdL7e7ORqQ@mail.gmail.com> <1515183976.21764.114.camel@mad-scientist.net>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Fri, 5 Jan 2018 14:35:59 -0600
-X-Google-Sender-Auth: C0pXWnsxP2BtUQU25S-1GAaOO7g
-Message-ID: <CAHd499A_ANzFA8HSQLJWakzzWanbmVGnur=um=kquYHu0aCBcQ@mail.gmail.com>
-Subject: Re: Can't squash merge with merge.ff set to false
-To:     paul@mad-scientist.net
-Cc:     Bryan Turner <bturner@atlassian.com>, Git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5A8D3540-F258-11E7-B443-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 5, 2018 at 2:26 PM, Paul Smith <paul@mad-scientist.net> wrote:
-> On Fri, 2018-01-05 at 12:12 -0800, Bryan Turner wrote:
->> On Fri, Jan 5, 2018 at 11:59 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
->> > Not sure if this is intended or a bug, but with the following
->> > configuration:
->> >
->> > $ git config --global merge.ff false
->> >
->> > I am not able to merge my topic branch into master with squash
->> > option:
->> >
->> > $ git checkout master
->> > $ git merge --squash topic
->> > fatal: You cannot combine --squash with --no-ff.
->> >
->> > I'm not sure why a non-fast-forward merge would prevent a squash
->> > merge, since by its very nature a squashed merge is not a fast
->> > forward merge (or maybe it is if you only have one commit).
->
-> Hah!  I was just thinking of checking the latest Git RC I built
-> yesterday to see if this pet peeve of mine has been fixed yet.  I guess
-> not!
->
->> The easiest way to move forward is probably to pass "--ff" on the
->> command line to override the config, when you're using "--squash".
->
-> That's what we always have to do.  Very annoying; we use squash-merge
-> extensively but also want to require ff merge by default.
->
->> As for why the two aren't allowed together, my assumption would be
->> because if you're only squashing a single commit "--squash" and that
->> commit is fast-forward from the target, a new commit is not created
->> and instead the target branch is fast-forwarded. With "--no-ff", it's
->> questionable what "--squash" should do in that case. Fast-forward
->> anyway? Rewrite the commit simply to get new committer details and
->> SHA-1?
->
-> If it only failed when you were squash-merging a single commit that was
-> also fast-forwardable, I guess that would be one thing.  But even if I
-> have multiple commits and I want to squash-merge them, which clearly is
-> a separate operation giving different results, I get this error.
->
-> I don't think Git should try to be clever here (if that's what it's
-> doing--I always assumed it was just a missing configuration case in the
-> error check).  If I asked for a squash-merge then Git should give me a
-> squash merge.
->
-> So in answer to your question, --squash should give me a squash merge
-> and the setting of --ff / --no-ff should be completely ignored, as it's
-> irrelevant.
->
-> My $0.02.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Seems like --ff works, but is also misleading since in my case (more
-than one commit) I'm not doing a ff merge and there's no possibility
-of it. I think your idea of the 2 being distinctly separate makes
-sense. Basically, --squash takes precedence and if the mechanism to
-implement squash in certain scenarios (such as single commit) is
-fast-forward merge, then that decision is made for the user and is no
-longer something they can control.
+> Hi Isaac,
+>
+> On Fri, 5 Jan 2018, Isaac Shabtay wrote:
+>
+>> Done: https://github.com/git-for-windows/git/pull/1421
+>> 
+>> I added credit to Jeff in the PR's description.
+>
+> Sadly, the PR's description won't make it into the commit history, and the
+> authorship really should have been retained.
+>
+> I found Peff's topic branch in his fork and force-pushed, to demonstrate
+> what I wanted to have. Currently the test suite is running (I test 64-bit
+> builds of the three major platforms Windows, macOS and Linux), and once
+> that is done and passed, I will merge the Pull Request.
+>
+>> Note that I tried compiling master, but failed due to a reason
+>> unrelated to this patch:
+>> 
+>> builtin/checkout.c:24:10: fatal error: fscache.h: No such file or directory
+>
+> That was an oversight in a previously-merged Pull Request. I have fixed
+> that locally and will soon push it out onto `master`.
+>
+> Ciao,
+> Johannes
+
+FWIW, I do not mind including this as part of -rc2 if not -rc1 for
+the upcoming release.
