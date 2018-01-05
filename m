@@ -7,106 +7,130 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A29B01F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 19:10:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4CE31F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 19:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752588AbeAETKV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 14:10:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60332 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752565AbeAETKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 14:10:20 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5E1F3C560E;
-        Fri,  5 Jan 2018 14:10:20 -0500 (EST)
+        id S1752714AbeAETTW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 14:19:22 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65129 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752121AbeAETTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 14:19:21 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAA86CC4E3;
+        Fri,  5 Jan 2018 14:19:20 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=OgVP5EM8H4V6
-        /WL+SZH7xcOp3Y4=; b=UQU6vjD1/XrrWvZAStP28B5/+OYVUAAFd3jZdWdc2lhG
-        Y0Tm0ie0RV0B4w6/Qa+/t9S/IwmaGTMfxeSLV9sjbqt261I9RFp11fcFNqvW0edC
-        VdAcCoyk7EG+nguTGhdRdsjp6jtsxDMegPAOgNVyyHKutvU+21HgMncz5xQT42o=
+        :content-type; s=sasl; bh=VRj23rIDe2oD3aB+qXykMle7j7Y=; b=ml6XFd
+        wVncKSvnaACcLBFDE6wjRCxv7IXWz2WA24V2MY7rJd3Pt4FGXdoJyYpSrMATsnlO
+        XA37tIR4LC6NoZFOdiFZK3ZNQxYXFeACh8R8b531Xv3fQGtUhOFuZVpPexibSPmG
+        88IYDOm7f70D8PbO4dkRrpH6evfE6jWrLltB4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ijJ9Lc
-        SugDGSeWOgp7ysaohlERvS8lYE46Q1yDQ7Z17oPI7cmY2jlkWxATjdowyZFIbwAz
-        GKPX36G1irbxZ25rbED2ZUMNih28wQng+hv5gGmpeecQwH+2xdNxqtYHLfEo0OFI
-        BfaUDhJB5dprFyVIjt2S2c5JW7E1qb6MyMS+Y=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 56872C560D;
-        Fri,  5 Jan 2018 14:10:20 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=nG0yzyN7HifHN9Qg/fya+d0wi+3zdcbP
+        qGfdqtTkAsaqzUm7zgdBPptFh130iM/Rnp4Q8lXS89LzASgc8MwOadVXuf0vnqKU
+        t5viqyvYywwwGcnzjhYR7az5Honp+H2+tmqa4JXmo4O8PWzMr82jFlGtAXrtJGeh
+        T8HtWnWPrcI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2BDCCC4E2;
+        Fri,  5 Jan 2018 14:19:20 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9A2C0C560C;
-        Fri,  5 Jan 2018 14:10:19 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DCC9CC4E1;
+        Fri,  5 Jan 2018 14:19:20 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>,
+To:     Jeff King <peff@peff.net>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Stephan Janssen <sjanssen@you-get.com>,
         "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
-References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
-        <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
-        <5A4B2DA5.907@hiroshima-u.ac.jp>
-        <59a1fc058278463996ed68c970a5e08a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
-        <955dae095d504b00b3e1c8a956ba852a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
-        <5A4D9089.3050209@hiroshima-u.ac.jp>
-        <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de>
-        <xmqqmv1tfpqh.fsf@gitster.mtv.corp.google.com>
-        <ee76246b-579c-fe01-eb9c-d400061b47b6@web.de>
-Date:   Fri, 05 Jan 2018 11:10:18 -0800
-In-Reply-To: <ee76246b-579c-fe01-eb9c-d400061b47b6@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 5 Jan 2018 14:54:33 +0100")
-Message-ID: <xmqqtvw0ceat.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 3/4] clone: factor out dir_exists() helper
+References: <20180102210753.GA10430@sigill.intra.peff.net>
+        <20180102211014.GC22556@sigill.intra.peff.net>
+        <xmqqbmi9dw55.fsf@gitster.mtv.corp.google.com>
+        <20180104235412.GA3474@sigill.intra.peff.net>
+        <20180105002206.GB3474@sigill.intra.peff.net>
+Date:   Fri, 05 Jan 2018 11:19:19 -0800
+In-Reply-To: <20180105002206.GB3474@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 4 Jan 2018 19:22:06 -0500")
+Message-ID: <xmqqo9m8cdvs.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 124B314E-F24C-11E7-AFE0-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 547D9268-F24D-11E7-B22F-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Jeff King <peff@peff.net> writes:
 
->> One practical problem is that users who do this
->>=20
->>      $ git archive HEAD Documentation/ | tar tf -
->>=20
->> would be expecting (at least) two different things, depending on the
->> situation they are in.
->>=20
->> So at least you'd need an "--include-untracked" option, I guess.
+> On Thu, Jan 04, 2018 at 06:54:12PM -0500, Jeff King wrote:
 >
-> Right, this breaks down with directories -- most build artifacts (e.g.
-> .o files) are probably not meant to end up in archives.
+>> > If we really want to be anal, perhaps a new helper path_exists()
+>> > that cares only about existence of paths (i.e. the implementation of
+>> > these two helpers they currently have), together with update to
+>> > check the st.st_mode for file_exists() and dir_exists(), may help
+>> > making the API set more rational, but I do not think it is worth it.
+>> 
+>> Yep, I also considered that file_exists() probably wants to be
+>> path_exists() with its current implementation. We'd probably want to
+>> review all of the callers.
+>> 
+>> Anyway, I tried to do the minimal refactoring here, with no change in
+>> behavior. I'm not opposed to calling this dir_exists() as path_exists()
+>> and making it globally available (as you note, I don't think we'd want
+>> to use a true dir_exists() here).
+>
+> So I actually started down this road just now, but I'm not sure if it's
+> worth it.
 
-I agree that it is unwise to overload the pathspec for this purpose.
-Perhaps bulk of the documentation of a project is in javadoc in its
-source code and extracted into some directory, where the user would
-want to include untracked things as well as tracked ones, while
-untracked contents of other directories are all not meant to be
-packaged.  As "git archive" is primarily about freezing the contents
-of a set of paths in a single revision into an archive, and
-including untracked things is secondary, perhaps the right way to do
-so would be to:
+Yeah, although I said it already without starting down this road,
+you actually thought about it more and your insight is more valuable
+;-)
 
- (1) leave pathspec as-is---they mean "only this area of the named
-     revision goes into the resulting archive", and=20
+> If we were to transition to an endgame with path_exists(),
+> dir_exists(), and file_exists(), we'd probably want to do something
+> like:
+>
+>   1. introduce path_exists(), but leave existing file_exists() callers
+>      in place
+>
+>   2. introduce file_exists_as_file(), which checks S_IFREG
+>
+>   3. audit each file_exists() call to see if it ought to be
+>      path_exists() or file_exists_as_file() and convert as needed
+>
+>   4. When there are no more file_exists() calls left, all
+>      file_exists_as_file() instances can be renamed to file_exists().
+>
+> But as with any "audit each..." plan, that leaves topics in flight out
+> of luck. If we want to be kind to those, we'd have to wait a long while
+> to shake out any file_exists() callers.
+>
+> At which point is there much value in having path_exists() as a wrapper?
+> It's a better name, perhaps, but I think my future-proofing against
+> "file_exists() may become file-specific" was probably overly paranoid. I
+> don't think we could sanely do that conversion without risking breakage.
 
- (2) introduce a new "--add-untracked=3D<wildmatch>" option, that can
-     be multiply given, is cumulative, and is used to specify which
-     untracked paths to be included in the result from the working
-     tree contents.
+If we want to, the endgame can be to have a single path_exists_as()
+helper that could be used like so:
 
-So
+	#define PATH_TYPE_IFREG	(1<<0)
+	#define PATH_TYPE_IFLNK (1<<1)
+	#define PATH_TYPE_IFDIR (1<<2)
+	#define PATY_TYPE_IFANY ((1<<3)-1)
 
-	git archive \
-		--add-untracked=3D./configure \
-		--add-untracked=3D'Documentation/**/*.html' \
-		--add-untracked=3D'Documentation/*.[1-9]' \
-		HEAD -- . ':!contrib/' ':t/'
+	#define path_exists(path) path_exists_as(path, PATH_TYPE_ANY)
+	#define path_exists_as_file(path) path_exists_as(path, PATH_TYPE_IFREG)
 
-might be a way to package up sources we use without tests but
-include the built documentation files.
+	/* backward compatibility */
+	#define file_exists(path) path_exists_as(path, PATH_TYPE_ANY)
+
+We can avoid "file-exists used to mean this thing but in a distant
+future it means completely different thing" that way.
+
+> Maybe we should just document its behavior and use it here, rather than
+> introducing this new dir_exists().
+
+Sounds good enough to me ;-)
