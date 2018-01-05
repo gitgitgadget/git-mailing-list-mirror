@@ -2,165 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8121F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 21:36:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D27411F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 21:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753177AbeAEVgc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 16:36:32 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:45075 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753074AbeAEVgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 16:36:31 -0500
-Received: by mail-wm0-f65.google.com with SMTP id 9so4744579wme.4
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 13:36:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Wywc6l/1IWNnmLiJsm613g84o8ZBQeItXjCnF9kS2Rg=;
-        b=kafFNw/XNaUAcpwe5qR/ONjrsrWuYtn57wJm5iSnx9O6IOP7CPahkxRt3NLEW9Hsbm
-         v22YGMuI2lnMy1lMw/F7DWssI9XD2aae9frBVZeWAfFZEt4vRLzmPhHTa+up0cj7qQrN
-         SAS3PWo/GdGal/3MpYCF2FHyQ0SMfHWBrTnymimSG6Sexrtzhyo8cHfMkJ41ZpwPy66w
-         7t78+JGtzcEIVTtTIz1dZlTsKxJ9QbZX34Vzy/s51FYle5zq3M4pkzwfs0f5xQCLxouC
-         yMwlNRai+q46zIcljJQb70T3c21l9TX54amU7UeBC37S1eG7QMjmHlMF9wq9XTeVaYhs
-         j4mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Wywc6l/1IWNnmLiJsm613g84o8ZBQeItXjCnF9kS2Rg=;
-        b=N5jNWHl2vBOKCWXUbmODCpBVdUyTdy15/YkwOJQIUXF5o972F3jFLkWYmDfhd3YoVO
-         06urTAGn/rpJ55c+cOMYVmLUAvKeFjLp9sW8NnSkUQqYi79T1NFbMhfGnkgr+7hzwBEj
-         KJt2VBNVJkO8TWvIZiTPg4QZ8DicPby6tz7hqXP2JkBk0gwIhW8SimHzZvxCkdQBSj1Y
-         MG6K4ekBPIREKcuw2/ZPIYwB10/pXJ4l5gWxkSmyS9NMagT8uBN917T2JfhJEm5fLI95
-         HJFpoXNRiJxJsR6e/0JbGgnMp3sWAARJ/tOyQ1lc97K5N0d15fITSsETG1tKVjRYON0l
-         OSdQ==
-X-Gm-Message-State: AKGB3mLt5+r73+qL/VPXbGCKiqRhwXXbd90YkiaMONDRoBvnctKYvaUk
-        BB96v1ZY6oG8T52OFVCWrZdYYQUy
-X-Google-Smtp-Source: ACJfBoveWSafGk6iQa/mqSP5fmnalsAeEX3dPyZRcYre9PaTgNhyMxm2YcbpP2nYIJa99nNKsw8QnA==
-X-Received: by 10.80.163.221 with SMTP id t29mr6079989edb.39.1515188190002;
-        Fri, 05 Jan 2018 13:36:30 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id q3sm4716437edd.61.2018.01.05.13.36.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 05 Jan 2018 13:36:28 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] perf: amend the grep tests to test grep.threads
-References: <20171229225903.19688-1-avarab@gmail.com> <xmqqinchfowj.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqinchfowj.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 05 Jan 2018 22:36:27 +0100
-Message-ID: <87o9m8asys.fsf@evledraar.gmail.com>
+        id S1753165AbeAEVjS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 16:39:18 -0500
+Received: from mout.gmx.net ([212.227.17.20]:54803 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753155AbeAEVjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 16:39:17 -0500
+Received: from ggw-xinxiao-xx.fareast.corp.microsoft.com ([37.201.193.20]) by
+ mail.gmx.com (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MVsUW-1eQrZf2V0C-00X3L7; Fri, 05 Jan 2018 22:39:11 +0100
+Date:   Fri, 5 Jan 2018 22:39:10 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Isaac Shabtay <isaac@shabtay.com>, git@vger.kernel.org
+Subject: Re: Bug report: git clone with dest
+In-Reply-To: <20180105204427.GA6515@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1801052228270.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com> <20180103222821.GA32287@sigill.intra.peff.net> <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com> <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+ <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com> <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com> <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com> <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+ <20180105204427.GA6515@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dY+rYUdcjMzbus26Bl9JODYFJZ51M5HwgaS2Gq4dc0sdh1q+uNA
+ FN2R8nPhqhopjJW2qECTwpxdmM1dahftu6UrjcRExZdYeRuvizMSYvRkn1ikyPHr8LmUBoz
+ b3JuJsAy1L8jf2QPQVqHLKl72aV1wonWcmfRP5aULHqzhf7Oy39+b1oRtBQfKO7pUJHQX3e
+ tMQxuWiYgGmbluPjza+sA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/iAXxNn4gPw=:F9ifioAutAOW4eiZV7CJww
+ QGQNlFk3DlRmQKxuzSXMxyxTW1FjtczqaZ/l+o18I5TYWEYif4mS9TCJOHitheTP9sjshtHTD
+ CWL172dmi6rSmWxjGuHoDoI9U0IWMuo0sMi8BdiaojiJAY5nVQj2WbuvL7rf/ThvqrVd1BFcF
+ RtDT7e8OmODF7BEFcNopGJVn51lTAg9p2D82ee++V5OkYiRNDe0jx33GVnW4bkE2DjtymXE2n
+ jVvgKtgpmo9aQVOfycGeph2xXPp2U98Rwa/w1ag47l+MHt0ae3ew/h3C2Q+F3k+TeTZJg8QiQ
+ 5Wz+nqQLwZF5xToAWfuUW3baQTjpVCx1i58qwcNNAegPpRIzV4TeAzjNXoxgvBzi1AqXmvrzG
+ F1A8WMP/uu7mlwg96PPGEQOOKE81oHLY8hIYJp6uYc6iUi/K3mCuoW/+SiFDHesTUj4z1pifD
+ mOa0uEtvKJ1KJfcJu1ogtLphoj1YEDUV/LUmCn4YiKvI+smCIml8eoCzTwHNc2eH4feh4WeU1
+ d6ic7QqeelHaWDVN1wzWu0/+KU5wLN1CW+/nsF9kr25Yu+AFNcTvfj5w5jcz5hA2GYEVeF2nu
+ dtpVV3+MusF5NBPoIJDKyp3NjFZzJX1QRnoCJsKQAWBL4fNB9uyhwTxLXZbrSMIEtNddR8nCv
+ lZXuZnW4v1oO4XrQbIdlQpdLgh5zndMQ/PS4BG2WAGfcPt2tvzc4Y0ctzCcGIbKz9AKl5zBGq
+ Zls+p/h84X+uuY76tayI2fjjur3KRMN5Y4QBfoMjoAgvs/FoOBWLmgV3eOfU8U+7F/8fM2BOi
+ QAO0Rd88UGAG4IZIyG5qgrRu5mykwp6OkCbD3HxbBBHw86zefKJBeMQ2tbcMGAyKrsI7p3z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Peff,
 
-On Thu, Jan 04 2018, Junio C. Hamano jotted:
+On Fri, 5 Jan 2018, Jeff King wrote:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Ever since 5b594f457a ("Threaded grep", 2010-01-25) the number of
->> threads git-grep uses under PTHREADS has been hardcoded to 8, but
->> there's no performance test to check whether this is an optimal
->> setting.
->>
->> Amend the existing tests for the grep engines to support a mode where
->> this can be tested, e.g.:
->>
->>     GIT_PERF_GREP_THREADS='1 8 16' GIT_PERF_LARGE_REPO=~/g/linux ./run p782*
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>
->> This looks less scary under diff -w.
->>
->>  t/perf/p7820-grep-engines.sh       | 52 ++++++++++++++++++++++++++++-------
->>  t/perf/p7821-grep-engines-fixed.sh | 55 ++++++++++++++++++++++++++++++--------
->>  2 files changed, 86 insertions(+), 21 deletions(-)
->>
->> diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
->> index 62aba19e76..8b09c5bf32 100755
->> --- a/t/perf/p7820-grep-engines.sh
->> +++ b/t/perf/p7820-grep-engines.sh
->> @@ -12,6 +12,9 @@ e.g. GIT_PERF_7820_GREP_OPTS=' -i'. Some options to try:
->> ...
->> +		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
->>  		then
->> -			test_cmp out.basic out.perl
->> +			test_perf $prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" "
->> +				git -c grep.patternType=$engine grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine' || :
->> +			"
->> +		else
->> +			for threads in $GIT_PERF_GREP_THREADS
->> +			do
->> +				test_perf PTHREADS,$prereq "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern' with $threads threads" "
->
-> Is it guaranteed that $prereq is not empty at this point?
->
-> Judging by the way the other side uses "test_perf $prereq ..."
-> without quotes around it, I suspect you do expect it to be empty in
-> some cases.  It means you expect test_have_prereq is prepared to
-> skip an empty prerequisite in a prereq list, but I do not recall
-> writing that helper in such a way, so...
->
-> 	PTHREADS${prereq:+,}$prereq
->
-> or something along that line, perhaps?
+> On Fri, Jan 05, 2018 at 09:22:07PM +0100, Johannes Schindelin wrote:
+> 
+> > On Fri, 5 Jan 2018, Isaac Shabtay wrote:
+> > 
+> > > Done: https://github.com/git-for-windows/git/pull/1421
+> > > 
+> > > I added credit to Jeff in the PR's description.
+> > 
+> > Sadly, the PR's description won't make it into the commit history, and the
+> > authorship really should have been retained.
+> > 
+> > I found Peff's topic branch in his fork and force-pushed, to demonstrate
+> > what I wanted to have. Currently the test suite is running (I test 64-bit
+> > builds of the three major platforms Windows, macOS and Linux), and once
+> > that is done and passed, I will merge the Pull Request.
+> 
+> I think the discussion has ended at "don't do anything else", but note
+> that Junio and I were musing on whether to update the series around the
+> dir_exists() function.
 
-It's not, but a trailing comma at the end of the prereq list works since
-test_have_prereq() relies on setting the IFS to ",", so as long as this
-is portable:
+I briefly looked over this discussion and got the same impression.
 
-    $ str="foo,bar,baz,"; export IFS=,; for word in $str; do echo "w:<$word>"; done
-    w:<foo>
-    w:<bar>
-    w:<baz>
+> Which would then create headaches for you later when you try to merge a
+> subtly-different series that makes it upstream.
 
-And I'm not 100% sure that it is, this should be fine. Works on both
-bash & dash for me.
+Subtly-different is not a big problem. It is typically solved by `git
+rebase --skip` ;-)
 
-We could use the ${...} pattern above if you prefer, but since it
-doesn't appear to be needed...
+> Like I said, I think we've resolved not to do anything, but I wanted to
+> point out a potential pitfall with this kind of "pick up a topic early"
+> strategy (I'm intimately familiar with this pitfall because I do it all
+> the time for the fork we run on our servers at GitHub).
 
->> diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
->> index c7ef1e198f..61e41b82cf 100755
->> --- a/t/perf/p7821-grep-engines-fixed.sh
->> +++ b/t/perf/p7821-grep-engines-fixed.sh
->> @@ -6,6 +6,9 @@ Set GIT_PERF_7821_GREP_OPTS in the environment to pass options to
->> ...
->>  for pattern in 'int' 'uncommon' 'æ'
->>  do
->>  	for engine in fixed basic extended perl
->> @@ -23,19 +31,44 @@ do
->> ...
->> +		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
->>  		then
->> -			test_cmp out.fixed out.perl
->> +			test_perf $prereq "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern" "
->> +				git -c grep.patternType=$engine grep$GIT_PERF_7821_GREP_OPTS $pattern >'out.$engine' || :
->> +			"
->> +		else
->> +			for threads in $GIT_PERF_GREP_THREADS
->> +			do
->> +				test_perf PTHREADS,$prereq "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern with $threads threads" "
->> +					git -c grep.patternType=$engine -c grep.threads=$threads grep$GIT_PERF_7821_GREP_OPTS $pattern >'out.$engine.$threads' || :
->> +				"
->> +			done
->
-> Same here, which means these two scripts share somewhat large body
-> of text and makes me wonder if it is worth refactoring it to ease
-> future updates to them.
+Thanks for your concern.
 
-Yeah, but I wanted to leave refactoring these for some other time.
+And not to worry, I have plenty of expertise, won over the years, in
+dealing with subtly different variants of patches having been accepted
+upstream and conflicting with patches that were carried in Git for
+Windows.
+
+Ciao,
+Dscho
