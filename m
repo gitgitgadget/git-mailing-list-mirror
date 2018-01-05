@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2C601F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0AD1F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751402AbeAEJNP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 04:13:15 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:37707 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751342AbeAEJNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 04:13:04 -0500
-Received: by mail-wm0-f47.google.com with SMTP id f140so1201794wmd.2
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:13:03 -0800 (PST)
+        id S1751376AbeAEJNN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 04:13:13 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:42972 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751357AbeAEJNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 04:13:05 -0500
+Received: by mail-wm0-f68.google.com with SMTP id b141so1214635wme.1
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:13:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nO7lqokalyArBQhzSfjxEU9B5GQEntcWaPPsQ34/w5s=;
-        b=uK3oel/J7Tue6qgi4ifrkRsjNbIn9fCdO0kVcc4ySE3qHLmwiwyMKILOqxe9rDXzmG
-         oxJkVWVGjdU+QYfkgRb1Kw1hbLXVx8RnfMUp/2ZiRt3xy8YHTTlxLysCLV9qfGRg6uEW
-         YNnARuql3DFk6fWYcCBt6q6SDYiHgJfwceQOshJf41NCM2YBejosvRdZVZTjOJtIu2MO
-         YR7w86rb+FMqie29tgbQiiq4jEbJ3OzasVpHDMuz6uL9GhMUQ1+ASYtr1LxntcIbPw2z
-         pz6ljd6O/yxdjYwtFz+mtrWKGw13qiBAa3NZO1Fze06ha2XEorb99J4XRX9y1asIBCrE
-         wMvQ==
+        bh=ovRUdLnRm5YFZzJD5E45idwHZRdX1saVHrhkPt3eb0c=;
+        b=Zmc3m2OUoel+03KiBFwuHjkJXsePQIbRSn6VeSUKlXutCttllu5Ie2sl9sdX2bB3+T
+         tHVSr8dEVSTCvzJRrQLELAEsKa6mot3VbsgrHZrCC+UPW7sQZNUCyqciGIxSy+l6dD/z
+         Ttponxy/jLubL9/QTm6Jweo70lfbt26ftQN2JE+52iP5WnG6+dJvh81G9LB0+XWOWlPC
+         HZOviWoWfj1yRbiOUdmp7WaaJ3O5tWd0Xfej5HxjpFG2MN1wZzrv4MZk/rwwdUyxoApw
+         sEvNEZD0IhPMuw0iwGqt068z/gt1rmIWJKTW+qohruI/CrwIZDXDmq/L0LfaGBarLWYj
+         xQ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nO7lqokalyArBQhzSfjxEU9B5GQEntcWaPPsQ34/w5s=;
-        b=tLq91ERloDhkoei0GaVMbPCWxqv9VgOtMJs3QfSL+Nyyp/OX5EvKVRHJVaXijxUrWz
-         fPKBIgGQHnrP6Fbkepfu0lPboeahmwmSGcESR12fXHfYgSWMqbY//w0hbmbY2cM3tEJw
-         Bmnor7ARw6/ASG7cdLd+6lMqllnnIpWMijWjGnknKWLQvZnh7GZZ/bpDpwN1HHvNo17G
-         bCJ3KO1C2gQkstOamZemUnwsBiAv7QBkMXN71T5Od0+7JXj2o2crvLwmXVChxitgDA/U
-         5kWx8b8C9D7PbOsIzZGVX8wrZbyLBKO/74KQYvGfTfNmHANJCZnaFojMA2jLjwbraK0m
-         iZMA==
-X-Gm-Message-State: AKGB3mL6qe37PlRSiSxB03bUGgNH4tGyiaOhAq8W3m0UBZUw0Lp/IGYZ
-        GHsYkD81ID/bzWBGMbsLJ0V+By6u
-X-Google-Smtp-Source: ACJfBosg0dAun2dp0L1N2u2k/9xv3E4Dh29Ert3Pp7Q9obeb+GQ3MIhWdzEzcZ4xs0vkRh8FA49Y5A==
-X-Received: by 10.28.111.90 with SMTP id k87mr1585405wmc.108.1515143582051;
-        Fri, 05 Jan 2018 01:13:02 -0800 (PST)
+        bh=ovRUdLnRm5YFZzJD5E45idwHZRdX1saVHrhkPt3eb0c=;
+        b=oRCFG3yxZaR0MxfOxBLsruPjjdPwQMnhChzsxNokQKghe7LzVnj7Z5bq8Kvik+1ZPg
+         3DSb0IXW262d/VR3kHlBIMoeKdBjpzMmsXvNKgANA981wZRKiF9slDLXc7G6LpFqJdLu
+         Bgzuggna7CujH+oCzkR5oqaQehZ3HhQp5P2PDdAS4/gxPiolOFr/KyaUlx1Ud6l40+nE
+         ZKzi8oIDtcLGStdNmhRDXPX8zAU1LAJesaIOylgxKBraW0X172Gz5ZUPwUh85HNSxLJi
+         ljXJNcARKIpqEZB99Qo+Nxrbx1Aqf1akY2bGrzozMUxYX5371zs5Zzkl0c0QTuW9gA59
+         vKrw==
+X-Gm-Message-State: AKGB3mLG8tW1+PnHykdJGyob5LarPPw41cZ1M5suKL+bQoJmdpFdrC+Q
+        f5XEV+DCisTuLrfIf9jwOutdSmeJ
+X-Google-Smtp-Source: ACJfBouwU4+PviEtvLM/1y+QH5VTfVmaTB++LFpoCViqn57L5BXrY7MTHRqlvSMt4cNup53RuZXD9w==
+X-Received: by 10.28.45.69 with SMTP id t66mr1767117wmt.120.1515143583347;
+        Fri, 05 Jan 2018 01:13:03 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.59
+        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.13.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Jan 2018 01:13:00 -0800 (PST)
+        Fri, 05 Jan 2018 01:13:02 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3 6/7] perf/run: learn to send output to codespeed server
-Date:   Fri,  5 Jan 2018 10:12:25 +0100
-Message-Id: <20180105091226.16083-7-chriscool@tuxfamily.org>
+Subject: [PATCH v3 7/7] perf/run: read GIT_PERF_REPO_NAME from perf.repoName
+Date:   Fri,  5 Jan 2018 10:12:26 +0100
+Message-Id: <20180105091226.16083-8-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.40.gbe5e688583
 In-Reply-To: <20180105091226.16083-1-chriscool@tuxfamily.org>
 References: <20180105091226.16083-1-chriscool@tuxfamily.org>
@@ -68,46 +68,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's make it possible to set in a config file the URL of
-a codespeed server. And then let's make the `run` script
-send the perf test results to this URL at the end of the
-tests.
+The GIT_PERF_REPO_NAME env variable is used in
+the `aggregate.perl` script to set the 'environment'
+field in the JSON Codespeed output.
 
-This should make is possible to easily automate the process
-of running perf tests and having their results available in
-Codespeed.
+Let's make it easy to set this variable by setting it
+in a config file.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/perf/run | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ t/perf/run | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/t/perf/run b/t/perf/run
-index 4e62d6bb3f..ef56396546 100755
+index ef56396546..1a100d6134 100755
 --- a/t/perf/run
 +++ b/t/perf/run
-@@ -148,10 +148,20 @@ run_subsection () {
- 	test "$GIT_PERF_CODESPEED_OUTPUT" = "true" && codespeed_opt="--codespeed"
+@@ -137,6 +137,9 @@ run_subsection () {
+ 	get_var_from_env_or_config "GIT_PERF_MAKE_COMMAND" "perf" "makeCommand"
+ 	get_var_from_env_or_config "GIT_PERF_MAKE_OPTS" "perf" "makeOpts"
  
- 	run_dirs "$@"
--	./aggregate.perl $codespeed_opt "$@"
++	get_var_from_env_or_config "GIT_PERF_REPO_NAME" "perf" "repoName"
++	export GIT_PERF_REPO_NAME
 +
-+	if test -z "$GIT_PERF_SEND_TO_CODESPEED"
-+	then
-+		./aggregate.perl $codespeed_opt "$@"
-+	else
-+		json_res_file="test-results/$GIT_PERF_SUBSECTION/aggregate.json"
-+		./aggregate.perl --codespeed "$@" | tee "$json_res_file"
-+		send_data_url="$GIT_PERF_SEND_TO_CODESPEED/result/add/json/"
-+		curl -v --request POST --data-urlencode "json=$(cat "$json_res_file")" "$send_data_url"
-+	fi
- }
+ 	GIT_PERF_AGGREGATING_LATER=t
+ 	export GIT_PERF_AGGREGATING_LATER
  
- get_var_from_env_or_config "GIT_PERF_CODESPEED_OUTPUT" "perf" "codespeedOutput" "--bool"
-+get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEED" "perf" "sendToCodespeed"
- 
- cd "$(dirname $0)"
- . ../../GIT-BUILD-OPTIONS
 -- 
 2.16.0.rc0.40.gbe5e688583
 
