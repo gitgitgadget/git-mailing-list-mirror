@@ -2,129 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 960F61F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 11:15:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 567FB1F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 11:19:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751583AbeAELPo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 06:15:44 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36276 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750837AbeAELPn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 06:15:43 -0500
-Received: by mail-wm0-f66.google.com with SMTP id b76so1850433wmg.1
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 03:15:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=c14U9u79t2p2uMZMFAb4CGv2TPXBSrGYk1SF1ZBDs5w=;
-        b=cNQ3mYQwTSjtsMEgmDe3lazuYtc2rwNSAALMPMjN2dc7YJEEAlbUwp0pWnCr1PU3RX
-         f7f1xz583Q5d2w/l03NJ3raEPfpLZpH/ybCWs6On0feyaHub2Ol3fNy/vkkFDQCULtoQ
-         cmBOoi2tgbTfeesAfIEgsSXKjdCWzPsM5101o=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=c14U9u79t2p2uMZMFAb4CGv2TPXBSrGYk1SF1ZBDs5w=;
-        b=YAdotcTlTbcDo14dxy7KyOWNQ06++pXnYtJd6rgxNgYYw+rQPNtlI7B+EoYVSEpiPN
-         vmczCuNj0aX8jOyXYuR8yWKAFILivrraqSgxfjLozVAA2dLb7R1n6R4C1Jn46a1Y51GW
-         knhwWVahAuoOwYfLM8Ws/x00VLdIGocTqZiykRsp1++0jEHj3paQNL1XOdmku5Bm69p5
-         GEfvQQtmJHW+sD8HUkNrESAm2cE0QsgJN6iF55UA+bua3RTElH0FCb9xvEBtUQRMvrk/
-         emBrzSUgjHZuzfH6uO0yARY2M6BfX0YGIXbNrk3tO1sArRIpXai6+pEKS1qwK03/s/ci
-         g3LQ==
-X-Gm-Message-State: AKGB3mJLDWX2rYyonLLsC0Nhjdwap8wBh44cvAJIMCf7c24lUF+2Lkq0
-        gQxiQKoFcQwwOMJ0kSLFo3I46fhOCj8=
-X-Google-Smtp-Source: ACJfBouUtpXUEtsK2Hq3q+6LBN08NcVQKCnImKEBfHlO2rZvxNbFdssm0IYkaodvJ9kctrcmoTODkw==
-X-Received: by 10.28.238.135 with SMTP id j7mr2090026wmi.69.1515150942452;
-        Fri, 05 Jan 2018 03:15:42 -0800 (PST)
-Received: from zen.linaro.local ([81.128.185.34])
-        by smtp.gmail.com with ESMTPSA id b127sm7246278wma.26.2018.01.05.03.15.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Jan 2018 03:15:41 -0800 (PST)
-Received: from zen (localhost [127.0.0.1])
-        by zen.linaro.local (Postfix) with ESMTPS id 1F2F63E00CE;
-        Fri,  5 Jan 2018 11:15:41 +0000 (GMT)
-References: <q7h9wp0wod8y.fsf@orange.lip.ens-lyon.fr> <1515147109-8077-1-git-send-email-git@matthieu-moy.fr>
-User-agent: mu4e 1.0-alpha3; emacs 26.0.90
-From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+        id S1751176AbeAELS5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 06:18:57 -0500
+Received: from mout.gmx.net ([212.227.15.19]:50137 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751092AbeAELS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 06:18:56 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgL1q-1eITfT0aRy-00NiI0; Fri, 05
+ Jan 2018 12:18:49 +0100
+Date:   Fri, 5 Jan 2018 12:18:50 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     Matthieu Moy <git@matthieu-moy.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] send-email: add test for Linux's get_maintainer.pl
-In-reply-to: <1515147109-8077-1-git-send-email-git@matthieu-moy.fr>
-Date:   Fri, 05 Jan 2018 11:15:41 +0000
-Message-ID: <87o9m8d09u.fsf@linaro.org>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: GSoC 2018 Org applications. Deadline = January 23, 2018 at 18:00
+ (CET)
+In-Reply-To: <q7h9lghcob2s.fsf@orange.lip.ens-lyon.fr>
+Message-ID: <alpine.DEB.2.21.1.1801051217190.31@MININT-6BKU6QN.europe.corp.microsoft.com>
+References: <q7h9lghcob2s.fsf@orange.lip.ens-lyon.fr>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:vxZK4ZBW1FPKsjbhneWqjRS1c9oosmHvpy2TNXmpifgPz7J7JZi
+ yfwJ63aBtT77dxVZZuHuW3vbCiol7+X77MwCmODMu7VkUOXe6Cjz/0fOQZV9AHMslI3mafz
+ hi8e5i01GLZopiZEweWqgz8dx4H+ytO+giFPk+FmZwUZFG9VZTiEqyP+JTi9I+c84Ohc67R
+ tVT7hrVDrrhWkIAO0p+4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bUSgaJvNFm4=:kA2zQrlDvZFuxN2PpBiejo
+ aVMM0fWy3g2N2bHF75u/vQi9HEP0J4m+NfIQbsQuN/Et6byOn9U7wyKz+TF6YB7TkhGCcWVg5
+ wvTI3NuV24vvs3vJOO+8eRLYU6bGydf/NSgP70F+8QzLHARUbRbUNyh+mJ4zKDvv1iTW+w3h3
+ /ab5T0AwvVTdcagS4tpBBDXa8BvleMYM6ObSFDlY+orMRyeKee+7tggRQpZdayiaaa8CSqd9+
+ QXSTRVFlC0OLVV3f/Ve0SxwWvST/HFQ5wMARIorH1yQY7et8qVTL4nI8Ju5rbSL8Usrkr+CKm
+ HTEdibwctDtCJLUTuE1WVPuYIW/obu7Ekb37MrdM6qBbu808WG6SKIM4TIuP2EU5nNZyi4p2c
+ v6LsJqJr8Ut7jE0+3y4b/Jy7eIIEvhRmyMoad70kiNaZElgFzKKlDfiRBFLI0+5TNpoeVyIbH
+ fwpkS/cdAK70/MA+l0DSE4UyPgzWVgWen+VGsRq3FYWZ2tBm0hA07FDF5Hi14lfGG961U0MTb
+ zW+5QuN2rLITwOSbdXr6oOyYyWjvzefKZ8aKo/i68LrGOSwrW+MRGF/9TnFd9mDywmLbDEocW
+ /VCTgG92xqPsPE2eCGW2+821LRJ2a+Uf4CFdeRWBdliHTCbChrr9uVspvw5HTcMj4pPbgEj/b
+ WfEZmH5zQ9IlKNnLR4jsI6B9phMK7jpxfbQVNS4yjryJsA94hywTsl2dMvFrf0ZBlM8Wvi5oG
+ OYzuFRvNPKxIdPJaTGhxwISVlNOdoS5Px/QJw5Nn04mvApvUTrIbc8cOhVJyfGdf31kKMVNqS
+ On9Tc/WE80DViGrwhQBPY6RmFXhuB7ML2w/2hOorywK/N87XmwSxbM49P1klObphUSm7phJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-Matthieu Moy <git@matthieu-moy.fr> writes:
+On Fri, 5 Jan 2018, Matthieu Moy wrote:
 
-> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> We had a regression that broke Linux's get_maintainer.pl. Using
-> Mail::Address to parse email addresses fixed it, but let's protect
-> against future regressions.
->
-> Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
-> ---
->  t/t9001-send-email.sh | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 4d261c2..f126177 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -172,6 +172,28 @@ test_expect_success $PREREQ 'cc trailer with various=
- syntax' '
->  	test_cmp expected-cc commandline1
->  '
->
-> +test_expect_success $PREREQ 'setup fake get_maintainer.pl script for cc =
-trailer' "
-> +	cat >expected-cc-script.sh <<-EOF &&
-> +	#!/bin/sh
-> +	echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
-> +	echo 'Two Person <two@example.com> (maintainer:THIS THING)'
-> +	echo 'Third List <three@example.com> (moderated list:THIS THING (FOO/ba=
-r))'
-> +	echo '<four@example.com> (moderated list:FOR THING)'
-> +	echo 'five@example.com (open list:FOR THING (FOO/bar))'
-> +	echo 'six@example.com (open list)'
-> +	EOF
-> +	chmod +x expected-cc-script.sh
-> +"
-> +
-> +test_expect_success $PREREQ 'cc trailer with get_maintainer.pl output' '
-> +	test_commit cc-trailer-getmaint &&
-> +	clean_fake_sendmail &&
-> +	git send-email -1 --to=3Drecipient@example.com \
-> +		--cc-cmd=3D"./expected-cc-script.sh" \
-> +		--smtp-server=3D"$(pwd)/fake.sendmail" &&
-> +	test_cmp expected-cc commandline1
-> +'
-> +
->  test_expect_success $PREREQ 'setup expect' "
->  cat >expected-show-all-headers <<\EOF
->  0001-Second.patch
+> If we go for it, we need:
+> 
+> * Admins
+> 
+> * Potential mentors
 
-I think you need to apply Eric's suggestions from:
+Count me in as a potential mentor.
 
-  From: Eric Sunshine <sunshine@sunshineco.com>
-  Date: Sat, 18 Nov 2017 21:54:46 -0500
-  Message-ID: <CAPig+cSh0tVVkh0xF9FwCfM4gngAWMSN_FXd2zhzHcy2trYXfw@mail.gma=
-il.com>
+> * List of microproject and project ideas
+>   (https://git.github.io/SoC-2017-Ideas/ and
+>   https://git.github.io/SoC-2017-Microprojects/ are good starting
+>   points)
 
---
-Alex Benn=C3=A9e
+I have spent a bit of time recently to document a couple of Git for
+Windows-specific projects thoroughly, I could easily copy/paste them
+there, too. (Yaaay, Markdown! Now, if only we could use it in Git's man
+pages, too...)
+
+Ciao,
+Dscho
