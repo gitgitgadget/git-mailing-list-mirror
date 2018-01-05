@@ -2,88 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A06D1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 13:54:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1E1B1F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 14:19:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751728AbeAENyu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 08:54:50 -0500
-Received: from mout.web.de ([212.227.15.3]:59946 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751422AbeAENys (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 08:54:48 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LtoCT-1ewRxr00Bx-0117I9; Fri, 05
- Jan 2018 14:54:38 +0100
-Subject: Re: [PATCH] git-archive: accept --owner and --group like GNU tar
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     suzuki toshiya <mpsuzuki@hiroshima-u.ac.jp>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20171229140535.10746-1-mpsuzuki@hiroshima-u.ac.jp>
- <df39f62558314cf6a9d9df3e23f31dd8@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <5A4B2DA5.907@hiroshima-u.ac.jp>
- <59a1fc058278463996ed68c970a5e08a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <955dae095d504b00b3e1c8a956ba852a@OS2PR01MB1147.jpnprd01.prod.outlook.com>
- <5A4D9089.3050209@hiroshima-u.ac.jp>
- <f7654cd9-2cd0-0775-3b10-8e3dc1a66dae@web.de>
- <xmqqmv1tfpqh.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ee76246b-579c-fe01-eb9c-d400061b47b6@web.de>
-Date:   Fri, 5 Jan 2018 14:54:33 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1751523AbeAEOTo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 09:19:44 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:36186 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751365AbeAEOTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 09:19:43 -0500
+Received: by mail-wm0-f48.google.com with SMTP id b76so2774251wmg.1
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 06:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=h1jDVMiWXt+94sFIlHNlQ5tQwX738eRtbY8X2z6IuiI=;
+        b=IVmSnbM3Zwa+xVIsTkDfQwNZq5XNjdqiGDnHRh3M5fPGP8SF0XM+nZYCUfCcaByYyt
+         mTo3M/XPTOj2FEUG5MNl2C3RUm5YwiaWuFk2fQEgBx0/Fjkl8X98rLc1NfP9eg3wUq/L
+         djWr7vj/pdH5nrPQ5m2UlAvHEzguP847/GRtWPrROj8eHpn/9vf+/dVhdLvHiRDHVuWD
+         zu1c9acApzNenbH+eQEWNVsBJIChEzNb9hAmBQUvXhvwFbSWKhqPCg1fS4UfJz6oFf/k
+         lVoUDF6bjqnp8rAKlXb/Tf46uV1UWn9bhFMNkO2i07rc1zANcYhV7KN8aS5KcHu1sfEk
+         oJaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=h1jDVMiWXt+94sFIlHNlQ5tQwX738eRtbY8X2z6IuiI=;
+        b=mgQxsa0B0KKWui1avyFOiFJYOFf/G5Q76S5PdPUCVf+XWz8D2j2+S6UqJtW82z8788
+         3p3u7UDA6Z2aECG5QEJSTRA12CuDSWbGrlXmExbAtRlox6LWleVmCZl1XcLE7D9WfZ+W
+         MXhCW6vvjsx+cAz0+0qygngKBZrLLb6ou2+htXMibNHsbSTqW+h1QUL3WHUf6ah71gmj
+         IxlpLAXXXHB9rW7uCSqdon/inakX54d5GyQQDbl5aljWIfCnrfu3jOdrcLChMNO2NUpO
+         pKL/o3EI94U0MwVK2TxS6obzqrukfu6OgsYPzmBSqDlvzvEewxuiNCuzqP0WZ9Nazq0n
+         SVkQ==
+X-Gm-Message-State: AKGB3mLRyaTDcAr1vtl/od9sOG1pi8FOCmeGQ2x+RRqWdHfbkn1m4l6Z
+        WFqEsnAGG6AYeOSVQRr6cAs=
+X-Google-Smtp-Source: ACJfBouWO9pLTFfex07EW2MxKURNu09NYwq+8BQfGKTDoJhzMjfPy7EVYASWqW8v+QWnycFDvhgSEg==
+X-Received: by 10.80.134.249 with SMTP id 54mr4309892edu.295.1515161982517;
+        Fri, 05 Jan 2018 06:19:42 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id o15sm3965800edk.25.2018.01.05.06.19.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 05 Jan 2018 06:19:41 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+        Thomas Adam <thomas@xteddy.org>
+Subject: Re: [RFC PATCH 1/2] add a local copy of Mail::Address from CPAN
+References: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
+Date:   Fri, 05 Jan 2018 15:19:40 +0100
+Message-ID: <87shbkbd6r.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqmv1tfpqh.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:JMiZcDI5C1Py+5bWu//at++h8UT5AWywb/YYA7LKQPUdaLqh8qi
- bMr5RxE1X75zTRz945RJCurHOu9WTxj6hPjdCzJRAkWnPqm++M6Wtw2Vpwe5wHJuKqusPjt
- KyeuNb70YdWSp2CYT07YZSGDHIHhnYJgQF5jc7MAZ8il5vi+rtHMRWwxa8+zRwn7JVoNH4F
- 3g+q+I/I6ycbvIl1kK80w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/t7j+gfzKfw=:C7NkZroaaw7u9wFmQecmFi
- teCRAO/PojbW1H4dFI5NTXctm4uSyd8+KWWzATchUMYFhs5fArIqQ+x71YYwLa/DeetzzGnxs
- D2fgdx+JfVfrXQKgqXgsLd7AMxwdMHw3Bf9J6EYZG+GG/trSBSraNaFR92m0njI04XetOY5X2
- Qm1C3VR6lkxrf5JdX04N9MF+MtODVOnha2NS2CnB523TC+6gE700Qa+TI6j6e+p4T9y8ilCAo
- 2J628aPOnUYG3rOoiMWV8Guz0BQwx+rkiKrmXjyICDkQvY+vXUgvbg7VakX8yPFumc3nGBFxA
- gTonQ3IXxAzwhZKXkR792WwlgZtSRdzpv6VjNnAZTZX71WdpcONxNiFYH+bBFyUhM7UI6gSSl
- d9tMwHWULhOrYwruT3QCXLuvVwbkEXdsD0jbwZDL49Tl4YvneeWw2DhV8fnVDdtODV7KxhC4i
- h80f6wiQXUpGOhisulpRGn0URBCDaDWiZJeBDPkXJW1FEgeK6sAvQlhqpEVj78cX7s6MYP/W2
- yGVh6pSnqKge3VF0/5aH2u+bkneLxUUmvSAx2zYKvoOu7dM8x+wwV79JZfCKnGLM5dA5+Z3RM
- +v+kTZssV9UvbEikG3YgbGu9tixsUWwuTeK0I9nwAXrMIT6GltaoTIrKlPmdElzqIMMAxP87P
- lUa/FaZcCthEkXkUH2S1NPTj/UvuSlFSOl0GugnySlN0WtxYOYozXlB/e9hmJ0PtjR6cErNFK
- SlDpBEJYU7+9f4Klv4HTLdrBKEaqpvTIf91Qu6CFu70NwS5nBo1ZOVRGspmY7mPhkLT5Ew6DW
- YxI0BJnhScPNJFQXE8A1WWv/4S3zr4dLUtaDKwchNqQQKCEZco=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.01.2018 um 19:22 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> I don't know if it's a good idea, but perhaps we don't even need a new
->> option.  We could change how pathspecs of untracked files are handled:
->> Instead of aborting we could include them in the archive.  (Sounds like
->> the simplest possible interface, but may have practical problems.)
-> 
-> One practical problem is that users who do this
-> 
->      $ git archive HEAD Documentation/ | tar tf -
-> 
-> would be expecting (at least) two different things, depending on the
-> situation they are in.
-> 
-> So at least you'd need an "--include-untracked" option, I guess.
 
-Right, this breaks down with directories -- most build artifacts (e.g.
-.o files) are probably not meant to end up in archives.  We could still
-do it for regular files and symlinks.  Perhaps that's too confusing,
-though, and an --add-untracked-file parameter (or whatever we want to
-call it) is the way to go.
+On Thu, Jan 04 2018, Matthieu Moy jotted:
 
-René
+> I looked at the perl/Git/Error.pm wrapper, and ended up writting a
+> different, much simpler version. I'm not sure the same approach would
+> apply to Error.pm, but my straightforward version does the job for
+> Mail/Address.pm.
+
+Yeah, yours is much simpler because Mail::Address doesn't have an import
+method, which is the entire complexity in the Error.pm wrapper.
+
+I'll probably submit a wrapper-for-the-wrappers patch at some point
+after this gets in, i.e. both of these would become:
+
+    package Git::Error;
+    use Git::WrapCPAN 'Error';
+    1;
+
+    package Git::Mail::Address;
+    use Git::WrapCPAN 'Mail::Address';
+    1;
+
+Then the Git::WrapCPAN package would do all the magic the Git::Error
+wrapper is doing now, but with a configurable package.
+
+But this doesn't have to wait for that.
+
+> I would also be fine with using our local copy unconditionaly.
+
+Some notes on your patch:
+
+ * If I comment out your whole eval/or-do I was puzzled because tests
+   still pass, turns out the eval { require Email::Valid } will bring in
+   Mail::Address from CPAN.
+
+   Not a bug, just something to note for others poking at this.
+
+ * You didn't update t/t9000/test.pl to use the wrapper, which I thought
+   was a bug until I realized this is built on top of
+   gitster/mm/send-email-fallback-to-local-mail-address.
