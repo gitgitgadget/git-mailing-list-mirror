@@ -2,96 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C9CC1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 21:15:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAE521F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 21:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752976AbeAEVPS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 16:15:18 -0500
-Received: from mout.gmx.net ([212.227.17.20]:51976 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752902AbeAEVPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 16:15:17 -0500
-Received: from ggw-xinxiao-xx.fareast.corp.microsoft.com ([37.201.193.20]) by
- mail.gmx.com (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LwGDy-1eyHpC1uwQ-0182Je; Fri, 05 Jan 2018 22:15:00 +0100
-Date:   Fri, 5 Jan 2018 22:14:59 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Kim Gybels <kgybels@infogroep.be>,
-        "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-Subject: Re: [PATCH] rebase -p: fix quoting when calling `git merge`
-In-Reply-To: <xmqqvaggaw11.fsf@gitster.mtv.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1801052212000.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-References: <8cafe900ce97d885c58f4a7f02e748d2ae3b02a2.1515101305.git.johannes.schindelin@gmx.de> <xmqqvaggaw11.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:1/SZSUvF6PtUFxt74RZHfc521MWu2M4bADEY3UZx3oFTGGSdqve
- 5yX5s8CIC6el1tLW5Vq/u26B8kwL6bm9T84/pTpBRocI2BeEs85Rzi72SDNyzWKGFEAOH6g
- 6CdNAvjA5RgDwHONnG4p2Y4N6IufrZOoVDZmfDtpu6N2cT1odd3Ws9HDf4QFKf/h8l27JA7
- eRxf6QooUGrBoDpMZ/BsA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IUw6K1S/ZiI=:ri8McOvhdMK41nOX1s+W7G
- w60c6TtuAEAarJSGOkcqP0wH4cpX7vq4neLnf090j+N95iJZ4UUuzbK1T4sYPQQyLC+b5fCMR
- kd3x+Tp0XxSINfsig38LVEOt0N0R/SwwuUhfkL0xA29yDLr2xFXUII22C7YcC4NlKe3xsEFDA
- VGAOI/+2ixcZCr07SMT3uQaC35ljNH5Xh4ve/3CgAQmGKvBsECDLGOWkhv/GPhWXL2FJhmTMO
- PbN9C4zfZR+v0j72lURZBoh0wnQwibnDulR93gfNRbi03d7zJCdxDg4tK72NLbk2eVse/1pHZ
- Pll0Ze7xYLOjf1n/Pdn7QV0C+TmzprT/XfQ0Oi+MbNhL1yQo8bfdStkVsnJyTxkZtR32c0mf2
- Wj8u7EqyBg+PCqR39eEUOzrxslVhAra576Cu/2B0abgYSQr6hse8EvB91MaDXUQLDQlffku1q
- PbGr1PYT1GkOFbfV9zxw6pofjWFR2TmUc5kIj/SdiWrLp4hbuv6KaPb1Jz6nnjkE+Qp5hZ1dh
- EM6jRKcI5eB09gZJ9GshM8o0mO1t220QOfe3uISmTOAQn+a9vgVHilXMmImaD7oW+cDmn5VLd
- HAoyFjscw0MwtiBibAtjsnlfG0fWzR2erGdJlTLm61AkVZD+gV3TbATd+KE32Yhm9jLGgPxMR
- oRKDmz1aE4LlH2DoY5xwTQndrKc17JyOobnroQ1NwbIyl6Zab2DSdxH9zlzqCoZ/j347NqJmL
- 7R1HCsldD0cT8kEEVq+FsUaRnQ7G/5516XSgmYMZMyMKsya5HxBUiU0m8xgIR7Y82cFQIHkFW
- 3FXb9ZIOVC0X9/xt/9/Lu8dPA+fZ+EFuV6TW2gYX1ezSLwL+GTDD52P02xoxDhrU1pA9OMx
+        id S1753072AbeAEVWB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 16:22:01 -0500
+Received: from gproxy8-pub.mail.unifiedlayer.com ([67.222.33.93]:35855 "EHLO
+        gproxy8-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753045AbeAEVV7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 5 Jan 2018 16:21:59 -0500
+X-Greylist: delayed 2397 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Jan 2018 16:21:59 EST
+Received: from cmgw2 (unknown [10.0.90.83])
+        by gproxy8.mail.unifiedlayer.com (Postfix) with ESMTP id B93321ACCAE
+        for <git@vger.kernel.org>; Fri,  5 Jan 2018 13:26:21 -0700 (MST)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmgw2 with 
+        id ukSJ1w00T0QvKlu01kSMQR; Fri, 05 Jan 2018 13:26:21 -0700
+X-Authority-Analysis: v=2.2 cv=doKrMxo4 c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=RgaUWeydRksA:10 a=pGLkceISAAAA:8 a=ivXI333Y1-cMi7feZ64A:9
+ a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=K0jH0/vVVQX7tN3sYP4GrWPtUSleu4MTYDlIzJGTMg0=; b=RfnK/zVqQUaHrH1iAX5gOTSuKC
+        mh2dJX9jRcxNfEHaV+jUUfXPAPgcoXm07J7bohHFyWlxksvY6ruaL9f42N0eELR0LlYcOhZW4ZTAf
+        6dPw7NU1/6Xu4ZEVd7mhKxWUs;
+Received: from [65.112.16.22] (port=57670 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1eXYZG-0023Wv-52; Fri, 05 Jan 2018 13:26:18 -0700
+Message-ID: <1515183976.21764.114.camel@mad-scientist.net>
+Subject: Re: Can't squash merge with merge.ff set to false
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Bryan Turner <bturner@atlassian.com>,
+        Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Date:   Fri, 05 Jan 2018 15:26:16 -0500
+In-Reply-To: <CAGyf7-FHyO9pkEFFguea+B+VMTodF=mg8wJNedvjYdL7e7ORqQ@mail.gmail.com>
+References: <CAHd499C=3Y-ykgYZhSJzk=e-Pi6BUFeN8C89krd5T7T5fRB91g@mail.gmail.com>
+         <CAGyf7-FHyO9pkEFFguea+B+VMTodF=mg8wJNedvjYdL7e7ORqQ@mail.gmail.com>
+Organization: GNU's Not UNIX!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 65.112.16.22
+X-Exim-ID: 1eXYZG-0023Wv-52
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [65.112.16.22]:57670
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, 2018-01-05 at 12:12 -0800, Bryan Turner wrote:
+> On Fri, Jan 5, 2018 at 11:59 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> > Not sure if this is intended or a bug, but with the following
+> > configuration:
+> > 
+> > $ git config --global merge.ff false
+> > 
+> > I am not able to merge my topic branch into master with squash
+> > option:
+> > 
+> > $ git checkout master
+> > $ git merge --squash topic
+> > fatal: You cannot combine --squash with --no-ff.
+> > 
+> > I'm not sure why a non-fast-forward merge would prevent a squash
+> > merge, since by its very nature a squashed merge is not a fast
+> > forward merge (or maybe it is if you only have one commit).
 
-On Fri, 5 Jan 2018, Junio C Hamano wrote:
+Hah!  I was just thinking of checking the latest Git RC I built
+yesterday to see if this pet peeve of mine has been fixed yet.  I guess
+not!
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> >  git-rebase--interactive.sh |  9 ++++++---
-> >  t/t3418-rebase-continue.sh | 14 ++++++++++++++
-> >  2 files changed, 20 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index e3f5a0abf3c..085aa068cbb 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -392,9 +392,12 @@ pick_one_preserving_merges () {
-> >  			new_parents=${new_parents# $first_parent}
-> >  			merge_args="--no-log --no-ff"
-> >  			if ! do_with_author output eval \
-> > -			'git merge ${gpg_sign_opt:+"$gpg_sign_opt"} \
-> > -				$allow_rerere_autoupdate $merge_args \
-> > -				$strategy_args -m "$msg_content" $new_parents'
-> > +				git merge ${gpg_sign_opt:+$(git rev-parse \
-> > +					--sq-quote "$gpg_sign_opt")} \
-> > +				$allow_rerere_autoupdate "$merge_args" \
-> > +				"$strategy_args" \
-> > +				-m $(git rev-parse --sq-quote "$msg_content") \
-> > +				"$new_parents"
-> 
-> Makes sense.  I should have been more careful when reviewing
-> db2b3b820e2.
+> The easiest way to move forward is probably to pass "--ff" on the
+> command line to override the config, when you're using "--squash".
 
-Don't be so harsh on yourself. This bug was apparently not a big deal for
-four years (which can feel like a *very* long time, can't it?).
+That's what we always have to do.  Very annoying; we use squash-merge
+extensively but also want to require ff merge by default.
 
-Besides, the way code review happens in this project is not really
-conducive to intense testing of the code: mere patch review will never be
-as effective as patch review combined with hands-on testing of code paths
-that may look like they could hide some unexpected bugs.
+> As for why the two aren't allowed together, my assumption would be
+> because if you're only squashing a single commit "--squash" and that
+> commit is fast-forward from the target, a new commit is not created
+> and instead the target branch is fast-forwarded. With "--no-ff", it's
+> questionable what "--squash" should do in that case. Fast-forward
+> anyway? Rewrite the commit simply to get new committer details and
+> SHA-1?
 
-Ciao,
-Dscho
+If it only failed when you were squash-merging a single commit that was
+also fast-forwardable, I guess that would be one thing.  But even if I
+have multiple commits and I want to squash-merge them, which clearly is
+a separate operation giving different results, I get this error.
+
+I don't think Git should try to be clever here (if that's what it's
+doing--I always assumed it was just a missing configuration case in the
+error check).  If I asked for a squash-merge then Git should give me a
+squash merge.
+
+So in answer to your question, --squash should give me a squash merge
+and the setting of --ff / --no-ff should be completely ignored, as it's
+irrelevant.
+
+My $0.02.
