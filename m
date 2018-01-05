@@ -2,124 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C095E1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 18:59:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01AA31F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 19:01:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752313AbeAES7a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 13:59:30 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37125 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752171AbeAES73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 13:59:29 -0500
-Received: by mail-qt0-f194.google.com with SMTP id f2so6856553qtj.4
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 10:59:28 -0800 (PST)
+        id S1752520AbeAETBO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 14:01:14 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:43763 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752219AbeAETBA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 14:01:00 -0500
+Received: by mail-wr0-f193.google.com with SMTP id s13so2706232wra.10
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 11:00:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=JSKqSfCJEOpiCmi8vm2i5QcnYp/WbGk+2ABs6s1HSeM=;
-        b=CQiYVciM9Ylbk5RylUjBb1pvkfCtSFGoSlYkeeIkPTHjMgPXaDXY3XKhjo/2BSu+Ra
-         /QYcggn7AnTdrpzBDZ0r4c+Pbu/abvvi2MA018n2x+VBI+jc32NMpmwvUGBG9i+OCxgE
-         Bla3mXV++ZpGtk3TgUww/SKgCEIAgQaZeFvBuV3UKcNxnec8mRuW556oIRktH8c4ywg0
-         /BxXT3ZdPSiiJT/tA1L43NTkvhYi0AhOzzmqQIJvFx1CU8ogNkfOuBHvGCupqJ0OnwqI
-         1opkkNruN/oq466kkZ4Zj6vIA14vz/oQaETD9hF31EBOxaB2qVStI4rvU4xYxeVh7k+Y
-         dDnA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ypr8PxbKlRSd/Uk/+HywVvrD1aigZJ+oLtZnyjAYxhI=;
+        b=pHFIgluRNqsgr206gEtPFZknBEN513q9LNqQ3xQBoE663Y0SxIu5gVafxtyj/raegH
+         p37dltGxHEjAftddnO4qK5y/jGmPYSWJgVB5P0MGx4+fndWG8MBl1mf25zDC5LNtXt7e
+         VXYgAym7mPF0lTVEuVQUlotBLIimrk23F2SjqqwBoCrYj1iQHf1GTplJ+e/1pCgbTRgG
+         qNNkW+ZWNSlpCdT+Srzmwf+nq7pFak6zZz6XedVQMznEkzySjdFE81yDxFFRTW4/KAus
+         XHi1S8mQehhZycL2RqL4uhD5MnmfsaFVA2RZEG81USJBWE8+gDOFP73REquBvn3CzMZk
+         JxYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=JSKqSfCJEOpiCmi8vm2i5QcnYp/WbGk+2ABs6s1HSeM=;
-        b=bpu/Bvbu1c+sta42dutLCx339+wDo/jrcTpff3lSIYAPlHI20A1yAsZiCe5vzezQaM
-         H+/ZTLvelU9kiqpZ6qC7dhnG9Y/sJ7HE6ikd1Wg1BBFu27QyzJakezog99EXs0LUouhg
-         akenVXDCj+GQ15/xAD80YuVs9W+oM9vNngGjtP7w0heFKslhkMop03AZyG0wetdo9jo3
-         l3X9DqzJQgOUD2nFfS+3YKalMGxy926Uczb+CtogKMg2wtWzuVHIVaNETET+JPJ69nrZ
-         8cIGqbnEJ0k0rYEAi5+vk1wwbMk/ExPSuMWX4vm4C63Hr784E076vNDJMpghMqtMojO+
-         /MRQ==
-X-Gm-Message-State: AKwxytf/aJEiEVcBfBGuIRYK+9DawDcPoUeEWL+BgHvggz6eRCPXz/e9
-        dqxe+lN3tQ3il8LLzR56AO7Jf87KocA5UyTk2HA=
-X-Google-Smtp-Source: ACJfBovDiSkTPZ2Q3/fWGGkXF58AkBqfkWD3lzUa9KpKGiSoKYR2TWpzizxETpYQ/7dFppE5nm5rIIcW5lbGtB1LMq0=
-X-Received: by 10.237.38.71 with SMTP id z65mr5485339qtc.114.1515178768378;
- Fri, 05 Jan 2018 10:59:28 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.198.2 with HTTP; Fri, 5 Jan 2018 10:59:27 -0800 (PST)
-In-Reply-To: <1515177413-12526-3-git-send-email-git@matthieu-moy.fr>
-References: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr>
- <1515177413-12526-1-git-send-email-git@matthieu-moy.fr> <1515177413-12526-3-git-send-email-git@matthieu-moy.fr>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 5 Jan 2018 13:59:27 -0500
-X-Google-Sender-Auth: sh5tdGclCnboHZgMknA-JbP51Io
-Message-ID: <CAPig+cQURBQxw69RFyOGKxqyQihTh1c7djsFx3H2MJtWNXKryg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] send-email: add test for Linux's get_maintainer.pl
-To:     Matthieu Moy <git@matthieu-moy.fr>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Thomas Adam <thomas@xteddy.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=ypr8PxbKlRSd/Uk/+HywVvrD1aigZJ+oLtZnyjAYxhI=;
+        b=M3jaR9WQ0MBbf5TpV/CV7KNjYaayfUJxt7Mko2U5bs4fkmPmIZYpFuIO4HyjJNa8/S
+         9P3vhj22cSVzWGmc6W6jDDGBi5YfUVIRKanMxe0+gX8K+1zrpoOnzVH9mcJxR5Er2HKF
+         HPeh2Yxy5Z9zlWq3Uql+qVCEkwLoiHhwhJ77PUb+NhwvBGeRMywKXbn1HyWWnmRL1jqq
+         1mWMJpyKMbhIl37UxyF0AcJPQBY/pM+pDvid7uXm2Dfw6ZyxL5Bde2na1kHnBIqGWqmY
+         hbQwqTtLQSiDPhfmXIHdA0VHxx2Jwb7juTmM/hIbOlIoxWeF4fwlmxID+DYcIT7aP6kD
+         yXJQ==
+X-Gm-Message-State: AKGB3mIMdw0nuk0nPqJeg4jfhmzhSfHFsJOrvG25jI1HA3T+2Qkcwdzs
+        o+KJla7VgCOkEAYfi05966E=
+X-Google-Smtp-Source: ACJfBovOyBkvNK4ALSL3obLIyhVdWMtwbXLA7dmjcHZFm8b+3GUhW3KnNuT+1yiBm1dnxDF00lDM2A==
+X-Received: by 10.223.128.164 with SMTP id 33mr3932570wrl.85.1515178859052;
+        Fri, 05 Jan 2018 11:00:59 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id d7sm8523375wrd.54.2018.01.05.11.00.58
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 Jan 2018 11:00:58 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 1/1] convert_to_git(): checksafe becomes int conv_flags
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180101215959.1460-1-tboegi@web.de>
+Date:   Fri, 5 Jan 2018 20:00:57 +0100
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, patrick@luehne.de
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <B45F57FC-E798-4C8F-9C40-200944D86029@gmail.com>
+References: <96B6CD4C-0A0C-47F5-922D-B8BAFB832FD1@gmail.com> <20180101215959.1460-1-tboegi@web.de>
+To:     tboegi@web.de
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 5, 2018 at 1:36 PM, Matthieu Moy <git@matthieu-moy.fr> wrote:
-> From: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> We had a regression that broke Linux's get_maintainer.pl. Using
-> Mail::Address to parse email addresses fixed it, but let's protect
-> against future regressions.
->
-> Patch-edited-by: Matthieu Moy <git@matthieu-moy.fr>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
+
+> On 01 Jan 2018, at 22:59, tboegi@web.de wrote:
+>=20
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>=20
+> When calling convert_to_git(), the checksafe parameter has been used =
+to
+> check if commit would give a non-roundtrip conversion of EOL.
+>=20
+> When checksafe was introduced, 3 values had been in use:
+> SAFE_CRLF_FALSE: no warning
+> SAFE_CRLF_FAIL:  reject the commit if EOL do not roundtrip
+> SAFE_CRLF_WARN:  warn the user if EOL do not roundtrip
+>=20
+> Already today the integer value 0 is passed as the parameter checksafe
+> instead of the correct enum value SAFE_CRLF_FALSE.
+>=20
+> Turn the whole call chain to use an integer with single bits, which
+> can be extended in the next commits:
+> - The global configuration variable safe_crlf is now conv_flags_eol.
+> - The parameter checksafe is renamed into conv_flags.
+>=20
+> Helped-By: Lars Schneider <larsxschneider@gmail.com>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 > ---
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> @@ -172,6 +172,26 @@ test_expect_success $PREREQ 'cc trailer with various=
- syntax' '
-> +test_expect_success $PREREQ 'setup fake get_maintainer.pl script for cc =
-trailer' "
-> +       write_script expected-cc-script.sh <<-EOF &&
-> +       echo 'One Person <one@example.com> (supporter:THIS (FOO/bar))'
-> +       echo 'Two Person <two@example.com> (maintainer:THIS THING)'
-> +       echo 'Third List <three@example.com> (moderated list:THIS THING (=
-FOO/bar))'
-> +       echo '<four@example.com> (moderated list:FOR THING)'
-> +       echo 'five@example.com (open list:FOR THING (FOO/bar))'
-> +       echo 'six@example.com (open list)'
-> +       EOF
-> +       chmod +x expected-cc-script.sh
-> +"
-> +
-> +test_expect_success $PREREQ 'cc trailer with get_maintainer.pl output' '
-> +       clean_fake_sendmail &&
-> +       git send-email -1 --to=3Drecipient@example.com \
-> +               --cc-cmd=3D"./expected-cc-script.sh" \
-> +               --smtp-server=3D"$(pwd)/fake.sendmail" &&
+> This is my suggestion.
+> (1) The flag bits had been renamed.
+> (2) The (theoretical ?) mix of WARN/FAIL is still there,
+>    I am not sure if this is a real problem.
+>=20
+> (3) There are 2 reasons that CONV_EOL_RENORMALIZE is set.
+>    Either in a renormalizing merge, or by running
+>    git add --renormalize .
+>    Therefor HASH_RENORMALIZE is not the same as CONV_EOL_RENORMALIZE.
 
-Aside from the unnecessary (thus noisy) quotes around the --cc-cmd
-value, my one concern is that someone may come along and want to
-"normalize" it to --cc-cmd=3D"$(pwd)/expected-cc-script.sh" for
-consistency with the following --smtp-server line. This worry is
-compounded by the commit message not explaining why these two lines
-differ (one using "./" and one using "$(pwd)/"). So, at minimum, it
-might be a good idea to explain why "./" is used for this one distinct
-case, compared with all the others which use "$(pwd)/". An alternative
-would be to insert a cleanup/modernization patch before this one which
-changes all the "$(pwd)/" to "./", although you'd still want to
-explain why that's being done (to wit: because --cc-cmd behavior with
-spaces is not well defined). Or, perhaps this isn't an issue and my
-worry is not justified (after all, the test will break if someone
-changes the "./" to "$(pwd)/"). At any rate, such a concern probably
-shouldn't hold up this patch.
+Can you elaborate a bit? I am diving into the code but I am still =
+confused.
 
-> +       test_cmp expected-cc commandline1
-> +'
-> +
->  test_expect_success $PREREQ 'setup expect' "
->  cat >expected-show-all-headers <<\EOF
->  0001-Second.patch
+I also noticed that the "flags" integer is potentially double booked =
+with
+the following values (see read-cache.c:add_to_index()):
+
+#define ADD_CACHE_VERBOSE 1
+#define ADD_CACHE_PRETEND 2
+#define ADD_CACHE_IGNORE_ERRORS	4
+
+#define HASH_WRITE_OBJECT 1
+#define HASH_FORMAT_CHECK 2
+#define HASH_RENORMALIZE  4
+
+Is this intentional?=20
+
+Thanks,
+Lars
+
+
+More context:
+  =
+https://public-inbox.org/git/96B6CD4C-0A0C-47F5-922D-B8BAFB832FD1@gmail.co=
+m/
+  (3) We kind of replicate some flags defined in cache.h:
+     #define HASH_WRITE_OBJECT 1
+     #define HASH_RENORMALIZE  4
+
+
