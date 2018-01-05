@@ -7,70 +7,82 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C74A1F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 22:20:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFF031F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 22:23:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753158AbeAEWUQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 17:20:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51023 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753095AbeAEWUP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 17:20:15 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9EF93CAEFE;
-        Fri,  5 Jan 2018 17:20:12 -0500 (EST)
+        id S1753070AbeAEWXC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 17:23:02 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56267 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752511AbeAEWXB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 17:23:01 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE3F2D19F4;
+        Fri,  5 Jan 2018 17:23:00 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=vsi9sTRNNBGxsn5E0E17PQZTbY4=; b=a6O1XP
-        MvFXWDXxLg0JY9SnjmkArP8rTWe5cLOOt8T7sP1A67FonTbYI0aGRWqzKZND5UUu
-        qGfPy1icQvDMX9WtH9H12ZmshmI53EO4PNLysNqsqWzZnhS9kYDIStqNRs12q6XX
-        ZqbjKQ1fDzTIBFlQspoVclT7SoQ7hnXhzNBFY=
+        :content-type; s=sasl; bh=LvtKT2o866Jc0pwBZ26HjmQTws4=; b=D6LBSA
+        pjEkEViEMWRM6FF7SYlbLNWWaf2+sfQeSiG6CjYKysTi4X37Qi3n/GiXdVfL1zqD
+        5Lk2iDeNEfcjK5dgb3wG0i8pNVizcbHly21R8aw96ErWw09aI+0jcll+Wy08w14Z
+        5sfy81/sD8rV8VRZmEM93GHNtqJqKXMBDwK/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZqCUnF6aoYeDvG65SIi7idNc7gnsSL6c
-        8/ATj+b8/goworLZ7xXCJ0AurA/gAVjdyFxDT59HGb1F5c1CfAQB8/4EcreQf9VH
-        aABgZkVNaJjEPIdYksKndW+xKtbANTbKNq17jSrUh0lrn3Px7Urg/aBpxS/EeBn4
-        P1KW1ZrFxM0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9764ACAEFD;
-        Fri,  5 Jan 2018 17:20:12 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=RAI0wnCUue8U/RvJamsweU3KS0SdlQtC
+        3ZwQ8HiFaqBTtyP/C60xUWERGAtPULpYhj8N8h+4zL8G19e2CcnmvIoVhqE/McWa
+        Qf5VY8kjKcHUvYNZTEQ9FvqfGfQFWnhltl6HNaK7EnN0s40lchrXw3oyn5vlcCyn
+        P89aaLoMH2E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D34A3D19F3;
+        Fri,  5 Jan 2018 17:23:00 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D3FCCAEFC;
-        Fri,  5 Jan 2018 17:20:12 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1A88ED19F2;
+        Fri,  5 Jan 2018 17:23:00 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Yasushi SHOJI <yasushi.shoji@gmail.com>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [BUG] v2.16.0-rc0 seg faults when git bisect skip
-References: <CAELBRWKYZK2tVhGZSExXRXrRB94jFN-4N3d=iKARzEsqLu7k1g@mail.gmail.com>
-        <87fu7nc9a2.fsf@evledraar.gmail.com>
-        <CAN0heSrZ4dEFqNX69PgtGCERJKabokz88v-vnNZkUBXfK118mg@mail.gmail.com>
-        <CAELBRWK6Y=-7WBwai16dBKd8OLxdXWOiZMALVJXrP9ak8gF-LA@mail.gmail.com>
-Date:   Fri, 05 Jan 2018 14:20:11 -0800
-In-Reply-To: <CAELBRWK6Y=-7WBwai16dBKd8OLxdXWOiZMALVJXrP9ak8gF-LA@mail.gmail.com>
-        (Yasushi SHOJI's message of "Fri, 5 Jan 2018 11:45:43 +0900")
-Message-ID: <xmqqincgaqxw.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [PATCH 6/6] fsmonitor: Use fsmonitor data in `git diff`
+References: <20180103030456.8181-1-alexmv@dropbox.com>
+        <121828fc14bc6f3096d16005feffb58bf68f070a.1514948078.git.alexmv@dropbox.com>
+        <alpine.DEB.2.21.1.1801042335130.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+Date:   Fri, 05 Jan 2018 14:22:59 -0800
+In-Reply-To: <alpine.DEB.2.21.1.1801042335130.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+        (Johannes Schindelin's message of "Thu, 4 Jan 2018 23:46:27 +0100
+        (STD)")
+Message-ID: <xmqqefn4aqt8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 98BF0452-F266-11E7-8A47-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: FCE1043A-F266-11E7-91A4-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yasushi SHOJI <yasushi.shoji@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The patch (actually, I've tested the one in pu, 2e9fdc795cb27) avoids
-> the seg fault for sure, but the question is:
+>> diff --git a/diff-lib.c b/diff-lib.c
+>> index 8104603a3..13ff00d81 100644
+>> --- a/diff-lib.c
+>> +++ b/diff-lib.c
+>> @@ -95,6 +95,9 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+>>  
+>>  	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+>>  
+>> +	if (!(option & DIFF_SKIP_FSMONITOR))
+>> +		refresh_fsmonitor(&the_index);
+>> +
+>>  	if (diff_unmerged_stage < 0)
+>>  		diff_unmerged_stage = 2;
 >
-> When does the list allowed to contain NULLs?
+> I read over this hunk five times, and only now am I able to wrap my head
+> around this: if we do *not* want to skip the fsmonitor data, we refresh
+> the fsmonitor data in the index.
+>
+> That feels a bit like an unneeded double negation. Speaking for myself, I
+> would prefore `DIFF_IGNORE_FSMONITOR` instead, it would feel less like a
+> double negation then. But I am not a native speaker, so I might be wrong.
 
-A very legitimate question.  With the proposed log message alone, it
-is even tempting to declare that the change may merely be sweeping
-the issue under the rug.  A bit better explanation is needed, at
-least.
+I do find the logic a bit convoluted with double negative.
