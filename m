@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6EF41F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA251F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751354AbeAEJNE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 04:13:04 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37872 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751298AbeAEJM4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 04:12:56 -0500
-Received: by mail-wr0-f194.google.com with SMTP id f8so3794627wre.4
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:12:56 -0800 (PST)
+        id S1751366AbeAEJNI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 04:13:08 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:43992 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751322AbeAEJM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 04:12:58 -0500
+Received: by mail-wr0-f195.google.com with SMTP id s13so1381865wra.10
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:12:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tibdXcLRpg7qYJcS1pb36DjWENd2l7pIORW4mMzrTl0=;
-        b=GkvHgfuB0Ejs6CT4tQA4535oXVLWiCuszdp8wNVmA7rgFvD/W16LI7HMUjXGzJGu3H
-         FCfROobT7kgPm5LhrNMj9BSxdMFXZlBW7iSsK3/I/a3oE/Od/9yIqdJNYGqGbDsOwlTe
-         WPWsgpXmPvQwUimJHGwY6/fnJJWfTcgYKUXux2T5XNDuBdPcbECvPLlcFokubQb+6W7R
-         wu4+gkpZuyPPaEePqCSTovEOFWA+Y+J2O16oxKozQEBIcTG3s51v5e0zXIZxIam6sVzQ
-         XtT2nKFs2eHGm6BdiKoLPWPLNZVUmNzCvCMmDAkq8ZmVvSa7TvOO089BFxf2V0f1Zqan
-         6QFw==
+        bh=Ln2suc6061Eu6XkAUGxf57+H3W2TO7IhvER0o/YAwlQ=;
+        b=kljRTIRr1X9TccFBhqJZWxlo8AZqxLkaRwLoV9RQg9A8MbD0Wrw4ZlnruGaACCSBTk
+         uUnHQERaz+g6OKeuEA7WfEzfJi41BZwqXSEQlw3XAi8UoT70/FAW0CvGMoX9QxfMTFb1
+         04TWA7yfYgnDgSUL7JJKMwiVGBmgMmwyhBCsj1DUMS3VPbwDXv7Nel8xDCIaBZwbdeaU
+         k+kxj+nthy4nY1Ag4XV7VbCpVlyYPtm1KI+T7vPqhXEGzb8QAuLF7P9Xdg8+hB2PyDIN
+         uEGuAju2NR98fMXsD2uyNjLcNzk5HD/xvmyDE4K21XRvZEjLOfmU3aZW0erHACkK4RrZ
+         rNkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tibdXcLRpg7qYJcS1pb36DjWENd2l7pIORW4mMzrTl0=;
-        b=g6sMezp6PcsDmkxqEJT8fFTlKlI6k0WgPdNKMrqNCcML4ytrBO7VKu6Vr67+xZ85mh
-         gzUJTLekYinuYs+jXmExBdUxTVviHIsm6Z5Nq9hCG/JJmaBL6xGDfUQ22bgkCRbZLMh5
-         YkR8uGG2cJlePB2Uw7mhlPRosBsRMNyUhRryagLeDY1QTFVyDo/8PcscGX+bcViU+udJ
-         TYY5DADEZWKV7ZUnX5vZ184enNwOQ23bRBiohThZfeabZL7ejmIg4SZbHnrVLmR/1FMu
-         ogd6RCi6tfIUw++aYdnT1LewPB2FcdXoj+fXKCrMU/J16ev3K2TPLxgMd+T2/zQi3CEV
-         DR8Q==
-X-Gm-Message-State: AKGB3mLx8tHkFGyj1zEQnqmR+RhUj3WqqNpKwuvHCFggemJI5Rj6KSuR
-        BoLOAYcL9Y712KjJkAEjfbLk2jSJ
-X-Google-Smtp-Source: ACJfBovsxfZRo+XRyPuTG8ql2qy33iPU6gnYxIq+rHpLXCl/LwPf7j4Cg6XMd0IsEJBvQEw09S/A4Q==
-X-Received: by 10.223.157.146 with SMTP id p18mr1938367wre.190.1515143575265;
-        Fri, 05 Jan 2018 01:12:55 -0800 (PST)
+        bh=Ln2suc6061Eu6XkAUGxf57+H3W2TO7IhvER0o/YAwlQ=;
+        b=YiCTmOM0kzTc0HS9mDERjFrL1NNIdZOsilq8OckYeVIIjwUkQuR04bcdVdPzGhsd+H
+         lvWtggrDxukQU7LYRrehRJLzhhmpVm9nWhXyZQ5HG5SGY09L2wNKbKmFnhU7xFOorWBZ
+         tsJW+RHNyJFAjO2uKK6oTsHDQNuiPMYl2krhgq56jyzZ/z6YPaUfhhyQblT5buZjj+tP
+         VxU6o52axAejrr9HNJ9L9PH48qGf9v8xHACKCoeU3Q94N9O5v9aeCV8lOxxkDFyMFADU
+         DfxyKzz4hVogyr47RspWiBFzi+d0Uqf1CZ1el0ETuTEPTyfzvrHU+q0ZztdcRpG3HnRO
+         +dpQ==
+X-Gm-Message-State: AKGB3mKPZeHHREL7EISuzCw/T03mzoHLvtdbYns+t3IQI6+VjERD/r06
+        Dr9ZMAvFgjzB3dUt41r+IZ6+BGvc
+X-Google-Smtp-Source: ACJfBouUDTHhXP2ExoOXkSQ8t3Oz0yp4Nl1/1MHFLmmQytFbfnza28snPNpUplgshhS+vw3DZcnjjQ==
+X-Received: by 10.223.147.197 with SMTP id 63mr2204816wrp.156.1515143576950;
+        Fri, 05 Jan 2018 01:12:56 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.53
+        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Jan 2018 01:12:54 -0800 (PST)
+        Fri, 05 Jan 2018 01:12:56 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3 2/7] perf/aggregate: refactor printing results
-Date:   Fri,  5 Jan 2018 10:12:21 +0100
-Message-Id: <20180105091226.16083-3-chriscool@tuxfamily.org>
+Subject: [PATCH v3 3/7] perf/aggregate: implement codespeed JSON output
+Date:   Fri,  5 Jan 2018 10:12:22 +0100
+Message-Id: <20180105091226.16083-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.40.gbe5e688583
 In-Reply-To: <20180105091226.16083-1-chriscool@tuxfamily.org>
 References: <20180105091226.16083-1-chriscool@tuxfamily.org>
@@ -68,139 +68,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we want to implement another kind of output than
-the current output for the perf test results, let's
-refactor the existing code that outputs the results
-in its own print_default_results() function.
+Codespeed (https://github.com/tobami/codespeed/) is an open source
+project that can be used to track how some software performs over
+time. It stores performance test results in a database and can show
+nice graphs and charts on a web interface.
 
+As it can be interesting to use Codespeed to see how Git performance
+evolves over time and releases, let's implement a Codespeed output
+in "perf/aggregate.perl".
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/perf/aggregate.perl | 96 +++++++++++++++++++++++++++------------------------
- 1 file changed, 50 insertions(+), 46 deletions(-)
+ t/perf/aggregate.perl | 64 +++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 62 insertions(+), 2 deletions(-)
 
 diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 769d418708..3609cb5dc3 100755
+index 3609cb5dc3..5c439f6bc2 100755
 --- a/t/perf/aggregate.perl
 +++ b/t/perf/aggregate.perl
-@@ -100,13 +100,6 @@ sub read_descr {
- 	return $line;
+@@ -3,6 +3,7 @@
+ use lib '../../perl/blib/lib';
+ use strict;
+ use warnings;
++use JSON;
+ use Git;
+ 
+ sub get_times {
+@@ -35,10 +36,15 @@ sub format_times {
+ 	return $out;
  }
  
--my %descrs;
--my $descrlen = 4; # "Test"
--for my $t (@subtests) {
--	$descrs{$t} = $shorttests{$t}.": ".read_descr("$resultsdir/$t.descr");
--	$descrlen = length $descrs{$t} if length $descrs{$t}>$descrlen;
--}
--
- sub have_duplicate {
- 	my %seen;
- 	for (@_) {
-@@ -122,54 +115,65 @@ sub have_slash {
- 	return 0;
+-my (@dirs, %dirnames, %dirabbrevs, %prefixes, @tests);
++my (@dirs, %dirnames, %dirabbrevs, %prefixes, @tests, $codespeed);
+ while (scalar @ARGV) {
+ 	my $arg = $ARGV[0];
+ 	my $dir;
++	if ($arg eq "--codespeed") {
++		$codespeed = 1;
++		shift @ARGV;
++		next;
++	}
+ 	last if -f $arg or $arg eq "--";
+ 	if (! -d $arg) {
+ 		my $rev = Git::command_oneline(qw(rev-parse --verify), $arg);
+@@ -70,8 +76,10 @@ if (not @tests) {
  }
  
--my %newdirabbrevs = %dirabbrevs;
--while (!have_duplicate(values %newdirabbrevs)) {
--	%dirabbrevs = %newdirabbrevs;
--	last if !have_slash(values %dirabbrevs);
--	%newdirabbrevs = %dirabbrevs;
--	for (values %newdirabbrevs) {
--		s{^[^/]*/}{};
-+sub print_default_results {
-+	my %descrs;
-+	my $descrlen = 4; # "Test"
-+	for my $t (@subtests) {
-+		$descrs{$t} = $shorttests{$t}.": ".read_descr("$resultsdir/$t.descr");
-+		$descrlen = length $descrs{$t} if length $descrs{$t}>$descrlen;
+ my $resultsdir = "test-results";
++my $results_section = "";
+ if (exists $ENV{GIT_PERF_SUBSECTION} and $ENV{GIT_PERF_SUBSECTION} ne "") {
+ 	$resultsdir .= "/" . $ENV{GIT_PERF_SUBSECTION};
++	$results_section = $ENV{GIT_PERF_SUBSECTION};
+ }
+ 
+ my @subtests;
+@@ -174,6 +182,58 @@ sub print_default_results {
  	}
--}
+ }
  
--my %times;
--my @colwidth = ((0)x@dirs);
--for my $i (0..$#dirs) {
--	my $d = $dirs[$i];
--	my $w = length (exists $dirabbrevs{$d} ? $dirabbrevs{$d} : $dirnames{$d});
--	$colwidth[$i] = $w if $w > $colwidth[$i];
--}
--for my $t (@subtests) {
--	my $firstr;
-+	my %newdirabbrevs = %dirabbrevs;
-+	while (!have_duplicate(values %newdirabbrevs)) {
-+		%dirabbrevs = %newdirabbrevs;
-+		last if !have_slash(values %dirabbrevs);
-+		%newdirabbrevs = %dirabbrevs;
-+		for (values %newdirabbrevs) {
-+			s{^[^/]*/}{};
++sub print_codespeed_results {
++	my ($results_section) = @_;
++
++	my $project = "Git";
++
++	my $executable = `uname -s -m`;
++	chomp $executable;
++
++	if ($results_section ne "") {
++		$executable .= ", " . $results_section;
++	}
++
++	my $environment;
++	if (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
++		$environment = $ENV{GIT_PERF_REPO_NAME};
++	} elsif (exists $ENV{GIT_TEST_INSTALLED} and $ENV{GIT_TEST_INSTALLED} ne "") {
++		$environment = $ENV{GIT_TEST_INSTALLED};
++		$environment =~ s|/bin-wrappers$||;
++	} else {
++		$environment = `uname -r`;
++		chomp $environment;
++	}
++
++	my @data;
++
++	for my $t (@subtests) {
++		for my $d (@dirs) {
++			my $commitid = $prefixes{$d};
++			$commitid =~ s/^build_//;
++			$commitid =~ s/\.$//;
++			my ($result_value, $u, $s) = get_times("$resultsdir/$prefixes{$d}$t.times");
++
++			my %vals = (
++				"commitid" => $commitid,
++				"project" => $project,
++				"branch" => $dirnames{$d},
++				"executable" => $executable,
++				"benchmark" => $shorttests{$t} . " " . read_descr("$resultsdir/$t.descr"),
++				"environment" => $environment,
++				"result_value" => $result_value,
++			    );
++			push @data, \%vals;
 +		}
 +	}
 +
-+	my %times;
-+	my @colwidth = ((0)x@dirs);
- 	for my $i (0..$#dirs) {
- 		my $d = $dirs[$i];
--		$times{$prefixes{$d}.$t} = [get_times("$resultsdir/$prefixes{$d}$t.times")];
--		my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
--		my $w = length format_times($r,$u,$s,$firstr);
-+		my $w = length (exists $dirabbrevs{$d} ? $dirabbrevs{$d} : $dirnames{$d});
- 		$colwidth[$i] = $w if $w > $colwidth[$i];
--		$firstr = $r unless defined $firstr;
- 	}
--}
--my $totalwidth = 3*@dirs+$descrlen;
--$totalwidth += $_ for (@colwidth);
--
--binmode STDOUT, ":utf8" or die "PANIC on binmode: $!";
-+	for my $t (@subtests) {
-+		my $firstr;
-+		for my $i (0..$#dirs) {
-+			my $d = $dirs[$i];
-+			$times{$prefixes{$d}.$t} = [get_times("$resultsdir/$prefixes{$d}$t.times")];
-+			my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
-+			my $w = length format_times($r,$u,$s,$firstr);
-+			$colwidth[$i] = $w if $w > $colwidth[$i];
-+			$firstr = $r unless defined $firstr;
-+		}
-+	}
-+	my $totalwidth = 3*@dirs+$descrlen;
-+	$totalwidth += $_ for (@colwidth);
++	print to_json(\@data, {utf8 => 1, pretty => 1}), "\n";
++}
++
+ binmode STDOUT, ":utf8" or die "PANIC on binmode: $!";
  
--printf "%-${descrlen}s", "Test";
--for my $i (0..$#dirs) {
--	my $d = $dirs[$i];
--	printf "   %-$colwidth[$i]s", (exists $dirabbrevs{$d} ? $dirabbrevs{$d} : $dirnames{$d});
--}
--print "\n";
--print "-"x$totalwidth, "\n";
--for my $t (@subtests) {
--	printf "%-${descrlen}s", $descrs{$t};
--	my $firstr;
-+	printf "%-${descrlen}s", "Test";
- 	for my $i (0..$#dirs) {
- 		my $d = $dirs[$i];
--		my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
--		printf "   %-$colwidth[$i]s", format_times($r,$u,$s,$firstr);
--		$firstr = $r unless defined $firstr;
-+		printf "   %-$colwidth[$i]s", (exists $dirabbrevs{$d} ? $dirabbrevs{$d} : $dirnames{$d});
- 	}
- 	print "\n";
-+	print "-"x$totalwidth, "\n";
-+	for my $t (@subtests) {
-+		printf "%-${descrlen}s", $descrs{$t};
-+		my $firstr;
-+		for my $i (0..$#dirs) {
-+			my $d = $dirs[$i];
-+			my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
-+			printf "   %-$colwidth[$i]s", format_times($r,$u,$s,$firstr);
-+			$firstr = $r unless defined $firstr;
-+		}
-+		print "\n";
-+	}
- }
-+
-+binmode STDOUT, ":utf8" or die "PANIC on binmode: $!";
-+
-+print_default_results();
+-print_default_results();
++if ($codespeed) {
++	print_codespeed_results($results_section);
++} else {
++	print_default_results();
++}
 -- 
 2.16.0.rc0.40.gbe5e688583
 
