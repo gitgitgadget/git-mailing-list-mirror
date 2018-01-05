@@ -2,81 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EF8E1F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 07:08:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AD981F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751289AbeAEHIY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 02:08:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53982 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751056AbeAEHIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 02:08:23 -0500
-Received: (qmail 15286 invoked by uid 109); 5 Jan 2018 07:08:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 05 Jan 2018 07:08:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2305 invoked by uid 111); 5 Jan 2018 07:08:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 05 Jan 2018 02:08:54 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Jan 2018 02:08:21 -0500
-Date:   Fri, 5 Jan 2018 02:08:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?54mb5pet?= <niuxu16@nudt.edu.cn>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Recommendation for consistent update on invoke of "sha1_to_hex()"
-Message-ID: <20180105070821.GB14251@sigill.intra.peff.net>
-References: <fb56cfe.6744.160c45a9e5a.Coremail.niuxu16@nudt.edu.cn>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fb56cfe.6744.160c45a9e5a.Coremail.niuxu16@nudt.edu.cn>
+        id S1751326AbeAEJM6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 04:12:58 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35620 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751262AbeAEJMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 04:12:54 -0500
+Received: by mail-wm0-f65.google.com with SMTP id a79so1214022wma.0
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:12:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=yzWvzrfLgjfUU5EsC79c+wCaMeI5nxhBy+vLPz7kiS4=;
+        b=GqnoFKJkhsQwsUYYVfMRemCENRdFcnUJqUIKafAworRL/LmTsDxFHWfq0NlXjWYeNk
+         xYBiE1JuQEybYwgQeG2JHds3V3kLNm4gtm0J3lAfL5z8b8AmQuow9yor8h45OIKeA+dG
+         nV9La39e6nPYz25Ag07mh39n8k8/oeDKBjGHnMmzM1xovU7ssAbyZsQ6vRDjLtvnK1J+
+         /FaeAljN07JmoTvFz1FghTgeLUd1UNiYPzp/Yz83AIXOAKGX1VGSsmwoSuqk1h+/PPhu
+         2fTgcLiJRFlcvnEmYYqcie/ohGbXET2z55jKuxFTczS46iePgnn9I3IffnKCA8HrmpsR
+         BehQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=yzWvzrfLgjfUU5EsC79c+wCaMeI5nxhBy+vLPz7kiS4=;
+        b=gXagE+lZ9jAci1HvXBxRAPl1jFF9ctuKrpGV4h373iA6cn8bv5kq6H32sTUdh+JxC8
+         lRTGA/bwJwD1vgnRSAQloQvq4pXDor4Dq11zHvd0pFle/1lqreyPuXJno/K1CLLKW3/t
+         INfTa9NSg1tDDBCfRXrIGS7DzdCT24zCTD6xTYYnpozfyOSyuexVULVNioHrNeLrBjg1
+         c1F7SiEg9ry4BcYiL519qzJ8I4Agn5JKi5hQeD1aMAC9CAltWTc+D+x+LRllQ6/q/RC7
+         qMLkO7iZSrawt30zBgf/+YYA9nOMgMNdg876iSSkaV59IcIBOq9BMn0nxgM5j+00/miO
+         nHKw==
+X-Gm-Message-State: AKGB3mJo5QKnghAPJrZNhZMnXWX4KiO+gG2iM04kX5uy7BFrVNvCeNDz
+        wlPOB3WTMuLXVac0+KpHmNvS1NP+
+X-Google-Smtp-Source: ACJfBott1AfKGs5NC/mB38Oj90uCPzeUglsqpEFtrD58g5I8qWQwcqpcf0DiCadL+NQwR1twh9O+pQ==
+X-Received: by 10.28.232.12 with SMTP id f12mr1785714wmh.24.1515143573175;
+        Fri, 05 Jan 2018 01:12:53 -0800 (PST)
+Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 Jan 2018 01:12:52 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH v3 1/7] perf/aggregate: fix checking ENV{GIT_PERF_SUBSECTION}
+Date:   Fri,  5 Jan 2018 10:12:20 +0100
+Message-Id: <20180105091226.16083-2-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.16.0.rc0.40.gbe5e688583
+In-Reply-To: <20180105091226.16083-1-chriscool@tuxfamily.org>
+References: <20180105091226.16083-1-chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 05, 2018 at 11:26:01AM +0800, 牛旭 wrote:
+The way we check ENV{GIT_PERF_SUBSECTION} could trigger
+comparison between undef and "" that may be flagged by
+use of strict & warnings. Let's fix that.
 
-> By mining historical patches, we suggest that invokes of sha1_to_hex()
-> should be replaced with that of oid_to_hex(). One example for
-> recommendation and corresponding patch are listed as follows. 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/perf/aggregate.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Note that these two functions take different types. If you only have a
-"const unsigned char *", then you must use sha1_to_hex(). If you have a
-"struct object_id", then you should be using oid_to_hex(). If there are
-sites which do:
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index e401208488..769d418708 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -70,7 +70,7 @@ if (not @tests) {
+ }
+ 
+ my $resultsdir = "test-results";
+-if ($ENV{GIT_PERF_SUBSECTION} ne "") {
++if (exists $ENV{GIT_PERF_SUBSECTION} and $ENV{GIT_PERF_SUBSECTION} ne "") {
+ 	$resultsdir .= "/" . $ENV{GIT_PERF_SUBSECTION};
+ }
+ 
+-- 
+2.16.0.rc0.40.gbe5e688583
 
-  sha1_to_hex(oid.hash)
-
-those should be converted to use oid_to_hex(). I think there's a
-coccinelle rule for this, though, so there shouldn't be any lingering
-calls like that.
-
-Of course the ultimate goal is for every function to use oid_to_hex().
-But that's much bigger than a single-line change, since groups of
-dependent functions need to be converted (try "git log
---author=carlson" to see example patches).
-
-> One example of missed spot:
-> 1  void assert_sha1_type(const unsigned char *sha1, enum 
->   object_type expect)
-> 2 {
-> 3  enum object_type type = sha1_object_info(sha1, NULL);
-> 4  if (type < 0)
-> 5   die("%s is not a valid object",sha1_to_hex(sha1));
-> 6  if (type != expect)
-> 7   die("%s is not a valid '%s' object", sha1_to_hex(sha1),
-> 8  typename(expect));
-> 9 }
-
-So this is an example that doesn't convert easily. The function has only
-the bare pointer, so you'd have to change its parameter list (and
-therefore all of its callers).
-
--Peff
