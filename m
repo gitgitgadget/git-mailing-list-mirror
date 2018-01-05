@@ -2,102 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D27411F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 21:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BEA41F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 21:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753165AbeAEVjS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 16:39:18 -0500
-Received: from mout.gmx.net ([212.227.17.20]:54803 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753155AbeAEVjR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 16:39:17 -0500
-Received: from ggw-xinxiao-xx.fareast.corp.microsoft.com ([37.201.193.20]) by
- mail.gmx.com (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MVsUW-1eQrZf2V0C-00X3L7; Fri, 05 Jan 2018 22:39:11 +0100
-Date:   Fri, 5 Jan 2018 22:39:10 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Isaac Shabtay <isaac@shabtay.com>, git@vger.kernel.org
-Subject: Re: Bug report: git clone with dest
-In-Reply-To: <20180105204427.GA6515@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1801052228270.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com> <20180103222821.GA32287@sigill.intra.peff.net> <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com> <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
- <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com> <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com> <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com> <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <20180105204427.GA6515@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753155AbeAEVoW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 16:44:22 -0500
+Received: from mail-yb0-f176.google.com ([209.85.213.176]:37462 "EHLO
+        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753074AbeAEVoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 16:44:21 -0500
+Received: by mail-yb0-f176.google.com with SMTP id 5so2385044ybp.4
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 13:44:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=Ly8BUOBN69C7od7IoWUNyGR5/4PHVfLV8a+MWMw2KFI=;
+        b=mkGaTc0MDG7eOvxKfpGpNHTqcwyq4W8eu+KUrXT9bJVsGyWvRm7RUz0E5PzHi5+b65
+         sumPRu2euUI2sZZeqpgta+WEIcTB7HIve9PqN9WyDx299sYvREvxFW8nHK5KpQw54Tqz
+         FSYrR6hD5JIvsOExrRK4tx23jL8kectcwHGxpB4gG19lneFDC5/WL+ntwkrqgytOfcGc
+         iP4yKPUASpRQ022+NZTP0sLOB/5yaoXeptHakFgH8dvXCa2+jRC9VQ02HkSF/u+1j6lE
+         rbKJiVaiyywQaDwisEj6jF2nhyBA2olU27TtEm+kHGIMabH6ZdPovbZ6ogtrbfnX+zV7
+         73xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=Ly8BUOBN69C7od7IoWUNyGR5/4PHVfLV8a+MWMw2KFI=;
+        b=sdCWTm+tKlBCqon9TqmgA4kwtwfdM3VTy11qTjFqFS54lo4rj9whQgQyP7nHucU11F
+         d4pTYzBPM+Um0QgYHR5MTW2u7cOnUDorO7QYhwTOD3cAYe1kzxhamev5tEg5etX2Wx4h
+         jyHlo6Ozo7Kv3o0Q0MyejaCYMS5mq5bzTmKqY0pmon+n61H6rVZrJjDwJS3+XGGyugr9
+         de1xW7XgV1TNKunDNBrZyNit++nEDKWrBthnxoBocdWOw68Tr+KpJRqRCYAD+MThuqea
+         WkkfFo4O3Qje4To8QEF00f2tnPTUYAy1HP2BhteuQw9rRYLsTFhMhD/a4iEKni/voKW4
+         D/7g==
+X-Gm-Message-State: AKGB3mLlSIl60PnGc4I54qZkW9vtlRxlj8sOVPG4ZoPCH/JNEY20pnxT
+        mXr0RCbhkVCfJtJ4Zl9PbDxJzB7ND/tfeqSKInUAOw==
+X-Google-Smtp-Source: ACJfBov1tTmAFJcbX2uogD2mfalHupFO6vbxTiaVOZJ62w+rJDGYmet/fIt52sV4F59lzoTAk/SJfTkVcPH4GcBFtP8=
+X-Received: by 10.37.183.132 with SMTP id n4mr4299150ybh.220.1515188660498;
+ Fri, 05 Jan 2018 13:44:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:dY+rYUdcjMzbus26Bl9JODYFJZ51M5HwgaS2Gq4dc0sdh1q+uNA
- FN2R8nPhqhopjJW2qECTwpxdmM1dahftu6UrjcRExZdYeRuvizMSYvRkn1ikyPHr8LmUBoz
- b3JuJsAy1L8jf2QPQVqHLKl72aV1wonWcmfRP5aULHqzhf7Oy39+b1oRtBQfKO7pUJHQX3e
- tMQxuWiYgGmbluPjza+sA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/iAXxNn4gPw=:F9ifioAutAOW4eiZV7CJww
- QGQNlFk3DlRmQKxuzSXMxyxTW1FjtczqaZ/l+o18I5TYWEYif4mS9TCJOHitheTP9sjshtHTD
- CWL172dmi6rSmWxjGuHoDoI9U0IWMuo0sMi8BdiaojiJAY5nVQj2WbuvL7rf/ThvqrVd1BFcF
- RtDT7e8OmODF7BEFcNopGJVn51lTAg9p2D82ee++V5OkYiRNDe0jx33GVnW4bkE2DjtymXE2n
- jVvgKtgpmo9aQVOfycGeph2xXPp2U98Rwa/w1ag47l+MHt0ae3ew/h3C2Q+F3k+TeTZJg8QiQ
- 5Wz+nqQLwZF5xToAWfuUW3baQTjpVCx1i58qwcNNAegPpRIzV4TeAzjNXoxgvBzi1AqXmvrzG
- F1A8WMP/uu7mlwg96PPGEQOOKE81oHLY8hIYJp6uYc6iUi/K3mCuoW/+SiFDHesTUj4z1pifD
- mOa0uEtvKJ1KJfcJu1ogtLphoj1YEDUV/LUmCn4YiKvI+smCIml8eoCzTwHNc2eH4feh4WeU1
- d6ic7QqeelHaWDVN1wzWu0/+KU5wLN1CW+/nsF9kr25Yu+AFNcTvfj5w5jcz5hA2GYEVeF2nu
- dtpVV3+MusF5NBPoIJDKyp3NjFZzJX1QRnoCJsKQAWBL4fNB9uyhwTxLXZbrSMIEtNddR8nCv
- lZXuZnW4v1oO4XrQbIdlQpdLgh5zndMQ/PS4BG2WAGfcPt2tvzc4Y0ctzCcGIbKz9AKl5zBGq
- Zls+p/h84X+uuY76tayI2fjjur3KRMN5Y4QBfoMjoAgvs/FoOBWLmgV3eOfU8U+7F/8fM2BOi
- QAO0Rd88UGAG4IZIyG5qgrRu5mykwp6OkCbD3HxbBBHw86zefKJBeMQ2tbcMGAyKrsI7p3z
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.129.103.65 with HTTP; Fri, 5 Jan 2018 13:44:19 -0800 (PST)
+In-Reply-To: <CAGyf7-E-7KUCAM8SeG-2powp2XN+H=16VG-6XBmj1wUT9tjVcw@mail.gmail.com>
+References: <CAHd499C=3Y-ykgYZhSJzk=e-Pi6BUFeN8C89krd5T7T5fRB91g@mail.gmail.com>
+ <CAGyf7-FHyO9pkEFFguea+B+VMTodF=mg8wJNedvjYdL7e7ORqQ@mail.gmail.com>
+ <1515183976.21764.114.camel@mad-scientist.net> <CAHd499A_ANzFA8HSQLJWakzzWanbmVGnur=um=kquYHu0aCBcQ@mail.gmail.com>
+ <CAGyf7-E-7KUCAM8SeG-2powp2XN+H=16VG-6XBmj1wUT9tjVcw@mail.gmail.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Fri, 5 Jan 2018 15:44:19 -0600
+X-Google-Sender-Auth: BD_gMTUDeFAtbYGPtYSKAgaqGXU
+Message-ID: <CAHd499BfQiDen6PZFhEeB7-B64PeeQcCWNVze6fONsDGO=YHog@mail.gmail.com>
+Subject: Re: Can't squash merge with merge.ff set to false
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     paul@mad-scientist.net, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Fri, Jan 5, 2018 at 2:54 PM, Bryan Turner <bturner@atlassian.com> wrote:
+> The two _aren't_ distinctly separate, though. "git merge --squash
+> --ff-only" has very different semantics to "git merge --squash --ff",
+> in that it will only create a new squashed commit (or fast-forward a
+> single commit) if the incoming commit(s) are fast-forward from the
+> target. So there _is_ a setting for the fast-forward mode (given
+> "--ff", "--ff-only", and "--no-ff" are a tri-state switch, and
+> therefore comprise a single setting) that does impact squashing.
 
-On Fri, 5 Jan 2018, Jeff King wrote:
-
-> On Fri, Jan 05, 2018 at 09:22:07PM +0100, Johannes Schindelin wrote:
-> 
-> > On Fri, 5 Jan 2018, Isaac Shabtay wrote:
-> > 
-> > > Done: https://github.com/git-for-windows/git/pull/1421
-> > > 
-> > > I added credit to Jeff in the PR's description.
-> > 
-> > Sadly, the PR's description won't make it into the commit history, and the
-> > authorship really should have been retained.
-> > 
-> > I found Peff's topic branch in his fork and force-pushed, to demonstrate
-> > what I wanted to have. Currently the test suite is running (I test 64-bit
-> > builds of the three major platforms Windows, macOS and Linux), and once
-> > that is done and passed, I will merge the Pull Request.
-> 
-> I think the discussion has ended at "don't do anything else", but note
-> that Junio and I were musing on whether to update the series around the
-> dir_exists() function.
-
-I briefly looked over this discussion and got the same impression.
-
-> Which would then create headaches for you later when you try to merge a
-> subtly-different series that makes it upstream.
-
-Subtly-different is not a big problem. It is typically solved by `git
-rebase --skip` ;-)
-
-> Like I said, I think we've resolved not to do anything, but I wanted to
-> point out a potential pitfall with this kind of "pick up a topic early"
-> strategy (I'm intimately familiar with this pitfall because I do it all
-> the time for the fork we run on our servers at GitHub).
-
-Thanks for your concern.
-
-And not to worry, I have plenty of expertise, won over the years, in
-dealing with subtly different variants of patches having been accepted
-upstream and conflicting with patches that were carried in Git for
-Windows.
-
-Ciao,
-Dscho
+That feels really contrived to me though. For example, when I'm asking
+to squash I don't really care about fast forward in that case.
+Squashing means I'm expecting a possibly completely new commit with my
+collective changes. If I only had one commit on my branch, likely I'd
+be aware of that, and would do a fast forward merge or something. I
+think the difference here is mind set. And maybe this is just me, but
+the mentality when I choose --squash means I want nothing to do with
+fast-foward. I don't care about it affecting the operation. If a
+fast-foward happens to be the end result, I still don't care. Git made
+that decision for me. And all I want is the end result: A single
+commit.
