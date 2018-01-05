@@ -2,81 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D67C41F428
-	for <e@80x24.org>; Fri,  5 Jan 2018 20:22:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DEAC1F428
+	for <e@80x24.org>; Fri,  5 Jan 2018 20:26:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751540AbeAEUWP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 15:22:15 -0500
-Received: from mout.gmx.net ([212.227.15.15]:58322 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751312AbeAEUWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 15:22:14 -0500
-Received: from ggw-xinxiao-xx.fareast.corp.microsoft.com ([37.201.193.20]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MdKkd-1eF3sg0Hb9-00ITCR; Fri, 05 Jan 2018 21:22:09 +0100
-Date:   Fri, 5 Jan 2018 21:22:07 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
-To:     Isaac Shabtay <isaac@shabtay.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: Bug report: git clone with dest
-In-Reply-To: <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801052118410.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-References: <CAK2k7nSsygwRj_Hhrz7-qXZ8UBB=O+deOeC2FFTkrGmWSUpKqA@mail.gmail.com> <20180103222821.GA32287@sigill.intra.peff.net> <CAK2k7nRdk5qBp6Xzud-GS7YeSpchrQoOdqRd-3uXVeWZ1xsnVg@mail.gmail.com> <alpine.DEB.2.21.1.1801050019250.32@MININT-6BKU6QN.europe.corp.microsoft.com>
- <CAK2k7nTRAqQKFGi0OfVgub3vWZAkdML5p786L7UyhVDFtsk7Xg@mail.gmail.com> <alpine.DEB.2.21.1.1801051130500.32@MININT-6BKU6QN.europe.corp.microsoft.com> <CAK2k7nSWoNX+Y5dhLqLVzhzE12f3MgZo0R8xrHYKFwxCL+9mEg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751704AbeAEU0a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 15:26:30 -0500
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:40856 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751560AbeAEU03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 15:26:29 -0500
+Received: by mail-ot0-f179.google.com with SMTP id d10so4861983oti.7
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 12:26:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NMwcl1TzrSV36rbrf4YjF0IEojXJr4FNjkgkHrvAKio=;
+        b=PrTBOIXu2GeaVHmz0yfp5rev+E/9A1Igs8PJ81LlTCQ8bv7D9gcRGKrRFvNF3JcE7N
+         mnLpHsME5OJfF/sbUBupgGTMIljTnoML/iHxaxi7uPc3iCuGu+b7zJ3HclRpqVsrr8XZ
+         smegcJTK7B6JeEzhstMkXM0y8RxOBxZF2KEwEKbYLlrX9f6pbX5XSwz3/bYl+PqF8WhL
+         wYXR8BuDzSNi7XbVbzarO4UhF7vbwEidYealj99xh64gOOimoXIswJupTLjB7KP0YkY7
+         yHjuJV6fBrzRjrH2YlIykpR9LjrzitRNmwV/+QQPTl30gHnDrWCb0YxCQ7ZMYrm9DMhu
+         XJ5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NMwcl1TzrSV36rbrf4YjF0IEojXJr4FNjkgkHrvAKio=;
+        b=sMOXJ1QbKL49L1i7i36OWM6FjefFKAME/WqdfoVJv1KP8GKsBhTIcjRNndXARLWbJ4
+         /KQG0Ev4hQ8CUP9F6rIW6Dsf9MOYfOwKm/2Ea9NSJlAu0lFY0bKY4gWC/rhClCqMpVEv
+         VJvH5rKbE/hzgcpEC3MtRUDgjlLwcNRQzQrai/dLGsNlV8vkJSROgdyT4eiUqhXHZl7D
+         SFpQ7bkyt35W+Y57qnLIowlcPwitHU6WrXyKUrB76Os/T7gbfvXNnFpS6fF0GFukDG5K
+         N2Uroe3+WWalqx5P0M1URgrqfEa1PHvKOYpCDgwdzl2JP/djK9XaZ5MN6SvcY1qo/f19
+         lTcQ==
+X-Gm-Message-State: AKwxytd51N4Awmy1Zbay+NzkizfbKN6xPp5zuU32JclVlv8klTtEMKs0
+        L06J7AVDWnt/cFgCOsL3bVinJryXeSO1m/I1RaKATA==
+X-Google-Smtp-Source: ACJfBosZW+xGj+CDS5GdG3FuuS1jq/IEuj6d/AQ/bxmgg7RdWupdyRZR/Q5nfLfhG/JdoMHzoX3HAx7tSRiQHYg4/5E=
+X-Received: by 10.157.17.51 with SMTP id g48mr2928931ote.186.1515183988318;
+ Fri, 05 Jan 2018 12:26:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:auouXOlkPNEKJ3sogOyNy2pmzQF2t0uTCJlVIe6hf+JZrycYj0I
- BxYvcXmzX2EyLkqzATVvl+WkBjE/l75dS1uN8ujzggqBSn8JRVnZnGjSWVe2B/Hq2B0YTo+
- NqvRgeBzTeo1JXC6y5CEoQGj1Lw6nEfzRRc3+Ed2nyHxmS8drgxsJsGYcJJDb/gMTbSo6ej
- KhH5zVFNbqyEyLklPNFow==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OEag9l3eTtw=:86F0b2FRjNzdvSlfmsZ1Mw
- NkSeHbUy3G6eso4MvSbkE2pga/js5j/Y7xaawGReOPxmcXE3G/XSm7kpgPjTc+YLxjRWKoCKT
- lc5ZrPBv2m/V3gUcEAFmrhesORynFR3FpssAhmCeyJ/PlNwTOgmBqBMDwp9WHBKUwam8AxQ4p
- dLgKhF7GxyYjsdO+mvxZjCOcTltcH4hKvZ5B6o2JTvrBbd7kzEEZO0/H++t4fnSUgM2kE4ioP
- lK9c3qbU77Z/8Ge6kNKI9RokPXZA1HQ4/LIWezRdevzS/sqU8lOpsYwTJlB4psy0hlTFZ1OLz
- lImPhD62C14EGDYbwuj5APQ5n0fgQg+3ybgPKMIWhyGfMWxWY7Wg+0d04SBRsmfV4FDmxudmw
- 5a8RMIHBEZUQii8apdgnccfms3PIvGHZKc8i8qAC6Djfeo7HskK7bkUOlC9ivgO6aZgwyEPyn
- N6pT4sbIueQG+V8ey5NoSvAiWi+XEI/Rwy3nKTWSpd5Rw6LEPNLTRo3erowuryE/7OSO7QBBC
- Jh+Nw9qozTFuD2kkHioHhIgM8vg/oBFzLGrRygjAmLAZu205Z5XcLyXs1vb1TJPLQs7wrmKtt
- DHKv/pBoQGAsrTWHdBybYXWvppWCEziuhkhncZ2RNiOwV8g5UAZx9RkhW2AO20hjTk4S8KeNk
- ywCR/y+A/6KmHt/LTjiNx76ATJUsYZkDMbTyRKqinGaFIL6EBVuXZf+fJH+zjw731p1wr/eNu
- thDRu8CVY0AE5pBBYU/+8RR8mQ7NRCEdSv4CoK6ERpVQO8pE2XEgK28JKgKY+dDp1kBdpzXvT
- 6WjeIIDwupMR128NPscbRtTDxZ43GTgVrm2TEc9bUrk76ShCIxSsccvV7KbgYAIsds09HIg
+Received: by 10.157.32.133 with HTTP; Fri, 5 Jan 2018 12:26:27 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.21.1.1711012254380.6482@virtualbox>
+References: <CAKbB5OwxQ4XtLXuu2w3QmuKryA=3iHupz=y0m2E1NH+Dwzd8Xw@mail.gmail.com>
+ <alpine.DEB.2.21.1.1711012254380.6482@virtualbox>
+From:   Matthew Orres <matthew.orres@gmail.com>
+Date:   Fri, 5 Jan 2018 15:26:27 -0500
+Message-ID: <CAKbB5OxZ1Mua0zNMpe8nt8cQbasUyfz0uNzOXL9FJXWrsqPN-g@mail.gmail.com>
+Subject: Re: Git 2.15.0 on OSX 10.12.6: gui multi-select stage
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Isaac,
+I'd be glad to give it a try - but am unfamiliar with how portable a
+manual build of Git can be used along side the version I have
+installed via Homebrew - do I just use full paths to reference the
+compiled executable from within my repository folder?
 
-On Fri, 5 Jan 2018, Isaac Shabtay wrote:
+Thanks!
 
-> Done: https://github.com/git-for-windows/git/pull/1421
-> 
-> I added credit to Jeff in the PR's description.
-
-Sadly, the PR's description won't make it into the commit history, and the
-authorship really should have been retained.
-
-I found Peff's topic branch in his fork and force-pushed, to demonstrate
-what I wanted to have. Currently the test suite is running (I test 64-bit
-builds of the three major platforms Windows, macOS and Linux), and once
-that is done and passed, I will merge the Pull Request.
-
-> Note that I tried compiling master, but failed due to a reason
-> unrelated to this patch:
-> 
-> builtin/checkout.c:24:10: fatal error: fscache.h: No such file or directory
-
-That was an oversight in a previously-merged Pull Request. I have fixed
-that locally and will soon push it out onto `master`.
-
-Ciao,
-Johannes
+On Wed, Nov 1, 2017 at 5:58 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Matthew,
+>
+> On Wed, 1 Nov 2017, Matthew Orres wrote:
+>
+>> Using 2.15.0 on OSX 10.12.6, when I open git gui, and then attempt to
+>> stage multiple files as such:
+>>
+>> * Left click first file
+>> * CMD+Shift+Click last file to multi-select all files
+>> * CMT+T (shortcut for Stage to Commit)
+>>
+>> Only the file I selected with the first Left Click is staged and my
+>> selection disappears.
+>>
+>> I'd be happy to provide more system-level info if there's issues with
+>> reproducing this on other machines.
+>
+> Maybe you'll be also happy to test things?
+>
+> I believe that we carry a fix for this in Git for Windows:
+> https://github.com/git-for-windows/git/commit/3a5640fd3f0aa57edecc8dab455a97c5a15e6626
+>
+> The easiest way to test this would be to simply build Git from the
+> `master` branch of https://github.com/git-for-windows/git (I try to keep
+> it building and passing the test suite at all times not only on Windows,
+> but also on Linux, it should also work on macOS).
+>
+> Ciao,
+> Johannes
+>
+> P.S.: If you test this, and can confirm that it fixes your issue, I'll get
+> this patch submitted properly to the Git mailing list (sadly, it seems
+> that the https://github.com/patthoyts/git-gui project is sleeping beauty
+> mode for a while now, otherwise I would add PRs there).
