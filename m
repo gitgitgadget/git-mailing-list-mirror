@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 430CB1F406
-	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2C601F406
+	for <e@80x24.org>; Fri,  5 Jan 2018 09:13:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751387AbeAEJNO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 Jan 2018 04:13:14 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37883 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751262AbeAEJNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 Jan 2018 04:13:00 -0500
-Received: by mail-wr0-f194.google.com with SMTP id f8so3794759wre.4
-        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:12:59 -0800 (PST)
+        id S1751402AbeAEJNP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 Jan 2018 04:13:15 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:37707 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751342AbeAEJNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 Jan 2018 04:13:04 -0500
+Received: by mail-wm0-f47.google.com with SMTP id f140so1201794wmd.2
+        for <git@vger.kernel.org>; Fri, 05 Jan 2018 01:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Tg0BSyH6gd7g8kzQV6SJY50NnbhVIJ+VAv4iAOMGjtw=;
-        b=k62K+GdDYmKd9xirmd8sWvDAEnlsgdE+/fovYzxSXfTGLz2utKyUlMz0pvJewLRAGk
-         FPgeaWAlbrkTtnnVvwC3J8dxI4Fk+v6nKLWchKs0Ei9tSn+ffYmVZGmO9YAEWiXcsrpt
-         BKh4vFLqVOY1upyUyEQpukkIjaSxyH1qxKAfG0L35aMDmCinFLHUWofTb49G6k+AFQDo
-         y1A7wRynEBizuyf2Ntfig4AwXNiqV2c9j0X5c6zn5Z3Dl6D32v9DDAw89ScPxMEwNpT/
-         t82x88gQPI2gAvGfWrJ6pSLpFmaP1ko8L5/U/c+2KwW1OhM9hSu2WObyqHPEGu0TFvxJ
-         Qdqg==
+        bh=nO7lqokalyArBQhzSfjxEU9B5GQEntcWaPPsQ34/w5s=;
+        b=uK3oel/J7Tue6qgi4ifrkRsjNbIn9fCdO0kVcc4ySE3qHLmwiwyMKILOqxe9rDXzmG
+         oxJkVWVGjdU+QYfkgRb1Kw1hbLXVx8RnfMUp/2ZiRt3xy8YHTTlxLysCLV9qfGRg6uEW
+         YNnARuql3DFk6fWYcCBt6q6SDYiHgJfwceQOshJf41NCM2YBejosvRdZVZTjOJtIu2MO
+         YR7w86rb+FMqie29tgbQiiq4jEbJ3OzasVpHDMuz6uL9GhMUQ1+ASYtr1LxntcIbPw2z
+         pz6ljd6O/yxdjYwtFz+mtrWKGw13qiBAa3NZO1Fze06ha2XEorb99J4XRX9y1asIBCrE
+         wMvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Tg0BSyH6gd7g8kzQV6SJY50NnbhVIJ+VAv4iAOMGjtw=;
-        b=rqMiQi2HWO41xnW8J4xPJb2PsnsiFqdmRt+l5AJmtmi/09p3PuxZ4FYg1eKAeU8oQE
-         gD5w6nG8cD+fypcvVSsMSapJIGz3xwQpgMh1UUG77We7+e4zGPSmlAnHtIL06uV2PVys
-         uj4nMELDzpiqGyCXSi5DxQgiIVP1zBl/qlXFRugUC4d1n/3VjFw5BfI7HhyqT1GwlroU
-         BY153kcYVEa0gZyu8PESQo5S4ppCQW+McWB217vNTeWnSVQy3Mz+ftJwlGfhlBvPMcyO
-         d0xB+bYg74oofxCNtTHRIxpDm2O1qqfpA731zKOpeHDORXhszeHivzNjp2vB77uMIl/E
-         mj3A==
-X-Gm-Message-State: AKGB3mJwvQ8vcNokk5xaDN9yY8XNSeogakYORGJMZUott9Ro9Lp9Cjw9
-        bQ4PGcXsQPQOBH2F8KmJ35aeUIt2
-X-Google-Smtp-Source: ACJfBotvRW7GG9F0+ZWf7C8sFQsLAbSxwosWu9Y3JwW4HE/joZuHojpL3UcYjExbJ2p+rKoXsr+W8g==
-X-Received: by 10.223.143.12 with SMTP id p12mr2050316wrb.215.1515143578495;
-        Fri, 05 Jan 2018 01:12:58 -0800 (PST)
+        bh=nO7lqokalyArBQhzSfjxEU9B5GQEntcWaPPsQ34/w5s=;
+        b=tLq91ERloDhkoei0GaVMbPCWxqv9VgOtMJs3QfSL+Nyyp/OX5EvKVRHJVaXijxUrWz
+         fPKBIgGQHnrP6Fbkepfu0lPboeahmwmSGcESR12fXHfYgSWMqbY//w0hbmbY2cM3tEJw
+         Bmnor7ARw6/ASG7cdLd+6lMqllnnIpWMijWjGnknKWLQvZnh7GZZ/bpDpwN1HHvNo17G
+         bCJ3KO1C2gQkstOamZemUnwsBiAv7QBkMXN71T5Od0+7JXj2o2crvLwmXVChxitgDA/U
+         5kWx8b8C9D7PbOsIzZGVX8wrZbyLBKO/74KQYvGfTfNmHANJCZnaFojMA2jLjwbraK0m
+         iZMA==
+X-Gm-Message-State: AKGB3mL6qe37PlRSiSxB03bUGgNH4tGyiaOhAq8W3m0UBZUw0Lp/IGYZ
+        GHsYkD81ID/bzWBGMbsLJ0V+By6u
+X-Google-Smtp-Source: ACJfBosg0dAun2dp0L1N2u2k/9xv3E4Dh29Ert3Pp7Q9obeb+GQ3MIhWdzEzcZ4xs0vkRh8FA49Y5A==
+X-Received: by 10.28.111.90 with SMTP id k87mr1585405wmc.108.1515143582051;
+        Fri, 05 Jan 2018 01:13:02 -0800 (PST)
 Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.56
+        by smtp.gmail.com with ESMTPSA id y42sm7903531wrc.96.2018.01.05.01.12.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 Jan 2018 01:12:57 -0800 (PST)
+        Fri, 05 Jan 2018 01:13:00 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v3 4/7] perf/run: add conf_opts argument to get_var_from_env_or_config()
-Date:   Fri,  5 Jan 2018 10:12:23 +0100
-Message-Id: <20180105091226.16083-5-chriscool@tuxfamily.org>
+Subject: [PATCH v3 6/7] perf/run: learn to send output to codespeed server
+Date:   Fri,  5 Jan 2018 10:12:25 +0100
+Message-Id: <20180105091226.16083-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.16.0.rc0.40.gbe5e688583
 In-Reply-To: <20180105091226.16083-1-chriscool@tuxfamily.org>
 References: <20180105091226.16083-1-chriscool@tuxfamily.org>
@@ -68,57 +68,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's make it possible to use `git config` type specifiers like
-`--int` or `--bool`, so that config values are converted to the
-canonical form and easier to use.
+Let's make it possible to set in a config file the URL of
+a codespeed server. And then let's make the `run` script
+send the perf test results to this URL at the end of the
+tests.
 
-This additional argument is now the fourth argument of
-get_var_from_env_or_config() instead of the fifth because we
-want the default value argument to be unset if it is not
-passed, and this is simpler if it is the last argument.
+This should make is possible to easily automate the process
+of running perf tests and having their results available in
+Codespeed.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/perf/run | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ t/perf/run | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/t/perf/run b/t/perf/run
-index 43e4de49ef..214d658172 100755
+index 4e62d6bb3f..ef56396546 100755
 --- a/t/perf/run
 +++ b/t/perf/run
-@@ -105,7 +105,8 @@ get_var_from_env_or_config () {
- 	env_var="$1"
- 	conf_sec="$2"
- 	conf_var="$3"
--	# $4 can be set to a default value
-+	conf_opts="$4" # optional
-+	# $5 can be set to a default value
+@@ -148,10 +148,20 @@ run_subsection () {
+ 	test "$GIT_PERF_CODESPEED_OUTPUT" = "true" && codespeed_opt="--codespeed"
  
- 	# Do nothing if the env variable is already set
- 	eval "test -z \"\${$env_var+x}\"" || return
-@@ -116,18 +117,18 @@ get_var_from_env_or_config () {
- 	if test -n "$GIT_PERF_SUBSECTION"
- 	then
- 		var="$conf_sec.$GIT_PERF_SUBSECTION.$conf_var"
--		conf_value=$(git config -f "$GIT_PERF_CONFIG_FILE" "$var") &&
-+		conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
- 		eval "$env_var=\"$conf_value\"" && return
- 	fi
- 	var="$conf_sec.$conf_var"
--	conf_value=$(git config -f "$GIT_PERF_CONFIG_FILE" "$var") &&
-+	conf_value=$(git config $conf_opts -f "$GIT_PERF_CONFIG_FILE" "$var") &&
- 	eval "$env_var=\"$conf_value\"" && return
- 
--	test -n "${4+x}" && eval "$env_var=\"$4\""
-+	test -n "${5+x}" && eval "$env_var=\"$5\""
+ 	run_dirs "$@"
+-	./aggregate.perl $codespeed_opt "$@"
++
++	if test -z "$GIT_PERF_SEND_TO_CODESPEED"
++	then
++		./aggregate.perl $codespeed_opt "$@"
++	else
++		json_res_file="test-results/$GIT_PERF_SUBSECTION/aggregate.json"
++		./aggregate.perl --codespeed "$@" | tee "$json_res_file"
++		send_data_url="$GIT_PERF_SEND_TO_CODESPEED/result/add/json/"
++		curl -v --request POST --data-urlencode "json=$(cat "$json_res_file")" "$send_data_url"
++	fi
  }
  
- run_subsection () {
--	get_var_from_env_or_config "GIT_PERF_REPEAT_COUNT" "perf" "repeatCount" 3
-+	get_var_from_env_or_config "GIT_PERF_REPEAT_COUNT" "perf" "repeatCount" "--int" 3
- 	export GIT_PERF_REPEAT_COUNT
+ get_var_from_env_or_config "GIT_PERF_CODESPEED_OUTPUT" "perf" "codespeedOutput" "--bool"
++get_var_from_env_or_config "GIT_PERF_SEND_TO_CODESPEED" "perf" "sendToCodespeed"
  
- 	get_var_from_env_or_config "GIT_PERF_DIRS_OR_REVS" "perf" "dirsOrRevs"
+ cd "$(dirname $0)"
+ . ../../GIT-BUILD-OPTIONS
 -- 
 2.16.0.rc0.40.gbe5e688583
 
