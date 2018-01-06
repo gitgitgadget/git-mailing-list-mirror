@@ -2,82 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC4D01F406
-	for <e@80x24.org>; Sat,  6 Jan 2018 12:13:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 737D91F406
+	for <e@80x24.org>; Sat,  6 Jan 2018 12:13:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752787AbeAFMNK (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Jan 2018 07:13:10 -0500
-Received: from mout.gmx.net ([212.227.17.20]:58686 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751613AbeAFMNJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Jan 2018 07:13:09 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGRhs-1ec8w70RiS-00DEAc; Sat, 06
- Jan 2018 13:13:07 +0100
-Date:   Sat, 6 Jan 2018 13:13:06 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
-To:     Matthew Orres <matthew.orres@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Git 2.15.0 on OSX 10.12.6: gui multi-select stage
-In-Reply-To: <CAKbB5OwoO22vA3r9J9WAgzxGGScyDE7xM+msGCU_qn2XHU+nbQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801061311250.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-References: <CAKbB5OwxQ4XtLXuu2w3QmuKryA=3iHupz=y0m2E1NH+Dwzd8Xw@mail.gmail.com> <alpine.DEB.2.21.1.1711012254380.6482@virtualbox> <CAKbB5OxZ1Mua0zNMpe8nt8cQbasUyfz0uNzOXL9FJXWrsqPN-g@mail.gmail.com> <CAKbB5OxFTycBVhzyow9Op2M=HcBWKhLEii-putehS0ONNw=W=A@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801052240440.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet> <CAKbB5OwoO22vA3r9J9WAgzxGGScyDE7xM+msGCU_qn2XHU+nbQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752860AbeAFMN4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Jan 2018 07:13:56 -0500
+Received: from forward4j.cmail.yandex.net ([5.255.227.22]:38836 "EHLO
+        forward4j.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751613AbeAFMNz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 Jan 2018 07:13:55 -0500
+X-Greylist: delayed 451 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Jan 2018 07:13:55 EST
+Received: from mxback3g.mail.yandex.net (mxback3g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:164])
+        by forward4j.cmail.yandex.net (Yandex) with ESMTP id 16B8820DB3;
+        Sat,  6 Jan 2018 15:06:23 +0300 (MSK)
+Received: from web58g.yandex.ru (web58g.yandex.ru [2a02:6b8:0:1402::9c])
+        by mxback3g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id ox2SYASAL4-6Mb8hudw;
+        Sat, 06 Jan 2018 15:06:22 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1515240382;
+        bh=kBWYjhlgJewF+lWlmGi6kqDCKS3Ow6naHG+vedrzMGs=;
+        h=From:To:In-Reply-To:References:Subject:Message-Id:Date;
+        b=JYDaA6ifPNmhvuuMXoLxRxyJJk9jemjD20MZ2O9TFgp0jMFOsJa4DHq1gYyC9NH91
+         3aOb6qJ2TMTzk17lQuUMNClkpvUkJOaTVHTW7MAbsnx/YDXO27RK5nNh2LDy6M5BGY
+         bYQkuiz7JPKD1ycVOZ1iMzn/kloxmVmbiekFM9F8=
+Authentication-Results: mxback3g.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web58g.yandex.ru with HTTP;
+        Sat, 06 Jan 2018 15:06:22 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     Johannes Sixt <j6t@kdbg.org>, git <git@vger.kernel.org>
+In-Reply-To: <c09e2447-a528-9da1-9936-9b0ebfdddd78@kdbg.org>
+References: <4747541492256174@web25g.yandex.ru> <c09e2447-a528-9da1-9936-9b0ebfdddd78@kdbg.org>
+Subject: Re: Git allow to unconditionaly remove files on other developer host
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:chbXhTjVaKyAyv0bQd4HRWVpc6d5WrZhXrL3cREzYC8RdyEwHfZ
- +fjP2fZH9tPpK0MGngnUW3zLZkOBQSrMC2L+FWbJggPGDL8mY2GF+48JTmnrj7G9ysmOoe0
- tViqr4cRbZExT8aatpvIflOsVlM7Yh8RnmGRreZ8MxGKZqA+YLyC2dwoaSJzmD4+FyyVZih
- 6QvGNqzi8nm8KMZNQEyvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MP5Vryt/aPk=:/P9YEwhk5ZTTbHyUj1PYkW
- nx++Uqz8h9pITS14Uk69KLSDEVAfmcPX6tnELm2zQfguW/e1nhkjIMVms++IBF6wuk+XFO9g6
- 0OMUmWqNqGbuQxOBInvl2uEdNvnvQlkI74UkfUpRH10fXETOVlQJG3NSHqWxYttGNiP4Lmu3l
- hlgsHnCZSng9QahvG9kqd7cb6bl0/AzIoKthdaBPNlgGa/LDrGIx5ICtpaTIX+Oij/b5Kjzj3
- 2kkRP7BuyGQLv+PJjL/J+Rbbb1CKiPM3NFe0jyxpa8+k7/hlSYUvRru0CXjSYC+R7L3ko6gBU
- 2e0aE3StR7C9VXu/lRcBfZMz+an7eBkJcbt0wn+iSghBm/0lTiCZQeXhlt4kGiwKgC9vqHC74
- 0gfDeBErO9WsDAzCTh1JWCOFDKAVPAvsQac2VENtaeXnwSbnmJM4/TOYSeOwBD4TkYhMf6KAo
- FTBXcr7QcFiki838O8Y+vSRvxqZ7L7QLfPKrWb2gUbbxes1VHwgdYx5wCPbPTq4d8nKnuEZ+5
- VGmqsbPsK0oi+/I06wOlcnfsUr5OAVsl4qNvCf6g2FxsJ0TZ6O3DPXpdlBHjcn5PeRZSlfVxD
- MGEvM80LDhxfmAvqEqwuw8ATZyVyrcBvp7A2F5fulk13iQbW0P+5XOaMQnVKmy7GRHiE/8nEv
- eYZ4VCdlBxphBXge+p0QQbm+Tztjj/kM4TnM6mtLGHoth3ZlyWjWePVwwVXjVacRx4NjL70YL
- d6LQf5or95pNDS36Q9vfsjqtDtO7srRwdF94vfX6MwCkwQ6mNrVJDAE+X6OqoioU/SEmgvaVr
- tsoHsyok39UNLatNC6AHyM4oUGBj0RN9RZV3qSR9FAwQ64bju4MtMTLqo1NflBtl0Ge4cB6
+Message-Id: <676071515240382@web58g.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Sat, 06 Jan 2018 14:06:22 +0200
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matthew,
 
-On Fri, 5 Jan 2018, Matthew Orres wrote:
+> This happens *only* if the other developers also have somefile mentioned
+> in their .gitignore.
 
-> Beautiful!
-> 
-> Pulled down that commit, was able to build and can confirm the issue
-> is fixed in git gui!
-> 
-> This has been a thorn in my side, so I appreciate your help! I look
-> forward to it being included in the next release for git in Homebrew!
-> :)
+It will be mentioned, because of I can add/push, wait developers pull,  add/push
 
-Well, a little bit more help from your side would be nice. For example,
-you could report back *to the Git mailing list* that it helped you.
-Otherwise, how is the Git maintainer to know that these commits help
-anything?
+I can do this because I was angry or was fired. So this is my last "surprise" for others ))
 
-Also: it is *quite* late in the release cycle right now. We are at
-v2.16.0-rc1, there will be one more release candidate in the coming week,
-and then the final v2.16.0 in the next week.
+>>  EXPECTED: git should warn about that content will be replaced and do not pull/checkout until we force pull/checkout
+>
+> If somefile is *not* mentioned in their .gitignore, the file is not
+> removed and there is a warning.
 
-I highly doubt that the patches (which I still have to identify) will make
-it into that release.
+As you can see the file is not just ignored in my case it is important because added to the repo
 
-Ciao,
-Johannes
+
+we can think of some sort of default configuration stored in repo. 
+But added to ignore file because developers do not want to track local changes
+(every developer has own options when configure local instance of application)
+
+it *this very important* to not lose these options while switching between branches or pull from remote.
+
+And I do not expect and do not want to get such "surprises" from anyone
