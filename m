@@ -2,141 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2071F406
-	for <e@80x24.org>; Sat,  6 Jan 2018 22:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 863831F406
+	for <e@80x24.org>; Sat,  6 Jan 2018 22:20:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752209AbeAFWBa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Jan 2018 17:01:30 -0500
-Received: from mout.gmx.net ([212.227.15.15]:50001 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751399AbeAFWB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Jan 2018 17:01:29 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8laO-1ek54Y3ppU-00CAst; Sat, 06
- Jan 2018 23:01:23 +0100
-Date:   Sat, 6 Jan 2018 23:01:22 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        git-for-windows@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc1
-In-Reply-To: <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-References: <xmqqbmi7ano1.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752074AbeAFWUp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Jan 2018 17:20:45 -0500
+Received: from vsmx012.vodafonemail.xion.oxcs.net ([153.92.174.90]:7566 "EHLO
+        vsmx012.vodafonemail.xion.oxcs.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751274AbeAFWUo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 Jan 2018 17:20:44 -0500
+X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Jan 2018 17:20:44 EST
+Received: from vsmx004.vodafonemail.xion.oxcs.net (unknown [192.168.75.198])
+        by mta-8-out.mta.xion.oxcs.net (Postfix) with ESMTP id 9049E8CE34F
+        for <git@vger.kernel.org>; Sat,  6 Jan 2018 22:13:22 +0000 (UTC)
+Received: from [192.168.22.206] (unknown [80.156.181.150])
+        by mta-8-out.mta.xion.oxcs.net (Postfix) with ESMTPA id 6F832CDF7B
+        for <git@vger.kernel.org>; Sat,  6 Jan 2018 22:13:20 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   Friedrich Spee von Langenfeld <stehlampen@arcor.de>
+Subject: Errors and other unpleasant things found by Cppcheck
+Message-ID: <5fb2c981-7a7b-5a0f-f2bb-b16189980d9b@arcor.de>
+Date:   Sat, 6 Jan 2018 23:13:23 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YfS1/Us3gHH8k2glq1mFVrjPHkygI01ff7LEmrPfABBQB9g9VzH
- QqYZwb1QuuQPVdd2T+u8Cl6PWnx1o1lqdXhn/U49j06urXoSQkoyBFYAdbfon8zty0oediu
- yH/h4N3atv9XC37B8mMhEagKeO/vByN1vAA81VZm8YZ51oNxoBbxKpChqASR1skQG5KLCKd
- CuXRwlIfZEAgWzyODhzLg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Lsua/QKxHno=:EGK6PGLxDUHjVJLGVMACI1
- BSPUf24I4qOXnhjeIhUeOsj6gDFM9D20dvylQsJfIe1OFpRdj1vOzt2Ye8K0zJWYXfq4uV088
- QayvBCH/SfthVKV5k72YsTarvxWvxw6uKR9nVqoAY86qEkr2ypS07pYtwXxOZRchyOoQHt04M
- h3kS41GgHCJejt4MkfRkbwM/t+MDNw+KxS4ur9oTDegRwtnj73vRBWxY6ChQUd5C/riJGpYw4
- lLQvwCKXw29LRUUb50OnpCNlfCW3jX1m48H+2Fp82W/bUFuo2NaPhjBwG1Abj5o+R17EKPZnd
- 6KoQJzbvX2MmORhpUMtjEa8GVp9Y/q2OOJW654c0yzQwiUCxV7Dh/34whqVKCBkkhVh0YyK0c
- dPS5FAWIj+KtePu6dRoPdKimsp7k14TxYEDN64PxIY7UNzBoCrsxO7PDhBe35w1T6JAq70YSh
- XFkEFa6wXpmXvGdaeItYsiHThOHg6zLp83w2P7KhGE48idSrER06P1BUFrx8u8bg3OsQkKrT4
- Y8koq6qUVShJeoxHHmoNTd+IkfJwiT2lZU9HOk289DQhGbXgXjIeDoMxv9hxb4vkXYwZ/6yjm
- VCePERudXI6NPwAj24+mX2yT9pNzEndr6ER/sItHOxw2BgL9QTQ33RyeibroePm6m7z3zzKUI
- jAFrjUEP2oZUvRZ5pFVVZxYeFLHimQ/CSjqH/4gv/tZIWYOebvcvaEnj+DhKnNB0vUhkmRAJF
- 1KdMwwRZD/6cTW1nnFNw7+ga/0wPXC5SzOnCGINoY9ekDHwvMVBR37WVqTUbp+XUvwo87ODqG
- wkR00i8IZ0fhSjPjsJIJwSFyHr4DEVNI2pKdSyA6jP6fbBUfbQFaNJjudq2VXlJaoK/E2YD
+Content-Type: multipart/mixed;
+ boundary="------------24BAE6A9DCC0D8764DF352A4"
+X-VADE-STATUS: LEGIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi again,
+This is a multi-part message in MIME format.
+--------------24BAE6A9DCC0D8764DF352A4
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, 6 Jan 2018, Johannes Schindelin wrote:
+Hi,
 
-> On Fri, 5 Jan 2018, Junio C Hamano wrote:
-> 
-> > A release candidate Git v2.16.0-rc1 is now available for testing
-> > at the usual places.  It is comprised of 455 non-merge commits
-> > since v2.15.0, contributed by 79 people, 23 of which are new faces.
-> 
-> I rebased Git for Windows' thicket of patch series on top, and I already
-> got this when running t0021:
-> 
-> 	# failed 10 among 26 test(s)
-> 	1..26
+I analyzed the GitHub repository with Cppcheck. The resulting XML file 
+is attached. Please open it in Cppcheck to view it comfortably.
 
-I actually was able to figure it out: it was the GITPERLLIB problem I
-described earlier, where we run (once again) into trouble with Git's
-expectations that everything behaves like Linux, including colon-separated
-path lists.
+Especially the bunch of errors could be of interest to you.
 
-The test suite passed, so I kicked off a build which should be available
-soon at:
+Greetings
 
-https://github.com/git-for-windows/git/releases/tag/v2.16.0-rc1.windows.1
-
-The patch to work around the GITPERLLIB issue looks like this:
-
--- snipsnap --
-Subject: [PATCH] mingw: handle GITPERLLIB in t0021 in a Windows-compatible
-way
-
-Git's assumption that all path lists are colon-separated is not only
-wrong on Windows, it is not even an assumption that is compatible with
-POSIX.
-
-In the interest of time, let's not try to fix this properly but simply
-work around the obvious breakage on Windows, where the MSYS2 Bash used
-by Git for Windows to interpret the Git's Unix shell scripts will
-automagically convert path lists in the environment to
-semicolon-separated lists of Windows paths (with drive letter and the
-corresponding colon and all that jazz).
-
-In other words, we simply look whether there is a semicolon in
-GITPERLLIB and split by semicolons if found instead of colons. This is
-not fool-proof, of course, as the path list could consist of a single
-path. But that is not the case in Git for Windows' test suite, there are
-always two paths in GITPERLLIB.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t0021/rot13-filter.pl | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index f1678851de9..470107248eb 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -31,7 +31,22 @@
- #
- 
- use 5.008;
--use lib (split(/:/, $ENV{GITPERLLIB}));
-+sub gitperllib {
-+	# Git assumes that all path lists are Unix-y colon-separated ones. But
-+	# when the Git for Windows executes the test suite, its MSYS2 Bash
-+	# calls git.exe, and colon-separated path lists are converted into
-+	# Windows-y semicolon-separated lists of *Windows* paths (which
-+	# naturally contain a colon after the drive letter, so splitting by
-+	# colons simply does not cut it).
-+	#
-+	# Detect semicolon-separated path list and handle them appropriately.
-+
-+	if ($ENV{GITPERLLIB} =~ /;/) {
-+		return split(/;/, $ENV{GITPERLLIB});
-+	}
-+	return split(/:/, $ENV{GITPERLLIB});
-+}
-+use lib (gitperllib());
- use strict;
- use warnings;
- use IO::File;
--- 
-2.16.0.rc0.windows.1
+Friedrich
 
 
+--------------24BAE6A9DCC0D8764DF352A4
+Content-Type: text/xml;
+ name="Cppcheck results for Git.xml"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="Cppcheck results for Git.xml"
+
+<?xml version="1.0" encoding="UTF-8"?>
+<results version="2">
+    <cppcheck version="1.81"/>
+    <errors>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: git_dir" verbose="Uninitialized variable: git_dir">
+            <location file="config.c" line="219"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: oe" verbose="Uninitialized variable: oe">
+            <location file="fast-import.c" line="3006"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: oe" verbose="Uninitialized variable: oe">
+            <location file="fast-import.c" line="3023"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: mrtree" verbose="Uninitialized variable: mrtree">
+            <location file="merge-recursive.c" line="2064"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: saved_namelen" verbose="Uninitialized variable: saved_namelen">
+            <location file="read-cache.c" line="2107"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: explicit" verbose="Uninitialized variable: explicit">
+            <location file="ref-filter.c" line="1287"/>
+        </error>
+        <error id="unknownEvaluationOrder" severity="error" msg="Expression &amp;#039;prev_ch=p_ch,(p_ch=*++p)!=&amp;#039;]&amp;#039;&amp;#039; depends on order of evaluation of side effects" verbose="Expression &amp;#039;prev_ch=p_ch,(p_ch=*++p)!=&amp;#039;]&amp;#039;&amp;#039; depends on order of evaluation of side effects">
+            <location file="wildmatch.c" line="263"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clean.c" line="268"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clean.c" line="692"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clean.c" line="758"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: string_list_item" verbose="Uninitialized variable: string_list_item">
+            <location file="builtin\clean.c" line="357"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clean.c" line="688"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clean.c" line="1009"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\clone.c" line="1000"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\config.c" line="456"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\describe.c" line="161"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\describe.c" line="175"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: pos" verbose="Uninitialized variable: pos">
+            <location file="builtin\interpret-trailers.c" line="46"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: tmp" verbose="Uninitialized variable: tmp">
+            <location file="builtin\interpret-trailers.c" line="46"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\ls-files.c" line="259"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\name-rev.c" line="202"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\name-rev.c" line="213"/>
+        </error>
+        <error id="doubleFree" severity="error" msg="Memory pointed to by &amp;#039;buf&amp;#039; is freed twice." verbose="Memory pointed to by &amp;#039;buf&amp;#039; is freed twice.">
+            <location file="builtin\notes.c" line="265"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: item" verbose="Uninitialized variable: item">
+            <location file="builtin\repack.c" line="314"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: reaches" verbose="Uninitialized variable: reaches">
+            <location file="builtin\rev-list.c" line="482"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: all" verbose="Uninitialized variable: all">
+            <location file="builtin\rev-list.c" line="482"/>
+        </error>
+        <error id="leakNoVarFunctionCall" severity="error" msg="Allocation with malloc_startup, memcpy doesn&amp;#039;t release it." verbose="Allocation with malloc_startup, memcpy doesn&amp;#039;t release it.">
+            <location file="compat\mingw.c" line="2139"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: sbcset" verbose="Memory leak: sbcset">
+            <location file="compat\regex\regcomp.c" line="3085"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: mbcset" verbose="Memory leak: mbcset">
+            <location file="compat\regex\regcomp.c" line="3085"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: sbcset" verbose="Memory leak: sbcset">
+            <location file="compat\regex\regcomp.c" line="3633"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: mbcset" verbose="Memory leak: mbcset">
+            <location file="compat\regex\regcomp.c" line="3633"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: table_size" verbose="Uninitialized variable: table_size">
+            <location file="compat\regex\regcomp.c" line="2801"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: table_size" verbose="Uninitialized variable: table_size">
+            <location file="compat\regex\regcomp.c" line="2804"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: lrr_count" verbose="Uninitialized variable: lrr_count">
+            <location file="contrib\examples\builtin-fetch--tool.c" line="420"/>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: lrr_list" verbose="Uninitialized variable: lrr_list">
+            <location file="contrib\examples\builtin-fetch--tool.c" line="427"/>
+        </error>
+        <error id="preprocessorErrorDirective" severity="error" msg="No header in #include" verbose="No header in #include">
+            <location file="sha1dc\ubc_check.c" line="31"/>
+        </error>
+        <error id="preprocessorErrorDirective" severity="error" msg="No header in #include" verbose="No header in #include">
+            <location file="sha1dc\ubc_check.c" line="371"/>
+        </error>
+        <error id="preprocessorErrorDirective" severity="error" msg="No header in #include" verbose="No header in #include">
+            <location file="sha1dc\ubc_check.h" line="49"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: entries" verbose="Memory leak: entries">
+            <location file="t\helper\test-hashmap.c" line="129"/>
+        </error>
+        <error id="memleak" severity="error" msg="Memory leak: hashes" verbose="Memory leak: hashes">
+            <location file="t\helper\test-hashmap.c" line="129"/>
+        </error>
+        <error id="syntaxError" severity="error" msg="Invalid number of character &amp;#039;{&amp;#039; when no macros are defined." verbose="Invalid number of character &amp;#039;{&amp;#039; when no macros are defined.">
+            <location file="t\t4051\appended1.c" line="3"/>
+        </error>
+        <error id="syntaxError" severity="error" msg="Invalid number of character &amp;#039;{&amp;#039; when no macros are defined." verbose="Invalid number of character &amp;#039;{&amp;#039; when no macros are defined.">
+            <location file="t\t4051\appended2.c" line="35"/>
+        </error>
+    </errors>
+</results>
+
+--------------24BAE6A9DCC0D8764DF352A4--
