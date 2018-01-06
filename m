@@ -2,91 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45491F406
-	for <e@80x24.org>; Sat,  6 Jan 2018 21:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2071F406
+	for <e@80x24.org>; Sat,  6 Jan 2018 22:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753564AbeAFVix (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 Jan 2018 16:38:53 -0500
-Received: from imap.thunk.org ([74.207.234.97]:59298 "EHLO imap.thunk.org"
+        id S1752209AbeAFWBa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Jan 2018 17:01:30 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50001 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753183AbeAFViu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Jan 2018 16:38:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=AyIKwEdE18pC5+o6yOxK4ILXI5+3TfaGE5DROEw1M10=; b=B9MofwXJ/Zu7dI40p4A9l/J5e0
-        6wd+Cb16vFroLc+vYV5kZPGDEScmnaSe3BbNlLZ29ntKm55W/fkZa91IhtFQvKvEcWGG92d/YZdnR
-        w6Lqv62cz2MKmTS/2pUvtwgpc3N4l4NTEne6Nix+8gTMbgXGEVXvhCJQH9o44z7SbpNA=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1eXwAw-0002Df-HQ; Sat, 06 Jan 2018 21:38:46 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 83EAEC00508; Sat,  6 Jan 2018 16:38:45 -0500 (EST)
-Date:   Sat, 6 Jan 2018 16:38:45 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Carl Baldwin <carl@ecbaldwin.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Martin Fick <mfick@codeaurora.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bring together merge and rebase
-Message-ID: <20180106213845.GD2404@thunk.org>
-References: <CALiLy7pBvyqA+NjTZHOK9t0AFGYbwqwRVD3sZjUg0ZLx5y1h3A@mail.gmail.com>
- <20171225035215.GC1257@thunk.org>
- <20171226011638.GA16552@Carl-MBP.ecbaldwin.net>
- <3447055.jsE6nH3DQt@mfick-lnx>
- <xmqq4lo0cbbv.fsf@gitster.mtv.corp.google.com>
- <20180106172919.GA17272@Carl-MBP.ecbaldwin.net>
+        id S1751399AbeAFWB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 Jan 2018 17:01:29 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8laO-1ek54Y3ppU-00CAst; Sat, 06
+ Jan 2018 23:01:23 +0100
+Date:   Sat, 6 Jan 2018 23:01:22 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@johannes-schindelin.gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
+        git-for-windows@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc1
+In-Reply-To: <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+References: <xmqqbmi7ano1.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180106172919.GA17272@Carl-MBP.ecbaldwin.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YfS1/Us3gHH8k2glq1mFVrjPHkygI01ff7LEmrPfABBQB9g9VzH
+ QqYZwb1QuuQPVdd2T+u8Cl6PWnx1o1lqdXhn/U49j06urXoSQkoyBFYAdbfon8zty0oediu
+ yH/h4N3atv9XC37B8mMhEagKeO/vByN1vAA81VZm8YZ51oNxoBbxKpChqASR1skQG5KLCKd
+ CuXRwlIfZEAgWzyODhzLg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Lsua/QKxHno=:EGK6PGLxDUHjVJLGVMACI1
+ BSPUf24I4qOXnhjeIhUeOsj6gDFM9D20dvylQsJfIe1OFpRdj1vOzt2Ye8K0zJWYXfq4uV088
+ QayvBCH/SfthVKV5k72YsTarvxWvxw6uKR9nVqoAY86qEkr2ypS07pYtwXxOZRchyOoQHt04M
+ h3kS41GgHCJejt4MkfRkbwM/t+MDNw+KxS4ur9oTDegRwtnj73vRBWxY6ChQUd5C/riJGpYw4
+ lLQvwCKXw29LRUUb50OnpCNlfCW3jX1m48H+2Fp82W/bUFuo2NaPhjBwG1Abj5o+R17EKPZnd
+ 6KoQJzbvX2MmORhpUMtjEa8GVp9Y/q2OOJW654c0yzQwiUCxV7Dh/34whqVKCBkkhVh0YyK0c
+ dPS5FAWIj+KtePu6dRoPdKimsp7k14TxYEDN64PxIY7UNzBoCrsxO7PDhBe35w1T6JAq70YSh
+ XFkEFa6wXpmXvGdaeItYsiHThOHg6zLp83w2P7KhGE48idSrER06P1BUFrx8u8bg3OsQkKrT4
+ Y8koq6qUVShJeoxHHmoNTd+IkfJwiT2lZU9HOk289DQhGbXgXjIeDoMxv9hxb4vkXYwZ/6yjm
+ VCePERudXI6NPwAj24+mX2yT9pNzEndr6ER/sItHOxw2BgL9QTQ33RyeibroePm6m7z3zzKUI
+ jAFrjUEP2oZUvRZ5pFVVZxYeFLHimQ/CSjqH/4gv/tZIWYOebvcvaEnj+DhKnNB0vUhkmRAJF
+ 1KdMwwRZD/6cTW1nnFNw7+ga/0wPXC5SzOnCGINoY9ekDHwvMVBR37WVqTUbp+XUvwo87ODqG
+ wkR00i8IZ0fhSjPjsJIJwSFyHr4DEVNI2pKdSyA6jP6fbBUfbQFaNJjudq2VXlJaoK/E2YD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 06, 2018 at 10:29:21AM -0700, Carl Baldwin wrote:
-> > When n==m==1, "amended" pointer from X1 to A1 may allow you to
-> > answer "Is this the first attempt?  If this is refined, what did the
-> > earlier one look like?" when given X1, but you would also want to
-> > answer a related question "This was a good start, but did the effort
-> > result in a refined patch, and if so what is it?" when given A1, and
-> > "amended" pointer won't help at all.  Needless to say, the "pointer"
-> > approach breaks down when !(n==m==1).
+Hi again,
+
+On Sat, 6 Jan 2018, Johannes Schindelin wrote:
+
+> On Fri, 5 Jan 2018, Junio C Hamano wrote:
 > 
-> It doesn't break down. It merely presents more sophisticated situations
-> that may be more work for the tool to help out with. This is where I
-> think a prototype will help see these situations and develop the tool to
-> manage them.
+> > A release candidate Git v2.16.0-rc1 is now available for testing
+> > at the usual places.  It is comprised of 455 non-merge commits
+> > since v2.15.0, contributed by 79 people, 23 of which are new faces.
+> 
+> I rebased Git for Windows' thicket of patch series on top, and I already
+> got this when running t0021:
+> 
+> 	# failed 10 among 26 test(s)
+> 	1..26
 
-That's another way of saying "break down".
+I actually was able to figure it out: it was the GITPERLLIB problem I
+described earlier, where we run (once again) into trouble with Git's
+expectations that everything behaves like Linux, including colon-separated
+path lists.
 
-And if the goal is a prototype, may I gently suggest that the way
-forward is trailers in the commit body, ala:
+The test suite passed, so I kicked off a build which should be available
+soon at:
 
-	Change-Id: I0b793feac9664bcc8935d8ec04ca16d5
+https://github.com/git-for-windows/git/releases/tag/v2.16.0-rc1.windows.1
 
-or
+The patch to work around the GITPERLLIB issue looks like this:
 
-	Upstream-4.15-SHA1: 73875fc2b3934e45b4b9a94eb57ca8cd
+-- snipsnap --
+Subject: [PATCH] mingw: handle GITPERLLIB in t0021 in a Windows-compatible
+way
 
-Making changes in the commit header is complex, and has all *sorts* of
-forward and backwards compatibility challenges, especially when it's
-not clear what the proper data model should be.
+Git's assumption that all path lists are colon-separated is not only
+wrong on Windows, it is not even an assumption that is compatible with
+POSIX.
 
-Cheers,
+In the interest of time, let's not try to fix this properly but simply
+work around the obvious breakage on Windows, where the MSYS2 Bash used
+by Git for Windows to interpret the Git's Unix shell scripts will
+automagically convert path lists in the environment to
+semicolon-separated lists of Windows paths (with drive letter and the
+corresponding colon and all that jazz).
 
-						 -Ted
+In other words, we simply look whether there is a semicolon in
+GITPERLLIB and split by semicolons if found instead of colons. This is
+not fool-proof, of course, as the path list could consist of a single
+path. But that is not the case in Git for Windows' test suite, there are
+always two paths in GITPERLLIB.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t0021/rot13-filter.pl | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index f1678851de9..470107248eb 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -31,7 +31,22 @@
+ #
+ 
+ use 5.008;
+-use lib (split(/:/, $ENV{GITPERLLIB}));
++sub gitperllib {
++	# Git assumes that all path lists are Unix-y colon-separated ones. But
++	# when the Git for Windows executes the test suite, its MSYS2 Bash
++	# calls git.exe, and colon-separated path lists are converted into
++	# Windows-y semicolon-separated lists of *Windows* paths (which
++	# naturally contain a colon after the drive letter, so splitting by
++	# colons simply does not cut it).
++	#
++	# Detect semicolon-separated path list and handle them appropriately.
++
++	if ($ENV{GITPERLLIB} =~ /;/) {
++		return split(/;/, $ENV{GITPERLLIB});
++	}
++	return split(/:/, $ENV{GITPERLLIB});
++}
++use lib (gitperllib());
+ use strict;
+ use warnings;
+ use IO::File;
+-- 
+2.16.0.rc0.windows.1
+
+
