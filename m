@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39D7E1F406
-	for <e@80x24.org>; Sat,  6 Jan 2018 18:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 858051F406
+	for <e@80x24.org>; Sat,  6 Jan 2018 18:46:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753189AbeAFSq4 (ORCPT <rfc822;e@80x24.org>);
+        id S1753192AbeAFSq5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 Jan 2018 13:46:57 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35207 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753122AbeAFSq4 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 6 Jan 2018 13:46:56 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:40167 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753122AbeAFSqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 Jan 2018 13:46:53 -0500
-Received: by mail-pf0-f194.google.com with SMTP id v26so3558366pfl.7
-        for <git@vger.kernel.org>; Sat, 06 Jan 2018 10:46:53 -0800 (PST)
+Received: by mail-pf0-f193.google.com with SMTP id t12so731619pfg.2
+        for <git@vger.kernel.org>; Sat, 06 Jan 2018 10:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=BaEbscPuZ/Wb8ESYAighsSxREDw5ZXE0LhB1mGBS608=;
-        b=gl+YY3grrJJAz3vTD4vzN1gJthHDktsq3FbrpGKCv1iIgFgNq+JyFAOWuehKw+J09a
-         Q/F6nw8rnh+9fS4cj01fkefolh5MWS/CyGpI1bagHqlnrbMAp6zr1duoLNNocmU8jvAN
-         93af2hGaWd3mvuS6yE0HdbcBIcMsSYbtrQWTu4YeNOCQvWeouykQ+D+QF02ZlfBN9mxb
-         Czvm4/x8IrJYSicfZeh+z9XoiPR/TulpsS4KXH8yqD1PaP4ABCbpzWOvNMl5VAP/Q4FB
-         WLEE4zsAqt4ATbuNwGgy+LfsHnlLYqBIWMdZgXP3DDjtu0weZpkza9ZeHFGoYrMN+WVe
-         vF3g==
+        bh=rgrD0NKt08H0CgH2kJ6JQnBFCDrfAhaOaUUooxOw4gI=;
+        b=AFZA60Af3ZvaLqldAb+GvaRGh+VmdO874igC6pOx400sGCnRdGde7eoLsVcIYooMQM
+         QamYYY/k7NLtke5GJYvg9stk8vr+Uida+TCSmyg0F9HYX6sGnKMe4HZqd3CHKhwbT55O
+         pj8ifH+47e90c3p6wvvDUpDcVnjgOI/u93BL9sWQLp4BaJzoDPq35dJIFLOspA+j0/2T
+         h7SQrQIAkD0IpVVZJdQCjzTA2pP+/uIKbmqiRsfPnWYkPJRrU1p9EMlkV3QwLTLekInz
+         DS3oX5OZB1rNXJ1O2PJM8mHziT89xe8Oj7Ko8c277DF18NK0dXhXUUBZC00l+qyMAj2E
+         QXQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=BaEbscPuZ/Wb8ESYAighsSxREDw5ZXE0LhB1mGBS608=;
-        b=q1O8d6pYhgxlhdD4tXUPdwYCxARXbViJ1hWXjliPIdo/dNftRByyeR2xMHfVXqGWQu
-         cUdXmP9buNIhjYyVX5RDNqNi5WxAS0YJVORHeHJVuVS4jLax8qS0ap6AUloZHAXcL9wQ
-         8CAPscLk/e23xKNYjvT/+g6Ulv2tjdXtRXCOBi8mWOU9o5NxRZyMfwbX6hwPr6B7DU9l
-         aZdD7qV9wy8hxtR1QHTZmo516oKyB4Wiuz4mWtdqzWKer9CRYXO33ksI993kFcga5Is7
-         zGDFbe/lRY7d1ydWT0sJ+GkEUkC8rkpJNvc/09jnKeQxOxLqYTXMWugxK/b2J7JE0+iD
-         OIgg==
-X-Gm-Message-State: AKGB3mLTuc4JQFcwZms3ZUZ24wRd7ZedTSV+3kjx+RsCwVwrDjLQgE9w
-        t8oZTw/ZJxEOlVRpbpl0LxvPiiah
-X-Google-Smtp-Source: ACJfBosu80n+Q/3PpXVmMuRZiBQ1FgoJ22ihjHLaXdqQNGesaMFg8pZq5HcfslUaQ7CjrB9HSPOh5A==
-X-Received: by 10.98.6.130 with SMTP id 124mr6465969pfg.8.1515264413066;
-        Sat, 06 Jan 2018 10:46:53 -0800 (PST)
+        bh=rgrD0NKt08H0CgH2kJ6JQnBFCDrfAhaOaUUooxOw4gI=;
+        b=XVJx6k9EaCI4EKnunB5kfJ/ZcBRwcBik1t4ThJKZvSIySiC8eSivrH6GTj6P1HaPgm
+         +GVUz601NoQnMMG+GdWD2hV+VYWK+YpnNkwNbMoxE2aKbLaKwysBbHmJlFT7eGiJmpqK
+         0VGDRG8gtJJTcVBh48K3nLMR36EU7kLkb3AUk5teepBMEyiSLAjhb8karcR1Fo+UH3Hp
+         9ulmbtFTzS+MnNta8bg0DVvGgn0hybZpBzyPjXKm7upIT0EBMClyaXZvaS29bWKpvJDx
+         W4yLEyzS6ZCrzWQpl3mtvwaOJemE2+Cj6iZRGijQi8HAjgVMP49wUpQM+bReW21Tmq9P
+         1aAA==
+X-Gm-Message-State: AKGB3mIXY1iY0lsP86cMj3vKPamR1ORZ+a/LSijLPvEyLtmHgK9FfpAH
+        h3SV/BURaw8/LeEpqlx9v46vTioiHbk=
+X-Google-Smtp-Source: ACJfBovibwsRTzSqnJwzUM5j9KPHlkoSA6opng9uBw1mb9JXkipWyitRvMofcQtUJr7ATacmibFajQ==
+X-Received: by 10.98.254.24 with SMTP id z24mr6521625pfh.48.1515264415745;
+        Sat, 06 Jan 2018 10:46:55 -0800 (PST)
 Received: from localhost.localdomain ([117.246.198.31])
-        by smtp.gmail.com with ESMTPSA id j14sm21141273pfj.93.2018.01.06.10.46.50
+        by smtp.gmail.com with ESMTPSA id j14sm21141273pfj.93.2018.01.06.10.46.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 Jan 2018 10:46:51 -0800 (PST)
+        Sat, 06 Jan 2018 10:46:54 -0800 (PST)
 From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     Git mailing list <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 7/8] Doc/git-submodule: improve readability and grammar of a sentence
-Date:   Sun,  7 Jan 2018 00:16:13 +0530
-Message-Id: <20180106184614.20115-8-kaartic.sivaraam@gmail.com>
+Subject: [PATCH 8/8] Doc/git-submodule: correctly quote important words
+Date:   Sun,  7 Jan 2018 00:16:14 +0530
+Message-Id: <20180106184614.20115-9-kaartic.sivaraam@gmail.com>
 X-Mailer: git-send-email 2.16.0.rc0.223.g4a4ac8367
 In-Reply-To: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
 References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
@@ -64,26 +64,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 ---
- Documentation/git-submodule.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-submodule.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index ff612001d..befbccde6 100644
+index befbccde6..5c4d941cc 100644
 --- a/Documentation/git-submodule.txt
 +++ b/Documentation/git-submodule.txt
-@@ -132,9 +132,9 @@ expects by cloning missing submodules and updating the working tree of
+@@ -132,8 +132,8 @@ expects by cloning missing submodules and updating the working tree of
  the submodules. The "updating" can be done in several ways depending
  on command line options and the value of `submodule.<name>.update`
  configuration variable. The command line option takes precedence over
--the configuration variable. if neither is given, a checkout is performed.
--update procedures supported both from the command line as well as setting
--`submodule.<name>.update`:
-+the configuration variable. If neither is given, a checkout is performed.
-+The update procedures supported both from the command line as well as
-+through the `submodule.<name>.update` configuration are:
+-the configuration variable. If neither is given, a checkout is performed.
+-The update procedures supported both from the command line as well as
++the configuration variable. If neither is given, a 'checkout' is performed.
++The 'update' procedures supported both from the command line as well as
+ through the `submodule.<name>.update` configuration are:
  
  	checkout;; the commit recorded in the superproject will be
- 	    checked out in the submodule on a detached HEAD.
+@@ -150,8 +150,8 @@ checked out in the submodule.
+ 	merge;; the commit recorded in the superproject will be merged
+ 	    into the current branch in the submodule.
+ 
+-The following procedures are only available via the `submodule.<name>.update`
+-configuration variable:
++The following 'update' procedures are only available via the
++`submodule.<name>.update` configuration variable:
+ 
+ 	custom command;; arbitrary shell command that takes a single
+ 	    argument (the sha1 of the commit recorded in the
 -- 
 2.16.0.rc0.223.g4a4ac8367
 
