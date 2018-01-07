@@ -2,116 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8824E1F404
-	for <e@80x24.org>; Sun,  7 Jan 2018 21:18:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEF901F404
+	for <e@80x24.org>; Sun,  7 Jan 2018 22:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754655AbeAGVSi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 16:18:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57966 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754557AbeAGVSh (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 7 Jan 2018 16:18:37 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D0BA760402;
-        Sun,  7 Jan 2018 21:18:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1515359916;
-        bh=b9kLEtRBg9HR2oHcKr/pE6KjYVHCbmNAKv+XdC8RkBQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ATWnblyCsjccnbmlSfmR29ddYd19rINE69WqYfMhlYOQW/QKhvDqpy1f7r2zerzGr
-         1O9Dy6aeSdjh/d7sOBVRjia0iVJYJYzJHjFxJXTnH0JsnlHIIkDzeVgei5gDdT68wQ
-         QhAnITobpIuraMJ5BiK+E/aK92sDN+9UyU/tH0JyYiLKnXfrltN99A7+AJuHsUiBrE
-         4+fUatVGj6LipFQm1PVCRULYsWeMPUrpx/+WdFPMGSFuYWFs9PJpOJXTUu3C1nc09T
-         DRDCReGXwj/W6Ya2KOvgxkj1bimWTDVeyKt6Gmm1MhIUFue0NmEF+rYjvkefZRLmID
-         5OZKvCO+Q/37GIKJHBP4vCX6EieowPno8KtjJuzIJ4YYsd6/9m4XLrP3+gKvTtii7G
-         zgqEzqKGHxmAETbRfcUC4D4s8oGHtzdi9FzcN2aupxv3KjmTMqO1xFpK+yNTi0gql0
-         YNPdrs5BhyJ4qy7zKhZ37v/pKV4Xm/XgofVCa7HTqdTbbhu1Tsn
-Date:   Sun, 7 Jan 2018 21:18:29 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'git mailing list' <git@vger.kernel.org>
-Subject: Re: Request for Assist on Limits for Tests
-Message-ID: <20180107211829.GA5946@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'git mailing list' <git@vger.kernel.org>
-References: <000d01d387fa$36a65300$a3f2f900$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9jxsPFA5p3P2qPhR"
-Content-Disposition: inline
-In-Reply-To: <000d01d387fa$36a65300$a3f2f900$@nexbridge.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-5-amd64)
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1754723AbeAGW22 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 17:28:28 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:39500 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754703AbeAGW21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 17:28:27 -0500
+Received: by mail-wr0-f195.google.com with SMTP id z48so3262860wrz.6
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 14:28:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=nE4Zhzg+u/eMX3glg6lyov8j5pFmRhcIjXK0Zpue5JI=;
+        b=kP86drj2fabMHRnypGYFJZEB08vxNMrsgU935CeElD4m99SoQ0rN/KX8/becCxMrl/
+         7N20uvqKO+fOzhHtZ0eeuy6ufwsNo6gTzIw9j3SORKl/UEgimtKiQFesZ9TKdrpVMhC1
+         hozSJWrS0sIBLaOgNDVXsSWR1BrZAetzGTnE3JVIxmEQSxkO4ORXNVVJMvHjyZEG4x3o
+         gHvZ1cuhvoqnxUqDZrJajCHbhL+H33oPu5vjC8x7vRckA+VMNbr41nQ0oaTbiY/SkK9t
+         THR93+TG6inuOoIyuf7IgIJMffhBcBctcRmZs4weKcIJapz0ACoczqpsorPZcaSA7X2b
+         ylMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=nE4Zhzg+u/eMX3glg6lyov8j5pFmRhcIjXK0Zpue5JI=;
+        b=Cw09XSxk++lhGq3SThyxy5rc8F8o5JpjXmIk7j3hIvPiOptolzXO0dduxAKJKGcLlU
+         ayPz23nV8mrMg/FTDZXeEHXJTHGbxyJ+MFHQA3r6PAZB66H6tU6dO9NnVGhU4M7qtKl3
+         JUbOMVctf4m80VbFNbptwBo2+DzuNNn562ZUZs4DW2/0bs9mcH8m8vIOHPw613sKca3F
+         N9CvRt+WrVZmQY0b1+n3WRTziaghJlgmiZ9ZAPPawCkUcAOJl5yIaJ8FOcpthAbbcJGv
+         egb2cP3Eiyum9R+7SLOe8pk+yyephb5zZQqwpIle5dMEBXSLeAlFjTf1qFBdFcWchxWe
+         NOpQ==
+X-Gm-Message-State: AKGB3mKG7+RQRiNqIQwbTQMcFzHD/F6c9gJh3rXu6ZB9FyoqDT7Fk7Pm
+        2eoVU4UAsZQohYtMg6no/9rKH9xI
+X-Google-Smtp-Source: ACJfBovv1yPVYzzB4iiULPk2wbR+xoRCb9M03+x2ZxA1ENGbt+K5ZweZ+IoSDs4CgJRYEZaKamNkEA==
+X-Received: by 10.223.145.198 with SMTP id 64mr7865966wri.163.1515364106066;
+        Sun, 07 Jan 2018 14:28:26 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id p8sm9127204wrf.50.2018.01.07.14.28.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 07 Jan 2018 14:28:25 -0800 (PST)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH v3 0/3] fixes for split index mode
+Date:   Sun,  7 Jan 2018 22:30:12 +0000
+Message-Id: <20180107223015.17720-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79
+In-Reply-To: <20171217225122.28941-1-t.gummerer@gmail.com>
+References: <20171217225122.28941-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks Brandon and Lars for comments on the previous round.
 
---9jxsPFA5p3P2qPhR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Previous rounds were at <20171210212202.28231-1-t.gummerer@gmail.com>
+and <20171217225122.28941-1-t.gummerer@gmail.com>.
 
-On Sun, Jan 07, 2018 at 03:57:59PM -0500, Randall S. Becker wrote:
-> I'm looking for a proper (i.e. not sneaky) way to detect the platform I am
-> on during testing so that some tests can be modified/skipped other than
-> using the standard set of dependencies. In particular, the maximum path on
-> current NonStop platforms is 8-bit 2048 bytes. It appears that there are
-> some tests - at least from my preliminary "guessing" - that are beyond th=
-at
-> limit once all of the path segments are put together. I would rather have
-> something in git that specifies a path size limit so nothing exceeds it, =
-but
-> that may be wishing.
+Changes since the previous round:
 
-The way we usually skip tests automatically is with a test prerequisite.
-You might look at t/test-lib.sh for the test_set_prereq and
-test_lazy_prereq calls and synthesize one (maybe LONG_PATHS) that meets
-your needs.  You can then annotate those tests with the appropriate
-prerequisite.
+- reworked the patches to no longer try to use struct repository for
+  worktrees, but pass gitdir into read_index_from instead (Thanks
+  Brandon :)).  So the fixes that were in 1/3 and 2/3 previously are
+  now in 1/3
+- 2/3 now fixes t7009 properly.  I thought it was fixed before, but it
+  probably just passed the tests because of the GIT_TEST_SPLIT_INDEX
+  "randomness".
+- The travis job is now only running the 64-bit linux build with split
+  index mode to save even more cycles.
+- As this wasn't picked up anywhere yet, I took the freedom to rebase
+  this onto the current master, which includes sg/travis-fixes, which
+  made it a bit easier for me to test.  If this makes the life harder
+  for anyone reviewing this let me know and I can base it on the same
+  commit previous iterations were based on.
 
-I expect that for long paths, you will hit a lot of the same issues as
-occur on Windows, where PATH_MAX may be very small.  It might be
-valuable to expose this information as a build option and then set an
-appropriate variable in t/test-lib.sh.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Thomas Gummerer (3):
+  read-cache: fix reading the shared index for other repos
+  split-index: don't write cache tree with null sha1 entries
+  travis: run tests with GIT_TEST_SPLIT_INDEX
 
---9jxsPFA5p3P2qPhR
-Content-Type: application/pgp-signature; name="signature.asc"
+ cache-tree.c            |  2 +-
+ cache.h                 |  8 +++++---
+ ci/run-linux32-build.sh |  1 +
+ ci/run-tests.sh         |  4 ++++
+ read-cache.c            | 25 ++++++++++++++-----------
+ repository.c            |  2 +-
+ revision.c              |  3 ++-
+ split-index.c           |  2 ++
+ t/t1700-split-index.sh  | 19 +++++++++++++++++++
+ 9 files changed, 49 insertions(+), 17 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
+-- 
+2.16.0.rc1.238.g530d649a79
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpSjqUACgkQv1NdgR9S
-9osbgQ//Sd7m/OSZ9yVB17RxgTDQEUyzYcQOi7fRBgwZGgZuk8AiV3fzdI+GZocw
-z2FpktYrNz1djT/oRe+WBB1SHC98rwVTFZkowrSOqz+sYQ6bpyVAb/sRnmZDHLid
-JpLOO2T8/3yHW9ew7HBpwMsQOViECYb4RBWRmxXQ2Xx5h5/MzBFdj/36lPdf1r++
-QOBNyzyKOMpwujg3Szd6h0rSHM//3t88M/5bAoNszoNU7ixZrFTEC56qYVCAmzYM
-2L8/0CtXR8yBab2+aMUo/ToB60aDLoTKwYg04MGNo7wja3CtIM48vLdDQRry7j+y
-Q1i01/DgesfuGOdI9TD6md8yZ5wNmj4uxV3O5KitTUayNbCuppnozDBIxttKMniB
-v0Z3fs88FjIRNDc3Texco0JKCmkZoJYktnzsOqlnn6s6rXuzAkb3TXwa/i9pJQMB
-6NCGzwLlJNDiZ0sI6p0c5Yjl+LvhSBAhubUbSu/jbjJkBx5RPHniMcyfjjWoWMk0
-zQbB90L4/GoYon4Wl2q285Fn7fxw8pmtLOc7QCNi9XY2nR3SJg3DCF9PWdUfKjWw
-Ahd6g48vG4Lb1D0DvcaA42VwIpE8pcq4GzquAZ792v1TqnEV6k06nCHErg1nv8d9
-tQuKr1MehyGYdh1sXYun4kzvm9ZHdKck7bCk5xVjYbFVizDcMDM=
-=c6PK
------END PGP SIGNATURE-----
-
---9jxsPFA5p3P2qPhR--
