@@ -2,139 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 107141F404
-	for <e@80x24.org>; Sun,  7 Jan 2018 12:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FB1C1F404
+	for <e@80x24.org>; Sun,  7 Jan 2018 13:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753922AbeAGMpW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 07:45:22 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:43214 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753847AbeAGMpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jan 2018 07:45:20 -0500
-Received: by mail-ot0-f196.google.com with SMTP id r42so1885835otb.10
-        for <git@vger.kernel.org>; Sun, 07 Jan 2018 04:45:19 -0800 (PST)
+        id S1753946AbeAGNpv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 08:45:51 -0500
+Received: from mail-pl0-f53.google.com ([209.85.160.53]:35519 "EHLO
+        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753935AbeAGNpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 08:45:50 -0500
+Received: by mail-pl0-f53.google.com with SMTP id b96so6081766pli.2
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 05:45:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=SRulSzloCNIRLPBmr6spo9djNNc1JLgWoYS6nAN+N64=;
-        b=ZGSMoCId4KfWUFpF9b4a9HEYnIW8j3pB+5kDTE1sPN1urlxA0q4gcPOE/eK1WRaBxg
-         HstgfHIBdE7NG/kVFYkIWwBr0DQ6WDWGcUEk/2o/EiKBXsKB4FmAlrtR9dp5RbCW/xzT
-         eiBbLiQfJxlSk6oUdxRRefQM3mZpyrLxRNWr/RS4mIZDuXwGLCWnuyN2CNzOj7GJyZvh
-         uVZbQkmXJLfHHCHAAPptPLUAuEbL1xBCR2bqXklcP9PwR3pNsmHUwb0nd/HVqQ4fQooE
-         79ur4aoTFRC5haAtMHLwY+tC+r61lnNzYtoYFP862Xs7GACXTHvlcawadQbkSH/WTLsu
-         V1ZA==
+        h=to:from:subject:message-id:date:user-agent:mime-version;
+        bh=1IURKYxBZy+8Yzz9nyoFFD5B1UxClNe1ohvTLjU7oJs=;
+        b=b3/OBYJFrTXpATjRM0FTE0SuSj6QhbshmGXiVNN+TJBfTq76gaNGiTzj7pg0PMCCYr
+         wfafZrnZQCxGZ8BvGgrCXGes6HIVx7m8jEBGi0fQjHorEJj3eMeW2z6YqFaz3mVIAEZZ
+         /67QOZPNLYmEVLIXcn+pok9+F9Lgch62TnQjz/CKGiIsIdzFE5o6dx/3ZcFlV+3bGKj6
+         R8fhPItidE6Gokh4MPkOaojJxP4xQRWw29v9Tt/cUhcuqp7F2ReTxd9r9mFc1nqp7StR
+         BC2qB0p3XRbS7LLnQhHXnqL3Tg57jLABTPJXR+/Fk+TdUcnwC9yIGcNABI7ib6FmlKNJ
+         jfCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=SRulSzloCNIRLPBmr6spo9djNNc1JLgWoYS6nAN+N64=;
-        b=pdofuJtW//s98gZdtc7p5Sar34Q2L4tmS+7iKj3gloeTFj9bXQvdE6Q4MzpynbxetK
-         xlpKhSxW01lg7d5nffMnZu3OTJFDnVVTolQ1+i9EtI/ETvgj3+lAJ+GcxO7WK1Bj/cud
-         hXE2xfCOWCrUV4im3DTN0+rXXjfzZKLAXQe6GNd77t9SxQVILG/vpEbBfEKP1KnBOYqb
-         StT0Dn6D/r7Cxt6u1EpvuuWWJdu46ldsUId1oTZbCHBfUrFl33Qrz02f1KrivRzdBg00
-         Hqajm7cnbjZOJaUoc3A7m4o2kdPmVDVO0JpsUuKJDa4Xk4YZ70s1vDqLcEn2dNveLgH8
-         wfxQ==
-X-Gm-Message-State: AKwxytfY9FFdJkxsDOTf26/0NEVPI8jzUaRpGMdoR293og9ESsNcE77C
-        VNCy1RuL4cteL17HsYAyJd5OSyFNu60LayAmtKA=
-X-Google-Smtp-Source: ACJfBou31NolWfEbz3I8UfWF5OEImkYFPW6ATKZmmgoxR7gbtFNWZIIyMnfEUibnPd7O9QQea/OzrytUoPX+nhyQcTk=
-X-Received: by 10.157.32.108 with SMTP id n99mr5511005ota.301.1515329119200;
- Sun, 07 Jan 2018 04:45:19 -0800 (PST)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version;
+        bh=1IURKYxBZy+8Yzz9nyoFFD5B1UxClNe1ohvTLjU7oJs=;
+        b=HfdPWU9RZ9pLKDFwdLlv2yCFldf4mQAKOYnnZXvDHbm3aNqjvc5JAXrZbiGbk6QWx3
+         7A703v0HXA/eIggm1kWY73XhQFfHRRPE5IV2DQJRXXM/jG8x8v1ixRjGCkZpB/POPjjc
+         AdT2UUMQaI4hCET5HKcbKZfSKCucoNZYAx765xPmKQW1OSw48gKsCTQakcpEUjgGzZ5O
+         Mt2bEynEIKhRtmF0bK2eXygFQXpGUNSdiQZ4nH+RBdDNScF+H3tqDEGzmkCo0Z8S7ApD
+         yTHmuie+7qmMWOgez2ZN7kwDzHp3uXGKI7Ks7l2f6cG79oqXgsE6AKAq9MSzkzVvad/3
+         Bivw==
+X-Gm-Message-State: AKGB3mKdQ5z6UNpz4eukGMAvCPSzFSM04H7ulgniH59lD6kr33heJgUG
+        in488KsIR0zku8p70k+0Q6HtAOSe
+X-Google-Smtp-Source: ACJfBovHe0fdvwIgmcYU32vSK5mwjgAPOfwvfQWrV4lr043D1T8NOYwdqQKqjDUESMP1ZuXr5fd0Gg==
+X-Received: by 10.84.245.151 with SMTP id j23mr9244936pll.232.1515332749833;
+        Sun, 07 Jan 2018 05:45:49 -0800 (PST)
+Received: from [192.168.206.100] ([117.209.170.57])
+        by smtp.gmail.com with ESMTPSA id z5sm9448302pgs.18.2018.01.07.05.45.46
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 07 Jan 2018 05:45:48 -0800 (PST)
+To:     Git Mailing list <git@vger.kernel.org>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: [BUG] "git stash -p" doesn't work well when splitting nearby changes
+Message-ID: <aa43f1ff-9095-fb4d-43bc-bf8283b7dabb@gmail.com>
+Date:   Sun, 7 Jan 2018 19:15:40 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Sun, 7 Jan 2018 04:44:48 -0800 (PST)
-In-Reply-To: <20180103204928.3769-6-avarab@gmail.com>
-References: <CACsJy8BnxOz9brnkyZ58guTsUhgKKN_XQvbYaZJz17888pgHoQ@mail.gmail.com>
- <20180103204928.3769-1-avarab@gmail.com> <20180103204928.3769-6-avarab@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 7 Jan 2018 19:44:48 +0700
-Message-ID: <CACsJy8DG8H4r+-yAzo0Z8xuzb3FpDCayGaj0jqO4btkymrGN6Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] dir.c: stop ignoring opendir() error in open_cached_dir()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="xFWabpCUGg2HOfYDrjczM4anxUMVnhekH"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 4, 2018 at 3:49 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
->
-> A follow-up to the recently fixed bugs in the untracked
-> invalidation. If opendir() fails it should show a warning, perhaps
-> this should die, but if this ever happens the error is probably
-> recoverable for the user, and dying would just make things worse.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  dir.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index 163ca69df0..a605e01692 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1857,17 +1857,22 @@ static int open_cached_dir(struct cached_dir *cdi=
-r,
->                            struct strbuf *path,
->                            int check_only)
->  {
-> +       const char *c_path;
-> +
->         memset(cdir, 0, sizeof(*cdir));
->         cdir->untracked =3D untracked;
->         if (valid_cached_dir(dir, untracked, istate, path, check_only))
->                 return 0;
-> -       cdir->fdir =3D opendir(path->len ? path->buf : ".");
-> +       c_path =3D path->len ? path->buf : ".";
-> +       cdir->fdir =3D opendir(c_path);
->         if (dir->untracked) {
->                 invalidate_directory(dir->untracked, untracked);
->                 dir->untracked->dir_opened++;
->         }
-> -       if (!cdir->fdir)
-> +       if (!cdir->fdir) {
-> +               warning_errno(_("could not open directory '%s'"), c_path)=
-;
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--xFWabpCUGg2HOfYDrjczM4anxUMVnhekH
+Content-Type: multipart/mixed; boundary="A4Cu8lvjs5mrHZYemuWIaG8xRaOLizwSU";
+ protected-headers="v1"
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Git Mailing list <git@vger.kernel.org>
+Message-ID: <aa43f1ff-9095-fb4d-43bc-bf8283b7dabb@gmail.com>
+Subject: [BUG] "git stash -p" doesn't work well when splitting nearby changes
 
-This should be closer to opendir(). The code in between,
-invalidate_directory(), could have modified errno and we would print
-incorrect message here.
+--A4Cu8lvjs5mrHZYemuWIaG8xRaOLizwSU
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-But you can't simply move the whole "if (!cdir->fdir) { .. }" block up
-either because we want to invalidate before returning -1, so perhaps
+I recently made two changes to nearby lines (approx. 3 lines b/w them)
+in a file and wanted to stash one part of it and not the other. I tried
+to use "git stash -p" for this. I split the hunk of concern (of course,
+they came out as a single hunk) and gave 'y' for one and 'n' for the
+other. The stash was created successfully but the discarding that change
+from the work tree failed with the following error,
 
-       cdir->fdir =3D opendir(c_path);
-       if (!cdir->fdir)
-               warning_errno(_("could not open directory '%s'"), c_path);
-       if (dir->untracked) { ... }
-       if (!cdir->fdir)
-               return -1;
+error: patch failed: Documentation/gitsubmodules.txt:57
+error: Documentation/gitsubmodules.txt: patch does not apply
+Cannot remove worktree changes
 
->                 return -1;
-> +       }
->         return 0;
->  }
->
-> --
-> 2.15.1.424.g9478a66081
->
+I guess this a bug that has been for a very long time now (I generally
+use the one built from 'next' but this error occurs even if I use 2.11)?
+Or is this intentional? I couldn't glean any reason for that, though.
+
+In case you need a reproduction recipe,
+
+git init stash-patch-test &&
+cd stash-patch-test &&
+echo 'Let us put some lines to ensure
+Git would allow us to split
+a change we make
+to this text.
+It should be a little longer, I guess.
+A little more.
+Almost there.
+And DONE.' >test-files &&
+git add . &&
+git commit -m "Initial commit"
+
+
+Apply this patch or do something similar to what it does,
+
+diff --git a/test-files b/test-files
+index daa67cf..d3142e7 100644
+--- a/test-files
++++ b/test-files
+@@ -1,7 +1,7 @@
+-Let us put some lines to ensure
++Let's put some lines to ensure
+ Git would allow us to split
+ a change we make
+-to this text.
++to this text
+ It should be a little longer, I guess.
+ A little more.
+ Almost there.
+
+Then,
+
+$ git stash -p
+diff --git a/test-files b/test-files
+index daa67cf..d3142e7 100644
+--- a/test-files
++++ b/test-files
+@@ -1,7 +1,7 @@
+-Let us put some lines to ensure
++Let's put some lines to ensure
+ Git would allow us to split
+ a change we make
+-to this text.
++to this text
+ It should be a little longer, I guess.
+ A little more.
+ Almost there.
+Stash this hunk [y,n,q,a,d,/,s,e,?]? s
+Split into 2 hunks.
+@@ -1,3 +1,3 @@
+-Let us put some lines to ensure
++Let's put some lines to ensure
+ Git would allow us to split
+ a change we make
+Stash this hunk [y,n,q,a,d,/,j,J,g,e,?]? n
+@@ -2,6 +2,6 @@
+ Git would allow us to split
+ a change we make
+-to this text.
++to this text
+ It should be a little longer, I guess.
+ A little more.
+ Almost there.
+Stash this hunk [y,n,q,a,d,/,K,g,e,?]? y
+
+Saved working directory and index state WIP on master: f0dff20 Initial
+commit
+error: patch failed: test-files:1
+error: test-files: patch does not apply
+Cannot remove worktree changes
 
 
 
 --=20
-Duy
+Kaartic
+
+Quote: "Be creative. Be adventurous. Be original. And above all else, be
+young." - Wonder Woman
+
+
+--A4Cu8lvjs5mrHZYemuWIaG8xRaOLizwSU--
+
+--xFWabpCUGg2HOfYDrjczM4anxUMVnhekH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpSJIQbHGthYXJ0aWMu
+c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpUoUP/0mDLqOcvT94zz/+9ENm
+vD6AH2cO+rPzoTaY7+LimA3BcNXzId0ykwt1glpj7B/XC1KJFJZDJwOuM6Xutikf
+2V1Wtxi/KBgUXEJcgk8bSTqLmyaDQucTnwC35JaP6EZTzNXn+7f1k4mZ4RY1iYP3
+OJJsZV/mpJkywWs0maOMBylJ2LpTTK9QVVH+5luVvkOR9DSQhv9fFmTc9/9cfutA
+Ek+OaVyxPjHC0f8CzZqDrabayez4ikLlgMsZtW327fddtForLJO86epWBJSux45V
+/9La/qSG1XVFc7D/w1zPYKpDps2suSfLHnItJmW8wOqCVuDk3817ReebzVYSPa6I
+Y/0ZLBYmsnFr9soGilWX3+JvSVMVMvMXgzj/IQXOWB1Sdkn4FCKLiywhiAivFrhn
+on0GUs+JrkUi+vWmcEA7c6WnMHpjMREXUKFhbxNu3/H2+S4Pd1NZyh453Ryy/YQ7
+R0tp41uvIZ1iVavH3Tc5PpU9RmafnImH76lQ2Px89h+RPmqEEYSTS8kv2VTddyoD
+MHIElQCnH44U+CBrVO6jB1Hm78JLw8lMG4ayC8OQnBMQhR8FA8+qbRp5EmAcuHbw
+UZAw2fo62G2A++6fhbolGFUrt4KUy0ubUjB2Y2bCksJBkF6Lc8eVdRlas1xMPbrI
+cLMnGKYJDKPM1MrQ641e2qg2
+=IL5J
+-----END PGP SIGNATURE-----
+
+--xFWabpCUGg2HOfYDrjczM4anxUMVnhekH--
