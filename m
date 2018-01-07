@@ -2,220 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D7E11F428
-	for <e@80x24.org>; Sun,  7 Jan 2018 09:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 107141F404
+	for <e@80x24.org>; Sun,  7 Jan 2018 12:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752630AbeAGJik (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 04:38:40 -0500
-Received: from mout.web.de ([217.72.192.78]:63687 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752396AbeAGJih (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jan 2018 04:38:37 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MCZh8-1ehQoU3ucc-009QJG; Sun, 07
- Jan 2018 10:38:17 +0100
-Date:   Sun, 7 Jan 2018 10:38:15 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v3 0/7] convert: add support for different encodings
-Message-ID: <20180107093815.GA7442@tor.lan>
-References: <20180106004808.77513-1-lars.schneider@autodesk.com>
+        id S1753922AbeAGMpW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 07:45:22 -0500
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:43214 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753847AbeAGMpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 07:45:20 -0500
+Received: by mail-ot0-f196.google.com with SMTP id r42so1885835otb.10
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 04:45:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SRulSzloCNIRLPBmr6spo9djNNc1JLgWoYS6nAN+N64=;
+        b=ZGSMoCId4KfWUFpF9b4a9HEYnIW8j3pB+5kDTE1sPN1urlxA0q4gcPOE/eK1WRaBxg
+         HstgfHIBdE7NG/kVFYkIWwBr0DQ6WDWGcUEk/2o/EiKBXsKB4FmAlrtR9dp5RbCW/xzT
+         eiBbLiQfJxlSk6oUdxRRefQM3mZpyrLxRNWr/RS4mIZDuXwGLCWnuyN2CNzOj7GJyZvh
+         uVZbQkmXJLfHHCHAAPptPLUAuEbL1xBCR2bqXklcP9PwR3pNsmHUwb0nd/HVqQ4fQooE
+         79ur4aoTFRC5haAtMHLwY+tC+r61lnNzYtoYFP862Xs7GACXTHvlcawadQbkSH/WTLsu
+         V1ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SRulSzloCNIRLPBmr6spo9djNNc1JLgWoYS6nAN+N64=;
+        b=pdofuJtW//s98gZdtc7p5Sar34Q2L4tmS+7iKj3gloeTFj9bXQvdE6Q4MzpynbxetK
+         xlpKhSxW01lg7d5nffMnZu3OTJFDnVVTolQ1+i9EtI/ETvgj3+lAJ+GcxO7WK1Bj/cud
+         hXE2xfCOWCrUV4im3DTN0+rXXjfzZKLAXQe6GNd77t9SxQVILG/vpEbBfEKP1KnBOYqb
+         StT0Dn6D/r7Cxt6u1EpvuuWWJdu46ldsUId1oTZbCHBfUrFl33Qrz02f1KrivRzdBg00
+         Hqajm7cnbjZOJaUoc3A7m4o2kdPmVDVO0JpsUuKJDa4Xk4YZ70s1vDqLcEn2dNveLgH8
+         wfxQ==
+X-Gm-Message-State: AKwxytfY9FFdJkxsDOTf26/0NEVPI8jzUaRpGMdoR293og9ESsNcE77C
+        VNCy1RuL4cteL17HsYAyJd5OSyFNu60LayAmtKA=
+X-Google-Smtp-Source: ACJfBou31NolWfEbz3I8UfWF5OEImkYFPW6ATKZmmgoxR7gbtFNWZIIyMnfEUibnPd7O9QQea/OzrytUoPX+nhyQcTk=
+X-Received: by 10.157.32.108 with SMTP id n99mr5511005ota.301.1515329119200;
+ Sun, 07 Jan 2018 04:45:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180106004808.77513-1-lars.schneider@autodesk.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:2su+DH4HTz7HvS2L72uUcXVJPyFYJvTVUgBC3OLuig7Es1XwtbL
- /sqYStbIsCA5C5a7k35Xz6XaU6enCq8+/jY8wCChvwn9FaUXh/abzuz95R9WS7kAYQ2eW2j
- 25wltVo4mht8I9jhtVik0CyHppJ9l8hTwgGb4tDVFjM4+pCmSnqEhBHyRQE7wC389Cx+o7D
- Wc0NT6RCc9xWgzQx7nJew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:oxLCtYpym0s=:2JVCNGP1qvCXdU2q6gZ26N
- rP8rSIrgcPnXRg8givIE9jB98l/urHQ++9wtkClvKwY0RrwiR8O1+aS078PkwYMXRhkH/VSF0
- nsdfCBdOYLIbXhE9plfBZhJ0zmFenxWAoL3h30tk2h6mV6MI0aPhzk894GHDqtJMf5ZlYCn/t
- /gUhCFzfrv8LGB/JOl7PhUo7/zBLO9ogj5zxCbfprhisqxkXfNK4FAyC1sdEqzjmCYgU7hF+Y
- QA+kL8Q71xo6YjjNUhcrNnfDCO6wdgq8h+glxOLWbVpyU/im/fsS2e6sIRykTopvZFf9AZyQG
- OPhkhUkW5M6AU0gmvfYQo9cRD8/6eoMExa+UXVozelvmbKgx8g3A3//PElygAmA8rojN1rzs7
- lhzLu1JzGztp3euyDYC/voQ5m5Tl5Nei/wZVLiDzj9UQtERuW2SR1iq14R8AVRgUCvOFUcz3/
- aJw1cqbol3Mv7MD7qgVSs+REwvOILNYQRoEUdx0NTUeeJoxwiaaV2PjAeDqDf4u+Rx0M4rpXa
- YjaC4U8k85e5QPzjPw/X2tdiYEZ/K0y8JYk0pvc+msNJamRxd+nwq7DG5QlEbE19beyWyVJ28
- FSPjCKwybPt0d65+lrsB526ZtelYHzE9sSJCuDfqPGzeEIIZOXpCXrxnN8HXZvKutKuJvvszl
- +YU1ZHxcbL008RHoxB/6BB5adiGKTSfi/jImV0ycsxxc2FrERCE0FMgCyxCJnsJFq5BHksjK0
- ZgFgN6eIU1YJgDeUOXgz16EgeUuIyxWHXpqBYU7XlnUiqQv/vY+1d1bXGSVEutIuMHt7oB0dn
- uV7fiUiTxO06AoRom5beduUivI0Qw==
+Received: by 10.74.141.5 with HTTP; Sun, 7 Jan 2018 04:44:48 -0800 (PST)
+In-Reply-To: <20180103204928.3769-6-avarab@gmail.com>
+References: <CACsJy8BnxOz9brnkyZ58guTsUhgKKN_XQvbYaZJz17888pgHoQ@mail.gmail.com>
+ <20180103204928.3769-1-avarab@gmail.com> <20180103204928.3769-6-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 7 Jan 2018 19:44:48 +0700
+Message-ID: <CACsJy8DG8H4r+-yAzo0Z8xuzb3FpDCayGaj0jqO4btkymrGN6Q@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] dir.c: stop ignoring opendir() error in open_cached_dir()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 06, 2018 at 01:48:01AM +0100, lars.schneider@autodesk.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Hi,
-> 
-> Patches 1-5 and 6 are helper functions and preparation.
-> Patch 6 is the actual change.
-> 
-> I am still torn between "checkout-encoding" and "working-tree-encoding"
-> as attribute name. I am happy to hear arguments for/against one or the
-> other.
+On Thu, Jan 4, 2018 at 3:49 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>
+> A follow-up to the recently fixed bugs in the untracked
+> invalidation. If opendir() fails it should show a warning, perhaps
+> this should die, but if this ever happens the error is probably
+> recoverable for the user, and dying would just make things worse.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  dir.c | 9 +++++++--
+>  1 file changed, 7 insertions(+), 2 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 163ca69df0..a605e01692 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1857,17 +1857,22 @@ static int open_cached_dir(struct cached_dir *cdi=
+r,
+>                            struct strbuf *path,
+>                            int check_only)
+>  {
+> +       const char *c_path;
+> +
+>         memset(cdir, 0, sizeof(*cdir));
+>         cdir->untracked =3D untracked;
+>         if (valid_cached_dir(dir, untracked, istate, path, check_only))
+>                 return 0;
+> -       cdir->fdir =3D opendir(path->len ? path->buf : ".");
+> +       c_path =3D path->len ? path->buf : ".";
+> +       cdir->fdir =3D opendir(c_path);
+>         if (dir->untracked) {
+>                 invalidate_directory(dir->untracked, untracked);
+>                 dir->untracked->dir_opened++;
+>         }
+> -       if (!cdir->fdir)
+> +       if (!cdir->fdir) {
+> +               warning_errno(_("could not open directory '%s'"), c_path)=
+;
 
-checkout-encoding is probably misleading, as it is even the checkin-encoding.
+This should be closer to opendir(). The code in between,
+invalidate_directory(), could have modified errno and we would print
+incorrect message here.
 
-What is wrong with working-tree-encoding ?
-I think the 2 "-".
+But you can't simply move the whole "if (!cdir->fdir) { .. }" block up
+either because we want to invalidate before returning -1, so perhaps
 
-What was wrong with workingtree-encoding ?
-Or
-workdir-encoding ?
+       cdir->fdir =3D opendir(c_path);
+       if (!cdir->fdir)
+               warning_errno(_("could not open directory '%s'"), c_path);
+       if (dir->untracked) { ... }
+       if (!cdir->fdir)
+               return -1;
 
-
-
-> 
-> Changes since v2:
-> 
-> * Added Torsten's crlfsave refactoring patch (patch 5)
->   @Torsten: I tried to make the commit message more clean, added
->             some comments to and renamed conv_flags_eol to
->             global_conv_flags_eol.
-> 
-> * Improved documentation and commit message (Torsten)
-
-Good, thanks.
-> 
-> * Removed unnecessary NUL assignment in xstrdup_tolower() (Torsten)
-> 
-> * Set "git config core.eol lf" to made the test run on Windows (Dscho)
-> 
-> * Made BOM arrays static (Ramsay)
-
-
-Some comments:
-
-I would like to have the CRLF conversion a little bit more strict -
-many users tend to set core.autocrlf=true or write "* text=auto"
-in the .gitattributes.
-Reading all the effort about BOM markers and UTF-16LE, I think there
-should ne some effort to make the line endings round trip.
-Therefore I changed convert.c to demand that the "text" attribute
-is set to enable CRLF conversions.
-(If I had submitted the patch, I would have demanded
-"text eol=lf" or "text eol=crlf", but the test case t0028 indicates
-that there is a demand to produce line endings as configured in core.eol)
-
-Anyway, I rebased it onto git.git/master, changed the docu, and pushed it to
-https://github.com/tboegi/git/tree/180107-0935-For-lars-schneider-encode-V3B
-
-Here is a inter-diff against your version:
-
- diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
- index 1bc03e69c..b8d9f91c8 100644
- --- a/Documentation/gitattributes.txt
- +++ b/Documentation/gitattributes.txt
- @@ -281,7 +281,7 @@ interpreted as binary and consequently built-in Git text processing
-  tools (e.g. 'git diff') as well as most Git web front ends do not
-  visualize the content.
-  
- -In these cases you can teach Git the encoding of a file in the working
- +In these cases you can tell Git the encoding of a file in the working
-  directory with the `checkout-encoding` attribute. If a file with this
-  attributes is added to Git, then Git reencodes the content from the
-  specified encoding to UTF-8 and stores the result in its internal data
- @@ -308,17 +308,20 @@ Use the `checkout-encoding` attribute only if you cannot store a file in
-  UTF-8 encoding and if you want Git to be able to process the content as
-  text.
-  
- +Note that when `checkout-encoding` is defined, by default the line
- +endings are not converted. `text=auto` and core.autocrlf are ignored.
- +Set the `text` attribute to enable CRLF conversions.
- +
-  Use the following attributes if your '*.txt' files are UTF-16 encoded
- -with byte order mark (BOM) and you want Git to perform automatic line
- -ending conversion based on your platform.
- +with byte order mark (BOM).
-  
-  ------------------------
- -*.txt		text checkout-encoding=UTF-16
- +*.txt		checkout-encoding=UTF-16
-  ------------------------
-  
-  Use the following attributes if your '*.txt' files are UTF-16 little
- -endian encoded without BOM and you want Git to use Windows line endings
- -in the working directory.
- +endian encoded without BOM and you want Git to use LF in the repo and
- +CRLF in the working directory.
-  
-  ------------------------
-  *.txt 		checkout-encoding=UTF-16LE text eol=CRLF
- diff --git a/convert.c b/convert.c
- index 13f766d2a..1e29f515e 100644
- --- a/convert.c
- +++ b/convert.c
- @@ -221,18 +221,27 @@ static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_
-  	}
-  }
-  
-  
-  static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- @@ -432,7 +441,7 @@ static int crlf_to_git(const struct index_state *istate,
-  		 * cherry-pick.
-  		 */
-  		if ((!(conv_flags & CONV_EOL_RENORMALIZE)) &&
- -		    has_cr_in_index(istate, path))
- +		    has_crlf_in_index(istate, path))
-  			convert_crlf_into_lf = 0;
-  	}
-  	if (((conv_flags & CONV_EOL_RNDTRP_WARN) ||
- @@ -1214,9 +1223,28 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
-  			ca->crlf_action = git_path_check_crlf(ccheck + 0);
-  		ca->ident = git_path_check_ident(ccheck + 1);
-  		ca->drv = git_path_check_convert(ccheck + 2);
- +		ca->checkout_encoding = git_path_check_encoding(ccheck + 5);
-  		if (ca->crlf_action != CRLF_BINARY) {
-  			enum eol eol_attr = git_path_check_eol(ccheck + 3);
- -			if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_LF)
- +			if (ca->checkout_encoding) {
- +				enum crlf_action crlf_action = CRLF_BINARY;
- +				/*
- +				 * encoded files don't use auto.
- +				 * 'text' must be specified to
- +				 * do crlf conversions
- +				 */
- +				if (ca->crlf_action == CRLF_TEXT) {
- +					if (eol_attr == EOL_LF)
- +						crlf_action = CRLF_TEXT_INPUT;
- +					else if (eol_attr == EOL_CRLF)
- +						crlf_action = CRLF_TEXT_CRLF;
- +					else if (text_eol_is_crlf())
- +						crlf_action = CRLF_TEXT_CRLF;
- +					else
- +						crlf_action = CRLF_TEXT_INPUT;
- +				}
- +				ca->crlf_action = crlf_action;
- +			} else if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_LF)
-  				ca->crlf_action = CRLF_AUTO_INPUT;
-  			else if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_CRLF)
-  				ca->crlf_action = CRLF_AUTO_CRLF;
- @@ -1225,11 +1253,11 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
-  			else if (eol_attr == EOL_CRLF)
-  				ca->crlf_action = CRLF_TEXT_CRLF;
-  		}
- -		ca->checkout_encoding = git_path_check_encoding(ccheck + 5);
-  	} else {
-  		ca->drv = NULL;
-  		ca->crlf_action = CRLF_UNDEFINED;
-  		ca->ident = 0;
- +		ca->checkout_encoding = NULL;
-  	}
-  
-  	/* Save attr and make a decision for action */
+>                 return -1;
+> +       }
+>         return 0;
+>  }
+>
+> --
+> 2.15.1.424.g9478a66081
+>
 
 
+
+--=20
+Duy
