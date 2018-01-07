@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3377D1F404
-	for <e@80x24.org>; Sun,  7 Jan 2018 18:15:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90FE91F404
+	for <e@80x24.org>; Sun,  7 Jan 2018 18:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754353AbeAGSPI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 13:15:08 -0500
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:39592 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754298AbeAGSPG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jan 2018 13:15:06 -0500
-Received: by mail-qk0-f195.google.com with SMTP id r8so7422913qke.6
-        for <git@vger.kernel.org>; Sun, 07 Jan 2018 10:15:06 -0800 (PST)
+        id S1754391AbeAGSPO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 13:15:14 -0500
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:39594 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754279AbeAGSPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 13:15:07 -0500
+Received: by mail-qk0-f194.google.com with SMTP id r8so7422955qke.6
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 10:15:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=t5BaJrW84J4hELVJe7MF13jQPYvlLKjp8ucS6gABAms=;
-        b=YGT6gDhRnzYOapd0HaZ/5FR5bS0+207jEcZ9iUz9lypded0QkMNOG8VMG6qexUPL8Z
-         GEus4xFLYKOjowMwQc7RVjQyfTalVBLgEYVYEGjjT0vvhkK2S2GgiDgrdRuxzTXmeY75
-         Rs4JHdD+EGLSMxowJ5U3x4j6A2Yj3SBj6uIXV/3F1WGgieD4PGJR6P/dflL34Zt7zMcp
-         hwKwgG4zgRK4g/bg/RER5nJKHuK27l6h7omM/KCnXRyP0yKn79zCRof6zEOPfzOpQy6A
-         o5bESDRgl5vs4c5u/dSd8QoJ6MpvbZ8ybHBea/cmKxvf/ZlRu07yL5qHmpdDiR1F+XsU
-         V88w==
+        bh=LXQyH2yDUpB6AovzMJo/Ppg3r02EFFdxI6wB0Y33W7c=;
+        b=VfC1fWAIqmqrPLQhlR2EMoKoxcVae0NJ0l17Gt0Z1Z2bua0kJb85x1oXStfVMlBldB
+         3RNbr/dhE5sPWnUHEIeNT4kPXAktEJTngy/w/R0dAH6f7uNHWx361PFQaRGy1pmCU1um
+         ag7amkgou0ZArPYuq03UeLxd5gWYnuU3ZF5T7ckDhVmh/QB3n2WT49x9RauIsFzEe0Ut
+         y2Kj0Uxyk/xdbwEr5vwCsCdsnIn5AagWP3NQw9qrG7dq/iHe3YsSIV6dCs/y8U/SXRPk
+         /tsFJ5piuwr1T1W33Jm/h31ZjPvwFt3LuRLzz/DV44nuaG6tgLP9JFYocqnds4DiILtd
+         e2nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=t5BaJrW84J4hELVJe7MF13jQPYvlLKjp8ucS6gABAms=;
-        b=IMRYWum1q3aagTfrLMzB+MX3KbqKBGaRssWrssa4rij2wvo1I3B1WjQRnuAFCzTxij
-         YaiRMZDeqzW7sRNINWJ2IhvQbZ8UFErDLBullNkDGwuFQ1fxKMhhW89+Z5u6jYkj3peB
-         TB2cJ8S+QGYj7y82GdmQX2EdTyis/IOopfxt7BLqB06s+vpuJ9O0Tr1lMFuLauE5LO04
-         k17k5pVzh55hx9a8ZD0EbacRGYUXbclsxgB9GvOyVIgazTNyri5STFpCxqXqTXnEufv+
-         t0mE915SPZvUIGuAszPfjl6uCViT1oc239z4DYrg5H9WuRRMhdG6xPkK1N/eS1LBAZks
-         u5QQ==
-X-Gm-Message-State: AKwxytccH3rnbUgZDpm+GsubFP3xuRvpB09brgVSmrFRKpykyagyYdmX
-        h1iLFcJCFq/lnAeaIlrXRIoH6L76vIo=
-X-Google-Smtp-Source: ACJfBotLQqhPBb5IunZKA5Uy+M3s4vY4wUamoo78+lOBwVo1JOMJe/eeuUA8fjPcevBUM+c4tAslmA==
-X-Received: by 10.55.162.140 with SMTP id l134mr13245212qke.124.1515348905193;
-        Sun, 07 Jan 2018 10:15:05 -0800 (PST)
+        bh=LXQyH2yDUpB6AovzMJo/Ppg3r02EFFdxI6wB0Y33W7c=;
+        b=NilKoQPjH6E/jDV5/2QePFUnL5s5sbGTScSLLsHzT8gOmhpdmo1BATMGrAZaYfEsE4
+         4WywpkM0BYc9Ms9E8IGbko/ow7s0UiSnMd04huAm0Z218CZxq5ohubftsyAFZBEeoRgQ
+         NT4XkPEQ0HzLmNsLVV15zCvUgbWqwgXsPHWyIyNEXMPyPsggz45rM8kiWICTz8w9FsI2
+         h9XS8+47ATbIDRt8f9qItCWyoIaILlxdjUuS+P7ZuRNWiK2PXFH4jtWQDDKixoLpE3b/
+         uK1kIrX6KZ7e+/yUwrL76Dov5ImD4Jr75zuyffK3PG4gMSeBkfWUgMa0K77zkHDdJ+dl
+         KK3g==
+X-Gm-Message-State: AKGB3mIh7HiOiBxNaT4e+wLFgpOHcugKKT+irul71mqlK0+BSMP9VFTW
+        bZDxr3YSTaxQrXTyz6iTO3DTXmtfvgI=
+X-Google-Smtp-Source: ACJfBott+o/ao2e7yyMKguJ6kr/mgrV67x4NYLT4wkSR8GlGV21zkioRZ3TvWdHsPP32pRtCl6NvAQ==
+X-Received: by 10.55.192.2 with SMTP id o2mr12063212qki.232.1515348906513;
+        Sun, 07 Jan 2018 10:15:06 -0800 (PST)
 Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id f38sm6599763qtc.73.2018.01.07.10.15.04
+        by smtp.gmail.com with ESMTPSA id f38sm6599763qtc.73.2018.01.07.10.15.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 07 Jan 2018 10:15:04 -0800 (PST)
+        Sun, 07 Jan 2018 10:15:05 -0800 (PST)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, stolee@gmail.com, git@jeffhostetler.com,
         peff@peff.net, gitster@pobox.com, Johannes.Shindelin@gmx.de,
         jrnieder@gmail.com
-Subject: [RFC PATCH 01/18] docs: Multi-Pack Index (MIDX) Design Notes
-Date:   Sun,  7 Jan 2018 13:14:42 -0500
-Message-Id: <20180107181459.222909-2-dstolee@microsoft.com>
+Subject: [RFC PATCH 02/18] midx: specify midx file format
+Date:   Sun,  7 Jan 2018 13:14:43 -0500
+Message-Id: <20180107181459.222909-3-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.15.0
 In-Reply-To: <20180107181459.222909-1-dstolee@microsoft.com>
 References: <20180107181459.222909-1-dstolee@microsoft.com>
@@ -65,180 +65,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commentary: This file format uses the large offsets from the pack-index
-version 2 format, but drops the CRC32 hashes from that format.
+A multi-pack-index (MIDX) file indexes the objects in multiple
+packfiles in a single pack directory. After a simple fixed-size
+header, the version 1 file format uses chunks to specify
+different regions of the data that correspond to different types
+of data, including:
 
-Also: I included the HASH footer at the end only because it is already in
-the pack and pack-index formats, but not because it is particularly useful
-here. If possible, I'd like to remove it and speed up MIDX writes.
+- List of OIDs in lex-order
+- A fanout table into the OID list
+- List of packfile names (relative to pack directory)
+- List of object metadata
+- Large offsets (if needed)
 
--- >8 --
+By adding extra optional chunks, we can easily extend this format
+without invalidating written v1 files.
 
-Add a technical documentation file describing the design
-for the multi-pack index (MIDX). Includes current limitations
-and future work.
+One value in the header corresponds to a number of "base MIDX files"
+and will always be zero until the value is used in a later patch.
+
+We considered using a hashtable format instead of an ordered list
+of objects to reduce the O(log N) lookups to O(1) lookups, but two
+main issues arose that lead us to abandon the idea:
+
+- Extra space required to ensure collision counts were low.
+- We need to identify the two lexicographically closest OIDs for
+  fast abbreviations. Binary search allows this.
+
+The current solution presents multiple packfiles as if they were
+packed into a single packfile with one pack-index.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/multi-pack-index.txt | 149 +++++++++++++++++++++++++++
- 1 file changed, 149 insertions(+)
- create mode 100644 Documentation/technical/multi-pack-index.txt
+ Documentation/technical/pack-format.txt | 85 +++++++++++++++++++++++++++++++++
+ 1 file changed, 85 insertions(+)
 
-diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-new file mode 100644
-index 0000000000..d31b03dec5
---- /dev/null
-+++ b/Documentation/technical/multi-pack-index.txt
-@@ -0,0 +1,149 @@
-+Multi-Pack-Index (MIDX) Design Notes
-+====================================
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 8e5bf60be3..ab459ef142 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -160,3 +160,88 @@ Pack file entry: <+
+     corresponding packfile.
+ 
+     20-byte SHA-1-checksum of all of the above.
 +
-+The Git object directory contains a 'pack' directory containing
-+packfiles (with suffix ".pack") and pack-indexes (with suffix
-+".idx"). The pack-indexes provide a way to lookup objects and
-+navigate to their offset within the pack, but these must come
-+in pairs with the packfiles. This pairing depends on the file
-+names, as the pack-index differs only in suffix with its pack-
-+file. While the pack-indexes provide fast lookup per packfile,
-+this performance degrades as the number of packfiles increases,
-+because abbreviations need to inspect every packfile and we are
-+more likely to have a miss on our most-recently-used packfile.
-+For some large repositories, repacking into a single packfile
-+is not feasible due to storage space or excessive repack times.
++== midx-*.midx files have the following format:
 +
-+The multi-pack-index (MIDX for short, with suffix ".midx")
-+stores a list of objects and their offsets into multiple pack-
-+files. It contains:
++The multi-pack-index (MIDX) files refer to multiple pack-files.
 +
-+- A list of packfile names.
-+- A sorted list of object IDs.
-+- A list of metadata for the ith object ID including:
-+  - A value j referring to the jth packfile.
-+  - An offset within the jth packfile for the object.
-+- If large offsets are required, we use another list of large
-+  offsets similar to version 2 pack-indexes.
++In order to allow extensions that add extra data to the MIDX format, we
++organize the body into "chunks" and provide a lookup table at the beginning
++of the body. The header includes certain length values, such as the number
++of packs, the number of base MIDX files, hash lengths and types.
 +
-+Thus, we can provide O(log N) lookup time for any number
-+of packfiles.
++All 4-byte numbers are in network order.
 +
-+A new config setting 'core.midx' must be enabled before writing
-+or reading MIDX files.
++HEADER:
 +
-+The MIDX files are updated by the 'midx' builtin with the
-+following common parameter combinations:
++	4-byte signature:
++	    The signature is: {'M', 'I', 'D', 'X'}
 +
-+- 'git midx' gives the hash of the current MIDX head.
-+- 'git midx --write --update-head --delete-expired' writes a new
-+  MIDX file, points the MIDX head to that file, and deletes the
-+  existing MIDX file if out-of-date.
-+- 'git midx --read' lists some basic information about the current
-+  MIDX head. Used for basic tests.
-+- 'git midx --clear' deletes the current MIDX head.
++	4-byte version number:
++	    Git currently only supports version 1.
 +
-+Design Details
-+--------------
++	1-byte Object Id Version (1 = SHA-1)
 +
-+- The MIDX file refers only to packfiles in the same directory
-+  as the MIDX file.
++	1-byte Object Id Length (H)
 +
-+- A special file, 'midx-head', stores the hash of the latest
-+  MIDX file so we can load the file without performing a dirstat.
-+  This file is especially important with incremental MIDX files,
-+  pointing to the newest file.
++	1-byte number (I) of base multi-pack-index files:
++	    This value is currently always zero.
 +
-+- If a packfile exists in the pack directory but is not referenced
-+  by the MIDX file, then the packfile is loaded into the packed_git
-+  list and Git can access the objects as usual. This behavior is
-+  necessary since other tools could add packfiles to the pack
-+  directory without notifying Git.
++	1-byte number (C) of "chunks"
 +
-+- The MIDX file should be only a supplemental structure. If a
-+  user downgrades or disables the `core.midx` config setting,
-+  then the existing .idx and .pack files should be sufficient
-+  to operate correctly.
++	4-byte number (P) of pack files
 +
-+- The file format includes parameters for the object id length
-+  and hash algorithm, so a future change of hash algorithm does
-+  not require a change in format.
++CHUNK LOOKUP:
 +
-+- If an object appears in multiple packfiles, then only one copy
-+  is stored in the MIDX. This has a possible performance issue:
-+  If an object appears as the delta-base of multiple objects from
-+  multiple packs, then cross-pack delta calculations may slow down.
-+  This is currently only theoretical and has not been demonstrated
-+  to be a measurable issue.
++	(C + 1) * 12 bytes providing the chunk offsets:
++	    First 4 bytes describe chunk id. Value 0 is a terminating label.
++	    Other 8 bytes provide offset in current file for chunk to start.
++	    (Chunks are provided in file-order, so you can infer the length
++	    using the next chunk position if necessary.)
 +
-+Current Limitations
-+-------------------
++	The remaining data in the body is described one chunk at a time, and
++	these chunks may be given in any order. Chunks are required unless
++	otherwise specified.
 +
-+- MIDX files are managed only by the midx builtin and is not
-+  automatically updated on clone or fetch.
++CHUNK DATA:
 +
-+- There is no '--verify' option for the midx builtin to verify
-+  the contents of the MIDX file against the pack contents.
++	OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
++	    The ith entry, F[i], stores the number of OIDs with first
++	    byte at most i. Thus F[255] stores the total
++	    number of objects (N). The number of objects with first byte
++	    value i is (F[i] - F[i-1]) for i > 0.
 +
-+- Constructing a MIDX file currently requires the single-pack
-+  index for every pack being added to the MIDX.
++	OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
++	    The OIDs for all objects in the MIDX are stored in lexicographic
++	    order in this chunk.
 +
-+- The fsck builtin does not check MIDX files, but should.
++	Object Offsets (ID: {'O', 'O', 'F', 'F'}) (N * 8 bytes)
++	    Stores two 4-byte values for every object.
++	    1: The pack-int-id for the pack storing this object.
++	    2: The offset within the pack.
++		If all offsets are less than 2^31, then the large offset chunk
++		will not exist and offsets are stored as in IDX v1.
++		If there is at least one offset value larger than 2^32-1, then
++		the large offset chunk must exist. If the large offset chunk
++		exists and the 31st bit is on, then removing that bit reveals
++		the row in the large offsets containing the 8-byte offset of
++		this object.
 +
-+- The repack builtin is not aware of the MIDX files, and may
-+  invalidate the MIDX files by deleting existing packfiles. The
-+  MIDX may also be extended in the future to store metadata about
-+  a packfile that can be used for faster repack commands.
++	[Optional] Object Large Offsets (ID: {'L', 'O', 'F', 'F'})
++	    8-byte offsets into large packfiles.
 +
-+- The naive Git HTTP server advertises lists of packfiles using
-+  the file system directly.
++	Packfile Name Lookup (ID: {'P', 'L', 'O', 'O'}) (P * 4 bytes)
++	    P * 4 bytes storing the offset in the packfile name chunk for
++	    the null-terminated string containing the filename for the
++	    ith packfile. The filename is relative to the MIDX file's parent
++	    directory.
 +
-+Future Work
-+-----------
++	Packfile Names (ID: {'P', 'N', 'A', 'M'})
++	    Stores the packfile names as concatenated, null-terminated strings.
++	    Packfiles must be listed in lexicographic order for fast lookups by
++	    name. This is the only chunk not guaranteed to be a multiple of four
++	    bytes in length, so it should be the last chunk for alignment reasons.
 +
-+- The current file-format requires between 28 and 36 bytes per
-+  object. As the repository grows, the MIDX file can become
-+  very large and become a bottleneck when updating the file. To
-+  fix this "big write" problem, we can make the MIDX file
-+  incremental. Instead of just one MIDX file, we will have a
-+  sequence of MIDX files that can be unioned together. Then
-+  on write we take the new objects to add and consider how many
-+  existing files should be merged into a new file containing
-+  the latest objects.
++TRAILER:
 +
-+  This list of "base indexes" will be presented as an optional
-+  chunk in the MIDX format and contains the OIDs for the base
-+  files. Thus, the `midx_head` file only stores the OID for the
-+  "tip" MIDX file and then the rest are loaded based on those
-+  pointers, such as the following figure:
-+
-+  [     BIG     ] <- [ MEDIUM ] <- [tiny] <- midx_head
-+	 ^___________________________|
-+
-+  The plan being that every write replaces the "tiny" index,
-+  and when that index becomes large enough it merges with the
-+  "medium" index and a new tiny index is created in the next
-+  write. Very rarely, the "big" index would be updated, causing
-+  a slow write.
-+
-+- After the MIDX feature is sufficiently hardened and widely used,
-+  consider making Git more fully depend on the MIDX file. If MIDX
-+  is the default, then we can delete the single-pack-indexes from
-+  the pack directory. We could also allow thin packs in the pack
-+  directory.
-+
-+- The MIDX could be extended to store a "stable object order" such
-+  that adding objects to the order does not change the existing
-+  objects. This would enable re-using the reachability bitmaps after
-+  repacking and updating the MIDX file.
-+
-+Related Links
-+-------------
-+
-+[0] https://bugs.chromium.org/p/git/issues/detail?id=6
-+    Chromium work item for: Multi-Pack Index (MIDX)
-+
-+[1] https://public-inbox.org/git/CB5074CF.3AD7A%25joshua.redstone@fb.com/T/#u
-+    Subject: Git performance results on a large repository
-+    Date: 3 Feb 2012
-+
++	H-byte HASH-checksum of all of the above.
 -- 
 2.15.0
 
