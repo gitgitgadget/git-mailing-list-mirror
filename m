@@ -2,84 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAB1D1F404
-	for <e@80x24.org>; Sun,  7 Jan 2018 16:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65DCE1F404
+	for <e@80x24.org>; Sun,  7 Jan 2018 16:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754193AbeAGQ4L (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 11:56:11 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:39032 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754177AbeAGQ4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jan 2018 11:56:10 -0500
-Received: by mail-wm0-f45.google.com with SMTP id i11so10290467wmf.4
-        for <git@vger.kernel.org>; Sun, 07 Jan 2018 08:56:10 -0800 (PST)
+        id S1754133AbeAGQ5o (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 11:57:44 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:43091 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754057AbeAGQ5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 11:57:43 -0500
+Received: by mail-qt0-f172.google.com with SMTP id w10so11142137qtb.10
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 08:57:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-transfer-encoding;
-        bh=KH1g130ruyM5EJvsQ6/yMFcX97bI5VtdDi9PGC6GvBg=;
-        b=WRwtIdsU7pGIm3n2W0eQCLewa16yi3Q68vazw73Cg7Iwu8gCcg8pfuuVJ/dhAMDh+a
-         GR8UCMC5DSE6EN8bUsBwrxR3anJYrdW2oJ9CoKSMJ+3MlT4/xU+7CLxtK/I8thgmtEX/
-         FUQ2UuwuoE7QnnRPpZrumWXLkip0TYUj34iPdt1fYhLwaWhttTtNewOicutT3PeTLW+d
-         JZpCwCvcwZn7KWPWrVkczp8f0HysyJb7ieJVlLpFyVtKLxp4KN+5DTnK7KQme3L77+gS
-         ACwSG/jIUCXb3plhyFguh50hW7SV4FMndxFq3vd/ygkl6URID+oBTxC42M+1IJj7c+/8
-         nmAA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pv6eXeDpr7sGhLFR1vKSPgQfLhnEmYuqw4b64/oNEAo=;
+        b=NKBl2cW1SmgEAW9NaNMwi9Sv0xVcgJp9TFZRA7EA7q+bzH3kHINfmp8rHFPpWjBCGe
+         wffB8K+GL2+CjGO/LtOE8493XywvY0jgKg67ty4sgjRK1pqB6yhiUH3bEdw9tQ9t2EVw
+         kCUzkhpOc+yQuGGqo+u/SxYsV4DNLlgN1CMYGhncuKCHUiKLiks6cqAKmaosMUuoKJy8
+         rWBwLFqhwP5b8RfBmqGlTaF9jPlTQU0AQJKF1NwqNeBXJOeXkU9XYVM6yJx3X+/zqy8J
+         +i4IyF+ZvcLvAjm1z5yNsxF/5oovOodyQ5mQAwtqaXDLUQf4pPe61LMrdH7bCmwgJ2sM
+         4Chw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-transfer-encoding;
-        bh=KH1g130ruyM5EJvsQ6/yMFcX97bI5VtdDi9PGC6GvBg=;
-        b=q2i5nCqQgPVKEm7msI0SHUFs+pxctqA6oTz3F8QoKjq2GIj1J0zR2dlFwu34k29Y7a
-         DeN6G4c1K/vlJxPW78JTY2HSdZnLdtc4fVhyPSN934G2gkc/bh4uXpEW5yMAkniP1aTx
-         9zMapiCyGJl4p388DWa/Ur4k1UjTALW7UqRxOiZN3ucr700PtDhQ4csrrycF6LBBJrDd
-         f8Dnlk3vyqeVfL23eSnKy9AExaIQmEkh5YCvd/9/9VUfLYS8uGVFrErYLZH9fKT4V9TU
-         boTa19brn6FH3/j+L3RF7loZApb3hG+1pzGHJLrUSAInDXUEmvHWucQwDZ+OcBtZ7RCP
-         /Xvg==
-X-Gm-Message-State: AKGB3mJaUfZGClZgNUKJNL65W9ywMR048xHylRURzWx0t6wWmm+AsKy1
-        Qk+pz2eVR6XQx8EVwUPV8uf0iw==
-X-Google-Smtp-Source: ACJfBotxa9uBAmtWeWe/JqUZ66pV4WfUayFYo7pbqpuhuHrjefIGxg9ZlDljyNswiSrvVeDjCoYZMA==
-X-Received: by 10.80.150.35 with SMTP id y32mr13053229eda.175.1515344169493;
-        Sun, 07 Jan 2018 08:56:09 -0800 (PST)
-Received: from [192.168.0.104] (d8D86700B.access.telenet.be. [141.134.112.11])
-        by smtp.gmail.com with ESMTPSA id 4sm5731429edf.81.2018.01.07.08.56.08
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 07 Jan 2018 08:56:08 -0800 (PST)
-Message-ID: <5A525127.5010409@gmail.com>
-Date:   Sun, 07 Jan 2018 17:56:07 +0100
-From:   Mark Nauwelaerts <mark.nauwelaerts@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0 SeaMonkey/2.22
-MIME-Version: 1.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=pv6eXeDpr7sGhLFR1vKSPgQfLhnEmYuqw4b64/oNEAo=;
+        b=YmdCNri6vCqDEd9UVjpedmSASSOsT0wm9uKM576Yqcu8dOb4LC/AfQhtBZvv49Elhg
+         TwGF//QxQ6uoBxovYtmr7p6G+yEJuWnfnNvcLA4Zqf/mzEKYafTzM4mYgKuyzMwm3OYb
+         Sv10gH8fKPLyzogDLi0kMCzFWaC/oKV1aVdjPPNoHzBJ95WDkEm3xBt9EtDY3V8idlR1
+         UR49w2TT2MIqaCS0Lqp7Fvub+uGY6kHQSu67v517vCI/X8du64Atj9e3dn/cpvN45+1m
+         IBGIfO+qllZ8teBeaV7GHrSyZoTe0Gz6oPAjYGuW5KzLJCvaRVfjPO3GNPCeiBkaK+pL
+         5NnQ==
+X-Gm-Message-State: AKwxytdLmX2uBkH0O6w3IMKZPf0RTM/JkT3uUc28awcp6Xx+XgIImMag
+        Vg1GftpmyNG5fNDvEcDqkArXqGmqPug=
+X-Google-Smtp-Source: ACJfBouofoHhSJHZl7pQPGPF7WSskCzmU0LlCW981nVEa2RsUTwwTqlSW1TthJeQ6CxAzNw2mcolFA==
+X-Received: by 10.200.27.116 with SMTP id p49mr12376626qtk.254.1515344261710;
+        Sun, 07 Jan 2018 08:57:41 -0800 (PST)
+Received: from localhost.localdomain (ip-35-41-54-196.montreal.ca.northamericancoax.com. [196.54.41.35])
+        by smtp.gmail.com with ESMTPSA id l52sm6421164qtc.43.2018.01.07.08.57.39
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 07 Jan 2018 08:57:40 -0800 (PST)
+From:   Dan Jacques <dnj@google.com>
 To:     git@vger.kernel.org
-CC:     gitster@pobox.com
-Subject: Re: [PATCH 0/2] restore fast-export full filecopy detection
-References: <1514112729-31647-1-git-send-email-mark.nauwelaerts@gmail.com>
-In-Reply-To: <1514112729-31647-1-git-send-email-mark.nauwelaerts@gmail.com>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc:     Dan Jacques <dnj@google.com>, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de, gitster@pobox.com
+Subject: [PATCH v5 0/3] RUNTIME_PREFIX relocatable Git
+Date:   Sun,  7 Jan 2018 11:56:10 -0500
+Message-Id: <20180107165613.78434-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/12/17 11:52, Mark Nauwelaerts wrote:
-> From: Mark Nauwelaerts <mnauw@users.sourceforge.net>
->
-> When using fast-export/fast-import to interface/bridge with another VCS
-> that explicitly tracks copy/rename as metadata, fast-export's ability
-> to report filecopy/filerename is quite useful (if not essential).
->
-> There has been a fix in this area recently with as side-effect that
-> in some scenarios a filecopy is no longer reported as such.
-> These few patches provide an alternative fix for the original problem
-> while still retaining previous fast-export's filecopy reporting.
->
-> See patches for additional details and commit references.
-Any comments or opinions on these patches?  Could they be applied and included?
+This patch set expands support for the RUNTIME_PREFIX configuration flag,
+currently only used on Windows builds, to include Linux, Darwin, and
+FreeBSD. When Git is built with RUNTIME_PREFIX enabled, it resolves its
+ancillary paths relative to the runtime location of its executable
+rather than hard-coding them at compile-time, allowing a Git
+installation to be deployed to a path other than the one in which it
+was built/installed.
 
-Thanks,
-Mark.
+Note that RUNTIME_PREFIX is not currently used outside of Windows.
+This patch set should not have an impact on default Git builds.
+
+I'm uploading an updated patch set now that avarab@'s Perl Makefile
+simplification patch set has advanced and seems to be stable. Please take
+a look and let me know what you think!
+
+Previous threads:
+v1: https://public-inbox.org/git/20171116170523.28696-1-dnj@google.com/
+v2: https://public-inbox.org/git/20171119173141.4896-1-dnj@google.com/
+v3: https://public-inbox.org/git/20171127164055.93283-1-dnj@google.com/
+v4: https://public-inbox.org/git/20171129223807.91343-1-dnj@google.com/
+
+Changes in v5 from v4:
+
+- Rebase on top of "next", notably incorporating the
+  "ab/simplify-perl-makefile" branch.
+- Cleaner Makefile relative path enforcement.
+- Update Perl header template path now that the "perl/" directory has
+  fewer build-related files in it.
+- Update Perl runtime prefix header to use a general system path resolution
+  function.
+- Implemented the injection of the locale directory into Perl's
+  "Git/I18N.pm" module from the runtime prefix Perl script header.
+- Updated Perl's "Git/I18N.pm" module to accept injected locale directory.
+- Added more content to some comments.
+
+=== Testing ===
+
+The latest patch set is available for testing on my GitHub fork, including
+"travis.ci" testing. The "runtime-prefix" branch includes a "config.mak"
+commit that enables runtime prefix for the Travis build; the
+"runtime-prefix-no-config" omits this file, testing this patch without
+runtime prefix enabled:
+- https://github.com/danjacques/git/tree/runtime-prefix
+- https://travis-ci.org/danjacques/git/branches
+
+Built/tested locally using this "config.mak" w/ autoconf:
+
+=== Example config.mak ===
+
+## (BEGIN config.mak)
+
+RUNTIME_PREFIX = YesPlease
+RUNTIME_PREFIX_PERL = YesPlease
+gitexecdir = libexec/git-core
+template_dir = share/git-core/templates
+sysconfdir = etc
+
+## (END config.mak)
+
+=== Revision History ===
+
+Changes in v4 from v3:
+
+- Incorporated some quoting and Makefile dependency fixes, courtesy of
+  <johannes.schindelin@gmx.de>.
+
+Changes in v3 from v2:
+
+- Broken into multiple patches now that Perl is isolated in its own
+  RUNTIME_PREFIX_PERL flag.
+- Working with avarab@, several changes to Perl script runtime prefix
+  support:
+  - Moved Perl header body content from Makefile into external template
+    file(s).
+  - Added generic "perllibdir" variable to override Perl installation
+    path.
+  - RUNTIME_PREFIX_PERL generated script header is more descriptive and
+    consistent with how the C version operates.
+  - Fixed Generated Perl header Makefile dependency, should rebuild
+    when dependent files and flags change.
+- Changed some of the new RUNTIME_PREFIX trace strings to use consistent
+  formatting and terminology.
+
+Changes in v2 from v1:
+
+- Added comments and formatting to improve readability of
+  platform-sepecific executable path resolution sleds in
+  `git_get_exec_path`.
+- Consolidated "cached_exec_path" and "argv_exec_path" globals
+  into "exec_path_value".
+- Use `strbuf_realpath` instead of `realpath` for procfs resolution.
+- Removed new environment variable exports. Git with RUNTIME_PREFIX no
+  longer exports or consumes any additional environment information.
+- Updated Perl script resolution strategy: rather than having Git export
+  the relative executable path to the Perl scripts, they now resolve
+  it independently when RUNTIME_PREFIX_PERL is enabled.
+- Updated resolution strategy for "gettext()": use system_path() instead
+  of special environment variable.
+- Added `sysctl` executable resolution support for BSDs that don't
+  mount "procfs" by default (most of them).
+
+Dan Jacques (3):
+  Makefile: generate Perl header from template file
+  Makefile: add Perl runtime prefix support
+  exec_cmd: RUNTIME_PREFIX on some POSIX systems
+
+ .gitignore                                       |   1 +
+ Makefile                                         | 114 +++++++++--
+ cache.h                                          |   1 +
+ common-main.c                                    |   4 +-
+ config.mak.uname                                 |   7 +
+ exec_cmd.c                                       | 241 ++++++++++++++++++++---
+ exec_cmd.h                                       |   4 +-
+ gettext.c                                        |   8 +-
+ git.c                                            |   2 +-
+ perl/Git/I18N.pm                                 |   2 +-
+ perl/header_templates/fixed_prefix.template.pl   |   1 +
+ perl/header_templates/runtime_prefix.template.pl |  32 +++
+ 12 files changed, 364 insertions(+), 53 deletions(-)
+ create mode 100644 perl/header_templates/fixed_prefix.template.pl
+ create mode 100644 perl/header_templates/runtime_prefix.template.pl
+
+-- 
+2.15.0.chromium12
+
