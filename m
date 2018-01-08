@@ -2,117 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4601FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 19:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 919621FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 19:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756322AbeAHTPM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 14:15:12 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:59034 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755580AbeAHTPK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Jan 2018 14:15:10 -0500
-X-Greylist: delayed 1734 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Jan 2018 14:15:10 EST
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-web-01.w4a.fr)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1eYcR3-000AJj-OL; Mon, 08 Jan 2018 19:46:14 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id C6AEB1C0E49;
-        Mon,  8 Jan 2018 19:45:02 +0100 (CET)
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id dieKD1CH_8Vh; Mon,  8 Jan 2018 19:45:02 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 4CCF71C11C1;
-        Mon,  8 Jan 2018 19:45:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-web-01.w4a.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-web-01.w4a.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id wlyYYys_zykQ; Mon,  8 Jan 2018 19:45:02 +0100 (CET)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by zose-mta-hub-out-web-01.w4a.fr (Postfix) with ESMTP id 27EF71C0E49;
-        Mon,  8 Jan 2018 19:45:01 +0100 (CET)
-Date:   Mon, 8 Jan 2018 19:46:12 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Message-ID: <719818385.221348.1515437172473.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <CAP8UFD06ZThD=FiccGrYLKpJz6R8NAUzFzMv+zrD4MisfJSbTw@mail.gmail.com>
-References: <q7h9lghcob2s.fsf@orange.lip.ens-lyon.fr> <alpine.DEB.2.21.1.1801051217190.31@MININT-6BKU6QN.europe.corp.microsoft.com> <CAP8UFD06ZThD=FiccGrYLKpJz6R8NAUzFzMv+zrD4MisfJSbTw@mail.gmail.com>
-Subject: Re: GSoC 2018 Org applications. Deadline = January 23, 2018 at
- 18:00 (CET)
+        id S932410AbeAHTST (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 14:18:19 -0500
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:46592 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932355AbeAHTSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 14:18:17 -0500
+Received: by mail-qt0-f177.google.com with SMTP id r39so14946084qtr.13
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 11:18:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=CIqTwaOnI8VSuCNtn6o3rCVAyblDyyDs8gfaaIQEWo4=;
+        b=oDXMK1DqUKqUzI5YS8MjgnwhOQCmpYrcQXaBOtW1hFOMtYwVukNGNgzvE4QMYp7RvV
+         lMGk84KZom86ZrDkXbO3N2l/mFXmJW/w8AVcqXjA+IEyYww7ps1E3wBY/ECXRgb3Xj9/
+         +6y4eDkRZUCrBxCKp6UCWo+jaoUwycG2RWSF1NBQX/V/YExlPELjhck9RJ7vAqIqWz9a
+         n0x3aprm5tawIzutsjQPL36N3AWtoSZcgW3XtnfJBULz+vX4O9zv9Dm4dvegRDyP1gve
+         kOR7I3YflaBp+HF0V11g29CKjsjHhHVO23h/uboWwL5Y31udP37TxDdEQYwDhMSviAqH
+         rHFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=CIqTwaOnI8VSuCNtn6o3rCVAyblDyyDs8gfaaIQEWo4=;
+        b=YNogx7BPikwKrV6iWr8DQH4BSwucKgSVn7pRyNFlt9aKA5TISI7hRBOIV8PXW1A+yw
+         573Q/2uQkHvykIktZQL95odGVd4ev6y8Iz5TtW/2I5tObXk+GQA1bm3hgeCQgbkEAD1k
+         svvSw7RlkCxSdsarLh3L4R21f1waNAKGO9IYvHd0Z5bmi9svmjycF7RcopcMJ57WBVjH
+         ul4vIe3vRjgrw+MW+XA5bDIYoJtiIFItHUMS6UHN9dGrLKItam8u2rpjD5wlunrYW/lC
+         X4tNttDG9/DeSV/Wep2lkTp3+/XVqkz3o4k5mk6Q3HiKEw8sW9COTHzDlZjJVo5mOzCt
+         bdIw==
+X-Gm-Message-State: AKwxytczgZc7rt7iU5ESkkGsm4QGUwJ9A6S5WW50xqwuJrQOUxruRB8n
+        JiR2ZDOZvViM+0mmk3jqEUoulA==
+X-Google-Smtp-Source: ACJfBouMJSG4rRE9ueVFCgouCCWbwtD37go7SIWMpayIcucGZbKXYKsWUevlDa4wEQkf6JUrLHAkfQ==
+X-Received: by 10.200.17.25 with SMTP id c25mr16416251qtj.97.1515439096283;
+        Mon, 08 Jan 2018 11:18:16 -0800 (PST)
+Received: from dnj-macbookpro.roam.corp.google.com.com ([172.23.222.209])
+        by smtp.gmail.com with ESMTPSA id k3sm7790025qtj.40.2018.01.08.11.18.15
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 08 Jan 2018 11:18:15 -0800 (PST)
+From:   Dan Jacques <dnj@google.com>
+To:     avarab@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, dnj@google.com, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH v5 2/3] Makefile: add Perl runtime prefix support
+Date:   Mon,  8 Jan 2018 14:18:12 -0500
+Message-Id: <20180108191812.52565-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
+In-Reply-To: <87inccbscj.fsf@evledraar.gmail.com>
+References: <87inccbscj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.7.11_GA_1854 (ZimbraWebClient - FF57 (Linux)/8.7.11_GA_1854)
-Thread-Topic: GSoC 2018 Org applications. Deadline = January 23, 2018 at 18:00 (CET)
-Thread-Index: uEZ3KJ5nxWPFYKc4fNuKncZMgjQ67g==
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: Combined (0.09)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5tC0UK+5EXaq1S8U2UVv133j1g3/PwYZaTCzSym8uE9HUitjeSUZ7skk
- CYNDj+2RlWWBUnGywMKq3X5xeLzyrXCYMXdDJbl0zJISHuDpYUgBxny7zX4LRTl3KRxPycYW83X5
- yLBTaqi03Bto7MR+NwLpBaOnOAr02oY8SqCWeLmuBzwVO1OZSLMG0J+7Ys8oDE2agB+cMuwrT2m5
- dvKphnwEybI1sOftHmSKUCHCvcq0+97CL41XDezwBoE7d4v3GrEFXogYRm3nJgdSXkuMf4fX9tnW
- lG/OPZfQDyf8WosOiUw068MC7ZiH/k9UNBOwWbc8/ou4HsEE0cokhF/g5T/WAzzjLnJnvWqQwX7Y
- feigA6BknuCjYLw/sl38r7kUc/1qJYab+Oi0pZrAwMZvzUWd5a1UKDAw1uB7ci8W17Gf3UP28xVH
- bhnYgilQn85qtkFdG+8oksmYeAnETBnKYEV28MKf35lHSvC6UyDhqkhDvCrJPmnnTHzVkpybMK7Z
- TaKt/YBhiRplXhn03vU98dtR7KZTJJG/1QRnwAzHw/oJa+wXImvuA/qi388qP41stPzwxulXBsoQ
- 6nZaYxeIqMrmI8mJEUh9mwJV6tRuvxTvKZC7F8ACqTeNLptvxEZcmQCSYva1a6KCh04AyzJQgNha
- I22p7LcY/woTxTSkTFBkpFYIU2/sSgRx7K4UHplMz7cdNsK9Y8oIY7DS9AD2QLNDebtqDywdo+KN
- R3RjhF85CFDxDrsLU3qm2qo1Sr/iLf7nF4yN/7wNlhSml4LIoWChmNdig5VSybRGYqS6oADhepPE
- FpRjoOiggAkX7KdkjxxwEiTVJqDh0qKoKsXx5llBubvYKuhKpuI95ka3cETIzFjcLr6RL8jM3R5I
- hpmFC4kjSTD1ZDObCjF+B8Dvd82vgV/njHHIbNMKOf9nF36x4Ii4PZnY5dOZ7V02q/ROZwRAL85z
- y5irEacH2FSFTW3GLxsTFnT1LoeNMOi6+XYAS/5rYqqYUNIv7+CPD54aAtCBIPOx8FKVIUcRh40P
- xNYulwPEZq0N30Y49KdlglHPMS+4ayUpOtEhdxekWDmK9g==
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Christian Couder" <christian.couder@gmail.com> wrote:
+On Mon, 08 Jan 2018, Ævar Arnfjörð Bjarmason replied:
 
-> Hi,
-> 
-> On Fri, Jan 5, 2018 at 12:18 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi,
->>
->> On Fri, 5 Jan 2018, Matthieu Moy wrote:
->>
->>> If we go for it, we need:
->>>
->>> * Admins
->>>
->>> * Potential mentors
->>
->> Count me in as a potential mentor.
-> 
-> I am ok to be admin and mentor.
+> Thanks, applied this on top of next and it works for me, i.e. install to
+> /tmp/git and move to /tmp/git2 = works for me. Comments below.
 
-Cool :-)
+Good to hear! I've run this through a few machines at my disposal, but
+the more hands on the better.
 
-In case you missed it: there's an iCal/Google calendar link on
-the timeline page:
+>> Enabling RUNTIME_PREFIX_PERL overrides the system-specific Perl script
+>> installation path generated by MakeMaker to force installation into a
+>> platform-neutral location, "<prefix>/share/perl5".
+>
+> Not generated by MakeMaker anymore :)
 
-  https://developers.google.com/open-source/gsoc/timeline
+Hah good catch! I'll update the commit message.
 
-If you use an electronic calendar, it's nice to add it to make
-sure you never miss a deadline. The URL is the same every year, it's
-how I got a reminder that the application was open.
+>>+# it. This is intentionally separate from RUNTIME_PREFIX so that notably Windows
+>>+# can hard-code Perl library paths while still enabling RUNTIME_PREFIX
+>>+# resolution.
+>
+> Maybe we covered this in previous submissions, but refresh my memory,
+> why is the *_PERL define still needed? Reading this explanation doesn't
+> make sense to me, but I'm probably missing something.
+>
+> If we have a system where we have some perl library paths on the system
+> we want to use, then they'll still be in @INC after our 'use lib'-ing,
+> so we'll find libraries there.
+>
+> The only reason I can think of for doing this for C and not for Perl
+> would be if you for some reason want to have a git in /tmp/git but then
+> use a different version of the Git.pm from some system install, but I
+> can't imagine why.
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+The reason is entirely due to the way Git-for-Windows is structured. In
+Git-for-Windows, Git binaries are run directly from Windows, meaning that
+they require RUNTIME_PREFIX resolution. However, Perl scripts are run from
+a MinGW universe, within which filesystem paths are fixed. Therefore,
+Windows Perl scripts don't require a runtime prefix resolution.
+
+This makes sense because they are clearly functional right now without this
+patch enabled :) However, we don't have the luxury of running Perl in a
+separate universe on other OSes, so this patch is necessary for them.
+
+I created a separate option because I wanted to ensure that I don't change
+anything fundamental in Windows, which currently relies on runtime prefix
+resoultion. On all other operating systems, Perl and binary runtime prefix
+resolution is disabled by default, so if this patch set does end up having
+bugs or edge cases in the Perl runtime prefix code, it won't inpact anybody's
+current builds.
+
+I can foresee a future where Windows maintainers decide that
+PERL_RUNTIME_PREFIX is fine for Windows and merge the two options; however,
+I didn't want to force that decision in the initial implementation.
+
+> > +	# GIT_EXEC_PATH is supplied by `git` or the test suite. Otherwise, resolve
+> > +	# against the runtime path of this script.
+> > +	require FindBin;
+> > +	require File::Spec;
+> > +	(my $prefix = $ENV{GIT_EXEC_PATH} || $FindBin::Bin) =~ s=${gitexecdir_relative}$==;
+>
+> So why are we falling back on $FindBin::Bin? Just so you can do
+> e.g. /tmp/git2/libexec/git-core/git-svn like you can do
+> /tmp/git2/libexec/git-core/git-status, i.e. will this never be false if
+> invoked via "git"?
+>
+> I don't mind it, just wondering if I'm missing something and we need to
+> use the fallback path in some "normal" codepath.
+
+Yep, exactly. The ability to directly invoke Perl scripts is currently
+functional in non-runtime-prefix builds, so enabling it in runtime-prefix
+builds seemed appropriate. I have found this useful for testing.
+
+However, since GIT_EXEC_PATH is probably going to be the common path,
+I'll scoop the FindBin code (including the "require" statement) into a
+conditional in v6 and use it only when GIT_EXEC_PATH is empty.
+
+> > +	return File::Spec->catdir($prefix, $relpath);
+>
+> I think you initially got some version of this from me (or not), so this
+> is probably my fault, but reading this again I think this would be
+> better as just:
+>
+>     return $prefix . '@@PATHSEP@@' . $relpath;
+>
+> I.e. right after this we split on @@PATHSEP@@, and that clearly works
+> (as opposed to using File::Spec->splitpath) since we've used it
+> forever.
+>
+> Better just to use the same idiom on both ends to not leave the reader
+> wondering why we can split paths one way, but need to join them another
+> way.
+
+PATHSEP is the path separator (":"), as opposed to the filesystem separator
+("/"). We split on PATHSEP below b/c we need to "use lib" as an array, but
+it may be a ":"-delimited string.
