@@ -7,85 +7,89 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33FCF1FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 18:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73FC11FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 18:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755580AbeAHSdr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 13:33:47 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:43640 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755460AbeAHSdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 13:33:45 -0500
-Received: by mail-qt0-f171.google.com with SMTP id w10so14774103qtb.10
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 10:33:45 -0800 (PST)
+        id S1755876AbeAHSgg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 13:36:36 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:34401 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755730AbeAHSge (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 13:36:34 -0500
+Received: by mail-qk0-f196.google.com with SMTP id b76so2515917qkc.1
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 10:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=W+K7uyDwfBWmUd0PtBO57rIoWv5UARTgDBlWP65KPE0=;
-        b=buUcsrUIdmROUIV/eldMNoROqYBLx+PDgvRls8whcHapWN94fvhsqdyit5bh41h6l0
-         Ca/RbgWMkZMeFxqfzfzuiFpJf6xxBP8OLnMyvCZqg8qvQEXAox0a1t01jqFueWP1mW3N
-         lpTymNxyKh//ZGNYeGAUK3eHDsFVOLfFx5SQNdOfH8pt9nLYb6jvu/pD/k51MIOU831f
-         jRXWso7cQLHjK82NnZG55S9gufsOaStP7mI8Rll9wEF16XKkisAJWQKk6sPwiXViv9h4
-         o98jsMA7XxLUUcBuw7y4W77lZQcJVUQ4DT4q/iE+hix9MsXydv1lNu8Tnaq1Ef1SPd/o
-         o+Jg==
+        bh=Yn8awq8ipJW3Dhix8qZg9/QT12qEbmrY1iNIibcEs6s=;
+        b=YMpb4EKyN4eEbLcx0Wp7kHcruS1SkuO8dlI0utv6SJQicqBrk3dFTXszTlToo3fHZo
+         y+qX7cpZUg82Cq9aBTF57SQcpv5Z73gSrSrDwjsndsCZ96NNgWPYZRmF9n3oZVqcgm05
+         GWEJJ7nTeEaQbFS/hmqxHCyNaU3DqGAmf87mO/0OnpLwPAILRbmJGWHZaAGRYGoA5xkl
+         G3oZ6RUKhiqkur7U5XYruEak+nQg3AN+hzedzC45lBlBTT1zhgmnDeu8RDPcK5wnwuVF
+         ZMb5SRiabWqJITvW1RQiInlq/HTDjMKiFBf1JCwon1MiisF0EbmB30JO00Qxj8kPZCKt
+         XLXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=W+K7uyDwfBWmUd0PtBO57rIoWv5UARTgDBlWP65KPE0=;
-        b=UNmmJ615n7NdbH50N0n3zvhg5QGJfKhGicFoWUs8+YiEwjwxlk5woBsjmEdsssltcP
-         S9kcb1H7pCA/EPK45CyLmXRiB94lCyG7VrMkLi6lNF73pLuTKMBnUXavuIMVIZuqbWbm
-         u+wGdB1Cm5LoMkUlh/+z3LEzcUnCmtnE70znRar9xhL6BHhHIoWVgQLPJWAAJq9tOrd1
-         XbiQH9ChgPYzT3KvKQ5Uk0nukVEOo6CYvYe3rb3Ex2dcwk+A54En3lT4he+3S/sn/WkB
-         Iktpknf6hy+m6/ZfFrpOzxBv3qV2SnHePauTfPnbRWe4qkrN5eHSkLBMh2mkZPTnWVAT
-         S5zg==
-X-Gm-Message-State: AKwxyteeH75awEruxo1dE/wH4eBK0Bx5bpuiSq73DKsyPgwRnkQF+cYu
-        ImM2NqPppqwnH7zLqOa9JCo00tIBQ42+vRIBUhnp1g==
-X-Google-Smtp-Source: ACJfBougkEWN1AVw9d4yxyurYPE53oM3YeWKvm2ZjGT0l2XVSR73Wp5HNGlu2Ss97Lz85EO7aKo92rE+wuy2CTqv6Ok=
-X-Received: by 10.200.41.1 with SMTP id y1mr16654090qty.162.1515436424657;
- Mon, 08 Jan 2018 10:33:44 -0800 (PST)
+        bh=Yn8awq8ipJW3Dhix8qZg9/QT12qEbmrY1iNIibcEs6s=;
+        b=h0P/6onD2SyF60g5DqhC2TUkfJnHkJoQ4ha7KjIhX4aKveEB18eNz2DZ03LSvO4g/q
+         Y815uB/fxb09uf6FWUncMk4UWdGSpGOZaUQ6wZKqctdcnmRb20njw4q/zciC3WYprbJn
+         ZAZ9SUNx1vafHyTuRil1f6EvugtQN35JSDLwWNA8EQvQQDCz5+flpQwReDQPMsAHwMLH
+         peQCE73FJDvrxuHCRbloHa9aYEGD2LVgeTpR3OK0WImRaSJ2LzyOE9AZ+NmRtfEP/yKV
+         D7YIBa9kt/zEbg3BBY5mc2fIbIZoP2Vm08WOQlQCg6Y1YfQaatuUjaJ5G5jMPOLywWgP
+         lZpQ==
+X-Gm-Message-State: AKwxyteIT5hqlhfiJf5DZ8Jvr+VnhCm0ubRyar5yBotMnO0iXT9HyAdP
+        6xCnywVC0zinqksNzxWU9vAiNsrJ9TRkWw5vnSYVBwWz
+X-Google-Smtp-Source: ACJfBotlbk7QA0RunqVcnrSUveV3yzrUsan6tjzy3VXwgRe3e2qv59LvlnKTbbLBsVe1PiqUQ2KQJjQX3vstrIObcQk=
+X-Received: by 10.55.72.75 with SMTP id v72mr16807933qka.295.1515436593392;
+ Mon, 08 Jan 2018 10:36:33 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 10:33:43 -0800 (PST)
-In-Reply-To: <CAPig+cQb1G0H5FS9bMmrqv=T45XoRwp2-2vUAEDayd0hV8PwYA@mail.gmail.com>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-2-kaartic.sivaraam@gmail.com> <CAPig+cQb1G0H5FS9bMmrqv=T45XoRwp2-2vUAEDayd0hV8PwYA@mail.gmail.com>
+Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 10:36:32 -0800 (PST)
+In-Reply-To: <20180106184614.20115-3-kaartic.sivaraam@gmail.com>
+References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com> <20180106184614.20115-3-kaartic.sivaraam@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Jan 2018 10:33:43 -0800
-Message-ID: <CAGZ79kaNujhXPPSHQZuvEAz_NLDT0Opna+W4b84-vnan-1UsOA@mail.gmail.com>
-Subject: Re: [PATCH 1/8] Doc/gitsubmodules: split a sentence for better readability
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
+Date:   Mon, 8 Jan 2018 10:36:32 -0800
+Message-ID: <CAGZ79kYyUcun4spUKVsOb+SucCe6=1cizrfH7hrFoyKteWZ_9w@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Doc/gitsubmodules: clearly specify advantage of submodule
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 6, 2018 at 4:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Jan 6, 2018 at 1:46 PM, Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
->> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
->> ---
->> diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
->> @@ -36,8 +36,8 @@ The `gitlink` entry contains the object name of the commit that the
->>  The section `submodule.foo.*` in the `.gitmodules` file gives additional
->> -hints to Gits porcelain layer such as where to obtain the submodule via
->> -the `submodule.foo.url` setting.
->> +hints to Gits porcelain layer. For example, the `submodule.foo.url`
->> +setting specifies where to obtain the submodule.
+On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+> ---
+>  Documentation/gitsubmodules.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I don't find the original difficult to read (aside, perhaps, from the
-> missing comma before "such as"), so I don't feel strongly about this
-> change.
+> diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
+> index bf46b0fb5..cb795c6b6 100644
+> --- a/Documentation/gitsubmodules.txt
+> +++ b/Documentation/gitsubmodules.txt
+> @@ -57,7 +57,7 @@ Submodules can be used for at least two different use cases:
+>      * Size of the git repository:
+>        In its current form Git scales up poorly for large repositories containing
+>        content that is not compressed by delta computation between trees.
+> -      However you can also use submodules to e.g. hold large binary assets
+> +      Therefore you can use submodules to hold large binary assets
 
-Seconded. I am neutral to this change, but as you were keen enough to
-come up with the patch, I see no reason to reject it.
-Anyway, let's read on!
+If this improves readability by a lot, I'd be all for it. But this use
+case is just
+exemplary. There are also cases of submodules that do not contain big files,
+but e.g. have a lengthy history with lots of small files.
+So I don't know, as I would want to keep emphasized that this is just
+an example.
 
-Thanks,
-Stefan
 
+>        and these repositories are then shallowly cloned such that you do not
+>        have a large history locally.
+>      * Transfer size:
+> --
+> 2.16.0.rc0.223.g4a4ac8367
 >
-> However, since you're touching this, you could apply the s/Gits/Git's/ fix.
