@@ -2,91 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6A21FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 21:46:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9511FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 21:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932763AbeAHVq3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 16:46:29 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:33130 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752495AbeAHVq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 16:46:28 -0500
-Received: by mail-qt0-f172.google.com with SMTP id e2so15489447qti.0
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 13:46:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Os+0nXMN/uOUPd6CjpfYDH8j/Dzl+aGIbgyO66awHtY=;
-        b=UYCmK/2We+geK/X+rVlKyP65supx/XFKRCrwZ19RPFdgBPxT++7Y8hsxw2Xio5OV9x
-         F/5gxlxaVo5oCHfCrkYCUHsNsX6wfiv2/KjDqAr/QfWWCM5RSPsg4fzIp+PKoIS/HB9C
-         xBSd3yAke2CaJOsAw5zlI0r2flK3yAeIyGWS1HHKhjx8QsMfL94ourfRMuper6nF4p1a
-         N+Utv9eamBPJsafOpAMyEshpHvjNTVH6UPoR7oCEWY3+t7UqTHPUwwKZ69kp2jGSe4qg
-         q6Qk52WJYIaOWnyp1GzLoMvvaHZVxH2MVRHY464nxwKadGajQGU0DkmqJvTZHPWueYVj
-         UWoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Os+0nXMN/uOUPd6CjpfYDH8j/Dzl+aGIbgyO66awHtY=;
-        b=I+s/gR6u9YPO/MsfP72TtpkojXiCXMZccicxdBNbdEJcKLqeT4Ss/Maf55a+Qw6IyP
-         /aZgGfu9VY5G++zWov/xfRrRI13eMladq8rpjpqrUXUWofJtWP4JcLQ9mkbQ1vG6gUa3
-         yc2XbkGQH64iTQJ9tKOjRdUnkRIdnC2MObLJSnM86TFnnp7j1zdhKcd64ptsABWkUNmD
-         SUXX51BZfO7jbpaIxJPD2aohtzEHgrtuuhaAhZuR+SDwg5ykglMcXhb/T5c28bWFrrqO
-         Fokmjwv2qTFIXT6MnR5YWuxPd3A4ZQ0y7lg44hIWxo8dx8gxQmXtgfneImzsUmYYSEux
-         cc2Q==
-X-Gm-Message-State: AKwxytf3e03Q5OdheGWYz2PEekGyZQeyjjQdk8wuLzEZdX4uTHBTk/pw
-        b23vlp1nyojkMnt2pxcmNuPkYKsd/fBvseWlflAXI4Z3YPE=
-X-Google-Smtp-Source: ACJfBosvTBz0vmPTb1TNMJXOThGHyAWPCnfpsf1PvuLUW5ArXfUYa91GhpYig9X6YK6qjrQ1qwRluNoXSBuVb0anPnU=
-X-Received: by 10.200.26.66 with SMTP id q2mr385357qtk.174.1515447987207; Mon,
- 08 Jan 2018 13:46:27 -0800 (PST)
+        id S1753986AbeAHVud (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 16:50:33 -0500
+Received: from mout.web.de ([212.227.17.12]:64920 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754507AbeAHVuc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 16:50:32 -0500
+Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mgwhg-1eCcDr3uZE-00M6ca; Mon, 08
+ Jan 2018 22:50:28 +0100
+Subject: Re: [PATCH] bisect: avoid NULL pointer dereference
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <07a8cdae-8f8c-8560-c450-c6089a942c96@web.de>
+ <nycvar.QRO.7.76.6.1801082145140.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4806374d-144e-5260-b4bf-34c699a980a3@web.de>
+Date:   Mon, 8 Jan 2018 22:50:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 13:46:26 -0800 (PST)
-In-Reply-To: <CAP=KgsSQOG=mmUDfSFDw0HJYvJWVPFU7M5T+k4VhfuRC_v9dww@mail.gmail.com>
-References: <CAP=KgsSQOG=mmUDfSFDw0HJYvJWVPFU7M5T+k4VhfuRC_v9dww@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Jan 2018 13:46:26 -0800
-Message-ID: <CAGZ79katKiRwXLJscxbO-+JWLedgKmZ7Un-65i4CqefX9Fedqg@mail.gmail.com>
-Subject: Re: cherry-picking fails after making a directory a submodule
-To:     Per Cederqvist <cederp@opera.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1801082145140.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:9gY4lAVHAYKNdtM+mIXnism3OwWydxa5lXQz13dtCiF/Lhf0B7l
+ Dfb6ZZHM7DdJeaFQ1VSETHRn+mhQTIdKrkbCHUA3gGeLe8jMjQR55xYVl5mTnbw+pYEBiHy
+ IR5jwDwU9DBA/sTiEBGvC26ZfHKL390/bPU78Z5rKlCXawA+IsqEtZatcRGydIyHnhDCREa
+ A5ePHGhfArtx/3HrqdHmQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MZK595q8CrY=:0nosobdgP3KtBNUtJ/vByT
+ 5Xtc+CoTNIUZf1xPZ5A+uYRUr7ZQPm2nW1I+M6ZB7++GE/qh4LWsn0Oin76SFAszYxJLuLjJY
+ QP6NLf+tI+tBwJQShCazp4QU6vvOR6yL0nKNxvupYnNmGrx/vfV1GwPp1kyYLf2XP4uIhW3fA
+ dOV5fp7di0VZxHgAOpdmR1c5xY+YxdRvYMlBRRsSyaHuTlPLH6uEFyvZIrNvTqEYK1oE/CVVv
+ fpxFFOWSojr3iGgW+XEUchOpBGL9LXfJ3eAr4FwBJQhPe9BY74GEcIy9jcWNNBWp/qSUZefL9
+ R6b3wIFm7t08mZPmtL8D/D92qrD3mT8GO+T9/HvsWCawhERyMSx6jVDoNJIPfOSaLmq7uqHiM
+ cMqaXInddaICloKdFKbd8UxifmpDf7pG9MVvdOmJSth3MHIy//kELHXNDIBsw9SuMzHXfStsN
+ 5LdnxGo41r5FRkGCDY9ZziHbpcRHLHIAk5/HK4eRwEWsYD5KqTYLVOduBGMFbIIBv0VcCiZ/Q
+ ntrBeZJizWAvqXbmsIVQeCbEN77HJy+cM2kasCE3qv1Hr9Zf6nl5FFdPJkIG0DbsgTHVvvmOU
+ yjsJgkMg6XeSHKJ4JuT/xSBxtI/zZRgDOQWqBhJL3T68ZQ6EHvmhD1rvm7HtjLRclqSTsjb1Y
+ T4RU+YXSz6qsOUQ6Afp94tjD7LixFenpdp6Ia04B9L+HqnSnzf0pVn4eP9q5bmKubNGQPf2i8
+ csZYr9ULq8bw/CwxMNQ/zIFiCFecrssL/lJi4jRQ00QWZnLNS+r2QWDyD+6bwq//N1TdwlRsF
+ Rkp3JDe3y2iqpe3tPnLsB8UFMJN4EENtGT2gd3bSMPveZ0Mopg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 8, 2018 at 1:08 PM, Per Cederqvist <cederp@opera.com> wrote:
-> I have a situation where I have switched a directory from being a
-> subdirectory to being a submodule.  I then try to cherry-pick a commit
-> from a taskbranch that was made before the switch to the master
-> branch.  The commit touches a file outside the subdirectory/submodule.
-> Yet "git cherry-pick" fails with this error message:
->
->> error: could not apply 78c403e... Add a project feature
->> hint: after resolving the conflicts, mark the corrected paths
->> hint: with 'git add <paths>' or 'git rm <paths>'
->> hint: and commit the result with 'git commit'
->
-> I can resolve the situation by running "git add libfoo && git
-> cherry-pick --continue".  The generated commit contains no changes to
-> "libfoo".
->
-> I don't understand why I need to manually add libfoo, as the commit
-> I'm cherry-picking doesn't touch anything in libfoo.
->
-> The script below can reproduce the issue.  Tested with git 2.15.1,
-> 2.14.0 and 2.8.0, all with the same result.
->
-> Is this a bug in "git cherry-pick"?
+Hello Dscho,
 
-Could you please test with
-github.com/git/git/commit/c641ca67072946f95f87e7b21f13f3d4e73701e3
-included? (See its parent commit, for the test)
+Am 08.01.2018 um 21:45 schrieb Johannes Schindelin:
+> Isn't this identical to
+> https://public-inbox.org/git/20180103184852.27271-1-avarab@gmail.com/ ?
 
-From my cursory read that commit is the issue addressed in that commit.
+yes, indeed, thanks.  So here's an upvote for Ævar's patch then. :)
+
+(I should have sent it earlier, but was not fully convinced it could be
+triggered in the wild.)
+
+René
