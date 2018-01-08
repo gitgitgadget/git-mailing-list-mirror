@@ -2,127 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 264A51F406
-	for <e@80x24.org>; Mon,  8 Jan 2018 06:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7681F1F406
+	for <e@80x24.org>; Mon,  8 Jan 2018 09:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755727AbeAHGhU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 01:37:20 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37046 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1755723AbeAHGhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 01:37:19 -0500
-Received: (qmail 816 invoked by uid 109); 8 Jan 2018 06:37:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 08 Jan 2018 06:37:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26110 invoked by uid 111); 8 Jan 2018 06:37:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 08 Jan 2018 01:37:46 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Jan 2018 01:37:12 -0500
-Date:   Mon, 8 Jan 2018 01:37:12 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 0/5] Add --no-ahead-behind to status
-Message-ID: <20180108063712.GB10933@sigill.intra.peff.net>
-References: <20180103214733.797-1-git@jeffhostetler.com>
- <20180104230630.GA2599@sigill.intra.peff.net>
- <2887ad5a-5de9-3c5b-92c3-40b19120e604@jeffhostetler.com>
+        id S932079AbeAHJlY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 04:41:24 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:35697 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932076AbeAHJlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 04:41:21 -0500
+Received: by mail-wm0-f45.google.com with SMTP id a79so12938413wma.0
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 01:41:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=nIbTMVYn87W8PCf5xVXZNXwWXlNGKYbzFIcMTEAOWZ0=;
+        b=bcWc6C7sIWGj53dIIsYW8UmuC4cthDTuiMz7t1ycYKNOw473kZRvX+laMyjzLgTgVE
+         dqW7X4JHz8qSnsrFNR1075HYnOXnb7oVKQKGuYw/pm6wXvP8B9svcmZ8ffmodCeaayTt
+         PjPUmKxnOMUuwevznjI+pr2Y03FZJlA36a0uKoqRvA/E/b8yAkD0WcOumXrKYiClM54s
+         zfVH927zlBWJ6pW+7Wk2ivSupkLwgysu2qpPsAGXROQmij4pIzrzYFD+HDr0beDrSUn/
+         AtjhW3rHmrbuw6U5leK9EkmYCMdQ8/mDeq4dbxUo1ATLNaD5hrpw/JzFPAKpU54BXbg6
+         joUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=nIbTMVYn87W8PCf5xVXZNXwWXlNGKYbzFIcMTEAOWZ0=;
+        b=W3G68z+4sbtDzLu2h3RYukYgVQzYkOLImVJkjrhxWygfwW5d20AY0U/s7lYpfJSmx8
+         CHCdbgWuPDlCa5BaqtUATq5VCAUjhjcwkYB6pZITIkDHtgCr+jbY+NCVKhy6M9wr8XC7
+         pjOyY+jZlupnd8eBfHq2XZ1gKE5wQPTQzQCVZWKtnDvsLy0EzcDnzJxjcKPr9tA5gKbV
+         o0PRXR9uzLgCUUD9UyKw2wgclTB5CGwJmMoULmmOv5QkaaOnmmkciTPvksXWXwcxKrvu
+         3j8j64sWCNxov9n1Z5ZvqHZf3YVnEgmzImeUhzcuBUyWyHn5AFHXCeB3AyhiFyHHNHOm
+         maJw==
+X-Gm-Message-State: AKGB3mLcCsJabGx6n5U2x1DauC3Q5TNgeQW4ZeZ4JClTiWQd5IoQSaa2
+        qHLN6DDzyhAEMG5X8hsSQJE=
+X-Google-Smtp-Source: ACJfBouHBVfYjvhYiQZsVhiK8fY1jKqc6iMYmGLn15QFXgO1YKdWzCbhLU8mBTruHiqItLbomAqKAw==
+X-Received: by 10.80.182.83 with SMTP id c19mr15397268ede.126.1515404479772;
+        Mon, 08 Jan 2018 01:41:19 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id b30sm7679840ede.53.2018.01.08.01.41.17
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Jan 2018 01:41:17 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Dan Jacques <dnj@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v5 2/3] Makefile: add Perl runtime prefix support
+References: <20180108030239.92036-1-dnj@google.com> <20180108030239.92036-3-dnj@google.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20180108030239.92036-3-dnj@google.com>
+Date:   Mon, 08 Jan 2018 10:41:16 +0100
+Message-ID: <87inccbscj.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2887ad5a-5de9-3c5b-92c3-40b19120e604@jeffhostetler.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 05, 2018 at 11:46:24AM -0500, Jeff Hostetler wrote:
 
-> > I'm mildly negative on this "level 2" config. If influencing the
-> > porcelain via config creates compatibility headaches, then why would we
-> > allow it here? And if it doesn't, then why do we need to protect against
-> > it? This seems to exist in a funny middle ground that cannot decide
-> > whether it is bad or not.
-> > 
-> > It's like we're inserting a foot-gun, but putting it just far enough out
-> > of reach that we can blame the user when they shoot themselves with it.
-> > 
-> > Is there a compelling use case for this? From the previous discussion,
-> > this is the strawman I came up with:
-> [...]
-> 
-> I kinda trying to serve 2 masters here.  As we discussed earlier, we
-> don't want config options to change porcelain formats, hence the
-> true/false thing only affecting non-porcelain formats.  On the other
-> hand, VS and git.exe are on different release schedules.  Normally,
-> I'd just have VS emit a "git status --no-ahead-behind --porcelain=v2"
-> and be done, but that requires that git.exe gets updated before VS.
-> We do control some of that, but if VS gets updated first, that causes
-> an error, whereas "git -c status.aheadbehind=<x> status --porcelain=v2"
-> does not.  It is respected if/when git is updated and ignored until
-> then.  Likewise, if they update git first, we can tell them to set a
-> config setting on the repo and inherit it for porcelain v2 output
-> without VS knowing about it.  Sorry, if that's too much detail.
+On Mon, Jan 08 2018, Dan Jacques jotted:
 
-OK, so my strawman was totally off-base. :)
+Thanks, applied this on top of next and it works for me, i.e. install to
+/tmp/git and move to /tmp/git2 = works for me. Comments below.
 
-That explanation is interesting. I do think you're facing a real problem
-with moving the versions in lockstep. But shoe-horning the feature into
-config like this seems like a pretty ugly solution:
+> Enabling RUNTIME_PREFIX_PERL overrides the system-specific Perl script
+> installation path generated by MakeMaker to force installation into a
+> platform-neutral location, "<prefix>/share/perl5".
 
-  1. Then we're stuck with this weird foot-gun config option forever.
+Not generated by MakeMaker anymore :)
 
-  2. It only solves the problem for this one option. Is there a more
-     general solution?
+From 3/3 (not not send 2 e-mails):
 
-The more general solutions I can come up with are:
+>+# it. This is intentionally separate from RUNTIME_PREFIX so that notably Windows
+>+# can hard-code Perl library paths while still enabling RUNTIME_PREFIX
+>+# resolution.
 
-  1. Is there a way for a caller to query Git to say "do you understand
-     --no-ahead-behind?".
+Maybe we covered this in previous submissions, but refresh my memory,
+why is the *_PERL define still needed? Reading this explanation doesn't
+make sense to me, but I'm probably missing something.
 
-     You can ask "git version", but parsing version numbers is
-     problematic. We don't have any kind of "feature flags" output, and
-     I'm not sure we'd want to get down to the level of specific
-     command-line options there.
+If we have a system where we have some perl library paths on the system
+we want to use, then they'll still be in @INC after our 'use lib'-ing,
+so we'll find libraries there.
 
-     One thing you can do is speculatively run "status --no-ahead-behind",
-     and if it returns 129, try again without as a fallback. That incurs
-     a failed invocation for the fallback case, but it's quick (we fail
-     before looking at any data) and you can cache it for the duration
-     of a VS session.
+The only reason I can think of for doing this for C and not for Perl
+would be if you for some reason want to have a git in /tmp/git but then
+use a different version of the Git.pm from some system install, but I
+can't imagine why.
 
-  2. There could be some way to tell the option parser that the next
-     flag is optional. E.g.:
+Or there's another option...
 
-       git status --optional=--no-ahead-behind
+> +	# GIT_EXEC_PATH is supplied by `git` or the test suite. Otherwise, resolve
+> +	# against the runtime path of this script.
+> +	require FindBin;
+> +	require File::Spec;
+> +	(my $prefix = $ENV{GIT_EXEC_PATH} || $FindBin::Bin) =~ s=${gitexecdir_relative}$==;
 
-     That would be pretty easy to implement globally in parse-options.c.
-     It knows when an option is unrecognized, so it could just treat
-     that as a silent noop rather than barfing.
+So why are we falling back on $FindBin::Bin? Just so you can do
+e.g. /tmp/git2/libexec/git-core/git-svn like you can do
+/tmp/git2/libexec/git-core/git-status, i.e. will this never be false if
+invoked via "git"?
 
-     Of course, that doesn't solve your problem today. It wouldn't be
-     safe to start using "--optional" until it had been in several
-     released versions.
+I don't mind it, just wondering if I'm missing something and we need to
+use the fallback path in some "normal" codepath.
 
-     And I have a feeling it may not be sufficient without further
-     feedback to the caller. For this flag, the caller is happy to say
-     "do this if you know how, but otherwise I will cope". But there are
-     probably flag where it would need to know whether it had any effect
-     or not. So this whole direction is probably crazy.
+> +	return File::Spec->catdir($prefix, $relpath);
 
-Of the two, I think (1) is not so bad.
+I think you initially got some version of this from me (or not), so this
+is probably my fault, but reading this again I think this would be
+better as just:
 
-> It is OK with me if we omit the last commit in the patch series (that
-> does the experimental =2 extension) and I'll deal with this separately
-> (maybe differently) in the gvfs fork.
+    return $prefix . '@@PATHSEP@@' . $relpath;
 
-That would be my preference. Thanks.
+I.e. right after this we split on @@PATHSEP@@, and that clearly works
+(as opposed to using File::Spec->splitpath) since we've used it
+forever.
 
--Peff
+Better just to use the same idiom on both ends to not leave the reader
+wondering why we can split paths one way, but need to join them another
+way.
