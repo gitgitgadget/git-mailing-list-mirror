@@ -2,124 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5D281FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 19:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99C4F1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 19:38:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933405AbeAHTgR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 14:36:17 -0500
-Received: from mout.gmx.net ([212.227.17.21]:58251 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933402AbeAHTgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 14:36:13 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfmZs-1eDgac2udI-00NEDJ; Mon, 08
- Jan 2018 20:36:10 +0100
-Date:   Mon, 8 Jan 2018 20:36:10 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: rebase preserve-merges: incorrect merge commits
-In-Reply-To: <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801082034470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com> <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
- <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com> <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1756605AbeAHTik (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 14:38:40 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:40117 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756468AbeAHTij (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 14:38:39 -0500
+Received: by mail-qt0-f173.google.com with SMTP id u42so15035296qte.7
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 11:38:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=XQuG2IRjSb+fW/jxZ9uzyDypMi4tu4Lz93KQDH6mbTo=;
+        b=KLpQpg9hACvxQjMeZJZeY5fEUuzoAr4BdSpIVlIsQCHHe15k5WZ1WwO2OYCsxA5je7
+         ChxKBHxvJqit8R+lfSFxjNjWOSMPdMZN3YL1SqQDlRU1ld1hHDJdtO0LmOgl1DUye6i+
+         OQULHIZZ4tUkZbnaZEyU0Yum8ENYIFO55DdzKwArXOC66C86mzfK2gmemxQEg6E966NI
+         paF/OXmmelnpaSmYOUBLfk42jUXyXP8DFsuP+pTsvHh0sRMuqRxcyejSTT4zw4HQTUnE
+         7qdvCJhqGuNWCxu5XU240iSeXCoyHBJmbzrbOjFEDPrMVuyIp5oXEQCGAJN8og/gZPmI
+         69VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=XQuG2IRjSb+fW/jxZ9uzyDypMi4tu4Lz93KQDH6mbTo=;
+        b=jEfPNdMnGm2HV8I8jzerwzw4FWaU9abJJEyoVclN2MNFimS5xotAY0vICQE7kLuqcw
+         mPXEMP0XRc2x3ydmH8gEvkFik0bohxo51vCh0mbzlrH1vBH7ARY5OHPAEyj7sAsp614U
+         PJKwFCZTbkcVLX8eOKrobDMQxggyX37zKG8k90BoGg4Nn7zvwadBBl+Dicy6Bp76cdi5
+         i0BliRnFql5aMzU3krcC+H7RzI6A5hE/lQTqb0AiMX1Uzz04kDvj/q68Ta+XgxNDJnIS
+         sTne2gjo71uzmtRaDnc24gnROQV2K4uqmcrwxWdeMjmWWGO6MHdXDce+Z+b2dwQzTtNn
+         NLWg==
+X-Gm-Message-State: AKwxytcF/0sr6b9SvYYRxMbVCm6loES1xbt9MR4H6MzCzIeqHntWXNyH
+        Uwu/U4pggQp4BXv/YIJF0X+nF/+ZCKat2HHuFUmycHHm
+X-Google-Smtp-Source: ACJfBovl4XrwJFRe3LJpo8AL4dyo5QZuhYKOKFYNrcWosFWpYpTnhCOGJNrINHqaPt6Z2SE3CvPK9BzeLOMU+AdJwTs=
+X-Received: by 10.237.53.50 with SMTP id a47mr18635017qte.29.1515440318503;
+ Mon, 08 Jan 2018 11:38:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hYtVjdwZ2G1ajNEl3YS1pSSN3DO3/Dvvmn9gCRziEA+0Kk6O6s3
- Bb9WD6sffP1AVv44nm7JoLKgDtDYP2l/BDHREtezDgOBr/DeOJOpIWi+MxaXJP/K+ukxDb7
- OAX8lqskE9vdt0FG0JwwfVJG0siP6HgTRs/645YNgOWwmNojwcB+0tlXTzoZyaWkCWW1PgU
- wy1W7iX5c9RFlYtUfUKqg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JDw0gfLI8VE=:Kz1rxY8WuI62JBDnks6e89
- IXQbIaHSYS9i4DnyN8nO9OvcdCO22+x3/8qgrbTnR4UW1ZeRKpTQT0rfoxIYMMeXVF6ktxWjZ
- fnWhv/O8v2E4js845quoE5jQI8xFOF30PMoMdb/FrkkA/4k/AzmMHQR9h6U10KU5D5C3vxwZv
- oO404ttSRYtOAMP7VLTv/Z7hhb6PYK4q6/t9yj+bXIqdGD1RCvF5y0HoXElyqRgdICbYy+TUC
- HNTx8dqPkUrbX+BhvqHMqNxU7orViuN9pZBpk3eiDFKZkErkkgTGPeYFbwltgk/3eM9VYuzMm
- cYSFDtQHNdGgMG/YID0OBxiXIqDHGqvkA3W3dW0S3wxDbN6+x+2P8AjKIpNPjSF8zyXizkFJl
- WsrMgnVG8J2LRFEC3XJoA7cmB6COcc886k4Aly21+SA9z99+C7nmbrK02meX7mKhMyfrVhguN
- zFILHF+VIRqQoFJ/VBZy2l/WZxQna75YEE0sWJtfYUvjf4ezAuT7Yh+66A7qzT7cx9w/RjKfr
- klFahozgO8wPMA/1YfZmqrD5lhvRFxN6HsOAAUAyHQgS1bw8wQKpznbboFz4qkX5ywtAhaXjE
- 1pqTU6q/Gb7rl0Y59ESkEXlw+WedUJ0cx4KoXr8U4FeQ3r7ek11HNzriWVPO8ooZUEosZKMWE
- bx759C5IGXXt/+dDg/3j+mms3QkCqCLSB0Ig/Z87FjY1/HzDMwbbHRZq6jKffdHCCbU9uJIOV
- zYd5kthYFH31ziCmaCJOEYLYJJEAEZTpTIqnqbR2ku8jzaPxIV9duuQt0N2DB8JCqjbHeozLv
- Ead20LIEUGGQmXUrtr4B5UKm/a+aIKGKCK0aunyI3kO1xvlHlm7Bx0VLfOltmBUTF57WIkhdA
- t7v7RvH0HUeLr0gQCPvjsD4GJi+8I4CdYg42G3kTt3rW4F+b+3zOKUQI3HiHRyUdYmdhBElTH
- rRx2zWaY0PPpGFE8fA22GkHcGzcDrFzVitOJuJIBgBcLkTw0KfWqjJ9G/HLinMQkPGIjn2loU
- b06xWCgpQQbyFR/Lgi01LI8=
+Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 11:38:37 -0800 (PST)
+In-Reply-To: <CAPig+cQg3o2iicGhSmwPM8dDjtUFSGow5dwprbRNnq4-m5EmFA@mail.gmail.com>
+References: <20171228210345.205300-1-sbeller@google.com> <20171228210345.205300-3-sbeller@google.com>
+ <CAPig+cTkxmiJZwLqYhKhvApZubJLTLufv2Yo6D5nLMLmrUc2cg@mail.gmail.com>
+ <CAGZ79ka22DPHX5_etFREvdVjfsQPzQG66iFgyfsjCdLnwUcAdA@mail.gmail.com> <CAPig+cQg3o2iicGhSmwPM8dDjtUFSGow5dwprbRNnq4-m5EmFA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 8 Jan 2018 11:38:37 -0800
+Message-ID: <CAGZ79kYxP7ZwpQvv_-2voN+-6C6trZmVwGXoRE1NiAMe7O_GxQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] builtin/blame: dim uninteresting metadata
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matwey,
+On Sat, Jan 6, 2018 at 12:26 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Thu, Jan 4, 2018 at 5:10 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Thu, Dec 28, 2017 at 2:29 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> On Thu, Dec 28, 2017 at 4:03 PM, Stefan Beller <sbeller@google.com> wrote:
+>>>> +static inline void colors_unset(const char **use_color, const char **reset_color)
+>>>> +{
+>>>> +       *use_color = "";
+>>>> +       *reset_color = "";
+>>>> +}
+>>>> +
+>>>> +static inline void colors_set(const char **use_color, const char **reset_color)
+>>>> +{
+>>>> +       *use_color = repeated_meta_color;
+>>>> +       *reset_color = GIT_COLOR_RESET;
+>>>> +}
+>>>
+>>> I'm not convinced that this colors_unset() / colors_set() /
+>>> setup_line_color() abstraction is buying much. With this abstraction,
+>>> I found the code more difficult to reason about than if the colors
+>>> were just set/unset manually in the code which needs the colors. I
+>>> *could* perhaps imagine setup_line_color() existing as a separate
+>>> function since it is slightly more complex than the other two, but as
+>>> it has only a single caller through all patches, even that may not be
+>>> sufficient to warrant its existence.
+>>
+>> Have you viewed this patch in context of the following patch?
+>> Originally I was convinced an abstraction was not needed, but
+>> as the next patch shows, a helper per field seems handy.
+>
+> I did take the other patch into consideration when making the
+> observation, and I still found the code more difficult to reason about
+> than if these minor bits of code had merely been inlined into the
+> callers. I neglected to mention previously that part of the problem
+> may be that these function names do not do a good job of conveying
+> what is being done, thus I repeatedly had to consult the function
+> implementations while reading callers in order to understand what was
+> going on.
 
-On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+I asked the question before rewriting and resending, and now I agree
+that we do not want to have these small helpers.
 
-> 2018-01-08 19:32 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >
-> > On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
-> >
-> >> 2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
-> >> > 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> >> >> Hi Matwey,
-> >> >>
-> >> >> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
-> >> >>
-> >> >>> I think that rebase preserve-merges algorithm needs further
-> >> >>> improvements. Probably, you already know it.
-> >> >>
-> >> >> Yes. preserve-merges is a fundamentally flawed design.
-> >> >>
-> >> >> Please have a look here:
-> >> >>
-> >> >>         https://github.com/git/git/pull/447
-> >> >>
-> >> >> Since we are in a feature freeze in preparation for v2.16.0, I will
-> >> >> submit these patch series shortly after v2.16.0 is released.
-> >> >>
-> >> >>> As far as I understand the root cause of this that when new merge
-> >> >>> commit is created by rebase it is done simply by git merge
-> >> >>> $new_parents without taking into account any actual state of the
-> >> >>> initial merge commit.
-> >> >>
-> >> >> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
-> >> >> it *does* allow it, but then fails to handle it correctly.) We even have
-> >> >> test cases that mark this as "known breakage".
-> >> >>
-> >> >> But really, I do not think it is worth trying to fix the broken design.
-> >> >> Better to go with the new recreate-merges. (I am biased, of course,
-> >> >> because I invented recreate-merges. But then, I also invented
-> >> >> preserve-merges, so ...)
-> >> >
-> >> > Well. I just checked --recreate-merges=no-rebase-cousins from the PR
-> >> > and found that it produces the same wrong result in my test example.
-> >> > The topology is reproduced correctly, but merge-commit content is
-> >> > broken.
-> >> > I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
-> >>
-> >> Indeed, exactly as you still say in the documentation: "Merge conflict
-> >> resolutions or manual amendments to merge commits are not preserved."
-> >> My initial point is that they have to be preserved. Probably in
-> >> recreate-merges, if preserve-merges is discontinued.
-> >
-> > Ah, but that is consistent with how non-merge-preserving rebase works: the
-> > `pick` commands *also* do not record merge conflict resolution...
-> >
-> 
-> I am sorry, didn't get it. When I do non-merge-preserving rebase
-> --interactive there is no way to `pick' merge-commit at all.
-
-Right, but you can `pick` commits and you can get merge conflicts. And you
-need to resolve those merge conflicts and those merge conflict resolutions
-are not preserved for future interactive rebases, unless you use `rerere`
-(in which case it also extends to `pick`ing merge commits in
-merge-preserving mode).
-
-Ciao,
-Johannes
+Thanks,
+Stefan
