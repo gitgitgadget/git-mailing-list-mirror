@@ -7,209 +7,123 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E10991FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 17:22:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7301FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 17:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752632AbeAHRWa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 12:22:30 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37392 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752592AbeAHRW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 12:22:29 -0500
-Received: by mail-wm0-f67.google.com with SMTP id f140so15622070wmd.2
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 09:22:28 -0800 (PST)
+        id S1753257AbeAHRY2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 12:24:28 -0500
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:46937 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753223AbeAHRY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 12:24:26 -0500
+Received: by mail-oi0-f41.google.com with SMTP id d124so3711441oib.13
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 09:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Oeeof63t3y9UuxrltwKClA7NyJHiX8diACA37wWMZ4E=;
-        b=iGRzJWqVbyuBnlsv4aos9pdyJBTk43+8QdBOnqDSWVFkxJMEGubt+2edMwnNWDKwMd
-         Jb0HtI30Ha3zh8ntEKkKKmxP+1qBhi1pnPHzaJ0dz9sVmh9masaJ2eI+BecnEJffULKo
-         cSglTTW9Du7dqe028ooOsj35YAaqC5RHLI2EbKra5MD+SWIp/tNLnNkedrwvaQPbyskU
-         Fp/skKNUf2dbQ9BXcZluYFleYMrhpN1wNAlvb+yXQEjrnhXjrmAvrlELF1TqGxyhVjSZ
-         nbS53n/KJxz5y0LN0Z1SkSdbFJG6dIOiaJXDNR9/WnshVXOdhzrjobAVik1fJ9d6eLlV
-         cpiw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ACwMAvMzq+H2oUBQRgxz6nFm5tLCMxAQeoZfKcz7THA=;
+        b=MvPB1gvp7ktrhSo4u7tqYum6k5Cb0se9s/RaIroosGk94QDDePgI5u4Hl2fPaRrKay
+         G06amgT/BlzG8KpJ4ZrZ5ebIRWNxlP/8K3CyvFK+ypabBqB02OG6SigWtxo0zew/TO9N
+         UlVjAG84JVlkMrjgclPI3hb8Nn5Vl6xgCIAotlJx3uJkUUYkMpdT6de+CS9Uml40hdE0
+         cYwnNZR94nJeUaJgffqqsdMrC9VW96uRvIYqf0gA2LbW1VC4mn0iWOFkxSRyQwYi79/D
+         D7hpxaoyqkC/fMzdh04Yebhi/RhSzzXBDGRswTfK2dp9reBPKbdF9ffXl4ZhnOTw7LOX
+         8oaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Oeeof63t3y9UuxrltwKClA7NyJHiX8diACA37wWMZ4E=;
-        b=GGrzErSzbTJMX+gzMah5psYm+GbgyfCBMR5Wldcij6M3UWOaY6Xos8IM5qCjhLVkrW
-         9SIfOJEThBgXKaQ4BUUP/4FtfD760FSjf3g12iMvSBPYcPGb01X0YC4dQlpIjSwFru48
-         t/Aw6LQlo8aU3GA5ZQBfDwR9p/uf1cyFO68+5LQLH5X/iCPZogRgtbNBQghh6TJYS1Y1
-         Vx6hUrYR+EbQbH1GUgFk+rsFThUIJe3iDRwo+DXEb3rfY0oA5rtKuqnSCRNeydoKYv5B
-         dAS9NaFFu3BT0TO2OMYkYX0iU88ynivDFKhva/oo2zOeVesTHmUjeO0OnDEFfG38lWte
-         uRTw==
-X-Gm-Message-State: AKGB3mJqoLeLXSadvhDfPti9CzL8HQPVhA1SW5ZcBbJw3b+Jd6pMN7WV
-        /mFGxHJ0oVVXS8JSE4k1HjQWlQ==
-X-Google-Smtp-Source: ACJfBotjxSnBEEfHyGNOsuK9XJqczHJUevkjTe52c7zrg/Xx3fJgFCd3aPBQ9LAe49hRdrsDDMJc8w==
-X-Received: by 10.28.232.148 with SMTP id f20mr9045929wmi.147.1515432147394;
-        Mon, 08 Jan 2018 09:22:27 -0800 (PST)
-Received: from localhost.localdomain ([213.208.157.7])
-        by smtp.gmail.com with ESMTPSA id r82sm10157493wme.31.2018.01.08.09.22.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 Jan 2018 09:22:26 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] travis-ci: build Git during the 'script' phase
-Date:   Mon,  8 Jan 2018 18:22:14 +0100
-Message-Id: <20180108172214.23615-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.0.rc1.67.g706959270
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ACwMAvMzq+H2oUBQRgxz6nFm5tLCMxAQeoZfKcz7THA=;
+        b=EjHFpLItBrVVtFJE5bswv3vhXJDVGe0W0jMMy4NugLqOM0zPjtUBZ++ob71Rlx+tNW
+         +V1qG41ThKx791boy83BO8Dk+D9ziXrx2o+/tZlojslH2aumOcw0jJxWYrF2xefMQQpU
+         kCPGBepBsOCrXUY85CUMYRr8QZ2NFrSyNOVAvzjPkXUG3ZlKr2kiMp0OZEEF4Uij6bUz
+         Asr5NNXya/QnfNjXFgfLmOvyQ5ikyoRUb0VQzlG6P6QS0dUZrMMlooQjM/oousNsDUbw
+         1jQl4YF1M8RhZNS9qCnjcIoI5QVn8/J3ll2aje0JLu7L5gTU8Pwydzr9lBHHo5idmyG3
+         UtDg==
+X-Gm-Message-State: AKGB3mKaIzqJ6+U/YSJTtPyc1Bs5krg5l4CXt51xryPBsVxV6rnYN1ya
+        9PkeBmPYZkeU2HMimSnQT9UdMFTpB8C5fJHWU0xzFQ==
+X-Google-Smtp-Source: ACJfBosGWfzsV9+xD5Ic4zAFZy8v9BbsMpS7cY03rQ0J1apTLr2+cAn9BIPtMNJqXLjFbgt+1F4Q8YrsztuljoqYi/s=
+X-Received: by 10.202.239.134 with SMTP id n128mr6824069oih.279.1515432266004;
+ Mon, 08 Jan 2018 09:24:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.157.73.21 with HTTP; Mon, 8 Jan 2018 09:24:05 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
+ <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com> <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
+Date:   Mon, 8 Jan 2018 20:24:05 +0300
+Message-ID: <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com>
+Subject: Re: rebase preserve-merges: incorrect merge commits
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since we started building and testing Git on Travis CI (522354d70
-(Add Travis CI support, 2015-11-27)), we build Git in the
-'before_script' phase and run the test suite in the 'script' phase
-(except in the later introduced 32 bit Linux and Windows build jobs,
-where we build in the 'script' phase').
+2018-01-08 19:32 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
+>
+> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+>
+>> 2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
+>> > 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>> >> Hi Matwey,
+>> >>
+>> >> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+>> >>
+>> >>> I think that rebase preserve-merges algorithm needs further
+>> >>> improvements. Probably, you already know it.
+>> >>
+>> >> Yes. preserve-merges is a fundamentally flawed design.
+>> >>
+>> >> Please have a look here:
+>> >>
+>> >>         https://github.com/git/git/pull/447
+>> >>
+>> >> Since we are in a feature freeze in preparation for v2.16.0, I will
+>> >> submit these patch series shortly after v2.16.0 is released.
+>> >>
+>> >>> As far as I understand the root cause of this that when new merge
+>> >>> commit is created by rebase it is done simply by git merge
+>> >>> $new_parents without taking into account any actual state of the
+>> >>> initial merge commit.
+>> >>
+>> >> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
+>> >> it *does* allow it, but then fails to handle it correctly.) We even have
+>> >> test cases that mark this as "known breakage".
+>> >>
+>> >> But really, I do not think it is worth trying to fix the broken design.
+>> >> Better to go with the new recreate-merges. (I am biased, of course,
+>> >> because I invented recreate-merges. But then, I also invented
+>> >> preserve-merges, so ...)
+>> >
+>> > Well. I just checked --recreate-merges=no-rebase-cousins from the PR
+>> > and found that it produces the same wrong result in my test example.
+>> > The topology is reproduced correctly, but merge-commit content is
+>> > broken.
+>> > I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
+>>
+>> Indeed, exactly as you still say in the documentation: "Merge conflict
+>> resolutions or manual amendments to merge commits are not preserved."
+>> My initial point is that they have to be preserved. Probably in
+>> recreate-merges, if preserve-merges is discontinued.
+>
+> Ah, but that is consistent with how non-merge-preserving rebase works: the
+> `pick` commands *also* do not record merge conflict resolution...
+>
 
-Contrarily, the Travis CI practice is to build and test in the
-'script' phase; indeed Travis CI's default build command for the
-'script' phase of C/C++ projects is:
+I am sorry, didn't get it. When I do non-merge-preserving rebase
+--interactive there is no way to `pick' merge-commit at all.
 
-  ./configure && make && make test
+> Ciao,
+> Johannes
 
-The reason why Travis CI does it this way and why it's a better
-approach than ours lies in how unsuccessful build jobs are
-categorized.  After something went wrong in a build job, its state can
-be:
 
-  - 'failed', if a command in the 'script' phase returned an error.
-    This is indicated by a red 'X' on the Travis CI web interface.
 
-  - 'errored', if a command in the 'before_install', 'install', or
-    'before_script' phase returned an error, or the build job exceeded
-    the time limit.  This is shown as a red '!' on the web interface.
-
-This makes it easier, both for humans looking at the Travis CI web
-interface and for automated tools querying the Travis CI API, to
-decide when an unsuccessful build is our responsibility requiring
-human attention, i.e. when a build job 'failed' because of a compiler
-error or a test failure, and when it's caused by something beyond our
-control and might be fixed by restarting the build job, e.g. when a
-build job 'errored' because a dependency couldn't be installed due to
-a temporary network error or because the OSX build job exceeded its
-time limit.
-
-The drawback of building Git in the 'before_script' phase is that one
-has to check the trace log of all 'errored' build jobs, too, to see
-what caused the error, as it might have been caused by a compiler
-error.  This requires additional clicks and page loads on the web
-interface and additional complexity and API requests in automated
-tools.
-
-Therefore, move building Git from the 'before_script' phase to the
-'script' phase, updating the script's name accordingly as well.
-'ci/run-builds.sh' now becomes basically empty, remove it.  Several of
-our build job configurations override our default 'before_script' to
-do nothing; with this change our default 'before_script' won't do
-anything, either, so remove those overriding directives as well.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-
-A verbose commit message for such a change... but I don't know why we
-started with building Git in the 'before_script' phase.  522354d70
-doesn't tell, and I couldn't find anything relevant in the mailing list
-archives.  Whatever the reasons might have been, I think the above
-justifies the change.
-
-Should go on top of 'sg/travis-check-untracked' in 'next'.
-
- .travis.yml                                 | 7 +------
- ci/{run-tests.sh => run-build-and-tests.sh} | 4 +++-
- ci/run-build.sh                             | 8 --------
- 3 files changed, 4 insertions(+), 15 deletions(-)
- rename ci/{run-tests.sh => run-build-and-tests.sh} (80%)
- delete mode 100755 ci/run-build.sh
-
-diff --git a/.travis.yml b/.travis.yml
-index 4684b3f4f..5f5ee4f3b 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -33,7 +33,6 @@ matrix:
-       compiler:
-       addons:
-       before_install:
--      before_script:
-       script:
-         - >
-           test "$TRAVIS_REPO_SLUG" != "git/git" ||
-@@ -46,7 +45,6 @@ matrix:
-       services:
-         - docker
-       before_install:
--      before_script:
-       script: ci/run-linux32-docker.sh
-     - env: jobname=StaticAnalysis
-       os: linux
-@@ -56,7 +54,6 @@ matrix:
-           packages:
-           - coccinelle
-       before_install:
--      before_script:
-       script: ci/run-static-analysis.sh
-       after_failure:
-     - env: jobname=Documentation
-@@ -68,13 +65,11 @@ matrix:
-           - asciidoc
-           - xmlto
-       before_install:
--      before_script:
-       script: ci/test-documentation.sh
-       after_failure:
- 
- before_install: ci/install-dependencies.sh
--before_script: ci/run-build.sh
--script: ci/run-tests.sh
-+script: ci/run-build-and-tests.sh
- after_failure: ci/print-test-failures.sh
- 
- notifications:
-diff --git a/ci/run-tests.sh b/ci/run-build-and-tests.sh
-similarity index 80%
-rename from ci/run-tests.sh
-rename to ci/run-build-and-tests.sh
-index 22355f009..d3a094603 100755
---- a/ci/run-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -1,11 +1,13 @@
- #!/bin/sh
- #
--# Test Git
-+# Build and test Git
- #
- 
- . ${0%/*}/lib-travisci.sh
- 
- ln -s $HOME/travis-cache/.prove t/.prove
-+
-+make --jobs=2
- make --quiet test
- 
- check_unignored_build_artifacts
-diff --git a/ci/run-build.sh b/ci/run-build.sh
-deleted file mode 100755
-index 4f940d103..000000000
---- a/ci/run-build.sh
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh
--#
--# Build Git
--#
--
--. ${0%/*}/lib-travisci.sh
--
--make --jobs=2
 -- 
-2.16.0.rc1.67.g706959270
-
+With best regards,
+Matwey V. Kornilov
