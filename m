@@ -2,128 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E7301FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 17:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 428BC1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 17:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753257AbeAHRY2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 12:24:28 -0500
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:46937 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753223AbeAHRY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 12:24:26 -0500
-Received: by mail-oi0-f41.google.com with SMTP id d124so3711441oib.13
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 09:24:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ACwMAvMzq+H2oUBQRgxz6nFm5tLCMxAQeoZfKcz7THA=;
-        b=MvPB1gvp7ktrhSo4u7tqYum6k5Cb0se9s/RaIroosGk94QDDePgI5u4Hl2fPaRrKay
-         G06amgT/BlzG8KpJ4ZrZ5ebIRWNxlP/8K3CyvFK+ypabBqB02OG6SigWtxo0zew/TO9N
-         UlVjAG84JVlkMrjgclPI3hb8Nn5Vl6xgCIAotlJx3uJkUUYkMpdT6de+CS9Uml40hdE0
-         cYwnNZR94nJeUaJgffqqsdMrC9VW96uRvIYqf0gA2LbW1VC4mn0iWOFkxSRyQwYi79/D
-         D7hpxaoyqkC/fMzdh04Yebhi/RhSzzXBDGRswTfK2dp9reBPKbdF9ffXl4ZhnOTw7LOX
-         8oaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ACwMAvMzq+H2oUBQRgxz6nFm5tLCMxAQeoZfKcz7THA=;
-        b=EjHFpLItBrVVtFJE5bswv3vhXJDVGe0W0jMMy4NugLqOM0zPjtUBZ++ob71Rlx+tNW
-         +V1qG41ThKx791boy83BO8Dk+D9ziXrx2o+/tZlojslH2aumOcw0jJxWYrF2xefMQQpU
-         kCPGBepBsOCrXUY85CUMYRr8QZ2NFrSyNOVAvzjPkXUG3ZlKr2kiMp0OZEEF4Uij6bUz
-         Asr5NNXya/QnfNjXFgfLmOvyQ5ikyoRUb0VQzlG6P6QS0dUZrMMlooQjM/oousNsDUbw
-         1jQl4YF1M8RhZNS9qCnjcIoI5QVn8/J3ll2aje0JLu7L5gTU8Pwydzr9lBHHo5idmyG3
-         UtDg==
-X-Gm-Message-State: AKGB3mKaIzqJ6+U/YSJTtPyc1Bs5krg5l4CXt51xryPBsVxV6rnYN1ya
-        9PkeBmPYZkeU2HMimSnQT9UdMFTpB8C5fJHWU0xzFQ==
-X-Google-Smtp-Source: ACJfBosGWfzsV9+xD5Ic4zAFZy8v9BbsMpS7cY03rQ0J1apTLr2+cAn9BIPtMNJqXLjFbgt+1F4Q8YrsztuljoqYi/s=
-X-Received: by 10.202.239.134 with SMTP id n128mr6824069oih.279.1515432266004;
- Mon, 08 Jan 2018 09:24:26 -0800 (PST)
+        id S1753849AbeAHRmL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 12:42:11 -0500
+Received: from mail-bl2nam02on0126.outbound.protection.outlook.com ([104.47.38.126]:2801
+        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1753595AbeAHRmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 12:42:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=JEry+aoxu1+HUVePOuPjPfFnCb8ejy0tDzZDPv4E6wM=;
+ b=cQjOfuL/NklEusEXrdkZi/U+DRjWSyN8SioBBjLZjVxA96NLyMixFU2dkJd9Upgrwy9IdLDX4+Y+C6zINzzl5ivvTN56yMy4Q66xEoVG3daF99GDoetG28mpFlKuhWXcTqMhNhIjkQRRzlZVSjfdV40OKabmB5ezA8qX/KqCY3Q=
+Received: from DM5PR2101MB0902.namprd21.prod.outlook.com (52.132.132.159) by
+ DM5PR2101MB0934.namprd21.prod.outlook.com (52.132.131.164) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.407.2; Mon, 8 Jan 2018 17:42:07 +0000
+Received: from DM5PR2101MB0902.namprd21.prod.outlook.com
+ ([fe80::b9e9:ed12:fc9b:d9c6]) by DM5PR2101MB0902.namprd21.prod.outlook.com
+ ([fe80::b9e9:ed12:fc9b:d9c6%4]) with mapi id 15.20.0407.000; Mon, 8 Jan 2018
+ 17:42:07 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
+CC:     Alex Vandiver <alexmv@dropbox.com>
+Subject: RE: git-p4 + watchman - watching the p4 repo?
+Thread-Topic: git-p4 + watchman - watching the p4 repo?
+Thread-Index: AQHTiKRRnzxm8LWLE06LEWhFOj1OGqNqPaUA
+Date:   Mon, 8 Jan 2018 17:42:06 +0000
+Message-ID: <DM5PR2101MB0902FE564628A5604AB860F9F4130@DM5PR2101MB0902.namprd21.prod.outlook.com>
+References: <CAE5ih79t8N969E-8qm9JMNZZo6qvRqw6GA=b6UTHskB-ozt7Fg@mail.gmail.com>
+In-Reply-To: <CAE5ih79t8N969E-8qm9JMNZZo6qvRqw6GA=b6UTHskB-ozt7Fg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=benpeart@microsoft.com;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2018-01-08T17:42:03.2841015Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
+ Sensitivity=General
+x-originating-ip: [70.33.148.227]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM5PR2101MB0934;7:M9P990/cMF68A3qGvmPIfP1FdIoqLHLi8BpLzSyHGUgOVB2elSJ5D5yZXRMYE7zFCRYA/BsdhN50CdvwECK9T3Xmpgilx8uzDzs2M31MCDniUZEyPv8M7705GBKSJhBg3r9v4QozBqH7fXFzEhcMEX2fQqyFFjYIBrgMPhoQPQ3aLGpUiW1ux5X03ylVSUvYFyqesXuoR+4EVQdAdjxcTwoNO3LWGAgHoHwv0UZFnKkxTluKBI4GeMjmC1uanY8d
+x-ms-exchange-antispam-srfa-diagnostics: SSOS;
+x-ms-office365-filtering-correlation-id: b8b99753-dc87-4864-1407-08d556bf2328
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020040)(5600026)(4604075)(3008032)(48565401081)(2017052603307)(7193020);SRVR:DM5PR2101MB0934;
+x-ms-traffictypediagnostic: DM5PR2101MB0934:
+x-microsoft-antispam-prvs: <DM5PR2101MB0934E58D6D0F631D4301C509F4130@DM5PR2101MB0934.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(89211679590171)(9452136761055)(60067363179207);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040470)(2401047)(8121501046)(5005006)(10201501046)(3231023)(944501098)(3002001)(93006095)(93001095)(6055026)(61426038)(61427038)(6041268)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123562045)(20161123564045)(6072148)(201708071742011);SRVR:DM5PR2101MB0934;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:DM5PR2101MB0934;
+x-forefront-prvs: 054642504A
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(39380400002)(396003)(346002)(366004)(376002)(13464003)(199004)(189003)(5660300001)(229853002)(6436002)(2906002)(66066001)(102836004)(106356001)(105586002)(55016002)(14454004)(68736007)(25786009)(8676002)(4326008)(3846002)(2950100002)(8936002)(9686003)(3660700001)(3280700002)(81166006)(6116002)(81156014)(6246003)(97736004)(72206003)(53936002)(2900100001)(8990500004)(10090500001)(5250100002)(10290500003)(74316002)(76176011)(99286004)(110136005)(22452003)(53546011)(305945005)(6506007)(316002)(478600001)(7696005)(33656002)(7736002)(86362001)(86612001);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0934;H:DM5PR2101MB0902.namprd21.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-message-info: emXxBJSOKxHNdKHkB/IXQhd3oCAIgQRE+Dm+6c+wBxCaF8xWm6PdhPHC+9lbmmKwxv4yeez+KLWFXWydzcI/Zw==
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received: by 10.157.73.21 with HTTP; Mon, 8 Jan 2018 09:24:05 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
- <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com> <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-Date:   Mon, 8 Jan 2018 20:24:05 +0300
-Message-ID: <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com>
-Subject: Re: rebase preserve-merges: incorrect merge commits
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8b99753-dc87-4864-1407-08d556bf2328
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jan 2018 17:42:07.0564
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0934
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-08 19:32 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->
->> 2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
->> > 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> >> Hi Matwey,
->> >>
->> >> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->> >>
->> >>> I think that rebase preserve-merges algorithm needs further
->> >>> improvements. Probably, you already know it.
->> >>
->> >> Yes. preserve-merges is a fundamentally flawed design.
->> >>
->> >> Please have a look here:
->> >>
->> >>         https://github.com/git/git/pull/447
->> >>
->> >> Since we are in a feature freeze in preparation for v2.16.0, I will
->> >> submit these patch series shortly after v2.16.0 is released.
->> >>
->> >>> As far as I understand the root cause of this that when new merge
->> >>> commit is created by rebase it is done simply by git merge
->> >>> $new_parents without taking into account any actual state of the
->> >>> initial merge commit.
->> >>
->> >> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
->> >> it *does* allow it, but then fails to handle it correctly.) We even have
->> >> test cases that mark this as "known breakage".
->> >>
->> >> But really, I do not think it is worth trying to fix the broken design.
->> >> Better to go with the new recreate-merges. (I am biased, of course,
->> >> because I invented recreate-merges. But then, I also invented
->> >> preserve-merges, so ...)
->> >
->> > Well. I just checked --recreate-merges=no-rebase-cousins from the PR
->> > and found that it produces the same wrong result in my test example.
->> > The topology is reproduced correctly, but merge-commit content is
->> > broken.
->> > I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
->>
->> Indeed, exactly as you still say in the documentation: "Merge conflict
->> resolutions or manual amendments to merge commits are not preserved."
->> My initial point is that they have to be preserved. Probably in
->> recreate-merges, if preserve-merges is discontinued.
->
-> Ah, but that is consistent with how non-merge-preserving rebase works: the
-> `pick` commands *also* do not record merge conflict resolution...
->
-
-I am sorry, didn't get it. When I do non-merge-preserving rebase
---interactive there is no way to `pick' merge-commit at all.
-
-> Ciao,
-> Johannes
-
-
-
--- 
-With best regards,
-Matwey V. Kornilov
+SSBoYXZlbid0IHVzZWQgcGVyZm9yY2Ugc28gYW0gdW5mYW1pbGlhciB3aXRoIGFueSBiZWhhdmlv
+cnMgc3BlY2lmaWMgdG8gdGhhdCBidXQgdGhlIGxvZ2ljIHRvIGhhdmUgZ2l0IGF1dG9tYXRpY2Fs
+bHkgdGVsbCB3YXRjaG1hbiB0byBzdGFydCB3YXRjaGluZyByZXBvcyBpcyBqdXN0IGEgY29udmVu
+aWVuY2UgZmVhdHVyZS4gIEZlZWwgZnJlZSB0byByZW1vdmUvZGlzYWJsZS9tb2RpZnkgaXQgaW4g
+dGhlIGZzbW9uaXRvci13YXRjaG1hbiBpbnRlZ3JhdGlvbiBzY3JpcHQ6DQoNCglpZiAoJHJldHJ5
+ID4gMCBhbmQgJG8tPntlcnJvcn0gYW5kICRvLT57ZXJyb3J9ID1+IG0vdW5hYmxlIHRvIHJlc29s
+dmUgcm9vdCAuKiBkaXJlY3RvcnkgKC4qKSBpcyBub3Qgd2F0Y2hlZC8pIHsNCgkJcHJpbnQgU1RE
+RVJSICJBZGRpbmcgJyRnaXRfd29ya190cmVlJyB0byB3YXRjaG1hbidzIHdhdGNoIGxpc3QuXG4i
+Ow0KCQkkcmV0cnktLTsNCgkJcXgvd2F0Y2htYW4gd2F0Y2ggIiRnaXRfd29ya190cmVlIi87DQoN
+CkJlbg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEx1a2UgRGlhbWFu
+ZCBbbWFpbHRvOmx1a2VAZGlhbWFuZC5vcmddDQo+IFNlbnQ6IE1vbmRheSwgSmFudWFyeSA4LCAy
+MDE4IDEyOjE1IFBNDQo+IFRvOiBHaXQgVXNlcnMgPGdpdEB2Z2VyLmtlcm5lbC5vcmc+DQo+IENj
+OiBBbGV4IFZhbmRpdmVyIDxhbGV4bXZAZHJvcGJveC5jb20+OyBCZW4gUGVhcnQNCj4gPEJlbi5Q
+ZWFydEBtaWNyb3NvZnQuY29tPg0KPiBTdWJqZWN0OiBnaXQtcDQgKyB3YXRjaG1hbiAtIHdhdGNo
+aW5nIHRoZSBwNCByZXBvPw0KPiANCj4gSGkhDQo+IA0KPiBJIGNvdWxkIGJlIHdyb25nIGFib3V0
+IHRoaXMsIGJ1dCBJIHdoZW4gSSB0cmllZCBtaXhpbmcgd2F0Y2htYW4gd2l0aCBnaXQtcDQsIEkN
+Cj4gZm91bmQgdGhhdCBvbiAiZ2l0IHA0IHN1Ym1pdCIgaXQgZW5kZWQgdXAgd2F0Y2hpbmcgdGhl
+IHA0IHJlcG8sIHdoaWNoIHNlZW1zDQo+IGEgYml0IHBvaW50bGVzcyAoYW5kIHdhcyBhbHNvIHZl
+cnkgc2xvdykuDQo+IA0KPiAkIFtjcmVhdGUgZ2l0LXA0IGNsb25lIG9mIHNvbWUgcDQgcmVwb10N
+Cj4gJCA6ID5iYXINCj4gJCBnaXQgYWRkIGJhciAmJiBnaXQgY29tbWl0IC1tICdhZGRpbmcgYmFy
+Jw0KPiAkIGdpdCBwNCBzdWJtaXQgLS1vcmlnaW4gSEVBRF4gLS1zaGVsdmUNCj4gUGVyZm9yY2Ug
+Y2hlY2tvdXQgZm9yIGRlcG90IHBhdGggLy9kZXBvdC8gbG9jYXRlZCBhdCAvdG1wL3A0L2NsaS8N
+Cj4gU3luY2hyb25pemluZyBwNCBjaGVja291dC4uLg0KPiAuLi4gLSBmaWxlKHMpIHVwLXRvLWRh
+dGUuDQo+IEFwcGx5aW5nIDRjZTQwNTcgY2hhbmdlDQo+IC8vZGVwb3QvYmFyIzEgLSBvcGVuZWQg
+Zm9yIGVkaXQNCj4gQWRkaW5nICcvdG1wL3A0L2NsaScgdG8gd2F0Y2htYW4ncyB3YXRjaCBsaXN0
+Lg0KPiANCj4gSXMgdGhlcmUgYW55IHdheSB0byBzdG9wIGl0IGRvaW5nIHRoaXM/DQo+IA0KPiBU
+aGFua3MhDQo+IEx1a2UNCg==
