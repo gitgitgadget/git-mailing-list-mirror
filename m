@@ -2,149 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70E811F404
-	for <e@80x24.org>; Mon,  8 Jan 2018 00:09:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 621751F404
+	for <e@80x24.org>; Mon,  8 Jan 2018 03:03:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754834AbeAHAI7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 Jan 2018 19:08:59 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:40549 "EHLO
+        id S1755082AbeAHDDR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 Jan 2018 22:03:17 -0500
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:37472 "EHLO
         mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754726AbeAHAI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 Jan 2018 19:08:59 -0500
-Received: by mail-qk0-f180.google.com with SMTP id d18so1884041qke.7
-        for <git@vger.kernel.org>; Sun, 07 Jan 2018 16:08:58 -0800 (PST)
+        with ESMTP id S1754977AbeAHDDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 Jan 2018 22:03:14 -0500
+Received: by mail-qk0-f180.google.com with SMTP id p13so12579648qke.4
+        for <git@vger.kernel.org>; Sun, 07 Jan 2018 19:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qfb2g+LLMV1HX2HgKxQEImsNRyNWKv5vD4OTpg0mTQo=;
-        b=aRkdHCv5cR3UnzT3r64BM/GgioGMRkqlPMBGoBvIaRPwVnIVoIs6kaAx+M45azhF42
-         W6z3qi34ZzzeoOtCFkEjOzBwk6TJOr3Ut2UiMSd5fZeAijcuv2iKeWy/8dk6xWgiP+hx
-         e5ByIycGIQku3DERCJiC3qcXQy2SllBLCOrznBEo4pskjvBWwu1j35xYM+QIDIzG/Jmw
-         G1COSULoLN8T6ibyMZLZOuo9dzXhTbS47lhBBoYiyWYzBlZq7DOLfUTs3dF0y2ooS242
-         YxWEMI4Ge+EUwzaUDzCaclgnm/cYdLD7GFTuKhnKqN0pM69hiaSke+4HII5z54r/1RQy
-         TLiQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=trM943b13dnaYoHw9gqDAppx0dpz/HklupGWyPgUs9g=;
+        b=DH6nyy0rAQMKx7//7TjbU7SpxTsPchLcFI8gRqlxtJzNFIzUn7+UhQGi4+9Qzdtwz7
+         uoeXy2ev8dNhANRT7eaHGb+ALvDu6V81B0CvHM+kguVpLFgHFoZ78gEDd/dLO174O1MG
+         uh56jNOCBJjnhZAPphnoHvRjg71BNFIPWsT5VXDgwZimgvl401ybCnPXU0x4ujaU0ErY
+         BxVUbEZQAnuyrXxJ61ze1inXYktveUjthITEzPU+uPqOThRLn9FyKf5AALBGof6LLymI
+         OfArm91iXHA7OBJZTaEPCF2+9AsfisOufCCrZh4Dm+7V4mrq2VI7PJAvHewFJpO3ky//
+         fN8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qfb2g+LLMV1HX2HgKxQEImsNRyNWKv5vD4OTpg0mTQo=;
-        b=UlRZrsSlOEGRHRCjYxUgWtT99VRAqCQEKeV7uy4xydWE7yohMR+4nNYX8XVjX911/d
-         Jz9Lff4JxKT1q1YouIHhBN3FuiLXieGWMJEsHHt5DwREs9QTD+F+O3HQssOMy5Jg8GM/
-         ulPhFy/1ac2oue26OwjXlRR/gkxc4Bx4qo7ETqusWaKC/fPPqYGQHDw7cd2a0jrlhKXV
-         ReMiCsg4n9tdhOLJdhw6cbeFdMEWoXUaZ3GOXpgkulaCZ1uEYW/jbzBFiGsBkSwz2QVv
-         23NEF50oZz+/sNNkugaPrKUBNoy65cbVPgijhMod+a7jwmhjzuCqMBLcX78c1BjwxicS
-         V86w==
-X-Gm-Message-State: AKwxytcGACJzpIPkjBdj3jgYdfIkVQfw8cMaFUV3SZRQPzudOYHW9cWt
-        bLNCgK3CWdrEIEsTMC9K4kDs+JEpt+o=
-X-Google-Smtp-Source: ACJfBosgRXXkAixjXFqHl/x/1S7H8pYGemYeFc9DbyAx4ve5V2mxtoNwyiS+tj8R0kT0WiOZl/CVAQ==
-X-Received: by 10.55.156.19 with SMTP id f19mr3729702qke.89.1515370138127;
-        Sun, 07 Jan 2018 16:08:58 -0800 (PST)
-Received: from [10.0.1.24] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id e16sm6857969qtk.64.2018.01.07.16.08.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 Jan 2018 16:08:57 -0800 (PST)
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        peff@peff.net, gitster@pobox.com, johannes.schindelin@gmx.de,
-        jrnieder@gmail.com
-References: <20180107181459.222909-1-dstolee@microsoft.com>
- <87k1wtb8a4.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
-Date:   Sun, 7 Jan 2018 19:08:54 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:58.0) Gecko/20100101
- Thunderbird/58.0
+        bh=trM943b13dnaYoHw9gqDAppx0dpz/HklupGWyPgUs9g=;
+        b=EdF0Y86QHwUadMmG6A+BqtuB7NU0wHbwpRYaI+ut2yTit1IWIlnXVcFd7Yrec/N863
+         fvbEkPAGJIh1f30U2RycUCCkeBpP9uY1f6RzP0wmcL8bEhZKC1tErqzJBbDMm+msV9/3
+         ZBJ4V+nmutCtvnwf2pQBAuk3oav9yyYHRCxzthvWpMtvDzhFCYuC1JIP8c271q/6z2fi
+         71bhIxDGpz9gzc0ZWCHgV69zSfqQVqDoj+x5+mULAM43mhILXs7AkMFJXL/Bu0rCwPaK
+         NqwEoAP4A5tP8EopE6fe9eHGeUgT3OUwV4Gp57BN/u0lwy26Elk3iQiSqIHJJjGnqFFi
+         UoEQ==
+X-Gm-Message-State: AKwxytcqO/zCH2h+KelsL0zCiCuHR/cG3gz3wc8A7+3iNVW7B6CXW+XR
+        DjYfXKpfg8P0duG0W7f8q0quFr1iaf4=
+X-Google-Smtp-Source: ACJfBosgyJnvjq10EDhAHH3WQTcjcVXKSb9fqxPcbpwVVI8FTrHacDUpkdPvihvFhK2vCKsJkQ7/5Q==
+X-Received: by 10.55.209.137 with SMTP id o9mr11979006qkl.234.1515380592496;
+        Sun, 07 Jan 2018 19:03:12 -0800 (PST)
+Received: from localhost.localdomain (ip-99-2-52-196.nyc.us.northamericancoax.com. [196.52.2.99])
+        by smtp.gmail.com with ESMTPSA id m77sm7156345qke.76.2018.01.07.19.03.11
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 07 Jan 2018 19:03:11 -0800 (PST)
+From:   Dan Jacques <dnj@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
+        Dan Jacques <dnj@google.com>
+Subject: [PATCH v5 0/3] RUNTIME_PREFIX relocatable Git
+Date:   Sun,  7 Jan 2018 22:02:36 -0500
+Message-Id: <20180108030239.92036-1-dnj@google.com>
+X-Mailer: git-send-email 2.15.0.chromium12
 MIME-Version: 1.0
-In-Reply-To: <87k1wtb8a4.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/7/2018 5:42 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Sun, Jan 07 2018, Derrick Stolee jotted:
-> 
->>      git log --oneline --raw --parents
->>
->> Num Packs | Before MIDX | After MIDX |  Rel % | 1 pack %
->> ----------+-------------+------------+--------+----------
->>          1 |     35.64 s |    35.28 s |  -1.0% |   -1.0%
->>         24 |     90.81 s |    40.06 s | -55.9% |  +12.4%
->>        127 |    257.97 s |    42.25 s | -83.6% |  +18.6%
->>
->> The last column is the relative difference between the MIDX-enabled repo
->> and the single-pack repo. The goal of the MIDX feature is to present the
->> ODB as if it was fully repacked, so there is still room for improvement.
->>
->> Changing the command to
->>
->>      git log --oneline --raw --parents --abbrev=40
->>
->> has no observable difference (sub 1% change in all cases). This is likely
->> due to the repack I used putting commits and trees in a small number of
->> packfiles so the MRU cache workes very well. On more naturally-created
->> lists of packfiles, there can be up to 20% improvement on this command.
->>
->> We are using a version of this patch with an upcoming release of GVFS.
->> This feature is particularly important in that space since GVFS performs
->> a "prefetch" step that downloads a pack of commits and trees on a daily
->> basis. These packfiles are placed in an alternate that is shared by all
->> enlistments. Some users have 150+ packfiles and the MRU misses and
->> abbreviation computations are significant. Now, GVFS manages the MIDX file
->> after adding new prefetch packfiles using the following command:
->>
->>      git midx --write --update-head --delete-expired --pack-dir=<alt>
-> 
-> (Not a critique of this, just a (stupid) question)
-> 
-> What's the practical use-case for this feature? Since it doesn't help
-> with --abbrev=40 the speedup is all in the part that ensures we don't
-> show an ambiguous SHA-1.
+(Send #2, since I failed to CC everyone in the first posting).
 
-The point of including the --abbrev=40 is to point out that object 
-lookups do not get slower with the MIDX feature. Using these "git log" 
-options is a good way to balance object lookups and abbreviations with 
-object parsing and diff machinery. And while the public data shape I 
-shared did not show a difference, our private testing of the Windows 
-repository did show a valuable improvement when isolating to object 
-lookups and ignoring abbreviation calculations.
+This patch set expands support for the RUNTIME_PREFIX configuration flag,
+currently only used on Windows builds, to include Linux, Darwin, and
+FreeBSD. When Git is built with RUNTIME_PREFIX enabled, it resolves its
+ancillary paths relative to the runtime location of its executable
+rather than hard-coding them at compile-time, allowing a Git
+installation to be deployed to a path other than the one in which it
+was built/installed.
 
-> The reason we do that at all is because it makes for a prettier UI.
+Note that RUNTIME_PREFIX is not currently used outside of Windows.
+This patch set should not have an impact on default Git builds.
 
-We tried setting core.abbrev=40 on GVFS enlistments to speed up 
-performance and the users rebelled against the hideous output. They 
-would rather have slower speeds than long hashes.
+I'm uploading an updated patch set now that avarab@'s Perl Makefile
+simplification patch set has advanced and seems to be stable. Please take
+a look and let me know what you think!
 
-> Are there things that both want the pretty SHA-1 and also care about the
-> throughput? I'd have expected machine parsing to just use
-> --no-abbrev-commit.
+Previous threads:
+v1: https://public-inbox.org/git/20171116170523.28696-1-dnj@google.com/
+v2: https://public-inbox.org/git/20171119173141.4896-1-dnj@google.com/
+v3: https://public-inbox.org/git/20171127164055.93283-1-dnj@google.com/
+v4: https://public-inbox.org/git/20171129223807.91343-1-dnj@google.com/
 
-The --raw flag outputs blob hashes, so the --abbrev=40 covers all hashes.
+Changes in v5 from v4:
 
-> If something cares about both throughput and e.g. is saving the
-> abbreviated SHA-1s isn't it better off picking some arbitrary size
-> (e.g. --abbrev=20), after all the default abbreviation is going to show
-> something as small as possible, which may soon become ambigous after the
-> next commit.
+- Rebase on top of "next", notably incorporating the
+  "ab/simplify-perl-makefile" branch.
+- Cleaner Makefile relative path enforcement.
+- Update Perl header template path now that the "perl/" directory has
+  fewer build-related files in it.
+- Update Perl runtime prefix header to use a general system path resolution
+  function.
+- Implemented the injection of the locale directory into Perl's
+  "Git/I18N.pm" module from the runtime prefix Perl script header.
+- Updated Perl's "Git/I18N.pm" module to accept injected locale directory.
+- Added more content to some comments.
 
-Unfortunately, with the way the abbreviation algorithms work, using 
---abbrev=20 will have similar performance problems because you still 
-need to inspect all packfiles to ensure there isn't a collision in the 
-first 20 hex characters.
+=== Testing ===
 
-Thanks,
--Stolee
+The latest patch set is available for testing on my GitHub fork, including
+"travis.ci" testing. The "runtime-prefix" branch includes a "config.mak"
+commit that enables runtime prefix for the Travis build; the
+"runtime-prefix-no-config" omits this file, testing this patch without
+runtime prefix enabled:
+- https://github.com/danjacques/git/tree/runtime-prefix
+- https://travis-ci.org/danjacques/git/branches
 
+Built/tested locally using this "config.mak" w/ autoconf:
+
+=== Example config.mak ===
+
+## (BEGIN config.mak)
+
+RUNTIME_PREFIX = YesPlease
+RUNTIME_PREFIX_PERL = YesPlease
+gitexecdir = libexec/git-core
+template_dir = share/git-core/templates
+sysconfdir = etc
+
+## (END config.mak)
+
+=== Revision History ===
+
+Changes in v4 from v3:
+
+- Incorporated some quoting and Makefile dependency fixes, courtesy of
+  <johannes.schindelin@gmx.de>.
+
+Changes in v3 from v2:
+
+- Broken into multiple patches now that Perl is isolated in its own
+  RUNTIME_PREFIX_PERL flag.
+- Working with avarab@, several changes to Perl script runtime prefix
+  support:
+  - Moved Perl header body content from Makefile into external template
+    file(s).
+  - Added generic "perllibdir" variable to override Perl installation
+    path.
+  - RUNTIME_PREFIX_PERL generated script header is more descriptive and
+    consistent with how the C version operates.
+  - Fixed Generated Perl header Makefile dependency, should rebuild
+    when dependent files and flags change.
+- Changed some of the new RUNTIME_PREFIX trace strings to use consistent
+  formatting and terminology.
+
+Changes in v2 from v1:
+
+- Added comments and formatting to improve readability of
+  platform-sepecific executable path resolution sleds in
+  `git_get_exec_path`.
+- Consolidated "cached_exec_path" and "argv_exec_path" globals
+  into "exec_path_value".
+- Use `strbuf_realpath` instead of `realpath` for procfs resolution.
+- Removed new environment variable exports. Git with RUNTIME_PREFIX no
+  longer exports or consumes any additional environment information.
+- Updated Perl script resolution strategy: rather than having Git export
+  the relative executable path to the Perl scripts, they now resolve
+  it independently when RUNTIME_PREFIX_PERL is enabled.
+- Updated resolution strategy for "gettext()": use system_path() instead
+  of special environment variable.
+- Added `sysctl` executable resolution support for BSDs that don't
+  mount "procfs" by default (most of them).
+
+Dan Jacques (3):
+  Makefile: generate Perl header from template file
+  Makefile: add Perl runtime prefix support
+  exec_cmd: RUNTIME_PREFIX on some POSIX systems
+
+ .gitignore                                       |   1 +
+ Makefile                                         | 114 +++++++++--
+ cache.h                                          |   1 +
+ common-main.c                                    |   4 +-
+ config.mak.uname                                 |   7 +
+ exec_cmd.c                                       | 241 ++++++++++++++++++++---
+ exec_cmd.h                                       |   4 +-
+ gettext.c                                        |   8 +-
+ git.c                                            |   2 +-
+ perl/Git/I18N.pm                                 |   2 +-
+ perl/header_templates/fixed_prefix.template.pl   |   1 +
+ perl/header_templates/runtime_prefix.template.pl |  32 +++
+ 12 files changed, 364 insertions(+), 53 deletions(-)
+ create mode 100644 perl/header_templates/fixed_prefix.template.pl
+ create mode 100644 perl/header_templates/runtime_prefix.template.pl
+
+-- 
+2.15.0.chromium12
 
