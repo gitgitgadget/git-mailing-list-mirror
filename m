@@ -2,286 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD89A1F406
-	for <e@80x24.org>; Mon,  8 Jan 2018 10:35:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 191DC1F406
+	for <e@80x24.org>; Mon,  8 Jan 2018 10:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756517AbeAHKe6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 05:34:58 -0500
-Received: from mut-mta1-se01a-zose1-fr.yulpa.io ([185.49.21.248]:47538 "EHLO
-        mut-mta1-se01a-zose1-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755890AbeAHKe4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 Jan 2018 05:34:56 -0500
-Received: from zose-mx-out01.web4all.fr ([185.49.20.46] helo=zose-mta-hub-out-mua-02.web4all.fr)
-        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <git@matthieu-moy.fr>)
-        id 1eYUlT-0002Sd-OY; Mon, 08 Jan 2018 11:34:53 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 7853160E20;
-        Mon,  8 Jan 2018 11:34:46 +0100 (CET)
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 4FAWM-FtEY_u; Mon,  8 Jan 2018 11:34:42 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTP id 4CF7B60E5B;
-        Mon,  8 Jan 2018 11:34:42 +0100 (CET)
-X-Virus-Scanned: amavisd-new at zose1.web4all.fr
-Received: from zose-mta-hub-out-mua-02.web4all.fr ([127.0.0.1])
-        by localhost (zose-mta-hub-out-mua-02.web4all.fr [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id LgPhFGeeZrbo; Mon,  8 Jan 2018 11:34:42 +0100 (CET)
-Received: from moylip.lip.ens-lyon.fr (dhcp-13-157.lip.ens-lyon.fr [140.77.13.157])
-        (Authenticated sender: matthieu.moy@matthieu-moy.fr)
-        by zose-mta-hub-out-mua-02.web4all.fr (Postfix) with ESMTPSA id 735A560E20;
-        Mon,  8 Jan 2018 11:34:40 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Thomas Adam <thomas@xteddy.org>,
-        Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH v3 2/3] Remove now useless email-address parsing code
-Date:   Mon,  8 Jan 2018 11:34:33 +0100
-Message-Id: <1515407674-5233-2-git-send-email-git@matthieu-moy.fr>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1515407674-5233-1-git-send-email-git@matthieu-moy.fr>
-References: <1515177413-12526-1-git-send-email-git@matthieu-moy.fr>
- <1515407674-5233-1-git-send-email-git@matthieu-moy.fr>
-X-Originating-IP: 185.49.20.46
-X-SpamExperts-Domain: zose1.web4all.fr
-X-SpamExperts-Username: 185.49.20.46
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.46@zose1.web4all.fr
-X-SpamExperts-Outgoing-Class: ham
-X-SpamExperts-Outgoing-Evidence: SB/global_tokens (7.69632806835e-05)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5jrx6DXotmGy6vb8yk9DAXHj1g3/PwYZaTCzSym8uE9HPImhfA8k5/zW
- UdbqUfA/+atZAIrjsCRyglG39ay7s40zkSakW8+kgCjGkeOx1qmz3ywmUacsjxjAsJqLMS98bJTN
- iqbXZIDkOGe2FHwUiJMpTgZqLYtJsbXv/ketFafwq+G25XHaa2KawFj0OiLrEH091rP1WLs/7NTd
- f/v9ilzOIBlCHgCawvkuWitWcipbboAfGuY98hZCOSppmWR0f+KVse1sVhWabI0/+PN3sIJgPotx
- C4d5mZiBkvWU8JOmlab7A14bDhsVpYYd7UZLwsivEsJmn1J3i12zQnpjnAkksRzltJtieFUSxnzh
- hYFeh4JLEtnm8ySEiLmvj502SX5iR5s2m8n9hOTmgdU9KKveLgRddK55nMwKlfa186oozmyhDRHa
- NLgbENzE8UYLv0ZqmBjctg3sraCMRH0q8y0f/ewgTZZHnomyLohxA2/JJ6lavGyCMxxrx/V1QkJh
- uHW2G/SF32BkaVUv9IQODMJ47049fv7DynTeLk68Ja5SY5R6BpcvGp3jcY/qUcseg7VRAzeOsvgA
- V5QompPxrkfi9hmPKuiBYMIBAmK2NFHJ2+mjZSBX08/Qa05JAIPdavvg7iEFLP+SSY+Av5+AiC6q
- 57wRJX0TOTJHzvd3MM9RlAGcUzJGugIsdSHTBsSYj/aYhl5PbUSZkKp1vJeV4FmhSCf4BF/WdfYJ
- bQ6u3FdnP3h8izjtZsxkRYrv06jIw6W1C84udHc1IZJSv0wxMqxThRWXb/vjhFfnRGEw17v+HDXM
- PVMaQCIb+s/RO6mAGcwYghcXJyLED6jwQGBY36ohzfH4XhSDqdP/cnlEQ4kfqYy08y9qrcIh5f7x
- FiDniFFfEoXm0/FPF8PR0w363lm8oLPYy4YTN6Tnj/EjhZ8pvzjd0/KJo06KSY/Nuo+6Ze58MBvt
- Sp/30FBTc0LHHV5YbaWAq0BDJ73nbtNkWc/zst1ymB3m2xZYS6jH5McCr5LJM700aXzYJC4yKoPz
- E5+rg5zjXjFYo+QNnmYltQOnEF9dSV894wpXF4CTvMURvtge8Z7vJMrDsqwzXs0XHW3yvXuqcc8b
- 2Rz+DKDRpNcP
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+        id S1756486AbeAHKmc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 05:42:32 -0500
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:33369 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755823AbeAHKmb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 05:42:31 -0500
+Received: by mail-oi0-f68.google.com with SMTP id y141so669024oia.0
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 02:42:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=U5OwR0WbrG/egkNJIig2GcY/9LRj49Kh9iXaJgRl4Dc=;
+        b=eaZoNV6fFjLvxDb3xdslE3urx2FV4JSyqGVdm6sQKj4N/4NkU96N6gL/Om/Uwbemtf
+         wZ11In9RqxhsCSlvoBftc+KTV3UuKQ4Pi+LuH3DGwycna13RoowqLvaVtvWBib/8uTvK
+         a2DDyXcRGLj+S4pjhrCjRzuZnUlfAJDjyUaNhKNXnNxZdc4eAvtzXKRTa2UCUayWZWcd
+         HfFvS0JLjn0VTzpSdJbmOhPPzPcPH+7IYr3ceL0NUHpJ4QzXcEV1NtAqNce70Sk9M9T9
+         qBM1ruBI8ge0XQ+f2gW1jYO3UaA5Z2TEYgyGFCOToAs/I0rHZiH+TGbz0Z2y2BjJuIiU
+         37IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=U5OwR0WbrG/egkNJIig2GcY/9LRj49Kh9iXaJgRl4Dc=;
+        b=BgWTo/sU7z4cwD5n6Mj2wBQS9xxD3WN9sZuS+6phNGOFrlTnm/aSZg5xR8UDMln6eA
+         bUdNSSZ+bJDkq74JJTPXfkKg/xX/6Y9qnJNnZRXQOat/SO7sgmFoNoyd7y5Ob01QD6aL
+         AQrz+JO+sWMh0aKo4u6GNUHh5QFJ63PQup7Lmdy0Z/CWFMtTXCMFFoaiaswmKVg5SRwf
+         oUfbI6nUds7+NxxSkOkCuC99izGzJtFwhVf4fOwJqvELT1vt5EPx7c/0GxgC7FdCNe96
+         Lzbq7f3UA4Xsq8hrEOyEa7KEc7qw2E7+H7cEaFke0LueXCcKQLgPgYiUohwOo41qPor8
+         OvBQ==
+X-Gm-Message-State: AKwxytdmuwKOFSP3JLFJAbQBCjeFO1ppup+m8BRfVWH9TSuSTV96LAjP
+        QLFh1urIEhHOIQZy7G+wuikn1NxdFRDTBoJtrmg=
+X-Google-Smtp-Source: ACJfBovk0VIxYsuLuXWKefIdC+LfLSMZ+lAYoKbQpAoSmCv3EOzYmnOUnwh5z2Q8rfgYvQR5gTygnT4aB0ZDZRsvOzs=
+X-Received: by 10.202.68.2 with SMTP id r2mr7939oia.351.1515408150289; Mon, 08
+ Jan 2018 02:42:30 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.141.5 with HTTP; Mon, 8 Jan 2018 02:41:59 -0800 (PST)
+In-Reply-To: <20180107223015.17720-2-t.gummerer@gmail.com>
+References: <20171217225122.28941-1-t.gummerer@gmail.com> <20180107223015.17720-1-t.gummerer@gmail.com>
+ <20180107223015.17720-2-t.gummerer@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 8 Jan 2018 17:41:59 +0700
+Message-ID: <CACsJy8DBkAwoNWSma-+WkOUkQrenbkT5c1-Ez2jmmf-+wGRbxQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for other repos
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We now use Mail::Address unconditionaly, hence parse_mailboxes is now
-dead code. Remove it and its tests.
+On Mon, Jan 8, 2018 at 5:30 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> @@ -1896,16 +1895,17 @@ int read_index_from(struct index_state *istate, const char *path)
+>                 split_index->base = xcalloc(1, sizeof(*split_index->base));
+>
+>         base_sha1_hex = sha1_to_hex(split_index->base_sha1);
+> -       base_path = git_path("sharedindex.%s", base_sha1_hex);
+> +       base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_sha1_hex);
 
-Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
----
-No change since v2.
+Personally I prefer the repo_git_path() from v2 (sorry I was away and
+could not comment anything). The thing is, git_path() and friends
+could do some path translation underneath to support multiple
+worktrees. Think of the given path here as a "virtual path" that may
+be translated to something else, not exactly <git_dir> + "/" +
+"sharedindex.%s". But in practice, we're not breaking the relationship
+between $GIT_DIR/index and $GIT_DIR/sharedindex.* any time soon, doing
+manual path transformation here is fine.
 
- perl/Git.pm          | 71 ----------------------------------------------------
- t/t9000-addresses.sh | 27 --------------------
- t/t9000/test.pl      | 67 -------------------------------------------------
- 3 files changed, 165 deletions(-)
- delete mode 100755 t/t9000-addresses.sh
- delete mode 100755 t/t9000/test.pl
+What about the other git_path() in this file? With patch applied I still get
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index ffa09ac..65e6b32 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -880,77 +880,6 @@ sub ident_person {
- 	return "$ident[0] <$ident[1]>";
- }
- 
--=item parse_mailboxes
--
--Return an array of mailboxes extracted from a string.
--
--=cut
--
--# Very close to Mail::Address's parser, but we still have minor
--# differences in some cases (see t9000 for examples).
--sub parse_mailboxes {
--	my $re_comment = qr/\((?:[^)]*)\)/;
--	my $re_quote = qr/"(?:[^\"\\]|\\.)*"/;
--	my $re_word = qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
--
--	# divide the string in tokens of the above form
--	my $re_token = qr/(?:$re_quote|$re_word|$re_comment|\S)/;
--	my @tokens = map { $_ =~ /\s*($re_token)\s*/g } @_;
--	my $end_of_addr_seen = 0;
--
--	# add a delimiter to simplify treatment for the last mailbox
--	push @tokens, ",";
--
--	my (@addr_list, @phrase, @address, @comment, @buffer) = ();
--	foreach my $token (@tokens) {
--		if ($token =~ /^[,;]$/) {
--			# if buffer still contains undeterminated strings
--			# append it at the end of @address or @phrase
--			if ($end_of_addr_seen) {
--				push @phrase, @buffer;
--			} else {
--				push @address, @buffer;
--			}
--
--			my $str_phrase = join ' ', @phrase;
--			my $str_address = join '', @address;
--			my $str_comment = join ' ', @comment;
--
--			# quote are necessary if phrase contains
--			# special characters
--			if ($str_phrase =~ /[][()<>:;@\\,.\000-\037\177]/) {
--				$str_phrase =~ s/(^|[^\\])"/$1/g;
--				$str_phrase = qq["$str_phrase"];
--			}
--
--			# add "<>" around the address if necessary
--			if ($str_address ne "" && $str_phrase ne "") {
--				$str_address = qq[<$str_address>];
--			}
--
--			my $str_mailbox = "$str_phrase $str_address $str_comment";
--			$str_mailbox =~ s/^\s*|\s*$//g;
--			push @addr_list, $str_mailbox if ($str_mailbox);
--
--			@phrase = @address = @comment = @buffer = ();
--			$end_of_addr_seen = 0;
--		} elsif ($token =~ /^\(/) {
--			push @comment, $token;
--		} elsif ($token eq "<") {
--			push @phrase, (splice @address), (splice @buffer);
--		} elsif ($token eq ">") {
--			$end_of_addr_seen = 1;
--			push @address, (splice @buffer);
--		} elsif ($token eq "@" && !$end_of_addr_seen) {
--			push @address, (splice @buffer), "@";
--		} else {
--			push @buffer, $token;
--		}
--	}
--
--	return @addr_list;
--}
--
- =item hash_object ( TYPE, FILENAME )
- 
- Compute the SHA1 object id of the given C<FILENAME> considering it is
-diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-deleted file mode 100755
-index a1ebef6..0000000
---- a/t/t9000-addresses.sh
-+++ /dev/null
-@@ -1,27 +0,0 @@
--#!/bin/sh
--
--test_description='compare address parsing with and without Mail::Address'
--. ./test-lib.sh
--
--if ! test_have_prereq PERL; then
--	skip_all='skipping perl interface tests, perl not available'
--	test_done
--fi
--
--perl -MTest::More -e 0 2>/dev/null || {
--	skip_all="Perl Test::More unavailable, skipping test"
--	test_done
--}
--
--perl -MMail::Address -e 0 2>/dev/null || {
--	skip_all="Perl Mail::Address unavailable, skipping test"
--	test_done
--}
--
--test_external_has_tap=1
--
--test_external_without_stderr \
--	'Perl address parsing function' \
--	perl "$TEST_DIRECTORY"/t9000/test.pl
--
--test_done
-diff --git a/t/t9000/test.pl b/t/t9000/test.pl
-deleted file mode 100755
-index dfeaa9c..0000000
---- a/t/t9000/test.pl
-+++ /dev/null
-@@ -1,67 +0,0 @@
--#!/usr/bin/perl
--use lib (split(/:/, $ENV{GITPERLLIB}));
--
--use 5.008;
--use warnings;
--use strict;
--
--use Test::More qw(no_plan);
--use Mail::Address;
--
--BEGIN { use_ok('Git') }
--
--my @success_list = (q[Jane],
--	q[jdoe@example.com],
--	q[<jdoe@example.com>],
--	q[Jane <jdoe@example.com>],
--	q[Jane Doe <jdoe@example.com>],
--	q["Jane" <jdoe@example.com>],
--	q["Doe, Jane" <jdoe@example.com>],
--	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
--	q[Jane!#$%&'*+-/=?^_{|}~Doe' <jdoe@example.com>],
--	q["<jdoe@example.com>"],
--	q["Jane jdoe@example.com"],
--	q[Jane Doe <jdoe    @   example.com  >],
--	q[Jane       Doe <  jdoe@example.com  >],
--	q[Jane @ Doe @ Jane @ Doe],
--	q["Jane, 'Doe'" <jdoe@example.com>],
--	q['Doe, "Jane' <jdoe@example.com>],
--	q["Jane" "Do"e <jdoe@example.com>],
--	q["Jane' Doe" <jdoe@example.com>],
--	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
--	q["Jane\" Doe" <jdoe@example.com>],
--	q[Doe, jane <jdoe@example.com>],
--	q["Jane Doe <jdoe@example.com>],
--	q['Jane 'Doe' <jdoe@example.com>],
--	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
--	q[Jane <jdoe@example.com> Doe],
--	q[<jdoe@example.com> Jane Doe]);
--
--my @known_failure_list = (q[Jane\ Doe <jdoe@example.com>],
--	q["Doe, Ja"ne <jdoe@example.com>],
--	q["Doe, Katarina" Jane <jdoe@example.com>],
--	q[Jane jdoe@example.com],
--	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
--	q[Jane Doe],
--	q[Jane "Doe <jdoe@example.com>"],
--	q[\"Jane Doe <jdoe@example.com>],
--	q[Jane\"\" Doe <jdoe@example.com>],
--	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
--
--foreach my $str (@success_list) {
--	my @expected = map { $_->format } Mail::Address->parse("$str");
--	my @actual = Git::parse_mailboxes("$str");
--	is_deeply(\@expected, \@actual, qq[same output : $str]);
--}
--
--TODO: {
--	local $TODO = "known breakage";
--	foreach my $str (@known_failure_list) {
--		my @expected = map { $_->format } Mail::Address->parse("$str");
--		my @actual = Git::parse_mailboxes("$str");
--		is_deeply(\@expected, \@actual, qq[same output : $str]);
--	}
--}
--
--my $is_passing = eval { Test::More->is_passing };
--exit($is_passing ? 0 : 1) unless $@ =~ /Can't locate object method/;
+> ~/w/git/temp $ git grep git_path read-cache.c
+read-cache.c:           shared_index_path = git_path("%s", de->d_name);
+read-cache.c:   temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
+read-cache.c:                         git_path("sharedindex.%s",
+sha1_to_hex(si->base->sha1)));
+read-cache.c:           const char *shared_index = git_path("sharedindex.%s",
+
+I suppose submodule has not triggered any of these code paths yet. Not
+sure if we should deal with them now or wait until later.
+
+Perhaps if we add a "struct repository *" pointer inside index_state,
+we could retrieve back the_repository (or others) and call
+repo_git_path() everywhere without changing index api too much. I
+don't know. I like the  'struct repository' concept but couldn't
+follow its development so I don't if this is what it should become.
 -- 
-2.7.4
-
+Duy
