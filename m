@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73FC11FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 18:36:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75E2E1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 18:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755876AbeAHSgg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 13:36:36 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:34401 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755730AbeAHSge (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 13:36:34 -0500
-Received: by mail-qk0-f196.google.com with SMTP id b76so2515917qkc.1
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 10:36:34 -0800 (PST)
+        id S1755453AbeAHSih (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 13:38:37 -0500
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:35903 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755000AbeAHSig (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 13:38:36 -0500
+Received: by mail-qk0-f195.google.com with SMTP id d21so4397317qkj.3
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 10:38:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Yn8awq8ipJW3Dhix8qZg9/QT12qEbmrY1iNIibcEs6s=;
-        b=YMpb4EKyN4eEbLcx0Wp7kHcruS1SkuO8dlI0utv6SJQicqBrk3dFTXszTlToo3fHZo
-         y+qX7cpZUg82Cq9aBTF57SQcpv5Z73gSrSrDwjsndsCZ96NNgWPYZRmF9n3oZVqcgm05
-         GWEJJ7nTeEaQbFS/hmqxHCyNaU3DqGAmf87mO/0OnpLwPAILRbmJGWHZaAGRYGoA5xkl
-         G3oZ6RUKhiqkur7U5XYruEak+nQg3AN+hzedzC45lBlBTT1zhgmnDeu8RDPcK5wnwuVF
-         ZMb5SRiabWqJITvW1RQiInlq/HTDjMKiFBf1JCwon1MiisF0EbmB30JO00Qxj8kPZCKt
-         XLXg==
+        bh=++Jcazy5gmnT9yXVekWMCfB8IbTei6RRedAZEM/NffI=;
+        b=hGwKb5e18TZUn3yAwJSV9KLZZA9tSbPk7fbJDHT9qGVyqDGW4xnLzHAAWikHqHvFDV
+         9yQxUwsJ/BVgLqbd2y6PIuU+BnqnEYZujCwE7Ss8SIf8btl1FAzwfCes27NrZu8QEv2h
+         ++5hZi0laAXR4Bn8KRnsVzQ7TcDlQUiYXLpP3yT2AVOuMmpnMy9YL1CsrrnYLDlt7tYW
+         rBnjF+vS2ApAa40GTlPvA2SgbOE+18l8i43lewteaNoU6Ea2TwDgWrtyWD0teqLqke84
+         KOlHGvjSwqLXJnu+AgEvAjV2yEgXCu0T3xyfZ/f9i+NORyzJ6iYJiiuQoyLVmBZcBBCf
+         ffuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Yn8awq8ipJW3Dhix8qZg9/QT12qEbmrY1iNIibcEs6s=;
-        b=h0P/6onD2SyF60g5DqhC2TUkfJnHkJoQ4ha7KjIhX4aKveEB18eNz2DZ03LSvO4g/q
-         Y815uB/fxb09uf6FWUncMk4UWdGSpGOZaUQ6wZKqctdcnmRb20njw4q/zciC3WYprbJn
-         ZAZ9SUNx1vafHyTuRil1f6EvugtQN35JSDLwWNA8EQvQQDCz5+flpQwReDQPMsAHwMLH
-         peQCE73FJDvrxuHCRbloHa9aYEGD2LVgeTpR3OK0WImRaSJ2LzyOE9AZ+NmRtfEP/yKV
-         D7YIBa9kt/zEbg3BBY5mc2fIbIZoP2Vm08WOQlQCg6Y1YfQaatuUjaJ5G5jMPOLywWgP
-         lZpQ==
-X-Gm-Message-State: AKwxyteIT5hqlhfiJf5DZ8Jvr+VnhCm0ubRyar5yBotMnO0iXT9HyAdP
-        6xCnywVC0zinqksNzxWU9vAiNsrJ9TRkWw5vnSYVBwWz
-X-Google-Smtp-Source: ACJfBotlbk7QA0RunqVcnrSUveV3yzrUsan6tjzy3VXwgRe3e2qv59LvlnKTbbLBsVe1PiqUQ2KQJjQX3vstrIObcQk=
-X-Received: by 10.55.72.75 with SMTP id v72mr16807933qka.295.1515436593392;
- Mon, 08 Jan 2018 10:36:33 -0800 (PST)
+        bh=++Jcazy5gmnT9yXVekWMCfB8IbTei6RRedAZEM/NffI=;
+        b=Rlac8dCndfvt78quyrFCp9VnW30QO3xYW+uCDS2yns7+skwjn9WJPujrGNhwrXlUeG
+         dvgr6OZlAeocS2f2sMdJsMJopYNqcRxe4ivER6iMOvG6Fn9jvrJatdz3onRpqTViETjz
+         dkVPnlYTZXeJvt980gGY/KYU5ffQHrKWS38+FmF84EWzGv9gyUAUy7fr0ZvLjTpIEO09
+         KkTtac5yR6O6IlwX9dRbQ3l58F551dK7Oj13GVoQnlQqzDfl0SlkHd2NapNs8V3qNon1
+         tAHGO2/URbqc+dIz8h7UTdPM+mjTDOTpeAh/9AsLogA09MechTH6NToMzaPXuBfQzluo
+         D9dQ==
+X-Gm-Message-State: AKwxyteSUH1hc4NLkUSkPaAcApjP3XcTpU88eouSj2FQ7qVxWPBGvG8Q
+        sLVmuQi5n0ACbkHCGpVQggL834KgRU6EXix8N93YSA==
+X-Google-Smtp-Source: ACJfBovu6VCem7E4xKIRybRmLNz49RxzL31u2hi5OGRw2W7xvnA8WJkITvTLDWMqmHGt//zMWxYNpCVJxnNF4YI1Nq4=
+X-Received: by 10.55.72.75 with SMTP id v72mr16816664qka.295.1515436715778;
+ Mon, 08 Jan 2018 10:38:35 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 10:36:32 -0800 (PST)
-In-Reply-To: <20180106184614.20115-3-kaartic.sivaraam@gmail.com>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com> <20180106184614.20115-3-kaartic.sivaraam@gmail.com>
+Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 10:38:35 -0800 (PST)
+In-Reply-To: <20180106184614.20115-4-kaartic.sivaraam@gmail.com>
+References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com> <20180106184614.20115-4-kaartic.sivaraam@gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Jan 2018 10:36:32 -0800
-Message-ID: <CAGZ79kYyUcun4spUKVsOb+SucCe6=1cizrfH7hrFoyKteWZ_9w@mail.gmail.com>
-Subject: Re: [PATCH 2/8] Doc/gitsubmodules: clearly specify advantage of submodule
+Date:   Mon, 8 Jan 2018 10:38:35 -0800
+Message-ID: <CAGZ79kYrp_DAaiDzpiWbTSvsfud=JHSO+NX3UaC4osAE3dYmmQ@mail.gmail.com>
+Subject: Re: [PATCH 3/8] Doc/gitsubmodules: specify how submodules help in
+ reduced size
 To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,31 +66,26 @@ On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
 <kaartic.sivaraam@gmail.com> wrote:
 > Signed-off-by: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 > ---
->  Documentation/gitsubmodules.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/gitsubmodules.txt | 3 +++
+>  1 file changed, 3 insertions(+)
 >
 > diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
-> index bf46b0fb5..cb795c6b6 100644
+> index cb795c6b6..3f73983d5 100644
 > --- a/Documentation/gitsubmodules.txt
 > +++ b/Documentation/gitsubmodules.txt
-> @@ -57,7 +57,7 @@ Submodules can be used for at least two different use cases:
->      * Size of the git repository:
->        In its current form Git scales up poorly for large repositories containing
->        content that is not compressed by delta computation between trees.
-> -      However you can also use submodules to e.g. hold large binary assets
-> +      Therefore you can use submodules to hold large binary assets
-
-If this improves readability by a lot, I'd be all for it. But this use
-case is just
-exemplary. There are also cases of submodules that do not contain big files,
-but e.g. have a lengthy history with lots of small files.
-So I don't know, as I would want to keep emphasized that this is just
-an example.
-
-
->        and these repositories are then shallowly cloned such that you do not
->        have a large history locally.
+> @@ -63,6 +63,9 @@ Submodules can be used for at least two different use cases:
 >      * Transfer size:
+>        In its current form Git requires the whole working tree present. It
+>        does not allow partial trees to be transferred in fetch or clone.
+> +      If you have your project as multiple repositories tied together as
+> +      submodules in a superproject, you can avoid fetching the working
+> +      trees of the repositories you are not interested in.
+
+You do not fetch a working tree, but a whole repository?
+
+>      * Access control:
+>        By restricting user access to submodules, this can be used to implement
+>        read/write policies for different users.
 > --
 > 2.16.0.rc0.223.g4a4ac8367
 >
