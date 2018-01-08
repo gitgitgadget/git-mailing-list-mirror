@@ -7,64 +7,64 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D9641FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 20:27:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE07A1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 20:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757563AbeAHU1r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 15:27:47 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:35252 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757547AbeAHU1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 15:27:45 -0500
-Received: by mail-qk0-f175.google.com with SMTP id w184so7633166qka.2
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 12:27:45 -0800 (PST)
+        id S1755904AbeAHUd2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 15:33:28 -0500
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:41131 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755899AbeAHUd1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 15:33:27 -0500
+Received: by mail-qk0-f170.google.com with SMTP id a8so15825644qkb.8
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 12:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qdtM9LPEa8b9k+7POWt5zwHUf3h5X9nf5dIIhmF0O2s=;
-        b=Cpb1wiXSpX7eEGMl2QG1O4C+hVobotbE9+YwZneBCfewbaQswgUGHd9YBycI3GLFdW
-         7rz+ntJ3ylZ5ZOMcoHHpfJICvHFSpbvYPvU7wUK2yc76SpkhWjL5NKcFxfdPj3rYXFzq
-         m0Xb1Rl7RSOSJKgb8qZ5wzVUCHiaxg1YUGXhQuwC8HTgNYW1cVpDjS7nIyTHawcClYU6
-         g5b+6pH9cjHZrgqoEBeM8i0VhC6MeyR2u0dGUggRkN0w7wZOFblpgqE6y4DHi1BKzWfK
-         0ENeq6K7NETfuclU1LIAPhTDsfBfyAOsFwfT0bGxHqb3J7ll5WS2R1aV6FLLqSZ8xJud
-         PSYQ==
+        bh=GT4vqJKZoN6VhsDe9nKMUQ/MMeD8OA0LaOfXpyRbNBk=;
+        b=B8KW3AjiL6m+n2YITi7ffwREUVtIvwNj/gWKXRkhB92b+LZMyjTUTGbzc7HPWSYUt7
+         t1i9J9xm7B2vzdkogSunYUF9T11E/gAvcRQqRfHxYmynRCpuXuU5uPFFCW10iNrlNx7G
+         bEFZAgAwgj2TequW74erywGeT7W9MNO6M2yjWox8iO3CcoZgahQm8ypleoLrmXtTCEb+
+         guzp5j+wR6pavqx7kHm20zhetJJHWq+1rQOkLSxdJd5DkwEiNXlqEmD9X8ku8ZodeZBR
+         xs01W+4IdMsusUkcIhS0ChTZtn7ZSbl3CHeF4tta1fd3CIOZzn96VnulASlkojEVilUP
+         0O2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=qdtM9LPEa8b9k+7POWt5zwHUf3h5X9nf5dIIhmF0O2s=;
-        b=Q1ONwBBhl6j8mL09WS0ztqHN8kWXGMxosUnGT1lenDEJW9KPF64wFg+be8QhDkigRy
-         MZUKJBAoRuR1BRVbMQPxUpE55wAH2WvOFnERjmYFhGepJocOQm/tE7WXiKp/48uW9owp
-         YJInzmVt0Lobz6kw2aDNN+ZIQwoq6ODMsnlchlBu3JDcOOlltJzzybzopXTPKZWwQhHS
-         lN9OZDTKQ3Gvgz4GgP5IR/TGE+nSYIH/XFxcitVukDwOZe9AihA3LjjK5wvNxCBJScK5
-         rAPQNlFs3fVkpHEQZD8T9JLK8D423vF+si09oMYHzmyNnJyrYYYWfO2sLN+nKZEOq9LB
-         Lr0A==
-X-Gm-Message-State: AKwxytdvUm1UpgcFJo8iqr6dvNcfkhHL8uKYoBqe9dVJruhNkYCGG8F4
-        kRCIt4BiB9HR+78JDz72rc7vdVM1
-X-Google-Smtp-Source: ACJfBouGpUiuOs8yzTE0a8xF/n5WJUAGBZi2kHcERylYxmZu3pbGx/UhzTH+5J9G790JcHGtsKsWPg==
-X-Received: by 10.55.87.71 with SMTP id l68mr17728872qkb.331.1515443264444;
-        Mon, 08 Jan 2018 12:27:44 -0800 (PST)
+        bh=GT4vqJKZoN6VhsDe9nKMUQ/MMeD8OA0LaOfXpyRbNBk=;
+        b=haGgrwXNPerth8IeJ79Dq1a42FUCF6a2u9yRu4mGJ8yKr/ZWpQ/B62N99t8DT/ginY
+         EurF6mD6kL50ARoC6Qddiyi9R6ZDPjQhVxFMnHgWIef1//jlQ7SURlP8srclyk9buR61
+         BoT+MNeEbT5rLc/NhCQECJFZHay7gBPaHbONxqnLmWIRykh03RaU6umDAmEWeENZddZB
+         0dIjuUnsi5U2STbOA1lnfgIC4MRM6XPx8DogbW5qvIq9R6CdbYZGuDjwBkzwnU/fEjiu
+         pACGpzpJd7TbPGTd3x9mU4Wa8IFA9vHFgUrY9Nil7M/JqvhnEGPtPusjcQg5HYNfkKB8
+         nr3A==
+X-Gm-Message-State: AKwxytd89Jf01QLmMDOf32SDw4ohjpIiaYA+QzzQ1GDh5wf6e/06eSiy
+        qyVgv+NdBoPC1pkHcjECenuuE9Kx
+X-Google-Smtp-Source: ACJfBovKmCbactvxHjIb0Hs1D6pBrkYNGAZot8kViQZG9jR+SwFeJIPssRH9K4sJ0PGdcZvVnhqlOA==
+X-Received: by 10.55.186.134 with SMTP id k128mr8515366qkf.23.1515443606360;
+        Mon, 08 Jan 2018 12:33:26 -0800 (PST)
 Received: from [192.168.1.105] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id l52sm8091084qtc.43.2018.01.08.12.27.42
+        by smtp.gmail.com with ESMTPSA id m77sm8274605qke.76.2018.01.08.12.33.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jan 2018 12:27:43 -0800 (PST)
-Subject: Re: [PATCH 2/6] fsmonitor: Stop inline'ing mark_fsmonitor_valid /
- _invalid
+        Mon, 08 Jan 2018 12:33:25 -0800 (PST)
+Subject: Re: [PATCH 4/6] fsmonitor: Make output of test-dump-fsmonitor more
+ concise
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Alex Vandiver <alexmv@dropbox.com>
 Cc:     git@vger.kernel.org
 References: <20180103030456.8181-1-alexmv@dropbox.com>
- <9bb36cea369530b980f6542e3e0f24dc142a20a8.1514948078.git.alexmv@dropbox.com>
- <alpine.DEB.2.21.1.1801042326581.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+ <36db77ccb5c025a73bf3f5841cd11607427ffdc0.1514948078.git.alexmv@dropbox.com>
+ <alpine.DEB.2.21.1.1801042331590.32@MININT-6BKU6QN.europe.corp.microsoft.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <01ad47b4-aa5e-461a-270b-dd60032afbd1@gmail.com>
-Date:   Mon, 8 Jan 2018 15:27:41 -0500
+Message-ID: <af33fb18-fd31-727b-efcc-b3873c6e58f1@gmail.com>
+Date:   Mon, 8 Jan 2018 15:33:24 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1801042326581.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+In-Reply-To: <alpine.DEB.2.21.1.1801042331590.32@MININT-6BKU6QN.europe.corp.microsoft.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,28 +75,55 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 1/4/2018 5:27 PM, Johannes Schindelin wrote:
+On 1/4/2018 5:33 PM, Johannes Schindelin wrote:
 > Hi Alex,
 > 
 > On Tue, 2 Jan 2018, Alex Vandiver wrote:
 > 
->> These were inline'd when they were first introduced, presumably as an
->> optimization for cases when they were called in tight loops.  This
->> complicates using these functions, as untracked_cache_invalidate_path
->> is defined in dir.h.
->>
->> Leave the inline'ing up to the compiler's decision, for ease of use.
+>> Rather than display one very long line, summarize the contents of that
+>> line.  The tests do not currently rely on any content except the first
+>> line ("no fsmonitor" / "fsmonitor last update").
+> 
+> The more interesting part would be the entries with outdated ("invalid")
+> information. I thought that this information was pretty useful for
+> debugging. Maybe we could still keep at least that part, or at least
+> trigger outputting it via a command-line flag?
 > 
 
-I'm fine with these not being inline.  I was attempting to minimize the 
-performance impact of the fsmonitor code when it was not even turned on. 
-  Inlineing these functions allowed it to be kept to a simple test but I 
-suspect (especially with modern optimizing compilers) that the overhead 
-of calling a function to do that test is negligible.
+During the development and testing of fsmonitor, I found the '+-' to be 
+helpful (especially since it is in index order).  I could touch a file 
+and verify that it showed up as invalid and that it was the file I 
+expected by its placement in the index.
 
-> As a compromise, you could leave the rather simple mark_fsmonitor_valid()
-> as inlined function. It should be by far the more-called function, anyway.
-> 
+I'd hate to have to add options to a test program for more/less output. 
+I do like your additions of the time since updated and the final counts. 
+  I prefer more information rather than less in my test tools - how 
+about this?
+
+
+diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
+index 5d61b0d621..8503da288d 100644
+--- a/t/helper/test-dump-fsmonitor.c
++++ b/t/helper/test-dump-fsmonitor.c
+@@ -20,11 +20,13 @@ int cmd_main(int ac, const char **av)
+                (uintmax_t)istate->fsmonitor_last_update,
+                (now - istate->fsmonitor_last_update)/1.0e9);
+
+-       for (i = 0; i < istate->cache_nr; i++)
++       for (i = 0; i < istate->cache_nr; i++) {
++               printf((istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) 
+? "+" : "-");
+                 if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID)
+                         valid++;
++       }
+
+-       printf("  valid: %d\n", valid);
++       printf("\n  valid: %d\n", valid);
+         printf("  invalid: %d\n", istate->cache_nr - valid);
+
+         return 0;
+
+
 > Ciao,
 > Johannes
 > 
