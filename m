@@ -2,285 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94C721F406
-	for <e@80x24.org>; Mon,  8 Jan 2018 11:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 403161FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 12:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756648AbeAHL5J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 06:57:09 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35033 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756612AbeAHL5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 06:57:07 -0500
-Received: by mail-wm0-f65.google.com with SMTP id a79so13703284wma.0
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 03:57:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=references:user-agent:from:to:cc:subject:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=xjGAb1L7PLmME50akAlUF0+43kGpDuXjwpZ/9WD/VSs=;
-        b=cSzk/eVi5Wi8Obaanq4vMRXbNnOM0+Ay1WLNRPSdmdaZrBChsfeTUo9z6I936blDcA
-         jbupKAjVSsYqaS+10iiV7/5Dau5BeYOpMT/oFi9cWTelfEwOZhGCKTE2/Yaglp8VyPS3
-         zIU1P230yaz7QcIwwJ8ch/3rZGThdXBJZOqu8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:references:user-agent:from:to:cc:subject
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=xjGAb1L7PLmME50akAlUF0+43kGpDuXjwpZ/9WD/VSs=;
-        b=tmYvMc6UOlitAs4tJjvSg8NDWkhla+9Cb1l5QKl2/ZdEdRBr3yGxKQaDz0VHIDEER+
-         33Jh0ILlFEbn4YI4EE+VxytpWLrfQ8fVl3jRHrXH3rF+ZW3BS5vT60W28LgVQfF6ruBH
-         P5eviC8lQowUgk6K+Xb0vJJrojXsm8NHkicauSnoyCPwLuOyVwfkYxNNSk+RA+okLh3i
-         b6mUBO7vwrhOj7b9byYdpCR0m9Mr7h7V4cbSQjYeCPWCaeCZpKg2Fg4sfknR0GWbBug1
-         KfZmVri86XCvDRyi51l2AyttX2pNcmBbu3XW9rueS6w0aiSpyU9zWiTSMoV2PO81sg0n
-         l7bA==
-X-Gm-Message-State: AKGB3mLfcyg8fldlYBwwhdmj4H+SDATh99X30cxehNtACNBvzjUABY9X
-        0ozcV9ju309yIAok/+Tl0d4/og==
-X-Google-Smtp-Source: ACJfBoui4ykmkpNDwCPWPQjBun1WR5+uMl6ijhBXF/WRUXBBddNj68C4V1RTQ3BuKszP7wisxdVNAg==
-X-Received: by 10.28.141.18 with SMTP id p18mr9143893wmd.143.1515412626524;
-        Mon, 08 Jan 2018 03:57:06 -0800 (PST)
-Received: from zen.linaro.local ([81.128.185.34])
-        by smtp.gmail.com with ESMTPSA id a69sm10587554wma.25.2018.01.08.03.57.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 08 Jan 2018 03:57:05 -0800 (PST)
-Received: from zen (localhost [127.0.0.1])
-        by zen.linaro.local (Postfix) with ESMTPS id 2FE853E037F;
-        Mon,  8 Jan 2018 11:57:05 +0000 (GMT)
-References: <1515177413-12526-1-git-send-email-git@matthieu-moy.fr> <1515407674-5233-1-git-send-email-git@matthieu-moy.fr> <1515407674-5233-2-git-send-email-git@matthieu-moy.fr>
-User-agent: mu4e 1.0-alpha3; emacs 26.0.90
-From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-To:     Matthieu Moy <git@matthieu-moy.fr>
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Thomas Adam <thomas@xteddy.org>
-Subject: Re: [PATCH v3 2/3] Remove now useless email-address parsing code
-In-reply-to: <1515407674-5233-2-git-send-email-git@matthieu-moy.fr>
-Date:   Mon, 08 Jan 2018 11:57:05 +0000
-Message-ID: <87h8rwo966.fsf@linaro.org>
+        id S1757034AbeAHMZS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 07:25:18 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53328 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756239AbeAHMZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 07:25:17 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwJko-1exKnY3gpK-0184JA; Mon, 08
+ Jan 2018 13:25:11 +0100
+Date:   Mon, 8 Jan 2018 13:25:04 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
+        Anthony Ramine <n.oxyde@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH v4 8/7] wildmatch test: skip file creation tests on
+ Windows proper
+In-Reply-To: <CACsJy8CDz57RR+VHpaPb5YMhKG5kUgb9rt5TWKL8n+e7Xart3g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801081319520.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <nycvar.QRO.7.76.6.1801052133380.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet> <20180105221222.28867-1-avarab@gmail.com> <xmqqzi5raogu.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.76.6.1801061337020.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+ <CACsJy8CDz57RR+VHpaPb5YMhKG5kUgb9rt5TWKL8n+e7Xart3g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:kg+0Rdq04scfgRSoAxpIA2F027KR0u+fil4XjuvjWaJPZIcF8P5
+ aD01GsuzIAS9+ljdxKxaL0IvY5w8CC04VT9h/XWAMpafIvJkD8bzJpDveFQF9hDXG7mxcPv
+ H7QphvHk0T7CoD9kB9Z/bV2ZP0kFhd/SJM9yACWNdxujcrcJmFhH7HJPMgjY5Uprkn1mjDs
+ BGXSRlcg8Ir6goD4pb62g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z9JEjOj6Hzg=:S8S/uTjrA8LdCJFUHwrVOH
+ RdmA/nEtjnhC1JOqqeo9Sv/YuZm52c6Y7NBYM21TK3u7ljd9nd4AIb+3G108bp6A//dL2ONuC
+ L8poGvKmckZLozRnxJfpTNfDrrMMml9zKCJYnDr5CZR120H5sI6VGWTRzMCVtZkzb8eN6QrCW
+ qCFQCDZnDim5/l6QmwBdwnm0nxqWIsUWWQMzYsgH7djGk3RjtM8XW3lDa6gknhXOv68BhfvAE
+ MTm8lQWasYLks6V/0xVoN0smH/VkrhztEpZfHMzKHzknylbtJHO4noMasNakCr7nV6ZsRKJUN
+ 90HFSQvqWUGf/+eYd8DYDGNFAIblTNs6PJTdKtwQVEDtFFVqg68yXB7SLNgnvkscgGYBdpaU+
+ AgOBAaNgDLjzLVubyXMEo75LuwjUIVgogEUytjkyhJWdkynGZP8bRqv9NhDC6u6QgkmVialYe
+ FUt5WwoDkpBmcB4MpaS9psJvtsPTPVmLbKztH0476b7B2v3VjjPoRV1a1vkiptWIS8drB4kGH
+ +R3eEpSDYZu6VSpXCpLdReJYij21SgGBhV6EaUtGBZVCKwkmkc3Z5drjGGvO9BQivAyZsOBJx
+ i+EP9+KA0kyhB8KhDBFC4Uqf153mFZL370VeQaC/d0VnXiB1WSKzVBIwrSnWI+CSCrEeIJ0Yg
+ 03s0DS85l5nQ0l+FAkvTQN7+3p0VMRzHB73Tx8D9d07hwLfqV1dpsAtLZljFdRhWVvqScBmQV
+ 1OQOBqtYTEr4/nC6aQx7tCrGXtK/Ya5reStFrvdUFDiVMF+rudaSb8yGZLQdfme/1VvtYJ3EC
+ sFHWz8ua7HtnYrIwe2LDyjmoUsNNsaLqjK0rPFBySC5iIiMHAh+V0OeO6MV7lgzwFqvkbIe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Duy,
 
-Matthieu Moy <git@matthieu-moy.fr> writes:
+On Sun, 7 Jan 2018, Duy Nguyen wrote:
 
-> We now use Mail::Address unconditionaly, hence parse_mailboxes is now
-> dead code. Remove it and its tests.
->
-> Signed-off-by: Matthieu Moy <git@matthieu-moy.fr>
+> On Sat, Jan 6, 2018 at 7:51 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Nobody likes to run tests that take too
+> > long. And look at this:
+> >
+> >         ...
+> >         ok 1511 - ipathmatch: match 'Z' '[Z-y]'
+> >         ok 1512 - ipathmatch(ls): match '[Z-y]' 'Z'
+> >         # still have 84 known breakage(s)
+> >         # failed 52 among remaining 1428 test(s)
+> >         1..1512
+> >
+> >         real    5m51.432s
+> >         user    0m33.986s
+> >         sys     2m13.162s
+> >
+> > Yep. It takes *over eight minutes*.
+> 
+> I suppose this is because the sheer number of test cases adds a lot of
+> shell overhead on Windows. I wonder if it's better to rewrite this
+> test in C instead. We start to do some more unit testing here and
+> there and kind of abuse the sh-based test framework for this. Having a
+> proper unit test framework would be good anyway since it's sometimes
+> hard to create a specific scenario with high level commands.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I agree that it would make a ton of sense to use a proper, portable test
+framework written in pure, portable C.
 
-> ---
-> No change since v2.
->
->  perl/Git.pm          | 71 ----------------------------------------------=
-------
->  t/t9000-addresses.sh | 27 --------------------
->  t/t9000/test.pl      | 67 ----------------------------------------------=
----
->  3 files changed, 165 deletions(-)
->  delete mode 100755 t/t9000-addresses.sh
->  delete mode 100755 t/t9000/test.pl
->
-> diff --git a/perl/Git.pm b/perl/Git.pm
-> index ffa09ac..65e6b32 100644
-> --- a/perl/Git.pm
-> +++ b/perl/Git.pm
-> @@ -880,77 +880,6 @@ sub ident_person {
->  	return "$ident[0] <$ident[1]>";
->  }
->
-> -=3Ditem parse_mailboxes
-> -
-> -Return an array of mailboxes extracted from a string.
-> -
-> -=3Dcut
-> -
-> -# Very close to Mail::Address's parser, but we still have minor
-> -# differences in some cases (see t9000 for examples).
-> -sub parse_mailboxes {
-> -	my $re_comment =3D qr/\((?:[^)]*)\)/;
-> -	my $re_quote =3D qr/"(?:[^\"\\]|\\.)*"/;
-> -	my $re_word =3D qr/(?:[^]["\s()<>:;@\\,.]|\\.)+/;
-> -
-> -	# divide the string in tokens of the above form
-> -	my $re_token =3D qr/(?:$re_quote|$re_word|$re_comment|\S)/;
-> -	my @tokens =3D map { $_ =3D~ /\s*($re_token)\s*/g } @_;
-> -	my $end_of_addr_seen =3D 0;
-> -
-> -	# add a delimiter to simplify treatment for the last mailbox
-> -	push @tokens, ",";
-> -
-> -	my (@addr_list, @phrase, @address, @comment, @buffer) =3D ();
-> -	foreach my $token (@tokens) {
-> -		if ($token =3D~ /^[,;]$/) {
-> -			# if buffer still contains undeterminated strings
-> -			# append it at the end of @address or @phrase
-> -			if ($end_of_addr_seen) {
-> -				push @phrase, @buffer;
-> -			} else {
-> -				push @address, @buffer;
-> -			}
-> -
-> -			my $str_phrase =3D join ' ', @phrase;
-> -			my $str_address =3D join '', @address;
-> -			my $str_comment =3D join ' ', @comment;
-> -
-> -			# quote are necessary if phrase contains
-> -			# special characters
-> -			if ($str_phrase =3D~ /[][()<>:;@\\,.\000-\037\177]/) {
-> -				$str_phrase =3D~ s/(^|[^\\])"/$1/g;
-> -				$str_phrase =3D qq["$str_phrase"];
-> -			}
-> -
-> -			# add "<>" around the address if necessary
-> -			if ($str_address ne "" && $str_phrase ne "") {
-> -				$str_address =3D qq[<$str_address>];
-> -			}
-> -
-> -			my $str_mailbox =3D "$str_phrase $str_address $str_comment";
-> -			$str_mailbox =3D~ s/^\s*|\s*$//g;
-> -			push @addr_list, $str_mailbox if ($str_mailbox);
-> -
-> -			@phrase =3D @address =3D @comment =3D @buffer =3D ();
-> -			$end_of_addr_seen =3D 0;
-> -		} elsif ($token =3D~ /^\(/) {
-> -			push @comment, $token;
-> -		} elsif ($token eq "<") {
-> -			push @phrase, (splice @address), (splice @buffer);
-> -		} elsif ($token eq ">") {
-> -			$end_of_addr_seen =3D 1;
-> -			push @address, (splice @buffer);
-> -		} elsif ($token eq "@" && !$end_of_addr_seen) {
-> -			push @address, (splice @buffer), "@";
-> -		} else {
-> -			push @buffer, $token;
-> -		}
-> -	}
-> -
-> -	return @addr_list;
-> -}
-> -
->  =3Ditem hash_object ( TYPE, FILENAME )
->
->  Compute the SHA1 object id of the given C<FILENAME> considering it is
-> diff --git a/t/t9000-addresses.sh b/t/t9000-addresses.sh
-> deleted file mode 100755
-> index a1ebef6..0000000
-> --- a/t/t9000-addresses.sh
-> +++ /dev/null
-> @@ -1,27 +0,0 @@
-> -#!/bin/sh
-> -
-> -test_description=3D'compare address parsing with and without Mail::Addre=
-ss'
-> -. ./test-lib.sh
-> -
-> -if ! test_have_prereq PERL; then
-> -	skip_all=3D'skipping perl interface tests, perl not available'
-> -	test_done
-> -fi
-> -
-> -perl -MTest::More -e 0 2>/dev/null || {
-> -	skip_all=3D"Perl Test::More unavailable, skipping test"
-> -	test_done
-> -}
-> -
-> -perl -MMail::Address -e 0 2>/dev/null || {
-> -	skip_all=3D"Perl Mail::Address unavailable, skipping test"
-> -	test_done
-> -}
-> -
-> -test_external_has_tap=3D1
-> -
-> -test_external_without_stderr \
-> -	'Perl address parsing function' \
-> -	perl "$TEST_DIRECTORY"/t9000/test.pl
-> -
-> -test_done
-> diff --git a/t/t9000/test.pl b/t/t9000/test.pl
-> deleted file mode 100755
-> index dfeaa9c..0000000
-> --- a/t/t9000/test.pl
-> +++ /dev/null
-> @@ -1,67 +0,0 @@
-> -#!/usr/bin/perl
-> -use lib (split(/:/, $ENV{GITPERLLIB}));
-> -
-> -use 5.008;
-> -use warnings;
-> -use strict;
-> -
-> -use Test::More qw(no_plan);
-> -use Mail::Address;
-> -
-> -BEGIN { use_ok('Git') }
-> -
-> -my @success_list =3D (q[Jane],
-> -	q[jdoe@example.com],
-> -	q[<jdoe@example.com>],
-> -	q[Jane <jdoe@example.com>],
-> -	q[Jane Doe <jdoe@example.com>],
-> -	q["Jane" <jdoe@example.com>],
-> -	q["Doe, Jane" <jdoe@example.com>],
-> -	q["Jane@:;\>.,()<Doe" <jdoe@example.com>],
-> -	q[Jane!#$%&'*+-/=3D?^_{|}~Doe' <jdoe@example.com>],
-> -	q["<jdoe@example.com>"],
-> -	q["Jane jdoe@example.com"],
-> -	q[Jane Doe <jdoe    @   example.com  >],
-> -	q[Jane       Doe <  jdoe@example.com  >],
-> -	q[Jane @ Doe @ Jane @ Doe],
-> -	q["Jane, 'Doe'" <jdoe@example.com>],
-> -	q['Doe, "Jane' <jdoe@example.com>],
-> -	q["Jane" "Do"e <jdoe@example.com>],
-> -	q["Jane' Doe" <jdoe@example.com>],
-> -	q["Jane Doe <jdoe@example.com>" <jdoe@example.com>],
-> -	q["Jane\" Doe" <jdoe@example.com>],
-> -	q[Doe, jane <jdoe@example.com>],
-> -	q["Jane Doe <jdoe@example.com>],
-> -	q['Jane 'Doe' <jdoe@example.com>],
-> -	q[Jane@:;\.,()<>Doe <jdoe@example.com>],
-> -	q[Jane <jdoe@example.com> Doe],
-> -	q[<jdoe@example.com> Jane Doe]);
-> -
-> -my @known_failure_list =3D (q[Jane\ Doe <jdoe@example.com>],
-> -	q["Doe, Ja"ne <jdoe@example.com>],
-> -	q["Doe, Katarina" Jane <jdoe@example.com>],
-> -	q[Jane jdoe@example.com],
-> -	q["Jane "Kat"a" ri"na" ",Doe" <jdoe@example.com>],
-> -	q[Jane Doe],
-> -	q[Jane "Doe <jdoe@example.com>"],
-> -	q[\"Jane Doe <jdoe@example.com>],
-> -	q[Jane\"\" Doe <jdoe@example.com>],
-> -	q['Jane "Katarina\" \' Doe' <jdoe@example.com>]);
-> -
-> -foreach my $str (@success_list) {
-> -	my @expected =3D map { $_->format } Mail::Address->parse("$str");
-> -	my @actual =3D Git::parse_mailboxes("$str");
-> -	is_deeply(\@expected, \@actual, qq[same output : $str]);
-> -}
-> -
-> -TODO: {
-> -	local $TODO =3D "known breakage";
-> -	foreach my $str (@known_failure_list) {
-> -		my @expected =3D map { $_->format } Mail::Address->parse("$str");
-> -		my @actual =3D Git::parse_mailboxes("$str");
-> -		is_deeply(\@expected, \@actual, qq[same output : $str]);
-> -	}
-> -}
-> -
-> -my $is_passing =3D eval { Test::More->is_passing };
-> -exit($is_passing ? 0 : 1) unless $@ =3D~ /Can't locate object method/;
+However, this ship has long sailed, hasn't it?
 
+Of course, we do have useful stuff in t/helper/. And we have precedent for
+more sensible bulk testing that does not require sh to generate or provide
+lists of test data, see e.g. the basename/dirname tests. And we could
+organize t/helper/ better, including a refactoring to have a single binary
+rather than tons and tons of binaries that all link to libgit.a and
+take a lot of space (even with LZMA compression, the current test
+artifacts take about 90 megabyte!).
 
---
-Alex Benn=C3=A9e
+If I had the time I would write this up as a valuable GSoC project. Not
+that Junio cares. But I do.
+
+Ciao,
+Dscho
