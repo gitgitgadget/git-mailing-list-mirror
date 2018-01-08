@@ -2,176 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7851FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 19:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC53D1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 19:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932228AbeAHTIp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 14:08:45 -0500
-Received: from mail-qt0-f171.google.com ([209.85.216.171]:43774 "EHLO
-        mail-qt0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932181AbeAHTIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 14:08:44 -0500
-Received: by mail-qt0-f171.google.com with SMTP id w10so14909361qtb.10
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 11:08:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dtSnTOeNxkvUQNpTNXE4axN8A78IW+1aNVNSEfCK+4A=;
-        b=BlQJCVEzuaVJFTSePkWIokW0hgZsGsqu5nRNJswGHOj+ehS2UL3g/4VdFlVnbwAddf
-         agwKsNCSpF5a71iZ7wRk8Ajeo6VcUAHGYL78D+L7KAGiExMjT6C3kD8KIGe4bN/oGLno
-         udUe0ByQh/JfZu3EsQahsAh3Pzilo3Eeu+WbT5rNyGnpzwiTYZ/shrbpie1DOeF5bGTX
-         8PJdzHOiJ6DpUQLJnAYi7idO1uxxjt6fIIjTaV+8mYUptwqWom+BCHmF05gZ5mT3rQbu
-         NNUWYrkLWDz+45p3jl3prK6I+HwZxK9E8h/jlsvQwRORsj3Z25Yy/8P8QEdxzE2o84cc
-         m1gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dtSnTOeNxkvUQNpTNXE4axN8A78IW+1aNVNSEfCK+4A=;
-        b=SGH57Z0+bD0KC32vRvGtpRJkU+M//NCrFkL4eDAOIb3j/Ys5LRafrjmtB3UX26fVt7
-         ogQxtT4X9aZWHXqUz/IsffVGJGbQRq9WIh/uT4sbWuBQ5ONN/WbByyhoQT3GVsSaf6o+
-         EVoPjwtiQRFvkWzvIc23ZmUjrooGnqdK6qsmEFaEyM6/wgBPgetezRDup9qexAswNs+J
-         2s+g8aKllToU1zKyI9FFM1fwew/P2ezycAw6W5qFXh9PH/C7ecGvxZWlska2CQEULn9m
-         NDlySM9ZgpGK59x4DuxUAdzM9FyfdUfcHVOvj7PPUP2FJviCR28jAEymZuscmY9m8SLJ
-         JIuQ==
-X-Gm-Message-State: AKwxyte7IHxH+ub2nCPdCJ/6tHjXsXH6TtSPxmPA7R930E65SKkHHH1z
-        jRLn4lG75kxmbmHNtNe0LsMz3mgQUk1hmw6IMSWs1w==
-X-Google-Smtp-Source: ACJfBotXhAmigu7MmwA4tFAc5L1UezczUeC2SpEKJjP3/RKMRctpFyGT5cPKeDGv/7F5sD6Xwd1T3DPd8tGZfVpJLN4=
-X-Received: by 10.200.26.37 with SMTP id v34mr17725399qtj.207.1515438523029;
- Mon, 08 Jan 2018 11:08:43 -0800 (PST)
+        id S1756342AbeAHTOF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 14:14:05 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51734 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755123AbeAHTOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 14:14:03 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 316D3D449A;
+        Mon,  8 Jan 2018 14:14:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0lIlEHhdjASzWty4ZKbko4MS8aU=; b=s0ug+N
+        CLVvrRk1KFCH9sXKJH72eeoMzUjkCkE3/K5d169t86ePkmt5vyyi2WwCBOBcgxIt
+        Na9YuRKZLneRhdXF8lkPwH2d5+I+Kmn2DkOhwZGrcxc3AqlD3FMWifKRTKhB6VqS
+        CW5JX3cT3848BIb89XM2julbwrfhAga7aj7TU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PWFgsoEDOImUg326yFqXvJiR/8GCm0Fh
+        cr/fA3xDMrtcT4viOt+9yxPKnb5oF5DjDEAHWLIgUNF5+TgnG5U9AeOW3KIIPggV
+        sLIU2u0TJFO5UT0oFgiB59Nt0Cq84eGm9ZZRV2kCIsEExjbK0uYK62MFxvfDvEyi
+        iGryp7cVtt0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29C32D4499;
+        Mon,  8 Jan 2018 14:14:03 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7D5B5D4496;
+        Mon,  8 Jan 2018 14:14:02 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org
+Subject: Re: [PATCHv3 1/4] color.h: document and modernize header
+References: <20171110011002.10179-1-sbeller@google.com>
+        <20180104224007.214548-1-sbeller@google.com>
+        <20180104224007.214548-2-sbeller@google.com>
+Date:   Mon, 08 Jan 2018 11:14:00 -0800
+In-Reply-To: <20180104224007.214548-2-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 4 Jan 2018 14:40:04 -0800")
+Message-ID: <xmqqr2r088p3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Mon, 8 Jan 2018 11:08:42 -0800 (PST)
-In-Reply-To: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 8 Jan 2018 11:08:42 -0800
-Message-ID: <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Doc/submodules: a few updates
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 166D5898-F4A8-11E7-AAD3-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> These are just a few improvements that I thought would make the documenta=
-tion
-> related to submodules a little better in various way such as readability,
-> consistency etc., These were things I noticed while reading thise documen=
-ts.
->
-> Sorry, for the highly granular patches. I did the commits as and when I w=
-as
-> reading them and tried to keep them focused to one particular change by r=
-ebasing
-> them as needed. In case they need some change, let me know.
+Stefan Beller <sbeller@google.com> writes:
 
-While small patches are really appreciated for code (bisect, automated
-testing, and
-the general difficulty to reason about code, as a very small change
-may affect the whole
-code base), I am not sure if they benefit in documentation.
-Documentation is a rather
-local human readable thing, so by changing one sentence we don't
-affect the understanding
-of documentation at a completely unrelated place.
+>  /*
+> - * Set the color buffer (which must be COLOR_MAXLEN bytes)
+> - * to the raw color bytes; this is useful for initializing
+> - * default color variables.
+> + * NEEDSWWORK: document this function or refactor grep.c to stop using this
+> + * function.
+>   */
+> -void color_set(char *dst, const char *color_bytes);
+> +extern void color_set(char *dst, const char *color_bytes);
 
-Also it helps to read more than just sentence fragments, i.e. I tried
-looking at the
-whole paragraph for review. May I suggest to squash them all and
-resend as one patch?
+The original that is removed by the patch documents the function
+well enough; as long as the NEEDSWORK comment is followed through
+in a later step in the series, it's alright, though ;-)
 
+> -int git_config_colorbool(const char *var, const char *value);
+> -int want_color(int var);
+> -int color_parse(const char *value, char *dst);
+> -int color_parse_mem(const char *value, int len, char *dst);
+> +/*
+> + * Parse a config option, which can be a boolean or one of
+> + * "never", "auto", "always". Return a constant of
+> + * GIT_COLOR_NEVER for "never" or negative boolean,
+> + * GIT_COLOR_ALWAYS for "always" or a positive boolean,
+> + * and GIT_COLOR_AUTO for "auto".
+> + */
+> +extern int git_config_colorbool(const char *var, const char *value);
 
->
-> I based these patches on top of 'master'.
+"never" and "always" not being part of usual boolean vocabulary
+makes it a bit awkward to explain.
 
-I am not aware of other submodule patches affecting documentation in master=
-..pu,
-so this should be easy to merge.
+> +/*
+> + * Output the formatted string in the specified color (and then reset to normal
+> + * color so subsequent output is uncolored). Omits the color encapsulation if
+> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+> + * the color. The `color_print_strbuf` prints the given pre-formatted strbuf
+> + * instead, up to its first NUL character.
+> + */
 
->
-> Apart from the changes, I saw a few things that needed improvement/clarif=
-ication
-> but wasn't able to do that myself due to my limited knowledge of submodul=
-es. They
-> are listed below. I'll add in patches for them if they are correctly clar=
-ified.
->
->
-> 1.
->
->  man gitsubmodules
->
->        =C2=B7   The configuration file $GIT_DIR/config in the superprojec=
-t. Typical configuration at this place is controlling if a submodule is
->            recursed into at all via the active flag for example.
->
->            If the submodule is not yet initialized, then the configuratio=
-n inside the submodule does not exist yet, so configuration where to
->            obtain the submodule from is configured here for example.
->
-> What's the "active flag" mentioned above? Also I find the phrase "is recu=
-rsed into at all"
-> to be a little slippery. How could it be improved?
+Obviously, it does not have to be part of this step nor series, but
+the above observation makes us realize that color_print_strbuf()
+would probably be an unreasonably narrow interface.  It is not too
+much to ask the caller to dereference and pass only the .buf
+component of the strbuf to an alternative helper that takes "const
+char *" and by doing so would allow us to let other callers that do
+not have a strbuf but just a plain string use it, too.
 
-There are multiple ways to indicate if a submodule is "active", i.e. if Git=
- is
-supposed to pay attention. Historically we had to set the
-submodule.<name>.url flag in the config, but last year Brandon added
-submodule.active as well as submodule.<name>.active which supersede
-the .url flag.
-
-(See is_submodule_active() in submodule.c to see the definitive answer to
-"should Git pay attention?")
-https://github.com/git/git/blob/master/submodule.c#L224
-
-I wonder if this indicates a lack of documentation when the active
-flags were introduced.
-They are found in 'man git config', but maybe we need to spell them
-out explicitly
-in the submodule related docs.
-
-> 2.
->
->  man git submodule
->
->        update
->            ...
->
->            checkout
->                ....
->
->                If --force is specified, the submodule will be checked out=
- (using git checkout --force if appropriate), even if the commit
->                specified in the index of the containing repository alread=
-y matches the commit checked out in the submodule.
->
-> I'm not sure this is conveying all the information it should be conveying=
-.
-> It seems to making the user wonder, "How at all does 'git submodule updat=
-e --force'
-> differs from 'git submodule update'?" also "using git checkout --force if=
- appropriate"
-> seems to be invoking all sorts confusion as "appropriate" is superfluous.
-
-When "submodule update" is invoked with the `--force` flag, that flag is pa=
-ssed
-on to the 'checkout' operation. If you do not give the --force, then
-the checkout
-will also be done without --force.
-
->
-> How could these confusions be clarified?
-
-I tried giving an alternative snippet above, not sure how else to tell.
+Looks good.
