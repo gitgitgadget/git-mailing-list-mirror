@@ -2,163 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 919621FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 19:18:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96F571FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 19:32:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932410AbeAHTST (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 14:18:19 -0500
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:46592 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932355AbeAHTSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 14:18:17 -0500
-Received: by mail-qt0-f177.google.com with SMTP id r39so14946084qtr.13
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 11:18:17 -0800 (PST)
+        id S933229AbeAHTc3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 14:32:29 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:39147 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932155AbeAHTc2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 14:32:28 -0500
+Received: by mail-pg0-f67.google.com with SMTP id z20so3942504pgv.6
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 11:32:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CIqTwaOnI8VSuCNtn6o3rCVAyblDyyDs8gfaaIQEWo4=;
-        b=oDXMK1DqUKqUzI5YS8MjgnwhOQCmpYrcQXaBOtW1hFOMtYwVukNGNgzvE4QMYp7RvV
-         lMGk84KZom86ZrDkXbO3N2l/mFXmJW/w8AVcqXjA+IEyYww7ps1E3wBY/ECXRgb3Xj9/
-         +6y4eDkRZUCrBxCKp6UCWo+jaoUwycG2RWSF1NBQX/V/YExlPELjhck9RJ7vAqIqWz9a
-         n0x3aprm5tawIzutsjQPL36N3AWtoSZcgW3XtnfJBULz+vX4O9zv9Dm4dvegRDyP1gve
-         kOR7I3YflaBp+HF0V11g29CKjsjHhHVO23h/uboWwL5Y31udP37TxDdEQYwDhMSviAqH
-         rHFQ==
+        bh=MZQdfJCL3SYQis5hzADOkuMhnMMyhLPkBzlSvWxvUv0=;
+        b=c5fFyHOtM7ovAjRpJya7ZMC3OSrH3cFRpTuryBAfcKMvk1mJXvVbFLH4hDpCyiAVhF
+         IGoe1RRaEV8Jkwi1rqMiHhPQU4ou9QaVCqzf/oH5lFTPxg67466Iw24PQYbhWQIqnR9D
+         uSTrMHaDKxliBudpDDEN9hd0SnndpU5jqelgvCf6LwKPdhEZmiHxtyNFFrGkFNHSvWbR
+         HLHU8kqU5c5YGjle1lSxNW669FwRfCKQaB/oQf702aCXOBko8NoHyvL3GnBhzSinGi/B
+         pmMHmA0RMtM57k5dJl5/it4+1yf0Z0hBHsg5DcO2vlDocFFw58G06+LQhfBhAEjf0t5e
+         9foA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CIqTwaOnI8VSuCNtn6o3rCVAyblDyyDs8gfaaIQEWo4=;
-        b=YNogx7BPikwKrV6iWr8DQH4BSwucKgSVn7pRyNFlt9aKA5TISI7hRBOIV8PXW1A+yw
-         573Q/2uQkHvykIktZQL95odGVd4ev6y8Iz5TtW/2I5tObXk+GQA1bm3hgeCQgbkEAD1k
-         svvSw7RlkCxSdsarLh3L4R21f1waNAKGO9IYvHd0Z5bmi9svmjycF7RcopcMJ57WBVjH
-         ul4vIe3vRjgrw+MW+XA5bDIYoJtiIFItHUMS6UHN9dGrLKItam8u2rpjD5wlunrYW/lC
-         X4tNttDG9/DeSV/Wep2lkTp3+/XVqkz3o4k5mk6Q3HiKEw8sW9COTHzDlZjJVo5mOzCt
-         bdIw==
-X-Gm-Message-State: AKwxytczgZc7rt7iU5ESkkGsm4QGUwJ9A6S5WW50xqwuJrQOUxruRB8n
-        JiR2ZDOZvViM+0mmk3jqEUoulA==
-X-Google-Smtp-Source: ACJfBouMJSG4rRE9ueVFCgouCCWbwtD37go7SIWMpayIcucGZbKXYKsWUevlDa4wEQkf6JUrLHAkfQ==
-X-Received: by 10.200.17.25 with SMTP id c25mr16416251qtj.97.1515439096283;
-        Mon, 08 Jan 2018 11:18:16 -0800 (PST)
-Received: from dnj-macbookpro.roam.corp.google.com.com ([172.23.222.209])
-        by smtp.gmail.com with ESMTPSA id k3sm7790025qtj.40.2018.01.08.11.18.15
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 08 Jan 2018 11:18:15 -0800 (PST)
-From:   Dan Jacques <dnj@google.com>
-To:     avarab@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, dnj@google.com, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH v5 2/3] Makefile: add Perl runtime prefix support
-Date:   Mon,  8 Jan 2018 14:18:12 -0500
-Message-Id: <20180108191812.52565-1-dnj@google.com>
-X-Mailer: git-send-email 2.15.0.chromium12
-In-Reply-To: <87inccbscj.fsf@evledraar.gmail.com>
-References: <87inccbscj.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=MZQdfJCL3SYQis5hzADOkuMhnMMyhLPkBzlSvWxvUv0=;
+        b=qP0SfjbKm56JUqYwK55S8u2+z05YZnxNtJXjpHTtQ31xIW0JpYcqN8DPhqeUD9Adg0
+         9KiBPkuCvoCBzm2yyJVLP7Aeg3pxS2rMlYJh8OxkbojxYQ2LLJC+4XY80OMrFRVHU2cx
+         GT27jk/v9cB7YpHbsRdZXdbTkJQQRGJGQRr+Oi49BIuoDYzvr9jRnbJ2KFzfCqnvw4yk
+         VShVU6S4i4lCxThBIqsK5xj6XrwBDM08jip4+CaOO1ABF+uaEWtuuM1kusWm/ZvC4Pg0
+         EB5F9vWzgCQXc4d3u92TEEdieuvNPahhDJwGICkuL9Yj+ozUBCXJ95aIgU12QzRwIbMN
+         td7A==
+X-Gm-Message-State: AKGB3mLciUbw7Zwd5j3kSULEeMZRMYjk5TRDZaCucs0z6qBHIMl1/64r
+        tos3KNc/1ifjJlybhLsk7UPjfRC8KX4=
+X-Google-Smtp-Source: ACJfBouoJjx1uqgdZCSGPAu1S9zfXGqpnX9D90LE2kW+YrWeox62Trf/I9mudNP7PkBJcwlY8kts9Q==
+X-Received: by 10.101.80.139 with SMTP id r11mr10125619pgp.383.1515439947783;
+        Mon, 08 Jan 2018 11:32:27 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:b54f:f5a7:98a3:acf1])
+        by smtp.gmail.com with ESMTPSA id w21sm26680103pfl.50.2018.01.08.11.32.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 08 Jan 2018 11:32:26 -0800 (PST)
+Date:   Mon, 8 Jan 2018 11:32:26 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, gitster@pobox.com, Johannes.Shindelin@gmx.de,
+        jrnieder@gmail.com
+Subject: Re: [RFC PATCH 01/18] docs: Multi-Pack Index (MIDX) Design Notes
+Message-Id: <20180108113226.da265814e5c1deea1f8c404d@google.com>
+In-Reply-To: <20180107181459.222909-2-dstolee@microsoft.com>
+References: <20180107181459.222909-1-dstolee@microsoft.com>
+        <20180107181459.222909-2-dstolee@microsoft.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 08 Jan 2018, Ævar Arnfjörð Bjarmason replied:
+On Sun,  7 Jan 2018 13:14:42 -0500
+Derrick Stolee <stolee@gmail.com> wrote:
 
-> Thanks, applied this on top of next and it works for me, i.e. install to
-> /tmp/git and move to /tmp/git2 = works for me. Comments below.
+> +Design Details
+> +--------------
+> +
+> +- The MIDX file refers only to packfiles in the same directory
+> +  as the MIDX file.
+> +
+> +- A special file, 'midx-head', stores the hash of the latest
+> +  MIDX file so we can load the file without performing a dirstat.
+> +  This file is especially important with incremental MIDX files,
+> +  pointing to the newest file.
 
-Good to hear! I've run this through a few machines at my disposal, but
-the more hands on the better.
+I presume that the actual MIDX files are named by hash? (You might have
+written this somewhere that I somehow missed.)
 
->> Enabling RUNTIME_PREFIX_PERL overrides the system-specific Perl script
->> installation path generated by MakeMaker to force installation into a
->> platform-neutral location, "<prefix>/share/perl5".
->
-> Not generated by MakeMaker anymore :)
+Also, I notice that in the "Future Work" section, the possibility of
+multiple MIDX files is raised. Could this 'midx-head' file be allowed to
+store multiple such files? That way, we avoid a bit of file format
+churn (in that we won't need to define a new "chunk" in the future).
 
-Hah good catch! I'll update the commit message.
+> +- If a packfile exists in the pack directory but is not referenced
+> +  by the MIDX file, then the packfile is loaded into the packed_git
+> +  list and Git can access the objects as usual. This behavior is
+> +  necessary since other tools could add packfiles to the pack
+> +  directory without notifying Git.
+> +
+> +- The MIDX file should be only a supplemental structure. If a
+> +  user downgrades or disables the `core.midx` config setting,
+> +  then the existing .idx and .pack files should be sufficient
+> +  to operate correctly.
 
->>+# it. This is intentionally separate from RUNTIME_PREFIX so that notably Windows
->>+# can hard-code Perl library paths while still enabling RUNTIME_PREFIX
->>+# resolution.
->
-> Maybe we covered this in previous submissions, but refresh my memory,
-> why is the *_PERL define still needed? Reading this explanation doesn't
-> make sense to me, but I'm probably missing something.
->
-> If we have a system where we have some perl library paths on the system
-> we want to use, then they'll still be in @INC after our 'use lib'-ing,
-> so we'll find libraries there.
->
-> The only reason I can think of for doing this for C and not for Perl
-> would be if you for some reason want to have a git in /tmp/git but then
-> use a different version of the Git.pm from some system install, but I
-> can't imagine why.
+Let me try to summarize: so, at this point, there are no
+backwards-incompatible changes to the repo disk format. Unupdated code
+paths (and old versions of Git) can just read the .idx and .pack files,
+as always. Updated code paths will look at the .midx and .idx files, and
+will sort them as follows:
+ - .midx files go into a data structure
+ - .idx files not referenced by any .midx files go into the
+   existing packed_git data structure
 
-The reason is entirely due to the way Git-for-Windows is structured. In
-Git-for-Windows, Git binaries are run directly from Windows, meaning that
-they require RUNTIME_PREFIX resolution. However, Perl scripts are run from
-a MinGW universe, within which filesystem paths are fixed. Therefore,
-Windows Perl scripts don't require a runtime prefix resolution.
+A writer can either merely write a new packfile (like old versions of
+Git) or write a packfile and update the .midx file, and everything above
+will still work. In the event that a writer deletes an existing packfile
+referenced by a .midx (for example, old versions of Git during a
+repack), we will lose the advantages of the .midx file - we will detect
+that the .midx no longer works when attempting to read an object given
+its information, but in this case, we can recover by dropping the .midx
+file and loading all the .idx files it references that still exist.
 
-This makes sense because they are clearly functional right now without this
-patch enabled :) However, we don't have the luxury of running Perl in a
-separate universe on other OSes, so this patch is necessary for them.
-
-I created a separate option because I wanted to ensure that I don't change
-anything fundamental in Windows, which currently relies on runtime prefix
-resoultion. On all other operating systems, Perl and binary runtime prefix
-resolution is disabled by default, so if this patch set does end up having
-bugs or edge cases in the Perl runtime prefix code, it won't inpact anybody's
-current builds.
-
-I can foresee a future where Windows maintainers decide that
-PERL_RUNTIME_PREFIX is fine for Windows and merge the two options; however,
-I didn't want to force that decision in the initial implementation.
-
-> > +	# GIT_EXEC_PATH is supplied by `git` or the test suite. Otherwise, resolve
-> > +	# against the runtime path of this script.
-> > +	require FindBin;
-> > +	require File::Spec;
-> > +	(my $prefix = $ENV{GIT_EXEC_PATH} || $FindBin::Bin) =~ s=${gitexecdir_relative}$==;
->
-> So why are we falling back on $FindBin::Bin? Just so you can do
-> e.g. /tmp/git2/libexec/git-core/git-svn like you can do
-> /tmp/git2/libexec/git-core/git-status, i.e. will this never be false if
-> invoked via "git"?
->
-> I don't mind it, just wondering if I'm missing something and we need to
-> use the fallback path in some "normal" codepath.
-
-Yep, exactly. The ability to directly invoke Perl scripts is currently
-functional in non-runtime-prefix builds, so enabling it in runtime-prefix
-builds seemed appropriate. I have found this useful for testing.
-
-However, since GIT_EXEC_PATH is probably going to be the common path,
-I'll scoop the FindBin code (including the "require" statement) into a
-conditional in v6 and use it only when GIT_EXEC_PATH is empty.
-
-> > +	return File::Spec->catdir($prefix, $relpath);
->
-> I think you initially got some version of this from me (or not), so this
-> is probably my fault, but reading this again I think this would be
-> better as just:
->
->     return $prefix . '@@PATHSEP@@' . $relpath;
->
-> I.e. right after this we split on @@PATHSEP@@, and that clearly works
-> (as opposed to using File::Spec->splitpath) since we've used it
-> forever.
->
-> Better just to use the same idiom on both ends to not leave the reader
-> wondering why we can split paths one way, but need to join them another
-> way.
-
-PATHSEP is the path separator (":"), as opposed to the filesystem separator
-("/"). We split on PATHSEP below b/c we need to "use lib" as an array, but
-it may be a ":"-delimited string.
+As a reviewer, I think this is a very good approach, and this does make
+things easier to review (as opposed to, say, an approach where a lot of
+the code must be aware of .midx files).
