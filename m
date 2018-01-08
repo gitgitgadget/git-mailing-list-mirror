@@ -2,152 +2,512 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6B11FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 12:28:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3F6D1FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 12:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757171AbeAHM2h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 07:28:37 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:40656 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757164AbeAHM2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 07:28:34 -0500
-Received: by mail-wm0-f54.google.com with SMTP id f206so13859707wmf.5
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 04:28:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=u/vAPug9rr5yc2vT5/76MlnJc/9t14Ryxv2diUVGot4=;
-        b=odRNQmXjDfH+sqcQeht7tKvc5fYq2EQe3/joQkKFBJ+VQ1Q8AwcscbFIO4BUme05pK
-         7XjTS7UcJeQKF40D1ShGEIBV7UWmqJ4T2jjhmmSQ1eX6NFdepDAWR6nNGnXCaW3JtFU1
-         ljnDx31QuE/elS7lnPXCYXdzDI985XEXjZs7XY9sENrkGVCmxEjkkecyv1aW87MpJ9vv
-         BQML/T4NpFSV69s9OhGQ1EFQwVH2MtEVnx+/pKm8qYDgG7wc5aShA75wo9bVJb0HqVx8
-         4GOSUeksOQaPZ7RDdoseDDSqsjIJHgnRl1XNBs4P2pCDmOxaU5RpbwPsJ7QnU6lPsAoJ
-         DO2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=u/vAPug9rr5yc2vT5/76MlnJc/9t14Ryxv2diUVGot4=;
-        b=OUyCrY7Uu8LIxuwYKxK+Im6ETp75wMWPMhLBLuJy6ZpDQjuvxpvK9aPkaJ9JN2051v
-         lOq03/3tUDdnL+s9SQ/rLuOS0JH3owa3dIxhjrMk6dMk588UsUsdC96CE5vnl1/nemfu
-         68LewF5+1+io6h6HRuK+/ZQakztrmNPlmjIGabEI6pPg6b8NtVETkqe5g1mlgBjrIG6o
-         rL5037DqaCfCuscR7n5B4T+0nOkWW08IqIdDdHImuhTvGs6S8JXTP4msUAI1ZyCqk5XN
-         E2EUA41/OxtXwgyD8SGw0cmKXDiEtBb/EN1xO4CdVisCB4F3Avo4Nx15Pv4mPm+lVwSi
-         viPw==
-X-Gm-Message-State: AKGB3mJqrp+oCRmD44ILq9auP6B6j8f/kTXmrr+swXptP9RqNfGkQN6i
-        xLXAGOhC503JvnE0uxyR+5s=
-X-Google-Smtp-Source: ACJfBoudkcdwz1uhMe/Fl7zcOPhBwH85UhNDDmHVJbGmGemsP7kwC7OtOqYwgrLuyWn1LTOyyVVYkw==
-X-Received: by 10.80.226.207 with SMTP id q15mr16901522edl.248.1515414513395;
-        Mon, 08 Jan 2018 04:28:33 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id y48sm7067433edd.77.2018.01.08.04.28.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 08 Jan 2018 04:28:32 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        dstolee@microsoft.com, git@jeffhostetler.com, gitster@pobox.com,
-        johannes.schindelin@gmx.de, jrnieder@gmail.com,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-References: <20180107181459.222909-1-dstolee@microsoft.com> <87k1wtb8a4.fsf@evledraar.gmail.com> <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com> <20180108102029.GA21232@sigill.intra.peff.net> <20180108102708.GA19461@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20180108102708.GA19461@sigill.intra.peff.net>
-Date:   Mon, 08 Jan 2018 13:28:31 +0100
-Message-ID: <87efn0bkls.fsf@evledraar.gmail.com>
+        id S1757390AbeAHMqd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 07:46:33 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50116 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756378AbeAHMqc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 07:46:32 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIhDo-1eaigD2kp6-002Gr9; Mon, 08
+ Jan 2018 13:46:25 +0100
+Date:   Mon, 8 Jan 2018 13:46:24 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Anthony Ramine <n.oxyde@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>
+Subject: Re: [PATCH v4 8/7] wildmatch test: skip file creation tests on
+ Windows proper
+In-Reply-To: <87mv1raz9p.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801081331540.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <nycvar.QRO.7.76.6.1801052133380.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet> <20180105221222.28867-1-avarab@gmail.com> <xmqqzi5raogu.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.76.6.1801061337020.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+ <87mv1raz9p.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323329-483015967-1515415585=:31"
+X-Provags-ID: V03:K0:NZWL8KVJj0eWKeZ2xG5M2Hqu3/ZXLD4XIfQSZUhJQJmk9KrKIOY
+ Jsx1n5WsUB6GgbeH7tQtb5JiSSFdoZD0DTTjb1qW3gkQ7uI1fuYKna40pCsgCS2FaIziDbS
+ JzvBLI1SsacT7Nmk2OGF18KEQkHEx1OBzi+JJe82vkuV3gY6tts+L9XWv8TaEMUd6wAO2MQ
+ i4FGJryCUc/11tzNCJqeQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MAJ4lme7mOQ=:HNfNiS6NcwLtGn0I0WZiTq
+ jlfisOUxL4kd5neR9NJFdKh4R1O+WYbNJHQkroeU/8YRdTUHWpvn6V456jV+zOaoH8DFxinFA
+ j8IdQNGXINTxLSZc/TK7zziTj+8aR90gtFJN+4omtk+mPTQTZvdJFrPMJITydQEYgO/eLBs/o
+ 5piqMUQ6EII369gqX3B6Geoc+hl/DD8p/VzBS1wnXmAXgDCqJCtUBmjrElaGlNvZvaztxiiuD
+ iFWDXgn6K6Odg9dwGQRRMOJYw3sFM7zprijRu1/AhEHAJ/n9/gKU41Yn0vQ6eVY8OazT7FDgA
+ tljDH+ZeK1u4yfgUH0t1fdLsPsGPB0GCX6KBmK7mnyKQhc31WyBav/Nsl7difJn/xeC6Ixrfo
+ CErSjjmZAtBNgWXoNcV9V12ttDmMbU/acCv5U4Az6SiSG5IFfiO+yYvkfmWkbElj66qegHJgc
+ FqO46ZJ2+ZQM/tfcxAeR2s2SKID5ZRtc+1orVZ5QPyOR1bpJIRlrimwN14cLdtsb8Kc4DOWC9
+ itWZBnKsB4nWsrntOojDBhMPO7rxz76yw/eKDq761+MqjqOcBg20r1IOjBPTAnRhVs2GqNMF4
+ 1OhN0+o3LZ8QAlWijoFriB5k0YnaNOf7asqS17EvI5SY4Shg5dM2cBFN0FodviJfbbaFNNFzZ
+ 5PvT1k4xZJIpha+2/4LBgGu/QS3/YLtts9/GtI4jNePt2QnDLhJoDddlaeqEDKzJrlI+WPnVh
+ JHG53RAty4oO8Iw3kPAZB346a1ZZRvJ9SapqnW5jAyrHEvYtxmGiRTWeZE4cfIEPEETUJRurw
+ iPzGQ3TKdbqJ8+HPT3wyaVMQ6K2c/dM6GrHGWLPTOk8wkFntIEEMWavdtlHBOuS/N3giBZ+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, Jan 08 2018, Jeff King jotted:
+--8323329-483015967-1515415585=:31
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> On Mon, Jan 08, 2018 at 05:20:29AM -0500, Jeff King wrote:
->
->> I.e., what if we did something like this:
->>
->> diff --git a/sha1_name.c b/sha1_name.c
->> index 611c7d24dd..04c661ba85 100644
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -600,6 +600,15 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
->>  	if (len == GIT_SHA1_HEXSZ || !len)
->>  		return GIT_SHA1_HEXSZ;
->>
->> +	/*
->> +	 * A default length of 10 implies a repository big enough that it's
->> +	 * getting expensive to double check the ambiguity of each object,
->> +	 * and the chance that any particular object of interest has a
->> +	 * collision is low.
->> +	 */
->> +	if (len >= 10)
->> +		return len;
->> +
->
-> Oops, this really needs to terminate the string in addition to returning
-> the length (so it was always printing 40 characters in most cases). The
-> correct patch is below, but it performs the same.
->
-> diff --git a/sha1_name.c b/sha1_name.c
-> index 611c7d24dd..5921298a80 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -600,6 +600,17 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
->  	if (len == GIT_SHA1_HEXSZ || !len)
->  		return GIT_SHA1_HEXSZ;
->
-> +	/*
-> +	 * A default length of 10 implies a repository big enough that it's
-> +	 * getting expensive to double check the ambiguity of each object,
-> +	 * and the chance that any particular object of interest has a
-> +	 * collision is low.
-> +	 */
-> +	if (len >= 10) {
-> +		hex[len] = 0;
-> +		return len;
-> +	}
-> +
->  	mad.init_len = len;
->  	mad.cur_len = len;
->  	mad.hex = hex;
+Hi =C3=86var,
 
-That looks much more sensible, leaving aside other potential benefits of
-MIDX.
+On Sat, 6 Jan 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Given the argument Linus made in e6c587c733 ("abbrev: auto size the
-default abbreviation", 2016-09-30) maybe we should add a small integer
-to the length for good measure, i.e. something like:
+> Can you please provide me with the output of the test under -v -x -d
+> from github.com:avar/git.git wildmatch-refactor-8 branch?
 
-	if (len >= 10) {
-		int extra = 2; /* or  just 1? or maybe 0 ... */
-		hex[len + extra] = 0;
-		return len + extra;
-	}
+With -v -x -i:
 
-I tried running:
+-- snip --
+[...]
+expecting success:
+                                printf '%s' '?a?b' >expect &&
+                                git --glob-pathspecs ls-files -z -- '\??\?b=
+' >actual.raw 2>actual.err &&
 
-    git log --pretty=format:%h --abbrev=7 | perl -nE 'chomp; say length'|sort|uniq -c|sort -nr
+        tr -d '\0' <actual.raw >actual &&
+        >expect.err &&
+        test_cmp expect.err actual.err &&
+        test_cmp expect actual
 
-On several large repos, which forces something like the disambiguation
-we had before Linus's patch, on e.g. David Turner's
-2015-04-03-1M-git.git test repo it's:
+++ printf %s '?a?b'
+++ git --glob-pathspecs ls-files -z -- '\??\?b'
++ test_eval_ret_=3D128
++ want_trace
++ test t =3D t
++ test t =3D t
++ set +x
+error: last command exited with $?=3D128
+not ok 734 - wildmatch(ls): match '\??\?b' '?a?b'
+#
+#                                       printf '%s' '?a?b' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '\??\?b' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
 
-     952858 7
-      44541 8
-       2861 9
-        168 10
-         17 11
-          2 12
+real    2m9.127s
+user    0m10.026s
+sys     1m0.617s
+-- snap --
 
-And the default abbreviation picks 12. I haven't yet found a case where
-it's wrong, but if we wanted to be extra safe we could just add a byte
-or two to the SHA-1.
+and
+
+-- snip --
+$ cat ./trash\ directory.t3070-wildmatch/actual.err
+fatal: Invalid path '/??': No such file or directory
+-- snap --
+
+As to the speed:
+
+-- snip --
+# still have 144 known breakage(s)
+# failed 28 among remaining 1746 test(s)
+1..1890
+
+real    5m55.162s
+user    0m26.396s
+sys     2m34.152s
+-- snap --
+
+=2E.. seems to be in the same ballpark. You are just leaning way too heavil=
+y
+on Unix shell scripting.
+
+FWIW the breakages are:
+
+-- snip --
+not ok 734 - wildmatch(ls): match '\??\?b' '?a?b'
+#
+#                                       printf '%s' '?a?b' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '\??\?b' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 735 - iwildmatch: match '?a?b' '\??\?b'
+not ok 736 - iwildmatch(ls): match '\??\?b' '?a?b'
+#
+#                                       printf '%s' '?a?b' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '\??\?b' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 737 - pathmatch: match '?a?b' '\??\?b'
+not ok 738 - pathmatch(ls): match '\??\?b' '?a?b'
+#
+#                                       printf '%s' '?a?b' >expect &&
+#                                       git ls-files -z -- '\??\?b'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 739 - ipathmatch: match '?a?b' '\??\?b'
+not ok 740 - ipathmatch(ls): match '\??\?b' '?a?b'
+#
+#                                       printf '%s' '?a?b' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '\??\?b' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 741 - cleanup after previous file test
+ok 742 - setup wildtest file test for abc
+ok 743 - wildmatch: match 'abc' '\a\b\c'
+not ok 744 - wildmatch(ls): match '\a\b\c' 'abc'
+#
+#                                       printf '%s' 'abc' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '\a\b\c' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 745 - iwildmatch: match 'abc' '\a\b\c'
+not ok 746 - iwildmatch(ls): match '\a\b\c' 'abc'
+#
+#                                       printf '%s' 'abc' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '\a\b\c' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 747 - pathmatch: match 'abc' '\a\b\c'
+not ok 748 - pathmatch(ls): match '\a\b\c' 'abc'
+#
+#                                       printf '%s' 'abc' >expect &&
+#                                       git ls-files -z -- '\a\b\c'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 749 - ipathmatch: match 'abc' '\a\b\c'
+not ok 750 - ipathmatch(ls): match '\a\b\c' 'abc'
+#
+#                                       printf '%s' 'abc' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '\a\b\c' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+[...]
+not ok 964 - wildmatch(ls): match '[\-_]' '-'
+#
+#                                       printf '%s' '-' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '[\-_]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 965 - iwildmatch: match '-' '[\-_]'
+not ok 966 - iwildmatch(ls): match '[\-_]' '-'
+#
+#                                       printf '%s' '-' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '[\-_]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 967 - pathmatch: match '-' '[\-_]'
+not ok 968 - pathmatch(ls): match '[\-_]' '-'
+#
+#                                       printf '%s' '-' >expect &&
+#                                       git ls-files -z -- '[\-_]'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 969 - ipathmatch: match '-' '[\-_]'
+not ok 970 - ipathmatch(ls): match '[\-_]' '-'
+#
+#                                       printf '%s' '-' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '[\-_]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 971 - cleanup after previous file test
+ok 972 - setup wildtest file test for ]
+ok 973 - wildmatch: match ']' '[\]]'
+not ok 974 - wildmatch(ls): match '[\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '[\]]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 975 - iwildmatch: match ']' '[\]]'
+not ok 976 - iwildmatch(ls): match '[\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '[\]]' >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 977 - pathmatch: match ']' '[\]]'
+not ok 978 - pathmatch(ls): match '[\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git ls-files -z -- '[\]]'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 979 - ipathmatch: match ']' '[\]]'
+not ok 980 - ipathmatch(ls): match '[\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '[\]]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+[...]
+not ok 1284 - wildmatch(ls): match '[A-\\]' 'G'
+#
+#                                       printf '%s' 'G' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '[A-\\]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1285 - iwildmatch: match 'G' '[A-\\]'
+not ok 1286 - iwildmatch(ls): match '[A-\\]' 'G'
+#
+#                                       printf '%s' 'G' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '[A-\\]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1287 - pathmatch: match 'G' '[A-\\]'
+not ok 1288 - pathmatch(ls): match '[A-\\]' 'G'
+#
+#                                       printf '%s' 'G' >expect &&
+#                                       git ls-files -z -- '[A-\\]'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1289 - ipathmatch: match 'G' '[A-\\]'
+not ok 1290 - ipathmatch(ls): match '[A-\\]' 'G'
+#
+#                                       printf '%s' 'G' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '[A-\\]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+[...]
+not ok 1374 - wildmatch(ls): match '[\1-\3]' '2'
+#
+#                                       printf '%s' '2' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '[\1-\3]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1375 - iwildmatch: match '2' '[\1-\3]'
+not ok 1376 - iwildmatch(ls): match '[\1-\3]' '2'
+#
+#                                       printf '%s' '2' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '[\1-\3]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1377 - pathmatch: match '2' '[\1-\3]'
+not ok 1378 - pathmatch(ls): match '[\1-\3]' '2'
+#
+#                                       printf '%s' '2' >expect &&
+#                                       git ls-files -z -- '[\1-\3]'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1379 - ipathmatch: match '2' '[\1-\3]'
+not ok 1380 - ipathmatch(ls): match '[\1-\3]' '2'
+#
+#                                       printf '%s' '2' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '[\1-\3]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+[...]
+not ok 1424 - wildmatch(ls): match '[[-\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --glob-pathspecs ls-files -z
+#                                       -- '[[-\]]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1425 - iwildmatch: match ']' '[[-\]]'
+not ok 1426 - iwildmatch(ls): match '[[-\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --glob-pathspecs
+#                                       --icase-pathspecs ls-files -z --
+#                                       '[[-\]]' >actual.raw 2>actual.err
+#                                       &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1427 - pathmatch: match ']' '[[-\]]'
+not ok 1428 - pathmatch(ls): match '[[-\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git ls-files -z -- '[[-\]]'
+#                                       >actual.raw 2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+ok 1429 - ipathmatch: match ']' '[[-\]]'
+not ok 1430 - ipathmatch(ls): match '[[-\]]' ']'
+#
+#                                       printf '%s' ']' >expect &&
+#                                       git --icase-pathspecs ls-files -z
+#                                       -- '[[-\]]' >actual.raw
+#                                       2>actual.err &&
+#
+#               tr -d '\0' <actual.raw >actual &&
+#               >expect.err &&
+#               test_cmp expect.err actual.err &&
+#               test_cmp expect actual
+#
+-- snap --
+
+Ciao,
+Dscho
+--8323329-483015967-1515415585=:31--
