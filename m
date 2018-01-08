@@ -2,103 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 191DC1F406
-	for <e@80x24.org>; Mon,  8 Jan 2018 10:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0B311F406
+	for <e@80x24.org>; Mon,  8 Jan 2018 11:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756486AbeAHKmc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 05:42:32 -0500
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:33369 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755823AbeAHKmb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 05:42:31 -0500
-Received: by mail-oi0-f68.google.com with SMTP id y141so669024oia.0
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 02:42:30 -0800 (PST)
+        id S1756191AbeAHLn3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 06:43:29 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:42857 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756014AbeAHLn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 06:43:28 -0500
+Received: by mail-wm0-f41.google.com with SMTP id b141so13627924wme.1
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 03:43:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=U5OwR0WbrG/egkNJIig2GcY/9LRj49Kh9iXaJgRl4Dc=;
-        b=eaZoNV6fFjLvxDb3xdslE3urx2FV4JSyqGVdm6sQKj4N/4NkU96N6gL/Om/Uwbemtf
-         wZ11In9RqxhsCSlvoBftc+KTV3UuKQ4Pi+LuH3DGwycna13RoowqLvaVtvWBib/8uTvK
-         a2DDyXcRGLj+S4pjhrCjRzuZnUlfAJDjyUaNhKNXnNxZdc4eAvtzXKRTa2UCUayWZWcd
-         HfFvS0JLjn0VTzpSdJbmOhPPzPcPH+7IYr3ceL0NUHpJ4QzXcEV1NtAqNce70Sk9M9T9
-         qBM1ruBI8ge0XQ+f2gW1jYO3UaA5Z2TEYgyGFCOToAs/I0rHZiH+TGbz0Z2y2BjJuIiU
-         37IQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=fvoVwI68ESCY36fq4lbOlSHNNJtbMbnPfalglFAXsT8=;
+        b=lTU3Tf3d9zAhW5dsT7LDasGdsNHQlX54Nw909cjhNAw6A9VQRwGKLHl4mLISrZ7mUl
+         ao5IG6nk0zLAU80Kn5nrCF6WetIjtScHnYzucwoepk2YilFnuoo4crNv/xhrgpcrUm6I
+         bTsqKXUcUc9q13Uw74vX2Nkp99h5kSK8EfzAOTsJPfKSogdKa0DnbeZjrifHv7fuI6qs
+         H86Fr/P5ABaUqtu2BJlPwGIGEkmJ3+x3x4w9ocLHBDszIgiQ449c57jFiPtVPfK7lUcc
+         NSfANobASjA2rJcoCJqtqZ1pfIAnaZXeETvz1lTsuhvVR+28lRaqF9lCrIfx2EcG1fCm
+         C5Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=U5OwR0WbrG/egkNJIig2GcY/9LRj49Kh9iXaJgRl4Dc=;
-        b=BgWTo/sU7z4cwD5n6Mj2wBQS9xxD3WN9sZuS+6phNGOFrlTnm/aSZg5xR8UDMln6eA
-         bUdNSSZ+bJDkq74JJTPXfkKg/xX/6Y9qnJNnZRXQOat/SO7sgmFoNoyd7y5Ob01QD6aL
-         AQrz+JO+sWMh0aKo4u6GNUHh5QFJ63PQup7Lmdy0Z/CWFMtTXCMFFoaiaswmKVg5SRwf
-         oUfbI6nUds7+NxxSkOkCuC99izGzJtFwhVf4fOwJqvELT1vt5EPx7c/0GxgC7FdCNe96
-         Lzbq7f3UA4Xsq8hrEOyEa7KEc7qw2E7+H7cEaFke0LueXCcKQLgPgYiUohwOo41qPor8
-         OvBQ==
-X-Gm-Message-State: AKwxytdmuwKOFSP3JLFJAbQBCjeFO1ppup+m8BRfVWH9TSuSTV96LAjP
-        QLFh1urIEhHOIQZy7G+wuikn1NxdFRDTBoJtrmg=
-X-Google-Smtp-Source: ACJfBovk0VIxYsuLuXWKefIdC+LfLSMZ+lAYoKbQpAoSmCv3EOzYmnOUnwh5z2Q8rfgYvQR5gTygnT4aB0ZDZRsvOzs=
-X-Received: by 10.202.68.2 with SMTP id r2mr7939oia.351.1515408150289; Mon, 08
- Jan 2018 02:42:30 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=fvoVwI68ESCY36fq4lbOlSHNNJtbMbnPfalglFAXsT8=;
+        b=sT18IB3XyWAL5oPDVz7ePeXg23V6BOazg0ijQbdjwR+nbB9E/+dy07L9vdnUfdHBmR
+         bGyPTZp9r5dVbMLdc4adlC6OJ/TVUH89JM8JWP87Ss6ecSjLOapySGp0HGGieiQ6FvGm
+         T4YkXXqYf8fRYwQ6J+YdV2oi/quRlRfFPWeLO4mp4HMcJnMznNZsnB3j/kVsSqH27Rhm
+         gbe0Pb5EuMEWXRPNu4w9/xNGysDE4Q6QVDJVWwffHtPr+/HfzcFEVipCkHcZ71g0ZwW5
+         sdb24Qk9HWwUyaZNtHm2mj9m3UeokqXIB4YSdWEWK3aVJBwRfSXS7EmRWWA5em6M07IT
+         FImw==
+X-Gm-Message-State: AKGB3mIslrOQMMzihp2I5/o5K9M8Zfpg2EDEei5qdw/3hlRBtrYe+ALT
+        n+ezy+ghA547rEbkb6J1AK5tN2Og
+X-Google-Smtp-Source: ACJfBouyIf4/AaQVqyxQ9ry5bE+Bx+8EEp5maPKNF2QC+oVaUn/CFRBSIvXmo2XEdlc1A3/cDUsa1A==
+X-Received: by 10.80.145.173 with SMTP id g42mr16229364eda.156.1515411807023;
+        Mon, 08 Jan 2018 03:43:27 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id 4sm6474076edf.81.2018.01.08.03.43.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 08 Jan 2018 03:43:25 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, gitster@pobox.com, johannes.schindelin@gmx.de,
+        jrnieder@gmail.com
+Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
+References: <20180107181459.222909-1-dstolee@microsoft.com> <87k1wtb8a4.fsf@evledraar.gmail.com> <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
+Date:   Mon, 08 Jan 2018 12:43:25 +0100
+Message-ID: <87fu7gbmoy.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Mon, 8 Jan 2018 02:41:59 -0800 (PST)
-In-Reply-To: <20180107223015.17720-2-t.gummerer@gmail.com>
-References: <20171217225122.28941-1-t.gummerer@gmail.com> <20180107223015.17720-1-t.gummerer@gmail.com>
- <20180107223015.17720-2-t.gummerer@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 8 Jan 2018 17:41:59 +0700
-Message-ID: <CACsJy8DBkAwoNWSma-+WkOUkQrenbkT5c1-Ez2jmmf-+wGRbxQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for other repos
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 8, 2018 at 5:30 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> @@ -1896,16 +1895,17 @@ int read_index_from(struct index_state *istate, const char *path)
->                 split_index->base = xcalloc(1, sizeof(*split_index->base));
+
+On Mon, Jan 08 2018, Derrick Stolee jotted:
+
+> On 1/7/2018 5:42 PM, Ævar Arnfjörð Bjarmason wrote:
+>> If something cares about both throughput and e.g. is saving the
+>> abbreviated SHA-1s isn't it better off picking some arbitrary size
+>> (e.g. --abbrev=20), after all the default abbreviation is going to show
+>> something as small as possible, which may soon become ambigous after the
+>> next commit.
 >
->         base_sha1_hex = sha1_to_hex(split_index->base_sha1);
-> -       base_path = git_path("sharedindex.%s", base_sha1_hex);
-> +       base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_sha1_hex);
+> Unfortunately, with the way the abbreviation algorithms work, using
+> --abbrev=20 will have similar performance problems because you still
+> need to inspect all packfiles to ensure there isn't a collision in the
+> first 20 hex characters.
 
-Personally I prefer the repo_git_path() from v2 (sorry I was away and
-could not comment anything). The thing is, git_path() and friends
-could do some path translation underneath to support multiple
-worktrees. Think of the given path here as a "virtual path" that may
-be translated to something else, not exactly <git_dir> + "/" +
-"sharedindex.%s". But in practice, we're not breaking the relationship
-between $GIT_DIR/index and $GIT_DIR/sharedindex.* any time soon, doing
-manual path transformation here is fine.
+I meant (but forgot to write) that this would be some new mode,
+e.g. --abbrev=20 --no-abbrev-check which would just perform a substr()
+of the 40 character SHA-1. It might be interesting to add that for
+reasons completely unrelated to your series.
 
-What about the other git_path() in this file? With patch applied I still get
-
-> ~/w/git/temp $ git grep git_path read-cache.c
-read-cache.c:           shared_index_path = git_path("%s", de->d_name);
-read-cache.c:   temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
-read-cache.c:                         git_path("sharedindex.%s",
-sha1_to_hex(si->base->sha1)));
-read-cache.c:           const char *shared_index = git_path("sharedindex.%s",
-
-I suppose submodule has not triggered any of these code paths yet. Not
-sure if we should deal with them now or wait until later.
-
-Perhaps if we add a "struct repository *" pointer inside index_state,
-we could retrieve back the_repository (or others) and call
-repo_git_path() everywhere without changing index api too much. I
-don't know. I like the  'struct repository' concept but couldn't
-follow its development so I don't if this is what it should become.
--- 
-Duy
+Thanks for answering the rest.
