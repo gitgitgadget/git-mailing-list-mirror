@@ -2,140 +2,328 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDFBD1FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 14:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AD211FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 14:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757228AbeAHOWd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 09:22:33 -0500
-Received: from siwi.pair.com ([209.68.5.199]:10421 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757153AbeAHOWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 09:22:32 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id E6A87844C1;
-        Mon,  8 Jan 2018 09:22:31 -0500 (EST)
-Received: from [10.160.98.77] (unknown [167.220.148.77])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A933C844BE;
-        Mon,  8 Jan 2018 09:22:31 -0500 (EST)
-Subject: Re: [PATCH v3 0/5] Add --no-ahead-behind to status
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180103214733.797-1-git@jeffhostetler.com>
- <20180104230630.GA2599@sigill.intra.peff.net>
- <2887ad5a-5de9-3c5b-92c3-40b19120e604@jeffhostetler.com>
- <20180108063712.GB10933@sigill.intra.peff.net>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <3ed06c39-2eac-e9d7-2976-6a7b55536cb0@jeffhostetler.com>
-Date:   Mon, 8 Jan 2018 09:22:30 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
-MIME-Version: 1.0
-In-Reply-To: <20180108063712.GB10933@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S933085AbeAHOi4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 09:38:56 -0500
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:37637 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932575AbeAHOiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 09:38:55 -0500
+Received: by mail-wr0-f178.google.com with SMTP id f8so10973712wre.4
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 06:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wr34EkR/8VGd95wazMPbeHmSDj6wPJfILwjMFQ0YqqM=;
+        b=XNhmr1tX9VKrhjZKjakhwoqQuwTlWXC72zdBezQh4clDl2NKH741KSXTyML7jhrGr1
+         6loAkJD7e7CL0m54sk2STZElVSKVEKvGoE/1p1lVxMIx4ggNsZEYj1D8nCX13xR47QIJ
+         od6bLTo9sDWHU3+uAgTCRYjw1fwNGtQ3wzOsJN+6FSGa+XnTfP6KYYMizPPLquLWBoQm
+         sy562YPO/bgulw4K+xS+MNKFKXzBLV1kBiXwvs0tGO81J5fSLPgzxjrotvDtQj8smu7p
+         xU6ImLLGBYstaaZO+wDDhsjw2KjRh1WOdRyGhzupNNyLbJk6wlv3KqrgDSqZWowIgHii
+         DQZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wr34EkR/8VGd95wazMPbeHmSDj6wPJfILwjMFQ0YqqM=;
+        b=e4XsqsPWl9PxAdaWh9albl3uuLJ7d6Casid+ziotYrLa00vDLnzMHQJV2/CuF4SZMo
+         eCQDsoK+DwZSzqTF+0LvtPUJJAnlH2uDXfcboWPxWq/XrW1IFT8xCS2mGmLuUgzIcLz+
+         g1Jj3H2fos1AGslUldPl6gMXmInSUIurGidOIxQdr0M9cJ5yUBdUwVeSgtrNqTdAT0dL
+         aLNFgKhrXHfdudpaiO7zSRJV5JB/hfKwgDzQn6dAXQDaKR0wuY/AQkctfmDGTiT7ct6u
+         vxZES1XB6eyXUUZkXRI3HzsFaqhZD9r/w2m97iEmUuSomDYybkrIpMQxF1CBtiINs3WE
+         4A+g==
+X-Gm-Message-State: AKGB3mIsht7KnQNFx6lfRpHiz2OQje6Y7Wz9hWIoCnFKl+xMUmDmGHAr
+        K8E1OPS6yqeLt6YunsxXly0=
+X-Google-Smtp-Source: ACJfBotWwGgV1cxNE0o4LP5BmPWFtG/KUwEVnfXBp3FFbUh/Vuvq2Ml1Mx3wKUlFamY0NgHU3eMl9w==
+X-Received: by 10.223.192.134 with SMTP id d6mr6408827wrf.206.1515422334275;
+        Mon, 08 Jan 2018 06:38:54 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 201sm13483898wmm.38.2018.01.08.06.38.51
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 08 Jan 2018 06:38:53 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 0/7] convert: add support for different encodings
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180107093815.GA7442@tor.lan>
+Date:   Mon, 8 Jan 2018 15:38:48 +0100
+Cc:     Lars Schneider <lars.schneider@autodesk.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes.Schindelin@gmx.de,
+        =?utf-8?Q?Patrick_L=C3=BChne?= <patrick@luehne.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B51940E6-95AB-424A-AF62-0018E9934279@gmail.com>
+References: <20180106004808.77513-1-lars.schneider@autodesk.com> <20180107093815.GA7442@tor.lan>
+To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+> On 07 Jan 2018, at 10:38, Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>=20
+> On Sat, Jan 06, 2018 at 01:48:01AM +0100, lars.schneider@autodesk.com =
+wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> Hi,
+>>=20
+>> Patches 1-5 and 6 are helper functions and preparation.
+>> Patch 6 is the actual change.
+>>=20
+>> I am still torn between "checkout-encoding" and =
+"working-tree-encoding"
+>> as attribute name. I am happy to hear arguments for/against one or =
+the
+>> other.
+>=20
+> checkout-encoding is probably misleading, as it is even the =
+checkin-encoding.
 
-On 1/8/2018 1:37 AM, Jeff King wrote:
-> On Fri, Jan 05, 2018 at 11:46:24AM -0500, Jeff Hostetler wrote:
-> 
->>> I'm mildly negative on this "level 2" config. If influencing the
->>> porcelain via config creates compatibility headaches, then why would we
->>> allow it here? And if it doesn't, then why do we need to protect against
->>> it? This seems to exist in a funny middle ground that cannot decide
->>> whether it is bad or not.
->>>
->>> It's like we're inserting a foot-gun, but putting it just far enough out
->>> of reach that we can blame the user when they shoot themselves with it.
->>>
->>> Is there a compelling use case for this? From the previous discussion,
->>> this is the strawman I came up with:
->> [...]
->>
->> I kinda trying to serve 2 masters here.  As we discussed earlier, we
->> don't want config options to change porcelain formats, hence the
->> true/false thing only affecting non-porcelain formats.  On the other
->> hand, VS and git.exe are on different release schedules.  Normally,
->> I'd just have VS emit a "git status --no-ahead-behind --porcelain=v2"
->> and be done, but that requires that git.exe gets updated before VS.
->> We do control some of that, but if VS gets updated first, that causes
->> an error, whereas "git -c status.aheadbehind=<x> status --porcelain=v2"
->> does not.  It is respected if/when git is updated and ignored until
->> then.  Likewise, if they update git first, we can tell them to set a
->> config setting on the repo and inherit it for porcelain v2 output
->> without VS knowing about it.  Sorry, if that's too much detail.
-> 
-> OK, so my strawman was totally off-base. :)
-> 
-> That explanation is interesting. I do think you're facing a real problem
-> with moving the versions in lockstep. But shoe-horning the feature into
-> config like this seems like a pretty ugly solution:
-> 
->    1. Then we're stuck with this weird foot-gun config option forever.
-> 
->    2. It only solves the problem for this one option. Is there a more
->       general solution?
-> 
-> The more general solutions I can come up with are:
-> 
->    1. Is there a way for a caller to query Git to say "do you understand
->       --no-ahead-behind?".
-> 
->       You can ask "git version", but parsing version numbers is
->       problematic. We don't have any kind of "feature flags" output, and
->       I'm not sure we'd want to get down to the level of specific
->       command-line options there.
-> 
->       One thing you can do is speculatively run "status --no-ahead-behind",
->       and if it returns 129, try again without as a fallback. That incurs
->       a failed invocation for the fallback case, but it's quick (we fail
->       before looking at any data) and you can cache it for the duration
->       of a VS session.
-> 
->    2. There could be some way to tell the option parser that the next
->       flag is optional. E.g.:
-> 
->         git status --optional=--no-ahead-behind
-> 
->       That would be pretty easy to implement globally in parse-options.c.
->       It knows when an option is unrecognized, so it could just treat
->       that as a silent noop rather than barfing.
-> 
->       Of course, that doesn't solve your problem today. It wouldn't be
->       safe to start using "--optional" until it had been in several
->       released versions.
-> 
->       And I have a feeling it may not be sufficient without further
->       feedback to the caller. For this flag, the caller is happy to say
->       "do this if you know how, but otherwise I will cope". But there are
->       probably flag where it would need to know whether it had any effect
->       or not. So this whole direction is probably crazy.
-> 
-> Of the two, I think (1) is not so bad.
-> 
->> It is OK with me if we omit the last commit in the patch series (that
->> does the experimental =2 extension) and I'll deal with this separately
->> (maybe differently) in the gvfs fork.
-> 
-> That would be my preference. Thanks.
-> 
-> -Peff
-> 
+Yeah, I start to think the same.
 
-Interesting ideas, but probably overkill for now.  I'll pull it out
-of my next version and deal with it differently our gvfs fork.
+
+> What is wrong with working-tree-encoding ?
+> I think the 2 "-".
+>=20
+> What was wrong with workingtree-encoding ?
+
+Yeah, the two dashes are a minor annoyance.
+
+However, consider this:
+
+$ git grep 'working tree' -- '*.txt' | wc -l
+     570
+
+$ git grep 'working-tree' -- '*.txt' | wc -l
+       6
+
+$ git grep 'workingtree' -- '*.txt' | wc -l
+       0
+
+
+$ git grep 'working tree' -- po | wc -l
+     704
+
+$ git grep 'working-tree' -- po | wc -l
+       0
+
+$ git grep 'workingtree' -- po | wc -l
+       0
+
+I think "working tree" is a pretty established term that
+endusers might be able to understand. Therefore, I would
+like to go with "working-tree-encoding" as it was written
+that way at least 6 times in the Git tree before.
+
+Would that work for you?
+
+
+> Or
+> workdir-encoding ?
+
+Although I like the shortness, the term "workdir" might already=20
+be occupied [1]. Could that cause confusion?
+
+[1] 4f01748d51 (contrib/workdir: add a simple script to create a working =
+directory, 2007-03-27)
+
+
+>>=20
+>> * Removed unnecessary NUL assignment in xstrdup_tolower() (Torsten)
+>>=20
+>> * Set "git config core.eol lf" to made the test run on Windows =
+(Dscho)
+>>=20
+>> * Made BOM arrays static (Ramsay)
+>=20
+>=20
+> Some comments:
+>=20
+> I would like to have the CRLF conversion a little bit more strict -
+> many users tend to set core.autocrlf=3Dtrue or write "* text=3Dauto"
+> in the .gitattributes.
+> Reading all the effort about BOM markers and UTF-16LE, I think there
+> should ne some effort to make the line endings round trip.
+> Therefore I changed convert.c to demand that the "text" attribute
+> is set to enable CRLF conversions.
+> (If I had submitted the patch, I would have demanded
+> "text eol=3Dlf" or "text eol=3Dcrlf", but the test case t0028 =
+indicates
+> that there is a demand to produce line endings as configured in =
+core.eol)
+
+But wouldn't that be inconvenient for the users? E.g. if I add a UTF-16
+file on Windows with CRLF then it would be nice if Git would =
+automatically
+convert the line endings to LF on Linux, no?
+
+IOW: Why should we handle text files that have a defined =
+checkout-encoding
+differently compared to UTF-8 encoded text files? Wouldn't that be =
+unexpected
+to the user?
 
 Thanks,
-Jeff
+Lars
+
+
+
+>=20
+> Anyway, I rebased it onto git.git/master, changed the docu, and pushed =
+it to
+> =
+https://github.com/tboegi/git/tree/180107-0935-For-lars-schneider-encode-V=
+3B
+>=20
+> Here is a inter-diff against your version:
+>=20
+> diff --git a/Documentation/gitattributes.txt =
+b/Documentation/gitattributes.txt
+> index 1bc03e69c..b8d9f91c8 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -281,7 +281,7 @@ interpreted as binary and consequently built-in =
+Git text processing
+>  tools (e.g. 'git diff') as well as most Git web front ends do not
+>  visualize the content.
+>=20
+> -In these cases you can teach Git the encoding of a file in the =
+working
+> +In these cases you can tell Git the encoding of a file in the working
+
+Oops. I meant to change that already. Thanks!
+
+>  directory with the `checkout-encoding` attribute. If a file with this
+>  attributes is added to Git, then Git reencodes the content from the
+>  specified encoding to UTF-8 and stores the result in its internal =
+data
+> @@ -308,17 +308,20 @@ Use the `checkout-encoding` attribute only if =
+you cannot store a file in
+>  UTF-8 encoding and if you want Git to be able to process the content =
+as
+>  text.
+>=20
+> +Note that when `checkout-encoding` is defined, by default the line
+> +endings are not converted. `text=3Dauto` and core.autocrlf are =
+ignored.
+> +Set the `text` attribute to enable CRLF conversions.
+> +
+>  Use the following attributes if your '*.txt' files are UTF-16 encoded
+> -with byte order mark (BOM) and you want Git to perform automatic line
+> -ending conversion based on your platform.
+> +with byte order mark (BOM).
+>=20
+>  ------------------------
+> -*.txt		text checkout-encoding=3DUTF-16
+> +*.txt		checkout-encoding=3DUTF-16
+>  ------------------------
+>=20
+>  Use the following attributes if your '*.txt' files are UTF-16 little
+> -endian encoded without BOM and you want Git to use Windows line =
+endings
+> -in the working directory.
+> +endian encoded without BOM and you want Git to use LF in the repo and
+> +CRLF in the working directory.
+>=20
+>  ------------------------
+>  *.txt 		checkout-encoding=3DUTF-16LE text eol=3DCRLF
+> diff --git a/convert.c b/convert.c
+> index 13f766d2a..1e29f515e 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -221,18 +221,27 @@ static void check_global_conv_flags_eol(const =
+char *path, enum crlf_action crlf_
+>  	}
+>  }
+>=20
+>=20
+>  static int will_convert_lf_to_crlf(size_t len, struct text_stat =
+*stats,
+> @@ -432,7 +441,7 @@ static int crlf_to_git(const struct index_state =
+*istate,
+>  		 * cherry-pick.
+>  		 */
+>  		if ((!(conv_flags & CONV_EOL_RENORMALIZE)) &&
+> -		    has_cr_in_index(istate, path))
+> +		    has_crlf_in_index(istate, path))
+>  			convert_crlf_into_lf =3D 0;
+>  	}
+>  	if (((conv_flags & CONV_EOL_RNDTRP_WARN) ||
+> @@ -1214,9 +1223,28 @@ static void convert_attrs(struct conv_attrs =
+*ca, const char *path)
+>  			ca->crlf_action =3D git_path_check_crlf(ccheck + =
+0);
+>  		ca->ident =3D git_path_check_ident(ccheck + 1);
+>  		ca->drv =3D git_path_check_convert(ccheck + 2);
+> +		ca->checkout_encoding =3D git_path_check_encoding(ccheck =
++ 5);
+>  		if (ca->crlf_action !=3D CRLF_BINARY) {
+>  			enum eol eol_attr =3D git_path_check_eol(ccheck =
++ 3);
+> -			if (ca->crlf_action =3D=3D CRLF_AUTO && eol_attr =
+=3D=3D EOL_LF)
+> +			if (ca->checkout_encoding) {
+> +				enum crlf_action crlf_action =3D =
+CRLF_BINARY;
+> +				/*
+> +				 * encoded files don't use auto.
+> +				 * 'text' must be specified to
+> +				 * do crlf conversions
+> +				 */
+> +				if (ca->crlf_action =3D=3D CRLF_TEXT) {
+> +					if (eol_attr =3D=3D EOL_LF)
+> +						crlf_action =3D =
+CRLF_TEXT_INPUT;
+> +					else if (eol_attr =3D=3D =
+EOL_CRLF)
+> +						crlf_action =3D =
+CRLF_TEXT_CRLF;
+> +					else if (text_eol_is_crlf())
+> +						crlf_action =3D =
+CRLF_TEXT_CRLF;
+> +					else
+> +						crlf_action =3D =
+CRLF_TEXT_INPUT;
+> +				}
+> +				ca->crlf_action =3D crlf_action;
+> +			} else if (ca->crlf_action =3D=3D CRLF_AUTO && =
+eol_attr =3D=3D EOL_LF)
+>  				ca->crlf_action =3D CRLF_AUTO_INPUT;
+>  			else if (ca->crlf_action =3D=3D CRLF_AUTO && =
+eol_attr =3D=3D EOL_CRLF)
+>  				ca->crlf_action =3D CRLF_AUTO_CRLF;
+> @@ -1225,11 +1253,11 @@ static void convert_attrs(struct conv_attrs =
+*ca, const char *path)
+>  			else if (eol_attr =3D=3D EOL_CRLF)
+>  				ca->crlf_action =3D CRLF_TEXT_CRLF;
+>  		}
+> -		ca->checkout_encoding =3D git_path_check_encoding(ccheck =
++ 5);
+>  	} else {
+>  		ca->drv =3D NULL;
+>  		ca->crlf_action =3D CRLF_UNDEFINED;
+>  		ca->ident =3D 0;
+> +		ca->checkout_encoding =3D NULL;
+>  	}
+>=20
+>  	/* Save attr and make a decision for action */
+>=20
+>=20
+
