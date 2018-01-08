@@ -2,123 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00E651FADF
-	for <e@80x24.org>; Mon,  8 Jan 2018 14:46:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209C41FADF
+	for <e@80x24.org>; Mon,  8 Jan 2018 15:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933708AbeAHOqd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 Jan 2018 09:46:33 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:38069 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933601AbeAHOqa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 Jan 2018 09:46:30 -0500
-Received: by mail-ot0-f179.google.com with SMTP id h2so9391589oti.5
-        for <git@vger.kernel.org>; Mon, 08 Jan 2018 06:46:30 -0800 (PST)
+        id S1756656AbeAHPJz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 Jan 2018 10:09:55 -0500
+Received: from mail-io0-f182.google.com ([209.85.223.182]:39068 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755386AbeAHPJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 Jan 2018 10:09:54 -0500
+Received: by mail-io0-f182.google.com with SMTP id g70so14238835ioj.6
+        for <git@vger.kernel.org>; Mon, 08 Jan 2018 07:09:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=JfYIYzvn9iSU688mTplaegXir87+YNbE4dyWcZSwEzs=;
-        b=a8nasD5H8pUTswDhK2H9Jn7+Z0teUVy9EBXEeRmKfxpNWMERBHLVSkStI8xR5p8k7m
-         4M3M+tbNDu6szKdM86jFQgSgLW/5mEwzuxbfwdcYHHFWjOCEGJ9Nu5xvHx0Z1VqStEZb
-         yTadgFQ4SP1VcSEPK5ATiPMFQcvjJCewE38KmYtBMCmRfRaquJaRmn/8425EFrZ+PcaA
-         A4siR9+NG4Jur8qAkBJUUKY3nZIJh3M5Bn3hB+YJ/3X50nC8I6G9SQRQuJi4p2P32DUy
-         FdCtwvBR69jz0XBNeKtRA3Opc9ngbKjZnBa+aID3vlKIv1bpA8iHL1qIsRVyGZYQYFjy
-         cm8A==
+        bh=0op8+FPphkuBzSHOktjzfI8iti93THTPwxvge6SVllc=;
+        b=VHqd9TkriUiV9Y8shven3taW4EA6iIITHCr8MM+8KOP3zAH4TO5LPJUl64vv1YMogc
+         OcZgbwt7gSTO6qJZe/B/iLYkX0d7XmCTg/dkRr0of23i0zjEEsnrU516X3k85bX88gJX
+         NAn41vrK4XOusRVqVvzVzdW1wypRo9Bzhtxd0aqD7/vCZxs7TUgmw0DaV3/vJqimrokD
+         F9gHVHlmYSZCoN377PRoS44fy3JmVQm7EUT3HkUGTR2NuhSyJASLpNPJg/1wfpPBtdGp
+         4MNMUbephlWn+sqZg4vnhgZrrOIP3mIMjfJomSsSXfErG6sJ/riLvz18wa5+REvlPr3L
+         e+Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=JfYIYzvn9iSU688mTplaegXir87+YNbE4dyWcZSwEzs=;
-        b=k1pKbDBhR7dv0srmZpHy6vU+WM2uPUPp2VmqK6jZK398cxF5XYy7hBEDY+SDVaM1sG
-         saN7zkpFH4EkKp2hz+115CEjYJeiFPIaw3FGxgHeCdQk9KKbFVMUKzXkzijJF8CLcOC/
-         bJJ4J1MZMJ5HFg43C6ai+i1f+28MVMclgEQMDbqoXVdLnGdA9stdxOrKAar/+WQH885j
-         wp/U4cbI0Z7bsmafqUN37G+/C91gQb2ANRUCL7qCYtZSAfSEluC4K5nIYIjHwUPDEfGu
-         ApwVWw8/Dkl7t38ni4c52jVtFzyiXoSX7EltQniWO/VB3B7kK1++k385WwmYYXDOU64h
-         s+YQ==
-X-Gm-Message-State: AKwxytdH7A3ssx7l1rtEyf9lb2N2l9zcccsw+jpc/r0xhK+aktxMAhzE
-        9CnCBxG1J/5qvJRYCo6vMaTE2quj6jrBRq+94B0=
-X-Google-Smtp-Source: ACJfBosWiLGmYbr1WzgpIXs9fk6x12vOlmXjyc6T5ZZU9yD3+nrB/pwkHkt2JnYK66le6WK9dxHtupF6MIfnnduzeH8=
-X-Received: by 10.157.13.233 with SMTP id 96mr2455357ots.331.1515422789887;
- Mon, 08 Jan 2018 06:46:29 -0800 (PST)
+        bh=0op8+FPphkuBzSHOktjzfI8iti93THTPwxvge6SVllc=;
+        b=XszpEh3o0pKkjncyGJ+rdp303yNwXf5V97qLj+E/nYurQZubOkWhQ/V2ESNR3gyRPu
+         QoCqTp/ANXWIkH/ijfi7eg2RDC6oweJ3bZr0h4BHA4+a5IGYaT4k8yc+UjIez4A4xFZ9
+         NOcBLHtuPDRN5I+dDwKDZARBLtTpnyEymIsZeido3bb0cctdui4pSyZw28phrZGmw9+y
+         sJNxKaieD3GYptBY8vdjQUay+J0qGG+yNE1YSFO6xVitCmzztuGbgaIkkrm0zGuaQ9dC
+         v6jkwv8BY2POINtoGkZb1H3anqt0qSFswEqy70WF2nclWG9dhCMdBy11nS/oQdA90ktq
+         K4Ug==
+X-Gm-Message-State: AKGB3mJwQh+58kNHcj+S0f0yNKRv4dZdkzmhMovERfPg7rvoQWW+q0yW
+        xhZSdR26YsFhPitrS84McLZMoqqTirgfXXu8Oh8=
+X-Google-Smtp-Source: ACJfBosfWLEsnmZs41JoRo9QEbZGIEQq2XND/a3m9ZuQiUYPtO3EImETGQ8ZFkNgamoN3BEILTFHguaQuNI1DRtQwYM=
+X-Received: by 10.107.3.199 with SMTP id e68mr10855338ioi.96.1515424193779;
+ Mon, 08 Jan 2018 07:09:53 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.157.73.21 with HTTP; Mon, 8 Jan 2018 06:46:09 -0800 (PST)
-In-Reply-To: <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
-References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
-From:   "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-Date:   Mon, 8 Jan 2018 17:46:09 +0300
-Message-ID: <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com>
-Subject: Re: rebase preserve-merges: incorrect merge commits
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
+Received: by 10.79.113.199 with HTTP; Mon, 8 Jan 2018 07:09:53 -0800 (PST)
+In-Reply-To: <CAELBRWLV7wQm_b9Lvj67KiAMAxq6vNOzA3z62S-f5=3A5LyjZQ@mail.gmail.com>
+References: <CAELBRWLyZ5s2Wvk2U5Ks2adx23Z+51dbEs3QbAq+5nGLe21srQ@mail.gmail.com>
+ <20180106082116.11057-1-martin.agren@gmail.com> <CAELBRWJJYfRUxkzoeFfHQbSL5xzPQKt4srdoge=4K4n=ChN-TA@mail.gmail.com>
+ <CAP8UFD03-EPxQQk51RZgb9Osdb4P=B67CLU6PrEP0O9chcHOCw@mail.gmail.com> <CAELBRWLV7wQm_b9Lvj67KiAMAxq6vNOzA3z62S-f5=3A5LyjZQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 8 Jan 2018 16:09:53 +0100
+Message-ID: <CAP8UFD1rO1cFCfZg53gG71qfbapkn3gVvja87YFiMBZTkOqNuw@mail.gmail.com>
+Subject: Re: [BUG] v2.16.0-rc0 seg faults when git bisect skip
+To:     Yasushi SHOJI <yasushi.shoji@gmail.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
-> 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> Hi Matwey,
->>
->> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->>
->>> I think that rebase preserve-merges algorithm needs further
->>> improvements. Probably, you already know it.
->>
->> Yes. preserve-merges is a fundamentally flawed design.
->>
->> Please have a look here:
->>
->>         https://github.com/git/git/pull/447
->>
->> Since we are in a feature freeze in preparation for v2.16.0, I will
->> submit these patch series shortly after v2.16.0 is released.
->>
->>> As far as I understand the root cause of this that when new merge
->>> commit is created by rebase it is done simply by git merge
->>> $new_parents without taking into account any actual state of the
->>> initial merge commit.
->>
->> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
->> it *does* allow it, but then fails to handle it correctly.) We even have
->> test cases that mark this as "known breakage".
->>
->> But really, I do not think it is worth trying to fix the broken design.
->> Better to go with the new recreate-merges. (I am biased, of course,
->> because I invented recreate-merges. But then, I also invented
->> preserve-merges, so ...)
->
-> Well. I just checked --recreate-merges=no-rebase-cousins from the PR
-> and found that it produces the same wrong result in my test example.
-> The topology is reproduced correctly, but merge-commit content is
-> broken.
-> I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
+Hi,
 
-Indeed, exactly as you still say in the documentation: "Merge conflict
-resolutions or manual amendments to merge commits are not preserved."
-My initial point is that they have to be preserved. Probably in
-recreate-merges, if preserve-merges is discontinued.
-
+On Mon, Jan 8, 2018 at 3:45 PM, Yasushi SHOJI <yasushi.shoji@gmail.com> wrote:
+> Hi all,
 >
->>
->> Ciao,
->> Johannes
->>
+> Thank you guys for insightful help.  I just read the code and now I understand
+> what you guys are saying.  Yeah, I can say the fix is "spot on".
 >
->
->
-> --
-> With best regards,
-> Matwey V. Kornilov
+> But, to be honest, it's hard to see why you need "if (p)" at  the first glance.
+> So, how about this fix, instead?
 
++    for (p = list, i = 0; i < cnt; i++, p = p->next) {
 
+Here "i" can reach "cnt - 1" at most, so ...
 
--- 
-With best regards,
-Matwey V. Kornilov
++        if (i == cnt) {
++            /* clean-up unused elements if any */
++            free_commit_list(p->next);
++            p->next = NULL;
++        }
+
+... "i == cnt" is always false above. I think it should be "i == cnt - 1".
+
+And with your code one can wonder why the cleanup is part of the loop.
+
+> I also found a bug in show_list().  I'm attaching a patch as well.
+
+Could you send it inline as explained in Documentation/SubmittingPatches?
+
+Thanks,
+Christian.
