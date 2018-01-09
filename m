@@ -2,145 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2EE11F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 20:25:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78A6E1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 20:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755520AbeAIUY7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 15:24:59 -0500
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:39019 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753448AbeAIUY6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 15:24:58 -0500
-Received: by mail-pg0-f54.google.com with SMTP id z20so6494845pgv.6
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:24:58 -0800 (PST)
+        id S1751644AbeAIUjV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 15:39:21 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:45679 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751374AbeAIUjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 15:39:18 -0500
+Received: by mail-pf0-f174.google.com with SMTP id u19so9385989pfa.12
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=FC1x1SyWC8ph9QguO1KA1R3jjBDnyjtDiDqHHsK6aIc=;
-        b=mf/pZlzMXhT6kbyo20kPYN2mq9XRAnOZoZOTUSp5zKzdh3YsVsNgVuUycHj7QNTMGR
-         DUE3HKuHUifqt1TK346jIrN5RhR1W6qnIhTQCiNV1Dywv3Kg8x+5wFo6RsRQDnqffMtS
-         g1qjbCsHOTagiRmbhl0QttIa0WI6JatJHNewO8JXoGXSoQHIwzYqdYZBC3VgCNNg5vaW
-         ngachKd5FHy6e6vl7wMs1/l5DBk6ExFOoGl0R4/RSvmzVf9nk90J4A7iIALMP53FNKMu
-         8TRYoqzqDzzSP0+OhGJTVgM9ub8SBD4O0VM82QkicmTIP5WC0I8QbdWReQeaXOMyKsOM
-         p/GA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zbSBF85r7d+gAfL2LtUhOTWT9U/83m+XFpahMli5NpM=;
+        b=AEXoA+UBgxsOC07/jg1FHSKkGTCBybtrQFYNogRAt7VnbhLKggqPlfeD+r8wCl4K0z
+         uaaeDkiy9D1lV3N/6ipAZckh5HtoGkqm2Th9iBjf4F3o4MFMSjHRMAgggZV9av+/B6TB
+         9kIhFeQGxAsJVh6RRPwggOOiNTdI0c/U0uo/twmA6b8k/wWqMgPsvEW+EJ9wFfs8Lv66
+         TpAnFQwX43pIVFRiNdck2jVz0YsoDwdwfELYSwGzrWLk8VIA42+xGPZmrHUiEAJ71fBB
+         CBO3QiXpUvdplAfbWCP4YbqK9kjjXbBvFO29Pg/yHeYAncKDMhR9TjklbKzkE3e9MO8K
+         1imA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=FC1x1SyWC8ph9QguO1KA1R3jjBDnyjtDiDqHHsK6aIc=;
-        b=HSoKyXd2hYl9cNbzRkxSUMVLqb7PELCoYwTdZHVmh6vULaMgo9oxyQjZtYlnxtOb6H
-         j1AadirbFj/KhVzkU5Hof/kBUyQ46pStRWXPEWWIxfEu73sKNucZ/oAzSVLEMDVLl54n
-         S/3Quf1fQG9XY6jJgWp8dxrz0qyzQD9n6qtjU7H7OOwRpQJyJjRO9AO2TT2OVWblOF5G
-         syOWKwGRKnFAnGPJaF7QKo2Meo8myMrYnf5JG5F0eM6uW37CFv1drSA82j6hYe0js7SA
-         XCBZQo/LdlZB0X0WkUpEHg8Zf/pOq/fsWfLFwD+24xRUC5zI1LrUz3PPnHGkEfKs2AdN
-         RAng==
-X-Gm-Message-State: AKGB3mIsenZkhnKbhZgrQ2ISkru4ub+SNqDFlsw8ViZKjGv+3w+cIc8S
-        CQRUFlbW2gbcKUbf4wUOE0qT4g==
-X-Google-Smtp-Source: ACJfBosiNYMU3TboYsYMGSJEUibOkKid2AoU5eOoxCx3bCQOiGRJcp1fMc1d0/n+Xi5UzrZxM6IXTA==
-X-Received: by 10.84.128.36 with SMTP id 33mr16279897pla.75.1515529497370;
-        Tue, 09 Jan 2018 12:24:57 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id s184sm29852151pfb.9.2018.01.09.12.24.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 12:24:56 -0800 (PST)
-Date:   Tue, 9 Jan 2018 12:24:55 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 11/26] serve: introduce git-serve
-Message-Id: <20180109122455.5845c4f12ccdd4cada1528f2@google.com>
-In-Reply-To: <20180103001828.205012-12-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-12-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zbSBF85r7d+gAfL2LtUhOTWT9U/83m+XFpahMli5NpM=;
+        b=Wa4IJrzjpLwP5g0Sa3iuQHmOIVHsMWM9lOhR0IsldgSum2eUD0uR50Ugo7q00sR23T
+         6PCNXeAYeb2RUvQiZ9ss/bOHbiuA50tUB3NOA3+VoJcfsQUUGE7OsIvcXfmgyDhgdnXy
+         7fdYuGET5UJygtTCCobxk2jGb42TNMnHyFUtSdw8bBe44Pwx1D8NStkNfr7THxqgIE6f
+         aKkwWD43Fd8kL7Xg0Wf0MnyXoS0gie6wuFS5fdZWlCILLcxJ/ZHxgg/HiIklFbseNikX
+         5g6fbpty6DHi4yyc1JPhslX+Snai5IywmbZZnf8tiyi0QJvmahTyUI+/4pC0KP4nZEq9
+         nFuQ==
+X-Gm-Message-State: AKwxytf+9EQdP0aJ6u8iN9MJwH/96J7ukKb0695qcaXR5QIFkCw8XJMG
+        dGoS0ypEwDAUugcgMynojNATjnnL
+X-Google-Smtp-Source: ACJfBosbjACm9/Sw1/mzvbEtVrcW3Az/yHrEcFXiBsgnBM1Dy0kPvg3aiJhpRTlkPUgKpiU49Sw9zg==
+X-Received: by 10.84.175.132 with SMTP id t4mr625551plb.74.1515530358020;
+        Tue, 09 Jan 2018 12:39:18 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id b3sm7654847pga.24.2018.01.09.12.39.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Jan 2018 12:39:16 -0800 (PST)
+Date:   Tue, 9 Jan 2018 12:38:49 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     Colin Walters <walters@verbum.org>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: upstreaming https://github.com/cgwalters/git-evtag ?
+Message-ID: <20180109203849.GA30468@aiede.svl.corp.google.com>
+References: <1515442320.3241451.1228399576.66D7DA96@webmail.messagingengine.com>
+ <20180108204029.m42qyezojak4kohh@LykOS.localdomain>
+ <CAGZ79kZ8AXezcX1_5WJsUJMHiHCzj2B=Uj8+4K3VF+cC6mTCqA@mail.gmail.com>
+ <1515465051.2895186.1228754952.0036D645@webmail.messagingengine.com>
+ <20180109180933.jbyidmmv5xpsjuae@LykOS.localdomain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109180933.jbyidmmv5xpsjuae@LykOS.localdomain>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:13 -0800
-Brandon Williams <bmwill@google.com> wrote:
+Hi,
 
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> new file mode 100644
-> index 000000000..b87ba3816
-> --- /dev/null
-> +++ b/Documentation/technical/protocol-v2.txt
+Santiago Torres wrote:
 
-I'll review the documentation later, once there is some consensus that
-the overall design is OK. (Or maybe there already is consensus?)
+>> In contrast, working on hash-function-transition.txt?  That
+>> seems like it'd easily consume many person-months of work.
+>> And that plan only exists post-shatter.io, whereas git-evtag
+>> long predates both.
+>
+> I think this is partly true. A hash transition has been brought up
+> multiple times pre-shattered. In my opinion shattered was a much-needed
+> PR push for SHA1 deprecation. In practice, things changed very little.
 
-> diff --git a/builtin/serve.c b/builtin/serve.c
-> new file mode 100644
-> index 000000000..bb726786a
-> --- /dev/null
-> +++ b/builtin/serve.c
-> @@ -0,0 +1,30 @@
-> +#include "cache.h"
-> +#include "builtin.h"
-> +#include "parse-options.h"
-> +#include "serve.h"
-> +
-> +static char const * const grep_usage[] = {
+Sure, the main relevant things that changed are:
 
-Should be serve_usage.
+ 1. The sha1collisiondetection library became well known, which if
+    anything makes moving off of SHA-1 *less* urgent than before (but
+    still urgent).
 
-> diff --git a/serve.c b/serve.c
-> new file mode 100644
-> index 000000000..da8127775
-> --- /dev/null
-> +++ b/serve.c
+and
 
-[snip]
+ 2. We came up with and agreed on a design for a transition off of
+    SHA-1 that we are (slowly but surely) executing on.  This means
+    it's a good time to help get it done.
 
-> +struct protocol_capability {
-> +	const char *name; /* capability name */
+>>> Personally I'd dislike to include ev-tags as it might send a signal
+>>> of "papering over sha1 issues instead of fixing it".
+>>
+>> I don't agree.  I think it's pretty clear that a hash function transition
+>> would be a huge amount of work - not least because of course
+>> there are now at least two widely used implementations of git in C,
+>> plus https://www.eclipse.org/jgit/ plus...
+>
+> I agree with Stefan here. I think it's better in the long-term to
+> push for hash-agnosticity. I don't know if git-evtag is hash agnostic,
+> but if it is not, then we have two transition plans to think about.
 
-Maybe document as:
+I don't think there's even a question here: Git has to transition off
+of SHA-1.
 
-  The name of the capability. The server uses this name when advertising
-  this capability, and the client uses this name to invoke the command
-  corresponding to this capability.
+In that context, Stefan's comment is a welcome one: once we've
+transitioned off of SHA-1, having a separate evtag feature would make
+git more complicated without any benefit to match.  To put it another
+way, the gpgsig-sha256 field described in
+Documentation/technical/hash-function-transition.txt provides
+essentially the same functionality as an evtag.  What's missing is an
+implementation of it.
 
-> +	/*
-> +	 * Function queried to see if a capability should be advertised.
-> +	 * Optionally a value can be specified by adding it to 'value'.
-> +	 */
-> +	int (*advertise)(struct repository *r, struct strbuf *value);
+I'm happy to help in any way I can (reviews, advice, etc).
 
-Document what happens when value is appended to. For example:
+[...]
+> Full disclosure, I published a "competing" solution a couple of years
+> ago[1] but, in my personal opinion, I think push certificates can
+> achieve the same security guarantees as my system with very little
+> changes.
 
-  ... If value is appended to, the server will advertise this capability
-  as <name>=<value> instead of <name>.
+Work to improve the usability of push certs would also be very very
+welcome.
 
-> +	/*
-> +	 * Function called when a client requests the capability as a command.
-> +	 * The command request will be provided to the function via 'keys', the
-> +	 * capabilities requested, and 'args', the command specific parameters.
-> +	 *
-> +	 * This field should be NULL for capabilities which are not commands.
-> +	 */
-> +	int (*command)(struct repository *r,
-> +		       struct argv_array *keys,
-> +		       struct argv_array *args);
+Thanks and hope that helps,
+Jonathan
 
-Looking at the code below, I see that the command is not executed unless
-advertise returns true - this means that a command cannot be both
-supported and unadvertised. Would this be too restrictive? For example,
-this would disallow a gradual across-multiple-servers rollout in which
-we allow but not advertise a capability, and then after some time,
-advertise the capability.
-
-If we change this, then the value parameter of advertise can be
-mandatory instead of optional.
+> [1] https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/torres-arias
