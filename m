@@ -2,95 +2,265 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 028751F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 16:49:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5C81F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 17:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759699AbeAIQtV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 11:49:21 -0500
-Received: from mout.gmx.net ([212.227.15.19]:62083 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759692AbeAIQtT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 11:49:19 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbxJ8-1eGji00zkk-00JIOh; Tue, 09
- Jan 2018 17:48:58 +0100
-Date:   Tue, 9 Jan 2018 17:48:58 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Jeff King <peff@peff.net>, Jeff Hostetler <git@jeffhostetler.com>,
-        Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 0/4] Add --no-ahead-behind to status
-In-Reply-To: <c19f6469-190a-33e7-20a2-fcb17b8e45d9@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801091744540.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180108154822.54829-1-git@jeffhostetler.com> <7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com> <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com> <20180109072044.GD32257@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <c19f6469-190a-33e7-20a2-fcb17b8e45d9@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1759962AbeAIRGc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 12:06:32 -0500
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:43750 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751197AbeAIRGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 12:06:31 -0500
+Received: by mail-pf0-f171.google.com with SMTP id e3so8978472pfi.10
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 09:06:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to;
+        bh=ryRWI0ITBXP1l6F6wdeXk4iZX6hYGSzgfjvlHML0pac=;
+        b=LhOLNIfMoVqoP+y/2FJdyYZlUfLITJJhaI28EEP3tSE4s+PG/O5xmCupp4rhU2BGMX
+         WgzxNkSta67jeZWRHp9n5DNezi58qHn9X+1w+aQTT8KkyFI5DO6bCVRgVzUNdiP+XWUF
+         ARbMvb5cx9qofO1pvDSHPcmKS+4Z+Yz0TSW13qQltPvV335UF1IDwYN8E0FdPOddplG4
+         j1qppbRrlrPgzuBrWbEFWVdEFTuE1AWXcLctYMnKou7W1AyeZ/Z+UpADY+WGqsyr1gqV
+         Wy/4cIr7W2eyT9lfmU/oCk5uRaYbDB06dYPydarRlJBqx3dIGWTvIqW+RiJt/Y4hjvMb
+         yfzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to;
+        bh=ryRWI0ITBXP1l6F6wdeXk4iZX6hYGSzgfjvlHML0pac=;
+        b=s2s+762sJZ8XokYo6akBdgzy5MmnnAfeBY10WEJdwOqsRjo8/tF06AMSO8OD8ZjaW2
+         DJbibKIhK6Kag3v0s186Nf0TZybp1kaJ3+KBlf9pT+IHSGZwu+Y9UgNXdxj3whhS8E1T
+         OpM3E6UvL9zyvjIpCxmm4RRPFYAHyoDfCKetiaFSTS6pY1Xvt3MNH/4bBEHiln2QmU1/
+         96+vf9O/JeoN7Mdgs5oxFTKsR0dmXd6kzZ5/0iBPASC+KcKUV4R29VxWdZ+5Gahdfv2H
+         V0YHk001oLOOQf5SfYuzxQ+TFiEVAiG1+tkSAz7C59NrHY8Ijwz/O17bprv4AEKsG8KC
+         BVbA==
+X-Gm-Message-State: AKGB3mI1ZfEuQ6IxYy3liGRR6kWE6SjUCrVeg70PwG13o4Nw7RJYaYcE
+        r9LZIl3lnVqqk+Y1tdsPTlbEBlQ5
+X-Google-Smtp-Source: ACJfBotdLNV5DKhj4cTmP8WeNSzY97XjVup944DYVd04iLNUGIsNf/TZ8b4BmLYYi/U7WTEPalMqhw==
+X-Received: by 10.99.67.133 with SMTP id q127mr5476430pga.365.1515517590031;
+        Tue, 09 Jan 2018 09:06:30 -0800 (PST)
+Received: from [192.168.206.100] ([117.209.190.40])
+        by smtp.gmail.com with ESMTPSA id d5sm4891603pfk.2.2018.01.09.09.06.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Jan 2018 09:06:28 -0800 (PST)
+Subject: Re: [PATCH 0/8] Doc/submodules: a few updates
+To:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
+ <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <64503247-66ad-03cf-26ba-3383337971b5@gmail.com>
+Date:   Tue, 9 Jan 2018 22:36:16 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Z3R61fwz0H9mXWk+QhLokxbOs8v6X0eScIzjxz/FNdDZvnBl9nU
- LKhvsv96c1NKoLFteNSpzZMNDq19L492QK2Rt9E1GNvngGhKOkXk40jYcKbsQV9dQsNrEjz
- OJTK0ttoHAglH8/87xyVGgZSwAXyKuSX67CaVrQM/nVHXkapwrCAysj/WgoLhV369uCchGI
- 3DeVYASM52xNopgO4hGIQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LWk43Lvusqk=:ZpJRPW55inEnZBy9yd6jB5
- wF0ZErvfjYYck12RhkIa74uSGWp/f4iU8NXNj45Up8d9N/07Mj2FN6UZqZHfRY1qoECU+WqTv
- 7uvgVQ50c5G50erD637TnPITlgbDpyjUn/o/lljb2QmOICuo9plJDxErkNfMjth5cFsgxcCTG
- Jhqlgl5udXOWX5Tdc21wsoJ+Q9iGorj7DQJPeuvRHMjv4S6pE++SRWgCQaeifFsi1qXkCAD01
- tyNQPnLVrjyniFyREzu3GkxG+F11ufOiY2Eqy3fLwHqdJZKTMQHxIxZ2cvZ3KBSGwV0QiLcRP
- JjjIqBvagOywZF8KAn3BYixcnhP+ZDyi0SrI5F3tkudQUsxndie6ffld532J97heYG/b3yaBA
- wQFwVtytdOboNscOlUTMZ5UOfy6QEqXIbwR/CigEJ41AH66KDZF4tGJCpCJbksei9aY9g86DV
- EFyfDfqVndW1WtjD5Pq8c1JJy2sWwmWqUpPtbAhAa7rKfgGceS4GVEsDElBekcTjz8KlLFxot
- p/AkupAQ++W+1DBpFTpPrh1iMJT0IY3sL1Ofq7AZkwquuX5AsA3pjtXkgNPQ+joREzwxRLLdY
- eSWebFZQJqSj7o/Q7JRQK16wt4aZXJRrqTbaUMz+krNK5//9S1sezP4XS7lyYQOjTf7ZKs8Ci
- //0DGhUNJEy9iVO9+bJyKQpmEPRliiu2yIX7LjG5eaZYEdu/FzOJLmyXBDu6JsUtLM7s3A3K8
- xMrS4v2I+u7nN2neG8Sv14/y3cQqoFyq25vXBmgMlSiozzgThfFtsjSE6IMOWIAxFE6+wmd4h
- kug/1RLcCmL+iG+aRQ3NtjZBPOTt5ke8Yp3a5FwMl2hhKHgo06N2nHJIYvKoecsWcGxN7Is
+In-Reply-To: <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB
+Content-Type: multipart/mixed; boundary="BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9";
+ protected-headers="v1"
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Stefan Beller <sbeller@google.com>, Brandon Williams <bmwill@google.com>
+Cc: Git mailing list <git@vger.kernel.org>
+Message-ID: <64503247-66ad-03cf-26ba-3383337971b5@gmail.com>
+Subject: Re: [PATCH 0/8] Doc/submodules: a few updates
+References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
+ <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
+In-Reply-To: <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
 
-On Tue, 9 Jan 2018, Derrick Stolee wrote:
+--BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-> On 1/9/2018 8:15 AM, Johannes Schindelin wrote:
-> >
-> > On Tue, 9 Jan 2018, Jeff King wrote:
-> >
-> > > But I don't think you can approximate both ahead and behind together
-> > > without finding the actual merge base.
-> > >
-> > > But even still, finding small answers quickly and accurately and
-> > > punting to "really far, I didn't bother to compute it" on the big
-> > > ones would be an improvement over always punting.
-> >
-> > Indeed. The longer I think about it, the more I like the "100+ commits
-> > apart" idea.
-> 
-> Again, I strongly suggest we drop this approach because it will be more pain
-> than it is worth.
+On Tuesday 09 January 2018 12:38 AM, Stefan Beller wrote:
+> On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+>=20
+> While small patches are really appreciated for code (bisect, automated
+> testing, and
+> the general difficulty to reason about code, as a very small change
+> may affect the whole
+> code base), I am not sure if they benefit in documentation.
+> Documentation is a rather
+> local human readable thing, so by changing one sentence we don't
+> affect the understanding
+> of documentation at a completely unrelated place.
+>=20
+> Also it helps to read more than just sentence fragments, i.e. I tried
+> looking at the
+> whole paragraph for review. May I suggest to squash them all and
+> resend as one patch?
+>=20
 
-So what you are saying is if there is a commit graph with *heavy* clock
-skew, you might overestimate how many commits apart the tips are.
+I wouldn't mind that. I thought it might be easy to find to find the
+parts I changed when the patches are small. So, I sent them without
+squashing them together. In case you feel it's not worth, let me know so
+I'll squash them in.
 
-I say that this is striking the balance between correctness and usability
-on the *wrong* side.
+BTW, in case I did squash them in, would it be nice to keep the commit
+subjects of the current patch series as bullet points in the unified
+commit message?
 
-Sure, it might be wrong if your commit graph suffers heavily from clock
-skew. In most cases, you still get a pretty darn useful hint where you're
-at.
 
-The alternative would be *not* to show any useful hint in most cases, i.e.
-when you did not find all merge bases within <N> commits. I would really
-hate it if Git spent so much time and did not even give me a hint. Totally
-unsatisfying user experience.
+>=20
+>>
+>> I based these patches on top of 'master'.
+>=20
+> I am not aware of other submodule patches affecting documentation in ma=
+ster..pu,
+> so this should be easy to merge.
+>=20
+>>
+>> Apart from the changes, I saw a few things that needed improvement/cla=
+rification
+>> but wasn't able to do that myself due to my limited knowledge of submo=
+dules. They
+>> are listed below. I'll add in patches for them if they are correctly c=
+larified.
+>>
+>>
+>> 1.
+>>
+>>  man gitsubmodules
+>>
+>>        =C2=B7   The configuration file $GIT_DIR/config in the superpro=
+ject. Typical configuration at this place is controlling if a submodule i=
+s
+>>            recursed into at all via the active flag for example.
+>>
+>>            If the submodule is not yet initialized, then the configura=
+tion inside the submodule does not exist yet, so configuration where to
+>>            obtain the submodule from is configured here for example.
+>>
+>> What's the "active flag" mentioned above? Also I find the phrase "is r=
+ecursed into at all"
+>> to be a little slippery. How could it be improved?
+>=20
+> There are multiple ways to indicate if a submodule is "active", i.e. if=
+ Git is
+> supposed to pay attentio. Historically we had to set the
+> submodule.<name>.url flag in the config, but last year Brandon added
+> submodule.active as well as submodule.<name>.active which supersede
+> the .url flag.
+>=20
+> (See is_submodule_active() in submodule.c to see the definitive answer =
+to
+> "should Git pay attention?")
+> https://github.com/git/git/blob/master/submodule.c#L224
+>=20
 
-Ciao,
-Johannes
+Thanks for the info!
+
+
+> I wonder if this indicates a lack of documentation when the active
+> flags were introduced.
+> They are found in 'man git config', but maybe we need to spell them
+> out explicitly
+> in the submodule related docs.
+>=20
+
+Possibly. So, why not in Documentation/gitsubmodules! Here's a replaced
+version of that paragraph,
+
+    * The configuration file `$GIT_DIR/config` in the superproject.
+   Typically this file is used to specify whether the submodule
+   is recursed into at all via the `active` flag for example. A
+   submodule is considered active if `submodule.<name>.url` is set
+   or if the submodules path is present in `submodule.active` or
+   if `submodule.<name>.url` is set.
+
+
+>> 2.
+>>
+>>  man git submodule
+>>
+>>        update
+>>            ...
+>>
+>>            checkout
+>>                ....
+>>
+>>                If --force is specified, the submodule will be checked =
+out (using git checkout --force if appropriate), even if the commit
+>>                specified in the index of the containing repository alr=
+eady matches the commit checked out in the submodule.
+>>
+>> I'm not sure this is conveying all the information it should be convey=
+ing.
+>> It seems to making the user wonder, "How at all does 'git submodule up=
+date --force'
+>> differs from 'git submodule update'?" also "using git checkout --force=
+ if appropriate"
+>> seems to be invoking all sorts confusion as "appropriate" is superfluo=
+us.
+>=20
+> When "submodule update" is invoked with the `--force` flag, that flag i=
+s passed
+> on to the 'checkout' operation. If you do not give the --force, then
+> the checkout
+> will also be done without --force.
+>=20
+
+If that's the case then shouldn't the "if appropriate" part of "(using
+git checkout --force if appropriate)" be dropped? That seems to make it
+clear, at least for me. Or is intended as '--force' will not be passed
+to git checkout all the time?
+
+>>
+>> How could these confusions be clarified?
+>=20
+> I tried giving an alternative snippet above, not sure how else to tell.=
+
+>=20
+
+
+
+--=20
+Kaartic
+
+Quote: "Be creative. Be adventurous. Be original. And above all else, be
+young." - Wonder Woman
+
+
+--BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9--
+
+--x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpU9ogbHGthYXJ0aWMu
+c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpKDQQAITmQzNxwLR2ASBnYA2h
+4hMI0F4SmQjUCKoilUuDkUD4uJ6H3Ib2sXKpJQTvfuU100SGSJnrkVUQPQKwYpxA
+aL9BBrPmH9vCVh0An55fIStLm188i8mSKQYUGMrk1k/W7Bey00YAprkDxiSODcQm
+mR/JfgpNtOKLwudocMokpZ393+KfB18C3O9Hq642Ry289U91bwRbOzmbZ7TAA1TT
+wXEW/GMP2DO4kkT/W+5PYXmMFt5zeDbmiNCfEesxUQWSnV6XKpSghcf5nBPPQOix
+qmpgD5nngZ6NngyLPfB/nOYDl9T67VN/DQzGL7jFMBuS2XvPH++dldMxSPYrUljL
+tcMba1wnr6xobOjPazaF3qwJfbkC4jJqFQX3wWULF27+R68ZyIRDNPzYbFmC/MpA
+M3fqZCmPo7jCq3S6x/CqjJ63OfNG/sV9qZgdAG7ziGnj5TDsDQ4cbbukOLUo+BJ7
+TpJhECEJKtEvJTUPsaGN0DEjTun7fiZ3XPlM0bJVo7/5c/ksFrj3NrJ2H4V0wKjj
+RaGYLxi6MrzlUz4DkBQuVkknKw4b87itc58Hoe1qYj2xwEARpoIgnaBLH27vYivr
+UnN7zPbYnrXQFxf8vksJSCnQFXCSZMbkPcg0QgwnLLtKo6GOctCCAcln5Y+vBk9m
+m9vStCchS+YuhrM5ItVxlMMz
+=Ihrz
+-----END PGP SIGNATURE-----
+
+--x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB--
