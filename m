@@ -2,82 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A43F1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 20:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FFB31FAEF
+	for <e@80x24.org>; Tue,  9 Jan 2018 20:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756929AbeAIUu2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 15:50:28 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36262 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753968AbeAIUu1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 15:50:27 -0500
-Received: by mail-pf0-f176.google.com with SMTP id 23so6742688pfp.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:50:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MUSlKvkOwH8xWopj9D/kS0cpNzoRNtE2N0uDLG2wGkE=;
-        b=eZJjdjMdEb1VhfpaHFGFE9ohw6lTUoSAYzjM3szX/uD/fFC2t0ciMEMWjsx1yVINe5
-         KwGDTf1H9iULdyMgxYLYwQtmBouSHk0qYceaik36OmAG7WPfv0N3PfRekuz1N2lucd8i
-         nBCpb3/JJXnGR1GNO8u7syd8/eMpGYWQnk3U1qmUdGBOx6BJq+agRgdYqEwtoRQ7wJXG
-         vwLoDnrFVOmoe5yylcA/l8l3TFIqXTdBLyQBG7V61sEGrgJSyVy6kNh2tf1/Qy4lJjOX
-         AnVCCSzOZUXsEiKyto6i1TeHvH31GpzOI7ztY4VDDUqSR5PEx/bmAuJYHYOI5wjhJnC2
-         MJfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MUSlKvkOwH8xWopj9D/kS0cpNzoRNtE2N0uDLG2wGkE=;
-        b=NhMCibNS/axOL89p9SQKT7aDFS9WK7QRq02S7RTUMYeTe3RYtaywBsiK2fSLpmezy5
-         tr6pp9qO2DrCsl9cUiLefWS+l6LW4EYAfrzUXHrWrQlVN+YUutNaKzTx+qgvmrjWqKD3
-         CmwVmSbBxcCDYtWa4mQM1XS7lLwDpdhlWONkwiIkUr7i3cc+S6eByHlkh+fg0zyIcrrg
-         9QrrsMh9O4+HrUSkjSmeRij3fI/Tkbzon9qQpMGJyD76UtD3PmlAev1/lZizYQdVbe1c
-         20r9udX/sCcU13eGod08av2h8gl+wtGbNcCCp7yKpo3n6C+HLNMnxd6IBH66P/rqouBF
-         NdUw==
-X-Gm-Message-State: AKGB3mKNUCqaAhKUDmW6wtTEb3eHRVZ9zZ8zyfIVh60xzGDzFzk+01iy
-        hAfnBpbew0MfxBaOJuFEM3+WAg==
-X-Google-Smtp-Source: ACJfBot41fYrSHz1r/SZmB1QDnuNzaYJSpU9gn5PvT9+c8m8v5szcmMS6/OaXbzTnyDtToKwH4P5iw==
-X-Received: by 10.99.174.77 with SMTP id e13mr13266876pgp.263.1515531026540;
-        Tue, 09 Jan 2018 12:50:26 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id u68sm30480495pfu.17.2018.01.09.12.50.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 12:50:25 -0800 (PST)
-Date:   Tue, 9 Jan 2018 12:50:25 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 12/26] ls-refs: introduce ls-refs server command
-Message-Id: <20180109125025.6c88700e6e00e45822ee8932@google.com>
-In-Reply-To: <20180103001828.205012-13-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-13-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S932093AbeAIU54 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 15:57:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55319 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758151AbeAIU5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 15:57:45 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA76EC02AE;
+        Tue,  9 Jan 2018 15:57:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1Aw+TDh301Hs6MW0PnVogDmcGsM=; b=qZxdW0
+        ysaEWjbTedu2AWZfsKu50MWRfGp8kNIc3myZ+xUHUfUYIUVicP0D1fapHztzkjk8
+        pJ7Gk8dfVXZkdkFE3SRWSUGlpOlckyagXcZADKDqyPaNB8gdpfWsjoSfuKDmF1K6
+        HAodBkrfUgAtdRu+8Jcy8cxkNquCuD1RIXyxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xjhlSHzuXnbTNFal/cr3URbRNZ0gfr+3
+        w6gt4nYkzNYlHv1O3lNWOn4MzR9Z+WJSNbnxfg8jwkr84uvuTTiN2D3LPaK2BBYH
+        8kiqy9r/HIln6CNgTymL+Z/8Up4XfukU62+x/wL1fHY7+GkkXgtqQ4pJCj4IsfJg
+        OSXMlBCE1bw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0F86C02AD;
+        Tue,  9 Jan 2018 15:57:44 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 35CBEC02AB;
+        Tue,  9 Jan 2018 15:57:44 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
+Subject: Re: [PATCH v1 1/2] submodule: port submodule subcommand 'sync' from shell to C
+References: <20180109175703.4793-1-pc44800@gmail.com>
+        <20180109175703.4793-2-pc44800@gmail.com>
+Date:   Tue, 09 Jan 2018 12:57:43 -0800
+In-Reply-To: <20180109175703.4793-2-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Tue, 9 Jan 2018 23:27:02 +0530")
+Message-ID: <xmqqpo6i4uns.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BD38CF2C-F57F-11E7-B32F-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:14 -0800
-Brandon Williams <bmwill@google.com> wrote:
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-> +  symrefs: In addition to the object pointed by it, show the underlying
-> +	   ref pointed by it when showing a symbolic ref.
-> +  peel: Show peeled tags.
-> +  ref-pattern <pattern>: When specified, only references matching the
-> +			 given patterns are displayed.
+> +static int print_default_remote(int argc, const char **argv, const char *prefix)
+> +{
+> +	const char *remote;
+> +
+> +	if (argc != 1)
+> +		die(_("submodule--helper print-default-remote takes no arguments"));
+> +
+> +	remote = get_default_remote();
+> +	if (remote)
+> +		printf("%s\n", remote);
+> +
+> +	return 0;
+> +}
 
-I notice "symrefs" being tested in patch 13 and "ref-pattern" being
-tested in patch 16. Is it possible to make a test for "peel" as well?
-(Or is it being tested somewhere I didn't notice?)
+This is called directly from main and return immediately after
+printing, so a small leak of remote does not matter, I guess.
+
+> +static void sync_submodule(const char *path, const char *prefix,
+> +			   unsigned int flags)
+> +{
+> +	const struct submodule *sub;
+> +	char *remote_key = NULL;
+> +	char *sub_origin_url, *super_config_url, *displaypath;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	char *sub_config_path = NULL;
+> +
+> +	if (!is_submodule_active(the_repository, path))
+> +		return;
+> +
+> +	sub = submodule_from_path(&null_oid, path);
+> +
+> +	if (sub && sub->url) {
+> +		if (starts_with_dot_dot_slash(sub->url) || starts_with_dot_slash(sub->url)) {
+
+Not a big deal, but other codepaths seem to fold this pattern into
+two lines, i.e.
+
+		if (starts_with_dot_dot_slash(sub->url) ||
+		    starts_with_dot_slash(sub->url)) {
+
+> +			sub_origin_url = relative_url(remote_url, sub->url, up_path);
+> +			super_config_url = relative_url(remote_url, sub->url, NULL);
+
+On this side, these two are allocated memory that need to be freed.
+
+> +		} else {
+> +			sub_origin_url = xstrdup(sub->url);
+> +			super_config_url = xstrdup(sub->url);
+
+This side as well.
+
+> +		}
+> +	} else {
+> +		sub_origin_url = "";
+> +		super_config_url = "";
+
+But not these.  You have free() of these two at the end of this
+function, which will break things.
+
