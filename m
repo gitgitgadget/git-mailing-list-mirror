@@ -2,85 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A0F81FAE2
-	for <e@80x24.org>; Tue,  9 Jan 2018 18:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B91D51F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 18:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758395AbeAISl2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 13:41:28 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:42572 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758354AbeAISl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 13:41:27 -0500
-Received: by mail-pg0-f42.google.com with SMTP id q67so8565321pga.9
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 10:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UiojifUx8RUcXIrLlVfjj4K9ks0WlJQOq5aPoOjdZ38=;
-        b=CE5Ot14Z+F/prkx1OzKwSRJpzWZZDSbQZQx9lALu5A1XlYvZ2nXYceULMD8oX8YE6x
-         OhtExA/jThUk7ud87IMdm44ONkco8GxqTXrICZN6Ix/9kY7jyInO6lR4st7ZAF2FxGxX
-         YgeqOia7GsK6FWg9dZYMtsFkBzaAhdlZ5kR9icnOOlR2tPXMgbue292bNFzUlOtlIbTt
-         F0iHmRZ6erno2+CtF+eOp0JGS4dRocxBbKhLibHgRZtPG3vaMLLfu7RDVBV4idGYyi5Y
-         W2GVF5yehld/hybT2SYWVBOrn5sZ2kGMkN6FOoFZRUOs0LkLoPJIsOOymAsFrqfYbjXs
-         gbIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UiojifUx8RUcXIrLlVfjj4K9ks0WlJQOq5aPoOjdZ38=;
-        b=PPWSaiBr+pggoDRLICYL0Cg8+5SFKENGrLQ0AJjBf6NinluMJ8kCzH29a6nqCl+KEo
-         niQMyvfS5bgIBCDosDQYkyFC6V/8He9+cgxBHwymEIu/2r1BfFt6ze4sLmUEpjfdM4e0
-         jmT9FjadhWgC0K56yifXjIp7Hb5+DJRE3epnGTE/1VPLmco5tREv5e0g7XetkDqRESHQ
-         IgBxKtAowamkmeMuaWckNPEuVuT3MMJT9wRavBpkCLKQW+iO/7nvXY/TtB4/33P6BANZ
-         +O4BZqr62CqSlaJ6YF6STup/Tndwc7W1Hobg4N8nzQtO9Zmrg9E/XVrLdR6FIotir4vt
-         IfOw==
-X-Gm-Message-State: AKGB3mJckPIp4U3dVBAKjaAmeldljxn9TYhZy8H2G5Pyu+8QugznLwhf
-        mTAWANV4qB5Iz5DuXEshfay6tg==
-X-Google-Smtp-Source: ACJfBovCG3IcyxYbhSH7h68KMRBNeGcAZEvJKVIsQ8Sr0sjnk5G4otPNRGSwF1oX05Jicc4fpnm+ow==
-X-Received: by 10.99.47.67 with SMTP id v64mr13134900pgv.150.1515523286694;
-        Tue, 09 Jan 2018 10:41:26 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id s81sm33859889pfg.60.2018.01.09.10.41.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 10:41:26 -0800 (PST)
-Date:   Tue, 9 Jan 2018 10:41:25 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 09/26] transport: store protocol version
-Message-Id: <20180109104125.4cb1a3e545cfe354862e4b8e@google.com>
-In-Reply-To: <20180103001828.205012-10-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-10-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1760418AbeAISte (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 13:49:34 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59934 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757128AbeAIStd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 13:49:33 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 47704C83F9;
+        Tue,  9 Jan 2018 13:49:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XEkkmRvCNPHcMr9tsxUYydoy1tE=; b=oVpFUA
+        EdOObqFH2XuVDYJes2V2jNENsM90eBO9VQmWShuWUWjzfxyZneJEv9LYVE85fTgs
+        fi5BCGJDdsYGqPnBJ1taVSnhp0W0R5UV5uZPz+yFLzvPcShZa00UEyWNqRkbwFAO
+        F0lrzGVQKLn0uc1vYlZ05NzQKbzwAk0qBEgtk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f9y7bFL0sb8EHE3GePdyPnOP7RMb9zHE
+        o1pUpLJveMCRoOuN5c/SBIfVBp8oZUgFikLJX9ahuydIH4H1GPswmLJWuSZnmgHs
+        3pldNguy0wmGlU+eDE+hGfoWO0Ji6NplFEMtAPsBCQFop7q3bxtwOyBQMrRayN5a
+        IGnExZf+LD8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 402E3C83F8;
+        Tue,  9 Jan 2018 13:49:33 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B8745C83F7;
+        Tue,  9 Jan 2018 13:49:32 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Andreas Krey <a.krey@gmx.de>
+Subject: Re: [PATCH] merge-recursive: do not look at the index during recursive merge
+References: <CABPp-BGy3_RyVQfCm+9O_AAfKA0_CZ5ajJE7NuLbToERWyWmqQ@mail.gmail.com>
+        <20171221191907.4251-1-newren@gmail.com>
+        <20171221191907.4251-3-newren@gmail.com>
+        <xmqqbmi484tw.fsf@gitster.mtv.corp.google.com>
+        <xmqq7esq7v4j.fsf_-_@gitster.mtv.corp.google.com>
+        <CABPp-BEJS+59FD-1WduHMmtnBBrgS7xDWJm8Z5URrthDp-0Bwg@mail.gmail.com>
+Date:   Tue, 09 Jan 2018 10:49:31 -0800
+In-Reply-To: <CABPp-BEJS+59FD-1WduHMmtnBBrgS7xDWJm8Z5URrthDp-0Bwg@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 9 Jan 2018 11:29:50 -0700")
+Message-ID: <xmqqy3l66f5w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4C046F0-F56D-11E7-85FE-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:11 -0800
-Brandon Williams <bmwill@google.com> wrote:
+Elijah Newren <newren@gmail.com> writes:
 
-> diff --git a/transport.c b/transport.c
-> index 63c3dbab9..2378dcb38 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -118,6 +118,7 @@ struct git_transport_data {
->  	struct child_process *conn;
->  	int fd[2];
->  	unsigned got_remote_heads : 1;
-> +	enum protocol_version version;
+> Hi,
+>
+> On Tue, Jan 9, 2018 at 11:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>>     > I haven't come up with an addition to the test suite, but I suspect
+>>     > this change is conceptually wrong.  What if a call to this function
+>>     > is made during a recursive, inner merge?
+>
+> Eek, good catch.
+>
+>>  merge-recursive.c          |  2 +-
+>>  t/t3030-merge-recursive.sh | 50 ++++++++++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 51 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/merge-recursive.c b/merge-recursive.c
+>> index 780f81a8bd..0fc580d8ca 100644
+>> --- a/merge-recursive.c
+>> +++ b/merge-recursive.c
+>> @@ -1954,7 +1954,7 @@ int merge_trees(struct merge_options *o,
+>>         if (oid_eq(&common->object.oid, &merge->object.oid)) {
+>>                 struct strbuf sb = STRBUF_INIT;
+>>
+>> -               if (index_has_changes(&sb)) {
+>> +               if (!o->call_depth && index_has_changes(&sb)) {
+>>                         err(o, _("Dirty index: cannot merge (dirty: %s)"),
+>>                             sb.buf);
+>>                         return 0;
+>
+> Yep, looks good to me; sorry for overlooking this.
+>
+> Elijah
 
-Should this be initialized to protocol_unknown_version? Right now, as
-far as I can tell, it is zero-initialized, which means protocol_v0.
+Thanks.  The breakage is already in 'master' so this fix needs to be
+fast-tracked.
