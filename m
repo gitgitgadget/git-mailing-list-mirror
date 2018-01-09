@@ -7,153 +7,164 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25FF11F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 14:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EA101F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 14:29:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754138AbeAIOTa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 09:19:30 -0500
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:41552 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753830AbeAIOT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 09:19:27 -0500
-Received: by mail-ot0-f180.google.com with SMTP id 5so3458497oth.8
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 06:19:27 -0800 (PST)
+        id S1755429AbeAIO3f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 09:29:35 -0500
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:41595 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753201AbeAIO3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 09:29:34 -0500
+Received: by mail-qt0-f177.google.com with SMTP id i40so17984155qti.8
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 06:29:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3H4EROF7+dpzBmW8tobFRdMkY2BB2R8AlTltvjuZ/M8=;
-        b=PTQMiUclcAM2KyxsN6O7KvDwYcWshhT+bZoRuK7BkkGRsCZAYwoYqnowFgLcXtQBBT
-         RGH+ZireYdIucc19+riq8LbiRcyKleLJ4ngaKb4WxSGTyhE0UrZQBEbWb5ULGjh5ecTA
-         jaqvt2IaMBw3JqeSY+faaWWOGboXNwr/vFWcY84aEAVnGx3FR9i/PtRTO/NSoq3yYpmC
-         8uy9CtXYeNSzKynFM+GHijiK8aeekS1SLKIHylGMHd+Vsgw5Fn7e2uZ2xtKsqMOqnlgK
-         iGTZBSjCDLaGbpkqrcmpbLofyH8kclkkQccNDc+xqRRMr+iTT8xX9c4+Wu7hjTC1zHQM
-         c6lQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=duQ2dKrBwf87kEMRvkOF4F4Yo4cNpFimzNYtRu7gpb0=;
+        b=aNtBCuS0gYG2RKnm3U4S5vu6gu+pxCRRRQ82uNAdePAcf6nHcWXvdiC60w3SuPgO8D
+         AVLRhRf7TxAjew+xQSNKZGsoyUL7J3L3JqYqs636Nsxmk3g5dOsrj89VVpCOlrYphTG9
+         M+s2Bke7WA1YvZsFBhRtSu5bWtQBf7JMpBTd0hmcvgUDCkaCMSIH9tMag7++Ut9RNbtl
+         314MpndGy3u24QhgSJY2+uCMJKhLaFVc9bN6iSsUPOL3oEwEUt9rN7jD6u6yIKAyQ6pa
+         PyeiwbYS7M5vfwlMZT3x0FzrsWyScfrPzI6J/tU0guGyUPaCB/Vn0Uym14CjELbk9BnL
+         /u4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3H4EROF7+dpzBmW8tobFRdMkY2BB2R8AlTltvjuZ/M8=;
-        b=mUNTbEEQwoO9C1fI4jOsyc3txH5JH3oD8CWLREC0iEJGLAi+PFxoAgW0yUKjYSw9v7
-         En24jyQ9vKs03kRae59Tjuf3bPiWuzxeQDPW5ndaBLvh2vLBKTVbcsX+uYqRc6pjQaJD
-         vog2MwZfMpm8DdX8IwtyvNyUEyYRPzqT0IgApDqRgT0MuGgnB9GWzgLQJ5kFVI+32dtv
-         dJeDjyhsSfaIuPo0qp7Rm49l07Zr2uOq30MlRHEAb2NvSE4mMS4NiK+FNNUCIQwXtbCG
-         XukgsFvJf+t2Dk3OWz13dKfdY8NulFwWLaIzKiTEWeUtGoIBw1mv9EC5TSDbXxgyofiA
-         Sh5w==
-X-Gm-Message-State: AKwxytesiffd0tMero5Ch77XpZ982VYeg7kO5HbXiRPqxC64Xube/7IW
-        xZOHQH6KLpo/g7/PvWo8Mtu2mYzXLlk7HXnt1QY=
-X-Google-Smtp-Source: ACJfBosLp0iCBef5Uz9F0IjY835MeUPS4d+cjxJAwWHHqUXfJz7kES8iqHZpqeIVAKmTn8B/EQHAAH5ASgxzpMNadpA=
-X-Received: by 10.157.6.136 with SMTP id 8mr1333173otx.174.1515507566319; Tue,
- 09 Jan 2018 06:19:26 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=duQ2dKrBwf87kEMRvkOF4F4Yo4cNpFimzNYtRu7gpb0=;
+        b=g7nd3I8DcA3HwfKRaEvEPi1db38Ft8Ot27jqY1nlDK7aAph8+0jabvlXlA2kXIh+Lr
+         +gmYooMthJ7HinexDB4/54DfEEjQU8LBEuk7l6A2pc97qFBiB4sl2DUANldo6dl6tKqg
+         9oD5tlJ3NbOyrqmvO3IE4ZmcLi1VMb0+QO1BcJq/zqhIfZfiy00ZiIOJgCPdqdFF0+p0
+         YHpOdjxMrZeiyGHuFsagwXi+GDXuNXPQ7oefgHWfVyAXHoD8jGivGATo7h2Oa24glKtu
+         Fpq7ZxGbMWMRS004cD9Hyl4EJeCbDKn+x1ua7kCZfEiYBKshFZn5es+adODqJM1gmYip
+         dGhg==
+X-Gm-Message-State: AKwxytdAEDeDK1st/g2rdgBUFdKkmQHTqfBmm60SNqG5K+Ax/jx4Hv+w
+        c5U4fN+eYeFZytPIEhqxRW4=
+X-Google-Smtp-Source: ACJfBot+Ww9CzR+vyHIg1Fa44d0JonpCxm+d4vj+irnQSQ0FNsUrF7vatWQzUBwP9fznlgoP028Awg==
+X-Received: by 10.200.19.202 with SMTP id i10mr22227251qtj.117.1515508173258;
+        Tue, 09 Jan 2018 06:29:33 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id y65sm9287036qke.24.2018.01.09.06.29.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Jan 2018 06:29:32 -0800 (PST)
+Subject: Re: [PATCH v4 0/4] Add --no-ahead-behind to status
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180108154822.54829-1-git@jeffhostetler.com>
+ <7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com>
+ <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com>
+ <20180109072044.GD32257@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c19f6469-190a-33e7-20a2-fcb17b8e45d9@gmail.com>
+Date:   Tue, 9 Jan 2018 09:29:31 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.157.73.21 with HTTP; Tue, 9 Jan 2018 06:19:05 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1801091424170.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
- <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801082034470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAJs94Eb0Yf=4Obk6BpifSZaPiw3ArY-01LbTb1nUaM+o2hSayw@mail.gmail.com> <nycvar.QRO.7.76.6.1801091424170.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
-Date:   Tue, 9 Jan 2018 17:19:05 +0300
-Message-ID: <CAJs94EaKObUhvNedMmOGWA9SDMH7y-2V7DLkxO=MabddpbjYFQ@mail.gmail.com>
-Subject: Re: rebase preserve-merges: incorrect merge commits
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-09 16:25 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi Matwey,
+On 1/9/2018 8:15 AM, Johannes Schindelin wrote:
+> Hi Peff,
 >
-> On Tue, 9 Jan 2018, Matwey V. Kornilov wrote:
+> On Tue, 9 Jan 2018, Jeff King wrote:
 >
->> 2018-01-08 22:36 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> >
->> > On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->> >
->> >> 2018-01-08 19:32 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> >> >
->> >> > On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->> >> >
->> >> >> 2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
->> >> >> > 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> >> >> >> Hi Matwey,
->> >> >> >>
->> >> >> >> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
->> >> >> >>
->> >> >> >>> I think that rebase preserve-merges algorithm needs further
->> >> >> >>> improvements. Probably, you already know it.
->> >> >> >>
->> >> >> >> Yes. preserve-merges is a fundamentally flawed design.
->> >> >> >>
->> >> >> >> Please have a look here:
->> >> >> >>
->> >> >> >>         https://github.com/git/git/pull/447
->> >> >> >>
->> >> >> >> Since we are in a feature freeze in preparation for v2.16.0, I will
->> >> >> >> submit these patch series shortly after v2.16.0 is released.
->> >> >> >>
->> >> >> >>> As far as I understand the root cause of this that when new merge
->> >> >> >>> commit is created by rebase it is done simply by git merge
->> >> >> >>> $new_parents without taking into account any actual state of the
->> >> >> >>> initial merge commit.
->> >> >> >>
->> >> >> >> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
->> >> >> >> it *does* allow it, but then fails to handle it correctly.) We even have
->> >> >> >> test cases that mark this as "known breakage".
->> >> >> >>
->> >> >> >> But really, I do not think it is worth trying to fix the broken design.
->> >> >> >> Better to go with the new recreate-merges. (I am biased, of course,
->> >> >> >> because I invented recreate-merges. But then, I also invented
->> >> >> >> preserve-merges, so ...)
->> >> >> >
->> >> >> > Well. I just checked --recreate-merges=no-rebase-cousins from the PR
->> >> >> > and found that it produces the same wrong result in my test example.
->> >> >> > The topology is reproduced correctly, but merge-commit content is
->> >> >> > broken.
->> >> >> > I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
->> >> >>
->> >> >> Indeed, exactly as you still say in the documentation: "Merge conflict
->> >> >> resolutions or manual amendments to merge commits are not preserved."
->> >> >> My initial point is that they have to be preserved. Probably in
->> >> >> recreate-merges, if preserve-merges is discontinued.
->> >> >
->> >> > Ah, but that is consistent with how non-merge-preserving rebase works: the
->> >> > `pick` commands *also* do not record merge conflict resolution...
->> >> >
->> >>
->> >> I am sorry, didn't get it. When I do non-merge-preserving rebase
->> >> --interactive there is no way to `pick' merge-commit at all.
->> >
->> > Right, but you can `pick` commits and you can get merge conflicts. And you
->> > need to resolve those merge conflicts and those merge conflict resolutions
->> > are not preserved for future interactive rebases, unless you use `rerere`
->> > (in which case it also extends to `pick`ing merge commits in
->> > merge-preserving mode).
+>> On Mon, Jan 08, 2018 at 03:04:20PM -0500, Jeff Hostetler wrote:
 >>
->> Are you talking about merge conflicts arising due to commits reordering?
+>>>> I was thinking about something similar to the logic we use today
+>>>> about whether to start reporting progress on other long commands.
+>>>> That would mean you could still get the ahead/behind values if you
+>>>> aren't that far behind but would only get "different" if that
+>>>> calculation gets too expensive (which implies the actual value isn't
+>>>> going to be all that helpful anyway).
+>>> After a off-line conversation with the others I'm going to look into
+>>> a version that is limited to n commits rather than be completely on or
+>>> off.  I think if you are for example less than 100 a/b then those numbers
+>>> have value; if you are past n, then they have much less value.
+>>>
+>>> I'd rather do it by a fixed limit than by time to ensure that output
+>>> is predictable on graph shape and not on system load.
+>> I like this direction a lot. I had hoped we could say "100+ commits
+>> ahead",
+> How about "100+ commits apart" instead?
+
+Unfortunately, we can _never_ guarantee more than 1 commit ahead/behind 
+unless we walk to the merge base (or have generation numbers). For 
+example, suppose the 101st commit in each history has a parent that in 
+the recent history of the other commit. (There must be merge commits to 
+make this work without creating cycles, but the ahead/behind counts 
+could be much lower than the number of walked commits.)
+
 >
-> Merge conflicts can arise from commit reordering, and they can also arise
-> from commits introduced in "upstream" in the meantime.
+>> but I don't think we can do so accurately without generation numbers.
+> Even with generation numbers, it is not possible to say whether two given
+> commits reflect diverging branches or have an ancestor-descendant
+> relationship (or in graph speak: whether they are comparable).
 
-Then I am totally agree with you.
-But initially I said about conflict resolutions and amendments already
-contained in existing merge-commits. While rerere can at least learn
-conflict resolutions from existing merge-commits, rerere cannot learn
-and recover manual amendments.
+If you walk commits using a priority queue where the priority is the 
+generation number, then you can know that you have walked all reachable 
+commits with generation greater than X, so you know among those commits 
+which are comparable or not.
 
+For this to work accurately, you must walk from both tips to a 
+generation lower than each. It does not help the case where one branch 
+is 100,000+ commits ahead, where most of those commits have higher 
+generation number than the behind commit.
+
+> It could potentially make it possible to cut off the commit traversal, but
+> I do not even see how that would be possible.
 >
-> Ciao,
-> Johannes
+> The only thing you could say for sure is that two different commits with
+> the same generation number are for sure "uncomparable", i.e. reflect
+> diverging branches.
+>
+>> E.g., the case I mentioned at the bottom of this mail:
+>>
+>>    https://public-inbox.org/git/20171224143318.GC23648@sigill.intra.peff.net/
+>>
+>> I haven't thought too hard on it, but I suspect with generation numbers
+>> you could bound it and at least say "100+ ahead" or "100+ behind".
+> If you have walked 100 commits and still have not found a merge base,
+> there is no telling whether one start point is the ancestor of the other.
+> All you can say is that there are more than 100 commits in the
+> "difference".
+>
+> You would not even be able to say that the *shortest* path between those
+> two start points is longer than 100 commits, you can construct
+> pathological DAGs pretty easily.
+>
+> Even if you had generation numbers, and one commit's generation number
+> was, say, 17, and the other one's was 17,171, you could not necessarily
+> assume that the 17 one is the ancestor of the 17,171 one, all you can say
+> that it is not possible the other way round.
 
+This is why we cannot _always_ use generation numbers, but they do help 
+in some cases.
 
+>> But I don't think you can approximate both ahead and behind together
+>> without finding the actual merge base.
+>>
+>> But even still, finding small answers quickly and accurately and punting
+>> to "really far, I didn't bother to compute it" on the big ones would be
+>> an improvement over always punting.
+> Indeed. The longer I think about it, the more I like the "100+ commits
+> apart" idea.
+>
 
--- 
-With best regards,
-Matwey V. Kornilov
+Again, I strongly suggest we drop this approach because it will be more 
+pain than it is worth.
+
+Thanks,
+-Stolee
