@@ -2,215 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAEDC1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 16:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 028751F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 16:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934414AbeAIQhq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 11:37:46 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:42479 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934406AbeAIQhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 11:37:36 -0500
-Received: by mail-pf0-f176.google.com with SMTP id d23so8916095pfe.9
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 08:37:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=htQfNoZdeO2EIPl26Rl1V1GDshJUCinoksZThgut5JU=;
-        b=PvyWn7e2VoDOD0GndOntNOu3zmEiSzDF6FcWcYInhr+Ey9uNlVy4yhhygBLcY82wKw
-         Th/j7QVFINmzUqfUT0tvmLXN9Q+jl4NMpKNUF0VQbMTnBIBLerVkhIJD5RJ6c0rwUvq/
-         FbZkTPg/KsAQDcXtxVnJrA/f+tZ7AAiLm7z+3/1A4xtIL477Mvam2I6EZ48OhSvjnuXa
-         XMrD/l3IEk5IOGvuuChUb33vzhdmMb/sIcPWfsWziwoENEDOt77fW/7PnGQjfl6S5ike
-         GaoKuJEQSP72e4TIDA7NLI9nnz/tDaKCl8OfG9P+l9EYKI8L91OJD16ocrFoGLmohDKi
-         eNMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=htQfNoZdeO2EIPl26Rl1V1GDshJUCinoksZThgut5JU=;
-        b=m7SBjCdl4be1Rd9+49xAv7cmWxfrgloqEc5GsLmBGsfv2GtdUlvUFQ/if5DMZWznZ0
-         9KKNSP2PjCJd6+TpnCdbqzobmLjLszOzh8q0n/l/zutvtK+5Yr3WWW7uIltgeC2lxl89
-         uCLKmQdl3J7KY1DznhXwTjGfgru+3OGNGymCNgIEeveX3VASW4n6vepfzmadaU0jIBOo
-         JZBoWEfH+UtbpIKeWOmy2tXO1LGPhHqwG63DynYzx9lAjLJ2/rTvwbXqdFIQ1GojaALk
-         GKk5lTgI7viSKoizIZSuX3q5TuByCsvAGWnund9QObL+2UgU1/GXllZqBrvHq02fZuC0
-         Yv8Q==
-X-Gm-Message-State: AKGB3mKJW8CSHoyLrdv1drXVf6XWWnv+Zl8oGegud60yZ7JPOti4V0jL
-        2WWzJLatFqpnbS8pZ0lm2bNzG817
-X-Google-Smtp-Source: ACJfBoti0ZN9S4HyyylhyZxomFxpbvmGRVtS1JFmKvYbOCqntB8k1nCSTefBr8ESNZXsuH4aDbb+4Q==
-X-Received: by 10.101.96.2 with SMTP id m2mr12812492pgu.119.1515515855645;
-        Tue, 09 Jan 2018 08:37:35 -0800 (PST)
-Received: from [192.168.206.100] ([117.219.201.242])
-        by smtp.gmail.com with ESMTPSA id a22sm35123945pfc.47.2018.01.09.08.37.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 08:37:34 -0800 (PST)
-Subject: Re: [PATCH 6/8] Doc/gitsubmodules: improve readability of certain
- lines
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-7-kaartic.sivaraam@gmail.com>
- <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <f82949ed-5dbd-eab4-d917-8fe675b1c517@gmail.com>
-Date:   Tue, 9 Jan 2018 22:07:21 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1759699AbeAIQtV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 11:49:21 -0500
+Received: from mout.gmx.net ([212.227.15.19]:62083 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759692AbeAIQtT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 11:49:19 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbxJ8-1eGji00zkk-00JIOh; Tue, 09
+ Jan 2018 17:48:58 +0100
+Date:   Tue, 9 Jan 2018 17:48:58 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Jeff King <peff@peff.net>, Jeff Hostetler <git@jeffhostetler.com>,
+        Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 0/4] Add --no-ahead-behind to status
+In-Reply-To: <c19f6469-190a-33e7-20a2-fcb17b8e45d9@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801091744540.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180108154822.54829-1-git@jeffhostetler.com> <7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com> <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com> <20180109072044.GD32257@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <c19f6469-190a-33e7-20a2-fcb17b8e45d9@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="o1VBanXi4pfskxoBQFm7foSeKxAG34twA"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Z3R61fwz0H9mXWk+QhLokxbOs8v6X0eScIzjxz/FNdDZvnBl9nU
+ LKhvsv96c1NKoLFteNSpzZMNDq19L492QK2Rt9E1GNvngGhKOkXk40jYcKbsQV9dQsNrEjz
+ OJTK0ttoHAglH8/87xyVGgZSwAXyKuSX67CaVrQM/nVHXkapwrCAysj/WgoLhV369uCchGI
+ 3DeVYASM52xNopgO4hGIQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LWk43Lvusqk=:ZpJRPW55inEnZBy9yd6jB5
+ wF0ZErvfjYYck12RhkIa74uSGWp/f4iU8NXNj45Up8d9N/07Mj2FN6UZqZHfRY1qoECU+WqTv
+ 7uvgVQ50c5G50erD637TnPITlgbDpyjUn/o/lljb2QmOICuo9plJDxErkNfMjth5cFsgxcCTG
+ Jhqlgl5udXOWX5Tdc21wsoJ+Q9iGorj7DQJPeuvRHMjv4S6pE++SRWgCQaeifFsi1qXkCAD01
+ tyNQPnLVrjyniFyREzu3GkxG+F11ufOiY2Eqy3fLwHqdJZKTMQHxIxZ2cvZ3KBSGwV0QiLcRP
+ JjjIqBvagOywZF8KAn3BYixcnhP+ZDyi0SrI5F3tkudQUsxndie6ffld532J97heYG/b3yaBA
+ wQFwVtytdOboNscOlUTMZ5UOfy6QEqXIbwR/CigEJ41AH66KDZF4tGJCpCJbksei9aY9g86DV
+ EFyfDfqVndW1WtjD5Pq8c1JJy2sWwmWqUpPtbAhAa7rKfgGceS4GVEsDElBekcTjz8KlLFxot
+ p/AkupAQ++W+1DBpFTpPrh1iMJT0IY3sL1Ofq7AZkwquuX5AsA3pjtXkgNPQ+joREzwxRLLdY
+ eSWebFZQJqSj7o/Q7JRQK16wt4aZXJRrqTbaUMz+krNK5//9S1sezP4XS7lyYQOjTf7ZKs8Ci
+ //0DGhUNJEy9iVO9+bJyKQpmEPRliiu2yIX7LjG5eaZYEdu/FzOJLmyXBDu6JsUtLM7s3A3K8
+ xMrS4v2I+u7nN2neG8Sv14/y3cQqoFyq25vXBmgMlSiozzgThfFtsjSE6IMOWIAxFE6+wmd4h
+ kug/1RLcCmL+iG+aRQ3NtjZBPOTt5ke8Yp3a5FwMl2hhKHgo06N2nHJIYvKoecsWcGxN7Is
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---o1VBanXi4pfskxoBQFm7foSeKxAG34twA
-Content-Type: multipart/mixed; boundary="KpCfMXLkloKcjgoja2uKSRVSsNuPmosgk";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Message-ID: <f82949ed-5dbd-eab4-d917-8fe675b1c517@gmail.com>
-Subject: Re: [PATCH 6/8] Doc/gitsubmodules: improve readability of certain
- lines
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-7-kaartic.sivaraam@gmail.com>
- <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
-In-Reply-To: <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
+Hi Stolee,
 
---KpCfMXLkloKcjgoja2uKSRVSsNuPmosgk
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+On Tue, 9 Jan 2018, Derrick Stolee wrote:
 
-On Tuesday 09 January 2018 12:19 AM, Stefan Beller wrote:
-> On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
->>
->> - * The command line for those commands that support taking submodule
->> -   specifications. Most commands have a boolean flag '--recurse-submo=
-dules
->> -   whether to recurse into submodules. Examples are `ls-files` or `ch=
-eckout`.
->> + * The command line arguments of those commands that support taking s=
-ubmodule
->> +   specifications. Most commands have a boolean flag '--recurse-submo=
-dules'
->> +   which specify whether they should recurse into submodules. Example=
-s are
->> +   `ls-files` or `checkout`.
->>     Some commands take enums, such as `fetch` and `push`, where you ca=
-n
->>     specify how submodules are affected.
->>
->> @@ -90,8 +91,8 @@ Submodule operations can be configured using the fol=
-lowing mechanisms
->>  For example an effect from the submodule's `.gitignore` file
->>  would be observed when you run `git status --ignore-submodules=3Dnone=
-` in
->>  the superproject. This collects information from the submodule's work=
-ing
->> -directory by running `status` in the submodule, which does pay attent=
-ion
->> -to its `.gitignore` file.
->> +directory by running `status` in the submodule while paying attention=
+> On 1/9/2018 8:15 AM, Johannes Schindelin wrote:
+> >
+> > On Tue, 9 Jan 2018, Jeff King wrote:
+> >
+> > > But I don't think you can approximate both ahead and behind together
+> > > without finding the actual merge base.
+> > >
+> > > But even still, finding small answers quickly and accurately and
+> > > punting to "really far, I didn't bother to compute it" on the big
+> > > ones would be an improvement over always punting.
+> >
+> > Indeed. The longer I think about it, the more I like the "100+ commits
+> > apart" idea.
+> 
+> Again, I strongly suggest we drop this approach because it will be more pain
+> than it is worth.
 
->> +to the `.gitignore` file of the submodule.
->=20
-> Both are grammatically correct and expressive, thanks!
->
+So what you are saying is if there is a commit graph with *heavy* clock
+skew, you might overestimate how many commits apart the tips are.
 
-You're welcome!
+I say that this is striking the balance between correctness and usability
+on the *wrong* side.
 
+Sure, it might be wrong if your commit graph suffers heavily from clock
+skew. In most cases, you still get a pretty darn useful hint where you're
+at.
 
->>  +
->=20
-> Extra spurious line?
->
+The alternative would be *not* to show any useful hint in most cases, i.e.
+when you did not find all merge bases within <N> commits. I would really
+hate it if Git spent so much time and did not even give me a hint. Totally
+unsatisfying user experience.
 
-No. That's a "real" plus in the document that's usually present between
-paragraphs :) I think I now get why Junio suggests people to review
-patches in context (possibly, by applying them) ;)
-
-
->>  The submodule's `$GIT_DIR/config` file would come into play when runn=
-ing
->>  `git push --recurse-submodules=3Dcheck` in the superproject, as this =
-would
->> @@ -107,13 +108,13 @@ If the submodule is not yet initialized, then th=
-e configuration
->>  inside the submodule does not exist yet, so configuration where to
->>  obtain the submodule from is configured here for example.
->>
-
-I caught this in the context while replying. "so configuration where to
-obtain the submodule from is configured here for example." doesn't seem
-to read well. Maybe removing configuration from the sentence will make
-it sound better?
-
-
->> - * the `.gitmodules` file inside the superproject. Additionally to th=
-e
->> -   required mapping between submodule's name and path, a project usua=
-lly
->> + * The `.gitmodules` file inside the superproject. Additionally, if m=
-apping
->> +   is required between a submodule's name and its path, a project usu=
-ally
->=20
-> This changes meaning, originally it tries to say:
->=20
-> * it requires mapping path <-> names.
-
-I get this ...
-
-> * but there can be more.
->=20
-
-=2E.. but not this. Did the previous version really try to say this?
-Anyways how does this sound?
-
-  * The `.gitmodules` file inside the superproject. A project usually
-    uses this file to suggest defaults for the upstream collection
-    of repositories for the mapping that is required between a
-    submodule's name and its path.
-
-I think it conveys the "it requires mapping path <-> names." correctly
-but doesn't convey the "but there can be more." part. I'm not sure how
-to get that into the sentence, correctly.
-
-
---KpCfMXLkloKcjgoja2uKSRVSsNuPmosgk--
-
---o1VBanXi4pfskxoBQFm7foSeKxAG34twA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpU78EbHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlp2XMQAJnfQAMxlE6K8RxbXbwO
-ZZ4ASCZf19tXIKl1WPq+F+v9W8M8/avAbKP7OKciC2QjYgFX5T9n/+4ttRN/Fpqa
-PN8JjoVuPBlBmBEV6WLay+tnQwT0o8z0QssFN2ln6UcwQ/NFGXeRdF7+TqOfLVhs
-3dQPUazg8cAL7VTP0nJiwBf+z99iT+JGeRn0GS2/baLggo5DKEpgaUXJ43/0jkCG
-upt28JpetAsT8Tje7FHfmjVa83CFvPu61I2DvDFGONx8yEHfgX5m700EKFWhP+/N
-5W49x2Tp/KdHIMXruwMPNsCKQVk0EpAbsN5T8UX51mWUjMw9VXAojfXO0GPxCGNP
-Sk5Xh9P75wdgtoWHCnv5fmDvyfdzTCs5W8UOqUF4bnBi5wYv0NlNYPoBx0qtrjjX
-gm3z9Yo4lFNGwAgb+g2pzypufK1ScwqEhYBH1VF6GmGD27JtR3q5p6DHPYj3JEoz
-Sa887pEsUX9xFfnLaQChUe7FraORxI44SeqqfSmx1Yj5IV81yVpk5UxvRru9zNxu
-7s+p437aeeNY8NTkCqXkgdxe2knWKgKy8fqKJcoHumrsf9b+bcbUJutdXxDY9xYI
-9LKokVb61QlAcazTRu1EwuAs6pCdokZM1PCeh5b6tM14ZVKq2BGYaihBlRQIDz3R
-2kZWcfeuPFextZ0pl1RL3p0Q
-=jXk5
------END PGP SIGNATURE-----
-
---o1VBanXi4pfskxoBQFm7foSeKxAG34twA--
+Ciao,
+Johannes
