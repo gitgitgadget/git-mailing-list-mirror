@@ -2,155 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 376BB1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 16:07:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 961821F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 16:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933819AbeAIQG7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 11:06:59 -0500
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:44744 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932898AbeAIQG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 11:06:56 -0500
-Received: by mail-pg0-f43.google.com with SMTP id i5so8263515pgq.11
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 08:06:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=NI3wLkM65tffahr0ICwFzMnwObFdrC7M4ABDf14Co3c=;
-        b=r+4bBCMif3aJcZZAysplY1NeeWFHDW54mQ4ah6JCpyeQGTN/chKN/Jt62Ko4Y3MOvY
-         XoDNk47CYmGr8FaKDXhBqCYN0EhT913eAUB+I1oPqLb9L786H6zxAYIteirRKtgtStOm
-         zKDxM/YJv4MR4flh4nuWsH+pVRWZ27J8pObHOkYiWa8/baJ4pmMfi62mEB9xWD+y80hj
-         lq7+471G4jXTRgFfpMTnHkgYiQTiniQBkv6JXzLoucmyJ9jP8tOxqOA3jJIR6oDWvkSM
-         YDMIsb7S3q/aawOBm18gdVd5xuOqjvJ0VDqBe+tEOoC6Ld2sgObAyvfAm7rkaMDhiJGD
-         bbGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=NI3wLkM65tffahr0ICwFzMnwObFdrC7M4ABDf14Co3c=;
-        b=Ta5ZMxrGLE9kbTfYkMrNOkZorFvihoPeBxO3ReMIPhAstONAEypyJ26E+/BW6vMaTB
-         +XXvCk4rV8ONdiY6qq5HswmvDTK9N1YUui2cqBokeIlouWEPCN0sAKbQ3F6/99utXwM8
-         2ny7P/MqXB6dgjZMFiT5yfqBE6UYp9I4O1AhZ1OzgPv8RHzX9AUM+uOTututAOcFAXkR
-         CspX01TGXA+WFrUp/oqY+YZQcXIWMxOB5Tik6xwgSyCqpTiu7IVTsKtJZzmWGaq7H/FK
-         HchOMpaW4Rbq0amOkzeTehYPLm9njZkr9eZWVwQZegZ+Ny4NicorcaP9XCLFHp8VLizh
-         RSTg==
-X-Gm-Message-State: AKGB3mIjTFIEceCjQ3WbqTk5lhCK4zKALDDmC7AaY7BdS/+fRg6ug0nT
-        Fc95bebVHXv0b4iiGqTSwfSfo+jb
-X-Google-Smtp-Source: ACJfBovCBJB5seOFT5Kjan/FywYIXT/Tn6TXkEkbsJm8UR1rslonT8R8Bl3U9b2WfH9Pc8IdIOL8Sw==
-X-Received: by 10.99.174.10 with SMTP id q10mr12581932pgf.440.1515514015614;
-        Tue, 09 Jan 2018 08:06:55 -0800 (PST)
-Received: from [192.168.206.100] ([117.242.90.141])
-        by smtp.gmail.com with ESMTPSA id 67sm27161257pgg.50.2018.01.09.08.06.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 08:06:54 -0800 (PST)
-Subject: Re: [PATCH 4/8] Doc/gitsubmodules: avoid abbreviations
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-5-kaartic.sivaraam@gmail.com>
- <CAGZ79kZZf=zSfqFr9EV_Q408mG4cHTEQSOAMC7n_35oKgHJp2A@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <b59bd56a-f88b-a65a-263f-2b6d2f57dd99@gmail.com>
-Date:   Tue, 9 Jan 2018 21:36:38 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1759319AbeAIQ3k (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 11:29:40 -0500
+Received: from mout.gmx.net ([212.227.15.18]:58592 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759230AbeAIQ3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 11:29:20 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMCFR-1eVvQe378f-0086L4; Tue, 09
+ Jan 2018 17:29:17 +0100
+Date:   Tue, 9 Jan 2018 17:29:18 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     "Matwey V. Kornilov" <matwey.kornilov@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: rebase preserve-merges: incorrect merge commits
+In-Reply-To: <CAJs94EaKObUhvNedMmOGWA9SDMH7y-2V7DLkxO=MabddpbjYFQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801091728590.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAJs94Eas59UxZ+490AUSOuB37i+JBEvbCnGBMVpKi1G469OTbw@mail.gmail.com> <nycvar.QRO.7.76.6.1801081452290.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94Ea52CcNvBxXVeZLvgsaS4YPiXaeDvRm2zUopoLVowgm+Q@mail.gmail.com>
+ <CAJs94Ea_Kf5RFMuPreBOGYEjhECdQP2F7m=-wDkf9xRnQFPfhA@mail.gmail.com> <nycvar.QRO.7.76.6.1801081730170.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94EYrBgNW-bzoEgy9=fStJW2esoULxfOHX45V63HavqOCpw@mail.gmail.com> <nycvar.QRO.7.76.6.1801082034470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CAJs94Eb0Yf=4Obk6BpifSZaPiw3ArY-01LbTb1nUaM+o2hSayw@mail.gmail.com> <nycvar.QRO.7.76.6.1801091424170.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CAJs94EaKObUhvNedMmOGWA9SDMH7y-2V7DLkxO=MabddpbjYFQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZZf=zSfqFr9EV_Q408mG4cHTEQSOAMC7n_35oKgHJp2A@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="4kjLouwDA0P9bjuX0qXACNNeW4x2AYtar"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:y/YW+JQYBnrUN0XpGghwQe9nfuo0Lw4yE9pKT4XMcFncugunzyY
+ HvoZ25E1ivJ/cjdEDGO+qKne0N+XsNa7vemkDxocy37cBS77Pum+DBlR3YNT86DCWYohegk
+ eFY/mzdK6DIV0OVyC6n5sFAtDbFHdcr76KVyX3oGErsxxxJ5TSjxVd4bxVgUgT+oNnWNsNv
+ qZaEdL+hnap8nEbA3dXPw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AyWnwawjKPE=:dsaQRIxg+6qlZSdMS5UxTY
+ Vluup75esDrsnNKYMiIqM0g1lRevNl8Tk7qKGOZUhPdnjddvDUAdatO+CkceWbLUxqpNwyKCy
+ jffVt1KtTVHmnm4g/rtTOjgW7uXAkzqWKQOYPwhUzZDYnhZihHyaP5A5RVuxealYJA/yxNkP5
+ g7805HLLQmQzwOXnsfxzWevTJGHa7adD5533U9ImGHcO1XWmFXQBl4ac/0ykfcF7WK09Yzo1a
+ sM+Ba3bVBOzjsOi7ZlzWiykwsTedwQDZLKlB5U+YZjPF5FtHFiTFTDftMMfoY+sznR+nBVh79
+ k0RPyXTcOZDfKTXovXOy1cZ3hE20TGOEfSLeu9fTTXSXqVQbrZFn4xsnlkWoqNDnN+xPLEyko
+ x8QXDY3g1KEib9NshNr0cH2O1RuASkH+jyuinJ8x313LrlFdKyH0kWwbjh1tLpVQe+29OE9qH
+ n6xSspP6P1vhHZPegAk4oIZVcVHa2ge+w/QBPbBIRjsjpZTFwa2//jPrDuHMVbndzliXY2L24
+ 8UuPONKgyXtSFYbYnpgjOCXwE3bhjBeoZg7MqifcCroBbUv63u5HP1vjZHQjztEZngSopoHzm
+ NW55K1rHwK1N1hk7mIce6Axz8XFX/FHIzrwtYF9AW4ltR2bCL9f0TZ+BSxdC97fKyWdUh7TEr
+ DQYJt7WcaxVZ7lu0f+jR1+qpilzRGn04FXJfklZ69Y3uTKrIu5OKVhtLVcpGLxCQeDHFG8/HE
+ DhyqkA6sekS1u29VTRxrOSnNr+GuzVErUiQwYSIAAuYg3kAIlaHMRvyHLz8qhz2uHGZzXn4R1
+ h2Hw2bQietegkeGZTNXYJQ41Sx2OZPoc/h/IuuLU5QIUie6uY4LFxzr/epJ3O06qrVcaNQV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---4kjLouwDA0P9bjuX0qXACNNeW4x2AYtar
-Content-Type: multipart/mixed; boundary="HL2RdeJSCAqTj2JD05Avunvu28IP7XaJH";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Message-ID: <b59bd56a-f88b-a65a-263f-2b6d2f57dd99@gmail.com>
-Subject: Re: [PATCH 4/8] Doc/gitsubmodules: avoid abbreviations
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-5-kaartic.sivaraam@gmail.com>
- <CAGZ79kZZf=zSfqFr9EV_Q408mG4cHTEQSOAMC7n_35oKgHJp2A@mail.gmail.com>
-In-Reply-To: <CAGZ79kZZf=zSfqFr9EV_Q408mG4cHTEQSOAMC7n_35oKgHJp2A@mail.gmail.com>
+Hi Matwey,
 
---HL2RdeJSCAqTj2JD05Avunvu28IP7XaJH
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+On Tue, 9 Jan 2018, Matwey V. Kornilov wrote:
 
-On Tuesday 09 January 2018 12:15 AM, Stefan Beller wrote:
->>
->> - * The command line for those commands that support taking submodule =
-specs.
->=20
-> ++ The command line for those commands that support taking submodules
-> as part of their pathspecs[1].
-> ++
-> ++[1] pathspec is an official term according to `man gitglossary`.
->=20
-> Maybe?
->=20
+> 2018-01-09 16:25 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > Hi Matwey,
+> >
+> > On Tue, 9 Jan 2018, Matwey V. Kornilov wrote:
+> >
+> >> 2018-01-08 22:36 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> >> >
+> >> > On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+> >> >
+> >> >> 2018-01-08 19:32 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> >> >> >
+> >> >> > On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+> >> >> >
+> >> >> >> 2018-01-08 17:42 GMT+03:00 Matwey V. Kornilov <matwey.kornilov@gmail.com>:
+> >> >> >> > 2018-01-08 16:56 GMT+03:00 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> >> >> >> >> Hi Matwey,
+> >> >> >> >>
+> >> >> >> >> On Mon, 8 Jan 2018, Matwey V. Kornilov wrote:
+> >> >> >> >>
+> >> >> >> >>> I think that rebase preserve-merges algorithm needs further
+> >> >> >> >>> improvements. Probably, you already know it.
+> >> >> >> >>
+> >> >> >> >> Yes. preserve-merges is a fundamentally flawed design.
+> >> >> >> >>
+> >> >> >> >> Please have a look here:
+> >> >> >> >>
+> >> >> >> >>         https://github.com/git/git/pull/447
+> >> >> >> >>
+> >> >> >> >> Since we are in a feature freeze in preparation for v2.16.0, I will
+> >> >> >> >> submit these patch series shortly after v2.16.0 is released.
+> >> >> >> >>
+> >> >> >> >>> As far as I understand the root cause of this that when new merge
+> >> >> >> >>> commit is created by rebase it is done simply by git merge
+> >> >> >> >>> $new_parents without taking into account any actual state of the
+> >> >> >> >>> initial merge commit.
+> >> >> >> >>
+> >> >> >> >> Indeed. preserve-merges does not allow commits to be reordered. (Actually,
+> >> >> >> >> it *does* allow it, but then fails to handle it correctly.) We even have
+> >> >> >> >> test cases that mark this as "known breakage".
+> >> >> >> >>
+> >> >> >> >> But really, I do not think it is worth trying to fix the broken design.
+> >> >> >> >> Better to go with the new recreate-merges. (I am biased, of course,
+> >> >> >> >> because I invented recreate-merges. But then, I also invented
+> >> >> >> >> preserve-merges, so ...)
+> >> >> >> >
+> >> >> >> > Well. I just checked --recreate-merges=no-rebase-cousins from the PR
+> >> >> >> > and found that it produces the same wrong result in my test example.
+> >> >> >> > The topology is reproduced correctly, but merge-commit content is
+> >> >> >> > broken.
+> >> >> >> > I did git rebase --recreate-merges=no-rebase-cousins --onto abc-0.1 v0.1 abc-0.2
+> >> >> >>
+> >> >> >> Indeed, exactly as you still say in the documentation: "Merge conflict
+> >> >> >> resolutions or manual amendments to merge commits are not preserved."
+> >> >> >> My initial point is that they have to be preserved. Probably in
+> >> >> >> recreate-merges, if preserve-merges is discontinued.
+> >> >> >
+> >> >> > Ah, but that is consistent with how non-merge-preserving rebase works: the
+> >> >> > `pick` commands *also* do not record merge conflict resolution...
+> >> >> >
+> >> >>
+> >> >> I am sorry, didn't get it. When I do non-merge-preserving rebase
+> >> >> --interactive there is no way to `pick' merge-commit at all.
+> >> >
+> >> > Right, but you can `pick` commits and you can get merge conflicts. And you
+> >> > need to resolve those merge conflicts and those merge conflict resolutions
+> >> > are not preserved for future interactive rebases, unless you use `rerere`
+> >> > (in which case it also extends to `pick`ing merge commits in
+> >> > merge-preserving mode).
+> >>
+> >> Are you talking about merge conflicts arising due to commits reordering?
+> >
+> > Merge conflicts can arise from commit reordering, and they can also arise
+> > from commits introduced in "upstream" in the meantime.
+> 
+> Then I am totally agree with you.
+> But initially I said about conflict resolutions and amendments already
+> contained in existing merge-commits. While rerere can at least learn
+> conflict resolutions from existing merge-commits, rerere cannot learn
+> and recover manual amendments.
 
-Yeah, I actually did think 'specification' wasn't a the best fit for
-this (should have mentioned that somewhere) Now, the real term came out :=
-)
+Great, so the information is all there and you can implement it? :-)
 
-Just to be sure, that "[1] pathspec ..." part goes to the end of the
-document doesn't it?
-
-
->> -   Most commands have a boolean flag '--recurse-submodules' whether t=
-o
->> -   recurse into submodules. Examples are `ls-files` or `checkout`.
->> + * The command line for those commands that support taking submodule
->> +   specifications. Most commands have a boolean flag '--recurse-submo=
-dules
->> +   whether to recurse into submodules. Examples are `ls-files` or `ch=
-eckout`.
->>     Some commands take enums, such as `fetch` and `push`, where you ca=
-n
->>     specify how submodules are affected.
->>
->> --
->> 2.16.0.rc0.223.g4a4ac8367
->>
-
-
-
---HL2RdeJSCAqTj2JD05Avunvu28IP7XaJH--
-
---4kjLouwDA0P9bjuX0qXACNNeW4x2AYtar
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpU6I4bHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlppl8P/iMwjw949UrlpfNwiIiQ
-xp9+XYYbUK8rFNQLhANpU0SbCfeiNXjMalV9Z1Gz3eiDkdmmyS66rCrhowI5QEW2
-3r3F4RnR59Nmpp5Hik20LM1tbTOp+CWRAmc5bKHInRgwkVrJbisly+CHdEytgw67
-9fcYlYi4BsxEgMpTcH9X6IvuNw+WeP3nWcpaHKf0QhYj9dRJ850TZbUcAmtABi9J
-uTGFK20hDc7ahxh6YZDJb+CRZKz+jDa2YbNM+B5SIytkON2EwB7XmbVFJu/C82BT
-UgfwVlEjXLTxW362IcWat+9PurQHxVMalBkkCWeOqhDUa6JcU/1wzvyWDwbGEIWd
-qaZXLwXT6UJzi02CwUL9uhMh2e5K8oEltDpkvQaca9vIBO0eIlPmk5KpRO9D3cI0
-O+wr8BerPvBYui1heJze+Ew/V02VKcLAxq6SZvdQJbWNBn6QF+Ye+2JrZdIfoe7y
-+SZf5kZMA8JnYR37/o9couJjorap8JTOU/oZcbd5tBKZ4RzsutwOiJldnG9CfRMm
-V1tnCxTaqSKnK3eKhTgH/vMZj826Di7fY/OpyAB8ewI9aItfUGygVSaBXthCt7Sp
-5lpXr1Bkz9spdgEd1Xzo7Mb2WstWGCFktN/QUz4CzrqJ8f2vtsc/A97UfmDn4iaS
-Ap6NwShgelUUE/W5pj3ETGjS
-=6jvN
------END PGP SIGNATURE-----
-
---4kjLouwDA0P9bjuX0qXACNNeW4x2AYtar--
+Ciao,
+Johannes
