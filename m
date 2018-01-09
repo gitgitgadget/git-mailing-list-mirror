@@ -2,116 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2961F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 18:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A74C1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 18:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934735AbeAISIR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 13:08:17 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:42150 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934729AbeAISIP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 13:08:15 -0500
-Received: by mail-pg0-f66.google.com with SMTP id q67so8503502pga.9
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 10:08:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9zF7fxZX8xxhNeNlWYcHzlZ/gk/5vPwhe57YIwNQ87E=;
-        b=YZM6rpPecFxGN7N2U+/NfFca9XBG+CLrmTdztf5IIOkOZlRNeVEMfs71MJ3vuhw91O
-         QzSHt+7tjJMMGZJzexHxdx/xYDBOtkx0hMtPWWRb4uSksQUnNhW62fsBQzY7ggbN4zf+
-         bHh7G+8GkvEDcEGt8d6qa0Wt4w1VuPPKLF6a7hm3+yRlxY9OOywjvZoAunuvYNw1OB9L
-         oNlwkeZ6FZRyawzFISiteLHq95jEgwFkMCnrSfSgdIpPuKVeHWMTbT+QgbehOK+UEFdo
-         5Ptq+GXlVF4aYhLQ5wom4HpSg+bgOwC7cymoJe3MCb+iITcVntaOEIRk5rbiwNOhFz8C
-         CJZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9zF7fxZX8xxhNeNlWYcHzlZ/gk/5vPwhe57YIwNQ87E=;
-        b=RIgTC/R0qCXVZZEXhz0JjRvEaSM/OOjlC9ZPEPYooFHMdi46G0U/2tDnrHZTvHVQKm
-         UdVgnfW7rjLZyZ8uVag1/I4aS9jfcWqjke5rtbNuueLWq5K+grPMSn5GVRQxmKHvkmBK
-         Ksu/WdqgH+uI8bnRKjBjsm2k5furmjKxVejgX/rbNeqry7wjyiSTaOVJ9vn8tuI6/RsZ
-         +70p/ZiVJ7xc4Txd9gx6R9qH9sVT1jopOZCtwuPgdvc5n89Wf+xrWVmimnzLb1k09CF7
-         QHtNFDyEJ8muYoy6ib1eZowKc2Ay7BPGc2S2LA5qcS8D/E43G8hUigsuoUCCoQKWrP5f
-         ZN6Q==
-X-Gm-Message-State: AKGB3mJt6lgAPqqPcPmDDS05QUXpYfVaGrEXQd9aVxY06cSUVbsWj4xJ
-        p0v9R47J9eMgbJdfZHCfL9wehuZdQAU=
-X-Google-Smtp-Source: ACJfBosYy+8XmUMwDuaE1OUv+glJBMiVNoYwFJZzLL7KX6SEDmTIdBarl9dcdGj324A2F0ebSMLRtQ==
-X-Received: by 10.101.66.134 with SMTP id j6mr12522086pgp.56.1515521294337;
-        Tue, 09 Jan 2018 10:08:14 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id i186sm29502482pfg.178.2018.01.09.10.08.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 10:08:13 -0800 (PST)
-Date:   Tue, 9 Jan 2018 10:08:13 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 02/26] pkt-line: introduce struct packet_reader
-Message-Id: <20180109100813.054a6681900174ba73e30da5@google.com>
-In-Reply-To: <20180103001828.205012-3-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-3-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1757519AbeAISMd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 13:12:33 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:10783 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751885AbeAISMc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 13:12:32 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from secure.elehost.com (wolfserver.elehost.com [216.66.27.130])
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTP id w09ICUF0047470
+        for <git@vger.kernel.org>; Tue, 9 Jan 2018 13:12:30 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Received: from 99.229.179.249
+        (SquirrelMail authenticated user rsbecker)
+        by secure.elehost.com with HTTP;
+        Tue, 9 Jan 2018 13:12:30 -0500
+Message-ID: <f08a9506afb73c57751d3d413bfb433a.squirrel@secure.elehost.com>
+Date:   Tue, 9 Jan 2018 13:12:30 -0500
+Subject: [PATCH] Prototype PATH_MAX length detection in tests, demonstrated
+ in t0001-init.sh
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     git@vger.kernel.org
+User-Agent: SquirrelMail/1.4.23 [SVN]
+MIME-Version: 1.0
+Content-Type:   text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:04 -0800
-Brandon Williams <bmwill@google.com> wrote:
+This patch create a configuration variable PATH_MAX that
+corresponds with the value in limits.h. The value of PATH_MAX,
+if supplied, is added to BASIC_CFLAGS and will validate with
+limits.h. PATH_MAX is also added to GIT-BUILD-OPTIONS and is
+available in the git test suite.
 
-> diff --git a/pkt-line.h b/pkt-line.h
-> index 06c468927..c446e886a 100644
-> --- a/pkt-line.h
-> +++ b/pkt-line.h
-> @@ -111,6 +111,63 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
->   */
->  ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
->  
-> +struct packet_reader {
-> +	/* source file descriptor */
-> +	int fd;
-> +
-> +	/* source buffer and its size */
-> +	char *src_buffer;
-> +	size_t src_len;
-> +
-> +	/* buffer that pkt-lines are read into and its size */
-> +	char *buffer;
-> +	unsigned buffer_size;
+This patch also creates a test_expected_success_cond, taking a
+single function as first argument. In the t0001-init.sh case,
+subtest 34 this function is test_path_max_is_sane, although any
+0/1 returning function can be used. The prototype allows the long base
+path test to be skipped if PATH_MAX is less than 2048 bytes.
 
-Is the intention to support different buffers in the future?
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ Makefile                |  9 +++++++++
+ config.mak.uname        |  1 +
+ t/t0001-init.sh         |  2 +-
+ t/test-lib-functions.sh | 31 +++++++++++++++++++++++++++++++
+ t/test-lib.sh           | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 84 insertions(+), 1 deletion(-)
 
-[snip]
+diff --git a/Makefile b/Makefile
+index 5543dd2..c9b96a6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -151,6 +151,9 @@ all::
+ # in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
+ # wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
+ #
++# Define PATH_MAX to limit the size of paths used by git and test scripts.
++# This value should be consistent with limits.h
++#
+ # Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl
+(Darwin).
+ #
+ # Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto
+(Darwin).
+@@ -1431,6 +1434,9 @@ ifdef SHA1_MAX_BLOCK_SIZE
+ 	LIB_OBJS += compat/sha1-chunked.o
+ 	BASIC_CFLAGS += -DSHA1_MAX_BLOCK_SIZE="$(SHA1_MAX_BLOCK_SIZE)"
+ endif
++ifdef PATH_MAX
++	BASIC_CFLAGS += -DPATH_MAX="$(PATH_MAX)"
++endif
+ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
+@@ -2283,6 +2289,9 @@ endif
+ ifdef TEST_GIT_INDEX_VERSION
+ 	@echo TEST_GIT_INDEX_VERSION=\''$(subst ','\'',$(subst
+','\'',$(TEST_GIT_INDEX_VERSION)))'\' >>$@+
+ endif
++ifdef PATH_MAX
++	@echo PATH_MAX=\''$(subst ','\'',$(subst ','\'',$(PATH_MAX)))'\' >>$@+
++endif
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
 
-> +/*
-> + * Peek the next packet line without consuming it and return the status.
-> + * The next call to 'packet_reader_read()' will perform a read of the same line
-> + * that was peeked, consuming the line.
-> + *
-> + * Only a single line can be peeked at a time.
+ ### Detect Python interpreter path changes
+diff --git a/config.mak.uname b/config.mak.uname
+index 3721cea..06ee503 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -442,6 +442,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	# Missdetected, hence commented out, see below.
+ 	#NO_CURL = YesPlease
+ 	# Added manually, see above.
++	PATH_MAX = 1024
+ 	NEEDS_SSL_WITH_CURL = YesPlease
+ 	NEEDS_CRYPTO_WITH_SSL = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index c4814d2..58dad87 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -315,7 +315,7 @@ test_expect_success 'init with separate gitdir' '
+ 	test_path_is_dir realgitdir/refs
+ '
 
-It is logical to me that if you peeked at a line, and then peeked at it
-again, you will get the same line - I would phrase this not as a
-restriction ("only a single line") but just as a statement of fact (e.g.
-"Peeking at the same line multiple times without an intervening
-packet_reader_read will return the same result").
+-test_expect_success 'init in long base path' '
++test_expect_success_cond 'test_path_max_is_sane' 'init in long base path' '
+ 	# exceed initial buffer size of strbuf_getcwd()
+ 	component=123456789abcdef &&
+ 	test_when_finished "chmod 0700 $component; rm -rf $component" &&
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 50a9a1d..67e24e9 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -430,6 +430,24 @@ test_expect_success () {
+ 	test_finish_
+ }
 
-> + */
-> +extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
-> +
->  #define DEFAULT_PACKET_MAX 1000
->  #define LARGE_PACKET_MAX 65520
->  #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
++test_expect_success_cond () {
++	test_start_
++	test "$#" = 3 && { test_cond_func=$1; shift; } ||
++	error "bug in the test script: not parameters to test-expect-success-cond"
++	export test_cond_func
++	if ! test_skip_cond "$@"
++	then
++		say >&3 "expecting success: $2"
++		if test_run_ "$2"
++		then
++			test_ok_ "$1"
++		else
++			test_failure_ "$@"
++		fi
++	fi
++	test_finish_
++}
++
+ # test_external runs external test scripts that provide continuous
+ # test output about their progress, and succeeds/fails on
+ # zero/non-zero exit code.  It outputs the test output on stdout even
+@@ -536,6 +554,19 @@ test_path_is_dir () {
+ 	fi
+ }
+
++test_path_max_is_sane() {
++	if test -z "$PATH_MAX"
++	then
++		retval=1
++	elif test $PATH_MAX -ge 2048
++	then
++		retval=1
++	else
++		retval=0
++	fi
++	return "$retval"
++}
++
+ # Check if the directory exists and is empty as expected, barf otherwise.
+ test_dir_is_empty () {
+ 	test_path_is_dir "$1" &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 30eb743..8d16e9e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -702,6 +702,48 @@ test_skip () {
+ 	esac
+ }
+
++test_skip_cond () {
++	to_skip=
++	skipped_reason=
++	if match_pattern_list $this_test.$test_count $GIT_SKIP_TESTS
++	then
++		to_skip=t
++		skipped_reason="GIT_SKIP_TESTS"
++	fi
++	if test -z "$to_skip" && test -n "$test_cond_func"
++	then
++		to_skip=t
++
++		of_prereq=
++		${test_cond_func}
++		if [ $? -eq 0 ]
++		then
++			of_func=" of $test_cond_func"
++			to_skip=t
++		else
++			to_skip=f
++		fi
++		skipped_reason="failed conditional${of_func}"
++	fi
++	if test -z "$to_skip" && test -n "$run_list" &&
++		! match_test_selector_list '--run' $test_count "$run_list"
++	then
++		to_skip=t
++		skipped_reason="--run"
++	fi
++
++	case "$to_skip" in
++	t)
++		say_color skip >&3 "skipping test: $@"
++		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
++		: true
++		;;
++	*)
++		false
++		;;
++	esac
++}
++
+ # stub; perf-lib overrides it
+ test_at_end_hook_ () {
+ 	:
+-- 
+2.8.5.21.g9298251
+
+
+
