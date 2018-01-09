@@ -2,121 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA0291F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 20:16:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2EE11F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 20:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752071AbeAIUQo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 15:16:44 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:36024 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751982AbeAIUQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 15:16:43 -0500
-Received: by mail-qt0-f179.google.com with SMTP id a16so19377395qtj.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:16:43 -0800 (PST)
+        id S1755520AbeAIUY7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 15:24:59 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:39019 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753448AbeAIUY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 15:24:58 -0500
+Received: by mail-pg0-f54.google.com with SMTP id z20so6494845pgv.6
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:24:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zk4MBQaBQOgZfXh0QUve1fgx2iUnkc6VUMsUh+001Ts=;
-        b=qY/sDsbxxVL6BfTaclP1iaLqBM0XMdEcyhmxfD01d++3f60OC/D1F+wZbM0OPBjwuw
-         62nGSsPRcnL52h91VcS3xn9TneNdGvn4nz6TS+Bs1JTKNpMNFxttE1H30WteA3J55YJq
-         RC45W3Vy3ollJu4YemrnL43EaoWghWrgAC4/KAik5UD1DcFeZGIOLPsYmCo/WeX4p4T6
-         P3W+85er5Xu2g8eyw1cAEVlBZlQjxrkB5xWRWiP0NTVm8Qj+B2kXoY1WslBo4lpoFWy7
-         juApv/1XRFynRytod47z1UMethfyA4mpXugcMi6D81RrvZxcH0SyKWck/sKUDHe1PJvy
-         RpoQ==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=FC1x1SyWC8ph9QguO1KA1R3jjBDnyjtDiDqHHsK6aIc=;
+        b=mf/pZlzMXhT6kbyo20kPYN2mq9XRAnOZoZOTUSp5zKzdh3YsVsNgVuUycHj7QNTMGR
+         DUE3HKuHUifqt1TK346jIrN5RhR1W6qnIhTQCiNV1Dywv3Kg8x+5wFo6RsRQDnqffMtS
+         g1qjbCsHOTagiRmbhl0QttIa0WI6JatJHNewO8JXoGXSoQHIwzYqdYZBC3VgCNNg5vaW
+         ngachKd5FHy6e6vl7wMs1/l5DBk6ExFOoGl0R4/RSvmzVf9nk90J4A7iIALMP53FNKMu
+         8TRYoqzqDzzSP0+OhGJTVgM9ub8SBD4O0VM82QkicmTIP5WC0I8QbdWReQeaXOMyKsOM
+         p/GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zk4MBQaBQOgZfXh0QUve1fgx2iUnkc6VUMsUh+001Ts=;
-        b=dZ49+HJnY7wC+tk6tS/hUVU873lt+3absrwg2noRCKKGKqw6UsqsswTJquGT6qVS4G
-         g2A7ciAN4cjhIXJOUqaLp1+WWVoAlkiUfQJuj7Jf7YcjAVAvYxF6T1GkWW4nETwb8iDI
-         hh80tUSriM4XrM0wZOOScnM1QpTb4Ikg3NpTmLGTq4hDOJ471NOXZo73yzxSBdZa9/T5
-         f8M+C4uRI13Nz3r5mEUIt9GNqMYAtlfuJ+uxAaEiY3AXsGA34WURRmsyVp5/9pvK6f1b
-         RO92GNW6XOj/GN51g+SxKluECX30uEDjdGZdsPgsksxNy2hPSJWEIsfpVx9WqGFgICzC
-         Q0UA==
-X-Gm-Message-State: AKwxytf4PcY1u1s9Ad8VqO5nkgWaK4F56fcXq/ALZvCA0CSZwtOuhkQL
-        GqkxQxKqzTXQ3+H0QziuC8/X5sZN3pjX62q1SBT95A==
-X-Google-Smtp-Source: ACJfBosmvYjrVEsWhq8zJMm+VDe8dola4cCvuVs1up5Pc8MuoSXhlSmZ28gNFnTra3WwP8Of3c/7aKpafeyW3PYNNGA=
-X-Received: by 10.200.26.37 with SMTP id v34mr23166336qtj.207.1515529002582;
- Tue, 09 Jan 2018 12:16:42 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 9 Jan 2018 12:16:41 -0800 (PST)
-In-Reply-To: <xmqqtvvu4wr2.fsf@gitster.mtv.corp.google.com>
-References: <20180107181459.222909-1-dstolee@microsoft.com>
- <87k1wtb8a4.fsf@evledraar.gmail.com> <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
- <20180108102029.GA21232@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1801081438470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180109065018.GA32257@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1801091357560.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <CAGZ79kYdgD2h7QjjJe0aA4eMATCGkH62XYvziUNvAPsBJDXOCA@mail.gmail.com> <xmqqtvvu4wr2.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 9 Jan 2018 12:16:41 -0800
-Message-ID: <CAGZ79kajChFqJRxLAaFnUeikW28kJQXLj7JG6G3=Td4u-zxTwg@mail.gmail.com>
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=FC1x1SyWC8ph9QguO1KA1R3jjBDnyjtDiDqHHsK6aIc=;
+        b=HSoKyXd2hYl9cNbzRkxSUMVLqb7PELCoYwTdZHVmh6vULaMgo9oxyQjZtYlnxtOb6H
+         j1AadirbFj/KhVzkU5Hof/kBUyQ46pStRWXPEWWIxfEu73sKNucZ/oAzSVLEMDVLl54n
+         S/3Quf1fQG9XY6jJgWp8dxrz0qyzQD9n6qtjU7H7OOwRpQJyJjRO9AO2TT2OVWblOF5G
+         syOWKwGRKnFAnGPJaF7QKo2Meo8myMrYnf5JG5F0eM6uW37CFv1drSA82j6hYe0js7SA
+         XCBZQo/LdlZB0X0WkUpEHg8Zf/pOq/fsWfLFwD+24xRUC5zI1LrUz3PPnHGkEfKs2AdN
+         RAng==
+X-Gm-Message-State: AKGB3mIsenZkhnKbhZgrQ2ISkru4ub+SNqDFlsw8ViZKjGv+3w+cIc8S
+        CQRUFlbW2gbcKUbf4wUOE0qT4g==
+X-Google-Smtp-Source: ACJfBosiNYMU3TboYsYMGSJEUibOkKid2AoU5eOoxCx3bCQOiGRJcp1fMc1d0/n+Xi5UzrZxM6IXTA==
+X-Received: by 10.84.128.36 with SMTP id 33mr16279897pla.75.1515529497370;
+        Tue, 09 Jan 2018 12:24:57 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
+        by smtp.gmail.com with ESMTPSA id s184sm29852151pfb.9.2018.01.09.12.24.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Jan 2018 12:24:56 -0800 (PST)
+Date:   Tue, 9 Jan 2018 12:24:55 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 11/26] serve: introduce git-serve
+Message-Id: <20180109122455.5845c4f12ccdd4cada1528f2@google.com>
+In-Reply-To: <20180103001828.205012-12-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+        <20180103001828.205012-12-bmwill@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 9, 2018 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> And in that light, I'd like to propose a new naming scheme:
->>
->> (a) assume that we "tag" HEAD at the start of the rebase
->> (b) any abbreviation must be given as committish anchored to said ref:
->>
->> pick REBASE_HEAD~1 commit subject
->> pick REBASE_HEAD~2 distak the gostim
->> pick REBASE_HEAD~3 Document foo
->> pick REBASE_HEAD~4 Testing the star-gazer
->>
->> And as we have the full descriptiveness of the committishs there,
->> each commit can be described in a unique way using the graph relationship.
->> I am just throwing the name REBASE_HEAD out there to trigger some associations
->> ("similar to FETCH_HEAD"), but I dislike the name.
->>
->> (c) this would not solve the problem of mergy history, yet. For that we'd need
->>     to introduce more keywords, that allow us to move around in the DAG,
->>     such that we can reset to a specific revision or name revisions on the fly.
->>     So maybe all we need is "reset", "name" (== short lived tag),
->>     "merge" (rewrite parents of HEAD) to be expressive enough, but still keep
->>     the line oriented interface?
->
-> It is correct to say that (c) is an issue that is not solved by (b),
-> but with the current scheme, the commits are internally referenced
-> by full object names, and just before it is presented to the end
-> users, these names are abbreviated down to unique prefix.  The
-> machinery expands these abbreviated names back to the full names
-> before going forward, so it is not an issue that we are creating new
-> commits during the rebase.
->
-> Does it make it easier to read if we used ~$n notation based on a
-> fixed point, instead of shortened unique object names?  What
-> improvement is (b) trying to achieve?
->
+On Tue,  2 Jan 2018 16:18:13 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
-Johannes wrote:
-> I think a better alternative would be to introduce a new abbreviation mode
-> that is *intended* to stop caring about unique abbreviations.
->
-> In web interfaces, for example, it makes tons of sense to show, say, 8
-> digits in link texts and have the full name in the actual link URL.
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> new file mode 100644
+> index 000000000..b87ba3816
+> --- /dev/null
+> +++ b/Documentation/technical/protocol-v2.txt
 
-And that is what (b) would solve, as it is shorter than the full hash and
-yet exact.
+I'll review the documentation later, once there is some consensus that
+the overall design is OK. (Or maybe there already is consensus?)
 
-(c) was mostly speculation on top of (b) if we can take it any further.
+> diff --git a/builtin/serve.c b/builtin/serve.c
+> new file mode 100644
+> index 000000000..bb726786a
+> --- /dev/null
+> +++ b/builtin/serve.c
+> @@ -0,0 +1,30 @@
+> +#include "cache.h"
+> +#include "builtin.h"
+> +#include "parse-options.h"
+> +#include "serve.h"
+> +
+> +static char const * const grep_usage[] = {
+
+Should be serve_usage.
+
+> diff --git a/serve.c b/serve.c
+> new file mode 100644
+> index 000000000..da8127775
+> --- /dev/null
+> +++ b/serve.c
+
+[snip]
+
+> +struct protocol_capability {
+> +	const char *name; /* capability name */
+
+Maybe document as:
+
+  The name of the capability. The server uses this name when advertising
+  this capability, and the client uses this name to invoke the command
+  corresponding to this capability.
+
+> +	/*
+> +	 * Function queried to see if a capability should be advertised.
+> +	 * Optionally a value can be specified by adding it to 'value'.
+> +	 */
+> +	int (*advertise)(struct repository *r, struct strbuf *value);
+
+Document what happens when value is appended to. For example:
+
+  ... If value is appended to, the server will advertise this capability
+  as <name>=<value> instead of <name>.
+
+> +	/*
+> +	 * Function called when a client requests the capability as a command.
+> +	 * The command request will be provided to the function via 'keys', the
+> +	 * capabilities requested, and 'args', the command specific parameters.
+> +	 *
+> +	 * This field should be NULL for capabilities which are not commands.
+> +	 */
+> +	int (*command)(struct repository *r,
+> +		       struct argv_array *keys,
+> +		       struct argv_array *args);
+
+Looking at the code below, I see that the command is not executed unless
+advertise returns true - this means that a command cannot be both
+supported and unadvertised. Would this be too restrictive? For example,
+this would disallow a gradual across-multiple-servers rollout in which
+we allow but not advertise a capability, and then after some time,
+advertise the capability.
+
+If we change this, then the value parameter of advertise can be
+mandatory instead of optional.
