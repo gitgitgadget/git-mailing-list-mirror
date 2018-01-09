@@ -7,94 +7,91 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E491C1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 21:31:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD8011F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 21:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751817AbeAIVbR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 16:31:17 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63684 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750883AbeAIVbQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 16:31:16 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4AA79C0ABE;
-        Tue,  9 Jan 2018 16:31:16 -0500 (EST)
+        id S1753859AbeAIVnD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 16:43:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63544 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753744AbeAIVm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 16:42:59 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 45CD5CAD57;
+        Tue,  9 Jan 2018 16:42:59 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M5QDQO3aiNQNNgttTKofwofEKHw=; b=U65DtB
-        W6CG8dmMtSkcgJLAqAlRFcI4Q20rtlaCLK/lq5yFzCkkCFwAAHdMfbw2LUT5xWYz
-        Uzpgo3C/mxgOGeeieQbODLWhcpXZpNIWZ8i7IzAoxueHPW6zyeA0gO7l1xo1/DG7
-        +KgZYbmzRORulkkkePRa0a7s6O43jWYukVD4Y=
+        :content-type; s=sasl; bh=fDEhN+N5WSbKBi83HFRsDA17WH4=; b=F4kksG
+        KRsXznzT5cswHWt9vhYQhz9kQ75oVhl9eup69xVYV+0361HtFf3u79dO3iMR35o1
+        KXeVx2yb8zOIpvMwRUfgOHQVRiOhCA+vAKTHcN+SE5UEkMye0x47rHG8/usNVom1
+        rxR1P7Gqwpxh7HAcrKWGgdFCZsO0PHZTqMZSU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=i7SYFanR5+1WUGYA4JEQtmblBBivv2H9
-        nxgYawfTfAuLWGm9PjXauueOVJHzo0J7ZudfMwNZPFKvdzzOZtIs6sa0v2PkV+vL
-        ELAG6Q8yd2ynetbjFVwXDD4udcHlr4CncoJ5CvAM3VRNz0DOBg3DO2u/kSBohnug
-        G1c/8lAx/8k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 426AEC0ABD;
-        Tue,  9 Jan 2018 16:31:16 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=vGLoenX4dWkwOTuFvOXtaHsmEAaCcan0
+        eHlOD0iyhjkm3nymmEvf4n7NGWJFHgUBorFMjPTXw7FHElvx7zVDktYLoPJJZytj
+        81mf1I1hqkH4uJVMR/qRmpTBgCWco+a0ENGWFdNhufMhYknkuA9DLORM2fvIwZRU
+        wiKEhd+8XRQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C8F7CAD56;
+        Tue,  9 Jan 2018 16:42:59 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A8E47C0ABB;
-        Tue,  9 Jan 2018 16:31:15 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA81DCAD55;
+        Tue,  9 Jan 2018 16:42:58 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-References: <20180107181459.222909-1-dstolee@microsoft.com>
-        <87k1wtb8a4.fsf@evledraar.gmail.com>
-        <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
-        <20180108102029.GA21232@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1801081438470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <20180109065018.GA32257@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1801091357560.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <CAGZ79kYdgD2h7QjjJe0aA4eMATCGkH62XYvziUNvAPsBJDXOCA@mail.gmail.com>
-        <xmqqtvvu4wr2.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kajChFqJRxLAaFnUeikW28kJQXLj7JG6G3=Td4u-zxTwg@mail.gmail.com>
-Date:   Tue, 09 Jan 2018 13:31:14 -0800
-In-Reply-To: <CAGZ79kajChFqJRxLAaFnUeikW28kJQXLj7JG6G3=Td4u-zxTwg@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 9 Jan 2018 12:16:41 -0800")
-Message-ID: <xmqq373e4t3x.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
+        git-for-windows@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc1
+References: <xmqqbmi7ano1.fsf@gitster.mtv.corp.google.com>
+        <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+Date:   Tue, 09 Jan 2018 13:42:57 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Sat, 6 Jan 2018 23:01:22 +0100
+        (STD)")
+Message-ID: <xmqqy3l63dzy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6C30A8D4-F584-11E7-B1E2-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 0F2DC1E2-F586-11E7-8B88-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Johannes wrote:
->> I think a better alternative would be to introduce a new abbreviation mode
->> that is *intended* to stop caring about unique abbreviations.
->>
->> In web interfaces, for example, it makes tons of sense to show, say, 8
->> digits in link texts and have the full name in the actual link URL.
->
-> And that is what (b) would solve, as it is shorter than the full hash and
-> yet exact.
+> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+> index f1678851de9..470107248eb 100644
+> --- a/t/t0021/rot13-filter.pl
+> +++ b/t/t0021/rot13-filter.pl
+> @@ -31,7 +31,22 @@
+>  #
+>  
+>  use 5.008;
+> -use lib (split(/:/, $ENV{GITPERLLIB}));
+> +sub gitperllib {
+> +...
+> +	if ($ENV{GITPERLLIB} =~ /;/) {
+> +		return split(/;/, $ENV{GITPERLLIB});
+> +	}
+> +	return split(/:/, $ENV{GITPERLLIB});
+> +}
 
-I still do not get it, even though I fully agree that in Web UI what
-Dscho envisions makes tons of sense.  Use some short handle that
-does not need to be unique inside repository to display, but have a
-full information that can be used by machines.  The shortened ones
-need to be unique _within_ a given todo list, to be displayed as
-text to be "clicked", where the A element's href attribute that
-surrounds that "clickable" text has fully unambiguous information.
+This cannot be the whole story for a few reasons.
 
-And that fully unambiguous information, because it is for machine
-consumption, can be a full object name without any shortening.
+ - In t/test-lib.sh we see this:
 
-I do not see a need for REBASE_HEAD~$n to make it less robust
-(i.e. we now need to worry about making sure it is not lost or moved
-while we need it and clean it up when we are done, etc.)
+   GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
+   export GITPERLLIB
+
+   If this part wants to split with ';', then the joining needs to
+   be done with ';' to match, no?
+
+ - In addition to t0021, there are similar split with colon in 0202,
+   9000 and 9700, yet I am getting the feeling that you observed the
+   issue only in0021, to which I do not think of a good explanation
+   why.
+
