@@ -8,139 +8,122 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1CAD1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 13:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C16331F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 13:06:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757189AbeAINGH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 08:06:07 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:49104
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756991AbeAINFZ (ORCPT
+        id S1757188AbeAINGG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 08:06:06 -0500
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:37326
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1757001AbeAINFZ (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 9 Jan 2018 08:05:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515503123;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=eSOcoG4YTk2mvr5orwuAPBqKwxRNhwoQEv2BAHBj/wE=;
-        b=E3SEr18A8uGBl25NakQyVysSC8WyfGk34OFzjMNK6siIMhTt+EtqBc8eBzyJDa+v
-        8sifkGukrsTJNl+DuNJ8Q/cbKm26RxZfwpewcxX81etW/S4wccOsj52yt3SPcPHdNR2
-        gVM65qUlLE4qkdL+y4T4uXWwHhqzd/HdN4CWcVpA=
+        bh=FJl96QU/r+gU2HnOTQlBFSgNwsqWJS+uE26e2yVddXw=;
+        b=PRe3fJoJY+P6QKL5WEPl3k1UcjPnLfS8JYbxyBqiVOZPCW6WqAJ+7tF6k46XQ79F
+        vS2iPBtmngBHY9unCAsN9g+jqApvv4pFfU9OU8ZeL7A8i4h4iXoEie5uiy6w7Fzmer9
+        TkYvH9dTt0VRsnP5cEKPUh24kRZF9339r93a9ifc=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160db067baa-645d1cd7-0fa5-404e-b3f0-afba7dac7d18-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160db067c89-c76828dd-d98c-45c6-8de1-2c9d7fc61841-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
 References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
-Subject: [PATCH 13/20] cat-file: start use ref_array_item struct
+Subject: [PATCH 17/20] cat-file: add is_cat flag in ref-filter
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Tue, 9 Jan 2018 13:05:23 +0000
-X-SES-Outgoing: 2018.01.09-54.240.7.12
+X-SES-Outgoing: 2018.01.09-54.240.7.20
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Moving from using expand_data to ref_array_item structure.
-That helps us to reuse functions from ref-filter easier.
+Add is_cat flag, further it helps to get rid of cat_file_data field
+in ref_format.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 30 +++++++++++++++++++-----------
- ref-filter.h       |  5 +++++
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ builtin/cat-file.c | 1 +
+ ref-filter.c       | 8 +++++---
+ ref-filter.h       | 1 +
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1f331559e55c7..1c92194faaede 100644
+index e11dbf88e386c..289912ab1f858 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -183,26 +183,26 @@ static int is_atom(const char *atom, const char *s, int slen)
- }
+@@ -393,6 +393,7 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+ 	opt->format->cat_file_data = &data;
++	opt->format->is_cat = 1;
+ 	verify_ref_format(opt->format);
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
+diff --git a/ref-filter.c b/ref-filter.c
+index 112336edbe871..4259c9b9cd767 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -101,6 +101,7 @@ static struct used_atom {
+ } *used_atoms;
+ static int used_atom_cnt, need_tagged, need_symref;
+ struct expand_data *cat_file_info;
++static int is_cat = 0;
  
- static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			 struct expand_data *data)
-+			 struct ref_array_item *item)
+ static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
  {
- 	if (is_atom("objectname", atom, len))
--		strbuf_addstr(sb, oid_to_hex(&data->oid));
-+		strbuf_addstr(sb, oid_to_hex(&item->objectname));
- 	else if (is_atom("objecttype", atom, len))
--		strbuf_addstr(sb, typename(data->type));
-+		strbuf_addstr(sb, typename(item->type));
- 	else if (is_atom("objectsize", atom, len))
--		strbuf_addf(sb, "%lu", data->size);
-+		strbuf_addf(sb, "%lu", item->size);
- 	else if (is_atom("objectsize:disk", atom, len))
--		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
-+		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)item->disk_size);
- 	else if (is_atom("rest", atom, len))
--		strbuf_addstr(sb, data->rest);
-+		strbuf_addstr(sb, item->rest);
- 	else if (is_atom("deltabase", atom, len))
--		strbuf_addstr(sb, oid_to_hex(&data->delta_base_oid));
-+		strbuf_addstr(sb, oid_to_hex(&item->delta_base_oid));
+@@ -493,7 +494,7 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atoms[i].name, "symref"))
+ 		need_symref = 1;
+-	if (cat_file_info && !strcmp(valid_atoms[i].name, "rest"))
++	if (is_cat && !strcmp(valid_atoms[i].name, "rest"))
+ 		cat_file_info->split_on_whitespace = 1;
+ 	return at;
  }
+@@ -739,6 +740,7 @@ int verify_ref_format(struct ref_format *format)
+ 	const char *cp, *sp;
  
--static size_t expand_format(struct strbuf *sb, const char *start, void *vdata)
-+static size_t expand_format(struct strbuf *sb, const char *start, void *data)
- {
- 	const char *end;
--	struct expand_data *data = vdata;
-+	struct ref_array_item *item = data;
+ 	cat_file_info = format->cat_file_data;
++	is_cat = format->is_cat;
+ 	format->need_color_reset_at_eol = 0;
+ 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
+ 		const char *color, *ep = strchr(sp, ')');
+@@ -748,7 +750,7 @@ int verify_ref_format(struct ref_format *format)
+ 			return error(_("malformed format string %s"), sp);
+ 		/* sp points at "%(" and ep points at the closing ")" */
  
- 	if (*start != '(')
- 		return 0;
-@@ -210,7 +210,7 @@ static size_t expand_format(struct strbuf *sb, const char *start, void *vdata)
- 	if (!end)
- 		die("format element '%s' does not end in ')'", start);
- 
--	expand_atom(sb, start + 1, end - start - 1, data);
-+	expand_atom(sb, start + 1, end - start - 1, item);
- 	return end - start + 1;
- }
- 
-@@ -282,6 +282,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 			       struct expand_data *data)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct ref_array_item item;
- 
- 	if (!data->skip_object_info &&
- 	    sha1_object_info_extended(data->oid.hash, &data->info,
-@@ -292,7 +293,14 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 		return;
+-		if (format->cat_file_data)
++		if (is_cat)
+ 		{
+ 			at = parse_ref_filter_atom(format, valid_cat_file_atoms,
+ 						   ARRAY_SIZE(valid_cat_file_atoms), sp + 2, ep);
+@@ -1466,7 +1468,7 @@ int populate_value(struct ref_array_item *ref)
+ 			ref->symref = "";
  	}
  
--	strbuf_expand(&buf, opt->format->format, expand_format, data);
-+	item.objectname = data->oid;
-+	item.type = data->type;
-+	item.size = data->size;
-+	item.disk_size = data->disk_size;
-+	item.rest = data->rest;
-+	item.delta_base_oid = data->delta_base_oid;
-+
-+	strbuf_expand(&buf, opt->format->format, expand_format, &item);
- 	strbuf_addch(&buf, '\n');
- 	batch_write(opt, buf.buf, buf.len);
- 	strbuf_release(&buf);
+-	if (cat_file_info) {
++	if (is_cat) {
+ 		if (!cat_file_info->skip_object_info &&
+ 		    sha1_object_info_extended(ref->objectname.hash, &cat_file_info->info,
+ 					      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
 diff --git a/ref-filter.h b/ref-filter.h
-index de3fd3263ac64..28774e8e0f771 100644
+index 9e4444cf3ef9a..5ba4724a472f6 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -40,6 +40,11 @@ struct ref_array_item {
- 	const char *symref;
- 	struct commit *commit;
- 	struct atom_value *values;
-+	enum object_type type;
-+	unsigned long size;
-+	off_t disk_size;
-+	const char *rest;
-+	struct object_id delta_base_oid;
- 	char refname[FLEX_ARRAY];
+@@ -126,6 +126,7 @@ struct ref_format {
+ 	 * hopefully would be reduced later.
+ 	 */
+ 	struct expand_data *cat_file_data;
++	int is_cat;
  };
  
+ #define REF_FORMAT_INIT { NULL, 0, -1 }
 
 --
 https://github.com/git/git/pull/450
