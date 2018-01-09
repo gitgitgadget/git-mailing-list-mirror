@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AB311F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 19:15:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37E711F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 19:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933821AbeAITPN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 14:15:13 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35884 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932998AbeAITPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 14:15:13 -0500
-Received: by mail-pf0-f195.google.com with SMTP id 23so6567852pfp.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:15:12 -0800 (PST)
+        id S933782AbeAITTI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 14:19:08 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:41681 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933255AbeAITTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 14:19:07 -0500
+Received: by mail-pf0-f196.google.com with SMTP id j3so5413171pfh.8
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:19:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=McAt39KXcyrPCTSTZLkqi4cYKGQfSZw3I0BFvClGq4g=;
-        b=iprWCxdVBEkswe6h0io9bdEgCAyomeK/PQUeDzHLmf1JylZzT1125Ug9+dlyCH50vP
-         e+iMQcLyZ9/MX6pPKoVil8/o9aUqkMd68twbPAyD7XxmddqLNN59H0uffEf5ADtJXASY
-         6pbh/Cb0IOqxjqIxSANNjn5vyHlRi5YnBU6UYak9JK7oFfMy4zhjowMJ2dAOXmhd/nEw
-         IkN3wjho3NrSzm6txGY7dpdqJ36jtQFnF3UknA8F44TKDsoPxr1uSAxR6Uqa81L+jA+0
-         bAknI0QEDSKdSiCpYX3Dl6LnxmX9WB2Wiv+MeUNbFh8vUe/6stvglD9N5csDRweG4xi7
-         NJTQ==
+        bh=P3WFsYaufvxOM/4Q2kYGnaCqR/2uEu7SPXi7PVFJMHQ=;
+        b=bfHzOOO18QXcaw3PAyqVzpYeJvKiP0pcy6td5oYaIX1BkLTnENvNdc5D5QVYl8up5G
+         CrdzdIVCreoNt5wb7uHttxfedkIGBYZD547Bs0ZenivLlpVK4/n8jRxYlhy6DbBqRAnE
+         a9rFPDj0CpFDMRKZRjXEMNF95XzybKpRhMOVMJWxGUoaLjQ97e2Z2rX/o20n9bob/nPN
+         K1STMH+nbFCm8b/ShlwQS+4MW4REKKgKKMDnAvwxnX8bV6q3luyXaF8dCj1ho49RCq8E
+         6rHIGERIMyrE2XkxH3Rr51CHVG4L09VPSBnaTOSwEJRtBceeEu+EmcSY2r0rv439S9hv
+         UZHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=McAt39KXcyrPCTSTZLkqi4cYKGQfSZw3I0BFvClGq4g=;
-        b=Pr41rXFZTY4opM13WIA2kldgLSuoLS4gSauj/sWfvBPHiQjum4ftFWtVuz076yu1xE
-         y17NA8a0WhJMoUNHupPWFURBZJ+KuI5Za9+ApJ04LFxL9RtGVox7HBlJruffkDVg2+l3
-         AefW+18x8M6/LfJ4TaYAJehSdWmpBPNS7WZtsk7c0/+/NAS+E24+jhgaBTX7e0+6OiFU
-         46jUJjxWbf3jkPH0bqaN/WRyARPrvuy931Fw+G2cwwAY0CT215jC/oV/uXAAqsyoohb+
-         RTg2K2SCHNwSEK61S6EKay4l3QmIY7HWXQvuqrx5N1q5OErUyXE7mW9qTxrpBscQiObE
-         LClQ==
-X-Gm-Message-State: AKGB3mJhZCtYCvQ1nzNqWJAnvg9pIrjeVoL4/ibz4YAi8NwmA2q9/K2s
-        TMa4JvZ3TA6auyWmnnWZdz0N5w==
-X-Google-Smtp-Source: ACJfBouSkuxbmMFiqUSgvlTgN5k5YswnTHKwEUtGLeDUeyR0kcNIu8hm6HEE7zdmc8RTZvr2eOuRrw==
-X-Received: by 10.159.205.129 with SMTP id v1mr16451393plo.31.1515525312456;
-        Tue, 09 Jan 2018 11:15:12 -0800 (PST)
+        bh=P3WFsYaufvxOM/4Q2kYGnaCqR/2uEu7SPXi7PVFJMHQ=;
+        b=CBy6V3CU7+EJW0wyABF48cPRItcJs5hF1jdSGWhNB7JP8mTApdMogJVdQJTJ3oHXa9
+         jbJwGCoW4B2jTCUuBwBiUOhGIpCfVe86HxqjVLXyPFN55QzGhenXxdexqkjPzwfah02E
+         6btjwD206EOf4wAH8amyt5nWRRgn5oorVbWo3whT15M88NXP+y5arv9AOgM2Vf/WRYOy
+         fqK0bHNw3zKVPqef3cuTTxev2qEsFY+5WU6p4d/nXY66WwyzymHN/Knijv+23LgNxAVM
+         bkyhWlSx5j7cJY7GEwJ1In1pzVqWf5RckGGi6BCsNQwYM5QRl6gccjJ7Fa6V7zad8t2q
+         gpsQ==
+X-Gm-Message-State: AKwxytd7DJE7aMjg3WygI4ZWQ2ds6okA62kgfMQbZinmflgnltJDwITC
+        pPqI41OyJC4o5RY7iQ9yXNd/9DLu3Rg=
+X-Google-Smtp-Source: ACJfBosEksIdIbF2mKSuRfWoIjC4w+ycTAH7QYdbXpl+ogFNnBbikxoXf5fLgqcN4zmiYcdF27wXwQ==
+X-Received: by 10.98.224.205 with SMTP id d74mr2491944pfm.56.1515525546423;
+        Tue, 09 Jan 2018 11:19:06 -0800 (PST)
 Received: from google.com ([2620:0:100e:422:5de7:5b51:7854:d1a5])
-        by smtp.gmail.com with ESMTPSA id b25sm35099695pfd.182.2018.01.09.11.15.10
+        by smtp.gmail.com with ESMTPSA id e26sm29338353pfi.10.2018.01.09.11.19.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 Jan 2018 11:15:11 -0800 (PST)
-Date:   Tue, 9 Jan 2018 11:15:10 -0800
+        Tue, 09 Jan 2018 11:19:05 -0800 (PST)
+Date:   Tue, 9 Jan 2018 11:19:04 -0800
 From:   Brandon Williams <bmwill@google.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
         peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH 09/26] transport: store protocol version
-Message-ID: <20180109191510.GB151395@google.com>
+Subject: Re: [PATCH 02/26] pkt-line: introduce struct packet_reader
+Message-ID: <20180109191904.GC151395@google.com>
 References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-10-bmwill@google.com>
- <20180109104125.4cb1a3e545cfe354862e4b8e@google.com>
+ <20180103001828.205012-3-bmwill@google.com>
+ <20180109100813.054a6681900174ba73e30da5@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180109104125.4cb1a3e545cfe354862e4b8e@google.com>
+In-Reply-To: <20180109100813.054a6681900174ba73e30da5@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,24 +71,58 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 01/09, Jonathan Tan wrote:
-> On Tue,  2 Jan 2018 16:18:11 -0800
+> On Tue,  2 Jan 2018 16:18:04 -0800
 > Brandon Williams <bmwill@google.com> wrote:
 > 
-> > diff --git a/transport.c b/transport.c
-> > index 63c3dbab9..2378dcb38 100644
-> > --- a/transport.c
-> > +++ b/transport.c
-> > @@ -118,6 +118,7 @@ struct git_transport_data {
-> >  	struct child_process *conn;
-> >  	int fd[2];
-> >  	unsigned got_remote_heads : 1;
-> > +	enum protocol_version version;
+> > diff --git a/pkt-line.h b/pkt-line.h
+> > index 06c468927..c446e886a 100644
+> > --- a/pkt-line.h
+> > +++ b/pkt-line.h
+> > @@ -111,6 +111,63 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+> >   */
+> >  ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
+> >  
+> > +struct packet_reader {
+> > +	/* source file descriptor */
+> > +	int fd;
+> > +
+> > +	/* source buffer and its size */
+> > +	char *src_buffer;
+> > +	size_t src_len;
+> > +
+> > +	/* buffer that pkt-lines are read into and its size */
+> > +	char *buffer;
+> > +	unsigned buffer_size;
 > 
-> Should this be initialized to protocol_unknown_version? Right now, as
-> far as I can tell, it is zero-initialized, which means protocol_v0.
+> Is the intention to support different buffers in the future?
 
-I don't think it matters as the value isn't used until after the
-version has already been discovered.
+Potentially at some point.
+
+> 
+> [snip]
+> 
+> > +/*
+> > + * Peek the next packet line without consuming it and return the status.
+> > + * The next call to 'packet_reader_read()' will perform a read of the same line
+> > + * that was peeked, consuming the line.
+> > + *
+> > + * Only a single line can be peeked at a time.
+> 
+> It is logical to me that if you peeked at a line, and then peeked at it
+> again, you will get the same line - I would phrase this not as a
+> restriction ("only a single line") but just as a statement of fact (e.g.
+> "Peeking at the same line multiple times without an intervening
+> packet_reader_read will return the same result").
+
+Fair enough, i'll change the wording.
+
+> 
+> > + */
+> > +extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
+> > +
+> >  #define DEFAULT_PACKET_MAX 1000
+> >  #define LARGE_PACKET_MAX 65520
+> >  #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
 
 -- 
 Brandon Williams
