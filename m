@@ -7,59 +7,61 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AF571F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 22:24:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 108901F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 22:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756279AbeAIWYy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 17:24:54 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:38319 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756065AbeAIWYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 17:24:53 -0500
-Received: by mail-pg0-f67.google.com with SMTP id t67so8961123pgc.5
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 14:24:53 -0800 (PST)
+        id S1754889AbeAIW2a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 17:28:30 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:43066 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754000AbeAIW23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 17:28:29 -0500
+Received: by mail-pf0-f172.google.com with SMTP id e3so9595090pfi.10
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 14:28:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fyqMRZMSj+aZ/8smS/rZnIixDBO+b5oGCn6v9B+zaeE=;
-        b=jeo9hYDlAYPypNtZnR3WxuUbBxbQFSZQC0DhSrE27UYVh1dEE60k+uSmIvw/g77LQc
-         h+jSk/Lil8/ce3QRwUpRt7H67Tb+J84Wg68FXmP3vocC5Z4anIXEOjm1xQc9s7R7UCaa
-         LDbT8IRB0fp3JZoNHFBOsFACe0dxIwuPtMdzA3Xd9jPzjCftOKhE0pc+ORToeqgL3p5Z
-         ib3R+ugwHT+3bcifBLxyme188oL78ubfVQeX45ezHBrXwIqNWkR9EByJpDdhrUVPux+H
-         2g1qBTNusBvgDF0KWANvlUen6yQ9lFE51avg12zDH9wnu0jckiGCmQwU7h69d6dw4MuV
-         4wJw==
+        bh=PWh1HcTK7YwLl4PPrpKLQFZc/RHQX+D6XM02nhqqcxY=;
+        b=ua9UhDc67MT5zEj3aRRqsE1wv51Amv5hXjW9E7JHm1hUs471bKI40tzBKd1FyhLtEC
+         VqFbFRYvpMX7O95G0p95y8Pn4t/inS+oGYZuZcIdIFo4UBF0WaGs/7/67wrSm75FeHhU
+         VBl+nhtCx8DcpV51TEK9EZ/Ziw1X2btv1kHIaUr1S48dkg4P0BmE70K9FjFOvVI8PSC5
+         nkw2g9M4f+kR4SsV0CkCbN4vyTdcnnwVIXiJQtsTcOg76KZIFz0KM6i12OjK1+KjaBnu
+         8xUfa5ZVvfBZxTOLgl7G1yT5VPrV220tOpwhs0+yfuRrRGpT3RkQBL9DqOqqBDeRHpcp
+         Oadg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fyqMRZMSj+aZ/8smS/rZnIixDBO+b5oGCn6v9B+zaeE=;
-        b=G5nqFXPym7A+FeXWOoymxsDA9GOJFusg5G7L4XHBvNP0t0SIK8QpwQnXCd9hK9KpXi
-         COLfwsO6X8Tk8xhdU6UTlTZjdk2pRSQlpTcXrwnh2/oxnQL23FO5T4L2XGWUuvs1eKHm
-         PFnfx4r1Un2cqemtutA4km6n2bEyXQwXu3BdkpsQyGvETHyWqJ2NXaIr/0tOAw1uC5Oz
-         txdpeWGnAFQuu5C1nhsJrl+lnUhrGBSPU8LHmVfzQZsm+feKja7ZE78Emxp7TXQlfzB3
-         lpjgST6EiYSwruyCNJS7yqassfOaolRV5NeTfBVHSUK+jZ0MblzNPMYWWJeTs4zyzCEA
-         8OAA==
-X-Gm-Message-State: AKGB3mKXA0wpiXpd+NkYlo1vbGsPJOBBPxsLiZawYVu/6JmDNMYdmBf8
-        MYe5HI49pTMnpq38vW5cFNqt7t+8vyc=
-X-Google-Smtp-Source: ACJfBotAgQ5Jmn1Z1SRt9DJEuzYsRovOeItCl5fOS5VIrkR3UHbeplMAAjtPIO360Vl5rLEjhHbZ1Q==
-X-Received: by 10.101.82.205 with SMTP id z13mr13240967pgp.403.1515536692748;
-        Tue, 09 Jan 2018 14:24:52 -0800 (PST)
+        bh=PWh1HcTK7YwLl4PPrpKLQFZc/RHQX+D6XM02nhqqcxY=;
+        b=Td5vAoO4IXzeJge2PSddHYbbidrsRncX2wdw4Z0IBg1khylZahM/+QkpQ2HFO63SoY
+         Z+szsIHp+CHklsP5OdwXTnToHhT4NQm1WQabkEDvzWiEHg0hB22FOsckUodsgNC9+z8n
+         CwtDmG++eS7RS25GFOHSi/tNjGhOpUn+f0es5Tt0/Zy1rd/dZNBPmzgwVqq1omYW1hzZ
+         2KnF0zJ63EQ4Cpc6a8SGYggCm68/8MaR5Vgj01RY5nlbsdsQO3n1WweMnq6UmE5eJHOw
+         +2whBaKxolBEqwoI1/5EeH6n/OdjYacmB3h1DWy0dkO/eFg7MMTcFTQseRg+JFYsIXlO
+         Cehg==
+X-Gm-Message-State: AKGB3mICqFUGyqlb8OpqYyRE+gi1UiGfuWg/LWtL0mhYhlSbW6xpcuUO
+        5AlaUMRU8i/oOtIFXV36ARcpVJeiqDI=
+X-Google-Smtp-Source: ACJfBosdgsQtQPtBDUcrpkO/0tOOtO46gZYvGc+GQqcef7ePUN8SjjIt8GVPxTq65v1pJLI8maBJwg==
+X-Received: by 10.159.208.7 with SMTP id a7mr17628654plp.104.1515536909036;
+        Tue, 09 Jan 2018 14:28:29 -0800 (PST)
 Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id s189sm28517091pgc.5.2018.01.09.14.24.51
+        by smtp.gmail.com with ESMTPSA id f10sm28305688pgr.62.2018.01.09.14.28.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 14:24:52 -0800 (PST)
-Date:   Tue, 9 Jan 2018 14:24:51 -0800
+        Tue, 09 Jan 2018 14:28:28 -0800 (PST)
+Date:   Tue, 9 Jan 2018 14:28:27 -0800
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
         peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
         jrnieder@gmail.com
-Subject: Re: [PATCH 13/26] connect: request remote refs using v2
-Message-Id: <20180109142451.1e10f3936eafc270c9bb8b76@google.com>
-In-Reply-To: <20180103001828.205012-14-bmwill@google.com>
+Subject: Re: [PATCH 11/26] serve: introduce git-serve
+Message-Id: <20180109142827.a2fe13a69e5240b6a12729e1@google.com>
+In-Reply-To: <20180109221642.GF151395@google.com>
 References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-14-bmwill@google.com>
+        <20180103001828.205012-12-bmwill@google.com>
+        <20180109122455.5845c4f12ccdd4cada1528f2@google.com>
+        <20180109221642.GF151395@google.com>
 X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -69,44 +71,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:15 -0800
+On Tue, 9 Jan 2018 14:16:42 -0800
 Brandon Williams <bmwill@google.com> wrote:
 
-> diff --git a/connect.c b/connect.c
-> index caa539b75..9badd403f 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -12,9 +12,11 @@
->  #include "sha1-array.h"
->  #include "transport.h"
->  #include "strbuf.h"
-> +#include "version.h"
->  #include "protocol.h"
->  
->  static char *server_capabilities;
-> +static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
->  static const char *parse_feature_value(const char *, const char *, int *);
->  
->  static int check_ref(const char *name, unsigned int flags)
-> @@ -62,6 +64,33 @@ static void die_initial_contact(int unexpected)
->  		      "and the repository exists."));
->  }
->  
-> +static int server_supports_v2(const char *c, int die_on_error)
+> All good documentation changes.
 
-Document what "c" means.
+Thanks!
 
-[snip]
+> > > +	/*
+> > > +	 * Function called when a client requests the capability as a command.
+> > > +	 * The command request will be provided to the function via 'keys', the
+> > > +	 * capabilities requested, and 'args', the command specific parameters.
+> > > +	 *
+> > > +	 * This field should be NULL for capabilities which are not commands.
+> > > +	 */
+> > > +	int (*command)(struct repository *r,
+> > > +		       struct argv_array *keys,
+> > > +		       struct argv_array *args);
+> > 
+> > Looking at the code below, I see that the command is not executed unless
+> > advertise returns true - this means that a command cannot be both
+> > supported and unadvertised. Would this be too restrictive? For example,
+> > this would disallow a gradual across-multiple-servers rollout in which
+> > we allow but not advertise a capability, and then after some time,
+> > advertise the capability.
+> 
+> One way to change this would be to just add another function to the
+> struct which is called to check if the command is allowed, instead of
+> relying on the same function to do that for both advertise and
+> allow...though I don't see a big win for allowing a command but not
+> advertising it.
 
-> +static void process_capabilities_v2(struct packet_reader *reader)
-> +{
-> +	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-> +		argv_array_push(&server_capabilities_v2, reader->line);
-> +	}
+My rationale for allowing a command but not advertising it is in the
+paragraph above (that you quoted), but if that is insufficient
+rationale, then I agree that we don't need to do this.
 
-No need for braces on single-line blocks.
+> > If we change this, then the value parameter of advertise can be
+> > mandatory instead of optional.
+> 
+> I don't see how this fixes the issue you bring up.
 
-> +static int process_ref_v2(const char *line, struct ref ***list)
-
-The "list" is the tail of a linked list, so maybe name it "tail"
-instead.
+This is a consequence, not a fix - if we were to do as I suggested, then
+we no longer need to invoke advertise to check whether something is
+advertised except when we are advertising them, in which case "value"
+never needs to be NULL.
