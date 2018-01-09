@@ -2,130 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D98D1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 18:04:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8791B1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 18:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760281AbeAISEO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 13:04:14 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:36408 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760276AbeAISEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 13:04:13 -0500
-Received: by mail-pg0-f47.google.com with SMTP id j2so7291109pgv.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 10:04:13 -0800 (PST)
+        id S932628AbeAISG7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 13:06:59 -0500
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:39744 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758745AbeAISG6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 13:06:58 -0500
+Received: by mail-qt0-f181.google.com with SMTP id k19so18910575qtj.6
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 10:06:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xOmBTFvQrXLLOqDH9j6ow2/eCxeZSpZZ7+4Px+36fCI=;
-        b=T/dZtXQImmqSq9+X+MEQMkaxlyMllEGrYkMERZHWTMM8NCLlQEFzqoaYLIBp4MPGfS
-         mchsummmPsS41gsf6jfNmgXaSDhTVG4GNEaugBREGvI5nEDuOa5VOCfffbqCjwowe+3I
-         tAIZ6M8d9oWwqCc9Qvi5eGeaAH28wgwTKNn3XulsRrJbnISmcslss4IHHpVFdECKEXuR
-         lmXeQFBuQas0CWWgmbmB0enqDfI8NnJsed0olKeKDBlMHE6YFKnXtQ0Z027bWwrLgN6L
-         akJfGVI5D4E1J0ouOFLpa46SNRRptLR5JLX/MVc4rnMoMj/iTfO6vOAlmm7A+f6o3ZRq
-         FCKA==
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=iZqkAgkPNYHAG5HE+8cc329RxBHzQCuaj90joVRArHw=;
+        b=qyJzCqf5sTtTGpZbDr7y+9bXT6aMOdOj2n4ONBiFAFXfWAWZ3R9EjxwBCOkFFfsJWj
+         GHoFzWby/Y8wBXVmt9nRCynTjKxykctDepAPqABRiTLSXOufzMVkAVCYX6xdqydY/4sd
+         +JPjeeZaDX4yX+Fv180fQwijZ4tW61+EccXJQUCiLYAnklXlD168sCZmDE53vm59qV5e
+         LXiCPhfaadOWl+/9nP7/amDOLDLqwIHqQI7DYs6cQgjJY2o2FvynmLCm7C5cn2DZpCZ5
+         T3IALMreU7D6ZVEd6lLDEcyMN48G6YanfVXsdLKwcoHwGLHuJ7SxM73gpB4UfRaeyn3i
+         gHLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xOmBTFvQrXLLOqDH9j6ow2/eCxeZSpZZ7+4Px+36fCI=;
-        b=LviuFnVajVE57bfD1b8aSrSATBinK2THDX48W47Pzw3KBZXg9P/XDDmZClMJC2ATlP
-         B29jyhl0IrybiAoQm/6EXWVipTdXBsn3grh/6Ng2FrF7l/BZ7W/v8cgdqpHiOWnvWQfZ
-         mFWBq0TJFQD2CP1TBOGG13hnpiqUwLW2X4emVceQPl24DSOusfgMHJcuwfyu6hE3qmzh
-         acn490cOgjgIfaQP/NjRfNtSc/jWeEBAGxbkQhR0GipB4RWHKoX9azfeFKjbTlK0A62R
-         /DjEV/rHoYTKvSEaL3aR18vkDArwA+EAiRGIPHDvYfoEHbucFbZj6YTuk7gX3sX05yzO
-         vRjg==
-X-Gm-Message-State: AKGB3mI9JUvo7v3EsD9JISl/iHSTv3WbT8g1r9LRZ8d6c9jC2f7pYlSx
-        1aUVr37ab83P3/ktwSjb9/SlnQ==
-X-Google-Smtp-Source: ACJfBotuBqyhF+dD94pJY8JOEmgXhEcQsoHvihzHMslqBMRQd91XJbxv+41P2tRwcUwiQKCBK7FGFg==
-X-Received: by 10.84.128.72 with SMTP id 66mr16005453pla.284.1515521053262;
-        Tue, 09 Jan 2018 10:04:13 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
-        by smtp.gmail.com with ESMTPSA id s25sm28492974pge.63.2018.01.09.10.04.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 10:04:12 -0800 (PST)
-Date:   Tue, 9 Jan 2018 10:04:11 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 01/26] pkt-line: introduce packet_read_with_status
-Message-Id: <20180109100411.b63dd903e2037372e4a28a91@google.com>
-In-Reply-To: <20180103001828.205012-2-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-2-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=iZqkAgkPNYHAG5HE+8cc329RxBHzQCuaj90joVRArHw=;
+        b=HYpjYvNNUtp8a0GnQb1ynKBRmqxrYm+w+GLJhRhYO8K3uxwwDGnzJ3axi5fRD2JREy
+         Y0CsdSQxyuZNcVQ7GjpAQgOgTS/AMiQrOjSjoDymx6zQpMsQrWir7b7kQBk4jhiBybae
+         IgVI24zfvqdWOz497xGdN1nybFOvtyR2oS8x7gxUO0bcf84zj7Ew5VWT+qM6EFnNsgXH
+         9mAGR8OxG0OwMLALp3vcWHBV7uZiF3jVOXVRTSTwIMrgSatS3mUZQhlvM/kiHRFZNcmD
+         qa1BZt/9T01diP0zL9UaHzSk61UbF6vcHaZFZKGcjz2PqIALTpUAVhWvoBK3wtY0rnG9
+         fk7g==
+X-Gm-Message-State: AKwxytd7GRZDTMNiJ/REMBFtLFiKfEZGmp1e/jcRHYKvoZOAV2cARrSy
+        GIT2S3ITEiDDzU1zsoSbtx2fdw==
+X-Google-Smtp-Source: ACJfBosMqMpFBuyzaiw6RqWDXT2E1lvJpsortm6ad0gfUfTciEM0Wj8+F8tGP8TRSn5pHkpjb3OMbw==
+X-Received: by 10.237.34.137 with SMTP id p9mr21647168qtc.194.1515521217354;
+        Tue, 09 Jan 2018 10:06:57 -0800 (PST)
+Received: from LykOS.localdomain (216-165-95-160.NATPOOL.NYU.EDU. [216.165.95.160])
+        by smtp.gmail.com with ESMTPSA id o57sm9668703qtf.53.2018.01.09.10.06.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 09 Jan 2018 10:06:56 -0800 (PST)
+Date:   Tue, 9 Jan 2018 13:09:34 -0500
+From:   Santiago Torres <santiago@nyu.edu>
+To:     Colin Walters <walters@verbum.org>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: upstreaming https://github.com/cgwalters/git-evtag ?
+Message-ID: <20180109180933.jbyidmmv5xpsjuae@LykOS.localdomain>
+References: <1515442320.3241451.1228399576.66D7DA96@webmail.messagingengine.com>
+ <20180108204029.m42qyezojak4kohh@LykOS.localdomain>
+ <CAGZ79kZ8AXezcX1_5WJsUJMHiHCzj2B=Uj8+4K3VF+cC6mTCqA@mail.gmail.com>
+ <1515465051.2895186.1228754952.0036D645@webmail.messagingengine.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="kgnzigqrbtkgjkeu"
+Content-Disposition: inline
+In-Reply-To: <1515465051.2895186.1228754952.0036D645@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:03 -0800
-Brandon Williams <bmwill@google.com> wrote:
 
-> -int packet_read(int fd, char **src_buf, size_t *src_len,
-> -		char *buffer, unsigned size, int options)
-> +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
-> +						char *buffer, unsigned size, int *pktlen,
-> +						int options)
->  {
-> -	int len, ret;
-> +	int len;
->  	char linelen[4];
->  
-> -	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
-> -	if (ret < 0)
-> -		return ret;
-> +	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0)
-> +		return PACKET_READ_EOF;
-> +
->  	len = packet_length(linelen);
->  	if (len < 0)
->  		die("protocol error: bad line length character: %.4s", linelen);
-> -	if (!len) {
-> +
-> +	if (len == 0) {
+--kgnzigqrbtkgjkeu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This change (replacing "!len" with "len == 0") is unnecessary, I think.
+> > See Documentation/technical/hash-function-transition.txt
+> > for how to do it.
+>=20
+> evtag took me a day or two to write initially and doesn't
+> impose any requirements on users except a small additional
+> bit of software.
 
->  		packet_trace("0000", 4, 0);
-> -		return 0;
-> +		return PACKET_READ_FLUSH;
-> +	} else if (len >= 1 && len <= 3) {
-> +		die("protocol error: bad line length character: %.4s", linelen);
->  	}
+I agree that, in nature it shouldn't be difficult, but I also think that
+things usually take longer when you try to minimize code reuse and
+streamline the system's design.
 
-This seems to be more of a "bad line length" than a "bad line length
-character".
+> In contrast, working on hash-function-transition.txt?  That
+> seems like it'd easily consume many person-months of work.
+> And that plan only exists post-shatter.io, whereas git-evtag
+> long predates both.
 
-Also, some of the checks are redundant. Above, it is probably better to
-delete "len >= 1", and optionally write "len < 4" instead of "len <= 3"
-(to emphasize that the subtraction of 4 below does not result in a
-negative value).
+I think this is partly true. A hash transition has been brought up
+multiple times pre-shattered. In my opinion shattered was a much-needed
+PR push for SHA1 deprecation. In practice, things changed very little.
 
-> +
->  	len -= 4;
-> -	if (len >= size)
-> +	if ((len < 0) || ((unsigned)len >= size))
->  		die("protocol error: bad line length %d", len);
+> > Personally I'd dislike to include ev-tags as it might send a signal
+> > of "papering over sha1 issues instead of fixing it".
+>=20
+> I don't agree.  I think it's pretty clear that a hash function transition
+> would be a huge amount of work - not least because of course
+> there are now at least two widely used implementations of git in C,
+> plus https://www.eclipse.org/jgit/ plus...
 
-The "len < 0" check is redundant.
+I agree with Stefan here. I think it's better in the long-term to
+push for hash-agnosticity. I don't know if git-evtag is hash agnostic,
+but if it is not, then we have two transition plans to think about.
 
-> -	ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
-> -	if (ret < 0)
-> -		return ret;
-> +
-> +	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0)
-> +		return PACKET_READ_EOF;
->  
->  	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
->  	    len && buffer[len-1] == '\n')
+>=20
+> > push certificates are somewhat underdocumented, see the
+>=20
+> Why not call them "git signed pushes"?  Junio's post
+> even says "the signed push".
+
+A signed push creates a push certificate.
+>=20
+> And I just looked at this a little bit more but I'm not sure I
+> see how this covers the same goal as evtags;
+
+Correct me if I'm wrong (it's been a couple of years) but last time I
+read about git evtags, they basically did the following:
+
+    1. Create a signed tag.
+    2. Create a signed statement of all the references.
+    3. Create a checksum of the checked out code on the tag.
+    4. Create a tarball of it.
+
+I think 1) is already happening, 2) is very similar information to the
+one contained in a push certificate. I don't know how necessary are 3)
+and 4), but that's just my very opinionated take on it.
+
+Full disclosure, I published a "competing" solution a couple of years
+ago[1] but, in my personal opinion, I think push certificates can
+achieve the same security guarantees as my system with very little
+changes.
+
+Cheers!
+-Santiago.
+
+[1] https://www.usenix.org/conference/usenixsecurity16/technical-sessions/p=
+resentation/torres-arias
+
+--kgnzigqrbtkgjkeu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAlpVBVkACgkQRo8SLOgW
+IpVKFg//Xg1jLavNjZnoJ+ZN2WBISvzhyWoaN1Sx8G68C6aE4Dgbz+zdMMDOjd6a
+pbS/LC6hsryht/9YsRcFjziUYSAmXuCNQbsCkswsULxwGS3/K6Q0qMbnb7TSikJr
+AHuTX4fq73IdjW+lGZfQ00nRv3Qhl9FR8pgDCPZo+jk91pEnnFg9P72kmHNf0ANE
+tMCDpztCUMnQ3O7CAbHuS0B6QVYNObQWJgxYiHG/9DC3dxDMiFZ/nnrbtOy5s9sC
+cNzF4/kOsfy62OLNfSdsb3mm/zswMNpYnyBXF2irRgu3qeMoq4mOD138KvBy95ov
+8OBFcywnKjU4jOIEgNA9j/jg58Ke9WyrazqkPHIProbJZJLvUrhKGWvSIJ92SI+m
+MvebE+JglT0GCG9TFaUFUg0NLhv1sdoGKyOFPBE8gWk99h7agWQ6qGDI/h8fl0Xt
+ucBdvVB+yzHKUaIGBkyvRCGplhZNpB68jCODCEfQ4PStEot6eqdRDMhcQEPNGP+U
+DprO/6RwNnPNOUsl86BNkddTtNw9xz5u2d27Rg03dPqfPe6o8/FMANoTwf0xydxt
+d979hrQjgj5wvKD84E47DErA0leGJcm3/GoN+oZ49FcYxBfY6RGkK+G7rwciKE8v
+HM0i3Erx3vRC7cZma6zlst8KcnMkYeJqMKIFGNHdqtkfzqIrwuA=
+=+tAj
+-----END PGP SIGNATURE-----
+
+--kgnzigqrbtkgjkeu--
