@@ -2,88 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E2C61F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 19:26:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5524F1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 19:28:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935457AbeAIT0r (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 14:26:47 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:40618 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935447AbeAIT0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 14:26:46 -0500
-Received: by mail-qt0-f176.google.com with SMTP id u42so19188810qte.7
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:26:46 -0800 (PST)
+        id S935460AbeAIT2F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 14:28:05 -0500
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:40266 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935440AbeAIT2E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 14:28:04 -0500
+Received: by mail-pg0-f54.google.com with SMTP id q12so8651939pgt.7
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:28:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ovNyTQldeq3HvacTbl6Id2BEcR+V4Uma+b5P21Hdyew=;
-        b=Y7LcBf1Fj8hRE0j4qPhY1brbV8LZcmqEatAdmh0x90lJT50iI5LNborNES+fLAnQ3V
-         nI1UZiXDZ9Hq1+HAz+8CIb0MKjSaE6HuBdbwCJRJr8S0F4c4/ewVqC37KKW7gxHZnpSY
-         cQa3EdtiVam3LbriHuszbyOWyDdvgu7fqod1KN3ccgC4h0T7Ul2ia1ob8E0p+lb55njV
-         VfuLl6gO/ztC5uJ5Hgh2+6fR54LOxWTL3+YBsvvtka4CNrzXJMqZP4XIyJMS3v6IA/sK
-         1GHdNwx0MSNsIrdgv/ZpXoupWO47G60RixVJOupJpnVys5QbpSOz2x6Td8OotI7aItBN
-         tNXQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=onQtOx9txmP2tJkbnfmpz6BPAD6a4YL2e+J9JRYUZ24=;
+        b=rqCoonvQiWDL048cPfOD/B5Uh0AP5Z8VkqPu3h6HaFGu1j8br800e3FF4XhmSyxX20
+         T7Li9r7K2sQ+HgtRtcSd7Y1giKyxIjeYu/ASqihIoql0FToDt/syKOnRiyKk8/YA9Squ
+         tyvD8ld5UV+n+fgKwQviRzDrYBUjUEBJP5SYQjbCwcjd9XMOb6cRefZVMsgNGpLOGZzj
+         D1f+6F5uOgvxz99re/EC91AHOALcwX6sRAsAehTw78XUvi0bb1u0O+hgNhn1uwWsyByU
+         oyGLPLkNmGlRNosTQp8gCAWr853omalj6dotoGoVRtjVTSvFxRPCK8YVxV7Ky6gxiiXf
+         P49w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ovNyTQldeq3HvacTbl6Id2BEcR+V4Uma+b5P21Hdyew=;
-        b=E4P+eRKXG1j/ihbJ/NRQqXPYsnXVVWQAEOTfc7WdWZ+m/cQglqsMYJDV+xKICGGvTN
-         o6cIwtp7E2TnNuCt6Dy3HqzOSQTQcoM0/RVkEqyuamP+TinNQQ0y/ZwwS2AWZF68kv/T
-         vun8m2jlxuSDCAwQ9WUAn0rxd2Ch66lNJaO1femGGVV9nlCzPSNSGPlY5fJgc9QMEK/8
-         npaQFBng1IioJ2E1z37mzxqlmFp+CCyqRrJvvuRa7GWMfZsrY8bXQjGb/ChEtjyfgAzH
-         4hwsy2IgPVPSwmoEK16qcQz0DNRZlHXxFT/t3ne6/uDTErOlZW0J5XEIg28CodL9PZj9
-         M9SQ==
-X-Gm-Message-State: AKwxytfqIKqlO0dwL8lIyRXpm61oHshR288GZYd68Xny7XmR8pGtCF4t
-        iXrmUqkP/EJsQhSyiRc9qEbyYd+E+ahnzjCi2APqgA==
-X-Google-Smtp-Source: ACJfBovQ+ss8vffDt5krySkBiOZl7mYJAbAolDIBJXcI5uMZiIWTNDuYEoSNAW3+DHC00QZTpSg54hp8dUdtyj918Zg=
-X-Received: by 10.237.38.35 with SMTP id z32mr23263286qtc.180.1515526005931;
- Tue, 09 Jan 2018 11:26:45 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=onQtOx9txmP2tJkbnfmpz6BPAD6a4YL2e+J9JRYUZ24=;
+        b=K+iqG9gY1maDUgsvMa8i/n/NrG1POXr7n+u4HLZveZAzzqP9t/oKezosFS44YzYtcZ
+         f8ghzhteWeVcH5BM1+mqb9V0wniA8GgtdfjKRjsbvOAQiMc58ced9ejzaimC5tSqa18l
+         ZCmTaJAh1InySVMCWC5NgM8h3MwCt/70MWCwpZnOqYYWdoI2smOX+YEPqH8f9GN9X85D
+         GB/Rwm7aVsidDi6g+R8EWHFLxiXuHOmzQQfFv2u7+19zgJquH9tsbRxjQUonoZE351eh
+         QwJGrp2P6mxv5Py+R8n5raVQv+w9cwZ+qop1fnQ0ODPISfbd7jaftxtV/Kua4xTeVrSb
+         VcOw==
+X-Gm-Message-State: AKGB3mJVZAzW8kO24hxgnwW6txqqWJ0KmX1sRwooueg2SQhMQHBGY4lD
+        LR4Z3QtnWSKPBkXyC0g7cNhOhw==
+X-Google-Smtp-Source: ACJfBosbS4I0sy7lPsmhU8Xew/zFNymmuSFf+9Q3ihcbwlDciRZInvpPwgUtr+t7qfwMZbG+tuVXng==
+X-Received: by 10.101.67.1 with SMTP id j1mr13245880pgq.204.1515526083545;
+        Tue, 09 Jan 2018 11:28:03 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:5de7:5b51:7854:d1a5])
+        by smtp.gmail.com with ESMTPSA id j14sm35749002pfj.93.2018.01.09.11.28.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 Jan 2018 11:28:02 -0800 (PST)
+Date:   Tue, 9 Jan 2018 11:28:01 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 01/26] pkt-line: introduce packet_read_with_status
+Message-ID: <20180109192801.GD151395@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180103001828.205012-2-bmwill@google.com>
+ <20180109100411.b63dd903e2037372e4a28a91@google.com>
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Tue, 9 Jan 2018 11:26:44 -0800 (PST)
-In-Reply-To: <b59bd56a-f88b-a65a-263f-2b6d2f57dd99@gmail.com>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-5-kaartic.sivaraam@gmail.com> <CAGZ79kZZf=zSfqFr9EV_Q408mG4cHTEQSOAMC7n_35oKgHJp2A@mail.gmail.com>
- <b59bd56a-f88b-a65a-263f-2b6d2f57dd99@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 9 Jan 2018 11:26:44 -0800
-Message-ID: <CAGZ79kZKMKZGWSvPMPHWJ9SeNQSegeiZ3SvMtK+gEYp1dFxYyA@mail.gmail.com>
-Subject: Re: [PATCH 4/8] Doc/gitsubmodules: avoid abbreviations
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109100411.b63dd903e2037372e4a28a91@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 9, 2018 at 8:06 AM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> On Tuesday 09 January 2018 12:15 AM, Stefan Beller wrote:
->>>
->>> - * The command line for those commands that support taking submodule specs.
->>
->> ++ The command line for those commands that support taking submodules
->> as part of their pathspecs[1].
->> ++
->> ++[1] pathspec is an official term according to `man gitglossary`.
->>
->> Maybe?
->>
->
-> Yeah, I actually did think 'specification' wasn't a the best fit for
-> this (should have mentioned that somewhere) Now, the real term came out :)
->
-> Just to be sure, that "[1] pathspec ..." part goes to the end of the
-> document doesn't it?
+On 01/09, Jonathan Tan wrote:
+> On Tue,  2 Jan 2018 16:18:03 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > -int packet_read(int fd, char **src_buf, size_t *src_len,
+> > -		char *buffer, unsigned size, int options)
+> > +enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
+> > +						char *buffer, unsigned size, int *pktlen,
+> > +						int options)
+> >  {
+> > -	int len, ret;
+> > +	int len;
+> >  	char linelen[4];
+> >  
+> > -	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
+> > -	if (ret < 0)
+> > -		return ret;
+> > +	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0)
+> > +		return PACKET_READ_EOF;
+> > +
+> >  	len = packet_length(linelen);
+> >  	if (len < 0)
+> >  		die("protocol error: bad line length character: %.4s", linelen);
+> > -	if (!len) {
+> > +
+> > +	if (len == 0) {
+> 
+> This change (replacing "!len" with "len == 0") is unnecessary, I think.
+> 
+> >  		packet_trace("0000", 4, 0);
+> > -		return 0;
+> > +		return PACKET_READ_FLUSH;
+> > +	} else if (len >= 1 && len <= 3) {
+> > +		die("protocol error: bad line length character: %.4s", linelen);
+> >  	}
+> 
+> This seems to be more of a "bad line length" than a "bad line length
+> character".
 
-The [1] part was just to highlight it for the sake of this discussion;
-I would not include it into the man page.
+I'll make these changes, though I do think this needs to stay as a "bad
+line length character" as the len could be neg which is an indication of
+parsing the linelen character failed.
 
-Stefan
+> 
+> Also, some of the checks are redundant. Above, it is probably better to
+> delete "len >= 1", and optionally write "len < 4" instead of "len <= 3"
+> (to emphasize that the subtraction of 4 below does not result in a
+> negative value).
+> 
+> > +
+> >  	len -= 4;
+> > -	if (len >= size)
+> > +	if ((len < 0) || ((unsigned)len >= size))
+> >  		die("protocol error: bad line length %d", len);
+> 
+> The "len < 0" check is redundant.
+> 
+> > -	ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
+> > -	if (ret < 0)
+> > -		return ret;
+> > +
+> > +	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0)
+> > +		return PACKET_READ_EOF;
+> >  
+> >  	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
+> >  	    len && buffer[len-1] == '\n')
+
+-- 
+Brandon Williams
