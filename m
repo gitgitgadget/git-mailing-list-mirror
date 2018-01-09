@@ -7,91 +7,76 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD8011F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 21:43:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 882FD1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 22:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753859AbeAIVnD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 16:43:03 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63544 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753744AbeAIVm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 16:42:59 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 45CD5CAD57;
-        Tue,  9 Jan 2018 16:42:59 -0500 (EST)
+        id S1755093AbeAIWEY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 17:04:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59941 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754821AbeAIWEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 17:04:23 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5B6FC12B6;
+        Tue,  9 Jan 2018 17:04:22 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fDEhN+N5WSbKBi83HFRsDA17WH4=; b=F4kksG
-        KRsXznzT5cswHWt9vhYQhz9kQ75oVhl9eup69xVYV+0361HtFf3u79dO3iMR35o1
-        KXeVx2yb8zOIpvMwRUfgOHQVRiOhCA+vAKTHcN+SE5UEkMye0x47rHG8/usNVom1
-        rxR1P7Gqwpxh7HAcrKWGgdFCZsO0PHZTqMZSU=
+        :content-type; s=sasl; bh=EFEpCYukSwUYK/JRUmjdkPDd5xM=; b=E54qFe
+        nIp1wKmCOhiaWHfNUZGFoo7ZRScvC4LoucbfPikQHFCrYFMXA4iitdDR/sOuCclj
+        hgznnx6ey7ZKnAMuVdBIwmi6qbGcYuaTlGc7Nuj97riEbZN3sDGYxnrsVjwd0p81
+        6DpSt3vgi8c1o3YOu91ge1w/cIi2kF+TU6Ixc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vGLoenX4dWkwOTuFvOXtaHsmEAaCcan0
-        eHlOD0iyhjkm3nymmEvf4n7NGWJFHgUBorFMjPTXw7FHElvx7zVDktYLoPJJZytj
-        81mf1I1hqkH4uJVMR/qRmpTBgCWco+a0ENGWFdNhufMhYknkuA9DLORM2fvIwZRU
-        wiKEhd+8XRQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C8F7CAD56;
-        Tue,  9 Jan 2018 16:42:59 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=S6GDSWpvboPBCPN69wfznRRxmicsX1EQ
+        nMZrVuqSQR8V70/2hb8XZCI49OFVXHVjogceaqf1hA0ZBb3S+i+ubMyd3qDw/IWU
+        yAS+0+SKWGBTlaktG7/bWToFqC9qY47PsSB6RdaYiEGHuTV1Kcn9wMveczHknnze
+        jLqupfTI6No=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD587C12B5;
+        Tue,  9 Jan 2018 17:04:22 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA81DCAD55;
-        Tue,  9 Jan 2018 16:42:58 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2A75FC12B4;
+        Tue,  9 Jan 2018 17:04:22 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        git-for-windows@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc1
-References: <xmqqbmi7ano1.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-Date:   Tue, 09 Jan 2018 13:42:57 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Sat, 6 Jan 2018 23:01:22 +0100
-        (STD)")
-Message-ID: <xmqqy3l63dzy.fsf@gitster.mtv.corp.google.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 03/20] cat-file: rename variables in ref-filter
+References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
+        <01020160db067bde-7f500636-b80e-4099-a84e-2613126c9aa1-000000@eu-west-1.amazonses.com>
+Date:   Tue, 09 Jan 2018 14:04:21 -0800
+In-Reply-To: <01020160db067bde-7f500636-b80e-4099-a84e-2613126c9aa1-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Tue, 9 Jan 2018 13:05:23 +0000")
+Message-ID: <xmqqtvvu3d0a.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0F2DC1E2-F586-11E7-8B88-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 0C303828-F589-11E7-919B-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-> index f1678851de9..470107248eb 100644
-> --- a/t/t0021/rot13-filter.pl
-> +++ b/t/t0021/rot13-filter.pl
-> @@ -31,7 +31,22 @@
->  #
->  
->  use 5.008;
-> -use lib (split(/:/, $ENV{GITPERLLIB}));
-> +sub gitperllib {
-> +...
-> +	if ($ENV{GITPERLLIB} =~ /;/) {
-> +		return split(/;/, $ENV{GITPERLLIB});
-> +	}
-> +	return split(/:/, $ENV{GITPERLLIB});
-> +}
+> Rename some variables for easier reading.
+> They point not to values, but to arrays.
 
-This cannot be the whole story for a few reasons.
+Once the code is written and people start to build on top, a change
+like this is not worth the code churn, especially because there are
+two equally valid schools of naming convention.
 
- - In t/test-lib.sh we see this:
+ - When you have an array, each of whose 20 slots holds a single
+   dosh, I would prefer to call the array dosh[20], not doshes[20],
+   so that I can refer to the seventh dosh as "dosh[7]".
 
-   GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
-   export GITPERLLIB
+ - If you more often refer to the array as a whole (than you refer
+   to individual elements) and want to stress the fact that the
+   array holds multiple elements in it, I can understand that you
+   may be tempted to call the whole array "doshes[]".
 
-   If this part wants to split with ';', then the joining needs to
-   be done with ';' to match, no?
+So please drop this and other "rename variables" patches from the
+series.
 
- - In addition to t0021, there are similar split with colon in 0202,
-   9000 and 9700, yet I am getting the feeling that you observed the
-   issue only in0021, to which I do not think of a good explanation
-   why.
 
