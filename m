@@ -2,130 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E99E1F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 22:35:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65D9F1FAE2
+	for <e@80x24.org>; Tue,  9 Jan 2018 22:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753774AbeAIWe7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 17:34:59 -0500
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:43706 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751981AbeAIWe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 17:34:58 -0500
-Received: by mail-pg0-f43.google.com with SMTP id f14so6412031pga.10
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 14:34:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5J10X7UX+21kaqR0whzSuwINvzVz2ixzmKLges3/+b4=;
-        b=TxD7h/qlsVgHbN9pxR14zYeb2FcMlTZwT+ykE4n4952zNEc5P2u1GLBe7HBjV5XIle
-         lB36ri+YTaYeRoG4iUpJJJigWn7Ky3qZ30jYikDVFiZBVjmPzxVGd++7SF3ycTLYD5rT
-         1tUuBaGZW6E3zb5t7i8TojJbV0PrIZTLOyo8IhWRFEuC2BbD3kXTJcMjTq8LzggRVJmD
-         LJlBpO1p27J7tDSVPgWJptojTUcrnPfXbpJ15AZ4uLffXAdVWkHbQZk3OsF4HEQqZPmr
-         ny3jfVSJVB+Xfx+r9WVt66OvYXi25XwwUQU7k+Cvp7/9kMExjWDbj8GkMHwaN8rhs+xK
-         tkbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5J10X7UX+21kaqR0whzSuwINvzVz2ixzmKLges3/+b4=;
-        b=BdnIy2MMRi6E8gPS9R6judrYedoS2L3Qbd8kcm40C7ctR0qBUWATerpn+jsLe9ZOQq
-         J9aN/ofy+89jwhThOaBNdCRK705Ky+feAIRx6zLmjAUMrda4Si4zrLPeXKKgB8bQOIH8
-         0JCE7LcSIW9TpBOYZvnjB3GVDLvvlKzNGW5H2wFxhMdAYc3eKU9SK5Y5z/iPGiu8hnzz
-         /umGpxioAAMXKLQ9RUI0xM2Ylk5CTQWvG3I2zwhERXLfnZYjMtymm5tf5q1bl0Ni3oC/
-         hdTYDfhRr+LaK92kmK1zEzVlcik7b+VVlr4osdVZZBTHBPZKXimYqo6Rgzyyk2A3YDjN
-         uQ7A==
-X-Gm-Message-State: AKGB3mLO6ydcPQEL2L+k1l0D3hCw04eNEs38pmXlHzvUr76CcrEeZSRD
-        D47Dw49+rsWIySXSztUucg6GKA==
-X-Google-Smtp-Source: ACJfBovlLOItyxFH9kNw45OWjbQXGpZF2iQFn99LGRqzcDVMr4YZiY6LJlVXMfq0nneqnmpA6BJfcg==
-X-Received: by 10.159.211.74 with SMTP id g10mr16760755plp.432.1515537297342;
-        Tue, 09 Jan 2018 14:34:57 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:5de7:5b51:7854:d1a5])
-        by smtp.gmail.com with ESMTPSA id p86sm18595057pfj.176.2018.01.09.14.34.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 Jan 2018 14:34:56 -0800 (PST)
-Date:   Tue, 9 Jan 2018 14:34:55 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 11/26] serve: introduce git-serve
-Message-ID: <20180109223455.GG151395@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-12-bmwill@google.com>
- <20180109122455.5845c4f12ccdd4cada1528f2@google.com>
- <20180109221642.GF151395@google.com>
- <20180109142827.a2fe13a69e5240b6a12729e1@google.com>
+        id S1755451AbeAIWpS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 17:45:18 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50758 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755350AbeAIWpR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 17:45:17 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 16A13CBC04;
+        Tue,  9 Jan 2018 17:45:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pt6fwZ6PcKwzItcOdB6Q9NPDgGM=; b=NKTpEu
+        rm4R94buQ2db2UKu/VdoKFTAs/6U0Xo+TnYKHypizOWJX2V49ZKCbEo2d96loDz3
+        t15sgAM+GlgIBGE3ew2hfqGYnGq20VpXNJWc4qxfYhH6r4M3hnr7vpsREFSRaZGR
+        u52UeivWkErG5WC+SxcaD+ClJLT4nPgEzAj18=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=a3cCl3V+e23BFY+qQCP7sz7B6r6MrvSr
+        Wa1D0p8mUPMlFtb5M2gNkOaJQ+eMsn8IP62+wxm4WiA4gY0D6wE7sLzN+ap+2dVq
+        TOcagwWP+UtXaWnMJWRSxedc/Ow2jCXy7xRMQ1KKLVPFCaBy//Hqo1p1NCC3J1tT
+        DIbH6cfd0ZU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F102CBC03;
+        Tue,  9 Jan 2018 17:45:17 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 809A6CBC02;
+        Tue,  9 Jan 2018 17:45:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCHv4 0/4] Fix --recurse-submodules for submodule worktree changes
+References: <xmqqo9mahdll.fsf@gitster.mtv.corp.google.com>
+        <20180105200304.34173-1-sbeller@google.com>
+Date:   Tue, 09 Jan 2018 14:45:15 -0800
+In-Reply-To: <20180105200304.34173-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 5 Jan 2018 12:03:00 -0800")
+Message-ID: <xmqqlgh63b44.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180109142827.a2fe13a69e5240b6a12729e1@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: C31860EC-F58E-11E7-9CD7-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/09, Jonathan Tan wrote:
-> On Tue, 9 Jan 2018 14:16:42 -0800
-> Brandon Williams <bmwill@google.com> wrote:
-> 
-> > All good documentation changes.
-> 
-> Thanks!
-> 
-> > > > +	/*
-> > > > +	 * Function called when a client requests the capability as a command.
-> > > > +	 * The command request will be provided to the function via 'keys', the
-> > > > +	 * capabilities requested, and 'args', the command specific parameters.
-> > > > +	 *
-> > > > +	 * This field should be NULL for capabilities which are not commands.
-> > > > +	 */
-> > > > +	int (*command)(struct repository *r,
-> > > > +		       struct argv_array *keys,
-> > > > +		       struct argv_array *args);
-> > > 
-> > > Looking at the code below, I see that the command is not executed unless
-> > > advertise returns true - this means that a command cannot be both
-> > > supported and unadvertised. Would this be too restrictive? For example,
-> > > this would disallow a gradual across-multiple-servers rollout in which
-> > > we allow but not advertise a capability, and then after some time,
-> > > advertise the capability.
-> > 
-> > One way to change this would be to just add another function to the
-> > struct which is called to check if the command is allowed, instead of
-> > relying on the same function to do that for both advertise and
-> > allow...though I don't see a big win for allowing a command but not
-> > advertising it.
-> 
-> My rationale for allowing a command but not advertising it is in the
-> paragraph above (that you quoted), but if that is insufficient
-> rationale, then I agree that we don't need to do this.
+Stefan Beller <sbeller@google.com> writes:
 
-I have no issues with adding that functionality, i don't really feel
-that strongly one way or another.  Just seemed like additional work for
-not much gain right now, key being right now.  It very well may be worth
-it for the use case you specified.  If so I can definitely make the
-change.
+> v4:
+> Stefan Beller (4):
+>   t/lib-submodule-update.sh: clarify test
+>   t/lib-submodule-update.sh: Fix test ignoring ignored files in
+>     submodules
+>   unpack-trees: oneway_merge to update submodules
+>   submodule: submodule_move_head omits old argument in forced case
+>
+>  submodule.c               |  4 +++-
+>  t/lib-submodule-update.sh | 19 +++++++++++++++++--
+>  unpack-trees.c            |  3 +++
+>  3 files changed, 23 insertions(+), 3 deletions(-)
 
-> 
-> > > If we change this, then the value parameter of advertise can be
-> > > mandatory instead of optional.
-> > 
-> > I don't see how this fixes the issue you bring up.
-> 
-> This is a consequence, not a fix - if we were to do as I suggested, then
-> we no longer need to invoke advertise to check whether something is
-> advertised except when we are advertising them, in which case "value"
-> never needs to be NULL.
+Thanks.  This one looks excellent.
 
-Oh I understand what you are trying to explain, yes you're right.
-
--- 
-Brandon Williams
+Let's merge it to 'next' and cook it there.
