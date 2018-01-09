@@ -6,31 +6,33 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AAE01F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 18:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B8791F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 18:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934939AbeAISua (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 13:50:30 -0500
-Received: from siwi.pair.com ([209.68.5.199]:52943 "EHLO siwi.pair.com"
+        id S934985AbeAISud (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 13:50:33 -0500
+Received: from siwi.pair.com ([209.68.5.199]:64519 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932279AbeAISu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 13:50:29 -0500
+        id S934958AbeAISub (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 13:50:31 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id EB2BB844E7;
-        Tue,  9 Jan 2018 13:50:28 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 4C40F84517;
+        Tue,  9 Jan 2018 13:50:31 -0500 (EST)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 83490844DA;
-        Tue,  9 Jan 2018 13:50:28 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTPSA id D9209844DA;
+        Tue,  9 Jan 2018 13:50:30 -0500 (EST)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 0/4] Add --no-ahead-behind to status
-Date:   Tue,  9 Jan 2018 18:50:14 +0000
-Message-Id: <20180109185018.69164-1-git@jeffhostetler.com>
+Subject: [PATCH v5 3/4] status: update short status to respect --no-ahead-behind
+Date:   Tue,  9 Jan 2018 18:50:17 +0000
+Message-Id: <20180109185018.69164-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20180109185018.69164-1-git@jeffhostetler.com>
+References: <20180109185018.69164-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -38,54 +40,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This is version 5 of my patch series to avoid expensive ahead/behind
-calculations in status.  This version completely removes the config
-setting and is just the --[no-]ahead-behind command line argument.
+Teach "git status --short --branch" to respect "--no-ahead-behind"
+parameter to skip computing ahead/behind counts for the branch and
+its upstream and just report '[different]'.
 
-Internally (inside MSFT) we have had further discussions in this
-area and identified 2 somewhat independent needs:
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ t/t6040-tracking-info.sh | 13 +++++++++++++
+ wt-status.c              | 11 +++++++----
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-[1] The first is to just be able to turn off the a/b calculation when
-    the invoker does not need the result at all.
-
-[2] The second is to greatly speed up or limit the a/b calculation on
-    extremely large repositories.
-
-    In earlier versions of this patch series, there were several
-    discussions of a limited mode that would look for no more than n
-    commits or milliseconds.  Also discussed were some problems that
-    such limiting will have and it was decided to be not worth the effort.
-
-    We have been discussing some ways to speed up the calculation on the
-    client and have tentatively scheduled this shortly.  Hopefully, this
-    will eliminate the performance problems and reduce the likelyhood
-    that anyone would need to set a config setting to change the default
-    behavior (in either porcelain or non-porcelain) formats.
-
-So with that in mind, this version elimates the config setting so that
-we have don't to carry forward a soon-to-be-obsolete setting.
-
-All that remains in this version is the command line argument to turn
-on/off the a/b calculation.
-
-Jeff Hostetler (4):
-  stat_tracking_info: return +1 when branches not equal
-  status: add --[no-]ahead-behind to status and commit for V2 format.
-  status: update short status to respect --no-ahead-behind
-  status: support --no-ahead-behind in long format
-
- Documentation/git-status.txt |  5 ++++
- builtin/checkout.c           |  2 +-
- builtin/commit.c             |  7 +++++
- ref-filter.c                 |  8 +++---
- remote.c                     | 50 +++++++++++++++++++++++------------
- remote.h                     | 12 +++++++--
- t/t6040-tracking-info.sh     | 42 ++++++++++++++++++++++++++++++
- t/t7064-wtstatus-pv2.sh      | 62 ++++++++++++++++++++++++++++++++++++++++++++
- wt-status.c                  | 41 ++++++++++++++++++++---------
- wt-status.h                  |  2 ++
- 10 files changed, 196 insertions(+), 35 deletions(-)
-
+diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
+index 8f17fd9..0190220 100755
+--- a/t/t6040-tracking-info.sh
++++ b/t/t6040-tracking-info.sh
+@@ -147,6 +147,19 @@ test_expect_success 'status -s -b (diverged from upstream)' '
+ '
+ 
+ cat >expect <<\EOF
++## b1...origin/master [different]
++EOF
++
++test_expect_success 'status -s -b --no-ahead-behind (diverged from upstream)' '
++	(
++		cd test &&
++		git checkout b1 >/dev/null &&
++		git status -s -b --no-ahead-behind | head -1
++	) >actual &&
++	test_i18ncmp expect actual
++'
++
++cat >expect <<\EOF
+ ## b5...brokenbase [gone]
+ EOF
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 3fcab57..a4d3470 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1766,7 +1766,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	const char *base;
+ 	char *short_base;
+ 	const char *branch_name;
+-	int num_ours, num_theirs;
++	int num_ours, num_theirs, sti;
+ 	int upstream_is_gone = 0;
+ 
+ 	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "## ");
+@@ -1792,8 +1792,9 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 
+ 	color_fprintf(s->fp, branch_color_local, "%s", branch_name);
+ 
+-	if (stat_tracking_info(branch, &num_ours, &num_theirs, &base,
+-			       AHEAD_BEHIND_FULL) < 0) {
++	sti = stat_tracking_info(branch, &num_ours, &num_theirs, &base,
++				 s->ahead_behind_flags);
++	if (sti < 0) {
+ 		if (!base)
+ 			goto conclude;
+ 
+@@ -1805,12 +1806,14 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	color_fprintf(s->fp, branch_color_remote, "%s", short_base);
+ 	free(short_base);
+ 
+-	if (!upstream_is_gone && !num_ours && !num_theirs)
++	if (!upstream_is_gone && !sti)
+ 		goto conclude;
+ 
+ 	color_fprintf(s->fp, header_color, " [");
+ 	if (upstream_is_gone) {
+ 		color_fprintf(s->fp, header_color, LABEL(N_("gone")));
++	} else if (s->ahead_behind_flags == AHEAD_BEHIND_QUICK) {
++		color_fprintf(s->fp, header_color, LABEL(N_("different")));
+ 	} else if (!num_ours) {
+ 		color_fprintf(s->fp, header_color, LABEL(N_("behind ")));
+ 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
 -- 
 2.9.3
 
