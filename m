@@ -2,204 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEE161F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 19:57:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02381F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 20:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759624AbeAIT5s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 14:57:48 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:36865 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754326AbeAIT5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 14:57:47 -0500
-Received: by mail-pg0-f49.google.com with SMTP id z17so2772192pgc.4
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:57:47 -0800 (PST)
+        id S1754880AbeAIUG4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 15:06:56 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:32770 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754046AbeAIUGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 15:06:55 -0500
+Received: by mail-pf0-f195.google.com with SMTP id y89so9347048pfk.0
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 12:06:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=16QMtrBrnMKPeKekuGtWO04nbbxfGjTM3YjOkBO+R+k=;
-        b=c0wfLy9Y2/tRQ0KmF6tbexfR3JFStl60WizsA6vP/GnmpHQfZAS6uKxD2jZH72OXN/
-         92Zl/VfCu4WOQF+yiw2IwZ92EZlwJpPk44TgOGmLzviI6Xu0hxP/3egt4brekQKElsIo
-         8gX8szRtohdA5d3isepOAc1KmwAiFBgCpij8if8rFB1UCW5zlfVbPJQGyp2hnNBZnaSr
-         AkdWXKXftKyC61BEOctC6ntk2TZKuAGwihHf/am+bXoN6LP3S2PBhiFOKisqqYOvNzWg
-         zwyxhYzSFphSc2qRDARbzyN2fD1hxurLU0nBCJoMqm8TX0IGdn4VEwodSvTkl8akezRD
-         bksg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2FcqrhVGQfsww0tNmOKiz0lxwd6C1juXD5rpArT2oxY=;
+        b=ZxPcoJ02NJmQRbwuUY+qiBeCJG1MkXr55Y+s39oa28Yu90dh0LVlq0klMZzVpbqQID
+         Ee4G4dVr73Gj9MvFc5jmFl3qcUotKiNKiz4p3JtkhicMp+XhCCAh/dkztSo9cG/l7RGP
+         rggQUgHSDm5G5MeXQNpy+G2Wh2Anq2459QylYl479fxEQ/s4qJAXFuKxTJaU7fTUNOzQ
+         wKj4wYWCzF5YvDAxfJw0Dfq1jOKbVp1LcqmRndKWffHNJ/SBmKxZ4W84l96QuFSumkJK
+         oiqrZRsy22eBa3NIQm/JD+e39XfKx2sf/Mkl1Q5PrTTiriISan/WMXarkVMA12a3EvEF
+         sPhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=16QMtrBrnMKPeKekuGtWO04nbbxfGjTM3YjOkBO+R+k=;
-        b=G4XhHCXYQuIu/rMY7d1G2Vrqh4vPOMRLjzxZRLmgpU1ZwtMfrqQ3M+0DuqHZC7jxwb
-         oCvYL6OB8821pzk4thuWDYTazRSgeAKZLYo/O1GTF7a086sPbsmg4i1ymicmtV5QDvOL
-         wRAynZwbVVI0NfF7Ea0esHwYsEpes4fqOCTXY2BiOgry/OMm8T49cKx9TgtoZs5L2Lnw
-         heMTTIigLiUTlRj3lfmgL39q3Xaue8AIMGu63SsylCRs0QcrWZ9pmUdRsb/TnSfwKLyG
-         o+XDlW+foH43baTqMIWP698w92mN7xRe1iBse9/rkO2WFAyww71eSNOqxC4TA9/ZTX7o
-         dlJA==
-X-Gm-Message-State: AKGB3mLbtORHqB+6rIOaL1W/5s+ByALtXWLjmdlGHV9CW2knST5HuxXp
-        RTSpJToXBKI0/zo2IayE5Ty5dAty
-X-Google-Smtp-Source: ACJfBosZahdF/4uDZFcuEJsxVBxrTAeCiTDDitibtxbYD82w6InuT2LdwQF+euE46HjYXzGVnn4RZQ==
-X-Received: by 10.84.248.135 with SMTP id q7mr16256758pll.159.1515527866916;
-        Tue, 09 Jan 2018 11:57:46 -0800 (PST)
-Received: from [192.168.206.100] ([117.209.190.40])
-        by smtp.gmail.com with ESMTPSA id 186sm16544453pgi.34.2018.01.09.11.57.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 11:57:45 -0800 (PST)
-Subject: Re: [PATCH 6/8] Doc/gitsubmodules: improve readability of certain
- lines
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-7-kaartic.sivaraam@gmail.com>
- <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
- <f82949ed-5dbd-eab4-d917-8fe675b1c517@gmail.com>
- <CAGZ79kbQoLCodgR+JGXf_K1kS2Orjzp3W+7ZQBM0gX9je6d3Rg@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <f2753a3f-3e9c-b653-c29b-3399160c5e22@gmail.com>
-Date:   Wed, 10 Jan 2018 01:27:35 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2FcqrhVGQfsww0tNmOKiz0lxwd6C1juXD5rpArT2oxY=;
+        b=cCNkRv8WI64xnQjjYMujLroIeRVhaWOyK8OPDA1W/w3uGAVD52ETx/YXOuycWAzP50
+         NqwaHDbvt14tdmABtcfRmJCatZon2riXt+U5mRcqfW0/ZRo+F79bTHAINxLStiF866Yn
+         Qp8TqHmSNdfQY/EYHYXosieDo2SNWHOe8b2HPj3N0FK5r4LwUr3qumKcN21wGdbYcH3X
+         UOWSjt/AhaERvagiuJYr6IOA/oeFVXCvqE4AQUMzwFzsBCGoVvC3tvdZJ5lzLe3svhNI
+         NMTJqc1HllDBvxTWVhx8UMgvEWZjfaQwGaymeV9Uh7Ew3Wq8NQiy/0rbbmm13rOoMemO
+         gxsw==
+X-Gm-Message-State: AKGB3mKEhaERN130l3n90A4xXl49GkNxswbzg4CUztMWH91KGum2FfoU
+        nRnRG0y2ciRcQZmUfQdARzCfUA==
+X-Google-Smtp-Source: ACJfBouKhqxmna3L5aKRO9/76zj7lvSJ+lTLfTsEZo+46MehIMlylVV8ccD5+VYkwU3UmP+2cWgvqA==
+X-Received: by 10.99.141.193 with SMTP id z184mr7050281pgd.261.1515528414550;
+        Tue, 09 Jan 2018 12:06:54 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:5de7:5b51:7854:d1a5])
+        by smtp.gmail.com with ESMTPSA id h80sm13577220pfj.12.2018.01.09.12.06.53
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 Jan 2018 12:06:53 -0800 (PST)
+Date:   Tue, 9 Jan 2018 12:06:52 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, christian.couder@gmail.com
+Subject: Re: [PATCH v1 0/2] Incremental rewrite of git-submodules
+Message-ID: <20180109200652.GE151395@google.com>
+References: <20180109175703.4793-1-pc44800@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbQoLCodgR+JGXf_K1kS2Orjzp3W+7ZQBM0gX9je6d3Rg@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="OysdXfdaFXjENRVyQ7irylznj44ybOa98"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109175703.4793-1-pc44800@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---OysdXfdaFXjENRVyQ7irylznj44ybOa98
-Content-Type: multipart/mixed; boundary="SHU98iFhXQHG5u9RehHw9tMKGdI1utSch";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Message-ID: <f2753a3f-3e9c-b653-c29b-3399160c5e22@gmail.com>
-Subject: Re: [PATCH 6/8] Doc/gitsubmodules: improve readability of certain
- lines
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <20180106184614.20115-7-kaartic.sivaraam@gmail.com>
- <CAGZ79kYPcx39VqWLAxRCQgO16=Yegq6XeCVUmX7shYomF6sz=g@mail.gmail.com>
- <f82949ed-5dbd-eab4-d917-8fe675b1c517@gmail.com>
- <CAGZ79kbQoLCodgR+JGXf_K1kS2Orjzp3W+7ZQBM0gX9je6d3Rg@mail.gmail.com>
-In-Reply-To: <CAGZ79kbQoLCodgR+JGXf_K1kS2Orjzp3W+7ZQBM0gX9je6d3Rg@mail.gmail.com>
+On 01/09, Prathamesh Chavan wrote:
+> The patches [1] and [2] concerning the porting of submodule
+> subcommands: sync and deinit were updated in accoudance with
+> the changes made in one of such similar portings made earlier
+> for submodule subcommand status[3]. Following are the changes
+> made:
 
---SHU98iFhXQHG5u9RehHw9tMKGdI1utSch
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+The two patches look good to me.  Thanks for continuing this work!
 
-On Wednesday 10 January 2018 01:01 AM, Stefan Beller wrote:
->>>>  The submodule's `$GIT_DIR/config` file would come into play when ru=
-nning
->>>>  `git push --recurse-submodules=3Dcheck` in the superproject, as thi=
-s would
->>>> @@ -107,13 +108,13 @@ If the submodule is not yet initialized, then =
-the configuration
->>>>  inside the submodule does not exist yet, so configuration where to
->>>>  obtain the submodule from is configured here for example.
->>>>
->>
->> I caught this in the context while replying. "so configuration where t=
-o
->> obtain the submodule from is configured here for example." doesn't see=
-m
->> to read well. Maybe removing configuration from the sentence will make=
+> 
+> * It was observed that the number of params increased a lot due to flags
+>   like quiet, recursive, cached, etc, and keeping in mind the future
+>   subcommand's ported functions as well, a single unsigned int called
+>   flags was introduced to store all of these flags, instead of having
+>   parameter for each one.
 
->> it sound better?
->>
+This is unfortunate.  The use of a flag word or using bit-fields are
+essentially equivalent so its unfortunate that the conversion to using
+one or the other caused review churn.  My own preference would be to use
+bit-fields ;)  I also noticed that the flags you are using start with
+OPT_* which conflict with the parse-options namespace, sorry for not
+catching this when a few of your older patches made it into master.
+This isn't a big deal since no symbols look to collide so I am not
+suggesting you change this since I would prefer to eliminate more
+unnecessary review churn on this series.
 
-I'm going to make this change.
+> 
+> * To accomodate the possiblity of a direct call to the functions
+>   deinit_submodule() and sync_submodule(), callback functions were
+>   introduced.
+> 
+> As before you can find this series at: 
+> https://github.com/pratham-pc/git/commits/patch-series-2
+> 
+> And its build report is available at: 
+> https://travis-ci.org/pratham-pc/git/builds/
+> Branch: patch-series-2
+> Build #195
+> 
+> [1]: https://public-inbox.org/git/20170807211900.15001-6-pc44800@gmail.com/
+> [2]: https://public-inbox.org/git/20170807211900.15001-7-pc44800@gmail.com/
+> [3]: https://public-inbox.org/git/20171006132415.2876-4-pc44800@gmail.com/
+> 
+> Prathamesh Chavan (2):
+>   submodule: port submodule subcommand 'sync' from shell to C
+>   submodule: port submodule subcommand 'deinit' from shell to C
+> 
+>  builtin/submodule--helper.c | 345 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-submodule.sh            | 112 +-------------
+>  2 files changed, 347 insertions(+), 110 deletions(-)
+> 
+> -- 
+> 2.14.2
+> 
 
-
->>
->>>> - * the `.gitmodules` file inside the superproject. Additionally to =
-the
->>>> -   required mapping between submodule's name and path, a project us=
-ually
->>>> + * The `.gitmodules` file inside the superproject. Additionally, if=
- mapping
->>>> +   is required between a submodule's name and its path, a project u=
-sually
->>>
->>> This changes meaning, originally it tries to say:
->>>
->>> * it requires mapping path <-> names.
->>
->> I get this ...
->>
->>> * but there can be more.
->>
->> ... but not this. Did the previous version really try to say this?
->> Anyways how does this sound?
->=20
-> Well that was me being very sloppy trying to say that there might be
-> submodule.<name>.{url, ignored, shallow} settings which just happen to
-> be there.
->=20
->>   * The `.gitmodules` file inside the superproject. A project usually
->>     uses this file to suggest defaults for the upstream collection
->>     of repositories for the mapping that is required between a
->>     submodule's name and its path.
->>
->> I think it conveys the "it requires mapping path <-> names." correctly=
-
->> but doesn't convey the "but there can be more." part. I'm not sure how=
-
->> to get that into the sentence, correctly.
->=20
-> I did not consider that part the important part, hence my sloppiness.
-> Sorry for the confusion.
->=20
-> My main point was to say that the mapping is the important part and
-> must be found in the .gitmodules file, otherwise we do not consider
-> it a submodule (for whatever "it" is, maybe a gitlink at a path=3Dname)=
-=2E
->=20
-
-So, I'm going to use the version that I specified above as I think it
-seems to convey that clearly (at least to me),
-
-    The `.gitmodules` file inside the superproject. A project usually
-    uses this file to suggest defaults for the upstream collection
-    of repositories for the mapping that is required between a
-    submodule's name and its path.
-
-Let me know, if there are issues.
-
-Thanks,
-Kaartic
-
-
---SHU98iFhXQHG5u9RehHw9tMKGdI1utSch--
-
---OysdXfdaFXjENRVyQ7irylznj44ybOa98
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpVHrAbHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpCdcP/2/Q5ko6LlQk5pZY6xcM
-lbBJeWi5ajujgwnu1DVnbkx6woBBKiDo05BRG89JCeblZ54VcNbVLNZx5Xer7U+O
-dZzEkRMetXQu0lOfLQ9L3EEGpRkQJqpyoSZF44vJ6gBHnV+MAZbWhDwBoTckLHpP
-OnuvNatDnZ8/LJ1rA4JG7itL7/RGIhB7QE9TgELVSbMBQGKap2UI4HpKo/YmjgUo
-qE7TUT7O5tfdWm09OeMcw0V0BzqXsaIoLsTsXC6emahGRQb/zgV3y3NrN5qrY60f
-zpAVpbY7nCavC1j5ymjraWcC+CQ/3lH+TEJk5XuumMlOgl3ziGtx44ppmzYgbkz4
-KtXXhePszjaO7YN2zjXP5Nx3TKfiMyDNWR5/aXN1uydejEKkNv+a2CwxUgrp4DH/
-85n+AR0nlshl2AvMFVO1uZ6XaEbO43Jho95OivdnlGnFJUysPIa3c5PRZXkMkvoh
-SALOPOyTf3s/as07aDDiSqZSozSvwotDMm2psZBpXs9xvH8rqXpsiAXkpGZKBeHf
-xuq8ysIlFGZpN5uGrwzzFUAVqYW4Fm4yGOMenZHea26b8juHDU45+EkCQs6dRtb+
-dk1qlOhBnqJYRO/cO2PUc8j3x1Cfs6A+H5Cj/gbHiBIMyNiWXMfBz2kP/dDBg5MX
-TNlgLMU70j6s7f6kZtR75Oo1
-=uVdZ
------END PGP SIGNATURE-----
-
---OysdXfdaFXjENRVyQ7irylznj44ybOa98--
+-- 
+Brandon Williams
