@@ -8,183 +8,128 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C58A31F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 13:06:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E966C1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 13:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757221AbeAINGF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 08:06:05 -0500
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:38564
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756992AbeAINFZ (ORCPT
+        id S1757225AbeAINGH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 08:06:07 -0500
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:37318
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756999AbeAINFZ (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 9 Jan 2018 08:05:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515503123;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=eiYmdPy2AYf3LKpKj1ErAL8Nwy8TCHcHvgJHFKhoky4=;
-        b=HMpn8v4vsBJM3Intn5s5UNGov9d9uuZCtM1ssB3cwOC0S+CEC42UMMeMKLA+06ll
-        CqKK0pvawXrWp++XOm6KhhIhWIyg7pwMMFAAz8mTnSIIz1FS9wUz8Wfe3UX4qsiGDJQ
-        5wz/hKNJA2ZiJJtLruYxZoHFr33WjQ7W3TnrGvH8=
+        bh=V/tFOIAJ+AA7p//KfbF9NPJ5IxgKzVLRVbrdBrjCV2k=;
+        b=MFoKPpjeqlWqHxlgZC/DQa+cRTdtDeb0WmDsTWnEZ6CkINazh3UtsWTEnDoRNMYX
+        YbkPGHVnq7dVKWN1OfX3x16krxaiRnN1SqFw8bMh/BJ3rFnVpX5m9kgBZtWDQ1oPDhH
+        ZLKhbinl0q3cyxccPaan4zHDwVY8wLhDQXb5Lmuk=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160db067b4f-60d6012f-7cb8-4ba2-891f-1d1ed5bb5786-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160db067af3-3108a276-f04a-4eb0-8434-5006f6596f56-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
 References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
-Subject: [PATCH 07/20] cat-file: reuse parse_ref_filter_atom
+Subject: [PATCH 12/20] cat-file: rename variable in ref-filter
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Tue, 9 Jan 2018 13:05:23 +0000
-X-SES-Outgoing: 2018.01.09-54.240.7.17
+X-SES-Outgoing: 2018.01.09-54.240.7.20
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Continue migrating formatting logic from cat-file to ref-filter.
-Reuse parse_ref_filter_atom for unifying all processes in ref-filter
-and further reducing of expand_atom_into_fields function.
+Rename variable for easier reading.
+It points not to values, but to arrays.
+Added "s" ending so that it could be obvious.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- ref-filter.c | 73 +++++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 45 insertions(+), 28 deletions(-)
+ ref-filter.c | 16 ++++++++--------
+ ref-filter.h |  2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index 98bb10185ae96..2bd9a8fc4e39c 100644
+index 1b8c8787190a9..56d2687e07df9 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -100,6 +100,7 @@ static struct used_atom {
- 	} u;
- } *used_atoms;
- static int used_atom_cnt, need_tagged, need_symref;
-+struct expand_data *cat_file_info;
+@@ -1418,7 +1418,7 @@ static void need_object(struct ref_array_item *ref) {
+ 		die(_("parse_object_buffer failed on %s for %s"),
+ 		    oid_to_hex(&ref->objectname), ref->refname);
  
- static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
- {
-@@ -251,6 +252,16 @@ static void objectname_atom_parser(const struct ref_format *format, struct used_
- 		die(_("unrecognized %%(objectname) argument: %s"), arg);
+-	grab_values(ref->value, 0, obj, buf, size);
++	grab_values(ref->values, 0, obj, buf, size);
+ 	if (!eaten)
+ 		free(buf);
+ 
+@@ -1448,7 +1448,7 @@ static void need_object(struct ref_array_item *ref) {
+ 	if (!obj)
+ 		die(_("parse_object_buffer failed on %s for %s"),
+ 		    oid_to_hex(tagged), ref->refname);
+-	grab_values(ref->value, 1, obj, buf, size);
++	grab_values(ref->values, 1, obj, buf, size);
+ 	if (!eaten)
+ 		free(buf);
  }
- 
-+static void objectsize_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+{
-+	if (!arg)
-+		; /* default to normal object size */
-+	else if (!strcmp(arg, "disk"))
-+		cat_file_info->info.disk_sizep = &cat_file_info->disk_size;
-+	else
-+		die(_("urecognized %%(objectsize) argument: %s"), arg);
-+}
-+
- static void refname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+@@ -1460,7 +1460,7 @@ static void populate_value(struct ref_array_item *ref)
  {
- 	refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
-@@ -371,6 +382,14 @@ static struct valid_atom {
- 	{ "else" },
- };
+ 	int i;
  
-+static struct valid_atom valid_cat_file_atoms[] = {
-+	{ "objectname" },
-+	{ "objecttype" },
-+	{ "objectsize", FIELD_ULONG, objectsize_atom_parser },
-+	{ "rest" },
-+	{ "deltabase" },
-+};
-+
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
+-	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
++	ref->values = xcalloc(used_atom_cnt, sizeof(struct atom_value));
  
- struct ref_formatting_stack {
-@@ -392,6 +411,25 @@ struct atom_value {
- 	struct used_atom *atom;
- };
+ 	if (need_symref && (ref->flag & REF_ISSYMREF) && !ref->symref) {
+ 		ref->symref = resolve_refdup(ref->refname, RESOLVE_REF_READING,
+@@ -1473,7 +1473,7 @@ static void populate_value(struct ref_array_item *ref)
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct used_atom *atom = &used_atoms[i];
+ 		const char *name = used_atoms[i].name;
+-		struct atom_value *v = &ref->value[i];
++		struct atom_value *v = &ref->values[i];
+ 		int deref = 0;
+ 		const char *refname;
+ 		struct branch *branch = NULL;
+@@ -1571,7 +1571,7 @@ static void populate_value(struct ref_array_item *ref)
+ 	}
  
-+static int is_atom(const char *atom, const char *s, int slen)
-+{
-+	int alen = strlen(atom);
-+	return alen == slen && !memcmp(atom, s, alen);
-+}
-+
-+static void expand_atom_into_fields(const char *atom, int len,
-+				    struct expand_data *data)
-+{
-+	if (is_atom("objecttype", atom, len))
-+		data->info.typep = &data->type;
-+	else if (is_atom("objectsize", atom, len))
-+		data->info.sizep = &data->size;
-+	else if (is_atom("rest", atom, len))
-+		data->split_on_whitespace = 1;
-+	else if (is_atom("deltabase", atom, len))
-+		data->info.delta_base_sha1 = data->delta_base_oid.hash;
-+}
-+
- /*
-  * Used to parse format string and sort specifiers
+ 	for (i = 0; i < used_atom_cnt; i++) {
+-		struct atom_value *v = &ref->value[i];
++		struct atom_value *v = &ref->values[i];
+ 		if (v->s == NULL) {
+ 			need_object(ref);
+ 			break;
+@@ -1586,11 +1586,11 @@ static void populate_value(struct ref_array_item *ref)
   */
-@@ -458,6 +496,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 		need_tagged = 1;
- 	if (!strcmp(valid_atoms[i].name, "symref"))
- 		need_symref = 1;
-+	if (cat_file_info)
-+		expand_atom_into_fields(atom, atom_len, cat_file_info);
- 	return at;
- }
- 
-@@ -693,31 +733,6 @@ static const char *find_next(const char *cp)
- 	return NULL;
- }
- 
--static int is_atom(const char *atom, const char *s, int slen)
--{
--	int alen = strlen(atom);
--	return alen == slen && !memcmp(atom, s, alen);
--}
--
--static void expand_atom_into_fields(const char *atom, int len,
--				    struct expand_data *data)
--{
--	if (is_atom("objectname", atom, len))
--		; /* do nothing */
--	else if (is_atom("objecttype", atom, len))
--		data->info.typep = &data->type;
--	else if (is_atom("objectsize", atom, len))
--		data->info.sizep = &data->size;
--	else if (is_atom("objectsize:disk", atom, len))
--		data->info.disk_sizep = &data->disk_size;
--	else if (is_atom("rest", atom, len))
--		data->split_on_whitespace = 1;
--	else if (is_atom("deltabase", atom, len))
--		data->info.delta_base_sha1 = data->delta_base_oid.hash;
--	else
--		die("unknown format element: %.*s", len, atom);
--}
--
- /*
-  * Make sure the format string is well formed, and parse out
-  * the used atoms.
-@@ -726,6 +741,7 @@ int verify_ref_format(struct ref_format *format)
+ static void get_ref_atom_value(struct ref_array_item *ref, int atom, struct atom_value **v)
  {
- 	const char *cp, *sp;
+-	if (!ref->value) {
++	if (!ref->values) {
+ 		populate_value(ref);
+-		fill_missing_values(ref->value);
++		fill_missing_values(ref->values);
+ 	}
+-	*v = &ref->value[atom];
++	*v = &ref->values[atom];
+ }
  
-+	cat_file_info = format->cat_file_data;
- 	format->need_color_reset_at_eol = 0;
- 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
- 		const char *color, *ep = strchr(sp, ')');
-@@ -736,9 +752,10 @@ int verify_ref_format(struct ref_format *format)
- 		/* sp points at "%(" and ep points at the closing ")" */
+ /*
+diff --git a/ref-filter.h b/ref-filter.h
+index 590a60ffe034d..de3fd3263ac64 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -39,7 +39,7 @@ struct ref_array_item {
+ 	unsigned int kind;
+ 	const char *symref;
+ 	struct commit *commit;
+-	struct atom_value *value;
++	struct atom_value *values;
+ 	char refname[FLEX_ARRAY];
+ };
  
- 		if (format->cat_file_data)
--			expand_atom_into_fields(sp + 2, ep - sp - 2,
--						format->cat_file_data);
--		else
-+		{
-+			at = parse_ref_filter_atom(format, valid_cat_file_atoms,
-+						   ARRAY_SIZE(valid_cat_file_atoms), sp + 2, ep);
-+		} else
- 		{
- 			at = parse_ref_filter_atom(format, valid_atoms,
- 						   ARRAY_SIZE(valid_atoms), sp + 2, ep);
 
 --
 https://github.com/git/git/pull/450
