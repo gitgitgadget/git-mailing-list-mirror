@@ -2,77 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1011F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 19:13:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AB311F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 19:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935454AbeAITNQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 14:13:16 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60343 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935440AbeAITNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 14:13:14 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 96708C8985;
-        Tue,  9 Jan 2018 14:13:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8yQ+wLLXt6Lr
-        byWh2+48qur0TUQ=; b=DGnjCMCg84ntDpgVsfiPETNKEifyDWeCgU2/bbIgJ/Y6
-        aKcV3Qy0jsiqN668Q5tPURqUawMvAjBmh9LN+7DDxHWOU4kOn1nx5A1a6OZuKG4a
-        gQWuvEuVAf1ZhOOan/x3liCkA2k+t4uOjDELbWNFQbcttH2T+3VOkmyxL2keBEU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H0oDQb
-        rMziI2Nvpf8x7eaZzaXleaLdqfBV6d2eGh9LMna1OesGz1h5WOsq9TLGgVu/+MJ4
-        YdSZEJr8sYxv6yYi542DECDaLD1Q6seyBET0C1HRoY7FWzU97aObNBKurngxK5ka
-        ijpUWlHZPKwxj7EnsJ24MsMlHx2F0lr2b+ml4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DFD9C8984;
-        Tue,  9 Jan 2018 14:13:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0EBB4C8982;
-        Tue,  9 Jan 2018 14:13:12 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: merge-base --is-ancestor A B is unreasonably slow with unrelated history B
-References: <87608bawoa.fsf@evledraar.gmail.com>
-Date:   Tue, 09 Jan 2018 11:13:11 -0800
-In-Reply-To: <87608bawoa.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 09 Jan 2018 16:17:41 +0100")
-Message-ID: <xmqq7esq6e2g.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S933821AbeAITPN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 14:15:13 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35884 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932998AbeAITPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 14:15:13 -0500
+Received: by mail-pf0-f195.google.com with SMTP id 23so6567852pfp.3
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 11:15:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=McAt39KXcyrPCTSTZLkqi4cYKGQfSZw3I0BFvClGq4g=;
+        b=iprWCxdVBEkswe6h0io9bdEgCAyomeK/PQUeDzHLmf1JylZzT1125Ug9+dlyCH50vP
+         e+iMQcLyZ9/MX6pPKoVil8/o9aUqkMd68twbPAyD7XxmddqLNN59H0uffEf5ADtJXASY
+         6pbh/Cb0IOqxjqIxSANNjn5vyHlRi5YnBU6UYak9JK7oFfMy4zhjowMJ2dAOXmhd/nEw
+         IkN3wjho3NrSzm6txGY7dpdqJ36jtQFnF3UknA8F44TKDsoPxr1uSAxR6Uqa81L+jA+0
+         bAknI0QEDSKdSiCpYX3Dl6LnxmX9WB2Wiv+MeUNbFh8vUe/6stvglD9N5csDRweG4xi7
+         NJTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=McAt39KXcyrPCTSTZLkqi4cYKGQfSZw3I0BFvClGq4g=;
+        b=Pr41rXFZTY4opM13WIA2kldgLSuoLS4gSauj/sWfvBPHiQjum4ftFWtVuz076yu1xE
+         y17NA8a0WhJMoUNHupPWFURBZJ+KuI5Za9+ApJ04LFxL9RtGVox7HBlJruffkDVg2+l3
+         AefW+18x8M6/LfJ4TaYAJehSdWmpBPNS7WZtsk7c0/+/NAS+E24+jhgaBTX7e0+6OiFU
+         46jUJjxWbf3jkPH0bqaN/WRyARPrvuy931Fw+G2cwwAY0CT215jC/oV/uXAAqsyoohb+
+         RTg2K2SCHNwSEK61S6EKay4l3QmIY7HWXQvuqrx5N1q5OErUyXE7mW9qTxrpBscQiObE
+         LClQ==
+X-Gm-Message-State: AKGB3mJhZCtYCvQ1nzNqWJAnvg9pIrjeVoL4/ibz4YAi8NwmA2q9/K2s
+        TMa4JvZ3TA6auyWmnnWZdz0N5w==
+X-Google-Smtp-Source: ACJfBouSkuxbmMFiqUSgvlTgN5k5YswnTHKwEUtGLeDUeyR0kcNIu8hm6HEE7zdmc8RTZvr2eOuRrw==
+X-Received: by 10.159.205.129 with SMTP id v1mr16451393plo.31.1515525312456;
+        Tue, 09 Jan 2018 11:15:12 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:5de7:5b51:7854:d1a5])
+        by smtp.gmail.com with ESMTPSA id b25sm35099695pfd.182.2018.01.09.11.15.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 Jan 2018 11:15:11 -0800 (PST)
+Date:   Tue, 9 Jan 2018 11:15:10 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 09/26] transport: store protocol version
+Message-ID: <20180109191510.GB151395@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180103001828.205012-10-bmwill@google.com>
+ <20180109104125.4cb1a3e545cfe354862e4b8e@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2351930C-F571-11E7-8D2C-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109104125.4cb1a3e545cfe354862e4b8e@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 01/09, Jonathan Tan wrote:
+> On Tue,  2 Jan 2018 16:18:11 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > diff --git a/transport.c b/transport.c
+> > index 63c3dbab9..2378dcb38 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -118,6 +118,7 @@ struct git_transport_data {
+> >  	struct child_process *conn;
+> >  	int fd[2];
+> >  	unsigned got_remote_heads : 1;
+> > +	enum protocol_version version;
+> 
+> Should this be initialized to protocol_unknown_version? Right now, as
+> far as I can tell, it is zero-initialized, which means protocol_v0.
 
-> This is obviously a pathological case, but maybe we should work slightl=
-y
-> harder on the RHS of and discover that it itself is an orphan commit.
+I don't think it matters as the value isn't used until after the
+version has already been discovered.
 
-In order to discover a commit is an orphan, you'd need to prove not
-just that it does not reach the main part of the history (which is
-cheap---its parenthood network would be quite limited and traversing
-all of it is not that expensive) but the other way around, i.e. the
-main part of the history would not reach it.
-
-Do you have a cheaper way to do the latter than a full traveral of
-the main history?  If not, then the cost similar to "git log master"
-is expected.
+-- 
+Brandon Williams
