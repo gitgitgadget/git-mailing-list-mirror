@@ -8,119 +8,101 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2CF01F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 13:05:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A4051F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 13:05:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757155AbeAINFv (ORCPT <rfc822;e@80x24.org>);
+        id S1757150AbeAINFv (ORCPT <rfc822;e@80x24.org>);
         Tue, 9 Jan 2018 08:05:51 -0500
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:45794
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1757014AbeAINFZ (ORCPT
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:49110
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1757021AbeAINFZ (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 9 Jan 2018 08:05:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515503123;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515503124;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=jEpFGYgej7FTlltVuihwlZ3kR1Iskq/6bQaRpIx6UbM=;
-        b=ZBAa8Wp69F4r8uyz9D47sHz6CieiiKAEsQM0PORTQjWUknMM5q4Fe+z84r50SRyy
-        lY77Ra1957gg7eBe0nK0j5XQVROd/LFElDm1tZ3wqJCBbdFf/pNAvpzYAwCnCqO844M
-        W/HAcArjySeHuhW15IIBVvx03ziwz73ovHSOu838=
+        bh=lWlBsE7mOlv6/YV1eS1ASIGK8wVfLFzke4bmLfoflMg=;
+        b=OVpnGv4bLc0drIpdXrqVEXpIr1KxCst2hSNBhEYIwvCqzngU8kZs8w8yAQPih9Vm
+        avsID6BIrI2llrEvdBwD98+CNQbrZ7bijki5jfPDXRUSFg/yHctgVWd1WDHIGMGBPUV
+        GXTig/h6tG6kz0nARIiNhi/UrvpSdkpLpgSEC5U4=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160db067c88-b3fd99cb-2155-43d7-875a-f3f0d2ad0e1e-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160db067c8a-c3ce9582-bc4d-40fd-ac96-b530f93b2752-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
 References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
-Subject: [PATCH 15/20] cat-file: start reusing populate_value
+Subject: [PATCH 19/20] cat-file: move skip_object_info into ref-filter
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Tue, 9 Jan 2018 13:05:23 +0000
-X-SES-Outgoing: 2018.01.09-54.240.7.18
+X-SES-Outgoing: 2018.01.09-54.240.7.12
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move logic related to getting object info from cat-file to ref-filter.
-It will help to reuse whole formatting logic from ref-filter further.
+Move logic related to skip_object_info into ref-filter,
+so that cat-file does not use that field at all.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 16 +++-------------
- ref-filter.c       | 15 +++++++++++++++
- ref-filter.h       |  2 ++
- 3 files changed, 20 insertions(+), 13 deletions(-)
+ builtin/cat-file.c | 7 +------
+ ref-filter.c       | 5 +++++
+ ref-filter.h       | 1 +
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1c92194faaede..e11dbf88e386c 100644
+index 5aac10b9808ff..19cee0d22fabe 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -284,21 +284,11 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 	struct strbuf buf = STRBUF_INIT;
- 	struct ref_array_item item;
+@@ -395,16 +395,11 @@ static int batch_objects(struct batch_options *opt)
+ 	opt->format->cat_file_data = &data;
+ 	opt->format->is_cat = 1;
+ 	opt->format->split_on_whitespace = &data.split_on_whitespace;
++	opt->format->all_objects = opt->all_objects;
+ 	verify_ref_format(opt->format);
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
  
--	if (!data->skip_object_info &&
--	    sha1_object_info_extended(data->oid.hash, &data->info,
--				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
--		printf("%s missing\n",
--		       obj_name ? obj_name : oid_to_hex(&data->oid));
--		fflush(stdout);
--		return;
+-	if (opt->all_objects) {
+-		struct object_info empty = OBJECT_INFO_INIT;
+-		if (!memcmp(&data.info, &empty, sizeof(empty)))
+-			data.skip_object_info = 1;
 -	}
 -
- 	item.objectname = data->oid;
--	item.type = data->type;
--	item.size = data->size;
--	item.disk_size = data->disk_size;
- 	item.rest = data->rest;
--	item.delta_base_oid = data->delta_base_oid;
-+	item.start_of_request = obj_name;
-+
-+	if (populate_value(&item)) return;
- 
- 	strbuf_expand(&buf, opt->format->format, expand_format, &item);
- 	strbuf_addch(&buf, '\n');
+ 	/*
+ 	 * If we are printing out the object, then always fill in the type,
+ 	 * since we will want to decide whether or not to stream.
 diff --git a/ref-filter.c b/ref-filter.c
-index ed1b78943b8b4..7df6d7e3d6511 100644
+index ee27edb2dad56..dbca6856432c0 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1469,6 +1469,21 @@ int populate_value(struct ref_array_item *ref)
- 			ref->symref = "";
+@@ -766,6 +766,11 @@ int verify_ref_format(struct ref_format *format)
  	}
- 
-+	if (cat_file_info) {
-+		if (!cat_file_info->skip_object_info &&
-+		    sha1_object_info_extended(ref->objectname.hash, &cat_file_info->info,
-+					      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
-+			const char *e = ref->start_of_request;
-+			printf("%s missing\n", e ? e : oid_to_hex(&ref->objectname));
-+			fflush(stdout);
-+			return -1;
-+		}
-+		ref->type = cat_file_info->type;
-+		ref->size = cat_file_info->size;
-+		ref->disk_size = cat_file_info->disk_size;
-+		ref->delta_base_oid = cat_file_info->delta_base_oid;
+ 	if (format->need_color_reset_at_eol && !want_color(format->use_color))
+ 		format->need_color_reset_at_eol = 0;
++	if (is_cat && format->all_objects) {
++		struct object_info empty = OBJECT_INFO_INIT;
++		if (!memcmp(&cat_file_info->info, &empty, sizeof(empty)))
++			cat_file_info->skip_object_info = 1;
 +	}
-+
- 	/* Fill in specials first */
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atoms[i];
+ 	return 0;
+ }
+ 
 diff --git a/ref-filter.h b/ref-filter.h
-index d541749f9b1dc..9e4444cf3ef9a 100644
+index 3228661414623..7f7b17e659241 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -45,6 +45,8 @@ struct ref_array_item {
- 	off_t disk_size;
- 	const char *rest;
- 	struct object_id delta_base_oid;
-+	/* Need it for better explanation in error log. */
-+	const char *start_of_request;
- 	char refname[FLEX_ARRAY];
+@@ -128,6 +128,7 @@ struct ref_format {
+ 	struct expand_data *cat_file_data;
+ 	int is_cat;
+ 	int *split_on_whitespace;
++	int all_objects;
  };
  
+ #define REF_FORMAT_INIT { NULL, 0, -1 }
 
 --
 https://github.com/git/git/pull/450
