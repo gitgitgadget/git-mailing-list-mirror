@@ -6,107 +6,73 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF0AC1F404
-	for <e@80x24.org>; Tue,  9 Jan 2018 07:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17E251F404
+	for <e@80x24.org>; Tue,  9 Jan 2018 07:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754698AbeAIHML (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 02:12:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38244 "HELO cloud.peff.net"
+        id S933386AbeAIHUr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 02:20:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38260 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750818AbeAIHMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 02:12:10 -0500
-Received: (qmail 4091 invoked by uid 109); 9 Jan 2018 07:12:10 -0000
+        id S933076AbeAIHUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 02:20:46 -0500
+Received: (qmail 4479 invoked by uid 109); 9 Jan 2018 07:20:46 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Jan 2018 07:12:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 09 Jan 2018 07:20:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2339 invoked by uid 111); 9 Jan 2018 07:12:43 -0000
+Received: (qmail 2388 invoked by uid 111); 9 Jan 2018 07:21:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Jan 2018 02:12:43 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 09 Jan 2018 02:21:19 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jan 2018 02:12:08 -0500
-Date:   Tue, 9 Jan 2018 02:12:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Jan 2018 02:20:44 -0500
+Date:   Tue, 9 Jan 2018 02:20:44 -0500
 From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        gitster@pobox.com, johannes.schindelin@gmx.de, jrnieder@gmail.com
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-Message-ID: <20180109071208.GB32257@sigill.intra.peff.net>
-References: <20180107181459.222909-1-dstolee@microsoft.com>
- <87k1wtb8a4.fsf@evledraar.gmail.com>
- <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
- <20180108102029.GA21232@sigill.intra.peff.net>
- <d00ba196-715d-4613-530c-ef7f7c4562f4@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 0/4] Add --no-ahead-behind to status
+Message-ID: <20180109072044.GD32257@sigill.intra.peff.net>
+References: <20180108154822.54829-1-git@jeffhostetler.com>
+ <7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com>
+ <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d00ba196-715d-4613-530c-ef7f7c4562f4@gmail.com>
+In-Reply-To: <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 08, 2018 at 08:43:44AM -0500, Derrick Stolee wrote:
+On Mon, Jan 08, 2018 at 03:04:20PM -0500, Jeff Hostetler wrote:
 
-> > Just to make sure I'm parsing this correctly: normal lookups do get faster
-> > when you have a single index, given the right setup?
-> > 
-> > I'm curious what that setup looked like. Is it just tons and tons of
-> > packs? Is it ones where the packs do not follow the mru patterns very
-> > well?
+> > I was thinking about something similar to the logic we use today
+> > about whether to start reporting progress on other long commands.
+> > That would mean you could still get the ahead/behind values if you
+> > aren't that far behind but would only get "different" if that
+> > calculation gets too expensive (which implies the actual value isn't
+> > going to be all that helpful anyway).
 > 
-> The way I repacked the Linux repo creates an artificially good set of packs
-> for the MRU cache. When the packfiles are partitioned instead by the time
-> the objects were pushed to a remote, the MRU cache performs poorly.
-> Improving these object lookups are a primary reason for the MIDX feature,
-> and almost all commands improve because of it. 'git log' is just the
-> simplest to use for demonstration.
-
-Interesting.
-
-The idea of the pack mru (and the "last pack looked in" before it) is
-that there would be good locality for time-segmented packs (like those
-generated by pushes), since most operations also tend to visit history
-in chronological-ish order (e.g., log). Tree-wide operations would be an
-exception there, though, since files would have many ages across the
-tree (though in practice, one would hope that pretty-ancient history
-would eventually be replaced in a modern tree).
-
-I've often wondered, though, if the mru (and "last pack") work mainly
-because the "normal" distribution for a repository is to have one big
-pack with most of history, and then a couple of smaller ones (what
-hasn't been packed yet). Even something as naive as "look in the last
-pack" works there, because it turns into "look in the biggest pack".  If
-it has most of the objects, it's the most likely place for the previous
-and the next objects to be.
-
-But from my understanding of how you handle the Windows repository, you
-have tons of equal-sized packs that are never coalesced. Which is quite
-a different pattern.
-
-I would expect your "--max-pack-size" thing to end up with something
-roughly segmented like pushes, though, just because we do order the
-write phase in reverse chronological order. Well, mostly. We do each
-object type in its own chunks, and there's some reordering based on
-deltas. So given the sizes, it's likely that most of your trees all end
-up in a few packs.
-
-> > There may be other reasons to want MIDX or something like it, but I just
-> > wonder if we can do this much simpler thing to cover the abbreviation
-> > case. I guess the question is whether somebody is going to be annoyed in
-> > the off chance that they hit a collision.
+> After a off-line conversation with the others I'm going to look into
+> a version that is limited to n commits rather than be completely on or
+> off.  I think if you are for example less than 100 a/b then those numbers
+> have value; if you are past n, then they have much less value.
 > 
-> No only are users going to be annoyed when they hit collisions after
-> copy-pasting an abbreviated hash, there are also a large number of tools
-> that people build that use abbreviated hashes (either for presenting to
-> users or because they didn't turn off abbreviations).
->
-> Abbreviations cause performance issues in other commands, too (like
-> 'fetch'!), so whatever short-circuit you put in, it would need to be global.
-> A flag on one builtin would not suffice.
+> I'd rather do it by a fixed limit than by time to ensure that output
+> is predictable on graph shape and not on system load.
 
-Yeah, I agree it's potentially problematic for a lot of reasons. I was
-just hoping we could bound the probabilities in a way that is
-acceptable. Maybe it's a fool's errand.
+I like this direction a lot. I had hoped we could say "100+ commits
+ahead", but I don't think we can do so accurately without generation
+numbers. E.g., the case I mentioned at the bottom of this mail:
+
+  https://public-inbox.org/git/20171224143318.GC23648@sigill.intra.peff.net/
+
+I haven't thought too hard on it, but I suspect with generation numbers
+you could bound it and at least say "100+ ahead" or "100+ behind". But I
+don't think you can approximate both ahead and behind together without
+finding the actual merge base.
+
+But even still, finding small answers quickly and accurately and punting
+to "really far, I didn't bother to compute it" on the big ones would be
+an improvement over always punting.
 
 -Peff
