@@ -7,97 +7,87 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52A201F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 18:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 814C31FAE2
+	for <e@80x24.org>; Tue,  9 Jan 2018 18:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934980AbeAIS5i (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 13:57:38 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61506 "EHLO
+        id S935084AbeAIS7v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 13:59:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57644 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932310AbeAIS5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 13:57:38 -0500
+        with ESMTP id S932310AbeAIS7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 13:59:50 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4BFEFBE412;
-        Tue,  9 Jan 2018 13:57:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D965FBE4A9;
+        Tue,  9 Jan 2018 13:59:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UOWZ2pXqgjoXTJxKQwMSpHGhCoE=; b=Qq6x/r
-        6Z/mNX/SQP3FN03Arm54Q4X7mBYiGxFSihORYDvEXKvjeciiX7vm27N4pImQJGe3
-        bgZgPW/3fe1MP2m3nHNmP8jI17jJghpITd0WC7ChPwDuzMIDtC/gFkIBCkPL6JPZ
-        MkyRvWPVCix1LdQaCCKVDqihIE1jLN6/mYYLc=
+        :content-type; s=sasl; bh=2wxigUWpIhVd5db79LF8NoTkl5U=; b=aECSQ/
+        gE0rgUwHBJIIJXA/Zbf4JEW1095mlRua+tX1nw9yyMqjOo+PYGRC2AvghUQveDSI
+        VTmYuuLTssnHS9ChFktzD5y69YEzxCrGBnJ/QagqXDcWxyxgx4fNakWellI5GTnP
+        9CEc+moUjuyT5/orSJuKblnDgvopZfRQXRxao=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iI5wqhGD+Nz/i7iUOABnh5JoayCKbMKo
-        nQHEqRn18aicEFi/b4kt7BlT42nEHNxf6KrykAOIA21FD1+JNAHr+ppQZTfHNefO
-        myXybVpbvvh3Dguw1Nn92jDp33NO3+LKnpQMJQzR6HBB1EYRq1uYo8faTVPatkBr
-        7pGGAGpLRaQ=
+        :content-type; q=dns; s=sasl; b=qS4e+IbXkRlBuZJyrXeQ3hp8W58ZPWKE
+        liCAeSa5nwNy/Lw2JWpjlN9U1IALH+MkAka7Thahg0a0gquMWB1V3u3esNLZANdZ
+        uS9Hrp4Rh0dqRRaWA786grXUyNMTUP6FcTYwWWDQbsrc1L40LZgDJdFWvwin5K7g
+        Qor0ByLYOm8=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 43831BE411;
-        Tue,  9 Jan 2018 13:57:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D1CB3BE4A8;
+        Tue,  9 Jan 2018 13:59:49 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB810BE410;
-        Tue,  9 Jan 2018 13:57:34 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A654BE4A4;
+        Tue,  9 Jan 2018 13:59:49 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Yasushi SHOJI <yasushi.shoji@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] bisect: debug: convert struct object to object_id
-References: <20180109110356.25824-1-yasushi.shoji@gmail.com>
-Date:   Tue, 09 Jan 2018 10:57:33 -0800
-In-Reply-To: <20180109110356.25824-1-yasushi.shoji@gmail.com> (Yasushi SHOJI's
-        message of "Tue, 9 Jan 2018 20:03:56 +0900")
-Message-ID: <xmqqr2qy6esi.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Taylor Blau <ttaylorr@github.com>
+Subject: Re: What's cooking in git.git (Dec 2017, #03; Wed, 13)
+References: <xmqqzi6mutcc.fsf@gitster.mtv.corp.google.com>
+        <ABE531C2-3173-441D-8710-B9B75C97B4F5@gmail.com>
+Date:   Tue, 09 Jan 2018 10:59:48 -0800
+In-Reply-To: <ABE531C2-3173-441D-8710-B9B75C97B4F5@gmail.com> (Lars
+        Schneider's message of "Tue, 9 Jan 2018 13:59:43 +0100")
+Message-ID: <xmqqmv1m6eor.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F403F8D0-F56E-11E7-A5DD-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 443E51BA-F56F-11E7-A879-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yasushi SHOJI <yasushi.shoji@gmail.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> The commit f2fd0760f62e79609fef7bfd7ecebb002e8e4ced converted struct
-> object to object_id but a debug function show_list(), which is
-> ifdef'ed to noop, in bisect.c wasn't.
+>> On 14 Dec 2017, at 00:00, Junio C Hamano <gitster@pobox.com> wrote:
+>> 
+>> Here are the topics that have been cooking.  Commits prefixed with
+>> '-' are only in 'pu' (proposed updates) while commits prefixed with
+>> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+>> the integration branches, but I am still holding onto them.
+>> 
+>> You can find the changes described here in the integration branches
+>> of the repositories listed at
+>> 
+>>    http://git-blame.blogspot.com/p/git-public-repositories.html
+>> ...
+>> 
+>> * jk/progress-delay-fix (2017-12-04) 2 commits
+>>  (merged to 'next' on 2017-12-05 at 8e62c2b18b)
+>> + progress: drop delay-threshold code
+>> + progress: set default delay threshold to 100%, not 0%
+>> 
+>> A regression in the progress eye-candy was fixed.
 >
-> So fix it.
+> Hi Junio,
 >
-> Signed-off-by: Yasushi SHOJI <Yasushi.SHOJI@gmail.com>
-> ---
+> this fixes a bug that affects the Git LFS community (not only
+> eye-candy). Would it be possible to get this into Git 2.15.2?
 
-Thanks.  That's quite an old breakage ;-)
+The topic is in 'master' and is a candidate to eventually hit the
+'maint' track.  I do not know if 2.15.2 is warranted, though, as we
+are getting closer to 2.16 and supposed to be concentrating more on
+regression fixes.
 
-
-
->  bisect.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index 3756f127b..0dd0f289a 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -132,7 +132,7 @@ static void show_list(const char *debug, int counted, int nr,
->  		unsigned flags = commit->object.flags;
->  		enum object_type type;
->  		unsigned long size;
-> -		char *buf = read_sha1_file(commit->object.sha1, &type, &size);
-> +		char *buf = read_sha1_file(commit->object.oid.hash, &type, &size);
->  		const char *subject_start;
->  		int subject_len;
->  
-> @@ -144,10 +144,10 @@ static void show_list(const char *debug, int counted, int nr,
->  			fprintf(stderr, "%3d", weight(p));
->  		else
->  			fprintf(stderr, "---");
-> -		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.sha1));
-> +		fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.oid.hash));
->  		for (pp = commit->parents; pp; pp = pp->next)
->  			fprintf(stderr, " %.*s", 8,
-> -				sha1_to_hex(pp->item->object.sha1));
-> +				sha1_to_hex(pp->item->object.oid.hash));
->  
->  		subject_len = find_commit_subject(buf, &subject_start);
->  		if (subject_len)
+Thanks.
