@@ -2,265 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5C81F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 17:06:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93EED1F406
+	for <e@80x24.org>; Tue,  9 Jan 2018 17:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759962AbeAIRGc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 12:06:32 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:43750 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751197AbeAIRGb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 12:06:31 -0500
-Received: by mail-pf0-f171.google.com with SMTP id e3so8978472pfi.10
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 09:06:30 -0800 (PST)
+        id S934610AbeAIRzl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 12:55:41 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:44423 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934606AbeAIRzh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 12:55:37 -0500
+Received: by mail-pg0-f46.google.com with SMTP id i5so8477545pgq.11
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 09:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=ryRWI0ITBXP1l6F6wdeXk4iZX6hYGSzgfjvlHML0pac=;
-        b=LhOLNIfMoVqoP+y/2FJdyYZlUfLITJJhaI28EEP3tSE4s+PG/O5xmCupp4rhU2BGMX
-         WgzxNkSta67jeZWRHp9n5DNezi58qHn9X+1w+aQTT8KkyFI5DO6bCVRgVzUNdiP+XWUF
-         ARbMvb5cx9qofO1pvDSHPcmKS+4Z+Yz0TSW13qQltPvV335UF1IDwYN8E0FdPOddplG4
-         j1qppbRrlrPgzuBrWbEFWVdEFTuE1AWXcLctYMnKou7W1AyeZ/Z+UpADY+WGqsyr1gqV
-         Wy/4cIr7W2eyT9lfmU/oCk5uRaYbDB06dYPydarRlJBqx3dIGWTvIqW+RiJt/Y4hjvMb
-         yfzw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=g4wfyI0JKAzD3gCe14N7sgMYr+US2mbZj9varmY1ELg=;
+        b=DGFltsKLaWwRbST/N6eLxLdJvuE4eML0tzOrEyvP1iHMvYTyNeaPa6GTUp1wBTy9UM
+         Fgvs2Bt4gjSfy6/03Os5irdZzc3KIsxwiG3Y+tzrN6qhRYimm6keox2wx/uJc0LvnKSy
+         mOaWK+vHcteKIJ7dsv/RTZZ2cW1r9Y7qcFXs8JATah1zOoZ96hZZecWmEAlSYflB+Ec1
+         SCeyROy5MPIpLJrseWvr/GoLPl+uND7GBrJg+mZv1or4AC6S2I/2xQ8ORCv3OqQK1+yF
+         3/n2IpXiUFWew0pW6IAzUM7/PyGtzix4oH+4ZXa2Rgktf7+qdIRX+M9auwIVQUiQ0ocf
+         jo1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=ryRWI0ITBXP1l6F6wdeXk4iZX6hYGSzgfjvlHML0pac=;
-        b=s2s+762sJZ8XokYo6akBdgzy5MmnnAfeBY10WEJdwOqsRjo8/tF06AMSO8OD8ZjaW2
-         DJbibKIhK6Kag3v0s186Nf0TZybp1kaJ3+KBlf9pT+IHSGZwu+Y9UgNXdxj3whhS8E1T
-         OpM3E6UvL9zyvjIpCxmm4RRPFYAHyoDfCKetiaFSTS6pY1Xvt3MNH/4bBEHiln2QmU1/
-         96+vf9O/JeoN7Mdgs5oxFTKsR0dmXd6kzZ5/0iBPASC+KcKUV4R29VxWdZ+5Gahdfv2H
-         V0YHk001oLOOQf5SfYuzxQ+TFiEVAiG1+tkSAz7C59NrHY8Ijwz/O17bprv4AEKsG8KC
-         BVbA==
-X-Gm-Message-State: AKGB3mI1ZfEuQ6IxYy3liGRR6kWE6SjUCrVeg70PwG13o4Nw7RJYaYcE
-        r9LZIl3lnVqqk+Y1tdsPTlbEBlQ5
-X-Google-Smtp-Source: ACJfBotdLNV5DKhj4cTmP8WeNSzY97XjVup944DYVd04iLNUGIsNf/TZ8b4BmLYYi/U7WTEPalMqhw==
-X-Received: by 10.99.67.133 with SMTP id q127mr5476430pga.365.1515517590031;
-        Tue, 09 Jan 2018 09:06:30 -0800 (PST)
-Received: from [192.168.206.100] ([117.209.190.40])
-        by smtp.gmail.com with ESMTPSA id d5sm4891603pfk.2.2018.01.09.09.06.24
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=g4wfyI0JKAzD3gCe14N7sgMYr+US2mbZj9varmY1ELg=;
+        b=dG1qDMvZwSwmYHhkYEl5iDxSfVyV35m0P1V4Pi7saD1meyzpeGFz6LfvjXSxOS/lw6
+         xrwipIVn7asAsh522kVBFPfofRgBC7GSBU4VUM0O4ksnuzINPyf7k3ZDQQd6G0QaGi3u
+         gf1xdBE9AEF5jFYpwdniFU/EgoTO7+mDyOq4UuJ4yUTIYJ6uHH0WgH6hjJEBf9mP92mD
+         nXdPH+QkejiK4U4iEGS9s7gDVNaPv5SfCZPilNEU9lGCguBljszFUQpXb04cwWk8K1KZ
+         SnmXQYH+gCqWNfhIGPAeaHxwFY58+KJBncBsStw7lbgn+j0nTbZN1NGYHJcxcATAYJtD
+         j7jg==
+X-Gm-Message-State: AKGB3mJpqeJKeJI2ag+xNjangx0X1dNbSnrMj6JQaovuwydixVV0JnNn
+        7VUS463XYZmEdh/MUheYno2P/EYzucQ=
+X-Google-Smtp-Source: ACJfBovje1fOF7P1N6OKp7HeGik2wX8jeMP2GWUZhr18LdnCEEK14eQDJZLg//6ft61Lm+/3hwIcQg==
+X-Received: by 10.98.254.11 with SMTP id z11mr6025701pfh.48.1515520536613;
+        Tue, 09 Jan 2018 09:55:36 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
+        by smtp.gmail.com with ESMTPSA id h13sm28611816pfi.40.2018.01.09.09.55.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 Jan 2018 09:06:28 -0800 (PST)
-Subject: Re: [PATCH 0/8] Doc/submodules: a few updates
-To:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <64503247-66ad-03cf-26ba-3383337971b5@gmail.com>
-Date:   Tue, 9 Jan 2018 22:36:16 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
-MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB"
+        Tue, 09 Jan 2018 09:55:35 -0800 (PST)
+Date:   Tue, 9 Jan 2018 09:55:34 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 00/26] protocol version 2
+Message-Id: <20180109095534.c0c9b9ad3933d406c993c3ab@google.com>
+In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB
-Content-Type: multipart/mixed; boundary="BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Stefan Beller <sbeller@google.com>, Brandon Williams <bmwill@google.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Message-ID: <64503247-66ad-03cf-26ba-3383337971b5@gmail.com>
-Subject: Re: [PATCH 0/8] Doc/submodules: a few updates
-References: <20180106184614.20115-1-kaartic.sivaraam@gmail.com>
- <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
-In-Reply-To: <CAGZ79kZ-UNCyCzmg=5PQ_p5xbmCp7HUc0=TXNBxwTjZDCnJtBg@mail.gmail.com>
+On Tue,  2 Jan 2018 16:18:02 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
---BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+> The following patches extend what I sent out as an WIP
+> (https://public-inbox.org/git/20171204235823.63299-1-bmwill@google.com/) and
+> implement protocol version 2.
 
-On Tuesday 09 January 2018 12:38 AM, Stefan Beller wrote:
-> On Sat, Jan 6, 2018 at 10:46 AM, Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
->=20
-> While small patches are really appreciated for code (bisect, automated
-> testing, and
-> the general difficulty to reason about code, as a very small change
-> may affect the whole
-> code base), I am not sure if they benefit in documentation.
-> Documentation is a rather
-> local human readable thing, so by changing one sentence we don't
-> affect the understanding
-> of documentation at a completely unrelated place.
->=20
-> Also it helps to read more than just sentence fragments, i.e. I tried
-> looking at the
-> whole paragraph for review. May I suggest to squash them all and
-> resend as one patch?
->=20
+Summarizing (for myself) the rationale for protocol version 2:
 
-I wouldn't mind that. I thought it might be easy to find to find the
-parts I changed when the patches are small. So, I sent them without
-squashing them together. In case you feel it's not worth, let me know so
-I'll squash them in.
+The existing protocol has a few pain points: (a) limit on the length of
+the capability line (the capability line can be used to include
+additional parameters in a backwards-compatible way), (b) difficulty in
+creating proxies because of inconsistent flush semantics, and (c) the
+need to implement clients twice - once for HTTP and once for
+connect-supporting transports. To which we can add another: (d) if we
+want to support something entirely new (for example, a server-side "git
+log"), we will need a new protocol anyway.
 
-BTW, in case I did squash them in, would it be nice to keep the commit
-subjects of the current patch series as bullet points in the unified
-commit message?
+The new functionality introduced in this patch set is probably best done
+using a new protocol. If it were done using the existing protocol (by
+adding a parameter in the capabilities line), we would still run into
+(a) and (c), so we might as well introduce the new protocol now.
 
+Some of the above points are repeats from my previous e-mail:
+https://public-inbox.org/git/20171110121347.1f7c184c543622b60164e9fb@google.com/
 
->=20
->>
->> I based these patches on top of 'master'.
->=20
-> I am not aware of other submodule patches affecting documentation in ma=
-ster..pu,
-> so this should be easy to merge.
->=20
->>
->> Apart from the changes, I saw a few things that needed improvement/cla=
-rification
->> but wasn't able to do that myself due to my limited knowledge of submo=
-dules. They
->> are listed below. I'll add in patches for them if they are correctly c=
-larified.
->>
->>
->> 1.
->>
->>  man gitsubmodules
->>
->>        =C2=B7   The configuration file $GIT_DIR/config in the superpro=
-ject. Typical configuration at this place is controlling if a submodule i=
-s
->>            recursed into at all via the active flag for example.
->>
->>            If the submodule is not yet initialized, then the configura=
-tion inside the submodule does not exist yet, so configuration where to
->>            obtain the submodule from is configured here for example.
->>
->> What's the "active flag" mentioned above? Also I find the phrase "is r=
-ecursed into at all"
->> to be a little slippery. How could it be improved?
->=20
-> There are multiple ways to indicate if a submodule is "active", i.e. if=
- Git is
-> supposed to pay attentio. Historically we had to set the
-> submodule.<name>.url flag in the config, but last year Brandon added
-> submodule.active as well as submodule.<name>.active which supersede
-> the .url flag.
->=20
-> (See is_submodule_active() in submodule.c to see the definitive answer =
-to
-> "should Git pay attention?")
-> https://github.com/git/git/blob/master/submodule.c#L224
->=20
+> Some changes from that series are as follows:
+>  * Lots of various cleanup on the ls-refs and fetch command code, both server
+>    and client.
+>  * Fetch command now supports a stateless-rpc mode which enables communicating
+>    with a half-duplex connection.
 
-Thanks for the info!
+Good to hear about fetch support.
 
+>  * Introduce a new remote-helper command 'connect-half-duplex' which is
+>    implemented by remote-curl (the http remote-helper).  This allows for a
+>    client to establish a half-duplex connection and use remote-curl as a proxy
+>    to wrap requests in http before sending them to the remote end and
+>    unwrapping the responses and sending them back to the client's stdin.
 
-> I wonder if this indicates a lack of documentation when the active
-> flags were introduced.
-> They are found in 'man git config', but maybe we need to spell them
-> out explicitly
-> in the submodule related docs.
->=20
+I'm not sure about the "half-duplex" name - it is half-duplex in that
+each side must terminate their communications with a flush, but not
+half-duplex in that request-response pairs can overlap each other (e.g.
+during negotation during fetch - there is an optimization in which the
+client tries to keep two requests pending at a time). I think that the
+idea we want to communicate is that requests and responses are always
+packetized, stateless, and always happen as a pair.
 
-Possibly. So, why not in Documentation/gitsubmodules! Here's a replaced
-version of that paragraph,
+I wonder if "stateless-connect" is a better keyword - it makes sense to
+me (once described) that "stateless" implies that the client sends
+everything the server needs at once (thus, in a packet), the server
+sends everything the client needs back at once (thus, in a packet), and
+then the client must not assume any state-storing on the part of the
+server or transport.
 
-    * The configuration file `$GIT_DIR/config` in the superproject.
-   Typically this file is used to specify whether the submodule
-   is recursed into at all via the `active` flag for example. A
-   submodule is considered active if `submodule.<name>.url` is set
-   or if the submodules path is present in `submodule.active` or
-   if `submodule.<name>.url` is set.
+>  * The transport code is refactored for ls-remote, fetch, and push to provide a
+>    list of ref-patterns (based on the refspec being used) when requesting refs
+>    from the remote end.  This allows the ls-refs code to send this list of
+>    patterns so the remote end and filter the refs it sends back.
 
+Briefly looking at the implementation, the client seems to incur an
+extra roundtrip when using ls-remote (and others) with a v2-supporting
+server. I initially didn't like this, but upon further reflection, this
+is probably fine for now. The client can be upgraded later, and I think
+that clients will eventually want to query git-serve directly for
+"ls-refs" first, and then fall back to v0 for ancient servers, instead
+of checking git-upload-pack first (as in this patch set) - so, the
+support for "ls-refs" here won't be carried forward merely for backwards
+compatibility, but will eventually be actively used.
 
->> 2.
->>
->>  man git submodule
->>
->>        update
->>            ...
->>
->>            checkout
->>                ....
->>
->>                If --force is specified, the submodule will be checked =
-out (using git checkout --force if appropriate), even if the commit
->>                specified in the index of the containing repository alr=
-eady matches the commit checked out in the submodule.
->>
->> I'm not sure this is conveying all the information it should be convey=
-ing.
->> It seems to making the user wonder, "How at all does 'git submodule up=
-date --force'
->> differs from 'git submodule update'?" also "using git checkout --force=
- if appropriate"
->> seems to be invoking all sorts confusion as "appropriate" is superfluo=
-us.
->=20
-> When "submodule update" is invoked with the `--force` flag, that flag i=
-s passed
-> on to the 'checkout' operation. If you do not give the --force, then
-> the checkout
-> will also be done without --force.
->=20
+As for the decision to use a new endpoint "git-serve" instead of reusing
+"git-upload-pack" (or "git-receive-pack"), reusing the existing one
+might allow some sort of optimization later in which the first
+"git-upload-pack" query immediately returns with the v2 answer (instead
+of redirecting the client to "git-serve"), but this probably doesn't
+matter in practice (as I stated above, I think that eventually clients
+will query git-serve first).
 
-If that's the case then shouldn't the "if appropriate" part of "(using
-git checkout --force if appropriate)" be dropped? That seems to make it
-clear, at least for me. Or is intended as '--force' will not be passed
-to git checkout all the time?
+> This series effectively implements protocol version 2 for listing a remotes
+> refs (ls-remote) as well as for fetch for the builtin transports (ssh, git,
+> file) and for the http/https transports.  Push is not implemented yet and
+> doesn't need to be implemented at the same time as fetch since the
+> receive-pack code can default to using protocol v0 when v2 is requested by the
+> client.
 
->>
->> How could these confusions be clarified?
->=20
-> I tried giving an alternative snippet above, not sure how else to tell.=
-
->=20
-
-
-
---=20
-Kaartic
-
-Quote: "Be creative. Be adventurous. Be original. And above all else, be
-young." - Wonder Woman
-
-
---BrNmBlBT8p2igfBYRugSqWAUDBWcaJAN9--
-
---x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpU9ogbHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpKDQQAITmQzNxwLR2ASBnYA2h
-4hMI0F4SmQjUCKoilUuDkUD4uJ6H3Ib2sXKpJQTvfuU100SGSJnrkVUQPQKwYpxA
-aL9BBrPmH9vCVh0An55fIStLm188i8mSKQYUGMrk1k/W7Bey00YAprkDxiSODcQm
-mR/JfgpNtOKLwudocMokpZ393+KfB18C3O9Hq642Ry289U91bwRbOzmbZ7TAA1TT
-wXEW/GMP2DO4kkT/W+5PYXmMFt5zeDbmiNCfEesxUQWSnV6XKpSghcf5nBPPQOix
-qmpgD5nngZ6NngyLPfB/nOYDl9T67VN/DQzGL7jFMBuS2XvPH++dldMxSPYrUljL
-tcMba1wnr6xobOjPazaF3qwJfbkC4jJqFQX3wWULF27+R68ZyIRDNPzYbFmC/MpA
-M3fqZCmPo7jCq3S6x/CqjJ63OfNG/sV9qZgdAG7ziGnj5TDsDQ4cbbukOLUo+BJ7
-TpJhECEJKtEvJTUPsaGN0DEjTun7fiZ3XPlM0bJVo7/5c/ksFrj3NrJ2H4V0wKjj
-RaGYLxi6MrzlUz4DkBQuVkknKw4b87itc58Hoe1qYj2xwEARpoIgnaBLH27vYivr
-UnN7zPbYnrXQFxf8vksJSCnQFXCSZMbkPcg0QgwnLLtKo6GOctCCAcln5Y+vBk9m
-m9vStCchS+YuhrM5ItVxlMMz
-=Ihrz
------END PGP SIGNATURE-----
-
---x0kpWwDibN2FqPyxgyxqPZTMLDSd2FfeB--
+Agreed - push can be done later.
