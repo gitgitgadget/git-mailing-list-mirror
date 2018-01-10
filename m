@@ -2,163 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59D481F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 19:14:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 628B91F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 19:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752099AbeAJTOj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 14:14:39 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:41279 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751828AbeAJTOe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 14:14:34 -0500
-Received: by mail-qk0-f196.google.com with SMTP id a8so136203qkb.8
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 11:14:34 -0800 (PST)
+        id S1753812AbeAJT0E (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 14:26:04 -0500
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:33419 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753802AbeAJT0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 14:26:02 -0500
+Received: by mail-ua0-f182.google.com with SMTP id z47so74029uac.0
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 11:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zmC8VPPMXp1CAquJh+9y47+RanZ9KzFOr//L2x8VUjg=;
-        b=XTUJiyBnbbT1TuGv9GroESxD8wrd1NKAoPpXU4lnN1M7sG9cABSdd/o7uFy57kA2eL
-         Z2baIZwrF97SR9aB02ui+TbmMdvf+l8zHEvKb05jXswhq2AUOz48JiEBNbZyiEI9gXUe
-         CJTV8kaiTdlRROoDmZkTZkciRbLXGyvx0m8LQkgaKbUqDxf1Y/6HKgIR705jbHXNsLbU
-         u31aKc9AbWoL5wzAUWilXqxnSf1jy35M6ORvWk2oO8Nxa2ahAj583l+CGTBy3yCwqDnO
-         LRfUPJjU/EndW6HUbv9xabeo39KQ6JCiBMwiMnXra9UduPW9plIlcupVgvCPA5pBTHjG
-         o9cw==
+         :cc;
+        bh=nTAMcOMaTOXyVzpAVJnM2T+J4pwP+GLsLSIG6AsHfbQ=;
+        b=n8x2bDufDJW7wBsXrKig7VpBcwBc0POmBOck/xqOrQGcq9tMVaYGP2WXAVpiCZ3ilT
+         3el7+MS8o5xfVejgfwjtiscyAM0sjogzonyrzGdoxdUCJNXquy/1Pqi0Sk3qhtcTCnTM
+         FiukANiSv4Wns0fRMGcvUtcXigSLeRtCT1WcZgHU59VPBs97Y8PdbMvBD/2pgs2ooFEY
+         PEfrOrx1L+VpPyv/xEIFauMTR0xbeYWFH2ynPOFw2a8XvZUb2U9RDlB0kUM8PnqDwJTj
+         xq42pD131/TWN5f3/kCjNb9n0B2r71VSWt8nPME8h1TZbxxeMdqQqBd9iLxwJsjNgTd1
+         yPXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zmC8VPPMXp1CAquJh+9y47+RanZ9KzFOr//L2x8VUjg=;
-        b=Z4ZI9AUvO1+hVGS4J2EizPRvU33r/ULnlfq9oXN3GErN+RaHhAoUOfc1hXZpuajf30
-         Vp1nXiOpuiXrkCWM9B3LT72+AYL56vlKQCLm/Z9ilxIx4cSbMA7TZWvkhTs2op807cpe
-         hLazel7YRFxUSNSyrErs1yWe06dlM2k8cpt7TjhbL2J/jNntBfpx7X3lrVYWVBl631Sx
-         7g/QAn72SW+k48UIUkOTzjEerB7EsQLV+dfaEiN+22WnoSYFcxJ2u3PmpDdkBZ0NRzN7
-         rehN4IQwA1bjN8uRVAGghtGR310ICKdEhq5fArFwxD2tpq+rJ/0E4KNYeg3xzehD+dTO
-         8oOw==
-X-Gm-Message-State: AKwxytfoiTPMYkXnNp0n6OlKV3v4MVjWt0lPWcXgbAgxgRsDknkA42QJ
-        EUPsCdSbgr3FgNQ/qW7bKv6FO/y04I0YTv0oafqL3w==
-X-Google-Smtp-Source: ACJfBotzYIMUJY0DcPsSirjXdcwnjziV0+ZRbG+RHMm9jaDon8g0G31fFr01xjHQpMm690xURUmTdl+yo7gNuBwKpY0=
-X-Received: by 10.237.58.132 with SMTP id o4mr3169164qte.207.1515611673278;
- Wed, 10 Jan 2018 11:14:33 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=nTAMcOMaTOXyVzpAVJnM2T+J4pwP+GLsLSIG6AsHfbQ=;
+        b=ErvQb0pxBYYZfvpsLzY9RnQdw8niQFgQhtJ1cVCj3F1C6k1Tsq0LhiFth9ZdM1bIlC
+         11cVVjUJzhlNLUFCycN7PncZRuO5Ut+x3drcKLbNZ2trsPowytHsa8zTCyHOtpU1y72A
+         vEkhrHzjB52bL1jhFN44QOM4gt7WJX08W/n40FSogf+ffkAz0GGz1kuZ1UxLHY3elO5p
+         6gEV9slvUfY/90E6ynmkue4t/LGI7mteKTx/g5evf1AFvszuwLTZQmGeDthmCW3o5c4M
+         hiJkZZN5H/1ib7c/W2A1dSN1BTRtZHExHm+xloH5tXiZIhkRAp/GVsuUAe/+m5c63EnV
+         K8xQ==
+X-Gm-Message-State: AKwxytdGfHVIb8bgpnsFIDGcWV4LOPxrcTYbqhvCT2j9mY8jJY1Bbe9Q
+        N4IwK4DQTiCRCCsOpO68mJt+auXErsD43uAHyCo=
+X-Google-Smtp-Source: ACJfBotC99BreP/LQs5hWC6p9TM4vDU7bIdYJoDd/qlfzRzFZYse0UtB9Ucl2h/G71HwurxdHmz9uDmlVroimybeLus=
+X-Received: by 10.176.49.222 with SMTP id e30mr20061420uan.170.1515612360556;
+ Wed, 10 Jan 2018 11:26:00 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.140.85.179 with HTTP; Wed, 10 Jan 2018 11:14:32 -0800 (PST)
-In-Reply-To: <20180110180945.GA53941@google.com>
-References: <20180110104835.22905-1-pclouds@gmail.com> <20180110180945.GA53941@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 10 Jan 2018 11:14:32 -0800
-Message-ID: <CAGZ79ka0mhPy776fRYtvnaqd5P1dwvuaeONozEWpaJVZxSneiA@mail.gmail.com>
-Subject: Re: [PATCH] run-command.c: print env vars when GIT_TRACE is set
-To:     Brandon Williams <bmwill@google.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git <git@vger.kernel.org>
+Received: by 10.176.11.153 with HTTP; Wed, 10 Jan 2018 11:25:59 -0800 (PST)
+In-Reply-To: <xmqq1siy30zd.fsf@gitster.mtv.corp.google.com>
+References: <CAKdAkRQuj1hfKeckjuR2oP+8C1i+ZR36O-+aRYif4ufaS_zs+w@mail.gmail.com>
+ <CAKdAkRTK=0Kafc-nhvJTu+9m-pp=BV3Oc-gu6ssjZZQm95pC_Q@mail.gmail.com> <xmqq1siy30zd.fsf@gitster.mtv.corp.google.com>
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Date:   Wed, 10 Jan 2018 11:25:59 -0800
+Message-ID: <CAKdAkRSuNhEri+3eUbX8iVjr0JUyADSJBtgL==VjNwgKwe3Xqw@mail.gmail.com>
+Subject: Re: prepare-commit-msg hook no longer run for cherry-pick?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 10, 2018 at 10:09 AM, Brandon Williams <bmwill@google.com> wrot=
-e:
-> On 01/10, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> Occasionally submodule code could execute new commands with GIT_DIR set
->> to some submodule. GIT_TRACE prints just the command line which makes it
->> hard to tell that it's not really executed on this repository.
-
-Speaking of GIT_DIR, we may also want to print the dir that the command is
-executed in as the GIT_DIR for submodules usually is only ".git" assuming t=
-he
-run-command struct set the .dir to the submodules worktree. I think I had a
-patch for printing the cwd of a process on the list once upon a time, but
-I am unable to find it again. Maybe we'd want to include the cwd of a spawn=
-ed
-process if it differs from the current process?
-
->>
->> Print env variables in this case. Note that the code deliberately ignore
->> variables unsetting because there are so many of them (to keep git
->> environment clean for the next process) and really hard to read.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  A minor thing that I ignored in this patch is quoting the environment
->>  variables. For me it's meh. Perhaps I should just dumb the env
->>  without quoting at all.
+On Tue, Jan 9, 2018 at 6:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> A patch like this would have been very helpful to me on some previous
-> occasions, so thanks for writing it up.
-
-The patch I mentioned above (very similar though less powerful than this on=
-e)
-was carried by locally for some time, so I definitely see value in this pat=
-ch.
-Thanks for writing it!
-
+> Dmitry Torokhov <dmitry.torokhov@gmail.com> writes:
 >
->>
->>  run-command.c |  3 ++-
->>  trace.c       | 38 +++++++++++++++++++++++++++++++++++---
->>  trace.h       | 18 +++++++++++++++---
->>  3 files changed, 52 insertions(+), 7 deletions(-)
->>
->> diff --git a/run-command.c b/run-command.c
->> index 31fc5ea86e..235367087d 100644
->> --- a/run-command.c
->> +++ b/run-command.c
->> @@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
->>               cmd->err =3D fderr[0];
->>       }
->>
->> -     trace_argv_printf(cmd->argv, "trace: run_command:");
->> +     trace_env_argv_printf(cmd->env, cmd->argv, "trace: run_command:");
->> +
->>       fflush(NULL);
->>
->>  #ifndef GIT_WINDOWS_NATIVE
->> diff --git a/trace.c b/trace.c
->> index b7530b51a9..d8967b66e8 100644
->> --- a/trace.c
->> +++ b/trace.c
->> @@ -146,7 +146,26 @@ static void trace_vprintf_fl(const char *file, int =
-line, struct trace_key *key,
->>       print_trace_line(key, &buf);
->>  }
->>
->> +static void concatenate_env(struct strbuf *dst, const char *const *env)
->> +{
->> +     int i;
->> +
->> +     /* Copy into destination buffer. */
->> +     strbuf_grow(dst, 255);
->> +     for (i =3D 0; env[i]; ++i) {
->> +             /*
->> +              * the main interesting is setting new vars
->> +              * e.g. GIT_DIR, ignore the unsetting to reduce noise.
->> +              */
+> >> I had prepare-commit-msg hook that would scrub "Patchwork-ID: NNNN" tags
+> >> form commit messages and would update input mailing list patchwork to
+> >> mark corresponding patches as "accepted" when I cherry pick form
+> >> WIP/review queue into branches that I publish, but that recently stopped
+> >> working if I do a simple cherry-pick.
+> >
+> > This seems like a regression, at least for my use case. Unfortunately
+> > my mail seems to get lost in the mailing list noise...
 >
-> I think you're missing a word, maybe:
->   'The main interesting part is setting new vars'
->
->> +             if (!strchr(env[i], '=3D'))
->> +                     continue;
->> +             strbuf_addch(dst, ' ');
->> +             sq_quote_buf(dst, env[i]);
->> +     }
->
-> At first when i read this I was under the impression that the whole
-> environment was going to be printed out...but i now realize that this
-> tracing  will only print out the delta's or the additions to the
-> environment that the child will see.  Maybe this should be called out
-> more clearly in the commit message?
+> Possibly.  Can you bisect to see which commit broke things for you?
+> That would allow people who know what they themselves broke better
+> than I do to take a look ;-)
 
-It only adds newly set variables, I wonder why deletions are noisy?
-I could not find an example of a removal of environment variables
-specific to submodules that would be noisy.
+Right, so it looks like the master works well, it is next(?) branch
+that is troublesome (apparently we pack experimental internally?).
 
-Stefan
+I bisected it down to:
+
+commit 356ee4659bb551cd9464b317d691827276752c2d (refs/bisect/bad)
+Author: Phillip Wood <phillip.wood@dunelm.org.uk>
+Date:   Fri Nov 24 11:07:57 2017 +0000
+
+   sequencer: try to commit without forking 'git commit'
+
+   If the commit message does not need to be edited then create the
+   commit without forking 'git commit'. Taking the best time of ten runs
+   with a warm cache this reduces the time taken to cherry-pick 10
+   commits by 27% (from 282ms to 204ms), and the time taken by 'git
+   rebase --continue' to pick 10 commits by 45% (from 386ms to 212ms) on
+   my computer running linux. Some of greater saving for rebase is
+   because it no longer wastes time creating the commit summary just to
+   throw it away.
+
+   The code to create the commit is based on builtin/commit.c. It is
+   simplified as it doesn't have to deal with merges and modified so that
+   it does not die but returns an error to make sure the sequencer exits
+   cleanly, as it would when forking 'git commit'
+
+   Even when not forking 'git commit' the commit message is written to a
+   file and CHERRY_PICK_HEAD is created unnecessarily. This could be
+   eliminated in future. I hacked up a version that does not write these
+   files and just passed an strbuf (with the wrong message for fixup and
+   squash commands) to do_commit() but I couldn't measure any significant
+   time difference when running cherry-pick or rebase. I think
+   eliminating the writes properly for rebase would require a bit of
+   effort as the code would need to be restructured.
+
+   Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+   Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+With this commit the hook is not being run unless I specify '-e' flag
+to cherry-pick.
+
+Thanks.
+
+-- 
+Dmitry
