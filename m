@@ -2,130 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 914FB1FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 09:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57FE21FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 10:07:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964947AbeAJJin (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 04:38:43 -0500
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:48796
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755656AbeAJJgm (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 10 Jan 2018 04:36:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515577001;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=e26EezBeQGBuptJJ1CK3mWMx4qJfS5wQojnXKjbffOc=;
-        b=LKUSELq9C8gCDHtVY7s2ctjrjjzPBkGG19uP1kRD+0yhQebRjHrPYkxKb683BTF9
-        m2R+UJfEcg+VCtQlkjZfApnanxwwh5QZ6lZoBbihjgMVdCCzKcnJmfIlui/y453mZNR
-        y38Pj3MkfKwzbYrgBf6rCjqnvDw51dGWAJSZxLi8=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+        id S1754034AbeAJKHW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 05:07:22 -0500
+Received: from s019.cyon.net ([149.126.4.28]:59076 "EHLO s019.cyon.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752451AbeAJKHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 05:07:20 -0500
+X-Greylist: delayed 502 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Jan 2018 05:07:19 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
+         s=default; h=Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:MIME-Version
+        :Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=Gh7EXv3d/457Mfd//GtD8lLC7hm6in2Fz45mJyVrrvI=; b=d4nGSw4BVl5+4DpNFnXwGJ7P2S
+        3Ko6g23b4ChAM2LR6uMrKAaAi+MQQ5ZJYgEH0sNMM4nl6QFEyNEPvJqKJ2KzEZ9xkEhnAYf43cEpN
+        hc//wuM2TFdVizdnUVZ0b7vD0IR6d0/OgcjWs520Ns67bjPi7cjDeMdnYckiwuhpx8rArB1KHfoyD
+        9DJeo6Qu8JjNqqTs4XDO2FjhhkJ3Ko3MZae02mvNguwloUF/fvp/dWo/Gj0vpk0mwAgcJ9+K6SdEV
+        B5KhJQQv2kn+6tZ6q3FLz0w/V4RBW+pOrxOccklprTUIKcNtAEn7u4t4HlQRdBI5j6Rcs8OfVjVAV
+        eC/rfpMQ==;
+Received: from [10.20.10.233] (port=64192 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.89)
+        (envelope-from <bb@drbeat.li>)
+        id 1eZD9o-0006sf-Mi; Wed, 10 Jan 2018 10:58:55 +0100
+Received: by drbeat.li (Postfix, from userid 1000)
+        id 412DB20197; Wed, 10 Jan 2018 10:58:52 +0100 (CET)
+From:   Beat Bolli <dev+git@drbeat.li>
 To:     git@vger.kernel.org
-Message-ID: <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 10 Jan 2018 09:36:41 +0000
-X-SES-Outgoing: 2018.01.10-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Cc:     Beat Bolli <dev+git@drbeat.li>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH] t3900: add some more quotes
+Date:   Wed, 10 Jan 2018 10:58:32 +0100
+Message-Id: <20180110095832.22077-1-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.15.0.rc1.299.gda03b47c3
+X-OutGoing-Spam-Status: No, score=-1.0
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make valid_atom as a function parameter,
-there could be another variable further.
-Need that for further reusing of formatting logic in cat-file.c.
+In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
+were added to protect against spaces in $HOME. In the test_when_finished
+hander, two files are deleted which must be quoted individually.
 
-We do not need to allow users to pass their own valid_atom variable in
-global functions like verify_ref_format because in the end we want to
-have same set of valid atoms for all commands. But, as a first step
-of migrating, I create further another version of valid_atom
-for cat-file.
-
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored by: Jeff King <peff@peff.net>
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- ref-filter.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ t/t3900-i18n-commit.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 3f9161707e66b..32b7e918bca75 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -325,7 +325,7 @@ static void head_atom_parser(const struct ref_format *format, struct used_atom *
- 	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, NULL, NULL);
- }
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 9e4e694d9..dc00db87b 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
+ '
  
--static struct {
-+static struct valid_atom {
- 	const char *name;
- 	cmp_type cmp_type;
- 	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
-@@ -396,6 +396,7 @@ struct atom_value {
-  * Used to parse format string and sort specifiers
-  */
- static int parse_ref_filter_atom(const struct ref_format *format,
-+				 const struct valid_atom *valid_atom, int n_atoms,
- 				 const char *atom, const char *ep)
- {
- 	const char *sp;
-@@ -425,13 +426,13 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	atom_len = (arg ? arg : ep) - sp;
+ test_expect_success 'UTF-8 invalid characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
+ 	echo "UTF-8 characters" >F &&
+ 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
+ 		>"$HOME/invalid" &&
+@@ -49,7 +49,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
+ '
  
- 	/* Is the atom a valid one? */
--	for (i = 0; i < ARRAY_SIZE(valid_atom); i++) {
-+	for (i = 0; i < n_atoms; i++) {
- 		int len = strlen(valid_atom[i].name);
- 		if (len == atom_len && !memcmp(valid_atom[i].name, sp, len))
- 			break;
- 	}
+ test_expect_success 'UTF-8 overlong sequences rejected' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
+ 	rm -f "$HOME/stderr" "$HOME/invalid" &&
+ 	echo "UTF-8 overlong" >F &&
+ 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
+@@ -59,7 +59,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
+ '
  
--	if (ARRAY_SIZE(valid_atom) <= i)
-+	if (n_atoms <= i)
- 		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
+ test_expect_success 'UTF-8 non-characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
+ 	echo "UTF-8 non-character 1" >F &&
+ 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
+ 		>"$HOME/invalid" &&
+@@ -68,7 +68,7 @@ test_expect_success 'UTF-8 non-characters refused' '
+ '
  
- 	/* Add it in, including the deref prefix */
-@@ -708,7 +709,8 @@ int verify_ref_format(struct ref_format *format)
- 		if (!ep)
- 			return error(_("malformed format string %s"), sp);
- 		/* sp points at "%(" and ep points at the closing ")" */
--		at = parse_ref_filter_atom(format, sp + 2, ep);
-+		at = parse_ref_filter_atom(format, valid_atom,
-+					   ARRAY_SIZE(valid_atom), sp + 2, ep);
- 		cp = ep + 1;
- 
- 		if (skip_prefix(used_atom[at].name, "color:", &color))
-@@ -2139,7 +2141,9 @@ void format_ref_array_item(struct ref_array_item *info,
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
- 		get_ref_atom_value(info,
--				   parse_ref_filter_atom(format, sp + 2, ep),
-+				   parse_ref_filter_atom(format, valid_atom,
-+							 ARRAY_SIZE(valid_atom),
-+							 sp + 2, ep),
- 				   &atomv);
- 		atomv->handler(atomv, &state);
- 	}
-@@ -2187,7 +2191,8 @@ static int parse_sorting_atom(const char *atom)
- 	 */
- 	struct ref_format dummy = REF_FORMAT_INIT;
- 	const char *end = atom + strlen(atom);
--	return parse_ref_filter_atom(&dummy, atom, end);
-+	return parse_ref_filter_atom(&dummy, valid_atom,
-+				     ARRAY_SIZE(valid_atom), atom, end);
- }
- 
- /*  If no sorting option is given, use refname to sort as default */
+ test_expect_success 'UTF-8 non-characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
+ 	echo "UTF-8 non-character 2." >F &&
+ 	printf "Commit message\n\nNon-character:\357\267\220\n" \
+ 		>"$HOME/invalid" &&
+-- 
+2.15.0.rc1.299.gda03b47c3
 
---
-https://github.com/git/git/pull/450
