@@ -2,90 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52F31FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 10:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D70511FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 10:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753937AbeAJKxS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 05:53:18 -0500
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:33772 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753080AbeAJKwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 05:52:53 -0500
-Received: by mail-ot0-f175.google.com with SMTP id x15so13923111ote.0
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 02:52:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=4YyBD4Wu1QJOe7Yx6cdRrQS/gWNekKHUjCYle612uTk=;
-        b=lpsE1ZjXHfMGGDq9ZsuJM2DkQv4dYsSIEkzM0IgJXYcA9HXmRnxMF+BkdnUdSFiMll
-         Xpbz7WsPhYM4rf25E8E6a0gYYgkWQm/eBTnZZMIPZMiFioXXpJtbnim0llZ1+LjOUv+M
-         vNDQT2bqRl9K1p+lJCihB88NtN8VBXI2ST8N7QkSRR8Y6zeFZPqzNQXVKId27qdp2Xw8
-         DBCUiLn/0XBts/evHmnAkIudMj8TckUpInMinuM6jy7j2efF9+ofiHtYqJOOEUy5rmb+
-         quMsc9Bb0ichPOvEJZA9BCZpJuOGZDf5C7O2072VZoHDe7yaotFtXTDV2RHCSw9NO3JK
-         PYDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=4YyBD4Wu1QJOe7Yx6cdRrQS/gWNekKHUjCYle612uTk=;
-        b=mTbvhSlMS4tVrWRNsh4IOL9cVxR0CjGLwrX4rKcvDS/8iUIlW006bYEzwwQlD3Hy+n
-         NHJmSHzJ5nkrwsWg8Pr2PRGdfndQGE3rg51FD1NL7/bxBOdxdP/WIDQCGxy9mTmtALm3
-         ZwyoskF0Zei/3z3tF3UV+ureO2j1FRT7EZT/owgZNb/1+lhPSCK1Qp/5BHb6C1sR07HD
-         UC1CT2Lywn5irgdYilq6zjj4qVMOYZS+rLEpVqKk4Ee/Ha09sB5/3dFxn9QAtZhBDY+Z
-         NAZ7/Li6mJ5SIIcQlm7OpRVxG077KXr7YAkudB+VSh01vfgegzNFoB8aiaeLOsiNEGNJ
-         t3ig==
-X-Gm-Message-State: AKwxytejhBrlKZdd+CDnY3+jINSVqBl4b75G6IZSc3k9A6jFD3EeMZYx
-        RGY+m71OI36PehnZ752K7fOTf18cCGEHWSSsQp0=
-X-Google-Smtp-Source: ACJfBov+nWntPdYOUVXOqV/qru/fD266YavouNs0hLcPd/mAPMd6K8fqLGDo/wL4OSDuSs/DOY04CmUeG3AxtuU47OU=
-X-Received: by 10.157.87.133 with SMTP id q5mr533668oth.106.1515581572836;
- Wed, 10 Jan 2018 02:52:52 -0800 (PST)
+        id S964934AbeAJK52 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 05:57:28 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39954 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S964916AbeAJK5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 05:57:25 -0500
+Received: (qmail 26583 invoked by uid 109); 10 Jan 2018 10:57:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Jan 2018 10:57:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14164 invoked by uid 111); 10 Jan 2018 10:57:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Jan 2018 05:57:58 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jan 2018 05:57:23 -0500
+Date:   Wed, 10 Jan 2018 05:57:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        gitster@pobox.com, jrnieder@gmail.com
+Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
+Message-ID: <20180110105723.GB18553@sigill.intra.peff.net>
+References: <20180107181459.222909-1-dstolee@microsoft.com>
+ <87k1wtb8a4.fsf@evledraar.gmail.com>
+ <c08416f1-bbec-2037-34a6-f454d85de439@gmail.com>
+ <20180108102029.GA21232@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1801081438470.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <20180109065018.GA32257@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1801091357560.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Wed, 10 Jan 2018 02:52:22 -0800 (PST)
-In-Reply-To: <20180110103832.GA4018@dinwoodie.org>
-References: <nycvar.QRO.7.76.6.1801052133380.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <20180105221222.28867-1-avarab@gmail.com> <xmqqzi5raogu.fsf@gitster.mtv.corp.google.com>
- <nycvar.QRO.7.76.6.1801061337020.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <CACsJy8CDz57RR+VHpaPb5YMhKG5kUgb9rt5TWKL8n+e7Xart3g@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081319520.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180110090724.GA2893@ash> <20180110103832.GA4018@dinwoodie.org>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 10 Jan 2018 17:52:22 +0700
-Message-ID: <CACsJy8D+OdRxr5MazYUzJXKVCpfC=faWCKTYX+E20kYvg9Pt=Q@mail.gmail.com>
-Subject: Re: [PATCH v4 8/7] wildmatch test: skip file creation tests on
- Windows proper
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Anthony Ramine <n.oxyde@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1801091357560.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 10, 2018 at 5:38 PM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
->> One disadvantage of this though, if this kind of framework does not
->> get popular, then any new test feature must be added at both places
->> but it's a waste of time to support both. So...
->
-> I don't follow: if we end up implementing every test twice, as we have
-> here, then I agree, but I don't think there's much value in doing that
-> except as a proof of concept, as in this immediate discussion.  The
-> obvious-to-me way to do this would be following the precedent of the
-> core code: gradually migrate things away from shell code to C code.
+On Tue, Jan 09, 2018 at 02:05:09PM +0100, Johannes Schindelin wrote:
 
-Not the tests themselves. Test features, like --valgrind, --debug,
---verbose and that kind of stuff. These are handled by test-lib.sh. If
-we add support for --new-fancy-thing to test-lib.sh then we need some
-more code in test-lib.c as well.
--- 
-Duy
+> > I think that could be easily worked around for rebase by asking git to
+> > check ambiguity during the conversion.
+> 
+> Sure.
+> 
+> It also points to a flaw in your reasoning, and you should take my example
+> further: previously, we guaranteed unique abbreviations, and who is to say
+> that there is no script out there relying on that guarantee? You?
+
+I'm not sure what you think my reasoning was, since I made the same
+point directly after. ;)
+
+> > I am a bit curious if there's a bounded probability that people would
+> > find acceptable for Git to give an ambiguous abbreviation. We already
+> > accept 1 in 2^160, of course. But would, e.g., one in a million be OK?
+> 
+> What is that going to solve?
+
+I'm not sure I understand your question. We can bound the probability of
+a collision by increasing the size of the abbreviation. My question was
+whether there is a size where that tradeoff makes sense. So it "solves"
+the problem of worrying about collisions.
+
+> I think a better alternative would be to introduce a new abbreviation mode
+> that is *intended* to stop caring about unique abbreviations.
+> 
+> In web interfaces, for example, it makes tons of sense to show, say, 8
+> digits in link texts and have the full name in the actual link URL.
+
+I'm not sure if that would be useful option or not. I certainly agree
+that static abbreviations are a useful thing to want. But for scripted
+callers, it's usually easy to cut down the abbreviation yourself. I
+think your web interface example is a good one. The caller will ask Git
+for the full 40-hex hash, and then cut it down itself when generating
+the link (and I just so happen to have worked on a web interface that
+does this[1]).
+
+So would it be useful for humans to use? That's what I'm not sure about.
+It seems cumbersome to have to add "--abbrev=8!" on the command line to
+each invocation. But if it were triggered by config, it seems like we
+would risk breaking scripts.
+
+> I am just hesitant to change things that would break existing setups.
+
+Me too. I'm not sure if I'm seriously advocating the "bound the
+probability" thing. It's just something I think is worth pondering a
+little.
+
+-Peff
+
+[1] Actually, there _is_ something that it's useful for Git to tell the
+    caller, which is the approximate number of objects in the
+    repository. Eight digits is not enough for the kernel, for example,
+    and these days we use 12 digits by default. I'm not sure if such a
+    web interface would rather ask for "%H %h" and generate the link
+    text from the second half, or it would rather just get a ballpark on
+    the number of objects, and do the simple abbreviation math itself
+    (right now GitHub does not do either; I don't know about other
+    interfaces).
