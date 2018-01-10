@@ -2,125 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8E001F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 18:25:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C9F1F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 18:28:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752268AbeAJSZv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 13:25:51 -0500
-Received: from smtp.codeaurora.org ([198.145.29.96]:35088 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbeAJSZu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 13:25:50 -0500
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 9DE0A60B1B; Wed, 10 Jan 2018 18:25:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1515608749;
-        bh=B6WoWD9gPj9/0+CmmaDTjcp1WqxmVVMKKAgg2ixN0Ts=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=errHdfUyk6K66QTD7oHYx/tQY5NgjuHbcpBh69ZQ1B0tghalsJH7kZdldT6uZ1MBW
-         sEGCsGcFBMIn8RyYuF3s+ZzDI8IaQTYliObSSC4LFQpKqzUY+maj+KTesRGDetRsJ7
-         KC3N+bDhKnE+LjSedNgiUtCPJlkrMZP+NluUq5J0=
-Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D78D960724;
-        Wed, 10 Jan 2018 18:25:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1515608749;
-        bh=B6WoWD9gPj9/0+CmmaDTjcp1WqxmVVMKKAgg2ixN0Ts=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=errHdfUyk6K66QTD7oHYx/tQY5NgjuHbcpBh69ZQ1B0tghalsJH7kZdldT6uZ1MBW
-         sEGCsGcFBMIn8RyYuF3s+ZzDI8IaQTYliObSSC4LFQpKqzUY+maj+KTesRGDetRsJ7
-         KC3N+bDhKnE+LjSedNgiUtCPJlkrMZP+NluUq5J0=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D78D960724
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        peff@peff.net, gitster@pobox.com, Johannes.Shindelin@gmx.de,
-        jrnieder@gmail.com
-Subject: Re: [RFC PATCH 00/18] Multi-pack index (MIDX)
-Date:   Wed, 10 Jan 2018 11:25:47 -0700
-Message-ID: <2648064.NJaMxHkljU@mfick-lnx>
-User-Agent: KMail/4.13.3 (Linux/3.13.0-125-generic; KDE/4.13.3; x86_64; ; )
-In-Reply-To: <20180107181459.222909-1-dstolee@microsoft.com>
-References: <20180107181459.222909-1-dstolee@microsoft.com>
+        id S1751989AbeAJS2B convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 10 Jan 2018 13:28:01 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:44911 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751683AbeAJS2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 13:28:01 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0AIRreN008722
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 10 Jan 2018 13:27:53 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Johannes Sixt'" <j6t@kdbg.org>
+Cc:     <git@vger.kernel.org>, "'Bill Honaker'" <bhonaker@xid.com>,
+        "'Joachim Schmitz'" <jojo@schmitz-digital.de>
+References: <f08a9506afb73c57751d3d413bfb433a.squirrel@secure.elehost.com> <47197839-720f-3c8d-729c-3fcb615aeb36@kdbg.org> <005d01d389a7$c55da9f0$5018fdd0$@nexbridge.com> <f485f647-bff6-e219-2fc5-a2a9410b6d17@kdbg.org>
+In-Reply-To: <f485f647-bff6-e219-2fc5-a2a9410b6d17@kdbg.org>
+Subject: RE: [PATCH] Prototype PATH_MAX length detection in tests, demonstrated in t0001-init.sh
+Date:   Wed, 10 Jan 2018 13:27:47 -0500
+Message-ID: <00e501d38a40$ba8f4d50$2fade7f0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQIsbxSdIT0HX8bTkZvBsKb6qpXvfgHeGaYPAh+I5qUBWDvO4qKQ8+Rg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sunday, January 07, 2018 01:14:41 PM Derrick Stolee 
-wrote:
-> This RFC includes a new way to index the objects in
-> multiple packs using one file, called the multi-pack
-> index (MIDX).
-...
-> The main goals of this RFC are:
+On January 10, 2018 1:16 PM, Johannes Sixt wrote:
+> Am 10.01.2018 um 01:12 schrieb Randall S. Becker:
+> > On January 9, 2018 6:01 PM, Johannes Sixt wrote:
+> > I'm encountering strange warnings, while looking into the details of what
+> test t0001 fails in spots. These include:
+> > #24 warning: templates not found x00000000000000...[lots of 0
+> > deleted...]00000000000000000000 which exceeds 2K, but that's just
+> content, right, and not causing an apparent breakage.
 > 
-> * Determine interest in this feature.
+> This warning occurs also on Linux and Windows. I think it is by design and
+> not something to be fixed.
 > 
-> * Find other use cases for the MIDX feature.
+> >
+> > # 34. Admittedly it was shorter than 2K, but there is something weird in this
+> path that I can't find, causing a failure out of fts_read from gnulib.
+> > Initialized empty Git repository in /home/ituglib/randall/git/t/trash
+> > directory.t0001-
+> init/123456789abcdef/123456789abcdef/123456789abcdef/1
+> >
+> 23456789abcdef/123456789abcdef/123456789abcdef/123456789abcdef/123
+> 4567
+> > 89abcdef/newdir/.git/
+> > rm: fts_read failed: No such file or directory
+> >
+> > This error is coming from some of shell utilities (in this case rm)
+> > used in the test rather than git code itself.
+> 
+> So, the problem is not in the git executable. This does not warrant a change
+> in the build process, yet.
+> 
+> >  While well within the
+> > supported path length of the operating system/platform (1K), there is
+> > an acknowledged issue that is causing breakage when paths get large
+> > enough (even only this large, unfortunately). We're at 221 breaks out
+> > of 12982-ish, which is good, but have to otherwise visually check each
+> > breakage until the fts_read problem is resolved - I know what the
+> > issue is, but I don't have the auth to resolve it, so waiting on HPE
+> > platform development for that. Of course, manually patching that many
+> > breaks is equally unwieldy, so I'm willing to tolerate not having this
+> > patch applied at this time.
+> 
+> Let me propose a different workaround. In my build on Windows, I inject a
+> few blind spots in the test suite using GIT_SKIP_TESTS for cases where I do
+> not have time to find a fix. It looks like this:
+> 
+> diff --git a/t/Makefile b/t/Makefile
+> index 96317a35f4..fd8b18c3c0 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -103,3 +103,19 @@ perf:
+>  	$(MAKE) -C perf/ all
+> 
+>  .PHONY: pre-clean $(T) aggregate-results clean valgrind perf
+> +
+> +# see
+> +https://public-inbox.org/git/alpine.DEB.2.21.1.1710260008270.37495@virt
+> +ualbox/ # the suggested solution is for MSYS2; don't have time to fix
+> +this for MSYS GIT_SKIP_TESTS += t0021.1[5-9] t0021.2[0-6] # special
+> +file names GIT_SKIP_TESTS += t1300.14[02] # GIT_SSH_COMMAND with args
+> +forwarded incompletely via git clone to test_fake_ssh GIT_SKIP_TESTS +=
+> +t5601.5[01] # unknown failure in shallow submodule test GIT_SKIP_TESTS
+> ++= t7406.46 # mktemp missing?
+> +GIT_SKIP_TESTS += t7610.22
+> +export GIT_SKIP_TESTS
+> +
+> +NO_SVN_TESTS=SkipThem
+> +export NO_SVN_TESTS
+> --
+> 
+> Build the list of test cases that do not pass, until the test suite runs through.
+> Then start fixing the cases.
+> 
+> It is not foolproof, but very effective in keeping the focus on new cases. You
+> have to run tests with 'make' so that the variable is picked up. Also, when
+> somebody adds new tests in front of the mentioned cases, the numbers
+> must be adjusted.
 
-My interest in this feature would be to speed up fetches 
-when there is more than one large pack-file with many of the 
-same objects that are in other pack-files.   What does your 
-MIDX design do when it encounters multiple copies of the 
-same object in different pack files?  Does it index them all, 
-or does it keep a single copy?
+I can live with this. Thanks for your advice. Let's hold off on applying my approach.
 
-In our Gerrit instance (Gerrit uses jgit), we have multiple 
-copies of the linux kernel repos linked together via the 
-alternatives file mechanism.  These repos have many different 
-references (mostly Gerrit change references), but they share 
-most of the common objects from the mainline.  I have found 
-that during a large fetch such as a clone, jgit spends a 
-significant amount of extra time by having the extra large 
-pack-files from the other repos visible to it, usually around 
-an extra minute per instance of these (without them, the 
-clone takes around 7mins).  This adds up easily with a few 
-repos extra repos, it can almost double the time.
-
-My investigations have shown that this is due to jgit 
-searching each of these pack files to decide which version of 
-each object to send.  I don't fully understand its selection 
-criteria, however if I shortcut it to just pick the first 
-copy of an object that it finds, I regain my lost time.  I 
-don't know if git suffers from a similar problem?  If git 
-doesn't suffer from this then it likely just uses the first 
-copy of an object it finds (which may not be the best object 
-to send?)
-
-It would be nice if this use case could be improved with 
-MIDX.  To do so, it seems that it would either require that 
-MIDX either only put "the best" version of an object (i.e. 
-pre-select which one to use), or include the extra 
-information to help make the selection process of which copy 
-to use (perhaps based on the operation being performed) 
-fast.
-
-This also leads me to ask, what other additional information 
-(bitmaps?) for other operations, besides object location, 
-might suddenly be valuable in an index that potentially 
-points to multiple copies of objects?  Would such 
-information be appropriate in MIDX, or would it be better in 
-another index?
-
-Thanks,
-
--Martin
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
+Cheers,
+Randall
 
