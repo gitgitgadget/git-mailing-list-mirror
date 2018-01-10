@@ -2,141 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23D021F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 23:09:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2D81FAE2
+	for <e@80x24.org>; Wed, 10 Jan 2018 23:17:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752839AbeAJXJ4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 18:09:56 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57787 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752567AbeAJXJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 18:09:55 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DCF5D42A9;
-        Wed, 10 Jan 2018 18:09:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AdwBD3vpvd0evigeen4ZDWGxcjU=; b=hq7Q/v
-        C2qzwz19pvK71D3geti8ilQxtK0SQ6sz7FEXc85sJkJo6ByznWGfIHGQH/e+2dSi
-        RRaTVRbYEpshd3ZZFGBJw1wtWmu7pjEF0JjO2uKITE4P/Z+uou41n1Y99DBN6R+B
-        5i2UDZyQ1/YP49l4sN3r5dDxG08wsk6wiI6bQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p+ymi83BGoRgvHNv+CLbSGf99hRd8QXJ
-        DhQHoCYygMZvPAwpBITlTN+YqOs2SR0hk3LiG8UxDxLaHGlHprEdj6GjD5xbhyQP
-        W17y15aVmsuilRQtcK3iSRgUW+Jewb6Id8+pbY7V8c0oZIlijq1iMJ9P6jPTTRzl
-        6cWP//zP/LQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75A79D42A8;
-        Wed, 10 Jan 2018 18:09:54 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA12DD42A7;
-        Wed, 10 Jan 2018 18:09:53 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
-Cc:     sunshine@sunshineco.com, git@vger.kernel.org,
-        johannes.schindelin@gmx.de, peff@peff.net
-Subject: Re: [PATCH v2] t3900: add some more quotes
-References: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com>
-        <20180110223840.1481-1-dev+git@drbeat.li>
-Date:   Wed, 10 Jan 2018 15:09:52 -0800
-In-Reply-To: <20180110223840.1481-1-dev+git@drbeat.li> (Beat Bolli's message
-        of "Wed, 10 Jan 2018 23:38:40 +0100")
-Message-ID: <xmqqfu7dz4xr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752088AbeAJXRl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 18:17:41 -0500
+Received: from avasout03.plus.net ([84.93.230.244]:35931 "EHLO
+        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751561AbeAJXRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 18:17:39 -0500
+Received: from [10.0.2.15] ([80.189.70.206])
+        by smtp with ESMTPA
+        id ZPcneWXHw6MuZZPcoeh6II; Wed, 10 Jan 2018 23:17:38 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=YqAhubQX c=1 sm=1 tr=0
+ a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
+ a=IkcTkHD0fZMA:10 a=IqPUlTZAAAAA:8 a=jqIJi-bjKPfx0JSm4LgA:9 a=QEXdDO2ut3YA:10
+ a=uJLxWluzARXgNwbH5uYh:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Test failure for v2.16.0-rc0 on cygwin
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <519ac918-6b5f-bca3-05a0-0114683b9724@ramsayjones.plus.com>
+ <20171230144019.GB29210@dinwoodie.org> <20180102113649.GC29210@dinwoodie.org>
+ <3616d866-9a53-6e32-0a62-488342ae214f@ramsayjones.plus.com>
+ <e69657de-9455-2b97-09d7-2bd58ce513f6@ramsayjones.plus.com>
+ <alpine.DEB.2.21.1.1801042152570.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <87f53af7-4f5b-22a7-b950-772eb67b0151@ramsayjones.plus.com>
+Date:   Wed, 10 Jan 2018 23:17:37 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5E031F1C-F65B-11E7-84C0-575F0C78B957-77302942!pb-smtp2.pobox.com
+In-Reply-To: <alpine.DEB.2.21.1.1801042152570.32@MININT-6BKU6QN.europe.corp.microsoft.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfMc2wXQnTOrOZy2IW/K9xpRSv5qb1wx7ebkoZ7d6YhYa/btiLKRkkpxrdPRii7wf+9fV5kufh2g+pNUxPDOswP5mXbo00dHR883ehfM01vgmXl7D4OO+
+ KAghk/6LMZ9OXKZZ+2rpb074At8F1dZfQAtrThAvfRN+E6dkDpNZEQMZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
 
-> In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
-> were added to protect against spaces in $HOME. In the test_when_finished
-> handler, two files are deleted which must be quoted individually.
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
->
-> Diff to v1:
->
-> s/hander/handler/ in the message.
-> ...
 
-OK, but that forgets to fix a more important issue raised in the
-discussion, no?
+On 04/01/18 20:55, Johannes Schindelin wrote:
+> On Tue, 2 Jan 2018, Ramsay Jones wrote:
+[snip]
+>> Also, when logged-in remotely it fails consistently, when logged-in
+>> directly it passes consistently. :-D
+> 
+> You are most likely hitting cmd.exe at some point there. In cmd.exe, there
+> are some restrictions that are inherited by spawned processes AFAIU. For
+> example, the current directory cannot be a UNC path.
+> 
+> You are most likely running the interactive Cygwin session in MinTTY? Then
+> you do not get those restrictions. If you start Cygwin in a cmd.exe
+> window, you should see the exact same test failures again.
 
-Here is what I ended up queuing in the meantime.  Thanks.
+I actually don't see a difference when starting cygwin from a cmd.exe, it
+passes just fine. The interactive cygwin session(s), either directly, or
+most often via the X-server (with ssh-agent in between!), all have their
+id's and group membership look like:
 
--- >8 --
-From: Beat Bolli <dev+git@drbeat.li>
-Date: Wed, 10 Jan 2018 10:58:32 +0100
-Subject: [PATCH] t3900: add some more quotes
+  $ who
+  $ id
+  uid=1001(ramsay) gid=513(None) groups=513(None),545(Users),4(INTERACTIVE),66049(CONSOLE LOGON),11(Authenticated Users),15(This Organization),113(Local account),66048(LOCAL),262154(NTLM Authentication),401408(Medium Mandatory Level)
+  $
 
-In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
-were added to protect against spaces in $HOME. In the test_when_finished
-command, two files are deleted which must be quoted individually.
+However, when remotely logged-in over shh, it looks like:
 
-[jc: with \$HOME in the test_when_finished command quoted, as
-pointed out by j6t].
+  $ who -H
+  NAME     LINE         TIME             COMMENT
+  ramsay   pty2         2018-01-02 19:48 (192.168.1.2)
+  $ id
+  uid=1001(ramsay) gid=513(None) groups=513(None),11(Authenticated Users),66048(LOCAL),66049(CONSOLE LOGON),4(INTERACTIVE),15(This Organization),545(Users),0(root),405504(High Mandatory Level)
+  $
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-Helped-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3900-i18n-commit.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+So, when remotely logged-in, we have:
 
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 9e4e694d93..b92ff95977 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
- '
- 
- test_expect_success 'UTF-8 invalid characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
- 	echo "UTF-8 characters" >F &&
- 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
- 		>"$HOME/invalid" &&
-@@ -49,7 +49,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
- '
- 
- test_expect_success 'UTF-8 overlong sequences rejected' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
- 	rm -f "$HOME/stderr" "$HOME/invalid" &&
- 	echo "UTF-8 overlong" >F &&
- 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
-@@ -59,7 +59,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
- 	echo "UTF-8 non-character 1" >F &&
- 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
- 		>"$HOME/invalid" &&
-@@ -68,7 +68,7 @@ test_expect_success 'UTF-8 non-characters refused' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
- 	echo "UTF-8 non-character 2." >F &&
- 	printf "Commit message\n\nNon-character:\357\267\220\n" \
- 		>"$HOME/invalid" &&
--- 
-2.16.0-rc1-187-g8dee184084
+  Additional groups: 0(root), 405504(High Mandatory Level)
 
+  Missing groups: 113(Local account), 262154(NTLM Authentication),
+                  401408(Medium Mandatory Level)
+
+I haven't thought too much about what that means ...
+
+After reading this[1], I have been meaning to try setting the
+'LocalAccountTokenFilterPolicy' registry variable mentioned in
+that article, to see if that would make any difference. I haven't
+found the time yet ... :-D
+
+ATB,
+Ramsay Jones
+
+
+[1] http://www.tomsitpro.com/articles/windows-10-administrative-shares,2-47.html
