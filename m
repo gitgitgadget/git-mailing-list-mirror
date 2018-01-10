@@ -2,126 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E93741F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 15:58:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CE9A1F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 16:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965816AbeAJP6q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 10:58:46 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:37085 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964976AbeAJP6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 10:58:45 -0500
-Received: by mail-wm0-f49.google.com with SMTP id f140so27906172wmd.2
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 07:58:44 -0800 (PST)
+        id S1754613AbeAJQBm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 11:01:42 -0500
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:43682 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751293AbeAJQBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 11:01:21 -0500
+Received: by mail-vk0-f41.google.com with SMTP id k132so11850461vke.10
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 08:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=znEvGY3W9cUfaH8uHmOeFc+wHIepmaokjg5rPVEjlKk=;
-        b=kQIoyAV6XlROS/YvS/IRqlxcV1izAHiNaP90x4KRdUsTtEVpFjhsOpBojz1h3fYg6F
-         xjj0DpNn/mhLn+W0LtloKYa20cYMzz0s6Q4l4gVHE8zlP6kO9Dljet3mLX1ROtGwZH/u
-         0SDF25+nQ7WHf/YJo9GmzPTV/rFBAvPuPu/b7YShtGxnt4Uqf6oKBDChHZUXHC7UR7tT
-         rglk1Omw1618c/b8zpeU96eJ4bLzvlRMignlNoOlWbxjlKg3Xa0Os7S/0u3ZnfoOXCbb
-         41BPQ2ZAi8mt8FgCGrxhDJ5Hjotmf+wS77Pukw6GXXZXvj3wssJpGz7PxBTFHQnATFpE
-         4k6g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AUL6gRNEY+PWIqqhWLQr+dUauV83SOxrGK15KTIhCSw=;
+        b=pBm9ZMc/zK0/HLJjpayMJ7PXmztkj5T5CCPGuHpDhyuEWRV6TEYYNoUrPSv26oqgXQ
+         ifRzHBZU9DQ9OBZy4ej4t6JVFiw2V/u6ldhEshaScS7gSWXwz4qzVbr5dnnyvIiqYfrt
+         zmmvKoV26cp8LELKg/8cDX5chIyh0eb6HHALkrw7AvNso/zqwHwDDMbRBELZ3Aio1Wfq
+         MCVoUyGPprJlthHrdQfOYclz78CdiE+Xfrnvi2qwRBXuMVppkpfVVbO+HUh8hwMNxv6G
+         QDxg+uQs3lo4vwJBNoqMZv1m5hTJiwAN5nCoy7u4Dt1DIewoX3L+8gDhgc7/vJYUaCpW
+         gcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=znEvGY3W9cUfaH8uHmOeFc+wHIepmaokjg5rPVEjlKk=;
-        b=f9LoFsdjj7kssJtyhRj731v+PNVJ/8wG+fg/Mtb/natKLihzvO0sKnDNWIkOlGIUKa
-         toERPHkjXH1m0JcmM/iYgVDdciVJbyOhVbF0CD5E6Db+D0zJS1VL9EUFeoJLBY9/U86S
-         7NuTYJWEPjhQAbcS6LL6sJMdLv75TQ1ZlsL6rG5y9MO4n+YD+BrJ4L5XRBhcxaD8/vZ/
-         lBP4hPVI/ktO+aXdXOe9YNHyGlEINtfBcqCa2z0ChgBGQ9Sko4pWCHYbv1OFK7Upt7R8
-         rRkSWjK0ZOTuXOVBP8qKKmCWt2+bOvmW2PeKaJte4ppK1VyPc2aLPLtTOvXJhS0WecEF
-         4c6Q==
-X-Gm-Message-State: AKwxytdCYN8WmWzooN4WnUm5qpwSFz/7MAkDLLcTtQ8tGgq+4aqmp9qE
-        1Az4OpfdkXQWV61rwgPdO0c=
-X-Google-Smtp-Source: ACJfBosJnUOp7ghpHsz99pr/4dqRIFvEdcze4XtIbs5B0VCGG5h10kz2yEtDkck27CU4D8SXjBd8pg==
-X-Received: by 10.80.140.248 with SMTP id r53mr8643428edr.306.1515599923618;
-        Wed, 10 Jan 2018 07:58:43 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id f9sm8903555edm.83.2018.01.10.07.58.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 10 Jan 2018 07:58:42 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Sam Millman <sam.millman@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: How to use multiple SSH keys on Git exe (not bash)
-References: <CALKyTE7+qJSYHQRB44HjHXK_EjOxNnCfQOROSDVVwAFR-gMnXQ@mail.gmail.com> <CALKyTE7VpeCoofzzutdEmsjtGe7NaC3EywQWJvM0EOH3U6XvoA@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CALKyTE7VpeCoofzzutdEmsjtGe7NaC3EywQWJvM0EOH3U6XvoA@mail.gmail.com>
-Date:   Wed, 10 Jan 2018 16:58:41 +0100
-Message-ID: <87mv1laeoe.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AUL6gRNEY+PWIqqhWLQr+dUauV83SOxrGK15KTIhCSw=;
+        b=SkTXQAqoOF+4kkOKMENWm8j0o/gUe4Hc9VVGuY6YUP5YaJgf6g+7TWY3492QeNGVvF
+         K+ZEt+myBkwSiT7qTHqBCC494MKKwD9beIb+mRQmuJDgjsvwoWQSvFEvO326RAYIXkc3
+         eIgsfd2OyCQRGIXzUfIZk5CDgRYG2pfJGrRNiCM77bHckB2iLC4j0h9hh0Tx7an9q2hR
+         B3vUGvPmFdEKdxg0Jh+8csiNXvQDCBpPze9QCGJ4EESiS6AqJE7bfL2R4LeJPfi/wUme
+         n+aujuWCDszJGTfZEdo9s9ieP7PSr4FJjKUR+Bf1AiZoiH4hvxeERaQu9+/vciWepW7q
+         nJjQ==
+X-Gm-Message-State: AKwxytdU//xsZzse1fJRR9Tm7bYRw9yZ1ddvbJ18AZh+Jjsth2T9DXZV
+        //8O8U3/SBC3sdZtu2b83KTUF7DJRIaoYhLuc339wA==
+X-Google-Smtp-Source: ACJfBosRJbvsFyELv7T3uMPOvxMEXt1eKtbm344hojbOHpWKV1xSYHx22LLYd56ieGuhdc40H0GHOql4yzHhGtpfHxs=
+X-Received: by 10.31.61.85 with SMTP id k82mr16722988vka.187.1515600079753;
+ Wed, 10 Jan 2018 08:01:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.103.142.195 with HTTP; Wed, 10 Jan 2018 08:01:19 -0800 (PST)
+In-Reply-To: <000c01d38a2b$d14c4620$73e4d260$@nexbridge.com>
+References: <CALKyTE7+qJSYHQRB44HjHXK_EjOxNnCfQOROSDVVwAFR-gMnXQ@mail.gmail.com>
+ <CALKyTE7VpeCoofzzutdEmsjtGe7NaC3EywQWJvM0EOH3U6XvoA@mail.gmail.com> <000c01d38a2b$d14c4620$73e4d260$@nexbridge.com>
+From:   Sam Millman <sam.millman@gmail.com>
+Date:   Wed, 10 Jan 2018 16:01:19 +0000
+Message-ID: <CALKyTE4eqbw_kMEH9fpwFa-s-WagFn5j9OxK68YXoARm7f4zHQ@mail.gmail.com>
+Subject: Re: How to use multiple SSH keys on Git exe (not bash)
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+That would mean I would need to change the case for a letter everytime
+I have a repo with a new key, that would mean I would be restricted to
+12 client repos at a time :\, seems very hacky to me
 
-On Wed, Jan 10 2018, Sam Millman jotted:
-
-> I am trying, for the sake of PhpStorm, to get multiple SSH keys
-> working using git . exe, which means no GitBash.
->
-> I can get the keys to work just fine with GitBash.
->
-> I edited my .ssh/config to look like (I know this is incorrect):
->
-> Host bitucket . org
-> IdentityFile ~/.ssh/id_rsa1
->
-> Host bitbucket . org
-> IdentityFile ~/.ssh/id_rsa
->
->
-> And id_rsa1 works, I can actually pick from the other repo. But, of
-> course, id_rsa does not now.
->
-> I change to:
->
-> Host bitucket . org-dd
-> HostName bitbucket . org
-> IdentityFile ~/.ssh/id_rsa1
->
-> Host bitbucket . org-sas
-> HostName bitbucket . org
-> IdentityFile ~/.ssh/id_rsa
->
-> And now only id_rsa works.
->
-> I also tried combining the two IdentityFile lines together like so
-> (for some reason):
->
-> Host bitucket . org
-> IdentityFile ~/.ssh/id_rsa1
-> IdentityFile ~/.ssh/id_rsa
->
-> I have even tried running ssh-agent . exe, adding id_rsa1 to that and
-> then running the git clone with no result.
->
-> The weird thing is, I have two public keys as well and they both load
-> in the ssh . exe (they return errors about format), I just cannot get
-> my ssh . exe to work with multiple private keys.
-
-This might just be a special case of the problem of some hosting
-providers picking only the first key you provide, as described in this
-thread:
-https://public-inbox.org/git/20180103102840.27897-1-avarab@gmail.com/
-
-If so, you either need to hack around this with ssh host aliases, or a
-custom GIT_SSH_COMMAND.
-
-> On 10 January 2018 at 15:29, Sam Millman <sam.millman@gmail.com> wrote:
->> I am trying, for the sake of PhpStorm, to get multiple SSH keys working
->> using git . exe, which means no GitBash.
+On 10 January 2018 at 15:58, Randall S. Becker <rsbecker@nexbridge.com> wrote:
+> On January 10, 2018 10:31 AM Sam Millman wrote:
+>> I am trying, for the sake of PhpStorm, to get multiple SSH keys working using
+>> git . exe, which means no GitBash.
 >>
 >> I can get the keys to work just fine with GitBash.
 >>
@@ -160,7 +108,59 @@ custom GIT_SSH_COMMAND.
 >> running the git clone with no result.
 >>
 >> The weird thing is, I have two public keys as well and they both load in the
->> ssh . exe (they return errors about format), I just cannot get my ssh . exe
->> to work with multiple private keys.
+>> ssh . exe (they return errors about format), I just cannot get my ssh . exe to
+>> work with multiple private keys.
 >>
->> Has anyone got any ideas on how to solve this?
+>> On 10 January 2018 at 15:29, Sam Millman <sam.millman@gmail.com> wrote:
+>> > I am trying, for the sake of PhpStorm, to get multiple SSH keys
+>> > working using git . exe, which means no GitBash.
+>> >
+>> > I can get the keys to work just fine with GitBash.
+>> >
+>> > I edited my .ssh/config to look like (I know this is incorrect):
+>> >
+>> > Host bitucket . org
+>> > IdentityFile ~/.ssh/id_rsa1
+>> >
+>> > Host bitbucket . org
+>> > IdentityFile ~/.ssh/id_rsa
+>> >
+>> >
+>> > And id_rsa1 works, I can actually pick from the other repo. But, of
+>> > course, id_rsa does not now.
+>> >
+>> > I change to:
+>> >
+>> > Host bitucket . org-dd
+>> > HostName bitbucket . org
+>> > IdentityFile ~/.ssh/id_rsa1
+>> >
+>> > Host bitbucket . org-sas
+>> > HostName bitbucket . org
+>> > IdentityFile ~/.ssh/id_rsa
+>> >
+>> > And now only id_rsa works.
+>> >
+>> > I also tried combining the two IdentityFile lines together like so
+>> > (for some
+>> > reason):
+>> >
+>> > Host bitucket . org
+>> > IdentityFile ~/.ssh/id_rsa1
+>> > IdentityFile ~/.ssh/id_rsa
+>> >
+>> > I have even tried running ssh-agent . exe, adding id_rsa1 to that and
+>> > then running the git clone with no result.
+>> >
+>> > The weird thing is, I have two public keys as well and they both load
+>> > in the ssh . exe (they return errors about format), I just cannot get
+>> > my ssh . exe to work with multiple private keys.
+>> >
+>> > Has anyone got any ideas on how to solve this?
+>
+> The ~/.ssh/config file is case sensitive by definition when it comes to Host and HostName. Try bitbucket.org for one and Bitbucket.org for another. You will have to change the remote URL accordingly to pick up the correct identity.
+>
+> Good luck,
+> Randall
+>
+>
