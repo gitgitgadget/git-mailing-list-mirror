@@ -2,238 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97B151F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 17:57:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5ABB1F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 18:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751665AbeAJR5d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 12:57:33 -0500
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:41875 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751417AbeAJR5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 12:57:32 -0500
-Received: by mail-pl0-f51.google.com with SMTP id q3so2378393plr.8
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 09:57:32 -0800 (PST)
+        id S1751665AbeAJSJt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 13:09:49 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:45451 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751504AbeAJSJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 13:09:48 -0500
+Received: by mail-pg0-f67.google.com with SMTP id c194so10450943pga.12
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 10:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/qm5wb9UeokCve/eOOoL07RGb9/Yh1Da+2sGYJxsYgc=;
-        b=PSzyi54yIepr8GdR/p+GuLmee16JXfgmEnsXdp9T6N7aQoOjWphRwLHi3eOnYiPJMA
-         YX6VbI4ZoP/iolBfCh1nsGZV1JUa+hSCXpcZYNlTGom0JvFdIvUJmf5A0GRFP1fD4Tao
-         0FU1s3mLIAPozUqc+u7U+YsohwqXfx8AzDqp1UdoiEY0GPDA7xHUAOb0iA6tWJ6skA7J
-         sCVV7WTjq2JmjRuePgluAqtxXxiSdavwQg/6RNiB/LzjySCAWTI+6V6bvfwU52euHpPp
-         KyMCaHPUJp78vWSuQA+7ARHvvL3FO4jvNs82WwxiRQyufGuwMrc4LiA8L6xw7u5UX0VQ
-         77wA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=7FhW9ldpBqH7DRIBvjPXbUpVLCbjgcbv47mLloBnH28=;
+        b=VibtfSw9q0dr4EnQTmTNN1s/z7hfxI4Qg0nnWyArcxvy0vZpz23fY3NQEbCuFKLvYM
+         Uw4XdUTRqI01tcRJcJpQAbqqZtDtVB3NfJ28+zDq6JrVwJnL9RjxmAoHDfUYDuepDOpw
+         8PwdO5fxETTIUT3tJDaCJfx2iux853EiLuNzyatTfITbnGxBjnelkM9E/BMKWKbleQGh
+         IsyDM5LaSgzbC/o2lrZb+auOnFPmdZinD68NS4BQUjgqsge8UbWu6MGEa/d1HyVfBn4D
+         mIqWy+icMkoz3NEqkGivHNjqFX7QTnGZvICqhhcndDZYJMdUA4VM+raf3zVwsqXkKCCT
+         PqJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/qm5wb9UeokCve/eOOoL07RGb9/Yh1Da+2sGYJxsYgc=;
-        b=eTvfbAafnU6+mrfbaEYthxPyIJmALhv19+kwpcPeBQAgOpZg4jyTL1K3iIJWLYhKmu
-         z/CgC2EZvDkOKr25NQ7MdxCzBj5CDrdSGd1e5YyKwBEC5DJzPuLcNFNl0bKwBd4NzNEQ
-         9mijni8mFf112xeRYsckXqTJLl2rZRJBoDTnecKop7mAep8xJNAn5BZh31+K5/KVcxqy
-         CUFvpDMaMB3fP+FlN4HoBHjROJXg83HlaxDmW0pBVMUKHayQ9N/Lsg3MEdvBRKOo2Rrt
-         aSunk11wBwB7xJjbYDmAZqWitCY36bqSBlnyII9XGcxEIU97pmYtYNOPdTQlI7euVvn1
-         QN5A==
-X-Gm-Message-State: AKGB3mICQ6Czg3gGvlkCAW8L/d9SKRYaaUWHV5RzzCHXq7s8KocsGH7S
-        5IY+tPqOSSq9BvTjdeeYRlWNEQ==
-X-Google-Smtp-Source: ACJfBosKEhNNLZ474ieXmgmhk/kM3nbFANMgvg2lbdNe5hBU/RbpC+84m8zswA34pW9Yk+oIbin9Xg==
-X-Received: by 10.84.137.169 with SMTP id 38mr20225608pln.246.1515607051529;
-        Wed, 10 Jan 2018 09:57:31 -0800 (PST)
-Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:64a5:1889:307:c3c0])
-        by smtp.gmail.com with ESMTPSA id o88sm14595125pfi.82.2018.01.10.09.57.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Jan 2018 09:57:30 -0800 (PST)
-Date:   Wed, 10 Jan 2018 09:57:30 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 26/26] remote-curl: implement connect-half-duplex
- command
-Message-Id: <20180110095730.1daaa70d7c583c58b85142a3@google.com>
-In-Reply-To: <20180103001828.205012-27-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
-        <20180103001828.205012-27-bmwill@google.com>
-X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=7FhW9ldpBqH7DRIBvjPXbUpVLCbjgcbv47mLloBnH28=;
+        b=jK6nUmancnNsSYMzsXwKm2vUwpCPvK3ObuJcoqIc6DPta4g6g/Cy2ZQlGE9075nQUo
+         YFI3JFc+JY8DHhJjERiPyuWvLwDFBeRrAc2CzkaKFti0uQ4gRzO/8162Qa2z3GjVwf4q
+         0ywqGeXKRuQKqJJ+rrOx4rLU+k0T7BflMY59OkGPUK6qgoh2DA9CDM6qfWmGpG8OtIuv
+         c0OUUQEYdLAvpKvSvrSsR09NcunNbiN9YHMN2TQVXPyrULCL7q/dahgIqH+Ro5ECXHnM
+         jR4IBinya/hISquEGWjAQfhAU5g9pGRxpqpKFH7b4nGKMmTRVa70b0uwNUZlnuGAIB3Z
+         KFtA==
+X-Gm-Message-State: AKGB3mK1KdKm9OwURP7fidoY+a3flJYQ31nXsZ+kDeXzyTLwBQZzbQD8
+        Ct7/A7nQATkdkeXipGX72cOpY/YZLX4=
+X-Google-Smtp-Source: ACJfBovgbksDyW2B7ykn3lgZ/d+OG1qbibLUxUvR1/j9pffFWJ/M9ZJFrU08WNGAtI1ZzppkL61wUQ==
+X-Received: by 10.99.112.25 with SMTP id l25mr8461251pgc.154.1515607787577;
+        Wed, 10 Jan 2018 10:09:47 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:d157:f909:10c:5e57])
+        by smtp.gmail.com with ESMTPSA id b8sm30613557pff.26.2018.01.10.10.09.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 Jan 2018 10:09:46 -0800 (PST)
+Date:   Wed, 10 Jan 2018 10:09:45 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] run-command.c: print env vars when GIT_TRACE is set
+Message-ID: <20180110180945.GA53941@google.com>
+References: <20180110104835.22905-1-pclouds@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180110104835.22905-1-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue,  2 Jan 2018 16:18:28 -0800
-Brandon Williams <bmwill@google.com> wrote:
+On 01/10, Nguyễn Thái Ngọc Duy wrote:
+> Occasionally submodule code could execute new commands with GIT_DIR set
+> to some submodule. GIT_TRACE prints just the command line which makes it
+> hard to tell that it's not really executed on this repository.
+> 
+> Print env variables in this case. Note that the code deliberately ignore
+> variables unsetting because there are so many of them (to keep git
+> environment clean for the next process) and really hard to read.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  A minor thing that I ignored in this patch is quoting the environment
+>  variables. For me it's meh. Perhaps I should just dumb the env
+>  without quoting at all.
 
-> +static size_t proxy_in(void *ptr, size_t eltsize,
-> +		       size_t nmemb, void *buffer_)
+A patch like this would have been very helpful to me on some previous
+occasions, so thanks for writing it up.
 
-OK, I managed to look at the Curl stuff in more detail.
-
-I know that these parameter names are what remote_curl.c has been using
-for its callbacks, but I find them confusing (in particular, some Curl
-documentation rightly refer to the 1st parameter as a buffer, and the
-4th parameter is actually userdata). Also, according to the Curl
-documentation, the type of the first parameter is "char *". Could we
-change the type of the first parameter to "char *", and the name of the
-fourth parameter either to "proxy_state_" or "userdata"?
-
+> 
+>  run-command.c |  3 ++-
+>  trace.c       | 38 +++++++++++++++++++++++++++++++++++---
+>  trace.h       | 18 +++++++++++++++---
+>  3 files changed, 52 insertions(+), 7 deletions(-)
+> 
+> diff --git a/run-command.c b/run-command.c
+> index 31fc5ea86e..235367087d 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
+>  		cmd->err = fderr[0];
+>  	}
+>  
+> -	trace_argv_printf(cmd->argv, "trace: run_command:");
+> +	trace_env_argv_printf(cmd->env, cmd->argv, "trace: run_command:");
+> +
+>  	fflush(NULL);
+>  
+>  #ifndef GIT_WINDOWS_NATIVE
+> diff --git a/trace.c b/trace.c
+> index b7530b51a9..d8967b66e8 100644
+> --- a/trace.c
+> +++ b/trace.c
+> @@ -146,7 +146,26 @@ static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
+>  	print_trace_line(key, &buf);
+>  }
+>  
+> +static void concatenate_env(struct strbuf *dst, const char *const *env)
 > +{
-> +	size_t max = eltsize * nmemb;
-> +	struct proxy_state *p = buffer_;
-> +	size_t avail = p->request_buffer.len - p->pos;
+> +	int i;
 > +
-> +	if (!avail) {
-> +		if (p->seen_flush) {
-> +			p->seen_flush = 0;
-> +			return 0;
-> +		}
-> +
-> +		strbuf_reset(&p->request_buffer);
-> +		switch (packet_reader_read(&p->reader)) {
-> +		case PACKET_READ_EOF:
-> +			die("error reading request from parent process");
+> +	/* Copy into destination buffer. */
+> +	strbuf_grow(dst, 255);
+> +	for (i = 0; env[i]; ++i) {
+> +		/*
+> +		 * the main interesting is setting new vars
+> +		 * e.g. GIT_DIR, ignore the unsetting to reduce noise.
+> +		 */
 
-This should say "BUG:", I think. I'm not sure what the best way of
-explaining it is, but basically connect_half_duplex is supposed to
-ensure (by peeking) that there is no EOF when proxy_in() is called.
+I think you're missing a word, maybe:
+  'The main interesting part is setting new vars'
 
-> +		case PACKET_READ_NORMAL:
-> +			packet_buf_write_len(&p->request_buffer, p->reader.line,
-> +					     p->reader.pktlen);
-> +			break;
-> +		case PACKET_READ_DELIM:
-> +			packet_buf_delim(&p->request_buffer);
-> +			break;
-> +		case PACKET_READ_FLUSH:
-> +			packet_buf_flush(&p->request_buffer);
-> +			p->seen_flush = 1;
-> +			break;
-> +		}
-> +		p->pos = 0;
-> +		avail = p->request_buffer.len;
+> +		if (!strchr(env[i], '='))
+> +			continue;
+> +		strbuf_addch(dst, ' ');
+> +		sq_quote_buf(dst, env[i]);
 > +	}
-> +
-> +	if (max < avail)
-> +		avail = max;
-> +	memcpy(ptr, p->request_buffer.buf + p->pos, avail);
-> +	p->pos += avail;
-> +	return avail;
 
-Thanks, this looks correct. I wish that the Curl API had a way for us to
-say "here are 4 more bytes, and that is all" instead of us having to
-make a note (p->seen_flush) to remember to return 0 on the next call,
-but that's the way it is.
+At first when i read this I was under the impression that the whole
+environment was going to be printed out...but i now realize that this
+tracing  will only print out the delta's or the additions to the
+environment that the child will see.  Maybe this should be called out
+more clearly in the commit message?
 
 > +}
-> +static size_t proxy_out(char *ptr, size_t eltsize,
-> +			size_t nmemb, void *buffer_)
-
-Add a blank line before proxy_out. Also, same comment as proxy_in()
-about the function signature.
-
-> +{
-> +	size_t size = eltsize * nmemb;
-> +	struct proxy_state *p = buffer_;
 > +
-> +	write_or_die(p->out, ptr, size);
-> +	return size;
+>  static void trace_argv_vprintf_fl(const char *file, int line,
+> +				  const char *const *env,
+>  				  const char **argv, const char *format,
+>  				  va_list ap)
+>  {
+> @@ -157,6 +176,9 @@ static void trace_argv_vprintf_fl(const char *file, int line,
+>  
+>  	strbuf_vaddf(&buf, format, ap);
+>  
+> +	if (env)
+> +		concatenate_env(&buf, env);
+> +
+>  	sq_quote_argv(&buf, argv, 0);
+>  	print_trace_line(&trace_default_key, &buf);
+>  }
+> @@ -214,7 +236,16 @@ void trace_argv_printf(const char **argv, const char *format, ...)
+>  {
+>  	va_list ap;
+>  	va_start(ap, format);
+> -	trace_argv_vprintf_fl(NULL, 0, argv, format, ap);
+> +	trace_argv_vprintf_fl(NULL, 0, NULL, argv, format, ap);
+> +	va_end(ap);
 > +}
 > +
-> +static int proxy_post(struct proxy_state *p)
+> +void trace_env_argv_printf(const char *const *env, const char **argv,
+> +			   const char *format, ...)
 > +{
-> +	struct active_request_slot *slot;
-> +	struct curl_slist *headers = http_copy_default_headers();
-> +	int err;
+> +	va_list ap;
+> +	va_start(ap, format);
+> +	trace_argv_vprintf_fl(NULL, 0, env, argv, format, ap);
+>  	va_end(ap);
+>  }
+>  
+> @@ -251,12 +282,13 @@ void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+>  	va_end(ap);
+>  }
+>  
+> -void trace_argv_printf_fl(const char *file, int line, const char **argv,
+> +void trace_argv_printf_fl(const char *file, int line,
+> +			  const char *const *env, const char **argv,
+>  			  const char *format, ...)
+>  {
+>  	va_list ap;
+>  	va_start(ap, format);
+> -	trace_argv_vprintf_fl(file, line, argv, format, ap);
+> +	trace_argv_vprintf_fl(file, line, env, argv, format, ap);
+>  	va_end(ap);
+>  }
+>  
+> diff --git a/trace.h b/trace.h
+> index 88055abef7..830d9dcd19 100644
+> --- a/trace.h
+> +++ b/trace.h
+> @@ -34,6 +34,10 @@ extern void trace_printf_key(struct trace_key *key, const char *format, ...);
+>  __attribute__((format (printf, 2, 3)))
+>  extern void trace_argv_printf(const char **argv, const char *format, ...);
+>  
+> +__attribute__((format (printf, 3, 4)))
+> +extern void trace_env_argv_printf(const char * const*env, const char **argv,
+> +				  const char *format, ...);
 > +
-> +	headers = curl_slist_append(headers, p->hdr_content_type);
-> +	headers = curl_slist_append(headers, p->hdr_accept);
-> +	headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
+>  extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+>  
+>  /* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
+> @@ -93,7 +97,14 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+>  	do {								    \
+>  		if (trace_pass_fl(&trace_default_key))			    \
+>  			trace_argv_printf_fl(TRACE_CONTEXT, __LINE__,	    \
+> -					    argv, __VA_ARGS__);		    \
+> +					     NULL, argv, __VA_ARGS__);	    \
+> +	} while (0)
 > +
-> +	slot = get_active_slot();
-> +
-> +	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-> +	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
-> +	curl_easy_setopt(slot->curl, CURLOPT_URL, p->service_url);
-> +	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+> +#define trace_env_argv_printf(env, argv, ...)				    \
+> +	do {								    \
+> +		if (trace_pass_fl(&trace_default_key))			    \
+> +			trace_argv_printf_fl(TRACE_CONTEXT, __LINE__, 	    \
+> +					     env, argv, __VA_ARGS__); 	    \
+>  	} while (0)
+>  
+>  #define trace_strbuf(key, data)						    \
+> @@ -121,8 +132,9 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+>  __attribute__((format (printf, 4, 5)))
+>  extern void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+>  				const char *format, ...);
+> -__attribute__((format (printf, 4, 5)))
+> -extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
+> +__attribute__((format (printf, 5, 6)))
+> +extern void trace_argv_printf_fl(const char *file, int line,
+> +				 const char *const *env, const char **argv,
+>  				 const char *format, ...);
+>  extern void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+>  			    const struct strbuf *data);
+> -- 
+> 2.15.1.600.g899a5f85c6
+> 
 
-I looked at the Curl documentation for CURLOPT_HTTPHEADER and
-curl_easy_setopt doesn't consume the argument here (in fact, it asks us
-to keep "headers" around), so it might be possible to just generate the
-headers once in proxy_state_init().
-
-> +
-> +	/* Setup function to read request from client */
-> +	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, proxy_in);
-> +	curl_easy_setopt(slot->curl, CURLOPT_READDATA, p);
-> +
-> +	/* Setup function to write server response to client */
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, proxy_out);
-> +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, p);
-> +
-> +	err = run_slot(slot, NULL);
-> +
-> +	if (err != HTTP_OK)
-> +		err = -1;
-
-This seems to mean that we cannot have two requests in flight at the
-same time even while there is no response (from the fact that we have a
-HTTP status code after returning from run_slot()).
-
-I thought that git fetch over HTTP uses the two-requests-in-flight
-optimization that it also does over other protocols like SSH, but I see
-that that code path (fetch_git() in remote-curl.c) also uses run_slot()
-indirectly, so maybe my assumption is wrong. Anyway, this is outside the
-scope of this patch.
-
-> +
-> +	curl_slist_free_all(headers);
-> +	return err;
-> +}
-> +
-> +static int connect_half_duplex(const char *service_name)
-> +{
-> +	struct discovery *discover;
-> +	struct proxy_state p;
-> +
-> +	/*
-> +	 * Run the info/refs request and see if the server supports protocol
-> +	 * v2.  If and only if the server supports v2 can we successfully
-> +	 * establish a half-duplex connection, otherwise we need to tell the
-> +	 * client to fallback to using other transport helper functions to
-> +	 * complete their request.
-> +	 */
-> +	discover = discover_refs(service_name, 0);
-> +	if (discover->version != protocol_v2) {
-> +		printf("fallback\n");
-> +		fflush(stdout);
-> +		return -1;
-> +	} else {
-> +		/* Half-Duplex Connection established */
-> +		printf("\n");
-> +		fflush(stdout);
-> +	}
-> +
-> +	proxy_state_init(&p, service_name);
-> +
-> +	/*
-> +	 * Dump the capability listing that we got from the server earlier
-> +	 * during the info/refs request.
-> +	 */
-> +	write_or_die(p.out, discover->buf, discover->len);
-> +
-> +	/* Peek the next packet line.  Until we see EOF keep sending POSTs */
-> +	while (packet_reader_peek(&p.reader) != PACKET_READ_EOF) {
-> +		if (proxy_post(&p)) {
-> +			/* We would have an err here */
-
-Probably better to comment "Error message already printed by
-proxy_post".
+-- 
+Brandon Williams
