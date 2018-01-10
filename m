@@ -2,118 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEAF31F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 22:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB65D1F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 22:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752104AbeAJWjE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 17:39:04 -0500
-Received: from s019.cyon.net ([149.126.4.28]:54512 "EHLO s019.cyon.net"
+        id S1751911AbeAJWlO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 17:41:14 -0500
+Received: from mout.gmx.net ([212.227.15.19]:54485 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751561AbeAJWjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 17:39:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=drbeat.li;
-         s=default; h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-        Sender:Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=oTEVXleuhVOaKf/nhKrbrYjIJbzi/EphiE5aso32TRo=; b=FidDevtKujw7fkbEEg8g0wyKIU
-        9COlBgedo++KZXcHKtez40dZNRhKrgVk1jecC/TILHErVBWTuseQi2dkBqOikOM6CzyK8ncYEsSRB
-        g2VZiUldBRzypxzI+EQj3plPdpSRWQbvwLGDFhG69r/egykReRzOatvE/cuIRK5XXqvlIkpE4fRC4
-        tS/aV0ORZm7HlCil5i/L83FrcjWXOj57wwOvKC2fUSIsP3mh4F56MFRW6VBjQikct1yC6kpMlk4Gl
-        GtbZjMnq4rlye3+jXo4pq/0t0KUXCPuOnEcQl25S3GJERAx9cWyj7AzGpvUExN/RQWF5K140LByLP
-        eiFtYUaA==;
-Received: from [10.20.10.233] (port=15514 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.89)
-        (envelope-from <bb@drbeat.li>)
-        id 1eZP1M-0006ya-PY; Wed, 10 Jan 2018 23:39:01 +0100
-Received: by drbeat.li (Postfix, from userid 1000)
-        id 5032820197; Wed, 10 Jan 2018 23:38:56 +0100 (CET)
-From:   Beat Bolli <dev+git@drbeat.li>
-To:     sunshine@sunshineco.com
-Cc:     dev+git@drbeat.li, git@vger.kernel.org, johannes.schindelin@gmx.de,
-        peff@peff.net
-Subject: [PATCH v2] t3900: add some more quotes
-Date:   Wed, 10 Jan 2018 23:38:40 +0100
-Message-Id: <20180110223840.1481-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.15.0.rc1.299.gda03b47c3
-In-Reply-To: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com>
-References: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com>
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+        id S1750782AbeAJWlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 17:41:13 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MC4VE-1eiEju2sYS-008neu; Wed, 10
+ Jan 2018 23:40:54 +0100
+Date:   Wed, 10 Jan 2018 23:40:53 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: Re: [PATCH v5 8/9] sequencer: try to commit without forking 'git
+ commit'
+In-Reply-To: <20180110205351.GA73826@aiede.svl.corp.google.com>
+Message-ID: <nycvar.QRO.7.76.6.1801102332350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171211141330.23566-1-phillip.wood@talktalk.net> <20171211141330.23566-9-phillip.wood@talktalk.net> <20180110205351.GA73826@aiede.svl.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:cpkdPjlRtyldtT9ptQ+K3de4vhlRMbm8X51lHGclDaCagQzTKjT
+ rS3fZk/UfmibO/ourr50FC+RoRAiDBQJTJK8MDbSRbGfu9LA8g1GC/XCKAjlGzBxkKh0Zdv
+ okXmQnYt/tayRjeJ4boa3WLQSB37sZJ1ZtS5ZA24MhTpSio0PlJlR6PuXxnSl87fzeFvOMq
+ rzNIaO+AZ3X4kCdNJnBwQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1qKmCzxH/OU=:8/ed457VlzLc2Wp160a8fu
+ 5wXWitSldhM3VfyW5PjvGqITmynru21/O1hB3GqqewgqjR5upF2L8Qi8il6NQZoYJUnn7FGkz
+ h/COPGxNDx5aJ6yAbYgzb9MpPeNJegsiKOdxemn61t9147inLDK5D5kO8ju9ZTfpOtzqxtAUE
+ U1z2rPJzKIIGkB/UoEKbyqcLCmn9oBnf6Ln8pbeZxcT5NIVaG9IZmvc4IS/Eh7mlNSuwu9oI+
+ MI6AS+lrHRCedrOBa+A/UJ6kQYtj36oJ2eE/nIGWBrDohSD7pJVOg7qsvvKDFHVILNYWhzZn5
+ tRZUKZ2ET7PV89YGPFmFIlNUObGpYCz79AsMTUe6/uZowVtF7D1wF1Xp75q+TzW7lOle3BsKe
+ XDiyQFvzA2drVI9YC/G/tPqkLiN7R/lNWoN5A/Y+zNuk+AmdY7PUSsLDwr7ZPB2t5+p4Qijax
+ Seh+gZW635QEA2fXUW5TWfPnqRR7OsVh5IpwuMnIph2peaFlTHQOYs7YnHsQewX0dVgvVjxm3
+ vStJxPMmyYSwk6j9uDmIB87qF6Au3Y6AfzA2+/qVsF+ku86/AryIIib4XEm0AWOIb+eOrGdSS
+ Yow86EEP+H53HkiiygXbv+CCdMDvE4cqNQyeHCnIywLZdMLAv3dWEZYI6vtLc2H6VgdjpbAwg
+ sO+SIHCtIsT2Z1dKQWHDHk7Y79GhnkjVIwAXOnahXasi4dM16nG/A6EK99aqTGpEwYcNiEyts
+ S88WsmldnzPB0Hqim+BH5QrLH+xjegea0u7kKdL2J7fZNPJU9R16lYEU2j2dknUxk5OaWvKhe
+ hH2pO56vQuExx/RNRGUV9vemlhoeIaG3zgVFKP/ULnXILbybT0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
-were added to protect against spaces in $HOME. In the test_when_finished
-handler, two files are deleted which must be quoted individually.
+Hi,
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
+On Wed, 10 Jan 2018, Jonathan Nieder wrote:
 
-Diff to v1:
+> Phillip Wood wrote:
+> 
+> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >
+> > If the commit message does not need to be edited then create the
+> > commit without forking 'git commit'. Taking the best time of ten runs
+> > with a warm cache this reduces the time taken to cherry-pick 10
+> > commits by 27% (from 282ms to 204ms), and the time taken by 'git
+> > rebase --continue' to pick 10 commits by 45% (from 386ms to 212ms) on
+> > my computer running linux. Some of greater saving for rebase is
+> > because it no longer wastes time creating the commit summary just to
+> > throw it away.
+> 
+> Neat!  Dmitry Torokhov (cc-ed) noticed[1] that this causes the
+> prepare-commit-msg hook not to be invoked, which I think is
+> unintentional.  Should we check for such a hook and take the slowpath
+> when it is present?
 
-s/hander/handler/ in the message.
+We could also easily recreate the functionality:
 
- t/t3900-i18n-commit.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+	if (find_hook("pre-commit")) {
+		struct argv_array hook_env = ARGV_ARRAY_INIT;
 
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 9e4e694d9..dc00db87b 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
- '
- 
- test_expect_success 'UTF-8 invalid characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
- 	echo "UTF-8 characters" >F &&
- 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
- 		>"$HOME/invalid" &&
-@@ -49,7 +49,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
- '
- 
- test_expect_success 'UTF-8 overlong sequences rejected' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
- 	rm -f "$HOME/stderr" "$HOME/invalid" &&
- 	echo "UTF-8 overlong" >F &&
- 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
-@@ -59,7 +59,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
- 	echo "UTF-8 non-character 1" >F &&
- 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
- 		>"$HOME/invalid" &&
-@@ -68,7 +68,7 @@ test_expect_success 'UTF-8 non-characters refused' '
- '
- 
- test_expect_success 'UTF-8 non-characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
- 	echo "UTF-8 non-character 2." >F &&
- 	printf "Commit message\n\nNon-character:\357\267\220\n" \
- 		>"$HOME/invalid" &&
--- 
-2.15.0.rc1.299.gda03b47c3
+		argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s",
+			get_index_file());
+		argv_array_push(&hook_env, "GIT_EDITOR=:");
+		ret = run_hook_le(hook_env.argv, "pre-commit", NULL);
+		argv_array_clear(&hook_env);
+	}
 
+(This assumes that the in-process try_to_commit() is only called if the
+commit message is not to be edited interactively, which is currently the
+case.)
+
+Ciao,
+Dscho
