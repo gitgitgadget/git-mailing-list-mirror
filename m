@@ -2,141 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC631F406
-	for <e@80x24.org>; Tue,  9 Jan 2018 23:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9517E1F406
+	for <e@80x24.org>; Wed, 10 Jan 2018 00:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755211AbeAIXzV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 Jan 2018 18:55:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53707 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752091AbeAIXzT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 Jan 2018 18:55:19 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3FE67C2CC0;
-        Tue,  9 Jan 2018 18:55:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XCtzm/stD9oidi65B5OhWrJBPy8=; b=hJ3RMC
-        U/KQpNk+mjYB4wEc3t7h9weVsY2p+P+oZ+/x40mzYQgVnAUqZMApdBQhCNDQ4PAA
-        ImhpKQu0haNmgu8FBmqol77rxQDk0MiTkvipuAttdXZdlgrguj7MtsRVNJK/9ev5
-        QZPL6aP7fOLbw7MlSV9HuGdnAIVlrSXFzTnzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RVg7AEOLX0mCf0nV8RDJvEPbzKv0yHrR
-        mvj8IeW7hjkKiFaK5bOVgz/qTjBSTlpkzH+Hek3VyYIAncVvOmhv1nx6NS2/MdF4
-        JLHgmY42e5iPUD3Y94lBXya9tmpsJl9ItmXogubXJi1qew3tw2AszaVgi5VvIehJ
-        6Arma8vi5Ww=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 36F90C2CBE;
-        Tue,  9 Jan 2018 18:55:19 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B105BC2CBD;
-        Tue,  9 Jan 2018 18:55:18 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, git-packagers@googlegroups.com,
-        git-for-windows@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc1
-References: <xmqqbmi7ano1.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.76.6.1801061354430.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-        <nycvar.QRO.7.76.6.1801062248160.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
-        <xmqqy3l63dzy.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 09 Jan 2018 15:55:17 -0800
-In-Reply-To: <xmqqy3l63dzy.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 09 Jan 2018 13:42:57 -0800")
-Message-ID: <xmqq608a37ve.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8BCD430A-F598-11E7-B1C3-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1755511AbeAJAFQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 Jan 2018 19:05:16 -0500
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:39680 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751994AbeAJAFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 Jan 2018 19:05:15 -0500
+Received: by mail-pg0-f53.google.com with SMTP id z20so7019411pgv.6
+        for <git@vger.kernel.org>; Tue, 09 Jan 2018 16:05:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ErJuRBydo5R4bUmHBaA+tD3c0ZaounOBNqjBVn4VK+0=;
+        b=Qu58HmBw5hQkA4+tQFg0DqCIIIRf9nQ7Xz+Pou0XI1DVJmlpKrjPr8e/Mxke2QqUQb
+         PUMe9TALqfJG6GfzJ6Ane/fy3Nw54lbTv54i9yY+Jm/Ns7enGAh2NvvMNIGWz17rkIMj
+         v37J5a1/fQyi1j0HZSLkBHyGdQYrk2s5iV0w/fTe5Rbs4zUvUm6l2M0LcUzoSGPNDcPa
+         6cSQHKf+5OPrBH7s5INgHoHKpg+8fawydh74AxrFOWSfnEXVU8M/E/zLs4fTCXozDpi8
+         hpwV41TcF5R8NzN/8f3RXk7bOOfSbMRE7DvvFZ4vcmhgJMB5iZI3r9G5ce5/xcl7mWc7
+         UBEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ErJuRBydo5R4bUmHBaA+tD3c0ZaounOBNqjBVn4VK+0=;
+        b=iOd4pcNrUAxErCTDAsu6qvNgHp5295K9ucXYTTEeZjJj1IeG2495z0O1n0PykPviYE
+         WmurXzCCWHhpvhMMWX3ZPcbyaNT0A+Lz0tOnjRIY8UW87r63pY7HncjXxkcdoLZDrX1h
+         ++6+elq7h8Td6X9vp9SPZZILazXWCu3OnjSFKhx6udbKWLnZqwFh37GjisQwaeS8HZxh
+         k5ShirHtqkmqDYd5HN26w35koagwmPdopcYZBq6DLsGsm0ghKl/1zQd5Y81vTi9KQ4VQ
+         /cOgLHDYnOBJSKB1Coriy6pRazLUwD9/GfChiKZUwj8ac3lH9YVcq8UmxVL2o+n2E6Sr
+         NAag==
+X-Gm-Message-State: AKGB3mK1A4vHF1oZwYWBZi6ns7cUSG0zkxtfB05UOO5mt4sXMQ86qPqE
+        62flAu4ku9ic/ZXY9yROrpaPwg==
+X-Google-Smtp-Source: ACJfBourkx3pmk7hKEh82F6jPIT87HXZ5/XEUdSYsPIA9ZnvLBEfcc1pBCs6xwQVounHomYupj7raA==
+X-Received: by 10.84.234.200 with SMTP id i8mr17645072plt.161.1515542714507;
+        Tue, 09 Jan 2018 16:05:14 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([2620:0:100e:422:592e:240e:24e2:56aa])
+        by smtp.gmail.com with ESMTPSA id r8sm28109383pgt.43.2018.01.09.16.05.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 Jan 2018 16:05:13 -0800 (PST)
+Date:   Tue, 9 Jan 2018 16:05:12 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 20/26] fetch-pack: perform a fetch using v2
+Message-Id: <20180109160512.b3f12f45afd7121d25cf5fa4@google.com>
+In-Reply-To: <20180103001828.205012-21-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+        <20180103001828.205012-21-bmwill@google.com>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue,  2 Jan 2018 16:18:22 -0800
+Brandon Williams <bmwill@google.com> wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
->> index f1678851de9..470107248eb 100644
->> --- a/t/t0021/rot13-filter.pl
->> +++ b/t/t0021/rot13-filter.pl
->> @@ -31,7 +31,22 @@
->>  #
->>  
->>  use 5.008;
->> -use lib (split(/:/, $ENV{GITPERLLIB}));
->> +sub gitperllib {
->> +...
->> +	if ($ENV{GITPERLLIB} =~ /;/) {
->> +		return split(/;/, $ENV{GITPERLLIB});
->> +	}
->> +	return split(/:/, $ENV{GITPERLLIB});
->> +}
->
-> This cannot be the whole story for a few reasons.
->
->  - In t/test-lib.sh we see this:
->
->    GITPERLLIB="$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib/arch/auto/Git
->    export GITPERLLIB
->
->    If this part wants to split with ';', then the joining needs to
->    be done with ';' to match, no?
->
->  - In addition to t0021, there are similar split with colon in 0202,
->    9000 and 9700, yet I am getting the feeling that you observed the
->    issue only in0021, to which I do not think of a good explanation
->    why.
+> +static enum ack_type process_ack(const char *line, struct object_id *oid)
+> +{
+> +	const char *arg;
+> +
+> +	if (!strcmp(line, "NAK"))
+> +		return NAK;
+> +	if (skip_prefix(line, "ACK ", &arg)) {
+> +		if (!parse_oid_hex(arg, oid, &arg)) {
+> +			if (strstr(arg, "continue"))
+> +				return ACK_continue;
 
-This somehow vaguely rang a bell, and I dug this thing up from the
-archive, [*1*] which ended like so:
+This function seems to be only used for v2, so I don't think we need to
+parse "continue".
 
-    >> In our C code, we have "#define PATH_SEP ';'", and encourage
-    >> our code to be careful and use it.  Is there something
-    >> similar for Perl scripts, I wonder.
-    >>
-    > We probably should find a better solution to allow this to
-    > work with windows style paths...? I know that python provides
-    > os.pathsep, but I haven't seen an equivalent for perl yet.
-    >
-    > The Env[1] core modules suggests using
-    > $Config::Config{path_sep}[2]..  maybe we should be using this?
+Also, maybe describe the plan for supporting functionality not supported
+yet (e.g. server-side declaration of shallows and client-side "deepen").
 
-    I was testing this recently on the Perl included with Git for
-    Windows and it returns : for the path separator even though it's
-    on Windows, so I don't think that would work. The Perl in Git
-    for Windows seems to want UNIX-style inputs (something Dscho
-    seemed to allude to in his response earlier.). I'm not sure why
-    it's that way, but he probably knows.
+It may be possible to delay support for server-side shallows on the
+server (that is, only implement support for it in the client) since the
+server can just declare that it doesn't support protocol v2 when serving
+such repos (although it might just be easier to implement server-side
+support in this case).
 
-Your initial response in this thread made it sound as if -rc1 is the
-only thing that changed, but looking at the differences between -rc0
-and -rc1, which does not touch t0021 or any other instances of
-"split(/:/, $ENV{GITPERLLIB})", I am wondering if it is possible
-that perhaps the way Perl is built for GfW has been changed recently
-and we can safely and sanely use $Config::Config{path_sep} (contrary
-to what was found in late Oct in the message quoted above) now?
+For "deepen", we need support for it both on the client and the server
+now unless we plan to declare a "deepen" capability in the future (then,
+as of these patches, clients that require "deepen" will use protocol v1;
+when a new server declares "deepen", old clients will ignore it and keep
+the status quo, and new clients can then use "deepen").
 
-In any case, I'd prefer this issue to be resolved properly before
--rc2; a patch to t0021/rot13-filter.pl alone does not smell like a
-"proper solution" that is based on the understanding of the root
-cause (and that is why I spent time digging the list archive).
-
-Thanks.
-
-
-[Reference]
-
-*1* https://public-inbox.org/git/CAGyf7-EjKaHgwkN9trO4mFvba9odbWCzA9Jh0Pk6ZE6FOskOYg@mail.gmail.com/
-
-
-
+There may be others that I've missed.
