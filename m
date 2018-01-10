@@ -2,75 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E05331F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 23:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23D021F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 23:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752827AbeAJXJc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 18:09:32 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60664 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752567AbeAJXJb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 18:09:31 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mg3h3-1eCdK04A1F-00NPrf; Thu, 11
- Jan 2018 00:09:22 +0100
-Date:   Thu, 11 Jan 2018 00:09:19 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+        id S1752839AbeAJXJ4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 18:09:56 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57787 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752567AbeAJXJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 18:09:55 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DCF5D42A9;
+        Wed, 10 Jan 2018 18:09:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AdwBD3vpvd0evigeen4ZDWGxcjU=; b=hq7Q/v
+        C2qzwz19pvK71D3geti8ilQxtK0SQ6sz7FEXc85sJkJo6ByznWGfIHGQH/e+2dSi
+        RRaTVRbYEpshd3ZZFGBJw1wtWmu7pjEF0JjO2uKITE4P/Z+uou41n1Y99DBN6R+B
+        5i2UDZyQ1/YP49l4sN3r5dDxG08wsk6wiI6bQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=p+ymi83BGoRgvHNv+CLbSGf99hRd8QXJ
+        DhQHoCYygMZvPAwpBITlTN+YqOs2SR0hk3LiG8UxDxLaHGlHprEdj6GjD5xbhyQP
+        W17y15aVmsuilRQtcK3iSRgUW+Jewb6Id8+pbY7V8c0oZIlijq1iMJ9P6jPTTRzl
+        6cWP//zP/LQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75A79D42A8;
+        Wed, 10 Jan 2018 18:09:54 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA12DD42A7;
+        Wed, 10 Jan 2018 18:09:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Beat Bolli <dev+git@drbeat.li>
-cc:     sunshine@sunshineco.com, git@vger.kernel.org, peff@peff.net
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org,
+        johannes.schindelin@gmx.de, peff@peff.net
 Subject: Re: [PATCH v2] t3900: add some more quotes
-In-Reply-To: <20180110223840.1481-1-dev+git@drbeat.li>
-Message-ID: <nycvar.QRO.7.76.6.1801110008030.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com> <20180110223840.1481-1-dev+git@drbeat.li>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+References: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com>
+        <20180110223840.1481-1-dev+git@drbeat.li>
+Date:   Wed, 10 Jan 2018 15:09:52 -0800
+In-Reply-To: <20180110223840.1481-1-dev+git@drbeat.li> (Beat Bolli's message
+        of "Wed, 10 Jan 2018 23:38:40 +0100")
+Message-ID: <xmqqfu7dz4xr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Op7TAxFLu67UE7Vxwx+PVC5+vzv847ycRCDmWTMnZfM+zYFho6L
- VUeHOLyGs4ZQuVEH+AMYq71ldvPTCDJj2q4M1vBeNGVXsRdy40akYEJrXNEfWDML8YY9cf8
- epkJ2koCTfwNzcvyzji+mNPDbQBtNjwKDHQBb49HH8CizOEC5MA/iaqrrmC20e5or+7KdaC
- QVBNnBYEwAliF22RpkNkA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ckqr6uDtfG8=:3tUnAOgJXsSvaYfzrWM8oB
- AgyBQSzeDz3aHrxk0nMwunyfS+KmdRge9itGOo+Ho+S9Qqw8acuYykYcCtmaYDaOF8CdJYTP1
- 1i/1BsQu7xyyP98WAGhNQAeQsG/DKwfakbKP5QKytCvLUOe8kkCGsT51GjbQbdS634jFJzzJz
- cfgdruYrF8iEf90vOszS/yhDwDax/5Tv8+MlrVVCcFzKcm2RpLGoL3gV+25zgQ9Y0McOoP2DM
- bAtQ7Gxk1jlDTLeByZ7Ar3HssyKT0psPbgJ08Sj5eKW12crHzmNpqnXQfeUvJPxOsVk8C7ONW
- QywrFwlQunGPSUREL1CfvQzwWti4pyQQVwzdPaPQv1m0dWESAiZ7IiS3b69DNrOWP1iaRl5BA
- Vkrs7lcDIvwvfBX2RmODwPW5dFLDipHcqUlw1akkyAnsGJsPh3j8Suu5HcUdcTZaxc1oksey1
- 6dctrIfDiQ6Y7GNLs31GSk5mVkNttSPNQ9fEanc7j4qouJcV+e30pUVoyUAoJOn5vKwWXlZ5R
- IyGPp0GAeYgK2hZbCR5S3v3Yrv8kH3vsWIJE1ioP0qOX+KtpB4ejzW/PcBWwDxUMC6v8Yx0zu
- xvcIo8n6zcnA8vUDXkJAuNol1Eqc0c42trANVBI1N+w5Vc9HRBqgM52mSjgyI/dWageTtpvLG
- kIclKaci8WxeeJErQfMqlg6hKvBtUlQR2afAPhmSELKSx0BhMqfh1Be8ZVpboV8XbrT6CDuOQ
- nm1xdXfSB0VP3ReOvO7yZoLRkAOX4JYRr/Sr+zS5/ggYGYTV5qgGVSzEstlp4vjjfvEK3Fs7L
- 0ZNsjbTqR2ZktN3MWyQbEgesAYJIq4hhkC6C0i7Lcoep/Uocb0=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E031F1C-F65B-11E7-84C0-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Beat,
+Beat Bolli <dev+git@drbeat.li> writes:
 
-On Wed, 10 Jan 2018, Beat Bolli wrote:
+> In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
+> were added to protect against spaces in $HOME. In the test_when_finished
+> handler, two files are deleted which must be quoted individually.
+>
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>
+> Diff to v1:
+>
+> s/hander/handler/ in the message.
+> ...
 
-> diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-> index 9e4e694d9..dc00db87b 100755
-> --- a/t/t3900-i18n-commit.sh
-> +++ b/t/t3900-i18n-commit.sh
-> @@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
->  '
->  
->  test_expect_success 'UTF-8 invalid characters refused' '
-> -	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-> +	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
+OK, but that forgets to fix a more important issue raised in the
+discussion, no?
 
-It is probably worth quoting the dollar characters, too, as pointed out by
-Hannes Sixt: we want to interpolate the value only when needed, just in
-case that the HOME variable contains double quotes.
+Here is what I ended up queuing in the meantime.  Thanks.
 
-Ciao,
-Dscho
+-- >8 --
+From: Beat Bolli <dev+git@drbeat.li>
+Date: Wed, 10 Jan 2018 10:58:32 +0100
+Subject: [PATCH] t3900: add some more quotes
+
+In 89a70b80 ("t0302 & t3900: add forgotten quotes", 2018-01-03), quotes
+were added to protect against spaces in $HOME. In the test_when_finished
+command, two files are deleted which must be quoted individually.
+
+[jc: with \$HOME in the test_when_finished command quoted, as
+pointed out by j6t].
+
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+Helped-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t3900-i18n-commit.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index 9e4e694d93..b92ff95977 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
+ '
+ 
+ test_expect_success 'UTF-8 invalid characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
+ 	echo "UTF-8 characters" >F &&
+ 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
+ 		>"$HOME/invalid" &&
+@@ -49,7 +49,7 @@ test_expect_success 'UTF-8 invalid characters refused' '
+ '
+ 
+ test_expect_success 'UTF-8 overlong sequences rejected' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
+ 	rm -f "$HOME/stderr" "$HOME/invalid" &&
+ 	echo "UTF-8 overlong" >F &&
+ 	printf "\340\202\251ommit message\n\nThis is not a space:\300\240\n" \
+@@ -59,7 +59,7 @@ test_expect_success 'UTF-8 overlong sequences rejected' '
+ '
+ 
+ test_expect_success 'UTF-8 non-characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
+ 	echo "UTF-8 non-character 1" >F &&
+ 	printf "Commit message\n\nNon-character:\364\217\277\276\n" \
+ 		>"$HOME/invalid" &&
+@@ -68,7 +68,7 @@ test_expect_success 'UTF-8 non-characters refused' '
+ '
+ 
+ test_expect_success 'UTF-8 non-characters refused' '
+-	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
++	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\"" &&
+ 	echo "UTF-8 non-character 2." >F &&
+ 	printf "Commit message\n\nNon-character:\357\267\220\n" \
+ 		>"$HOME/invalid" &&
+-- 
+2.16.0-rc1-187-g8dee184084
+
