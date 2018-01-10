@@ -2,139 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C7E1F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 19:53:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B04B1F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 19:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751396AbeAJTx0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 14:53:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40474 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751238AbeAJTxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 14:53:25 -0500
-Received: (qmail 18726 invoked by uid 109); 10 Jan 2018 19:53:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Jan 2018 19:53:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18094 invoked by uid 111); 10 Jan 2018 19:53:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Jan 2018 14:53:58 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jan 2018 14:53:23 -0500
-Date:   Wed, 10 Jan 2018 14:53:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Beat Bolli <dev+git@drbeat.li>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t3900: add some more quotes
-Message-ID: <20180110195323.GA26186@sigill.intra.peff.net>
-References: <20180110095832.22077-1-dev+git@drbeat.li>
- <6b32292b-0f71-7cf8-2069-41766d440b58@kdbg.org>
+        id S1751450AbeAJT5M (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 14:57:12 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56753 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751276AbeAJT5L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 14:57:11 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D8560B6788;
+        Wed, 10 Jan 2018 14:57:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PG9pTKe2gG4OT0dm1dvEjb3ivCA=; b=ernSSp
+        FIb8Gxf0Exm4RVtEVI67zTwhZm3FJ84Z2m9LEOFj5FYDz4mcKpdGfczdPIjsAdXq
+        +QCf8P2jsMpfmg7IizbQh1MvIIcTeA0ucIXUkzjS5Fw/7d2mVX0awUwaZCZuUijV
+        JETJVdMYFd6Xk6SV+DzswOFaP5nJr78MAkOEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kL95J2D3v/tLzozPjpzKVhSftUEYAwVb
+        ZajTBZTOzVYR+te4SZeumf6aDuFTgUHjUP1N75c7ePynEMH0KQAgEu/7tOL9f6VG
+        90mDXK5DrjSn1n8PTjYxQfTulC9/mtzW+HLnY79+OXrRB4Ly6tq79c8nUs+K7P5e
+        CqwHU2EjfGs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D054CB6787;
+        Wed, 10 Jan 2018 14:57:10 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 51AFBB6785;
+        Wed, 10 Jan 2018 14:57:10 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2018, #02; Tue, 9)
+References: <xmqqa7xm38wc.fsf@gitster.mtv.corp.google.com>
+        <718e2723-9547-8cd6-ac46-07e8631da09a@jeffhostetler.com>
+Date:   Wed, 10 Jan 2018 11:57:09 -0800
+In-Reply-To: <718e2723-9547-8cd6-ac46-07e8631da09a@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 10 Jan 2018 11:25:42 -0500")
+Message-ID: <xmqqshbd1o8a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6b32292b-0f71-7cf8-2069-41766d440b58@kdbg.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 71ABFEE6-F640-11E7-9F4A-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 10, 2018 at 08:02:09PM +0100, Johannes Sixt wrote:
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> > diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-> > index 9e4e694d9..dc00db87b 100755
-> > --- a/t/t3900-i18n-commit.sh
-> > +++ b/t/t3900-i18n-commit.sh
-> > @@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
-> >   '
-> >   test_expect_success 'UTF-8 invalid characters refused' '
-> > -	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-> > +	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
-> 
-> Should that not better be
-> 
-> 	test_when_finished "rm -f \"\$HOME/stderr\" \"\$HOME/invalid\""
-> 
-> i.e., delay the expansion of $HOME to protect against double-quotes in the
-> path?
+> On 1/9/2018 6:33 PM, Junio C Hamano wrote:
+>> --------------------------------------------------
+>> [Cooking]
+>>
+>>
+>> * jh/fsck-promisors (2017-12-08) 10 commits
+> [...]
+>
+>> * jh/partial-clone (2017-12-08) 13 commits
+> [...]
+>
+> Parts 2 and 3 of partial clone have been simmering
+> for a while now.  I was wondering if there were any
+> more comments or questions on them.  I don't recall
+> any existing issues.
 
-Yeah. One of the reasons for both of the errors in this thread is the
-nested double-quoting. Using single quotes is awkward because we're
-already using them to delimit the whole snippet.  I've often wondered if
-our tests would be more readable taking the snippet over stdin.
-Something like:
+Me neither.
 
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 9e4e694d93..09ad4d8878 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -39,14 +39,14 @@ test_expect_success 'UTF-16 refused because of NULs' '
- 	test_must_fail git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
- '
- 
--test_expect_success 'UTF-8 invalid characters refused' '
--	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-+test_expect_success 'UTF-8 invalid characters refused' - <<\EOT
-+	test_when_finished 'rm -f "$HOME/stderr $HOME/invalid"' &&
- 	echo "UTF-8 characters" >F &&
- 	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
- 		>"$HOME/invalid" &&
- 	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
- 	test_i18ngrep "did not conform" "$HOME"/stderr
--'
-+EOT
- 
- test_expect_success 'UTF-8 overlong sequences rejected' '
- 	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 1701fe2a06..be8a47d304 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -391,11 +391,32 @@ test_verify_prereq () {
- 	error "bug in the test script: '$test_prereq' does not look like a prereq"
- }
- 
-+# Read from stdin into the variable given in $1.
-+test_read_to_eof () {
-+	# Bash's "read" is sufficiently flexible that we can skip the extra
-+	# process.
-+	if test -n "$BASH_VERSION"
-+	then
-+		# 64k should be enough for anyone...
-+		read -N 65536 -r "$1"
-+	else
-+		# command substitution eats trailing whitespace, so we add
-+		# and then remove a non-whitespace character.
-+		eval "$1=\$(cat; printf x)"
-+		eval "$1=\${$1%x}"
-+	fi
-+}
-+
- test_expect_failure () {
- 	test_start_
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
- 	error "bug in the test script: not 2 or 3 parameters to test-expect-failure"
-+	if test "$2" = "-"
-+	then
-+		test_read_to_eof test_block
-+		set -- "$1" "$test_block"
-+	fi
- 	test_verify_prereq
- 	export test_prereq
- 	if ! test_skip "$@"
-@@ -416,6 +437,11 @@ test_expect_success () {
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
- 	error "bug in the test script: not 2 or 3 parameters to test-expect-success"
-+	if test "$2" = "-"
-+	then
-+		test_read_to_eof test_block
-+		set -- "$1" "$test_block"
-+	fi
- 	test_verify_prereq
- 	export test_prereq
- 	if ! test_skip "$@"
+I do not mind merging them to 'next' during the feature freeze, but
+we won't be merging them to 'master' soon anyway, and I'd like to
+see us concentrate more on finding and fixing regressions on the
+'master' front for now.
