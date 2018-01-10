@@ -7,96 +7,70 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB65D1F404
-	for <e@80x24.org>; Wed, 10 Jan 2018 22:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E05331F404
+	for <e@80x24.org>; Wed, 10 Jan 2018 23:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751911AbeAJWlO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 17:41:14 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54485 "EHLO mout.gmx.net"
+        id S1752827AbeAJXJc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 18:09:32 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60664 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750782AbeAJWlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 17:41:13 -0500
-Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MC4VE-1eiEju2sYS-008neu; Wed, 10
- Jan 2018 23:40:54 +0100
-Date:   Wed, 10 Jan 2018 23:40:53 +0100 (STD)
+        id S1752567AbeAJXJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 18:09:31 -0500
+Received: from [192.168.0.129] ([37.201.193.20]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mg3h3-1eCdK04A1F-00NPrf; Thu, 11
+ Jan 2018 00:09:22 +0100
+Date:   Thu, 11 Jan 2018 00:09:19 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: Re: [PATCH v5 8/9] sequencer: try to commit without forking 'git
- commit'
-In-Reply-To: <20180110205351.GA73826@aiede.svl.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1801102332350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171211141330.23566-1-phillip.wood@talktalk.net> <20171211141330.23566-9-phillip.wood@talktalk.net> <20180110205351.GA73826@aiede.svl.corp.google.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+cc:     sunshine@sunshineco.com, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2] t3900: add some more quotes
+In-Reply-To: <20180110223840.1481-1-dev+git@drbeat.li>
+Message-ID: <nycvar.QRO.7.76.6.1801110008030.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <CAPig+cTmgp3=jkG2Kb3x+3n4Dsq1V6GMGkfVE3=p6KGMBnNMkQ@mail.gmail.com> <20180110223840.1481-1-dev+git@drbeat.li>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:cpkdPjlRtyldtT9ptQ+K3de4vhlRMbm8X51lHGclDaCagQzTKjT
- rS3fZk/UfmibO/ourr50FC+RoRAiDBQJTJK8MDbSRbGfu9LA8g1GC/XCKAjlGzBxkKh0Zdv
- okXmQnYt/tayRjeJ4boa3WLQSB37sZJ1ZtS5ZA24MhTpSio0PlJlR6PuXxnSl87fzeFvOMq
- rzNIaO+AZ3X4kCdNJnBwQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1qKmCzxH/OU=:8/ed457VlzLc2Wp160a8fu
- 5wXWitSldhM3VfyW5PjvGqITmynru21/O1hB3GqqewgqjR5upF2L8Qi8il6NQZoYJUnn7FGkz
- h/COPGxNDx5aJ6yAbYgzb9MpPeNJegsiKOdxemn61t9147inLDK5D5kO8ju9ZTfpOtzqxtAUE
- U1z2rPJzKIIGkB/UoEKbyqcLCmn9oBnf6Ln8pbeZxcT5NIVaG9IZmvc4IS/Eh7mlNSuwu9oI+
- MI6AS+lrHRCedrOBa+A/UJ6kQYtj36oJ2eE/nIGWBrDohSD7pJVOg7qsvvKDFHVILNYWhzZn5
- tRZUKZ2ET7PV89YGPFmFIlNUObGpYCz79AsMTUe6/uZowVtF7D1wF1Xp75q+TzW7lOle3BsKe
- XDiyQFvzA2drVI9YC/G/tPqkLiN7R/lNWoN5A/Y+zNuk+AmdY7PUSsLDwr7ZPB2t5+p4Qijax
- Seh+gZW635QEA2fXUW5TWfPnqRR7OsVh5IpwuMnIph2peaFlTHQOYs7YnHsQewX0dVgvVjxm3
- vStJxPMmyYSwk6j9uDmIB87qF6Au3Y6AfzA2+/qVsF+ku86/AryIIib4XEm0AWOIb+eOrGdSS
- Yow86EEP+H53HkiiygXbv+CCdMDvE4cqNQyeHCnIywLZdMLAv3dWEZYI6vtLc2H6VgdjpbAwg
- sO+SIHCtIsT2Z1dKQWHDHk7Y79GhnkjVIwAXOnahXasi4dM16nG/A6EK99aqTGpEwYcNiEyts
- S88WsmldnzPB0Hqim+BH5QrLH+xjegea0u7kKdL2J7fZNPJU9R16lYEU2j2dknUxk5OaWvKhe
- hH2pO56vQuExx/RNRGUV9vemlhoeIaG3zgVFKP/ULnXILbybT0=
+X-Provags-ID: V03:K0:Op7TAxFLu67UE7Vxwx+PVC5+vzv847ycRCDmWTMnZfM+zYFho6L
+ VUeHOLyGs4ZQuVEH+AMYq71ldvPTCDJj2q4M1vBeNGVXsRdy40akYEJrXNEfWDML8YY9cf8
+ epkJ2koCTfwNzcvyzji+mNPDbQBtNjwKDHQBb49HH8CizOEC5MA/iaqrrmC20e5or+7KdaC
+ QVBNnBYEwAliF22RpkNkA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ckqr6uDtfG8=:3tUnAOgJXsSvaYfzrWM8oB
+ AgyBQSzeDz3aHrxk0nMwunyfS+KmdRge9itGOo+Ho+S9Qqw8acuYykYcCtmaYDaOF8CdJYTP1
+ 1i/1BsQu7xyyP98WAGhNQAeQsG/DKwfakbKP5QKytCvLUOe8kkCGsT51GjbQbdS634jFJzzJz
+ cfgdruYrF8iEf90vOszS/yhDwDax/5Tv8+MlrVVCcFzKcm2RpLGoL3gV+25zgQ9Y0McOoP2DM
+ bAtQ7Gxk1jlDTLeByZ7Ar3HssyKT0psPbgJ08Sj5eKW12crHzmNpqnXQfeUvJPxOsVk8C7ONW
+ QywrFwlQunGPSUREL1CfvQzwWti4pyQQVwzdPaPQv1m0dWESAiZ7IiS3b69DNrOWP1iaRl5BA
+ Vkrs7lcDIvwvfBX2RmODwPW5dFLDipHcqUlw1akkyAnsGJsPh3j8Suu5HcUdcTZaxc1oksey1
+ 6dctrIfDiQ6Y7GNLs31GSk5mVkNttSPNQ9fEanc7j4qouJcV+e30pUVoyUAoJOn5vKwWXlZ5R
+ IyGPp0GAeYgK2hZbCR5S3v3Yrv8kH3vsWIJE1ioP0qOX+KtpB4ejzW/PcBWwDxUMC6v8Yx0zu
+ xvcIo8n6zcnA8vUDXkJAuNol1Eqc0c42trANVBI1N+w5Vc9HRBqgM52mSjgyI/dWageTtpvLG
+ kIclKaci8WxeeJErQfMqlg6hKvBtUlQR2afAPhmSELKSx0BhMqfh1Be8ZVpboV8XbrT6CDuOQ
+ nm1xdXfSB0VP3ReOvO7yZoLRkAOX4JYRr/Sr+zS5/ggYGYTV5qgGVSzEstlp4vjjfvEK3Fs7L
+ 0ZNsjbTqR2ZktN3MWyQbEgesAYJIq4hhkC6C0i7Lcoep/Uocb0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Beat,
 
-On Wed, 10 Jan 2018, Jonathan Nieder wrote:
+On Wed, 10 Jan 2018, Beat Bolli wrote:
 
-> Phillip Wood wrote:
-> 
-> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >
-> > If the commit message does not need to be edited then create the
-> > commit without forking 'git commit'. Taking the best time of ten runs
-> > with a warm cache this reduces the time taken to cherry-pick 10
-> > commits by 27% (from 282ms to 204ms), and the time taken by 'git
-> > rebase --continue' to pick 10 commits by 45% (from 386ms to 212ms) on
-> > my computer running linux. Some of greater saving for rebase is
-> > because it no longer wastes time creating the commit summary just to
-> > throw it away.
-> 
-> Neat!  Dmitry Torokhov (cc-ed) noticed[1] that this causes the
-> prepare-commit-msg hook not to be invoked, which I think is
-> unintentional.  Should we check for such a hook and take the slowpath
-> when it is present?
+> diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+> index 9e4e694d9..dc00db87b 100755
+> --- a/t/t3900-i18n-commit.sh
+> +++ b/t/t3900-i18n-commit.sh
+> @@ -40,7 +40,7 @@ test_expect_success 'UTF-16 refused because of NULs' '
+>  '
+>  
+>  test_expect_success 'UTF-8 invalid characters refused' '
+> -	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
+> +	test_when_finished "rm -f \"$HOME/stderr\" \"$HOME/invalid\"" &&
 
-We could also easily recreate the functionality:
-
-	if (find_hook("pre-commit")) {
-		struct argv_array hook_env = ARGV_ARRAY_INIT;
-
-		argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s",
-			get_index_file());
-		argv_array_push(&hook_env, "GIT_EDITOR=:");
-		ret = run_hook_le(hook_env.argv, "pre-commit", NULL);
-		argv_array_clear(&hook_env);
-	}
-
-(This assumes that the in-process try_to_commit() is only called if the
-commit message is not to be edited interactively, which is currently the
-case.)
+It is probably worth quoting the dollar characters, too, as pointed out by
+Hannes Sixt: we want to interpolate the value only when needed, just in
+case that the HOME variable contains double quotes.
 
 Ciao,
 Dscho
