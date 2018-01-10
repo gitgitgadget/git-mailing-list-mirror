@@ -8,28 +8,28 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A562A1FADF
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC391FADF
 	for <e@80x24.org>; Wed, 10 Jan 2018 09:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965404AbeAJJhy (ORCPT <rfc822;e@80x24.org>);
+        id S965401AbeAJJhy (ORCPT <rfc822;e@80x24.org>);
         Wed, 10 Jan 2018 04:37:54 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:44096
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:44090
         "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755675AbeAJJgm (ORCPT
+        by vger.kernel.org with ESMTP id S1755737AbeAJJgm (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 10 Jan 2018 04:36:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515577001;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=1U50wLweePySfVevy8QhAwZmdIwFacY93OPU3ZmIKgA=;
-        b=V+gVWLa4LNcmTQDCEpVwJkQON1GXpjmeoqW6aSf5QFxo2ASIqyPHU1J35hFjVCM/
-        eDGjtqLBcrVNSJbCZTs2uw9Rv8+DDceic3VDGJfwDokcqwUjT2oUn+yRUpI08JPlqZC
-        Nw5VlDE9USbt10TVkK9qf88gTYnc/UhMws89GShM=
+        bh=7Cj8U3cWN0ZTxk05CG68T0I9N9NYngpKQZwuLNYTDjs=;
+        b=KIUeuHDzHWYbgvCtJsay+lWJJKjAgCXjyGGCnWvamCpl/6YKtZ5aLZz2zDwjQ/N4
+        wUTD+YdR2qaVfgkJn8vFafXCpqCnrrR8goK6ZRo3PF1GjLoIQGRVDUe4et6HajyFAsP
+        uzxMgggv/g6jMUSyEIwP2w2hyjrq2JpO+Nvh58/8=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160df6dc58b-a6cf8e70-3bde-461d-98af-5e5129973960-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160df6dc583-8c4e2489-bbba-43d5-b2b8-48794531acea-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
 References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 13/18] cat-file: start reusing populate_value
+Subject: [PATCH v2 11/18] cat-file: start use ref_array_item struct
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -41,83 +41,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move logic related to getting object info from cat-file to ref-filter.
-It will help to reuse whole formatting logic from ref-filter further.
+Moving from using expand_data to ref_array_item structure.
+That helps us to reuse functions from ref-filter easier.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 16 +++-------------
- ref-filter.c       | 15 +++++++++++++++
- ref-filter.h       |  2 ++
- 3 files changed, 20 insertions(+), 13 deletions(-)
+ builtin/cat-file.c | 30 +++++++++++++++++++-----------
+ ref-filter.h       |  5 +++++
+ 2 files changed, 24 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1c92194faaede..e11dbf88e386c 100644
+index 1f331559e55c7..1c92194faaede 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -284,21 +284,11 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+@@ -183,26 +183,26 @@ static int is_atom(const char *atom, const char *s, int slen)
+ }
+ 
+ static void expand_atom(struct strbuf *sb, const char *atom, int len,
+-			 struct expand_data *data)
++			 struct ref_array_item *item)
+ {
+ 	if (is_atom("objectname", atom, len))
+-		strbuf_addstr(sb, oid_to_hex(&data->oid));
++		strbuf_addstr(sb, oid_to_hex(&item->objectname));
+ 	else if (is_atom("objecttype", atom, len))
+-		strbuf_addstr(sb, typename(data->type));
++		strbuf_addstr(sb, typename(item->type));
+ 	else if (is_atom("objectsize", atom, len))
+-		strbuf_addf(sb, "%lu", data->size);
++		strbuf_addf(sb, "%lu", item->size);
+ 	else if (is_atom("objectsize:disk", atom, len))
+-		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
++		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)item->disk_size);
+ 	else if (is_atom("rest", atom, len))
+-		strbuf_addstr(sb, data->rest);
++		strbuf_addstr(sb, item->rest);
+ 	else if (is_atom("deltabase", atom, len))
+-		strbuf_addstr(sb, oid_to_hex(&data->delta_base_oid));
++		strbuf_addstr(sb, oid_to_hex(&item->delta_base_oid));
+ }
+ 
+-static size_t expand_format(struct strbuf *sb, const char *start, void *vdata)
++static size_t expand_format(struct strbuf *sb, const char *start, void *data)
+ {
+ 	const char *end;
+-	struct expand_data *data = vdata;
++	struct ref_array_item *item = data;
+ 
+ 	if (*start != '(')
+ 		return 0;
+@@ -210,7 +210,7 @@ static size_t expand_format(struct strbuf *sb, const char *start, void *vdata)
+ 	if (!end)
+ 		die("format element '%s' does not end in ')'", start);
+ 
+-	expand_atom(sb, start + 1, end - start - 1, data);
++	expand_atom(sb, start + 1, end - start - 1, item);
+ 	return end - start + 1;
+ }
+ 
+@@ -282,6 +282,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 			       struct expand_data *data)
+ {
  	struct strbuf buf = STRBUF_INIT;
- 	struct ref_array_item item;
++	struct ref_array_item item;
  
--	if (!data->skip_object_info &&
--	    sha1_object_info_extended(data->oid.hash, &data->info,
--				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
--		printf("%s missing\n",
--		       obj_name ? obj_name : oid_to_hex(&data->oid));
--		fflush(stdout);
--		return;
--	}
--
- 	item.objectname = data->oid;
--	item.type = data->type;
--	item.size = data->size;
--	item.disk_size = data->disk_size;
- 	item.rest = data->rest;
--	item.delta_base_oid = data->delta_base_oid;
-+	item.start_of_request = obj_name;
-+
-+	if (populate_value(&item)) return;
- 
- 	strbuf_expand(&buf, opt->format->format, expand_format, &item);
- 	strbuf_addch(&buf, '\n');
-diff --git a/ref-filter.c b/ref-filter.c
-index c15906cb091c7..35e16cec6d862 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1467,6 +1467,21 @@ int populate_value(struct ref_array_item *ref)
- 			ref->symref = "";
+ 	if (!data->skip_object_info &&
+ 	    sha1_object_info_extended(data->oid.hash, &data->info,
+@@ -292,7 +293,14 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 		return;
  	}
  
-+	if (cat_file_info) {
-+		if (!cat_file_info->skip_object_info &&
-+		    sha1_object_info_extended(ref->objectname.hash, &cat_file_info->info,
-+					      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
-+			const char *e = ref->start_of_request;
-+			printf("%s missing\n", e ? e : oid_to_hex(&ref->objectname));
-+			fflush(stdout);
-+			return -1;
-+		}
-+		ref->type = cat_file_info->type;
-+		ref->size = cat_file_info->size;
-+		ref->disk_size = cat_file_info->disk_size;
-+		ref->delta_base_oid = cat_file_info->delta_base_oid;
-+	}
+-	strbuf_expand(&buf, opt->format->format, expand_format, data);
++	item.objectname = data->oid;
++	item.type = data->type;
++	item.size = data->size;
++	item.disk_size = data->disk_size;
++	item.rest = data->rest;
++	item.delta_base_oid = data->delta_base_oid;
 +
- 	/* Fill in specials first */
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atom[i];
++	strbuf_expand(&buf, opt->format->format, expand_format, &item);
+ 	strbuf_addch(&buf, '\n');
+ 	batch_write(opt, buf.buf, buf.len);
+ 	strbuf_release(&buf);
 diff --git a/ref-filter.h b/ref-filter.h
-index 6df45c5bd9dcb..0c7253913735b 100644
+index 590a60ffe034d..9bd36243481b4 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -45,6 +45,8 @@ struct ref_array_item {
- 	off_t disk_size;
- 	const char *rest;
- 	struct object_id delta_base_oid;
-+	/* Need it for better explanation in error log. */
-+	const char *start_of_request;
+@@ -40,6 +40,11 @@ struct ref_array_item {
+ 	const char *symref;
+ 	struct commit *commit;
+ 	struct atom_value *value;
++	enum object_type type;
++	unsigned long size;
++	off_t disk_size;
++	const char *rest;
++	struct object_id delta_base_oid;
  	char refname[FLEX_ARRAY];
  };
  
