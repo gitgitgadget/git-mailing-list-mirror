@@ -8,90 +8,176 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AECEC1FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 09:37:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71DA91FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 09:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756150AbeAJJg7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 04:36:59 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:44092
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755977AbeAJJgm (ORCPT
+        id S1756153AbeAJJhB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 04:37:01 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:59396
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755902AbeAJJgm (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 10 Jan 2018 04:36:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515577001;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=pkMreuIktdvxn9f2u+KyFkv0V1qlupHSH1gk1/4ugNU=;
-        b=Y+I+HQCdcL8el9d0qxG414SMMF3fsaY7LvUe4aYaRJOB9ds3fRCADqohm55Hv0Eo
-        t3bps3mAvHs0PTFvfsG3WaA6IqeEsHgQ6KNh6rGMKsFrnA/U/4N986mVQ9RFeneJd58
-        nMbucberJ8vDsVmmbn8hAyBJTIZzCd0gkwLkyOvY=
+        bh=BQn5MT3Mtqm/8kltGzOAvoBMq2XoQUNd6DLbVIvckQw=;
+        b=GeckH3JoMc73VgvJ+83RSXdfSAk7RhjnDPZRx4pBTH72wAC6E3tTv5RW+gds542+
+        U3tI/+yl7vLCj5G/L30F66O98O5PIScUhJV45OgEaBu5OZ/popzqyyZErL5pgHuRt2d
+        PbOV7wDGlVhnefuuUinFcqrCllb9xLIairBP/66k=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160df6dc5ba-269b8786-0038-41be-95b2-dee29fcde83f-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160df6dc55c-8460a406-3567-42b0-9f03-733e7c64792a-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
 References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 16/18] ref_format: add split_on_whitespace flag
+Subject: [PATCH v2 08/18] ref-filter: get rid of goto
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Wed, 10 Jan 2018 09:36:41 +0000
-X-SES-Outgoing: 2018.01.10-54.240.7.12
+X-SES-Outgoing: 2018.01.10-54.240.7.17
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add flag to ref_format struct so that we could pass needed info
-to cat-file.
+Get rid of goto command in ref-filter for better readability.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 1 +
- ref-filter.c       | 4 ++--
- ref-filter.h       | 1 +
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ ref-filter.c | 103 ++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 53 insertions(+), 50 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 289912ab1f858..5aac10b9808ff 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -394,6 +394,7 @@ static int batch_objects(struct batch_options *opt)
- 	memset(&data, 0, sizeof(data));
- 	opt->format->cat_file_data = &data;
- 	opt->format->is_cat = 1;
-+	opt->format->split_on_whitespace = &data.split_on_whitespace;
- 	verify_ref_format(opt->format);
- 	if (opt->cmdmode)
- 		data.split_on_whitespace = 1;
 diff --git a/ref-filter.c b/ref-filter.c
-index 2c955e90bb4c9..0fb33198fb450 100644
+index bb09875e2dbf4..575c5351d0f79 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -494,8 +494,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 		need_tagged = 1;
- 	if (!strcmp(valid_atom[i].name, "symref"))
- 		need_symref = 1;
--	if (is_cat && !strcmp(valid_atoms[i].name, "rest"))
--		cat_file_info->split_on_whitespace = 1;
-+	if (!strcmp(valid_atom[i].name, "rest"))
-+		*format->split_on_whitespace = 1;
- 	return at;
+@@ -1403,16 +1403,60 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+ 	return show_ref(&atom->u.refname, ref->refname);
  }
  
-diff --git a/ref-filter.h b/ref-filter.h
-index 12a938b0aa6a3..aaf1790e43e62 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -127,6 +127,7 @@ struct ref_format {
- 	 */
- 	struct expand_data *cat_file_data;
- 	int is_cat;
-+	int *split_on_whitespace;
- };
++static void need_object(struct ref_array_item *ref) {
++	struct object *obj;
++	const struct object_id *tagged;
++	unsigned long size;
++	int eaten;
++	void *buf = get_obj(&ref->objectname, &obj, &size, &eaten);
++	if (!buf)
++		die(_("missing object %s for %s"),
++		    oid_to_hex(&ref->objectname), ref->refname);
++	if (!obj)
++		die(_("parse_object_buffer failed on %s for %s"),
++		    oid_to_hex(&ref->objectname), ref->refname);
++
++	grab_values(ref->value, 0, obj, buf, size);
++	if (!eaten)
++		free(buf);
++
++	/*
++	 * If there is no atom that wants to know about tagged
++	 * object, we are done.
++	 */
++	if (!need_tagged || (obj->type != OBJ_TAG))
++		return;
++
++	/*
++	 * If it is a tag object, see if we use a value that derefs
++	 * the object, and if we do grab the object it refers to.
++	 */
++	tagged = &((struct tag *)obj)->tagged->oid;
++
++	/*
++	 * NEEDSWORK: This derefs tag only once, which
++	 * is good to deal with chains of trust, but
++	 * is not consistent with what deref_tag() does
++	 * which peels the onion to the core.
++	 */
++	buf = get_obj(tagged, &obj, &size, &eaten);
++	if (!buf)
++		die(_("missing object %s for %s"),
++		    oid_to_hex(tagged), ref->refname);
++	if (!obj)
++		die(_("parse_object_buffer failed on %s for %s"),
++		    oid_to_hex(tagged), ref->refname);
++	grab_values(ref->value, 1, obj, buf, size);
++	if (!eaten)
++		free(buf);
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+ static void populate_value(struct ref_array_item *ref)
+ {
+-	void *buf;
+-	struct object *obj;
+-	int eaten, i;
+-	unsigned long size;
+-	const struct object_id *tagged;
++	int i;
  
- #define REF_FORMAT_INIT { NULL, 0, -1 }
+ 	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
+ 
+@@ -1526,53 +1570,12 @@ static void populate_value(struct ref_array_item *ref)
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct atom_value *v = &ref->value[i];
+-		if (v->s == NULL)
+-			goto need_obj;
++		if (v->s == NULL) {
++			need_object(ref);
++			break;
++		}
+ 	}
+ 	return;
+-
+- need_obj:
+-	buf = get_obj(&ref->objectname, &obj, &size, &eaten);
+-	if (!buf)
+-		die(_("missing object %s for %s"),
+-		    oid_to_hex(&ref->objectname), ref->refname);
+-	if (!obj)
+-		die(_("parse_object_buffer failed on %s for %s"),
+-		    oid_to_hex(&ref->objectname), ref->refname);
+-
+-	grab_values(ref->value, 0, obj, buf, size);
+-	if (!eaten)
+-		free(buf);
+-
+-	/*
+-	 * If there is no atom that wants to know about tagged
+-	 * object, we are done.
+-	 */
+-	if (!need_tagged || (obj->type != OBJ_TAG))
+-		return;
+-
+-	/*
+-	 * If it is a tag object, see if we use a value that derefs
+-	 * the object, and if we do grab the object it refers to.
+-	 */
+-	tagged = &((struct tag *)obj)->tagged->oid;
+-
+-	/*
+-	 * NEEDSWORK: This derefs tag only once, which
+-	 * is good to deal with chains of trust, but
+-	 * is not consistent with what deref_tag() does
+-	 * which peels the onion to the core.
+-	 */
+-	buf = get_obj(tagged, &obj, &size, &eaten);
+-	if (!buf)
+-		die(_("missing object %s for %s"),
+-		    oid_to_hex(tagged), ref->refname);
+-	if (!obj)
+-		die(_("parse_object_buffer failed on %s for %s"),
+-		    oid_to_hex(tagged), ref->refname);
+-	grab_values(ref->value, 1, obj, buf, size);
+-	if (!eaten)
+-		free(buf);
+ }
+ 
+ /*
 
 --
 https://github.com/git/git/pull/450
