@@ -2,92 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E989F1FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 07:07:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 369FB1FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 07:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754198AbeAJHHM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 02:07:12 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:36469 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753532AbeAJHHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 02:07:10 -0500
-Received: by mail-qt0-f182.google.com with SMTP id a16so20875453qtj.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2018 23:07:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vWI/9UU8apc1AchKr0s39FnSVxK1uugG6KIfnAA0tV8=;
-        b=t/moJ0n7NC7XgDIbzOhR+okLZSvMu5s2X7MVPBYW5zvniWPLXl6/1XXr0rPiCCLUct
-         jPAnNInCdMGqIrO8aMbhsgXyl87JJVf9TPJcRBpA1UfvUHnqn2EHQxZWpjtjbnGC/2fW
-         gzHhkbyB+BgDp0Vt77uOv/CUC3lLttAj1nllgHW09XYti8PywDn7mCFoh3s6X1XUtK9y
-         bEdtXqrf01l0Qni7awhIweX8GAGrIS0T5gqK43EaWgX4l6n9yFIvXAXnyOHjOJvjZ2ya
-         +aEoR6SU9QcFWwoF6aA6iaJ/fBtPj8D8zClZRUe9yji/UzX59nSe4oOFE5gxViqVfhmK
-         UEmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vWI/9UU8apc1AchKr0s39FnSVxK1uugG6KIfnAA0tV8=;
-        b=g18RVV1Xr3elaJUBxOQ79x8fBH7Sb+Iyc2G4i9Ep1TOBChqw8Ojf9DC9vcSCeHxxHO
-         pNmKhdt+QlFtUr+iNO0lwWV0sFdWaSnXQEfPxCRkZ2OpWam6r4mNTRO48v2Yij1jOfU+
-         IG4DmyPTP31UI5ORfIb80uv0WXCmpA3Iw1avRJiaAlClY9wiKDMVVuOZ4AtHfCIVYT9u
-         leN8TjbgVac4buoOdDDuMOksF6nHvpS/4lWUwnuYYLXX0O8b1eMWRAq/EXsA6rmp9brj
-         9Fz/nkWRcIf4udSrODefNvChwop66LwT+42QH3II/1c/fas5XgDNFv//6MbrB77x6Kru
-         Z6zg==
-X-Gm-Message-State: AKwxyteTGgaXPmZZeTEhrga2IzrW/ECm+2NJCmx8Xxgp88h1WNaCwnS+
-        Rumc5WqzCA95mZ9nGEZ8UrD/tmCv1h7HL6igrx8b8g==
-X-Google-Smtp-Source: ACJfBotTIAVna9dWwFEzjzXyudVtxzuOtUv1K/gqSRHbzPY6J+E+Z7j980xAyqpGce5JmgwKgU1Q5sNIQPE4lARTjN4=
-X-Received: by 10.237.38.35 with SMTP id z32mr25531023qtc.180.1515568029833;
- Tue, 09 Jan 2018 23:07:09 -0800 (PST)
+        id S933052AbeAJHmC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 02:42:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39706 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753842AbeAJHmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 02:42:01 -0500
+Received: (qmail 16202 invoked by uid 109); 10 Jan 2018 07:42:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 10 Jan 2018 07:42:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13337 invoked by uid 111); 10 Jan 2018 07:42:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 10 Jan 2018 02:42:34 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Jan 2018 02:41:59 -0500
+Date:   Wed, 10 Jan 2018 02:41:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 0/4] Add --no-ahead-behind to status
+Message-ID: <20180110074159.GA16315@sigill.intra.peff.net>
+References: <20180108154822.54829-1-git@jeffhostetler.com>
+ <7b759564-5544-8845-0594-e8342a0b4ba5@gmail.com>
+ <8affe37c-d937-d7e0-fe06-cf7c8db173fa@jeffhostetler.com>
+ <20180109072044.GD32257@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 MIME-Version: 1.0
-Received: by 10.200.16.154 with HTTP; Tue, 9 Jan 2018 23:07:09 -0800 (PST)
-In-Reply-To: <xmqqtvvu3d0a.fsf@gitster.mtv.corp.google.com>
-References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
- <01020160db067bde-7f500636-b80e-4099-a84e-2613126c9aa1-000000@eu-west-1.amazonses.com>
- <xmqqtvvu3d0a.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Wed, 10 Jan 2018 10:07:09 +0300
-Message-ID: <CAL21BmnBcYD1ws+2e18o-X4awzFteMkZ0fGYtoJyYdB51JqdzQ@mail.gmail.com>
-Subject: Re: [PATCH 03/20] cat-file: rename variables in ref-filter
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1801091407480.37@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-10 1:04 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
-> Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
->
->> Rename some variables for easier reading.
->> They point not to values, but to arrays.
->
-> Once the code is written and people start to build on top, a change
-> like this is not worth the code churn, especially because there are
-> two equally valid schools of naming convention.
->
->  - When you have an array, each of whose 20 slots holds a single
->    dosh, I would prefer to call the array dosh[20], not doshes[20],
->    so that I can refer to the seventh dosh as "dosh[7]".
->
->  - If you more often refer to the array as a whole (than you refer
->    to individual elements) and want to stress the fact that the
->    array holds multiple elements in it, I can understand that you
->    may be tempted to call the whole array "doshes[]".
->
-> So please drop this and other "rename variables" patches from the
-> series.
->
->
+On Tue, Jan 09, 2018 at 02:15:47PM +0100, Johannes Schindelin wrote:
 
-OK, I will revert that. I have done this because it's hard for me to
-keep in mind that it's not just a simple pointer to a single value,
-and I tried to make the code more intuitive.
+> > I like this direction a lot. I had hoped we could say "100+ commits
+> > ahead",
+> 
+> How about "100+ commits apart" instead?
+
+Yeah, that is probably more accurate for the general case.
+
+> > but I don't think we can do so accurately without generation numbers.
+> 
+> Even with generation numbers, it is not possible to say whether two given
+> commits reflect diverging branches or have an ancestor-descendant
+> relationship (or in graph speak: whether they are comparable).
+> 
+> It could potentially make it possible to cut off the commit traversal, but
+> I do not even see how that would be possible.
+> 
+> The only thing you could say for sure is that two different commits with
+> the same generation number are for sure "uncomparable", i.e. reflect
+> diverging branches.
+
+I think sometimes we can say more. E.g., imagine we have two commits, A
+and B, with generation numbers N and N+1000. We walk back 100 commits
+deep from B and end up at a commit around N+900. We know that there are
+at least 100 commits in B that are not in A (the 100 we walked, which we
+know cannot be ancestors of A because of their generation numbers).
+That's true even if there is no ancestry relationship between the two
+commits at all.
+
+But we cannot say in that case how many (if any) commits are in A but
+not B. So we can say "100+ commits ahead, unknown behind" (or if the two
+generation numbers are reversed, we can say "unknown ahead, 100+ commits
+behind).
+
+In the more general case, we could actually walk _past_ generation N,
+and end up at N-25 or similar. There we can't say anything intelligent
+about the commits with generations <= N. But we could say something like
+"there are 75 commits in B that cannot be in A" (note that it's probably
+_not_ actually 75; it's however many we walked until we crossed N).
+
+So that was what I was getting at in the earlier mail. We can sometimes
+give a partial answer. But I think giving that partial answer is likely
+to be more confusing than useful to a user, because there are a lot of
+caveats about how much we know for a given situation.
+
+And I think from what you wrote below that you probably agree with that
+(that we can make a few claims, but not enough to really be useful).
+
+-Peff
