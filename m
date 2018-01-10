@@ -2,111 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D69421FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 10:38:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D810A1FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 10:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752281AbeAJKiw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 05:38:52 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:40226 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751858AbeAJKiu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 05:38:50 -0500
-Received: by mail-wr0-f169.google.com with SMTP id 100so925943wrb.7
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 02:38:49 -0800 (PST)
+        id S1752821AbeAJKsq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 05:48:46 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:37876 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751696AbeAJKsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 05:48:43 -0500
+Received: by mail-pl0-f67.google.com with SMTP id s3so7039520plp.4
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 02:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ea+XES1ifyEh9r2BON9+Op6XKziKpCAwhVtw6uINDC0=;
-        b=Tfydh+4QJLyozTiMh+zjHjtz+/TWg7w97a0TooLNVZN8xxqYT7XFwjlNj5h5mBGoac
-         KdMRxUMiq4Vfg032jjypLnzPxFbL4sR5KqXwbMUqQawjLYCkOa5lm6ewQwFv5EUxw9Oh
-         TVropcGRjeWIc/RMrzrXXTxoVuCcboVDxP54U=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Scm7wJ7aC33MDqzVa0hzBWnZZpOXKj+2sQrWvR1Ckrc=;
+        b=kKOjlcTReb5l/xLS1G80ZY4t7gCzzcG6Vm1fa0PR3fk6lFX+OYqrjDmCeQQXThgVhm
+         1o2yq+cBww0MI0HV1UqMufZ5CZcPgueR/CK8LWAt8/xDRKFYwmkE4e3hysCj6iVYGKtu
+         Tz3TAuur7pQYGo1hMNoNddGftywpxmjSm4ti1zG5SlRjyhl88AW7ZxE4bDAnI1qljwcX
+         GyZs0U1l3Qar8EaG9Gd7KnCRBhY4PkAXGY1GgnbiDGN8JYUL8Sd0aVjy0c+bqEQTGRBC
+         v1S72ZZEvRiit+JTwZZDsGsIYVs64HpXvgHYoT2TviSmGS34q4tnt9Zil0+jCHaBgOax
+         G1/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ea+XES1ifyEh9r2BON9+Op6XKziKpCAwhVtw6uINDC0=;
-        b=mWh8QR0eS0iVhajP7TeLyyBvyTbWnKfdvU+mECTUVxw50oxjcTy9Qjpeo8dx0Tzu6M
-         nJihIB88k8CTrvNFVBiy1USsbDigZPK++KfRXZpAuYXV5KLlsGjTp41EuMPgFQmKPP+T
-         PlZ0+3VXx62SLWuTeZC8yqcWutjLiksof/pnbqAd2bH+0OiSmWCJL5zKdpT4KVCW2XXI
-         kBj3oGrVARnACaLugBXYXyiHKoQGuog72MBKGeHB2NGZA3RYDLbLGJadvfJooa6q49eR
-         PeWEF2F3IzFvaNAOzBstixYt+EjSQQAaCHXJM1wow9Ji0EHUo7OZk6WjcAIAxvjT6qWL
-         e4og==
-X-Gm-Message-State: AKGB3mKI0vLZdy3TSjW9HrF5PsGzt0N1JcYU2Bl12RUyNTAZoU3FkDYC
-        /A94u+0FpwSJ9i0/sluLznXwJg==
-X-Google-Smtp-Source: ACJfBovaBJpze/vGzZnWSWtA23QPm+qbA4rHH7VtkLHwwMzPwRbFc2kTBgF5QBevXBMpaDwXjzKQCg==
-X-Received: by 10.223.182.18 with SMTP id f18mr15247781wre.11.1515580728965;
-        Wed, 10 Jan 2018 02:38:48 -0800 (PST)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id j6sm18549993wmg.41.2018.01.10.02.38.47
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Scm7wJ7aC33MDqzVa0hzBWnZZpOXKj+2sQrWvR1Ckrc=;
+        b=Ev9WH7ZV1HLzzE2PNVGIWjK3N48BkBzMFPG6YbEVyNBVpjW6ZVzzeRXybVAx/sTi4E
+         7iVd7WOLkyfSPDBObn/tyvBridUpIdAUHrb92B/29GN2DeKkcWc3kWPHCAsLKT2Zr5QO
+         FsaqV+WgA8dh21zlojcPGArfwJ28oWogzIPQJAWthtUpj+dlVnBQq7F8roHWqzKbf0nX
+         NiVf+7l9P6sSWcJpqi5P2xy2IBRcsUajOWqlR9pzuvqNMQlcHWttO7cRsk069KDaJZmW
+         dGcZk6J72Doj+1JO5vgim3cN5oCKnbsn6wXzUgYWvS6WFzXdWmCfdkXcA6qKVFD5eeoy
+         p/SA==
+X-Gm-Message-State: AKGB3mLacRE/oQldCRmvAOJ6PoNs82pgKV5AQ1i+0Q0OnVqVBbvjAf8n
+        SThkWPBXpobE5sYYsNJvldg0Wg==
+X-Google-Smtp-Source: ACJfBot5KFHUd7UDshigE2Hbkayr+t+6pvGrKHmI7CbVtd/YIwrbiklRgCAdVD9BXl8ON4fP0al8rw==
+X-Received: by 10.84.244.135 with SMTP id h7mr13907592pll.222.1515581322976;
+        Wed, 10 Jan 2018 02:48:42 -0800 (PST)
+Received: from ash ([116.106.0.190])
+        by smtp.gmail.com with ESMTPSA id v23sm33473522pfe.72.2018.01.10.02.48.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Jan 2018 02:38:48 -0800 (PST)
-Date:   Wed, 10 Jan 2018 10:38:32 +0000
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Anthony Ramine <n.oxyde@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v4 8/7] wildmatch test: skip file creation tests on
- Windows proper
-Message-ID: <20180110103832.GA4018@dinwoodie.org>
-References: <nycvar.QRO.7.76.6.1801052133380.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <20180105221222.28867-1-avarab@gmail.com>
- <xmqqzi5raogu.fsf@gitster.mtv.corp.google.com>
- <nycvar.QRO.7.76.6.1801061337020.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <CACsJy8CDz57RR+VHpaPb5YMhKG5kUgb9rt5TWKL8n+e7Xart3g@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081319520.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180110090724.GA2893@ash>
+        Wed, 10 Jan 2018 02:48:42 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 10 Jan 2018 17:48:38 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] run-command.c: print env vars when GIT_TRACE is set
+Date:   Wed, 10 Jan 2018 17:48:35 +0700
+Message-Id: <20180110104835.22905-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180110090724.GA2893@ash>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 10 January 2018 at 04:07 pm +0700, Duy Nguyen wrote:
-> On Mon, Jan 08, 2018 at 01:25:04PM +0100, Johannes Schindelin wrote:
-> > I agree that it would make a ton of sense to use a proper, portable test
-> > framework written in pure, portable C.
-> > 
-> > However, this ship has long sailed, hasn't it?
-> 
-> If you meant converting the whole test suite, oh yeah that's not gonna
-> happen. But it's still possible to have some tests written in C.
-> 
-> I played a bit with this. The assumption is if it's agreed that we can
-> get something bare bone (but functional) in then we could start having
-> more and more C-based unit tests in future and also improve the C
-> framework to be on par with shell one on the side.
-> 
-> There are still some minor problems with my patch, and a bunch of
-> optional features not supported. But the numbers looks unexpectedly
-> promising. 0.7 seconds on the shell version and 0.03 on the C one.
+Occasionally submodule code could execute new commands with GIT_DIR set
+to some submodule. GIT_TRACE prints just the command line which makes it
+hard to tell that it's not really executed on this repository.
 
-I see even more promising results from a single run on one of my Cygwin
-systems: from 21.3 seconds for t3070 to 0.112 seconds for your t3071.  I
-expect there's a similar improvement in Dscho's Git for Windows
-environment.
+Print env variables in this case. Note that the code deliberately ignore
+variables unsetting because there are so many of them (to keep git
+environment clean for the next process) and really hard to read.
 
-> One disadvantage of this though, if this kind of framework does not
-> get popular, then any new test feature must be added at both places
-> but it's a waste of time to support both. So...
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ A minor thing that I ignored in this patch is quoting the environment
+ variables. For me it's meh. Perhaps I should just dumb the env
+ without quoting at all.
 
-I don't follow: if we end up implementing every test twice, as we have
-here, then I agree, but I don't think there's much value in doing that
-except as a proof of concept, as in this immediate discussion.  The
-obvious-to-me way to do this would be following the precedent of the
-core code: gradually migrate things away from shell code to C code.
+ run-command.c |  3 ++-
+ trace.c       | 38 +++++++++++++++++++++++++++++++++++---
+ trace.h       | 18 +++++++++++++++---
+ 3 files changed, 52 insertions(+), 7 deletions(-)
 
-Adam
+diff --git a/run-command.c b/run-command.c
+index 31fc5ea86e..235367087d 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
+ 		cmd->err = fderr[0];
+ 	}
+ 
+-	trace_argv_printf(cmd->argv, "trace: run_command:");
++	trace_env_argv_printf(cmd->env, cmd->argv, "trace: run_command:");
++
+ 	fflush(NULL);
+ 
+ #ifndef GIT_WINDOWS_NATIVE
+diff --git a/trace.c b/trace.c
+index b7530b51a9..d8967b66e8 100644
+--- a/trace.c
++++ b/trace.c
+@@ -146,7 +146,26 @@ static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
+ 	print_trace_line(key, &buf);
+ }
+ 
++static void concatenate_env(struct strbuf *dst, const char *const *env)
++{
++	int i;
++
++	/* Copy into destination buffer. */
++	strbuf_grow(dst, 255);
++	for (i = 0; env[i]; ++i) {
++		/*
++		 * the main interesting is setting new vars
++		 * e.g. GIT_DIR, ignore the unsetting to reduce noise.
++		 */
++		if (!strchr(env[i], '='))
++			continue;
++		strbuf_addch(dst, ' ');
++		sq_quote_buf(dst, env[i]);
++	}
++}
++
+ static void trace_argv_vprintf_fl(const char *file, int line,
++				  const char *const *env,
+ 				  const char **argv, const char *format,
+ 				  va_list ap)
+ {
+@@ -157,6 +176,9 @@ static void trace_argv_vprintf_fl(const char *file, int line,
+ 
+ 	strbuf_vaddf(&buf, format, ap);
+ 
++	if (env)
++		concatenate_env(&buf, env);
++
+ 	sq_quote_argv(&buf, argv, 0);
+ 	print_trace_line(&trace_default_key, &buf);
+ }
+@@ -214,7 +236,16 @@ void trace_argv_printf(const char **argv, const char *format, ...)
+ {
+ 	va_list ap;
+ 	va_start(ap, format);
+-	trace_argv_vprintf_fl(NULL, 0, argv, format, ap);
++	trace_argv_vprintf_fl(NULL, 0, NULL, argv, format, ap);
++	va_end(ap);
++}
++
++void trace_env_argv_printf(const char *const *env, const char **argv,
++			   const char *format, ...)
++{
++	va_list ap;
++	va_start(ap, format);
++	trace_argv_vprintf_fl(NULL, 0, env, argv, format, ap);
+ 	va_end(ap);
+ }
+ 
+@@ -251,12 +282,13 @@ void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+ 	va_end(ap);
+ }
+ 
+-void trace_argv_printf_fl(const char *file, int line, const char **argv,
++void trace_argv_printf_fl(const char *file, int line,
++			  const char *const *env, const char **argv,
+ 			  const char *format, ...)
+ {
+ 	va_list ap;
+ 	va_start(ap, format);
+-	trace_argv_vprintf_fl(file, line, argv, format, ap);
++	trace_argv_vprintf_fl(file, line, env, argv, format, ap);
+ 	va_end(ap);
+ }
+ 
+diff --git a/trace.h b/trace.h
+index 88055abef7..830d9dcd19 100644
+--- a/trace.h
++++ b/trace.h
+@@ -34,6 +34,10 @@ extern void trace_printf_key(struct trace_key *key, const char *format, ...);
+ __attribute__((format (printf, 2, 3)))
+ extern void trace_argv_printf(const char **argv, const char *format, ...);
+ 
++__attribute__((format (printf, 3, 4)))
++extern void trace_env_argv_printf(const char * const*env, const char **argv,
++				  const char *format, ...);
++
+ extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+ /* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
+@@ -93,7 +97,14 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+ 	do {								    \
+ 		if (trace_pass_fl(&trace_default_key))			    \
+ 			trace_argv_printf_fl(TRACE_CONTEXT, __LINE__,	    \
+-					    argv, __VA_ARGS__);		    \
++					     NULL, argv, __VA_ARGS__);	    \
++	} while (0)
++
++#define trace_env_argv_printf(env, argv, ...)				    \
++	do {								    \
++		if (trace_pass_fl(&trace_default_key))			    \
++			trace_argv_printf_fl(TRACE_CONTEXT, __LINE__, 	    \
++					     env, argv, __VA_ARGS__); 	    \
+ 	} while (0)
+ 
+ #define trace_strbuf(key, data)						    \
+@@ -121,8 +132,9 @@ extern void trace_performance_since(uint64_t start, const char *format, ...);
+ __attribute__((format (printf, 4, 5)))
+ extern void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+ 				const char *format, ...);
+-__attribute__((format (printf, 4, 5)))
+-extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
++__attribute__((format (printf, 5, 6)))
++extern void trace_argv_printf_fl(const char *file, int line,
++				 const char *const *env, const char **argv,
+ 				 const char *format, ...);
+ extern void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+ 			    const struct strbuf *data);
+-- 
+2.15.1.600.g899a5f85c6
+
