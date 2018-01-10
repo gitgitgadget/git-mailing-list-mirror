@@ -8,67 +8,119 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE2A51FADF
-	for <e@80x24.org>; Wed, 10 Jan 2018 09:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A562A1FADF
+	for <e@80x24.org>; Wed, 10 Jan 2018 09:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965407AbeAJJhz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 04:37:55 -0500
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:56996
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755673AbeAJJgm (ORCPT
+        id S965404AbeAJJhy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 04:37:54 -0500
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:44096
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755675AbeAJJgm (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 10 Jan 2018 04:36:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1515577001;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=BOlndjYJIHr5aU940X2DIFRCxQTQhuMKgSR/kVcJIDU=;
-        b=dxbMGqtOhgF8tm3+MdrWgCZvTyN7VN8cNAN9KmkHQSTwO7OVnW9eELCdVHzwjC+R
-        dQNtlz7zkm0Se8X0CM83bA6Z8dqS/L6CcT5oDpKA0GYzUawQOx7s/jJPZECFfdl1Dga
-        fa5UUKv7Ko1QjqgNVUZYGlfcPD7S0ksshuFZ2sVA=
+        bh=1U50wLweePySfVevy8QhAwZmdIwFacY93OPU3ZmIKgA=;
+        b=V+gVWLa4LNcmTQDCEpVwJkQON1GXpjmeoqW6aSf5QFxo2ASIqyPHU1J35hFjVCM/
+        eDGjtqLBcrVNSJbCZTs2uw9Rv8+DDceic3VDGJfwDokcqwUjT2oUn+yRUpI08JPlqZC
+        Nw5VlDE9USbt10TVkK9qf88gTYnc/UhMws89GShM=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020160df6dc56f-955e97ff-4dc8-4471-8fb6-32dc9572781e-000000@eu-west-1.amazonses.com>
+Message-ID: <01020160df6dc58b-a6cf8e70-3bde-461d-98af-5e5129973960-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
 References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 09/18] cat-file: simplify expand_atom function
+Subject: [PATCH v2 13/18] cat-file: start reusing populate_value
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Wed, 10 Jan 2018 09:36:41 +0000
-X-SES-Outgoing: 2018.01.10-54.240.7.20
+X-SES-Outgoing: 2018.01.10-54.240.7.12
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not sure, but looks like there is no need in that checking.
-There is a checking before whether it is null and we die in such case.
+Move logic related to getting object info from cat-file to ref-filter.
+It will help to reuse whole formatting logic from ref-filter further.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ builtin/cat-file.c | 16 +++-------------
+ ref-filter.c       | 15 +++++++++++++++
+ ref-filter.h       |  2 ++
+ 3 files changed, 20 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 9055fa3a8b0ae..dd43457c0ad7e 100644
+index 1c92194faaede..e11dbf88e386c 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -193,10 +193,9 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
- 		strbuf_addf(sb, "%lu", data->size);
- 	else if (is_atom("objectsize:disk", atom, len))
- 		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
--	else if (is_atom("rest", atom, len)) {
--		if (data->rest)
--			strbuf_addstr(sb, data->rest);
--	} else if (is_atom("deltabase", atom, len))
-+	else if (is_atom("rest", atom, len))
-+		strbuf_addstr(sb, data->rest);
-+	else if (is_atom("deltabase", atom, len))
- 		strbuf_addstr(sb, oid_to_hex(&data->delta_base_oid));
- 	else
- 		die("unknown format element: %.*s", len, atom);
+@@ -284,21 +284,11 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct ref_array_item item;
+ 
+-	if (!data->skip_object_info &&
+-	    sha1_object_info_extended(data->oid.hash, &data->info,
+-				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+-		printf("%s missing\n",
+-		       obj_name ? obj_name : oid_to_hex(&data->oid));
+-		fflush(stdout);
+-		return;
+-	}
+-
+ 	item.objectname = data->oid;
+-	item.type = data->type;
+-	item.size = data->size;
+-	item.disk_size = data->disk_size;
+ 	item.rest = data->rest;
+-	item.delta_base_oid = data->delta_base_oid;
++	item.start_of_request = obj_name;
++
++	if (populate_value(&item)) return;
+ 
+ 	strbuf_expand(&buf, opt->format->format, expand_format, &item);
+ 	strbuf_addch(&buf, '\n');
+diff --git a/ref-filter.c b/ref-filter.c
+index c15906cb091c7..35e16cec6d862 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1467,6 +1467,21 @@ int populate_value(struct ref_array_item *ref)
+ 			ref->symref = "";
+ 	}
+ 
++	if (cat_file_info) {
++		if (!cat_file_info->skip_object_info &&
++		    sha1_object_info_extended(ref->objectname.hash, &cat_file_info->info,
++					      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
++			const char *e = ref->start_of_request;
++			printf("%s missing\n", e ? e : oid_to_hex(&ref->objectname));
++			fflush(stdout);
++			return -1;
++		}
++		ref->type = cat_file_info->type;
++		ref->size = cat_file_info->size;
++		ref->disk_size = cat_file_info->disk_size;
++		ref->delta_base_oid = cat_file_info->delta_base_oid;
++	}
++
+ 	/* Fill in specials first */
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct used_atom *atom = &used_atom[i];
+diff --git a/ref-filter.h b/ref-filter.h
+index 6df45c5bd9dcb..0c7253913735b 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -45,6 +45,8 @@ struct ref_array_item {
+ 	off_t disk_size;
+ 	const char *rest;
+ 	struct object_id delta_base_oid;
++	/* Need it for better explanation in error log. */
++	const char *start_of_request;
+ 	char refname[FLEX_ARRAY];
+ };
+ 
 
 --
 https://github.com/git/git/pull/450
