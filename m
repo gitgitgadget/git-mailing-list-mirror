@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 701F11F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 11:06:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 956201F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 11:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932630AbeAKLGn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 06:06:43 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:38769 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932285AbeAKLGm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 06:06:42 -0500
-Received: by mail-pg0-f65.google.com with SMTP id t67so1948128pgc.5
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:06:42 -0800 (PST)
+        id S933626AbeAKLOR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 06:14:17 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:37465 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932861AbeAKLOQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 06:14:16 -0500
+Received: by mail-pf0-f175.google.com with SMTP id p1so1407995pfh.4
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:14:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=FcP65d9vJgYNml1KWv3nM8syt9rcUVSfs7IlUQGTMds=;
-        b=KQ5ees88deEBED3DBRoY+4kjUHzN5ydcKdC5Bxo7skIUsX40xPKjPRwWqdAbsuFm3O
-         ISzSA3GAVo38QluIxp9z3W766CFg5g5cSiY/k7aWH6m9hfktb8fkXSOUYa8yBrQK/ZJV
-         017mRPwCoSrC7KYZa8cbM6wSQa8u+Xb5v36/Al+0dU+bzePSNapfM61llZM91BiH/Wyw
-         UNHJXoxM2KChnI5aE7Op0XN+TK3hpZx6Tasc562c8tSzr8iva3Y2mI7zmKBvpzkuDnMU
-         sX1g5LFsO4/mnyHQxFMUqS//8JPoBwuKxGa2nIy3p07xQUCaABHLR1iulbD3B9cwyz9O
-         jwhg==
+        bh=/scoU1YFAeO9JWFtL2vB3I4idw78iNxyyhIRg0yWMWM=;
+        b=skqk344wgLKrYYxHY6vSay5AnD5fQKZqVMzYdQHDLyx2UA3Se0p0j4d7bdB7BteY1W
+         EXpBg+1pvoEJQNoG2hvQxYB0xEaNZzFQZW0L6vYgteHtfU8bez1kXsQ5fP61LoOeGTpD
+         +HjNMdD1RZawPJU1PFtlKWucr4sL7qyBItnh31+lPgzplF7mkqH9ElKBg55jC3IVbtK9
+         b0LzxusRUWACWCYDUjmbP6H5HhvoMLlyKSD7G/rD1q59RffQXWk3iRN3vufcdhd6HTWQ
+         QPpC9SVjhgOeX3K4o+XK/pIWkb698Kk3sObSAvSQdtlqzuRYlrshBgaeCL6YGJMBA3wZ
+         CIgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FcP65d9vJgYNml1KWv3nM8syt9rcUVSfs7IlUQGTMds=;
-        b=NDwVK3clT61JknNwhw2biHIR5nT/xW4pFuqDTcbB+16tZR/+sk87KIVAwRBO3uYTGZ
-         Eca1YCmiFGs+EsHI0/JLQOnIjTgbDVFzWZknivN9+seUlKA59i5s/uiCXerA5zWmkYXK
-         h1E2U8Jlq/4hvchpm/vuOTpu7cp/2FBFS0u684G+6kWDkvyj4bXSZdcaJm/10K8Qcu0R
-         WkpUWtObk8mqjaCKvGSi/YfMyQZ3kQoRepvVEq2ONGZgQe26fDNggZV/9v24doXG8UPR
-         H/wO866Sgn4TG6pvPlibqIz+hBuq28GuYWdQ7dlTzvZTuH6cjkIKq4M+aDkIGJafNHwE
-         53rw==
-X-Gm-Message-State: AKGB3mJ1y4Tmj5VtIXCKHWumM9C1qcjmn0rDCPoCG5BvIuEcc84rOHGB
-        7T04Y48bwt6OllvtxrjYX172HGaDTWp7UJfvYMU=
-X-Google-Smtp-Source: ACJfBosqkOaO9DcVDTu4ehHHqBEN58eDpcWrSpdjMMn9HnEWge/SP8HmCufOk6yYkW7vGwklSy1ONzu86Uyn9+jtV24=
-X-Received: by 10.98.31.72 with SMTP id f69mr15212123pff.196.1515668802297;
- Thu, 11 Jan 2018 03:06:42 -0800 (PST)
+        bh=/scoU1YFAeO9JWFtL2vB3I4idw78iNxyyhIRg0yWMWM=;
+        b=FePLbTcWC8FDo2zQmNk8BTGecuXeTE6vZlxp/UmA0bHTzEtCj/XWDEmQS1KZvzii9J
+         eVxwvdZIyfIQgLXJ0XBfVpGH32fw4NgOePGh8S1qM01EVPQGLU0NQ3bdEjqWkQwWANp2
+         EJY0r333LIi57CzVKDi2WeFATxI/kOARM4Yo5UrtM6zMFcUd4y4lmBrJKBTPLrDHs4aG
+         sPNwPmwpkVfQLztKHA2OyzCPLaaxJdaxP+NABdtLVGCLMW9j0rwy0bRY+AyYWHLql69h
+         JY1fukJLtWdVA1HxB50NAqIo41jHC2RtXU6p1/Qbfd2llvc6vXwncTebQGK7VmST1XrD
+         +JOA==
+X-Gm-Message-State: AKGB3mLToUXHMqAcSDiXUDN78tyTjN6sqy7iPBs9EbGlrtaue1Ua/kWN
+        EfxLuy6IftrRIFo5WtLAymbWre5lrvbfrYzMyA8=
+X-Google-Smtp-Source: ACJfBovwaMg754gvC8HXGm8WoFMnT2uy6DbdnD8wFLY96sjQdUA1DkDUxbZRlhU4+ua5pdFywj8yfwf+SnMWSX6S5Ug=
+X-Received: by 10.84.252.8 with SMTP id x8mr22248111pll.190.1515669256200;
+ Thu, 11 Jan 2018 03:14:16 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.100.183.106 with HTTP; Thu, 11 Jan 2018 03:06:11 -0800 (PST)
-In-Reply-To: <CAGZ79kbUL6UBBB-wL+BxBdbomt+sxa66VVSYBxxBt6JVfPVfKA@mail.gmail.com>
-References: <20180110110643.21465-1-pclouds@gmail.com> <CAGZ79kbUL6UBBB-wL+BxBdbomt+sxa66VVSYBxxBt6JVfPVfKA@mail.gmail.com>
+Received: by 10.100.183.106 with HTTP; Thu, 11 Jan 2018 03:13:45 -0800 (PST)
+In-Reply-To: <20180111100734.GA17274@sigill.intra.peff.net>
+References: <20180110104835.22905-1-pclouds@gmail.com> <20180111100734.GA17274@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 11 Jan 2018 18:06:11 +0700
-Message-ID: <CACsJy8CgzrSu7bZYQAPOK=P+CWK2vjTS3=biBBP6uZGe5ZoSMw@mail.gmail.com>
-Subject: Re: [PATCH/RFC] add--interactive: ignore all internal submodule changes
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Thu, 11 Jan 2018 18:13:45 +0700
+Message-ID: <CACsJy8Beq2gx8K8Hk7NMVj_1Cgn5v-tuN9eZtDRCuOxB_urcWw@mail.gmail.com>
+Subject: Re: [PATCH] run-command.c: print env vars when GIT_TRACE is set
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,59 +62,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 11, 2018 at 2:47 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, Jan 10, 2018 at 3:06 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> For 'add -i' and 'add -p' the only action we can take on a dirty
->> submodule entry (from the superproject perspective) is its SHA-1. The
->> content changes inside do not matter, at least until interactive add has
->> --recurse-submodules or something.
->>
->> Ignore all dirty changes to reduce the questions 'add -i' and 'add -p'
->> throw at the user when submodules are dirty.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  $DAYJOB started to use submodules and this annoys me so much when I
->>  use 'git add -p'. I'm neither very familiar with add--interactive nor
->>  submodules code but this seems to work. Hopefully it's a correct
->>  change.
+On Thu, Jan 11, 2018 at 5:07 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jan 10, 2018 at 05:48:35PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 >
-> I would think this fixes your problem and it looks correct.
+>> Occasionally submodule code could execute new commands with GIT_DIR set
+>> to some submodule. GIT_TRACE prints just the command line which makes it
+>> hard to tell that it's not really executed on this repository.
+>>
+>> Print env variables in this case. Note that the code deliberately ignore
+>> variables unsetting because there are so many of them (to keep git
+>> environment clean for the next process) and really hard to read.
 >
-> However I wonder about some subtle detail:
-> the "dirty" setting will ignore anything inside the submodule, and
-> only pay attention to the delta in gitlinks between HEAD and index.
+> I like this, and I'm pretty sure it would have helped me debug at least
+> once in the past. I did notice one funny thing, though I think it was
+> largely there before.
+>
+> The output for a single command is pretty shell-like due to the quoting:
+>
+>   $ GIT_TRACE=3D1 ./git upload-pack . >/dev/null
+>   [...]run_command: 'git-upload-pack' '.'
+>
+> You could copy and paste that to a shell if you wanted.  And with
+> environment variables, that remains so:
+>
+>   $ GIT_TRACE=3D1 ./git ls-remote https://github.com/git/git >/dev/null
+>   [...]run_command: 'GIT_DIR=3D.git' 'git-remote-https' 'https://[...]'
+>
+> But if we're actually running a command via the shell, it all gets
+> quoted as one argument:
+>
+>   $ GIT_TRACE=3D1 GIT_PAGER=3D'foo | bar' ./git log
+>   [...]run_command: 'LV=3D-c' 'foo | bar'
+>
+> which is kind of weird, as that's not something that can be run in a
+> shell. This isn't introduced by your patch at all, but I noticed it more
+> because of the shell-like environment variable output.
 
-Wait, why does diff-files, the command about worktree and index, look
-at HEAD? Testing, testing... no I think it still works as expected
+I think you just found an argument to change my "meh" with regards to
+quoting to "need to fix" because I also often copy/paste these
+commands. I thought about it and assumed shells would still recognize
+'name=3Dvalue' assignments without actually testing it.
 
-> ~/w/git/temp/z $ git ls-files  --stage foo
-160000 41521690bee4b76ad108a403b79415f8591a5592 0       foo
-> ~/w/git/temp/z $ git -C foo rev-parse HEAD
-3bc15b2e78ec3a5c5ea27715f20adaa2669446b1
-> ~/w/git/temp/z $ ../git diff --ignore-submodules=3Ddirty foo
-diff --git a/foo b/foo
-index 4152169..3bc15b2 160000
---- a/foo
-+++ b/foo
-@@ -1 +1 @@
--Subproject commit 41521690bee4b76ad108a403b79415f8591a5592
-+Subproject commit 3bc15b2e78ec3a5c5ea27715f20adaa2669446b1
-> ~/w/git/temp/z $ ../git diff-files --ignore-submodules=3Ddirty foo
-:160000 160000 41521690bee4b76ad108a403b79415f8591a5592
-0000000000000000000000000000000000000000 M      foo
+> We actually used to print a separate:
+>
+>   exec: /bin/sh -c 'foo | bar'
+>
+> line when we invoked a shell, which would arguably be the right place to
+> show the env variables for such a case. But that went away with
+> 3967e25be1 (run-command: prepare command before forking, 2017-04-19).
+>
+> I think it might be helpful if we added back in "/bin/sh -c" to the
+> run_command line when "use_shell" is in effect (and when we're not doing
+> our "skip the shell" trickery).  But that's totally orthogonal to your
+> patch.
+>
+> And anyway, it's just tracing output, so I don't think it's incredibly
+> important either way. It was just something I noticed while looking at
+> your patch's output.
 
-If I reset foo/.git/HEAD back to 4152169... then diff-files
---ignore..=3Ddirty returns empty. So I think it does check submodule's
-HEAD.
-
-> Maybe we'd want to have a mode "dirty-except-submodule-HEAD",
-> which would ignore all submodule worktree changes, but if its HEAD
-> is different than the gitlink in the superproject index or HEAD, such tha=
-t
-> checking out a different revision inside the submodule is not lost
-> when staging things in the superproject for a new commit?
+Noted. I might do it if it's not super complex.
 --=20
 Duy
