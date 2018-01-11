@@ -2,107 +2,256 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A9C1F404
-	for <e@80x24.org>; Thu, 11 Jan 2018 00:29:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8621F404
+	for <e@80x24.org>; Thu, 11 Jan 2018 01:09:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753187AbeAKA3e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 19:29:34 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:33494 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752982AbeAKA3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 19:29:34 -0500
-Received: by mail-it0-f44.google.com with SMTP id c102so12164458itd.0
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 16:29:33 -0800 (PST)
+        id S1752678AbeAKBJZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 20:09:25 -0500
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:42276 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752312AbeAKBJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 20:09:23 -0500
+Received: by mail-pg0-f46.google.com with SMTP id q67so1387956pga.9
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 17:09:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=lji.org; s=google;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=M8Q4Qc48978m1npSZqTAKdqQpCBhISvTcYt71OniMGg=;
-        b=DoVguvJVrTU+aJixsrWUxTj+xaYIP86vkZX2UB6NGNk6sdw98P22RT9S3N25ZWT16q
-         yxVS2Qjpd/wfDOrtCeYqu4CaJxLa4dvE5y6b54LeIvmfCPOp260AK28/DUqLOweuHzaB
-         ATVQ8Mr9ob8ndU2T8lBnwDwP82ukeCi+UxDII=
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=n7H6v4T2XD4j+JMXAHiWiTcnPPFT1J7TC9OaPz5pqD8=;
+        b=FlyvOiyv+ksRsAqL9lzzbv2bqwCKN4BnIZzqB9qGYc0k9+8GD9rDGUUvALUYPgIPGa
+         kHp1xCSYbw4C8/OJ9n6uspy7C9ao7SOlVqK1L2gf0QXqWFlQ4S+cEwpjrE0acsy41aL/
+         7qAZnHSQ1mJLclgN2G66FeLeyPE8sUxB5z2oA8GmDQL2xFylL3bugSdUuOeYCOuJfDYK
+         vb7sUWeeuYWgRfo6yBPgXj6iSRVMU1t3oD3YkFhwF/F3s2iqwI1NTvlr9Jlv02hmV4Me
+         4Q6X4dYmS/9n5GgROC+VZTpClfrYKkHqNv9dniY3RxTylf+WKBYlTVYJi86N3kiIB666
+         ekyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=M8Q4Qc48978m1npSZqTAKdqQpCBhISvTcYt71OniMGg=;
-        b=MVqKzm8mGmHD6SO7Hq8rxMvrtxO7Y4hPgDZoaYYY1bfx71TlXdYwpa8kz7skoOReQ3
-         lekIDUTgaMEUOL1NWfF4GBGSMJRcayAx0620JLNFNE+Y8txvZ3iQVBmJFyV0IwuKsXDF
-         Pa/X73KTeDfin4jBAj6oJGn6F+WO5CLEcrWpLsPKbvJ8i4biK2Q355OrsMZdcaZj/Tr9
-         VSoU5bUSQmcFXqRqnwdpUG6j9KHrdaJyh45vI5LHIPRe9IVLNcm1KKrqsqgHG3B9jmV9
-         7NjNhkfRTFVWaFu9j5qkyseUxfk7ZIUwXGUx4NOTb4e/mT8EDe0zjqxIbIbfdu0mfWOC
-         CnWA==
-X-Gm-Message-State: AKGB3mILqwZmALKVieIvE1+a8hseTN0dqSbs9ndDYjuaMZqzSHl0Au7Z
-        I753NMTJmE4j4N2mInLcV5VrP1xOgsUKTCGY9Fg8n/mm6j8=
-X-Google-Smtp-Source: ACJfBotsh+0mtxVYsiHxGEyKw9T1W6c7hgHIjJ/DxlbxbkwcRypt9jqBqmxvrcSnjLPpMSwOL4a8BaQ3BWiy3q6DCOk=
-X-Received: by 10.36.53.76 with SMTP id k73mr21470847ita.35.1515630573364;
- Wed, 10 Jan 2018 16:29:33 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=n7H6v4T2XD4j+JMXAHiWiTcnPPFT1J7TC9OaPz5pqD8=;
+        b=T3pEqEMlim2IlXqwdgvfqITW7iekFYm3NjI7oIg4FD5Fyo+BTzSgjD48rHxENO6Q30
+         yTQqtnPZWkS/yPHA4Pvl/pZ8ZKNKDaaKutv9EzRDOMc/AshAoxlxHA1Caiq96cV/aMT9
+         /XDlHfv3l9s1EmyRSVlRoFrdWBcSW0Oz2uNTTGyyFDM10oaHF5v3/Z7GUYA41J0zfgpT
+         V4eXr4tUBwBLUIMgd17yYftvrCeU9SDdiTvcjcSWC1/QMrsrKTeyjbRFVjOpTtYbdhf5
+         28Bc+nvuqAc/8WD00sSjkhkemrYpjEImEMQlzUe6oe6kmm7dlDHI3DT/TSIRK7qOGJsJ
+         jGIA==
+X-Gm-Message-State: AKwxytdTRTJaL9OeZ5uOJ3HjCsF8YJ8bWSSKmW4fPxwQtjHc26BOtTUF
+        g82mB9YweIe04hg+nlVJGdfuBA==
+X-Google-Smtp-Source: ACJfBoupcBjqAlk0LZnHdyRerxnZQ07i/pct9bEct2Ou27qjpD2sFjBXTXDb0qelMVRlQTv3A4PbHw==
+X-Received: by 10.159.229.129 with SMTP id az1mr813868plb.232.1515632962994;
+        Wed, 10 Jan 2018 17:09:22 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:d157:f909:10c:5e57])
+        by smtp.gmail.com with ESMTPSA id l10sm28673pgp.86.2018.01.10.17.09.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 Jan 2018 17:09:22 -0800 (PST)
+Date:   Wed, 10 Jan 2018 17:09:20 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 26/26] remote-curl: implement connect-half-duplex command
+Message-ID: <20180111010920.GB91567@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180103001828.205012-27-bmwill@google.com>
+ <20180110095730.1daaa70d7c583c58b85142a3@google.com>
 MIME-Version: 1.0
-Received: by 10.107.164.228 with HTTP; Wed, 10 Jan 2018 16:29:12 -0800 (PST)
-From:   Jason Greenbaum <jgbaum@lji.org>
-Date:   Wed, 10 Jan 2018 16:29:12 -0800
-Message-ID: <CAKNOR-JbAjE9URdFw_ZrqVeZot=emHFWLgpjhQ7uqUsJpRzx2A@mail.gmail.com>
-Subject: git svn clone of messy repository
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180110095730.1daaa70d7c583c58b85142a3@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 01/10, Jonathan Tan wrote:
+> On Tue,  2 Jan 2018 16:18:28 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > +static size_t proxy_in(void *ptr, size_t eltsize,
+> > +		       size_t nmemb, void *buffer_)
+> 
+> OK, I managed to look at the Curl stuff in more detail.
+> 
+> I know that these parameter names are what remote_curl.c has been using
+> for its callbacks, but I find them confusing (in particular, some Curl
+> documentation rightly refer to the 1st parameter as a buffer, and the
+> 4th parameter is actually userdata). Also, according to the Curl
+> documentation, the type of the first parameter is "char *". Could we
+> change the type of the first parameter to "char *", and the name of the
+> fourth parameter either to "proxy_state_" or "userdata"?
 
-I'm in the process of using git svn to migrate several repos over to
-git and one repo, in particular, has a very challenging format.
-During the migration, I would also like to reorganize the repo.  It
-looks something like this in svn:
+Sounds good, I'll make the change.
 
-myrepo
-  trunk
-    project_of_interest
-    other_project1
-    other_project2
-    =E2=80=A6
-  branches
-    FF-1.0
-      project_of_interest
-      other_project1
-      other_project2
-      =E2=80=A6
-   FF-1.1
-      project_of_interest
-      other_project1
-      other_project2
-      =E2=80=A6
+> 
+> > +{
+> > +	size_t max = eltsize * nmemb;
+> > +	struct proxy_state *p = buffer_;
+> > +	size_t avail = p->request_buffer.len - p->pos;
+> > +
+> > +	if (!avail) {
+> > +		if (p->seen_flush) {
+> > +			p->seen_flush = 0;
+> > +			return 0;
+> > +		}
+> > +
+> > +		strbuf_reset(&p->request_buffer);
+> > +		switch (packet_reader_read(&p->reader)) {
+> > +		case PACKET_READ_EOF:
+> > +			die("error reading request from parent process");
+> 
+> This should say "BUG:", I think. I'm not sure what the best way of
+> explaining it is, but basically connect_half_duplex is supposed to
+> ensure (by peeking) that there is no EOF when proxy_in() is called.
 
-There is also a 'tags' directory at the toplevel, but that's not
-important to illustrate the issue I'm having.  What I would like to do
-is to migrate ONLY the folder called 'project_of_interest' and
-preserve it's trunk, branches, and tags.  I'm not sure this is
-possible directly with git svn clone, but here is what I've tried:
+This wouldn't necessarily be a bug if the parent dies early for some
+reason though right?
 
-git svn clone \
---authors-file=3D$AUTHORS_FILE \
---prefix=3D"" \
---trunk=3Dtrunk/project_of_interest \
---branches=3Dbranches/FF-1.0/project_of_interest \
---branches=3Dbranches/FF-1.1/project_of_interest \
-svn://my-svn-server/myrepo \
-project_of_interest.git
+> 
+> > +		case PACKET_READ_NORMAL:
+> > +			packet_buf_write_len(&p->request_buffer, p->reader.line,
+> > +					     p->reader.pktlen);
+> > +			break;
+> > +		case PACKET_READ_DELIM:
+> > +			packet_buf_delim(&p->request_buffer);
+> > +			break;
+> > +		case PACKET_READ_FLUSH:
+> > +			packet_buf_flush(&p->request_buffer);
+> > +			p->seen_flush = 1;
+> > +			break;
+> > +		}
+> > +		p->pos = 0;
+> > +		avail = p->request_buffer.len;
+> > +	}
+> > +
+> > +	if (max < avail)
+> > +		avail = max;
+> > +	memcpy(ptr, p->request_buffer.buf + p->pos, avail);
+> > +	p->pos += avail;
+> > +	return avail;
+> 
+> Thanks, this looks correct. I wish that the Curl API had a way for us to
+> say "here are 4 more bytes, and that is all" instead of us having to
+> make a note (p->seen_flush) to remember to return 0 on the next call,
+> but that's the way it is.
+> 
+> > +}
+> > +static size_t proxy_out(char *ptr, size_t eltsize,
+> > +			size_t nmemb, void *buffer_)
+> 
+> Add a blank line before proxy_out. Also, same comment as proxy_in()
+> about the function signature.
 
-The trunk seems to become the 'master' branch just fine, but my svn
-branches are not pulled down.  I'm not sure I have the syntax right or
-if this is even possible without first reorganizing the svn repo in
-place, updating the .git/config file, or by some other means.  Any
-help would be much appreciated.  I'm happy to provide more info as
-needed.
+I'll change this function too.
 
-Thanks,
+> 
+> > +{
+> > +	size_t size = eltsize * nmemb;
+> > +	struct proxy_state *p = buffer_;
+> > +
+> > +	write_or_die(p->out, ptr, size);
+> > +	return size;
+> > +}
+> > +
+> > +static int proxy_post(struct proxy_state *p)
+> > +{
+> > +	struct active_request_slot *slot;
+> > +	struct curl_slist *headers = http_copy_default_headers();
+> > +	int err;
+> > +
+> > +	headers = curl_slist_append(headers, p->hdr_content_type);
+> > +	headers = curl_slist_append(headers, p->hdr_accept);
+> > +	headers = curl_slist_append(headers, "Transfer-Encoding: chunked");
+> > +
+> > +	slot = get_active_slot();
+> > +
+> > +	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+> > +	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+> > +	curl_easy_setopt(slot->curl, CURLOPT_URL, p->service_url);
+> > +	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+> 
+> I looked at the Curl documentation for CURLOPT_HTTPHEADER and
+> curl_easy_setopt doesn't consume the argument here (in fact, it asks us
+> to keep "headers" around), so it might be possible to just generate the
+> headers once in proxy_state_init().
 
-Jason
+Yeah I'll go ahead and do that, it'll make the post function a bit
+cleaner too.
+
+> 
+> > +
+> > +	/* Setup function to read request from client */
+> > +	curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, proxy_in);
+> > +	curl_easy_setopt(slot->curl, CURLOPT_READDATA, p);
+> > +
+> > +	/* Setup function to write server response to client */
+> > +	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, proxy_out);
+> > +	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, p);
+> > +
+> > +	err = run_slot(slot, NULL);
+> > +
+> > +	if (err != HTTP_OK)
+> > +		err = -1;
+> 
+> This seems to mean that we cannot have two requests in flight at the
+> same time even while there is no response (from the fact that we have a
+> HTTP status code after returning from run_slot()).
+> 
+> I thought that git fetch over HTTP uses the two-requests-in-flight
+> optimization that it also does over other protocols like SSH, but I see
+> that that code path (fetch_git() in remote-curl.c) also uses run_slot()
+> indirectly, so maybe my assumption is wrong. Anyway, this is outside the
+> scope of this patch.
+> 
+> > +
+> > +	curl_slist_free_all(headers);
+> > +	return err;
+> > +}
+> > +
+> > +static int connect_half_duplex(const char *service_name)
+> > +{
+> > +	struct discovery *discover;
+> > +	struct proxy_state p;
+> > +
+> > +	/*
+> > +	 * Run the info/refs request and see if the server supports protocol
+> > +	 * v2.  If and only if the server supports v2 can we successfully
+> > +	 * establish a half-duplex connection, otherwise we need to tell the
+> > +	 * client to fallback to using other transport helper functions to
+> > +	 * complete their request.
+> > +	 */
+> > +	discover = discover_refs(service_name, 0);
+> > +	if (discover->version != protocol_v2) {
+> > +		printf("fallback\n");
+> > +		fflush(stdout);
+> > +		return -1;
+> > +	} else {
+> > +		/* Half-Duplex Connection established */
+> > +		printf("\n");
+> > +		fflush(stdout);
+> > +	}
+> > +
+> > +	proxy_state_init(&p, service_name);
+> > +
+> > +	/*
+> > +	 * Dump the capability listing that we got from the server earlier
+> > +	 * during the info/refs request.
+> > +	 */
+> > +	write_or_die(p.out, discover->buf, discover->len);
+> > +
+> > +	/* Peek the next packet line.  Until we see EOF keep sending POSTs */
+> > +	while (packet_reader_peek(&p.reader) != PACKET_READ_EOF) {
+> > +		if (proxy_post(&p)) {
+> > +			/* We would have an err here */
+> 
+> Probably better to comment "Error message already printed by
+> proxy_post".
+
+-- 
+Brandon Williams
