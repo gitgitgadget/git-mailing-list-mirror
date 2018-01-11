@@ -2,110 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A73D1F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 06:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DFBE1F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 09:05:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754303AbeAKGbO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 01:31:14 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40846 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932145AbeAKGbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 01:31:12 -0500
-Received: (qmail 17048 invoked by uid 109); 11 Jan 2018 06:31:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Jan 2018 06:31:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21271 invoked by uid 111); 11 Jan 2018 06:31:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Jan 2018 01:31:45 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jan 2018 01:31:10 -0500
-Date:   Thu, 11 Jan 2018 01:31:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'git mailing list' <git@vger.kernel.org>
-Subject: Re: [PATCH] Replaced read with xread in transport-helper.c to fix
- SSIZE_MAX overun in t5509
-Message-ID: <20180111063110.GB31213@sigill.intra.peff.net>
-References: <010f01d38a9e$a5c4f290$f14ed7b0$@nexbridge.com>
+        id S932612AbeAKJF0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 04:05:26 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:47458 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754157AbeAKJEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 04:04:53 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id A9AD41F406;
+        Thu, 11 Jan 2018 09:04:52 +0000 (UTC)
+Date:   Thu, 11 Jan 2018 09:04:52 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jason Greenbaum <jgbaum@lji.org>
+Cc:     git@vger.kernel.org
+Subject: Re: git svn clone of messy repository
+Message-ID: <20180111090452.GA29874@dcvr>
+References: <CAKNOR-JbAjE9URdFw_ZrqVeZot=emHFWLgpjhQ7uqUsJpRzx2A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <010f01d38a9e$a5c4f290$f14ed7b0$@nexbridge.com>
+In-Reply-To: <CAKNOR-JbAjE9URdFw_ZrqVeZot=emHFWLgpjhQ7uqUsJpRzx2A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 11, 2018 at 12:40:05AM -0500, Randall S. Becker wrote:
+Jason Greenbaum <jgbaum@lji.org> wrote:
+> --trunk=trunk/project_of_interest \
+> --branches=branches/FF-1.0/project_of_interest \
+> --branches=branches/FF-1.1/project_of_interest \
 
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 3640804..68a4e30 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1202,7 +1202,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
->                 return 0;       /* No space for more. */
-> 
->         transfer_debug("%s is readable", t->src_name);
-> -       bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-> +       bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
->         if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
->                 errno != EINTR) {
->                 error_errno("read(%s) failed", t->src_name);
+> The trunk seems to become the 'master' branch just fine, but my svn
+> branches are not pulled down.  I'm not sure I have the syntax right or
+> if this is even possible without first reorganizing the svn repo in
+> place, updating the .git/config file, or by some other means.
 
-After this patch, I don't think we can ever see any of those errno
-values again, as xread() will automatically retry in such a case.
+By default, the basename ("project_of_interest") is used and you
+get collisions.
 
-I think that's OK. In the code before your patch, udt_do_read() would
-return 0 in such a case, giving the caller the opportunity to do
-something besides simply retry the read. But the only caller is
-udt_copy_task_routine(), which would just loop anyway.  It may be worth
-mentioning that in the commit message.
+I think this section of the git-svn manpage should help:
 
-So your patch is OK.  But we should probably clean up on top, like the
-patch below (on top of yours; though note your patch was whitespace
-corrupted; the tabs were converted to spaces).
-
--- >8 --
-Subject: [PATCH] transport-helper: drop read/write errno checks
-
-Since we use xread() and xwrite() here, EINTR, EAGAIN, and
-EWOULDBLOCK retries are already handled for us, and we will
-never see these errno values ourselves. We can drop these
-conditions entirely, making the code easier to follow.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- transport-helper.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/transport-helper.c b/transport-helper.c
-index d48be722a5..fc49567ac4 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1208,8 +1208,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
- 
- 	transfer_debug("%s is readable", t->src_name);
- 	bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
--	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
--		errno != EINTR) {
-+	if (bytes < 0) {
- 		error_errno("read(%s) failed", t->src_name);
- 		return -1;
- 	} else if (bytes == 0) {
-@@ -1236,7 +1235,7 @@ static int udt_do_write(struct unidirectional_transfer *t)
- 
- 	transfer_debug("%s is writable", t->dest_name);
- 	bytes = xwrite(t->dest, t->buf, t->bufuse);
--	if (bytes < 0 && errno != EWOULDBLOCK) {
-+	if (bytes < 0) {
- 		error_errno("write(%s) failed", t->dest_name);
- 		return -1;
- 	} else if (bytes > 0) {
--- 
-2.16.0.rc1.446.g4cb7d89c69
+| When using multiple --branches or --tags, 'git svn' does not automatically
+| handle name collisions (for example, if two branches from different paths have
+| the same name, or if a branch and a tag have the same name).  In these cases,
+| use 'init' to set up your Git repository then, before your first 'fetch', edit
+| the $GIT_DIR/config file so that the branches and tags are associated
+| with different name spaces.  For example:
+| 
+| 	branches = stable/*:refs/remotes/svn/stable/*
+| 	branches = debug/*:refs/remotes/svn/debug/*
 
