@@ -2,96 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65DE91FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 20:22:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92F9A1FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 20:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933794AbeAKUWA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 15:22:00 -0500
-Received: from mout.gmx.net ([212.227.15.19]:56916 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933683AbeAKUV6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 15:21:58 -0500
-Received: from [10.122.129.233] ([46.142.197.184]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaaOf-1eJzkz1Zqj-00K58s; Thu, 11
- Jan 2018 21:21:40 +0100
-Date:   Thu, 11 Jan 2018 21:21:38 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: Re: [PATCH v5 8/9] sequencer: try to commit without forking 'git
- commit'
-In-Reply-To: <5efbad65-6afe-e135-4681-ba380cd6797f@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1801112120390.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20170925101041.18344-1-phillip.wood@talktalk.net> <20171211141330.23566-1-phillip.wood@talktalk.net> <20171211141330.23566-9-phillip.wood@talktalk.net> <20180110205351.GA73826@aiede.svl.corp.google.com> <nycvar.QRO.7.76.6.1801102332350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <5efbad65-6afe-e135-4681-ba380cd6797f@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754387AbeAKUbs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 15:31:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56216 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754365AbeAKUbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 15:31:48 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 83666C42B2;
+        Thu, 11 Jan 2018 15:31:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BZDojOyOv9XLeUcdgb9X9aE3onE=; b=s+wnWP
+        G8jkZiG/Mxp89ELMZOvKa8RfcVJWun674iMH/C68agDY+S02be8cRsGuF0MPpPX+
+        07rraaSJbt9MfKubmyKTuGIrZP2jkg9dwDJyR9R6KZB308Yug+tfuLkROPz5M4za
+        gjvAeuh2mq0EEtB2eTJ3SC4D1RGViym4kFKRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BV5aXKKQEvLR70YFql0nFeGhROKrmrJe
+        fggjb6Ut5xRRVZrRrdh8YziRKTaE1SjUfh6Sx7XRckQ7rsTgf/uIPz/QMFF1xiM8
+        9bc04XEtPWoqt02VKJ4RrbUfhapqDUVssKOH2WVwSI9MQc48lDIHNUbqrqZa1JYA
+        AhYVvTP4oJo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7A89FC42B1;
+        Thu, 11 Jan 2018 15:31:47 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E7354C42B0;
+        Thu, 11 Jan 2018 15:31:46 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, sbeller@google.com
+Subject: Re: [PATCH v2 1/2] submodule: port submodule subcommand 'sync' from shell to C
+References: <20180109175703.4793-1-pc44800@gmail.com>
+        <20180111201721.25930-1-pc44800@gmail.com>
+        <20180111201721.25930-2-pc44800@gmail.com>
+Date:   Thu, 11 Jan 2018 12:31:45 -0800
+In-Reply-To: <20180111201721.25930-2-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Fri, 12 Jan 2018 01:47:20 +0530")
+Message-ID: <xmqqshbcxhla.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:j8dd/cF0RsFqGmO8ONICxDVkEJt4IEP2kvGl7GwAoPutl3sw7i1
- sm2pw/E2/O+ANRQxuM9qi2NFrPQts7unQpRIkhGzk5vTDKEiUESmeajMrIP+R/xxf/pdxsx
- zvqbBsULbHUvtzMu/2oQnlTAoYOxT2M/Z92eXNmo4nX9Bi6T6NhEsZ5kM3BRFTksL9qar1j
- +kyX/KGruPW9TSfSLm9oA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Uj3kK5iyoUo=:ooUpoT4V5Q70+4ue1qsrXj
- osEq7/rAIUd6P+i3WSuPdHLSGB8zVAeeTPXlRU0UxuJwmCuZcGsfc1d6mxM8GVCnK376nfz02
- 3Cpt4Nf5ORVtbMhtlWTkT7WoEORunCodifTiDzkX5MwstCsNpburij3x3TR7/driY6XmvwovG
- rZdZtDU2pveT42HrH/y4YH3dH+2Z2pshyZLqmia6y7xd/q0IR4Op1inlo/bm/6dsv9bMqzTNn
- pbOn9odT2vsdhVDWje3xbdNh5OsCCklPzIuQV1dBPognuUvs94UPiOf9j/IYYtFBeOke9rZyy
- iosn1VFLLVwyQmJzTqX0IO8oWVkaPuHKCeNrPfFn/pH+jat1pERfn1ASyRYZ07WQ0zOY9LKEv
- e0ButWOO1dz2h61cFAvgjxgMRWqjh0DliYcqQUSQ0zYVyHPP45929WbonJ+T60K4WdJp6ln++
- d78FABCFGp/Db3sY3O+JP0LwDdqBEdIyNtl8I24TfSs/AjEoeX2SEhBgMCuTHaufmEs6Auq/D
- PEiydOBM/dchOAblsdikQF20HQI27nE3p6gGtF8C4jcxwKvsUbxKiCo3gVHHwjmgPGqHpqK/n
- rTfkojEayNDbEY83Lj43koJbxjML6s5A9Zsvg9F2dd6nvo3v9/a+8pG3gx4AK4N734oWgTdXj
- ZtQbZDLa42IfyrxtrDm9co7HHNS+44aQTN/qLWiTxmkPxMRvtNjbR2H6t4pRWl937GOlLUYyO
- /ionITXWov8KYRzgKCKqeD8ufQ+EFCAJnCWlLHcLGbA4m1BtSaIB0eJePznldm4r5W+WwEla7
- Zjumvl8U5pZbrBtXrwmfOBOh5eqi06TtR/umKulHDUmb4gaayA=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 71D709DC-F70E-11E7-8CE6-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-On Thu, 11 Jan 2018, Phillip Wood wrote:
+> +		} else {
+> +			sub_origin_url = xstrdup(sub->url);
+> +			super_config_url = xstrdup(sub->url);
+> +		}
+> +	} else {
+> +		sub_origin_url = "";
+> +		super_config_url = "";
+> +	}
+> + ...
+> +cleanup:
+> +	if (strlen(super_config_url))
+> +		free(super_config_url);
+> +	if (strlen(sub_origin_url))
+> +		free(sub_origin_url);
 
-> On 10/01/18 22:40, Johannes Schindelin wrote:
-> > Hi,
-> > 
-> > On Wed, 10 Jan 2018, Jonathan Nieder wrote:
-> > 
-> >> that this causes the prepare-commit-msg hook not to be invoked, which
-> >> I think is unintentional.  Should we check for such a hook and take
-> >> the slowpath when it is present?
-> > 
-> > We could also easily recreate the functionality:
-> > 
-> > 	if (find_hook("pre-commit")) {
-> > 		struct argv_array hook_env = ARGV_ARRAY_INIT;
-> > 
-> > 		argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s",
-> > 			get_index_file());
-> > 		argv_array_push(&hook_env, "GIT_EDITOR=:");
-> > 		ret = run_hook_le(hook_env.argv, "pre-commit", NULL);
-> > 		argv_array_clear(&hook_env);
-> > 	}
-> 
-> Thanks Johannes, though it needs to run the 'prepare-commit-msg' hook,
-> the current code in master only runs the 'pre-commit' hook when we edit
-> the message. I'll send a patch with a test.
+The above is ugly and veriy likely to be wrong; imagine that
+sub->url was an empty string to begin with.
 
-Sorry, yes, that's the hook I meant ;-) the quoted text by Jonathan even
-mentions it explicitly.
-
-Ciao,
-Johannes
+Doing xstrdup("") before assigning the constant to *_url would be a
+lot more sensible and maintainable solution for things like this.
