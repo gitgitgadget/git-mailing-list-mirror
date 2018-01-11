@@ -2,163 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C1841F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 09:25:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACC011F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 09:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754705AbeAKJZw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 04:25:52 -0500
-Received: from mail-ot0-f169.google.com ([74.125.82.169]:36270 "EHLO
-        mail-ot0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754475AbeAKJZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 04:25:49 -0500
-Received: by mail-ot0-f169.google.com with SMTP id w4so1580872otg.3
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 01:25:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PUmNQdh9S/to4AKeZCFT5gacB+J9SV5POgg825zilmQ=;
-        b=OKUWWwcCYsnWWqDSlcGRq28O1Dcm3LX+SaOgA5iwueU9roIYYwFsaSFvwCe36N0Ise
-         0P5xOwWBOeqLXKt33NKn5o7460wIfom7wgnzN+FB33pEPTBml8LhG0m9cDHZ2PcqCFOk
-         kRdevlLixn8TDziuP03PakirkuX8NnJl0kLWiezSDz/cWR6LtHyZnLR5n89NNETcnXRy
-         SFV30n3RK8ntG6XDWB8BfVecKVMhYIQBGCAfxKQ+P9jqA87w/woRKFH8zHF+gEqzxih3
-         kX+RAlCAC0uy8/Ikarz0iouYAHFbS+K6zssBEaKqgQ9DQeo+w1unIB1hkpQJcHwxBwy4
-         1iGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PUmNQdh9S/to4AKeZCFT5gacB+J9SV5POgg825zilmQ=;
-        b=WTQxg7jpknviagSF79KK+xtYHrSI+DEtAFcaOEKJca8cAZsdQHbEjK8VDUHS50Nmcz
-         yV3FVi5VyGZdMl18hLLa66CW9ka7Kkbewv/x0c7WzJ2wI+YpXtJDV92LWHErd0ImI2fn
-         s8ceFkovoa+MFe4LA75IUZXMU2ey0ob/Ga89O9GOAKkuI8o2TA20HCrQFvgZuSobNN23
-         NHS0scB1QIjJFFI4iKRobwXjX/VQoIAUmKxhQjN4gk+XwTaeoWZOMhwaBcORUt9JL2HB
-         +WFbIuQb4ZVhaUJGOzBEgMlHFuv5Yoq4AYTzCvttQG8BVuXKrjKXm4Fd/0TY3u7AWqBZ
-         D+Fw==
-X-Gm-Message-State: AKwxytccxNAF7ObPNacJ9eIBCJlm9Qppt7+CiHWlvYiz4zYpnOj8k13G
-        /OksTjGSPIGeqIuly6XEG3pfcVkDeMZ9FTsy76Y=
-X-Google-Smtp-Source: ACJfBoseT6z/MdKU06u+hYDGqmtmj9bWzTeNr3qo4SUDqULxr8oCPRRFwUuu18X/IL/P4MxlDVXOKJvy/cVy00/EDt8=
-X-Received: by 10.157.87.133 with SMTP id q5mr2796785oth.106.1515662749091;
- Thu, 11 Jan 2018 01:25:49 -0800 (PST)
+        id S932924AbeAKJiX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 04:38:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40970 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754319AbeAKJiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 04:38:22 -0500
+Received: (qmail 25660 invoked by uid 109); 11 Jan 2018 09:38:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Jan 2018 09:38:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21734 invoked by uid 111); 11 Jan 2018 09:38:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Jan 2018 04:38:55 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jan 2018 04:38:20 -0500
+Date:   Thu, 11 Jan 2018 04:38:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t3900: add some more quotes
+Message-ID: <20180111093819.GB9190@sigill.intra.peff.net>
+References: <20180110095832.22077-1-dev+git@drbeat.li>
+ <6b32292b-0f71-7cf8-2069-41766d440b58@kdbg.org>
+ <20180110195323.GA26186@sigill.intra.peff.net>
+ <xmqqy3l5z9hx.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Thu, 11 Jan 2018 01:25:18 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1801102057110.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <nycvar.QRO.7.76.6.1801052133380.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <20180105221222.28867-1-avarab@gmail.com> <xmqqzi5raogu.fsf@gitster.mtv.corp.google.com>
- <nycvar.QRO.7.76.6.1801061337020.1337@wbunaarf-fpuvaqryva.tvgsbejvaqbjf.bet>
- <CACsJy8CDz57RR+VHpaPb5YMhKG5kUgb9rt5TWKL8n+e7Xart3g@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801081319520.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180110090724.GA2893@ash> <nycvar.QRO.7.76.6.1801102057110.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 11 Jan 2018 16:25:18 +0700
-Message-ID: <CACsJy8CZY0F2AkBMEQPNkJ+8FTjV4+4PqijiFBHSCJ4Vc1572g@mail.gmail.com>
-Subject: Re: [PATCH v4 8/7] wildmatch test: skip file creation tests on
- Windows proper
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Anthony Ramine <n.oxyde@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy3l5z9hx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 11, 2018 at 3:24 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> diff --git a/Makefile b/Makefile
->> index 2a81ae22e9..567387b558 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -644,6 +644,7 @@ X =3D
->>
->>  PROGRAMS +=3D $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
->>
->> +TEST_PROGRAMS_NEED_X +=3D test-3071-wildmatch
->
-> I guess I can always work on unifying those gazillion of test executables
-> into a single one later.
+On Wed, Jan 10, 2018 at 01:31:22PM -0800, Junio C Hamano wrote:
 
-Oh yeah. I did notice your remark about disk consumption but this was
-a quick hack that I would not bother with it. For the record I'm
-slightly bothered with many test programs too, not due to disk size
-but because it increases link time (disk i/o probably also plays part
-in that). This may help another thing... at the end of the mail
+> > +# Read from stdin into the variable given in $1.
+> > +test_read_to_eof () {
+> > +	# Bash's "read" is sufficiently flexible that we can skip the extra
+> > +	# process.
+> > +	if test -n "$BASH_VERSION"
+> > +	then
+> > +		# 64k should be enough for anyone...
+> > +		read -N 65536 -r "$1"
+> > +	else
+> > +		# command substitution eats trailing whitespace, so we add
+> > +		# and then remove a non-whitespace character.
+> > +		eval "$1=\$(cat; printf x)"
+> > +		eval "$1=\${$1%x}"
+> > +	fi
+> > +}
+> 
+> Yuck.  Hacky but nice.
+> 
+> I think this will make it easier to read but I suspect here text
+> would use temporary files and may slow things down a bit?  I do not
+> know if it is even measurable, though.
 
->> +static struct match_input match_tests[] =3D {
->> +     /* Basic wildmatch features */
->> +     { 1, "foo", "foo" },
->> +     { 0, "foo", "bar" },
->> +     { 1, "", "" },
->
-> These patterns share the "magic-ness" of =C3=86var's test cases... althou=
-gh
-> your version is certainly more concise.
+Yeah, since I was able to contain the horrible-ness in this function, I
+think the overall readability/portability is probably OK. My main
+concern was that it would be slower (hence the bash hackery). I applied
+the patch below on top to see what kind of impact we could measure
+across the whole suite:
 
-Another thing will make me move away from this style is, you can't
-mark one test broken. In the end, we may have some macro that issue
-one match() call per line, very similar to how t3070 does now. Then we
-have more freedom in marking tests.
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index be8a47d304..6f2e6e7560 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -441,6 +441,15 @@ test_expect_success () {
+ 	then
+ 		test_read_to_eof test_block
+ 		set -- "$1" "$test_block"
++	else
++		# this is obviously a dumb thing to do, but it's just
++		# a performance-testing hack.
++		test_read_to_eof test_block <<EOF
++$2
++EOF
++		# our here-doc hackery added an extra newline
++		set -- "$1" "${test_block%
++}"
+ 	fi
+ 	test_verify_prereq
+ 	export test_prereq
 
-> BTW IIRC =C3=86var explicitly said that he needs to use `ls-files` in ord=
-er to
-> test the interaction with the index, so that would probably take a little
-> bit more work.
+After doing five trial timings each of "make test" on:
 
-Yeah, run_command() and stuff, not super hard (but then it opens up
-another aspect I didn't address in this quick hack: collecting output
-log of a test and only showing it when the test fails, could be
-tricker to do in C than shell.
+  - stock git with dash
+  - this patch with dash (so using "cat" to read the here-doc)
+  - stock git with bash
+  - this patch with bash (so using an internal "read")
 
->> diff --git a/t/t3071-wildmatch.sh b/t/t3071-wildmatch.sh
->> new file mode 100755
->> index 0000000000..6e83b4d684
->> --- /dev/null
->> +++ b/t/t3071-wildmatch.sh
->> @@ -0,0 +1,3 @@
->> +#!/bin/sh
->> +
->> +exec helper/test-3071-wildmatch t3071-wildmatch "$@"
->
-> Should it not be `exec test-3071-wildmatch "${0%.sh}" "$@"`?
+I couldn't come up with any definitive slowdown.
 
-No, test-lib.sh is required to set up $PATH properly so you can run
-test programs without path. This is another sticky point. Some
-integration with test-lib.sh is needed. I would like to have something
-like this
+In the first two, there's a fair bit of run-to-run noise (easily 10%),
+and my best run was actually _with_ the patch (by only 3%, but still the
+opposite of what you'd expect).
 
--- 8< --
-cat >t3071-wildmatch-c.sh <<EOF
-#!/bin/sh
-. ./test-lib.sh
-EOF
--- 8< --
+Running the (stock) suite with bash is definitively slower than with
+dash (by about 20%). Adding in this patch didn't seem to make it any
+slower.
 
-and test-lib.sh will take care of finding the right program, passing
-the right test name as argument... (a single test program covering all
-test groups, rather than one binary per test group, would simplify
-things here). We need something though to let test-lib.sh know this is
-C-based not shell to activate this mode. The "-c" suffix in the file
-name is for that purpose, but maybe we will figure out something
-better later. If it's too magical, this would do
+So I dunno. Maybe it's not so crazy an idea.
 
--- 8< --
-cat >t3071-wildmatch.sh <<EOF
-#!/bin/sh
-
-. ./test-lib.sh
-
-exec_c_tests # new function defined in test-lib.sh
-EOF
--- 8< --
---=20
-Duy
+-Peff
