@@ -2,124 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A33A1FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 20:48:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A82731FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 21:33:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932505AbeAKUsO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 15:48:14 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52962 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932290AbeAKUsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 15:48:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 207C9C473C;
-        Thu, 11 Jan 2018 15:48:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JmCm2rXlq6AVfEifQZ0xossdJjo=; b=E6I2kt
-        IfBLMilY5PwzGPwNX56bTjb3AXMOVdlGNkbjzj8cUPc8RwluQS5Y3irWDEn3mAtC
-        a0JMhryC0Zusuqf1PcfnhLFCzxBKQkCGiSxGxp9W1UwJaOmrPNolGjUrTd724SO4
-        lImuKM9tc6Vpb70pEfK0oe+18/REU9ZIexXec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cyAXeyQadHqXvck49eH2NpL0YEuEiEM1
-        ZkxiFA9IoWZeiu6ufg7UaLaEzMVKW7a1O0Gv8ei2YMIKKvLzhUj1BdDgkWbhU7fL
-        GYnalGLFykMMdQW6thrwgBzcuANUWb5E8DR9c+LRtUitcuyrUt/Q0XJN1zlXP0Mv
-        gPyw+F65cnk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1829BC473B;
-        Thu, 11 Jan 2018 15:48:13 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8B8BEC473A;
-        Thu, 11 Jan 2018 15:48:12 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com, sbeller@google.com
-Subject: Re: [PATCH v2 2/2] submodule: port submodule subcommand 'deinit' from shell to C
-References: <20180109175703.4793-1-pc44800@gmail.com>
-        <20180111201721.25930-1-pc44800@gmail.com>
-        <20180111201721.25930-3-pc44800@gmail.com>
-Date:   Thu, 11 Jan 2018 12:48:11 -0800
-In-Reply-To: <20180111201721.25930-3-pc44800@gmail.com> (Prathamesh Chavan's
-        message of "Fri, 12 Jan 2018 01:47:21 +0530")
-Message-ID: <xmqqh8rsxgtw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S933141AbeAKVdW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 16:33:22 -0500
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:46182 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932290AbeAKVdT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 16:33:19 -0500
+Received: by mail-wr0-f174.google.com with SMTP id g21so3521813wrb.13
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 13:33:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=YXHiW78qle210jlAUEYXVZZE1rCqtxm6XRvt/Gm28+E=;
+        b=A7dmkDkTEszfkgwCzj8fPwWW1fBBfD4xCLbAxAJHikBPsktpZWdLcP6j02gzGfBJo0
+         iha98VvOixRZEMSjfZhu3lYbjYZqOKvGvwavpYDQi4G2k3WPYQzC3rPsnmJJopg+yQ2M
+         ZJ/7t+jqw7p836yvfmVjtG2HjvDiOCcUk/N88NK1JAXKOs6ElN/uTg62j2BlW+eYF1UE
+         aN25RvJsCz8NHpSwP6txl4KIm8fhsKeKX7bM+GLB5r7Es/ZWiHGYVM0bgYbCLleRmaCD
+         tDjlGSIYNMNtOh1TTQQI8KiyZffo4KYWFGTvTTrOOG3OEYcX+0326qCfBMUNTt9ZzZtL
+         v/0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=YXHiW78qle210jlAUEYXVZZE1rCqtxm6XRvt/Gm28+E=;
+        b=DBPaR5r73rMXrCv1+dP0pvFbhh/Z31WKT5757FdgdCtRS13YiBRLNGt2MGHxhDfuw2
+         aRm7AV/0KfxIabFPX72yFr2eaDvtljYObug2wStK9trFI1zfIQuugx32RA5QxMTmjUdx
+         F936gERhVTSrWXeaOb1oqNvmoldSKbuZQi2M11U1ybdK8F17u0fkdEBbofdUE4mpw+pz
+         SuWB7A1yQSg8PTYBtu31DRSE4YBImOqvIKrAQLYAe/MB3ampDkmBeV/VTc3U50/GPypw
+         SoZXnVgeyTNvUo1hVMf2h4E/11gfKyb1bhAH2o1UTBR127PrLQFw9Z+7KOqUr1ILTcfu
+         tv5g==
+X-Gm-Message-State: AKGB3mKhLLId51FJzZpQP6QRzNPzux0aLg+Erx3LVywuVJyGEmiZlaPI
+        0dM13vx+X2Zly4trycNKgJrVe8N8
+X-Google-Smtp-Source: ACJfBotLdakE64GEKJ+lDACkLVby4CNN5yDF3s3ZkQrSLNdRXox4V7bHXJY5MOBpKcNe91EhNurgwQ==
+X-Received: by 10.223.198.20 with SMTP id n20mr21014410wrg.191.1515706398101;
+        Thu, 11 Jan 2018 13:33:18 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id t138sm1802564wme.16.2018.01.11.13.33.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 11 Jan 2018 13:33:17 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
+        <pclouds@gmail.com>, Christian Couder <christian.couder@gmail.com>
+Subject: git gc --auto yelling at users where a repo legitimately has >6700 loose objects
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
+Date:   Thu, 11 Jan 2018 22:33:15 +0100
+Message-ID: <87inc89j38.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BD5185F2-F710-11E7-8AA4-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prathamesh Chavan <pc44800@gmail.com> writes:
+I recently disabled gc.auto=0 and my nightly aggressive repack script on
+our big monorepo across our infra, relying instead on git gc --auto in
+the background to just do its thing.
 
-> +	/* remove the submodule work tree (unless the user already did it) */
-> +	if (is_directory(path)) {
-> +		struct strbuf sb_rm = STRBUF_INIT;
-> +		const char *format;
-> +
-> +		/*
-> +		 * protect submodules containing a .git directory
-> +		 * NEEDSWORK: instead of dying, automatically call
-> +		 * absorbgitdirs and (possibly) warn.
-> +		 */
-> +		if (is_directory(sub_git_dir))
-> +			die(_("Submodule work tree '%s' contains a .git "
-> +			      "directory (use 'rm -rf' if you really want "
-> +			      "to remove it including all of its history)"),
-> +			    displaypath);
-> +
-> +		if (!(flags & OPT_FORCE)) {
-> +			struct child_process cp_rm = CHILD_PROCESS_INIT;
-> +			cp_rm.git_cmd = 1;
-> +			argv_array_pushl(&cp_rm.args, "rm", "-qn",
-> +					 path, NULL);
-> +
-> +			if (run_command(&cp_rm))
-> +				die(_("Submodule work tree '%s' contains local "
-> +				      "modifications; use '-f' to discard them"),
-> +				      displaypath);
-> +		}
-> +
-> +		strbuf_addstr(&sb_rm, path);
-> +
-> +		if (!remove_dir_recursively(&sb_rm, 0))
-> +			format = _("Cleared directory '%s'\n");
-> +		else
-> +			format = _("Could not remove submodule work tree '%s'\n");
-> +
-> +		if (!(flags & OPT_QUIET))
-> +			printf(format, displaypath);
-> +
-> +		strbuf_release(&sb_rm);
-> +	}
-> +
-> +	if (mkdir(path, 0777))
-> +		die_errno(_("could not create empty submodule directory %s"),
-> +		      displaypath);
+I didn't want users to wait for git-gc, and I'd written this nightly
+cronjob before git-gc learned to detach to the background.
 
-If path was a directory (which presumably is the normal case) and
-recursive removal fails (i.e. when the code says "Could not remove"),
-this mkdir() would also fail with EEXIST.
+But now I have git-gc on some servers yelling at users on every pull
+command:
 
-In such a case, the original code did not die and instead continued
-to remove the entries for the submodule from the configuration.
-This "rewritten" version dies, leaving the stale configuration for
-the submodule we failed to get rid of from the working tree.
+    warning: There are too many unreachable loose objects; run 'git prune' to remove them.
 
-I offhand do not know which one of these error case behaviours is
-more useful; the user needs to do something (e.g. loosening the perm
-in some paths in the submodule that prevented "rm -rf" from working
-with "chmod u+w sub/some/path" and removing it manually) to recover
-in either case, and cleaning as much as possible by removing the
-configuration entries even when this mkdir() fails would probably be
-a better behaviour, as long as the command as a whole exits with non
-zero status to signal an error.
+The reason is that I have all the values at git's default settings, and
+there legitimately are >~6700 loose objects that were created in the
+last 2 weeks.
+
+For those rusty on git-gc's defaults, this is what it looks like in this
+scenario:
+
+ 1. User runs "git pull"
+ 2. git gc --auto is called, there are >6700 loose objects
+ 3. it forks into the background, tries to prune and repack, objects
+    older than gc.pruneExpire (2.weeks.ago) are pruned.
+ 4. At the end of all this, we check *again* if we have >6700 objects,
+    if we do we print "run 'git prune'" to .git/gc.log, and will just
+    emit that error for the next day before trying again, at which point
+    we unlink the gc.log and retry, see gc.logExpiry.
+
+Right now I've just worked around this by setting gc.pruneExpire to a
+lower value (4.days.ago). But there's a larger issue to be addressed
+here, and I'm not sure how.
+
+When the warning was added in [1] it didn't know to detach to the
+background yet, that came in [2], shortly after came gc.log in [3].
+
+We could add another gc.auto-like limit, which could be set at some
+higher value than gc.auto. "Hey if I have more than 6700 loose objects,
+prune the <2wks old ones, but if at the end there's still >6700 I don't
+want to hear about it unless there's >6700*N".
+
+I thought I'd just add that, but the details of how to pass that message
+around get nasty. With that solution we *also* don't want git gc to
+start churning in the background once we reach >6700 objects, so we need
+something like gc.logExpiry which defers the gc until the next day. We
+might need to create .git/gc-waitabit.marker, ew.
+
+More generally, these hard limits seem contrary to what the user cares
+about. E.g. I suspect that most of these loose objects come from
+branches since deleted in upstream, whose objects could have a different
+retention policy.
+
+Or we could say "I want 2 weeks of objects, but if that runs against the
+6700 limit just keep the latest 6700/2".
+
+1. a087cc9819 ("git-gc --auto: protect ourselves from accumulated
+   cruft", 2007-09-17)
+2. 9f673f9477 ("gc: config option for running --auto in background",
+   2014-02-08)
+3. 329e6e8794 ("gc: save log from daemonized gc --auto and print it next
+   time", 2015-09-19)
