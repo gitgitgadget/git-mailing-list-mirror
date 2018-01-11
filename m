@@ -7,80 +7,156 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8DC21F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 11:25:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56AE51F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 11:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754230AbeAKLZj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 06:25:39 -0500
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:32814 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754206AbeAKLZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 06:25:38 -0500
-Received: by mail-pg0-f52.google.com with SMTP id i196so1989357pgd.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:25:38 -0800 (PST)
+        id S1754113AbeAKLjz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 06:39:55 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:33290 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752294AbeAKLjy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 06:39:54 -0500
+Received: by mail-wr0-f182.google.com with SMTP id p6so1892122wrd.0
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pN6+sYxU+kq/PLnBLSjTRHnHitSi1fhNvwy5OK40ps8=;
-        b=r504X991V9rHQ3asltRF7v0Lf3MWXvpRS8v45M48PSh6SCNle87ZCMdNnNxYiAyXsP
-         6JlO8F2u68dUZNbfeY5rBuqqXj4D7xFdL/tT9poqt83nj/kDLEC6ru7b53w5r25nlhjB
-         qQSMC2GwqryDBWk4iEisqweieYKfciPMVL21qQfD8JVyfubRzw1McdODFCQsyy2LWFqg
-         RS4WUa3yCBgjwVC4CPr9squ2rTn49MtySHaLhIoghAsYo3GJJzctNcin1HKxefq/3Rd4
-         dUzfOGPDl0aAt/4varjwde49ou5/R56lcoDpefY5uhHdlxRSkM4uiLT65cX7zHUCmBCy
-         gs2Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=8X8PMN4oFDoVLEN1ZUyVY2xaf0QqYItXbh9jM7qWfWs=;
+        b=TYmcEDzWYzT0FkSZGLr+kNZaILpy0QOr33KgZr9Hao3ftiFshFRV82ODT5bo1XelG/
+         +tjOS5HY3e6Dn0BwGNKJxjI7daoKTk/5FTt/f9ECx3rXyRTf4dsX8ObOwRGW/KDCVe3l
+         yU7hj57zf7YgIhQOJtvsVGvLzxohkdFFivWI7dDjzthyC4DUl6tc7k8sqjQq9rtPCox6
+         lz2lQL59NXqQiN/jSGPOwPTne9MaTYGmbriTm+yY5M2p73imV+4YhAfRQayK2wrwvSpL
+         rhlrAJm0pmmgiiG1VcixzUFbJBFW8YklUjvVNh3zL7d10mJFlTgCmRIta0SqLgXUkbju
+         y8wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pN6+sYxU+kq/PLnBLSjTRHnHitSi1fhNvwy5OK40ps8=;
-        b=nAQx/TpI8EAlj+RXzq8AgrugAI35CawxPQXJdTwp6l0CD3GCddGGkKB28TOC1t7wOA
-         si5f4Uvst6tuEQP9Ov1WFl9tthnmvUuINUj/2EN8iNPxH27Goo6QfxTA/S4E8lkYzHTf
-         qAf0FNA6K33icysVNC4aex5KRqEknBB+FetMWU4qBG1tFEDIO48jFQoszoxLgPbBQH2A
-         hYzJbTBmpJ6vJLTxlQ3f7pmJThnlwc+zXhtyH6xRrGZiUmikplJS4KmlUDvpMazJw8I/
-         u/0rJs5ExulIpztYmdwF7wk7AwMXZYxZdou2c1fPv3bw7kW6w28Zb1bXrcHqLRzG1ICa
-         6DSg==
-X-Gm-Message-State: AKGB3mIt5p+sZ8b5mISr3njJ3irtCBBpTdZDiWk9FiRWfx1scXZT4VxB
-        MWS8BbC+bi4vBKaBeaJO2tPJwFzs8GHx+ccshX4=
-X-Google-Smtp-Source: ACJfBoszigjAFuNqeYyMn9OXK747BIOyJQNV4vrA0GPwzGDZWG48AVWHl9QnUttbNHC/j59gyWU5VuvgVKXbJ1B0UoM=
-X-Received: by 10.99.0.17 with SMTP id 17mr17656112pga.149.1515669937764; Thu,
- 11 Jan 2018 03:25:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=8X8PMN4oFDoVLEN1ZUyVY2xaf0QqYItXbh9jM7qWfWs=;
+        b=H2Izj84NR2d83lJ4r0quCERR7O/hNeykx2lZ634Csbi0x4jqSLdRgH/in0pNT/gs8F
+         6pv6oTdIx18vMlTA59bqPQNarLdVCgMmHrEHTrkz/++ATDiNQoY2znbLshPlsasUAbew
+         erxTa9HPCAWFHUrvj9RvD8v+MJYfslE4w2A0QbyKL0axpNVgvtGE+eIcT+BfdhJEOi1B
+         caX5e+RdBMRCXtA0tVT641BfppIBuTVPmgeRokmplGRll4HPXmwD7T0VXMq0bcQima57
+         D9PNre+4UyCkXgUH7kgfPW76dTaSKa505M9AI+oe20tt+Llen4rEa8frxn+WutmV7NdU
+         blgw==
+X-Gm-Message-State: AKGB3mIgBKjSzVgdvrxS4NJJdAf5mtjPHjjeOcfT9MPMTpJnaUmQjaHQ
+        5gkTSUZXGT0bu87QwOQW6L4=
+X-Google-Smtp-Source: ACJfBovquclR0R1a9336HcprmG/7AkapO1ziBfs7IsDHtHz+OmgDm8cI9kvVhVv6bbgKRq61tjVo0w==
+X-Received: by 10.223.198.69 with SMTP id u5mr19604663wrg.157.1515670792924;
+        Thu, 11 Jan 2018 03:39:52 -0800 (PST)
+Received: from localhost.localdomain (x590c5d6f.dyn.telefonica.de. [89.12.93.111])
+        by smtp.gmail.com with ESMTPSA id c19sm501991wmd.5.2018.01.11.03.39.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 11 Jan 2018 03:39:52 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>, Beat Bolli <dev+git@drbeat.li>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: read test snippet from stdin [was: [PATCH] t3900: add some more quotes]
+Date:   Thu, 11 Jan 2018 12:39:28 +0100
+Message-Id: <20180111113928.6412-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc1.105.gdd2bd9e18
+In-Reply-To: <20180110195323.GA26186@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.100.183.106 with HTTP; Thu, 11 Jan 2018 03:25:07 -0800 (PST)
-In-Reply-To: <20180111094712.2551-1-pclouds@gmail.com>
-References: <20180110104835.22905-1-pclouds@gmail.com> <20180111094712.2551-1-pclouds@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 11 Jan 2018 18:25:07 +0700
-Message-ID: <CACsJy8BpFiNTQKLU2g=4Fat2gC1R0OcMteqcZx0ubg5ChNmKgw@mail.gmail.com>
-Subject: Re: [PATCH v2] run-command.c: print env vars when GIT_TRACE is set
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 11, 2018 at 4:47 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
->  Though, Stefan, while i'm not opposed to trace every single setting
->  in child_process, including variable deletion, cwd and even more, it
 
-Another thing I forgot to add, s/ and even more/, redirection&/. At
-some point I think I was checking the git-pack-objects command from
-GIT_TRACE and didn't realize it was taking input from stdin (I was
-naive :D). At least on linux we could even take advantage of
-/proc/<pid>/fd to show path names and stuff in addition to plain file
-descriptors.
+> I've often wondered if
+> our tests would be more readable taking the snippet over stdin.
+> Something like:
+> 
+> diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+> index 9e4e694d93..09ad4d8878 100755
+> --- a/t/t3900-i18n-commit.sh
+> +++ b/t/t3900-i18n-commit.sh
+> @@ -39,14 +39,14 @@ test_expect_success 'UTF-16 refused because of NULs' '
+>  	test_must_fail git commit -a -F "$TEST_DIRECTORY"/t3900/UTF-16.txt
+>  '
+>  
+> -test_expect_success 'UTF-8 invalid characters refused' '
 
->  may be not that often needed for a "casual" developer.
->
->  I suggest we have something like $GIT_TRACE_EXEC instead that could
->  be super verbose when we need it and leave $GIT_TRACE with a
->  reasonable subset.
---=20
-Duy
+Note that the test snippet started right after that last single quote,
+i.e. it started with a newline.
+
+> -	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
+> +test_expect_success 'UTF-8 invalid characters refused' - <<\EOT
+> +	test_when_finished 'rm -f "$HOME/stderr $HOME/invalid"' &&
+
+And now it starts at the beginning of this line, i.e. without that
+leading neline.  This change leads to the following when run with '-v':
+
+  expecting success: 	test_when_finished 'rm -f "$HOME/stderr $HOME/invalid"' &&
+	echo "UTF-8 characters" >F &&
+	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
+		>"$HOME/invalid" &&
+	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+	test_i18ngrep "did not conform" "$HOME"/stderr
+
+Notice how the "expecting success" and the first line of the test ended
+up in the same line.  I find this more annoying than the lack of empty
+line between the colored and indented test code and the uncolored and
+unindented test output.
+
+>  	echo "UTF-8 characters" >F &&
+>  	printf "Commit message\n\nInvalid surrogate:\355\240\200\n" \
+>  		>"$HOME/invalid" &&
+>  	git commit -a -F "$HOME/invalid" 2>"$HOME"/stderr &&
+>  	test_i18ngrep "did not conform" "$HOME"/stderr
+> -'
+> +EOT
+>  
+>  test_expect_success 'UTF-8 overlong sequences rejected' '
+>  	test_when_finished "rm -f \"$HOME/stderr $HOME/invalid\"" &&
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 1701fe2a06..be8a47d304 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -391,11 +391,32 @@ test_verify_prereq () {
+>  	error "bug in the test script: '$test_prereq' does not look like a prereq"
+>  }
+>  
+> +# Read from stdin into the variable given in $1.
+> +test_read_to_eof () {
+> +	# Bash's "read" is sufficiently flexible that we can skip the extra
+> +	# process.
+> +	if test -n "$BASH_VERSION"
+> +	then
+> +		# 64k should be enough for anyone...
+> +		read -N 65536 -r "$1"
+> +	else
+> +		# command substitution eats trailing whitespace, so we add
+> +		# and then remove a non-whitespace character.
+> +		eval "$1=\$(cat; printf x)"
+> +		eval "$1=\${$1%x}"
+> +	fi
+> +}
+
+Command substitutions don't eat trailing whitespaces in general, only
+trailing newlines.  POSIX:
+
+  The shell shall expand the command substitution by executing command
+  in a subshell environment (see Shell Execution Environment) and
+  replacing the command substitution (the text of command plus the
+  enclosing "$()" or backquotes) with the standard output of the
+  command, removing sequences of one or more <newline>s at the end of
+  the substitution.
+
+Bash and dash conform to this.
+
+How about this alternative (also adding the missing leading newline
+mentioned above):
+
++		eval "$1='
++'\$(cat)'
++'"
+
+The indentation is yuck, but overall perhaps a bit less hacky...
+
