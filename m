@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5873B1FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 18:58:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4228B1FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 18:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965187AbeAKS6G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 13:58:06 -0500
-Received: from mout.web.de ([212.227.17.11]:56283 "EHLO mout.web.de"
+        id S965372AbeAKS6K (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 13:58:10 -0500
+Received: from mout.web.de ([212.227.17.11]:56049 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933141AbeAKS6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 13:58:04 -0500
+        id S965208AbeAKS6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 13:58:07 -0500
 Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Laky4-1fJk6L0BQm-00kQDA; Thu, 11
- Jan 2018 19:57:53 +0100
-Subject: Re: [PATCH v2 5/9] bisect: avoid using the rev_info flag leak_pending
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LbrQm-1fGRFF2PLw-00jKol; Thu, 11
+ Jan 2018 19:57:45 +0100
+Subject: Re: [PATCH v2 4/9] object: add clear_commit_marks_all()
 To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
@@ -27,107 +27,172 @@ Cc:     Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
  <ac4c77a1-6403-ca20-2021-50c99201915a@web.de>
- <07d0e0c6-d023-bd28-511b-78092cb35b4f@web.de>
- <20180110080754.GE16315@sigill.intra.peff.net>
+ <ec45f9a8-292a-53e2-52b6-44d744cb6c36@web.de>
+ <20180110075838.GD16315@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b0fbedea-77d8-5571-6042-03b512c0680d@web.de>
-Date:   Thu, 11 Jan 2018 19:57:51 +0100
+Message-ID: <a0ca86b8-e258-2588-1c99-a30e8e60fdbd@web.de>
+Date:   Thu, 11 Jan 2018 19:57:42 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <20180110080754.GE16315@sigill.intra.peff.net>
+In-Reply-To: <20180110075838.GD16315@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:c34kF7QeFF2CPooyqZZgBHdSN6n0ZgB41thd+15CigXh7m8FDHr
- OHMBaLmHkkH4KmFVr/kCQ8aatiRwH97kjM2qfvPlXBEgHkC+5N8vpmxhJ7QRRRLkubBGZ+J
- 2x52JtP5TS8UKFuXO6tMuq+bq8DmNiTF9v57UEPvcpxDY7aJb0KL4kE1X0yNUuQGLtq8uGZ
- mZNrSfl27/Egg7QtnIDQA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I5rZ2+wpWS0=:2TPqyJScR4GFeKKNC43cdz
- 2fk/tn1EH8Td5pGRRrzJv9Z0PBPrX/su9z2DiVVpXd9vleZeBr76j52yPuNxOjdb3Z8dQ3Uuo
- KpdAaTzXPgX+egbAAlK//aS94GObW8tKgiG0ceHPCcM2ux1ciJ/WykJqUAxAXxGfWksKO826/
- hs3RuAh77wM6UNQ5qs7HRIRn8uzjKf6J6LmWCeBVKrWzo+Hiwzigi6EVNOEDGTCsbmS5oOzJE
- gos76jaSuteqMkq81hSyM9p5Ug1YPCB0NNYRKtssXr2WgpdaF71I8PuAMUr3G1JtrzVutRmZx
- KGEiszGdbQ08Q+nl0kJ+1IApe/+NAw75/Q9TM4zAjYPftvTbwTkt7xL22CIf3P4iizv1zDkjb
- Aj0zfZTf6GqWbOtqH3tup4RculmftZiNpwCrDjj+q1e+AD0rIsagd1PDCD7yUzocC1LSIn3/U
- 8OYEjcZTIWN6JBda3u5V9+7FygYKfldo/ro1S8Ft/heEzJyQXIBgL2O5uXris1q6xwpyJqA2J
- 7yIKFunzmXRlymQi1XcK7CKDZwSg60eD4vb+FAqWI/RKR2bcdwI+nb1pFGZZtQayg2UoZxn83
- cT2y9NtRE48oPGIRBoL+LQJ25NbKjk/YfxROEuQaEctNJAJ2jnBd41+j2uKTJluRBBOa7vV2Z
- CKuM9jmnlpnO4hcjLb5u0fuNO2t1kdwbyD8rn7J6OoyFqdx3Cpbs7Zt2hZ1Qx5xk81XdtissI
- Hk6C2qQwifvfP00lxCdDNzxkhfCGpy9FQXJQp3jXHbtRxDPO9fQJ/Lw5aSJfyyb3C7T+ZucYW
- 3fTbOH7clQ3NYtFbdaZYJRQDkjan7bQtFYBzz5U7HpyCjktPqs=
+X-Provags-ID: V03:K0:3xBTIe4H3Fo7vinwm7zrKHEG7sRltQ6zhNjdCoVE6K49BwCX71E
+ u9S8jx7KSKKp5ZPJ2rtdmWTfMNnOu9Rbr+iTJ39bGdO0kXBWbmk1TdJfJPwTtyqNJZv2y0c
+ 93oAaHJl4KSQspSmVzjnPrlQKhH4WUxfGV/DJnRH/nfeEcg7T1m5rcnnXFncEt1xYRgQ4q8
+ HFHGJMo+OzuUAAfsnBy5A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:reNzE9bB1uM=:p9Mnbv72jYlaC1o81N9ed2
+ 6PSapKxw8NT1zdIMmQ4gmQfjqDDb5PskKAn6wxashdSRVamTmVND+Za9TIlzIRBbpbU6hL6sw
+ H5vN1cuZUN+qFRkWtzUIdHkUFll8lrUzlhLqCHKAUVYmQhAV4cobSeZvCSX2GZvQkcSAMAndV
+ RcnXzcHBjHLWYz8nWdGoDvXp9+hxh2mvXQALFzzFwSoRXsXH6nH+CneyMWLsUSWXkj8bt0TWS
+ xzOUsC061Z/E0FnT7CenWyqgRnj4HbaKjyuVCX93tcyuY4MeNfAvWTsz5geuvhaEG9CnasbQR
+ QC1rbsWganDXIJVvTonijX3O7rpg+y/8kFbsCLQEPr3K81nNYq3dXQPha6c/eHoAv8Gr4CQZD
+ KMKhXDxfrZOgO1FcWr7Pt147OWuvL/CWy6j4Bj4Fo+a1AiyyemLILges5tfDsEUCMz/NdJIzO
+ obnyZmRSkIN3XwwrFA2F3Dw0xP2Tx5s9xK54+KKZjUJ5Ib9l3mzPo/HQDhs05L0iIHzP5XJBg
+ 1nnPw+R0ugjyynfUvcMJR9ZdMSIJccDG0b9YnzW5DWbFQDAF1anvQoun+ZRnHkC2Rbids8BTf
+ 1iOSA/pC9Sm4r+o+wuIFGoCnfzLu+JNex+KVEA5/hIgggIGZAYhwfbsxshF7EGzH9BYcwb3X3
+ QFHpYp77F/kQnuNDY0CiXePqzJz+pyTMeyEloLJ/OYMjyhQMQYUYTrCjbwDkvGa0wXY6qgKt2
+ 2g9K0/1wMU0GYhrGPbUhsD0bG5sr8aslkPD5JrVt2Lc1Tl8bRVz5XOWIA5iwPNskn89IN+Q0a
+ pvTESq9dPUbjbmDUmG1vR00tC+yhLDQJdcqmGLrNEt6sdu+FZ0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.01.2018 um 09:07 schrieb Jeff King:
-> On Mon, Dec 25, 2017 at 06:45:36PM +0100, René Scharfe wrote:
+Am 10.01.2018 um 08:58 schrieb Jeff King:
+> On Mon, Dec 25, 2017 at 06:44:58PM +0100, René Scharfe wrote:
 > 
->> The leak_pending flag is so awkward to use that multiple comments had to
->> be added around each occurrence.  We only use it for remembering the
->> commits whose marks we have to clear after checking if all of the good
->> ones are ancestors of the bad one.  This is easy, though: We need to do
->> that for the bad and good commits, of course.
+>> Add a function for clearing the commit marks of all in-core commit
+>> objects.  It's similar to clear_object_flags(), but more precise, since
+>> it leaves the other object types alone.  It still has to iterate through
+>> them, though.
 > 
-> Are we sure that our list is the same as what is traversed? I won't be
-> surprised if it is true, but it doesn't seem immediately obvious from
-> the code:
+> Makes sense.
 > 
->> -static int check_ancestors(const char *prefix)
->> +static int check_ancestors(int rev_nr, struct commit **rev, const char *prefix)
->>   {
+> Is it worth having:
 > 
-> So now we take in a set of objects...
+>    void clear_object_flags_from_type(int type, unsigned flags);
 > 
->>   	struct rev_info revs;
->> -	struct object_array pending_copy;
->>   	int res;
->>   
->>   	bisect_rev_setup(&revs, prefix, "^%s", "%s", 0);
-> 
-> But those objects aren't provided here. bisect_rev_setup() puts its own
-> set of objects into the pending list...
+> rather than having two near-identical functions? I guess we'd need some
+> way of saying "all types" to reimplement clear_object_flags() as a
+> wrapper (OBJ_NONE, I guess?).
 
-Yes, namely from the global variables current_bad_oid and good_revs.
+I don't know if there is a demand.  Perhaps the two callers of
+clear_object_flags() should be switched to clear_commit_marks_all()?
+They look like they only care about commits as well.  Or is it safe to
+stomp over the flags of objects of other types?  Then we'd only need
+to keep clear_object_flags()..
 
->> -	/* Save pending objects, so they can be cleaned up later. */
->> -	pending_copy = revs.pending;
->> -	revs.leak_pending = 1;
->> -
->> -	/*
->> -	 * bisect_common calls prepare_revision_walk right away, which
->> -	 * (together with .leak_pending = 1) makes us the sole owner of
->> -	 * the list of pending objects.
->> -	 */
->>   	bisect_common(&revs);
->>   	res = (revs.commits != NULL);
-> 
-> And then we traverse, and then...
-> 
->>   
->>   	/* Clean up objects used, as they will be reused. */
->> -	clear_commit_marks_for_object_array(&pending_copy, ALL_REV_FLAGS);
->> -
->> -	object_array_clear(&pending_copy);
->> +	clear_commit_marks_many(rev_nr, rev, ALL_REV_FLAGS);
-> 
-> ...this is the first time we look at "rev".
+> The run-time check is maybe a little bit slower in the middle of a tight
+> loop, but I'm not sure it would matter much (I'd actually be curious if
+> this approach is faster than the existing traversal code, too).
 
-... which is populated by get_bad_and_good_commits() using the global
-variables current_bad_oid and good_revs.
+I don't know how to measure this properly.  With 100 runs each I get
+this for the git repo and the silly test program below, which measures
+the duration of the respective function call:
 
-> If we already have the list of tips, could we just feed it ourselves to
-> bisect_rev_setup (I think that would require us remembering which were
-> "good" and "bad", but that doesn't seem like a big deal).
+   mean        stddev method
+   ----------- ------ ----------------------
+   5.89763e+06 613106 clear_commit_marks
+   2.72572e+06 507689 clear_commit_marks_all
+   1.96582e+06 494753 clear_object_flags
 
-That's done already under the covers.  De-globalizing these variables
-would make this visible.
-
-Another way would be to store the bad and good revs in a format that
-allows them to be used everywhere, thus avoiding confusing
-duplication/conversions.  Commit pointers and arrays thereof should
-work everywhere we currently use object_ids and oid_arrays for bad
-and good revs, right?
+So these are noisy numbers, but kind of in the expected range.
 
 René
+
+---
+ Makefile                           |  1 +
+ t/helper/test-clear-commit-marks.c | 67 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
+ create mode 100644 t/helper/test-clear-commit-marks.c
+
+diff --git a/Makefile b/Makefile
+index 1a9b23b679..7db2c6ca7f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -648,6 +648,7 @@ X =
+ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+ 
+ TEST_PROGRAMS_NEED_X += test-chmtime
++TEST_PROGRAMS_NEED_X += test-clear-commit-marks
+ TEST_PROGRAMS_NEED_X += test-ctype
+ TEST_PROGRAMS_NEED_X += test-config
+ TEST_PROGRAMS_NEED_X += test-date
+diff --git a/t/helper/test-clear-commit-marks.c b/t/helper/test-clear-commit-marks.c
+new file mode 100644
+index 0000000000..296ca0286f
+--- /dev/null
++++ b/t/helper/test-clear-commit-marks.c
+@@ -0,0 +1,67 @@
++#include "cache.h"
++#include "commit.h"
++#include "revision.h"
++
++static void start(struct timespec *start)
++{
++	clock_gettime(CLOCK_MONOTONIC, start);
++}
++
++static void print_duration(struct timespec *start)
++{
++	struct timespec end;
++	uint64_t d;
++	clock_gettime(CLOCK_MONOTONIC, &end);
++	d = end.tv_sec - start->tv_sec;
++	d *= 1000000000;
++	d += end.tv_nsec - start->tv_nsec;
++	printf("%lu", d);
++}
++
++int cmd_main(int argc, const char **argv)
++{
++	struct rev_info revs;
++	struct object_id oid;
++	struct commit *commit;
++	struct timespec ts;
++
++	setup_git_directory();
++
++	if (get_oid("HEAD", &oid))
++		die("No HEAD?");
++	commit = lookup_commit(&oid);
++	if (!commit)
++		die("HEAD is not a committish?");
++
++	init_revisions(&revs, NULL);
++	add_pending_object(&revs, &commit->object, "HEAD");
++	if (prepare_revision_walk(&revs))
++		die("revision walk setup failed");
++	while (get_revision(&revs))
++		; /* nothing */
++
++	if (argc != 2)
++		return 0;
++
++	if (!strcmp(argv[1], "clear_commit_marks")) {
++		start(&ts);
++		clear_commit_marks(commit, ALL_REV_FLAGS);
++		print_duration(&ts);
++	}
++
++	if (!strcmp(argv[1], "clear_commit_marks_all")) {
++		start(&ts);
++		clear_commit_marks_all(ALL_REV_FLAGS);
++		print_duration(&ts);
++	}
++
++	if (!strcmp(argv[1], "clear_object_flags")) {
++		start(&ts);
++		clear_object_flags(ALL_REV_FLAGS);
++		print_duration(&ts);
++	}
++
++	printf(" %s\n", argv[1]);
++
++	return 0;
++}
+-- 
+2.15.1
