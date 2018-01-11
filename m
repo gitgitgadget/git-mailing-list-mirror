@@ -2,143 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB9DA1FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 14:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A07601FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 14:45:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932720AbeAKOMS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 09:12:18 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:41357 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754252AbeAKOMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 09:12:17 -0500
-Received: by mail-wm0-f41.google.com with SMTP id g75so5882372wme.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 06:12:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:user-agent:date:message-id:mime-version;
-        bh=wh+xAVueCZU2scLLvC769DKoZtaE7Tcim9XIpR/sil0=;
-        b=IMdICGjfTXtyYi60GxTJB8jEkmlYDejswtFQs8fUqNl5bBqLQ8eHpR2pVIQ9cxipym
-         3oQK7RPPa8cgX5DWj1XqV7kpyZCZHYHW3TswnDGK1HOjJ2dWLdtD1A+x+BrIcnKcO62N
-         11wCie/DhONNGTjMJbQ+SskWggOGexL4jR6PHdOoaYEj+6XQl7FlYVxGPAewr8bV+w8z
-         fqwRvCapP8PLuTmFXjiEWAhKa4IFhGniq/j4tdVZdTcJKcmMQSWav+bpcKxLy4hnOCyb
-         7oVrS7V+JWJQyWOLjFngwPcB6JcX7MsVayo/kTYZlENyjrB+tTYeZXlQlbWyKe5Sgu+T
-         T6Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:user-agent:date:message-id
-         :mime-version;
-        bh=wh+xAVueCZU2scLLvC769DKoZtaE7Tcim9XIpR/sil0=;
-        b=KI1ExrhgoKvqzNx518JMjLYxnm798aX36/VQgRhGMWvdot29KVhXHktk53dBeLbeX0
-         bjhXY1DIDSejC5KEs/dBSofnup/SzM0+T33PLekMTO6yjrfx6z1n36Yj95b0dNm6NJBK
-         rlpDhxLKwM92WI7URrii6hFQrjARhxpljOtDFTfuCDapGeYv0aKo8p/GP0hiS3zBxt+e
-         otUFKL7Rl87vWiVXhjlmFzmKevM2M7D/NRmPy5Vip0AGo8fxuMC266wUYlgDh7ru4pSH
-         IkYI6DevoFu3L4b7sMDzSUsvAJE11pR8i4yY1EHqdzWc+giNjvHQzMKoWgBlvZD+JY2q
-         g/+g==
-X-Gm-Message-State: AKwxyteY+lI+ofGgZ06wIvZuPbEIMJKroCx1ZJTneMqvNqHa4Fn8jGvW
-        CTUW2djdN+RmRk5wZkv0oK8bFemj
-X-Google-Smtp-Source: ACJfBovD7wZHAwYs+5wWCOTx49I539VbKsz2OERATet+2+I+idce8kdi+XG6+wyWWgro17WjYOQ8xQ==
-X-Received: by 10.80.130.35 with SMTP id 32mr2709193edf.7.1515679935843;
-        Thu, 11 Jan 2018 06:12:15 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id c7sm1667771edc.37.2018.01.11.06.12.14
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 11 Jan 2018 06:12:14 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Unable to de-init stubborn submodule
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-Date:   Thu, 11 Jan 2018 15:12:14 +0100
-Message-ID: <87k1woa3i9.fsf@evledraar.gmail.com>
+        id S934402AbeAKOpz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 09:45:55 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:10415 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934389AbeAKOpy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 09:45:54 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0BEjqlu051678
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 09:45:53 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'git mailing list'" <git@vger.kernel.org>
+Subject: [BUG] Weird breakages in t1450 #2 on NonStop
+Date:   Thu, 11 Jan 2018 09:45:46 -0500
+Message-ID: <003601d38aea$e0e08ff0$a2a1afd0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="koi8-r"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdOK5xVtXEff9WZESC+JndRRxUmtsA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What if we wanted to drop sha1collisiondetection/ as a submodule and
-replace it with a copy of what's now in sha1dc/? I ran into this with
-another project, but here's a way to reproduce it on git.git:
+This one has me scratching my head:
 
-    (
-        rm -rf /tmp/git &&
-        git clone git@github.com:git/git.git /tmp/git
-        cd /tmp/git &&
-        git tag nuke-before &&
-        git submodule update --init &&
-        git rm -r .gitmodules sha1collisiondetection &&
-        git commit -m"Nuke sha1dc submodule" &&
-        cp -Rvp sha1dc sha1collisiondetection &&
-        git add sha1collisiondetection &&
-        git commit -m"Now it's not a submodule" &&
-        git tag nuke-after &&
-        git reset --hard nuke-before &&
-        git submodule update --init && # skip this and the below won't fail
-        git reset --hard nuke-after && # Emulate someone doing a pull
-        git ls-tree HEAD | grep sha1collisiondetection && # OK, shows "tree" not "commit"
-        test $(git rev-parse HEAD) == $(git -C sha1collisiondetection/ log -1 --pretty=format:%H) && echo OK || echo WTF
-    )
+The object file name being reported below in t1450, subtest 2 is corrupt,
+but I can't figure out why the script might be generating this condition -
+there's nothing apparent, but it looks like the git commit -m C step is
+reporting or using a bad name. This breakage was not present in 2.8.5 (now
+at 7234152 (2.13.5) and is persistent (i.e. always happens). This is the
+only test in all of git where I have observed this particular situation.
+Adding set -x to test_commit is unrevealing. The git fsck in this test is
+never executed because the test_commit fails with a non-zero git commit
+completion code. There is no rn---- (actual r n 252 252 252 252) in the
+objects directory - even the 'rn' does not correspond to anything.. I am
+suspecting an unterminated string that ran into freed memory somewhere, but
+that's speculative. 
 
-This results in a really bizarre state where according to ls-tree
-sha1collisiondetection is a tree at the current commit:
+Does anyone have a perspective on this - was it subsequently fixed?
 
-    040000 tree 81583289d96bdde4b366c243ab524ea28d895ea5    sha1collisiondetection
+Thanks,
+Randall
 
-But git still believes there's a submodule there for some reason, and
-shows the log for the upstream sha1collisiondetection project:
+Initialized empty Git repository in /home/git/git/t/trash
+directory.t1450-fsck/another/.git/
+error: object directory /home/git/git/t/trash
+directory.t1450-fsck/another/.git/objects/rn---- does not exist; check
+.git/objects/info/alternates.
+[master (root-commit) 1aac250] C
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fileC
+error: object directory /home/git/git/t/trash
+directory.t1450-fsck/another/.git/objects/rn---- does not exist; check
+.git/objects/info/alternates.
+--- empty       2018-01-11 13:57:30 +0000
++++ actual      2018-01-11 13:57:40 +0000
+@@ -0,0 +1 @@
++error: object directory /home/git/git/t/trash
+directory.t1450-fsck/another/.git/objects/rn---- does not exist; check
+.git/objects/info/alternates.
+not ok 2 - loose objects borrowed from alternate are not missing
+#
+#               mkdir another &&
+#               (
+#                       cd another &&
+#                       git init &&
+#                       echo ../../../.git/objects
+>.git/objects/info/alternates &&
+#                       test_commit C fileC one &&
+#                       git fsck --no-dangling >../actual 2>&1
+#               ) &&
+#               test_cmp empty actual
+#
 
-    git -C sha1collisiondetection/ log -1
-    commit 19d97bf (HEAD, origin/master, origin/HEAD, master)
-    Merge: 3f14d1b c93f0b4
-    Author: Dan Shumow <shumow@gmail.com>
-    Date:   Sat Jul 1 12:36:15 2017 -0700
+Ls -l of the objects directory:
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 .
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 ..
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 13
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 56
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 bd
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 c9
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 f7
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 info
+drwxrwxr-x 1 randall ITUGLIB 4096 Jan 11 08:26 pack
+from find:
+./13
+./13/4756353796a5439d93586be27999eea3807a34
+./56
+./56/26abf0f72e58d7a153368ba57db4c673c0e171
+./bd
+./bd/04fbdc74c1ad468ee1cc86d49860490ab3e6c7
+./c9
+./c9/145d6720f85544cc4bb6009a2e541660aa156b
+./c9/176b0dd1a95c80ad8de21784b1eeffd3681f49
+./f7
+./f7/19efd430d52bcfc8566a43b2eb655688d38871
+./info
+./pack
 
-        Merge pull request #37 from avar/fixup-pull-request-34
-
-        Fix endian detection logic for Sparc, little endian BSD etc.
-
-Doing:
-
-    git submodule deinit sha1collisiondetection
-
-Does nothing to help, then I thought it might be:
-
-    git config -f .git/config -l|grep ^submodule
-    submodule.sha1collisiondetection.active=true
-    submodule.sha1collisiondetection.url=https://github.com/cr-marcstevens/sha1collisiondetection.git
-
-But running:
-
-    git config --remove-section submodule.sha1collisiondetection
-
-Doesn't help either, neither does removing the index:
-
-    rm .git/index &&
-    git reset --hard
-
-If you then do:
-
-    rm -rf .git/modules
-
-You'll get this error:
-
-    git -C sha1collisiondetection/ log -1
-    fatal: Not a git repository: /tmp/git/sha1collisiondetection/../.git/modules/sha1collisiondetection
-
-But I can't see what's still referencing it.
-
-This problem is avoided if, as noted with a comment I skip:
-
-    git submodule update --init
-
-But I shouldn't need to remember to de-init a submodule before moving to
-a new commit that doesn't have it, least I end up in some seemingly
-unrecoverable state.
-
-Am I missing something obvious here?
