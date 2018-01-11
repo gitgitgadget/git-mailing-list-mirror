@@ -2,199 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE6721F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 09:47:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2AD61F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 10:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754826AbeAKJrb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 04:47:31 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:45700 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754481AbeAKJra (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 04:47:30 -0500
-Received: by mail-pf0-f196.google.com with SMTP id u19so1272154pfa.12
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 01:47:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+kerjlB6nO3SuGt+YKNPvp6QZ7XFQGObjlFbYPYBBBI=;
-        b=CoTeOj2x2K+LumFQYf2pe6qFxoTZYEH08V81VzXV4hG0BY5WIZnU+4sShmENLq+44d
-         EuVNeHGziCYS4aazmokKqQk4mR9IzsyH8aMOuKxCjFq+SX12Ho/9hnQX86YTsVztY6dG
-         YOJs9BXCZlTG1QbwJ7tr4oyHoWFEDRaSfh+EENbWcMwFquYwnr11qFwfYyy2fTg6SOA7
-         2NDD6U2uT2XzEVlyrjNoJBfw8ahY2qIaV3NVMjNb+bVo+SMWqk8Yp1QPLJOGLMv6crrP
-         k0y1svjOLk6vi2x1UVP8+pIJ4YgVweR6Iidqs4QxbWW1+TDhSUEKQnRA0zoKsprjfsrJ
-         3L+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+kerjlB6nO3SuGt+YKNPvp6QZ7XFQGObjlFbYPYBBBI=;
-        b=tTh7xFQKMueNgAyEVm9ouRWTzCGHV73xUZU8+ii8J/RjeMNKw5zZdamD/mML1GAgmY
-         mDOOhRQu9VKnfLhuodW+Cy9oN46/fcUJXRFNszJ8afAsELqKNmaSkXjAJB5JSxWC7nfW
-         QRXtQr+kJJ1K5Y/SDJYSoiALvUEMrdQN1Ih3h2XI1YSTdpqPb3E13Ox5jP/cjTJ/HGun
-         12rJ3UHl/HpqZHfiuWFC6IzKD+Ic3s1LTCBfBj9//JZtC/VrZL7ulWtdZPyIGx8Lc4oV
-         OB/pNi2TNMH8FXdDcWsGxvbNqjFS7IVtXLhgGNJaqH7fT/Dln7U3am7vgK7hzANfHF2r
-         TN1w==
-X-Gm-Message-State: AKGB3mJiVONZFHua0qIVUeOYZz+AIxlobTwGeyQrE4X7DoJfBwZ9UeWl
-        2YydaGBkMEbGWZSfCJnHosNivA==
-X-Google-Smtp-Source: ACJfBotXJ9skhrzmjHhOhslG6u4b/2bBskVDhUDzbN36xletMumfjxQvHpFDHdWm6OAFS8jIA6r/yA==
-X-Received: by 10.98.48.194 with SMTP id w185mr19638065pfw.52.1515664049369;
-        Thu, 11 Jan 2018 01:47:29 -0800 (PST)
-Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id 77sm39876371pfh.43.2018.01.11.01.47.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 Jan 2018 01:47:24 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 11 Jan 2018 16:47:19 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2] run-command.c: print env vars when GIT_TRACE is set
-Date:   Thu, 11 Jan 2018 16:47:12 +0700
-Message-Id: <20180111094712.2551-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <20180110104835.22905-1-pclouds@gmail.com>
+        id S933025AbeAKKHh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 05:07:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41006 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932982AbeAKKHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 05:07:37 -0500
+Received: (qmail 26950 invoked by uid 109); 11 Jan 2018 10:07:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 11 Jan 2018 10:07:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21835 invoked by uid 111); 11 Jan 2018 10:08:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 11 Jan 2018 05:08:10 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Jan 2018 05:07:35 -0500
+Date:   Thu, 11 Jan 2018 05:07:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] run-command.c: print env vars when GIT_TRACE is set
+Message-ID: <20180111100734.GA17274@sigill.intra.peff.net>
 References: <20180110104835.22905-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180110104835.22905-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Occasionally submodule code could execute new commands with GIT_DIR set
-to some submodule. GIT_TRACE prints just the command line which makes it
-hard to tell that it's not really executed on this repository.
+On Wed, Jan 10, 2018 at 05:48:35PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-Print modified env variables (compared to parent environment) in this
-case. Actually only modified or new variables are printed. Variable
-deletion is suppressed because they are often used to clean up
-repo-specific variables that git passes around between processes. When
-submodule code executes commands on another repo, it clears all these
-variables, _many_ of these, that make the output really noisy.
+> Occasionally submodule code could execute new commands with GIT_DIR set
+> to some submodule. GIT_TRACE prints just the command line which makes it
+> hard to tell that it's not really executed on this repository.
+> 
+> Print env variables in this case. Note that the code deliberately ignore
+> variables unsetting because there are so many of them (to keep git
+> environment clean for the next process) and really hard to read.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- v2 fixes up commit message to clarify about "env delta" and why var
- deletion is not printed.
+I like this, and I'm pretty sure it would have helped me debug at least
+once in the past. I did notice one funny thing, though I think it was
+largely there before.
 
- It also keeps child_process tracing in one place/function, this
- should make it easier to trace more e.g. cwd and stuff.
+The output for a single command is pretty shell-like due to the quoting:
 
- Though, Stefan, while i'm not opposed to trace every single setting
- in child_process, including variable deletion, cwd and even more, it
- may be not that often needed for a "casual" developer.
- 
- I suggest we have something like $GIT_TRACE_EXEC instead that could
- be super verbose when we need it and leave $GIT_TRACE with a
- reasonable subset.
+  $ GIT_TRACE=1 ./git upload-pack . >/dev/null
+  [...]run_command: 'git-upload-pack' '.'
 
- run-command.c |  3 ++-
- trace.c       | 39 +++++++++++++++++++++++++++++++++++++++
- trace.h       |  3 +++
- 3 files changed, 44 insertions(+), 1 deletion(-)
+You could copy and paste that to a shell if you wanted.  And with
+environment variables, that remains so:
 
-diff --git a/run-command.c b/run-command.c
-index 31fc5ea86e..002074b128 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
- 		cmd->err = fderr[0];
- 	}
- 
--	trace_argv_printf(cmd->argv, "trace: run_command:");
-+	trace_run_command(cmd);
-+
- 	fflush(NULL);
- 
- #ifndef GIT_WINDOWS_NATIVE
-diff --git a/trace.c b/trace.c
-index b7530b51a9..e5e46e2a09 100644
---- a/trace.c
-+++ b/trace.c
-@@ -23,6 +23,7 @@
- 
- #include "cache.h"
- #include "quote.h"
-+#include "run-command.h"
- 
- struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
- struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
-@@ -272,6 +273,44 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
- #endif /* HAVE_VARIADIC_MACROS */
- 
- 
-+static void concatenate_env(struct strbuf *dst, const char *const *env)
-+{
-+	int i;
-+
-+	/* Copy into destination buffer. */
-+	strbuf_grow(dst, 255);
-+	for (i = 0; env[i]; ++i) {
-+		/*
-+		 * the main interesting is setting new vars
-+		 * e.g. GIT_DIR, ignore the unsetting to reduce noise.
-+		 */
-+		if (!strchr(env[i], '='))
-+			continue;
-+		strbuf_addch(dst, ' ');
-+		sq_quote_buf(dst, env[i]);
-+	}
-+}
-+
-+void trace_run_command(const struct child_process *cp)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	if (!prepare_trace_line(NULL, 0, &trace_default_key, &buf))
-+		return;
-+
-+	strbuf_addf(&buf, "trace: run_command:");
-+
-+	/*
-+	 * caller is responsible for setting this if the main source
-+	 * is actually in cp->env_array
-+	 */
-+	if (cp->env)
-+		concatenate_env(&buf, cp->env);
-+
-+	sq_quote_argv(&buf, cp->argv, 0);
-+	print_trace_line(&trace_default_key, &buf);
-+}
-+
- static const char *quote_crnl(const char *path)
- {
- 	static struct strbuf new_path = STRBUF_INIT;
-diff --git a/trace.h b/trace.h
-index 88055abef7..e54c687f26 100644
---- a/trace.h
-+++ b/trace.h
-@@ -4,6 +4,8 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- 
-+struct child_process;
-+
- struct trace_key {
- 	const char * const key;
- 	int fd;
-@@ -17,6 +19,7 @@ extern struct trace_key trace_default_key;
- extern struct trace_key trace_perf_key;
- 
- extern void trace_repo_setup(const char *prefix);
-+extern void trace_run_command(const struct child_process *cp);
- extern int trace_want(struct trace_key *key);
- extern void trace_disable(struct trace_key *key);
- extern uint64_t getnanotime(void);
--- 
-2.15.1.600.g899a5f85c6
+  $ GIT_TRACE=1 ./git ls-remote https://github.com/git/git >/dev/null
+  [...]run_command: 'GIT_DIR=.git' 'git-remote-https' 'https://[...]'
 
+But if we're actually running a command via the shell, it all gets
+quoted as one argument:
+
+  $ GIT_TRACE=1 GIT_PAGER='foo | bar' ./git log
+  [...]run_command: 'LV=-c' 'foo | bar'
+
+which is kind of weird, as that's not something that can be run in a
+shell. This isn't introduced by your patch at all, but I noticed it more
+because of the shell-like environment variable output.
+
+We actually used to print a separate:
+
+  exec: /bin/sh -c 'foo | bar'
+
+line when we invoked a shell, which would arguably be the right place to
+show the env variables for such a case. But that went away with
+3967e25be1 (run-command: prepare command before forking, 2017-04-19).
+
+I think it might be helpful if we added back in "/bin/sh -c" to the
+run_command line when "use_shell" is in effect (and when we're not doing
+our "skip the shell" trickery).  But that's totally orthogonal to your
+patch.
+
+And anyway, it's just tracing output, so I don't think it's incredibly
+important either way. It was just something I noticed while looking at
+your patch's output.
+
+-Peff
