@@ -2,59 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 956201F406
-	for <e@80x24.org>; Thu, 11 Jan 2018 11:14:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8DC21F406
+	for <e@80x24.org>; Thu, 11 Jan 2018 11:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933626AbeAKLOR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 06:14:17 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:37465 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932861AbeAKLOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 06:14:16 -0500
-Received: by mail-pf0-f175.google.com with SMTP id p1so1407995pfh.4
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:14:16 -0800 (PST)
+        id S1754230AbeAKLZj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 06:25:39 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:32814 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754206AbeAKLZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 06:25:38 -0500
+Received: by mail-pg0-f52.google.com with SMTP id i196so1989357pgd.0
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 03:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=/scoU1YFAeO9JWFtL2vB3I4idw78iNxyyhIRg0yWMWM=;
-        b=skqk344wgLKrYYxHY6vSay5AnD5fQKZqVMzYdQHDLyx2UA3Se0p0j4d7bdB7BteY1W
-         EXpBg+1pvoEJQNoG2hvQxYB0xEaNZzFQZW0L6vYgteHtfU8bez1kXsQ5fP61LoOeGTpD
-         +HjNMdD1RZawPJU1PFtlKWucr4sL7qyBItnh31+lPgzplF7mkqH9ElKBg55jC3IVbtK9
-         b0LzxusRUWACWCYDUjmbP6H5HhvoMLlyKSD7G/rD1q59RffQXWk3iRN3vufcdhd6HTWQ
-         QPpC9SVjhgOeX3K4o+XK/pIWkb698Kk3sObSAvSQdtlqzuRYlrshBgaeCL6YGJMBA3wZ
-         CIgg==
+        bh=pN6+sYxU+kq/PLnBLSjTRHnHitSi1fhNvwy5OK40ps8=;
+        b=r504X991V9rHQ3asltRF7v0Lf3MWXvpRS8v45M48PSh6SCNle87ZCMdNnNxYiAyXsP
+         6JlO8F2u68dUZNbfeY5rBuqqXj4D7xFdL/tT9poqt83nj/kDLEC6ru7b53w5r25nlhjB
+         qQSMC2GwqryDBWk4iEisqweieYKfciPMVL21qQfD8JVyfubRzw1McdODFCQsyy2LWFqg
+         RS4WUa3yCBgjwVC4CPr9squ2rTn49MtySHaLhIoghAsYo3GJJzctNcin1HKxefq/3Rd4
+         dUzfOGPDl0aAt/4varjwde49ou5/R56lcoDpefY5uhHdlxRSkM4uiLT65cX7zHUCmBCy
+         gs2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/scoU1YFAeO9JWFtL2vB3I4idw78iNxyyhIRg0yWMWM=;
-        b=FePLbTcWC8FDo2zQmNk8BTGecuXeTE6vZlxp/UmA0bHTzEtCj/XWDEmQS1KZvzii9J
-         eVxwvdZIyfIQgLXJ0XBfVpGH32fw4NgOePGh8S1qM01EVPQGLU0NQ3bdEjqWkQwWANp2
-         EJY0r333LIi57CzVKDi2WeFATxI/kOARM4Yo5UrtM6zMFcUd4y4lmBrJKBTPLrDHs4aG
-         sPNwPmwpkVfQLztKHA2OyzCPLaaxJdaxP+NABdtLVGCLMW9j0rwy0bRY+AyYWHLql69h
-         JY1fukJLtWdVA1HxB50NAqIo41jHC2RtXU6p1/Qbfd2llvc6vXwncTebQGK7VmST1XrD
-         +JOA==
-X-Gm-Message-State: AKGB3mLToUXHMqAcSDiXUDN78tyTjN6sqy7iPBs9EbGlrtaue1Ua/kWN
-        EfxLuy6IftrRIFo5WtLAymbWre5lrvbfrYzMyA8=
-X-Google-Smtp-Source: ACJfBovwaMg754gvC8HXGm8WoFMnT2uy6DbdnD8wFLY96sjQdUA1DkDUxbZRlhU4+ua5pdFywj8yfwf+SnMWSX6S5Ug=
-X-Received: by 10.84.252.8 with SMTP id x8mr22248111pll.190.1515669256200;
- Thu, 11 Jan 2018 03:14:16 -0800 (PST)
+        bh=pN6+sYxU+kq/PLnBLSjTRHnHitSi1fhNvwy5OK40ps8=;
+        b=nAQx/TpI8EAlj+RXzq8AgrugAI35CawxPQXJdTwp6l0CD3GCddGGkKB28TOC1t7wOA
+         si5f4Uvst6tuEQP9Ov1WFl9tthnmvUuINUj/2EN8iNPxH27Goo6QfxTA/S4E8lkYzHTf
+         qAf0FNA6K33icysVNC4aex5KRqEknBB+FetMWU4qBG1tFEDIO48jFQoszoxLgPbBQH2A
+         hYzJbTBmpJ6vJLTxlQ3f7pmJThnlwc+zXhtyH6xRrGZiUmikplJS4KmlUDvpMazJw8I/
+         u/0rJs5ExulIpztYmdwF7wk7AwMXZYxZdou2c1fPv3bw7kW6w28Zb1bXrcHqLRzG1ICa
+         6DSg==
+X-Gm-Message-State: AKGB3mIt5p+sZ8b5mISr3njJ3irtCBBpTdZDiWk9FiRWfx1scXZT4VxB
+        MWS8BbC+bi4vBKaBeaJO2tPJwFzs8GHx+ccshX4=
+X-Google-Smtp-Source: ACJfBoszigjAFuNqeYyMn9OXK747BIOyJQNV4vrA0GPwzGDZWG48AVWHl9QnUttbNHC/j59gyWU5VuvgVKXbJ1B0UoM=
+X-Received: by 10.99.0.17 with SMTP id 17mr17656112pga.149.1515669937764; Thu,
+ 11 Jan 2018 03:25:37 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.100.183.106 with HTTP; Thu, 11 Jan 2018 03:13:45 -0800 (PST)
-In-Reply-To: <20180111100734.GA17274@sigill.intra.peff.net>
-References: <20180110104835.22905-1-pclouds@gmail.com> <20180111100734.GA17274@sigill.intra.peff.net>
+Received: by 10.100.183.106 with HTTP; Thu, 11 Jan 2018 03:25:07 -0800 (PST)
+In-Reply-To: <20180111094712.2551-1-pclouds@gmail.com>
+References: <20180110104835.22905-1-pclouds@gmail.com> <20180111094712.2551-1-pclouds@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 11 Jan 2018 18:13:45 +0700
-Message-ID: <CACsJy8Beq2gx8K8Hk7NMVj_1Cgn5v-tuN9eZtDRCuOxB_urcWw@mail.gmail.com>
-Subject: Re: [PATCH] run-command.c: print env vars when GIT_TRACE is set
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Thu, 11 Jan 2018 18:25:07 +0700
+Message-ID: <CACsJy8BpFiNTQKLU2g=4Fat2gC1R0OcMteqcZx0ubg5ChNmKgw@mail.gmail.com>
+Subject: Re: [PATCH v2] run-command.c: print env vars when GIT_TRACE is set
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,65 +65,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 11, 2018 at 5:07 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Jan 10, 2018 at 05:48:35PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> Occasionally submodule code could execute new commands with GIT_DIR set
->> to some submodule. GIT_TRACE prints just the command line which makes it
->> hard to tell that it's not really executed on this repository.
->>
->> Print env variables in this case. Note that the code deliberately ignore
->> variables unsetting because there are so many of them (to keep git
->> environment clean for the next process) and really hard to read.
->
-> I like this, and I'm pretty sure it would have helped me debug at least
-> once in the past. I did notice one funny thing, though I think it was
-> largely there before.
->
-> The output for a single command is pretty shell-like due to the quoting:
->
->   $ GIT_TRACE=3D1 ./git upload-pack . >/dev/null
->   [...]run_command: 'git-upload-pack' '.'
->
-> You could copy and paste that to a shell if you wanted.  And with
-> environment variables, that remains so:
->
->   $ GIT_TRACE=3D1 ./git ls-remote https://github.com/git/git >/dev/null
->   [...]run_command: 'GIT_DIR=3D.git' 'git-remote-https' 'https://[...]'
->
-> But if we're actually running a command via the shell, it all gets
-> quoted as one argument:
->
->   $ GIT_TRACE=3D1 GIT_PAGER=3D'foo | bar' ./git log
->   [...]run_command: 'LV=3D-c' 'foo | bar'
->
-> which is kind of weird, as that's not something that can be run in a
-> shell. This isn't introduced by your patch at all, but I noticed it more
-> because of the shell-like environment variable output.
+On Thu, Jan 11, 2018 at 4:47 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+>  Though, Stefan, while i'm not opposed to trace every single setting
+>  in child_process, including variable deletion, cwd and even more, it
 
-I think you just found an argument to change my "meh" with regards to
-quoting to "need to fix" because I also often copy/paste these
-commands. I thought about it and assumed shells would still recognize
-'name=3Dvalue' assignments without actually testing it.
+Another thing I forgot to add, s/ and even more/, redirection&/. At
+some point I think I was checking the git-pack-objects command from
+GIT_TRACE and didn't realize it was taking input from stdin (I was
+naive :D). At least on linux we could even take advantage of
+/proc/<pid>/fd to show path names and stuff in addition to plain file
+descriptors.
 
-> We actually used to print a separate:
+>  may be not that often needed for a "casual" developer.
 >
->   exec: /bin/sh -c 'foo | bar'
->
-> line when we invoked a shell, which would arguably be the right place to
-> show the env variables for such a case. But that went away with
-> 3967e25be1 (run-command: prepare command before forking, 2017-04-19).
->
-> I think it might be helpful if we added back in "/bin/sh -c" to the
-> run_command line when "use_shell" is in effect (and when we're not doing
-> our "skip the shell" trickery).  But that's totally orthogonal to your
-> patch.
->
-> And anyway, it's just tracing output, so I don't think it's incredibly
-> important either way. It was just something I noticed while looking at
-> your patch's output.
-
-Noted. I might do it if it's not super complex.
+>  I suggest we have something like $GIT_TRACE_EXEC instead that could
+>  be super verbose when we need it and leave $GIT_TRACE with a
+>  reasonable subset.
 --=20
 Duy
