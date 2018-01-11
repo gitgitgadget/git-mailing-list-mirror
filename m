@@ -2,101 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6630A1F404
-	for <e@80x24.org>; Thu, 11 Jan 2018 00:24:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00A9C1F404
+	for <e@80x24.org>; Thu, 11 Jan 2018 00:29:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753242AbeAKAX7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 19:23:59 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:42884 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752763AbeAKAX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 19:23:58 -0500
-Received: by mail-pg0-f47.google.com with SMTP id q67so1221696pga.9
-        for <git@vger.kernel.org>; Wed, 10 Jan 2018 16:23:58 -0800 (PST)
+        id S1753187AbeAKA3e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 19:29:34 -0500
+Received: from mail-it0-f44.google.com ([209.85.214.44]:33494 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752982AbeAKA3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 19:29:34 -0500
+Received: by mail-it0-f44.google.com with SMTP id c102so12164458itd.0
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 16:29:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=H/qRUvrgzg5niyPu8/7eBoxhL+Q0SFk+iu2vwiglatQ=;
-        b=YBP8CGKOwIhaFEuWZNGLE+NerbUSK1xAtNGcFX1nVyvEyXl2Dlg626c4DygkN9zfNA
-         G2u3s8SJZPBHprN+g4eONY53E1PV+pM7Dwkc7CkJnAnk2DmBg/429RQMDMpWts0Lx9I1
-         KWgXF2yZ5QgAC/su8QbMFJc6O5LYaOlVHQBWwrbHDNqWoM5ZHGQysWELdk8KAq/ddm4v
-         l7cmURcG996P6KP3ZpjnyJQ/x9oTQAg6GhFLlxjjISTYy6zsixl2es+dOZzbyOMWk8vv
-         nl6sQOtWr49RTnuyTciDf+rTMVwpVbI3W+qb22/499ePYbfnZ7qW7VBxLyA4yn8JG96I
-         ZvBQ==
+        d=lji.org; s=google;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=M8Q4Qc48978m1npSZqTAKdqQpCBhISvTcYt71OniMGg=;
+        b=DoVguvJVrTU+aJixsrWUxTj+xaYIP86vkZX2UB6NGNk6sdw98P22RT9S3N25ZWT16q
+         yxVS2Qjpd/wfDOrtCeYqu4CaJxLa4dvE5y6b54LeIvmfCPOp260AK28/DUqLOweuHzaB
+         ATVQ8Mr9ob8ndU2T8lBnwDwP82ukeCi+UxDII=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=H/qRUvrgzg5niyPu8/7eBoxhL+Q0SFk+iu2vwiglatQ=;
-        b=FY6AiGfubMDzKrj5Oj0p71Px3oOLiIMqvM+G7t9Ir2WoQ49O73SyHGADJN9NvytLjs
-         zM3OAx/6vafw0YHyF+Lk5VyPzdsckh3oVaIbaqq4jImLQOPZa0quKyWM9PeqOKZy0mQ4
-         oRqb5SDB/jVSf111eXRvPgYHqdWt++WUhvhgGqah7qYX/LYUWuwvMkCI62TsZnApwcRs
-         JZsdSbMeOf1ozx++cxNZOQW2pl7xfNWqCgb+dzfWrozFk2YbuXm/rDUgC1c1nex21bsO
-         N8/zTk+Q1bbFh/28wwrJMnsvsD8GbvqDIukYM4i/svrG1dkLi4RCG6zyZEqkhLf6qR8s
-         AAtA==
-X-Gm-Message-State: AKGB3mKzTM4NCietCXSXnQ+ZTaopZdBLYqRBTeVhP6Yi+gh7UuWKj9oy
-        vgJAEIvNt0rs0gGgouWJZLIHEAXB/98=
-X-Google-Smtp-Source: ACJfBov3A1HQyoXs9lM92TdpCL3IFojvuaHUHpBPRbxSQ9zJW8VvW1/6/q4My2aQI8dm+NjrQ/a/XA==
-X-Received: by 10.99.157.13 with SMTP id i13mr16674573pgd.309.1515630237919;
-        Wed, 10 Jan 2018 16:23:57 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:d157:f909:10c:5e57])
-        by smtp.gmail.com with ESMTPSA id e12sm33380616pgu.81.2018.01.10.16.23.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 10 Jan 2018 16:23:57 -0800 (PST)
-Date:   Wed, 10 Jan 2018 16:23:55 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 00/26] protocol version 2
-Message-ID: <20180111002355.GA91567@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180109095534.c0c9b9ad3933d406c993c3ab@google.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=M8Q4Qc48978m1npSZqTAKdqQpCBhISvTcYt71OniMGg=;
+        b=MVqKzm8mGmHD6SO7Hq8rxMvrtxO7Y4hPgDZoaYYY1bfx71TlXdYwpa8kz7skoOReQ3
+         lekIDUTgaMEUOL1NWfF4GBGSMJRcayAx0620JLNFNE+Y8txvZ3iQVBmJFyV0IwuKsXDF
+         Pa/X73KTeDfin4jBAj6oJGn6F+WO5CLEcrWpLsPKbvJ8i4biK2Q355OrsMZdcaZj/Tr9
+         VSoU5bUSQmcFXqRqnwdpUG6j9KHrdaJyh45vI5LHIPRe9IVLNcm1KKrqsqgHG3B9jmV9
+         7NjNhkfRTFVWaFu9j5qkyseUxfk7ZIUwXGUx4NOTb4e/mT8EDe0zjqxIbIbfdu0mfWOC
+         CnWA==
+X-Gm-Message-State: AKGB3mILqwZmALKVieIvE1+a8hseTN0dqSbs9ndDYjuaMZqzSHl0Au7Z
+        I753NMTJmE4j4N2mInLcV5VrP1xOgsUKTCGY9Fg8n/mm6j8=
+X-Google-Smtp-Source: ACJfBotsh+0mtxVYsiHxGEyKw9T1W6c7hgHIjJ/DxlbxbkwcRypt9jqBqmxvrcSnjLPpMSwOL4a8BaQ3BWiy3q6DCOk=
+X-Received: by 10.36.53.76 with SMTP id k73mr21470847ita.35.1515630573364;
+ Wed, 10 Jan 2018 16:29:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180109095534.c0c9b9ad3933d406c993c3ab@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.164.228 with HTTP; Wed, 10 Jan 2018 16:29:12 -0800 (PST)
+From:   Jason Greenbaum <jgbaum@lji.org>
+Date:   Wed, 10 Jan 2018 16:29:12 -0800
+Message-ID: <CAKNOR-JbAjE9URdFw_ZrqVeZot=emHFWLgpjhQ7uqUsJpRzx2A@mail.gmail.com>
+Subject: git svn clone of messy repository
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/09, Jonathan Tan wrote:
-> On Tue,  2 Jan 2018 16:18:02 -0800
-> Brandon Williams <bmwill@google.com> wrote:
-> 
-> >  * Introduce a new remote-helper command 'connect-half-duplex' which is
-> >    implemented by remote-curl (the http remote-helper).  This allows for a
-> >    client to establish a half-duplex connection and use remote-curl as a proxy
-> >    to wrap requests in http before sending them to the remote end and
-> >    unwrapping the responses and sending them back to the client's stdin.
-> 
-> I'm not sure about the "half-duplex" name - it is half-duplex in that
-> each side must terminate their communications with a flush, but not
-> half-duplex in that request-response pairs can overlap each other (e.g.
-> during negotation during fetch - there is an optimization in which the
-> client tries to keep two requests pending at a time). I think that the
-> idea we want to communicate is that requests and responses are always
-> packetized, stateless, and always happen as a pair.
-> 
-> I wonder if "stateless-connect" is a better keyword - it makes sense to
-> me (once described) that "stateless" implies that the client sends
-> everything the server needs at once (thus, in a packet), the server
-> sends everything the client needs back at once (thus, in a packet), and
-> then the client must not assume any state-storing on the part of the
-> server or transport.
+Hi,
 
-I like that name much better, I think I'll change it to use
-'stateless-connect'.  Thanks :)
+I'm in the process of using git svn to migrate several repos over to
+git and one repo, in particular, has a very challenging format.
+During the migration, I would also like to reorganize the repo.  It
+looks something like this in svn:
 
+myrepo
+  trunk
+    project_of_interest
+    other_project1
+    other_project2
+    =E2=80=A6
+  branches
+    FF-1.0
+      project_of_interest
+      other_project1
+      other_project2
+      =E2=80=A6
+   FF-1.1
+      project_of_interest
+      other_project1
+      other_project2
+      =E2=80=A6
 
--- 
-Brandon Williams
+There is also a 'tags' directory at the toplevel, but that's not
+important to illustrate the issue I'm having.  What I would like to do
+is to migrate ONLY the folder called 'project_of_interest' and
+preserve it's trunk, branches, and tags.  I'm not sure this is
+possible directly with git svn clone, but here is what I've tried:
+
+git svn clone \
+--authors-file=3D$AUTHORS_FILE \
+--prefix=3D"" \
+--trunk=3Dtrunk/project_of_interest \
+--branches=3Dbranches/FF-1.0/project_of_interest \
+--branches=3Dbranches/FF-1.1/project_of_interest \
+svn://my-svn-server/myrepo \
+project_of_interest.git
+
+The trunk seems to become the 'master' branch just fine, but my svn
+branches are not pulled down.  I'm not sure I have the syntax right or
+if this is even possible without first reorganizing the svn repo in
+place, updating the .git/config file, or by some other means.  Any
+help would be much appreciated.  I'm happy to provide more info as
+needed.
+
+Thanks,
+
+Jason
