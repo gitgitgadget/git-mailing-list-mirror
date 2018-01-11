@@ -2,197 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4228B1FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 18:58:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41A331FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 19:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965372AbeAKS6K (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 13:58:10 -0500
-Received: from mout.web.de ([212.227.17.11]:56049 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965208AbeAKS6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 13:58:07 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LbrQm-1fGRFF2PLw-00jKol; Thu, 11
- Jan 2018 19:57:45 +0100
-Subject: Re: [PATCH v2 4/9] object: add clear_commit_marks_all()
+        id S964978AbeAKTCI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 14:02:08 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55720 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933141AbeAKTCG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 14:02:06 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21246C8B3F;
+        Thu, 11 Jan 2018 14:02:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yksiGce8gn7rJHi1weBFdJ7602k=; b=q/+63+
+        i22p3lvEIpz9JwR1Tbnn13x+HcgyrP99+sIcUb2NJJw8U+xyWPfC1z67K2r7Swmd
+        TgXyI6Q222USDHN4evHB3t92szyvQrKbMuWgxvXC4Pbsbyuzd3iIbjXnz5LB/1yR
+        xXuNrJpCZ85OriqCnHASpARUyWsYK7/+ByzMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=NE/5YLxcGSsAU3q/8SdvJ0mhIpnQLQPv
+        ELibcX4WdtNee5CpTX3jQ0qoq3kmHWdvlkpU7AMHnRWjN0PQ9Z/+9fazeChc0q+g
+        c9hWNz+CZLIbDgKCQfJwH9fuS6/H+9wtJCol7fbkwtGDG7QS9NSO5T3CSfO8OaNm
+        +EF1nTSSz1s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1573AC8B3E;
+        Thu, 11 Jan 2018 14:02:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7803AC8B3D;
+        Thu, 11 Jan 2018 14:02:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
- <ac4c77a1-6403-ca20-2021-50c99201915a@web.de>
- <ec45f9a8-292a-53e2-52b6-44d744cb6c36@web.de>
- <20180110075838.GD16315@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a0ca86b8-e258-2588-1c99-a30e8e60fdbd@web.de>
-Date:   Thu, 11 Jan 2018 19:57:42 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+Cc:     "Andreas G. Schacker" <andreas.schacker@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] doc/read-tree: remove obsolete remark
+References: <20180109153034.22970-1-andreas.schacker@gmail.com>
+        <20180111104914.GA5897@sigill.intra.peff.net>
+Date:   Thu, 11 Jan 2018 11:02:04 -0800
+In-Reply-To: <20180111104914.GA5897@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 11 Jan 2018 05:49:14 -0500")
+Message-ID: <xmqqbmi0z0b7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180110075838.GD16315@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:3xBTIe4H3Fo7vinwm7zrKHEG7sRltQ6zhNjdCoVE6K49BwCX71E
- u9S8jx7KSKKp5ZPJ2rtdmWTfMNnOu9Rbr+iTJ39bGdO0kXBWbmk1TdJfJPwTtyqNJZv2y0c
- 93oAaHJl4KSQspSmVzjnPrlQKhH4WUxfGV/DJnRH/nfeEcg7T1m5rcnnXFncEt1xYRgQ4q8
- HFHGJMo+OzuUAAfsnBy5A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:reNzE9bB1uM=:p9Mnbv72jYlaC1o81N9ed2
- 6PSapKxw8NT1zdIMmQ4gmQfjqDDb5PskKAn6wxashdSRVamTmVND+Za9TIlzIRBbpbU6hL6sw
- H5vN1cuZUN+qFRkWtzUIdHkUFll8lrUzlhLqCHKAUVYmQhAV4cobSeZvCSX2GZvQkcSAMAndV
- RcnXzcHBjHLWYz8nWdGoDvXp9+hxh2mvXQALFzzFwSoRXsXH6nH+CneyMWLsUSWXkj8bt0TWS
- xzOUsC061Z/E0FnT7CenWyqgRnj4HbaKjyuVCX93tcyuY4MeNfAvWTsz5geuvhaEG9CnasbQR
- QC1rbsWganDXIJVvTonijX3O7rpg+y/8kFbsCLQEPr3K81nNYq3dXQPha6c/eHoAv8Gr4CQZD
- KMKhXDxfrZOgO1FcWr7Pt147OWuvL/CWy6j4Bj4Fo+a1AiyyemLILges5tfDsEUCMz/NdJIzO
- obnyZmRSkIN3XwwrFA2F3Dw0xP2Tx5s9xK54+KKZjUJ5Ib9l3mzPo/HQDhs05L0iIHzP5XJBg
- 1nnPw+R0ugjyynfUvcMJR9ZdMSIJccDG0b9YnzW5DWbFQDAF1anvQoun+ZRnHkC2Rbids8BTf
- 1iOSA/pC9Sm4r+o+wuIFGoCnfzLu+JNex+KVEA5/hIgggIGZAYhwfbsxshF7EGzH9BYcwb3X3
- QFHpYp77F/kQnuNDY0CiXePqzJz+pyTMeyEloLJ/OYMjyhQMQYUYTrCjbwDkvGa0wXY6qgKt2
- 2g9K0/1wMU0GYhrGPbUhsD0bG5sr8aslkPD5JrVt2Lc1Tl8bRVz5XOWIA5iwPNskn89IN+Q0a
- pvTESq9dPUbjbmDUmG1vR00tC+yhLDQJdcqmGLrNEt6sdu+FZ0=
+Content-Type: text/plain
+X-Pobox-Relay-ID: EA3E651C-F701-11E7-A0C5-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.01.2018 um 08:58 schrieb Jeff King:
-> On Mon, Dec 25, 2017 at 06:44:58PM +0100, René Scharfe wrote:
-> 
->> Add a function for clearing the commit marks of all in-core commit
->> objects.  It's similar to clear_object_flags(), but more precise, since
->> it leaves the other object types alone.  It still has to iterate through
->> them, though.
-> 
+Jeff King <peff@peff.net> writes:
+
+> On Tue, Jan 09, 2018 at 04:30:34PM +0100, Andreas G. Schacker wrote:
+>
+>> Earlier versions of `git read-tree` required the `--prefix` option value
+>> to end with a slash. This restriction was eventually lifted without a
+>> corresponding amendment to the documentation.
+>
 > Makes sense.
-> 
-> Is it worth having:
-> 
->    void clear_object_flags_from_type(int type, unsigned flags);
-> 
-> rather than having two near-identical functions? I guess we'd need some
-> way of saying "all types" to reimplement clear_object_flags() as a
-> wrapper (OBJ_NONE, I guess?).
+>
+>> ---prefix=<prefix>/::
+>> +--prefix=<prefix>::
+>>  	Keep the current index contents, and read the contents
+>>  	of the named tree-ish under the directory at `<prefix>`.
+>>  	The command will refuse to overwrite entries that already
+>> -	existed in the original index file. Note that the `<prefix>/`
+>> -	value must end with a slash.
+>> +	existed in the original index file.
+>
+> Is it worth mentioning in the new world order that the slash is not
+> implied? I.e., that you probably do want to say "--prefix=foo/" if you
+> want the subdirectory "foo", but do not want to match "foobar"?
 
-I don't know if there is a demand.  Perhaps the two callers of
-clear_object_flags() should be switched to clear_commit_marks_all()?
-They look like they only care about commits as well.  Or is it safe to
-stomp over the flags of objects of other types?  Then we'd only need
-to keep clear_object_flags()..
-
-> The run-time check is maybe a little bit slower in the middle of a tight
-> loop, but I'm not sure it would matter much (I'd actually be curious if
-> this approach is faster than the existing traversal code, too).
-
-I don't know how to measure this properly.  With 100 runs each I get
-this for the git repo and the silly test program below, which measures
-the duration of the respective function call:
-
-   mean        stddev method
-   ----------- ------ ----------------------
-   5.89763e+06 613106 clear_commit_marks
-   2.72572e+06 507689 clear_commit_marks_all
-   1.96582e+06 494753 clear_object_flags
-
-So these are noisy numbers, but kind of in the expected range.
-
-René
-
----
- Makefile                           |  1 +
- t/helper/test-clear-commit-marks.c | 67 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
- create mode 100644 t/helper/test-clear-commit-marks.c
-
-diff --git a/Makefile b/Makefile
-index 1a9b23b679..7db2c6ca7f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -648,6 +648,7 @@ X =
- PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
- 
- TEST_PROGRAMS_NEED_X += test-chmtime
-+TEST_PROGRAMS_NEED_X += test-clear-commit-marks
- TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-config
- TEST_PROGRAMS_NEED_X += test-date
-diff --git a/t/helper/test-clear-commit-marks.c b/t/helper/test-clear-commit-marks.c
-new file mode 100644
-index 0000000000..296ca0286f
---- /dev/null
-+++ b/t/helper/test-clear-commit-marks.c
-@@ -0,0 +1,67 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "revision.h"
-+
-+static void start(struct timespec *start)
-+{
-+	clock_gettime(CLOCK_MONOTONIC, start);
-+}
-+
-+static void print_duration(struct timespec *start)
-+{
-+	struct timespec end;
-+	uint64_t d;
-+	clock_gettime(CLOCK_MONOTONIC, &end);
-+	d = end.tv_sec - start->tv_sec;
-+	d *= 1000000000;
-+	d += end.tv_nsec - start->tv_nsec;
-+	printf("%lu", d);
-+}
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	struct rev_info revs;
-+	struct object_id oid;
-+	struct commit *commit;
-+	struct timespec ts;
-+
-+	setup_git_directory();
-+
-+	if (get_oid("HEAD", &oid))
-+		die("No HEAD?");
-+	commit = lookup_commit(&oid);
-+	if (!commit)
-+		die("HEAD is not a committish?");
-+
-+	init_revisions(&revs, NULL);
-+	add_pending_object(&revs, &commit->object, "HEAD");
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
-+	while (get_revision(&revs))
-+		; /* nothing */
-+
-+	if (argc != 2)
-+		return 0;
-+
-+	if (!strcmp(argv[1], "clear_commit_marks")) {
-+		start(&ts);
-+		clear_commit_marks(commit, ALL_REV_FLAGS);
-+		print_duration(&ts);
-+	}
-+
-+	if (!strcmp(argv[1], "clear_commit_marks_all")) {
-+		start(&ts);
-+		clear_commit_marks_all(ALL_REV_FLAGS);
-+		print_duration(&ts);
-+	}
-+
-+	if (!strcmp(argv[1], "clear_object_flags")) {
-+		start(&ts);
-+		clear_object_flags(ALL_REV_FLAGS);
-+		print_duration(&ts);
-+	}
-+
-+	printf(" %s\n", argv[1]);
-+
-+	return 0;
-+}
--- 
-2.15.1
+Doesn't "git read-tree --prefix=previous HEAD^" add paths like
+"previous/Documentation/Makefile" to the index, i.e. instead of
+forcing you to have the required slash at the end, we give one for
+free when it is missing?
