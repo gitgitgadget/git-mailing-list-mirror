@@ -2,106 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2D81FAE2
-	for <e@80x24.org>; Wed, 10 Jan 2018 23:17:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6630A1F404
+	for <e@80x24.org>; Thu, 11 Jan 2018 00:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752088AbeAJXRl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 Jan 2018 18:17:41 -0500
-Received: from avasout03.plus.net ([84.93.230.244]:35931 "EHLO
-        avasout03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751561AbeAJXRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 Jan 2018 18:17:39 -0500
-Received: from [10.0.2.15] ([80.189.70.206])
-        by smtp with ESMTPA
-        id ZPcneWXHw6MuZZPcoeh6II; Wed, 10 Jan 2018 23:17:38 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=YqAhubQX c=1 sm=1 tr=0
- a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
- a=IkcTkHD0fZMA:10 a=IqPUlTZAAAAA:8 a=jqIJi-bjKPfx0JSm4LgA:9 a=QEXdDO2ut3YA:10
- a=uJLxWluzARXgNwbH5uYh:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: Test failure for v2.16.0-rc0 on cygwin
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <519ac918-6b5f-bca3-05a0-0114683b9724@ramsayjones.plus.com>
- <20171230144019.GB29210@dinwoodie.org> <20180102113649.GC29210@dinwoodie.org>
- <3616d866-9a53-6e32-0a62-488342ae214f@ramsayjones.plus.com>
- <e69657de-9455-2b97-09d7-2bd58ce513f6@ramsayjones.plus.com>
- <alpine.DEB.2.21.1.1801042152570.32@MININT-6BKU6QN.europe.corp.microsoft.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <87f53af7-4f5b-22a7-b950-772eb67b0151@ramsayjones.plus.com>
-Date:   Wed, 10 Jan 2018 23:17:37 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1753242AbeAKAX7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 Jan 2018 19:23:59 -0500
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:42884 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752763AbeAKAX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 Jan 2018 19:23:58 -0500
+Received: by mail-pg0-f47.google.com with SMTP id q67so1221696pga.9
+        for <git@vger.kernel.org>; Wed, 10 Jan 2018 16:23:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=H/qRUvrgzg5niyPu8/7eBoxhL+Q0SFk+iu2vwiglatQ=;
+        b=YBP8CGKOwIhaFEuWZNGLE+NerbUSK1xAtNGcFX1nVyvEyXl2Dlg626c4DygkN9zfNA
+         G2u3s8SJZPBHprN+g4eONY53E1PV+pM7Dwkc7CkJnAnk2DmBg/429RQMDMpWts0Lx9I1
+         KWgXF2yZ5QgAC/su8QbMFJc6O5LYaOlVHQBWwrbHDNqWoM5ZHGQysWELdk8KAq/ddm4v
+         l7cmURcG996P6KP3ZpjnyJQ/x9oTQAg6GhFLlxjjISTYy6zsixl2es+dOZzbyOMWk8vv
+         nl6sQOtWr49RTnuyTciDf+rTMVwpVbI3W+qb22/499ePYbfnZ7qW7VBxLyA4yn8JG96I
+         ZvBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=H/qRUvrgzg5niyPu8/7eBoxhL+Q0SFk+iu2vwiglatQ=;
+        b=FY6AiGfubMDzKrj5Oj0p71Px3oOLiIMqvM+G7t9Ir2WoQ49O73SyHGADJN9NvytLjs
+         zM3OAx/6vafw0YHyF+Lk5VyPzdsckh3oVaIbaqq4jImLQOPZa0quKyWM9PeqOKZy0mQ4
+         oRqb5SDB/jVSf111eXRvPgYHqdWt++WUhvhgGqah7qYX/LYUWuwvMkCI62TsZnApwcRs
+         JZsdSbMeOf1ozx++cxNZOQW2pl7xfNWqCgb+dzfWrozFk2YbuXm/rDUgC1c1nex21bsO
+         N8/zTk+Q1bbFh/28wwrJMnsvsD8GbvqDIukYM4i/svrG1dkLi4RCG6zyZEqkhLf6qR8s
+         AAtA==
+X-Gm-Message-State: AKGB3mKzTM4NCietCXSXnQ+ZTaopZdBLYqRBTeVhP6Yi+gh7UuWKj9oy
+        vgJAEIvNt0rs0gGgouWJZLIHEAXB/98=
+X-Google-Smtp-Source: ACJfBov3A1HQyoXs9lM92TdpCL3IFojvuaHUHpBPRbxSQ9zJW8VvW1/6/q4My2aQI8dm+NjrQ/a/XA==
+X-Received: by 10.99.157.13 with SMTP id i13mr16674573pgd.309.1515630237919;
+        Wed, 10 Jan 2018 16:23:57 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:d157:f909:10c:5e57])
+        by smtp.gmail.com with ESMTPSA id e12sm33380616pgu.81.2018.01.10.16.23.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 Jan 2018 16:23:57 -0800 (PST)
+Date:   Wed, 10 Jan 2018 16:23:55 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 00/26] protocol version 2
+Message-ID: <20180111002355.GA91567@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180109095534.c0c9b9ad3933d406c993c3ab@google.com>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1801042152570.32@MININT-6BKU6QN.europe.corp.microsoft.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMc2wXQnTOrOZy2IW/K9xpRSv5qb1wx7ebkoZ7d6YhYa/btiLKRkkpxrdPRii7wf+9fV5kufh2g+pNUxPDOswP5mXbo00dHR883ehfM01vgmXl7D4OO+
- KAghk/6LMZ9OXKZZ+2rpb074At8F1dZfQAtrThAvfRN+E6dkDpNZEQMZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109095534.c0c9b9ad3933d406c993c3ab@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 04/01/18 20:55, Johannes Schindelin wrote:
-> On Tue, 2 Jan 2018, Ramsay Jones wrote:
-[snip]
->> Also, when logged-in remotely it fails consistently, when logged-in
->> directly it passes consistently. :-D
+On 01/09, Jonathan Tan wrote:
+> On Tue,  2 Jan 2018 16:18:02 -0800
+> Brandon Williams <bmwill@google.com> wrote:
 > 
-> You are most likely hitting cmd.exe at some point there. In cmd.exe, there
-> are some restrictions that are inherited by spawned processes AFAIU. For
-> example, the current directory cannot be a UNC path.
+> >  * Introduce a new remote-helper command 'connect-half-duplex' which is
+> >    implemented by remote-curl (the http remote-helper).  This allows for a
+> >    client to establish a half-duplex connection and use remote-curl as a proxy
+> >    to wrap requests in http before sending them to the remote end and
+> >    unwrapping the responses and sending them back to the client's stdin.
 > 
-> You are most likely running the interactive Cygwin session in MinTTY? Then
-> you do not get those restrictions. If you start Cygwin in a cmd.exe
-> window, you should see the exact same test failures again.
+> I'm not sure about the "half-duplex" name - it is half-duplex in that
+> each side must terminate their communications with a flush, but not
+> half-duplex in that request-response pairs can overlap each other (e.g.
+> during negotation during fetch - there is an optimization in which the
+> client tries to keep two requests pending at a time). I think that the
+> idea we want to communicate is that requests and responses are always
+> packetized, stateless, and always happen as a pair.
+> 
+> I wonder if "stateless-connect" is a better keyword - it makes sense to
+> me (once described) that "stateless" implies that the client sends
+> everything the server needs at once (thus, in a packet), the server
+> sends everything the client needs back at once (thus, in a packet), and
+> then the client must not assume any state-storing on the part of the
+> server or transport.
 
-I actually don't see a difference when starting cygwin from a cmd.exe, it
-passes just fine. The interactive cygwin session(s), either directly, or
-most often via the X-server (with ssh-agent in between!), all have their
-id's and group membership look like:
-
-  $ who
-  $ id
-  uid=1001(ramsay) gid=513(None) groups=513(None),545(Users),4(INTERACTIVE),66049(CONSOLE LOGON),11(Authenticated Users),15(This Organization),113(Local account),66048(LOCAL),262154(NTLM Authentication),401408(Medium Mandatory Level)
-  $
-
-However, when remotely logged-in over shh, it looks like:
-
-  $ who -H
-  NAME     LINE         TIME             COMMENT
-  ramsay   pty2         2018-01-02 19:48 (192.168.1.2)
-  $ id
-  uid=1001(ramsay) gid=513(None) groups=513(None),11(Authenticated Users),66048(LOCAL),66049(CONSOLE LOGON),4(INTERACTIVE),15(This Organization),545(Users),0(root),405504(High Mandatory Level)
-  $
-
-So, when remotely logged-in, we have:
-
-  Additional groups: 0(root), 405504(High Mandatory Level)
-
-  Missing groups: 113(Local account), 262154(NTLM Authentication),
-                  401408(Medium Mandatory Level)
-
-I haven't thought too much about what that means ...
-
-After reading this[1], I have been meaning to try setting the
-'LocalAccountTokenFilterPolicy' registry variable mentioned in
-that article, to see if that would make any difference. I haven't
-found the time yet ... :-D
-
-ATB,
-Ramsay Jones
+I like that name much better, I think I'll change it to use
+'stateless-connect'.  Thanks :)
 
 
-[1] http://www.tomsitpro.com/articles/windows-10-administrative-shares,2-47.html
+-- 
+Brandon Williams
