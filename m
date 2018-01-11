@@ -2,206 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 122921FADF
-	for <e@80x24.org>; Thu, 11 Jan 2018 17:53:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 111531FADF
+	for <e@80x24.org>; Thu, 11 Jan 2018 18:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934944AbeAKRxU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 Jan 2018 12:53:20 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:46108 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932621AbeAKRxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 Jan 2018 12:53:19 -0500
-Received: by mail-pg0-f65.google.com with SMTP id s9so849772pgq.13
-        for <git@vger.kernel.org>; Thu, 11 Jan 2018 09:53:19 -0800 (PST)
+        id S935421AbeAKSAy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 Jan 2018 13:00:54 -0500
+Received: from mail-lf0-f43.google.com ([209.85.215.43]:44201 "EHLO
+        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932454AbeAKSAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 Jan 2018 13:00:51 -0500
+Received: by mail-lf0-f43.google.com with SMTP id w23so3727251lfd.11
+        for <git@vger.kernel.org>; Thu, 11 Jan 2018 10:00:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=GEGVCDjl9VuKrHPOzsqjf8baKRS6aQehu/TlkJqyRGQ=;
-        b=fTIuTuKi6l68qovSyz90nDIiSs5q37nXD41RUKOzZ8l0zTNa/j6IFg79Jy0MX1C0Jh
-         Rt1QEJe3tafA/1YgFWtK1Oa2AbtPVxDu8FDyeYp3bE9ae0s3hUgapS7CzwgdE9d3v2PJ
-         +Xt9e6M1od8K4sxbYaGsT543DfmdzQUxzjBHKWAUypfl8lRy7W7XGO4jh7/G4ayjmUli
-         oYteTSdqIOMds2+opsDG3AhURKqxdkvHqaZUDA96RjUr0O9onLBKMNn+aosQ8HVFLlj2
-         vxDIpdWJNsYVTe7jdUNf5NT+B+lHFY1WutahL5bOilPlLGonhumRs9i9gAZ0clq2A166
-         6nCQ==
+        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oTzWddfjRXsROUFW6xjQbWe2AdKZW5hBz7GLIMyGZ+A=;
+        b=y8pxb1430oiXR9DiSXtBwMHPkPKjGg1c7OcIuO65zT+gTYuWLBg+jl3sWm76wUgIoX
+         FV+SALuo07oBMrJVHXgUgKTPniZ1wXrTDF6wG1zdqSdJlSyQjUtx1gQ0CfueX9tjSHS2
+         PRiR1eruFzHzsF0jrXSdPzSjxntpc2bgb99J2m9LsmwANIUiI1U5oF7HSSnHrq6NYGtD
+         nBYAgi22IUneWT76TyW6bB92Xs7eB58iR8Emg1Fqv7vatEr4Jag5oQv8pcGu/87X+XK/
+         XLSiBTyUfMkqlszDcvC156nh7VB4cykPzDSZF4JK4ZVHEB5hjDmxjXXRfcB/8JsJvDvs
+         0lWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=GEGVCDjl9VuKrHPOzsqjf8baKRS6aQehu/TlkJqyRGQ=;
-        b=hYGWQ4OOkMafvf19LXPLPshmWcNYndzXBl7HnlAByGPinwaS1lbq55jD98n4ns64tY
-         I7oFW3dRMzvBS2/qBYzjR6W+wX/YioCim2LDYayXzh29OQsgu/LpEwSjFeN24EKhj7tn
-         1JH95clfxmcw6k3ZLMHw5JZ5+nE3r5raEcsneq5dsfaYt9hOuB+u+raZIMB9wgjX69U8
-         EqKnFPmNntZlmBDaTAGvbJFKbycShSSnX+P+9SN8Hy1X6AEUs7O1cY6/XvqnIO1ZcG7E
-         kAHgZ1ExLbCmZJ0kw6+NOnNhNeC3NbaDZIqvQjzphZRSjA7bahMEVqksR0V2Nq7XzgxN
-         8TNA==
-X-Gm-Message-State: AKwxytcED3G715y1fRDYcPZvNssXGcBZDBCXAeaULa3WOVwxpK6CaQVE
-        a7GpCV+Pzjkj0d/ZwLk1lVkNtw==
-X-Google-Smtp-Source: ACJfBouIc4blPq4oL4PiWO0jpT1FeevtEd3avAJtSGRUiNgh5uaNUgi+Mphj3+XkqOIWGEJml/i2GA==
-X-Received: by 10.101.97.10 with SMTP id z10mr3810545pgu.24.1515693198407;
-        Thu, 11 Jan 2018 09:53:18 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:3800:a714:ab3:b606])
-        by smtp.gmail.com with ESMTPSA id r13sm34821044pgq.25.2018.01.11.09.53.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 Jan 2018 09:53:17 -0800 (PST)
-Date:   Thu, 11 Jan 2018 09:53:16 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v2] run-command.c: print env vars when GIT_TRACE is set
-Message-ID: <20180111175316.GD91567@google.com>
-References: <20180110104835.22905-1-pclouds@gmail.com>
- <20180111094712.2551-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=oTzWddfjRXsROUFW6xjQbWe2AdKZW5hBz7GLIMyGZ+A=;
+        b=gzWNb+h2PxMSXQoZxQxza9BAmrViKHaV1uzFo1rZPDiabQ3Kw0bAE0+N7Z8VWUKjLy
+         2yToWl/6VUrhxLD/GXJe3g57H9F7hU9uUebl42hfzg0uKYBAo2ij4Z+2xAsIlxV7XSuT
+         z5s7qsIJBbRfwdqde5DGdc6C6Hl7oTcPqXp5lmEZS8qgb7c/Bl0Dio/SfdIXfYuyQ1gd
+         QG6NgaEl6YpPwznVZhdeH8Cj5YWXieKPK5Am6tLvnSD2yR+axfmUdpV1IMWmrJsW4rjg
+         S6RyDT6Cri1+0hioqaabjsbeXPEGdvpphS6MUAOJqTrkm7uSNua0hmlU04Db8gBlZ7He
+         ybyw==
+X-Gm-Message-State: AKwxytfoSxLRY0QfmglJf8OB/euueF6qm7UKDj+YLa5tu2pEz9JOOH3+
+        9uqg2bEsBjqYVxfiKUUtobUoeMh2QawB/uyznzcCxAdgUpM=
+X-Google-Smtp-Source: ACJfBotnosxt1ainXFFtBrERhKw7+cT/rue/n0+hDoCP70ypNGV6eTJCktJyUOjFxaTvpFIcHB1kTCgwj1Ede04wquA=
+X-Received: by 10.25.80.70 with SMTP id z6mr896478lfj.72.1515693649342; Thu,
+ 11 Jan 2018 10:00:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180111094712.2551-1-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.25.221.150 with HTTP; Thu, 11 Jan 2018 10:00:48 -0800 (PST)
+From:   Edward Thomson <ethomson@edwardthomson.com>
+Date:   Thu, 11 Jan 2018 18:00:48 +0000
+Message-ID: <CA+WKDT3uKyEfzGvnkRUG7SEKy4ypz+Aa223UaVE8vyktcmgSvw@mail.gmail.com>
+Subject: [ANNOUNCE] Git London User Group: 16 January 2018
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/11, Nguyễn Thái Ngọc Duy wrote:
-> Occasionally submodule code could execute new commands with GIT_DIR set
-> to some submodule. GIT_TRACE prints just the command line which makes it
-> hard to tell that it's not really executed on this repository.
-> 
-> Print modified env variables (compared to parent environment) in this
-> case. Actually only modified or new variables are printed. Variable
-> deletion is suppressed because they are often used to clean up
-> repo-specific variables that git passes around between processes. When
-> submodule code executes commands on another repo, it clears all these
-> variables, _many_ of these, that make the output really noisy.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  v2 fixes up commit message to clarify about "env delta" and why var
->  deletion is not printed.
-> 
->  It also keeps child_process tracing in one place/function, this
->  should make it easier to trace more e.g. cwd and stuff.
-> 
->  Though, Stefan, while i'm not opposed to trace every single setting
->  in child_process, including variable deletion, cwd and even more, it
->  may be not that often needed for a "casual" developer.
->  
->  I suggest we have something like $GIT_TRACE_EXEC instead that could
->  be super verbose when we need it and leave $GIT_TRACE with a
->  reasonable subset.
-> 
->  run-command.c |  3 ++-
->  trace.c       | 39 +++++++++++++++++++++++++++++++++++++++
->  trace.h       |  3 +++
->  3 files changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/run-command.c b/run-command.c
-> index 31fc5ea86e..002074b128 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
->  		cmd->err = fderr[0];
->  	}
->  
-> -	trace_argv_printf(cmd->argv, "trace: run_command:");
-> +	trace_run_command(cmd);
-> +
->  	fflush(NULL);
->  
->  #ifndef GIT_WINDOWS_NATIVE
-> diff --git a/trace.c b/trace.c
-> index b7530b51a9..e5e46e2a09 100644
-> --- a/trace.c
-> +++ b/trace.c
-> @@ -23,6 +23,7 @@
->  
->  #include "cache.h"
->  #include "quote.h"
-> +#include "run-command.h"
->  
->  struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
->  struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
-> @@ -272,6 +273,44 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
->  #endif /* HAVE_VARIADIC_MACROS */
->  
->  
-> +static void concatenate_env(struct strbuf *dst, const char *const *env)
-> +{
-> +	int i;
-> +
-> +	/* Copy into destination buffer. */
-> +	strbuf_grow(dst, 255);
-> +	for (i = 0; env[i]; ++i) {
-> +		/*
-> +		 * the main interesting is setting new vars
-> +		 * e.g. GIT_DIR, ignore the unsetting to reduce noise.
-> +		 */
+Git London User Group: 16 January, 2018
+=======================================
 
-Patch looks good to me! Only nit is this comment which reads funny which i
-pointed out in v1.
+I'm pleased to announce the formation of the Git London User Group, where
+Git users and experts from throughout the UK can get together to share
+tips, experience and assistance for using Git successfully.
 
-> +		if (!strchr(env[i], '='))
-> +			continue;
-> +		strbuf_addch(dst, ' ');
-> +		sq_quote_buf(dst, env[i]);
-> +	}
-> +}
-> +
-> +void trace_run_command(const struct child_process *cp)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	if (!prepare_trace_line(NULL, 0, &trace_default_key, &buf))
-> +		return;
-> +
-> +	strbuf_addf(&buf, "trace: run_command:");
-> +
-> +	/*
-> +	 * caller is responsible for setting this if the main source
-> +	 * is actually in cp->env_array
-> +	 */
-> +	if (cp->env)
-> +		concatenate_env(&buf, cp->env);
-> +
-> +	sq_quote_argv(&buf, cp->argv, 0);
-> +	print_trace_line(&trace_default_key, &buf);
-> +}
-> +
->  static const char *quote_crnl(const char *path)
->  {
->  	static struct strbuf new_path = STRBUF_INIT;
-> diff --git a/trace.h b/trace.h
-> index 88055abef7..e54c687f26 100644
-> --- a/trace.h
-> +++ b/trace.h
-> @@ -4,6 +4,8 @@
->  #include "git-compat-util.h"
->  #include "strbuf.h"
->  
-> +struct child_process;
-> +
->  struct trace_key {
->  	const char * const key;
->  	int fd;
-> @@ -17,6 +19,7 @@ extern struct trace_key trace_default_key;
->  extern struct trace_key trace_perf_key;
->  
->  extern void trace_repo_setup(const char *prefix);
-> +extern void trace_run_command(const struct child_process *cp);
->  extern int trace_want(struct trace_key *key);
->  extern void trace_disable(struct trace_key *key);
->  extern uint64_t getnanotime(void);
-> -- 
-> 2.15.1.600.g899a5f85c6
-> 
+The first meeting takes place Tuesday, 16 January, 2018 at 19:00.
 
--- 
-Brandon Williams
+Agenda
+------
+Extending Git through Scripting: Charles Bailey
+
+Git is the most popular version control system in use today; it is highly
+flexible and supports many different workflows.  One of its strengths is
+its openness to scripting.  This talk looks at the basic principles that
+support best practice for scripting Git and how to avoid some common
+pitfalls.
+
+Building Git Tools with libgit2: Edward Thomson
+
+Edward introduces the libgit2 framework (http://libgit2.org), which is a
+portable, implementation of Git as a library.  If you're looking for more
+advanced programmatic access to working with Git repositories, libgit2 is
+a good option, which is why it's used by many Git servers like GitHub and
+VSTS and clients like gmaster and GitKraken.  Edward will introduce libgit2
+and some of the language bindings like LibGit2Sharp (for .NET) and Rugged
+(for Ruby).
+
+Location
+--------
+General Assembly.  The Relay Building, 1st floor.
+114 Whitechapel High Street London, E1 7PT.
+
+We ask that you please RSVP at http://londongit.org/.
+
+Sponsors
+--------
+A big thank you to the sponsors of the Git London User Group.  Bloomberg
+has been kind enough to sponsor the meeting space for us to use.  Microsoft
+has sponsored food for dinner.  And All Things Git (the Podcast about Git)
+has sponsored meetup and registration fees.
+
+Thanks also to Henry Kleynhans, the other organizer of the group.
+
+Contact
+-------
+Follow us on Meetup by visiting http://londongit.org/, or on Twitter at
+@londongit.
+
+If you're in or around London, we hope that you'll join us next Tuesday!
+
+Sincerely,
+Edward Thomson (ethomson@edwardthomson.com)
