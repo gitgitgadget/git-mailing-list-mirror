@@ -2,112 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47CD21F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 23:10:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 310A81F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 23:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965304AbeALXKT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 18:10:19 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:17577 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965260AbeALXKS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 18:10:18 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0CNABqx025008
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 12 Jan 2018 18:10:11 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, "'Tanay Abhra'" <tanayabh@gmail.com>,
-        "'Matthieu Moy'" <git@matthieu-moy.fr>
-References: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com> <xmqqd12ewx1v.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqd12ewx1v.fsf@gitster.mtv.corp.google.com>
-Subject: RE: [ANNOUNCE] Git v2.16.0-rc2 - breakages in t1308 and 1404
-Date:   Fri, 12 Jan 2018 18:10:05 -0500
-Message-ID: <008f01d38bfa$7eba9bc0$7c2fd340$@nexbridge.com>
+        id S965313AbeALXU7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 18:20:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56851 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965236AbeALXU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 18:20:58 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C17ABBB457;
+        Fri, 12 Jan 2018 18:20:57 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=opaMtM7EJi/GK8he6n/e1HnBs7U=; b=MewrGa
+        rRiUF9YLj52YnbAnx/Jc9bj7ynHmE+t3r6OFZhoKeFaiJjzAucPoduKW9ybO7Jqv
+        1v1YbCHTrHYSjzXqfdjDgCIiOlkDjPS/ASRXt//fWSsST7/rORu0rrfpCou103sx
+        FIGd2SjbgmZS/N4e2wWuJEC3Z18IPMsiANqj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YPkyiLH8eHMrt2IFuh4+CI+v7X3+f2oV
+        P6X4GMEVYMhqvm/NWyEUwJksz1Ng+FK4tAO1yTBu5Av8BtxvnythOrMJxpHu68pY
+        amviGtQM5bfoylYy4uCauf7Nm0DbcPVrLS9Nhy9UoOwd4oeh8WHZ5U/qU7Mc7FXe
+        aXmJoTzBekA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9944BB456;
+        Fri, 12 Jan 2018 18:20:57 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2FD1FBB455;
+        Fri, 12 Jan 2018 18:20:57 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/4] sq_quote_argv: drop maxlen parameter
+References: <20180112133613.GF27499@sigill.intra.peff.net>
+        <20180112133810.GA8290@sigill.intra.peff.net>
+Date:   Fri, 12 Jan 2018 15:20:55 -0800
+In-Reply-To: <20180112133810.GA8290@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 12 Jan 2018 08:38:10 -0500")
+Message-ID: <xmqq373awtns.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHHiNv2BEqC34ia2FxRCk/aLMaSEAHvubufo3lb6YA=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3E45F830-F7EF-11E7-A8B0-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 12, 2018 5:08 PM, Junio C Hamano wrote:
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> > It looks like the exit code is coming back as 1 not 2. There is also a
-> > file except vs expect.
-> > ./trash directory.t1308-config-set: ls a-directory  actual  config2
-> > except  expect  output  result
-> 
-> The test that leaves "except" does look wrong.  The relevant part looks
-like
-> this:
-> 
->     test_expect_success 'find value with highest priority from a
-configset' '
->             echo hask >expect &&
->             test-config configset_get_value case.baz config2 .git/config
->actual &&
->             test_cmp expect actual
->     '
-> 
->     test_expect_success 'find value_list for a key from a configset' '
->             cat >except <<-\EOF &&
->             sam
->             ...
->             EOF
->             test-config configset_get_value case.baz config2 .git/config
->actual &&
->             test_cmp expect actual
->     '
-> 
-> The invocations of test-config in these two tests look exactly the same,
-at
-> least to me, so whatever comes out of the command and stored in 'actual'
-> must match what the first test stored in 'expect'
-> and compared the same as 'actual' in that test.
-> 
-> So the second test is probably asking a wrong question to test-config but
-> because it prepares an expected answer in a wrong file, it did not even
-> notice that it is asking a wrong question X-<.
-> 
-> The wrong test comes from 4c715ebb ("test-config: add tests for the
-> config_set API", 2014-07-28); I do not know offhand if the author of that
-> change is still around.
-> 
-> Having said all that, I suspect that the "except" thing may not have
-anything
-> to do with what you are observing; sorry for not ending up to be very
-helpful
-> X-<.
+Jeff King <peff@peff.net> writes:
 
-Sadly, fixing the "except" thing causes the test to break now. I can't make
-sense of the intent of this, unless the test is to find unmatching keys and
-it really does mean "except"
---- expect      2018-01-12 23:03:41 +0000
-+++ actual      2018-01-12 23:03:41 +0000
-@@ -1,5 +1 @@
--sam
--bat
- hask
--lama
--ball
+> No caller passes anything but "0" for this parameter, which
+> requests that the function ignore it completely. In fact, in
+> all of history there was only one such caller, and it went
+> away in 7f51f8bc2b (alias: use run_command api to execute
+> aliases, 2011-01-07).
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Just a cleanup, though it touches the caller you just added, too.
 
-[case]
-baz = lama
-[my]
-new = silk
-[case]
-baz = ball
-
+Yup.  This is a good change in the longer term.  I needed an evil
+merge for a stalled topic in 'pu' to adjust a couple of new callers,
+though ;-)..
