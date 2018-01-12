@@ -2,105 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8133D1F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 18:06:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4DF1F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 18:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965144AbeALSGH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 13:06:07 -0500
-Received: from mail-yb0-f176.google.com ([209.85.213.176]:40501 "EHLO
-        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964977AbeALSGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 13:06:05 -0500
-Received: by mail-yb0-f176.google.com with SMTP id i12so1557109ybj.7
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 10:06:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oUIlzb2TOxMqD+9Nl6DHAx+lWvkgS0WFxI5ZuNr+XNY=;
-        b=wALzzOUjqdFRCetwQTNowMv45cBgVuqIZh2JDK/qlOqkDMvRuJZHiUHddE0+bJjG9t
-         OIGUXthUfnBGbPIYDIlZngrsrFo8W2+TZKvb3pnxiJHSLOqsYacFBMdSRS9txB6VKsyW
-         lvsn7BAQu6S7PZV6kQsdvSsDF6p8fX9lMAaN6/MxhXQ/MIlV3ihOOxEYEsBxiro+IMlh
-         naBlnTjk3inBWeMNP1pHKr9pokN6pfaMSL8fy/quLZM206+xfTAH9nqanuwUyJbw4agD
-         F2QpUwbfrqqq6fu9AcOZ2g7SKILGUeDw5Xl17wE822buzyAx38ca/EvWBnv3IrL/m0l9
-         77Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oUIlzb2TOxMqD+9Nl6DHAx+lWvkgS0WFxI5ZuNr+XNY=;
-        b=oSo6DPg9DdP8d5JUD+/FmX+lw68db3ua7vhz7VxNdWd/t/f1AJY/pGamH75XNOWQFP
-         UUgq+eaYquFpfp0A++V0qCTqnF6rHp/jEEeXpcAwSQ5Bz1xi+Ur4aarTvnwUaKJVq0wn
-         PNSED9CmShRkTf2bcup5IFKFX4g/t3qXbrfHDJqW8g3kU9xmlY7FMWbW4xfgNIg2fouo
-         acHCbNsYEoUt4ama28d1bSgYqMim6GnY2+wDexV0wgrPG2y9VELSJeB3wYf6ZQRtrQUe
-         S1DdmCsWWMahZMhUPxI+EigRj9CNrFvRXlYSU44oMMTIXc+S9EdTYeAj518WHp7i0o7x
-         YVeA==
-X-Gm-Message-State: AKwxytf6vqD0LWhr89XBIjrwB0LPaRAgaYuH/9CeD5fhHWQ4mdQS8nn7
-        uV+84KcmTvPoAN3J1ISlfjMBC0/jUqXxIOt1WLLxcw==
-X-Google-Smtp-Source: ACJfBovnikXirlIo55pkWcqyPYhq3u8i4j4TNwN4ylDw4x2Pox0gtzv5hejdTVn0BbAjs8DLrOUxLKv+O76Z3AH1NW0=
-X-Received: by 10.37.92.4 with SMTP id q4mr5302983ybb.39.1515780364402; Fri,
- 12 Jan 2018 10:06:04 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.134.197 with HTTP; Fri, 12 Jan 2018 10:06:02 -0800 (PST)
-In-Reply-To: <20180112133613.GF27499@sigill.intra.peff.net>
-References: <20180111094712.2551-1-pclouds@gmail.com> <20180112095607.18293-1-pclouds@gmail.com>
- <20180112133613.GF27499@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 12 Jan 2018 10:06:02 -0800
-Message-ID: <CAGZ79kZRFCLEtyWCjKm-vM36Gf1EJfEAAFxEFz0wQHv4bqPc_A@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] run-command.c: print env vars when GIT_TRACE is set
+        id S964994AbeALSYc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 13:24:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50677 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964862AbeALSYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 13:24:31 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F0621D4465;
+        Fri, 12 Jan 2018 13:24:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eZanK710sAn1EtQJYD3fPuQWdkY=; b=hcvqll
+        VDw5jpNd8oUz4YirVREAgJ/hFc2ooWvzumlZ89XzTtokyL7l1/hf4v63XKLIvmvk
+        c1sJGoZ4sBvqDBaDc4TfgVt/xEwv8nrkaGDQ47vjzPT6hG8oVBoEmeI4hy4QIdmj
+        9sxGgwEXp/qulyJQFsvHnKm3WuBEcph75dCrA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fg0kPvOZ4L5n9iEMUUOAumJmXXdwEdKN
+        3lE4QWYqMHu+UCHo387XaI5RISScQiaGMOnsSefvWEwhpByOQ9f5dTwGEfMRBzJn
+        OY1/L6q7hB8j4ihNV4v5djT7i9xKRephFxqB6azHwiyOtvvJeak0nIFQzEHzfWGY
+        Snfh+6MMufo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5C78D4463;
+        Fri, 12 Jan 2018 13:24:30 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 694CBD4462;
+        Fri, 12 Jan 2018 13:24:30 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git <git@vger.kernel.org>,
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
         Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 4/4] trace.c: be smart about what env to print in trace_run_command()
+References: <20180111094712.2551-1-pclouds@gmail.com>
+        <20180112095607.18293-1-pclouds@gmail.com>
+        <20180112095607.18293-5-pclouds@gmail.com>
+        <20180112133355.GE27499@sigill.intra.peff.net>
+Date:   Fri, 12 Jan 2018 10:24:28 -0800
+In-Reply-To: <20180112133355.GE27499@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 12 Jan 2018 08:33:55 -0500")
+Message-ID: <xmqqpo6fvstf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4890096-F7C5-11E7-8219-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 12, 2018 at 5:36 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jan 12, 2018 at 04:56:03PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> v3 turns a single patch into a series. Changes from v2
->>
->> - env var quoting is now done correctly (from shell syntax perspective)
->> - the program name is prepended in git_cmd mode
->> - cwd is now printed too (because I have too, see 4/4)
->> - we don't blindly print the env delta anymore but print the actual
->>   differences compared to parent env
->> - which means we also print "unset XXX" statements in $GIT_TRACE
->
-> Overall I like it, though I raised on corner case in 4/4.
->
->> The new output on git.git looks like this
->>
->>     trace: run_command: cd 'sha1collisiondetection'; unset GIT_PREFIX; G=
-IT_DIR=3D'.git' git 'status' '--porcelain=3D2'
->>
->> a bit longer than I would like, but that's because of
->> sha1collisiondetection and it's not long enough for me to invent
->> $GIT_TRACE_EXEC.
->
-> IMHO the unconditional single-quotes make this longer and uglier than it
-> needs to be. I've often been tempted to have them kick in only when
-> necessary. Here are some patches to do that (on top of yours).
->
->   [5/4]: sq_quote_argv: drop maxlen parameter
->   [6/4]: trace: avoid unnecessary quoting
->
+Jeff King <peff@peff.net> writes:
 
-I have reviewed the whole series 6/4 and think they can be applied as-is,
-though I have not thought about the corner case you mentioned.
+>> +		/*
+>> +		 * Do we have a sequence of "unset GIT_DIR; GIT_DIR=foo"?
+>> +		 * Then don't bother with the unset thing.
+>> +		 */
+>> +		if (i + 1 < envs.nr &&
+>> +		    !strcmp(env, envs.items[i + 1].string))
+>>  			continue;
+>
+> Are we guaranteed that "FOO" and "FOO=bar" appear next to each other in the
+> sorted list? I think "FOO123=bar" could come between.
 
-Thanks for this series!
-Stefan
+At this point, envs is a string list whose key is FOO for both "FOO"
+(unset) and "FOO=bar" (set); "FOO123=bar" would sort after these two.
+
+But I did not see anything that attempts to guarantee that "FOO"
+sorts before "FOO=bar" with string_list_sort().  If the sort used in
+the function is stable, and if the case we care about is unset
+followed by set, then the above would catch the case, but even if
+that were the case, it is unclear what we want to do when a set of
+FOO is followed by an unset of FOO.
+
+And if the sort is not stable, then the above code is just simply
+broken.
+
+> I also think this is a special case of a more general problem. FOO could
+> appear any number of times in the "env" array, as a deletion or with
+> multiple values. Our prep_childenv() would treat that as "last one
+> wins", I think. Could we just do the same here?
+
+Yeah, if the last one is to set FOO=bar, then it feels sufficient to
+just check if FOO is set to bar in the original and deciding to show
+or hide; similarly if the last one is to unset FOO, it does not matter
+if the caller sets it to some other value before unsetting, so it
+feels sufficient to just check if FOO is set to anything in the
+original environment.
+
+
+
