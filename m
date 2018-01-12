@@ -2,184 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB2A71F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 13:39:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 490161F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 13:42:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933582AbeALNjj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 08:39:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42138 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S933508AbeALNji (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 08:39:38 -0500
-Received: (qmail 4600 invoked by uid 109); 12 Jan 2018 13:39:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 12 Jan 2018 13:39:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30813 invoked by uid 111); 12 Jan 2018 13:40:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 12 Jan 2018 08:40:12 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jan 2018 08:39:36 -0500
-Date:   Fri, 12 Jan 2018 08:39:36 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 6/4] trace: avoid unnecessary quoting
-Message-ID: <20180112133936.GB8290@sigill.intra.peff.net>
-References: <20180112133613.GF27499@sigill.intra.peff.net>
+        id S933669AbeALNmF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 08:42:05 -0500
+Received: from mail-ot0-f176.google.com ([74.125.82.176]:37538 "EHLO
+        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933478AbeALNmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 08:42:03 -0500
+Received: by mail-ot0-f176.google.com with SMTP id a24so5060205otd.4
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 05:42:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=A9jHlptbpmI2kFvJeAPVPU8F7lWBl2yj8ZY9+4vYWjY=;
+        b=C26SVDkgFc8QflzrBBueF6h/WEysUV0aHgrGaKopPZraq46v7G8T7lkvaMfNZW2Er0
+         9iql6p7kq0L+p4F6n+ZRoBFXNr6TxeiLBuY3xjAAGIPCgS7PtXIkWc2fHYCi+H9wMDnE
+         vO4j7sY+tE4RVcfFEj9VxzaGzCO2f8Rb9EYDwM8Yx+q34kIhxFgu2us4PPfc9wdTu/i9
+         7Er16f8lDyh4xJCeEYq2bGT7eD2mOalMyXENhs81WCoYOPo/5bde/8fh7x2336t3koW9
+         mNPgvceSJuBB52E4O2uuhV9lyIWJIDkaZ8KQFTVDKkDjxtQN0KZr2kDuzhTxLxsAdgwL
+         n1zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=A9jHlptbpmI2kFvJeAPVPU8F7lWBl2yj8ZY9+4vYWjY=;
+        b=R1VNzxEt6jxo4HOfRw1T1Ro5lpuR3+a/m3xFAA974iXec2oLz4G0dpgIMRkSkpglAW
+         +9NyK7pfWMlDAFH6764Sm9qW0/05xGaQhm0Mes/LTH+ZEOmrSbjktM3CTIra95wnXD5o
+         ICYT9rdJQ2u5wC/mQioW1z7GY2kFtirEnqPnDjMHm2wG3YSSNqv2sFQBRsGnETKB/6PB
+         SMXDGSie2C/qEF59WmY0LV8qlXJUT81FAQMW6EG+5kTauXK6nBH1vIJ2hceqXkxtyu/k
+         xRpyXEKqO7pm8ceUzUVVN+7QbmXcAA3Y02Ay1wgu614J/OdCOoX0Y8tE2e6y2GpMcWo2
+         RqMw==
+X-Gm-Message-State: AKwxytfi/TWXsBZVw39u6/qxvgm9rT34b2ipkpNt+wtTe/bP2dowbLwl
+        fVx6bDzF02SjE0idJLaYZToWIpdBw+KlqS/dVEg=
+X-Google-Smtp-Source: ACJfBouEXp1Y0/0UFx2zYdDFpPBI4kAi8Pxu3NqvvcFquapjUmb924dHQqHYsnmBjSwYsoNkhpnSHmGHmMlN/k5TOsI=
+X-Received: by 10.157.53.12 with SMTP id o12mr10290115otc.181.1515764522675;
+ Fri, 12 Jan 2018 05:42:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180112133613.GF27499@sigill.intra.peff.net>
+Received: by 10.74.141.5 with HTTP; Fri, 12 Jan 2018 05:41:32 -0800 (PST)
+In-Reply-To: <CACsJy8AWO5Vk-Qz3VVBUezWL=oAd9YkeGq=_TXGSb0GSs5bLcg@mail.gmail.com>
+References: <87inc89j38.fsf@evledraar.gmail.com> <CACsJy8AWO5Vk-Qz3VVBUezWL=oAd9YkeGq=_TXGSb0GSs5bLcg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 12 Jan 2018 20:41:32 +0700
+Message-ID: <CACsJy8CUYosOGK5tn0C=t=SkbS-fyaSxp536zx+9jh_O+WNaEQ@mail.gmail.com>
+Subject: Re: git gc --auto yelling at users where a repo legitimately has
+ >6700 loose objects
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Trace output which contains arbitrary strings (e.g., the
-arguments to commands which we are running) is always passed
-through sq_quote_buf(). That function always adds
-single-quotes, even if the output consists of vanilla
-characters. This can make the output a bit hard to read.
+On Fri, Jan 12, 2018 at 7:07 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> More generally, these hard limits seem contrary to what the user cares
+>> about. E.g. I suspect that most of these loose objects come from
+>> branches since deleted in upstream, whose objects could have a different
+>> retention policy.
+>
+> Er.. what retention policy? I think gc.pruneExpire is the only thing
+> that can keep loose objects around?
 
-Let's avoid the quoting if there are no characters which a
-shell would interpret. Trace output doesn't necessarily need
-to be shell-compatible, but:
+Er... I think I know what you meant now. Loose objects can come from
+three sources: worktree (git-hash-object and friends),
+git-unpack-objects and unreachable objects in packs released back by
+git-repack.
 
-  - the shell language is a good ballpark for what humans
-    consider readable (well, humans versed in command line
-    tools)
-
-  - the run_command bits can be cut-and-pasted to a shell,
-    and we'll keep that property
-
-  - it covers any cases which would make the output
-    visually ambiguous (e.g., embedded whitespace or quotes)
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- quote.c | 26 ++++++++++++++++++++++++++
- quote.h |  8 ++++++++
- trace.c | 10 +++++-----
- 3 files changed, 39 insertions(+), 5 deletions(-)
-
-diff --git a/quote.c b/quote.c
-index b2970da627..37d2686865 100644
---- a/quote.c
-+++ b/quote.c
-@@ -43,6 +43,22 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
- 	free(to_free);
- }
- 
-+void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
-+{
-+	static const char ok_punct[] = "+,-./:=@_^";
-+	const char *p;
-+
-+	for (p = src; *p; p++) {
-+		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
-+			sq_quote_buf(dst, src);
-+			return;
-+		}
-+	}
-+
-+	/* if we get here, we did not need quoting */
-+	strbuf_addstr(dst, src);
-+}
-+
- void sq_quotef(struct strbuf *dst, const char *fmt, ...)
- {
- 	struct strbuf src = STRBUF_INIT;
-@@ -68,6 +84,16 @@ void sq_quote_argv(struct strbuf *dst, const char **argv)
- 	}
- }
- 
-+void sq_quote_argv_pretty(struct strbuf *dst, const char **argv)
-+{
-+	int i;
-+
-+	for (i = 0; argv[i]; i++) {
-+		strbuf_addch(dst, ' ');
-+		sq_quote_buf_pretty(dst, argv[i]);
-+	}
-+}
-+
- static char *sq_dequote_step(char *arg, char **next)
- {
- 	char *dst = arg;
-diff --git a/quote.h b/quote.h
-index 48a75a416b..ea992dcc91 100644
---- a/quote.h
-+++ b/quote.h
-@@ -33,6 +33,14 @@ extern void sq_quote_buf(struct strbuf *, const char *src);
- extern void sq_quote_argv(struct strbuf *, const char **argv);
- extern void sq_quotef(struct strbuf *, const char *fmt, ...);
- 
-+/*
-+ * These match their non-pretty variants, except that they avoid
-+ * quoting when there are no exotic characters. These should only be used for
-+ * human-readable output, as sq_dequote() is not smart enough to dequote it.
-+ */
-+void sq_quote_buf_pretty(struct strbuf *, const char *src);
-+void sq_quote_argv_pretty(struct strbuf *, const char **argv);
-+
- /* This unwraps what sq_quote() produces in place, but returns
-  * NULL if the input does not look like what sq_quote would have
-  * produced.
-diff --git a/trace.c b/trace.c
-index 973e462a2c..aba2825044 100644
---- a/trace.c
-+++ b/trace.c
-@@ -158,7 +158,7 @@ static void trace_argv_vprintf_fl(const char *file, int line,
- 
- 	strbuf_vaddf(&buf, format, ap);
- 
--	sq_quote_argv(&buf, argv);
-+	sq_quote_argv_pretty(&buf, argv);
- 	print_trace_line(&trace_default_key, &buf);
- }
- 
-@@ -341,7 +341,7 @@ static void concatenate_env(struct strbuf *dst, const char *const *deltaenv)
- 			continue;
- 
- 		strbuf_addf(dst, " %s=", env);
--		sq_quote_buf(dst, p);
-+		sq_quote_buf_pretty(dst, p);
- 	}
- 	string_list_clear(&envs, 0);
- }
-@@ -360,7 +360,7 @@ void trace_run_command(const struct child_process *cp)
- 
- 	if (cp->dir) {
- 		strbuf_addstr(&buf, " cd ");
--		sq_quote_buf(&buf, cp->dir);
-+		sq_quote_buf_pretty(&buf, cp->dir);
- 		strbuf_addch(&buf, ';');
- 	}
- 
-@@ -374,7 +374,7 @@ void trace_run_command(const struct child_process *cp)
- 	if (cp->git_cmd)
- 		strbuf_addstr(&buf, " git");
- 
--	sq_quote_argv(&buf, cp->argv);
-+	sq_quote_argv_pretty(&buf, cp->argv);
- 	print_trace_line(&trace_default_key, &buf);
- }
- 
-@@ -532,6 +532,6 @@ void trace_command_performance(const char **argv)
- 		atexit(print_command_performance_atexit);
- 
- 	strbuf_reset(&command_line);
--	sq_quote_argv(&command_line, argv);
-+	sq_quote_argv_pretty(&command_line, argv);
- 	command_start_time = getnanotime();
- }
+The last one could be a result of a branch deletion like you said.
+Depending on the branch size, you could release back a large amount of
+objects in loose form at the same time. This really skews my "create
+time distributed equally" model and the new estimation in
+too_many_objects() probably won't help you much either. If only we
+have a way to count all these objects as "one"... but putting these
+back in a pack hurts obj lookup performance...
 -- 
-2.16.0.rc1.459.g7b9f90244d
+Duy
