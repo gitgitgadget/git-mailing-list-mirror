@@ -2,198 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D51FF1F404
-	for <e@80x24.org>; Fri, 12 Jan 2018 10:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23E7A1F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 12:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754784AbeALKsJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 05:48:09 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36119 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754576AbeALKsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 05:48:08 -0500
-Received: by mail-wr0-f196.google.com with SMTP id d9so4931488wre.3
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 02:48:07 -0800 (PST)
+        id S933113AbeALMHg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 07:07:36 -0500
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:33385 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932705AbeALMHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 07:07:35 -0500
+Received: by mail-ot0-f182.google.com with SMTP id x15so4880421ote.0
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 04:07:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=egyOtN2lRbTsVZTjrX5SI2gRpI/EXLIH4YQ9HouNe9I=;
-        b=SNCDaGhCY9TF8dobC1WWzrA7iNwd/4EVs9VA8g+gaF9v9FSaGOPI/vFD/jMDxliuGW
-         68QrpscbtJ4XiFo/VLy/p3IXdHq/AYarC/kQ6lpv3KR6Qcfnl3O53NWuDzAKI4V9O7W4
-         +ClpH5SXkuxw8yLzIXgnIi0m3jShuIS+Y4ExyCuJBLqs2d86dPt87IrlP/GoWZCH4e+K
-         YvMgsnGPnFrLpq6NGtAEWLdtBmMgE7BZi5A4//nH76P8gUEl/o2xYoebFu0Gv9Vfu8Zu
-         dVK1Hd27T+kS089PHMb6hdmKgqnjX0A9nwhGZMb7kzBoV/iHBZ+qewplh55SB5HYRHIv
-         P+EQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=L1Qxz9K1mIXBeDVQiwMwV2pD/dBRMNponYI2yvGmBTw=;
+        b=a8trE1OevrtRGF4W+ZvB+Cxem2XMuXFrurmoJAQMdLKi6aSvbcFvaujuYdRff/pWUp
+         pDXXN5AvSAz5SiQA5TSJ2ujPwMtHtBeY84ln8o/MJJ+S3p94qLuWROHkXSmCyzoxmMro
+         La8hkLVVYQ6IsyOtN4ylHJZw0ZdjIcvAYa+UcT2elCSQjnuP0rWh3A4jlLJGp9+5rHhZ
+         iBQQHbx7tSpU5HH28h19SvVPDOK0kDhNiAGGIDMHL8hT3aslNPe1A3DIN41EElMrSj6u
+         cFHdXpwMjqvkyuYMfscFXuXKXSF0UbcqzGM3RISSn4vKlR8Nkky0AO9jjyLQXpobjqE1
+         96Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=egyOtN2lRbTsVZTjrX5SI2gRpI/EXLIH4YQ9HouNe9I=;
-        b=QPx02adCeSni5FXPms8ya+JzRymG8yBVDBFxIFbX0GpmszAalelXd+fw8V9P7A/RO3
-         mVzSh5TiTJ39T2kmuQIokzA2xeue25YI0iinkD/UGloMwn3j79wRm0hvqi+eOVZgYmZJ
-         5B2DpVENzMY3T3iPtF/7QXWXV6xKYt227ykAwP+rWOr6mirhSwkACknH0ousOeBLj3qs
-         HXhtlPGC8oSbeHy5DUbhmwfk3WfeGGgOw9DKcLssrjHF0UWqvyxQgZVnl9JGq89TARP3
-         vF6mlaBobaP8dCIwf7qq9gSRDifCR5NOlpB4lfpN1QMzgV/iijnlg8S/FgDvz5Xo3vW3
-         Hajw==
-X-Gm-Message-State: AKGB3mLrQvjvTRNKkD30s2EY4deCsyk6DPa2ldaaiCGdNDed+J0Y+V7q
-        qcEOmJpt3DppfMcE+PO+MFZXEBOR
-X-Google-Smtp-Source: ACJfBouE3AXIs2mZ1ds408DYNS8LkhLMWZsP452l2dTYGCYkcQEWl6PGIkpPHMTgBZEG1qQoItvv9Q==
-X-Received: by 10.223.158.208 with SMTP id b16mr22151196wrf.66.1515754086750;
-        Fri, 12 Jan 2018 02:48:06 -0800 (PST)
-Received: from greyhound ([195.145.21.250])
-        by smtp.gmail.com with ESMTPSA id h4sm19501522wrh.40.2018.01.12.02.48.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Jan 2018 02:48:05 -0800 (PST)
-From:   Christian Ludwig <chrissicool@googlemail.com>
-X-Google-Original-From: Christian Ludwig <chrissicool@gmail.com>
-Received: from cc by greyhound with local (Exim 4.89)
-        (envelope-from <cc@localhost>)
-        id 1eZwsW-0007Mj-SN; Fri, 12 Jan 2018 11:48:04 +0100
-To:     git@vger.kernel.org
-Cc:     Christian Ludwig <chrissicool@gmail.com>
-Subject: [PATCH] send-email: Support separate Reply-To address
-Date:   Fri, 12 Jan 2018 11:47:51 +0100
-Message-Id: <20180112104751.28263-1-chrissicool@gmail.com>
-X-Mailer: git-send-email 2.15.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=L1Qxz9K1mIXBeDVQiwMwV2pD/dBRMNponYI2yvGmBTw=;
+        b=B/AvuyvoO6vgL3RgceYl1DihyF/vYnxrB6En9GuQjVBQR6rZLSRK07lmHE7LDYzQoH
+         n0d/DfnL25ZhJe/awg2LFqm8EGt+V5TKta7Wftv4b3ev/b7ToUHBDxAe4+137M/t0711
+         Nkvzsn4VBNVwz7XZvRvUa3RK3oh0UTKys+ntbEIe6LTi9IpMXBo7hKbJbluCPXjvjj7F
+         Szm2JaaxfJHDfmMrQ7JioWruyIJxeMdGfM25hB1BZloEUGUTLpnI9WDUkWuwNDw4Sv4P
+         wzttZPN5oQS2ETwvK4fOCe5+CFlqFDpQ6V9gDzQmtW3ZFX3EazoEKEV/3InaM4fC6Al5
+         DpmA==
+X-Gm-Message-State: AKwxytckzbQIRbkpCJXzbL2gQKEog0IZ0580BE7WV2Rte/Ixt89KPVL/
+        WsdLnO8h0AMR4N8jziRoGC2ZYQIIb+0fliTXz5Mjrg==
+X-Google-Smtp-Source: ACJfBotQUUs42tfmKz4KOmK9dnFpCqB4Q5t3d1KW7KEhmsrJNXnYq+HmubtcMcMpHUZeHvGkRP+KmepBxYmI6t/jmsU=
+X-Received: by 10.157.32.108 with SMTP id n99mr16226141ota.301.1515758854805;
+ Fri, 12 Jan 2018 04:07:34 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.141.5 with HTTP; Fri, 12 Jan 2018 04:07:04 -0800 (PST)
+In-Reply-To: <87inc89j38.fsf@evledraar.gmail.com>
+References: <87inc89j38.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 12 Jan 2018 19:07:04 +0700
+Message-ID: <CACsJy8AWO5Vk-Qz3VVBUezWL=oAd9YkeGq=_TXGSb0GSs5bLcg@mail.gmail.com>
+Subject: Re: git gc --auto yelling at users where a repo legitimately has
+ >6700 loose objects
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some projects contributions from groups are only accepted from a
-common group email address. But every individual may want to recieve
-replies to her own personal address. That's what we have 'Reply-To'
-headers for in SMTP.
+On Fri, Jan 12, 2018 at 4:33 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> For those rusty on git-gc's defaults, this is what it looks like in this
+> scenario:
+>
+>  1. User runs "git pull"
+>  2. git gc --auto is called, there are >6700 loose objects
+>  3. it forks into the background, tries to prune and repack, objects
+>     older than gc.pruneExpire (2.weeks.ago) are pruned.
+>  4. At the end of all this, we check *again* if we have >6700 objects,
+>     if we do we print "run 'git prune'" to .git/gc.log, and will just
+>     emit that error for the next day before trying again, at which point
+>     we unlink the gc.log and retry, see gc.logExpiry.
+>
+> Right now I've just worked around this by setting gc.pruneExpire to a
+> lower value (4.days.ago). But there's a larger issue to be addressed
+> here, and I'm not sure how.
+>
+> When the warning was added in [1] it didn't know to detach to the
+> background yet, that came in [2], shortly after came gc.log in [3].
+>
+> We could add another gc.auto-like limit, which could be set at some
+> higher value than gc.auto. "Hey if I have more than 6700 loose objects,
+> prune the <2wks old ones, but if at the end there's still >6700 I don't
+> want to hear about it unless there's >6700*N".
 
-Introduce an optional '--reply-to' command line option. Unfortunately
-the $reply_to variable name was already taken for the 'In-Reply-To'
-header field. To reduce code churn, use $reply_address as variable
-name instead.
+Yes it's about time we make too_many_loose_objects() more accurate and
+complain less, especially when the complaint is useless.
 
-Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
----
- Documentation/git-send-email.txt |  5 +++++
- git-send-email.perl              | 18 +++++++++++++++++-
- t/t9001-send-email.sh            |  2 ++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+> I thought I'd just add that, but the details of how to pass that message
+> around get nasty. With that solution we *also* don't want git gc to
+> start churning in the background once we reach >6700 objects, so we need
+> something like gc.logExpiry which defers the gc until the next day. We
+> might need to create .git/gc-waitabit.marker, ew.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 8060ea35c..c3bc622b1 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -84,6 +84,11 @@ See the CONFIGURATION section for `sendemail.multiEdit`.
- 	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
- 	set, as returned by "git var -l".
- 
-+--reply-to=<address>::
-+	Specify the address that replies from reciepients should
-+	to go. Use this if replies to messages should go to another
-+	address than what is specified with the --from parameter.
-+
- --in-reply-to=<identifier>::
- 	Make the first mail (or all the mails with `--no-thread`) appear as a
- 	reply to the given Message-Id, which avoids breaking threads to
-diff --git a/git-send-email.perl b/git-send-email.perl
-index edcc6d346..fc21081d3 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -56,6 +56,7 @@ git send-email --dump-aliases
-     --[no-]cc               <str>  * Email Cc:
-     --[no-]bcc              <str>  * Email Bcc:
-     --subject               <str>  * Email "Subject:"
-+    --reply-to              <str>  * Email "Reply-To:"
-     --in-reply-to           <str>  * Email "In-Reply-To:"
-     --[no-]xmailer                 * Add "X-Mailer:" header (default).
-     --[no-]annotate                * Review each patch that will be sent in an editor.
-@@ -166,7 +167,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
- 
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
--	$initial_reply_to,$initial_subject,@files,
-+	$initial_reply_to,$reply_address,$initial_subject,@files,
- 	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
- 
- my $envelope_sender;
-@@ -315,6 +316,7 @@ die __("--dump-aliases incompatible with other options\n")
- $rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_reply_to,
-+		    "reply-to=s" => \$reply_address,
- 		    "subject=s" => \$initial_subject,
- 		    "to=s" => \@initial_to,
- 		    "to-cmd=s" => \$to_cmd,
-@@ -677,6 +679,7 @@ if ($compose) {
- 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
- 	my $tpl_subject = $initial_subject || '';
- 	my $tpl_reply_to = $initial_reply_to || '';
-+	my $tpl_reply_address = $reply_address || '';
- 
- 	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
- From $tpl_sender # This line is ignored.
-@@ -688,6 +691,7 @@ for the patch you are writing.
- Clear the body content if you don't wish to send a summary.
- EOT2
- From: $tpl_sender
-+Reply-To: $tpl_reply_address
- Subject: $tpl_subject
- In-Reply-To: $tpl_reply_to
- 
-@@ -738,6 +742,9 @@ EOT3
- 		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
- 			$initial_reply_to = $1;
- 			next;
-+		} elsif (/^Reply-To:\s*(.+)\s*$/i) {
-+			$reply_address = $1;
-+			next;
- 		} elsif (/^From:\s*(.+)\s*$/i) {
- 			$sender = $1;
- 			next;
-@@ -884,6 +891,12 @@ if (defined $initial_reply_to) {
- 	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
- }
- 
-+if (defined $reply_address) {
-+	$reply_address =~ s/^\s+|\s+$//g;
-+	($reply_address) = expand_aliases($reply_address);
-+	$reply_address = sanitize_address($reply_address);
-+}
-+
- if (!defined $smtp_server) {
- 	my @sendmail_paths = qw( /usr/sbin/sendmail /usr/lib/sendmail );
- 	push @sendmail_paths, map {"$_/sendmail"} split /:/, $ENV{PATH};
-@@ -1315,6 +1328,9 @@ Message-Id: $message_id
- 		$header .= "In-Reply-To: $reply_to\n";
- 		$header .= "References: $references\n";
- 	}
-+	if ($reply_address) {
-+		$header .= "Reply-To: $reply_address\n";
-+	}
- 	if (@xh) {
- 		$header .= join("\n", @xh) . "\n";
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 81869d891..c62318a78 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -205,6 +205,7 @@ Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- In-Reply-To: <unique-message-id@example.com>
- References: <unique-message-id@example.com>
-+Reply-To: Reply <reply@example.com>
- 
- Result: OK
- EOF
-@@ -297,6 +298,7 @@ test_expect_success $PREREQ 'Show all headers' '
- 		--dry-run \
- 		--suppress-cc=sob \
- 		--from="Example <from@example.com>" \
-+		--reply-to="Reply <reply@example.com>" \
- 		--to=to@example.com \
- 		--cc=cc@example.com \
- 		--bcc=bcc@example.com \
--- 
-2.15.1
+Hmm.. could we save the info from the last run to help the next one?
+If the last gc --auto (which does try to remove some loose objects)
+leaves 6700 objects still loose, then it's "clear" that the next run
+may also leave those loose. If we save that number somewhere (gc.log
+too?) too_many_loose_objects() can read back and subtract it from the
+estimation and may decide not to do gc at all since the number of
+loose-and-prunable objects is below threshold.
 
+The problem is of course these 6700 will gradually become prunable
+over time. We can't just substract the same constant forever. Perhaps
+we can do something based on gc.pruneExpire?
+
+Say gc.pruneExpires specifies to keep objects in two weeks, we assume
+these object create time is spread out equally over 14 days. So after
+one day, 6700/14 objects are supposed to be prune-able and part of
+too_many_loose_objects estimation. The gc--auto that is run two weeks
+since the first run would count all loose objects as prunable again.
+
+> More generally, these hard limits seem contrary to what the user cares
+> about. E.g. I suspect that most of these loose objects come from
+> branches since deleted in upstream, whose objects could have a different
+> retention policy.
+
+Er.. what retention policy? I think gc.pruneExpire is the only thing
+that can keep loose objects around?
+
+BTW
+
+> But now I have git-gc on some servers yelling at users on every pull
+> command:
+>
+>    warning: There are too many unreachable loose objects; run 'git prune'=
+ to remove them.
+
+Why do we yell at the users when some maintenance thing is supposed to
+be done on the server side? If this is the case, should gc have some
+way to yell at the admin instead?
+--=20
+Duy
