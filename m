@@ -6,105 +6,65 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4405E1F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 19:42:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81DD41F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 19:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965121AbeALTmb convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 12 Jan 2018 14:42:31 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:49773 "EHLO
+        id S965062AbeALTxB convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 12 Jan 2018 14:53:01 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:45890 "EHLO
         elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965044AbeALTma (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 14:42:30 -0500
+        with ESMTP id S1754584AbeALTw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 14:52:59 -0500
 X-Virus-Scanned: amavisd-new at elehost.com
 Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
         (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0CJgRsD015765
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0CJquH8016435
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 12 Jan 2018 14:42:28 -0500 (EST)
+        Fri, 12 Jan 2018 14:52:56 -0500 (EST)
         (envelope-from rsbecker@nexbridge.com)
 From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Subject: RE: [ANNOUNCE] Git v2.16.0-rc2 - breakages in t1308 and 1404
-Date:   Fri, 12 Jan 2018 14:42:21 -0500
-Message-ID: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>,
+        "=?utf-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>,
+        "'Lars Schneider'" <larsxschneider@gmail.com>
+References: <20180112163644.14108-1-randall.s.becker@rogers.com> <xmqqh8rqx4kz.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqh8rqx4kz.fsf@gitster.mtv.corp.google.com>
+Subject: RE: [PATCH] Fixed pervasive enumeration warning in convert.h.
+Date:   Fri, 12 Jan 2018 14:52:50 -0500
+Message-ID: <004c01d38bde$f0e6bb50$d2b431f0$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="utf-8"
 Content-Transfer-Encoding: 8BIT
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdOL3Mn+j89TsvbiQOOvlTVgqqPdUg==
+Thread-Index: AQIaHxLWcrG4akzpY1ZwYOznE60qXALrzaZXoswgLzA=
 Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 11, 2018 11:11 PM, Junio C Hamano wrote:
-> A release candidate Git v2.16.0-rc2 is now available for testing at the usual
-> places.  It is comprised of 483 non-merge commits since v2.15.0, contributed
-> by 80 people, 23 of which are new faces.
-<snip>
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+On January 12, 2018 2:25 PM, Junio C Hamano wrote:
+> > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> >  {
+> > -	return convert_to_git(istate, path, NULL, 0, NULL, 0);
+> > +	return convert_to_git(istate, path, NULL, 0, NULL,
+> SAFE_CRLF_FALSE);
+> >  }
+> 
+> I think this is being solved a bit differently with a1fbf854
+> ("convert_to_git(): safe_crlf/checksafe becomes int conv_flags", 2018-01-
+> 06), and 0 becomes the right value to pass at this caller to say "I am passing
+> none of the flag bit".
+> 
+> I am hoping that the series that ends at f3b11d54 ("convert: add support for
+> 'checkout-encoding' attribute", 2018-01-06) will be rerolled and hit 'master'
+> early in the next cycle.
 
-Please forgive my not knowing the proper way to report this ... we have a few breakages on the NonStop port (which has finally caught up to 2.16, yay!). The test run takes a very long time to run, so this is preliminary. I'm also not sure who should try to resolve these.
+Got it. Will revert this one on my end. On a related too many warnings subject, hashmap.h has a variable unused (void *item). Is that addressed soon? If not, I can deal with it.
 
-For 1308:
-
-Value not found for "foo.bar"
-not ok 23 - proper error on directory "files"
-#
-#               echo "Error (-1) reading configuration file a-directory." >expect &&
-#               mkdir a-directory &&
-#               test_expect_code 2 test-config configset_get_value foo.bar a-directory 2>output &&
-#               grep "^warning:" output &&
-#               grep "^Error" output >actual &&
-#               test_cmp expect actual
-test_expect_code: command exited with 1, we wanted 2 test-config configset_get_value foo.bar a-directory
-
-It looks like the exit code is coming back as 1 not 2. There is also a file except vs expect.
-./trash directory.t1308-config-set: ls
-a-directory  actual  config2  except  expect  output  result
-
-For 1404: It looks like the error was detected, but the test case was not structured to handle where the detection occurred. Here's what I see:
-
-not ok 52 - delete fails cleanly if packed-refs file is locked
-#
-#               prefix=refs/locked-packed-refs &&
-#               # Set up a reference with differing loose and packed versions:
-#               git update-ref $prefix/foo $C &&
-#               git pack-refs --all &&
-#               git update-ref $prefix/foo $D &&
-#               git for-each-ref $prefix >unchanged &&
-#               # Now try to delete it while the `packed-refs` lock is held:
-#               : >.git/packed-refs.lock &&
-#               test_when_finished "rm -f .git/packed-refs.lock" &&
-#               test_must_fail git update-ref -d $prefix/foo >out 2>err &&
-#               git for-each-ref $prefix >actual &&
-#               test_i18ngrep "Unable to create $Q.*packed-refs.lock$Q: File exists" err &&
-#               test_cmp unchanged actual
-#
-
-# failed 1 among 52 test(s)
-1..52
-./trash directory.t1404-update-ref-errors: ls
-actual       commands  expected      expected-refs  out         unchanged
-actual-refs  err       expected-err  input          output.err
-./trash directory.t1404-update-ref-errors: cat err
-error: Unable to create '/home/git/git/t/trash directory.t1404-update-ref-errors/.git/packed-refs.lock': File already exists.
-
-Another git process seems to be running in this repository, e.g.
-an editor opened by 'git commit'. Please make sure all processes
-are terminated then try again. If it still fails, a git process
-may have crashed in this repository earlier:
-remove the file manually to continue.
-./trash directory.t1404-update-ref-errors: cat out
-
-Sincerely,
+Cheers,
 Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
+(also, sorry about the other email address in use. It's the only way I can use send-email, fixing the annoying prior wrapping/tab/space garbage I had).
 
