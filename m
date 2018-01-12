@@ -2,94 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342F21F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 17:02:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115341F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 17:19:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964873AbeALRB6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 12:01:58 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:45308 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964860AbeALRB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 12:01:57 -0500
-Received: by mail-wm0-f42.google.com with SMTP id i186so13380228wmi.4
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 09:01:57 -0800 (PST)
+        id S934109AbeALRTb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 12:19:31 -0500
+Received: from mail-yw0-f178.google.com ([209.85.161.178]:40892 "EHLO
+        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964926AbeALRTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 12:19:07 -0500
+Received: by mail-yw0-f178.google.com with SMTP id g191so2795290ywe.7
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 09:19:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Py6aKVMpKE/vGNuMkEydCwWTvEOUrRij8Dgyvyv2EhE=;
-        b=tYFIfxV9ebnYGPZukgZe3yZ8EwcDIJUbw7kPNmOnjbyTh0Cxlmt9JTVjvNps+JoUzu
-         Q5my/7Vc6Q092+yd5qy5xH+LuxWRG6Tjf3Gi0MKGpKUfNav4YyMlLyvdSn/BwnTQgGma
-         Uj7c9/gYG3VEGb1kocSjYiWQ4Qc2c+7rBM+UxcjfkUhSd5R7QU3T+zUpza7pw3BxT9Y2
-         cdywpCd+keY34wcBvo33R36ETfsQNs8hN2DX3O3nsrrkABW5VXB0o5D/c2muWWXK0dXW
-         Dnz7DOUTubyEwFs/yqNMGVpq6cZRsS+ZaWp+CF+zr8FtzDHlamntBepT86Mjv8cj3IrC
-         4u2Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=v5pYlwQBgv8wi4WzZQK6Oz2yzJXDnV6t7uU0xIAbywY=;
+        b=KvexodXkTIB3Spz6rrKtQE93+X1qs/7m4r7RUhzt6xwvDXeoxcWYYuzozgX0BlDhjL
+         dMUhtEXayIDGiY0jJYJ9t9P4E87BrABvzrELSQw9tbwFNiAv/SX8m9gTXQgbA94fJoZd
+         7UOyuYMCb6vuK8qYmy/BzRSmJegVTwwwqtSUjIfZl1EasjfaXppJ1sx8nrz0q/43CQ3y
+         2+VQ+nHE2f+xKEj75ziAm1bHyK0pVLquIrhDnYBxuMvIUXazLlc4J0rz9keEaXmzzk6W
+         I4YJzSU1fusbne6hqkPBDii4tHrKuiQYbhposYj6RYAmVutgFP0s2DFJSaq5yFPasWeY
+         xrdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Py6aKVMpKE/vGNuMkEydCwWTvEOUrRij8Dgyvyv2EhE=;
-        b=UIMxvi2an/5B4aR31McSTXaf/R1teexnRAyvHUMIALQuehUEF2aHx4joimQV1956sU
-         xGByiJSw9k5+r3E9RdXVXTUEI3HYUIg7gomLKkjTEXuB4ad5SeeSUwLjO1HuOHoSquTt
-         XAnMx2QU/tjPZ0l2tryZdvOoocgAetLmTVfWHsFRmsWmjTW5ObN7QPPdRUIqtUUbQx7u
-         PsathB8dhKOzkuy+6D26Jm15qli/C99cJlPxb/T4QcT7VWXZe/R94uaUVwfVz0sH5sir
-         pDXBjxMhTO4IrCAfF9M607XVSwWbxWFdcF8iI63K7RvS/KF4UsNLX4bD9ASErApFm6k2
-         A8wg==
-X-Gm-Message-State: AKwxytduhBonC+YisjssnIuGYRAP+35JbeRcFYpCw78/JBfhIKzgE/5b
-        wdwzLxxR/bH/YrvbvsiAzOPR6A==
-X-Google-Smtp-Source: ACJfBovtHJofgzLEryJX/t8MFYFRUdOtJWR8AQjUwRkv9GWyyzG/Z2tLS0Ts+ZV7BQOzpN4L3yiwWg==
-X-Received: by 10.80.221.206 with SMTP id x14mr7498692edk.196.1515776516757;
-        Fri, 12 Jan 2018 09:01:56 -0800 (PST)
-Received: from [192.168.178.26] (ipservice-092-214-164-190.092.214.pools.vodafone-ip.de. [92.214.164.190])
-        by smtp.googlemail.com with ESMTPSA id o15sm13766992edk.25.2018.01.12.09.01.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Jan 2018 09:01:55 -0800 (PST)
-Subject: Re: [PATCH] l10n: de.po: translate 72 new messages
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-Cc:     Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
-        Christian Stimming <stimming@tuhh.de>,
-        Phillip Szelat <phillip.szelat@gmail.com>,
-        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
-References: <20180111174401.8006-1-ralf.thielow@gmail.com>
-From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-Message-ID: <cb9c9680-6ef2-f59a-b549-5082fee68496@gmail.com>
-Date:   Fri, 12 Jan 2018 18:01:52 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=v5pYlwQBgv8wi4WzZQK6Oz2yzJXDnV6t7uU0xIAbywY=;
+        b=X4rOIWeclDMzw6BKEiKh3VUEPhI8CuP6FCXDR2kuMTQz57q7bB5EHBaP8i7OaCRama
+         bCl7wCCyy61OTeOusiVewCLABZERlSS19COF7NkNF+nw2Kn7i2aGsvnKwiem8QMr2kjT
+         zuhppuE92+9dkjj+R1YXlCbfg8yBXqDX7pz3IEfRhAVb8FVlsbXUDE8qfLiT1CnWgMn9
+         Tx/bX8CyMcEcB/ToBI6irXiOP0HtCDSx++KXkbZFFBYg1QrCO5chR/p0YgQjkI+5cAvH
+         Bz8H5xBoeOM2Wvta5Wp6rHK72R0ITWNPQ89pCe7qztPC32UaL1thV8UCVlF8ndoT1ybA
+         96cg==
+X-Gm-Message-State: AKGB3mIK1ebkuz9+OV4bi7kDd1S6CGi7GJ/AALRwPaRppYa6BVJ6n1YJ
+        jxSdw2O59SIXrF2naMekF78hg5wm7kwMnhwa0Sv3+g==
+X-Google-Smtp-Source: ACJfBouiKWOz/7FNvFhhMSMeRTELz17iCk/rbC3NXBwmQ5NTTlQ80IGjh3XyG2YJfhaGEjf01uWDb66IOP4H5QzXCa8=
+X-Received: by 10.129.156.134 with SMTP id t128mr17044985ywg.108.1515777546334;
+ Fri, 12 Jan 2018 09:19:06 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20180111174401.8006-1-ralf.thielow@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Received: by 10.37.134.197 with HTTP; Fri, 12 Jan 2018 09:19:05 -0800 (PST)
+In-Reply-To: <20180112095607.18293-1-pclouds@gmail.com>
+References: <20180111094712.2551-1-pclouds@gmail.com> <20180112095607.18293-1-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 12 Jan 2018 09:19:05 -0800
+Message-ID: <CAGZ79kYUyugA_BhMgr_k1aWfxg9+cNbOcVO+LOZkZ1YAAu7_mQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] run-command.c: print env vars when GIT_TRACE is set
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ralf,
+On Fri, Jan 12, 2018 at 1:56 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> v3 turns a single patch into a series. Changes from v2
+>
+> - env var quoting is now done correctly (from shell syntax perspective)
+> - the program name is prepended in git_cmd mode
+> - cwd is now printed too (because I have too, see 4/4)
+> - we don't blindly print the env delta anymore but print the actual
+>   differences compared to parent env
+> - which means we also print "unset XXX" statements in $GIT_TRACE
+>
+> The new output on git.git looks like this
+>
+>     trace: run_command: cd 'sha1collisiondetection'; unset GIT_PREFIX; GI=
+T_DIR=3D'.git' git 'status' '--porcelain=3D2'
+>
+> a bit longer than I would like, but that's because of
+> sha1collisiondetection and it's not long enough for me to invent
+> $GIT_TRACE_EXEC.
+>
+> I'm not adding "sh -c" back though because that looks like it should
+> be done in run_command.c itself, not just output tracing output.
 
-thanks for your translations.
+Wow! This is really cool. Thanks for your effort.
+(Also I learned today that I can just copy the command, up to now I always
+dequoted the commands when rerunning it for debugging as I assumed I had to=
+)
 
-The only thing that could be changed is:
+>
+> Oh.. before anybody asks, I'm not adding git prefix to the "cd" part.
+> You're supposed to know that git moves back to worktree top dir when
+> you read $GIT_TRACE (or are welcome to improve the print out).
 
-
->  #: builtin/submodule--helper.c:678
->  msgid ""
->  "Use commit stored in the index instead of the one stored in the submodule "
->  "HEAD"
-> -msgstr ""
-> +msgstr "benutze den Commit, der im Index gespeichert ist, statt den im Submodul HEAD"
-
-
-The original message has a capital letter so maybe it should be "Benutze"?
-
-Everything else looks great!
-
-
-Kind regards,
-Matthias
+Heh. Would appending  "; cd -" solve the issue? (Though I would argue
+we don't need or want to add that actually, as you'd want to copy and run
+the command and surely want to run more tests in that directory afterwards.
+I mean you're debugging, right?)
