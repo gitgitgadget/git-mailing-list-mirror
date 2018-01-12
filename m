@@ -2,78 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 421F91F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 15:47:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C29D1F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 16:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964879AbeALPrz convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 12 Jan 2018 10:47:55 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:64240 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933988AbeALPrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 10:47:53 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0CFljxE006640
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Fri, 12 Jan 2018 10:47:45 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jeff King'" <peff@peff.net>
-Cc:     "'git mailing list'" <git@vger.kernel.org>
-References: <003601d38aea$e0e08ff0$a2a1afd0$@nexbridge.com> <000201d38b24$9e27ac40$da7704c0$@nexbridge.com> <20180112143912.GB9088@sigill.intra.peff.net>
-In-Reply-To: <20180112143912.GB9088@sigill.intra.peff.net>
-Subject: RE: [BUG] Weird breakages in t1450 #2 on NonStop
-Date:   Fri, 12 Jan 2018 10:47:39 -0500
-Message-ID: <001c01d38bbc$b04a05b0$10de1110$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQExQbaZU2sHaLe3IAgxbGtzSYtiSgH/8Q3BAUb4OrGkmr0qIA==
-Content-Language: en-ca
+        id S964845AbeALQg7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 11:36:59 -0500
+Received: from sonic312-25.consmr.mail.ne1.yahoo.com ([66.163.191.206]:35814
+        "EHLO sonic312-25.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S964832AbeALQg7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 12 Jan 2018 11:36:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1515775018; bh=xnF0vwEDl4KsKsgnEmRNbfElkQHkiZ1Km7ELUr+M/ds=; h=From:To:Cc:Subject:Date:From:Subject; b=FqJu4ETKN/A+2WD7zmrT7mcsneYWOgPgsxKPEXgt3R40p8QTDcLtiv+r8GsoFqoDDypiLmsBdDRk+7W4OiCA4GvlpwYihxWssNr1K50pAG3YkQQs1HoSrdWLKbO5eARJVKtJDXmitNqzQy2PhJFpc4TELvWI57/rlhIS5ZFnHHsmW8ISjgq4xkbswnndvOsFzkjOPTq46mBnxVi/gkhavFvQ+Ko8ZyTDN7cH1bRDBAIIfIMhdYNjkmhawbkEONIoSfT+1BNYY/6DQm0yJf3jxwM+GdJuHP+12HSzdvpP3FfmaZ2Klh5aT7kigoPEZBIR9FvFGoWmTb4Oa/blxPwN4w==
+X-YMail-OSG: SbJClZgVM1lQI3gdUx7ope8jLyXE5mV7c9LhAs0gdn8LHvxo5a7Z4y3Mxk3LGjy
+ W7Sf7XTui_orgT8xky.pZtFxaPTtCO9..rLg4v1MJv8aHq3sx_6L5.sFuDRrNZ0nE4Oy7gtPkJ3j
+ 52aLtWjmudAKBJgrtEKJuouJthVhDMacbXX8HUZ_zSUofvZ9ht6dUQMXHyVuj9znItuNT43TcK7b
+ v5NESb8uMSHo1sp7lnwnHnD7SAANrakcyUIvWUKOfl8s3glcX08sX.O.hSgJUI4PfDYrWhscA05m
+ GOJ1IBwXmK4Ut3EI9F5Z0cFkF6ufyXgBpjxHJZVuBZfBFoSMg.lCoH_W32WxL6SpIql6d3zXaoNW
+ 3FROc36Vs8gKNFpKgd0QMun7MkLcqJyAVtkaQ9gR_iWbOEHNxDRY1.bdxl.bX.zacUj5.VgHDTEx
+ A5.vTQbawQV.wzfa9Q6wiLoStT2RdW16GL4yuLkQt284oDCpAvz6ALa3rhbmlIzGi.jXwhajCMAr
+ kjfAL7MoLeYMNxPfHvTkkK5A-
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.ne1.yahoo.com with HTTP; Fri, 12 Jan 2018 16:36:58 +0000
+Received: from smtp231.mail.ne1.yahoo.com (EHLO localhost.localdomain) ([10.218.253.210])
+          by smtp408.mail.ne1.yahoo.com (JAMES SMTP Server ) with ESMTPA ID d58f1bc7ace46c21762dcec7e73df0f0;
+          Fri, 12 Jan 2018 16:36:54 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [PATCH] Fixed pervasive enumeration warning in convert.h.
+Date:   Fri, 12 Jan 2018 11:36:44 -0500
+Message-Id: <20180112163644.14108-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 12, 2018 9:39 AM, Jeff King wrote:
-> On Thu, Jan 11, 2018 at 04:39:04PM -0500, Randall S. Becker wrote:
-> 
-> > > executed because the test_commit fails with a non-zero git commit
-> > > completion code. There is no rn---- (actual r n 252 252 252 252) in
-> > > the objects directory - even the 'rn' does not correspond to
-> > > anything.. I am suspecting an unterminated string that ran into
-> > > freed memory somewhere, but that's speculative.
-> >
-> > Does anyone recall fixing this one at or near
-> > dfe46c5ce6e68d682f80f9874f0eb107e9fee797? There was a rewrite of
-> > sha1_file.c including link_alt_odb_entry where I am finding memory
-> > corruptions. I think I'm chasing something that was already fixed some
-> > time after 2.13.5 but the common parent to where I am is pretty far
-> > back compared to master.
-> 
-> I did a lot of work on link_alt_odb_entry() in the past year or so, and I seem
-> to recall seeing some cases where we could run into unterminated memory
-> in the error message.
-> 
-> Maybe dc732bd5cb (read_info_alternates: read contents into strbuf, 2017-
-> 09-19)?
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-In that case, I think I'm going to jump right to 2.16.0-rc2. I think I would have preferred 2.15.2 - but there isn't one yet 😉
+The actual enum value should be used rather than 0 and was causing
+a warning in an inline proc.
 
-Cheers,
-Randall
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ convert.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
+diff --git a/convert.h b/convert.h
+index 4f2da22..a9a6658 100644
+--- a/convert.h
++++ b/convert.h
+@@ -79,7 +79,7 @@ extern int renormalize_buffer(const struct index_state *istate,
+ static inline int would_convert_to_git(const struct index_state *istate,
+ 				       const char *path)
+ {
+-	return convert_to_git(istate, path, NULL, 0, NULL, 0);
++	return convert_to_git(istate, path, NULL, 0, NULL, SAFE_CRLF_FALSE);
+ }
+ /* Precondition: would_convert_to_git_filter_fd(path) == true */
+ extern void convert_to_git_filter_fd(const struct index_state *istate,
+-- 
+2.8.5.23.g6fa7ec3
 
