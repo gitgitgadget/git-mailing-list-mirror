@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3ACB81F404
-	for <e@80x24.org>; Fri, 12 Jan 2018 09:57:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9ED01F404
+	for <e@80x24.org>; Fri, 12 Jan 2018 09:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754522AbeALJ5M (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 04:57:12 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:44758 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754350AbeALJ5L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 04:57:11 -0500
-Received: by mail-pg0-f68.google.com with SMTP id m20so4235225pgc.11
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 01:57:10 -0800 (PST)
+        id S1754558AbeALJ5S (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 04:57:18 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:44777 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754350AbeALJ5Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 04:57:16 -0500
+Received: by mail-pf0-f196.google.com with SMTP id m26so4050739pfj.11
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 01:57:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0bmknLtjCN8uBY/qHLqSjY0zIUT3fSiv2wq2/SZZUsE=;
-        b=rldkKMo0uGeUwpXZhM6C6oSdjZIs/l6DTV+1QplrGPZKp5M/QgwP/jjZzVaYq/Y2Zz
-         qaR2H7o6sbq9+5qMZ5TGVKLjFTO/H5BaxASNRwWy9Fh3AXVZjYKMIXdw8+FTLkr7SUin
-         NeeN1+inOhWiK9ZU1YjI8RPuib6L0qn5IT98Jm62CLwfkVzR/19G/dnZoJZsekom4/72
-         yR1Sa4guMglTrr8UYCKNb5op2N2omYOwGJ9Ez+S/F0zWdvJmK7tpnI60YG7eIqCNxL5T
-         2uNae7mYKeJqo0MSGL3aj2+i+QlwSfCq+uq0/7gSAiSwL7jg+i0+un5aDdYZ9t666afZ
-         RYuA==
+        bh=rJxh/1QuN99pEH0YFgX62TMYiMnE91SqeAc9LAiOLe0=;
+        b=rfLMcnkWrDu8ZfwRvnhIwmJp9gaL/mTZK7ioZ8VL4Mikr5FatnERBEITXzZA0yHU8E
+         n/AhRoQyOCVPz7MRbGtePtLb52CTcCOy4an8Pm0Zx+XrzB3GCJ3MjmrCeq/99iQuYyQE
+         MMMJp0gQG9QX/KRXHD4lTtMHtO+/k/RVeA6r97IheEcmaNDO9qg3m0jDUYxhpsqZvwo3
+         VOs+FPpVjX1TrzmUug4rJBAq5eULOwYWe3hLSUOQXQQLdrtTnUTyvSSn02oJbOWJgh7i
+         WTEX9+kAnROZoINTi3bYzUZp+6xFtNii4mpm0z5likU7JrDRcFns/YBPoqNDlp3i1ubE
+         BvSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0bmknLtjCN8uBY/qHLqSjY0zIUT3fSiv2wq2/SZZUsE=;
-        b=tPYMODQeq2yRUfhHX+WovGF37TxheB1hySOR01b124JzrgSQowEaBZIzt4WCUFMfdJ
-         hmTxuELqhT6jPu4fai05OhpqeTmUeZotrsTsYhf9b350uUJVsFb57KvIf6C2DK9jzKKu
-         OiNtU4UwwcJWaFRQkP0u9YK9/lNoSiGXhp61PM4seRtpE79F7TG/PB5VV7kA5d8k0f/e
-         DKTULX7WTA5oeoprVSN094/fQYgZETB4VnJCinB0YoSHvYZxwg/oAtNmntTvdvB38hZK
-         lEoZZcOZW2qFNuDP04VkR4oSckrzzxnFFBtjv0xlYz33B05by4F7nSg5vIO6qulpreMA
-         nfPA==
-X-Gm-Message-State: AKwxytdDphpzRNjQXpBKb3vZ7bDvaa0VV/U/VC24kaS4GrZABRM+e4QK
-        qbF0ZEq0gSj9FrlMVQ5sAE4hqA==
-X-Google-Smtp-Source: ACJfBouoXeUHAtJfbUxC5AHwX3FXnvxHyUp1Jvh4v2zLaYH6Mr46/4Ea1uXfTbGM+t3Zg4Lcpr3mlw==
-X-Received: by 10.159.229.3 with SMTP id s3mr5652625plq.161.1515751030310;
-        Fri, 12 Jan 2018 01:57:10 -0800 (PST)
+        bh=rJxh/1QuN99pEH0YFgX62TMYiMnE91SqeAc9LAiOLe0=;
+        b=XoapRN4dE89bCw6EsCKI5n5hZUIMLXpdO788CvrCvvc191flre6ulFU4SwgRGy630B
+         tHjs0LKLbgKrH6en6DTM5Z5JwTj3NYnUOS+tqvBM9eYCN46ra364cs487ATuxGoEOHKj
+         1U+4TNqocnwRbU6RNI4tuTzac/56i0qq5Vr9KdbKGyHLxK7TB5QJTv3tQHqvQGtzdnvv
+         SjnGRLLoJBcgUDA7Qez+9EMbmzCDUBNUfrs10NeZraxysGIi91+Yk4BzlAxWA892BT64
+         lm9HPmno5aSJzRLq7hYYSEZBqLyj0Hyf9p9ec/cQN/gyu2OXto2+Ty8gm64/CoH1Cmig
+         aBZA==
+X-Gm-Message-State: AKwxytefcSz1L4yyM9/ZDup4zNMCL2cLoZSYGD2ZDZpNlKV2ys5NbdFI
+        1Ane8OGy3KI6b42AKXwfD09hSw==
+X-Google-Smtp-Source: ACJfBovrt/pLyINkW9hIau+CslyiuqwIJJLqwfWaIEFuhT/HBDqxmlaDol1j6qbtpY/rm/VmmQQXPQ==
+X-Received: by 10.84.218.69 with SMTP id f5mr13223385plm.431.1515751035883;
+        Fri, 12 Jan 2018 01:57:15 -0800 (PST)
 Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id e62sm10149689pfa.173.2018.01.12.01.57.06
+        by smtp.gmail.com with ESMTPSA id d186sm29568144pfa.0.2018.01.12.01.57.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Jan 2018 01:57:09 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 12 Jan 2018 16:57:04 +0700
+        Fri, 12 Jan 2018 01:57:15 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 12 Jan 2018 16:57:10 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 3/4] trace.c: print env vars in trace_run_command()
-Date:   Fri, 12 Jan 2018 16:56:06 +0700
-Message-Id: <20180112095607.18293-4-pclouds@gmail.com>
+Subject: [PATCH v3 4/4] trace.c: be smart about what env to print in trace_run_command()
+Date:   Fri, 12 Jan 2018 16:56:07 +0700
+Message-Id: <20180112095607.18293-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 In-Reply-To: <20180112095607.18293-1-pclouds@gmail.com>
 References: <20180111094712.2551-1-pclouds@gmail.com>
@@ -74,71 +74,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Occasionally submodule code could execute new commands with GIT_DIR set
-to some submodule. GIT_TRACE prints just the command line which makes it
-hard to tell that it's not really executed on this repository.
+The previous concatenate_env() is kinda dumb. It receives a env delta
+in child_process and blindly follows it. If the run_command() user
+"adds" more vars of the same value, or deletes vars that do not exist
+in parent env in the first place (*), then why bother to print them?
 
-Print modified env variables (compared to parent environment) in this
-case. Actually only modified or new variables (*) are printed. Variable
-deletion is suppressed because they are often used to clean up
-repo-specific variables that git passes around between processes. When
-submodule code executes commands on another repo, it clears all these
-variables, _many_ of these, that make the output really noisy.
+This patch checks child_process.env against parent environment and
+only print the actual differences. The unset syntax (and later on cwd)
+follows closely shell syntax for easy reading/guessing and copy/paste.
 
-(*) sort of. More on this in the next patch.
+There is an interesting thing with this change. In the previous patch,
+we unconditionally print new vars. With submodule code we may have
+something like this
+
+    trace: ... GIT_DIR='.git' git 'status' '--porcelain=2'
+
+but since parent's GIT_DIR usually has the same value '.git' too, this
+change suppress that, now we can't see that the above command runs in
+a separate repo. This is the run for printing cwd. Now we have
+
+    trace: ... cd foo; git 'status' '--porcelain=2'
+
+Another equally interesting thing is, some caller can do "unset GIT_DIR;
+set GIT_DIR=.git". Since parent env can have the same value '.git', we
+don't re-print GIT_DIR=.git. In that case must NOT print "unset GIT_DIR"
+or the user will be misled to think the new command has no GIT_DIR.
+
+A note about performance. Yes we're burning a lot more cycles for
+displaying something this nice. But because it's protected by
+$GIT_TRACE, and run_command() should not happen often anyway, it should
+not feel any slower than before.
+
+(*) this is the case with submodule code where all local_repo_env[]
+vars are to be deleted even though many of them do not exist in the
+first place. Printing all these is too noisy and that leads to
+ignoring variable deletion in the previous patch.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- trace.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ trace.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 69 insertions(+), 8 deletions(-)
 
 diff --git a/trace.c b/trace.c
-index ed1f728021..e499074d39 100644
+index e499074d39..a1f871e720 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -273,6 +273,24 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+@@ -272,23 +272,78 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+ 
  #endif /* HAVE_VARIADIC_MACROS */
  
- 
-+static void concatenate_env(struct strbuf *dst, const char *const *envs)
++static void sort_deltaenv(struct string_list *envs,
++			  const char *const *deltaenv)
 +{
-+	int i;
++	struct strbuf key = STRBUF_INIT;
++	const char *const *e;
 +
-+	for (i = 0; envs[i]; i++) {
-+		const char *env = envs[i];
-+		const char *p = strchr(env, '=');
++	for (e = deltaenv; e && *e; e++) {
++		char *equals = strchr(*e, '=');
 +
-+		if (!p) /* ignore var deletion for now */
-+			continue;
-+		p++;
-+
-+		strbuf_addch(dst, ' ');
-+		strbuf_add(dst, env, p - env);
-+		sq_quote_buf(dst, p);
++		if (equals) {
++			strbuf_reset(&key);
++			strbuf_add(&key, *e, equals - *e);
++			string_list_append(envs, key.buf)->util = equals + 1;
++		} else {
++			string_list_append(envs, *e)->util = NULL;
++		}
 +	}
++	string_list_sort(envs);
++	strbuf_release(&key);
 +}
-+
- void trace_run_command(const struct child_process *cp)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -281,8 +299,17 @@ void trace_run_command(const struct child_process *cp)
- 				&trace_default_key, &buf))
- 		return;
  
-+	strbuf_grow(&buf, 255);
+-static void concatenate_env(struct strbuf *dst, const char *const *envs)
 +
++static void concatenate_env(struct strbuf *dst, const char *const *deltaenv)
+ {
++	struct string_list envs = STRING_LIST_INIT_DUP;
+ 	int i;
+ 
+-	for (i = 0; envs[i]; i++) {
+-		const char *env = envs[i];
+-		const char *p = strchr(env, '=');
++	/*
++	 * Construct a sorted string list consisting of the delta
++	 * env. We need this to detect the case when the same var is
++	 * deleted first, then added again.
++	 */
++	sort_deltaenv(&envs, deltaenv);
++
++	/*
++	 * variable deletion first because it's printed like separate
++	 * shell commands
++	 */
++	for (i = 0; i < envs.nr; i++) {
++		const char *env = envs.items[i].string;
++		const char *p = envs.items[i].util;
++
++		if (p || !getenv(env))
++			continue;
+ 
+-		if (!p) /* ignore var deletion for now */
++		/*
++		 * Do we have a sequence of "unset GIT_DIR; GIT_DIR=foo"?
++		 * Then don't bother with the unset thing.
++		 */
++		if (i + 1 < envs.nr &&
++		    !strcmp(env, envs.items[i + 1].string))
+ 			continue;
+-		p++;
+ 
+-		strbuf_addch(dst, ' ');
+-		strbuf_add(dst, env, p - env);
++		strbuf_addf(dst, " unset %s;", env);
++	}
++
++	for (i = 0; i < envs.nr; i++) {
++		const char *env = envs.items[i].string;
++		const char *p = envs.items[i].util;
++		const char *old_value;
++
++		if (!p)
++			continue;
++
++		old_value = getenv(env);
++		if (old_value && !strcmp(old_value, p))
++			continue;
++
++		strbuf_addf(dst, " %s=", env);
+ 		sq_quote_buf(dst, p);
+ 	}
++	string_list_clear(&envs, 0);
+ }
+ 
+ void trace_run_command(const struct child_process *cp)
+@@ -303,6 +358,12 @@ void trace_run_command(const struct child_process *cp)
+ 
  	strbuf_addf(&buf, "trace: run_command:");
  
-+	/*
-+	 * The caller is responsible for initializing cp->env from
-+	 * cp->env_array if needed. We only check one place.
-+	 */
-+	if (cp->env)
-+		concatenate_env(&buf, cp->env);
++	if (cp->dir) {
++		strbuf_addstr(&buf, " cd ");
++		sq_quote_buf(&buf, cp->dir);
++		strbuf_addch(&buf, ';');
++	}
 +
- 	if (cp->git_cmd)
- 		strbuf_addstr(&buf, " git");
- 
+ 	/*
+ 	 * The caller is responsible for initializing cp->env from
+ 	 * cp->env_array if needed. We only check one place.
 -- 
 2.15.1.600.g899a5f85c6
 
