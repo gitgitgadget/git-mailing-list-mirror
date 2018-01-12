@@ -2,166 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01701F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 14:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0701F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 15:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933873AbeALOob (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 09:44:31 -0500
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:36640 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933764AbeALOoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 09:44:30 -0500
-Received: by mail-wr0-f181.google.com with SMTP id d9so5515867wre.3
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 06:44:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XSjSzJ1uk3q+2nALlbr5hGh7BGU35L5lQOj/VHwmAjA=;
-        b=tJj6sOmOQQ58SCgqeryWAJPV+ooDZf8A2adDxspruKOX0X3tZ5OWqoFLwAjKhXJEoY
-         uJBZNbfRhgGnWnXmWylUWCfIDPbiv/8h2fifazcuduOsRbd5PsDfLIWP91PAeBsZ1jgu
-         M8MpmrDVwtuZPzdoyAhiUQvoIsz1vBE4PYH2qqeB6bSgn9p+A8oJQnpUXYvEIzvpiFwd
-         aBMeMUoOUO80rfdQQ4NQXgaZk6INMVjMl1yRacw4pSrsNiCFDUKsI6pu8B0hNJ5DuLjI
-         cdjAVeTPiS+MW2rW/bj4xVtlGpZL3OReuSPsnXtgRbFHX107TwPuFl/Jmsf+S2DyyHpd
-         4Jwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XSjSzJ1uk3q+2nALlbr5hGh7BGU35L5lQOj/VHwmAjA=;
-        b=jEcaLmd6Slz/j8SpZYmakcx/b5S99mX2PelhJOWi/n4VizMyBFz3Ojb1DKX32VgbGT
-         nPOnwfYIFM09VZqq+aYs2+dqib3gdmO3Fp9lBvi/kvyicStkabLPGMkmXvAmw/rjI9QY
-         9JA5eNpuuFPMXEWXDW9ra66Xe1+QS2Mdka58K9bgmjNX8BlkoHKAjtqAxWMfZX5IXS5J
-         zMZjrew0GcZbaEq6UnU45W2P5ead2OnM1yNxLG/sP171FVLSdYobEfAzZNvIVgUGHKoH
-         7MyNWPF2/ETv87pGoGQhhqhVE4irSvJVsQ666whLg089Ep80qHrmDp7w0due9j/lXiFB
-         Cg5g==
-X-Gm-Message-State: AKwxytfa4gyw3B61DRAfwI8vcos9XLksRFCAc7kkXd/xZQ2Y8ao0aukn
-        eGn1Ng/qHtMj3bC2mGN8mlPacvFN
-X-Google-Smtp-Source: ACJfBovrlNZ1vTluFEXEIWs+UBmcZl25Pt2jk2LaZ9AdjevvFKqmJOJQwo4J0JJNNixQDNz4Ltu7oQ==
-X-Received: by 10.223.192.65 with SMTP id c1mr3877030wrf.58.1515768268344;
-        Fri, 12 Jan 2018 06:44:28 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id o12sm22829127wrf.14.2018.01.12.06.44.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 12 Jan 2018 06:44:27 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: git gc --auto yelling at users where a repo legitimately has >6700 loose objects
-References: <87inc89j38.fsf@evledraar.gmail.com> <CACsJy8AWO5Vk-Qz3VVBUezWL=oAd9YkeGq=_TXGSb0GSs5bLcg@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CACsJy8AWO5Vk-Qz3VVBUezWL=oAd9YkeGq=_TXGSb0GSs5bLcg@mail.gmail.com>
-Date:   Fri, 12 Jan 2018 15:44:26 +0100
-Message-ID: <87d12f9lx1.fsf@evledraar.gmail.com>
+        id S933997AbeALPVB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 10:21:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42252 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S933926AbeALPVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 10:21:01 -0500
+Received: (qmail 8847 invoked by uid 109); 12 Jan 2018 15:21:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 12 Jan 2018 15:21:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31731 invoked by uid 111); 12 Jan 2018 15:21:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 12 Jan 2018 10:21:34 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 Jan 2018 10:20:59 -0500
+Date:   Fri, 12 Jan 2018 10:20:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/9] object: add clear_commit_marks_all()
+Message-ID: <20180112152058.GA10210@sigill.intra.peff.net>
+References: <6ace4f8f-824b-2825-ef18-1fccebb9fb5c@web.de>
+ <ac4c77a1-6403-ca20-2021-50c99201915a@web.de>
+ <ec45f9a8-292a-53e2-52b6-44d744cb6c36@web.de>
+ <20180110075838.GD16315@sigill.intra.peff.net>
+ <a0ca86b8-e258-2588-1c99-a30e8e60fdbd@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <a0ca86b8-e258-2588-1c99-a30e8e60fdbd@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jan 11, 2018 at 07:57:42PM +0100, René Scharfe wrote:
 
-On Fri, Jan 12 2018, Duy Nguyen jotted:
+> > Is it worth having:
+> > 
+> >    void clear_object_flags_from_type(int type, unsigned flags);
+> > 
+> > rather than having two near-identical functions? I guess we'd need some
+> > way of saying "all types" to reimplement clear_object_flags() as a
+> > wrapper (OBJ_NONE, I guess?).
+> 
+> I don't know if there is a demand.  Perhaps the two callers of
+> clear_object_flags() should be switched to clear_commit_marks_all()?
+> They look like they only care about commits as well.  Or is it safe to
+> stomp over the flags of objects of other types?  Then we'd only need
+> to keep clear_object_flags()..
 
-> On Fri, Jan 12, 2018 at 4:33 AM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> For those rusty on git-gc's defaults, this is what it looks like in this
->> scenario:
->>
->>  1. User runs "git pull"
->>  2. git gc --auto is called, there are >6700 loose objects
->>  3. it forks into the background, tries to prune and repack, objects
->>     older than gc.pruneExpire (2.weeks.ago) are pruned.
->>  4. At the end of all this, we check *again* if we have >6700 objects,
->>     if we do we print "run 'git prune'" to .git/gc.log, and will just
->>     emit that error for the next day before trying again, at which point
->>     we unlink the gc.log and retry, see gc.logExpiry.
->>
->> Right now I've just worked around this by setting gc.pruneExpire to a
->> lower value (4.days.ago). But there's a larger issue to be addressed
->> here, and I'm not sure how.
->>
->> When the warning was added in [1] it didn't know to detach to the
->> background yet, that came in [2], shortly after came gc.log in [3].
->>
->> We could add another gc.auto-like limit, which could be set at some
->> higher value than gc.auto. "Hey if I have more than 6700 loose objects,
->> prune the <2wks old ones, but if at the end there's still >6700 I don't
->> want to hear about it unless there's >6700*N".
->
-> Yes it's about time we make too_many_loose_objects() more accurate and
-> complain less, especially when the complaint is useless.
->
->> I thought I'd just add that, but the details of how to pass that message
->> around get nasty. With that solution we *also* don't want git gc to
->> start churning in the background once we reach >6700 objects, so we need
->> something like gc.logExpiry which defers the gc until the next day. We
->> might need to create .git/gc-waitabit.marker, ew.
->
-> Hmm.. could we save the info from the last run to help the next one?
-> If the last gc --auto (which does try to remove some loose objects)
-> leaves 6700 objects still loose, then it's "clear" that the next run
-> may also leave those loose. If we save that number somewhere (gc.log
-> too?) too_many_loose_objects() can read back and subtract it from the
-> estimation and may decide not to do gc at all since the number of
-> loose-and-prunable objects is below threshold.
->
-> The problem is of course these 6700 will gradually become prunable
-> over time. We can't just substract the same constant forever. Perhaps
-> we can do something based on gc.pruneExpire?
->
-> Say gc.pruneExpires specifies to keep objects in two weeks, we assume
-> these object create time is spread out equally over 14 days. So after
-> one day, 6700/14 objects are supposed to be prune-able and part of
-> too_many_loose_objects estimation. The gc--auto that is run two weeks
-> since the first run would count all loose objects as prunable again.
->
->> More generally, these hard limits seem contrary to what the user cares
->> about. E.g. I suspect that most of these loose objects come from
->> branches since deleted in upstream, whose objects could have a different
->> retention policy.
->
-> Er.. what retention policy? I think gc.pruneExpire is the only thing
-> that can keep loose objects around?
+I'd worry that the call in reset_revision_walk() might want to clear
+non-commits if the revisions have "--objects" passed to them.
 
-You answered this yourself in
-CACsJy8CUYosOGK5tn0C=t=SkbS-fyaSxp536zx+9jh_O+WNaEQ@mail.gmail.com, yeah
-I mean loose objects from branch deletions.
+I do suspect that clearing flags from all objects would just work in the
+general case (since we're limiting ourselves to only a particular set of
+flags). But it's probably not worth the risk of unintended fallout,
+since there's not much benefit after your series.
 
-More generally, the reason we even have the 2 week limit is to pick a
-good trade-off between performance and not losing someone's work that
-they e.g. "git add"-ed but never committed.
+> > The run-time check is maybe a little bit slower in the middle of a tight
+> > loop, but I'm not sure it would matter much (I'd actually be curious if
+> > this approach is faster than the existing traversal code, too).
+> 
+> I don't know how to measure this properly.  With 100 runs each I get
+> this for the git repo and the silly test program below, which measures
+> the duration of the respective function call:
+> 
+>    mean        stddev method
+>    ----------- ------ ----------------------
+>    5.89763e+06 613106 clear_commit_marks
+>    2.72572e+06 507689 clear_commit_marks_all
+>    1.96582e+06 494753 clear_object_flags
+> 
+> So these are noisy numbers, but kind of in the expected range.
 
-I'm suggesting (but don't know if this is worth it, especially given
-Jeff's comments) that one smarter approach might be to track where the
-objects came from (e.g. by keeping reflogs for deleted upstream branches
-for $expiry_time).
+That's about what I'd expect. The "bad" case for looking at all objects
+is when there are a bunch of objects loaded that _weren't_ part of this
+particular traversal. I have no idea how often that happens, but we can
+guess at the impact in the worst case: having done a previous --objects
+traversal in the process and then traversing all of the commits a second
+time, we'd probably have about 5-10x as many objects to look through for
+that second path. So clear_commit_marks() would win there.
 
-Then we could immediately delete loose objects we got from upstream
-branches (or delete them more aggressively), while treating objects that
-were originally created in the local repository differently.
+The absolute numbers are small enough that it probably doesn't matter
+either way.
 
->> But now I have git-gc on some servers yelling at users on every pull
->> command:
->>
->>    warning: There are too many unreachable loose objects; run 'git prune' to remove them.
->
-> Why do we yell at the users when some maintenance thing is supposed to
-> be done on the server side? If this is the case, should gc have some
-> way to yell at the admin instead?
-
-Sorry I didn't clarify this, this is a shared server (rollout system
-with staged checkouts) that users log into and stage/test a rollout from
-the git repo, so not the git server.
-
-Because it's a shared repo there's a lot more loose object churn, Mostly
-due to pulling more often (and thus more branches that later get
-deleted), but also from rebasing and whatnot in the rollout repo.
+-Peff
