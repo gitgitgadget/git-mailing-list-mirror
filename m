@@ -2,116 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FF111F406
-	for <e@80x24.org>; Fri, 12 Jan 2018 20:28:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B6E31F406
+	for <e@80x24.org>; Fri, 12 Jan 2018 22:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964956AbeALU2i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 15:28:38 -0500
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36899 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964847AbeALU2i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 15:28:38 -0500
-Received: by mail-pf0-f171.google.com with SMTP id p1so5209968pfh.4
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 12:28:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ta/yjby62WzKpO98ezWzxVJT/vvcJceYoP2VqgW9e2Q=;
-        b=qLYo1OvtoLjaGfl2SDLTlJ4ie3h45ZP1ZZDrnC7v3s0GFpdgAHmYrqVDahN2bsY1OM
-         hyYVUB4gEAhaKkUKARK2MNPR8pYY7AKH6b8RDX8TTiQJsS7uzMgLi0OSEgc14sl4+JhO
-         2t+I8yDmI1otemcJvOeCJ7tfnA8jGjq6E7UVgI1r7yc+7cAfs6bLgJjNPhxuhz98jJGg
-         4qEsjfzvBLduQwHLPJPsPQ2xgNNpHUICQDP0ZwhExz0XYtfpbGWz7G4/cndThshYcFZ1
-         8M5nHBvdlEbFzVUtfaIfbWXOvPrBKrv479khvs1P+BSDknLwKJtt8rCo++W9KQw+UAQO
-         9aAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ta/yjby62WzKpO98ezWzxVJT/vvcJceYoP2VqgW9e2Q=;
-        b=aY5OVcmrxQxB8WvE7WiWDXh2kH3kNuH+rYJ5etnLviIt+rXJQBCx8cGK5/Cq+TPr78
-         2FT7haYR9NymowhJIKy0ba/ckupQe0iW5NFXiFFH08X/3uS2uUvnngbtO7tDRJB5lL1d
-         Qu4fXwZ+RU15PzbHxDlqcSmZnqVE08uSqhRmp3i14WfEfgsTImQNO0qugATsDsZQA4l/
-         Bd3gNY587DAX3MyY7Y70ioM/nLyz3NpxBgEYwjmj+FOaQYjlw8Q29eRf7sWQSoE+h6C/
-         zt1oudXIoR8mqCkrSfoyZtlw/QgHr2I+KpiaJf9hv9Hu5rS8IOpriEnbsAHkOWd9foJI
-         gT9A==
-X-Gm-Message-State: AKwxytfzIZ6XI7sY7/lnQC76Q7EDTcSG6bJl1iO7MYosKQsSpJHxDuK4
-        bH4pU34xx7KootpX/h3opziwYw==
-X-Google-Smtp-Source: ACJfBosnuiV5dFehE5S6mggI1CdPwlChPK0I1ZkDCR0Vt4BhD42YdZaddtW1nud3qdy81w7DyjlqCw==
-X-Received: by 10.84.248.131 with SMTP id q3mr7956748pll.5.1515788917313;
-        Fri, 12 Jan 2018 12:28:37 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:1ce8:f9b2:923:333c])
-        by smtp.gmail.com with ESMTPSA id 28sm26796470pfn.34.2018.01.12.12.28.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 12 Jan 2018 12:28:36 -0800 (PST)
-Date:   Fri, 12 Jan 2018 12:28:35 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 4/4] trace.c: be smart about what env to print in
- trace_run_command()
-Message-ID: <20180112202835.GA108169@google.com>
-References: <20180111094712.2551-1-pclouds@gmail.com>
- <20180112095607.18293-1-pclouds@gmail.com>
- <20180112095607.18293-5-pclouds@gmail.com>
- <20180112133355.GE27499@sigill.intra.peff.net>
- <xmqqpo6fvstf.fsf@gitster.mtv.corp.google.com>
- <20180112184546.GA15514@sigill.intra.peff.net>
- <xmqqlgh2x4tr.fsf@gitster.mtv.corp.google.com>
- <20180112192314.GA19004@sigill.intra.peff.net>
+        id S965296AbeALWHq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 17:07:46 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54869 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965183AbeALWHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 17:07:44 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2ED7FD72F3;
+        Fri, 12 Jan 2018 17:07:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ofV/P4lNCUrWh1hniIKbVdhtGWs=; b=wk3P7g
+        LnwYBHr8fG8xpQvjC23YZ+Yw2YtzWYPEeQPpFAQQmnG4SD37ng91txP45ob+5afa
+        luZ7RHol5RGS96YbcVn/2zionzTNtvhk/STQZkEBNV8H7Y5N/9TY6hlADPJx7gvx
+        mxoYYM4Hh0kOKX4PHfFXvw0h3lfH23FKFXHn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KsVRnixp6unjGLkINaUPX85Ao35kf0oZ
+        OBe9oLEO+uQMQXr27jFUUKLdDFngYgONccmVoTBOe2ZcYZYIZNqV7rLkQlXL+e97
+        mMSVdk2x6FWiHL2kciwRFv0CUvpMuLf6yisnPL4R8HGK9gUy0Gqs3RM0Yu60CqDy
+        TrCLC26szu0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 254BCD72F2;
+        Fri, 12 Jan 2018 17:07:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F33DD72F1;
+        Fri, 12 Jan 2018 17:07:41 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>, Tanay Abhra <tanayabh@gmail.com>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc2 - breakages in t1308 and 1404
+References: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com>
+Date:   Fri, 12 Jan 2018 14:07:40 -0800
+In-Reply-To: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com> (Randall
+        S. Becker's message of "Fri, 12 Jan 2018 14:42:21 -0500")
+Message-ID: <xmqqd12ewx1v.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180112192314.GA19004@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0253BB1E-F7E5-11E7-9892-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/12, Jeff King wrote:
-> On Fri, Jan 12, 2018 at 11:19:44AM -0800, Junio C Hamano wrote:
-> 
-> > Jeff King <peff@peff.net> writes:
-> > 
-> > > The actual prep_childenv() code looks like it would always do
-> > > last-one-wins, so we should treat FOO as unset in that final case. But
-> > > that only kicks in on non-Windows.
-> > >
-> > > On Windows we feed cmd->env straight to mingw_spawnvpe().  That ends up
-> > > in make_environment_block(), which looks like it does something similar.
-> > >
-> > > It's too bad the prep code is not shared, since then we could probably
-> > > just ask _it_ which deltas it applied.
-> > 
-> > Yeah, but that function does a lot more than computing delta.  
-> > 
-> > It's primary point, which comes from ae25394b ("run-command: prepare
-> > child environment before forking", 2017-04-19), is to create a full
-> > copy of the environment, not just a series of putenv/unsetenv that
-> > describes what gets changed, and that is done to avoid any
-> > allocation after fork before exec in the child process.
-> > 
-> > I guess prep_childenv() could take an extra and optional string-list
-> > to report what "deltas" it applied to the tracing machinery.  I am
-> > not sure if that is worth it, though.
-> 
-> Yes, that's exactly what I meant. I think if it covered all platforms it
-> might be worth it (not so much for code de-duping, but because then we
-> would know our display logic always matched what we exec'd). But unless
-> somebody wants to refactor all of the Windows spawn code, it's
-> definitely not a good idea.
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-And not having access to a windows box I didn't want to try and refactor
-the windows-only code when I introduced prep_childenv() :)
+> It looks like the exit code is coming back as 1 not 2. There is
+> also a file except vs expect.
+> ./trash directory.t1308-config-set: ls
+> a-directory  actual  config2  except  expect  output  result
 
--- 
-Brandon Williams
+The test that leaves "except" does look wrong.  The relevant part
+looks like this:
+
+    test_expect_success 'find value with highest priority from a configset' '
+            echo hask >expect &&
+            test-config configset_get_value case.baz config2 .git/config >actual &&
+            test_cmp expect actual
+    '
+
+    test_expect_success 'find value_list for a key from a configset' '
+            cat >except <<-\EOF &&
+            sam
+            ...
+            EOF
+            test-config configset_get_value case.baz config2 .git/config >actual &&
+            test_cmp expect actual
+    '
+
+The invocations of test-config in these two tests look exactly the
+same, at least to me, so whatever comes out of the command and
+stored in 'actual' must match what the first test stored in 'expect'
+and compared the same as 'actual' in that test.
+
+So the second test is probably asking a wrong question to test-config
+but because it prepares an expected answer in a wrong file, it did
+not even notice that it is asking a wrong question X-<.
+
+The wrong test comes from 4c715ebb ("test-config: add tests for the
+config_set API", 2014-07-28); I do not know offhand if the author of
+that change is still around.
+
+Having said all that, I suspect that the "except" thing may not have
+anything to do with what you are observing; sorry for not ending up
+to be very helpful X-<.
+
+
+
+
