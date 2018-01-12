@@ -2,223 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9ED01F404
-	for <e@80x24.org>; Fri, 12 Jan 2018 09:57:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2ECEA1F404
+	for <e@80x24.org>; Fri, 12 Jan 2018 10:37:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754558AbeALJ5S (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 04:57:18 -0500
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:44777 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754350AbeALJ5Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 04:57:16 -0500
-Received: by mail-pf0-f196.google.com with SMTP id m26so4050739pfj.11
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 01:57:16 -0800 (PST)
+        id S932797AbeALKhd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 05:37:33 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37248 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754660AbeALKhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 05:37:32 -0500
+Received: by mail-wm0-f68.google.com with SMTP id f140so10810152wmd.2
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 02:37:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rJxh/1QuN99pEH0YFgX62TMYiMnE91SqeAc9LAiOLe0=;
-        b=rfLMcnkWrDu8ZfwRvnhIwmJp9gaL/mTZK7ioZ8VL4Mikr5FatnERBEITXzZA0yHU8E
-         n/AhRoQyOCVPz7MRbGtePtLb52CTcCOy4an8Pm0Zx+XrzB3GCJ3MjmrCeq/99iQuYyQE
-         MMMJp0gQG9QX/KRXHD4lTtMHtO+/k/RVeA6r97IheEcmaNDO9qg3m0jDUYxhpsqZvwo3
-         VOs+FPpVjX1TrzmUug4rJBAq5eULOwYWe3hLSUOQXQQLdrtTnUTyvSSn02oJbOWJgh7i
-         WTEX9+kAnROZoINTi3bYzUZp+6xFtNii4mpm0z5likU7JrDRcFns/YBPoqNDlp3i1ubE
-         BvSA==
+        d=googlemail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=bB4YTmHIxFTAMpCrsJkFaQlg9cw8QkiJGrenf+pyhKY=;
+        b=RNBoV8XGVRFn4JOjKLw62TrGo3Yq6w6Xkfkn5n2MMVbB8kyR3de25lp1kUF4srw/u7
+         CnvvrbE51C9sAMMWLCLLhJ0xWrHxldkNoaVje9V+RcwX71V9tIfmpA8UeSusHEQuGIaK
+         crTX4gPT6tSnQOmYwgpFYjuGtEvAYvOCQ9YXh1dkEdgHgT1KNxhV5u/HxRSz7Aqpw8nM
+         7SHdBbAOacn2YJ1uxRbDsrB0oxYzFx8JJrykE6RJSMnQqSsNqb9hbZT5lHs3VW/hcLZb
+         IggqQPP/Rn9mRY+Jk31CnI6D5OxWH3Kx3Oj4VRafhBnGGoW8ZjukAPkLh8DcpybY7+AZ
+         sjog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rJxh/1QuN99pEH0YFgX62TMYiMnE91SqeAc9LAiOLe0=;
-        b=XoapRN4dE89bCw6EsCKI5n5hZUIMLXpdO788CvrCvvc191flre6ulFU4SwgRGy630B
-         tHjs0LKLbgKrH6en6DTM5Z5JwTj3NYnUOS+tqvBM9eYCN46ra364cs487ATuxGoEOHKj
-         1U+4TNqocnwRbU6RNI4tuTzac/56i0qq5Vr9KdbKGyHLxK7TB5QJTv3tQHqvQGtzdnvv
-         SjnGRLLoJBcgUDA7Qez+9EMbmzCDUBNUfrs10NeZraxysGIi91+Yk4BzlAxWA892BT64
-         lm9HPmno5aSJzRLq7hYYSEZBqLyj0Hyf9p9ec/cQN/gyu2OXto2+Ty8gm64/CoH1Cmig
-         aBZA==
-X-Gm-Message-State: AKwxytefcSz1L4yyM9/ZDup4zNMCL2cLoZSYGD2ZDZpNlKV2ys5NbdFI
-        1Ane8OGy3KI6b42AKXwfD09hSw==
-X-Google-Smtp-Source: ACJfBovrt/pLyINkW9hIau+CslyiuqwIJJLqwfWaIEFuhT/HBDqxmlaDol1j6qbtpY/rm/VmmQQXPQ==
-X-Received: by 10.84.218.69 with SMTP id f5mr13223385plm.431.1515751035883;
-        Fri, 12 Jan 2018 01:57:15 -0800 (PST)
-Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id d186sm29568144pfa.0.2018.01.12.01.57.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Jan 2018 01:57:15 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 12 Jan 2018 16:57:10 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=bB4YTmHIxFTAMpCrsJkFaQlg9cw8QkiJGrenf+pyhKY=;
+        b=HFNhl1McCg82v+H5Y9SfD53HiKSuHps1mFtKie5RileNgOHuo82svtpPd9ejBVQNaW
+         Tx5IasibH2rfDgZNW/KPg+ydIngHHkVtaATqOPYyiXGa1tp2L1LX8B7phRJnUIc/0qyk
+         c/u07FP+iLsFvco9akJqaaHLOlI4OcIKPNTz9ZltXRvZU13Nw6kXMWGNBP3xFfg7Oo63
+         Bq377nXP7ojOgkU+nVm0W4InKQOmfyaIKEzQYFWz6N8aUCJetY955rD7Gvbe8en8sePO
+         FZtw53xSxFPaFXpmmipIk0IOimwBiU8VoCv3eDvMgSYp315T1pz3M0bVQlmZXrABtzA6
+         pLRA==
+X-Gm-Message-State: AKwxytfDsOiuldUdjkWj38fFkpyMNlUQkHaw8UE1zMjc3OmqtBI+iCCy
+        kAOrCcMgOEr7xj+cSyDKI97iHSEZ
+X-Google-Smtp-Source: ACJfBotPStcxAj/clisxHAJ2U7JArNEUpu1K27/rw0Mhevw9IH9bJIcK4b0Buiy/t/Wc+TN4OltVqA==
+X-Received: by 10.28.144.7 with SMTP id s7mr3869341wmd.89.1515753451002;
+        Fri, 12 Jan 2018 02:37:31 -0800 (PST)
+Received: from greyhound ([195.145.21.250])
+        by smtp.gmail.com with ESMTPSA id p29sm2253991wmf.20.2018.01.12.02.37.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 12 Jan 2018 02:37:30 -0800 (PST)
+From:   Christian Ludwig <chrissicool@googlemail.com>
+X-Google-Original-From: Christian Ludwig <chrissicool@gmail.com>
+Received: from cc by greyhound with local (Exim 4.89)
+        (envelope-from <cc@localhost>)
+        id 1eZwiH-00072J-96; Fri, 12 Jan 2018 11:37:29 +0100
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v3 4/4] trace.c: be smart about what env to print in trace_run_command()
-Date:   Fri, 12 Jan 2018 16:56:07 +0700
-Message-Id: <20180112095607.18293-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <20180112095607.18293-1-pclouds@gmail.com>
-References: <20180111094712.2551-1-pclouds@gmail.com>
- <20180112095607.18293-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Christian Ludwig <chrissicool@gmail.com>
+Subject: [PATCH] tests: Deduplicate code in send-email test
+Date:   Fri, 12 Jan 2018 11:37:24 +0100
+Message-Id: <20180112103724.27002-1-chrissicool@gmail.com>
+X-Mailer: git-send-email 2.15.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous concatenate_env() is kinda dumb. It receives a env delta
-in child_process and blindly follows it. If the run_command() user
-"adds" more vars of the same value, or deletes vars that do not exist
-in parent env in the first place (*), then why bother to print them?
+Use the wrapper function around the sed statement like everywhere else
+in the test. Unfortunately the wrapper function is defined pretty late.
 
-This patch checks child_process.env against parent environment and
-only print the actual differences. The unset syntax (and later on cwd)
-follows closely shell syntax for easy reading/guessing and copy/paste.
+Move the wrapper to the top of the test file, so future users have it
+available right away.
 
-There is an interesting thing with this change. In the previous patch,
-we unconditionally print new vars. With submodule code we may have
-something like this
-
-    trace: ... GIT_DIR='.git' git 'status' '--porcelain=2'
-
-but since parent's GIT_DIR usually has the same value '.git' too, this
-change suppress that, now we can't see that the above command runs in
-a separate repo. This is the run for printing cwd. Now we have
-
-    trace: ... cd foo; git 'status' '--porcelain=2'
-
-Another equally interesting thing is, some caller can do "unset GIT_DIR;
-set GIT_DIR=.git". Since parent env can have the same value '.git', we
-don't re-print GIT_DIR=.git. In that case must NOT print "unset GIT_DIR"
-or the user will be misled to think the new command has no GIT_DIR.
-
-A note about performance. Yes we're burning a lot more cycles for
-displaying something this nice. But because it's protected by
-$GIT_TRACE, and run_command() should not happen often anyway, it should
-not feel any slower than before.
-
-(*) this is the case with submodule code where all local_repo_env[]
-vars are to be deleted even though many of them do not exist in the
-first place. Printing all these is too noisy and that leads to
-ignoring variable deletion in the previous patch.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
 ---
- trace.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 69 insertions(+), 8 deletions(-)
+ t/t9001-send-email.sh | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/trace.c b/trace.c
-index e499074d39..a1f871e720 100644
---- a/trace.c
-+++ b/trace.c
-@@ -272,23 +272,78 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 4d261c2a9..81869d891 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -6,6 +6,12 @@ test_description='git send-email'
+ # May be altered later in the test
+ PREREQ="PERL"
  
- #endif /* HAVE_VARIADIC_MACROS */
- 
-+static void sort_deltaenv(struct string_list *envs,
-+			  const char *const *deltaenv)
-+{
-+	struct strbuf key = STRBUF_INIT;
-+	const char *const *e;
-+
-+	for (e = deltaenv; e && *e; e++) {
-+		char *equals = strchr(*e, '=');
-+
-+		if (equals) {
-+			strbuf_reset(&key);
-+			strbuf_add(&key, *e, equals - *e);
-+			string_list_append(envs, key.buf)->util = equals + 1;
-+		} else {
-+			string_list_append(envs, *e)->util = NULL;
-+		}
-+	}
-+	string_list_sort(envs);
-+	strbuf_release(&key);
++replace_variable_fields () {
++	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
++		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
++		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/"
 +}
++
+ test_expect_success $PREREQ 'prepare reference tree' '
+ 	echo "1A quick brown fox jumps over the" >file &&
+ 	echo "lazy dog" >>file &&
+@@ -296,10 +302,7 @@ test_expect_success $PREREQ 'Show all headers' '
+ 		--bcc=bcc@example.com \
+ 		--in-reply-to="<unique-message-id@example.com>" \
+ 		--smtp-server relay.example.com \
+-		$patches |
+-	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
+-		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
+-		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/" \
++		$patches | replace_variable_fields \
+ 		>actual-show-all-headers &&
+ 	test_cmp expected-show-all-headers actual-show-all-headers
+ '
+@@ -554,12 +557,6 @@ Result: OK
+ EOF
+ "
  
--static void concatenate_env(struct strbuf *dst, const char *const *envs)
-+
-+static void concatenate_env(struct strbuf *dst, const char *const *deltaenv)
- {
-+	struct string_list envs = STRING_LIST_INIT_DUP;
- 	int i;
- 
--	for (i = 0; envs[i]; i++) {
--		const char *env = envs[i];
--		const char *p = strchr(env, '=');
-+	/*
-+	 * Construct a sorted string list consisting of the delta
-+	 * env. We need this to detect the case when the same var is
-+	 * deleted first, then added again.
-+	 */
-+	sort_deltaenv(&envs, deltaenv);
-+
-+	/*
-+	 * variable deletion first because it's printed like separate
-+	 * shell commands
-+	 */
-+	for (i = 0; i < envs.nr; i++) {
-+		const char *env = envs.items[i].string;
-+		const char *p = envs.items[i].util;
-+
-+		if (p || !getenv(env))
-+			continue;
- 
--		if (!p) /* ignore var deletion for now */
-+		/*
-+		 * Do we have a sequence of "unset GIT_DIR; GIT_DIR=foo"?
-+		 * Then don't bother with the unset thing.
-+		 */
-+		if (i + 1 < envs.nr &&
-+		    !strcmp(env, envs.items[i + 1].string))
- 			continue;
--		p++;
- 
--		strbuf_addch(dst, ' ');
--		strbuf_add(dst, env, p - env);
-+		strbuf_addf(dst, " unset %s;", env);
-+	}
-+
-+	for (i = 0; i < envs.nr; i++) {
-+		const char *env = envs.items[i].string;
-+		const char *p = envs.items[i].util;
-+		const char *old_value;
-+
-+		if (!p)
-+			continue;
-+
-+		old_value = getenv(env);
-+		if (old_value && !strcmp(old_value, p))
-+			continue;
-+
-+		strbuf_addf(dst, " %s=", env);
- 		sq_quote_buf(dst, p);
- 	}
-+	string_list_clear(&envs, 0);
- }
- 
- void trace_run_command(const struct child_process *cp)
-@@ -303,6 +358,12 @@ void trace_run_command(const struct child_process *cp)
- 
- 	strbuf_addf(&buf, "trace: run_command:");
- 
-+	if (cp->dir) {
-+		strbuf_addstr(&buf, " cd ");
-+		sq_quote_buf(&buf, cp->dir);
-+		strbuf_addch(&buf, ';');
-+	}
-+
- 	/*
- 	 * The caller is responsible for initializing cp->env from
- 	 * cp->env_array if needed. We only check one place.
+-replace_variable_fields () {
+-	sed	-e "s/^\(Date:\).*/\1 DATE-STRING/" \
+-		-e "s/^\(Message-Id:\).*/\1 MESSAGE-ID-STRING/" \
+-		-e "s/^\(X-Mailer:\).*/\1 X-MAILER-STRING/"
+-}
+-
+ test_suppression () {
+ 	git send-email \
+ 		--dry-run \
 -- 
-2.15.1.600.g899a5f85c6
+2.15.1
 
