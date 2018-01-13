@@ -2,98 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82BB21F406
-	for <e@80x24.org>; Sat, 13 Jan 2018 00:22:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0431F406
+	for <e@80x24.org>; Sat, 13 Jan 2018 02:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965360AbeAMAW0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 19:22:26 -0500
-Received: from mail-qk0-f174.google.com ([209.85.220.174]:36669 "EHLO
-        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965304AbeAMAWZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 19:22:25 -0500
-Received: by mail-qk0-f174.google.com with SMTP id d21so10820767qkj.3
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 16:22:24 -0800 (PST)
+        id S965407AbeAMCvx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 21:51:53 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:34057 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965368AbeAMCvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 21:51:52 -0500
+Received: by mail-wm0-f54.google.com with SMTP id 81so4724593wmb.1
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 18:51:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ahF3H80v78dRAIyL4p0kjNfpd9/OGx9o5wtc5dVfSf0=;
-        b=Oeo/MG7hldNmrRzC19zj2DtwBPZ6zjFzAltZ979eXoUpvIVtPnmsWAM5tPJjkNmvtS
-         +yUnZ9kEz4rxb9P6VVAwz2EN9OtcqIWjTkQ9XuzbUWxedW7ne1almc3Nj4H5/pcnLdTf
-         UKU9478ihrYq+28rmKa/s7wYAz/OQR4nXubPIgdSn5NhsFmzDsFdjURJhYgGdQRRwXqR
-         yS20ou8ePslLR63imZeNhZ41C1+p803RaqqFlwdCUJN+om7Oet63VqBrEWr+Pj2meaF7
-         LkPD24GsnVoeo4sNPQA4nFFB/4HdwvauAZXU+cKTu7ifaA8O8Pgfuv18KmuzY6evW/vP
-         QIkQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=QB22WK56DOz+h6q7d+rTVJuTZL4nTKbxzMvyQpsuHMs=;
+        b=Ks2uCv2KCd1yZqBshG4Jk3MX9alEYa/8qMzb6WNF0z99VS0tLUK4fNSl/SJa1hqaxM
+         XSxEhg8uQ7PIO+/vH2Wm7esLGUAYSR0Y2/Buy4UgcC0cSVHRtnRttczaNd/5N94WOES8
+         kVCKldfWobn7gVfxvlYc1kU67/K5Z1SShiDVfQFiHZsyjeN0P6v8Lpq5ePrhwIVZ4lu/
+         GlMTdF38MiASmynT3xjz6d0eEV7gBs3/Mxj/ykV9ADRF/pr+zZIHg/Ru1s41oe96nSAb
+         V2MQpO1Kdvi9MKYMOD++f3YHt1i699CHY/WS4DzqDfCzCZGiLmltC/iAPQUmNS0msEs0
+         hzfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ahF3H80v78dRAIyL4p0kjNfpd9/OGx9o5wtc5dVfSf0=;
-        b=mFL/b1FosZSPypWeRKMOiM3U6sLse5BHrT9NgDKtrQ/BmMbChLRReGopaBK2j6DQwr
-         5PNySGtZYqAT0IV9k2ZZ0p/RmKMFucN+4DzoiDCsJp38hhj5BYLvqbcMfDwEv5uoNkLA
-         xVay29GJTJzOVmJdO5BlsO77anlBoqmyhnb5pu4summwf+/MFHcp9FNs9wOT5u1ypSOF
-         UGyEqZByxDDfZZ+jfOZ7pw7XLLKBFzszRET7DvqwFAOyrTG9BKCFqGFA6g6+ByCwv+eY
-         PG3YYheVcJmANNU5kbHe30m2T6PYhHIxPYldGBoWapsjZfwqja30fo5KGC3FMyADoXkH
-         u7ZA==
-X-Gm-Message-State: AKwxytcCHR+nAIiumAS+rDlUT3LtTf2M67enUPUaJJz+M9uzeuvgD0Z4
-        BegNSoXetm5FFxA9+zR05ksCq2EY
-X-Google-Smtp-Source: ACJfBosomrSTXpQowjjqHbAArGLA5+SiGyG93MOFdhvIrJicb0sznMiwh8GP/yINkLRDP3ZBq4ll2A==
-X-Received: by 10.55.214.75 with SMTP id t72mr41033747qki.12.1515802944180;
-        Fri, 12 Jan 2018 16:22:24 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id 137sm450979qkg.83.2018.01.12.16.22.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 12 Jan 2018 16:22:23 -0800 (PST)
-Date:   Fri, 12 Jan 2018 19:22:21 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Andrzej =?utf-8?B?T8WbbWlhxYJvd3NraQ==?= <me@osmialowski.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Git uses wrong subkey for signing commits with GPG key
-Message-ID: <20180113002221.GQ29313@zaya.teonanacatl.net>
-References: <CAHLNBdVp0VTqtxHQ_cQ2XPMMDhqnQG5boj0M2JrT-iECaFUFZA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=QB22WK56DOz+h6q7d+rTVJuTZL4nTKbxzMvyQpsuHMs=;
+        b=pOoHoZsEoWuQHSkJxp/mXSszvlWEqB4CNwhc/ZitvJV1OO3dOXJ02AspqDwkQot3l1
+         pcFg3L5fdjQZOn+mD/IqzAL98e2msfBYoC0ev0zPT5uZnnTP6V9Km55LN5vJXmRYv9Dn
+         H1a7fzAnqVVZnYYJXsPFpkjZxyzDuR6p/L2wgIbdeq9CUG2dTfw5/2AlnVgITt9MWZ7U
+         Yoz93dMIOVXmw4xdfRG843BWc2MQfkjHP8ErFsusP/A9WRNkPzsPhqfQsuPgNW8gXnqe
+         iVtd/Uha1oYdtwRyJ5fKqM501B+BmR8/c/NpehfLDVvEfLVHP/zy6IP2uLspvUK5EsgT
+         T0sA==
+X-Gm-Message-State: AKwxytc+cibAC9QYBkdAChCXlB3B+0r8DZFVPR6USXD/j1r0PmvSSivb
+        t/YkyE3eui/V/eGgtMACXTOG59P8YmoskWDzRRh05Q==
+X-Google-Smtp-Source: ACJfBoucRy3QHiBA8rMmhPPoOY3KTF2xAoqSmbUUj+HLdJKD0evBqSZS2gAXniDyLzV5urfygBW9q/Vkx2IrvvFggnA=
+X-Received: by 10.28.132.207 with SMTP id g198mr5284337wmd.118.1515811911480;
+ Fri, 12 Jan 2018 18:51:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHLNBdVp0VTqtxHQ_cQ2XPMMDhqnQG5boj0M2JrT-iECaFUFZA@mail.gmail.com>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.28.107.150 with HTTP; Fri, 12 Jan 2018 18:51:51 -0800 (PST)
+In-Reply-To: <xmqqy3l2ves2.fsf@gitster.mtv.corp.google.com>
+References: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com>
+ <xmqqd12ewx1v.fsf@gitster.mtv.corp.google.com> <008f01d38bfa$7eba9bc0$7c2fd340$@nexbridge.com>
+ <xmqqy3l2ves2.fsf@gitster.mtv.corp.google.com>
+From:   Tanay Abhra <tanayabh@gmail.com>
+Date:   Fri, 12 Jan 2018 20:51:51 -0600
+Message-ID: <CAEc54XAP0jFuD4J_XUZOuHEBZ+6PceEQbpm7HJEtRt4NS7Lf2A@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.16.0-rc2 - breakages in t1308 and 1404
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Git List <git@vger.kernel.org>,
+        Matthieu Moy <git@matthieu-moy.fr>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrzej,
+On Fri, Jan 12, 2018 at 5:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+>
+> > Sadly, fixing the "except" thing causes the test to break now.
+>
+> That is exactly what I wanted to say.  If you want to "fix" it,
+> you'd need to figure out what the author of the "except" thing
+> wanted to test, adjust the args given to test-config (it cannot be
+> the same as the test-config invocation of the previous test), and
+> then fix the typo s/except/expect/.  Changing the typo alone *will*
+> of course make the test fail, because then the file with the
+> corrected name, i.e. "expect", has bogus lines that does not match
+> how the current invocation of "test-config" command is expected to
+> output.
 
-Andrzej Ośmiałowski wrote:
-> I have an issue with git and signing commits with GPG subkey.
-> 
-> My setup:
-> - master key used for certification only
-> - subkey for my main workstation
-> - subkey for my mobile workstation (a notebook).
-> 
-> Both subkeys are used for signing only.
-> 
-> I've configured git to use my specific subkey however it does not
-> work: git config --global user.signingkey = KEYID. Every commit is
-> being signed using the newest subkey. I've verified the same behavior
-> on three systems (although with the same setup). I've tried to use
-> --gpg-sign=KEYID flag, but it does not work either.
 
-I could be wrong, but I think you need to append '!' to
-KEYID to force gpg to use that specific signing subkey.
+Hi Guys,
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A vacuum is a hell of a lot better than some of the stuff that nature
-replaces it with.
-    -- Tennessee Williams
+I was the original author of the test, I am sorry about the typo.
 
+I will submit a patch fixing the test. The fix can be checked at
+https://github.com/git/git/pull/451.
+
+'configset_get_value' will be changed to 'configset_get_value_multi'
+since the test expects a list of values instead of a single value.
+
+Thanks,
+Tanay Abhra
