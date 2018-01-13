@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 154A81FADF
-	for <e@80x24.org>; Sat, 13 Jan 2018 06:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D413A1FADF
+	for <e@80x24.org>; Sat, 13 Jan 2018 06:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754633AbeAMGt7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jan 2018 01:49:59 -0500
-Received: from mail-pl0-f53.google.com ([209.85.160.53]:42897 "EHLO
-        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750951AbeAMGt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jan 2018 01:49:59 -0500
-Received: by mail-pl0-f53.google.com with SMTP id bd8so321381plb.9
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 22:49:58 -0800 (PST)
+        id S1754647AbeAMGuF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Jan 2018 01:50:05 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:43802 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754558AbeAMGuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jan 2018 01:50:04 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e3so5885433pfi.10
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 22:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qzuT0qihJDV3/LlbNjRlfDpVKBddyJ2JylupahNDHvc=;
-        b=bluiW6HdCNaLyDtrNevjSyV8AVKEZyLnbh7/1GQHq6K107mEcSnALk8gdzZatirn3u
-         00lOASzAeTRhRJ5D75FAgirZ0l+jn7u46mI3OT+64K7iyJ0cTTkFlzReDgvh57h0Zrj8
-         A7irXF4Lize5sf5lp+/OpK8sFuJAJjig8UFF/h0MmTZFnSkhSBr/0Gfnd/mD6pOxPlZ+
-         GtxrEcO6G44Wecv5CgO+rlwcYllmzaKVl0m3nIDtar9XVE+iCQuybMxJ5/oCDnCvnOKW
-         5whmNZWEYP+GJjuzuxjoF7qI0inbuss6cDs7qHN3Q7FiQPb+ARrY3i/qeKDccnB93mv9
-         sxEw==
+        bh=YF9uDYFOHxF4PkI2tXglwEBRgeeA3DropXjNk/VgWQM=;
+        b=SERe7znRdLfWVIF1icPLJwA8c395XLXINTyP5djG1Ct5TAuXFs+G2kUzGDTTMezF8q
+         I/IY1fpo+1YUrJGXcGZ2UZ48MdAaSUc37pAD8W2DLhDhf25rdvjMkaEunm/LtGdZLpMw
+         VlIrAf7Vk77JldkAq/nZtT4QcunTtwOALsA2JyYpJA6FRIEPsfz0ByQPTj/tXeja8Yjq
+         fdJ29yBkn0K1CyuBhb7FYI2Mn3Q8IXXFFNEVvl6biwDxIucH4JbpCOIRoaAiRPexfcfb
+         gBWa5557/CWPFVFRMdgdNgSCWnkWWms031ZPqY7hZSvX1BkjKxszPfnvhk2DwOdKwwDY
+         dh8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qzuT0qihJDV3/LlbNjRlfDpVKBddyJ2JylupahNDHvc=;
-        b=p6J5+rFUDVZPYkv/Nf66udZ6+FjZI64vp9TZsDuL3J0af8pXBI52LYbvVCHYXHj6ZJ
-         zBslezgpu3uwy8s158H6JDJbxMJU0KXIMvQhGBH1fMBcsoPztot2kjfvtLo8xKGRNSKd
-         OniIEDFWSlHXLyXg17xQHKIq3ydjSVtw4aBZ0dOTEWh1qGwxG/Yxo+cV1aWMNB4JTOIw
-         CxEC2BSqwUvFInC+h1jhexgR9rIkFVEQUbWygBKvezmQJQAoqbWopjOTNAKRrDWR7UBU
-         EtDHpTsTyNKx+z1qp0AwZ1ai4qUKSX5cE9y+YeJywIxNMniCqe95vh/sams9fwqNORSg
-         Jt+w==
-X-Gm-Message-State: AKGB3mLiQta2x95FhBNeoXOnxmR5wbWnhOdSlTxrymZeDejdlK5csVrZ
-        llxjZwXCoiAn4lRsy/PRaS1nZQ==
-X-Google-Smtp-Source: ACJfBots3HMfGjwP0fLGPp3QnAnhNg+5v/2mQMyeXfQSLmuY2fg+siGJnm+6N68cpbw50M7DiuxfQQ==
-X-Received: by 10.84.240.71 with SMTP id h7mr28408592plt.418.1515826198144;
-        Fri, 12 Jan 2018 22:49:58 -0800 (PST)
+        bh=YF9uDYFOHxF4PkI2tXglwEBRgeeA3DropXjNk/VgWQM=;
+        b=QxhqbDrHfIseH/0Bo1313gUXLrRRS/c6PTYw8fp6Awoq78a1AKYypAMl0JcIyUFYYe
+         9QNFsLSx+O/j79g2tBu1k2v3yW11YgNwFmi+O4fka0bNh6iYYa0n8CPpUJ8Tz6rv1so0
+         S/EMM+QNh3HwO1WvuLL6B7zsGOk9qQEX59ptpmNAyG3W4MK9frzUIemWx+W4yJI37r0l
+         HKw46LsRufJubQPIvhtnb2blJvQla41X/C0cW12D8ErHg49oTWomV64c/CHx/TxXP5WL
+         0EJsfokJwig1mEWDqjUTtWhHnNuwMwG6v4wey0PPy0bqN03ShHPGqvKw7xG3bspWVpum
+         sqkg==
+X-Gm-Message-State: AKGB3mJUKfsAXYfJR1ji7BGuHVchX8sh/iVF4QmZeI4naLOfRNITzsgE
+        yOnC2hXLMoiXx90XuQzDDq27pQ==
+X-Google-Smtp-Source: ACJfBovaoXuj9ALWnoCp7vUAEPPz5rQ3gqbjlv+VFbWLMc70pfs1uIT4rR9cvWm0yiwbh03BjM/WGQ==
+X-Received: by 10.101.77.207 with SMTP id q15mr22283278pgt.368.1515826203788;
+        Fri, 12 Jan 2018 22:50:03 -0800 (PST)
 Received: from ash ([116.106.0.190])
-        by smtp.gmail.com with ESMTPSA id l64sm25511055pfi.46.2018.01.12.22.49.54
+        by smtp.gmail.com with ESMTPSA id m65sm46174756pfm.41.2018.01.12.22.50.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 Jan 2018 22:49:57 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 13 Jan 2018 13:49:51 +0700
+        Fri, 12 Jan 2018 22:50:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 13 Jan 2018 13:49:58 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,12 +59,13 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 0/7] Trace env variables in run_command()
-Date:   Sat, 13 Jan 2018 13:49:42 +0700
-Message-Id: <20180113064949.6043-1-pclouds@gmail.com>
+Subject: [PATCH v4 1/7] sq_quote_argv: drop maxlen parameter
+Date:   Sat, 13 Jan 2018 13:49:43 +0700
+Message-Id: <20180113064949.6043-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <20180112095607.18293-1-pclouds@gmail.com>
+In-Reply-To: <20180113064949.6043-1-pclouds@gmail.com>
 References: <20180112095607.18293-1-pclouds@gmail.com>
+ <20180113064949.6043-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,193 +74,115 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v4:
+From: Jeff King <peff@peff.net>
 
-- incorporates Jeff patches and moves them on top
-- removes strbuf release from print_trace_line
-- prints 'unset a b c' instead of 'unset a; unset b; unset c'
-- squashes v3 3/4 and 4/4 and Junio's patch into 6/7
-- adds tests
-- cwd is separated in 7/7
+No caller passes anything but "0" for this parameter, which
+requests that the function ignore it completely. In fact, in
+all of history there was only one such caller, and it went
+away in 7f51f8bc2b (alias: use run_command api to execute
+aliases, 2011-01-07).
 
-interdiff with what's on 'pu':
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/am.c        | 2 +-
+ builtin/rev-parse.c | 4 ++--
+ quote.c             | 4 +---
+ quote.h             | 2 +-
+ trace.c             | 4 ++--
+ 5 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index d24d157379..0ab71f14fb 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -56,6 +56,10 @@ int cmd_main(int argc, const char **argv)
+diff --git a/builtin/am.c b/builtin/am.c
+index acfe9d3c8c..5bdd2d7578 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1061,7 +1061,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+ 	}
+ 	write_state_text(state, "scissors", str);
  
- 	if (argc < 3)
- 		return 1;
-+	while (!strcmp(argv[1], "env")) {
-+		argv_array_push(&proc.env_array, argv[2]);
-+		argv += 2;
-+	}
- 	proc.argv = (const char **)argv + 2;
+-	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
++	sq_quote_argv(&sb, state->git_apply_opts.argv);
+ 	write_state_text(state, "apply-opt", sb.buf);
  
- 	if (!strcmp(argv[1], "start-command-ENOENT")) {
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index e4739170aa..e6208316c3 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -141,4 +141,26 @@ test_expect_success 'run_command outputs ' '
- 	test_cmp expect actual
- '
+ 	if (state->rebasing)
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 74aa644cbb..96d06a5d01 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -516,7 +516,7 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 			PARSE_OPT_SHELL_EVAL);
  
-+test_trace() {
-+	local expected="$1"
-+	shift
-+	GIT_TRACE=1 test-run-command "$@" run-command true 2>&1 >/dev/null | \
-+		sed 's/.* run_command: //' >actual &&
-+	echo "$expected true" >expected &&
-+	test_cmp expected actual
-+}
-+
-+test_expect_success 'GIT_TRACE with environment variables' '
-+	test_trace "abc=1 def=2" env abc=1 env def=2 &&
-+	test_trace "abc=2" env abc env abc=1 env abc=2 &&
-+	test_trace "abc=2" env abc env abc=2 &&
-+	abc=1 test_trace "def=1" env abc=1 env def=1 &&
-+	abc=1 test_trace "def=1" env abc env abc=1 env def=1 &&
-+	test_trace "def=1" env non-exist env def=1 &&
-+	test_trace "abc=2" env abc=1 env abc env abc=2 &&
-+	abc=1 def=2 test_trace "unset abc def;" env abc env def &&
-+	abc=1 def=2 test_trace "unset def; abc=3" env abc env def env abc=3 &&
-+	abc=1 test_trace "unset abc;" env abc=2 env abc
-+'
-+
- test_done
+ 	strbuf_addstr(&parsed, " --");
+-	sq_quote_argv(&parsed, argv, 0);
++	sq_quote_argv(&parsed, argv);
+ 	puts(parsed.buf);
+ 	return 0;
+ }
+@@ -526,7 +526,7 @@ static int cmd_sq_quote(int argc, const char **argv)
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+ 	if (argc)
+-		sq_quote_argv(&buf, argv, 0);
++		sq_quote_argv(&buf, argv);
+ 	printf("%s\n", buf.buf);
+ 	strbuf_release(&buf);
+ 
+diff --git a/quote.c b/quote.c
+index de2922ddd6..b2970da627 100644
+--- a/quote.c
++++ b/quote.c
+@@ -56,7 +56,7 @@ void sq_quotef(struct strbuf *dst, const char *fmt, ...)
+ 	strbuf_release(&src);
+ }
+ 
+-void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxlen)
++void sq_quote_argv(struct strbuf *dst, const char **argv)
+ {
+ 	int i;
+ 
+@@ -65,8 +65,6 @@ void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxlen)
+ 	for (i = 0; argv[i]; ++i) {
+ 		strbuf_addch(dst, ' ');
+ 		sq_quote_buf(dst, argv[i]);
+-		if (maxlen && dst->len > maxlen)
+-			die("Too many or long arguments");
+ 	}
+ }
+ 
+diff --git a/quote.h b/quote.h
+index 66f5644aa2..48a75a416b 100644
+--- a/quote.h
++++ b/quote.h
+@@ -30,7 +30,7 @@ struct strbuf;
+  */
+ 
+ extern void sq_quote_buf(struct strbuf *, const char *src);
+-extern void sq_quote_argv(struct strbuf *, const char **argv, size_t maxlen);
++extern void sq_quote_argv(struct strbuf *, const char **argv);
+ extern void sq_quotef(struct strbuf *, const char *fmt, ...);
+ 
+ /* This unwraps what sq_quote() produces in place, but returns
 diff --git a/trace.c b/trace.c
-index 9f49bcdd03..4bfd3fce10 100644
+index b7530b51a9..fa9174fc4b 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -132,7 +132,6 @@ static void print_trace_line(struct trace_key *key, struct strbuf *buf)
- {
- 	strbuf_complete_line(buf);
- 	trace_write(key, buf->buf, buf->len);
--	strbuf_release(buf);
- }
- 
- static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
-@@ -145,6 +144,7 @@ static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
+@@ -157,7 +157,7 @@ static void trace_argv_vprintf_fl(const char *file, int line,
  
  	strbuf_vaddf(&buf, format, ap);
- 	print_trace_line(key, &buf);
-+	strbuf_release(&buf);
- }
  
- static void trace_argv_vprintf_fl(const char *file, int line,
-@@ -160,6 +160,7 @@ static void trace_argv_vprintf_fl(const char *file, int line,
- 
- 	sq_quote_argv_pretty(&buf, argv);
+-	sq_quote_argv(&buf, argv, 0);
++	sq_quote_argv(&buf, argv);
  	print_trace_line(&trace_default_key, &buf);
-+	strbuf_release(&buf);
  }
  
- void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
-@@ -172,6 +173,7 @@ void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+@@ -426,6 +426,6 @@ void trace_command_performance(const char **argv)
+ 		atexit(print_command_performance_atexit);
  
- 	strbuf_addbuf(&buf, data);
- 	print_trace_line(key, &buf);
-+	strbuf_release(&buf);
+ 	strbuf_reset(&command_line);
+-	sq_quote_argv(&command_line, argv, 0);
++	sq_quote_argv(&command_line, argv);
+ 	command_start_time = getnanotime();
  }
- 
- static void trace_performance_vprintf_fl(const char *file, int line,
-@@ -191,6 +193,7 @@ static void trace_performance_vprintf_fl(const char *file, int line,
- 	}
- 
- 	print_trace_line(&trace_perf_key, &buf);
-+	strbuf_release(&buf);
- }
- 
- #ifndef HAVE_VARIADIC_MACROS
-@@ -272,17 +275,17 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
- 
- #endif /* HAVE_VARIADIC_MACROS */
- 
--static void concatenate_env(struct strbuf *dst, const char *const *deltaenv)
-+static void add_env(struct strbuf *dst, const char *const *deltaenv)
- {
- 	struct string_list envs = STRING_LIST_INIT_DUP;
- 	const char *const *e;
- 	int i;
-+	int printed_unset = 0;
- 
--	/* Last one wins... */
-+	/* Last one wins, see run-command.c:prep_childenv() for context */
- 	for (e = deltaenv; e && *e; e++) {
- 		struct strbuf key = STRBUF_INIT;
- 		char *equals = strchr(*e, '=');
--
- 		if (equals) {
- 			strbuf_reset(&key);
- 			strbuf_add(&key, *e, equals - *e);
-@@ -290,30 +293,39 @@ static void concatenate_env(struct strbuf *dst, const char *const *deltaenv)
- 		} else {
- 			string_list_insert(&envs, *e)->util = NULL;
- 		}
-+		strbuf_release(&key);
- 	}
- 
--	/* series of "unset X; unset Y;..." */
-+	/* "unset X Y...;" */
- 	for (i = 0; i < envs.nr; i++) {
- 		const char *var = envs.items[i].string;
- 		const char *val = envs.items[i].util;
- 
--		if (val)
-+		if (val || !getenv(var))
- 			continue;
--		if (getenv(var))
--			strbuf_addf(dst, " unset %s;", var);
-+
-+		if (!printed_unset) {
-+			strbuf_addstr(dst, " unset");
-+			printed_unset = 1;
-+		}
-+		strbuf_addf(dst, " %s", var);
- 	}
-+	if (printed_unset)
-+		strbuf_addch(dst, ';');
- 
- 	/* ... followed by "A=B C=D ..." */
- 	for (i = 0; i < envs.nr; i++) {
- 		const char *var = envs.items[i].string;
- 		const char *val = envs.items[i].util;
--		const char *old_value;
-+		const char *oldval;
- 
- 		if (!val)
- 			continue;
--		old_value = getenv(var);
--		if (old_value && !strcmp(old_value, val))
-+
-+		oldval = getenv(var);
-+		if (oldval && !strcmp(val, oldval))
- 			continue;
-+
- 		strbuf_addf(dst, " %s=", var);
- 		sq_quote_buf_pretty(dst, val);
- 	}
-@@ -328,8 +340,6 @@ void trace_run_command(const struct child_process *cp)
- 				&trace_default_key, &buf))
- 		return;
- 
--	strbuf_grow(&buf, 255);
--
- 	strbuf_addf(&buf, "trace: run_command:");
- 
- 	if (cp->dir) {
-@@ -343,7 +353,7 @@ void trace_run_command(const struct child_process *cp)
- 	 * cp->env_array if needed. We only check one place.
- 	 */
- 	if (cp->env)
--		concatenate_env(&buf, cp->env);
-+		add_env(&buf, cp->env);
- 
- 	if (cp->git_cmd)
- 		strbuf_addstr(&buf, " git");
 -- 
 2.15.1.600.g899a5f85c6
 
