@@ -2,95 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0431F406
-	for <e@80x24.org>; Sat, 13 Jan 2018 02:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 097611F406
+	for <e@80x24.org>; Sat, 13 Jan 2018 04:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965407AbeAMCvx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 Jan 2018 21:51:53 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:34057 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965368AbeAMCvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 Jan 2018 21:51:52 -0500
-Received: by mail-wm0-f54.google.com with SMTP id 81so4724593wmb.1
-        for <git@vger.kernel.org>; Fri, 12 Jan 2018 18:51:52 -0800 (PST)
+        id S965436AbeAMEzA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 Jan 2018 23:55:00 -0500
+Received: from mail-oi0-f48.google.com ([209.85.218.48]:42077 "EHLO
+        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965422AbeAMEzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 Jan 2018 23:55:00 -0500
+Received: by mail-oi0-f48.google.com with SMTP id o64so5267726oia.9
+        for <git@vger.kernel.org>; Fri, 12 Jan 2018 20:54:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=QB22WK56DOz+h6q7d+rTVJuTZL4nTKbxzMvyQpsuHMs=;
-        b=Ks2uCv2KCd1yZqBshG4Jk3MX9alEYa/8qMzb6WNF0z99VS0tLUK4fNSl/SJa1hqaxM
-         XSxEhg8uQ7PIO+/vH2Wm7esLGUAYSR0Y2/Buy4UgcC0cSVHRtnRttczaNd/5N94WOES8
-         kVCKldfWobn7gVfxvlYc1kU67/K5Z1SShiDVfQFiHZsyjeN0P6v8Lpq5ePrhwIVZ4lu/
-         GlMTdF38MiASmynT3xjz6d0eEV7gBs3/Mxj/ykV9ADRF/pr+zZIHg/Ru1s41oe96nSAb
-         V2MQpO1Kdvi9MKYMOD++f3YHt1i699CHY/WS4DzqDfCzCZGiLmltC/iAPQUmNS0msEs0
-         hzfQ==
+        bh=G9Z6cPOAFEy6MS/D0FHSLrQPMKa6PkM55QTZ6yi+2S4=;
+        b=dZ14DZk0ZsxranmjOuVBs5dbk8Y7p3068JTO3tk901CS/izR5pYXSvICcNve0loX6J
+         NRQfOtWqoP1uSA/SlbIEoN6Hth/5tRZPHGN+266eB3EAYt/dSs1NwqQaQRmEpj10ZT4B
+         oebXqzqjJzzBLqwddq2Cc6L7QyIch6xk3iiTejBBfj8TbiG/eXoAhDbf2w3qQPsS7srl
+         rfOfTgwlVtY+JgDvBSUZ2AyjMJqrdsKuct4zdIovKlf/2kA57TQlBFoGJIaalRhFoqmm
+         g7+X8IHX710cZwgWpn6NkFjlhRAQ72/mfH2oNdczgamTGJlxOmxM3/12HfUGea7BCzCM
+         QhfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=QB22WK56DOz+h6q7d+rTVJuTZL4nTKbxzMvyQpsuHMs=;
-        b=pOoHoZsEoWuQHSkJxp/mXSszvlWEqB4CNwhc/ZitvJV1OO3dOXJ02AspqDwkQot3l1
-         pcFg3L5fdjQZOn+mD/IqzAL98e2msfBYoC0ev0zPT5uZnnTP6V9Km55LN5vJXmRYv9Dn
-         H1a7fzAnqVVZnYYJXsPFpkjZxyzDuR6p/L2wgIbdeq9CUG2dTfw5/2AlnVgITt9MWZ7U
-         Yoz93dMIOVXmw4xdfRG843BWc2MQfkjHP8ErFsusP/A9WRNkPzsPhqfQsuPgNW8gXnqe
-         iVtd/Uha1oYdtwRyJ5fKqM501B+BmR8/c/NpehfLDVvEfLVHP/zy6IP2uLspvUK5EsgT
-         T0sA==
-X-Gm-Message-State: AKwxytc+cibAC9QYBkdAChCXlB3B+0r8DZFVPR6USXD/j1r0PmvSSivb
-        t/YkyE3eui/V/eGgtMACXTOG59P8YmoskWDzRRh05Q==
-X-Google-Smtp-Source: ACJfBoucRy3QHiBA8rMmhPPoOY3KTF2xAoqSmbUUj+HLdJKD0evBqSZS2gAXniDyLzV5urfygBW9q/Vkx2IrvvFggnA=
-X-Received: by 10.28.132.207 with SMTP id g198mr5284337wmd.118.1515811911480;
- Fri, 12 Jan 2018 18:51:51 -0800 (PST)
+        bh=G9Z6cPOAFEy6MS/D0FHSLrQPMKa6PkM55QTZ6yi+2S4=;
+        b=Nc8mLEAdkMZSKfzXSRi5BPG26MZ4m4zz58B5Zu0JONRsmopPRQdsQIlYynvpq0NB1d
+         76NrL/SB024fmMAhgBH7QowF4r/qlR0pPh+eBOcE80Mgl9LIfhwre/zd1lDcEQCgXq2C
+         TFvNjpmS6M4itbfMu3/Xgfd252TeXIfsqk1xM0KaQryELxXHO/IGXJ9HhuDu3J/B3Pmu
+         C4op9ESoo+kD3HQUEygTHBCgqw58WcI/le+wsyeK+Fzacn4NU9ZUpU+hZJ+j7MPtzvG1
+         WNrRIlfQtr3UuckqvqA094bWd017ogxh0m04zrklWRlu6ekTJv2a1fH5zhSoLQPwi+14
+         vb/Q==
+X-Gm-Message-State: AKwxytddalK4ikBLcnM/sJz3eoPN2KYJg+wwB0Gn1krzPuGdyQ7zjgZV
+        iSkYmcYN8hz+NOlWn1blevHYzIGKSDcuhu/edRk=
+X-Google-Smtp-Source: ACJfBot2Fz+cRlTYb/7lebSrPDC/ZtWx/8zrocu48HgbgwZ07aQmh9JqKI2+l0MrQ2MUKv4ThYJmVftgruDwLXY4YoM=
+X-Received: by 10.202.102.156 with SMTP id m28mr4188169oik.252.1515819299449;
+ Fri, 12 Jan 2018 20:54:59 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.28.107.150 with HTTP; Fri, 12 Jan 2018 18:51:51 -0800 (PST)
-In-Reply-To: <xmqqy3l2ves2.fsf@gitster.mtv.corp.google.com>
-References: <004b01d38bdd$7a11da60$6e358f20$@nexbridge.com>
- <xmqqd12ewx1v.fsf@gitster.mtv.corp.google.com> <008f01d38bfa$7eba9bc0$7c2fd340$@nexbridge.com>
- <xmqqy3l2ves2.fsf@gitster.mtv.corp.google.com>
-From:   Tanay Abhra <tanayabh@gmail.com>
-Date:   Fri, 12 Jan 2018 20:51:51 -0600
-Message-ID: <CAEc54XAP0jFuD4J_XUZOuHEBZ+6PceEQbpm7HJEtRt4NS7Lf2A@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.16.0-rc2 - breakages in t1308 and 1404
+Received: by 10.74.141.5 with HTTP; Fri, 12 Jan 2018 20:54:26 -0800 (PST)
+In-Reply-To: <xmqq7esmwuwn.fsf@gitster.mtv.corp.google.com>
+References: <20180111094712.2551-1-pclouds@gmail.com> <20180112095607.18293-1-pclouds@gmail.com>
+ <20180112095607.18293-5-pclouds@gmail.com> <20180112133355.GE27499@sigill.intra.peff.net>
+ <xmqq7esmwuwn.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 13 Jan 2018 11:54:26 +0700
+Message-ID: <CACsJy8CeYY34G=JjwHWqM+QbBG41pkW7VP+Aowak26rdM1qpPg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] trace.c: be smart about what env to print in trace_run_command()
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Git List <git@vger.kernel.org>,
-        Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 12, 2018 at 5:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Jan 13, 2018 at 5:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+>> I also think this is a special case of a more general problem. FOO could
+>> appear any number of times in the "env" array, as a deletion or with
+>> multiple values. Our prep_childenv() would treat that as "last one
+>> wins", I think. Could we just do the same here?
 >
-> > Sadly, fixing the "except" thing causes the test to break now.
+> Perhaps this should be squashed into the original 4/4 instead of
+> being a separate patch.  We'd probably want some sort of test, I
+> wonder?  Not tested at all beyond compiling...
 >
-> That is exactly what I wanted to say.  If you want to "fix" it,
-> you'd need to figure out what the author of the "except" thing
-> wanted to test, adjust the args given to test-config (it cannot be
-> the same as the test-config invocation of the previous test), and
-> then fix the typo s/except/expect/.  Changing the typo alone *will*
-> of course make the test fail, because then the file with the
-> corrected name, i.e. "expect", has bogus lines that does not match
-> how the current invocation of "test-config" command is expected to
-> output.
+> -- >8 --
+> Subject: [PATCH 7/4] run-command.c: don't be too cute in concatenate_env()
+>
+> Instead of relying on "sort" being stable to sort "unset VAR"
+> immediately before "VAR=VAL" to remove the former, just pick the
+> last manipulation for each VAR from the list of environment tweaks
+> and show them in the output.
 
+This is not enough. Imagine we have GIT_DIR=foo in parent env, then a
+sequence of "GIT_DIR", "GIT_DIR=foo" in deltaenv. Because we process
+set/unset in two separate loops, the "last one wins" rule does not see
+that "GIT_DIR=foo" wins over "unset GIT_DIR;". So we might print
+"unset GIT_DIR; GIT_DIR=foo", which is fine even if it's redundant.
+Except that we don't print that.
 
-Hi Guys,
+The problem comes from comparing with parent env. The new var has the
+same value as parent env so we won't print "GIT_DIR=foo", just "unset
+GIT_DIR;". This is wrong.
 
-I was the original author of the test, I am sorry about the typo.
-
-I will submit a patch fixing the test. The fix can be checked at
-https://github.com/git/git/pull/451.
-
-'configset_get_value' will be changed to 'configset_get_value_multi'
-since the test expects a list of values instead of a single value.
-
-Thanks,
-Tanay Abhra
+I'm tempted to just get the final child env from prep_childenv() then
+compare with parent env and print the differences. It will not work
+with Windows though, so Windows gets the old trace line without env
+delta. I hope some Windows contributor will jump in at some point if
+they want env tracing works for them too.
+-- 
+Duy
