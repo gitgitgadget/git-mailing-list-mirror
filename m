@@ -2,130 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7815C1F404
-	for <e@80x24.org>; Sat, 13 Jan 2018 18:56:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 502661F404
+	for <e@80x24.org>; Sat, 13 Jan 2018 19:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754288AbeAMS4n (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jan 2018 13:56:43 -0500
-Received: from mout.gmx.net ([212.227.15.19]:56392 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754158AbeAMS4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jan 2018 13:56:42 -0500
-Received: from [10.122.129.233] ([46.142.197.184]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MUHoI-1eR32g1Zr8-00Qz0e; Sat, 13
- Jan 2018 19:56:24 +0100
-Date:   Sat, 13 Jan 2018 19:56:26 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Kim Gybels <kgybels@infogroep.be>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] packed_ref_cache: don't use mmap() for small files
-In-Reply-To: <20180113161149.9564-1-kgybels@infogroep.be>
-Message-ID: <nycvar.QRO.7.76.6.1801131954380.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <20180113161149.9564-1-kgybels@infogroep.be>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752360AbeAMTau convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 13 Jan 2018 14:30:50 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:18602 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751026AbeAMTau (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jan 2018 14:30:50 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0DJUjUV064321
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Sat, 13 Jan 2018 14:30:45 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+References: <003701d38c99$65657830$30306890$@nexbridge.com>
+In-Reply-To: <003701d38c99$65657830$30306890$@nexbridge.com>
+Subject: RE: Git 2.16.0-rc2 Test Summary on NonStop
+Date:   Sat, 13 Jan 2018 14:30:40 -0500
+Message-ID: <004701d38ca5$024dec30$06e9c490$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mUj7C5s+8rU02zcvJ2CSDEqYtac/jV8IM06O/GBpIL969+bmWA8
- uTym2dWJyvVLv0geoNi07pAJWKy9N3GDvF5APO07/3Ci/P6URGNwPeejZPnUxh2ig5a5vgn
- iqCXZ+hWhxpC/iYrSLgeDDg0ZCkpDAohEd3efbnBrXOhYtlE7N10QhJmTPyhClo1XLsPnqo
- +jkvnkHh/PLItk6gSVMIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:E6458msBrmo=:oVBjzC6GSHRxNd7k01PG97
- o/CI8sRGga7MSh+wzFO/vwtoSdS5KTxOv3gI9NbTULT3SXt4/+YyBU+uQnM4z1Vh+Puhvkmec
- fhKI6tedjIjiolCUMZIzMbwSJrAXEItAAuoYIcgQ6V1g0IWQHjitsnSYvDG9+GCwdGbVnGRqg
- m/uCrl3ZvfCC8JEvSReQz8eq+6ofeVgJqBn7X/31dzn9hCCINwdKaLdow11bMksrpzzlHxcW1
- sxlfiCRH9+Lq9o9IPoNcEZHE49ESg74/lsEY3+/WXpmTzTUEkgLBhhfK7Gl7yVgcQjn5wb2oM
- +YO6FXEa22pFtsm2FeKqlg0IOsUYcRXnwk/wEX82MFszrGI+NLOXLooHM4YFBRt6w5vZ/sZ3G
- rE9I7WR6SI2rjjhLQypbK2FTrmCQF4PuuD0loWXdc5r/ex7ZcEX3AF2wnVCi4OX02B9WOLG1L
- NItZ0+taMbRnoHj07KWIf4cvH7YA1zAucbnm1fmSc14okX19mc6dsJO81LNIr2gd+DfP/xSYR
- UMD6TMfysBLiKVnH/UMtbYOfS6rbS6oKVmw38JBq2I/PFeq6KHnmOUldWHkFc1ybINtlcREUs
- paE0qZEWzLrUPIaKZsk8VAWDtiVrC9hJOTweL9OWLmpd2Ps7WRDbyKlGnBeREDEGdgOVxu0SK
- 1mgiwqpaWuqXL57E26y6htSg/JXr8TJ+blj107IhxL0oUmENOn5dSUuhuLgj7/9uprVd1dPKH
- wwMo/yQT6uayS1uorMtgt8533n03FwhPZZl+olJbcilapjwcHoP/6HdyXt65yUyhGUUPF2xKz
- QzOXf5AWX2x43rb2ME9BYuYXPbIqPMOHAF+rOow/EfVaGVU90E=
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQEB2xv+cjZHBANYZwQikwwCgD6UJqUVk3fQ
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sat, 13 Jan 2018, Kim Gybels wrote:
-
-> Take a hint from commit ea68b0ce9f8ce8da3e360aed3cbd6720159ffbee and use
-
-Maybe use
-
-	ea68b0ce9f8 (hash-object: don't use mmap() for small files,
-	2010-02-21)
-
-instead of the full commit name?
-
-> read() instead of mmap() for small packed-refs files.
+On January 13, 2018 1:08 PM, I wrote:
+> Here’s where things are. This is probably the best git release so far
+(ever).
+> After applying a4cdf02, I had 6 total breakages. 3 existing, 3 new.
+> Many reduced. The test took about 24 hours to run on platform, which is
+> about 2 hours shorter than 2.13.5.
 > 
-> This also fixes the problem[1] where xmmap() returns NULL for zero
-> length[2], for which munmap() later fails.
-> 
-> Alternatively, we could simply check for NULL before munmap(), or
-> introduce an xmunmap() that could be used together with xmmap().
-> 
-> [1] https://github.com/git-for-windows/git/issues/1410
-> [2] Logic introduced in commit 9130ac1e1966adb9922e64f645730d0d45383495
-> 
-> Signed-off-by: Kim Gybels <kgybels@infogroep.be>
-> ---
->  refs/packed-backend.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index dab8a85d9a..7177e5bc2f 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -455,6 +455,8 @@ static void verify_buffer_safe(struct snapshot *snapshot)
->  				 last_line, eof - last_line);
->  }
->  
-> +#define SMALL_FILE_SIZE (32*1024)
-> +
->  /*
->   * Depending on `mmap_strategy`, either mmap or read the contents of
->   * the `packed-refs` file into the snapshot. Return 1 if the file
-> @@ -489,21 +491,21 @@ static int load_contents(struct snapshot *snapshot)
->  		die_errno("couldn't stat %s", snapshot->refs->path);
->  	size = xsize_t(st.st_size);
->  
-> -	switch (mmap_strategy) {
-> -	case MMAP_NONE:
-> +	if (!size) {
-> +		snapshot->buf = NULL;
-> +		snapshot->eof = NULL;
-> +		snapshot->mmapped = 0;
-> +	} else if (size <= SMALL_FILE_SIZE || mmap_strategy == MMAP_NONE) {
->  		snapshot->buf = xmalloc(size);
->  		bytes_read = read_in_full(fd, snapshot->buf, size);
->  		if (bytes_read < 0 || bytes_read != size)
->  			die_errno("couldn't read %s", snapshot->refs->path);
->  		snapshot->eof = snapshot->buf + size;
->  		snapshot->mmapped = 0;
-> -		break;
-> -	case MMAP_TEMPORARY:
-> -	case MMAP_OK:
-> +	} else {
->  		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
->  		snapshot->eof = snapshot->buf + size;
->  		snapshot->mmapped = 1;
-> -		break;
->  	}
->  	close(fd);
+> t1308-config-set.sh (2 already discussed and expecting a fix, both appear
+to
+> be issues in the test script, not code) t1404-update-ref-errors.sh # 52 –
+> reported but not discussed:
+>    not ok 52 - delete fails cleanly if packed-refs file is locked.
+>      The lock detection worked, but the test assumed the detection would
+> occur in a different spot.
+> t9001-send-email.sh (2 have existed for 2 years. 1 is new. We have not
+used
+> send-email on platform to this point).
+>    not ok 31 - reject long lines
+>      This is a new fail since 2.8.5
+>   not ok 106 - sendemail.transferencoding=7bit fails on 8bit data
+>      Still to be investigated. This may be a tooling issue on Platform.
+>   not ok 107 - --transfer-encoding overrides sendemail.transferEncoding
+>      Still to be investigated. This may be a tooling issue on Platform.
 
-Nicely explained, and nicely solved, for a potential extra performance
-benefit ;-)
+I missed one:
+not ok 134 - --dump-aliases must be used alone
+#
+#               test_must_fail git send-email --dump-aliases
+--to=janice@example
+.com -1 refs/heads/accounting
+#
 
-Thank you!
-Dscho
+This one has been around at least since 2.5.6.
+
