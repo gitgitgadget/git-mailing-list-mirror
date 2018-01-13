@@ -2,108 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1368F1F404
-	for <e@80x24.org>; Sat, 13 Jan 2018 16:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7F61F404
+	for <e@80x24.org>; Sat, 13 Jan 2018 17:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755159AbeAMQSe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jan 2018 11:18:34 -0500
-Received: from eir.is.scarlet.be ([193.74.71.27]:19522 "EHLO eir.is.scarlet.be"
+        id S1755323AbeAMRNa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 Jan 2018 12:13:30 -0500
+Received: from mout.web.de ([212.227.17.11]:58383 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755143AbeAMQSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jan 2018 11:18:33 -0500
-X-Greylist: delayed 366 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Jan 2018 11:18:33 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
-        s=scarlet; t=1515859926;
-        bh=/O8PCweOgxAQKGdAMk+KQnrkQcusgkoNdK+oFWMJbiU=;
-        h=From:To:Cc:Subject:Date:Message-Id;
-        b=FUvzwygzfTzWJYlpJ1/nzrm8o9oNZ2h5+QmikeoKtq6M4ojmYxdQPPyuC6IS7C4Q/
-         Fi3FELrwxyQ6W92y93NY9ki4rqQ6OqArxxxIPvd7ppt/lCAGh/oE8x97gKJ1XT5QU/
-         EPpgVc4r/KjAh8+HcgLLSP2AD0kkY46UP+LyGtng=
-Received: from localhost.localdomain (ip-213-49-134-254.dsl.scarlet.be [213.49.134.254])
-        by eir.is.scarlet.be (8.14.9/8.14.9) with ESMTP id w0DGC5Tg018524
-        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
-        Sat, 13 Jan 2018 17:12:06 +0100
-X-Scarlet: d=1515859926 c=213.49.134.254
-From:   Kim Gybels <kgybels@infogroep.be>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Kim Gybels <kgybels@infogroep.be>
-Subject: [PATCH] packed_ref_cache: don't use mmap() for small files
-Date:   Sat, 13 Jan 2018 17:11:49 +0100
-Message-Id: <20180113161149.9564-1-kgybels@infogroep.be>
-X-Mailer: git-send-email 2.15.1.windows.2
-X-DCC-scarlet.be-Metrics: eir 20002; Body=5 Fuz1=5 Fuz2=5
-X-Virus-Scanned: clamav-milter 0.98.1-exp at eir
-X-Virus-Status: Clean
+        id S1754978AbeAMRN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 Jan 2018 12:13:29 -0500
+Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxfKp-1eu4sF3BSV-017El9; Sat, 13
+ Jan 2018 18:13:12 +0100
+Subject: unused variable in hashmap.h [was: Re: [PATCH] Fixed pervasive
+ enumeration warning in convert.h.]
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?Q?'Torsten_B=c3=b6gershausen'?= <tboegi@web.de>,
+        'Lars Schneider' <larsxschneider@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20180112163644.14108-1-randall.s.becker@rogers.com>
+ <xmqqh8rqx4kz.fsf@gitster.mtv.corp.google.com>
+ <004c01d38bde$f0e6bb50$d2b431f0$@nexbridge.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f139ed79-1e12-d7b6-dd24-ce77000917ec@web.de>
+Date:   Sat, 13 Jan 2018 18:13:11 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
+MIME-Version: 1.0
+In-Reply-To: <004c01d38bde$f0e6bb50$d2b431f0$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:2Roj93XHIacGtQoDHZ+bYRyBWQJBEvzkrSsDpqL1yRO/PSqnd4V
+ 9BMwOzsyo7Jr0lnntAgExbCkZgOychvxhpWMSKRO9Gx2YjMpOZwD633NVMyfW3qyxzzZi6i
+ MgtJ5pxac4LtSin+NXimReUZJAbnz9YRWzFjD9fTW4Ndp8QbJrMpoMpntoF65DXxdVbNFcC
+ 27n/dD3jen7EsSwU0gpog==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JQeyNJ8UYiQ=:9VjKVNVciDcAWHTUEEWWYB
+ 0/H0INZ1jR/lvPKQ/HCAifDCn1zwxUF9sMFkGigq+dTIYPHer0iMTEZ0dBC/9FPLWdRRma5KM
+ CbIa8UBqzfdxcIm7aXBwY6OaiZZK0TxcGzgQRbuLacbjOlnrjD8OxL9CSfHTsOA+ZgUYo3bEw
+ CVc6Np4sJVl3nuyKnJwIKPNdWsCawU9CYvQLpRbUOQfpfwhhUZp3PZLfjX0NJYStcgyyk7178
+ eize/3DsE0PlEQ7bwMRekAL1cgtThI21u9txy40LnnE+epF2im8tKrjyXPcxPm14wUhKIL/KQ
+ EwpFXwDfg++GCbEZK0TsBHYaNphsYwDrjksI47F0dEnt9sEc/2AVHFx+vvgV9ph1Hd1Pl5WuA
+ n7Acxqpw6b3vllOG47wDO65RbvXg4mGS9ojfINB//4Vq9VCsDMZI18+QQLie+1WhOl4o+Rplm
+ ohdtYXag1+QT8Y385SBqH6i1fngq+Qx+hJUFw15q6Ha+VCeQkOgJIg/LHzowWKxX2Le3SVVJp
+ EHpOnlTCn8ciEo2x3Pch3PTb7HykCW24a8iqHKabXkae1lPfJ9SbC4eB8RA9zFrnVI021HDf+
+ 6hfDmfmLNBV/sR+yIjtekdWxSt9N7dEwWa/5UStZIjWcZU3c3K1qHmKIyHrWFAs5tMBnACBkj
+ EMmXpMB6BhcpY+SKjcHB4U9nbSlNXiokKEjmBvejVyXF/vl4tUr0AB2l1wW2gRyfafwtzGGYW
+ 4cKDummnq5FrMn6/PxblhnNRFTyuilPxLktAMZP5QI6L3A2bwhpb1b51BzIO+CKNAop3o/BoG
+ 1f3C8lYCRd817rvLeI+x1zV0+rT5G2Wc+iOa6aL5Icr7xqZR2I=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take a hint from commit ea68b0ce9f8ce8da3e360aed3cbd6720159ffbee and use
-read() instead of mmap() for small packed-refs files.
+Am 12.01.2018 um 20:52 schrieb Randall S. Becker:
+> On a related too many warnings subject, hashmap.h has a variable
+> unused (void *item). Is that addressed soon? If not, I can deal with
+> it.
+Here are the code lines containing the variable in question:
 
-This also fixes the problem[1] where xmmap() returns NULL for zero
-length[2], for which munmap() later fails.
+        void *item;
+        while ((item = hashmap_iter_next(&iter)))
 
-Alternatively, we could simply check for NULL before munmap(), or
-introduce an xmunmap() that could be used together with xmmap().
+Intriguing.  The variable "item" is set, but can be removed without
+effect.  GCC 7.2 and Clang 5 don't warn about that.
 
-[1] https://github.com/git-for-windows/git/issues/1410
-[2] Logic introduced in commit 9130ac1e1966adb9922e64f645730d0d45383495
+The code was introduced by 8b604d1951 (hashmap: add API to disable item
+counting when threaded) and there is no patch in pu that touches it
+again, yet.
 
-Signed-off-by: Kim Gybels <kgybels@infogroep.be>
----
- refs/packed-backend.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index dab8a85d9a..7177e5bc2f 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -455,6 +455,8 @@ static void verify_buffer_safe(struct snapshot *snapshot)
- 				 last_line, eof - last_line);
- }
- 
-+#define SMALL_FILE_SIZE (32*1024)
-+
- /*
-  * Depending on `mmap_strategy`, either mmap or read the contents of
-  * the `packed-refs` file into the snapshot. Return 1 if the file
-@@ -489,21 +491,21 @@ static int load_contents(struct snapshot *snapshot)
- 		die_errno("couldn't stat %s", snapshot->refs->path);
- 	size = xsize_t(st.st_size);
- 
--	switch (mmap_strategy) {
--	case MMAP_NONE:
-+	if (!size) {
-+		snapshot->buf = NULL;
-+		snapshot->eof = NULL;
-+		snapshot->mmapped = 0;
-+	} else if (size <= SMALL_FILE_SIZE || mmap_strategy == MMAP_NONE) {
- 		snapshot->buf = xmalloc(size);
- 		bytes_read = read_in_full(fd, snapshot->buf, size);
- 		if (bytes_read < 0 || bytes_read != size)
- 			die_errno("couldn't read %s", snapshot->refs->path);
- 		snapshot->eof = snapshot->buf + size;
- 		snapshot->mmapped = 0;
--		break;
--	case MMAP_TEMPORARY:
--	case MMAP_OK:
-+	} else {
- 		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
- 		snapshot->eof = snapshot->buf + size;
- 		snapshot->mmapped = 1;
--		break;
- 	}
- 	close(fd);
- 
--- 
-2.15.1.windows.2
-
+René
