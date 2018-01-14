@@ -2,149 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 899AD1F406
-	for <e@80x24.org>; Sun, 14 Jan 2018 10:18:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 388221F406
+	for <e@80x24.org>; Sun, 14 Jan 2018 10:24:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751440AbeANKS5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jan 2018 05:18:57 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:34172 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750985AbeANKS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jan 2018 05:18:56 -0500
-Received: by mail-pl0-f65.google.com with SMTP id d21so1752587pll.1
-        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:18:56 -0800 (PST)
+        id S1751287AbeANKYu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 05:24:50 -0500
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:44872 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750915AbeANKYt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 05:24:49 -0500
+Received: by mail-ot0-f177.google.com with SMTP id g59so8459952otg.11
+        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:24:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PMGANf+eQUOopHPJc5WEBMeisK0fiGt9c7pmgH2wzhI=;
-        b=Ra0Z0PxESHYFiWB1+EsIzJK5TlF1m0Pf0iyqBlOumB9UMRxII9NfXwPuhqhKUlLnTd
-         ORL4Jd/VBLnDsiN3ZGUmjlMUA8L+IY0x2D4UFjmwEJ/i+/C9kYZ6DqNTuj/rvl3F4NgA
-         jPf749+7Jp8oHEPgG+YoetMkhdN0nKki2UKfKYxBgAridqZnzJGgHFoCI7QOxmgVCYjQ
-         wIXTaOHUDzAqZ5GffgK2429L2YvxHiZktofryEDGMJt1zPP5hbnu8hPVI1osLhHjqVQ6
-         D6jxdRrsIOAOO68Enh4CRSu96J3GhNp2M3a+KBbI/yz5Wb3651WUfjF3ZrIV9b/V+M6+
-         CTNA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=j6CU7bLlZt8bfd5q/TULygkUuI7LQWf5DML6jtFlLT0=;
+        b=eHk9sNmR9+Rp+8tl3U5W/FWJYV510Ue3DCRpI49Dp1pOYGSAn8SG9OJJqA4vidCHjQ
+         qikkb+lBxD23vf5aT+bNcthMDGe7HCY/89MTV95SQsSUCrQ+FrF4kHDIjFSmRRRIzWZ4
+         k/ekn3JHAHxqtnUw3HRVriPSIsEKKBG9h2vXbiN68mgds72jVspQXcKrTdhamvY3CCj4
+         e4KXUVXSz7ihcvqmTVfaBwXZspfOD2PWnPPLZaG24JbqXWbauvPufXGBRNPEj7BXE5TE
+         ZEIDOf8vTqoPylB7ckkAKyR0/k4jRaJpJ29/TnSfOQBT5F4E7I7OnFoq0B6z/1IWFuNz
+         zqdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PMGANf+eQUOopHPJc5WEBMeisK0fiGt9c7pmgH2wzhI=;
-        b=mHzvd575gOuezWx/f33KYU489hx1GgpblWUoLjD5AlCh9MTMc3cJKb6W+IBBINHEuy
-         pUYbwFRPgOvzTFMrio6SFNSHKPfRyPJGmQ4gtnhiR5cNTz0z93V5JiyQ2khkYRvmGkVU
-         hHcaC9n7td+aQmtSUAlFl14voyEtWe2b5Akw+2DA4uztUbEpe6mjXkTY4FB9RuvMMgX4
-         BzG/RcucAzoZL2kS5HtShcy0kP1y5i98N4A4FKWzGX1FAzGTj3nwW04SsX9cm7wdsbFY
-         I25NmR1ZkSzVXuNIGavz61OnmbWcimxYEZs1gX7krXB4OMUdnGITG0ptnEIPbM2L26Yj
-         NQ7Q==
-X-Gm-Message-State: AKGB3mJ5lmh53HJ7dkgs1ED80R5vScxZ2oihu1aVOXSFj4bn848YDu24
-        0ZeTh5GbJozwPqr9C2/x6aafhw==
-X-Google-Smtp-Source: ACJfBotJHcC6wvjCC8sBbabfCfG5FyaR1upcvT4So+G3u9jalyNH3Q5aj1X5RvMorwYGhhyQuniTVQ==
-X-Received: by 10.84.133.198 with SMTP id f64mr31153148plf.266.1515925135956;
-        Sun, 14 Jan 2018 02:18:55 -0800 (PST)
-Received: from ash ([115.73.186.82])
-        by smtp.gmail.com with ESMTPSA id i125sm50430746pfe.151.2018.01.14.02.18.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Jan 2018 02:18:55 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 14 Jan 2018 17:18:49 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     t.gummerer@gmail.com, larsxschneider@gmail.com, bmwill@google.com,
-        peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        szeder.dev@gmail.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 3/3] read-cache: don't write index twice if we can't write shared index
-Date:   Sun, 14 Jan 2018 17:18:20 +0700
-Message-Id: <20180114101820.4273-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <20180114101820.4273-1-pclouds@gmail.com>
-References: <CACsJy8A_moFProjfPAJFn2aP52w5qdYdOu4Ygox1qMMitNUHLg@mail.gmail.com>
- <20180114101820.4273-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=j6CU7bLlZt8bfd5q/TULygkUuI7LQWf5DML6jtFlLT0=;
+        b=Cu13c8oFejl5nHzjp8j0db4pFAmmSjK1YNpxYMxLmR/t5g+1Miyargzo7i46Ngk8Vm
+         3WiNgF4tKs/Uil2aT9a7cjsLC5LUu2fF7sXQYQDoQo8IpbJWlogU2tsujsh+As/kTu2p
+         AvkfANTPzKimMrQu8zq5Cw4FfKB+fUF0ZMmG7sASUI+BpDnl4qbliRE89reGKAStPwRw
+         l1AR/F2onDz8tS/7ondQQVlCnwrk723BRjLdr0ckVtjeB5D0c9jfviqj9tkKTJBvErsu
+         GeqIAUtoGERqMeL68pSDuz2MvjjThdhv2oFsbKxW6soFmhbsxXb+FM74BGc9/IkaHsMv
+         /v7w==
+X-Gm-Message-State: AKwxytcvPQ21z9ANhogmzwjLyUK6LVzch2ZXgdj/fK8ZTgymfsnD5eRi
+        9TDh0++Mlknp0jdf39oOgOx/gpRoIPKyVjFWZEg=
+X-Google-Smtp-Source: ACJfBot0d0AsjoEuW0eb7CXRak4vqvCU9nxaVJzdwKuyz3INNDLNs9Xp7SXoXnmcf0B0aeSzJvI0aHxqtWYTjQ81asY=
+X-Received: by 10.157.45.198 with SMTP id g64mr15514730otb.226.1515925488524;
+ Sun, 14 Jan 2018 02:24:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.141.5 with HTTP; Sun, 14 Jan 2018 02:24:18 -0800 (PST)
+In-Reply-To: <20180114093535.GA2518@ruderich.org>
+References: <20180113132211.13350-1-pclouds@gmail.com> <20180114093535.GA2518@ruderich.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 14 Jan 2018 17:24:18 +0700
+Message-ID: <CACsJy8BsV9+pxTzTD4mr6ZwThyxir5w2+a4ArqrhBPgyE3q5AA@mail.gmail.com>
+Subject: Re: [PATCH/RFC] diff: add --compact-summary option to complement --stat
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a0a967568e ("update-index --split-index: do not split if $GIT_DIR is
-read only", 2014-06-13), we tried to make sure we can still write an
-index, even if the shared index can not be written.
+On Sun, Jan 14, 2018 at 4:37 PM, Simon Ruderich <simon@ruderich.org> wrote:
+> On Sat, Jan 13, 2018 at 08:22:11PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>> [snip]
+>>
+>> For mode changes, executable bit is denoted as "(+x)" or "(-x)" when
+>> it's added or removed respectively. The same for when a regular file is
+>> replaced with a symlink "(+l)" or the other way "(-l)". This also
+>> applies to new files. New regulare files are "A", while new executable
+>> files or symlinks are "A+x" or "A+l".
+>
+> I like the short summary. However I find the use of parentheses
+> inconsistent.
 
-We did so by just calling 'do_write_locked_index()' just before
-'write_shared_index()'.  'do_write_locked_index()' always at least
-closes the tempfile nowadays, and used to close or commit the lockfile
-if COMMIT_LOCK or CLOSE_LOCK were given at the time this feature was
-introduced.  COMMIT_LOCK or CLOSE_LOCK is passed in by most callers of
-'write_locked_index()'.
+I agree. I put them in parentheses because somehow to me plain "+x"
+looks weird to me.
 
-After calling 'write_shared_index()', we call 'write_split_index()',
-which calls 'do_write_locked_index()' again, which then tries to use the
-closed lockfile again, but in fact fails to do so as it's already
-closed. This eventually leads to a segfault.
+> Why not use them either always (also for "(A+l)")
+> or never? Was there a specific reason why you added them just in
+> one place?
 
-Make sure to write the main index only once.
-
-[nd: most of the commit message and investigation done by Thomas, I only
-tweaked the solution a bit]
-
-Helped-by: Thomas Gummerer <t.gummerer@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- read-cache.c           |  5 +++--
- t/t1700-split-index.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index c568643f55..c58c0a978a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2561,8 +2561,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		if (!temp) {
- 			hashclr(si->base_sha1);
- 			ret = do_write_locked_index(istate, lock, flags);
--		} else
--			ret = write_shared_index(istate, &temp);
-+			goto out;
-+		}
-+		ret = write_shared_index(istate, &temp);
- 
- 		saved_errno = errno;
- 		if (is_tempfile_active(temp))
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index af9b847761..5494389dbb 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -401,4 +401,23 @@ done <<\EOF
- 0642 -rw-r---w-
- EOF
- 
-+test_expect_success POSIXPERM 'graceful handling splitting index is not allowed' '
-+	test_create_repo ro &&
-+	(
-+		cd ro &&
-+		test_commit initial &&
-+		git update-index --split-index &&
-+		test -f .git/sharedindex.*
-+	) &&
-+	test_when_finished "chmod -R u+w ro" &&
-+	chmod -R u-w ro &&
-+	cp ro/.git/index new-index &&
-+	GIT_INDEX_FILE="$(pwd)/new-index" git -C ro update-index --split-index &&
-+	chmod -R u+w ro &&
-+	rm ro/.git/sharedindex.* &&
-+	GIT_INDEX_FILE=new-index git ls-files >actual &&
-+	echo initial.t >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.15.1.600.g899a5f85c6
-
+Actually shortly after I sent the mail, I realized I could do better.
+Since this is a mode _modification_, we could denote it with "M" (most
+files in diffstat are "M" for obvious reasons, we just don't print it
+because it adds no value), so here we could print "M+x" or "M-x". This
+aligns well with "A+l" or "A+x" for example and is one character
+shorter than my old way.
+--=20
+Duy
