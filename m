@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 990161F406
-	for <e@80x24.org>; Sun, 14 Jan 2018 10:18:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 800D01F406
+	for <e@80x24.org>; Sun, 14 Jan 2018 10:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751143AbeANKSn (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jan 2018 05:18:43 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:44115 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750915AbeANKSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jan 2018 05:18:42 -0500
-Received: by mail-pf0-f194.google.com with SMTP id m26so6807547pfj.11
-        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:18:41 -0800 (PST)
+        id S1751390AbeANKSu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 05:18:50 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:39041 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750985AbeANKSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 05:18:49 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e11so6801423pff.6
+        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oMei7Icr0Dw/QVkCDC/NnN2ZRm/L5UN8M/BCHHKiemk=;
-        b=DtAwYEeb5Ae48FnSBtOR2oeYC6SWiJsGA4OYmp+ke0jD2Ww9ltW2BXexQmvoQVLuao
-         sjAHbkasC9WMg1w18e2PS6gpNB3Me132dZ6K2tBFGcakGcBad/dpdRLiliXBqE3wX5OD
-         svtelcPryTaIXXQ8LxjskETh2dbW7Yiz3Mmut+thIQpg6103JSss9L4mcM/P6yh2KFzz
-         fd8jv9Y1vPFRG4pDrhKQKEKmY/N7gBdgiOowPM7JLKVEKqOCGbEJhuO0CON8PWqLm55A
-         0229CjT/TRF6uaEdmG8loGW6cwTehLI34z/G5hCQJsqcCeQCyG30esbPKcoraE5OhwHm
-         0YXw==
+        bh=GuEJm2/eV9DbFae3j50j4UIyRhmVIBrHQDRJA1WqX20=;
+        b=b+A14eagzB3bZccrQAIWdStfzOazqHo8bCvxD/QyKQYnuIjIf1rl5C5DJOfLWjUm/C
+         IulPfqPtzzLbEEdfEdv97Fzswd3nvITRs3Ywc92diCgUdDMubUDg4YdDtoZ35gykXqOs
+         6q6M+mTZ52ew9tqVPqY1sKDfSdOI9YhvCb6UPAMMqJ3Ukl89/xY2zp6da3Fash48Jt/I
+         hZLLV4WKCmwwgU2ZdDTYh7LSOalfBKdMIoAcVkxUhyWJRxmnCSbB9D3Y9p0lxDW9wHV4
+         uP22q6u+K9in3wpI6pHgVRbDJzooSFRQ4AZsbVnWoStQeJ/G1ja1iIoO+AkFVunELOTS
+         3XrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oMei7Icr0Dw/QVkCDC/NnN2ZRm/L5UN8M/BCHHKiemk=;
-        b=fHhRqNBv7h5lr2T2mifHznf2GhzCitaerGi2o65YP6DyMbzRhVRU4CFP0T9qByYZdE
-         uYxT1yci2oiF6jeZf1yzf+71yZWARgdfNYFNouIb1bhDSD0biKs0PsobhcWpPpDiJqZ1
-         ALT5OFBTOPsONclisp1+fqhgleiksJvLnCzkEuJnQd6rrAQ2sU1SVAbI+Lqh2n7urYdY
-         z6X29lirQRkGHOoKlMU2d3wPEsTVzlkUDXSZzOHhhDpyNjOLpfmpYyUCM9dMyhltBHVb
-         9OFRNuq9hVoQ+kv+KYeW0CefaTxRPrEUZWmDXydaZDBPqQbnUuxRcUx/bfkgttUgqbja
-         T8cg==
-X-Gm-Message-State: AKGB3mJqGjDXdVQg5H3GK7kIH/mPoWuMr8MxXTmLjVyXndtxYTcSGJ2r
-        wWT7rr91XQqG4/8xOZCGez42vQ==
-X-Google-Smtp-Source: ACJfBoswPFH60xvGO2e+IDxjavrYfMR6NamaJKFf1ffTOP+n11x7a8BeOYKUC/SMd6HLrY2m5Lrmfw==
-X-Received: by 10.98.65.216 with SMTP id g85mr28631554pfd.76.1515925121412;
-        Sun, 14 Jan 2018 02:18:41 -0800 (PST)
+        bh=GuEJm2/eV9DbFae3j50j4UIyRhmVIBrHQDRJA1WqX20=;
+        b=eQRltBGrAAFgKNOHjBeodxhuvlHU/n7E6pMk2tbAtbrwjTzP4sUNIUoGTgZNiZjMFj
+         FfS0qEysCFFjftpQl9FJ0vn8rdQNBL/XRberWR16WoQVYbGtKYspApZInUBTWdY0NxmK
+         hH0u0pHIDLGwxtFUAZSa4a3xSeT65z9eTAGIi8xywM8cX49qSHQTaTD8+r78agnkFWgE
+         5vFUnKI96lZddatyucZrE0GzJ3ElG6si1KnzXipAoLvva7JzBRPeYtX7bHn68nhgOUXh
+         zmI4jofVdofSmZuOxYKtMOI3yFjqoHWMgRSXdlh7PePDMIVwA6fhQfAfcdWyCcMsFTL8
+         dCkA==
+X-Gm-Message-State: AKGB3mKKT53L/o14YFBFcnw7YN9022eIADXWcO1hgx1mzQWrx6JOFbO8
+        kHrYv97iBAC37xOfSl8Z1iVR+g==
+X-Google-Smtp-Source: ACJfBosd2n4G3XagUXrg0uXS0Z408ygkV/3vneCqq3JPhu38IDjcQN0pfIlkURAbjJ/cEG73Zp5fnw==
+X-Received: by 10.101.83.9 with SMTP id m9mr24766045pgq.202.1515925128842;
+        Sun, 14 Jan 2018 02:18:48 -0800 (PST)
 Received: from ash ([115.73.186.82])
-        by smtp.gmail.com with ESMTPSA id w83sm31265859pfi.56.2018.01.14.02.18.37
+        by smtp.gmail.com with ESMTPSA id m10sm44066056pge.59.2018.01.14.02.18.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 14 Jan 2018 02:18:40 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 14 Jan 2018 17:18:35 +0700
+        Sun, 14 Jan 2018 02:18:48 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 14 Jan 2018 17:18:41 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,13 @@ Cc:     t.gummerer@gmail.com, larsxschneider@gmail.com, bmwill@google.com,
         szeder.dev@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/3] read-cache.c: change type of "temp" in write_shared_index()
-Date:   Sun, 14 Jan 2018 17:18:18 +0700
-Message-Id: <20180114101820.4273-1-pclouds@gmail.com>
+Subject: [PATCH 2/3] read-cache.c: move tempfile creation/cleanup out of write_shared_index
+Date:   Sun, 14 Jan 2018 17:18:19 +0700
+Message-Id: <20180114101820.4273-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <CACsJy8A_moFProjfPAJFn2aP52w5qdYdOu4Ygox1qMMitNUHLg@mail.gmail.com>
+In-Reply-To: <20180114101820.4273-1-pclouds@gmail.com>
 References: <CACsJy8A_moFProjfPAJFn2aP52w5qdYdOu4Ygox1qMMitNUHLg@mail.gmail.com>
+ <20180114101820.4273-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,61 +73,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This local variable 'temp' will be passed in from the caller in the next
-patch. To reduce patch noise, let's change its type now while it's still
-a local variable and get all the trival conversion out of the next patch.
+For one thing, we have more consistent cleanup procedure now and always
+keep errno intact.
+
+The real purpose is the ability to break out of write_locked_index()
+early when mks_tempfile() fails in the next patch. It's more awkward to
+do it if this mks_tempfile() is still inside write_shared_index().
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ read-cache.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
 diff --git a/read-cache.c b/read-cache.c
-index 2eb81a66b9..536086e1fe 100644
+index 536086e1fe..c568643f55 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2474,30 +2474,32 @@ static int clean_shared_index_files(const char *current_hex)
+@@ -2472,31 +2472,18 @@ static int clean_shared_index_files(const char *current_hex)
+ }
+ 
  static int write_shared_index(struct index_state *istate,
- 			      struct lock_file *lock, unsigned flags)
+-			      struct lock_file *lock, unsigned flags)
++			      struct tempfile **temp)
  {
--	struct tempfile *temp;
-+	struct tempfile *real_temp;
-+	struct tempfile **temp = &real_temp;
+-	struct tempfile *real_temp;
+-	struct tempfile **temp = &real_temp;
  	struct split_index *si = istate->split_index;
  	int ret;
  
--	temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
--	if (!temp) {
-+	real_temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
-+	if (!real_temp) {
- 		hashclr(si->base_sha1);
- 		return do_write_locked_index(istate, lock, flags);
- 	}
-+	temp = &real_temp;
+-	real_temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
+-	if (!real_temp) {
+-		hashclr(si->base_sha1);
+-		return do_write_locked_index(istate, lock, flags);
+-	}
+-	temp = &real_temp;
  	move_cache_to_base_index(istate);
--	ret = do_write_index(si->base, temp, 1);
-+	ret = do_write_index(si->base, *temp, 1);
+ 	ret = do_write_index(si->base, *temp, 1);
+-	if (ret) {
+-		delete_tempfile(temp);
++	if (ret)
+ 		return ret;
+-	}
+ 	ret = adjust_shared_perm(get_tempfile_path(*temp));
  	if (ret) {
--		delete_tempfile(&temp);
-+		delete_tempfile(temp);
+-		int save_errno = errno;
+ 		error("cannot fix permission bits on %s", get_tempfile_path(*temp));
+-		delete_tempfile(temp);
+-		errno = save_errno;
  		return ret;
  	}
--	ret = adjust_shared_perm(get_tempfile_path(temp));
-+	ret = adjust_shared_perm(get_tempfile_path(*temp));
- 	if (ret) {
- 		int save_errno = errno;
--		error("cannot fix permission bits on %s", get_tempfile_path(temp));
--		delete_tempfile(&temp);
-+		error("cannot fix permission bits on %s", get_tempfile_path(*temp));
-+		delete_tempfile(temp);
- 		errno = save_errno;
- 		return ret;
+ 	ret = rename_tempfile(temp,
+@@ -2567,7 +2554,21 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 	new_shared_index = istate->cache_changed & SPLIT_INDEX_ORDERED;
+ 
+ 	if (new_shared_index) {
+-		ret = write_shared_index(istate, lock, flags);
++		struct tempfile *temp;
++		int saved_errno;
++
++		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
++		if (!temp) {
++			hashclr(si->base_sha1);
++			ret = do_write_locked_index(istate, lock, flags);
++		} else
++			ret = write_shared_index(istate, &temp);
++
++		saved_errno = errno;
++		if (is_tempfile_active(temp))
++			delete_tempfile(&temp);
++		errno = saved_errno;
++
+ 		if (ret)
+ 			goto out;
  	}
--	ret = rename_tempfile(&temp,
-+	ret = rename_tempfile(temp,
- 			      git_path("sharedindex.%s", sha1_to_hex(si->base->sha1)));
- 	if (!ret) {
- 		hashcpy(si->base_sha1, si->base->sha1);
 -- 
 2.15.1.600.g899a5f85c6
 
