@@ -2,122 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74EEA1FADF
-	for <e@80x24.org>; Sun, 14 Jan 2018 16:50:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D2571FADF
+	for <e@80x24.org>; Sun, 14 Jan 2018 17:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751670AbeANQux convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 14 Jan 2018 11:50:53 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:19305 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751210AbeANQuw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jan 2018 11:50:52 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0EGomwC097274
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 14 Jan 2018 11:50:49 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     <git@vger.kernel.org>
-Cc:     "'Joachim Schmitz'" <jojo@schmitz-digital.de>
-References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com>
-In-Reply-To: <004a01d38cab$705262a0$50f727e0$@nexbridge.com>
-Subject: RE: [BUG] test_must_fail: does not correctly detect failures - Was Git 2.16.0-rc2 Test Summary on NonStop
-Date:   Sun, 14 Jan 2018 11:50:41 -0500
-Message-ID: <001a01d38d57$d36c7d10$7a457730$@nexbridge.com>
+        id S1751622AbeANRZS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 12:25:18 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:24434 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751425AbeANRZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 12:25:17 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id am1zeUxspNSVVam1zezue8; Sun, 14 Jan 2018 17:25:15 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=NYGW7yL4 c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=8nJEP1OIZ-IA:10 a=onhi19IbAAAA:8
+ a=Dx4yW56zAAAA:8 a=M2GpmdpaB_3U2oAO02wA:9 a=wPNLvfGTeEIA:10
+ a=JvkiTdytZRqVYIXWt-wT:22 a=X_u8qhY6y2Nm79co_leF:22
+Message-ID: <E2F9FAE97F7D4B49A5A644FC796A9AAC@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <randall.s.becker@rogers.com>, <git@vger.kernel.org>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <20180114164529.10120-1-randall.s.becker@rogers.com>
+Subject: Re: [PATCH] Remoted unnecessary void* from hashmap.h that caused compile warnings
+Date:   Sun, 14 Jan 2018 17:25:15 -0000
+Organization: OPDS
 MIME-Version: 1.0
 Content-Type: text/plain;
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJL2DF5YDw1sAX4TtGn7MOoKgkH9KKC/hRA
-Content-Language: en-ca
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180114-0, 14/01/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfBpVX/tdfB7TTc9hP+kbpU3RdiKZJre2kMIXGRRFfaYVNYS1qP4gCFiU+POHWV0SB+fAodGszoanV+fjfhiq+QhNwSvdSnK3FSUfhYUPSizyxPa9AFh2
+ l9Sz53EGHXJtxgJ7xoRPYY/VW4CIXY1ecPwBoggp6msfLI+MuUU5i2S2NXwHhcK+rIVMUBljIxSVQTbVP851cZ04uxbON78N08Vkk4uG4cvt5vxPOoNnQMiK
+ /J/aL1/ZNujwht6ePqfoAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 13, 2018 3:17 PM, I wrote:
-> On January 13, 2018 2:31 PM, I wrote:
-> > On January 13, 2018 1:08 PM, I wrote:
-> > > Here’s where things are. This is probably the best git release so
-> > > far
-> > (ever).
-> > > After applying a4cdf02, I had 6 total breakages. 3 existing, 3 new.
-> > > Many reduced. The test took about 24 hours to run on platform, which
-> > > is about 2 hours shorter than 2.13.5.
-> > >
-> > > t1308-config-set.sh (2 already discussed and expecting a fix, both
-> > > appear
-> > to
-> > > be issues in the test script, not code) t1404-update-ref-errors.sh #
-> > > 52 – reported but not discussed:
-> > >    not ok 52 - delete fails cleanly if packed-refs file is locked.
-> > >      The lock detection worked, but the test assumed the detection
-> > > would occur in a different spot.
-> > > t9001-send-email.sh (2 have existed for 2 years. 1 is new. We have
-> > > not
-> > used
-> > > send-email on platform to this point).
-> > >    not ok 31 - reject long lines
-> > >      This is a new fail since 2.8.5
-> > >   not ok 106 - sendemail.transferencoding=7bit fails on 8bit data
-> > >      Still to be investigated. This may be a tooling issue on
-Platform.
-> > >   not ok 107 - --transfer-encoding overrides
-> > > sendemail.transferEncoding
-> > >      Still to be investigated. This may be a tooling issue on
-Platform.
-> >
-> > I missed one:
-> > not ok 134 - --dump-aliases must be used alone #
-> > #               test_must_fail git send-email --dump-aliases
-> > --to=janice@example
-> > .com -1 refs/heads/accounting
-> 
-> Running the tests in debug, I found that they all (1308, 1404, 9001) use
-> test_must_fail, and hit similar situations:
-> 
-> expecting success:
->         test_must_fail git send-email --dump-aliases
---to=janice@example.com
-> -1 refs/heads/accounting
-> --dump-aliases incompatible with other options
-> test_must_fail: died by signal 34: git send-email --dump-aliases --
-> to=janice@example.com -1 refs/heads/accounting not ok 134 - --dump-
-> aliases must be used alone #
-> #               test_must_fail git send-email --dump-aliases
-> --to=janice@example.com -1 refs/heads/accounting #
-> 
-> It is looking like git is doing what it is supposed to be doing, but the
-test
-> scripts are not detecting failures properly. The test_must_fail routine is
-> interestingly used in all of the above test cases that are failing. The
-actual
-> exit_code reported by git was 162, (a.k.a. signal 34 - which is not thrown
-on
-> the platform. The max signal is 31 (SIGABEND). test_must_fail has a weird
-> combination of some errors pass and others don't, but I can't correlate
-the
-> intent of its use in these tests particularly with no acceptable signals
-passed
-> in. Adding a return 1 if 162 caused other tests to fail as well, so that's
-not the
-> fix.
+From: <randall.s.becker@rogers.com>
+Subject: [PATCH] Remoted unnecessary void* from hashmap.h that caused 
+compile warnings
 
-Follow-up: This looks like the completion code from perl on NonStop is not
-the same as expected by git in the case of failures. I need to debug this to
-get more details to the team. We have had completion issues before relating
-to interpretation problems between perl, bash, and git in this platform, so
-I'm assuming this to be likely again but need to track down the specifics.
-Can anyone point me to where the detection is within git or the execv?
+s/Remoted/Removed/ ?
 
-Thanks,
-Randall
- 
+Maybe shorten to " hashmap.h: remove unnecessary void* " (ex the superflous 
+spaces)
+--
+Philip
+
+
+> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+>
+> * The while loop in the inline method hashmap_enable_item_counting
+>  used an unneeded variable. The loop has been revised accordingly.
+>
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+> hashmap.h | 3 +--
+> 1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/hashmap.h b/hashmap.h
+> index 7ce79f3..d375d9c 100644
+> --- a/hashmap.h
+> +++ b/hashmap.h
+> @@ -400,7 +400,6 @@ static inline void 
+> hashmap_disable_item_counting(struct hashmap *map)
+>  */
+> static inline void hashmap_enable_item_counting(struct hashmap *map)
+> {
+> - void *item;
+>  unsigned int n = 0;
+>  struct hashmap_iter iter;
+>
+> @@ -408,7 +407,7 @@ static inline void hashmap_enable_item_counting(struct 
+> hashmap *map)
+>  return;
+>
+>  hashmap_iter_init(map, &iter);
+> - while ((item = hashmap_iter_next(&iter)))
+> + while (hashmap_iter_next(&iter))
+>  n++;
+>
+>  map->do_count_items = 1;
+> -- 
+> 2.8.5.23.g6fa7ec3
+> 
 
