@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5C61F406
-	for <e@80x24.org>; Sun, 14 Jan 2018 10:37:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9221F406
+	for <e@80x24.org>; Sun, 14 Jan 2018 10:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbeANKhJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jan 2018 05:37:09 -0500
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:47038 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751085AbeANKhI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jan 2018 05:37:08 -0500
-Received: by mail-ua0-f169.google.com with SMTP id j23so1409091uak.13
-        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:37:08 -0800 (PST)
+        id S1751143AbeANKnH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 05:43:07 -0500
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:43671 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751060AbeANKnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 05:43:06 -0500
+Received: by mail-ua0-f174.google.com with SMTP id l12so6789086uaa.10
+        for <git@vger.kernel.org>; Sun, 14 Jan 2018 02:43:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=cVl+WMbw3aa1gX4JJvT1aLR6YsZoufVLm9BHx4gTmBE=;
-        b=ugvbKJcQrYAG4YYmWqu+EECX/u1QGTNbMSf6mS1w9OEXC0qljb5msJwNQT2XgBPW4F
-         SWxRf21u6i4rmgSqGgdFZF2BpjGXWfwnt0lhXCKuORCzL34ABfyMpVPhWNKz+aBFfE1W
-         KxYz+E/b99F+Wj9/eSsuZNgxXw4AykpzGLG5fq46t+uakD0TFU3hIgBBHDryahbcN2k0
-         W7J2bud0AlreOJAtN0k4MQMzAgl2rg5pdLE49DaS4qXp4MaMipv7fwk+5Zt0d47dlhDU
-         OG5EnrOarUn9SV5yBVtzCR4ms0wr+hsMrqjGsu/Iz3s2sqQhDjn3spkMOqxIeRrL7/Dy
-         T37A==
+        bh=92Q/GIm2a55FoSBnMnTWXFXW+lMwSwusNC4aN8aeLcM=;
+        b=BF1KVuoVVI4Zri8wfXiQmj/7qeNdcAplWrWkur4ZYTNI6OkJ83ajYFtmZ86CLnjSCy
+         NU5/scl/H/hW06pXSlx9OlpEfgy2EHp7D2tv6y3rCd6+RB5/MwrYiJrqcWalOHL3aslY
+         yFUBQlYTjf/wFnLWRviEm7YUziQIMKfPkDhVXtUiVhfDEWiil1GBkC1K9c4Vq6pqcXHP
+         tOfwxW4rwrm/yt+B7qXxkoUJk4/tqXg3kYA2ZClbCW7ElhBeJtRYkdBlQMOpjMHoB8w4
+         ZTAAJ/cm6OkpLPOd/36QgA0vwFrS8jH/X/d4AcfASOccwPsrHdEp3UwtaCs3NqK05mB8
+         4yfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cVl+WMbw3aa1gX4JJvT1aLR6YsZoufVLm9BHx4gTmBE=;
-        b=UYAlTjsDYHsyxmLeLFvJQu0LYdK+Qm5i+Nz2+ATlbnbVPk9MfDqDBcgwR0xTCKHOqb
-         jufSGGgxU8CkiY97afvPolIOlm2cyHnSv8i+5IM3ApSoyOVlyNrHS8m8faBEEcfHi/aj
-         lww3r/ViHGT3VYbQJa0ZsAs/dGDfb8/6OpqtZxAUIGl7O371B+R4W6TuV6oCxYVrWphg
-         D0qYWoXvOK+pbnz0uxiUAcgJnuUAIJ0/Ld4oFVqbDtImfOnw4N2mqOSVPL2+RP7eTe8l
-         Tu+PqwIyvV91wds/l8sw7njxPJ0Z7YxzU/t/WZYx0Azh8OkDXGal6VpVtGKv6D8f31WD
-         4pkA==
-X-Gm-Message-State: AKwxytfTSGe1fhqyPiagBRnVlzWtDiisopP+wfVnHOhBgV3dKxT1OYQa
-        YiPfMzFL6r1bwJlV5kCsXL6nxCBFybZRmmhwOHI=
-X-Google-Smtp-Source: ACJfBovPYmVqJrd5da2PK0kFAwatxAfU0sWmy2xxjeLZd1qqiYRsIUEUtQ6AIiQnEcxwCGtkC019XOhmB//FVTsoaXE=
-X-Received: by 10.176.96.4 with SMTP id j4mr16454019ual.180.1515926227761;
- Sun, 14 Jan 2018 02:37:07 -0800 (PST)
+        bh=92Q/GIm2a55FoSBnMnTWXFXW+lMwSwusNC4aN8aeLcM=;
+        b=fL8qc54GKG0XSvZiMdTy1nMaXZy28+L/6QoPpXmswRBQn59dlcFplR9s0vaTrmeylb
+         pM1BiUqlMmhGxbnwhE8t2NRBReAwGfWvF1ZlYK/Nl9b7944SMWFpofCnEwA03GbjqUlc
+         LXnyz1HvBqCdawDGRqWLexg3+PP8FxeuP0ySF15jEn6eqDq0pXgL54iCZvLOn6b8ADlZ
+         U7ytih6Xl36mygKXJVOG8yN51iW9f5gmSeM8UKRZS8YCU81EMhlRVmP71p7WWI5BgMeD
+         C6Pj3nAZS9+LIUDSy1WUIM1eK6rjq+Kl1mCa9kkHV0wejwVkN3GrNLCwn1DV14cK820U
+         vk+w==
+X-Gm-Message-State: AKwxytdfJfz23I+sXbSn67SkFwM0U54DMBYOqInYDUfT9KC0p8x9zW4T
+        BppXny/jxvcngZ34YBMWxTIqTgcqRIslsQiAvnc=
+X-Google-Smtp-Source: ACJfBovB4RIV1Ham3FDNMKEQaCO2zNAIWCqvJte1fsw06+8Uhn6M7ju0qt3s9lM6FfT/Hwi7bqjOlV+jvHWAfyBHzKM=
+X-Received: by 10.176.76.43 with SMTP id l43mr9379625uaf.93.1515926585746;
+ Sun, 14 Jan 2018 02:43:05 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.10.140 with HTTP; Sun, 14 Jan 2018 02:37:07 -0800 (PST)
-In-Reply-To: <20180113103255.GA31117@sigill.intra.peff.net>
+Received: by 10.176.10.140 with HTTP; Sun, 14 Jan 2018 02:43:05 -0800 (PST)
+In-Reply-To: <20180113105407.GA31825@sigill.intra.peff.net>
 References: <20180108172214.23615-1-szeder.dev@gmail.com> <xmqqvagc6m42.fsf@gitster.mtv.corp.google.com>
  <5DE3FA05-2347-4BE7-8A1A-A6E5FEEC7C2B@gmail.com> <CAM0VKjnSzoc+E408ifKCg+qPTaGRNL3e3JVdRN573kdcBSzbHw@mail.gmail.com>
- <20180113103255.GA31117@sigill.intra.peff.net>
+ <20180113103255.GA31117@sigill.intra.peff.net> <20180113105407.GA31825@sigill.intra.peff.net>
 From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Sun, 14 Jan 2018 11:37:07 +0100
-Message-ID: <CAM0VKj=QrDr9671uMGKSSZUczB-Soc5mmoijiBsx8t_WkQa6+w@mail.gmail.com>
+Date:   Sun, 14 Jan 2018 11:43:05 +0100
+Message-ID: <CAM0VKjkmEThnM7KdQ=SJFGK1E_zdjsCFnFas7fsRG97aQmS52g@mail.gmail.com>
 Subject: Re: [PATCH] travis-ci: build Git during the 'script' phase
 To:     Jeff King <peff@peff.net>
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
@@ -66,87 +66,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 13, 2018 at 11:32 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jan 12, 2018 at 02:32:54PM +0100, SZEDER G=C3=A1bor wrote:
->
->> That's the just beginning of a looong list of executed test scripts in
->> seemingly pseudo-random order.  IMHO that's very rarely the interesting
->> part; I, for one, am only interested in that list in exceptional cases,
->> e.g. while tweaking the build dependencies or the 'prove --state=3D...'
->> options.
->
-> Aren't folds supposed to do this? I.e., record all the output but only
-> show it to the user if the command exited non-zero.
->
-> According to:
->
->   https://blog.travis-ci.com/2013-05-22-improving-build-visibility-log-fo=
-lds
->
-> they auto-fold individual commands _except_ the ones in the script
-> section. Is there a way to manually mark folds in the output?
->
-> Hmph. I could not find an answer from travis, but googling seems to turn
-> up that something like this would work:
+On Sat, Jan 13, 2018 at 11:54 AM, Jeff King <peff@peff.net> wrote:
+> I think there's also a similar feature to include timings for each fold,
+> which might be worth pursuing.
 
-Oh.  I did look for something like this in the Travis CI docs, found
-nothing and then didn't bother with Google.  Rookie mistake, I know :)
+If you look for 'travis_time' in the raw log, you'll find lines like
+these:
 
-But indeed, have a look at the raw trace log at:
+  travis_time:start:01ccbe40
+  $ some-command
+  ... and its output ...
+  travis_time:end:01ccbe40:start=3D1515840453305552968,finish=3D15158404719=
+60386859,duration=3D18654833891
 
-  https://api.travis-ci.org/v3/job/328418291/log.txt
+So it seems doable, but we'll have to do the timekeeping ourselves.
+Running 'time $cmd' is much easier, but that time won't be displayed
+next to the folds, of course.
+Do we really care that much?
 
-It starts with that "travis_fold:start:..." thing right away.
 
-> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-> index 07f27c7270..8c830aa3c0 100755
-> --- a/ci/lib-travisci.sh
-> +++ b/ci/lib-travisci.sh
-> @@ -77,6 +77,23 @@ check_unignored_build_artifacts ()
->         }
->  }
->
-> +fold () {
-> +       printf 'travis_fold:start:%s\r' "$1"
-> +}
-> +
-> +unfold () {
-> +       printf 'travis_fold:end:%s\r' "$1"
-> +}
-> +
-> +fold_cmd () {
-> +       local name=3D$1; shift
-> +       fold "$name"
-> +       "$@"
-> +       local ret=3D$?
-> +       unfold "$name"
-> +       return $ret
-> +}
-
-We don't have to fiddle with the return value, because we run (almost
-all of) our build scripts with 'set -e', i.e. if the command fails then
-the script will exit immediately.
-
-> +
->  # Set 'exit on error' for all CI scripts to let the caller know that
->  # something went wrong.
->  # Set tracing executed commands, primarily setting environment variables
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index d3a094603f..12b2590230 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -7,8 +7,8 @@
->
->  ln -s $HOME/travis-cache/.prove t/.prove
->
-> -make --jobs=3D2
-> -make --quiet test
-> +fold_cmd compile make --jobs=3D2
-> +fold_cmd test make --quiet test
->
->  check_unignored_build_artifacts
->
->
-> I've queued a CI job to see if this actually works. :)
->
-> -Peff
+G=C3=A1bor
