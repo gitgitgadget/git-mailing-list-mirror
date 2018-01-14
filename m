@@ -2,419 +2,756 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB521F404
-	for <e@80x24.org>; Sat, 13 Jan 2018 22:49:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914321F406
+	for <e@80x24.org>; Sun, 14 Jan 2018 07:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753931AbeAMWtw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 Jan 2018 17:49:52 -0500
-Received: from mout.web.de ([212.227.17.12]:58528 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753414AbeAMWtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 Jan 2018 17:49:50 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MTPel-1eScUz13MF-00SQeG; Sat, 13
- Jan 2018 23:49:34 +0100
-From:   tboegi@web.de
-To:     randall.s.becker@rogers.com, rsbecker@nexbridge.com,
-        git@vger.kernel.org, larsxschneider@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1 1/1] convert_to_git(): safe_crlf/checksafe becomes int conv_flags
-Date:   Sat, 13 Jan 2018 23:49:31 +0100
-Message-Id: <20180113224931.27031-1-tboegi@web.de>
-X-Mailer: git-send-email 2.16.0.rc0.2.g00e34bdac6.dirty
-In-Reply-To: <xmqqh8rqx4kz.fsf@gitster.mtv.corp.google.com>
-References: <xmqqh8rqx4kz.fsf@gitster.mtv.corp.google.com>
+        id S1751512AbeANHqz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 02:46:55 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:33107 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751203AbeANHqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 02:46:53 -0500
+Received: by mail-wm0-f48.google.com with SMTP id x4so8056100wmc.0
+        for <git@vger.kernel.org>; Sat, 13 Jan 2018 23:46:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E5ID9eHvn4dhAwMk+kKexVX3xWqkD60bw8qjfi16O2s=;
+        b=G9cyykdwmMzflvDe0qw3QLE0rOKqQXYrDEohMiu0Nrl5/RGzuD2C6pO5fDvbDBYjZ0
+         EjQhYfyBsibqxQXCbjBvT9aU4EjKdeEk/Wke04dCpG+ydEPMhZnRhE5Iapnq9pe+fXnz
+         0qzp9j1W9/XhdFxJgGTUK20XP6fNjfc3h4+zfVHkkgrvC3SUV+Vmrj08e4X0WC6C0cNL
+         XcyLJjkKcvwzp8SGhtMMBHdmq6XL4pO7GF984/ioTnvfkLwRdaKLckj/1jRmuPjGZzVd
+         /mOlyy2HbXCvAMmdhrgyORnF20+toVUzjLCF8v7HZy8IOcbGB+eYeZhbPLjOv6zFVhG2
+         cZTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E5ID9eHvn4dhAwMk+kKexVX3xWqkD60bw8qjfi16O2s=;
+        b=aUX9AGwXPc9oZQIruBs6SAz6YjaMplKVcybAQS31du/YM/L/iyRjrjPnTSgWSCpWRj
+         gz+THhrUcf7Xl3O0XN7buBAzExHA979LWXvGFtNXkGgAC/d+GmawmVS1iegbOi7VwNF5
+         BU6NrIckpGcr7CdjH9DSFazbL1U4GHPDTdgcImuIR1IQeslD8644t7O61rCo51vxMb1a
+         EMH6ZxN68v/m75zhDWsByc8SgQUyAiUXZ57GsPQ97ApxGbbGnfJEC+zOsfXqZwRu3eS/
+         ybpLhLQH9WfvpDiEbGYE+Fuhh+HY5GF3ur/K3WBbkdK60avaDoCN56XSIQf49GM0MlJa
+         mtXw==
+X-Gm-Message-State: AKwxytep2zbZ6newQ4cimgGSXiYCDGq8J/yjzIFJjJk9VoxTYCD+atD+
+        IVFhsWod1Ww4/ZowC0W66+9L1cwr
+X-Google-Smtp-Source: ACJfBotJv/r47WMt4HBmuqgM3JsaEaQTKdNJXCJk13KxyTaOlB6/B6bocf6G/gtVVcla5Tej5rfdMg==
+X-Received: by 10.80.129.225 with SMTP id 88mr13395069ede.19.1515916011875;
+        Sat, 13 Jan 2018 23:46:51 -0800 (PST)
+Received: from localhost (cable-62-117-24-49.cust.telecolumbus.net. [62.117.24.49])
+        by smtp.gmail.com with ESMTPSA id d20sm4476336ede.16.2018.01.13.23.46.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 Jan 2018 23:46:51 -0800 (PST)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+To:     git@vger.kernel.org,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?q?Magnus=20G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH v2] l10n: de.po: translate 72 new messages
+Date:   Sun, 14 Jan 2018 08:46:45 +0100
+Message-Id: <20180114074645.4978-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc1.290.gc44db26fe
+In-Reply-To: <20180111174401.8006-1-ralf.thielow@gmail.com>
+References: <20180111174401.8006-1-ralf.thielow@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:KX1rM0U+BBSM5WRFQ8heR6GPx1G6lldjSukTnLCyBPaj5Ilnlu5
- jmBgyzy93b9TA63K/BKYjeawlGwDEfhp7HVaKR9ccvzVL6T5dr4KWu3ryhkSDUYwSwipF7A
- IMu1dwoQw5xu4OPcCm7EtnaAaa6CYO18g/RChADFqWRBZmTeSmS4eAUWIL0l1afbXTyGHlO
- o0X0usxFncjanAjmMBiUg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lsAm8Vce9xQ=:bVuK28UUCFGYROEGf/mvBg
- 5I5oSWovyhK+KwDU21+a4cB5IaHgpTtKWIG7EM2h/dBCoPiQocGXVDkW0GiCVKe31rh5nk5FW
- LJndIzNS3uk0T9ly1WEczF6BRGpjJVZeMY/StX1YDTROdtLK80ElhULaaponINT24zF9PTt/X
- F7zSLPLlAr3SgWkKC/t4v8kMtaIlw4uO/IuxkkaoEb5ZQ3DaUIjXqWaOA8q5RbvS1cSs6FG/0
- U46LNiHmDsu0jbDlwWUaQhuCYWqI1V+OaS/G+Lavm6zVEKQY2mk16iI7+OkRhDvwBjF0uytNz
- lQpEg+AFPDfJVQb7U16Wz3n7y6CYcLVm45tHW1U5y/WLaVxqnfHwuk7aTAKYv4YzcexT4zHJN
- ZXwvxO2F3tryxbwjYHkuoBcYRo+Tf/4ykDU1n4WumMUr2UxrDaSolvnGs8zUtmOOTuv7Nvabs
- wEL3BJbEbkqfHyBG9koP6EOe4t8R0Z/tfoeP/e6doR2b7ze1L/ObrNAaZHC9aTbHEh3h9Yakv
- /ZBshs3N0cVgcJSVXfi7kb/hgs8/UNa6bZ7AYd/aRt+l5+LnttSq2CupGifYhOjA+BvDYhTUH
- c/UWcSnnyipp+dS2ERTcWgd7DJbe/aeJT/+o9hdJPaHWv0g/enMiaN2KVDzCJRqCjbVS4qG0e
- g4PCcNpK7rjo1ZjNBJFtpwxQMUvRQLvdTEDz7wuyzdHVWiGpKevO6fveENqVKzQgnPOeJRRtT
- tLRJG6V0asC224X/uYQ1F5akEm+gSrP676Ziq+pMk5xt/qIn8TJBSqObiKDwxXHna6ljL3W+r
- ne5i2QQvG5gQOVAfINybUbEU/pV1/9XLsQ5GEvbalkUhxJbYtY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+Translate 72 new messages came from git.pot update in 18a907225 (l10n:
+git.pot: v2.16.0 round 1 (64 new, 25 removed)) and 005c62fe4 (l10n:
+git.pot: v2.16.0 round 2 (8 new, 4 removed)).
 
-When calling convert_to_git(), the checksafe parameter defined what
-should happen if the EOL conversion (CRLF --> LF --> CRLF) does not
-roundtrip cleanly. In addition, it also defined if line endings should
-be renormalized (CRLF --> LF) or kept as they are.
-
-checksafe was an safe_crlf enum with these values:
-SAFE_CRLF_FALSE:       do nothing in case of EOL roundtrip errors
-SAFE_CRLF_FAIL:        die in case of EOL roundtrip errors
-SAFE_CRLF_WARN:        print a warning in case of EOL roundtrip errors
-SAFE_CRLF_RENORMALIZE: change CRLF to LF
-SAFE_CRLF_KEEP_CRLF:   keep all line endings as they are
-
-In some cases the integer value 0 was passed as checksafe parameter
-instead of the correct enum value SAFE_CRLF_FALSE. That was no problem
-because SAFE_CRLF_FALSE is defined as 0.
-
-FALSE/FAIL/WARN are different from RENORMALIZE and KEEP_CRLF. Therefore,
-an enum is not ideal. Let's use a integer bit pattern instead and rename
-the parameter to conv_flags to make it more generically usable. This
-allows us to extend the bit pattern in a subsequent commit.
-
-Reported-By: Randall S. Becker <rsbecker@nexbridge.com>
-Helped-By: Lars Schneider <larsxschneider@gmail.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
 
- >I think this is being solved a bit differently with a1fbf854
- >("convert_to_git(): safe_crlf/checksafe becomes int conv_flags",
- >2018-01-06), and 0 becomes the right value to pass at this caller to
- >say "I am passing none of the flag bit".
+Thanks for the review, Matthias!
 
- >I am hoping that the series that ends at f3b11d54 ("convert: add
- >support for 'checkout-encoding' attribute", 2018-01-06) will be
- >rerolled and hit 'master' early in the next cycle.
+ po/de.po | 227 +++++++++++++++++++++++++++------------------------------------
+ 1 file changed, 98 insertions(+), 129 deletions(-)
 
-  Thanks for the report & suggested patch. After reading it, I suggest
-  to break out the enum/int fix into an own "series".
-
-
-apply.c        |  6 +++---
- combine-diff.c |  2 +-
- config.c       |  7 +++++--
- convert.c      | 38 +++++++++++++++++++-------------------
- convert.h      | 17 +++++++----------
- diff.c         |  8 ++++----
- environment.c  |  2 +-
- sha1_file.c    | 12 ++++++------
- 8 files changed, 46 insertions(+), 46 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index 321a9fa68..f8b67bfee 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2263,8 +2263,8 @@ static void show_stats(struct apply_state *state, struct patch *patch)
- static int read_old_data(struct stat *st, struct patch *patch,
- 			 const char *path, struct strbuf *buf)
- {
--	enum safe_crlf safe_crlf = patch->crlf_in_old ?
--		SAFE_CRLF_KEEP_CRLF : SAFE_CRLF_RENORMALIZE;
-+	int conv_flags = patch->crlf_in_old ?
-+		CONV_EOL_KEEP_CRLF : CONV_EOL_RENORMALIZE;
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFLNK:
- 		if (strbuf_readlink(buf, path, st->st_size) < 0)
-@@ -2281,7 +2281,7 @@ static int read_old_data(struct stat *st, struct patch *patch,
- 		 * should never look at the index when explicit crlf option
- 		 * is given.
- 		 */
--		convert_to_git(NULL, path, buf->buf, buf->len, buf, safe_crlf);
-+		convert_to_git(NULL, path, buf->buf, buf->len, buf, conv_flags);
- 		return 0;
- 	default:
- 		return -1;
-diff --git a/combine-diff.c b/combine-diff.c
-index 2505de119..19f30c335 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1053,7 +1053,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			if (is_file) {
- 				struct strbuf buf = STRBUF_INIT;
+diff --git a/po/de.po b/po/de.po
+index b24b28875..eef4897fb 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -1716,7 +1716,7 @@ msgstr "Konnte Git-Verzeichnis nicht von '%s' nach '%s' migrieren."
+ #: editor.c:61
+ #, c-format
+ msgid "hint: Waiting for your editor to close the file...%c"
+-msgstr ""
++msgstr "Hinweis: Warte auf das Schließen der Datei durch Ihren Editor...%c"
  
--				if (convert_to_git(&the_index, elem->path, result, len, &buf, safe_crlf)) {
-+				if (convert_to_git(&the_index, elem->path, result, len, &buf, global_conv_flags_eol)) {
- 					free(result);
- 					result = strbuf_detach(&buf, &len);
- 					result_size = len;
-diff --git a/config.c b/config.c
-index e617c2018..1f003fbb9 100644
---- a/config.c
-+++ b/config.c
-@@ -1149,11 +1149,14 @@ static int git_default_core_config(const char *var, const char *value)
- 	}
+ #: entry.c:177
+ msgid "Filtering content"
+@@ -2087,12 +2087,12 @@ msgstr "Ungültiges Datumsformat: %s"
  
- 	if (!strcmp(var, "core.safecrlf")) {
-+		int eol_rndtrp_die;
- 		if (value && !strcasecmp(value, "warn")) {
--			safe_crlf = SAFE_CRLF_WARN;
-+			global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- 			return 0;
- 		}
--		safe_crlf = git_config_bool(var, value);
-+		eol_rndtrp_die = git_config_bool(var, value);
-+		global_conv_flags_eol = eol_rndtrp_die ?
-+			CONV_EOL_RNDTRP_DIE : CONV_EOL_RNDTRP_WARN;
- 		return 0;
- 	}
+ #: list-objects-filter-options.c:30
+ msgid "multiple object filter types cannot be combined"
+-msgstr ""
++msgstr "Mehrere Arten von Objekt-Filtern können nicht kombiniert werden."
  
-diff --git a/convert.c b/convert.c
-index 1a41a48e1..b976eb968 100644
---- a/convert.c
-+++ b/convert.c
-@@ -193,30 +193,30 @@ static enum eol output_eol(enum crlf_action crlf_action)
- 	return core_eol;
- }
+ #: list-objects-filter-options.c:41 list-objects-filter-options.c:68
+-#, fuzzy, c-format
++#, c-format
+ msgid "invalid filter-spec expression '%s'"
+-msgstr "Ungültige Datei: '%s'"
++msgstr "Ungültiger filter-spec Ausdruck '%s'."
  
--static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
-+static void check_global_conv_flags_eol(const char *path, enum crlf_action crlf_action,
- 			    struct text_stat *old_stats, struct text_stat *new_stats,
--			    enum safe_crlf checksafe)
-+			    int conv_flags)
- {
- 	if (old_stats->crlf && !new_stats->crlf ) {
- 		/*
- 		 * CRLFs would not be restored by checkout
- 		 */
--		if (checksafe == SAFE_CRLF_WARN)
-+		if (conv_flags & CONV_EOL_RNDTRP_DIE)
-+			die(_("CRLF would be replaced by LF in %s."), path);
-+		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
- 			warning(_("CRLF will be replaced by LF in %s.\n"
- 				  "The file will have its original line"
- 				  " endings in your working directory."), path);
--		else /* i.e. SAFE_CRLF_FAIL */
--			die(_("CRLF would be replaced by LF in %s."), path);
- 	} else if (old_stats->lonelf && !new_stats->lonelf ) {
- 		/*
- 		 * CRLFs would be added by checkout
- 		 */
--		if (checksafe == SAFE_CRLF_WARN)
-+		if (conv_flags & CONV_EOL_RNDTRP_DIE)
-+			die(_("LF would be replaced by CRLF in %s"), path);
-+		else if (conv_flags & CONV_EOL_RNDTRP_WARN)
- 			warning(_("LF will be replaced by CRLF in %s.\n"
- 				  "The file will have its original line"
- 				  " endings in your working directory."), path);
--		else /* i.e. SAFE_CRLF_FAIL */
--			die(_("LF would be replaced by CRLF in %s"), path);
- 	}
- }
+ #: lockfile.c:151
+ #, c-format
+@@ -2356,9 +2356,9 @@ msgid "Adding %s"
+ msgstr "Füge %s hinzu"
  
-@@ -268,7 +268,7 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- static int crlf_to_git(const struct index_state *istate,
- 		       const char *path, const char *src, size_t len,
- 		       struct strbuf *buf,
--		       enum crlf_action crlf_action, enum safe_crlf checksafe)
-+		       enum crlf_action crlf_action, int conv_flags)
- {
- 	struct text_stat stats;
- 	char *dst;
-@@ -298,12 +298,12 @@ static int crlf_to_git(const struct index_state *istate,
- 		 * unless we want to renormalize in a merge or
- 		 * cherry-pick.
- 		 */
--		if ((checksafe != SAFE_CRLF_RENORMALIZE) &&
-+		if ((!(conv_flags & CONV_EOL_RENORMALIZE)) &&
- 		    has_crlf_in_index(istate, path))
- 			convert_crlf_into_lf = 0;
- 	}
--	if ((checksafe == SAFE_CRLF_WARN ||
--	    (checksafe == SAFE_CRLF_FAIL)) && len) {
-+	if (((conv_flags & CONV_EOL_RNDTRP_WARN) ||
-+	     ((conv_flags & CONV_EOL_RNDTRP_DIE) && len))) {
- 		struct text_stat new_stats;
- 		memcpy(&new_stats, &stats, sizeof(new_stats));
- 		/* simulate "git add" */
-@@ -316,7 +316,7 @@ static int crlf_to_git(const struct index_state *istate,
- 			new_stats.crlf += new_stats.lonelf;
- 			new_stats.lonelf = 0;
- 		}
--		check_safe_crlf(path, crlf_action, &stats, &new_stats, checksafe);
-+		check_global_conv_flags_eol(path, crlf_action, &stats, &new_stats, conv_flags);
- 	}
- 	if (!convert_crlf_into_lf)
- 		return 0;
-@@ -1129,7 +1129,7 @@ const char *get_convert_attr_ascii(const char *path)
+ #: merge-recursive.c:1958
+-#, fuzzy, c-format
++#, c-format
+ msgid "Dirty index: cannot merge (dirty: %s)"
+-msgstr "Geänderter Index: kann Patches nicht anwenden (geändert: %s)"
++msgstr "Geänderter Index: kann nicht mergen (geändert: %s)"
  
- int convert_to_git(const struct index_state *istate,
- 		   const char *path, const char *src, size_t len,
--                   struct strbuf *dst, enum safe_crlf checksafe)
-+		   struct strbuf *dst, int conv_flags)
- {
- 	int ret = 0;
- 	struct conv_attrs ca;
-@@ -1144,8 +1144,8 @@ int convert_to_git(const struct index_state *istate,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	if (checksafe != SAFE_CRLF_KEEP_CRLF) {
--		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
-+	if (!(conv_flags & CONV_EOL_KEEP_CRLF)) {
-+		ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, conv_flags);
- 		if (ret && dst) {
- 			src = dst->buf;
- 			len = dst->len;
-@@ -1156,7 +1156,7 @@ int convert_to_git(const struct index_state *istate,
+ #: merge-recursive.c:1962
+ msgid "Already up to date!"
+@@ -3015,6 +3015,8 @@ msgid ""
+ "The '%s' hook was ignored because it's not set as executable.\n"
+ "You can disable this warning with `git config advice.ignoredHook false`."
+ msgstr ""
++"Der '%s' Hook wurde ignoriert, weil er nicht als ausführbar markiert ist.\n"
++"Sie können diese Warnung mit `git config advice.ignoredHook false` deaktivieren."
  
- void convert_to_git_filter_fd(const struct index_state *istate,
- 			      const char *path, int fd, struct strbuf *dst,
--			      enum safe_crlf checksafe)
-+			      int conv_flags)
- {
- 	struct conv_attrs ca;
- 	convert_attrs(&ca, path);
-@@ -1167,7 +1167,7 @@ void convert_to_git_filter_fd(const struct index_state *istate,
- 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ #: send-pack.c:141
+ #, c-format
+@@ -3137,14 +3139,12 @@ msgid "%s: Unable to write new index file"
+ msgstr "%s: Konnte neue Index-Datei nicht schreiben"
  
--	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
-+	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, conv_flags);
- 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
- }
+ #: sequencer.c:496
+-#, fuzzy
+ msgid "could not resolve HEAD commit"
+-msgstr "Konnte HEAD-Commit nicht auflösen\n"
++msgstr "Konnte HEAD-Commit nicht auflösen."
  
-@@ -1226,7 +1226,7 @@ int renormalize_buffer(const struct index_state *istate, const char *path,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	return ret | convert_to_git(istate, path, src, len, dst, SAFE_CRLF_RENORMALIZE);
-+	return ret | convert_to_git(istate, path, src, len, dst, CONV_EOL_RENORMALIZE);
- }
+ #: sequencer.c:516
+-#, fuzzy
+ msgid "unable to update cache tree"
+-msgstr "Konnte Cache-Verzeichnis nicht aktualisieren\n"
++msgstr "Konnte Cache-Verzeichnis nicht aktualisieren."
  
- /*****************************************************************
-diff --git a/convert.h b/convert.h
-index 4f2da225a..65ab3e516 100644
---- a/convert.h
-+++ b/convert.h
-@@ -8,15 +8,12 @@
+ #: sequencer.c:600
+ #, c-format
+@@ -3178,14 +3178,14 @@ msgstr ""
+ "  git rebase --continue\n"
  
- struct index_state;
+ #: sequencer.c:702
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not parse commit %s"
+-msgstr "Konnte Commit %s nicht parsen\n"
++msgstr "Konnte Commit %s nicht parsen."
  
--enum safe_crlf {
--	SAFE_CRLF_FALSE = 0,
--	SAFE_CRLF_FAIL = 1,
--	SAFE_CRLF_WARN = 2,
--	SAFE_CRLF_RENORMALIZE = 3,
--	SAFE_CRLF_KEEP_CRLF = 4
--};
-+#define CONV_EOL_RNDTRP_DIE   (1<<0) /* Die if CRLF to LF to CRLF is different */
-+#define CONV_EOL_RNDTRP_WARN  (1<<1) /* Warn if CRLF to LF to CRLF is different */
-+#define CONV_EOL_RENORMALIZE  (1<<2) /* Convert CRLF to LF */
-+#define CONV_EOL_KEEP_CRLF    (1<<3) /* Keep CRLF line endings as is */
+ #: sequencer.c:707
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not parse parent commit %s"
+-msgstr "Konnte Eltern-Commit %s nicht parsen\n"
++msgstr "Konnte Eltern-Commit %s nicht parsen."
  
--extern enum safe_crlf safe_crlf;
-+extern int global_conv_flags_eol;
+ #: sequencer.c:836
+ #, c-format
+@@ -3316,14 +3316,14 @@ msgid "git %s: failed to refresh the index"
+ msgstr "git %s: Fehler beim Aktualisieren des Index"
  
- enum auto_crlf {
- 	AUTO_CRLF_FALSE = 0,
-@@ -66,7 +63,7 @@ extern const char *get_convert_attr_ascii(const char *path);
- /* returns 1 if *dst was used */
- extern int convert_to_git(const struct index_state *istate,
- 			  const char *path, const char *src, size_t len,
--			  struct strbuf *dst, enum safe_crlf checksafe);
-+			  struct strbuf *dst, int conv_flags);
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int async_convert_to_working_tree(const char *path, const char *src,
-@@ -85,7 +82,7 @@ static inline int would_convert_to_git(const struct index_state *istate,
- extern void convert_to_git_filter_fd(const struct index_state *istate,
- 				     const char *path, int fd,
- 				     struct strbuf *dst,
--				     enum safe_crlf checksafe);
-+				     int conv_flags);
- extern int would_convert_to_git_filter_fd(const char *path);
+ #: sequencer.c:1270
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s does not accept arguments: '%s'"
+-msgstr "%%(body) akzeptiert keine Argumente"
++msgstr "%s akzeptiert keine Argumente: '%s'"
  
- /*****************************************************************
-diff --git a/diff.c b/diff.c
-index fb22b19f0..35cca04f2 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3520,13 +3520,13 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- {
- 	int size_only = flags & CHECK_SIZE_ONLY;
- 	int err = 0;
-+	int conv_flags = global_conv_flags_eol;
- 	/*
- 	 * demote FAIL to WARN to allow inspecting the situation
- 	 * instead of refusing.
- 	 */
--	enum safe_crlf crlf_warn = (safe_crlf == SAFE_CRLF_FAIL
--				    ? SAFE_CRLF_WARN
--				    : safe_crlf);
-+	if (conv_flags & CONV_EOL_RNDTRP_DIE)
-+		conv_flags = CONV_EOL_RNDTRP_WARN;
+ #: sequencer.c:1279
+-#, fuzzy, c-format
++#, c-format
+ msgid "missing arguments for %s"
+-msgstr "Objekt %s fehlt für %s"
++msgstr "Fehlende Argumente für %s."
  
- 	if (!DIFF_FILE_VALID(s))
- 		die("internal error: asking to populate invalid file.");
-@@ -3603,7 +3603,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		/*
- 		 * Convert from working tree format to canonical git format
- 		 */
--		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
-+		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, conv_flags)) {
- 			size_t size = 0;
- 			munmap(s->data, s->size);
- 			s->should_munmap = 0;
-diff --git a/environment.c b/environment.c
-index 63ac38a46..10a32c20a 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,7 +49,7 @@ enum auto_crlf auto_crlf = AUTO_CRLF_FALSE;
- int check_replace_refs = 1;
- char *git_replace_ref_base;
- enum eol core_eol = EOL_UNSET;
--enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
-+int global_conv_flags_eol = CONV_EOL_RNDTRP_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
- enum rebase_setup_type autorebase = AUTOREBASE_NEVER;
-diff --git a/sha1_file.c b/sha1_file.c
-index 3da70ac65..6bc7c6ada 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -133,14 +133,14 @@ static struct cached_object *find_cached_object(const unsigned char *sha1)
- }
+ #: sequencer.c:1322
+ #, c-format
+@@ -4965,7 +4965,7 @@ msgstr "versionierte Dateien aktualisieren"
  
+ #: builtin/add.c:299
+ msgid "renormalize EOL of tracked files (implies -u)"
+-msgstr ""
++msgstr "erneutes Normalisieren der Zeilenenden von versionierten Dateien (impliziert -u)"
  
--static enum safe_crlf get_safe_crlf(unsigned flags)
-+static int get_conv_flags(unsigned flags)
- {
- 	if (flags & HASH_RENORMALIZE)
--		return SAFE_CRLF_RENORMALIZE;
-+		return CONV_EOL_RENORMALIZE;
- 	else if (flags & HASH_WRITE_OBJECT)
--		return safe_crlf;
-+	  return global_conv_flags_eol;
- 	else
--		return SAFE_CRLF_FALSE;
-+		return 0;
- }
+ #: builtin/add.c:300
+ msgid "record only the fact that the path will be added later"
+@@ -5507,36 +5507,34 @@ msgstr "git bisect--helper --next-all [--no-checkout]"
  
+ #: builtin/bisect--helper.c:13
+ msgid "git bisect--helper --write-terms <bad_term> <good_term>"
+-msgstr ""
++msgstr "git bisect--helper --write-terms <bad_term> <good_term>"
  
-@@ -1752,7 +1752,7 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	if ((type == OBJ_BLOB) && path) {
- 		struct strbuf nbuf = STRBUF_INIT;
- 		if (convert_to_git(&the_index, path, buf, size, &nbuf,
--				   get_safe_crlf(flags))) {
-+				   get_conv_flags(flags))) {
- 			buf = strbuf_detach(&nbuf, &size);
- 			re_allocated = 1;
- 		}
-@@ -1786,7 +1786,7 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
- 	assert(would_convert_to_git_filter_fd(path));
+ #: builtin/bisect--helper.c:14
+-#, fuzzy
+ msgid "git bisect--helper --bisect-clean-state"
+-msgstr "git bisect--helper --next-all [--no-checkout]"
++msgstr "git bisect--helper --bisect-clean-state"
  
- 	convert_to_git_filter_fd(&the_index, path, fd, &sbuf,
--				 get_safe_crlf(flags));
-+				 get_conv_flags(flags));
+ #: builtin/bisect--helper.c:46
+-#, fuzzy, c-format
++#, c-format
+ msgid "'%s' is not a valid term"
+-msgstr "'%s' ist keine gültige Referenz."
++msgstr "'%s' ist kein gültiger Begriff."
  
- 	if (write_object)
- 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+ #: builtin/bisect--helper.c:50
+-#, fuzzy, c-format
++#, c-format
+ msgid "can't use the builtin command '%s' as a term"
+-msgstr "Kann eingebauten Befehl '$term' nicht als Begriff verwenden"
++msgstr "Kann den eingebauten Befehl '%s' nicht als Begriff verwenden."
+ 
+ #: builtin/bisect--helper.c:60
+-#, fuzzy, c-format
++#, c-format
+ msgid "can't change the meaning of the term '%s'"
+-msgstr "Kann Bedeutung von '$term' nicht ändern."
++msgstr "Kann die Bedeutung von dem Begriff '%s' nicht ändern."
+ 
+ #: builtin/bisect--helper.c:71
+ msgid "please use two different terms"
+ msgstr "Bitte verwenden Sie zwei verschiedene Begriffe."
+ 
+ #: builtin/bisect--helper.c:78
+-#, fuzzy
+ msgid "could not open the file BISECT_TERMS"
+-msgstr "konnte temporäre Datei '%s' nicht öffnen"
++msgstr "Konnte die Datei BISECT_TERMS nicht öffnen."
+ 
+ #: builtin/bisect--helper.c:120
+ msgid "perform 'git bisect next'"
+@@ -5544,29 +5542,27 @@ msgstr "'git bisect next' ausführen"
+ 
+ #: builtin/bisect--helper.c:122
+ msgid "write the terms to .git/BISECT_TERMS"
+-msgstr ""
++msgstr "die Begriffe nach .git/BISECT_TERMS schreiben"
+ 
+ #: builtin/bisect--helper.c:124
+ msgid "cleanup the bisection state"
+-msgstr ""
++msgstr "den Zustand der binären Suche aufräumen"
+ 
+ #: builtin/bisect--helper.c:126
+ msgid "check for expected revs"
+-msgstr ""
++msgstr "auf erwartete Commits prüfen"
+ 
+ #: builtin/bisect--helper.c:128
+ msgid "update BISECT_HEAD instead of checking out the current commit"
+ msgstr "BISECT_HEAD aktualisieren, anstatt den aktuellen Commit auszuchecken"
+ 
+ #: builtin/bisect--helper.c:143
+-#, fuzzy
+ msgid "--write-terms requires two arguments"
+-msgstr "--abort akzeptiert keine Argumente"
++msgstr "--write-terms benötigt zwei Argumente."
+ 
+ #: builtin/bisect--helper.c:147
+-#, fuzzy
+ msgid "--bisect-clean-state requires no arguments"
+-msgstr "--continue erwartet keine Argumente"
++msgstr "--bisect-clean-state erwartet keine Argumente."
+ 
+ #: builtin/blame.c:27
+ msgid "git blame [<options>] [<rev-opts>] [<rev>] [--] <file>"
+@@ -5857,9 +5853,9 @@ msgid "Branch copy failed"
+ msgstr "Kopie des Branches fehlgeschlagen"
+ 
+ #: builtin/branch.c:517
+-#, fuzzy, c-format
++#, c-format
+ msgid "Created a copy of a misnamed branch '%s'"
+-msgstr "falsch benannten Branch '%s' umbenannt"
++msgstr "Kopie eines falsch benannten Branches '%s' erstellt."
+ 
+ #: builtin/branch.c:520
+ #, c-format
+@@ -5908,7 +5904,7 @@ msgstr "Informationsmeldungen unterdrücken"
+ 
+ #: builtin/branch.c:590
+ msgid "set up tracking mode (see git-pull(1))"
+-msgstr "den Übernahmemodus einstellen (siehe git-pull(1))"
++msgstr "Modus zum Folgen von Branches einstellen (siehe git-pull(1))"
+ 
+ #: builtin/branch.c:592
+ msgid "do not use"
+@@ -7513,9 +7509,9 @@ msgstr ""
+ "vorhandenen Autor überein"
+ 
+ #: builtin/commit.c:1090
+-#, fuzzy, c-format
++#, c-format
+ msgid "Invalid ignored mode '%s'"
+-msgstr "Ungültiger Modus '%s' für unversionierte Dateien"
++msgstr "Ungültiger ignored-Modus '%s'."
+ 
+ #: builtin/commit.c:1104 builtin/commit.c:1349
+ #, c-format
+@@ -7624,13 +7620,10 @@ msgstr ""
+ "all)"
+ 
+ #: builtin/commit.c:1382
+-#, fuzzy
+ msgid ""
+ "show ignored files, optional modes: traditional, matching, no. (Default: "
+ "traditional)"
+-msgstr ""
+-"unversionierte Dateien anzeigen, optionale Modi: all, normal, no. (Standard: "
+-"all)"
++msgstr "ignorierte Dateien anzeigen, optionale Modi: traditional, matching, no. (Standard: traditional)"
+ 
+ #: builtin/commit.c:1384 parse-options.h:155
+ msgid "when"
+@@ -7650,7 +7643,7 @@ msgstr "unversionierte Dateien in Spalten auflisten"
+ 
+ #: builtin/commit.c:1406
+ msgid "Unsupported combination of ignored and untracked-files arguments"
+-msgstr ""
++msgstr "Nicht unterstützte Kombination von ignored und untracked-files Argumenten."
+ 
+ #: builtin/commit.c:1469
+ msgid "couldn't look up newly created commit"
+@@ -7661,9 +7654,8 @@ msgid "could not parse newly created commit"
+ msgstr "Konnte neu erstellten Commit nicht analysieren."
+ 
+ #: builtin/commit.c:1516
+-#, fuzzy
+ msgid "unable to resolve HEAD after creating commit"
+-msgstr "Konnte HEAD-Commit nicht auflösen\n"
++msgstr "Konnte HEAD nicht auflösen, nachdem der Commit erstellt wurde."
+ 
+ #: builtin/commit.c:1518
+ msgid "detached HEAD"
+@@ -7975,7 +7967,7 @@ msgstr "Wert ist ein Pfad (Datei oder Verzeichnisname)"
+ 
+ #: builtin/config.c:84
+ msgid "value is an expiry date"
+-msgstr ""
++msgstr "Wert ist ein Verfallsdatum"
+ 
+ #: builtin/config.c:85
+ msgid "Other"
+@@ -8088,7 +8080,7 @@ msgstr "kein Tag entspricht exakt '%s'"
+ #: builtin/describe.c:316
+ #, c-format
+ msgid "No exact match on refs or tags, searching to describe\n"
+-msgstr ""
++msgstr "Keine exakte Übereinstimmung bei Referenzen oder Tags, Suche zum Beschreiben\n"
+ 
+ #: builtin/describe.c:363
+ #, c-format
+@@ -8128,9 +8120,9 @@ msgstr ""
+ "Suche bei %s aufgegeben\n"
+ 
+ #: builtin/describe.c:494
+-#, fuzzy, c-format
++#, c-format
+ msgid "describe %s\n"
+-msgstr "suche zur Beschreibung von %s\n"
++msgstr "Beschreibe %s\n"
+ 
+ #: builtin/describe.c:497 builtin/log.c:500
+ #, c-format
+@@ -8138,9 +8130,9 @@ msgid "Not a valid object name %s"
+ msgstr "%s ist kein gültiger Objekt-Name"
+ 
+ #: builtin/describe.c:505
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s is neither a commit nor blob"
+-msgstr "'%s' ist kein Commit"
++msgstr "%s ist weder ein Commit, noch ein Blob."
+ 
+ #: builtin/describe.c:519
+ msgid "find the tag that comes after the commit"
+@@ -9863,14 +9855,12 @@ msgid "Use mail map file"
+ msgstr "\"mailmap\"-Datei verwenden"
+ 
+ #: builtin/log.c:155
+-#, fuzzy
+ msgid "only decorate refs that match <pattern>"
+-msgstr "nur Referenzen verwenden, die <Muster> entsprechen"
++msgstr "\"decorate\" nur bei Referenzen anwenden, die <Muster> entsprechen"
+ 
+ #: builtin/log.c:157
+-#, fuzzy
+ msgid "do not decorate refs that match <pattern>"
+-msgstr "keine Tags betrachten, die <Muster> entsprechen"
++msgstr "\"decorate\" nicht bei Referenzen anwenden, die <Muster> entsprechen"
+ 
+ #: builtin/log.c:158
+ msgid "decorate options"
+@@ -10207,10 +10197,8 @@ msgstr ""
+ "Kleinbuchstaben für Dateien mit 'assume unchanged' Markierung verwenden"
+ 
+ #: builtin/ls-files.c:521
+-#, fuzzy
+ msgid "use lowercase letters for 'fsmonitor clean' files"
+-msgstr ""
+-"Kleinbuchstaben für Dateien mit 'assume unchanged' Markierung verwenden"
++msgstr "Kleinbuchstaben für 'fsmonitor clean' Dateien verwenden"
+ 
+ #: builtin/ls-files.c:523
+ msgid "show cached files in the output (default)"
+@@ -11104,9 +11092,8 @@ msgid "git notes [--ref <notes-ref>] remove [<object>...]"
+ msgstr "git notes [--ref <Notiz-Referenz>] remove [<Objekt>...]"
+ 
+ #: builtin/notes.c:36
+-#, fuzzy
+ msgid "git notes [--ref <notes-ref>] prune [-n] [-v]"
+-msgstr "git notes [--ref <Notiz-Referenz>] prune [-n | -v]"
++msgstr "git notes [--ref <Notiz-Referenz>] prune [-n] [-v]"
+ 
+ #: builtin/notes.c:37
+ msgid "git notes [--ref <notes-ref>] get-ref"
+@@ -11516,9 +11503,8 @@ msgid "Compressing objects"
+ msgstr "Komprimiere Objekte"
+ 
+ #: builtin/pack-objects.c:2599
+-#, fuzzy
+ msgid "invalid value for --missing"
+-msgstr "Ungültiger Wert für %s"
++msgstr "Ungültiger Wert für --missing."
+ 
+ #: builtin/pack-objects.c:2902
+ #, c-format
+@@ -11675,9 +11661,8 @@ msgid "write a bitmap index together with the pack index"
+ msgstr "Bitmap-Index zusammen mit Pack-Index schreiben"
+ 
+ #: builtin/pack-objects.c:3010
+-#, fuzzy
+ msgid "handling for missing objects"
+-msgstr "fehlende Objekte erlauben"
++msgstr "Behandlung für fehlende Objekte"
+ 
+ #: builtin/pack-objects.c:3144
+ msgid "Counting objects"
+@@ -11704,9 +11689,8 @@ msgid "Removing duplicate objects"
+ msgstr "Lösche doppelte Objekte"
+ 
+ #: builtin/prune.c:11
+-#, fuzzy
+ msgid "git prune [-n] [-v] [--progress] [--expire <time>] [--] [<head>...]"
+-msgstr "git prune [-n] [-v] [--expire <Zeit>] [--] [<head>...]"
++msgstr "git prune [-n] [-v] [--progress] [--expire <Zeit>] [--] [<Branch>...]"
+ 
+ #: builtin/prune.c:106
+ msgid "report pruned objects"
+@@ -12315,14 +12299,12 @@ msgid "make rebase script"
+ msgstr "Rebase-Skript erstellen"
+ 
+ #: builtin/rebase--helper.c:32
+-#, fuzzy
+ msgid "shorten commit ids in the todo list"
+-msgstr "SHA-1's in der TODO-Liste verkürzen"
++msgstr "Commit-IDs in der TODO-Liste verkürzen"
+ 
+ #: builtin/rebase--helper.c:34
+-#, fuzzy
+ msgid "expand commit ids in the todo list"
+-msgstr "SHA1's in der TODO-Liste erweitern"
++msgstr "Commit-IDs in der TODO-Liste erweitern"
+ 
+ #: builtin/rebase--helper.c:36
+ msgid "check the todo list"
+@@ -12337,9 +12319,8 @@ msgid "rearrange fixup/squash lines"
+ msgstr "fixup/squash-Zeilen umordnen"
+ 
+ #: builtin/rebase--helper.c:42
+-#, fuzzy
+ msgid "insert exec commands in todo list"
+-msgstr "SHA1's in der TODO-Liste erweitern"
++msgstr "\"exec\"-Befehle in TODO-Liste einfügen"
+ 
+ #: builtin/receive-pack.c:30
+ msgid "git receive-pack <git-dir>"
+@@ -13254,12 +13235,12 @@ msgstr "Konnte neue Index-Datei nicht schreiben."
+ 
+ #: builtin/rev-list.c:399
+ msgid "object filtering requires --objects"
+-msgstr ""
++msgstr "Das Filtern von Objekten erfordert --objects."
+ 
+ #: builtin/rev-list.c:402
+-#, fuzzy, c-format
++#, c-format
+ msgid "invalid sparse value '%s'"
+-msgstr "Ungültiger Farbwert: %.*s"
++msgstr "Ungültiger \"sparse\"-Wert '%s'."
+ 
+ #: builtin/rev-list.c:442
+ msgid "rev-list does not support display of notes"
+@@ -13267,7 +13248,7 @@ msgstr "rev-list unterstützt keine Anzeige von Notizen"
+ 
+ #: builtin/rev-list.c:445
+ msgid "cannot combine --use-bitmap-index with object filtering"
+-msgstr ""
++msgstr "--use-bitmap-index kann nicht mit dem Filtern von Objekten kombiniert werden."
+ 
+ #: builtin/rev-parse.c:402
+ msgid "git rev-parse --parseopt [<options>] -- [<args>...]"
+@@ -13804,35 +13785,32 @@ msgid "no submodule mapping found in .gitmodules for path '%s'"
+ msgstr "Keine Submodul-Zuordnung in .gitmodules für Pfad '%s' gefunden"
+ 
+ #: builtin/submodule--helper.c:626
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not resolve HEAD ref inside the submodule '%s'"
+-msgstr "Fehler bei Rekursion in Submodul-Pfad '%s'"
++msgstr "Konnte HEAD-Referenz nicht innerhalb des Submodul-Pfads '%s' auflösen."
+ 
+ #: builtin/submodule--helper.c:653
+-#, fuzzy, c-format
++#, c-format
+ msgid "failed to recurse into submodule '%s'"
+-msgstr "Fehler bei Rekursion in Submodul-Pfad '%s'"
++msgstr "Fehler bei Rekursion in Submodul '%s'."
+ 
+ #: builtin/submodule--helper.c:677
+-#, fuzzy
+ msgid "Suppress submodule status output"
+-msgstr "dies an die Ausgabe der Submodul-Pfade voranstellen"
++msgstr "Ausgabe über Submodul-Status unterdrücken"
+ 
+ #: builtin/submodule--helper.c:678
+ msgid ""
+ "Use commit stored in the index instead of the one stored in the submodule "
+ "HEAD"
+-msgstr ""
++msgstr "Benutze den Commit, der im Index gespeichert ist, statt den im Submodul HEAD"
+ 
+ #: builtin/submodule--helper.c:679
+-#, fuzzy
+ msgid "recurse into nested submodules"
+-msgstr "Rekursion in Submodule durchführen"
++msgstr "Rekursion in verschachtelte Submodule durchführen"
+ 
+ #: builtin/submodule--helper.c:684
+-#, fuzzy
+ msgid "git submodule status [--quiet] [--cached] [--recursive] [<path>...]"
+-msgstr "git submodule--helper update_clone [--prefix=<Pfad>] [<Pfad>...]"
++msgstr "git submodule status [--quiet] [--cached] [--recursive] [<Pfad>...]"
+ 
+ #: builtin/submodule--helper.c:708
+ msgid "git submodule--helper name <path>"
+@@ -14426,21 +14404,19 @@ msgstr ""
+ 
+ #: builtin/update-index.c:1022
+ msgid "write out the index even if is not flagged as changed"
+-msgstr ""
++msgstr "Index rausschreiben, auch wenn dieser nicht als geändert markiert ist"
+ 
+ #: builtin/update-index.c:1024
+-#, fuzzy
+ msgid "enable or disable file system monitor"
+-msgstr "Splitting des Index aktivieren oder deaktivieren"
++msgstr "Dateisystem-Monitor aktivieren oder deaktivieren"
+ 
+ #: builtin/update-index.c:1026
+-#, fuzzy
+ msgid "mark files as fsmonitor valid"
+-msgstr "diese Datei immer als unverändert betrachten"
++msgstr "Dateien als \"fsmonitor valid\" markieren"
+ 
+ #: builtin/update-index.c:1029
+ msgid "clear fsmonitor valid bit"
+-msgstr ""
++msgstr "\"fsmonitor valid\"-Bit löschen"
+ 
+ #: builtin/update-index.c:1127
+ msgid ""
+@@ -14485,27 +14461,25 @@ msgid "Untracked cache enabled for '%s'"
+ msgstr "Cache für unversionierte Dateien für '%s' aktiviert"
+ 
+ #: builtin/update-index.c:1171
+-#, fuzzy
+ msgid "core.fsmonitor is unset; set it if you really want to enable fsmonitor"
+ msgstr ""
+-"core.splitIndex ist auf 'false' gesetzt. Entfernen oder ändern Sie dies,\n"
+-"wenn sie wirklich das Splitting des Index aktivieren möchten."
++"core.fsmonitor nicht gesetzt. Setzen Sie es, wenn Sie den Dateisystem-Monitor\n"
++"wirklich aktivieren möchten."
+ 
+ #: builtin/update-index.c:1175
+ msgid "fsmonitor enabled"
+-msgstr ""
++msgstr "Dateisystem-Monitor aktiviert"
+ 
+ #: builtin/update-index.c:1178
+-#, fuzzy
+ msgid ""
+ "core.fsmonitor is set; remove it if you really want to disable fsmonitor"
+ msgstr ""
+-"core.splitIndex ist auf 'true' gesetzt. Entfernen oder ändern Sie dies,\n"
+-"wenn Sie wirklich das Splitting des Index deaktivieren möchten."
++"core.fsmonitor ist gesetzt. Löschen Sie es, wenn Sie den Dateisystem-Monitor\n"
++"wirklich deaktivieren möchten."
+ 
+ #: builtin/update-index.c:1182
+ msgid "fsmonitor disabled"
+-msgstr ""
++msgstr "Dateisystem-Monitor deaktiviert"
+ 
+ #: builtin/update-ref.c:10
+ msgid "git update-ref [<options>] -d <refname> [<old-val>]"
+@@ -14676,23 +14650,22 @@ msgid "keep the new working tree locked"
+ msgstr "das neue Arbeitsverzeichnis gesperrt lassen"
+ 
+ #: builtin/worktree.c:377
+-#, fuzzy
+ msgid "set up tracking mode (see git-branch(1))"
+-msgstr "den Übernahmemodus einstellen (siehe git-pull(1))"
++msgstr "Modus zum Folgen von Branches einstellen (siehe git-branch(1))"
+ 
+ #: builtin/worktree.c:380
+-#, fuzzy
+ msgid "try to match the new branch name with a remote-tracking branch"
+-msgstr "Upstream-Branch '%s' nicht als Remote-Tracking-Branch gespeichert"
++msgstr ""
++"versuchen, eine Übereinstimmung des Branch-Namens mit einem\n"
++"Remote-Tracking-Branch herzustellen"
+ 
+ #: builtin/worktree.c:388
+ msgid "-b, -B, and --detach are mutually exclusive"
+ msgstr "-b, -B und --detach schließen sich gegenseitig aus"
+ 
+ #: builtin/worktree.c:453
+-#, fuzzy
+ msgid "--[no-]track can only be used if a new branch is created"
+-msgstr "--local kann nur innerhalb eines Git-Repositories verwendet werden."
++msgstr "--[no]-track kann nur verwendet werden, wenn ein neuer Branch erstellt wird."
+ 
+ #: builtin/worktree.c:553
+ msgid "reason for locking"
+@@ -14824,12 +14797,11 @@ msgstr "Leite nach %s um"
+ 
+ #: list-objects-filter-options.h:54
+ msgid "args"
+-msgstr ""
++msgstr "Argumente"
+ 
+ #: list-objects-filter-options.h:55
+-#, fuzzy
+ msgid "object filtering"
+-msgstr "Art des Objektes"
++msgstr "Filtern nach Objekten"
+ 
+ #: common-cmds.h:9
+ msgid "start a working area (see also: git help tutorial)"
+@@ -15106,7 +15078,7 @@ msgstr "?? Was reden Sie da?"
+ 
+ #: git-bisect.sh:453
+ msgid "bisect run failed: no command provided."
+-msgstr ""
++msgstr "'bisect run' fehlgeschlagen: kein Befehl angegeben."
+ 
+ #: git-bisect.sh:458
+ #, sh-format
+@@ -15235,9 +15207,8 @@ msgid "The pre-rebase hook refused to rebase."
+ msgstr "Der \"pre-rebase hook\" hat den Rebase zurückgewiesen."
+ 
+ #: git-rebase.sh:219
+-#, fuzzy
+ msgid "It looks like 'git am' is in progress. Cannot rebase."
+-msgstr "\"git-am\" scheint im Gange zu sein. Kann Rebase nicht durchführen."
++msgstr "'git-am' scheint im Gange zu sein. Kann Rebase nicht durchführen."
+ 
+ #: git-rebase.sh:363
+ msgid "No rebase in progress?"
+@@ -15283,9 +15254,9 @@ msgstr ""
+ "etwas Schützenswertes vorhanden ist."
+ 
+ #: git-rebase.sh:480
+-#, fuzzy, sh-format
++#, sh-format
+ msgid "invalid upstream '$upstream_name'"
+-msgstr "ungültiger Upstream-Branch $upstream_name"
++msgstr "Ungültiger Upstream-Branch '$upstream_name'."
+ 
+ #: git-rebase.sh:504
+ #, sh-format
+@@ -15303,9 +15274,9 @@ msgid "Does not point to a valid commit: $onto_name"
+ msgstr "$onto_name zeigt auf keinen gültigen Commit"
+ 
+ #: git-rebase.sh:542
+-#, fuzzy, sh-format
++#, sh-format
+ msgid "fatal: no such branch/commit '$branch_name'"
+-msgstr "fatal: Branch $branch_name nicht gefunden"
++msgstr "fatal: Branch/Commit '$branch_name' nicht gefunden"
+ 
+ #: git-rebase.sh:575
+ msgid "Cannot autostash"
+@@ -15321,9 +15292,9 @@ msgid "Please commit or stash them."
+ msgstr "Bitte committen Sie die Änderungen oder benutzen Sie \"stash\"."
+ 
+ #: git-rebase.sh:607
+-#, fuzzy, sh-format
++#, sh-format
+ msgid "HEAD is up to date."
+-msgstr "HEAD ist jetzt bei"
++msgstr "HEAD ist aktuell."
+ 
+ #: git-rebase.sh:609
+ #, sh-format
+@@ -15331,10 +15302,9 @@ msgid "Current branch $branch_name is up to date."
+ msgstr "Aktueller Branch $branch_name ist auf dem neuesten Stand."
+ 
+ #: git-rebase.sh:617
+-#, fuzzy, sh-format
++#, sh-format
+ msgid "HEAD is up to date, rebase forced."
+-msgstr ""
+-"Aktueller Branch $branch_name ist auf dem neuesten Stand, Rebase erzwungen."
++msgstr "HEAD ist aktuell, Rebase erzwungen."
+ 
+ #: git-rebase.sh:619
+ #, sh-format
+@@ -15398,7 +15368,7 @@ msgstr "Kann $ref_stash nicht mit $w_commit aktualisieren."
+ #: git-stash.sh:281
+ #, sh-format
+ msgid "error: unknown option for 'stash push': $option"
+-msgstr ""
++msgstr "Fehler: unbekannte Option für 'stash push': $option"
+ 
+ #: git-stash.sh:295
+ msgid "Can't use --patch and --include-untracked or --all at the same time"
+@@ -16107,9 +16077,8 @@ msgid "Could not init rewritten commits"
+ msgstr "Konnte neu geschriebene Commits nicht initialisieren."
+ 
+ #: git-rebase--interactive.sh:897
+-#, fuzzy
+ msgid "Could not generate todo list"
+-msgstr "Konnte nicht nach %s schreiben"
++msgstr "Konnte TODO-Liste nicht erzeugen."
+ 
+ #: git-rebase--interactive.sh:973
+ #, sh-format
 -- 
-2.16.0.rc0.2.g00e34bdac6.dirty
+2.16.0.rc1.290.gc44db26fe
 
