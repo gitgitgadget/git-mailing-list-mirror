@@ -2,63 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D89E11FADF
-	for <e@80x24.org>; Sun, 14 Jan 2018 18:21:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0152C1FADF
+	for <e@80x24.org>; Sun, 14 Jan 2018 18:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751846AbeANSVD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 Jan 2018 13:21:03 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:23116 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751797AbeANSVC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 Jan 2018 13:21:02 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0EIKx3c099408
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sun, 14 Jan 2018 13:21:00 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Philip Oakley'" <philipoakley@iee.org>, <git@vger.kernel.org>
-References: <20180114164529.10120-1-randall.s.becker@rogers.com> <E2F9FAE97F7D4B49A5A644FC796A9AAC@PhilipOakley>
-In-Reply-To: <E2F9FAE97F7D4B49A5A644FC796A9AAC@PhilipOakley>
-Subject: RE: [PATCH] Remoted unnecessary void* from hashmap.h that caused compile warnings
-Date:   Sun, 14 Jan 2018 13:20:55 -0500
-Message-ID: <002801d38d64$6e62efa0$4b28cee0$@nexbridge.com>
+        id S1751742AbeANSkq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 Jan 2018 13:40:46 -0500
+Received: from bsmtp1.bon.at ([213.33.87.15]:42350 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751210AbeANSkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 Jan 2018 13:40:45 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zKQKR4qJ7z5tlF;
+        Sun, 14 Jan 2018 19:40:43 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 2C0AF274;
+        Sun, 14 Jan 2018 19:40:43 +0100 (CET)
+Subject: Re: [BUG] test_must_fail: does not correctly detect failures - Was
+ Git 2.16.0-rc2 Test Summary on NonStop
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org, 'Joachim Schmitz' <jojo@schmitz-digital.de>
+References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com>
+ <001a01d38d57$d36c7d10$7a457730$@nexbridge.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <59d3adab-4a95-4ef5-2d8f-ef4c7b797156@kdbg.org>
+Date:   Sun, 14 Jan 2018 19:40:43 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="US-ASCII"
+In-Reply-To: <001a01d38d57$d36c7d10$7a457730$@nexbridge.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLT64Z5+adlU8BW/+joOIaH6CfVUgI5uQnjoWEjvWA=
-Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 14, 2018 12:25 PM, Philip Oakley wrote:
-> To: randall.s.becker@rogers.com; git@vger.kernel.org
-> Cc: Randall S. Becker <rsbecker@nexbridge.com>
-> Subject: Re: [PATCH] Remoted unnecessary void* from hashmap.h that
-> caused compile warnings
-> 
-> From: <randall.s.becker@rogers.com>
-> Subject: [PATCH] Remoted unnecessary void* from hashmap.h that caused
-> compile warnings
-> 
-> s/Remoted/Removed/ ?
-> 
-> Maybe shorten to " hashmap.h: remove unnecessary void* " (ex the
-> superflous
-> spaces)
+Am 14.01.2018 um 17:50 schrieb Randall S. Becker:
+> Follow-up: This looks like the completion code from perl on NonStop is not
+> the same as expected by git in the case of failures. I need to debug this to
+> get more details to the team. We have had completion issues before relating
+> to interpretation problems between perl, bash, and git in this platform, so
+> I'm assuming this to be likely again but need to track down the specifics.
+> Can anyone point me to where the detection is within git or the execv?
 
-I amended the commit fixing the typo and cleaning up the comment.
+Perhaps you are looking for wait_or_whine() in run-command.c? But this 
+function cannot do anything if perl alread exits with an exotic code (> 
+128 even though no signal was received).
 
-Thanks,
-Randall
-
+-- Hannes
