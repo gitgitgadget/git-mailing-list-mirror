@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D481F404
-	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99CD01F404
+	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755022AbeAOLAI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 06:00:08 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:46291 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755004AbeAOLAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 06:00:07 -0500
-Received: by mail-pg0-f68.google.com with SMTP id s9so5998118pgq.13
-        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:07 -0800 (PST)
+        id S1755063AbeAOLAP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 06:00:15 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33661 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755035AbeAOLAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 06:00:14 -0500
+Received: by mail-pg0-f66.google.com with SMTP id i196so7831017pgd.0
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YF9uDYFOHxF4PkI2tXglwEBRgeeA3DropXjNk/VgWQM=;
-        b=rYzzryj8CFm4JpXj02aHZ5e1r4nxHgAOSGji8B1WwLXNPCLd61J6WUJBEXVVzWGb2c
-         sEzcbvtpKn6QOtgD/Qfg22E3pO7gMpcRqNOxJsQMY87t4XNWONzLAU8ek2fih9yfZlGR
-         GXizsZswQ5LfoYXnV8nttYzfPar8UqjG62uDjghz4X4ITTwNF8O6QDXmzOEaqNCWiX3+
-         jAvt59QbqL6h+qbh2QqdjNBLCc0oIh4SaGuO4ZDu5tgLrDvHcblLivGAwR1cx+T/zOYB
-         PIEvXRp6kBaJ6U46kvrcgJQroNfg3xDfxlkHdEzpuAcrlIChHGMpmrxAdT85Jkgdjl1Z
-         sA8g==
+        bh=CTgD6tY7cnOfsxspTAjPbYHoYLthvu7ZU/9/7IBlw2k=;
+        b=JbV4hxImk8WTW9+aL5s5SiNKVz49L8OROdIbm0gA8A/0uUxALg+art38OJyCCUPnOK
+         RRaOK3RNPKIIhh1ILm6iW32IsGu/8dTIgl09k5T0W1TmCu+wBTdm2LnFFXvTXTF9ceUY
+         vxJlqundTkCU3xk6VFPQLvX/OQ2KY7rafyeLhsELhe1kFVLhdd66eQjvpTuXrbwf41J9
+         vUE/vPimPxG2dTrblRqg22UIbH+a+wEXziVPLIKtz5IhfnajuhRC6K5Mtaa2MV4eBYkZ
+         XMwy4a1CGt7WqPdyEzmxZXL6TcN6nuja8bm6J+CkcwdWO0J6uWExHX5k1YXzDWLrmtvr
+         CgoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YF9uDYFOHxF4PkI2tXglwEBRgeeA3DropXjNk/VgWQM=;
-        b=dBL09NNuLP+ad4NvbeePpmG3JPRKfB1ywJ1ghpdyZCt7ZHuvulEOrYkCD4VGuo+ZCg
-         OMwXlbn2rE9uKQUstz3C6xW6mDRWhFLUlw8Nw4KTQu9wGfl7llPVt0qVA91qNB4JGQx/
-         oIF9LD3Hwl7x3bEW3NHXQ6mvvTkKAitg7A9ddULKASmB4NcFUWmZ1ZTfgw4XSFYazQBj
-         eRsmDhpgrXty5OgGqExMaj5Rej63UI6CeC+lj+LbHrEEGDh54S3KUXfiWQR4gQFItFS0
-         5RBwiRJGnOoOL7EPOvhp5soYq4hqjdDPDnMnkuN4xiVecNBLwKZxBSa4mVO+5N1U2sNh
-         8Fcg==
-X-Gm-Message-State: AKwxytfb2Ai8V8yZWeZ1F4LfM+VQ91e6o57WZ7yfrGS6+AMI0Sa51bXE
-        htfrz7py7HGJoEtKSL1GvU1EEA==
-X-Google-Smtp-Source: ACJfBotu9ZFk0pCruSqUa1TJOUpn05tHet6E9ZDEyKiJAQcCsIWLfhXtv03/l4lhWSq9+Bj80OxStg==
-X-Received: by 10.99.124.2 with SMTP id x2mr14918772pgc.184.1516014006979;
-        Mon, 15 Jan 2018 03:00:06 -0800 (PST)
+        bh=CTgD6tY7cnOfsxspTAjPbYHoYLthvu7ZU/9/7IBlw2k=;
+        b=q6HdD8vjEuqVw9pxKm7KvbfpencoAy7JPZsCSTxku+/C2olOM8ma+j5AHIXfdqZopm
+         ibPjQ+Dl1O0o36d5aR641VWjadTMXBP1RqWerYl8RLVL3sHbGp6SA//hgdohHQSBcl6k
+         6v+ZvVhKls/t2OXD1U4s5uADzE51vm04Mz70JtpB1K+5ZYrVECAMUAI75H6htIaxh0mE
+         DNW/u9H94s93JJBDxENy6ZUtLaiKNH96LbFUaLhOHb+EvgxghiBffzSYDFwtkQdBVh5B
+         0ulgUjPCRJOxy6UGPrXZAI+cHqlo0bpD/+PIdv9lSzZ2lVimeSOSeKhDVZB5xc8Ozm+H
+         ymYw==
+X-Gm-Message-State: AKwxytcZ3N95MNilCUJodTcnbmiyFoiRJKlANkYomXGA0GXTCnlcw/xg
+        aWjGKZ5VnsoyUQati/Uv9LpiHA==
+X-Google-Smtp-Source: ACJfBotukWz7+b30xCI7Nzy8a561k41EciCpl+6Zv3fc1n6Lx5gVlREY6ZdJGBSCR/5nln8kDemK+w==
+X-Received: by 10.98.13.196 with SMTP id 65mr4131421pfn.155.1516014013957;
+        Mon, 15 Jan 2018 03:00:13 -0800 (PST)
 Received: from ash ([27.75.129.14])
-        by smtp.gmail.com with ESMTPSA id 126sm26370574pfe.134.2018.01.15.03.00.03
+        by smtp.gmail.com with ESMTPSA id y7sm3899926pfe.48.2018.01.15.03.00.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jan 2018 03:00:06 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:01 +0700
+        Mon, 15 Jan 2018 03:00:13 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:07 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 1/7] sq_quote_argv: drop maxlen parameter
-Date:   Mon, 15 Jan 2018 17:59:43 +0700
-Message-Id: <20180115105949.18328-2-pclouds@gmail.com>
+Subject: [PATCH v5 2/7] trace: avoid unnecessary quoting
+Date:   Mon, 15 Jan 2018 17:59:44 +0700
+Message-Id: <20180115105949.18328-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 In-Reply-To: <20180115105949.18328-1-pclouds@gmail.com>
 References: <20180113064949.6043-1-pclouds@gmail.com>
@@ -76,102 +76,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-No caller passes anything but "0" for this parameter, which
-requests that the function ignore it completely. In fact, in
-all of history there was only one such caller, and it went
-away in 7f51f8bc2b (alias: use run_command api to execute
-aliases, 2011-01-07).
+Trace output which contains arbitrary strings (e.g., the
+arguments to commands which we are running) is always passed
+through sq_quote_buf(). That function always adds
+single-quotes, even if the output consists of vanilla
+characters. This can make the output a bit hard to read.
+
+Let's avoid the quoting if there are no characters which a
+shell would interpret. Trace output doesn't necessarily need
+to be shell-compatible, but:
+
+  - the shell language is a good ballpark for what humans
+    consider readable (well, humans versed in command line
+    tools)
+
+  - the run_command bits can be cut-and-pasted to a shell,
+    and we'll keep that property
+
+  - it covers any cases which would make the output
+    visually ambiguous (e.g., embedded whitespace or quotes)
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/am.c        | 2 +-
- builtin/rev-parse.c | 4 ++--
- quote.c             | 4 +---
- quote.h             | 2 +-
- trace.c             | 4 ++--
- 5 files changed, 7 insertions(+), 9 deletions(-)
+ quote.c | 26 ++++++++++++++++++++++++++
+ quote.h |  8 ++++++++
+ trace.c |  4 ++--
+ 3 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index acfe9d3c8c..5bdd2d7578 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1061,7 +1061,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 	}
- 	write_state_text(state, "scissors", str);
- 
--	sq_quote_argv(&sb, state->git_apply_opts.argv, 0);
-+	sq_quote_argv(&sb, state->git_apply_opts.argv);
- 	write_state_text(state, "apply-opt", sb.buf);
- 
- 	if (state->rebasing)
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 74aa644cbb..96d06a5d01 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -516,7 +516,7 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_SHELL_EVAL);
- 
- 	strbuf_addstr(&parsed, " --");
--	sq_quote_argv(&parsed, argv, 0);
-+	sq_quote_argv(&parsed, argv);
- 	puts(parsed.buf);
- 	return 0;
- }
-@@ -526,7 +526,7 @@ static int cmd_sq_quote(int argc, const char **argv)
- 	struct strbuf buf = STRBUF_INIT;
- 
- 	if (argc)
--		sq_quote_argv(&buf, argv, 0);
-+		sq_quote_argv(&buf, argv);
- 	printf("%s\n", buf.buf);
- 	strbuf_release(&buf);
- 
 diff --git a/quote.c b/quote.c
-index de2922ddd6..b2970da627 100644
+index b2970da627..37d2686865 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -56,7 +56,7 @@ void sq_quotef(struct strbuf *dst, const char *fmt, ...)
- 	strbuf_release(&src);
+@@ -43,6 +43,22 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
+ 	free(to_free);
  }
  
--void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxlen)
-+void sq_quote_argv(struct strbuf *dst, const char **argv)
++void sq_quote_buf_pretty(struct strbuf *dst, const char *src)
++{
++	static const char ok_punct[] = "+,-./:=@_^";
++	const char *p;
++
++	for (p = src; *p; p++) {
++		if (!isalpha(*p) && !isdigit(*p) && !strchr(ok_punct, *p)) {
++			sq_quote_buf(dst, src);
++			return;
++		}
++	}
++
++	/* if we get here, we did not need quoting */
++	strbuf_addstr(dst, src);
++}
++
+ void sq_quotef(struct strbuf *dst, const char *fmt, ...)
  {
- 	int i;
- 
-@@ -65,8 +65,6 @@ void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxlen)
- 	for (i = 0; argv[i]; ++i) {
- 		strbuf_addch(dst, ' ');
- 		sq_quote_buf(dst, argv[i]);
--		if (maxlen && dst->len > maxlen)
--			die("Too many or long arguments");
+ 	struct strbuf src = STRBUF_INIT;
+@@ -68,6 +84,16 @@ void sq_quote_argv(struct strbuf *dst, const char **argv)
  	}
  }
  
++void sq_quote_argv_pretty(struct strbuf *dst, const char **argv)
++{
++	int i;
++
++	for (i = 0; argv[i]; i++) {
++		strbuf_addch(dst, ' ');
++		sq_quote_buf_pretty(dst, argv[i]);
++	}
++}
++
+ static char *sq_dequote_step(char *arg, char **next)
+ {
+ 	char *dst = arg;
 diff --git a/quote.h b/quote.h
-index 66f5644aa2..48a75a416b 100644
+index 48a75a416b..ea992dcc91 100644
 --- a/quote.h
 +++ b/quote.h
-@@ -30,7 +30,7 @@ struct strbuf;
-  */
- 
- extern void sq_quote_buf(struct strbuf *, const char *src);
--extern void sq_quote_argv(struct strbuf *, const char **argv, size_t maxlen);
-+extern void sq_quote_argv(struct strbuf *, const char **argv);
+@@ -33,6 +33,14 @@ extern void sq_quote_buf(struct strbuf *, const char *src);
+ extern void sq_quote_argv(struct strbuf *, const char **argv);
  extern void sq_quotef(struct strbuf *, const char *fmt, ...);
  
++/*
++ * These match their non-pretty variants, except that they avoid
++ * quoting when there are no exotic characters. These should only be used for
++ * human-readable output, as sq_dequote() is not smart enough to dequote it.
++ */
++void sq_quote_buf_pretty(struct strbuf *, const char *src);
++void sq_quote_argv_pretty(struct strbuf *, const char **argv);
++
  /* This unwraps what sq_quote() produces in place, but returns
+  * NULL if the input does not look like what sq_quote would have
+  * produced.
 diff --git a/trace.c b/trace.c
-index b7530b51a9..fa9174fc4b 100644
+index fa9174fc4b..9784915be1 100644
 --- a/trace.c
 +++ b/trace.c
 @@ -157,7 +157,7 @@ static void trace_argv_vprintf_fl(const char *file, int line,
  
  	strbuf_vaddf(&buf, format, ap);
  
--	sq_quote_argv(&buf, argv, 0);
-+	sq_quote_argv(&buf, argv);
+-	sq_quote_argv(&buf, argv);
++	sq_quote_argv_pretty(&buf, argv);
  	print_trace_line(&trace_default_key, &buf);
  }
  
@@ -179,8 +184,8 @@ index b7530b51a9..fa9174fc4b 100644
  		atexit(print_command_performance_atexit);
  
  	strbuf_reset(&command_line);
--	sq_quote_argv(&command_line, argv, 0);
-+	sq_quote_argv(&command_line, argv);
+-	sq_quote_argv(&command_line, argv);
++	sq_quote_argv_pretty(&command_line, argv);
  	command_start_time = getnanotime();
  }
 -- 
