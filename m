@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 039581F404
-	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC0931F404
+	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755118AbeAOLA0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 06:00:26 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:39029 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755098AbeAOLAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 06:00:25 -0500
-Received: by mail-pg0-f67.google.com with SMTP id w17so1985322pgv.6
-        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:25 -0800 (PST)
+        id S1755152AbeAOLAb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 06:00:31 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:43549 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755129AbeAOLAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 06:00:30 -0500
+Received: by mail-pg0-f66.google.com with SMTP id n17so239152pgf.10
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NvraFG4444v/YirZrZh0xAcM3wAFHBOGfu8oJq+wXho=;
-        b=so9UoXsIAwXXHhIWW00l8sOspXlQKBFWEKjLbrbIBipj3KQPF0OT332k79kjwdO9CU
-         9YL8wkz4CPei03FjEvGuYSjm4rQChxicPDpaTs1aQXpfYK31HY1JJxS2g2NiRmq8t+4E
-         7M6oWlm+y6e15BM/7W6uI+jVAJGa371YgCozuGFj48ssgaG6Z40BOnef6g6zmDXy5A7T
-         UYDBFjWjXoGfyH1yenate9DhQXYPvaNFjo6IsvW2BuswG64RmGMtUF785K/j+BKhzmJh
-         A1J3A3OBc/287Y/s09q8e+Zl36oRXoK9n7+wsChm0BlyLZi/aII7eXeHzJvnE4jrW5HH
-         cCgg==
+        bh=9981EHi6d7jYjUpbE7sh26OG0jZhgsmU/uKwlsQHG4c=;
+        b=Vd3aReBf6bMAEPCLDH0HnJEAlTwjfQcRiGxHh5O3KDge1QG1xDjs6JNulxAcSf1IWd
+         RqC00Ubc5amiN+ygdpEYcY+rskLYIWksaYu9zCGvs7R3q6YbWdscEDZsPiTVWQzXf5TT
+         tnatYiwITxqhYNa3TNq2YMjSkSZrFEaKrSd8rUB2CxSs0xVJS2CUljoNYDrgCCBhzcFM
+         pDLNZL+bnMDNIJBNu27nsy7pXW3BKjfnU4uEBC6DbpmR8RZm6TNqqX5E395QmNHLxTkR
+         7NBWVOChZ+mraHpGFhe8AtYoMiUhmkCWOGJQeV6x5m30O4u9uBVex9qf7dVcPQhqMLSR
+         AWeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NvraFG4444v/YirZrZh0xAcM3wAFHBOGfu8oJq+wXho=;
-        b=JmtquVmdbTfEntDlXZeTZtfpaAMDeBdEpTyGRIlwZ+1VkTK4htNiXe0C0gcAUSn3Aa
-         Ok0tWRf21yQVASArrQDThr6bZEmdA0E6HQnfDtB5atAMrt2rKyv8ByKmyWHo+Y4b2jTQ
-         XscfBT4ZTMQhsmz0k4pAbtHfdgUNyIyMSoMRe5H2YuvcZh3WuuczqO9l5xngn2291Vn+
-         RC7Gx1TRm9OQmkUruw74UC5JE6BqublR2FTvqpSdWFLBHoN+sPENJMYt1/Nv5SdNOKzv
-         qv+Rp9GD2Uu9ZMcAZEqSxddv5u9CzCquGFbgdPPe6M5+5ZoxnBzI43eASb6DFAAkdG1f
-         D1Aw==
-X-Gm-Message-State: AKwxytftNRK6y+rVPgHz+/9HREgcIvsVEtI4NfOuqMMmpYKsPAA6hJCv
-        l8sIvzKgv/xenrxF5Ge0JelVnA==
-X-Google-Smtp-Source: ACJfBovpN8BSOZbtB4gqLvA4dOxwn9PAR7TRJvnvlZTGUPjquJ4Q3HiyuS3LKprjPHj0kJmmj/lg8w==
-X-Received: by 10.101.73.71 with SMTP id q7mr4818986pgs.66.1516014024563;
-        Mon, 15 Jan 2018 03:00:24 -0800 (PST)
+        bh=9981EHi6d7jYjUpbE7sh26OG0jZhgsmU/uKwlsQHG4c=;
+        b=o5UUbcXU05U2vDBgC6Lw0Z3fb2cT7smZgoX+Z2A/2EyJnqIrruKzBWcxQ7qZtPfOfR
+         FTdUMP1E8dLtDJN1bAAqIJWBg359V6ArEEvQSQA6uMoquzO+emVYfH+m/APA27Wn7yF0
+         g5TVmk+Za9g+5E30CjIpSvu9xmfvgd1Cm4xUtQTacLiNrO00pcpjxGidCOJE39e0F4hF
+         kTKSbCSmmYElh7NzNiw9l5wm2LYltRqCxk8r7bXSf/JeEbFKoGS3W5aH1F5WWVcN7cGY
+         k21xMAyPy0etqAGeJcTAITLOV6+PMOXJz4DnyXQIWsjVyIxDSZDkyWDJeBTBuuViqTQW
+         SsxQ==
+X-Gm-Message-State: AKGB3mJZtFMZJcCdPJZSjK1im2rwEeZJKy9g/bTy+/N/YpX/RSM7EVgR
+        Q/+Jxx0zHlQWWS/iVBC2U7gluQ==
+X-Google-Smtp-Source: ACJfBotM85Coc7OAEmqcgda4F7H6ZQjQ3tP/EJKZW4ReRiaNr3o5jexYULZ252qpgw8SMnMgwwsbWQ==
+X-Received: by 10.99.152.26 with SMTP id q26mr26111905pgd.74.1516014030202;
+        Mon, 15 Jan 2018 03:00:30 -0800 (PST)
 Received: from ash ([27.75.129.14])
-        by smtp.gmail.com with ESMTPSA id n76sm35837303pfh.95.2018.01.15.03.00.20
+        by smtp.gmail.com with ESMTPSA id s14sm55624876pfa.158.2018.01.15.03.00.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jan 2018 03:00:23 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:19 +0700
+        Mon, 15 Jan 2018 03:00:29 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:24 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 4/7] trace.c: introduce trace_run_command()
-Date:   Mon, 15 Jan 2018 17:59:46 +0700
-Message-Id: <20180115105949.18328-5-pclouds@gmail.com>
+Subject: [PATCH v5 5/7] trace.c: print program 'git' when child_process.git_cmd is set
+Date:   Mon, 15 Jan 2018 17:59:47 +0700
+Message-Id: <20180115105949.18328-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 In-Reply-To: <20180115105949.18328-1-pclouds@gmail.com>
 References: <20180113064949.6043-1-pclouds@gmail.com>
@@ -74,91 +74,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the same as the old code that uses trace_argv_printf() in
-run-command.c. This function will be improved in later patches to
-print more information from struct child_process.
+We normally print full command line, including the program and its
+argument. When git_cmd is set, we have a special code path to run the
+right "git" program and child_process.argv[0] will not contain the
+program name anymore. As a result, we print just the command
+arguments.
 
-A slight regression: the old code would print run-command.c:xxx as the
-trace location site while the new code prints trace.c:xxx. This should
-be fine until the second call site is added, then we might need a macro
-wrapper named trace_run_command() to capture the right source location.
+I thought it was a regression when the code was refactored and git_cmd
+added, but apparently it's not. git_cmd mode was introduced before
+tracing was added in 8852f5d704 (run_command(): respect GIT_TRACE -
+2008-07-07) so it's more like an oversight in 8852f5d704.
+
+Fix it, print the program name "git" in git_cmd mode. It's nice to have
+now. But it will be more important later when we start to print env
+variables too, in shell syntax. The lack of a program name would look
+confusing then.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- run-command.c |  3 ++-
- trace.c       | 16 ++++++++++++++++
- trace.h       |  3 +++
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ trace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index 31fc5ea86e..002074b128 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
- 		cmd->err = fderr[0];
- 	}
- 
--	trace_argv_printf(cmd->argv, "trace: run_command:");
-+	trace_run_command(cmd);
-+
- 	fflush(NULL);
- 
- #ifndef GIT_WINDOWS_NATIVE
 diff --git a/trace.c b/trace.c
-index 7f3b08e148..da3db301e7 100644
+index da3db301e7..98bee2c259 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -23,6 +23,7 @@
+@@ -286,6 +286,9 @@ void trace_run_command(const struct child_process *cp)
  
- #include "cache.h"
- #include "quote.h"
-+#include "run-command.h"
+ 	strbuf_addf(&buf, "trace: run_command:");
  
- struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
- struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
-@@ -275,6 +276,21 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
- #endif /* HAVE_VARIADIC_MACROS */
- 
- 
-+void trace_run_command(const struct child_process *cp)
-+{
-+	struct strbuf buf = STRBUF_INIT;
++	if (cp->git_cmd)
++		strbuf_addstr(&buf, " git");
 +
-+	if (!prepare_trace_line(__FILE__, __LINE__,
-+				&trace_default_key, &buf))
-+		return;
-+
-+	strbuf_addf(&buf, "trace: run_command:");
-+
-+	sq_quote_argv_pretty(&buf, cp->argv);
-+	print_trace_line(&trace_default_key, &buf);
-+	strbuf_release(&buf);
-+}
-+
- static const char *quote_crnl(const char *path)
- {
- 	static struct strbuf new_path = STRBUF_INIT;
-diff --git a/trace.h b/trace.h
-index 88055abef7..e54c687f26 100644
---- a/trace.h
-+++ b/trace.h
-@@ -4,6 +4,8 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- 
-+struct child_process;
-+
- struct trace_key {
- 	const char * const key;
- 	int fd;
-@@ -17,6 +19,7 @@ extern struct trace_key trace_default_key;
- extern struct trace_key trace_perf_key;
- 
- extern void trace_repo_setup(const char *prefix);
-+extern void trace_run_command(const struct child_process *cp);
- extern int trace_want(struct trace_key *key);
- extern void trace_disable(struct trace_key *key);
- extern uint64_t getnanotime(void);
+ 	sq_quote_argv_pretty(&buf, cp->argv);
+ 	print_trace_line(&trace_default_key, &buf);
+ 	strbuf_release(&buf);
 -- 
 2.15.1.600.g899a5f85c6
 
