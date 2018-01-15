@@ -2,89 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9A31FAE2
-	for <e@80x24.org>; Mon, 15 Jan 2018 23:52:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B751F1F406
+	for <e@80x24.org>; Mon, 15 Jan 2018 23:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750852AbeAOXwy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 18:52:54 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44524 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750752AbeAOXwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 18:52:54 -0500
-Received: (qmail 23877 invoked by uid 109); 15 Jan 2018 23:52:54 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Jan 2018 23:52:54 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20806 invoked by uid 111); 15 Jan 2018 23:53:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Jan 2018 18:53:29 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:52:52 -0500
-Date:   Mon, 15 Jan 2018 18:52:52 -0500
-From:   Jeff King <peff@peff.net>
-To:     Kim Gybels <kgybels@infogroep.be>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] packed_ref_cache: don't use mmap() for small files
-Message-ID: <20180115235251.GA21900@sigill.intra.peff.net>
-References: <20180113161149.9564-1-kgybels@infogroep.be>
- <20180115211505.GA4778@sigill.intra.peff.net>
- <20180115233751.GA1781@infogroep.be>
+        id S1750752AbeAOX51 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 18:57:27 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:41705 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750716AbeAOX50 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 18:57:26 -0500
+Received: by mail-wr0-f196.google.com with SMTP id o7so13440976wro.8
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 15:57:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BJyAMhUIziad/Yel5FkVDuSungjbYdlnyJN/gr+RHkU=;
+        b=OG4zmmukiu5hw3e3TPztiFXRe01JrvGp/so51+voRE3dW2mO8VQdlUbwIvonyFfLcD
+         D/lyYdV/3pJGBcfnBkTq3rJ33d/rR8rVbcr/mJ1RXJukDLNlZR7CCpU72OguaphqwvJC
+         5MWMkrV03+Wt78MCruDMrn6enMPkwpHRYZqrceAh9/huhh64zf4uOms22BHaqxQnNL59
+         RYgUpfN5wnSQYmIL3f3NiTYI0WZS7dBPK8XnN78C4oUOxjvZoB10wr3EJEQvw5gndMEx
+         1/v3CajiO0BxY4S3xI/W/lkw0LLz4hreg8bK9Vmko5ILX1ZuGIFKs4njrt5bjalnqkEM
+         zjlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BJyAMhUIziad/Yel5FkVDuSungjbYdlnyJN/gr+RHkU=;
+        b=tK5rmwnEaTBOO04B5y32YBd/YO9tIf20uu0tfhJmxjY1sxcrC1QLB1Ulm93i+HMu3h
+         AfoyUqVkPleaDV3wI/Sj4+iR77sTbvLMsh+ttCTNpPRpHTrJxjXvEm/72UsVCQAsZ11/
+         hy1/89Z3WfnGpMt+TbyVLHGnzHgam65j3k1i01BblxIkwjsUqSgRAMIxZlx3kfZ+4vWl
+         w/CMBHoJvgkNDNP45hlgjrQR4CBfhIk4D4fqSjnXCForK3ZEWwwe6cPtwbDRMw/Cfnb9
+         +JCfVtwnntpmPWmInt9vOarPWf7bo6rFhZ1tDSJxZR7kGIFrHUG9/AAYYJZbCZRC+NiN
+         D/0w==
+X-Gm-Message-State: AKwxytfhDcO/P9zkROfuzukZ5M8IXVrAS6zG9lnpn0BeOFnj8jddFohQ
+        17AjCtE/fO93kEflV8/mVSMbpVSL
+X-Google-Smtp-Source: ACJfBosZwtqWH6NQjVsWSGOobN4F3b7Re4ATKgqdMnEwNnTNlRI0CzLm48KYQY7b8A/ZX/gxPF4krw==
+X-Received: by 10.223.133.136 with SMTP id 8mr6089818wrt.99.1516060644956;
+        Mon, 15 Jan 2018 15:57:24 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id a41sm1209042wra.72.2018.01.15.15.57.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 15 Jan 2018 15:57:24 -0800 (PST)
+Date:   Mon, 15 Jan 2018 23:59:43 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Removed unnecessary void* from hashmap.h that caused
+ compile warnings
+Message-ID: <20180115235943.GM2641@hank>
+References: <20180114180748.14584-1-randall.s.becker@rogers.com>
+ <20180115204301.GL2641@hank>
+ <007801d38e42$6b6df3b0$4249db10$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180115233751.GA1781@infogroep.be>
+In-Reply-To: <007801d38e42$6b6df3b0$4249db10$@nexbridge.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 16, 2018 at 12:37:51AM +0100, Kim Gybels wrote:
+On 01/15, Randall S. Becker wrote:
+> On January 15, 2018 3:43 PM, Thomas Gummerer wrote:
+> > Thanks for your patch!  A few nitpicks below:
+> > 
+> > > Subject: [PATCH] Removed unnecessary void* from hashmap.h that caused
+> > > compile warnings
+> > 
+> > From Documentation/SubmittingPatches:
+> > 
+> >     Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+> >     instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+> >     to do frotz", as if you are giving orders to the codebase to change
+> >     its behavior.
+> > 
+> > I liked the subject Philip suggested in the other thread: "hashmap.h:
+> > remove unnecessary void*", or maybe "hashmap.h: remove unnecessary
+> > variable".
+> > 
+> > On 01/14, randall.s.becker@rogers.com wrote:
+> > > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> > >
+> > > * hashmap.h: Revised the while loop in the
+> > hashmap_enable_item_counting
+> > > 	to remove unneeded void* item.
+> > 
+> > As above, this should be described in an imperative mood, and describe why
+> > this is a good change and should be merged.  Maybe something along the
+> > lines of the below?
+> > 
+> >     In 'hashmap_enable_item_counting()', item is assigned but never
+> >     used.  This causes a warning on HP NonStop.  As the variable is
+> >     never used, fix this by just removing it.
+> > 
+> > > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> > >
+> > > [..snip..]
+> > >
+> I like it. Do you need this resubmitted? Or should I just learn for next
+> time?
 
-> > This looks good to me, and since it's a recent-ish regression, I think
-> > we should take the minimal fix here.
+I think it would be good if you resubmit the patch.  These rules tend
+to be applied quite strictly, as you can also see when looking at the
+git commit history.  So with the updated commit message Junio should
+just be able to pick it up (unless there's something I missed here as
+well :))
+
+As a side note, I just noticed the two submissions both had [PATCH] in
+the title, whereas new submissions should be marked as such using
+[PATCH v2] etc. as prefix, so it's easier for reviewers to know which
+version is the newer one.
+
+> Cheers,
+> Randall
 > 
-> The minimal fix being a simple NULL check before munmap()?
-
-Sorry to be unclear. I just meant that your patch is probably fine
-as-is. I didn't want to hold up a regression fix with a bunch of
-nit-picking or possible future work, when we could build that on top
-later.
-
-> > But it does make me wonder whether xmmap() ought to be doing this "small
-> > mmap" optimization for us. Obviously that only works when we do
-> > MAP_PRIVATE and never write to the result. But that's how we always use
-> > it anyway, and we're restricted to that to work with the NO_MMAP wrapper
-> > in compat/mmap.c.
-> 
-> Maybe I should have left the optimization for small files out of the patch for
-> the zero length regression. After all, read() vs mmap() performance might
-> depend on other factors than just size.
-
-I'd be OK including it here, since there's prior art in the commit you
-referenced. Though of course actual numbers are always good when
-claiming an optimization. :)
-
-> > If the "!size" case is just lumped in with "size <= SMALL_FILE_SIZE",
-> > then we'd try to xmalloc(0), which is guaranteed to work (we fallback to
-> > a 1-byte allocation if necessary). Would that make things simpler and
-> > more consistent for the rest of the code to always have snapshot->buf be
-> > a valid pointer (just based on seeing Michael's follow-up patches)?
-> 
-> Indeed, all those patches are to avoid using the NULL pointers in ways that are
-> undefined. We could also copy index_core's way of handling the zero length
-> case:
-> ret = index_mem(sha1, "", size, type, path, flags);
-> 
-> Point to some static memory instead of NULL, then all the pointer arithmetic is defined.
-
-Yep, that would work, too. I don't think the overhead of a
-once-per-process xmalloc(0) is a big deal, though, if it keeps the code
-simpler (though I admit it is not that complex either way).
-
--Peff
