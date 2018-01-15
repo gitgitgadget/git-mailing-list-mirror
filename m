@@ -2,114 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BC241F406
-	for <e@80x24.org>; Mon, 15 Jan 2018 12:18:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1493E1F406
+	for <e@80x24.org>; Mon, 15 Jan 2018 14:25:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933586AbeAOMSD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 07:18:03 -0500
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:47992 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932252AbeAOMR6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 Jan 2018 07:17:58 -0500
-X-AuditID: 1207440d-973ff70000000c05-1b-5a5c9bf161c4
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F6.C0.03077.1FB9C5A5; Mon, 15 Jan 2018 07:17:54 -0500 (EST)
-Received: from bagpipes.fritz.box (p54AAEF2D.dip0.t-ipconnect.de [84.170.239.45])
+        id S934673AbeAOOZv convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 15 Jan 2018 09:25:51 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:24574 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933627AbeAOOZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 09:25:49 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
         (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w0FCHiEs010101
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Mon, 15 Jan 2018 07:17:51 -0500
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Kim Gybels <kgybels@infogroep.be>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 3/3] find_reference_location(): don't invoke if `snapshot->buf` is NULL
-Date:   Mon, 15 Jan 2018 13:17:35 +0100
-Message-Id: <46a457904cf0261e337dfd94dc2f1d62abf64053.1516017331.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <20180114191416.2368-1-kgybels@infogroep.be>
-References: <20180114191416.2368-1-kgybels@infogroep.be>
-In-Reply-To: <cover.1516017331.git.mhagger@alum.mit.edu>
-References: <cover.1516017331.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsUixO6iqPtpdkyUwYfLshZdV7qZLBp6rzBb
-        9C/vYrM42DmT1eL2ivnMDqwef99/YPL48DHOo+/IGkaPi5eUPT5vkgtgjeKySUnNySxLLdK3
-        S+DK2Df1OXPBHP6Ko0cXszYwzubpYuTkkBAwkbh86QxbFyMXh5DADiaJHw9WM0E4F5kkFrTu
-        ZwepYhPQlVjU08wEYosIqEocnD+FEaSIWWAFo8Taph6gBAeHsEC4xMRJ6iA1LEA1P3e9B6vn
-        FYiSWNr/kRFim7zE+wX3wWxOAUuJo++2sYHYQgIWEp8OfWIGGcMJZK+7kAwRNpc4+b2TfQIj
-        3wJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6uZkleqkppZsYIWHGu4Px/zqZQ4wCHIxK
-        PLwRy6KjhFgTy4orcw8xSnIwKYnyqvfGRAnxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4W0MBsrx
-        piRWVqUW5cOkpDlYlMR51Zao+wkJpCeWpGanphakFsFkZTg4lCR4V8wCahQsSk1PrUjLzClB
-        SDNxcIIM5wEa/hSkhre4IDG3ODMdIn+KUZfjxovXbcxCLHn5ealS4rxdIEUCIEUZpXlwc2Dp
-        4RWjONBbwry3QKp4gKkFbtIroCVMQEvql0SCLClJREhJNTDWzL2m8P9fsrTl5YSpggKN654+
-        3/Yh5K94XJ+PeOqc1srYirhS+3WhrToeP8oSX+bk6Trdu7H4cJLbivsXlHauyxT8vD5c9UL6
-        yerN/q+FftYfCjxZ6vy05t36rMUWbPUy5cxJXiE71Bc5zpSU/PXY5Jbjea7y6x/bDWYt2uWr
-        e2LXylWMe8WUWIozEg21mIuKEwFtZUK56gIAAA==
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0FEPfIZ037333
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 15 Jan 2018 09:25:42 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Johannes Sixt'" <j6t@kdbg.org>
+Cc:     <git@vger.kernel.org>,
+        "'Joachim Schmitz'" <jojo@schmitz-digital.de>
+References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com> <001a01d38d57$d36c7d10$7a457730$@nexbridge.com> <59d3adab-4a95-4ef5-2d8f-ef4c7b797156@kdbg.org> <004a01d38d7f$3306e810$9914b830$@nexbridge.com> <007901d38da9$d517e9e0$7f47bda0$@nexbridge.com> <499fb29f-ca34-8d28-256d-896107c29a3e@kdbg.org>
+In-Reply-To: <499fb29f-ca34-8d28-256d-896107c29a3e@kdbg.org>
+Subject: RE: [BUG] test_must_fail: does not correctly detect failures - Was Git 2.16.0-rc2 Test Summary on NonStop
+Date:   Mon, 15 Jan 2018 09:25:37 -0500
+Message-ID: <001b01d38e0c$ba16e250$2e44a6f0$@nexbridge.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJL2DF5YDw1sAX4TtGn7MOoKgkH9AFqQNrWAa1IcAICMDCvxwE+b2lEArTVekCiOo+4QA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If `snapshot->buf` is NULL, then `find_reference_location()` has two
-problems:
+On January 15, 2018 2:06 AM, Johannes Sixt wrote:
+> Am 15.01.2018 um 03:37 schrieb Randall S. Becker:
+> > On January 14, 2018 4:33 PM, I wrote:
+> >> The exotic error code coming back from perl is 162. I can muck with
+> >> it, if there was a value more useful to git.
+> >> *  553          } else if (WIFEXITED(status)) {
+> >> *  554                  code = WEXITSTATUS(status);
+> >> (eInspect 3,887):p code
+> >> $4 = 162
+> >>
+> >> The perl code uses die to terminate with a non-specific non-zero error
+> code.
+> >> What it seems is that there is an assumed value that the git tests
+> >> depend on, but perl.org describes the following:
+> >>
+> >> "die raises an exception. Inside an eval the error message is stuffed
+> >> into $@ and the eval is terminated with the undefined value. If the
+> >> exception is outside of all enclosing evals, then the uncaught
+> >> exception prints LIST to STDERR and exits with a non-zero value. If
+> >> you need to exit the process with a specific exit code, see exit."
+> 
+> I take "die exits with non-zero" as a piece of information for the
+> *users* so that they can write "if perl foo.pl; then something; fi" in shell
+> scripts. I do *not* interpret it as leeway for implementers of perl to choose
+> any random value as exit code. Choosing 162 just to be funky would be
+> short-sighted. [I'm saying all this without knowing how perl specifies 'die'
+> beyond the paragraph you cited. Perhaps there's more about 'die' that
+> justifies exit code 162.] I'd say that the perl port is broken.
 
-1. It relies on behavior that is technically undefined in C, such as
-   computing `NULL + 0`.
+I agree that 162 is wrong. Its interpretation is 128+signal, which clearly does not happen in this case. On the platform, if the perl script is via stdin, 162 or 169 are returned. If via file (perl file.pl), 255 comes back. The port has issues. I have an opened a bug report with the platform developers. Usual non-Open Source timeframes to fix apply. ☹
 
-2. It returns NULL if the reference doesn't exist, even if `mustexist`
-   is not set. This problem doesn't come up in the current code,
-   because we never call this function with `snapshot->buf == NULL`
-   and `mustexist` set. But it is something that future callers need
-   to be aware of.
+> >>
+> >> So it seems that we might need to either not use die or change the
+> >> tests not to care about the exit code for specific tests involving perl.
+> Suggestions?
+> >
+> > Sadly, while changing the funky 162 completion code to 255 works fine
+> > for t9001, it causes a bunch of other tests to fail (parts of
+> > 1308 and most of 1404). I can't tall whether this is test suite or
+> > code related but I'm caught in the middle. Going to the platform
+> > developers may eventually get the fix for t9001 (fixing perl), but
+> > otherwise, I'm not sure why changing 162 to 255 causes 1308 and 1404
+> > to blow so badly. In any event, I'm putting this away for a few days
+> > due to $DAYJOB.
+> 
+> Why do you not choose 1? He, on my Linux box perl -e die exits with 255.
+> So...
 
-We could fix the first problem by adding some extra logic to the
-function. But considering both problems together, it is more
-straightforward to document that the function should only be called if
-`snapshot->buf` is non-NULL.
+Choosing 1 is an option. I can try that, but I'm not sure it's going to help the test situation more than choosing 255 to replace 162. 
 
-Adjust `packed_read_raw_ref()` to return early if `snapshot->buf` is
-NULL rather than calling `find_reference_location()`.
-
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/packed-backend.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 36796d65f0..ed2b396bef 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -521,8 +521,9 @@ static int load_contents(struct snapshot *snapshot)
-  * reference name; for example, one could search for "refs/replace/"
-  * to find the start of any replace references.
-  *
-+ * This function must only be called if `snapshot->buf` is non-NULL.
-  * The record is sought using a binary search, so `snapshot->buf` must
-- * be sorted.
-+ * also be sorted.
-  */
- static const char *find_reference_location(struct snapshot *snapshot,
- 					   const char *refname, int mustexist)
-@@ -728,6 +729,12 @@ static int packed_read_raw_ref(struct ref_store *ref_store,
- 
- 	*type = 0;
- 
-+	if (!snapshot->buf) {
-+		/* There are no packed references */
-+		errno = ENOENT;
-+		return -1;
-+	}
-+
- 	rec = find_reference_location(snapshot, refname, 1);
- 
- 	if (!rec) {
--- 
-2.14.2
+Cheers,
+Randall
 
