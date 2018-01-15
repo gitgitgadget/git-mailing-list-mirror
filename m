@@ -2,150 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5794B1F404
-	for <e@80x24.org>; Mon, 15 Jan 2018 07:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729D11F404
+	for <e@80x24.org>; Mon, 15 Jan 2018 09:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753741AbeAOHd7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 02:33:59 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:60536 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752979AbeAOHd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 02:33:58 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zKlTd0H2Pz5tlN;
-        Mon, 15 Jan 2018 08:33:56 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6399B274;
-        Mon, 15 Jan 2018 08:33:56 +0100 (CET)
-Subject: Re: [PATCH 1/1] Mark messages for translations
-To:     Alexander Shopov <ash@kambanaria.org>
-Cc:     git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
-        bmwill@google.com, peff@peff.net, sandals@crustytoothpaste.net,
-        worldhello.net@gmail.com
-References: <20180115054419.4112-1-ash@kambanaria.org>
- <20180115054419.4112-2-ash@kambanaria.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <b9e734a2-52bb-08b1-6bab-3d47b0f7ebeb@kdbg.org>
-Date:   Mon, 15 Jan 2018 08:33:56 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1754828AbeAOJQa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 04:16:30 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:46221 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752385AbeAOJQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 04:16:29 -0500
+Received: by mail-qt0-f195.google.com with SMTP id o35so3217423qtj.13
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 01:16:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kambanaria-org.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=hSy1tmplfte3Ha2TZrgWVz5Vf7GTFTC8xNluNNbUd+w=;
+        b=P5q2s47zEntGSEik4fFK7nl1ejljNoInpsNgfogIZG+2AZe9iM8tdfpWlGSlxfBnc1
+         AMxyfsP59XIpodLx8wPv2cYCYC1w8WflenMECkOvm3NcU6M7/L3ATJuCdip05HuJrk/M
+         pnDPuq9WgmBkBmoqYsV+GIDIUQlvmtJXZLPWPJTV3bLKq7reYr/f+IxeRko/f8QaQBfd
+         eZ6s6SlpYogta23L5xYYaBXY+IGAimDjJlh/6sENMM/CWhGUTr9He5yl//KVyLtP8Wec
+         8FdKFIiBDYoErRC11Kikks44woS6z8d7uS4SVEWEA51FW3O2FgRmO69RaHh2n5f/Qn6B
+         +CVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=hSy1tmplfte3Ha2TZrgWVz5Vf7GTFTC8xNluNNbUd+w=;
+        b=BlJLKDvbWqeylilRfJhWLoOyM9L14fcE8+IiVBZP+XPI02ZLhSnfoZrVj6drpvFXoz
+         R54FvJbMCB/huQry3RGeIBEssHLuG0pan7u3Xd3F0t6PO4ErptwdPAolwCM1B2F1gqPn
+         6tm9vd1e0Q2hi5a6t74tCDcDSNWAsG+aGTgUDc+E4L8fJNYvXe/mHAfNkwXJutt5lmuh
+         9NiHHHqSsmUtMmfFwISrkIttYyYGYXW8no7OyvGQRfvxdG9EmsXsBGQBYhxE9feQnb5J
+         Nob/9D/02FLj/tM7WUD4QmG1Dm3XBN0vlcPSQl+PPqESxBSLiWvhOkNlNZZMUtCianLS
+         175g==
+X-Gm-Message-State: AKwxytcrGpgiSGHvhuxx9Q+da8JJVgYv28sHjkIv+LxLi7zDLHji+TN/
+        jgNvJo7//q64Fk80KQm81D+H4cxnGdlah3BitTd6Pg==
+X-Google-Smtp-Source: ACJfBovcuhMz6cNV1+ESbBjhX+MR2jAt7z/9dxHfqfagk6S4hWNN9WSqzN2VOAWM6Tlhl6QkaztqNZyWFKLLVpb9Kmk=
+X-Received: by 10.237.37.202 with SMTP id y10mr24873314qtc.66.1516007788082;
+ Mon, 15 Jan 2018 01:16:28 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20180115054419.4112-2-ash@kambanaria.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.200.54.49 with HTTP; Mon, 15 Jan 2018 01:16:27 -0800 (PST)
+In-Reply-To: <CAP6f5MnaMiqEMbGW_xj6X495jF=txpzeq+DEHOkz7VCg2D6D9w@mail.gmail.com>
+References: <20180115054419.4112-1-ash@kambanaria.org> <20180115054419.4112-2-ash@kambanaria.org>
+ <b9e734a2-52bb-08b1-6bab-3d47b0f7ebeb@kdbg.org> <CAP6f5Mnn+pRdL6ihgwcqsTwyGy+EQfBbgPxkFmGLcWL-hJx-8g@mail.gmail.com>
+ <CAP6f5MnaMiqEMbGW_xj6X495jF=txpzeq+DEHOkz7VCg2D6D9w@mail.gmail.com>
+From:   Alexander Shopov <ash@kambanaria.org>
+Date:   Mon, 15 Jan 2018 10:16:27 +0100
+Message-ID: <CAP6f5M=HdjfQT+oO76sMfcD7zOfajeukh_VxSL_diqEsCWAYWw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Mark messages for translations
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        martin.agren@gmail.com, bmwill@google.com,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Xin Jiang <worldhello.net@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.01.2018 um 06:44 schrieb Alexander Shopov:
-> @@ -5,11 +5,11 @@
->   #include "run-command.h"
->   
->   const char git_usage_string[] =
-> -	"git [--version] [--help] [-C <path>] [-c name=value]\n"
-> -	"           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
-> -	"           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]\n"
-> -	"           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
-> -	"           <command> [<args>]";
-> +	N_("git [--version] [--help] [-C <path>] [-c name=value]\n"
-> +	   "           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
-> +	   "           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]\n"
-> +	   "           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
-> +	   "           <command> [<args>]");
->   
->   const char git_more_info_string[] =
->   	N_("'git help -a' and 'git help -g' list available subcommands and some\n"
-> @@ -92,7 +92,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->   				*envchanged = 1;
->   		} else if (!strcmp(cmd, "--git-dir")) {
->   			if (*argc < 2) {
-> -				fprintf(stderr, "No directory given for --git-dir.\n" );
-> +  				fprintf(stderr, _("No directory given for --git-dir.\n" ));
->   				usage(git_usage_string);
+And again, sigh:
+>>   const char git_usage_string[] =
+....
+>>   const char git_more_info_string[] =
+> It is not obvious to me where git_usage_string is looked up in the
+> message catalog. It is used that way in builtin/help.c ..
 
-It is not obvious to me where git_usage_string is looked up in the 
-message catalog. Should this not be
+I wanted to be consistent with the current state of the file. This is the
+same way const char git_more_info_string[] is defined and initialized.
+Having it this way saves the lookup on each usage I guess but any performance
+gains will be negligible. Is there a convention?
 
-				usage(_(git_usage_string));
+> We have settled with lower-case letters at the beginning of error
+> messages. (See Documentation/CodingGuidelines, "Error Messages".) You
+> could fix that while you are touching die, die_errno, etc, messages.
 
-(here and in later instances)? It is used that way in builtin/help.c, 
-for example.
+Great! It will allow for further reduction in repetition of messages.
 
-> @@ -385,14 +385,14 @@ void setup_work_tree(void)
->   		return;
->   
->   	if (work_tree_config_is_bogus)
-> -		die("unable to set up work tree using invalid config");
-> +		die(_("unable to set up work tree using invalid config"));
->   
->   	work_tree = get_git_work_tree();
->   	git_dir = get_git_dir();
->   	if (!is_absolute_path(git_dir))
->   		git_dir = real_path(get_git_dir());
->   	if (!work_tree || chdir(work_tree))
-> -		die("This operation must be run in a work tree");
-> +		die(_("This operation must be run in a work tree"));
+> I notice you change past tense to present tense in some cases.
+I am reading this that messages SHOULD be in present tense (unless they MUST
+be in past tense). This is good. Perhaps I will look at current messages and
+then fix en masse (if there is sth to fix).
 
-We have settled with lower-case letters at the beginning of error 
-messages. (See Documentation/CodingGuidelines, "Error Messages".) You 
-could fix that while you are touching die, die_errno, etc, messages.
+> I'm not a friend of geeky abbreviations like "chdir" or "cwd" in
+> user-visible messages
 
-> @@ -677,12 +677,12 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
->   		else {
->   			char *core_worktree;
->   			if (chdir(gitdirenv))
-> -				die_errno("Could not chdir to '%s'", gitdirenv);
-> +				die_errno(_("Cannot chdir to '%s'"), gitdirenv);
+I agree but I would also keep in mind that using the name of the function
+may alllow to parametrize the messages like:
+Cannot execute "%s" on "%s" - for example. Anyway this is not that important
+for me. Will wait for other opinions.
 
-I notice you change past tense to present tense in some cases. IMO, this 
-makes the messages more consistent. Good.
+>> -                     die_errno("fork failed");
+>> +                     die_errno(_("fork failed"));
+>> -             die_errno("setsid failed");
+>> +             die_errno(_("setsid failed"));
 
-I'm not a friend of geeky abbreviations like "chdir" or "cwd" in 
-user-visible messages, and I would have taken the opportunity to change 
-the messages accordingly. This is really only my personal taste, though, 
-and it's possible that I'm alone in this camp.
+> it is useful to have the function name in  the message. Which rises the
+> question:why translate them at all?
+Why not eat the cake while having it - one can pass function name in  a
+ message like: '"%s" failed'
 
->   			if (chdir(git_work_tree_cfg))
-> -				die_errno("Could not chdir to '%s'", git_work_tree_cfg);
-> +				die_errno(_("Cannot chdir to '%s'"), git_work_tree_cfg);
->   			core_worktree = xgetcwd();
->   			if (chdir(cwd->buf))
-> -				die_errno("Could not come back to cwd");
-> +				die_errno(_("Cannot come back to cwd");
-...
-> @@ -1207,7 +1207,7 @@ void sanitize_stdfds(void)
->   	while (fd != -1 && fd < 2)
->   		fd = dup(fd);
->   	if (fd == -1)
-> -		die_errno("open /dev/null or dup failed");
-> +		die_errno(_("open /dev/null or dup failed"));
->   	if (fd > 2)
->   		close(fd);
->   }
-> @@ -1222,12 +1222,12 @@ int daemonize(void)
->   		case 0:
->   			break;
->   		case -1:
-> -			die_errno("fork failed");
-> +			die_errno(_("fork failed"));
->   		default:
->   			exit(0);
->   	}
->   	if (setsid() == -1)
-> -		die_errno("setsid failed");
-> +		die_errno(_("setsid failed"));
-
-Here is a certain class of errors: They should occur only rarely 
-(actually, is that true?) Then it is useful to have the function name in 
-the message. Which rises the question: why translate them at all? It's 
-possible that translators turn the message into unusable gibberish just 
-to please their language. All of this is only IMHO; I don't use 
-translated Git.
-
--- Hannes
+Regards:
+al_shopov
