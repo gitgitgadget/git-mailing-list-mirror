@@ -2,110 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38C1B1F406
-	for <e@80x24.org>; Mon, 15 Jan 2018 20:50:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DCF41F406
+	for <e@80x24.org>; Mon, 15 Jan 2018 21:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750764AbeAOUuG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 15:50:06 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:54301 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750714AbeAOUuF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 15:50:05 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0FKo27f053665
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 15 Jan 2018 15:50:03 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Thomas Gummerer'" <t.gummerer@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <20180114180748.14584-1-randall.s.becker@rogers.com> <20180115204301.GL2641@hank>
-In-Reply-To: <20180115204301.GL2641@hank>
-Subject: RE: [PATCH] Removed unnecessary void* from hashmap.h that caused compile warnings
-Date:   Mon, 15 Jan 2018 15:49:58 -0500
-Message-ID: <007801d38e42$6b6df3b0$4249db10$@nexbridge.com>
+        id S1751103AbeAOVPI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 16:15:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44344 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751085AbeAOVPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 16:15:08 -0500
+Received: (qmail 11943 invoked by uid 109); 15 Jan 2018 21:15:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 15 Jan 2018 21:15:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19778 invoked by uid 111); 15 Jan 2018 21:15:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 15 Jan 2018 16:15:42 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Jan 2018 16:15:05 -0500
+Date:   Mon, 15 Jan 2018 16:15:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     Kim Gybels <kgybels@infogroep.be>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] packed_ref_cache: don't use mmap() for small files
+Message-ID: <20180115211505.GA4778@sigill.intra.peff.net>
+References: <20180113161149.9564-1-kgybels@infogroep.be>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJ+6L22/4W3a1sesdo4xNks9eauoAFvA5UDohM66gA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180113161149.9564-1-kgybels@infogroep.be>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 15, 2018 3:43 PM, Thomas Gummerer wrote:
-> Thanks for your patch!  A few nitpicks below:
-> 
-> > Subject: [PATCH] Removed unnecessary void* from hashmap.h that caused
-> > compile warnings
-> 
-> From Documentation/SubmittingPatches:
-> 
->     Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
->     instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
->     to do frotz", as if you are giving orders to the codebase to change
->     its behavior.
-> 
-> I liked the subject Philip suggested in the other thread: "hashmap.h:
-> remove unnecessary void*", or maybe "hashmap.h: remove unnecessary
-> variable".
-> 
-> On 01/14, randall.s.becker@rogers.com wrote:
-> > From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> >
-> > * hashmap.h: Revised the while loop in the
-> hashmap_enable_item_counting
-> > 	to remove unneeded void* item.
-> 
-> As above, this should be described in an imperative mood, and describe why
-> this is a good change and should be merged.  Maybe something along the
-> lines of the below?
-> 
->     In 'hashmap_enable_item_counting()', item is assigned but never
->     used.  This causes a warning on HP NonStop.  As the variable is
->     never used, fix this by just removing it.
-> 
-> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> > ---
-> >  hashmap.h | 3 +--
-> >  1 file changed, 1 insertion(+), 2 deletions(-)
-> >
-> > diff --git a/hashmap.h b/hashmap.h
-> > index 7ce79f3..d375d9c 100644
-> > --- a/hashmap.h
-> > +++ b/hashmap.h
-> > @@ -400,7 +400,6 @@ static inline void
-> hashmap_disable_item_counting(struct hashmap *map)
-> >   */
-> >  static inline void hashmap_enable_item_counting(struct hashmap *map)
-> > {
-> > -	void *item;
-> >  	unsigned int n = 0;
-> >  	struct hashmap_iter iter;
-> >
-> > @@ -408,7 +407,7 @@ static inline void
-> hashmap_enable_item_counting(struct hashmap *map)
-> >  		return;
-> >
-> >  	hashmap_iter_init(map, &iter);
-> > -	while ((item = hashmap_iter_next(&iter)))
-> > +	while (hashmap_iter_next(&iter))
-> >  		n++;
-> >
-> >  	map->do_count_items = 1;
+On Sat, Jan 13, 2018 at 05:11:49PM +0100, Kim Gybels wrote:
 
-I like it. Do you need this resubmitted? Or should I just learn for next
-time?
+> Take a hint from commit ea68b0ce9f8ce8da3e360aed3cbd6720159ffbee and use
+> read() instead of mmap() for small packed-refs files.
+> 
+> This also fixes the problem[1] where xmmap() returns NULL for zero
+> length[2], for which munmap() later fails.
+> 
+> Alternatively, we could simply check for NULL before munmap(), or
+> introduce an xmunmap() that could be used together with xmmap().
 
-Cheers,
-Randall
+This looks good to me, and since it's a recent-ish regression, I think
+we should take the minimal fix here.
 
+But it does make me wonder whether xmmap() ought to be doing this "small
+mmap" optimization for us. Obviously that only works when we do
+MAP_PRIVATE and never write to the result. But that's how we always use
+it anyway, and we're restricted to that to work with the NO_MMAP wrapper
+in compat/mmap.c.
+
+> @@ -489,21 +491,21 @@ static int load_contents(struct snapshot *snapshot)
+>  		die_errno("couldn't stat %s", snapshot->refs->path);
+>  	size = xsize_t(st.st_size);
+>  
+> -	switch (mmap_strategy) {
+> -	case MMAP_NONE:
+> +	if (!size) {
+> +		snapshot->buf = NULL;
+> +		snapshot->eof = NULL;
+> +		snapshot->mmapped = 0;
+> +	} else if (size <= SMALL_FILE_SIZE || mmap_strategy == MMAP_NONE) {
+>  		snapshot->buf = xmalloc(size);
+>  		bytes_read = read_in_full(fd, snapshot->buf, size);
+>  		if (bytes_read < 0 || bytes_read != size)
+>  			die_errno("couldn't read %s", snapshot->refs->path);
+>  		snapshot->eof = snapshot->buf + size;
+>  		snapshot->mmapped = 0;
+
+If the "!size" case is just lumped in with "size <= SMALL_FILE_SIZE",
+then we'd try to xmalloc(0), which is guaranteed to work (we fallback to
+a 1-byte allocation if necessary). Would that make things simpler and
+more consistent for the rest of the code to always have snapshot->buf be
+a valid pointer (just based on seeing Michael's follow-up patches)?
+
+-Peff
