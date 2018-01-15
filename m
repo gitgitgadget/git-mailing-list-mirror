@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FE551F404
-	for <e@80x24.org>; Mon, 15 Jan 2018 07:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B1831F404
+	for <e@80x24.org>; Mon, 15 Jan 2018 07:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754000AbeAOHFq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 02:05:46 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:49945 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753391AbeAOHFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 02:05:46 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zKks35V9Nz5tlG;
-        Mon, 15 Jan 2018 08:05:43 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 2776C274;
-        Mon, 15 Jan 2018 08:05:43 +0100 (CET)
-Subject: Re: [BUG] test_must_fail: does not correctly detect failures - Was
- Git 2.16.0-rc2 Test Summary on NonStop
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org, 'Joachim Schmitz' <jojo@schmitz-digital.de>
-References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com>
- <001a01d38d57$d36c7d10$7a457730$@nexbridge.com>
- <59d3adab-4a95-4ef5-2d8f-ef4c7b797156@kdbg.org>
- <004a01d38d7f$3306e810$9914b830$@nexbridge.com>
- <007901d38da9$d517e9e0$7f47bda0$@nexbridge.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <499fb29f-ca34-8d28-256d-896107c29a3e@kdbg.org>
-Date:   Mon, 15 Jan 2018 08:05:43 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1753615AbeAOHbf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 02:31:35 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:41097 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751253AbeAOHbe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 02:31:34 -0500
+Received: by mail-io0-f181.google.com with SMTP id f6so12110504ioh.8
+        for <git@vger.kernel.org>; Sun, 14 Jan 2018 23:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=xfaGzO7S0GW7jXC0BeGpv+JJ6Cja5aCin/jad7Zeq8I=;
+        b=jb1WFZSIuR9W/1KJn7JddN6MEiA5Zs7/Iuv7N/tvdcPCrDpSoNwWrMwP/cbERxw238
+         FgBeOyDBDI4F7iZA4CRRELg+LE7slPfpZWezptf6GYvYm5WzBhINgpv6b0jJi54ae5ss
+         ykouTsYAFspkWqRKFF3XFHIEnqFVOSeq5q0wedK32k4JSNvHCh558F+vD66uAziEwdyw
+         40a144dwbTwHSebIhanjJ0hE1nB867yC1qROi/YVcGZQ2roeJvF+O+TbYrupjkmK+369
+         cwDd4CcS1o9ZvimmYPAD1SAN/v7ojfoJEc0pN5Z6X5CABLupNjwR5UgO5qc9LfWQ9uF2
+         Sy2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=xfaGzO7S0GW7jXC0BeGpv+JJ6Cja5aCin/jad7Zeq8I=;
+        b=lfgV4NGHz/VfsTAVly2CtMK1/WuZ3Q4jMyfeBEKu4S879Q1BCCvO5QTF0za85htArF
+         s3ctG/vkc1Z/B07lu3PmS+e6mJ8b5EOWpI/W7C18qFsPsKFmaBHRs39WaILBNGoBOU2s
+         HM/kvtK0y4g5CnfQApu1jSmJhkf6XITh+7wFU03/rfGDZ1xmpbvcVRV8gpndoaC1avbe
+         Xq5HPQKhcdMDDxGSh3URoD0eJqsqGg8Kky8WPisyLw7G12iaIjBkBJIm8h3MYQGKDkjd
+         38gMichOTzw1x807AYEf8vZPMonnGypsk6LwkWiSYEm2eZHpT3vjuvvd1ITe37+Vvaaa
+         V5GQ==
+X-Gm-Message-State: AKwxytcDdi/0Ij5J2lesxEjZB9bF7Q/zILKkQSUjTOH035ghTu0uA3Re
+        vSapt6XeudgLZdgMlAKqDwD68uYioWRuEnZ3P52j+n/c
+X-Google-Smtp-Source: ACJfBossGPWJ9DC3aFfpq6Jdzwtg6yvBX/EeOCM6OPFmWH35zljsSLvfjFbfpoEGVS6CihCnJbp1VGMR55i+J41BWrk=
+X-Received: by 10.107.3.209 with SMTP id e78mr14979075ioi.96.1516001493449;
+ Sun, 14 Jan 2018 23:31:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <007901d38da9$d517e9e0$7f47bda0$@nexbridge.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.79.113.199 with HTTP; Sun, 14 Jan 2018 23:31:32 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 15 Jan 2018 08:31:32 +0100
+Message-ID: <CAP8UFD2gdwaqNO+CSfqgEamvHood_OOXgkScU=OoT5ssei3HPQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 35
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josef Wolf <jw@raven.inka.de>,
+        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.01.2018 um 03:37 schrieb Randall S. Becker:
-> On January 14, 2018 4:33 PM, I wrote:
->> The exotic error code coming back from perl is 162. I can muck with it, if
->> there was a value more useful to git.
->> *  553          } else if (WIFEXITED(status)) {
->> *  554                  code = WEXITSTATUS(status);
->> (eInspect 3,887):p code
->> $4 = 162
->>
->> The perl code uses die to terminate with a non-specific non-zero error code.
->> What it seems is that there is an assumed value that the git tests depend on,
->> but perl.org describes the following:
->>
->> "die raises an exception. Inside an eval the error message is stuffed into $@
->> and the eval is terminated with the undefined value. If the exception is
->> outside of all enclosing evals, then the uncaught exception prints LIST to
->> STDERR and exits with a non-zero value. If you need to exit the process with
->> a specific exit code, see exit."
+Hi,
 
-I take "die exits with non-zero" as a piece of information for the 
-*users* so that they can write "if perl foo.pl; then something; fi" in 
-shell scripts. I do *not* interpret it as leeway for implementers of 
-perl to choose any random value as exit code. Choosing 162 just to be 
-funky would be short-sighted. [I'm saying all this without knowing how 
-perl specifies 'die' beyond the paragraph you cited. Perhaps there's 
-more about 'die' that justifies exit code 162.] I'd say that the perl 
-port is broken.
+A draft of a new Git Rev News edition is available here:
 
->>
->> So it seems that we might need to either not use die or change the tests not
->> to care about the exit code for specific tests involving perl. Suggestions?
-> 
-> Sadly, while changing the funky 162 completion code to 255 works
-> fine for t9001, it causes a bunch of other tests to fail (parts of
-> 1308 and most of 1404). I can't tall whether this is test suite or
-> code related but I'm caught in the middle. Going to the platform
-> developers may eventually get the fix for t9001 (fixing perl), but
-> otherwise, I'm not sure why changing 162 to 255 causes 1308 and 1404
-> to blow so badly. In any event, I'm putting this away for a few days
-> due to $DAYJOB.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-35.md
 
-Why do you not choose 1? He, on my Linux box perl -e die exits with 255. 
-So...
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
--- Hannes
+  https://github.com/git/git.github.io/issues/271
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday January 17th.
+
+Thanks,
+Christian.
