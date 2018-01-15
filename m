@@ -2,55 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 285101F404
-	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 039581F404
+	for <e@80x24.org>; Mon, 15 Jan 2018 11:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755087AbeAOLAV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 06:00:21 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:44588 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755072AbeAOLAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 06:00:19 -0500
-Received: by mail-pl0-f68.google.com with SMTP id f8so1448252plk.11
-        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:19 -0800 (PST)
+        id S1755118AbeAOLA0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 06:00:26 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:39029 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755098AbeAOLAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 Jan 2018 06:00:25 -0500
+Received: by mail-pg0-f67.google.com with SMTP id w17so1985322pgv.6
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 03:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fCr7dHRjerGiDDk4osYQqwPwBSqz7r1iw0UEOwHdaGE=;
-        b=dKMUy9uNz/380UX4639Tw42ZunArZv6ukeCrFK6PIMYGbdsrfmHngODj0Fn8JSwgk5
-         Hz3FupiUjj1IOVhaHIT7FeWk6H8dVaSZu4mAXguiah4EuBhixXtXENI8tqfRBii8NBHJ
-         BtRkl2nmqU2YV6CeRXFUrBCRdftuVLFNRvLq/MSwNv9hu8r/f0d5m91ITsoT+0w4ciOj
-         GLZqhakO31QUnUDifb3GNZMZwwAg5RiQ3h0s6yVBtVccuTTNztkQ6omiu9U/Q+8ACoo0
-         xqCT7t7Z7fp1lqLOCtsyYlUo2vSI0gjvWGjPChL8SdAS8UB1EX5FiG1n8XQZ5IDKM/YU
-         gA1w==
+        bh=NvraFG4444v/YirZrZh0xAcM3wAFHBOGfu8oJq+wXho=;
+        b=so9UoXsIAwXXHhIWW00l8sOspXlQKBFWEKjLbrbIBipj3KQPF0OT332k79kjwdO9CU
+         9YL8wkz4CPei03FjEvGuYSjm4rQChxicPDpaTs1aQXpfYK31HY1JJxS2g2NiRmq8t+4E
+         7M6oWlm+y6e15BM/7W6uI+jVAJGa371YgCozuGFj48ssgaG6Z40BOnef6g6zmDXy5A7T
+         UYDBFjWjXoGfyH1yenate9DhQXYPvaNFjo6IsvW2BuswG64RmGMtUF785K/j+BKhzmJh
+         A1J3A3OBc/287Y/s09q8e+Zl36oRXoK9n7+wsChm0BlyLZi/aII7eXeHzJvnE4jrW5HH
+         cCgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fCr7dHRjerGiDDk4osYQqwPwBSqz7r1iw0UEOwHdaGE=;
-        b=Zdj2XcQVdnElXwQxkDCIozYqiZXmgCeXb70TftRCE3b2rvvuQqtVw9etU8E9T5+PIG
-         DTBAMuZ0rceZQ55W/DEhWuVfTtYLcPuy1X3YVCMQ4uxeCv9JILpRQhmcUuHPpYcwicZH
-         zK0EUzGQmvz8QgUGQ5Z51ixq7pEVEv758wQREFyBmV51Wf4g+Y2gHQ6PGpF59IXG3uyb
-         H8V7Whu8e0UDh1d6v5Kp8O7ZXyBN0Xx7Qd1ry4wjtZ/EQYpi2RcoJc1HBJMUilw8BYZw
-         CdtNtjNGTnYDtDLdH3uvC4znBVai+eo4kIl7jPqkPZMvHgBOR8h2rLuZgrQBF2z4NOeU
-         7/mw==
-X-Gm-Message-State: AKGB3mL1EkEjWZihwbxUBOTtf9pk/jQ16oUzgUB+Bitwwl8hHneP+lcg
-        5PiOqHs6b2Cofa8LhnWURD06xg==
-X-Google-Smtp-Source: ACJfBovxkALDgfXJC9Oac7BoWoncPffUcn1aJJtcdnFzyPteIBn61MZqW0fCnAZOSceHKFa0hz3Zlw==
-X-Received: by 10.124.18.1 with SMTP id t1mr27574102ply.342.1516014019080;
-        Mon, 15 Jan 2018 03:00:19 -0800 (PST)
+        bh=NvraFG4444v/YirZrZh0xAcM3wAFHBOGfu8oJq+wXho=;
+        b=JmtquVmdbTfEntDlXZeTZtfpaAMDeBdEpTyGRIlwZ+1VkTK4htNiXe0C0gcAUSn3Aa
+         Ok0tWRf21yQVASArrQDThr6bZEmdA0E6HQnfDtB5atAMrt2rKyv8ByKmyWHo+Y4b2jTQ
+         XscfBT4ZTMQhsmz0k4pAbtHfdgUNyIyMSoMRe5H2YuvcZh3WuuczqO9l5xngn2291Vn+
+         RC7Gx1TRm9OQmkUruw74UC5JE6BqublR2FTvqpSdWFLBHoN+sPENJMYt1/Nv5SdNOKzv
+         qv+Rp9GD2Uu9ZMcAZEqSxddv5u9CzCquGFbgdPPe6M5+5ZoxnBzI43eASb6DFAAkdG1f
+         D1Aw==
+X-Gm-Message-State: AKwxytftNRK6y+rVPgHz+/9HREgcIvsVEtI4NfOuqMMmpYKsPAA6hJCv
+        l8sIvzKgv/xenrxF5Ge0JelVnA==
+X-Google-Smtp-Source: ACJfBovpN8BSOZbtB4gqLvA4dOxwn9PAR7TRJvnvlZTGUPjquJ4Q3HiyuS3LKprjPHj0kJmmj/lg8w==
+X-Received: by 10.101.73.71 with SMTP id q7mr4818986pgs.66.1516014024563;
+        Mon, 15 Jan 2018 03:00:24 -0800 (PST)
 Received: from ash ([27.75.129.14])
-        by smtp.gmail.com with ESMTPSA id l10sm15240592pgp.86.2018.01.15.03.00.15
+        by smtp.gmail.com with ESMTPSA id n76sm35837303pfh.95.2018.01.15.03.00.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 Jan 2018 03:00:18 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:14 +0700
+        Mon, 15 Jan 2018 03:00:23 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 15 Jan 2018 18:00:19 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +59,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 3/7] trace.c: move strbuf_release() out of print_trace_line()
-Date:   Mon, 15 Jan 2018 17:59:45 +0700
-Message-Id: <20180115105949.18328-4-pclouds@gmail.com>
+Subject: [PATCH v5 4/7] trace.c: introduce trace_run_command()
+Date:   Mon, 15 Jan 2018 17:59:46 +0700
+Message-Id: <20180115105949.18328-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 In-Reply-To: <20180115105949.18328-1-pclouds@gmail.com>
 References: <20180113064949.6043-1-pclouds@gmail.com>
@@ -75,59 +74,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function is about printing a trace line, not releasing the buffer it
-receives too. Move strbuf_release() back outside. This makes it easier
-to see how strbuf is managed.
+This is the same as the old code that uses trace_argv_printf() in
+run-command.c. This function will be improved in later patches to
+print more information from struct child_process.
+
+A slight regression: the old code would print run-command.c:xxx as the
+trace location site while the new code prints trace.c:xxx. This should
+be fine until the second call site is added, then we might need a macro
+wrapper named trace_run_command() to capture the right source location.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- trace.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ run-command.c |  3 ++-
+ trace.c       | 16 ++++++++++++++++
+ trace.h       |  3 +++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/trace.c b/trace.c
-index 9784915be1..7f3b08e148 100644
---- a/trace.c
-+++ b/trace.c
-@@ -131,7 +131,6 @@ static void print_trace_line(struct trace_key *key, struct strbuf *buf)
- {
- 	strbuf_complete_line(buf);
- 	trace_write(key, buf->buf, buf->len);
--	strbuf_release(buf);
- }
- 
- static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
-@@ -144,6 +143,7 @@ static void trace_vprintf_fl(const char *file, int line, struct trace_key *key,
- 
- 	strbuf_vaddf(&buf, format, ap);
- 	print_trace_line(key, &buf);
-+	strbuf_release(&buf);
- }
- 
- static void trace_argv_vprintf_fl(const char *file, int line,
-@@ -159,6 +159,7 @@ static void trace_argv_vprintf_fl(const char *file, int line,
- 
- 	sq_quote_argv_pretty(&buf, argv);
- 	print_trace_line(&trace_default_key, &buf);
-+	strbuf_release(&buf);
- }
- 
- void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
-@@ -171,6 +172,7 @@ void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
- 
- 	strbuf_addbuf(&buf, data);
- 	print_trace_line(key, &buf);
-+	strbuf_release(&buf);
- }
- 
- static void trace_performance_vprintf_fl(const char *file, int line,
-@@ -190,6 +192,7 @@ static void trace_performance_vprintf_fl(const char *file, int line,
+diff --git a/run-command.c b/run-command.c
+index 31fc5ea86e..002074b128 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -624,7 +624,8 @@ int start_command(struct child_process *cmd)
+ 		cmd->err = fderr[0];
  	}
  
- 	print_trace_line(&trace_perf_key, &buf);
-+	strbuf_release(&buf);
- }
+-	trace_argv_printf(cmd->argv, "trace: run_command:");
++	trace_run_command(cmd);
++
+ 	fflush(NULL);
  
- #ifndef HAVE_VARIADIC_MACROS
+ #ifndef GIT_WINDOWS_NATIVE
+diff --git a/trace.c b/trace.c
+index 7f3b08e148..da3db301e7 100644
+--- a/trace.c
++++ b/trace.c
+@@ -23,6 +23,7 @@
+ 
+ #include "cache.h"
+ #include "quote.h"
++#include "run-command.h"
+ 
+ struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
+ struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
+@@ -275,6 +276,21 @@ void trace_performance_fl(const char *file, int line, uint64_t nanos,
+ #endif /* HAVE_VARIADIC_MACROS */
+ 
+ 
++void trace_run_command(const struct child_process *cp)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	if (!prepare_trace_line(__FILE__, __LINE__,
++				&trace_default_key, &buf))
++		return;
++
++	strbuf_addf(&buf, "trace: run_command:");
++
++	sq_quote_argv_pretty(&buf, cp->argv);
++	print_trace_line(&trace_default_key, &buf);
++	strbuf_release(&buf);
++}
++
+ static const char *quote_crnl(const char *path)
+ {
+ 	static struct strbuf new_path = STRBUF_INIT;
+diff --git a/trace.h b/trace.h
+index 88055abef7..e54c687f26 100644
+--- a/trace.h
++++ b/trace.h
+@@ -4,6 +4,8 @@
+ #include "git-compat-util.h"
+ #include "strbuf.h"
+ 
++struct child_process;
++
+ struct trace_key {
+ 	const char * const key;
+ 	int fd;
+@@ -17,6 +19,7 @@ extern struct trace_key trace_default_key;
+ extern struct trace_key trace_perf_key;
+ 
+ extern void trace_repo_setup(const char *prefix);
++extern void trace_run_command(const struct child_process *cp);
+ extern int trace_want(struct trace_key *key);
+ extern void trace_disable(struct trace_key *key);
+ extern uint64_t getnanotime(void);
 -- 
 2.15.1.600.g899a5f85c6
 
