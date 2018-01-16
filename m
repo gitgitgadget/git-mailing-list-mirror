@@ -2,134 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9F01F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 17:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E824D1F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 17:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751118AbeAPRLx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 12:11:53 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:46216 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750885AbeAPRLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 12:11:52 -0500
-Received: by mail-wm0-f47.google.com with SMTP id 143so9783412wma.5
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 09:11:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=3OxfLM/+udIBIVYyha60CWo99AwciLRIGUC3AuD0rl4=;
-        b=DrTiNMuolCxdKHM3NaZ6vkV2QCOXw1GQTW+PjhDsj8frYmV4h+6Z6dmrsTuSSu0HAc
-         q7qlRglEhYIcDQ040iEevP9qwoAiuqbUy+SF5fs3UKjXEjg/K05MoU03V5V9RqYkJKRK
-         2aItXk0m/K9zdevCl+BrUXLVqwELmmuenO8i1jhjXj6wsPXl9VfmIlBjPXnGrC114wr0
-         nxpPIacnQ6Ycd2N8YXSmT4vrni4sm1A+G0qoyKRTfFV/eg+p1vlvDC86RPuO6/fijt0Y
-         NXnQgSIY881ASK8yvD7PIWh+13C8KDfNA5Mw3bPaqiw1DprgcAt+Q+p+GB6yVC9J2Hlb
-         9WUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=3OxfLM/+udIBIVYyha60CWo99AwciLRIGUC3AuD0rl4=;
-        b=aym5QZtTQts/sTfuCfDlaehaI6gaOfJPtzhYVB7JCJtX1jK9RAyJsr4+JA6AXg13OP
-         XYOpSlCeeI5qnHPiV/dhTt0xaKejlKxfhHqZIN5TdDMiSOIXjfRaqyhXGvAsTdMvwwpa
-         hsLdheaHLbkLVHDwOAntYY5UDdkYbFXk+k8S49xR5CS7ssdNGuMgA2x+J1zTzA2m8cts
-         ZiFvsdI11q2Dl1p77rfPgiVI2osXLkjmQQq7JXiRluwmn4u8GqlfGP3SAERPX0TwKfQI
-         kYZ4tOm45Rcn4ojTC/UFhJVJkktnKCytJOh+zPVg741AuvYGUkhcojFVwg+Q/0dvv6Sk
-         qWgw==
-X-Gm-Message-State: AKwxytfF4xzjm/XL6c+VybhrwNe9PNdTT69pRMk/HApLDCjZWGmqaSXJ
-        vrVYx8yd+uXElM0SS8cpEJs=
-X-Google-Smtp-Source: ACJfBovOj3nkPVtKbFMXR4hoFWIRWPJLz9q8C8BIuv1PxNGTvFAUZqQCW6jM9AQUaAKpgBQc0iaZPA==
-X-Received: by 10.28.12.14 with SMTP id 14mr15099628wmm.121.1516122711166;
-        Tue, 16 Jan 2018 09:11:51 -0800 (PST)
-Received: from localhost.localdomain (x4db03624.dyn.telefonica.de. [77.176.54.36])
-        by smtp.gmail.com with ESMTPSA id n74sm20600383wmi.1.2018.01.16.09.11.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 16 Jan 2018 09:11:50 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] describe: use strbuf_add_unique_abbrev() for adding short hashes
-Date:   Tue, 16 Jan 2018 18:11:30 +0100
-Message-Id: <20180116171130.16568-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.0.rc2.74.g1e1541f18
-In-Reply-To: <422ae05b-6541-38f3-7638-4bee1b766d91@web.de>
+        id S1751090AbeAPRZ7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 12:25:59 -0500
+Received: from ikke.info ([178.21.113.177]:57016 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750779AbeAPRZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 12:25:58 -0500
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id CA20D4402C2; Tue, 16 Jan 2018 18:25:56 +0100 (CET)
+Date:   Tue, 16 Jan 2018 18:25:56 +0100
+From:   Kevin Daudt <me@ikke.info>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] sha1_file: remove static strbuf from sha1_file_name()
+Message-ID: <20180116172556.GA5618@alpha.vpn.ikke.info>
+References: <20180116071814.19884-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180116071814.19884-1-chriscool@tuxfamily.org>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Patch generated by Coccinelle (and contrib/coccinelle/strbuf.cocci).
+On Tue, Jan 16, 2018 at 08:18:14AM +0100, Christian Couder wrote:
+> Using a static buffer in sha1_file_name() is error prone
+> and the performance improvements it gives are not needed
+> in most of the callers.
+> 
+> So let's get rid of this static buffer and, if necessary
+> or helpful, let's use one in the caller.
 
-Interesting.
+Missing sign-off
 
-The static analysis build job on Travis CI runs 'make coccicheck', so
-it should have caught this.  However, I've looked at more build job
-results than I could count while working on some Travis CI related
-patches in the last few weeks, but I've never noticed Coccinelle
-proposing anything.
-
-Now I see that Coccinelle's, and in turn 'make coccicheck's exit code
-only indicates that Coccinelle managed to finish without any errors
-(e.g. no wrong --options, missing files or whatnot), but it has
-nothing to do with whether it found something to transform or not.  To
-find out the latter, we have to check the resulting
-'contrib/coccinelle/*.cocci.patch' files or look closer at 'make
-coccicheck's standard output.  If any of those '*.cocci.patch' files
-are not empty and make's output contains lines like:
-
-  SPATCH result: contrib/coccinelle/strbuf.cocci.patch
-
-then Coccinelle found something.
-
-Well, OK, I think that might be an acceptable behavior for developers
-running 'make coccicheck' themselves, but totally unsuitable for
-automated Travis CI build jobs, because it doesn't draw our attention
-to Coccinelle's findings.  And the only means to draw attention in
-an automated setting is to fail the buid job.
-
-Good, I quickly whipped up a patch to fail the build job if any of the
-resulting '*.cocci.patch' files are not empty and also to include
-their content in the trace log, to see how that would work out, and...
-
-> "make coccicheck" doesn't propose any other changes for current master.
-
-... and found that 'make coccicheck' on Travis CI _does_ propose
-further changes for current master.  You can find the build job's
-output including those proposed changes here:
-
-  https://travis-ci.org/szeder/git/jobs/329296813#L586
-
-The proposed changes coming from 'array.cocci' are replacing memmove()
-calls with MOVE_ARRAY().  After a (very) cursory look they all seem to
-make sense to me; at least after applying those changes Git can be
-built and the test suite still succeeds.
-
-Unfortunately, most of the changes coming from 'strbuf.cocci' don't
-make any sense, they appear to be the mis-application of the "use
-strbuf_addstr() instead of strbuf_addf() to add a single string" rule:
-
-  -             strbuf_addf(&sb_repo, "%d", counter);
-  +             strbuf_addstr(&sb_repo, counter);
-
-It seems that those rules need some refinement, but I have no idea
-about Coccinelle and this is not the time for me to dig deeper.
-
-What makes all this weird is that running 'make coccicheck' on my own
-machine doesn't produce any of these additional proposed changes, just
-like at René's.  Can it be related to differing Coccinelle versions?
-Travis CI installs 1.0.0~rc19.deb-3; I have 1.0.4.deb-2.
-
-
-Gábor
-
+> ---
+>  cache.h       |  8 +++-----
+>  http-walker.c |  6 ++++--
+>  http.c        | 16 ++++++++++------
+>  sha1_file.c   | 38 +++++++++++++++++++++++++-------------
+>  4 files changed, 42 insertions(+), 26 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index d8b975a571..6db565408e 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -957,12 +957,10 @@ extern void check_repository_format(void);
+>  #define TYPE_CHANGED    0x0040
+>  
+>  /*
+> - * Return the name of the file in the local object database that would
+> - * be used to store a loose object with the specified sha1.  The
+> - * return value is a pointer to a statically allocated buffer that is
+> - * overwritten each time the function is called.
+> + * Put in `buf` the name of the file in the local object database that
+> + * would be used to store a loose object with the specified sha1.
+>   */
+> -extern const char *sha1_file_name(const unsigned char *sha1);
+> +extern void sha1_file_name(struct strbuf *buf, const unsigned char *sha1);
+>  
+>  /*
+>   * Return an abbreviated sha1 unique within this repository's object database.
+> diff --git a/http-walker.c b/http-walker.c
+> index 1ae8363de2..07c2b1af82 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -544,8 +544,10 @@ static int fetch_object(struct walker *walker, unsigned char *sha1)
+>  	} else if (hashcmp(obj_req->sha1, req->real_sha1)) {
+>  		ret = error("File %s has bad hash", hex);
+>  	} else if (req->rename < 0) {
+> -		ret = error("unable to write sha1 filename %s",
+> -			    sha1_file_name(req->sha1));
+> +		struct strbuf buf = STRBUF_INIT;
+> +		sha1_file_name(&buf, req->sha1);
+> +		ret = error("unable to write sha1 filename %s", buf.buf);
+> +		strbuf_release(&buf);
+>  	}
+>  
+>  	release_http_object_request(req);
+> diff --git a/http.c b/http.c
+> index 5977712712..5979305bc9 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2168,7 +2168,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+>  	unsigned char *sha1)
+>  {
+>  	char *hex = sha1_to_hex(sha1);
+> -	const char *filename;
+> +	struct strbuf filename = STRBUF_INIT;
+>  	char prevfile[PATH_MAX];
+>  	int prevlocal;
+>  	char prev_buf[PREV_BUF_SIZE];
+> @@ -2180,14 +2180,15 @@ struct http_object_request *new_http_object_request(const char *base_url,
+>  	hashcpy(freq->sha1, sha1);
+>  	freq->localfile = -1;
+>  
+> -	filename = sha1_file_name(sha1);
+> +	sha1_file_name(&filename, sha1);
+>  	snprintf(freq->tmpfile, sizeof(freq->tmpfile),
+> -		 "%s.temp", filename);
+> +		 "%s.temp", filename.buf);
+>  
+> -	snprintf(prevfile, sizeof(prevfile), "%s.prev", filename);
+> +	snprintf(prevfile, sizeof(prevfile), "%s.prev", filename.buf);
+>  	unlink_or_warn(prevfile);
+>  	rename(freq->tmpfile, prevfile);
+>  	unlink_or_warn(freq->tmpfile);
+> +	strbuf_release(&filename);
+>  
+>  	if (freq->localfile != -1)
+>  		error("fd leakage in start: %d", freq->localfile);
+> @@ -2302,6 +2303,7 @@ void process_http_object_request(struct http_object_request *freq)
+>  int finish_http_object_request(struct http_object_request *freq)
+>  {
+>  	struct stat st;
+> +	struct strbuf filename = STRBUF_INIT;
+>  
+>  	close(freq->localfile);
+>  	freq->localfile = -1;
+> @@ -2327,8 +2329,10 @@ int finish_http_object_request(struct http_object_request *freq)
+>  		unlink_or_warn(freq->tmpfile);
+>  		return -1;
+>  	}
+> -	freq->rename =
+> -		finalize_object_file(freq->tmpfile, sha1_file_name(freq->sha1));
+> +
+> +	sha1_file_name(&filename, freq->sha1);
+> +	freq->rename = finalize_object_file(freq->tmpfile, filename.buf);
+> +	strbuf_release(&filename);
+>  
+>  	return freq->rename;
+>  }
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 3da70ac650..f66c21b2da 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -321,15 +321,11 @@ static void fill_sha1_path(struct strbuf *buf, const unsigned char *sha1)
+>  	}
+>  }
+>  
+> -const char *sha1_file_name(const unsigned char *sha1)
+> +void sha1_file_name(struct strbuf *buf, const unsigned char *sha1)
+>  {
+> -	static struct strbuf buf = STRBUF_INIT;
+> -
+> -	strbuf_reset(&buf);
+> -	strbuf_addf(&buf, "%s/", get_object_directory());
+> +	strbuf_addf(buf, "%s/", get_object_directory());
+>  
+> -	fill_sha1_path(&buf, sha1);
+> -	return buf.buf;
+> +	fill_sha1_path(buf, sha1);
+>  }
+>  
+>  struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
+> @@ -710,7 +706,12 @@ int check_and_freshen_file(const char *fn, int freshen)
+>  
+>  static int check_and_freshen_local(const unsigned char *sha1, int freshen)
+>  {
+> -	return check_and_freshen_file(sha1_file_name(sha1), freshen);
+> +	static struct strbuf buf = STRBUF_INIT;
+> +
+> +	strbuf_reset(&buf);
+> +	sha1_file_name(&buf, sha1);
+> +
+> +	return check_and_freshen_file(buf.buf, freshen);
+>  }
+>  
+>  static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
+> @@ -866,8 +867,12 @@ static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+>  			  const char **path)
+>  {
+>  	struct alternate_object_database *alt;
+> +	static struct strbuf buf = STRBUF_INIT;
+> +
+> +	strbuf_reset(&buf);
+> +	sha1_file_name(&buf, sha1);
+> +	*path = buf.buf;
+>  
+> -	*path = sha1_file_name(sha1);
+>  	if (!lstat(*path, st))
+>  		return 0;
+>  
+> @@ -891,8 +896,12 @@ static int open_sha1_file(const unsigned char *sha1, const char **path)
+>  	int fd;
+>  	struct alternate_object_database *alt;
+>  	int most_interesting_errno;
+> +	static struct strbuf buf = STRBUF_INIT;
+> +
+> +	strbuf_reset(&buf);
+> +	sha1_file_name(&buf, sha1);
+> +	*path = buf.buf;
+>  
+> -	*path = sha1_file_name(sha1);
+>  	fd = git_open(*path);
+>  	if (fd >= 0)
+>  		return fd;
+> @@ -1557,9 +1566,12 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+>  	git_SHA_CTX c;
+>  	unsigned char parano_sha1[20];
+>  	static struct strbuf tmp_file = STRBUF_INIT;
+> -	const char *filename = sha1_file_name(sha1);
+> +	static struct strbuf filename = STRBUF_INIT;
+> +
+> +	strbuf_reset(&filename);
+> +	sha1_file_name(&filename, sha1);
+>  
+> -	fd = create_tmpfile(&tmp_file, filename);
+> +	fd = create_tmpfile(&tmp_file, filename.buf);
+>  	if (fd < 0) {
+>  		if (errno == EACCES)
+>  			return error("insufficient permission for adding an object to repository database %s", get_object_directory());
+> @@ -1612,7 +1624,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+>  			warning_errno("failed utime() on %s", tmp_file.buf);
+>  	}
+>  
+> -	return finalize_object_file(tmp_file.buf, filename);
+> +	return finalize_object_file(tmp_file.buf, filename.buf);
+>  }
+>  
+>  static int freshen_loose_object(const unsigned char *sha1)
+> -- 
+> 2.16.0.rc2.2.g7757b9aa6e.dirty
+> 
