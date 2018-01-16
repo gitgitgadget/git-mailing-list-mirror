@@ -2,73 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9EE41F406
-	for <e@80x24.org>; Tue, 16 Jan 2018 11:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4001F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 13:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751306AbeAPLsh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 06:48:37 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:35864 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750885AbeAPLsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 06:48:36 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3zLT4y4MVFz1qt0n;
-        Tue, 16 Jan 2018 12:48:34 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3zLT4y3hRMz1qr23;
-        Tue, 16 Jan 2018 12:48:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id pLmVWy8ozGCN; Tue, 16 Jan 2018 12:48:33 +0100 (CET)
-X-Auth-Info: SPf0uC98WiSoe7LCTih3AQDyQEMBPKc/3P3ARVnyfM9RQspEmx/A5MTU8raMDoZx
-Received: from localhost (ppp-188-174-155-106.dynamic.mnet-online.de [188.174.155.106])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Tue, 16 Jan 2018 12:48:33 +0100 (CET)
-Received: by localhost (Postfix, from userid 1000)
-        id 827DD2C33EB; Tue, 16 Jan 2018 12:48:32 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Michael Giuffrida <michaelpg@chromium.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Michael Schubert <mschub@elegosoft.com>
-Subject: Re: [BUG] git remote prune removes local tags, depending on fetch config
-References: <CACi5S_39wNrbfjLfn0xhCY+uewtFN2YmnAcRc86z6pjUTjWPHQ@mail.gmail.com>
-        <87tvvmiqn7.fsf@evledraar.gmail.com>
-        <CACi5S_33F7VVRYiBOQsxgg_ZPOg9ZvhLZ26bStYWiq7n96aeug@mail.gmail.com>
-X-Yow:  Should I start with the time I SWITCHED personalities with a BEATNIK
- hair stylist or my failure to refer five TEENAGERS to a good OCULIST?
-Date:   Tue, 16 Jan 2018 12:48:32 +0100
-In-Reply-To: <CACi5S_33F7VVRYiBOQsxgg_ZPOg9ZvhLZ26bStYWiq7n96aeug@mail.gmail.com>
-        (Michael Giuffrida's message of "Mon, 15 Jan 2018 18:14:30 -0800")
-Message-ID: <874lnmkorz.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.0.90 (gnu/linux)
+        id S1751885AbeAPNsk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 08:48:40 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:45795 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751876AbeAPNsj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 08:48:39 -0500
+Received: by mail-qt0-f182.google.com with SMTP id x27so10203021qtm.12
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 05:48:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=+sEhi4sjAx8TCUQNt0nI3NexSrvLH/wIUg8T7AjNoYc=;
+        b=KSaaTVrjQoOfMBaw5lK+MzTy9Wj0fmNqDvpSCsQDi86JEMmQcw83QC3kenuA4x5I1l
+         sYVpcYnuwa+680hWqLQ0qKLvAAFg+9RtboK3EW5Cx8BKH9lakxnFVirJ3lHxA2LQKN1O
+         HfDrqg/H58dlw9z7uyYrbLro/Ti5/nFtCfjYRtSQQubI9/u7vE9iK1EtQFpg/IfbTfej
+         6DOf1s8QFp4sJ5asnYl96ZmUr6MHtiNy6692sN2l2atzi7nSEgBZ3CE9ee87QtultM3j
+         3pMo5dl2ytqLk7E0hzvgkMXzekif4gxadnOAol6sdILosuMfsyzgr3d10BarIeMSgrI7
+         QhRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=+sEhi4sjAx8TCUQNt0nI3NexSrvLH/wIUg8T7AjNoYc=;
+        b=ma5YPcKzGCwTjRaGg0/BvsAXQp6Q6ILsYCjQvi/gIRiIxMSOwP8f/Dszc++6d0lUik
+         LlDQheqisv2blrpeSgny70g7W8WJjVwTe8HsPqh0b88OAai4Eunr2oxLsUVz3RqFEg7v
+         R3Y4Y06tUN93KE5pwKGcTySiawLiTisM+hUbeugqlGfrgFNa44/O6fCJ4/BAAy0KsRM0
+         dINbFWpxQuznzIY8Q5o9shqj0+pYTT5HvWbjOUKYb2k/gVETZf7M0yrNJoVZVFy1dq+t
+         /E/PbOp2K/3265ZyXUIOGsxtYZKnSNJ4wGKAO2u8eTRp4ilRoQYrLGRwD6m5QuYqF7oO
+         Cfwg==
+X-Gm-Message-State: AKwxyte9LsH6PJjxoJNTi0yt5RpuNB/lLU8ikcONB1CX3zxYyxRDdO+j
+        lqKAMMGucf2uUTDpfQ9xnO0=
+X-Google-Smtp-Source: ACJfBouJPLgJw8htVmpCRHljjcwoL9uk8UdKbASOnjr4XvLj+IAcd88agVQLuTPd+YlMLdEEKeVpKg==
+X-Received: by 10.237.37.112 with SMTP id w45mr24764980qtc.242.1516110518062;
+        Tue, 16 Jan 2018 05:48:38 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id q32sm1343859qkq.71.2018.01.16.05.48.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jan 2018 05:48:36 -0800 (PST)
+Subject: Re: [PATCH] describe: use strbuf_add_unique_abbrev() for adding short
+ hashes
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <422ae05b-6541-38f3-7638-4bee1b766d91@web.de>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6f91c34e-3ab0-30fc-4678-4424ac350cd9@gmail.com>
+Date:   Tue, 16 Jan 2018 08:48:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <422ae05b-6541-38f3-7638-4bee1b766d91@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jan 15 2018, Michael Giuffrida <michaelpg@chromium.org> wrote:
+On 1/15/2018 12:10 PM, René Scharfe wrote:
+> Call strbuf_add_unique_abbrev() to add an abbreviated hash to a strbuf
+> instead of taking a detour through find_unique_abbrev() and its static
+> buffer.  This is shorter and a bit more efficient.
+>
+> Patch generated by Coccinelle (and contrib/coccinelle/strbuf.cocci).
+>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> The changed line was added by 4dbc59a4cc (builtin/describe.c: factor
+> out describe_commit).
+>
+> "make coccicheck" doesn't propose any other changes for current master.
+>
+>   builtin/describe.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/describe.c b/builtin/describe.c
+> index 3b0b204b1e..21e37f5dae 100644
+> --- a/builtin/describe.c
+> +++ b/builtin/describe.c
+> @@ -380,7 +380,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+>   	if (!match_cnt) {
+>   		struct object_id *cmit_oid = &cmit->object.oid;
+>   		if (always) {
+> -			strbuf_addstr(dst, find_unique_abbrev(cmit_oid->hash, abbrev));
+> +			strbuf_add_unique_abbrev(dst, cmit_oid->hash, abbrev);
+>   			if (suffix)
+>   				strbuf_addstr(dst, suffix);
+>   			return;
 
-> It doesn't seem like a useful feature -- you wouldn't expect `git
-> fetch --prune` to remove your local branches that you were developing
-> on, right?
+René,
 
-Don't mix local and remote refs.  There is a reason why remote tracking
-branches are put in a separate name space.  If you fetch the remote tags
-into a separate name space (eg. refs/remote/tags/*:refs/tags/*) then
-there is no conflict.
+Thanks for this cleanup! I just learned about strbuf_add_unique_abbrev() 
+and like that it uses the reentrant find_unique_abbrev_r() instead.
 
-Andreas.
+Looks good to me.
+-Stolee
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
