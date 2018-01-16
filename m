@@ -2,90 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7527D1F406
-	for <e@80x24.org>; Tue, 16 Jan 2018 03:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96F231F406
+	for <e@80x24.org>; Tue, 16 Jan 2018 06:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750827AbeAPDb3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 15 Jan 2018 22:31:29 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:46083 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750764AbeAPDb2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 22:31:28 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0G3VIVx018971
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 15 Jan 2018 22:31:19 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc:     "'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>,
-        "'Joachim Schmitz'" <jojo@schmitz-digital.de>
-References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com> <001a01d38d57$d36c7d10$7a457730$@nexbridge.com> <59d3adab-4a95-4ef5-2d8f-ef4c7b797156@kdbg.org> <004a01d38d7f$3306e810$9914b830$@nexbridge.com> <007901d38da9$d517e9e0$7f47bda0$@nexbridge.com> <499fb29f-ca34-8d28-256d-896107c29a3e@kdbg.org> <001b01d38e0c$ba16e250$2e44a6f0$@nexbridge.com> <20180116030051.GA244260@genre.crustytoothpaste.net>
-In-Reply-To: <20180116030051.GA244260@genre.crustytoothpaste.net>
-Subject: RE: [BUG] test_must_fail: does not correctly detect failures - Was Git 2.16.0-rc2 Test Summary on NonStop
-Date:   Mon, 15 Jan 2018 22:31:14 -0500
-Message-ID: <00eb01d38e7a$79cb0960$6d611c20$@nexbridge.com>
+        id S1750827AbeAPGzY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 01:55:24 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:46083 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750740AbeAPGzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 01:55:23 -0500
+Received: by mail-qt0-f173.google.com with SMTP id o35so6920140qtj.13
+        for <git@vger.kernel.org>; Mon, 15 Jan 2018 22:55:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=DATbZxVLMrWWuu2OXfGuOxG8zLbRHZsxLcL8gCeVC38=;
+        b=VB1Y5ESBVGfepPMH9gZ0L7QODiHS8NMDAfUBif1+SXeGZ4y68tvL//IBH2YanRvroN
+         cXA42OrLD0GX3vCr9o8IqdSd/ONlN6rNFj6zlbBFA6VoEarHYNVf5vdckfp3IcOFjCI4
+         SpAZvU2kj1o9yJ6MW97Ks9UugH0hO9MVazNT8/JZj+LioPZN5SmSt1MhlIXZE3EfvkD+
+         JJbw4dpzTrm5vCX3bYy3iQvP9JKFpQkwZ6mPNe68jNAQbnKYsj0ch17fxlYb2R0Si4Va
+         i/WuY+QqyuiJ1qZb9aj6zOSJusAhIlhgtLY52XeqLcDbjnlzlw9Gsc/czMmWPKPatr1a
+         RplQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=DATbZxVLMrWWuu2OXfGuOxG8zLbRHZsxLcL8gCeVC38=;
+        b=opu2XEkzZMb2S3qKlT6d9hY/Y4D/5hfmSf3MyY0oWaKms+TVD2reZ/J1aRjysBJFMg
+         2beDRd4DxeNMdAMBS5bVJL+K2VEZvMBfPza5o8rsCeLv1kWpIVxMQVcU13xw77BgaUtw
+         Hlxbt1OLkXKqGF0ihmfFWx+o3b8YOFD34xph9JE2+t4kAjyx6/Dcm+ZKX5T2ZE5LfV4S
+         BVJm4spabeMoWm146Vv2a7EHOUwY3SNA4TgwJnZJOyy6s0ZibZ8jIvIzq7leflTP/Itm
+         yC2VNjkeKGABdOzv2jbbIpmjpralJbRfLEaCsS5tUJIdHThGDT7RDMmF0Oq4SqtcaoLc
+         hi/Q==
+X-Gm-Message-State: AKwxytdYTtMnMfj9ztcPVAI/RfpywqUpWSWWm+/6wmDUhU7++b3hXnNm
+        kxa76w85MTuFB7TgwPEke0pNdhdN6cg1vQPIGs3unA==
+X-Google-Smtp-Source: ACJfBovgzAvSOelYbkL610sXcbdq6p+5CI8DsHT4UbHwclYw6misdvSpHEHZimKhGpSxG/RBIPS1IgBm7SePxKDPFcU=
+X-Received: by 10.200.0.18 with SMTP id a18mr5027218qtg.162.1516085722893;
+ Mon, 15 Jan 2018 22:55:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQJL2DF5YDw1sAX4TtGn7MOoKgkH9AFqQNrWAa1IcAICMDCvxwE+b2lEArTVekACkMZMAwHgYxGOohfhfCA=
+Received: by 10.200.16.154 with HTTP; Mon, 15 Jan 2018 22:55:22 -0800 (PST)
+In-Reply-To: <20180115214208.GD4778@sigill.intra.peff.net>
+References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
+ <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
+ <20180115214208.GD4778@sigill.intra.peff.net>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Tue, 16 Jan 2018 09:55:22 +0300
+Message-ID: <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
+Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 15, 2018 10:01 PM, brian m. Carlson wrote:
-> On Mon, Jan 15, 2018 at 09:25:37AM -0500, Randall S. Becker wrote:
-> > On January 15, 2018 2:06 AM, Johannes Sixt wrote:
-> > > I take "die exits with non-zero" as a piece of information for the
-> > > *users* so that they can write "if perl foo.pl; then something; fi"
-> > > in shell scripts. I do *not* interpret it as leeway for implementers
-> > > of perl to choose any random value as exit code. Choosing 162 just
-> > > to be funky would be short-sighted. [I'm saying all this without knowing
-> how perl specifies 'die'
-> > > beyond the paragraph you cited. Perhaps there's more about 'die'
-> > > that justifies exit code 162.] I'd say that the perl port is broken.
-> >
-> > I agree that 162 is wrong. Its interpretation is 128+signal, which
-> > clearly does not happen in this case. On the platform, if the perl
-> > script is via stdin, 162 or 169 are returned. If via file (perl
-> > file.pl), 255 comes back. The port has issues. I have an opened a bug
-> > report with the platform developers. Usual non-Open Source timeframes
-> > to fix apply. ☹
-> 
-> I believe the standard behavior for Perl with die is the following:
-> 
-> exit $! if $!;
-> exit $? >> 8 if $? >> 8;
-> exit 255; # otherwise
-> 
-> Is there an errno value on your port that matches 162?  Maybe EBADF?
-> 
-> On Linux, I get the following:
-> 
-> genre ok % printf die | perl -; echo $?
-> Died at - line 1.
-> 9
+2018-01-16 0:42 GMT+03:00 Jeff King <peff@peff.net>:
+> On Wed, Jan 10, 2018 at 09:36:41AM +0000, Olga Telezhnaya wrote:
+>
+>> Make valid_atom as a function parameter,
+>> there could be another variable further.
+>> Need that for further reusing of formatting logic in cat-file.c.
+>>
+>> We do not need to allow users to pass their own valid_atom variable in
+>> global functions like verify_ref_format because in the end we want to
+>> have same set of valid atoms for all commands. But, as a first step
+>> of migrating, I create further another version of valid_atom
+>> for cat-file.
+>
+> I agree in the end we'd want a single valid_atom list. It doesn't look
+> like we hit that end state in this series, though.
+>
+> I guess I'm not quite clear on why we're not adding these new atoms to
+> ref-filter (and for-each-ref) right away, though. We already have the
+> first three (name, type, and size), and we'd just need to support
+> %(rest) and %(deltabase).
+>
+> I think %(rest) doesn't really make sense for for-each-ref (we're not
+> reading any input), but it could expand to the empty string by default
+> (or even throw an error if the caller asks us not to support it).
+>
+> IOW, the progression I'd expect in a series like this is:
+>
+>   1. Teach ref-filter.c to support everything that cat-file can do.
+>
+>   2. Convert cat-file to use ref-filter.c.
+>
+> -Peff
 
-Nah. Worse. Assume a perl script that is simply 'die "hello world"'. If it's in a file, perl reports 255. If from stdin, perl reports 162/169. Doh. That's supposed to be 128+signum, and max sig is 31 (SIGABEND) on the platform. The difficulty at this point is that if I fix wait_or_whine to map either code to 255 or 1, then many more other tests fail, so I'm stuck with either 6 reasonably acceptable breaks or about 60 unacceptable ones, based on assumptions in test_must_fail or other fail detections in the git suite. I'd rather not mess with git code if the test breaks themselves are explainable.
+I agree, I even made this and it's working fine:
+https://github.com/git/git/pull/450/commits/1b74f1047f07434dccb207534d1ad45a143e3f2b
+But I decided not to add that to patch because I expand the
+functionality of several commands (not only cat-file and
+for-each-ref), and I need to support all new functionality in a proper
+way, make these error messages, test everything and - the hardest one
+- support many new commands for cat-file. As I understand, it is not
+possible unless we finally move to ref-filter and print results also
+there. Oh, and I also need to rewrite docs in that case. And I decided
+to apply this in another patch. But, please, say your opinion, maybe
+we could do that here in some way.
 
-Sign.
-
-Randall
-
--- Brief whoami:
-  NonStop developer since approximately NonStop(211288444200000000)
-  UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Olga
