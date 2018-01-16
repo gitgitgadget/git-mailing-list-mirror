@@ -2,107 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C03851F406
-	for <e@80x24.org>; Tue, 16 Jan 2018 09:25:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77EE51F406
+	for <e@80x24.org>; Tue, 16 Jan 2018 09:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751199AbeAPJZY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 04:25:24 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:39064 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750716AbeAPJZX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 04:25:23 -0500
-Received: by mail-pf0-f194.google.com with SMTP id e11so9345671pff.6
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 01:25:23 -0800 (PST)
+        id S1751492AbeAPJpZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 04:45:25 -0500
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:37358 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751489AbeAPJpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 04:45:24 -0500
+Received: by mail-qk0-f174.google.com with SMTP id y80so13518847qkb.4
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 01:45:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+X42UM09CQHkersKKxN5aCvd8A5rXusFsRE2ZQrCEks=;
-        b=nAZYsH53c6Xa2RomTwAaBWJOVTdBJgNWHdD40qzT3bDuk59e7sozK6JPDfX1pPHXb5
-         CDmX8xsuLnz2ejABU8qN4RZAAU8bPC2rnPUU+Ao0snn1WKfBF6vOoKU/98KYVCVFyx4L
-         XktFLycA6uk/deHEA3q9K7OSGx4x8H1HTUTVJbyAXvdeuaYnbXOVzeW7lnYRD7yaUvdV
-         bIWBLs3jPZ5Qz7avGt9hS2bG4jwrzbBmXQjvTztgSngU/g1pZi5Tgn2MMUhjG0stCUTq
-         4BShITj0EGzESBZjWyAT7nwvhMrwNdHQKrUGWXEpAVkBGCR7rZv6s0lJW7b5De4f3R4i
-         icaQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4fC++4HKAqAT2TU4xXvY/KzP444S4WBXDJ0ACU8+jiU=;
+        b=pDAJHvOR7KKcRYlv2jikjuz0i7n/8rpY+Ivn02lVb9OhVdyndQn8hQjRwMTr5S/Oz8
+         J7pzNuFMoLQQnMFJHfwjQ38Q4ZoKEltf2pCp0NjB2r/mfa8dveVB6yCjPRSadRqVRIjJ
+         SCUwlobHYpX+0V/kbw6VYOQCQsBTEvOBPc7b5ShK5mHaBErpWQMaFFuen+YSPcctPqts
+         brc1N6Fju0L+4a+qu4yhclS6Qv/NTZf/fsq6FFZ+70OTAsB5ZPCHI5wbNIWjCGx5J+UW
+         kmZqec5msZAbZWjaTqhT5YhyMa+zqv9fCAsJg0+9xOk45bkDDAo6Mh97rFccw8mlAjhj
+         OFWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+X42UM09CQHkersKKxN5aCvd8A5rXusFsRE2ZQrCEks=;
-        b=KSHene6mHwnSvj1HKFgywmcvsI6u9QnxvT3GRRr6mgrbte4Ji58gWDCqC0ZDUq9De6
-         lxuGhTWZLMLxlsSWHmHLrET9t5yIDBO45JbjDoIvIP/yU5jn12yrUJIFddwCRKeZvOjF
-         zlkFo9kcnWEuabLV4ckICnRLgPxq+kvnxxFV6dQp8uBIsgwudCzUdYVJ2Hx8HvNu2SW+
-         b7A8nHnfwix8TqrPOxcUOG7swwr8Wp4K13rZJoSRRGgIuajwsXts15ZBn28BL/lNla5y
-         tkQpB7yYJBTWTUY1FFq0u89gD+f8OBTTd1IzLlo7rWr/NGRage3iNl5Mlb5d2B1dEVw8
-         SuHg==
-X-Gm-Message-State: AKGB3mKcL9eEk5/L1Wm37onZOtPZs6Yidhj1jkNIIIxTTxBcKAhyzbyo
-        EnPLkkdbAUREe+Vafz2HBKhyvA==
-X-Google-Smtp-Source: ACJfBouZSgbNBrWiPGk2wltLf/9vxjFVN1HwLLgq8BQxqbnqZ+z38leLL+5JTWzcyFEyt+cnI9SE5w==
-X-Received: by 10.99.97.200 with SMTP id v191mr25147034pgb.121.1516094722574;
-        Tue, 16 Jan 2018 01:25:22 -0800 (PST)
-Received: from ash ([27.75.129.14])
-        by smtp.gmail.com with ESMTPSA id v1sm2868300pfd.111.2018.01.16.01.25.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jan 2018 01:25:21 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 16 Jan 2018 16:25:15 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] diff.c: flush stdout before printing rename warnings
-Date:   Tue, 16 Jan 2018 16:23:49 +0700
-Message-Id: <20180116092349.11330-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4fC++4HKAqAT2TU4xXvY/KzP444S4WBXDJ0ACU8+jiU=;
+        b=epNCUtFT+BJ9MtTNbGVPOYxyQgNUI0N+iRv9Shj56Iyz3aAKHbbKJCILreUQfZQJXh
+         aSKCRY2Gc2djZLGCWDPNlPR1Ae+BFAfeAKe9Xnp4/AGxh+ojx5e94mBwQ/ZVOz21c8lG
+         k3Fx0zp9ZM7aYJbuyrC8oEy6CYVKtEszALW0XoMxp5wu9ZT4bsFCujuwHLWQhE1iDT7K
+         JoYUhrsWCr1ps6v7q2NdPCum9QITv9o+fljdzPjgX/4bJDKqKlujn4A21wzw3k+b7OU1
+         4w/eiQ4FO/8FsPS7JLJYFY5TzQ1vvVF3Kf6zx8GxIqf3kybtQ8MtXHsttwcXgTWpRkYk
+         +TWg==
+X-Gm-Message-State: AKwxytfHYVnVwhG+R88VQaZghBtEVmZWGzi466+eth7Lr5SVSQ7Ag5IB
+        g802enqpZXWXSI38d7ZeSggNtdQaOnyiRmeOzy3mJw==
+X-Google-Smtp-Source: ACJfBot765D+TIObiY5JzQio19hSbsYbAoJ2z7XBfgFQV0aCQqPrSTLmY51AYa/CD1Xf8wMtwyJdbmSK8DfJ8H1QNS4=
+X-Received: by 10.55.183.3 with SMTP id h3mr54349263qkf.34.1516095923486; Tue,
+ 16 Jan 2018 01:45:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.200.16.154 with HTTP; Tue, 16 Jan 2018 01:45:23 -0800 (PST)
+In-Reply-To: <20180115213702.GC4778@sigill.intra.peff.net>
+References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
+ <01020160df6dc51d-7cd5fb1a-9798-49c1-bc82-480108e1a90b-000000@eu-west-1.amazonses.com>
+ <20180115213702.GC4778@sigill.intra.peff.net>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Tue, 16 Jan 2018 12:45:23 +0300
+Message-ID: <CAL21Bm=WP3CN4OotC1pw3CY1anQALEcnnWMy6FJFaGwVJPARDg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/18] cat-file: reuse struct ref_format
+To:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The diff output is buffered in a FILE object and could still be
-partially buffered when we print these warnings (directly to fd 2).
-The output is messed up like this
+2018-01-16 0:37 GMT+03:00 Jeff King <peff@peff.net>:
+> On Wed, Jan 10, 2018 at 09:36:41AM +0000, Olga Telezhnaya wrote:
+>
+>> Start using ref_format struct instead of simple char*.
+>> Need that for further reusing of formatting logic from ref-filter.
+>
+> OK, this makes sense (though again, at some point we want this to stop
+> being a "ref_format" and just be a "format").
+>
+>>  struct batch_options {
+>> +     struct ref_format *format;
+>
+> Does this need to be a pointer? We can just store the ref_format inside
+> the struct, right? And then...
+>
+>> @@ -557,7 +558,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>>  {
+>>       int opt = 0;
+>>       const char *exp_type = NULL, *obj_name = NULL;
+>> -     struct batch_options batch = {0};
+>> +     struct ref_format format = REF_FORMAT_INIT;
+>> +     struct batch_options batch = {&format};
+>>       int unknown_type = 0;
+>
+> ...here you would not need the extra local variable. You can initialize
+> it like:
+>
+>   struct batch_options batch = { REF_FORMAT_INIT };
+>
+> -Peff
 
- worktree.c                                   |   138 +-
- worktree.h        warning: inexact rename detection was skipped due to too many files.
-                           |    12 +-
- wrapper.c                                    |    83 +-
+Thanks a lot!
+Fixed, please check new version here: https://github.com/git/git/pull/450
+If everything else is OK, I will send it to the mailing list.
+As I said in other email threads, not sure that we need to include
+last commit ("make valid_atom general again") into a new patch.
 
-It gets worse if the warning is printed after color codes for the graph
-part are already printed. You'll get a warning in green or red.
-
-Flush stdout first, so we can get something like this instead:
-
- xdiff/xutils.c                               |    42 +-
- xdiff/xutils.h                               |     4 +-
- 1033 files changed, 150824 insertions(+), 69395 deletions(-)
-warning: inexact rename detection was skipped due to too many files.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- diff.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/diff.c b/diff.c
-index fb22b19f09..5545c25640 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5454,6 +5454,7 @@ N_("you may want to set your %s variable to at least "
- 
- void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
- {
-+	fflush(stdout);
- 	if (degraded_cc)
- 		warning(_(degrade_cc_to_c_warning));
- 	else if (needed)
--- 
-2.15.1.600.g899a5f85c6
-
+Thanks again,
+Olga
