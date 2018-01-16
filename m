@@ -2,122 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEEEC1F406
-	for <e@80x24.org>; Tue, 16 Jan 2018 07:23:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C03851F406
+	for <e@80x24.org>; Tue, 16 Jan 2018 09:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750798AbeAPHXh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 02:23:37 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:40901 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750752AbeAPHXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 02:23:37 -0500
-Received: by mail-io0-f195.google.com with SMTP id t22so3545711ioa.7
-        for <git@vger.kernel.org>; Mon, 15 Jan 2018 23:23:36 -0800 (PST)
+        id S1751199AbeAPJZY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 04:25:24 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:39064 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750716AbeAPJZX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 04:25:23 -0500
+Received: by mail-pf0-f194.google.com with SMTP id e11so9345671pff.6
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 01:25:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vn5b8zJKtspco+7K1/aTY6jEl/MG5n2geohfAiCgZbM=;
-        b=VZThNP16IKP1+rA4gm1tdAeFvjxOJj+7c1B+YE0wxuCgSkqzKQZvjcVtaQ01A0vp5f
-         d66+6kteDqxtkxP+1QyGXKqNd7FnalNBnS0BwTGWuXOl52WHaogqegatcMcVuGeH06be
-         TKZEPvoKHAOtJIGkp7UEzbKpMOWblkSYmRjJ0o9cZrZPa4xVtbs8Fw1HH1dguyGQ7Zqr
-         6fUzApHfiqYYMyHqFjWIFCA5pBeOPmZIoPIDdSR3Lo9U2ok1sAWhApNfjH1p3kAuT+CD
-         zIeJKCfB/ymYrXUM6Hqe1/+Of0DkRxqvPZ/yVGqu6wMb45ZTsM4vjhL/BQzqG1q15hZf
-         ezqg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+X42UM09CQHkersKKxN5aCvd8A5rXusFsRE2ZQrCEks=;
+        b=nAZYsH53c6Xa2RomTwAaBWJOVTdBJgNWHdD40qzT3bDuk59e7sozK6JPDfX1pPHXb5
+         CDmX8xsuLnz2ejABU8qN4RZAAU8bPC2rnPUU+Ao0snn1WKfBF6vOoKU/98KYVCVFyx4L
+         XktFLycA6uk/deHEA3q9K7OSGx4x8H1HTUTVJbyAXvdeuaYnbXOVzeW7lnYRD7yaUvdV
+         bIWBLs3jPZ5Qz7avGt9hS2bG4jwrzbBmXQjvTztgSngU/g1pZi5Tgn2MMUhjG0stCUTq
+         4BShITj0EGzESBZjWyAT7nwvhMrwNdHQKrUGWXEpAVkBGCR7rZv6s0lJW7b5De4f3R4i
+         icaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vn5b8zJKtspco+7K1/aTY6jEl/MG5n2geohfAiCgZbM=;
-        b=r6BuTmL70RzX98uhIcqtOfzjJmMDc0bfvvc7QwqfzIsh/S2ib5mrkmWB8ghwb37P+j
-         BbiC5I4LDlqytZTGndPGunMZTvauygBnktYCfgfme9uaz3SFZZkOeI/sduJT9u1QFiLA
-         9f90pYT8z364Q1QReGU7s5WnBbjRJNFYs9o8HTcwQuGSYjRFIQCQpP1r7tsashWf5NwG
-         g1OiK8QvSKxKX3lnHV0so1DEp9bB4qFRBDQqvghmrCYR16rjgi73Ibm992gA66AlroJB
-         ZMBPiAH+dShn9HckNeP1reLuu/jHNZhqDui54NrPwsp7eP6F6m4ONnfwVsnnA10HFPO1
-         3Plg==
-X-Gm-Message-State: AKwxytdWM426F896+eqOlIJKRnRXZ1wd+l2XLRongiEveaaIUXqDs/1Z
-        SicreVyl75PVebQNoUU0OT/CISi6MjVbvtSI2JU=
-X-Google-Smtp-Source: ACJfBousIQOeLnMor5O9WDnPtjrRXIkh9fIuYTcuYRqxJZZxYURG5kADSZ5jbIUYTOt9lPRPqmQfDpKUEL67OThMkZU=
-X-Received: by 10.107.3.209 with SMTP id e78mr18548716ioi.96.1516087416418;
- Mon, 15 Jan 2018 23:23:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=+X42UM09CQHkersKKxN5aCvd8A5rXusFsRE2ZQrCEks=;
+        b=KSHene6mHwnSvj1HKFgywmcvsI6u9QnxvT3GRRr6mgrbte4Ji58gWDCqC0ZDUq9De6
+         lxuGhTWZLMLxlsSWHmHLrET9t5yIDBO45JbjDoIvIP/yU5jn12yrUJIFddwCRKeZvOjF
+         zlkFo9kcnWEuabLV4ckICnRLgPxq+kvnxxFV6dQp8uBIsgwudCzUdYVJ2Hx8HvNu2SW+
+         b7A8nHnfwix8TqrPOxcUOG7swwr8Wp4K13rZJoSRRGgIuajwsXts15ZBn28BL/lNla5y
+         tkQpB7yYJBTWTUY1FFq0u89gD+f8OBTTd1IzLlo7rWr/NGRage3iNl5Mlb5d2B1dEVw8
+         SuHg==
+X-Gm-Message-State: AKGB3mKcL9eEk5/L1Wm37onZOtPZs6Yidhj1jkNIIIxTTxBcKAhyzbyo
+        EnPLkkdbAUREe+Vafz2HBKhyvA==
+X-Google-Smtp-Source: ACJfBouZSgbNBrWiPGk2wltLf/9vxjFVN1HwLLgq8BQxqbnqZ+z38leLL+5JTWzcyFEyt+cnI9SE5w==
+X-Received: by 10.99.97.200 with SMTP id v191mr25147034pgb.121.1516094722574;
+        Tue, 16 Jan 2018 01:25:22 -0800 (PST)
+Received: from ash ([27.75.129.14])
+        by smtp.gmail.com with ESMTPSA id v1sm2868300pfd.111.2018.01.16.01.25.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jan 2018 01:25:21 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Tue, 16 Jan 2018 16:25:15 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] diff.c: flush stdout before printing rename warnings
+Date:   Tue, 16 Jan 2018 16:23:49 +0700
+Message-Id: <20180116092349.11330-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
 MIME-Version: 1.0
-Received: by 10.79.113.199 with HTTP; Mon, 15 Jan 2018 23:23:35 -0800 (PST)
-In-Reply-To: <33af3206-b15d-3b01-e121-796cd31eb743@jeffhostetler.com>
-References: <20180103163403.11303-1-chriscool@tuxfamily.org>
- <20180103163403.11303-15-chriscool@tuxfamily.org> <33af3206-b15d-3b01-e121-796cd31eb743@jeffhostetler.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 16 Jan 2018 08:23:35 +0100
-Message-ID: <CAP8UFD0wOo56dtqzhY8CHw=0+miQ1fPaJZJiTtLatgf_gmrQUw@mail.gmail.com>
-Subject: Re: [PATCH 14/40] sha1_file: prepare for external odbs
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 4, 2018 at 7:00 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
->
->
-> On 1/3/2018 11:33 AM, Christian Couder wrote:
+The diff output is buffered in a FILE object and could still be
+partially buffered when we print these warnings (directly to fd 2).
+The output is messed up like this
 
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 261baf800f..785e8dda03 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -322,17 +322,22 @@ static void fill_sha1_path(struct strbuf *buf, const
->> unsigned char *sha1)
->>         }
->>   }
->>   -const char *sha1_file_name(const unsigned char *sha1)
->> +const char *sha1_file_name_alt(const char *objdir, const unsigned char
->> *sha1)
->>   {
->>         static struct strbuf buf = STRBUF_INIT;
->
-> While we are refactoring sha1_file_name() and adding
-> sha1_file_name_alt(), could we also change the API and
-> pass in the strbuf so we can get rid of the static buffer?
-> Granted, it is a little off topic, but it will help out
-> in the long run.
+ worktree.c                                   |   138 +-
+ worktree.h        warning: inexact rename detection was skipped due to too many files.
+                           |    12 +-
+ wrapper.c                                    |    83 +-
 
-Ok, but I prefer to do that in a separate patch series, so I just sent:
+It gets worse if the warning is printed after color codes for the graph
+part are already printed. You'll get a warning in green or red.
 
-https://public-inbox.org/git/20180116071814.19884-1-chriscool@tuxfamily.org
+Flush stdout first, so we can get something like this instead:
 
->> @@ -1551,7 +1562,7 @@ static inline int directory_size(const char
->> *filename)
->>    * We want to avoid cross-directory filename renames, because those
->>    * can have problems on various filesystems (FAT, NFS, Coda).
->>    */
->> -static int create_tmpfile(struct strbuf *tmp, const char *filename)
->> +int create_object_tmpfile(struct strbuf *tmp, const char *filename)
->>   {
->>         int fd, dirlen = directory_size(filename);
->>   @@ -1591,7 +1602,7 @@ static int write_loose_object(const unsigned char
->> *sha1, char *hdr, int hdrlen,
->>         static struct strbuf tmp_file = STRBUF_INIT;
->
-> Same thing here, since we are renaming the function anyway, could we
-> add a strbuf arg and get rid of the static one?
+ xdiff/xutils.c                               |    42 +-
+ xdiff/xutils.h                               |     4 +-
+ 1033 files changed, 150824 insertions(+), 69395 deletions(-)
+warning: inexact rename detection was skipped due to too many files.
 
-I will see how it goes with the above patch to remove the static
-buffer in sha1_file_name() before preparing a patch to remove the
-static buffer in create_tmpfile().
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ diff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Christian.
+diff --git a/diff.c b/diff.c
+index fb22b19f09..5545c25640 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5454,6 +5454,7 @@ N_("you may want to set your %s variable to at least "
+ 
+ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
+ {
++	fflush(stdout);
+ 	if (degraded_cc)
+ 		warning(_(degrade_cc_to_c_warning));
+ 	else if (needed)
+-- 
+2.15.1.600.g899a5f85c6
+
