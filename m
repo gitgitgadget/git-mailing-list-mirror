@@ -2,90 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 554DC1F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 19:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3FC61F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 19:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751666AbeAPTXH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 14:23:07 -0500
-Received: from mail-pl0-f51.google.com ([209.85.160.51]:34874 "EHLO
-        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751412AbeAPTXG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 14:23:06 -0500
-Received: by mail-pl0-f51.google.com with SMTP id b96so6911991pli.2
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 11:23:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=QCSrcvGvPcpZqz16AwPhZiRpSg7cJx0uOxwEGupRcmU=;
-        b=n7qJDEO1erDYe4cD0w2S4Ncax6YAnZuNNuTJXRXNkmLAcQJnGZToDcnpuRQHDZoxeL
-         O/17Ct0aWLMzHWE3S4/13Fdv6lkYOwbfjCEk7M/bKKLTIZXam0RqQ27FSLqNhDKIjNFL
-         5/HtsSSW6JCHWCoe57B6hu8QZq3Kgj/lshlTvm7jVTgqnKiNq3mH6aur3KumeTOLGafO
-         khLEt92TphfSLlw7W/n+Q6YbMzogN44vksRFJNaBqTodQTwRoP7Dz0+9WjXiNMnMAiHW
-         1MUN+5Cmvi19nYu+aV73sv25sJm4N549xwT/g/jARSBA36BLDXx5HmFXBKj3hDidSDra
-         g9pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=QCSrcvGvPcpZqz16AwPhZiRpSg7cJx0uOxwEGupRcmU=;
-        b=VePDUOViN/+M5dF5hfj4p1Xt2NDt0aLMxMH73ArJBm7rt5rXvW6sBl3eyV+YqbDdMt
-         hLHiak4bAfohfBHCSPeFZ2pYdpWyuTSZeDwwRfgP1mzx9ki4jHSI7+OiOtktCWVdBK/9
-         TvofQHTHD/LGBWkANl0zQW8LHvb8CzvMUkJ4Z0Xv2UkSCZNCxYS1rPoErlUronYJA3DD
-         bu8/MYrCHKQd8MgVlSkS3qHffNlUenJbp7cpQVfNsLzmRhT1hmMsjuhx2zol0EVYlov9
-         0BNF614GAVAkneQ9jtIxV02qgklChkWUMCvGZoibKh0myQejd5ibLTwqlMyOhE4Kx6bd
-         NM5A==
-X-Gm-Message-State: AKGB3mJj6ur4IeGPKIY3sI+HivPR+DzsQCOc2/7pgwSJYJCqAg4fvWJB
-        WHNaAhnVK+HUcYDsfUiUbQmbGw==
-X-Google-Smtp-Source: ACJfBovBMZAiAmUZy7mgJSizGJusZiio5QuXlFTlNDwNlP7oDBHC/bAOngPlzPs/fupCRlKQPLdgBg==
-X-Received: by 10.159.218.151 with SMTP id w23mr31453398plp.100.1516130586198;
-        Tue, 16 Jan 2018 11:23:06 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:f523:b526:bbca:bb86])
-        by smtp.gmail.com with ESMTPSA id k90sm5054897pfk.171.2018.01.16.11.23.04
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 Jan 2018 11:23:05 -0800 (PST)
-Date:   Tue, 16 Jan 2018 11:23:03 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH 12/26] ls-refs: introduce ls-refs server command
-Message-ID: <20180116192303.GC135179@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-13-bmwill@google.com>
- <20180109125025.6c88700e6e00e45822ee8932@google.com>
+        id S1751693AbeAPTcp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 14:32:45 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65415 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751280AbeAPTco (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 14:32:44 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC9F5CD5B7;
+        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tPugntVks4duSBfide1dWF3p3dY=; b=u6NBYA
+        kLbM20eeqgmeUzlRefinq/p+X9exuX9VbDQec8FugaLE8mXULNJ3XHnPQQM62vhu
+        akT284LCxEl7fRRPgaqj6rpzbr4yrgYDu5fEY81c1iYi70XEwC9+cST7R/M2AP7b
+        SQJefrduVwH+5k3/P2djIJaF0NhRknbv00J/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tiB/Oq0cojWdAuOA9nppu0+iI7eFjQpg
+        6k9e8OjI1qjKYyOiZ5Mua57CLfSsTD5P5iosEkjE/Xgb7A7Wrc4z1J33SBqsOQTG
+        PvI7wlWIouwjC3qDQOs1j2VZhqSn7DGi0BHtqAJ1fn9HLTVZzZN7LMwottmuQceT
+        eeq3JvRx/zU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4CF8CD5B6;
+        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 242A0CD5B5;
+        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 0/2] Incremental rewrite of git-submodules
+References: <20180111201721.25930-1-pc44800@gmail.com>
+        <20180114211529.6391-1-pc44800@gmail.com>
+Date:   Tue, 16 Jan 2018 11:32:41 -0800
+In-Reply-To: <20180114211529.6391-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Mon, 15 Jan 2018 02:45:27 +0530")
+Message-ID: <xmqq4lnlvbty.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180109125025.6c88700e6e00e45822ee8932@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05A34AAC-FAF4-11E7-80B7-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/09, Jonathan Tan wrote:
-> On Tue,  2 Jan 2018 16:18:14 -0800
-> Brandon Williams <bmwill@google.com> wrote:
-> 
-> > +  symrefs: In addition to the object pointed by it, show the underlying
-> > +	   ref pointed by it when showing a symbolic ref.
-> > +  peel: Show peeled tags.
-> > +  ref-pattern <pattern>: When specified, only references matching the
-> > +			 given patterns are displayed.
-> 
-> I notice "symrefs" being tested in patch 13 and "ref-pattern" being
-> tested in patch 16. Is it possible to make a test for "peel" as well?
-> (Or is it being tested somewhere I didn't notice?)
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-Really good suggestion.  I'll introduce unit tests for both the
-git-serve cmdline as well as for more simple server commands (ls-refs).
+> Changes in v3:
+>
+> * For the variables: super_config_url and sub_origin_url, xstrdup() was used
+>   while assigning "" to them, before freeing.
+>
+> * In case of the function deinit_submodule, since the orignal code doesn't die
+>   upon failure of the function mkdir(), printf was used instead of die_errno.
+>
+> As before you can find this series at:
+> https://github.com/pratham-pc/git/commits/patch-series-2
+>
+> And its build report is available at:
+> https://travis-ci.org/pratham-pc/git/builds/
+> Branch: patch-series-2
+> Build #197
+>
+> Prathamesh Chavan (2):
+>   submodule: port submodule subcommand 'sync' from shell to C
+>   submodule: port submodule subcommand 'deinit' from shell to C
+>
+>  builtin/submodule--helper.c | 340 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-submodule.sh            | 112 +--------------
+>  2 files changed, 342 insertions(+), 110 deletions(-)
 
--- 
-Brandon Williams
+Looks sensible.  Thanks.
+
