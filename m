@@ -2,137 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EE2B1F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 21:42:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAA131F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 22:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750876AbeAPVmn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 16:42:43 -0500
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:32873 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750750AbeAPVmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 16:42:42 -0500
-Received: by mail-pg0-f47.google.com with SMTP id i196so10188458pgd.0
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 13:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EQaawwQCq5yvfauSPlueYP41MZ9RAhlWCojsZWmpEL4=;
-        b=g+Jb2XILuxohPNLWESUpwtqCH3/pDDsukyzudUHx07gi2hhqgBgYER2dOmkK1sgyis
-         Prd6WmOb3ZZkNwZH6W9vWWMzzi0JDwf8yaf4eqt/TY5kypjVG7boGteBXg+Ct+zjGELT
-         a25ChieusXDv8Jo6qvIL/W2YSAj5FMSXUTjSvW6RdZu5sKz/MfjmSx11R0hRBoaCbswz
-         ljkItsOmqnnO+Qw1Md4dDmcCghL4Skt48vnooBivCmKMDJ2GLowBMd53ylAaQHVMdR9g
-         iD1W7OH2fc6Kre9nxMLMvEhmFhVjiv1v8C7XQ7Svkxq+eHtMOQZb3Bd7dg605y6UwVKj
-         /rQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EQaawwQCq5yvfauSPlueYP41MZ9RAhlWCojsZWmpEL4=;
-        b=iBqCONQ+VqO53vTlqG+FPkzUmJib8d+fQotUvHigjsZLoDgkhQ0K1TxfWHGDdr8kWu
-         N/5oFZ/ZMxZBeP/5kwriu+axJyPfgBgYE9Wt7m6gxjauoF/M+nosqIQIoZaB9hwth0/I
-         xTnzQZsgZrER5YMli5sQvMbFwNy5x98+WGJnywPZjm+0qFt57MUcHoqCdVcebw2BzZwi
-         xO6rdOKKWw1kYyNaHB5Sk7mkMfPapeuXEpoudHUS2e+EE+PPPUaKia8VHx0bx3LTf10N
-         k747Ds5QsHqJSPZkeFUxaM+GPpEk1uLUaPGJXAh2Oeii5UQEmQFPUWC4bkspgX6ToV/l
-         mGJw==
-X-Gm-Message-State: AKwxytdNq6vaNNb26bDvYVov747UxvtbUgtfEv2Q+BhC9L6bZBi6r8Md
-        ZfNjoqJOSmFnUi6BqMdJ9sSBuayMauM=
-X-Google-Smtp-Source: ACJfBovW5tMCBIjjE5GQrI11tt/bOuxrp0YS/XpO1GnXy21PpdXXqNCgw7omq5bvJwnYrsbLzh0uTQ==
-X-Received: by 10.101.77.146 with SMTP id p18mr6069889pgq.75.1516138961676;
-        Tue, 16 Jan 2018 13:42:41 -0800 (PST)
-Received: from google.com ([2620:0:100e:3010:80fa:b782:3b81:6dc7])
-        by smtp.gmail.com with ESMTPSA id c83sm5541209pfk.8.2018.01.16.13.42.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jan 2018 13:42:40 -0800 (PST)
-Date:   Tue, 16 Jan 2018 13:42:39 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for
- other repos
-Message-ID: <20180116214239.GA3622@google.com>
-References: <20171217225122.28941-1-t.gummerer@gmail.com>
- <20180107223015.17720-1-t.gummerer@gmail.com>
- <20180107223015.17720-2-t.gummerer@gmail.com>
+        id S1751630AbeAPWNb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 17:13:31 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55136 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751142AbeAPWNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 17:13:30 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D898DB5E10;
+        Tue, 16 Jan 2018 17:13:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=O6EXOJaj2xy7
+        RTwCLtoI4cmnqUQ=; b=dJKDRYHKInSBflORmNxZzTAwCkTZLgae2NGHxu5P2TAB
+        CfYYH98TTYOSggvEBPcCnRhjygsFYNRJjy8xEKyTU0r3dg4cAvLp8NfeQNVjiAlz
+        TVxFKp2sBwHe+XF266NHcKy294xhTD92aoDhMyDOTxPyPpF+IK5EAJ558Wz3h6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aFdITG
+        aQRsp1Gb7Lj3e+yiBru8WJDdIzrACTDW8KaXermuGP2sT22mCe8ux6rfnTg7+nOb
+        LtpYBdQAS0OVGTWzh6uF9E2FmBDc2GKWZzkp5WSSH4FWlJw01nkiKaDSfnCmy9Wl
+        PnIJdtFCd6gUxdXKM116RjhQq2g6UcIe0yy4E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CED16B5E0F;
+        Tue, 16 Jan 2018 17:13:29 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42BB4B5E0E;
+        Tue, 16 Jan 2018 17:13:29 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v4 6/7] trace.c: print env vars in trace_run_command()
+References: <20180112095607.18293-1-pclouds@gmail.com>
+        <20180113064949.6043-1-pclouds@gmail.com>
+        <20180113064949.6043-7-pclouds@gmail.com>
+Date:   Tue, 16 Jan 2018 14:13:28 -0800
+In-Reply-To: <20180113064949.6043-7-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Sat, 13 Jan 2018 13:49:48 +0700")
+Message-ID: <xmqqmv1dtptj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180107223015.17720-2-t.gummerer@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 7B2DA158-FB0A-11E7-ADFF-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/07, Thomas Gummerer wrote:
-> read_index_from() takes a path argument for the location of the index
-> file.  For reading the shared index in split index mode however it just
-> ignores that path argument, and reads it from the gitdir of the current
-> repository.
-> 
-> This works as long as an index in the_repository is read.  Once that
-> changes, such as when we read the index of a submodule, or of a
-> different working tree than the current one, the gitdir of
-> the_repository will no longer contain the appropriate shared index,
-> and git will fail to read it.
-> 
-> For example t3007-ls-files-recurse-submodules.sh was broken with
-> GIT_TEST_SPLIT_INDEX set in 188dce131f ("ls-files: use repository
-> object", 2017-06-22), and t7814-grep-recurse-submodules.sh was also
-> broken in a similar manner, probably by introducing struct repository
-> there, although I didn't track down the exact commit for that.
-> 
-> be489d02d2 ("revision.c: --indexed-objects add objects from all
-> worktrees", 2017-08-23) breaks with split index mode in a similar
-> manner, not erroring out when it can't read the index, but instead
-> carrying on with pruning, without taking the index of the worktree into
-> account.
-> 
-> Fix this by passing an additional gitdir parameter to read_index_from,
-> to indicate where it should look for and read the shared index from.
-> 
-> read_cache_from() defaults to using the gitdir of the_repository.  As it
-> is mostly a convenience macro, having to pass get_git_dir() for every
-> call seems overkill, and if necessary users can have more control by
-> using read_index_from().
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-I'm not saying we need to change this again but I got to thinking about
-what the root cause for this bug is and I think it's a design flaw in
-how split index is implemented.  IIUC Split index is an index extension
-that can be enabled to limit the size of the index file that is written
-when making changes to the index.  It breaks the index into two pieces,
-index (which contains only changes) and sharedindex.XXXXX (which
-contains unchanged information) where 'XXXXX' is a value found in the
-index file.  If we don't do anything fancy then these two files live
-next to one another in a repository's git directory at $GIT_DIR/index
-and $GIT_DIR/sharedindex.XXXXX.  This seems to work all well and fine
-except that this isn't always the case and the read_index_from function
-takes this into account by enabling a caller to specify a path to where
-the index file is located.  We can do this by specifying the index file
-we want to use by setting GIT_INDEX_FILE.
+> +test_trace() {
+> +	local expected=3D"$1"
 
-Being able to specify an index file via the environment is a feature
-that has existed for a very long time (one that I personally think makes
-things difficult because of things like additions like the sharedindex)
-and I don't think was taken into account when introducing the split
-index extension.  In this case if i were to specify a location of an
-index file in my home directory '~/index' and be using the split index
-feature then the corresponding sharedindex file would live in my
-repository's git directory '~/project/.git/sharedindex.XXXXX'.  So the
-sharedindex file is always located relative to the project's git
-directory and not the index file itself, which is kind of confusing.
-Maybe a better design would be to have the sharedindex file located
-relative to the index file.
+Style: "test_trace () {" is how we start a shell function.
+Portability: we do not use "local".
 
-Anyway, some food for thought.
+> +	shift
+> +	GIT_TRACE=3D1 test-run-command "$@" run-command true 2>&1 >/dev/null =
+| \
+> +		sed 's/.* run_command: //' >actual &&
+> +	echo "$expected true" >expected &&
+> +	test_cmp expected actual
 
--- 
-Brandon Williams
+Consistency: everybody else in the test script contrasts "actual" vs
+"expect" (they happen to be of the same length ;-); don't say
+expectED just to be different.
+
+> +}
+> +
+> +test_expect_success 'GIT_TRACE with environment variables' '
+> +	test_trace "abc=3D1 def=3D2" env abc=3D1 env def=3D2 &&
+> +	test_trace "abc=3D2" env abc env abc=3D1 env abc=3D2 &&
+> +	test_trace "abc=3D2" env abc env abc=3D2 &&
+> +	abc=3D1 test_trace "def=3D1" env abc=3D1 env def=3D1 &&
+
+Portability: "VAR=3DVAL shell_function args..." does not work
+everywhere, unlike "VAR=3DVAL command args..." that exports the set of
+environment variables for just a single shot invocation of the
+command.
+
+Running this script with dash fails, even though bash does behave as
+you expect.
+
+> +	abc=3D1 test_trace "def=3D1" env abc env abc=3D1 env def=3D1 &&
+> +	test_trace "def=3D1" env non-exist env def=3D1 &&
+> +	test_trace "abc=3D2" env abc=3D1 env abc env abc=3D2 &&
+> +	abc=3D1 def=3D2 test_trace "unset abc def;" env abc env def &&
+> +	abc=3D1 def=3D2 test_trace "unset def; abc=3D3" env abc env def env a=
+bc=3D3 &&
+> +	abc=3D1 test_trace "unset abc;" env abc=3D2 env abc
+> +'
+
+Taking them together, here is what I'll be queuing on top to make
+today's push-out to pass the tests.
+
+Thanks.
+
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index e6208316c3..24c92b6cd7 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -141,26 +141,41 @@ test_expect_success 'run_command outputs ' '
+ 	test_cmp expect actual
+ '
+=20
+-test_trace() {
+-	local expected=3D"$1"
++test_trace () {
++	expect=3D"$1"
+ 	shift
+ 	GIT_TRACE=3D1 test-run-command "$@" run-command true 2>&1 >/dev/null | =
+\
+ 		sed 's/.* run_command: //' >actual &&
+-	echo "$expected true" >expected &&
+-	test_cmp expected actual
++	echo "$expect true" >expect &&
++	test_cmp expect actual
+ }
+=20
+ test_expect_success 'GIT_TRACE with environment variables' '
+ 	test_trace "abc=3D1 def=3D2" env abc=3D1 env def=3D2 &&
+ 	test_trace "abc=3D2" env abc env abc=3D1 env abc=3D2 &&
+ 	test_trace "abc=3D2" env abc env abc=3D2 &&
+-	abc=3D1 test_trace "def=3D1" env abc=3D1 env def=3D1 &&
+-	abc=3D1 test_trace "def=3D1" env abc env abc=3D1 env def=3D1 &&
++	(
++		abc=3D1 && export abc &&
++		test_trace "def=3D1" env abc=3D1 env def=3D1
++	) &&
++	(
++		abc=3D1 && export abc &&
++		test_trace "def=3D1" env abc env abc=3D1 env def=3D1
++	) &&
+ 	test_trace "def=3D1" env non-exist env def=3D1 &&
+ 	test_trace "abc=3D2" env abc=3D1 env abc env abc=3D2 &&
+-	abc=3D1 def=3D2 test_trace "unset abc def;" env abc env def &&
+-	abc=3D1 def=3D2 test_trace "unset def; abc=3D3" env abc env def env abc=
+=3D3 &&
+-	abc=3D1 test_trace "unset abc;" env abc=3D2 env abc
++	(
++		abc=3D1 def=3D2 && export abc def &&
++		test_trace "unset abc def;" env abc env def
++	) &&
++	(
++		abc=3D1 def=3D2 && export abc def &&
++		test_trace "unset def; abc=3D3" env abc env def env abc=3D3
++	) &&
++	(
++		abc=3D1 && export abc &&
++		test_trace "unset abc;" env abc=3D2 env abc
++	)
+ '
+=20
+ test_done
+--=20
+2.16.0-rc2-179-g03f5267cd7
+
