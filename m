@@ -2,143 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DE471F406
-	for <e@80x24.org>; Tue, 16 Jan 2018 02:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7B0E1F406
+	for <e@80x24.org>; Tue, 16 Jan 2018 03:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751333AbeAPCOx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 Jan 2018 21:14:53 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:38061 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750812AbeAPCOv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 Jan 2018 21:14:51 -0500
-Received: by mail-vk0-f68.google.com with SMTP id l63so8533094vke.5
-        for <git@vger.kernel.org>; Mon, 15 Jan 2018 18:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=32MjnmQNsgMdisFXxW4kS4Bgx6N2qSHQsF+UP5cQ3vo=;
-        b=WQwwN3BJKBWVGa5NS/mqOq3kOGgj/+YlfWxb1cHWOsDG7YnkL0rmC1ca0+o+kQXQG8
-         OMXQHatcI1X20fl9LQTivoEyv275NQs9PJN0oPH9Zoft7dspaiypI+7S3C3Njpt3I2S+
-         z09IB+ECqsyTnZRVs5d6RzMPxQEG9Axy5hObpgvTr8iDmKsu48Du3OIQ79f2K159ylLC
-         Ry7sSPFX7XylalMLeRrhhy7H95PHNpyh2IgjbKdnpyt9uqbkrok5XfyNZdDbrIBusxQS
-         tOwhtrG5U2y3nXE6UfT0BxjlBtj4e58mm3DpXaZ+tOggjwD5pMp1+A6Hod+NV4PKVpr+
-         DLYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=32MjnmQNsgMdisFXxW4kS4Bgx6N2qSHQsF+UP5cQ3vo=;
-        b=TH/8XLQbqzdT9KFvlWWHsqBXvz555cXdeJEXjrdSmCpXdiIPxqbLaBtk6kbzfqZIKr
-         jKRrzbQES+iAyggmo3NJdB6Ury9Tjp4lY8GwqpvfVOxVtJtXISOKv21EchrOyNrRWDBY
-         +9wnD2ga6rEEFaMcyHCgNdaqMApB9mqQoy86M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=32MjnmQNsgMdisFXxW4kS4Bgx6N2qSHQsF+UP5cQ3vo=;
-        b=JaxNPxCJgwln0QfisP049qotFe8/tr2sBAVZmdc7lhPCvKeyzQZ0ymnJk4J/4DRJFH
-         Ar/ZoSCjWL/XNSdn4U2zMnZF1PRhS8OXSIZJXvYod++CMPQ/vStvNd5u7QYgtn/gJ0Te
-         zmppweEh9Kc3tVuacVgyHRBUuXhu5hxLOtMkti9fRfZ8yH5WeQH8/qVMxMnrH2ePRBFE
-         oLl0fK0XK2RGoFdU5CJaTXYeagPFqmyifyCdEzuORzMJE4j18khdlDRA0OO89bDq0Up4
-         eDWQBoTFuJ8lxaGc2tdJYzq6eW3SeIxDakV3p60iVEE9rVjFlU/KLydBsVWVMFOnwTTf
-         EpmA==
-X-Gm-Message-State: AKwxytdpUBn/NpiqEfFXygijStbOyACk5bqFJpgDHQQ6yPlv9dzItk7D
-        t9n28DLtIo/DSzy13p7MkBruNvbnaYwUOqSFo9210g==
-X-Google-Smtp-Source: ACJfBoue21twQMLiHng6CWZbtpNJiagRiukDar9wxQBlHa7XaUAe+RKG2qDpTgEjy5ft5UvTu1r7/IWKKzKZ4ThYrR4=
-X-Received: by 10.31.254.201 with SMTP id l192mr13424624vki.153.1516068890461;
- Mon, 15 Jan 2018 18:14:50 -0800 (PST)
+        id S1751641AbeAPDBB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 Jan 2018 22:01:01 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58054 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751609AbeAPDA7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 15 Jan 2018 22:00:59 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 599786052F;
+        Tue, 16 Jan 2018 03:00:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1516071657;
+        bh=MebRLYmZjtQNEu+RgyBIiadvpOh6AfEXk/gRyGbFEl4=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hURhh+SmlrNpLB10bTpOImY0CxMb3WB078P4vYYp6XKLAxn9SOhwcis6t6RpfjPFP
+         yR9z17Z++dRWE0lPIP1J7eZXm5EGYYib+7gM4zmryu4GcnH7BXfWP9JEYK+zXhXABn
+         mWkhVsWUnNoyZ4VHxxdqEBM+HYiSCqvRO83zJwYhQcoTKczZwe5LG2vgzeU92bFewL
+         jySlk3tQzWMj3u1ArUrZEg41qokB34U5mU86bgG+NMT4qkOH1wA1uAJK/1FKgow9pl
+         Ven5cVufwyTFF9gD0WUTQ+XMGqhf3iQgmHKPfqdxqKoN2RmK0dlp1H9wDsMMpStxxX
+         ygqcPr8+bblwGofG279dgw5xbguuq6k1ie0kq7ZtHhK/AiqqfOiM6LkQUkB/n6MNyB
+         kXJ+F6hASaMsa2BOvfDgl72guaKek1S8VcQhYXIE0JRIwDbnfnfb1x46FRgNQVPW5+
+         xRXaqNHtMSs+c/KWdUMy0e9/AkbrBTO3ehXc9FaZ7yOZqte4zI1
+Date:   Tue, 16 Jan 2018 03:00:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Johannes Sixt' <j6t@kdbg.org>, git@vger.kernel.org,
+        'Joachim Schmitz' <jojo@schmitz-digital.de>
+Subject: Re: [BUG] test_must_fail: does not correctly detect failures - Was
+ Git 2.16.0-rc2 Test Summary on NonStop
+Message-ID: <20180116030051.GA244260@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Johannes Sixt' <j6t@kdbg.org>, git@vger.kernel.org,
+        'Joachim Schmitz' <jojo@schmitz-digital.de>
+References: <004a01d38cab$705262a0$50f727e0$@nexbridge.com>
+ <001a01d38d57$d36c7d10$7a457730$@nexbridge.com>
+ <59d3adab-4a95-4ef5-2d8f-ef4c7b797156@kdbg.org>
+ <004a01d38d7f$3306e810$9914b830$@nexbridge.com>
+ <007901d38da9$d517e9e0$7f47bda0$@nexbridge.com>
+ <499fb29f-ca34-8d28-256d-896107c29a3e@kdbg.org>
+ <001b01d38e0c$ba16e250$2e44a6f0$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.159.37.66 with HTTP; Mon, 15 Jan 2018 18:14:30 -0800 (PST)
-In-Reply-To: <87tvvmiqn7.fsf@evledraar.gmail.com>
-References: <CACi5S_39wNrbfjLfn0xhCY+uewtFN2YmnAcRc86z6pjUTjWPHQ@mail.gmail.com>
- <87tvvmiqn7.fsf@evledraar.gmail.com>
-From:   Michael Giuffrida <michaelpg@chromium.org>
-Date:   Mon, 15 Jan 2018 18:14:30 -0800
-X-Google-Sender-Auth: 75pnYSXbSGZWUFzVvgOeG7oEc2g
-Message-ID: <CACi5S_33F7VVRYiBOQsxgg_ZPOg9ZvhLZ26bStYWiq7n96aeug@mail.gmail.com>
-Subject: Re: [BUG] git remote prune removes local tags, depending on fetch config
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org,
-        Michael Schubert <mschub@elegosoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="LQksG6bCIzRHxTLp"
+Content-Disposition: inline
+In-Reply-To: <001b01d38e0c$ba16e250$2e44a6f0$@nexbridge.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-5-amd64)
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just to confirm, you're talking about the behavior of removing *all*
-tags that aren't found on the remote? (Not just tags that used to be
-on some remote, but have since been removed from that remote.) So,
-with your proposed workflow, you would never create your own tags
-locally, without pushing them to the remote before running `git fetch`
--- otherwise they would simply be deleted.
 
-It doesn't seem like a useful feature -- you wouldn't expect `git
-fetch --prune` to remove your local branches that you were developing
-on, right?
+--LQksG6bCIzRHxTLp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 15, 2018 at 4:38 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Mon, Jan 15 2018, Michael Giuffrida jotted:
->
->> `git remote prune <name>` should "delete all stale remote-tracking
->> branches under <name>". I was surprised to discover, after some
->> troubleshooting, that it also deletes *all* local tags that don't
->> exist on the remote, if the following refspec is included in the
->> remote's fetch config:
->>
->>     +refs/tags/*:refs/tags/*
->>
->> So, if `remote.origin.fetch` is configured to fetch all tags from the
->> remote, any tags I create locally will be deleted when running `git
->> remote prune origin`. This is not intuitive [1], nor is is it
->> explained in the docs [2]. Is this behavior obvious to someone with a
->> better understanding of Git internals?
->>
->> I did find a better way to automatically fetch tags (using tagopt
->> instead of adding the fetch refspec). However, the refspec doesn't
->> seem "wrong" in itself; in particular, `git fetch --tags` used to be
->> considered equivalent to specifying the refspec
->> "refs/tags/*:refs/tags/*" -- implying that this is a sensible refspec
->> [3]. So I wouldn't expect it to "break" the behavior of another
->> command.
->>
->> [1] https://stackoverflow.com/q/34687657/1327867
->> [2] https://git-scm.com/docs/git-remote.html#git-remote-empruneem
->> [3] https://github.com/git/git/commit/c5a84e92a2fe9e8748e32341c344d7a6c0=
-f52a50
->
-> These docs are really confusing, but it is working as intended, and
-> really should be re-documented.
->
-> The `git remote prune` subcommand just ends up piggy-backing on
-> git-fetch, whose behavior is explained here:
-> https://git-scm.com/docs/git-fetch.html#git-fetch---prune
->
-> It's worked this way since at least v1.8.5.6, maybe at some distant
-> point in the past it only did this for branches when invoked via
-> git-remote as the documentation says.
->
-> RELATED:
->
-> I've actually had the reverse problem with this. I want some way to turn
-> this behavior on without explicitly hacking the refspec, so I can do it
-> globally in /etc/gitconfig or in ~/.gitconfig without screwing with the
-> config of each checkout on certain machines.
->
-> You can set fetch.prune=3Dtrue, but that only prunes the branches, you
-> need to inject remote.origin.fetch into each checkout, unless I've
-> missed some way of doing this.
->
-> I wanted to add fetch.pruneTags that would make it as if you had
-> refs/tags/*:refs/tags/* in the fetch spec, but I haven't hacked that up
-> yet, if anyone can see any inherent issue with that plan I'd like to
-> know about it.
+On Mon, Jan 15, 2018 at 09:25:37AM -0500, Randall S. Becker wrote:
+> On January 15, 2018 2:06 AM, Johannes Sixt wrote:
+> > I take "die exits with non-zero" as a piece of information for the
+> > *users* so that they can write "if perl foo.pl; then something; fi" in =
+shell
+> > scripts. I do *not* interpret it as leeway for implementers of perl to =
+choose
+> > any random value as exit code. Choosing 162 just to be funky would be
+> > short-sighted. [I'm saying all this without knowing how perl specifies =
+'die'
+> > beyond the paragraph you cited. Perhaps there's more about 'die' that
+> > justifies exit code 162.] I'd say that the perl port is broken.
+>=20
+> I agree that 162 is wrong. Its interpretation is 128+signal, which
+> clearly does not happen in this case. On the platform, if the perl
+> script is via stdin, 162 or 169 are returned. If via file (perl
+> file.pl), 255 comes back. The port has issues. I have an opened a bug
+> report with the platform developers. Usual non-Open Source timeframes
+> to fix apply. =E2=98=B9
+
+I believe the standard behavior for Perl with die is the following:
+
+exit $! if $!;
+exit $? >> 8 if $? >> 8;
+exit 255; # otherwise
+
+Is there an errno value on your port that matches 162?  Maybe EBADF?
+
+On Linux, I get the following:
+
+genre ok % printf die | perl -; echo $?
+Died at - line 1.
+9
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--LQksG6bCIzRHxTLp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpdauMACgkQv1NdgR9S
+9ovP7hAAtB8dh50VcyijKr4YJ9zokvu8sZX/H1yRTQc2xT2z6KS/NrvBucpCFqEH
+7Wvd+n2UAXx7RTSus0tRitYgs2zaOLStXO8eyYQYxPc2spjoxw27739s909xuTVa
+X2f7TFlf161UR0EJUFqHh8UGJ5I2r+DokjqDz6lQeo27qzVYM+/QfRAeQwfgkTYU
+8tjJQF7ApfQ/wTNTgP/xI6rdKo9k7wEl5rNSox4Ts6b7j56prWE4cNgkX5vLNHl+
+nqrwNdlwb2EdSZ7Rc3rha25Pu12k+zrD2xx6NOOmfGoq3l8QvxiEDN7VmopAoTWp
+/bl1r5YfimAgW5xYFvVHZRw3nqJOSO5QexrfUZUTTBqD4xqnmahcdUVqo3M3KPyQ
+QWDfQw1urvz370JKYL87zlx2xeYw1XrIbBsxIGG8nTyFZNLnwRzVpOIFcj/19qEj
+vBdnwBBbo9xu87fZ9bIPIXntz3fmOVi+tr7wTKy0UdMCeVy3X36iz97TibKZ1Z/7
+icDWbHS0J+0kg/TeKwUiCjzcU5nHGRO2EIhRTvqrNuCkNwch4auW9Gi+hD+Bddse
+wXsV+cVW4lkvIOQLsAVhXCuwXy3xqrs20F8hWkVRw4VXfp54mC3QrI9DjcoT5sC0
+oG0pnbh5OpFmgFSaiJPKJq5aLL7T+V3BHlOBSpSysoKzE6RDmQY=
+=zWGp
+-----END PGP SIGNATURE-----
+
+--LQksG6bCIzRHxTLp--
