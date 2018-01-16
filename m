@@ -2,117 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 316941F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 19:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 554DC1F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 19:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751347AbeAPTGs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 14:06:48 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56525 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751070AbeAPTGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 14:06:47 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7306FD61A2;
-        Tue, 16 Jan 2018 14:06:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=R4knFSipHEAc
-        B5vi9ejlaeg5GT0=; b=OafzqriC48UYffzYNU1EGwRs9/szCclI1MIXyqE/j9Ue
-        fOIyNyzzfNQKacrURbrFtFEhxr6i9mlXItBV9vO9FqTiw8F6Jr/zpVP4KZ7Ok9OB
-        PhkjFP+8w7/HYuI7qeCotY9YehrmNlMXnHew1EElqVr9fMT1mVlwTCI/M7VVVzw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=aSz+UD
-        5SYqCivRCMmZkXYvGLD+o8QICn1v12hSyzrV3V+8FF+sWH7+WK7ZhKK5vv3eVato
-        FdFXi6o0eMA6RKYEIPbctLLN50t7L2SkeFfQxk4m9voEcl/UyW9a+1fOmGtyIC5Y
-        c1jJ4URpGeaHGzQwaea/ejEKHwXdHEzg+hnFk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 68B26D61A1;
-        Tue, 16 Jan 2018 14:06:46 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C6EF8D61A0;
-        Tue, 16 Jan 2018 14:06:45 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff.c: flush stdout before printing rename warnings
-References: <20180116092349.11330-1-pclouds@gmail.com>
-Date:   Tue, 16 Jan 2018 11:06:44 -0800
-In-Reply-To: <20180116092349.11330-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Tue, 16 Jan 2018 16:23:49 +0700")
-Message-ID: <xmqqd129vd17.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751666AbeAPTXH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 14:23:07 -0500
+Received: from mail-pl0-f51.google.com ([209.85.160.51]:34874 "EHLO
+        mail-pl0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbeAPTXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 14:23:06 -0500
+Received: by mail-pl0-f51.google.com with SMTP id b96so6911991pli.2
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 11:23:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QCSrcvGvPcpZqz16AwPhZiRpSg7cJx0uOxwEGupRcmU=;
+        b=n7qJDEO1erDYe4cD0w2S4Ncax6YAnZuNNuTJXRXNkmLAcQJnGZToDcnpuRQHDZoxeL
+         O/17Ct0aWLMzHWE3S4/13Fdv6lkYOwbfjCEk7M/bKKLTIZXam0RqQ27FSLqNhDKIjNFL
+         5/HtsSSW6JCHWCoe57B6hu8QZq3Kgj/lshlTvm7jVTgqnKiNq3mH6aur3KumeTOLGafO
+         khLEt92TphfSLlw7W/n+Q6YbMzogN44vksRFJNaBqTodQTwRoP7Dz0+9WjXiNMnMAiHW
+         1MUN+5Cmvi19nYu+aV73sv25sJm4N549xwT/g/jARSBA36BLDXx5HmFXBKj3hDidSDra
+         g9pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QCSrcvGvPcpZqz16AwPhZiRpSg7cJx0uOxwEGupRcmU=;
+        b=VePDUOViN/+M5dF5hfj4p1Xt2NDt0aLMxMH73ArJBm7rt5rXvW6sBl3eyV+YqbDdMt
+         hLHiak4bAfohfBHCSPeFZ2pYdpWyuTSZeDwwRfgP1mzx9ki4jHSI7+OiOtktCWVdBK/9
+         TvofQHTHD/LGBWkANl0zQW8LHvb8CzvMUkJ4Z0Xv2UkSCZNCxYS1rPoErlUronYJA3DD
+         bu8/MYrCHKQd8MgVlSkS3qHffNlUenJbp7cpQVfNsLzmRhT1hmMsjuhx2zol0EVYlov9
+         0BNF614GAVAkneQ9jtIxV02qgklChkWUMCvGZoibKh0myQejd5ibLTwqlMyOhE4Kx6bd
+         NM5A==
+X-Gm-Message-State: AKGB3mJj6ur4IeGPKIY3sI+HivPR+DzsQCOc2/7pgwSJYJCqAg4fvWJB
+        WHNaAhnVK+HUcYDsfUiUbQmbGw==
+X-Google-Smtp-Source: ACJfBovBMZAiAmUZy7mgJSizGJusZiio5QuXlFTlNDwNlP7oDBHC/bAOngPlzPs/fupCRlKQPLdgBg==
+X-Received: by 10.159.218.151 with SMTP id w23mr31453398plp.100.1516130586198;
+        Tue, 16 Jan 2018 11:23:06 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:f523:b526:bbca:bb86])
+        by smtp.gmail.com with ESMTPSA id k90sm5054897pfk.171.2018.01.16.11.23.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 16 Jan 2018 11:23:05 -0800 (PST)
+Date:   Tue, 16 Jan 2018 11:23:03 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, stolee@gmail.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH 12/26] ls-refs: introduce ls-refs server command
+Message-ID: <20180116192303.GC135179@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180103001828.205012-13-bmwill@google.com>
+ <20180109125025.6c88700e6e00e45822ee8932@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6564DA22-FAF0-11E7-A160-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180109125025.6c88700e6e00e45822ee8932@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On 01/09, Jonathan Tan wrote:
+> On Tue,  2 Jan 2018 16:18:14 -0800
+> Brandon Williams <bmwill@google.com> wrote:
+> 
+> > +  symrefs: In addition to the object pointed by it, show the underlying
+> > +	   ref pointed by it when showing a symbolic ref.
+> > +  peel: Show peeled tags.
+> > +  ref-pattern <pattern>: When specified, only references matching the
+> > +			 given patterns are displayed.
+> 
+> I notice "symrefs" being tested in patch 13 and "ref-pattern" being
+> tested in patch 16. Is it possible to make a test for "peel" as well?
+> (Or is it being tested somewhere I didn't notice?)
 
-> The diff output is buffered in a FILE object and could still be
-> partially buffered when we print these warnings (directly to fd 2).
-> The output is messed up like this
->
->  worktree.c                                   |   138 +-
->  worktree.h        warning: inexact rename detection was skipped due to=
- too many files.
->                            |    12 +-
->  wrapper.c                                    |    83 +-
->
-> It gets worse if the warning is printed after color codes for the graph
-> part are already printed. You'll get a warning in green or red.
->
-> Flush stdout first, so we can get something like this instead:
->
->  xdiff/xutils.c                               |    42 +-
->  xdiff/xutils.h                               |     4 +-
->  1033 files changed, 150824 insertions(+), 69395 deletions(-)
-> warning: inexact rename detection was skipped due to too many files.
+Really good suggestion.  I'll introduce unit tests for both the
+git-serve cmdline as well as for more simple server commands (ls-refs).
 
-The patch sort-of makes sense, and I am not sure if any of the
-issues that show rooms for potential improvements I'll mention are
-worth doing.
-
- - This matters only when the standard output and the starndard error
-   are going to the same place.  It also would be conceptually nicer to
-   flush stderr as well even though it is by default not fully
-   buffered.
-
- - Also this function can take two bools and gives a warning that
-   potentially cause the issue three out of four combinations, so one
-   out of four cases we would be unnecessarily flushing.
-
-
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> ---
->  diff.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/diff.c b/diff.c
-> index fb22b19f09..5545c25640 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -5454,6 +5454,7 @@ N_("you may want to set your %s variable to at le=
-ast "
-> =20
->  void diff_warn_rename_limit(const char *varname, int needed, int degra=
-ded_cc)
->  {
-> +	fflush(stdout);
->  	if (degraded_cc)
->  		warning(_(degrade_cc_to_c_warning));
->  	else if (needed)
+-- 
+Brandon Williams
