@@ -2,43 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,PYZOR_CHECK,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67A831F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 15:21:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9F01F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 17:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbeAPPVX convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 16 Jan 2018 10:21:23 -0500
-Received: from host119-8-237-212.serverdedicati.aruba.it ([212.237.8.119]:39514
-        "EHLO host.aruba.it" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750892AbeAPPVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 10:21:22 -0500
-X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Jan 2018 10:21:22 EST
-Received: from nadneaa1.miniserver.com (nadneaa1.miniserver.com [78.31.104.223])
-        by host.aruba.it (Postfix) with ESMTPA id F34D767243
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 16:11:54 +0100 (CET)
+        id S1751118AbeAPRLx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 12:11:53 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:46216 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750885AbeAPRLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 12:11:52 -0500
+Received: by mail-wm0-f47.google.com with SMTP id 143so9783412wma.5
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 09:11:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=3OxfLM/+udIBIVYyha60CWo99AwciLRIGUC3AuD0rl4=;
+        b=DrTiNMuolCxdKHM3NaZ6vkV2QCOXw1GQTW+PjhDsj8frYmV4h+6Z6dmrsTuSSu0HAc
+         q7qlRglEhYIcDQ040iEevP9qwoAiuqbUy+SF5fs3UKjXEjg/K05MoU03V5V9RqYkJKRK
+         2aItXk0m/K9zdevCl+BrUXLVqwELmmuenO8i1jhjXj6wsPXl9VfmIlBjPXnGrC114wr0
+         nxpPIacnQ6Ycd2N8YXSmT4vrni4sm1A+G0qoyKRTfFV/eg+p1vlvDC86RPuO6/fijt0Y
+         NXnQgSIY881ASK8yvD7PIWh+13C8KDfNA5Mw3bPaqiw1DprgcAt+Q+p+GB6yVC9J2Hlb
+         9WUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=3OxfLM/+udIBIVYyha60CWo99AwciLRIGUC3AuD0rl4=;
+        b=aym5QZtTQts/sTfuCfDlaehaI6gaOfJPtzhYVB7JCJtX1jK9RAyJsr4+JA6AXg13OP
+         XYOpSlCeeI5qnHPiV/dhTt0xaKejlKxfhHqZIN5TdDMiSOIXjfRaqyhXGvAsTdMvwwpa
+         hsLdheaHLbkLVHDwOAntYY5UDdkYbFXk+k8S49xR5CS7ssdNGuMgA2x+J1zTzA2m8cts
+         ZiFvsdI11q2Dl1p77rfPgiVI2osXLkjmQQq7JXiRluwmn4u8GqlfGP3SAERPX0TwKfQI
+         kYZ4tOm45Rcn4ojTC/UFhJVJkktnKCytJOh+zPVg741AuvYGUkhcojFVwg+Q/0dvv6Sk
+         qWgw==
+X-Gm-Message-State: AKwxytfF4xzjm/XL6c+VybhrwNe9PNdTT69pRMk/HApLDCjZWGmqaSXJ
+        vrVYx8yd+uXElM0SS8cpEJs=
+X-Google-Smtp-Source: ACJfBovOj3nkPVtKbFMXR4hoFWIRWPJLz9q8C8BIuv1PxNGTvFAUZqQCW6jM9AQUaAKpgBQc0iaZPA==
+X-Received: by 10.28.12.14 with SMTP id 14mr15099628wmm.121.1516122711166;
+        Tue, 16 Jan 2018 09:11:51 -0800 (PST)
+Received: from localhost.localdomain (x4db03624.dyn.telefonica.de. [77.176.54.36])
+        by smtp.gmail.com with ESMTPSA id n74sm20600383wmi.1.2018.01.16.09.11.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 16 Jan 2018 09:11:50 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] describe: use strbuf_add_unique_abbrev() for adding short hashes
+Date:   Tue, 16 Jan 2018 18:11:30 +0100
+Message-Id: <20180116171130.16568-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.0.rc2.74.g1e1541f18
+In-Reply-To: <422ae05b-6541-38f3-7638-4bee1b766d91@web.de>
 MIME-Version: 1.0
-From:   "Peter Deng" <peterddengg@aruba.com>
-Reply-To: peterddengg@aruba.com
-To:     git@vger.kernel.org
-Subject: Did you get my last email
-Content-Type: text/plain
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Smart_Send_3_1_6
-Date:   Tue, 16 Jan 2018 15:12:02 +0000
-Message-ID: <25163950865602050431162@nadneaa1>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there, I sent you an email a few days with a proposal that I think you will be interested in because it is of mutual benefit. Did you receive the email? I am not if you got it because I did not receive a reply from you and my mailbox has been acting up lately. Could you please reply me directly on my private mailbox: peterddeng2000@secsuremailer.com and let me know if you got the proposal and if you are interested in working with me to accomplish the proposed project.
+> Patch generated by Coccinelle (and contrib/coccinelle/strbuf.cocci).
 
-I await your response on my private mailbox above.
+Interesting.
 
-Regards,
+The static analysis build job on Travis CI runs 'make coccicheck', so
+it should have caught this.  However, I've looked at more build job
+results than I could count while working on some Travis CI related
+patches in the last few weeks, but I've never noticed Coccinelle
+proposing anything.
 
-Peter.
-peterddeng2000@secsuremailer.com
+Now I see that Coccinelle's, and in turn 'make coccicheck's exit code
+only indicates that Coccinelle managed to finish without any errors
+(e.g. no wrong --options, missing files or whatnot), but it has
+nothing to do with whether it found something to transform or not.  To
+find out the latter, we have to check the resulting
+'contrib/coccinelle/*.cocci.patch' files or look closer at 'make
+coccicheck's standard output.  If any of those '*.cocci.patch' files
+are not empty and make's output contains lines like:
+
+  SPATCH result: contrib/coccinelle/strbuf.cocci.patch
+
+then Coccinelle found something.
+
+Well, OK, I think that might be an acceptable behavior for developers
+running 'make coccicheck' themselves, but totally unsuitable for
+automated Travis CI build jobs, because it doesn't draw our attention
+to Coccinelle's findings.  And the only means to draw attention in
+an automated setting is to fail the buid job.
+
+Good, I quickly whipped up a patch to fail the build job if any of the
+resulting '*.cocci.patch' files are not empty and also to include
+their content in the trace log, to see how that would work out, and...
+
+> "make coccicheck" doesn't propose any other changes for current master.
+
+... and found that 'make coccicheck' on Travis CI _does_ propose
+further changes for current master.  You can find the build job's
+output including those proposed changes here:
+
+  https://travis-ci.org/szeder/git/jobs/329296813#L586
+
+The proposed changes coming from 'array.cocci' are replacing memmove()
+calls with MOVE_ARRAY().  After a (very) cursory look they all seem to
+make sense to me; at least after applying those changes Git can be
+built and the test suite still succeeds.
+
+Unfortunately, most of the changes coming from 'strbuf.cocci' don't
+make any sense, they appear to be the mis-application of the "use
+strbuf_addstr() instead of strbuf_addf() to add a single string" rule:
+
+  -             strbuf_addf(&sb_repo, "%d", counter);
+  +             strbuf_addstr(&sb_repo, counter);
+
+It seems that those rules need some refinement, but I have no idea
+about Coccinelle and this is not the time for me to dig deeper.
+
+What makes all this weird is that running 'make coccicheck' on my own
+machine doesn't produce any of these additional proposed changes, just
+like at René's.  Can it be related to differing Coccinelle versions?
+Travis CI installs 1.0.0~rc19.deb-3; I have 1.0.4.deb-2.
+
+
+Gábor
+
