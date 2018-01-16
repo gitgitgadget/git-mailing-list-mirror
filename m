@@ -2,87 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3FC61F404
-	for <e@80x24.org>; Tue, 16 Jan 2018 19:32:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEE431F404
+	for <e@80x24.org>; Tue, 16 Jan 2018 19:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751693AbeAPTcp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 14:32:45 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65415 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751280AbeAPTco (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 14:32:44 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC9F5CD5B7;
-        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tPugntVks4duSBfide1dWF3p3dY=; b=u6NBYA
-        kLbM20eeqgmeUzlRefinq/p+X9exuX9VbDQec8FugaLE8mXULNJ3XHnPQQM62vhu
-        akT284LCxEl7fRRPgaqj6rpzbr4yrgYDu5fEY81c1iYi70XEwC9+cST7R/M2AP7b
-        SQJefrduVwH+5k3/P2djIJaF0NhRknbv00J/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=tiB/Oq0cojWdAuOA9nppu0+iI7eFjQpg
-        6k9e8OjI1qjKYyOiZ5Mua57CLfSsTD5P5iosEkjE/Xgb7A7Wrc4z1J33SBqsOQTG
-        PvI7wlWIouwjC3qDQOs1j2VZhqSn7DGi0BHtqAJ1fn9HLTVZzZN7LMwottmuQceT
-        eeq3JvRx/zU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4CF8CD5B6;
-        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 242A0CD5B5;
-        Tue, 16 Jan 2018 14:32:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v3 0/2] Incremental rewrite of git-submodules
-References: <20180111201721.25930-1-pc44800@gmail.com>
-        <20180114211529.6391-1-pc44800@gmail.com>
-Date:   Tue, 16 Jan 2018 11:32:41 -0800
-In-Reply-To: <20180114211529.6391-1-pc44800@gmail.com> (Prathamesh Chavan's
-        message of "Mon, 15 Jan 2018 02:45:27 +0530")
-Message-ID: <xmqq4lnlvbty.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 05A34AAC-FAF4-11E7-80B7-575F0C78B957-77302942!pb-smtp2.pobox.com
+        id S1751434AbeAPTiz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 14:38:55 -0500
+Received: from sif.is.scarlet.be ([193.74.71.28]:65068 "EHLO sif.is.scarlet.be"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750898AbeAPTix (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 14:38:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
+        s=scarlet; t=1516131511;
+        bh=4FT8YWXL0JkER8LpHYHgsy7Fsrx9jug/eJDcsz2cCY4=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=mOWUL9TzfKNRtJrSNMLBnbJlKYgx3vD/9m/ad346vxckmNihIGZ3ZAUaY+Wc8iyd7
+         dAP9NkEsTOkj5baI5DBhAEUnOVRbGFXxhrBdpBFEH7GsC52plPfAdy+p7nTcqe8xVf
+         f6hZoEgpuFtl1gzMob06XmIZ+qojD0UnROvbkqmE=
+Received: from localhost.localdomain (ip-62-235-174-105.dsl.scarlet.be [62.235.174.105])
+        by sif.is.scarlet.be (8.14.9/8.14.9) with ESMTP id w0GJcTHh014346
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT);
+        Tue, 16 Jan 2018 20:38:30 +0100
+X-Scarlet: d=1516131510 c=62.235.174.105
+From:   Kim Gybels <kgybels@infogroep.be>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Kim Gybels <kgybels@infogroep.be>
+Subject: [PATCH v3] packed_ref_cache: don't use mmap() for small files
+Date:   Tue, 16 Jan 2018 20:38:15 +0100
+Message-Id: <20180116193815.4568-1-kgybels@infogroep.be>
+X-Mailer: git-send-email 2.15.1.windows.2
+In-Reply-To: <20180115235251.GA21900@sigill.intra.peff.net>
+References: <20180115235251.GA21900@sigill.intra.peff.net>
+X-DCC-scarlet.be-Metrics: sif 20002; Body=6 Fuz1=6 Fuz2=6
+X-Virus-Scanned: clamav-milter 0.98.1-exp at sif
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prathamesh Chavan <pc44800@gmail.com> writes:
+Take a hint from commit ea68b0ce9f8 (hash-object: don't use mmap() for
+small files, 2010-02-21) and use read() instead of mmap() for small
+packed-refs files.
 
-> Changes in v3:
->
-> * For the variables: super_config_url and sub_origin_url, xstrdup() was used
->   while assigning "" to them, before freeing.
->
-> * In case of the function deinit_submodule, since the orignal code doesn't die
->   upon failure of the function mkdir(), printf was used instead of die_errno.
->
-> As before you can find this series at:
-> https://github.com/pratham-pc/git/commits/patch-series-2
->
-> And its build report is available at:
-> https://travis-ci.org/pratham-pc/git/builds/
-> Branch: patch-series-2
-> Build #197
->
-> Prathamesh Chavan (2):
->   submodule: port submodule subcommand 'sync' from shell to C
->   submodule: port submodule subcommand 'deinit' from shell to C
->
->  builtin/submodule--helper.c | 340 ++++++++++++++++++++++++++++++++++++++++++++
->  git-submodule.sh            | 112 +--------------
->  2 files changed, 342 insertions(+), 110 deletions(-)
+This also fixes the problem[1] where xmmap() returns NULL for zero
+length[2], for which munmap() later fails.
 
-Looks sensible.  Thanks.
+Alternatively, we could simply check for NULL before munmap(), or
+introduce xmunmap() that could be used together with xmmap(). However,
+always setting snapshot->buf to a valid pointer, by relying on
+xmalloc(0)'s fallback to 1-byte allocation, makes using snapshots
+easier.
+
+[1] https://github.com/git-for-windows/git/issues/1410
+[2] Logic introduced in commit 9130ac1e196 (Better error messages for
+    corrupt databases, 2007-01-11)
+
+Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+---
+
+Change since v2: removed separate case for zero length as suggested by Peff,
+ensuring that snapshot->buf is always a valid pointer.
+
+ refs/packed-backend.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index dab8a85d9a..b6e2bc3c1d 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -455,6 +455,8 @@ static void verify_buffer_safe(struct snapshot *snapshot)
+ 				 last_line, eof - last_line);
+ }
+ 
++#define SMALL_FILE_SIZE (32*1024)
++
+ /*
+  * Depending on `mmap_strategy`, either mmap or read the contents of
+  * the `packed-refs` file into the snapshot. Return 1 if the file
+@@ -489,21 +491,17 @@ static int load_contents(struct snapshot *snapshot)
+ 		die_errno("couldn't stat %s", snapshot->refs->path);
+ 	size = xsize_t(st.st_size);
+ 
+-	switch (mmap_strategy) {
+-	case MMAP_NONE:
++	if (size <= SMALL_FILE_SIZE || mmap_strategy == MMAP_NONE) {
+ 		snapshot->buf = xmalloc(size);
+ 		bytes_read = read_in_full(fd, snapshot->buf, size);
+ 		if (bytes_read < 0 || bytes_read != size)
+ 			die_errno("couldn't read %s", snapshot->refs->path);
+ 		snapshot->eof = snapshot->buf + size;
+ 		snapshot->mmapped = 0;
+-		break;
+-	case MMAP_TEMPORARY:
+-	case MMAP_OK:
++	} else {
+ 		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 		snapshot->eof = snapshot->buf + size;
+ 		snapshot->mmapped = 1;
+-		break;
+ 	}
+ 	close(fd);
+ 
+-- 
+2.15.1.windows.2
 
