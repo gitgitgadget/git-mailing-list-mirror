@@ -7,102 +7,190 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9831F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 19:04:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E651D1F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 19:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750948AbeAQTEg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 14:04:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54001 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750853AbeAQTEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 14:04:35 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D805BD6E5;
-        Wed, 17 Jan 2018 14:04:34 -0500 (EST)
+        id S1752100AbeAQTFV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 14:05:21 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51067 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750830AbeAQTFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 14:05:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8ACA8C77C7;
+        Wed, 17 Jan 2018 14:05:19 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=TsRtDzV1YSK29pJIqeUQDHhcEII=; b=i9TqQW
-        AnapT87BrOg8KUkHpnNI1kmoS0SavmwNtrHct3TUnPHuyc1aUmxHAxJkvkJ8bHuA
-        i8QmhcllLPDN1HgXL+uLk5TAD7yeCmm1GzEU47iiVBCP1iJAb5f3/cgwhEnwYgIn
-        Zgt5UfxRGd5ARyU4gsxe52Ne6wfkQFOelz6eQ=
+        :content-type; s=sasl; bh=u8HkbzS4/9Ucwd0lQzkC+rG2TCw=; b=skYwxd
+        PDQYgQvH2sAVYk0q2J5W0yi2EIsTJcBk/RP99xaJyQqJG49MfgdO1n+I5wjEogq1
+        zq1xEncJmLmf7IMR/qkP5k9Ksocu38e3pFG4qn21JMAM2kY7xk956B37PZu2CEJp
+        QoSVCxUVcVp5CKTkzuVnqIWcKfBbc+Vdk6zXw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nvNnEsANLP/+8SNRwi3rGbTqXH+Vxzxh
-        I4uo2Z3e7CFoj2M0n132USrdpoy2RxoDuHop7XSmx9qa7LLRu4A09ndxeF3T9dI5
-        gd9733oiF3LZhPT7dofqSHzauTIMKiVUCqRnY9ZN0OcNwvcegCqaFE5fhrhJSN6t
-        j1F/lGfkX4E=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 749B7BD6E4;
-        Wed, 17 Jan 2018 14:04:34 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Vbmam2kigWUssn4pRu98hptL4ekF8hDG
+        arGEiY2/DPEI9OguicHn9nE71YBC/n113ShE1zgh2jPTMWbNVv7L7v8RtVoDhQTZ
+        E+nRzk+ZRhKHLsg3XLfbA7At9tkOPcwGPU8ME2DC21i75HkqxNuAcSv1gC8NEV3i
+        3hMiqX1n9kc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70BA3C77C6;
+        Wed, 17 Jan 2018 14:05:19 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D7083BD6E1;
-        Wed, 17 Jan 2018 14:04:33 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC40FC77C5;
+        Wed, 17 Jan 2018 14:05:18 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christoph Hellwig <hch@lst.de>
-Cc:     git@vger.kernel.org, linux-fsdevel@vger.kernel.org
-Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-References: <20180117184828.31816-1-hch@lst.de>
-Date:   Wed, 17 Jan 2018 11:04:32 -0800
-In-Reply-To: <20180117184828.31816-1-hch@lst.de> (Christoph Hellwig's message
-        of "Wed, 17 Jan 2018 19:48:28 +0100")
-Message-ID: <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
+To:     Christian Ludwig <chrissicool@googlemail.com>
+Cc:     git@vger.kernel.org, Christian Ludwig <chrissicool@gmail.com>
+Subject: Re: [PATCH v2 1/2] send-email: Rename variable for clarity
+References: <20180117180801.31049-1-chrissicool@gmail.com>
+Date:   Wed, 17 Jan 2018 11:05:17 -0800
+In-Reply-To: <20180117180801.31049-1-chrissicool@gmail.com> (Christian
+        Ludwig's message of "Wed, 17 Jan 2018 19:08:00 +0100")
+Message-ID: <xmqq8tcws3v6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 412B2228-FBB9-11E7-B984-575F0C78B957-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5BF6FE38-FBB9-11E7-A268-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christoph Hellwig <hch@lst.de> writes:
+Christian Ludwig <chrissicool@googlemail.com> writes:
 
-> fsync is required for data integrity as there is no gurantee that
-> data makes it to disk at any specified time without it.  Even for
-> ext3 with data=ordered mode the file system will only commit all
-> data at some point in time that is not guaranteed.
+> The SMTP protocol has both, the 'Reply-To' and the 'In-Reply-To' header
+> fields. We only use the latter. To avoid confusion, rename the variable
+> for it.
+>
+> Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
+> ---
 
-It comes from this one:
+Makes sense.
 
-commit aafe9fbaf4f1d1f27a6f6e3eb3e246fff81240ef
-Author: Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed Jun 18 15:18:44 2008 -0700
-
-    Add config option to enable 'fsync()' of object files
-    
-    As explained in the documentation[*] this is totally useless on
-    filesystems that do ordered/journalled data writes, but it can be a
-    useful safety feature on filesystems like HFS+ that only journal the
-    metadata, not the actual file contents.
-    
-    It defaults to off, although we could presumably in theory some day
-    auto-enable it on a per-filesystem basis.
-    
-    [*] Yes, I updated the docs for the thing.  Hell really _has_ frozen
-        over, and the four horsemen are probably just beyond the horizon.
-        EVERYBODY PANIC!
-    
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0e25b2c92..9a1cec5c8 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -866,10 +866,8 @@ core.whitespace::
->  core.fsyncObjectFiles::
->  	This boolean will enable 'fsync()' when writing object files.
->  +
-> -This is a total waste of time and effort on a filesystem that orders
-> -data writes properly, but can be useful for filesystems that do not use
-> -journalling (traditional UNIX filesystems) or that only journal metadata
-> -and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
-> +This option is enabled by default and ensures actual data integrity
-> +by calling fsync after writing object files.
-
-I am somewhat sympathetic to the desire to flip the default to
-"safe" and allow those who know they are already safe to tweak the
-knob for performance, and it also makes sense to document that the
-default is "true" here.  But I do not see the point of removing the
-four lines from this paragraph; the sole effect of the removal is to
-rob information from readers that they can use to decide if they
-want to disable the configuration, no?
+>  git-send-email.perl | 38 +++++++++++++++++++-------------------
+>  1 file changed, 19 insertions(+), 19 deletions(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index edcc6d346..0c07f48d5 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -166,13 +166,13 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
+>  
+>  # Variables we fill in automatically, or via prompting:
+>  my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+> -	$initial_reply_to,$initial_subject,@files,
+> +	$initial_in_reply_to,$initial_subject,@files,
+>  	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
+>  
+>  my $envelope_sender;
+>  
+>  # Example reply to:
+> -#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+> +#$initial_in_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
+>  
+>  my $repo = eval { Git->repository() };
+>  my @repo = $repo ? ($repo) : ();
+> @@ -314,7 +314,7 @@ die __("--dump-aliases incompatible with other options\n")
+>      if !$help and $dump_aliases and @ARGV;
+>  $rc = GetOptions(
+>  		    "sender|from=s" => \$sender,
+> -                    "in-reply-to=s" => \$initial_reply_to,
+> +                    "in-reply-to=s" => \$initial_in_reply_to,
+>  		    "subject=s" => \$initial_subject,
+>  		    "to=s" => \@initial_to,
+>  		    "to-cmd=s" => \$to_cmd,
+> @@ -676,7 +676,7 @@ if ($compose) {
+>  
+>  	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
+>  	my $tpl_subject = $initial_subject || '';
+> -	my $tpl_reply_to = $initial_reply_to || '';
+> +	my $tpl_in_reply_to = $initial_in_reply_to || '';
+>  
+>  	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
+>  From $tpl_sender # This line is ignored.
+> @@ -689,7 +689,7 @@ Clear the body content if you don't wish to send a summary.
+>  EOT2
+>  From: $tpl_sender
+>  Subject: $tpl_subject
+> -In-Reply-To: $tpl_reply_to
+> +In-Reply-To: $tpl_in_reply_to
+>  
+>  EOT3
+>  	for my $f (@files) {
+> @@ -736,7 +736,7 @@ EOT3
+>  				quote_subject($subject, $compose_encoding) .
+>  				"\n";
+>  		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
+> -			$initial_reply_to = $1;
+> +			$initial_in_reply_to = $1;
+>  			next;
+>  		} elsif (/^From:\s*(.+)\s*$/i) {
+>  			$sender = $1;
+> @@ -872,16 +872,16 @@ sub expand_one_alias {
+>  @initial_cc = process_address_list(@initial_cc);
+>  @bcclist = process_address_list(@bcclist);
+>  
+> -if ($thread && !defined $initial_reply_to && $prompting) {
+> -	$initial_reply_to = ask(
+> +if ($thread && !defined $initial_in_reply_to && $prompting) {
+> +	$initial_in_reply_to = ask(
+>  		__("Message-ID to be used as In-Reply-To for the first email (if any)? "),
+>  		default => "",
+>  		valid_re => qr/\@.*\./, confirm_only => 1);
+>  }
+> -if (defined $initial_reply_to) {
+> -	$initial_reply_to =~ s/^\s*<?//;
+> -	$initial_reply_to =~ s/>?\s*$//;
+> -	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
+> +if (defined $initial_in_reply_to) {
+> +	$initial_in_reply_to =~ s/^\s*<?//;
+> +	$initial_in_reply_to =~ s/>?\s*$//;
+> +	$initial_in_reply_to = "<$initial_in_reply_to>" if $initial_in_reply_to ne '';
+>  }
+>  
+>  if (!defined $smtp_server) {
+> @@ -901,7 +901,7 @@ if ($compose && $compose > 0) {
+>  }
+>  
+>  # Variables we set as part of the loop over files
+> -our ($message_id, %mail, $subject, $reply_to, $references, $message,
+> +our ($message_id, %mail, $subject, $in_reply_to, $references, $message,
+>  	$needs_confirm, $message_num, $ask_default);
+>  
+>  sub extract_valid_address {
+> @@ -1310,9 +1310,9 @@ Message-Id: $message_id
+>  	if ($use_xmailer) {
+>  		$header .= "X-Mailer: git-send-email $gitversion\n";
+>  	}
+> -	if ($reply_to) {
+> +	if ($in_reply_to) {
+>  
+> -		$header .= "In-Reply-To: $reply_to\n";
+> +		$header .= "In-Reply-To: $in_reply_to\n";
+>  		$header .= "References: $references\n";
+>  	}
+>  	if (@xh) {
+> @@ -1489,8 +1489,8 @@ EOF
+>  	return 1;
+>  }
+>  
+> -$reply_to = $initial_reply_to;
+> -$references = $initial_reply_to || '';
+> +$in_reply_to = $initial_in_reply_to;
+> +$references = $initial_in_reply_to || '';
+>  $subject = $initial_subject;
+>  $message_num = 0;
+>  
+> @@ -1700,9 +1700,9 @@ foreach my $t (@files) {
+>  
+>  	# set up for the next message
+>  	if ($thread && $message_was_sent &&
+> -		($chain_reply_to || !defined $reply_to || length($reply_to) == 0 ||
+> +		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
+>  		$message_num == 1)) {
+> -		$reply_to = $message_id;
+> +		$in_reply_to = $message_id;
+>  		if (length $references > 0) {
+>  			$references .= "\n $message_id";
+>  		} else {
