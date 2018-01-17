@@ -2,93 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 063AB1F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 22:25:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 024B91F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 22:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754644AbeAQWZp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 17:25:45 -0500
-Received: from mail-it0-f51.google.com ([209.85.214.51]:46350 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753833AbeAQWZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 17:25:43 -0500
-Received: by mail-it0-f51.google.com with SMTP id c16so11122412itc.5;
-        Wed, 17 Jan 2018 14:25:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ivewxAMMt9IbN82pUZes7rC9mpmwh9EM3EU1uGbRh4E=;
-        b=Vqf1Ar32FlPbAAI5F/MJ2VB9UzZU8uffCfR3bppJ58HIR2QRnzefCVeoNFyUCNLdm7
-         VawSjgcYuLu3MpIj6Y2QFwiQvns4WBh3jGkXkN9F/O2nWAboJH/ymmG8EqSlWTBa7kZA
-         Sl2TSjSvMqbQDlCRgG0/75XZWYSkwvS4EsIjfK7YvEaDBKGr8BAllEvjZxgo+vzyRMbf
-         Cul1j3pcyzq+lB4nsAsnXR+qP/5MAsg0+pcl/mte0SEj9V0/1YXV/tiTFPrgU8ZtFXXn
-         ZLbUYkT5SC9Vk1Z2OOttBThwZRwy/KcahrWbqVvkBB+Ixe5f5umjRk2luGpAL6cc+ReF
-         hZSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ivewxAMMt9IbN82pUZes7rC9mpmwh9EM3EU1uGbRh4E=;
-        b=AggjQr0lIoFWPeJ345/wRxGdRhWnHVDVSZBWEWjrF5bq1L8TC0ol/oEKI7YxcL0PeY
-         NQg8A0A1rrvKKPunLZlmstNwAVe7Z3ORxczndKPyVfXpPJNEx+bX0dx/9lEFgule24P0
-         C7DF7JzdpYxITRLgnAH1wfm42ampVTKH2CvRgN+bQ4lWoNDle3AnlLlT+QaCWCeh/1YW
-         Ms6greyInKZnLJ7tGsTD+xvJAmznpyWwwGNsbTXIk0F3+ELUoXjZx5iJsSNKeCJKpFOM
-         f9V6YYOrgeA5glu4njPVMZiVbHDzI9ygo3aI4M2LXWFOvEm11g/rKk/nG/udcNIBZhpo
-         a/Ug==
-X-Gm-Message-State: AKwxytes/82XnpoxMMGI+WG7TqXPms+ZdzoJFhVJOTqGGGrHPsYbKQ//
-        oxu4pKT3ZIK1GKoVd8gLWjRWbtN/OZSPEVB5kgpL+A==
-X-Google-Smtp-Source: ACJfBotE/z9Rbm+Oeg58kRDQC03DFsxRd5AaBYx523xhgOda+7nqgGi6f1aB7mxLAQWFcffLCoVbCzoIw4X3eT+Wers=
-X-Received: by 10.36.47.5 with SMTP id j5mr17067424itj.123.1516227942364; Wed,
- 17 Jan 2018 14:25:42 -0800 (PST)
+        id S1753639AbeAQW1K (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 17:27:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47190 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753112AbeAQW1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 17:27:09 -0500
+Received: (qmail 21741 invoked by uid 109); 17 Jan 2018 22:27:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 17 Jan 2018 22:27:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6372 invoked by uid 111); 17 Jan 2018 22:27:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 17 Jan 2018 17:27:45 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Jan 2018 17:27:07 -0500
+Date:   Wed, 17 Jan 2018 17:27:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>, Kevin Daudt <me@ikke.info>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 2/2] sha1_file: improve sha1_file_name() perfs
+Message-ID: <20180117222707.GA16031@sigill.intra.peff.net>
+References: <20180117175455.9316-1-chriscool@tuxfamily.org>
+ <20180117175455.9316-2-chriscool@tuxfamily.org>
+ <3cbace45-61df-3074-a48c-66c68c96d542@jeffhostetler.com>
+ <xmqq4lnkryt2.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.6.147 with HTTP; Wed, 17 Jan 2018 14:25:41 -0800 (PST)
-In-Reply-To: <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
-References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
- <87h8rki2iu.fsf@evledraar.gmail.com> <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 17 Jan 2018 14:25:41 -0800
-X-Google-Sender-Auth: -JMTpSryQ46rzRXsJmqZa9x79Hs
-Message-ID: <CA+55aFxSEd4azxVTEDNnUJaFY0Lp7VMQ2OGTYmVOFF7cr_HcqA@mail.gmail.com>
-Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Christoph Hellwig <hch@lst.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4lnkryt2.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 17, 2018 at 2:07 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> The original git design was very much to write each object file
-> without any syncing, because they don't matter since a new object file
-> - by definition - isn't really reachable. Then sync before writing the
-> index file or a new ref.
+On Wed, Jan 17, 2018 at 12:54:33PM -0800, Junio C Hamano wrote:
 
-.. actually, I think it originally sync'ed only before starting to
-actually remove objects due to repacking.
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+> >>     void sha1_file_name(struct strbuf *buf, const unsigned char
+> >> *sha1)
+> >>   {
+> >> -	strbuf_addf(buf, "%s/", get_object_directory());
+> >> +	const char *obj_dir = get_object_directory();
+> >> +	size_t extra = strlen(obj_dir) + 1 + GIT_MAX_HEXSZ;
+> >
+> > Very minor nit.  Should this be "+3" rather than "+1"?
+> > One for the slash after obj_dir, one for the slash between
+> > "xx/y[38]", and one for the trailing NUL.
+> >
+> >>   +	if (extra > strbuf_avail(buf))
+> >> +		strbuf_grow(buf, extra);
+> 
+> The callers who care use static strbuf with 1/2, which lets them
+> grow it to an appropriate size after they make their first call.
+> 
+> On the other hand, the ones to which performance does not matter by
+> definition do not care.
+> 
+> I actually think this whole "extra -> grow" business should be
+> discarded.  With a miscomputed "extra" like this, it does not help
+> anybody---everybody may pay cost for one extra realloc due to the
+> miscalculation, and the ones that do care also do during their first
+> call.
 
-The theory was that you can lose the last commit series or whatever,
-and have to git-fsck, and have to re-do it, but you could never lose
-long-term work. If your machine crashes, you still remember what you
-did just before the crash.
+Let me second that. The diffstat here, along with the magic numbers, is
+not really encouraging unless we have a demonstrable speedup. In which
+case we can then measure and compare other approaches, like pushing a
+static strbuf farther up the stack. But without that, it feels like
+stumbling around in the dark.
 
-That theory may have been more correct back in the days than it is
-now. People who use git might be less willing to treat it like a
-filesystem that you can fsck than I was back 10+ ago.
-
-It's worth noting that the commit that Junio pointed to (from 2008)
-didn't actually change any behavior. It just allowed people who cared
-to change behavior. The original "let's not waste time on fsync every
-object write, because we can just re-create the state anyway" behavior
-goes back to 2005.
-
-              Linus
+-Peff
