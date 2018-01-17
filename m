@@ -7,210 +7,127 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E90D1F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 18:08:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76E4C1F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 18:16:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752520AbeAQSIN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 13:08:13 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:42625 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752641AbeAQSIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 13:08:11 -0500
-Received: by mail-wr0-f193.google.com with SMTP id e41so19524624wre.9
-        for <git@vger.kernel.org>; Wed, 17 Jan 2018 10:08:10 -0800 (PST)
+        id S1752654AbeAQSQt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 13:16:49 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:44342 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752368AbeAQSQs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 13:16:48 -0500
+Received: by mail-it0-f67.google.com with SMTP id b5so10299595itc.3
+        for <git@vger.kernel.org>; Wed, 17 Jan 2018 10:16:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yAKJrt0AqLEpX1UeLjBQOpwtqI4As6K4yXbwUyYhxjI=;
-        b=Cb3ugdB8f0zSGXqNuNQtyujRoUXYUnTZWxUH0yaKn4kNl7E9HFSMSGepIuKA5KeExe
-         TAqHFAKftXu9YToRfMT6GAlr1XFBGgqWLgmMZaLAM2D/VvVKusG+qzJ2WePhDjoRjLs2
-         RYKFGHW1WsHt/kOjdqxJhNDZS2IENkZf3CY5oAtxAvLoCsQ1DhNhoo50akdL9FoBl2GD
-         vQaIwgAV8UULeio9KNrZQlci1ZRsSQ/x3BomJzW9UzyKaKUd4ZXtCrRFFjb++xBGLC+r
-         R3Zt2Qn+HCPRvoH/ueaXlg/mRnOtlSqP9NUk6+wrNz1FS/+FvscdF/YJQ3o4TD/iuvfY
-         eARw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3DrGDYSiiAaLMaHOtdOS3C1RdgNTLfbut9joAHTfzFE=;
+        b=EBGhNBny8KUTGGZVbRYT52mwqMYg0MJVDxZEdMAALbFtpFpCbF9ZELoMSJoE3tv3Sp
+         D/W3pIlYnjIfSQ/yfVreD2QV2et7bp5Ac4hUIedLWkdHyYHP51EPplYKoQSBA0XGP5zg
+         ucKFebMPLlXi1r6Qe9kmptIh+s9R7EegCBEVY/mEm2q4Gaq1eVJdsyKiAjlFFnYi0cLO
+         lK3l8HeBWEUJ86SdQWWrjP8kdHoGBpCTAGoNM+AXRUJ5uSUm5PoFKl82QZd51CADmLS/
+         fsQRYC6PvRFSUWhKjIHTkeDNCqON48LPMspgPoZc94aiHNUEecl1quZyl4CA+VXm2nc5
+         hufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yAKJrt0AqLEpX1UeLjBQOpwtqI4As6K4yXbwUyYhxjI=;
-        b=BGfoJlqCgkwP5mHAdRfsaIGGtkzse/H0fC0kAY1bcuAtIc9OmeYC8QANs9Fx3HLJi+
-         wOpc8EyCkNKnDib39jNRVKuWW7kqQlI7NLpQwugZeFh77j2KA8KzOCDqNSY31WsFKlrB
-         t8J5nj9uDjYV0oQnCp43hqZ4bn4vabUncykPBJqm9uI/hxU+XN3XiqD74e1Pw5I6ZNXb
-         l+aKZZzljd41yQNmjlFlw0I97vGqumJRWGD9kpSO2Wv0IvNsDhw4GrXi/Ka8XdqyQkUq
-         b8Q9A+OhJ7/mD40g9PlTlusch5GGuvUsVaI628ncTbZ6LCXAz5yAN4YgovCOSrU8/WyF
-         QkSA==
-X-Gm-Message-State: AKwxytcM0sOsljBXug8SRQ7S5+u9vsK1p9zYWJx7r5gonohofjkmUxE5
-        R1I2WaKVeX6VkJQpaV9ZMQWJEKgl
-X-Google-Smtp-Source: ACJfBov6EV+V66GlwwIePqem4kQKJmgFQfHxhL9+HAakq13lRWY9jQ00yB3V/k/FYN3GdI6M6TDpoQ==
-X-Received: by 10.223.208.201 with SMTP id z9mr3452983wrh.194.1516212489345;
-        Wed, 17 Jan 2018 10:08:09 -0800 (PST)
-Received: from greyhound ([195.145.21.250])
-        by smtp.gmail.com with ESMTPSA id 198sm5291331wmo.21.2018.01.17.10.08.07
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3DrGDYSiiAaLMaHOtdOS3C1RdgNTLfbut9joAHTfzFE=;
+        b=EVQ72389Z9ccjbVJu3kHV2Q85J59mjkH9Wy+8bP34BZzOMf9V5Jfo53A26Np7e4BTu
+         ZdwmmF66nRtbFSnovenzeh9CE6qHlVfWZhtFb8DObwR+pQ9tsLFsWzU5R60gvLOse7Zf
+         o38yTvBIsWNFlCsJUvUBJByXL5PTnF42kpJ012BUzvUOCS8qZlpw8zrP3BZw8kABr6HA
+         rhhbFd1jV91Rsg3S4+N/e3cPtEuOYFPj61lnbYkyRVxNdtpvryi7OtSRS0JfZA5zKjZv
+         zWgBiUuvnkEv54QbQvCkoOv73B+A2csan2tHRwBeKT2ACdpvHkDp1GBwrTPRE0Bz46Wi
+         W6yQ==
+X-Gm-Message-State: AKwxytfruHBEa4m8e7VjYocgEBCsTuMNjDbrMkf8DwYNE3GgUSSIolMA
+        /d7YOMmoA2TqqgxpYt1TcdY=
+X-Google-Smtp-Source: ACJfBou/MnpKxO/9spDEWEBdEoVMDWtn9iG3EpHB2gNtO212GYOMqYBQhRAnwD8PUFjG7mYpHlouuw==
+X-Received: by 10.36.250.203 with SMTP id v194mr23568886ith.83.1516213007158;
+        Wed, 17 Jan 2018 10:16:47 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r13sm2809662ioa.4.2018.01.17.10.16.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Jan 2018 10:08:07 -0800 (PST)
-From:   Christian Ludwig <chrissicool@googlemail.com>
-X-Google-Original-From: Christian Ludwig <chrissicool@gmail.com>
-Received: from cc by greyhound with local (Exim 4.89)
-        (envelope-from <cc@localhost>)
-        id 1ebs84-00085a-Nt; Wed, 17 Jan 2018 19:08:04 +0100
-To:     git@vger.kernel.org
-Cc:     Christian Ludwig <chrissicool@gmail.com>
-Subject: [PATCH v2 2/2] send-email: Support separate Reply-To address
-Date:   Wed, 17 Jan 2018 19:08:01 +0100
-Message-Id: <20180117180801.31049-2-chrissicool@gmail.com>
-X-Mailer: git-send-email 2.15.1
-In-Reply-To: <20180117180801.31049-1-chrissicool@gmail.com>
-References: <20180117180801.31049-1-chrissicool@gmail.com>
+        Wed, 17 Jan 2018 10:16:46 -0800 (PST)
+Date:   Wed, 17 Jan 2018 10:16:18 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for
+ other repos
+Message-ID: <20180117181618.GA112319@aiede.svl.corp.google.com>
+References: <20171217225122.28941-1-t.gummerer@gmail.com>
+ <20180107223015.17720-1-t.gummerer@gmail.com>
+ <20180107223015.17720-2-t.gummerer@gmail.com>
+ <20180116214239.GA3622@google.com>
+ <CACsJy8A9AheuBK-mKy9d9m5yfSFFZ9N8=wg8FZD_C6mHHTdqXg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8A9AheuBK-mKy9d9m5yfSFFZ9N8=wg8FZD_C6mHHTdqXg@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In some projects contributions from groups are only accepted from a
-common group email address. But every individual may want to recieve
-replies to her own personal address. That's what we have 'Reply-To'
-headers for in SMTP.
+Hi,
 
-Introduce an optional '--reply-to' command line option. Unfortunately
-the $reply_to variable name was already taken for the 'In-Reply-To'
-header field. To reduce code churn, use $reply_address as variable
-name instead.
+Duy Nguyen wrote:
+> On Wed, Jan 17, 2018 at 4:42 AM, Brandon Williams <bmwill@google.com> wrote:
 
-Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
----
- Documentation/git-send-email.txt       |  5 +++++
- contrib/completion/git-completion.bash |  2 +-
- git-send-email.perl                    | 18 +++++++++++++++++-
- t/t9001-send-email.sh                  |  2 ++
- 4 files changed, 25 insertions(+), 2 deletions(-)
+>>                                  IIUC Split index is an index extension
+>> that can be enabled to limit the size of the index file that is written
+>> when making changes to the index.  It breaks the index into two pieces,
+>> index (which contains only changes) and sharedindex.XXXXX (which
+>> contains unchanged information) where 'XXXXX' is a value found in the
+>> index file.  If we don't do anything fancy then these two files live
+>> next to one another in a repository's git directory at $GIT_DIR/index
+>> and $GIT_DIR/sharedindex.XXXXX.  This seems to work all well and fine
+>> except that this isn't always the case and the read_index_from function
+>> takes this into account by enabling a caller to specify a path to where
+>> the index file is located.  We can do this by specifying the index file
+>> we want to use by setting GIT_INDEX_FILE.
+[...]
+>> In this case if i were to specify a location of an
+>> index file in my home directory '~/index' and be using the split index
+>> feature then the corresponding sharedindex file would live in my
+>> repository's git directory '~/project/.git/sharedindex.XXXXX'.  So the
+>> sharedindex file is always located relative to the project's git
+>> directory and not the index file itself, which is kind of confusing.
+>> Maybe a better design would be to have the sharedindex file located
+>> relative to the index file.
+>
+> That adds more problems. Now when you move the index file around you
+> have to move the shared index file too (think about atomic rename
+> which we use in plenty of places, we can't achieve that by moving two
+> files). A new dependency to $GIT_DIR is not that confusing to me, the
+> index file is useless anyway if you don't have access to
+> $GIT_DIR/objects. There was always the option to _not_ split the index
+> when $GIT_INDEX_FILE is specified, I think I did consider that but I
+> dropped it because we'd lose the performance gain by splitting.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 8060ea35c..71ef97ba9 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -84,6 +84,11 @@ See the CONFIGURATION section for `sendemail.multiEdit`.
- 	the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if that is not
- 	set, as returned by "git var -l".
- 
-+--reply-to=<address>::
-+	Specify the address where replies from recipients should go to.
-+	Use this if replies to messages should go to another address than what
-+	is specified with the --from parameter.
-+
- --in-reply-to=<identifier>::
- 	Make the first mail (or all the mails with `--no-thread`) appear as a
- 	reply to the given Message-Id, which avoids breaking threads to
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3683c772c..2a0dc4eef 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2081,7 +2081,7 @@ _git_send_email ()
- 			--compose --confirm= --dry-run --envelope-sender
- 			--from --identity
- 			--in-reply-to --no-chain-reply-to --no-signed-off-by-cc
--			--no-suppress-from --no-thread --quiet
-+			--no-suppress-from --no-thread --quiet --reply-to
- 			--signed-off-by-cc --smtp-pass --smtp-server
- 			--smtp-server-port --smtp-encryption= --smtp-user
- 			--subject --suppress-cc= --suppress-from --thread --to
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 0c07f48d5..9bf758307 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -56,6 +56,7 @@ git send-email --dump-aliases
-     --[no-]cc               <str>  * Email Cc:
-     --[no-]bcc              <str>  * Email Bcc:
-     --subject               <str>  * Email "Subject:"
-+    --reply-to              <str>  * Email "Reply-To:"
-     --in-reply-to           <str>  * Email "In-Reply-To:"
-     --[no-]xmailer                 * Add "X-Mailer:" header (default).
-     --[no-]annotate                * Review each patch that will be sent in an editor.
-@@ -166,7 +167,7 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
- 
- # Variables we fill in automatically, or via prompting:
- my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
--	$initial_in_reply_to,$initial_subject,@files,
-+	$initial_in_reply_to,$reply_to,$initial_subject,@files,
- 	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
- 
- my $envelope_sender;
-@@ -315,6 +316,7 @@ die __("--dump-aliases incompatible with other options\n")
- $rc = GetOptions(
- 		    "sender|from=s" => \$sender,
-                     "in-reply-to=s" => \$initial_in_reply_to,
-+		    "reply-to=s" => \$reply_to,
- 		    "subject=s" => \$initial_subject,
- 		    "to=s" => \@initial_to,
- 		    "to-cmd=s" => \$to_cmd,
-@@ -677,6 +679,7 @@ if ($compose) {
- 	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
- 	my $tpl_subject = $initial_subject || '';
- 	my $tpl_in_reply_to = $initial_in_reply_to || '';
-+	my $tpl_reply_to = $reply_to || '';
- 
- 	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
- From $tpl_sender # This line is ignored.
-@@ -688,6 +691,7 @@ for the patch you are writing.
- Clear the body content if you don't wish to send a summary.
- EOT2
- From: $tpl_sender
-+Reply-To: $tpl_reply_to
- Subject: $tpl_subject
- In-Reply-To: $tpl_in_reply_to
- 
-@@ -738,6 +742,9 @@ EOT3
- 		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
- 			$initial_in_reply_to = $1;
- 			next;
-+		} elsif (/^Reply-To:\s*(.+)\s*$/i) {
-+			$reply_to = $1;
-+			next;
- 		} elsif (/^From:\s*(.+)\s*$/i) {
- 			$sender = $1;
- 			next;
-@@ -884,6 +891,12 @@ if (defined $initial_in_reply_to) {
- 	$initial_in_reply_to = "<$initial_in_reply_to>" if $initial_in_reply_to ne '';
- }
- 
-+if (defined $reply_to) {
-+	$reply_to =~ s/^\s+|\s+$//g;
-+	($reply_to) = expand_aliases($reply_to);
-+	$reply_to = sanitize_address($reply_to);
-+}
-+
- if (!defined $smtp_server) {
- 	my @sendmail_paths = qw( /usr/sbin/sendmail /usr/lib/sendmail );
- 	push @sendmail_paths, map {"$_/sendmail"} split /:/, $ENV{PATH};
-@@ -1315,6 +1328,9 @@ Message-Id: $message_id
- 		$header .= "In-Reply-To: $in_reply_to\n";
- 		$header .= "References: $references\n";
- 	}
-+	if ($reply_to) {
-+		$header .= "Reply-To: $reply_to\n";
-+	}
- 	if (@xh) {
- 		$header .= join("\n", @xh) . "\n";
- 	}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 81869d891..c62318a78 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -205,6 +205,7 @@ Message-Id: MESSAGE-ID-STRING
- X-Mailer: X-MAILER-STRING
- In-Reply-To: <unique-message-id@example.com>
- References: <unique-message-id@example.com>
-+Reply-To: Reply <reply@example.com>
- 
- Result: OK
- EOF
-@@ -297,6 +298,7 @@ test_expect_success $PREREQ 'Show all headers' '
- 		--dry-run \
- 		--suppress-cc=sob \
- 		--from="Example <from@example.com>" \
-+		--reply-to="Reply <reply@example.com>" \
- 		--to=to@example.com \
- 		--cc=cc@example.com \
- 		--bcc=bcc@example.com \
--- 
-2.15.1
+Can you elaborate a little more on this?
 
+At first glance, it seems simpler to say "paths in index extensions
+named in the index file are relative to the location of the index
+file" and to make moving the index file also require moving the shared
+index file, exactly as you say.  So at least from a "principle of
+least surprise" perspective I would be tempted to go that way.
+
+It's true that we rely on atomic rename in plenty of places, but only
+within a directory.  (Filesystem boundaries, NFS, etc mean that atomic
+renames across directories are a lost cause.)
+
+Fortunately index files (including temp index files used by scripts)
+tend to only be in $GIT_DIR, for exactly that reason.  So I am
+wondering if switching to index-file-relative semantics would be an
+invasive move and what the pros and cons of such a move are.
+
+Thanks,
+Jonathan
