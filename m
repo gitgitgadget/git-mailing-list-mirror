@@ -2,149 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC96B1F404
-	for <e@80x24.org>; Wed, 17 Jan 2018 00:44:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C471D1F404
+	for <e@80x24.org>; Wed, 17 Jan 2018 00:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751559AbeAQAoc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 19:44:32 -0500
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:38762 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750816AbeAQAob (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 19:44:31 -0500
-Received: by mail-pf0-f176.google.com with SMTP id k19so10606854pfj.5
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 16:44:31 -0800 (PST)
+        id S1751182AbeAQAv7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 19:51:59 -0500
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:42799 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750816AbeAQAv6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 19:51:58 -0500
+Received: by mail-vk0-f66.google.com with SMTP id t4so10535886vkb.9
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 16:51:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5g2xLrQjOnI2gmNpkL/uW2Kelb1uoaAukFqcUhwV3OM=;
-        b=JKQgaIu7xigybFWYWwuk4gjsO62ORpwyA+A2ovtGDjUT1YTrbvnA/pglKxxOI/+/5H
-         oUnqENG4ELv9KbATTrvhHlxtJKO0034NMAhkmA3iqR1Zmah5MyEiMp4f3xdtfJ2Ktytv
-         MMXSzcjoXc+eBbF882PWfhZ4LW2rY535R2yBslu09UVVbBEmnaW+USw44/kxLR1Vj65K
-         UoB3r5PEHRZt/NDXduAI6wLIdIrnJU4eo2zw1noSckEXz7gwpA31FJPdHMnLYmSFSVww
-         PQTWTo8xh/y+H1xwvpa2Ed7mo2xjGHk5eJ2OG+6UdPVdiOiDVZJvs9FjaZglNNIMywyb
-         Wc/w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=s/KYIHHu5+eUY3fLfDuqxTj24IFUUffS0yKJ0D2V5v4=;
+        b=NMlvXJeWbijXDnS3Aa+v8wVftYPm/mF1uU+bku5ABAGmbw3vtfB6s52+eH3fqOu1cc
+         O+VPnczg1NETNZuQcWe7DwQ+xhiZSJaRKWO2Qv0eC5WqCFk/rbQCvatZ6bVjW4yHTX6j
+         lSqYV3gy6HuUmA9Sdt44i4P6Fu4FGLRQdbc0LDniB8mxTJYDfa4WD9ty3PtvHLHa6/pA
+         coctiDDiNVCVz9FAt65E2e8+vj2UO4BqfJPU63d/bkZ6wwcXLJfHSVwZTVHedBQw+dU7
+         8h1KqcuJaYyBFFGnmUvzsCgEsJG+5CZK0TKRNJITyNIL0MCZNryCAStTn3KfwowE6Hm6
+         l1qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5g2xLrQjOnI2gmNpkL/uW2Kelb1uoaAukFqcUhwV3OM=;
-        b=Z9VxZrLNgoMpKMAkeDtoAZ+p0WdA4W4KD4iAphJnRVUZjMBDPly40o6o1ywqOsMonj
-         Hg5oTkKx8KHnP8ayFEcOFJG9nvftFu/jYRsAvGidl92aEVqLhwn7UW+s6na+0mQmQVgO
-         RhBNCyRPlr459wozQN4hpCLgZDYC8Vqx0jHgw0anrwox8pNaeltfP0cVpPm8y3S9fiAM
-         v3y3aYi10JRHk6pzNGM+yembFKb9519nwdtoH2UkO6Ie1B6iXtXvI4oPyU4FKqjwUzzK
-         KPSIsw3hwKhtdnTGdrVTE3CDylDZzLYhYTuMu8UTI2sq7yG9IO+b7g5r7b7EhQwhaxsP
-         o1Tg==
-X-Gm-Message-State: AKGB3mIBCc2ePJZTBp2y6dRQ8SYYymWbQIfswYMOsELI+Sgk09L8i+a+
-        Fnyluz7LEOuH7nzoQRrfgVc=
-X-Google-Smtp-Source: ACJfBotlBCs9KzDpYZmQBESOJ77W2eR8Qy3GAY0e0nL8C9rTLyjsjOG1wlpXppr0AlbXdEBmxqIAOg==
-X-Received: by 10.98.204.75 with SMTP id a72mr28032655pfg.211.1516149870885;
-        Tue, 16 Jan 2018 16:44:30 -0800 (PST)
-Received: from duynguyen.dek-tpc.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id u10sm4852503pgo.31.2018.01.16.16.44.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jan 2018 16:44:29 -0800 (PST)
-Date:   Wed, 17 Jan 2018 07:44:19 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Keith Smiley <k@keith.so>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Kevin Daudt <me@ikke.info>
-Subject: Re: [PATCH] Add shell completion for git remote rm
-Message-ID: <20180117004419.GA14263@duynguyen.dek-tpc.internal>
-References: <20171229135240.GQ3693@zaya.teonanacatl.net>
- <20171229224825.31062-1-szeder.dev@gmail.com>
- <87y3ll6s0e.fsf@evledraar.gmail.com>
- <20171230005222.GT3693@zaya.teonanacatl.net>
- <87vago76i8.fsf@evledraar.gmail.com>
- <xmqq373miw4r.fsf@gitster.mtv.corp.google.com>
- <1516052626.2870893.1236353440.65CA651A@webmail.messagingengine.com>
- <CACsJy8Dzv3qPc1dB1rdvYL+CvEp+hY8ddoBrbCiP5KnqikzyLw@mail.gmail.com>
- <xmqqh8rlvdgh.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=s/KYIHHu5+eUY3fLfDuqxTj24IFUUffS0yKJ0D2V5v4=;
+        b=hk1tl3dOfH191o7L5vehA5exDpCiJLE6+oNd8pueSn/sW1PBq9T+kWzuz9hzPZXJzp
+         1ECl2HtMBUdMk1ZyGvBGvB1ZUE4dOu7Qnbn1JrroFWbq+RYI3t0sUkAVaFUvg7kzJib2
+         l4T1yhajI8poI47XlE58Iqj1aJiuO6zbzL28ioS6Y3ByzOE6EycItspXP3VtF1RPNxtR
+         EmYePqCwgDIPBNyJkNc/HRaalwvR9GFiMOULit4EZ70jIbDJ4VvJrdQpJJcM6EZ2UZEt
+         xHLxMDgQGRS2K+0AQAqcumxVAn3r3ue5vnQ5u9IMvLm5zZHSs33CVDcygvPonI8COrYE
+         wgjA==
+X-Gm-Message-State: AKwxytfTULyffSExjcfe7ZN7dIQLxltwL5QUhMYcdx4xn+FiZTf/JSJ8
+        ZAVCaIL3znEs4Z5t0ZHpBZwaY34gu01NGzCwE/U=
+X-Google-Smtp-Source: ACJfBouWIniIZvnuNaODvJAU5QaA6Ncx/ITQZabkkitWA8+am7ArMHZSfJPAEQvA60pEzWDB7AqG57Zmewv7tS3oqUg=
+X-Received: by 10.31.60.69 with SMTP id j66mr779804vka.155.1516150317398; Tue,
+ 16 Jan 2018 16:51:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh8rlvdgh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.176.10.140 with HTTP; Tue, 16 Jan 2018 16:51:56 -0800 (PST)
+In-Reply-To: <20180116103700.4505-1-pclouds@gmail.com>
+References: <20180116103700.4505-1-pclouds@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 17 Jan 2018 01:51:56 +0100
+Message-ID: <CAM0VKjkz8-VsLJ8i64OHHUH4R4WY5fT6x3X+s=FKuZyfM9txkA@mail.gmail.com>
+Subject: Re: [PATCH/RFC 0/2] Automate updating git-completion.bash a bit
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 16, 2018 at 10:57:34AM -0800, Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
-> 
-> > On Tue, Jan 16, 2018 at 4:43 AM, Keith Smiley <k@keith.so> wrote:
-> >> So it sounds like either we should deprecate rm, or I should update the patch to the suggested method where we just complete remotes, but not rm in the list of completions.
-> >
-> > I vote for deprecation. I could send a patch to start warning to
-> > switch from 'rm' to 'remove'. Then perhaps we can delete it after two
-> > releases. It's not classified as plumbing should we don't have worry
-> > too much about scripts relying on 'remote rm'.
-> 
-> I do not know about "two releases" part (which amounts to merely
-> 20-24 weeks), but looking at "git remote -h" output and seeing that
-> we do spell out "rename" (instead of saying "mv" or something cryptic),
-> it probably makes sense to remove "rm" some time in the future.
-> 
-> I actually do think "rm" is _already_ deprecated.  
-> 
-> "git remote --help" does not mention it in its synopsis section and
-> it merely has ", rm" after "remove" as if an afterthought.
+On Tue, Jan 16, 2018 at 11:36 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy
+<pclouds@gmail.com> wrote:
+> I noticed --recurse-submodules was missing from git-grep complete
+> list. Then I found a couple more should be on the list as well and
+> many more in future may face the same faith. Perhaps this helps remedy
+> this situation?
+>
+> This lets us extract certain information from git commands and feed it
+> directly to git-completion.bash. Now long options by default will
+> be complete-able (which also means it's the reviewer's and coder's
+> responsibility to add "no complete" flag appropriately) but I think
+> the number of new dangerous options will be much fewer than
+> completeable ones.
+>
+> This is not really a new idea. Python has argcomplete that does more
+> or less the same thing.
 
-It's actually my bad. I should have replaced 'rm' with 'remove' in
-git-remote.txt in e17dba8fe1 (remote: prefer subcommand name 'remove'
-to 'rm' - 2012-09-06)
+This has come up before for Git as well, see:
 
-> I am not sure if it is worth being more explicit, perhaps like this?
+  https://public-inbox.org/git/1334140165-24958-1-git-send-email-bebarino@g=
+mail.com/T/#u
 
-Looks good. If we want to be more careful, we can follow up with
-something even more annoying like this before removing 'rm'
+I see that your approach solves one of the shortcomings of those older
+patches, namely it makes possible to omit dangerous options from
+completion.  Great.
 
--- 8< --
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 577b969c1b..0a544703e6 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -90,7 +90,6 @@ In case <old> and <new> are the same, and <old> is a file under
- the configuration file format.
- 
- 'remove'::
--'rm'::
- 
- Remove the remote named <name>. All remote-tracking branches and
- configuration settings for the remote are removed.
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d95bf904c3..774ef6931e 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1609,7 +1609,10 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
- 		result = add(argc, argv);
- 	else if (!strcmp(argv[0], "rename"))
- 		result = mv(argc, argv);
--	else if (!strcmp(argv[0], "rm") || !strcmp(argv[0], "remove"))
-+	else if (!strcmp(argv[0], "rm")) {
-+		warning(_("'rm' is a deprecated synonym. Use 'remove' instead."));
-+		result = rm(argc, argv);
-+	} else if (!strcmp(argv[0], "remove"))
- 		result = rm(argc, argv);
- 	else if (!strcmp(argv[0], "set-head"))
- 		result = set_head(argc, argv);
--- 8< --
+I also see that you want to invoke git in a subshell every time the user
+attempts to complete an --option.  Not so great, at least for Windows
+users.  That older thread contains a few ideas about how to do it only
+once by lazy-initializing a variable for each command to hold its
+options.
 
-PS. This also makes me thing about supporting subcommand aliases, so
-that people can add back 'git remote rm' if they like (or something
-like 'git r rm' when they alias 'remote' as well). Which is probably a
-good thing to do. Long command names are fine when you have completion
-support, they are a pain to type otherwise.
 
---
-Duy
+> This is just a proof of concept. More commands should be converted of
+> course if it's a good thing to do.
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+>   parse-options: support --git-completion-helper
+>   git-completion: use --git-completion-helper
+>
+>  builtin/grep.c                         | 13 +++++++-----
+>  contrib/completion/git-completion.bash | 16 +--------------
+>  parse-options.c                        | 37 ++++++++++++++++++++++++++++=
+++++++
+>  parse-options.h                        | 14 ++++++++-----
+>  4 files changed, 55 insertions(+), 25 deletions(-)
+>
+> --
+> 2.15.1.600.g899a5f85c6
+>
