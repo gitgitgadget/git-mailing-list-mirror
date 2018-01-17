@@ -2,166 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26DCA1F404
-	for <e@80x24.org>; Wed, 17 Jan 2018 00:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC96B1F404
+	for <e@80x24.org>; Wed, 17 Jan 2018 00:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750933AbeAQAcL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 Jan 2018 19:32:11 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:36204 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750811AbeAQAcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 Jan 2018 19:32:11 -0500
-Received: by mail-pg0-f49.google.com with SMTP id k68so2728179pga.3
-        for <git@vger.kernel.org>; Tue, 16 Jan 2018 16:32:10 -0800 (PST)
+        id S1751559AbeAQAoc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 Jan 2018 19:44:32 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:38762 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750816AbeAQAob (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 Jan 2018 19:44:31 -0500
+Received: by mail-pf0-f176.google.com with SMTP id k19so10606854pfj.5
+        for <git@vger.kernel.org>; Tue, 16 Jan 2018 16:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=msCh3DH7REoGB1T4ZCEO9dY3Rx6zAZpiPh73hrmhBAw=;
-        b=HfVflXT3F/jMl+qQt+QHp7ZFyWicdMxDW0CzyNVV1k4XQ9Xa+DUXkK8WHMUWVAj26R
-         3wWPUPICiMCm2FRAG62c62rZwdnIPSuBN52PPXyGjS0txqC7qbdteljX518qx8d0xGYR
-         1fw0cWsfRWtf7zrQoE2Z4SYtwkNF+HBMDo1vm4Lud5TksKH3zF4U05lVN44OGpA2GTK/
-         82IHWI/FrPedXIkqyLkT4C/ZNDGjU0ejLRFYfX4sZXFa0p4MvdB3EyqbPjCsc3IwNVmK
-         +BBJCI0Dhyso67beweabNQjNjhkA3dBtJ2IRISDkaeA5ZbpAhXDqcy+9hNS9cJCMVzJG
-         JvXw==
+        bh=5g2xLrQjOnI2gmNpkL/uW2Kelb1uoaAukFqcUhwV3OM=;
+        b=JKQgaIu7xigybFWYWwuk4gjsO62ORpwyA+A2ovtGDjUT1YTrbvnA/pglKxxOI/+/5H
+         oUnqENG4ELv9KbATTrvhHlxtJKO0034NMAhkmA3iqR1Zmah5MyEiMp4f3xdtfJ2Ktytv
+         MMXSzcjoXc+eBbF882PWfhZ4LW2rY535R2yBslu09UVVbBEmnaW+USw44/kxLR1Vj65K
+         UoB3r5PEHRZt/NDXduAI6wLIdIrnJU4eo2zw1noSckEXz7gwpA31FJPdHMnLYmSFSVww
+         PQTWTo8xh/y+H1xwvpa2Ed7mo2xjGHk5eJ2OG+6UdPVdiOiDVZJvs9FjaZglNNIMywyb
+         Wc/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=msCh3DH7REoGB1T4ZCEO9dY3Rx6zAZpiPh73hrmhBAw=;
-        b=b13iYdgscg5fnbQYrSycY964hKttyPx/z/5mDu23zWlK007dlAP1h9DLJzzwuIJInW
-         16wVwJX5KNVIZYC9Ewt8kTxC0D99v9gU2wiUbB4MvnkrzzAywPQJJ3uzkciuphzg9KlN
-         0jt30x1sP9xqNbckm11mlQTXJC7XNLoDbpofRFn2QcmTacG8eWaLuDL+bEjG+f+HHqrZ
-         B7uWU+Kk33cVO4SjNBTLPHj/gct6HTxEdbwvMKWQsrvLofh8HyV37piG9B1EWaJt9HZM
-         UAbc4yhbbeUr3BlFYjxrplsFWBLgdt51gVaGT8y5+9dWaIRfWLTlB1gnnfH/5t9tMUVZ
-         ZuVQ==
-X-Gm-Message-State: AKGB3mLafHN4WtE3i5uRBGzWFR54PG9bTiPFPJKk/dufBkUeXllX4TB2
-        piZ9HujFCfeHHhdmIlJ3sYk0HA==
-X-Google-Smtp-Source: ACJfBovAP1GDoMtNEGTuExrBCKRYJ9sOYasFKtR2QaSRnMlp1MiyIYH3sSKqqURl6V/5uT7/KItcJg==
-X-Received: by 10.101.96.134 with SMTP id t6mr31297901pgu.253.1516149130135;
-        Tue, 16 Jan 2018 16:32:10 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id j23sm5464157pfj.42.2018.01.16.16.32.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 16 Jan 2018 16:32:09 -0800 (PST)
-Date:   Tue, 16 Jan 2018 16:32:08 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        bh=5g2xLrQjOnI2gmNpkL/uW2Kelb1uoaAukFqcUhwV3OM=;
+        b=Z9VxZrLNgoMpKMAkeDtoAZ+p0WdA4W4KD4iAphJnRVUZjMBDPly40o6o1ywqOsMonj
+         Hg5oTkKx8KHnP8ayFEcOFJG9nvftFu/jYRsAvGidl92aEVqLhwn7UW+s6na+0mQmQVgO
+         RhBNCyRPlr459wozQN4hpCLgZDYC8Vqx0jHgw0anrwox8pNaeltfP0cVpPm8y3S9fiAM
+         v3y3aYi10JRHk6pzNGM+yembFKb9519nwdtoH2UkO6Ie1B6iXtXvI4oPyU4FKqjwUzzK
+         KPSIsw3hwKhtdnTGdrVTE3CDylDZzLYhYTuMu8UTI2sq7yG9IO+b7g5r7b7EhQwhaxsP
+         o1Tg==
+X-Gm-Message-State: AKGB3mIBCc2ePJZTBp2y6dRQ8SYYymWbQIfswYMOsELI+Sgk09L8i+a+
+        Fnyluz7LEOuH7nzoQRrfgVc=
+X-Google-Smtp-Source: ACJfBotlBCs9KzDpYZmQBESOJ77W2eR8Qy3GAY0e0nL8C9rTLyjsjOG1wlpXppr0AlbXdEBmxqIAOg==
+X-Received: by 10.98.204.75 with SMTP id a72mr28032655pfg.211.1516149870885;
+        Tue, 16 Jan 2018 16:44:30 -0800 (PST)
+Received: from duynguyen.dek-tpc.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id u10sm4852503pgo.31.2018.01.16.16.44.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jan 2018 16:44:29 -0800 (PST)
+Date:   Wed, 17 Jan 2018 07:44:19 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Keith Smiley <k@keith.so>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for
- other repos
-Message-ID: <20180117003208.qkjtwijmb6o3n6xn@google.com>
-References: <20171217225122.28941-1-t.gummerer@gmail.com>
- <20180107223015.17720-1-t.gummerer@gmail.com>
- <20180107223015.17720-2-t.gummerer@gmail.com>
- <20180116214239.GA3622@google.com>
- <CACsJy8A9AheuBK-mKy9d9m5yfSFFZ9N8=wg8FZD_C6mHHTdqXg@mail.gmail.com>
+        Kevin Daudt <me@ikke.info>
+Subject: Re: [PATCH] Add shell completion for git remote rm
+Message-ID: <20180117004419.GA14263@duynguyen.dek-tpc.internal>
+References: <20171229135240.GQ3693@zaya.teonanacatl.net>
+ <20171229224825.31062-1-szeder.dev@gmail.com>
+ <87y3ll6s0e.fsf@evledraar.gmail.com>
+ <20171230005222.GT3693@zaya.teonanacatl.net>
+ <87vago76i8.fsf@evledraar.gmail.com>
+ <xmqq373miw4r.fsf@gitster.mtv.corp.google.com>
+ <1516052626.2870893.1236353440.65CA651A@webmail.messagingengine.com>
+ <CACsJy8Dzv3qPc1dB1rdvYL+CvEp+hY8ddoBrbCiP5KnqikzyLw@mail.gmail.com>
+ <xmqqh8rlvdgh.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8A9AheuBK-mKy9d9m5yfSFFZ9N8=wg8FZD_C6mHHTdqXg@mail.gmail.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
+In-Reply-To: <xmqqh8rlvdgh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/17, Duy Nguyen wrote:
-> On Wed, Jan 17, 2018 at 4:42 AM, Brandon Williams <bmwill@google.com> wrote:
-> > On 01/07, Thomas Gummerer wrote:
-> >> read_index_from() takes a path argument for the location of the index
-> >> file.  For reading the shared index in split index mode however it just
-> >> ignores that path argument, and reads it from the gitdir of the current
-> >> repository.
-> >>
-> >> This works as long as an index in the_repository is read.  Once that
-> >> changes, such as when we read the index of a submodule, or of a
-> >> different working tree than the current one, the gitdir of
-> >> the_repository will no longer contain the appropriate shared index,
-> >> and git will fail to read it.
-> >>
-> >> For example t3007-ls-files-recurse-submodules.sh was broken with
-> >> GIT_TEST_SPLIT_INDEX set in 188dce131f ("ls-files: use repository
-> >> object", 2017-06-22), and t7814-grep-recurse-submodules.sh was also
-> >> broken in a similar manner, probably by introducing struct repository
-> >> there, although I didn't track down the exact commit for that.
-> >>
-> >> be489d02d2 ("revision.c: --indexed-objects add objects from all
-> >> worktrees", 2017-08-23) breaks with split index mode in a similar
-> >> manner, not erroring out when it can't read the index, but instead
-> >> carrying on with pruning, without taking the index of the worktree into
-> >> account.
-> >>
-> >> Fix this by passing an additional gitdir parameter to read_index_from,
-> >> to indicate where it should look for and read the shared index from.
-> >>
-> >> read_cache_from() defaults to using the gitdir of the_repository.  As it
-> >> is mostly a convenience macro, having to pass get_git_dir() for every
-> >> call seems overkill, and if necessary users can have more control by
-> >> using read_index_from().
+On Tue, Jan 16, 2018 at 10:57:34AM -0800, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+> > On Tue, Jan 16, 2018 at 4:43 AM, Keith Smiley <k@keith.so> wrote:
+> >> So it sounds like either we should deprecate rm, or I should update the patch to the suggested method where we just complete remotes, but not rm in the list of completions.
 > >
-> > I'm not saying we need to change this again but I got to thinking about
-> > what the root cause for this bug is and I think it's a design flaw in
-> > how split index is implemented.  IIUC Split index is an index extension
-> > that can be enabled to limit the size of the index file that is written
-> > when making changes to the index.  It breaks the index into two pieces,
-> > index (which contains only changes) and sharedindex.XXXXX (which
-> > contains unchanged information) where 'XXXXX' is a value found in the
-> > index file.  If we don't do anything fancy then these two files live
-> > next to one another in a repository's git directory at $GIT_DIR/index
-> > and $GIT_DIR/sharedindex.XXXXX.  This seems to work all well and fine
-> > except that this isn't always the case and the read_index_from function
-> > takes this into account by enabling a caller to specify a path to where
-> > the index file is located.  We can do this by specifying the index file
-> > we want to use by setting GIT_INDEX_FILE.
-> >
-> > Being able to specify an index file via the environment is a feature
-> > that has existed for a very long time (one that I personally think makes
-> > things difficult because of things like additions like the sharedindex)
-> > and I don't think was taken into account when introducing the split
-> > index extension.
+> > I vote for deprecation. I could send a patch to start warning to
+> > switch from 'rm' to 'remove'. Then perhaps we can delete it after two
+> > releases. It's not classified as plumbing should we don't have worry
+> > too much about scripts relying on 'remote rm'.
 > 
-> It was (partly because I did use GIT_INDEX_FILE on occasions).
+> I do not know about "two releases" part (which amounts to merely
+> 20-24 weeks), but looking at "git remote -h" output and seeing that
+> we do spell out "rename" (instead of saying "mv" or something cryptic),
+> it probably makes sense to remove "rm" some time in the future.
 > 
-> > In this case if i were to specify a location of an
-> > index file in my home directory '~/index' and be using the split index
-> > feature then the corresponding sharedindex file would live in my
-> > repository's git directory '~/project/.git/sharedindex.XXXXX'.  So the
-> > sharedindex file is always located relative to the project's git
-> > directory and not the index file itself, which is kind of confusing.
-> > Maybe a better design would be to have the sharedindex file located
-> > relative to the index file.
+> I actually do think "rm" is _already_ deprecated.  
 > 
-> That adds more problems. Now when you move the index file around you
-> have to move the shared index file too (think about atomic rename
-> which we use in plenty of places, we can't achieve that by moving two
-> files). A new dependency to $GIT_DIR is not that confusing to me, the
-> index file is useless anyway if you don't have access to
-> $GIT_DIR/objects. There was always the option to _not_ split the index
-> when $GIT_INDEX_FILE is specified, I think I did consider that but I
-> dropped it because we'd lose the performance gain by splitting.
-> 
-> > Anyway, some food for thought.
-> >
-> > --
-> > Brandon Williams
-> 
-> 
-> 
-> -- 
-> Duy
+> "git remote --help" does not mention it in its synopsis section and
+> it merely has ", rm" after "remove" as if an afterthought.
 
-Thanks for giving me some more context :) makes me feel more confident
-in the solution that's already been proposed.
+It's actually my bad. I should have replaced 'rm' with 'remove' in
+git-remote.txt in e17dba8fe1 (remote: prefer subcommand name 'remove'
+to 'rm' - 2012-09-06)
 
--- 
-Brandon Williams
+> I am not sure if it is worth being more explicit, perhaps like this?
+
+Looks good. If we want to be more careful, we can follow up with
+something even more annoying like this before removing 'rm'
+
+-- 8< --
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 577b969c1b..0a544703e6 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -90,7 +90,6 @@ In case <old> and <new> are the same, and <old> is a file under
+ the configuration file format.
+ 
+ 'remove'::
+-'rm'::
+ 
+ Remove the remote named <name>. All remote-tracking branches and
+ configuration settings for the remote are removed.
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c3..774ef6931e 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1609,7 +1609,10 @@ int cmd_remote(int argc, const char **argv, const char *prefix)
+ 		result = add(argc, argv);
+ 	else if (!strcmp(argv[0], "rename"))
+ 		result = mv(argc, argv);
+-	else if (!strcmp(argv[0], "rm") || !strcmp(argv[0], "remove"))
++	else if (!strcmp(argv[0], "rm")) {
++		warning(_("'rm' is a deprecated synonym. Use 'remove' instead."));
++		result = rm(argc, argv);
++	} else if (!strcmp(argv[0], "remove"))
+ 		result = rm(argc, argv);
+ 	else if (!strcmp(argv[0], "set-head"))
+ 		result = set_head(argc, argv);
+-- 8< --
+
+PS. This also makes me thing about supporting subcommand aliases, so
+that people can add back 'git remote rm' if they like (or something
+like 'git r rm' when they alias 'remote' as well). Which is probably a
+good thing to do. Long command names are fine when you have completion
+support, they are a pain to type otherwise.
+
+--
+Duy
