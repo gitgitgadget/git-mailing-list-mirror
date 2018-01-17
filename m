@@ -2,195 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E651D1F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 19:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D21211F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 19:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbeAQTFV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 14:05:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51067 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750830AbeAQTFU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 14:05:20 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8ACA8C77C7;
-        Wed, 17 Jan 2018 14:05:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=u8HkbzS4/9Ucwd0lQzkC+rG2TCw=; b=skYwxd
-        PDQYgQvH2sAVYk0q2J5W0yi2EIsTJcBk/RP99xaJyQqJG49MfgdO1n+I5wjEogq1
-        zq1xEncJmLmf7IMR/qkP5k9Ksocu38e3pFG4qn21JMAM2kY7xk956B37PZu2CEJp
-        QoSVCxUVcVp5CKTkzuVnqIWcKfBbc+Vdk6zXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Vbmam2kigWUssn4pRu98hptL4ekF8hDG
-        arGEiY2/DPEI9OguicHn9nE71YBC/n113ShE1zgh2jPTMWbNVv7L7v8RtVoDhQTZ
-        E+nRzk+ZRhKHLsg3XLfbA7At9tkOPcwGPU8ME2DC21i75HkqxNuAcSv1gC8NEV3i
-        3hMiqX1n9kc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70BA3C77C6;
-        Wed, 17 Jan 2018 14:05:19 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CC40FC77C5;
-        Wed, 17 Jan 2018 14:05:18 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Ludwig <chrissicool@googlemail.com>
-Cc:     git@vger.kernel.org, Christian Ludwig <chrissicool@gmail.com>
-Subject: Re: [PATCH v2 1/2] send-email: Rename variable for clarity
-References: <20180117180801.31049-1-chrissicool@gmail.com>
-Date:   Wed, 17 Jan 2018 11:05:17 -0800
-In-Reply-To: <20180117180801.31049-1-chrissicool@gmail.com> (Christian
-        Ludwig's message of "Wed, 17 Jan 2018 19:08:00 +0100")
-Message-ID: <xmqq8tcws3v6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752833AbeAQTIn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 14:08:43 -0500
+Received: from mail-bn3nam01on0126.outbound.protection.outlook.com ([104.47.33.126]:19040
+        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752802AbeAQTIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 14:08:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=a/JEhTMOKOpfhi0CYvW3jmGYIXfa89AKkZIUFP0BQ8Y=;
+ b=o7XwANk0oGKK5CagWsDCYX9jbLx0UUEqlF+9CMvW8BiFUIy097FiUC2U7bIyQHVwVq1bff6BXG+KrvYxwkQk/+KXb8gQZyAr+iZqM4FLs0F2uKfjzmd+dhe8zxToKEZjW3hP8GV0dtBKtydA4FkZCsClf5HmFMdx28FTRLgiTUU=
+Received: from stolee-linux.corp.microsoft.com
+ (2001:4898:8010:0:eb4a:5dff:fe0f:7308) by
+ BL0PR2101MB1011.namprd21.prod.outlook.com (2603:10b6:207:37::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.444.5; Wed, 17 Jan
+ 2018 19:08:37 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     git@jeffhostetler.com, stolee@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH] packfile: use get_be64() for large offsets
+Date:   Wed, 17 Jan 2018 14:08:23 -0500
+Message-Id: <20180117190823.209469-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.15.0
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5BF6FE38-FBB9-11E7-A268-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Originating-IP: [2001:4898:8010:0:eb4a:5dff:fe0f:7308]
+X-ClientProxiedBy: BN6PR05CA0012.namprd05.prod.outlook.com
+ (2603:10b6:405:39::25) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 054c2b95-99cd-49c7-173a-08d55dddb6e8
+X-MS-Office365-Filtering-HT: Tenant
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(4534125)(4602075)(4627221)(201703031133081)(201702281549075)(48565401081)(2017052603307)(7193020);SRVR:BL0PR2101MB1011;
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;3:hulUKS1YE46lRHdFM6pxcVqcrI5eZvy+XRnzATrtNEh8QbEo0g8qxIy+vbhhzdxF7uXEwxlZ/fOwnXBOx992NPM1DXFhJ216c/FibV145pW0O1389E624gAY+uu0AMUxsNbkVLqk7yZBBPSAoIY9jyhY/MFqz6PYIhePSzBBOweqH6mCm/ml7oqLxhRxwR/juFMuNQ0uZLl66I+azxu/SfrmWiP7nH1BnzdEJfXXdngIk6MD9eQ2feP0Y4TPutb8;25:RwyQbVeUMvnNhB5XfjCC4lqqeEoG49xegNL7SwTnzcqeZuMV784L0rzvWTAAQavvhsgystwlqrIUyaMUdLqx/mKTYWMRlVy/GxnR2RHjVJOSiWFWWIoq/I4WepY77U43jSqgd/2YEhN/Fan3IrGWvnLeEHBlzpAQr3098POTovVk7qXZduzHrhI890xZ0iPoQgLK8sU9nD4eyZzrc9p9I2cFXAZA309JmcfZxaL0R5KTugFQykk8Iqs0Ar2U2vQmzQVvYnzXQbyaTknwCKaM1z/z9Wxqg3QbIGJqxYleNTyUiASPUom+NvvRBhprHrqDZLbtgK6dwd7gz6zEyEBqew==;31:mU8fP7/h6BNdtaRAgv7Eso6rDp0SnEn0USstFOzw2sk9khOmPntwqAMba7aIhvauHrXEWCizUHJXw4VHKkz4JKpoGnr8Ws5F8bbUiKqKnrrQZyMba8OcaoEsLkM30yMxIkXpF7v0pIjsnMNWhVD+SABM1qj6IMIUtEmXiP9/Hig9WrqYhcw2tM7pDDqt9oEUQtKXWejjMrUJE1tMyEtHDGIdx0I5pwPuSYRvLUaSqKA=
+X-MS-TrafficTypeDiagnostic: BL0PR2101MB1011:
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;20:i99IIWde/J1KwUz+uc0klcu5uIAe9fPS8PBMUr51GXQV1mLtxxPPqgdYAN4GE1E44z//E2U+LF77t/gvufXzZ52t8R5p7NZqqRTrH7+Vq6z8UDy/LlMuFaps6gwn0ZJ3B/mGSe/H7I9tk8rGetTnjbH/PqNwAzDtReF0Hp2jNi1BunRzCunE30mk1RYEu4gJhAJhl5/rfLDw6HxC4cbDUVha1yQULfZoviEFLFi4yMNG4IGwKyOOE5Jm5D2bc8m0gCOlIKCh4mTMq75y4kfI/f/UIbOHrw097YxazFLPd4/FYn+ZKLXuVAVZI+J5Xl4jdaipaufwwmhvi8UcbYisDXOzFzpfi09pbttGuH5t9BANSJHJrfgyytv/9Rz53EjWvMeRh5idG4ljU2A1x7VPoJ4LMqj/Wj+j/qJcsVyoknpz2/qWAWiRUMXeOaK5mjC0XNwip5qlGV3w57M7DvK5VtMt3+PUhp661JhsqnW0+2vkq7fb+15X5nXIG5Fs1W3E;4:XK0ffz5IyxECX4ctroozpzm+3KW6J0WqhqIGo1EZhpyaL9dXpmBxEG3dZFDHRFOyXgD5lRaNh6pqXX/DJuI+1OZRPkU0sKiTzcfbblGRnpbYPfNsy3VAIuRwvyAXQyN4XffJ52S8VLvy3uyf0/aojQ+axQgp/U4WhPGQQieXzMwBYQZ5g1pq5tw2h2KFTkZwyudq5H1kNzvJOsTZk1TOL3k7enFhFQ7SLKopTSw9HIqSy7i4QgWs0dgjyD1mIhvUw1WSiBIkCMsR9xZvu0XG6/YKRzTd2oCDXjXNK80YHKWdoORRAatdj4IUMn2h1R0JI/j+0L6ZuGHB2TUaRWe0oaIDXnCKhqNgS1Ee8VjR6fg=
+X-Microsoft-Antispam-PRVS: <BL0PR2101MB1011ADF9B929DAD86A95555FA1E90@BL0PR2101MB1011.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171);
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(61425038)(6040470)(2401047)(8121501046)(5005006)(93006095)(93001095)(3231042)(2400048)(944501161)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041268)(20161123558120)(20161123562045)(20161123564045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011);SRVR:BL0PR2101MB1011;BCL:0;PCL:0;RULEID:(100000803126)(100110400120);SRVR:BL0PR2101MB1011;
+X-Forefront-PRVS: 0555EC8317
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(39380400002)(376002)(366004)(39860400002)(346002)(396003)(189003)(199004)(105586002)(6116002)(8676002)(2351001)(2361001)(106356001)(1076002)(6486002)(6346003)(59450400001)(47776003)(25786009)(386003)(50226002)(52396003)(81156014)(16586007)(53936002)(81166006)(10090500001)(52116002)(51416003)(7696005)(107886003)(316002)(10290500003)(8936002)(478600001)(305945005)(2906002)(6916009)(6666003)(48376002)(50466002)(97736004)(39060400002)(575784001)(5660300001)(68736007)(86612001)(86362001)(4326008)(22452003)(7736002)(36756003);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1011;H:stolee-linux.corp.microsoft.com;FPR:;SPF:None;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
+Received-SPF: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BL0PR2101MB1011;23:lPc990rpQmhzfLXtBRh8rqMwINnKpvO+Fdw9H+d?=
+ =?us-ascii?Q?O93uSQLtblbAkjltmo/TS+o/tyfmHAUTbi7mPzaj125x85i+rqYG4pqZqzj+?=
+ =?us-ascii?Q?7eBKQ4z0xDpbj4EAP/pXt5KbZq/9SRgx/586Phqxt9iDzZGap2kZT4aMiwqU?=
+ =?us-ascii?Q?zIjmlwngAqaYDw/sm0lBsX7iAy2jbBplrDbrEZWAkwNTkfxrarkeHNR8QVRO?=
+ =?us-ascii?Q?/gW3V9r0PRXqiCkuW9h6LtJ74GT9rh+eMPJ+omL5XaYu/3naqx6YdA8MaHzu?=
+ =?us-ascii?Q?CjLjkukxa9tc2H0OpaFWekELncbawst8vp6PYyTyRqGkyaUN5nVlX9y8KUge?=
+ =?us-ascii?Q?0Fxw/W+sMBmiebX4mtVsuVc5ru1n0aLKQCeRqI2lSgKlaEbOQfiNPNCyswhr?=
+ =?us-ascii?Q?K2tO/Uz6WgRGzzV46gZ8he0y7qoKxSSAMvIVSqNllbQ5kaxxhwyZeutcYxko?=
+ =?us-ascii?Q?o/jCYvoovCPRAkC9kU3daaddFExPxRHIG1A8vLq+/D3PUEvjO0wqIWPNNaR3?=
+ =?us-ascii?Q?p+54QVw8PxLirgI0f5lCelbMVELHHSR53NzmFRYS5X+CMWm7475fHSGEjTX9?=
+ =?us-ascii?Q?rxiWTkwpzPRRAe3oGPeNCGChoNIKaoNui4r+I+VkMWU/rHq6TJwGFCG2R4QX?=
+ =?us-ascii?Q?rMhMjEX3ym8LtzFST6X3FAwCKNDxrrORz7/atj78i0vIrqMhVCj7ZssE/9nD?=
+ =?us-ascii?Q?imwyfOkJNXmTH9d7MUzUc4TiG/kRxnstgYOksBE4p+u6Wo9eV7RIq01AGVXr?=
+ =?us-ascii?Q?6AxZZ/Ptr3/3/pTcqx+TN7TyAOLsMBGGqDfycMJhKOBe7Qs9SKylxOvYQh4o?=
+ =?us-ascii?Q?gZSQyKMgxuLKLqPTaOgkLSQtA+vT4AqVfvNzGB8k+cLRactV1KF9URWJfdWK?=
+ =?us-ascii?Q?Sek1jSwc/vHenWSNpCU9V7PiKK0avu1rQccaLlOKPAHRgEZbHlZPpM7Xhmak?=
+ =?us-ascii?Q?zzP1+thme8bjHDS0ep6oF3udj2rldpBqBpF/1DDEciE3/UYky+tCMUgf8Wjk?=
+ =?us-ascii?Q?7BKCmUTHco0k87yqlrhluPvcXybgG9U0sAyrN91n0kzBCw5MCyZCnKyPXY6e?=
+ =?us-ascii?Q?sERK9jImPC4mpK6ajtOQUqCFtSj+aW/N1TG195XjE8DPW43ivYCyOZeYQEIX?=
+ =?us-ascii?Q?a+7oWONlwQQfj03b3NnHRM/X3Pz3ANPSQZztxmEVbPBKS07FqUoUo4H4HgKY?=
+ =?us-ascii?Q?tjHNn5jBD+s1CPwD1N5wBjQbPByCnlqufEaNc7PAeKjGPJeFU/OYx+IorJtU?=
+ =?us-ascii?Q?JAAQ/anZWpJY1PZ+CvIs=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;BL0PR2101MB1011;6:0zesRgL/axIoZ/kM+IS6CTTHTEh8+kMVM98Xrh02WnkCJX8Zxvt94Hucs7RYp4VH9D7zHRMeutwkQXH1RGyF43Dyf0rr+2GstiV7jEYngsFK0tGg29pamx1bhjs6yK1dZjcNoan2Og4JQrD0ttCfbCwO9B+I3VdGUJyM/wYOS3wY1AbYIB4bJ7x4H/EX9l0urekZTNsknrrA3eTEQOm74scmfL/IwAOrk6aiFQAK4k1oG+gwTaJs5RU/cuDaKXptoBzW+pEPGjVN49ugttRGqrdl/ck/fYA3MKEh+pTrtQHMExSNGCo4tgHHrUAFJyF12UeAUMpZo/wjyNxi4+1rGD1N82KW2wtGJ6nwLbK+J5U=;5:RrsFNhyQFi9x73+9kyPRQ43mEtc27rE5uRZRLeNk466LB3AjggCWneyllf0JLjW9fJET9ZC70RTZgOaN+uA7GkDK1i0jhQLwV/+QTZY1mOtCfPBtrs1XMCg6M3vzj3RyP7cq8u9uUJTB7XzctvmDYNBtC1VUbjCO238bePjhiTs=;24:enPgKaNqcKjN4cw10OU42oCqBZbtKfRHRe4L4n5BPvV0bH4v4LV+zEMukrQbqp86e8ynjrQblvEVL/W2RrR6knoOLkVlRrn9cDKDxEZdM5U=;7:42SXF8ZhK6RhjJFQcKdUzEZrXDQEE8mB39pP0LR1Z2PttnZ54WCpdafnFpD+Vt2OFuTz3Cok8HcWlqkQIq2/zo2pkHxHdw70+y3J8awZAGXDJRXDKmPrB1cHvGyFo0qyRnJZh5p4Oo/nMcW63uQcZXJ9QAPUTwOyFRf76iwG8QXTYats/bc/ebQ74RB+IYGLarN0tx7kigeSiGRC8y7upXrak2kkxmC0K/RSmHHuohsTw8srYUHRpt6Chd6VqUj5
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2018 19:08:37.8260
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 054c2b95-99cd-49c7-173a-08d55dddb6e8
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1011
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Ludwig <chrissicool@googlemail.com> writes:
+The pack-index version 2 format uses two 4-byte integers in network-byte order to represent one 8-byte value. The current implementation has several code clones for stitching these integers together.
 
-> The SMTP protocol has both, the 'Reply-To' and the 'In-Reply-To' header
-> fields. We only use the latter. To avoid confusion, rename the variable
-> for it.
->
-> Signed-off-by: Christian Ludwig <chrissicool@gmail.com>
-> ---
+Use get_be64() to create an 8-byte integer from two 4-byte integers represented this way.
 
-Makes sense.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ pack-revindex.c | 6 ++----
+ packfile.c      | 3 +--
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
->  git-send-email.perl | 38 +++++++++++++++++++-------------------
->  1 file changed, 19 insertions(+), 19 deletions(-)
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index edcc6d346..0c07f48d5 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -166,13 +166,13 @@ my $re_encoded_word = qr/=\?($re_token)\?($re_token)\?($re_encoded_text)\?=/;
->  
->  # Variables we fill in automatically, or via prompting:
->  my (@to,$no_to,@initial_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
-> -	$initial_reply_to,$initial_subject,@files,
-> +	$initial_in_reply_to,$initial_subject,@files,
->  	$author,$sender,$smtp_authpass,$annotate,$use_xmailer,$compose,$time);
->  
->  my $envelope_sender;
->  
->  # Example reply to:
-> -#$initial_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
-> +#$initial_in_reply_to = ''; #<20050203173208.GA23964@foobar.com>';
->  
->  my $repo = eval { Git->repository() };
->  my @repo = $repo ? ($repo) : ();
-> @@ -314,7 +314,7 @@ die __("--dump-aliases incompatible with other options\n")
->      if !$help and $dump_aliases and @ARGV;
->  $rc = GetOptions(
->  		    "sender|from=s" => \$sender,
-> -                    "in-reply-to=s" => \$initial_reply_to,
-> +                    "in-reply-to=s" => \$initial_in_reply_to,
->  		    "subject=s" => \$initial_subject,
->  		    "to=s" => \@initial_to,
->  		    "to-cmd=s" => \$to_cmd,
-> @@ -676,7 +676,7 @@ if ($compose) {
->  
->  	my $tpl_sender = $sender || $repoauthor || $repocommitter || '';
->  	my $tpl_subject = $initial_subject || '';
-> -	my $tpl_reply_to = $initial_reply_to || '';
-> +	my $tpl_in_reply_to = $initial_in_reply_to || '';
->  
->  	print $c <<EOT1, Git::prefix_lines("GIT: ", __ <<EOT2), <<EOT3;
->  From $tpl_sender # This line is ignored.
-> @@ -689,7 +689,7 @@ Clear the body content if you don't wish to send a summary.
->  EOT2
->  From: $tpl_sender
->  Subject: $tpl_subject
-> -In-Reply-To: $tpl_reply_to
-> +In-Reply-To: $tpl_in_reply_to
->  
->  EOT3
->  	for my $f (@files) {
-> @@ -736,7 +736,7 @@ EOT3
->  				quote_subject($subject, $compose_encoding) .
->  				"\n";
->  		} elsif (/^In-Reply-To:\s*(.+)\s*$/i) {
-> -			$initial_reply_to = $1;
-> +			$initial_in_reply_to = $1;
->  			next;
->  		} elsif (/^From:\s*(.+)\s*$/i) {
->  			$sender = $1;
-> @@ -872,16 +872,16 @@ sub expand_one_alias {
->  @initial_cc = process_address_list(@initial_cc);
->  @bcclist = process_address_list(@bcclist);
->  
-> -if ($thread && !defined $initial_reply_to && $prompting) {
-> -	$initial_reply_to = ask(
-> +if ($thread && !defined $initial_in_reply_to && $prompting) {
-> +	$initial_in_reply_to = ask(
->  		__("Message-ID to be used as In-Reply-To for the first email (if any)? "),
->  		default => "",
->  		valid_re => qr/\@.*\./, confirm_only => 1);
->  }
-> -if (defined $initial_reply_to) {
-> -	$initial_reply_to =~ s/^\s*<?//;
-> -	$initial_reply_to =~ s/>?\s*$//;
-> -	$initial_reply_to = "<$initial_reply_to>" if $initial_reply_to ne '';
-> +if (defined $initial_in_reply_to) {
-> +	$initial_in_reply_to =~ s/^\s*<?//;
-> +	$initial_in_reply_to =~ s/>?\s*$//;
-> +	$initial_in_reply_to = "<$initial_in_reply_to>" if $initial_in_reply_to ne '';
->  }
->  
->  if (!defined $smtp_server) {
-> @@ -901,7 +901,7 @@ if ($compose && $compose > 0) {
->  }
->  
->  # Variables we set as part of the loop over files
-> -our ($message_id, %mail, $subject, $reply_to, $references, $message,
-> +our ($message_id, %mail, $subject, $in_reply_to, $references, $message,
->  	$needs_confirm, $message_num, $ask_default);
->  
->  sub extract_valid_address {
-> @@ -1310,9 +1310,9 @@ Message-Id: $message_id
->  	if ($use_xmailer) {
->  		$header .= "X-Mailer: git-send-email $gitversion\n";
->  	}
-> -	if ($reply_to) {
-> +	if ($in_reply_to) {
->  
-> -		$header .= "In-Reply-To: $reply_to\n";
-> +		$header .= "In-Reply-To: $in_reply_to\n";
->  		$header .= "References: $references\n";
->  	}
->  	if (@xh) {
-> @@ -1489,8 +1489,8 @@ EOF
->  	return 1;
->  }
->  
-> -$reply_to = $initial_reply_to;
-> -$references = $initial_reply_to || '';
-> +$in_reply_to = $initial_in_reply_to;
-> +$references = $initial_in_reply_to || '';
->  $subject = $initial_subject;
->  $message_num = 0;
->  
-> @@ -1700,9 +1700,9 @@ foreach my $t (@files) {
->  
->  	# set up for the next message
->  	if ($thread && $message_was_sent &&
-> -		($chain_reply_to || !defined $reply_to || length($reply_to) == 0 ||
-> +		($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
->  		$message_num == 1)) {
-> -		$reply_to = $message_id;
-> +		$in_reply_to = $message_id;
->  		if (length $references > 0) {
->  			$references .= "\n $message_id";
->  		} else {
+diff --git a/pack-revindex.c b/pack-revindex.c
+index 1b7ebd8d7e..ff5f62c033 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -134,10 +134,8 @@ static void create_pack_revindex(struct packed_git *p)
+ 			if (!(off & 0x80000000)) {
+ 				p->revindex[i].offset = off;
+ 			} else {
+-				p->revindex[i].offset =
+-					((uint64_t)ntohl(*off_64++)) << 32;
+-				p->revindex[i].offset |=
+-					ntohl(*off_64++);
++				p->revindex[i].offset = get_be64(off_64);
++				off_64 += 2;
+ 			}
+ 			p->revindex[i].nr = i;
+ 		}
+diff --git a/packfile.c b/packfile.c
+index 4a5fe7ab18..228ed0d59a 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1702,8 +1702,7 @@ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+ 			return off;
+ 		index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
+ 		check_pack_index_ptr(p, index);
+-		return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
+-				   ntohl(*((uint32_t *)(index + 4)));
++		return get_be64(index);
+ 	}
+ }
+ 
+-- 
+2.15.0
+
