@@ -2,76 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E58331F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 13:14:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC901F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 13:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbeAQNON (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 08:14:13 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:44981 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750816AbeAQNOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 08:14:12 -0500
-Received: by mail-it0-f67.google.com with SMTP id b5so9140802itc.3
-        for <git@vger.kernel.org>; Wed, 17 Jan 2018 05:14:12 -0800 (PST)
+        id S1753054AbeAQNe6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 08:34:58 -0500
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:33760 "EHLO
+        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752792AbeAQNeq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 08:34:46 -0500
+Received: by mail-oi0-f46.google.com with SMTP id y141so13131644oia.0
+        for <git@vger.kernel.org>; Wed, 17 Jan 2018 05:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=3KnMwZpDCg8AldvDZt9g9CjujrcdUfPCTRq/wUZwxTQ=;
-        b=AylGJDpkKSsNX9afLgYbEfqUTRzO1aqXfF+EbqQ/sfQ23RTETMyAEPr2uaIJ5Gmn4h
-         r7n5/KhP96EF5leKVFopE3JFczhleBJqA23p7JjGoQx2DyL49jLxRzgGHoB6cTlsjYlo
-         ERNjn6OvJqzkwU9Q0ZdNFTwKoNRPzSGaZvwBFn/FPLW0j/LMApKSaZ/pV91VJcR1cbL2
-         0daX57Q0AVtGP9yo/QwcESyYB4ZmLGawGgJK8aP1XvaLeV/aWFOZq8/oxnY2x8qPjCtJ
-         VIvOjeuFHWCCejTJGKvuxcEBznmj+H1gwYe+hSiDxaYiB6ZdPKayqeqlrlyylJ2nTe5V
-         gRTw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Dd0TOKGv20J1AHnrHyUsJABKnpjTxvHqslAzs6Uwx+U=;
+        b=awtSzIWUZL2cWTlcZL55PTBAHxdXOfxeZK5aAAlB64oiU/vJzUGLhljBJbsALHcD8f
+         xD8rQs2B5ZAP+BJqs/ISjHKbAOuw2ErgjqZ/TiYyAwe9dtWZCf76gWXoKWBDc4NeB4Wx
+         XSJRFZPWb/13hFHFZXEw8A+MXacdMrjUNNCehcQjyipYwcnPOqjvWDxl9sNtjbxmNlWu
+         7fz51dqI+YQ618360cs3z8ur4ixmrTLjHYnpEEuCngwQuM4GaX2+gG4X6puoYZRU1MEi
+         AKZrsFqHaByCLbW2yE6wo9qn2/tqZcZSHZcV44nXgTAyGB9+Jq3fkgwWw8phWsquNqvs
+         mfXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=3KnMwZpDCg8AldvDZt9g9CjujrcdUfPCTRq/wUZwxTQ=;
-        b=uAGf311jvIolyH0DZxQ7xsItgvzMk7Yb9Zl8s1Y1I6lUPSearcDKS7Dq4aOjjRwtkx
-         cetN49wCkQ+CN90hL2q26gNfjPhDGDdfehWiRdPAlgRs0/zn3B/3feDssMqEZAQa5ogj
-         oLqtIDDCoEBUwNKaF2AtnOuMlbm4M9Nn4IYGRlb2glHhTT2ADxRmJRZnNZWYsd2h83Vr
-         yvvCPwC7hedmtKr0xHVRgc0/groC1/QGADFpKkpflbkEwzoHHwO7CW7lHbgJ+B3lk6at
-         4Hq8M/ve7bBz2K3mBqeHByeLEWCvK934XGjYS0ZiwTOWxrl3c3UQ2VugT6fEqEv2lIXM
-         oAFw==
-X-Gm-Message-State: AKwxyteZnaP/5Gg/hwChI/RyDTbWqlJ/9HT8nhwfz8CEx9j8O8E/Htgi
-        DscOYYw7l6cmHXa5gFnTef4OpVnJHsJnK9YISROe0B4p
-X-Google-Smtp-Source: ACJfBosavDjRYZs65+IlZ1OLgaY8gXqTpdW1gtY7YTYXYGejGacRV7dRWkpzxtfI2PgR3t4caPz9gqhyMagXvdtQjXI=
-X-Received: by 10.36.84.205 with SMTP id t196mr12803471ita.128.1516194852129;
- Wed, 17 Jan 2018 05:14:12 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Dd0TOKGv20J1AHnrHyUsJABKnpjTxvHqslAzs6Uwx+U=;
+        b=pfCYQwIum/dUwXlJPIJzYSc8kRi+G/vrp5xR1OIKNrOVEdlmzB4GMxhCQ722S0WimI
+         7uuASe8d0ugFI3Evpw/AEu5NrY4SxASt3IGnccHyYZpdl8SCI8REVu8gIKpM6oPIsa3N
+         zKq9aNSzHkiOEQTyo5ILXTUL8ch5JjqAGwMOm/MNKxBYfUveBNkV42AT6aIBM06rjJIZ
+         5UE852cncVKgCPWleP3S2thpkkYnFNpgOGmfXuxr9umJeRsv279DR0/DHL+Mkzt6Dyw+
+         V7zPukUsLBCCwgpsNHTatoSpm+l70463Tv4xEuTM5OCC7wJ1PI5wsIGpl5Qw501WTx9J
+         H1pg==
+X-Gm-Message-State: AKwxytfSJSDqAe/J+eRoJKh+OZ1PffjxUhAbBPt3IoYwaaSCck6hNjU5
+        5a/VrBxL6IdBF6W5vZ+47zHqu6kz9P3niBgqjDc=
+X-Google-Smtp-Source: ACJfBovhWkZRp9z1QLqFp2jkJCiNDdvbTW7EfbBIk/ksWpLYyfKZ3REDkR+0kxbJNdZuWJjWZo94dDZPmfehmyEuoiA=
+X-Received: by 10.202.76.214 with SMTP id z205mr1023101oia.183.1516196085372;
+ Wed, 17 Jan 2018 05:34:45 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.113.199 with HTTP; Wed, 17 Jan 2018 05:14:11 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 17 Jan 2018 14:14:11 +0100
-Message-ID: <CAP8UFD21GqJRUWr2hxKPCKFPWuPVFVXRaKCUcY-dbVxbEKwjYQ@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 35
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Josef Wolf <jw@raven.inka.de>,
-        Igor Djordjevic <igor.d.djordjevic@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
+Received: by 10.74.141.5 with HTTP; Wed, 17 Jan 2018 05:34:14 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1801170455380.16166@localhost.localdomain>
+References: <alpine.LFD.2.21.1801170455380.16166@localhost.localdomain>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 17 Jan 2018 20:34:14 +0700
+Message-ID: <CACsJy8A0BcdqwkDDd0Fx_8DDCgJc6gZaXkcYqysdv8BH1nvibQ@mail.gmail.com>
+Subject: Re: misleading "man git-worktree", is last "add" argument necessarily
+ a "branch"?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Wed, Jan 17, 2018 at 7:58 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>
+>   perusing "git worktree", and man page reads:
+>
+>   SYNOPSIS
+>        git worktree add [-f] [--detach] [--checkout] [--lock]   \
+>                         [-b <new-branch>] <path> [<branch>]
+>                                                  ^^^^^^^^^^
+>
+> however, can't that last optional argument be any arbitrary commit,
+> not just a "branch"?
 
-The 35th edition of Git Rev News is now published:
-
-  https://git.github.io/rev_news/2018/01/17/edition-35/
-
-Thanks a lot to all the contributors!
-
-Enjoy,
-Christian, Jakub, Markus and Gabriel.
+It's been changed to commit-ish about two months ago in c4738aedc0
+(worktree: add can be created from any commit-ish - 2017-11-26)
+-- 
+Duy
