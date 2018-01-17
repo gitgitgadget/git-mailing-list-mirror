@@ -2,85 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 672B91F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 22:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2006B1F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 22:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753865AbeAQWGs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 17:06:48 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:42729 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753808AbeAQWGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 17:06:47 -0500
-Received: by mail-wm0-f42.google.com with SMTP id b141so18259862wme.1
-        for <git@vger.kernel.org>; Wed, 17 Jan 2018 14:06:46 -0800 (PST)
+        id S1754071AbeAQWH0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 17:07:26 -0500
+Received: from mail-it0-f67.google.com ([209.85.214.67]:45782 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753808AbeAQWHY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 17:07:24 -0500
+Received: by mail-it0-f67.google.com with SMTP id x42so11073484ita.4;
+        Wed, 17 Jan 2018 14:07:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=fpS7asDGOxYDKRERvKjf2FA4y254vfsYM3avAd/lGko=;
-        b=sZcv4Ma9yJo8NaIcHPvouZJqoW79UpM2FiLZt2kmQAyuo/MdFizB59c+a7S3OkJ0En
-         OtKdj7/eLgb4psZ5NK+nPXL8HoPPKeCwfekRg5/FbBItaH5+CBO0FdNN9sn3tX+VgLrz
-         F4JWQY9cl7/e1U7MWwHtRdBJyKPp0XjV817n4cpYB3cd2KlCo1DVKVvWCgb/vBi6OI6z
-         WNErPHaMKS5jsjfXnOk1t4UiSKI3r1S4tdIm05MCvTGPBCGpHOniTtlMVuR3RzjBeGx4
-         oEtPgNITohUBuV+pCr1ZL1cR/GL2N0UQPisIqaQKNMUyMId86SuOPITL4b8ksoVQJhbf
-         Ap4A==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=Uf8MHkl4IDmewO+KJVL1Asgw0HNf1M/44yIdecfmaOc=;
+        b=ZwQHuTRzVnvn2WLiU0CVMyyIj5Fc8TopOuHNBQwCQW+YVLFVyAvV/PA0ZOzJKVZLF3
+         yu5K2HqWP86a8wUJW6QbOknJJdIdjIWsmbJEBJxRaqO3MQ7ehdHfPSCKc597cnVOZ3fl
+         68BDPP1M5Fz63GxKoEQ4xNumQNTIYHguz5kZGi0CTulLiArDofW1KYjQcxb3djSaTH5M
+         UdgNwrJRz+9oIg9OIs6iwpTesutWudKgcbm9d+20D7aLgPu/9kTlzV7euuHem4sjMb5N
+         ihYQOqlU37bXuLsqFqbm5UWOfC8OZttYHMDVvEbPCCqePj0XgcTxpslejr1GKvJh5k5q
+         jiVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=fpS7asDGOxYDKRERvKjf2FA4y254vfsYM3avAd/lGko=;
-        b=UA/VTiV76N/NCjPjlpiMV+0ne75IEqjyZBDydacvQbWXSMRQSi5TeUT7wJvQuY11jr
-         Khzduevxkq26zxwLCyooIG5Al0iD4QOST6T1LE/Ie7kl2PXMnBCfap5wpchNwCevmliu
-         cv3YeDjHMvS1kl5NUJ64g4rwY8arHEwoOIrkzabtz1R8xJ9sb7mI4QFGIcLzytOj6O7e
-         5Em4E7WevBD6fmliHBbVIfaGpDOtw3UPbL73maXOPm2k07nFdM1OLPNY6cPpmiOmg2Yj
-         4s+ljyrXYVJ9aN+qUlmvJ0mRv10Wy9Ri+LmQxPc6nkO+rOrvE3gjQPj6HxFc0qGE9ARx
-         zljw==
-X-Gm-Message-State: AKwxytdE9NvQNpI9HhH5qFlQUdI1VvsctT5BWLOnQSCXUNOVw3TleebD
-        LC8Go8UicjRn9mEItmGWkvo=
-X-Google-Smtp-Source: ACJfBosxeikWv/XZJ5Vl/zWRGnKr2vHhW//XmGR0OuWXK/he/9s0TwOhBOg8OTBvFSQXdD4vYnPJ+w==
-X-Received: by 10.80.190.9 with SMTP id a9mr4822201edi.258.1516226806151;
-        Wed, 17 Jan 2018 14:06:46 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id g61sm3325021edd.48.2018.01.17.14.06.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 17 Jan 2018 14:06:45 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Christian Ludwig <chrissicool@googlemail.com>
-Cc:     git@vger.kernel.org, Christian Ludwig <chrissicool@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] send-email: Support separate Reply-To address
-References: <20180117180801.31049-1-chrissicool@gmail.com> <20180117180801.31049-2-chrissicool@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <20180117180801.31049-2-chrissicool@gmail.com>
-Date:   Wed, 17 Jan 2018 23:06:44 +0100
-Message-ID: <87fu74i1hn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=Uf8MHkl4IDmewO+KJVL1Asgw0HNf1M/44yIdecfmaOc=;
+        b=dBp5GMcfIxCTtKUMfUQxCcyi7Ma5Lgm7MQIxa0KW4zFbp5Z/5pFfR0IrnyFzqm6Bor
+         TEnlzPFYZwBTAnHOmx1vdWcaU7L6NP4AFb5/evUs3l6MzJ50KlaqVZFAu0oF0Xq7mCQe
+         htGJV6Ryn4PARf/Je9VLWwD6WrwJSYFUMV732HpFdmgPRRXDuyBByLEW08v9HqMtUeK2
+         yAvGls8cFG/4+hgYhJVLe2LxgR6suDimZrX2cDWWuMmaEclhw8W6xEok18nE7twpFwv7
+         bpfpnbcCx5i+2taLeDutsAS90aF7T1Xkx0pNF4o7nNFdW2Zb4xvqLLVbvo1WC5FJ+ub9
+         lvnw==
+X-Gm-Message-State: AKwxyte5V5MgA3qh4TFIey3JIaeqVv6wep80oPFwlHGA72LK6ti1kFMQ
+        qgBXABCLRXtDRvW3HDvjPx0nMUhM9meCgntL9tM=
+X-Google-Smtp-Source: ACJfBouybYiU2V7AGtG7gBoPWaTVj5Zx5s15wg+CQSI78uLaKHpowhJ7wecCD/RrtbJsrU1AgbinHbblhC0yNp7sZ2Q=
+X-Received: by 10.36.175.88 with SMTP id l24mr18029071iti.139.1516226843377;
+ Wed, 17 Jan 2018 14:07:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.6.147 with HTTP; Wed, 17 Jan 2018 14:07:22 -0800 (PST)
+In-Reply-To: <87h8rki2iu.fsf@evledraar.gmail.com>
+References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
+ <87h8rki2iu.fsf@evledraar.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 17 Jan 2018 14:07:22 -0800
+X-Google-Sender-Auth: mK6N8IY2ZmzYwWJx8eFa_-Ltr1I
+Message-ID: <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Christoph Hellwig <hch@lst.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jan 17, 2018 at 1:44 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>     I ran a small test myself on CentOS 7 (3.10) with ext4 data=3Dordered
+>     on the tests I thought might do a lot of loose object writes:
+>
+>       $ GIT_PERF_REPEAT_COUNT=3D10 GIT_PERF_LARGE_REPO=3D~/g/linux GIT_PE=
+RF_MAKE_OPTS=3D"NO_OPENSSL=3DY CFLAGS=3D-O3 -j56" ./run origin/master fsync=
+-on~ fsync-on p3400-rebase.sh p0007-write-cache.sh
+>       [...]
+>       Test                                                            fsy=
+nc-on~         fsync-on
+>       -------------------------------------------------------------------=
+------------------------------------
+>       3400.2: rebase on top of a lot of unrelated changes             1.4=
+5(1.30+0.17)   1.45(1.28+0.20) +0.0%
+>       3400.4: rebase a lot of unrelated changes without split-index   4.3=
+4(3.71+0.66)   4.33(3.69+0.66) -0.2%
+>       3400.6: rebase a lot of unrelated changes with split-index      3.3=
+8(2.94+0.47)   3.38(2.93+0.47) +0.0%
+>       0007.2: write_locked_index 3 times (3214 files)                 0.0=
+1(0.00+0.00)   0.01(0.00+0.00) +0.0%
+>
+>    No impact. However I did my own test of running the test suite 10%
+>    times with/without this patch, and it runs 9% slower:
+>
+>      fsync-off: avg:21.59 21.50 21.50 21.52 21.53 21.54 21.57 21.59 21.61=
+ 21.63 21.95
+>       fsync-on: avg:23.43 23.21 23.25 23.26 23.26 23.27 23.32 23.49 23.51=
+ 23.83 23.88
 
-On Wed, Jan 17 2018, Christian Ludwig jotted:
+That's not the thing you should check.
 
-> +if (defined $reply_to) {
-> +	$reply_to =~ s/^\s+|\s+$//g;
-> +	($reply_to) = expand_aliases($reply_to);
-> +	$reply_to = sanitize_address($reply_to);
-> +}
+Now re-do the test while another process writes to a totally unrelated
+a huge file (say, do a ISO file copy or something).
 
-Just a note to other reviewers: I found it odd to call a function with
-one argument and then enforce list context, but I see expand_aliases()
-expects to be called that way, and this is copied from a previous
-pattern earlier in the file.
+That was the thing that several filesystems get completely and
+horribly wrong. Generally _particularly_ the logging filesystems that
+don't even need the fsync, because they use a single log for
+everything (so fsync serializes all the writes, not just the writes to
+the one file it's fsync'ing).
 
-(As an aside, that code looks a bit odd, but then I see 302e04ea4d
-("send-email: detect cycles in alias expansion", 2009-07-23) )
+The original git design was very much to write each object file
+without any syncing, because they don't matter since a new object file
+- by definition - isn't really reachable. Then sync before writing the
+index file or a new ref.
 
-Looks good to me.
+But things have changed, I'm not arguing that the code shouldn't be
+made safe by default. I personally refuse to use rotating media on my
+machines anyway, largely exactly because of the fsync() issue (things
+like "firefox" started doing fsync on the mysql database for stupid
+things, and you'd get huge pauses).
+
+But I do think your benchmark is wrong. The case where only git does
+something is not interesting or relevant. It really is "git does
+something _and_ somebody else writes something entirely unrelated at
+the same time" that matters.
+
+                  Linus
