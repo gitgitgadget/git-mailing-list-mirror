@@ -2,98 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B8691FADF
-	for <e@80x24.org>; Wed, 17 Jan 2018 09:48:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 599251F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 12:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752316AbeAQJsf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 04:48:35 -0500
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:40871 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750830AbeAQJsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 04:48:33 -0500
-Received: by mail-oi0-f44.google.com with SMTP id u83so12675249oie.7
-        for <git@vger.kernel.org>; Wed, 17 Jan 2018 01:48:32 -0800 (PST)
+        id S1752662AbeAQM2Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 07:28:16 -0500
+Received: from mail-it0-f41.google.com ([209.85.214.41]:47018 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752520AbeAQM2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 07:28:15 -0500
+Received: by mail-it0-f41.google.com with SMTP id c16so8976684itc.5
+        for <git@vger.kernel.org>; Wed, 17 Jan 2018 04:28:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=573gqXElDnPZ1jVbdgUIBRsgYfVCGBDyFFgV+hbslNk=;
-        b=pcBfyZFlqoq7xJYuA4zi/3C1X5fCIYvkEiscLzRNfrj4sBXU1ZAABPHixu0DV7v1Bz
-         YCbfVXjcssUWT465RGVYinZrNZ/QlF0UEC2/KVzIc2UZtW1aCKnYwBRZ3PgunSPpDz70
-         MXtG4G8t04OC6GQo8RpaEneQb759zMwrh0RBuV2hk/9TLUTjP3AGFId4f2YCI77JnN77
-         wzQRW6MOEGLBeLVQ8wWi+yq55Ru3hZA8+7Te2FZYLjJGswzqk3+13qfI4Obhayzi6err
-         qRkN9hTs/SwzXzL2XDPGtCNEqHNY5vkLjw/rGGouZmdgEPR3KuewwqTZhtgul8crfH4N
-         U3XA==
+        bh=ngFhyFbQDtL1X6DOajwqJJUMx/qnKH0nmkwXWW9D/+k=;
+        b=FiJb39WJuirSMvxaVOGpntGVK9JlO8MeUfqWQqiRDOqZqq//kaYgkNB2pYBwpjWgAc
+         6zFF0EIe6BrnjhIeyM5nSK00jYsO8NAQeI7TR/I/4dnZYECSszp3p4Dr0mPHmnYO05pH
+         f8gN1/a0Y5FmuTHNiIiF8/UogcuPu3cdQvZNqf1YtSYNaSzr4hEfBhFImwnz9DSRpbKA
+         ggBEaclthpbXpHtnqaaTUPOyfKbDTWgU9aSDxpZSnfd0ZxsqhPgpuusvFCGLqmomLYWe
+         xsJbAmi16XjAb2tSMMJkNn/ZjAWJQ0EkCzM7qpamg+NkhbBTTpYjI2lBUJeMbME5pGik
+         U9MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=573gqXElDnPZ1jVbdgUIBRsgYfVCGBDyFFgV+hbslNk=;
-        b=t/HueCl0N51TYe4BXHx8f8pfalYEVQVAQ3Kky+aiAIIhasTaUeTE41RujAyUOvV8Wv
-         8AYKZlY+YhHb2FANzKESLo0ODpsfxzKekxIJ+o09bAN8jBs8DHqmi6PSkakOvn2VJKER
-         UikBkPaZNO/oXZBxuxn2zHqo79Tlvowmin2KbVndG93fEo0RLUHH2+tH0NLIU0W1r+CU
-         KCddzPkSO3Gfg+IlDtDmIlYXsSy5WZ8xxCTma2je+g5P+PDztkx3EAs2UCMaxyJoL86Y
-         50iFg3xvGYUoNCj20/D2kJ9+yrDR53FKDs1FdfIImgLCeKCkBobEAQtQgZGxQ0bcUf5Z
-         1Paw==
-X-Gm-Message-State: AKwxyteHyd6tm5txNoPcfviyXpds1WP6zbTqjHX0GtjqE5egIKSPssLb
-        n4/FCPINaCkh1KgvntAa92kaeoTVC8i8lvX9QkU=
-X-Google-Smtp-Source: ACJfBovk03YQCJBkocCfS40Qkp7yMSKnWiDnJEoVs2aMEWjq9kVfM6g9wgNWINMFwG4UZqt5H9tVSiliLBRV3p4gJa8=
-X-Received: by 10.202.60.134 with SMTP id j128mr740905oia.268.1516182512614;
- Wed, 17 Jan 2018 01:48:32 -0800 (PST)
+        bh=ngFhyFbQDtL1X6DOajwqJJUMx/qnKH0nmkwXWW9D/+k=;
+        b=YPYbfc8YZ7nL8c/a8VVj2C5J7Sy4VZ0zHiftVBETqVBIA5mLq+M240NHNeY3+USDFh
+         h9yqf+CD3ii6H+/wt5ZdMII0u1ViD2CJQ7B7ez9G1AoyGT9I3yHoD+Onc6nlblOr4r7l
+         1U8Vi6MaFkEZzV3/PFMyIHWFUomPt7CMcXCqzsLxMn2zSwx0yoIfUQObJiges98Q7/yx
+         nFCgAsqfAhkPYTCisoTXrcRROdQKmYzNGssUuEqDvadS74Wn7WlS3Remcy0OWRXlUuMF
+         xFmOrNrSckw+zEoIJWpzZqC0x0v/PsQEi4SN1GVXWFEfwznt4Xpe6cKdJO/8Ssl+9SZf
+         8bmA==
+X-Gm-Message-State: AKwxyte8NsUQTQMVyEUx4FV94ZQTS0p9WCPdkbpBsfkIaJk6Ver8M1kB
+        GRpAj+mCgBm6j+dFc4MCDe/NXtZF3A5uURDFc98=
+X-Google-Smtp-Source: ACJfBov7rRWo7IWJNM5rHNFgl057qKtbpMZgFhY5dsyHW5Ewsh1245ZjDJfUphf0RwzI99fS5Kv8E+2DOW2xaVJxwiI=
+X-Received: by 10.36.249.196 with SMTP id l187mr11916679ith.63.1516192095181;
+ Wed, 17 Jan 2018 04:28:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Wed, 17 Jan 2018 01:48:02 -0800 (PST)
-In-Reply-To: <20180117061703.GB5618@alpha.vpn.ikke.info>
-References: <20171229135240.GQ3693@zaya.teonanacatl.net> <20171229224825.31062-1-szeder.dev@gmail.com>
- <87y3ll6s0e.fsf@evledraar.gmail.com> <20171230005222.GT3693@zaya.teonanacatl.net>
- <87vago76i8.fsf@evledraar.gmail.com> <xmqq373miw4r.fsf@gitster.mtv.corp.google.com>
- <1516052626.2870893.1236353440.65CA651A@webmail.messagingengine.com>
- <CACsJy8Dzv3qPc1dB1rdvYL+CvEp+hY8ddoBrbCiP5KnqikzyLw@mail.gmail.com>
- <xmqqh8rlvdgh.fsf@gitster.mtv.corp.google.com> <20180117004419.GA14263@duynguyen.dek-tpc.internal>
- <20180117061703.GB5618@alpha.vpn.ikke.info>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 17 Jan 2018 16:48:02 +0700
-Message-ID: <CACsJy8C0f43cc5TuybEo5wmem9MSdTO+-0tF3c9k4siN1UgwwQ@mail.gmail.com>
-Subject: Re: [PATCH] Add shell completion for git remote rm
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Junio C Hamano <gitster@pobox.com>, Keith Smiley <k@keith.so>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.79.113.199 with HTTP; Wed, 17 Jan 2018 04:28:14 -0800 (PST)
+In-Reply-To: <CAGZ79kax5Hip1wP3U60im__Dm0GvH8nNd+ByxG5OxMXrRkRvdQ@mail.gmail.com>
+References: <q7h9lghcob2s.fsf@orange.lip.ens-lyon.fr> <CAGZ79kax5Hip1wP3U60im__Dm0GvH8nNd+ByxG5OxMXrRkRvdQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 17 Jan 2018 13:28:14 +0100
+Message-ID: <CAP8UFD0etLfmvAqHOpoUPWF3eTMJUQZZ4Lfqe+CxTJuQPU3T0A@mail.gmail.com>
+Subject: Re: GSoC 2018 Org applications. Deadline = January 23, 2018 at 18:00 (CET)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Matthieu Moy <git@matthieu-moy.fr>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 17, 2018 at 1:17 PM, Kevin Daudt <me@ikke.info> wrote:
-> On Wed, Jan 17, 2018 at 07:44:19AM +0700, Duy Nguyen wrote:
->> PS. This also makes me thing about supporting subcommand aliases, so
->> that people can add back 'git remote rm' if they like (or something
->> like 'git r rm' when they alias 'remote' as well). Which is probably a
->> good thing to do. Long command names are fine when you have completion
->> support, they are a pain to type otherwise.
->>
+On Tue, Jan 16, 2018 at 9:08 PM, Stefan Beller <sbeller@google.com> wrote:
 >
-> Couldn't they just create an alias like git rrm then, if they use it so
-> often that it becomes an issue?
+> I'll be fine as a co-mentor this year.
 
-They could. The only exception that may not work is if they want to
-insert some options between "r" and "rm". Sometimes option positions
-matter. Anyway this is just thinking out loud, maybe we don't really
-need it until people scream about it with a valid use case
+Great!
 
-> Having another layer of aliases does create a lot of complexity.
+It looks like you also accepted the invite to be an admin, so we are 3
+admins now (Matthieu, you and me), maybe 4 if Dscho joins, so our
+application is complete.
 
-Yes. It's partly the reason I wanted this actually ;-) Many commands
-have gained subcommands nowadays but there's no shared infrastructure
-for managing these subcommands. By adding something that works across
-the board at subcommand level I'm forced to "fix" this (or probably
-never get to do the sub-aliasing because this "fix" takes forever).
--- 
-Duy
+We can still improve the Idea and Microproject pages though:
+
+https://git.github.io/SoC-2018-Ideas/
+https://git.github.io/SoC-2018-Microprojects/
