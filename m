@@ -2,40 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3ACF1F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 19:35:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE3951F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 19:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754162AbeAQTfN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 14:35:13 -0500
-Received: from verein.lst.de ([213.95.11.211]:57374 "EHLO newverein.lst.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754152AbeAQTfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 14:35:11 -0500
-Received: by newverein.lst.de (Postfix, from userid 2407)
-        id 458E768C4E; Wed, 17 Jan 2018 20:35:10 +0100 (CET)
-Date:   Wed, 17 Jan 2018 20:35:10 +0100
-From:   Christoph Hellwig <hch@lst.de>
+        id S1753988AbeAQThg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 14:37:36 -0500
+Received: from bombadil.infradead.org ([65.50.211.133]:53909 "EHLO
+        bombadil.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752588AbeAQThd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 14:37:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20170209; h=In-Reply-To:Content-Type:MIME-Version
+        :References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=ift2L3OXm9wUYJYLcS/nvfvuywA2f8JQ2yyZkoXPAU4=; b=bst1tPMpdQO5MLqSUN3zQ/uuj
+        EqpTUCGwSkB3e/yfRz/d7odER4Z10B8Hsvdy9WXe1HWIdWv2LwPKW1x/C4YCTZwirfbjH19NkTEeZ
+        d9qCWWGdZQ8OtIRQRcenPcsuY1bUMWLwAEWalJPbhtZXURfjW7u8PZtx2pEs8Z1p9q6/iX0gs+hOf
+        wKA3BDemHcsPJ65vzw3RFo0pCMKu+AJg6fnDH6IZcjpPU03mEUrJZtpQAokEpeShxe9lr/gz6ecgp
+        xxa6zcIA9r0sTJU/jhR7JmiF1p7nrKVvM+4jX92N7mPzF9N3wAQeX7fd2Lvjoa5OLtQ6RV8zDDnks
+        UuOoOyO+w==;
+Received: from willy by bombadil.infradead.org with local (Exim 4.89 #1 (Red Hat Linux))
+        id 1ebtWd-0008Es-JR; Wed, 17 Jan 2018 19:37:31 +0000
+Date:   Wed, 17 Jan 2018 11:37:31 -0800
+From:   Matthew Wilcox <willy@infradead.org>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Christoph Hellwig <hch@lst.de>, git@vger.kernel.org,
         linux-fsdevel@vger.kernel.org
 Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-Message-ID: <20180117193510.GA30657@lst.de>
-References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
+Message-ID: <20180117193731.GC25862@bombadil.infradead.org>
+References: <20180117184828.31816-1-hch@lst.de>
+ <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jan 17, 2018 at 11:04:32AM -0800, Junio C Hamano wrote:
+> Christoph Hellwig <hch@lst.de> writes:
+> > @@ -866,10 +866,8 @@ core.whitespace::
+> >  core.fsyncObjectFiles::
+> >  	This boolean will enable 'fsync()' when writing object files.
+> >  +
+> > -This is a total waste of time and effort on a filesystem that orders
+> > -data writes properly, but can be useful for filesystems that do not use
+> > -journalling (traditional UNIX filesystems) or that only journal metadata
+> > -and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
+> > +This option is enabled by default and ensures actual data integrity
+> > +by calling fsync after writing object files.
+> 
 > I am somewhat sympathetic to the desire to flip the default to
 > "safe" and allow those who know they are already safe to tweak the
 > knob for performance, and it also makes sense to document that the
@@ -44,68 +70,12 @@ On Wed, Jan 17, 2018 at 11:04:32AM -0800, Junio C Hamano wrote:
 > rob information from readers that they can use to decide if they
 > want to disable the configuration, no?
 
-Does this sound any better?  It is a little to technical for my
-taste, but I couldn't come up with anything better:
+How about this instead?
 
----
-From ab8f2d38dfe40e74de5399af0d069427c7473b76 Mon Sep 17 00:00:00 2001
-From: Christoph Hellwig <hch@lst.de>
-Date: Wed, 17 Jan 2018 19:42:46 +0100
-Subject: enable core.fsyncObjectFiles by default
-
-fsync is required for data integrity as there is no gurantee that
-data makes it to disk at any specified time without it.  Even for
-ext3 with data=ordered mode the file system will only commit all
-data at some point in time that is not guaranteed.
-
-I've lost data on development machines with various times countless
-times due to the lack of this option, and now lost trees on a
-git server with ext4 as well yesterday.  It's time to make git
-safe by default.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- Documentation/config.txt | 11 +++++++----
- environment.c            |  2 +-
- 2 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0e25b2c92..8b99f1389 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -866,10 +866,13 @@ core.whitespace::
- core.fsyncObjectFiles::
- 	This boolean will enable 'fsync()' when writing object files.
- +
--This is a total waste of time and effort on a filesystem that orders
--data writes properly, but can be useful for filesystems that do not use
--journalling (traditional UNIX filesystems) or that only journal metadata
--and not file contents (OS X's HFS+, or Linux ext3 with "data=writeback").
-+This option is enabled by default and ensures actual data integrity
-+by calling fsync after writing object files.
-+
-+Note that this might be really slow on ext3 in the traditional
-+data=ordered mode, in which case you might want to disable this option.
-+ext3 in data=ordered mode will order the actual data writeout with
-+metadata operation, but not actually guarantee data integrity either.
- 
- core.preloadIndex::
- 	Enable parallel index preload for operations like 'git diff'
-diff --git a/environment.c b/environment.c
-index 63ac38a46..c74375b5e 100644
---- a/environment.c
-+++ b/environment.c
-@@ -36,7 +36,7 @@ const char *git_hooks_path;
- int zlib_compression_level = Z_BEST_SPEED;
- int core_compression_level;
- int pack_compression_level = Z_DEFAULT_COMPRESSION;
--int fsync_object_files;
-+int fsync_object_files = 1;
- size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
- size_t delta_base_cache_limit = 96 * 1024 * 1024;
--- 
-2.14.2
-
-
+This option is enabled by default and ensures data integrity by calling
+fsync after writing object files.  It is not necessary on filesystems
+which journal data writes, but is still necessary on filesystems which
+do not use journalling (ext2), or that only journal metadata writes
+(OS X's HFS+, or Linux's ext4 with "data=writeback").  Turning this
+option off will increase performance at the possible risk of data loss.
 
