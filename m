@@ -2,112 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A796A1F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 23:04:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4CA11F406
+	for <e@80x24.org>; Wed, 17 Jan 2018 23:16:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753688AbeAQXEN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 18:04:13 -0500
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35295 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753363AbeAQXEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 18:04:11 -0500
-Received: by mail-it0-f66.google.com with SMTP id e1so11209368ita.0
-        for <git@vger.kernel.org>; Wed, 17 Jan 2018 15:04:11 -0800 (PST)
+        id S1754009AbeAQXQ5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 18:16:57 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:33886 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753805AbeAQXQz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 18:16:55 -0500
+Received: by mail-wm0-f45.google.com with SMTP id 81so136935wmb.1;
+        Wed, 17 Jan 2018 15:16:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EgC8KLgDeGM6rlcmcojfe3H3Nbhib4ZlEe6Dg5BEwfs=;
-        b=lDeHgAAS2N2iyTAZcrfHFJBxZ9964Xep42EZyDrOogAMpmDjxe8iMwBhnRUqzjel8x
-         CEjlr6B5rvHELbMYcUOZDKXmhRqK45wKu9AowW8jPDUpuwB/fGhiigrgho6RodUMX8OM
-         t/JLcCZU3OQYAfIYDViFNjYVXdX9eFolvOcYOR1a2WWRuPY+enHhOtLGL8vNirzw6atu
-         2akB3oupuHaYZMtH0YcZbYFqx7Ldp9T0W2B42FnGo4/NXKxcVAcWgD7TbJcKelZrjB3P
-         V0F+w7kRE8jHDmyCSD3yK14m/xvfrAZ0OMGDrovsOb0M7cpucWK1QecOsiNAuyoaK9wN
-         Cy6g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=opaOMYZENbCRn13dIrpGaEhzm+cSebl2vpOjG8Ec9rQ=;
+        b=BQ2UmTN8RcxpCzYjubBpwWzFkmfHE7sUlHE+G87z7+qayiHb+hZWAUOaC93TKu4NqY
+         2q4gy/WaVRrqG1gyPaeb8lVEuH9TMcrn7o9A6hBnv17y2PbL4r3+98q5mCI+IqH9Lwqp
+         QqJXsyQYN3NwDx8DPZnqo7sb5DwOMRmeU2iKZDM/KY/63BID3M1hf5e+BULtgtgb4z8e
+         ozw1tlB02hFg3KbScJFYdxKeVzMV7cKmXGgTU5IP6+J74HfzhE0PZPuj1IF6D/6W+lL1
+         edx/gwnI8tOnmFhlDXXkac38UoG2aQaZUXQ9EiqTZojgymwp7DUGYO/Gh6rfL+McZJym
+         LYlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EgC8KLgDeGM6rlcmcojfe3H3Nbhib4ZlEe6Dg5BEwfs=;
-        b=JiKTIvzw9PlzYBDTBtJ5Svo6cFctXmB7meVTePtUICraoHciWD3ojzEXWaGsTVkrfy
-         iU9u4t5933HWerktCpgbu/pQe513VOmEeKusdcJzEtDziGiMJgUZqhx4hxkZ7UEXOjCt
-         mLER8uQlArfEg9RTmt5FTaBNkqE8ODrI4rg6wHagHl9mzftFky4CD44h4Bp4OGa+BaSK
-         2fipmzJxyMsBndAW7H1APVoztiAR1kWVJBnAkTzyGIP77RgN82UrdIpypfBxBjYst8Jt
-         TbGbWdWGXK3QZpsD+wSu4ncr8WkP3e86qIilTD2L+BFXnHWiZkpJUrBAD9pEHyvD8jUA
-         HjXw==
-X-Gm-Message-State: AKwxytfXEm4NmaK5Q2jo0fmzY4a9jIWO99fl+a77oVzlOOTfkaMxW1XL
-        m9To3SPagAQM6Rt47Y1ka1HyMd188rR6A6E04Ac=
-X-Google-Smtp-Source: ACJfBou1qb/qb3WSaHGtRJmtpNdb9MGl6UR6JF8a82Yx4GHJX68Sr3NHLXjPHvvft0A+HgwVN5hJomhRoyJfBWkybZg=
-X-Received: by 10.36.84.205 with SMTP id t196mr15033130ita.128.1516230250814;
- Wed, 17 Jan 2018 15:04:10 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=opaOMYZENbCRn13dIrpGaEhzm+cSebl2vpOjG8Ec9rQ=;
+        b=r/vXM2SGY8QNEt+fgb59A+voBgXV2zlaexqQWuWVuog1+iY9kvTLjcodZS/mreiDWp
+         fIj5oyG95iAzkYJm9riqXKPoXaTPNdg2QF9+VT2oY0nzEXFeamd9kmGuP3A2tDOpeHQE
+         JpoNkcDJn6vZtsg/MK7+x2B9Z3thRdqyENg7pUHuo16TzwBAHnMne7dpVHXH25Tkv10c
+         xfDuxxwCJeuEKgdHsHYYBvxEePc/ZSwsKCBX5mmagJB4HCy0CyqoFCfH1gWIZbIlqULB
+         ryDk6Vqz81jmIlbvntQXWbw8IWRLXU+AT8OB8GOw8/ji2J7sueFoNwJfGMz92Y2JCr6f
+         Ttzg==
+X-Gm-Message-State: AKwxyteu+6fn0lMtjNZsLTwdHmc6K/tKV+0skKIBAwIIvLfQNI0nEzVo
+        51Uw81cetxb9rbWMjhcEK1w=
+X-Google-Smtp-Source: ACJfBouknragCdnoNT7K6rg8Rn3sta0EYHM7DQtQaLBNXjsE+4ZQRQt49dlWB4Toyp8PsjBChD0X8w==
+X-Received: by 10.80.155.7 with SMTP id o7mr5051563edi.105.1516231013425;
+        Wed, 17 Jan 2018 15:16:53 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id y3sm3032452edb.1.2018.01.17.15.16.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 17 Jan 2018 15:16:52 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Christoph Hellwig <hch@lst.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com> <87h8rki2iu.fsf@evledraar.gmail.com> <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+Date:   Thu, 18 Jan 2018 00:16:51 +0100
+Message-ID: <87efmohy8s.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.113.199 with HTTP; Wed, 17 Jan 2018 15:04:09 -0800 (PST)
-In-Reply-To: <20180117214906.GC13128@sigill.intra.peff.net>
-References: <01020160db0679c9-799a0bc4-b6d1-43e2-ad3b-80be4e4c55e9-000000@eu-west-1.amazonses.com>
- <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
- <20180115213335.GB4778@sigill.intra.peff.net> <20180115220946.GF4778@sigill.intra.peff.net>
- <CAL21BmmmX5-uisj+_=sDHwJO=fpXc41Wriw+uuxtR=gOio-HZQ@mail.gmail.com> <20180117214906.GC13128@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 18 Jan 2018 00:04:09 +0100
-Message-ID: <CAP8UFD1hnP3yab-qDKPkNcj5VadUD_HW5+V1e2nwPAB8r31zoQ@mail.gmail.com>
-Subject: Re: [PATCH v2 01/18] cat-file: split expand_atom into 2 functions
-To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 17, 2018 at 10:49 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jan 16, 2018 at 10:22:23AM +0300, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=
-=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F wrote:
->
->> >> In other words, I think the endgame is that expand_atom() isn't there=
- at
->> >> all, and we're calling the equivalent of format_ref_item() for each
->> >> object (except that in a unified formatting world, it probably doesn'=
-t
->> >> have the word "ref" in it, since that's just one of the items a calle=
-r
->> >> might pass in).
+
+On Wed, Jan 17 2018, Linus Torvalds jotted:
+
+> On Wed, Jan 17, 2018 at 1:44 PM, Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
 >>
->> Agree! I want to merge current edits, then create format.h file and
->> make some renames, then finish migrating process to new format.h and
->> support all new meaningful tags.
+>>     I ran a small test myself on CentOS 7 (3.10) with ext4 data=ordered
+>>     on the tests I thought might do a lot of loose object writes:
+>>
+>>       $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux GIT_PERF_MAKE_OPTS="NO_OPENSSL=Y CFLAGS=-O3 -j56" ./run origin/master fsync-on~ fsync-on p3400-rebase.sh p0007-write-cache.sh
+>>       [...]
+>>       Test                                                            fsync-on~         fsync-on
+>>       -------------------------------------------------------------------------------------------------------
+>>       3400.2: rebase on top of a lot of unrelated changes             1.45(1.30+0.17)   1.45(1.28+0.20) +0.0%
+>>       3400.4: rebase a lot of unrelated changes without split-index   4.34(3.71+0.66)   4.33(3.69+0.66) -0.2%
+>>       3400.6: rebase a lot of unrelated changes with split-index      3.38(2.94+0.47)   3.38(2.93+0.47) +0.0%
+>>       0007.2: write_locked_index 3 times (3214 files)                 0.01(0.00+0.00)   0.01(0.00+0.00) +0.0%
+>>
+>>    No impact. However I did my own test of running the test suite 10%
+>>    times with/without this patch, and it runs 9% slower:
+
+That should be "10 times" b.t.w., not "10% times"
+
+>>
+>>      fsync-off: avg:21.59 21.50 21.50 21.52 21.53 21.54 21.57 21.59 21.61 21.63 21.95
+>>       fsync-on: avg:23.43 23.21 23.25 23.26 23.26 23.27 23.32 23.49 23.51 23.83 23.88
 >
-> I think we have a little bit of chicken and egg there, though. I'm
-> having trouble reviewing the current work, because it's hard to evaluate
-> whether it's doing the right thing without seeing the end state.
+> That's not the thing you should check.
+>
+> Now re-do the test while another process writes to a totally unrelated
+> a huge file (say, do a ISO file copy or something).
+>
+> That was the thing that several filesystems get completely and
+> horribly wrong. Generally _particularly_ the logging filesystems that
+> don't even need the fsync, because they use a single log for
+> everything (so fsync serializes all the writes, not just the writes to
+> the one file it's fsync'ing).
+>
+> The original git design was very much to write each object file
+> without any syncing, because they don't matter since a new object file
+> - by definition - isn't really reachable. Then sync before writing the
+> index file or a new ref.
+>>
+> But things have changed, I'm not arguing that the code shouldn't be
+> made safe by default. I personally refuse to use rotating media on my
+> machines anyway, largely exactly because of the fsync() issue (things
+> like "firefox" started doing fsync on the mysql database for stupid
+> things, and you'd get huge pauses).
+>
+> But I do think your benchmark is wrong. The case where only git does
+> something is not interesting or relevant. It really is "git does
+> something _and_ somebody else writes something entirely unrelated at
+> the same time" that matters.
 
-Yeah, to me it feels like you are at a middle point and there are many
-ways to go forward.
+Yeah it's shitty, just a quick hack to get some since there was a
+discussion of performance, but neither your original patch or this
+thread had quoted any.
 
-As I wrote in another email though, I think it might be a good time to
-consolidate new functionality by adding tests (and perhaps
-documentation at the same time) for each new atom that is added to
-ref-filter or cat-file. It will help you refactor the code and your
-patch series later without breaking the new functionality.
+One thing you may have missed is that this is a parallel (56 tests at a
+time) run of the full test suite. So there's plenty of other git
+processes (and test setup/teardown) racing with any given git
+process. Running the test suite in a loop like this gives me ~100K IO
+ops/s & ~50% disk utilization.
 
-> So what
-> I was suggesting in my earlier mails was that we actually _not_ try to
-> merge this series, but use its components and ideas to build a new
-> series that does things in a bit different order.
+Or does overall FS activity and raw throughput (e.g. with an ISO copy)
+matter more than general FS contention?
 
-Yeah, I think you will have to do that, but the tests that you can add
-now for the new features will help you when you will build the new
-series.
+Tweaking it to emulate this iso copy case, running another test with one
+of these running concurrently:
 
-And hopefully it will not be too much work to create this new series
-as you will perhaps be able to just use the interactive rebase to
-build it.
+    # setup
+    dd if=/dev/urandom of=/tmp/fake.iso bs=1024 count=$((1000*1024))
+    # run in a loop (shuf to not always write the same thing)
+    while sleep 0.1; do shuf /tmp/fake.iso | pv >/tmp/fake.shuf.iso; done
 
-I also don't think it's a big problem if the current patch series gets
-quite long before you start creating a new series.
+Gives throughput that spikes to 100% (not consistently) and:
+
+    fsync-off: avg:36.37 31.74 33.83 35.12 36.19 36.32 37.04 37.34 37.71 37.93 40.43
+     fsync-on: avg:38.09 34.56 35.14 35.69 36.41 36.41 37.96 38.25 40.45 41.44 44.59
+
+~4.7% slower, v.s. ~8.5% in my earlier
+87h8rki2iu.fsf@evledraar.gmail.com without that running.
+
+Which is not an argument for / against this patch, but those numbers
+seem significant, and generally if the entire test suite slows down by
+that much there's going to be sub-parts of it that are much worse.
+
+Which might be a reason to tread more carefully and if it *does* slow
+things down perhaps do it with more granularity, e.g. turning it on in
+git-receive-pack might be more sensible than in git-filter-branch.
+
+I remember Roberto Tyley's BFG writing an amazing amount of loose
+objects, but it doesn't seem to have an fsync() option, I wonder if
+adding one would be a representative pathological test case.
