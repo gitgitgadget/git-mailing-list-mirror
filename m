@@ -2,113 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235C51FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 21:37:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62EB21FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 21:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753762AbeARVhC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 16:37:02 -0500
-Received: from mout.gmx.net ([212.227.15.18]:57285 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753525AbeARVhB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 16:37:01 -0500
-Received: from [10.122.129.233] ([46.142.197.184]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlV71-1fCzzc2brj-00bHqq; Thu, 18
- Jan 2018 22:36:55 +0100
-Date:   Thu, 18 Jan 2018 22:36:51 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Stefan Beller <sbeller@google.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com
-Subject: Re: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive:
- clarify arguments
-In-Reply-To: <20180118183618.39853-2-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1801182233480.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-2-sbeller@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754440AbeARVhj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 16:37:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48546 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753476AbeARVhg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 16:37:36 -0500
+Received: (qmail 18919 invoked by uid 109); 18 Jan 2018 21:37:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 18 Jan 2018 21:37:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15343 invoked by uid 111); 18 Jan 2018 21:38:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 18 Jan 2018 16:38:10 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Jan 2018 16:37:32 -0500
+Date:   Thu, 18 Jan 2018 16:37:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't
+ write shared index
+Message-ID: <20180118213732.GA7403@sigill.intra.peff.net>
+References: <CACsJy8A_moFProjfPAJFn2aP52w5qdYdOu4Ygox1qMMitNUHLg@mail.gmail.com>
+ <20180114101820.4273-1-pclouds@gmail.com>
+ <20180114101820.4273-3-pclouds@gmail.com>
+ <CAM0VKjmGo5gjUBpTQp9M+pvZzBMDAmYYCu-5VfG-8LYRxU7i0Q@mail.gmail.com>
+ <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+ <20180118132931.GA21914@sigill.intra.peff.net>
+ <CACsJy8BkJXeaG3mYNEsfVK4N_-WxwU2Pk2pa1FThH1sMEW2yxA@mail.gmail.com>
+ <20180118150014.GA2097@ash>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:a2y3yiFrJ0cFJmST3Ya5d92CsHIHAyiMpat5v0uOXnAaQswwmwi
- YA0Ez1vjZSEt1LkDka5u9C8QmnvyxHUs98+mPBVgTyEE5RPKiuoCDORvTyDtjN6lWJdLKfQ
- /6Pr3DRz/VMmSoO0o6icVsIzD2V5nLTbbZoSEFMNqdrHmcDIT2cdEtTMIADD4GsEuzEUewG
- dwe0B9FNWbUsE2R66/IoQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xJnF3f+rjZQ=:GH+2nOPq4Jg7A4UcQJedHv
- J9VX8/jZ43KQxzHQbt0/p3tOpN+NvRbwRzaVDj+ppWlQewfhnsJUQRX9ZSHSECS2Yqcjh3Las
- FNMgZUu6WVufnVGvbHFAo7sEP8nU8q4efTjukJGK3FWr6Zn8DdC98sctLarChIhXClHh5SUOE
- VpomREG+bQJs2KmJzi1JBH3vI6ZQwWerbS6nzweZHGkF8cJXnAsLusVJ3KQi4UOdQWae1gm4W
- O/Nqch9ijc9z+jvAnp5pgoRsjIPZ4+KlonhFX+RYCuKt5W8MprNa9xdhKnDXlMSWwkM/CojUB
- 2WX4NtXH5aZoDV4FioiWLDP1aSve5KVs/OKQlZQZbIYNu3SYso43wkeNC+DifGykBArhM7y3d
- 8jQoWFvlKaFRRkI2G1CZaP6xqcMTtR6ASbmI3I3tlZBLGrnsC2sR9DhP2fXYROOGDvHF7mNwF
- F6uzXBAHd7uI8ocPpIond2PcsEcSan/7+VDbG+7rHO+abNdHcRXBqms83skHkALEKBsJFq06L
- Y5JJjYecgp+XOeSBZzjCbhdO0r1C8VO07G137UCfxQRCgzzZBepwgbJsJTPE2zcf+RhM9HCrb
- G9MhEIa9YNyIvnslHJH3uSsysTcWbHuDCAtauqFRIS8AKFNxiXHPN/iC4s0hi8kMqWmIKDerf
- h3ifhzpxkKm97tzFyWMy1Cjctx8UxhyVaLNng83Ws2Nk5y+V1BIzSjrepcR5EutWWJ9ENEry9
- lfhQFqSlUmULtKHZ8JONzG9IPm4Fot4DKTM3HlZ5/4Gi+JzKp4IMuVrHsBb3XLWnv2ehxd8gJ
- mtf5PphLjJg8RLzpmkTc7hPBx+LdBa9KrVKBBMU7YUPsyZD8uw=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180118150014.GA2097@ash>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On Thu, Jan 18, 2018 at 10:00:14PM +0700, Duy Nguyen wrote:
 
-On Thu, 18 Jan 2018, Stefan Beller wrote:
-
-> Up to now each command took a commit as its first argument and ignored
-> the rest of the line (usually the subject of the commit)
+> The test suite was run as root, no wonder why my removing write access
+> has no effect. I got the test to pass with this, but then it fails
+> with
 > 
-> Now that we have commands that take different arguments, clarify each
-> command by giving the argument list.
+>     Can't write .prove (Permission denied) at /usr/share/perl/5.22/App/Prove.pm line 542.
 > 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  git-rebase--interactive.sh | 22 +++++++++++-----------
->  1 file changed, 11 insertions(+), 11 deletions(-)
+> Some more chown'ing or chmod'ing is required....
+
+Ah, right. I agree that we probably ought to run the ci as non-root.
+However, if the test requires non-root, it probably needs to be marked
+with the SANITY prereq.
+
+I also ran into one funny thing: if you run the script with "-i", then
+we do not run the test_when_finished block. And therefore the "ro"
+directory is left without its write bit, and the next test run fails, as
+it cannot "rm -rf" the old trash directory out of the way.
+
+I'm not sure there's a good solution, though. Skipping the
+test_when_finished block on a "-i" run is intentional, to let you
+inspect the broken state.
+
+> Subject: [PATCH] ci: don't accidentally run the test suite as root
 > 
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 23184c77e8..3cd7446d0b 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -155,17 +155,17 @@ reschedule_last_action () {
->  append_todo_help () {
->  	gettext "
->  Commands:
-> -p, pick = use commit
-> -r, reword = use commit, but edit the commit message
-> -e, edit = use commit, but stop for amending
-> -s, squash = use commit, but meld into previous commit
-> -f, fixup = like \"squash\", but discard this commit's log message
-> -x, exec = run command (the rest of the line) using shell
-> -d, drop = remove commit
-> -l, label = label current HEAD with a name
-> -t, reset = reset HEAD to a label
-> -b, bud = reset HEAD to the revision labeled 'onto'
-> -m, merge = create a merge commit using a given commit's message
-> +p, pick <commit> = use commit
-> +r, reword <commit> = use commit, but edit the commit message
-> +e, edit <commit> = use commit, but stop for amending
-> +s, squash <commit> = use commit, but meld into previous commit
-> +f, fixup <commit> = like \"squash\", but discard this commit's log message
-> +x, exec <commit> = run command (the rest of the line) using shell
-> +d, drop <commit> = remove commit
-> +l, label <label>= label current HEAD with a name
-> +t, reset <label> = reset HEAD to a label
-> +b, bud = reset HEAD to the revision labeled 'onto', no arguments
-> +m, merge [<label-or-commit>]* = create a merge commit using a given commit's message
+> This script assigns and adds a user named "ci" in a subshell so the
+> outer CI_USER is not affected. For some reason, CI_USER is actually
+> empty on Travis linux32 builds. This makes the following "su" useless
+> and the test suite is run as root.
 
-Good idea! I would rather do it as an introductory patch (that only
-converts the existing list).
+Are we sure this was the problem on Travis, and it wasn't just an issue
+with how I reproduced via docker?
 
-As to `merge`: it is a bit more complicated ;-)
-
-	m, merge <original-merge-commit> ( <label> | "<label>..." ) [<oneline>]
-		create a merge commit using the original merge commit's
-		message (or the oneline, if "-" is given). Use a quoted
-		list of commits to be merged for octopus merges.
-
-Thanks,
-Dscho
+-Peff
