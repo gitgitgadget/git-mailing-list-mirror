@@ -3,76 +3,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28AB31F406
-	for <e@80x24.org>; Wed, 17 Jan 2018 23:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D03D1F406
+	for <e@80x24.org>; Thu, 18 Jan 2018 00:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754162AbeAQX54 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 Jan 2018 18:57:56 -0500
-Received: from mail-it0-f47.google.com ([209.85.214.47]:45508 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753923AbeAQX5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 Jan 2018 18:57:55 -0500
-Received: by mail-it0-f47.google.com with SMTP id x42so11356524ita.4;
-        Wed, 17 Jan 2018 15:57:54 -0800 (PST)
+        id S1753879AbeARAel (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 Jan 2018 19:34:41 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:41659 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753023AbeARAek (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 Jan 2018 19:34:40 -0500
+Received: by mail-pg0-f66.google.com with SMTP id 136so11939565pgd.8
+        for <git@vger.kernel.org>; Wed, 17 Jan 2018 16:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=vC+rO8PsH9gUmIE+FBBgRWFZuXr6HghJxXGat2PSGKY=;
-        b=SHaTFDl6cqsgSEXPZgLbVAxCaXvTCyxWb8MLMGzE9cwM0CY7QWh5N74HsLllpIE+8J
-         C7gtStFRl/EYJI9eq1yZQGez+A8/bqMv8raKjNd6emDS13zT1LlNr7zD8uyI2kGrPfCc
-         UvXjHws6/+IuWTX65WQuqJlR+KhIv5CYQm1fTDaLecuMI72EkkXv8INyVslAkV9EkkLS
-         8ltQjvz43AszmexhQvymkDHeBON6CazVfUeOiha/kaeUuNTyyUTWFhdHP5tD/qPhNNjr
-         Kuv/PYwDH12I+YJqvCQSlbXCdMV5gIie6gdzvkCfjJpOaXhHNRGWgZK4uTKbtydJUsN3
-         0+Rw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=GbjQ7CWl1DroyLYYMU7/a536bcsKEQsKmUg6n1DqWvQ=;
+        b=JdF4r6OY/mqNJG7SMUY31gqQYsTp9US+gi0Yt5noI0hAWU8kqroXb+4hdisDcToC4i
+         RTHDkpDf+iTpZ+s0epPcWoZJRaU7OoHsZu+FupgVsSAr76lznp5jJfpFy0XpzsEhwhS+
+         5H6LJEEIxGaTwae4pUidiv3Ufm1reTBRRVT1F6AKygX9UlOF9B0FhzsLg/2RJpjlMGjb
+         JiqW6k3v1MnSDf3hZsX8aP1r/XijEPksrII0apuIgm0ajOS+w4ur0lDBivj4YfUy5jwa
+         QJsEPyIYi+ceXhJUmvM/+5EJ8f1Iy5qVm4NyqOLjo1DCK+TMMA+4UJU8Y5tLL/IeJ7IO
+         /N7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=vC+rO8PsH9gUmIE+FBBgRWFZuXr6HghJxXGat2PSGKY=;
-        b=XNCq7hxX4emDZ4VG7wKHh10EUv2fKd52bzRKWHogRrKxbpUzfA49CiXt34vZYebCs6
-         2DuDOFUIMJ3hJoIwATU8ZnwWfUCHyZjHpanctKatvaT7GgrM5sReowstiIP157C5c3JO
-         AeYQjmp4QSfTrut3qEPSXkqpqbT3iunSqrbNroLF2XYQvkSHFpDnfvd9mg+2pIQET7Br
-         LIh8veusJtzPHaq5l3JQrzWIL7tdjtnC94uOpEgilBvj1uib6rMHdGDsW2+WzqDSQUfL
-         f6M3QrG8pRdHOt/jejyaRCTv1PFl/yHhEkPqqiL8qxzqaC0rwPWrGknJwmGnuIeRZLbF
-         gyNw==
-X-Gm-Message-State: AKwxytcwbOFkBO+4Np97w5fEz9YWLMtlaQ/A5knEK1r/g0sWuD7UPM1F
-        HkbJGRcwM4Z6Sr84Mycbg1IvJZSZmCSGnzsDZi0=
-X-Google-Smtp-Source: ACJfBouCPfgZ1smvFwwz5UXxurbVGcg7W/rWM/CXGwwVLuRZeOjVE9zIP3USdhkKmHX11Diw9dCbPF11EcIfR3mDYcI=
-X-Received: by 10.36.248.134 with SMTP id a128mr4074170ith.152.1516233474472;
- Wed, 17 Jan 2018 15:57:54 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.107.6.147 with HTTP; Wed, 17 Jan 2018 15:57:53 -0800 (PST)
-In-Reply-To: <20180117235220.GD6948@thunk.org>
-References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
- <87h8rki2iu.fsf@evledraar.gmail.com> <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
- <20180117235220.GD6948@thunk.org>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 17 Jan 2018 15:57:53 -0800
-X-Google-Sender-Auth: BOYy9XhSRKuZq6_9A-al21ckMnY
-Message-ID: <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
-Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-To:     "Theodore Ts'o" <tytso@mit.edu>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=GbjQ7CWl1DroyLYYMU7/a536bcsKEQsKmUg6n1DqWvQ=;
+        b=B9OWTVqAUcdOXfC8pKYFP6yLhX3wI/0yondLjsixBRCKeGaVXMja6uG1XVZblzoe0A
+         lvln0kJPf8L5ggwT4mf9MtPcUOCmlQ31k7wCBDVnIg/honzu/QuYO0Bq3EgQqzA9zEuO
+         7P0d0SKo37Y1h0XFFiPdZdWNjX0iYXGyUFG9zVfyrm3T8McVmomY9pHgXYvcLilecchc
+         1tB0zAzDIXqlOP8VH/+IXS6wFI0J0Wfx7AiiM+Wurewti2vAfwLPUxAuxfZR81T9ZkhW
+         S71DZnN/y89BUxDYa8WGYH3NiwfjZpOz8+cbsXfGGYqyd7RasIYg1djhPhcKFNJPYvfy
+         LocA==
+X-Gm-Message-State: AKwxytdF5zB+TJEiLX2VQn5q+BhnBU28vqX9yb7qyxTlw93tfeYZrlPA
+        Z9ockizxKgHf7ZF/ZQe46RCJYIkCHTY=
+X-Google-Smtp-Source: ACJfBovRAnmHIpt5clPPMRvbFWTcIzcVjzu9YXq6f0SLA9jnL9opmQA6MLKWMDyqTqe8brOOhNL2Eg==
+X-Received: by 10.159.252.75 with SMTP id t11mr4967111plz.324.1516235679883;
+        Wed, 17 Jan 2018 16:34:39 -0800 (PST)
+Received: from twelve3.mtv.corp.google.com ([100.96.218.44])
+        by smtp.gmail.com with ESMTPSA id d5sm11233484pfk.2.2018.01.17.16.34.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 17 Jan 2018 16:34:38 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [RFC PATCH 0/2] Cookie redaction during GIT_TRACE_CURL
+Date:   Wed, 17 Jan 2018 16:34:29 -0800
+Message-Id: <cover.1516235197.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.16.0.rc2.38.g114ad43e1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 17, 2018 at 3:52 PM, Theodore Ts'o <tytso@mit.edu> wrote:
->
-> Well, let's be fair; this is something *ext3* got wrong, and it was
-> the default file system back them.
+Sometimes authentication information is sent over HTTP through cookies,
+but when using GIT_TRACE_CURL, that information appears in logs. There
+are some HTTP headers already redacted ("Authorization:" and
+"Proxy-Authorization:") - the first patch extends such redaction to a
+user-specified list.
 
-I'm pretty sure reiserfs and btrfs did too..
+I've also included another patch to allow omission of data transmission
+information from being logged when using GIT_TRACE_CURL. This reduces
+the information logged to that similar to GIT_CURL_VERBOSE.
+(As for why not use GIT_CURL_VERBOSE instead - that is because
+GIT_CURL_VERBOSE does not perform any redaction, merely using Curl's
+default logging mechanism.)
 
-          Linus
+The patches are ready for merging, but I marked this as "RFC" just in
+case there is a better way to accomplish this.
+
+Jonathan Tan (2):
+  http: support cookie redaction when tracing
+  http: support omitting data from traces
+
+ http.c                      | 82 ++++++++++++++++++++++++++++++++++++++++-----
+ t/t5551-http-fetch-smart.sh | 24 +++++++++++++
+ 2 files changed, 98 insertions(+), 8 deletions(-)
+
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+
