@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 980971FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 18:36:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79F361FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 18:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756003AbeARSgb (ORCPT <rfc822;e@80x24.org>);
+        id S1755948AbeARSgg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 13:36:36 -0500
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:44419 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755712AbeARSgb (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 18 Jan 2018 13:36:31 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:38553 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755827AbeARSga (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 13:36:30 -0500
-Received: by mail-pg0-f68.google.com with SMTP id y27so8979590pgc.5
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 10:36:29 -0800 (PST)
+Received: by mail-pf0-f172.google.com with SMTP id m26so15315320pfj.11
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 10:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WJXzwVdGvOqkLlxJNuoUzTsEzhxI52glz+DL9IGU9OA=;
-        b=PlHs76oERzzKjrRwl7N9NJpwd8IW9dpKIQ5KIhUFv+w6xQFRvMBoqaRfR+T5UEjYzV
-         /DLbhNnbQsDkvwUhD3hW0BiaZiHaW9vBFZHTXKL6qwsKUOBkZQ7froBi6dPesr+PpWwG
-         7y3GNIZ5fU6p/tCJmQ11cc2D7saGsr9wtMP04IuI0x/Tca6JwfR13YQXHJo1JpTsn85U
-         X9k5jfpHC+6jFmfk3kZigYMYRgAENsUlL1ifzt5HKMzHKHlsxd/5u0iLvtCaCrmAUIgV
-         zRUfXLhUGQd2eUaWvqdGZY8gl3UhAQu1daSWvx2dgkHgLlyXo8STEAz8smte/+ocOE3p
-         Uk1g==
+        bh=tMkZnu7S+Ybhx6q7vykcPVMSbNzNJVmFF3bv9ukTbfw=;
+        b=s3VShe4D42ovP7MsHuilDodSBCxKNuHjPNvvUbyhBCb24tp75seFLU/hf34XVbI57v
+         5dt7+csEHx1Le36UUjjK7v+nVHNqxM9c0cZ+hfiBtxipuM/q/CSl2/qMdJ4LvUddbDfp
+         MxSkwywac2D3PkyeCbYlRMpMvTYKZwt8d5FV3wcrHXNDGz/ADOElQnHtaEKBRUJIHR5X
+         71Y22Tf52Iv0e6x1Nhamj57ZAoT1JrsHWoSyy19iUdq20VRG4fewWp0X3f/AEmccfkWj
+         cVa4+1LT0e22CsygCNvpG0os93aD66vWWFqcsGtUNePVo3cewMPDE3BmvXxlzzREs0rv
+         T2Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=WJXzwVdGvOqkLlxJNuoUzTsEzhxI52glz+DL9IGU9OA=;
-        b=ayLzwwgRiXFYNrRXkLF9CbBRZ0fFhTkvA6THNS6lBdlcXw0HW98/2sd8TQgcvyLmgC
-         C27JqNYAKl1kCOWUL5oLAvdH3RQgJWKW4x2jUmJ0Szha+4ksxSpNQRnOU/1S4/H6bdnn
-         q7kJQcA0CZxotQIeIFHkAnY14PM/eg53OJ5RwvDUe0yxffy0alWvgCfi8h50EH1bTupj
-         WyrCyg2tb8G6QSoCkiQjw6PAbVsBx8ndcQvvFlEF4r/+yDGmbD0YKUIfp5b+19MMH5LJ
-         VDKw6LXuM5Sv6BbdMJs+iK2oIShljQiE/TDbnFmXFhTcSfyYVXwHvbFG5NcOHBrj8erm
-         Bm3A==
-X-Gm-Message-State: AKGB3mJNFyXNzKx4EU0qkNjb4olznTVk1c0e2zl3U5+OTS07hJbuMz26
-        /24Elcao/Bgh6Uq+IDr4BoUjyw==
-X-Google-Smtp-Source: ACJfBosBPFls3BObJqnC+VIQKtx4lKO+YaH+VEUH39W/ju9fKCDX+eDgez2MmXkX9HjG6mhXd+qvVA==
-X-Received: by 10.99.117.18 with SMTP id q18mr32898581pgc.71.1516300589241;
-        Thu, 18 Jan 2018 10:36:29 -0800 (PST)
+        bh=tMkZnu7S+Ybhx6q7vykcPVMSbNzNJVmFF3bv9ukTbfw=;
+        b=j59I7YnAKB7VxMY/YYKPJ9DD/Pvz1TPUCFMnd4QWX9oSgezjo7FUnTPPO6A3zoO1Mc
+         ugFqjV4Jz/b3cQFPDvYp+63PgOXTpdwH9uFNqXeqP4oZVu31HLkmHNlxk6sSQ5DbOU4R
+         hWah3gjNjBaDRmU/9gUU0EQK4mqPGqrOs5MVia6geXfTFliHF68OTUSs77TJCMZOxMlG
+         7U4szwYY9sET3Q7BmW5Ts1rAKlHoz5Ma+CjKYpG1a8dfk1QRQav6wHPwkdJngFm1loNB
+         BKu0VzlF1CcLhLOWp7axmxYgTFProId7Vvsoi78/s4VG6j84lu+M43ygHvHQHIv7CJMo
+         GeQA==
+X-Gm-Message-State: AKGB3mIrqScT91UfIvqpzkJ8WHAbI/SNTilCkIpwmImrcSH27CYQom/v
+        q5gHJ9AU1YYw7cFVSXPA/eniaQ==
+X-Google-Smtp-Source: ACJfBosnopV8Hm5S0+N99oWs3s+Qfac0cBpOJ5KdPj4iKoL7YUK/iEZiuWwLR9OG0cAe3NY2YMAxXQ==
+X-Received: by 10.101.72.70 with SMTP id i6mr38547729pgs.9.1516300590602;
+        Thu, 18 Jan 2018 10:36:30 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id m6sm13594366pfh.151.2018.01.18.10.36.28
+        by smtp.gmail.com with ESMTPSA id t71sm15610377pfg.115.2018.01.18.10.36.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Jan 2018 10:36:28 -0800 (PST)
+        Thu, 18 Jan 2018 10:36:30 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     johannes.schindelin@gmx.de
 Cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive: clarify arguments
-Date:   Thu, 18 Jan 2018 10:36:17 -0800
-Message-Id: <20180118183618.39853-2-sbeller@google.com>
+Subject: [PATCH 10/8] [DO NOT APPLY, but improve?] rebase--interactive: introduce "stop" command
+Date:   Thu, 18 Jan 2018 10:36:18 -0800
+Message-Id: <20180118183618.39853-3-sbeller@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
 In-Reply-To: <20180118183618.39853-1-sbeller@google.com>
 References: <cover.1516225925.git.johannes.schindelin@gmx.de>
@@ -64,50 +64,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Up to now each command took a commit as its first argument and ignored
-the rest of the line (usually the subject of the commit)
+Jake suggested using "x false" instead of "edit" for some corner cases.
 
-Now that we have commands that take different arguments, clarify each
-command by giving the argument list.
+I do prefer using "x false" for all kinds of things such as stopping
+before a commit (edit only let's you stop after a commit), and the
+knowledge that "x false" does the least amount of actions behind my back.
+
+We should have that command as well, maybe?
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- git-rebase--interactive.sh | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ git-rebase--interactive.sh |  1 +
+ sequencer.c                | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 23184c77e8..3cd7446d0b 100644
+index 3cd7446d0b..9eac53f0c5 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -155,17 +155,17 @@ reschedule_last_action () {
- append_todo_help () {
- 	gettext "
- Commands:
--p, pick = use commit
--r, reword = use commit, but edit the commit message
--e, edit = use commit, but stop for amending
--s, squash = use commit, but meld into previous commit
--f, fixup = like \"squash\", but discard this commit's log message
--x, exec = run command (the rest of the line) using shell
--d, drop = remove commit
--l, label = label current HEAD with a name
--t, reset = reset HEAD to a label
--b, bud = reset HEAD to the revision labeled 'onto'
--m, merge = create a merge commit using a given commit's message
-+p, pick <commit> = use commit
-+r, reword <commit> = use commit, but edit the commit message
-+e, edit <commit> = use commit, but stop for amending
-+s, squash <commit> = use commit, but meld into previous commit
-+f, fixup <commit> = like \"squash\", but discard this commit's log message
-+x, exec <commit> = run command (the rest of the line) using shell
-+d, drop <commit> = remove commit
-+l, label <label>= label current HEAD with a name
-+t, reset <label> = reset HEAD to a label
-+b, bud = reset HEAD to the revision labeled 'onto', no arguments
-+m, merge [<label-or-commit>]* = create a merge commit using a given commit's message
+@@ -166,6 +166,7 @@ l, label <label>= label current HEAD with a name
+ t, reset <label> = reset HEAD to a label
+ b, bud = reset HEAD to the revision labeled 'onto', no arguments
+ m, merge [<label-or-commit>]* = create a merge commit using a given commit's message
++y, stay = stop for  shortcut for
  
  These lines can be re-ordered; they are executed from top to bottom.
  " | git stripspace --comment-lines >>"$todo"
+diff --git a/sequencer.c b/sequencer.c
+index 2b4e6b1232..4b3b9fe59d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -782,6 +782,7 @@ enum todo_command {
+ 	TODO_RESET,
+ 	TODO_BUD,
+ 	TODO_MERGE,
++	TODO_STOP,
+ 	/* commands that do nothing but are counted for reporting progress */
+ 	TODO_NOOP,
+ 	TODO_DROP,
+@@ -803,6 +804,7 @@ static struct {
+ 	{ 'l', "label" },
+ 	{ 't', "reset" },
+ 	{ 'b', "bud" },
++	{ 'y', "stay" },
+ 	{ 'm', "merge" },
+ 	{ 0,   "noop" },
+ 	{ 'd', "drop" },
+@@ -1307,6 +1309,12 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 		return 0;
+ 	}
+ 
++	if (item->command == TODO_STOP) {
++		item->commit = NULL;
++		item->arg = "";
++		item->arg_len = 0;
++	}
++
+ 	end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
+ 	item->arg = end_of_object_name + strspn(end_of_object_name, " \t");
+ 	item->arg_len = (int)(eol - item->arg);
+@@ -2407,6 +2415,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 				/* `current` will be incremented below */
+ 				todo_list->current = -1;
+ 			}
++		} else if (item->command == TODO_STOP) {
++			todo_list->current = -1;
+ 		} else if (item->command == TODO_LABEL)
+ 			res = do_label(item->arg, item->arg_len);
+ 		else if (item->command == TODO_RESET)
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
