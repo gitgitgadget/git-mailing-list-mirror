@@ -7,65 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 652231F404
-	for <e@80x24.org>; Thu, 18 Jan 2018 09:46:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 399EC1F404
+	for <e@80x24.org>; Thu, 18 Jan 2018 09:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755394AbeARJqH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 04:46:07 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33983 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755002AbeARJqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 04:46:05 -0500
-Received: by mail-pg0-f67.google.com with SMTP id r19so7888460pgn.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 01:46:05 -0800 (PST)
+        id S932199AbeARJu5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 04:50:57 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:43390 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932177AbeARJux (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 04:50:53 -0500
+Received: by mail-pg0-f65.google.com with SMTP id n17so6091400pgf.10
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 01:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6LbjqeDS0e8T/7ai2spEIy+tICWEMxCdNZ9aAUiK/20=;
-        b=N5H0d4CVbMBxv3H3GKwPwAqRoMSOQY36TX3RJG1NRewrxOqamHWwD+b9sch4BAhhfp
-         e9JmONRrcdV2t5Tn4aiHbOGjSPnlhUMRLOlOp345G55yKhYdi4eFvYgq7nz5tDLtF56C
-         I3IkPhg0YRrzFBKl+IDQM7qareeKFbMAM1kQ1Jw5l80K4n5o3oIHlsreU8coAbhwxtfv
-         wbRL6xQhRk/VBYEw95QfWybwYksD9+2P8tpc/ehlYYcdObsBRpMuLrZRiKNotf14c7aW
-         4xJlMTu8pZFLioRF/ZC0/ST9IQp5lGPaMjLnvLWlIJHMN55BiCtxNnUZaCNTYPWB2+qN
-         gcKg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ekeRnRsehDtIrniXfa0QLrD/vhmRJ3Vrdxalx9ZRg/A=;
+        b=eRv/9ssJrBm/+o3a2J18wU21IZZNnm8ewHv7Kreis7x5XzME3TOeLhjjZkM7q2RZnU
+         UFI43aGkldvceRq5xjF+HSd+/tFjVLEngGjrs8vLb0tY27yx46czRn1QDAns0wYFzjFo
+         iBHQ3KaOGXhWiYhmgMD5RyT1yNk9/wh8bzIaHFZtKHppQOpGBrDVPI4XhnXnNGrUINkW
+         nOnVbnAeImjrqAWaWKCFJGeMnMQUoRic5EQI8JsxKhgfMwrO9mr0cPxlIJ5MFnSgp7br
+         ztz00SrVsu7Kiqj8gs7G34mebJjvrGHrh2lmhr3Ay/YPJhljvUn42XRr26aC4gu13nnL
+         Tv5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6LbjqeDS0e8T/7ai2spEIy+tICWEMxCdNZ9aAUiK/20=;
-        b=A9UilchKTCMUUqvo0iyVdpP1ZSAlU3EKkmhtBBEY/pUAsFf1KMbRU8a54eZ0GEi004
-         1g9SJKrda4bMedM/vC4AcoJwkGETdeVRG6FowTwvNpEyBr++UUtHu54eNGxoSsSk/+sW
-         3Pbr6Kxqr60YLiaaFgLfC27aadE/Vl+AkUddIpxivmAs1Jjq7Y5NuwDsIMfXw5SkuUND
-         6mzxddM7P4OeKhCJBGQPLXilDGjPPBprs+8WWwInU233M3/jjDho97UcQ8c69YEVbhtq
-         7tENZedMbTojLvww0Pox5Tz6Z7tZESN8F8ExcxMt14imMoFFmJ/HK4i3YgayGkNkwbn7
-         Xfsg==
-X-Gm-Message-State: AKwxytel1bfKDA58UWSxfm9QweIyCkIr6cjdA2mp5YbQPPDJMQ7zz7W3
-        H4tytnUhGLfjwtSYghwPlr7R3A==
-X-Google-Smtp-Source: ACJfBotDex64lDPmqF/5ZhlyGU0Y9PgUoMs8eMDSKQ+2bI2mJ4pBRT9y+lEpv/pBUwsTv21to/xtfA==
-X-Received: by 10.101.72.143 with SMTP id n15mr20601747pgs.181.1516268764982;
-        Thu, 18 Jan 2018 01:46:04 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ekeRnRsehDtIrniXfa0QLrD/vhmRJ3Vrdxalx9ZRg/A=;
+        b=AqeN/pJXKiqPfGW1vzNj3ayfqf8cCiPmtevQUMrgXLt6U3bQXtTUChuJT8U2PMhKNE
+         Cp83bECwErWmst5Pep5qHkieuuwud8DCv/PezDOaTCN4amDt2UV4F/y0TC/jJSq3KSqg
+         gt/9IpqxAMUsGJk5rPBh89MrLyV8jALw1QYP8+6ZRBc8JNH6JxrzK/EC+TqUZnS5xvW3
+         f7Qgd6KvEfwNBqGVHrGq+dWlev+iS8N29f3oDuACkRswZzDE9XMqvIaWfTTjFFUI9Fs1
+         Ce003BWCRTlCbubX7cNsu6UI+25YoIdbVNbIhNksKsxtetKThK6MLNbZ52HXTMQLV4EY
+         cpvQ==
+X-Gm-Message-State: AKGB3mJeuW1LRp4sBpRTvaYNZzSemoBMCmfw1rnOpQqhqD5PgaBSKxvW
+        Z32bYhVq3aUyuVd6QHmtEf1SGQ==
+X-Google-Smtp-Source: ACJfBouJiCEXXyqhfaGD2Erah6/J471DG9Eqx3BkN6MTynCgbbmAWOBbk1HpT8hZmJQTRBcO5AIXCA==
+X-Received: by 10.99.112.70 with SMTP id a6mr27248983pgn.152.1516269053037;
+        Thu, 18 Jan 2018 01:50:53 -0800 (PST)
 Received: from ash ([27.75.129.14])
-        by smtp.gmail.com with ESMTPSA id z19sm11737518pfh.185.2018.01.18.01.46.01
+        by smtp.gmail.com with ESMTPSA id x21sm12464589pfi.174.2018.01.18.01.50.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jan 2018 01:46:04 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 18 Jan 2018 16:45:59 +0700
+        Thu, 18 Jan 2018 01:50:52 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 18 Jan 2018 16:50:47 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v6 7/7] run-command.c: print new cwd in trace_run_command()
-Date:   Thu, 18 Jan 2018 16:45:12 +0700
-Message-Id: <20180118094512.27849-8-pclouds@gmail.com>
+Subject: [PATCH] dir.c: print correct errno when opendir() fails
+Date:   Thu, 18 Jan 2018 16:50:36 +0700
+Message-Id: <20180118095036.29422-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
-In-Reply-To: <20180118094512.27849-1-pclouds@gmail.com>
-References: <20180115105949.18328-1-pclouds@gmail.com>
- <20180118094512.27849-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,30 +68,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a command sets a new env variable GIT_DIR=.git, we need more context
-to know where that '.git' is related to.
+The call invalidate_directory() between opendir() and warning_errno() in
+theory could make some system calls and change errno. Prevent that by
+warning immediately after opendir().
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- run-command.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ This is on top of nd/fix-untracked-cache-invalidation which is now on
+ 'next'. Sorry I waited too long to send the replacement and it's now
+ too late.
 
-diff --git a/run-command.c b/run-command.c
-index 1301b878c7..a483d5904a 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -622,6 +622,11 @@ static void trace_run_command(const struct child_process *cp)
- 		return;
+ dir.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index dd1e50c328..55736d3e2a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1795,14 +1795,14 @@ static int open_cached_dir(struct cached_dir *cdir,
+ 		return 0;
+ 	c_path = path->len ? path->buf : ".";
+ 	cdir->fdir = opendir(c_path);
++	if (!cdir->fdir)
++		warning_errno(_("could not open directory '%s'"), c_path);
+ 	if (dir->untracked) {
+ 		invalidate_directory(dir->untracked, untracked);
+ 		dir->untracked->dir_opened++;
+ 	}
+-	if (!cdir->fdir) {
+-		warning_errno(_("could not open directory '%s'"), c_path);
++	if (!cdir->fdir)
+ 		return -1;
+-	}
+ 	return 0;
+ }
  
- 	strbuf_addf(&buf, "trace: run_command:");
-+	if (cp->dir) {
-+		strbuf_addstr(&buf, " cd ");
-+		sq_quote_buf_pretty(&buf, cp->dir);
-+		strbuf_addch(&buf, ';');
-+	}
- 	/*
- 	 * The caller is responsible for initializing cp->env from
- 	 * cp->env_array if needed. We only check one place.
 -- 
 2.15.1.600.g899a5f85c6
 
