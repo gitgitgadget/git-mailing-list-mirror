@@ -2,120 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 660151FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 14:23:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C75A61FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 14:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756523AbeAROXo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 09:23:44 -0500
-Received: from mail-io0-f173.google.com ([209.85.223.173]:33175 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756467AbeAROXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 09:23:41 -0500
-Received: by mail-io0-f173.google.com with SMTP id n7so8532492iob.0
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 06:23:41 -0800 (PST)
+        id S932352AbeAROrL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 09:47:11 -0500
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:41052 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932257AbeAROrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 09:47:10 -0500
+Received: by mail-wr0-f174.google.com with SMTP id o7so22810228wro.8
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 06:47:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=x4SACr7qo2mIWTquLV1KPaQhpbVgDLdR1MYsirFgvNU=;
-        b=Lxm4aP/CD7fkp0f8Pf3osjKEC95F3ZwxYIc48JeZbPe2Rdp32wsY8eyxBnMppMcNr8
-         QoLkcejOEgerhe807nCkP3HT/81qDQ0VxZRu+2mA2qKebaRe+G38D7r6tQOcWzLvUtGg
-         +Cwf71S2RY1eqC4tYWauqzOSb1FA6NsbaHAsF/EGt97IjhRcpRT4g/Ic1cH1yvZJsuGC
-         BgNRmZx7qm3wJ8ynAb0HEP+L+lHI8CwePNm+BQLyqz1xwgAkyzjN+ycCeD6Etk4hqPpZ
-         vUbAv8VvM67eQ/D8KzusHXnHaCuEuYO3qHPDr49ItMkno2WTwMvyor/Mgp5vCUDBh68G
-         1ZRQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=4+fexLLGLgXxFBim1eCAY+sSYB1ZnV+YYEv4DKh40HY=;
+        b=On8kQJHzgO5TAZa258nXuSAR3VD16UoeFLCvIEgauEoi+7PqbwjtnpYNml7oogEupy
+         mjHp0gFAPKHYxwSdehpRDyVW8weUlsyzlotIfFRs4K0owM9G5Q6X1Lz3AVCJBi28BwyV
+         Wz8chj8bSmA6nERMKOe71U3iTqkfjdOlnNctF2Se7263Hhix3MU7sBmX8srkMBw3C5sa
+         8Y6ZMOxfR18p72st3JuekfSFteScZr19MoR1cBCZSuH43BN8JRnwjvidKXUoIblICzMu
+         a5VXamZ5Z4Jsah1D7hcOo2YFYXf/j41/Q3MtNtrLWy8oc/Y8W3AEobHvvX7E1lk/d3zx
+         qhvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=x4SACr7qo2mIWTquLV1KPaQhpbVgDLdR1MYsirFgvNU=;
-        b=gZgs5m+p07UnDDGtu9kPIPQMqHIoAy+Qlt8JYxAlceTd3b4Kz+Qp+7YH1dQJ1Kl8Pb
-         UHieYU7pM8eyJCouLpxllKb+FfGyK6xpCxp6eVRrS+R282awluA54iG/hB9xdHUW/MpF
-         coioLx5gvSHcBuQ2Xt7gy8aVfELMe32zgDYPcNC1WwsaLFm9wJpty9VwxZzqn33ILEkb
-         n5Gf+KlezdxzHO7ueqInIomuIJkLd6zXJd13TOjKfxO9i0gf7TqKq3btL0CVzIXqifgn
-         kA5b+LulYfOrzZ/CGuLMuizA/0PiDNY66a8e73k1tseKpAiudul/jYsdmdRTRIzD9O6k
-         RSKg==
-X-Gm-Message-State: AKwxytdjT4PhbnILHSHjwSB6TCovQjxpSUmCm4ZTMz/4QW/k4K0ORzO0
-        e/uS1rMq4VqCz40WbesbzQPpIWHrNsCponLwrNU=
-X-Google-Smtp-Source: ACJfBosPVMnWvh5IDPTyyIezADvZTJ1ocU0XkQPi/XpZuXUmYLy34JP/y1VQjJJE/qscHOX3WybJcf8ZvvMVgdppLQM=
-X-Received: by 10.107.69.3 with SMTP id s3mr14875452ioa.67.1516285420437; Thu,
- 18 Jan 2018 06:23:40 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=4+fexLLGLgXxFBim1eCAY+sSYB1ZnV+YYEv4DKh40HY=;
+        b=QOb2uOgfaqGx/Fcr/7EccUFk3pROnnpYjUYOQIMjkt9zRd7WycxVliDzxWr1QRZv5e
+         Roow0GK0v0guceoBVEVaj+JDj+DsJzaREXAx2EDxHL1PCivfOhFZ8nG748IhhMhbi2u/
+         DvW5bXCG7azMRFiS5A/GaHdIzidMpeVDGehqcmVmMxuEMdG+73npmTpFz/i08iIr/Q66
+         g0CnQdtnSHblouQ10k53p712NLmdchhExHtj4fPMJIPBlxZArHklP4oD9ZVjH7UfddM5
+         ebhNhx8s7dD0eE7qVU5IFc/FxejGaVG1MKtynE0yjrn/vQsA3FsZq/+lQSHSanF9aNl1
+         7YPw==
+X-Gm-Message-State: AKwxyteZEnQEnEOCQ0F0G0TjSyc8mmc8HC6tox9Uqk3NhY8Aw+oi5T7q
+        F2gFC0SkttFL9f8mUTmnjU0=
+X-Google-Smtp-Source: ACJfBov/7vA5hErRQuWFeItGvIrsDHd333yNZnNCx0kLnlX4JGiUoI/fVwmQm0YH7pQKsX97qWBk+w==
+X-Received: by 10.223.135.187 with SMTP id b56mr5381477wrb.164.1516286829701;
+        Thu, 18 Jan 2018 06:47:09 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id m6sm7480784wmd.37.2018.01.18.06.47.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 18 Jan 2018 06:47:08 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     raikrishna76@gmail.com
+Cc:     git-packagers <git-packagers@googlegroups.com>,
+        git@vger.kernel.org, Michael Felt <aixtools@gmail.com>,
+        Thom May <thom@may.lt>
+Subject: Re: Git For Aix 6 and 7
+References: <157d942b-99a9-4a75-92b9-8eb8adb17032@googlegroups.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <157d942b-99a9-4a75-92b9-8eb8adb17032@googlegroups.com>
+Date:   Thu, 18 Jan 2018 15:47:07 +0100
+Message-ID: <87d127i5qs.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.113.199 with HTTP; Thu, 18 Jan 2018 06:23:39 -0800 (PST)
-In-Reply-To: <CAL21BmneJ4rgCtf8t8LOK=gVv0MR+xam9jFBp7kp33rqEG7f6Q@mail.gmail.com>
-References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
- <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
- <20180115214208.GD4778@sigill.intra.peff.net> <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
- <20180117214354.GA13128@sigill.intra.peff.net> <CAP8UFD0PtOqX5c4ovRbYDWejQ55iUwtnPv-zGXS2GFAajhXqtA@mail.gmail.com>
- <CAL21BmnKd0qamJWJbrAzg_ZX1GkhCTPO_5zOiFNMBeF-xjDTiQ@mail.gmail.com> <CAL21BmneJ4rgCtf8t8LOK=gVv0MR+xam9jFBp7kp33rqEG7f6Q@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 18 Jan 2018 15:23:39 +0100
-Message-ID: <CAP8UFD1qPTh_VX8ebazxoeEHRfNjmNwy-baat9Y+GVHrHWQqFA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
-To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 18, 2018 at 12:49 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
-=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
-> 2018-01-18 9:20 GMT+03:00 =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=
-=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com>:
->>
->> I think it's important to finish migrating process at first. I mean,
->> now we are preparing and collecting everything in ref-filter, but we
->> make resulting string and print still in cat-file. And I am not sure,
->> but maybe it will not be possible to start using new atoms in cat-file
->> while some part of logic still differs.
+
+On Thu, Jan 18 2018, raikrishna jotted:
+
+> Hi Team,
 >
-> I tried to make that part here:
-> https://github.com/telezhnaya/git/commit/19a148614f1d4db1f8e628eb4e6d7c81=
-9d2da875
-> I know that the code is disgusting and there is a memory leak :) I
-> just try to reuse ref-filter logic, I will cleanup everything later.
-> At first, I try to make it work.
-> The problem is that I have segfault, and if I use gdb, I get:
+> I have an urgent requirement to install Git client for Aix 6 and 7, could
+> you please help send me or navigate me to the correct url.
+> My present infrastructure comprise of Aix and Linux servers , I am
+> successfully using Git on Linux however I am struggling to find correct
+> package for AIX platform.
 >
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x0000000000000000 in ?? ()
+> Appreciate your quick response.
 
-Make sure that you compile with debug options like -g3. For example I use:
+Hi raikrishna. The git-packagers list is a rather small list so perhaps
+someone on the general git list (CC'd) knows the answer to this.
 
-$ make -j 4 DEVELOPER=3D1 CFLAGS=3D"-g3"
+I'm not aware of anyone providing binary git packages for AIX, but I
+don't use it so maybe they exist.
 
-> I tried to google it, it's my first time when I get that strange
-> message, and unfortunately find nothing. So please explain me the
-> reason, why I can't find a place of segfault that way.
+The last mention on the mailing list I could find of someone packaging
+it was this from Michael Felt's (CC'd)
+https://public-inbox.org/git/CANvxniXkbAKgjm+NZ0cyyCToEYp23Kd8s4yxSqUOsAUAHJSA7g@mail.gmail.com/
 
-I get the following:
+The last AIX-related patch to git is actually mine, but I haven't logged
+into an AIX box in over a decade, see
+https://github.com/chef/omnibus-software/commit/e247e36761#diff-3df898345d670979b74acc0bf71d8c47
 
-(gdb) run cat-file --batch < myarg.txt
-Starting program: /home/ubuntu/bin/git cat-file --batch < myarg.txt
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+So it looks like there's a chef build recipe for it, maybe that's
+something you can use?
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00005555556ea7cf in format_ref_array_item (info=3D0x7fffffffd460,
-format=3D0x7fffffffd6e0,
-    final_buf=3D0x7fffffffd410) at ref-filter.c:2234
-2234                    atomv->handler(atomv, &state);
-(gdb) bt
-#0  0x00005555556ea7cf in format_ref_array_item (info=3D0x7fffffffd460,
-    format=3D0x7fffffffd6e0, final_buf=3D0x7fffffffd410) at ref-filter.c:22=
-34
-#1  0x00005555556ea91c in show_ref_array_item (info=3D0x7fffffffd460,
-format=3D0x7fffffffd6e0)
-    at ref-filter.c:2256
-#2  0x0000555555577ef7 in batch_object_write (
-    obj_name=3D0x555555a66770 "5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689",
-    opt=3D0x7fffffffd6e0, data=3D0x7fffffffd5e0) at builtin/cat-file.c:298
+I would not be surprised if building git on AIX, particularly with a
+non-GNU toolchain, fails in all sorts of interesting ways. People here
+on the list would be happy to help you work through those failures,
+we're keen to port git to whatever we can get our hands on, but these
+platforms experience quite a bit of bitrot.
