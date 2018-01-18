@@ -2,88 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 045781FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 19:17:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9A551FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 20:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754868AbeARTRa convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 18 Jan 2018 14:17:30 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:52907 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750974AbeARTRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 14:17:30 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0IJHNQZ026783
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 14:17:24 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'git mailing list'" <git@vger.kernel.org>
-Subject: [Question] format-patch along a specific path
-Date:   Thu, 18 Jan 2018 14:17:19 -0500
-Message-ID: <008101d39090$f90103c0$eb030b40$@nexbridge.com>
+        id S1755507AbeARUH4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 15:07:56 -0500
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34616 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753412AbeARUHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 15:07:44 -0500
+Received: by mail-io0-f195.google.com with SMTP id c17so26189492iod.1
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 12:07:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=wyn95djlarVBCI+xF91ZjQgHdQ8dmZVJKZLnlqFhrz0=;
+        b=Fg7DCprp3+6OUlP0mPa/Pl975mkBYavgjUX61j1ir2ZCLPNDT6jk4AsTjtQjshFjMd
+         nc65erCXDXWhhnHAHVGzD979lJrx6e27Xt1NA6yJdRXNVHCtr6lwIV/3yqTqPc2+MH7V
+         uTuFk9e7MPVLxC4fEW3ryVmN6xlODklCcAKZ+fi2ColFTo7YC0ZuBJjFzVkOGaAEv5Ns
+         66pK4WN0njgBrEpyXnu6ZHbtzFkDt6SAmJnTy0B+mklY2xeG8Ahz3DLGC9yUuAcKp5Sv
+         284mdMxjNBsbiZe6lOoi/ZrIPFGx9SoS9J9YGPsxb8dyh39uchr6AicwfATItlkB3xM5
+         pqwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=wyn95djlarVBCI+xF91ZjQgHdQ8dmZVJKZLnlqFhrz0=;
+        b=RyX/InVB0QP8ZQLv4suc4HjCjXMubEUAoB4v7OhxYf2uDUAn2MWHY1iwCMFkP/donr
+         HN8MTdtDVs1thcVgx0AmAfQbqmPL5j1uNS25V3wYK+2ZkI7zdRvinw3oRtuRpr/lLnQv
+         1AMugJyB8QDDqcuWwoo+dnncuPLFxxXX4ry/ddbAU5/K2291uQQH1K8q3dHkuYlYGyeX
+         pEmyT37WyxBHG0N1+d7Ap9z901e/Hp1yXeNzu3uZ71QVX8p534buNjZHJvXsesvGj5ov
+         pA0pNYYRMvioKrpWC5gnJkDPy3Osr/xEB8uupYjwAqalwf5QzHtJGE8wv/DJXvhekvhO
+         EFFQ==
+X-Gm-Message-State: AKwxytffUdRAemTrcROVuL31XYwAODg3BMTBJc91jWG+1k8UGPEseQa0
+        CiNHJo/Na8J0Q17tcLvMTIjdXSMl
+X-Google-Smtp-Source: ACJfBoubZuw+wkAglZNswo1HXSOGG6OQG8wph3Ev4sGUZRa6Lfhb2uhNlCInJ/Vriu97zuiva0wlKw==
+X-Received: by 10.107.164.134 with SMTP id d6mr5709521ioj.176.1516306063453;
+        Thu, 18 Jan 2018 12:07:43 -0800 (PST)
+Received: from [10.3.15.151] ([142.75.254.199])
+        by smtp.googlemail.com with ESMTPSA id u103sm4197412ioi.3.2018.01.18.12.07.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jan 2018 12:07:42 -0800 (PST)
+Subject: Re: Git For Aix 6 and 7
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        raikrishna76@gmail.com
+Cc:     git-packagers <git-packagers@googlegroups.com>,
+        git@vger.kernel.org, Michael Felt <aixtools@gmail.com>,
+        Thom May <thom@may.lt>
+References: <157d942b-99a9-4a75-92b9-8eb8adb17032@googlegroups.com>
+ <87d127i5qs.fsf@evledraar.gmail.com>
+From:   Peter Harris <peter@harr.ca>
+Message-ID: <d21239cf-804d-7bc8-5af3-0d54fdbc85d6@harr.ca>
+Date:   Thu, 18 Jan 2018 15:07:42 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        boundary="----=_NextPart_000_0072_01D39066.A87A7D20";
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQK/WPpE2nT8DMwv0Z/u7ayHG0SXiw==
+In-Reply-To: <87d127i5qs.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On 2018-01-18 09:47 AM, Ã†var ArnfjÃ¶rÃ° Bjarmason wrote:
+> 
+> On Thu, Jan 18 2018, raikrishna jotted:
+> 
+>> Hi Team,
+>>
+>> I have an urgent requirement to install Git client for Aix 6 and 7, could
+>> you please help send me or navigate me to the correct url.
+>> My present infrastructure comprise of Aix and Linux servers , I am
+>> successfully using Git on Linux however I am struggling to find correct
+>> package for AIX platform.
+>>
+>> Appreciate your quick response.
+> 
+> Hi raikrishna. The git-packagers list is a rather small list so perhaps
+> someone on the general git list (CC'd) knows the answer to this.
+> 
+> I'm not aware of anyone providing binary git packages for AIX, but I
+> don't use it so maybe they exist.
 
-What I’m trying to do is to format a patch based on a single commit from
-2.16.0 representing the NonStop port, for review and comments to the team.
-Here is a partial (somewhat familiar) tree:
+IBM provides git packages for AIX here:
+https://www-03.ibm.com/systems/power/software/aix/linux/toolbox/alpha.html
 
-*   f1a482cd8 (HEAD -> randall_2.16, ituglib_release) NonStop port changes
-for git 2.16.0.
-|\
-| | * b2a06dcfb (refs/stash) WIP on randall: 5653e94 Removed unnecessary
-void* from hashmap.h that caused compile warnings
-| |/
-| * 5653e943a (randall) Removed unnecessary void* from hashmap.h that caused
-compile warnings
-| *   b318de9ca Merge branch 'ituglib_devel' into 2.16.0-rc1
-| |\
-| | * a4cdf025d (randall_2.13.5) Replaced read with xread in
-transport-helper.c to fix SSIZE_MAX overun in t5509
-| | | * b72dbd7fa (origin/pu) Merge branch 'ds/use-get-be64' into pu
-| |_|/
-|/| |
-| | | * 896df04e4 (origin/next) Sync with 2.16
-| |_|/
-|/| |
-* | | 2512f1544 (tag: v2.16.0, origin/master, origin/HEAD) Git 2.16
-|/ /
-* | c6c75c93a (tag: v2.16.0-rc2) Git 2.16-rc2
+It's git 2.12.0, so it's not the very latest version of git, but it's
+not bad for AIX.
 
-Trying the intuitive approach of git format-patch -1 f1a482cd8, I end up
-with a patch for c6c75c93a, which I assume is a backtrack. If I use
-2512f1544..f1a482cd8, I end up with a whole bunch of commits along the long
-path rather than the short single hop path, (I actually want the short
-path). The --base=2512f1544 option complains that the base commit shouldn't
-be in revision list, which I also assume is an artifact of backtracking. Is
-there a clean way in 2.16.0 to do this or should I redo the commit as a
-squash and disconnect it from the other path?
-
-Cheers,
-Randall
-
--- Brief whoami:
-  NonStop developer since approximately NonStop(211288444200000000)
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Peter Harris
