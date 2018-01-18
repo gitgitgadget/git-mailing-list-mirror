@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464821FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 21:27:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7A51FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 21:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753476AbeARV1A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 16:27:00 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:43468 "EHLO
+        id S1753969AbeARV2c (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 16:28:32 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:43689 "EHLO
         mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750977AbeARV07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 16:26:59 -0500
-Received: by mail-wm0-f47.google.com with SMTP id g1so24588046wmg.2
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:26:58 -0800 (PST)
+        with ESMTP id S1754789AbeARV20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 16:28:26 -0500
+Received: by mail-wm0-f47.google.com with SMTP id g1so24594287wmg.2
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:28:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=0a1QJsAyPWmyEy7ZZ1SD9XOIxWYbAUygm3T55ptBc04=;
-        b=FycC9DkDUSfebDVU7YyZeHqCnbnCzKdY7bXOu2zDPkQoslirxJrRHbr0ovv22itX7J
-         GjM7wyGQIdII6bRLhCPd1KLWlm/3TelR0McgwHtSjXH4uU8h784b1C6myE72fY5Pubjg
-         MN6TkMSKGU9OUsUV4D5fBQNuYjCbs1UOkgpGpounP2VFzoD8gk+QaozyPaucGpkI+sjp
-         Wgm9ZwlrVFJLt59Ko+Z4mzQqfpSGSlO8WZuNlYXUXFjY9T46Nwpxup9OUMnDlVOwGXBm
-         u+ZIwXSv1AqbF7famemKNqCfFwZCy3DDxde9OHxDrhqSlaBPXe9qJxxhWKSBBJFjb7kd
-         yRUw==
+        bh=WeaNTCJwgQXXV1noggE549GRnY9oSfPdqiMNuM1CS3M=;
+        b=rcR4Lp/yKZcr6NWAbNdS+SVxg4tkvlKjyEy+AvFfLkvZbJtpahdaJ4glo8JSzKclrt
+         u58pqClsY/bqr0Q434bEVLY5BLuW95UQqqfovpES47JGRHZyavwmFYqWfGnKBkaGgsbL
+         x/29YBzqgRZ+mudkhPwQHQAce2Cq3wlhNKH+hHIqR1TP30GJTt1pyhfJdsMNPqr8aJ3i
+         r4ojJFIj0XZpsOkCY1mheSLcdmKrCEGWt07i/+I7VZiVJHpfSy6umsXeApsRXnd4mTFn
+         m1YD4sguHZvUdmElNQl8jxwOJ8dDgD2QCPDkKfVe9ODEe+w8ZaGmgZb0LpUkrpeE0LlU
+         rHJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=0a1QJsAyPWmyEy7ZZ1SD9XOIxWYbAUygm3T55ptBc04=;
-        b=j7tbJuKtU00fW5GM68RlSt7lN54HRuvc/rzRtbcZWC/a3mYjODP/ZShNFp4ReEcZWz
-         e/BKaUpMgFr0vyrmZZ4jsIxaSZAmv4P2FPi1PN8LdVPpfSlpK6kX5T0HrXk+Uj8or0kK
-         qNwlALyl4ZRoYwmn1xN+2eUmLRsohssBC5vyczpAM3oN6opzeCy/XWwQwNNqbq4io/bG
-         wsPDOyPeaM+ntougifUkDXmmhPSVd6bjQSiY7x81Ly/KO01LMiEJCn1AVcZkzaBSZNHN
-         xNQwDCngvUrHQNxwMUkrig156UTtaZvQtH6HkgD+FFRMT18mOO76GJ0vk9bySjrzcl3R
-         Mouw==
-X-Gm-Message-State: AKwxyteQ+8qy3jf+QyOwajE8rHD54mk2W0OEfXfrGnNxf6Avb7elxH2+
-        kJkVTldJBC2KXW/g4SL8mk6Jam9jeBzTV16Cb4JH9Q==
-X-Google-Smtp-Source: ACJfBouOdV9wEKsu2CUxq9fUt6Un69/zZ2hko7Q7oWiK0Cc9sXtXG835jZlE+rFXeawWyIhcbBjXPosdCmf0tyRLH70=
-X-Received: by 10.80.164.233 with SMTP id x38mr9762907edb.293.1516310817747;
- Thu, 18 Jan 2018 13:26:57 -0800 (PST)
+        bh=WeaNTCJwgQXXV1noggE549GRnY9oSfPdqiMNuM1CS3M=;
+        b=Fw8OohR3FPJwUIKdcDDHkbVlulmY0VmT+MB0M2bFA26j/72OC1cXvSeZD8O9QiGxdP
+         54LM/YW+uGVKrcgslDQNkwy5cT+SNh89TMhLTh+UbS8ke0U9nzI4hTt6jmdetk4Ti10E
+         E9w3diRGIO0aJz0pAk+NNTEU3OCdMCXG+ROqnh8zr8x6yfj7aFcjCNLjBaRU+6RuwAUh
+         WL/hu09RMhxTdYevdsi36eOVi3gVGStvKcISdD4+hvEUBdWjLuaWTCPIRLCrDfCxMPeH
+         cgGae62peNIGisr5NRmguRI6xvbgpFVYA6pP47YorCJI0XZ3O1kMQYo1YLnSn4QGVVSc
+         qKEg==
+X-Gm-Message-State: AKwxytfV1Q08PCkFGfaw5H/SLEvTWSf1IyU9Tqz7IXZakCQ8cy0pFvYq
+        bxx9vGmPYWe8AuRiAlv76lV7a1g8rAC/NTrDtWM=
+X-Google-Smtp-Source: ACJfBou3QydkFUyqkCpZjEq+Kv605tWzDS/90Zqv9M4obRBJmqR4haCpVkzJXzUX4giR2lvoqf7/81bx3IExvJMmeDg=
+X-Received: by 10.80.184.77 with SMTP id k13mr10042133ede.187.1516310903148;
+ Thu, 18 Jan 2018 13:28:23 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 13:26:37 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1801182214350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 13:28:02 -0800 (PST)
+In-Reply-To: <F2A95961E128479484699EC5DDC9243D@PhilipOakley>
 References: <cover.1516225925.git.johannes.schindelin@gmx.de>
- <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de>
- <CA+P7+xrLrU=s4EgPYs7HP4JRBj1fW2YJNUEpswJENBxHAvz5LQ@mail.gmail.com> <nycvar.QRO.7.76.6.1801182214350.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
+ <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com> <F2A95961E128479484699EC5DDC9243D@PhilipOakley>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Jan 2018 13:26:37 -0800
-Message-ID: <CA+P7+xrWc9mO8AuVomUbFr-JBfzmggCs9qE4yois27t4drHSMQ@mail.gmail.com>
-Subject: Re: [PATCH 2/8] sequencer: introduce the `merge` command
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>,
+Date:   Thu, 18 Jan 2018 13:28:02 -0800
+Message-ID: <CA+P7+xqHZ58MEaj7KrCpk_-MprqipGwjXMvhPaeUP0MsBLPgsQ@mail.gmail.com>
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -64,47 +65,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 18, 2018 at 1:22 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->> Would it be possible to open the editor with the supplied text when
->> there's no commit?  The text after <rev> must be oneline only..
+On Thu, Jan 18, 2018 at 1:24 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Jacob Keller" <jacob.keller@gmail.com>
 >
-> I actually want to avoid that because my main use case is fire-and-forget,
-> i.e. I want to edit only the todo list and then (barring any merge
-> conflicts) I do not want to edit anything anymore.
->
-
-Agreed, for the case where we copy a commit message, I do not want the
-editor either.
-
-> But I guess we could special-case the thing where `-` is specified as
-> "merge commit message provider" and an empty oneline is provided?
->
-
-It's for when there is a new merge, for when we are creating a new one
-using "-", yes.
-
->> It's difficult to reword merges because of the nature of rebase
->> interactive, you can't just re-run the rebase command and use
->> "reword".
+>> On Thu, Jan 18, 2018 at 7:35 AM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>>>
+>>> This commit implements the commands to label, and to reset to, given
+>>> revisions. The syntax is:
+>>>
+>>>         label <name>
+>>>         reset <name>
+>>>
+>>> As a convenience shortcut, also to improve readability of the generated
+>>> todo list, a third command is introduced: bud. It simply resets to the
+>>> "onto" revision, i.e. the commit onto which we currently rebase.
+>>>
 >>
->> I suppose you could cheat by putting in an "edit" command that let you
->> create an empty commit with a message...
+>> The code looks good, but I'm a little wary of adding bud which
+>> hard-codes a specific label. I suppose it does grant a bit of
+>> readability to the resulting script... ? It doesn't seem that
+>> important compared to use using "reset onto"? At least when
+>> documenting this it should be made clear that the "onto" label is
+>> special.
+>>
+>> Thanks,
+>> Jake.
 >
-> Or you could "cheat" by adding `exec git commit --amend`...
 >
-> Seriously again, I have no good idea how to provide an equivalent to the
-> `reword` verb that would work on merge commits...
+> I'd agree.
 >
+> The special 'onto' label should be fully documented, and the commit message
+> should indicate which patch actually defines it (and all its corner cases
+> and fall backs if --onto isn't explicitly given..)
 
-Given that there is a work around, and I doubt it's that common, I'm
-not sure we need one, plus i have no idea what verb to use....
+I don't think it actually relates to "--onto" but rather to simply
+using "label onto" in your sequencer script allows bud to work, and
+simply shortens the overall work necessary. It's equivalent to "reset
+onto" if I understand.
 
-We could allow reword on its own to simply reword the top commit?
-
-That being said, since there's a simple-ish workaruond using "stop",
-or "exec git commit --amend" I don't see this as being important
-enough to worry about now.
-
-Thanks,
-Jake
+>
+> Likewise the choice of 'bud' should be explained with some nice phraseology
+> indicating that we are growing the new flowering from the bud, otherwise the
+> word is a bit too short and sudden for easy explanation.
+>
+> Philip
