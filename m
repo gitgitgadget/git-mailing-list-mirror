@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550EF1FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 21:20:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5010E1FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 21:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753649AbeARVUc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 16:20:32 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:32789 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752100AbeARVU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 16:20:27 -0500
-Received: by mail-wm0-f54.google.com with SMTP id x4so4503569wmc.0
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:20:25 -0800 (PST)
+        id S1753394AbeARVWN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 16:22:13 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36259 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752840AbeARVWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 16:22:11 -0500
+Received: by mail-wm0-f68.google.com with SMTP id f3so25789395wmc.1
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:22:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=NSvQd/rll4pJwCKpVIBTv5pXHafJfSs4IsjGgxZWhXQ=;
-        b=eJSzxgONyQ/70WqPYBzlSL31ISRoat43cmj2UU9v/J9QmyZNXQsisZ11SsuWJeHE+N
-         q2FgaRiFVgzPnnMIxeXmbYxkEMB4mhqkDJS/lWvDy8qys4OS5b183xjyJN8rlP8OM3La
-         KlcEHmPSlbY90akciJK4EYMaIbuV8T9h8qaz3P/8Cbv1KsQ/docRhCEXOGGMlpKodwrA
-         O277dL2jcSeZ/zlwl1ytapOMmQsoIZvVi6aRGwGbdTEb96kyJKJB0KckAsJEpS7MEluB
-         T5Z6hm9CsMW5C+kLP8M7CTk6NTBz0i5qKDJBikZUUwxF2UDHr9pkbMCsZZfapZQVhH6O
-         1DPw==
+        bh=o0j7yfVv8XRh6c/S3EB5m5e9qB0iKA8l4dIrivv+aYw=;
+        b=HWcHmvyDqyU25n715ql9AIqniG0PYHOgbvHF8IpshWOYeLXvOS9X88PRqeF9SOljtE
+         /FzSQ3f9Hg5pkk9qs3FiI6rUmovf89QJGeTxVKge1cbTOUEkO02RUpHHhGyAOkqJTd8T
+         hs5PkpoXmtCW3ko4KI45SKuyBzsQiH2lbQjnA0XhHG8OI7YPhmbPfonx0JWIfU9+6G8i
+         3v4zkAy4K56qSxAZXQBawPo6Zq0puLQynrihC0Lhz5CjTIWXUteAnwHRqtUZ22yBD+ut
+         KHZBCFH2HeJLmdoSogRhDDPlfSoVMMHT5fsslFB2sd726Hy1Ni64giXcjg/eB6cRth1p
+         6ckg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=NSvQd/rll4pJwCKpVIBTv5pXHafJfSs4IsjGgxZWhXQ=;
-        b=j1P9yht3uqJZNfUGVe8zcZUJTtGed++DTbLaP70Gh/hPKqCVdI+9kmEzljKDmDs/j+
-         Oia7DBfw1EZiyCLk9IvF6R59J/SHjJPKfv+N+FhJjShfkHKPE39/N3Em5nvuXGdcaDr7
-         o/48e/WR2N8NbVBpoifX9g6RTq/pAR+llCAp7X3EKSekmfeHGZUA/JsjhWx4ypsJ3vaD
-         uT8YEvJNTqnb7bS0S7VhwaJCluDG5Na7rYIp/gSqC8DXTw3wihkK9eoToX5VAdjcm/R/
-         jqbjN4ebnT0AMOvMpfrn7IaXx173UoIN6qNS/8foYD6d0lPolRPexSuNY92oztEhz3jK
-         R8/w==
-X-Gm-Message-State: AKwxyteM3PbmZVE/ibTlDMCcLRBWvkEFgasQJESNtZ/oeUE1oVDSHn1+
-        8cWoTxBVL2VDY0Psq/s40chlmu4BCSvMvb5+Qcs5Iw==
-X-Google-Smtp-Source: ACJfBouueXCiRmU/LvHvbP+Jk3w5Av9P2stKW7xgHnS/Uc/XyqWcSHoMB8duHd1HV8l9TXrO+MbPSlKBdmU1HSUMDsw=
-X-Received: by 10.80.164.233 with SMTP id x38mr9741789edb.293.1516310424781;
- Thu, 18 Jan 2018 13:20:24 -0800 (PST)
+        bh=o0j7yfVv8XRh6c/S3EB5m5e9qB0iKA8l4dIrivv+aYw=;
+        b=rGOa2tx6Ewe7kCYG3C6Bao4vFMBZXkWxOL5h2UNmqInBnjGTJ8dq8U37BJzJrgCH1B
+         DUAYwo81PwR6E8qAm/OK6CebWJQoZlCsXbwXPZNvn+Xgd0M5sjpuvUcL4TU6pLwcrLQN
+         xfNpAS2gNEqp8ALbbGS5lajqsYM9/hNvIw+bwvmiNB2H7dmRP++ezGU6Fvs7gk7LcKrQ
+         976eQVoqeUytfqZCFwciCl5EYHyt99kT2jk2CzxXztT3I9fy9JHdyx+p+KnE/81NhYoN
+         gVKsA77az9ry84HbBjzBWRJPVZ82Afq36rtREQIaN0YYNe+Xj8DSb/NvMH7dVoMOBqJH
+         pq8g==
+X-Gm-Message-State: AKwxytdGOfKvXn5Fepv4d0mrZDMYG0CvB2KDpkR1cbHWtcJCjdhG3Lm8
+        6w/5GVFW4L9S1vVzsch8nyINJHmGSweacRiP3tJIPg==
+X-Google-Smtp-Source: ACJfBovJQ5fEyakJTD0d2aaFCVFUm+ITNrxrpqIv6yiUMcTEMB4g6smzlKdaNaj2LizcYuikfAolCT+cXTm56e7Z2Ec=
+X-Received: by 10.80.164.233 with SMTP id x38mr9748093edb.293.1516310530212;
+ Thu, 18 Jan 2018 13:22:10 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 13:20:04 -0800 (PST)
-In-Reply-To: <20180118183618.39853-3-sbeller@google.com>
+Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 13:21:49 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1801182212210.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 References: <cover.1516225925.git.johannes.schindelin@gmx.de>
- <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-3-sbeller@google.com>
+ <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
+ <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com> <nycvar.QRO.7.76.6.1801182212210.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Jan 2018 13:20:04 -0800
-Message-ID: <CA+P7+xpwYDeNHfzMtHJkKEB8-A+kZ95wBEn0RC5R8pWbgKOmiQ@mail.gmail.com>
-Subject: Re: [PATCH 10/8] [DO NOT APPLY, but improve?] rebase--interactive:
- introduce "stop" command
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>,
+Date:   Thu, 18 Jan 2018 13:21:49 -0800
+Message-ID: <CA+P7+xo096LyacgFM3kLMHovXT3sWsf_m9AB7oENREZ7TfWa9Q@mail.gmail.com>
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -65,86 +64,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 18, 2018 at 10:36 AM, Stefan Beller <sbeller@google.com> wrote:
-> Jake suggested using "x false" instead of "edit" for some corner cases.
+On Thu, Jan 18, 2018 at 1:13 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Jake,
 >
-> I do prefer using "x false" for all kinds of things such as stopping
-> before a commit (edit only let's you stop after a commit), and the
-> knowledge that "x false" does the least amount of actions behind my back.
+> On Thu, 18 Jan 2018, Jacob Keller wrote:
 >
-> We should have that command as well, maybe?
+>> On Thu, Jan 18, 2018 at 7:35 AM, Johannes Schindelin
+>> <johannes.schindelin@gmx.de> wrote:
+>> > This commit implements the commands to label, and to reset to, given
+>> > revisions. The syntax is:
+>> >
+>> >         label <name>
+>> >         reset <name>
+>> >
+>> > As a convenience shortcut, also to improve readability of the generated
+>> > todo list, a third command is introduced: bud. It simply resets to the
+>> > "onto" revision, i.e. the commit onto which we currently rebase.
+>> >
+>>
+>> The code looks good, but I'm a little wary of adding bud which
+>> hard-codes a specific label. I suppose it does grant a bit of
+>> readability to the resulting script... ? It doesn't seem that
+>> important compared to use using "reset onto"? At least when
+>> documenting this it should be made clear that the "onto" label is
+>> special.
 >
+> Indeed, `bud` helped me more in the earlier times of the Git garden shears
+> when I had to *introduce* branch structure into the long list of Git for
+> Windows' patches.
+>
+> If there are no voices in favor of `bud` other than mine, I will remove
+> support for it in the next iteration.
+>
+> Ciao,
+> Dscho
 
-
-I agree. I use "x false" very often, and I think stop is probably a
-better solution since it avoids spawning an extra shell that will just
-fail. Not sure if stop implies too much about "stop the whole thing"
-as opposed to "stop here and let me do something manual", but I think
-it's clear enough.
+After I saw more examples, I don't mind it. I do think it's not
+strictly necessary, but it seemed to help me with the readability. My
+only main concern is that it's limited to a special label.
 
 Thanks,
 Jake
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  git-rebase--interactive.sh |  1 +
->  sequencer.c                | 10 ++++++++++
->  2 files changed, 11 insertions(+)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 3cd7446d0b..9eac53f0c5 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -166,6 +166,7 @@ l, label <label>= label current HEAD with a name
->  t, reset <label> = reset HEAD to a label
->  b, bud = reset HEAD to the revision labeled 'onto', no arguments
->  m, merge [<label-or-commit>]* = create a merge commit using a given commit's message
-> +y, stay = stop for  shortcut for
->
->  These lines can be re-ordered; they are executed from top to bottom.
->  " | git stripspace --comment-lines >>"$todo"
-> diff --git a/sequencer.c b/sequencer.c
-> index 2b4e6b1232..4b3b9fe59d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -782,6 +782,7 @@ enum todo_command {
->         TODO_RESET,
->         TODO_BUD,
->         TODO_MERGE,
-> +       TODO_STOP,
->         /* commands that do nothing but are counted for reporting progress */
->         TODO_NOOP,
->         TODO_DROP,
-> @@ -803,6 +804,7 @@ static struct {
->         { 'l', "label" },
->         { 't', "reset" },
->         { 'b', "bud" },
-> +       { 'y', "stay" },
->         { 'm', "merge" },
->         { 0,   "noop" },
->         { 'd', "drop" },
-> @@ -1307,6 +1309,12 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
->                 return 0;
->         }
->
-> +       if (item->command == TODO_STOP) {
-> +               item->commit = NULL;
-> +               item->arg = "";
-> +               item->arg_len = 0;
-> +       }
-> +
->         end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
->         item->arg = end_of_object_name + strspn(end_of_object_name, " \t");
->         item->arg_len = (int)(eol - item->arg);
-> @@ -2407,6 +2415,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->                                 /* `current` will be incremented below */
->                                 todo_list->current = -1;
->                         }
-> +               } else if (item->command == TODO_STOP) {
-> +                       todo_list->current = -1;
->                 } else if (item->command == TODO_LABEL)
->                         res = do_label(item->arg, item->arg_len);
->                 else if (item->command == TODO_RESET)
-> --
-> 2.16.0.rc1.238.g530d649a79-goog
->
