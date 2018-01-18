@@ -2,159 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98C9E1FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 21:24:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A28B1FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 21:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754830AbeARVX7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 16:23:59 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35802 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754775AbeARVXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 16:23:49 -0500
-Received: by mail-wm0-f48.google.com with SMTP id r78so25817859wme.0
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:23:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/9TG0j51PaSZS6hv4OsdZVBW4+LuX1UPC543KXTFPqI=;
-        b=ldkyxiisf9ijMMOQLvChNch7vxciW0xthJDBcDgNx5LOt3H3puA1tRVyWPBShs4XuO
-         8/jDRCGK4k0Rr23fT+Tna7NB/VvMhZhpji695R85r2W59wv3R41g1VH+8GLuh/ApQ8SL
-         IS1ATQwqdEFEfDoRm4IEr2M6ncxBPYicuyL7FbCYMjiJfDKtMal/PhQEcKMTOcfExjHm
-         LU+Y0Y/+YnXIYdVKjLOfN4625F5WoKsi9Slcx/5chWikoXAXz3mwIpxuHpmUmnWCy4Mw
-         6i75uEi5VC+GEcgbLNq6NulnNDGrU8C0xjOoXqn9bTK7LqHWFToZNc/i+FbNR8ZSgxnB
-         OVPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/9TG0j51PaSZS6hv4OsdZVBW4+LuX1UPC543KXTFPqI=;
-        b=GPfi6IDuCXqN/VdJtg/A4YjBOC/Gkzbe6Yz/BcGbHa1V3MobwYlH9LW/ScRD+0tMtT
-         xVN/+oF5YtJUtblk+A1mgWAD95tcxQRDO4HN4Zw4oMcgDNShXl8qwyZXf5TzbqwbsYpV
-         8sld0LwsIRLnuPMuJR14fz25JKcL7ImfeK6/HVz+0seZ172zofapEzKXGEj2X5S2H+/J
-         Bhm2tkMiA2/VpeM1fLWaO0TFwD9n8iasn5QQ2ZzSMlqvBIqW8ElXe8ogLUa3vF9OzDDO
-         1/DUDzc/NKq5vWJnpZzlsYVySYVaoxbz0Gm1dEdEBRYoF1Dy5pQ8OR2/Rw8iNFFpikEp
-         7nXA==
-X-Gm-Message-State: AKwxytfg6x/jiu7CjYzS+HJRsvjSgbXBjJfOLIjEb+8+HtlmVetcsSYE
-        I1cgf2aSJcMzHOW6O60z/7M=
-X-Google-Smtp-Source: ACJfBos7MzS5L67CPxJwU37o3REiOgZc9RBC9aqSLzbO6bb34VzmiSJE6GCbIA7GZYEx6coVOrcG0A==
-X-Received: by 10.80.155.7 with SMTP id o7mr9726838edi.105.1516310627949;
-        Thu, 18 Jan 2018 13:23:47 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id k42sm5537889edb.44.2018.01.18.13.23.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Jan 2018 13:23:46 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] diff: add --compact-summary option to complement --stat
-References: <20180113132211.13350-1-pclouds@gmail.com> <20180118100546.32251-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <20180118100546.32251-1-pclouds@gmail.com>
-Date:   Thu, 18 Jan 2018 22:23:45 +0100
-Message-ID: <87bmhqj1y6.fsf@evledraar.gmail.com>
+        id S1754882AbeARVYc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 16:24:32 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:14211 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753928AbeARVYa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 16:24:30 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id cHffeTdTqAp17cHffeDX4a; Thu, 18 Jan 2018 21:24:27 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=7BKP_PJc6Qcrf2-FrQ0A:9 a=QEXdDO2ut3YA:10
+Message-ID: <F2A95961E128479484699EC5DDC9243D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jacob Keller" <jacob.keller@gmail.com>,
+        "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Cc:     "Git mailing list" <git@vger.kernel.org>,
+        "Junio C Hamano" <gitster@pobox.com>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de> <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com>
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
+Date:   Thu, 18 Jan 2018 21:24:28 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180118-34, 18/01/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfC4jBaKJeMZX8xeTgoamXC/wEBPrOTopwQ4Z+acv1oIhPYDn2jJ6k20/7SE34kDGSh46MCLdyT2ejOxPIh8hYA1TNkTEU4fGxvNkGXB3ONfXWGdSpZ8B
+ eGYqksalqWWqXnrGoEeFH7+JBwGqlOHir5HArkQDGOw8P/Odmw7qOSvTPUOFIKQhKbuUOmsLuNkN8AuEGanGUsg9MgUZqUdayl7UY+5cnV3ZCYTKVy/eMctF
+ 5TB3p6AR/RrGLiy6GclMZgrKvKd7CQT7+Iswqd8P4Is=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Jan 18 2018, Nguyễn Thái Ngọc Duy jotted:
-
-> This is partly inspired by gerrit web interface which shows diffstat
-> like this, e.g. with commit 0433d533f1 (notice the "A" column on the
-> third line):
+From: "Jacob Keller" <jacob.keller@gmail.com>
+> On Thu, Jan 18, 2018 at 7:35 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+>> This commit implements the commands to label, and to reset to, given
+>> revisions. The syntax is:
+>>
+>>         label <name>
+>>         reset <name>
+>>
+>> As a convenience shortcut, also to improve readability of the generated
+>> todo list, a third command is introduced: bud. It simply resets to the
+>> "onto" revision, i.e. the commit onto which we currently rebase.
+>>
 >
+> The code looks good, but I'm a little wary of adding bud which
+> hard-codes a specific label. I suppose it does grant a bit of
+> readability to the resulting script... ? It doesn't seem that
+> important compared to use using "reset onto"? At least when
+> documenting this it should be made clear that the "onto" label is
+> special.
 >
->      Documentation/merge-config.txt     |  4 +
->      builtin/merge.c                    |  2 +
->    A t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++
->      t/t7612-merge-verify-signatures.sh | 45 ++++++++++
->    4 files changed, 132 insertions(+)
+> Thanks,
+> Jake.
 
-This feature is awesome. This has bothered me about --stat, but I
-haven't done anything about it.
+I'd agree.
 
-> In other words, certain information currently shown with --summary is
-> embedded in the diffstat. This helps reading (all information of the
-> same file in the same line instead of two) and can reduce the number of
-> lines if you add/delete a lot of files.
+The special 'onto' label should be fully documented, and the commit message 
+should indicate which patch actually defines it (and all its corner cases 
+and fall backs if --onto isn't explicitly given..)
 
-Wait, isn't there a bug here in the existing --summary code, its
-documentation says it'll show information "such as creations, renames
-and mode changes".
+Likewise the choice of 'bud' should be explained with some nice phraseology 
+indicating that we are growing the new flowering from the bud, otherwise the 
+word is a bit too short and sudden for easy explanation.
 
-But even though your --compact-summary shows that the file is being
-added and its mode changed:
+Philip 
 
-    $ diff -ru <(./git-show --stat 0433d533f1) <(./git-show --stat --compact-summary 0433d533f1)
-    --- /dev/fd/63  2018-01-18 21:11:51.186570555 +0000
-    +++ /dev/fd/62  2018-01-18 21:11:51.186570555 +0000
-    @@ -14,8 +14,8 @@
-           t: add tests for pull --verify-signatures
-           merge: add config option for verifySignatures
-
-    - Documentation/merge-config.txt     |  4 ++
-    - builtin/merge.c                    |  2 +
-    - t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++++++++++++++++++++++
-    - t/t7612-merge-verify-signatures.sh | 45 +++++++++++++++++++++
-    +     Documentation/merge-config.txt     |  4 ++
-    +     builtin/merge.c                    |  2 +
-    + A+x t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++++++++++++++++++
-    +     t/t7612-merge-verify-signatures.sh | 45 +++++++++++++++++++
-      4 files changed, 132 insertions(+)
-
-There is no difference between --stat with and without --summary on the
-same commit, shouldn't it show "create mode [...]" ?
-
-E.g. 95450bbbaa will do the trick for both:
-
-    $ diff -ru <(./git-show --stat 95450bbbaa) <(./git-show --stat --summary 95450bbbaa)
-    --- /dev/fd/63  2018-01-18 21:14:20.770050599 +0000
-    +++ /dev/fd/62  2018-01-18 21:14:20.770050599 +0000
-    @@ -14,3 +14,4 @@
-      git-svn.perl                    |  1 +
-      t/t9169-git-svn-dcommit-crlf.sh | 27 +++++++++++++++++++++++++++
-      2 files changed, 28 insertions(+)
-    + create mode 100755 t/t9169-git-svn-dcommit-crlf.sh
-
-    $ diff -ru <(./git-show --stat --summary 95450bbbaa) <(./git-show --stat --compact-summary 95450bbbaa)
-    --- /dev/fd/63  2018-01-18 21:14:30.646016210 +0000
-    +++ /dev/fd/62  2018-01-18 21:14:30.646016210 +0000
-    @@ -11,7 +11,6 @@
-         Reported-by: Brian Bennett <Brian.Bennett@Transamerica.com>
-         Signed-off-by: Eric Wong <e@80x24.org>
-
-    - git-svn.perl                    |  1 +
-    - t/t9169-git-svn-dcommit-crlf.sh | 27 +++++++++++++++++++++++++++
-    +     git-svn.perl                    |  1 +
-    + A+x t/t9169-git-svn-dcommit-crlf.sh | 27 +++++++++++++++++++++++++++
-      2 files changed, 28 insertions(+)
-    - create mode 100755 t/t9169-git-svn-dcommit-crlf.sh
-
-> +--compact-summary::
-> +	Output a condensed summary of extended header information in
-> +	front of the file name part of diffstat. This option is
-> +	ignored if --stat is not specified.
-> ++
-
-If for some reason the lack of information about the commit under
---summary isn't a bug/fixable it makes sense to document the differences
-here.
-
-> +File creations or deletions are denoted wigth "A" or "D" respectively,
-
-s/wigth/with/
-
-> +optionally "+l" if it's a symlink, or "+x" if it's executable.
-> +Mode changes are shown "M+x" or "M-x" for adding or removing
-
-"Mode changes are shown as" is better worded.
