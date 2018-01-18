@@ -2,113 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0D721F404
-	for <e@80x24.org>; Thu, 18 Jan 2018 08:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 839821F404
+	for <e@80x24.org>; Thu, 18 Jan 2018 09:45:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755250AbeARI4x (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 03:56:53 -0500
-Received: from mail-it0-f41.google.com ([209.85.214.41]:38904 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755033AbeARI4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 03:56:51 -0500
-Received: by mail-it0-f41.google.com with SMTP id w14so12045165itc.3
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 00:56:51 -0800 (PST)
+        id S1755271AbeARJp3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 04:45:29 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:42688 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755377AbeARJpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 04:45:22 -0500
+Received: by mail-pf0-f194.google.com with SMTP id b25so7745961pfd.9
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 01:45:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=axWNb9WKvbb2aM8xwj6xOx+vyfWc8nGbKAY/wl299KA=;
-        b=cNgYAvEafbbEgsPc6N+fyoVBKRMQUJFSGDISbYCtyd+vi0lUdrO7KjFa5xeI12I3q6
-         cfnL22nge6lASyE3WPJhgYexfbvE6izzm5fEIa9bbunyauNl9juht0WPa4WxU60b6yvl
-         Hk/uIpVMBXX7ysHiiKvrD1sES45jiRaWZYkouHue0hVvxGDR4ETGp52WEXndstqvSJYj
-         JWYpkL+0MK3eqsK+1fU6cPpNTSXVHaB41erTaPmpYrmUwE7O/J5o72C4R9JfjdGleZ58
-         9bl3TJ7IJU68FXzYT7pxMfFaRsKf+GWftHaAsrvfPH2PeugVhP/DI96ZxkW6HoqvHuzX
-         fZeg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tL+XnB07aesxN5iOWKF6c2cXejnBS2qiUaz26CN6WDw=;
+        b=tzYRBv5MK3QCgmjKJsKrYu/fLvEv1itFtbahx84aayGFMBWlTblJkHK9bfRe5gqn82
+         c8Ry+EP1Rdq60pVW3lwudbt1ZiFaVOlvP/uOYU/QiW99gMvvaQn+M1whmZHa6eUbBXg1
+         HgKcb53YhJeCvgO6bchLaC1y86ESc10YgsXHc43o09A8Y7HhLBA6AZT5F9E7Lgv9ft2l
+         gPlHm22slDrrYdMdvkR4khgIacYX1Rt3yTC2za3qwJGFVqfS+9ECtoj3tVh1nxdTTMy+
+         KDueahykZpl2GjKppkxa+NW0XoZK4Bf8f4fzb8wC/XO4Vnr/mwWF0abMaL5zj7QaCOO/
+         NYvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=axWNb9WKvbb2aM8xwj6xOx+vyfWc8nGbKAY/wl299KA=;
-        b=SuHuMg/LrbTrKTR1OxPxN6lQUejNNzvFB0QIULO27guP7eL0Fx2/d3VWlsvijrzjcs
-         Fr59gigMre8sA7cX3NJXqyH9YV6bmuhcS0jy7/sMhS3q0L8Y46i/ooU4kiG7cOlnhi25
-         XSMp3KnMUK20qGaYilYghdCnx6htC/64Ya7C4Ft/+h/fQw1D+olgrA+ygsRDAX5jKL4q
-         jeLeF6ulUwZugHwWHv3XgFqrh9HJMLxXgUDguLgz4TVF86VnW7XO2hng3RwiH4QjS0zi
-         WS2sk5OeLirctbxfNGYfLZuxG8Sgup2ajwh1EpIOY+2BampV6exZs6s+atXEY0R7cC/U
-         XLIQ==
-X-Gm-Message-State: AKwxytcPwaVN66xonM1THjocqytS0FWOHdwpfZ+vZpwbxNnQXM/oGv9X
-        VejJd8d0w2T2V8GJS0qlHd5t7hWAlPb0y85+36k=
-X-Google-Smtp-Source: ACJfBos8Ee/E33/eKm9CJwabDoJkwl5lWVK7Ml9YoLFLLsvQBxKjuH8dGV8YNHWMHoJeugBAxGyykK4siGvI5cX7yTY=
-X-Received: by 10.36.137.84 with SMTP id s81mr19379312itd.75.1516265810494;
- Thu, 18 Jan 2018 00:56:50 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tL+XnB07aesxN5iOWKF6c2cXejnBS2qiUaz26CN6WDw=;
+        b=nfP+kCCFutkXanOnpKUWjwEcKTQYshcXOgwMnv6+jxtwxkpPnvXNmORWGfwkqSosFf
+         bUd4o+NOwrovet8igT/fg2aIyuoQu/4VRP5xTk3MmHVZViF39o0MoVQxYSPVCddfax4V
+         fv6FkNlu/li+tSB6iPFdWQ7GbCejxdU5T07FUt1VDfhkCmqXjd9uequft0WYBokI4viC
+         rf2EQaZ1v0VggwpNvB8g2taq5Yc/CdPoi6owT4xy9fSsUmaoHcwpxk5EnXWvvPVcaJCd
+         IWdPfZJJ+E3loxRS8nAx71wcfXngE+L97eRJfGC++A2N98mH5yxyyC8VyYYW/RpQnVl/
+         pdlw==
+X-Gm-Message-State: AKwxyteIkeFj/Tr/qVs2C6g6JuUpuR6xk1peY7hWOzE71JM+oigy7kve
+        E3ZUK0k7SxErbId12FQlmCdqjA==
+X-Google-Smtp-Source: ACJfBovlieTagF22mB/rXZziZ1N96vLcXzEMmo45QkLYy+nk3kQIxlbTk6/Xvo6KTETyOB9F7F/2mQ==
+X-Received: by 10.84.133.14 with SMTP id 14mr13595084plf.360.1516268721974;
+        Thu, 18 Jan 2018 01:45:21 -0800 (PST)
+Received: from ash ([27.75.129.14])
+        by smtp.gmail.com with ESMTPSA id q67sm13156959pfi.164.2018.01.18.01.45.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jan 2018 01:45:21 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 18 Jan 2018 16:45:13 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v6 0/7] Trace env variables in run_command()
+Date:   Thu, 18 Jan 2018 16:45:05 +0700
+Message-Id: <20180118094512.27849-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.15.1.600.g899a5f85c6
+In-Reply-To: <20180115105949.18328-1-pclouds@gmail.com>
+References: <20180115105949.18328-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.113.199 with HTTP; Thu, 18 Jan 2018 00:56:50 -0800 (PST)
-In-Reply-To: <bda13f22-b6ca-f46d-9730-ff00ec536b0b@jeffhostetler.com>
-References: <xmqqa7xm38wc.fsf@gitster.mtv.corp.google.com> <718e2723-9547-8cd6-ac46-07e8631da09a@jeffhostetler.com>
- <xmqqshbd1o8a.fsf@gitster.mtv.corp.google.com> <bda13f22-b6ca-f46d-9730-ff00ec536b0b@jeffhostetler.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 18 Jan 2018 09:56:50 +0100
-Message-ID: <CAP8UFD0P7kVo2NP4Wq7OaSV4H1+sqHapuzW5AQef+enNS0S5hw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2018, #02; Tue, 9)
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 10, 2018 at 11:03 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
->
->
-> On 1/10/2018 2:57 PM, Junio C Hamano wrote:
->>
->> Jeff Hostetler <git@jeffhostetler.com> writes:
->>
->>> On 1/9/2018 6:33 PM, Junio C Hamano wrote:
->>>>
->>>> --------------------------------------------------
->>>> [Cooking]
->>>>
->>>>
->>>> * jh/fsck-promisors (2017-12-08) 10 commits
->>>
->>> [...]
->>>
->>>> * jh/partial-clone (2017-12-08) 13 commits
->>>
->>> [...]
->>>
->>> Parts 2 and 3 of partial clone have been simmering
->>> for a while now.  I was wondering if there were any
->>> more comments or questions on them.  I don't recall
->>> any existing issues.
->>
->> Me neither.
+v6 squashes Junio's changes in 6/7 and moves trace_run_command() from
+trace.c to run-command.c.
 
-I am still not very happy with fetch_object() not returning anything.
-I wonder what happens when that function is used to fetch from a repo
-that cannot provide the requested object.
+Jeff King (2):
+  sq_quote_argv: drop maxlen parameter
+  trace: avoid unnecessary quoting
 
-Also I think the "extensions.partialclone = <remote>" config option is
-not very future proof. If people start using partial clone, it is
-likely that at some point they will need their repo to talk to more
-than one remote that is partial clone enabled and I don't see how such
-a config option can scale in this case.
+Nguyễn Thái Ngọc Duy (5):
+  trace.c: move strbuf_release() out of print_trace_line()
+  run-command.c: introduce trace_run_command()
+  run-command.c: print program 'git' when tracing git_cmd mode
+  run-command.c: print env vars in trace_run_command()
+  run-command.c: print new cwd in trace_run_command()
 
->> I do not mind merging them to 'next' during the feature freeze, but
->> we won't be merging them to 'master' soon anyway, and I'd like to
->> see us concentrate more on finding and fixing regressions on the
->> 'master' front for now.
->
-> I didn't want to rush this -- just check to see if there was
-> any thing that I should focus on while waiting for 2.16 to ship
-> and settle down.
+ builtin/am.c                |  2 +-
+ builtin/rev-parse.c         |  4 +--
+ quote.c                     | 30 ++++++++++++++--
+ quote.h                     | 10 +++++-
+ run-command.c               | 88 ++++++++++++++++++++++++++++++++++++++++++++-
+ t/helper/test-run-command.c |  9 +++++
+ t/t0061-run-command.sh      | 37 +++++++++++++++++++
+ trace.c                     |  9 +++--
+ 8 files changed, 178 insertions(+), 11 deletions(-)
 
-Thanks for already having commented on the patch series I sent to
-integrate the external odb with the above work,
-Christian.
+-- 
+2.15.1.600.g899a5f85c6
+
