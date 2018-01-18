@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B789C1FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 16:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4441FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 16:44:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754964AbeARQcC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 11:32:02 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:39194 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753527AbeARQcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 11:32:00 -0500
-Received: by mail-wm0-f42.google.com with SMTP id i11so23985946wmf.4
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 08:32:00 -0800 (PST)
+        id S932653AbeARQoO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 11:44:14 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35516 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932640AbeARQoL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 11:44:11 -0500
+Received: by mail-wm0-f68.google.com with SMTP id r78so24297500wme.0
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 08:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=iVwWH20MklzMR44EDheTwXkIhQ3HTAP6Ww2jjfv4WVs=;
-        b=kyh+sbU00H5qdZ9pp/GxSrqPFJsxgs4PdSUOIENOfXQlvVKJM1AF7Ki3X5jbos20jE
-         v8ZzilE9Y6fgRbd03/+ZUEuFTRkhyuP8YertC6HlJZKET89eAZMBw3wZ9hUEo2uwsAEN
-         CsagJ+/8CPLK9/h9kSRhZ0d5v4DnhSlxF9aSkrgY/9r60aABYq4IaanNy8PBAAFStYFe
-         t6xYtglYeHINfC2wLotl4db1WGtTi4pDt0TSX2aTj61KVWTxZHg/LzTXazt6ppTprfjk
-         BepmLW6S1U7wFjdiwQYcjFFMZMGiZQgfDOzqeQh8wBnP9xSXhCvWTyt8evT7mhGzFCvP
-         yAkA==
+        bh=5z6KvwMEhG0yt7BQG728kNY/3Q7YHZZLAzScRvR+guM=;
+        b=KLAyeJ/M2eQnVL/9GBeEVRZu/hma+kcGdrgdQwcXvb8fXjWhK6vP7MbB10sx5iMFzZ
+         EaWEa9srfcNEtCmL+J6TEENxcQa2aP+wksLbHikxSkJaZskJPs3zun+1OlIhlQpwk7ZU
+         xifJEOtBygl1L7H/TUUT+iyesXeKwOiCyDQCt+LMiDIlyGZvPx1YVhzpfCO7JP9FBZUw
+         Pj5gpie6bjPhYRELkiW2mweK9JaeDUiHfuXbHTFgBeG3PE/oJ8uk9YQFNjl3YERJWLk5
+         LRyrhKK5zaRLj5ETK7Wxmocdp1TBIYLET2k9Io4rocctQlINpRWfMtlAquIRG16/w9qI
+         pmTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=iVwWH20MklzMR44EDheTwXkIhQ3HTAP6Ww2jjfv4WVs=;
-        b=bUWPEHFbKI1PyyOFWuG5O1tGXhWMuFnE1QLCWNQs80MFSJoh8o5+F9zqmPAYERNB3b
-         2WNupfHNCYMWBdd+crOK/2FbzjOSFWFZVZ7g1vpl0q5iRQTq3UDfcpN9mjwPtEI28HCa
-         eZM83ycL0FX8FZiQpJTXlhEXp7jdyCBXCqSQF695wNT+OMy03OyRH0IaadJxsn+xH0/y
-         dFYd6Z/TOgxYzIY6uF5FQgYbBEOyXtDdysojjzheOAfJzOH//TkbSue1DIgKbViEvdLo
-         wtt2Hp7Rg3O2X+mPr9D7D8MpZTa2mpBTfNQ7K4YP/flS1L/8xo3mXEd5OLmwvPnF+6+8
-         yRXw==
-X-Gm-Message-State: AKwxytc001ODc76qmBCigu1FpiLICAQxuYtUiRbYD/WEM138SKPY8fVU
-        0OpHoH4Lu8T96ud1in+rmWWUjxIi/VoCfj5H/lo=
-X-Google-Smtp-Source: ACJfBothJ0dq/haPsnoIAAGyK8Op2KtibK4M6Z+3YQdnD2wWeavwZc/z421jFyNIwh4TN2q+PxJ9/fxV1b/1ROXNvgY=
-X-Received: by 10.80.211.7 with SMTP id g7mr8902195edh.76.1516293119154; Thu,
- 18 Jan 2018 08:31:59 -0800 (PST)
+        bh=5z6KvwMEhG0yt7BQG728kNY/3Q7YHZZLAzScRvR+guM=;
+        b=YKAojvLv3rlJYgqliaJ+Lyz0QxTKnr/Gosjuof8sEkOdvdjgGBnXUMWHO7FGGkbtX9
+         xpSVIJOw59ZfvPoG3ev2bB3rFMELoO+e7Mtw80XpVtJBqjCnLYl4h6iYsXxp9SAxtzl7
+         3EqstshBUyX6se5ZhcmGAbJ8QYUDirx15uc95KH7HXh/IIgLVIncBmyRH+/pXinUcEaq
+         8tDW2fC0lvm1mQgibmLYmECwuxW6p2C05M4TWS4pi+tRFCBLhO59K7s5jbAz1XJSLI2Q
+         qn+h2WFFNMBsJOQy7r6CysRxvUJgPYxROk4Bkgz0z21BvNnhTzIABcPrdaq42/u3knV5
+         PIGA==
+X-Gm-Message-State: AKwxyteWD+8FdCeuT3C8i1ShXbD+bO2u9OiTsT0FgHism8be0OUuWcgS
+        a3W8Kb0IA3VD4TbVUfEgvw06hB/i3jWCRVSQecY=
+X-Google-Smtp-Source: ACJfBovacdK6d48wcNt7XnBzH64VAIKGKCcyiN9ft0jaPPGRje3+kJ/qt8LzF63sRdDitSjhlBhovUK9qEAyOxItAEc=
+X-Received: by 10.80.241.89 with SMTP id z25mr9022197edl.104.1516293850020;
+ Thu, 18 Jan 2018 08:44:10 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 08:31:38 -0800 (PST)
-In-Reply-To: <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de>
+Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 08:43:49 -0800 (PST)
+In-Reply-To: <219dbf95a8069190abe0986ca66b65a8ae3e670d.1516225925.git.johannes.schindelin@gmx.de>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <219dbf95a8069190abe0986ca66b65a8ae3e670d.1516225925.git.johannes.schindelin@gmx.de>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Jan 2018 08:31:38 -0800
-Message-ID: <CA+P7+xrLrU=s4EgPYs7HP4JRBj1fW2YJNUEpswJENBxHAvz5LQ@mail.gmail.com>
-Subject: Re: [PATCH 2/8] sequencer: introduce the `merge` command
+Date:   Thu, 18 Jan 2018 08:43:49 -0800
+Message-ID: <CA+P7+xr0FpgTUa9SgkXM1U86i8f0cParNqGkP=KNPOR_EqNHYg@mail.gmail.com>
+Subject: Re: [PATCH 6/8] sequencer: handle autosquash and post-rewrite for
+ merge commands
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
@@ -64,54 +65,132 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jan 18, 2018 at 7:35 AM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> This patch is part of the effort to reimplement `--preserve-merges` with
-> a substantially improved design, a design that has been developed in the
-> Git for Windows project to maintain the dozens of Windows-specific patch
-> series on top of upstream Git.
+> In the previous patches, we implemented the basic functionality of the
+> `git rebase -i --recreate-merges` command, in particular the `merge`
+> command to create merge commits in the sequencer.
 >
-> The previous patch implemented the `label`, `bud` and `reset` commands
-> to label commits and to reset to a labeled commits. This patch adds the
-> `merge` command, with the following syntax:
+> The interactive rebase is a lot more these days, though, than a simple
+> cherry-pick in a loop. For example, it calls the post-rewrite hook (if
+> any) after rebasing with a mapping of the old->new commits. And the
+> interactive rebase also supports the autosquash mode, where commits
+> whose oneline is of the form `fixup! <oneline>` or `squash! <oneline>`
+> are rearranged to amend commits whose oneline they match.
 >
->         merge <commit> <rev> <oneline>
+> This patch implements the post-rewrite and autosquash handling for the
+> `merge` command we just introduced. The other commands that were added
+> recently (`label`, `reset` and `bud`) do not create new commits,
+> therefore post-rewrite & autosquash do not need to handle them.
 >
-> The <commit> parameter in this instance is the *original* merge commit,
-> whose author and message will be used for the to-be-created merge
-> commit.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  refs.c                            |  3 ++-
+>  sequencer.c                       | 10 +++++++---
+>  t/t3430-rebase-recreate-merges.sh | 39 +++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 48 insertions(+), 4 deletions(-)
 >
-> The <rev> parameter refers to the (possibly rewritten) revision to
-> merge. Let's see an example of a todo list:
->
->         label onto
->
->         # Branch abc
->         bud
->         pick deadbeef Hello, world!
->         label abc
->
->         bud
->         pick cafecafe And now for something completely different
->         merge baaabaaa abc Merge the branch 'abc' into master
->
-> To support creating *new* merges, i.e. without copying the commit
-> message from an existing commit, use the special value `-` as <commit>
-> parameter (in which case the text after the <rev> parameter is used as
-> commit message):
->
->         merge - abc This will be the actual commit message of the merge
->
-> This comes in handy when splitting a branch into two or more branches.
->
+> diff --git a/refs.c b/refs.c
+> index 20ba82b4343..e8b84c189ff 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -600,7 +600,8 @@ int dwim_log(const char *str, int len, struct object_id *oid, char **log)
+>  static int is_per_worktree_ref(const char *refname)
+>  {
+>         return !strcmp(refname, "HEAD") ||
+> -               starts_with(refname, "refs/bisect/");
+> +               starts_with(refname, "refs/bisect/") ||
+> +               starts_with(refname, "refs/rewritten/");
+>  }
 
-Would it be possible to open the editor with the supplied text when
-there's no commit? The text after <rev> must be oneline only..
+Would this part make more sense to move into the commit that
+introduces writing these refs, or does it only matter once you start
+this step here?
 
-It's difficult to reword merges because of the nature of rebase
-interactive, you can't just re-run the rebase command and use
-"reword".
+>
+>  static int is_pseudoref_syntax(const char *refname)
+> diff --git a/sequencer.c b/sequencer.c
+> index 1bef16647b4..b63bfb9a141 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2413,10 +2413,13 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>                         res = do_reset(item->arg, item->arg_len);
+>                 else if (item->command == TODO_BUD)
+>                         res = do_reset("onto", 4);
+> -               else if (item->command == TODO_MERGE)
+> +               else if (item->command == TODO_MERGE) {
+>                         res = do_merge(item->commit,
+>                                        item->arg, item->arg_len, opts);
+> -               else if (!is_noop(item->command))
+> +                       if (item->commit)
+> +                               record_in_rewritten(&item->commit->object.oid,
+> +                                                   peek_command(todo_list, 1));
+> +               } else if (!is_noop(item->command))
+>                         return error(_("unknown command %d"), item->command);
+>
+>                 todo_list->current++;
+> @@ -3556,7 +3559,8 @@ int rearrange_squash(void)
+>                 struct subject2item_entry *entry;
+>
+>                 next[i] = tail[i] = -1;
+> -               if (item->command >= TODO_EXEC) {
+> +               if (item->command >= TODO_EXEC &&
+> +                   (item->command != TODO_MERGE || !item->commit)) {
+>                         subjects[i] = NULL;
+>                         continue;
+>                 }
+> diff --git a/t/t3430-rebase-recreate-merges.sh b/t/t3430-rebase-recreate-merges.sh
+> index 46ae52f88b3..76e615bd7c1 100755
+> --- a/t/t3430-rebase-recreate-merges.sh
+> +++ b/t/t3430-rebase-recreate-merges.sh
+> @@ -143,4 +143,43 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
+>         EOF
+>  '
+>
+> +test_expect_success 'refs/rewritten/* is worktree-local' '
+> +       git worktree add wt &&
+> +       cat >wt/script-from-scratch <<-\EOF &&
+> +       label xyz
+> +       exec GIT_DIR=../.git git rev-parse --verify refs/rewritten/xyz >a || :
+> +       exec git rev-parse --verify refs/rewritten/xyz >b
+> +       EOF
+> +
+> +       test_config -C wt sequence.editor \""$PWD"/replace-editor.sh\" &&
+> +       git -C wt rebase -i HEAD &&
+> +       test_must_be_empty wt/a &&
+> +       test_cmp_rev HEAD "$(cat wt/b)"
+> +'
+> +
 
-I suppose you could cheat by putting in an "edit" command that let you
-create an empty commit with a message...
+Same for the test here, I can't figure out why this is necessary in
+this patch as opposed to the patch which first introduced the
+refs/rewritten/<label> refs.
 
-Thanks,
-Jake
+> +test_expect_success 'post-rewrite hook and fixups work for merges' '
+> +       git checkout -b post-rewrite &&
+> +       test_commit same1 &&
+> +       git reset --hard HEAD^ &&
+> +       test_commit same2 &&
+> +       git merge -m "to fix up" same1 &&
+> +       echo same old same old >same2.t &&
+> +       test_tick &&
+> +       git commit --fixup HEAD same2.t &&
+> +       fixup="$(git rev-parse HEAD)" &&
+> +
+> +       mkdir -p .git/hooks &&
+> +       test_when_finished "rm .git/hooks/post-rewrite" &&
+> +       echo "cat >actual" | write_script .git/hooks/post-rewrite &&
+> +
+> +       test_tick &&
+> +       git rebase -i --autosquash --recreate-merges HEAD^^^ &&
+> +       printf "%s %s\n%s %s\n%s %s\n%s %s\n" >expect $(git rev-parse \
+> +               $fixup^^2 HEAD^2 \
+> +               $fixup^^ HEAD^ \
+> +               $fixup^ HEAD \
+> +               $fixup HEAD) &&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_done
+> --
+> 2.15.1.windows.2.1430.ga56c4f9e2a9
+>
+>
