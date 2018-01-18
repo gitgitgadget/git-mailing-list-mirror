@@ -2,99 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4C241FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 22:31:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B00321FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 22:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932307AbeARWbW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 17:31:22 -0500
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:42900 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932473AbeARWbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 17:31:12 -0500
-Received: by mail-pf0-f178.google.com with SMTP id b25so9522651pfd.9
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 14:31:12 -0800 (PST)
+        id S1754351AbeARWcn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 17:32:43 -0500
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:35257 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753881AbeARWcl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 17:32:41 -0500
+Received: by mail-ua0-f193.google.com with SMTP id g16so16678802ual.2
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 14:32:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=UMExLQwUrd1Rs+eX35xOYhpZoR18CdwIdWp+nozI25Y=;
-        b=E3KiRw0KzcW4DAwIetH9nBBCNKr0wY7BLnpo+YAYcEn1PFSpZXAUhJvvuSNRXrBrUm
-         KIcV3J5y1gq/YJ4LsCVIlVp7EAOnD5fo/LV9C+wzoIc7dx1BlGKkNMzt04z8tl7kod/R
-         2Y0EAJ3fJ13pW1HxAMYVyelo0arNdo1Htwr0+czV/YpyPa81qmMbGEWhgEQ5SsXwGC+U
-         viVHfNmlA9QVaatZV//a/xH58CRFkJPuSGjGBDITzVUjZb41Oa6/EIDcVNCllF9lDRje
-         dq8cUHQnDlz7tVA3oVqQl2DsQP3FEXBCa74jlVnF+NS+eQcd0QJaIOMq6sUOVkS9F46g
-         gkIw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bcdkiXwm7wK9WCYWedkiK3gVXPKDyqikTXoTuX75CuA=;
+        b=mt/D7I6HLbEYcM9CL/YAJWVUElovykUrKHEo9dDQiiWcGREMyvlkWuy6tu1uTOHKGg
+         R1v3nFK92w6xKFiWdHE2SsdHOzJGbjBr3vmG16/roTD539xOD4v7Ak62C+un10wRroQ2
+         C9vSV5dADlIWEk152rE0MCw9sR5AT2KGwH6dk81r3XP/Won+oKcX6OuOO2gHvJd5JTJV
+         SLY4WSfnlBd5lQIRRE0bTwnhIG531gKbo2h8RLVMnz7+V9bMJF/MTjAlgGEaVUMpgYb+
+         In9pWC01GIFbHN2a7oy6TJCy5W6yWWRiyyg/xSLV1M6mDFqG8LgDGpKQefUM5Ooxz7jS
+         +Flg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UMExLQwUrd1Rs+eX35xOYhpZoR18CdwIdWp+nozI25Y=;
-        b=UwD8sCX2KGW2sBr+AsqVDqpXvPgEF9BQEmxT3FtoeD2lLDT38diYrWtOpDddt6/iRo
-         SP+dyrvGnT4Ik8yJdZO3BaGlzE42jC/i4UWVSxk86KXBTuf3k2NgQ4nD+aOyKjz9QR1p
-         u2g/kZXmibg0MwOYojKK6ngwRzUyJ1fWpOFiJsEgMrSTkdpJ+h0GSTVDIoaXUYs1tMVX
-         VyGXmpjFrCR3zXkVuD8EyMTVg4b8QZ2lKIyBT3mrNyy063kepZ0v8lVD2olbfDDNdhj3
-         O2TkWVn8fb6RiIRxawghQD4HDGis5hG2AlRa2NzFdshd5ExFZAHYKc19dA35d3zKeJgw
-         VRhA==
-X-Gm-Message-State: AKGB3mK/NEER+0/5rXUtSGNT2xpP3QyQV91c9BLwyKJ5h5bKvXGx8aXh
-        IdEbI0Vx6xA7a2qixlki+6YlBA==
-X-Google-Smtp-Source: ACJfBoui1wNpZuTZM8n6yDrdv+yH0KWn2CB/3EAcGkBHazoO573gJUEpO8HY5UB1GycN/OAELhjfyQ==
-X-Received: by 10.98.103.83 with SMTP id b80mr34532808pfc.223.1516314671719;
-        Thu, 18 Jan 2018 14:31:11 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id y131sm14566327pfg.69.2018.01.18.14.31.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 18 Jan 2018 14:31:10 -0800 (PST)
-Date:   Thu, 18 Jan 2018 14:31:09 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2018, #02; Tue, 9)
-Message-Id: <20180118143109.bc0eb10b036411e0a5a3694f@google.com>
-In-Reply-To: <CAP8UFD0P7kVo2NP4Wq7OaSV4H1+sqHapuzW5AQef+enNS0S5hw@mail.gmail.com>
-References: <xmqqa7xm38wc.fsf@gitster.mtv.corp.google.com>
-        <718e2723-9547-8cd6-ac46-07e8631da09a@jeffhostetler.com>
-        <xmqqshbd1o8a.fsf@gitster.mtv.corp.google.com>
-        <bda13f22-b6ca-f46d-9730-ff00ec536b0b@jeffhostetler.com>
-        <CAP8UFD0P7kVo2NP4Wq7OaSV4H1+sqHapuzW5AQef+enNS0S5hw@mail.gmail.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bcdkiXwm7wK9WCYWedkiK3gVXPKDyqikTXoTuX75CuA=;
+        b=j8LtNSVHVPn1cp7YT1p7amaQaGzhSJNHwTQfjsoMnzH3ECdmMbuodLAfewlXRgDZA0
+         NWdusBzlY0Xf7qrqKQcWHvz47txvBxX/qkaORhvkeVmk6cy13KmLziNgICHXjQeKeUWU
+         V3wEpDdLTGZuzmruaVD4SsTVKu5I4TgjyqksS9Pzrj2u/juz/SWj18q7LcMkm20ekluz
+         uRBBqAU8OO2NJvMCOtlfHxs8ObuAzH7pDnr71Su/fMb+4di/x/hB7Ys6YvWbzSNBd+Xy
+         UwfbhkTMMb9gfQ3cwyCjY32AmiNV2ujf4L9AQr1rxS3woLNcgRls8O7tv4dLTCjSFmOB
+         y8og==
+X-Gm-Message-State: AKwxytcNEJzYCuale5TniHDpxMWXgyltnqn/+9x4AG5IGW85hpM8iT0E
+        9La3Fluh1MK///0rw6xpaiOwA2gzCrJ2RSjrf70=
+X-Google-Smtp-Source: ACJfBos6cvIwSH2Lmhbx4p/IvmdDcR8D4zVjtbmhomz05a/6MbRvSqcD4gD6s6r0g80uYfbnKRiQJ4kav9jP1eDCHX8=
+X-Received: by 10.176.72.178 with SMTP id x47mr6322801uac.24.1516314761060;
+ Thu, 18 Jan 2018 14:32:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.10.140 with HTTP; Thu, 18 Jan 2018 14:32:40 -0800 (PST)
+In-Reply-To: <20180118213732.GA7403@sigill.intra.peff.net>
+References: <CACsJy8A_moFProjfPAJFn2aP52w5qdYdOu4Ygox1qMMitNUHLg@mail.gmail.com>
+ <20180114101820.4273-1-pclouds@gmail.com> <20180114101820.4273-3-pclouds@gmail.com>
+ <CAM0VKjmGo5gjUBpTQp9M+pvZzBMDAmYYCu-5VfG-8LYRxU7i0Q@mail.gmail.com>
+ <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+ <20180118132931.GA21914@sigill.intra.peff.net> <CACsJy8BkJXeaG3mYNEsfVK4N_-WxwU2Pk2pa1FThH1sMEW2yxA@mail.gmail.com>
+ <20180118150014.GA2097@ash> <20180118213732.GA7403@sigill.intra.peff.net>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 18 Jan 2018 23:32:40 +0100
+Message-ID: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write
+ shared index
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 18 Jan 2018 09:56:50 +0100
-Christian Couder <christian.couder@gmail.com> wrote:
+On Thu, Jan 18, 2018 at 10:37 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jan 18, 2018 at 10:00:14PM +0700, Duy Nguyen wrote:
+>
+>> The test suite was run as root, no wonder why my removing write access
+>> has no effect. I got the test to pass with this, but then it fails
+>> with
+>>
+>>     Can't write .prove (Permission denied) at /usr/share/perl/5.22/App/P=
+rove.pm line 542.
+>>
+>> Some more chown'ing or chmod'ing is required....
 
-> I am still not very happy with fetch_object() not returning anything.
-> I wonder what happens when that function is used to fetch from a repo
-> that cannot provide the requested object.
+This is the fallout of running the tests as root in the past.  With your
+patch 'prove' is run as a non-root user, but the prove state is loaded
+from Travis CI's cache, where it has been written as root the last time
+around, so now we don't have permissions to (over)write it.
 
-My idea was to save a verification step - the caller of fetch_object()
-needs to reattempt the object load anyway (which includes a verification
-that the object exists), so I didn't see the need to have fetch_object()
-do it too.
+I have patches in the works to address this as well.
 
-> Also I think the "extensions.partialclone = <remote>" config option is
-> not very future proof. If people start using partial clone, it is
-> likely that at some point they will need their repo to talk to more
-> than one remote that is partial clone enabled and I don't see how such
-> a config option can scale in this case.
+>> Subject: [PATCH] ci: don't accidentally run the test suite as root
+>>
+>> This script assigns and adds a user named "ci" in a subshell so the
+>> outer CI_USER is not affected. For some reason, CI_USER is actually
+>> empty on Travis linux32 builds. This makes the following "su" useless
+>> and the test suite is run as root.
+>
+> Are we sure this was the problem on Travis, and it wasn't just an issue
+> with how I reproduced via docker?
 
-In the case that they want to talk to more than one
-partial-clone-enabled repo, I think that there still needs to be one
-"default" remote from which missing objects are fetched. I can think of
-a few reasons for that - for example, (a) we need to support commands
-that give a nonexistent-in-repo SHA-1 directly, and (b) existing Git
-code relies on the ability to fetch an object given only its SHA-1. (a)
-can be overcome by forbidding that (?) and (b) can be overcome by an
-overhaul of the object-fetching and object-using code, but I don't think
-both (a) and (b) will occur anytime soon.
+Yes, we are.
+
+
+G=C3=A1bor
