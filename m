@@ -2,77 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B92E1FADF
-	for <e@80x24.org>; Thu, 18 Jan 2018 21:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 235C51FADF
+	for <e@80x24.org>; Thu, 18 Jan 2018 21:37:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755022AbeARV3f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 16:29:35 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:36040 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754740AbeARV3Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 16:29:25 -0500
-Received: by mail-wm0-f45.google.com with SMTP id f3so25824071wmc.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 13:29:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Cpvc711wDW5Js6JGcwOt3chkmKUN71+gbutcc3/3iII=;
-        b=g/oOvf1hHJUZpV5tFpu4rsnSa2mMCACSsyoMjg2sJbiz8RAZXH17QGbVQdN843GWLU
-         cf3NBUqShVky33qXzx9PUp02MrQHoKv+/GWX/JgLs9uq8vW6ZJjruLDTgFhmZ/V8tunZ
-         Ip2yQus+ad54n3UmIVl1+flsa2UMYrXhoNcNX7sINg4bKqRdZjV+8nhMPN1kB/DIiFN0
-         PLw/BBgbJ2EpgDa10BaNgDdQbq4h5FGJdPa+vKobj/7x9GOjOFneHAYhHKPiYzRctGOa
-         wNZVP6+LPjExQoGnp7YHHnxbg6BBl5pl1/EY/LAJlX4PFByAGexPf5iDzrrpfTb83fB2
-         HFNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Cpvc711wDW5Js6JGcwOt3chkmKUN71+gbutcc3/3iII=;
-        b=k/uHH8i0uXabz7Jbd/zjRA19yQdjcaRiE3B8wSjcGCWuz56eherbWEcsStB5KEW8IS
-         S4g0FXpkT6W/LiRJLCZNk1nrmvoLs0uNrXuFXvq+G0mdg/3PG7t/RiCcz1kYa26nn1LR
-         h5suErVzaSf7P//MhYIiqRUSxFnw824a6YK/tU1djZNBBrTmy3QebjSKIZ5nIyzjPB7l
-         ITbohQr8WiE9u/K/quHwMo17AWr1m8cdsauTIwRIkm3PLt7qiZXE2Ko8w9HMT5CWVLKO
-         GYZzDirXPZEmjvv0YFfmDu2NzBKaXjqXFS/qnnZ6vg10y4uDmWToTgBynMTOc0mZFghY
-         ZMuQ==
-X-Gm-Message-State: AKwxytdwrJkhheya0UriPQVIE+ARiZFr/fpeSsHMkYzLLrUr9jQfGi03
-        MtL3Z+Zxm8jn0i0iOZ/UjQsCL1FyIn1tnfFpqOQ=
-X-Google-Smtp-Source: ACJfBotUnyJBZoHHBK/ZpWiHLwj9eIkgJr8zYFqsg0dZN9QI41ydpYabibi6YMWTrVJSx0pO5f85TfJSZgDjh8yde8w=
-X-Received: by 10.80.241.89 with SMTP id z25mr10076580edl.104.1516310963306;
- Thu, 18 Jan 2018 13:29:23 -0800 (PST)
+        id S1753762AbeARVhC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 16:37:02 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57285 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753525AbeARVhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 16:37:01 -0500
+Received: from [10.122.129.233] ([46.142.197.184]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlV71-1fCzzc2brj-00bHqq; Thu, 18
+ Jan 2018 22:36:55 +0100
+Date:   Thu, 18 Jan 2018 22:36:51 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Stefan Beller <sbeller@google.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, jacob.keller@gmail.com
+Subject: Re: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive:
+ clarify arguments
+In-Reply-To: <20180118183618.39853-2-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1801182233480.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-2-sbeller@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.80.212.44 with HTTP; Thu, 18 Jan 2018 13:29:02 -0800 (PST)
-In-Reply-To: <nycvar.QRO.7.76.6.1801182226160.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
- <219dbf95a8069190abe0986ca66b65a8ae3e670d.1516225925.git.johannes.schindelin@gmx.de>
- <CA+P7+xr0FpgTUa9SgkXM1U86i8f0cParNqGkP=KNPOR_EqNHYg@mail.gmail.com> <nycvar.QRO.7.76.6.1801182226160.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 18 Jan 2018 13:29:02 -0800
-Message-ID: <CA+P7+xpAX-pgGAZS84DtOVSk9RfnLtD2JqsSYDKYZ30dcLKYJw@mail.gmail.com>
-Subject: Re: [PATCH 6/8] sequencer: handle autosquash and post-rewrite for
- merge commands
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:a2y3yiFrJ0cFJmST3Ya5d92CsHIHAyiMpat5v0uOXnAaQswwmwi
+ YA0Ez1vjZSEt1LkDka5u9C8QmnvyxHUs98+mPBVgTyEE5RPKiuoCDORvTyDtjN6lWJdLKfQ
+ /6Pr3DRz/VMmSoO0o6icVsIzD2V5nLTbbZoSEFMNqdrHmcDIT2cdEtTMIADD4GsEuzEUewG
+ dwe0B9FNWbUsE2R66/IoQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xJnF3f+rjZQ=:GH+2nOPq4Jg7A4UcQJedHv
+ J9VX8/jZ43KQxzHQbt0/p3tOpN+NvRbwRzaVDj+ppWlQewfhnsJUQRX9ZSHSECS2Yqcjh3Las
+ FNMgZUu6WVufnVGvbHFAo7sEP8nU8q4efTjukJGK3FWr6Zn8DdC98sctLarChIhXClHh5SUOE
+ VpomREG+bQJs2KmJzi1JBH3vI6ZQwWerbS6nzweZHGkF8cJXnAsLusVJ3KQi4UOdQWae1gm4W
+ O/Nqch9ijc9z+jvAnp5pgoRsjIPZ4+KlonhFX+RYCuKt5W8MprNa9xdhKnDXlMSWwkM/CojUB
+ 2WX4NtXH5aZoDV4FioiWLDP1aSve5KVs/OKQlZQZbIYNu3SYso43wkeNC+DifGykBArhM7y3d
+ 8jQoWFvlKaFRRkI2G1CZaP6xqcMTtR6ASbmI3I3tlZBLGrnsC2sR9DhP2fXYROOGDvHF7mNwF
+ F6uzXBAHd7uI8ocPpIond2PcsEcSan/7+VDbG+7rHO+abNdHcRXBqms83skHkALEKBsJFq06L
+ Y5JJjYecgp+XOeSBZzjCbhdO0r1C8VO07G137UCfxQRCgzzZBepwgbJsJTPE2zcf+RhM9HCrb
+ G9MhEIa9YNyIvnslHJH3uSsysTcWbHuDCAtauqFRIS8AKFNxiXHPN/iC4s0hi8kMqWmIKDerf
+ h3ifhzpxkKm97tzFyWMy1Cjctx8UxhyVaLNng83Ws2Nk5y+V1BIzSjrepcR5EutWWJ9ENEry9
+ lfhQFqSlUmULtKHZ8JONzG9IPm4Fot4DKTM3HlZ5/4Gi+JzKp4IMuVrHsBb3XLWnv2ehxd8gJ
+ mtf5PphLjJg8RLzpmkTc7hPBx+LdBa9KrVKBBMU7YUPsyZD8uw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> Same for the test here, I can't figure out why this is necessary in
->> this patch as opposed to the patch which first introduced the
->> refs/rewritten/<label> refs.
->
-> Woops. This was its own commit, and must have been accidentally squashed
-> during one of my rebases. Will re-introduce it;
+Hi Stefan,
 
-Yep that makes sense!
+On Thu, 18 Jan 2018, Stefan Beller wrote:
+
+> Up to now each command took a commit as its first argument and ignored
+> the rest of the line (usually the subject of the commit)
+> 
+> Now that we have commands that take different arguments, clarify each
+> command by giving the argument list.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  git-rebase--interactive.sh | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
+> 
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 23184c77e8..3cd7446d0b 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -155,17 +155,17 @@ reschedule_last_action () {
+>  append_todo_help () {
+>  	gettext "
+>  Commands:
+> -p, pick = use commit
+> -r, reword = use commit, but edit the commit message
+> -e, edit = use commit, but stop for amending
+> -s, squash = use commit, but meld into previous commit
+> -f, fixup = like \"squash\", but discard this commit's log message
+> -x, exec = run command (the rest of the line) using shell
+> -d, drop = remove commit
+> -l, label = label current HEAD with a name
+> -t, reset = reset HEAD to a label
+> -b, bud = reset HEAD to the revision labeled 'onto'
+> -m, merge = create a merge commit using a given commit's message
+> +p, pick <commit> = use commit
+> +r, reword <commit> = use commit, but edit the commit message
+> +e, edit <commit> = use commit, but stop for amending
+> +s, squash <commit> = use commit, but meld into previous commit
+> +f, fixup <commit> = like \"squash\", but discard this commit's log message
+> +x, exec <commit> = run command (the rest of the line) using shell
+> +d, drop <commit> = remove commit
+> +l, label <label>= label current HEAD with a name
+> +t, reset <label> = reset HEAD to a label
+> +b, bud = reset HEAD to the revision labeled 'onto', no arguments
+> +m, merge [<label-or-commit>]* = create a merge commit using a given commit's message
+
+Good idea! I would rather do it as an introductory patch (that only
+converts the existing list).
+
+As to `merge`: it is a bit more complicated ;-)
+
+	m, merge <original-merge-commit> ( <label> | "<label>..." ) [<oneline>]
+		create a merge commit using the original merge commit's
+		message (or the oneline, if "-" is given). Use a quoted
+		list of commits to be merged for octopus merges.
 
 Thanks,
-Jake
+Dscho
