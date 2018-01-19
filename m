@@ -2,95 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E6BF1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 21:48:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4DFF1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 21:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932305AbeASVst (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 16:48:49 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:35991 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756461AbeASVss (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 16:48:48 -0500
-Received: by mail-qt0-f175.google.com with SMTP id z11so7364395qtm.3
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 13:48:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=rSZPLKCHrg/HTig+zzpH3sTLGNDprHlhrTm7rkO5r4g=;
-        b=qWMgHqoFUVlqUkSV6AiebsXUS90vxVxA1p3IWS1eZriqZroVWuvo+kLIhtYIODEdNv
-         ilFNHo9UNOjVLmldDy2Woqlw45fRbPsESIo3ws0aHq/AYzt5kxcWEwmaHI+lZjjj65W9
-         XvHG0hlHma2uq/c7lBdtmMdcvhG4/qEp8QdbBfEEcsrXdfWb0EVP8BzXS6OHBE/wd6N3
-         PnPCLah0LbRpaZWS8Q0Xtc8YluFaxbz8cESUUbPlUmUDXATgR1T2/xQN29xkNWkeqjKj
-         rcgmVoPUPwBNnYLbPQRzcWFnoerSrSLMiup3t7gjKi8O3cAXhk/vBAbGPNDn71wtTj7s
-         Rl/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=rSZPLKCHrg/HTig+zzpH3sTLGNDprHlhrTm7rkO5r4g=;
-        b=JoZeat5DX7N3nubchyYZ7G4LoJy0wtTFYqnLEbsVAX2bOi65cX6oZ6c+baymqz9FuZ
-         OPBIEzOYFoH8z5nk/oG4wOpu6nJ2F8KcVJn2ynDneevxxFeBKOtxJE5LfnyEaq6liTSM
-         2dKhDSTIDITri/DwUdRgyxkqAMyQYgvHqiZTCJBIX7nzDXqAAp7uYr7jDt0U9kkh8ZOz
-         /DRMRMjriDBc457U/zaSQ45kCBa/YPGvM79TFC6IcSZpzpKkYPT3Me9uuXsOBQYYIM/J
-         JZHff2rQtzdd+57SXHf+gPhxB8V9XpY/9flEAIy0zPDrjSH8cHG5RcwliTQbvTGFO+I+
-         MH/w==
-X-Gm-Message-State: AKwxytfuIq0PrTuRrL6Z1CAStiVWLk3WaOJ9u/RTUKyrtumPsAc3nQWD
-        gqKCZLGj+gU06A5BZzIaIlnlcBXzqKTsMBxWQDs=
-X-Google-Smtp-Source: ACJfBot9XykHB25uADcmhqm4hqByDDk3e+G5hI60mXmUsRzFVhKro0T7QJMG/fgNAGYrWllF+BBBvkQVfKicYVZsMgY=
-X-Received: by 10.55.204.18 with SMTP id r18mr69442300qki.212.1516398527623;
- Fri, 19 Jan 2018 13:48:47 -0800 (PST)
+        id S1756567AbeASVwX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 16:52:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50150 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1756461AbeASVwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 16:52:21 -0500
+Received: (qmail 25938 invoked by uid 109); 19 Jan 2018 21:52:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 19 Jan 2018 21:52:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24990 invoked by uid 111); 19 Jan 2018 21:52:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Jan 2018 16:52:57 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jan 2018 16:52:19 -0500
+Date:   Fri, 19 Jan 2018 16:52:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v2] diff: add --compact-summary option to complement
+ --stat
+Message-ID: <20180119215219.GC12074@sigill.intra.peff.net>
+References: <20180113132211.13350-1-pclouds@gmail.com>
+ <20180118100546.32251-1-pclouds@gmail.com>
+ <20180118224814.GA8473@sigill.intra.peff.net>
+ <CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 13:48:47 -0800 (PST)
-In-Reply-To: <xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
- <20180119041825.727904-1-sandals@crustytoothpaste.net> <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
- <xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 19 Jan 2018 16:48:47 -0500
-X-Google-Sender-Auth: d9Ff8Z23opgz_kKgFaTk2mO9iOQ
-Message-ID: <CAPig+cRX2HpUPCnuf3aiZO71KmFgBR4JE_=NBA3UuwuRxrXR2Q@mail.gmail.com>
-Subject: Re: [PATCH] repository: pre-initialize hash algo pointer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
-        <aleks.bulaev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> Now that we know (due to Duy's excellent detective work[1]) that the
->> trigger is files with names differing only in case on case-insensitive
->> filesystems, the commit message can be updated appropriately.
->
-> Thanks.  Let me apply the following and do a 2.16.1, hopefully by
-> the end of day or mid tomorrow at the latest.  Test to protect the
-> fix can come as a separate follow-up patch.
->
-> -- >8 --
-> Subject: [PATCH] repository: pre-initialize hash algo pointer
-> [...]
-> A "git clone" of a project that has two paths that differ only in
-> case suffers from this if it is run on a case insensitive platform.
-> When the command attempts to check out one of these two paths after
-> checking out the other one, the checkout codepath needs to see if
-> the version that is already on the filesystem (which should not
-> happen if the FS were case sensitive), and it needs to exercise the
-> hashing code.
+On Fri, Jan 19, 2018 at 07:26:28AM +0700, Duy Nguyen wrote:
 
-Thanks, the amended commit message makes the reason for the patch more
-concrete. There does seem to be a bit of a grammatical issue, however,
-which makes it difficult to parse. Namely, "already on the filesystem
-(...)" probably was meant to say "already on the filesystem (...) is
-{something}".
+> > (I know this is a bikeshed, so I'm perfectly willing to take "yuck, I
+> > don't like that as well" as a response).
+> 
+> The position of A+x column is exactly where gerrit put it. Though web
+> pages have more flexibility than our terminal console so its position
+> does not have to be the same. I'm just throwing options out there
+> 
+> For many years I have this instead
+> 
+>  t/t5573-pull-verify-signatures.sh (new +x) | 81 ++++++++++++++++++++
+> 
+> Another option is just wrap the code in [] to make it look like check
+> boxes. But that wastes two more columns
+> 
+>        builtin/merge.c                    |  2 +
+>  [A+x] t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++++++++
+>        t/t7612-merge-verify-signatures.sh | 45 +++++++++++++
+
+Yeah, I almost suggested brackets, but wasn't sure if people would balk
+at the extra 2 columns. But they do help it stand out more. Colors would
+help, too, as you noted. Though they would not transfer over email, and
+I wonder if people would want to use this for format-patch.
+
+> Back to your suggestion, I kinda like the closeness between the +/-
+> count and "|" though. The output on 10c78a162f is like this, which
+> makes "A" looks a bit umm.. disconnected from the path name?
+> 
+>   Documentation/RelNotes/2.14.0.txt | A  97 +++++++++++++++++++++++++++
+>   GIT-VERSION-GEN                   |     2 +-
+>   RelNotes                          |     2 +-
+
+Yeah, I was trying to get it away from the pathname, since it doesn't
+stand out as much. I guess it depends how you think of the "A". To me it
+is sensible as a modifier for the line-count change. I.e., My read on
+the output above is "here is a path; it was added with 97 lines".
+
+> > One thing I noticed is that --compact-summary by itself does nothing.
+> > Should it imply --stat?
+> 
+> It might go with --numstat or --dirstat in future too. Didn't really
+> think hard about this yet. But I probably will go with Eric suggestion
+> and keep this in --stat=.... unless it really makes sense to have
+> something like this in --numstat or --dirstat.
+
+I'd think that most consumers of --numstat are not human, and would
+just use "--numstat --raw" to get all the information. But I also have
+not thought hard about it.
+
+Anyway, thanks for listening. :)
+
+-Peff
