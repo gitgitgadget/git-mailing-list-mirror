@@ -2,93 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99FD51F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 21:09:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D35B1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 21:20:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756260AbeASVJa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 16:09:30 -0500
-Received: from mail-wr0-f175.google.com ([209.85.128.175]:43714 "EHLO
-        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752190AbeASVJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 16:09:29 -0500
-Received: by mail-wr0-f175.google.com with SMTP id t16so2702976wrc.10
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 13:09:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Eto3jiQDMf3BoM4FgwSwFNcHnenacOrYiqwOkB/P5WU=;
-        b=VRqvnRPQ28YFxKp8D3Sf1EV2CaG+Cwt8sylUKr0G1PBKNZP5fgv/6CxmaaqZMAbLqt
-         dWETqNCXXnP/rL9qiPofADHWcHSyYbDWDQI/Zk/FGxrHP9vGC1kjD56tDkxYDykLloee
-         +vSjrqESSzGQEMpWzjLI3qJtlK3tUUuQXVTTw1J3xhibJu9FiOaYwcs2q3sF0OfPJvkE
-         oK16IjN1hSjmKZikfdU0LDw5KLXOKESFtipgL418V2GevqDSQROmcfuGnBTNkBwL/n9U
-         EMzyPRhuppkZBxh8LcGmgn4NdBAAuIoOResDnqMAswdjo9JhHRxmSYY1J5oSYcDxfj4E
-         mFyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Eto3jiQDMf3BoM4FgwSwFNcHnenacOrYiqwOkB/P5WU=;
-        b=UIkk5lEHUT85jd+LbnA8krjJNTj4x5spVG6BuwBzzfpoqmIEizsIbYQyDssg0ndiTv
-         l8qK4ZvgsgUe1szr9erguB0NOjOMICfSmh3SVjZU9ImqXjz1G5ACyXpW+Ink82fVCmhJ
-         6UIFMCdo7wNSx6kPDQXBAcCrMaQbe5PFT0/ZyqVm4/TWXaKH3o35oOx2ROsgfN0gBxqW
-         SL2e4T/9wE5f9E8PYN3YpnDxniKugZTnVHOoA/H+KLShf+/VxihiPblhjpIOP7oQHwnX
-         2BxmOtljU2TBR3MVPWY+nJJHXXH4DaxND/wihDQ07rm8nT9gih7WPoeJO4WYHbWNMVfW
-         UKGA==
-X-Gm-Message-State: AKwxyteKvm/eUhY3jvP6m4wcx47LAfKzzUBADgG1ztWPJsoqs/FtmjCy
-        4HiXCF+41UQn3H8G/iBJXVA=
-X-Google-Smtp-Source: ACJfBoudnmMvkwIbJxOEbcMQjFyQFjrBXE4DE2jYIScr4tsLgMJp3T1IyrnSXiuLW/FEPOlfgWnrNg==
-X-Received: by 10.223.170.11 with SMTP id p11mr6854896wrd.26.1516396167748;
-        Fri, 19 Jan 2018 13:09:27 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id d8sm5970955wrf.88.2018.01.19.13.09.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 19 Jan 2018 13:09:26 -0800 (PST)
-Date:   Fri, 19 Jan 2018 21:11:49 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 0/3] fixes for split index mode
-Message-ID: <20180119211149.GO2641@hank>
-References: <20171217225122.28941-1-t.gummerer@gmail.com>
- <20180107223015.17720-1-t.gummerer@gmail.com>
- <20180118215331.GN2641@hank>
- <xmqqbmhpr92m.fsf@gitster.mtv.corp.google.com>
+        id S1756307AbeASVUp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 16:20:45 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61081 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754118AbeASVUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 16:20:44 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD1A6CA9F1;
+        Fri, 19 Jan 2018 16:20:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KcJw++Xz9WYh
+        uC0jsYzMw2Zi9zY=; b=nonoDfLc0W5DuWIQRYrJJyyvZgFLoWIdYnT2oz3pkawf
+        ydpJZR1MM5NFhbP8cja+MLEktPs2rBqjr9wOHIX+bLWDmqnyRHJZgpKDpm7OABKx
+        AysVqQFTmeoc+1hOX8WSXBdD32KUPLf63NNc8iD6Ynix9nfluaUjKpjFAB+AZKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YMnMQG
+        QyfVA8oKAQAyV9r0bFs405QHin2ZFTk4lcY9Du6g6YiXVE9m4MKH0Any16q3JXGv
+        cdhxmRvTYip98kPSgWfOPAArMNhYnjbGoXCsk9UenuU+AcaPz2LGzl2Tw/GffxUN
+        kpa76W0/F4LUSS1sfPkYm66yvBqn0PIEuOXTA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D531DCA9F0;
+        Fri, 19 Jan 2018 16:20:43 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4CF83CA9EF;
+        Fri, 19 Jan 2018 16:20:43 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] diff: add --compact-summary option to complement --stat
+References: <20180113132211.13350-1-pclouds@gmail.com>
+        <20180118100546.32251-1-pclouds@gmail.com>
+Date:   Fri, 19 Jan 2018 13:20:41 -0800
+In-Reply-To: <20180118100546.32251-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 18 Jan 2018 17:05:46 +0700")
+Message-ID: <xmqq607xpmty.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbmhpr92m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9B5BD296-FD5E-11E7-88D0-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/19, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > Friendly ping on this series now that 2.16 is out :) Is there anything
-> > in this series (up to 3/3, 4/3 can be dropped now that Duy fixed it in
-> > a nicer way) that still needs updating?  It fixes a few bugs in split
-> > index mode with submodules/worktrees, so it would be nice to get this
-> > reviewed/merged.
-> 
-> I was wondering about the same thing.  Especially it wasn't very
-> clear to me what Duy's replacement was meant to replace and how well
-> it was supposed to work with the rest of your series.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Sorry about the confusion.  4/3 was replaced by Duy's series, but the
-rest of this series is independent of those patches.
+>      Documentation/merge-config.txt     |  4 +
+>      builtin/merge.c                    |  2 +
+>    A t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++
+>      t/t7612-merge-verify-signatures.sh | 45 ++++++++++
+>    4 files changed, 132 insertions(+)
+> ...
+> With this tweak, the actual printout is like this
+>
+>      Documentation/merge-config.txt     |  4 ++
+>      builtin/merge.c                    |  2 +
+>  A+x t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++++++++
+>      t/t7612-merge-verify-signatures.sh | 45 +++++++++++++
+>  4 files changed, 132 insertions(+)
 
-> Let's drop 4/3 and queue 1-3/3 for now.
+I like the concept but given that additions and mode changes are
+rare events, I am not so sure if it is worth always wasting three
+columns like the above.  Assuming that this is solely meant for
+human consumption and machine parsability is of no concern, I
+actually prefer the output format you said you've been using your
+personal fork, e.g.
 
-Thanks!
+ Documentation/merge-config.txt              |  4 ++
+ builtin/merge.c                             |  2 +
+ t/t5573-pull-verify-signatures.sh (new, +x) | 81 +++++++++++++++++++++++=
++
+ t/t7612-merge-verify-signatures.sh          | 45 +++++++++++++
+
+That is
+
+ (1) do not change the starting column at the leftmost end, and
+ (2) do not permanently allocate the columns for "compact" summary.
+
+Instead, the above may be (a) just stealing the columns needed for
+"(new, +x)" from the pathname portion of the output, and/or (2)
+widening the pathname portion of the output for the whole thing
+while doing so.
+
