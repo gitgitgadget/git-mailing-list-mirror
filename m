@@ -2,101 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEEA51F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 17:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA64C1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 17:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932392AbeASRxt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 12:53:49 -0500
-Received: from mout.web.de ([217.72.192.78]:58396 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932166AbeASRxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 12:53:48 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LmLgE-1fBNe0061i-00ZtKD; Fri, 19
- Jan 2018 18:53:42 +0100
-Subject: Re: [PATCH] describe: use strbuf_add_unique_abbrev() for adding short
- hashes
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-References: <20180116171130.16568-1-szeder.dev@gmail.com>
- <7390fd9c-5969-61f1-86b8-6971eaf1432b@web.de>
- <CAM0VKj=eL5ZnnwKrxqtDYE+ijqJvcU-4bJNhjurvdn+Bpv7gUQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
-Date:   Fri, 19 Jan 2018 18:53:40 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1755981AbeASR5L (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 12:57:11 -0500
+Received: from mail-it0-f50.google.com ([209.85.214.50]:41499 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755899AbeASR5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 12:57:09 -0500
+Received: by mail-it0-f50.google.com with SMTP id b77so3078426itd.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 09:57:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=kcP7se02iLdfvN3MEvGS4HrP48xY7Gx55azf11T3SCM=;
+        b=JRbUpwc7Nmt5XnwQBxZaQec3cpLfzbqdSG8Cq/hi4pgQVwYJUJs8xxP0/j9sOb+c27
+         HKXGNOXsbPHj2SBx+7JWeY+CKQYVZ2cchQEEkjuzYRnf4X9WZcv+2kAndcTFTb/qFASY
+         hJW/YHL8RLoxgbNbqCdh0SHZ6UFqJrcprmJyLYOovCOMskPtq/ifxAlikw+qsPiYrhOi
+         Qyn33qyhqZY16BHgBk5oRvd8JlTxdNfJc3KqqE9VhAWtGi5ueq8VU/03jQqpn1WbIuDe
+         Bic/SlwBJ0DEJBwRBrYw98lX7zO+5GywvYY8Nuz6iSVDMG8IP2xb1+QW7uHmDrm/Z+b3
+         Uzfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=kcP7se02iLdfvN3MEvGS4HrP48xY7Gx55azf11T3SCM=;
+        b=J1w7UzQCzq4QawkCfZZyuiHFsdoDYftEu63ifYSoPl8qOdiT8ulS0DJVP4fCiY+wqC
+         hw6qLt1AahpE7M2tUv/BI5XIs+gzH5PzLiHJH9+uoCQztZajEOXnE3DmOsvRYrdHmGJJ
+         UY2zKGaBihkiJyx1pn2Js5Bf5cnBStc4Hvp3wChEhIxBsUoVH8/Audo8xcUeSNPg6HKT
+         Hu8YDacDhucQmAmADY6lO1mIn8OIqbfJ+TZH1WQ8rmG6VlpE5ecZ2ixlwF0bTStGDDth
+         ouotuNX0AcbRYksdV3MfwCX04Tjudh6xN53P9vN92Z7Wk31Y1RtpcdbuV7pHtGpbaCq8
+         Eo6Q==
+X-Gm-Message-State: AKwxyteagkSHjgeBHt/0nP9TmM/nXrqfno/80msVBIZv5MrBv5QYFvSC
+        6c742gReGHJU0kmVARFmjCG5RpqGPVPFxbhFyOpvLA==
+X-Google-Smtp-Source: ACJfBou0bKlrHOnPkUZRLvJlWfDHbl4q9mtVUNztusiCg6SZOd73RAkbNGQBpylwigbybH1pZqworMmssFHQ/ZTHPH0=
+X-Received: by 10.36.137.84 with SMTP id s81mr5454781itd.75.1516384628952;
+ Fri, 19 Jan 2018 09:57:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKj=eL5ZnnwKrxqtDYE+ijqJvcU-4bJNhjurvdn+Bpv7gUQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:QCtB5ydpm6syjzYoSNhGReXFtfOhyW1m0hNO+a7jTvR038XBoIm
- x3p41ekInfKmYLICyyJE2SBM3PoolClwtDzN4GhOcdqcRO3W9GHsmcnwlpV3qiT7ezajf2/
- uZZ4Dxa8e5lLFj2oC414Prs7nOVm0GrK/BlhhGTTr1BODgMv6gycMrwar4s9ZXfP2t37oKr
- c+EF6HZFlLWV6ysaaRI7A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VDA2f7X4jy4=:Fvt/dBYwMczgODv9h/iMKI
- 6vXwxVoOAFjzNgkLOdDwvx7lICw1t55mxG9U0p05+pW3Pxns5nIk9qKja4lICR0ut/WD//lKU
- keleaqhfb5AjkRaSGA4BOHTuEaHTdcIRGCZZOtrcWht+e7NOEMnjoGozAfGQ2OMjDXxKpJFgB
- tqJ265G4+a5sLULWGmgE6mOCkuU1FKxfc8S1rZUi5hQbfsDbTaUaYSXQ2/2z9fq0mhTJTErFu
- gbIx99C6ESGO5zpWyOGmE5/i6qvHNnbiz43d9YZCs1iHccJBJ6rxD8PvEX0NYg8nrLhG8LDGg
- 4wHX77pDu0tbFb82zx3GdlDw/ZCoIh6oeBJSHyYqzA0GNE8UdZKg2jvFl9EaKUn2/1g+v0+7N
- HYLQVConKjXXiFnWqGdsqn/jKYgJOOzGVKNLTBoiFbrP5UFw0FxnUk1iePQ2rlupCI6X/Aj7D
- 8g23I+FBatKtrR4HrD/f4kEv9cgVvoDM4DVpxEESeWLkiceNXjKF3pHvfgNRnQE3//Dn3d+yP
- ZyeSDsCtJylVFQW8cIwvVnTEIpGAxrJegS49OLtuAemx+hx3j1Rk8T3r6e7QeDE6GJ/fS6wkk
- 08yF7Ams0DJs8etptSFdwkHapOXL3t5h++c0l7yP3do4mUV2BjIiZYXjI+QBa/leGpbug4tkO
- 3MqYi1ldgzektczOh2MRGq3A53zrrqMl3piRnn10qFBdtbkHwr2WXtwshjZcDk+jrwJPmW9R1
- 9r8QxBaZv7/YC0ViFa50NWCFLyeDa2Soi0tF6IlY9B+09RBGlGsuZb1PDdb2nZK4PIw6Wb5mI
- IPWjWaKCaqFgCpgQ7lA5TK4cKafnQfeSZvFqPnYOP2Dprxbs2Q=
+Received: by 10.79.201.204 with HTTP; Fri, 19 Jan 2018 09:57:08 -0800 (PST)
+In-Reply-To: <CAL21Bmn1yk_Cw11umpYf7X96JfmguZO48d8QHnx8tXwqT09aiw@mail.gmail.com>
+References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
+ <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
+ <20180115214208.GD4778@sigill.intra.peff.net> <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
+ <20180117214354.GA13128@sigill.intra.peff.net> <CAP8UFD0PtOqX5c4ovRbYDWejQ55iUwtnPv-zGXS2GFAajhXqtA@mail.gmail.com>
+ <CAL21BmnKd0qamJWJbrAzg_ZX1GkhCTPO_5zOiFNMBeF-xjDTiQ@mail.gmail.com>
+ <CAP8UFD1dcwEA9z+oQKFV=aFoKn73mtP4qkLGovW2XTu6N=N4dA@mail.gmail.com> <CAL21Bmn1yk_Cw11umpYf7X96JfmguZO48d8QHnx8tXwqT09aiw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 19 Jan 2018 18:57:08 +0100
+Message-ID: <CAP8UFD28TwpNgaVyyNuO4qZHnk8ajj53TnVCw9SxHrUAV03_HQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.01.2018 um 23:40 schrieb SZEDER Gábor:
-> On Thu, Jan 18, 2018 at 10:40 PM, René Scharfe <l.s.r@web.de> wrote:
->> Am 16.01.2018 um 18:11 schrieb SZEDER Gábor:
->>> Unfortunately, most of the changes coming from 'strbuf.cocci' don't
->>> make any sense, they appear to be the mis-application of the "use
->>> strbuf_addstr() instead of strbuf_addf() to add a single string" rule:
->>>
->>>     -             strbuf_addf(&sb_repo, "%d", counter);
->>>     +             strbuf_addstr(&sb_repo, counter);
->>>
->>> It seems that those rules need some refinement, but I have no idea
->>> about Coccinelle and this is not the time for me to dig deeper.
->>>
->>> What makes all this weird is that running 'make coccicheck' on my own
->>> machine doesn't produce any of these additional proposed changes, just
->>> like at René's.  Can it be related to differing Coccinelle versions?
->>> Travis CI installs 1.0.0~rc19.deb-3; I have 1.0.4.deb-2.
+On Fri, Jan 19, 2018 at 6:22 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
+=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+> 2018-01-19 20:14 GMT+03:00 Christian Couder <christian.couder@gmail.com>:
+>> On Thu, Jan 18, 2018 at 7:20 AM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=
+=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+
+>>> And another thoughts here - we were thinking about creating format.h
+>>> but decided not to move forward with it, and now we are suffering
+>>> because of it. Can I create it right now or the history of commits
+>>> would be too dirty because of it?
 >>
->> The version difference may explain it, but I couldn't find a matching
->> bugfix in http://coccinelle.lip6.fr/distrib/changes.html when I just
->> skimmed it.  I wonder if the following patch could make a difference:
-> 
-> Yes, it does, now all those nonsense suggestions are gone on Travis CI.
+>> It would also make it difficult to refactor your patch series if there
+>> is a big move or renaming in the middle.
+>>
+>>> Also, do you mean just renaming of
+>>> ref-filter? I was thinking that I need to put formatting-related logic
+>>> to another file and leave all other stuff in ref-filter.
+>>
+>> Yeah, you can do both a move and a renaming.
+>
+> Thanks for a response! That thought is not clear enough for me. Do you
+> want me to split ref-filter into 2 files (one is for formatting only
+> called format and other one is for anything else still called
+> ref-filter) - here is a second question by the way, do I need to
+> create only format.h (and leave all realizations in ref-filter.c), or
+> I also need to create format.c. Or, just to rename ref-filter into
+> format and that's all.
 
-I would have expected matching a literal "%s" to be easier than
-dissecting that (admittedly simple) format string, but if it all works
-out fine then I'm not complaining. :)  Sent the patch again properly.
-
->    https://travis-ci.org/szeder/git/jobs/330572425#L713
-> 
-> Those "memmove() -> MOVE_ARRAY" suggestions are still there, of course.
-
-They look valid and nice to have in that report.  I wonder why we don't
-get them locally, though.  Are you going to submit them as a patch?
-
-(NB: The patches generated by coccicheck apply with "patch -p0", unlike
- those generated by git diff and friends.)
-
-Thanks,
-René
+Just renaming ref-filter into format (including the filenames) will
+probably be enough, but it's also possible that it will make more
+sense to keep some code only relevant to ref filtering into
+ref-filter.{c,h}. We will be in a better position to decide what we
+should do when the migration is finished.
