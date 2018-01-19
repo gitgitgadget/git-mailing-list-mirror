@@ -2,127 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F2671F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 14:53:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D9E01F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 15:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755718AbeASOxN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 09:53:13 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:36834 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754860AbeASOxM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 09:53:12 -0500
-Received: from [192.168.2.201] ([92.22.6.159])
-        by smtp.talktalk.net with SMTP
-        id cY2YeWBSebjdZcY2Yepw63; Fri, 19 Jan 2018 14:53:11 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1516373591;
-        bh=Xij2QqDgQIt0IaxiUahNC7AuTvaEJA1lnMBSyNd6CCc=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=BnWoyauLfQiUL7QZQVyITckRmnYFDd8xBkaYBzU90OvTGjsCdAwvakAQmwt4ZjHc0
-         ZxvB9bAc3/pQexnpPtsbogCvdmvBwU6l2u5xTrD09YqhFalYqgm+xClv8iydiv1AUT
-         OoxgH23N5OX3X494BDadf8ZVPCeC2+xKoR3FIQxs=
-X-Originating-IP: [92.22.6.159]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=zHCrIP3pJrCm+L4FAUKT3Q==:117
- a=zHCrIP3pJrCm+L4FAUKT3Q==:17 a=IkcTkHD0fZMA:10 a=4Ih5-cJaxJSgcgI5BZIA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/8] sequencer: fast-forward merge commits, if possible
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
- <9878bd57cc82daf08309943305460c1e8a050518.1516225925.git.johannes.schindelin@gmx.de>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <7e6906c9-d642-ee8d-82fd-29ee6c60e308@talktalk.net>
-Date:   Fri, 19 Jan 2018 14:53:09 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1755847AbeASPtN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 10:49:13 -0500
+Received: from mail-io0-f179.google.com ([209.85.223.179]:34008 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755581AbeASPtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 10:49:00 -0500
+Received: by mail-io0-f179.google.com with SMTP id c17so2611245iod.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 07:49:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LRZr8kaRnloiqVatFUdT1RgpXt/k6e5I3/3BzAIJz3M=;
+        b=uehBd2LgT4mwY+D8a8vd8N8nva1PGmJV2FAdoRrUARgWav7AjBKHr2MdK/DPxFqhpY
+         qPgpUoBCpim8jLNZgz7xP0uLIkc750FCZqK+ALjgTy2v66IVb3oF13yQAWoMustZiuPN
+         /7SDFI/SBThIgBRtuho2/EfQyMnR5giDnT7dkwHLpzI2JyLNrt0y0lYZFqdDmZ35ZSTM
+         /zx0Ftq2LMXu+cIfPzl/mWIYvnIXcoiGotMnTwiDSpVgAjh/C5Tg1yS2fcnCmFEzhLlo
+         wPmE+18Rs+9bCju4z+sgcyQdJ0enk+i4oDWGLcVKj/LcWdMf2B0r1E3vQrUE3H5IXw9H
+         mAFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LRZr8kaRnloiqVatFUdT1RgpXt/k6e5I3/3BzAIJz3M=;
+        b=uRaTyka2buVgD1VIIXdxnJkUBzsIdox2eL8wmrgPOTHrO6xjZmQ2/xakXOz/Uql7Ma
+         3F3AZriTREIegXaWOpO7shPFWf0nKsOWdPKbui2r0bshKLdTYff7tVHDZlUtPa3mPZRj
+         eT968LXObNKWGgfwLVQRLneuzmdGm0AZSY/h3AuHYBFZQxf1u5PLkHy1ohLN5m4B3bdU
+         JWMTWAVowPVlhiUkAYBJnS5oiXqTa+upLa3w8MNmcfI7331fYlS+55Q6fvbLpNzN3d4e
+         3HWF9OQNmlUdco6ENBp1IwXRZbhcintwQqxZ6QIqA3ZvL3mJMOi76Uer6b067nK0WvsP
+         ZiwQ==
+X-Gm-Message-State: AKwxytcssqEf6+wUEINSHFyL3nHioqqa2V1YzIBvroIyiOTQRQ5Gbj43
+        Dg1a/ETk9AsmhKwuAUPkRJYacG+3t16pfDIvWD0=
+X-Google-Smtp-Source: ACJfBovF2oLskMdAzo4+NdEGxA5q5Z6lqhgs1FatHhSBqg5ib0OPXKDwLlXY/yZeryx031Fs1TrMUtLqdl/H5ntZ8os=
+X-Received: by 10.107.17.37 with SMTP id z37mr16541761ioi.282.1516376939292;
+ Fri, 19 Jan 2018 07:48:59 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <9878bd57cc82daf08309943305460c1e8a050518.1516225925.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPG33T+jQfTI2kyAPhDzKomsuh+ZaTM3ApJdxjp9/kHBpqutYvlHXRkXY4bGUXkanAeepuY/iNgEVfYIfbk61OtUAcq2ZsGy0+NoY02iUdTNzx+SDN/6
- vR6uDlkfhbNB7zgSTI5NHDTCVIsUqESn4qFwSGq0xPoXSPBF43neV1ka+hovn54OWj5v8r/tI/qeBILwN7XW1d5oaW4NrcQwN1MUpUxPVBsgq1Tmu4gqMd1Z
- pWZYLGln4WXwspYMjZFBsvTMq/FlBe3/RhRLJTj2f2w=
+Received: by 10.79.201.204 with HTTP; Fri, 19 Jan 2018 07:48:58 -0800 (PST)
+In-Reply-To: <CAL21Bmnv24tc7H5w4Nm=TfYjVEYB=ykZ3iv_0JtUMODCKCwQzw@mail.gmail.com>
+References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
+ <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
+ <20180115214208.GD4778@sigill.intra.peff.net> <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
+ <20180117214354.GA13128@sigill.intra.peff.net> <CAP8UFD0PtOqX5c4ovRbYDWejQ55iUwtnPv-zGXS2GFAajhXqtA@mail.gmail.com>
+ <CAL21BmnKd0qamJWJbrAzg_ZX1GkhCTPO_5zOiFNMBeF-xjDTiQ@mail.gmail.com>
+ <CAL21BmneJ4rgCtf8t8LOK=gVv0MR+xam9jFBp7kp33rqEG7f6Q@mail.gmail.com>
+ <CAP8UFD1qPTh_VX8ebazxoeEHRfNjmNwy-baat9Y+GVHrHWQqFA@mail.gmail.com> <CAL21Bmnv24tc7H5w4Nm=TfYjVEYB=ykZ3iv_0JtUMODCKCwQzw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 19 Jan 2018 16:48:58 +0100
+Message-ID: <CAP8UFD21JcERHDZz_TVX9nuw+vfE=ra19hC50fRKdMxL_5bxOg@mail.gmail.com>
+Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/01/18 15:35, Johannes Schindelin wrote:
-> 
-> Just like with regular `pick` commands, if we are trying to recreate a
-> merge commit, we now test whether the parents of said commit match HEAD
-> and the commits to be merged, and fast-forward if possible.
-> 
-> This is not only faster, but also avoids unnecessary proliferation of
-> new objects.
+On Fri, Jan 19, 2018 at 1:24 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
+=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+> 2018-01-18 17:23 GMT+03:00 Christian Couder <christian.couder@gmail.com>:
+>> On Thu, Jan 18, 2018 at 12:49 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=
+=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+>>> 2018-01-18 9:20 GMT+03:00 =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=
+=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com>:
+>>>>
+>>>> I think it's important to finish migrating process at first. I mean,
+>>>> now we are preparing and collecting everything in ref-filter, but we
+>>>> make resulting string and print still in cat-file. And I am not sure,
+>>>> but maybe it will not be possible to start using new atoms in cat-file
+>>>> while some part of logic still differs.
+>>>
+>>> I tried to make that part here:
+>>> https://github.com/telezhnaya/git/commit/19a148614f1d4db1f8e628eb4e6d7c=
+819d2da875
+>>> I know that the code is disgusting and there is a memory leak :) I
+>>> just try to reuse ref-filter logic, I will cleanup everything later.
+>>> At first, I try to make it work.
+>>> The problem is that I have segfault, and if I use gdb, I get:
+>>>
+>>> Program received signal SIGSEGV, Segmentation fault.
+>>> 0x0000000000000000 in ?? ()
+>>
+>> Make sure that you compile with debug options like -g3. For example I us=
+e:
+>>
+>> $ make -j 4 DEVELOPER=3D1 CFLAGS=3D"-g3"
+>
+> Is it OK that I get different test results with simple make and with
+> make with all that flags?
+> Have a code: https://github.com/telezhnaya/git/commits/catfile
+> I do:
+>
+> olya@ubuntu17-vm:~/git$ make install
+> olya@ubuntu17-vm:~/git$ cd t
+> olya@ubuntu17-vm:~/git/t$ ./t1006-cat-file.sh
+>
+> And I have 17 tests broken.
+> Then, without any changes in code, I do:
+>
+> olya@ubuntu17-vm:~/git$ make -j 4 DEVELOPER=3D1 CFLAGS=3D"-g3" install
+> olya@ubuntu17-vm:~/git$ cd t
+> olya@ubuntu17-vm:~/git/t$ ./t1006-cat-file.sh
+>
+> And there is 42 tests broken.
+> And it's really hard to search for errors in such situation.
 
-I might have missed something but shouldn't this be checking opts->allow_ff?
-
-Another possible optimization is that if the parent branches have only
-reworded commits or some commits that have been squashed but no other
-changes then their trees will be the same as in the original merge
-commit and so could be reused without calling merge_recursive().
-
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 21 ++++++++++++++++++++-
->  1 file changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 567cfcbbe8b..a96255426e7 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2085,7 +2085,7 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
->  	struct commit *head_commit, *merge_commit, *i;
->  	struct commit_list *common, *j, *reversed = NULL;
->  	struct merge_options o;
-> -	int ret;
-> +	int can_fast_forward, ret;
->  	static struct lock_file lock;
->  
->  	for (merge_arg_len = 0; merge_arg_len < arg_len; merge_arg_len++)
-> @@ -2151,6 +2151,14 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
->  		return error(_("Cannot merge without a current revision"));
->  	}
->  
-> +	/*
-> +	 * If HEAD is not identical to the parent of the original merge commit,
-> +	 * we cannot fast-forward.
-> +	 */
-> +	can_fast_forward = commit && commit->parents &&
-> +		!oidcmp(&commit->parents->item->object.oid,
-> +			&head_commit->object.oid);
-> +
->  	strbuf_addf(&ref_name, "refs/rewritten/%.*s", merge_arg_len, arg);
->  	merge_commit = lookup_commit_reference_by_name(ref_name.buf);
->  	if (!merge_commit) {
-> @@ -2164,6 +2172,17 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
->  		rollback_lock_file(&lock);
->  		return -1;
->  	}
-> +
-> +	if (can_fast_forward && commit->parents->next &&
-> +	    !commit->parents->next->next &&
-> +	    !oidcmp(&commit->parents->next->item->object.oid,
-> +		    &merge_commit->object.oid)) {
-> +		strbuf_release(&ref_name);
-> +		rollback_lock_file(&lock);
-> +		return fast_forward_to(&commit->object.oid,
-> +				       &head_commit->object.oid, 0, opts);
-> +	}
-> +
->  	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
->  		      git_path_merge_head(), 0);
->  	write_message("no-ff", 5, git_path_merge_mode(), 0);
-> 
-
+Some segfaults and other memory issues might happen or not happen
+depending on how the code has been compiled. I think that if you fix
+all the memory related issues, the behavior should be the same.
