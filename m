@@ -7,48 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24C6E1FADF
-	for <e@80x24.org>; Fri, 19 Jan 2018 00:00:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0251FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 00:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932645AbeASAAw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 19:00:52 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:37345 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932394AbeASAAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 19:00:51 -0500
-Received: by mail-wm0-f51.google.com with SMTP id v71so233154wmv.2
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:00:51 -0800 (PST)
+        id S932719AbeASAA4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 19:00:56 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38305 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932657AbeASAAx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 19:00:53 -0500
+Received: by mail-wm0-f65.google.com with SMTP id 141so226769wme.3
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:00:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GDMVAU2/x2chnsLBt4T+2tFxohr+lVprVqOvqnc+Jk0=;
-        b=vJmM2+Xg3gNR4RtAr6r0cAb/N5Esa2svO7SA637nO0onN3St+AiZcWtj07JcP74kcl
-         OI8XtX1v2OgXItjZfp2kyjI4QOqt/cxFQ3Zzjc+XnNFRzWoi/V5Eash0rsStTFrN/qv0
-         q52VLFfA8+VgnTdUAuF8MuoQ6+yXwTNeJMSOKXhy6sF7fHeUlcgK+bBOVBGzakPCsZFR
-         yvMlP3VhdthQfUKTqPQjMmtH3d7cz0v3oLX3dwqE+r8rZs7lV2RTIL0xMjHumG4z+q/v
-         MeBS/FaMxtlzs9ysWOJVJpWzR8d2vNPAuzw9b5iSPnyD7zzQnEUAlMFU2k9uLjIF4UUq
-         GR6w==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=0ykLi6Ykto9nanussP1XeJEgg6neh4v8kPetyxp3Ij4=;
+        b=i5l72w25cqX4QVD4tesUsEV5mu4ztvP0qrT7uJbYbhslukbixB546LE1W23T33d2GQ
+         oD5VYSTC+TQPzKNCOOp3yeVnDvwrMQHOemWvgaidFOXeKLtpamka2Ajjz7a3u38KApYF
+         OSY4ekfkTrBCOmtSAruCov93+oWV6FW1LiYPUqEVmd5QbylsQztKgIk7hC56pGxp6a8S
+         xco8+CgvasFvoN+eTxS6E1aW8JxBUPs/CJvT4O1Gs3cz0VQXeF2jw5s3pWrOITI/T5Po
+         HY1x7WnIL+vQHbWrgu1XjLtZR4Z3SibeLG2kGkuQZgKqBP+GE0gf9VuJ/6lBTwlrQw0F
+         oaXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GDMVAU2/x2chnsLBt4T+2tFxohr+lVprVqOvqnc+Jk0=;
-        b=e21B5/YmtVJY9kaWJaykqvhTI8g7A9VFsPD8mwtMAh672Jkqq0xlWFis//mNUn49oQ
-         TUoQApnkfkdcBxMrAYgtagN4d934BFmnP3o0TTlOhJZqda29+MqLF7tCW5qTytoMtZZF
-         pPE4ISJqiS62/jxAUjccU2BT+Gtnq4uKaXM00x9rgS8aVLtCpDiOPjG90L9K41JeMv7B
-         Ek+ffEpd1AnVTbgr0PNWETpE/xOkocq5/59J648alv9FzvWbCQL8R9L+/9TPHfJXHdSZ
-         VmI2Gn1w9h1zEKSDRtbsjSaqjoJ52PLc2OzeWLcvlx+CKmuiB0EG90IPCCgpWuWoSRB0
-         9rUg==
-X-Gm-Message-State: AKwxytco3vIEYoRFnfKNERBzkrNCp8W5MLPZI6me4spgJYuOVC9hF75R
-        ybqTbucYGtwjSjGSTluoCGH4bG92
-X-Google-Smtp-Source: ACJfBoteE3iINVI+YKjxHgWjoMyRSRJmyFxecpAyqcyagbG3MhT58smCxJSsBI2oxJ22MeP8nyD07A==
-X-Received: by 10.28.66.198 with SMTP id k67mr5936880wmi.74.1516320049878;
-        Thu, 18 Jan 2018 16:00:49 -0800 (PST)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=0ykLi6Ykto9nanussP1XeJEgg6neh4v8kPetyxp3Ij4=;
+        b=CSr3SCnl5MLVsI4FYprtwseGRj2qXWQn4RKcpDFYZ78gLV/n2zfIuFxjr30mRlHp9m
+         YlDNtdKzGj7M/N9ZhQeDUc64aJVC6YFSaWMm5pJilDo0Sbc7GLnw0TmfFionqeHKx9SK
+         594Fi+xTjKpE2BF34ZxtBjVh4H1PU/i+H5j8L1b62NQa/iV9xFYXxW980Nhg13OiFvBP
+         tTl+GOoEuou5o14ToVd8b+986NiA0m3/J/RWmKvh74fNpFVPkeI75H0ayPX0VaHEy+35
+         d9+WtPKMMcf2/I2PWTRn5xp5jluVEQRBUkPqAIuc6cokvGUEvLGNW4c2lxRjskBpuNsu
+         b+VQ==
+X-Gm-Message-State: AKwxytcrzi37fwDluTLjMCikqpMYX2yjA+rKjaoHqZfliweu28qZKtdV
+        bqtbpBn22v91A0FU1jz1tHkhzNjb
+X-Google-Smtp-Source: ACJfBot3F1hcgJ2YrZoRj3LDtIIVL9aI559HQpvS/7HCZpahK7HbU44ul6krl9EZ7pj9avBEXIKNZQ==
+X-Received: by 10.28.140.9 with SMTP id o9mr3109644wmd.28.1516320051832;
+        Thu, 18 Jan 2018 16:00:51 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b48sm17706481wrd.69.2018.01.18.16.00.48
+        by smtp.gmail.com with ESMTPSA id b48sm17706481wrd.69.2018.01.18.16.00.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jan 2018 16:00:48 -0800 (PST)
+        Thu, 18 Jan 2018 16:00:50 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 00/11] document & test fetch pruning + WIP fetch.pruneTags
-Date:   Fri, 19 Jan 2018 00:00:16 +0000
-Message-Id: <20180119000027.28898-1-avarab@gmail.com>
+Subject: [PATCH 01/11] fetch tests: refactor in preparation for testing tag pruning
+Date:   Fri, 19 Jan 2018 00:00:17 +0000
+Message-Id: <20180119000027.28898-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
+In-Reply-To: <20180119000027.28898-1-avarab@gmail.com>
+References: <20180119000027.28898-1-avarab@gmail.com>
 In-Reply-To: <87po6ahx87.fsf@evledraar.gmail.com>
 References: <87po6ahx87.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
@@ -72,45 +75,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Giuffrida noted that the git-remote docs were very confusing,
-and upthread I said I wanted this shiny related thing in 11/11.
+In a subsequent commit this function will learn to test for tag
+pruning, prepare for that by making space for more variables, and
+making it clear that "expected" here refers to branches.
 
-Along the way I fixed up fetch tests & documentation to hopefully be a
-lot less confusing.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t5510-fetch.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-I think 1-10/11 of this makes sense for inclusion as-is (pending
-review etc.), 11/11 is broken currently, but review / comments on it
-welcome, particularly the CLI / config interface / docs etc.
-
-The bug causing it not to work is less of a "I can't figure this out"
-and more of a "I won't have time again for hacking in the next couple
-of days, and wanted to see what people thought", but if someone wants
-to see what I'm screwing up there and do my homework for me that's
-also most welcome.
-
-Ævar Arnfjörð Bjarmason (11):
-  fetch tests: refactor in preparation for testing tag pruning
-  fetch tests: arrange arguments for future readability
-  fetch tests: add a tag to be deleted to the pruning tests
-  fetch tests: double quote a variable for interpolation
-  fetch tests: test --prune and refspec interaction
-  git fetch doc: add a new section to explain the ins & outs of pruning
-  git remote doc: correct dangerous lies about what prune does
-  git-fetch & config doc: link to the new PRUNING section
-  fetch: don't redundantly null something calloc() gave us
-  fetch tests: add scaffolding for the new fetch.pruneTags
-  WIP fetch: add a --fetch-prune option and fetch.pruneTags config
-
- Documentation/config.txt        |  21 ++++++-
- Documentation/fetch-options.txt |  18 +++++-
- Documentation/git-fetch.txt     |  49 ++++++++++++++++
- Documentation/git-remote.txt    |  14 +++--
- builtin/fetch.c                 |  38 ++++++++++--
- remote.c                        |   2 +
- remote.h                        |   1 +
- t/t5510-fetch.sh                | 125 +++++++++++++++++++++++++++-------------
- 8 files changed, 216 insertions(+), 52 deletions(-)
-
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 668c54be41..11da97f9b7 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -549,9 +549,12 @@ set_config_tristate () {
+ }
+ 
+ test_configured_prune () {
+-	fetch_prune=$1 remote_origin_prune=$2 cmdline=$3 expected=$4
++	fetch_prune=$1
++	remote_origin_prune=$2
++	cmdline=$3
++	expected_branch=$4
+ 
+-	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${3:+ $3}; $4" '
++	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${3:+ $3}; branch:$4" '
+ 		# make sure a newbranch is there in . and also in one
+ 		git branch -f newbranch &&
+ 		(
+@@ -572,7 +575,7 @@ test_configured_prune () {
+ 			set_config_tristate remote.origin.prune $remote_origin_prune &&
+ 
+ 			git fetch $cmdline &&
+-			case "$expected" in
++			case "$expected_branch" in
+ 			pruned)
+ 				test_must_fail git rev-parse --verify refs/remotes/origin/newbranch
+ 				;;
 -- 
 2.15.1.424.g9478a66081
 
