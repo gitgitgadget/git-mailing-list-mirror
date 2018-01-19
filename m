@@ -2,81 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEEDC1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 18:48:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3B21F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 18:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756107AbeASSsB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 13:48:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52077 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755830AbeASSr7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 13:47:59 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 54835C88D7;
-        Fri, 19 Jan 2018 13:47:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1QcTpvW3L2wQk6BuN1Q2gq1QJ98=; b=hFf7VM
-        IRew4SUMB2guSopAGelpDDXEx95qIk5IN80l/dZ/65nINyOmFQm+8OPEbQeiY/Z9
-        i4kUsS6DPguxuYeGQmmBkLCrShWVg5rUJ4GZdrPblavyqW1XXWw/2yaPdvavz3wD
-        EksRlYz2QQqUw8En2RAXJwHD7dBQWUjk+C9Io=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=WadVvTamtHYlkUMxozXMG+3Iri3NiZsw
-        aO/E62MueNm93NHgGj759lXDB/6ftA9Lc9lkWkkjF4zJdI79M7tdHmGrrw8sakiN
-        kA7QhGqtHdkwhlVfs3YjXZdhULTIZvawn3jBLaPL0BwVtsvozAKT1XY777dQEphj
-        NoONmydWDkY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AE19C88D6;
-        Fri, 19 Jan 2018 13:47:59 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B07CCC88D5;
-        Fri, 19 Jan 2018 13:47:58 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?0J7Qu9GPINCi?= =?utf-8?B?0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function parameter
-References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
-        <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
-        <20180115214208.GD4778@sigill.intra.peff.net>
-        <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
-        <20180117214354.GA13128@sigill.intra.peff.net>
-        <CAP8UFD0PtOqX5c4ovRbYDWejQ55iUwtnPv-zGXS2GFAajhXqtA@mail.gmail.com>
-        <CAL21BmnKd0qamJWJbrAzg_ZX1GkhCTPO_5zOiFNMBeF-xjDTiQ@mail.gmail.com>
-        <CAP8UFD1dcwEA9z+oQKFV=aFoKn73mtP4qkLGovW2XTu6N=N4dA@mail.gmail.com>
-        <20180119172353.GA5752@sigill.intra.peff.net>
-Date:   Fri, 19 Jan 2018 10:47:57 -0800
-In-Reply-To: <20180119172353.GA5752@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 19 Jan 2018 12:23:53 -0500")
-Message-ID: <xmqq4lnhr8gy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1756225AbeASSzR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 13:55:17 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:12270 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756195AbeASSzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 13:55:06 -0500
+Received: from [192.168.2.201] ([92.22.6.159])
+        by smtp.talktalk.net with SMTP
+        id cbodeiKtdpb8rcbodecnso; Fri, 19 Jan 2018 18:55:04 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1516388104;
+        bh=ekX6wckfe/jy30564+GTzOSc71F5SGXyn9EwsHT0PD4=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=XCd94WRMYA1BFZBSKfhD6+0zp0VKLKEYamk8l6HQ+WiG4L6EEI6A3OXBsFqOa2/GE
+         uQuZlti0pETwnLJXpO79GZ0r0E80e652uSlpQAFhKxINLHNbkZ8lZF8TIPBr7+O1yo
+         +mNRzORgRkeguNmFD97PuP1GIMx2G0wMZtqZQjxc=
+X-Originating-IP: [92.22.6.159]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ZM2noTzb c=1 sm=1 tr=0 a=zHCrIP3pJrCm+L4FAUKT3Q==:117
+ a=zHCrIP3pJrCm+L4FAUKT3Q==:17 a=IkcTkHD0fZMA:10 a=qCpffpwGBEQzZuBsVGoA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to resettherevision
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+ <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
+ <d069a3c7-198e-81d2-0f35-f934e110c991@philandanna.no-ip.org>
+Message-ID: <229b332d-56b8-0183-f57b-b0db0c62f781@talktalk.net>
+Date:   Fri, 19 Jan 2018 18:55:01 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44DEA372-FD49-11E7-80C7-8EF31968708C-77302942!pb-smtp1.pobox.com
+In-Reply-To: <d069a3c7-198e-81d2-0f35-f934e110c991@philandanna.no-ip.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfNKOejI8v7FEcyEYCM/YgCuQe0Q4dtkTV69WZA7oTcUhidv1jeWPHp8NFKGMgVE/13zsZya1IAnXH1pJTFcJMTvOfE/CxDEX8HkI20+KRAHSDddqIpWX
+ S1oMtxdgYXMMWuX2P8lCPzml81jtSYkzLRId7G1H5w1KS0NPo+xBsCHf8oIbRMU7Qo3OlZSv9Iw+dYWPaOYbPgLFU2TaND+OXjfYqD1zPnr4nvOO7wOOe0Z/
+ u+nrU1iI+EKKzPcULVRZTrAD9PT2nDokoub1CXOycNhflUmAjhQaiOe4VM47VuRF9Mbaie6q7LK2s2482EYe1gnk3vujZ6eWVhO1gJRBlqWrE0JrXyIMmaQV
+ lHkT7ROs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 19/01/18 12:24, Phillip Wood wrote:
+> 
+> On 18/01/18 15:35, Johannes Schindelin wrote:
+>>
+>> Internally, the `label <name>` command creates the ref
+>> `refs/rewritten/<name>`. This makes it possible to work with the labeled
+>> revisions interactively, or in a scripted fashion (e.g. via the todo
+>> list command `exec`).
+> 
+> If a user has two work trees and runs a rebase in each with the same
+> label name, they'll clobber each other. I'd suggest storing them under
+> refs/rewritten/<branch-name or detached HEAD SHA> instead. If the user
+> tries to rebase a second worktree with the same detached HEAD as an
+> existing rebase then refuse to start.
+> 
 
-> I also think %(deltabase) does make sense for anything that points to an
-> object. I suspect it's not all that _useful_ for for-each-ref, but that
-> doesn't mean we can't return the sensible thing if somebody asks for it.
+Ah this isn't a concern after all as patch 5 makes refs/rewritten local
+to the worktree. Perhaps you could move that part of patch 5 here or add
+a note to the commit message that it will become worktree local later in
+the series
 
-This may not be a new issue (or any issue at all), but is the
-ability to learn deltabase make any sense in the first place?
+Best Wishes
 
-What should the code do when an object has three copies in the
-repo, i.e. one as a base object (or a loose one), another as a
-delta against an object, and the third one as a delta against
-a different object?
+Phillip
