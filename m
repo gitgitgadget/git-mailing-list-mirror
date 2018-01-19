@@ -2,130 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7706C1FADF
-	for <e@80x24.org>; Fri, 19 Jan 2018 00:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35E451FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 01:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755088AbeASAqr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 19:46:47 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:45050 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755030AbeASAqq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 19:46:46 -0500
-Received: by mail-qt0-f196.google.com with SMTP id m59so136515qte.11
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:46:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=XDMc6N/uxCj+OY56W6OoBF1Ic8d0HrgGRLCiG+Oa908=;
-        b=plX8KIRXtnFJ+0Vg3rcnKwAhcHVnoPLo1dWv4P83YUiis1TQQMFTXCybjHGYC9x35h
-         eqqOlNdIS1b0IvqJEhUTqQqCemvkrFEyn5qJA1HVwdZipvFgBxMvXkE4jRCIZ2bDIJ25
-         pKvb4AW2pz9ftpq5Tjy93Vvv7VBr+C/djLBYIMNR7t06YCZRGKAFci7qNhkW3shXxHmb
-         I9mSKPFQ6ZF/AgjYu0hygDGwa5gozsi2FkFdAouv+QJngk0IMfndt4dP1ZBzkxc9LWyQ
-         d4QU3M/iumXRm5/otJKBidORu2rQ2HPIsZ9GeuE+avZDgqHyNIsVSTNYerwkwlD0Ardb
-         +p3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=XDMc6N/uxCj+OY56W6OoBF1Ic8d0HrgGRLCiG+Oa908=;
-        b=JTeadzOw+8eaBMR4SvGDw1UaFwNitOa+/TkpKBvC6UajgGVPcmOSU3j2cnfHmKMEnX
-         Maj6DWfFuirD8SxDiRQvPg3tvSEva6T+rdr5kJOu2IDq96fDL5BO5L3xxDLZr+6SXK/T
-         1ZO+laB9qHBdpLXzgS7Pqo2NjPAEBKwHj+eY0ylKV05DE/+smGMc0do8wilq5rLaleFh
-         TAwuYYaLGKzCGDu05ppMBN+++bag5Z/GNanEvbY7xyR2FLb6Fp1huuNSCFg+z5Vv5pbs
-         yilkMb3c3mFga/q01Q7dedwxOAjnzbnaI5SyXQ6ykr/mJ5NrRFTUPuBPbstpXLKHrrmt
-         k8+A==
-X-Gm-Message-State: AKwxytd4S+UqbcYLHhE6W3GT/0m1KSk3ZH2eZxLnabtA7sEg8hkRZ675
-        U36ESucxn7dkgIyhGUaNqYehsok7Ik38uD0g4rI=
-X-Google-Smtp-Source: ACJfBovUEvDe+DVOQeGY/Kb4GtDiNpXhF8FZ6xTAKGkyc3cy9a5takCh65emYE93Y9Z5QWlSJhxRFkJ4vgh4DcttBYI=
-X-Received: by 10.55.116.71 with SMTP id p68mr63418905qkc.164.1516322805639;
- Thu, 18 Jan 2018 16:46:45 -0800 (PST)
+        id S1755331AbeASBXG convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 18 Jan 2018 20:23:06 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:62730 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755152AbeASBW5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 20:22:57 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0J1MrqJ039647
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 18 Jan 2018 20:22:53 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Stefan Beller'" <sbeller@google.com>
+Cc:     <randall.s.becker@rogers.com>, "'git'" <git@vger.kernel.org>
+References: <20180118224243.5016-1-randall.s.becker@rogers.com> <CAGZ79kb4Zr6QnNydRX56B_4Jo5fveufBFJAD7r_8U-NRSMa2qQ@mail.gmail.com> <87a7xaiu7z.fsf@evledraar.gmail.com>
+In-Reply-To: <87a7xaiu7z.fsf@evledraar.gmail.com>
+Subject: RE: [RFC PATCH] NonStop port changes for git 2.16.0.
+Date:   Thu, 18 Jan 2018 20:22:49 -0500
+Message-ID: <00ba01d390c4$083b7360$18b25a20$@nexbridge.com>
 MIME-Version: 1.0
-Received: by 10.12.137.143 with HTTP; Thu, 18 Jan 2018 16:46:45 -0800 (PST)
-In-Reply-To: <20180119000027.28898-7-avarab@gmail.com>
-References: <87po6ahx87.fsf@evledraar.gmail.com> <20180119000027.28898-1-avarab@gmail.com>
- <20180119000027.28898-7-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 18 Jan 2018 19:46:45 -0500
-X-Google-Sender-Auth: sSMzcHobuiL_p-PoK6mH4YIz5o4
-Message-ID: <CAPig+cRVHQQR_V+GH1X-KVBtCRkGq=PewOQJu6WcnVa6N+sRNA@mail.gmail.com>
-Subject: Re: [PATCH 06/11] git fetch doc: add a new section to explain the ins
- & outs of pruning
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        Michael Schubert <mschub@elegosoft.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQKGERhTgCchMwVIke5wy32jaCZ+0AG9Oe9rApJvi32h8uZ2IA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 18, 2018 at 7:00 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Add a new section to canonically explain how remote reference pruning
-> works, and how users should be careful about using it in conjunction
-> with tag refspecs in particular.
->
-> A subsequent commit will update the git-remote documentation to refer
-> to this section, and details the motivation for writing this in the
-> first place.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
-> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-> @@ -99,6 +99,55 @@ The latter use of the `remote.<repository>.fetch` valu=
-es can be
-> +PRUNING
-> +-------
-> +
-> +Git has a default disposition to keeping data unless it's explicitly
+On January 18, 2018 7:11 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Jan 18 2018, Stefan Beller jotted:
+> > On Thu, Jan 18, 2018 at 2:42 PM,  <randall.s.becker@rogers.com> wrote:
+> >> Further: there are 6 known breakages that have been reported. The
+> >> perl issues relating to completion codes are being examined at
+> >> present by the platform support teams so are not addressed by this
+> patch.
+> >
+> > For perl I'd suggest cc'ing Ævar (cc'd just now) as that seems his
+> > field of expertise.
+> 
+> Just to make sure I'm keeping up, this refers to some breakage not detailed
+> in the patch above, right?
+> 
+> The only perl-related change I see is undoing part of 6c109904bc ("Port to HP
+> NonStop", 2012-09-19) having to do with how we find perl/python (which,
+> not being at all familiar with NonStop, makes sense to me).
+> 
+> But sure, if there's some details about those 6 issues I might have time to
+> take a look, but it sounds like it's being looked at by NonStop support...
 
-s/keeping/keep/ or s/to keeping/of keeping/
+The issue I found is that NonStop perl is reporting completion code 162/169 when 'die "stuff";' is run from stdin, while reporting 255 when a real file is used. This isn't covered by the patch. The values are in the range 128+sig#, but no such signals are value on the platform (SIGABEND is 31 and SIGGUARDIAN is 99 with a gap between those). I had tried a few experiments mapping the wonky completion codes in run-command.c to something sane but that caused more breakages (60) in the test suite than leaving well enough alone (6). From what I can determine, git is behaving reasonably properly in the conditions tested, but the test suite structure in its use of perl is triggering artifacts that appear to be breakages when really not. This is currently being investigated by the HPE support team, so I'm leaving perl completion matters in their hands for now.
 
-> +thrown away, this extends to keeping a hold of local references to
+Cheers,
+Randall
 
-s/away,/away;/
-s/to keeping a hold of/holding onto/
+-- Brief whoami:
+  NonStop developer since approximately NonStop(211288444200000000)
+  UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
-> +branches on remotes that have themselves deleted those branches.
-> +
-> +If left to accumulate these stale references might make performance
 
-s/accumulate/&,/
 
-> +worse on big and busy repos that have a lot of branch churn, and
-> +e.g. make the output of commands like `git branch -a --contains
-> +<commit>` needlessly verbose, as well as impacting anything else
-> +that'll work with the complete set of known references.
-> +
-> +These remote tracking references can be deleted as a one-off with
-> +either of:
-> +
-> +------------------------------------------------
-> +# While fetching
-> +$ git fetch --prune <name>
-> +
-> +# Only prune, don't fetch
-> +$ git remote <name>
-> +------------------------------------------------
-
-Did you mean "git remote prune <name>"?
-
-> +To prune references on a remote as part of your normal workflow
-
-This reads as if it's possible to prune something on the remote
-machine itself. Maybe just say:
-
-    To prune references as part of your normal workflow...
-
-> +without needing to remember to run that set `fetch.prune` globally, or
-> +`remote.<name>.prune` per-remote in the config. See
-> +linkgit:git-config[1].
