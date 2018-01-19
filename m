@@ -7,140 +7,101 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9C681F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 21:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7C681F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 21:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754263AbeASVBs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 16:01:48 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55275 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753427AbeASVBr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 16:01:47 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78AACBEFEE;
-        Fri, 19 Jan 2018 16:01:46 -0500 (EST)
+        id S1755247AbeASVJJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 16:09:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61839 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752190AbeASVJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 16:09:08 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3086FCA721;
+        Fri, 19 Jan 2018 16:09:07 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BkJ4Xt89NoGNt0STXmC2b1DJvc4=; b=aNgbGE
-        XNYcw3z9XjMuDLZi92oRteorvVRylkfoQv0MM22SvBHx9/WiDb0rHilEnRHnBNJA
-        Ay6z8d8wbt9BOHQhkLdyRfNu86VDfvQrz4Livbu+ZOmT0jSYv+kpkITULlSybnCB
-        jXMfrPU6GB8RNe6E0KAxqQLzfZmYjhdyDa1S0=
+        :content-type:content-transfer-encoding; s=sasl; bh=ms4EAfb58h+d
+        pgT5xvGQ84Mtlqk=; b=Y6TQX+DfGa5KQ8QtMb1hbpJL6K23rDLQHYF5xs8jdXSu
+        YtQDrR6cNp9pMGoaj2LmqT8D3aUctZvmmciCdYBP/ULt2GzDIiJxzWFwwY50yc0F
+        vRvgsHOXC5WPFpOi4PqbUE8k22HqgqvTtbnxW8Wstl3lWpe48LR0q9Urq8gQEeI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ipHE/tetSP1NLTmGEkNxDdp7iPFhPR7X
-        P41KOnOxd6nDKJ8kj/ce9KVNvh1o04FVjDWMsPI5XhlY/VvFdbMHQK5+0iP8Llzm
-        xlcSb20ZU4/sZLbbt4jZ2ZNdr/DCjqQMoWj0a45O/m52ERkjlN3NnloHQL16C3IT
-        oBkFmfzqmU0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 70C6DBEFED;
-        Fri, 19 Jan 2018 16:01:46 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jy1/B7
+        q28aEDtSPwsGU7iwqFnBkYN3nwMRkZJoVDVH2tMoT6KnBKEr7ki1Dy3MZPeecGRx
+        UQ7q2JshF1fWV675yjNdb0B6uasbrUJNQsi8w61m8wMiH1ZyZUnXE7qXwk2D176V
+        vTzLS72+jZzXmIsYNR7nZFvqsnTO0IeKMm68A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2A098CA71F;
+        Fri, 19 Jan 2018 16:09:07 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CE672BEFEC;
-        Fri, 19 Jan 2018 16:01:45 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 992B6CA71E;
+        Fri, 19 Jan 2018 16:09:06 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Gargi Sharma <gs051095@gmail.com>, git <git@vger.kernel.org>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Subject: Re: [PATCH] mru: Replace mru.[ch] with list.h implementation
-References: <1516067185-1087-1-git-send-email-gs051095@gmail.com>
-        <CAP8UFD0oBfmwx6r8rFMLzCyhEoy6QMQ-5RHJv=2WavYgE9FSMQ@mail.gmail.com>
-Date:   Fri, 19 Jan 2018 13:01:44 -0800
-In-Reply-To: <CAP8UFD0oBfmwx6r8rFMLzCyhEoy6QMQ-5RHJv=2WavYgE9FSMQ@mail.gmail.com>
-        (Christian Couder's message of "Fri, 19 Jan 2018 19:26:37 +0100")
-Message-ID: <xmqqefmlpnpj.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] dir.c: print correct errno when opendir() fails
+References: <20180118095036.29422-1-pclouds@gmail.com>
+Date:   Fri, 19 Jan 2018 13:09:05 -0800
+In-Reply-To: <20180118095036.29422-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 18 Jan 2018 16:50:36 +0700")
+Message-ID: <xmqqa7x9pnda.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F56AB188-FD5B-11E7-8FBD-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FC19209A-FD5C-11E7-BD7D-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> On Tue, Jan 16, 2018 at 2:46 AM, Gargi Sharma <gs051095@gmail.com> wrote:
->> Replace the custom calls to mru.[ch] with calls to list.h. This patch is the
->> final step in removing the mru API completely and inlining the logic.
+> The call invalidate_directory() between opendir() and warning_errno() i=
+n
+> theory could make some system calls and change errno. Prevent that by
+> warning immediately after opendir().
 >
-> You might want to say that this provides a significant code reduction
-> which shows that the mru API is not a very useful abstraction anymore.
->
->> Another discussion, here
->> (https://public-inbox.org/git/CAOCi2DGYQr4jFf5ObY2buyhNJeaAPQKF8tbojn2W0b18Eo+Wgw@mail.gmail.com/)
->> was on what has to be done with the next pointer of packed git type
->
-> I think using "pointer to a 'struct packed_git'" instead of "pointer
-> of packed git type" would be clearer here, but anyway see below.
->
->> inside the
->> packed_git structure. It can be removed _given_ that no one needs to
->> access the list in order and can be sent as another patch.
->
-> I don't think it's worth pointing to a discussion about a future
-> improvement in the commit message. You could perhaps even remove all
-> the above paragraph as this commit is valuable and self contained
-> enough by itself.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+.com>
+> ---
+>  This is on top of nd/fix-untracked-cache-invalidation which is now on
+>  'next'. Sorry I waited too long to send the replacement and it's now
+>  too late.
 
-True. 
-
-If it is summarizing conclusion of the earlier discussion, that is a
-different matter, though.
-
-It is perfectly OK to have it under "---" line, even if it is merely
-voicing author's opinion, by the way.  It can serve as a good
-discussion (re-)starter.
+Well, we'll see a rewind of 'next' soonish anyway, so you can just
+tell me to tentatively kick it back to 'pu' to be replaced with a
+reroll if you prefer.
 
 
->> ---
 
-Missing sign-off?
 
->> Changes in v2:
->>         - Add a move to front function to the list API.
->>         - Remove memory leak.
->>         - Remove redundant remove operations on the list.
->>
->> The commit has been built on top of ot/mru-on-list branch.
+>  dir.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> Nice!
->
->>  Makefile               |  1 -
->>  builtin/pack-objects.c | 12 ++++++------
->>  cache.h                |  9 +++++----
->>  list.h                 |  7 +++++++
->>  mru.c                  | 27 ---------------------------
->>  mru.h                  | 40 ----------------------------------------
->>  packfile.c             | 18 +++++++++---------
->>  sha1_file.c            |  1 -
->>  8 files changed, 27 insertions(+), 88 deletions(-)
->>  delete mode 100644 mru.c
->>  delete mode 100644 mru.h
->
-> Very nice!
-
-Yes, nice reduction.
-
->
-> [...]
->
->> @@ -1030,8 +1029,9 @@ static int want_object_in_pack(const unsigned char *sha1,
->>                                 *found_pack = p;
->>                         }
->>                         want = want_found_object(exclude, p);
->> -                       if (!exclude && want > 0)
->> -                               mru_mark(&packed_git_mru, entry);
->> +                       if (!exclude && want > 0) {
->> +                               list_move_to_front(&p->mru, &packed_git_mru);
->> +                       }
->
-> Style: we usually remove brackets when there is one line after the
-> if(...) line. (See the 2 lines that you delete.)
->
-> Otherwise the patch looks good to me.
->
-> Thanks,
-> Christian.
+> diff --git a/dir.c b/dir.c
+> index dd1e50c328..55736d3e2a 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1795,14 +1795,14 @@ static int open_cached_dir(struct cached_dir *c=
+dir,
+>  		return 0;
+>  	c_path =3D path->len ? path->buf : ".";
+>  	cdir->fdir =3D opendir(c_path);
+> +	if (!cdir->fdir)
+> +		warning_errno(_("could not open directory '%s'"), c_path);
+>  	if (dir->untracked) {
+>  		invalidate_directory(dir->untracked, untracked);
+>  		dir->untracked->dir_opened++;
+>  	}
+> -	if (!cdir->fdir) {
+> -		warning_errno(_("could not open directory '%s'"), c_path);
+> +	if (!cdir->fdir)
+>  		return -1;
+> -	}
+>  	return 0;
+>  }
