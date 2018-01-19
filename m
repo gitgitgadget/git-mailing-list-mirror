@@ -7,103 +7,95 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3B91F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 19:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A592E1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 19:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756071AbeASTeh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 14:34:37 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:44386 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755830AbeASTef (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 14:34:35 -0500
-Received: by mail-yw0-f196.google.com with SMTP id x62so1032568ywg.11
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 11:34:35 -0800 (PST)
+        id S1756213AbeASTzT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 14:55:19 -0500
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33624 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756284AbeASTzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 14:55:17 -0500
+Received: by mail-yw0-f195.google.com with SMTP id x24so1061139ywj.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 11:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SQJAA70OrpVhhMb9Tqo9fU9ZLwM0mcWb9xeABGTKK88=;
-        b=mp0hA7EOV2OCCr3WWIDR1gM9Prg7bxLHGvcavdP7JO1bdoZHuRrbN675gZ50WkZKV1
-         YKzkbPwcaNvhU8wOJrbvinVaXJmIeXGPR9HYg/Gi2+sF8JVU1njdGlM1ZIeSsv+AXnqN
-         kcJdHfZW7gbTzUbntdAZ8kgtsysfG2ibTVuIBjzz3+D4zZsY9W3v1Gm1HIgzSx2jbdzQ
-         JeimU9vrf49UctUQyD/4w69s5WmUXFcouvAFsiHA0L0FCeuLBRIR1g7TJl6iym/EG2cy
-         A5CFXQeCSy5idiWAEvXw24eQOqyXja7rDFbf3jpFFxy3F0thCcvj0wMiyve/7Pn7GKNr
-         n7Fw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=RrvYu6NS0NfEukbBQNYdf/ScykxkP2JHMy6t7Q7+RbA=;
+        b=uqKT/jcFPQpII7rB63fY0XbRMXZTAGRdtqicxPBzrCDtP++FoOj5FHazNLvQRlInph
+         UtRdzu3C3rqtbv52wspWiIJQGJJJFLwxIKcPSo4vUEVpM/+KIeLYDduykkM7YgjvIqTe
+         lo83TYE1CI2MbiC7Gt748vMnmnWAopPD0CTMhmKPn0m9lVvm4VECDRNRXy7btTzVs/0n
+         ENbM+jHdbxdlaEGHmSZEXJwAmpyN5Y8n4eYYdXtPV0sfqwYWNHLBlnROHU1mUJl2+Cdv
+         ZxXWbChItSFhGqdsEKj6qo0EmHo4jggNs8H0Wz/LmnNX6f3xkpfY5YqBapkvI+B+sxpD
+         uNHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SQJAA70OrpVhhMb9Tqo9fU9ZLwM0mcWb9xeABGTKK88=;
-        b=B15sVv3+DK/qPeiP1gBv5NsLFXXkWf5lvr1BSUjmTEoLNAAaCqIdnyPZmCf8vFLq9R
-         xCkIkTNemG3vzAu1Ur828n66kXiTe3FbDpgwhoTELDpavls9UgYqvPGjyX327vnoYP5O
-         aH2W97Yj4pXNFLFQKgDW07F5aV5z2sAuMbdvACpcrwn0lzSuHWjkZ6NDxsLY+LU5oNM6
-         TLnRmv+hMtJRD3zIUEI4jxkQBHz7l+oZnJvSAXygwwvVN1Affq5GUB2V+17ns+n5J0++
-         9WBAkzrhNMFHDLdsNPMU4a1nZGOd/Iz7hH/nY3540tMnk/NxXEGiNTPIPf3624hjsmaj
-         FHQA==
-X-Gm-Message-State: AKwxytc2tLuPgmh6GS5cLbRekT2ykQcYvwhwMPWd01Bp22tEQ7RkHVqz
-        cZ+v80OEpAT8Ffj1NMUjRpPZ6KXANpZjO8GlHhe6/11P84o=
-X-Google-Smtp-Source: ACJfBosuZVIRcx97h5zcgDaE6MKpZonhTdfvWZaQIWyYDDl0MuoH304borsEgKX400R5ra3xDb+QUvzSS/G5L3c7Eo0=
-X-Received: by 10.129.108.149 with SMTP id h143mr10500899ywc.373.1516390474947;
- Fri, 19 Jan 2018 11:34:34 -0800 (PST)
+         :message-id:subject:to;
+        bh=RrvYu6NS0NfEukbBQNYdf/ScykxkP2JHMy6t7Q7+RbA=;
+        b=siZhaM9PCl3KOXgdEmpRKVTVd2w2TmbQWyIm1bBJoZMMqDxdLHRJa8lgoVTgMKx7ye
+         ry95LpbE6NnJqGtPaF/o2eabYumVQbJ3ppm+fhCriaBTAMXNlE9wC5Ej6V9DOWSI2tS/
+         f0lbLs0zGkoeXlvS8UHW2C1GCZ/6hvCtv+UcB9jkrlqrl/DscrkAMrMFIah4pK7bsWov
+         QZ7s/irna8Y13V8zSMVC8fioUPetapopMgzXPAl7XmC5BUxMcStF/kPBlTRWEzqwW/Sm
+         IkbqPt2lSegoqRlXTfD4CkCQgmsdkWG/MY7n/ZZvMG2OjoNIyO+OE92HrclafMtseNjO
+         crew==
+X-Gm-Message-State: AKwxytfGbd00/ZTq57OyONA9RG89mCp1Lc4pq60JsAcY1/KxTpYJzGl1
+        wizxda+n3OHOvzdcoXr4up858PCJFayTA0twPd/trA==
+X-Google-Smtp-Source: ACJfBou0743enX60fdlp2UW9evJbJMIgmWAP1fsOJVP2QPj39iioSkfyU5ziuiIzL303/CsZPkBoOQ33m/23cXldZVE=
+X-Received: by 10.13.220.3 with SMTP id f3mr10457423ywe.288.1516391716600;
+ Fri, 19 Jan 2018 11:55:16 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.210.209 with HTTP; Fri, 19 Jan 2018 11:34:34 -0800 (PST)
-In-Reply-To: <20180119173406.13324-1-randall.s.becker@rogers.com>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com>
+Received: by 10.37.210.209 with HTTP; Fri, 19 Jan 2018 11:55:15 -0800 (PST)
+In-Reply-To: <20180119173406.13324-6-randall.s.becker@rogers.com>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-6-randall.s.becker@rogers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 19 Jan 2018 11:34:34 -0800
-Message-ID: <CAGZ79kYUBRueisw2exRC7E-mpHZYE0Y07nnT4CNF_daAYMna9g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
-To:     randall.s.becker@rogers.com
-Cc:     git <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
+Date:   Fri, 19 Jan 2018 11:55:15 -0800
+Message-ID: <CAGZ79kYft+6k3YjyMn32-gJwFEwCpEYKJ=WnksqJdQaozm5PQw@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] Force test suite traps to be cleared for NonStop ksh
+To:     randall.s.becker@rogers.com, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 9:33 AM,  <randall.s.becker@rogers.com> wrote:
+On Fri, Jan 19, 2018 at 9:34 AM,  <randall.s.becker@rogers.com> wrote:
 > From: "Randall S. Becker" <rsbecker@nexbridge.com>
 >
-> * wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
->   default on the NonStop platform.
+> * t/lib-git-daemon.sh: fix incompatibilities with ksh traps not being
+>   cleared automatically on platform.
+
+Which platform? Do we need to guard it for other platforms?
+(I guess we don't we have traps in some other places and it is
+POSIX)
+
+>  This caused tests to seem to fail
+>   while actually succeeding.
 >
-
-Due to my review of a previous patch, I now know about the __TANDEM
-directive and why we use this to guard this line. :)
-
-The setbuf(0) is easier than sprinkling (guarded) flushes all over the code,
-so that seems like a clean solution, which we currently don't use.
-(it occurred twice in history, see eac14f8909 (Win32: Thread-safe
-windows console output, 2012-01-14) for its introduction and fcd428f4a9
-(Win32: fix broken pipe detection, 2012-03-01) for its deletion).
-
 > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 > ---
->  wrapper.c | 3 +++
+>  t/lib-git-daemon.sh | 3 +++
 >  1 file changed, 3 insertions(+)
 >
-> diff --git a/wrapper.c b/wrapper.c
-> index d20356a77..671cbb4b4 100644
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
->         FILE *stream = fdopen(fd, mode);
->         if (stream == NULL)
->                 die_errno("Out of memory? fdopen failed");
-> +#ifdef __TANDEM
-> +       setbuf(stream,0);
-
-My man page tells me the second arg is a pointer,
-so we'd prefer NULL instead?
-
-Thanks,
-Stefan
-
-> +#endif
->         return stream;
+> diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+> index 987d40680..955beecd9 100644
+> --- a/t/lib-git-daemon.sh
+> +++ b/t/lib-git-daemon.sh
+> @@ -68,6 +68,7 @@ start_git_daemon() {
+>                 test_skip_or_die $GIT_TEST_GIT_DAEMON \
+>                         "git daemon failed to start"
+>         fi
+> +       trap '' EXIT
 >  }
 >
+>  stop_git_daemon() {
+> @@ -89,4 +90,6 @@ stop_git_daemon() {
+>         fi
+>         GIT_DAEMON_PID=
+>         rm -f git_daemon_output
+> +
+> +       trap '' EXIT
+>  }
 > --
 > 2.16.0.31.gf1a482c
 >
