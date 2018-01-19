@@ -2,88 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF9DC1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 18:22:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8EB1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 18:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755965AbeASSWK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 13:22:10 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:34773 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755899AbeASSWI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 13:22:08 -0500
-Received: by mail-qt0-f182.google.com with SMTP id 33so6026518qtv.1
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 10:22:08 -0800 (PST)
+        id S1756107AbeASS0j (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 13:26:39 -0500
+Received: from mail-it0-f51.google.com ([209.85.214.51]:34907 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755830AbeASS0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 13:26:38 -0500
+Received: by mail-it0-f51.google.com with SMTP id e1so3162575ita.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 10:26:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5pdqgNnqlPliysvIWKxp+Q+ITLoDyYzl5rlwFwoYF/4=;
-        b=uqr/V2SC0GpqoKilKMgNWbHLqIGGFQGBkTPMDaX7my6Gtebv2rTq8HQJ3O0KaW4++s
-         lb2sObuei0l8iFh9JnlN/FFL+jxDVRoQh/17P3N/GPDEi6/6hQkI7hgCxcNgnB6N7wIx
-         mphn6fvdfPjl9vn3KkZA9HyhijxGuCXxEvru5/Nl8uuP+FVNQJwytwlaPxzsL84kqclM
-         nma6axqu5QO7WbtD+opEtbJz7KXtPCCdJPmc5g/KDbjDuvopuba/VN4BlBS25udybzmo
-         OY9o+ytDNuxvVsXDGNiwv7GIggbIJ6gSU5U30cal61Ep2WsG24hmOyaJ0V7yyvIX9pSo
-         I6Sg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=em1aWPbFRzxaJe0nDcK3hVJgGL9+zyx2eQ8ILkyBolY=;
+        b=llo4S0BGwpYl+b7D+2U1jPODszB2tx2IzUsZpaIsqV5PaC52Z1H4HZSOeLckj1EWXX
+         V2VHAfW2WHe8+C8kjAptPLtM55wB4JUoKg/yi2JSaDh+Ue4drWnSYK/A9RVwgFgDdOXv
+         HkxTrvKlJ1UxPJYi1K6B6w+gG17erruqmgUS9Guw1RLO9A9BhzXWeE1VqrkMnjYRwM0S
+         ACl4kwiNiOSMtQSduf3/IJO5vdtBhFw3HIjcmw9Bi6uDQeguyAZXWSbPUC8JSp2WqyOP
+         pPY/ht+dt8driiBZFYZHpERltoVFhw7Bj8vDTmrHvaCF4Y+VgrEPryQaU3MCwcD9smmW
+         qnrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5pdqgNnqlPliysvIWKxp+Q+ITLoDyYzl5rlwFwoYF/4=;
-        b=uO2KISgosA8BR+SxyHypwJiXEXRx4LkTkcfLKwuDUHwzFdhVfCkevcoJwgGW6Okszi
-         MkXDMMuNE0JIm/f/KCUQUp9Pqk0MpR9dft0IS4x/DXWhJFBbmQEOPYhxWhauwwrLSL2r
-         qyxDQgAZV60aJCQV3jlmQcZs/i9P5oGDAWZCXD7m1pctAFxWiFgJAhfMy4jrcnnrwW+H
-         VQx8BcUwErEFazb+xiszNfgpsk8tQfUxqqJsK9iuVP3EGGatVwl7cu81DlxV6d5SmL1w
-         Kw1pbIzLMjjOsuEv5lTJD3eR5QaSXcMZ1S5S4pqoWaMV6R6kBM1jIz7b0ZOfOAk59BbX
-         Jbsg==
-X-Gm-Message-State: AKwxytejmngke82Petbj0mMI3XuP5HhGvyFbY+QYrxsBdKrn0l5WcYw7
-        gcCcKWl/D4qaJgZ02HWjQe2jIr6M
-X-Google-Smtp-Source: ACJfBosTh4wRfd/ivIEjldU83uuCCaK2LDyqpyijogdXYhIQglCgt+AU+j4D6W2ItM9d5I+bPWsi+g==
-X-Received: by 10.200.18.202 with SMTP id b10mr47277743qtj.152.1516386127887;
-        Fri, 19 Jan 2018 10:22:07 -0800 (PST)
-Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
-        by smtp.gmail.com with ESMTPSA id n20sm5744908qtb.28.2018.01.19.10.22.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 19 Jan 2018 10:22:06 -0800 (PST)
-Date:   Fri, 19 Jan 2018 13:22:04 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "Stephen M. McQuay" <stephen@mcquay.me>
-Cc:     git@vger.kernel.org
-Subject: Re: Segmentation fault on clone
-Message-ID: <20180119182204.GO1427@zaya.teonanacatl.net>
-References: <20180119180855.GA98561@smm.local>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=em1aWPbFRzxaJe0nDcK3hVJgGL9+zyx2eQ8ILkyBolY=;
+        b=k2ODh8csXVdeVPML5S3jjLNWA96tWgnekpKfKnbwCF3QUCSsGgl4TSnrIO0Kt+HP8F
+         T+SpgaZIsyaOSC6tvImhYRaD/lY7QOVstThTA0vudcrKhCJUtps6GPo5WPOX8rFi6mWF
+         YtAplNZ23JzURP2LOcng8F+d+J2Qt17kll/VTVQsDM2R3l90DzlyzzRU8DO5F8sc2a9T
+         Dd7C4qAvA0p7u5kZ5+b3pP0HAQcZi13yZhMuDCMMKiFaaTBcspBK8SWBu9hkxqkUm1Mh
+         nSexb88mL+xVwvWaA+WciIjPZjBFHG0+YNqgQnT/r9FgA6KWQQDfKQ0hKhd6WDiEhDta
+         aHKg==
+X-Gm-Message-State: AKwxytct6QFLsK1103gJudzaEZME63pY9IXBtF5mSDLO6kMIN7q13Wt1
+        O1z0C7cx/Tp0Ft9kZpJ8G0ih5sd4eBuUJ67mqpw=
+X-Google-Smtp-Source: ACJfBov4alYh6wLDIGjiZAeIFK6gxo7iO38hJ6ft/eqJcrFDMLVxV3Cn2ykFMiSwmvfhCmoz9/Dlh6pmqG7juDT7wR8=
+X-Received: by 10.36.249.196 with SMTP id l187mr21744459ith.63.1516386397607;
+ Fri, 19 Jan 2018 10:26:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180119180855.GA98561@smm.local>
-User-Agent: Mutt/1.9.1 (2017-09-22)
+Received: by 10.79.201.204 with HTTP; Fri, 19 Jan 2018 10:26:37 -0800 (PST)
+In-Reply-To: <1516067185-1087-1-git-send-email-gs051095@gmail.com>
+References: <1516067185-1087-1-git-send-email-gs051095@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 19 Jan 2018 19:26:37 +0100
+Message-ID: <CAP8UFD0oBfmwx6r8rFMLzCyhEoy6QMQ-5RHJv=2WavYgE9FSMQ@mail.gmail.com>
+Subject: Re: [PATCH] mru: Replace mru.[ch] with list.h implementation
+To:     Gargi Sharma <gs051095@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stephen,
+On Tue, Jan 16, 2018 at 2:46 AM, Gargi Sharma <gs051095@gmail.com> wrote:
+> Replace the custom calls to mru.[ch] with calls to list.h. This patch is the
+> final step in removing the mru API completely and inlining the logic.
 
-Stephen M. McQuay wrote:
-> I submitted a bug against the brew project when git
-> version 2.16.0 started segfaulting:
-> 
-> https://github.com/Homebrew/homebrew-core/issues/23045#issuecomment-358891009
+You might want to say that this provides a significant code reduction
+which shows that the mru API is not a very useful abstraction anymore.
 
-This seems likely to be the same segfault as:
+> Another discussion, here
+> (https://public-inbox.org/git/CAOCi2DGYQr4jFf5ObY2buyhNJeaAPQKF8tbojn2W0b18Eo+Wgw@mail.gmail.com/)
+> was on what has to be done with the next pointer of packed git type
 
-https://public-inbox.org/git/CALwADsGfB10f5+nOFN-pHCt4z1SkWMcvSHn8KokcyCM0V6K-BA@mail.gmail.com/
+I think using "pointer to a 'struct packed_git'" instead of "pointer
+of packed git type" would be clearer here, but anyway see below.
 
-There's a patch in that thread.
+> inside the
+> packed_git structure. It can be removed _given_ that no one needs to
+> access the list in order and can be sent as another patch.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The man who is a pessimist before forty-eight knows too much; the man
-who is an optimist after forty-eight knows too little.
-    -- Mark Twain
+I don't think it's worth pointing to a discussion about a future
+improvement in the commit message. You could perhaps even remove all
+the above paragraph as this commit is valuable and self contained
+enough by itself.
 
+> ---
+> Changes in v2:
+>         - Add a move to front function to the list API.
+>         - Remove memory leak.
+>         - Remove redundant remove operations on the list.
+>
+> The commit has been built on top of ot/mru-on-list branch.
+
+Nice!
+
+>  Makefile               |  1 -
+>  builtin/pack-objects.c | 12 ++++++------
+>  cache.h                |  9 +++++----
+>  list.h                 |  7 +++++++
+>  mru.c                  | 27 ---------------------------
+>  mru.h                  | 40 ----------------------------------------
+>  packfile.c             | 18 +++++++++---------
+>  sha1_file.c            |  1 -
+>  8 files changed, 27 insertions(+), 88 deletions(-)
+>  delete mode 100644 mru.c
+>  delete mode 100644 mru.h
+
+Very nice!
+
+[...]
+
+> @@ -1030,8 +1029,9 @@ static int want_object_in_pack(const unsigned char *sha1,
+>                                 *found_pack = p;
+>                         }
+>                         want = want_found_object(exclude, p);
+> -                       if (!exclude && want > 0)
+> -                               mru_mark(&packed_git_mru, entry);
+> +                       if (!exclude && want > 0) {
+> +                               list_move_to_front(&p->mru, &packed_git_mru);
+> +                       }
+
+Style: we usually remove brackets when there is one line after the
+if(...) line. (See the 2 lines that you delete.)
+
+Otherwise the patch looks good to me.
+
+Thanks,
+Christian.
