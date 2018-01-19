@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB5A1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 19:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3B91F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 19:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932274AbeASTZb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 14:25:31 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:37606 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756141AbeASTZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 14:25:30 -0500
-Received: by mail-yw0-f180.google.com with SMTP id v139so1026397ywg.4
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 11:25:30 -0800 (PST)
+        id S1756071AbeASTeh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 14:34:37 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:44386 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755830AbeASTef (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 14:34:35 -0500
+Received: by mail-yw0-f196.google.com with SMTP id x62so1032568ywg.11
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 11:34:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=OWxX+YoUXsu2/1GtvJ6H6G9yil2YKvSRzLFI7XZ5f78=;
-        b=GpPv5vHG7JmBvWx+D/qjFCwV+jnIktcQFz4BY0kCKTtJVDiKO+Zixn1jgt1z6IVF/3
-         UQdUlvggp6FZ6m0Nq0r8uomwA7MjlAUU/NY2Fj+mlnvNF5ZBCu98+7bCbofD1Ud4hVS1
-         ZIyCl6BEaa/DK1zS13Vy1Q5CJW0kmfwezoREOm6H6sGJNxW1CHhS50oV0nQZ2b6gS1Xk
-         CiDRKN8qfJ9L5zI33JbL1jsoKPSQ8NJbDi81uMss/Fp4mBEV6WP4v1AO1fxnBvyKVyoI
-         Ck4L6uSn32XY9biu13/QJ1i4s5k6vcgxTL/X8MYRsSQo6fwvlGV1tuolSNnBNSqXnLUK
-         2VcQ==
+        bh=SQJAA70OrpVhhMb9Tqo9fU9ZLwM0mcWb9xeABGTKK88=;
+        b=mp0hA7EOV2OCCr3WWIDR1gM9Prg7bxLHGvcavdP7JO1bdoZHuRrbN675gZ50WkZKV1
+         YKzkbPwcaNvhU8wOJrbvinVaXJmIeXGPR9HYg/Gi2+sF8JVU1njdGlM1ZIeSsv+AXnqN
+         kcJdHfZW7gbTzUbntdAZ8kgtsysfG2ibTVuIBjzz3+D4zZsY9W3v1Gm1HIgzSx2jbdzQ
+         JeimU9vrf49UctUQyD/4w69s5WmUXFcouvAFsiHA0L0FCeuLBRIR1g7TJl6iym/EG2cy
+         A5CFXQeCSy5idiWAEvXw24eQOqyXja7rDFbf3jpFFxy3F0thCcvj0wMiyve/7Pn7GKNr
+         n7Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=OWxX+YoUXsu2/1GtvJ6H6G9yil2YKvSRzLFI7XZ5f78=;
-        b=U+fhbVEnRaI19h0VlL45I5vYma8IplLDNGa+VHaatENfO0he5dR9sovW5ar0mVSdgJ
-         bz7tp5vPC6Lnsd12x3MiKwSqFOWJPxto9TdGwHyT4YtSM6To7o+2Yh+MIWzMgBjIUi2b
-         OWV+ChNthE0kWVEgl6AlvfXYWLOtvGIoc+TUAG/hyKKPy7Hiv9fFBXXWZVYkOQL4ELHD
-         Ls3Y7W9snEqmO6+F1Ct/TJfQRU2UosgY6hBJLgTZ76yM8+WlYUzBAd+9V80jSnN5Jjrq
-         eqTzttaB/KnqNerlH7brHA23245zBExr1G57gFvFtkdj2h8wboQ7xZ3Kb7OUS8vmD9mv
-         5zjA==
-X-Gm-Message-State: AKwxytcDLIoc1ojGvNSZRjFqlMoPG0VpM1FBJMcBhWPF2zoGPpI3ost4
-        qCyY09ogbO3ambIJEjlrgW+J4e89maJE25yqjyiBgQVRCDs=
-X-Google-Smtp-Source: ACJfBotND84eKiJ0E8AccjtnA3IxHgwiZk49yTNueV0qdlJosIBUX8ilRS8DkZMqj1v9beX2T9A7WjI2J25iibHqAvs=
-X-Received: by 10.129.122.73 with SMTP id v70mr10383266ywc.156.1516389929493;
- Fri, 19 Jan 2018 11:25:29 -0800 (PST)
+        bh=SQJAA70OrpVhhMb9Tqo9fU9ZLwM0mcWb9xeABGTKK88=;
+        b=B15sVv3+DK/qPeiP1gBv5NsLFXXkWf5lvr1BSUjmTEoLNAAaCqIdnyPZmCf8vFLq9R
+         xCkIkTNemG3vzAu1Ur828n66kXiTe3FbDpgwhoTELDpavls9UgYqvPGjyX327vnoYP5O
+         aH2W97Yj4pXNFLFQKgDW07F5aV5z2sAuMbdvACpcrwn0lzSuHWjkZ6NDxsLY+LU5oNM6
+         TLnRmv+hMtJRD3zIUEI4jxkQBHz7l+oZnJvSAXygwwvVN1Affq5GUB2V+17ns+n5J0++
+         9WBAkzrhNMFHDLdsNPMU4a1nZGOd/Iz7hH/nY3540tMnk/NxXEGiNTPIPf3624hjsmaj
+         FHQA==
+X-Gm-Message-State: AKwxytc2tLuPgmh6GS5cLbRekT2ykQcYvwhwMPWd01Bp22tEQ7RkHVqz
+        cZ+v80OEpAT8Ffj1NMUjRpPZ6KXANpZjO8GlHhe6/11P84o=
+X-Google-Smtp-Source: ACJfBosuZVIRcx97h5zcgDaE6MKpZonhTdfvWZaQIWyYDDl0MuoH304borsEgKX400R5ra3xDb+QUvzSS/G5L3c7Eo0=
+X-Received: by 10.129.108.149 with SMTP id h143mr10500899ywc.373.1516390474947;
+ Fri, 19 Jan 2018 11:34:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.210.209 with HTTP; Fri, 19 Jan 2018 11:25:28 -0800 (PST)
-In-Reply-To: <20180119173406.13324-3-randall.s.becker@rogers.com>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-3-randall.s.becker@rogers.com>
+Received: by 10.37.210.209 with HTTP; Fri, 19 Jan 2018 11:34:34 -0800 (PST)
+In-Reply-To: <20180119173406.13324-1-randall.s.becker@rogers.com>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 19 Jan 2018 11:25:28 -0800
-Message-ID: <CAGZ79kY4HzL8ed23RmoCU0izjsRKsZ0Mkzcmpm3+ugu7qZtcLA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] Bypass GCC attributes on NonStop platform where used.
+Date:   Fri, 19 Jan 2018 11:34:34 -0800
+Message-ID: <CAGZ79kYUBRueisw2exRC7E-mpHZYE0Y07nnT4CNF_daAYMna9g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
 To:     randall.s.becker@rogers.com
 Cc:     git <git@vger.kernel.org>,
         "Randall S. Becker" <rsbecker@nexbridge.com>
@@ -62,66 +62,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 9:34 AM,  <randall.s.becker@rogers.com> wrote:
+On Fri, Jan 19, 2018 at 9:33 AM,  <randall.s.becker@rogers.com> wrote:
 > From: "Randall S. Becker" <rsbecker@nexbridge.com>
 >
-> * remote.c: force ignoring of GCC __attribute construct not supported
->   by c99 by defining it as an empty CPP macro.
+> * wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
+>   default on the NonStop platform.
 >
+
+Due to my review of a previous patch, I now know about the __TANDEM
+directive and why we use this to guard this line. :)
+
+The setbuf(0) is easier than sprinkling (guarded) flushes all over the code,
+so that seems like a clean solution, which we currently don't use.
+(it occurred twice in history, see eac14f8909 (Win32: Thread-safe
+windows console output, 2012-01-14) for its introduction and fcd428f4a9
+(Win32: fix broken pipe detection, 2012-03-01) for its deletion).
+
 > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+>  wrapper.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/wrapper.c b/wrapper.c
+> index d20356a77..671cbb4b4 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
+>         FILE *stream = fdopen(fd, mode);
+>         if (stream == NULL)
+>                 die_errno("Out of memory? fdopen failed");
+> +#ifdef __TANDEM
+> +       setbuf(stream,0);
 
-I do not know about the __TANDEM symbol, but some research[1]
-indicates it is a macro specifically for case of cross platform support:
-
-    You can use the __TANDEM symbol to increase the portability
-    of your programs. Enclose system-dependent source text in an
-    if section that uses #ifdef or #ifndef to test for the existence of the
-    __TANDEM symbol.
-
-It seems to not be used outside of the NonStop port[2], so the code seems
-ok. (I would have used #ifdef, as I thought this is more prevalent in our
-code base and for consistency we'd rather want to use one thing only, bug
-"git grep '#if defined'" proves me wrong)
-
-However the commit message is hard to understand (say for somebody who
-will find this commit in 2 years using git-blame).
-
-Maybe:
-
-    In NonStop HPE (version X, all versions?) there is no support for the
-    __attribute macro. By redefining the __attribute to an empty macro, the
-    code compiles on NonStop HPE. Use the system specific __TANDEM
-    macro to guard it for just this platform.
-
-as that will help those people in the future not having to do the research?
-
-
-[1] http://h20628.www2.hp.com/km-ext/kmcsdirect/emr_na-c02121175-1.pdf
-[2] https://sourceforge.net/p/predef/wiki/OperatingSystems/?version=44
+My man page tells me the second arg is a pointer,
+so we'd prefer NULL instead?
 
 Thanks,
 Stefan
 
-
-> ---
->  remote.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/remote.c b/remote.c
-> index 4e93753e1..c18f9de7f 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -11,6 +11,10 @@
->  #include "mergesort.h"
->  #include "argv-array.h"
->
-> +#if defined (__TANDEM)
-> +#define __attribute(a)
 > +#endif
-> +
->  enum map_direction { FROM_SRC, FROM_DST };
+>         return stream;
+>  }
 >
->  static struct refspec s_tag_refspec = {
 > --
 > 2.16.0.31.gf1a482c
 >
