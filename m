@@ -2,122 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7602A1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 18:09:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF9DC1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 18:22:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756177AbeASSJH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 13:09:07 -0500
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:44263 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756186AbeASSJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 13:09:02 -0500
-Received: by mail-pg0-f43.google.com with SMTP id m20so1998102pgc.11
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 10:09:01 -0800 (PST)
+        id S1755965AbeASSWK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 13:22:10 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:34773 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755899AbeASSWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 13:22:08 -0500
+Received: by mail-qt0-f182.google.com with SMTP id 33so6026518qtv.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 10:22:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mcquay-me.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Avy9y8JlTA2aIcl/bHrn2xg5/8Vq7kq7ph1n31b6gC0=;
-        b=Jj41nih/VKVM1RSz5hKoydDBcI/5auf1wa+Q0niEHR0M5HaEdWK/AfnME1PehNPQm1
-         4KApbRZLmwo9O4AR8pygfvUprGzFwCJYMVFx9EFkVE5Q7EgTNQfP9RNQWYJkm9sRWY+I
-         R9DfKk7jWiGnmluUQueCJSAGKQP7x3CYfptMo8zw+G8AqmTq6TEuZgbokYYr2t4zW4z5
-         geLz2vBViPlHvTm42hsqUyi56jdI7ml+1lLVXXsS+OqIyn6mM4UoAyVt7ItZGmqbCLq3
-         RFJIYEyoYiS/jG+BOLYWbyuRBshnviBup+/i5A1Stc5Ndkoh3bPnhJPF8H/BsQK/mtNH
-         730g==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5pdqgNnqlPliysvIWKxp+Q+ITLoDyYzl5rlwFwoYF/4=;
+        b=uqr/V2SC0GpqoKilKMgNWbHLqIGGFQGBkTPMDaX7my6Gtebv2rTq8HQJ3O0KaW4++s
+         lb2sObuei0l8iFh9JnlN/FFL+jxDVRoQh/17P3N/GPDEi6/6hQkI7hgCxcNgnB6N7wIx
+         mphn6fvdfPjl9vn3KkZA9HyhijxGuCXxEvru5/Nl8uuP+FVNQJwytwlaPxzsL84kqclM
+         nma6axqu5QO7WbtD+opEtbJz7KXtPCCdJPmc5g/KDbjDuvopuba/VN4BlBS25udybzmo
+         OY9o+ytDNuxvVsXDGNiwv7GIggbIJ6gSU5U30cal61Ep2WsG24hmOyaJ0V7yyvIX9pSo
+         I6Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Avy9y8JlTA2aIcl/bHrn2xg5/8Vq7kq7ph1n31b6gC0=;
-        b=MxO0GkL91FlsAs/4KgaBOqZAvOEFEUas5hG/mh/HV0s5wWucrRtyqJggymgXgBgAyt
-         aHfOu747F3tHdLxGlHpbTq8oL2LQwGER4vUM/mX+R+MVc1WvYWgbxDmEa3oZVy47Sl+J
-         Y3PTCuTlYRiRptnytdxSS4yPhspmf7jUQWcoaw+QFoFuUbBQ97d700IvXvJ4fKdEFXR0
-         /96rZwO3/C762/KQAE1ULkjvIPWAlMFeEzKGBsB70cBG7BqhJlR+xTO1i2LQrzgfwRpS
-         MrO4yP3kP9KSgyQGrUVRK9cUOi3tasUmH/rgWIsrRu8rDD1dCKrVXhImHA4x9gpu8ubp
-         a2pQ==
-X-Gm-Message-State: AKwxytcvLz/QD/YLVHM/yue3ZmXQzTu9KEqIdIx6vJ/wz7yuKyTID+J1
-        ORV/M9685j0cJKS6T7xjU97H2zWNiV0=
-X-Google-Smtp-Source: AH8x225kkQOMoMWbFw/EehSUhQkgq1tz24eBoAWk0ZeslGpK2GXTMSC46WnW5IXdTBZEl7pqJomrGQ==
-X-Received: by 10.98.186.18 with SMTP id k18mr1668541pff.115.1516385340708;
-        Fri, 19 Jan 2018 10:09:00 -0800 (PST)
-Received: from smm.local (ec2-54-153-88-228.us-west-1.compute.amazonaws.com. [54.153.88.228])
-        by smtp.gmail.com with ESMTPSA id 184sm18170024pfg.87.2018.01.19.10.08.59
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 19 Jan 2018 10:08:59 -0800 (PST)
-Date:   Fri, 19 Jan 2018 10:08:57 -0800
-From:   "Stephen M. McQuay" <stephen@mcquay.me>
-To:     git@vger.kernel.org
-Subject: Segmentation fault on clone
-Message-ID: <20180119180855.GA98561@smm.local>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5pdqgNnqlPliysvIWKxp+Q+ITLoDyYzl5rlwFwoYF/4=;
+        b=uO2KISgosA8BR+SxyHypwJiXEXRx4LkTkcfLKwuDUHwzFdhVfCkevcoJwgGW6Okszi
+         MkXDMMuNE0JIm/f/KCUQUp9Pqk0MpR9dft0IS4x/DXWhJFBbmQEOPYhxWhauwwrLSL2r
+         qyxDQgAZV60aJCQV3jlmQcZs/i9P5oGDAWZCXD7m1pctAFxWiFgJAhfMy4jrcnnrwW+H
+         VQx8BcUwErEFazb+xiszNfgpsk8tQfUxqqJsK9iuVP3EGGatVwl7cu81DlxV6d5SmL1w
+         Kw1pbIzLMjjOsuEv5lTJD3eR5QaSXcMZ1S5S4pqoWaMV6R6kBM1jIz7b0ZOfOAk59BbX
+         Jbsg==
+X-Gm-Message-State: AKwxytejmngke82Petbj0mMI3XuP5HhGvyFbY+QYrxsBdKrn0l5WcYw7
+        gcCcKWl/D4qaJgZ02HWjQe2jIr6M
+X-Google-Smtp-Source: ACJfBosTh4wRfd/ivIEjldU83uuCCaK2LDyqpyijogdXYhIQglCgt+AU+j4D6W2ItM9d5I+bPWsi+g==
+X-Received: by 10.200.18.202 with SMTP id b10mr47277743qtj.152.1516386127887;
+        Fri, 19 Jan 2018 10:22:07 -0800 (PST)
+Received: from zaya.teonanacatl.net (pool-173-67-181-41.hrbgpa.fios.verizon.net. [173.67.181.41])
+        by smtp.gmail.com with ESMTPSA id n20sm5744908qtb.28.2018.01.19.10.22.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 19 Jan 2018 10:22:06 -0800 (PST)
+Date:   Fri, 19 Jan 2018 13:22:04 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     "Stephen M. McQuay" <stephen@mcquay.me>
+Cc:     git@vger.kernel.org
+Subject: Re: Segmentation fault on clone
+Message-ID: <20180119182204.GO1427@zaya.teonanacatl.net>
+References: <20180119180855.GA98561@smm.local>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="AqsLC8rIMeq19msA"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <20180119180855.GA98561@smm.local>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stephen,
 
---AqsLC8rIMeq19msA
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Stephen M. McQuay wrote:
+> I submitted a bug against the brew project when git
+> version 2.16.0 started segfaulting:
+> 
+> https://github.com/Homebrew/homebrew-core/issues/23045#issuecomment-358891009
 
-I submitted a bug against the brew project when git version 2.16.0=20
-started segfaulting:
+This seems likely to be the same segfault as:
 
-https://github.com/Homebrew/homebrew-core/issues/23045#issuecomment-3588910=
-09
+https://public-inbox.org/git/CALwADsGfB10f5+nOFN-pHCt4z1SkWMcvSHn8KokcyCM0V6K-BA@mail.gmail.com/
 
-I've built git from master from https://github.com/git/git and was able=20
-to reproduce (no surprise, the top commit claims it's 2.16.0), and also=20
-built from the `next` branch which yields similar results.
+There's a patch in that thread.
 
-I'm on latest customer release of MacOS:
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The man who is a pessimist before forty-eight knows too much; the man
+who is an optimist after forty-eight knows too little.
+    -- Mark Twain
 
-    $ uname -a
-    Darwin smm.local 17.3.0 Darwin Kernel Version 17.3.0: Thu Nov  9 18:09:=
-22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64 x86_64
-
-    $ sw_vers
-    ProductName:    Mac OS X
-    ProductVersion: 10.13.2
-    BuildVersion:   17C205
-
-The clone url in question: git@github.com:gdamore/tcell.git
-
-Any other information that would be helpful?
-
-Respectfully,
-
---=20
-Stephen
-
---AqsLC8rIMeq19msA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEVnuBnnGQMCaGOsqiTkty9Hm6POUFAlpiNDcACgkQTkty9Hm6
-POVHuQ//cHlaFWUb4MGpl4+0++J1pQtYyHBoKOxFWfIHd77hSh1ZA3sgfbGYwl+3
-BinQ0b85m8vl5XieRiWFs5SEJvSa1w9d94m1MUR3j1gP+iDHqXhUIbmonjVLCScf
-RKBpi1f49MyxJ8j1lSO9v80vQ6VkEz2lbp/zTIAWIrHyBhz9xMvdnXA+3q6g8yyO
-jGgRbA2zIP1L/OTFmuHj+AjXr53psJ+loLZDnuw11ZxEp9mJFdeoCThLdmssi7vY
-OU7SdL/sLJw5niXNC9Vop2+GL7aPZLrhV2krGgQ4PfKIqdx+7QUrJv9f9j87fuL0
-5bTZwvhz3PFtfRjZxtq/Zih96gUe247PN2G3zFlUO5S1tnW0rIVs+WpchUCs+qxa
-ZVbIVQZKm9uXgCy3ZbMJ2ckWFFCfanbiU7Tz//1QfGT3ejlsIn1z1oj5+WlCBG6u
-rbsgHJlTtaagPcmD7rcqkkU5vLx1HS4v3kxoqGrD+cYlr0QZtKUXty72ikCRViON
-ajXL2ZlOB0cMq+VPKvpJAXQf8hy7veOSDlTJsolbBfEVU47PjM4J+HR1TjOr/MOx
-J5ES/jl7KMaJ8nXpBGcH1yw7QaJLIKGPyfbcee9NsR4ypASCKJ+YXO05nHEoDvGT
-lSm2iy/GI+4QJbszuA77rP4FXCjCEGMb29hNoyZwn2hLErNlc4w=
-=d+2j
------END PGP SIGNATURE-----
-
---AqsLC8rIMeq19msA--
