@@ -7,24 +7,24 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AA651F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 17:34:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 437241F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 17:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932547AbeASRe0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 12:34:26 -0500
-Received: from sonic307-6.consmr.mail.bf2.yahoo.com ([74.6.134.45]:39010 "EHLO
+        id S932553AbeASRe3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 12:34:29 -0500
+Received: from sonic307-6.consmr.mail.bf2.yahoo.com ([74.6.134.45]:45915 "EHLO
         sonic307-6.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932440AbeASReU (ORCPT
+        by vger.kernel.org with ESMTP id S932456AbeASReU (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 19 Jan 2018 12:34:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1516383259; bh=xf4ogDu5+wvU3g0vtmnT2PUHM9HJS69Ds0TRq4xBLzM=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=uRiS3ttDftP8hgeQllbzpSs7nlya2vDNmQB+mTIbZZIr7ERHuYNef7TGgrGJAHYtvCEsVzS1hHS7RqxD+Q/V6f61M+mKYhtwRyJ7XvvpjZPUcGWJvhDxorpEO4rkc5SineeM2WZkRL9xd3hrqTfKXg/lPAJ9YNXSuM0VXwrZSLKrSeB3mi1t1GbqdQjYywNlOpV9ffuRJWj8Uc/UtXaO3T/qLlzCT5XIBjszjRO2I+NUiDPth4MbQi2OsIlrcXu6zOgtpLYYBgSMPNx/VlzprSNU6JCsZlIT3TUUCW1Mw6At0rAP72XlcsiUCaTk5H4s2TxZNwrxnLEl59oplCLc6Q==
-X-YMail-OSG: I7sfaVgVM1nEsUCHgsJEuBQVj9RmwRQlkdmIbUMVcVHuq7QVJkkcfeQymr1qpBv
- VnCpwEC.2dRAtCOy7KvD58Wxoe.RJAflUYcbk6fuz313OZMLJubNU2WUA12wkA2CC5M4.1Tto92j
- saj6rMYq5jkYL8vZvEd46DxexEM3bEwWIcOSbsBDvZKolCFBwGl_GYgyJZmSf0GNkEqZTT.jTXLa
- kpPtN8135EjQOlSb7yap9yaJlGb8hF98TbgRo.S2sd9D1Zk1bZPQNYW4loB1pymo5DNvwCkSGA_v
- y4I.9_jOADS0u12yo2YRcrJ8MA30P6QsU4HkDD1qmXK8V8ffTgHbW0e6UpzphSuhF1u5O8G_dCAv
- AX2gIcsm46L8dWK1JO2euUqtyLpb_IOeHGL0vpJAa6ja1AuiW7a.zI32wyQT6n66aL4Lu.eMWDxZ
- nUcNzOHgfcqmaw1plHYtKcUlLhIJQdZlbY1srlTHI_AkvfFCLzwlGk1nM7btPsq7yc_bwdIvKSH7
- KI1u.kUG5wEPE7ImAh3TMVTC4OpqwXLRHQUvyenHHhaf58peoBQ--
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1516383259; bh=fGX+hGittB6Jx+n3YPvAGaNzrxRhFXw9CT8nOrgxOLw=; h=From:To:Cc:Subject:Date:From:Subject; b=sAjcLHy5nBkGjtLppbFYkLVz5BuI2eVdrs6nJ0pyycORa9IkbfseZcs0tuOjl4fsu9lUS74Z6dtGyEsAiVCTWS8S/HGd4SmpQ5p7i3NmC/5/UQjk9LrDMJYX665IN2p6xMpSbVfRhvBpfqZ7LcQf6tVtalJq1hmuAtscCwLRwuj5dKNgxAR84wMNz9deiNVpb77/uZnqWPHI6c4scU9EkB05iDs8ipw4CRCBg9y8XKeQEAz76vMCaKhf+Qtt6m3RnkUKpmP/JYEzAMHJr2JC93LT1CqR6ULhI7h/ioH6O1IqhLynjKKiF5FmZfNZUuDbu4VqfDufXIfGf5I3YBwnFQ==
+X-YMail-OSG: .wb00hcVM1l9jAo.UviQIu2U7d_okJMRjeRuaxtnB2H6vURX54K65Woex8KZjbC
+ P6TAavym8NBPPbO0qlCTS_M6E8gZx6bfVo3xf63hoOCvQjn_.xipN1FGUD0ohhalmdxGHxaBNxy7
+ TpUX6Rq4F93k87FanPhqIJJH.44yGC9cg.QJOpW5hc9H4YF09HDQ75XjkRQNKzhEvjNf9a.eIlGb
+ lnjZx8E_pof_LigcbmtDDtrjXZ8WuVzu6VLWpRi2NJicEUN1wnk5q.bBRji49EsDY1s36FVcQCw9
+ uhMI3B4C3_ScnV9u21T5kxNamAwFg5lX9LK_FAlQYoOL5PyXr8vYkCZtOdoMQac6OXyFRlFr0zd6
+ TpAVQAeIfRFEJoF1OiYtg1sHmAk.ap6u4gum1Ss7nVGKyDviH_aICDikOHC3NPnreWj0f2JAsQM9
+ INz28.Pny8iISI59USt9qcYxTjHGp_J43M54R4xA6B1.EYDaF41ncy7gykm09pAKAxSQlqTNMPxq
+ CyN4n58ykEC.6fm2M7BoVbALOMCanKpGDkQwUTSk8HwmotBnkzg--
 Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.bf2.yahoo.com with HTTP; Fri, 19 Jan 2018 17:34:19 +0000
 Received: from smtpgate102.mail.bf1.yahoo.com (EHLO localhost.localdomain) ([72.30.28.113])
           by smtp406.mail.bf1.yahoo.com (JAMES SMTP Server ) with ESMTPA ID e78d06b6c08cf8709c5b5470ad5cf24d;
@@ -32,12 +32,10 @@ Received: from smtpgate102.mail.bf1.yahoo.com (EHLO localhost.localdomain) ([72.
 From:   randall.s.becker@rogers.com
 To:     git@vger.kernel.org
 Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v2 0/6] Cover Letter for NonStop Port Patches
-Date:   Fri, 19 Jan 2018 12:34:00 -0500
-Message-Id: <20180119173406.13324-2-randall.s.becker@rogers.com>
+Subject: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
+Date:   Fri, 19 Jan 2018 12:33:59 -0500
+Message-Id: <20180119173406.13324-1-randall.s.becker@rogers.com>
 X-Mailer: git-send-email 2.12.3
-In-Reply-To: <20180119173406.13324-1-randall.s.becker@rogers.com>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -45,35 +43,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-This is the second attempt at submission of the NonStop port to
-the git team. This package is split by file but should be applied
-atomically.
+* wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
+  default on the NonStop platform.
 
-I am not happy with the change in compat/regex/regcomp.c and figure
-this might change with feedback.
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ wrapper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Sincerely,
-Randall
-
-Randall S. Becker (7):
-  Force pipes to flush immediately on NonStop platform
-  Bypass GCC attributes on NonStop platform where used.
-  Add tar extract install options override in installation processing.
-  Define config options required for the HPE NonStop NSX and NSE
-    platforms
-  Force test suite traps to be cleared for NonStop ksh
-  Bring NonStop platform definitions up to date in git-compat-util.h
-  Add intptr_t and uintptr_t to regcomp.c for NonStop platform.
-
- Makefile               |  6 +++++-
- compat/regex/regcomp.c |  8 ++++++++
- config.mak.uname       | 29 +++++++++++++++++++++--------
- git-compat-util.h      | 15 +++++++++++++++
- remote.c               |  4 ++++
- t/lib-git-daemon.sh    |  3 +++
- wrapper.c              |  3 +++
- 7 files changed, 59 insertions(+), 9 deletions(-)
-
+diff --git a/wrapper.c b/wrapper.c
+index d20356a77..671cbb4b4 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
+ 	FILE *stream = fdopen(fd, mode);
+ 	if (stream == NULL)
+ 		die_errno("Out of memory? fdopen failed");
++#ifdef __TANDEM
++	setbuf(stream,0);
++#endif
+ 	return stream;
+ }
+ 
 -- 
 2.16.0.31.gf1a482c
 
