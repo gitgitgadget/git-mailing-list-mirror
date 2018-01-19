@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2520E1FADF
-	for <e@80x24.org>; Fri, 19 Jan 2018 00:01:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8FD91FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 00:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932823AbeASABG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 19:01:06 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:42776 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932748AbeASAA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 19:00:59 -0500
-Received: by mail-wm0-f65.google.com with SMTP id b141so234563wme.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:00:59 -0800 (PST)
+        id S932833AbeASABJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 19:01:09 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:44913 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932753AbeASABB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 19:01:01 -0500
+Received: by mail-wm0-f66.google.com with SMTP id t74so221133wme.3
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:01:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=PCR2gIkwChHUheuuCU0tW0teeyQsRQVAIS43VywTn64=;
-        b=T4Zq7wiiA2iEsrqnHmhePXPsfTv/W3SVQgfzjQE6Ye/7vo98jq74HMqD/ioxDGl7dF
-         Ff/UkyS6VXtCz/Syap1Ol/613vwbqcMKStrPRj6fTLiP70C+5gdPa+rovtAikHosr8dG
-         LKg/IMrUVP21HeBk6/szU+N7fVyyTBlsb8S6y93WwQx/auE7aGXwJBLt4Ep3ybKKfmUe
-         IFV5yVMw6XkzrwUbQtgO+dWwiMYpTe8k6YpSbkFsMOoYaDxyNEKTzPLRkorNZLF/HzKE
-         /lqj1RPih60PJkS4abKWl90qmjvPI8yDXFvmLnlSBf6VEFwgVfs+fpMeM8+T/ybLAK/o
-         KCWA==
+        bh=OSTZqggGIXeMr43ZWLSzV4vuV7hN+2LJ809bSUfqc3w=;
+        b=HmyRDMyrauoWeOtxkgebk5N0anBLmsxrCN5H9fG8xAoXRRgc8yPvuqmlL8k9VghH76
+         Fsas5bykH5IjRDP9ULMYFJZn8W2wTacBzBxpUjtqE5RaB11iFCpo2sJ7WP4KTL0fAWCW
+         wCv5p9sJ38wnuiKg+5bRFrTn5QFdvntI3E/2dCr+srde+FauUhrsCmIZSezszDY7XjgK
+         kTAd2wYeNNEXR93tO3ZvRUnypgRygWjXymRcVenjiOYkW61y/aCvDOLGVlPWbaBK9jTJ
+         Dj1HO4V8IRqOfLM0XG58fAnt5pyL9s/YKpdEjsk1wCRGqd+ZB04NRYn6ddHAlp7B6gzo
+         6YbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=PCR2gIkwChHUheuuCU0tW0teeyQsRQVAIS43VywTn64=;
-        b=sEWRek7RrqbVlM3ewD6IjcOdU9ItudBGBbyJfCgU+jU61dUkZXwvFTRLQxH6GVHd6a
-         pJ2qECtqCIBqNM9yumlgAlNdiRQjYefbl8WiiTDyr3gyaaocv+XbRDmpV+bm14hgWE+G
-         DSjW0p5a3blNikWo8QGUNmApZ7N/dHDWZPEMehTWejiKpG3oTNgxOKPbKzdSsNFFrezL
-         qYQwJa3YklnLZ6/MA8LMuou6q8FZ0o5s9zQCPYTWA2bkAsBf7vI7ZYK3ow7GfszWeU5W
-         3holXKveCua08AM5PXbAKOBiIv0ZlK+whu48rjQ7/NEErP6D4g1IR7FiqCl/zT0R14xR
-         sNbA==
-X-Gm-Message-State: AKwxytdfrMkfBHAE3NZ5FBnJ9X1Rc6hN5XzXdxXscbKi88S+Hugepmfa
-        lTXuzk+wuHGZhT3v/fUuSi3vvOvh
-X-Google-Smtp-Source: ACJfBov4jeUPIZnsCQ7Fiv91UUgRKSsYT4E0th7QI2hu3o6d8Xwg0VX+zu0u15bVP8xB683MgqxdeQ==
-X-Received: by 10.28.185.79 with SMTP id j76mr6224444wmf.35.1516320058110;
-        Thu, 18 Jan 2018 16:00:58 -0800 (PST)
+        bh=OSTZqggGIXeMr43ZWLSzV4vuV7hN+2LJ809bSUfqc3w=;
+        b=LQ02XJV9iEPSH6ZQOC0fJciAnsYrUa8k/JhWRaaXXZ+iS6sUed49IkBVcIuxZj6Mzr
+         m5k8Y75TJZOsdn2pslYsJHpufT3QWoedm/bIytylT7BZT/001gENdxnvYOASgROkltcT
+         A5fHNPBkzUVq0Hh8DCUdGOvrdeJpeIjmFxc2waEuWvbnbDfJEoIM7JDfFzRhQ3FKJGcV
+         o7fYoDFLN4ZT4nDB4S1/VSD17Xks6DPZ/kfrCHhC1wo7dnqMDYKXTjMxGsB46KBSJBib
+         b7TblIprcGhXCdwvYj3vi1brIMmEe+8e259Bpls1519fuMdiC6AZ4chXVAF1w8HKR0Zs
+         vmYA==
+X-Gm-Message-State: AKwxytd7r10epIZQCYC0yGHyeqYIlGMcLIJpRYkvY6fOhpfNPrI+LZYZ
+        B89Dj2WLEr1aieiQB6h+aKl0Q+3X
+X-Google-Smtp-Source: ACJfBovjK60gJJtVeX9PBAO8fZijww2MIDO4x4Sv6b7Oxh75a3OGAr7UBx2kb4pAn8Tgz7NnqAr3oQ==
+X-Received: by 10.28.58.208 with SMTP id h199mr2797806wma.79.1516320059806;
+        Thu, 18 Jan 2018 16:00:59 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b48sm17706481wrd.69.2018.01.18.16.00.56
+        by smtp.gmail.com with ESMTPSA id b48sm17706481wrd.69.2018.01.18.16.00.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jan 2018 16:00:56 -0800 (PST)
+        Thu, 18 Jan 2018 16:00:58 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/11] fetch tests: double quote a variable for interpolation
-Date:   Fri, 19 Jan 2018 00:00:20 +0000
-Message-Id: <20180119000027.28898-5-avarab@gmail.com>
+Subject: [PATCH 05/11] fetch tests: test --prune and refspec interaction
+Date:   Fri, 19 Jan 2018 00:00:21 +0000
+Message-Id: <20180119000027.28898-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180119000027.28898-1-avarab@gmail.com>
 References: <20180119000027.28898-1-avarab@gmail.com>
@@ -75,33 +75,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the $cmdline variable contains multiple arguments they won't be
-interpolated correctly since the body of the test is single quoted. I
-don't know what part of test-lib.sh is expanding variables within
-single-quoted strings, but interpolating this inline is the desired
-behavior here.
+Add a test for the interaction between explicitly provided refspecs
+and fetch.prune.
 
-This will be used in a subsequent commit to pass more than one
-variable to git-fetch.
+There's no point in adding this boilerplate to every combination of
+unset/false/true, it's instructive and sufficient to show that no
+matter if the variable is unset, false or true the refspec on the
+command-line overrides any configuration variable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5510-fetch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5510-fetch.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index fad65bd885..542eb53a99 100755
+index 542eb53a99..576c2598c9 100755
 --- a/t/t5510-fetch.sh
 +++ b/t/t5510-fetch.sh
-@@ -578,7 +578,7 @@ test_configured_prune () {
- 			set_config_tristate fetch.prune $fetch_prune &&
- 			set_config_tristate remote.origin.prune $remote_origin_prune &&
+@@ -609,6 +609,10 @@ test_configured_prune () {
+ test_configured_prune unset unset kept   kept   ""
+ test_configured_prune unset unset kept   kept   "--no-prune"
+ test_configured_prune unset unset pruned kept   "--prune"
++test_configured_prune unset unset kept   pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*'"
++test_configured_prune unset unset pruned pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:refs/remotes/origin/*'"
  
--			git fetch $cmdline &&
-+			git fetch '"$cmdline"' &&
- 			case "$expected_branch" in
- 			pruned)
- 				test_must_fail git rev-parse --verify refs/remotes/origin/newbranch
+ test_configured_prune false unset kept   kept   ""
+ test_configured_prune false unset kept   kept   "--no-prune"
+@@ -625,6 +629,10 @@ test_configured_prune unset false pruned kept   "--prune"
+ test_configured_prune false false kept   kept   ""
+ test_configured_prune false false kept   kept   "--no-prune"
+ test_configured_prune false false pruned kept   "--prune"
++test_configured_prune false false kept   pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*'"
++test_configured_prune false false pruned pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:refs/remotes/origin/*'"
+ 
+ test_configured_prune true  false kept   kept   ""
+ test_configured_prune true  false pruned kept   "--prune"
+@@ -641,6 +649,10 @@ test_configured_prune false true  pruned kept   "--prune"
+ test_configured_prune true  true  pruned kept   ""
+ test_configured_prune true  true  pruned kept   "--prune"
+ test_configured_prune true  true  kept   kept   "--no-prune"
++test_configured_prune true  true  kept   pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*'"
++test_configured_prune true  true  pruned pruned \
++	"--prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:refs/remotes/origin/*'"
+ 
+ test_expect_success 'all boundary commits are excluded' '
+ 	test_commit base &&
 -- 
 2.15.1.424.g9478a66081
 
