@@ -2,90 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 736D41FAE2
-	for <e@80x24.org>; Fri, 19 Jan 2018 00:01:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BE411FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 00:06:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932874AbeASABh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 19:01:37 -0500
-Received: from mail-ot0-f175.google.com ([74.125.82.175]:44575 "EHLO
-        mail-ot0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932547AbeASABf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 19:01:35 -0500
-Received: by mail-ot0-f175.google.com with SMTP id t20so12364287ote.11
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:01:35 -0800 (PST)
+        id S1753928AbeASAGu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 19:06:50 -0500
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:33987 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750762AbeASAGt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 19:06:49 -0500
+Received: by mail-oi0-f65.google.com with SMTP id a70so1792oib.1
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:06:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=my44hkNC1kQQVqyySVV6sEPDKadL/7So0HwWmSzJ4G8=;
-        b=lSOi1hnUDRXsDg2HgCZekFDxco8beS/5uzTUJSg6tkUwz/02rX09GeJUQvbcwHYgE2
-         4OL3ex2srwDtWMG1KVvMsi3vlg6P/jjCt3nAHTX0dMQ4SU00dbB+l1TXhia4VEQ07RVd
-         F6knUcqcslO2zZZ4YLSiDwqLn00soEiON5F9H5IoLTv+8+9zX3Zq3+8gNZcb4Z6uD0jT
-         LSiubwWlYklQW8SULG+LCYLfdrkQc6gshJhaHYHxbuHvjKaybnaf19XGGlxd82Nn9ACM
-         6br7cU59sYhQ2t6zWHin/W6xPpFhIuDqQJHNm4A4wLWEU6/nEeAydTEAHRa4Ai9wkY1G
-         4LqQ==
+         :cc:content-transfer-encoding;
+        bh=799ixpFqNGyZgHt2UiSRA9kKIFyHZC9AoDR8U7YrFsU=;
+        b=YbyZWun5Nd4V+v7tmZ1Vtq4eM1YnnVBJH+chw9HnydqSDiIy0QnfK0G8sgKum6lmHO
+         K5w7lW+GfpCfFTMyiEqx18UvaPHRMe7Qij0wiOm5thVtdI+33FELLQ+mK74NUrLF8go3
+         uR/uHhwCI42bzVpu6VqdVlqknIkx+Laf99C/r2M8Xb0bjmciFnEFc+kH/N0Ja+wnCt9m
+         9LMioHVdeyfy9lzvp85QgCyrMTUjQYBC7R/g+NawmS0by20qE6K448XkkqryYN8d4LIL
+         ekA0Onm/J3IQZLzzLfbSo8j60logXow2TyI0ws5jX33E8NjjnGRZfkvZBCqtTur/lLeJ
+         3SFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=my44hkNC1kQQVqyySVV6sEPDKadL/7So0HwWmSzJ4G8=;
-        b=ls4oyknCsKl/HP8rtGAPMNMW+iOc+boLV0B2z//3UavLxF6Au0BStcRQXubie0xTDg
-         MmKxeuNHHwCD6MALDBTk0V/6k6o9Al1YYV3FCYLccxsoL27M5Q2f2azL08piLy0Y5dFo
-         60psQ2RVUp+Xaf19KB4KIn9i1zUJzdt5ATjoYN8hLQX2Mn/GL2FM9sL/R0k+OCtqYAON
-         K26XmTWs35VrHe5thE/Y3bMJIVndqV8NZx/x2sAitZE5jJFqwTBgH+Xvyv7oLwZ3bSxr
-         hb47kRRMeisHU5Ou+J0ZNwEaxvwRAubaZ7sd1N5hlO0KkfcUc+WXz1Wb4i99ogpt4HtG
-         3lmg==
-X-Gm-Message-State: AKwxytdSR5qjcht0BBOmMm6xOFvsZf9p02a61ovTRjhIo73Iu9A7tKmP
-        yunO6PbBke0MAUKZoEpzqxaNXhQTmbNr1wISw9s=
-X-Google-Smtp-Source: ACJfBotO/5Zx67aowNKQmLFjgycI9OcOHFG65AvaousoDhmG0gbGxlsKq1sB93JlccPSgIMo9fEg1WJl5xiWPjV0RKo=
-X-Received: by 10.157.45.198 with SMTP id g64mr4993970otb.226.1516320095075;
- Thu, 18 Jan 2018 16:01:35 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=799ixpFqNGyZgHt2UiSRA9kKIFyHZC9AoDR8U7YrFsU=;
+        b=j6+anUXOfOkBsltIMJ9/GTwVdno8QwxRUuoqyzhd2ZZdX9R6E7DO9jWQnMawcUrncn
+         +97eC96CvKWQDg1Ya0NQsEfBCvLmWh7SYtTNCdce4tXkVuOOuWgYh9agpoiBy1mc14y/
+         gTG45lcw7b1PKa4a/yLBQU+nT94IX6L4C1+exA+2JQwOy3KIAS+Q1z68lND59FVHPpFd
+         4zvZH4goRD/ATAWv0x43wLBsa0MD4FzrtXOzcyRP60tmjv5LUab+6WtcW4ESJeWJgw/n
+         FfQV79TtiNaSv3WqCpGMiFvMQndU55q2I3V5F4JadcHjLywFlrPXvPQXuved9ABOdbZP
+         I8VQ==
+X-Gm-Message-State: AKwxytcFHrSPvWOmReogbS4goSoGejjU+aO2/lKOF/2wh2MzzTpppik5
+        pTjoPWRX3uNhC12kEzeBB6inYEqItqCOEgY4fCfXUA==
+X-Google-Smtp-Source: ACJfBoumL9MIdL08sb6RbRX/E9OZGeqc98MdsdI0KpW3rav7/Qxqfx76uc212Ugm9ZldCYdtQa44shFInDb1PAgrPEg=
+X-Received: by 10.202.76.214 with SMTP id z205mr4152762oia.183.1516320408364;
+ Thu, 18 Jan 2018 16:06:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Thu, 18 Jan 2018 16:01:04 -0800 (PST)
-In-Reply-To: <CAPig+cQLgs59JYxcmK30qY307ArwqJx6pNOo95Z39_jJ9+D6+g@mail.gmail.com>
+Received: by 10.74.141.5 with HTTP; Thu, 18 Jan 2018 16:06:17 -0800 (PST)
+In-Reply-To: <87bmhqj1y6.fsf@evledraar.gmail.com>
 References: <20180113132211.13350-1-pclouds@gmail.com> <20180118100546.32251-1-pclouds@gmail.com>
- <CAPig+cQLgs59JYxcmK30qY307ArwqJx6pNOo95Z39_jJ9+D6+g@mail.gmail.com>
+ <87bmhqj1y6.fsf@evledraar.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 19 Jan 2018 07:01:04 +0700
-Message-ID: <CACsJy8B5qrN8T1aai3y3nfEc5baqn2Xkk6vZozMp5Lh-mPZ0VQ@mail.gmail.com>
+Date:   Fri, 19 Jan 2018 07:06:17 +0700
+Message-ID: <CACsJy8CXPP_75TEHvcWStm1ZneMDP+ioA=7iYcL25oEUiVHKxw@mail.gmail.com>
 Subject: Re: [PATCH v2] diff: add --compact-summary option to complement --stat
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 1:57 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
->> @@ -188,6 +188,17 @@ and accumulating child directory counts in the parent directories:
->> +--compact-summary::
->> +       Output a condensed summary of extended header information in
->> +       front of the file name part of diffstat. This option is
->> +       ignored if --stat is not specified.
+On Fri, Jan 19, 2018 at 4:23 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Wait, isn't there a bug here in the existing --summary code, its
+> documentation says it'll show information "such as creations, renames
+> and mode changes".
 >
-> Rather than ignoring this option if --stat is not specified, a
-> different approach would be for --compact-summary to imply --stat.
+> But even though your --compact-summary shows that the file is being
+> added and its mode changed:
 >
-> Also, per documentation:
+>     $ diff -ru <(./git-show --stat 0433d533f1) <(./git-show --stat --comp=
+act-summary 0433d533f1)
+>     --- /dev/fd/63  2018-01-18 21:11:51.186570555 +0000
+>     +++ /dev/fd/62  2018-01-18 21:11:51.186570555 +0000
+>     @@ -14,8 +14,8 @@
+>            t: add tests for pull --verify-signatures
+>            merge: add config option for verifySignatures
 >
->     --stat[=<width>[,<name-width>[,<count>]]]::
+>     - Documentation/merge-config.txt     |  4 ++
+>     - builtin/merge.c                    |  2 +
+>     - t/t5573-pull-verify-signatures.sh  | 81 +++++++++++++++++++++++++++=
++++++++++++
+>     - t/t7612-merge-verify-signatures.sh | 45 +++++++++++++++++++++
+>     +     Documentation/merge-config.txt     |  4 ++
+>     +     builtin/merge.c                    |  2 +
+>     + A+x t/t5573-pull-verify-signatures.sh  | 81 +++++++++++++++++++++++=
++++++++++++
+>     +     t/t7612-merge-verify-signatures.sh | 45 +++++++++++++++++++
+>       4 files changed, 132 insertions(+)
 >
->     These parameters can also be set individually with `--stat-width=<width>`,
->     `--stat-name-width=<name-width>` and `--stat-count=<count>`.
+> There is no difference between --stat with and without --summary on the
+> same commit, shouldn't it show "create mode [...]" ?
 >
-> One wonders if "compact" could be another modifier recognized by --stat.
+> E.g. 95450bbbaa will do the trick for both:
 >
-> (Genuine questions/observations; I haven't formed strong opinions either way.)
+>     $ diff -ru <(./git-show --stat 95450bbbaa) <(./git-show --stat --summ=
+ary 95450bbbaa)
+>     --- /dev/fd/63  2018-01-18 21:14:20.770050599 +0000
+>     +++ /dev/fd/62  2018-01-18 21:14:20.770050599 +0000
+>     @@ -14,3 +14,4 @@
+>       git-svn.perl                    |  1 +
+>       t/t9169-git-svn-dcommit-crlf.sh | 27 +++++++++++++++++++++++++++
+>       2 files changed, 28 insertions(+)
+>     + create mode 100755 t/t9169-git-svn-dcommit-crlf.sh
+>
+>     $ diff -ru <(./git-show --stat --summary 95450bbbaa) <(./git-show --s=
+tat --compact-summary 95450bbbaa)
+>     --- /dev/fd/63  2018-01-18 21:14:30.646016210 +0000
+>     +++ /dev/fd/62  2018-01-18 21:14:30.646016210 +0000
+>     @@ -11,7 +11,6 @@
+>          Reported-by: Brian Bennett <Brian.Bennett@Transamerica.com>
+>          Signed-off-by: Eric Wong <e@80x24.org>
+>
+>     - git-svn.perl                    |  1 +
+>     - t/t9169-git-svn-dcommit-crlf.sh | 27 +++++++++++++++++++++++++++
+>     +     git-svn.perl                    |  1 +
+>     + A+x t/t9169-git-svn-dcommit-crlf.sh | 27 ++++++++++++++++++++++++++=
++
+>       2 files changed, 28 insertions(+)
+>     - create mode 100755 t/t9169-git-svn-dcommit-crlf.sh
 
-I left open an option to combine this with other --*stat like numstat
-(or unlikely, dirstat). I haven't really thought about this. Yeah
-perhaps putting this in --stat would be a better move.
---
+Interesting. 0433d533f1 is a merge commit, perhaps that has something
+to do with this. Adding --first-parent does show "create mode" line.
+I'll check this later.
+--=20
 Duy
