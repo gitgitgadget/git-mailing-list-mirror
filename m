@@ -7,73 +7,120 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CE351F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 19:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C40A21F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 19:24:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932690AbeASTM7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 14:12:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55927 "EHLO
+        id S932166AbeASTY2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 14:24:28 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64534 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932551AbeASTMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 14:12:23 -0500
+        with ESMTP id S1756019AbeASTY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 14:24:26 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3559EC8EB0;
-        Fri, 19 Jan 2018 14:12:23 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E134DC911E;
+        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NimqwxhoIU8C
-        tqZo6BGY9K00zOw=; b=dB7Ce3ON5wlY3k/i0AUGjoqnqpw3apjndMRkAoFdAxTE
-        OF+yW+SDGUWBfkeTTF4R1NkB3BpBLtL61YwI/+KGokWXGmcQwgdf8uV/o2I/T4hs
-        XLD9kykGad6ht9xP1qQRoin5pg0LKdFNueAcPi0PEdmsSpayPpNGRJQmWp7b6Lw=
+        :content-type; s=sasl; bh=uU13qSG8254nW4S5hKl7gq77uG4=; b=CHMF3Q
+        L9Zuz8AB86Wk0Hmzxt8w7+yi1tdH16GTxP2yzNlDdZAbj1HbFqYTNLayehb937ku
+        Cf/N7IiY7sbi1m9jT8VplNIosevB4kwINGmcDoSbLbTlsqfiQrJgbrl0Mvewl9Ut
+        Kx/EULxR9sZ2Fre/dOy0phn7gP2r7YHhYkErs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=U5Q4Sq
-        9Xsg5w+SSBljZwvUA7JYr38MmbcP06qGqlSgFIVgVtKwtYSAHdE2NVXfr2JJf/uM
-        fIPbwBtPKyO+p53i8bDnikhAg5uaGo9f6ZOpRemSeChFfiHxdHsL4bmAiYxu8Hvs
-        wrmU6uHhUvcFa8Rxi5y8GvO6a6MEjCUScNagU=
+        :content-type; q=dns; s=sasl; b=qpOD2GVRora0Otp2avkWPLiA9MVLTg9Y
+        pNnyYBzi/K2+Zpxw3Vc/Z739rVGFZQA+Nb39zKhm6Rm8g/Zi6iTP51bN2BPgMhUv
+        6qvWQJV7jYhaL9FB6GiDhRzfDxnA82ghm9oPgUiRuTOunWJ1HapszNqxPs1sL9XW
+        nFi9qKrmyLA=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2D87CC8EAF;
-        Fri, 19 Jan 2018 14:12:23 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D78ADC911D;
+        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A4B17C8EAE;
-        Fri, 19 Jan 2018 14:12:22 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F320C911A;
+        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, peff@peff.net,
-        git@jeffhostetler.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2] packfile: use get_be64() for large offsets
-References: <20180118141522.18294-1-szeder.dev@gmail.com>
-Date:   Fri, 19 Jan 2018 11:12:21 -0800
-In-Reply-To: <20180118141522.18294-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 18 Jan 2018 15:15:22 +0100")
-Message-ID: <xmqqvafxpsru.fsf@gitster.mtv.corp.google.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
+        <aleks.bulaev@gmail.com>
+Subject: Re: [PATCH] repository: pre-initialize hash algo pointer
+References: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
+        <20180119041825.727904-1-sandals@crustytoothpaste.net>
+        <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
+Date:   Fri, 19 Jan 2018 11:24:24 -0800
+In-Reply-To: <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
+        (Eric Sunshine's message of "Fri, 19 Jan 2018 02:54:26 -0500")
+Message-ID: <xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AD6AD87C-FD4C-11E7-A194-8EF31968708C-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C26537C-FD4E-11E7-997D-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Junio,
-> ...
-> This patch can't be applied to 'maint' currently at 3013dff86 (Prepare
-> for 2.15.2, 2017-12-06), as it is in case of 'ds/use-get-be64',
-> because 'maint' doesn't have get_be64() yet (b2e39d006 (bswap: add 64
-> bit endianness helper get_be64, 2017-09-22)).
+>> I'm still quite mystified as to why this is working on Linux and not
+>> macOS, but I can only guess that compilers are just very advanced and
+>> have somehow concluded that we would clearly never dereference a NULL
+>> pointer, so they picked the only non-NULL value.
+>
+> Now that we know (due to Duy's excellent detective work[1]) that the
+> trigger is files with names differing only in case on case-insensitive
+> filesystems, the commit message can be updated appropriately.
 
-Thanks for stopping me. =20
+Thanks.  Let me apply the following and do a 2.16.1, hopefully by
+the end of day or mid tomorrow at the latest.  Test to protect the
+fix can come as a separate follow-up patch.
 
-I do not always get to test anything not in 'next' in isolation
-before I actually try to merge it there (at which time I would have
-noticed), and you caught me in this one doing a short-cut "just
-queue it somewhere and throw it in 'pu'".
+-- >8 --
+Subject: [PATCH] repository: pre-initialize hash algo pointer
 
+There are various git subcommands (among them, clone) which don't set up
+the repository (that is, they lack RUN_SETUP or RUN_SETUP_GENTLY) but
+end up needing to have information about the hash algorithm in use.
+Because the hash algorithm is part of struct repository and it's only
+initialized in repository setup, we can end up dereferencing a NULL
+pointer in some cases if we call one of these subcommands and look up
+the empty blob or empty tree values.
+
+A "git clone" of a project that has two paths that differ only in
+case suffers from this if it is run on a case insensitive platform.
+When the command attempts to check out one of these two paths after
+checking out the other one, the checkout codepath needs to see if
+the version that is already on the filesystem (which should not
+happen if the FS were case sensitive), and it needs to exercise the
+hashing code.
+
+In the future, we can add a command line option for this or read it
+from the configuration, but until we're ready to expose that
+functionality to the user, simply initialize the repository
+structure to use the current hash algorithm, SHA-1.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ repository.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/repository.c b/repository.c
+index 998413b8bb..f66fcb1342 100644
+--- a/repository.c
++++ b/repository.c
+@@ -5,7 +5,7 @@
+ 
+ /* The main repository */
+ static struct repository the_repo = {
+-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, NULL, 0, 0
++	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
+ };
+ struct repository *the_repository = &the_repo;
+ 
+-- 
+2.16.0-204-gc262421c89
 
