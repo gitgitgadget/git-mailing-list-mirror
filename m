@@ -2,136 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01F741FADF
-	for <e@80x24.org>; Fri, 19 Jan 2018 00:27:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCF431FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 00:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754860AbeASA1B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 19:27:01 -0500
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:45275 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750784AbeASA1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 Jan 2018 19:27:00 -0500
-Received: by mail-oi0-f67.google.com with SMTP id j129so12979oib.12
-        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:26:59 -0800 (PST)
+        id S1755254AbeASA20 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 Jan 2018 19:28:26 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:45592 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755191AbeASA2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 Jan 2018 19:28:14 -0500
+Received: by mail-pf0-f196.google.com with SMTP id a88so22055pfe.12
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 16:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=r5jQZEvrvoiRPnljbDishXIHpNfwezqlOhoU6Y2vNU8=;
-        b=dj+QnGRAHqmU3yQiuHbAee0tF8ZQmMLvsXtCoSUe3HPNufG38p2qkRNnnXorOvnGfh
-         XgN0FP5nU++hREpDPIo5u3wG/cWCMpTzrxFVhVRb+jeACdCEtTHi5ZP6ERIs1qyJ2YCN
-         0B5tAyocY1ME7UZiSNQ773mIDlW9Ihuk6sKfWsX44uR+0r645SMPREC5WBsfNjbwR5l6
-         LWrL0DufUqtA1JQYh2UdWMLF2e8YVdieJ6j2uuny/CN0rXm/UauMfeeQfdxK//r5S8bR
-         gFUt5JL11G7kGNW4uFwAmHCh6dGlNoOkYbrYpeeGjGg8+LnTKNl5W/sTQJwNnMtoKm6/
-         8odg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=k9pjBZpACYWMh+cVEV1d7JuhKfSt2BQA9bMOJmD5yjs=;
+        b=T2Tzi4Onv1bkENtUnBuPK6Lw7pve3vjZiUeryVEUW5SB/oVQYWeJoGNLEaEUBGlCoR
+         7etclWuYjdM8hXCMQlG+gPdyZaw+NV/dLq5MczjRvfXVBkHwXoBSyUn+JdgFLx+AGWEX
+         KH7RLYq6Thcn46jwPHR8MIN7OME1a4/LNG1Up7AQCwbWS1/6x15Nvn2/q7JCdk1oWQW0
+         ybubcE/D5YeSFYNV8URSW6YPcz+TYD1tfsgwacr14X9aX/ncpfw72M+jWfp/DROS9Qf+
+         vw2Cv/GuP16AFWS/DQOGdHxAX6FfkxQGMxsme/w7rrqM1H9COzM1m9JPqluycf7nTylW
+         q8Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r5jQZEvrvoiRPnljbDishXIHpNfwezqlOhoU6Y2vNU8=;
-        b=MOJu9qFUO1IKRlV7oK5wWp6rBbyFOWYQrrM9kiC8dgGT4rpgcbBMhD9jcvpXgL8x1W
-         /uNvD1sNqP/7ryvwxN46Bc7L7KvrWI7CenDpbLuBEviZgqrMzkhmisLK2dXHcgtb8NGf
-         PrD5x9p15HLBrDsPUqYRyXbwefB3047300LarViyi6yXqUzvxgaLjVpO5ebXtT3I5iYI
-         kioSh8dFVswBNwAe5Z7IxbplpbWL2t9YGvfaYL5pTMZbByO+8SBEe8yG3giMo8rqJuUZ
-         4QoLz/aFF2LMlbCzHO6Q6SIWCo+LWxmkXVSjVNjdVQyDyZ5gOjVat13iHilmT6wbMDVb
-         lv8w==
-X-Gm-Message-State: AKwxytcTDGUik9ziGzDIXZWDdsI1HufMLYaV3CtR9xn9C/4Ozq485VeC
-        xbNKXx1W1LwiNi+BLudTzNHCFv2bI6y0EfAX+jBftQ==
-X-Google-Smtp-Source: ACJfBos4XNwR7SkKQRFcQ4JE8Z2PKKlrYZUwDI/tKeBnRvhEeHcHoCodfBZqpNZDi1sPxoX6YHsPRgI2SV6W4ySp5uI=
-X-Received: by 10.202.76.214 with SMTP id z205mr4177644oia.183.1516321619438;
- Thu, 18 Jan 2018 16:26:59 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.141.5 with HTTP; Thu, 18 Jan 2018 16:26:28 -0800 (PST)
-In-Reply-To: <20180118224814.GA8473@sigill.intra.peff.net>
-References: <20180113132211.13350-1-pclouds@gmail.com> <20180118100546.32251-1-pclouds@gmail.com>
- <20180118224814.GA8473@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 19 Jan 2018 07:26:28 +0700
-Message-ID: <CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com>
-Subject: Re: [PATCH v2] diff: add --compact-summary option to complement --stat
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=k9pjBZpACYWMh+cVEV1d7JuhKfSt2BQA9bMOJmD5yjs=;
+        b=lxGMkTW4FrFAEewguP/flVpFzIJDh/Tp+Zd3X42epdqr8onHMxgogKmztWr8uprr1e
+         ECf6a/4lSSzNSEH7x0xS3DUOwLyN44bzeytW3wSQ9wU7Isia+SIME3vfGjVZJpgxamWl
+         Y5LHYxIr0AFSzZ05XrdZg7TszJZrjnhdOmGrQ2BcmMlBL8zEnngRNX3PO7f/NpRNHU/z
+         apgMpJSD6cEYbAY7ojsgQJ4hQ5R83ZBerhcRSyRdKcaVMmpUZhsqOADfqHpobZJbRUnT
+         1z8I/7KpDxfueVEhm3SiiLsK9RGuvdkt0uRVCE79+QxwN5hKxImnJx4XxRAp3L++2Ohq
+         7Z5w==
+X-Gm-Message-State: AKwxyteoFLedfkwUD/mnNbGJeC08MRMgrsBmDv9vQoaPczhCt4zYhhaR
+        4T2krUqDllsia2bovG0ovbDkTI9nP3g=
+X-Google-Smtp-Source: ACJfBour/PVHspKsLpSvgXXSTJPrD+7vlGpovkJ4EekTjnuqPzgSueXXGi493KhZdDb6FM29DuTTrA==
+X-Received: by 10.98.108.130 with SMTP id h124mr28185810pfc.33.1516321693496;
+        Thu, 18 Jan 2018 16:28:13 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id t1sm13571469pgs.73.2018.01.18.16.28.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 Jan 2018 16:28:12 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, sunshine@sunshineco.com
+Subject: [PATCH v2 2/2] http: support omitting data from traces
+Date:   Thu, 18 Jan 2018 16:28:02 -0800
+Message-Id: <42366886098655a6bf712f55c6c0246e31218f6f.1516321355.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.16.0.rc2.37.ge0d575025.dirty
+In-Reply-To: <cover.1516321355.git.jonathantanmy@google.com>
+References: <cover.1516321355.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1516321355.git.jonathantanmy@google.com>
+References: <cover.1516235197.git.jonathantanmy@google.com> <cover.1516321355.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 5:48 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, Jan 18, 2018 at 05:05:46PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> This is partly inspired by gerrit web interface which shows diffstat
->> like this, e.g. with commit 0433d533f1 (notice the "A" column on the
->> third line):
->>
->>      Documentation/merge-config.txt     |  4 +
->>      builtin/merge.c                    |  2 +
->>    A t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++
->>      t/t7612-merge-verify-signatures.sh | 45 ++++++++++
->>    4 files changed, 132 insertions(+)
->
-> I like the general concept. Perusing "git log" output, though, it felt
-> like the summary column was very close to the filenames. What do you
-> think of putting it after the "|", where it is only close to a number?
->
-> Something like the patch below (on top of yours, but it probably needs
-> tweaked further for graph_width), which gives:
->
->    t/t5573-pull-verify-signatures.sh | A+x  78 ++++++++++++++++++++++++++=
-++
->
-> (I know this is a bikeshed, so I'm perfectly willing to take "yuck, I
-> don't like that as well" as a response).
+GIT_TRACE_CURL provides a way to debug what is being sent and received
+over HTTP, with automatic redaction of sensitive information. But it
+also logs data transmissions, which significantly increases the log file
+size, sometimes unnecessarily. Add an option "GIT_TRACE_CURL_NO_DATA" to
+allow the user to omit such data transmissions.
 
-The position of A+x column is exactly where gerrit put it. Though web
-pages have more flexibility than our terminal console so its position
-does not have to be the same. I'm just throwing options out there
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ Documentation/git.txt       |  4 ++++
+ http.c                      | 27 +++++++++++++++++++--------
+ t/t5551-http-fetch-smart.sh | 12 ++++++++++++
+ 3 files changed, 35 insertions(+), 8 deletions(-)
 
-For many years I have this instead
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 5446d2143..8163b5796 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -646,6 +646,10 @@ of clones and fetches.
+ 	variable.
+ 	See `GIT_TRACE` for available trace output options.
+ 
++`GIT_TRACE_CURL_NO_DATA`::
++	When a curl trace is enabled (see `GIT_TRACE_CURL` above), do not dump
++	data (that is, only dump info lines and headers).
++
+ `GIT_REDACT_COOKIES`::
+ 	This can be set to a comma-separated list of strings. When a curl trace
+ 	is enabled (see `GIT_TRACE_CURL` above), whenever a "Cookies:" header
+diff --git a/http.c b/http.c
+index 088cf70bf..32a823895 100644
+--- a/http.c
++++ b/http.c
+@@ -16,6 +16,7 @@
+ #include "string-list.h"
+ 
+ static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
++static int trace_curl_data = 1;
+ static struct string_list cookies_to_redact = STRING_LIST_INIT_DUP;
+ #if LIBCURL_VERSION_NUM >= 0x070a08
+ long int git_curl_ipresolve = CURL_IPRESOLVE_WHATEVER;
+@@ -695,24 +696,32 @@ static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size,
+ 		curl_dump_header(text, (unsigned char *)data, size, DO_FILTER);
+ 		break;
+ 	case CURLINFO_DATA_OUT:
+-		text = "=> Send data";
+-		curl_dump_data(text, (unsigned char *)data, size);
++		if (trace_curl_data) {
++			text = "=> Send data";
++			curl_dump_data(text, (unsigned char *)data, size);
++		}
+ 		break;
+ 	case CURLINFO_SSL_DATA_OUT:
+-		text = "=> Send SSL data";
+-		curl_dump_data(text, (unsigned char *)data, size);
++		if (trace_curl_data) {
++			text = "=> Send SSL data";
++			curl_dump_data(text, (unsigned char *)data, size);
++		}
+ 		break;
+ 	case CURLINFO_HEADER_IN:
+ 		text = "<= Recv header";
+ 		curl_dump_header(text, (unsigned char *)data, size, NO_FILTER);
+ 		break;
+ 	case CURLINFO_DATA_IN:
+-		text = "<= Recv data";
+-		curl_dump_data(text, (unsigned char *)data, size);
++		if (trace_curl_data) {
++			text = "<= Recv data";
++			curl_dump_data(text, (unsigned char *)data, size);
++		}
+ 		break;
+ 	case CURLINFO_SSL_DATA_IN:
+-		text = "<= Recv SSL data";
+-		curl_dump_data(text, (unsigned char *)data, size);
++		if (trace_curl_data) {
++			text = "<= Recv SSL data";
++			curl_dump_data(text, (unsigned char *)data, size);
++		}
+ 		break;
+ 
+ 	default:		/* we ignore unknown types by default */
+@@ -857,6 +866,8 @@ static CURL *get_curl_handle(void)
+ 	if (getenv("GIT_CURL_VERBOSE"))
+ 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1L);
+ 	setup_curl_trace(result);
++	if (getenv("GIT_TRACE_CURL_NO_DATA"))
++		trace_curl_data = 0;
+ 	if (getenv("GIT_REDACT_COOKIES")) {
+ 		string_list_split(&cookies_to_redact,
+ 				  getenv("GIT_REDACT_COOKIES"), ',', -1);
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index 21a5ce860..f5721b4a5 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -385,5 +385,17 @@ test_expect_success 'GIT_REDACT_COOKIES handles empty values' '
+ 	grep "Cookie:.*Foo=<redacted>" err
+ '
+ 
++test_expect_success 'GIT_TRACE_CURL_NO_DATA prevents data from being traced' '
++	rm -rf clone &&
++	GIT_TRACE_CURL=true \
++		git clone $HTTPD_URL/smart/repo.git clone 2>err &&
++	grep "=> Send data" err &&
++
++	rm -rf clone &&
++	GIT_TRACE_CURL=true GIT_TRACE_CURL_NO_DATA=1 \
++		git clone $HTTPD_URL/smart/repo.git clone 2>err &&
++	! grep "=> Send data" err
++'
++
+ stop_httpd
+ test_done
+-- 
+2.16.0.rc2.37.ge0d575025.dirty
 
- t/t5573-pull-verify-signatures.sh (new +x) | 81 ++++++++++++++++++++
-
-Another option is just wrap the code in [] to make it look like check
-boxes. But that wastes two more columns
-
-       builtin/merge.c                    |  2 +
- [A+x] t/t5573-pull-verify-signatures.sh  | 81 ++++++++++++++++++++++++
-       t/t7612-merge-verify-signatures.sh | 45 +++++++++++++
-
-Back to your suggestion, I kinda like the closeness between the +/-
-count and "|" though. The output on 10c78a162f is like this, which
-makes "A" looks a bit umm.. disconnected from the path name?
-
-  Documentation/RelNotes/2.14.0.txt | A  97 +++++++++++++++++++++++++++
-  GIT-VERSION-GEN                   |     2 +-
-  RelNotes                          |     2 +-
-
-Another way is just separate the status code from file name
-
- A | Documentation/RelNotes/2.14.0.txt | 97 +++++++++++++++++++++++++++
-   | GIT-VERSION-GEN                   |  2 +-
-   | RelNotes                          |  2 +-
-
-Last note. With colored diffstat, we should be able to use a separate
-color (or something in the +/- part) to denote new/deleted files. I
-didn't think about this...
-
->> The new option --compact-summary implements this with a tweak to support
->> mode change, which is shown in --summary too.
->
-> One thing I noticed is that --compact-summary by itself does nothing.
-> Should it imply --stat?
-
-It might go with --numstat or --dirstat in future too. Didn't really
-think hard about this yet. But I probably will go with Eric suggestion
-and keep this in --stat=3D.... unless it really makes sense to have
-something like this in --numstat or --dirstat.
---=20
-Duy
