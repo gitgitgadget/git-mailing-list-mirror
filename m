@@ -2,100 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1611FADF
-	for <e@80x24.org>; Fri, 19 Jan 2018 04:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59E421FADF
+	for <e@80x24.org>; Fri, 19 Jan 2018 05:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750931AbeASETL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 Jan 2018 23:19:11 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58112 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750757AbeASETJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 Jan 2018 23:19:09 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3CC1A6052F;
-        Fri, 19 Jan 2018 04:19:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1516335548;
-        bh=OavYY+Q0lC90q/gdxewNckMWOoUcrYR7SgRR8P4Ma+A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Hwg3rY0PKx66FTMEny3DR/JPGAgj5//9ueXBhE6Rq0xTbg+qd6CRg5ojcml/o/IWE
-         nOm0yVlg13VNlNZEPhOcjDXYSDuRIoCapbX/Zw2nJQ/B1Rv29pMXqmkctctiIIDw0V
-         u22cHUZUb4Uvnj1lFqjWmbx2+iGXo234ThR/QmHtK3nyrHpA+Kgzkr8/0VxN7yI3A0
-         LmCLcHRiJ8AvWg/N4yQ4KqMlpgO4fsqEiXBVmz0cZgVxjv612q0QvydsgbsFyY4K8X
-         RjsIGm8VgWJaX0OB9CzL32VSeIQ9L36JQLmr0YsDAqtBtoch5xD6plVwtqC2ND8nFA
-         84W5+1zEv8DR4QcV8pqB90kXNCGE4d8SCUU9Hom5U4MsKzxhXJcBQFfG/2e4Eo0AtT
-         52VCYyUP61MwnJMEClnCHMAoQnozDGEFh4BaIrptL09jcOmGc+LPmUYKyXXOFp596E
-         Nws29UmS9zYuc4VpeUR3Kg4bJ+gwI3SNfTt4Wea+N2lAJUnOMrt
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=D0=B4=D1=80=20=D0=91=D1=83=D0=BB=D0=B0=D0=B5=D0=B2?= 
-        <aleks.bulaev@gmail.com>
-Subject: [PATCH] repository: pre-initialize hash algo pointer
-Date:   Fri, 19 Jan 2018 04:18:25 +0000
-Message-Id: <20180119041825.727904-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.16.0.rc2.280.g09355b536d
-In-Reply-To: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
-References: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1750780AbeASFcb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 00:32:31 -0500
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:36036 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750722AbeASFca (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 00:32:30 -0500
+Received: by mail-ot0-f170.google.com with SMTP id f100so496017otf.3
+        for <git@vger.kernel.org>; Thu, 18 Jan 2018 21:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=YhWx736hGRq1K4IRK78cmvXZI3M6DimFx8AhLUPtds8=;
+        b=FDKHcSLUU/URliPZKUn69dmk+tmBZVEpxXc0vE+Gb7ROQ5l/sx829wRMBTnx2a1Elp
+         9K7tV7eOM26pqK9n8qtFFLrnBgr6KXZJjchO5OD/mFr2gC6VSId9YmxWSMprkGRX1TuU
+         6fK6mhNrajJu3rt70SfzMOgP8QHhduv1a6Zz2wjwi9vSXvqjpl7h0IDvlLYFdn1faz+b
+         9Noyi4VRFu4ePtxXI23ZygiNvijYQcM95vI7ekslrPX3oTFAyLrxP1vj/NZOX9DZOA9c
+         pIU3Yv9XWmkGXGMC+Aklsk05ZCEceDTSRRWxKcELplNd4M+NXQbybCZuCg0ZVVZCb46E
+         2PRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=YhWx736hGRq1K4IRK78cmvXZI3M6DimFx8AhLUPtds8=;
+        b=npUQf0mOVDvlI6NMaBsYtHFiW10jcK9/fBBKOX4JeDa3oSeo2vPFuGfwT5/YsObwj7
+         fT0ugrF4IAigESc/cXhYBOanUgTbNjf5VyHIKQxv32jJL9gL3ppyXnO5AtfJwFPimQx1
+         23j3h6J/q6RZykFN8cNfN7MZTwT1wbyhddCGAE9JnyolhLEAupJj8HL/KjWtInmQLNBd
+         cTSHHsV8TghdwK3lZt2nKb8IV7FdVEwHd9llZ02pFeOByidFw49FMtFkqWAvpV5e6OdS
+         X+gvAGyF4b51LJC25d+oxzmG2KBja0/gg1HU771y5ypX+UUQ04HMdLiYn/QsPm2Dbb/j
+         rA8w==
+X-Gm-Message-State: AKwxytd15LScXzhP0drsYmqeli5NlWxalvZPV8Ue8vtJd8V4IW4GlUYR
+        y4pyofJcQeSbME1pZVIkOK3Hbtwe5lfQFWbfb9s=
+X-Google-Smtp-Source: ACJfBotbVX+OQQtD49V6jIGRZG8Jo2ZUfbUsiM12kfuGTSC26DhTRpEAiVc13Q1OIi6HJ4Ww20OP5pghPgaR2NkFJ/U=
+X-Received: by 10.157.32.82 with SMTP id n76mr5363952ota.301.1516339948844;
+ Thu, 18 Jan 2018 21:32:28 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.27.3 with HTTP; Thu, 18 Jan 2018 21:31:58 -0800 (PST)
+In-Reply-To: <20180119034025.GB222163@genre.crustytoothpaste.net>
+References: <CALwADsGfB10f5+nOFN-pHCt4z1SkWMcvSHn8KokcyCM0V6K-BA@mail.gmail.com>
+ <CAPig+cTkBEGyoS93GYCtoDgccTF_UixqBkVTExg7Zf0M1J7KRQ@mail.gmail.com>
+ <20180119024738.GA222163@genre.crustytoothpaste.net> <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
+ <20180119034025.GB222163@genre.crustytoothpaste.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 19 Jan 2018 12:31:58 +0700
+Message-ID: <CACsJy8BTFm_0sv=roL1OKKW=1DyU3vqD50NKyHg3KQ7G+mAepQ@mail.gmail.com>
+Subject: Re: git 2.16.0 segfaults on clone of specific repo
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
+        <aleks.bulaev@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are various git subcommands (among them, clone) which don't set up
-the repository (that is, they lack RUN_SETUP or RUN_SETUP_GENTLY) but
-end up needing to have information about the hash algorithm in use.
-Because the hash algorithm is part of struct repository and it's only
-initialized in repository setup, we can end up dereferencing a NULL
-pointer in some cases if we call one of these subcommands and look up
-the empty blob or empty tree values.
+On Fri, Jan 19, 2018 at 10:40 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Thu, Jan 18, 2018 at 10:06:10PM -0500, Eric Sunshine wrote:
+>> > I have a guess about what the problem might be.  Can you try this patch
+>> > and see if it fixes things?
+>>
+>> That does fix the crash. Thanks for the quick diagnosis.
+>>
+>> Can the commit message go into more detail as to why this was crashing
+>> (or your speculation about why)? Perhaps give more detail about what
+>> 'clone' is doing that led to the crash.
+>
+> Sure.  I ran into this as I was expanding the hash structure abstraction
+> into my next series.  I'll send a follow-up patch with a more
+> descriptive answer.
+>
+> I'm still extremely puzzled as to why this doesn't fail on Linux.  If
+> it's failing in this case, it should very, very clearly fail all the
+> time we access an empty blob or an empty tree.  I've tried with gcc and
+> two versions of clang, using -fno-lto, with address sanitizer, with -O0,
+> and so on.  I'd really like to catch this kind of issue sooner in the
+> future if I can figure out how to reproduce it.
 
-In the future, we can add a command line option for this or read it from
-the configuration, but until we're ready to expose that functionality to
-the user, simply initialize the repository structure to use the current
-hash algorithm, SHA-1.
+I think it's file system related, case-insensitive one in particular.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- repository.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The call trace posted at the beginning of this thread should never
+trigger for an initial clone. You only check if an _existing_ entry
+matches what you are about to checkout when you switch trees. For this
+to happen at clone time, I suppose you have to checkout entry "A",
+then re-checkout "A" again. Which can only happen on case-insensitive
+file systems and a case-sensitive repo where the second "A" might
+actually be "a".
 
-I'm still quite mystified as to why this is working on Linux and not
-macOS, but I can only guess that compilers are just very advanced and
-have somehow concluded that we would clearly never dereference a NULL
-pointer, so they picked the only non-NULL value.
+vim-colorschemes.git has these two entries, which meets one of the
+conditions, I suppose macos meets the other
 
-I haven't included a test because I have no way to reproduce the issue.
-This patch is the first from a series I'm working on where I do expand
-the use of the hash struct and therefore caused a segfault on clone, so
-I can imagine what's going on without having a way to prove it affects
-this particular case.
+colors/darkblue.vim
+colors/darkBlue.vim
 
-If someone with access to macOS can provide a test, I'd be very
-grateful.
-
-My apologies for the error and inconvenience.
-
-diff --git a/repository.c b/repository.c
-index 998413b8bb..f66fcb1342 100644
---- a/repository.c
-+++ b/repository.c
-@@ -5,7 +5,7 @@
- 
- /* The main repository */
- static struct repository the_repo = {
--	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, NULL, 0, 0
-+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
- };
- struct repository *the_repository = &the_repo;
- 
+On Linux, after I hacked all over the place to force ce_match_stat()
+to eventually call index_fd() which in turns must use one of the
+hashing function, I got a crash.
+-- 
+Duy
