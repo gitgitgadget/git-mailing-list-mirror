@@ -7,35 +7,37 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 437241F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 17:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 783F81F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 17:34:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932553AbeASRe3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 12:34:29 -0500
-Received: from sonic307-6.consmr.mail.bf2.yahoo.com ([74.6.134.45]:45915 "EHLO
-        sonic307-6.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932456AbeASReU (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 Jan 2018 12:34:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1516383259; bh=fGX+hGittB6Jx+n3YPvAGaNzrxRhFXw9CT8nOrgxOLw=; h=From:To:Cc:Subject:Date:From:Subject; b=sAjcLHy5nBkGjtLppbFYkLVz5BuI2eVdrs6nJ0pyycORa9IkbfseZcs0tuOjl4fsu9lUS74Z6dtGyEsAiVCTWS8S/HGd4SmpQ5p7i3NmC/5/UQjk9LrDMJYX665IN2p6xMpSbVfRhvBpfqZ7LcQf6tVtalJq1hmuAtscCwLRwuj5dKNgxAR84wMNz9deiNVpb77/uZnqWPHI6c4scU9EkB05iDs8ipw4CRCBg9y8XKeQEAz76vMCaKhf+Qtt6m3RnkUKpmP/JYEzAMHJr2JC93LT1CqR6ULhI7h/ioH6O1IqhLynjKKiF5FmZfNZUuDbu4VqfDufXIfGf5I3YBwnFQ==
-X-YMail-OSG: .wb00hcVM1l9jAo.UviQIu2U7d_okJMRjeRuaxtnB2H6vURX54K65Woex8KZjbC
- P6TAavym8NBPPbO0qlCTS_M6E8gZx6bfVo3xf63hoOCvQjn_.xipN1FGUD0ohhalmdxGHxaBNxy7
- TpUX6Rq4F93k87FanPhqIJJH.44yGC9cg.QJOpW5hc9H4YF09HDQ75XjkRQNKzhEvjNf9a.eIlGb
- lnjZx8E_pof_LigcbmtDDtrjXZ8WuVzu6VLWpRi2NJicEUN1wnk5q.bBRji49EsDY1s36FVcQCw9
- uhMI3B4C3_ScnV9u21T5kxNamAwFg5lX9LK_FAlQYoOL5PyXr8vYkCZtOdoMQac6OXyFRlFr0zd6
- TpAVQAeIfRFEJoF1OiYtg1sHmAk.ap6u4gum1Ss7nVGKyDviH_aICDikOHC3NPnreWj0f2JAsQM9
- INz28.Pny8iISI59USt9qcYxTjHGp_J43M54R4xA6B1.EYDaF41ncy7gykm09pAKAxSQlqTNMPxq
- CyN4n58ykEC.6fm2M7BoVbALOMCanKpGDkQwUTSk8HwmotBnkzg--
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic307.consmr.mail.bf2.yahoo.com with HTTP; Fri, 19 Jan 2018 17:34:19 +0000
+        id S932563AbeASRei (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 12:34:38 -0500
+Received: from sonic302-7.consmr.mail.bf2.yahoo.com ([74.6.135.46]:43698 "EHLO
+        sonic302-7.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932520AbeASReW (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 Jan 2018 12:34:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1516383261; bh=dAbIFWWJOQ6bDhflaakXdetZgkqdMP+FU0nJijOASx8=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=UwduEba6Sg/PP9jXT2Nhod0dtUklLln+beiy0+GOavPeLRkDThSUlbWf5/RS6ZmeVmFzzdPB4Xqwte5oyFOscJNZK1zycphAb9hxp2GU0Flg6Y3K/bRPPlEhxjEh72spVW1Dz4OBmshfdJ99FauKd/G1cI4RbTVnv1e2PLYj1Bj1X0YRBXXDVFiTcI+1r6PUIynDBy4AhzqxuBo9RfVWGGfZnt1a/BNNRTBS53+b0beCSU34z/z7/yikutyuWYHcemeJRVXxJI0BS4Wkg3UdciFJDFAVKsYJUN/LBu77mgH+HiNUvpquOu6ehELwyp7nh/MnvtSVJKICMpzdkRUTQg==
+X-YMail-OSG: fvF.eHkVM1npPHnVI2_6v4nuNmGAZKw1AtU7Id66ZRGKrNiaUwpAg6N0AVt1N75
+ dFPnjUwxjHhJ8JP4pnZWc9WEdcI_D6f_JjWX3sDS07IRPc7jBvtJ1vS47zp_LwaEFQmHNdBbDldv
+ P_UCtjT3SORbiFE4_mMwRN6vnMRtlXH_sITGHzRYnDfhKqqklyxKE_XXRHwtyhjm3uwYragA1XEP
+ 9jKMGg2oj1q27DCT1YguXHikBfFN9wTZHfleABCEhf8O2opGu87OQ_Bg2SOBVeJX6FMszAld.C1H
+ 4X6iaytT_XBDyM6TjpWCliOpy_y1EE0CwQKzi4lK.THPNXMsrfRCsiVI.iHRUmC_CFaTsfuZQP3V
+ .gE2rQIYszxy8qq0E.E1oozrSPVH480r2nLsVu5QZI33krNWa4tsVhn6QDzscR_qlLpT6pjwQ8Yn
+ zVACfLpZ_cgsdyEVzdeaKVL4742c3cs7GW7WmYaiOB3T9BprDRnpgzawBMTIpzyHAZrcZfSzsDMr
+ 6mE_MKR5pjPC8fl6ucBc2TEqE_YsfxL43EmqOQpRr_wWt_ENYyQ--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic302.consmr.mail.bf2.yahoo.com with HTTP; Fri, 19 Jan 2018 17:34:21 +0000
 Received: from smtpgate102.mail.bf1.yahoo.com (EHLO localhost.localdomain) ([72.30.28.113])
           by smtp406.mail.bf1.yahoo.com (JAMES SMTP Server ) with ESMTPA ID e78d06b6c08cf8709c5b5470ad5cf24d;
-          Fri, 19 Jan 2018 17:34:18 +0000 (UTC)
+          Fri, 19 Jan 2018 17:34:20 +0000 (UTC)
 From:   randall.s.becker@rogers.com
 To:     git@vger.kernel.org
 Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
-Date:   Fri, 19 Jan 2018 12:33:59 -0500
-Message-Id: <20180119173406.13324-1-randall.s.becker@rogers.com>
+Subject: [PATCH v2 4/6] Force test suite traps to be cleared for NonStop ksh
+Date:   Fri, 19 Jan 2018 12:34:04 -0500
+Message-Id: <20180119173406.13324-6-randall.s.becker@rogers.com>
 X-Mailer: git-send-email 2.12.3
+In-Reply-To: <20180119173406.13324-1-randall.s.becker@rogers.com>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -43,28 +45,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-* wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
-  default on the NonStop platform.
+* t/lib-git-daemon.sh: fix incompatibilities with ksh traps not being
+  cleared automatically on platform. This caused tests to seem to fail
+  while actually succeeding.
 
 Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 ---
- wrapper.c | 3 +++
+ t/lib-git-daemon.sh | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/wrapper.c b/wrapper.c
-index d20356a77..671cbb4b4 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
- 	FILE *stream = fdopen(fd, mode);
- 	if (stream == NULL)
- 		die_errno("Out of memory? fdopen failed");
-+#ifdef __TANDEM
-+	setbuf(stream,0);
-+#endif
- 	return stream;
+diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
+index 987d40680..955beecd9 100644
+--- a/t/lib-git-daemon.sh
++++ b/t/lib-git-daemon.sh
+@@ -68,6 +68,7 @@ start_git_daemon() {
+ 		test_skip_or_die $GIT_TEST_GIT_DAEMON \
+ 			"git daemon failed to start"
+ 	fi
++	trap '' EXIT
  }
  
+ stop_git_daemon() {
+@@ -89,4 +90,6 @@ stop_git_daemon() {
+ 	fi
+ 	GIT_DAEMON_PID=
+ 	rm -f git_daemon_output
++
++	trap '' EXIT
+ }
 -- 
 2.16.0.31.gf1a482c
 
