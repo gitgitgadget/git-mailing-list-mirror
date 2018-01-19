@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 625C51F576
-	for <e@80x24.org>; Fri, 19 Jan 2018 10:34:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1B01F576
+	for <e@80x24.org>; Fri, 19 Jan 2018 10:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754696AbeASKeX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 05:34:23 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34350 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbeASKeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 05:34:21 -0500
-Received: by mail-qt0-f195.google.com with SMTP id 33so2686635qtv.1
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 02:34:21 -0800 (PST)
+        id S1755337AbeASKzp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 05:55:45 -0500
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:39866 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751200AbeASKzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 05:55:41 -0500
+Received: by mail-qt0-f193.google.com with SMTP id f4so2778843qtj.6
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 02:55:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=BXbXOhOuQMS0hKNxCJoWy+u344SCPBT4UgQ81DMAa6Q=;
-        b=LYV/ortcEKcBDAvGoSbFoko5567pCUgIp7knjs624p7vR72De9OjnCzeNLfzl95Evg
-         tHTz0mHUc1RSx55tqguAdtH7HKUsEGBp6Qqzin360vmaCYxMSJwscHIJcIzo5hBmy64H
-         qbnF7wVp/haixAEZ4qymOOgbb02iLHWULLLy7K3LfYeoNKCbkaORxhD+VDFljETE7atA
-         QKObw2260NxSmSL6ox4gYUQeiZpdxotLs1dzdlW6ZlmmFFuN/SPYscGLJsD4Maaw8voj
-         EOTzBk+0w3L3hvGx9DHGSQ2MrVxKc31/V4iwyrYhqf/jKVJvNCWmmhzRnUDrqX9KoSAG
-         txkA==
+        bh=8sF8k0b94CjCpviufoo1cEpz1rdVlrowOPHd9dfR/UA=;
+        b=CAfG7F2BIMd6QoTHJuw0reGM/KResGJYsh9mOl1/18W2FHj1BvfIU6aZIMw3xtR0bH
+         U0Dj71lKBK4DvG0RlgYamPlwJtOqREKMntejGKjShlXinG/yIYjf0TslgqGnb4Y00RmW
+         8p+O1NzcIkbU7d72GqORVKgVnd/7EPoVz147Y+ssAqRwS2EY8xrVU+LT7K9G3LGATTRM
+         WJ2TezYtr29nXfSNDL11mJCaYmyfGIArK8WB8uJh4KSouVdpoZmBF0U9SiJxGVPvKFYh
+         jdqFYtH0xZqJnFx/1sEVaMAlnF7kVdc0tfpOVVDCTO/cPHNN0bw82anhj0GtAaOPhaJa
+         uxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=BXbXOhOuQMS0hKNxCJoWy+u344SCPBT4UgQ81DMAa6Q=;
-        b=lTquIvh6GyGVYUvsORYBtJBF1WXVlNULe+gmmsRFcK2712Q38ecYxMUvRsCaUQCPXx
-         WGhvXaOAXB+Lf3ZPsIQAWvmm6E8PQt8WWfl3tywaVXQDoHFJzdSZ+LPqWawesWi9l8qP
-         MRtwxzoa+8QiojJ+hqYHfPA8Kmv+LQRW9HnMQxiQent/bOZJ2ujZKJA3RgYBFf+whCxv
-         SqJN682lCerfeonrE/pxoieF2ZaMy9LahxKuamn6v92/WLIMAWfOBP8prFihrVtEBDZb
-         HBSDP4Tjhugq0vJx+2h8mH9rj7R7f4BlB/cw67aBfoMslsv/1SFy+osgtgjtF3p/uZu8
-         z1/w==
-X-Gm-Message-State: AKwxytfqs4Q7y1hNCwMmEVg4oUjYxg5mB/YBsNF7Pg7uD3QEcaFgPA4M
-        FK6H/5jYjSpYmXL/kLaDwlXWLqsf7GZk6Pmi/V4=
-X-Google-Smtp-Source: ACJfBotqYdTs3FEURutM89SqFEZuhBYmlIgMkfUQsekbUi/vgBUomWw3kixsTNpLAp+Xp1Rf1DieWd3z7wBcCryNlVc=
-X-Received: by 10.200.7.74 with SMTP id k10mr28139503qth.333.1516358061186;
- Fri, 19 Jan 2018 02:34:21 -0800 (PST)
+        bh=8sF8k0b94CjCpviufoo1cEpz1rdVlrowOPHd9dfR/UA=;
+        b=ke1RnfiI8buM9dNlwH5g4KcGZcKygdnFleLnxIwkFneG+2zdbFyI22XUug7SNQFG9j
+         wP9wjikkIwTAs4ZdxH2MoNWlzRMopf7wNMDysLHs4iuM7aqzsx1yyVmcAOTTGj6CaotS
+         RukGLTlgp5lDwEwy+bA4eaS6KlCf/BHCOS6P2jrIEJvgp00L5ji6coADSdQbvsxTzQKv
+         oleY6HBLaio5xnE0K50FwlYxNsq40EOLzh87U0MYrM4uW0U4skGgiWpyNfPAHIxeognf
+         UnE1gpgxrsN8q+Y19BSy1nHLfELJ+zbGvF+v7Bv48Z4dkOOuFRnxlIoh7ErYQA7IuNz6
+         ydhg==
+X-Gm-Message-State: AKwxytfh+qOB8RRA1OXfx+coEtO5ylT1juoAZt/6NTp3JD1m0x9gpnOL
+        7cgaCVmuEdB2mXglJHxJEeOHx9FSTjsyaKK5nwM=
+X-Google-Smtp-Source: ACJfBou21teRfC98YlRMrFq3mUXRrM+TIZmsa/Xa72/imhtwjOkDZykLMQnsR4QoGJ+GN4iGcE4vRgs4vNqVXS9ZTmQ=
+X-Received: by 10.55.177.135 with SMTP id a129mr28262900qkf.112.1516359340313;
+ Fri, 19 Jan 2018 02:55:40 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 02:34:20 -0800 (PST)
-In-Reply-To: <b9cb2d915aa4ff564b1960ce0352664b1d26eecb.1516225925.git.johannes.schindelin@gmx.de>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <b9cb2d915aa4ff564b1960ce0352664b1d26eecb.1516225925.git.johannes.schindelin@gmx.de>
+Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 02:55:39 -0800 (PST)
+In-Reply-To: <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 19 Jan 2018 05:34:20 -0500
-X-Google-Sender-Auth: dzXf1wreMNnZ_BT0raNPvP9aZC4
-Message-ID: <CAPig+cSn_X-0iir-cKSd=P8p5QCxrR2qU_GBj7zDbv8zTc+AQw@mail.gmail.com>
-Subject: Re: [PATCH 4/8] rebase-helper --make-script: introduce a flag to
- recreate merges
+Date:   Fri, 19 Jan 2018 05:55:39 -0500
+X-Google-Sender-Auth: Ser_ukbAbiDLULTxLR-lCL2XJ1k
+Message-ID: <CAPig+cQZTd77oqod8EZbXqroaaYb7oYbXUOW+jWFfRMrOMonPw@mail.gmail.com>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
@@ -66,53 +65,38 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jan 18, 2018 at 10:35 AM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> The sequencer just learned a new commands intended to recreate branch
-
-s/a //
-
-> structure (similar in spirit to --preserve-merges, but with a
-> substantially less-broken design).
 > [...]
+> With this patch, the goodness of the Git garden shears comes to `git
+> rebase -i` itself. Passing the `--recreate-merges` option will generate
+> a todo list that can be understood readily, and where it is obvious
+> how to reorder commits. New branches can be introduced by inserting
+> `label` commands and calling `merge - <label> <oneline>`. And once this
+> mode has become stable and universally accepted, we can deprecate the
+> design mistake that was `--preserve-merges`.
+>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
-> diff --git a/sequencer.c b/sequencer.c
-> @@ -2785,6 +2787,335 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
-> +static const char *label_oid(struct object_id *oid, const char *label,
-> +                            struct label_state *state)
-> +{
-> +       [...]
-> +       } else if (((len = strlen(label)) == GIT_SHA1_RAWSZ &&
-> +                   !get_oid_hex(label, &dummy)) ||
-> +                  hashmap_get_from_hash(&state->labels,
-> +                                        strihash(label), label)) {
-> +               /*
-> +                * If the label already exists, or if the label is a valid full
-> +                * OID, we append a dash and a number to make it unique.
-> +                */
-> +               [...]
-> +               for (i = 2; ; i++) {
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> @@ -900,6 +900,7 @@ fi
+>  if test t != "$preserve_merges"
+>  then
+>         git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+> +               ${recreate_merges:+--recreate-merges} \
 
-Why '2'? Is there some non-obvious significance to this value?
+If the user specifies both --preserve-merges and --recreate-merges, it
+looks like --preserve-merges will take precedence.
 
-> +                       strbuf_setlen(buf, len);
-> +                       strbuf_addf(buf, "-%d", i);
-> +                       if (!hashmap_get_from_hash(&state->labels,
-> +                                                  strihash(buf->buf),
-> +                                                  buf->buf))
-> +                               break;
-> +               }
-> +
-> +static int make_script_with_merges(struct pretty_print_context *pp,
-> +                                  struct rev_info *revs, FILE *out,
-> +                                  unsigned flags)
-> +{
-> +       [...]
-> +               is_octopus = to_merge && to_merge->next;
-> +
-> +               if (is_octopus)
-> +                       BUG("Octopus merges not yet supported");
+Should git-rebase.sh have a mutual-exclusion check and error out if
+both are specified?
 
-Is this a situation which the end-user can trigger by specifying a
-merge with more than two parents? If so, shouldn't this be just a
-normal error message rather than a (developer) bug message? Or, am I
-misunderstanding?
+>                 $revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
+>         die "$(gettext "Could not generate todo list")"
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> @@ -262,6 +264,10 @@ do
+> +       --recreate-merges)
+> +               recreate_merges=t
+> +               test -z "$interactive_rebase" && interactive_rebase=implied
+> +               ;;
+>         --preserve-merges)
+>                 preserve_merges=t
+>                 test -z "$interactive_rebase" && interactive_rebase=implied
