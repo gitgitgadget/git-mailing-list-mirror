@@ -2,125 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C40A21F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 19:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB5A1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 19:25:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932166AbeASTY2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 14:24:28 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64534 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756019AbeASTY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 14:24:26 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E134DC911E;
-        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uU13qSG8254nW4S5hKl7gq77uG4=; b=CHMF3Q
-        L9Zuz8AB86Wk0Hmzxt8w7+yi1tdH16GTxP2yzNlDdZAbj1HbFqYTNLayehb937ku
-        Cf/N7IiY7sbi1m9jT8VplNIosevB4kwINGmcDoSbLbTlsqfiQrJgbrl0Mvewl9Ut
-        Kx/EULxR9sZ2Fre/dOy0phn7gP2r7YHhYkErs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qpOD2GVRora0Otp2avkWPLiA9MVLTg9Y
-        pNnyYBzi/K2+Zpxw3Vc/Z739rVGFZQA+Nb39zKhm6Rm8g/Zi6iTP51bN2BPgMhUv
-        6qvWQJV7jYhaL9FB6GiDhRzfDxnA82ghm9oPgUiRuTOunWJ1HapszNqxPs1sL9XW
-        nFi9qKrmyLA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D78ADC911D;
-        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4F320C911A;
-        Fri, 19 Jan 2018 14:24:25 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
-        <aleks.bulaev@gmail.com>
-Subject: Re: [PATCH] repository: pre-initialize hash algo pointer
-References: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
-        <20180119041825.727904-1-sandals@crustytoothpaste.net>
-        <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
-Date:   Fri, 19 Jan 2018 11:24:24 -0800
-In-Reply-To: <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 19 Jan 2018 02:54:26 -0500")
-Message-ID: <xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932274AbeASTZb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 14:25:31 -0500
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:37606 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756141AbeASTZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 14:25:30 -0500
+Received: by mail-yw0-f180.google.com with SMTP id v139so1026397ywg.4
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 11:25:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OWxX+YoUXsu2/1GtvJ6H6G9yil2YKvSRzLFI7XZ5f78=;
+        b=GpPv5vHG7JmBvWx+D/qjFCwV+jnIktcQFz4BY0kCKTtJVDiKO+Zixn1jgt1z6IVF/3
+         UQdUlvggp6FZ6m0Nq0r8uomwA7MjlAUU/NY2Fj+mlnvNF5ZBCu98+7bCbofD1Ud4hVS1
+         ZIyCl6BEaa/DK1zS13Vy1Q5CJW0kmfwezoREOm6H6sGJNxW1CHhS50oV0nQZ2b6gS1Xk
+         CiDRKN8qfJ9L5zI33JbL1jsoKPSQ8NJbDi81uMss/Fp4mBEV6WP4v1AO1fxnBvyKVyoI
+         Ck4L6uSn32XY9biu13/QJ1i4s5k6vcgxTL/X8MYRsSQo6fwvlGV1tuolSNnBNSqXnLUK
+         2VcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OWxX+YoUXsu2/1GtvJ6H6G9yil2YKvSRzLFI7XZ5f78=;
+        b=U+fhbVEnRaI19h0VlL45I5vYma8IplLDNGa+VHaatENfO0he5dR9sovW5ar0mVSdgJ
+         bz7tp5vPC6Lnsd12x3MiKwSqFOWJPxto9TdGwHyT4YtSM6To7o+2Yh+MIWzMgBjIUi2b
+         OWV+ChNthE0kWVEgl6AlvfXYWLOtvGIoc+TUAG/hyKKPy7Hiv9fFBXXWZVYkOQL4ELHD
+         Ls3Y7W9snEqmO6+F1Ct/TJfQRU2UosgY6hBJLgTZ76yM8+WlYUzBAd+9V80jSnN5Jjrq
+         eqTzttaB/KnqNerlH7brHA23245zBExr1G57gFvFtkdj2h8wboQ7xZ3Kb7OUS8vmD9mv
+         5zjA==
+X-Gm-Message-State: AKwxytcDLIoc1ojGvNSZRjFqlMoPG0VpM1FBJMcBhWPF2zoGPpI3ost4
+        qCyY09ogbO3ambIJEjlrgW+J4e89maJE25yqjyiBgQVRCDs=
+X-Google-Smtp-Source: ACJfBotND84eKiJ0E8AccjtnA3IxHgwiZk49yTNueV0qdlJosIBUX8ilRS8DkZMqj1v9beX2T9A7WjI2J25iibHqAvs=
+X-Received: by 10.129.122.73 with SMTP id v70mr10383266ywc.156.1516389929493;
+ Fri, 19 Jan 2018 11:25:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C26537C-FD4E-11E7-997D-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.37.210.209 with HTTP; Fri, 19 Jan 2018 11:25:28 -0800 (PST)
+In-Reply-To: <20180119173406.13324-3-randall.s.becker@rogers.com>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-3-randall.s.becker@rogers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 19 Jan 2018 11:25:28 -0800
+Message-ID: <CAGZ79kY4HzL8ed23RmoCU0izjsRKsZ0Mkzcmpm3+ugu7qZtcLA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] Bypass GCC attributes on NonStop platform where used.
+To:     randall.s.becker@rogers.com
+Cc:     git <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->> I'm still quite mystified as to why this is working on Linux and not
->> macOS, but I can only guess that compilers are just very advanced and
->> have somehow concluded that we would clearly never dereference a NULL
->> pointer, so they picked the only non-NULL value.
+On Fri, Jan 19, 2018 at 9:34 AM,  <randall.s.becker@rogers.com> wrote:
+> From: "Randall S. Becker" <rsbecker@nexbridge.com>
 >
-> Now that we know (due to Duy's excellent detective work[1]) that the
-> trigger is files with names differing only in case on case-insensitive
-> filesystems, the commit message can be updated appropriately.
+> * remote.c: force ignoring of GCC __attribute construct not supported
+>   by c99 by defining it as an empty CPP macro.
+>
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 
-Thanks.  Let me apply the following and do a 2.16.1, hopefully by
-the end of day or mid tomorrow at the latest.  Test to protect the
-fix can come as a separate follow-up patch.
+I do not know about the __TANDEM symbol, but some research[1]
+indicates it is a macro specifically for case of cross platform support:
 
--- >8 --
-Subject: [PATCH] repository: pre-initialize hash algo pointer
+    You can use the __TANDEM symbol to increase the portability
+    of your programs. Enclose system-dependent source text in an
+    if section that uses #ifdef or #ifndef to test for the existence of the
+    __TANDEM symbol.
 
-There are various git subcommands (among them, clone) which don't set up
-the repository (that is, they lack RUN_SETUP or RUN_SETUP_GENTLY) but
-end up needing to have information about the hash algorithm in use.
-Because the hash algorithm is part of struct repository and it's only
-initialized in repository setup, we can end up dereferencing a NULL
-pointer in some cases if we call one of these subcommands and look up
-the empty blob or empty tree values.
+It seems to not be used outside of the NonStop port[2], so the code seems
+ok. (I would have used #ifdef, as I thought this is more prevalent in our
+code base and for consistency we'd rather want to use one thing only, bug
+"git grep '#if defined'" proves me wrong)
 
-A "git clone" of a project that has two paths that differ only in
-case suffers from this if it is run on a case insensitive platform.
-When the command attempts to check out one of these two paths after
-checking out the other one, the checkout codepath needs to see if
-the version that is already on the filesystem (which should not
-happen if the FS were case sensitive), and it needs to exercise the
-hashing code.
+However the commit message is hard to understand (say for somebody who
+will find this commit in 2 years using git-blame).
 
-In the future, we can add a command line option for this or read it
-from the configuration, but until we're ready to expose that
-functionality to the user, simply initialize the repository
-structure to use the current hash algorithm, SHA-1.
+Maybe:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- repository.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+    In NonStop HPE (version X, all versions?) there is no support for the
+    __attribute macro. By redefining the __attribute to an empty macro, the
+    code compiles on NonStop HPE. Use the system specific __TANDEM
+    macro to guard it for just this platform.
 
-diff --git a/repository.c b/repository.c
-index 998413b8bb..f66fcb1342 100644
---- a/repository.c
-+++ b/repository.c
-@@ -5,7 +5,7 @@
- 
- /* The main repository */
- static struct repository the_repo = {
--	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, NULL, 0, 0
-+	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
- };
- struct repository *the_repository = &the_repo;
- 
--- 
-2.16.0-204-gc262421c89
+as that will help those people in the future not having to do the research?
 
+
+[1] http://h20628.www2.hp.com/km-ext/kmcsdirect/emr_na-c02121175-1.pdf
+[2] https://sourceforge.net/p/predef/wiki/OperatingSystems/?version=44
+
+Thanks,
+Stefan
+
+
+> ---
+>  remote.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/remote.c b/remote.c
+> index 4e93753e1..c18f9de7f 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -11,6 +11,10 @@
+>  #include "mergesort.h"
+>  #include "argv-array.h"
+>
+> +#if defined (__TANDEM)
+> +#define __attribute(a)
+> +#endif
+> +
+>  enum map_direction { FROM_SRC, FROM_DST };
+>
+>  static struct refspec s_tag_refspec = {
+> --
+> 2.16.0.31.gf1a482c
+>
