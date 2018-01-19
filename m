@@ -2,77 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5FD41F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 18:35:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2A831F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 18:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755981AbeASSfB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 13:35:01 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65534 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755830AbeASSfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 13:35:00 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B7E1BCE4F;
-        Fri, 19 Jan 2018 13:34:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ojlL8wjJyqzyQTypNAkYcjm9CiE=; b=NmGwhy
-        bvo101VwGHvXg5SToLCHwXcOEZQsbjkoT2axNbQDiqeeiWpBaE6faiC8oZE5lNMr
-        4TqkCYIWpOz6+9btdlbyq/QN6GQnZHhPf8O/MGPf0ZFETecDkcP2xljJ3NJPo7x6
-        +Qz8h+D8q19heO2nG1XrKQzSMn4crMYdQ7SGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QMcjv2o2lvfgxPwd/sP3DRgoDEDmtWyq
-        Q6z6r6xXZpvENwv1v033dZFOn6ndqx6zCt7EbbIzRk1jVVjF15SO89WEl2bnB0Sv
-        T4gq4pbr3lf5ithrQkM+GZ5HKnwRTJqRry6wkET7DDMFgJmzKs1mwJ+n9sUOEVtr
-        9qrTAW7pMn4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 52EEBBCE4E;
-        Fri, 19 Jan 2018 13:34:59 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B9627BCE4D;
-        Fri, 19 Jan 2018 13:34:58 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 0/3] fixes for split index mode
-References: <20171217225122.28941-1-t.gummerer@gmail.com>
-        <20180107223015.17720-1-t.gummerer@gmail.com>
-        <20180118215331.GN2641@hank>
-Date:   Fri, 19 Jan 2018 10:34:57 -0800
-In-Reply-To: <20180118215331.GN2641@hank> (Thomas Gummerer's message of "Thu,
-        18 Jan 2018 21:53:31 +0000")
-Message-ID: <xmqqbmhpr92m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1756162AbeASSld (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 13:41:33 -0500
+Received: from imap.thunk.org ([74.207.234.97]:38870 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755830AbeASSlb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 13:41:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=Q41ZZNaUoq05hVW6ZMMAcX8l8ziSJFd2AEMYgO62Nm8=; b=OZNFYo9pn7uhl/xfymMxPqIJZu
+        Irsdgd8Qw7i6n+XPkdIjL0TcOwt1mFqRmheKgtuOWnwzg3ziZFX055CXJyjzuP4dy1uXahZFvIWzj
+        mTgMHRuJtOseDAcJwwDw8UCIYEDGlapWSq+pYm2K5mN3+4X06tCQF4HvObMS/tzIMtEU=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1ecbbV-0007Sd-G6; Fri, 19 Jan 2018 18:41:29 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id A3C96C003D5; Fri, 19 Jan 2018 13:41:28 -0500 (EST)
+Date:   Fri, 19 Jan 2018 13:41:28 -0500
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: should any build system legitimately change any tracked files?
+Message-ID: <20180119184128.GA643@thunk.org>
+References: <alpine.LFD.2.21.1801191247250.10222@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 73F9D91C-FD47-11E7-A927-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1801191247250.10222@localhost.localdomain>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Fri, Jan 19, 2018 at 12:51:52PM -0500, Robert P. J. Day wrote:
+> that's all the info i was given, but it *seems* clear that the build
+> process itself was making changes to one or more tracked files.
+> 
+>   technically, i guess one can design a build system to do pretty
+> much anything, but is it fair to say that this is a really poor design
+> decision? admittedly, this isn't specifically a git question, but i'm
+> open to opinions on something that strikes me as a bad idea.
 
-> Friendly ping on this series now that 2.16 is out :) Is there anything
-> in this series (up to 3/3, 4/3 can be dropped now that Duy fixed it in
-> a nicer way) that still needs updating?  It fixes a few bugs in split
-> index mode with submodules/worktrees, so it would be nice to get this
-> reviewed/merged.
+I agree that in general it's a bad idea.  I can see how it happens,
+though, which is because two things come into tension:
 
-I was wondering about the same thing.  Especially it wasn't very
-clear to me what Duy's replacement was meant to replace and how well
-it was supposed to work with the rest of your series.
+1) The general desire not to check in generated files into the git
+repository --- including configure files generated by autoconf,
+Makefiles generated by automake, libtool files, etc.
 
-Let's drop 4/3 and queue 1-3/3 for now.
+2) Wanting not to give users trying to build from source a non-hostile
+experience.  Unfortunately autoconf/automake/libtool systems are
+notorious for not having a stable interface, such that if you have the
+wrong or outdated version of the tools, the results of generating the
+configure, Makefile, etc., using a different version than what the
+developer used.... well, your results may vary.
+
+What I do is use "Maintainer mode" which means that the generated
+files are *not* automatically rebuilt by the build system unless you
+configure with --enable-maintainer-mode, and then I *do* check in the
+generated files into git.  That way I can run with
+--enable-maintainer-mode, and check in updates to Makefile, configure,
+etc., as necessary when the input files change, but that way, end
+users don't have to worry getting ambushed by version skew caused by
+using an old (or unexpectedly newer) version of the
+autoconf/autoconf/libtool tools.
+
+Heck, I even have had config.guess/config.sub change on me in
+incompatible ways(*), so I ship my own version and don't enable a blind
+update of those files from the upstream FSF sources --- mainly because
+I don't trust them to preserve a stable interface.  Better that I
+manually pull them into the repo, and test them before I do a public
+release.
+
+					- Ted
+
+(*) Although to be fair it's been years since I've been screwed in
+this fashion.  But once bitten, twice shy....
