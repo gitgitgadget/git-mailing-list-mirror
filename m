@@ -7,92 +7,115 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C86C1F576
-	for <e@80x24.org>; Fri, 19 Jan 2018 08:28:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75E941F576
+	for <e@80x24.org>; Fri, 19 Jan 2018 09:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754918AbeASI2z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 03:28:55 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33315 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754777AbeASI2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 03:28:44 -0500
-Received: by mail-qt0-f194.google.com with SMTP id e2so2046734qti.0
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 00:28:43 -0800 (PST)
+        id S1755271AbeASI74 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 03:59:56 -0500
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:39083 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755220AbeASI7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 03:59:48 -0500
+Received: by mail-qt0-f177.google.com with SMTP id f4so2160185qtj.6
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 00:59:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=u44vWvCq2ipyygyVONweGIRwyjg/L+/dCKimNG4Oclk=;
-        b=W2ZpBVFjYlvcVFnDS7/uBM0VqwirhKFAi/wkv+4oxOuMXzTCyOt8PNRXc6D05nzonm
-         DpnmWDkbhmKKMSBPSwWpE2QdsxYBayJ6hZnn6bVuYUtOJuhrMPqTo3hjORTJQOb7Wjzh
-         BAtl0WLVJihnAdQoqr49KNz/CcEutSNP9aysb3pfN9zX+SdqrZMhpkkFZRWxyYdKrBrA
-         JYa1EjLlgTX+kj8kTgl9oFhwgxr41EHTKksN/VGMOfrQWA9OV9/+jFFnRyKq1YZgIZ6v
-         EJOHkqMDxmpQhvBh5Cr3IprIh0yAexZHjSqeRI+qxs5VovE2A2lDevgUCTd+tywMOk/O
-         kzGg==
+        bh=v7fnNN4KSI1oe5X4PgR7myiDzjXzA0ym2i0rASWP6Dc=;
+        b=bofs5zL+ipMvAxfzyHBEJOCLCr9ApuLoIk2r/d0L2SV5fTCt52QHpkEej+WsVY82tT
+         FTxKliu1b+amwQ5Y2kia+luY8L/5gRAE4DQwGEJqDQpq8FxbbTB98HE9I/Clz+/sv8jh
+         q4oLHoM+JcMebSP2f2s4E2SBylQEWa9KRE4fx1ZRifWTf0qXU+FE7mzdZxLCOt4T8JoT
+         1CnOg7ensVkDaZVK59eKserQUERCP5UTWVTTdqGn6D5DHO6hyxRKvF2mernOcltDtT6F
+         +uSiDk+TOdDCYr7CSPJbXRY3iNAzV0kKkJ5Kg825Sm3UbX+9WfdApye6HbYbfIMKVQJd
+         pJmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=u44vWvCq2ipyygyVONweGIRwyjg/L+/dCKimNG4Oclk=;
-        b=CdfJSUcz7pC6Aw0HUi3Km8UjeNG4dD5rrAb8UNgwEUHwkpcRhEk6isnsrcD7nCn/rL
-         2+AhWbaGQVu+exqz82bK58zgGnihZlgmLLXqwaMZx5U6ISAfpykaG86Qh/aBs8MivXYp
-         uRSDEIRQfBhBM52ycYmwQgwWkUQISKd95WUg4vw+BQS5rU10HO06z0GmznukU0c22UFs
-         bxVnxtO8YT1o9BYyutzz72iIAGZPXyVNd+ODipjDf5NNzKM4CYV8KFH0GnAMHG+z2jVE
-         eUQ99U2HgwMhDPP/6cvbxAI0E11T9fkUernI+1NOHdrmhcMDaPc9qG+GvjcEsPPYGYae
-         3dqw==
-X-Gm-Message-State: AKwxytc3+rXxB7HxAi+hgHkcYSVLABqlFO54YLaWJqPeLFX3uL9xk+O9
-        eUGhKXbFcFyQ6/hcY+hoqWM86PgD/viJkh9dUdw=
-X-Google-Smtp-Source: ACJfBotQqwWjrmFMe3cJiB6ZBux6s86mW4lGfeXZYI2JekDDCLFybcJGvmyWy+Hs2GtvmxVytOpGWQFq66ry+TQugDk=
-X-Received: by 10.200.47.130 with SMTP id l2mr39086166qta.277.1516350523136;
- Fri, 19 Jan 2018 00:28:43 -0800 (PST)
+        bh=v7fnNN4KSI1oe5X4PgR7myiDzjXzA0ym2i0rASWP6Dc=;
+        b=oBlJQJ4Mnca4w+ggL5T+jhHM4Ok6O4lh+fz4c1WU3ZwSwtP0BUYM2mWX+rsi5FR+kJ
+         aeTwYL7Asn3s5TYiKC8BMZCMw+/Zj7bUlXwtmBJJsm8w4j97wwJAOHh0m3goRcSqQD8C
+         OZSTgQywHCH9JpPJjTl5RG7UhUCaVh+i91cHnIlVFZroai2fACRd1SFG8xQZMKTfMerV
+         KtApJA6M8RBE/Fiz5D1XPZkatyvAvJs1ja3sHuF5ZKj5+ux9Jd+EVD0ujTrKK1mYChY9
+         qH74sNf8/5js1CxyX5A5EaDInGTSHaPZWDqOCr7adP51huggrKBQQUWykZWmp2gFHHKE
+         QBXg==
+X-Gm-Message-State: AKwxytfpAAj5TMc/IPCcSeXbLfKjSmf+k5HW9PVsewZkohU52voIRHk5
+        Ka8ZDoaEUlAYV6+6ieI1Kvntoxm4bMDSPId7UJE=
+X-Google-Smtp-Source: ACJfBovl7GfFrrVQtpTWXo7IQhFY8KWxje27W1lcNQXMspzen5jhrAdltKwObx4kMoOxzVSRoOzKF9hqaRETIXqxC1g=
+X-Received: by 10.200.27.91 with SMTP id p27mr35335412qtk.254.1516352387319;
+ Fri, 19 Jan 2018 00:59:47 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 00:28:42 -0800 (PST)
-In-Reply-To: <CACsJy8AOPDNTbAWzDHd+Oa5PSc1v2qdfcaq60P7X5wznM4VTug@mail.gmail.com>
-References: <CALwADsGfB10f5+nOFN-pHCt4z1SkWMcvSHn8KokcyCM0V6K-BA@mail.gmail.com>
- <CAPig+cTkBEGyoS93GYCtoDgccTF_UixqBkVTExg7Zf0M1J7KRQ@mail.gmail.com>
- <20180119024738.GA222163@genre.crustytoothpaste.net> <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
- <20180119034025.GB222163@genre.crustytoothpaste.net> <CACsJy8BTFm_0sv=roL1OKKW=1DyU3vqD50NKyHg3KQ7G+mAepQ@mail.gmail.com>
- <20180119074001.GA55929@flurp.local> <CACsJy8AOPDNTbAWzDHd+Oa5PSc1v2qdfcaq60P7X5wznM4VTug@mail.gmail.com>
+Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 00:59:47 -0800 (PST)
+In-Reply-To: <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 19 Jan 2018 03:28:42 -0500
-X-Google-Sender-Auth: BHvqZn0i7Lu583q-wsPizVg0jPc
-Message-ID: <CAPig+cQmCeEHZNkYSRPUTZHyRP-Tkiobx6ghSktYiT9CCBV6FA@mail.gmail.com>
-Subject: Re: git 2.16.0 segfaults on clone of specific repo
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
-        <aleks.bulaev@gmail.com>, Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Fri, 19 Jan 2018 03:59:47 -0500
+X-Google-Sender-Auth: xYUA9zYQHzsUyYN2DRgUU6F9lZs
+Message-ID: <CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com>
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 3:22 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Fri, Jan 19, 2018 at 2:40 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Fri, Jan 19, 2018 at 12:31:58PM +0700, Duy Nguyen wrote:
->>> On Linux, after I hacked all over the place to force ce_match_stat()
->>> to eventually call index_fd() which in turns must use one of the
->>> hashing function, I got a crash.
->>
->> Nice detective work.
->
-> And not stepping back to think for a bit. I realized now that if I
-> just mounted a vfat filesystem, I could have verified it much quicker.
-> It does crash on linux with similar stack trace.
+On Thu, Jan 18, 2018 at 10:35 AM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
 > [...]
->> This particular manifestation is caught by the
->> following test which fails without brian's patch on MacOS (and
->> presumably Windows) and succeeds with it. On Linux and BSD, it will of
->> course succeed always, so I'm not sure how much practical value it
->> has.
+> This commit implements the commands to label, and to reset to, given
+> revisions. The syntax is:
 >
-> There's a travis job running "on windows" (I don't what it really
-> means) so it might help actually. This vim-colorschemes repository has
-> shown up in git mailing list before, I think. We probably should just
-> add it as part of our regression tests ;-)
+>         label <name>
+>         reset <name>
+> [...]
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/sequencer.c b/sequencer.c
+> @@ -1919,6 +1936,139 @@ static int do_exec(const char *command_line)
+> +static int safe_append(const char *filename, const char *fmt, ...)
+> +{
+> +       [...]
+> +       if (commit_lock_file(&lock) < 0) {
+> +               rollback_lock_file(&lock);
+> +               return error(_("failed to finalize '%s'."), filename);
 
-And, Dscho does run the test suite on Windows regularly, so perhaps
-this test does have some practical value.
+s/\.//
+
+> +       }
+> +
+> +       return 0;
+> +}
+> +
+> +static int do_reset(const char *name, int len)
+> +{
+> +       [...]
+> +       if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+> +               return -1;
+> +
+> +       for (i = 0; i < len; i++)
+> +               if (isspace(name[i]))
+> +                       len = i;
+
+What is the purpose of this loop? I could imagine that it's trying to
+strip all whitespace from the end of 'name', however, to do that it
+would iterate backward, not forward. (Or perhaps it's trying to
+truncate at the first space, but then it would need to invert the
+condition or use 'break'.) Am I missing something obvious?
+
+> +       read_cache_unmerged();
+> +       if (!fill_tree_descriptor(&desc, &oid)) {
+> +               error(_("Failed to find tree of %s."), oid_to_hex(&oid));
+
+s/Failed/failed/
+s/\.//
+
+> +               rollback_lock_file(&lock);
+> +               free((void *)desc.buffer);
+> +               strbuf_release(&ref_name);
+> +               return -1;
+> +       }
