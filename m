@@ -7,74 +7,89 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1660F1F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 21:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C86891F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 22:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756577AbeASV5j (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 16:57:39 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63274 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756461AbeASV5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 16:57:38 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9106CB1EC;
-        Fri, 19 Jan 2018 16:57:37 -0500 (EST)
+        id S1756647AbeASWOZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 17:14:25 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50727 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756567AbeASWOX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 17:14:23 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4613AC0047;
+        Fri, 19 Jan 2018 17:14:09 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RrXe2WqATYHyY1L2UQwA9+6ic+c=; b=Edmo0j
-        Dj5x17l3xZBMRCquS3hyN02CTS1UE3nowMo7DyriPY09/fSJqdhdAMpsij2Q01Vx
-        bdkd2kXHSnBNkZedC2WpxL9q7nH62U7AUt6pwirE21BViCA2oX2d6V0H0tLQHAPJ
-        N9hQutbd5PXMP1bwWgQJIp+2kuBjoOwkuCXYM=
+        :content-type; s=sasl; bh=EPLyD+TAxIvT2uacG7Ii4xOrsrk=; b=CCoQXy
+        VPudsn1e6cqivCH7Qaq3OuqEKs2vTriN270yH09sk2+bgpZAOpiGQvIv/nevb7EC
+        gtvQye0Xu8udJmSkNii/Ffy/Z0nRjVmY2kyILFgpLAWFzVv/BaiUn4j0NYxV5SSZ
+        7r6t24x47ORz/aKnzEZaihS26zT64ldzSj2FI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bovA9LhDygUpqFVXRl4AxyCXDQyefSh2
-        Sinemo5e6fyD7SdKaTWGdtCur8IBwxlyrSarmztiQsykbzVLsjuvD0W27unGDAkl
-        7nJOfhXf5iL82esr9nOY0lYNEfAqvIo2rMyD0MnCajCzuM9LzhZyOiGJwXOEhXiC
-        uducJQegHuM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C183ACB1EB;
-        Fri, 19 Jan 2018 16:57:37 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=rO3uNayw/DPzpDPDo2WkDNRu7FeS8j0j
+        IPlj/bwJFy47Y8FsxV3sOSIWpsB9IVWEj82w8JpsJR9KzKVRMwnKOCNWzYA9sCLJ
+        tlUTGtnHMncomF780cX2t7zxZxhiYHPWqLyDHIGrX3TOO7bfI2ODB7HmH9omQXai
+        GzAPsESwQL4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E074C0046;
+        Fri, 19 Jan 2018 17:14:09 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 291B4CB1E9;
-        Fri, 19 Jan 2018 16:57:37 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A63E2C0045;
+        Fri, 19 Jan 2018 17:14:08 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 1/3] read-cache: fix reading the shared index for other repos
-References: <20171217225122.28941-1-t.gummerer@gmail.com>
-        <20180107223015.17720-1-t.gummerer@gmail.com>
-        <20180107223015.17720-2-t.gummerer@gmail.com>
-Date:   Fri, 19 Jan 2018 13:57:35 -0800
-In-Reply-To: <20180107223015.17720-2-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sun, 7 Jan 2018 22:30:13 +0000")
-Message-ID: <xmqq1silpl4g.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Mathias Rav <m@git.strova.dk>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] files_initial_transaction_commit(): only unlock if locked
+References: <20180118143841.1a4c674d@novascotia>
+        <20180118141914.GA32718@sigill.intra.peff.net>
+Date:   Fri, 19 Jan 2018 14:14:07 -0800
+In-Reply-To: <20180118141914.GA32718@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 18 Jan 2018 09:19:14 -0500")
+Message-ID: <xmqqwp0do5sg.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C2F63D3C-FD63-11E7-98FD-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 11F25658-FD66-11E7-B0D8-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> read_cache_from() defaults to using the gitdir of the_repository.  As it
-> is mostly a convenience macro, having to pass get_git_dir() for every
-> call seems overkill, and if necessary users can have more control by
-> using read_index_from().
+> On Thu, Jan 18, 2018 at 02:38:41PM +0100, Mathias Rav wrote:
+>
+>> Running git clone --single-branch --mirror -b TAGNAME previously
+>> triggered the following error message:
+>> 
+>> 	fatal: multiple updates for ref 'refs/tags/TAGNAME' not allowed.
+>> 
+>> This error condition is handled in files_initial_transaction_commit().
+>> 
+>> 42c7f7ff9 ("commit_packed_refs(): remove call to `packed_refs_unlock()`", 2017-06-23)
+>> introduced incorrect unlocking in the error path of this function,
+>> which changes the error message to
+>> 
+>> 	fatal: BUG: packed_refs_unlock() called when not locked
+>> 
+>> Move the call to packed_refs_unlock() above the "cleanup:" label
+>> since the unlocking should only be done in the last error path.
+>
+> Thanks, this solution looks correct to me. It's pretty low-impact since
+> the locking is the second-to-last thing in the function, so we don't
+> have to re-add the unlock to a bunch of error code paths. But one
+> alternative would be to just do:
+>
+>   if (packed_refs_is_locked(refs))
+> 	packed_refs_unlock(refs->packed_ref_store);
+>
+> in the cleanup section.
 
-This was a bit painful change, given that some changes in flight do
-add new callsites to read_index_from() and they got the function
-changed under their feet.
-
-Please double check if I made the right git-dir to be passed to them
-when I push out 'pu' in a few hours.
+Yeah, that may be a more future-proof alternative, and just as you
+said the patch as posted would be sufficient, too.
 
 Thanks.
