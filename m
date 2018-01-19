@@ -2,77 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 034F31F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 20:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2FB1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 20:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932362AbeASUM7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 15:12:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49950 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932219AbeASUM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 15:12:58 -0500
-Received: (qmail 21214 invoked by uid 109); 19 Jan 2018 20:12:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 19 Jan 2018 20:12:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24051 invoked by uid 111); 19 Jan 2018 20:13:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 19 Jan 2018 15:13:34 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Jan 2018 15:12:56 -0500
-Date:   Fri, 19 Jan 2018 15:12:56 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH v2 03/18] ref-filter: make valid_atom as function
- parameter
-Message-ID: <20180119201256.GB10197@sigill.intra.peff.net>
-References: <01020160df6dc499-0e6d11ec-1dcd-4a71-997b-ea231f33fae4-000000@eu-west-1.amazonses.com>
- <01020160df6dc529-fae54bd6-e595-44fa-9f9a-c44cb3a5a1a8-000000@eu-west-1.amazonses.com>
- <20180115214208.GD4778@sigill.intra.peff.net>
- <CAL21Bm=+uPrKECcCq2_rfJRuCpsOjZ41NfiyY3d1UA0b8YKj1w@mail.gmail.com>
- <20180117214354.GA13128@sigill.intra.peff.net>
- <CAP8UFD0PtOqX5c4ovRbYDWejQ55iUwtnPv-zGXS2GFAajhXqtA@mail.gmail.com>
- <CAL21BmnKd0qamJWJbrAzg_ZX1GkhCTPO_5zOiFNMBeF-xjDTiQ@mail.gmail.com>
- <CAP8UFD1dcwEA9z+oQKFV=aFoKn73mtP4qkLGovW2XTu6N=N4dA@mail.gmail.com>
- <20180119172353.GA5752@sigill.intra.peff.net>
- <xmqq4lnhr8gy.fsf@gitster.mtv.corp.google.com>
+        id S1756260AbeASUZI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 15:25:08 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50657 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756213AbeASUZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 15:25:06 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 12E22BE6AC;
+        Fri, 19 Jan 2018 15:25:06 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+4B4/3XXfCTW5h3x5EFNsVGKve4=; b=ZSg+gU
+        6zHFdxqeJGV42B5RtQmlAgO86bGukq65wiO/SJxT/IhUo1Fbf3TN1FbzwDToIUAl
+        TBZBlGDzm7yR6v45aLJq60HU5T8viJmKtuOIFxvpWmjF+rbSKbIHIdQDMdWBOCK4
+        /j+tERsJpUHCEjsPUk92IIfIe6k8hOKGpLF1w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=r/Ddg1miD7qflYFO3U9nWL/bVWo1ZgLK
+        k1pdv6bjFOoP8N+BBAxflr043jPjofZpYMM9P7eOmqK3gGsVqyGQs5HjGiKL96p1
+        9aoUS6fFfe7Wb7waMhWfeMsM4WdwIMrvzgEYlcZEpwoiH+UEyytsnjJ2SKvotaa8
+        MA79+sjdOio=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B3AFBE6AB;
+        Fri, 19 Jan 2018 15:25:06 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 832C0BE6AA;
+        Fri, 19 Jan 2018 15:25:05 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 0/8] rebase -i: offer to recreate merge commits
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+Date:   Fri, 19 Jan 2018 12:25:04 -0800
+In-Reply-To: <cover.1516225925.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Thu, 18 Jan 2018 16:35:23 +0100 (STD)")
+Message-ID: <xmqqmv19ppen.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4lnhr8gy.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D5E2FE7E-FD56-11E7-9BF3-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 10:47:57AM -0800, Junio C Hamano wrote:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I also think %(deltabase) does make sense for anything that points to an
-> > object. I suspect it's not all that _useful_ for for-each-ref, but that
-> > doesn't mean we can't return the sensible thing if somebody asks for it.
-> 
-> This may not be a new issue (or any issue at all), but is the
-> ability to learn deltabase make any sense in the first place?
-> 
-> What should the code do when an object has three copies in the
-> repo, i.e. one as a base object (or a loose one), another as a
-> delta against an object, and the third one as a delta against
-> a different object?
+> Think of --recreate-merges as "--preserve-merges done right". It
+> introduces new verbs for the todo list, `label`, `reset` and `merge`.
+> For a commit topology like this:
+>
+>             A - B - C
+>               \   /
+>                 D
+>
+> the generated todo list would look like this:
+>
+>             # branch D
+>             pick 0123 A
+>             label branch-point
+>             pick 1234 D
+>             label D
+>
+>             reset branch-point
+>             pick 2345 B
+>             merge 3456 D C
 
-This was a known issue when I introduced %(deltabase). The documentation
-explicitly calls this out and makes no promises about which copy we
-describe.
+Yup.  I've seen this design talked about on list in the past, and
+I've always felt that this is "sequencer done right".
 
-The %(objectsize:disk) atom has the same issue, too. See the CAVEATS
-section of git-cat-file(1).
+At the first glance, it may feel somewhat unsatisfying that "merge"
+has to say effects of which commits should be reflected in the
+result and which commot to take the log message from, i.e.
+(recreated)D is merged to form the resulting tree, and 3456=C is
+used for the log, to recreate C in the above example, while "pick"
+always uses the same commit for both, i.e. recreated B inherits both
+the changes and log message from the original B=2345 (or depending
+on the readers' point of view, "merge" is allowed to use two
+different commits, while "pick" is always limited to the same one).
 
--Peff
+But I think this distinction is probably fundamental and I am not
+opposed to it at all.  The result of "pick" has only one parent, and
+the parent is determined only by the previous actions and not by
+anything on the "pick" line in the todo list.  But the result of
+"merge" has to record all the other parents, and only the first
+parent is determined implicitly by the previous actions.  We need to
+tell the "merge" command about "3456=C" in order to recreate the
+effect of original merge commit (i.e. changes between B and C) as
+well as its log message, and we also need to tell it about label "D"
+that it is the "other parent" that need to be recorded.
+
+Obviously "merge" command syntax should allow recreating an octopus,
+so whenever I said "two" in the above, I meant "N".  The original
+merge commit is needed so that the effect to replay (roughly: a
+patch going to the original merge result from its first parent) can
+be learned from the existing history, and all the other "N-1"
+parents needs to be given (and they must have been already created
+in the todo list) so that the resulting recreated merge can be
+recorded with them as parents (in addition to the first parent that
+is implicitly given as the result of all the previous steps).
+
+One interesting (and probably useful) thing to notice is that if A
+were not rebased in the above sample picture, and only B were the
+one that was tweaked, then a recreated C may use the same original D
+as its side parent, and the mechanism outlined above naturally can
+support it by allowing an un-rewritten commit to be given as a side
+parent when "merge" is redoing C.
+
+I probably won't have time to actually look at the code for a few
+days, but I am reasonably excited about the topic ;-)
+
+Thanks.
