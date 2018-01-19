@@ -2,96 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2A831F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 18:41:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4781A1F404
+	for <e@80x24.org>; Fri, 19 Jan 2018 18:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756162AbeASSld (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 13:41:33 -0500
-Received: from imap.thunk.org ([74.207.234.97]:38870 "EHLO imap.thunk.org"
+        id S1756186AbeASSp3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 13:45:29 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:47412 "EHLO smtp.gentoo.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755830AbeASSlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 13:41:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=Q41ZZNaUoq05hVW6ZMMAcX8l8ziSJFd2AEMYgO62Nm8=; b=OZNFYo9pn7uhl/xfymMxPqIJZu
-        Irsdgd8Qw7i6n+XPkdIjL0TcOwt1mFqRmheKgtuOWnwzg3ziZFX055CXJyjzuP4dy1uXahZFvIWzj
-        mTgMHRuJtOseDAcJwwDw8UCIYEDGlapWSq+pYm2K5mN3+4X06tCQF4HvObMS/tzIMtEU=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1ecbbV-0007Sd-G6; Fri, 19 Jan 2018 18:41:29 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id A3C96C003D5; Fri, 19 Jan 2018 13:41:28 -0500 (EST)
-Date:   Fri, 19 Jan 2018 13:41:28 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+        id S1756130AbeASSpX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 13:45:23 -0500
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by smtp.gentoo.org (Postfix) with ESMTPS id 0F6DD335C39
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 18:45:22 +0000 (UTC)
+Received: (qmail 12170 invoked by uid 10000); 19 Jan 2018 18:45:20 -0000
+Date:   Fri, 19 Jan 2018 18:45:20 +0000
+From:   "Robin H. Johnson" <robbat2@gentoo.org>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: should any build system legitimately change any tracked files?
-Message-ID: <20180119184128.GA643@thunk.org>
+Message-ID: <robbat2-20180119T183103-843967451Z@orbis-terrarum.net>
 References: <alpine.LFD.2.21.1801191247250.10222@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="19uQFt6ulqmgNgg1"
 Content-Disposition: inline
 In-Reply-To: <alpine.LFD.2.21.1801191247250.10222@localhost.localdomain>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+User-Agent: Mutt/1.8.2 (2017-04-18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
+--19uQFt6ulqmgNgg1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
 On Fri, Jan 19, 2018 at 12:51:52PM -0500, Robert P. J. Day wrote:
+>=20
+>   just finished teaching a couple git courses and, after class, a
+> student came up and described a rather weird problem -- in short:
+>=20
+>   1) before build, "git diff" shows nothing
+>   2) do the standard build
+>   3) suddenly, "git diff" shows some changes
+>=20
 > that's all the info i was given, but it *seems* clear that the build
 > process itself was making changes to one or more tracked files.
-> 
+>=20
 >   technically, i guess one can design a build system to do pretty
 > much anything, but is it fair to say that this is a really poor design
 > decision? admittedly, this isn't specifically a git question, but i'm
 > open to opinions on something that strikes me as a bad idea.
+I have seen what you describe, but it had a good cause:
+1. The source repo contained some intermediate generated source,=20
+   eg foo.x -> foo.c -> foo.o
+2. The output of the tool that did foo.a -> foo.c differed due to some
+   factor on the system (different version, different config in /etc etc).
+3. The initial checkout caused the mtime of foo.c to be just older
+   newer than foo.x, so the build system decided to regen foo.c.
+4. (optional) The makefile had conditional rules to skip the regen if the t=
+ool was
+   not present.
 
-I agree that in general it's a bad idea.  I can see how it happens,
-though, which is because two things come into tension:
+Until the tool output changed, even if the file was regenerated, it was
+identical, so it didn't show up in diff.
 
-1) The general desire not to check in generated files into the git
-repository --- including configure files generated by autoconf,
-Makefiles generated by automake, libtool files, etc.
+What are the possible mistakes here?
+- The intermediate source possibly should not be committed [depending on
+  the tool, this isn't always an option]
+- The build system scripts (makefile etc) contains a mistake.
+- Some final (non-intermediate/non-source) file was committed.
 
-2) Wanting not to give users trying to build from source a non-hostile
-experience.  Unfortunately autoconf/automake/libtool systems are
-notorious for not having a stable interface, such that if you have the
-wrong or outdated version of the tools, the results of generating the
-configure, Makefile, etc., using a different version than what the
-developer used.... well, your results may vary.
+I've seen similar patterns for GNU Bison, autoconf, and lots of other
+tools.=20
 
-What I do is use "Maintainer mode" which means that the generated
-files are *not* automatically rebuilt by the build system unless you
-configure with --enable-maintainer-mode, and then I *do* check in the
-generated files into git.  That way I can run with
---enable-maintainer-mode, and check in updates to Makefile, configure,
-etc., as necessary when the input files change, but that way, end
-users don't have to worry getting ambushed by version skew caused by
-using an old (or unexpectedly newer) version of the
-autoconf/autoconf/libtool tools.
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
 
-Heck, I even have had config.guess/config.sub change on me in
-incompatible ways(*), so I ship my own version and don't enable a blind
-update of those files from the upstream FSF sources --- mainly because
-I don't trust them to preserve a stable interface.  Better that I
-manually pull them into the repo, and test them before I do a public
-release.
+--19uQFt6ulqmgNgg1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-					- Ted
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-(*) Although to be fair it's been years since I've been screwed in
-this fashion.  But once bitten, twice shy....
+iQKTBAEBCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAlpiPL9fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
+RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
+JsT97xAAnclq8adcr061qOyqaGgg0nm8sw251XsGScNBzWZR9NpWmpKH7GvfS+un
+xDdJ7DLkdbk0FPzwaE3qY2nI4CyimbzCCNYl26fRW0BjaNkI1jJltbFLTQ5fZjuC
+bnmBD6VOvKJzs5W35ulVUQ1GVleL4Ea6Z998l5drezz3RKNl9+Q/iO0Z5Ej2dpKz
+bhpXFeAjiDYdBPTjimYcv7IYjIJkXY/ASqkPE1k+T5JsrI7SP95hnHS+cOj21b9P
+/n8wJTD3tOCkTi7L3frKQXA8G9BInPXBlY5LH+Wxdljpqu+924Kmn6gmqUo52RMu
+YyB5WMNPlnwjTmUm3ZMvcN/VwHZ3D/l1R/DsNzhXk9qPdx2AvVMLklx0rLe5yURM
+pDAUoPiSJ3dMrrGlYPsMU80OjBRm8q9j+ppE+dcm8Ph7uxVff8vxAA0aA/pIBKbz
+h4mjsJh7whc3yZvVplR8C7dLhx8gj9uFpRAm13yedNqt8LjwxENhUnSOdOy7XEa6
+Kai+vaRVbWK5CF9Y5wXke1jls5oWrx/YjRDDUu3Ci2r3G31gTF4LxJoF61RlaZH1
+A22O0b8tjsBYaKaL8OfbS5kEj/MpY/k2GOMHrniTNfK603xYJjRm16KtTUAn/rDv
+LP3HTHv1Aj5n6895TwmwWkjqnuqVholBpalvKqxZWaLBgHieeds=
+=YxqD
+-----END PGP SIGNATURE-----
+
+--19uQFt6ulqmgNgg1--
