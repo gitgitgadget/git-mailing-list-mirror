@@ -2,150 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88A471F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 15:40:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEC8A1F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 20:33:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754653AbeATPfd convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 20 Jan 2018 10:35:33 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:47984 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753549AbeATPfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 10:35:32 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0KFZTU9030638
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 20 Jan 2018 10:35:30 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
-        <git@vger.kernel.org>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-4-randall.s.becker@rogers.com> <1153e1c0-c7d5-3e0d-ce41-ffb1230164f7@web.de> <019601d391f4$dd367de0$97a379a0$@nexbridge.com> <9b7bf754-90bd-c25c-f5ae-124dcd97d281@web.de>
-In-Reply-To: <9b7bf754-90bd-c25c-f5ae-124dcd97d281@web.de>
-Subject: RE: [PATCH v2 2/6] Add tar extract install options override in installation processing.
-Date:   Sat, 20 Jan 2018 10:35:26 -0500
-Message-ID: <019901d39204$4ed19980$ec74cc80$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQH5ceUaUBDLnBuBgyHh9+OiHAZcgwJI/tV9AkeXrP0DG2hYFwHm6YW2ouSNUnA=
+        id S1756653AbeATUdh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 15:33:37 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58162 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756624AbeATUdg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 20 Jan 2018 15:33:36 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 52F8560402;
+        Sat, 20 Jan 2018 20:33:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1516480413;
+        bh=6iSVF3PJbef1aeoxruEacBSLP55FNOSCH1zUMy1A8Uc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=ekanK/JBcpUSrYlXG5jvkpphsYPkcJdAhrg1QgdYa3icN/WqsE3Ul1Kmj2hHCJBg+
+         1s9/TonvdL8lAIvuBR9NB+XoPhWE4BAv2xcScWB+h/87wSuuIilB9AE/5bhqC5BKbZ
+         d7zxlWPFWJjcyACHRs+1TZ+HygpxzAGohRODUdU+MTpQp2yV11x3L4/tsG7fScTM9z
+         Aa7EMj/EMtdEa+0xQo62f6I5kySfKmzc7KOlSJ6zQmGMMKFOPvzZxcjmOJPfantnlI
+         QZ9csINqVcj8di2KLD5s4lrDpgApKTIV0lSgZIWa8DyCeNPxsZo37MCNH84GPZNAbR
+         WbmipDbDIgAwlfxmngUVjf6XlEjXY3yf4yX8XKEeHGnHqkHZqpU0I9RS4S/bAG7Bei
+         htVAjkClCdoiyDb4+BIBPbRjLE842eJhaTU+N7NsrZQTcyDqEGsRw6mnWvK4fqMmi3
+         lqyhUjA4F6hTjpLPmIKFX9UJSTBmzmPD7Z/+EBQlqneVN5DgkOL
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=D0=B4=D1=80=20=D0=91=D1=83=D0=BB=D0=B0=D0=B5=D0=B2?= 
+        <aleks.bulaev@gmail.com>
+Subject: [PATCH] t: add clone test for files differing only in case
+Date:   Sat, 20 Jan 2018 20:33:24 +0000
+Message-Id: <20180120203324.112522-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.16.0.rc2.280.g09355b536d
+In-Reply-To: <20180119041825.727904-1-sandals@crustytoothpaste.net>
+References: <20180119041825.727904-1-sandals@crustytoothpaste.net>
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 20, 2018 9:25 AM, René Scharfe wrote:
-> To: Randall S. Becker <rsbecker@nexbridge.com>; git@vger.kernel.org
-> Subject: Re: [PATCH v2 2/6] Add tar extract install options override in
-> installation processing.
-> 
-> Am 20.01.2018 um 14:44 schrieb Randall S. Becker:
-> > On January 20, 2018 7:31 AM, René Scharfe wrote:
-> >> Am 19.01.2018 um 18:34 schrieb randall.s.becker@rogers.com:
-> >>> From: "Randall S. Becker" <rsbecker@nexbridge.com>
-> >>>
-> >>> * Makefile: Add TAR_EXTRACT_OPTIONS to allow platform options to be
-> >>> specified if needed. The default is xof.
-> >>>
-> >>> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com> ---
-> >>> Makefile | 6 +++++- 1 file changed, 5 insertions(+), 1
-> >>> deletion(-)
-> >>>
-> >>> diff --git a/Makefile b/Makefile index 1a9b23b67..040e9eacd
-> >>> 100644 --- a/Makefile +++ b/Makefile @@ -429,6 +429,9 @@ all:: #
-> >>> running the test scripts (e.g., bash has better support for "set -x"
-> >>> # tracing). # +# Define TAR_EXTRACT_OPTIONS if you want to change
-> >>> the default +behaviour # from xvf to something else during
-> >>> installation.
-> >>
-> >> "xof" instead of "xvf"?
-> >
-> > When I look at the parent commit, it says xof, so I wanted to preserve
-> > existing behaviour by default. Our install process wants to see the
-> > actual set of files, so we wanted to use xvof but that hardly seemed
-> > of general interest. I was hoping an option to control it would be
-> > agreeable.
-> 
-> Preserving the default is good. I meant that the default is "xof", but the
-> added line implies it was "xvf" instead.
-> 
-> Seeing your actual use case confirms that my suggestion below would work
-> for you.
-> 
-> >
-> >>> +# # When cross-compiling, define HOST_CPU as the canonical name
-> >>> of the
-> >> CPU on
-> >>> # which the built Git will run (for instance "x86_64").
-> >>>
-> >>> @@ -452,6 +455,7 @@ LDFLAGS = ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
-> >>> ALL_LDFLAGS = $(LDFLAGS) STRIP ?= strip +TAR_EXTRACT_OPTIONS = xof
-> >>>
-> >>> # Create as necessary, replace existing, make ranlib unneeded.
-> >>> ARFLAGS = rcs @@ -2569,7 +2573,7 @@ install: all ifndef NO_GETTEXT
-> >>> $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(localedir_SQ)'
-> >>> (cd po/build/locale && $(TAR) cf - .) | \ -	(cd
-> >>> '$(DESTDIR_SQ)$(localedir_SQ)' && umask 022 && $(TAR) xof -) + (cd
-> >>> '$(DESTDIR_SQ)$(localedir_SQ)' && umask 022 && $(TAR)
-> >>> +$(TAR_EXTRACT_OPTIONS) -)
-> >>
-> >> Hmm.  TAR_EXTRACT_OPTIONS always needs to have f (or -f, or --file)
-> >> at the end to go together with the following dash, meaning to extract
-> >> from stdin. And x (or -x, or --extract) is probably needed in all
-> >> cases as well.  So wouldn't it make more sense to only put the o (or
-> >> -o, or --no-same-owner) into TAR_EXTRACT_OPTIONS and enforce x and
-> f?
-> >
-> > This is a good suggestion, and I'd love to do that, if I could
-> > guarantee a modern tar, which I can't. The platform comes with a
-> > really old-school tar from some old (seemingly BSD4.3) epoch that only
-> > takes one option set. There is a more modern tar that can be
-> > optionally installed if the sysadmin decides to that takes a slightly
-> > more modern set, which could support your request, and my team also
-> > has a gnu port that is very modern. I can't control what customers are
-> > choosing to have installed, unfortunately. Your point is well made and
-> > I am completely on board with it, but it introduces a configuration
-> > requirement.
-> 
-> Long options would be nice to nice to have, but are not my main point; I
-> included them mainly to spare readers from firing up "man tar" to look up
-> the meaning of the short ones.
-> 
-> I just meant to say that something like this here would make more sense
-> because you always need x and f- anyway:
-> 
-> 	TAR_EXTRACT_OPTIONS = o
-> 
-> 	... ${TAR} x${TAR_EXTRACT_OPTIONS}f -
-> 
-> > As with the broadening setbuf (patch 2/6) change, I would like to
-> > consider this for the future, having a slightly different more complex
-> > idea. I could introduce something like this:
-> >
-> > 1. HAS_ANCIENT_TAR=UnfortunatelyYes in config.mak.uname that disables
-> > this capability all together 2. HAS_ANCIENT_TAR=AreYouKiddingMe
-> > (joke) then set up TAR_EXTRACT_ADDITIONAL_OPTIONS above and beyond
-> the
-> > default, so --file, --no-same-owner would always be in effect for that
-> > operation.
-> >
-> > The micro-project would also, logically, need to apply to other tar
-> > occurrences throughout the code and potentially need a test case
-> > written for it (not entirely sure what that would test, yet).
-> > Is that a reasonable approach?
-> 
-> As long as old-school dash-less flags suffice for our purposes (including
-> yours) we can just keep using that style everywhere and avoid adding more
-> settings.  It would be a different matter if we needed features that have no
-> short flag, or are only offered by certain tar implementations.
+We recently introduced a regression in cloning repositories onto
+case-insensitive file systems where the repository contains multiple
+files differing only in case.  In such a case, we would segfault.  This
+segfault has already been fixed (repository: pre-initialize hash algo
+pointer), but it's not the first time similar problems have arisen.
+Introduce a test to catch this case and ensure the behavior does not
+regress.
 
-Points taken. I will reissue this particular patch shortly.
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ t/t5601-clone.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
+I've verified that the test does fail without the patch on a vfat file
+system.  However, many other tests also fail on a vfat file system on
+Linux, so unfortunately that doesn't look like a viable testing strategy
+going forward.
+
+I didn't include an object ID for the commit referenced simply because I
+didn't see one yet and I didn't want to insert a local one that wouldn't
+work for anyone else.
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 0f895478f0..53b2dda9d2 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -611,4 +611,17 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
+ 	git -C replay.git index-pack -v --stdin <tmp.pack
+ '
+ 
++hex2oct() {
++	perl -ne 'printf "\\%03o", hex for /../g'
++}
++
++test_expect_success 'clone on case-insensitive fs' '
++	o=$(git hash-object -w --stdin </dev/null | hex2oct) &&
++	t=$(printf "100644 X\0${o}100644 x\0${o}" |
++		git hash-object -w -t tree --stdin) &&
++	c=$(git commit-tree -m bogus $t) &&
++	git update-ref refs/heads/bogus $c &&
++	git clone -b bogus . bogus
++'
++
+ test_done
