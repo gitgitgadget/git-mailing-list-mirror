@@ -2,109 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6FC61F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 22:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9DE51F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 22:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756736AbeATW0n (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 17:26:43 -0500
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:38679 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756712AbeATW0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 17:26:41 -0500
-Received: by mail-ot0-f195.google.com with SMTP id v5so4455441oth.5
-        for <git@vger.kernel.org>; Sat, 20 Jan 2018 14:26:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=N24nuQMxeSl+5f+RWvwUYX4vlSEjZh9hmWamYuClHf8=;
-        b=Ghvv4rkSZ6I5F2/TYU12/sLTkXv419Pm7NWMowqheHD9kXshOy0TIrkYDKS3kMPQyK
-         BU/VoyzPqg4NFFqOwjqm6aRapwzqLIY4XJbyNLZdRhmjwc+0y1K144s88IXTczbYi+Cf
-         pq62HxYbi/NsOLn2IACCmaEIe2MH1kVpF8euPrfhULxa5JIHET8s5y1bVC+BIhPdGeCC
-         Cj+eX4KeKZ9WT4GQF1N43j4uR9l75hDiYLWBpk+t/Ira4PBhpKIMZnvn84h11M0hu7d7
-         68EG8A1OCSh3uMm2qYnpEX8f6iqIrvr5plYMRbIPDPF2zoTosWvocs/ZkKiD9LC15fEw
-         lRGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=N24nuQMxeSl+5f+RWvwUYX4vlSEjZh9hmWamYuClHf8=;
-        b=ZESLqvthAZDJj6z+UF11I1n0h/oiENBmWpsbMaMkxnQupx2F/6pxizulJ4lbpIRh7m
-         da9vEZIQ0l1504sbFUZ7DCKBNL2/kIh9YA8jfy9O0e0caPWIp8gxjty1YtusV2fcWKuj
-         GAJ92R+u/1f5t3YKqcLUbp+E33u20fRt7ft/NCN8r42fBGg3NmlqXzc6/8AZDjNkHsh1
-         a8GOFaoKMpXWhBAYlOJufgm+TnWkL3TiOeZCr3PXJfylJ9azSs3GwMVBhAleY9bP60BI
-         nL2Aw4fb1MAinvlD3y6BZGtpsl1tkWRfHxsXbFaLPQL39prfolQRPOymCB2G5hxDfot2
-         3pDg==
-X-Gm-Message-State: AKwxytfPb4In3EsLxWDMw+h8VhPQH9uuUyAn5cqk17K+RHxb4Y2ZNWM6
-        Sryfcl9pGaKgIWwog0uzOYkUDYmq9B2LFtJGf83XHg==
-X-Google-Smtp-Source: AH8x226ua87ITwZ2svvEho5uU59L1Gmsp2LStAooFTKLoXvcZ/zEhH+ibT5HdE7Gb4JQ0BuJRxW26xp/NowOOWXPEUg=
-X-Received: by 10.157.7.164 with SMTP id 33mr1512839oto.276.1516487201058;
- Sat, 20 Jan 2018 14:26:41 -0800 (PST)
+        id S1756755AbeATW1F (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 17:27:05 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62833 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756712AbeATW1D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 17:27:03 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63924D9D54;
+        Sat, 20 Jan 2018 17:27:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tdCWlWM1gJCY3i0fW6LipzDCjpI=; b=LQBjsT
+        3Bh9QOUILhGpOBLZjhsu7QRZtEGXyYlYAVUrbX+eWHho//Z+RiXep/yeV2TgZBVy
+        Ij4Pxx8/CNmvAh8fmSNUna9/x7wIL/jD0xEGo81RPHRnYrDf9yswZSWfGRpaBSoR
+        ZBkMuyT+f3bWbfePSOjVb1ZWkuJK8lxYRFuIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oBgyMrMrdAMfpcy2F2IAIHqp69zwwD+J
+        QquZI88CKTCD6qn5Lw5wLjH7GsPFW5EYUqQcfjdB19WsDwmqu24ppoIWwNzXGR/k
+        dbwO817teTX/I9xvKDIxSdTvJCB1Edy5pAheOMWA2+9ZHmyWdsJhGCH4QXIJQQ76
+        bVBYVr+OtKY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5AD55D9D53;
+        Sat, 20 Jan 2018 17:27:02 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0981D9D52;
+        Sat, 20 Jan 2018 17:27:01 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Theodore Ts'o <tytso@mit.edu>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Chris Mason <clm@fb.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+References: <20180117184828.31816-1-hch@lst.de>
+        <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
+        <87h8rki2iu.fsf@evledraar.gmail.com>
+        <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+        <20180117235220.GD6948@thunk.org>
+        <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
+        <20180118162721.GA26078@lst.de>
+        <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
+        <20180120221445.GA4451@thunk.org>
+Date:   Sat, 20 Jan 2018 14:27:00 -0800
+In-Reply-To: <20180120221445.GA4451@thunk.org> (Theodore Ts'o's message of
+        "Sat, 20 Jan 2018 17:14:45 -0500")
+Message-ID: <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.160.203 with HTTP; Sat, 20 Jan 2018 14:26:10 -0800 (PST)
-In-Reply-To: <CAPig+cQ9mMVvMLKSQOKxinc5iuRK61yTDQ511ZdNqEOtbCGoAQ@mail.gmail.com>
-References: <1516404987-3420-1-git-send-email-gs051095@gmail.com> <CAPig+cQ9mMVvMLKSQOKxinc5iuRK61yTDQ511ZdNqEOtbCGoAQ@mail.gmail.com>
-From:   Gargi Sharma <gs051095@gmail.com>
-Date:   Sat, 20 Jan 2018 22:26:10 +0000
-Message-ID: <CAOCi2DGOkotCb+4SUCZShOp=r_=QMhMYBq4GUq-ATe=OE0XM3w@mail.gmail.com>
-Subject: Re: [PATCH v3] mru: Replace mru.[ch] with list.h implementation
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0921BC3C-FE31-11E7-88A9-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 20, 2018 at 12:59 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Fri, Jan 19, 2018 at 6:36 PM, Gargi Sharma <gs051095@gmail.com> wrote:
->> Replace the custom calls to mru.[ch] with calls to list.h. This patch is
->> the final step in removing the mru API completely and inlining the logic.
->> This patch leads to significant code reduction and the mru API hence, is
->> not a useful abstraction anymore.
->
-> A couple minor style nits below... (may not be worth a re-roll)
+Theodore Ts'o <tytso@mit.edu> writes:
 
-I can send a v4, it shouldn't be a problem. :)
+> ....  I've never been fond of the "git repack -A" behavior
+> where it can generate huge numbers of loose files.  I'd much prefer it
+> if the other objects ended up in a separate pack file, and then some
+> other provision made for nuking that pack file some time later....
 
->
->> Signed-off-by: Gargi Sharma <gs051095@gmail.com>
->> ---
->> diff --git a/cache.h b/cache.h
->> @@ -1587,10 +1588,10 @@ extern struct packed_git {
->>  } *packed_git;
->>
->>  /*
->> - * A most-recently-used ordered version of the packed_git list, which can
->> - * be iterated instead of packed_git (and marked via mru_mark).
->> + * A most-recently-used ordered version of the packed_git list.
->>   */
->> -extern struct mru packed_git_mru;
->> +extern struct list_head packed_git_mru;
->> +
->
-> Unnecessary extra blank line.
->
->>  struct pack_entry {
->>         off_t offset;
->> diff --git a/packfile.c b/packfile.c
->> @@ -859,9 +859,9 @@ static void prepare_packed_git_mru(void)
->>  {
->>         struct packed_git *p;
->>
->> -       mru_clear(&packed_git_mru);
->> -       for (p = packed_git; p; p = p->next)
->> -               mru_append(&packed_git_mru, p);
->> +       for (p = packed_git; p; p = p->next) {
->> +               list_add_tail(&p->mru, &packed_git_mru);
->> +       }
->
-> Unnecessary braces on for-loop.
->
->>  }
+Yes, a "cruft pack" that holds unreachable object has been discussed
+a few times recently on list, and I do agree that it is a desirable
+thing to have in the longer run.
+
+What's tricky is to devise a way to allow us to salvage objects that
+are placed in a cruft pack because they are accessed recently,
+proving themselves to be no longer crufts.  It could be that a good
+way to resurrect them is to explode them to loose form when they are
+accessed out of a cruft pack.  We need to worry about interactions
+with read-only users if we go that route, but with the current
+"explode unreachable to loose, touch their mtime when they are
+accessed" scheme ends up ignoring accesses from read-only users that
+cannot update mtime, so it might not be too bad.
+
