@@ -6,81 +6,111 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B82091F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 13:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1D021F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 13:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753549AbeATNXu convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 20 Jan 2018 08:23:50 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:28434 "EHLO
+        id S1753487AbeATNpA convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 20 Jan 2018 08:45:00 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:25170 "EHLO
         elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753416AbeATNXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 08:23:48 -0500
+        with ESMTP id S1751130AbeATNo7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 08:44:59 -0500
 X-Virus-Scanned: amavisd-new at elehost.com
 Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
         (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0KDNkdw027497
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0KDiuhQ027858
         (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Sat, 20 Jan 2018 08:23:47 -0500 (EST)
+        Sat, 20 Jan 2018 08:44:57 -0500 (EST)
         (envelope-from rsbecker@nexbridge.com)
 From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "=?UTF-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>
-Cc:     <git@vger.kernel.org>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180120111012.GA26459@tor.lan>
-In-Reply-To: <20180120111012.GA26459@tor.lan>
-Subject: RE: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
-Date:   Sat, 20 Jan 2018 08:23:43 -0500
-Message-ID: <019501d391f1$e826f750$b874e5f0$@nexbridge.com>
+To:     "=?UTF-8?Q?'Ren=C3=A9_Scharfe'?=" <l.s.r@web.de>,
+        <git@vger.kernel.org>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-4-randall.s.becker@rogers.com> <1153e1c0-c7d5-3e0d-ce41-ffb1230164f7@web.de>
+In-Reply-To: <1153e1c0-c7d5-3e0d-ce41-ffb1230164f7@web.de>
+Subject: RE: [PATCH v2 2/6] Add tar extract install options override in installation processing.
+Date:   Sat, 20 Jan 2018 08:44:53 -0500
+Message-ID: <019601d391f4$dd367de0$97a379a0$@nexbridge.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
         charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: AQH5ceUaUBDLnBuBgyHh9+OiHAZcgwKtGOTzoxuWFRA=
+Thread-Index: AQH5ceUaUBDLnBuBgyHh9+OiHAZcgwJI/tV9AkeXrP2jDHuV0A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 20, 2018 6:10 AM,  Torsten Bögershausen wrote:
-> On Fri, Jan 19, 2018 at 12:33:59PM -0500, randall.s.becker@rogers.com
-> wrote:
+On January 20, 2018 7:31 AM, René Scharfe wrote:
+> Am 19.01.2018 um 18:34 schrieb randall.s.becker@rogers.com:
 > > From: "Randall S. Becker" <rsbecker@nexbridge.com>
 > >
-> > * wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
-> >   default on the NonStop platform.
+> > * Makefile: Add TAR_EXTRACT_OPTIONS to allow platform options to be
+> >    specified if needed. The default is xof.
 > >
 > > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 > > ---
-> >  wrapper.c | 3 +++
-> >  1 file changed, 3 insertions(+)
+> >   Makefile | 6 +++++-
+> >   1 file changed, 5 insertions(+), 1 deletion(-)
 > >
-> > diff --git a/wrapper.c b/wrapper.c
-> > index d20356a77..671cbb4b4 100644
-> > --- a/wrapper.c
-> > +++ b/wrapper.c
-> > @@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
-> >  	FILE *stream = fdopen(fd, mode);
-> >  	if (stream == NULL)
-> >  		die_errno("Out of memory? fdopen failed");
-> > +#ifdef __TANDEM
-> > +	setbuf(stream,0);
-> > +#endif
+> > diff --git a/Makefile b/Makefile
+> > index 1a9b23b67..040e9eacd 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -429,6 +429,9 @@ all::
+> >   # running the test scripts (e.g., bash has better support for "set -x"
+> >   # tracing).
+> >   #
+> > +# Define TAR_EXTRACT_OPTIONS if you want to change the default
+> > +behaviour # from xvf to something else during installation.
 > 
-> Reading the commit message, I would have expected someting similar to
-> 
-> #ifdef FORCE_PIPE_FLUSHES
-> 	setbuf(stream,0);
-> #endif
-> 
-> (Because other systems may need the tweak as well, some day) Of course
-> you need to change that in the Makefile and config.mak.uname
-> 
-> >  	return stream;
-> >  }
+> "xof" instead of "xvf"?
 
-I can definitely see the point. Would you be agreeable to expanding the scope of this as a separate patch after this one is applied? I would want to bring at least one more Not NonStop machine into the mix for testing, which is more than I can do this weekend 😊.
+When I look at the parent commit, it says xof, so I wanted to preserve existing behaviour by default. Our install process wants to see the actual set of files, so we wanted to use xvof but that hardly seemed of general interest. I was hoping an option to control it would be agreeable.
 
-Cheers,
-Randall
+> > +#
+> >   # When cross-compiling, define HOST_CPU as the canonical name of the
+> CPU on
+> >   # which the built Git will run (for instance "x86_64").
+> >
+> > @@ -452,6 +455,7 @@ LDFLAGS =
+> >   ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+> >   ALL_LDFLAGS = $(LDFLAGS)
+> >   STRIP ?= strip
+> > +TAR_EXTRACT_OPTIONS = xof
+> >
+> >   # Create as necessary, replace existing, make ranlib unneeded.
+> >   ARFLAGS = rcs
+> > @@ -2569,7 +2573,7 @@ install: all
+> >   ifndef NO_GETTEXT
+> >   	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(localedir_SQ)'
+> >   	(cd po/build/locale && $(TAR) cf - .) | \
+> > -	(cd '$(DESTDIR_SQ)$(localedir_SQ)' && umask 022 && $(TAR) xof -)
+> > +	(cd '$(DESTDIR_SQ)$(localedir_SQ)' && umask 022 && $(TAR)
+> > +$(TAR_EXTRACT_OPTIONS) -)
+> 
+> Hmm.  TAR_EXTRACT_OPTIONS always needs to have f (or -f, or --file) at the
+> end to go together with the following dash, meaning to extract from stdin.
+> And x (or -x, or --extract) is probably needed in all cases as well.  So wouldn't
+> it make more sense to only put the o (or -o, or
+> --no-same-owner) into TAR_EXTRACT_OPTIONS and enforce x and f?
+
+This is a good suggestion, and I'd love to do that, if I could guarantee a modern tar, which I can't. The platform comes with a really old-school tar from some old (seemingly BSD4.3) epoch that only takes one option set. There is a more modern tar that can be optionally installed if the sysadmin decides to that takes a slightly more modern set, which could support your request, and my team also has a gnu port that is very modern. I can't control what customers are choosing to have installed, unfortunately. Your point is well made and I am completely on board with it, but it introduces a configuration requirement.
+
+As with the broadening setbuf (patch 2/6) change, I would like to consider this for the future, having a slightly different more complex idea. I could introduce something like this:
+
+1. HAS_ANCIENT_TAR=UnfortunatelyYes in config.mak.uname that disables this capability all together
+2. HAS_ANCIENT_TAR=AreYouKiddingMe (joke) then set up TAR_EXTRACT_ADDITIONAL_OPTIONS above and beyond the default, so --file, --no-same-owner would always be in effect for that operation.
+
+The micro-project would also, logically, need to apply to other tar occurrences throughout the code and potentially need a test case written for it (not entirely sure what that would test, yet).
+
+Is that a reasonable approach?
+
+> 
+> >   endif
+> >   ifndef NO_PERL
+> >   	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)'
+> > install
+> >
 
