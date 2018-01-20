@@ -2,93 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A0CA1F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 22:25:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6FC61F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 22:26:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756733AbeATWZO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 17:25:14 -0500
-Received: from mail-ot0-f193.google.com ([74.125.82.193]:37109 "EHLO
-        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756712AbeATWZN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 17:25:13 -0500
-Received: by mail-ot0-f193.google.com with SMTP id a24so4456590otd.4
-        for <git@vger.kernel.org>; Sat, 20 Jan 2018 14:25:13 -0800 (PST)
+        id S1756736AbeATW0n (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 17:26:43 -0500
+Received: from mail-ot0-f195.google.com ([74.125.82.195]:38679 "EHLO
+        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756712AbeATW0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 17:26:41 -0500
+Received: by mail-ot0-f195.google.com with SMTP id v5so4455441oth.5
+        for <git@vger.kernel.org>; Sat, 20 Jan 2018 14:26:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ADwDIWbFubScR/DLj5FX8Ljb+EbnjGMUvA8WpMaVeJM=;
-        b=G5oP4UjhI5LxOk+PH5OeHxzT4R9S8jSplm0rHivfM7YvuqpLn7J+xA6wMqN4Ibn9GA
-         icIqeQeQws326OUKFxYnfIldwyRFuP5aAay6YnwQ8XqT2ivw+59Y01fe5k31i2ymTKBq
-         kouBVSw1lSxaBIbcoEPP2m32wI3HoxLVhHI24g6ESnyaN78qBlnWZi9+QK8UVGL55E3y
-         NnOLZZRwhHQ0EF4dcD6hLzdZJKKly50gD2TdB5FcbN0qeyPCwIzZtbJ7UxXzV1xZvVWp
-         6iplvJL1O50/fK5OtKO5i5mS2wbioHR6D3cYDg/1Yp0lJZPWOStA7BBc0RXvbzUHGhYC
-         b80g==
+        bh=N24nuQMxeSl+5f+RWvwUYX4vlSEjZh9hmWamYuClHf8=;
+        b=Ghvv4rkSZ6I5F2/TYU12/sLTkXv419Pm7NWMowqheHD9kXshOy0TIrkYDKS3kMPQyK
+         BU/VoyzPqg4NFFqOwjqm6aRapwzqLIY4XJbyNLZdRhmjwc+0y1K144s88IXTczbYi+Cf
+         pq62HxYbi/NsOLn2IACCmaEIe2MH1kVpF8euPrfhULxa5JIHET8s5y1bVC+BIhPdGeCC
+         Cj+eX4KeKZ9WT4GQF1N43j4uR9l75hDiYLWBpk+t/Ira4PBhpKIMZnvn84h11M0hu7d7
+         68EG8A1OCSh3uMm2qYnpEX8f6iqIrvr5plYMRbIPDPF2zoTosWvocs/ZkKiD9LC15fEw
+         lRGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ADwDIWbFubScR/DLj5FX8Ljb+EbnjGMUvA8WpMaVeJM=;
-        b=NrHwtiORulCwbiBjfEXhsd0RYCWXZ4w+4eH1amt7YsZPwCoVOoARuuB3i9e1dGuJ4U
-         1Yn1FBmNjHcBkvgXmLCl0L6AAMbIqxZsT7OAN4xI3KDH/zOR2I8Lca8Hf2Z9QHioT9ep
-         FSD1uiUkEySjvH8kkPZeqMyRdUYoiFpCO8UH5MHxTHdddM7DyeXrwKgfsepQPzK0sf5H
-         We+ntyD3kdzZMDLXF07tfeDzkGmlwKAof9cy5cisT/Euxc5El0RFe+lWLjIBzmtj6anf
-         DF0ddFyK55UmTFXhy6nQxzOH5zGd+xOM/cspkMLM9fXnFzNuKs3q4aXXlgjY0tmmmLuk
-         HTxA==
-X-Gm-Message-State: AKwxytf5oUsBtpfqFDcoZx+Kc7xigE3HufbuybHVL7SIUEfwzedInd4Y
-        VGTZAFGjbnhmbF8bS6clbpQCqmL61p+YTHCzKN4=
-X-Google-Smtp-Source: AH8x224ax5M8BfWtmsSiVwQg4G2Ff1icgIGLsQ+SuQl3RZYBRZq2RHRu/eEb6Eqf2dz77aEyuUS4GNCarMyZLc/sgm8=
-X-Received: by 10.157.12.230 with SMTP id o35mr1738556otd.191.1516487112563;
- Sat, 20 Jan 2018 14:25:12 -0800 (PST)
+        bh=N24nuQMxeSl+5f+RWvwUYX4vlSEjZh9hmWamYuClHf8=;
+        b=ZESLqvthAZDJj6z+UF11I1n0h/oiENBmWpsbMaMkxnQupx2F/6pxizulJ4lbpIRh7m
+         da9vEZIQ0l1504sbFUZ7DCKBNL2/kIh9YA8jfy9O0e0caPWIp8gxjty1YtusV2fcWKuj
+         GAJ92R+u/1f5t3YKqcLUbp+E33u20fRt7ft/NCN8r42fBGg3NmlqXzc6/8AZDjNkHsh1
+         a8GOFaoKMpXWhBAYlOJufgm+TnWkL3TiOeZCr3PXJfylJ9azSs3GwMVBhAleY9bP60BI
+         nL2Aw4fb1MAinvlD3y6BZGtpsl1tkWRfHxsXbFaLPQL39prfolQRPOymCB2G5hxDfot2
+         3pDg==
+X-Gm-Message-State: AKwxytfPb4In3EsLxWDMw+h8VhPQH9uuUyAn5cqk17K+RHxb4Y2ZNWM6
+        Sryfcl9pGaKgIWwog0uzOYkUDYmq9B2LFtJGf83XHg==
+X-Google-Smtp-Source: AH8x226ua87ITwZ2svvEho5uU59L1Gmsp2LStAooFTKLoXvcZ/zEhH+ibT5HdE7Gb4JQ0BuJRxW26xp/NowOOWXPEUg=
+X-Received: by 10.157.7.164 with SMTP id 33mr1512839oto.276.1516487201058;
+ Sat, 20 Jan 2018 14:26:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.160.203 with HTTP; Sat, 20 Jan 2018 14:24:42 -0800 (PST)
-In-Reply-To: <20180120010228.hhyvirqp44taf3cz@dcvr.yhbt.net>
-References: <1516404987-3420-1-git-send-email-gs051095@gmail.com> <20180120010228.hhyvirqp44taf3cz@dcvr.yhbt.net>
+Received: by 10.74.160.203 with HTTP; Sat, 20 Jan 2018 14:26:10 -0800 (PST)
+In-Reply-To: <CAPig+cQ9mMVvMLKSQOKxinc5iuRK61yTDQ511ZdNqEOtbCGoAQ@mail.gmail.com>
+References: <1516404987-3420-1-git-send-email-gs051095@gmail.com> <CAPig+cQ9mMVvMLKSQOKxinc5iuRK61yTDQ511ZdNqEOtbCGoAQ@mail.gmail.com>
 From:   Gargi Sharma <gs051095@gmail.com>
-Date:   Sat, 20 Jan 2018 22:24:42 +0000
-Message-ID: <CAOCi2DGKkLnY_=-7pMr9VyP7TVsj0b8w-msdNn9ZtXKK8g7u9g@mail.gmail.com>
+Date:   Sat, 20 Jan 2018 22:26:10 +0000
+Message-ID: <CAOCi2DGOkotCb+4SUCZShOp=r_=QMhMYBq4GUq-ATe=OE0XM3w@mail.gmail.com>
 Subject: Re: [PATCH v3] mru: Replace mru.[ch] with list.h implementation
-To:     Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 20, 2018 at 1:02 AM, Eric Wong <e@80x24.org> wrote:
-> Gargi Sharma <gs051095@gmail.com> wrote:
->> --- a/list.h
->> +++ b/list.h
->> @@ -93,6 +93,13 @@ static inline void list_move(struct list_head *elem, struct list_head *head)
->>       list_add(elem, head);
->>  }
+On Sat, Jan 20, 2018 at 12:59 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, Jan 19, 2018 at 6:36 PM, Gargi Sharma <gs051095@gmail.com> wrote:
+>> Replace the custom calls to mru.[ch] with calls to list.h. This patch is
+>> the final step in removing the mru API completely and inlining the logic.
+>> This patch leads to significant code reduction and the mru API hence, is
+>> not a useful abstraction anymore.
+>
+> A couple minor style nits below... (may not be worth a re-roll)
+
+I can send a v4, it shouldn't be a problem. :)
+
+>
+>> Signed-off-by: Gargi Sharma <gs051095@gmail.com>
+>> ---
+>> diff --git a/cache.h b/cache.h
+>> @@ -1587,10 +1588,10 @@ extern struct packed_git {
+>>  } *packed_git;
 >>
->> +/* Move to the front of the list. */
->> +static inline void list_move_to_front(struct list_head *elem, struct list_head *head)
->> +{
->> +     list_del(elem);
->> +     list_add(elem, head);
->> +}
+>>  /*
+>> - * A most-recently-used ordered version of the packed_git list, which can
+>> - * be iterated instead of packed_git (and marked via mru_mark).
+>> + * A most-recently-used ordered version of the packed_git list.
+>>   */
+>> -extern struct mru packed_git_mru;
+>> +extern struct list_head packed_git_mru;
 >> +
 >
-> Since we already have list_move and it does the same thing,
-> I don't think we need a new function, here.
+> Unnecessary extra blank line.
 >
-> Hackers coming from other projects (glibc/urcu/Linux kernel)
-> might appreciate having fewer differences from what they're used
-> to.
-
-I think the idea behind this function was that it is already being used in two
-places in the code and might be used in other places in the future. I agree
-with your stance, but a list_move_to_front is pretty self explanatory and not
-too different, so it should be alright.
-
+>>  struct pack_entry {
+>>         off_t offset;
+>> diff --git a/packfile.c b/packfile.c
+>> @@ -859,9 +859,9 @@ static void prepare_packed_git_mru(void)
+>>  {
+>>         struct packed_git *p;
+>>
+>> -       mru_clear(&packed_git_mru);
+>> -       for (p = packed_git; p; p = p->next)
+>> -               mru_append(&packed_git_mru, p);
+>> +       for (p = packed_git; p; p = p->next) {
+>> +               list_add_tail(&p->mru, &packed_git_mru);
+>> +       }
 >
-> Anyways thanks for working on this!
+> Unnecessary braces on for-loop.
+>
+>>  }
