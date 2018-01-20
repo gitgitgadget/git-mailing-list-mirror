@@ -2,120 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B35AB1F576
-	for <e@80x24.org>; Sat, 20 Jan 2018 09:38:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABB161F576
+	for <e@80x24.org>; Sat, 20 Jan 2018 11:11:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751343AbeATJiS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 04:38:18 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:43183 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751055AbeATJiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 04:38:14 -0500
-Received: by mail-qt0-f182.google.com with SMTP id s3so9732033qtb.10
-        for <git@vger.kernel.org>; Sat, 20 Jan 2018 01:38:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=uIJDYuWzM+ZQ87Vk81wsKM47sj2wbLEj8T69ACfKtL8=;
-        b=fgM3s5pvwxbPow9+sbG2Gdm448v6oUVyKNaJ1CU4NrloOViZ8Som9FeQ4xC/VTEhdr
-         5RN43cM7AkhUkDqUFzqUij8djnNJUjc7I2/PdHJCf/TVFarvw7lOWNqHWLQDUpkqZWRd
-         xsSRyru/YpPtFHTnryIqdvclo8ZxOcrDKYnN+SZesAP8YWcVjJrZvHru55TABD8NFYNO
-         0p/GhlLLI8VinmP+Z0N3W3cJ0owfLz4yQh46nGDPdeyxUGbURA1k8tj7xcU0GhL3/fFA
-         6OQh/gD81+k4Y7wQ8T2YyD1WnL9IS5RW7babFh2bNevyoaj1Priuoj+zDfQ03k6zAXhu
-         011Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=uIJDYuWzM+ZQ87Vk81wsKM47sj2wbLEj8T69ACfKtL8=;
-        b=YfV6YsqOf+YX3n+lk90Z9A5E0AALYuo8kAwp+dY3649kzuvO0CNGXZLq9K7pZ7EdQU
-         t3yO3qRWnUHkcfPXssOJvhyCcosTpsrKbpEEg0MVpgE4wzAjds/Wyh8fQeCi5uD96DUB
-         7BkQkqSHSkvOvg3iCi99qxGM+cRUJ5eL2uyIc5Pzi06QvYvGRQHoGKrbsnaY2Ub/y8Py
-         F1Rb1B2qkjh45Ywr/A8RW7qDNU3S0gu92NOD1+FBHtOp6cfsFok312OPlQ/MKbO+cZqB
-         JzJgWx6pu0gP8tFnZ1gtrxI80ydqveUJwM3Y9BPtmfNWHUzmkJTCSVFbVE1H+0gVGVix
-         t+uw==
-X-Gm-Message-State: AKwxytex1C8fAcPgTMBWo8/vYSgF9mAh96u/79KKOL7bzDG95PP2/oYS
-        whzO7c5HvJmRxAjTjMZ3GnQxoX8PohcNyg3mPaU=
-X-Google-Smtp-Source: AH8x226+eBJvRfM2ZaMV4vL75iq+AZe1doONqZ+EbWnN60XR56vwTIg7w8gvcK7tMe3TtlFy/AVXMD+dhcEHlQk0Sbo=
-X-Received: by 10.200.25.9 with SMTP id t9mr1825322qtj.75.1516441093420; Sat,
- 20 Jan 2018 01:38:13 -0800 (PST)
+        id S1751146AbeATLK2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 06:10:28 -0500
+Received: from mout.web.de ([212.227.17.11]:50780 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751022AbeATLK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 06:10:26 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0McFLP-1eLbIf040t-00JaqU; Sat, 20
+ Jan 2018 12:10:14 +0100
+Date:   Sat, 20 Jan 2018 12:10:12 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v2 0/6] Force pipes to flush immediately on NonStop
+ platform
+Message-ID: <20180120111012.GA26459@tor.lan>
+References: <20180119173406.13324-1-randall.s.becker@rogers.com>
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Sat, 20 Jan 2018 01:38:12 -0800 (PST)
-In-Reply-To: <xmqqo9lpnhdb.fsf@gitster.mtv.corp.google.com>
-References: <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
- <20180119041825.727904-1-sandals@crustytoothpaste.net> <CAPig+cTOw5NsSmLHYcBEidDzNyiidJ0Dw1dF227KWDL9JrASvw@mail.gmail.com>
- <xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com> <xmqqo9lpnhdb.fsf@gitster.mtv.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 20 Jan 2018 04:38:12 -0500
-X-Google-Sender-Auth: PxFDqeTajBN--Ygky8ibioC_iNI
-Message-ID: <CAPig+cR08-EsBGkrGckG5zTN3iPeLL4cj1g5TykicQJe7sK-pQ@mail.gmail.com>
-Subject: Re: [PATCH] repository: pre-initialize hash algo pointer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
-        <aleks.bulaev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180119173406.13324-1-randall.s.becker@rogers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:5ty0euPACCqTDsw+IumPdx1q1i6VwqtfxJ4a4l5VkaxL3ek98HM
+ ZffWBRWCYVJqP+3GSFIgoSDuc2pN/WI+7ooj4UEB4rra6ISDHFdN1dCBLqU82soabCcpiYw
+ gv5h21BqgcHWJgmz+ntPY7nIP8YyWotly2qquyLGy6L1YI7bc6lwkSfeFKbq1hVLRZF89W5
+ YOYee2DrNwkAzW4yHNZ+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EOzqXpePRoc=:ySm6CZvPuO1+Yh2tyLxon6
+ WagRVALivVbs1rDqxsXKmRPM85X4u3B1kb+mqBPB77Vra5ODBe27Dgipaq4OV4lXeVTxcxSM9
+ 0qu0khIPbGjZp70b0OeERWPHQMkzgOVNFjQb5IxnAVrpFSNT6f2HEjVxmkWF8WspxEfRQwVck
+ fvOwOq5whw9oa/p2jS+MLBmKWfUSy1NOlKj3Ss+PFBX+a1IkodLLVRx7fLKREUrSolNVzrWTo
+ 0KW5UfJADwjx0LbDujhmJI65bpM8aY9ehN0H3Z7TnoxAfh0VAwxQWMPgnqtrH1d9f5l7G2dk/
+ rAqhIxLWrk0bMh3v9BKu5BAuba9E0J5zFS8jZ8LhqA82eeXkgK77fvAkhPaGAM8jp79fUJ1lB
+ 0Y4QdH1SjZTvawUHvm2Pa7+6CSuzHA1rV+xiQSXTUDExiWQp1t81OT9Aav4wfu+G+/RD2ImW9
+ WRFLsP8HV1QHq60f12hjF4ffU+olW+J33Q7hQK5Pqw/2so0fW3FbWULgr+WnIKghBmjsXGCGs
+ 0+sZvyCUT/5Sl0oWovhVI5eTZVW0P//GDFFhdXQYsskAgXr0OtZk8dp/Sw5JX574XebbaiTBr
+ 9Hk9WEMUWfYtct+XH5VSuMb7gAFZS92xEeEBRth0efqBsynAcI6gw/bHKDjX2jEZkpSv0ZqC+
+ THbVfIrEYZvc/yL41HJqSQrA+dI34elLB10N/s/iuP7W0bipNfi8Ppy6+f1LcuQfnzxVcccRg
+ zYdJeZ5uY+RJLqnKtDJ0UIGp4a7DoUEgTSUa4btvj04H3BaXuHbqYNo+WLoBHr2UVdT/wmZgX
+ fsbJCfjh6QAdvpPZdd0eUWKetiDGg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 20, 2018 at 2:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->>> Now that we know (due to Duy's excellent detective work[1]) that the
->>> trigger is files with names differing only in case on case-insensitive
->>> filesystems, the commit message can be updated appropriately.
->>
->> Thanks.  Let me apply the following and do a 2.16.1, hopefully by
->> the end of day or mid tomorrow at the latest.  Test to protect the
->> fix can come as a separate follow-up patch.
->
-> I actually changed my mind and decided not to rush 2.16.1 with just
-> this change.  After all, even though it is better not to crash in
-> such a problematic case, a "successful" clone of such a project on
-> such a filesystem cannot be sanely used *anyway*, so in that sense
-> the "fix" would stop "clone" from segfaulting but the resulting
-> repository would still be "wrong" (e.g. "git status" immediately
-> after clone would likely to say that the working tree is already
-> dirty and missing one of the two paths, or something silly like
-> that).
+On Fri, Jan 19, 2018 at 12:33:59PM -0500, randall.s.becker@rogers.com wrote:
+> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> 
+> * wrapper.c: called setbuf(stream,0) to force pipe flushes not enabled by
+>   default on the NonStop platform.
+> 
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+>  wrapper.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/wrapper.c b/wrapper.c
+> index d20356a77..671cbb4b4 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -403,6 +403,9 @@ FILE *xfdopen(int fd, const char *mode)
+>  	FILE *stream = fdopen(fd, mode);
+>  	if (stream == NULL)
+>  		die_errno("Out of memory? fdopen failed");
+> +#ifdef __TANDEM
+> +	setbuf(stream,0);
+> +#endif
 
-The counter-argument is that filenames differing only in case do not
-necessarily render a project unusable on case-insensitive filesystems.
-For instance, if the problematic files exist only in a project's test
-suite or in some platform-specific resource directory, the project
-itself may still be perfectly usable for a person cloning a project
-merely to build and use it (not develop it). However, "clone" crashing
-_does_ render the project unusable for the same person.
+Reading the commit message, I would have expected someting similar to
 
-The crash[1] when cloning 'tcell' is an example of a project which is
-still 100% usable on case-insensitive filesystems despite
-case-conflicting filenames. Each of the conflicting file pairs [2] has
-identical content, so everything works as intended.
+#ifdef FORCE_PIPE_FLUSHES
+	setbuf(stream,0);
+#endif
 
-Case-conflicting filenames also do not necessarily make it impossible
-to do development work on a project. I have, myself, on several
-occasions cloned such projects on MacOS to make improvements and track
-down and/or fix bugs in parts of the projects not impacted by the
-case-conflicting filenames.
+(Because other systems may need the tweak as well, some day)
+Of course you need to change that in the Makefile and config.mak.uname
 
-Footnotes:
-
-[1]: https://public-inbox.org/git/20180119180855.GA98561@smm.local/
-
-[2]: case-conflicting files in tcell's bundled terminfo database:
-    terminfo/database/32/2621A
-    terminfo/database/32/2621a
-    terminfo/database/68/hp2621A
-    terminfo/database/68/hp2621a
-    terminfo/database/68/hp70092A
-    terminfo/database/68/hp70092a
+>  	return stream;
+>  }
+>  
+> -- 
+> 2.16.0.31.gf1a482c
+> 
