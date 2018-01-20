@@ -2,138 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AEF01F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 20:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 649531F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 22:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932289AbeATU6j (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 15:58:39 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58184 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932198AbeATU6h (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Jan 2018 15:58:37 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EDFBD60402;
-        Sat, 20 Jan 2018 20:58:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1516481915;
-        bh=lHxHj9RoBdZzFIar3P2a3U+9SXidQQv2YYYGtZ9kKyU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ic7AqpQxSnn/5wQWWpLOv8EMpDENoiWcOczQoX27bvRiLWDcN1fyqkRe0Eu4GbX7q
-         /DdsrY+h4lUCqnALuhGWiR6h9P1SGnI+1athgzWUpdmgxf/qLwct+TKD0lASOhjtXe
-         vrBxFqb97t+rvcoIrKPn2FY+n/AqdY28J0GSi9xmWshivingyHsCFR+rSrzcIISwo+
-         eH3BEnGtXtfJIsnmUq2+7a52pf5llIvgqtOsh4jcuegiQlDheRxjEgL9otRsN1cIfa
-         RnPnvLTJb8bVD6y7P0H8qbVbiRVc8E+0HoO32d7jc9CMs5etgfDWOQsaadbEhIS6pq
-         3cDXftxd4pGy58g/Qw61/irw56xWIxWRdab6j/3DwR2I/vgYOc0uY1Sg69mo4sqZFa
-         hRvOl18nbny+Uz7UBwG4WiSpcCZUmWojEtiYNCObxSwy1nQFv4GT8GjFd1wn9ogOo0
-         xyGdCJwZzT4gW+W8We2i4nqC5f1oNO32TL5qnfjAUvrpFFXosqX
-Date:   Sat, 20 Jan 2018 20:58:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 00/11] Some fixes and bunch of object_id conversions
-Message-ID: <20180120205830.GC8965@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Patryk Obara <patryk.obara@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-References: <cover.1516282880.git.patryk.obara@gmail.com>
+        id S1756732AbeATWOz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 17:14:55 -0500
+Received: from imap.thunk.org ([74.207.234.97]:41206 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756652AbeATWOv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 17:14:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=2e4dqcjMge9DYIPHTxEF2qXFQFb4zvzaSioR4/Z7KlI=; b=JaKtLTLJf2KYAeKRFCpe3h5K7/
+        8jLOd6bxCgJU1Hf1pZ8OmBwjFqiSWUxvsUCcSSxRDzeYDRmjaGAhxb8RdwqTec52IzbYo2FIOtrZu
+        fTjFC2Sdz+kpCHl5pzPgdDBau56IurOTS5Ng39AlvJqHUbtPWmyt9qJYVrg8qh18ZiHo=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1ed1PS-00082T-Mq; Sat, 20 Jan 2018 22:14:46 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 057D4C0021E; Sat, 20 Jan 2018 17:14:45 -0500 (EST)
+Date:   Sat, 20 Jan 2018 17:14:45 -0500
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Chris Mason <clm@fb.com>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+Message-ID: <20180120221445.GA4451@thunk.org>
+References: <20180117184828.31816-1-hch@lst.de>
+ <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com>
+ <87h8rki2iu.fsf@evledraar.gmail.com>
+ <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+ <20180117235220.GD6948@thunk.org>
+ <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
+ <20180118162721.GA26078@lst.de>
+ <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wxDdMuZNg1r63Hyj"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1516282880.git.patryk.obara@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
+In-Reply-To: <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jan 19, 2018 at 11:08:46AM -0800, Junio C Hamano wrote:
+> So..., is it fair to say that the one you sent in
+> 
+>   https://public-inbox.org/git/20180117193510.GA30657@lst.de/
+> 
+> is the best variant we have seen in this thread so far?  I'll keep
+> that in my inbox so that I do not forget, but I think we would want
+> to deal with a hotfix for 2.16 on case insensitive platforms before
+> this topic.
 
---wxDdMuZNg1r63Hyj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It's a simplistic fix, but it will work.  There may very well be
+certain workloads which generate a large number of loose objects
+(e.g., git repack -A) which will make things go significantly more
+slowly as a result.  It might very well be the case that if nothing
+else is going on, something like "write all the files without
+fsync(2), then use syncfs(2)" would be much faster.  The downside with
+that approach is if indeed you were downloading a multi-gigabyte DVD
+image at the same time, the syncfs(2) will force a writeback of the
+partially writte DVD image, or some other unrelated files.
 
-On Thu, Jan 18, 2018 at 03:50:52PM +0100, Patryk Obara wrote:
-> * brian m. carlson implemented vtable for hash algorithm selection and pu=
-shed
-> the repository format front - thanks to him it's now quite easy to
-> experimentally replace hashing functions and, e.g. do some performance te=
-sting.
+But if the goal is to just change the default, and then see what
+shakes out, and then apply other optimizations later, that's certainly
+a valid result.  I've never been fond of the "git repack -A" behavior
+where it can generate huge numbers of loose files.  I'd much prefer it
+if the other objects ended up in a separate pack file, and then some
+other provision made for nuking that pack file some time later.  But
+that's expanding the scope significantly over what's currently being
+discussed.
 
-Good, I'm glad this has been helpful.
-
-> Patch 1 is not directly related to object_id conversions but helped with
-> debugging t5540, which kept failing on master for me (spoiler: it was Fed=
-ora
-> fault).  It helps with debugging of failing git-push over HTTP in case of
-> internal server error, so I think it might be worthwhile.
->=20
-> Patch 2 is a small adjustment to .clang-format, which prevents unnecessary
-> line breaks after function return type.
-
-I have no strong opinions about these two patches, but didn't see
-anything that looked problematic.  Better debugging is always nice.
-
-> Patch 6 is a tiny fix in oidclr function.
-
-I think this is a good direction to go in.
-
-> All other patches are progressive conversions to struct object_id with so=
-me
-> formatting fixes sprinkled in. These should be somewhat uncontroversial, =
-I hope.
-
-Overall, I like the direction this series is going.
-
-When I've made changes to the sha1_file functions, I've traditionally
-moved them away from using "sha1_file" to "object_file" to ensure that
-we make it a bit more obvious that they handle object_id structs and
-aren't limited to SHA-1.  For consistency, it might be nice to make that
-change.
-
-Other than that and the question I had about the formatting, I think the
-series looks good.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---wxDdMuZNg1r63Hyj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpjrXYACgkQv1NdgR9S
-9osMFhAAgLH51UkHBmBFqlvFqb5rHeqae4OJGUBNO2EgC/44jOwakOairFBU5ZWk
-Sh4yfR9f0CTyZ1wbuwX+ldkDdjxNUQ77I3nTxn7PvZVG0FRxd+dcFqmVI9WB1u3F
-UhPZE86nHjiYZYyNCv9dVscwb5Jw6sV1yTbzKpDAOXlBkSabfudTTngBe71UEPtP
-OZUNJhPcH79bCm4kGnvgmcZmal6+sZCG/Bn8f/5crFBLmwDH8c1lTy6mjbcdDJOY
-qgcKRYIngCBUwHjNUMO55/ArtRxsj+pscD6SczQ7EL4n29dE5gw5g3ISn2JZZO7N
-IIazOX1hz2dFpXyz08hqDQsVQTH7KXY1Gec1W+fbkrOZ/7PLuIuyPQiHI6oVH3rh
-AOZIgrxOEY2Gyy3/94pkZ6A1R97Yt0xnbhJP6hZvaW1BnbztcMEYIhjFTVhBVmAj
-iXHjzqEQiHBxaIQEBgvL1JJJZW7fRA8OC4OMF8aeUIunEW8OHqJpWmigRPmaOlcD
-4RkpzV5nPWZB+IU+N+0i57envfoFEsA0vDnmqAqjNNnYk4RyJlooZuuPJoJGnWtc
-F7vk2YGyIM7ZIfC5PMaqu7owcWjuWQFpFZGx6RKikMqJ/mb3tq6O6x8ZUTf53Qn5
-9mrHyq+0a92uO+dAdmfPH6AB5U5g+NOymwujZlzsEA+kbJtQPIs=
-=5wT6
------END PGP SIGNATURE-----
-
---wxDdMuZNg1r63Hyj--
+						- Ted
