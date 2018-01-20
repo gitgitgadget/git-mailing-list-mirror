@@ -2,94 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42D591F404
-	for <e@80x24.org>; Fri, 19 Jan 2018 23:39:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADE081F404
+	for <e@80x24.org>; Sat, 20 Jan 2018 00:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754766AbeASXjf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 18:39:35 -0500
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:44738 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752184AbeASXje (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 18:39:34 -0500
-Received: by mail-oi0-f66.google.com with SMTP id s11so199118oih.11
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 15:39:34 -0800 (PST)
+        id S1756261AbeATAPs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 19:15:48 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:35915 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752938AbeATAPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 19:15:46 -0500
+Received: by mail-qt0-f194.google.com with SMTP id z11so8044811qtm.3
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 16:15:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GUM1t33kOjxSNyBe3xqJ6k27v6ToSkufxtk1bra7UKY=;
-        b=rBYYHR1kd738aYRqwFa6a44erjjp8LIy7R3dbWnJd0r+Bp0ANF9moAnlqEquUHsf6r
-         1PhU1R1hL+ns77Mz+U4hdz71eRUFk34SFw0kpei/+5z0+L5/4rqHZT3d3nu6PRgW+ZmC
-         oGF0eARSo8LB56Gv+3/oiaqBZqZbRYaxGqiwdvttaDujKEBCz1UD4Ddv6CRBQQalEjMa
-         k8lXCma/9bMwIOtsXiFTrtZKgbNaKoEH75IrhTd6pcJlEinIpuvkYVkRcKxxZu5aQYLa
-         iKSan7wVmL/5eUwrzEDMpX6BxH3zF/s5+mGBH21Nbxcspb4sKVs5w+ydSNh5HGks7Jbs
-         +zXQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to;
+        bh=sIQqpuEOUQ4URxUCE0rlrCfTP6jIfAVRg2JjLHm6PE8=;
+        b=CvFvEoI0S1bGgx/SJhROdfoRiaWODxVpmNbFSaKU3HVPN3veIJt26cCT3ZFgpX96my
+         bRD71rKtvUehJWJYjklJy/5UcUfa7CYY+GzE68ERRT+y9vQjf4chmJ0KE2ruVib3x0xp
+         mg+MZwR1SY3a+w0IgTsloeQjIaYG1EmZ7jV0wGi/BSrqYSg6QX65SOwhLUezSJvU8MD6
+         V1tE7GIb5HKXZGJ0G12+Wg2RN3Hfze3EKqfkxgw7w+ryFYnbjPIv0QYTysndYkaMQEgF
+         Gb9qf9FkAkULmgzzIWABoh/TnR2jtKFhzmZgUOOCP1o1hdTNAomG+m8PPbMwZylH7kym
+         ULcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GUM1t33kOjxSNyBe3xqJ6k27v6ToSkufxtk1bra7UKY=;
-        b=d+KWy6ZT86TwQlJUpHDGlF059+Huuaxc53XphhtJKT3Kn3kOE901KK4Rcts3c4ZBqn
-         w7MNf5QxTJq0F1lBWFnLEiIIDV4eBOitUdlgs+ZCMY36lS4fMPFRHdWAjHpjkNS2IH0o
-         x3f9oTViPly2UVhdgUPCEh3HDBmFXcS7NrCZ84tRzwo3jsyM7v/zteJnsjJQTFav3w2m
-         aU4fzcMxs8oO9WoIk0t+RxiKD7aOZyI7y++4fnVCS/Do0uuestLrYze8lK6AFCpPX+LY
-         LOaUYzcL09b5R05KJo3pqg044ZwZQwBwnIhxCF9WWbZ9+e8UsiAh4huZl8wyrwOG0nIV
-         5wsg==
-X-Gm-Message-State: AKwxytc5KblzYsRZ8ickYsToOu3DMqTZSmnkGb6JF+eRILZ7UsEv8+Mv
-        wNMaJVknKpIcDf7aTgYg+ZzTyWT3d4Hk0isOBEk=
-X-Google-Smtp-Source: AH8x227aC+WYC6eTWzayLkCyxbWUTjqVLe46snubkM/kn1yT0S1ajGjxmnQxjsl3wfEozyvBfni7tQBNJy8hkEO0DSA=
-X-Received: by 10.202.195.71 with SMTP id t68mr117560oif.216.1516405173746;
- Fri, 19 Jan 2018 15:39:33 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to;
+        bh=sIQqpuEOUQ4URxUCE0rlrCfTP6jIfAVRg2JjLHm6PE8=;
+        b=ZGQB2yyaeqeNwW3FyQVQ9YCIXX0AbI04MyVPUzVjSlryF4cMMmhWIRpnuuw4THDNvE
+         L7ZKstTpP7uHF3jkenaCCwIpxFtYFw4nIvxexakM3wwwiQOm01yaiAqs9ktg9TR493FQ
+         FHk2Xf9Je9Rx9RZOuvaEl04ofTUSx5jstriLUR/6EAaCYGiCCrr7mRJ6jYxqRp4PX+Xm
+         16O6qiBIWIfyk4PQwg18KRmFypN/2m1G00s/YD0MVjk9+uv/gnC4rqdGHrLY9unfiHMF
+         ZAOwwUtZyU8YBLXz/ZW32LhyGf2nGFmlrkMOFpCJCLTt0usTtpKSbQ3KxnMnRaEL2t9R
+         gKCQ==
+X-Gm-Message-State: AKwxytfiHhXIz21VbYpLZ8P2fTNpDfoXy81qdv5kM/8qzF7GBlM7g6eX
+        6rmKemetgAM7iWGkj8EPWOA5LgNvlAkCaLXBPLE=
+X-Google-Smtp-Source: AH8x2252z95SOsENRKf6UbFAvB3ENMFoQ1tSHi09hfjKgzsAvbLkqAZhPhBA4Wi88HPrOh3TD17wJrzmfzCFFp22nNo=
+X-Received: by 10.200.47.130 with SMTP id l2mr340298qta.277.1516407346010;
+ Fri, 19 Jan 2018 16:15:46 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.160.203 with HTTP; Fri, 19 Jan 2018 15:39:03 -0800 (PST)
-In-Reply-To: <20180119214655.GB12074@sigill.intra.peff.net>
-References: <1516067185-1087-1-git-send-email-gs051095@gmail.com> <20180119214655.GB12074@sigill.intra.peff.net>
-From:   Gargi Sharma <gs051095@gmail.com>
-Date:   Fri, 19 Jan 2018 23:39:03 +0000
-Message-ID: <CAOCi2DE_t_ppRZjiZm6CKJByL0nErTci1D7EL5U3KeCRNMyc+Q@mail.gmail.com>
-Subject: Re: [PATCH] mru: Replace mru.[ch] with list.h implementation
-To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
+Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 16:15:45 -0800 (PST)
+In-Reply-To: <20180119223130.GC222163@genre.crustytoothpaste.net>
+References: <CALwADsGfB10f5+nOFN-pHCt4z1SkWMcvSHn8KokcyCM0V6K-BA@mail.gmail.com>
+ <CAPig+cTkBEGyoS93GYCtoDgccTF_UixqBkVTExg7Zf0M1J7KRQ@mail.gmail.com>
+ <20180119024738.GA222163@genre.crustytoothpaste.net> <CAPig+cSbbzKV0GttLjHCyY3CNcJO0bdP3Mp4pT+3waUTMAQ8kg@mail.gmail.com>
+ <20180119034025.GB222163@genre.crustytoothpaste.net> <CACsJy8BTFm_0sv=roL1OKKW=1DyU3vqD50NKyHg3KQ7G+mAepQ@mail.gmail.com>
+ <20180119074001.GA55929@flurp.local> <20180119223130.GC222163@genre.crustytoothpaste.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 19 Jan 2018 19:15:45 -0500
+X-Google-Sender-Auth: o5z5RUhhWCnCxXwKfPLZNa8fbFs
+Message-ID: <CAPig+cQmWqQWQrRQHHn=3hn6UFzJxT=9d5kKnJht_dt8sCgwkQ@mail.gmail.com>
+Subject: Re: git 2.16.0 segfaults on clone of specific repo
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
+        <aleks.bulaev@gmail.com>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 9:46 PM, Jeff King <peff@peff.net> wrote:
+On Fri, Jan 19, 2018 at 5:31 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Fri, Jan 19, 2018 at 02:40:02AM -0500, Eric Sunshine wrote:
+>> Nice detective work. This particular manifestation is caught by the
+>> following test which fails without brian's patch on MacOS (and
+>> presumably Windows) and succeeds with it. On Linux and BSD, it will of
+>> course succeed always, so I'm not sure how much practical value it
+>> has.
 >
-> On Mon, Jan 15, 2018 at 08:46:25PM -0500, Gargi Sharma wrote:
->
-> > Replace the custom calls to mru.[ch] with calls to list.h. This patch is the
-> > final step in removing the mru API completely and inlining the logic.
-> >
-> > Another discussion, here
-> > (https://public-inbox.org/git/CAOCi2DGYQr4jFf5ObY2buyhNJeaAPQKF8tbojn2W0b18Eo+Wgw@mail.gmail.com/)
-> > was on what has to be done with the next pointer of packed git type
-> > inside the
-> > packed_git structure. It can be removed _given_ that no one needs to
-> > access the list in order and can be sent as another patch.
->
-> Thanks for picking this up again. I agree that this is probably a good
-> stopping point for now, as I think just combining this with the 'next'
-> pointer may carry more side effects.
-Agreed, hence just thought that if the discussion is started again, we
-can point them
-to the email thread.
->
-> Aside from the braces thing that Christian mentioned (and the missing
-> signoff), this all looks good to me.
-Thanks, made the changes and sent a v3,
+> I'd argue that it's a worthwhile test to have, since it will fail on
+> those systems where it's going to be a problem.  Furthermore, people do
+> run the tests (as does Travis) on case-insensitive file systems during
+> the development cycle, so if we break something in the future, someone
+> will notice while we're still in the development cycle.
 
-Best,
-Gargi
->
-> -Peff
+Oh, I agree. My original question of its practical value was based
+upon my belief that the full test suite is very rarely run on MacOS
+(partly because there are so few Git developers on MacOS and partly
+because it runs so slowly on the platform, though not nearly as slowly
+as on Windows). However, as soon as I hit "Send", it hit me that the
+problem would also manifest on Windows, and we know that Dscho runs
+the tests regularly on Windows, so I changed my mind. I did consider
+Travis but wasn't sure if it was testing on case-insensitive
+filesystems.
+
+Are you planning on submitting the test as a proper patch as follow-up
+to [1]? I couldn't quite decide in which test script it should reside.
+
+[1]: https://public-inbox.org/git/xmqqr2qlps7r.fsf@gitster.mtv.corp.google.com/
