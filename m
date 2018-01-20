@@ -2,98 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEC8A1F424
-	for <e@80x24.org>; Sat, 20 Jan 2018 20:33:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1231F424
+	for <e@80x24.org>; Sat, 20 Jan 2018 20:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756653AbeATUdh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 15:33:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58162 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756624AbeATUdg (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 20 Jan 2018 15:33:36 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 52F8560402;
-        Sat, 20 Jan 2018 20:33:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1516480413;
-        bh=6iSVF3PJbef1aeoxruEacBSLP55FNOSCH1zUMy1A8Uc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=ekanK/JBcpUSrYlXG5jvkpphsYPkcJdAhrg1QgdYa3icN/WqsE3Ul1Kmj2hHCJBg+
-         1s9/TonvdL8lAIvuBR9NB+XoPhWE4BAv2xcScWB+h/87wSuuIilB9AE/5bhqC5BKbZ
-         d7zxlWPFWJjcyACHRs+1TZ+HygpxzAGohRODUdU+MTpQp2yV11x3L4/tsG7fScTM9z
-         Aa7EMj/EMtdEa+0xQo62f6I5kySfKmzc7KOlSJ6zQmGMMKFOPvzZxcjmOJPfantnlI
-         QZ9csINqVcj8di2KLD5s4lrDpgApKTIV0lSgZIWa8DyCeNPxsZo37MCNH84GPZNAbR
-         WbmipDbDIgAwlfxmngUVjf6XlEjXY3yf4yX8XKEeHGnHqkHZqpU0I9RS4S/bAG7Bei
-         htVAjkClCdoiyDb4+BIBPbRjLE842eJhaTU+N7NsrZQTcyDqEGsRw6mnWvK4fqMmi3
-         lqyhUjA4F6hTjpLPmIKFX9UJSTBmzmPD7Z/+EBQlqneVN5DgkOL
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B0=D0=BD=D0=B4=D1=80=20=D0=91=D1=83=D0=BB=D0=B0=D0=B5=D0=B2?= 
-        <aleks.bulaev@gmail.com>
-Subject: [PATCH] t: add clone test for files differing only in case
-Date:   Sat, 20 Jan 2018 20:33:24 +0000
-Message-Id: <20180120203324.112522-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.16.0.rc2.280.g09355b536d
-In-Reply-To: <20180119041825.727904-1-sandals@crustytoothpaste.net>
-References: <20180119041825.727904-1-sandals@crustytoothpaste.net>
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        id S1756667AbeATUeU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 15:34:20 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:33472 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756615AbeATUeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 15:34:18 -0500
+Received: by mail-wm0-f41.google.com with SMTP id x4so12016336wmc.0
+        for <git@vger.kernel.org>; Sat, 20 Jan 2018 12:34:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=raIRCmCxyEhw+zD4TdKPpxNzJcti9PazI1wntMEaEXc=;
+        b=p2GYhOp7y+/A8x9D11nfD+IAI+kE6jdVKG1OwEW/vmgYcPTfL1FDLl4889IR1/cNrQ
+         /EwLMKW5mZZ4StNk1m3z+jUgshRCuOzzW350kZQKsMFzoo6EqzC63b/cUwKVZjZSvG/c
+         hjx4uTCKAtHbspFi2dhEADxv0j/sIJPW6/eC99SIRNZLjdjARzdhF8myvYjszKOT2nrY
+         dOam52luGTeitbwUR9cV5iOUP67Hc/ot7FnHrxIzbzmc4hjZ/1NjUiCqH6TooqQLeZ9P
+         +wr4D8XVxKIFNT5h91KyuOXNJWgo2fvogby/rWlwFLdTBqAu9T9osrmjRDU0v4qT2XIY
+         dNPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=raIRCmCxyEhw+zD4TdKPpxNzJcti9PazI1wntMEaEXc=;
+        b=hvr3jdNYVsJidbmr+coji4WJTpoaGMkoP4nxz2/hXAnK+xqihxMVLZ6EJ7RQbeleUZ
+         qMp0hrePihgJukjFYVfGOGmIA8LV2sq1CMDCshMEFu93WBrDWuMZu+9D6RChU1FvttAD
+         dUyBzR5Q6vttHmyBIz8T2hkMRGDtMa6m86nxWqUeLE+KifyaAUTCPL4p3fibDynrn0p3
+         2R/QtbBMqvEhsDDHVE/Pfqaq8fSPbWjOp+I1dtX36njsC4/QhPtXmUvmYa0//a8vuqaX
+         YOV9wqDtx9TbS1IklCapPoMcuCUQV5AmmHGCklq7XDTXSa7Q4AdLurFukeQDSkxP0U83
+         tKGg==
+X-Gm-Message-State: AKwxytfdlSTdecxnQ2S4y7RWmPYxmmb7HT383KXMGefP5wyRcDheOb01
+        J8xkhU/RQcxMT/SiWB5RTMs=
+X-Google-Smtp-Source: AH8x226k1FBi4vGIFuUkXGfml5OmPOo9jDVUXxTPNwWDTWp/f7HujU3EJegFR0M87ByNTJHIG6qpxQ==
+X-Received: by 10.80.186.55 with SMTP id g52mr5253108edc.25.1516480457653;
+        Sat, 20 Jan 2018 12:34:17 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id p6sm7620803edh.68.2018.01.20.12.34.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 20 Jan 2018 12:34:15 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     =?utf-8?Q?'Ren=C3=A9?= Scharfe' <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/6] Add tar extract install options override in installation processing.
+References: <20180119173406.13324-1-randall.s.becker@rogers.com> <20180119173406.13324-4-randall.s.becker@rogers.com> <1153e1c0-c7d5-3e0d-ce41-ffb1230164f7@web.de> <019601d391f4$dd367de0$97a379a0$@nexbridge.com> <9b7bf754-90bd-c25c-f5ae-124dcd97d281@web.de> <019901d39204$4ed19980$ec74cc80$@nexbridge.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <019901d39204$4ed19980$ec74cc80$@nexbridge.com>
+Date:   Sat, 20 Jan 2018 21:34:14 +0100
+Message-ID: <877esci81l.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We recently introduced a regression in cloning repositories onto
-case-insensitive file systems where the repository contains multiple
-files differing only in case.  In such a case, we would segfault.  This
-segfault has already been fixed (repository: pre-initialize hash algo
-pointer), but it's not the first time similar problems have arisen.
-Introduce a test to catch this case and ensure the behavior does not
-regress.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t5601-clone.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+On Sat, Jan 20 2018, Randall S. Becker jotted:
 
-I've verified that the test does fail without the patch on a vfat file
-system.  However, many other tests also fail on a vfat file system on
-Linux, so unfortunately that doesn't look like a viable testing strategy
-going forward.
+> I will reissue this particular patch shortly.
 
-I didn't include an object ID for the commit referenced simply because I
-didn't see one yet and I didn't want to insert a local one that wouldn't
-work for anyone else.
+It makes sense to base that submission on the next branch instead of
+master. I have a patch queued up there which adds two new tar
+invocations.
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 0f895478f0..53b2dda9d2 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -611,4 +611,17 @@ test_expect_success 'GIT_TRACE_PACKFILE produces a usable pack' '
- 	git -C replay.git index-pack -v --stdin <tmp.pack
- '
- 
-+hex2oct() {
-+	perl -ne 'printf "\\%03o", hex for /../g'
-+}
-+
-+test_expect_success 'clone on case-insensitive fs' '
-+	o=$(git hash-object -w --stdin </dev/null | hex2oct) &&
-+	t=$(printf "100644 X\0${o}100644 x\0${o}" |
-+		git hash-object -w -t tree --stdin) &&
-+	c=$(git commit-tree -m bogus $t) &&
-+	git update-ref refs/heads/bogus $c &&
-+	git clone -b bogus . bogus
-+'
-+
- test_done
+Also re your commit message see the formatting guide in
+Documentation/SubmittingPatches, in particular: instead of:
+
+ - Add a brief subject line
+
+ - Just make the body be a normal paragraph instead of a bullet-point
+   list with one item.
