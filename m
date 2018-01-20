@@ -7,90 +7,113 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 888D51F576
-	for <e@80x24.org>; Sat, 20 Jan 2018 09:15:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 496B91F576
+	for <e@80x24.org>; Sat, 20 Jan 2018 09:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751269AbeATJPA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 04:15:00 -0500
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:35118 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751064AbeATJO5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 04:14:57 -0500
-Received: by mail-wm0-f45.google.com with SMTP id r78so7806714wme.0
-        for <git@vger.kernel.org>; Sat, 20 Jan 2018 01:14:56 -0800 (PST)
+        id S1751156AbeATJTY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 04:19:24 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:46225 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751055AbeATJTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 04:19:21 -0500
+Received: by mail-wm0-f48.google.com with SMTP id 143so7516641wma.5
+        for <git@vger.kernel.org>; Sat, 20 Jan 2018 01:19:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=9Csn6sUf80DLuhNOaTT5ItXMAwBN/I9ZEfT7dbcXe8w=;
-        b=do2CzvferFmA9HEjgSwJNH7KIzzFNynLy1fddnrOTpefiIyCAay6qYhrS6ylrPRvXf
-         klYeJV0NfQ5nuVfe70Zw/k3RScQERHXIYdf2WRUY+9R9gqtVbPI95n3ATPKP7fBdNj3d
-         z4k6vMl3nKR6RB085xg7JjqHUMfMlOGuC8+rsEHawoR+ifyKtovwBMzT8acxaWEnzW2Q
-         FQ3tyX4FoorzSeRP6kxmWur9ktap04WBu7QiqUyLQBlOAxSMmqxzKJQIXr8Jrc03Ps+E
-         4JAnIAoO1FrCIKl4su2q9KuU5nkywa14mNy1PzdF8oS2LZMda0WeYytdSv0+rKfJ4Yt3
-         fq3A==
+        bh=zNsx6KczgZmfZskOLqjjZOvsnGzUNLG/0gYG5DPt5Kg=;
+        b=X4CDz8Bj3Lmykrb7yUPQh30wRk4qpCkgi0yKXbZEH07Y63EKTgmM2f241UffxqnyWj
+         xVvB45eq1Ah2kkahJnBI1LEHmk7YS0ad/PWjd79PzrvzEMNOYf5gaQEYYlQ3PBsl46Yr
+         8WisBSZUB4ZeLrpq2PdCiDbI+W++Ul1uqIcbYSqNhErIynfYl6PZTdfjgrF/QI1eKCUB
+         JQjhbXZqvTi2sC/Kfg4CMVvM8yDTb5Kle1xVmH3Ij+Hs72hCJ0Bh07aM9PoC5kh/H0qN
+         vSONWa5JjfVsBqa/18x1GCjYOsD1xf2xadNDPnowypL/Fxv06sBAk+lRnfFnC+rs8yMB
+         1CZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=9Csn6sUf80DLuhNOaTT5ItXMAwBN/I9ZEfT7dbcXe8w=;
-        b=jPE8QnglyVtRG8tgReT+on1291AA/ukEU11XXnPQfsuGAGbZ+tTpQWM75NPzup7QMa
-         4Ef6ESLbNXi4jeN4mY3W/yJ0UHuJg+4dIH3TgqKm7hzM0/klrRFOMl2dfC9+tUGLORLu
-         3170SKmpqkotO8CwLViJMVRijwcN1cgnvB5avPO2Sa7MmyZcoNQEOJuxqii7oUrnEoBj
-         ZCvrZ9B5MtNaHI+WTMIpIrsevnqPdQimMZxHM05Vqb0idVa9rTHBfNaaWbb0lP4sguia
-         H34lVZVWzcIPc/rCQYED59N+Ukxx3jNLOq0Yh6D6wuj2WDip+Vf5bkIkpruj1yNh8w5d
-         mo4A==
-X-Gm-Message-State: AKwxytc6+fcO9QE2kt4+1aNBCUsFm/n0XHV9s5gBqhZEuh+nKK9Amu/w
-        kmLbi59XY9yRsg4rBCQxPMtRHdPXgrzJeWqkEc4=
-X-Google-Smtp-Source: AH8x225LQOVMU5eXEINNMcqUc0PotB7GUZymHxAvxoxa5z+8EM30fUUveBKRUTq9rCNaCUkL6/e9t7u6mQ+3tXpX1rA=
-X-Received: by 10.80.165.21 with SMTP id y21mr2726561edb.148.1516439695897;
- Sat, 20 Jan 2018 01:14:55 -0800 (PST)
+        bh=zNsx6KczgZmfZskOLqjjZOvsnGzUNLG/0gYG5DPt5Kg=;
+        b=YrVmMZlDOsEO8k6n1/ucxKCEfB4DeNLocfC9v16gUqT3dj19xENVeughqCsI6AMBe8
+         L7oYxBQrRHJhg+BFcNWkDcy9tHg9LYbnhoZVjjibGSzd2bJt4tj8qfdQ9JauuGYR968L
+         +2aiTK2ol36vKdDMw6FqRSNMALKVKSDEE9sppMMuBneztbYjR7NLEH0q0O3NoXZ5QPcZ
+         vtgVc2eKE0vL8BDTLItx5uGKzXuIMVzz12TnrgXfaLQa82nQAx4BbGRY07e2dsok/kc0
+         t4YadDIHn5mzTteTiQs9ye0TawDBwwHFlhxu0Ajru/XfI6B/mKkDrzMr73jSg/rs40Os
+         n7Gw==
+X-Gm-Message-State: AKwxytfrHYxJgGosj4th/66AqhPGOclThLHV3ow9qsBJu7U0LnkITsq7
+        U1qZVJuY0wUP1/3RdroSo290YIsqi+e/SBS+lUA=
+X-Google-Smtp-Source: AH8x2264FXY7TKGXq6wIayoyPNr4Rmj0QJIN5M/BxG7aLi3FyImTQcM/CCOo8CUp/lV5grNYYPWDbcxnV2SUK0TARMk=
+X-Received: by 10.80.241.89 with SMTP id z25mr2721118edl.104.1516439960070;
+ Sat, 20 Jan 2018 01:19:20 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.80.177.180 with HTTP; Sat, 20 Jan 2018 01:14:35 -0800 (PST)
-In-Reply-To: <xmqqinbxpp5m.fsf@gitster.mtv.corp.google.com>
+Received: by 10.80.177.180 with HTTP; Sat, 20 Jan 2018 01:18:59 -0800 (PST)
+In-Reply-To: <b3b37af6-4b65-5a44-a395-6f75a4adc98e@talktalk.net>
 References: <cover.1516225925.git.johannes.schindelin@gmx.de>
- <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-2-sbeller@google.com>
- <nycvar.QRO.7.76.6.1801182233480.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqinbxpp5m.fsf@gitster.mtv.corp.google.com>
+ <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de>
+ <b3b37af6-4b65-5a44-a395-6f75a4adc98e@talktalk.net>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 20 Jan 2018 01:14:35 -0800
-Message-ID: <CA+P7+xoO4twSgYVNJ4WaTj80WHS_ViEOBOEVST1nX9UzRA4JxQ@mail.gmail.com>
-Subject: Re: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive:
- clarify arguments
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Git mailing list <git@vger.kernel.org>
+Date:   Sat, 20 Jan 2018 01:18:59 -0800
+Message-ID: <CA+P7+xr4KtR4q8Y=-+pv2TzvP009zRVR6a_zh2GOZXt_LXrFOg@mail.gmail.com>
+Subject: Re: [PATCH 2/8] sequencer: introduce the `merge` command
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Good idea! I would rather do it as an introductory patch (that only
->> converts the existing list).
+On Fri, Jan 19, 2018 at 6:45 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
+> On 18/01/18 15:35, Johannes Schindelin wrote:
 >>
->> As to `merge`: it is a bit more complicated ;-)
+>> This patch is part of the effort to reimplement `--preserve-merges` with
+>> a substantially improved design, a design that has been developed in the
+>> Git for Windows project to maintain the dozens of Windows-specific patch
+>> series on top of upstream Git.
 >>
->>       m, merge <original-merge-commit> ( <label> | "<label>..." ) [<oneline>]
->>               create a merge commit using the original merge commit's
->>               message (or the oneline, if "-" is given). Use a quoted
->>               list of commits to be merged for octopus merges.
+>> The previous patch implemented the `label`, `bud` and `reset` commands
+>> to label commits and to reset to a labeled commits. This patch adds the
+>> `merge` command, with the following syntax:
+>>
+>>       merge <commit> <rev> <oneline>
 >
-> Is it just the message that is being reused?
->
-> Aren't the trees of the original commit and its parents participate
-> in creating the tree of the recreated merge?  One way to preserve an
-> originally evil merge is to notice how it was made by taking the
-> difference between the result of mechanical merge of original merge
-> parents and the original merge result, and carry it forward when
-> recreating the merge across new parents.  Just being curious.
->
+> I'm concerned that this will be confusing for users. All of the other
+> rebase commands replay the changes in the commit hash immediately
+> following the command name. This command instead uses the first commit
+> to specify the message which is different to both 'git merge' and the
+> existing rebase commands. I wonder if it would be clearer to have 'merge
+> -C <commit> <rev> ...' instead so it's clear which argument specifies
+> the message and which the remote head to merge. It would also allow for
+> 'merge -c <commit> <rev> ...' in the future for rewording an existing
+> merge message and also avoid the slightly odd 'merge - <rev> ...'. Where
+> it's creating new merges I'm not sure it's a good idea to encourage
+> people to only have oneline commit messages by making it harder to edit
+> them, perhaps it could take another argument to mean open the editor or
+> not, though as Jake said I guess it's not that common.
 
-It looks like currently that only the commit is kept, with no attempt
-to recreate evil merges.
+I actually like the idea of re-using commit message options like -C,
+-c,  and -m, so we could do:
 
-Thanks,
-Jake
+merge -C <commit> ... to take message from commit
+merge -c <commit> ...  to take the message from commit and open editor to edit
+merge -m "<message>" ... to take the message from the quoted test
+merge ... to merge and open commit editor with default message
+
+This also, I think, allows us to not need to put the oneline on the
+end, meaning we wouldn't have to quote the parent commit arguments
+since we could use option semantics?
+
+>
+> One thought that just struck me - if a merge or reset command specifies
+> an invalid label is it rescheduled so that it's still in the to-do list
+> when the user edits it after rebase stops?
+>
+> In the future it might be nice if the label, reset and merge commands
+> were validated when the to-do list is parsed so that the user gets
+> immediate feedback if they try to create a label that is not a valid ref
+> name or that they have a typo in a name given to reset or merge rather
+> than the rebase stopping later.
+>
