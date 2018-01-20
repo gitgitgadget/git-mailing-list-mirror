@@ -7,104 +7,101 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 856A31F404
-	for <e@80x24.org>; Sat, 20 Jan 2018 00:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A358A1F404
+	for <e@80x24.org>; Sat, 20 Jan 2018 00:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755132AbeATAsf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 Jan 2018 19:48:35 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:45151 "EHLO
+        id S1755728AbeATA7u (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 Jan 2018 19:59:50 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34021 "EHLO
         mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753054AbeATAsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 Jan 2018 19:48:33 -0500
-Received: by mail-qt0-f194.google.com with SMTP id x27so8152454qtm.12
-        for <git@vger.kernel.org>; Fri, 19 Jan 2018 16:48:33 -0800 (PST)
+        with ESMTP id S1754132AbeATA7s (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 Jan 2018 19:59:48 -0500
+Received: by mail-qt0-f194.google.com with SMTP id 33so8222210qtv.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2018 16:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=Ks6Nsbai4zzn3JjmT58sX7hk7IuGo9MsZXkB85Rcz18=;
-        b=ftdaBTOCbQCaKLs4Q7ViRJgHurPEUrUSFZaQ+D+zJRImgZCzCsVhJRJ9T8nNU3MFy+
-         NWQyzUcc7oRI1fdrTSlDrHfHFxUAXYjhiAtpD1SvlP8/Z+pdsR+kryy+GBhkW1CESSVA
-         CCXwltrwXB/CYegVP0YA24bOR+iFcMbicYGUom5lekTwZV1cIosRqEc3OFoZ8gIqV6WW
-         xN0aH9vhLLa+PQwVpWk3tts6thI0vOya1ggZgDnBuzL30RLz45UoSdd2qFLdosK0eJt3
-         YpNYhyRp7aaG4LjAhABZpta2VY9r//1F2YzcQG9nsZOAoGlTjsLLO7JTa7ugDu03v87T
-         io2Q==
+        bh=zTX9V8C5pv3YCVRHqZRDmAh1x5W7cKyM6wFOQyizdHw=;
+        b=pQVk7RuHkUEvUWMV8RPPd61c+7dRtX3ni44jgCvDech7LVy3Vpt0Mm6fMr+RXzjbCl
+         dTEzvoedYK9nR7NjN5dINmUnkn6LuxnoBN++3TpDQlj6OaKmEbsY3W20aLho0Z2eXd3+
+         K3rycqC4jqIqOd+SRtM9G3r2OUHNFYF649zT4u7dJ75xu9Cxa5XJ3kz7REE9fG7KNVM1
+         yVCaa99wI/i9DpgnyiWh3lnQMBRsWjFOfu7uQ4v4tPkH9qv6iLOX3QfUEy3pDm0O7Sul
+         xSxd/flpCrVUdhUk2dcTuav8a7sIyC3Zwh+FacI7nPRQvQ+OkiN0VsSLMosXgf2aU61s
+         DJ4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=Ks6Nsbai4zzn3JjmT58sX7hk7IuGo9MsZXkB85Rcz18=;
-        b=iJzQpfT2HA8Rzol2cqeoSgXaZbYf5vyLSMY50WGso+mVY2C7UMXJiqh4tdF00TXxwR
-         9kFKkZreZHgHLxbIfGfaJJedcPgI2Y47XH8ugPKaw3SZD4KkQcA/rLloi0BXVszMCc7m
-         x4oW5j5dQYAwcS3beKiHeabFrOoQb9rSiFyt28GCKYHvXzN3bQ2dMtjTfMo+tgqeV+6v
-         Is6oCHiMEmVQmdcDDG2VkbuZw3EYRZQlpw9WZH4uon2vgvPVKcQ38xGakzW8xgTKJTOl
-         gPpIVNSs5xv4RpoOSOavhX+jgi0iUQJDWfaEdCV/u0w0nGYDPJfPXTKUizxOLRQh+c8t
-         4wdQ==
-X-Gm-Message-State: AKwxytcSXdnO1TZSPqbP+Rz9hBlvqbr6QULiXi3z5bPsIEylkyODrvND
-        FQLPyalFt3IETr3LGmRSdZbxhqUoEdKWXDsZKgA=
-X-Google-Smtp-Source: AH8x224Wx10iX3NcxGDKZ8EdwzvViND2XJZKsW0zBwT1QwUWRRL9xg21QfrIxJ1UcYAMD+95xgmGE0Arl/4XH4Z+PRU=
-X-Received: by 10.200.9.42 with SMTP id t39mr476601qth.74.1516409312828; Fri,
- 19 Jan 2018 16:48:32 -0800 (PST)
+        bh=zTX9V8C5pv3YCVRHqZRDmAh1x5W7cKyM6wFOQyizdHw=;
+        b=DJbBp36xGEBdhgU9UFMAXGHAg4ih7NfM2WAF3ghOSYk15DNdDUBDJOqgykSiwpv+9y
+         tyL4tPsqVNexz5AynUZxzf5c2DI1upXdXVkVWXoUQbzt/WQiJSMsXriOnEd15yzKKTzL
+         GGDDdD21RAPOS0dzUL6awUAZfimkiG32fzHp+lDNDZ+ifmqm8UKeFPfd7i3WloHh/0ic
+         mxx4OuHNf6K8LeLwp6vqF+c+BEdcFfRivlne35mgTIW0YUoGWyK0tmmkB7N0RH+/xa2B
+         GddyqbGCmxCq8kC3EXJ8rtbcHb8hb4iB05nzGKTKeXXUoTUyQpdGhTtZAWcZ8sp4vA77
+         /diQ==
+X-Gm-Message-State: AKwxytf8Vo6RM7jYoTfsdohEFJCL7fQrK7styQGLxokI9QMMm1tITl3Y
+        bK4G6fGKKXQynnAZvW9oYTEm3hjqR/mns30EM2s=
+X-Google-Smtp-Source: AH8x2265y8hrPekbihh4AFrHblv5MA5+vDJfnMhO56sX8BmDgfA31itdUPkFnr5UwsdxIC29kRlDSjfXzGsQW5oHWF4=
+X-Received: by 10.55.203.85 with SMTP id d82mr477241qkj.286.1516409988048;
+ Fri, 19 Jan 2018 16:59:48 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 16:48:32 -0800 (PST)
-In-Reply-To: <20180119141940.5421-2-phillip.wood@talktalk.net>
-References: <CAKdAkRSuNhEri+3eUbX8iVjr0JUyADSJBtgL==VjNwgKwe3Xqw@mail.gmail.com>
- <20180119141940.5421-1-phillip.wood@talktalk.net> <20180119141940.5421-2-phillip.wood@talktalk.net>
+Received: by 10.12.175.239 with HTTP; Fri, 19 Jan 2018 16:59:47 -0800 (PST)
+In-Reply-To: <1516404987-3420-1-git-send-email-gs051095@gmail.com>
+References: <1516404987-3420-1-git-send-email-gs051095@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 19 Jan 2018 19:48:32 -0500
-X-Google-Sender-Auth: YIL_5TrHU4_0wiotNcz94juzQos
-Message-ID: <CAPig+cS5BrZboaoKjCzi0TQJkR2VBnPUNJG4+WN5z8946Z4H0A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t7505: Add tests for cherry-pick and rebase -i/-p
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Date:   Fri, 19 Jan 2018 19:59:47 -0500
+X-Google-Sender-Auth: giqN--fSNW5MqogCA95p5RXVe8k
+Message-ID: <CAPig+cQ9mMVvMLKSQOKxinc5iuRK61yTDQ511ZdNqEOtbCGoAQ@mail.gmail.com>
+Subject: Re: [PATCH v3] mru: Replace mru.[ch] with list.h implementation
+To:     Gargi Sharma <gs051095@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 19, 2018 at 9:19 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> Check that cherry-pick and rebase call the 'prepare-commit-msg' hook
-> correctly. [...]
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Fri, Jan 19, 2018 at 6:36 PM, Gargi Sharma <gs051095@gmail.com> wrote:
+> Replace the custom calls to mru.[ch] with calls to list.h. This patch is
+> the final step in removing the mru API completely and inlining the logic.
+> This patch leads to significant code reduction and the mru API hence, is
+> not a useful abstraction anymore.
+
+A couple minor style nits below... (may not be worth a re-roll)
+
+> Signed-off-by: Gargi Sharma <gs051095@gmail.com>
 > ---
-> diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-> @@ -4,6 +4,38 @@ test_description='prepare-commit-msg hook'
-> +test_expect_success 'set up commits for rebasing' '
-> +       test_commit root &&
-> +       test_commit a a a &&
-> +       test_commit b b b &&
-> +       git checkout -b rebase-me root &&
-> +       test_commit rebase-a a aa &&
-> +       test_commit rebase-b b bb &&
-> +       for i in $(seq 1 13)
-
-For portability, use $(test_seq ...) rather than $(seq ...).
-
-> +       do
-> +               test_commit rebase-$i c $i
-> +       done &&
-> +       git checkout master &&
+> diff --git a/cache.h b/cache.h
+> @@ -1587,10 +1588,10 @@ extern struct packed_git {
+>  } *packed_git;
+>
+>  /*
+> - * A most-recently-used ordered version of the packed_git list, which can
+> - * be iterated instead of packed_git (and marked via mru_mark).
+> + * A most-recently-used ordered version of the packed_git list.
+>   */
+> -extern struct mru packed_git_mru;
+> +extern struct list_head packed_git_mru;
 > +
-> +       cat >rebase-todo <<-EOF
-> +       pick $(git rev-parse rebase-a)
-> +       pick $(git rev-parse rebase-b)
-> +       fixup $(git rev-parse rebase-1)
-> +       fixup $(git rev-parse rebase-2)
-> +       pick $(git rev-parse rebase-3)
-> +       fixup $(git rev-parse rebase-4)
-> +       squash $(git rev-parse rebase-5)
-> +       reword $(git rev-parse rebase-6)
-> +       squash $(git rev-parse rebase-7)
-> +       fixup $(git rev-parse rebase-8)
-> +       fixup $(git rev-parse rebase-9)
-> +       edit $(git rev-parse rebase-10)
-> +       squash $(git rev-parse rebase-11)
-> +       squash $(git rev-parse rebase-12)
-> +       edit $(git rev-parse rebase-13)
-> +       EOF
-> +'
+
+Unnecessary extra blank line.
+
+>  struct pack_entry {
+>         off_t offset;
+> diff --git a/packfile.c b/packfile.c
+> @@ -859,9 +859,9 @@ static void prepare_packed_git_mru(void)
+>  {
+>         struct packed_git *p;
+>
+> -       mru_clear(&packed_git_mru);
+> -       for (p = packed_git; p; p = p->next)
+> -               mru_append(&packed_git_mru, p);
+> +       for (p = packed_git; p; p = p->next) {
+> +               list_add_tail(&p->mru, &packed_git_mru);
+> +       }
+
+Unnecessary braces on for-loop.
+
+>  }
