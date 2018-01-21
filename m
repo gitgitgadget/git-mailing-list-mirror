@@ -2,102 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8A361F576
-	for <e@80x24.org>; Sun, 21 Jan 2018 18:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2D91F576
+	for <e@80x24.org>; Sun, 21 Jan 2018 18:47:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751301AbeAUSbm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Jan 2018 13:31:42 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:38331 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750925AbeAUSbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jan 2018 13:31:41 -0500
-Received: by mail-it0-f48.google.com with SMTP id w14so7376802itc.3
-        for <git@vger.kernel.org>; Sun, 21 Jan 2018 10:31:41 -0800 (PST)
+        id S1750954AbeAUSrL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Jan 2018 13:47:11 -0500
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:42209 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750853AbeAUSrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Jan 2018 13:47:10 -0500
+Received: by mail-qt0-f193.google.com with SMTP id c2so15690832qtn.9
+        for <git@vger.kernel.org>; Sun, 21 Jan 2018 10:47:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GasDCc84EIKLuonmBdU5Vl0W91nxjDImrMdzmV7GCNM=;
-        b=P6iLl1lfqrr0LoWAg1ShLZhKWLl+OwNDdyUWDMqTymIt08aQ/Ex8Pu4GQDoFPAQaNp
-         poR7sNjnzOSSw38jLpX1qWDyPVQYFddfXeDFpIi9qEwuIo31Jgxwo0mZnVyEBiqx2KI9
-         XkZcjhdWPng3rcuVLWmYriYAcokY226lMk9ceLt3+S1ub36t2oWclH1Qtobxxycpe7dG
-         kCjYDDq5FGZ25LXbODzAQ0zvlNS3VoyDNyeIRfU1XOqhMEUBtxK201K1TpnRSNZfOYZ2
-         vvMmOJMdsyBbNrpHQun4OYnNH+4gt3/XZce4L1Hsm/lbHJqO2zAqLrWsXN70QDjhdVNl
-         M5mQ==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=LY3ZGF4l+m6lq+6EtaXfZNIKHtVbqxqJ7aNn+fkQCQ0=;
+        b=AH5ZjdwQKQLpmsukxkDJzqJMVlYKpHtlQI1AUKJ3enIx2gLtpA8kMzkyWBlswHn0XC
+         ypfXayWmGKaBwNlMVbD8CYnr3DUS2fT7eYpG8G+IP7T8YZq4o9GF/Vrf3qdUWqacfu+H
+         Vi9G/AWstRnEsI5nrU+m8d/vuKtXOK0a8QRRrsYT/yWw1/Pho7IN5HzfAuHHMG7LmP+R
+         pcW1cE+CJjEGETREvfIEowKwJsR7YZXlGhsb/iPw6liE+vy4tYbN4EIoBUrmot8h69+R
+         Hxi5oWQYIbbjOwaHBNwQKbBv6wS/fUvOuwTJnrxwGRGWmmLiicGZi+I8sCE86r2zqaZz
+         /neA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GasDCc84EIKLuonmBdU5Vl0W91nxjDImrMdzmV7GCNM=;
-        b=QgzzURZOG0Tm6Dhb9b5oPZtDS3X1FwMpdiXj/zszWJc5WFFEPB1FwGj1l0RLoB/WHx
-         Y4q+FVl15GVECiFmmtwARqIalPxPBLzxgxlOpmZ5M5+GWuL/BsR+GNF6iELT/Q4lm+Gm
-         nFzHLxB70K+FJSc+dSwu0Ot1zVmTbDvjJlEXHXH5aSIjVkmwBjywoJO8AkONp/zkJBsS
-         VSoc9hIcJyxGFDnDerhjNFC/amHRHljNnB6qzwus5yvSh+v8j/+aYVp3dIqd2p8epvLu
-         0OR6/Qr0eAX419f/VfEnUA4KoBrsB6kC6Z2j7xNbLq4kJy+HATTJgSawvh/iGY5ZqEUs
-         Y7Nw==
-X-Gm-Message-State: AKwxytedqVFcZvwyt51SixvwmgVdkQ1G17k+nVAmxoPvdV+1itC/OnWt
-        Rszb6NQGbomzGR4FLr/+VU9nPdDELXueg3ha+kSfKhOC
-X-Google-Smtp-Source: AH8x225KHMBwaR7Qh/U+O3DofviipSPqo2KtkcTAq2rxYsGJwJQ5dUG3UqMY6v8n6rRQP2L3JU2JSdOmYquCqkp5qWg=
-X-Received: by 10.36.189.129 with SMTP id x123mr4093138ite.31.1516559500596;
- Sun, 21 Jan 2018 10:31:40 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=LY3ZGF4l+m6lq+6EtaXfZNIKHtVbqxqJ7aNn+fkQCQ0=;
+        b=SAaST0vClSRBI6t3b/iUrBrBlCr9Pu7Giq/6XfilPmffAuc40HipMyERpknM+T+PsX
+         MdWD2mJJUu1NFYVGP97SIATa+V8Uim31SFUe2o2YeDWRG9OulBEiO46/IPINjvYl0cB0
+         lwCdWz/ypK4bGwPfZ/oCR3Dk3RTOcVmWo3ykDUefXvcWxxsgYCVS7t/dizUgEOcW81af
+         Mf/tJHxuBXloWqImewosJVeswBgXcSsJz2Mr3LFG+mPWzPqovwZgfC3BQVbn+ICRRYoZ
+         oYWzB2Q5GdrpR+mlaLGoJpru/FA8Rkbia6iR9sajTJWXlI+uk0df+1fmTp2Z287cu0yj
+         n57w==
+X-Gm-Message-State: AKwxyte3ktBy+M7Ltx62B7Mj7PUzwrGDi+zXKLVSAlyvuLHxu/sVfPQU
+        RDrI17RqDp3tdI2tO2eha/XjRAL+qqYNRcBPerE=
+X-Google-Smtp-Source: AH8x225oyvIR6ka3Lce+vAGmgStXIk+wT/sQPKacyv9HXygGcIJ9/etj0QvBSpMXbWP3N2zEDmhPd+V7/K5TYk5ZnNI=
+X-Received: by 10.200.25.9 with SMTP id t9mr7614505qtj.75.1516560429702; Sun,
+ 21 Jan 2018 10:47:09 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.2.134.103 with HTTP; Sun, 21 Jan 2018 10:31:20 -0800 (PST)
-From:   John Cheng <johnlicheng@gmail.com>
-Date:   Sun, 21 Jan 2018 10:31:20 -0800
-Message-ID: <CAJzZBAQuOqwRmBLOdUEVMY74_xT2dWe3a+9qT9ufc4bp8gjgig@mail.gmail.com>
-Subject: cygwin git and golang: how @{u} is handled
-To:     git@vger.kernel.org
+Received: by 10.12.175.239 with HTTP; Sun, 21 Jan 2018 10:47:09 -0800 (PST)
+In-Reply-To: <CACsJy8CpfVb546caxP-HGjk9uXa805uayF0A7oMzh+fzEFS_Qw@mail.gmail.com>
+References: <20180119041825.727904-1-sandals@crustytoothpaste.net>
+ <20180120203324.112522-1-sandals@crustytoothpaste.net> <CACsJy8CpfVb546caxP-HGjk9uXa805uayF0A7oMzh+fzEFS_Qw@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 21 Jan 2018 13:47:09 -0500
+X-Google-Sender-Auth: W6NTOos22kMVEYTLxkYnoMBoROI
+Message-ID: <CAPig+cT-oj2N978Qk3oQ_7wMOccAA80ws62UdFq3PvWkD6xKOg@mail.gmail.com>
+Subject: Re: [PATCH] t: add clone test for files differing only in case
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
+        <aleks.bulaev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am experiencing a strange behavior and I'm not certain if it is a
-problem with golang or the cygwin version of git.
+On Sun, Jan 21, 2018 at 6:50 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Jan 21, 2018 at 3:33 AM, brian m. carlson
+>> +test_expect_success 'clone on case-insensitive fs' '
+>
+> We have CASE_INSENSITIVE_FS prereq. Should we use it here? I know it
+> does not harm running this test on case-sensitive filesystem, but the
+> prereq could be useful for grepping.
 
-Steps to reproduce:
-Use golang's os/exec library to execute
-exec.Command(os.Args[1],"log","@{u}") // where os.Args[1] is either
-cygwin git or Windows git
+I'd rather not hide it behind the CASE_INSENSITIVE_FS[1] prerequisite
+since the test potentially could catch some sort of future regression
+even on case-sensitive filesystems.
 
-Expected result:
-commit 09357db3a29909c3498143b0d06989e00f5e2442
-Author: John Cheng <johnlicheng@gmail.com>
-Date:   Sun Jan 14 10:57:01 2018 -0800
-...
-
-Actual result:
-Suppose that cygwin git is specified, the result becomes:
-exit status 128 fatal: ambiguous argument '@u': unknown revision or
-path not in the working tree.
-
-Version:
-git version 2.15.1.windows.2
-git version 2.15.1
-
-I'm not certain if this is a git problem, as I could not reproduce
-this problem using python to script cygwin git.
-
-A list of scenarios I've tested are
-1. golang + cygwin git = "exit code 128"
-2. golang + windows git = "exit code 0"
-3. python + cygwin git = "exit code 0"
-4. python + windows git = "exit code 0"
-
-I've tried to write a simple program to echo the command line
-parameters passed by go into the process it executes - and it appears
-that go itself does not change "@{u}" into "@u". I'm a bit stuck at
-point to figure out which may be the cause: golang or git. I figured
-I'd start here.
-
-
-
-
-
--- 
----
-John L Cheng
+[1]: Todd Zullinger suggested the same:
+https://public-inbox.org/git/CAPig+cSRN1zHc=zsO1Y_aQ_eO+sbsd0cq5iZ9hYz3ruK_E-0Dw@mail.gmail.com/
