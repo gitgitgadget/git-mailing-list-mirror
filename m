@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40FDF1F424
-	for <e@80x24.org>; Sun, 21 Jan 2018 00:03:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EB9B1F424
+	for <e@80x24.org>; Sun, 21 Jan 2018 00:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932362AbeAUADy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 19:03:54 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:44398 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932198AbeAUADs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 19:03:48 -0500
-Received: by mail-wm0-f67.google.com with SMTP id t74so9939351wme.3
-        for <git@vger.kernel.org>; Sat, 20 Jan 2018 16:03:48 -0800 (PST)
+        id S932467AbeAUAD6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 19:03:58 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:42308 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932367AbeAUADz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 Jan 2018 19:03:55 -0500
+Received: by mail-wr0-f193.google.com with SMTP id e41so4820364wre.9
+        for <git@vger.kernel.org>; Sat, 20 Jan 2018 16:03:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=lpbif+mFeoIDH1s4HhI6FotapcRS84bl01lmLsZHXmw=;
-        b=MeiCTZ4lZ0TuNCQdg3iA40JJXIkOMPvDFOEOfP+m6v2dbbT8htWcQitXpvtZxJk+E2
-         ARtgQlMx5pfEa1DsM3CbOWdjiscCxL0WMzX552AkNeMaTLc2EvAw+fLDZIKLjwTkbXc1
-         3ITRxAQldTZSDglO8nhfoFlDYc6Rvs0pvmfm7dQH0BTYhRhLydjTLeVYbm/rCuu7EjtE
-         ZO8mOgJwACuwOD0+CGAWaBmHD2AYLRjv5YYnCRdtjE+sHpqhn2JFuYFhbKSCEdT7lRzg
-         jICn46boqu+gTG34cFUrNVcGnnzJ2tDSOyN1ymVKj9WDejYEpNE7kAlq41PQ5hWjgYn/
-         HbAw==
+        bh=mtpOBdSnjC9T25DSFWBYvYtOSuqUMpfMKnfTHBSex3w=;
+        b=QSu1Lo/eIYx6Tmr/RDcw51A2EOdoRxk7NWmJpII7+ddyxRoenvSOCtm2wJXeTXVDe5
+         ae5Ok4FEgPQfAnLYiJ+oPzDJB93XNo71CpMVf2DTbxzp05VfO6Zb0t+deH/K3zQOb7sK
+         qLE7XOe59NV3sr0grQK8Q4vMLmBmeYkqGSD9PEYu3fH+StLWq5f3jw/tGzcFbUw+SRm9
+         6S7A1dYR8mKi2pPYL01YQ8RMxzcyLH0n+UHBmpSS6ALAG6tYh1P1WrhOAUA2PwfW4yME
+         378snr7QVNlOjjhiBeLcxhYtvMoG8tVIsIkchbslBUiVFyJfMkPKtqnNDymiWpC0pome
+         XFjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=lpbif+mFeoIDH1s4HhI6FotapcRS84bl01lmLsZHXmw=;
-        b=BhG95OrGVdD+DLtfjxd1SmCauSw8o7qHsn7+YYx4vx5gHwEDr28Cr8QIgRnnuu0T+M
-         GHvrxA8WqHIyOSIHKU5yukjd+ocKhx4hERSkdWSvnvlnOOlLp1qliaCKQm8cncJ4wk/4
-         BIhxBRe21J/Hzvp/eUrTDTB6UUp7fDzwOkEieflNkgejW5IqguPIXA1gS5X+AGWarwPM
-         GyoOJ6vo8PiASDGm8JWBJaayGC4dggxZC8k5Zs2Hle/l5oWDVnBlByUMmk9HcrLRhLiM
-         i+Zi2ysEAxpOXtbi3dkX0tm0OhqKIZdKKWE4ylXFn7JHTqbCZZ/cJsfaxcPsr7HYjrlW
-         6RtA==
-X-Gm-Message-State: AKwxytchnrv3BUVSi0Llh8UqvGR5caGU8dR9LY4JYWgkbG20GLOkuyMQ
-        xMQmMEH8Zt8vIL0T1st0Z+KMKyRJ
-X-Google-Smtp-Source: AH8x226s+pbfrNVMkEkjojphiNj6hmF67uksrY0wjP8NttY9TiyGr0qQlQ5zYot/eKSpvpPd7rIt+A==
-X-Received: by 10.28.192.24 with SMTP id q24mr2020869wmf.96.1516493026705;
-        Sat, 20 Jan 2018 16:03:46 -0800 (PST)
+        bh=mtpOBdSnjC9T25DSFWBYvYtOSuqUMpfMKnfTHBSex3w=;
+        b=Z6aOL6791eHLATwhbd+Erd/CNcb2qNOVWreVfQSJg8fNpwSmseLKtxDWpqhkj5u+PM
+         K6zWQxQmCtkmAyYVUBMRz1ghU7FCDh6PsO8BDy9ib0JVe9Y57D3dsUzq1zWks9z3Z8Dl
+         b05finBKQLpxUdugg6W7c7CncytJgHe1mtAjHUwWPTlZfGU5UZTcU9t+2je9919XMEex
+         43oqlokr3CnjaY4i5yxBNtfzz0Oj3YmV13PoGac0tbSmCorA6BtEilkxkubryj8aDsBb
+         YG6kcccjYxjv12W33eeN7JBa+nCXVLYbN6/dMZTnoduczEAdMrMJMupU8S4ZNpm/v73f
+         RiXA==
+X-Gm-Message-State: AKwxytd6H+4H5Mi1Q+JhaAqOqtjtrEnZXURvM1DQUjZwxhZxSRqjNTld
+        S1FrtqKWx0CligmUeKssTD7kIWxh
+X-Google-Smtp-Source: AH8x227AX8LcnMhHfSfFIcRreOnaQmdmVTcy2VaQGPvkxq6YGl5CmjBF0CSkucphOJHoyEiFA2MU8A==
+X-Received: by 10.223.128.231 with SMTP id 94mr2369913wrl.64.1516493033357;
+        Sat, 20 Jan 2018 16:03:53 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v75sm18677641wrc.45.2018.01.20.16.03.44
+        by smtp.gmail.com with ESMTPSA id v75sm18677641wrc.45.2018.01.20.16.03.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 Jan 2018 16:03:45 -0800 (PST)
+        Sat, 20 Jan 2018 16:03:52 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 09/12] fetch: don't redundantly NULL something calloc() gave us
-Date:   Sun, 21 Jan 2018 00:03:01 +0000
-Message-Id: <20180121000304.32323-10-avarab@gmail.com>
+Subject: [PATCH v2 10/12] fetch: stop accessing "remote" variable indirectly
+Date:   Sun, 21 Jan 2018 00:03:02 +0000
+Message-Id: <20180121000304.32323-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180121000304.32323-1-avarab@gmail.com>
 References: <20180121000304.32323-1-avarab@gmail.com>
@@ -76,35 +76,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stop redundantly NULL-ing the last element of the refs structure,
-which was retrieved via calloc(), and is thus guaranteed to be
-pre-NULL'd.
+Access the "remote" variable passed to the fetch_one() directly rather
+than through the gtransport wrapper struct constructed in this
+function for other purposes.
 
-This code dates back to b888d61c83 ("Make fetch a builtin",
-2007-09-10), where wasn't any reason to do this back then either, it's
-just something left over from when git-fetch was initially introduced.
+This makes the code more readable, as it's now obvious that the remote
+struct doesn't somehow get munged by the prepare_transport() function
+above, which takes the "remote" struct as an argument and constructs
+the "gtransport" struct, containing among other things the "remote"
+struct.
 
-The initial motivation for this change was to make a subsequent change
-which'll also modify the refs variable smaller, since it won't have to
-copy this redundant "NULL the last + 1 item" pattern.
+This pattern of accessing the container struct was added in
+737c5a9cde ("fetch: make --prune configurable", 2013-07-13) when this
+code was initially introduced.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fetch.c | 1 -
- 1 file changed, 1 deletion(-)
+ builtin/fetch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7bbcd26faf..b34665db9e 100644
+index b34665db9e..a85c2002a9 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -1302,7 +1302,6 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 			} else
- 				refs[j++] = argv[i];
- 		}
--		refs[j] = NULL;
- 		ref_nr = j;
- 	}
+@@ -1280,8 +1280,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
  
+ 	if (prune < 0) {
+ 		/* no command line request */
+-		if (0 <= gtransport->remote->prune)
+-			prune = gtransport->remote->prune;
++		if (0 <= remote->prune)
++			prune = remote->prune;
+ 		else if (0 <= fetch_prune_config)
+ 			prune = fetch_prune_config;
+ 		else
 -- 
 2.15.1.424.g9478a66081
 
