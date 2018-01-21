@@ -2,82 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D2D91F576
-	for <e@80x24.org>; Sun, 21 Jan 2018 18:47:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87DB51F576
+	for <e@80x24.org>; Sun, 21 Jan 2018 18:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750954AbeAUSrL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Jan 2018 13:47:11 -0500
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:42209 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750853AbeAUSrK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jan 2018 13:47:10 -0500
-Received: by mail-qt0-f193.google.com with SMTP id c2so15690832qtn.9
-        for <git@vger.kernel.org>; Sun, 21 Jan 2018 10:47:10 -0800 (PST)
+        id S1751347AbeAUSzY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Jan 2018 13:55:24 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38977 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751336AbeAUSzX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Jan 2018 13:55:23 -0500
+Received: by mail-wm0-f44.google.com with SMTP id b21so12765336wme.4
+        for <git@vger.kernel.org>; Sun, 21 Jan 2018 10:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=LY3ZGF4l+m6lq+6EtaXfZNIKHtVbqxqJ7aNn+fkQCQ0=;
-        b=AH5ZjdwQKQLpmsukxkDJzqJMVlYKpHtlQI1AUKJ3enIx2gLtpA8kMzkyWBlswHn0XC
-         ypfXayWmGKaBwNlMVbD8CYnr3DUS2fT7eYpG8G+IP7T8YZq4o9GF/Vrf3qdUWqacfu+H
-         Vi9G/AWstRnEsI5nrU+m8d/vuKtXOK0a8QRRrsYT/yWw1/Pho7IN5HzfAuHHMG7LmP+R
-         pcW1cE+CJjEGETREvfIEowKwJsR7YZXlGhsb/iPw6liE+vy4tYbN4EIoBUrmot8h69+R
-         Hxi5oWQYIbbjOwaHBNwQKbBv6wS/fUvOuwTJnrxwGRGWmmLiicGZi+I8sCE86r2zqaZz
-         /neA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=B6rxj9SVHq2yFqx5hWtP0XBhY4GC5XxBvtCDHQlcDFE=;
+        b=G1fUy0v91JQqErVWcDd7liMEgfxLWMHbQYtPLEFIbL9rrtlBy/xvXxAGtdWjT39Z5C
+         AXOD+LhDzjveV19MTCfX8lo4Q7kdXgzgmv7MI3Vs0LTutNHZBXIp4BS9moIAFQfkNWZt
+         KjNNiny6esrpokb1Ds7OlnBOHT+NrMFPDbEEJoI/txxBvvCfpGJIHaPndP5IfBxdh2GO
+         c7TGql410sQyk0zGHVxhJ1fA9MOIErvKsgljHfe/zoY7qSyF9xYjKh/UDo3SaPyb7ADY
+         7ik1UeI85UFsCjAyOx9HS8KB8XokQdmuxHw5RL8rt9+Jq5+EgFBnyP/12VuJcq9BnvKU
+         eByw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=LY3ZGF4l+m6lq+6EtaXfZNIKHtVbqxqJ7aNn+fkQCQ0=;
-        b=SAaST0vClSRBI6t3b/iUrBrBlCr9Pu7Giq/6XfilPmffAuc40HipMyERpknM+T+PsX
-         MdWD2mJJUu1NFYVGP97SIATa+V8Uim31SFUe2o2YeDWRG9OulBEiO46/IPINjvYl0cB0
-         lwCdWz/ypK4bGwPfZ/oCR3Dk3RTOcVmWo3ykDUefXvcWxxsgYCVS7t/dizUgEOcW81af
-         Mf/tJHxuBXloWqImewosJVeswBgXcSsJz2Mr3LFG+mPWzPqovwZgfC3BQVbn+ICRRYoZ
-         oYWzB2Q5GdrpR+mlaLGoJpru/FA8Rkbia6iR9sajTJWXlI+uk0df+1fmTp2Z287cu0yj
-         n57w==
-X-Gm-Message-State: AKwxyte3ktBy+M7Ltx62B7Mj7PUzwrGDi+zXKLVSAlyvuLHxu/sVfPQU
-        RDrI17RqDp3tdI2tO2eha/XjRAL+qqYNRcBPerE=
-X-Google-Smtp-Source: AH8x225oyvIR6ka3Lce+vAGmgStXIk+wT/sQPKacyv9HXygGcIJ9/etj0QvBSpMXbWP3N2zEDmhPd+V7/K5TYk5ZnNI=
-X-Received: by 10.200.25.9 with SMTP id t9mr7614505qtj.75.1516560429702; Sun,
- 21 Jan 2018 10:47:09 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=B6rxj9SVHq2yFqx5hWtP0XBhY4GC5XxBvtCDHQlcDFE=;
+        b=oIAuAqSFnQAoW5yvlQEVxigRskeIWWdSzjz4LzoNzu1oXWvT0gTJQ899HoMlApSMi/
+         6TGrj8Z7L5GzCxE6Mzxzk6sfvPUXxGGphlKHq5B1J7ajEWHR2GkU022zBjVrvyow2Rg/
+         nLm9FwYFKu96/BwFVKUnd8DUxOyMawSOMOznSebl9ki8Qe4o+9dgC7SEC6/OLsHV9DWA
+         rKgUAhgvbqrFnos64Bjq1fcRHN8OyioRV7TpNqYzcjV8lGo+9z8NlyEKhlFgpraIs8rk
+         3DbFjNyKUGlbutwiZH+w5BWEC6vFyFr4D7DWpUxiTZNfzDK2FMqwX8RPyfBg/vGQmWCl
+         k92A==
+X-Gm-Message-State: AKwxytfK1798NDoWa0BQ1KDtDhwGzDxSD4kxtcqwRxUD0sC6/Hgwp2pd
+        XAA22+0CBACS9U7W2XuCzH0=
+X-Google-Smtp-Source: AH8x2264MiFw4EQXNKa4AOGt+yCoBFeWhrkYrZCygFKDNXF8Uccn1ZD4i+itL5NgiYVW4qVdZUJQ6Q==
+X-Received: by 10.80.214.8 with SMTP id x8mr9817570edi.129.1516560922419;
+        Sun, 21 Jan 2018 10:55:22 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id u4sm8924397edc.91.2018.01.21.10.55.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 21 Jan 2018 10:55:21 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Cheng <johnlicheng@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: cygwin git and golang: how @{u} is handled
+References: <CAJzZBAQuOqwRmBLOdUEVMY74_xT2dWe3a+9qT9ufc4bp8gjgig@mail.gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <CAJzZBAQuOqwRmBLOdUEVMY74_xT2dWe3a+9qT9ufc4bp8gjgig@mail.gmail.com>
+Date:   Sun, 21 Jan 2018 19:55:19 +0100
+Message-ID: <87372zhwiw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Sun, 21 Jan 2018 10:47:09 -0800 (PST)
-In-Reply-To: <CACsJy8CpfVb546caxP-HGjk9uXa805uayF0A7oMzh+fzEFS_Qw@mail.gmail.com>
-References: <20180119041825.727904-1-sandals@crustytoothpaste.net>
- <20180120203324.112522-1-sandals@crustytoothpaste.net> <CACsJy8CpfVb546caxP-HGjk9uXa805uayF0A7oMzh+fzEFS_Qw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 21 Jan 2018 13:47:09 -0500
-X-Google-Sender-Auth: W6NTOos22kMVEYTLxkYnoMBoROI
-Message-ID: <CAPig+cT-oj2N978Qk3oQ_7wMOccAA80ws62UdFq3PvWkD6xKOg@mail.gmail.com>
-Subject: Re: [PATCH] t: add clone test for files differing only in case
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
-        <aleks.bulaev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 21, 2018 at 6:50 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Jan 21, 2018 at 3:33 AM, brian m. carlson
->> +test_expect_success 'clone on case-insensitive fs' '
->
-> We have CASE_INSENSITIVE_FS prereq. Should we use it here? I know it
-> does not harm running this test on case-sensitive filesystem, but the
-> prereq could be useful for grepping.
 
-I'd rather not hide it behind the CASE_INSENSITIVE_FS[1] prerequisite
-since the test potentially could catch some sort of future regression
-even on case-sensitive filesystems.
+On Sun, Jan 21 2018, John Cheng jotted:
 
-[1]: Todd Zullinger suggested the same:
-https://public-inbox.org/git/CAPig+cSRN1zHc=zsO1Y_aQ_eO+sbsd0cq5iZ9hYz3ruK_E-0Dw@mail.gmail.com/
+> Actual result:
+> Suppose that cygwin git is specified, the result becomes:
+> exit status 128 fatal: ambiguous argument '@u': unknown revision or
+> path not in the working tree.
+
+Given that:
+
+    $ git log @{x}
+    fatal: ambiguous argument '@{x}': unknown revision or path not in the working tree.
+
+Spews the output back at you as @{x} not @x the problem must be in
+whatever is passing the argument to git, whether that's go or some other
+wrapper.
+
+Try putting a "git" first in your $PATH which is nothing but:
+
+    #!/bin/sh
+    echo "args: $@"
+    exit 1
+
+And seeing what you get.
