@@ -2,96 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 570811F424
-	for <e@80x24.org>; Sun, 21 Jan 2018 04:39:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE4141F424
+	for <e@80x24.org>; Sun, 21 Jan 2018 04:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750832AbeAUEjM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 Jan 2018 23:39:12 -0500
-Received: from mout.web.de ([217.72.192.78]:52828 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750817AbeAUEjL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 Jan 2018 23:39:11 -0500
-Received: from [192.168.178.36] ([91.20.48.24]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LZvgf-1f53hA3L1p-00lk1P; Sun, 21
- Jan 2018 05:39:01 +0100
-Subject: Re: [PATCH v3] mru: Replace mru.[ch] with list.h implementation
-To:     Gargi Sharma <gs051095@gmail.com>, Eric Wong <e@80x24.org>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org
-References: <1516404987-3420-1-git-send-email-gs051095@gmail.com>
- <20180120010228.hhyvirqp44taf3cz@dcvr.yhbt.net>
- <CAOCi2DGKkLnY_=-7pMr9VyP7TVsj0b8w-msdNn9ZtXKK8g7u9g@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <75c9bdc5-1c81-1e03-e865-5e74014bd590@web.de>
-Date:   Sun, 21 Jan 2018 05:38:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S1750853AbeAUEly (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 Jan 2018 23:41:54 -0500
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47886 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750817AbeAUElx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 20 Jan 2018 23:41:53 -0500
+X-AuditID: 12074412-c85ff70000000b7d-82-5a641a10a4cf
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 9D.D5.02941.01A146A5; Sat, 20 Jan 2018 23:41:52 -0500 (EST)
+Received: from [192.168.69.190] (p4FC6EAAB.dip0.t-ipconnect.de [79.198.234.171])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w0L4fn5c030836
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 20 Jan 2018 23:41:50 -0500
+Subject: Re: [PATCH v3] packed_ref_cache: don't use mmap() for small files
+To:     Jeff King <peff@peff.net>, Kim Gybels <kgybels@infogroep.be>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20180115235251.GA21900@sigill.intra.peff.net>
+ <20180116193815.4568-1-kgybels@infogroep.be>
+ <20180117220902.GA14952@sigill.intra.peff.net>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <29c51594-6e29-be34-3d5f-2b9f399490f2@alum.mit.edu>
+Date:   Sun, 21 Jan 2018 05:41:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <CAOCi2DGKkLnY_=-7pMr9VyP7TVsj0b8w-msdNn9ZtXKK8g7u9g@mail.gmail.com>
+In-Reply-To: <20180117220902.GA14952@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:jeIt8hY7gb+YDjFgA6pmTi7lu60N1+tkX73PgaYXB5M2ciDyEFD
- SR4pwYduLyVUGD3Lc9V8Sz0R7wq9c2VQwAGC9l2aKH9K8sU6f/lr5bSSbUTyHzIhuF3GE62
- SN9SsT5Uefgqf9esvvDaQFBA8zWv4IhXLZ7Jw1CFzqgCjKT9SLXEX7JRTp1BqNfvVF7ef8i
- sYp6ujKv2xNvf9DdONgbA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:L5QpKtMhhlI=:wrrOuJOuOZ1MmMDxpmR4sR
- I1G4BOQQgLMJaPdT5LYfYA10MoTxWG9RPmElfA1It3cyXDtQP9gTwQAlStN1V42iMDT1QbdZs
- rGL9c1s3Q6Jn6iqmEvQ8AwtoCTQSSKwIkDpSf7OUl9/KGB0qvO+rdBGl1DNaCRTwI9WYZPCE5
- ORnn1tZOUmH3U3peuQow3pg8YD5p+Mb2oJOw7tzV6ChIp74nE4ybgeRcQXj+qqhfPFcppqJ89
- VFhY+wUymVzPvWuPpI4lwiYre7iWSmqJq5EHHDOlFfvTh5XCbAU2OX92pFcTPrn6zJXIkfH+j
- DALDPn/ur4wNyFe6ScsJ2mwa5zHgW7/zrtCeomVYJA3mjLFNmlvXs8aOOmQ0MDdbtxQzoYUyW
- CoopSkpHEjHTYM4bJss/blV3NF4igBGEy0NsrIe35cDnRC59v4hNbyM8o7ry6nvCnCEoVO/PP
- Jmxxbxfo7vyUHU6fjgur8+MFIPI/L6oFaf1pzIaCBw8nxLRRjeInMU7GWxSO2FGth7ZCcToLV
- 2zyIah2RKHuWtsHmIEA9T2Qm3WZO+2X6Gv5YJSkY1nT7LNrn7eLcIFpyZWGoeX6aJF6BqCIHk
- TFIKLLOHQN4voT/qAHDPPMQXpTz8lzmsosFcYi0rSg6cNGyeWaAeoih+/qVN56UERZ+QbWySf
- fqhVLdE/F70Uzr2bxfBzDmUOfg/VYB6hVU8HQ7vj2X+UmfgROIirwRtQMrsDANpzmNoCh5SVM
- 8OeKbxBt2QZS2arjd7QGdOPaIdkhNNei+cIVv7cf8UqDYzcPPWx9vjSIookWfiGFwP3I8oF8C
- 0UhX8qpLSvtLrXVNWPqzROahMF3eSMl+Sccy7kCXgITix7yASM=
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRmVeSWpSXmKPExsUixO6iqCsglRJlsGeFjkXXlW4mi4beK8wW
+        /cu72CwOds5ktfjR0sPswOrx4WOcR9+RNYwez3r3MHpcvKTs8XmTXABrFJdNSmpOZllqkb5d
+        AlfGjyPnmAv+8lQsWLeOsYHxPFcXIyeHhICJxNGOx+xdjFwcQgI7mCR+LtsD5Vxgkth1t5MF
+        pEpYwEti6pKD7CC2iICDxJa5BxlBbGaBMokT72dBNcxilGg5uwOsgU1AV2JRTzMTiM0rYC+x
+        eMlZsAYWAVWJ3es3gtmiAhESU9auZYGoEZQ4OfMJmM0pYC2x7OcMqAXqEn/mXWKGsMUlbj2Z
+        zwRhy0tsfzuHeQIj0FaE9llIWmYhaZmFpGUBI8sqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0z
+        vdzMEr3UlNJNjJDQF9rBuP6k3CFGAQ5GJR7eA/OTo4RYE8uKK3MPMUpyMCmJ8t61TYoS4kvK
+        T6nMSCzOiC8qzUktPsQowcGsJMI7+yFQOW9KYmVValE+TEqag0VJnPfnYnU/IYH0xJLU7NTU
+        gtQimKwMB4eSBK+YZEqUkGBRanpqRVpmTglCmomDE2Q4D9DwJxJANbzFBYm5xZnpEPlTjLoc
+        N168bmMWYsnLz0uVEufNACkSACnKKM2DmwNLWa8YxYHeEubVB1nHA0x3cJNeAS1hAloysTcR
+        ZElJIkJKqoFRlP/5pp/vDRbfS5APnKb7/+C3Vw/+35rx5e70BNFbLRt/ucyXtzwbdmmqzv4o
+        lq6IZ3s2WGtJyy78c0Vg201tndzfYRvyJ/avLrmqmDfrZdpa2RxH1ZY7pxbW1i079e5z+yt/
+        RdaPJRNkc0/1nJk+x2/VgvRXy211fsqyTVOWFQk02/950/Nvq5VYijMSDbWYi4oTAWrnaEM0
+        AwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 20.01.2018 um 23:24 schrieb Gargi Sharma:
-> On Sat, Jan 20, 2018 at 1:02 AM, Eric Wong <e@80x24.org> wrote:
->> Gargi Sharma <gs051095@gmail.com> wrote:
->>> --- a/list.h
->>> +++ b/list.h
->>> @@ -93,6 +93,13 @@ static inline void list_move(struct list_head *elem, struct list_head *head)
->>>        list_add(elem, head);
->>>   }
->>>
->>> +/* Move to the front of the list. */
->>> +static inline void list_move_to_front(struct list_head *elem, struct list_head *head)
->>> +{
->>> +     list_del(elem);
->>> +     list_add(elem, head);
->>> +}
->>> +
->>
->> Since we already have list_move and it does the same thing,
->> I don't think we need a new function, here.
->>
->> Hackers coming from other projects (glibc/urcu/Linux kernel)
->> might appreciate having fewer differences from what they're used
->> to.
+On 01/17/2018 11:09 PM, Jeff King wrote:
+> On Tue, Jan 16, 2018 at 08:38:15PM +0100, Kim Gybels wrote:
 > 
-> I think the idea behind this function was that it is already being used in two
-> places in the code and might be used in other places in the future. I agree
-> with your stance, but a list_move_to_front is pretty self explanatory and not
-> too different, so it should be alright.
+>> Take a hint from commit ea68b0ce9f8 (hash-object: don't use mmap() for
+>> small files, 2010-02-21) and use read() instead of mmap() for small
+>> packed-refs files.
+>>
+>> This also fixes the problem[1] where xmmap() returns NULL for zero
+>> length[2], for which munmap() later fails.
+>>
+>> Alternatively, we could simply check for NULL before munmap(), or
+>> introduce xmunmap() that could be used together with xmmap(). However,
+>> always setting snapshot->buf to a valid pointer, by relying on
+>> xmalloc(0)'s fallback to 1-byte allocation, makes using snapshots
+>> easier.
+>>
+>> [1] https://github.com/git-for-windows/git/issues/1410
+>> [2] Logic introduced in commit 9130ac1e196 (Better error messages for
+>>     corrupt databases, 2007-01-11)
+>>
+>> Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+>> ---
+>>
+>> Change since v2: removed separate case for zero length as suggested by Peff,
+>> ensuring that snapshot->buf is always a valid pointer.
+> 
+> Thanks, this looks fine to me (I'd be curious to hear from Michael if
+> this eliminates the need for the other patches).
 
-Not sure I understand the point about the function being already used as
-an argument for adding it, but if there is already one which has the
-exact sane behavior (list_move() in this case) then that should be used
-instead of adding a duplicate.
+`snapshot->buf` can still be NULL if the `packed-refs` file didn't exist
+(see the earlier code path in `load_contents()`). So either that code
+path *also* has to get the `xmalloc()` treatment, or my third patch is
+still necessary. (My second patch wouldn't be necessary because the
+ENOENT case makes `load_contents()` return 0, triggering the early exit
+from `create_snapshot()`.)
 
-René
+I don't have a strong preference either way.
 
+Michael
