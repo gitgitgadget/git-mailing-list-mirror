@@ -8,54 +8,53 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90F371F576
-	for <e@80x24.org>; Sun, 21 Jan 2018 16:27:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C6E41F576
+	for <e@80x24.org>; Sun, 21 Jan 2018 16:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751402AbeAUQ1Z (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Jan 2018 11:27:25 -0500
-Received: from mail-io0-f195.google.com ([209.85.223.195]:44408 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751085AbeAUQ1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jan 2018 11:27:24 -0500
-Received: by mail-io0-f195.google.com with SMTP id z6so6952870iob.11
-        for <git@vger.kernel.org>; Sun, 21 Jan 2018 08:27:23 -0800 (PST)
+        id S1750873AbeAUQgc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Jan 2018 11:36:32 -0500
+Received: from mail-it0-f68.google.com ([209.85.214.68]:39151 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750793AbeAUQga (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 Jan 2018 11:36:30 -0500
+Received: by mail-it0-f68.google.com with SMTP id 68so7193267ite.4
+        for <git@vger.kernel.org>; Sun, 21 Jan 2018 08:36:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:content-transfer-encoding;
-        bh=ArVjDH3TZXzJn6T/unTptPOIOWf3Q6FX3puqhcHovH0=;
-        b=WPc5Rc3QHn9xplZmsHJdHSDkS9zZaKlUAKbOZJgoQ9dVc79TtuQwWzVvOse8BAeo8i
-         9vMo10WTVZfQj4DW2uWLHUTIybFFppmf2lI7G9wroL2hiM5SGDcROgcnjmP/yDLv+7PN
-         Xcwza4omfK5IR+6Cjwo2kZ/8rUK6OCYKSqeetuptG199UBb1la0FXJ5CeF0jBXXKSFem
-         xwekKtsi1/Vm+p15UKLBZUQ2j9ZVbkFJ34HxhHR6cK2KZt3hFaTQcZhd2Vr7VA4GyIbb
-         u4jrj3NUhKfN7ZFYY5E9Y/ksSpVORq00rtkKeLBk+mncYhETrTHcvjlBuJnqa30rSl/a
-         c8Eg==
+        bh=PEF+rHGWx03j6a/lXLR5ZzcRE8lUUIfOc8RU2YBGOAQ=;
+        b=OMsKolSM3NIuulrj43OA4iOpiHkdeu+ugot+mpjhIisIb98eyMVquDvZgk77+Jdl8D
+         RFza/LHFDX23dP0UVBPjB+A59Vxi6PzKNLMhinMWqOCQYDxDV28JfZcfetA4dRHCvFdN
+         nLB2wjweT0dvozpmp8MhhgZPvhgjf8LncLD0MZcO7ozfevruuEUI6+PYZesDX+RDGaR6
+         whyNwBeliKCe9wHgZVQm4lvRUHK0zJokg6xNTbD4u0z3iDoat1/cIwwoGxmkLa8eS3/p
+         B3002j1RLy0cZMK9TLaMVxgYa4h5Eg6F0+ME0VLC8Xm0JDxHySZvMBxkVKakb8ggK3I9
+         Xbqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:content-transfer-encoding;
-        bh=ArVjDH3TZXzJn6T/unTptPOIOWf3Q6FX3puqhcHovH0=;
-        b=S5wBNfHZvmJsZWNqpwjJqBsZf2Yoj/sSsD5kN7Qtu4ttp4R7yz7+Jnox1BMTuWXQkT
-         O37vm7hw0cpaoRENIoU2ybWWAmY3Y9+ts06h5MdSpkYMGrsyFLNjpyxaGLLz0GR907kx
-         pYEm/5O8HVGgVy8ohbjvA97t1tc7ZtuJEPthQb3SsPv+6IN7uyCSdFUS7W9QZ4GCudLd
-         4GbTSNe84/+JwZPf7hSaVL86uGVOC5mTiHyCKM3ODiZfQKKfD/fJrClxyY6UICUnFIbl
-         CFMj+46FNBCgAAAPhF7CZURx6ZJJHUNA5SbKljP+kFjym27SOUYgvbr/jrxz3E+pWRyG
-         wJaQ==
-X-Gm-Message-State: AKwxytfiKGTD8NHDYWNo5hf3os8fNriJNXdJABqd3Xtc0PRjkqL32kRP
-        Ot9x+gKHNy20ZVjnuQA5tVWeCgfFdoaNZUOvlb8=
-X-Google-Smtp-Source: AH8x2259DQmkbDiqVkKs0wtFyQyslvwVzpJIVEqIRHGJo6DW98AsTm/xdAZRrbEF+D4MbBIj6RQ0jAuGMGW2uNaULcc=
-X-Received: by 10.107.78.16 with SMTP id c16mr5435702iob.105.1516552043476;
- Sun, 21 Jan 2018 08:27:23 -0800 (PST)
+        bh=PEF+rHGWx03j6a/lXLR5ZzcRE8lUUIfOc8RU2YBGOAQ=;
+        b=kHZXLrZmHwGjBbZQBxSyPwmZB7XujeFSA3HKFq6pxQs5agOEIoLJz8q2DU8koYQlb/
+         f/HdBZ5Ag/E6J1RQM/DtD9rpTzMNSUhWsS9iWyd7vBIRFcDDZ/QmE+d+ClVLdSmJv025
+         4D+jSsGRldBWEg/JJ8d7y/hmKu2+Ruore65TdHPatfMJiHV3woeu+BHDOQmi/c/myzYy
+         AqMIx+StDfKBlAKZKIgLcZIiOBEGUiDVgkGKxG0cPvlMkXCuzBZ25VBJWI1XTDrj2sRR
+         302GAAyH/HAz96n9muDTPhYEQRfGQQaW5LRGQHhq7zW/9jMyTz6oS2CM/UJpj9uWi7ae
+         Qk1A==
+X-Gm-Message-State: AKwxytcLOzGlLr++xne7q9lLC86Y9D8n9+KJJtWdaewXDuwLroBZNqRj
+        tuJ0wZp9sfZOssrS6eIphyMStLcnsDXG7dPffEc=
+X-Google-Smtp-Source: AH8x224a/y7JORB676z+q8mCkyuFQky0ZmWicJg0WZhlQeHp/OtmgTXbPwVP/CY0wyoMmiPZkWTr5akOkNfCjanWJlI=
+X-Received: by 10.36.216.8 with SMTP id b8mr5095386itg.107.1516552590217; Sun,
+ 21 Jan 2018 08:36:30 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.206.140 with HTTP; Sun, 21 Jan 2018 08:26:53 -0800 (PST)
-In-Reply-To: <20180120204456.GB8965@genre.crustytoothpaste.net>
-References: <cover.1516282880.git.patryk.obara@gmail.com> <0d554b5efb35b7570fc1e762c9035556423d3da3.1516282880.git.patryk.obara@gmail.com>
- <20180120204456.GB8965@genre.crustytoothpaste.net>
+Received: by 10.79.206.140 with HTTP; Sun, 21 Jan 2018 08:35:59 -0800 (PST)
+In-Reply-To: <20180120205830.GC8965@genre.crustytoothpaste.net>
+References: <cover.1516282880.git.patryk.obara@gmail.com> <20180120205830.GC8965@genre.crustytoothpaste.net>
 From:   Patryk Obara <patryk.obara@gmail.com>
-Date:   Sun, 21 Jan 2018 17:26:53 +0100
-X-Google-Sender-Auth: 1kRHhVsU0PgYenWl-yzuaqcj_WM
-Message-ID: <CAJfL8+SPCvCLMkXxjHrVkeHXt3t14Dj2x5nde7S17mcRomKB5g@mail.gmail.com>
-Subject: Re: [PATCH 11/11] sha1_file: convert write_sha1_file to object_id
+Date:   Sun, 21 Jan 2018 17:35:59 +0100
+X-Google-Sender-Auth: 9zep9cvYLWSV5duQeiKm5LJV3Fk
+Message-ID: <CAJfL8+SU79RVbDVQc-feNvFtpcGdP8VRNyvhE3bfaMb6_OZuqQ@mail.gmail.com>
+Subject: Re: [PATCH 00/11] Some fixes and bunch of object_id conversions
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         Patryk Obara <patryk.obara@gmail.com>,
         Git List <git@vger.kernel.org>,
@@ -70,34 +69,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20 January 2018 at 21:44, brian m. carlson
+On 20 January 2018 at 21:58, brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> On Thu, Jan 18, 2018 at 03:51:03PM +0100, Patryk Obara wrote:
->> diff --git a/sha1_file.c b/sha1_file.c
->> index 88b960316c..b7baf69041 100644
->> --- a/sha1_file.c
->> +++ b/sha1_file.c
->> @@ -1420,8 +1420,8 @@ void *read_object_with_reference(const unsigned ch=
-ar *sha1,
->>  }
->>
->>  static void write_sha1_file_prepare(const void *buf, unsigned long len,
->> -                                    const char *type, unsigned char *sh=
-a1,
->> -                                    char *hdr, int *hdrlen)
->> +                                 const char *type, struct object_id *oi=
-d,
->> +                                 char *hdr, int *hdrlen)
->
-> It looks like the indentation has changed here.  Was that intentional?
 
-Yes. After every commit, I am running clang-format on lines, that I
-touch to verify formatting and
-decide if I want to include formatting fixes or not. In this case,
-function parameters were
-aligned using spaces only (which is arguably hard to see in the mail)
-- now they are aligned to first
-parameter (at least in my editor and in gitk :)).
+> When I've made changes to the sha1_file functions, I've traditionally
+> moved them away from using "sha1_file" to "object_file" to ensure that
+> we make it a bit more obvious that they handle object_id structs and
+> aren't limited to SHA-1.  For consistency, it might be nice to make that
+> change.
+
+I will address this in V2 and add several more conversions, that
+are sufficient to make git hash-object -w work with sha-256 (which I will
+send as separate RFC thread).
+
+I started converting functions needed for cat-file, but number of places,
+that still needs to be touched up grew quite rapidly, so it'll take some
+time :).
 
 --=20
 | =E2=86=90 Ceci n'est pas une pipe
