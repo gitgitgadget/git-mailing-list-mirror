@@ -2,90 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87DB51F576
-	for <e@80x24.org>; Sun, 21 Jan 2018 18:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20CF81F576
+	for <e@80x24.org>; Sun, 21 Jan 2018 19:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751347AbeAUSzY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Jan 2018 13:55:24 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:38977 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbeAUSzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jan 2018 13:55:23 -0500
-Received: by mail-wm0-f44.google.com with SMTP id b21so12765336wme.4
-        for <git@vger.kernel.org>; Sun, 21 Jan 2018 10:55:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=B6rxj9SVHq2yFqx5hWtP0XBhY4GC5XxBvtCDHQlcDFE=;
-        b=G1fUy0v91JQqErVWcDd7liMEgfxLWMHbQYtPLEFIbL9rrtlBy/xvXxAGtdWjT39Z5C
-         AXOD+LhDzjveV19MTCfX8lo4Q7kdXgzgmv7MI3Vs0LTutNHZBXIp4BS9moIAFQfkNWZt
-         KjNNiny6esrpokb1Ds7OlnBOHT+NrMFPDbEEJoI/txxBvvCfpGJIHaPndP5IfBxdh2GO
-         c7TGql410sQyk0zGHVxhJ1fA9MOIErvKsgljHfe/zoY7qSyF9xYjKh/UDo3SaPyb7ADY
-         7ik1UeI85UFsCjAyOx9HS8KB8XokQdmuxHw5RL8rt9+Jq5+EgFBnyP/12VuJcq9BnvKU
-         eByw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=B6rxj9SVHq2yFqx5hWtP0XBhY4GC5XxBvtCDHQlcDFE=;
-        b=oIAuAqSFnQAoW5yvlQEVxigRskeIWWdSzjz4LzoNzu1oXWvT0gTJQ899HoMlApSMi/
-         6TGrj8Z7L5GzCxE6Mzxzk6sfvPUXxGGphlKHq5B1J7ajEWHR2GkU022zBjVrvyow2Rg/
-         nLm9FwYFKu96/BwFVKUnd8DUxOyMawSOMOznSebl9ki8Qe4o+9dgC7SEC6/OLsHV9DWA
-         rKgUAhgvbqrFnos64Bjq1fcRHN8OyioRV7TpNqYzcjV8lGo+9z8NlyEKhlFgpraIs8rk
-         3DbFjNyKUGlbutwiZH+w5BWEC6vFyFr4D7DWpUxiTZNfzDK2FMqwX8RPyfBg/vGQmWCl
-         k92A==
-X-Gm-Message-State: AKwxytfK1798NDoWa0BQ1KDtDhwGzDxSD4kxtcqwRxUD0sC6/Hgwp2pd
-        XAA22+0CBACS9U7W2XuCzH0=
-X-Google-Smtp-Source: AH8x2264MiFw4EQXNKa4AOGt+yCoBFeWhrkYrZCygFKDNXF8Uccn1ZD4i+itL5NgiYVW4qVdZUJQ6Q==
-X-Received: by 10.80.214.8 with SMTP id x8mr9817570edi.129.1516560922419;
-        Sun, 21 Jan 2018 10:55:22 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id u4sm8924397edc.91.2018.01.21.10.55.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 21 Jan 2018 10:55:21 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     John Cheng <johnlicheng@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: cygwin git and golang: how @{u} is handled
-References: <CAJzZBAQuOqwRmBLOdUEVMY74_xT2dWe3a+9qT9ufc4bp8gjgig@mail.gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <CAJzZBAQuOqwRmBLOdUEVMY74_xT2dWe3a+9qT9ufc4bp8gjgig@mail.gmail.com>
-Date:   Sun, 21 Jan 2018 19:55:19 +0100
-Message-ID: <87372zhwiw.fsf@evledraar.gmail.com>
+        id S1750930AbeAUTzV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 Jan 2018 14:55:21 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58202 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750878AbeAUTzV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 21 Jan 2018 14:55:21 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2E2716048F;
+        Sun, 21 Jan 2018 19:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1516564518;
+        bh=JmYQCWhTYEs50N1P0hFGCGFlnxflWhiPon0b3qHKaTs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=WJl30EpjRK4cS8aJQ12zWvlXpg1cvz51iLVd8KlAApbRCvI0y2lPmxkxDuTRVcAcR
+         MMZ6vKxDyIvZFhcsOXo6XA1Fs3Kz31sekhp0n2hhYERfo7ojaWDZ4aO6o8+ycMu9Gu
+         9Zyt0Hhag0SnF+UH6B5rGUMrQJrgf3qVgJ78tQrOdbSVHoh36l/lX2XHGSTqtLU25J
+         b3EBo35hcmt/xFhIT+kavWFy6k6tMDqI6nYcOckOZxeKmw/9VcLFBioIXuwydelWwK
+         8mfvqNr9C8fwuNc5i2OeR9BglWK2llGJtWPe5Yz2F1i+DS0D7QUUUIO2t0GjmuN23C
+         vcMhEASeZ9TOgwPheGHixrQzwmIvczQk83ccU3vCccgddeXOMQ2i1pE3EA1QjmXJUG
+         kJNmmVA8aXoJB4A8Fa60bIKV9m460FfAuqGn8nZ5v5K81lYOcofSoOIbyAvCLIiqtZ
+         07C3iPDm1fSiMTJ9UVehyMzAS7c35Jt63teeUA/RXI2Pr+HmajQ
+Date:   Sun, 21 Jan 2018 19:55:11 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= 
+        <aleks.bulaev@gmail.com>
+Subject: Re: [PATCH] t: add clone test for files differing only in case
+Message-ID: <20180121195511.GE8965@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCR0YPQu9Cw0LXQsg==?= <aleks.bulaev@gmail.com>
+References: <20180119041825.727904-1-sandals@crustytoothpaste.net>
+ <20180120203324.112522-1-sandals@crustytoothpaste.net>
+ <xmqqa7x7oecq.fsf@gitster.mtv.corp.google.com>
+ <CAPig+cTW+vO7FWYViUrO-aV8pPL=KKhGf7Wkgh_51cbrxKZPEQ@mail.gmail.com>
+ <20180121080728.GA20770@flurp.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="//IivP0gvsAy3Can"
+Content-Disposition: inline
+In-Reply-To: <20180121080728.GA20770@flurp.local>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Jan 21 2018, John Cheng jotted:
+--//IivP0gvsAy3Can
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Actual result:
-> Suppose that cygwin git is specified, the result becomes:
-> exit status 128 fatal: ambiguous argument '@u': unknown revision or
-> path not in the working tree.
+On Sun, Jan 21, 2018 at 03:07:28AM -0500, Eric Sunshine wrote:
+> On Sun, Jan 21, 2018 at 02:46:15AM -0500, Eric Sunshine wrote:
+> > Yep. In pretty much any other test script, this would work (it was
+> > developed in a stand-alone script), but t5601 (which nukes .git as its
+> > first action) isn't the most friendly place.
+>=20
+> Here's a re-roll which fixes that problem (and has a slightly
+> re-written commit message.
 
-Given that:
+Yes, this looks good.  I did indeed intend to forge your From line on
+the message and actually test that it was fixed, but only tested it on
+the vfat partition, not my ext4 partition, where, of course, I got
+distracted by the various other failures.  Sigh.
 
-    $ git log @{x}
-    fatal: ambiguous argument '@{x}': unknown revision or path not in the working tree.
+Thanks for fixing this up.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Spews the output back at you as @{x} not @x the problem must be in
-whatever is passing the argument to git, whether that's go or some other
-wrapper.
+--//IivP0gvsAy3Can
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Try putting a "git" first in your $PATH which is nothing but:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
 
-    #!/bin/sh
-    echo "args: $@"
-    exit 1
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpk8B8ACgkQv1NdgR9S
+9ovXuQ//YWUVFRUzhBn72nDK/x4j1eX7X1qVlqtGiX64s/Cr/NppjnZ3ez7v6SEe
+p7q7BSJu6wuKDvhZKLRbakFvXSGlY3C+5Fq+ztFBPv3q+XIoE64Q5LLX7dPRVi3Y
+UblJuZu/qsBNXS/Lbawg9ESKSwpmkMbXo4bRwj0v6jNb9WOOMe93gad1OXlMZ3gr
+Sjfdau8pFZTcLjAAVEUb1s/yGDBJqq9PwLxJfqvgNDw0JtNtifH99FIDyJ0LcFkA
+lN8xwmzhyB7p9tDybd+BVNzjig4kZMGL5R2wewAwdtAG7/ntmEzdaf0FafaLgyuK
+c4ue3/OXjzp9gFvqDJ+MenitxIwLlADLnSiSkAmanV4REZ5PsndeBElVzqQgsoPL
+lmRH71N6O/bHl3bCtfWcFn6Je32qTmSsSvNZh0S4qbUtaFoJMle/bxDjP9L9asK4
+bxygbJpAI2j96yZPJVBuC69Z6VzwOK9cz0ozaKU48NYn2nd/9YOOlMiEw1GjSEd9
+Hk72hR34x71jIi9n5SWF8AVNcIhBnaAQiHnmXDyBM7Bv+VQXkTmsQDEVYTpgbTTK
+EktGbXz0MOuWgxlTk1FamKDjv66maJLXqAKSKmX2apxfMP74lGGn5ez+qpMkHurM
+D8TAKYFbe3CUUt1S9OuGtIJOqvxKi3ZULffk3pN2Dcsdf7s1JgI=
+=KWpb
+-----END PGP SIGNATURE-----
 
-And seeing what you get.
+--//IivP0gvsAy3Can--
