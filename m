@@ -2,111 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 883971F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:44:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7AA91F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751096AbeAVXoY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:44:24 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59618 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751038AbeAVXoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:44:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B358ACC115;
-        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=45/YsisZf1wAUcRI347AaQBmRL8=; b=ZZden6
-        HBIU8lewQ8Om14BikCH8rmdOLpeIOKlSNCgcMKDW+WNKO2P5cU3fGfQK1zkIPCEp
-        6PTNqKzgHa2kKn1hCASONQkFzyW0IduVOv080CC378bUNrfmzzdsCJBDHLuhVSvs
-        ut70I05srcryY8JDNnBzQk6b+einIlhFMoFbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ueCaZiyPqAxJR0s/cPtwnyNM7ExVLwTt
-        K6fjCgSfo2SkRLTEvTfxdpkPAFMjUfACDW96nAQvA8OcJSwcIKOCHxtoTVp8vYXK
-        MGMiLIK/ZV3mrG4gULmyAbKSo6kcrJGoIxNYtRRI7oTXODOScBU60G2mD9Jei1sh
-        Y5XXTTv87Vc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB6C0CC114;
-        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 265BECC113;
-        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     <git@vger.kernel.org>
-Subject: Re: [Nit] Lots of enumerated type warnings
-References: <001601d3917b$c1ade3c0$4509ab40$@nexbridge.com>
-        <xmqqo9lljz3l.fsf@gitster.mtv.corp.google.com>
-        <001501d393d3$b82150d0$2863f270$@nexbridge.com>
-Date:   Mon, 22 Jan 2018 15:44:20 -0800
-In-Reply-To: <001501d393d3$b82150d0$2863f270$@nexbridge.com> (Randall
-        S. Becker's message of "Mon, 22 Jan 2018 17:52:40 -0500")
-Message-ID: <xmqqy3kpihm3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751126AbeAVXsG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:48:06 -0500
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36344 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751038AbeAVXsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:48:05 -0500
+Received: by mail-wm0-f44.google.com with SMTP id f3so20152260wmc.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 15:48:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=sXH1BYyBOwIGRsd24rNR2vnJpHDjA5P864WfR1uqp8Q=;
+        b=d7YMr2V+1KCuE74Gp8SZfuzwfQdq+52qvlhCcmE7YKPPNVKayeCGMMNlJja9s3IZTe
+         u+czwRMLZy5PjFhlneB4WM6FZBfcghDk4jeYga4koTiQEdLoSIwBR8KVuJVTVGdfQL7k
+         U6bh3e82praGiW4uRSCHxcV+HkGbQNk0b/d70HKw9Q28pifxq1lmFtZaA/usbaYiTSNg
+         9Y3OQYmwcfA+WNtff1On0gq80v5YaKmlakx5KpprWtFPro7XY9RqfHA78Qon6k38Ps6v
+         /tvxn4TwgpZ+AGzl4rp1ePko4Cv1RmWCmRnjcx2xfZIHSE8i0CXmdWs2Kkwvg0CE7Pyh
+         t6iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=sXH1BYyBOwIGRsd24rNR2vnJpHDjA5P864WfR1uqp8Q=;
+        b=SgTHFy5zwBRIp+SNxXGtPPa/A8sPw9ObUFY5eRqLFuQLilvmOytmTkL5A628Hr33+g
+         XIofzCqTLbJqgpsKXzZMbSKgdUiSIAxgfCQY1y83K5AToAJW4vL7KoJPHNCHhzTNYENF
+         R5W6VBtqmUjLWZ6KtsuioU8UIHLHaRZ8JwLOijAVKcS/anuYzlU49XQ5JwHdkR+WCceK
+         dFOP5qf1qOop5+iDLNW7GX84Lz/zWnNzEe3Rg0yowi0f1+SHVsKGMM5YkN/+krx/wFfB
+         0a+Yk4/u1MqKrHyej0zPwqDqDh+8RBxmIZJZfZc73XWUex27PT1RszghxeFMYPrIIs91
+         StJg==
+X-Gm-Message-State: AKwxytfexMlDiECtSrGMQJlN9lRspfLcLCDmR1Syx16YyepS05844cJV
+        8GjHCGBc0QJqlXTF9i+EZNM=
+X-Google-Smtp-Source: AH8x225x6mD0wagVEC90Uyd2U1IYLIkz0qMQXbCa+ImF86NRzvjEYbK3sCWSUcwOj6MlSc2aFct2yA==
+X-Received: by 10.80.148.248 with SMTP id t53mr16499728eda.180.1516664884326;
+        Mon, 22 Jan 2018 15:48:04 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id b12sm11542004eda.81.2018.01.22.15.48.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Jan 2018 15:48:03 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 12/12] fetch: add a --fetch-prune option and fetch.pruneTags config
+References: <20180121000304.32323-1-avarab@gmail.com> <20180119000027.28898-1-avarab@gmail.com> <20180121000304.32323-13-avarab@gmail.com> <xmqq372xmxcu.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <xmqq372xmxcu.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 23 Jan 2018 00:48:02 +0100
+Message-ID: <87tvvdh2vh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2B3B1392-FFCE-11E7-A886-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-> Here are a few examples, there are more:
+On Mon, Jan 22 2018, Junio C. Hamano jotted:
+
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 >
-> auto_crlf = git_config_bool(var, value);
->   		          ^
-
-The carets in your message do not align to what I think they are
-trying to point at, but I think the above is pointing at the '=' and
-wants to say "auto_crlf variable is enum, it gets assigned an
-integer returned from git_config_bool(), and I do not like that
-assignment".
-
-For this one I tend to agree with the compiler, meaning that it is
-ugly to define "enum auto_crlf" in such a way that the first two
-values happen to match what a logically different "enum" (which is
-"boolean") assigns the two values to.  And this judgment does not
-change whether git_config_bool() actually returns an enum or an int
-(the code in reality returns the latter).
-
-I do not think people would terribly mind a patch to turn the above
-into:
-
-  auto_crlf = git_config_bool(var, value) ? AUTO_CRLF_FALSE : AUTO_CRLF_TRUE;
-
-> "/home/jenkins/.jenkins/workspace/Build_Git/config.c", line 1147:
-> warning(272): 
->           enumerated type mixed with another type
+>> Add a --fetch-prune option to git-fetch, along with fetch.pruneTags
+>> config option. This allows for doing any of:
+>>
+>>     git fetch -p -P
+>>     git fetch --prune --prune-tags
+>>     git fetch -p -P origin
+>>     git fetch --prune --prune-tags origin
+>>
+>> Or simply:
+>>
+>>     git config fetch.prune true &&
+>>     git config fetch.pruneTags true &&
+>>     git fetch
+>>
+>> Instead of the much more verbose:
+>>
+>>     git fetch --prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:refs/remotes/origin/*'
+>>
+>> Before this feature it was painful to support the use-case of pulling
+>> from a repo which is having both its branches *and* tags deleted
+>> regularly, and wanting our local references to reflect upstream.
+>>
+>> At work we create deployment tags in the repo for each rollout, and
+>> there's *lots* of those, so they're archived within weeks for
+>> performance reasons.
+>>
+>> Without this change it's hard to centrally configure such repos in
+>> /etc/gitconfig (on servers that are only used for working with
+>> them). You need to set fetch.prune=true globally, and then for each
+>> repo:
+>>
+>>     git -C {} config --replace-all remote.origin.fetch "refs/tags/*:refs/tags/*" "^refs/tags/*:refs/tags/*$"
 >
-> type = sha1_object_info(s->oid.hash, &s->size);
->   			     ^
-
-/* returns enum object_type or negative */
-int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
-
-The function has been like this forever, I suspect, and I would say
-"this gives negative when error, or enum we know is non-negative" is
-quite a reasonable thing to do, but the enum has OBJ_BAD defined to
-be negative, so probably it is more kosher if sha1_object_info() is
-declared to return "enum object_type" instead of int.
-
-> "/home/jenkins/.jenkins/workspace/Build_Git/diff.c", line 3618:
-> warning(272): 
->           enumerated type mixed with another type
+> I think the last one is supposed to be a regular expression on
+> existing values.  Shouldn't the asterisks be quoted?
 >
-> options->color_moved = diff_color_moved_default;
->   	                     ^
+> Otherwise, it would appears as if "refs/tags:refs/tags///" are
+> replaced with "refs/tags/*:refs/tags/*", but it certainly is not
+> what you are doing.
 
-If color_moved field is declared to be an enum, the _default
-variable should be, too.  I do not think it is such a controversial
-fix.
+Yes, well spotted. I copied this from an escaped version and forgot to
+update that escaping. Will fix.
+
+> I also wonder why the existing one does not expect a leading '+',
+> which I think is what we place by default when you clone.
+
+I didn't raise this because I didn't want to get side-tracked with yet
+another thing, but it appears to me that a + prefix in tags refspecs
+does absolutely nothing. Consider on a fresh git.git clobbering the new
+v2.16.1 tag locally:
+
+    $ git tag -a -m"fake" -f v2.16.1 v2.16.0
+    Updated tag 'v2.16.1' (was eb5fcb24f)
+
+This should clobber it, and does:
+
+    $ git fetch --prune --dry-run origin '+refs/tags/*:refs/tags/*'
+    From github.com:git/git
+     t [tag update]          v2.16.1    -> v2.16.1
+
+But so will this without +, which seems like a bug to me:
+
+    $ git fetch --prune --dry-run origin 'refs/tags/*:refs/tags/*'
+    From github.com:git/git
+     t [tag update]          v2.16.1    -> v2.16.1
+
+But maybe I'm missing something.
+
+
+>> +-P::
+>> +--prune-tags::
+>> +	.... This option is
+>> +	merely a shorthand for providing the explicit tag refspec
+>> +	along with `--prune`, see the discussion about that in its
+>> +	documentation.
+>
+> So would "git fetch -P origin" be like "git fetch --prune --tags
+> origin"?
+
+No, as I understand it --tags just has the effect of considering remote
+tags that aren't tags of the branches you're fetching, so e.g. on a
+fresh git.git:
+
+    $ git tag -a -m"fake" -f v2.16.2 v2.16.0
+    $ git fetch --prune --tags --dry-run
+    $
+
+I.e. it does nothing. Whereas this will prune the new fake tag:
+
+    $ git fetch --prune origin 'refs/tags/*:refs/tags/*'
+    From github.com:git/git
+     - [deleted]             (none)     -> v2.16.2
+
+And so does the --prune-tags option:
+
+    $ ~/g/git/git-fetch --prune --prune-tags origin
+    From github.com:git/git
+     - [deleted]             (none)     -> v2.16.2
+
+
+>>  +
+>>  See the PRUNING section below for more details.
+>>
+>> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+>> index 18fac0da2e..5682ed4ae1 100644
+>> --- a/Documentation/git-fetch.txt
+>> +++ b/Documentation/git-fetch.txt
+>> @@ -148,6 +148,30 @@ So be careful when using this with a refspec like
+>>  `refs/tags/*:refs/tags/*`, or any other refspec which might map
+>>  references from multiple remotes to the same local namespace.
+>>
+>> +Since keeping up-to-date with both branches and tags on the remote is
+>> +a common use-case the `--prune-tags` option can be supplied along with
+>> +`--prune` to prune local tags that don't exist on the remote. Tag
+>> +pruning can also be enabled with `fetch.pruneTags` or
+>> +`remote.<name>.pruneTags` in the config. See linkgit:git-config[1].
+>> +
+>> +The `--prune-tags` option is equivalent to having
+>> +`refs/tags/*:refs/tags/*` configured in the refspecs for the
+>> +remote. This can lead to some seemingly strange interactions:
+>> +
+>> +------------------------------------------------
+>> +# These both fetch tags
+>> +$ git fetch --no-tags origin 'refs/tags/*:refs/tags/*'
+>> +$ git fetch --no-tags --prune-tags origin
+>> +------------------------------------------------
+>
+> This description is too confusing.  First you say "having
+> ... configured in the refspecs for the remote", but configured
+> refspecs for the remote (I presume that you are missing 'fetch' from
+> that description and are talking about the "remote.$name.fetch"
+> configuration variable) are overridden when you give explicit
+> refspecs from the command line, so the above two are not even
+> equivalent.  The first one gives a refspec explicitly from the
+> command line, so other configured refspecs like
+>
+>     [remote "origin"] fetch = +refs/heads/*:refs/remotes/origin/*
+>
+> should be ignored, while the second one, if --prune-tags tells Git
+> to behave as if
+>
+>     [remote "origin"] fetch = refs/tags/*:refs/tags/*
+>
+> also exists in the config, would not cause other ones for the same
+> remote from getting ignored.  So...
+
+Indeed, I'll reword this. FWIW I meant something closer to "declared in
+the refspecs of the remote" not "configured ... remote".
