@@ -6,83 +6,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91A541F576
-	for <e@80x24.org>; Mon, 22 Jan 2018 04:35:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A4C01F576
+	for <e@80x24.org>; Mon, 22 Jan 2018 05:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751101AbeAVEfM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 Jan 2018 23:35:12 -0500
-Received: from ng2.cptxoffice.net ([208.74.121.106]:18632 "EHLO
-        felipe64.dev.cpanel.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750955AbeAVEfM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 Jan 2018 23:35:12 -0500
-X-Greylist: delayed 958 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Jan 2018 23:35:11 EST
-Received: from root by felipe64.dev.cpanel.net with local (Exim 4.90)
-        (envelope-from <felipe@felipegasper.com>)
-        id 1edTZY-00029z-Fj
-        for git@vger.kernel.org; Sun, 21 Jan 2018 22:19:04 -0600
-Date:   Sun, 21 Jan 2018 22:19:04 -0600
-From:   felipe@felipegasper.com
-To:     git@vger.kernel.org
-Subject: [PATCH] Fix comma splices
-Message-ID: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
-User-Agent: Heirloom mailx 12.5 7/5/10
+        id S1750924AbeAVFkf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 00:40:35 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:39290 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750828AbeAVFke (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 00:40:34 -0500
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 784401F576;
+        Mon, 22 Jan 2018 05:40:34 +0000 (UTC)
+Date:   Mon, 22 Jan 2018 05:40:34 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jason Pyeron <jpyeron@pdinc.us>
+Cc:     git@vger.kernel.org
+Subject: Re: git svn clone - Malformed network data: The XML response
+ contains invalid XML: Malformed XML: no element found at
+ /usr/share/perl5/vendor_perl/5.26/Git/SVN/Ra.pm line 312
+Message-ID: <20180122054034.GA9759@starla>
+References: <042F7DAF79EF4C29B85958BD75AE019F@blackfat>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - felipe64.dev.cpanel.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - felipegasper.com
-X-Get-Message-Sender-Via: felipe64.dev.cpanel.net: sender_ident via received_protocol == local: root/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: felipe64.dev.cpanel.net: root
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <042F7DAF79EF4C29B85958BD75AE019F@blackfat>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From b18bd6babc2d6a6f79177acfa2416bb5bf2b153f Mon Sep 17 00:00:00 2001
-From: Felipe Gasper <felipe@felipegasper.com>
-Date: Sun, 21 Jan 2018 23:01:47 -0500
-Subject: [PATCH] Fix comma splices in remote.c
+Jason Pyeron <jpyeron@pdinc.us> wrote:
+> 
+> I am asuming that this is an issue caused by codeplex's svn
+> from tfs implementation. Does anyone here have any insight?
 
-Signed-off-by: Felipe Gasper <felipe@felipegasper.com>
----
- remote.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Seems like it, even using svn(1) fails (see below)
 
-diff --git a/remote.c b/remote.c
-index 4e93753e1..e8ba808c5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2123,9 +2123,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 				_("  (use \"git push\" to publish your local commits)\n"));
- 	} else if (!ours) {
- 		strbuf_addf(sb,
--			Q_("Your branch is behind '%s' by %d commit, "
-+			Q_("Your branch is behind '%s' by %d commit "
- 			       "and can be fast-forwarded.\n",
--			   "Your branch is behind '%s' by %d commits, "
-+			   "Your branch is behind '%s' by %d commits "
- 			       "and can be fast-forwarded.\n",
- 			   theirs),
- 			base, theirs);
-@@ -2134,11 +2134,11 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 				_("  (use \"git pull\" to update your local branch)\n"));
- 	} else {
- 		strbuf_addf(sb,
--			Q_("Your branch and '%s' have diverged,\n"
--			       "and have %d and %d different commit each, "
-+			Q_("Your branch and '%s' have diverged.\n"
-+			       "They have %d and %d different commit each, "
- 			       "respectively.\n",
--			   "Your branch and '%s' have diverged,\n"
--			       "and have %d and %d different commits each, "
-+			   "Your branch and '%s' have diverged.\n"
-+			       "They have %d and %d different commits each, "
- 			       "respectively.\n",
- 			   ours + theirs),
- 			base, ours, theirs);
--- 
-2.15.1
+> r27599 = 9e769d8327767a155d7b96b7cc28579cf0ed4c93 (refs/remotes/git-svn)
+> Malformed network data: The XML response contains invalid XML: Malformed XML: no element found at /usr/share/perl5/vendor_perl/5.26/Git/SVN/Ra.pm line 312.
 
+OK, so lets find out what the next commit is after r27599:
+
+  svn log -v -r 27599:HEAD https://smtp4dev.svn.codeplex.com/svn
+
+  # which tells me r27864
+
+  svn diff -r 27599:27864 https://smtp4dev.svn.codeplex.com/svn
+  # which tells me:
+  svn: E130003: The XML response contains invalid XML
+
+strace only shows encrypted data, so maybe there's a flag or
+debug option you can enable in SVN itself to see what was in the
+bad XML or maybe contact the admin to see if it can be fixed.
