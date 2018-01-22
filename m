@@ -7,161 +7,92 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEDC51F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 20:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7741F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 21:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751046AbeAVUuo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 15:50:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64703 "EHLO
+        id S1750977AbeAVVZf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 16:25:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55304 "EHLO
         pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751030AbeAVUun (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 15:50:43 -0500
+        with ESMTP id S1750878AbeAVVZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 16:25:34 -0500
 Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C024BC95A7;
-        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB4D5C9E43;
+        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RIzqFIE93OnN
-        uWH8ueEW9umippQ=; b=Uff+xe7DLtpFsK1Ah6NfWxGgsG1taL3XsdSqSNbt3g5E
-        tWdLIwgUsH9bs2QEt22qhrd8xCvzElZhv7QtF5RiyUb1NMao3jA3LgUSMeASEpmP
-        YRb3pKz1gX1DimpjH6obHDa7P8IJBJv7XXjCmTSLwL98hSweYUNWUwzLjJOZsn0=
+        :content-type; s=sasl; bh=ZZei2BHlf+AOqClJUGzM8hpKzpM=; b=rchEYp
+        uTcIw40P3NXtByxlg2/C6a6Xx50JemjSlfQy7ywnBa8TWalQ5JAPt1cWLnUzFmfw
+        pigDJxZyM7VgjKwPU/Bi88kVeP3o6JW3khG11Ik/YqiodLxAeQpYh6NWMn0IoBK4
+        GH0am2PM5wAVyQc/3hFXt1bpGHITV2yU+SxMc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bwqYYH
-        lOc75cNgSPwQ5tg52GsZnkdnQx06rHUdIK+997L70B/LxIRR2Z8lWL+KCG1NaOLm
-        fPXtHYKF0+kUETMtiZosOQ388Can/+OaQkDjsR1ipew1V/ORfQtHTpUOssm+Tg7B
-        tHM+99kVZiiQbwJUo55TAe+gmFprnX3AQ5KWo=
+        :content-type; q=dns; s=sasl; b=hNC8LPf3YGKxmGgJMO2idDPvw/cgKJCj
+        eousSqd0mun9deaVqkPdiYG85fcILleHxIy7lKDLDWIgNIX/gyuovCKPlPbTTw4J
+        zmiPtoHooOiAtQkt3hzIWROW4XeLKCDJB8wjItdsHnU8Zz7mfOExplq7w0JT7pqQ
+        aUyw8Z71Td8=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7265C95A6;
-        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D12C0C9E42;
+        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DC35C95A5;
-        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42228C9E41;
+        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
-        Michael Schubert <mschub@elegosoft.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 12/12] fetch: add a --fetch-prune option and fetch.pruneTags config
-References: <20180121000304.32323-1-avarab@gmail.com>
-        <20180119000027.28898-1-avarab@gmail.com>
-        <20180121000304.32323-13-avarab@gmail.com>
-Date:   Mon, 22 Jan 2018 12:50:41 -0800
-In-Reply-To: <20180121000304.32323-13-avarab@gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sun, 21 Jan 2018 00:03:04 +0000")
-Message-ID: <xmqq372xmxcu.fsf@gitster.mtv.corp.google.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+        <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
+        <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com>
+Date:   Mon, 22 Jan 2018 13:25:32 -0800
+In-Reply-To: <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com>
+        (Jacob Keller's message of "Thu, 18 Jan 2018 08:25:30 -0800")
+Message-ID: <xmqqwp09lh6b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E9098598-FFB5-11E7-9569-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C76C696E-FFBA-11E7-A362-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-> Add a --fetch-prune option to git-fetch, along with fetch.pruneTags
-> config option. This allows for doing any of:
->
->     git fetch -p -P
->     git fetch --prune --prune-tags
->     git fetch -p -P origin
->     git fetch --prune --prune-tags origin
->
-> Or simply:
->
->     git config fetch.prune true &&
->     git config fetch.pruneTags true &&
->     git fetch
->
-> Instead of the much more verbose:
->
->     git fetch --prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:r=
-efs/remotes/origin/*'
->
-> Before this feature it was painful to support the use-case of pulling
-> from a repo which is having both its branches *and* tags deleted
-> regularly, and wanting our local references to reflect upstream.
->
-> At work we create deployment tags in the repo for each rollout, and
-> there's *lots* of those, so they're archived within weeks for
-> performance reasons.
->
-> Without this change it's hard to centrally configure such repos in
-> /etc/gitconfig (on servers that are only used for working with
-> them). You need to set fetch.prune=3Dtrue globally, and then for each
-> repo:
->
->     git -C {} config --replace-all remote.origin.fetch "refs/tags/*:ref=
-s/tags/*" "^refs/tags/*:refs/tags/*$"
+> The code looks good, but I'm a little wary of adding bud which
+> hard-codes a specific label. I suppose it does grant a bit of
+> readability to the resulting script... ? It doesn't seem that
+> important compared to use using "reset onto"? At least when
+> documenting this it should be made clear that the "onto" label is
+> special.
 
-I think the last one is supposed to be a regular expression on
-existing values.  Shouldn't the asterisks be quoted? =20
+I do not think we would mind "bud" too much in the end result, but
+the change in 1/8 is made harder to read than necessary with it.  It
+is the only thing that needs "a single-letter command name may now
+not have any argument after it" change to the parser among the three
+things being added here, and it also needs to be added to the list
+of special commands without arguments.
 
-Otherwise, it would appears as if "refs/tags:refs/tags///" are
-replaced with "refs/tags/*:refs/tags/*", but it certainly is not
-what you are doing.  I also wonder why the existing one does not
-expect a leading '+', which I think is what we place by default
-when you clone.
+It would have been easier to reason about if addition of "bud" was
+in its own patch done after label and reset are added.  And if done
+as a separate step, perhaps it would have been easier to realize
+that it would be a more future-proof solution for handling the
+"special" ness of BUD to add a new "unsigned flags" word to
+todo_command_info[] structure and using a bit that says "this does
+not take an arg" than to hardcode "noop and bud are the commands
+without args" in the code.  That hardcode was good enough when there
+was only one thing in that special case.  Now it has two.
 
-> +-P::
-> +--prune-tags::
-> +	.... This option is
-> +	merely a shorthand for providing the explicit tag refspec
-> +	along with `--prune`, see the discussion about that in its
-> +	documentation.
+In a similar way, the code to special case label and reset just like
+exec may also want to become more table driven, perhaps using
+another bit in the same new flags word to say "this does not refer
+to commit".  I think that can become [v2 1/N] while addition of "bud"
+can be [v2 2/N] (after all, "bud" just does the same do_reset() with
+hardcoded argument, so "label/reset" must come first).
 
-So would "git fetch -P origin" be like "git fetch --prune --tags
-origin"?
 
->  +
->  See the PRUNING section below for more details.
-> =20
-> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-> index 18fac0da2e..5682ed4ae1 100644
-> --- a/Documentation/git-fetch.txt
-> +++ b/Documentation/git-fetch.txt
-> @@ -148,6 +148,30 @@ So be careful when using this with a refspec like
->  `refs/tags/*:refs/tags/*`, or any other refspec which might map
->  references from multiple remotes to the same local namespace.
-> =20
-> +Since keeping up-to-date with both branches and tags on the remote is
-> +a common use-case the `--prune-tags` option can be supplied along with
-> +`--prune` to prune local tags that don't exist on the remote. Tag
-> +pruning can also be enabled with `fetch.pruneTags` or
-> +`remote.<name>.pruneTags` in the config. See linkgit:git-config[1].
-> +
-> +The `--prune-tags` option is equivalent to having
-> +`refs/tags/*:refs/tags/*` configured in the refspecs for the
-> +remote. This can lead to some seemingly strange interactions:
-> +
-> +------------------------------------------------
-> +# These both fetch tags
-> +$ git fetch --no-tags origin 'refs/tags/*:refs/tags/*'
-> +$ git fetch --no-tags --prune-tags origin
-> +------------------------------------------------
 
-This description is too confusing.  First you say "having
-... configured in the refspecs for the remote", but configured
-refspecs for the remote (I presume that you are missing 'fetch' from
-that description and are talking about the "remote.$name.fetch"
-configuration variable) are overridden when you give explicit
-refspecs from the command line, so the above two are not even
-equivalent.  The first one gives a refspec explicitly from the
-command line, so other configured refspecs like
 
-    [remote "origin"] fetch =3D +refs/heads/*:refs/remotes/origin/*
-
-should be ignored, while the second one, if --prune-tags tells Git
-to behave as if=20
-
-    [remote "origin"] fetch =3D refs/tags/*:refs/tags/*
-
-also exists in the config, would not cause other ones for the same
-remote from getting ignored.  So...
