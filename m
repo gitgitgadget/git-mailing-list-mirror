@@ -2,230 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50D691F424
-	for <e@80x24.org>; Mon, 22 Jan 2018 09:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5491B1F424
+	for <e@80x24.org>; Mon, 22 Jan 2018 09:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751936AbeAVJcy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 04:32:54 -0500
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:39227 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751852AbeAVJcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 04:32:52 -0500
-Received: by mail-oi0-f41.google.com with SMTP id t8so5482989oie.6
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 01:32:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=drBkdwfJCB5wO3SbPMSRXIQV9wBWUTQcn2RBqmh01dQ=;
-        b=Uw5/pXbKJcisySSK8Gg/mDt29WbTyyNa4OuA5Tzb0ZaVLbWTO+ULNSq//sBdI76DdG
-         cxGG256+W+Rvrn5jiRSKHpUOyYVXnMIKliG4AyKDfKYCEDER5Wt1udOMf4bB5QFT60ep
-         ZaPOxBX71r3bA5ZUNKOG1OYC8g1QPvLZbsm2FaJ1S50dje7LnePL/er/socHvyZt7SfS
-         UyvgLgG/+pTh0VM2daD/tMgGAzZpx5peeRvNEytI1MSIUxBegAbxUbnB44NKNjaoqXGo
-         o5iqpZoeogQ9M0TnWhtStbXet7tIGNTdKxnZ5OHdEj1vrAaISmvVS3BeQWtBrAj2/dl7
-         RmGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=drBkdwfJCB5wO3SbPMSRXIQV9wBWUTQcn2RBqmh01dQ=;
-        b=J3FERTVqALbWU9U/8ocLgNT7FXyUOe7hw3HjaYs5sPUkJJmWeyuYm1TCdiyoUM1KW3
-         1DFXysD53LtmQ7sAr0F0w8LDHCA3MGCg1uTvrDMCJ6aP05A2EKorSB2H6q8p6eZKBSPW
-         /nsQEVH/lklW6Ihy4t3oJxYoiUqA1rpM1ENbHnIxRyBIVLA126kdEK0bth+l+g2kvTYC
-         OFKONKLEtzDChZOUGI+aX8vh1SmTEHqSWxm6zRqu5/MXuBGLrPZ44++0Lh6QVAAySVcc
-         ONWxiC7N/UXTK5wPJJDZPVkJ70mSrd1hQc1dWQ+Q8P902vYPqv7v7JpgZIEeplNNZ59N
-         tDIg==
-X-Gm-Message-State: AKwxytd3ubFzdSfg6SR9cw1xMoq/JJzDZZGgxK/F1egN46AIWRZIh2QC
-        hbdKgVgJ91XJZVMAs+tnc1Hs/vsYDCdXneDEtOdU+A==
-X-Google-Smtp-Source: AH8x225EdazZAV73SoDEpurE8fv75+BXHef4HRLp1xom2y0Oidu6/wcI+B4ZNU84hjF9HTmpt9TjZdPl6ADEsz8dopY=
-X-Received: by 10.202.171.195 with SMTP id u186mr3440993oie.253.1516613571711;
- Mon, 22 Jan 2018 01:32:51 -0800 (PST)
+        id S1751389AbeAVJci (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 04:32:38 -0500
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:53879 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751987AbeAVJZn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 Jan 2018 04:25:43 -0500
+X-AuditID: 1207440d-973ff70000000c05-3d-5a65ae141edc
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 2D.DC.03077.51EA56A5; Mon, 22 Jan 2018 04:25:41 -0500 (EST)
+Received: from [192.168.69.190] (p54AAE13C.dip0.t-ipconnect.de [84.170.225.60])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w0M9PbAb008980
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Mon, 22 Jan 2018 04:25:39 -0500
+Subject: Re: [PATCH] files_initial_transaction_commit(): only unlock if locked
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Mathias Rav <m@git.strova.dk>, git@vger.kernel.org
+References: <20180118143841.1a4c674d@novascotia>
+ <20180118141914.GA32718@sigill.intra.peff.net>
+ <xmqqwp0do5sg.fsf@gitster.mtv.corp.google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <8328c28a-d93b-1076-20d3-823dbddf7e4c@alum.mit.edu>
+Date:   Mon, 22 Jan 2018 10:25:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.74.27.3 with HTTP; Mon, 22 Jan 2018 01:32:21 -0800 (PST)
-In-Reply-To: <20180122092114.27640-1-pclouds@gmail.com>
-References: <20180122092114.27640-1-pclouds@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 Jan 2018 16:32:21 +0700
-Message-ID: <CACsJy8CSja4Lh1co4PfMmag=REhEpfYrDchWzQrJW1p9uV=1HA@mail.gmail.com>
-Subject: Re: [PATCH/RFC] Merge most test helper programs into a new one "test-tool"
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqwp0do5sg.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsUixO6iqCu6LjXK4MEFK4uuK91MFg29V5gt
+        vrU8YLX40dLD7MDi8b5XxONZ7x5Gj4uXlD0+b5ILYInisklJzcksSy3St0vgyli3ejF7wQmF
+        ir379zI2MJ6S6mLk4JAQMJE4dDaji5GLQ0hgB5PE/kcf2CCc80wSR1q6WLsYOTmEBfwklm5r
+        YQaxRQQcJU48uA4WZxYwk1jwYy8rRMMkRomJp1eCFbEJ6Eos6mlmArF5Bewlpj2ZxAZiswio
+        SnSt+g/WLCoQITFl7VoWiBpBiZMzn4DZnALWEhs3/2eEWKAu8WfeJWYIW1zi1pP5TBC2vMT2
+        t3OYJzAKzELSPgtJyywkLbOQtCxgZFnFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGukl5tZopea
+        UrqJERLkvDsY/6+TOcQowMGoxMP7wCg1Sog1say4MvcQoyQHk5Ior10JUIgvKT+lMiOxOCO+
+        qDQntfgQowQHs5IIb9oKoBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoND
+        SYI3fy1Qo2BRanpqRVpmTglCmomDE2Q4D9BwW5Aa3uKCxNzizHSI/ClGXY4bL163MQux5OXn
+        pUqJ8/5aA1QkAFKUUZoHNweWnF4xigO9JcxrCTKKB5jY4Ca9AlrCBLTkRg3YkpJEhJRUA2Nk
+        w0afiJ05M1PWXyvZ29O1NrFCcd3DuKITGrK7brOpmgS12+zuD4veEdxr3//o4DPVU7aq3Vdd
+        V89xnrplmemdO69Uuy93fC03u+WgtfHfhHni624+OfJJZbPop82mGrt0z6x6JfPCXudsQNWS
+        iEAhH5m9SpuedNznkPoTW/v/lODlCbk3p7IosRRnJBpqMRcVJwIAv+VydSkDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whoops, this patch is over 100KB and will likely be blocked by
-vger.kernel.org. I may need to split it and resend later, but I think
-the commit message is enough for discussion (the actual changes are
-not that interesting anyway). The commit is only available at
-https://github.com/pclouds/git/tree/t-helper-all-in-one
+On 01/19/2018 11:14 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Thu, Jan 18, 2018 at 02:38:41PM +0100, Mathias Rav wrote:
+>>
+>>> Running git clone --single-branch --mirror -b TAGNAME previously
+>>> triggered the following error message:
+>>>
+>>> 	fatal: multiple updates for ref 'refs/tags/TAGNAME' not allowed.
+>>>
+>>> This error condition is handled in files_initial_transaction_commit().
+>>>
+>>> 42c7f7ff9 ("commit_packed_refs(): remove call to `packed_refs_unlock()`", 2017-06-23)
+>>> introduced incorrect unlocking in the error path of this function,
+>>> which changes the error message to
+>>>
+>>> 	fatal: BUG: packed_refs_unlock() called when not locked
+>>>
+>>> Move the call to packed_refs_unlock() above the "cleanup:" label
+>>> since the unlocking should only be done in the last error path.
+>>
+>> Thanks, this solution looks correct to me. It's pretty low-impact since
+>> the locking is the second-to-last thing in the function, so we don't
+>> have to re-add the unlock to a bunch of error code paths. But one
+>> alternative would be to just do:
+>>
+>>   if (packed_refs_is_locked(refs))
+>> 	packed_refs_unlock(refs->packed_ref_store);
+>>
+>> in the cleanup section.
+> 
+> Yeah, that may be a more future-proof alternative, and just as you
+> said the patch as posted would be sufficient, too.
 
-On Mon, Jan 22, 2018 at 4:21 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> Plenty small programs in t/helper are now part of a bigger one called
-> test-tool. There are two benefits in merging multiple programs into
-> one:
->
-> - t/helper consumes less disk space (31MB vs 152MB)
-> - link time is reduced (with ccache on and -j1, 16s vs 24s)
->
-> The following programs remain standalone because...
->
-> - test-line-buffer:
-> - test-svn-fe: extra dependencies
->
-> - test-fake-ssh: some tests require this to be a single argument,
->   splitting it into 'test-tool fake-ssh' creates new problems
->
-> - test-dump-fsmonitor:
-> - test-dump-untracked-cache:
-> - test-run-command:
-> - test-wildmatch: some in-flight topics add or remove call sites. It
->   is simpler to leave them out until the dust settles. Then we can
->   move them to test-tool.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  This may bring joy to Johannes and pain to Junio. I've excluded some
->  programs to reduce merge conflicts on 'pu' (only one conflict left in
->  Makefile due to a new test program). But if some new topics show up
->  and use these programs, it's going to be pain pain pain.
->
->  Makefile                                |  77 ++++-----
->  cache.h                                 |   2 +-
->  name-hash.c                             |   2 +-
->  t/helper/test-chmtime.c                 |   3 +-
->  t/helper/test-config.c                  |   3 +-
->  t/helper/test-ctype.c                   |   3 +-
->  t/helper/test-date.c                    |   3 +-
->  t/helper/test-delta.c                   |   3 +-
->  t/helper/test-drop-caches.c             |   3 +-
->  t/helper/test-dump-cache-tree.c         |   3 +-
->  t/helper/test-dump-split-index.c        |   3 +-
->  t/helper/test-example-decorate.c        |   3 +-
->  t/helper/test-genrandom.c               |   3 +-
->  t/helper/test-hashmap.c                 |   3 +-
->  t/helper/test-index-version.c           |   3 +-
->  t/helper/test-lazy-init-name-hash.c     |  13 +-
->  t/helper/test-match-trees.c             |   3 +-
->  t/helper/test-mergesort.c               |   3 +-
->  t/helper/test-mktemp.c                  |   3 +-
->  t/helper/test-online-cpus.c             |   3 +-
->  t/helper/test-parse-options.c           |   3 +-
->  t/helper/test-path-utils.c              |   3 +-
->  t/helper/test-prio-queue.c              |   3 +-
->  t/helper/test-read-cache.c              |   3 +-
->  t/helper/test-ref-store.c               |   3 +-
->  t/helper/test-regex.c                   |   3 +-
->  t/helper/test-revision-walking.c        |   3 +-
->  t/helper/test-scrap-cache-tree.c        |   3 +-
->  t/helper/test-sha1-array.c              |   3 +-
->  t/helper/test-sha1.c                    |   3 +-
->  t/helper/test-sha1.sh                   |   4 +-
->  t/helper/test-sigchain.c                |   3 +-
->  t/helper/test-strcmp-offset.c           |   3 +-
->  t/helper/test-string-list.c             |   3 +-
->  t/helper/test-submodule-config.c        |   3 +-
->  t/helper/test-subprocess.c              |   3 +-
->  t/helper/test-tool.c (new)              |  66 ++++++++
->  t/helper/test-tool.h (new)              |  39 +++++
->  t/helper/test-urlmatch-normalization.c  |   3 +-
->  t/helper/test-write-cache.c             |   3 +-
->  t/lib-git-p4.sh                         |   2 +-
->  t/lib-git-svn.sh                        |   2 +-
->  t/lib-pack.sh                           |   2 +-
->  t/perf/p0002-read-cache.sh              |   2 +-
->  t/perf/p0004-lazy-init-name-hash.sh     |   8 +-
->  t/perf/p0007-write-cache.sh             |   2 +-
->  t/perf/p0071-sort.sh                    |   2 +-
->  t/perf/p7519-fsmonitor.sh               |  12 +-
->  t/t0005-signals.sh                      |   6 +-
->  t/t0006-date.sh                         |   8 +-
->  t/t0009-prio-queue.sh                   |   6 +-
->  t/t0011-hashmap.sh                      |   4 +-
->  t/t0013-sha1dc.sh                       |   4 +-
->  t/t0021-conversion.sh                   |   4 +-
->  t/t0040-parse-options.sh                |  68 ++++----
->  t/t0060-path-utils.sh                   |  60 +++----
->  t/t0062-revision-walking.sh             |   2 +-
->  t/t0063-string-list.sh                  |  48 +++---
->  t/t0064-sha1-array.sh                   |  16 +-
->  t/t0065-strcmp-offset.sh                |   2 +-
->  t/t0070-fundamental.sh                  |   8 +-
->  t/t0090-cache-tree.sh                   |  18 +--
->  t/t0110-urlmatch-normalization.sh       | 266 ++++++++++++++++----------=
-------
->  t/t1006-cat-file.sh                     |   2 +-
->  t/t1050-large.sh                        |   6 +-
->  t/t1300-repo-config.sh                  |   2 +-
->  t/t1305-config-include.sh               |   2 +-
->  t/t1308-config-set.sh                   |  22 +--
->  t/t1309-early-config.sh                 |  12 +-
->  t/t1405-main-ref-store.sh               |   2 +-
->  t/t1406-submodule-ref-store.sh          |   2 +-
->  t/t1407-worktree-ref-store.sh           |   4 +-
->  t/t1501-work-tree.sh                    |  10 +-
->  t/t1600-index.sh                        |   2 +-
->  t/t1700-split-index.sh                  |  62 ++++----
->  t/t2022-checkout-paths.sh               |   4 +-
->  t/t2104-update-index-skip-worktree.sh   |   6 +-
->  t/t3008-ls-files-lazy-init-name-hash.sh |   4 +-
->  t/t3306-notes-prune.sh                  |   2 +-
->  t/t3404-rebase-interactive.sh           |   4 +-
->  t/t3418-rebase-continue.sh              |   4 +-
->  t/t3501-revert-cherry-pick.sh           |   2 +-
->  t/t3510-cherry-pick-sequence.sh         |   4 +-
->  t/t3600-rm.sh                           |   2 +-
->  t/t3700-add.sh                          |   2 +-
->  t/t4011-diff-symlink.sh                 |   2 +-
->  t/t4013-diff-various.sh                 |   2 +-
->  t/t4035-diff-quiet.sh                   |   2 +-
->  t/t4151-am-abort.sh                     |   4 +-
->  t/t4200-rerere.sh                       |  22 +--
->  t/t5000-tar-tree.sh                     |   4 +-
->  t/t5300-pack-object.sh                  |   4 +-
->  t/t5301-sliding-window.sh               |   2 +-
->  t/t5302-pack-index.sh                   |  14 +-
->  t/t5303-pack-corruption-resilience.sh   |  10 +-
->  t/t5304-prune.sh                        |  16 +-
->  t/t5310-pack-bitmaps.sh                 |   2 +-
->  t/t5313-pack-bounds-checks.sh           |   4 +-
->  t/t5314-pack-cycle-detection.sh         |   2 +-
->  t/t5316-pack-delta-depth.sh             |   2 +-
->  t/t5400-send-pack.sh                    |   2 +-
->  t/t5516-fetch-push.sh                   |   2 +-
->  t/t5546-receive-limits.sh               |   2 +-
->  t/t5547-push-quarantine.sh              |   2 +-
->  t/t5608-clone-2gb.sh                    |   2 +-
->  t/t6022-merge-rename.sh                 |  30 ++--
->  t/t6500-gc.sh                           |   2 +-
->  t/t6501-freshen-objects.sh              |   4 +-
->  t/t7411-submodule-config.sh             |  18 +--
->  t/t7508-status.sh                       |   6 +-
->  t/t7701-repack-unpack-unreachable.sh    |   6 +-
->  t/t7812-grep-icase-non-ascii.sh         |   2 +-
->  t/t9004-example.sh                      |   2 +-
->  t/t9100-git-svn-basic.sh                |   4 +-
->  t/t9300-fast-import.sh                  |   2 +-
->  t/t9802-git-p4-filetype.sh              |   2 +-
->  t/t9803-git-p4-shell-metachars.sh       |   4 +-
->  t/t9813-git-p4-preserve-users.sh        |   6 +-
->  t/t9820-git-p4-editor-handling.sh       |   2 +-
->  t/test-lib.sh                           |  10 +-
->  120 files changed, 681 insertions(+), 537 deletions(-)
->  create mode 100644 t/helper/test-tool.c
->  create mode 100644 t/helper/test-tool.h
---=20
-Duy
+Either solution LGTM. Thanks for finding and fixing this bug.
+
+But let's also take a step back. The invocation
+
+    git clone --single-branch --mirror -b TAGNAME
+
+seems curious. Does it even make sense to use `--mirror` and
+`--single-branch` at the same time? What should it do?
+
+Normally `--mirror` implies (aside from `--bare`) that the remote
+references should be converted 1:1 to local references and should be
+overwritten at every fetch; i.e., the refspec should be set to
+`+refs/*:refs/*`.
+
+To me the most plausible interpretation of `--mirror --single-branch -b
+BRANCHNAME` would be that the single branch should be fetched and made
+the HEAD, and the refspec should be set to
+`+refs/heads/BRANCHNAME:refs/heads/BRANCHNAME`. It also wouldn't be very
+surprising if it were forbidden to use these options together.
+
+Currently, we do neither of those things. Instead we fetch that one
+reference (as `refs/heads/BRANCHNAME`) but set the refspec to
+`+refs/*:refs/*`; i.e., the next fetch would fetch all of the history.
+
+It's even more mind-bending if `-b` is passed a `TAGNAME` rather than a
+`BRANCHNAME`. The documentation says that `-b TAGNAME` "detaches the
+HEAD at that commit in the resulting repository". If `--single-branch -b
+TAGNAME` is used, then the refspec is set to
+`+refs/tags/TAGNAME:refs/tags/TAGNAME`. But what if `--mirror` is also used?
+
+Currently, this fails, apparently because `--mirror` and `-b TAGNAME`
+each independently try to set `refs/tags/TAGNAME` (presumably to the
+same value). *If* this is a useful use case, we could fix it so that it
+doesn't fail. If not, maybe we should prohibit it explicitly and emit a
+clearer error message.
+
+Mathias: if you encountered this problem in the real world, what were
+you trying to accomplish? What behavior would you have expected?
+
+Maybe the behavior could be made more sane if there were a way to get
+the 1:1 reference mapping that `--mirror` implies without also getting
+`--bare` [1]. Suppose there were a `--refspec` option. Then instead of
+
+    git clone --mirror --single-branch -b BRANCHNAME
+
+with it's non-obvious semantics, you could prohibit that use and instead
+support
+
+    git clone --bare
+--refspec='+refs/heads/BRANCHNAME:refs/heads/BRANCHNAME'
+
+which seems clearer in its intent, if perhaps not super obvious. Or you
+could give `clone` a `--no-fetch` option, which would give the user a
+time to intervene between setting up the basic clone config and actually
+fetching objects.
+
+Michael
+
+
+[1] It seems like
+
+        git clone --config remote.origin.fetch='+refs/*:refs/*' clone ...
+
+    might do it, but that actually ends up setting up two refspecs and
+only honoring `+refs/heads/*:refs/remotes/origin/*` for the initial
+fetch. Plus it is pretty obscure.
