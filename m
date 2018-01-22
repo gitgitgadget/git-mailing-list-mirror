@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B7821F424
-	for <e@80x24.org>; Mon, 22 Jan 2018 11:05:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E40F1F424
+	for <e@80x24.org>; Mon, 22 Jan 2018 11:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbeAVLEx (ORCPT <rfc822;e@80x24.org>);
+        id S1751157AbeAVLEx (ORCPT <rfc822;e@80x24.org>);
         Mon, 22 Jan 2018 06:04:53 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:37503 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751057AbeAVLEq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 06:04:46 -0500
-Received: by mail-wm0-f68.google.com with SMTP id v71so15986067wmv.2
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:04:46 -0800 (PST)
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36511 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751024AbeAVLEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 06:04:48 -0500
+Received: by mail-wm0-f67.google.com with SMTP id f3so15979615wmc.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=xkUSt3o/zE896A/7jt51Jj6+GAy6ID6bl3aLeAfAlHo=;
-        b=NWOMResdhXOP55Lxy5IXFyQeWzkmVAPcrpiKyNikjn8NjUUp0/bZlagu2u2J7J2QKn
-         bGNN49a0BU3Twb+KRrn7Rp/00qzbAWJapdcjr1f+b2mk/UssbeNAxyIa9bkcWcf7kNtM
-         c6xjMQdFSJHTnL0fLdpk56hAsS+XuKcCHWgase6Qbu75Eo0FYAbOsDXqhs+VJvdQm2oB
-         1yRlxadyNR1ma00ZuKt+NkTf43flrOi4A3Skrz+Qav4bICv6fuyuljGDhJsTR+2fwOzP
-         epSbtNebfrJqUL09vL7+lg7obYApotrRiCfTIKDhKJMZ0eGpkzfJdIyKv9NHid7XSzOA
-         fI4Q==
+        bh=OaF8gDTeVT8ov6HllN2UbvC8Yn5JUCEuy9E4tbMRWT8=;
+        b=UfIniFff65/CaCFdiaYeSk28vB+SK2TahcBe6KsbGVvRA1m6u43i0oAjfGLtbUdueJ
+         5VwzJwM+/ER1tAmYypwgdpzlUwdULC8T6/dxi07MtC/ZuF8w95eIFIAdXnJjvkbBIFjT
+         PRfVk5Zynx9OKAVpoRXAPBW1vFxHNovOzvWrNdaEJweFDLA49quWFN9CVAYjKRzXAM1V
+         lK6xqAC/NuXWGhiDXAtnHTT4sDqtjBJZjht1o2Goty60XtAqezN1KGQkf8jBhde4tMV3
+         4CE0YIrmDQ59qlo/4z8a7YKiUc5IWSOj4jeZgyikP5+Wgl+fyejQI5ShpsTbwscjzdwR
+         uV7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=xkUSt3o/zE896A/7jt51Jj6+GAy6ID6bl3aLeAfAlHo=;
-        b=jkWTsn9/KZR6e3qAXdrrxiWZUaX1/WyYfXLBFAbzqA0WDMh+4WMM0u3W4eBuszwzrm
-         VKuwvp1ZCpDCt7oG+8wlU0drxGkn9iWpokeIcyyopL0PlRKsfUo6RMbzRWeNlcyti/jb
-         QVx4ahFAP7U4Co/BOwLSM8uFJ5gHAusNOC+4z9hVnF15TBXd3bEVAJ03JNly0oDOS92M
-         vUFk+JrqxJechh8GHfDkIvMsCCnAHwaNPLRFjI9LLvGV11ueVVBZFe53qZvmiTe78ZbJ
-         XhnA8U25IDZja0mj2n8G/1K5vpapqcMsxoLikRQ9K6GS29n+ANz9zJq1K9KDTK3cGPym
-         Jh+Q==
-X-Gm-Message-State: AKwxytfyXN2AsQU+ukuwpFNBl4jxJJtoOuUw6DNQjdrqrS+hYICU8/pl
-        s5zcAuV9IH5K2yUuSWRY0IWYUhyp
-X-Google-Smtp-Source: AH8x2241FcyE2huW6T/3eVyzqRFMUoobh3GO+jHkIvDCFOl1QjjF+elVpjnQDfGPOcIOEbH5cnQ59A==
-X-Received: by 10.80.240.205 with SMTP id a13mr12775298edm.77.1516619085229;
-        Mon, 22 Jan 2018 03:04:45 -0800 (PST)
+        bh=OaF8gDTeVT8ov6HllN2UbvC8Yn5JUCEuy9E4tbMRWT8=;
+        b=gjr9MBfgJvlna6o/kO06x926p+ydczhfIEaiq6b3BRny/NJ/mM46FY2C6J0OOTwy6d
+         EEjEbsNR11luQJm2LT7Q+NQT5vA+B/jI+T0NNjckCN7l96+LNGr4kWq5htvD2MrMuwmb
+         llWWeStKfKBcxxPOf+6INNieZzIna+R8niMM40L44iwc7zyRCqEJOwdjA0rx3Bqw5oR9
+         0X8GoC55QzLk3xJJfY9ko0eu58hwpxsQVx1RHZhDHoWsAHD5Z90StDZ/H9AdiVL0YbLG
+         9PLmcyoDslhpTGCc1H+WFy4bZ+Urxx/UuljxK+ojPIT3zXyd7RtlVPag2Zg97HSGwBP1
+         +Teg==
+X-Gm-Message-State: AKwxytfcgcvtRaQ4pHiuG8tKtQXEq0n83UHNSQL/74Nz6qKEkEBgPUmv
+        nJizM06uLbOrCEhk5yieiv5Zbiqv
+X-Google-Smtp-Source: AH8x226yFzSh1UE+huUQp1r76VtFdGz2eBpbUiCHIMuhKbFNShjvc5eaRVvwJbHeRYZBUXwxCEVqfA==
+X-Received: by 10.80.219.135 with SMTP id p7mr13258204edk.198.1516619086723;
+        Mon, 22 Jan 2018 03:04:46 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id e12sm10833591edm.42.2018.01.22.03.04.43
+        by smtp.gmail.com with ESMTPSA id e12sm10833591edm.42.2018.01.22.03.04.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Jan 2018 03:04:44 -0800 (PST)
+        Mon, 22 Jan 2018 03:04:45 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         sandals@crustytoothpaste.ath.cx,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v2 04/14] dir: convert struct sha1_stat to use object_id
-Date:   Mon, 22 Jan 2018 12:04:27 +0100
-Message-Id: <6f70bf776f08ccaf2a68c6be46f7fefd58da1baf.1516617960.git.patryk.obara@gmail.com>
+Subject: [PATCH v2 05/14] sha1_file: convert hash_sha1_file to object_id
+Date:   Mon, 22 Jan 2018 12:04:28 +0100
+Message-Id: <757646a6b42e8a0ceb50665a1fe6f588227d9873.1516617960.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1516617960.git.patryk.obara@gmail.com>
 References: <cover.1516282880.git.patryk.obara@gmail.com>
@@ -67,244 +67,295 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the declaration of struct sha1_stat. Adjust all usages of this
-struct and replace hash{clr,cmp,cpy} with oid{clr,cmp,cpy} wherever
-possible.  Rename it to struct oid_stat.
+Convert the declaration and definition of hash_sha1_file to use
+struct object_id and adjust all function calls.
 
-Remove macro EMPTY_BLOB_SHA1_BIN, as it's no longer used.
+Rename this function to hash_object_file.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- cache.h                              |  2 --
- dir.c                                | 56 +++++++++++++++++-------------------
- dir.h                                | 12 ++++----
- t/helper/test-dump-untracked-cache.c |  4 +--
- 4 files changed, 34 insertions(+), 40 deletions(-)
+ apply.c                  |  4 ++--
+ builtin/index-pack.c     |  5 ++---
+ builtin/replace.c        |  2 +-
+ builtin/unpack-objects.c |  2 +-
+ cache-tree.c             | 11 +++++------
+ cache.h                  |  5 ++++-
+ convert.c                |  6 +++---
+ diffcore-rename.c        |  4 ++--
+ dir.c                    |  4 ++--
+ log-tree.c               |  2 +-
+ sha1_file.c              | 26 +++++++++++++-------------
+ 11 files changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index e4e03ac51d..ed72933ba7 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1047,8 +1047,6 @@ extern const struct object_id empty_tree_oid;
- 	"\xe6\x9d\xe2\x9b\xb2\xd1\xd6\x43\x4b\x8b" \
- 	"\x29\xae\x77\x5a\xd8\xc2\xe4\x8c\x53\x91"
- extern const struct object_id empty_blob_oid;
--#define EMPTY_BLOB_SHA1_BIN (empty_blob_oid.hash)
--
+diff --git a/apply.c b/apply.c
+index 321a9fa68d..57ab8a8a29 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3154,7 +3154,7 @@ static int apply_binary(struct apply_state *state,
+ 		 * See if the old one matches what the patch
+ 		 * applies to.
+ 		 */
+-		hash_sha1_file(img->buf, img->len, blob_type, oid.hash);
++		hash_object_file(img->buf, img->len, blob_type, &oid);
+ 		if (strcmp(oid_to_hex(&oid), patch->old_sha1_prefix))
+ 			return error(_("the patch applies to '%s' (%s), "
+ 				       "which does not match the "
+@@ -3199,7 +3199,7 @@ static int apply_binary(struct apply_state *state,
+ 				     name);
  
- static inline int is_empty_blob_sha1(const unsigned char *sha1)
- {
-diff --git a/dir.c b/dir.c
-index 7c4b45e30e..ef977b8657 100644
---- a/dir.c
-+++ b/dir.c
-@@ -233,10 +233,8 @@ int within_depth(const char *name, int namelen,
-  *
-  * Optionally updates the given sha1_stat with the given OID (when valid).
-  */
--static int do_read_blob(const struct object_id *oid,
--			struct sha1_stat *sha1_stat,
--			size_t *size_out,
--			char **data_out)
-+static int do_read_blob(const struct object_id *oid, struct oid_stat *sha1_stat,
-+			size_t *size_out, char **data_out)
- {
- 	enum object_type type;
- 	unsigned long sz;
-@@ -253,7 +251,7 @@ static int do_read_blob(const struct object_id *oid,
+ 		/* verify that the result matches */
+-		hash_sha1_file(img->buf, img->len, blob_type, oid.hash);
++		hash_object_file(img->buf, img->len, blob_type, &oid);
+ 		if (strcmp(oid_to_hex(&oid), patch->new_sha1_prefix))
+ 			return error(_("binary patch to '%s' creates incorrect result (expecting %s, got %s)"),
+ 				name, patch->new_sha1_prefix, oid_to_hex(&oid));
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 4c51aec81f..7f5a95e6ff 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -958,9 +958,8 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 	free(delta_data);
+ 	if (!result->data)
+ 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
+-	hash_sha1_file(result->data, result->size,
+-		       typename(delta_obj->real_type),
+-		       delta_obj->idx.oid.hash);
++	hash_object_file(result->data, result->size,
++			 typename(delta_obj->real_type), &delta_obj->idx.oid);
+ 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
+ 		    &delta_obj->idx.oid);
+ 	counter_lock();
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 10078ae371..814bf6bfde 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -355,7 +355,7 @@ static void check_one_mergetag(struct commit *commit,
+ 	struct tag *tag;
+ 	int i;
  
- 	if (sha1_stat) {
- 		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
--		hashcpy(sha1_stat->sha1, oid->hash);
-+		oidcpy(&sha1_stat->oid, oid);
+-	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_oid.hash);
++	hash_object_file(extra->value, extra->len, typename(OBJ_TAG), &tag_oid);
+ 	tag = lookup_tag(&tag_oid);
+ 	if (!tag)
+ 		die(_("bad mergetag in commit '%s'"), ref);
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 62ea264c46..85a40d1af7 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -258,7 +258,7 @@ static void write_object(unsigned nr, enum object_type type,
+ 	} else {
+ 		struct object *obj;
+ 		int eaten;
+-		hash_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash);
++		hash_object_file(buf, size, typename(type), &obj_list[nr].oid);
+ 		added_object(nr, type, buf, size);
+ 		obj = parse_object_buffer(&obj_list[nr].oid, type, size, buf,
+ 					  &eaten);
+diff --git a/cache-tree.c b/cache-tree.c
+index e03e72c34a..6574eeb80d 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -400,15 +400,14 @@ static int update_one(struct cache_tree *it,
  	}
  
- 	if (sz == 0) {
-@@ -654,9 +652,8 @@ void add_exclude(const char *string, const char *base,
+ 	if (repair) {
+-		unsigned char sha1[20];
+-		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
+-		if (has_sha1_file(sha1))
+-			hashcpy(it->oid.hash, sha1);
++		struct object_id oid;
++		hash_object_file(buffer.buf, buffer.len, tree_type, &oid);
++		if (has_sha1_file(oid.hash))
++			oidcpy(&it->oid, &oid);
+ 		else
+ 			to_invalidate = 1;
+ 	} else if (dryrun)
+-		hash_sha1_file(buffer.buf, buffer.len, tree_type,
+-			       it->oid.hash);
++		hash_object_file(buffer.buf, buffer.len, tree_type, &it->oid);
+ 	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->oid.hash)) {
+ 		strbuf_release(&buffer);
+ 		return -1;
+diff --git a/cache.h b/cache.h
+index ed72933ba7..08f2b81e1b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1236,7 +1236,10 @@ static inline const unsigned char *lookup_replace_object(const unsigned char *sh
  
- static int read_skip_worktree_file_from_index(const struct index_state *istate,
- 					      const char *path,
--					      size_t *size_out,
--					      char **data_out,
--					      struct sha1_stat *sha1_stat)
-+					      size_t *size_out, char **data_out,
-+					      struct oid_stat *sha1_stat)
- {
- 	int pos, len;
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+-extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
++
++extern int hash_object_file(const void *buf, unsigned long len,
++			    const char *type, struct object_id *oid);
++
+ extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
+ extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, struct object_id *oid, unsigned flags);
  
-@@ -795,9 +792,8 @@ static int add_excludes_from_buffer(char *buf, size_t size,
-  * ss_valid is non-zero, "ss" must contain good value as input.
-  */
- static int add_excludes(const char *fname, const char *base, int baselen,
--			struct exclude_list *el,
--			struct index_state *istate,
--			struct sha1_stat *sha1_stat)
-+			struct exclude_list *el, struct index_state *istate,
-+			struct oid_stat *sha1_stat)
+diff --git a/convert.c b/convert.c
+index 1a41a48e15..d25a4757ad 100644
+--- a/convert.c
++++ b/convert.c
+@@ -898,7 +898,7 @@ static int ident_to_git(const char *path, const char *src, size_t len,
+ static int ident_to_worktree(const char *path, const char *src, size_t len,
+                              struct strbuf *buf, int ident)
  {
- 	struct stat st;
- 	int r;
-@@ -823,7 +819,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 		if (size == 0) {
- 			if (sha1_stat) {
- 				fill_stat_data(&sha1_stat->stat, &st);
--				hashcpy(sha1_stat->sha1, EMPTY_BLOB_SHA1_BIN);
-+				oidcpy(&sha1_stat->oid, &empty_blob_oid);
- 				sha1_stat->valid = 1;
- 			}
- 			close(fd);
-@@ -847,10 +843,11 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 				 !ce_stage(istate->cache[pos]) &&
- 				 ce_uptodate(istate->cache[pos]) &&
- 				 !would_convert_to_git(istate, fname))
--				hashcpy(sha1_stat->sha1,
--					istate->cache[pos]->oid.hash);
-+				oidcpy(&sha1_stat->oid,
-+				       &istate->cache[pos]->oid);
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *to_free = NULL, *dollar, *spc;
+ 	int cnt;
+ 
+@@ -912,7 +912,7 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
+ 	/* are we "faking" in place editing ? */
+ 	if (src == buf->buf)
+ 		to_free = strbuf_detach(buf, NULL);
+-	hash_sha1_file(src, len, "blob", sha1);
++	hash_object_file(src, len, "blob", &oid);
+ 
+ 	strbuf_grow(buf, len + cnt * 43);
+ 	for (;;) {
+@@ -969,7 +969,7 @@ static int ident_to_worktree(const char *path, const char *src, size_t len,
+ 
+ 		/* step 4: substitute */
+ 		strbuf_addstr(buf, "Id: ");
+-		strbuf_add(buf, sha1_to_hex(sha1), 40);
++		strbuf_add(buf, sha1_to_hex(oid.hash), GIT_SHA1_HEXSZ);
+ 		strbuf_addstr(buf, " $");
+ 	}
+ 	strbuf_add(buf, src, len);
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 245e999fe5..e27d0bb632 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -260,8 +260,8 @@ static unsigned int hash_filespec(struct diff_filespec *filespec)
+ 	if (!filespec->oid_valid) {
+ 		if (diff_populate_filespec(filespec, 0))
+ 			return 0;
+-		hash_sha1_file(filespec->data, filespec->size, "blob",
+-			       filespec->oid.hash);
++		hash_object_file(filespec->data, filespec->size, "blob",
++				 &filespec->oid);
+ 	}
+ 	return sha1hash(filespec->oid.hash);
+ }
+diff --git a/dir.c b/dir.c
+index ef977b8657..177f9027be 100644
+--- a/dir.c
++++ b/dir.c
+@@ -846,8 +846,8 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 				oidcpy(&sha1_stat->oid,
+ 				       &istate->cache[pos]->oid);
  			else
--				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
-+				hash_sha1_file(buf, size, "blob",
-+					       sha1_stat->oid.hash);
+-				hash_sha1_file(buf, size, "blob",
+-					       sha1_stat->oid.hash);
++				hash_object_file(buf, size, "blob",
++						 &sha1_stat->oid);
  			fill_stat_data(&sha1_stat->stat, &st);
  			sha1_stat->valid = 1;
  		}
-@@ -930,7 +927,7 @@ struct exclude_list *add_exclude_list(struct dir_struct *dir,
-  * Used to set up core.excludesfile and .git/info/exclude lists.
-  */
- static void add_excludes_from_file_1(struct dir_struct *dir, const char *fname,
--				     struct sha1_stat *sha1_stat)
-+				     struct oid_stat *sha1_stat)
+diff --git a/log-tree.c b/log-tree.c
+index fca29d4799..fc0cc0d6d1 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -499,7 +499,7 @@ static void show_one_mergetag(struct commit *commit,
+ 	int status, nth;
+ 	size_t payload_size, gpg_message_offset;
+ 
+-	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), oid.hash);
++	hash_object_file(extra->value, extra->len, typename(OBJ_TAG), &oid);
+ 	tag = lookup_tag(&oid);
+ 	if (!tag)
+ 		return; /* error message already given */
+diff --git a/sha1_file.c b/sha1_file.c
+index 830b93b428..4c44c60cec 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -788,7 +788,7 @@ void *xmmap(void *start, size_t length,
+ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 			 unsigned long size, const char *type)
  {
- 	struct exclude_list *el;
- 	/*
-@@ -1180,7 +1177,7 @@ static void prep_exclude(struct dir_struct *dir,
+-	unsigned char real_sha1[20];
++	struct object_id real_oid;
+ 	enum object_type obj_type;
+ 	struct git_istream *st;
+ 	git_SHA_CTX c;
+@@ -796,8 +796,8 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 	int hdrlen;
  
- 	while (current < baselen) {
- 		const char *cp;
--		struct sha1_stat sha1_stat;
-+		struct oid_stat sha1_stat;
- 
- 		stk = xcalloc(1, sizeof(*stk));
- 		if (current < 0) {
-@@ -1223,7 +1220,7 @@ static void prep_exclude(struct dir_struct *dir,
- 		}
- 
- 		/* Try to read per-directory file */
--		hashclr(sha1_stat.sha1);
-+		oidclr(&sha1_stat.oid);
- 		sha1_stat.valid = 0;
- 		if (dir->exclude_per_dir &&
- 		    /*
-@@ -1269,9 +1266,9 @@ static void prep_exclude(struct dir_struct *dir,
- 		 * order, though, if you do that.
- 		 */
- 		if (untracked &&
--		    hashcmp(sha1_stat.sha1, untracked->exclude_sha1)) {
-+		    hashcmp(sha1_stat.oid.hash, untracked->exclude_sha1)) {
- 			invalidate_gitignore(dir->untracked, untracked);
--			hashcpy(untracked->exclude_sha1, sha1_stat.sha1);
-+			hashcpy(untracked->exclude_sha1, sha1_stat.oid.hash);
- 		}
- 		dir->exclude_stack = stk;
- 		current = stk->baselen;
-@@ -2228,13 +2225,13 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 
- 	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
- 	root = dir->untracked->root;
--	if (hashcmp(dir->ss_info_exclude.sha1,
--		    dir->untracked->ss_info_exclude.sha1)) {
-+	if (oidcmp(&dir->ss_info_exclude.oid,
-+		   &dir->untracked->ss_info_exclude.oid)) {
- 		invalidate_gitignore(dir->untracked, root);
- 		dir->untracked->ss_info_exclude = dir->ss_info_exclude;
+ 	if (map) {
+-		hash_sha1_file(map, size, type, real_sha1);
+-		return hashcmp(sha1, real_sha1) ? -1 : 0;
++		hash_object_file(map, size, type, &real_oid);
++		return hashcmp(sha1, real_oid.hash) ? -1 : 0;
  	}
--	if (hashcmp(dir->ss_excludes_file.sha1,
--		    dir->untracked->ss_excludes_file.sha1)) {
-+	if (oidcmp(&dir->ss_excludes_file.oid,
-+		   &dir->untracked->ss_excludes_file.oid)) {
- 		invalidate_gitignore(dir->untracked, root);
- 		dir->untracked->ss_excludes_file = dir->ss_excludes_file;
- 	}
-@@ -2638,8 +2635,8 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
- 	FLEX_ALLOC_MEM(ouc, exclude_per_dir, untracked->exclude_per_dir, len);
- 	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_info_exclude.stat);
- 	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_excludes_file.stat);
--	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.sha1);
--	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.sha1);
-+	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.oid.hash);
-+	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.oid.hash);
- 	ouc->dir_flags = htonl(untracked->dir_flags);
  
- 	varint_len = encode_varint(untracked->ident.len, varbuf);
-@@ -2816,12 +2813,11 @@ static void read_sha1(size_t pos, void *cb)
- 	rd->data += 20;
+ 	st = open_istream(sha1, &obj_type, &size, NULL);
+@@ -822,9 +822,9 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
+ 			break;
+ 		git_SHA1_Update(&c, buf, readlen);
+ 	}
+-	git_SHA1_Final(real_sha1, &c);
++	git_SHA1_Final(real_oid.hash, &c);
+ 	close_istream(st);
+-	return hashcmp(sha1, real_sha1) ? -1 : 0;
++	return hashcmp(sha1, real_oid.hash) ? -1 : 0;
  }
  
--static void load_sha1_stat(struct sha1_stat *sha1_stat,
--			   const unsigned char *data,
--			   const unsigned char *sha1)
-+static void load_sha1_stat(struct oid_stat *sha1_stat,
-+			   const unsigned char *data, const unsigned char *sha1)
+ int git_open_cloexec(const char *name, int flags)
+@@ -1317,7 +1317,7 @@ int pretend_object_file(void *buf, unsigned long len, enum object_type type,
  {
- 	stat_data_from_disk(&sha1_stat->stat, data);
--	hashcpy(sha1_stat->sha1, sha1);
-+	hashcpy(sha1_stat->oid.hash, sha1);
- 	sha1_stat->valid = 1;
- }
+ 	struct cached_object *co;
  
-diff --git a/dir.h b/dir.h
-index 11a047ba48..e7bb786a33 100644
---- a/dir.h
-+++ b/dir.h
-@@ -74,9 +74,9 @@ struct exclude_list_group {
- 	struct exclude_list *el;
- };
- 
--struct sha1_stat {
-+struct oid_stat {
- 	struct stat_data stat;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int valid;
- };
- 
-@@ -124,8 +124,8 @@ struct untracked_cache_dir {
- };
- 
- struct untracked_cache {
--	struct sha1_stat ss_info_exclude;
--	struct sha1_stat ss_excludes_file;
-+	struct oid_stat ss_info_exclude;
-+	struct oid_stat ss_excludes_file;
- 	const char *exclude_per_dir;
- 	struct strbuf ident;
- 	/*
-@@ -195,8 +195,8 @@ struct dir_struct {
- 
- 	/* Enable untracked file cache if set */
- 	struct untracked_cache *untracked;
--	struct sha1_stat ss_info_exclude;
--	struct sha1_stat ss_excludes_file;
-+	struct oid_stat ss_info_exclude;
-+	struct oid_stat ss_excludes_file;
- 	unsigned unmanaged_exclude_files;
- };
- 
-diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index f752532ffb..d7c55c2355 100644
---- a/t/helper/test-dump-untracked-cache.c
-+++ b/t/helper/test-dump-untracked-cache.c
-@@ -54,8 +54,8 @@ int cmd_main(int ac, const char **av)
- 		printf("no untracked cache\n");
+-	hash_sha1_file(buf, len, typename(type), oid->hash);
++	hash_object_file(buf, len, typename(type), oid);
+ 	if (has_sha1_file(oid->hash) || find_cached_object(oid->hash))
  		return 0;
- 	}
--	printf("info/exclude %s\n", sha1_to_hex(uc->ss_info_exclude.sha1));
--	printf("core.excludesfile %s\n", sha1_to_hex(uc->ss_excludes_file.sha1));
-+	printf("info/exclude %s\n", oid_to_hex(&uc->ss_info_exclude.oid));
-+	printf("core.excludesfile %s\n", oid_to_hex(&uc->ss_excludes_file.oid));
- 	printf("exclude_per_dir %s\n", uc->exclude_per_dir);
- 	printf("flags %08x\n", uc->dir_flags);
- 	if (uc->root)
+ 	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
+@@ -1485,12 +1485,12 @@ static int write_buffer(int fd, const void *buf, size_t len)
+ 	return 0;
+ }
+ 
+-int hash_sha1_file(const void *buf, unsigned long len, const char *type,
+-                   unsigned char *sha1)
++int hash_object_file(const void *buf, unsigned long len, const char *type,
++		     struct object_id *oid)
+ {
+ 	char hdr[32];
+ 	int hdrlen = sizeof(hdr);
+-	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
++	write_sha1_file_prepare(buf, len, type, oid->hash, hdr, &hdrlen);
+ 	return 0;
+ }
+ 
+@@ -1769,7 +1769,7 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
+ 	if (write_object)
+ 		ret = write_sha1_file(buf, size, typename(type), oid->hash);
+ 	else
+-		ret = hash_sha1_file(buf, size, typename(type), oid->hash);
++		ret = hash_object_file(buf, size, typename(type), oid);
+ 	if (re_allocated)
+ 		free(buf);
+ 	return ret;
+@@ -1792,8 +1792,8 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
+ 		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+ 				      oid->hash);
+ 	else
+-		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
+-				     oid->hash);
++		ret = hash_object_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
++				       oid);
+ 	strbuf_release(&sbuf);
+ 	return ret;
+ }
+@@ -1907,7 +1907,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
+ 		if (strbuf_readlink(&sb, path, st->st_size))
+ 			return error_errno("readlink(\"%s\")", path);
+ 		if (!(flags & HASH_WRITE_OBJECT))
+-			hash_sha1_file(sb.buf, sb.len, blob_type, oid->hash);
++			hash_object_file(sb.buf, sb.len, blob_type, oid);
+ 		else if (write_sha1_file(sb.buf, sb.len, blob_type, oid->hash))
+ 			rc = error("%s: failed to insert into database", path);
+ 		strbuf_release(&sb);
 -- 
 2.14.3
 
