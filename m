@@ -2,119 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 602EE1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:31:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54BFC1F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:34:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751214AbeAVXbj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:31:39 -0500
-Received: from lucaswerkmeister.de ([94.130.58.99]:57024 "EHLO
-        lucaswerkmeister.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbeAVXbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:31:38 -0500
-X-Greylist: delayed 463 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Jan 2018 18:31:38 EST
-Received: from localhost (unknown [IPv6:2a02:8109:9a3f:f575:be5f:f4ff:fecb:74cd])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mail@lucaswerkmeister.de)
-        by lucaswerkmeister.de (Postfix) with ESMTPSA id D79C41925B2;
-        Tue, 23 Jan 2018 00:23:54 +0100 (CET)
-Authentication-Results: lucaswerkmeister.de; dmarc=fail (p=none dis=none) header.from=lucaswerkmeister.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lucaswerkmeister.de;
-        s=mail; t=1516663434;
-        bh=vfrDU44w9PGYh00dEHqVdBgrGFKyTAMBgJSK1KWG3Ck=;
-        h=From:To:Cc:Subject:Date:Message-Id:From:Reply-To:Subject:Date:To:
-         Cc:In-Reply-To:References:Message-Id:Sender:Content-Type:
-         Content-Transfer-Encoding:Content-Disposition:Mime-Version;
-        b=YiE8Q9X98Nk/EnedczCCi0EDPRZPaPp0i88j7eS2dK9FIGrXDsWwe9aX0XAuME6YI
-         ZusMCxZ8KeK40dFjFzEreVlWeBA7VQHVIkYvs7L6JJbZ7yMB6c/Mm+QGXM9ryWQixd
-         DVGNYjmrVNaiLCXtX15gjCdqO2Ya1pjKutq+RQuk=
-From:   Lucas Werkmeister <mail@lucaswerkmeister.de>
-To:     git@vger.kernel.org
-Cc:     Lucas Werkmeister <mail@lucaswerkmeister.de>
-Subject: [PATCH] daemon: add --no-syslog to undo implicit --syslog
-Date:   Tue, 23 Jan 2018 00:23:04 +0100
-Message-Id: <20180122232304.4863-1-mail@lucaswerkmeister.de>
-X-Mailer: git-send-email 2.16.0
+        id S1751183AbeAVXe3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:34:29 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53840 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751031AbeAVXe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:34:28 -0500
+Received: (qmail 10107 invoked by uid 109); 22 Jan 2018 23:34:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jan 2018 23:34:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12244 invoked by uid 111); 22 Jan 2018 23:35:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 18:35:05 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 18:34:26 -0500
+Date:   Mon, 22 Jan 2018 18:34:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Rene Scharfe <l.s.r@web.de>,
+        Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Use MOVE_ARRAY
+Message-ID: <20180122233426.GA27144@sigill.intra.peff.net>
+References: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
+ <20180122175009.20178-1-szeder.dev@gmail.com>
+ <20180122224410.GA21604@sigill.intra.peff.net>
+ <xmqq372xjwzg.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq372xjwzg.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Several options imply --syslog, without there being a way to disable it
-again. This commit adds that option.
+On Mon, Jan 22, 2018 at 03:26:59PM -0800, Junio C Hamano wrote:
 
-This is useful, for instance, when running `git daemon` as a systemd
-service with --inetd. systemd connects stderr to the journal by default,
-so logging to stderr is useful. On the other hand, log messages sent via
-syslog also reach the journal eventually, but run the risk of being
-processed at a time when the `git daemon` process has already exited
-(especially if the process was very short-lived, e.g. due to client
-error), so that the journal can no longer read its cgroup and attach the
-message to the correct systemd unit. See systemd/systemd#2913 [1].
+> Jeff King <peff@peff.net> writes:
+> 
+> > Most of these are "shift part of the array". I wonder if it would make
+> > sense to encapsulate that pattern in a helper, like:
+> >
+> >   #define SHIFT_ARRAY(a, nr, pos, slots) \
+> >     MOVE_ARRAY(a + pos + slots, a + pos, nr - pos - slots)
+> >   ...
+> >   SHIFT_ARRAY(it->down, it->subtree_nr, pos, 1);
+> 
+> Exactly my thought when I was queuing it, but I was wondering about
+> this more from "can we use the higher level abstraction for reducing
+> errors?" point of view.  If we are shifting an array by 3 slots to
+> the right, we should at least have enough slots allocated to hold
+> them (i.e. a->nr - a->alloc must be 3 or more).  But after realizing
+> that the level these macros operate at is still a bit too low to do
+> something like that, I quickly lost interest ;-)
 
-[1]: https://github.com/systemd/systemd/issues/2913
+Yeah, you'd need to know the "alloc" number to right-shift correctly,
+since by definition we're pushing off the end of a->nr. Left-shifts just
+need to make sure they don't go past "0", which we can do here, but I'd
+think they're pretty uncommon.
 
-Signed-off-by: Lucas Werkmeister <mail@lucaswerkmeister.de>
----
+The right macro level may actually be something more like "make room for
+N items at pos". E.g.:
 
-Notes:
-    I decided not to add the option to git-daemon's --help output, since
-    the similar --no-informative-errors option is also not listed there.
-    Let me know if it should be added.
-    
-    Feel free to remove the part about systemd from the commit message
-    if you feel it doesn't need to be included.
+  #define CREATE_ARRAY_HOLE(a, nr, alloc, pos, slots) do { \
+          ALLOC_GROW(a, nr + slots, alloc);
+	  MOVE_ARRAY(a + pos + slots, a + pos, nr - pos - slots);
+  } while (0)
 
- Documentation/git-daemon.txt | 6 ++++--
- daemon.c                     | 4 ++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+but I didn't investigate the surrounding code. And it surely would need
+a catchier name. ;)
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index 3c91db7be..dfd6ce03c 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -8,7 +8,7 @@ git-daemon - A really simple server for Git repositories
- SYNOPSIS
- --------
- [verse]
--'git daemon' [--verbose] [--syslog] [--export-all]
-+'git daemon' [--verbose] [--[no-]syslog] [--export-all]
- 	     [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]
- 	     [--strict-paths] [--base-path=<path>] [--base-path-relaxed]
- 	     [--user-path | --user-path=<path>]
-@@ -109,9 +109,11 @@ OPTIONS
- 	Maximum number of concurrent clients, defaults to 32.  Set it to
- 	zero for no limit.
- 
----syslog::
-+--[no-]syslog::
- 	Log to syslog instead of stderr. Note that this option does not imply
- 	--verbose, thus by default only error conditions will be logged.
-+	`--no-syslog` is the default, but may be given explicitly to override
-+	the implicit `--syslog` of an earlier `--inetd` or `--detach` option.
- 
- --user-path::
- --user-path=<path>::
-diff --git a/daemon.c b/daemon.c
-index e37e343d0..d59fef6d6 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -1300,6 +1300,10 @@ int cmd_main(int argc, const char **argv)
- 			log_syslog = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--no-syslog")) {
-+			log_syslog = 0;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--export-all")) {
- 			export_all_trees = 1;
- 			continue;
--- 
-2.16.0
-
+-Peff
