@@ -2,91 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AB791F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:05:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC03E1F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751151AbeAVXFX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:05:23 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:43373 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751060AbeAVXFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:05:22 -0500
-Received: by mail-wm0-f47.google.com with SMTP id g1so19301130wmg.2
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 15:05:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=QdfBeYsMhzUU9SlHaBFkd0iGO6xhEnWt9XkPDGENW50=;
-        b=pT6eGrZkWuRmkUgTGUSlgEohUEu4LdTZIBcUFlQjClWgTOZtVWPjaBVCzMCurxN3IY
-         jvOryQBxOeOOPtzdJDN8aUWB9q3IAu+A1gRxG/NxnTFO5XVAeuokfIELxKqwtJkpVnyb
-         h2BjPco2Xa7zKOhnCDYTnnKOlpOG+H9137rwMLjsVWJ/n/EXamEli1EpDq4F1iOM4nZy
-         QiThduVWcyV4W6TqY2z8BUEqCQhO59UmGm6vXr5iLPCMdTprt8xU1oR1HXSjXDoLM4X3
-         CKbsCmIZ3Ep5kabu/e5zF4huJpM1yND2ckHLo0Ni6AIY+sC0gJNnsPKMQCTK0MIXVqEy
-         PUmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=QdfBeYsMhzUU9SlHaBFkd0iGO6xhEnWt9XkPDGENW50=;
-        b=MLma/Y1kCYS+pbenzN3o4D/eCeHzZUwQb9wm/jEVmTU9+rlSEQzh1OXXVYos8w65jl
-         d2xPtonvRlq5fF8rRSX33JKbEJQbD3Wzc85G7z80dpfQYYiKOZxYPxoF/cJO2OiyEwAy
-         3RNh1L5R8gOawpTLlMdK78NXftHlzv6mxtK7hgURVIKzkTgpuoxaog0P8KRu9PkZgt6W
-         CI/jBQADgKTCKj58xK+CL5F9dacLfNcibL7jWmBhKCXEiWss2WOZ7qpQNLec4oqvK+AA
-         iOBYmJkjAWCUP6AZ1YV5eSpjr02Bee0TMtNIDP62DzzTAKw4Pq4T4n34C8PHeyKED9Fl
-         nJcg==
-X-Gm-Message-State: AKwxytew+EtGAVTrLNMjp2tRRKZR73rghOjTlc3om8mjTrOhynNu+Ndi
-        gXLkWUwBdU2MDbvu3OUzlH0=
-X-Google-Smtp-Source: AH8x225D/bQg6V4u1wMZ27IuTYw2voRP1HNRCdIMT+LUFXAMvjlDsSBslkWqQ6mq/bYRNQXJjuGZqw==
-X-Received: by 10.80.165.21 with SMTP id y21mr16359824edb.148.1516662321636;
-        Mon, 22 Jan 2018 15:05:21 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id w17sm12269853eda.96.2018.01.22.15.05.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Jan 2018 15:05:20 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
-        Michael Schubert <mschub@elegosoft.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 07/12] git remote doc: correct dangerous lies about what prune does
-References: <20180121000304.32323-1-avarab@gmail.com> <20180119000027.28898-1-avarab@gmail.com> <20180121000304.32323-8-avarab@gmail.com> <xmqq7es9mzna.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqq7es9mzna.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 23 Jan 2018 00:05:19 +0100
-Message-ID: <87vafth4uo.fsf@evledraar.gmail.com>
+        id S1751053AbeAVXIW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:08:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53770 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751031AbeAVXIW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:08:22 -0500
+Received: (qmail 8848 invoked by uid 109); 22 Jan 2018 23:08:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jan 2018 23:08:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11940 invoked by uid 111); 22 Jan 2018 23:08:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 18:08:59 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 18:08:20 -0500
+Date:   Mon, 22 Jan 2018 18:08:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     felipe@felipegasper.com
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Fix comma splices
+Message-ID: <20180122230819.GB21604@sigill.intra.peff.net>
+References: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jan 21, 2018 at 10:19:04PM -0600, felipe@felipegasper.com wrote:
 
-On Mon, Jan 22 2018, Junio C. Hamano jotted:
+> Subject: [PATCH] Fix comma splices in remote.c
+> [...]
+> @@ -2123,9 +2123,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+>  				_("  (use \"git push\" to publish your local commits)\n"));
+>  	} else if (!ours) {
+>  		strbuf_addf(sb,
+> -			Q_("Your branch is behind '%s' by %d commit, "
+> +			Q_("Your branch is behind '%s' by %d commit "
+>  			       "and can be fast-forwarded.\n",
+> -			   "Your branch is behind '%s' by %d commits, "
+> +			   "Your branch is behind '%s' by %d commits "
+>  			       "and can be fast-forwarded.\n",
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> +Deletes stale references associated with <name>. By default stale
->> +remote-tracking branches under <name>, but depending on global
->> +configuration and the configuration of the remote we might even prune
->> +local tags....
->
-> An optional clarification
->
->     s/prune local tags/& that haven't been pushed there/
->
->> +... Equivalent to `git fetch <name> --prune`, except that no
->> +new references will be fetched.
->
-> `git fetch --prune <name>` (dashed options first and then non
-> options), just like you wrote in the previous step.
+Yes, the original violates the usual English rules for commas, which say
+that the dependent clause joined with a conjunction should not have a
+comma.
 
-Thanks. Will fix both.
+(To be pedantic, these aren't comma splices. A comma splice joins two
+independent clauses with a comma and _without_ a conjunction).
+
+This kind of comma _can_ actually be considered correct if it makes the
+sentence more clear, or to indicate a more extreme contrast. I tend to
+agree with you, though, that it does not help clarity here at all.
+
+> @@ -2134,11 +2134,11 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+>  				_("  (use \"git pull\" to update your local branch)\n"));
+>  	} else {
+>  		strbuf_addf(sb,
+> -			Q_("Your branch and '%s' have diverged,\n"
+> -			       "and have %d and %d different commit each, "
+> +			Q_("Your branch and '%s' have diverged.\n"
+> +			       "They have %d and %d different commit each, "
+>  			       "respectively.\n",
+
+This one is the same case as above, but you solved it differently. I
+agree that the result reads more clearly than the original. And more
+clearly than:
+
+  Your branch and '%s' have diverged and have %d and %d different
+  commits each, respectively.
+
+The first hunk could use the same "start a new sentence" trick, but it's
+pretty clear as a single sentence.  So I think your patch is doing the
+right thing, my pedantic explanations notwithstanding. ;)
+
+Reading this did make me wonder two things, though:
+
+  1. Do we really need the newline after "diverged"? Especially with the
+     comma, it makes the result look funnily wrapped (unless you have an
+     extremely long upstream branch name).
+
+     OTOH, if we switch it to a period as your patch does, I think the
+     line break looks much more natural.
+
+  2. Is this Q_() here actually helping? It triggers on "ours + theirs"
+     being greater than 1. So the "singular" case could only come up if
+     you had "0" in one of the cases.  But:
+
+       ...and have 0 and 1 different commit each...
+
+     makes no sense to me in English. It would still be "commits". I
+     could accept:
+
+       ...and have 1 commit each...
+
+     for the case where it's 1/1. But we would use "1 and 1 different
+     commits each" (which is correct, albeit slightly clunkier).
+
+     In fact, I don't think the singular case here can _ever_ trigger,
+     because this is the "else" block we get to when we know that
+     neither is zero. So I think the singular half of this Q_() could
+     just go away.
+
+     Like:
+
+diff --git a/remote.c b/remote.c
+index 4c84ba88dc..52672ac658 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2096,13 +2096,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
+ 				_("  (use \"git pull\" to update your local branch)\n"));
+ 	} else {
+ 		strbuf_addf(sb,
+-			Q_("Your branch and '%s' have diverged,\n"
+-			       "and have %d and %d different commit each, "
+-			       "respectively.\n",
+-			   "Your branch and '%s' have diverged,\n"
+-			       "and have %d and %d different commits each, "
+-			       "respectively.\n",
+-			   ours + theirs),
++			_("Your branch and '%s' have diverged,\n"
++			  "and have %d and %d different commits each, "
++			  "respectively.\n"),
+ 			base, ours, theirs);
+ 		if (advice_status_hints)
+ 			strbuf_addstr(sb,
+
+(if I were doing such a series, I'd probably do that first as a
+preparatory step, and then do grammatical fix on top).
+
+-Peff
