@@ -2,100 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 763B31F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 15:09:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9C911F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 17:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751282AbeAVPJb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 10:09:31 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:43753 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750848AbeAVPJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 10:09:28 -0500
-Received: by mail-wm0-f44.google.com with SMTP id g1so16919499wmg.2;
-        Mon, 22 Jan 2018 07:09:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=nOOOKbqKxNNig5+tfTzk/pEWqLbEgR8hy+yD5MyCYvE=;
-        b=lG3yiGHB5kx3FWcE5ay38K6YnGQ+KNS96X1WFhOTeBnzbDkW6cvBrz4Yod1E25GWAp
-         /mjab5KlGE3ta7w7boM3j6ZNk3b24E5eL76XUoCCWFiTUNhbPwOJhUwINuxInR08H+9/
-         8Q8jIbbRLC4gYOZ4tRE78NNQJonCSncI20dWqKbfbO4xLIBz2Q9CfGfacvhzPc66oX0C
-         x7HyiAyfiCSAksCTkrIUeRhX8vhqC9apN6tDgjd8IHh6I6B9UN6Nh6PmhUzZEKwZN1qN
-         +EZW9TOOct8Q74Gcx03cQZ6y+Xgu28bx70qvs0JNWloYHI/GeFRaCKfV4Eh7f5lIK7aE
-         XfYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=nOOOKbqKxNNig5+tfTzk/pEWqLbEgR8hy+yD5MyCYvE=;
-        b=h+v0knLwRxXoQ2fFJafb6Aslr/KzSSP3xlQ0gGE48k2hjwDSI8/cXEe/qd1NVDAn0b
-         GHscFSUDIkNNS7XF3fhDkIW6Isvxh6UfecoVjoteDc5Sy+vCShsAWy3nA1foSA00DvdQ
-         Q/UK+5ztbzcmMq5pDuTvzM9xPlO40L5sHSvvlRoqkiOel6PLKXCMlHUKOc9hVLOPZl1m
-         HS+2Q8ojzKJRKnmNXptvnNUn8fSI6W/VT48uK4Z0volUNwW709OFqKRSlQuR0QX0LKd3
-         /UUJxTMJBlAQdCX+hPF1Pid9dcaMctjT9GfJqxoFgGVyY5A9yXDbUBmwKz7eoztIb7CI
-         GA8g==
-X-Gm-Message-State: AKwxytcrl27axh/4mRM1l9IzDygyNrGmtiJa7kWNzNDequgxX2d2fVwk
-        U5vqel9uOG2qc69SldSQQs0=
-X-Google-Smtp-Source: AH8x226438HG6LcGZDPwXtsWhUagNWpWbA2QO+jl1HONb3LAl0RXUuTqJ1NVWwD/ivveot71zs+ssA==
-X-Received: by 10.80.146.240 with SMTP id l45mr13742879eda.125.1516633766895;
-        Mon, 22 Jan 2018 07:09:26 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id s26sm2876889eds.49.2018.01.22.07.09.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Jan 2018 07:09:24 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Theodore Ts'o <tytso@mit.edu>, Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-        Chris Mason <clm@fb.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-References: <20180117184828.31816-1-hch@lst.de> <xmqqd128s3wf.fsf@gitster.mtv.corp.google.com> <87h8rki2iu.fsf@evledraar.gmail.com> <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com> <20180117235220.GD6948@thunk.org> <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com> <20180118162721.GA26078@lst.de> <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com> <20180120221445.GA4451@thunk.org> <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 22 Jan 2018 16:09:23 +0100
-Message-ID: <871siihqvw.fsf@evledraar.gmail.com>
+        id S1751112AbeAVRKK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 12:10:10 -0500
+Received: from mout.gmx.net ([212.227.15.18]:50924 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751028AbeAVRKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 12:10:09 -0500
+Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
+ (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0M9ra4-1eX61O0tcO-00B0cm; Mon, 22 Jan 2018 18:10:06 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.16.1
+Date:   Mon, 22 Jan 2018 17:09:59 +0000
+Message-Id: <20180122170959.12528-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.16.1.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:smqyPGMDnCaxs2HClhMbfkAptCgrF6+Trzu6SN+E8eibNZMNDAC
+ ne+jvG44av/Zq5wmgYzfh5p/vBKzccDw5wAP7ib/vdOxZe/5Q/90TZfBlMjLFn43nfRnkno
+ S/fl+20vvQULlOo4iG6ob8Hgy4lEhNrjZ1XkBtKJo7QkMDMxicXvQ/6/Z2z2Kl01oBSnAyz
+ nVW3Y2El+fxN027S9LXJA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uokQj6W2yVY=:5jHU4VqsJVUKkJ3Nn4u0Yk
+ lL9jeGkIODYR0F6qzzpt5U6BZUO2yhyFJSUT+Xzko1qER04Y+tr4JMGZammylHCDXDJdVoviA
+ 2EI3Tnni30DTQ1b3eGtOvhD5qF2P2SHNI0zzAh3Uh16Vt4+QwWJIOfEKextBqY0kQbft1xaKI
+ zQBElf8OA/cOHO7GcaSZE7PsjzKrHSC/W2W3NyuZYSN4Uv6W0oZrt8Kmn52c/dnntD+D2P3eV
+ tm5yindB6w6thSfOylKAgqagG0rEPNSn3FbwmgGyh6jnosWAdx0xncTX7GGzrCxfNxjiIZlDQ
+ 5CCN2p3HbyXHpNbjrcwmRBGH6eFH4rk1oXdM8C6W4XOOWOEffcLy4xGwlE+Cr9wrZ9ydYkaER
+ g+kMPKKIks9EniEAE8GVh4SMDdKHW9LRGN2X5vfvIl5SUAgWiB48Ho16K0+RWsseryjMjt/Pp
+ z4i747YiAMZlEEYLo4YpYmQ0QCFCxn5CeA4cAalOPuzL33r2o9oIsguxpWZA0FK1VDoDZ8nOw
+ 1JZukA510Bhgr2dysxbOvGj07SMOW/4wMMM/uybSh8Ubf6Dcy/q9v1p/2NKby9Ofk8CcKNP0U
+ q9ZJxDJpfr7Un/qR5yQS4EQ5cWItpNXPUMLNUJb7kRrv8paKvw4RVOfTVsg2QKdPTfYCCN6zg
+ sY94+LlGpnOu5BYj24MpjrdhQyqlfKZ0zYFYzTIHlJyQL/NUIQz7rv/KqoQ3BhmncsQwrz7D0
+ /x+jWtHGweDScX1NOwNNAjp5Eg2jL35z2yXi29uovf9jjoBlJ0zc28N8Ah/SR0ImPjXg3u5uY
+ IFxhKISOGR/Y+tUGRs8KgVYwzJ66vQa5b44Ln2vlmVAozHf4kA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Git users,
 
-On Sat, Jan 20 2018, Junio C. Hamano jotted:
+It is my pleasure to announce that Git for Windows 2.16.1 is available from:
 
-> Theodore Ts'o <tytso@mit.edu> writes:
->
->> ....  I've never been fond of the "git repack -A" behavior
->> where it can generate huge numbers of loose files.  I'd much prefer it
->> if the other objects ended up in a separate pack file, and then some
->> other provision made for nuking that pack file some time later....
->
-> Yes, a "cruft pack" that holds unreachable object has been discussed
-> a few times recently on list, and I do agree that it is a desirable
-> thing to have in the longer run.
->
-> What's tricky is to devise a way to allow us to salvage objects that
-> are placed in a cruft pack because they are accessed recently,
-> proving themselves to be no longer crufts.  It could be that a good
-> way to resurrect them is to explode them to loose form when they are
-> accessed out of a cruft pack.  We need to worry about interactions
-> with read-only users if we go that route, but with the current
-> "explode unreachable to loose, touch their mtime when they are
-> accessed" scheme ends up ignoring accesses from read-only users that
-> cannot update mtime, so it might not be too bad.
+	https://git-for-windows.github.io/
 
-Wouldn't it also make gc pruning more expensive? Now you can repack
-regularly and loose objects will be left out of the pack, and then just
-rm'd, whereas now it would entail creating new packs (unless the whole
-pack was objects meant for removal).
+Changes since Git for Windows v2.16.0(2) (January 18th 2018)
 
-Probably still worth it, but something to keep in mind.
+This is a hotfix release, based on upstream Git's hotfix to address a
+possible segmentation fault associated with case-insensitive file
+systems.
+
+Note: another hotfix might be coming the day after tomorrow, as cURL
+announced a new version addressing security advisories that might
+affect how Git talks via HTTP/HTTPS, too.
+
+New Features
+
+  * Comes with Git v2.16.1.
+
+Bug Fixes
+
+  * A set of regressions introduced by patches intended to speed up
+    reset and checkout was fixed (issues #1437, #1438, #1440 and #1442.
+
+Filename | SHA-256
+-------- | -------
+Git-2.16.1-64-bit.exe | 45ef5c5bd4b89c7d1a0126ecb37cd49f8d7f176458c1084149315bfc3af0eccd
+Git-2.16.1-32-bit.exe | 559886de7e5e4edcc3e4c5b1cb766ab90b37d4b7564a61770abdfd3cc84d53fc
+PortableGit-2.16.1-64-bit.7z.exe | 657296d33adceb1d7dabb17847dbd9ee5a45c4ef9d8d8aade2bfb42e57682baf
+PortableGit-2.16.1-32-bit.7z.exe | bc8cf57a206ca63d92aad649322bcec6600a41b91be61229d9282f61e42834ed
+MinGit-2.16.1-64-bit.zip | 14fde7abfa14f505605517b00c8b1bf09eec78e3653516f30dc43084d8df7ede
+MinGit-2.16.1-32-bit.zip | 9a37a9dd89add49caee6967e7f6d54182b2f27de7bd4e63e3bd006394ca56e69
+MinGit-2.16.1-busybox-64-bit.zip | 21ac64a8876f96af8375b4ab655e669be99c341c1fe5c762485d720886f31b48
+MinGit-2.16.1-busybox-32-bit.zip | 158eac07dbd90555afcfb73709a33feffa070db5ae3ff6602bf400d26f326d37
+Git-2.16.1-64-bit.tar.bz2 | 7c81ae1be97362a39cafe9377cbb1c681343c24a23c1fe1e3c20fb77d98de557
+Git-2.16.1-32-bit.tar.bz2 | 654e88c5a07aa553353cbefd1f1adacff1d8c3caec7ecfbedf3ff7d8bbea708b
+
+Ciao,
+Johannes
