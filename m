@@ -2,144 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC03E1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E64621F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:09:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751053AbeAVXIW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:08:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53770 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751031AbeAVXIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:08:22 -0500
-Received: (qmail 8848 invoked by uid 109); 22 Jan 2018 23:08:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jan 2018 23:08:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11940 invoked by uid 111); 22 Jan 2018 23:08:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 18:08:59 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 18:08:20 -0500
-Date:   Mon, 22 Jan 2018 18:08:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     felipe@felipegasper.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Fix comma splices
-Message-ID: <20180122230819.GB21604@sigill.intra.peff.net>
-References: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
+        id S1751126AbeAVXJ6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:09:58 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52261 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbeAVXJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:09:57 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CFECD8609;
+        Mon, 22 Jan 2018 18:09:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=LNkAu32PZzaH
+        xekTSXpHYPbhwcg=; b=F0dMW3ofW8Q6PsoCJkPyJ64FefW4r0gnE/yzd42zOgWh
+        ZlYT3/RpPebWds0Jur0Z9cMylW0x1c/5boOoDXlwcqDnaEGN01rV2l/v3HZbmhn7
+        9JUc+qnK4I+SwuiKyMgjxAquLWMkurvE6t/sKffpPvkYF4RgI1Y7xnUR2x5EpQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Ay7Rwg
+        m/W/ZAwKj7JxrCXfxxWBB4y+7r6tiDnT5j7tZWmBtnhF7WI/Z/CS5eUJE/AKwKMh
+        sBp1q7XuJqtQ6F8EoX3mE1KrONnbh6BEZoYpU8WQMoy4remX9Ft7Saq/utXKnp4n
+        qwyaamxuxp/TDmX9WtQ3D3PC53rCE44IibZgU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6492ED8608;
+        Mon, 22 Jan 2018 18:09:56 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C20C7D8607;
+        Mon, 22 Jan 2018 18:09:55 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write shared index
+References: <20180122110334.4411-1-pclouds@gmail.com>
+        <20180122110334.4411-4-pclouds@gmail.com>
+Date:   Mon, 22 Jan 2018 15:09:54 -0800
+In-Reply-To: <20180122110334.4411-4-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Mon, 22 Jan 2018 18:03:34 +0700")
+Message-ID: <xmqqfu6xjxrx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
+X-Pobox-Relay-ID: 5C36D454-FFC9-11E7-8FE7-8EF31968708C-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 21, 2018 at 10:19:04PM -0600, felipe@felipegasper.com wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Subject: [PATCH] Fix comma splices in remote.c
-> [...]
-> @@ -2123,9 +2123,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
->  				_("  (use \"git push\" to publish your local commits)\n"));
->  	} else if (!ours) {
->  		strbuf_addf(sb,
-> -			Q_("Your branch is behind '%s' by %d commit, "
-> +			Q_("Your branch is behind '%s' by %d commit "
->  			       "and can be fast-forwarded.\n",
-> -			   "Your branch is behind '%s' by %d commits, "
-> +			   "Your branch is behind '%s' by %d commits "
->  			       "and can be fast-forwarded.\n",
+> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> index af9b847761..d2a8e0312a 100755
+> --- a/t/t1700-split-index.sh
+> +++ b/t/t1700-split-index.sh
+> @@ -401,4 +401,23 @@ done <<\EOF
+>  0642 -rw-r---w-
+>  EOF
+> =20
+> +test_expect_success SANITY 'graceful handling when splitting index is =
+not allowed' '
 
-Yes, the original violates the usual English rules for commas, which say
-that the dependent clause joined with a conjunction should not have a
-comma.
+Is SANITY the only prereq we want, or do we want both it and POSIXPERM?
 
-(To be pedantic, these aren't comma splices. A comma splice joins two
-independent clauses with a comma and _without_ a conjunction).
+In "git grep SANITY t/" output, we see that they are almost always
+used together.
 
-This kind of comma _can_ actually be considered correct if it makes the
-sentence more clear, or to indicate a more extreme contrast. I tend to
-agree with you, though, that it does not help clarity here at all.
-
-> @@ -2134,11 +2134,11 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
->  				_("  (use \"git pull\" to update your local branch)\n"));
->  	} else {
->  		strbuf_addf(sb,
-> -			Q_("Your branch and '%s' have diverged,\n"
-> -			       "and have %d and %d different commit each, "
-> +			Q_("Your branch and '%s' have diverged.\n"
-> +			       "They have %d and %d different commit each, "
->  			       "respectively.\n",
-
-This one is the same case as above, but you solved it differently. I
-agree that the result reads more clearly than the original. And more
-clearly than:
-
-  Your branch and '%s' have diverged and have %d and %d different
-  commits each, respectively.
-
-The first hunk could use the same "start a new sentence" trick, but it's
-pretty clear as a single sentence.  So I think your patch is doing the
-right thing, my pedantic explanations notwithstanding. ;)
-
-Reading this did make me wonder two things, though:
-
-  1. Do we really need the newline after "diverged"? Especially with the
-     comma, it makes the result look funnily wrapped (unless you have an
-     extremely long upstream branch name).
-
-     OTOH, if we switch it to a period as your patch does, I think the
-     line break looks much more natural.
-
-  2. Is this Q_() here actually helping? It triggers on "ours + theirs"
-     being greater than 1. So the "singular" case could only come up if
-     you had "0" in one of the cases.  But:
-
-       ...and have 0 and 1 different commit each...
-
-     makes no sense to me in English. It would still be "commits". I
-     could accept:
-
-       ...and have 1 commit each...
-
-     for the case where it's 1/1. But we would use "1 and 1 different
-     commits each" (which is correct, albeit slightly clunkier).
-
-     In fact, I don't think the singular case here can _ever_ trigger,
-     because this is the "else" block we get to when we know that
-     neither is zero. So I think the singular half of this Q_() could
-     just go away.
-
-     Like:
-
-diff --git a/remote.c b/remote.c
-index 4c84ba88dc..52672ac658 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2096,13 +2096,9 @@ int format_tracking_info(struct branch *branch, struct strbuf *sb)
- 				_("  (use \"git pull\" to update your local branch)\n"));
- 	} else {
- 		strbuf_addf(sb,
--			Q_("Your branch and '%s' have diverged,\n"
--			       "and have %d and %d different commit each, "
--			       "respectively.\n",
--			   "Your branch and '%s' have diverged,\n"
--			       "and have %d and %d different commits each, "
--			       "respectively.\n",
--			   ours + theirs),
-+			_("Your branch and '%s' have diverged,\n"
-+			  "and have %d and %d different commits each, "
-+			  "respectively.\n"),
- 			base, ours, theirs);
- 		if (advice_status_hints)
- 			strbuf_addstr(sb,
-
-(if I were doing such a series, I'd probably do that first as a
-preparatory step, and then do grammatical fix on top).
-
--Peff
+> +	test_create_repo ro &&
+> +	(
+> +		cd ro &&
+> +		test_commit initial &&
+> +		git update-index --split-index &&
+> +		test -f .git/sharedindex.*
+> +	) &&
+> +	cp ro/.git/index new-index &&
+> +	test_when_finished "chmod u+w ro/.git" &&
+> +	chmod u-w ro/.git &&
+> +	GIT_INDEX_FILE=3D"$(pwd)/new-index" git -C ro update-index --split-in=
+dex &&
+> +	chmod u+w ro/.git &&
+> +	rm ro/.git/sharedindex.* &&
+> +	GIT_INDEX_FILE=3Dnew-index git ls-files >actual &&
+> +	echo initial.t >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_done
