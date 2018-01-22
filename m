@@ -7,80 +7,108 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FDCD1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 19:37:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28FD91F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 19:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750878AbeAVThs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 14:37:48 -0500
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:34311 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750825AbeAVThr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 14:37:47 -0500
-Received: by mail-qt0-f173.google.com with SMTP id a27so10672405qtd.1
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 11:37:47 -0800 (PST)
+        id S1750925AbeAVTqj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 14:46:39 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:37615 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750892AbeAVTqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 14:46:38 -0500
+Received: by mail-qt0-f194.google.com with SMTP id d54so23924508qtd.4
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 11:46:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=mpMEeMT/HGNEq4vJtGRupM3t/6S9mvmqL8Yg0IikDws=;
-        b=LBPYy7FEE7tLfum76X07jKR3Z/PO/HLsLrHNTwfoacAOeNhfuLI9k7Zcf87AwCJJmf
-         eS1JPtVnrv12OeWiGMrbVzUeqxAPIip0yiP9i8rjiqhSocuZaWYY/2EhOq/a7VGPgJ0f
-         eD5nuHqwMUZC+a0UVqoDAoxikYQEiOXkMu00DZT/EVTUMSbe09sliJhUIJPtxIh6s9II
-         aUCByTQqEEc6bwTwzwPspTxE61eg1b4/jLdrI54SJlrvVaorwP8YmevwGYs75Y5+iXk2
-         X/cSn30yicNJHVGowz8OO0Ynr4gGEW5l8NNsZK5tqRSEvqbTYnbgNQ+gSuTCb7bzZmg3
-         bxcg==
+         :subject:to:cc:content-transfer-encoding;
+        bh=PZAI7ZrBKerl7wSJE65MjMVlLK0Z/h4CU0KXq+UqZUU=;
+        b=YzIhebZCqTHkgO5cN1CGCcg9/nsFt5185WNlMgcdi5SELFk2B+I29pWhHUTReOwmKG
+         mi/UwmrIFyWq336SoTkR9r5tfI4++pcysIG9Qo2mWKkXmYHNmyq8hx6s6eztVmQvhQfT
+         nzKRt1p+wRB5H/xYxKs5bN/WTvPIIh5pgfIV1IrhX35ro1/EP8mxgH/zekcv2jaN2pj4
+         ikxAtRG0FHsJzyu46NmgH6RP2yvZVBkv5XFGXsruktHagj0i4MaNSY/sy6HLjY2adNKj
+         CNdRIMjMlHWWTYf2VKKWFlWqWwnFXaq2rODvEHYoeIL+VvRFAlwyj6URpVvD8IZZAHTT
+         Ztfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=mpMEeMT/HGNEq4vJtGRupM3t/6S9mvmqL8Yg0IikDws=;
-        b=j/XVqVFlrNkU/bCp0+aEF5CxHljKUrvsgiaKgIoXsm2czqi9rh6EMKcPZp3DodDvTw
-         4OTdsLBWFwwpCSZiaOwIQsZPa/y7qdbTIypJ5B5FvPFQ5gJ06PnVktKhqH6IhaEFiRvt
-         LoO14VwFM6EIEsJOQgLot7GlgLwdUrPbtn/EtYRwonPQOLlGdHpiVzeDa9iP9PMbj8jK
-         rY+BxZXDEydGHyvfAyuQo/MnP8Xd2u7tRMHu8kgrXqAUQDJTt3LXMvollRjV8rQZNNDD
-         x7GN8YKxx+x3OfIT4C8/5zTvjxKMo8nN8NdXNoWh7nydSwWqiq067aulO48doxM8Svm8
-         AomQ==
-X-Gm-Message-State: AKwxyteG4q1OOn4RixpyXwVhUGcgCWa5JLLPKd19RIy35MIompFG6mRF
-        xcYrcIhOxafU6oR1pTiEQV8vrlrNmFGHgZw9knk=
-X-Google-Smtp-Source: AH8x227AyoGGnYiahNVOF/J+wfdpqZc8jh5oHrA3DI3jT/c0uV23kxnAZgdOqgRgJbya+h3KwuBMKFiecucH0FV3pTI=
-X-Received: by 10.55.123.69 with SMTP id w66mr11470848qkc.326.1516649866617;
- Mon, 22 Jan 2018 11:37:46 -0800 (PST)
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=PZAI7ZrBKerl7wSJE65MjMVlLK0Z/h4CU0KXq+UqZUU=;
+        b=jGOXH1hxC0DVmpKP5Qbu9YbU3az2pfYyjSPbQvs/xv/ApGhmr/5faUiW5EI53I3+VM
+         lHZhCqBWUKam0KikgqOdMUd5R2iKlytTi1dfnkKwclWQXjvx0q2ku8vyFseIVQG3gdt2
+         ZE8DBAqVRsWJUTP5xbN0R8DA79SH941FKf4Y3GwJbyevZol/71Sx+5xmnHzs9crsHv1n
+         WAJdNba0akGSOkLER9omM0cF//JBhSD1o9P3Ftc1+CtvqyQvBXUAhZd2ht/OpNhd1VKA
+         NpSC0PaDvgPSPmOas6t3arcQJjsp3ToP96yOA5JdaqETZMWG3Cs79K7wf8Sivx6MtotG
+         DdUA==
+X-Gm-Message-State: AKwxytcM0M1mUHKKlSrRCJ0Gc0jhc+Kb9BWL63eXspvH+ej1I2g+yQUv
+        Oap2TIadt8L/NmVxKWmzD64RjIvVzR3qDLUZOV8=
+X-Google-Smtp-Source: AH8x226x7yh3ejJLIVZZBrFCxgc1yEx1AeJKHd3XuYZdHd7+YFcbCFmHeMLpIKquSK0j9oCXMB6PmI68q9A2wdUy5hA=
+X-Received: by 10.200.25.9 with SMTP id t9mr12721626qtj.75.1516650397462; Mon,
+ 22 Jan 2018 11:46:37 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Mon, 22 Jan 2018 11:37:46 -0800 (PST)
-In-Reply-To: <20180122180042.70101-1-lars.schneider@autodesk.com>
-References: <20180120152418.52859-6-lars.schneider@autodesk.com> <20180122180042.70101-1-lars.schneider@autodesk.com>
+Received: by 10.12.175.239 with HTTP; Mon, 22 Jan 2018 11:46:37 -0800 (PST)
+In-Reply-To: <20180122182717.21539-1-szeder.dev@gmail.com>
+References: <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+ <20180122182717.21539-1-szeder.dev@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 22 Jan 2018 14:37:46 -0500
-X-Google-Sender-Auth: do57r-BgRGrYO3EM-_bpd7HnUE0
-Message-ID: <CAPig+cRMHmFuMxQmSeGoK9hhUVEVVVLQs0j10Lo8bE5t8-V9OA@mail.gmail.com>
-Subject: Re: SQUASH convert: add tracing for 'working-tree-encoding' attribute
-To:     Lars Schneider <lars.schneider@autodesk.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>, simon@ruderich.org,
-        Johannes Sixt <j6t@kdbg.org>,
+Date:   Mon, 22 Jan 2018 14:46:37 -0500
+X-Google-Sender-Auth: 4aneXC-nllKS6oSb4L33Q4KOYBY
+Message-ID: <CAPig+cQnVfFcN_kH-pQmjJWa_3SeEb4_vdL7-nDCO-tV-U7Pvg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write
+ shared index
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 22, 2018 at 1:00 PM,  <lars.schneider@autodesk.com> wrote:
-> diff --git a/convert.c b/convert.c
-> @@ -1165,8 +1165,9 @@ static struct encoding *git_path_check_encoding(struct attr_check_item *check)
-> -       enc = xcalloc(1, sizeof(struct convert_driver));
-> -       enc->name = xstrdup_toupper(value);  /* aways use upper case names! */
-> +       enc = xcalloc(1, sizeof(*enc));
-> +       /* Aways use upper case names to simplify subsequent string comparison. */
+On Mon, Jan 22, 2018 at 1:27 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> Subject: [PATCH] travis-ci: include the trash directories of failed tests=
+ in
+>  the trace log
+>
+> The trash directory of a failed test might contain valuable
+> information about the cause of the failure, but we have no access to
+> the trash directories of Travis CI build jobs.  The only feedback we
+> get from there is the trace log, so...
+>
+> Modify 'ci/print-test-failures.sh' to create a tar.gz archive of the
+> test directory of each failed test and encode it with base64, so the
+> result is a block of ASCII text that can be safely included in the
+> trace log, along with a hint about how to restore it.  Furthermore,
+> run tests with '--immediate' to faithfully preserve the failed state.
+>
+> A few of our tests create a sizeable trash directory, so limit the
+> size of each included base64-encoded block, let's say, to 1MB.
+>
+> Note:
+>
+>   - The logs of Linux build jobs coming from Travis CI have mostly
+>     CRLF line endings, which makes 'base64 -d' from 'coreutils'
+>     complain about "invalid input"; it has to be converted to LF
+>     first.  'openssl base64 -d' can grok it just fine, even without
+>     conversion.
+>
+>   - The logs of OSX build jobs have CRCRLF line endings.  However, the
+>     'base64' util of OSX doesn't wrap its output at 76 columns, i.e.
+>     prints one single albeit very long line.  This means that while
 
-s/Aways/Always/
+Perhaps you could pipe the 'base64' output through 'fold' or 'fmt'?
 
-https://public-inbox.org/git/20180121142222.GA10248@ruderich.org/
-
-> +       enc->name = xstrdup_toupper(value);
->         *encoding_tail = enc;
->         encoding_tail = &(enc->next);
+>     'base64' from 'coreutils' still complains, by the time it gets to
+>     the invalid input it already decoded everything and produced a
+>     valid .tar.gz.  OTOH, 'openssl base64 -d' doesn't grok it, but
+>     exits without any error message or even an error code, even after
+>     converting to CRLF or LF line endings.
+>
+>     Go figure.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
