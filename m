@@ -2,124 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32CC1FADF
-	for <e@80x24.org>; Mon, 22 Jan 2018 19:31:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FDCD1F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 19:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751078AbeAVTb1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 14:31:27 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53916 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751049AbeAVTbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 14:31:25 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E2D4AD4F3D;
-        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XjAJqm8NXEtNw9ixvRFcr6vC/zM=; b=PTNsGN
-        zfPAAhpzCqgelaMAILjaWqeErmgb3jnqZrqtcngLfWbIJvceDPetljfPEzsRPUkU
-        PR9W/M7WHpnDacwmOCEheyo2MFkNLcA34+mtAaXCZVHb/sTuchr5bbJXX7qIAfrA
-        0CKbUnInAxLRZ+e4zzHGBoJfoP9j4h9pFwko0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ovxb+YL+Kwjaw8UyauSx01+uezAhu7HP
-        3GdP0cv3zRWpnZbRnIn6sOOcPDF1SGQuLYI8LrfQb/IhIp4JSv6UxBVCrNsz9i7q
-        Ma3iHA2XxC+TeKDeMEETpfP4RKXhhereHVe8wjXidRAy1MhC33igBqwztYxMVJ2G
-        7Hy1qkdH/KY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9F6ED4F3C;
-        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55D85D4F3A;
-        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>, Kim Gybels <kgybels@infogroep.be>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] packed_ref_cache: don't use mmap() for small files
-References: <20180115235251.GA21900@sigill.intra.peff.net>
-        <20180116193815.4568-1-kgybels@infogroep.be>
-        <20180117220902.GA14952@sigill.intra.peff.net>
-        <29c51594-6e29-be34-3d5f-2b9f399490f2@alum.mit.edu>
-Date:   Mon, 22 Jan 2018 11:31:20 -0800
-In-Reply-To: <29c51594-6e29-be34-3d5f-2b9f399490f2@alum.mit.edu> (Michael
-        Haggerty's message of "Sun, 21 Jan 2018 05:41:48 +0100")
-Message-ID: <xmqqh8rdn113.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1750878AbeAVThs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 14:37:48 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:34311 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750825AbeAVThr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 14:37:47 -0500
+Received: by mail-qt0-f173.google.com with SMTP id a27so10672405qtd.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 11:37:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=mpMEeMT/HGNEq4vJtGRupM3t/6S9mvmqL8Yg0IikDws=;
+        b=LBPYy7FEE7tLfum76X07jKR3Z/PO/HLsLrHNTwfoacAOeNhfuLI9k7Zcf87AwCJJmf
+         eS1JPtVnrv12OeWiGMrbVzUeqxAPIip0yiP9i8rjiqhSocuZaWYY/2EhOq/a7VGPgJ0f
+         eD5nuHqwMUZC+a0UVqoDAoxikYQEiOXkMu00DZT/EVTUMSbe09sliJhUIJPtxIh6s9II
+         aUCByTQqEEc6bwTwzwPspTxE61eg1b4/jLdrI54SJlrvVaorwP8YmevwGYs75Y5+iXk2
+         X/cSn30yicNJHVGowz8OO0Ynr4gGEW5l8NNsZK5tqRSEvqbTYnbgNQ+gSuTCb7bzZmg3
+         bxcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=mpMEeMT/HGNEq4vJtGRupM3t/6S9mvmqL8Yg0IikDws=;
+        b=j/XVqVFlrNkU/bCp0+aEF5CxHljKUrvsgiaKgIoXsm2czqi9rh6EMKcPZp3DodDvTw
+         4OTdsLBWFwwpCSZiaOwIQsZPa/y7qdbTIypJ5B5FvPFQ5gJ06PnVktKhqH6IhaEFiRvt
+         LoO14VwFM6EIEsJOQgLot7GlgLwdUrPbtn/EtYRwonPQOLlGdHpiVzeDa9iP9PMbj8jK
+         rY+BxZXDEydGHyvfAyuQo/MnP8Xd2u7tRMHu8kgrXqAUQDJTt3LXMvollRjV8rQZNNDD
+         x7GN8YKxx+x3OfIT4C8/5zTvjxKMo8nN8NdXNoWh7nydSwWqiq067aulO48doxM8Svm8
+         AomQ==
+X-Gm-Message-State: AKwxyteG4q1OOn4RixpyXwVhUGcgCWa5JLLPKd19RIy35MIompFG6mRF
+        xcYrcIhOxafU6oR1pTiEQV8vrlrNmFGHgZw9knk=
+X-Google-Smtp-Source: AH8x227AyoGGnYiahNVOF/J+wfdpqZc8jh5oHrA3DI3jT/c0uV23kxnAZgdOqgRgJbya+h3KwuBMKFiecucH0FV3pTI=
+X-Received: by 10.55.123.69 with SMTP id w66mr11470848qkc.326.1516649866617;
+ Mon, 22 Jan 2018 11:37:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D3F55C82-FFAA-11E7-B137-8EF31968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.12.175.239 with HTTP; Mon, 22 Jan 2018 11:37:46 -0800 (PST)
+In-Reply-To: <20180122180042.70101-1-lars.schneider@autodesk.com>
+References: <20180120152418.52859-6-lars.schneider@autodesk.com> <20180122180042.70101-1-lars.schneider@autodesk.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 22 Jan 2018 14:37:46 -0500
+X-Google-Sender-Auth: do57r-BgRGrYO3EM-_bpd7HnUE0
+Message-ID: <CAPig+cRMHmFuMxQmSeGoK9hhUVEVVVLQs0j10Lo8bE5t8-V9OA@mail.gmail.com>
+Subject: Re: SQUASH convert: add tracing for 'working-tree-encoding' attribute
+To:     Lars Schneider <lars.schneider@autodesk.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git List <git@vger.kernel.org>, simon@ruderich.org,
+        Johannes Sixt <j6t@kdbg.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+On Mon, Jan 22, 2018 at 1:00 PM,  <lars.schneider@autodesk.com> wrote:
+> diff --git a/convert.c b/convert.c
+> @@ -1165,8 +1165,9 @@ static struct encoding *git_path_check_encoding(struct attr_check_item *check)
+> -       enc = xcalloc(1, sizeof(struct convert_driver));
+> -       enc->name = xstrdup_toupper(value);  /* aways use upper case names! */
+> +       enc = xcalloc(1, sizeof(*enc));
+> +       /* Aways use upper case names to simplify subsequent string comparison. */
 
-> `snapshot->buf` can still be NULL if the `packed-refs` file didn't exist
-> (see the earlier code path in `load_contents()`). So either that code
-> path *also* has to get the `xmalloc()` treatment, or my third patch is
-> still necessary. (My second patch wouldn't be necessary because the
-> ENOENT case makes `load_contents()` return 0, triggering the early exit
-> from `create_snapshot()`.)
->
-> I don't have a strong preference either way.
+s/Aways/Always/
 
-Which would be a two-liner, like the attached, which does not look
-too bad by itself.
+https://public-inbox.org/git/20180121142222.GA10248@ruderich.org/
 
-The direction, if we take this approach, means that we are declaring
-that .buf being NULL is an invalid state for a snapshot to be in,
-instead of saying "an empty snapshot looks exactly like one that was
-freshly initialized", which seems to be the intention of the original
-design.
-
-After Kim's fix and with 3/3 in your follow-up series, various
-helpers are still unsafe against .buf being NULL, like
-sort_snapshot(), verify_buffer_safe(), clear_snapshot_buffer() (only
-when mmapped bit is set), find_reference_location().
-
-packed_ref_iterator_begin() checks if snapshot->buf is NULL and
-returns early.  At the first glance, this appears a useful short cut
-to optimize the empty case away, but the check also is acting as a
-guard to prevent a snapshot with NULL .buf from being fed to an
-unsafe find_reference_location().  An implicit guard like this feels
-a bit more brittle than my liking.  If we ensure .buf is never NULL,
-that check can become a pure short-cut optimization and stop being
-a correctness thing.
-
-So...
-
-
- refs/packed-backend.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index b6e2bc3c1d..1eeb5c7f80 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -473,12 +473,11 @@ static int load_contents(struct snapshot *snapshot)
- 	if (fd < 0) {
- 		if (errno == ENOENT) {
- 			/*
--			 * This is OK; it just means that no
--			 * "packed-refs" file has been written yet,
--			 * which is equivalent to it being empty,
--			 * which is its state when initialized with
--			 * zeros.
-+			 * Treat missing "packed-refs" as equivalent to
-+			 * it being empty.
- 			 */
-+			snapshot->eof = snapshot->buf = xmalloc(0);
-+			snapshot->mmapped = 0;
- 			return 0;
- 		} else {
- 			die_errno("couldn't read %s", snapshot->refs->path);
+> +       enc->name = xstrdup_toupper(value);
+>         *encoding_tail = enc;
+>         encoding_tail = &(enc->next);
