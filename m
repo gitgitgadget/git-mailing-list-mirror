@@ -2,94 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9C911F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 17:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 525351F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 17:50:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751112AbeAVRKK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 12:10:10 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50924 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751028AbeAVRKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 12:10:09 -0500
-Received: from localhost.localdomain ([65.55.188.220]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0M9ra4-1eX61O0tcO-00B0cm; Mon, 22 Jan 2018 18:10:06 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.16.1
-Date:   Mon, 22 Jan 2018 17:09:59 +0000
-Message-Id: <20180122170959.12528-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.16.1.windows.1
-Content-Type: text/plain; charset=UTF-8
+        id S1751157AbeAVRuX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 12:50:23 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34388 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751110AbeAVRuV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 12:50:21 -0500
+Received: by mail-wm0-f66.google.com with SMTP id j21so9996699wmh.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 09:50:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Si9AYb4hA2oVvsllTmeomKtXFA1HfoskiBGw0QmaAZ0=;
+        b=R0+xXu5kbunFq5pbKB/kgo1+CsKXmouUEA3mMjLxDcV3P4N6bNzqner2nKFYpS58yf
+         ftDlaRbUYcTTc07OocPI46NgroCAv/URerRdf5U2/PKImEbLtOP2Ia6zBtF/dGFHla+h
+         tK5btXeq/bwVseOweEL9AnciP4XcAFMMiiTEBJNw/CAITGFBGOFDv3UD9WZ3ccjuBkmO
+         1xZdIG5E6VFT/CkGa3a9rgFxpfeQOQC5xkrk9jn4+H7eGvBUgSR4+i48hoJQbQBPMKle
+         qZyjcOh6DZldLdQJWjbGUkveYVCNGAoxf64ruVyFqjhNnOn65Lt106LSI5L49IK8D6TW
+         igVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Si9AYb4hA2oVvsllTmeomKtXFA1HfoskiBGw0QmaAZ0=;
+        b=f8HWP6roOpXitQ0ZSVzduXZGtz8QxiJqz3ApHIQSCXPxiBw74I7bDclGMwTQR7Lkvx
+         TKZJAwtPPnvUEl4uP7BvG5Cf2yMRJ2FSn721/zQYfTbODZ3XeWPJarRmVMIQCtzKdki2
+         GqphA174ZOhXdaKJnq9Pe3g1DUPZNSOehtdVh0llcDZQb+yOSnS/1faMQbde8IyQ9JDl
+         olCgjqvaMm58SSDeTBVgmsrJwtQnR1EuooNLD3Oet1n8IJNEiI2c5QsaiEw7c0h1JfwG
+         YqwKbjMyl6snxgmC2HAj34j9yFmISnpMhxhkgJglRF6l2xx1Odh2ICIyuldjox2rcbRC
+         dlog==
+X-Gm-Message-State: AKwxytfUGgz5QoGruQGHQ9H6gR2KdMZGrB41mlr/gAUu7GEx4djUntme
+        NzTiR7uF9en3A1BFuqQpKRg=
+X-Google-Smtp-Source: AH8x227Dl6CUPVvc/ihZFv5A+R25ShHabzT+tlzkFqzdoXCCAFGziXzHKPuNjcszQjAEtzvQ/psGdA==
+X-Received: by 10.28.183.5 with SMTP id h5mr5948216wmf.14.1516643420475;
+        Mon, 22 Jan 2018 09:50:20 -0800 (PST)
+Received: from localhost.localdomain (x590e64ec.dyn.telefonica.de. [89.14.100.236])
+        by smtp.gmail.com with ESMTPSA id n53sm3962660wrb.56.2018.01.22.09.50.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 22 Jan 2018 09:50:19 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, Rene Scharfe <l.s.r@web.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] Use MOVE_ARRAY
+Date:   Mon, 22 Jan 2018 18:50:09 +0100
+Message-Id: <20180122175009.20178-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.1.80.gc0eec9753d
+In-Reply-To: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
+References: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
 MIME-Version: 1.0
-Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:smqyPGMDnCaxs2HClhMbfkAptCgrF6+Trzu6SN+E8eibNZMNDAC
- ne+jvG44av/Zq5wmgYzfh5p/vBKzccDw5wAP7ib/vdOxZe/5Q/90TZfBlMjLFn43nfRnkno
- S/fl+20vvQULlOo4iG6ob8Hgy4lEhNrjZ1XkBtKJo7QkMDMxicXvQ/6/Z2z2Kl01oBSnAyz
- nVW3Y2El+fxN027S9LXJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uokQj6W2yVY=:5jHU4VqsJVUKkJ3Nn4u0Yk
- lL9jeGkIODYR0F6qzzpt5U6BZUO2yhyFJSUT+Xzko1qER04Y+tr4JMGZammylHCDXDJdVoviA
- 2EI3Tnni30DTQ1b3eGtOvhD5qF2P2SHNI0zzAh3Uh16Vt4+QwWJIOfEKextBqY0kQbft1xaKI
- zQBElf8OA/cOHO7GcaSZE7PsjzKrHSC/W2W3NyuZYSN4Uv6W0oZrt8Kmn52c/dnntD+D2P3eV
- tm5yindB6w6thSfOylKAgqagG0rEPNSn3FbwmgGyh6jnosWAdx0xncTX7GGzrCxfNxjiIZlDQ
- 5CCN2p3HbyXHpNbjrcwmRBGH6eFH4rk1oXdM8C6W4XOOWOEffcLy4xGwlE+Cr9wrZ9ydYkaER
- g+kMPKKIks9EniEAE8GVh4SMDdKHW9LRGN2X5vfvIl5SUAgWiB48Ho16K0+RWsseryjMjt/Pp
- z4i747YiAMZlEEYLo4YpYmQ0QCFCxn5CeA4cAalOPuzL33r2o9oIsguxpWZA0FK1VDoDZ8nOw
- 1JZukA510Bhgr2dysxbOvGj07SMOW/4wMMM/uybSh8Ubf6Dcy/q9v1p/2NKby9Ofk8CcKNP0U
- q9ZJxDJpfr7Un/qR5yQS4EQ5cWItpNXPUMLNUJb7kRrv8paKvw4RVOfTVsg2QKdPTfYCCN6zg
- sY94+LlGpnOu5BYj24MpjrdhQyqlfKZ0zYFYzTIHlJyQL/NUIQz7rv/KqoQ3BhmncsQwrz7D0
- /x+jWtHGweDScX1NOwNNAjp5Eg2jL35z2yXi29uovf9jjoBlJ0zc28N8Ah/SR0ImPjXg3u5uY
- IFxhKISOGR/Y+tUGRs8KgVYwzJ66vQa5b44Ln2vlmVAozHf4kA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Use the helper macro MOVE_ARRAY to move arrays.  This is shorter and
+safer, as it automatically infers the size of elements.
 
-It is my pleasure to announce that Git for Windows 2.16.1 is available from:
+Patch generated by Coccinelle and contrib/coccinelle/array.cocci in
+Travis CI's static analysis build job.
 
-	https://git-for-windows.github.io/
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ cache-tree.c      | 5 ++---
+ commit.c          | 6 ++----
+ diffcore-rename.c | 8 ++++----
+ dir.c             | 4 ++--
+ parse-options.c   | 2 +-
+ read-cache.c      | 5 ++---
+ refs/ref-cache.c  | 6 ++----
+ replace_object.c  | 6 ++----
+ rerere.c          | 4 ++--
+ 9 files changed, 19 insertions(+), 27 deletions(-)
 
-Changes since Git for Windows v2.16.0(2) (January 18th 2018)
+diff --git a/cache-tree.c b/cache-tree.c
+index e03e72c34a..18946aa458 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -84,9 +84,8 @@ static struct cache_tree_sub *find_subtree(struct cache_tree *it,
+ 	down->namelen = pathlen;
+ 
+ 	if (pos < it->subtree_nr)
+-		memmove(it->down + pos + 1,
+-			it->down + pos,
+-			sizeof(down) * (it->subtree_nr - pos - 1));
++		MOVE_ARRAY(it->down + pos + 1, it->down + pos,
++			   it->subtree_nr - pos - 1);
+ 	it->down[pos] = down;
+ 	return down;
+ }
+diff --git a/commit.c b/commit.c
+index cab8d4455b..7d0080180d 100644
+--- a/commit.c
++++ b/commit.c
+@@ -126,10 +126,8 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+ 	ALLOC_GROW(commit_graft, commit_graft_nr + 1, commit_graft_alloc);
+ 	commit_graft_nr++;
+ 	if (pos < commit_graft_nr)
+-		memmove(commit_graft + pos + 1,
+-			commit_graft + pos,
+-			(commit_graft_nr - pos - 1) *
+-			sizeof(*commit_graft));
++		MOVE_ARRAY(commit_graft + pos + 1, commit_graft + pos,
++			   commit_graft_nr - pos - 1);
+ 	commit_graft[pos] = graft;
+ 	return 0;
+ }
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 245e999fe5..888a4b0189 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -57,8 +57,8 @@ static int add_rename_dst(struct diff_filespec *two)
+ 	ALLOC_GROW(rename_dst, rename_dst_nr + 1, rename_dst_alloc);
+ 	rename_dst_nr++;
+ 	if (first < rename_dst_nr)
+-		memmove(rename_dst + first + 1, rename_dst + first,
+-			(rename_dst_nr - first - 1) * sizeof(*rename_dst));
++		MOVE_ARRAY(rename_dst + first + 1, rename_dst + first,
++			   rename_dst_nr - first - 1);
+ 	rename_dst[first].two = alloc_filespec(two->path);
+ 	fill_filespec(rename_dst[first].two, &two->oid, two->oid_valid,
+ 		      two->mode);
+@@ -98,8 +98,8 @@ static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
+ 	ALLOC_GROW(rename_src, rename_src_nr + 1, rename_src_alloc);
+ 	rename_src_nr++;
+ 	if (first < rename_src_nr)
+-		memmove(rename_src + first + 1, rename_src + first,
+-			(rename_src_nr - first - 1) * sizeof(*rename_src));
++		MOVE_ARRAY(rename_src + first + 1, rename_src + first,
++			   rename_src_nr - first - 1);
+ 	rename_src[first].p = p;
+ 	rename_src[first].score = score;
+ 	return &(rename_src[first]);
+diff --git a/dir.c b/dir.c
+index 7c4b45e30e..ce6e50d2a2 100644
+--- a/dir.c
++++ b/dir.c
+@@ -747,8 +747,8 @@ static struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
+ 	FLEX_ALLOC_MEM(d, name, name, len);
+ 
+ 	ALLOC_GROW(dir->dirs, dir->dirs_nr + 1, dir->dirs_alloc);
+-	memmove(dir->dirs + first + 1, dir->dirs + first,
+-		(dir->dirs_nr - first) * sizeof(*dir->dirs));
++	MOVE_ARRAY(dir->dirs + first + 1, dir->dirs + first,
++		   dir->dirs_nr - first);
+ 	dir->dirs_nr++;
+ 	dir->dirs[first] = d;
+ 	return d;
+diff --git a/parse-options.c b/parse-options.c
+index fca7159646..d02eb8b015 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -525,7 +525,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
+ {
+-	memmove(ctx->out + ctx->cpidx, ctx->argv, ctx->argc * sizeof(*ctx->out));
++	MOVE_ARRAY(ctx->out + ctx->cpidx, ctx->argv, ctx->argc);
+ 	ctx->out[ctx->cpidx + ctx->argc] = NULL;
+ 	return ctx->cpidx + ctx->argc;
+ }
+diff --git a/read-cache.c b/read-cache.c
+index 2eb81a66b9..2e8c85c686 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1217,9 +1217,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
+ 	/* Add it in.. */
+ 	istate->cache_nr++;
+ 	if (istate->cache_nr > pos + 1)
+-		memmove(istate->cache + pos + 1,
+-			istate->cache + pos,
+-			(istate->cache_nr - pos - 1) * sizeof(ce));
++		MOVE_ARRAY(istate->cache + pos + 1, istate->cache + pos,
++			   istate->cache_nr - pos - 1);
+ 	set_index_entry(istate, pos, ce);
+ 	istate->cache_changed |= CE_ENTRY_ADDED;
+ 	return 0;
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 82c1cf90a7..e90bd3e727 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -238,10 +238,8 @@ int remove_entry_from_dir(struct ref_dir *dir, const char *refname)
+ 		return -1;
+ 	entry = dir->entries[entry_index];
+ 
+-	memmove(&dir->entries[entry_index],
+-		&dir->entries[entry_index + 1],
+-		(dir->nr - entry_index - 1) * sizeof(*dir->entries)
+-		);
++	MOVE_ARRAY(&dir->entries[entry_index],
++		   &dir->entries[entry_index + 1], dir->nr - entry_index - 1);
+ 	dir->nr--;
+ 	if (dir->sorted > entry_index)
+ 		dir->sorted--;
+diff --git a/replace_object.c b/replace_object.c
+index f0b39f06d5..3e49965d05 100644
+--- a/replace_object.c
++++ b/replace_object.c
+@@ -44,10 +44,8 @@ static int register_replace_object(struct replace_object *replace,
+ 	ALLOC_GROW(replace_object, replace_object_nr + 1, replace_object_alloc);
+ 	replace_object_nr++;
+ 	if (pos < replace_object_nr)
+-		memmove(replace_object + pos + 1,
+-			replace_object + pos,
+-			(replace_object_nr - pos - 1) *
+-			sizeof(*replace_object));
++		MOVE_ARRAY(replace_object + pos + 1, replace_object + pos,
++			   replace_object_nr - pos - 1);
+ 	replace_object[pos] = replace;
+ 	return 0;
+ }
+diff --git a/rerere.c b/rerere.c
+index 1ce440f4bb..79203c6c1e 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -159,8 +159,8 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
+ 		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
+ 		/* ... and add it in. */
+ 		rerere_dir_nr++;
+-		memmove(rerere_dir + pos + 1, rerere_dir + pos,
+-			(rerere_dir_nr - pos - 1) * sizeof(*rerere_dir));
++		MOVE_ARRAY(rerere_dir + pos + 1, rerere_dir + pos,
++			   rerere_dir_nr - pos - 1);
+ 		rerere_dir[pos] = rr_dir;
+ 		scan_rerere_dir(rr_dir);
+ 	}
+-- 
+2.16.1.80.gc0eec9753d
 
-This is a hotfix release, based on upstream Git's hotfix to address a
-possible segmentation fault associated with case-insensitive file
-systems.
-
-Note: another hotfix might be coming the day after tomorrow, as cURL
-announced a new version addressing security advisories that might
-affect how Git talks via HTTP/HTTPS, too.
-
-New Features
-
-  * Comes with Git v2.16.1.
-
-Bug Fixes
-
-  * A set of regressions introduced by patches intended to speed up
-    reset and checkout was fixed (issues #1437, #1438, #1440 and #1442.
-
-Filename | SHA-256
--------- | -------
-Git-2.16.1-64-bit.exe | 45ef5c5bd4b89c7d1a0126ecb37cd49f8d7f176458c1084149315bfc3af0eccd
-Git-2.16.1-32-bit.exe | 559886de7e5e4edcc3e4c5b1cb766ab90b37d4b7564a61770abdfd3cc84d53fc
-PortableGit-2.16.1-64-bit.7z.exe | 657296d33adceb1d7dabb17847dbd9ee5a45c4ef9d8d8aade2bfb42e57682baf
-PortableGit-2.16.1-32-bit.7z.exe | bc8cf57a206ca63d92aad649322bcec6600a41b91be61229d9282f61e42834ed
-MinGit-2.16.1-64-bit.zip | 14fde7abfa14f505605517b00c8b1bf09eec78e3653516f30dc43084d8df7ede
-MinGit-2.16.1-32-bit.zip | 9a37a9dd89add49caee6967e7f6d54182b2f27de7bd4e63e3bd006394ca56e69
-MinGit-2.16.1-busybox-64-bit.zip | 21ac64a8876f96af8375b4ab655e669be99c341c1fe5c762485d720886f31b48
-MinGit-2.16.1-busybox-32-bit.zip | 158eac07dbd90555afcfb73709a33feffa070db5ae3ff6602bf400d26f326d37
-Git-2.16.1-64-bit.tar.bz2 | 7c81ae1be97362a39cafe9377cbb1c681343c24a23c1fe1e3c20fb77d98de557
-Git-2.16.1-32-bit.tar.bz2 | 654e88c5a07aa553353cbefd1f1adacff1d8c3caec7ecfbedf3ff7d8bbea708b
-
-Ciao,
-Johannes
