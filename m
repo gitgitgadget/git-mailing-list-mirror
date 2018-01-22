@@ -2,197 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8B1E1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 20:15:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEDC51F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 20:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752037AbeAVUPK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 15:15:10 -0500
-Received: from mail-wr0-f176.google.com ([209.85.128.176]:38773 "EHLO
-        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750977AbeAVUPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 15:15:05 -0500
-Received: by mail-wr0-f176.google.com with SMTP id x1so10052536wrb.5
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 12:15:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sHX6fULp8dUEZH7ouEJKmKgNt8VpwJ7EXHwYP+ag9DA=;
-        b=ETgC1VOOEK2qUSO5foIsB6i/GrwnSpqKObOXRuXeDy+OxL1LWZIG6yzFH8B/+lVfMH
-         iAB4wmpmp0RDXX1gLeNazphH+HzvpMrO6b2oOqbxS6U5D/BtJPfJ0CLozLrwLHANisxg
-         vkXJ0bvutFZgQBulhgNAX/vaFQVhKnRiUDXWkvJF+xm6OUXKuQHKdKuDBs1fdP8uc3zL
-         AAgLDdbkN4oYKBY8H9tBd6PEJ7z2DqfuUiHVTMEuGcFS+M8dmdlHet70Kfc2zVBuycWc
-         0mEzFEAyRzr9w6bQ735QuNMx/La0T4mpuYzuM3372e3SDcAw8eqbaEXfTJHL3VrKYUgC
-         JZ7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sHX6fULp8dUEZH7ouEJKmKgNt8VpwJ7EXHwYP+ag9DA=;
-        b=Fw/38MIzJULAwqW4jOd6ZcVZO/6KQC2udhn+mmh7TL28TZfmOoQLZ5NQFvP1AmqkKY
-         CIISIg/ekGceMr2xRceH6HBhgDSz9p0RiwoTg6WZc/ZDcJoeQSlR8ou6eHuHQv0mReG8
-         Kj8dl73k8LoxbI7ea77XvIMv8UB/WUc4i3ipTysKt9q5wOfOFKcXMGoFSDFEoGCKCfIo
-         eoaHfXxNLbYuZ8pg5TEDqVh7i29BzuUJ7SzBhNnGlQ9bIBlk06el6d4lMUzqyhATBAnC
-         98ecKFlyZZSV0DWmpV0mlFx5q6/eW4VZTg8nf3zKS6emy83a5A94itObkQqecJKZ46FF
-         3zCA==
-X-Gm-Message-State: AKwxyter265Qu0iN70ndeHtqnlu8xDeI+pQU7CZUsvd65TjRv6HKj2/P
-        Fnz+8SLhRhYKBm734Nd1Ufw=
-X-Google-Smtp-Source: AH8x227Hk5dBm15cz+akcaukW1voRA5ef/XyFeVXymRWqD3Nt9keHMWalG5FHymiGuFEHk5Cwc3NWw==
-X-Received: by 10.223.198.198 with SMTP id c6mr37353wrh.159.1516652104435;
-        Mon, 22 Jan 2018 12:15:04 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id x127sm6103980wmb.36.2018.01.22.12.15.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Jan 2018 12:15:03 -0800 (PST)
-Date:   Mon, 22 Jan 2018 20:17:28 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S1751046AbeAVUuo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 15:50:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64703 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751030AbeAVUun (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 15:50:43 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C024BC95A7;
+        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=RIzqFIE93OnN
+        uWH8ueEW9umippQ=; b=Uff+xe7DLtpFsK1Ah6NfWxGgsG1taL3XsdSqSNbt3g5E
+        tWdLIwgUsH9bs2QEt22qhrd8xCvzElZhv7QtF5RiyUb1NMao3jA3LgUSMeASEpmP
+        YRb3pKz1gX1DimpjH6obHDa7P8IJBJv7XXjCmTSLwL98hSweYUNWUwzLjJOZsn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bwqYYH
+        lOc75cNgSPwQ5tg52GsZnkdnQx06rHUdIK+997L70B/LxIRR2Z8lWL+KCG1NaOLm
+        fPXtHYKF0+kUETMtiZosOQ388Can/+OaQkDjsR1ipew1V/ORfQtHTpUOssm+Tg7B
+        tHM+99kVZiiQbwJUo55TAe+gmFprnX3AQ5KWo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7265C95A6;
+        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1DC35C95A5;
+        Mon, 22 Jan 2018 15:50:42 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] worktree: teach "add" to check out existing branches
-Message-ID: <20180122201728.GA2130@hank>
-References: <20180121120208.12760-1-t.gummerer@gmail.com>
- <CACsJy8D9LS7e=cVE3Fq2qOnxK5++nFg2vjuhkNtRO-Bx0X1j6w@mail.gmail.com>
+Subject: Re: [PATCH v2 12/12] fetch: add a --fetch-prune option and fetch.pruneTags config
+References: <20180121000304.32323-1-avarab@gmail.com>
+        <20180119000027.28898-1-avarab@gmail.com>
+        <20180121000304.32323-13-avarab@gmail.com>
+Date:   Mon, 22 Jan 2018 12:50:41 -0800
+In-Reply-To: <20180121000304.32323-13-avarab@gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sun, 21 Jan 2018 00:03:04 +0000")
+Message-ID: <xmqq372xmxcu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D9LS7e=cVE3Fq2qOnxK5++nFg2vjuhkNtRO-Bx0X1j6w@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: E9098598-FFB5-11E7-9569-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/22, Duy Nguyen wrote:
-> On Sun, Jan 21, 2018 at 7:02 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > [...]
-> >  +
-> >  If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
-> > -then, as a convenience, a new branch based at HEAD is created automatically,
-> > -as if `-b $(basename <path>)` was specified.
-> > +then, as a convenience, a worktree with a branch named after
-> > +`$(basename <path>)` (call it `<branch>`) is created.  If `<branch>`
-> > +doesn't exist, a new branch based on HEAD is automatically created as
-> > +if `-b <branch>` was given.  If `<branch>` exists in the repository,
-> > +it will be checked out in the new worktree, if it's not checked out
-> > +anywhere else, otherwise the command will refuse to create the
-> > +worktree.
-> 
-> It starts getting a bit too magical to me. We probably should print
-> something "switching to branch..." or "creating new branch ..."  to
-> let people know what decision was taken, unless --quiet is given. Yeah
-> I know --quiet does not exist. You don't need to add it now either
-> since nobody has asked for it.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I think that's a good idea.  I'll add that, thanks.
+> Add a --fetch-prune option to git-fetch, along with fetch.pruneTags
+> config option. This allows for doing any of:
+>
+>     git fetch -p -P
+>     git fetch --prune --prune-tags
+>     git fetch -p -P origin
+>     git fetch --prune --prune-tags origin
+>
+> Or simply:
+>
+>     git config fetch.prune true &&
+>     git config fetch.pruneTags true &&
+>     git fetch
+>
+> Instead of the much more verbose:
+>
+>     git fetch --prune origin 'refs/tags/*:refs/tags/*' '+refs/heads/*:r=
+efs/remotes/origin/*'
+>
+> Before this feature it was painful to support the use-case of pulling
+> from a repo which is having both its branches *and* tags deleted
+> regularly, and wanting our local references to reflect upstream.
+>
+> At work we create deployment tags in the repo for each rollout, and
+> there's *lots* of those, so they're archived within weeks for
+> performance reasons.
+>
+> Without this change it's hard to centrally configure such repos in
+> /etc/gitconfig (on servers that are only used for working with
+> them). You need to set fetch.prune=3Dtrue globally, and then for each
+> repo:
+>
+>     git -C {} config --replace-all remote.origin.fetch "refs/tags/*:ref=
+s/tags/*" "^refs/tags/*:refs/tags/*$"
 
-> More or less related to this, there was a question [1] whether we
-> could do better than $(basename <path>) for determining branch name.
-> Since you're doing start to check if a branch exists, people may start
-> asking to check for branch "foo/bar" from the path abc/foo/bar instead
-> of just branch "bar".
+I think the last one is supposed to be a regular expression on
+existing values.  Shouldn't the asterisks be quoted? =20
 
-Thanks for pointing me at this.  I feel like we might get ourselves
-some backwards compatibility worries when doing that.  Lets say
-someone has a branch 'feature/a', using 'git worktree feature/a' would
-currently create a new branch 'a', and does not die.
+Otherwise, it would appears as if "refs/tags:refs/tags///" are
+replaced with "refs/tags/*:refs/tags/*", but it certainly is not
+what you are doing.  I also wonder why the existing one does not
+expect a leading '+', which I think is what we place by default
+when you clone.
 
-I'd guess most users would want 'feature/a' checked out in that case,
-but we can't exactly be sure we won't break anyones workflow here.
-With your suggestion I guess that would be mitigated somehow as it
-shows which action is taken, but dunno.
+> +-P::
+> +--prune-tags::
+> +	.... This option is
+> +	merely a shorthand for providing the explicit tag refspec
+> +	along with `--prune`, see the discussion about that in its
+> +	documentation.
 
-Should we hide this behaviour behind a flag, and plan for it
-eventually becoming the default?
+So would "git fetch -P origin" be like "git fetch --prune --tags
+origin"?
 
-> [1] https://github.com/git-for-windows/git/issues/1390
-> 
-> >
-> >  list::
-> >
-> > diff --git a/builtin/worktree.c b/builtin/worktree.c
-> > index 7cef5b120b..148a864bb9 100644
-> > --- a/builtin/worktree.c
-> > +++ b/builtin/worktree.c
-> > @@ -411,13 +411,21 @@ static int add(int ac, const char **av, const char *prefix)
-> >         if (ac < 2 && !opts.new_branch && !opts.detach) {
-> >                 int n;
-> >                 const char *s = worktree_basename(path, &n);
-> > -               opts.new_branch = xstrndup(s, n);
-> > -               if (guess_remote) {
-> > -                       struct object_id oid;
-> > -                       const char *remote =
-> > -                               unique_tracking_name(opts.new_branch, &oid);
-> > -                       if (remote)
-> > -                               branch = remote;
-> > +               const char *branchname = xstrndup(s, n);
-> > +               struct strbuf ref = STRBUF_INIT;
-> 
-> Perhaps a blank line after this to separate var declarations and the rest.
+>  +
+>  See the PRUNING section below for more details.
+> =20
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+> index 18fac0da2e..5682ed4ae1 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -148,6 +148,30 @@ So be careful when using this with a refspec like
+>  `refs/tags/*:refs/tags/*`, or any other refspec which might map
+>  references from multiple remotes to the same local namespace.
+> =20
+> +Since keeping up-to-date with both branches and tags on the remote is
+> +a common use-case the `--prune-tags` option can be supplied along with
+> +`--prune` to prune local tags that don't exist on the remote. Tag
+> +pruning can also be enabled with `fetch.pruneTags` or
+> +`remote.<name>.pruneTags` in the config. See linkgit:git-config[1].
+> +
+> +The `--prune-tags` option is equivalent to having
+> +`refs/tags/*:refs/tags/*` configured in the refspecs for the
+> +remote. This can lead to some seemingly strange interactions:
+> +
+> +------------------------------------------------
+> +# These both fetch tags
+> +$ git fetch --no-tags origin 'refs/tags/*:refs/tags/*'
+> +$ git fetch --no-tags --prune-tags origin
+> +------------------------------------------------
 
-Will add. 
+This description is too confusing.  First you say "having
+... configured in the refspecs for the remote", but configured
+refspecs for the remote (I presume that you are missing 'fetch' from
+that description and are talking about the "remote.$name.fetch"
+configuration variable) are overridden when you give explicit
+refspecs from the command line, so the above two are not even
+equivalent.  The first one gives a refspec explicitly from the
+command line, so other configured refspecs like
 
-> > +               if (!strbuf_check_branch_ref(&ref, branchname) &&
-> > +                   ref_exists(ref.buf)) {
-> > +                       branch = branchname;
-> 
-> Hmm.. do we need UNLEAK(branch);? Maybe you should try valgrind, I'm not sure.
+    [remote "origin"] fetch =3D +refs/heads/*:refs/remotes/origin/*
 
-Good question, I'll have a look, thanks.
+should be ignored, while the second one, if --prune-tags tells Git
+to behave as if=20
 
-> > +                       opts.checkout = 1;
-> > +               } else {
-> > +                       opts.new_branch = branchname;
-> > +                       if (guess_remote) {
-> > +                               struct object_id oid;
-> > +                               const char *remote =
-> > +                                       unique_tracking_name(opts.new_branch, &oid);
-> > +                               if (remote)
-> > +                                       branch = remote;
-> > +                       }
-> >                 }
-> >         }
-> >
-> > diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> > index 2b95944973..721b0e4c26 100755
-> > --- a/t/t2025-worktree-add.sh
-> > +++ b/t/t2025-worktree-add.sh
-> > @@ -198,13 +198,22 @@ test_expect_success '"add" with <branch> omitted' '
-> >         test_cmp_rev HEAD bat
-> >  '
-> >
-> > -test_expect_success '"add" auto-vivify does not clobber existing branch' '
-> > +test_expect_success '"add" auto-vivify checks out existing branch' '
-> >         test_commit c1 &&
-> >         test_commit c2 &&
-> >         git branch precious HEAD~1 &&
-> > -       test_must_fail git worktree add precious &&
-> > +       git worktree add precious &&
-> >         test_cmp_rev HEAD~1 precious &&
-> > -       test_path_is_missing precious
-> > +       (
-> > +               cd precious &&
-> > +               test_cmp_rev precious HEAD
-> > +       )
-> > +'
-> > +
-> > +test_expect_success '"add" auto-vivify fails with checked out branch' '
-> > +       git checkout -b test-branch &&
-> > +       test_must_fail git worktree add test-branch &&
-> > +       test_path_is_missing test-branch
-> >  '
-> >
-> >  test_expect_success '"add" no auto-vivify with --detach and <branch> omitted' '
-> > --
-> > 2.16.0.312.g896df04e46
-> >
-> 
-> 
-> 
-> -- 
-> Duy
+    [remote "origin"] fetch =3D refs/tags/*:refs/tags/*
+
+also exists in the config, would not cause other ones for the same
+remote from getting ignored.  So...
