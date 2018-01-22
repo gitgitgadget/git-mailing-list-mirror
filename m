@@ -7,137 +7,88 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66D5D1F424
-	for <e@80x24.org>; Mon, 22 Jan 2018 11:04:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 974BF1F424
+	for <e@80x24.org>; Mon, 22 Jan 2018 11:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbeAVLEm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 06:04:42 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:39668 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750925AbeAVLEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 06:04:41 -0500
-Received: by mail-wm0-f54.google.com with SMTP id b21so15973863wme.4
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:04:40 -0800 (PST)
+        id S1751122AbeAVLEp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 06:04:45 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35373 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751057AbeAVLEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 06:04:43 -0500
+Received: by mail-wm0-f66.google.com with SMTP id r78so15996946wme.0
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=dw5EcrAyV8h2EL2XY3THg1WY/bVr2i5tCddEDE4AtCU=;
-        b=gB4KRlfBSAUZSTrQvZkdaE/iHl6guFYKP/UUqBUhmvtWdnUeSZ+lpnU6ainWb/IAFZ
-         Gk+2KQtixnjtl3dZnnuFZ8vAidvYawPU6Smk1H+J0clURy6WlbAqXMSnLQJg7jwFLhug
-         hxewI4gXZiXPCV6uQXhbFZnnKEOEwMtSSDSNm/lvzNvETrYtkUyV6Bsm3kGZl3G1NYu0
-         z+bUzwGCOdaBNFH7+mReTq7mAlvURX1y9D5gLMPM1y2/7wUl9qDghAaNDN69ZebTfs/Y
-         mcu9XuXRXLbJRKlQG7JKjGOOriIRxXJGjVOu1UoucTM3kauJ1TsnPHzj2rrBiuncXEGW
-         UpaQ==
+        h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
+         :references;
+        bh=f9apXCOlCV5qT/u4pH0lVdktRN5bCPOC167+zbSLUkk=;
+        b=GQqrf/lHIirnFsqvGSPawDtO3WotK1rf2QhR6Ygr+t+nWZNtvli+oUJgNKg/vOmar0
+         VTbtOE5MMyQcR61J3+xvlAD7Q+DA3p2EadXAsIChZGIPCl0kN5jcF8QU071xghpYjWCz
+         vSnrNk/HF8FwdsIidbWla8Vxm9UEw2d8NuzPnPkX4hqcNjavm9UXW8PvMnzM/IMCeKrK
+         qL2dJLulI4LPXZ8ooyfdAjAsW/Fve/NiMyvXkR8/GbigELU33D6sXep35vga2CzDeAAs
+         UmybtClDj9oiC0h6Pqx4LAiHGZdqtB68ER0BOtUeXSbju9TGYEpKsEvTRsQCr5VZHxmX
+         GafA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references;
-        bh=dw5EcrAyV8h2EL2XY3THg1WY/bVr2i5tCddEDE4AtCU=;
-        b=TcV/Lg5gtKoaE6InH2FoWCkbZgolje57LC56c/9mxHs+9MPNKuBUiuH2nrx5XN2pex
-         W5EdUWLuO8ZGrfcBsM0vBcFu0lRrcGEj5FPaqryafm9eB2R76dgWVhgZjz5d+xMtN8vp
-         Ezj8XKroW3bIeIPdw/XzBzDTdbx2yvwLxubkZf5hVpBNKEzvKTSXeZOBj93oIq54Sfpv
-         Fa1s0tuT1WV+YDXuEfmS4bpzzr7oOdk5ezshCqpTxFFwt2X7nygat7QgmodmjlQGboiM
-         capedHvcNShi0YzURNfiMmJfbbpnfkQd/d0IlOy0J5yGpvFWG2JY4fDrJJRAJ+vBTFHj
-         cykA==
-X-Gm-Message-State: AKwxyteqKN8omLxwIkHQpDccfu9a3GYnTSzlVuxl4UuUEhk0o/jeSegM
-        8F3YE24dOuK5WVsf+sMaZVRDn79H
-X-Google-Smtp-Source: AH8x225WA4dd6E13RCgb0Jk3oBeLqP/i8fXSzVNYIRMRG5sx5zyRm7vUbI7quq1Nip43VBtkigPS6g==
-X-Received: by 10.80.177.67 with SMTP id l3mr12501034edd.267.1516619079792;
-        Mon, 22 Jan 2018 03:04:39 -0800 (PST)
+         :references:in-reply-to:references;
+        bh=f9apXCOlCV5qT/u4pH0lVdktRN5bCPOC167+zbSLUkk=;
+        b=GEcrSCNLaTp5DxDABa+LHiTUBOl2GNlbNBiePSVooRunyRThOHuksY1MZk6LtPp89i
+         5WuM0ypiyCmgdzUFft5MnqRmqapvEg9Mog01uTAMzvHBI9OFEUAhWSjYVMgUxd9Oeq7a
+         unCD0sCgrfY1uVygkwUmqS85pkNoQ5dJfRpzpkRxyUSyLTGi+4B4sL6wSRFjCP+UeUiV
+         HuShahxIEVZHBCv5ZrECtrv6ZPVVOdi+ybYDFwXb4aDoj9TWSnbbyyw5uGaGKzsNhFkw
+         W2i18ariYLp+1apW5f1hPT1SM+JLYgNKBzZW7sWghjcJ2pmG3Ut7QB08DaxXVxr11dLO
+         aBxQ==
+X-Gm-Message-State: AKwxyteqoBfLASye07irmtmOc8RJp3Um8v3IGWqsNGbJRXtggSgZ17h3
+        24UjmwDFQyd6IJRdnXib+kBO/WfV
+X-Google-Smtp-Source: AH8x226Fo9i9UCRXuUagm0LTx6UzoZhaRYnfdsohRF5mN3lcVuWfn7bM3mSM50oFc4KiXn+03yz5rg==
+X-Received: by 10.80.147.72 with SMTP id n8mr12834131eda.189.1516619082629;
+        Mon, 22 Jan 2018 03:04:42 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id e12sm10833591edm.42.2018.01.22.03.04.38
+        by smtp.gmail.com with ESMTPSA id e12sm10833591edm.42.2018.01.22.03.04.41
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 22 Jan 2018 03:04:38 -0800 (PST)
+        Mon, 22 Jan 2018 03:04:41 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         sandals@crustytoothpaste.ath.cx,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v2 00/14] Some fixes and bunch of object_id conversions
-Date:   Mon, 22 Jan 2018 12:04:23 +0100
-Message-Id: <cover.1516617960.git.patryk.obara@gmail.com>
+Subject: [PATCH v2 02/14] clang-format: adjust penalty for return type line break
+Date:   Mon, 22 Jan 2018 12:04:25 +0100
+Message-Id: <2c3edc8b9f481c36b203ece2c6f70467ae9fd365.1516617960.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
-In-Reply-To: <cover.1516282880.git.patryk.obara@gmail.com>
+In-Reply-To: <cover.1516617960.git.patryk.obara@gmail.com>
 References: <cover.1516282880.git.patryk.obara@gmail.com>
+ <cover.1516617960.git.patryk.obara@gmail.com>
+In-Reply-To: <cover.1516617960.git.patryk.obara@gmail.com>
+References: <cover.1516617960.git.patryk.obara@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compared to v1:
+The penalty of 5 makes clang-format very eager to put even short type
+declarations (e.g. "extern int") into a separate line, even when
+breaking parameters list is sufficient.
 
-Following brian's suggestion I renamed following functions and struct
-names to indicate, that they are no longer intended for sha1 algorithm
-only:
+Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
+---
+ .clang-format | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-struct sha1_stat         -> struct oid_stat
-pretend_sha1_file        -> pretend_object_file
-write_sha1_file          -> write_object_file
-hash_sha1_file           -> hash_object_file
-hash_sha1_file_literally -> hash_object_file_literally
-
-Added two more patches converting some more functions to struct object_id
-and one with pure function rename.
-
-Patryk Obara (14):
-  http-push: improve error log
-  clang-format: adjust penalty for return type line break
-  sha1_file: convert pretend_sha1_file to object_id
-  dir: convert struct sha1_stat to use object_id
-  sha1_file: convert hash_sha1_file to object_id
-  cache: clear whole hash buffer with oidclr
-  match-trees: convert splice_tree to object_id
-  commit: convert commit_tree* to object_id
-  notes: convert combine_notes_* to object_id
-  notes: convert write_notes_tree to object_id
-  sha1_file: convert write_sha1_file to object_id
-  sha1_file: convert force_object_loose to object_id
-  sha1_file: convert write_loose_object to object_id
-  sha1_file: rename hash_sha1_file_literally
-
- .clang-format                                 |   2 +-
- Documentation/technical/api-object-access.txt |   2 +-
- apply.c                                       |  12 ++--
- blame.c                                       |   2 +-
- builtin/am.c                                  |   4 +-
- builtin/checkout.c                            |   3 +-
- builtin/commit-tree.c                         |   4 +-
- builtin/commit.c                              |   5 +-
- builtin/hash-object.c                         |   3 +-
- builtin/index-pack.c                          |   5 +-
- builtin/merge.c                               |   8 +--
- builtin/mktag.c                               |   6 +-
- builtin/mktree.c                              |  10 +--
- builtin/notes.c                               |   8 +--
- builtin/pack-objects.c                        |   2 +-
- builtin/receive-pack.c                        |  11 +--
- builtin/replace.c                             |   4 +-
- builtin/tag.c                                 |   2 +-
- builtin/unpack-objects.c                      |  11 +--
- cache-tree.c                                  |  16 ++---
- cache.h                                       |  25 ++++---
- commit.c                                      |  15 ++--
- commit.h                                      |  11 +--
- convert.c                                     |   6 +-
- diffcore-rename.c                             |   4 +-
- dir.c                                         |  56 +++++++--------
- dir.h                                         |  12 ++--
- http-push.c                                   |   4 ++
- log-tree.c                                    |   2 +-
- match-trees.c                                 |  42 ++++++-----
- merge-recursive.c                             |   5 +-
- notes-cache.c                                 |   8 +--
- notes-merge.c                                 |   9 ++-
- notes-utils.c                                 |   9 +--
- notes-utils.h                                 |   3 +-
- notes.c                                       |  63 ++++++++--------
- notes.h                                       |  29 ++++----
- read-cache.c                                  |   6 +-
- sha1_file.c                                   | 100 ++++++++++++++------------
- t/helper/test-dump-untracked-cache.c          |   4 +-
- 40 files changed, 279 insertions(+), 254 deletions(-)
-
-
-base-commit: 59c276cf4da0705064c32c9dba54baefa282ea55
+diff --git a/.clang-format b/.clang-format
+index 611ab4750b..12a89f95f9 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -163,7 +163,7 @@ PenaltyBreakComment: 10
+ PenaltyBreakFirstLessLess: 0
+ PenaltyBreakString: 10
+ PenaltyExcessCharacter: 100
+-PenaltyReturnTypeOnItsOwnLine: 5
++PenaltyReturnTypeOnItsOwnLine: 60
+ 
+ # Don't sort #include's
+ SortIncludes: false
 -- 
 2.14.3
 
