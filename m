@@ -7,113 +7,72 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271281F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:13:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE461F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751096AbeAVXNM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:13:12 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54581 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbeAVXNL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:13:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03357CB935;
-        Mon, 22 Jan 2018 18:13:11 -0500 (EST)
+        id S1751110AbeAVXXD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:23:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59848 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751031AbeAVXXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:23:02 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 625F4D8838;
+        Mon, 22 Jan 2018 18:23:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Wt3rNgDtetCX
-        +TtUSFjNR2YbBuk=; b=HMVq0cAhYRRerrJYbdnEggtNDJLfBv4e/8fYCZync1PB
-        JeoD8afRFxTwtKFv8rEej3yORbEM2ArkgoPmEl4oQadL4gd6yVVOApkZmzHjVB7Z
-        L8THTfp45VHxPOL6lmSQB3UYcaKhvU3fbmF6J53fo4wtKZlNqshEwuyEbCisxyQ=
+        :content-type; s=sasl; bh=qLOkVh8JBUc0MjnK0qZY6Jq5s+Q=; b=QEL/LM
+        kMLnfJQaJmk5U3mcoimfsaRoi6tJV1QUSpFI9XhrwcL9RsI9M0jAKKKP3U7jjfeg
+        UbGsC+JwpFbwU4UhRTK+tjsW608cETStTCw0W6xPfI3XdfdbtYFvR+GvWvQY3xNY
+        /P2UP5Y7spQXrnoLb0j6pzDf0v26GJljTw7mk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rxLlJy
-        YUF9lnNG1xPZre9qa1HVPnTBqKEVPg38Y0gsF5Wz1Ct3EgYyVSiWmgqGPZEjJYf3
-        OgKJd5FvJZNKgd14i/QY2hV6S86QwyArnNpVa1r8TlFOi2ooAaRlGw4tTmDsrZyS
-        jcgZqrInzBSAsStfge8uYkOUsj6pxPycHq+zA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC882CB934;
-        Mon, 22 Jan 2018 18:13:10 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=xQsbEHcJWftTVgaHhio93IcLLabcwY8x
+        /Sv9UbtkGEo7wKeV14BUqOz6pjvB5NIpv/bzDBOVHfk1jiFpf4kgXatEKxj+wKlo
+        vFjAApfo09kItKh6pUJpBxmLxw2ZqDlnT5r1znLFfdTfWutOUDPMI5OHiPtqh6+V
+        fF4fn3KRji4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A3AFD8837;
+        Mon, 22 Jan 2018 18:23:02 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 63AFBCB933;
-        Mon, 22 Jan 2018 18:13:10 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D271BD8836;
+        Mon, 22 Jan 2018 18:23:01 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] format-patch: set diffstat width to 70 instead of default 80
-References: <20180122123154.8301-1-pclouds@gmail.com>
-Date:   Mon, 22 Jan 2018 15:13:09 -0800
-In-Reply-To: <20180122123154.8301-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Mon, 22 Jan 2018 19:31:54 +0700")
-Message-ID: <xmqqbmhljxmi.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     felipe@felipegasper.com, git@vger.kernel.org
+Subject: Re: [PATCH] Fix comma splices
+References: <5a656638.LthG4qGgtrvPcSKz%felipe@felipegasper.com>
+        <20180122230819.GB21604@sigill.intra.peff.net>
+Date:   Mon, 22 Jan 2018 15:23:00 -0800
+In-Reply-To: <20180122230819.GB21604@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 22 Jan 2018 18:08:20 -0500")
+Message-ID: <xmqq7es9jx63.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D02DD0EC-FFC9-11E7-98FD-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 30B5FA4C-FFCB-11E7-BF85-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Patches or cover letters generated by format-patch are meant to be
-> exchanged as emails, most of the time. And since it's generally agreed
-> that text in mails should be wrapped around 70 columns or so, make sure
-> these diffstat follow the convention.
->
-> I noticed this when I quoted a diffstat line [1]. Should we do somethin=
-g
-> like this? diffstat is rarely quoted though so perhaps the stat width
-> should be something like 75.
->
-> t4052 fails but I don't think it's worth fixing until it's clear if it'=
-s
-> worth doing this.
+> (To be pedantic, these aren't comma splices. A comma splice joins two
+> independent clauses with a comma and _without_ a conjunction).
 
-I guess you meant this as an RFC/PATCH; FWIW, I personally am in
-favor of this change.
+Thanks for clearing up the "Huh?" I felt earlier when I threw the
+patch to "to look at later" bin after finding updated text for most
+of them read not much better than the original, at least to me.
 
->
-> [1] https://public-inbox.org/git/20180122121426.GD5980@ash/T/#u
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> ---
->  builtin/log.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 14fdf39165..6be79656c5 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1061,6 +1061,7 @@ static void make_cover_letter(struct rev_info *re=
-v, int use_stdout,
-> =20
->  	memcpy(&opts, &rev->diffopt, sizeof(opts));
->  	opts.output_format =3D DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
-> +	opts.diffopt.stat_width =3D 70;
-> =20
->  	diff_setup_done(&opts);
-> =20
-> @@ -1611,9 +1612,12 @@ int cmd_format_patch(int argc, const char **argv=
-, const char *prefix)
->  		die(_("--check does not make sense"));
-> =20
->  	if (!use_patch_format &&
-> -		(!rev.diffopt.output_format ||
-> -		 rev.diffopt.output_format =3D=3D DIFF_FORMAT_PATCH))
-> +	    (!rev.diffopt.output_format ||
-> +	     rev.diffopt.output_format =3D=3D DIFF_FORMAT_PATCH)) {
->  		rev.diffopt.output_format =3D DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUM=
-MARY;
-> +		if (!rev.diffopt.stat_width)
-> +			rev.diffopt.stat_width =3D 70;
-> +	}
-> =20
->  	/* Always generate a patch */
->  	rev.diffopt.output_format |=3D DIFF_FORMAT_PATCH;
+So I am OK to take this patch (or an updated version), but the log
+message needs updating, I guess.
+
+>   2. Is this Q_() here actually helping? It triggers on "ours + theirs"
+>   ...
+>      In fact, I don't think the singular case here can _ever_ trigger,
+
+Exactly.
+
