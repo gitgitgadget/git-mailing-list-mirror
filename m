@@ -2,148 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13E981F424
-	for <e@80x24.org>; Mon, 22 Jan 2018 11:04:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66D5D1F424
+	for <e@80x24.org>; Mon, 22 Jan 2018 11:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751117AbeAVLEA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 06:04:00 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:41570 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751024AbeAVLD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 06:03:59 -0500
-Received: by mail-pf0-f195.google.com with SMTP id c6so3745095pfi.8
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:03:59 -0800 (PST)
+        id S1751054AbeAVLEm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 06:04:42 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:39668 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750925AbeAVLEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 06:04:41 -0500
+Received: by mail-wm0-f54.google.com with SMTP id b21so15973863wme.4
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 03:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6UL09GXftL3Qcw7hwwXVejlNXdP0FvsJ1OLN+ejiG0g=;
-        b=dln4UzPnmnR1An6N22Ydx+HUPgdXnKd2VkyP5jepQMLRNae+sDAbdp7anZ1popVAZg
-         85VlHI5LrKQYqlOkj7NxSUWteAAEcoCdWV9QmPtN19HmI5vAOOxPMFeBhoNaufzKGYPH
-         29fRkXWkqqsS+AYrILs+g5347WcjEljMqeArfSSYJzLPeGHEDjSyA0hf08KdfKMSOsbU
-         7iuU3GetPVHpXzF4kPAfycFrOiiplAI7OE5DEXLdJcLFkYhN9lcNoBjR7UztAPjxjDOx
-         vibFKczm+0byg0ntHoKtLqNIIHiGHxjFhU7ladwZ+oGq6eBmZ1kcKZN3lAgRlAK+MeZH
-         +vRw==
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=dw5EcrAyV8h2EL2XY3THg1WY/bVr2i5tCddEDE4AtCU=;
+        b=gB4KRlfBSAUZSTrQvZkdaE/iHl6guFYKP/UUqBUhmvtWdnUeSZ+lpnU6ainWb/IAFZ
+         Gk+2KQtixnjtl3dZnnuFZ8vAidvYawPU6Smk1H+J0clURy6WlbAqXMSnLQJg7jwFLhug
+         hxewI4gXZiXPCV6uQXhbFZnnKEOEwMtSSDSNm/lvzNvETrYtkUyV6Bsm3kGZl3G1NYu0
+         z+bUzwGCOdaBNFH7+mReTq7mAlvURX1y9D5gLMPM1y2/7wUl9qDghAaNDN69ZebTfs/Y
+         mcu9XuXRXLbJRKlQG7JKjGOOriIRxXJGjVOu1UoucTM3kauJ1TsnPHzj2rrBiuncXEGW
+         UpaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6UL09GXftL3Qcw7hwwXVejlNXdP0FvsJ1OLN+ejiG0g=;
-        b=o9J4TMci59qWe3XRHSSiaV+xTw9hO194G8LUzsbCCtb8Gx2yB8nIP4KmSuenmjpMCs
-         9AbZE6mawgoBFO0iA95kyNqxToOZSerFNW6Gc1y8JTHNeRtNgITkMgkeGndnhULZ1Z1m
-         9ATTcy9JApVpYvptQZ3l3QxceDPtF/ucfrmFXFE2GhAx4gbDfPaoABtQyOAlPLRCW5X+
-         g/iA6lkW1W2h8NS32NFC+i5dr9wOz+ACgj0kRcdeBcoqQjEQr0nRgUEWl03cRxFrGTyb
-         KOaGKRd4ASzFeHi7DDtmt7RDeiIgn+LnmBLFriFFfVip5Jauaf24bSNofDLvTFwWq+pG
-         EX0A==
-X-Gm-Message-State: AKwxyte9RxW35iZ/Opz1IxNWvB2n39OW3+TM7XkwK5DAmIe/TahLg6T2
-        S/o+Dl+T5vY/UvzsCP8KG+vsFw==
-X-Google-Smtp-Source: AH8x224xjYK6oTF6ShmpwxT7MvVwMg63GPOSp2YLGy64zeVVLxIxV5OC6/U0B7V0HW1LERoDaZPf8w==
-X-Received: by 10.98.35.14 with SMTP id j14mr8167870pfj.62.1516619038800;
-        Mon, 22 Jan 2018 03:03:58 -0800 (PST)
-Received: from ash ([171.233.110.59])
-        by smtp.gmail.com with ESMTPSA id 184sm57092pfd.156.2018.01.22.03.03.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jan 2018 03:03:58 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 22 Jan 2018 18:03:53 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 3/3] read-cache: don't write index twice if we can't write shared index
-Date:   Mon, 22 Jan 2018 18:03:34 +0700
-Message-Id: <20180122110334.4411-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.0.47.g3d9b0fac3a
-In-Reply-To: <20180122110334.4411-1-pclouds@gmail.com>
-References: <20180122110334.4411-1-pclouds@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references;
+        bh=dw5EcrAyV8h2EL2XY3THg1WY/bVr2i5tCddEDE4AtCU=;
+        b=TcV/Lg5gtKoaE6InH2FoWCkbZgolje57LC56c/9mxHs+9MPNKuBUiuH2nrx5XN2pex
+         W5EdUWLuO8ZGrfcBsM0vBcFu0lRrcGEj5FPaqryafm9eB2R76dgWVhgZjz5d+xMtN8vp
+         Ezj8XKroW3bIeIPdw/XzBzDTdbx2yvwLxubkZf5hVpBNKEzvKTSXeZOBj93oIq54Sfpv
+         Fa1s0tuT1WV+YDXuEfmS4bpzzr7oOdk5ezshCqpTxFFwt2X7nygat7QgmodmjlQGboiM
+         capedHvcNShi0YzURNfiMmJfbbpnfkQd/d0IlOy0J5yGpvFWG2JY4fDrJJRAJ+vBTFHj
+         cykA==
+X-Gm-Message-State: AKwxyteqKN8omLxwIkHQpDccfu9a3GYnTSzlVuxl4UuUEhk0o/jeSegM
+        8F3YE24dOuK5WVsf+sMaZVRDn79H
+X-Google-Smtp-Source: AH8x225WA4dd6E13RCgb0Jk3oBeLqP/i8fXSzVNYIRMRG5sx5zyRm7vUbI7quq1Nip43VBtkigPS6g==
+X-Received: by 10.80.177.67 with SMTP id l3mr12501034edd.267.1516619079792;
+        Mon, 22 Jan 2018 03:04:39 -0800 (PST)
+Received: from localhost.localdomain ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id e12sm10833591edm.42.2018.01.22.03.04.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Jan 2018 03:04:38 -0800 (PST)
+From:   Patryk Obara <patryk.obara@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        sandals@crustytoothpaste.ath.cx,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH v2 00/14] Some fixes and bunch of object_id conversions
+Date:   Mon, 22 Jan 2018 12:04:23 +0100
+Message-Id: <cover.1516617960.git.patryk.obara@gmail.com>
+X-Mailer: git-send-email 2.14.3
+In-Reply-To: <cover.1516282880.git.patryk.obara@gmail.com>
+References: <cover.1516282880.git.patryk.obara@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a0a967568e ("update-index --split-index: do not split if $GIT_DIR is
-read only", 2014-06-13), we tried to make sure we can still write an
-index, even if the shared index can not be written.
+Compared to v1:
 
-We did so by just calling 'do_write_locked_index()' just before
-'write_shared_index()'.  'do_write_locked_index()' always at least
-closes the tempfile nowadays, and used to close or commit the lockfile
-if COMMIT_LOCK or CLOSE_LOCK were given at the time this feature was
-introduced.  COMMIT_LOCK or CLOSE_LOCK is passed in by most callers of
-'write_locked_index()'.
+Following brian's suggestion I renamed following functions and struct
+names to indicate, that they are no longer intended for sha1 algorithm
+only:
 
-After calling 'write_shared_index()', we call 'write_split_index()',
-which calls 'do_write_locked_index()' again, which then tries to use the
-closed lockfile again, but in fact fails to do so as it's already
-closed. This eventually leads to a segfault.
+struct sha1_stat         -> struct oid_stat
+pretend_sha1_file        -> pretend_object_file
+write_sha1_file          -> write_object_file
+hash_sha1_file           -> hash_object_file
+hash_sha1_file_literally -> hash_object_file_literally
 
-Make sure to write the main index only once.
+Added two more patches converting some more functions to struct object_id
+and one with pure function rename.
 
-[nd: most of the commit message and investigation done by Thomas, I only
-tweaked the solution a bit]
+Patryk Obara (14):
+  http-push: improve error log
+  clang-format: adjust penalty for return type line break
+  sha1_file: convert pretend_sha1_file to object_id
+  dir: convert struct sha1_stat to use object_id
+  sha1_file: convert hash_sha1_file to object_id
+  cache: clear whole hash buffer with oidclr
+  match-trees: convert splice_tree to object_id
+  commit: convert commit_tree* to object_id
+  notes: convert combine_notes_* to object_id
+  notes: convert write_notes_tree to object_id
+  sha1_file: convert write_sha1_file to object_id
+  sha1_file: convert force_object_loose to object_id
+  sha1_file: convert write_loose_object to object_id
+  sha1_file: rename hash_sha1_file_literally
 
-Helped-by: Thomas Gummerer <t.gummerer@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- read-cache.c           |  5 +++--
- t/t1700-split-index.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ .clang-format                                 |   2 +-
+ Documentation/technical/api-object-access.txt |   2 +-
+ apply.c                                       |  12 ++--
+ blame.c                                       |   2 +-
+ builtin/am.c                                  |   4 +-
+ builtin/checkout.c                            |   3 +-
+ builtin/commit-tree.c                         |   4 +-
+ builtin/commit.c                              |   5 +-
+ builtin/hash-object.c                         |   3 +-
+ builtin/index-pack.c                          |   5 +-
+ builtin/merge.c                               |   8 +--
+ builtin/mktag.c                               |   6 +-
+ builtin/mktree.c                              |  10 +--
+ builtin/notes.c                               |   8 +--
+ builtin/pack-objects.c                        |   2 +-
+ builtin/receive-pack.c                        |  11 +--
+ builtin/replace.c                             |   4 +-
+ builtin/tag.c                                 |   2 +-
+ builtin/unpack-objects.c                      |  11 +--
+ cache-tree.c                                  |  16 ++---
+ cache.h                                       |  25 ++++---
+ commit.c                                      |  15 ++--
+ commit.h                                      |  11 +--
+ convert.c                                     |   6 +-
+ diffcore-rename.c                             |   4 +-
+ dir.c                                         |  56 +++++++--------
+ dir.h                                         |  12 ++--
+ http-push.c                                   |   4 ++
+ log-tree.c                                    |   2 +-
+ match-trees.c                                 |  42 ++++++-----
+ merge-recursive.c                             |   5 +-
+ notes-cache.c                                 |   8 +--
+ notes-merge.c                                 |   9 ++-
+ notes-utils.c                                 |   9 +--
+ notes-utils.h                                 |   3 +-
+ notes.c                                       |  63 ++++++++--------
+ notes.h                                       |  29 ++++----
+ read-cache.c                                  |   6 +-
+ sha1_file.c                                   | 100 ++++++++++++++------------
+ t/helper/test-dump-untracked-cache.c          |   4 +-
+ 40 files changed, 279 insertions(+), 254 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index c568643f55..c58c0a978a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2561,8 +2561,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		if (!temp) {
- 			hashclr(si->base_sha1);
- 			ret = do_write_locked_index(istate, lock, flags);
--		} else
--			ret = write_shared_index(istate, &temp);
-+			goto out;
-+		}
-+		ret = write_shared_index(istate, &temp);
- 
- 		saved_errno = errno;
- 		if (is_tempfile_active(temp))
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index af9b847761..d2a8e0312a 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -401,4 +401,23 @@ done <<\EOF
- 0642 -rw-r---w-
- EOF
- 
-+test_expect_success SANITY 'graceful handling when splitting index is not allowed' '
-+	test_create_repo ro &&
-+	(
-+		cd ro &&
-+		test_commit initial &&
-+		git update-index --split-index &&
-+		test -f .git/sharedindex.*
-+	) &&
-+	cp ro/.git/index new-index &&
-+	test_when_finished "chmod u+w ro/.git" &&
-+	chmod u-w ro/.git &&
-+	GIT_INDEX_FILE="$(pwd)/new-index" git -C ro update-index --split-index &&
-+	chmod u+w ro/.git &&
-+	rm ro/.git/sharedindex.* &&
-+	GIT_INDEX_FILE=new-index git ls-files >actual &&
-+	echo initial.t >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
+
+base-commit: 59c276cf4da0705064c32c9dba54baefa282ea55
 -- 
-2.16.0.47.g3d9b0fac3a
+2.14.3
 
