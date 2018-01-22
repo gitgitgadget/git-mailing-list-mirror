@@ -7,238 +7,172 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 525351F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 17:50:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEB461F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 17:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751157AbeAVRuX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 12:50:23 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34388 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751110AbeAVRuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 12:50:21 -0500
-Received: by mail-wm0-f66.google.com with SMTP id j21so9996699wmh.1
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 09:50:21 -0800 (PST)
+        id S1751134AbeAVR6G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 12:58:06 -0500
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:46899 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbeAVR6G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 12:58:06 -0500
+Received: by mail-vk0-f41.google.com with SMTP id e125so5484618vkh.13
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 09:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Si9AYb4hA2oVvsllTmeomKtXFA1HfoskiBGw0QmaAZ0=;
-        b=R0+xXu5kbunFq5pbKB/kgo1+CsKXmouUEA3mMjLxDcV3P4N6bNzqner2nKFYpS58yf
-         ftDlaRbUYcTTc07OocPI46NgroCAv/URerRdf5U2/PKImEbLtOP2Ia6zBtF/dGFHla+h
-         tK5btXeq/bwVseOweEL9AnciP4XcAFMMiiTEBJNw/CAITGFBGOFDv3UD9WZ3ccjuBkmO
-         1xZdIG5E6VFT/CkGa3a9rgFxpfeQOQC5xkrk9jn4+H7eGvBUgSR4+i48hoJQbQBPMKle
-         qZyjcOh6DZldLdQJWjbGUkveYVCNGAoxf64ruVyFqjhNnOn65Lt106LSI5L49IK8D6TW
-         igVg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3CfgvsqZ25XsOmAYhyZlgn85IJdwNcnqYatXI7VWYS4=;
+        b=jE7D8mGmYb6NglxU6/rIEylWzffd+yZ/8p9ilBk8/Ynl6ig5ancD/RoZmPsztveuzA
+         ulT7cSSs2VBfmS16rVkqg8izd56tpabXE5E3f3OAHGr9+oqGypS4Z+l2KJELbFMZUswq
+         j8pmZskb8cGd+FxMtuxAFIkMFwYXz8pLMS3urqI+U+C+i9dPO1I/111uprx86Z+NVmqw
+         vZZxgl4L2t4j0Tf067SNX04CeC53PkB3o+uPtqwrlRdnq9HBaIYW13WZUO5cnSTrn6P8
+         k3QUjxxIKLIsP0fKNHS76gHu34Uu8wxi+ajfSS87kzCujtGok333/cdXgCQ6l6ct09ZE
+         5nMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Si9AYb4hA2oVvsllTmeomKtXFA1HfoskiBGw0QmaAZ0=;
-        b=f8HWP6roOpXitQ0ZSVzduXZGtz8QxiJqz3ApHIQSCXPxiBw74I7bDclGMwTQR7Lkvx
-         TKZJAwtPPnvUEl4uP7BvG5Cf2yMRJ2FSn721/zQYfTbODZ3XeWPJarRmVMIQCtzKdki2
-         GqphA174ZOhXdaKJnq9Pe3g1DUPZNSOehtdVh0llcDZQb+yOSnS/1faMQbde8IyQ9JDl
-         olCgjqvaMm58SSDeTBVgmsrJwtQnR1EuooNLD3Oet1n8IJNEiI2c5QsaiEw7c0h1JfwG
-         YqwKbjMyl6snxgmC2HAj34j9yFmISnpMhxhkgJglRF6l2xx1Odh2ICIyuldjox2rcbRC
-         dlog==
-X-Gm-Message-State: AKwxytfUGgz5QoGruQGHQ9H6gR2KdMZGrB41mlr/gAUu7GEx4djUntme
-        NzTiR7uF9en3A1BFuqQpKRg=
-X-Google-Smtp-Source: AH8x227Dl6CUPVvc/ihZFv5A+R25ShHabzT+tlzkFqzdoXCCAFGziXzHKPuNjcszQjAEtzvQ/psGdA==
-X-Received: by 10.28.183.5 with SMTP id h5mr5948216wmf.14.1516643420475;
-        Mon, 22 Jan 2018 09:50:20 -0800 (PST)
-Received: from localhost.localdomain (x590e64ec.dyn.telefonica.de. [89.14.100.236])
-        by smtp.gmail.com with ESMTPSA id n53sm3962660wrb.56.2018.01.22.09.50.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Jan 2018 09:50:19 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Rene Scharfe <l.s.r@web.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] Use MOVE_ARRAY
-Date:   Mon, 22 Jan 2018 18:50:09 +0100
-Message-Id: <20180122175009.20178-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.1.80.gc0eec9753d
-In-Reply-To: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
-References: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3CfgvsqZ25XsOmAYhyZlgn85IJdwNcnqYatXI7VWYS4=;
+        b=sqJqkuN6TAWd9KZ5+VOtKpv5Ejj21m80naihZfby9J8qDvBNIy7a6upuU5sAPNgORb
+         QOdnhEkyDKif1auREyykYG9ovfKZfpcHfbZhUNRLaHryd86JSMbF6U6k0TBYtaO822WE
+         xcmMe8pXRrcGtKUCioDMMkhUG98D/Z8OnwFm5WdS9tJ4xHsuAx8rg0C1O5FLRCeOjKsm
+         JhJQf1AI+LOVy4BCC3JnQ52WbGYkq+qMO4HRH9S553jP9NJQ8go13jc0a3RFAAiiibkN
+         lajYFu3BOv4sVE1OHM9KpCuIbe1tV+7Nc8e9LYDMLzirzr7W1sDOeNHR02ccL/dw3VyT
+         WEZg==
+X-Gm-Message-State: AKwxytdMADj+MHkJCqJ2zIAHoVvmH/gcV3vVtgINdXMjyGha88CIc9Sy
+        2tDLSkXp3rg04GDEvGGOQB8uI+IVaIXdZaKvY5du3g==
+X-Google-Smtp-Source: AH8x227OKOqAU6sleJdA79r5az+1G/v+YqYuS67EaWQvFHpt1NDaBS0ky0aGoQPOuT+SZLVhZOwdEXPwBg4Ow0Qr6t0=
+X-Received: by 10.31.33.86 with SMTP id h83mr5022131vkh.183.1516643884869;
+ Mon, 22 Jan 2018 09:58:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.8.83 with HTTP; Mon, 22 Jan 2018 09:58:04 -0800 (PST)
+In-Reply-To: <CAFAcib-2fxiVxtVWcbvafY3-Br7Y70HMiHFZoT0VfK6JU0Dp9A@mail.gmail.com>
+References: <CAFAcib-2fxiVxtVWcbvafY3-Br7Y70HMiHFZoT0VfK6JU0Dp9A@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 22 Jan 2018 09:58:04 -0800
+Message-ID: <CABPp-BGYs9jo16OZR8NsL-eO9LwEttBxBspvp1-_JjuD2oBYbA@mail.gmail.com>
+Subject: Re: git merge-tree: bug report and some feature requests
+To:     Josh Bleecher Snyder <josharian@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the helper macro MOVE_ARRAY to move arrays.  This is shorter and
-safer, as it automatically infers the size of elements.
+On Sat, Jan 20, 2018 at 7:00 PM, Josh Bleecher Snyder
+<josharian@gmail.com> wrote:
+> Hi, all.
+>
+> I'm experimenting with some new porcelain for interactive rebase. One
+> goal is to leave the work tree untouched for most operations. It looks
+> to me like 'git merge-tree' may be the right plumbing command for
+> doing the merge part of the pick work of the todo list, one commit at
+> a time. If I'm wrong about this, I'd love pointers; what follows may
+> still be interesting anyway.
 
-Patch generated by Coccinelle and contrib/coccinelle/array.cocci in
-Travis CI's static analysis build job.
+I don't have a concrete alternative (yet?) but here are some pointers
+to two alternate merge-without-touching-working-tree possibilities, if
+your current route doesn't pan out as well as you like:
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- cache-tree.c      | 5 ++---
- commit.c          | 6 ++----
- diffcore-rename.c | 8 ++++----
- dir.c             | 4 ++--
- parse-options.c   | 2 +-
- read-cache.c      | 5 ++---
- refs/ref-cache.c  | 6 ++----
- replace_object.c  | 6 ++----
- rerere.c          | 4 ++--
- 9 files changed, 19 insertions(+), 27 deletions(-)
+I posted some patches last year to make merge-recursive.c be able to
+do merges without touching the working tree.  Adding a few flags would
+then enable it for any of 'merge', 'cherry-pick', 'am', or
+'rebase'...though for unsuccessful merges, there's a clear question of
+what/how conflicts should be reported to the user.  That probably
+depends a fair amount on the precise use-case.
 
-diff --git a/cache-tree.c b/cache-tree.c
-index e03e72c34a..18946aa458 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -84,9 +84,8 @@ static struct cache_tree_sub *find_subtree(struct cache_tree *it,
- 	down->namelen = pathlen;
- 
- 	if (pos < it->subtree_nr)
--		memmove(it->down + pos + 1,
--			it->down + pos,
--			sizeof(down) * (it->subtree_nr - pos - 1));
-+		MOVE_ARRAY(it->down + pos + 1, it->down + pos,
-+			   it->subtree_nr - pos - 1);
- 	it->down[pos] = down;
- 	return down;
- }
-diff --git a/commit.c b/commit.c
-index cab8d4455b..7d0080180d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -126,10 +126,8 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 	ALLOC_GROW(commit_graft, commit_graft_nr + 1, commit_graft_alloc);
- 	commit_graft_nr++;
- 	if (pos < commit_graft_nr)
--		memmove(commit_graft + pos + 1,
--			commit_graft + pos,
--			(commit_graft_nr - pos - 1) *
--			sizeof(*commit_graft));
-+		MOVE_ARRAY(commit_graft + pos + 1, commit_graft + pos,
-+			   commit_graft_nr - pos - 1);
- 	commit_graft[pos] = graft;
- 	return 0;
- }
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 245e999fe5..888a4b0189 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -57,8 +57,8 @@ static int add_rename_dst(struct diff_filespec *two)
- 	ALLOC_GROW(rename_dst, rename_dst_nr + 1, rename_dst_alloc);
- 	rename_dst_nr++;
- 	if (first < rename_dst_nr)
--		memmove(rename_dst + first + 1, rename_dst + first,
--			(rename_dst_nr - first - 1) * sizeof(*rename_dst));
-+		MOVE_ARRAY(rename_dst + first + 1, rename_dst + first,
-+			   rename_dst_nr - first - 1);
- 	rename_dst[first].two = alloc_filespec(two->path);
- 	fill_filespec(rename_dst[first].two, &two->oid, two->oid_valid,
- 		      two->mode);
-@@ -98,8 +98,8 @@ static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
- 	ALLOC_GROW(rename_src, rename_src_nr + 1, rename_src_alloc);
- 	rename_src_nr++;
- 	if (first < rename_src_nr)
--		memmove(rename_src + first + 1, rename_src + first,
--			(rename_src_nr - first - 1) * sizeof(*rename_src));
-+		MOVE_ARRAY(rename_src + first + 1, rename_src + first,
-+			   rename_src_nr - first - 1);
- 	rename_src[first].p = p;
- 	rename_src[first].score = score;
- 	return &(rename_src[first]);
-diff --git a/dir.c b/dir.c
-index 7c4b45e30e..ce6e50d2a2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -747,8 +747,8 @@ static struct untracked_cache_dir *lookup_untracked(struct untracked_cache *uc,
- 	FLEX_ALLOC_MEM(d, name, name, len);
- 
- 	ALLOC_GROW(dir->dirs, dir->dirs_nr + 1, dir->dirs_alloc);
--	memmove(dir->dirs + first + 1, dir->dirs + first,
--		(dir->dirs_nr - first) * sizeof(*dir->dirs));
-+	MOVE_ARRAY(dir->dirs + first + 1, dir->dirs + first,
-+		   dir->dirs_nr - first);
- 	dir->dirs_nr++;
- 	dir->dirs[first] = d;
- 	return d;
-diff --git a/parse-options.c b/parse-options.c
-index fca7159646..d02eb8b015 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -525,7 +525,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 
- int parse_options_end(struct parse_opt_ctx_t *ctx)
- {
--	memmove(ctx->out + ctx->cpidx, ctx->argv, ctx->argc * sizeof(*ctx->out));
-+	MOVE_ARRAY(ctx->out + ctx->cpidx, ctx->argv, ctx->argc);
- 	ctx->out[ctx->cpidx + ctx->argc] = NULL;
- 	return ctx->cpidx + ctx->argc;
- }
-diff --git a/read-cache.c b/read-cache.c
-index 2eb81a66b9..2e8c85c686 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1217,9 +1217,8 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
- 	/* Add it in.. */
- 	istate->cache_nr++;
- 	if (istate->cache_nr > pos + 1)
--		memmove(istate->cache + pos + 1,
--			istate->cache + pos,
--			(istate->cache_nr - pos - 1) * sizeof(ce));
-+		MOVE_ARRAY(istate->cache + pos + 1, istate->cache + pos,
-+			   istate->cache_nr - pos - 1);
- 	set_index_entry(istate, pos, ce);
- 	istate->cache_changed |= CE_ENTRY_ADDED;
- 	return 0;
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 82c1cf90a7..e90bd3e727 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -238,10 +238,8 @@ int remove_entry_from_dir(struct ref_dir *dir, const char *refname)
- 		return -1;
- 	entry = dir->entries[entry_index];
- 
--	memmove(&dir->entries[entry_index],
--		&dir->entries[entry_index + 1],
--		(dir->nr - entry_index - 1) * sizeof(*dir->entries)
--		);
-+	MOVE_ARRAY(&dir->entries[entry_index],
-+		   &dir->entries[entry_index + 1], dir->nr - entry_index - 1);
- 	dir->nr--;
- 	if (dir->sorted > entry_index)
- 		dir->sorted--;
-diff --git a/replace_object.c b/replace_object.c
-index f0b39f06d5..3e49965d05 100644
---- a/replace_object.c
-+++ b/replace_object.c
-@@ -44,10 +44,8 @@ static int register_replace_object(struct replace_object *replace,
- 	ALLOC_GROW(replace_object, replace_object_nr + 1, replace_object_alloc);
- 	replace_object_nr++;
- 	if (pos < replace_object_nr)
--		memmove(replace_object + pos + 1,
--			replace_object + pos,
--			(replace_object_nr - pos - 1) *
--			sizeof(*replace_object));
-+		MOVE_ARRAY(replace_object + pos + 1, replace_object + pos,
-+			   replace_object_nr - pos - 1);
- 	replace_object[pos] = replace;
- 	return 0;
- }
-diff --git a/rerere.c b/rerere.c
-index 1ce440f4bb..79203c6c1e 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -159,8 +159,8 @@ static struct rerere_dir *find_rerere_dir(const char *hex)
- 		ALLOC_GROW(rerere_dir, rerere_dir_nr + 1, rerere_dir_alloc);
- 		/* ... and add it in. */
- 		rerere_dir_nr++;
--		memmove(rerere_dir + pos + 1, rerere_dir + pos,
--			(rerere_dir_nr - pos - 1) * sizeof(*rerere_dir));
-+		MOVE_ARRAY(rerere_dir + pos + 1, rerere_dir + pos,
-+			   rerere_dir_nr - pos - 1);
- 		rerere_dir[pos] = rr_dir;
- 		scan_rerere_dir(rr_dir);
- 	}
--- 
-2.16.1.80.gc0eec9753d
+Although that series was placed on the backburner due to the immediate
+driver of the feature going away, I'm still interested in such a
+change, though I think it would fall out as a nice side effect of
+implementing Junio's proposed ideal-world-merge-recursive rewrite[1].
+I have started looking into that[2], but no guarantees about how
+quickly I'll find time to finish or even whether I will.
 
+[1] https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com
+[2] https://github.com/newren/git/blob/ort/ort-cover-letter contains
+overview of ideas and notes to myself about what I was hoping to
+accomplish; currently it doesn't even compile or do anything
+
+> 4. API suggestion
+>
+> Here's what I really want 'git merge-tree' to output. :)
+...
+> If the merge had conflicts, write the "as merged as possible" tree to
+
+You'd need to define "as merged as possible" more carefully, because I
+thought you meant a tree containing all the three-way merge conflict
+markers and such being present in the "resolved" file, but from your
+parenthetical note below it appears you think that is a different tree
+that would also be useful to diff against the first one.  That leaves
+me wondering what the first tree is. (Is it just the tree where for
+each path, if that path had no conflicts associated with it then it's
+the merge-resolved-file, and otherwise it's the file contents from the
+merge-base?).
+
+Both of these trees are actually rather non-trivial to define.  The
+wording above isn't actually sufficient, because content conflicts
+aren't the only kind of conflict.  More on that below.
+
+There is already a bunch of code in merge-recursive.c to create a
+forcibly-merged-accepting-conflict-markers-in-the-resolution and
+record it as a tree (this is used for creating virtual merge bases in
+the recursive case, namely when there isn't a single merge-base for
+the two branches you are merging).  It might be reusable for what you
+want here, but it's not immediately clear whether all the things it
+does are appropriate; someone would have to consider the non-content
+(path-based) conflicts carefully.
+
+> the object database and give me its sha, and then also give me the
+> three-way merge diff output for all conflicts, as a regular patch
+> against that tree, using full path names and shas. (Alternatively,
+> maybe better, give me a second sha for a tree containing all the
+> three-way merge diff patches applied, which I can diff against the
+> first tree to find the conflict patches.)
+
+As far as I can tell, you're assuming that it's possible with two
+trees that are crafted "just right", that you can tell where the merge
+conflicts are, with binary files being your only difficulty.  Content
+conflicts aren't the only type that exist; there are also path-based
+conflicts.  These type of conflicts also make it difficult to know how
+the two trees you are requesting should even be created.
+
+For example, if there is a modify/delete conflict, how can that be
+determined from just two trees?  If the first tree has the base
+version of the file, then the second tree either has a file at the
+same position or it doesn't.  Neither case looks like a conflict, but
+the original merge had one.  You need more information.  The exact
+same thing can be said for rename/delete conflicts.
+
+Similarly, rename/add (one side renames an existing file to some new
+path (say, "new_path"), and the other adds a brand new file at
+"new_path), or rename/rename(2to1) (each side renames a different file
+to the same location), won't be detectable just by diffing two trees.
+These are often handled by moving both files to some other location,
+so there's no way to record in a tree that there was a conflict.
+
+rename/rename(1to2) is similar, but instead of two different original
+files being renamed to the same thing, this is one file being renamed
+differently on different sides of history.
+
+I know that several of the examples above involved rename detection,
+which git-merge-trees won't even do, but that means you're even more
+likely to face the modify/delete conflict cases.  And our list still
+isn't done, either:
+
+Directory/file conflicts (one side puts a directory of the same name
+that the other side adds as a file) will also cause problems.
+
+Finally, directory rename detection (currently in pu under review)
+adds a few "implicit dir rename" conflict types (renames of multiple
+directories would cause multiple files to be renamed to the same
+location, or an existing file/dir being in the way of one or more
+path(s) getting implicitly renamed).  This means that the number of
+types of non-textual conflicts might also grow in the future so it may
+be unwise to try to special case existing exceptions with a bag of
+clever workarounds.
+
+
+Hope that helps,
+Elijah
