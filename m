@@ -2,97 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7741F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 21:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC1E21F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 22:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750977AbeAVVZf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 16:25:35 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55304 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750878AbeAVVZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 16:25:34 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB4D5C9E43;
-        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZZei2BHlf+AOqClJUGzM8hpKzpM=; b=rchEYp
-        uTcIw40P3NXtByxlg2/C6a6Xx50JemjSlfQy7ywnBa8TWalQ5JAPt1cWLnUzFmfw
-        pigDJxZyM7VgjKwPU/Bi88kVeP3o6JW3khG11Ik/YqiodLxAeQpYh6NWMn0IoBK4
-        GH0am2PM5wAVyQc/3hFXt1bpGHITV2yU+SxMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hNC8LPf3YGKxmGgJMO2idDPvw/cgKJCj
-        eousSqd0mun9deaVqkPdiYG85fcILleHxIy7lKDLDWIgNIX/gyuovCKPlPbTTw4J
-        zmiPtoHooOiAtQkt3hzIWROW4XeLKCDJB8wjItdsHnU8Zz7mfOExplq7w0JT7pqQ
-        aUyw8Z71Td8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D12C0C9E42;
-        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 42228C9E41;
-        Mon, 22 Jan 2018 16:25:33 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
-        <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com>
-Date:   Mon, 22 Jan 2018 13:25:32 -0800
-In-Reply-To: <CA+P7+xozcQD2xuys6mh8MsfcYZ_nb2c9yxhDxkc7FTN2SfoofQ@mail.gmail.com>
-        (Jacob Keller's message of "Thu, 18 Jan 2018 08:25:30 -0800")
-Message-ID: <xmqqwp09lh6b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751169AbeAVWKc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 17:10:32 -0500
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:44912 "EHLO
+        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750977AbeAVWKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 17:10:31 -0500
+Received: by mail-vk0-f49.google.com with SMTP id q62so5928301vkb.11
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 14:10:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1tfotWinBER6R70I33alZAKkF7d3cqGdrKjcffgu+xM=;
+        b=I+nMZony6afAmXR7opOk5BivgH9cIUr93kMBUAy1OE0ik0rQkcLEZkr1mR1oy0pwHw
+         U4P2rXPPSmJz0nx0k7MIFmqY7i7A0GOmTOz2mTDaaV2U9zJSbgmMVgS+Bnr4tjLhpJp7
+         dgxnUt9ix05narZvnkGw0gIoiml9Bq/fPVp2eDXpVxjBWr7hDZJPwklR7qiXu/m3rTxg
+         DxKtdVTMtpU+SESWUCd4dK4BKH4Vl+nxnlFf8JDJZ8S4Z+vLnB2uwKWUt9hgGbvZVzlG
+         5RMO76d4xyF4BpPsi43/nJQDdkLeHwWLyhV1SHV31YBzwqTkE9qiF5ObQVbMg79/LWv+
+         at4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1tfotWinBER6R70I33alZAKkF7d3cqGdrKjcffgu+xM=;
+        b=a4yCQCJRpFbHCiM30REIfQe/HGP7z8Bgt78lcNdeWFJdqhf8ZHjmzRHNXRgVxPCPo6
+         fQXz1+FgeFtiLJuMAghFZaowgsF8dYPphv8Nj1rgqqLoIO6ojcwVnHvvGUPdyoI8rXTQ
+         EtA6FKcCcKhieH0aPByRlGwkq8sFkDLqsIGu1ieBVspjIyRM7nPOCdcgMsPpHf3Ix9RB
+         reuNZTv00nc/7ogjRmnkv1ZzlNWaaR9LxjPUxGgyAyckWrYEuDA4CybAT0tIa5qNHbSd
+         c1VhutNUpqmq/IdtIUsJ2n6/Unz8P1dzOIrZTVcOj8+UQ4Bdci8KblYImGczHLZ6vjeH
+         pdcg==
+X-Gm-Message-State: AKwxytcVqP+evhCZK9+7IOUpnzIrdiQmS3ef68H5FvfkzyLjtHBmIrmi
+        nA2WhgvMZneEg3ng6GCdvgcm1+d9KcsfPoxKIqg=
+X-Google-Smtp-Source: AH8x226KlVFYuxPjw27C2b1fMN62RnYzMoa/6rE4CACszq6bZHKWEGanXgQOrwDHrYPUR/S4yAemJDCkF5BBKgCZYRQ=
+X-Received: by 10.31.45.1 with SMTP id t1mr281763vkt.12.1516659030857; Mon, 22
+ Jan 2018 14:10:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C76C696E-FFBA-11E7-A362-575F0C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.176.32.12 with HTTP; Mon, 22 Jan 2018 14:10:30 -0800 (PST)
+In-Reply-To: <CAPig+cQnVfFcN_kH-pQmjJWa_3SeEb4_vdL7-nDCO-tV-U7Pvg@mail.gmail.com>
+References: <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+ <20180122182717.21539-1-szeder.dev@gmail.com> <CAPig+cQnVfFcN_kH-pQmjJWa_3SeEb4_vdL7-nDCO-tV-U7Pvg@mail.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 22 Jan 2018 23:10:30 +0100
+Message-ID: <CAM0VKj=EK7ZQkxvhvzyDgKJXxzd19Mtj1vCRULqthVmPj4W2Tg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write
+ shared index
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+On Mon, Jan 22, 2018 at 8:46 PM, Eric Sunshine <sunshine@sunshineco.com> wr=
+ote:
+> On Mon, Jan 22, 2018 at 1:27 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com>=
+ wrote:
 
-> The code looks good, but I'm a little wary of adding bud which
-> hard-codes a specific label. I suppose it does grant a bit of
-> readability to the resulting script... ? It doesn't seem that
-> important compared to use using "reset onto"? At least when
-> documenting this it should be made clear that the "onto" label is
-> special.
+>>   - The logs of OSX build jobs have CRCRLF line endings.  However, the
+>>     'base64' util of OSX doesn't wrap its output at 76 columns, i.e.
+>>     prints one single albeit very long line.  This means that while
+>
+> Perhaps you could pipe the 'base64' output through 'fold' or 'fmt'?
 
-I do not think we would mind "bud" too much in the end result, but
-the change in 1/8 is made harder to read than necessary with it.  It
-is the only thing that needs "a single-letter command name may now
-not have any argument after it" change to the parser among the three
-things being added here, and it also needs to be added to the list
-of special commands without arguments.
+No need to, according to its manpage[1], OSX's base64 has an option to
+wrap lines after given number of characters.  Of course it uses a
+different letter for the option than the coreutils base64... :)
 
-It would have been easier to reason about if addition of "bud" was
-in its own patch done after label and reset are added.  And if done
-as a separate step, perhaps it would have been easier to realize
-that it would be a more future-proof solution for handling the
-"special" ness of BUD to add a new "unsigned flags" word to
-todo_command_info[] structure and using a bit that says "this does
-not take an arg" than to hardcode "noop and bud are the commands
-without args" in the code.  That hardcode was good enough when there
-was only one thing in that special case.  Now it has two.
-
-In a similar way, the code to special case label and reset just like
-exec may also want to become more table driven, perhaps using
-another bit in the same new flags word to say "this does not refer
-to commit".  I think that can become [v2 1/N] while addition of "bud"
-can be [v2 2/N] (after all, "bud" just does the same do_reset() with
-hardcoded argument, so "label/reset" must come first).
+(While long lines are ugly, in this particular case it comes handy: when
+using vim to extract the base64-encoded section from the log to a
+separate file, it's less keystrokes to yank a single line than to search
+for the end of the encoded section.)
 
 
-
-
+[1] - https://developer.apple.com/legacy/library/documentation/Darwin/Refer=
+ence/ManPages/man1/base64.1.html
