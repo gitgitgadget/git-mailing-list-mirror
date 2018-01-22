@@ -2,196 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C22E1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 18:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F32CC1FADF
+	for <e@80x24.org>; Mon, 22 Jan 2018 19:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751140AbeAVS1d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 13:27:33 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:34728 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751102AbeAVS1c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 13:27:32 -0500
-Received: by mail-wm0-f53.google.com with SMTP id j21so10131551wmh.1
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 10:27:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=whKCSpSr24MMIQm1FQ+ifsT0FSyEGP0Gg/pyWWMjcOo=;
-        b=c+w40Pxz9Tk7sWtsa33jU5QTEBzJPgFiGDAr5DF2xQIz7lm5G9dnG8CUG2iAba2mKe
-         XBLjM9ubGfvLzAzKlNIpXsgnWOnYFajz0iXXHnU3AwECCtmM266QjTRLADhL2jQRdCVl
-         +K/4axZtHuKPB54QumKmh9lr5gefevE55O9Oi0Z59cxuqcTmVrn53VaT6irzW/mtdpSg
-         +kdrtTP1uk4mAa9qmtyEZRPfCXc7FDTqadLDrGGa8zKC7C1s02MwAz2agP+WjJV1fkE/
-         gF9h11AaAGPcD82bDv7/4mYU9pFMrm8sBn88nD0IwMKWN2hYj3QrgQghQNHt+tzT+M95
-         gFwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=whKCSpSr24MMIQm1FQ+ifsT0FSyEGP0Gg/pyWWMjcOo=;
-        b=HeRu4dNK/2j3rKOi4slpdXa7See8bUKYybnPSX5ShvV4LadCzUVba8vqJtOi5a7FbT
-         BWMUDNbAxk3GX1z5MymrPKlMvWQFy4EqWgshu+Qbc8jntzqQbA+yv7oOz1fBhYg53eew
-         cNy4IA9c474um1pUx/u5BCl9dPfJP3aBqmdXVrYSIQd+/vInCOP4oQUj0PdCKDMsmw0N
-         VK38UsxrOw5Z1LkIRWo28lnM/J6Rl/ZlMsdS1w1fbnGA2uL5SIvDwnIP2LZrj/HtKGDt
-         OmmXMUt5WXIQs7gancPwYUiDs5+cLpIQpzlQd3AeVs1ldi2tZxqi/WUtzBX0RLD92xfw
-         yqtw==
-X-Gm-Message-State: AKwxytf4vDfH1X/KOL4vOTePsNHXA7dXJ/KwoAD/q1oXkSt+fSvB4uQS
-        5JQr7twuckM4uvqOQFPwBVw=
-X-Google-Smtp-Source: AH8x224yHhasjuLrHUf2zodI/8Mj/QTiGTC+ZJ6ZJe3bMHUPn/GX/b3zm2U2yr6Z7xZdOjdyvRvnzg==
-X-Received: by 10.28.65.133 with SMTP id o127mr5710312wma.130.1516645650947;
-        Mon, 22 Jan 2018 10:27:30 -0800 (PST)
-Received: from localhost.localdomain (x590e64ec.dyn.telefonica.de. [89.14.100.236])
-        by smtp.gmail.com with ESMTPSA id 31sm13698789wra.49.2018.01.22.10.27.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 22 Jan 2018 10:27:30 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write shared index
-Date:   Mon, 22 Jan 2018 19:27:17 +0100
-Message-Id: <20180122182717.21539-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.1.80.gc0eec9753d
-In-Reply-To: <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
-References: <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+        id S1751078AbeAVTb1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 14:31:27 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53916 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751049AbeAVTbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 14:31:25 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E2D4AD4F3D;
+        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XjAJqm8NXEtNw9ixvRFcr6vC/zM=; b=PTNsGN
+        zfPAAhpzCqgelaMAILjaWqeErmgb3jnqZrqtcngLfWbIJvceDPetljfPEzsRPUkU
+        PR9W/M7WHpnDacwmOCEheyo2MFkNLcA34+mtAaXCZVHb/sTuchr5bbJXX7qIAfrA
+        0CKbUnInAxLRZ+e4zzHGBoJfoP9j4h9pFwko0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Ovxb+YL+Kwjaw8UyauSx01+uezAhu7HP
+        3GdP0cv3zRWpnZbRnIn6sOOcPDF1SGQuLYI8LrfQb/IhIp4JSv6UxBVCrNsz9i7q
+        Ma3iHA2XxC+TeKDeMEETpfP4RKXhhereHVe8wjXidRAy1MhC33igBqwztYxMVJ2G
+        7Hy1qkdH/KY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D9F6ED4F3C;
+        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55D85D4F3A;
+        Mon, 22 Jan 2018 14:31:22 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Jeff King <peff@peff.net>, Kim Gybels <kgybels@infogroep.be>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] packed_ref_cache: don't use mmap() for small files
+References: <20180115235251.GA21900@sigill.intra.peff.net>
+        <20180116193815.4568-1-kgybels@infogroep.be>
+        <20180117220902.GA14952@sigill.intra.peff.net>
+        <29c51594-6e29-be34-3d5f-2b9f399490f2@alum.mit.edu>
+Date:   Mon, 22 Jan 2018 11:31:20 -0800
+In-Reply-To: <29c51594-6e29-be34-3d5f-2b9f399490f2@alum.mit.edu> (Michael
+        Haggerty's message of "Sun, 21 Jan 2018 05:41:48 +0100")
+Message-ID: <xmqqh8rdn113.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D3F55C82-FFAA-11E7-B137-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-On Thu, Jan 18, 2018 at 1:47 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Thu, Jan 18, 2018 at 6:36 PM, SZEDER Gábor <szeder.dev@gmail.com> wrote:
->> This series, queued as 'nd/shared-index-fix', makes the 32 bit Linux
->> build job fail on Travis CI.  Unfortunately, all it can tell us about
->> the failure is this:
->>
->>   Test Summary Report
->>   -------------------
->>   t1700-split-index.sh                             (Wstat: 256 Tests: 23
->>   Failed: 1)
->>     Failed test:  23
->>     Non-zero exit status: 1
->>   Files=809, Tests=18491, 401 wallclock secs ( 7.22 usr  1.60 sys + 263.16
->>   cusr 49.58 csys = 321.56 CPU)
->>   Result: FAIL
->>
->> because it can't access the test's verbose log due to lack of
->> permissions.
->>
->>
->>   https://travis-ci.org/git/git/jobs/329681826#L2074
+> `snapshot->buf` can still be NULL if the `packed-refs` file didn't exist
+> (see the earlier code path in `load_contents()`). So either that code
+> path *also* has to get the `xmalloc()` treatment, or my third patch is
+> still necessary. (My second patch wouldn't be necessary because the
+> ENOENT case makes `load_contents()` return 0, triggering the early exit
+> from `create_snapshot()`.)
 >
-> I may need help getting that log (or even better the trash directory
-> of t1700). 
+> I don't have a strong preference either way.
 
-Well, shower thoughts gave me an idea, see the included PoC patch below.
-I can't really decide whether it's too clever or too ugly :)
+Which would be a two-liner, like the attached, which does not look
+too bad by itself.
 
-It produces output like this (a previous WIP version without
-'--immediate'):
+The direction, if we take this approach, means that we are declaring
+that .buf being NULL is an invalid state for a snapshot to be in,
+instead of saying "an empty snapshot looks exactly like one that was
+freshly initialized", which seems to be the intention of the original
+design.
 
-  https://travis-ci.org/szeder/git/jobs/331601009#L2486
+After Kim's fix and with 3/3 in your follow-up series, various
+helpers are still unsafe against .buf being NULL, like
+sort_snapshot(), verify_buffer_safe(), clear_snapshot_buffer() (only
+when mmapped bit is set), find_reference_location().
+
+packed_ref_iterator_begin() checks if snapshot->buf is NULL and
+returns early.  At the first glance, this appears a useful short cut
+to optimize the empty case away, but the check also is acting as a
+guard to prevent a snapshot with NULL .buf from being fed to an
+unsafe find_reference_location().  An implicit guard like this feels
+a bit more brittle than my liking.  If we ensure .buf is never NULL,
+that check can become a pure short-cut optimization and stop being
+a correctness thing.
+
+So...
 
 
-  -- >8 --
+ refs/packed-backend.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Subject: [PATCH] travis-ci: include the trash directories of failed tests in
- the trace log
-
-The trash directory of a failed test might contain valuable
-information about the cause of the failure, but we have no access to
-the trash directories of Travis CI build jobs.  The only feedback we
-get from there is the trace log, so...
-
-Modify 'ci/print-test-failures.sh' to create a tar.gz archive of the
-test directory of each failed test and encode it with base64, so the
-result is a block of ASCII text that can be safely included in the
-trace log, along with a hint about how to restore it.  Furthermore,
-run tests with '--immediate' to faithfully preserve the failed state.
-
-A few of our tests create a sizeable trash directory, so limit the
-size of each included base64-encoded block, let's say, to 1MB.
-
-Note:
-
-  - The logs of Linux build jobs coming from Travis CI have mostly
-    CRLF line endings, which makes 'base64 -d' from 'coreutils'
-    complain about "invalid input"; it has to be converted to LF
-    first.  'openssl base64 -d' can grok it just fine, even without
-    conversion.
-
-  - The logs of OSX build jobs have CRCRLF line endings.  However, the
-    'base64' util of OSX doesn't wrap its output at 76 columns, i.e.
-    prints one single albeit very long line.  This means that while
-    'base64' from 'coreutils' still complains, by the time it gets to
-    the invalid input it already decoded everything and produced a
-    valid .tar.gz.  OTOH, 'openssl base64 -d' doesn't grok it, but
-    exits without any error message or even an error code, even after
-    converting to CRLF or LF line endings.
-
-    Go figure.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- ci/lib-travisci.sh        |  2 +-
- ci/print-test-failures.sh | 20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
-
-diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
-index 1efee55ef7..981c6e9504 100755
---- a/ci/lib-travisci.sh
-+++ b/ci/lib-travisci.sh
-@@ -97,7 +97,7 @@ fi
- export DEVELOPER=1
- export DEFAULT_TEST_TARGET=prove
- export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
--export GIT_TEST_OPTS="--verbose-log"
-+export GIT_TEST_OPTS="--verbose-log --immediate"
- export GIT_TEST_CLONE_2GB=YesPlease
- 
- case "$jobname" in
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 4f261ddc01..cc6a1247a4 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -23,5 +23,25 @@ do
- 		echo "$(tput setaf 1)${TEST_OUT}...$(tput sgr0)"
- 		echo "------------------------------------------------------------------------"
- 		cat "${TEST_OUT}"
-+
-+		TEST_NAME="${TEST_EXIT%.exit}"
-+		TEST_NAME="${TEST_NAME##*/}"
-+		TRASH_DIR="t/trash directory.$TEST_NAME"
-+		TRASH_TGZ_B64="$TEST_NAME.trash.base64"
-+		if [ -d "$TRASH_DIR" ]
-+		then
-+			tar czp "$TRASH_DIR" |base64 >"$TRASH_TGZ_B64"
-+
-+			if [ 1048576 -lt $(wc -c <"$TRASH_TGZ_B64") ]
-+			then
-+				# larger than 1MB
-+				echo "$(tput setaf 1)Trash directory of '$TEST_NAME' is too big to be included in the trace log$(tput sgr0)"
-+			else
-+				echo "$(tput setaf 1)Trash directory of '$TEST_NAME':$(tput sgr0)"
-+				echo "(Extract it to a file from the raw log, make sure it has Unix line endings, then run 'base64 -d <file> |tar vxzp' to restore it)"
-+				cat "$TRASH_TGZ_B64"
-+				echo "$(tput setaf 1)End of trash directory of '$TEST_NAME'$(tput sgr0)"
-+			fi
-+		fi
- 	fi
- done
--- 
-2.16.1.80.gc0eec9753d
-
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index b6e2bc3c1d..1eeb5c7f80 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -473,12 +473,11 @@ static int load_contents(struct snapshot *snapshot)
+ 	if (fd < 0) {
+ 		if (errno == ENOENT) {
+ 			/*
+-			 * This is OK; it just means that no
+-			 * "packed-refs" file has been written yet,
+-			 * which is equivalent to it being empty,
+-			 * which is its state when initialized with
+-			 * zeros.
++			 * Treat missing "packed-refs" as equivalent to
++			 * it being empty.
+ 			 */
++			snapshot->eof = snapshot->buf = xmalloc(0);
++			snapshot->mmapped = 0;
+ 			return 0;
+ 		} else {
+ 			die_errno("couldn't read %s", snapshot->refs->path);
