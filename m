@@ -2,84 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54BFC1F404
-	for <e@80x24.org>; Mon, 22 Jan 2018 23:34:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 883971F404
+	for <e@80x24.org>; Mon, 22 Jan 2018 23:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751183AbeAVXe3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 18:34:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53840 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751031AbeAVXe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 18:34:28 -0500
-Received: (qmail 10107 invoked by uid 109); 22 Jan 2018 23:34:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 22 Jan 2018 23:34:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12244 invoked by uid 111); 22 Jan 2018 23:35:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 18:35:05 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 18:34:26 -0500
-Date:   Mon, 22 Jan 2018 18:34:26 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Rene Scharfe <l.s.r@web.de>,
-        Stefan Beller <sbeller@google.com>,
-        Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] Use MOVE_ARRAY
-Message-ID: <20180122233426.GA27144@sigill.intra.peff.net>
-References: <d81743e5-d5ba-a565-23f7-072007493499@web.de>
- <20180122175009.20178-1-szeder.dev@gmail.com>
- <20180122224410.GA21604@sigill.intra.peff.net>
- <xmqq372xjwzg.fsf@gitster.mtv.corp.google.com>
+        id S1751096AbeAVXoY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 18:44:24 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59618 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751038AbeAVXoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 18:44:23 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B358ACC115;
+        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=45/YsisZf1wAUcRI347AaQBmRL8=; b=ZZden6
+        HBIU8lewQ8Om14BikCH8rmdOLpeIOKlSNCgcMKDW+WNKO2P5cU3fGfQK1zkIPCEp
+        6PTNqKzgHa2kKn1hCASONQkFzyW0IduVOv080CC378bUNrfmzzdsCJBDHLuhVSvs
+        ut70I05srcryY8JDNnBzQk6b+einIlhFMoFbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ueCaZiyPqAxJR0s/cPtwnyNM7ExVLwTt
+        K6fjCgSfo2SkRLTEvTfxdpkPAFMjUfACDW96nAQvA8OcJSwcIKOCHxtoTVp8vYXK
+        MGMiLIK/ZV3mrG4gULmyAbKSo6kcrJGoIxNYtRRI7oTXODOScBU60G2mD9Jei1sh
+        Y5XXTTv87Vc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB6C0CC114;
+        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 265BECC113;
+        Mon, 22 Jan 2018 18:44:21 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Nit] Lots of enumerated type warnings
+References: <001601d3917b$c1ade3c0$4509ab40$@nexbridge.com>
+        <xmqqo9lljz3l.fsf@gitster.mtv.corp.google.com>
+        <001501d393d3$b82150d0$2863f270$@nexbridge.com>
+Date:   Mon, 22 Jan 2018 15:44:20 -0800
+In-Reply-To: <001501d393d3$b82150d0$2863f270$@nexbridge.com> (Randall
+        S. Becker's message of "Mon, 22 Jan 2018 17:52:40 -0500")
+Message-ID: <xmqqy3kpihm3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq372xjwzg.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2B3B1392-FFCE-11E7-A886-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 22, 2018 at 03:26:59PM -0800, Junio C Hamano wrote:
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Most of these are "shift part of the array". I wonder if it would make
-> > sense to encapsulate that pattern in a helper, like:
-> >
-> >   #define SHIFT_ARRAY(a, nr, pos, slots) \
-> >     MOVE_ARRAY(a + pos + slots, a + pos, nr - pos - slots)
-> >   ...
-> >   SHIFT_ARRAY(it->down, it->subtree_nr, pos, 1);
-> 
-> Exactly my thought when I was queuing it, but I was wondering about
-> this more from "can we use the higher level abstraction for reducing
-> errors?" point of view.  If we are shifting an array by 3 slots to
-> the right, we should at least have enough slots allocated to hold
-> them (i.e. a->nr - a->alloc must be 3 or more).  But after realizing
-> that the level these macros operate at is still a bit too low to do
-> something like that, I quickly lost interest ;-)
+> Here are a few examples, there are more:
+>
+> auto_crlf = git_config_bool(var, value);
+>   		          ^
 
-Yeah, you'd need to know the "alloc" number to right-shift correctly,
-since by definition we're pushing off the end of a->nr. Left-shifts just
-need to make sure they don't go past "0", which we can do here, but I'd
-think they're pretty uncommon.
+The carets in your message do not align to what I think they are
+trying to point at, but I think the above is pointing at the '=' and
+wants to say "auto_crlf variable is enum, it gets assigned an
+integer returned from git_config_bool(), and I do not like that
+assignment".
 
-The right macro level may actually be something more like "make room for
-N items at pos". E.g.:
+For this one I tend to agree with the compiler, meaning that it is
+ugly to define "enum auto_crlf" in such a way that the first two
+values happen to match what a logically different "enum" (which is
+"boolean") assigns the two values to.  And this judgment does not
+change whether git_config_bool() actually returns an enum or an int
+(the code in reality returns the latter).
 
-  #define CREATE_ARRAY_HOLE(a, nr, alloc, pos, slots) do { \
-          ALLOC_GROW(a, nr + slots, alloc);
-	  MOVE_ARRAY(a + pos + slots, a + pos, nr - pos - slots);
-  } while (0)
+I do not think people would terribly mind a patch to turn the above
+into:
 
-but I didn't investigate the surrounding code. And it surely would need
-a catchier name. ;)
+  auto_crlf = git_config_bool(var, value) ? AUTO_CRLF_FALSE : AUTO_CRLF_TRUE;
 
--Peff
+> "/home/jenkins/.jenkins/workspace/Build_Git/config.c", line 1147:
+> warning(272): 
+>           enumerated type mixed with another type
+>
+> type = sha1_object_info(s->oid.hash, &s->size);
+>   			     ^
+
+/* returns enum object_type or negative */
+int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
+
+The function has been like this forever, I suspect, and I would say
+"this gives negative when error, or enum we know is non-negative" is
+quite a reasonable thing to do, but the enum has OBJ_BAD defined to
+be negative, so probably it is more kosher if sha1_object_info() is
+declared to return "enum object_type" instead of int.
+
+> "/home/jenkins/.jenkins/workspace/Build_Git/diff.c", line 3618:
+> warning(272): 
+>           enumerated type mixed with another type
+>
+> options->color_moved = diff_color_moved_default;
+>   	                     ^
+
+If color_moved field is declared to be an enum, the _default
+variable should be, too.  I do not think it is such a controversial
+fix.
