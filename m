@@ -2,94 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9E251F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 02:42:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C92E71F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 03:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751142AbeAWCmo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 21:42:44 -0500
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:42990 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751096AbeAWCmn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 21:42:43 -0500
-Received: by mail-oi0-f66.google.com with SMTP id c8so7005805oiy.9
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 18:42:43 -0800 (PST)
+        id S1751157AbeAWDWX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 22:22:23 -0500
+Received: from mail-ot0-f170.google.com ([74.125.82.170]:37938 "EHLO
+        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751142AbeAWDWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 22:22:22 -0500
+Received: by mail-ot0-f170.google.com with SMTP id v5so9473307oth.5
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 19:22:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cgy6dlxo3KZAqnRgYVF0a+H3B/JbzFazo7Lt/TftcWE=;
-        b=RB0EZnzCMgLRnYNkCpL+IK6F6cGJX8txgJBFqzPg/aGGAf9c83/Pk/ehU2x4FemX8/
-         ynPsntUBqDmAjB9yJmykXV8Y49LxMUlDUT0Y4pdeSxCJWcSsDYtICqEaturRNQN9+iRd
-         jrf6PSEMVv8yNMKEmE9bUoX5QpH/Kml/LEa8uEPcSLhcQhGNlMXYWtesf/TqgULFzVRx
-         1uCGcrCBydkyPet8l2CrTB1vQabYm5QofecjFkmuZsaLQ/WXA65CrNP+rtjoZt8b9lDK
-         rh7Mgob6ZHwIuI8W6IkD5pPPUt1QrfNDvslZuvsnTy8pBwrHCVd/8WAa3P7Y/t6UEyFh
-         2SGg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=RtM+hf9MIe5qCD4nhG9nXHZeUayobp5GbuKHf6WUG8U=;
+        b=ImYHXMgDKbc9uJ4FysoTEHnkR0OI8Q1eA0Qfyc3ZUoLStuW5Kh4R7T7W7T4gKzbuXw
+         owhf3Jh3BYO0vJ1SR8J/YI0AbM1gK8YM7KP4+2MzEDaEKtpJUfcx8EnWrWX2Hq/5t3uI
+         nbkHmIc74xJE3mKpzalhpts65dx9mbQ24xerHctQ29S0Ker4iEHB9qu1exKFcoEDwoDv
+         WilAUTcPgiD0aKtag4SVkPRAx5HDLWjQbLKpzvYCBGzOrqUhpzJTUoENrRXvmI4twfuX
+         OnHkhhj2wf2hg2x+PiOKUB5DtejU8ghwB9uIfthA+xcXHYC9EaLOb048Lg9X8/E/flBj
+         KM1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cgy6dlxo3KZAqnRgYVF0a+H3B/JbzFazo7Lt/TftcWE=;
-        b=j0xdz0erODg8iq1P00cu/QRKXQRSYrNlqX/mD5QE0cFYgKuIO/1zObd9vWkBdhlF9c
-         AyaWpyr9aFde02x3UjnDz5GbtZkx9mOB+bCwNwQmhoFhiFPcfNCo57Ornmy4yEME/ybY
-         qYxhuyXkQcgeqnk5kIpvzbbGqK0iRjMY60Dr4g5GMyknLNHKZewMmnnuQRlwerkv/TzW
-         1298/MUITQTwqWc9Z+Hfnv029GiTl0/+X9kVmqYgg3o5UPCcYQl/hVb/u2gKoIw2S922
-         QZfnv/WTB0JbV0z1/ionT3iOP4USOzk6NQwIu4Eay8vCBRJSLob3QQdq5QX2dKE5qBSK
-         OM0A==
-X-Gm-Message-State: AKwxytdp5vTlGEO9nuqBt8Fs5bzsOwJWFAoERR0FXB/iwXyBgAs50zcV
-        KU6Igut3TLmPSlP+hW9qx3FDAHoqC7nWpu6R+Bg=
-X-Google-Smtp-Source: AH8x2267tRv8PCI7oAjaF7ZTlVYappPSId/RT3cQBCfJM3WAlwF73Gf6JNY8mUStYy6TwnIxgn/uCKmRR92IOMJM/Og=
-X-Received: by 10.202.236.3 with SMTP id k3mr5306467oih.351.1516675363190;
- Mon, 22 Jan 2018 18:42:43 -0800 (PST)
+         :message-id:subject:to;
+        bh=RtM+hf9MIe5qCD4nhG9nXHZeUayobp5GbuKHf6WUG8U=;
+        b=Twj0GDutkT4gj+W43QLWZo/pqDhuoRZLivgJZZYYOopaKmX2or+GZ3o8No48LhhbL0
+         Yn6nNRggQJ+tlXQi63g6PlPhZgMbqE+P73OiQc/Q5xf1kBF3dBgF8Glcpon96MWlhRSW
+         b1mLL/L8AslWZy9NvYSmzewZxgbtjXIkRlz/UB6gRxQ+ETrrR1SUkunP6EiRep/VXoJE
+         sFeRtT0CZ9gi9Pq/fisvboz1mbYY+aXkpFM8qop7bpoMQasXhWeOVxdMds0oCcZBsjQQ
+         RJhpt7/R22PcKpi1O4k1ZVgCqrGkSbkB/RemQYs1qqCNV56yzumU+Bp0e97YQr+H8ILK
+         WhSg==
+X-Gm-Message-State: AKwxytfgHo8CaMuCnvvfu6oF7/TjZq4qt9GvG1lFJ149twCsEeRM2E5q
+        UygLXYkSMRntsatcy9unfDSXaktMlAOJSIc6wZHyuUPf
+X-Google-Smtp-Source: AH8x225gHCPbofmbNL6gstYCvwgxZbSB8ImKgfBIf1+SLIe9FEG6n8qRqzhXKOexCm0+KCOYBu+aDxFbMW9TWppzwi4=
+X-Received: by 10.157.49.99 with SMTP id v32mr5788273otd.389.1516677741909;
+ Mon, 22 Jan 2018 19:22:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.27.3 with HTTP; Mon, 22 Jan 2018 18:42:12 -0800 (PST)
-In-Reply-To: <20180122235202.GA26357@sigill.intra.peff.net>
-References: <20180122123154.8301-1-pclouds@gmail.com> <20180122235202.GA26357@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Jan 2018 09:42:12 +0700
-Message-ID: <CACsJy8AWNOz0opf4RSPPZs=fSLKppw2pg8mKn6unLXiyjM+=FQ@mail.gmail.com>
-Subject: Re: [PATCH] format-patch: set diffstat width to 70 instead of default 80
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.157.5.168 with HTTP; Mon, 22 Jan 2018 19:22:21 -0800 (PST)
+In-Reply-To: <CAMAMitCV3xvaSr00H574Pww=r_c3=0NqT1Ge13kc=gWJqDJ3Ug@mail.gmail.com>
+References: <CAMAMitCV3xvaSr00H574Pww=r_c3=0NqT1Ge13kc=gWJqDJ3Ug@mail.gmail.com>
+From:   Aleksey Bykov <aleksey.bykov@gmail.com>
+Date:   Mon, 22 Jan 2018 22:22:21 -0500
+Message-ID: <CAMAMitC-iyH_YOAsJcPpLcUbmX-Zun4MCL89Pxn2rr7Lu_m2cQ@mail.gmail.com>
+Subject: Re: The original file that was split in 2 other files, is there a way
+ in git to see what went where?
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 6:52 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 22, 2018 at 07:31:54PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
->> Patches or cover letters generated by format-patch are meant to be
->> exchanged as emails, most of the time. And since it's generally agreed
->> that text in mails should be wrapped around 70 columns or so, make sure
->> these diffstat follow the convention.
->>
->> I noticed this when I quoted a diffstat line [1]. Should we do something
->> like this? diffstat is rarely quoted though so perhaps the stat width
->> should be something like 75.
->
-> I think the general idea is sensible. Somewhere I picked up "72" as the
-> right size for email lines to accommodate quoting, but I'm pretty sure
-> you could justify any number between 70 and 75. :)
+Hello,
 
-I think it's easy to settle on 72 because cover letter's shortlog
-already wraps at 72 columns. No point in introducing another number
-here.
+My problem:
 
-> PS I had a funny feeling that this had come up before not due to
->    quoting, but just due to people with enormous terminals generating
->    too-long lines. But I couldn't find any discussion, and my
->    (admittedly brief) reading of the code is that we'd actually respect
->    the terminal size by default.
+I am a code reviewer, I have a situation in GIT:
 
-Yeah, there are tests to check that we do ignore terminal size too.
---=20
-Duy
+- before: a.txt
+
+Then a developer decided to split the content of a.txt into 2 files
+and add a few changes all in one commit:
+
+- after: b.txt + few changes and c.txt + few changes
+
+Is there an easy way to see:
+
+1. what came to b from a?
+2 .what came to c from a?
+3. all extra changes apart from just moving stuff?
+
+A specific command would help a lot.
+
+A certain policy/workflow that prevents from problem like this (when
+there is no way to visually diff the changes) would also help.
+
+https://stackoverflow.com/questions/48350398/the-original-file-that-was-split-in-2-other-files-is-there-a-way-in-git-to-see
+
+
+Thanks,
+Aleksey Bykov
