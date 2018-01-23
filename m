@@ -2,115 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67F991F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 05:46:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D6531F576
+	for <e@80x24.org>; Tue, 23 Jan 2018 06:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbeAWFqA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 00:46:00 -0500
-Received: from imap.thunk.org ([74.207.234.97]:47444 "EHLO imap.thunk.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750857AbeAWFp7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 00:45:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
-        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=tH9pDaR1gFHvsg610dYLUvqfkUd/WMd9tyqrY7EPGxg=; b=xENe4Gz4IdX88X/OYxePZr2Cwg
-        JRskACX2xJunB08sixtBSVBvfyKQdQuHA88lMIMhdvPC972XHr4sJJBQFEq+WAwW826zqjIOMtyw5
-        oTUra76ZMNm9kNWnGrsCbRpSArHwcUdX9+ui5Nj/BPpZ41ccLRHlaI4xVJnuOimYJUBY=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1edrP8-0001Dd-P1; Tue, 23 Jan 2018 05:45:54 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id A81F9C00554; Tue, 23 Jan 2018 00:45:53 -0500 (EST)
-Date:   Tue, 23 Jan 2018 00:45:53 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Jeff King <peff@peff.net>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christoph Hellwig <hch@lst.de>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
-        Chris Mason <clm@fb.com>
-Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
-Message-ID: <20180123054553.GA21015@thunk.org>
-References: <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
- <20180117235220.GD6948@thunk.org>
- <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
- <20180118162721.GA26078@lst.de>
- <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
- <20180120221445.GA4451@thunk.org>
- <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
- <871siihqvw.fsf@evledraar.gmail.com>
- <20180122180903.GB3513@thunk.org>
- <20180123004710.GF26357@sigill.intra.peff.net>
+        id S1751367AbeAWGbx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 01:31:53 -0500
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:39970 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751275AbeAWGbw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 01:31:52 -0500
+Received: by mail-wm0-f53.google.com with SMTP id v123so21214323wmd.5
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 22:31:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oflGRsIOikPADlTibzb+TXhPZdQPGS4n5WqTCKQ5iTU=;
+        b=S0gHhRSJ/9En2viAnog/HcadhP8HS2AgpM4XyvxN4H1iLSXhtLpyFzGT6L5VDYpPjq
+         hcJEuLuAjXjVKtBHsN7nULuJa+mK8c+gkaHbWgNeB0IIeBqF5i/GKc2weZblAswcPGGO
+         rsUyn/o5pCSCLdMz4gJTHYmgXDXNWy+8dRNxLGPeJt06Ysh+e+Dz70m2R3ehJZNyZNHu
+         /3VzyiAcWgWe7SsNlP+5tfGIc04qgVeZaWtu20GPjQO5S4DLJcmsskzq3C/8Fo2aLPDv
+         jmAO/HCmRLoqVFrJuXTEqGSxeJ2zfdc2QxfNB0YZI0zYFWbs7UIrlVCjTDzoDyoEcBy+
+         bJYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oflGRsIOikPADlTibzb+TXhPZdQPGS4n5WqTCKQ5iTU=;
+        b=LgBjWB6VT4xu5rQRlVlJOSbM6Gq1UV++XM2HClJziVSgnfP6NXERAUf73BW39iTLTK
+         ezBkFznB+LlKOA0vHcPOs3iD21Dzc9a8sqM3AvLxP/QjA2Nxue90Ockeht5/4JlMbsXf
+         qw+NmcaCbbN95st/Vm5Gt0VVhYeN2UsIokLHO5oaNw2JIhlumLw28BIk96cvd6Y5usef
+         CG4wO3gozArOznVdgoVgtltCgb42oACYJn/QAuqWAG7eked2sw6PSn3HoLhgxxnIZ7qK
+         AQS0CNCVw209Hu3740qnpmMJNAXSUObcifebBD5OSN4x5rTPXFaBPSuRZhpn+SGCcpT8
+         D1lA==
+X-Gm-Message-State: AKwxytfgVVKGTru8kXwjy/Zk+JbWZdFeMnj13PDvLYDo2c2meheNRiJL
+        6LEzD4QPmvmjzJqqwiyAJEcckg3iLclbWEnkdk4=
+X-Google-Smtp-Source: AH8x224wK6j+3gkW6rZWJjoZk8ufaIRe5nGTAHLBprv9Gy2jMoYm2aqS57qC/3RfDA2NQN2/ET9n/RWutU4C2OW2mHo=
+X-Received: by 10.80.211.7 with SMTP id g7mr17724770edh.76.1516689110877; Mon,
+ 22 Jan 2018 22:31:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180123004710.GF26357@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Received: by 10.80.177.180 with HTTP; Mon, 22 Jan 2018 22:31:30 -0800 (PST)
+In-Reply-To: <20180123005950.GH26357@sigill.intra.peff.net>
+References: <1516665078-107974-1-git-send-email-gitter.spiros@gmail.com>
+ <CAPig+cSuBRcM7BBw1MKOOVSZv+CVVrY-dWfSGj+31DA4QMrruA@mail.gmail.com> <20180123005950.GH26357@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 22 Jan 2018 22:31:30 -0800
+Message-ID: <CA+P7+xqfHnsoOq8EPb-4feu8Q6gdRTCeOGRVkSyjNJNtmtiw=Q@mail.gmail.com>
+Subject: Re: [PATCH] Fixes compile warning with -Wimplicit-fallthrough CFLAGS
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elia Pinto <gitter.spiros@gmail.com>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 22, 2018 at 07:47:10PM -0500, Jeff King wrote:
-> 
-> I think Ævar is talking about the case of:
-> 
->   1. You make 100 objects that aren't referenced. They're loose.
-> 
->   2. You run git-gc. They're still too recent to be deleted.
-> 
-> Right now those recent loose objects sit loose, and have zero cost at
-> the time of gc.  In a "cruft pack" world, you'd pay some I/O to copy
-> them into the cruft pack, and some CPU to zlib and delta-compress them.
-> I think that's probably fine, though.
+On Mon, Jan 22, 2018 at 4:59 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 22, 2018 at 07:54:18PM -0500, Eric Sunshine wrote:
+>
+>> On Mon, Jan 22, 2018 at 6:51 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
+>> > This patch add explicit fallthrough compiler attribute
+>> > when needed on switch case statement eliminating
+>> > the compile warning [-Werror=implicit-fallthrough=].
+>> > It does this by means of a macro that takes into account
+>> > the versions of the compilers that include that attribute.
+>> > [...]
+>> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+>> > ---
+>> > diff --git a/convert.c b/convert.c
+>> > @@ -1554,7 +1554,7 @@ static int ident_filter_fn(struct stream_filter *filter,
+>> >                 switch (ident->state) {
+>> >                 default:
+>> >                         strbuf_add(&ident->left, head, ident->state);
+>> > -                       /* fallthrough */
+>> > +                       GIT_FALLTHROUGH;
+>> >                 case IDENT_SKIPPING:
+>> >                         /* fallthrough */
+>>
+>> Why doesn't this /* fallthrough */ deserve the same treatment?
+>>
+>> >                 case IDENT_DRAINING:
+>
+> I can't answer that philosophically, but I can tell you why the compiler
+> does not complain. :)
+>
+> Usually case arms with no statements between them are exempt from
+> fallthrough warnings. So:
+>
+>   switch (foo)
+>   case 1:
+>   case 2:
+>   case 3:
+>      /* do one thing */
+>      break;
+>   case 4:
+>      /* do another thing */
+>      break;
+>   }
+>
+> does not need any annotations for cases 1 and 2 to fallthrough. Which
+> means that the original comment was not actually necessary for the
+> compiler, though the original author considered it a useful comment.
+>
+> So there you get into philosophy. Should it be converted to a
+> compiler-visible annotation, or is it better left as a comment?
+>
+> -Peff
 
-I wasn't assuming that git-gc would create a cruft pack --- although I
-guess it could.  As you say, recent loose objects have relatively zero
-cost at the time of gc.  To the extent that the gc has to read lots of
-loose files, there may be more seeks in the cold cache case, so there
-is actually *some* cost to having the loose objects, but it's not
-great.
+I'd personally rather stick to the comment if we can, or use something
+like "fallthrough;" to make it appear like a keyword, instead of an
+all caps macro, since at least to my sensibility, the all caps is a
+bit too crazy.
 
-What I was thinking about instead is that in cases where we know we
-are likely to be creating a large number of loose objects (whether
-they referenced or not), in a world where we will be calling fsync(2)
-after every single loose object being created, pack files start
-looking *way* more efficient.  So in general, if you know you will be
-creating N loose objects, where N is probably around 50 or so, you'll
-want to create a pack instead.
+Also, I would not put one inside an empty case statement that just
+falls through to the next branch and does nothing special itself.
 
-One of those cases is "repack -A", and in that case the loose objects
-are all going tobe not referenced, so it would be a "cruft pack".  But
-in many other cases where we might be importing from another DCVS,
-which will be another case where doing an fsync(2) after every loose
-object creation (and where I have sometimes seen it create them *all*
-loose, and not use a pack at all), is going to get extremely slow and
-painful.
-
-> So if we pack all the loose objects into a cruft pack, the mtime of the
-> cruft pack becomes the new gauge for "recent". And if we migrate objects
-> from old cruft pack to new cruft pack at each gc, then they'll keep
-> getting their mtimes refreshed, and we'll never drop them.
-
-Well, I was assuming that gc would be a special case which doesn't the
-mtime of the old cruft pack.  (Or more generally, any time an object
-is gets copied out of the cruft pack, either to a loose object, or to
-another pack, the mtime on the source pack should not be touched.)
-
-	      	  	       	      	   	   - Ted
+Thanks,
+Jake
