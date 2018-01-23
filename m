@@ -2,207 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD2E11F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 01:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E251F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 02:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751359AbeAWB3p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 20:29:45 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:41110 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751313AbeAWB3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 20:29:44 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 136so8513356pgd.8
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 17:29:44 -0800 (PST)
+        id S1751142AbeAWCmo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 21:42:44 -0500
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:42990 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbeAWCmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 21:42:43 -0500
+Received: by mail-oi0-f66.google.com with SMTP id c8so7005805oiy.9
+        for <git@vger.kernel.org>; Mon, 22 Jan 2018 18:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=r9cT/fdX4sePwVPK63UCVKXDhiuSmoV5Darn81LD2Qc=;
-        b=sPRQVNLiOedktU+0GPerqUeyGn0j3HlsyzxzNw2tZOhMWnWUngxW04Q2Ij9uOhrg9x
-         lhVMidjkbuIy+P0zI3N/otwobiO3XDdKFLdGt4j31ZupCDJI1T/ldrlAVkQM9EZJKkUZ
-         sLalWgx1d7WsmPC1Z8Q3OeL3ZwYPbpxle0MuHYqzfRwwA6/hwcJpoITajhBoUFvZ+wkn
-         flR71c6qOIGz0TbSeS24KrOucX+sWGZlTk4XkKeOdTz+AfmNFRNsodzWW1OmLTfLZu+W
-         UZZ9mVwhU8JEHZBx+tPjzx9rb0OphsNgJPOIPI6WumYruZ3Zm4awHLHRLH1GAPFs/UXN
-         pMuA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cgy6dlxo3KZAqnRgYVF0a+H3B/JbzFazo7Lt/TftcWE=;
+        b=RB0EZnzCMgLRnYNkCpL+IK6F6cGJX8txgJBFqzPg/aGGAf9c83/Pk/ehU2x4FemX8/
+         ynPsntUBqDmAjB9yJmykXV8Y49LxMUlDUT0Y4pdeSxCJWcSsDYtICqEaturRNQN9+iRd
+         jrf6PSEMVv8yNMKEmE9bUoX5QpH/Kml/LEa8uEPcSLhcQhGNlMXYWtesf/TqgULFzVRx
+         1uCGcrCBydkyPet8l2CrTB1vQabYm5QofecjFkmuZsaLQ/WXA65CrNP+rtjoZt8b9lDK
+         rh7Mgob6ZHwIuI8W6IkD5pPPUt1QrfNDvslZuvsnTy8pBwrHCVd/8WAa3P7Y/t6UEyFh
+         2SGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=r9cT/fdX4sePwVPK63UCVKXDhiuSmoV5Darn81LD2Qc=;
-        b=VQea2jpifn32Z78pa8tjNIGQszEEw8q9+SCehbr1uN1tQ1Kb5HEefLKyx8QeRLK3N8
-         JeEZWLaVCLbONd3UQJ00i0MsBGr/4cNjssVExILCfpxNVfzib06NRwr8Vojuspy8sp4W
-         hOCvbSAEhPg1mfI294wfZA3guiQWHcyuFaBBFx7W3MoLYe85u6KfhuxbxFdeQ0weKxBk
-         PEHZ4Y71n2Xb38xJlMI7KFY0NZghZwZD+Rtggf21DwGYuZBgtHlvFCr/c7UZOI795ZfR
-         QgWFGMlxcQSRbHDN1Lsx18v8L0kcv76vLsmRvndGnFuOt/3eQ3FQ2ElQxuHFz+H26man
-         Womw==
-X-Gm-Message-State: AKwxytcY3gybh9X+ZhOOWKB5rEjQI0zyAT+JviYYL5w2MJtRoLfuAZXC
-        eB3RRQeB9VBYB3kcGaLioWw=
-X-Google-Smtp-Source: AH8x226Fti6ubNc5gU/dNNoaMnsPvWFCsFH7nwM6IDGblWD+GOWpo2nSp8IyUsRxnw3JoUvU6vPpXg==
-X-Received: by 10.99.168.76 with SMTP id i12mr8024497pgp.119.1516670984125;
-        Mon, 22 Jan 2018 17:29:44 -0800 (PST)
-Received: from duynguyen.dek-tpc.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id c25sm1728671pfi.183.2018.01.22.17.29.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 22 Jan 2018 17:29:43 -0800 (PST)
-Date:   Tue, 23 Jan 2018 08:29:33 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.ath.cx>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 07/14] match-trees: convert splice_tree to object_id
-Message-ID: <20180123012933.GA15378@duynguyen.dek-tpc.internal>
-References: <cover.1516617960.git.patryk.obara@gmail.com>
- <b5782b135fb68b645ffea711028bd6024176005a.1516617960.git.patryk.obara@gmail.com>
- <20180122115642.GB5980@ash>
- <CAJfL8+TrFV=DkJPZAYYYc69recsYiOGdeV8Ev0r5xfcmmqP-Hw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cgy6dlxo3KZAqnRgYVF0a+H3B/JbzFazo7Lt/TftcWE=;
+        b=j0xdz0erODg8iq1P00cu/QRKXQRSYrNlqX/mD5QE0cFYgKuIO/1zObd9vWkBdhlF9c
+         AyaWpyr9aFde02x3UjnDz5GbtZkx9mOB+bCwNwQmhoFhiFPcfNCo57Ornmy4yEME/ybY
+         qYxhuyXkQcgeqnk5kIpvzbbGqK0iRjMY60Dr4g5GMyknLNHKZewMmnnuQRlwerkv/TzW
+         1298/MUITQTwqWc9Z+Hfnv029GiTl0/+X9kVmqYgg3o5UPCcYQl/hVb/u2gKoIw2S922
+         QZfnv/WTB0JbV0z1/ionT3iOP4USOzk6NQwIu4Eay8vCBRJSLob3QQdq5QX2dKE5qBSK
+         OM0A==
+X-Gm-Message-State: AKwxytdp5vTlGEO9nuqBt8Fs5bzsOwJWFAoERR0FXB/iwXyBgAs50zcV
+        KU6Igut3TLmPSlP+hW9qx3FDAHoqC7nWpu6R+Bg=
+X-Google-Smtp-Source: AH8x2267tRv8PCI7oAjaF7ZTlVYappPSId/RT3cQBCfJM3WAlwF73Gf6JNY8mUStYy6TwnIxgn/uCKmRR92IOMJM/Og=
+X-Received: by 10.202.236.3 with SMTP id k3mr5306467oih.351.1516675363190;
+ Mon, 22 Jan 2018 18:42:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJfL8+TrFV=DkJPZAYYYc69recsYiOGdeV8Ev0r5xfcmmqP-Hw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.74.27.3 with HTTP; Mon, 22 Jan 2018 18:42:12 -0800 (PST)
+In-Reply-To: <20180122235202.GA26357@sigill.intra.peff.net>
+References: <20180122123154.8301-1-pclouds@gmail.com> <20180122235202.GA26357@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 23 Jan 2018 09:42:12 +0700
+Message-ID: <CACsJy8AWNOz0opf4RSPPZs=fSLKppw2pg8mKn6unLXiyjM+=FQ@mail.gmail.com>
+Subject: Re: [PATCH] format-patch: set diffstat width to 70 instead of default 80
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 22, 2018 at 02:12:56PM +0100, Patryk Obara wrote:
-> >> @@ -197,26 +195,26 @@ static int splice_tree(const unsigned char *hash1,
-> >>               if (strlen(name) == toplen &&
-> >>                   !memcmp(name, prefix, toplen)) {
-> >>                       if (!S_ISDIR(mode))
-> >> -                             die("entry %s in tree %s is not a tree",
-> >> -                                 name, sha1_to_hex(hash1));
-> >> -                     rewrite_here = (unsigned char *) oid->hash;
-> >> +                             die("entry %s in tree %s is not a tree", name,
-> >> +                                 oid_to_hex(hash1));
-> >> +                     rewrite_here = (struct object_id *)oid;
-> >
-> > You don't need the typecast here anymore, do you?
-> 
-> Unfortunately, I do :(
-> 
-> Few lines above:
-> 192: const struct object_id *oid;
-> 194: oid = tree_entry_extract(&desc, &name, &mode);
-> 
-> Function tree_entry_extract returns const pointer, which leads to
-> compiler warning:
-> "assigning to 'struct object_id *' from 'const struct object_id *'
-> discards qualifiers".
-> 
-> On the other hand, if I change const qualifier for 'rewrite_here'
-> variable - warning will
-> appear in line 216:
-> 
-> 216: oidcpy(rewrite_here, rewrite_with);
-> 
-> So the question here is rather: is it ok to overwrite buffer returned
-> by tree_entry_extract?
-> 
-> When writing this I opted to preserve cv-qualifiers despite changing
-> pointer type (which implied preservation of typecast) - partly
-> because parameter 'desc' of tree_entry_extract is NOT const (which
-> suggests to me, that it's ok).
-> 
-> But this cast might be indication of unintended modification inside
-> tree description structure and might lead to an error is some other
-> place, if there's an assumption, that this buffer is not
-> overwritable.
-> 
-> Maybe const should be removed from return type of tree_entry_extract
-> (and maybe from oid field of struct name_entry)?
+On Tue, Jan 23, 2018 at 6:52 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 22, 2018 at 07:31:54PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 >
-> I will give it some more thought - maybe oidcpy from line 216 could
-> be replaced.
+>> Patches or cover letters generated by format-patch are meant to be
+>> exchanged as emails, most of the time. And since it's generally agreed
+>> that text in mails should be wrapped around 70 columns or so, make sure
+>> these diffstat follow the convention.
+>>
+>> I noticed this when I quoted a diffstat line [1]. Should we do something
+>> like this? diffstat is rarely quoted though so perhaps the stat width
+>> should be something like 75.
+>
+> I think the general idea is sensible. Somewhere I picked up "72" as the
+> right size for email lines to accommodate quoting, but I'm pretty sure
+> you could justify any number between 70 and 75. :)
 
-I've read this code a bit more (sorry I didn't see the "const struct
-object_id *oid" line when I read this patch). I think the typecast is
-very much on purpose. Junio wanted to make a new tree with one
-different hash in 68faf68938 (A new merge stragety 'subtree'. -
-2007-02-15) but I think he kinda abused the tree walker for this
-task.
+I think it's easy to settle on 72 because cover letter's shortlog
+already wraps at 72 columns. No point in introducing another number
+here.
 
-A cleaner way is create a new tree by copying unmodified entries and
-replacing just one entry. I think the old way was ok when we dealt
-with SHA-1 directly, but with the object_id abstraction in place, this
-kind of update looks iffy.
+> PS I had a funny feeling that this had come up before not due to
+>    quoting, but just due to people with enormous terminals generating
+>    too-long lines. But I couldn't find any discussion, and my
+>    (admittedly brief) reading of the code is that we'd actually respect
+>    the terminal size by default.
 
-Alternatively, perhaps we can do something like this to keep tree
-manipulation in tree-walk.c, one of the two places that know about
-tree object on-disk format (the other one is cache-tree.c)
-
--- 8< --
-diff --git a/match-trees.c b/match-trees.c
-index 396b7338df..a8dc8a53d9 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -171,7 +171,7 @@ static int splice_tree(const unsigned char *hash1,
- 	char *buf;
- 	unsigned long sz;
- 	struct tree_desc desc;
--	unsigned char *rewrite_here;
-+	const object_id *rewrite_here;
- 	const unsigned char *rewrite_with;
- 	unsigned char subtree[20];
- 	enum object_type type;
-@@ -199,7 +199,7 @@ static int splice_tree(const unsigned char *hash1,
- 			if (!S_ISDIR(mode))
- 				die("entry %s in tree %s is not a tree",
- 				    name, sha1_to_hex(hash1));
--			rewrite_here = (unsigned char *) oid->hash;
-+			rewrite_here = oid->hash;
- 			break;
- 		}
- 		update_tree_entry(&desc);
-@@ -215,7 +215,7 @@ static int splice_tree(const unsigned char *hash1,
- 	}
- 	else
- 		rewrite_with = hash2;
--	hashcpy(rewrite_here, rewrite_with);
-+	replace_tree_entry_hash(&desc, rewrite_with, buf, sz);
- 	status = write_sha1_file(buf, sz, tree_type, result);
- 	free(buf);
- 	return status;
-diff --git a/tree-walk.c b/tree-walk.c
-index 63a87ed666..f31a03569f 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -164,6 +164,17 @@ int tree_entry_gently(struct tree_desc *desc, struct name_entry *entry)
- 	return 1;
- }
- 
-+void replace_tree_entry_hash(struct tree_desc *desc,
-+			     const unsigned char *sha1,
-+			     char *buf, unsigned long size)
-+{
-+	unsigned long offset = (const char *)desc->buffer - buf;
-+	unsigned char *to_update;
-+
-+	to_update = (unsigned char *)buf + offset + tree_entry_len(&desc->entry);
-+	hashcpy(to_update, sha1);
-+}
-+
- void setup_traverse_info(struct traverse_info *info, const char *base)
- {
- 	int pathlen = strlen(base);
-diff --git a/tree-walk.h b/tree-walk.h
-index b6bd1b4ccf..9a7d133d68 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -35,6 +35,9 @@ int update_tree_entry_gently(struct tree_desc *);
- void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
- int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
- 
-+void replace_tree_entry_hash(struct tree_desc *desc,
-+			     const unsigned char *sha1,
-+			     char *buf, unsigned long size);
- /*
-  * Helper function that does both tree_entry_extract() and update_tree_entry()
-  * and returns true for success
--- 8< --
+Yeah, there are tests to check that we do ignore terminal size too.
+--=20
+Duy
