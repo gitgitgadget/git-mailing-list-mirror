@@ -6,77 +6,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3F8F1F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 00:12:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7052F1F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 00:15:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751278AbeAWAMR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 19:12:17 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53920 "HELO cloud.peff.net"
+        id S1751199AbeAWAPD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 Jan 2018 19:15:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53930 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751128AbeAWAMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 19:12:16 -0500
-Received: (qmail 11896 invoked by uid 109); 23 Jan 2018 00:12:18 -0000
+        id S1751128AbeAWAPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 Jan 2018 19:15:03 -0500
+Received: (qmail 12037 invoked by uid 109); 23 Jan 2018 00:15:04 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jan 2018 00:12:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jan 2018 00:15:04 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12705 invoked by uid 111); 23 Jan 2018 00:12:54 -0000
+Received: (qmail 12724 invoked by uid 111); 23 Jan 2018 00:15:40 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 19:12:54 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 22 Jan 2018 19:15:40 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 19:12:14 -0500
-Date:   Mon, 22 Jan 2018 19:12:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Jan 2018 19:15:00 -0500
+Date:   Mon, 22 Jan 2018 19:15:00 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] format-patch: set diffstat width to 70 instead of
- default 80
-Message-ID: <20180123001214.GC26357@sigill.intra.peff.net>
-References: <20180122123154.8301-1-pclouds@gmail.com>
- <20180122235202.GA26357@sigill.intra.peff.net>
- <87po61h1to.fsf@evledraar.gmail.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Gargi Sharma <gs051095@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5] mru: Replace mru.[ch] with list.h implementation
+Message-ID: <20180123001500.GD26357@sigill.intra.peff.net>
+References: <1516497964-6041-1-git-send-email-gs051095@gmail.com>
+ <20180122073701.h7fh7xrkmnzndzj7@untitled>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87po61h1to.fsf@evledraar.gmail.com>
+In-Reply-To: <20180122073701.h7fh7xrkmnzndzj7@untitled>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 01:10:43AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Mon, Jan 22, 2018 at 07:37:01AM +0000, Eric Wong wrote:
 
+> > --- a/packfile.c
+> > +++ b/packfile.c
+> > @@ -859,9 +859,8 @@ static void prepare_packed_git_mru(void)
+> >  {
+> >  	struct packed_git *p;
+> >  
+> > -	mru_clear(&packed_git_mru);
 > 
-> On Mon, Jan 22 2018, Jeff King jotted:
+> But the removed mru_clear needs to be replaced with:
 > 
-> > On Mon, Jan 22, 2018 at 07:31:54PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> >> +	opts.diffopt.stat_width = 70;
-> >>
-> >>  	diff_setup_done(&opts);
-> >
-> > I wondered how this should interact with any config, but I don't think
-> > you can actually configure the stat-width. You _can_ configure
-> > diff.statgraphwidth, though, which seems like a funny inconsistency.
+> +	INIT_LIST_HEAD(&packed_git_mru);
 > 
-> Isn't the numeric argument to --stat (this works with/without this
-> patch):
-> 
->     $ git format-patch -10 --stdout --stat=30 -- t|grep -m 5 ' | '
->      ...submodule-update.sh | 1 +
->      ...ule-update.sh | 14 ++++++
->      ...-addresses.sh | 27 ---
->      t/t9000/test.pl  | 67 ------
->      ...send-email.sh | 19 ++++++
->     $ git format-patch -10 --stdout --stat=90 -- t|grep -m 5 ' | '
->      t/lib-submodule-update.sh | 1 +
->      t/lib-submodule-update.sh | 14 ++++++++++++++
->      t/t9000-addresses.sh | 27 -------------------------
->      t/t9000/test.pl      | 67 --------------------------------------------------------------
->      t/t9001-send-email.sh | 19 +++++++++++++++++++
+> Otherwise, t3050 never finishes for me.
 
-Yeah, I meant by actual on-disk config. I didn't actually look at the
-patch closely, but I assumed that "format-patch --stat=90" would still
-override this (if not, then I think that would be a bug).
+Good catch. One alternative is to just add any new packs to the end (or
+beginning) of the mru list, instead of "resetting" it here. We can do
+that because we know that prepare_packed_git() never drops list entries,
+but only adds new ones.
+
+I'm OK with it either way, though.
 
 -Peff
