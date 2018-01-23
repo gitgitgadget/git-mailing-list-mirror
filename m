@@ -7,88 +7,92 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98A571F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 18:13:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 966131F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 18:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751928AbeAWSNN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 13:13:13 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56665 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751796AbeAWSNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 13:13:12 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 88E0EC5454;
-        Tue, 23 Jan 2018 13:13:11 -0500 (EST)
+        id S1751751AbeAWSS3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 13:18:29 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56047 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751508AbeAWSS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 13:18:28 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 417EFB4DDE;
+        Tue, 23 Jan 2018 13:18:26 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sdNdEg1ERk0QafdiM9pJsWz5MyM=; b=i+G4Wd
-        eQ8F0gXgy9jp6Ic8z0tA4dfoBj+29u9OOsC6lwfFfNGAL+8UJqgJqsE60nfR2UbZ
-        9P4Zy3hXZ64MtSdO6ZGkq7RC1L9BE70RcHBcns9elx5WYi57w2pi6G2YZzMndFOG
-        SEzrfkgVCp2pA+feOnOj0cXUZXBvp4L9fcCao=
+        :content-type; s=sasl; bh=YCyNGye3nzIVgakXuBkNmzx/Ivw=; b=hT6MNd
+        +MEqptx/3aEU6B+A9Z4R2/rWpdudREQGF9PEdJZkiOkVmaswh2POhX3UyfP+0Wat
+        UuJqH4afiddcAgl++pZU9YQHrsswxhqZjI3CWiUYKuHX7+w/49Zsv5j/SZ51jt6B
+        PNg/sPXGLwyrFYxGIifQsA4wlYVIlWI9BTX70=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OGR4N9PsNgn+K6sLSZYZFmpUWSTrJrSQ
-        uAWrd9OtNt9yuLfQEeVUzfw5U+LRUOv4rFsyujl0LoKH3ortnSXgeqtK+6v3jlp/
-        8mak3e+ZOEGVUIi8+oTVG7EDBWCrN5gvIsF140XbCn3X5H823brQ5Z0HIkufOryk
-        jA6qHyW1LXw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7FC63C5453;
-        Tue, 23 Jan 2018 13:13:11 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=EFi6Cp53/y/xna9NLGzf87cShj9VjpZT
+        ZxpLt5hhcpqzH2j6Vkam16yVybWP5yTpMF9oDPV2RxkwEW86Wz5O3Wp53nRtoVTf
+        s+82af1hWm/HrlzBv07+UwG4PUMND03jGRAc5FpXaIbppjt5/fRa+0Eg021sz+GZ
+        p1ODE6n0K8k=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 38FBEB4DDD;
+        Tue, 23 Jan 2018 13:18:26 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E90BDC5451;
-        Tue, 23 Jan 2018 13:13:10 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB9D2B4DDC;
+        Tue, 23 Jan 2018 13:18:25 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     =?utf-8?Q?'Torsten_B=C3=B6gershausen'?= <tboegi@web.de>,
-        <randall.s.becker@rogers.com>, <git@vger.kernel.org>
-Subject: Re: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
-References: <20180119173406.13324-1-randall.s.becker@rogers.com>
-        <20180120111012.GA26459@tor.lan>
-        <xmqqshaxjzcc.fsf@gitster.mtv.corp.google.com>
-        <001401d393d2$73458ef0$59d0acd0$@nexbridge.com>
-Date:   Tue, 23 Jan 2018 10:13:09 -0800
-In-Reply-To: <001401d393d2$73458ef0$59d0acd0$@nexbridge.com> (Randall
-        S. Becker's message of "Mon, 22 Jan 2018 17:43:34 -0500")
-Message-ID: <xmqqtvvcigui.fsf@gitster.mtv.corp.google.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] fsck: fix leak when traversing trees
+References: <20180120074351.GA12439@whir>
+Date:   Tue, 23 Jan 2018 10:18:24 -0800
+In-Reply-To: <20180120074351.GA12439@whir> (Eric Wong's message of "Sat, 20
+        Jan 2018 07:43:51 +0000")
+Message-ID: <xmqqpo60iglr.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 12150508-0069-11E8-A26C-8EF31968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CDAEFF58-0069-11E8-8B20-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Eric Wong <e@80x24.org> writes:
 
->> IOW, I do not see it explained clearly why this change is needed on any single
->> platform---so "that issue may be shared by others, too"
->> is a bit premature thing for me to listen to and understand, as "that issue" is
->> quite unclear to me.
+> While fsck_walk/fsck_walk_tree/parse_tree populates "struct tree"
+> idempotently, it is still up to the fsck_walk caller to call
+> free_tree_buffer.
 >
-> v4 might be a little better. The issue seems to be specific to
-> NonStop that it's PIPE mechanism needs to have setbuf(pipe,NULL)
-> called for git to be happy.  The default behaviour appears to be
-> different on NonStop from other platforms from our testing. We get
-> hung up waiting on pipes unless this is done.
+> Fixes: ad2db4030e42890e ("fsck: remove redundant parse_tree() invocation")
 
-I am afraid that that is not a "diagnosis" enough to allow us moving
-forward.  We get hung up because...?  When the process that has the
-other end of pipe open exits, NonStop does not close the pipe
-properly?  Or NonStop does not flush the data buffered in the pipe?
-Would it help if a compat wrapper that does setbuf(fd, NULL)
-immediately before closing the fd, or some other more targetted
-mechanism, is used only on NonStop, for example?  Potentially
-megabytes of data can pass thru a pipe, and if the platform bug
-affects only at the tail end of the transfer, marking the pipe not
-to buffer at all at the beginning is too big a hammer to work it
-around.  With the explanation given so far, this still smells more
-like "we have futzed around without understanding why, and this
-happens to work."  It may be good enough for your purpose of making
-progress (after all, I'd imagine that you'd need to work this around
-one way or another to hunt for and fix more issues on the platform),
-but it does not sound like "we know what the problem is, and this is
-the best workaround for that", which is what we want if it wants to
-become part of the official codebase.
+Yup, we can see that that commit did stop freeing the tree buffer.
+Thanks.
+
+>
+> Signed-off-by: Eric Wong <e@80x24.org>
+> ---
+>  These APIs could probably be made to be less error-prone,
+>  but at least this stops my little machine from OOM-ing.
+>
+>  builtin/fsck.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 04846d46f9..92ce775a74 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -171,7 +171,13 @@ static void mark_object_reachable(struct object *obj)
+>  
+>  static int traverse_one_object(struct object *obj)
+>  {
+> -	return fsck_walk(obj, obj, &fsck_walk_options);
+> +	int result = fsck_walk(obj, obj, &fsck_walk_options);
+> +
+> +	if (obj->type == OBJ_TREE) {
+> +		struct tree *tree = (struct tree *)obj;
+> +		free_tree_buffer(tree);
+> +	}
+> +	return result;
+>  }
+>  
+>  static int traverse_reachable(void)
