@@ -7,72 +7,74 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C54F1F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 18:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D51B21F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 18:34:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752157AbeAWSa6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 13:30:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65244 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751721AbeAWSa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 13:30:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2A404B7246;
-        Tue, 23 Jan 2018 13:30:56 -0500 (EST)
+        id S1752318AbeAWSeL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 13:34:11 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54694 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752302AbeAWSeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 13:34:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E973C5B60;
+        Tue, 23 Jan 2018 13:33:59 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BU/Kv9fQWuJQ
-        RlQVIsEglVywumo=; b=RZiOXdrSBxT/W2jXuKJXU4vsO+pjucWeRshCWSNXmA4U
-        1OxvuV2tgg9QYNlEqnIiNvWOCm1O7KbhNmsLxaq6I8+bi0V9ePk+fI6a3kSNUFi9
-        RwhyliO6l/6OGHhGwSBKsObBQDqav8v4CgO/gt7CiCoI++mdFhUWnkB1Fjiot+I=
+        :content-type; s=sasl; bh=Lh0nolXtJYhSkwi81icjdmi1YIA=; b=EA5kxi
+        jP1eZ4EjHP2GD65EopribEih2P8iw8cbsawq3c2Fv3XUMnpzcmbR/HKwjR75LuEU
+        UF64gajkL7qxPfsiABptIx6oXC52QB/TNW3VGN9vlBbULAMD9NKLrk2AIx/tz2dA
+        5u9Oy04chwiVLQXDBrSTUH1IQ41BcZ1G/MEdg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=G3Ft53
-        JJY7AujUJgDy8ZRzvR+rPRu6h4DwE2Ng9HwaknbD7t5rfzbIE/hjQ2K26SqQkqsZ
-        mE5HtJf+7ycaY7Mx9rkd3m+WhrkSgAWrbqqtJMfaRdK8STHg7YUWAlBWFFAVKOG6
-        2g0gTzs9SKzjnLZqDZNvH2MBD9UEP3XWGi5WQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22E8AB7245;
-        Tue, 23 Jan 2018 13:30:56 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=OlIqe5pqkqVYXRzPEW3AOTLUt3R2nI46
+        slL3gjAjatFeFFIGW3E5nJ0sNTeE7OhXiB8MjEtuod7qORW2ll43aNyGc86fXPQG
+        pU/3Ip5hJTFVMk9XiWrxIa1EMglxdClbMiL6mDwzPlLppOzkYKgDXmUAB13ifSiK
+        M/e/n5FoF7g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6654CC5B5F;
+        Tue, 23 Jan 2018 13:33:59 -0500 (EST)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 97A89B7242;
-        Tue, 23 Jan 2018 13:30:55 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0169C5B5E;
+        Tue, 23 Jan 2018 13:33:58 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Lucas Werkmeister <mail@lucaswerkmeister.de>, git@vger.kernel.org
-Subject: Re: [PATCH] daemon: add --no-syslog to undo implicit --syslog
-References: <20180122232304.4863-1-mail@lucaswerkmeister.de>
-        <87shaxh2b9.fsf@evledraar.gmail.com>
-Date:   Tue, 23 Jan 2018 10:30:54 -0800
-In-Reply-To: <87shaxh2b9.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 23 Jan 2018 01:00:10 +0100")
-Message-ID: <xmqqh8rcig0x.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Fixes compile warning with -Wimplicit-fallthrough CFLAGS
+References: <1516665078-107974-1-git-send-email-gitter.spiros@gmail.com>
+        <20180123000727.GB26357@sigill.intra.peff.net>
+Date:   Tue, 23 Jan 2018 10:33:57 -0800
+In-Reply-To: <20180123000727.GB26357@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 22 Jan 2018 19:07:28 -0500")
+Message-ID: <xmqqd120ifvu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8CABD40C-006B-11E8-87F2-575F0C78B957-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: F9E2B784-006B-11E8-A1C6-8EF31968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Jan 22 2018, Lucas Werkmeister jotted:
+>> diff --git a/apply.c b/apply.c
+>> index 321a9fa68..a22fb2881 100644
+>> --- a/apply.c
+>> +++ b/apply.c
+>> @@ -1450,7 +1450,7 @@ static void recount_diff(const char *line, int size, struct fragment *fragment)
+>>  		switch (*line) {
+>>  		case ' ': case '\n':
+>>  			newlines++;
+>> -			/* fall through */
+>> +			GIT_FALLTHROUGH;
 >
->> Several options imply --syslog, without there being a way to disable i=
-t
->> again. This commit adds that option.
->
-> Just two options imply --syslog, --detach & --inetd, unless I've missed
-> something, anyway 2 !=3D several, so maybe just say "The --detach and
-> --inetd options imply --syslog ...".
+> Ugh, the semi-colon there makes it look like it's actual code. If we go
+> this route, I wonder if it's worth hiding it inside the macro.
 
-Correct. Moreover, --detach completely dissociates the process from
-the original set of standard file descriptors by first closing them
-and then connecting it to "/dev/null", so it will be nonsense to use
-this new option with it.
+What?  You mean to shout in all caps without even terminating the
+line with any punctuation?  Please don't---I am sure it will break
+auto indentation people rely on from their editors.
+
