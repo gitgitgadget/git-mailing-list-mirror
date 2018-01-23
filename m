@@ -2,739 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 068341F576
-	for <e@80x24.org>; Tue, 23 Jan 2018 09:59:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480BD1F576
+	for <e@80x24.org>; Tue, 23 Jan 2018 10:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751235AbeAWJ7f (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 04:59:35 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:41594 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbeAWJ7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 04:59:33 -0500
-Received: by mail-pf0-f175.google.com with SMTP id c6so6257415pfi.8
-        for <git@vger.kernel.org>; Tue, 23 Jan 2018 01:59:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=5VBXet4kneQk79+Uj+oSUH8jPWKO19rZUih9cKZJBVo=;
-        b=Jm/5EiXla9pigp6Z59xwXOGxdghNexQw09WaFbOlG1U+TyRnTLnp7s5IjkZLUPr72x
-         WZqYuilosiuLuKgxd7GSe5Bu2UPKvmTnefpfipbOs6gsv+DSLFuhhg1MdJ2zeWw7lIL7
-         ROKkpOrK4Mr1HuDGYm3MSx9UjLaA6QJHdwsjUPGl7+uMnfSJR3KkOxswvmuMS9x4oViq
-         Nzzjv9txH0nFbD/jumhlMVtm6cvsggbwv1MQ9EA86ksYjJIcCOOV0k8zWg00tJxTtPBd
-         y51QkubzGq0RptK5omTkTLwflcNCpyKkmQJpjF95IkTsPdh7mTW3CdQNCTTyBb/kbKGe
-         nvPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=5VBXet4kneQk79+Uj+oSUH8jPWKO19rZUih9cKZJBVo=;
-        b=mTQISwNKhgtx+XMyBqL7OC7snaXJpXqywI7MlOcRtdBEB66CT1wuHpltIJq587R9m5
-         MPsqz7BhLe1eYNwUNd3tConiz2zsvG9Zm4gSIal1raCAGmFdqB8xc1H8Dy4t7cXbME+X
-         4PFfHcSLF6hRnsfQ4gjfMTY30s1z2zCqiXdx2aOxyTfwqXjZ2YQlJiTy5z3dN42J9Waa
-         0IeKL18NnuVmXRwKCpSMAAXFEfE4BI4tzOJkF61Ecg9PG9uFzq8i2ScvYWEfjmZ+alV8
-         /Vl9u9sExfQWBjJZYdroOgGQtpGrXnFqaLZtFTjV1PD2tirwjCG6uAgSHlCJtlKmnGyb
-         tqzQ==
-X-Gm-Message-State: AKwxytffKFj6vR1L7VfBDShdETJfGkwo/0oC8WPzIxRcefJtKdcPyR66
-        scj/H3nfpIkJyxs2BA4M89U=
-X-Google-Smtp-Source: AH8x225ROeopUMncMTRJxGdvdp3jjKZ3gvNVkUYLd8Ye8mVkajdRYdK5/oUnYhI7QT8uFIix2hAnVw==
-X-Received: by 10.98.8.86 with SMTP id c83mr10072769pfd.84.1516701572743;
-        Tue, 23 Jan 2018 01:59:32 -0800 (PST)
-Received: from ash ([171.233.110.59])
-        by smtp.gmail.com with ESMTPSA id 62sm16210829pgh.80.2018.01.23.01.59.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Jan 2018 01:59:31 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 23 Jan 2018 16:59:27 +0700
-Date:   Tue, 23 Jan 2018 16:59:27 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC 0/2] Automate updating git-completion.bash a bit
-Message-ID: <20180123095927.GA26613@ash>
-References: <20180116103700.4505-1-pclouds@gmail.com>
- <CAM0VKjkz8-VsLJ8i64OHHUH4R4WY5fT6x3X+s=FKuZyfM9txkA@mail.gmail.com>
- <CACsJy8D3wRmP_o5iFJwWtODOJpj-r=JZsJ3P8XxWOCD8rJJrHA@mail.gmail.com>
- <20180117093432.GA19189@ash>
- <CAM0VKj=NeQ_BthG087vswP=mCizXPBcfmCAa9haH4N5MRCNRWQ@mail.gmail.com>
+        id S1751238AbeAWKTK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 05:19:10 -0500
+Received: from mail-by2nam01on0139.outbound.protection.outlook.com ([104.47.34.139]:44180
+        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751233AbeAWKTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 05:19:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=autodesk.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=IIf+Qpr8X8LmkZhU3//+JjawGNAw6LNz4/UPmPtJ8sk=;
+ b=OFl7lSsatGi4v+sVge7cji0V/mnBCvR9tqYzVU5rNGJk2NWw+BLR6O5z2YmlpYADPJwOwTqmcnMnsPQdVBWcL9rMgE0srn+wUO2549MSeXUkSPo/M8CRG4FJcVzxSOFbOAJlYyE4aIvDuk0GcRQtqzNS5O3Y+pbyvUPzZSZ2J9k=
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=lars.schneider@autodesk.com; 
+Received: from slxbook4.ads.autodesk.com (62.159.156.210) by
+ BN6P136MB0020.NAMP136.PROD.OUTLOOK.COM (129.75.91.27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
+ 15.20.428.20; Tue, 23 Jan 2018 10:18:04 +0000
+From:   lars.schneider@autodesk.com
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        simon@ruderich.org, j6t@kdbg.org, larsxschneider@gmail.com,
+        peff@peff.net, ramsay@ramsayjones.plus.com,
+        sunshine@sunshineco.com, tboegi@web.de
+Subject: [PATCH v2] SQUASH convert: add tracing for 'working-tree-encoding' attribute
+Date:   Tue, 23 Jan 2018 11:17:39 +0100
+Message-Id: <20180123101739.72232-1-lars.schneider@autodesk.com>
+X-Mailer: git-send-email 2.16.0
+In-Reply-To: <20180120152418.52859-6-lars.schneider@autodesk.com>
+References: <20180120152418.52859-6-lars.schneider@autodesk.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKj=NeQ_BthG087vswP=mCizXPBcfmCAa9haH4N5MRCNRWQ@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
+X-Originating-IP: [62.159.156.210]
+X-ClientProxiedBy: VI1P189CA0033.EURP189.PROD.OUTLOOK.COM (10.165.188.46) To
+ BN6P136MB0020.NAMP136.PROD.OUTLOOK.COM (129.75.91.27)
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 87b4942d-7234-4695-078e-08d5624a97eb
+X-MS-Office365-Filtering-HT: Tenant
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(4534165)(4627221)(201703031133081)(201702281549075)(5600026)(4604075)(48565401081)(2017052603307)(7153060)(7193020);SRVR:BN6P136MB0020;
+X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0020;3:LpoD5jhA0B44csq6/4rrVjSHwD6x+i/CqyEjy0BsQtD9fnnZ0j0fVGbErhz7j2LwUY0pQq3czfSR2h2I2bjv2OUeiw4bMYkVMSa89ZNxlhtYYrcP9z9HFJxk2erfT28SsCRd12a427dBhfwv4FtTcAw21RH25UyFl++AJt9Xay7G9S8l3zrYLyQLrdm6hgmGisetj6gM46oW75cWrFRVQPKDG8gA1e3fdt9y+oYH7HZhBN34u5RTAvfRJzkwCG9N;25:DNR7VK8uqZlol4W/cvOk1DDafuQwJL5CH3jyR7I22KAdxTDF2nuuQ1GvpzWdn+SDUkWi6s18i87oTRrWmgH4kuMI4aSKw0e/gOm56ifBUUPxnj3JAmuSUDDDsJtMDms13RGwifyne2jkEp8JrgengNGwc0pcUS3KwVAIEAkhfbNLxit83c3ZHFXVgIbHS+meecWWLv4bLGRrpr4DQ2+SrSjoo4A+eiGsbwSALMmPO3bK0b7snRcVnASNT1KIXo7oozjS4DK7r98L0xAvGWLP52jhwCPk5/f5n4jg969zVI0TuC+6mBQuJmNZA1taoV3Z4qyXSKRFjLfrv2XNcpSLMw==;31:iRpW9YTMDJ2NlEv8k98nB7DqKDQNsjndXdkq6a9u1q5GVMwQB89JVKvGFrtdMfAQupKm1tIEr0IP+OQXIeBnCkHyVzThU5uZ3QIEEJ7qoo/6jRS2MfvLfZfaG00iRuQ64x+JpB4LEsUXEgKvcSwPKKDPXjFpCKTpQRH9dqpjte7anjKs93qYhsw2tdwGM7Lt2l5iTl+6UDX5Y96eYYGa1qYJ59Zx+WrrEI9fJkcDh9U=
+X-MS-TrafficTypeDiagnostic: BN6P136MB0020:
+X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0020;20:J//CPu5ryVNFROLbBJTDIKBS6KMJ6R/m+un8VhoVrmUQKw/iBtDZVf052y+1p3dZ86NxEcCYR0fli+I2KMEbsnOFpeusRplSbFhcKS4CQkTgJ/qfk7PKMwYyReHz4xDqaNAn7pCF/f/A9r/ttEwVTyhv/lBe3WPDTUBEJjuXStitP8/7jeE0pP+zk93lrwKJ4S9Hs0tsO2wncDZzgUAN3NH294/zcWC/hLa/1gEhexstMW3cT2NopaMRBVXR+qGod4+8iSVpMP064+yZ2N41+NItOfpwMXS9+eIYUnbIaFc5FMqOXhoPQEZ7LkkixPEOgTtl+LKZZiyMI7+Mji2xf7T5TC91BDxJ8sGobpJE82FvYr00Y/7rV7kBZ1swEXkjoE9Qs9S9KvSBQrJPr7IdhTrDqByyCMs/1VQdS5zP/814bsIozCP3us+akUB2y1wmkhj2Ly1eRnsoayEYdC7NrlEpvrH/ULHt94c7AK0D/aMiOWRV2wU+xIRLwFQQK1Rqpry303dz/py0emvwPTzA6TjWbu9e/bt2mf12Y6A/I+e8aYU+O1ArblfpX9y4dGoA31WqdYZXgtcdSTgEYed9Fuoaom9INSvGmJb2VkUGphk=;4:72EXkrnSptsgNix/0zkUYFNfXamIMpNuBcHUmENuL9sVSpV1VfJZBVcsDsMaRzYkh48z0f2C/NKgVkmbPZDMIGHTmOGGUBYdW4kNsAfR/KYTSY08n8f1c4eanqIylhIhRKehd6j9DUqAls38sQa1K/y/EeELmOrK2OqJrMajaLrYNpNYbEye7urzWbNZ/5q6zrhh1CYNDDa7YE8GGMGla6dWDQ3okmwGV6altgvxPOQIXlnXqhcTJKvvBF8s6N2CgspHhAFliqM0IA+dIfrI3GiAVfdwIaji1JUx7YvUGC6P3nyJFeN1MGXeHnmRduZQ
+X-Microsoft-Antispam-PRVS: <BN6P136MB0020E4975DAB84A7A49D8D62E8E30@BN6P136MB0020.NAMP136.PROD.OUTLOOK.COM>
+X-Exchange-Antispam-Report-Test: UriScan:(85827821059158);
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040501)(2401047)(5005006)(8121501046)(3002001)(10201501046)(93006095)(93001095)(3231023)(2400081)(944501161)(6055026)(6041288)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123562045)(20161123564045)(6072148)(201708071742011);SRVR:BN6P136MB0020;BCL:0;PCL:0;RULEID:(100000803101)(100110400095);SRVR:BN6P136MB0020;
+X-Forefront-PRVS: 05610E64EE
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(396003)(346002)(376002)(39380400002)(39860400002)(366004)(199004)(189003)(8936002)(2361001)(47776003)(7696005)(50226002)(86362001)(8676002)(7416002)(5660300001)(81156014)(81166006)(66066001)(106356001)(39060400002)(6116002)(3846002)(76176011)(8656006)(16526018)(52116002)(51416003)(386003)(26005)(97736004)(316002)(16586007)(6666003)(6916009)(7736002)(2950100002)(1076002)(4326008)(2906002)(68736007)(478600001)(48376002)(230783001)(36756003)(105586002)(50466002)(53936002)(9686003)(2351001)(85782001)(8666007)(6486002)(305945005)(25786009)(85772001);DIR:OUT;SFP:1102;SCL:1;SRVR:BN6P136MB0020;H:slxbook4.ads.autodesk.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+Received-SPF: None (protection.outlook.com: autodesk.com does not designate
+ permitted sender hosts)
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;BN6P136MB0020;23:xC16FR+pjSSdhPY50Et94ckNrXisUuj/xcl2KIm19?=
+ =?us-ascii?Q?4U5PuxPzc5Gsi6Ym7L0uui0Hy9Nt8gkb+FV0H3dZQTuJX7Sw0Ac94IkLrXWA?=
+ =?us-ascii?Q?ylhEGHpD6YbUh3NeipukA2lRGeWHybaHhHpS4RSnOjx0badcM9ttHb08jTOS?=
+ =?us-ascii?Q?r+S20K6sNJuOyOmj10ZHAhyARIeyHMK/jdnnXQziMlMRr1vEeemUv6rD836+?=
+ =?us-ascii?Q?iIjkG4BMXLIecHlce2sF2/WZHkpSQHOjrejoynBjLQBV9yYil35ldQ9xV0my?=
+ =?us-ascii?Q?LdndslekgO6PEWFp74T3xDBaAOkDApM8XhOgwHt+rXvz1pdfFjm1/gyuGJs8?=
+ =?us-ascii?Q?bEak+7GWZo4t+A3cM+scZjUEzVEoJwu5N/JkPnMNFCWEskobNcCF0gOiO40o?=
+ =?us-ascii?Q?ZI+7oSOKMnd2trv2J81vNfNzJTZS3vTEVO33RskZo3ev79DMLoGu6M9KOAXb?=
+ =?us-ascii?Q?83LZKRKTO092aZJMUstMC0SKVfol8IeEmwHVt/B12BnUrgRtl7rUuOQnATdX?=
+ =?us-ascii?Q?r+8gAe9CLPTGrFK59K6b2KdhOrHtaQXT0bfWMTruW2ooPCMNnX5WvJCHtITK?=
+ =?us-ascii?Q?n6WD8ec/9L8GlHa+uFiI1n7xb4Ndg7BYknUcsoRuY+Ku75cDR+tntaIRuiHI?=
+ =?us-ascii?Q?eFd+FY6osaPiDAlJBr0GOl4CcRpgv0eNevK35fW5yokYHp0SdEx3DbAi6Ng3?=
+ =?us-ascii?Q?FGJilloosqzi4eFCoyfmjXGnklqfycI+0iF7CGr4jtFJ1JRnBRQnOS4gD323?=
+ =?us-ascii?Q?b5eou8de5EWOpRK6G30uXlTlVAY+FJ+OIWyK6Hix+fQVxYU18LZ1TWvmcFlP?=
+ =?us-ascii?Q?OAksZ2i6FRFjgCgqSTfEHisnbxF7rxmAXEA/tUd7lpgLrB6v4cU5wtV+A+6S?=
+ =?us-ascii?Q?vbrt5PagMihtCCp01GOh6IDC+twTIrLwo5v39yEgzAQX32Ago1wm7JJpv364?=
+ =?us-ascii?Q?d6PzwFH82KvbIHt188X90A7Q7p8A/K7PUYgoSd4qvE9qHhhstiXzVRYU68oV?=
+ =?us-ascii?Q?PSA+k/4RPxud14/8zk9Bq6zRO9N85BMCmHXciI5u4fGpVaumkjd5RSgbTnl9?=
+ =?us-ascii?Q?20UDH0NoobqiSWCkWt6UufYQu7QQS38Xg4wWtebzfuikhqoemqitzoidTkxN?=
+ =?us-ascii?Q?PJy1N0bEvoxJ8V8hz8vdUSKqoPNCLKm/XFrnoQj2vuynlfJMXVkREbYHGL1l?=
+ =?us-ascii?Q?t/3grXy8i7tRjb66k4H4R3EwUyxgtHKe/z23NMnXdJCPmCkV5R4c4UlG4eFH?=
+ =?us-ascii?Q?B2viDvrBz0v/NK54rBbnTJmkdQTkJGnqx9UJA5FbBU297Y3/6t+gjU0C+Hnj?=
+ =?us-ascii?B?UT09?=
+X-Microsoft-Exchange-Diagnostics: 1;BN6P136MB0020;6:w20hX2onQuTKCk5eLkXxU5vhu2qI8RvX7gcmda6hffqF3IIMy3dMJEY79o7u77aCZ8A6eub7NvlC+eXbzqzcPpGyxIPyH1HbY8JcFixW8ei8w1ekTs9hG1seqQiul+hYN4HbnLQq0d8Db3ORoXvnhmYMq4EmBXeaRRRNOzU9K5Tt/Y2TeWm0MRkiOr6bd8CgovmhTG51knZGYWuGWirmIM6nMLuMwjwwr7Md8b8PA0RQEwy/41dqELpHUHQnx0p0UGvacXqZ2h9oAlHMYkFWnkHJYqCygl1SogZBrz9BUge+aAUOgs44AZB36lOZyGNpcp6avuTI2oo3eRiC67mqbJjf+E+ITZT2JjXMbV9NC1o=;5:tHzkMR9ctFEUPkBMgsO/W2OPc8U+h6uA70xvqh15du3+35tS6gvdSsapeW/5/LEv2GMEjKFAyLQOuEnTDBQw59MmFEFZf3xvH6VhtyWo/udTYlVUYGn7bkymA4be2bkdTplRwkEC9C6uumCE+oALqwHdJxWPo1Xn8EsDqPTrdbo=;24:SNeNwhlHfcGx34TH3MOWgUUA6/nm8IUUIgfRxAOc9tgSIHjFIohLos1wQGMmTwl7S2McZwUX+UKjjOr6CLG7LwvJnXQmC4IufaEKKLR1MmY=;7:1LmaTX4yMvJfYz011UCyus8NzlnJv6Tngu7v5lzX9A0gJKNzIIef9qaauvMXF1Cee2nGLc9M74EdKMntvpVcE6etKnW6AaRBkezlss0I2NrFfxSyjzsJpOeAhkHx7umy8/d66MNz6oFoydPwPBjB88hMjg44HQI7tlR4KqLp7QYHiHntISz2CJUG3Nz4lJFKlPZHfwcRehnYeTUEYCMi+DeOqnrKNlJ+/oZ+NYxDEPGdgxNXSrguJcki25oA3dzi
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: autodesk.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2018 10:18:04.0688 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87b4942d-7234-4695-078e-08d5624a97eb
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 67bff79e-7f91-4433-a8e5-c9252d2ddc1d
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6P136MB0020
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 22, 2018 at 07:03:24PM +0100, SZEDER Gábor wrote:
-> On Wed, Jan 17, 2018 at 10:34 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> > Actually I forgot another option. What if we automate updating the
-> > script at "compile" time instead of calling git at run time? E.g. with
-> > something like below, a contributor could just run
-> >
-> >     make update-completion
-> >
-> > then add git-completion.bash changes to the same patch that introduces
-> > new options. If they forget
-> 
-> They inevitably will :)
+From: Lars Schneider <larsxschneider@gmail.com>
 
-OK. We go with the first option then (with caching to reduce overhead
-on Windows). I'm not going to bother you with actual code changes. The
-diff of completable options looks like below. It would be great if
-people could check if some options should NOT be completable for some
-reason.
+Hi Junio,
 
-A couple points
+I overlooked a typo pointed out in Simon's review. Here is a new patch
+for squashing. Sorry for the trouble!
 
-- Ignore options that are removed in the diff. They are removed for a
-  reason which I will explain when real patches come.
+@Eric: Thanks for spotting this!
 
-- There are regressions where --foo= becomes --foo, I hope this is ok
-  for now. We can tweak this later.
+Cheers,
+Lars
 
-- In some commands you can complete both --foo and --foo= (now it's
-  just one form, --foo). I would argue that it's pointless. It's no
-  big deal to type '=' (or a space) after we have completed --foo.
 
-- I feel --force is not treated the same way everywhere. But I guess
-  that's ok since "forcing" in some command context may be less severe
-  than others.
+ convert.c                        | 8 ++++++--
+ t/t0028-working-tree-encoding.sh | 2 ++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
--- 8< --
-diff --git a/git-add.txt b/git-add.txt
-index 1c249a3..2693cc1 100644
---- a/git-add.txt
-+++ b/git-add.txt
-@@ -1,10 +1,15 @@
-+--all
- --chmod=
- --dry-run
- --edit
- --force
- --ignore-errors
-+--ignore-missing
-+--ignore-removal
- --intent-to-add
- --interactive
- --patch
- --refresh
-+--renormalize
- --update
-+--verbose
-diff --git a/git-am.txt b/git-am.txt
-index b0082bf..552dc96 100644
---- a/git-am.txt
-+++ b/git-am.txt
-@@ -1,12 +1,24 @@
- --3way
- --committer-date-is-author-date
-+--directory
-+--exclude
-+--gpg-sign
- --ignore-date
- --ignore-space-change
- --ignore-whitespace
-+--include
- --interactive
- --keep
-+--keep-cr
-+--keep-non-patch
-+--message-id
-+--no-keep-cr
- --no-utf8
-+--patch-format
-+--quiet
-+--reject
-+--resolvemsg=
- --scissors
- --signoff
- --utf8
----whitespace=
-+--whitespace
-diff --git a/git-apply.txt b/git-apply.txt
-index 6bf4c2f..71d53d2 100644
---- a/git-apply.txt
-+++ b/git-apply.txt
-@@ -1,13 +1,17 @@
-+--3way
-+--allow-overlap
- --apply
-+--build-fake-ancestor=
- --cached
- --check
----directory=
----exclude=
-+--directory
-+--exclude
- --ignore-space-change
- --ignore-whitespace
- --inaccurate-eof
-+--include
- --index
----index-info
-+--no-add
- --no-add
- --numstat
- --recount
-@@ -17,4 +21,4 @@
- --summary
- --unidiff-zero
- --verbose
----whitespace=
-+--whitespace
-diff --git a/git-branch.txt b/git-branch.txt
-index 69594e3..9d308aa 100644
---- a/git-branch.txt
-+++ b/git-branch.txt
-@@ -1,10 +1,14 @@
----abbrev=
-+--abbrev
-+--all
- --color
- --column
- --contains
- --copy
-+--create-reflog
- --delete
- --edit-description
-+--format=
-+--ignore-case
- --list
- --merged
- --move
-@@ -15,9 +19,10 @@
- --no-merged
- --no-track
- --points-at
-+--quiet
- --remotes
- --set-upstream-to=
----sort=
-+--sort
- --track
- --unset-upstream
- --verbose
-diff --git a/git-checkout.txt b/git-checkout.txt
-index 493a1fe..75f19d2 100644
---- a/git-checkout.txt
-+++ b/git-checkout.txt
-@@ -1,12 +1,14 @@
- --conflict=
- --detach
-+--ignore-other-worktrees
- --ignore-skip-worktree-bits
- --merge
- --no-recurse-submodules
- --no-track
----orphan
-+--orphan=
- --ours
- --patch
-+--progress
- --quiet
- --recurse-submodules
- --theirs
-diff --git a/git-cherry-pick.txt b/git-cherry-pick.txt
-index 39ba895..f8cdbce 100644
---- a/git-cherry-pick.txt
-+++ b/git-cherry-pick.txt
-@@ -1,5 +1,14 @@
-+--abort
-+--allow-empty
-+--allow-empty-message
-+--continue
- --edit
-+--ff
-+--gpg-sign
-+--keep-redundant-commits
- --mainline
- --no-commit
-+--quit
- --signoff
- --strategy=
-+--strategy-option
-diff --git a/git-clean.txt b/git-clean.txt
-index 40407f7..10c6155 100644
---- a/git-clean.txt
-+++ b/git-clean.txt
-@@ -1,2 +1,4 @@
- --dry-run
-+--exclude
-+--interactive
- --quiet
-diff --git a/git-clone.txt b/git-clone.txt
-index f6e892b..1b6a4da 100644
---- a/git-clone.txt
-+++ b/git-clone.txt
-@@ -1,18 +1,29 @@
- --bare
----branch
----depth
-+--branch=
-+--config
-+--depth=
-+--dissociate
-+--ipv4
-+--ipv6
-+--jobs=
- --local
- --mirror
- --no-checkout
- --no-hardlinks
- --no-single-branch
- --no-tags
----origin
-+--origin=
-+--progress
- --quiet
- --recurse-submodules
- --reference
-+--reference-if-able
-+--separate-git-dir=
-+--shallow-exclude
-+--shallow-since=
- --shallow-submodules
- --shared
- --single-branch
- --template=
----upload-pack
-+--upload-pack=
-+--verbose
-diff --git a/git-commit.txt b/git-commit.txt
-index 2f98a59..337a57e 100644
---- a/git-commit.txt
-+++ b/git-commit.txt
-@@ -1,20 +1,26 @@
- --all
----allow-empty
- --amend
- --author=
-+--branch
- --cleanup=
----date
-+--date=
- --dry-run
- --edit
- --file=
- --fixup=
-+--gpg-sign
- --include
- --interactive
----message=
-+--long
-+--message
- --no-edit
-+--no-post-rewrite
- --no-verify
-+--no-verify
-+--null
- --only
- --patch
-+--porcelain
- --quiet
- --reedit-message=
- --reset-author
-@@ -22,8 +28,7 @@
- --short
- --signoff
- --squash=
-+--status
- --template=
- --untracked-files
----untracked-files=
- --verbose
----verify
-diff --git a/git-config.txt b/git-config.txt
-index c4bcd1e..651fc27 100644
---- a/git-config.txt
-+++ b/git-config.txt
-@@ -1,15 +1,28 @@
- --add
-+--blob=
-+--bool
-+--bool-or-int
-+--edit
-+--expiry-date
- --file=
- --get
- --get-all
-+--get-color
-+--get-colorbool
- --get-regexp
-+--get-urlmatch
- --global
-+--includes
-+--int
- --list
- --local
- --name-only
-+--null
-+--path
- --remove-section
- --rename-section
- --replace-all
-+--show-origin
- --system
- --unset
- --unset-all
-diff --git a/git-describe.txt b/git-describe.txt
-index 05eeb7a..275debb 100644
---- a/git-describe.txt
-+++ b/git-describe.txt
-@@ -1,4 +1,4 @@
----abbrev=
-+--abbrev
- --all
- --always
- --broken
-diff --git a/git-fsck.txt b/git-fsck.txt
-index 9732ebf..3af9964 100644
---- a/git-fsck.txt
-+++ b/git-fsck.txt
-@@ -1,8 +1,12 @@
- --cache
-+--connectivity-only
-+--dangling
- --full
- --lost-found
- --name-objects
- --no-reflogs
-+--progress
-+--reflogs
- --root
- --strict
- --tags
-diff --git a/git-gc.txt b/git-gc.txt
-index 3b7ca6f..c08e60a 100644
---- a/git-gc.txt
-+++ b/git-gc.txt
-@@ -1,2 +1,3 @@
- --aggressive
- --prune
-+--quiet
-diff --git a/git-grep.txt b/git-grep.txt
-index 6bec8f7..f7770be 100644
---- a/git-grep.txt
-+++ b/git-grep.txt
-@@ -1,9 +1,14 @@
-+--after-context=
- --all-match
- --and
- --basic-regexp
-+--before-context=
- --break
- --cached
-+--color
-+--context
- --count
-+--exclude-standard
- --extended-regexp
- --files-with-matches
- --files-without-match
-@@ -14,14 +19,17 @@
- --ignore-case
- --invert-match
- --line-number
----max-depth
-+--max-depth=
- --name-only
- --no-index
- --not
- --or
- --perl-regexp
-+--quiet
-+--recurse-submodules
- --show-function
- --text
----threads
-+--textconv
-+--threads=
- --untracked
- --word-regexp
-diff --git a/git-init.txt b/git-init.txt
-index a7d3da6..aec6a35 100644
---- a/git-init.txt
-+++ b/git-init.txt
-@@ -1,5 +1,5 @@
- --bare
- --quiet
-+--separate-git-dir=
- --shared
----shared=
- --template=
-diff --git a/git-ls-files.txt b/git-ls-files.txt
-index 04d6f08..6810eb0 100644
---- a/git-ls-files.txt
-+++ b/git-ls-files.txt
-@@ -1,20 +1,23 @@
- --abbrev
- --cached
-+--debug
- --deleted
- --directory
-+--empty-directory
-+--eol
- --error-unmatch
----exclude=
----exclude-from=
----exclude-per-directory
-+--exclude
-+--exclude-from
- --exclude-per-directory=
- --exclude-standard
- --full-name
- --ignored
----ignored
- --killed
- --modified
- --no-empty-directory
- --others
-+--recurse-submodules
-+--resolve-undo
- --stage
- --unmerged
- --with-tree=
-diff --git a/git-ls-remote.txt b/git-ls-remote.txt
-index c58c80e..381384b 100644
---- a/git-ls-remote.txt
-+++ b/git-ls-remote.txt
-@@ -1,5 +1,7 @@
- --get-url
- --heads
-+--quiet
- --refs
- --symref
- --tags
-+--upload-pack=
-diff --git a/git-mv.txt b/git-mv.txt
-index c26c9e6..28ae674 100644
---- a/git-mv.txt
-+++ b/git-mv.txt
-@@ -1 +1,2 @@
- --dry-run
-+--verbose
-diff --git a/git-name-rev.txt b/git-name-rev.txt
-index 7b1acde..1e5044a 100644
---- a/git-name-rev.txt
-+++ b/git-name-rev.txt
-@@ -1,3 +1,8 @@
- --all
-+--always
-+--exclude
-+--name-only
-+--refs
- --stdin
- --tags
-+--undefined
-diff --git a/git-notes_add.txt b/git-notes_add.txt
-index 87cb06b..4c2dfc1 100644
---- a/git-notes_add.txt
-+++ b/git-notes_add.txt
-@@ -1,4 +1,5 @@
----file=
----message=
----reedit-message=
----reuse-message=
-+--allow-empty
-+--file
-+--message
-+--reedit-message
-+--reuse-message
-diff --git a/git-notes_append.txt b/git-notes_append.txt
-index 87cb06b..4c2dfc1 100644
---- a/git-notes_append.txt
-+++ b/git-notes_append.txt
-@@ -1,4 +1,5 @@
----file=
----message=
----reedit-message=
----reuse-message=
-+--allow-empty
-+--file
-+--message
-+--reedit-message
-+--reuse-message
-diff --git a/git-notes_copy.txt b/git-notes_copy.txt
-index 93aa025..d088b96 100644
---- a/git-notes_copy.txt
-+++ b/git-notes_copy.txt
-@@ -1 +1,2 @@
-+--for-rewrite=
- --stdin
-diff --git a/git-push.txt b/git-push.txt
-index 1f4182f..5ea1e39 100644
---- a/git-push.txt
-+++ b/git-push.txt
-@@ -1,16 +1,24 @@
- --all
-+--atomic
- --delete
- --dry-run
-+--exec=
- --follow-tags
- --force
- --force-with-lease
----force-with-lease=
-+--ipv4
-+--ipv6
- --mirror
-+--no-verify
-+--porcelain
-+--progress
- --prune
-+--push-option
- --quiet
- --receive-pack=
----recurse-submodules=
-+--recurse-submodules
- --repo=
- --set-upstream
-+--signed
- --tags
- --verbose
-diff --git a/git-remote_add.txt b/git-remote_add.txt
-index aed6530..4889f31 100644
---- a/git-remote_add.txt
-+++ b/git-remote_add.txt
-@@ -1,6 +1,6 @@
- --fetch
----master
----mirror=
-+--master=
-+--mirror
- --no-tags
- --tags
- --track
-diff --git a/git-replace.txt b/git-replace.txt
-index 53cd1aa..d494653 100644
---- a/git-replace.txt
-+++ b/git-replace.txt
-@@ -3,3 +3,4 @@
- --format=
- --graft
- --list
-+--raw
-diff --git a/git-reset.txt b/git-reset.txt
-index eafefbc..840cbae 100644
---- a/git-reset.txt
-+++ b/git-reset.txt
-@@ -1,6 +1,9 @@
- --hard
-+--intent-to-add
- --keep
- --merge
- --mixed
- --patch
-+--quiet
-+--recurse-submodules
- --soft
-diff --git a/git-revert.txt b/git-revert.txt
-index abd5c1e..ffa0d80 100644
---- a/git-revert.txt
-+++ b/git-revert.txt
-@@ -1,7 +1,11 @@
-+--abort
-+--continue
- --edit
-+--gpg-sign
- --mainline
- --no-commit
- --no-edit
-+--quit
- --signoff
- --strategy=
----strategy-option=
-+--strategy-option
-diff --git a/git-show-branch.txt b/git-show-branch.txt
-index e3c3096..37c9594 100644
---- a/git-show-branch.txt
-+++ b/git-show-branch.txt
-@@ -5,7 +5,7 @@
- --independent
- --list
- --merge-base
----more=
-+--more
- --no-color
- --no-name
- --reflog
-diff --git a/git-status.txt b/git-status.txt
-index 2dce372..ed86ad5 100644
---- a/git-status.txt
-+++ b/git-status.txt
-@@ -1,10 +1,12 @@
- --branch
----column=
-+--column
- --ignored
----ignore-submodules=
-+--ignore-submodules
- --long
- --no-column
-+--null
- --porcelain
- --short
----untracked-files=
-+--show-stash
-+--untracked-files
- --verbose
-diff --git a/git-tag.txt b/git-tag.txt
-index b983562..a5419db 100644
---- a/git-tag.txt
-+++ b/git-tag.txt
-@@ -1,18 +1,21 @@
- --annotate
----cleanup
-+--cleanup=
-+--color
- --column
- --contains
- --create-reflog
- --delete
----file
-+--file=
- --force
-+--format=
-+--ignore-case
- --list
----local-user
-+--local-user=
- --merged
- --message
- --no-contains
- --no-merged
- --points-at
- --sign
----sort=
-+--sort
- --verify
-diff --git a/git-worktree_add.txt b/git-worktree_add.txt
-index 9dd7f92..3cb6a7e 100644
---- a/git-worktree_add.txt
-+++ b/git-worktree_add.txt
-@@ -1 +1,5 @@
-+--checkout
- --detach
-+--guess-remote
-+--lock
-+--track
-diff --git a/git-worktree_lock.txt b/git-worktree_lock.txt
-index a0bc06b..6ad59bb 100644
---- a/git-worktree_lock.txt
-+++ b/git-worktree_lock.txt
-@@ -1 +1 @@
----reason
-+--reason=
--- 8< --
+diff --git a/convert.c b/convert.c
+index 13fad490ce..dce2f6e201 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1165,8 +1165,12 @@ static struct encoding *git_path_check_encoding(struct attr_check_item *check)
+ 	if (!strcasecmp(value, default_encoding))
+ 		return NULL;
+
+-	enc = xcalloc(1, sizeof(struct convert_driver));
+-	enc->name = xstrdup_toupper(value);  /* aways use upper case names! */
++	enc = xcalloc(1, sizeof(*enc));
++	/*
++	 * Ensure encoding names are always upper case (e.g. UTF-8) to
++	 * simplify subsequent string comparisons.
++	 */
++	enc->name = xstrdup_toupper(value);
+ 	*encoding_tail = enc;
+ 	encoding_tail = &(enc->next);
+
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 0f36d4990a..a6da61280d 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -22,6 +22,8 @@ test_expect_success 'setup test repo' '
+ test_expect_success 'ensure UTF-8 is stored in Git' '
+ 	git cat-file -p :test.utf16 >test.utf16.git &&
+ 	test_cmp_bin test.utf8.raw test.utf16.git &&
++
++	# cleanup
+ 	rm test.utf8.raw test.utf16.git
+ '
+
+
+base-commit: 21f4dac5aba07a6109285c57a0478bf502e09009
 --
-Duy
+2.16.0
+
