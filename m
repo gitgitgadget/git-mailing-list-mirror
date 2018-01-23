@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271091F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 22:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1A851F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 22:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932272AbeAWWOC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 17:14:02 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35238 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932267AbeAWWN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 17:13:59 -0500
-Received: by mail-wm0-f66.google.com with SMTP id r78so4895860wme.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2018 14:13:59 -0800 (PST)
+        id S932282AbeAWWOE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 17:14:04 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:41806 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932150AbeAWWOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 17:14:01 -0500
+Received: by mail-wm0-f65.google.com with SMTP id f71so4764884wmf.0
+        for <git@vger.kernel.org>; Tue, 23 Jan 2018 14:14:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=20WVKSy8nZbWDdNMnTQAaK/DS31nfEirl8V/hE95pqE=;
-        b=L20xvpQrGvZZco/lQmF5/61gG2QrlQHWnJxL/8egep3JVUmey81pt7813+8ea5OWe+
-         VZ7+db7CG66K+87HOm4hTx1bd47jbXgPkrA+FPdc+/ZVr7hwVPZAPWntEzQuef3J9Nig
-         Du7ZUBzUOZN4LroUO4TnwyFDico37nhzWu3mrlAOeBscWcb9pMMdB0w6hliXx7yJsGMx
-         spTKHfQ316A37f4wOB4MXCXWBxUaQ7oTPkuxEKqIqII9pvfsSaxxWRiyGjSFEheitKA8
-         IHxUO3noGzGuEnx3H4bN23jLrJIUeoVSAEMmv7MqltXWqGZwZoCYnhUUUw1P3ZtoJraa
-         Cmlw==
+        bh=9a+xR48CLwWWdUXXjVidyHKelZq7aRXwohmcNxo4CtU=;
+        b=dm4U45GkHzt5wCmqIDDfPhjdVlzvmgaqOdYxwob/Ndj4iBk2RaRw1ghsVgaYo1TxO8
+         b2OzMLyX53CLcLO8t3CLnPBdGntJ2FR9+f9ZgW3OtPITartIToa6JDX3aasdCBIgjusV
+         ZO9Snt7U6/THVSz2yXX0HlxAumkpiDJjrjKaiEc/We+gHJSDWUfAZdMUCNpFpOmTK5St
+         scoAKjVnjAOTBiKmi7k2o4PXPugGaVEkN4X2H1g/pTS5mU/L8njAk/hpLwzcdm+LycxW
+         ZfzLrT5bAf49W2h/dlp+omxlRoV0e/ahA5ww9sFgVDMliuF9ldchbE45+KoMsFA6FQMM
+         2RqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=20WVKSy8nZbWDdNMnTQAaK/DS31nfEirl8V/hE95pqE=;
-        b=sC91S4ANCAxgyoriB1VJmoGWcWwvluQZzuEt0ddKgej4hb063n8r/qrngwSRwyaWdQ
-         rTEk77yhvrG986Kz8TMQgm1RAjuBuMedikBi6wzjMVrdH+0x/S3ZPpnKpr5vVZ4zGoK1
-         aRhC4NJ23RgSx1wfPW4VWJiUygv7XE9ztk84Zn8kK3mG75Ow7HeM7jEe1zuUUjjN7DqZ
-         GTDpdFNsqWSUPjvzq8onZo7qGikJREARfOLR0V21SwfUg0+oLU8F0vZqhsdVgGVKmCGk
-         YzLGDZhPvqG5whM0QnbVzPAonEo7bq7Asj/u65Wis/ehTMmtwK5pSqWtHTe44dBcAMsG
-         UNTQ==
-X-Gm-Message-State: AKwxytc8nx6ALIK5+A00A8K1vSD6LEozFVln5TuTO/ChwuTDDfxPP/xT
-        f6i9K/nZMBpXv+BJ4ZOPg+165y+Y
-X-Google-Smtp-Source: AH8x2241gNqylwe3d7zj5nPO9r+sjyqcFRZbPYQENZbmNCcJMmTW+BkcZnYdgrwWi1ZqE2APnCHnfQ==
-X-Received: by 10.80.220.141 with SMTP id r13mr21112358edk.120.1516745637631;
-        Tue, 23 Jan 2018 14:13:57 -0800 (PST)
+        bh=9a+xR48CLwWWdUXXjVidyHKelZq7aRXwohmcNxo4CtU=;
+        b=ZLBSh8yK1BZtNjfB1dRWQG9+3E6vkYBZCRM/Noj0zbi/vFgralLeYxqsfR8XyKd0ha
+         ljl/Fd1EttPuXniuorEpKXfQRIS3hHrZnVzKr3pjJtMqUwBm8xRgvJZ9CFVIQCJO5oVL
+         q6Fv1f5mei+2Crwx/f9d6IoR98oUPnxrC58QXr5cd5DU/17kQQ3l1SnLsVBKA/Fva35b
+         BQJWmgA2QUoDx7sZXm6qDi6stAXCXUGubJ8cuv7T5XMwYjluncxAawk8XsZ5fzyiA/Ji
+         Nf+zCSB1PBt2GDqMUClPn/7F7Z/TtyUXBPg/Qz50E2NOYfRlq2QhFL6dlKZz8PGafIzq
+         MRlQ==
+X-Gm-Message-State: AKwxyteU2FCb3nCMFuRS99xxaqkksYxjtJOV6sRVMbsBwfU6nQ/voGZG
+        vqDQlXi1UVjqjAfjKgT/AZ5x8wGG
+X-Google-Smtp-Source: AH8x2276boaJGfFnOoExHYK2AQls+SlM62FYh6yIOEN0VRqoN/m6X42YbHdEqvBM8Br/5sLLKAFWVg==
+X-Received: by 10.80.165.21 with SMTP id y21mr21997544edb.148.1516745639395;
+        Tue, 23 Jan 2018 14:13:59 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id s5sm14321282eda.60.2018.01.23.14.13.56
+        by smtp.gmail.com with ESMTPSA id s5sm14321282eda.60.2018.01.23.14.13.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 Jan 2018 14:13:56 -0800 (PST)
+        Tue, 23 Jan 2018 14:13:58 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 06/11] fetch tests: test --prune and refspec interaction
-Date:   Tue, 23 Jan 2018 22:13:21 +0000
-Message-Id: <20180123221326.28495-7-avarab@gmail.com>
+Subject: [PATCH v3 07/11] git fetch doc: add a new section to explain the ins & outs of pruning
+Date:   Tue, 23 Jan 2018 22:13:22 +0000
+Message-Id: <20180123221326.28495-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180123221326.28495-1-avarab@gmail.com>
 References: <20180123221326.28495-1-avarab@gmail.com>
@@ -76,56 +76,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for the interaction between explicitly provided refspecs
-and fetch.prune.
+Add a new section to canonically explain how remote reference pruning
+works, and how users should be careful about using it in conjunction
+with tag refspecs in particular.
 
-There's no point in adding this boilerplate to every combination of
-unset/false/true, it's instructive and sufficient to show that no
-matter if the variable is unset, false or true the refspec on the
-command-line overrides any configuration variable.
+A subsequent commit will update the git-remote documentation to refer
+to this section, and details the motivation for writing this in the
+first place.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5510-fetch.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/git-fetch.txt | 49 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index fad65bd885..e5e88ee474 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -609,6 +609,10 @@ test_configured_prune () {
- test_configured_prune unset unset kept   kept   ""
- test_configured_prune unset unset kept   kept   "--no-prune"
- test_configured_prune unset unset pruned kept   "--prune"
-+test_configured_prune unset unset kept   pruned \
-+	"--prune origin +refs/tags/*:refs/tags/*"
-+test_configured_prune unset unset pruned pruned \
-+	"--prune origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*"
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index b153aefa68..18fac0da2e 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -99,6 +99,55 @@ The latter use of the `remote.<repository>.fetch` values can be
+ overridden by giving the `--refmap=<refspec>` parameter(s) on the
+ command line.
  
- test_configured_prune false unset kept   kept   ""
- test_configured_prune false unset kept   kept   "--no-prune"
-@@ -625,6 +629,10 @@ test_configured_prune unset false pruned kept   "--prune"
- test_configured_prune false false kept   kept   ""
- test_configured_prune false false kept   kept   "--no-prune"
- test_configured_prune false false pruned kept   "--prune"
-+test_configured_prune false false kept   pruned \
-+	"--prune origin +refs/tags/*:refs/tags/*"
-+test_configured_prune false false pruned pruned \
-+	"--prune origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*"
++PRUNING
++-------
++
++Git has a default disposition of keeping data unless it's explicitly
++thrown away; this extends to holding onto local references to branches
++on remotes that have themselves deleted those branches.
++
++If left to accumulate, these stale references might make performance
++worse on big and busy repos that have a lot of branch churn, and
++e.g. make the output of commands like `git branch -a --contains
++<commit>` needlessly verbose, as well as impacting anything else
++that'll work with the complete set of known references.
++
++These remote tracking references can be deleted as a one-off with
++either of:
++
++------------------------------------------------
++# While fetching
++$ git fetch --prune <name>
++
++# Only prune, don't fetch
++$ git remote prune <name>
++------------------------------------------------
++
++To prune references as part of your normal workflow without needing to
++remember to run that set `fetch.prune` globally, or
++`remote.<name>.prune` per-remote in the config. See
++linkgit:git-config[1].
++
++Here's where things get tricky and more specific. The pruning feature
++doesn't actually care about branches, instead it'll prune local <->
++remote references as a function of the refspec of the remote (see
++`<refspec>` and <<CRTB,CONFIGURED REMOTE-TRACKING BRANCHES>> above).
++
++Therefore if the refspec for the remote includes
++e.g. `refs/tags/*:refs/tags/*`, or you manually run e.g. `git fetch
++--prune <name> "refs/tags/*:refs/tags/*"` it won't be stale remote
++tracking branches that are deleted, but any local tag that doesn't
++exist on the remote.
++
++This might not be what you expect, i.e. you want to prune remote
++`<name>`, but also explicitly fetch tags from it, so when you fetch
++from it you delete all your local tags, most of which may not have
++come from the `<name>` remote in the first place.
++
++So be careful when using this with a refspec like
++`refs/tags/*:refs/tags/*`, or any other refspec which might map
++references from multiple remotes to the same local namespace.
++
+ OUTPUT
+ ------
  
- test_configured_prune true  false kept   kept   ""
- test_configured_prune true  false pruned kept   "--prune"
-@@ -641,6 +649,10 @@ test_configured_prune false true  pruned kept   "--prune"
- test_configured_prune true  true  pruned kept   ""
- test_configured_prune true  true  pruned kept   "--prune"
- test_configured_prune true  true  kept   kept   "--no-prune"
-+test_configured_prune true  true  kept   pruned \
-+	"--prune origin +refs/tags/*:refs/tags/*"
-+test_configured_prune true  true  pruned pruned \
-+	"--prune origin +refs/tags/*:refs/tags/* +refs/heads/*:refs/remotes/origin/*"
- 
- test_expect_success 'all boundary commits are excluded' '
- 	test_commit base &&
 -- 
 2.15.1.424.g9478a66081
 
