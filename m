@@ -2,261 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57CE01F576
-	for <e@80x24.org>; Tue, 23 Jan 2018 07:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 583F41F576
+	for <e@80x24.org>; Tue, 23 Jan 2018 09:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751086AbeAWHJf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 02:09:35 -0500
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:38147 "EHLO
-        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751002AbeAWHJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 02:09:34 -0500
-Received: by mail-yw0-f174.google.com with SMTP id m84so3901241ywd.5
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 23:09:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zoP66HEIGah0b3h8qO/9ENMReJJHitrDwZbq/LLLBKY=;
-        b=YJGpbIsgPWAi4BxHgpdQ3ZYKK++nDtqm2FE2RrWcc2bAJtsx58sn7gMVen6X/V4hFh
-         0vretpbqcmas/+Fe+UYiRdsHnHWQv/fV9D+hedLMPhdAgG17CrjgxnSuEmbjyy/81aV9
-         MUt7oZrnPhW04tH1qzcs66nlyiRITxNazc1s0xpLPEMGBxjiQP2AzaTUGt2Pqt5XijFt
-         UPWCJHgm8q04UJVU2RrCosEqwYsvZRzyD1MX58QSxYbRQLs6UyDtBGVoJNaEQAdHa3x5
-         99Qb35JoYa42g4qiQtVEN5xX0UPbMBykcOlX7JdRWWvxlTl/x4t1r6pHbUpzhg4cviNT
-         tEjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zoP66HEIGah0b3h8qO/9ENMReJJHitrDwZbq/LLLBKY=;
-        b=JAx8ou6IQ1kpQ58UnnZNUvztqXUZJoj2Pd7bUBV8kNEl7FJ4iMlLszgMKzDj5yUeX7
-         3oenTdoGt5r6Vnqlfpu77Iq7GC+607S/S3/B/OnLhGjejy831i+bfnN4AaCS7vYpXI1n
-         eQ8NuWXZakT6lNgLvu5P46PduzvxfhcHPz2Ynu5VoxxhC7wvHi30HHayb6jaLFdg7/rX
-         V2rb1eT3q+5F3D9E70+xYfCMEaEDO8xhl0uqZFx8H6gwpr6C0G7b+epaVUKfbaardPEm
-         y1pOJJMMQI6HO05Hf9HzVoAI3tDrVZXw0cRXYxy3qMlMCqxZB9KHsy5XK7g5mlK4DbTK
-         4yOQ==
-X-Gm-Message-State: AKwxytcWtoPpp9N9xRmc0RoATjf4a8IIQw9SxmQ1an6UBacqcSiHZ4Tn
-        9AuWssOO+OO9Z7W0i7mjh6qfYk5+TPNTcid/BtA=
-X-Google-Smtp-Source: AH8x226mwu6HRz1hZ4/fZSej2ek45+J2IsCJGIl8gTRFDWrYVqyqy4l8jy4OG9qpatvBrZbfWhiYhmkyY2lFYINydHQ=
-X-Received: by 10.129.89.198 with SMTP id n189mr1408554ywb.187.1516691373266;
- Mon, 22 Jan 2018 23:09:33 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.129.87.17 with HTTP; Mon, 22 Jan 2018 23:08:52 -0800 (PST)
-In-Reply-To: <CABPp-BGYs9jo16OZR8NsL-eO9LwEttBxBspvp1-_JjuD2oBYbA@mail.gmail.com>
-References: <CAFAcib-2fxiVxtVWcbvafY3-Br7Y70HMiHFZoT0VfK6JU0Dp9A@mail.gmail.com>
- <CABPp-BGYs9jo16OZR8NsL-eO9LwEttBxBspvp1-_JjuD2oBYbA@mail.gmail.com>
-From:   Josh Bleecher Snyder <josharian@gmail.com>
-Date:   Mon, 22 Jan 2018 23:08:52 -0800
-Message-ID: <CAFAcib9FGfTe8C7TaOY91kzhUvxXtpx5Y8JMFkqxhRhLJeytxg@mail.gmail.com>
-Subject: Re: git merge-tree: bug report and some feature requests
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751243AbeAWJ1w (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 04:27:52 -0500
+Received: from zucker2.schokokeks.org ([178.63.68.90]:39913 "EHLO
+        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750946AbeAWJ1u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 04:27:50 -0500
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Tue, 23 Jan 2018 10:27:59 +0100
+  id 0000000000000057.000000005A67001F.000026B5
+Date:   Tue, 23 Jan 2018 10:27:49 +0100
+From:   Simon Ruderich <simon@ruderich.org>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org,
+        gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v4 5/6] convert: add 'working-tree-encoding' attribute
+Message-ID: <20180123092749.GA6308@ruderich.org>
+References: <20180120152418.52859-1-lars.schneider@autodesk.com>
+ <20180120152418.52859-6-lars.schneider@autodesk.com>
+ <20180121142222.GA10248@ruderich.org>
+ <05265803-BD74-4667-ABB5-9752E55A5015@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <05265803-BD74-4667-ABB5-9752E55A5015@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> I'm experimenting with some new porcelain for interactive rebase. One
->> goal is to leave the work tree untouched for most operations. It looks
->> to me like 'git merge-tree' may be the right plumbing command for
->> doing the merge part of the pick work of the todo list, one commit at
->> a time. If I'm wrong about this, I'd love pointers; what follows may
->> still be interesting anyway.
->
-> I don't have a concrete alternative (yet?) but here are some pointers
-> to two alternate merge-without-touching-working-tree possibilities, if
-> your current route doesn't pan out as well as you like:
->
-> I posted some patches last year to make merge-recursive.c be able to
-> do merges without touching the working tree.  Adding a few flags would
-> then enable it for any of 'merge', 'cherry-pick', 'am', or
-> 'rebase'...though for unsuccessful merges, there's a clear question of
-> what/how conflicts should be reported to the user.  That probably
-> depends a fair amount on the precise use-case.
->
-> Although that series was placed on the backburner due to the immediate
-> driver of the feature going away, I'm still interested in such a
-> change, though I think it would fall out as a nice side effect of
-> implementing Junio's proposed ideal-world-merge-recursive rewrite[1].
-> I have started looking into that[2], but no guarantees about how
-> quickly I'll find time to finish or even whether I will.
->
-> [1] https://public-inbox.org/git/xmqqd147kpdm.fsf@gitster.mtv.corp.google.com
-> [2] https://github.com/newren/git/blob/ort/ort-cover-letter contains
-> overview of ideas and notes to myself about what I was hoping to
-> accomplish; currently it doesn't even compile or do anything
-
-Thanks for the pointer. That does seem promising.
-
-And yes, I see now that serialization of conflicts is decidedly
-challenging. More on that below.
-
-
->> 4. API suggestion
+On Mon, Jan 22, 2018 at 01:35:25PM +0100, Lars Schneider wrote:
+>>> +	enc->name = xstrdup_toupper(value);  /* aways use upper case names! */
 >>
->> Here's what I really want 'git merge-tree' to output. :)
-> ...
->> If the merge had conflicts, write the "as merged as possible" tree to
+>> "aways" -> "always" and I think the comment should say why
+>> uppercase is important.
 >
-> You'd need to define "as merged as possible" more carefully, because I
-> thought you meant a tree containing all the three-way merge conflict
-> markers and such being present in the "resolved" file, but from your
-> parenthetical note below it appears you think that is a different tree
-> that would also be useful to diff against the first one.  That leaves
-> me wondering what the first tree is. (Is it just the tree where for
-> each path, if that path had no conflicts associated with it then it's
-> the merge-resolved-file, and otherwise it's the file contents from the
-> merge-base?).
-
-FWIW, the parenthetical suggestion was indeed what I had in mind. But
-non-content conflicts appear to make that a non-starter. Or at least
-woefully incomplete.
-
-
-> Both of these trees are actually rather non-trivial to define.  The
-> wording above isn't actually sufficient, because content conflicts
-> aren't the only kind of conflict.  More on that below.
+> Would that be better?
 >
-> There is already a bunch of code in merge-recursive.c to create a
-> forcibly-merged-accepting-conflict-markers-in-the-resolution and
-> record it as a tree (this is used for creating virtual merge bases in
-> the recursive case, namely when there isn't a single merge-base for
-> the two branches you are merging).  It might be reusable for what you
-> want here, but it's not immediately clear whether all the things it
-> does are appropriate; someone would have to consider the non-content
-> (path-based) conflicts carefully.
-
-Ack. I assume this is also the code that generates the existing 'git
-merge-tree' patches, which includes conflict markers.
-
-
->> the object database and give me its sha, and then also give me the
->> three-way merge diff output for all conflicts, as a regular patch
->> against that tree, using full path names and shas. (Alternatively,
->> maybe better, give me a second sha for a tree containing all the
->> three-way merge diff patches applied, which I can diff against the
->> first tree to find the conflict patches.)
+> 	/* Aways use upper case names to simplify subsequent string comparison. */
+> 	enc->name = xstrdup_toupper(value);
 >
-> As far as I can tell, you're assuming that it's possible with two
-> trees that are crafted "just right", that you can tell where the merge
-> conflicts are, with binary files being your only difficulty.  Content
-> conflicts aren't the only type that exist; there are also path-based
-> conflicts.  These type of conflicts also make it difficult to know how
-> the two trees you are requesting should even be created.
+> AFAIK uppercase and lowercase names are both valid. I just wanted to
+> ensure that we use one consistent casing. That reads better in error messages
+> and I don't need to check for the letter case in has_prohibited_utf_bom()
+> and friends in utf8.c
+
+Sounds good (minus the "Aways" typo Eric already noticed).
+
+>> Micro-nit: For consistency with the previous test, remove the
+>> empty line and comment (or just keep the files generated from the
+>> "setup test repo" phase and don't explicitly delete them)?
 >
-> For example, if there is a modify/delete conflict, how can that be
-> determined from just two trees?  If the first tree has the base
-> version of the file, then the second tree either has a file at the
-> same position or it doesn't.  Neither case looks like a conflict, but
-> the original merge had one.  You need more information.  The exact
-> same thing can be said for rename/delete conflicts.
+> I would rather add a new line and a comment to the previous test
+> to be consistent.
 >
-> Similarly, rename/add (one side renames an existing file to some new
-> path (say, "new_path"), and the other adds a brand new file at
-> "new_path), or rename/rename(2to1) (each side renames a different file
-> to the same location), won't be detectable just by diffing two trees.
-> These are often handled by moving both files to some other location,
-> so there's no way to record in a tree that there was a conflict.
->
-> rename/rename(1to2) is similar, but instead of two different original
-> files being renamed to the same thing, this is one file being renamed
-> differently on different sides of history.
->
-> I know that several of the examples above involved rename detection,
-> which git-merge-trees won't even do, but that means you're even more
-> likely to face the modify/delete conflict cases.  And our list still
-> isn't done, either:
->
-> Directory/file conflicts (one side puts a directory of the same name
-> that the other side adds as a file) will also cause problems.
+> I know we could leave the files but these lingering files could
+> always surprise writers of future tests (at least they surprised
+> me in other tests).
 
-Me: If the world were simple, we could build it this simple way!
+Sure, that sounds good. Just noticed the inconsistency and wanted
+to mention it.
 
-You: The world isn't simple.
-
-Me: ...drat. Thanks.
-
-
-I've been looking at libgit2's handling of this. It appears the
-closest analog is:
-
-* Call git_merge_trees:
-https://libgit2.github.com/libgit2/#HEAD/group/merge/git_merge_trees
-* Call git_index_conflict_iterator_new on the resulting *git_index:
-https://libgit2.github.com/libgit2/#HEAD/group/index/git_index_conflict_iterator_new
-* Use git_index_conflict_next to inspect a conflict:
-https://libgit2.github.com/libgit2/#HEAD/group/index/git_index_conflict_next
-* The conflict provides three git_index_entrys:
-https://libgit2.github.com/libgit2/#HEAD/type/git_index_entry
-
-Looking over your list above, at a minimum, libgit2 might not have a
-particularly good way to represent submodule/file or
-submodule/directory conflicts, because is-a-submodule is defined
-external to a git_index_entry.
-
-(Incidentally, looking at
-https://github.com/git/git/blob/master/Documentation/technical/index-format.txt,
-it appears that there are also possibly symlink/gitlink X
-file/dir/submodule conflicts? Ugh.)
-
-libgit2 gets to avoid the bother of serialization and deserialization,
-but it seems the problem of conflict categorization still remains. See
-my next comments.
-
-
-
-> Finally, directory rename detection (currently in pu under review)
-> adds a few "implicit dir rename" conflict types (renames of multiple
-> directories would cause multiple files to be renamed to the same
-> location, or an existing file/dir being in the way of one or more
-> path(s) getting implicitly renamed).  This means that the number of
-> types of non-textual conflicts might also grow in the future so it may
-> be unwise to try to special case existing exceptions with a bag of
-> clever workarounds.
-
-There's tension here.
-
-Cataloging or special-casing all possible conflict types does seem
-unwise because of the sheer number of kinds of conflicts.
-
-But the alternative appears to be punting entirely, as libgit2 does,
-and merely providing something akin to three index entries. This which
-leaves it unclear what exactly the conflict was, at which point any
-user (read: porcelain developer) will end up having to recreate some
-merge logic to figure out what went wrong. And if merge-tree starts
-doing rename detection, the user might then have to emulate that as
-well. Given that, you may as well catalog the many kinds of conflicts
-and report which one occurred. And if there were a list of all
-possible kinds of conflicts, it'd help the user write correct code,
-because they're not going to naively fail to consider--as I did--the
-many kinds of non-content-based conflicts.
-
-
-I admit, I'm somewhat puzzled about where to go from here, both from
-git/libgit2's perspective and the perspective of my immediate needs.
-For myself, I probably have the luxury of bailing on anything but the
-simplest, content-based conflicts and sending the (end) user back to
-regular interactive rebase, if I can find a way to implement that
-reliably and without inordinate difficulty. The first case I checked
-doesn't look good: For dir/file merge conflicts, 'git merge-tree'
-merely reports some "added in remote" and "added in local"
-explanations, meaning I'd have to add path conflict detection myself.
-
-I'll continue to ponder. Thanks for the enlightening email.
-
--josh
-
-
-P.S. Is it expected/known that 'git merge --abort' of a
-merge-in-progress involving a dir/file conflict generates a mildly
-incomprehensible error in addition to aborting the merge?
-
-$ git merge --abort
-error: 'df' appears as both a file and as a directory
-error: df: cannot drop to stage #0
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
