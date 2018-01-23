@@ -6,76 +6,92 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 621921F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 16:20:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 249331F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 16:26:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751630AbeAWQUT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 11:20:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54390 "HELO cloud.peff.net"
+        id S1751408AbeAWQ0g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 11:26:36 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54426 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751170AbeAWQUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 11:20:18 -0500
-Received: (qmail 24015 invoked by uid 109); 23 Jan 2018 16:20:18 -0000
+        id S1751234AbeAWQ0g (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 11:26:36 -0500
+Received: (qmail 24323 invoked by uid 109); 23 Jan 2018 16:26:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jan 2018 16:20:18 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jan 2018 16:26:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16828 invoked by uid 111); 23 Jan 2018 16:20:55 -0000
+Received: (qmail 16891 invoked by uid 111); 23 Jan 2018 16:27:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Jan 2018 11:20:55 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Jan 2018 11:27:13 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Jan 2018 11:20:16 -0500
-Date:   Tue, 23 Jan 2018 11:20:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Jan 2018 11:26:33 -0500
+Date:   Tue, 23 Jan 2018 11:26:33 -0500
 From:   Jeff King <peff@peff.net>
-To:     Simon Ruderich <simon@ruderich.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        lars.schneider@autodesk.com, git@vger.kernel.org,
-        gitster@pobox.com, tboegi@web.de, j6t@kdbg.org,
-        sunshine@sunshineco.com, ramsay@ramsayjones.plus.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v4 5/6] convert: add 'working-tree-encoding' attribute
-Message-ID: <20180123162016.GD13068@sigill.intra.peff.net>
-References: <20180120152418.52859-1-lars.schneider@autodesk.com>
- <20180120152418.52859-6-lars.schneider@autodesk.com>
- <20180121142222.GA10248@ruderich.org>
- <05265803-BD74-4667-ABB5-9752E55A5015@gmail.com>
- <20180123005401.GG26357@sigill.intra.peff.net>
- <20180123102558.GA3878@ruderich.org>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/5] travis-ci: use 'set -e' in the 32 bit Linux build job
+Message-ID: <20180123162633.GE13068@sigill.intra.peff.net>
+References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
+ <20180122133220.18587-1-szeder.dev@gmail.com>
+ <20180122133220.18587-3-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180123102558.GA3878@ruderich.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180122133220.18587-3-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 11:25:58AM +0100, Simon Ruderich wrote:
+On Mon, Jan 22, 2018 at 02:32:17PM +0100, SZEDER Gábor wrote:
 
-> On Mon, Jan 22, 2018 at 07:54:01PM -0500, Jeff King wrote:
-> > But anyway, that was a bit of a tangent. Certainly the smaller change is
-> > just standardizing on sizeof(*foo), which I think most people agree on
-> > at this point. It might be worth putting in CodingGuidelines.
-> 
-> Personally I prefer sizeof(*foo) which is a well non-idiom, used
-> in many projects and IMHO easy to read and understand.
+> All 'ci/*' scripts use 'set -e' to break the build job if a command
+> fails, except 'ci/run-linux32-build.sh' which relies on the && chain
+> to do the same.  This inconsistency among the 'ci/*' scripts is asking
+> for trouble: I forgot about the && chain more than once while working
+> on this patch series.
 
-Me too.
+I think this actually fixes a bug:
 
-> I've played a little with coccinelle and the following spatch
-> seems to catch many occurrences of sizeof(struct ..) (the first
-> hunk seems to expand multiple times causing conflicts in the
-> generated patch). Cases like a->b = xcalloc() are not matched, I
-> don't know enough coccinelle for that. If there's interest I
-> could prepare patches, but it will create quite some code churn.
+>  # Update packages to the latest available versions
+>  linux32 --32bit i386 sh -c '
+>      apt update >/dev/null &&
+>      apt install -y build-essential libcurl4-openssl-dev libssl-dev \
+>  	libexpat-dev gettext python >/dev/null
+> -' &&
+> +'
 
-Yeah, I'm not sure what our current policy is there. Traditionally our
-strategy was not to churn code, but to update old idioms as they were
-touched. Especially if the change was not urgent, but mostly stylistic
-(which this one is).
+If this step failed, then...
 
-But with Coccinelle, it's a lot easier to apply the change tree-wide, and
-to convert topics in flight as they get merged. The maintainer still
-gets conflicts with topics-in-flight that touch converted areas, though.
-So I'd be curious to hear if Junio's opinion has changed at all.
+>  # If this script runs inside a docker container, then all commands are
+>  # usually executed as root. Consequently, the host user might not be
+>  # able to access the test output files.
+>  # If a host user id is given, then create a user "ci" with the host user
+>  # id to make everything accessible to the host user.
+> -HOST_UID=$1 &&
+> -CI_USER=$USER &&
+> -test -z $HOST_UID || (CI_USER="ci" && useradd -u $HOST_UID $CI_USER) &&
+
+We'd have triggered the right-hand side of this "||", and run the rest
+of the script.  The whole "||" block should have been inside {}.
+
+But after your patch, it should be fine with "set -e". Although...
+
+> +HOST_UID=$1
+> +CI_USER=$USER
+> +test -z $HOST_UID || (CI_USER="ci" && useradd -u $HOST_UID $CI_USER)
+
+If this "useradd" step fails, we wouldn't abort the script, because it's
+part of a conditional. You'd need a manual "|| exit 1" at the end of
+this line. Or to use a real "if" block.
+
+Reading this line, I'm also slightly confused by setting CI_USER in the
+subshell, and then only using it once. Should it be respecting the outer
+CI_USER setting? If not, should it just hard-code "ci" on the useradd
+command-line?  But that has nothing to do with your patch here.
 
 -Peff
