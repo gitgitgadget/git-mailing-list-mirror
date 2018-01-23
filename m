@@ -2,117 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B8071F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 04:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67F991F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 05:46:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751306AbeAWEGe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 Jan 2018 23:06:34 -0500
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:34672 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751195AbeAWEGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 Jan 2018 23:06:33 -0500
-Received: by mail-ot0-f194.google.com with SMTP id x15so4836794ote.1
-        for <git@vger.kernel.org>; Mon, 22 Jan 2018 20:06:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=u06uGjybvJJ3oSTSdJkdpGe2BtKccH/ea8kJmALOLdQ=;
-        b=Vv9ni40SZ83rnFZ8cL+Rdm/SVZUWIyVm84t3wWxA86JhPKEpS9Ezc7zt7zjn4/xv0U
-         wdHWWdip6LxxSfHiBoJR827OKzRZbyDeM9L4vHpeLYKkgyBNzhMmb848zF6N7qB+D6Ez
-         /h0d7kHhexF5jRvo3e3Ne3KaIrB1XUA31eRH+lefmtF+Cdk+B4c8XFAHzxVz9eAqgf+6
-         6dh92iqfW6OTSjtE1e74tuxR6XJusWq5doWU5ylw/CM5Sa3lk1y0m+LeaHBFgTMAF7e+
-         b7ZenN7xJs/eOZkRbQyDfJQohXEIAlNV7DXcHRECRtyFZDoTe3YQA6AusfAv4QigHnG2
-         cbOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=u06uGjybvJJ3oSTSdJkdpGe2BtKccH/ea8kJmALOLdQ=;
-        b=tuXS3SMrSAkTq9svL4x56o4d7Mqt0uHG5xEEYa7TMf5KHShqYfDuQM8Kv5dwPuO4b6
-         5TUYfbc7nfdad+iKLBKkuFWeAKEJyD9HFvtopcm5nGDbRxEOMuizw3p2cNnHDEsrDww+
-         9JTX81Nwv3nk69rx6ytXqAD5URxY+cB8mjvN6X71a5CFp1PGJxJofe3KH64fHcFW5ybB
-         /NmehoH5l+NNh3F360MxvErOI22d69sRfuShS0KYov1+pdkQjwNSzucHVC0EcHpVIQqO
-         QMY0IP81lXKC2zXQcPt7ftmAiclzx5oZInC5LgiouF0pQQXmWXMNZsxT9AOtrhxT3cna
-         7nzQ==
-X-Gm-Message-State: AKwxyteZGH3ZN30MIMhsb+7EN6EhYmL1psB/Fqc043SFK+hVQ8YmEuq0
-        PYF9RqeVqsBFQVpBT5iZNmRfg1bir6qXrMHTS/E=
-X-Google-Smtp-Source: AH8x2278Rg6StNXGGWiS6VCi4LNHISlLdWqqPRS33lITR44DG9X0OBW++5batdqcWyfKCNRTKj+wfCM4dsbOCXgGiY0=
-X-Received: by 10.157.53.12 with SMTP id o12mr5904343otc.181.1516680392710;
- Mon, 22 Jan 2018 20:06:32 -0800 (PST)
+        id S1751220AbeAWFqA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 00:46:00 -0500
+Received: from imap.thunk.org ([74.207.234.97]:47444 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750857AbeAWFp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 00:45:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
+         s=ef5046eb; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+        MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=tH9pDaR1gFHvsg610dYLUvqfkUd/WMd9tyqrY7EPGxg=; b=xENe4Gz4IdX88X/OYxePZr2Cwg
+        JRskACX2xJunB08sixtBSVBvfyKQdQuHA88lMIMhdvPC972XHr4sJJBQFEq+WAwW826zqjIOMtyw5
+        oTUra76ZMNm9kNWnGrsCbRpSArHwcUdX9+ui5Nj/BPpZ41ccLRHlaI4xVJnuOimYJUBY=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.89)
+        (envelope-from <tytso@thunk.org>)
+        id 1edrP8-0001Dd-P1; Tue, 23 Jan 2018 05:45:54 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id A81F9C00554; Tue, 23 Jan 2018 00:45:53 -0500 (EST)
+Date:   Tue, 23 Jan 2018 00:45:53 -0500
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     Jeff King <peff@peff.net>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Chris Mason <clm@fb.com>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+Message-ID: <20180123054553.GA21015@thunk.org>
+References: <CA+55aFzJ2QO0MH3vgbUd8X-dzg_65A-jKmEBMSVt8ST2bpmzSQ@mail.gmail.com>
+ <20180117235220.GD6948@thunk.org>
+ <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
+ <20180118162721.GA26078@lst.de>
+ <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
+ <20180120221445.GA4451@thunk.org>
+ <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
+ <871siihqvw.fsf@evledraar.gmail.com>
+ <20180122180903.GB3513@thunk.org>
+ <20180123004710.GF26357@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.74.27.3 with HTTP; Mon, 22 Jan 2018 20:06:02 -0800 (PST)
-In-Reply-To: <xmqqfu6xjxrx.fsf@gitster.mtv.corp.google.com>
-References: <20180122110334.4411-1-pclouds@gmail.com> <20180122110334.4411-4-pclouds@gmail.com>
- <xmqqfu6xjxrx.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 23 Jan 2018 11:06:02 +0700
-Message-ID: <CACsJy8B059uev+HpL=JGDdh+FM19vSFObhp7DB4eAt-u6d7GnQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write
- shared index
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180123004710.GF26357@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 6:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
->> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
->> index af9b847761..d2a8e0312a 100755
->> --- a/t/t1700-split-index.sh
->> +++ b/t/t1700-split-index.sh
->> @@ -401,4 +401,23 @@ done <<\EOF
->>  0642 -rw-r---w-
->>  EOF
->>
->> +test_expect_success SANITY 'graceful handling when splitting index is n=
-ot allowed' '
->
-> Is SANITY the only prereq we want, or do we want both it and POSIXPERM?
->
-> In "git grep SANITY t/" output, we see that they are almost always
-> used together.
+On Mon, Jan 22, 2018 at 07:47:10PM -0500, Jeff King wrote:
+> 
+> I think Ævar is talking about the case of:
+> 
+>   1. You make 100 objects that aren't referenced. They're loose.
+> 
+>   2. You run git-gc. They're still too recent to be deleted.
+> 
+> Right now those recent loose objects sit loose, and have zero cost at
+> the time of gc.  In a "cruft pack" world, you'd pay some I/O to copy
+> them into the cruft pack, and some CPU to zlib and delta-compress them.
+> I think that's probably fine, though.
 
-SANITY test does more or less the same as this one (chmod then verify)
-which is the reason I removed POSIXPERM. Looking at other tests
-though, they don't do anything different than what I do here and still
-require both SANITY and POSIXPERM. I'm adding POSIXPERM back.
+I wasn't assuming that git-gc would create a cruft pack --- although I
+guess it could.  As you say, recent loose objects have relatively zero
+cost at the time of gc.  To the extent that the gc has to read lots of
+loose files, there may be more seeks in the cold cache case, so there
+is actually *some* cost to having the loose objects, but it's not
+great.
 
->
->> +     test_create_repo ro &&
->> +     (
->> +             cd ro &&
->> +             test_commit initial &&
->> +             git update-index --split-index &&
->> +             test -f .git/sharedindex.*
->> +     ) &&
->> +     cp ro/.git/index new-index &&
->> +     test_when_finished "chmod u+w ro/.git" &&
->> +     chmod u-w ro/.git &&
->> +     GIT_INDEX_FILE=3D"$(pwd)/new-index" git -C ro update-index --split=
--index &&
->> +     chmod u+w ro/.git &&
->> +     rm ro/.git/sharedindex.* &&
->> +     GIT_INDEX_FILE=3Dnew-index git ls-files >actual &&
->> +     echo initial.t >expected &&
->> +     test_cmp expected actual
->> +'
->> +
->>  test_done
+What I was thinking about instead is that in cases where we know we
+are likely to be creating a large number of loose objects (whether
+they referenced or not), in a world where we will be calling fsync(2)
+after every single loose object being created, pack files start
+looking *way* more efficient.  So in general, if you know you will be
+creating N loose objects, where N is probably around 50 or so, you'll
+want to create a pack instead.
 
+One of those cases is "repack -A", and in that case the loose objects
+are all going tobe not referenced, so it would be a "cruft pack".  But
+in many other cases where we might be importing from another DCVS,
+which will be another case where doing an fsync(2) after every loose
+object creation (and where I have sometimes seen it create them *all*
+loose, and not use a pack at all), is going to get extremely slow and
+painful.
 
+> So if we pack all the loose objects into a cruft pack, the mtime of the
+> cruft pack becomes the new gauge for "recent". And if we migrate objects
+> from old cruft pack to new cruft pack at each gc, then they'll keep
+> getting their mtimes refreshed, and we'll never drop them.
 
---=20
-Duy
+Well, I was assuming that gc would be a special case which doesn't the
+mtime of the old cruft pack.  (Or more generally, any time an object
+is gets copied out of the cruft pack, either to a loose object, or to
+another pack, the mtime on the source pack should not be touched.)
+
+	      	  	       	      	   	   - Ted
