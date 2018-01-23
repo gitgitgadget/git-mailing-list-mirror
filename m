@@ -2,127 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 532BD1F576
-	for <e@80x24.org>; Tue, 23 Jan 2018 11:52:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53B901F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 16:17:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751235AbeAWLwJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 06:52:09 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:36970 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751173AbeAWLwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 06:52:08 -0500
-Received: by mail-lf0-f52.google.com with SMTP id f3so263181lfe.4
-        for <git@vger.kernel.org>; Tue, 23 Jan 2018 03:52:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3iERquDJSlU9JL1tNpshij7CCM79plxceKxhIVpPlvg=;
-        b=I5gIFZ/6kWXJP059AahfzlX6Ys6/zdSAz8FLI+6qeYE+Iczfk4I939q7A8o07XPzEW
-         mYKSzMGN+FzfSU5fp0qAU7MY+MqXNR6eEe82/6iWOcxnpCxFnwUKinRgf82sT1v0g/B+
-         fy+c8lBR4+3YhSYsGp4fIXNbtnP5M+zEgaL+/uus6x5JR35jVtvLxfoamts5MZbB+LvJ
-         6+keOhja1XXchBcEMLJqATSg06u7pNuNe0yz7JaJbTRJ8G6Y3EZkiR31eY0PaTWpiQhP
-         Ric6rUzcBaIK9dwJSGygNXREzc7Uk4lZenhGuwZ++M0iicVxEetjU2NJB7wdcyjJFbms
-         OD2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3iERquDJSlU9JL1tNpshij7CCM79plxceKxhIVpPlvg=;
-        b=br8zh6mMG1+NE/d2jpzqw82vSv5dIQqqk/XJHEo+gKHHFiQAMUkYUF2lZjdsvJwPRS
-         VqxQorHWVMkcqVAwwkM0+KNxboYEONZnNU9wuY72UVFIGfuJJwq0N4/fviZRP8oBoBN3
-         XX3Dh/fGnVDEdDn1ENv4cf9c4kyNOuV5tBrCW5ne8WZYJQ2y31l7lkr63/siufbG7kjE
-         t7QOkT8ObYlvka2di82cwP6UZgFSODS/bzVuWsBDfAcgMFLeJfdI2Gy6e12ifd5jiYWD
-         214kw5GmokQNdMKhJoL4jGQ2U+sBxy7ONDUdUsgtMYwG1YwvP1ZQnr/SltjLTP2QVRAR
-         QXlQ==
-X-Gm-Message-State: AKwxytdP3ycoJebTqM69y8jV/KVJXgv/RtNlW8RnW36QQ5n5850vc2/o
-        PQkx/irS6F7Dzt0s+vXQaDUYWpc3Ggoj44XlDZh/ycFzIts=
-X-Google-Smtp-Source: AH8x224EJ1Z0M7KpLvZrKsAX+JDWb8eU+u47VozHnSkOLbbZFOZbxv52/YSfs1JdF/iLc4fD2u3D+UYzqRniDvN1g3U=
-X-Received: by 10.25.228.13 with SMTP id b13mr1139874lfh.61.1516708327102;
- Tue, 23 Jan 2018 03:52:07 -0800 (PST)
+        id S1751895AbeAWQRm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 11:17:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54368 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751840AbeAWQRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 11:17:41 -0500
+Received: (qmail 23851 invoked by uid 109); 23 Jan 2018 16:17:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 23 Jan 2018 16:17:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16805 invoked by uid 111); 23 Jan 2018 16:18:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Jan 2018 11:18:18 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Jan 2018 11:17:38 -0500
+Date:   Tue, 23 Jan 2018 11:17:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     Theodore Ts'o <tytso@mit.edu>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christoph Hellwig <hch@lst.de>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        linux-fsdevel <linux-fsdevel@vger.kernel.org>,
+        Chris Mason <clm@fb.com>
+Subject: Re: [PATCH] enable core.fsyncObjectFiles by default
+Message-ID: <20180123161738.GC13068@sigill.intra.peff.net>
+References: <20180117235220.GD6948@thunk.org>
+ <CA+55aFxgg6MT5Z+Jox2xyG28g9jNJ4cL3jNZ5AgTOmUODuiBsA@mail.gmail.com>
+ <20180118162721.GA26078@lst.de>
+ <xmqqzi59psxt.fsf@gitster.mtv.corp.google.com>
+ <20180120221445.GA4451@thunk.org>
+ <xmqqefmknp3f.fsf@gitster.mtv.corp.google.com>
+ <871siihqvw.fsf@evledraar.gmail.com>
+ <20180122180903.GB3513@thunk.org>
+ <20180123004710.GF26357@sigill.intra.peff.net>
+ <20180123054553.GA21015@thunk.org>
 MIME-Version: 1.0
-Received: by 10.25.235.210 with HTTP; Tue, 23 Jan 2018 03:52:06 -0800 (PST)
-In-Reply-To: <CAFAcib9FGfTe8C7TaOY91kzhUvxXtpx5Y8JMFkqxhRhLJeytxg@mail.gmail.com>
-References: <CAFAcib-2fxiVxtVWcbvafY3-Br7Y70HMiHFZoT0VfK6JU0Dp9A@mail.gmail.com>
- <CABPp-BGYs9jo16OZR8NsL-eO9LwEttBxBspvp1-_JjuD2oBYbA@mail.gmail.com> <CAFAcib9FGfTe8C7TaOY91kzhUvxXtpx5Y8JMFkqxhRhLJeytxg@mail.gmail.com>
-From:   Edward Thomson <ethomson@edwardthomson.com>
-Date:   Tue, 23 Jan 2018 11:52:06 +0000
-Message-ID: <CA+WKDT3ZsObXc2ENV3gUXbMZU=McBJdiEpvk7y2OM0t+PrqZtQ@mail.gmail.com>
-Subject: Re: git merge-tree: bug report and some feature requests
-To:     Josh Bleecher Snyder <josharian@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180123054553.GA21015@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 7:08 AM, Josh Bleecher Snyder
-<josharian@gmail.com> wrote:
-> Looking over your list above, at a minimum, libgit2 might not have a
-> particularly good way to represent submodule/file or
-> submodule/directory conflicts, because is-a-submodule is defined
-> external to a git_index_entry.
+On Tue, Jan 23, 2018 at 12:45:53AM -0500, Theodore Ts'o wrote:
 
-libgit2 should detect submodule/file and submodule/directory
-conflicts.
+> What I was thinking about instead is that in cases where we know we
+> are likely to be creating a large number of loose objects (whether
+> they referenced or not), in a world where we will be calling fsync(2)
+> after every single loose object being created, pack files start
+> looking *way* more efficient.  So in general, if you know you will be
+> creating N loose objects, where N is probably around 50 or so, you'll
+> want to create a pack instead.
+> 
+> One of those cases is "repack -A", and in that case the loose objects
+> are all going tobe not referenced, so it would be a "cruft pack".  But
+> in many other cases where we might be importing from another DCVS,
+> which will be another case where doing an fsync(2) after every loose
+> object creation (and where I have sometimes seen it create them *all*
+> loose, and not use a pack at all), is going to get extremely slow and
+> painful.
 
-While, yes, some metadata about the submodule is located outside the
-index, you can look at the mode to determine that this _is_ a
-submodule.  You should be able to reliably detect submodule/file
-conflicts because one will be a regular or executable file (mode
-0100644 or 0100755), while the other entry at the same path will
-be a gitlink (mode 0160000).
+Ah, I see. I think in the general case of git operations this is hard
+(because most object writes don't realize the larger operation that
+they're a part of). But I agree that those two are the low-hanging fruit
+(imports should already be using fast-import, and "cruft packs" are not
+too hard an idea to implement).
 
-Similarly, submodule/directory conflict detection works just like
-regular file/directory conflict detection.  If some path `foo` is
-a submodule (or a regular file) then some path `foo/bar` existing
-in the other side of the merge causes a conflict.
+I agree that a cruft-pack implementation could just be for "repack -A",
+and does not have to collect otherwise loose objects. I think part of my
+confusion was that you and I are coming to the idea from different
+angles: you care about minimizing fsyncs, and I'm interested in stopping
+the problem where you have too many loose objects after running auto-gc.
+So I care more about collecting those loose objects for that case.
 
-> Cataloging or special-casing all possible conflict types does seem
-> unwise because of the sheer number of kinds of conflicts.
->
-> But the alternative appears to be punting entirely, as libgit2 does,
-> and merely providing something akin to three index entries.
+> > So if we pack all the loose objects into a cruft pack, the mtime of the
+> > cruft pack becomes the new gauge for "recent". And if we migrate objects
+> > from old cruft pack to new cruft pack at each gc, then they'll keep
+> > getting their mtimes refreshed, and we'll never drop them.
+> 
+> Well, I was assuming that gc would be a special case which doesn't the
+> mtime of the old cruft pack.  (Or more generally, any time an object
+> is gets copied out of the cruft pack, either to a loose object, or to
+> another pack, the mtime on the source pack should not be touched.)
 
-Indeed, when I added merge to libgit2, we put the higher-level conflict
-analysis into application code because there was not much interest in it
-at the time.  I've been meaning to add this to `git_status` in libgit2,
-but it's not been a high priority.
+Right, that's the "you have multiple cruft packs" idea which has been
+discussed[1] (each one just hangs around until its mtime expires, and
+may duplicate objects found elsewhere).
 
-> This which
-> leaves it unclear what exactly the conflict was, at which point any
-> user (read: porcelain developer) will end up having to recreate some
-> merge logic to figure out what went wrong. And if merge-tree starts
-> doing rename detection, the user might then have to emulate that as
-> well.
+That does end up with one pack per gc, which just punts the "too many
+loose objects" to "too many packs". But unless the number of gc runs you
+do is very high compared to the expiration time, we can probably ignore
+that.
 
-That's not a good idea.  Trying to figure out what merge did would be
-painful at best, and likely impossible, since a rename conflict is
-recorded in the main index without any way to piece it together.  eg:
+-Peff
 
-100644 deadbeefdeadbeefdeadbeefdeadbeefdeadbeef 1       bar.c
-100644 cafec4fecafec4fecafec4fecafec4fecafec4fe 2       bar.c
-100644 c4cc188a892898e13927dc4a02e7f68814b874b2 1       foo.c
-100644 71f5af150b25e3aaaad2d67ff46759311401036f 2       foo.c
-100644 351cfbdd55d656edd2c5c995aae3caafb9ec11fa 3       rename1.c
-100644 e407c7d138fb457674c3b114fcf47748169ab0c5 3       rename2.c
-
-This is the main index that results when bar.c has a rename/edit
-conflict, and foo.c also has a rename/edit conflict.  One was renamed
-to rename1.c and the other to rename2.c.  Trying to determine which is
-which _after the fact_ would be regrettable.  Especially since rename
-detection is not static - you would need to know the thresholds that
-were configured at the time merge was performed and try to replay
-the rename detection with that.
-
-libgit2 records a `NAME` section in the index that pairs the rename
-detection decisions that it performed so that you can analyze them
-and display them after the fact.
-
--ed
+[1] https://public-inbox.org/git/20170610080626.sjujpmgkli4muh7h@sigill.intra.peff.net/
