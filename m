@@ -2,67 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D031D1F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 20:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE56A1F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 20:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752544AbeAWUTv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 15:19:51 -0500
-Received: from mout.web.de ([212.227.15.4]:51863 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752535AbeAWUTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 15:19:50 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LyUha-1epaFh42fW-015ocQ; Tue, 23
- Jan 2018 21:19:32 +0100
-Date:   Tue, 23 Jan 2018 21:19:30 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v4 0/6]  convert: add support for different encodings
-Message-ID: <20180123201930.GA23019@tor.lan>
-References: <20180120152418.52859-1-lars.schneider@autodesk.com>
+        id S1752555AbeAWUWQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 15:22:16 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55011 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752495AbeAWUWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 15:22:15 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5470DB9F53;
+        Tue, 23 Jan 2018 15:22:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=sHM5vH0FFa75dBOJWuZraIzvVow=; b=dqpcIL
+        fiahoZyBXugK5rsecQfYjov6afwFsHEpVIZpiraRLmsOloeaUmlGq9QMZnRWFiFq
+        4duBBJC0fYGPFvBwU3wIC3Qafx4/z9K+HCgEkez8SOcdKbR2dD/H0QZw1zQmtRYH
+        WvLmgLMlJz1WbudLZdmb7XVmVemi/N6MNMozI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mBFgpIieX9d5nRNwCXn1UKCu2FZGr1or
+        LrbYsusZ8jGTIx4duPWeLoSDx+WkTMiKZCOQicIovEP0TMmrn8W9mHOsJAb9kIRC
+        DviN5oBU3IfhL9685NmgxGBMFi1W3XlSOrL8LcxAJARKcdwwra6sMtbjbcCxlEeH
+        1l9ePe9RyJk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C6D3B9F52;
+        Tue, 23 Jan 2018 15:22:15 -0500 (EST)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C5530B9F4F;
+        Tue, 23 Jan 2018 15:22:14 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+Date:   Tue, 23 Jan 2018 12:22:13 -0800
+In-Reply-To: <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Thu, 18 Jan 2018 16:35:48 +0100
+        (STD)")
+Message-ID: <xmqq607sgway.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180120152418.52859-1-lars.schneider@autodesk.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:8HIYI7wOV8J4P/risOw4KeRM+8nO3GKNhVKQRuQewrAgDfU1u1/
- scVcbcE7fZanVKit70UhVT/jxa2m3A+gSy904TWKdhpuaQMTWjak+MvzcClYAIx7y/GDVBp
- PuEAmb3qUiuWm4cPzTS9QG8djR15fDMj49FkzYOSm/ZtO3N3iDG8eKlV+wm0xykAjjsmlzY
- SZ72feYFgsAXBz7S48pqw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2SXm9/cjJ48=:3f3DhKotw9VssdwBxclvTs
- 0iUFsaiNDxWPGBfLE8zh0POmhtpmresLOHNZkMsGT76hbrqzOd/9vcXX8Wu+yDbtxUYgFq1VU
- +HrotH+lkpva8ltVGuXnfFlxKc7W8513OWhhiVajBEczG1VRDfMtVXwmShVUK8GOHk5Uhsbnq
- inYJUqTkFj1ZXVza6tBvxsrxinQnHtUeohjzaSdSRGB39T3OdnHc12m4UO5qgc8Y2FUCkkCaC
- UaPmrTlvgEym97ug2tMT853LsgzakVbs8vubBboz7toIF44Kax9sr8dE6PAvC9EVR5VjaVEby
- 93Va8DNIBPTP2Lftv8kf1zZSifgrXL0HDgg4kJ07vYoqkgwyC3TnK+J9aW1TPoIyW9SaqtNL1
- rVuHzQrRQAZ6EhsjYCRPBdgFOBSDnYpW7EHnmIXOIpzdjoWyTy0Z2CA1Xcyu7sLX+FzUnSAma
- 51fw11Ud4bhcb3y5PONX+U91+jNBp9yrc5iN0w7L39qlBcAbHPEEBpfuEkVUeX6J9yHGmbh3R
- zkjJoilKeIGkyT1rUa5DKxrau0zXHIXmVZhCZOTpKOiPUlAsPgGeNo4ADUr1w41bRCgY0pUp0
- cs6cbuREmBMuHCN0KW5ESkTrg1Hob1lG4QxOAg1D5Gz6O8JE8P89zw3wpJ+gBoZ+l9WrJB2tt
- oRfF7fTX3yOOEK4K5bJ2PVi2W5unG8D2JOL2oQ5em/7Ni34sc3by1dRZPraDJ/ZocK2Ufbfbp
- Y1OcWP6lmaRPfSol6c4tkAlZBxYzQNSUdtilooaUaLLhEZ/Ze05XQP2/8g3zYWS7ALwOm0Xlg
- 3o+p1wJPKXAKs6rZvmWotKTqe0/eg==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 19C69B88-007B-11E8-9A43-575F0C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 20, 2018 at 04:24:12PM +0100, lars.schneider@autodesk.com wrote:
-> From: Lars Schneider <larsxschneider@gmail.com>
-> 
-> Hi,
-> 
-> Patches 1-4 and 6 are preparation and helper functions.
-> Patch 5 is the actual change.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-I (still) have 2 remarks on convert.c - to make live easier,
-I will send a small "on top" patch the next days.
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 8a861c1e0d6..1d061373288 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -368,6 +368,11 @@ The commit list format can be changed by setting the configuration option
+>  rebase.instructionFormat.  A customized instruction format will automatically
+>  have the long commit hash prepended to the format.
+>  
+> +--recreate-merges::
+> +	Recreate merge commits instead of flattening the history by replaying
+> +	merges. Merge conflict resolutions or manual amendments to merge
+> +	commits are not preserved.
+> +
+
+It is sensible to postpone tackling "evil merges" in this initial
+iteration of the series, and "manual amendments ... not preserved"
+is a reasonable thing to document.  But do we want to say a bit more
+about conflicting merges?  "conflict resolutions ... not preserved"
+sounds as if it does not stop and instead record the result with
+conflict markers without even letting rerere to kick in, which
+certainly is not the impression you wanted to give to the readers.
+
+I am imagining that it will stop and give control back to the end
+user just like a conflicted "pick" would, and allow "rebase
+--continue" to record resolution from the working tree, and just
+like conflicted "pick", it would allow rerere() to help end users
+recall previous resolution.
+
