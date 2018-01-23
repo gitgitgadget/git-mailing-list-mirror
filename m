@@ -2,84 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 978BF1F404
-	for <e@80x24.org>; Tue, 23 Jan 2018 20:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D031D1F404
+	for <e@80x24.org>; Tue, 23 Jan 2018 20:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752489AbeAWUNP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 15:13:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56564 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752340AbeAWUNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 15:13:14 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DF5DB9B5C;
-        Tue, 23 Jan 2018 15:13:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r1r5xb5Hl9zRSa9xQrZsPgdEjl0=; b=pAj/wl
-        Z135OpJJ/z6MdWMFgXKJM4XvGoMjp23dOxabh28L/T5zQuLCe3H0Th98wFE8MDzI
-        acYHr35m0EuKTY+yQ/3qHJfpSjKVVyBsMjLoMRoRbgEirzR/NprzlFY9tZVBh2C6
-        jQhN38EhAGw+adeLrIOAq5K+ssdtPdVZyEVwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q3dMFrXdqMzblTrdmhCOJFLUNeIgvt68
-        MYyvziwlj1ZPVpTUxmaSlYZpbswiYiHdyWEALDwzMD4NExUz/mTHM+wZLKOtg4DA
-        BsV7du2cAUKL2l2cx4LIx3AfV3qTe+vW3tf4GJJT7kT7cVwO5PYZlQ+RXDbe3l0L
-        tjbdV9Dd65I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 558A1B9B5B;
-        Tue, 23 Jan 2018 15:13:14 -0500 (EST)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88D40B9B58;
-        Tue, 23 Jan 2018 15:13:13 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 4/8] rebase-helper --make-script: introduce a flag to recreate merges
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <b9cb2d915aa4ff564b1960ce0352664b1d26eecb.1516225925.git.johannes.schindelin@gmx.de>
-        <CAPig+cSn_X-0iir-cKSd=P8p5QCxrR2qU_GBj7zDbv8zTc+AQw@mail.gmail.com>
-Date:   Tue, 23 Jan 2018 12:13:12 -0800
-In-Reply-To: <CAPig+cSn_X-0iir-cKSd=P8p5QCxrR2qU_GBj7zDbv8zTc+AQw@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 19 Jan 2018 05:34:20 -0500")
-Message-ID: <xmqqa7x4gwpz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752544AbeAWUTv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 15:19:51 -0500
+Received: from mout.web.de ([212.227.15.4]:51863 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752535AbeAWUTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 15:19:50 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LyUha-1epaFh42fW-015ocQ; Tue, 23
+ Jan 2018 21:19:32 +0100
+Date:   Tue, 23 Jan 2018 21:19:30 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     lars.schneider@autodesk.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v4 0/6]  convert: add support for different encodings
+Message-ID: <20180123201930.GA23019@tor.lan>
+References: <20180120152418.52859-1-lars.schneider@autodesk.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D72ADF6A-0079-11E8-B87E-575F0C78B957-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180120152418.52859-1-lars.schneider@autodesk.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:8HIYI7wOV8J4P/risOw4KeRM+8nO3GKNhVKQRuQewrAgDfU1u1/
+ scVcbcE7fZanVKit70UhVT/jxa2m3A+gSy904TWKdhpuaQMTWjak+MvzcClYAIx7y/GDVBp
+ PuEAmb3qUiuWm4cPzTS9QG8djR15fDMj49FkzYOSm/ZtO3N3iDG8eKlV+wm0xykAjjsmlzY
+ SZ72feYFgsAXBz7S48pqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2SXm9/cjJ48=:3f3DhKotw9VssdwBxclvTs
+ 0iUFsaiNDxWPGBfLE8zh0POmhtpmresLOHNZkMsGT76hbrqzOd/9vcXX8Wu+yDbtxUYgFq1VU
+ +HrotH+lkpva8ltVGuXnfFlxKc7W8513OWhhiVajBEczG1VRDfMtVXwmShVUK8GOHk5Uhsbnq
+ inYJUqTkFj1ZXVza6tBvxsrxinQnHtUeohjzaSdSRGB39T3OdnHc12m4UO5qgc8Y2FUCkkCaC
+ UaPmrTlvgEym97ug2tMT853LsgzakVbs8vubBboz7toIF44Kax9sr8dE6PAvC9EVR5VjaVEby
+ 93Va8DNIBPTP2Lftv8kf1zZSifgrXL0HDgg4kJ07vYoqkgwyC3TnK+J9aW1TPoIyW9SaqtNL1
+ rVuHzQrRQAZ6EhsjYCRPBdgFOBSDnYpW7EHnmIXOIpzdjoWyTy0Z2CA1Xcyu7sLX+FzUnSAma
+ 51fw11Ud4bhcb3y5PONX+U91+jNBp9yrc5iN0w7L39qlBcAbHPEEBpfuEkVUeX6J9yHGmbh3R
+ zkjJoilKeIGkyT1rUa5DKxrau0zXHIXmVZhCZOTpKOiPUlAsPgGeNo4ADUr1w41bRCgY0pUp0
+ cs6cbuREmBMuHCN0KW5ESkTrg1Hob1lG4QxOAg1D5Gz6O8JE8P89zw3wpJ+gBoZ+l9WrJB2tt
+ oRfF7fTX3yOOEK4K5bJ2PVi2W5unG8D2JOL2oQ5em/7Ni34sc3by1dRZPraDJ/ZocK2Ufbfbp
+ Y1OcWP6lmaRPfSol6c4tkAlZBxYzQNSUdtilooaUaLLhEZ/Ze05XQP2/8g3zYWS7ALwOm0Xlg
+ 3o+p1wJPKXAKs6rZvmWotKTqe0/eg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On Sat, Jan 20, 2018 at 04:24:12PM +0100, lars.schneider@autodesk.com wrote:
+> From: Lars Schneider <larsxschneider@gmail.com>
+> 
+> Hi,
+> 
+> Patches 1-4 and 6 are preparation and helper functions.
+> Patch 5 is the actual change.
 
->> +               is_octopus = to_merge && to_merge->next;
->> +
->> +               if (is_octopus)
->> +                       BUG("Octopus merges not yet supported");
->
-> Is this a situation which the end-user can trigger by specifying a
-> merge with more than two parents? If so, shouldn't this be just a
-> normal error message rather than a (developer) bug message? Or, am I
-> misunderstanding?
-
-BUG() is "we wrote code carefully so that this should not trigger;
-we do not _expect_ the code to reach here".  This one is expected to
-trigger, and I agree with you that it should be die(), if the series
-is meant to be released to the general public in the current form
-(i.e. until the limitation is lifted so that it can handle an
-octopus).
-
-If the callers are made more careful to check if there is an octopus
-involved and reject the request early, then seeing an octopus in
-this location in a loop will become a BUG().
+I (still) have 2 remarks on convert.c - to make live easier,
+I will send a small "on top" patch the next days.
