@@ -2,86 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DED51F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 21:20:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD291F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 21:28:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932487AbeAXVUA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 16:20:00 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:44019 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932238AbeAXVT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 16:19:59 -0500
-Received: by mail-wm0-f48.google.com with SMTP id g1so10961888wmg.2
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:19:59 -0800 (PST)
+        id S932850AbeAXV2S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 16:28:18 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:40532 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932474AbeAXV2R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 16:28:17 -0500
+Received: by mail-pg0-f66.google.com with SMTP id g16so3613551pgn.7
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LHAkvhZqe/3awgVZRk0lMVM8H5FCIpamXvrrP8vBXeg=;
-        b=KIZiyjSkytzWOfSHi1P/mIESiFIjyEufookQ+pFzRfogMOkYMhna2ENhZF5WNJG58J
-         /n2/g+3KEk/XX6KAeMi56jqDc/Xp6Y/GhNjwiH3OsnVVlWeqUA0qh/g8GQhmYNen4Eu5
-         0lG2BTlWMux50hNZ/WZ+k+sSR8MrAXXlPppwcsyaYlApnqOdzm7HNX/sNP3tk39/tS8y
-         hvOcTcn7hIWTjjbvwOwExdu+/81J8yORtrjw1mJpRAIxKvs0b2/yMF6oL/qiVwTNqYQW
-         QKGfdfZh+qAPcpjCKSuEDMY5MrZstSETzBbdAZBFA3zY375X4QO8V8Ko4U39pnJkAYke
-         J2Kg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+1C7OhFOuRTfHL4Jxza7w5m8rBZe8fJPPzlGDu69KC4=;
+        b=Kkk0snMYDF7kdJ8eA1WcqcHWw0W9ym3Pf0/HhJBtFRAdLTVK1VIdZYFAAriN4Aw0V2
+         KXcwgL55ar+fKGWpyd2vEPhY1fb19y4RqlkeAgZHFWMhfMqFD4jMk9XcQgvR7MXVSrfx
+         Lcdgpx3b07nInGdJEppCX3ib6nbir/19/fpAxbtnmjogn3cimA8nZ7LsRIQXm/U5dDRN
+         2aG35RloMFjJwDYSSQbcsxebYmcnL6r6nFAdiUup0RazUKZcDViBkYIkB9JJB1Nqvc//
+         Cr8Y/gL0z3/pTLNRXa5zbrQzVKppjDWoB9MCs9FeFCuc0IkC70cTEEkY2prk/izaNhD1
+         83Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LHAkvhZqe/3awgVZRk0lMVM8H5FCIpamXvrrP8vBXeg=;
-        b=Ruhgj3oh6oetJqsSe5ct9LDC/L/e+oaRUulFfPVMhseG5QiheOHn6sjVoqgJSzRynp
-         MMxMxN0rW2tz59xxtY4o3fSsDYzCygr+NtuOwBOk8nayTpQHwoMrg3/JEHj1QtANwvAf
-         qbXUy1p32rNubC9vG8BN0R0EgJSnTtiZmfY8fMpWLCyRjlW12gEe1PGNTKz6Ay3iIiXB
-         FqRmrnCrcTBAFAa6RET5ykXK9VXt7mbKMscW1eNgDgamEs1jw1RB7oTgL/dfvuS8e+Ts
-         6qxa8HkX5j9qzifdLtY2hY+emdVO9a+Y+hkCh9ASeq0LTMYWKicymJdAHyq7aVrKOUvJ
-         2+ag==
-X-Gm-Message-State: AKwxyte4b6C8g+L/AWrWu5WgPuirhwjB628M55X+oQqNcLPx7C1EHBdf
-        Kc9tHwZD2cZmVaDup1k2pm9ggiB5+cwwrzd1Ido=
-X-Google-Smtp-Source: AH8x227c42sZ91zKY2JUSsyrXQ9tiwXfVBqEx52WgNptmE8i56vzjchzdaDQfsHD3519uixfuIKhFYYAc+CokLv0zsA=
-X-Received: by 10.28.208.142 with SMTP id h136mr6319362wmg.133.1516828798403;
- Wed, 24 Jan 2018 13:19:58 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+1C7OhFOuRTfHL4Jxza7w5m8rBZe8fJPPzlGDu69KC4=;
+        b=gbY1ZJarZj7C1/R4JyWm0U+ifH7gzhX+vXfx+nxcF91sBHveLNtRalghgleECriHzI
+         MqqwfyQUOwotD4dXKK4jjVP3WEjEBnKglhnR807q/qO3/FpSWK2pYsjjCwqfh9yoMywA
+         aIG2M0Zb3rrvPXbwdvcdyoQ3ziSSoihHRB2rI0ooZ7TZHGYcXDycx/NpOLpt5UO3Ha15
+         x7SxFEjhIJ/C/8rNQeo+jh7Q25zxnvSLoVEilqULcWzeozQbi8v3H8UfDGF6/sdh7ynq
+         OG+M7NSPd13eigZZDjhRYSTex7sui4JnzZ4mHPSK2D3tqfwuEs+fg7I0S93WLtuwSQBz
+         6Snw==
+X-Gm-Message-State: AKwxytfg1CNbUu9PlWADe9Hv91p9u4JW2oYqJYfljJqhGgu65H9v+ZPq
+        q/0EHfBadF8bNVF8XJyvQKFV8KQO4lk=
+X-Google-Smtp-Source: AH8x224jVlo+czJqdtoRMsXEQcbTbPAK3IWKx/A7xRSTpsJv5b7fAovtRKufuUV7fQecaZmnUPzTKg==
+X-Received: by 10.101.65.9 with SMTP id w9mr11664417pgp.214.1516829297063;
+        Wed, 24 Jan 2018 13:28:17 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
+        by smtp.gmail.com with ESMTPSA id 65sm12177634pfm.152.2018.01.24.13.28.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 Jan 2018 13:28:16 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patryk Obara <patryk.obara@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 00/14] Some fixes and bunch of object_id conversions
+References: <cover.1516617960.git.patryk.obara@gmail.com>
+        <cover.1516790478.git.patryk.obara@gmail.com>
+Date:   Wed, 24 Jan 2018 13:28:15 -0800
+In-Reply-To: <cover.1516790478.git.patryk.obara@gmail.com> (Patryk Obara's
+        message of "Wed, 24 Jan 2018 12:11:52 +0100")
+Message-ID: <xmqqr2qfaqvk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.223.166.115 with HTTP; Wed, 24 Jan 2018 13:19:57 -0800 (PST)
-In-Reply-To: <c5d21b22-e4cd-e338-c953-90a81981e23c@gmx.net>
-References: <20180123001648.24260-1-isaachier@gmail.com> <CAG6xkCZn6m2n0rDvpN6MmZcOr2hJBRCfhrppC37f-DUj3_JZsw@mail.gmail.com>
- <c5d21b22-e4cd-e338-c953-90a81981e23c@gmx.net>
-From:   Isaac Hier <isaachier@gmail.com>
-Date:   Wed, 24 Jan 2018 16:19:57 -0500
-Message-ID: <CAG6xkCbtVYa_eqZj4m74jXo7yC8kS8kjWm-fALePmHaH5yY0qg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Implement CMake build
-To:     Stephan Beyer <s-beyer@gmx.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your interest! This patch is based on the cmake-build
-branch of https://github.com/isaachier/git, but the full history is on
-the cmake branch (squashed it for easier readability). Hope that
-helps.
+Patryk Obara <patryk.obara@gmail.com> writes:
 
-On Wed, Jan 24, 2018 at 4:15 PM, Stephan Beyer <s-beyer@gmx.net> wrote:
-> Hi Isaac,
+> Compared to v2:
 >
-> On 01/24/2018 02:45 PM, Isaac Hier wrote:
->> I realize this is a huge patch, but does anyone have feedback for the
->> general idea?
+> * rebased to latest master
 >
-> Thank you very much. I am *personally* interested in this due to several
-> reasons (which are mostly that I am used to CMake and when I do
-> something on the Git codebase, I always end up that its build system
-> recompiles everything ...which drives me crazy as hell. Using CMake, I
-> could simply use out-of-source builds and be happy).
->
-> I am not sure if it should go into the main Git repo. I'd already be
-> happy if I could pull it from somewhere (github for example) and rebase
-> it to use for my local branches.
->
-> ~Stephan
+> * patch 1 and 2
+> I kept them in, but if Junio prefers them separately then I'll send
+> them as separate patches.
+
+It's not just me, but I think they should be separated out (I can
+just queue them separately, and there is no need to resend them
+unless/until they need to be updated for their own reason).
+
