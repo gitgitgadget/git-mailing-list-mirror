@@ -2,84 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD5851F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 12:15:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFE1C1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 12:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933554AbeAXMPO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 07:15:14 -0500
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:39006 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932953AbeAXMPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 07:15:10 -0500
-Received: by mail-lf0-f52.google.com with SMTP id w27so3693041lfd.6
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 04:15:10 -0800 (PST)
+        id S933386AbeAXMTO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 07:19:14 -0500
+Received: from mail-it0-f45.google.com ([209.85.214.45]:41657 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932953AbeAXMTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 07:19:13 -0500
+Received: by mail-it0-f45.google.com with SMTP id b77so4991847itd.0
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 04:19:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to;
-        bh=NqxwVIPKuMTm8N3Sb1XGlT2peFsqnrKgcTdIoenRdJk=;
-        b=cLdPDpf9Zobb+W6/nvBozlkNXIhSR2CyNnQXfXXK2nPsDqH6kYLl+DeNh1I7Zz4P2D
-         bj7B34+YKdX3y36mpivCjCzfQpZXc4lX6wvsGBk559RmJ6MeZqftOhnampaq4Pp1vQk1
-         q08MaMqQJHWZ5U+yjU/nkJ9R9O4cLBNjEE2t8d5FMIRkJeDFQ93ZvQynq0eU8rdMSgh1
-         r/u5MK583R0dCVHAKH4yEoaGXnZMeowZtVpIE2CuBQByW1WApcTeR/zIUUXTXP023tyT
-         A4M24lbCKUGwCR7j1PTXcyP3nntYyJvIoKGlzqR+UcijXlXX6rzJQ7kpKTnN0EtI3Gjo
-         b5eg==
+        bh=8X5fMiTj3wHleyxMXVzgelTXI0ZYeH98Gvv/NSAGgn4=;
+        b=PR+M63TFOtOMLpSoJ3DAQUNPAmC5yCAFpJYsswLb64orj3prOgDfFQMrfLNfVgGXFy
+         Z7Jwm33dp2DhftbpGJD5EGu3RTJi7hfSl0Dl00tMOAFqYHRkOy81n4NBgY0kDRkV9ZOS
+         kbop+CQy55774Po6/P57KeDQxYU1h7bz77FnE+cqNlHuk2i5psYObClrVu0wrMu4wfrq
+         FXVvPAn5oV19LTjy7OinskdSnOXy5cyChINF1XD40jzqJW4dRmxMNr3SfHgVDQTMEFDe
+         mG8qRNlPS5hHhwCL1m2/RErGKsNVUgA+ULvhG+DJTrreljLMeRrLWDlBlNjnj7go8A8m
+         Y7PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=NqxwVIPKuMTm8N3Sb1XGlT2peFsqnrKgcTdIoenRdJk=;
-        b=XYWs/zotWIZAyGm6QIFiMrW/4pumI8ETpbcO9BeLjJ1vfwx6Lit4MFcP7XUiala3mk
-         Or1N2swpK90tH1BLrzq8t3GyqAUYQo0lPhlOTRWM+5Pm6KJIpYasJw9492nzjgUlnlG2
-         zj30ufFPxtIeAruUsqATo5WO/b8CKasggna3XqUTT/pK3qZr7QhqOl0gvG9x6Cr6Bcs5
-         +UFwWGwl64rzohivKH1kdty/9nOKeXVjXeyjIkbYHut2eArEeLrMgUejlfSfK1KpPOaZ
-         vjUDEYO/lpPj4fxswsmDFv30y0yx6VByYm5bskIPmNcs8ncxyP68MmjkTSLq1fWTzMtg
-         AOSQ==
-X-Gm-Message-State: AKwxytfO0od6tMwn4LHK0C085QYCu+hmjr5KeK6D1w0unHwQ46psB75K
-        agFnSsQibcMdY/ArBVz0ME/vyGA1dgVB74wRfPWlrT95C94=
-X-Google-Smtp-Source: AH8x226IAgEf29qocwZmYqUi7lL7TGJHK2gmQ13Gikz4eMei8W/h5zRSlOJR3HJM9FO3VrcmNP5FZcJYu0cNINiZREE=
-X-Received: by 10.46.126.5 with SMTP id z5mr3145765ljc.43.1516796108909; Wed,
- 24 Jan 2018 04:15:08 -0800 (PST)
+        bh=8X5fMiTj3wHleyxMXVzgelTXI0ZYeH98Gvv/NSAGgn4=;
+        b=IEB7ytm8W14E86b7Z+WkxHx29ZcT+T9q9sUIMSEbpI4ZGoRxAeVOtSJHgj9cVreImd
+         cXyWzGWglOwmKadJcJaowxkS8Qd5Ap4dpNnbT9HuAIuWCDPoa3jdj2FPX/dQU14VppPk
+         ORy/kYrxHgMOmkYgsKz1L5E8hVg/OmpwGs9n2GlvQtYV0Za31PxUnvzvsaEZkoAJ7K47
+         8vZiCFAa/bMiz4KEn+h4taH7XKnpkk0HKoycu9VkIwvE8TKANV5FMlsczRqRjuxW9zkI
+         q+fB9mnueEmPxZfeJED4bqnTUq517xhlLhaj9Spz0njKEg2ADwi09IWZi4bYbRuQLBaG
+         gGGg==
+X-Gm-Message-State: AKwxytehpL5dI22hI9KQpCZ0uBWMfl7FmzHZeLD0PDB7zZiQxDWzm++Q
+        BhV1sS0FoqrjGfY3wwgwEhnI2DR340MXnkS8QfkvTw==
+X-Google-Smtp-Source: AH8x224XSJx5FPSy2R5PndrVK6lQy6RKBnLs0OGijg16pXcs5eENVcuF4pIV1tBiVkQkDQpMzo407tpD94hOsx9dJic=
+X-Received: by 10.36.131.130 with SMTP id d124mr8780984ite.30.1516796352459;
+ Wed, 24 Jan 2018 04:19:12 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.25.235.210 with HTTP; Wed, 24 Jan 2018 04:15:08 -0800 (PST)
-From:   Edward Thomson <ethomson@edwardthomson.com>
-Date:   Wed, 24 Jan 2018 12:15:08 +0000
-Message-ID: <CA+WKDT0rB0XV-99bnYYH7A7=a7doL2fqFR=FOq2DFuczUb9xDw@mail.gmail.com>
-Subject: [ANNOUNCE] libgit2 summit: 9 March 2018, Barcelona
-To:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.79.38.140 with HTTP; Wed, 24 Jan 2018 04:19:12 -0800 (PST)
+From:   Dimitriy <dimitriy.ryazantcev@gmail.com>
+Date:   Wed, 24 Jan 2018 14:19:12 +0200
+Message-ID: <CAPUT4mS+p+2n85dB-iWtae+0SDkUoYA5bqtUs+6OaFchjJJeuA@mail.gmail.com>
+Subject: [BUG] git pull with pull.rebase and rebase.autoStash is not working
+ anymore in 2.16
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The libgit2 community is hosting the libgit2 Summit 2018 on March 9th 2018
-in Barcelona.
+Looks like regression in 2.16.
+Worked fine before update.
+Seems like git stash is not always working.
+Any ideas?
 
-As peff previously announced, Git Merge 2018 is happening in Barcelona on
-March 8th (and the Git Contributor's Summit is planned for March 7.)  We
-will follow the Git Merge event and have our summit on March 9th so that
-people can attend both summits.
+$ git --version
+git version 2.16.0.windows.2
 
-We ask that you please register ahead of time.
+$ git config pull.rebase
+true
 
-https://goo.gl/forms/3HdRBeBWixxQE3rf1
+$ git config rebase.autoStash
+true
 
-Like the Git Contributor's Summit, we will likely start with a business
-update on libgit2 and the overall community.  After that, we will open the
-floor for discussions and/or presentations.
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 3 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
 
-We will also provide some time to provide a getting started discussion:
-if you think you might want to use or contribute to libgit2, then we'll
-let you know how easy it is to get started working with the library.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
 
-We also hope that we'll have some time to do some hacking.
+        modified:   source_work/xxxxx.cpp
 
-If you're a prior contributor to libgit2, you use the library, or you think
-that you might be interested, we encourage you to attend.
+no changes added to commit (use "git add" and/or "git commit -a")
 
-Looking forward to seeing you in Barcelona.
+$ git pull
+Created autostash: 7ddcdf2ba
+HEAD is now at ba14a4c3f some commit
+Cannot rebase: You have unstaged changes.
+Please commit or stash them.
 
--ed
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 3 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+You are currently rebasing.
+  (all conflicts fixed: run "git rebase --continue")
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   source_work/xxxxx.cpp
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git rebase --abort
+Applied autostash.
+
+$ git stash
+Saved working directory and index state WIP on develop: ba14a4c3f  some commit
+
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 3 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+
+        modified:   source_work/xxxxx.cpp
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ git stash
+Saved working directory and index state WIP on develop: ba14a4c3f  some commit
+
+$ git status
+On branch develop
+Your branch is behind 'origin/develop' by 3 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+
+-- 
+Sincerely,
+Dimitriy Ryazantcev
