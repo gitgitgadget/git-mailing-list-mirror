@@ -2,304 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11ED71F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 12:34:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9D501F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 13:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933580AbeAXMe4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 07:34:56 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:4248 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933446AbeAXMet (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 07:34:49 -0500
-Received: from lindisfarne.localdomain ([92.22.6.159])
-        by smtp.talktalk.net with SMTP
-        id eKGDelQgfmITaeKGOe9R5q; Wed, 24 Jan 2018 12:34:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1516797288;
-        bh=keYH4jGze7hn285Gwptl5jzlcDQ1S577SdSXi6UGf48=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=mUyzQKsD416d+DiPrtXuM9nbJaAxqZun9JJUMsYVC4+gSEirYcbpClG0x+UAUAihK
-         0YmYbJqemA4qrmBIaIYf9LxCBPlLdxyksSuJwND8LUws2C0UvpJvOIvb4oMtBDXM+F
-         NE3F13DPFIyH4r5JD2sNAbfIkeNwZhc6Myhs+Meg=
-X-Originating-IP: [92.22.6.159]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=W/RIbVek c=1 sm=1 tr=0 a=zHCrIP3pJrCm+L4FAUKT3Q==:117
- a=zHCrIP3pJrCm+L4FAUKT3Q==:17 a=evINK-nbAAAA:8 a=BCjA09oAAAAA:8
- a=ybZZDoGAAAAA:8 a=ehN-wHCze1MjmTvGf4MA:9 a=mEI1tq7-GJGsLoul:21
- a=zVeFIGEC-44a0gkX:21 a=RfR_gqz1fSpA9VikTjo0:22 a=jYKBPJSq9nmHKCndOPe9:22
- a=0RhZnL1DYvcuLYC8JZ5M:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v3 2/3] t7505: Add tests for cherry-pick and rebase -i/-p
-Date:   Wed, 24 Jan 2018 12:34:21 +0000
-Message-Id: <20180124123422.10637-3-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.15.1
-In-Reply-To: <20180124123422.10637-1-phillip.wood@talktalk.net>
-References: <CAKdAkRSuNhEri+3eUbX8iVjr0JUyADSJBtgL==VjNwgKwe3Xqw@mail.gmail.com>
- <20180124123422.10637-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfK112wMuQjxGAkrwshZzHuq7M/2hKmo9zJCCw+rxRljj+yH6Djt6wPkI8dszvYiEtPF3ypfZcvRPtRAtvIProfQmZd1kONYcr6KdGMgjgZdJziScn2la
- SL6iion1+FnrjOpxxERSM/N/o6j3kpHO26XGLsiYR1XJhmC6BK0FyvPP1Mf2SRMlxAZUPe2RCw55TGdhZ0Ir+8YL4A+g0sRkkKfnZ6zRDtGGWoOKO7/1h60E
- AbQtubwKsFAXKUKPficuFoeFVbEksIj/cDq86o4CLBBy8c2h5GSuTCgDlaqDpx4Yt9fC2kiNzCTWSGkB+qk8QzGeTWiHwlsEWboqQlayV5Yo5UE3GbgKzDD3
- A9XbnQYiIQplt9ChLSNEiTQg/xg4qGxPNMJTF+RCiRyms72blkx0ieb7s7NioJ9Xdk2I7J0+
+        id S933594AbeAXNJL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 08:09:11 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:41906 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933305AbeAXNJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 08:09:09 -0500
+Received: by mail-lf0-f66.google.com with SMTP id f136so5145028lff.8
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 05:09:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=gaRGy20NAt90FdYUDbpfJYGqSyHBLPOVd8knVAYfMK4=;
+        b=FH9X0Xk0qWT5u0ADdq0Am8vKW/uU6FMfcEjGZjhq0UsPZ7KjD7KFhHCmNNWHX0un8y
+         5LXfUyHfwPAhpYoDrtbgn6n9JZPtlHZy9SgTV/6EVlsExXhGgl8Ck+seJxbtrpu0M1vt
+         PfkQ9qZInMeONc41gt/9SHgN3BGZcoRn34mgPVLVglUTkIyKaHAD/NJCIz7Zr20TXyHE
+         42vScAScGOLy+BTPbTInQmmRdgVITFvFPGo1q8KQgXVtdeH0PLgqTRqvxYd9c/FzCjV+
+         /XifTfJpVSemQagrPMQVY0WUieigi5bWtpbn6forN9acmXuhg/VsaFJ4qbobFrNKCEeJ
+         z+tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=gaRGy20NAt90FdYUDbpfJYGqSyHBLPOVd8knVAYfMK4=;
+        b=iA/SdWycKoLCBLinrg4f/q1nNYx72RLZ9JcRGMYP7xp/S0YgdkNb6BjFA1dyKfsa+K
+         P4/UrfyQYwtF69sZbm3yonJDSsf2YidvZFAzlzYMIibbFyD17C5bcZisg1LoI5B09tYA
+         oCBDjXq80h9zG4zZCEQ9mb/832HepRgmeSG5WIVRdAMhCDGZCIX/0AMhHafcDW75ilZs
+         Xo3kByuZXUf2hBGRmGZNHR3c8xh6NMTbAW/PVJ0SB702uXoD2kCw75JsxiR7WOvRBoJ7
+         ugmZktVg7fmdF99HRKj6j3I7gu1k3yGkHpHxQ1pwH5ih5+fcd0T08jvExXreLKi4KAod
+         yNig==
+X-Gm-Message-State: AKwxytdZB984uSxY/QSf4LHJRq+F5gqbK+Csnxi47PDjuMzCAKdpb2W3
+        eORgkNkEfbuEf677ureRyWuA6emY
+X-Google-Smtp-Source: AH8x227kz8tNO56pRKmMgcsbG+DSM7XYZQDXPvnYjCos1i3STex7MgXE1UBeLZF6K/pEL98O0pWxoA==
+X-Received: by 10.25.80.92 with SMTP id z28mr3245609lfj.34.1516799347607;
+        Wed, 24 Jan 2018 05:09:07 -0800 (PST)
+Received: from localhost.localdomain ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id z16sm59223ljc.73.2018.01.24.05.09.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Jan 2018 05:09:06 -0800 (PST)
+From:   Patryk Obara <patryk.obara@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] setup: recognise extensions.objectFormat
+Date:   Wed, 24 Jan 2018 14:09:05 +0100
+Message-Id: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com>
+X-Mailer: git-send-email 2.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+This extension selects which hashing algorithm from vtable should be
+used for reading and writing objects in the object store.  At the moment
+supports only single value (sha-1).
 
-Check that cherry-pick and rebase call the 'prepare-commit-msg' hook
-correctly. The expected values for the hook arguments are taken to
-match the current master branch. I think there is scope for improving
-the arguments passed so they make a bit more sense - for instance
-cherry-pick currently passes different arguments depending on whether
-the commit message is being edited. Also the arguments for rebase
-could be improved. Commit 7c4188360ac ("rebase -i: proper
-prepare-commit-msg hook argument when squashing", 2008-10-3) apparently
-changed things so that when squashing rebase would pass 'squash' as
-the argument to the hook but that has been lost.
+In case value of objectFormat is an unknown hashing algorithm, Git
+command will fail with following message:
 
-I think that it would make more sense to pass 'message' for revert and
-cherry-pick -x/-s (i.e. cases where there is a new message or the
-current message in modified by the command), 'squash' when squashing
-with a new message and 'commit HEAD/CHERRY_PICK_HEAD'
-otherwise (picking and squashing without a new message).
+  fatal: unknown repository extensions found:
+	  objectformat = <value>
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
-Reviewed-by: Junio C Hamano <gitster@pobox.com>
+To indicate, that this specific objectFormat value is not recognised.
+
+The objectFormat extension is not allowed in repository marked as
+version 0 to prevent any possibility of accidentally writing a NewHash
+object in the sha-1 object store. This extension behaviour is different
+than preciousObjects extension (which is allowed in repo version 0).
+
+Add tests and documentation note about new extension.
 ---
- t/t7505-prepare-commit-msg-hook.sh | 126 +++++++++++++++++++++++++++++++++++--
- t/t7505/expected-rebase-i          |  17 +++++
- t/t7505/expected-rebase-p          |  18 ++++++
- 3 files changed, 157 insertions(+), 4 deletions(-)
- create mode 100644 t/t7505/expected-rebase-i
- create mode 100644 t/t7505/expected-rebase-p
+ Documentation/technical/repository-version.txt |  8 ++++++++
+ setup.c                                        | 27 ++++++++++++++++++++++++++
+ t/t1302-repo-version.sh                        | 15 ++++++++++++++
+ 3 files changed, 50 insertions(+)
 
-diff --git a/t/t7505-prepare-commit-msg-hook.sh b/t/t7505-prepare-commit-msg-hook.sh
-index cef709555eb9c3e3dec0016909a17ce7cf32650a..c1f68cbcbf40b0204ae44491c60d0b12a9fd8687 100755
---- a/t/t7505-prepare-commit-msg-hook.sh
-+++ b/t/t7505-prepare-commit-msg-hook.sh
-@@ -4,6 +4,38 @@ test_description='prepare-commit-msg hook'
- 
- . ./test-lib.sh
- 
-+test_expect_success 'set up commits for rebasing' '
-+	test_commit root &&
-+	test_commit a a a &&
-+	test_commit b b b &&
-+	git checkout -b rebase-me root &&
-+	test_commit rebase-a a aa &&
-+	test_commit rebase-b b bb &&
-+	for i in $(test_seq 1 13)
-+	do
-+		test_commit rebase-$i c $i
-+	done &&
-+	git checkout master &&
+diff --git a/Documentation/technical/repository-version.txt b/Documentation/technical/repository-version.txt
+index 00ad37986e..14a75a7fee 100644
+--- a/Documentation/technical/repository-version.txt
++++ b/Documentation/technical/repository-version.txt
+@@ -86,3 +86,11 @@ for testing format-1 compatibility.
+ When the config key `extensions.preciousObjects` is set to `true`,
+ objects in the repository MUST NOT be deleted (e.g., by `git-prune` or
+ `git repack -d`).
 +
-+	cat >rebase-todo <<-EOF
-+	pick $(git rev-parse rebase-a)
-+	pick $(git rev-parse rebase-b)
-+	fixup $(git rev-parse rebase-1)
-+	fixup $(git rev-parse rebase-2)
-+	pick $(git rev-parse rebase-3)
-+	fixup $(git rev-parse rebase-4)
-+	squash $(git rev-parse rebase-5)
-+	reword $(git rev-parse rebase-6)
-+	squash $(git rev-parse rebase-7)
-+	fixup $(git rev-parse rebase-8)
-+	fixup $(git rev-parse rebase-9)
-+	edit $(git rev-parse rebase-10)
-+	squash $(git rev-parse rebase-11)
-+	squash $(git rev-parse rebase-12)
-+	edit $(git rev-parse rebase-13)
-+	EOF
-+'
++`objectFormat`
++~~~~~~~~~~~~~~
 +
- test_expect_success 'with no hook' '
++This extension instructs Git to use a specific algorithm for addressing
++and interpreting objects in the object store. Currently, the only
++supported object format is `sha-1`.  See `hash-function-transition.txt`
++document for more detailed explanation.
+diff --git a/setup.c b/setup.c
+index 8cc34186ce..b48a90d9ce 100644
+--- a/setup.c
++++ b/setup.c
+@@ -405,6 +405,31 @@ void setup_work_tree(void)
+ 	initialized = 1;
+ }
  
- 	echo "foo" > file &&
-@@ -31,19 +63,41 @@ mkdir -p "$HOOKDIR"
- echo "#!$SHELL_PATH" > "$HOOK"
- cat >> "$HOOK" <<'EOF'
- 
-+GIT_DIR=$(git rev-parse --git-dir)
-+if test -d "$GIT_DIR/rebase-merge"
-+then
-+	rebasing=1
-+else
-+	rebasing=0
-+fi
++static int find_object_format(const char *value)
++{
++	int i;
++	for (i = GIT_HASH_SHA1; i < GIT_HASH_NALGOS; ++i) {
++		if (strcmp(value, hash_algos[i].name) == 0)
++			return i;
++	}
++	return GIT_HASH_UNKNOWN;
++}
 +
-+get_last_cmd () {
-+	tail -n1 "$GIT_DIR/rebase-merge/done" | {
-+		read cmd id _
-+		git log --pretty="[$cmd %s]" -n1 $id
++static void detect_object_format(struct repository_format *data,
++				 const char *value)
++{
++	if (data->version == 0)
++		die("invalid repository format version");
++
++	data->hash_algo = find_object_format(value);
++	if (data->hash_algo == GIT_HASH_UNKNOWN) {
++		char object_format[25];
++		xsnprintf(object_format, sizeof(object_format),
++			  "objectformat = %s", value);
++		string_list_append(&data->unknown_extensions, object_format);
 +	}
 +}
 +
- if test "$2" = commit
- then
--	source=$(git rev-parse "$3")
-+	if test $rebasing = 1
-+	then
-+		source="$3"
-+	else
-+		source=$(git rev-parse "$3")
-+	fi
- else
- 	source=${2-default}
- fi
--if test "$GIT_EDITOR" = :
-+test "$GIT_EDITOR" = : && source="$source (no editor)"
-+
-+if test $rebasing = 1
- then
--	sed -e "1s/.*/$source (no editor)/" "$1" >msg.tmp
-+	echo "$source $(get_last_cmd)" >"$1"
- else
- 	sed -e "1s/.*/$source/" "$1" >msg.tmp
-+	mv msg.tmp "$1"
- fi
--mv msg.tmp "$1"
- exit 0
- EOF
- chmod +x "$HOOK"
-@@ -158,6 +212,63 @@ test_expect_success 'with hook and editor (merge)' '
- 	test "$(git log -1 --pretty=format:%s)" = "merge"
+ static int check_repo_format(const char *var, const char *value, void *vdata)
+ {
+ 	struct repository_format *data = vdata;
+@@ -422,6 +447,8 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
+ 			;
+ 		else if (!strcmp(ext, "preciousobjects"))
+ 			data->precious_objects = git_config_bool(var, value);
++		else if (!strcmp(ext, "objectformat"))
++			detect_object_format(data, value);
+ 		else
+ 			string_list_append(&data->unknown_extensions, ext);
+ 	} else if (strcmp(var, "core.bare") == 0) {
+diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
+index ce4cff13bb..227b397ff2 100755
+--- a/t/t1302-repo-version.sh
++++ b/t/t1302-repo-version.sh
+@@ -107,4 +107,19 @@ test_expect_success 'gc runs without complaint' '
+ 	git gc
  '
  
-+test_rebase () {
-+	expect=$1 &&
-+	mode=$2 &&
-+	test_expect_$expect C_LOCALE_OUTPUT "with hook (rebase $mode)" '
-+		test_when_finished "\
-+			git rebase --abort
-+			git checkout -f master
-+			git branch -D tmp" &&
-+		git checkout -b tmp rebase-me &&
-+		GIT_SEQUENCE_EDITOR="cp rebase-todo" &&
-+		GIT_EDITOR="\"$FAKE_EDITOR\"" &&
-+		(
-+			export GIT_SEQUENCE_EDITOR GIT_EDITOR &&
-+			test_must_fail git rebase $mode b &&
-+			echo x >a &&
-+			git add a &&
-+			test_must_fail git rebase --continue &&
-+			echo x >b &&
-+			git add b &&
-+			git commit &&
-+			git rebase --continue &&
-+			echo y >a &&
-+			git add a &&
-+			git commit &&
-+			git rebase --continue &&
-+			echo y >b &&
-+			git add b &&
-+			git rebase --continue
-+		) &&
-+		if test $mode = -p # reword amended after pick
-+		then
-+			n=18
-+		else
-+			n=17
-+		fi &&
-+		git log --pretty=%s -g -n$n HEAD@{1} >actual &&
-+		test_cmp "$TEST_DIRECTORY/t7505/expected-rebase$mode" actual
-+	'
-+}
-+
-+test_rebase failure -i
-+test_rebase failure -p
-+
-+test_expect_failure 'with hook (cherry-pick)' '
-+	test_when_finished "git checkout -f master" &&
-+	git checkout -B other b &&
-+	git cherry-pick rebase-1 &&
-+	test "$(git log -1 --pretty=format:%s)" = "message (no editor)"
++test_expect_success 'object-format not allowed in repo version=0' '
++	mkconfig 0 "objectFormat = sha-1" >.git/config &&
++	check_abort
 +'
 +
-+test_expect_success 'with hook and editor (cherry-pick)' '
-+	test_when_finished "git checkout -f master" &&
-+	git checkout -B other b &&
-+	git cherry-pick -e rebase-1 &&
-+	test "$(git log -1 --pretty=format:%s)" = merge
++test_expect_success 'object-format=sha-1 allowed' '
++	mkconfig 1 "objectFormat = sha-1" >.git/config &&
++	check_allow
 +'
 +
- cat > "$HOOK" <<'EOF'
- #!/bin/sh
- exit 1
-@@ -199,4 +310,11 @@ test_expect_success 'with failing hook (merge)' '
- 
- '
- 
-+test_expect_failure C_LOCALE_OUTPUT 'with failing hook (cherry-pick)' '
-+	test_when_finished "git checkout -f master" &&
-+	git checkout -B other b &&
-+	test_must_fail git cherry-pick rebase-1 2>actual &&
-+	test $(grep -c prepare-commit-msg actual) = 1
++test_expect_success 'object-format=foo unsupported' '
++	mkconfig 1 "objectFormat = foo" >.git/config &&
++	check_abort
 +'
 +
  test_done
-diff --git a/t/t7505/expected-rebase-i b/t/t7505/expected-rebase-i
-new file mode 100644
-index 0000000000000000000000000000000000000000..c514bdbb9422c0f699a3e1c1514b41e0796214a5
---- /dev/null
-+++ b/t/t7505/expected-rebase-i
-@@ -0,0 +1,17 @@
-+message [edit rebase-13]
-+message (no editor) [edit rebase-13]
-+message [squash rebase-12]
-+message (no editor) [squash rebase-11]
-+default [edit rebase-10]
-+message (no editor) [edit rebase-10]
-+message [fixup rebase-9]
-+message (no editor) [fixup rebase-8]
-+message (no editor) [squash rebase-7]
-+message [reword rebase-6]
-+message [squash rebase-5]
-+message (no editor) [fixup rebase-4]
-+message (no editor) [pick rebase-3]
-+message (no editor) [fixup rebase-2]
-+message (no editor) [fixup rebase-1]
-+merge [pick rebase-b]
-+message [pick rebase-a]
-diff --git a/t/t7505/expected-rebase-p b/t/t7505/expected-rebase-p
-new file mode 100644
-index 0000000000000000000000000000000000000000..93bada596e25f7148fdf0b955211cedfc0fbdba3
---- /dev/null
-+++ b/t/t7505/expected-rebase-p
-@@ -0,0 +1,18 @@
-+message [edit rebase-13]
-+message (no editor) [edit rebase-13]
-+message [squash rebase-12]
-+message (no editor) [squash rebase-11]
-+default [edit rebase-10]
-+message (no editor) [edit rebase-10]
-+message [fixup rebase-9]
-+message (no editor) [fixup rebase-8]
-+message (no editor) [squash rebase-7]
-+HEAD [reword rebase-6]
-+message (no editor) [reword rebase-6]
-+message [squash rebase-5]
-+message (no editor) [fixup rebase-4]
-+message (no editor) [pick rebase-3]
-+message (no editor) [fixup rebase-2]
-+message (no editor) [fixup rebase-1]
-+merge [pick rebase-b]
-+message [pick rebase-a]
+
+base-commit: 5be1f00a9a701532232f57958efab4be8c959a29
 -- 
-2.15.1
+2.14.3
 
