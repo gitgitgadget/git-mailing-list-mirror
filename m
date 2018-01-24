@@ -7,112 +7,91 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDA4A1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 21:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 818CE1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 21:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932702AbeAXVLE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 16:11:04 -0500
-Received: from mail-io0-f193.google.com ([209.85.223.193]:45952 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932238AbeAXVLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 16:11:03 -0500
-Received: by mail-io0-f193.google.com with SMTP id p188so6313918ioe.12
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:11:03 -0800 (PST)
+        id S932487AbeAXVPJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 16:15:09 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:37571 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932238AbeAXVPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 16:15:07 -0500
+Received: by mail-pf0-f193.google.com with SMTP id p1so4110942pfh.4
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:15:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TIabGGMN5JQS+/SqEsxIdhCSV5OkRHuGdsri0SU7B18=;
-        b=nnF132TGs5xVRvzlDmkIv7laqiWum0rz8KGvjm9jGr+NWs3HlQCW39CyMBc+g9rt/v
-         2R7IDPRBfp4sOjtazWL9lh95/5bagx41fEmuJq+0+hPEBxOsIGUuziAfoXQnc4ppyvyi
-         yRdzRO63aGFV8cto0oDJ0cK3aBjhSqgbKoLJwwMAYu1F+2pfHrnl8RUL3yEXIwy2VaJW
-         mfzW7sX0Hjp120s57GgJ4fgqIac02x92/12IzlHbbR+8nVMfWTo5vbJ7OUCn8Nzu+cyC
-         Rnaee0jfUUwqritcgSuSccJWhCz3Z1l/s69FsHUQxy5pbvJ6POGNvx2bylESetjC13y+
-         MsLQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=1vTEMWYlhg5TDMLSpkWl5infSbaGSsWdguVtSOwPbMw=;
+        b=W4Y/DgtEaE+dAngoONfC1PwrCY8dsGlJaiVo1Q4QayxzmrVdsg74sSnyjPJqH+WTjt
+         d4JXePTyIrhqH8p3RxfIqMU2SCuQU30sltRlrm88ehAPmZSt8UeaxXK9ipaB7N4nlRVW
+         e0igqCOPjciboE9UE1OzwHb1U5jugPYwl4D9oH4TMlcNb5FS7DLKNjMYTxiEgwuOf/Ps
+         cgmYe0lu5RT4uPI+q+fnYrTb3KXjPdaW0OfjMyMyIuIuybdA0I1KuGGLMnZ9OK6otaBm
+         JEC52UJGqjIcjq24F2pUtJolXPFM5ndkvp1mWAoRJ34MmsRWj18d5T4Xwos/aHcf+8l8
+         ZEFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=TIabGGMN5JQS+/SqEsxIdhCSV5OkRHuGdsri0SU7B18=;
-        b=OSPv2QjFU00QxFIrX4/LSskksGEamGNC1fZjBf0EjInJ8OJZ7738jR8RVSIpbXe/40
-         Z6YNnEg5QAChR1hpXxM/+qH3ePMqS8oV4YAjX44TGX9ydv1xqC7yyUE/1DQ32TZV8mKi
-         mJmpnMNZse4jIDk6lQvpzHbgt8W0h5dilsbfogrOGOXq05XOlHu6MkeZCoPENTeRpFr4
-         fHZQuNVj4lc0os1Dq0ExNssMPiRFD/gZLQFTccPbcSTjwirI8sK7kuIpHMwSt04n8qwc
-         G3KMB927Ro4TPDiAKH1bsbu2cd4HgOF91vKkXgKreFN3iCfjYrf66FmqhG2b32Rp3Hox
-         zKSw==
-X-Gm-Message-State: AKwxytfgv0YxL79G1ayj8tAN0g8P1BVXMA403+ofQEFSrQbGhtF5UZLX
-        EQcEADPXnBcx/U5fZLnnLL8=
-X-Google-Smtp-Source: AH8x224VTzHP6JWakL4RuUgwvrlEgysv9U66XuUyOAMb42dJnPJY0rW0ng48KDlBWj9iB/zwPDOWWw==
-X-Received: by 10.107.169.142 with SMTP id f14mr10438601ioj.56.1516828262410;
-        Wed, 24 Jan 2018 13:11:02 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=1vTEMWYlhg5TDMLSpkWl5infSbaGSsWdguVtSOwPbMw=;
+        b=aGAUSYhO+PIjSHEKzw4M2De6A6+y4FaJLgECH1ud3N3dV4qfN1/930p/qD7AHlivqL
+         sIc6G0yqc+18WO6K5z7VYwMddJyeexQSDbBxImETRSvEYTiiBmOYpwArQ7pW+3UrrgMS
+         97maOZcC6K47kNodqJrV4dJUVYroD/kkkDzRY5cnQIvXXoYtVYiGtJ4OgTznjgFG2+2s
+         02thMfnjOrPrra+tDtF3hO54zBywfc8JMwPSER0e61bZwrD7LjI1mPG6DZhfMXypE8tz
+         k9OysACRgIFkoUjK9i3QvXpCh/IicbE4Iu9qZbvD6oAAuHxMS3cbUrNAZnRpfzEk9Xkz
+         51IQ==
+X-Gm-Message-State: AKwxyte9nh67r8Evqj+vFtktX2x8jN7WV1AVIuAI//bKxmxiPkv8vEOW
+        PT9tCQZ81GXzJxIyx9AC6fU=
+X-Google-Smtp-Source: AH8x2253XctqkFD1dWjCCxgAjQZzAGBRU6kwuQp0dSyQcBHVD0qxAQy0uWOSOcXf29GG+NRMSD2ijQ==
+X-Received: by 2002:a17:902:622:: with SMTP id 31-v6mr9157147plg.448.1516828506171;
+        Wed, 24 Jan 2018 13:15:06 -0800 (PST)
 Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id d202sm635733iod.73.2018.01.24.13.11.01
+        by smtp.gmail.com with ESMTPSA id i14sm1744273pgv.40.2018.01.24.13.15.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 13:11:01 -0800 (PST)
+        Wed, 24 Jan 2018 13:15:05 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Kim Gybels <kgybels@infogroep.be>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/6] find_reference_location(): make function safe for empty snapshots
-References: <cover.1516791909.git.mhagger@alum.mit.edu>
-        <e9f9ed1944c297a68c2b76f5d4ddd73e279bd207.1516791909.git.mhagger@alum.mit.edu>
-        <20180124202754.GA7773@sigill.intra.peff.net>
-Date:   Wed, 24 Jan 2018 13:11:00 -0800
-In-Reply-To: <20180124202754.GA7773@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 24 Jan 2018 15:27:54 -0500")
-Message-ID: <xmqq8tcnc68r.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 11/11] fetch: add a --fetch-prune option and fetch.pruneTags config
+References: <20180123221326.28495-1-avarab@gmail.com>
+        <20180121000304.32323-1-avarab@gmail.com>
+        <20180123221326.28495-12-avarab@gmail.com>
+        <xmqqo9ljc73n.fsf@gitster.mtv.corp.google.com>
+        <878tcnklzc.fsf@evledraar.gmail.com>
+Date:   Wed, 24 Jan 2018 13:15:04 -0800
+In-Reply-To: <878tcnklzc.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 24 Jan 2018 22:03:51 +0100")
+Message-ID: <xmqq4lnbc61z.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On Wed, Jan 24, 2018 at 12:14:13PM +0100, Michael Haggerty wrote:
+> On Wed, Jan 24 2018, Junio C. Hamano jotted:
 >
->> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
->> index 08698de6ea..361affd7ad 100644
->> --- a/refs/packed-backend.c
->> +++ b/refs/packed-backend.c
->> [...]
->> @@ -551,7 +553,7 @@ static const char *find_reference_location(struct snapshot *snapshot,
->>  	 */
->>  	const char *hi = snapshot->eof;
->>  
->> -	while (lo < hi) {
->> +	while (lo != hi) {
->>  		const char *mid, *rec;
->>  		int cmp;
+>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>>
+>>>  git -C {} config --replace-all remote.origin.fetch "+refs/tags/*:refs/tags/*" "^\+*refs/tags/\*:refs/tags/\*$"
+>>
+>> Shouldn't the last arg be
+>>
+>>  '^+\*refs/tags/\*:refs/tags/\*$'
+>>
+>> instead?
 >
-> This tightens the binary search termination condition. If we ever did
-> see "hi > lo", we'd want to terminate the loop. Is that ever possible?
+> ^+\* isn't a valid pattern.
 
-I think you meant "lo > hi", but I shared the same "Huh?" moment.
-
-Because "While lo is strictly lower than hi" is a so well
-established binary search pattern, even though we know that it is
-equivalent to "While lo and hi is different" due to your analysis
-below, the new code looks somewhat strange at the first glance.
-
-> I think the answer is "no". Our "hi" here is an exclusive bound, so we
-> should never go past it via find_end_of_record() when assigning "lo".
-> And "hi" is always assigned from the start of the current record. That
-> can never cross "lo", because find_start_of_record() ensures it.
->
-> So I think it's fine, but I wanted to double check.
-
-It would be much simpler to reason about if we instead do
-
-	#define is_empty_snapshot(s) ((s)->start == NULL)
-
-	if (is_empty_snapshot(snapshot))
-		return NULL;
-
-or something like that upfront.
-	
+Yikes, sorry for the noise.  You did mean "there might be a plus
+sign at the beginning, but there may not be".
 
