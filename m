@@ -2,96 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F24531F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 02:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B795E1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 04:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752289AbeAXCye (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 Jan 2018 21:54:34 -0500
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:43819 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752096AbeAXCyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 Jan 2018 21:54:33 -0500
-Received: by mail-qt0-f193.google.com with SMTP id s3so6859177qtb.10
-        for <git@vger.kernel.org>; Tue, 23 Jan 2018 18:54:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=J1UiI32iBz6OA2KBPOYJJjigOJPw01XiD52SEVG4xcw=;
-        b=coFA6MGOQCTmva55mV7YepDgQPS86tsq03ESucpVDmJQIG7uPAmdUDNKf2aRiJrCxJ
-         fMTPsNUsvsMYo5fnOylA0EThzCg3MrsBosFH6xy7eopVPTPMygohMVs4D5Jlr89VdZF/
-         TG2dD0lpbsccpDOLxWHErFBoBh5NUJg1zsCpb6DhGYOrcSnKTSfvwMUskXpyAHTzlgN9
-         +aU8HCS1eATG3nCRlcx49wY+sn7ou06aKe9LAFPL6cUql4WuKN7/H6XKa5YN78xavUxp
-         AakS/NBpWRTWzer1/yQJKbIKzMXP+m1Z/jcQYi80tDpYXbYyUGF1hXMab/2/O4mUuRdg
-         wmlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=J1UiI32iBz6OA2KBPOYJJjigOJPw01XiD52SEVG4xcw=;
-        b=Hi8tqL+LG9ToVfEPx/JFr2OWj1RSQZpvVVy2/VJudBHydweinOgiCLjIw+K/mV7IBt
-         q/F29Iz5dmI2ApGuoEitiN0X2Smg38QMr+jJIuOMLLLGZpvC9ZPfYufl5ueF2Nig3mCh
-         bKQDfltb51c8fuPe8VlB9m2UddO5sPYLx6twtiu+oFtTlWPQgWvp19tbB9GzfR6sb2dM
-         J3KTEn3PqIYwBdMaCgfIv9bX4h6TZDXGDUipyf3/PlTUZa00elTfcFF3iJXuY+lF+Wu+
-         IgxC4PITOelGqfJN7x5fPDmobe/g7Lf9BDftg6xZ9faaiAN4u+u6KUfXthdWok4kTUZs
-         7rxg==
-X-Gm-Message-State: AKwxytf/1RlwnxVwMFKysX649uBjwLE1+/hK8z/jzqaikvbQY7nU/OW4
-        Nt8tvNFf+ahq9qQ6uhbvoz95rA==
-X-Google-Smtp-Source: AH8x22461hFdARr48HPMi1L3p0TcqLzSOEE/L3+v4D+D0Cwl3oc+Vhb0hK9Bw2Kw8ou6euZd50eIJg==
-X-Received: by 10.55.204.81 with SMTP id r78mr6937644qki.356.1516762472962;
-        Tue, 23 Jan 2018 18:54:32 -0800 (PST)
-Received: from dinah.fibertel.com.ar ([2800:21a0:4000:1382::2])
-        by smtp.gmail.com with ESMTPSA id m69sm14207859qkm.56.2018.01.23.18.54.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 23 Jan 2018 18:54:32 -0800 (PST)
-From:   "Juan F. Codagnone" <jcodagnone@gmail.com>
-To:     git@vger.kernel.org
-Cc:     "Juan F. Codagnone" <jcodagnone@gmail.com>
-Subject: [PATCH] mailinfo: avoid segfault when can't open files
-Date:   Tue, 23 Jan 2018 23:54:17 -0300
-Message-Id: <20180124025417.32497-1-jcodagnone@gmail.com>
-X-Mailer: git-send-email 2.16.1.dirty
+        id S1752199AbeAXECf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 Jan 2018 23:02:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55116 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752126AbeAXECe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 Jan 2018 23:02:34 -0500
+Received: (qmail 29471 invoked by uid 109); 24 Jan 2018 04:02:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 04:02:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21994 invoked by uid 111); 24 Jan 2018 04:03:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 23 Jan 2018 23:03:12 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Jan 2018 23:02:32 -0500
+Date:   Tue, 23 Jan 2018 23:02:32 -0500
+From:   Jeff King <peff@peff.net>
+To:     "Juan F. Codagnone" <jcodagnone@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] mailinfo: avoid segfault when can't open files
+Message-ID: <20180124040232.GB1330@sigill.intra.peff.net>
+References: <20180124025417.32497-1-jcodagnone@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180124025417.32497-1-jcodagnone@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If <msg> or <patch> files can't be opened, clear_mailinfo crash as
-it follows NULL pointers.
+On Tue, Jan 23, 2018 at 11:54:17PM -0300, Juan F. Codagnone wrote:
 
-Can be reproduced using `git mailinfo . .`
+> If <msg> or <patch> files can't be opened, clear_mailinfo crash as
+> it follows NULL pointers.
+> 
+> Can be reproduced using `git mailinfo . .`
 
-Signed-off-by: Juan F. Codagnone <jcodagnone@gmail.com>
----
- mailinfo.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+Thanks for finding this.
 
-diff --git a/mailinfo.c b/mailinfo.c
-index a89db22ab..035abbbf5 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -1167,11 +1167,13 @@ void clear_mailinfo(struct mailinfo *mi)
- 	strbuf_release(&mi->inbody_header_accum);
- 	free(mi->message_id);
- 
--	for (i = 0; mi->p_hdr_data[i]; i++)
--		strbuf_release(mi->p_hdr_data[i]);
-+	if(mi->p_hdr_data != NULL)
-+		for (i = 0; mi->p_hdr_data[i]; i++)
-+			strbuf_release(mi->p_hdr_data[i]);
- 	free(mi->p_hdr_data);
--	for (i = 0; mi->s_hdr_data[i]; i++)
--		strbuf_release(mi->s_hdr_data[i]);
-+	if(mi->s_hdr_data != NULL)
-+		for (i = 0; mi->s_hdr_data[i]; i++)
-+			strbuf_release(mi->s_hdr_data[i]);
- 	free(mi->s_hdr_data);
- 
- 	while (mi->content < mi->content_top) {
--- 
-2.14.3
+Looking at the offending code and your solution, it looks like:
 
+  1. mailinfo() sometimes allocates mi->p_hdr_data and mi->s_hdr_data
+     and sometimes not, depending on how far we get before seeing an
+     error. The caller cannot know whether we did so or not based on
+     seeing an error return, but most call clear_mailinfo() if it wants
+     to avoid a leak.
+
+  2. There are two callers of mailinfo(). git-am simply dies on an
+     error, and so is unaffected. But git-mailinfo unconditionally calls
+     clear_mailinfo() before returning, regardless of the return code.
+
+  3. When we get to clear_mailinfo(), the arrays are either populated or
+     are NULL. We know they're initialized to NULL because of
+     setup_mailinfo(), which zeroes the whole struct.
+
+So I think your fix does the right thing. I do think this is a pretty
+awkward interface, and it would be less error-prone if either[1]:
+
+  a. we bumped the allocation of these arrays up in mailinfo() so
+     that they were simply always initialized. This fixes the bug in
+     clear_mailinfo(), but also any other function which looks at the
+     mailinfo struct (though I don't think there are any such cases).
+
+  b. we had mailinfo() clean up after itself on error, so that it was
+     always in a de-initialized state.
+
+But given the lack of callers, it may not be worth the effort. So I'm OK
+with this solution. It may be worth giving an abbreviated version of the
+above explanation in the commit message. Perhaps:
+
+  If <msg> or <patch> files can't be opened, then mailinfo() returns an
+  error before it even initializes mi->p_hdr_data or mi->s_hdr_data.
+  When cmd_mailinfo() then calls clear_mailinfo(), we dereference the
+  NULL pointers trying to free their contents.
+
+As for the patch itself, it looks correct but I saw two style nits:
+
+> diff --git a/mailinfo.c b/mailinfo.c
+> index a89db22ab..035abbbf5 100644
+> --- a/mailinfo.c
+> +++ b/mailinfo.c
+> @@ -1167,11 +1167,13 @@ void clear_mailinfo(struct mailinfo *mi)
+>  	strbuf_release(&mi->inbody_header_accum);
+>  	free(mi->message_id);
+>  
+> -	for (i = 0; mi->p_hdr_data[i]; i++)
+> -		strbuf_release(mi->p_hdr_data[i]);
+> +	if(mi->p_hdr_data != NULL)
+> +		for (i = 0; mi->p_hdr_data[i]; i++)
+> +			strbuf_release(mi->p_hdr_data[i]);
+
+We usually say "if (" with an extra space. And we generally just check
+pointers for their truth value. So:
+
+  if (mi->p_hdr_data) {
+	for (i = 0; ...)
+
+-Peff
+
+[1] Actually, it seems a little funny that we use xcalloc() here at all,
+    since the size is determined by a compile-time constant. Why not
+    just put an array directly into the struct and let it get zeroed
+    with the rest of the struct? That sidesteps the question of whether
+    we need to clear() after an error return, but it would fix this bug. :)
