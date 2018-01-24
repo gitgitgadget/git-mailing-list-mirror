@@ -2,100 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 667E81F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 16:57:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB7371F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 18:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934319AbeAXQ47 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 11:56:59 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:32789 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933988AbeAXQ46 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 11:56:58 -0500
-Received: by mail-qt0-f194.google.com with SMTP id d8so12061906qtm.0
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 08:56:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=my8kPfTgaMg/N25E61F137JbG3AvnJUDw6hylD9ej4g=;
-        b=lwvpcQqwczTiwYsYJvATnI2WfiwMQE6w+3/INS6p/f1OdBo6v6vsGOPA8vMW4Gj7YT
-         3kpDoRNjqKwoQKJdoK1g2ugZ5XvvhhdaxX+RD1CA0xrfobHdRDYTvT79ILG3s6162/od
-         hbjdiukSH0IBJBqfmJAZ+x7DDyw5DsHofLUXaKJc9k+3yXYq8gZSyya2nPfGWIW/UIYW
-         Bdqmt1D81PW+04/OaLWm/7MwFCUUGn8gKpCeZ4zSg90O5Cp4Oxyww0W8cEtENvg7g4QJ
-         0EVCPeoFNnA+0hN55v24B7zT11rj6h9vocEZkjAtvrPhKAL0yk5AB+biErW2qoh/lf6M
-         ejLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=my8kPfTgaMg/N25E61F137JbG3AvnJUDw6hylD9ej4g=;
-        b=P+MYv3lxgcBndx4aswQ6UIJMipXMobkX4NumWGLA4UHkNmOtZl7hwPyXbcvmCcLZAG
-         tt2e65giyTEC1QSu6cxwbW8C+ZPiQWIjCHyjcC4blC7ZzLDGo34aqR7VS63T/bPhvtM+
-         +r6gerD5F+4j6ZgmZogwwsMmW4Vs8c04oRTDXEn7+b16T3q7OmyzAImXGnGDeblRG4F9
-         FB1eVx4tTEdStrQuYOlW65eVcSvRGygR+uy4bXepSVF37A7FF1L8kaxSLHpELUTNW+Iz
-         f+o5MuCoXjO1sW0t/Kzp8gkw/8TZHD8+7SNDIAYL1+MHy4ETX6Ar+fizuV6JxfcaTNv9
-         A5Kw==
-X-Gm-Message-State: AKwxytcrJoIJHOTbVxWzq5CuOq8SD4VvobmIGRvevgOGUNB20JR0fMb5
-        784qXCX1Iba7ThZyFs+RYYYZRm34
-X-Google-Smtp-Source: AH8x227r/J0Nbo3QUXHJ6RFl40lyIKMo64+zmzg99c1zaX295dU8uUqsUnn68PhKGEVTVjVxCT98kQ==
-X-Received: by 10.237.57.165 with SMTP id m34mr10010680qte.258.1516813017312;
-        Wed, 24 Jan 2018 08:56:57 -0800 (PST)
-Received: from dinah.internal.zauberlabs.com ([190.210.239.57])
-        by smtp.gmail.com with ESMTPSA id m1sm514724qkf.8.2018.01.24.08.56.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 24 Jan 2018 08:56:56 -0800 (PST)
-From:   "Juan F. Codagnone" <jcodagnone@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        "Juan F. Codagnone" <jcodagnone@gmail.com>
-Subject: [PATCH v1] mailinfo: avoid segfault when can't open files
-Date:   Wed, 24 Jan 2018 13:56:47 -0300
-Message-Id: <20180124165647.7386-1-jcodagnone@gmail.com>
-X-Mailer: git-send-email 2.16.1.dirty
-In-Reply-To: <20180124040232.GB1330@sigill.intra.peff.net>
-References: <20180124040232.GB1330@sigill.intra.peff.net>
+        id S964986AbeAXSBu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 13:01:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55744 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S964826AbeAXSBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 13:01:50 -0500
+Received: (qmail 17464 invoked by uid 109); 24 Jan 2018 18:01:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 18:01:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26563 invoked by uid 111); 24 Jan 2018 18:02:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 13:02:22 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 13:01:42 -0500
+Date:   Wed, 24 Jan 2018 13:01:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 4/5] travis-ci: don't run the test suite as root in the
+ 32 bit Linux build
+Message-ID: <20180124180142.GA26290@sigill.intra.peff.net>
+References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
+ <20180122133220.18587-1-szeder.dev@gmail.com>
+ <20180122133220.18587-5-szeder.dev@gmail.com>
+ <20180123164340.GG13068@sigill.intra.peff.net>
+ <CAM0VKjkRGxAjjibHbJPmC6KZDFL67WEhN1VFqEjbsQAZbgCB8A@mail.gmail.com>
+ <20180124155622.GB15803@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180124155622.GB15803@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If <msg> or <patch> files can't be opened, then mailinfo() returns an
-error before it even initializes mi->p_hdr_data or mi->s_hdr_data.
-When cmd_mailinfo() then calls clear_mailinfo(), we dereference the
-NULL pointers trying to free their contents.
+On Wed, Jan 24, 2018 at 10:56:22AM -0500, Jeff King wrote:
 
-Signed-off-by: Juan F. Codagnone <jcodagnone@gmail.com>
-Reviewed-by: Jeff King <peff@peff.net>
----
- mailinfo.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+> > > (As an aside, I'm not sure the prove cache is doing much. Running in
+> > > slow-to-fast order helps if you are trying to run massively in parallel,
+> > > but we only use -j3 for our Travis builds).
+> > 
+> > It saves about a minute / 10% of runtime; it's mentioned in 7e72cfcee
+> > (travis-ci: save prove state for the 32 bit Linux build, 2017-12-27).
+> 
+> I'm surprised we get that much benefit out of a 3-way parallel run, but
+> I'll believe you if you measured it. I guess it's because a lot of the
+> really long tests are right at the end, numerically (especially if svn
+> tests are enabled). I wonder if "--shuffle" would yield similar
+> benefits.
 
-diff --git a/mailinfo.c b/mailinfo.c
-index a89db22ab..d04142ccc 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -1167,11 +1167,13 @@ void clear_mailinfo(struct mailinfo *mi)
- 	strbuf_release(&mi->inbody_header_accum);
- 	free(mi->message_id);
- 
--	for (i = 0; mi->p_hdr_data[i]; i++)
--		strbuf_release(mi->p_hdr_data[i]);
-+	if (mi->p_hdr_data)
-+		for (i = 0; mi->p_hdr_data[i]; i++)
-+			strbuf_release(mi->p_hdr_data[i]);
- 	free(mi->p_hdr_data);
--	for (i = 0; mi->s_hdr_data[i]; i++)
--		strbuf_release(mi->s_hdr_data[i]);
-+	if (mi->s_hdr_data)
-+		for (i = 0; mi->s_hdr_data[i]; i++)
-+			strbuf_release(mi->s_hdr_data[i]);
- 	free(mi->s_hdr_data);
- 
- 	while (mi->content < mi->content_top) {
--- 
-2.14.3
+Just for fun, I tried running:
 
+  cd t
+  best-of-five make GIT_PROVE_OPTS='-j3'
+  best-of-five make GIT_PROVE_OPTS='-j3 --state=slow,save'
+  best-of-five make GIT_PROVE_OPTS='-j3 --shuffle'
+
+and got:
+
+  stock
+  Attempt 1: 137.057
+  Attempt 2: 137.635
+  Attempt 3: 138.925
+  Attempt 4: 134.693
+  Attempt 5: 139.581
+
+  slow,save
+  Attempt 1: 133.157
+  Attempt 2: 135.602
+  Attempt 3: 133.225
+  Attempt 4: 136.278
+  Attempt 5: 133.382
+
+  shuffle
+  Attempt 1: 136.717
+  Attempt 2: 138.805
+  Attempt 3: 145.734
+  Attempt 4: 145.226
+  Attempt 5: 145.889
+
+I had expected the shuffle to be sometimes-fast and sometimes-slow, but
+it seems like it is just-slow. So that's probably not a big win. It also
+doesn't look like state-saving gets us much.
+
+Those runs don't have cvs/svn installed. I repeated with those
+installed. The whole run is much slower then (about 230s), but the
+relative timings are the same.
+
+I wonder what is different between my setup and Travis. I guess one
+is that I use a tmpfs for the test-root. I wonder if that could throw
+off the relative timings, or the importance of parallelization.
+
+-Peff
