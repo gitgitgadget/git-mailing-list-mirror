@@ -2,110 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB7371F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 18:01:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B8FE1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 18:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964986AbeAXSBu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 13:01:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55744 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S964826AbeAXSBu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 13:01:50 -0500
-Received: (qmail 17464 invoked by uid 109); 24 Jan 2018 18:01:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 18:01:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26563 invoked by uid 111); 24 Jan 2018 18:02:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 13:02:22 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 13:01:42 -0500
-Date:   Wed, 24 Jan 2018 13:01:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] travis-ci: don't run the test suite as root in the
- 32 bit Linux build
-Message-ID: <20180124180142.GA26290@sigill.intra.peff.net>
-References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
- <20180122133220.18587-1-szeder.dev@gmail.com>
- <20180122133220.18587-5-szeder.dev@gmail.com>
- <20180123164340.GG13068@sigill.intra.peff.net>
- <CAM0VKjkRGxAjjibHbJPmC6KZDFL67WEhN1VFqEjbsQAZbgCB8A@mail.gmail.com>
- <20180124155622.GB15803@sigill.intra.peff.net>
+        id S964971AbeAXSCe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 13:02:34 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:46430 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964826AbeAXSCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 13:02:33 -0500
+Received: by mail-pg0-f66.google.com with SMTP id s9so3221846pgq.13
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 10:02:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=wEIAvRyUYM4K+alY1qIlw09zcsZbJSjF9t4NneXki1g=;
+        b=hlt4Grs+lx+/hv9ffneUn4/8/m+y3zXARPoxzfdpb9HPBeV8ZjSJsdD9gFGfOtR+wR
+         VpLmZ4ig4jCloPQR4E8b5QKdJMtXRYiFbQN2saKdwUzptggNs5z/l9uylcg5aZpWAJZU
+         Ie9n/QS291VPWkrd466Drwzhrq7xbLIx46YP5E+u4bC0lAwPm2iWLOvEhDjEvh+RnQxf
+         TyYTJkaNW3MfZuGgvpanYqa+KWLQe6NG+Rs2DpnguCnD9aYJdfb5SZP8GJ0fzByh4DaF
+         FdaNDAs91Ehg1D6EFokad7rNxX7M8qiduZwRtHOXuMLNnbmi0JFywiB/5wdBkfWHVgau
+         4pqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=wEIAvRyUYM4K+alY1qIlw09zcsZbJSjF9t4NneXki1g=;
+        b=F9iUDV70HgOCw4Zzrs5Fvm2vJEYE9FrfBzYaxj9XncVGr9mVAbyR+5gbgaW3CH9Tra
+         cW6cI2v5pY25255EvxLdOkREJHeeuiXhmMXkxmOeGtcuNBrZyu/Z9CMrMSZn1mmb8fpM
+         lBGxYLcQmIYNKcMyslX2vFW2lcmRoj5mFROX6jMLpWKAp1A2c8QUEcTY2ez6d3FHdl4g
+         SSvr3yfS/Umt2d20PqylR8TqTq7jkRIv5GUd1oDtxcjBK2CLgWGq3jDhJAFh//yWZJOK
+         yx1dMNCD89WLa5j0J7gDSyfUhZ9Cgm8973CKvpcQ7lmz14Bh685YEKy4By4DdKB2P+pi
+         9sNw==
+X-Gm-Message-State: AKwxytf4QlDEV6qixfnrBSWLcKXaq5zgaqRNauat6MTFj3/k8eZpq4Jn
+        9h57BOOHC4PFXHLoylnqqRI=
+X-Google-Smtp-Source: AH8x22437rTkeeSR5S4EwpG554vE0oDYqQijMBTUTOBb8TOHD9KBynHs+eHNu0vGByTl7S8mfbalNA==
+X-Received: by 10.99.171.12 with SMTP id p12mr11490264pgf.304.1516816953032;
+        Wed, 24 Jan 2018 10:02:33 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
+        by smtp.gmail.com with ESMTPSA id j4sm12089420pfe.53.2018.01.24.10.02.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 Jan 2018 10:02:32 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Gargi Sharma <gs051095@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v6] mru: Replace mru.[ch] with list.h implementation
+References: <1516751211-19307-1-git-send-email-gs051095@gmail.com>
+        <20180124040341.GC1330@sigill.intra.peff.net>
+Date:   Wed, 24 Jan 2018 10:02:31 -0800
+In-Reply-To: <20180124040341.GC1330@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 23 Jan 2018 23:03:42 -0500")
+Message-ID: <xmqqa7x3f83s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180124155622.GB15803@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 24, 2018 at 10:56:22AM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> > > (As an aside, I'm not sure the prove cache is doing much. Running in
-> > > slow-to-fast order helps if you are trying to run massively in parallel,
-> > > but we only use -j3 for our Travis builds).
-> > 
-> > It saves about a minute / 10% of runtime; it's mentioned in 7e72cfcee
-> > (travis-ci: save prove state for the 32 bit Linux build, 2017-12-27).
-> 
-> I'm surprised we get that much benefit out of a 3-way parallel run, but
-> I'll believe you if you measured it. I guess it's because a lot of the
-> really long tests are right at the end, numerically (especially if svn
-> tests are enabled). I wonder if "--shuffle" would yield similar
-> benefits.
+> On Tue, Jan 23, 2018 at 06:46:51PM -0500, Gargi Sharma wrote:
+>
+>> Replace the custom calls to mru.[ch] with calls to list.h. This patch is
+>> the final step in removing the mru API completely and inlining the logic.
+>> This patch leads to significant code reduction and the mru API hence, is
+>> not a useful abstraction anymore.
+>> 
+>> Signed-off-by: Gargi Sharma <gs051095@gmail.com>
+>
+> Thanks, this version looks good to me.
 
-Just for fun, I tried running:
+Yes, indeed it does.  Thanks, both.
 
-  cd t
-  best-of-five make GIT_PROVE_OPTS='-j3'
-  best-of-five make GIT_PROVE_OPTS='-j3 --state=slow,save'
-  best-of-five make GIT_PROVE_OPTS='-j3 --shuffle'
-
-and got:
-
-  stock
-  Attempt 1: 137.057
-  Attempt 2: 137.635
-  Attempt 3: 138.925
-  Attempt 4: 134.693
-  Attempt 5: 139.581
-
-  slow,save
-  Attempt 1: 133.157
-  Attempt 2: 135.602
-  Attempt 3: 133.225
-  Attempt 4: 136.278
-  Attempt 5: 133.382
-
-  shuffle
-  Attempt 1: 136.717
-  Attempt 2: 138.805
-  Attempt 3: 145.734
-  Attempt 4: 145.226
-  Attempt 5: 145.889
-
-I had expected the shuffle to be sometimes-fast and sometimes-slow, but
-it seems like it is just-slow. So that's probably not a big win. It also
-doesn't look like state-saving gets us much.
-
-Those runs don't have cvs/svn installed. I repeated with those
-installed. The whole run is much slower then (about 230s), but the
-relative timings are the same.
-
-I wonder what is different between my setup and Travis. I guess one
-is that I use a tmpfs for the test-root. I wonder if that could throw
-off the relative timings, or the importance of parallelization.
-
--Peff
+Will queue.
