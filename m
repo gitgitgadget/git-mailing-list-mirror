@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E8761F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 15:27:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 183D21F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 15:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933979AbeAXP07 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 10:26:59 -0500
-Received: from siwi.pair.com ([209.68.5.199]:59287 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933936AbeAXP06 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 10:26:58 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 051948458E;
-        Wed, 24 Jan 2018 10:26:58 -0500 (EST)
-Received: from [10.160.98.99] (unknown [167.220.148.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C73328458D;
-        Wed, 24 Jan 2018 10:26:57 -0500 (EST)
-Subject: Re: What's cooking in git.git (Jan 2018, #03; Tue, 23)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqefmgfbcx.fsf@gitster.mtv.corp.google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Derrick Stolee <stolee@gmail.com>
-Message-ID: <d154319e-bb9e-b300-7c37-27b1dcd2a2ce@jeffhostetler.com>
-Date:   Wed, 24 Jan 2018 10:26:57 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S934191AbeAXPta (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 10:49:30 -0500
+Received: from cloud.peff.net ([104.130.231.41]:55598 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S934124AbeAXPt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 10:49:28 -0500
+Received: (qmail 8117 invoked by uid 109); 24 Jan 2018 15:49:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 15:49:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25693 invoked by uid 111); 24 Jan 2018 15:50:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 10:50:05 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 10:49:26 -0500
+Date:   Wed, 24 Jan 2018 10:49:26 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/5] travis-ci: use 'set -e' in the 32 bit Linux build job
+Message-ID: <20180124154925.GA15803@sigill.intra.peff.net>
+References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
+ <20180122133220.18587-1-szeder.dev@gmail.com>
+ <20180122133220.18587-3-szeder.dev@gmail.com>
+ <20180123162633.GE13068@sigill.intra.peff.net>
+ <CAM0VKjkGEfL2j2uzRa9=N5jZFbMMKEHn=UX=thxTAMM_g8TB4g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqefmgfbcx.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKjkGEfL2j2uzRa9=N5jZFbMMKEHn=UX=thxTAMM_g8TB4g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jan 24, 2018 at 01:12:48PM +0100, SZEDER Gábor wrote:
 
-
-On 1/23/2018 5:39 PM, Junio C Hamano wrote:
-> [Stalled]
+> >> -test -z $HOST_UID || (CI_USER="ci" && useradd -u $HOST_UID $CI_USER) &&
+> [...]
+> Indeed, the && chain is broken, I didn't noticed that.
 > 
-> * jh/status-no-ahead-behind (2018-01-04) 4 commits
->   - status: support --no-ahead-behind in long format
->   - status: update short status to respect --no-ahead-behind
->   - status: add --[no-]ahead-behind to status and commit for V2 format.
->   - stat_tracking_info: return +1 when branches not equal
+> Luckily it was broken in a way that it didn't lead to false successes:
+> if installing dependencies fails, then the first && chain
+> ensures that HOST_UID is not set, and then useradd will error out with
+> "invalid user ID 'ci'", causing the second && chain to abort the script
+> and thus breaking the build.
+
+True. :) I didn't even look closely at whether the failures could be
+correlated.
+
+> >> +HOST_UID=$1
+> >> +CI_USER=$USER
+> >> +test -z $HOST_UID || (CI_USER="ci" && useradd -u $HOST_UID $CI_USER)
+> >
+> > If this "useradd" step fails, we wouldn't abort the script, because it's
+> > part of a conditional. You'd need a manual "|| exit 1" at the end of
+> > this line. Or to use a real "if" block.
 > 
->   Expecting a reroll to finalize the topic.
+> No.  It does abort the script, because it isn't part of a conditional.
+> Try to run the script twice in the same container instance: in the
+> second run the user already exists, useradd fails and the whole script
+> aborts.
 
-I sent a V5 (1/9/2018) of this series that removed the config setting.
-It looks like your branch on GH only has the V4 version.
+You're right. I was confusing it with this case:
 
+  (one; two) || three
 
-WRT the reroll:
-There was a long discussion on a limited calculation (option (2)).
-While I appreciate how that would be nice to have (for some simple
-cases -- like my current feature branch relative to my upstream),
-I think that that is something we could add later if we want.
+in which we continue with "two" even if "one" fails. But it's only the
+left-hand side of the || that does that.
 
-(*) This patch gives a simple on/off.  This has value by itself for
-     certain situations.
-
-(*) To implement a limit would involve hacking the merge-base
-     calculation which gets into graph shape questions that I don't
-     think we want to get into.  Several messages in the thread talk
-     about some example shapes, but I don't think we have consensus on
-     what we want here.
-
-(*) Later this week Stolee will be submitting a patch series that add
-     a client-side commit graph cache.  This allows fast calculations
-     and includes generation numbers.  I'd rather wait until we have
-     this in and then see if we want/need the limited option.
-
-Thanks,
-Jeff
+-Peff
