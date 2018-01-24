@@ -2,79 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F03E1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 19:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 056BB1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 19:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932135AbeAXTvZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 14:51:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55892 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752424AbeAXTvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 14:51:24 -0500
-Received: (qmail 26496 invoked by uid 109); 24 Jan 2018 19:51:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 19:51:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27996 invoked by uid 111); 24 Jan 2018 19:52:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 14:52:02 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 14:51:22 -0500
-Date:   Wed, 24 Jan 2018 14:51:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] travis-ci: don't run the test suite as root in the
- 32 bit Linux build
-Message-ID: <20180124195122.GA7278@sigill.intra.peff.net>
-References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
- <20180122133220.18587-1-szeder.dev@gmail.com>
- <20180122133220.18587-5-szeder.dev@gmail.com>
- <20180123164340.GG13068@sigill.intra.peff.net>
- <CAM0VKjkRGxAjjibHbJPmC6KZDFL67WEhN1VFqEjbsQAZbgCB8A@mail.gmail.com>
- <20180124155622.GB15803@sigill.intra.peff.net>
- <20180124180142.GA26290@sigill.intra.peff.net>
+        id S1752536AbeAXTy4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 14:54:56 -0500
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:34195 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752504AbeAXTyz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 14:54:55 -0500
+Received: by mail-ua0-f174.google.com with SMTP id d1so3493884uak.1
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 11:54:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=HQCoYPoDF6hSwZEwWgTyNqqWrT60wJ6NzeTH9RXz+N4=;
+        b=kh90WCv1OtMtYXnXqfWoKKyj8brJxFJksSZcihgMLfZE8e1Orv5S2FV+O4Ts/GLHvp
+         4BD7wPkud6WnWI7+/zBAaYTrJti0gbOWlzjWXM/pvOWmZA93BD2b37ssLMP6flDls0wy
+         sNPtoIsY9MmVO1vLuXQBQFQxMFQwY7GxT56jnRtH4XFtF949/QmRcR0eGZdRfp36YE2q
+         4c+kHw7c+98BUL0WWXI06dY30wJDDYecWPj440+2Fcnx5bedyvezHAleEFdU5IseN321
+         j2FqtEJjcUK9JR9TstEWL2gU2x3mMwpzBW8a+lW0fDapqL2M7cZZM6ZDqca3cyvQb6i4
+         pWKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=HQCoYPoDF6hSwZEwWgTyNqqWrT60wJ6NzeTH9RXz+N4=;
+        b=B0JrNIo08UZFh/0aRMfojDd4j1FcK55yqVIUDDMta7CToLFhsXiu29wwIPEpE18rUb
+         Oa+XoF9QCGO4zW/GzQMzPTbBiHQcST3vFFRvh9ffvEskzspkVcRF+pdUH5sKctapEewO
+         +oljxF6N71dCrZkxTJy0M1EKTtlyYCTe54t2o96oo5Xe9IpH0UOEuaRstRrlyqC/eEtW
+         jmcIOtgGR+0b2fq4JUGT9dJAm5UvqR99/oAFErlB+EuqNfsRdapUUXQJv7faMjmsz/CQ
+         /0/CIiwLoy4Usy+Z7Aies3biOE/TXz9kjtLAachOiO0wOvLnlcC3XCb9tAcajE88hahM
+         nQIw==
+X-Gm-Message-State: AKwxytc4d1zQrwxumBTUZDo4jLYleT7SsQk6EbSPsKT/kpJagqRuuwdY
+        9RmrMOQCNnj2Y+AFE9FxBrJlC+SDWHbii/ZX5DFL5w==
+X-Google-Smtp-Source: AH8x224YA7VZbnaPtlj3Uv2oxlkiaiCcRkUqo4PrRk9n3VZPcBNgK1/14J8gRP1GTOVbh71d7KJ5SnO7PirSxtPr8+E=
+X-Received: by 10.159.49.239 with SMTP id w44mr2520846uad.111.1516823694410;
+ Wed, 24 Jan 2018 11:54:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180124180142.GA26290@sigill.intra.peff.net>
+Received: by 10.176.2.7 with HTTP; Wed, 24 Jan 2018 11:54:54 -0800 (PST)
+In-Reply-To: <CAL664u+hWORhU32vkMDyfQgxJdf=V5Tb8G+AyNReG9DxfX1F7g@mail.gmail.com>
+References: <CAL664u+hWORhU32vkMDyfQgxJdf=V5Tb8G+AyNReG9DxfX1F7g@mail.gmail.com>
+From:   Raghuram Karra <raghuramkarra15@gmail.com>
+Date:   Thu, 25 Jan 2018 01:24:54 +0530
+Message-ID: <CAL664uJDzs1doHUMgUpSvC-1u-ANduHXrtLYx+_7wv5HYgkoFw@mail.gmail.com>
+Subject: Re: [GSoC][QUERY] Regarding Git CI Improvement 3 microtask
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 24, 2018 at 01:01:42PM -0500, Jeff King wrote:
+Hello Everyone!! I have a query regarding Gsoc 2018 microtask. In the link
+:- https://git.github.io/SoC-2018-Microprojects/
 
-> Just for fun, I tried running:
-> 
->   cd t
->   best-of-five make GIT_PROVE_OPTS='-j3'
->   best-of-five make GIT_PROVE_OPTS='-j3 --state=slow,save'
->   best-of-five make GIT_PROVE_OPTS='-j3 --shuffle'
-> [...]
-> I wonder what is different between my setup and Travis. I guess one
-> is that I use a tmpfs for the test-root. I wonder if that could throw
-> off the relative timings, or the importance of parallelization.
+Git CI Improvement 3 task says to investigate if we can use pylint to
+analyze git-p4.py. The term Investigate is not clear for me!
 
-I just tried again without a tmpfs (actually, with
-GIT_TEST_OPTS=--verbose-log, which matches Travis) and still got the
-"prove" version as only about 10s faster. So I dunno. My disk is an SSD,
-so that probably _is_ faster than Travis's disks, and maybe that would
-matter.
+Even though, i have tried to run some tests in my local system i have
+generated a log file from running the following command :-
 
-I'm giving up on finding it. If you happen to have a recipe for
-reproducing a larger speedup with "--state=slow,save", I'd be curious to
-see it. But don't spend much time on it on my account. The existing
-prove-caching setup is there and working, so even in the worst case if
-it's not helping, it's not actively hurting much.
+>>> pylint git-p4.py > log.txt
 
--Peff
+the generated file is:- https://pastebin.com/ZGMbf5X5
+
+QUESTION:
+1. What is it that we have to investigate?
+
+2. According to the log file there are many bugs regarding coding standards
+e.x. (bad-whitespace). Do we have to rectify them?
+
+Thanking you,
+tejaram15
