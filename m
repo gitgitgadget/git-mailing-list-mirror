@@ -2,96 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5D91F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 15:56:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57E0E1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 16:20:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934179AbeAXP4Z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 10:56:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:55624 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S933953AbeAXP4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 10:56:25 -0500
-Received: (qmail 8612 invoked by uid 109); 24 Jan 2018 15:56:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 15:56:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25720 invoked by uid 111); 24 Jan 2018 15:57:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 10:57:02 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 10:56:23 -0500
-Date:   Wed, 24 Jan 2018 10:56:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] travis-ci: don't run the test suite as root in the
- 32 bit Linux build
-Message-ID: <20180124155622.GB15803@sigill.intra.peff.net>
-References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
- <20180122133220.18587-1-szeder.dev@gmail.com>
- <20180122133220.18587-5-szeder.dev@gmail.com>
- <20180123164340.GG13068@sigill.intra.peff.net>
- <CAM0VKjkRGxAjjibHbJPmC6KZDFL67WEhN1VFqEjbsQAZbgCB8A@mail.gmail.com>
+        id S934271AbeAXQUS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 11:20:18 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:33550 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934264AbeAXQUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 11:20:17 -0500
+Received: by mail-wm0-f45.google.com with SMTP id x4so27292052wmc.0
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 08:20:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=6P8snSpIISceHZg71jbcIBxZJzVGz1pqNDn5fI1rRws=;
+        b=o195fHHKvRON+SUWQgyear5S4jIhQuMi4hJZQAdQEM2OruUR6xdwX58E01MXQ0nI8J
+         pVg3/CdN3t4DgCYiA5UNAKyTOcwDoxhnIbBgiEjOhBjnOEliYrlQAfkoD9TGMhk4TfZL
+         USX3S2xwpLb8MK03hL0CHBXo72eUgy8JJoI8LSQaT+Ewp9vjOQpf6otZKTJHsPPK2lOy
+         sXiNEaO1Z/hfzAa+5ZKtxUeRUCzkBlcu8frc5CSs/pk1F+2rBROj9f2NvRxecqCtv0pm
+         Majg3zmx9ZgKRHaLVqquUv7MEPBMJs8UZaq61WwDxyb4APF1a2V5d+82/MSiaHM54dpV
+         cjuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=6P8snSpIISceHZg71jbcIBxZJzVGz1pqNDn5fI1rRws=;
+        b=hm4pjxQ16CTswhT5AzRJgmkSmiGaceZp/6jr4GoAYWqtCnFXvZiiDDNftlKJclzs9m
+         uXwrvs5v/lNcoj7ol1OqZFiRGys5MzF3s/jXrtdwj9Mx+A3UORzGH34qc+s7Cs83YtcN
+         EkuWg0s1+8ABOMitSy/attsM6Ek9kbfeshe1iaK+eV2Ln3tj6EzKReUtAtdTq7k+9ISr
+         VETKdqImHBLuy16qlx0qvvSkAhQ9tdigJYC4TNKiryfyCBO7Jr0OLlomm0EmsBBvP1wC
+         v8lfOI+H9g2sHYfozd6w+5XR8GrR1lrAmxIa1GIWb11VP9Z4pZaU6sCiNRE7JG47JS0E
+         8Rjw==
+X-Gm-Message-State: AKwxytdvOiqe2pfTIjHvT7nlMW0zf3h3PaOewQdkjfCOk4Af+QPRivBv
+        mTCHacdwzPDTo8NlnmPV14g=
+X-Google-Smtp-Source: AH8x224dyMM8wywaCtDo4lum525wgBxKw4KjFvf+X7pRFPwDzjfYZkgBlz3154XOpWfgFlpCoakmAQ==
+X-Received: by 10.80.219.75 with SMTP id b11mr26362219edl.220.1516810816152;
+        Wed, 24 Jan 2018 08:20:16 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id s8sm364357edk.94.2018.01.24.08.20.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Jan 2018 08:20:14 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Andreas Krey <a.krey@gmx.de>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Speed of git branch --contains
+References: <20180123203656.GA27016@inner.h.apk.li>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <20180123203656.GA27016@inner.h.apk.li>
+Date:   Wed, 24 Jan 2018 17:20:13 +0100
+Message-ID: <87607rgreq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKjkRGxAjjibHbJPmC6KZDFL67WEhN1VFqEjbsQAZbgCB8A@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 24, 2018 at 02:45:18PM +0100, SZEDER Gábor wrote:
 
-> I think the key is the handling of verbose logs of failed test(s).  The
-> original motivation for matching the user IDs was, I suppose, that we
-> wanted to dump the verbose log of the failed test(s) to the trace log on
-> the host, because this way it's fairly consistent with how other build
-> job do the same: it uses the same 'after_failure' script to dump the
-> verbose logs, it relies on Travis CI to automatically run that script if
-> something goes wrong, and those logs end up in the 'after_failure'
-> fold.
+On Tue, Jan 23 2018, Andreas Krey jotted:
 
-That makes sense, I guess. In the CI system I'm using there's no such
-distinction, and I just do:
+> I'm just looking at some scripts that do a 'git branch --contains $id --remote'
+> for each new commit in a repo, and unfortunately each invokation already
+> takes four minutes.
+>
+> It feels like git branch does the reachability detection separately
+> for each branch potentially listed. The alternative would be to
+>
+> - invert the parent map to a child map,
+> - use that to compute the set of commits that contain $id,
+> - then use that as predicate whether to show a given branch
+>   (show iff its head is in the set)
+>
+> That would speed things up considerably,
+> but what are the chances to see that change in git?
+>
+> I can do that as well within the script, with the additional
+> benefit that I only need to do the inversion once, but I might
+> instead take a stab at git branch.
 
-    tar -x && make -j64 test && exit 0
-    echo "Failing tests:"
-    echo "--------------"
-    grep -l '[^0]' t/test-results/*.exit |
-    while read failed; do
-      base=${failed%.exit}
-      name=${base#t/test-results/}
-      echo "==> $name"
-      cat "$base.out"
-    done
-    exit 1
+I posted something similar to the list the other day, and Derrick had a
+great follow-up to that which summarized the current work on this:
+https://public-inbox.org/git/87608bawoa.fsf@evledraar.gmail.com/
 
-There's no folds there at all, but we could of course do our own. It may
-not be worth messing with, though, if you've shaken all the problems out
-of the existing setup.
+Junio mentioned an edge case in that thread which you may not have
+thought of (I didn't). I.e. that one problem with such a mapping is that
+a new branch may at any point push new history which includes your
+commit as a merge, forcing you to re-compute this child map.
 
-> > (As an aside, I'm not sure the prove cache is doing much. Running in
-> > slow-to-fast order helps if you are trying to run massively in parallel,
-> > but we only use -j3 for our Travis builds).
-> 
-> It saves about a minute / 10% of runtime; it's mentioned in 7e72cfcee
-> (travis-ci: save prove state for the 32 bit Linux build, 2017-12-27).
-
-I'm surprised we get that much benefit out of a 3-way parallel run, but
-I'll believe you if you measured it. I guess it's because a lot of the
-really long tests are right at the end, numerically (especially if svn
-tests are enabled). I wonder if "--shuffle" would yield similar
-benefits.
-
--Peff
+That can be optimized by checking whether some commits come after others
+timestamp wise, but that brings us to the problem that timestamps aren't
+guaranteed to be monotonically increasing (and may even be years off) by
+git, which is another optimization challenge for things like --contains.
