@@ -2,98 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C13A1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 23:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69F1B1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 23:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932925AbeAXXcX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 18:32:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56444 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932072AbeAXXcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 18:32:22 -0500
-Received: (qmail 13240 invoked by uid 109); 24 Jan 2018 23:32:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 23:32:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30903 invoked by uid 111); 24 Jan 2018 23:33:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 18:33:00 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 18:32:20 -0500
-Date:   Wed, 24 Jan 2018 18:32:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git packs friendly to block-level deduplication
-Message-ID: <20180124233220.GB11348@sigill.intra.peff.net>
-References: <87bmhiykvw.fsf@evledraar.gmail.com>
- <CABPp-BE0u9x_TtEHmfS11ZV-50rSvCi_y7cmTVV7z=2zT3atvg@mail.gmail.com>
- <878tcmyhyk.fsf@evledraar.gmail.com>
+        id S932547AbeAXXjT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 18:39:19 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:41427 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932072AbeAXXjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 18:39:18 -0500
+Received: from [10.0.2.15] ([80.189.70.206])
+        by smtp with ESMTPA
+        id eUdPe8N8QC9PeeUdReWSRV; Wed, 24 Jan 2018 23:39:17 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=P+MUeBIu c=1 sm=1 tr=0
+ a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
+ a=IkcTkHD0fZMA:10 a=onhi19IbAAAA:8 a=Dx4yW56zAAAA:8 a=73kysmNu9xkLk0fDuFkA:9
+ a=QEXdDO2ut3YA:10 a=Jn1WFg6fsOMA:10 a=JvkiTdytZRqVYIXWt-wT:22
+ a=X_u8qhY6y2Nm79co_leF:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v4 1/4] Add tar extract install options override in
+ installation processing.
+To:     Junio C Hamano <gitster@pobox.com>, randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <20180121234203.13764-1-randall.s.becker@rogers.com>
+ <20180121234203.13764-2-randall.s.becker@rogers.com>
+ <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <12878143-3529-4802-f0a3-52a6a99b5ce5@ramsayjones.plus.com>
+Date:   Wed, 24 Jan 2018 23:39:15 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <878tcmyhyk.fsf@evledraar.gmail.com>
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJkJEgGt4kytQDiaEb2wKdk4kabI6a2IHwdXEoTudi3MmK8obTSKBhi89JrCFfSLdEYX6nxd30X4SJaZ3J9N1ZJZKzAV9qhE9+juT9ZRxn44etXGbh9v
+ /5Xd+sek3xxp11Tonq/eFm3O2ukFfc1DyyV6r15dahCy8aHjyRuIqkIgN5SXx/mu9INWFweb6NLMyQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 25, 2018 at 12:06:59AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> >> Has anyone here barked up this tree before? Suggestions? Tips on where
-> >> to start hacking the repack code to accomplish this would be most
-> >> welcome.
-> >
-> > Does this overlap with the desire to have resumable clones?  I'm
-> > curious what would happen if you did the same experiment with two
-> > separate clones of git/git, cloned one right after the other so that
-> > hopefully the upstream git/git didn't receive any updates between your
-> > two separate clones.  (In other words, how much do packfiles differ in
-> > practice for different packings of the same data?)
+
+On 24/01/18 20:33, Junio C Hamano wrote:
+> randall.s.becker@rogers.com writes:
 > 
-> If you clone git/git from Github twice in a row you get the exact same
-> pack, and AFAICT this is true of git in general (but may change between
-> versions).
+>> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+>> Subject: Re: [PATCH v4 1/4] Add tar extract install options override in installation processing.
+> 
+> We typically start the subject with some short token to help readers
+> of "git shortlog --no-merges" identify what area is being touched,
+> e.g. something like
+> 
+> Subject: [PATCH 1/4] Makefile: allow customizing tar extract options for installation
+> 
+>> Introduced TAR_EXTRACT_OPTIONS as a configuration option to change
+>> the options of tar processing during extract. The default value is "o"
+>> which synthesizes xof, by default.
+> 
+> And then we order the codebase "to be like so" (or, give an order to
+> a patch monkey "to make the resulting code like so").
+> i.e. something like:
+> 
+>     Introduce TAR_EXTRACT_OPTIONS to allow customizing the tar
+>     options used when installing.  The default value is "o", which ...
+> 
+> What is missing from the log message is the most important thing,
+> though.  Everything you wrote (i.e. what build-time knob is being
+> added, what is tweaked and what the default is) we can read from the
+> patch text itself, but readers will be left wondering why anybody
+> would want to change "o" and change it to what else under what
+> circumstances to achieve what.  I am guessing something like this
+> might be the reason behind this change
+> 
+>     This allows an implementations of "tar" that lacks the 'o'
+>     (--no-same-owner) extract option to be used (even though the
+>     resulting installed versions will keep ownership of whoever
+>     happened to have built them, instead of being owned by 'root')
+> 
+> but please do not make readers guess.
 
-That's definitely not guaranteed. It _tends_ to be the case over the
-short term because we use --threads=1 on the server. But it may differ
-if:
+Hmm, I'm a bit puzzled by this patch. I may be wrong, but it
+looks like it has nothing to do with the lack of the 'o' option
+of tar, and more to do with adding the 'v' option to only a
+single invocation of tar. There are three instances of this
+kind of pattern in the Makefile, but only one has been modified.
+Why?
 
-  - we repack on the server, which we do based on pushes
+> Having said all that, I wonder if this "go to po/build/locale, tar
+> everything up and then extract it elsewhere" is truly necessary.
+> IOW, why isn't it sufficient to do this instead, for example?
+> 
+>     umask 022 && cp -r po/build/locale/. '$(DESTDIR_SQ)$(localedir_SQ)'
 
-  - somebody pushes, even to another fork. The exact results depend
-    on the packs in which we find the objects, and a new push may
-    duplicate some existing objects but with a different representation,
-    (e.g., a different delta base).
+Given the above, I suspect that (for some unknown reason), a verbose
+'listing' of the locale files is required ... :-D
 
-I'm actually interested in adding an etags-like protocol extension that
-would work something like this:
+ATB,
+Ramsay Jones
 
-  - server says "here's a pack, and its opaque tag is XYZ".
-
-  - on resume, the client says "can I resume pack with tag XYZ"?
-
-  - the server then decides if the on-disk state is sufficient for it to
-    agree to recreate XYZ (e.g., number and identity of packs). If yes,
-    then it resumes. If no, then it says "nope" and the two sides go
-    through a normal fetch again.
-
-The important thing is that the tag is opaque to the client. So a stock
-implementation could use the on-disk state to decide. But a server could
-choose to cache the packs it sends for a period of time (especially if
-the client hangs up before we've sent the whole thing). We already do
-this to a limited degree at GitHub in order to efficiently serve
-multiple clients simultaneously fetching the same pack (e.g., imagine a
-fleet of AWS machines all triggering "git fetch" at once).
-
-I think that's a tangent to what you're looking for in this thread,
-though.
-
--Peff
