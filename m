@@ -2,106 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C18791F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 13:14:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A48251F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 13:37:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933685AbeAXNOP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 08:14:15 -0500
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:38234 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933467AbeAXNOM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 08:14:12 -0500
-Received: by mail-ua0-f193.google.com with SMTP id e25so353989uan.5
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 05:14:12 -0800 (PST)
+        id S933641AbeAXNhY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 08:37:24 -0500
+Received: from mail-lf0-f50.google.com ([209.85.215.50]:40780 "EHLO
+        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933556AbeAXNhX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 08:37:23 -0500
+Received: by mail-lf0-f50.google.com with SMTP id h92so5273495lfi.7
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 05:37:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RT4TE52hPceqthhTESjNaiDMbJucK0d0EZG9furWw9k=;
-        b=oh6DuA1ffY1i278TksvHgETq0xNDjwzfqtlnvCEpvah2zhi4V5GnSV3CXLICrz5o5D
-         erxkdk8cZbTird3Y+wMbJ3LpzQj8pbwsy/LyA6p2AwxUCoWQorTEE/7FZeaJxGQlKpew
-         IoUk2dpPRntON46YcJUf2+mJRyvbOclXVdu4TYWt8moqhjSsLbFzhZzJ6YP3VmHis9Mj
-         U6lNQ1RQ1NXIUgCbHQwTS8VJDqhO8rVRfzF5S7xWiWv2crPlAEd39erxtRdEiZxNwMgJ
-         wAjmcCTpMyq/hj+FxeCdvIzDRUuL180I0ixvVMhB4KB/pO+HDIcQhW2wcUH3ru424tuz
-         aa7g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+Jq+AGGC8qpBjujnqoRf3ZHBJRqnfIqpfCcVX3VHdlM=;
+        b=RC4wbFvU3SI0hH0QcSuihznvWNgsqzAGs+aJ2IGXVRcNt44AZZQbTtE4ZVdFiBMM6l
+         mrEWwNcO19CNge14rh7gc6obvgiH1sN5WJuAVe6/GxiU3LQp4hzAN6U7RZOtcorHEuhf
+         oG9ABtyAgZMLHaKk/mpSF8WKzVHPBPa5nRKffPUOngrtRmwgqLHBKMVRw/rOUbPk7iqL
+         liIV+2NOhk4CLjv8awjfB7I7dfA1tuuJwOGvt0d7CyWkmmNb7KSV3eREonQ2SUT4ziqx
+         1aI0XjxDqvZHZCGVwH2HujjdWKr1zfVKwwpAd1H9AzXIp6uWHeFl96rxvQ6YRmaSFxuF
+         sMfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RT4TE52hPceqthhTESjNaiDMbJucK0d0EZG9furWw9k=;
-        b=XokSC5obz7nZS450dNp2DX7Wc6G3tSP3hVFcloB4lxfC9B/h7JRXznsDDXW9WW8tON
-         tl88oLMSvm632MIeQqKEMhdtkJCLeCWESXJjGipJskfAKTsS+n+fP1ittk+FF3CDNcyQ
-         mwexWMohbCBcRrhGu4/TzRjPqfmQakexY3SD3PK5T4RYdQj5tnIGkhwRNyL+xqORY2Dm
-         1R1QFsf76eXg/4c2gKtXBNCEDtF+8iSlSzb1DyCWnQPpFgsR+WOUEVk2Dysw/el/55IP
-         YhrbOUWOJFfHVrEwBDp1vxr2GGiygd3MWyqGxCmG5ir/Gw/KTKW/xuScLXr9kBirDXtN
-         B+JQ==
-X-Gm-Message-State: AKwxyte6SoYz7friNi2iGCz/GwJHd7fZHgCqt6MVcEg/GiFxWzN+2mLj
-        ZRzQC5YbrW42L0nTFkFR1NLOlHvmccnDznILThw=
-X-Google-Smtp-Source: AH8x227SUIl4/3xOljL+2EZ9A3UFB618KWo1R15cOBQ2/rx6gH2A1i/5y2vtJDiybnl6JGKwSNLeTjvW+wCF7VaKpBw=
-X-Received: by 10.176.96.4 with SMTP id j4mr4400235ual.180.1516799651811; Wed,
- 24 Jan 2018 05:14:11 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Wed, 24 Jan 2018 05:14:11 -0800 (PST)
-In-Reply-To: <20180123163038.GF13068@sigill.intra.peff.net>
-References: <CAM0VKjmAjw0a2JzsY1BaAwZcCp8ge+jQaGN6L_nKTLugHeWyvQ@mail.gmail.com>
- <20180122133220.18587-1-szeder.dev@gmail.com> <20180122133220.18587-4-szeder.dev@gmail.com>
- <20180123163038.GF13068@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 24 Jan 2018 14:14:11 +0100
-Message-ID: <CAM0VKjmS1QMj5=rSnsPBh+49JqChYTZb=LPXhFCH57KVSApS6A@mail.gmail.com>
-Subject: Re: [PATCH 3/5] travis-ci: don't repeat the path of the cache directory
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+Jq+AGGC8qpBjujnqoRf3ZHBJRqnfIqpfCcVX3VHdlM=;
+        b=DaTbLqWPuZ4stxL6JrLq/X0sBYJsy9s1r5EXimv64jwgRE3tVYpnCpjImE5nMGgyHQ
+         GvRqPkMuZa9PLg+2aABcnLuETedvRZDS/0j/GIC0cISTofTWm15ko5zr4up0FfctVhvd
+         zjMHgCrvg9/JuRgCnY6aa1vUqpjaY7sM1H9asFr8N8LoOvuLYK0RALCI/PkCmBOyrBvS
+         yXoCgziCMeiTNBXBUaGgFnjxW6uDw77UelLK0bvBYAqO44qRtv2zmR7QJ+qjP9Hk+nVC
+         dllBbee6K8Bbnp9GrfAXAjL5Zboplj45uQpBzd/VTmSPPY36i7uG2kA18XlDVgDgMWSz
+         XVCw==
+X-Gm-Message-State: AKwxytfx5SxjZXQzgGBN6ioK70forVvlaWw3p3rVAp+FN4QTLOfkewGa
+        YC6bQU7/ic1ot2Q+XG3dzy8=
+X-Google-Smtp-Source: AH8x2271k1uirs5HM2+PvvjdHqtnywCfI+2C3hrcekEMad7MelrI0uOgySfUJb9crO1vR4ufeYR44g==
+X-Received: by 10.46.97.2 with SMTP id v2mr3554966ljb.71.1516801042544;
+        Wed, 24 Jan 2018 05:37:22 -0800 (PST)
+Received: from [192.168.1.138] ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id p7sm71511ljc.46.2018.01.24.05.37.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 24 Jan 2018 05:37:21 -0800 (PST)
+Subject: Re: [PATCH] setup: recognise extensions.objectFormat
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Brandon Williams <bmwill@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>
+References: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com>
+From:   Patryk Obara <patryk.obara@gmail.com>
+Message-ID: <4e6004e6-0917-6705-f6a6-25cff116b732@gmail.com>
+Date:   Wed, 24 Jan 2018 14:37:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
+ Thunderbird/58.0
+MIME-Version: 1.0
+In-Reply-To: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 23, 2018 at 5:30 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 22, 2018 at 02:32:18PM +0100, SZEDER G=C3=A1bor wrote:
+Argh! Forgot to sign-off the commit…
 
->> diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
->> index 248183982b..c9476d6598 100755
->> --- a/ci/run-linux32-build.sh
->> +++ b/ci/run-linux32-build.sh
->> @@ -25,10 +25,10 @@ CI_USER=3D$USER
->>  test -z $HOST_UID || (CI_USER=3D"ci" && useradd -u $HOST_UID $CI_USER)
->>
->>  # Build and test
->> -linux32 --32bit i386 su -m -l $CI_USER -c '
->> +linux32 --32bit i386 su -m -l $CI_USER -c "
->>       set -ex
->>       cd /usr/src/git
->> -     ln -s /tmp/travis-cache/.prove t/.prove
->> +     test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
->>       make --jobs=3D2
->>       make --quiet test
->> -'
->> +"
->
-> This interpolates $cache_dir while generating the snippet. You've stuck
-> it in single-quotes, which prevents most quoting problems, but obviously
-> it's an issue if the variable itself contains a single-quote. Is there
-> a reason not to just export $cache_dir in the environment and access it
-> directly from the snippet?
-
-Right, that's my conditioned response to single quotes kicking in :)
-
-We don't even need to export the variable, because Docker has already
-done it (that's what 'docker run --env VAR' does).
-
-
-> Probably not a _big_ deal, since we control the contents of the
-> variable, but it just seems like a fragile practice to avoid.
+-- 
+| ← Ceci n'est pas une pipe
+Patryk Obara
