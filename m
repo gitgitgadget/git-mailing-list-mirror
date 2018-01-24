@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 101DF1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 21:34:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1A01F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 21:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932637AbeAXVeN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 16:34:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56188 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932474AbeAXVeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 16:34:13 -0500
-Received: (qmail 2634 invoked by uid 109); 24 Jan 2018 21:34:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 21:34:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29419 invoked by uid 111); 24 Jan 2018 21:34:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 16:34:50 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 16:34:11 -0500
-Date:   Wed, 24 Jan 2018 16:34:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Kim Gybels <kgybels@infogroep.be>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/6] find_reference_location(): make function safe for
- empty snapshots
-Message-ID: <20180124213410.GA8952@sigill.intra.peff.net>
-References: <cover.1516791909.git.mhagger@alum.mit.edu>
- <e9f9ed1944c297a68c2b76f5d4ddd73e279bd207.1516791909.git.mhagger@alum.mit.edu>
- <20180124202754.GA7773@sigill.intra.peff.net>
- <xmqq8tcnc68r.fsf@gitster.mtv.corp.google.com>
+        id S932696AbeAXVgL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 16:36:11 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33205 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932539AbeAXVgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 16:36:10 -0500
+Received: by mail-pg0-f67.google.com with SMTP id u1so3636733pgr.0
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:36:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UhxcZ/Pm3N4QntR4nH2nayjw+KG7B31SK/FoZO2hdRo=;
+        b=WMDPyqnzjp0IB5Pg99sCBC9UuQFFPSvhjpoOclewCXfeCVPH+oFXpMvku+gxOFxcmf
+         mwxFPh+c3Bx4XNK1iAfHu0v5ryLAvK+BP/0ImDXhAwdeikl/Mj6ZGKvTlPFCX0c1mCfd
+         TWGzakqtqYW3fh23W7YQoTQA+o+h9jbDqyUzi4AZ0hXJzXAf/HzDOK5SuwsLv6wK9b9+
+         emNa1Tt+7kS3SBM2hqqZjc/hNYNUbq48N/s2jQ0zULX1iW7ES3e5HS5w8HDyLOaNsJNb
+         KLJsTseWzYKpqBx1D1brmAHj8ctJwfT7uF0osm1excKaggJXaaTqxOWmTPcCOtZ1Q/1i
+         w8GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UhxcZ/Pm3N4QntR4nH2nayjw+KG7B31SK/FoZO2hdRo=;
+        b=ILKGF6W0t5o6Ifg84KTG/YpoFg5rkzqEiyBVX8oyGjLEyrxmTwY/AQm5qHinUJdAqb
+         SvlcjQAmn0983sLyHALd8Bt5tyh9ZQA6A/M+XqZ8xAifQxxUtL5Z9TgtmboXrBOjOtQc
+         PTzoaCABryCbpuR3OQZtho02AkeFxg6nsv6NgydL9D3d0bLvFknN8vtVN9h14e45HVP6
+         zh9HhhUgABAHb3Bwta2ssik2RWQSBh63TrZL9fiuMlsA4GjZNja1vzh471S+NF5fNH+b
+         zU6G1W4FBj4nBE/6nDqNUztqgNGmbwUHcEkkA57EZrPg9RL7jDJdT2MyHN+QFK7gxjBZ
+         9I8Q==
+X-Gm-Message-State: AKwxytfQYjeauYGWMaCbDrUUetgt1j/KCBMQSHztpAzd1OYz3a0wOpUb
+        EJag2Np4uBAa4DsCDfo1TuiqLIiyp3U=
+X-Google-Smtp-Source: AH8x224hxU8mQBtR4Qwd1NVWajdeaGBX3G8B7ZSDCi1FdA0VmDcMbEHpfOnDV3+KIPzsT+K5A9IfSA==
+X-Received: by 10.101.67.65 with SMTP id k1mr11851894pgq.159.1516829769607;
+        Wed, 24 Jan 2018 13:36:09 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
+        by smtp.gmail.com with ESMTPSA id l188sm1716265pgl.72.2018.01.24.13.36.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 Jan 2018 13:36:09 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patryk Obara <patryk.obara@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 04/14] dir: convert struct sha1_stat to use object_id
+References: <cover.1516617960.git.patryk.obara@gmail.com>
+        <cover.1516790478.git.patryk.obara@gmail.com>
+        <cover.1516790478.git.patryk.obara@gmail.com>
+        <d7d2ff4d0d18ff381d023d0d2451d161d74a191c.1516790478.git.patryk.obara@gmail.com>
+Date:   Wed, 24 Jan 2018 13:36:07 -0800
+In-Reply-To: <d7d2ff4d0d18ff381d023d0d2451d161d74a191c.1516790478.git.patryk.obara@gmail.com>
+        (Patryk Obara's message of "Wed, 24 Jan 2018 12:11:56 +0100")
+Message-ID: <xmqqmv13aqig.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8tcnc68r.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 24, 2018 at 01:11:00PM -0800, Junio C Hamano wrote:
+Patryk Obara <patryk.obara@gmail.com> writes:
 
-> > This tightens the binary search termination condition. If we ever did
-> > see "hi > lo", we'd want to terminate the loop. Is that ever possible?
-> 
-> I think you meant "lo > hi", but I shared the same "Huh?" moment.
+> Convert the declaration of struct sha1_stat. Adjust all usages of this
+> struct and replace hash{clr,cmp,cpy} with oid{clr,cmp,cpy} wherever
+> possible.  Rename it to struct oid_stat.
 
-Er, yeah. Sorry about that.
+OK, but a hunk like this makes readers wonder...
 
-> Because "While lo is strictly lower than hi" is a so well
-> established binary search pattern, even though we know that it is
-> equivalent to "While lo and hi is different" due to your analysis
-> below, the new code looks somewhat strange at the first glance.
+> -static int do_read_blob(const struct object_id *oid,
+> -			struct sha1_stat *sha1_stat,
+> -			size_t *size_out,
+> -			char **data_out)
+> +static int do_read_blob(const struct object_id *oid, struct oid_stat *sha1_stat,
+> +			size_t *size_out, char **data_out)
 
-I thought at first that this was due to the way the record-finding
-happens, but I think even in our normal binary searches, it is an
-invariant that "lo <= hi".
+... why the variable is still called sha1_stat, not oid_stat.  Is it
+because it makes the patch too noisy or something?
 
-> > I think the answer is "no". Our "hi" here is an exclusive bound, so we
-> > should never go past it via find_end_of_record() when assigning "lo".
-> > And "hi" is always assigned from the start of the current record. That
-> > can never cross "lo", because find_start_of_record() ensures it.
-> >
-> > So I think it's fine, but I wanted to double check.
-> 
-> It would be much simpler to reason about if we instead do
-> 
-> 	#define is_empty_snapshot(s) ((s)->start == NULL)
-> 
-> 	if (is_empty_snapshot(snapshot))
-> 		return NULL;
-> 
-> or something like that upfront.
+> Remove macro EMPTY_BLOB_SHA1_BIN, as it's no longer used.
 
-Yes, I agree that would also work.
-
--Peff
+Good.
