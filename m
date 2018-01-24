@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02FCA1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 18:51:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931A51F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 18:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965002AbeAXSvV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 13:51:21 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34119 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964989AbeAXSvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 13:51:20 -0500
-Received: by mail-pg0-f68.google.com with SMTP id r19so3332117pgn.1
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 10:51:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JVrL6mguKiV7G7Zzt3yImVyUqTjKOICDNcGIm+3VBNs=;
-        b=rTnCG93fk9wuYtjb8IFxXFy7AYRFAe70cRSPd2HtBvHRT6w9Dx5uqvVBIUuvMgB1OT
-         k+Ch1olVs73mK1VpAgsrRZsJYIO0hMhj44MJCBz88mGt/tEVjb2N7e9A8EZKHoQv+dLR
-         txy6jJXLQAhjMmOOuBntpSM4nKCxKyO8bDuktGuUFMK3eoY46NV1PEykq7L4DqCQYIfE
-         7rGBsbgNAHUCdIoVCUXq2wDjRNgXazPJkIgOofUVQ2OkgXPPKmzotBMX7sRbfcnaImye
-         svy32zdtP5oBmJUkfBIjvM87Im3DexOSdISjbf2qbTWoYI1CE/zuElQm3qgXRqO2Tzv6
-         eLsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JVrL6mguKiV7G7Zzt3yImVyUqTjKOICDNcGIm+3VBNs=;
-        b=CiuxcCB+GbR/AYgRw9U6fM2wthA1cCTO1zl/1QnPjN5fASK/ds9Hxia8KfeW8LWV3+
-         dLFkJdfrq4e3rh1sp30cTWQpLYKrAqn6eOtX2jWBz1iPsh4MD6wZxg+AMtAIYAy6F4jS
-         wbuHLa2DXp/CJPaAaQ6pAre5mNvcXfKNwe/MoiLVz0dKTDoGVha2M+XdnMKnWuaMH48W
-         SipjCoGkxAQLEFqykJbtZQarV7YwByoV/p8IDl7iwVmCJTV6Rt/1HUu9IcH1ftXEM9GI
-         aCC/eGxVUUAHDmH5MzPbj0d878CbAQ/Pf1miQYPGTf61G3lIwXegly1qBIemiGAIyfTp
-         TYng==
-X-Gm-Message-State: AKwxytepVXRNevzcntPJPAGgvXCQxDty4oBD6zqBCVfnaBCuN8yqExwW
-        4tP9Avw7BUvN/2m6PeMEUIA=
-X-Google-Smtp-Source: AH8x225P1W+MPw2sIL2CLAm19+gtTBhhLBEKw9fTIaEAUPUyf1/Pau+W03VkJ/Ed7WO2cb05Ki97Ow==
-X-Received: by 10.99.180.67 with SMTP id n3mr10630135pgu.169.1516819879581;
-        Wed, 24 Jan 2018 10:51:19 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id j4sm12204471pfe.53.2018.01.24.10.51.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 10:51:18 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 3/8] sequencer: fast-forward merge commits, if possible
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <9878bd57cc82daf08309943305460c1e8a050518.1516225925.git.johannes.schindelin@gmx.de>
-        <7e6906c9-d642-ee8d-82fd-29ee6c60e308@talktalk.net>
-        <xmqqr2qggzie.fsf@gitster.mtv.corp.google.com>
-        <f1c5e283-d9c9-700d-0484-ec9c6bf76068@talktalk.net>
-Date:   Wed, 24 Jan 2018 10:51:17 -0800
-In-Reply-To: <f1c5e283-d9c9-700d-0484-ec9c6bf76068@talktalk.net> (Phillip
-        Wood's message of "Wed, 24 Jan 2018 10:32:43 +0000")
-Message-ID: <xmqqlggndra2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S965008AbeAXSv0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 13:51:26 -0500
+Received: from avasout02.plus.net ([212.159.14.17]:55808 "EHLO
+        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964989AbeAXSv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 13:51:26 -0500
+Received: from [10.0.2.15] ([80.189.70.206])
+        by smtp with ESMTPA
+        id eQ8oe7lUWC9PeeQ8qeWM0J; Wed, 24 Jan 2018 18:51:24 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=P+MUeBIu c=1 sm=1 tr=0
+ a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
+ a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8
+ a=ZSC0Gbhyz_MsaCNxSF4A:9 a=d05D3g4JurcY_Hbo:21 a=1xh8qA805lJi_I2S:21
+ a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v3 3/3] sequencer: run 'prepare-commit-msg' hook
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>
+References: <CAKdAkRSuNhEri+3eUbX8iVjr0JUyADSJBtgL==VjNwgKwe3Xqw@mail.gmail.com>
+ <20180124123422.10637-1-phillip.wood@talktalk.net>
+ <20180124123422.10637-4-phillip.wood@talktalk.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <3587bc5f-c5f7-d037-6644-25e21a5f4942@ramsayjones.plus.com>
+Date:   Wed, 24 Jan 2018 18:51:22 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180124123422.10637-4-phillip.wood@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJaIdGQTxq4kfunrDUYgO+adLBH+d6YbDj+JKuUQrzHQoRorZK956s9eaact0xTZbiDiCt/5PQP/7+kaBTOi4Smp+1LntscoG73/uyBVQ7HGJ9kATs5x
+ HqN4hylR2tUg6y5tsUKhFl0OzYnh6UwD3ks33ipQirEiKS0Sc2LpjI4y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> I agree that the merge should be recreated, but I was thinking of
-> something slightly different. Currently the sequencer uses
-> opts->allow_ff to control whether a new commit with the same contents
-> should be created even if the existing one could be reused.
 
-Ahh, OK.  I misunderstood what you meant.  Yes, what you said makes
-sense to me.
+On 24/01/18 12:34, Phillip Wood wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Commit 356ee4659b ("sequencer: try to commit without forking 'git
+> commit'", 2017-11-24) forgot to run the 'prepare-commit-msg' hook when
+> creating the commit. Fix this by writing the commit message to a
+> different file and running the hook. Using a different file means that
+> if the commit is cancelled the original message file is
+> unchanged. Also move the checks for an empty commit so the order
+> matches 'git commit'.
+> 
+> Reported-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Reviewed-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+
+Echoing Eric's earlier email, I don't think this Reviewed-by is
+warranted - I only requested the addition of a static keyword,
+I didn't actually review the patch.
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+
