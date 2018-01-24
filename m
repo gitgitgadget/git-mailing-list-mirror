@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED09F1F576
-	for <e@80x24.org>; Wed, 24 Jan 2018 11:14:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 798BC1F576
+	for <e@80x24.org>; Wed, 24 Jan 2018 11:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933344AbeAXLOn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 06:14:43 -0500
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:49222 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933236AbeAXLOf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Jan 2018 06:14:35 -0500
-X-AuditID: 1207440e-1c1ff70000000b4f-39-5a686a980990
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 27.6B.02895.99A686A5; Wed, 24 Jan 2018 06:14:33 -0500 (EST)
-Received: from bagpipes.fritz.box (p54AAE3E5.dip0.t-ipconnect.de [84.170.227.229])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w0OBEIiA004669
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Wed, 24 Jan 2018 06:14:30 -0500
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kim Gybels <kgybels@infogroep.be>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 6/6] packed_ref_cache: don't use mmap() for small files
-Date:   Wed, 24 Jan 2018 12:14:16 +0100
-Message-Id: <411272c9a3fd159ceae4649ebdb9d121ba0ea742.1516791909.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <cea5e366-dc95-6f41-6373-f8bbef103561@alum.mit.edu>
-References: <cea5e366-dc95-6f41-6373-f8bbef103561@alum.mit.edu>
-In-Reply-To: <cover.1516791909.git.mhagger@alum.mit.edu>
-References: <cover.1516791909.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrIIsWRmVeSWpSXmKPExsUixO6iqDszKyPK4OJlM4uuK91MFg29V5gt
-        +pd3sVkc7JzJanF7xXxmix8tPcwObB5/339g8vjwMc6j78gaRo9nvXsYPS5eUvb4vEkugC2K
-        yyYlNSezLLVI3y6BK6Pn61SWglauird7NrA3MM7h6GLk5JAQMJFonfyRpYuRi0NIYAeTRO/h
-        ZijnEpPEqUunGUGq2AR0JRb1NDOB2CICahIT2w6BFTELnGaU2LV/GQtIQljAXWLjpcdgNouA
-        qsS0PfdYQWxegSiJ6cfWskKsk5d4v+A+2FBOAQeJ7h2X2EBsIQF7ie5rh5i7GDmA4hYSlxdp
-        gZhCAuYSd/7xTGDkW8DIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMjJPT4
-        djC2r5c5xCjAwajEw3vDIj1KiDWxrLgy9xCjJAeTkihvflBGlBBfUn5KZUZicUZ8UWlOavEh
-        RgkOZiUR3jxWoHLelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgSvfybQ
-        UMGi1PTUirTMnBKENBMHJ8hwHqDhK0FqeIsLEnOLM9Mh8qcYdTluvHjdxizEkpeflyolzlsB
-        UiQAUpRRmgc3B5YyXjGKA70lzLsYpIoHmG7gJr0CWsIEtORGTSrIkpJEhJRUA6Om599+tevT
-        cwrcL801To0LS1quotWnv9Dg9qxbzNJHSj6fmr1AZLLBbBvnrVWxdgXPza5tWiV5TOqG8Aou
-        3TtvLO48fZF6bfmzVR/XOXQ/ZDIPtJqxnunUxgX/VnPsKlaZ/9pdSKRVcu76vWqnDmnECXNz
-        Mj64q+BxIjvvqB9PuFBHzL1bCZJKLMUZiYZazEXFiQC3xm8i9AIAAA==
+        id S933263AbeAXLsC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 06:48:02 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:40075 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932891AbeAXLsB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 06:48:01 -0500
+Received: by mail-wm0-f52.google.com with SMTP id v123so8012750wmd.5
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 03:48:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=cPqouQE2wIeqA0TxkHItmiRqHz9KkuhAzPyUxk64ONk=;
+        b=jNWWBNOv0tiLUkA19WMeecM6clAY0RbhatWrme4W8oibrk5lyyKisCsjOURU2/INBS
+         oEwENb04DfZHUNm2raeL/kuBiibozI8mZZOGLeR8D+FOnURAB2Orq6B+dDA3gn97VfrN
+         v77pexj9G5nYqotj0FvG2H5nI1xRRPtV69PRxUigeg6jy+ev1qQ/K1jYvOZt75/3vH4y
+         DJ+N5KcJ6dtihx3b8q7ab9BzVN0TAGH3llknEguUO5LXiZfyWR18YCxO2a3VhA/7TIZC
+         PXccW6UZutYG+X5fBEGBPtWP/adKP7JMSVAFQu3vA47gw1S/ouOtxGxR+p1SyRF3KEAY
+         9tZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=cPqouQE2wIeqA0TxkHItmiRqHz9KkuhAzPyUxk64ONk=;
+        b=XS65mtFZvzXvt8eKn8u3fQeUuSqwjigmvAMOwgE6BPiH+F/rOI2oJlexpJi9CODg0c
+         TTReCIi/W8aaPbe6JrVVBubDjHLoNxXtZ1lA364fs3reVxqyMb+ay6uaIxnXlJhO2fF1
+         58i2/hbG8w9SFZCBHwA4MWDpHTwOKQDZcIme66WzyYpQExdjH3B25otyNX7tV5yOQlUJ
+         EZjG4v0azgZkPcbNI1rxWYRU5uQjHJxIGH0AEpb6Y8Qc43vsRKKs5cdBBmL/tt/ImgQJ
+         NANKA2aDbE2RDdWhK2kvm1G0RtmuwIr+mLU0XfJv7k7FBTiCPLi4m0UhtmyFT2kb6Eo/
+         cbuw==
+X-Gm-Message-State: AKwxytcLCYv8QCEDla+RkQz21iZFpMwCHjzKNgPME9GNo/ATU0tmQVh+
+        OSTw6fG3R5wC6mPIxcvZNRc=
+X-Google-Smtp-Source: AH8x225cjG57Irn81qO7QRB0PRznnH46eS3NKYhV40qoDUlXM++XU4Iymbwhemyq4dOLcuEHaq22jA==
+X-Received: by 10.28.144.20 with SMTP id s20mr4744182wmd.149.1516794479827;
+        Wed, 24 Jan 2018 03:47:59 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id o12sm2042223wrf.81.2018.01.24.03.47.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 24 Jan 2018 03:47:58 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] nd/fix-untracked-cache-invalidation updates
+References: <20180118095036.29422-1-pclouds@gmail.com> <20180124093023.9071-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <20180124093023.9071-1-pclouds@gmail.com>
+Date:   Wed, 24 Jan 2018 12:47:57 +0100
+Message-ID: <87d11zh40i.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kim Gybels <kgybels@infogroep.be>
 
-Take a hint from commit ea68b0ce9f8 (hash-object: don't use mmap() for
-small files, 2010-02-21) and use read() instead of mmap() for small
-packed-refs files.
+On Wed, Jan 24 2018, Nguyễn Thái Ngọc Duy jotted:
 
-Signed-off-by: Kim Gybels <kgybels@infogroep.be>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/packed-backend.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> This is a small update where the last two patches on 'pu' are merged
+> in one. The final content is exactly the same as on 'pu'.
+>
+> Nguyễn Thái Ngọc Duy (3):
+>   dir.c: avoid stat() in valid_cached_dir()
+>   dir.c: fix missing dir invalidation in untracked code
+>   dir.c: stop ignoring opendir() error in open_cached_dir()
+>
+> Ævar Arnfjörð Bjarmason (2):
+>   status: add a failing test showing a core.untrackedCache bug
+>   update-index doc: note a fixed bug in the untracked cache
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index e829cf206d..8b4b45da67 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -458,6 +458,8 @@ static void verify_buffer_safe(struct snapshot *snapshot)
- 				 last_line, eof - last_line);
- }
- 
-+#define SMALL_FILE_SIZE (32*1024)
-+
- /*
-  * Depending on `mmap_strategy`, either mmap or read the contents of
-  * the `packed-refs` file into the snapshot. Return 1 if the file
-@@ -495,7 +497,7 @@ static int load_contents(struct snapshot *snapshot)
- 
- 	if (!size) {
- 		return 0;
--	} else if (mmap_strategy == MMAP_NONE) {
-+	} else if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
- 		snapshot->buf = xmalloc(size);
- 		bytes_read = read_in_full(fd, snapshot->buf, size);
- 		if (bytes_read < 0 || bytes_read != size)
--- 
-2.14.2
-
+Looks good to me.
