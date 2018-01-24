@@ -2,103 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50F221FADF
-	for <e@80x24.org>; Wed, 24 Jan 2018 22:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C0E71F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 22:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932507AbeAXWBs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 17:01:48 -0500
-Received: from mail-io0-f171.google.com ([209.85.223.171]:44027 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932249AbeAXWBr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 17:01:47 -0500
-Received: by mail-io0-f171.google.com with SMTP id 72so6454264iom.10
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 14:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LSBNLOFyQ8i5zyl3RcQShJ0GStGN887D1W+nb+8OepU=;
-        b=htfTI5WPTo/vlA0P0JkDUWFQ1EIFd49+xz2oUtZjij/2iF2KgaOHfF5fONTYfZl058
-         6H+2Xz01ZyM0L+nfHdIONFsmqsjN9bplIco9wHICmep2uY5ZsFRoUZ2qZKfDpA4gfplz
-         CmZVliJhjVutJAbpl4xgjVazvAYjm+LYkq5Ekm5XZ4hc2jsgoGysrQT3g/ysm557PU5R
-         Ju4zxM1qFYNsOss3OS5BhFtmbRwcNZoEkYCq19b6cA7XKrHUklHBFC5HxildJUrX9FIL
-         VBN3WWzDoAQaekSUgx8KVggm9mRs5ipwLSqMMuD9vmMdrCvuLrehs7O3PiHFPE8zVBjg
-         unjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LSBNLOFyQ8i5zyl3RcQShJ0GStGN887D1W+nb+8OepU=;
-        b=ck85eNqwh9WrSPWB6VmOZA1cKeqEoSB2z6WrGFqp06dwtUpoBH4wA8otc1B8X0z5Ma
-         X842TrDS8EwdAndFmA9+RiEuNeqylDXH1Hho1lSPuJwRdKePS+g6LLuY5i4aJkG0OBfF
-         D7Byp2Krx1e5QVJ4qWNPkgnwoLLVqmBavngZ+l+mVhwgQGZdn9Ye5DsG6AlaRe4uwn+w
-         NHr97qbqN2WzTxyTkYUIpqAi9YVOXWny8HTiVUn7pzVnx06MdQ4FaFDvh+MFt++cS1yI
-         hKbrF27ZMAdKOJ+Qcng3sb+aRuyJvFPRxWphNykC3Sw9PfDHdD7IYq7AgDR++iunOJHH
-         hLjw==
-X-Gm-Message-State: AKwxytc2qet1qbJEbpaTKd95GTuK53xXtxrRW9KIE4ht+DcjhoZW40Ew
-        sb66kRt396DKswn//E4UtxE=
-X-Google-Smtp-Source: AH8x224BPpM7hPbDZeJOQ8uobTL/tEZ6RpylFhffDJfWSh+QEw4exb/MpU0ONeL0n26H4mPuOi2a1Q==
-X-Received: by 10.107.137.104 with SMTP id l101mr10218849iod.179.1516831306738;
-        Wed, 24 Jan 2018 14:01:46 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id f7sm687352ioe.81.2018.01.24.14.01.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 14:01:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git List <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 1/8] sequencer: introduce new commands to reset the revision
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <8a91bf2184a3da4c0d5a13ba184813068e51f5c8.1516225925.git.johannes.schindelin@gmx.de>
-        <CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com>
-Date:   Wed, 24 Jan 2018 14:01:44 -0800
-In-Reply-To: <CAPig+cQbG2s-LrAo9+7C7=dXifbWFJ3SzuNa-QePHDk7egK=jg@mail.gmail.com>
-        (Eric Sunshine's message of "Fri, 19 Jan 2018 03:59:47 -0500")
-Message-ID: <xmqqa7x2c3w7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932745AbeAXWBw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 17:01:52 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59554 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932072AbeAXWBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 17:01:51 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B307CF130;
+        Wed, 24 Jan 2018 17:01:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=zsA3epkjOWJ4CfYKw7dbu9P/Kv4=; b=iAGaXm6
+        tOtaL88xbfJB4qqF+jM64Us1YtjcoYSYMxhXv4KQcL7EJc7YRLRNs8Kuf4xBJuD/
+        RTyPUFT3eH68nG0UIrmahUS3VqZfmRmWUHRL7mKYQGnj8tRKOMCxzy5B5h8vvq4B
+        gRisSGNyN922h1JJArVj+KcvB4VSySdYw3Ac=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=KsJxdBdPYTnWNY3npBqz+O/Pj3apSYRJh
+        hnkP9wuelZaVJxFaoMdJ7oDYSfCqBqIAX7GIHWMT8t4wetB21FRSnH5yRPAg01VY
+        +J63X5R+FR06RByjBRGon8PfcYj2Xpl8S3d2ChhofNtLsh/HuJv1cSeNnW9wfDgZ
+        Ei5782nsM4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 02AA1CF12F;
+        Wed, 24 Jan 2018 17:01:49 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 444BECF12D;
+        Wed, 24 Jan 2018 17:01:48 -0500 (EST)
+Date:   Wed, 24 Jan 2018 17:01:46 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     randall.s.becker@rogers.com, git@vger.kernel.org,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v4 1/4] Add tar extract install options override in
+ installation processing.
+Message-ID: <20180124220146.GI1427@zaya.teonanacatl.net>
+References: <20180121234203.13764-1-randall.s.becker@rogers.com>
+ <20180121234203.13764-2-randall.s.becker@rogers.com>
+ <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Pobox-Relay-ID: 2CAD472E-0152-11E8-A7BE-575F0C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Junio C Hamano wrote:
+> randall.s.becker@rogers.com writes:
+>> +# Define TAR_EXTRACT_OPTIONS if you want to change the default behaviour
+>> +# from xvf to something else during installation. The option only includes
+           ^^^
+Shouldn't this be xof?
 
->> +static int do_reset(const char *name, int len)
->> +{
->> +       [...]
->> +       if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
->> +               return -1;
->> +
->> +       for (i = 0; i < len; i++)
->> +               if (isspace(name[i]))
->> +                       len = i;
->
-> What is the purpose of this loop? I could imagine that it's trying to
-> strip all whitespace from the end of 'name', however, to do that it
-> would iterate backward, not forward. (Or perhaps it's trying to
-> truncate at the first space, but then it would need to invert the
-> condition or use 'break'.) Am I missing something obvious?
+>> +# "o" as xf are required.
 
-I must be missing the same thing.  Given that the callers of
-do_reset(), other than the "bug" thing that passes the hard coded
-"onto", uses item->arg/item->arg_len which includes everything after
-the insn word on the line in the todo list, I do suspect that the
-intention is to stop at the first whitespace char to avoid creating
-a ref with whitespace in it, i.e. it is a bug that can be fixed with
-s/len = i/break/.
-
-The code probably should further check the resulting string with
-check_ref_format() to detect strange chars and char sequences that
-make the resulting refname invalid.  For example, you would not want
-to allow a label with two consecutive periods in it.
-
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wisdom has two parts: (1) having a lot to say and (2) not saying it.
 
