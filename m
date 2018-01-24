@@ -2,85 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD291F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 21:28:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 101DF1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 21:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932850AbeAXV2S (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 16:28:18 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:40532 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932474AbeAXV2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 16:28:17 -0500
-Received: by mail-pg0-f66.google.com with SMTP id g16so3613551pgn.7
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 13:28:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+1C7OhFOuRTfHL4Jxza7w5m8rBZe8fJPPzlGDu69KC4=;
-        b=Kkk0snMYDF7kdJ8eA1WcqcHWw0W9ym3Pf0/HhJBtFRAdLTVK1VIdZYFAAriN4Aw0V2
-         KXcwgL55ar+fKGWpyd2vEPhY1fb19y4RqlkeAgZHFWMhfMqFD4jMk9XcQgvR7MXVSrfx
-         Lcdgpx3b07nInGdJEppCX3ib6nbir/19/fpAxbtnmjogn3cimA8nZ7LsRIQXm/U5dDRN
-         2aG35RloMFjJwDYSSQbcsxebYmcnL6r6nFAdiUup0RazUKZcDViBkYIkB9JJB1Nqvc//
-         Cr8Y/gL0z3/pTLNRXa5zbrQzVKppjDWoB9MCs9FeFCuc0IkC70cTEEkY2prk/izaNhD1
-         83Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+1C7OhFOuRTfHL4Jxza7w5m8rBZe8fJPPzlGDu69KC4=;
-        b=gbY1ZJarZj7C1/R4JyWm0U+ifH7gzhX+vXfx+nxcF91sBHveLNtRalghgleECriHzI
-         MqqwfyQUOwotD4dXKK4jjVP3WEjEBnKglhnR807q/qO3/FpSWK2pYsjjCwqfh9yoMywA
-         aIG2M0Zb3rrvPXbwdvcdyoQ3ziSSoihHRB2rI0ooZ7TZHGYcXDycx/NpOLpt5UO3Ha15
-         x7SxFEjhIJ/C/8rNQeo+jh7Q25zxnvSLoVEilqULcWzeozQbi8v3H8UfDGF6/sdh7ynq
-         OG+M7NSPd13eigZZDjhRYSTex7sui4JnzZ4mHPSK2D3tqfwuEs+fg7I0S93WLtuwSQBz
-         6Snw==
-X-Gm-Message-State: AKwxytfg1CNbUu9PlWADe9Hv91p9u4JW2oYqJYfljJqhGgu65H9v+ZPq
-        q/0EHfBadF8bNVF8XJyvQKFV8KQO4lk=
-X-Google-Smtp-Source: AH8x224jVlo+czJqdtoRMsXEQcbTbPAK3IWKx/A7xRSTpsJv5b7fAovtRKufuUV7fQecaZmnUPzTKg==
-X-Received: by 10.101.65.9 with SMTP id w9mr11664417pgp.214.1516829297063;
-        Wed, 24 Jan 2018 13:28:17 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id 65sm12177634pfm.152.2018.01.24.13.28.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 13:28:16 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v3 00/14] Some fixes and bunch of object_id conversions
-References: <cover.1516617960.git.patryk.obara@gmail.com>
-        <cover.1516790478.git.patryk.obara@gmail.com>
-Date:   Wed, 24 Jan 2018 13:28:15 -0800
-In-Reply-To: <cover.1516790478.git.patryk.obara@gmail.com> (Patryk Obara's
-        message of "Wed, 24 Jan 2018 12:11:52 +0100")
-Message-ID: <xmqqr2qfaqvk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932637AbeAXVeN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 16:34:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56188 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S932474AbeAXVeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 16:34:13 -0500
+Received: (qmail 2634 invoked by uid 109); 24 Jan 2018 21:34:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 24 Jan 2018 21:34:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29419 invoked by uid 111); 24 Jan 2018 21:34:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 24 Jan 2018 16:34:50 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 Jan 2018 16:34:11 -0500
+Date:   Wed, 24 Jan 2018 16:34:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Kim Gybels <kgybels@infogroep.be>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/6] find_reference_location(): make function safe for
+ empty snapshots
+Message-ID: <20180124213410.GA8952@sigill.intra.peff.net>
+References: <cover.1516791909.git.mhagger@alum.mit.edu>
+ <e9f9ed1944c297a68c2b76f5d4ddd73e279bd207.1516791909.git.mhagger@alum.mit.edu>
+ <20180124202754.GA7773@sigill.intra.peff.net>
+ <xmqq8tcnc68r.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8tcnc68r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patryk Obara <patryk.obara@gmail.com> writes:
+On Wed, Jan 24, 2018 at 01:11:00PM -0800, Junio C Hamano wrote:
 
-> Compared to v2:
->
-> * rebased to latest master
->
-> * patch 1 and 2
-> I kept them in, but if Junio prefers them separately then I'll send
-> them as separate patches.
+> > This tightens the binary search termination condition. If we ever did
+> > see "hi > lo", we'd want to terminate the loop. Is that ever possible?
+> 
+> I think you meant "lo > hi", but I shared the same "Huh?" moment.
 
-It's not just me, but I think they should be separated out (I can
-just queue them separately, and there is no need to resend them
-unless/until they need to be updated for their own reason).
+Er, yeah. Sorry about that.
 
+> Because "While lo is strictly lower than hi" is a so well
+> established binary search pattern, even though we know that it is
+> equivalent to "While lo and hi is different" due to your analysis
+> below, the new code looks somewhat strange at the first glance.
+
+I thought at first that this was due to the way the record-finding
+happens, but I think even in our normal binary searches, it is an
+invariant that "lo <= hi".
+
+> > I think the answer is "no". Our "hi" here is an exclusive bound, so we
+> > should never go past it via find_end_of_record() when assigning "lo".
+> > And "hi" is always assigned from the start of the current record. That
+> > can never cross "lo", because find_start_of_record() ensures it.
+> >
+> > So I think it's fine, but I wanted to double check.
+> 
+> It would be much simpler to reason about if we instead do
+> 
+> 	#define is_empty_snapshot(s) ((s)->start == NULL)
+> 
+> 	if (is_empty_snapshot(snapshot))
+> 		return NULL;
+> 
+> or something like that upfront.
+
+Yes, I agree that would also work.
+
+-Peff
