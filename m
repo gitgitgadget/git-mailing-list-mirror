@@ -2,109 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69F1B1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 23:39:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43CB81F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 23:55:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932547AbeAXXjT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 18:39:19 -0500
-Received: from avasout02.plus.net ([212.159.14.17]:41427 "EHLO
-        avasout02.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932072AbeAXXjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 18:39:18 -0500
-Received: from [10.0.2.15] ([80.189.70.206])
-        by smtp with ESMTPA
-        id eUdPe8N8QC9PeeUdReWSRV; Wed, 24 Jan 2018 23:39:17 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=P+MUeBIu c=1 sm=1 tr=0
- a=BecK+r/lr4XRfISlKBaA+g==:117 a=BecK+r/lr4XRfISlKBaA+g==:17
- a=IkcTkHD0fZMA:10 a=onhi19IbAAAA:8 a=Dx4yW56zAAAA:8 a=73kysmNu9xkLk0fDuFkA:9
- a=QEXdDO2ut3YA:10 a=Jn1WFg6fsOMA:10 a=JvkiTdytZRqVYIXWt-wT:22
- a=X_u8qhY6y2Nm79co_leF:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4 1/4] Add tar extract install options override in
- installation processing.
-To:     Junio C Hamano <gitster@pobox.com>, randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-References: <20180121234203.13764-1-randall.s.becker@rogers.com>
- <20180121234203.13764-2-randall.s.becker@rogers.com>
- <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <12878143-3529-4802-f0a3-52a6a99b5ce5@ramsayjones.plus.com>
-Date:   Wed, 24 Jan 2018 23:39:15 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S932300AbeAXXzz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 18:55:55 -0500
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:45894 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932072AbeAXXzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 18:55:54 -0500
+Received: by mail-qt0-f173.google.com with SMTP id x27so14990089qtm.12
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 15:55:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=NJvgj2XIUaR8Ln0ox7REANAMO0lCL2tkrs1DDFW/JQw=;
+        b=CNHPS26XldCZ6aaT+PXV9d1VTYA+OLhgtnPIqnpP7qpAI2/bb00B6Poy1OPNe22sh0
+         S/m+2Qd1Z5Or1U2xX1W3822SDXeLWo54P9gJyxr3CsXs/KC7ltb6KNJiZYMNWmA2kibk
+         RwskCj5bnXb89GCCEUCQW8a/uM3+dB9RUWELE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=NJvgj2XIUaR8Ln0ox7REANAMO0lCL2tkrs1DDFW/JQw=;
+        b=f1qrgXr5nHf1JEjn54/OB12LnB8IB3xzcmtyme+CW9K+0p2KKi5E9vnnCifW7ja+vm
+         ucrs5njgaohmkHawJZfPd27E2C7RdLeOqIBP9YiMy9b6gvEJfjX9JOjXT0mGrIHAz5A2
+         GaxAcQtwfnSIrGkovDJDld+JCrurszD6Gw3/nHtrCVMJiDNCOUHygw63cDzKz8ETE135
+         h4nJJ3csj0RNf/D+xTrwlnXMpXx4eQCli18Pq8NR3LotZ2Bw8bj6FtgHxWqxgjXsekct
+         2XA83GpWvot6X/imMCWmyMo1et4SINAhVnvMnEFTD4mSXYVohOfzsfnqcX8RmGMfi5pU
+         BPkQ==
+X-Gm-Message-State: AKwxytcm4BMzkPVZXU0tGhMugrFROf1ADr8nrJOmrgKkuzM6lch4X2ia
+        LPwVxByHsWUH7AKwOLU+7nipwVfSmInzOO4kIF6GczmC5eg=
+X-Google-Smtp-Source: AH8x226evGovuDLMFnUWo9EEkcnF1gefzGcdMOo4+sk4KMphFwIyLqhGknTNSP8s/bzLGuJpfctWVR6nC8rskrSizPM=
+X-Received: by 10.200.8.87 with SMTP id x23mr13588134qth.182.1516838153491;
+ Wed, 24 Jan 2018 15:55:53 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqq607rdmka.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJkJEgGt4kytQDiaEb2wKdk4kabI6a2IHwdXEoTudi3MmK8obTSKBhi89JrCFfSLdEYX6nxd30X4SJaZ3J9N1ZJZKzAV9qhE9+juT9ZRxn44etXGbh9v
- /5Xd+sek3xxp11Tonq/eFm3O2ukFfc1DyyV6r15dahCy8aHjyRuIqkIgN5SXx/mu9INWFweb6NLMyQ==
+Received: by 10.140.81.84 with HTTP; Wed, 24 Jan 2018 15:55:53 -0800 (PST)
+From:   Mark Waite <mwaite@cloudbees.com>
+Date:   Wed, 24 Jan 2018 16:55:53 -0700
+Message-ID: <CAM2y_jWnpDSA8kE+9z1jKW0dCzjOz053HrD479qc0ZjL13Gabw@mail.gmail.com>
+Subject: git 2.16, Jenkins git client plugin, and ""
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+It appears that git 2.16.0 and 2.16.1 have introduced a change which
+surprises the Jenkins git client plugin.
 
+Git 2.16.0 and 2.16.1 on Linux both report "fatal: ssh variant
+'simple' does not support setting port" when used in the context of
+the Jenkins git client plugin.
 
-On 24/01/18 20:33, Junio C Hamano wrote:
-> randall.s.becker@rogers.com writes:
-> 
->> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->> Subject: Re: [PATCH v4 1/4] Add tar extract install options override in installation processing.
-> 
-> We typically start the subject with some short token to help readers
-> of "git shortlog --no-merges" identify what area is being touched,
-> e.g. something like
-> 
-> Subject: [PATCH 1/4] Makefile: allow customizing tar extract options for installation
-> 
->> Introduced TAR_EXTRACT_OPTIONS as a configuration option to change
->> the options of tar processing during extract. The default value is "o"
->> which synthesizes xof, by default.
-> 
-> And then we order the codebase "to be like so" (or, give an order to
-> a patch monkey "to make the resulting code like so").
-> i.e. something like:
-> 
->     Introduce TAR_EXTRACT_OPTIONS to allow customizing the tar
->     options used when installing.  The default value is "o", which ...
-> 
-> What is missing from the log message is the most important thing,
-> though.  Everything you wrote (i.e. what build-time knob is being
-> added, what is tweaked and what the default is) we can read from the
-> patch text itself, but readers will be left wondering why anybody
-> would want to change "o" and change it to what else under what
-> circumstances to achieve what.  I am guessing something like this
-> might be the reason behind this change
-> 
->     This allows an implementations of "tar" that lacks the 'o'
->     (--no-same-owner) extract option to be used (even though the
->     resulting installed versions will keep ownership of whoever
->     happened to have built them, instead of being owned by 'root')
-> 
-> but please do not make readers guess.
+The solution we've accepted into the git client plugin source code is
+to set the environment variable "GIT_SSH_VARIANT=3Dssh".  That allows
+the failing case to pass, and does not seem to harm older versions of
+git.
 
-Hmm, I'm a bit puzzled by this patch. I may be wrong, but it
-looks like it has nothing to do with the lack of the 'o' option
-of tar, and more to do with adding the 'v' option to only a
-single invocation of tar. There are three instances of this
-kind of pattern in the Makefile, but only one has been modified.
-Why?
+The documentation at https://git-scm.com/docs/git says that
+GIT_SSH_VARIANT "overrides Git=E2=80=99s autodetection whether
+GIT_SSH/GIT_SSH_COMMAND/core.sshCommand refer to OpenSSH, plink or
+tortoiseplink."
 
-> Having said all that, I wonder if this "go to po/build/locale, tar
-> everything up and then extract it elsewhere" is truly necessary.
-> IOW, why isn't it sufficient to do this instead, for example?
-> 
->     umask 022 && cp -r po/build/locale/. '$(DESTDIR_SQ)$(localedir_SQ)'
+I haven't seen the same message from Git 2.16.1 for Windows.
 
-Given the above, I suspect that (for some unknown reason), a verbose
-'listing' of the locale files is required ... :-D
+The Jenkins bug report
+(https://issues.jenkins-ci.org/browse/JENKINS-49111) describes the
+user experience.
 
-ATB,
-Ramsay Jones
+Is the GIT_SSH_VARIANT solution expected to be used by git consumers
+like the Jenkins git client plugin when passing credential information
+through environment variables like SSH_ASKPASS?
 
+I see "ssh", "plink", and "tortoiseplink" as values of GIT_SSH_VARIANT
+used in tests, and "auto", "putty", and "simple" used in the source
+code in addition to "ssh", "plink", and "tortoiseplink".  What are the
+allowed values for GIT_SSH_VARIANT?
+
+What is the recommended value so that the Jenkins git client plugin
+can remain most compatible with previous behavior?
+
+No value was assigned previously to GIT_SSH_VARIANT in the Jenkins git
+client plugin.  I was expecting that git would choose "ssh" as the
+default value for GIT_SSH_VARIANT, rather than apparently choosing
+"simple".
+
+Is this a bug, or is this the new, intentional behavior of git?
+
+Thanks,
+Mark Waite
