@@ -2,80 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50BEC1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 16:29:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 906FB1F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 16:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934271AbeAXQ3u (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 11:29:50 -0500
-Received: from smtpq2.mnd.mail.iss.as9143.net ([212.54.34.165]:42414 "EHLO
-        smtpq2.mnd.mail.iss.as9143.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934157AbeAXQ3t (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 24 Jan 2018 11:29:49 -0500
-X-Greylist: delayed 1091 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Jan 2018 11:29:49 EST
-Received: from [212.54.34.120] (helo=smtp12.mnd.mail.iss.as9143.net)
-        by smtpq2.mnd.mail.iss.as9143.net with esmtp (Exim 4.86_2)
-        (envelope-from <git@jessiehernandez.com>)
-        id 1eeNeC-00015w-C5
-        for git@vger.kernel.org; Wed, 24 Jan 2018 17:11:36 +0100
-Received: from 53544873.cm-6-5b.dynamic.ziggo.nl ([83.84.72.115] helo=jessiehernandez.com)
-        by smtp12.mnd.mail.iss.as9143.net with esmtp (Exim 4.86_2)
-        (envelope-from <git@jessiehernandez.com>)
-        id 1eeNeC-0000uo-Af
-        for git@vger.kernel.org; Wed, 24 Jan 2018 17:11:36 +0100
-Received: by jessiehernandez.com (Postfix, from userid 112)
-        id 63DBA2142B; Wed, 24 Jan 2018 17:11:34 +0100 (CET)
-Received: from mail.jessiehernandez.com (localhost [127.0.0.1])
-        by jessiehernandez.com (Postfix) with ESMTP id 81AF1203CF
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 17:11:30 +0100 (CET)
-Received: from 185.46.212.85
-        (SquirrelMail authenticated user jessie)
-        by mail.jessiehernandez.com with HTTP;
-        Wed, 24 Jan 2018 17:11:30 +0100
-Message-ID: <54fd6a226955dc427bb25d5be37b4b0a.squirrel@mail.jessiehernandez.com>
-Date:   Wed, 24 Jan 2018 17:11:30 +0100
-Subject: Creating sparse checkout in a new linked git worktree
-From:   "Jessie Hernandez" <git@jessiehernandez.com>
-To:     git@vger.kernel.org
-Reply-To: git@jessiehernandez.com
-User-Agent: SquirrelMail/1.4.23 [SVN]
+        id S964861AbeAXQnZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 11:43:25 -0500
+Received: from forward101p.mail.yandex.net ([77.88.28.101]:55235 "EHLO
+        forward101p.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S964822AbeAXQnY (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 24 Jan 2018 11:43:24 -0500
+Received: from mxback3j.mail.yandex.net (mxback3j.mail.yandex.net [IPv6:2a02:6b8:0:1619::10c])
+        by forward101p.mail.yandex.net (Yandex) with ESMTP id 3A6596A81F77;
+        Wed, 24 Jan 2018 19:43:22 +0300 (MSK)
+Received: from localhost (localhost [::1])
+        by mxback3j.mail.yandex.net (nwsmtp/Yandex) with ESMTP id B4f4PybbPv-hL8SFZUu;
+        Wed, 24 Jan 2018 19:43:21 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1516812201;
+        bh=vXVviOGxs4tNipn2cY+bIqCyl6RgOSSDYHxJJbjV98s=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date;
+        b=GBp87odnUtyTlECJmDN/+dEGrr8eKicq2I3/Eb18iCIz88Uk4gWu1i0rciY8PuMes
+         xjwCdktuUNP/D4Vg+CBEwkal4jrsGHMegwx+qT/B94+GkzxM1qleK4xmAk9iTGJUVv
+         LIdwfBi3VAXTiaLsW5KPQeTVeqeAoP3suGv8OK5A=
+Authentication-Results: mxback3j.mail.yandex.net; dkim=pass header.i=@yandex.ru
+Received: by web36o.yandex.ru with HTTP;
+        Wed, 24 Jan 2018 19:43:21 +0300
+From:   KES <kes-kes@yandex.ru>
+Envelope-From: kes-kes@yandex.com
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+In-Reply-To: <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com>
+References: <14657461479715884@web21h.yandex.ru> <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
+         <CAGZ79kZbGPneUXVEqJYhQAn+dfYve7qCjhO7QFaV1JBs3HD1aA@mail.gmail.com> <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com>
+Subject: Re: Feature request: Improve diff algorithm
 MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Priority: 3 (Normal)
-Importance: Normal
-X-SourceIP: 83.84.72.115
-X-Ziggo-spambar: /
-X-Ziggo-spamscore: 0.0
-X-Ziggo-spamreport: CMAE Analysis: v=2.3 cv=T4SiscCQ c=1 sm=1 tr=0 a=n+ob1Bm1t1G9OO4azozuvA==:17 a=8nJEP1OIZ-IA:10 a=RgaUWeydRksA:10 a=SqOO0BFNNWZpJ7Fq0i0A:9 a=wPNLvfGTeEIA:10
- none
-X-Ziggo-Spam-Status: No
+Message-Id: <12531516812201@web36o.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Wed, 24 Jan 2018 18:43:21 +0200
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
-
-I am trying to get a sparse checkout in a linked worktree but cannot get
-it working. I have tried the following
-
-* git worktree add /some/new/path/new-branch --no-checkout
-* git config core.sparseCheckout true
-* <add the directory I would like to checkout out to
-$GIT_DIR/info/sparse-checkout>
-* cd  /some/new/path/new-branch
-* git read-tree -mu sparse-checkout
-
-But I still end up with a fully populated worktree.
-
-Is there something I am missing or doing wrong?
-
-thank you for any response.
-
-jessie
+Here is another place where diff can be improved:
+@@ -141,8 +140,9 @@ My_runops(pTHX)
+ 		// Do not trace variables in DB:: module
+ 		if( SvOK( inDB ) ) continue;
+ 
+-		sv_inc_nomg( inDB );
+ 
++		// save_item( inDB );
++		sv_inc_nomg( inDB );
+ 		dSP; SINFO; SAVETMPS;
+ 
+ 		// printf( "SWITCH\n" );
 
 
+This would be better it the patch looks like:
+( this patch is manually created just to light the idea. It may contain errors)
+@@ -140,6 +140,7 @@ My_runops(pTHX)
+         // Do not trace variables in DB:: module
+         if( SvOK( inDB ) ) continue;
+
++ 
++        // save_item( inDB );
+         sv_inc_nomg( inDB );
+- 
+         dSP; SINFO; SAVETMPS;
+
+As we can see, here the `sv_inc_nomg( inDB );` line is unchanged and `// save_item( inDB );` is added.
+Here we just add/remove empty lines and patch looks more better.
+
+I think (and this is my assumption), the the diff algorithm should take into account the string length.
+This is more better to add/remove more short lines
+
+21.11.2016, 20:55, "Jacob Keller" <jacob.keller@gmail.com>:
+> On Mon, Nov 21, 2016 at 10:17 AM, Stefan Beller <sbeller@google.com> wrote:
+>>  On Mon, Nov 21, 2016 at 8:56 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>>  On Mon, Nov 21, 2016 at 12:11 AM, KES <kes-kes@yandex.ru> wrote:
+>>>>  Hi.
+>>>
+>>>  Hi,
+>>>
+>>>>  I have some question about how diff works then give proposal:
+>>>>
+>>>>  it will be very useful for each "symbol" store additional meta info as source line length. So in this case when git counter two equal sequence of commands it will do further comparison: Adds 23 chars deletes none VS adds 75 chars deletes 46
+>>>>
+>>>>  Actually I got this:
+>>>>
+>>>>  @@ -129,8 +132,9 @@ sub _preprocess_message {
+>>>>   sub _process_message {
+>>>>       my ($self, $message) = @_;
+>>>>
+>>>>  - my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+>>>>  + my $time = [ gettimeofday ];
+>>>>
+>>>>  + my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+>>>>       return $self->send_error(ERROR_REQUEST_INVALID)
+>>>>           unless defined($method);
+>>>>
+>>>>  Instead of expected:
+>>>>  @@ -129,6 +132,8 @@ sub _preprocess_message {
+>>>>   sub _process_message {
+>>>>       my ($self, $message) = @_;
+>>>>
+>>>>  + my $time = [ gettimeofday ];
+>>>>  +
+>>>>       my $method = ref($message) eq 'HASH' ? $message->{method} : undef;
+>>>>  -
+>>>>       return $self->send_error(ERROR_REQUEST_INVALID)
+>>>
+>>>  Have you tried the various options for git to search for smaller
+>>>  diffs? Or using the other diff algorithms such as histogram instead of
+>>>  patience?
+>>
+>>  The newest version of Git comes with a flag to move around the diff
+>>  better, based on the work at https://github.com/mhagger/diff-slider-tools
+>
+> Unfortunately in this case, I'm not convinced that it will improve the
+> diff. It's worth a try as well though.
+>
+> Thanks,
+> Jake
