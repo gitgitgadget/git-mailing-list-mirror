@@ -2,81 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E135F1F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 20:42:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DAE51F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 20:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932271AbeAXUmN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 15:42:13 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34916 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932072AbeAXUmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 15:42:12 -0500
-Received: by mail-pf0-f193.google.com with SMTP id t12so4042937pfg.2
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 12:42:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ef9Zvi9TWVxidvbmuaJKnmurI2xXzh5gZV4cxg2OW/k=;
-        b=JA74N+BDghVflprG2zvQ3A2YGtNUL3GbJA1p/jqteohxkA/c+D7P36OJfc4dtlYOMU
-         4D3fbbCI0va1DufkuzWoF2lTAR6YG3CTO0LMMVsVpkXix2fgIZRMd5gpe7svNk0+bBoN
-         rJLmQjrEBr4E2ZXrKqMPKyT42hwlFpm1z63DY5wLDdw//6xetTLJLFrzFA+734gi8BTE
-         1JIYvCBiR2IIMUCK0mqT57Fv+GWKQTn3yJUBoGqUBLwS61UbkW76x63rhxZeH32tPrN1
-         FBq+R2Q6Ec5CpQ9C8kTDLCPX52Gwlo/tWRwb1qhu8+aYBp1+oyMLNoLVBEAnqpjMjrIQ
-         g7lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ef9Zvi9TWVxidvbmuaJKnmurI2xXzh5gZV4cxg2OW/k=;
-        b=ZHTPkeJX3iHb5uF5WW3DkdUhuirzzBEasemjxBgSGEzpjFf+XoWcmj+QLVPVhzExMF
-         EHKNp+w7YNY58hf+4eyolw7Ofpzag7pT5xxlLS91OW5fsjUIgEz8QrbalTasnidO2ETO
-         7C3OOskQsX9M3ySdzCgLXdUITt+qRwB+LMMJpVhtwM7gs2W12Zp8jvL4iP1AyJihs+Wi
-         3CEPAzK6IXj75P5By6QJGrhzhb7P6S+vHRfiUi0EfbMgp2mxejXyBA2lCy/fxvGeO5/Y
-         Uc/pipU46zxGGFAe4OO7oQw8XY3/vNtubX2WZcr8AFtYcHmUKuQXXx4T4imIQWqYRb0g
-         vEIw==
-X-Gm-Message-State: AKwxyte/H/9UEA6LasIAWcyzVJi09GZtrNRsKDMVqUCQkplyBCiIHn/+
-        d4g+VvWuMvVapJa2WAjMnAkGLi36F1E=
-X-Google-Smtp-Source: AH8x224f+udmYiEanyLFIg78GNmXslnu/veIS40/28IS+MB8J93NoOa+PVfkZMWz7biRJ5cAf0nK4A==
-X-Received: by 10.98.70.18 with SMTP id t18mr14094446pfa.14.1516826531416;
-        Wed, 24 Jan 2018 12:42:11 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id i20sm11057835pfj.58.2018.01.24.12.42.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 12:42:10 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        kaartic.sivaraam@gmail.com
-Subject: Re: [PATCH 0/7] nd/worktree-move reboot
-References: <20180124095357.19645-1-pclouds@gmail.com>
-Date:   Wed, 24 Jan 2018 12:42:09 -0800
-In-Reply-To: <20180124095357.19645-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 24 Jan 2018 16:53:50 +0700")
-Message-ID: <xmqqshavc7ku.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932251AbeAXUt6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 15:49:58 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:38126 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932072AbeAXUt5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 15:49:57 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0OKnrCH023828
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 24 Jan 2018 15:49:53 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        <randall.s.becker@rogers.com>
+Cc:     <git@vger.kernel.org>
+References: <20180121234203.13764-1-randall.s.becker@rogers.com>        <20180121234203.13764-4-randall.s.becker@rogers.com> <xmqq1sifdmf3.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq1sifdmf3.fsf@gitster.mtv.corp.google.com>
+Subject: RE: [PATCH v4 3/4] Bring NonStop platform definitions up to date in git-compat-util.h
+Date:   Wed, 24 Jan 2018 15:49:46 -0500
+Message-ID: <001601d39554$e19d24c0$a4d76e40$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQG+M0yL6q6MsDdNM8SZpgZC9eG5XQJYngodAcg/ICejjTuNcA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On January 24, 2018 3:36 PM, Junio C Hamano wrote:
+> randall.s.becker@rogers.com writes:
+> 
+> > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> >
+> > Add correct FLOSS (NonStop platform emulation) definitions into
+> > git-compat-util.h to allow correct emulation of non-platform
+> > behaviour. Also added NSIG definition that is not explicitly supplied
+> > in signal.h on platform.
+> >
+> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> > ---
+> >  git-compat-util.h | 15 +++++++++++++++
+> >  1 file changed, 15 insertions(+)
+> >
+> > diff --git a/git-compat-util.h b/git-compat-util.h index
+> > 68b2ad531..fb3ef0dcf 100644
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -378,6 +378,21 @@ static inline char *git_find_last_dir_sep(const
+> > char *path)  #define find_last_dir_sep git_find_last_dir_sep  #endif
+> >
+> > +#ifdef __TANDEM
+> > +#if !defined(_THREAD_SUPPORT_FUNCTIONS) &&
+> !defined(_PUT_MODEL_)
+> > +/* #include <floss.h(floss_read,floss_write,floss_fsync,floss_fork)>
+> > +*/
+> > +/* #include <floss.h(floss_fork)> */
+> > +#endif
+> 
+> The above adds a conditional no-op?  That's confusing...
 
-> This series adds two more commands "git worktree move" and "git
-> worktree remove" to do those things. I think I have addressed all
-> comments from the mail threads referenced in "What's cooking" mails. I
-> also added the ability to remove a worktree if its worktree area is
-> already deleted.
-
-Thanks for moving this forward.
+We are trying to make PUT work with git on NonStop. I can't tell you how
+much of a pain it is. This is a placeholder for others (outside our group)
+to know where to muck. I can remove it if you don't want it there.
+ 
+> > +#include <floss.h(floss_execl,floss_execlp,floss_execv,floss_execvp)>
+> > +#include <floss.h(floss_getpwuid)>
+> > +#if ! defined NSIG
+> > +/* NonStop NSE and NSX do not provide NSIG. SIGGUARDIAN(99) is the
+> highest
+> > +   known, by detective work using kill -l as a list is all signals
+> > +   instead of signal.h where it should be. */ # define NSIG 100
+> > +#endif #endif
+> > +
+> >  #if defined(__HP_cc) && (__HP_cc >= 61000)  #define NORETURN
+> > __attribute__((noreturn))  #define NORETURN_PTR
 
