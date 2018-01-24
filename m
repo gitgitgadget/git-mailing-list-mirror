@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 350501F576
-	for <e@80x24.org>; Wed, 24 Jan 2018 09:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 769891F576
+	for <e@80x24.org>; Wed, 24 Jan 2018 09:54:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932825AbeAXJje (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 04:39:34 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:43648 "EHLO
+        id S932836AbeAXJyM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 04:54:12 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:39262 "EHLO
         mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932877AbeAXJjQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 04:39:16 -0500
-Received: by mail-pf0-f195.google.com with SMTP id y26so2608594pfi.10
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 01:39:16 -0800 (PST)
+        with ESMTP id S932740AbeAXJyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 04:54:10 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e11so2638520pff.6
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 01:54:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JdHJS82TQhrQko5YQ/Ppz1bZkAynl2b7vdFWvBo8aW0=;
-        b=hPG12XcWP3zOPs3vtecmaiN2D6fswujr7Rrs5tgJrxwFamLYEc4qASgxOHsNOvdmjA
-         j/a0Ec9+5zOaz6ntkDY6TuUeC4cPbJsfqsBGdZrHm3lu+cD4B6OgRofID76kR+V5wxj4
-         xXxnr/RO4wPVK5i+PDg4zqBsLK9xPa5IXF9CQo1seACNrMtMZu1igyfS3VE0GTmXMe6M
-         NbUNnngCd3fLWKpi/gI6GKeiUkWHxW1jiNy+T2IHqhE2Aqrqmet+skCsSp622obnBAKi
-         MLMEp5Yk6sY9w3qgSh3UMwLvFRBrkQSFN7govFVL2oiTE+ysIQN5Wp3kIrmEE6fFpaOl
-         /rnA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8kluIeNFVquo89yj0FG1d3zTztDFIbMhPhsMjy+DqjU=;
+        b=CN7t6tVNpLpxXSgiHq/vJ/JUAlUa4jEYBkEA6IGQgHBFBhx2EbpC3siobZGGVH+LqX
+         u2ZDb6HreC741ZfNIU1znMq43ktb0kz6iBDxAq5sxdGfkyBw3omIFDTTUjx5mPHI5GOk
+         gAW1EIK/haiMgN+olF2/l+yZLdnJtpSfhxl8h6YRteQqJYWHtbeom29QoNKJEfoS0VWN
+         HVNAlPAEfbBUluN9SoTu86QefCdEwsoyEzOsjrbbC5Uece0xczafDIDppD+p+bReh12E
+         yIIqyFEeMBPvYuyqa4PGBmkDjzptPxf+keDG6cmzCNNAdreQ8W0CcsUx+lBQVAYBiYSZ
+         BiCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JdHJS82TQhrQko5YQ/Ppz1bZkAynl2b7vdFWvBo8aW0=;
-        b=MTQh5s6vpBfG2IC/MOQ/L+zZvays2ftsy9Yq1HCqpFZVulYWmzfr9MOmSKuOKRwdAr
-         60b+bNddPAQedz5wPB8u6c4IEUQkjsKmdtgUZbul1Twd4YVO3mEcrNjhW53H6Mxy+FKg
-         oDAOm0pljiQqu18yGV2T2TDkadU2mqHyYTzT8v2JbL5rmYJbWCFC360p2zMgltv3iBu/
-         1eEhNSJUEXRbIpZQygs/ObXysl1ur6M9kSyaCQvy9yvc579gzKX2O8PefN2dcKNM4itK
-         ZkQnjuO6zeYqfgwjHhdFN909c8LXpBBOuceCw9l56l41xQprxKl2xxW4ZjCGQwDhbXzM
-         E5pA==
-X-Gm-Message-State: AKwxytfTyf0+UHcl20WXbSEpHTURTUTYAObyNMh41h4Ymy1pJz0dRyiV
-        kQ5YRLydIeUoEyRT308Exo/w9w==
-X-Google-Smtp-Source: AH8x224vSRnLZMskgwaQmtegOpYZnXX56ZigMBxSU89KyP+0vOGvxiZhK8LvzDqvP/4wwCdV0fW0Lg==
-X-Received: by 10.99.163.2 with SMTP id s2mr10567837pge.264.1516786755946;
-        Wed, 24 Jan 2018 01:39:15 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=8kluIeNFVquo89yj0FG1d3zTztDFIbMhPhsMjy+DqjU=;
+        b=cQ0vb+vQyB4u+nnOcZmm6jlo2I0oIT8CnI9bnYTxw2rDTxBSBA1tcjbX2b2bqXOCts
+         KaG7z0SHA98HJJTPHWb40bKFvVa3EnBZbSFUaBKlTwhRBkwo2/KUAjUBePtIEGd5vRWZ
+         UljwdDIwVFjANGsU9+E0ekiMILCELJ5UqOgTuu0bjQkslw65/YcU/OovBiPG79xatEIV
+         DhC7sogmrHeYiv+j1wEGHzUW1Fsu8oqKKLbJACjG6oumq9m/bgUajfgCS62rcDa+Xset
+         Pfq8E4kW6UDA7hRl0zBDQWQExBM3/iAlcjDeZkaS2OVjbBCHPrMjgnriF+hzmswyV9ok
+         xXOg==
+X-Gm-Message-State: AKwxytdjxJqyP37s04dC7udiAsAIAJi35rN+XDnMoAZXwGQMx03ZB51T
+        aHEADVMUqkNco2bx7BbwmJ0nDQ==
+X-Google-Smtp-Source: AH8x2254I/drwMQoVnzBzU6sfdhYyhilpa/en/o0yc0OYMvEz/mynb4SqVA0NZlv/E1zDWKIelHS5w==
+X-Received: by 10.99.116.26 with SMTP id p26mr10875394pgc.320.1516787650215;
+        Wed, 24 Jan 2018 01:54:10 -0800 (PST)
 Received: from ash ([171.233.110.59])
-        by smtp.gmail.com with ESMTPSA id x22sm10331692pfa.169.2018.01.24.01.39.13
+        by smtp.gmail.com with ESMTPSA id v43sm35616057pgn.30.2018.01.24.01.54.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 24 Jan 2018 01:39:15 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 24 Jan 2018 16:39:10 +0700
+        Wed, 24 Jan 2018 01:54:09 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 24 Jan 2018 16:54:04 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        kaartic.sivaraam@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 3/3] read-cache: don't write index twice if we can't write shared index
-Date:   Wed, 24 Jan 2018 16:38:29 +0700
-Message-Id: <20180124093829.12966-4-pclouds@gmail.com>
+Subject: [PATCH 0/7] nd/worktree-move reboot
+Date:   Wed, 24 Jan 2018 16:53:50 +0700
+Message-Id: <20180124095357.19645-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.0.47.g3d9b0fac3a
-In-Reply-To: <20180124093829.12966-1-pclouds@gmail.com>
-References: <xmqqfu6xjxrx.fsf@gitster.mtv.corp.google.com>
- <20180124093829.12966-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,79 +70,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a0a967568e ("update-index --split-index: do not split if $GIT_DIR is
-read only", 2014-06-13), we tried to make sure we can still write an
-index, even if the shared index can not be written.
+This series adds two more commands "git worktree move" and "git
+worktree remove" to do those things. I think I have addressed all
+comments from the mail threads referenced in "What's cooking" mails. I
+also added the ability to remove a worktree if its worktree area is
+already deleted.
 
-We did so by just calling 'do_write_locked_index()' just before
-'write_shared_index()'.  'do_write_locked_index()' always at least
-closes the tempfile nowadays, and used to close or commit the lockfile
-if COMMIT_LOCK or CLOSE_LOCK were given at the time this feature was
-introduced.  COMMIT_LOCK or CLOSE_LOCK is passed in by most callers of
-'write_locked_index()'.
+It's a big code change (I reorganized remove_worktree() a bit for
+example to keep the last/new patch clean) so I'm not going to send
+interdiff.
 
-After calling 'write_shared_index()', we call 'write_split_index()',
-which calls 'do_write_locked_index()' again, which then tries to use the
-closed lockfile again, but in fact fails to do so as it's already
-closed. This eventually leads to a segfault.
+There's only one thing left that I should do, mentioned in 6/7, to
+print detached HEAD before we remove a worktree. But I think if that's
+a good idea, it could be done separately on top.
 
-Make sure to write the main index only once.
+Big thanks to Junio for keeping this on 'pu' all this time. Must be
+hard on you to resolve conflicts over and over.
 
-[nd: most of the commit message and investigation done by Thomas, I only
-tweaked the solution a bit]
+Nguyễn Thái Ngọc Duy (7):
+  worktree.c: add validate_worktree()
+  worktree.c: add update_worktree_location()
+  worktree move: new command
+  worktree move: accept destination as directory
+  worktree move: refuse to move worktrees with submodules
+  worktree remove: new command
+  worktree remove: allow it when $GIT_WORK_TREE is already gone
 
-Helped-by: Thomas Gummerer <t.gummerer@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- read-cache.c           |  5 +++--
- t/t1700-split-index.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ Documentation/git-worktree.txt         |  28 +++--
+ builtin/worktree.c                     | 216 +++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.bash |   5 +-
+ t/t2028-worktree-move.sh               |  65 ++++++++++
+ worktree.c                             |  97 +++++++++++++++
+ worktree.h                             |  18 +++
+ 6 files changed, 418 insertions(+), 11 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index c568643f55..c58c0a978a 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2561,8 +2561,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		if (!temp) {
- 			hashclr(si->base_sha1);
- 			ret = do_write_locked_index(istate, lock, flags);
--		} else
--			ret = write_shared_index(istate, &temp);
-+			goto out;
-+		}
-+		ret = write_shared_index(istate, &temp);
- 
- 		saved_errno = errno;
- 		if (is_tempfile_active(temp))
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index af9b847761..cbcefa6e5f 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -401,4 +401,23 @@ done <<\EOF
- 0642 -rw-r---w-
- EOF
- 
-+test_expect_success POSIXPERM,SANITY 'graceful handling when splitting index is not allowed' '
-+	test_create_repo ro &&
-+	(
-+		cd ro &&
-+		test_commit initial &&
-+		git update-index --split-index &&
-+		test -f .git/sharedindex.*
-+	) &&
-+	cp ro/.git/index new-index &&
-+	test_when_finished "chmod u+w ro/.git" &&
-+	chmod u-w ro/.git &&
-+	GIT_INDEX_FILE="$(pwd)/new-index" git -C ro update-index --split-index &&
-+	chmod u+w ro/.git &&
-+	rm ro/.git/sharedindex.* &&
-+	GIT_INDEX_FILE=new-index git ls-files >actual &&
-+	echo initial.t >expected &&
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
 2.16.0.47.g3d9b0fac3a
 
