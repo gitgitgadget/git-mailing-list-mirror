@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF7211F404
-	for <e@80x24.org>; Wed, 24 Jan 2018 18:47:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DE521F404
+	for <e@80x24.org>; Wed, 24 Jan 2018 18:47:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965048AbeAXSrZ (ORCPT <rfc822;e@80x24.org>);
+        id S965068AbeAXSr1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 13:47:27 -0500
+Received: from mail-yb0-f179.google.com ([209.85.213.179]:45098 "EHLO
+        mail-yb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964989AbeAXSrZ (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 24 Jan 2018 13:47:25 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33381 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964989AbeAXSrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 13:47:24 -0500
-Received: by mail-pg0-f67.google.com with SMTP id u1so3325599pgr.0
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 10:47:23 -0800 (PST)
+Received: by mail-yb0-f179.google.com with SMTP id k127so1922193ybc.12
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 10:47:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uzkKSp5e2N7L5A9/z29ga8u2V1Ldo4T8czLxiVpqjBY=;
-        b=QdubvBrmMEb3HUh27AVb0mHbrD0XQM5qXInKrJaWZV7S/jONL2j+hhPejOy6B4j3Wf
-         tWe0Ou0OnLCihZvO3TSYrWwS1NBdeoOkNF+UkfahQ5Q/+n4AllzZeLHP62Rhea+ulCfu
-         xSqQIhNE5BSzlW4O8/A4fqj97f1Iq7TGm+HxZmcewH+vOiZll0GndKo3N6luW1Kcdr5a
-         UiKl4WU1dWqPv1DuIpVyazJ7UonpY1XXc+l1jhFyiH430sm78kUrO+s04NFoy/Pi7g1K
-         KQeUr28w2WYFv0ZzTf7PXuDCGEIBfJZFI4nqUv/Q/3jQqlbq5uMsewvW+9yRU0bYlL7P
-         IRHA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dMt5s5DBiLqYovrHNogJz5rVInwJn6jTrr1jZYf5bz8=;
+        b=N5usPwvWM0XINWeN2yo1UwD42XnBTi8naeXrn4+p6vLex0Uq/Dsrkci4eiI0bidviF
+         pnYA7RymIKMoTkUMa3noe7YyDy6scUcBKA+pwEz/v/HKhkMSyVPDwUL0dCablEPzRO/y
+         /uz3KKkdkStNZFwTXxB6hvgY0x6ZsL0DsV753Kpn5ig+hfnSg3tRtPrr5EecKOUM2xU+
+         vPgfd8gQASQRnupkHeUFe1pSAEuYC7esjRikOONfMJEpsprKYfq6Z60ManOCVJhj1Dm2
+         PQR0tfVgkpdhO8bwmi7YNKJzsB3HTjAC4BYK7Kgk9LOMEfgUmrYidK5GYMFKb5Xw9ivx
+         KhgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uzkKSp5e2N7L5A9/z29ga8u2V1Ldo4T8czLxiVpqjBY=;
-        b=bVfPlzBZkq7WNOW5RFawhLcHB4yAcA+dU3ljawVApvTCZplqv0JR2wECUYbY3tLjuJ
-         QsRtaK/l/76ndt5RjAlkacV94NQVWs4BITJEUKXZLo4XXYQeA55rOlxs/WP2zzkeKOVL
-         XmK33JhmJofA/0BtABvTqDC4inqk/imCYBMkoC0CesaI4r4+f53df6s2oH9ZVFUglFPf
-         92pFFpEd/8nraaK2BRWtKBVNIbhftKBxRL6XILbGZ6lSwSIF1iEYdN5gDgpKZT8tFXqt
-         PH8N9iI9pb7/Ebx4GVAeagFqLI4yhAOUgJFWeJG2fr8lND2wRzVffKoIoLqqejGhHBnr
-         e1sw==
-X-Gm-Message-State: AKwxytdrAX6j8yBZ1rjBNvL6Xe9TPiDxyLj2RwB9FAzjv+9JHNxfin0p
-        7aDQ9yC/vS0ZNBvAkRyR3fi1N10Jl4Q=
-X-Google-Smtp-Source: AH8x2268YG+5e6VPAjZB5bJWaCzwSREBjy0Kz/R71PvpoRJWeoa2PnrM0anOrSoJXt4CcQfdb83eSg==
-X-Received: by 10.101.97.165 with SMTP id i5mr333230pgv.55.1516819643289;
-        Wed, 24 Jan 2018 10:47:23 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:69e6:5f42:e334:a0e2])
-        by smtp.gmail.com with ESMTPSA id m83sm11483033pfk.107.2018.01.24.10.47.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 Jan 2018 10:47:22 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Isaac Hier <isaachier@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/1] Implement CMake build
-References: <20180123001648.24260-1-isaachier@gmail.com>
-        <CAG6xkCZn6m2n0rDvpN6MmZcOr2hJBRCfhrppC37f-DUj3_JZsw@mail.gmail.com>
-Date:   Wed, 24 Jan 2018 10:47:21 -0800
-In-Reply-To: <CAG6xkCZn6m2n0rDvpN6MmZcOr2hJBRCfhrppC37f-DUj3_JZsw@mail.gmail.com>
-        (Isaac Hier's message of "Wed, 24 Jan 2018 08:45:03 -0500")
-Message-ID: <xmqqpo5zdrgm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dMt5s5DBiLqYovrHNogJz5rVInwJn6jTrr1jZYf5bz8=;
+        b=JuKaaLOuGs9KWt+uFAGLzE1lQc1Ij1DY0QXoGBiGCi6HIABur+EQiLFa3MK+RLNRli
+         ESuYwOPD3+IZVfAOTNZecpL9HqF6V58oBYF14lnbgJnqIbqrFzodwXA8qx6/qZ55NP6m
+         UL3vGsjHgWY+Fg9UPA+h4X3LFCDPhSCwFzobRumItvd4Raypb/Kj3Pp7f/soirICZhnV
+         yWyb7RzeHwmBGsq5NE86HLcKLi6+L74/a7s6WO7sHKW1xrlTgHZ89bKcEXhjjY+eQL8i
+         MEcO3xclH6Y9yD1oAhTj8J2x8UUcGvRXp+jAiNFUOjzwoG9Gv/KJM/+lrH20LfULcEzO
+         Fpew==
+X-Gm-Message-State: AKwxytefCEEIbsnfZZAKOc0HAvTzSy6EQPU2t92SCtovAtCtFZ9jc1iM
+        Bu86QJgTDSZpEWdGhIACQEyulrSLrOOMzLAv9qg=
+X-Google-Smtp-Source: AH8x225SghZrz/tdTXTQgqUJBxFYrLSogpzSWrr9BA+Ml4/FLDs/o5/NqtxrutB3/uxRecGfsZPuNW05JzBF0JCYYOc=
+X-Received: by 10.37.128.3 with SMTP id m3mr6096506ybk.450.1516819645176; Wed,
+ 24 Jan 2018 10:47:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.129.87.17 with HTTP; Wed, 24 Jan 2018 10:46:44 -0800 (PST)
+In-Reply-To: <CA+WKDT3ZsObXc2ENV3gUXbMZU=McBJdiEpvk7y2OM0t+PrqZtQ@mail.gmail.com>
+References: <CAFAcib-2fxiVxtVWcbvafY3-Br7Y70HMiHFZoT0VfK6JU0Dp9A@mail.gmail.com>
+ <CABPp-BGYs9jo16OZR8NsL-eO9LwEttBxBspvp1-_JjuD2oBYbA@mail.gmail.com>
+ <CAFAcib9FGfTe8C7TaOY91kzhUvxXtpx5Y8JMFkqxhRhLJeytxg@mail.gmail.com> <CA+WKDT3ZsObXc2ENV3gUXbMZU=McBJdiEpvk7y2OM0t+PrqZtQ@mail.gmail.com>
+From:   Josh Bleecher Snyder <josharian@gmail.com>
+Date:   Wed, 24 Jan 2018 10:46:44 -0800
+Message-ID: <CAFAcib_MysZPZOJ5xTWrh8nLk1Tn3Vi4LbscxgBO-+02S9Wvkw@mail.gmail.com>
+Subject: Re: git merge-tree: bug report and some feature requests
+To:     Edward Thomson <ethomson@edwardthomson.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Isaac Hier <isaachier@gmail.com> writes:
+Thanks, Ed. I think I'll pursue the libgit2 route; sounds promising.
 
-> I realize this is a huge patch, but does anyone have feedback for the
-> general idea?
 
-I personally am not interested, especially with the justification
-given in the cover letter.
+>> But the alternative appears to be punting entirely, as libgit2 does,
+>> and merely providing something akin to three index entries.
+>
+> Indeed, when I added merge to libgit2, we put the higher-level conflict
+> analysis into application code because there was not much interest in it
+> at the time.  I've been meaning to add this to `git_status` in libgit2,
+> but it's not been a high priority.
 
-Perhaps the one in this patch may be "mostly complete", and I am
-sure you can make it "complete" against a frozen target, but it is
-unclear to me how you envision keeping the completeness up to date.
+Is your conflict analysis application code public? I might be game to
+do some of the legwork to get it into libgit2's git_status (although
+I'm probably not the right person to do the API design). At a minimum,
+it would be helpful as a reference, as I'm probably about to recreate
+some subset of it myself.
 
-Whenever a developer needs to introduce a new build knob, the
-support for it needs to be implemented in not just Makefile but now
-also in this other thing.  Unless there is an automated
-bi-directional gateway to allow those who have been writing and
-reading Makefile not to worry about those who wants to build with
-CMake, and vice versa, you are forcing everybody to do the same work
-twice, no?
 
-Choice of build procedure for a project is like choise of SCM to
-store its source file.  If the new system is 10x better to make it
-worthwhile to educate everybody to use it, switching to a new system
-and ditching the current one *is* a reasonable thing to propose and
-consider.
-
-But I do not think you are proposing to switch, and I do not think
-you are convincingly arguing that it is 10x better than the current
-one, either.  
+-josh
