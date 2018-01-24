@@ -2,65 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B75D01F576
-	for <e@80x24.org>; Wed, 24 Jan 2018 07:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72B501F576
+	for <e@80x24.org>; Wed, 24 Jan 2018 09:11:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932111AbeAXHML (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 Jan 2018 02:12:11 -0500
-Received: from waltz.apk.li ([185.177.140.48]:61547 "EHLO waltz.apk.li"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752355AbeAXHMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 02:12:10 -0500
-Received: from continuum.iocl.org (localhost [127.0.0.1])
-        by waltz.apk.li (Postfix) with ESMTP id 1BB4D598054
-        for <git@vger.kernel.org>; Wed, 24 Jan 2018 08:12:08 +0100 (CET)
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id w0NKauU27168;
-        Tue, 23 Jan 2018 21:36:56 +0100
-Date:   Tue, 23 Jan 2018 21:36:56 +0100
-From:   Andreas Krey <a.krey@gmx.de>
-To:     git@vger.kernel.org
-Subject: Speed of git branch --contains
-Message-ID: <20180123203656.GA27016@inner.h.apk.li>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-message-flag: What did you expect to see here?
+        id S932784AbeAXJLr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 04:11:47 -0500
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:36175 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932356AbeAXJLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 04:11:42 -0500
+Received: by mail-oi0-f41.google.com with SMTP id w135so2374846oie.3
+        for <git@vger.kernel.org>; Wed, 24 Jan 2018 01:11:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TzoHZJUV7VpeqqK+t9pGzA6PH73FZls4EoPLRPk4Vfg=;
+        b=AXzkA54KRoueFQz4+yhvISSKc08/9YQfv2bYec/ahHy2GcRl2e3oAckdmb0XsIgMa6
+         T+lDDck+rsIBc0UA6W4SYLK9gbEu8KWrQ/sopddmzea58QPB/7crR4SU0hOJ8ZSX7RlC
+         EA3JYO8GdP0DePDPlrKafSzNV4trHGr33FocEgZhG8E0DKNSLEJO1glRr04MSSuDWIIl
+         73W/EVcHJLw4ldmohbKj0nKEbg5QaoU/rOW/I/CzZtalZxyM0XEBMihNATuxcMuxS4ix
+         qIPi1OJNuWSNTODL0ahNSxFTGiK68NE5XmZYnGa2lkmUP1ef4JOodOv0C0dHsgiydMFS
+         a/iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TzoHZJUV7VpeqqK+t9pGzA6PH73FZls4EoPLRPk4Vfg=;
+        b=XmSpDzUltHPA5t1U62LWBagn+ZNkaKhQkNWsKWpIFfNuz7IwoHRPcbPpE/hhJOP+X7
+         3OmvQIU4yuNknqTtDpq/JvMNFgcFhqBLDHGNF3wPbffIKMFvNJaFGj1QldGprMtFXxjU
+         pSwiTlXNxll8GDVOukovMufeD/Mxpy5y0HXdeaqdT3ABCCv9jvFX0EL/Lb5FWc9JrGq8
+         JdfBpxWDt1nXlF01vw42WLxY8TIPSl6LbEkqUJzjAh57gIb9TKy7sYtdvCxzDxQTOfre
+         JLs69rCf3qMdqIq1khZ/R8/RItt+kVe87sh04fT/w2MkQ5jrHymeC8CFhdvYIQORBqMy
+         K22w==
+X-Gm-Message-State: AKwxytfbiV8a5B9kBq+5sd46JMv3cZORkq0Pz24D+r2l0ODmsnE4tqlF
+        TFr8V7j2dpT1jIdKqJLtuReUAwpG8hEN3iR5pQc=
+X-Google-Smtp-Source: AH8x226Jb9Q9R1Cfi4+stXZsCbbEU7p+ohlRmgVgKXPt7sIvs4PEjk1TawyqvuORadjXggX8W8zQvTIDU7tVTgp2/w4=
+X-Received: by 10.202.196.208 with SMTP id u199mr7772644oif.117.1516785101967;
+ Wed, 24 Jan 2018 01:11:41 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.144.218 with HTTP; Wed, 24 Jan 2018 01:11:11 -0800 (PST)
+In-Reply-To: <20180122182717.21539-1-szeder.dev@gmail.com>
+References: <CACsJy8BBXQ9KErfiuf2ty_4szE2fiHLDiKvMig1LbSefzf-o7w@mail.gmail.com>
+ <20180122182717.21539-1-szeder.dev@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 24 Jan 2018 16:11:11 +0700
+Message-ID: <CACsJy8AVL4HzPxRjwT9qSc8g_5FwAVgpbEPQ5TfDuxr9C91wqA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] read-cache: don't write index twice if we can't write
+ shared index
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+On Tue, Jan 23, 2018 at 1:27 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+>
+> On Thu, Jan 18, 2018 at 1:47 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Thu, Jan 18, 2018 at 6:36 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com=
+> wrote:
+>>> This series, queued as 'nd/shared-index-fix', makes the 32 bit Linux
+>>> build job fail on Travis CI.  Unfortunately, all it can tell us about
+>>> the failure is this:
+>>>
+>>>   Test Summary Report
+>>>   -------------------
+>>>   t1700-split-index.sh                             (Wstat: 256 Tests: 2=
+3
+>>>   Failed: 1)
+>>>     Failed test:  23
+>>>     Non-zero exit status: 1
+>>>   Files=3D809, Tests=3D18491, 401 wallclock secs ( 7.22 usr  1.60 sys +=
+ 263.16
+>>>   cusr 49.58 csys =3D 321.56 CPU)
+>>>   Result: FAIL
+>>>
+>>> because it can't access the test's verbose log due to lack of
+>>> permissions.
+>>>
+>>>
+>>>   https://travis-ci.org/git/git/jobs/329681826#L2074
+>>
+>> I may need help getting that log (or even better the trash directory
+>> of t1700).
+>
+> Well, shower thoughts gave me an idea, see the included PoC patch below.
+> I can't really decide whether it's too clever or too ugly :)
 
-I'm just looking at some scripts that do a 'git branch --contains $id --remote'
-for each new commit in a repo, and unfortunately each invokation already
-takes four minutes.
-
-It feels like git branch does the reachability detection separately
-for each branch potentially listed. The alternative would be to
-
-- invert the parent map to a child map,
-- use that to compute the set of commits that contain $id,
-- then use that as predicate whether to show a given branch
-  (show iff its head is in the set)
-
-That would speed things up considerably,
-but what are the chances to see that change in git?
-
-I can do that as well within the script, with the additional
-benefit that I only need to do the inversion once, but I might
-instead take a stab at git branch.
-
-- Andreas
-
--- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+I can't comment on the patch. But there is one thing I think I should
+mention. As someone new to Travis, I didn't know that I could set up
+my own Travis jobs and get the logs myself. Maybe you should point
+that out when you point people to travis test failures (which I
+appreciate).
+--=20
+Duy
