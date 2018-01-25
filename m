@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 349831F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 23:59:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2919B1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 23:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751837AbeAYX7e (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:59:34 -0500
-Received: from mail-it0-f74.google.com ([209.85.214.74]:48271 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751798AbeAYX7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:59:18 -0500
-Received: by mail-it0-f74.google.com with SMTP id h200so625192itb.3
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:59:18 -0800 (PST)
+        id S1751878AbeAYX7p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 18:59:45 -0500
+Received: from mail-ot0-f201.google.com ([74.125.82.201]:56843 "EHLO
+        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751538AbeAYX7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 18:59:40 -0500
+Received: by mail-ot0-f201.google.com with SMTP id x4so5932041otx.23
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:59:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=cK513e6BNKPqiS3G2kqkCEVEcpHWayMuq0BwUJqt23M=;
-        b=MB5uBxHrmSMZYb54UmlsqCKR451KznOMb3gJXVvnggdn94g7xIMt8t68fpYK9SJOWv
-         dt2ZoWz+vchYMtFDPTey3SYvSqeOThOiLvQ7IVTlgMCxMSrK++N2XotEAZ0T6mF6Bl/8
-         4iuG5Jl22pAoEezGZUQuk0ExAAR3OyjyM73DLuesDKYGZpvNgiO0PTrbPd05DJ+n6YYN
-         wQja1uwPUNge1I7HetWAnh1tz+rOb7P54m2yhwBGmAjqouUVjHG17x3krvMlpXnjEPt4
-         SxVZyv+FuNN09VW6/mZN4NEWUfJlhqtrq7mtT8hlb2Bb3ZOk7z+K3NOY7KNi8yDLFbT4
-         Z/yQ==
+        bh=VphBVkCf/n6LqM6CjWl+BvTKwHZ0y07DXr/a8zpWJYI=;
+        b=DOuwjfz04wdKipGUi3nZ5wuHwWVPjokCEPHhjsz7DqAFMhQgiuCzxYlhJ9owNjIyKe
+         7Gxw+ClrmMf1YFLFKhE38lZk2a0mif/RCqH2FSFHf9UQZUI+Z7iHSI2S2J+dNjirxezU
+         pAu4ACZlU7UT1S5r92IEk24gdCJjMb6vt07WtCBmLMRCA50jYmnGEezbg1d3AxjHVf9b
+         nzwtSRK/9c7C5a7HPWQ9AjTqQ33KZjni+wsoL+WL9ameH9BkFhbN7mRLEl59OJVNqNNe
+         tO53MoRfdQw5s1+X7zlW/csO8fEnqvom2xEF5oCmsh9v5b+4MTR/aMh3i0rdt0yMoEcS
+         Um2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=cK513e6BNKPqiS3G2kqkCEVEcpHWayMuq0BwUJqt23M=;
-        b=Q4PxUoKq6DkU+IuVSMdYLBc9TdhzoFdEJ7ltX0ioi7Z34hs4agAiGZdfJWKa8PVxd8
-         WsjXhnlvWiiGdlbmSOTiZaTT4CRGepLvql7kZ9K00uwcs5x/PuWKLhuAgt410nqbu60q
-         Tj8cXepCu/NK1iCviLt6I43Eef9rVGS7DwnHL6lQG/xa9K35ZVDSqo9SlDGoxFIJ103L
-         S2EmEldg6WQ2Ix2miwQz6ABJChfiuUIeacczsMXWH8Jf0UsSeaq4OG4CPkyyT6J/kHK8
-         wuI7gqCb1JtB9rOsKhsIGKmp4tvsn+4/BITZRyejuyzmGVO3ptwcjtUKzV4uRPzkv8I8
-         ShIg==
-X-Gm-Message-State: AKwxytegrI9KaiAtVJ3eSkbenOv9djjbQ0rSU00BDP0Qo1HgKfTDt8cC
-        6vNzwW0IadSQGSEr8dW/iq20Rf+Yj411/VEDHQjF3p9PxPi8mztqyUyxggk3BcxUCbKtEzrCm2w
-        5do9/OXazPlj3+7zUSajwKwqdSBKvOQX0jWOowaKmZHGArE7R0a6EQEHBqQ==
-X-Google-Smtp-Source: AH8x224lVyrLzxeymkn9U0QCtyQRWq3e+OEzfAqDyksSkQVr61wGcyHDlVw0HmFjaJ+Rxr1Jhv2AVR3Q+zo=
+        bh=VphBVkCf/n6LqM6CjWl+BvTKwHZ0y07DXr/a8zpWJYI=;
+        b=QONX4dI5ks2SYHYbf0NZ/DcZprRsDc+C57liHh07s7lzUpsjlosWYCdjEjFvfX10Qi
+         jqHpqlFVdmqgFKidkHdP67+LFE/6cbiarw/e/gxRKvK6e9UXPHfZPSAix+V1neGoT1qY
+         sICleOZUZReY2BbWfYrmKYWBPxMSpnNRRWk3cLETSENs2sedGsFG4a8Kt/GX+H4gRDjH
+         nuqbrWX6hFWQfwvEGE5MiOUkFXSpBK8fne09OL8EEaWkF/u1ZYqVoSY3TGYEn32vurbA
+         GwpaUbUMcFeuKlqs4c7PnDDyryet46pGosi2rhE58ZYxbbUc3NYijrPrXBSZ0PgWZ+NN
+         kDEw==
+X-Gm-Message-State: AKwxytdwgCpU/afxlFsxaWymXSG0qL7rfBvgizF5cpjRtmP0mwgDCbNe
+        otRmLzSoXwEx72YNxHjIQRDxS0XH+FQcbSXgYz7gXrnQvM4Fiv2NfdL4wy5XvpqPfLMRGIOWYbG
+        D90qYhpAAQj0dybexZ2ewAMRn93DGnmMCKhZkcvEKtyCSrXlBnNYkdL1Cog==
+X-Google-Smtp-Source: AH8x227t9Z0mksl12+fxA+cy66IkYUMmAcsbx9NPpVrQiTt5hgsZJkxU0ml1ffXuNwIxUQeCKRAunwbOnuE=
 MIME-Version: 1.0
-X-Received: by 10.36.40.12 with SMTP id h12mr8669106ith.43.1516924757903; Thu,
- 25 Jan 2018 15:59:17 -0800 (PST)
-Date:   Thu, 25 Jan 2018 15:58:26 -0800
+X-Received: by 10.202.226.18 with SMTP id z18mr9681571oig.113.1516924779585;
+ Thu, 25 Jan 2018 15:59:39 -0800 (PST)
+Date:   Thu, 25 Jan 2018 15:58:35 -0800
 In-Reply-To: <20180125235838.138135-1-bmwill@google.com>
-Message-Id: <20180125235838.138135-16-bmwill@google.com>
+Message-Id: <20180125235838.138135-25-bmwill@google.com>
 References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v2 15/27] transport: convert get_refs_list to take a list of
- ref patterns
+Subject: [PATCH v2 24/27] transport-helper: introduce stateless-connect
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
@@ -65,133 +64,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the 'struct transport' virtual function 'get_refs_list()' to
-optionally take an argv_array of ref patterns.  When communicating with
-a server using protocol v2 these ref patterns can be sent when
-requesting a listing of their refs allowing the server to filter the
-refs it sends based on the sent patterns.
+Introduce the transport-helper capability 'stateless-connect'.  This
+capability indicates that the transport-helper can be requested to run
+the 'stateless-connect' command which should attempt to make a
+stateless connection with a remote end.  Once established, the
+connection can be used by the git client to communicate with
+the remote end natively in a stateless-rpc manner as supported by
+protocol v2.  This means that the client must send everything the server
+needs in a single request as the client must not assume any
+state-storing on the part of the server or transport.
+
+If a stateless connection cannot be established then the remote-helper
+will respond in the same manner as the 'connect' command indicating that
+the client should fallback to using the dumb remote-helper commands.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport-helper.c   |  5 +++--
- transport-internal.h |  4 +++-
- transport.c          | 16 +++++++++-------
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ transport-helper.c | 8 ++++++++
+ transport.c        | 1 +
+ transport.h        | 6 ++++++
+ 3 files changed, 15 insertions(+)
 
 diff --git a/transport-helper.c b/transport-helper.c
-index 508015023..4c334b5ee 100644
+index c032a2a87..82eb57c4a 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -1026,7 +1026,8 @@ static int has_attribute(const char *attrs, const char *attr) {
+@@ -26,6 +26,7 @@ struct helper_data {
+ 		option : 1,
+ 		push : 1,
+ 		connect : 1,
++		stateless_connect : 1,
+ 		signed_tags : 1,
+ 		check_connectivity : 1,
+ 		no_disconnect_req : 1,
+@@ -188,6 +189,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			refspecs[refspec_nr++] = xstrdup(arg);
+ 		} else if (!strcmp(capname, "connect")) {
+ 			data->connect = 1;
++		} else if (!strcmp(capname, "stateless-connect")) {
++			data->stateless_connect = 1;
+ 		} else if (!strcmp(capname, "signed-tags")) {
+ 			data->signed_tags = 1;
+ 		} else if (skip_prefix(capname, "export-marks ", &arg)) {
+@@ -612,6 +615,11 @@ static int process_connect_service(struct transport *transport,
+ 	if (data->connect) {
+ 		strbuf_addf(&cmdbuf, "connect %s\n", name);
+ 		ret = run_connect(transport, &cmdbuf);
++	} else if (data->stateless_connect) {
++		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
++		ret = run_connect(transport, &cmdbuf);
++		if (ret)
++			transport->stateless_rpc = 1;
  	}
- }
  
--static struct ref *get_refs_list(struct transport *transport, int for_push)
-+static struct ref *get_refs_list(struct transport *transport, int for_push,
-+				 const struct argv_array *ref_patterns)
- {
- 	struct helper_data *data = transport->data;
- 	struct child_process *helper;
-@@ -1039,7 +1040,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 
- 	if (process_connect(transport, for_push)) {
- 		do_take_over(transport);
--		return transport->vtable->get_refs_list(transport, for_push);
-+		return transport->vtable->get_refs_list(transport, for_push, ref_patterns);
- 	}
- 
- 	if (data->push && for_push)
-diff --git a/transport-internal.h b/transport-internal.h
-index 3c1a29d72..a67657ce3 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -3,6 +3,7 @@
- 
- struct ref;
- struct transport;
-+struct argv_array;
- 
- struct transport_vtable {
- 	/**
-@@ -21,7 +22,8 @@ struct transport_vtable {
- 	 * the ref without a huge amount of effort, it should store it
- 	 * in the ref's old_sha1 field; otherwise it should be all 0.
- 	 **/
--	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
-+	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
-+				     const struct argv_array *ref_patterns);
- 
- 	/**
- 	 * Fetch the objects for the given refs. Note that this gets
+ 	strbuf_release(&cmdbuf);
 diff --git a/transport.c b/transport.c
-index ffc6b2614..c54a44630 100644
+index 4fdbd9adc..aafb8fbb4 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -72,7 +72,7 @@ struct bundle_transport_data {
- 	struct bundle_header header;
- };
- 
--static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
-+static struct ref *get_refs_from_bundle(struct transport *transport, int for_push, const struct argv_array *ref_patterns)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	struct ref *result = NULL;
-@@ -189,7 +189,8 @@ static int connect_setup(struct transport *transport, int for_push)
- 	return 0;
- }
- 
--static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
-+static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
-+					const struct argv_array *ref_patterns)
- {
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
-@@ -204,7 +205,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push,
-+				ref_patterns);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -250,7 +252,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+@@ -250,6 +250,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 		data->options.check_self_contained_and_connected;
+ 	args.cloning = transport->cloning;
  	args.update_shallow = data->options.update_shallow;
++	args.stateless_rpc = transport->stateless_rpc;
  
  	if (!data->got_remote_heads)
--		refs_tmp = get_refs_via_connect(transport, 0);
-+		refs_tmp = get_refs_via_connect(transport, 0, NULL);
+ 		refs_tmp = get_refs_via_connect(transport, 0, NULL);
+diff --git a/transport.h b/transport.h
+index 4b656f315..9eac809ee 100644
+--- a/transport.h
++++ b/transport.h
+@@ -55,6 +55,12 @@ struct transport {
+ 	 */
+ 	unsigned cloning : 1;
  
- 	switch (data->version) {
- 	case protocol_v2:
-@@ -568,7 +570,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	int ret = 0;
- 
- 	if (!data->got_remote_heads)
--		get_refs_via_connect(transport, 1);
-+		get_refs_via_connect(transport, 1, NULL);
- 
- 	memset(&args, 0, sizeof(args));
- 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
-@@ -1028,7 +1030,7 @@ int transport_push(struct transport *transport,
- 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
- 			return -1;
- 
--		remote_refs = transport->vtable->get_refs_list(transport, 1);
-+		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
-@@ -1137,7 +1139,7 @@ int transport_push(struct transport *transport,
- const struct ref *transport_get_remote_refs(struct transport *transport)
- {
- 	if (!transport->got_remote_refs) {
--		transport->remote_refs = transport->vtable->get_refs_list(transport, 0);
-+		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
- 		transport->got_remote_refs = 1;
- 	}
- 
++	/*
++	 * Indicates that the transport is connected via a half-duplex
++	 * connection and should operate in stateless-rpc mode.
++	 */
++	unsigned stateless_rpc : 1;
++
+ 	/*
+ 	 * These strings will be passed to the {pre, post}-receive hook,
+ 	 * on the remote side, if both sides support the push options capability.
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
