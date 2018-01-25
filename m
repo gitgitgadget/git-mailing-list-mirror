@@ -2,96 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0810B1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 19:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 159E11F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 19:08:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbeAYTIW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 14:08:22 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36307 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750994AbeAYTIV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 14:08:21 -0500
-Received: by mail-pg0-f65.google.com with SMTP id k68so5655060pga.3
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 11:08:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JCOV5Cf+1o3jTqdFTHRi7zAB/w1aXPPvgAe8NmmqKj8=;
-        b=Oup+i8gXZ9dR/McBHUYWzz2z/3J5cG8thT4qldSAp+NH1fKxTjaQLdCRkLOQ8WEYNK
-         5KMg0+vS/M3lPhR1LFON4BQDH5gTmzHttboFhYOw3/pnIpI1QbNnkX/PucdmnRJJdGxV
-         /py0kjhMC0zTVXvrS+/nFnJf5MPze9Mpig/tl5YgZZN8PX3FD0bjildMJ5QfxiQfPN5+
-         2S+2fhLsW/7mIdGacwFoslxxXURru1BFGLbStCP4qt8F8uXnhUIXx1JE2y0Vi50ym9Cz
-         2wu5WPH2XFByX8R9fwkKjwlVIAh/+10JIodxdEV+4eeNo3clWM84PVSyQ+YA92K92CNY
-         QOCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=JCOV5Cf+1o3jTqdFTHRi7zAB/w1aXPPvgAe8NmmqKj8=;
-        b=c9HYBrXUthDrkXsda2MPXtYMSdXS+gv9mFCYlOMRPI6dx8ZcV+YSJPRM4KWbmV4It2
-         mWHzXyFBmG7Q4in8fD4pNt+G1AWOxFv4ai5jZ5yZgbEgxTjLzbZddUM7baRxBhRWhYAl
-         WUVKYf0aOIkL/DL6xz3+Ssx4oGeatcSabZqnxmwgJTtkKtqpdZ9douiwU+/VQUKbuenO
-         x58nc4XgvioLJA4X51wtFn8+/01DjX3MNt6R6yl7G7refQiO7PMXGVJHj+8s4KtbtaUi
-         lVPtcE6icQ8JNtSJffazCrDeI1zEHS5jkgl7edNvaxdCa7s/HZphhU6sleJ8fef81Ovk
-         IhIQ==
-X-Gm-Message-State: AKwxyte9l1vWnAGwZtdW3xS0i2iKVUfNHzIYpSCx8o2xVx4GvGsxbTLq
-        +MXCKxzbv9XTKANkwS0KglAyvx5FrvM=
-X-Google-Smtp-Source: AH8x227TgjxvcR/2QIn0ZL1vyDtUdYZZ746qaSJBqBkXr0FkNSM9Ob23eQMDSQgnZZYKnfhnAyMJHg==
-X-Received: by 2002:a17:902:67c5:: with SMTP id g5-v6mr8270623pln.106.1516907300637;
-        Thu, 25 Jan 2018 11:08:20 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id u26sm18013092pfk.126.2018.01.25.11.08.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 25 Jan 2018 11:08:20 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     robbat2@gentoo.org
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] builtin/pull: respect verbosity settings in submodules
-Date:   Thu, 25 Jan 2018 11:08:17 -0800
-Message-Id: <20180125190817.145041-1-sbeller@google.com>
-X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-In-Reply-To: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
-References: <robbat2-20180120T054223-685328376Z@orbis-terrarum.net>
+        id S1751228AbeAYTI1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 14:08:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57578 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1750994AbeAYTI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 14:08:26 -0500
+Received: (qmail 15189 invoked by uid 109); 25 Jan 2018 19:08:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 25 Jan 2018 19:08:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6417 invoked by uid 111); 25 Jan 2018 19:09:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 25 Jan 2018 14:09:04 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 Jan 2018 14:08:24 -0500
+Date:   Thu, 25 Jan 2018 14:08:24 -0500
+From:   Jeff King <peff@peff.net>
+To:     Lucas Werkmeister <mail@lucaswerkmeister.de>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 2/6] t/lib-git-daemon: record daemon log
+Message-ID: <20180125190824.GA26309@sigill.intra.peff.net>
+References: <20180125005447.GA26661@sigill.intra.peff.net>
+ <20180125005511.GB26850@sigill.intra.peff.net>
+ <38b41541-5758-d013-3d64-314eec7e31ed@lucaswerkmeister.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <38b41541-5758-d013-3d64-314eec7e31ed@lucaswerkmeister.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a6d7eb2c7a (pull: optionally rebase submodules (remote submodule
-changes only), 2017-06-23), we taught Git how to rebase submodules in
-a pull. However we missed to pass on the verbosity settings.
+On Thu, Jan 25, 2018 at 12:56:47PM +0100, Lucas Werkmeister wrote:
 
-Reported-by: Robin H. Johnson <robbat2@gentoo.org>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/pull.c | 2 ++
- 1 file changed, 2 insertions(+)
+> > Let's dump the log into a file, as well, so that future
+> > tests can check the log. There are two subtleties worth
+> > calling out here:
+> > 
+> >   - we replace "cat" with a subshell loop around "read" to
+> >     ensure that there's no buffering (so that tests can be
+> >     sure that after a request has been served, the matching
+> >     log entries will have made it to the file)
+> 
+> POSIX specifies the -u option for that behavior, can’t you use that?
+> (GNU coreutils’ cat ignores it, since writing without delay is
+> apparently its default behavior already.)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 511dbbe0f6..1876271af9 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -574,6 +574,7 @@ static int rebase_submodules(void)
- 	cp.no_stdin = 1;
- 	argv_array_pushl(&cp.args, "submodule", "update",
- 				   "--recursive", "--rebase", NULL);
-+	argv_push_verbosity(&cp.args);
- 
- 	return run_command(&cp);
- }
-@@ -586,6 +587,7 @@ static int update_submodules(void)
- 	cp.no_stdin = 1;
- 	argv_array_pushl(&cp.args, "submodule", "update",
- 				   "--recursive", "--checkout", NULL);
-+	argv_push_verbosity(&cp.args);
- 
- 	return run_command(&cp);
- }
--- 
-2.16.0.rc1.238.g530d649a79-goog
+Actually, this glosses over one other detail, which is that we'd also
+need to replace "cat" with "tee" to keep output going to descriptor 4.
+That's not strictly necessary (it's just for debugging output), so we
+could drop that. But the shell loop seemed easy enough.
 
+> >  	{
+> >  		read line <&7
+> > +		echo "$line"
+> >  		echo >&4 "$line"
+> > -		cat <&7 >&4 &
+> > -	} 7<git_daemon_output &&
+> > +		(
+> > +			while read line <&7
+> > +			do
+> > +				echo "$line"
+> > +				echo >&4 "$line"
+> > +			done
+> > +		) &
+> > +	} 7<git_daemon_output >>"$TRASH_DIRECTORY/daemon.log" &&
+> >  
+> >  	# Check expected output
+> >  	if test x"$(expr "$line" : "\[[0-9]*\] \(.*\)")" != x"Ready to rumble"
+> > 
+> 
+> read without -r clobbers backslashes, and echo may interpret escape
+> sequences. To faithfully reproduce the output, it would be better to use
+> read -r and printf '%s\n' "$line", I think. (However, it looks like the
+> existing code already uses read+echo, so I guess you could also keep
+> that pattern in this change and then fix it in a later one.)
+
+Yeah. I doubt it matters much, since this is just inside our tests, and
+we control the input. But it doesn't hurt to do it in the more robust
+way. I'll re-roll this patch.
+
+-Peff
