@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F314D1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 14:02:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D83EA1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 14:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751471AbeAYOCw (ORCPT <rfc822;e@80x24.org>);
+        id S1751482AbeAYOC6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 09:02:58 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:37266 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751404AbeAYOCw (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 25 Jan 2018 09:02:52 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37237 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751404AbeAYOCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 09:02:46 -0500
-Received: by mail-qt0-f194.google.com with SMTP id d54so19399358qtd.4
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 06:02:46 -0800 (PST)
+Received: by mail-qt0-f196.google.com with SMTP id d54so19400157qtd.4
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 06:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+/l0ogAUjFqZiWA1PLEAjUUZh/24K9ZykzK2rxPQ3KQ=;
-        b=BMXfmnzBiN53QyVeFlpVR4jF5n98q6iT2co2fDjD1qVo53z98vSxlzPMaUvxuETlFO
-         0doSJrHVXk2szvZ8LT8/CC4OwxqrEMV1OQJipwEXoKFZWqz8h0/Wdnx40wP+t/Mwhi4o
-         95apz1DihlP3U64AcN26RqiZ499Ax/ug5Di9Qlv1t4nl5EAIpMawyk4B0z4P38OCqb1p
-         6hwsgpZM+v5igEO4OzZp0lEhzmxoteFADbIIv2E+xOsyWpgeEidw3OK2Dx082rd2jedi
-         cJclBG2z2IkPW5RQFMvZCD4bTkqjoGEw2vG5/Z7DX6yk3BkXhbQ9HgL77eNYv9hgcYRe
-         gzUQ==
+        bh=MA4B1MxFOD8t563xQ8MXiwV3cHS78v9MbdenvQlJygs=;
+        b=ey+g7G3MwbKG4owve/C0xDxR6KkTQ2WzgCuzGu6sZi54IaMUU/wVCdrCt8hNx9iWaJ
+         Vx4jJy8YDe5ZNsnwGOATwrJPz5scPdIO8PPjSCN2zHOWOtnZ8SVyPQa4GKDq5i/hCtMs
+         4UjT7m2EsiTt6YlkQvIGjMVgs2L7pIzRBruEHqr+MugzwJoih78oWKLe8oiBVHsqlOtZ
+         9/V4P7FEtrCssppwMVLq0jG0q7OwTW8eYWp9rnvzr4kNxgsyn95fwe7HMgjo6ci5IWjI
+         7A9k4eQbzgMJunwLh+Qn2V5iyRhV02N9pLQw2e8qbSk3jYVv/hqFrMTaOBBTeL40yGsJ
+         cZgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+/l0ogAUjFqZiWA1PLEAjUUZh/24K9ZykzK2rxPQ3KQ=;
-        b=j1Hit5w+4tWO7a7f4Z/SFPUNOhtCD/QoFfiFw6IL4RVCVM1BeyftS+R7ZqJlGXhfvh
-         7UtgREKdPMqWciDgjKKuFBkoyKo1E6KvtSYRw5DtXbWR7fO6JOL+40qx4Bjilyia3f9+
-         sr/8KzN/vQ7+vrpT2R0sl4aofu1KKqZVXwRe92huohIp/+eanjo+BvZQg31nd/ouWtYH
-         bWC/XUtWioVlhgaVJNBHr48SZ5ETnBemXCku8VtoiDPhwKWxS7ECnMrwydHXYVi5NESH
-         x2ZckmFaYdpYGka98CyNFSEr7ioC5Mww+HjhoLO7+v3NEVyOwsB8grtwpkIAQ2JFN9Oa
-         OEGw==
-X-Gm-Message-State: AKwxytcETYRERCW1Dkl5qz/ymZZ96GLLD02jEDqofA3fbz7UhOrhdzcN
-        iafk7vsX7mK30IN3qM35djof3Nl6
-X-Google-Smtp-Source: AH8x2269baibmrIIQa/5VB1feF26adtrLm8J/rqZxcGy6uBijqZcET5Ya8bzfFxp2EljMDaRu5YJ8g==
-X-Received: by 10.55.25.146 with SMTP id 18mr13888281qkz.214.1516888965857;
-        Thu, 25 Jan 2018 06:02:45 -0800 (PST)
+        bh=MA4B1MxFOD8t563xQ8MXiwV3cHS78v9MbdenvQlJygs=;
+        b=gq0J04fIWeUnJfgL/nFdCiAq+yydDhdQ51EJq+e03lRdN1aJZjqaSs+8nodpzo9RCz
+         HFwNSX/v42uZUMzjrblE2rYHeHuohwDeGpiNzT1D6RysFEojJLOESdj2yBJZlsJOVdZW
+         6krvU2hBCcqIItHIjf2dXKEqZpVox0FZR1zb9qodDUWv12QBmb4GV4Z+aKrxcac6NVqe
+         6COtNP5AZpFf5RUFaC9JjM+cwK601Us2gdSHm+C8Nl8iH1olcZMaVAqhgTv8AU//iFen
+         +9rFIbiGvpNyfg4YaK/Q/5aiDXxth91LWz6SOcv1P7bEwPOM7Caw29f2b0UYrZYFH4rz
+         DcXw==
+X-Gm-Message-State: AKwxyte10dfxjdYY1X8e2v+Mwj+7ZVlFiFShP3AkMmnaHu1BORQ5KNh6
+        IS69dAaS6CSVFgRQPCmjdWwG2gLz
+X-Google-Smtp-Source: AH8x227QGO40ab+ZIeEI0o8b3ArmYb4Vefr8RFBgpHRcDVkFUiNtcqA9nqyQ2pi80dNQHTRRwx3PwA==
+X-Received: by 10.200.25.91 with SMTP id g27mr17078094qtk.71.1516888971560;
+        Thu, 25 Jan 2018 06:02:51 -0800 (PST)
 Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id y123sm1850875qka.42.2018.01.25.06.02.44
+        by smtp.gmail.com with ESMTPSA id y123sm1850875qka.42.2018.01.25.06.02.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jan 2018 06:02:45 -0800 (PST)
+        Thu, 25 Jan 2018 06:02:50 -0800 (PST)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
         sbeller@google.com, dstolee@microsoft.com
-Subject: [PATCH 04/14] packed-graph: add format document
-Date:   Thu, 25 Jan 2018 09:02:21 -0500
-Message-Id: <20180125140231.65604-5-dstolee@microsoft.com>
+Subject: [PATCH 09/14] packed-graph: implement git-graph --clear
+Date:   Thu, 25 Jan 2018 09:02:26 -0500
+Message-Id: <20180125140231.65604-10-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.16.0
 In-Reply-To: <20180125140231.65604-1-dstolee@microsoft.com>
 References: <20180125140231.65604-1-dstolee@microsoft.com>
@@ -64,121 +64,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add document specifying the binary format for packed graphs. This
-format allows for:
-
-* New versions.
-* New hash functions and hash lengths.
-* Optional extensions.
-
-Basic header information is followed by a binary table of contents
-into "chunks" that include:
-
-* An ordered list of commit object IDs.
-* A 256-entry fanout into that list of OIDs.
-* A list of metadata for the commits.
-* A list of "large edges" to enable octopus merges.
+Teach Git to delete the current 'graph_head' file and the packed graph
+it references. This is a good safety valve if somehow the file is
+corrupted and needs to be recalculated. Since the packed graph is a
+summary of contents already in the ODB, it can be regenerated.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/graph-format.txt | 88 ++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
- create mode 100644 Documentation/technical/graph-format.txt
+ Documentation/git-graph.txt | 16 ++++++++++++++--
+ builtin/graph.c             | 31 ++++++++++++++++++++++++++++++-
+ t/t5319-graph.sh            |  7 ++++++-
+ 3 files changed, 50 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/technical/graph-format.txt b/Documentation/technical/graph-format.txt
-new file mode 100644
-index 0000000000..a15e1036d7
---- /dev/null
-+++ b/Documentation/technical/graph-format.txt
-@@ -0,0 +1,88 @@
-+Git commit graph format
-+=======================
+diff --git a/Documentation/git-graph.txt b/Documentation/git-graph.txt
+index ac20aa67a9..f690699570 100644
+--- a/Documentation/git-graph.txt
++++ b/Documentation/git-graph.txt
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git graph' --write <options> [--pack-dir <pack_dir>]
+ 'git graph' --read <options> [--pack-dir <pack_dir>]
++'git graph' --clear [--pack-dir <pack_dir>]
+ 
+ OPTIONS
+ -------
+@@ -18,16 +19,21 @@ OPTIONS
+ 	Use given directory for the location of packfiles, graph-head,
+ 	and graph files.
+ 
++--clear::
++	Delete the graph-head file and the graph file it references.
++	(Cannot be combined with --read or --write.)
 +
-+The Git commit graph stores a list of commit OIDs and some associated
-+metadata, including:
+ --read::
+ 	Read a graph file given by the graph-head file and output basic
+-	details about the graph file. (Cannot be combined with --write.)
++	details about the graph file. (Cannot be combined with --clear
++	or --write.)
+ 
+ --graph-id::
+ 	When used with --read, consider the graph file graph-<oid>.graph.
+ 
+ --write::
+ 	Write a new graph file to the pack directory. (Cannot be combined
+-	with --read.)
++	with --clear or --read.)
+ 
+ --update-head::
+ 	When used with --write, update the graph-head file to point to
+@@ -61,6 +67,12 @@ $ git graph --write --update-head
+ $ git graph --read --graph-id=<oid>
+ ------------------------------------------------
+ 
++* Delete <dir>/graph-head and the file it references.
+++
++------------------------------------------------
++$ git graph --clear --pack-dir=<dir>
++------------------------------------------------
 +
-+- The generation number of the commit. Commits with no parents have
-+  generation number 1; commits with parents have generation number
-+  one more than the maximum generation number of its parents. We
-+  reserve zero as special, and can be used to mark a generation
-+  number invalid or as "not computed".
+ CONFIGURATION
+ -------------
+ 
+diff --git a/builtin/graph.c b/builtin/graph.c
+index 0760d99f43..ac15febc46 100644
+--- a/builtin/graph.c
++++ b/builtin/graph.c
+@@ -10,6 +10,7 @@
+ 
+ static char const * const builtin_graph_usage[] ={
+ 	N_("git graph [--pack-dir <packdir>]"),
++	N_("git graph --clear [--pack-dir <packdir>]"),
+ 	N_("git graph --read [--graph-id=<oid>]"),
+ 	N_("git graph --write [--pack-dir <packdir>] [--update-head]"),
+ 	NULL
+@@ -17,6 +18,7 @@ static char const * const builtin_graph_usage[] ={
+ 
+ static struct opts_graph {
+ 	const char *pack_dir;
++	int clear;
+ 	int read;
+ 	const char *graph_id;
+ 	int write;
+@@ -25,6 +27,29 @@ static struct opts_graph {
+ 	struct object_id old_graph_oid;
+ } opts;
+ 
++static int graph_clear(void)
++{
++	struct strbuf head_path = STRBUF_INIT;
++	char *old_path;
 +
-+- The root tree OID.
++	if (!opts.has_existing)
++		return 0;
 +
-+- The commit date.
++	strbuf_addstr(&head_path, opts.pack_dir);
++	strbuf_addstr(&head_path, "/");
++	strbuf_addstr(&head_path, "graph-head");
++	if (remove_path(head_path.buf))
++		die("failed to remove path %s", head_path.buf);
++	strbuf_release(&head_path);
 +
-+- The parents of the commit, stored using positional references within
-+  the graph file.
++	old_path = get_graph_filename_oid(opts.pack_dir, &opts.old_graph_oid);
++	if (remove_path(old_path))
++		die("failed to remove path %s", old_path);
++	free(old_path);
 +
-+== graph-*.graph files have the following format:
++	return 0;
++}
 +
-+In order to allow extensions that add extra data to the graph, we organize
-+the body into "chunks" and provide a binary lookup table at the beginning
-+of the body. The header includes certain values, such as number of chunks,
-+hash lengths and types.
+ static int graph_read(void)
+ {
+ 	struct object_id graph_oid;
+@@ -105,6 +130,8 @@ int cmd_graph(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_STRING, 'p', "pack-dir", &opts.pack_dir,
+ 			N_("dir"),
+ 			N_("The pack directory to store the graph") },
++		OPT_BOOL('c', "clear", &opts.clear,
++			N_("clear graph file and graph-head")),
+ 		OPT_BOOL('r', "read", &opts.read,
+ 			N_("read graph file")),
+ 		OPT_BOOL('w', "write", &opts.write,
+@@ -129,7 +156,7 @@ int cmd_graph(int argc, const char **argv, const char *prefix)
+ 			     builtin_graph_options,
+ 			     builtin_graph_usage, 0);
+ 
+-	if (opts.write + opts.read > 1)
++	if (opts.write + opts.read + opts.clear > 1)
+ 		usage_with_options(builtin_graph_usage, builtin_graph_options);
+ 
+ 	if (!opts.pack_dir) {
+@@ -141,6 +168,8 @@ int cmd_graph(int argc, const char **argv, const char *prefix)
+ 
+ 	opts.has_existing = !!get_graph_head_oid(opts.pack_dir, &opts.old_graph_oid);
+ 
++	if (opts.clear)
++		return graph_clear();
+ 	if (opts.read)
+ 		return graph_read();
+ 	if (opts.write)
+diff --git a/t/t5319-graph.sh b/t/t5319-graph.sh
+index 3919a3ad73..311fb9dd67 100755
+--- a/t/t5319-graph.sh
++++ b/t/t5319-graph.sh
+@@ -80,6 +80,11 @@ test_expect_success 'write graph with merges' \
+      _graph_read_expect "18" "${packdir}" &&
+      cmp expect output'
+ 
++test_expect_success 'clear graph' \
++    'git graph --clear &&
++     test_path_is_missing ${packdir}/graph-${graph2}.graph &&
++     test_path_is_missing ${packdir}/graph-head'
 +
-+All 4-byte numbers are in network order.
-+
-+HEADER:
-+
-+	4-byte signature:
-+	    The signature is: {'C', 'G', 'P', 'H'}
-+
-+	1-byte version number:
-+	    Currently, the only valid version is 1.
-+
-+	1-byte Object Id Version (1 = SHA-1)
-+
-+	1-byte Object Id Length (H)
-+
-+	1-byte number (C) of "chunks"
-+
-+CHUNK LOOKUP:
-+
-+	(C + 1) * 12 bytes listing the table of contents for the chunks:
-+	    First 4 bytes describe chunk id. Value 0 is a terminating label.
-+	    Other 8 bytes provide offset in current file for chunk to start.
-+	    (Chunks are ordered contiguously in the file, so you can infer
-+		the length using the next chunk position if necessary.)
-+
-+	The remaining data in the body is described one chunk at a time, and
-+	these chunks may be given in any order. Chunks are required unless
-+	otherwise specified.
-+
-+CHUNK DATA:
-+
-+	OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
-+	    The ith entry, F[i], stores the number of OIDs with first
-+	    byte at most i. Thus F[255] stores the total
-+	    number of commits (N).
-+
-+	OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
-+	    The OIDs for all commits in the graph.
-+
-+	Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
-+	    * The first H bytes are for the OID of the root tree.
-+	    * The next 8 bytes are for the int-ids of the first two parents of
-+	      the ith commit. Stores value 0xffffffff if no parent in that position.
-+	      If there are more than two parents, the second value has its most-
-+	      significant bit on and the other bits store an offset into the Large
-+	      Edge List chunk.
-+	    * The next 8 bytes store the generation number of the commit and the
-+	      commit time in seconds since EPOCH. The generation number uses the
-+	      higher 30 bits of the first 4 bytes, while the commit time uses the
-+	      32 bits of the second 4 bytes, along with the lowest 2 bits of the
-+	      lowest byte, storing the 33rd and 34th bit of the commit time.
-+
-+	[Optional] Large Edge List (ID: {'E', 'D', 'G', 'E'})
-+	    This list of 4-byte values store the second through nth parents for
-+	    all octoput merges. The second parent value in the commit data is a
-+	    negative number pointing into this list. Then iterate through this
-+	    list starting at that position until reaching a value with the most-
-+	    significant bit on. The other bits correspond to the int-id of the
-+	    last parent.
-+
-+TRAILER:
-+
-+	H-byte HASH-checksum of all of the above.
+ test_expect_success 'setup bare repo' \
+     'cd .. &&
+      git clone --bare full bare &&
+@@ -89,7 +94,7 @@ test_expect_success 'setup bare repo' \
+      baredir="./objects/pack"'
+ 
+ test_expect_success 'write graph in bare repo' \
+-    'graphbare=$(git graph --write) &&
++    'graphbare=$(git graph --write --update-head) &&
+      test_path_is_file ${baredir}/graph-${graphbare}.graph &&
+      test_path_is_file ${baredir}/graph-head &&
+      echo ${graphbare} >expect &&
 -- 
 2.16.0
 
