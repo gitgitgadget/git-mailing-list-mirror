@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E158F1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 23:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 396D81F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 23:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751434AbeAYX6o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:58:44 -0500
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:53515 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751187AbeAYX6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:58:43 -0500
-Received: by mail-yw0-f201.google.com with SMTP id n70so5960941ywd.20
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:58:43 -0800 (PST)
+        id S1751580AbeAYX6r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 18:58:47 -0500
+Received: from mail-ot0-f202.google.com ([74.125.82.202]:55292 "EHLO
+        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751187AbeAYX6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 18:58:45 -0500
+Received: by mail-ot0-f202.google.com with SMTP id 40so5942413otv.21
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:58:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=0akZzDYAE2rfOftqjZhbmbiNZgs1nFe4VsKyaBcxfLg=;
-        b=jy3Qr5fV0A2TlhVcqgilV8yEUy2tFmvji+wJJ0CO8r1VZh1sV0CT5IXpimlO7UvxIV
-         jIOD0QdHh5/y5evOf67OQqV+68pAJgewG7OfE+V162pAuM9168ZHdIXM7Fs08Fv2HRns
-         afnI5FRLpDjMac90DFMJQloZDpoP8kSyVetcd7RIJh4Xu7TbToBdTgC3fj+IAbeOvIRS
-         7eq92TEvmqKo6sLJGcUKbKqaTNoQNbedjZVfeVjhxdawEtSVv2zXYOu0eHA/ur07cy2V
-         ZFijRzXgsuPglAYJ2rDR5zsgaTtSc+5BGaVUjZxvSpNW172CQnN5VfW3CAAg5bTaGFoE
-         SiGg==
+        bh=06Wipua2WVbPDvUwJxMdSPHMVxrFJ2uhUZ/D/F5AwLw=;
+        b=ro5Sv/gw8F9qv7DCXmxup4dpUPwfQ37GvN0uEm0YiVGxZP7889ZOIkQnhPWDMraNzZ
+         o5nKiA0isYx3ZmrI9JuyhawuDtTnr/wyss+vJVeeAeY0bL/U7iISNiK1xkVCPZq9II3H
+         nVtC9evstDhbpgUsiO55lSoMlwluAqwwCvE5dPX5fBw3LqF7az8cADwQNkc4PdeVGMsJ
+         46R3qXEO6nknjF2Sg0zWiYOPbYUCkMZ9g1cWN8DkVAe8/y5QO06GRywEWC/CMsktrD1a
+         OAjtPROuDXTBUL5XUlHySuzoUMiLwXn9OaSZblOQDoIDObY9RzEO9Idv/mrRB90Xidaa
+         Z38g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=0akZzDYAE2rfOftqjZhbmbiNZgs1nFe4VsKyaBcxfLg=;
-        b=jjS9wBiwVxm6/MswoTjVrhmGPkkVb9uqVJnRScH/s8pY3upRbylK/FUv1AX1w49i4g
-         rQaTqBZJo4QNrsTmT+A1Ky4EKpwYAH2YiNeg2Vm7Fhf6lGdYceF+7eoQAC4IiVn7wKxF
-         zjctH9mHmqUVX8ULauj/U3RmiJYDS06lsrqGMK1Af8GxxbPJZvZVKza2aw7E8wnEnD0H
-         Q4o0Ap1vSLUNUJ4KRj24s5sHP1FWml02liEqPgJyip2zkoPrgLByPHgWk3JTvFGuEux6
-         T1Lyn0qCIxCCh54LGfPRU1DwMXdnRPvQ5nm22NXLLjB2+Do3cLrkNZMjvFODYXxbOHo8
-         YYoQ==
-X-Gm-Message-State: AKwxytesG1LDxtpgUxDkbtFSVHmTWggmppwg0nr2oGBp+oQ4QKbtInLH
-        +esSBFcnLpus5kCRubcdmxmn3ViPdms18OjkAXU5FTx6b+5FT+SDKxxRgLsAIg3nJMwVmokb6nI
-        ib+eQqjB+aEvAhmHNAL7I7uKTwY/Mdx3VFqXO2P1yHyRu6oX4KAUaGrGo6w==
-X-Google-Smtp-Source: AH8x225glhBWS3lIh1GCQSyIAkNf0AUPSazKf+/1TWM1gRMCRuI4Sh5qinYCUBBrQSXcT1K8baMmarDbGpE=
+        bh=06Wipua2WVbPDvUwJxMdSPHMVxrFJ2uhUZ/D/F5AwLw=;
+        b=hUMQ/ZPZKkQhhr3n2Z6zKWDm7BhjLIJDH8/MSCQbavLlWVxF8h7XOGPD+0WCGh6NC+
+         Zq69a8Oeh4eOdXF+AAlk0KLibr27fLzJQ+cDnduAze5+oCkt8JyfsR60tjq4PDwVLmWc
+         j3D/FpU7LQlqhaO1Pu2iThktKQ3EqZHftG1ZLLAcHmMeXM/w7gt9rVrH2yxE6vbtoJJE
+         UQ/7DXR7NOm8rNsHqKPxThuJ1JNU2qXqNWgFI11+RyqwlsjBzXe4lIqT2ySDxRKZeyMR
+         opgjwwzEvD29IZRw1uEDHirbTk3TlpXC9an65NZRmT4QCPNYKaOWks8A/gLgN97FUCxS
+         mDPQ==
+X-Gm-Message-State: AKwxytc+M1u5CxDe/F9+441k/ygU8g3cJkrvuWEwNtovrt+yXH2cKvGI
+        qDYdrW6uPMHnvXAZLHiuo4rooiolRZMO1bmYlmiejmCIn46IfPoPlejdd7PTYmUsvsT+9Maa7gI
+        CB1ETO1uk5UNCFP0AyWnLKSdcUxoYWRGrGVRYayTrNpGoGKsNFSwbKZRnRg==
+X-Google-Smtp-Source: AH8x2275DJ/CV6Jbt+fWSB62IJMq49I3vw0Z9ZoXEtYFz5sIcani2A9GAF/UbB55nmBxUOVKeP0humTIA6c=
 MIME-Version: 1.0
-X-Received: by 10.37.199.130 with SMTP id w124mr5947943ybe.30.1516924722503;
- Thu, 25 Jan 2018 15:58:42 -0800 (PST)
-Date:   Thu, 25 Jan 2018 15:58:11 -0800
-In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
-Message-Id: <20180125235838.138135-1-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
+X-Received: by 10.157.89.162 with SMTP id u34mr7187oth.83.1516924724804; Thu,
+ 25 Jan 2018 15:58:44 -0800 (PST)
+Date:   Thu, 25 Jan 2018 15:58:12 -0800
+In-Reply-To: <20180125235838.138135-1-bmwill@google.com>
+Message-Id: <20180125235838.138135-2-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v2 00/27] protocol version 2
+Subject: [PATCH v2 01/27] pkt-line: introduce packet_read_with_status
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
@@ -64,126 +64,135 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Changes in v2:
- * Added documentation for fetch
- * changes #defines for state variables to be enums
- * couple code changes to pkt-line functions and documentation
- * Added unit tests for the git-serve binary as well as for ls-refs
+The current pkt-line API encodes the status of a pkt-line read in the
+length of the read content.  An error is indicated with '-1', a flush
+with '0' (which can be confusing since a return value of '0' can also
+indicate an empty pkt-line), and a positive integer for the length of
+the read content otherwise.  This doesn't leave much room for allowing
+the addition of additional special packets in the future.
 
-Areas for improvement
- * Push isn't implemented, right now this is ok because if v2 is requested the
-   server can just default to v0.  Before this can be merged we may want to
-   change how the client request a new protocol, and not allow for sending
-   "version=2" when pushing even though the user has it configured.  Or maybe
-   its fine to just have an older client who doesn't understand how to push
-   (and request v2) to die if the server tries to speak v2 at it.
+To solve this introduce 'packet_read_with_status()' which reads a packet
+and returns the status of the read encoded as an 'enum packet_status'
+type.  This allows for easily identifying between special and normal
+packets as well as errors.  It also enables easily adding a new special
+packet in the future.
 
-   Fixing this essentially would just require piping through a bit more
-   information to the function which ultimately runs connect (for both builtins
-   and remote-curl)
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ pkt-line.c | 57 +++++++++++++++++++++++++++++++++++++++++++--------------
+ pkt-line.h | 15 +++++++++++++++
+ 2 files changed, 58 insertions(+), 14 deletions(-)
 
- * I want to make sure that the docs are well written before this gets merged
-   so I'm hoping that someone can do a through review on the docs themselves to
-   make sure they are clear.
-
- * Right now there is a capability 'stateless-rpc' which essentially makes sure
-   that a server command completes after a single round (this is to make sure
-   http works cleanly).  After talking with some folks it may make more sense
-   to just have v2 be stateless in nature so that all commands terminate after
-   a single round trip.  This makes things a bit easier if a server wants to
-   have ssh just be a proxy for http.
-
-   One potential thing would be to flip this so that by default the protocol is
-   stateless and if a server/command has a state-full mode that can be
-   implemented as a capability at a later point.  Thoughts?
-
- * Shallow repositories and shallow clones aren't supported yet.  I'm working
-   on it and it can be either added to v2 by default if people think it needs
-   to be in there from the start, or we can add it as a capability at a later
-   point.
-
-Series can also be found on on github: https://github.com/bmwill/git/tree/protocol-v2
-
-Brandon Williams (27):
-  pkt-line: introduce packet_read_with_status
-  pkt-line: introduce struct packet_reader
-  pkt-line: add delim packet support
-  upload-pack: convert to a builtin
-  upload-pack: factor out processing lines
-  transport: use get_refs_via_connect to get refs
-  connect: convert get_remote_heads to use struct packet_reader
-  connect: discover protocol version outside of get_remote_heads
-  transport: store protocol version
-  protocol: introduce enum protocol_version value protocol_v2
-  test-pkt-line: introduce a packet-line test helper
-  serve: introduce git-serve
-  ls-refs: introduce ls-refs server command
-  connect: request remote refs using v2
-  transport: convert get_refs_list to take a list of ref patterns
-  transport: convert transport_get_remote_refs to take a list of ref
-    patterns
-  ls-remote: pass ref patterns when requesting a remote's refs
-  fetch: pass ref patterns when fetching
-  push: pass ref patterns when pushing
-  upload-pack: introduce fetch server command
-  fetch-pack: perform a fetch using v2
-  transport-helper: remove name parameter
-  transport-helper: refactor process_connect_service
-  transport-helper: introduce stateless-connect
-  pkt-line: add packet_buf_write_len function
-  remote-curl: create copy of the service name
-  remote-curl: implement stateless-connect command
-
- .gitignore                              |   1 +
- Documentation/technical/protocol-v2.txt | 270 +++++++++++++++++
- Makefile                                |   7 +-
- builtin.h                               |   2 +
- builtin/clone.c                         |   2 +-
- builtin/fetch-pack.c                    |  21 +-
- builtin/fetch.c                         |  14 +-
- builtin/ls-remote.c                     |   7 +-
- builtin/receive-pack.c                  |   6 +
- builtin/remote.c                        |   2 +-
- builtin/send-pack.c                     |  20 +-
- builtin/serve.c                         |  30 ++
- builtin/upload-pack.c                   |  74 +++++
- connect.c                               | 295 ++++++++++++++-----
- connect.h                               |   3 +
- fetch-pack.c                            | 277 +++++++++++++++++-
- fetch-pack.h                            |   4 +-
- git.c                                   |   2 +
- ls-refs.c                               |  96 ++++++
- ls-refs.h                               |   9 +
- pkt-line.c                              | 149 +++++++++-
- pkt-line.h                              |  77 +++++
- protocol.c                              |   2 +
- protocol.h                              |   1 +
- remote-curl.c                           | 209 ++++++++++++-
- remote.h                                |   9 +-
- serve.c                                 | 253 ++++++++++++++++
- serve.h                                 |  15 +
- t/helper/test-pkt-line.c                |  62 ++++
- t/t5701-git-serve.sh                    | 172 +++++++++++
- t/t5702-protocol-v2.sh                  | 117 ++++++++
- transport-helper.c                      |  84 +++---
- transport-internal.h                    |   4 +-
- transport.c                             | 119 ++++++--
- transport.h                             |   9 +-
- upload-pack.c                           | 501 ++++++++++++++++++++++++--------
- upload-pack.h                           |  18 ++
- 37 files changed, 2646 insertions(+), 297 deletions(-)
- create mode 100644 Documentation/technical/protocol-v2.txt
- create mode 100644 builtin/serve.c
- create mode 100644 builtin/upload-pack.c
- create mode 100644 ls-refs.c
- create mode 100644 ls-refs.h
- create mode 100644 serve.c
- create mode 100644 serve.h
- create mode 100644 t/helper/test-pkt-line.c
- create mode 100755 t/t5701-git-serve.sh
- create mode 100755 t/t5702-protocol-v2.sh
- create mode 100644 upload-pack.h
-
+diff --git a/pkt-line.c b/pkt-line.c
+index 2827ca772..af0d2430f 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -280,28 +280,33 @@ static int packet_length(const char *linelen)
+ 	return (val < 0) ? val : (val << 8) | hex2chr(linelen + 2);
+ }
+ 
+-int packet_read(int fd, char **src_buf, size_t *src_len,
+-		char *buffer, unsigned size, int options)
++enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
++						char *buffer, unsigned size, int *pktlen,
++						int options)
+ {
+-	int len, ret;
++	int len;
+ 	char linelen[4];
+ 
+-	ret = get_packet_data(fd, src_buf, src_len, linelen, 4, options);
+-	if (ret < 0)
+-		return ret;
++	if (get_packet_data(fd, src_buffer, src_len, linelen, 4, options) < 0)
++		return PACKET_READ_EOF;
++
+ 	len = packet_length(linelen);
+-	if (len < 0)
++
++	if (len < 0) {
+ 		die("protocol error: bad line length character: %.4s", linelen);
+-	if (!len) {
++	} else if (!len) {
+ 		packet_trace("0000", 4, 0);
+-		return 0;
++		return PACKET_READ_FLUSH;
++	} else if (len < 4) {
++		die("protocol error: bad line length %d", len);
+ 	}
++
+ 	len -= 4;
+-	if (len >= size)
++	if ((unsigned)len >= size)
+ 		die("protocol error: bad line length %d", len);
+-	ret = get_packet_data(fd, src_buf, src_len, buffer, len, options);
+-	if (ret < 0)
+-		return ret;
++
++	if (get_packet_data(fd, src_buffer, src_len, buffer, len, options) < 0)
++		return PACKET_READ_EOF;
+ 
+ 	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
+ 	    len && buffer[len-1] == '\n')
+@@ -309,7 +314,31 @@ int packet_read(int fd, char **src_buf, size_t *src_len,
+ 
+ 	buffer[len] = 0;
+ 	packet_trace(buffer, len, 0);
+-	return len;
++	*pktlen = len;
++	return PACKET_READ_NORMAL;
++}
++
++int packet_read(int fd, char **src_buffer, size_t *src_len,
++		char *buffer, unsigned size, int options)
++{
++	enum packet_read_status status;
++	int pktlen;
++
++	status = packet_read_with_status(fd, src_buffer, src_len,
++					 buffer, size, &pktlen,
++					 options);
++	switch (status) {
++	case PACKET_READ_EOF:
++		pktlen = -1;
++		break;
++	case PACKET_READ_NORMAL:
++		break;
++	case PACKET_READ_FLUSH:
++		pktlen = 0;
++		break;
++	}
++
++	return pktlen;
+ }
+ 
+ static char *packet_read_line_generic(int fd,
+diff --git a/pkt-line.h b/pkt-line.h
+index 3dad583e2..06c468927 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -65,6 +65,21 @@ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+ int packet_read(int fd, char **src_buffer, size_t *src_len, char
+ 		*buffer, unsigned size, int options);
+ 
++/*
++ * Read a packetized line into a buffer like the 'packet_read()' function but
++ * returns an 'enum packet_read_status' which indicates the status of the read.
++ * The number of bytes read will be assigined to *pktlen if the status of the
++ * read was 'PACKET_READ_NORMAL'.
++ */
++enum packet_read_status {
++	PACKET_READ_EOF = -1,
++	PACKET_READ_NORMAL,
++	PACKET_READ_FLUSH,
++};
++enum packet_read_status packet_read_with_status(int fd, char **src_buffer, size_t *src_len,
++						char *buffer, unsigned size, int *pktlen,
++						int options);
++
+ /*
+  * Convenience wrapper for packet_read that is not gentle, and sets the
+  * CHOMP_NEWLINE option. The return value is NULL for a flush packet,
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
