@@ -2,118 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DDBC1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 20:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5851F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 20:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751192AbeAYUkP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 15:40:15 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:44835 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751138AbeAYUkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 15:40:14 -0500
-Received: by mail-qt0-f195.google.com with SMTP id l20so22567257qtj.11
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 12:40:14 -0800 (PST)
+        id S1751321AbeAYUtn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 15:49:43 -0500
+Received: from mail-ua0-f169.google.com ([209.85.217.169]:33157 "EHLO
+        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751138AbeAYUtl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 15:49:41 -0500
+Received: by mail-ua0-f169.google.com with SMTP id p12so5846339uad.0
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 12:49:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=f2qUEn+6PuRFdwdCH4/FeOuI1keQncivdwdJGUJ1Rwg=;
-        b=umEz6MqdgFkg0xjChanKcJhXl23hU/j6kvLBcZAo4rCxaP3Prxj5m5E/PB6kwSLcW/
-         Z1WdAxPkv1EkmTiRx0qyw0kqEw/9IZ0O26WzeG6cPzORbsMDB+VVTfamlmrm5IE5jve0
-         vmJRD7QOzVuvb8YGO46IxOsxsGPJetc5cjZXqIgNgw1GBECqHpgoMfIAomWD8Zvx/p6k
-         8WrxuCtfk/fTgbrJoQBuIVq7BA08t4wcQw+JmCZ4A3AC9RrqSQU/wiO7RDsF7pfudaRh
-         ojCuJC834IvsimlSPm7eRGGImuJ2DX00oV5AeWoI6uClwB1AXCWfkSgH6fbee+AFPvVH
-         16Kg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=L/JLwJcvlAUCfUlZDzzKtdBAQk9XNJWfI0P81syFvrE=;
+        b=XgrQUpMU6NXH/VTqoc67+LkQadH3g+eTj21pmGIpGIFSO7h/AweVIySXGQe73qW/h4
+         W3Y5gZ8rPme5v6fwSTc4KUMpzw27V3+rzY+FYunS752kl9B8hQhyEbxotP6wCRhO4GeR
+         R6WZX2kvuJEAe1JWpm0Vy++qDFD/OpGwHwSDVlsZDEn59QWGT9eE5C1elHRvEMgs6RlE
+         fZHozHiUE+2+Xw8gppgK+uitZniEODKfOKYU9MUX+TSN5IcHwJJg8LNGKlWcx9DcpVma
+         pLmBNLV865ksFr83G08F3TPhu8YjI8O6EmQJM8cbcrPcxsPMlfZfOrSomEPxRqGiTMJ7
+         SkJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=f2qUEn+6PuRFdwdCH4/FeOuI1keQncivdwdJGUJ1Rwg=;
-        b=V+lbUCbaHwScB46GHhZx3SAr96Uh6h8XjlfCuJoqjZCCJCTLXJQVNg3sVt2iQ29MTL
-         VjXseAA0MDvaJSnEmbW0kW//u505+5YdOsg+esI/ScM+nmrs8J5NYOUvSYK5QKOXDK6c
-         YOvjUIlYOydwR7xhjI6ABXa2kHqYIw3lhudfR0gQxLe+FlOP4lOFdi7dpX4fFsUXwPga
-         bG0bm9W6NHT6FYxR8Tjnp2eaLtdWS2hUii7eYg8uaID+j75Dd3EeojeIGNB9IFBLwl+M
-         trghGAObcvWdLXQ10FuK3DwnsXOaxTKRYLDxOb/1onnAi6qjEzgcWzre/RnON2A4Vu7h
-         aaoQ==
-X-Gm-Message-State: AKwxytdffsfIEaRPQBMFdWaA8DJzmbN0OGMlWEqiHAECphJu7wpRzy/O
-        8EFa1ggyeDYl2/v04PS/xC4=
-X-Google-Smtp-Source: AH8x227jkYaFox8LyXdqV+GaRsCg7C1vXylrYfao2y5l/8z2JHadIURpo1itRJ1rR1fY0DmcysDVNg==
-X-Received: by 10.233.239.205 with SMTP id d196mr16478902qkg.139.1516912813987;
-        Thu, 25 Jan 2018 12:40:13 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id m92sm2623137qkh.13.2018.01.25.12.40.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jan 2018 12:40:13 -0800 (PST)
-Subject: Re: [PATCH 02/14] packed-graph: add core.graph setting
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <20180125140231.65604-1-dstolee@microsoft.com>
- <20180125140231.65604-3-dstolee@microsoft.com>
- <CAGZ79kbUr-iQghL8qXxCq7noiYR9-MrxmTB4_v3D7WyXLPwUjA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d69b7eab-0aa2-6fed-7750-2fdf1ac8269f@gmail.com>
-Date:   Thu, 25 Jan 2018 15:40:12 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=L/JLwJcvlAUCfUlZDzzKtdBAQk9XNJWfI0P81syFvrE=;
+        b=iewMHUA40OwILr0Q4fL4IjIR+RwR8tc+9ukLK5CwrP01Zisifkpmto/X8Qoy97xY3e
+         FpVJNul8eTkXnYQNz4IYCMVu/RxsGyHBnFkFpdoMsJ8WiQyYuTA3w/AUhPbatbpXqypm
+         o1mGLcb6m0kYEBJgjWGq1QQ4K49t2wJffa0wKNrJjuTLDpNqLv9O84qMglUvX7w1W4Cc
+         2ShUCUIlnvmChWMZzCXt0rZkTVDWVRl8zkhxNFeFVEhAmVf+ikmdHL58xN5tOMIxOhHD
+         I+YwvDmAi9ZZkl1jdfrMOHc42vjQuvCH04zxGIILZ2gI6+qGRCI88RAJ2uhz/+aC+8zJ
+         wttA==
+X-Gm-Message-State: AKwxytebSN2ca5rbSQXDtnuEgZUg1HUPdqPwes/89LyiuH659wYMmO2z
+        hrWp0c8MmEYuIP7zXA7+k0/udsprLyfuXudWBPI=
+X-Google-Smtp-Source: AH8x2259D6MsA4fWPYsjdBVgkfsZaH8I+NxGEiw9V8a9/NVAw/1UwKedRDtooMJIQRzFmqgRPyuOOxSvIiimOUbb3uM=
+X-Received: by 10.176.11.138 with SMTP id c10mr8865881uak.94.1516913381053;
+ Thu, 25 Jan 2018 12:49:41 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbUr-iQghL8qXxCq7noiYR9-MrxmTB4_v3D7WyXLPwUjA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.176.32.12 with HTTP; Thu, 25 Jan 2018 12:49:40 -0800 (PST)
+In-Reply-To: <20180125201250.30171-1-szeder.dev@gmail.com>
+References: <14657461479715884@web21h.yandex.ru> <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
+ <CAGZ79kZbGPneUXVEqJYhQAn+dfYve7qCjhO7QFaV1JBs3HD1aA@mail.gmail.com>
+ <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com>
+ <12531516812201@web36o.yandex.ru> <446801516908691@web22j.yandex.ru> <20180125201250.30171-1-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Thu, 25 Jan 2018 21:49:40 +0100
+Message-ID: <CAM0VKj=ZMbYPBcXCU9T4iKCLhQ1O8wK8737KQTfiAEF9GWZs3Q@mail.gmail.com>
+Subject: Re: Feature request: Improve diff algorithm
+To:     KES <kes-kes@yandex.ru>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/25/2018 3:17 PM, Stefan Beller wrote:
-> On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
->> The packed graph feature is controlled by the new core.graph config
->> setting. This defaults to 0, so the feature is opt-in.
+On Thu, Jan 25, 2018 at 9:12 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+>> One yet more:
 >>
->> The intention of core.graph is that a user can always stop checking
->> for or parsing packed graph files if core.graph=0.
+>> @@ -141,5 +86,9 @@
+>>       // }
 >>
->> @@ -825,6 +825,7 @@ extern char *git_replace_ref_base;
->>   extern int fsync_object_files;
->>   extern int core_preload_index;
->>   extern int core_apply_sparse_checkout;
->> +extern int core_graph;
-> Putting it here instead of say the_repository makes sense as you'd want
-> to use this feature globally. However you can still have the config
-> different per repository  (e.g. version number of the graph setting,
-> as one might be optimized for speed and the other for file size of
-> the .graph file or such).
->
-> So not sure if we'd rather want to put this into the repository struct.
-> But then again the other core settings aren't there either and this
-> feature sounds like it is repository specific only in the experimental
-> phase; later it is expected to be on everywhere?
+>>
+>> -     OP* o;
 
-I do think that more things should go in the repository struct. 
-Unfortunately, that is not the world we live in.
+Oops, when trying to reproduce I overlooked that here the * is stuck
+after OP ...
 
-However, to make things clearer I'm following the pattern currently in 
-master. You'll see the same with the global 'packed_graph' pointer, 
-similar to 'packed_git'. I think these should be paired together until 
-the repository absorbs them.
+>> +     SV *tvs =3D  newSVpvs( "ScalarHistory" );
+>> +     SV *tva =3D  newSVpvs( "ArrayHistory"  );
+>> +     SV *tvh =3D  newSVpvs( "HashHistory"   );
+>> +
+>> +     OP *o;
 
-If other 'core_*' variables move to the repository, I'm happy to move 
-core_graph.
-If 'packed_git' moves to the repository, I'm happy to move 'packed_git'.
+... but here it's stuck to o.
 
-However, if there is significant interest in moving all new state to the 
-repository, then I'll move these values there. Let's have that 
-discussion here instead of spread around the rest of the patch.
-
-Thanks,
--Stolee
-
+With that adjusted I do get the same diff as you, and I think that's the
+right output in this case.
