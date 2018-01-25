@@ -7,166 +7,263 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D3B1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 14:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E38BF1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 14:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbeAYOCj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 09:02:39 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37199 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751161AbeAYOCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 09:02:37 -0500
-Received: by mail-qt0-f194.google.com with SMTP id d54so19398160qtd.4
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 06:02:37 -0800 (PST)
+        id S1751444AbeAYOCo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 09:02:44 -0500
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:43922 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751161AbeAYOCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 09:02:43 -0500
+Received: by mail-qt0-f193.google.com with SMTP id s3so19351919qtb.10
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 06:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=L29u1hMOR94E0m8zFUxrgJMguN/TguSEZTghMasOfeA=;
-        b=t0wsvRxqyeVOzuI0pFezTo1yZTaZhlkZNGde6BgbHBeZqGyfvtVzBS5O0WWwi8ePDC
-         j5rZ7rpcVVK6v15ANhuKmrpPQ5t+aBVUJ5rtxcQwXs07zY3fn8EnolJyplqDY7N5q9pc
-         DonCSV2CCjNYhMtAKFQBOZWa/GQ4pM17/PRF5FC7g6OAgle02MslOsjksQnGFJJJXQkM
-         JVhtNzP7lF0/6d3ZbsA2EQqEc0scGwuHI2qsHGyr2fFaU8EXI8gQpMysW/KgOR7iPVFt
-         y4l3iBth6K/rKrls8BkPTMEJosTRl1jv1cKZoqYcW4imNChPFH/5QQH7FJSAmK/LeIS6
-         F8qQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/Jc8Y2B1oLiJROpxHI1S3UVpNFoEgHlhudSImJtrDYo=;
+        b=toW9gVw+BwwEVElSzNGZwlfayufAcKxPxuy46+iTbd9J02e2JT+ywDwVOURnFmstos
+         +Ek9VlkG5vc+3LC2gOrKmHBvf66sFfI3+GtD0FTCxuZF3XxO7+omaDsXKdZ2e7c5Imz+
+         o3+jAPKAnwwXGgzlbxVMGSWki6norjN6I+A/q2jZkEiianiGNIMxbQeulGW417oKRM9w
+         qy74Xu/dtqnoYwrkzdfydDOA/asY8/P9TMsTzBsjqTk9UFRgeimDcQ1J6Wh2DdagN4I7
+         on1w6+GJD/ilO9jSda+vG4GxmpSgmMeVY+jyOD18NHJjRi0XXx5F4mLGLd9Rl6R5lhrK
+         XU2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=L29u1hMOR94E0m8zFUxrgJMguN/TguSEZTghMasOfeA=;
-        b=WpGyzm2nzyuJw9kKwimy8/jC0pUWgbvSOyWkvGp9bdpGHJ5zWdS3cmrN5OZ7V3jPgV
-         VR3dps2zCOna58Pu3BD8uxIn7JuyRNlQneSgrux23/HpTPOVkDn27cc4CoOCQx2MPvoK
-         hhc4bGwn0koMhQBOPi5f6TZLMlE+LlfVbzW8knyDBnyD8nK3eC4HZepyuDivu1GkRLLB
-         G2Jx8C+YqKccopV+SoImb/u9iENCbKSyXbBo6zwGgJLdPdr7VowvB1BjuhKxblstF2qU
-         m0OSLQyfnKEuxCp4/OdUEHrvaoV4P4heEo9wEhbCx81uaR59Tn53bxAFhGoeRdtp6shP
-         qvPg==
-X-Gm-Message-State: AKwxytcBDrAebHR5KAZiWXBWdATJqT3PfSmxCRmhoBsRGHl6NaBaE1qE
-        N3l2F7LjtRG/BfQTEr4dLcMMgU7+
-X-Google-Smtp-Source: AH8x227IA5UzP/+trIm8+BTxOqb7vM3oXrnbQLMh6+ZjDF7Y97gef7tAuoPpgoS1uzRVcSn5bgj23A==
-X-Received: by 10.200.36.130 with SMTP id s2mr16477562qts.0.1516888956519;
-        Thu, 25 Jan 2018 06:02:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/Jc8Y2B1oLiJROpxHI1S3UVpNFoEgHlhudSImJtrDYo=;
+        b=uB50rEXd8XCEOdsqEEpKWvtlfPZpSBgs9ZJ0GThHeZGUH/zjsHBNgHRhGdMQYKKivV
+         r5/y6ubFJGLz8X0RxDX1GB+0ifFxJp5kbHQ7yWv8nr5pwYls6ai7eGA+itZ/yjTBM5Ni
+         g8WZQ8xzawX2/2ntKRILivGoX8paxHrVPa7Ty71uBQiBcAVR/ra6VotnjaCW7eC4nwAW
+         dPKNkwBke9Ia20/DCpEZJYCzHtquptWEBodvlTKnVjeyOtsfflQBXdSg7rzLQto8Azdx
+         pURK/dOtUmkRXZkCzSOtokih6gwlOXtUrVpLnByO5diYBdCmfuWjTPR3RbyAB1nLESFq
+         V9MQ==
+X-Gm-Message-State: AKwxyteMFpAfaoWgZBVt020Ii19sEDuVugZYSV0rxQxrIUXeyXMFvoAR
+        P5G0Hj6Z83ay6EXxPElnO86AHK+e
+X-Google-Smtp-Source: AH8x224M+iBfVeIgQVl8HfPQmEUUbLAWgb4ljE8MNCwFtNqs9QCs3NISPn0LXTUvgVEYRB3ORN6gZA==
+X-Received: by 10.200.46.139 with SMTP id h11mr16112429qta.111.1516888961859;
+        Thu, 25 Jan 2018 06:02:41 -0800 (PST)
 Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id y123sm1850875qka.42.2018.01.25.06.02.34
+        by smtp.gmail.com with ESMTPSA id y123sm1850875qka.42.2018.01.25.06.02.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jan 2018 06:02:34 -0800 (PST)
+        Thu, 25 Jan 2018 06:02:36 -0800 (PST)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
         sbeller@google.com, dstolee@microsoft.com
-Subject: [PATCH 00/14] Serialized Commit Graph
-Date:   Thu, 25 Jan 2018 09:02:17 -0500
-Message-Id: <20180125140231.65604-1-dstolee@microsoft.com>
+Subject: [PATCH 01/14] graph: add packed graph design document
+Date:   Thu, 25 Jan 2018 09:02:18 -0500
+Message-Id: <20180125140231.65604-2-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.16.0
+In-Reply-To: <20180125140231.65604-1-dstolee@microsoft.com>
+References: <20180125140231.65604-1-dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As promised [1], this patch contains a way to serialize the commit graph.
-The current implementation defines a new file format to store the graph
-structure (parent relationships) and basic commit metadata (commit date,
-root tree OID) in order to prevent parsing raw commits while performing
-basic graph walks. For example, we do not need to parse the full commit
-when performing these walks:
+Add Documentation/technical/packed-graph.txt with details of the planned
+packed graph feature, including future plans.
 
-* 'git log --topo-order -1000' walks all reachable commits to avoid
-  incorrect topological orders, but only needs the commit message for
-  the top 1000 commits.
-
-* 'git merge-base <A> <B>' may walk many commits to find the correct
-  boundary between the commits reachable from A and those reachable
-  from B. No commit messages are needed.
-
-* 'git branch -vv' checks ahead/behind status for all local branches
-  compared to their upstream remote branches. This is essentially as
-  hard as computing merge bases for each.
-
-The current patch speeds up these calculations by injecting a check in
-parse_commit_gently() to check if there is a graph file and using that
-to provide the required metadata to the struct commit.
-
-The file format has room to store generation numbers, which will be
-provided as a patch after this framework is merged. Generation numbers
-are referenced by the design document but not implemented in order to
-make the current patch focus on the graph construction process. Once
-that is stable, it will be easier to add generation numbers and make
-graph walks aware of generation numbers one-by-one.
-
-Here are some performance results for a copy of the Linux repository
-where 'master' has 704,766 reachable commits and is behind 'origin/master'
-by 19,610 commits.
-
-| Command                          | Before | After  | Rel % |
-|----------------------------------|--------|--------|-------|
-| log --oneline --topo-order -1000 |  5.9s  |  0.7s  | -88%  |
-| branch -vv                       |  0.42s |  0.27s | -35%  |
-| rev-list --all                   |  6.4s  |  1.0s  | -84%  |
-| rev-list --all --objects         | 32.6s  | 27.6s  | -15%  |
-
-To test this yourself, run the following on your repo:
-
-	git config core.graph true
-	git show-ref -s | git graph --write --update-head
-
-The second command writes a commit graph file containing every commit
-reachable from your refs. Now, all git commands that walk commits will
-check your graph first before consulting the ODB. You can run your own
-performance comparisions by toggling the 'core.graph' setting.
-
-[1] https://public-inbox.org/git/d154319e-bb9e-b300-7c37-27b1dcd2a2ce@jeffhostetler.com/
-    Re: What's cooking in git.git (Jan 2018, #03; Tue, 23)
-
-[2] https://github.com/derrickstolee/git/pull/2
-    A GitHub pull request containing the latest version of this patch.
-
-P.S. I'm sending this patch from my gmail address to avoid Outlook
-munging the URLs included in the design document.
-
-Derrick Stolee (14):
-  graph: add packed graph design document
-  packed-graph: add core.graph setting
-  packed-graph: create git-graph builtin
-  packed-graph: add format document
-  packed-graph: implement construct_graph()
-  packed-graph: implement git-graph --write
-  packed-graph: implement git-graph --read
-  graph: implement git-graph --update-head
-  packed-graph: implement git-graph --clear
-  packed-graph: teach git-graph --delete-expired
-  commit: integrate packed graph with commit parsing
-  packed-graph: read only from specific pack-indexes
-  packed-graph: close under reachability
-  packed-graph: teach git-graph to read commits
-
- Documentation/config.txt                 |   3 +
- Documentation/git-graph.txt              | 102 ++++
- Documentation/technical/graph-format.txt |  88 ++++
- Documentation/technical/packed-graph.txt | 185 +++++++
- Makefile                                 |   2 +
- alloc.c                                  |   1 +
- builtin.h                                |   1 +
- builtin/graph.c                          | 231 +++++++++
- cache.h                                  |   1 +
- command-list.txt                         |   1 +
- commit.c                                 |  20 +-
- commit.h                                 |   2 +
- config.c                                 |   5 +
- environment.c                            |   1 +
- git.c                                    |   1 +
- log-tree.c                               |   3 +-
- packed-graph.c                           | 840 +++++++++++++++++++++++++++++++
- packed-graph.h                           |  65 +++
- packfile.c                               |   4 +-
- packfile.h                               |   2 +
- t/t5319-graph.sh                         | 271 ++++++++++
- 21 files changed, 1822 insertions(+), 7 deletions(-)
- create mode 100644 Documentation/git-graph.txt
- create mode 100644 Documentation/technical/graph-format.txt
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ Documentation/technical/packed-graph.txt | 185 +++++++++++++++++++++++++++++++
+ 1 file changed, 185 insertions(+)
  create mode 100644 Documentation/technical/packed-graph.txt
- create mode 100644 builtin/graph.c
- create mode 100644 packed-graph.c
- create mode 100644 packed-graph.h
- create mode 100755 t/t5319-graph.sh
 
+diff --git a/Documentation/technical/packed-graph.txt b/Documentation/technical/packed-graph.txt
+new file mode 100644
+index 0000000000..fcc0c83874
+--- /dev/null
++++ b/Documentation/technical/packed-graph.txt
+@@ -0,0 +1,185 @@
++Git Packed Graph Design Notes
++=============================
++
++Git walks the commit graph for many reasons, including:
++
++1. Listing and filtering commit history.
++2. Computing merge bases.
++
++These operations can become slow as the commit count grows above 100K.
++The merge base calculation shows up in many user-facing commands, such
++as 'status' and 'fetch' and can take minutes to compute depending on
++data shape. There are two main costs here:
++
++1. Decompressing and parsing commits.
++2. Walking the entire graph to avoid topological order mistakes.
++
++The packed graph is a file that stores the commit graph structure along
++with some extra metadata to speed up graph walks. This format allows a
++consumer to load the following info for a commit:
++
++1. The commit OID.
++2. The list of parents.
++3. The commit date.
++4. The root tree OID.
++5. An integer ID for fast lookups in the graph.
++6. The generation number (see definition below).
++
++Values 1-4 satisfy the requirements of parse_commit_gently().
++
++By providing an integer ID we can avoid lookups in the graph as we walk
++commits. Specifically, we need to provide the integer ID of the parent
++commits so we navigate directly to their information on request.
++
++Define the "generation number" of a commit recursively as follows:
++ * A commit with no parents (a root commit) has generation number 1.
++ * A commit with at least one parent has generation number 1 more than
++   the largest generation number among its parents.
++Equivalently, the generation number is one more than the length of a
++longest path from the commit to a root commit. The recursive definition
++is easier to use for computation and the following property:
++
++    If A and B are commits with generation numbers N and M, respectively,
++    and N <= M, then A cannot reach B. That is, we know without searching
++    that B is not an ancestor of A because it is further from a root commit
++    than A.
++
++    Conversely, when checking if A is an ancestor of B, then we only need
++    to walk commits until all commits on the walk boundary have generation
++    number at most N. If we walk commits using a priority queue seeded by
++    generation numbers, then we always expand the boundary commit with highest
++    generation number and can easily detect the stopping condition.
++
++This property can be used to significantly reduce the time it takes to
++walk commits and determine topological relationships. Without generation
++numbers, the general heuristic is the following:
++
++    If A and B are commits with commit time X and Y, respectively, and
++    X < Y, then A _probably_ cannot reach B.
++
++This heuristic is currently used whenever the computation can make
++mistakes with topological orders (such as "git log" with default order),
++but is not used when the topological order is required (such as merge
++base calculations, "git log --graph").
++
++Design Details
++--------------
++
++- A graph file is stored in a file named 'graph-<oid>.graph' in the pack
++  directory. This could be stored in an alternate.
++
++- The most-recent graph file OID is stored in a 'graph-head' file for
++  immediate access and storing backup graphs. This could be stored in an
++  alternate, and refers to a 'graph-<oid>.graph' file in the same pack
++  directory.
++
++- The core.graph config setting must be on to create or consume graph files.
++
++- The graph file is only a supplemental structure. If a user downgrades
++  or disables the 'core.graph' config setting, then the existing ODB is
++  sufficient.
++
++- The file format includes parameters for the object id length
++  and hash algorithm, so a future change of hash algorithm does
++  not require a change in format.
++
++Current Limitations
++-------------------
++
++- Only one graph file is used at one time. This allows the integer ID to
++  seek into the single graph file. It is possible to extend the model
++  for multiple graph files, but that is currently not part of the design.
++
++- .graph files are managed only by the 'graph' builtin. These are not
++  updated automatically during clone or fetch.
++
++- There is no '--verify' option for the 'graph' builtin to verify the
++  contents of the graph file.
++
++- The graph only considers commits existing in packfiles and does not
++  walk to fill in reachable commits. [Small]
++
++- When rewriting the graph, we do not check for a commit still existing
++  in the ODB, so garbage collection may remove commits
++
++- Generation numbers are not computed in the current version. The file
++  format supports storing them, along with a mechanism to upgrade from
++  a file without generation numbers to one that uses them.
++
++Future Work
++-----------
++
++- The file format includes room for precomputed generation numbers. These
++  are not currently computed, so all generation numbers will be marked as
++  0 (or "uncomputed"). A later patch will include this calculation.
++
++- The current implementation of the 'graph' builtin walks all packed objects
++  to find a complete list of commits in packfiles. If some commits are
++  stored as loose objects, then these do not appear in the graph. This is
++  handled gracefully by the file format, but it would cause incorrect
++  generation number calculations. We should implement the construct_graph()
++  method in a way that walks all commits reachable from some starting set
++  and then can use complete information for generation numbers. (Some
++  care must be taken around shallow clones.)
++
++- The graph is not currently integrated with grafts.
++
++- After computing and storing generation numbers, we must make graph
++  walks aware of generation numbers to gain performance benefits. This
++  will mostly be accomplished by swapping a commit-date-ordered priority
++  queue with one ordered by generation number. The following operations
++  are important candidates:
++
++    - paint_down_to_common()
++    - 'log --topo-order'
++
++- The graph currently only adds commits to a previously existing graph.
++  When writing a new graph, we could check that the ODB still contains
++  the commits and choose to remove the commits that are deleted from the
++  ODB. For performance reasons, this check should remain optional.
++
++- Currently, parse_commit_gently() requires filling in the root tree
++  object for a commit. This passes through lookup_tree() and consequently
++  lookup_object(). Also, it calls lookup_commit() when loading the parents.
++  These method calls check the ODB for object existence, even if the
++  consumer does not need the content. For example, we do not need the
++  tree contents when computing merge bases. Now that commit parsing is
++  removed from the computation time, these lookup operations are the
++  slowest operations keeping graph walks from being fast. Consider
++  loading these objects without verifying their existence in the ODB and
++  only loading them fully when consumers need them. Consider a method
++  such as "ensure_tree_loaded(commit)" that fully loads a tree before
++  using commit->tree.
++
++- The current design uses the 'graph' builtin to generate the graph. When
++  this feature stabilizes enough to recommend to most users, we should
++  add automatic graph writes to common operations that create many commits.
++  For example, one coulde compute a graph on 'clone' and 'fetch' commands.
++
++Related Links
++-------------
++
++[0] https://bugs.chromium.org/p/git/issues/detail?id=8
++    Chromium work item for: Serialized Commit Graph
++
++[1] https://public-inbox.org/git/20110713070517.GC18566@sigill.intra.peff.net/
++    An abandoned patch that introduced generation numbers.
++
++[2] https://public-inbox.org/git/20170908033403.q7e6dj7benasrjes@sigill.intra.peff.net/
++    Discussion about generation numbers on commits and how they interact
++    with fsck.
++
++[3] https://public-inbox.org/git/20170907094718.b6kuzp2uhvkmwcso@sigill.intra.peff.net/t/#m7a2ea7b355aeda962e6b86404bcbadc648abfbba
++    More discussion about generation numbers and not storing them inside
++    commit objects. A valuable quote:
++
++    "I think we should be moving more in the direction of keeping
++     repo-local caches for optimizations. Reachability bitmaps have been
++     a big performance win. I think we should be doing the same with our
++     properties of commits. Not just generation numbers, but making it
++     cheap to access the graph structure without zlib-inflating whole
++     commit objects (i.e., packv4 or something like the "metapacks" I
++     proposed a few years ago)."
++
++[4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
++    A patch to remove the ahead-behind calculation from 'status'.
 -- 
 2.16.0
 
