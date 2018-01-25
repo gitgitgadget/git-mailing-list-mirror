@@ -6,78 +6,111 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14E001F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 03:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9105D1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 04:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933498AbeAYDnI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 24 Jan 2018 22:43:08 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:15109 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933099AbeAYDnG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 Jan 2018 22:43:06 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0P3h19b037930
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 24 Jan 2018 22:43:01 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "=?UTF-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>,
-        <git@vger.kernel.org>, "Bill Honaker" <bhonaker@xid.com>,
-        "'Joachim Schmitz'" <jojo@schmitz-digital.de>
-References: <20180119173406.13324-1-randall.s.becker@rogers.com>        <20180120111012.GA26459@tor.lan>        <xmqqshaxjzcc.fsf@gitster.mtv.corp.google.com>  <001401d393d2$73458ef0$59d0acd0$@nexbridge.com> <xmqqtvvcigui.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqtvvcigui.fsf@gitster.mtv.corp.google.com>
-Subject: RE: [PATCH v2 0/6] Force pipes to flush immediately on NonStop platform
-Date:   Wed, 24 Jan 2018 22:42:54 -0500
-Message-ID: <006901d3958e$98ac26f0$ca0474d0$@nexbridge.com>
+        id S933420AbeAYEfx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 Jan 2018 23:35:53 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:45436 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933369AbeAYEfw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 Jan 2018 23:35:52 -0500
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1eeZGQ-0003cj-FA
+        for git@vger.kernel.org; Wed, 24 Jan 2018 23:35:51 -0500
+Date:   Wed, 24 Jan 2018 23:35:44 -0500
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <20180125043544.GY3296@hopa.kiewit.dartmouth.edu>
+References: <20170925000213.rilmsczdbi3jqkta@hopa.kiewit.dartmouth.edu>
+ <xmqqwp4nfuv1.fsf@gitster.mtv.corp.google.com>
+ <20170925031751.lg7zk6krt65dxwas@hopa.kiewit.dartmouth.edu>
+ <xmqqmv5je412.fsf_-_@gitster.mtv.corp.google.com>
+ <20170925143040.4qgofxcdahal46r7@hopa.kiewit.dartmouth.edu>
+ <xmqqing6cje7.fsf@gitster.mtv.corp.google.com>
+ <xmqqefqucigh.fsf@gitster.mtv.corp.google.com>
+ <xmqqa81ichdu.fsf@gitster.mtv.corp.google.com>
+ <20170926133703.7gtk5ztkhqvfxszh@hopa.kiewit.dartmouth.edu>
+ <xmqqtvyzslcz.fsf_-_@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQH5ceUaUBDLnBuBgyHh9+OiHAZcgwKtGOTzAeA6Ju4CPrPWMwGFsPegovWpRHA=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtvyzslcz.fsf_-_@gitster.mtv.corp.google.com>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: external diff driver is not used for diff --stat?
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 23, 2018 1:13 PM, Junio C Hamano wrote:
-> 
-> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
-> 
-> >> IOW, I do not see it explained clearly why this change is needed on
-> >> any single platform---so "that issue may be shared by others, too"
-> >> is a bit premature thing for me to listen to and understand, as "that
-> >> issue" is quite unclear to me.
-> >
-> > v4 might be a little better. The issue seems to be specific to NonStop
-> > that it's PIPE mechanism needs to have setbuf(pipe,NULL) called for
-> > git to be happy.  The default behaviour appears to be different on
-> > NonStop from other platforms from our testing. We get hung up waiting
-> > on pipes unless this is done.
-> 
-> I am afraid that that is not a "diagnosis" enough to allow us moving forward.
-> We get hung up because...?  When the process that has the other end of
-> pipe open exits, NonStop does not close the pipe properly?  Or NonStop
-> does not flush the data buffered in the pipe?
-> Would it help if a compat wrapper that does setbuf(fd, NULL) immediately
-> before closing the fd, or some other more targetted mechanism, is used only
-> on NonStop, for example?  Potentially megabytes of data can pass thru a
-> pipe, and if the platform bug affects only at the tail end of the transfer,
-> marking the pipe not to buffer at all at the beginning is too big a hammer to
-> work it around.  With the explanation given so far, this still smells more like
-> "we have futzed around without understanding why, and this happens to
-> work."  It may be good enough for your purpose of making progress (after
-> all, I'd imagine that you'd need to work this around one way or another to
-> hunt for and fix more issues on the platform), but it does not sound like "we
-> know what the problem is, and this is the best workaround for that", which is
-> what we want if it wants to become part of the official codebase.
+Dear Git Peoples,
 
-As I feared, the test suite was unable to reproduce the issue without setbuf(NULL) - primary because the test structure ends up with both ends of the git dialogs on clone and fetch in the same CPU (even if different IPUs), which does not experience the issue and we can't loop-back through the platform's proprietary SSH. I am not comfortable releasing without it at this stage, but if you don't want to go forward with this fix, my team can run it for a few months internally in the hope that this works out for the better. The situation is timing related and is fine 99.98-ish% of the time. I really do want the setbuf present in any compiled versions that our community might get, primarily because I don't like sleepless nights chasing this down (again).
+I am torturing git and git-annex here trying to compare some logs from a
+run of a software recorded in two different branches.  As many other
+tools, software often logs its version, elapsed times etc, so diff becomes not of interest to me:
 
-Cheers,
-Randall
+	$> PATH=~/proj/misc/git/INSTALL-2.16.1/bin:$PATH git diff test-18.0.09 test-18.0.05+git24-gb25b21054_dfsg.1-1_nd90+1 -- AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git
+	diff --git a/AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git b/AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git
+	index db85c9be..5f4a704d 100644
+	--- a/AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git
+	+++ b/AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git
+	@@ -1,4 +1,4 @@
+	-++ 3dAllineate: AFNI version=AFNI_18.0.09 (Jan 19 2018) [64-bit]
+	+++ 3dAllineate: AFNI version=Debian-18.0.05+git24-gb25b21054~dfsg.1-1~nd90+1 (Jan 23 2018) [64-bit]
+	 ++ Authored by: Zhark the Registrator
+	 ++ Source dataset: ./anat_final.FT+tlrc.HEAD
+	 ++ Base dataset:   ./final_epi_vr_base_min_outlier+tlrc.HEAD
+	@@ -28,5 +28,5 @@ volume 0
+		lpa  = 0.921773
+		lpc+ = 0.310739
+		ncd  = 0.967007
+	-++ 3dAllineate: total CPU time = 0.0 sec  Elapsed = 1.5
+	+++ 3dAllineate: total CPU time = 0.0 sec  Elapsed = 1.3
 
+
+so I came up with a simple differ to exclude those:
+
+	$> cat ~/bin/git-annex-diff-wrapper
+	#!/usr/bin/env bash                                                             
+	LANG=C diff --color=always --ignore-matching-lines="\(AFNI version=\|time.*Elapsed\)" -u "$2" "$5"  
+
+which works as it should (sorry for long lines, just wanted to not cut out
+anything which might be of relevance)
+
+	$> PATH=~/proj/misc/git/INSTALL-2.16.1/bin:$PATH GIT_EXTERNAL_DIFF='git-annex diffdriver  -- ~/bin/git-annex-diff-wrapper --' git diff --ext-diff test-18.0.09 test-18.0.05+git24-gb25b21054_dfsg.1-1_nd90+1 -- AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git     
+	# no output received
+
+(and even on annexed files -- whoohoo).
+
+The problem comes that --stat seems to be not using the external diff (it is
+line the same as above just with --stat):
+
+	$> PATH=~/proj/misc/git/INSTALL-2.16.1/bin:$PATH GIT_EXTERNAL_DIFF='git-annex diffdriver  -- ~/bin/git-annex-diff-wrapper --' git diff --ext-diff test-18.0.09 test-18.0.05+git24-gb25b21054_dfsg.1-1_nd90+1 --stat -- AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git
+	 AFNI_data6/FT_analysis/FT.results/out.allcostX.txt-git | 4 ++--
+	 1 file changed, 2 insertions(+), 2 deletions(-)
+
+
+A shortcoming or somehow "by design"? ;)
+
+PS Please CC me in replies
+
+Cheers!
+
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
