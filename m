@@ -7,81 +7,183 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251EF1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 23:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E158F1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 23:58:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751496AbeAYXfY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:35:24 -0500
-Received: from mail-yb0-f178.google.com ([209.85.213.178]:44739 "EHLO
-        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751296AbeAYXfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:35:24 -0500
-Received: by mail-yb0-f178.google.com with SMTP id z90so3717320ybh.11
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:35:24 -0800 (PST)
+        id S1751434AbeAYX6o (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 18:58:44 -0500
+Received: from mail-yw0-f201.google.com ([209.85.161.201]:53515 "EHLO
+        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751187AbeAYX6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 18:58:43 -0500
+Received: by mail-yw0-f201.google.com with SMTP id n70so5960941ywd.20
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:58:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=PV8Bw124Rqiv5/wBY58S/t4XJGgWUf17HnDhM2pZXxc=;
-        b=V6mXAGinmpy3TFO7UOusRisMuZss7n4R8D7Y669SYKEtN5Zjh19rGfsAwGbjONafoV
-         RtLDhfgT2T3S9zEvoEp8G8C9AiZt6VEavy2MRKX9jy+cOoC6tOfnkQ5sSI4n3HSuCF4w
-         8BQj/PZr/fCpdaS4yBtUh8HOyYpgwWa7KT/2/Xj2Oy9KuA4KS2OJtxkNJoIwwWuLESvi
-         qeqB30s5WpB+AYuB4sSETE/wHusV5H7kz6JssXiyBQIZyFHgBIh6A6/c/kWwYUZzGN1C
-         lNF2zlx4RLIFAshcAS7O+xQok1ZlEe6lcMFWPm7+A/i7ZNcfk2XJsNyRy0+pax4z2SI6
-         Dfhg==
+        bh=0akZzDYAE2rfOftqjZhbmbiNZgs1nFe4VsKyaBcxfLg=;
+        b=jy3Qr5fV0A2TlhVcqgilV8yEUy2tFmvji+wJJ0CO8r1VZh1sV0CT5IXpimlO7UvxIV
+         jIOD0QdHh5/y5evOf67OQqV+68pAJgewG7OfE+V162pAuM9168ZHdIXM7Fs08Fv2HRns
+         afnI5FRLpDjMac90DFMJQloZDpoP8kSyVetcd7RIJh4Xu7TbToBdTgC3fj+IAbeOvIRS
+         7eq92TEvmqKo6sLJGcUKbKqaTNoQNbedjZVfeVjhxdawEtSVv2zXYOu0eHA/ur07cy2V
+         ZFijRzXgsuPglAYJ2rDR5zsgaTtSc+5BGaVUjZxvSpNW172CQnN5VfW3CAAg5bTaGFoE
+         SiGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PV8Bw124Rqiv5/wBY58S/t4XJGgWUf17HnDhM2pZXxc=;
-        b=oJoyFFaX84KWGyRNfw1HeUBxEZw/30O/8cH2XfiQ7uzlLHnqRxwx0GVxD98Y1vPB6C
-         c0YQ5U7UVWQt5yra4EIBaojooO1M7G0Z9J+k3s/dKBL8mKExyjfcssajozOxyzKBeXRW
-         tepozm9vcrEfmKi0i9IowYuBvTltSFOJit6PaSIZ3/AQFGWnz5x5hNByZvFAcMjsqo5v
-         qq2rTc9IhauNTnfg1+Q2/jmH9jsbVSw6OBPFbGhN+4o6gjUK6t519iFwSPJ05a6Zv3e/
-         N+k0Ey4ufOI0llOZAckJiM5CW9KROOzAQfVPagp6QtZol1Grl/MW3RhMFL4NRi8ZgdQ3
-         LsqA==
-X-Gm-Message-State: AKwxytcQpKM79HLqpn9s4HLf4bIZ8FT/wAufuq5q31xckomNmc0m5HsK
-        m/BcwTlQpjo5K44XCxvfFM3B/zx6xYa3DNdOQIS4xg==
-X-Google-Smtp-Source: AH8x226mtNFRhtEE+yOh34MMmY7WIcWqAMN2vyM1rXeYEjkRI7QR+FFCX6+FfBTqCPjc80mF5wE0B1yc8N/1XHiuK/A=
-X-Received: by 10.37.34.8 with SMTP id i8mr9941099ybi.114.1516923323304; Thu,
- 25 Jan 2018 15:35:23 -0800 (PST)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=0akZzDYAE2rfOftqjZhbmbiNZgs1nFe4VsKyaBcxfLg=;
+        b=jjS9wBiwVxm6/MswoTjVrhmGPkkVb9uqVJnRScH/s8pY3upRbylK/FUv1AX1w49i4g
+         rQaTqBZJo4QNrsTmT+A1Ky4EKpwYAH2YiNeg2Vm7Fhf6lGdYceF+7eoQAC4IiVn7wKxF
+         zjctH9mHmqUVX8ULauj/U3RmiJYDS06lsrqGMK1Af8GxxbPJZvZVKza2aw7E8wnEnD0H
+         Q4o0Ap1vSLUNUJ4KRj24s5sHP1FWml02liEqPgJyip2zkoPrgLByPHgWk3JTvFGuEux6
+         T1Lyn0qCIxCCh54LGfPRU1DwMXdnRPvQ5nm22NXLLjB2+Do3cLrkNZMjvFODYXxbOHo8
+         YYoQ==
+X-Gm-Message-State: AKwxytesG1LDxtpgUxDkbtFSVHmTWggmppwg0nr2oGBp+oQ4QKbtInLH
+        +esSBFcnLpus5kCRubcdmxmn3ViPdms18OjkAXU5FTx6b+5FT+SDKxxRgLsAIg3nJMwVmokb6nI
+        ib+eQqjB+aEvAhmHNAL7I7uKTwY/Mdx3VFqXO2P1yHyRu6oX4KAUaGrGo6w==
+X-Google-Smtp-Source: AH8x225glhBWS3lIh1GCQSyIAkNf0AUPSazKf+/1TWM1gRMCRuI4Sh5qinYCUBBrQSXcT1K8baMmarDbGpE=
 MIME-Version: 1.0
-Received: by 10.37.210.209 with HTTP; Thu, 25 Jan 2018 15:35:22 -0800 (PST)
-In-Reply-To: <20180125140231.65604-10-dstolee@microsoft.com>
-References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-10-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 25 Jan 2018 15:35:22 -0800
-Message-ID: <CAGZ79kY9GD+ZiFCmAfUsJOqYOQg_a8FUzCiKwVST-_oLUPSnHg@mail.gmail.com>
-Subject: Re: [PATCH 09/14] packed-graph: implement git-graph --clear
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+X-Received: by 10.37.199.130 with SMTP id w124mr5947943ybe.30.1516924722503;
+ Thu, 25 Jan 2018 15:58:42 -0800 (PST)
+Date:   Thu, 25 Jan 2018 15:58:11 -0800
+In-Reply-To: <20180103001828.205012-1-bmwill@google.com>
+Message-Id: <20180125235838.138135-1-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
+Subject: [PATCH v2 00/27] protocol version 2
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com,
+        Brandon Williams <bmwill@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
-> Teach Git to delete the current 'graph_head' file and the packed graph
-> it references. This is a good safety valve if somehow the file is
-> corrupted and needs to be recalculated. Since the packed graph is a
-> summary of contents already in the ODB, it can be regenerated.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Changes in v2:
+ * Added documentation for fetch
+ * changes #defines for state variables to be enums
+ * couple code changes to pkt-line functions and documentation
+ * Added unit tests for the git-serve binary as well as for ls-refs
 
+Areas for improvement
+ * Push isn't implemented, right now this is ok because if v2 is requested the
+   server can just default to v0.  Before this can be merged we may want to
+   change how the client request a new protocol, and not allow for sending
+   "version=2" when pushing even though the user has it configured.  Or maybe
+   its fine to just have an older client who doesn't understand how to push
+   (and request v2) to die if the server tries to speak v2 at it.
 
->  static int graph_read(void)
->  {
->         struct object_id graph_oid;
-> @@ -105,6 +130,8 @@ int cmd_graph(int argc, const char **argv, const char *prefix)
->                 { OPTION_STRING, 'p', "pack-dir", &opts.pack_dir,
->                         N_("dir"),
->                         N_("The pack directory to store the graph") },
-> +               OPT_BOOL('c', "clear", &opts.clear,
-> +                       N_("clear graph file and graph-head")),
+   Fixing this essentially would just require piping through a bit more
+   information to the function which ultimately runs connect (for both builtins
+   and remote-curl)
 
-Given the docs building up a large list of "Cannot be combined with",
-maybe these OPT_BOOLS want to be OPT_CMDMODE ?
+ * I want to make sure that the docs are well written before this gets merged
+   so I'm hoping that someone can do a through review on the docs themselves to
+   make sure they are clear.
+
+ * Right now there is a capability 'stateless-rpc' which essentially makes sure
+   that a server command completes after a single round (this is to make sure
+   http works cleanly).  After talking with some folks it may make more sense
+   to just have v2 be stateless in nature so that all commands terminate after
+   a single round trip.  This makes things a bit easier if a server wants to
+   have ssh just be a proxy for http.
+
+   One potential thing would be to flip this so that by default the protocol is
+   stateless and if a server/command has a state-full mode that can be
+   implemented as a capability at a later point.  Thoughts?
+
+ * Shallow repositories and shallow clones aren't supported yet.  I'm working
+   on it and it can be either added to v2 by default if people think it needs
+   to be in there from the start, or we can add it as a capability at a later
+   point.
+
+Series can also be found on on github: https://github.com/bmwill/git/tree/protocol-v2
+
+Brandon Williams (27):
+  pkt-line: introduce packet_read_with_status
+  pkt-line: introduce struct packet_reader
+  pkt-line: add delim packet support
+  upload-pack: convert to a builtin
+  upload-pack: factor out processing lines
+  transport: use get_refs_via_connect to get refs
+  connect: convert get_remote_heads to use struct packet_reader
+  connect: discover protocol version outside of get_remote_heads
+  transport: store protocol version
+  protocol: introduce enum protocol_version value protocol_v2
+  test-pkt-line: introduce a packet-line test helper
+  serve: introduce git-serve
+  ls-refs: introduce ls-refs server command
+  connect: request remote refs using v2
+  transport: convert get_refs_list to take a list of ref patterns
+  transport: convert transport_get_remote_refs to take a list of ref
+    patterns
+  ls-remote: pass ref patterns when requesting a remote's refs
+  fetch: pass ref patterns when fetching
+  push: pass ref patterns when pushing
+  upload-pack: introduce fetch server command
+  fetch-pack: perform a fetch using v2
+  transport-helper: remove name parameter
+  transport-helper: refactor process_connect_service
+  transport-helper: introduce stateless-connect
+  pkt-line: add packet_buf_write_len function
+  remote-curl: create copy of the service name
+  remote-curl: implement stateless-connect command
+
+ .gitignore                              |   1 +
+ Documentation/technical/protocol-v2.txt | 270 +++++++++++++++++
+ Makefile                                |   7 +-
+ builtin.h                               |   2 +
+ builtin/clone.c                         |   2 +-
+ builtin/fetch-pack.c                    |  21 +-
+ builtin/fetch.c                         |  14 +-
+ builtin/ls-remote.c                     |   7 +-
+ builtin/receive-pack.c                  |   6 +
+ builtin/remote.c                        |   2 +-
+ builtin/send-pack.c                     |  20 +-
+ builtin/serve.c                         |  30 ++
+ builtin/upload-pack.c                   |  74 +++++
+ connect.c                               | 295 ++++++++++++++-----
+ connect.h                               |   3 +
+ fetch-pack.c                            | 277 +++++++++++++++++-
+ fetch-pack.h                            |   4 +-
+ git.c                                   |   2 +
+ ls-refs.c                               |  96 ++++++
+ ls-refs.h                               |   9 +
+ pkt-line.c                              | 149 +++++++++-
+ pkt-line.h                              |  77 +++++
+ protocol.c                              |   2 +
+ protocol.h                              |   1 +
+ remote-curl.c                           | 209 ++++++++++++-
+ remote.h                                |   9 +-
+ serve.c                                 | 253 ++++++++++++++++
+ serve.h                                 |  15 +
+ t/helper/test-pkt-line.c                |  62 ++++
+ t/t5701-git-serve.sh                    | 172 +++++++++++
+ t/t5702-protocol-v2.sh                  | 117 ++++++++
+ transport-helper.c                      |  84 +++---
+ transport-internal.h                    |   4 +-
+ transport.c                             | 119 ++++++--
+ transport.h                             |   9 +-
+ upload-pack.c                           | 501 ++++++++++++++++++++++++--------
+ upload-pack.h                           |  18 ++
+ 37 files changed, 2646 insertions(+), 297 deletions(-)
+ create mode 100644 Documentation/technical/protocol-v2.txt
+ create mode 100644 builtin/serve.c
+ create mode 100644 builtin/upload-pack.c
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
+ create mode 100644 serve.c
+ create mode 100644 serve.h
+ create mode 100644 t/helper/test-pkt-line.c
+ create mode 100755 t/t5701-git-serve.sh
+ create mode 100755 t/t5702-protocol-v2.sh
+ create mode 100644 upload-pack.h
+
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+
