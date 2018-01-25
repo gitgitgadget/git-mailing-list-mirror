@@ -2,92 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7967B1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 18:16:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E13F91F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 18:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbeAYSQg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 13:16:36 -0500
-Received: from st11p06im-asmtp002.me.com ([17.172.125.150]:49929 "EHLO
-        st11p06im-asmtp002.me.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751106AbeAYSQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 13:16:35 -0500
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Jan 2018 13:16:35 EST
-Received: from process-dkim-sign-daemon.st11p06im-asmtp002.me.com by
- st11p06im-asmtp002.me.com
- (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
- 2017)) id <0P3401800FSP3K00@st11p06im-asmtp002.me.com> for
- git@vger.kernel.org; Thu, 25 Jan 2018 17:16:35 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-        t=1516900595; bh=ZyjNrOmxY2NaWIKWl9j09YSCHJTfMhYLuM6iQgZnjzA=;
-        h=From:Content-type:MIME-version:Subject:Message-id:Date:To;
-        b=d6kndCWrrxOkoeBuVcs0gF9/ah4AxVVroLQ40m3r0lK80z/gA4kwpNUWzKfnaHlao
- hg15UjmNkpgg1xYrPhjjagmJDMGV8caI0YfhQXgRXsonrZ6tXo/Up8WwqQvAGERpWT
- vno0dzuU20fu/x7ClES5PmhXWza5iPhMb1rFgb/lEjmqfR0mZWPpV2TunZS1Th9rgR
- 5VwXRYfJw0u+8mWCVvQl6eGUw0GqJR2oGOk0d8GmmCWOo1ESzPq6hFbcEa+ONJUNIT
- 2KcXgn+nzxptRq1vYsiRVwSSOyc7csNo9QcrxzcXXXa3Qa7NflPDs8lK2I6xqQMiZL
- Wz09peKnQug9w==
-Received: from icloud.com ([127.0.0.1]) by st11p06im-asmtp002.me.com
- (Oracle Communications Messaging Server 8.0.1.2.20170607 64bit (built Jun  7
- 2017)) with ESMTPSA id <0P3400V76FZL1W10@st11p06im-asmtp002.me.com> for
- git@vger.kernel.org; Thu, 25 Jan 2018 17:16:34 +0000 (GMT)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2018-01-25_07:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1011 suspectscore=12 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1707230000 definitions=main-1801250233
-From:   Robert Leach <hepcat72@me.com>
-Content-type: text/plain; charset=us-ascii
-Content-transfer-encoding: quoted-printable
-Reply-to: rleach@princeton.edu
-MIME-version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-Subject: git credential-osxkeychain bug/feature?
-Message-id: <7445BC5F-F041-4E7D-8CB5-9513EEFF2C8C@me.com>
-Date:   Thu, 25 Jan 2018 12:16:33 -0500
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3251)
+        id S1751120AbeAYSqz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 13:46:55 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:46872 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750994AbeAYSqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 13:46:54 -0500
+Received: by mail-pf0-f195.google.com with SMTP id y5so6411738pff.13
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 10:46:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CVOrvzhDhelaoSNEi/pi4FW7JC1RTof8O6IoaaUPOhI=;
+        b=Cp4fTU3QO7F0BKRtqk3D0Ct+NnUNJ/OuVeBtGyX+N8wh67wiwqJFaN4NyRpsWAuabB
+         HYJ8N77kh1NxNV7FdqgGCmuH5EHpuGR6dxTr4rbN4qP1fZuOyVTw2QyIdXvNMXcOcmJ3
+         WAPhMrpQQHtEUAKUJBftU7Zm6JOLAuPIodxtg5j08XoFj0Po58JuzwYyjohD+mnSTPuG
+         0PDEl5sy7H6QDPP/Gx2g7A5IQ3pkacgMKyZjlC1vFjr3Pd7U01+Sl3Bm1moJCWMctHDl
+         3BPJsixehx38+4LJNjuEXkzZXebskhZayaBRjJyqJXVHxdFujXquHdsUbMbn61VoiT/J
+         w2zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CVOrvzhDhelaoSNEi/pi4FW7JC1RTof8O6IoaaUPOhI=;
+        b=JtNgyCkezNPWY3+fOrvQdqbBZxML1svdIGOQMRe7QsSeAA3V9vlAQ35wvXEuFJMhSn
+         tPFKhKEsSzoRItEVFlcK4cif+k1KBgP0DOQQcnNqsl4m/NfHC1phbOvmuTdq2CFVUGzR
+         2s0SMlnxEeHbw/QHYjTSlf8804ieDl+AZD7Ro5cf8ThTPzwlgJt7YOtU/cvE60Di+6N+
+         SMiLakfpnD2iuB4RlwgCaTiybEjzYg2NPMnqE0WMEMGXytWVW9bKlgb/2gBiAIpuhZ6Z
+         pF6BMaNBVhngHDdBpoSxr4pKRc85KiGRoRi1XDrkWra/LKNE5bA8kzvm+vba+Lu7CNSG
+         K6Gg==
+X-Gm-Message-State: AKwxytcNxVqRLS/rPxelbKhJf6lXUb+0KDFjscausjDj1tTd3yo7le1Z
+        DCy+Zvb7iU8TFRW5IuTpUhggyowX
+X-Google-Smtp-Source: AH8x224rL4ZHCn62HA7Zi2mHILKd3yyITC2GU4O2aStYwRK58y5aG6ocqlJTxnmz5ntswpVvodUlXA==
+X-Received: by 2002:a17:902:b783:: with SMTP id e3-v6mr12330483pls.160.1516906013714;
+        Thu, 25 Jan 2018 10:46:53 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:f924:a479:e3c:a7cc])
+        by smtp.gmail.com with ESMTPSA id n80sm18983678pfj.79.2018.01.25.10.46.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 25 Jan 2018 10:46:53 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/6] off-by-one errors in git-daemon
+References: <20180125005447.GA26661@sigill.intra.peff.net>
+Date:   Thu, 25 Jan 2018 10:46:51 -0800
+In-Reply-To: <20180125005447.GA26661@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 24 Jan 2018 19:54:48 -0500")
+Message-ID: <xmqqshatai90.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-I wanted to submit an issue regarding the credential-osxkeychain =
-interface functionality.  I don't know whether it's a bug or a feature =
-request.  Maybe it's even impossible to address? - I don't know, but =
-here's my issue.  Let me know if fixing/implementing this is a bad idea =
-or if it's an issue relating to something wrong on my system and not an =
-issue with git itself.
+> This series fixes two off-by-one errors in git-daemon noticed by Michael
+> (who then nerd-sniped me into fixing them). It also improves
+> git-daemon's verbose logging of extended attributes, and beefs up the
+> tests a bit.
+>
+> Before anyone gets excited, no, these aren't security-interesting
+> errors. The only effect you could have is for git-daemon to reject your
+> request as nonsense. ;)
 
-I have a git repo in a dropbox directory (not sure if that's relevant - =
-just giving full disclosure).  I have set up git to not ask me for my =
-password by using the credential-osxkeychain feature, and it works =
-great... unless I'm connected via ssh to the machine that has a copy of =
-my Dropbox on it.  Various git commands interrogate me for my login =
-instead of using the credentials stored in the KA database on that =
-remote machine, e.g.:
-
-git remote show origin
-Username for 'https://github.com': ^C
-
-When I'm sitting at that machine, I do not get asked for my login =
-credentials.
-
-It's a minor issue, and kind of silly TBH.  I can always just work on my =
-repo locally and synch, but if I'm working on a project that processes a =
-large dataset, it's faster to edit the project on the machine with the =
-data I'm testing it with.  I could VNC in or just synch after each =
-change, which works around the issue, but it's nicer to just do =
-everything on one ssh terminal session.
-
-But perhaps access to KA from a remote ssh session is restricted for =
-security reasons?  I'm just curious I suppose.  Should/can this work?
-
-Thanks,
-Rob
+Thanks.  All looked sensible.
