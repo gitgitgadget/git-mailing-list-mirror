@@ -2,103 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2740B1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 16:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE391F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 17:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751351AbeAYQd6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 11:33:58 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:41478 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbeAYQd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 11:33:57 -0500
-Received: from [192.168.2.240] ([92.22.6.159])
-        by smtp.talktalk.net with SMTP
-        id ekTJegwcObjdZekTKespr5; Thu, 25 Jan 2018 16:33:55 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1516898035;
-        bh=XM/ZgakkbbrkMEhjqGVIdXufZGCCPzT1aJM1B0p+lCg=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=LI36lCXsFtoIhPPfMdaU0Q7eF6CcjxofgPs5XoEjOoKZgDKaNwcWB+87L+otUcEeM
-         hhaCa6Nf7xo+Q8tXtz1Er/gpBCDvnFVL2I8dIZ3tM2JAQSd28UbT6KP1FO0TdkN2iE
-         hVJlDBv3k5KC0eAF9lWkhOTZpiHSnvaGiR8nnXZk=
-X-Originating-IP: [92.22.6.159]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ONFX5WSB c=1 sm=1 tr=0 a=zHCrIP3pJrCm+L4FAUKT3Q==:117
- a=zHCrIP3pJrCm+L4FAUKT3Q==:17 a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8
- a=evINK-nbAAAA:8 a=pGLkceISAAAA:8 a=Pe2gm5_r0UhPUR4akd0A:9
- a=DmOjOt0yi2vgyUOV:21 a=SVBS2Lvw-hvUI28N:21 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/3] sequencer: run 'prepare-commit-msg' hook
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>
-References: <CAKdAkRSuNhEri+3eUbX8iVjr0JUyADSJBtgL==VjNwgKwe3Xqw@mail.gmail.com>
- <20180124123422.10637-1-phillip.wood@talktalk.net>
- <20180124123422.10637-4-phillip.wood@talktalk.net>
- <3587bc5f-c5f7-d037-6644-25e21a5f4942@ramsayjones.plus.com>
- <xmqqh8rbdqwk.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <f4953ce5-0fb2-e1f8-fe07-cd541a53cc4e@talktalk.net>
-Date:   Thu, 25 Jan 2018 16:33:52 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
-MIME-Version: 1.0
-In-Reply-To: <xmqqh8rbdqwk.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOYt0qJZVVtWWzDekVmUgZkCgNGByYjwUizClPMtv9jDLGQDUm5pindiDDMVbp/+c+6qVz1WPZP3d4XeEbmxJh8TIbNIOAAShe+/2VjTrkPm2mcz/ogT
- /CPJhmnSJaUkF52kzF0H/wd6l8rsAOIWK9vRdcMo3u5luI5ZXGcNiJ8VgSYzrOlL2lktt8Yeg6C3ulRDTZcLBaehfQlUz5fjcckc3O2DA0LIbX70wylDqB2j
- +ievjuYRGwKMx6U45OQifSjKxzIZC0vWhRlP+RAaQ+1XPDW2gAfPQdPPgkqC78p7eIvP/rfLYu8sCcR/cWC6GwiDZ0uwu30iA6CtGRDIE3ZBWFRM1lOLXvdU
- KRPcqZaiejJwokVTxs76ceUffnv2S18/449rYgdHe0ZUStZ90xw=
+        id S1751237AbeAYRDL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 12:03:11 -0500
+Received: from scunmail02.zurich.com ([195.28.226.207]:1235 "EHLO
+        scunmail02.zurich.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750994AbeAYRDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 12:03:10 -0500
+X-IronPort-AV: E=Sophos;i="5.46,412,1511823600"; 
+   d="scan'208";a="466586579"
+Received: from unknown (HELO chknh741.emea.zurich.corp) ([172.28.78.80])
+  by cendm0258.emea.zurich.corp with ESMTP; 25 Jan 2018 18:02:49 +0100
+Received: from b0d0p4a1.rz.ch.zurich.com ([10.41.48.42])
+          by cendm0070.emea.zurich.corp (Lotus Domino Release 8.5.3FP3)
+          with ESMTP id 2018012518023585-400551 ;
+          Thu, 25 Jan 2018 18:02:35 +0100 
+Received: from b0d0p4a1.rz.ch.zurich.com (localhost [127.0.0.1])
+        by b0d0p4a1.rz.ch.zurich.com (8.15.1+Sun/8.15.1) with ESMTP id w0PH2ah2000802
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 18:02:36 +0100 (CET)
+Received: (from w1001179@localhost)
+        by b0d0p4a1.rz.ch.zurich.com (8.15.1+Sun/8.15.1/Submit) id w0PH2YFI000707
+        for git@vger.kernel.org; Thu, 25 Jan 2018 18:02:34 +0100 (CET)
+Date:   Thu, 25 Jan 2018 18:02:34 +0100 (CET)
+From:   christian.del.vecchio@zurich.com
+Message-Id: <201801251702.w0PH2YFI000707@b0d0p4a1.rz.ch.zurich.com>
+X-Authentication-Warning: b0d0p4a1.rz.ch.zurich.com: w1001179 set sender to christian.del.vecchio@zurich.com using -r
+To:     git@vger.kernel.org
+Subject: GIT 2.3.1 - Code Execution Vulnerability
+X-RouteServers: CN=CHKNH010/O=Zurich;CN=CHZNH010/OU=ZI/OU=Switzerland/O=Zurich;CN=CHKNH000/O=Zurich
+X-DLP:  Scanned
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/01/18 18:59, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
->> On 24/01/18 12:34, Phillip Wood wrote:
->>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>
->>> Commit 356ee4659b ("sequencer: try to commit without forking 'git
->>> commit'", 2017-11-24) forgot to run the 'prepare-commit-msg' hook when
->>> creating the commit. Fix this by writing the commit message to a
->>> different file and running the hook. Using a different file means that
->>> if the commit is cancelled the original message file is
->>> unchanged. Also move the checks for an empty commit so the order
->>> matches 'git commit'.
->>>
->>> Reported-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
->>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->>> Reviewed-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->>
->> Echoing Eric's earlier email, I don't think this Reviewed-by is
->> warranted - I only requested the addition of a static keyword,
->> I didn't actually review the patch.
-> 
-> Thanks for clarification, and I tend to agree.  You, Eric and I
-> certainly did not review what is posted here, so if I "git am" these
-> patches as-is, we'd be lying.
-> 
-> Having said that, I think this round takes all the review comments
-> raised against the previous round(s) into account.  So I'm tempted
-> to tweak them with s/Reviewed-/Helped-/ and queue.
-> 
-Thanks Junio, I wasn't sure whether to go with Reviewed-by or Helped-by, 
-I'll know for next time
+dear Team
 
-Best Wishes
+I am Christian Del Vecchio,and i work in the infrastructure of Middleware on Zurich.
+we have installed in our system Sun your product in order to connect to our bitbucket repository.
 
-Phillip
+we have followed the instruction provided on your Web Page:
+
+https://git-scm.com/download/linux
+pkgutil -i git
+
+the version installed is the 2.3.1, and actually it works.
+
+but last week our security team informed that this software didn't pass the check control due: Git Server and Client Remote Code Execution Vulnerability
+
+
+please, is it available a newer version that fix this problem?
+
+our system is: Sun Solaris v10 sparc
+
+best regards
+__________________________________________ 
+
+Christian Del Vecchio 
+Middleware SME 
+
+Zurich Insurance Group Ltd. 
+bac de Roda 58, 
+Building C, 4th floor 
+08019 Barcelona, Spain 
+
+64402 (internal) 
++34 93 4465402 (direct) 
+christian.del.vecchio@zurich.com 
+http://www.zurich.com 
