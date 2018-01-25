@@ -2,94 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08CA11F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 20:34:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEEF51F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 20:37:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751324AbeAYUe2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 15:34:28 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:45943 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751296AbeAYUeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 15:34:23 -0500
-Received: by mail-pg0-f66.google.com with SMTP id m136so5787529pga.12
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 12:34:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mhxgCuQNn5Y1WaYRPoaPgh45Rgsrm7+w6nL6QnOwCd4=;
-        b=cXxDc+evycHW1+/HU6b/0Rns/AhsKNWrQULIuLrCDXWWvIGFvd19auLzS/Rv2k3XC/
-         BgRSB3cydlZMA4AqE2Ehe3OUHAec79fdrvJLBHfFHJo2CU4bYx5c6yJ8fmbHB50XpNpm
-         NLa6kENF47Oi7sNCuA8zNJmyKy2hptR3IgBWxMP5RAmpEnUpYji3Vz9KNKimeTEx0Bmj
-         l9qtX+/zyz5M5UucrU4SZVBpHTV1zhvtX9Hn77hDDb/SCWam6WYIoc1MAyN/8c1cdzkr
-         Bn2GRzdoVHAxo0Z7iIjUwHDUycBA57bQo468fUXLb00rYfjwRmHh1fmSePaeRIVLdauF
-         NRmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mhxgCuQNn5Y1WaYRPoaPgh45Rgsrm7+w6nL6QnOwCd4=;
-        b=AmqK6kp968C1zHNmUTZbDQcs6DkoU5dzPBOaDaVaivK2YtDyJ1aHtvLKZ7dfxe+BDJ
-         95jv8Uefp+ZgFjX/kzOmVZxgT+bC3sbaHWAmARR+aCnGd1lXfYaMBKkCYjg4gWWbfOiW
-         LsYJEzbktp7WKI3NbzEp7JVTzzQWvfiqvagka/hAPRPFH0U6mGPkYQdeNedPnzmqSw3d
-         n7PPvZu+1Ew85r6AutpBxVuA6dpuwjmOBydvjIGHczGGW8Ppt9tCoOHnhEm5pKMbWc83
-         F6+6ktpW0U4WUjigzGwoSR/LfFdqSHwMH7z8e075X99NklFBfOVcb3MvvBO9U1LJ6kkk
-         yWJQ==
-X-Gm-Message-State: AKwxytd4h1KGi4zUzbxqijBzKmFLHppbb0VnthWdUeD8hjM7MDpTOBrg
-        fr92w2m+JyAAztaZU7SA6jk=
-X-Google-Smtp-Source: AH8x22733xSIsK47rC+wEUAWtnulAGygBn6+P+Wy1Rm2NMGL0u6StHKVUewqz/SPrSWyuI1RVqFZAQ==
-X-Received: by 10.101.97.12 with SMTP id z12mr13365197pgu.92.1516912462585;
-        Thu, 25 Jan 2018 12:34:22 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:f924:a479:e3c:a7cc])
-        by smtp.gmail.com with ESMTPSA id o20sm5418719pgv.85.2018.01.25.12.34.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 Jan 2018 12:34:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     KES <kes-kes@yandex.ru>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: Feature request: Improve diff algorithm
-References: <14657461479715884@web21h.yandex.ru>
-        <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
-        <CAGZ79kZbGPneUXVEqJYhQAn+dfYve7qCjhO7QFaV1JBs3HD1aA@mail.gmail.com>
-        <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com>
-        <12531516812201@web36o.yandex.ru> <446801516908691@web22j.yandex.ru>
-Date:   Thu, 25 Jan 2018 12:34:20 -0800
-In-Reply-To: <446801516908691@web22j.yandex.ru> (KES's message of "Thu, 25 Jan
-        2018 21:31:31 +0200")
-Message-ID: <xmqqfu6tad9v.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1751200AbeAYUhz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 15:37:55 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:56879 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751108AbeAYUhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 15:37:54 -0500
+Received: from hopa.kiewit.dartmouth.edu ([129.170.31.166] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1eeoHQ-0005Eo-Pt
+        for git@vger.kernel.org; Thu, 25 Jan 2018 15:37:53 -0500
+Date:   Thu, 25 Jan 2018 15:37:47 -0500
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <20180125203747.GI3658@hopa.kiewit.dartmouth.edu>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-SA-Exim-Connect-IP: 129.170.31.166
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: please resolve a mystery for me: what is j-c-diff exactly? ;)
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-KES <kes-kes@yandex.ru> writes:
+Hi Junio et al,
 
-> One yet more:
->
-> @@ -141,5 +86,9 @@
->  	// }
->  
->  
-> -	OP* o;
-> +	SV *tvs =  newSVpvs( "ScalarHistory" );
-> +	SV *tva =  newSVpvs( "ArrayHistory"  );
-> +	SV *tvh =  newSVpvs( "HashHistory"   );
-> +
-> +	OP *o;
->  	while( PL_op ) {
+j-c-diff is "used" in the docs within git, git-annex, and other places
+discussing git.  But I failed to find it to seek for an ultimate prototypical
+example of the diff command used by git ppl ;)
 
-Huh?
+$> git log -Sj-c-diff -p Documentation/gitattributes.txt 
+commit 2cc3167c688d1c91bc4cb9b1caa737b9d4971056
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Mon Apr 23 00:21:02 2007 -0700
 
-If the asterisk between type OP and var o did not change, then
-inserting the three new lines before o's definition may make sense,
-but otherwise...
+    Document "diff=driver" attribute
+    
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 126871756d..d2edb9b14a 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -151,8 +151,34 @@ Unspecified::
+        text, it is treated as text.  Otherwise it would
+        generate `Binary files differ`.
+ 
+-Any other value set to `diff` attribute is ignored and git acts
+-as if the attribute is left unspecified.
++String::
++
++ Diff is shown using the specified custom diff driver.
++ The driver program is given its input using the same
++ calling convention as used for GIT_EXTERNAL_DIFF
++ program.
++
++
++Defining a custom diff driver
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The definition of a diff driver is done in `gitconfig`, not
++`gitattributes` file, so strictly speaking this manual page is a
++wrong place to talk about it.  However...
++
++To define a custom diff driver `jcdiff`, add a section to your
++`$GIT_DIR/config` file (or `$HOME/.gitconfig` file) like this:
++
++----------------------------------------------------------------
++[diff "jcdiff"]
++ command = j-c-diff
++----------------------------------------------------------------
++
++When git needs to show you a diff for the path with `diff`
++attribute set to `jcdiff`, it calls the command you specified
++with the above configuration, i.e. `j-c-diff`, with 7
++parameters, just like `GIT_EXTERNAL_DIFF` program is called.
++See gitlink:git[7] for details.
+
+Cheers!
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
