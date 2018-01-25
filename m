@@ -2,141 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 536AF1F576
-	for <e@80x24.org>; Thu, 25 Jan 2018 09:40:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D1961F576
+	for <e@80x24.org>; Thu, 25 Jan 2018 09:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751181AbeAYJkm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 04:40:42 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:45797 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751109AbeAYJkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 04:40:39 -0500
-Received: by mail-pf0-f195.google.com with SMTP id a88so5368319pfe.12
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 01:40:39 -0800 (PST)
+        id S1751378AbeAYJyL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 04:54:11 -0500
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:41273 "EHLO
+        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751192AbeAYJyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 04:54:08 -0500
+Received: by mail-oi0-f47.google.com with SMTP id m83so4839313oik.8
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 01:54:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xTKRKLb0IF7mrk+A76AJWotVMF0vncTBb5jHxPCKUWA=;
-        b=onK96Ajx+CTFjzue9bHrp+DeSHrYxcuUv8w5Mh8v14cbWJJnI4f6eoxDx6HjokbTV3
-         MG53Ifb1VxHAj/1dDZgdoz//nYTW7rlgC1YhCP2JPuxlz8QJV37g5+G9rTEsmc193b5X
-         6V0QifeDCZI2eKreUOuAtk/+9oh5t4KbxxVpCaFIEzoG2+zCXYjg4POXSXvrXkrsqs0X
-         NCD2WjqCayCrQcwZus6qkVR5rBXwFcB86sB+iV0+yVslV5+IPAf9lGid7kZLWH7kp/Pi
-         iMe0v6pSyzptk8Vqs42i9D54kVmpz9ib4fVlSzfEyEJDRGtlPLhDDFEZM8X41zdFJaUP
-         caWA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OQqJowKpMbRobIJ2nEEmUOzc1UaEYwZW74AdvQKGnaM=;
+        b=ujoq9aN8qae4udtXoVTjMqNKDpttUWePIwFu+pOrNLyRXd/sc6bO5P9a2r0w0Xk+Cr
+         FfPi/u7qbiYIGpRTp3wYRyn64211IuxSEJ5G6JjRgu8938/jXiZ2vGOlqTem4SwSDW3d
+         8yFp2zKgKx3fFcBhMSCcUIfHJogp15xqtz91K7fmdma6QuPOXazKxQHq9KJfibCFpce5
+         g6/Urz9C2Q5kNQ1rfm/0aZbf9ri+CP6yClYQuZ3l8iYyaiwvlgVr/Lp73lBLctVuzQLO
+         tYRVIZ5b1GTEWUqRDTaTqp8/0DSUy5np5zq3Wgv1CAy7bIaUt+6SPu4PSwbl0GqB1i1u
+         RJZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xTKRKLb0IF7mrk+A76AJWotVMF0vncTBb5jHxPCKUWA=;
-        b=YTBQevv3wsxjZ7w1utH9z0CQhiXnnOhbcTjb1ijP3qpWt1AnMDSaJw7Z64ZDjdtGPi
-         //2o9S/ORlIpdgOM2yFJ3t5nqjYO5pjOnytgnWxot5/z+aLGqjQjv1kXPhMBdgkaZi/N
-         5DMtp3GHDmfd1/7Cx6XMgMQEe4IIdNrYd4T+2/aMRNkSBeGSpux9BhIqDKVklI66Pg+E
-         KNSD6f8i4vdw/aE/us8GhV0QoRFe6qHj+dfDMxHJWZR0V0plUu+Tm4vAqWgorrlrJJnR
-         lVixGYSoBdLU1pYFsgYVwhfi/zjLqv9tfJQSJ3oka58OVxu/2N56cPdnOtkdDzRP6hDq
-         jegQ==
-X-Gm-Message-State: AKwxytcegBgjTElMOWI4ohKuAoHany4OhN3RWuEa4RolAK2IxlZuN9tZ
-        JNoF5YViCzQi7+qRASeoOfGKtw==
-X-Google-Smtp-Source: AH8x227QcZJV+nsJH/167ex3DIWw4fYRwYjoKZ+7h3pIvK1qDuZP0SPOIMgD9c/r17DL9Jlxc+a/PQ==
-X-Received: by 2002:a17:902:6f08:: with SMTP id w8-v6mr10674232plk.155.1516873239083;
-        Thu, 25 Jan 2018 01:40:39 -0800 (PST)
-Received: from ash ([171.233.110.59])
-        by smtp.gmail.com with ESMTPSA id f72sm15638106pff.145.2018.01.25.01.40.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 Jan 2018 01:40:38 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 25 Jan 2018 16:40:32 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] merge: support --strategy '?' for git-completion.bash
-Date:   Thu, 25 Jan 2018 16:40:31 +0700
-Message-Id: <20180125094031.6584-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.0.47.g3d9b0fac3a
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OQqJowKpMbRobIJ2nEEmUOzc1UaEYwZW74AdvQKGnaM=;
+        b=Ac6YsCWcBbq9rdagGcJrgJ9Bp2H8I8FuHAoGH64z9zQgtVk83U42pJ4Rs75lenBFPz
+         eUWx+KLXQyDEkfnt18YVCb/6Bu+JUv+aSWsIYTMJZBzVnBStxnjCJq1TqKXkUuF2piPw
+         hFmRYp9g8tj9mxXFdgs2jAq/gs5ULN4binkvuqW1vrmTROvFvoW8ZayzzYK7wY4TTvST
+         V0SbtFPQtubFFRk2Esd5FsQSt7nLMkWr6SBTd4KAeQQXsyJgO0Sy2HX415Bt6HkZ7Wa2
+         94Owdq0SDr2Dfl1AzALt/smITjfCddmYFKJ79pthhd9s0v0YH6UBD6GGbcePZdQlzF5c
+         wWFw==
+X-Gm-Message-State: AKwxytfk2YAG9Ar/7Uakqe7ifj15IplVa/cOuyEFYBW6/RuzIITmPtR+
+        +mHDBZtlBhdRuY2G23gKtGP8fuhLJqZhREUC89E=
+X-Google-Smtp-Source: AH8x226dJGloRaPDfroX3UifNgSUOwjQz5EiKWr636LLIowJdH91z4+p/3KYDCL3xsZ3J52kj/IMVpPFEmSYN5AxMm0=
+X-Received: by 10.202.177.136 with SMTP id a130mr8567689oif.252.1516874047992;
+ Thu, 25 Jan 2018 01:54:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.144.218 with HTTP; Thu, 25 Jan 2018 01:53:37 -0800 (PST)
+In-Reply-To: <xmqqinbraqa4.fsf@gitster.mtv.corp.google.com>
+References: <cover.1516617960.git.patryk.obara@gmail.com> <cover.1516790478.git.patryk.obara@gmail.com>
+ <xmqqinbraqa4.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 25 Jan 2018 16:53:37 +0700
+Message-ID: <CACsJy8De7P4dXDX2QU=1-HWXtRqjz9o+sXH0zsKQ3mU0XgWkjQ@mail.gmail.com>
+Subject: Re: [PATCH v3 00/14] Some fixes and bunch of object_id conversions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patryk Obara <patryk.obara@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bash completion support gets the list of available strategies with a
-grep and sed trick which does not work on non-C locale since the anchor
-string is translated and it does not cover custom strategies either.
+On Thu, Jan 25, 2018 at 4:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Patryk Obara <patryk.obara@gmail.com> writes:
+>
+>> Patryk Obara (14):
+>>   http-push: improve error log
+>>   clang-format: adjust penalty for return type line break
+>>   sha1_file: convert pretend_sha1_file to object_id
+>>   dir: convert struct sha1_stat to use object_id
+>>   sha1_file: convert hash_sha1_file to object_id
+>>   cache: clear whole hash buffer with oidclr
+>>   match-trees: convert splice_tree to object_id
+>>   commit: convert commit_tree* to object_id
+>>   notes: convert combine_notes_* to object_id
+>>   notes: convert write_notes_tree to object_id
+>>   sha1_file: convert write_sha1_file to object_id
+>>   sha1_file: convert force_object_loose to object_id
+>>   sha1_file: convert write_loose_object to object_id
+>>   sha1_file: rename hash_sha1_file_literally
+>
+> These were mostly pleasant read.  I'll queue these on two topic
+> branches and wait to see what others say.
 
-Let's do it a better way and make git-merge provide all available
-strategies in machine-readable form.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Another, perhaps better, option is add "git merge --list-strategies".
- It requires some code movement, so I'll try with a simpler approach
- first.
-
- Documentation/merge-options.txt        | 3 +++
- builtin/merge.c                        | 7 +++++++
- contrib/completion/git-completion.bash | 9 +--------
- 3 files changed, 11 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 3888c3ff85..cd4342844f 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -97,6 +97,9 @@ option can be used to override --squash.
- 	If there is no `-s` option, a built-in list of strategies
- 	is used instead ('git merge-recursive' when merging a single
- 	head, 'git merge-octopus' otherwise).
-++
-+The special strategy '?' lists all available strategies and exits
-+immediately. No merge operation is done.
- 
- -X <option>::
- --strategy-option=<option>::
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 30264cfd7c..a09d04302c 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -140,6 +140,13 @@ static struct strategy *get_strategy(const char *name)
- 		}
- 		exclude_cmds(&main_cmds, &not_strategies);
- 	}
-+	if (!strcmp(name, "?")) {
-+		for (i = 0; i < main_cmds.cnt; i++)
-+			puts(main_cmds.names[i]->name);
-+		for (i = 0; i < other_cmds.cnt; i++)
-+			puts(other_cmds.names[i]->name);
-+		exit(0);
-+	}
- 	if (!is_in_cmdlist(&main_cmds, name) && !is_in_cmdlist(&other_cmds, name)) {
- 		fprintf(stderr, _("Could not find merge strategy '%s'.\n"), name);
- 		fprintf(stderr, _("Available strategies are:"));
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3683c772c5..6d947be858 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -594,14 +594,7 @@ __git_is_configured_remote ()
- 
- __git_list_merge_strategies ()
- {
--	git merge -s help 2>&1 |
--	sed -n -e '/[Aa]vailable strategies are: /,/^$/{
--		s/\.$//
--		s/.*://
--		s/^[ 	]*//
--		s/[ 	]*$//
--		p
--	}'
-+	git merge --strategy '?'
- }
- 
- __git_merge_strategies=
+Looks good to me too.
 -- 
-2.16.0.47.g3d9b0fac3a
-
+Duy
