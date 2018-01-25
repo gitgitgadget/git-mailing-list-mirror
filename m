@@ -2,122 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DEB21F576
-	for <e@80x24.org>; Thu, 25 Jan 2018 11:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 668251F576
+	for <e@80x24.org>; Thu, 25 Jan 2018 11:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751793AbeAYL4u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 06:56:50 -0500
-Received: from lucaswerkmeister.de ([94.130.58.99]:60614 "EHLO
-        lucaswerkmeister.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751682AbeAYL4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 06:56:49 -0500
-Received: from [172.16.67.210] (p578a6e4c.dip0.t-ipconnect.de [87.138.110.76])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mail@lucaswerkmeister.de)
-        by lucaswerkmeister.de (Postfix) with ESMTPSA id 9E404196B0A;
-        Thu, 25 Jan 2018 12:56:47 +0100 (CET)
-Authentication-Results: lucaswerkmeister.de; dmarc=fail (p=none dis=none) header.from=lucaswerkmeister.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lucaswerkmeister.de;
-        s=mail; t=1516881407;
-        bh=ev4H2C8ALZbVfXkIJmRjNTrxGefhSxtOgBCkO2rNP8w=;
-        h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-         In-Reply-To:Content-Type:Content-Transfer-Encoding:From:Reply-To:
-         Subject:Date:To:Cc:In-Reply-To:References:Message-Id:Sender:
-         Content-Type:Content-Transfer-Encoding:Content-Disposition:
-         Mime-Version;
-        b=gF5kwncgul58fgxMYBd3PZGPRhZN07YV4QHd5/HS/CVXqWYjv/hCL7NIqlQa6ZQcN
-         qyaCzsIytnC10mIePMJonCTO79IkMcGmeJu41kjM+0Den7+fFoOkVqCB9taLhmGkWY
-         oTZplML5RPDo53Er+tbKpuMQ9fzkrdrNZXfdNs2M=
-Subject: Re: [PATCH 2/6] t/lib-git-daemon: record daemon log
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>
-References: <20180125005447.GA26661@sigill.intra.peff.net>
- <20180125005511.GB26850@sigill.intra.peff.net>
-From:   Lucas Werkmeister <mail@lucaswerkmeister.de>
-Message-ID: <38b41541-5758-d013-3d64-314eec7e31ed@lucaswerkmeister.de>
-Date:   Thu, 25 Jan 2018 12:56:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.0
+        id S1751632AbeAYL7v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 06:59:51 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43323 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751173AbeAYL7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 06:59:50 -0500
+Received: by mail-pf0-f193.google.com with SMTP id y26so5582667pfi.10
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 03:59:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0s2u5PXkuhLQ9bLbc+fL8CZwmhEuhDEQQra/ezJUNf8=;
+        b=DLY3Uk9Meh0+1xVPQQN5oOhhS7SxKSf4Vkv7R+73bjnB+L5hQQWse38Zp9MALxeeFU
+         Stuo1rpxagnghtoFPSoT84jaBmDWaFfFccM0utP4hSEk9BNqbQOC4c/0JyEdBUYH9tbO
+         NfbLiYPaUzJhOjNCShs74xKvvnuqC2xptB7zZ+EGwHpQl37H7OJyFb0cJ2dC8LoCTgo1
+         DiiP2BHCpGye/E86D50TjpIEz3A74oFwV1SVavleM8MC9blYAQfsrOU6NFh3H65ddswl
+         68M4DhvW4jXAayttm60XPWhMx8ImOcscOhMmQY9Ni9BkR85kt5pOtWLv7e8UwjeFs1oa
+         nuYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0s2u5PXkuhLQ9bLbc+fL8CZwmhEuhDEQQra/ezJUNf8=;
+        b=jYNSxAsSb+C7P0MIP6nq7LTlGhOn0nasRUgehD+OarNyRHHhkQRCvXgQOp5lvbKat9
+         SWvvqKi54sOLzlFbEqCb+l+enJ9QQfNTF0kl8vo/EAeDSpJqtBgddV8G5+iNj7QUN7Hg
+         MWavYzk2440ZIEkCw3LAT0VDyNMvoYN4Deqyi8uSpW0nhoM4pXQhxoEV8+MvZ1HWmy+2
+         M4RjH5BFeAastqT2+FlmUMOVzMLC+Il+symieZhPQbgrbk7vVzhRRaqizEmOeW1H6Zd6
+         UkGPj1f9IAnSLqLxEKXrnRZyLgnDwiVsxQzAYYTnW5CGwBJyrrg//9qRGdm2szST17q7
+         T5/Q==
+X-Gm-Message-State: AKwxytf/IAyvGd6wY6Tqbk0oPeoHxfGscNEKYRzpJN2ARhHzDHTU87jC
+        vENx9BBibYfL8EnQw+TryJnHqQ==
+X-Google-Smtp-Source: AH8x224MGLNfxRfyWDKCHs8C4iVyesxGBRfAQFPuQ4eV1ux9/5Q42sP0MZbpaUdj4kXo2higyPdj+A==
+X-Received: by 2002:a17:902:930a:: with SMTP id bc10-v6mr11329173plb.19.1516881589204;
+        Thu, 25 Jan 2018 03:59:49 -0800 (PST)
+Received: from ash ([171.233.110.59])
+        by smtp.gmail.com with ESMTPSA id c29sm16480990pfd.172.2018.01.25.03.59.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 Jan 2018 03:59:48 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 25 Jan 2018 18:59:44 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2 0/2] wrap format-patch diffstats around 72 columns
+Date:   Thu, 25 Jan 2018 18:59:25 +0700
+Message-Id: <20180125115927.16196-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.200.g71ee9f6994
+In-Reply-To: <20180122123154.8301-1-pclouds@gmail.com>
+References: <20180122123154.8301-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180125005511.GB26850@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25.01.2018 01:55, Jeff King wrote:
-> When we start git-daemon for our tests, we send its stderr
-> log stream to a named pipe. We synchronously read the first
-> line to make sure that the daemon started, and then dump the
-> rest to descriptor 4. This is handy for debugging test
-> output with "--verbose", but the tests themselves can't
-> access the log data.
-> 
-> Let's dump the log into a file, as well, so that future
-> tests can check the log. There are two subtleties worth
-> calling out here:
-> 
->   - we replace "cat" with a subshell loop around "read" to
->     ensure that there's no buffering (so that tests can be
->     sure that after a request has been served, the matching
->     log entries will have made it to the file)
+Like v1, these changes keep diffstat generated by format-patch in 72
+columns. This constant is already used in the code, so it's a bit
+better than my random "70 or 75" value.
 
-POSIX specifies the -u option for that behavior, can’t you use that?
-(GNU coreutils’ cat ignores it, since writing without delay is
-apparently its default behavior already.)
+Granted these hard coded values (both 80 and 72) are not really nice.
+But I would wait for somebody to say "I need or want this" before I
+add code to make the default configurable.
 
-> 
->   - we open the logfile for append, rather than just output.
->     That makes it OK for tests to truncate the logfile
->     without restarting the daemon (the OS will atomically
->     seek to the end of the file when outputting each line).
->     That allows tests to look at the log without worrying
->     about pollution from earlier tests.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/lib-git-daemon.sh | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-> index 987d40680b..19f3ffdbb1 100644
-> --- a/t/lib-git-daemon.sh
-> +++ b/t/lib-git-daemon.sh
-> @@ -53,11 +53,19 @@ start_git_daemon() {
->  		"$@" "$GIT_DAEMON_DOCUMENT_ROOT_PATH" \
->  		>&3 2>git_daemon_output &
->  	GIT_DAEMON_PID=$!
-> +	>daemon.log
->  	{
->  		read line <&7
-> +		echo "$line"
->  		echo >&4 "$line"
-> -		cat <&7 >&4 &
-> -	} 7<git_daemon_output &&
-> +		(
-> +			while read line <&7
-> +			do
-> +				echo "$line"
-> +				echo >&4 "$line"
-> +			done
-> +		) &
-> +	} 7<git_daemon_output >>"$TRASH_DIRECTORY/daemon.log" &&
->  
->  	# Check expected output
->  	if test x"$(expr "$line" : "\[[0-9]*\] \(.*\)")" != x"Ready to rumble"
-> 
+Nguyễn Thái Ngọc Duy (2):
+  format-patch: keep cover-letter diffstat wrapped in 72 columns
+  format-patch: reduce patch diffstat width to 72
 
-read without -r clobbers backslashes, and echo may interpret escape
-sequences. To faithfully reproduce the output, it would be better to use
-read -r and printf '%s\n' "$line", I think. (However, it looks like the
-existing code already uses read+echo, so I guess you could also keep
-that pattern in this change and then fix it in a later one.)
+ builtin/log.c          |  7 ++++++-
+ t/t4052-stat-output.sh | 28 ++++++++++++++--------------
+ 2 files changed, 20 insertions(+), 15 deletions(-)
+
+-- 
+2.16.1.200.g71ee9f6994
+
