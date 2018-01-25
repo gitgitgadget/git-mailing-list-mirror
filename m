@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 563681F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 23:28:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 251EF1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 23:35:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751599AbeAYX2g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:28:36 -0500
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:36013 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751578AbeAYX2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:28:34 -0500
-Received: by mail-yw0-f172.google.com with SMTP id q6so3620226ywg.3
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:28:34 -0800 (PST)
+        id S1751496AbeAYXfY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 18:35:24 -0500
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:44739 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751296AbeAYXfY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 18:35:24 -0500
+Received: by mail-yb0-f178.google.com with SMTP id z90so3717320ybh.11
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:35:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=UDPlNjCvoDVWoQu73Nwv38x6myrQteTttyUcC1X32R0=;
-        b=VPvM9ucLzEpdkJRqwArutJ1+SEf1tezkEAydfBJ/D3VGuRYIIN6vBC/9dk73izuajW
-         QaKrAnvgMIXc3sda2nbY+yZVn45VpnTUljO+F0dpu137eog5nz/mEbVI8Jaf3gHaOacZ
-         eHSF/a4XhWxu9y9PHuI4kVCwKIObxuSlJW96b7htJRyo6Blh3eOx7MWqZyfTFhRlbu4+
-         PhnHtZB6yHogCmJ8yeyPgYmpxJQkpdQUI1ImNAG2Jab7mBWU59GrSxVDQ0PyZOxx0GjE
-         gpH6/+UFJ0oDyJfkKXEkc9IT8eq+t9mL+uu2MdeTVoDinzF07CMgxJBF5N3jqBMBOsVj
-         4mjA==
+        bh=PV8Bw124Rqiv5/wBY58S/t4XJGgWUf17HnDhM2pZXxc=;
+        b=V6mXAGinmpy3TFO7UOusRisMuZss7n4R8D7Y669SYKEtN5Zjh19rGfsAwGbjONafoV
+         RtLDhfgT2T3S9zEvoEp8G8C9AiZt6VEavy2MRKX9jy+cOoC6tOfnkQ5sSI4n3HSuCF4w
+         8BQj/PZr/fCpdaS4yBtUh8HOyYpgwWa7KT/2/Xj2Oy9KuA4KS2OJtxkNJoIwwWuLESvi
+         qeqB30s5WpB+AYuB4sSETE/wHusV5H7kz6JssXiyBQIZyFHgBIh6A6/c/kWwYUZzGN1C
+         lNF2zlx4RLIFAshcAS7O+xQok1ZlEe6lcMFWPm7+A/i7ZNcfk2XJsNyRy0+pax4z2SI6
+         Dfhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=UDPlNjCvoDVWoQu73Nwv38x6myrQteTttyUcC1X32R0=;
-        b=KA23Hj+DAO+VSTtzXlsh8k4HN/gQmeuVCAXUx0t0METcjqIVbOGqcSUFnttwUlWHSz
-         R/JNyJQ9taUsfp5NcwlXT4t7Y4bayVVKR7YakjEVOBIprEknpi374kSiartaEEn4C8EJ
-         m2vDDNCU8y1/kDjcmkxN62OuNF6mFN7jyImswMnanV+aYTX3gf57eiFviyTuIO1pSTZr
-         Hm6fyYmYnzcZ6IreRGakbwsyu8CJHlxmAbd5c50pVGPb5EAGaJgqEPxY4YQVmxuwzKLp
-         tTB/co+qlFXZ365W/WSJ9rXXE/EnDKQ4zUCZaDdwv1tKSbS8D3sb2EGqxHKR6V3dnuG0
-         X8wQ==
-X-Gm-Message-State: AKwxyteXR4IjWo0FH99ApvxxfM0RT2sExTQuNEE02YD7F2Chg+D0BYOV
-        ehvAsFnmneDbyzC626dCR5lEYAvyGuJ0o49bvX2c3A==
-X-Google-Smtp-Source: AH8x227T+nY1ut7clsKMsEGB9kWt74UelEd4f4yLgB2OBCI7A3NKwuyx/dwH8YwIRA1JlxMpbg0BR7eMvwt8Rjfjf3k=
-X-Received: by 10.129.108.149 with SMTP id h143mr9777356ywc.373.1516922913411;
- Thu, 25 Jan 2018 15:28:33 -0800 (PST)
+        bh=PV8Bw124Rqiv5/wBY58S/t4XJGgWUf17HnDhM2pZXxc=;
+        b=oJoyFFaX84KWGyRNfw1HeUBxEZw/30O/8cH2XfiQ7uzlLHnqRxwx0GVxD98Y1vPB6C
+         c0YQ5U7UVWQt5yra4EIBaojooO1M7G0Z9J+k3s/dKBL8mKExyjfcssajozOxyzKBeXRW
+         tepozm9vcrEfmKi0i9IowYuBvTltSFOJit6PaSIZ3/AQFGWnz5x5hNByZvFAcMjsqo5v
+         qq2rTc9IhauNTnfg1+Q2/jmH9jsbVSw6OBPFbGhN+4o6gjUK6t519iFwSPJ05a6Zv3e/
+         N+k0Ey4ufOI0llOZAckJiM5CW9KROOzAQfVPagp6QtZol1Grl/MW3RhMFL4NRi8ZgdQ3
+         LsqA==
+X-Gm-Message-State: AKwxytcQpKM79HLqpn9s4HLf4bIZ8FT/wAufuq5q31xckomNmc0m5HsK
+        m/BcwTlQpjo5K44XCxvfFM3B/zx6xYa3DNdOQIS4xg==
+X-Google-Smtp-Source: AH8x226mtNFRhtEE+yOh34MMmY7WIcWqAMN2vyM1rXeYEjkRI7QR+FFCX6+FfBTqCPjc80mF5wE0B1yc8N/1XHiuK/A=
+X-Received: by 10.37.34.8 with SMTP id i8mr9941099ybi.114.1516923323304; Thu,
+ 25 Jan 2018 15:35:23 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.210.209 with HTTP; Thu, 25 Jan 2018 15:28:32 -0800 (PST)
-In-Reply-To: <20180125140231.65604-7-dstolee@microsoft.com>
-References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-7-dstolee@microsoft.com>
+Received: by 10.37.210.209 with HTTP; Thu, 25 Jan 2018 15:35:22 -0800 (PST)
+In-Reply-To: <20180125140231.65604-10-dstolee@microsoft.com>
+References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-10-dstolee@microsoft.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 25 Jan 2018 15:28:32 -0800
-Message-ID: <CAGZ79kYQfHc398w5QMATotLYaCZW+sPiY05gGx9pGFm4GzBE+A@mail.gmail.com>
-Subject: Re: [PATCH 06/14] packed-graph: implement git-graph --write
+Date:   Thu, 25 Jan 2018 15:35:22 -0800
+Message-ID: <CAGZ79kY9GD+ZiFCmAfUsJOqYOQg_a8FUzCiKwVST-_oLUPSnHg@mail.gmail.com>
+Subject: Re: [PATCH 09/14] packed-graph: implement git-graph --clear
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
@@ -65,13 +65,23 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
+> Teach Git to delete the current 'graph_head' file and the packed graph
+> it references. This is a good safety valve if somehow the file is
+> corrupted and needs to be recalculated. Since the packed graph is a
+> summary of contents already in the ODB, it can be regenerated.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 
-> +------------------------------------------------
-> +$ git midx --write
 
-midx?
+>  static int graph_read(void)
+>  {
+>         struct object_id graph_oid;
+> @@ -105,6 +130,8 @@ int cmd_graph(int argc, const char **argv, const char *prefix)
+>                 { OPTION_STRING, 'p', "pack-dir", &opts.pack_dir,
+>                         N_("dir"),
+>                         N_("The pack directory to store the graph") },
+> +               OPT_BOOL('c', "clear", &opts.clear,
+> +                       N_("clear graph file and graph-head")),
 
-> +test_done
-
-The tests basically tests that there is no segfault?
-Makes sense.
+Given the docs building up a large list of "Cannot be combined with",
+maybe these OPT_BOOLS want to be OPT_CMDMODE ?
