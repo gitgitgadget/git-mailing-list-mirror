@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A51F1F404
-	for <e@80x24.org>; Thu, 25 Jan 2018 23:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69FAA1F404
+	for <e@80x24.org>; Thu, 25 Jan 2018 23:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbeAYX7U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:59:20 -0500
-Received: from mail-yb0-f201.google.com ([209.85.213.201]:41928 "EHLO
-        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751588AbeAYX7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:59:16 -0500
-Received: by mail-yb0-f201.google.com with SMTP id b2so5823399ybk.8
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:59:16 -0800 (PST)
+        id S1751687AbeAYX7W (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 18:59:22 -0500
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:48938 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751588AbeAYX7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 18:59:21 -0500
+Received: by mail-vk0-f73.google.com with SMTP id o64so5015938vka.15
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:59:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=fPTQjOQwDjHh84EuztDgj+8ow1RjbCITsytGnqWD8Nc=;
-        b=sAiAzmI/qgx+LJFajJmC6isyq0xf/3fZik0c95UzUX7SCvgIf/lb/yMvyUgvBT9pm5
-         kHTp87eLlYe+HdKBdXmqB1Py7OweG6dGSc8roUrqTHSfJMTtNRY7Pm4W+U3mimXEhdVl
-         vEV+e8DqsPTjb5arTfgGseo0XY4zbRreyXiwdkf0v3cQGbWg8FZ/QOY5ZNcNznb3apR8
-         OPUCeCjkt/E3FBXRi60TEErg7HQSbA6/lUUsEDqbAA8NBkvzaCxe1yMPnPdUX+SggscW
-         P0noGta0TfyjyVar4ITF4naAsETRfo74T6UJLsrSnMkkBUcjt4nPrpqg8AozBkBuffJ7
-         wr8A==
+        bh=iGYSa+Us8LmLwPYBHW5z4jBOfVZTlLOQ7ckZ2uFlBWA=;
+        b=YpHx3xKhP+6rWygyvPoUEwEO0sJCU1p8WY8xxF8TwyOTEd/j05quriqmrS/O5m+z79
+         A9yxcENcw33hE6gCTOO+5bSYYjq3ICq4/G9MAP5aRJagrBsJ+LmW2J0umIb7NjNKIP5d
+         Dpi5+mniYIUyiuBv2Mlh4OTTyTiavTyBSU7MI7ozqwMhqcx1XwijdN4ovFkkKUyR0RKx
+         QBNvq+cx88KyH+oHnr+TlUbn/W+QaYmObj/JE7G6vFH6u1aQBZg0VXoDN6zMQZwOx1uA
+         DcV9TtDPa54/1opJaEFiANu7UmhcriVwfARBSyOOx9TCzid01e/kUDdG1A9GX1UIz4Zu
+         Lw3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=fPTQjOQwDjHh84EuztDgj+8ow1RjbCITsytGnqWD8Nc=;
-        b=r06frb4ng4chPT0c5qYndI7+Es1SGQosx35JcCOP5h1zMHk9OxepOSoyB4pjgYIeh3
-         RdV6ZARqT7hh5Oo1DkE/8hPUBDA/uubrjKubl3VN72u0Kr1nISHj67gC47F5belK0YqV
-         c+gEpij195JAoB0ppCOgVyM5o6Mtwlgr2/gwhjU5exPZzuBQ+MwObZSml8fcsOyQvBwm
-         L2zpMO/KE5hWJ2RjFPaRNrcr96wRIkOW817M+MQRX4vlFmpjt+WW7q2sVHDd0JHrpOBD
-         3Ho6Ldt/je26zonNBrOzRyI/CoVCmlj5gzHxux5WTXVHULK6pqfSbEurNFIJQX6qlGu0
-         yPIg==
-X-Gm-Message-State: AKwxytfmEBDyQTet3k/tvldGWZjzkc6D52irAb2NFd3Cg5v6+be4LNMI
-        ATiP+KxJVyZ8Np15a/8qVkQcAfHn6DXJoz0Y5TdbBBmFPbNYT3PKFwToGsMZ3BFtwSrFjGfsAi7
-        0vnDFWjoK73olyDTAkihF3SFnDpt0r/IeuCRDikxQtP+Zb187VH68DOGACg==
-X-Google-Smtp-Source: AH8x2277rytHU19DEs2VQ5NwCu7m52xsqSMirpJjpG8lT3yhv0d9G9OSbEEwkUPYNiK54HV6ypwaKHs4Tp8=
+        bh=iGYSa+Us8LmLwPYBHW5z4jBOfVZTlLOQ7ckZ2uFlBWA=;
+        b=g5vxCs1wVAv5Rum08UCAkAGWVJSCzALD4Wtw/lTt1kw5LUNdkWQhotzf1M94xAiNZC
+         qhW0EelQ/4BZty8lJQenbjlhbtJeh3J4cDIe6YX4l5aNaMMQIfJWwidSVojhRCYPf5Ir
+         SINF/mWXDW0cZkk9vbgNwps/hYiFONuh35x4VEZuS+FvUGIFp+JMelRT/8XRPaPCTQ9r
+         fEnjM5VEl7G/dE5Bv1BgBOMaSch+Rh0XxgnVKfRm4SeBweuXPZOLw3UeIqLR839QhC5k
+         +0ExpPW+GjIV+xu/wvE0PbgRVgGIPp/UICSraDImKQ3xvyVCxP7Mo25/bPdEhh+dPDAH
+         7ZOA==
+X-Gm-Message-State: AKwxytep7MHBdU1V9OMReZmYPA+f3p1DVs/CviRzLrXmtLFiuy8bQPK/
+        cLbUpdCpqIUYBVfr7yk2fnhYW/vN626nYuzej22DSi+vnTIlEUdmzbngtyrpq0/H03GmUzu3XNc
+        7kQu1Sm7pgzmWiWmBIvHIY4/BSDdZv7alprDCOKoHiGtnENuB2RtM231fAw==
+X-Google-Smtp-Source: AH8x22565DURAh2gTONI7adg7vQOdcn53LvZ4mRjsJdd0hLDdyQu+5dpzjUIF+DtCw5eXjpq1AeAKuQY37Q=
 MIME-Version: 1.0
-X-Received: by 10.37.58.69 with SMTP id h66mr5791402yba.50.1516924755716; Thu,
- 25 Jan 2018 15:59:15 -0800 (PST)
-Date:   Thu, 25 Jan 2018 15:58:25 -0800
+X-Received: by 10.176.10.9 with SMTP id q9mr5999815uah.103.1516924760317; Thu,
+ 25 Jan 2018 15:59:20 -0800 (PST)
+Date:   Thu, 25 Jan 2018 15:58:27 -0800
 In-Reply-To: <20180125235838.138135-1-bmwill@google.com>
-Message-Id: <20180125235838.138135-15-bmwill@google.com>
+Message-Id: <20180125235838.138135-17-bmwill@google.com>
 References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v2 14/27] connect: request remote refs using v2
+Subject: [PATCH v2 16/27] transport: convert transport_get_remote_refs to take
+ a list of ref patterns
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
@@ -64,279 +65,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the client to be able to request a remote's refs using protocol
-v2.  This is done by having a client issue a 'ls-refs' request to a v2
-server.
+Convert 'transport_get_remote_refs()' to optionally take a list of ref
+patterns.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/upload-pack.c  |  10 ++--
- connect.c              | 123 ++++++++++++++++++++++++++++++++++++++++++++++++-
- remote.h               |   4 ++
- t/t5702-protocol-v2.sh |  28 +++++++++++
- transport.c            |   2 +-
- 5 files changed, 160 insertions(+), 7 deletions(-)
- create mode 100755 t/t5702-protocol-v2.sh
+ builtin/clone.c     | 2 +-
+ builtin/fetch.c     | 4 ++--
+ builtin/ls-remote.c | 2 +-
+ builtin/remote.c    | 2 +-
+ transport.c         | 7 +++++--
+ transport.h         | 3 ++-
+ 6 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index 8d53e9794..a757df8da 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- #include "protocol.h"
- #include "upload-pack.h"
-+#include "serve.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 284651797..6e77d993f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1121,7 +1121,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (transport->smart_options && !deepen)
+ 		transport->smart_options->check_self_contained_and_connected = 1;
  
- static const char * const upload_pack_usage[] = {
- 	N_("git upload-pack [<options>] <dir>"),
-@@ -16,6 +17,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
- 	const char *dir;
- 	int strict = 0;
- 	struct upload_pack_options opts = { 0 };
-+	struct serve_options serve_opts = SERVE_OPTIONS_INIT;
- 	struct option options[] = {
- 		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
- 			 N_("quit after a single request/response exchange")),
-@@ -48,11 +50,9 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+-	refs = transport_get_remote_refs(transport);
++	refs = transport_get_remote_refs(transport, NULL);
  
- 	switch (determine_protocol_version_server()) {
- 	case protocol_v2:
--		/*
--		 * fetch support for protocol v2 has not been implemented yet,
--		 * so ignore the request to use v2 and fallback to using v0.
--		 */
--		upload_pack(&opts);
-+		serve_opts.advertise_capabilities = opts.advertise_refs;
-+		serve_opts.stateless_rpc = opts.stateless_rpc;
-+		serve(&serve_opts);
- 		break;
- 	case protocol_v1:
- 		/*
-diff --git a/connect.c b/connect.c
-index f2157a821..3c653b65b 100644
---- a/connect.c
-+++ b/connect.c
-@@ -12,9 +12,11 @@
- #include "sha1-array.h"
- #include "transport.h"
- #include "strbuf.h"
-+#include "version.h"
- #include "protocol.h"
+ 	if (refs) {
+ 		mapped_refs = wanted_peer_refs(refs, refspec);
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7bbcd26fa..850382f55 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -250,7 +250,7 @@ static void find_non_local_tags(struct transport *transport,
+ 	struct string_list_item *item = NULL;
  
- static char *server_capabilities;
-+static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
- static const char *parse_feature_value(const char *, const char *, int *);
+ 	for_each_ref(add_existing, &existing_refs);
+-	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
++	for (ref = transport_get_remote_refs(transport, NULL); ref; ref = ref->next) {
+ 		if (!starts_with(ref->name, "refs/tags/"))
+ 			continue;
  
- static int check_ref(const char *name, unsigned int flags)
-@@ -62,6 +64,33 @@ static void die_initial_contact(int unexpected)
- 		      "and the repository exists."));
- }
+@@ -336,7 +336,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
  
-+/* Checks if the server supports the capability 'c' */
-+static int server_supports_v2(const char *c, int die_on_error)
-+{
-+	int i;
-+
-+	for (i = 0; i < server_capabilities_v2.argc; i++) {
-+		const char *out;
-+		if (skip_prefix(server_capabilities_v2.argv[i], c, &out) &&
-+		    (!*out || *out == '='))
-+			return 1;
-+	}
-+
-+	if (die_on_error)
-+		die("server doesn't support '%s'", c);
-+
-+	return 0;
-+}
-+
-+static void process_capabilities_v2(struct packet_reader *reader)
-+{
-+	while (packet_reader_read(reader) == PACKET_READ_NORMAL)
-+		argv_array_push(&server_capabilities_v2, reader->line);
-+
-+	if (reader->status != PACKET_READ_FLUSH)
-+		die("protocol error");
-+}
-+
- enum protocol_version discover_version(struct packet_reader *reader)
- {
- 	enum protocol_version version = protocol_unknown_version;
-@@ -85,7 +114,7 @@ enum protocol_version discover_version(struct packet_reader *reader)
- 	/* Maybe process capabilities here, at least for v2 */
- 	switch (version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		process_capabilities_v2(reader);
- 		break;
- 	case protocol_v1:
- 		/* Read the peeked version line */
-@@ -293,6 +322,98 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- 	return list;
- }
+-	const struct ref *remote_refs = transport_get_remote_refs(transport);
++	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
  
-+static int process_ref_v2(const char *line, struct ref ***list)
-+{
-+	int ret = 1;
-+	int i = 0;
-+	struct object_id old_oid;
-+	struct ref *ref;
-+	struct string_list line_sections = STRING_LIST_INIT_DUP;
-+
-+	if (string_list_split(&line_sections, line, ' ', -1) < 2) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	if (get_oid_hex(line_sections.items[i++].string, &old_oid)) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	ref = alloc_ref(line_sections.items[i++].string);
-+
-+	oidcpy(&ref->old_oid, &old_oid);
-+	**list = ref;
-+	*list = &ref->next;
-+
-+	for (; i < line_sections.nr; i++) {
-+		const char *arg = line_sections.items[i].string;
-+		if (skip_prefix(arg, "symref-target:", &arg))
-+			ref->symref = xstrdup(arg);
-+
-+		if (skip_prefix(arg, "peeled:", &arg)) {
-+			struct object_id peeled_oid;
-+			char *peeled_name;
-+			struct ref *peeled;
-+			if (get_oid_hex(arg, &peeled_oid)) {
-+				ret = 0;
-+				goto out;
-+			}
-+
-+			peeled_name = xstrfmt("%s^{}", ref->name);
-+			peeled = alloc_ref(peeled_name);
-+
-+			oidcpy(&peeled->old_oid, &peeled_oid);
-+			**list = peeled;
-+			*list = &peeled->next;
-+
-+			free(peeled_name);
-+		}
-+	}
-+
-+out:
-+	string_list_clear(&line_sections, 0);
-+	return ret;
-+}
-+
-+struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-+			     struct ref **list, int for_push,
-+			     const struct argv_array *ref_patterns)
-+{
-+	int i;
-+	*list = NULL;
-+
-+	/* Check that the server supports the ls-refs command */
-+	/* Issue request for ls-refs */
-+	if (server_supports_v2("ls-refs", 1))
-+		packet_write_fmt(fd_out, "command=ls-refs\n");
-+
-+	if (server_supports_v2("agent", 0))
-+	    packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
-+
-+	packet_delim(fd_out);
-+	/* When pushing we don't want to request the peeled tags */
-+	if (!for_push)
-+		packet_write_fmt(fd_out, "peel\n");
-+	packet_write_fmt(fd_out, "symrefs\n");
-+	for (i = 0; ref_patterns && i < ref_patterns->argc; i++) {
-+		packet_write_fmt(fd_out, "ref-pattern %s\n",
-+				 ref_patterns->argv[i]);
-+	}
-+	packet_flush(fd_out);
-+
-+	/* Process response from server */
-+	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-+		if (!process_ref_v2(reader->line, &list))
-+			die("invalid ls-refs response: %s", reader->line);
-+	}
-+
-+	if (reader->status != PACKET_READ_FLUSH)
-+		die("protocol error");
-+
-+	return list;
-+}
-+
- static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
- {
- 	int len;
-diff --git a/remote.h b/remote.h
-index 2016461df..21d0c776c 100644
---- a/remote.h
-+++ b/remote.h
-@@ -151,10 +151,14 @@ void free_refs(struct ref *ref);
+ 	if (refspec_count) {
+ 		struct refspec *fetch_refspec;
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index c4be98ab9..c6e9847c5 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -96,7 +96,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	if (uploadpack != NULL)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
  
- struct oid_array;
- struct packet_reader;
-+struct argv_array;
- extern struct ref **get_remote_heads(struct packet_reader *reader,
- 				     struct ref **list, unsigned int flags,
- 				     struct oid_array *extra_have,
- 				     struct oid_array *shallow_points);
-+extern struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
-+				    struct ref **list, int for_push,
-+				    const struct argv_array *ref_patterns);
+-	ref = transport_get_remote_refs(transport);
++	ref = transport_get_remote_refs(transport, NULL);
+ 	if (transport_disconnect(transport))
+ 		return 1;
  
- int resolve_remote_symref(struct ref *ref, struct ref *list);
- int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-new file mode 100755
-index 000000000..4bf4d61ac
---- /dev/null
-+++ b/t/t5702-protocol-v2.sh
-@@ -0,0 +1,28 @@
-+#!/bin/sh
-+
-+test_description='test git wire-protocol version 2'
-+
-+TEST_NO_CREATE_REPO=1
-+
-+. ./test-lib.sh
-+
-+# Test protocol v2 with 'file://' transport
-+#
-+test_expect_success 'create repo to be served by file:// transport' '
-+	git init file_parent &&
-+	test_commit -C file_parent one
-+'
-+
-+test_expect_success 'list refs with file:// using protocol v2' '
-+	GIT_TRACE_PACKET=1 git -c protocol.version=2 \
-+		ls-remote --symref "file://$(pwd)/file_parent" >actual 2>log &&
-+
-+	# Server responded using protocol v2
-+	cat log &&
-+	grep "git< version 2" log &&
-+
-+	git ls-remote --symref "file://$(pwd)/file_parent" >expect &&
-+	test_cmp actual expect
-+'
-+
-+test_done
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c..d0b6ff6e2 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -862,7 +862,7 @@ static int get_remote_ref_states(const char *name,
+ 	if (query) {
+ 		transport = transport_get(states->remote, states->remote->url_nr > 0 ?
+ 			states->remote->url[0] : NULL);
+-		remote_refs = transport_get_remote_refs(transport);
++		remote_refs = transport_get_remote_refs(transport, NULL);
+ 		transport_disconnect(transport);
+ 
+ 		states->queried = 1;
 diff --git a/transport.c b/transport.c
-index 83d9dd1df..ffc6b2614 100644
+index c54a44630..dfc603b36 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -204,7 +204,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		die("support for protocol v2 not implemented yet");
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
+@@ -1136,10 +1136,13 @@ int transport_push(struct transport *transport,
+ 	return 1;
+ }
+ 
+-const struct ref *transport_get_remote_refs(struct transport *transport)
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_patterns)
+ {
+ 	if (!transport->got_remote_refs) {
+-		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
++		transport->remote_refs =
++			transport->vtable->get_refs_list(transport, 0,
++							 ref_patterns);
+ 		transport->got_remote_refs = 1;
+ 	}
+ 
+diff --git a/transport.h b/transport.h
+index 731c78b67..4b656f315 100644
+--- a/transport.h
++++ b/transport.h
+@@ -178,7 +178,8 @@ int transport_push(struct transport *connection,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   unsigned int * reject_reasons);
+ 
+-const struct ref *transport_get_remote_refs(struct transport *transport);
++const struct ref *transport_get_remote_refs(struct transport *transport,
++					    const struct argv_array *ref_patterns);
+ 
+ int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
