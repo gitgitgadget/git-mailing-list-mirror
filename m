@@ -2,120 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C6D61F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CDB61F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752926AbeAZTUG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:20:06 -0500
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:35346 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752543AbeAZTUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 14:20:03 -0500
-Received: by mail-ua0-f194.google.com with SMTP id x33so969550uac.2
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:20:03 -0800 (PST)
+        id S1752939AbeAZTXO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:23:14 -0500
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:37730 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752872AbeAZTXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 14:23:10 -0500
+Received: by mail-pf0-f175.google.com with SMTP id p1so894233pfh.4
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:23:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1umYs29Mh8I9iz38y5AY7phwteZW2xUUzs/n7luByYE=;
-        b=p1WWq8d/bMZo4BVMeehgcwhTGhuciGmdKAeGCZ9D1nLrHMCcSJokiX0T7A5xblzTHN
-         H+kfdAqBS4oJoq5QPgbgc4Sq4OHuP5RX1RX9PdgaojXO+V33nP1JCwCYm6XAfpyIlYt6
-         xdGy9Jd9TQUrTFt0I4d/8wHFwklg0/ws9/BfnuJZcYzpi74fyzu2a48xhS8UvRer3t2K
-         WsC83lm1bbDsVrpwhbRlQq2oaAAhBaCim14r7d1EpugIbTG8JFkCM6pRFRjBNZeGmaNB
-         COH0GCLo1z2oqTJnwS0G39fdrZL0ldUkgjHOKzd+E51zjZTaibjvBRdQdDQQ8kxckcgE
-         lp9A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5vKfJrz8TAV/QX+DC7QCP7PJauietB+hbam+ko293Jo=;
+        b=fzrA/CpqUIEXclfk2gRzsfOm0zWFabKkNP3HIoQRB/vnSqX22lXNzvU4sTuxzFQlFV
+         YX7ChQy2u6AdMd1qtouExuPPMuwgxGWclGKFHMrTWRWldmGwyqI8PBzapx55KpIkCIx/
+         a+sg6v94VgbT1hlBuxRIHiEFf0S3metO2HMM8V2969wdlcJO5mlaX8OcZlFTB+SkGqR+
+         Yun60/e67kANP78nZNTgWbnSCtBnwsb0kC5jspd7onEl+Nwm2VQOcDY4ZmgTeRdV64YA
+         UgdHdsqcS38bR47uvXqnbsuYPwcXwy4ipG5rmkrGAZsjl+XogpuChp1mzEH81SeSukQW
+         2XjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1umYs29Mh8I9iz38y5AY7phwteZW2xUUzs/n7luByYE=;
-        b=YoTafOoY1MYnZQ5kv/mQIuXdMrINTgfJrT2fzIvWRzbA6DRUpQzKECve4iyIirQ0/F
-         kqAKK7YDq9tK61vWQi+irt7o/Glw1rqmT8jGvrdZAbeeYr0b4zZES3ea8zRGYjH+Xu4I
-         WQax22khmBM3EQZjo2wNLNg7ObBFz2RX3omGi01Ytl3YOz2P6wFHcrZXp1YHz8Vg8Y+I
-         BimvBMMhC7iZ6hD2R1X54DCGUi2iOFgv7VcBeCrxWGBWVtSWdf2lh2ZecFmPRhl64hPd
-         Wpbx/LmZlE0yp6gWLN+1KTu8xh3Rhf7mWom5JakvmYtzvY9p5dR/CwQX/peiUxCmxa42
-         yseg==
-X-Gm-Message-State: AKwxytdE1kPZqL3twh2M6NK0iuPPpT57+DT3PqaW4saBoIGrrE/a23Rt
-        Xf9hX/JKbPUEZTFIqjCFS+dCKzlcgPtIBj9mzhI=
-X-Google-Smtp-Source: AH8x227vXcrXT3VuQexIRbL2aOzknH9pmAqe4ZNk/nTAqESRUxA1E7e/5394a90fwnQC5T1KlVAyoXBhlhLJsrDarbk=
-X-Received: by 10.176.76.43 with SMTP id l43mr10741420uaf.93.1516994402998;
- Fri, 26 Jan 2018 11:20:02 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Fri, 26 Jan 2018 11:20:02 -0800 (PST)
-In-Reply-To: <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
-References: <20180126123708.21722-1-szeder.dev@gmail.com> <20180126123708.21722-6-szeder.dev@gmail.com>
- <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 26 Jan 2018 20:20:02 +0100
-Message-ID: <CAM0VKjm0uveCRpNy8H+inwTKa6fzHAjGn=f9tmQ4p1MCWGuirQ@mail.gmail.com>
-Subject: Re: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5vKfJrz8TAV/QX+DC7QCP7PJauietB+hbam+ko293Jo=;
+        b=dJ2XqMg6+MZTKFLDgy3d2m2+bRYVYhVgRmBIhxTFD9pFtUU4sfFo5cJE1glbVgvorn
+         j9r6/F0d091AhemM6mlXFujTfH2lkRoxJz/cR3zsUgIJmbtYcA7DMwJ9xv2iCdaMd+j9
+         J/K/qA1i95y4V/ecgXANVR8+Fw3cyk7YEp2GIoJ8pAbIhQ/fpWHRa9MOSU2d64TW5PG5
+         tIeAwAtTzWcgXXRib0o+CnZh5l1fy0fOa1VRVcv66Soa9nPCUds43BPmLcYJIczBPIRA
+         OhBhL+5gieEg7SMtoWC+uLOVoWk0DzeG5ZUCF+JZP58MD7fLOwHmpKmGinRxbZY7FKQ1
+         CWHg==
+X-Gm-Message-State: AKwxytfmGCZwBdUXAL86KYm2luok48HEXvOdDc5Ap27BmOSct48YX9Az
+        qmH6Ls5MIrAkp92lUmMCaC4=
+X-Google-Smtp-Source: AH8x227Azd4rmSfb9e8DVX9nJLLXSesmAO2IzHVySvbeU828UWGNPEod/7q2Qfz8iFI1SQsBH4lEnw==
+X-Received: by 2002:a17:902:aa88:: with SMTP id d8-v6mr14789335plr.171.1516994589869;
+        Fri, 26 Jan 2018 11:23:09 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id o69sm21210279pfj.32.2018.01.26.11.23.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 11:23:09 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
+References: <20180126123708.21722-1-szeder.dev@gmail.com>
+        <20180126123708.21722-6-szeder.dev@gmail.com>
+        <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
+        <CAM0VKjm0uveCRpNy8H+inwTKa6fzHAjGn=f9tmQ4p1MCWGuirQ@mail.gmail.com>
+Date:   Fri, 26 Jan 2018 11:23:08 -0800
+In-Reply-To: <CAM0VKjm0uveCRpNy8H+inwTKa6fzHAjGn=f9tmQ4p1MCWGuirQ@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 26 Jan 2018 20:20:02
+ +0100")
+Message-ID: <xmqqk1w477c3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 7:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->
->> One of the tests in 't5510-fetch.sh' checks the output of 'git fetch'
->> using 'test_i18ngrep', and while doing so it prefilters the output
->> with 'grep' before piping the result into 'test_i18ngrep'.
->>
->> This prefiltering is unnecessary, with the appropriate pattern
->> 'test_i18ngrep' can do it all by itself.  Furthermore, piping data
->> into 'test_i18ngrep' will interfere with the linting that will be
->> added in a later patch.
->
-> It is very likely that the prefiltering "grep" will not even see
-> what it is looking for under GETTEXT_POISON build in the first
-> place, so this conversion is the right thing to do from that point
-> of view as well.
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-No, GETTEXT_POISON only affects the translated messages, but those
-'grep' invocations looked only at refnames and formatting.
+> No, GETTEXT_POISON only affects the translated messages, but those
+> 'grep' invocations looked only at refnames and formatting.
 
-This is the GETTEXT_POISON-ed output of 'git fetch' in that test
-(probably will get line-wrapped):
-
-# GETTEXT POISON # * # GETTEXT POISON # descriptive-branch ->
-refs/crazyheads/descriptive-branch
- * # GETTEXT POISON # refs/others/crazy  -> crazy
- * # GETTEXT POISON # descriptive-tag    -> descriptive-tag
-
-
->> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->> ---
->>  t/t5510-fetch.sh | 9 +++------
->>  1 file changed, 3 insertions(+), 6 deletions(-)
->>
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index 668c54be4..3debc87d4 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -222,12 +222,9 @@ test_expect_success 'fetch uses remote ref names to=
- describe new refs' '
->>       (
->>               cd descriptive &&
->>               git fetch o 2>actual &&
->> -             grep " -> refs/crazyheads/descriptive-branch$" actual |
->> -             test_i18ngrep "new branch" &&
->> -             grep " -> descriptive-tag$" actual |
->> -             test_i18ngrep "new tag" &&
->> -             grep " -> crazy$" actual |
->> -             test_i18ngrep "new ref"
->> +             test_i18ngrep "new branch.* -> refs/crazyheads/descriptive=
--branch$" actual &&
->> +             test_i18ngrep "new tag.* -> descriptive-tag$" actual &&
->> +             test_i18ngrep "new ref.* -> crazy$" actual
->>       ) &&
->>       git checkout master
->>  '
+You are right for this specific case, but I was talking more from
+general principle---running test_i18ngrep on an output from grep
+should be flagged as anti-pattern (I recall vaguly finding an
+instance not in too distant past).
