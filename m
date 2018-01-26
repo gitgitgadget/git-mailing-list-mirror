@@ -2,213 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DB7C1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 00:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8453F1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 00:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751736AbeAYX65 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 Jan 2018 18:58:57 -0500
-Received: from mail-ot0-f202.google.com ([74.125.82.202]:55295 "EHLO
-        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751697AbeAYX6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 Jan 2018 18:58:55 -0500
-Received: by mail-ot0-f202.google.com with SMTP id 40so5942607otv.21
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 15:58:55 -0800 (PST)
+        id S1751682AbeAZAV1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 Jan 2018 19:21:27 -0500
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:41146 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751662AbeAZAV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 Jan 2018 19:21:26 -0500
+Received: by mail-wr0-f170.google.com with SMTP id v15so9370262wrb.8
+        for <git@vger.kernel.org>; Thu, 25 Jan 2018 16:21:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=PoPTneuj8NTTU/fFEn1x9koX3PYfoDoyEjXKEnL/YoM=;
-        b=YRTzm9GAFJFrnqD4PIEtVLOeUJS2iuALmQCRpi8232Ss2dyE7UbnvIH7AH55sWPknj
-         VlVbtblwNO3SMZdUrDi1UPsxLBz8iBMmjsodKRBmKw5BqlLKtvgt8HK54rJYOFP5CEh4
-         Qq2ms783n0fJsQQp3K6e1dShUHlSDMZpdSsrurompd3Yo53GmP87PEJtsrlLhoCHRqjH
-         XqgvdOnxMCPHF6IlyTpC4y8xfWp9upQ4Do0bR6InsT4aaOpMpmw0b+uzZHFK/Wju8F7N
-         OPIsH8swZgLkbZufxRDou3nW2kmbHOMFbn/eFb1yOlAFo9+LQ2JXpjscVvAbyeVVAfyg
-         m+aw==
+        bh=Bq0vj2+AiD8OKMgGdlN2L8n6czlCBjheiXMjQ6JhNkM=;
+        b=t4xGeWuUeCb6RB2E7dViEqtrimAvIvfFRgJw38pxK6lQI3nNFh+yaYLhMwuhRSyN/9
+         OyWGlPj5o+PzVj05AMveEFnF8j8xLwgWns8tgbxDpuTiUkB/NUL3P5pRRhepJyGm8ogO
+         7NH2h+HkUex4UMiEouNidQQM/VZ0berLIdmC2sXkk1ocEOEu5X+r9bY5tsxkAFaGq6L7
+         XT/Ep+7kB6+37Fvn0HeJnFwjqKq4ewd1m5EvKkG6BNzZ/kyn0xNe4mrM0hZF7V/ygQsf
+         dxMm0jZuXcTE/QXnxc8y+moYPnDdp4MEKulYFw4EMWfxRkyi0zdKkAz3h0Y5xXnlSTQp
+         mZtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=PoPTneuj8NTTU/fFEn1x9koX3PYfoDoyEjXKEnL/YoM=;
-        b=E/8v4/I+mVcmTNMmtIJHWDZ95dZ9WtaP1ZGz9W5PeWFKE4xqCTfES7XOdFKovfm3Gb
-         43AbUbUL9tzEy3dtP4RhrLPqyHieaF4UX2CF3+IDvsDb/ojDYvG6JUftHuwwN+mIfQ7n
-         awR8bDnhOdKKpdkl9iB860zuo8nKZqvBs47A/sbcLaCl56Hzyxf7SNb3A/hENSiIwlPe
-         ngEMroMaqDGIyOgOAUb6tywittdSEPdEBxf3bE+ExGmAC4KR0ZyLsIf3aFsqPkQFlP1r
-         HACiEgPjQGgAX7Kk9FblZT3oG1TvjX68PX7Z7EDnyKj6/yKRMys+yThsFAENnOU5tDt4
-         HjFg==
-X-Gm-Message-State: AKwxytd0HaTHVQVLpqP440GU7QTfrT8Eyla69vydKCJi4wgpkeKEx85v
-        ll69sipVZjOJDpkPb15LaAEaxu4sZMtwvv7HXEe/OGQILEw0f1WYsu8fR1qlBlT4JxbalDen3KD
-        dQD2qV/DrPny0Acd6mLEBRSNpA4inkWICK0fd1W0JUds/EtzSod+gxQeKEA==
-X-Google-Smtp-Source: AH8x2276fxj9Un78oFJOXOIc8GwLc9vNIpUAd4ouw4w1dl1sfeHn3Dqyb7nB4DG623OBnfBeVabJ8drw1mI=
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Bq0vj2+AiD8OKMgGdlN2L8n6czlCBjheiXMjQ6JhNkM=;
+        b=O1yyLSCwzUT1jWeyQmzstx2Rck3WyUZs1R9d3bIJMbYlWnFq9VeY5d23pcxAiUcamy
+         EmhPcEQukRGGHI+Z63lyjOEc11GaxazvFxNKhdDECcGukPNXfU2NHER+1jnSIabV5LK3
+         fxUulO5RgXgcCvXKTHQTioS8pk3+4RzvqBLShB6Ip+XuyfmapRnlIt4ubVvnz4E0/NKP
+         vI39qU69Ei8DYZrAsqrTURfRzSB4S8Xr60ZXG5s77I5h8/DkN5w/sfo9QneA/Y6+CYl8
+         AkCvQvAP6blLptbWfAYHA9WkPXAP+ZyYMs+f33BqSTSaLHgmCao6/ZO1HnwSbjvvVJeu
+         yHJQ==
+X-Gm-Message-State: AKwxytclo3hii5wrG5d++O/hIZ6xDCFMyWUyMP3ivhkgMbmWd2hOvPTV
+        0v4D26O4xTUoCGrZpBFD3ZqSuConoeo1fNkjgTQ=
+X-Google-Smtp-Source: AH8x2254dy/zm+Ojnew3aB91qQteNxTr/9eYLJxfQp65nVvmHJ3RizXDVnnu0UFjoJL7X0OlKXj/SS3AAidbYaNvYFg=
+X-Received: by 10.223.152.83 with SMTP id v77mr4272174wrb.233.1516926084664;
+ Thu, 25 Jan 2018 16:21:24 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.157.89.162 with SMTP id u34mr7307oth.83.1516924735161; Thu,
- 25 Jan 2018 15:58:55 -0800 (PST)
-Date:   Thu, 25 Jan 2018 15:58:16 -0800
-In-Reply-To: <20180125235838.138135-1-bmwill@google.com>
-Message-Id: <20180125235838.138135-6-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
-X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v2 05/27] upload-pack: factor out processing lines
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
-        philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com,
-        Brandon Williams <bmwill@google.com>
+Received: by 10.223.155.199 with HTTP; Thu, 25 Jan 2018 16:21:24 -0800 (PST)
+In-Reply-To: <ee5185b1-7820-b2ac-1bde-da1c761fa594@jeffhostetler.com>
+References: <20180123001648.24260-1-isaachier@gmail.com> <675fa58d-bff3-d7e4-5fac-ecf1401932f4@jeffhostetler.com>
+ <CAG6xkCbe+pLwTCButZGdPucHoRCq-a8mWfifd6z2bzGZNseE9A@mail.gmail.com> <ee5185b1-7820-b2ac-1bde-da1c761fa594@jeffhostetler.com>
+From:   Isaac Hier <isaachier@gmail.com>
+Date:   Thu, 25 Jan 2018 19:21:24 -0500
+Message-ID: <CAG6xkCa_nKtzhJJq=v7gazWe+8FnN3mz1vDftzZw2WUFqJ1bzw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Implement CMake build
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the logic for processing shallow, deepen, deepen_since, and
-deepen_not lines into their own functions to simplify the
-'receive_needs()' function in addition to making it easier to reuse some
-of this logic when implementing protocol_v2.
+Hi Jeff,
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- upload-pack.c | 113 ++++++++++++++++++++++++++++++++++++++--------------------
- 1 file changed, 74 insertions(+), 39 deletions(-)
+I have been looking at the build generator, which looks promising, but
+I have one concern. Assuming I can generate a CMakeLists.txt that
+appropriately updates the library sources, etc. how do you suggest I
+handle new portability macros? For example, assume someone adds a
+macro HAVE_X to indicate the availability of some platform-specific
+function x. In the current Makefile, a comment would be added to the
+top indicating when HAVE_X or NO_X should be set, and that option
+would toggle the HAVE_X C macro. But CMake can test for the
+availability of x, which is one of the main motives for adding a CMake
+build. The current build generator uses the output of make, so all it
+would know is whether or not HAVE_X is defined on the platform that
+ran the Makefile, but not the entire list of platform that git
+supports.
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 2ad73a98b..42d83d5b1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
- 	packet_flush(1);
- }
- 
-+static int process_shallow(const char *line, struct object_array *shallows)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "shallow ", &arg)) {
-+		struct object_id oid;
-+		struct object *object;
-+		if (get_oid_hex(arg, &oid))
-+			die("invalid shallow line: %s", line);
-+		object = parse_object(&oid);
-+		if (!object)
-+			return 1;
-+		if (object->type != OBJ_COMMIT)
-+			die("invalid shallow object %s", oid_to_hex(&oid));
-+		if (!(object->flags & CLIENT_SHALLOW)) {
-+			object->flags |= CLIENT_SHALLOW;
-+			add_object_array(object, NULL, shallows);
-+		}
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int process_deepen(const char *line, int *depth)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "deepen ", &arg)) {
-+		char *end = NULL;
-+		*depth = (int) strtol(arg, &end, 0);
-+		if (!end || *end || *depth <= 0)
-+			die("Invalid deepen: %s", line);
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "deepen-since ", &arg)) {
-+		char *end = NULL;
-+		*deepen_since = parse_timestamp(arg, &end, 0);
-+		if (!end || *end || !deepen_since ||
-+		    /* revisions.c's max_age -1 is special */
-+		    *deepen_since == -1)
-+			die("Invalid deepen-since: %s", line);
-+		*deepen_rev_list = 1;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
-+{
-+	const char *arg;
-+	if (skip_prefix(line, "deepen-not ", &arg)) {
-+		char *ref = NULL;
-+		struct object_id oid;
-+		if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
-+			die("git upload-pack: ambiguous deepen-not: %s", line);
-+		string_list_append(deepen_not, ref);
-+		free(ref);
-+		*deepen_rev_list = 1;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- static void receive_needs(void)
- {
- 	struct object_array shallows = OBJECT_ARRAY_INIT;
-@@ -745,49 +814,15 @@ static void receive_needs(void)
- 		if (!line)
- 			break;
- 
--		if (skip_prefix(line, "shallow ", &arg)) {
--			struct object_id oid;
--			struct object *object;
--			if (get_oid_hex(arg, &oid))
--				die("invalid shallow line: %s", line);
--			object = parse_object(&oid);
--			if (!object)
--				continue;
--			if (object->type != OBJ_COMMIT)
--				die("invalid shallow object %s", oid_to_hex(&oid));
--			if (!(object->flags & CLIENT_SHALLOW)) {
--				object->flags |= CLIENT_SHALLOW;
--				add_object_array(object, NULL, &shallows);
--			}
-+		if (process_shallow(line, &shallows))
- 			continue;
--		}
--		if (skip_prefix(line, "deepen ", &arg)) {
--			char *end = NULL;
--			depth = strtol(arg, &end, 0);
--			if (!end || *end || depth <= 0)
--				die("Invalid deepen: %s", line);
-+		if (process_deepen(line, &depth))
- 			continue;
--		}
--		if (skip_prefix(line, "deepen-since ", &arg)) {
--			char *end = NULL;
--			deepen_since = parse_timestamp(arg, &end, 0);
--			if (!end || *end || !deepen_since ||
--			    /* revisions.c's max_age -1 is special */
--			    deepen_since == -1)
--				die("Invalid deepen-since: %s", line);
--			deepen_rev_list = 1;
-+		if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
- 			continue;
--		}
--		if (skip_prefix(line, "deepen-not ", &arg)) {
--			char *ref = NULL;
--			struct object_id oid;
--			if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
--				die("git upload-pack: ambiguous deepen-not: %s", line);
--			string_list_append(&deepen_not, ref);
--			free(ref);
--			deepen_rev_list = 1;
-+		if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
- 			continue;
--		}
-+
- 		if (!skip_prefix(line, "want ", &arg) ||
- 		    get_oid_hex(arg, &oid_buf))
- 			die("git upload-pack: protocol error, "
--- 
-2.16.0.rc1.238.g530d649a79-goog
+Bottom line: should I add the portability tests as they are now,
+without accounting for future portability macros? One good alternative
+might be to suggest the authors of new portability macros include a
+small sample C program to test it. That would allow me to easily patch
+the CMake tests whenever that came up. In a best case scenario, a
+practice could be established to write the test in a specific
+directory with a certain name so that I could automatically update the
+CMake tests from the build generator.
 
+Thanks for the help,
+
+Isaac
+
+On Wed, Jan 24, 2018 at 4:00 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>
+>
+> On 1/24/2018 2:59 PM, Isaac Hier wrote:
+>>
+>> Jeff, no worries, fair enough. I know https://github.com/grpc/grpc
+>> uses a shared file to generate code for several build systems instead
+>> of maintaining them individually. I plan on doing the work anyway just
+>> because I have my own reasons to use CMake in Git (for packaging in
+>> https://github.com/ruslo/hunter is my main motive here). Whether or
+>> not it is maintained upstream is not a real concern for me at the
+>> moment.
+>
+> [...]
+>>
+>> I'll see how the Windows build currently works and if that makes
+>> sense, maybe I'll try using that build generator here too.
+>>
+>> Thanks for the feedback,
+>>
+>> Isaac
+>
+>
+> Look at the "vcxproj:" target in config.mak.uname (in the GfW repo).
+>
+> Jeff
