@@ -2,99 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F15AE1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 16:55:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C84FF1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 17:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751281AbeAZQzo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 11:55:44 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:42892 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751112AbeAZQzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 11:55:43 -0500
-Received: by mail-vk0-f65.google.com with SMTP id t4so664011vkb.9
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 08:55:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PyRnTV6naR7wzhcsUhQ3FIVOA/Mxaiu2yFJsMGOw4PQ=;
-        b=O80Lug5jmICNcuZUzxjg6teUv5UzdZ71BSyHZo+1gz2U680Bqfb4Qpi9ZR6vronoXA
-         CYTXFK8/1zxpZ4sxxaCtJby1lPgWuLN0/Yltsy3NZ7hxvwBS8WsBdzBCzaPeAUriHhxH
-         HWEKRd/g8eMl54zQggoH4Z2XmGFY6mf5Rc9zI3O/ykE3LtJxlgunKbL0XrMf7PDEP0Xi
-         5704mNBQU/j1nouRm/DFhDkmn8G6aIP5MLgoHwI8AUskJkhdYnCg99kfwKdbbrKDrfe4
-         jXCSYCsnTrmrQs2qx+FDlgSY5/5kM0zLPa7y5uChBNG7dcd/pgeaktPa71Ikvx6/PZW3
-         l9/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PyRnTV6naR7wzhcsUhQ3FIVOA/Mxaiu2yFJsMGOw4PQ=;
-        b=OjMqmYbrw1wRInExtBYtu3xpbpcQYaPDlV53jfaeqcRFUT3SCigRzaY4FIKQlGc1M2
-         u17ZKI7va5eRT7p9nmBNO494L8jqbPjTLuxvqA+gkmlgWDWYv54kIILeWLUAuLhvFyji
-         XA53lqdoYQIzSvOHqc709HMcR26ezcgBo/IeQtXreMwPEVKJVCezVaNsRbg5ERVCLPy5
-         VhgtiUPLmVJvxvFRvJiv8diw6gCzVS9xF0ofWkZdB0PjZ3ZX0uqtA9no309fNwJssTGT
-         8wE1vdoOIG/ZJCvd33+cxqy8kiNyJ928Zu8r1mLGc2lI67W+fvMRSOEvsNSoFSC9z9DR
-         LVlw==
-X-Gm-Message-State: AKwxytf+19UgKj9RNu47D0AVpW/TyR91ixp9HGO6iDC8LhmcAzbyMg9R
-        yx6D7BIp8Ovd8lGa48KvTrOVCP/6q8kiG5KAGE4=
-X-Google-Smtp-Source: AH8x2253lUIFFOcbLgb4Am8xSi+GAXdImfR0rOJChIaqOy4acZsBSI+mCu9jNnNGcBFrI5jAtp3WkfmjOAkqxVp4A6s=
-X-Received: by 10.31.92.142 with SMTP id q136mr10476251vkb.29.1516985743086;
- Fri, 26 Jan 2018 08:55:43 -0800 (PST)
+        id S1751638AbeAZRez (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 12:34:55 -0500
+Received: from siwi.pair.com ([209.68.5.199]:29367 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751403AbeAZRey (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 12:34:54 -0500
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 523AC8450D;
+        Fri, 26 Jan 2018 12:34:53 -0500 (EST)
+Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7CCB3844F8;
+        Fri, 26 Jan 2018 12:34:52 -0500 (EST)
+Subject: Re: [RFC PATCH 0/1] Implement CMake build
+To:     Isaac Hier <isaachier@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180123001648.24260-1-isaachier@gmail.com>
+ <675fa58d-bff3-d7e4-5fac-ecf1401932f4@jeffhostetler.com>
+ <CAG6xkCbe+pLwTCButZGdPucHoRCq-a8mWfifd6z2bzGZNseE9A@mail.gmail.com>
+ <ee5185b1-7820-b2ac-1bde-da1c761fa594@jeffhostetler.com>
+ <CAG6xkCa_nKtzhJJq=v7gazWe+8FnN3mz1vDftzZw2WUFqJ1bzw@mail.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <c134350c-5f73-9194-9815-a7f61ed30d03@jeffhostetler.com>
+Date:   Fri, 26 Jan 2018 12:34:51 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.176.8.83 with HTTP; Fri, 26 Jan 2018 08:55:42 -0800 (PST)
-In-Reply-To: <CAM0VKj=qhJQJ7uJWbBouSTYD0frA1zp1gwXzMVXuTiF+C6GH+g@mail.gmail.com>
-References: <20180105202711.24311-1-newren@gmail.com> <20180105202711.24311-4-newren@gmail.com>
- <CAM0VKj=qhJQJ7uJWbBouSTYD0frA1zp1gwXzMVXuTiF+C6GH+g@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 26 Jan 2018 08:55:42 -0800
-Message-ID: <CABPp-BFJCu_BY5SLrdXNSBWyXu1+Vz6Fwc6u2qNXA5hTRN4ZcQ@mail.gmail.com>
-Subject: Re: [PATCHv6 03/31] directory rename detection: testcases to avoid
- taking detection too far
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, git@matthieu-moy.fr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAG6xkCa_nKtzhJJq=v7gazWe+8FnN3mz1vDftzZw2WUFqJ1bzw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 3:37 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> On Fri, Jan 5, 2018 at 9:26 PM, Elijah Newren <newren@gmail.com> wrote:
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->>  t/t6043-merge-rename-directories.sh | 153 +++++++++++++++++++++++++++++=
-+++++++
->>  1 file changed, 153 insertions(+)
->>
->> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-=
-directories.sh
->> index f36493289..239819f2d 100755
->> --- a/t/t6043-merge-rename-directories.sh
->> +++ b/t/t6043-merge-rename-directories.sh
->
->> +test_expect_success '3b-check: Avoid implicit rename if involved as sou=
-rce on current side' '
->> +       (
->> +               cd 3b &&
->> +
->> +               git checkout A^0 &&
->> +
->> +               test_must_fail git merge -s recursive B^0 >out &&
->> +               test_i18ngrep CONFLICT.*rename/rename.*z/d.*x/d.*w/d out=
- &&
->> +               test_i18ngrep ! CONFLICT.*rename/rename.*y/d &&
->
-> The filename argument is missing in the above line.
 
-Whoops.  Good eyes; thanks for pointing it out.  I'll fix it up.
+
+On 1/25/2018 7:21 PM, Isaac Hier wrote:
+> Hi Jeff,
+> 
+> I have been looking at the build generator, which looks promising, but
+> I have one concern. Assuming I can generate a CMakeLists.txt that
+> appropriately updates the library sources, etc. how do you suggest I
+> handle new portability macros? For example, assume someone adds a
+> macro HAVE_X to indicate the availability of some platform-specific
+> function x. In the current Makefile, a comment would be added to the
+> top indicating when HAVE_X or NO_X should be set, and that option
+> would toggle the HAVE_X C macro. But CMake can test for the
+> availability of x, which is one of the main motives for adding a CMake
+> build. The current build generator uses the output of make, so all it
+> would know is whether or not HAVE_X is defined on the platform that
+> ran the Makefile, but not the entire list of platform that git
+> supports.
+> 
+> Bottom line: should I add the portability tests as they are now,
+> without accounting for future portability macros? One good alternative
+> might be to suggest the authors of new portability macros include a
+> small sample C program to test it. That would allow me to easily patch
+> the CMake tests whenever that came up. In a best case scenario, a
+> practice could be established to write the test in a specific
+> directory with a certain name so that I could automatically update the
+> CMake tests from the build generator.
+> 
+> Thanks for the help,
+> 
+> Isaac
+
+It's been years since I've used cmake as anything other than
+a casual (downstream) consumer, so I'm not sure I can answer
+your questions.
+
+The vcxproj target we have is a bit of a hack to automatically
+capture the set of source files and target libraries and executables.
+We don't try to capture the spirit of all of the HAVE_ and NO_ flags
+when we build the *.vcxproj files.  And we make some assumptions in
+the generation template for the usual VC/VS settings.  But then
+Windows is a single target and we don't have to worry about some
+things (like whether or not qsort is present).
+
+I don't want to discourage you from attempting this.  (And I realize
+that my initial response might have given that impression -- I mainly
+wanted to say that we don't currently have a problem on Windows with
+the current Makefile situation.)
+
+A full cmake system would let us simplify some things, but it also
+complicates some things.  So we might be trading one set of problems
+for another.  For example, the libgit2 project uses cmake.  Not to
+pick on them, but when I look at it, I see a lot of the same issues
+(but perhaps with better syntax than the makefile).
+
+     https://github.com/libgit2/libgit2/blob/master/CMakeLists.txt
+
+As to your portability test questions, I'm afraid I don't know.
+Sorry,
+Jeff
+
+
