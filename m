@@ -2,76 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8B8F1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61DBC1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751809AbeAZS1h (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:27:37 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59024 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751434AbeAZS1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:27:37 -0500
-Received: (qmail 15269 invoked by uid 109); 26 Jan 2018 18:27:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 26 Jan 2018 18:27:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17268 invoked by uid 111); 26 Jan 2018 18:28:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 26 Jan 2018 13:28:15 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jan 2018 13:27:35 -0500
-Date:   Fri, 26 Jan 2018 13:27:35 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/10] t5812: add 'test_i18ngrep's missing filename
- parameter
-Message-ID: <20180126182734.GB27618@sigill.intra.peff.net>
-References: <20180126123708.21722-1-szeder.dev@gmail.com>
- <20180126123708.21722-3-szeder.dev@gmail.com>
+        id S1751590AbeAZS3z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:29:55 -0500
+Received: from mail-yb0-f178.google.com ([209.85.213.178]:34135 "EHLO
+        mail-yb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751436AbeAZS3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:29:54 -0500
+Received: by mail-yb0-f178.google.com with SMTP id u35so523739ybi.1
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:29:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ne8xDAIsEb3UMT7PZaMFQvu1+hJFuzEjCn1i7x2GTH0=;
+        b=L68asxdAtoaVJoGSJ+ElMz8Cgtw3CSzD2ygOhx7Uf3ELWxYU9pkk8w6dAoS8ChbBrm
+         Aq0OuKQNcH7pgO0K5YdO6wMLn0j1UaKf5bAHSeDGLeaKEFC4HfMTm/5OrnXAusoHwMPH
+         watv0EcWDwB6ezbtjcVgGYUHbftHcOANfAYRa5PdXMwKApwfZSBVzkjzViTJ69flJEkZ
+         38qTzXp7Dby825SoMxSJHbeZBBab/jIjPxWIdJr1HF6o9x8d3y1hhYw4C7j5Ci1BM2iF
+         D8Ews6NQs4l3MObohAq+ddqCUxl1iZW74dKxpyj0thNMYMc1pbPzl/3jjCbzWjZb1hAk
+         TcwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ne8xDAIsEb3UMT7PZaMFQvu1+hJFuzEjCn1i7x2GTH0=;
+        b=iry0RlEg4ydLO8WTAltSpRn5D7WfdI9/p3K4IZR2fO3fcu7vX3UlQ1JfVlaBswe/fx
+         ltW4WylmXjyBkVQfgMd8fAtlyb87/ZBcNjgvknlEdeEEx+7w84JYxKFgVnB1LqwtePd+
+         wPUVF/xxcUhl96ptcVqXSnRQ2lmFxZGvpTQe3fwzLOT+ShAq9Z69ZxHVbuxoDmJgHb8h
+         8rO2Dbu3zNj13LJqha7Hwq6BmYCfaXVbjPQQbit04SRA4kXouSS8heFIpUwknLYiCtht
+         KSBEXse4hDbX5jfSNYEzEfPAWYmvPQCNvvMrILLPNSqLwZAuc2fTa36YdbvupM50E3Ho
+         t+6w==
+X-Gm-Message-State: AKwxytdC1J5hVLIaSZq8x4PBz/gFkHRZwtQ3XPfHrZh8iFlj5Q7xUKxO
+        415Rqa81nzCq1x2EUu7nU61aRMPV1JV7dyV2+EtqOA==
+X-Google-Smtp-Source: AH8x2257aijVw2gJ85q0tlWMOPHLedmemDs/Vha5zwBF9h31gWLhN0DEbzBhoACHaNzlvH4SVmBX1AdFxLzvqFD6DrU=
+X-Received: by 10.37.59.139 with SMTP id i133mr12135169yba.420.1516991393430;
+ Fri, 26 Jan 2018 10:29:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180126123708.21722-3-szeder.dev@gmail.com>
+Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 10:29:52 -0800 (PST)
+In-Reply-To: <12531516812201@web36o.yandex.ru>
+References: <14657461479715884@web21h.yandex.ru> <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
+ <CAGZ79kZbGPneUXVEqJYhQAn+dfYve7qCjhO7QFaV1JBs3HD1aA@mail.gmail.com>
+ <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com> <12531516812201@web36o.yandex.ru>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 26 Jan 2018 10:29:52 -0800
+Message-ID: <CAGZ79kZX3NOb4ttXvjV0=vrLrMTj7z7N=+=DUtd0+3gYWJ6wng@mail.gmail.com>
+Subject: Re: Feature request: Improve diff algorithm
+To:     KES <kes-kes@yandex.ru>
+Cc:     Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 01:37:00PM +0100, SZEDER Gábor wrote:
+On Wed, Jan 24, 2018 at 8:43 AM, KES <kes-kes@yandex.ru> wrote:
+> Here is another place where diff can be improved:
+> @@ -141,8 +140,9 @@ My_runops(pTHX)
+>                 // Do not trace variables in DB:: module
+>                 if( SvOK( inDB ) ) continue;
+>
+> -               sv_inc_nomg( inDB );
+>
+> +               // save_item( inDB );
+> +               sv_inc_nomg( inDB );
+>                 dSP; SINFO; SAVETMPS;
+>
+>                 // printf( "SWITCH\n" );
+>
+>
 
-> The second 'test_i18ngrep' invocation in the test 'curl redirects
-> respect whitelist' is missing its filename parameter.  This has
-> remained unnoticed since its introduction in f4113cac0 (http: limit
-> redirection to protocol-whitelist, 2015-09-22), because it would only
-> cause the test to fail if Git was built with a sufficiently old
-> libcurl version.  The test's two ||-chained 'test_i18ngrep'
-> invocations are supposed to check that either one of the two patterns
-> is present in 'git clone's error message.  As it happens, the first
-> invocation covers the error message from any reasonably up-to-date
-> libcurl, thus the second invocation, the one without the filename
-> parameter, isn't executed at all.  Apparently no one has run the test
-> suite's httpd tests with such an old libcurl in the last 2+ years, or
-> at least they haven't bothered to notify us about the failed test.
+(Manually reconstructing), the before:
 
-Interesting find.
+                 // Do not trace variables in DB:: module
+                 if( SvOK( inDB ) ) continue;
 
-The "too old" curl is older than 7.19.4, which we actually fail to build
-with since v2.12.0. So they probably did not even get as far as the
-tests. ;)
+                 sv_inc_nomg( inDB );
 
-> Fix this by consolidating the two patterns into a single extended
-> regexp, eliminating the need for an ||-chained second 'test_i18ngrep'
-> invocation.
+                 dSP; SINFO; SAVETMPS;
 
-OK. Once upon a time I think we had trouble with "grep -E", since some
-older systems had only "egrep". But I see we've introduced some "grep
--E" invocations as far back as 2013 and nobody has complained, so it's
-probably fine.
+                 // printf( "SWITCH\n" );
 
--Peff
+and after:
+
+                 // Do not trace variables in DB:: module
+                 if( SvOK( inDB ) ) continue;
+
+
+                  // save_item( inDB );
+                  sv_inc_nomg( inDB );
+                 dSP; SINFO; SAVETMPS;
+
+                 // printf( "SWITCH\n" );
+
+
+
+> This would be better it the patch looks like:
+> ( this patch is manually created just to light the idea. It may contain errors)
+> @@ -140,6 +140,7 @@ My_runops(pTHX)
+>          // Do not trace variables in DB:: module
+>          if( SvOK( inDB ) ) continue;
+>
+> +
+> +        // save_item( inDB );
+>          sv_inc_nomg( inDB );
+> -
+>          dSP; SINFO; SAVETMPS;
+
+Before:
+
+          // Do not trace variables in DB:: module
+          if( SvOK( inDB ) ) continue;
+
+          sv_inc_nomg( inDB );
+
+          dSP; SINFO; SAVETMPS;
+
+after:
+
+          if( SvOK( inDB ) ) continue;
+
+
+          // save_item( inDB );
+          sv_inc_nomg( inDB );
+          dSP; SINFO; SAVETMPS;
+
+Seems like the diff is the same.
+I agree that we'd rather want to remove/add empty lines
+instead of moving full lines. Maybe we can add a penalty for that
+in the diff code. Currently each line costs the same, as diff algorithm
+optimizes for number of lines to be minimal, which both these diffs
+satisfy.
+
+
+>
+> As we can see, here the `sv_inc_nomg( inDB );` line is unchanged and `// save_item( inDB );` is added.
+> Here we just add/remove empty lines and patch looks more better.
+>
+> I think (and this is my assumption), the the diff algorithm should take into account the string length.
+> This is more better to add/remove more short lines
+
+Yup. Thanks for giving an example.
