@@ -2,114 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF341F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:39:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E47E1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbeAZSjJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:39:09 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33169 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751291AbeAZSjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:39:08 -0500
-Received: by mail-pg0-f67.google.com with SMTP id u1so790033pgr.0
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:39:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=dLdjuCc1STgUOlCSAqf/1dbFPnJmvcGZYkUJgi7iuao=;
-        b=GiIzUyVnXppFylFq6y1sYUAitJgTCqqTAcPLHNb4RCT/p4CMJIWrbuFeLvdAJVNcO1
-         mVwwxBKUo1OeedfLnLzhcmzHPN6oWvj7VB45J0PDXwy4x3xs00HGAweMeoG0So84Wzvt
-         phTt7Yutb1Nhipsbx6jKdlNnEOpTjUazzgSw/nLQjBDsfflcG+mHPEzLmfhQj3HOIG65
-         ZS1V37JrAp+YPUlKn25qxsdQks9uIDed2MH+EtV1s3DspYx6A0VVsMzLVi4G/2pBz6Qf
-         1pmzONS9EgYXgWjYRvX5ppyblMPJUqUIjXWvsdgGHjLuHvWZ1JJ31PxQWj28Z1pOXLDx
-         jGdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=dLdjuCc1STgUOlCSAqf/1dbFPnJmvcGZYkUJgi7iuao=;
-        b=NlUNMqsOdHWWbJAcWlSlIIGCWxCjEnhX+8sF2/qCid9MHhr/PrX3SIaW3JlgBbCWPq
-         F05ifxDlPBkVa/SGUGvdciW76/nv2A9oW+fBlVVhJ4dm/GjQRMIJnDgS+2PeATUTXCnp
-         RcFjuDBcwKXRuVaw7H86o6M99WCa9uBsOTW9btw2qTAjSTt9LTr7cpeDpHTSKZDEABc5
-         ZJ+ra+1COjEvtuSCxJBZ9PUF7YHtOaa5C2YcuVpSi2+I2tTkW8gNz89YMTziUUrmTYMo
-         FUrS+76KKQ12mKrtP2dP6aGTZNgqqQWabIajfa3RUNxDcZA+A8CZATFksYZGUmIP1tMw
-         Y0dw==
-X-Gm-Message-State: AKwxytcUhbHYdt+Jk7NaLkhWm2fTtgs1vkw6Kybhsjhan/CEst81ldNE
-        2VpHFMTy4sMjj2MTOqy9P+s=
-X-Google-Smtp-Source: AH8x225XHS9F2LYW7SNrfUH0uzIH8241CeBeKHZtBotBAI6VYNEmgwOdKsvpl2F5sHOJc3n+cgjMFg==
-X-Received: by 10.98.246.8 with SMTP id x8mr19746870pfh.234.1516991947688;
-        Fri, 26 Jan 2018 10:39:07 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
-        by smtp.gmail.com with ESMTPSA id b8sm18446749pff.31.2018.01.26.10.39.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 10:39:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+        id S1752276AbeAZSmJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:42:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59060 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752134AbeAZSly (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:41:54 -0500
+Received: (qmail 15948 invoked by uid 109); 26 Jan 2018 18:41:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 26 Jan 2018 18:41:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17424 invoked by uid 111); 26 Jan 2018 18:42:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 26 Jan 2018 13:42:32 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jan 2018 13:41:51 -0500
+Date:   Fri, 26 Jan 2018 13:41:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 08/10] t: forbid piping into 'test_i18ngrep'
+Message-ID: <20180126184151.GD27618@sigill.intra.peff.net>
 References: <20180126123708.21722-1-szeder.dev@gmail.com>
-        <20180126123708.21722-9-szeder.dev@gmail.com>
-        <xmqq1sic8omp.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 26 Jan 2018 10:39:05 -0800
-In-Reply-To: <xmqq1sic8omp.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 26 Jan 2018 10:24:14 -0800")
-Message-ID: <xmqqshas79di.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+ <20180126123708.21722-9-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180126123708.21722-9-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 26, 2018 at 01:37:06PM +0100, SZEDER Gábor wrote:
 
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
->
->> See two of the previous patches for the only such cases we had in our
->> test suite.  However, reliably preventing this antipattern is arguably
->> more important than supporting these cases, which can be worked around
->> by only minor inconveniences.
->
-> I am not sure if that inconveniences will be minor.  Is this too
-> contrived an example, for example?
->
->   check () {
->         pattern=$1 file=$2 script=./runme
->
->         test_i18ngrep "$pattern" "$file" &&
->         write_script "$script" &&
->         test_expect_success "check $pattern" '
->                 "$script"
->         '
->   }
->
->   check foo file <<-EOF
->   ... test script comes here ...
->   EOF
+> When checking a git command's output with 'test_i18ngrep', it's
+> tempting to conveniently pipe the git command's standard output into
+> 'test_i18ngrep'.  Unfortunately, this is an anti-pattern, because it
+> hides the git command's exit code, and the test could continue even if
+> the command exited with error.
+> 
+> Add a bit of linting to 'test_i18ngrep' to detect when data is fed to
+> its standard input and to error out with a "bug in the test script"
+> message.
+> 
+> Note that this change will also forbid cases where 'test_i18ngrep'
+> would legitimately read its standard input, e.g.
+> 
+>   - when its standard input is redirected from a file, or
+> 
+>   - when a git command's standard output is first written to an
+>     intermediate file, which is then preprocessed by a non-git command
+>     before the results are piped into 'test_i18ngrep'.
+> 
+> See two of the previous patches for the only such cases we had in our
+> test suite.  However, reliably preventing this antipattern is arguably
+> more important than supporting these cases, which can be worked around
+> by only minor inconveniences.
 
-Is there a case where test_i18ngrep (after your clean-ups in this
-series up to 06/10) needs to read from more than one file?
+The idea seems reasonable to me. Let's think about what the escape hatch
+looks like to work around it if you need to.
 
-I actually think that the kind of inconveniences we *can* work with,
-without risking breakage to legitimate test, would be to allow and
-require test_i18ngrep to name and read only from one file that
-appears at the end of its command line.  IOW, instead of doing a
-probing "read" that you cannot undo and break legitimate test, I
-think it is OK to see if the last token names a file that is on the
-filesystem, e.g.
+I guess you've got:
 
-	test_i18ngrep () {
-		eval test -f \"\${$#}\" ||
-		error "bug in the test sript: test_i18ngrep must" \
-		      "name a file to read as the last token on the command line"
-		...
+  cat >file &&
+  test_i18ngrep ... file
 
+which is not too bad.
+
+You've also got:
+
+  test_i18ngrep ... -
+
+though that relies on the underlying grep understanding "-" (which is in
+POSIX, though with a rather vague "if the implementations supports it").
+And it wouldn't work with the "read" test in this patch.
+
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 92ed02937..e381d50d0 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -719,6 +719,10 @@ test_i18ncmp () {
+>  # under GETTEXT_POISON this pretends that the command produced expected
+>  # results.
+>  test_i18ngrep () {
+> +	( read line ) &&
+> +	error "bug in the test script: data on test_i18ngrep's stdin;" \
+> +	      "perhaps a git command's output is piped into it?"
+> +
+
+This seems kind of hacky compared to just seeing if there is a file
+argument. But I suppose that is hard to do, since we just pass through
+the arguments to grep.
+
+Though looking at our test_18ngrep invocations, they are simple enough
+that would just ask "are there two non-option arguments at the end of
+the command line". The exception is "-e", but IMHO we could just drop
+that. It serves no purpose unless you're trying to hide a "-" at the
+start of your pattern, and in fact we used to ban it since sysv grep
+didn't understand it (e.g., aadbe44f883).
+
+-Peff
