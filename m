@@ -2,111 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33C611F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 17:47:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1D281F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752019AbeAZRrp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 12:47:45 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:43261 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751847AbeAZRrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 12:47:43 -0500
-Received: by mail-pg0-f66.google.com with SMTP id n17so691349pgf.10
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 09:47:42 -0800 (PST)
+        id S1751596AbeAZSGi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:06:38 -0500
+Received: from mail-yb0-f174.google.com ([209.85.213.174]:41192 "EHLO
+        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751398AbeAZSGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:06:37 -0500
+Received: by mail-yb0-f174.google.com with SMTP id t14so490664ybc.8
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:06:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8i34GY8FAFH/ZSyCFvKlHx0VnmmmzezEaLswz0aVoS4=;
-        b=vIHy6A/llsR9x6bWhM/zU0lC2EXqGfz/fYSQ9Lt+0gyCgC0Hy7Fyyfjx7KrDRphT+i
-         F0Df4hRlas0yenKQN1CtuDTLaF6isRBkX/aaOAORafj9AJoSGHAMW4YZNwaYBZlA8nCO
-         6CxTQ1Yzsk/+P1CsT/jc/n5XKJobhysKsQ0ZqRCWIJ4KjRqGKy930+IFvKWqeabvHF7b
-         6Wkd6WaRQiEn29jhaLlF5wiXtSGLL7T6UKV07izPjlR8njba+vnXAfp1WWW1cPLq+Ye4
-         UiGBtTrVXgbQiXfu28+Xf1u6VcXfiENvwdb3dI4fnxHZ1C8LoR6/8eqEpWn/g1Drl6pZ
-         ajVQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=03Lu6ImMGDZ40bJ07ceAiQ7fB8zY19hbRxmWUIVyll8=;
+        b=HL0ZcdRUWeb+nvlPSVIWYcOOv1LAWZJJkgeQb1//lQkdjLVLuxaAbgN0GCiCpR38/E
+         BDk+KdlvCwT/9FbjJK7xOyw5/UxBHdPPAJNW8Fh1Nqio9iTLGHTw8ejZdvDzJ8kD2jgT
+         MjcJLVs9M5iwT7mA38u80MUwo/56SQGsqt7YTHu4kkdEq6qnBd0fOgv85JKMC3kziJYn
+         hJpXlQBBRJbX0WW2S3QJmUtZ3aCYRuW619Czs3sUa21obXk8SVwTFtJJApj9ME7N+K/S
+         Hzu1Bx4X6MrLXlI6Xn6Pw/59kFp0KYp7HKmn1z3iiBjfuw3snE665nf9V2GZ9nA3dy2I
+         GT5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=8i34GY8FAFH/ZSyCFvKlHx0VnmmmzezEaLswz0aVoS4=;
-        b=Npy0r9m7dQbfER+vyVwM30hb+iINk9s0cgZx5h+apYk5CsldXNr9cX/kBLKuS+JVoD
-         /Ze/ZnSG6Axy1tJQMXuIM/YD7XGLl3guqRlryWyApYWvI76nGRr8bHC9sp7PCv7OEjNg
-         vpYYlQqi851+5tT1gxRY8s3PFev8kGklH7pDBnl8uc7uCcA7svPqWck8e17qMXD33YIb
-         KYrESRzGqoDh1ztELFLIVlLMqg1HfsQeSa6p0NiFh+Gk+X6/IBRFkOYdc7Dz9Hn6q96l
-         h9JrI/NVp8XluaKnaYgvhHO4clbZRK5jZckzHvqNWAznCo9EiQKYqPLXviVAeE4vb7kd
-         2Xjw==
-X-Gm-Message-State: AKwxyteRn6z56Zo6xuXpLPRdb8HuFq8NEnWGWU1I1w8TMhMrNTN6qUTQ
-        /ApZiO0KBVUgcJZ4PFl4sOQ=
-X-Google-Smtp-Source: AH8x224eUxP7qXXK4Cj4YqaLHpjCj8558UkQHlskI394sgbNUVkzSGFnYiOXCFik6Zr8j7cH3ytk2w==
-X-Received: by 10.99.190.76 with SMTP id g12mr16598481pgo.235.1516988862192;
-        Fri, 26 Jan 2018 09:47:42 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
-        by smtp.gmail.com with ESMTPSA id s80sm20772147pfj.179.2018.01.26.09.47.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 09:47:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] merge: support --strategy '?' for git-completion.bash
-References: <20180125094031.6584-1-pclouds@gmail.com>
-        <xmqqo9lhai46.fsf@gitster.mtv.corp.google.com>
-        <20180126013142.GA11346@duynguyen.dek-tpc.internal>
-Date:   Fri, 26 Jan 2018 09:47:40 -0800
-In-Reply-To: <20180126013142.GA11346@duynguyen.dek-tpc.internal> (Duy Nguyen's
-        message of "Fri, 26 Jan 2018 08:31:42 +0700")
-Message-ID: <xmqqefmc8qbn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=03Lu6ImMGDZ40bJ07ceAiQ7fB8zY19hbRxmWUIVyll8=;
+        b=neH5omihTx21W+miq7MiCKeuqB6PhwaEYxOVSKe37rWMEdprR+pjV0PzxsyZgkkzrF
+         h8GcR72v418S1SeottXhSDQ2L/dfnd/jWYasDGPDFTLrs+JFOVpX2btqo/chDZIJh61W
+         5hpVGLj0nCvBtJCX7GIxdzst4glTy9Y3zR4+UIZHpSv4vOoMN18nbXPiDMsO1x9qZEBb
+         KGulvHqzLc5THKEytAgG6uIHAMjPjkpr+8X4LBbfe4cztqFbue8cVBOMtnZYZTELLwEX
+         8aTaE7QKy3mnNTNJjWCOJac5QA6+AcZCJtByfzR1rDQvA5H6vjf4C1UvuZWK6WgI/+oz
+         9VEw==
+X-Gm-Message-State: AKwxytc5jcr2Wf95sreAqOxoe5tnkvzxmAtx9mxPfwZ4d+TuX6irKwkK
+        oinxA3ZSpOLrz81HnoDPHQbMEAaxxPlLy57zun1GpQ==
+X-Google-Smtp-Source: AH8x226W1+6eVkR7LhxoWMr2HcTuOct/KfgIynO30cQqB0vfE8BDZU7yxLVNCrPXyPbWXb43ck6nl5A4cZZa/28LpTk=
+X-Received: by 10.37.60.7 with SMTP id j7mr10219211yba.39.1516989996432; Fri,
+ 26 Jan 2018 10:06:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 10:06:35 -0800 (PST)
+In-Reply-To: <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
+References: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com>
+ <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 26 Jan 2018 10:06:35 -0800
+Message-ID: <CAGZ79kbV0-z46O5=E1Y7ZxzvNr+YJG+q-5AunXbEFF=7Od2U3Q@mail.gmail.com>
+Subject: Re: [PATCH] setup: recognise extensions.objectFormat
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Patryk Obara <patryk.obara@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> I didn't look carefully at those sed magic. But it looks like it
-> correctly handles this case too. So v2 follows below. It still feels
-> dirty to do this kind of text manipulation though. But that can wait.
-
-I do like "introduce and use helper feature to produce machine
-parseable text" when it is appropriate.  But this alternative looks
-more in line with the current design of completion script and can
-easily be a maint material as pure bugfix for non C locale folks.
-
-Will queue.
-
-> -- 8< --
-> Subject: [PATCH] completion: fix completing merge strategies on non-C locales
+On Thu, Jan 25, 2018 at 2:08 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Jan 24, 2018 at 8:09 PM, Patryk Obara <patryk.obara@gmail.com> wrote:
+>> This extension selects which hashing algorithm from vtable should be
+>> used for reading and writing objects in the object store.  At the moment
+>> supports only single value (sha-1).
+>>
+>> In case value of objectFormat is an unknown hashing algorithm, Git
+>> command will fail with following message:
+>>
+>>   fatal: unknown repository extensions found:
+>>           objectformat = <value>
+>>
+>> To indicate, that this specific objectFormat value is not recognised.
+>>
+>> The objectFormat extension is not allowed in repository marked as
+>> version 0 to prevent any possibility of accidentally writing a NewHash
+>> object in the sha-1 object store. This extension behaviour is different
+>> than preciousObjects extension (which is allowed in repo version 0).
 >
-> The anchor string "Available strategies are:" is translatable so
-> __git_list_merge_strategies may fail to collect available strategies
-> from 'git merge' on non-C locales. Force C locale on this command.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
+> This config is so sensitive I wonder if we should forbid changing it
+> via git-config. You can't simply change this and expect anything to
+> work anyway.
 
+You may have a local tool to do so, "git convert-repo-to <newhash>",
+that would also adjust this setting.
 
->  contrib/completion/git-completion.bash | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I'd second Johannes to not add special error handling and forbidding
+git-config to change this setting.
+
+> "git init" can have an option to specify object format.
+
+makes sense.
+
+> "git clone"
+> naturally inherits the format from the remote repository.
+
+not necessarily. As the hash transition plan suggests, you'd start with
+a local conversion, so it would make sense to have a
+"clone --convert-locally-to <newhash>" flag.
+
+> Maybe a
+> future command allows to convert hash algorithm on an existing repo
+> (*). But other than that nobody is allowed to change this.
 >
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 3683c772c5..88813e9124 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -594,7 +594,7 @@ __git_is_configured_remote ()
->  
->  __git_list_merge_strategies ()
->  {
-> -	git merge -s help 2>&1 |
-> +	LANG=C LC_ALL=C git merge -s help 2>&1 |
->  	sed -n -e '/[Aa]vailable strategies are: /,/^$/{
->  		s/\.$//
->  		s/.*://
+> (*) it's probably git-clone that does this job, cloning and converting
+> at the same time.
+
+I think we also need on-the-fly conversion in fetch/push, so we can work
+converted locally, but pretend to the outside we speak sha1 just fine.,
+
+Stefan
