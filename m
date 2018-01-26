@@ -2,121 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1D281F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDA511F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751596AbeAZSGi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:06:38 -0500
-Received: from mail-yb0-f174.google.com ([209.85.213.174]:41192 "EHLO
-        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751398AbeAZSGh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:06:37 -0500
-Received: by mail-yb0-f174.google.com with SMTP id t14so490664ybc.8
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:06:37 -0800 (PST)
+        id S1751917AbeAZSQF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:16:05 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:39070 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751434AbeAZSQE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:16:04 -0500
+Received: by mail-pf0-f195.google.com with SMTP id e11so773675pff.6
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:16:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=03Lu6ImMGDZ40bJ07ceAiQ7fB8zY19hbRxmWUIVyll8=;
-        b=HL0ZcdRUWeb+nvlPSVIWYcOOv1LAWZJJkgeQb1//lQkdjLVLuxaAbgN0GCiCpR38/E
-         BDk+KdlvCwT/9FbjJK7xOyw5/UxBHdPPAJNW8Fh1Nqio9iTLGHTw8ejZdvDzJ8kD2jgT
-         MjcJLVs9M5iwT7mA38u80MUwo/56SQGsqt7YTHu4kkdEq6qnBd0fOgv85JKMC3kziJYn
-         hJpXlQBBRJbX0WW2S3QJmUtZ3aCYRuW619Czs3sUa21obXk8SVwTFtJJApj9ME7N+K/S
-         Hzu1Bx4X6MrLXlI6Xn6Pw/59kFp0KYp7HKmn1z3iiBjfuw3snE665nf9V2GZ9nA3dy2I
-         GT5w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=TAf1cUwZnUzJwyUVstnkdn0zpgWMXpZ/eqPe0zwTvus=;
+        b=dX68eOBERB4bLhuJAxAaFb7yDDpX4s7o13pqDHEQcnM7MWQrQ4sEiZDpSR4TZXLqCS
+         tOETfjsuZonkM+P9PIh/CvUz17nrChhDOFebz1xgahhplGd2/626+GlceQhwmsD+ZULX
+         ThHMr0RafXeKbXtrrNX+X9YS7ZBkz4BjdndoQ7Oa06uEzFFhO0phBLlMP0FVX+0tgWBs
+         ClYwKYM8ccBwGd26HqTl0Illd1evNhOcqKIukmE7Z1Osx6CZh7TGAKqQzAB9qKHND3UT
+         IxlPvFwt/kpipgT0JJNX0x6I/ZsTRLeVWFqDRsfZ6GBkFPgvwSj4cmKqlumeealWu9Ze
+         hm1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=03Lu6ImMGDZ40bJ07ceAiQ7fB8zY19hbRxmWUIVyll8=;
-        b=neH5omihTx21W+miq7MiCKeuqB6PhwaEYxOVSKe37rWMEdprR+pjV0PzxsyZgkkzrF
-         h8GcR72v418S1SeottXhSDQ2L/dfnd/jWYasDGPDFTLrs+JFOVpX2btqo/chDZIJh61W
-         5hpVGLj0nCvBtJCX7GIxdzst4glTy9Y3zR4+UIZHpSv4vOoMN18nbXPiDMsO1x9qZEBb
-         KGulvHqzLc5THKEytAgG6uIHAMjPjkpr+8X4LBbfe4cztqFbue8cVBOMtnZYZTELLwEX
-         8aTaE7QKy3mnNTNJjWCOJac5QA6+AcZCJtByfzR1rDQvA5H6vjf4C1UvuZWK6WgI/+oz
-         9VEw==
-X-Gm-Message-State: AKwxytc5jcr2Wf95sreAqOxoe5tnkvzxmAtx9mxPfwZ4d+TuX6irKwkK
-        oinxA3ZSpOLrz81HnoDPHQbMEAaxxPlLy57zun1GpQ==
-X-Google-Smtp-Source: AH8x226W1+6eVkR7LhxoWMr2HcTuOct/KfgIynO30cQqB0vfE8BDZU7yxLVNCrPXyPbWXb43ck6nl5A4cZZa/28LpTk=
-X-Received: by 10.37.60.7 with SMTP id j7mr10219211yba.39.1516989996432; Fri,
- 26 Jan 2018 10:06:36 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=TAf1cUwZnUzJwyUVstnkdn0zpgWMXpZ/eqPe0zwTvus=;
+        b=gXZpn1/9HLahGoRw0FvSYQsfNb5tHhD3sjykECZqM7y9iDobNrRe0enYjQEeODOfHg
+         Q8PHY9JFj32uo35yhjfKs/pj9XXEYJdV42vtbk06rgox/KyOQte/7116bsZgQO+BuXyM
+         ipw3SmMeUnlNmeR3Ipb+JzpdtbJBWKi7A5yV7TNvvK35YRbfHK3bmcyTU5bn2/JdCSrM
+         3yXg+k6FjSxxsiRh6Y8gruqYV6ecsmX/BviiT+55wIcWnuk+b8MYIzB9O+VPZG+GfNlz
+         XdnrkiiqJaq3tnJ9RP0NEsxj0+rpr4HCIKh3of1qzHh1cBFNQ/hCD1BwqzC/REr2Yy1Z
+         epog==
+X-Gm-Message-State: AKwxytfyECUIG0qK9qUohTXG4zTFdr2lYsstEIEwgn4qR4UAx1JvPuOi
+        P5U+h44N5h8BUd2mVbPJ7s8s1tCp
+X-Google-Smtp-Source: AH8x2273jIzdhaciRWNnz7d+nhntPoRs0i1TJ9HbZpqXZZ8WvK2FnbsvLjU7fAuoD7Iz3W9oduaCYQ==
+X-Received: by 2002:a17:902:3281:: with SMTP id z1-v6mr15027129plb.431.1516990563910;
+        Fri, 26 Jan 2018 10:16:03 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id b8sm18399428pff.31.2018.01.26.10.16.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 10:16:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
+References: <20180126123708.21722-1-szeder.dev@gmail.com>
+        <20180126123708.21722-6-szeder.dev@gmail.com>
+Date:   Fri, 26 Jan 2018 10:16:01 -0800
+In-Reply-To: <20180126123708.21722-6-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Fri, 26 Jan 2018 13:37:03 +0100")
+Message-ID: <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 10:06:35 -0800 (PST)
-In-Reply-To: <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
-References: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com>
- <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Jan 2018 10:06:35 -0800
-Message-ID: <CAGZ79kbV0-z46O5=E1Y7ZxzvNr+YJG+q-5AunXbEFF=7Od2U3Q@mail.gmail.com>
-Subject: Re: [PATCH] setup: recognise extensions.objectFormat
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Patryk Obara <patryk.obara@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 25, 2018 at 2:08 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jan 24, 2018 at 8:09 PM, Patryk Obara <patryk.obara@gmail.com> wrote:
->> This extension selects which hashing algorithm from vtable should be
->> used for reading and writing objects in the object store.  At the moment
->> supports only single value (sha-1).
->>
->> In case value of objectFormat is an unknown hashing algorithm, Git
->> command will fail with following message:
->>
->>   fatal: unknown repository extensions found:
->>           objectformat = <value>
->>
->> To indicate, that this specific objectFormat value is not recognised.
->>
->> The objectFormat extension is not allowed in repository marked as
->> version 0 to prevent any possibility of accidentally writing a NewHash
->> object in the sha-1 object store. This extension behaviour is different
->> than preciousObjects extension (which is allowed in repo version 0).
+SZEDER Gábor <szeder.dev@gmail.com> writes:
+
+> One of the tests in 't5510-fetch.sh' checks the output of 'git fetch'
+> using 'test_i18ngrep', and while doing so it prefilters the output
+> with 'grep' before piping the result into 'test_i18ngrep'.
 >
-> This config is so sensitive I wonder if we should forbid changing it
-> via git-config. You can't simply change this and expect anything to
-> work anyway.
+> This prefiltering is unnecessary, with the appropriate pattern
+> 'test_i18ngrep' can do it all by itself.  Furthermore, piping data
+> into 'test_i18ngrep' will interfere with the linting that will be
+> added in a later patch.
 
-You may have a local tool to do so, "git convert-repo-to <newhash>",
-that would also adjust this setting.
+It is very likely that the prefiltering "grep" will not even see
+what it is looking for under GETTEXT_POISON build in the first
+place, so this conversion is the right thing to do from that point
+of view as well.
 
-I'd second Johannes to not add special error handling and forbidding
-git-config to change this setting.
 
-> "git init" can have an option to specify object format.
 
-makes sense.
-
-> "git clone"
-> naturally inherits the format from the remote repository.
-
-not necessarily. As the hash transition plan suggests, you'd start with
-a local conversion, so it would make sense to have a
-"clone --convert-locally-to <newhash>" flag.
-
-> Maybe a
-> future command allows to convert hash algorithm on an existing repo
-> (*). But other than that nobody is allowed to change this.
 >
-> (*) it's probably git-clone that does this job, cloning and converting
-> at the same time.
-
-I think we also need on-the-fly conversion in fetch/push, so we can work
-converted locally, but pretend to the outside we speak sha1 just fine.,
-
-Stefan
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  t/t5510-fetch.sh | 9 +++------
+>  1 file changed, 3 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 668c54be4..3debc87d4 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -222,12 +222,9 @@ test_expect_success 'fetch uses remote ref names to describe new refs' '
+>  	(
+>  		cd descriptive &&
+>  		git fetch o 2>actual &&
+> -		grep " -> refs/crazyheads/descriptive-branch$" actual |
+> -		test_i18ngrep "new branch" &&
+> -		grep " -> descriptive-tag$" actual |
+> -		test_i18ngrep "new tag" &&
+> -		grep " -> crazy$" actual |
+> -		test_i18ngrep "new ref"
+> +		test_i18ngrep "new branch.* -> refs/crazyheads/descriptive-branch$" actual &&
+> +		test_i18ngrep "new tag.* -> descriptive-tag$" actual &&
+> +		test_i18ngrep "new ref.* -> crazy$" actual
+>  	) &&
+>  	git checkout master
+>  '
