@@ -7,87 +7,125 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 941B31FAE2
-	for <e@80x24.org>; Fri, 26 Jan 2018 11:22:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D3031F576
+	for <e@80x24.org>; Fri, 26 Jan 2018 11:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751798AbeAZLWx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 06:22:53 -0500
-Received: from mail-ot0-f195.google.com ([74.125.82.195]:43646 "EHLO
-        mail-ot0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751786AbeAZLWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 06:22:52 -0500
-Received: by mail-ot0-f195.google.com with SMTP id p36so136205otd.10
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 03:22:52 -0800 (PST)
+        id S1751744AbeAZLhU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 06:37:20 -0500
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:43924 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751480AbeAZLhS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 06:37:18 -0500
+Received: by mail-ua0-f193.google.com with SMTP id i5so100143uai.10
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 03:37:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=f6hwYZyIKZ7cZb4NHacW+sBnRuZJS+nOerKWtDrex5E=;
-        b=SY/clVeE6UDjmSSvShSl1XDQFnbMvOtmxHMgG5EmbcdrjmgBxAFWZHggvJv6TRAQx1
-         KI2eq55T1/go54rEUq5aVBjAqRUY7mXVyfD1EA5D61Se4uBlAMeZm7RlKhsvtdONTUr8
-         O1GRa8KxymnNuFO07/pUVnfF5B5UNwUoF8FSs1OU9xs4sCZWYaC0KlSVgzEPlHps4jdr
-         6hX5C1uhBTvhSjSAILm4ROribw1PTLTqDyx4ESeycp3La5u7sKm8589mLgGwPiXmonXY
-         B8WNtwjrO4eeDWgXvtEf8gg4XpWLxajjUFnbYWUU6xh/k7GachTxIy613IdHLxqufTNG
-         JAsA==
+        bh=t44Jk0hShVqSheYmI+h7OL4b7ocqodVamGTLd+DPf+o=;
+        b=EpHGWVM5dvJDZeVlTEpnwjMj2H1U+hJIHLWkZyGw4dwHzsM+qZAUBhJO693PS7Or6O
+         2CuiCGx+3o4XgoYUKTorA4z4zCa/CHv3v7E632XlzJjDSi5No3FnTKXvOpfUl6Q2vpnE
+         QkNc7SkeLGvdyehXubC0y8j4o3qhpsDxiHOkEH5hlEf5xlvlfY7P4OnuysCTlTmt8ISf
+         iqERajGxHHQSc98T61L0WaX7u4FKto+vKUaqxvbyPzWkiUA+WBe3zHnPxRDyO94KHqIr
+         d34Z2CgcYoshU6gTyIJMeCLPVitu0qz4Z8ro5Sbac/uqLRVcJ8oQPiiOdZPM7otF7PjJ
+         +QvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=f6hwYZyIKZ7cZb4NHacW+sBnRuZJS+nOerKWtDrex5E=;
-        b=ZwbWILJYqXKhFVSfO4d9DzwaLmHLTn9r5oSUVdOQlbGlBKKv6apMfNw6KSGiOqLk0c
-         BUHzBE2wVGZ7fJi319LLPWocEDx6smLIrJHjyadngX694RUhY6fsIWKyrM/IxUmsmXwf
-         FsMWyDDV252U3AAAZCiDsTBzp5T3rzqzFs+PgiyL6QVqac4CmbDxwm3zKkupmtKLKpF9
-         dgTdH6DWRFUKpYwu5IlZr7q+8NIf+nTma9tpV6so/aqT8fg6rQsjjWXmLg2Ut7nYJJxw
-         KFU19Ge79oT9/krKUMLI08jj29o1mk7wwLfPjsHxKNpQhV/Tqj0xrm5I1UGnvTOCnrQq
-         dHeg==
-X-Gm-Message-State: AKwxytdPawFnl1fATGMSTgZrv/VzdoW9eSkdrfG4L9eYq+Mn8aqS3uMV
-        ZMxaKIkW99pZV7HD0Z87K7nydz2TF3V+fzfdmq8=
-X-Google-Smtp-Source: AH8x2253z5BF5Ph/jmX1IldySmmTV4X4LqFhN1srxfdlP900SRHUkvaxwI7v+1pF3oSDqCGQ6icxtezwIaGhQ/YEFo8=
-X-Received: by 10.157.14.65 with SMTP id n1mr14319121otd.337.1516965772069;
- Fri, 26 Jan 2018 03:22:52 -0800 (PST)
+        bh=t44Jk0hShVqSheYmI+h7OL4b7ocqodVamGTLd+DPf+o=;
+        b=Cq2XHnlI490tkLiJ5l6Ugd7ws694wmPQtAC55BXzSPfN1imB0yO0qMy3nrYfTTpo8N
+         oRsGO6lzoP6tyYayX3o9T8/EBp2DmUxCIi7KIxP4HBh+50GoSmtBpYdiGQbqCJvBW7HI
+         FdSsxHmgRq4aXQE/w4mLhf4jEPXufNsGdtoMXLIEWGYiow7QxhGUUS/LC44cqDIS3Eg0
+         w7j8Hu9wfBgwUCfc4/OH20cVS4gy/taXB0mbPdn+QsN8hNiub67X+TLlZ3z+QMp0cv8Q
+         4CNIEFfAFNM/dQVyKqQMomjML1hfstMSW8WKl1yUpd4RgzLM9OpCfdVzBUMBilxtgHuO
+         E8BQ==
+X-Gm-Message-State: AKwxytcLxR2yPne0j73ozEOEk6clFyeXpdyuJb9fL9SPZRyaoMfIlCEM
+        JjNxzyDaYxFwzvhnFw3UkMX/hinOYFk9ECnw7Ak=
+X-Google-Smtp-Source: AH8x224DIi4KCd1UcI7M04PWqV9RLHQwVMHHuuc0TU3DCeGqHlJgowMMR5h/sCvc+BncEBFgPe3t07I/75xAhjSfwdU=
+X-Received: by 10.159.57.111 with SMTP id i47mr10135652uag.79.1516966638234;
+ Fri, 26 Jan 2018 03:37:18 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.144.218 with HTTP; Fri, 26 Jan 2018 03:22:21 -0800 (PST)
-In-Reply-To: <4d7eb4c8-8d48-7c8d-259a-ba6b2f64def0@talktalk.net>
-References: <20180126095520.919-1-pclouds@gmail.com> <20180126095520.919-3-pclouds@gmail.com>
- <4d7eb4c8-8d48-7c8d-259a-ba6b2f64def0@talktalk.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 26 Jan 2018 18:22:21 +0700
-Message-ID: <CACsJy8BsJjuxD8hhZ9P2KgTxraRvCJgYt83onBaD_gXA0ZP9DA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rebase: add --show-patch
-To:     phillip.wood@dunelm.org.uk
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 10.176.32.12 with HTTP; Fri, 26 Jan 2018 03:37:17 -0800 (PST)
+In-Reply-To: <20180105202711.24311-4-newren@gmail.com>
+References: <20180105202711.24311-1-newren@gmail.com> <20180105202711.24311-4-newren@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 26 Jan 2018 12:37:17 +0100
+Message-ID: <CAM0VKj=qhJQJ7uJWbBouSTYD0frA1zp1gwXzMVXuTiF+C6GH+g@mail.gmail.com>
+Subject: Re: [PATCHv6 03/31] directory rename detection: testcases to avoid
+ taking detection too far
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>, git@matthieu-moy.fr
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 6:12 PM, Phillip Wood <phillip.wood@talktalk.net> wrote:
->> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
->> index 06a4723d4d..5c513a9736 100644
->> --- a/git-rebase--merge.sh
->> +++ b/git-rebase--merge.sh
->> @@ -137,6 +137,10 @@ skip)
->>       finish_rb_merge
->>       return
->>       ;;
->> +show-patch)
->> +     cmt="$(cat "$state_dir/current")"
->> +     exec git format-patch --subject-prefix= --stdout "${cmt}^!"
->> +     ;;
->>  esac
+On Fri, Jan 5, 2018 at 9:26 PM, Elijah Newren <newren@gmail.com> wrote:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t6043-merge-rename-directories.sh | 153 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 153 insertions(+)
 >
-> Here and in the git-rebase--interactive you have access to the SHA of
-> the failed pick so you could run git log --patch and git colored output
+> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
+> index f36493289..239819f2d 100755
+> --- a/t/t6043-merge-rename-directories.sh
+> +++ b/t/t6043-merge-rename-directories.sh
 
-Yes. My first revision I actually did "git diff" here. The only
-problem is inconsistency because we can't color "git am --show-patch"
-the same way, the patch source is in text format, not in the repo. But
-if people are ok with that I sure would switch to "git show".
+> +test_expect_success '3b-check: Avoid implicit rename if involved as source on current side' '
+> +       (
+> +               cd 3b &&
+> +
+> +               git checkout A^0 &&
+> +
+> +               test_must_fail git merge -s recursive B^0 >out &&
+> +               test_i18ngrep CONFLICT.*rename/rename.*z/d.*x/d.*w/d out &&
+> +               test_i18ngrep ! CONFLICT.*rename/rename.*y/d &&
 
-> and it would use the pager in the same way as 'git am --show-patch' does
+The filename argument is missing in the above line.
 
-format-patch does set up pager. If it does not I would be very
-annoyed. I added this for convenience after all.
--- 
-Duy
+Why does the test still succeed, then?  Because 'test_i18ngrep' is
+expected not to find the given pattern, and of course it won't find the
+pattern if its input is empty as it comes from /dev/null instead of the
+appropriate file.
+
+
+> +
+> +               git ls-files -s >out &&
+> +               test_line_count = 5 out &&
+> +               git ls-files -u >out &&
+> +               test_line_count = 3 out &&
+> +               git ls-files -o >out &&
+> +               test_line_count = 1 out &&
+> +
+> +               git rev-parse >actual \
+> +                       :0:y/b :0:y/c :1:z/d :2:x/d :3:w/d &&
+> +               git rev-parse >expect \
+> +                       O:z/b O:z/c O:z/d O:z/d O:z/d &&
+> +               test_cmp expect actual &&
+> +
+> +               test_path_is_missing z/d &&
+> +               git hash-object >actual \
+> +                       x/d w/d &&
+> +               git rev-parse >expect \
+> +                       O:z/d O:z/d &&
+> +               test_cmp expect actual
+> +       )
+> +'
+> +
+> +###########################################################################
+> +# Rules suggested by section 3:
+> +#
+> +#   Avoid directory-rename-detection for a path, if that path is the source
+> +#   of a rename on either side of a merge.
+> +###########################################################################
+> +
+>  test_done
+> --
+> 2.14.2
+>
