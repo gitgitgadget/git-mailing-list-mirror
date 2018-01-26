@@ -2,72 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B0C21F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E93B31F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:48:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbeAZSri (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:47:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59080 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751378AbeAZSri (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:47:38 -0500
-Received: (qmail 16235 invoked by uid 109); 26 Jan 2018 18:47:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 26 Jan 2018 18:47:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17460 invoked by uid 111); 26 Jan 2018 18:48:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 26 Jan 2018 13:48:16 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jan 2018 13:47:36 -0500
-Date:   Fri, 26 Jan 2018 13:47:36 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/10] t: make sure that 'test_i18ngrep' got enough
- parameters
-Message-ID: <20180126184736.GF27618@sigill.intra.peff.net>
-References: <20180126123708.21722-1-szeder.dev@gmail.com>
- <20180126123708.21722-10-szeder.dev@gmail.com>
-MIME-Version: 1.0
+        id S1752249AbeAZSsA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:48:00 -0500
+Received: from [195.159.176.226] ([195.159.176.226]:33361 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1751897AbeAZSr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:47:59 -0500
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-2@m.gmane.org>)
+        id 1ef90S-0007zF-Q7
+        for git@vger.kernel.org; Fri, 26 Jan 2018 19:45:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: git@vger.kernel.org
+To:     git@vger.kernel.org
+From:   Tim Landscheidt <tim@tim-landscheidt.de>
+Subject: Re: [PATCH 0/2] Add "git rebase --show-patch"
+Date:   Fri, 26 Jan 2018 18:47:23 +0000
+Organization: http://www.tim-landscheidt.de/
+Message-ID: <87372s78zo.fsf@passepartout.tim-landscheidt.de>
+References: <20180126095520.919-1-pclouds@gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180126123708.21722-10-szeder.dev@gmail.com>
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
+Mail-Copies-To: never
+Cancel-Lock: sha1:763TlgmYiCSHjY6vVCPhgNaiUTI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 01:37:07PM +0100, SZEDER Gábor wrote:
+Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
 
-> Two of the previous patches in this series fixed two bogus
-> 'test_i18ngrep' invocations that had neither a filename parameter not
-> anything piped into their standard input, yet both managed to remain
-> unnoticed for years.  A third similarly bogus invocation is currently
-> lurking in 'pu' for a couple of weeks now.
+> When a conflict happens during a rebase, you often need to look at the
+> original patch to see what the changes are. This requires opening your
+> favourite pager with some random path inside $GIT_DIR.
 
-Hrm. At first I thought this was redundant with the stdin thing in the
-previous one. But that is only checking "did you _try_ to use stdin".
-This is checking "did you accidentally use stdin, which was empty".
+> This series makes that experience a bit better, by providing a command
+> to read the patch. This is along the line of --edit-todo and --quit
+> where you can just tell git what to do and not bother with details.
 
-But I think maybe it's the opposite; the other one is redundant with
-this one, since it would be hard to convince grep to read from stdin
-anyway with this.
+> My main focus is "git rebase", but because rebase uses "git am" behind
+> the scene, "git am" gains --show-patch option too.
 
-> Note that this is not quite perfect, as it doesn't account for any
-> 'grep --options' given as parameters.  However, doing so would be far
-> too complicated, considering that patters can start with dashes as
-> well, and in the majority of the cases we don't use any such options
-> anyway.
+> There was something more I wanted to do, like coloring to the patch.
+> But that probably will come later. I'll try to merge these two
+> 21-months-old patches first.
 
-Yeah, I agree this would help most cases, but not hurt in others. I do
-think Junio's "see if the final argument is a file" approach seems like
-it would cover us pretty accurately, though, without having to get too
-intimate with grep options.
+> […]
 
--Peff
+I dislike the approach to use a separate command/option.
+The nice thing about rebase-apply/original-commit is that
+you can use it in /any/ git command, i. e. you can do "git
+log $whatever..rebase-apply/original-commit".
+
+What I would do instead is (besides documenting it :-)) to
+provide an alias that is more in line with ORIG_HEAD,
+FETCH_HEAD, etc.; i. e. something along the lines of (pseudo
+code, will probably not work):
+
+| --- a/builtin/am.c
+| +++ b/builtin/am.c
+| @@ -1110,6 +1110,7 @@ static void am_next(struct am_state *state)
+|  
+|         oidclr(&state->orig_commit);
+|         unlink(am_path(state, "original-commit"));
+| +       delete_ref(NULL, "ORIG_COMMIT", NULL, 0);
+|  
+|         if (!get_oid("HEAD", &head))
+|                 write_state_text(state, "abort-safety", oid_to_hex(&head));
+| @@ -1441,6 +1442,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+|  
+|         oidcpy(&state->orig_commit, &commit_oid);
+|         write_state_text(state, "original-commit", oid_to_hex(&commit_oid));
+| +       update_ref_oid("am", "ORIG_COMMIT", &commit_oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+|  
+|         return 0;
+|  }
+
+This (when working) would allow to use ORIG_COMMIT in place
+of the mouthful rebase-apply/original-commit.
+
+Tim
+
