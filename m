@@ -8,28 +8,28 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5341F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:44:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9E111F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:44:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752531AbeAZToE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:44:04 -0500
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:37512
+        id S1752083AbeAZToH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:44:07 -0500
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:37510
         "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752175AbeAZTnl (ORCPT
+        by vger.kernel.org with ESMTP id S1752134AbeAZTnl (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 26 Jan 2018 14:43:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1516995820;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=uQeV4j/Dv2YKHUfJTIgVoJVzZeyCT4v2zHz17X2seyQ=;
-        b=G+sYdUQe1zOnT8P4REQ+F47gTpkHw3TVClFprYYVtmEckYIvfJHift0K0U+1yW7y
-        zpuM8JTCdhOrhlPkLOjtxRU+1O3TVcaVt2qb1cLzMFq7RxOrvWRDa0Vm5FYaFMYYEIT
-        R0ExIvk4rDaFmViOaFDEqxsowDkgc+THuwFtSIko=
+        bh=MoWVBopOGc7PPUBhC74GNB5DwXMptB1As0AIbD2Vo78=;
+        b=AS3k6z6PfAnKuzArSZYRs6eIr4uuQi2EV96HQSVbw2YYjGba+zI9Y7KTRmXbcEp8
+        rRinuKJxkg14jk3GOCXhA6+TwXEs5h+/aqFo7JQzQo2VHyb/cX4HsqOu8fUP5vfivPE
+        02atjwXHEbu9zxdNqpUMrfcW2JVpgjeUJYn3m8Qw=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016133ff3afb-6bab2c11-e0f3-4bef-9626-fbcc826bcb15-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016133ff3af0-0ebed14d-deb5-4744-9267-4c5b0c6a30c8-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
 References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC 03/24] cat-file: split expand_atom into 2 functions
+Subject: [PATCH RFC 04/24] cat-file: reuse struct ref_format
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -41,117 +41,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split expand_atom function into 2 different functions,
-expand_atom_into_fields prepares variable for further filling,
-(new) expand_atom creates resulting string.
+Start using ref_format struct instead of simple char*.
 Need that for further reusing of formatting logic from ref-filter.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 73 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 39 insertions(+), 34 deletions(-)
+ builtin/cat-file.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index f5fa4fd75af26..f783b39b9bd5c 100644
+index f783b39b9bd5c..65c300184cab8 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -217,47 +217,49 @@ static int is_atom(const char *atom, const char *s, int slen)
- 	return alen == slen && !memcmp(atom, s, alen);
- }
+@@ -13,15 +13,16 @@
+ #include "tree-walk.h"
+ #include "sha1-array.h"
+ #include "packfile.h"
++#include "ref-filter.h"
  
--static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			void *vdata)
-+static void expand_atom_into_fields(struct strbuf *sb, const char *atom, int len,
-+			struct expand_data *data)
+ struct batch_options {
++	struct ref_format format;
+ 	int enabled;
+ 	int follow_symlinks;
+ 	int print_contents;
+ 	int buffer_output;
+ 	int all_objects;
+ 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
+-	const char *format;
+ };
+ 
+ static const char *force_path;
+@@ -353,7 +354,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 		return;
+ 	}
+ 
+-	strbuf_expand(&buf, opt->format, expand_format, data);
++	strbuf_expand(&buf, opt->format.format, expand_format, data);
+ 	strbuf_addch(&buf, '\n');
+ 	batch_write(opt, buf.buf, buf.len);
+ 	strbuf_release(&buf);
+@@ -446,8 +447,8 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
+ 
+-	if (!opt->format)
+-		opt->format = "%(objectname) %(objecttype) %(objectsize)";
++	if (!opt->format.format)
++		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
+ 
+ 	/*
+ 	 * Expand once with our special mark_query flag, which will prime the
+@@ -456,7 +457,7 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+-	strbuf_expand(&buf, opt->format, expand_format, &data);
++	strbuf_expand(&buf, opt->format.format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
+@@ -548,7 +549,7 @@ static int batch_option_callback(const struct option *opt,
+ 
+ 	bo->enabled = 1;
+ 	bo->print_contents = !strcmp(opt->long_name, "batch");
+-	bo->format = arg;
++	bo->format.format = arg;
+ 
+ 	return 0;
+ }
+@@ -557,7 +558,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
  {
--	struct expand_data *data = vdata;
-+	if (is_atom("objectname", atom, len))
-+		; /* do nothing */
-+	else if (is_atom("objecttype", atom, len))
-+		data->info.typep = &data->type;
-+	else if (is_atom("objectsize", atom, len))
-+		data->info.sizep = &data->size;
-+	else if (is_atom("objectsize:disk", atom, len))
-+		data->info.disk_sizep = &data->disk_size;
-+	else if (is_atom("rest", atom, len))
-+		data->split_on_whitespace = 1;
-+	else if (is_atom("deltabase", atom, len))
-+		data->info.delta_base_sha1 = data->delta_base_oid.hash;
-+	else
-+		die("unknown format element: %.*s", len, atom);
-+}
+ 	int opt = 0;
+ 	const char *exp_type = NULL, *obj_name = NULL;
+-	struct batch_options batch = {0};
++	struct batch_options batch = { REF_FORMAT_INIT };
+ 	int unknown_type = 0;
  
--	if (is_atom("objectname", atom, len)) {
--		if (!data->mark_query)
--			strbuf_addstr(sb, oid_to_hex(&data->oid));
--	} else if (is_atom("objecttype", atom, len)) {
--		if (data->mark_query)
--			data->info.typep = &data->type;
--		else
--			strbuf_addstr(sb, typename(data->type));
--	} else if (is_atom("objectsize", atom, len)) {
--		if (data->mark_query)
--			data->info.sizep = &data->size;
--		else
--			strbuf_addf(sb, "%lu", data->size);
--	} else if (is_atom("objectsize:disk", atom, len)) {
--		if (data->mark_query)
--			data->info.disk_sizep = &data->disk_size;
--		else
--			strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
--	} else if (is_atom("rest", atom, len)) {
--		if (data->mark_query)
--			data->split_on_whitespace = 1;
--		else if (data->rest)
-+static void expand_atom(struct strbuf *sb, const char *atom, int len,
-+			 struct expand_data *data)
-+{
-+	if (is_atom("objectname", atom, len))
-+		strbuf_addstr(sb, oid_to_hex(&data->oid));
-+	else if (is_atom("objecttype", atom, len))
-+		strbuf_addstr(sb, typename(data->type));
-+	else if (is_atom("objectsize", atom, len))
-+		strbuf_addf(sb, "%lu", data->size);
-+	else if (is_atom("objectsize:disk", atom, len))
-+		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)data->disk_size);
-+	else if (is_atom("rest", atom, len)) {
-+		if (data->rest)
- 			strbuf_addstr(sb, data->rest);
--	} else if (is_atom("deltabase", atom, len)) {
--		if (data->mark_query)
--			data->info.delta_base_sha1 = data->delta_base_oid.hash;
--		else
--			strbuf_addstr(sb,
--				      oid_to_hex(&data->delta_base_oid));
--	} else
-+	} else if (is_atom("deltabase", atom, len))
-+		strbuf_addstr(sb, oid_to_hex(&data->delta_base_oid));
-+	else
- 		die("unknown format element: %.*s", len, atom);
- }
- 
--static size_t expand_format(struct strbuf *sb, const char *start, void *data)
-+static size_t expand_format(struct strbuf *sb, const char *start, void *vdata)
- {
- 	const char *end;
-+	struct expand_data *data = vdata;
- 
- 	if (*start != '(')
- 		return 0;
-@@ -265,7 +267,10 @@ static size_t expand_format(struct strbuf *sb, const char *start, void *data)
- 	if (!end)
- 		die("format element '%s' does not end in ')'", start);
- 
--	expand_atom(sb, start + 1, end - start - 1, data);
-+	if (data->mark_query)
-+		expand_atom_into_fields(sb, start + 1, end - start - 1, data);
-+	else
-+		expand_atom(sb, start + 1, end - start - 1, data);
- 
- 	return end - start + 1;
- }
+ 	const struct option options[] = {
 
 --
 https://github.com/git/git/pull/452
