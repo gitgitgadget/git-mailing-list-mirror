@@ -2,255 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 302A01F576
-	for <e@80x24.org>; Fri, 26 Jan 2018 07:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FE331F576
+	for <e@80x24.org>; Fri, 26 Jan 2018 09:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752077AbeAZHvF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 02:51:05 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:45462 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752065AbeAZHvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 02:51:04 -0500
-Received: by mail-pg0-f49.google.com with SMTP id m136so6767323pga.12
-        for <git@vger.kernel.org>; Thu, 25 Jan 2018 23:51:04 -0800 (PST)
+        id S1752863AbeAZJZe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 04:25:34 -0500
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:35415 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752814AbeAZJZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 04:25:29 -0500
+Received: by mail-ot0-f177.google.com with SMTP id w26so211872otj.2
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 01:25:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:references:in-reply-to:date
-         :mime-version;
-        bh=r47zVCZrNJD2fFbOVdaoMDYRoiDj1Ss6TEmY1veagJo=;
-        b=k6sWXIGmAEisbvoacVIlIqXAnBmcIfjah9Bkrqx+Ub8zei8lSL8PONHVx9vPdEeMdQ
-         QbMef7H96Y7FMjVUdzg/dDkHnMkxhZc+j2WdT3QrW3I32GYGIoMbZH237OOH7JIDdX/A
-         Zb49GAjHZGFkoNBz8idTtgxgNuLdZeIWRpZLozRtynb3AtU7UWVD8hxGhDsZepnRn5yp
-         +IqfBBN18nNJ624nGCa+fO8up8Y7iL2KV1mMG3oDyJJEbIkrH4e/IHgUGZVUyBk1fOaP
-         QdaWPgXDg1J/M6sSTPEw5fcIqDlAMQKRItcbqxtTuvV/UrlkZsn9Ft4aRoEEcnrUn3AA
-         CUtg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5MfFSCXc+/4GDv2VHgUWDdWz1kufQobVdp/5J4t81GM=;
+        b=ugvcY7LXGnvbVDzHfhfdQhHQI8jdz3OT4LlZNMc8a50/mxCf+sO7g1I7goVLnC8Hxz
+         fiowauUAltdsbzBEFJI6nf5TXgG+kY5eFIvCqpXrDo+h3oj4oJric2Yaoc6Qzyp8TJ4F
+         W3DXFyoxNkxDIOrJZa/IWMJVbU0pLAgjD3SquqEm1KZaPJgtgylmvHwakGz4TaY62o2O
+         wK0eJ9ZY4eO2D0NmMQolFFtOvC9MyJylm63hy+MXd9NS7AiJB950yJ06OGj87h0t3cVA
+         BcZ2EcQMkicS+5QPfyE5f0xZJ5IaRi5xCjt/QVV6hkr6m6/oP38t1raKQu0yP+RXMvPg
+         TAvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:references
-         :in-reply-to:date:mime-version;
-        bh=r47zVCZrNJD2fFbOVdaoMDYRoiDj1Ss6TEmY1veagJo=;
-        b=W+6uQ2b1Sh8Dpqa+kIBxJeDwfhZWFxSVQpyr0kM4t15cgFkT0vDo19XkVESlvHsb++
-         45nqw1seYHYxBQAeC8EtrauN5QFtz5f94565cPI5EYAsTE1iEewwUcpxJdmILtyJkKJp
-         raAMthKKi709uvLzzrYyR1WL7JeHswyw1TBsvbPyx7l5jimI3W0bLI1sCFVV6iyR9VH0
-         gRoHAgE17gaVamdoXdutb7MK531/STM3yeKhIaDLbA8x9NZeHHL4u1UXp0izQfZpj/zb
-         i5ZAkmpptzDiUFJ5Aytpu05JnJBDDgxZXzxXXmx+fCUVMETjF8gMYI6+7VDXeEOckIIg
-         EESA==
-X-Gm-Message-State: AKwxytfGEkAY2KybgvpluP4YmruUSDPjVB6H9fWRW2O0xPvWfiUHGS6j
-        yo9nPhUEcAZHRpMM8TzMq5/hwXi3
-X-Google-Smtp-Source: AH8x227kK7vcjKqJlEyGGY77+XBCf5+SeNw44iJAeq2bgm7IBYv5dL98SdgxOdRFGa+eK/+5Cy5KaQ==
-X-Received: by 2002:a17:902:5814:: with SMTP id m20-v6mr4378897pli.434.1516953064118;
-        Thu, 25 Jan 2018 23:51:04 -0800 (PST)
-Received: from unique-pc ([14.102.72.147])
-        by smtp.gmail.com with ESMTPSA id c29sm19737896pfd.172.2018.01.25.23.50.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 Jan 2018 23:51:02 -0800 (PST)
-Message-ID: <1516953056.8886.3.camel@gmail.com>
-Subject: Re: Bug, git rebase -i does not abort correctly
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5MfFSCXc+/4GDv2VHgUWDdWz1kufQobVdp/5J4t81GM=;
+        b=X7T8Ik4DNIqReynZLU4WRndi8+JN8EzaPBaXNrB+GG2cSOel/JGp5eJGEZvdaztVWy
+         QBCO63B7+ImZZQxkfIgmdvFpVlhXx59h7AMt6Cnlb2ipRBfIUiDKnROosyeezW895mbO
+         rDPdu0zxk3TYQsbDQJI7U1yyqmJFgwR83gw/IEXglKq0iWYsZR3iP0Sg21NXqc4zXEUx
+         BZiMpemysJcenP4trEBrLwqeIhXhx3cqSNCWhG9AlJpYevsNB1fCby3dArh77Dbcgd7b
+         qjm7xEj5tytoEx9E+oRWVDyQgNHj7YRNG/dK4gxI0Sa2jow+6gHmES9xvKz/Sf5WJKdg
+         9niA==
+X-Gm-Message-State: AKwxytecpv2HtCEq3/SlJMY13Sm6/DmBAH0rvIgkYjJPd/INOVAOEDui
+        s595vaDeCzJaWzxjh1ecNn9M4xNCryjNwRRn4Jw=
+X-Google-Smtp-Source: AH8x2277Kh0cBQQy07ATXUOKtomxr7I3YxRZrYPGUr5+3mfECoONT4ZgjVR8I6IOTdc6WsXp95EW0W2eMqomVmb9L8k=
+X-Received: by 10.157.112.12 with SMTP id k12mr3626544otj.165.1516958729202;
+ Fri, 26 Jan 2018 01:25:29 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.144.218 with HTTP; Fri, 26 Jan 2018 01:24:58 -0800 (PST)
+In-Reply-To: <1516953056.8886.3.camel@gmail.com>
 References: <CACsJy8Dzh5E8JUDkwFmYTwS6KgqGc_1rJBVsDCoC9EpcSShN2Q@mail.gmail.com>
-In-Reply-To: <CACsJy8Dzh5E8JUDkwFmYTwS6KgqGc_1rJBVsDCoC9EpcSShN2Q@mail.gmail.com>
-Content-Type: multipart/mixed; boundary="=-IxJgYBL7VRXucOy8poS8"
-Date:   Fri, 26 Jan 2018 13:20:56 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1+deb9u1 
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+ <1516953056.8886.3.camel@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 26 Jan 2018 16:24:58 +0700
+Message-ID: <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
+Subject: Re: Bug, git rebase -i does not abort correctly
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jan 26, 2018 at 2:50 PM, Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> This might seem to be a bug as the comment in "git-rebase-todo" says,
+>
+>     However, if you remove everything, the rebase will be aborted.
+>
+> But "man git rebase" clearly says,
+>
+>     If <branch> is specified, git rebase will perform an automatic "git
+>     checkout <branch>" before doing anything else. Otherwise it remains
+>     on
+>     the current branch.
+>
+> Junio has previously confirmed that "git rebase [-i] <upstream>
+> <branch>" is just a short hand for "git checkout <branch> && git rebase
+> [-i] <upstream>".[ref 1] So, it's not surprising that it left HEAD at
+> @~3 when you completely removed the contents of git-rebase-todo and
+> exited the editor.
+>
+> Does that help solve your issue?
 
---=-IxJgYBL7VRXucOy8poS8
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-On Thursday 25 January 2018 05:43 PM, Duy Nguyen wrote:
-> rebase scripts are too much for me, so I'll play the user reporting
-> bugs this time :)
-> 
-> Instead of doing
-> 
->     $ git rebase -i --onto origin/master @~3
-> 
-> I sometimes accidentally type
-> 
->     $ git rebase -i origin/master @~3
-> 
-> ("rebase -i" is actually an alias, which is why I never forget to
-type -i)
-> 
-> Usually the todo list in $EDITOR shows noop, I realize my mistake and
-> try to abort it by clearing the todo list before saving and closing
-> $EDITOR. The problem is, HEAD is moved away anyway (to origin/master
-I
-> think) 
-
-For me it left HEAD at @~3. Reading the synopsis of `man git rebase` I
-could guess that the corresponding abstract form would be,
-
-    $ git rebase -i <upstream> <branch>
-
-
-> even if rebase is supposed to abort the operation and leave
-> HEAD untouched.
-> 
-
-This might seem to be a bug as the comment in "git-rebase-todo" says,
-
-    However, if you remove everything, the rebase will be aborted.
-
-But "man git rebase" clearly says,
-
-    If <branch> is specified, git rebase will perform an automatic "git
-    checkout <branch>" before doing anything else. Otherwise it remains
-    on
-    the current branch.
-
-Junio has previously confirmed that "git rebase [-i] <upstream>
-<branch>" is just a short hand for "git checkout <branch> && git rebase
-[-i] <upstream>".[ref 1] So, it's not surprising that it left HEAD at
-@~3 when you completely removed the contents of git-rebase-todo and
-exited the editor.
-
-Does that help solve your issue?
-
-
-[ref 1]: 
-
-https://public-inbox.org/git/%3Cxmqqpo8387hz.fsf@gitster.mtv.corp.google.com%3E
-
--- 
-Kaartic
-
-QUOTE
-
-“It is impossible to live without failing at something, unless you live
-so cautiously that you might as well not have lived at all – in which
-case, you fail by default.”
-
-      - J. K. Rowling
-
-
-WIKIPEDIA: DID YOU KNOW?
-
-Only 33% of internet users in India have heard of Wikipedia !!
-
-* What do you think could be the reason behind this?
-
-* What are ways in which the awareness about Wikipedia in India and
-other countries be increased ?
-
-Reference:
-
-* Give your ideas for increasing the awareness of Wikipedia in India
-and
-in other countries and get a Grant from the Wikimedia Foundation to
-bring your idea to life.
-
-  https://meta.wikimedia.org/wiki/Grants:IdeaLab/Inspire
-
-* Know more about the awareness problem of Wikipedia
-
-  https://meta.wikimedia.org/wiki/New_Readers/Awareness
-
-  https://meta.wikimedia.org/wiki/New_Readers/Next_steps/Raising_awareness
+Sort of. It smells bad design to me when a mistake can easily become a
+feature. But with your help, I think I should be able to disable this
+feature on my local build. Thanks.
 -- 
-Kaartic
---=-IxJgYBL7VRXucOy8poS8
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-I seem to able to reproduce your issue. More comments inline.
-
-On Thursday 25 January 2018 05:43 PM, Duy Nguyen wrote:
-> rebase scripts are too much for me, so I'll play the user reporting
-> bugs this time :)
-> 
-> Instead of doing
-> 
->     $ git rebase -i --onto origin/master @~3
-> 
-> I sometimes accidentally type
-> 
->     $ git rebase -i origin/master @~3
-> 
-> ("rebase -i" is actually an alias, which is why I never forget to type -i)
-> 
-> Usually the todo list in $EDITOR shows noop, I realize my mistake and
-> try to abort it by clearing the todo list before saving and closing
-> $EDITOR. The problem is, HEAD is moved away anyway (to origin/master I
-> think) 
-
-For me it left HEAD at @~3. Reading the synopsis of `man git rebase` I
-could guess that the corresponding abstract form would be,
-
-    $ git rebase -i <upstream> <branch>
-
-
-> even if rebase is supposed to abort the operation and leave
-> HEAD untouched.
-> 
-
-This might seem to be a bug as the comment in "git-rebase-todo" says,
-
-    However, if you remove everything, the rebase will be aborted.
-
-But "man git rebase" clearly says,
-
-    If <branch> is specified, git rebase will perform an automatic git
-checkout <branch> before doing anything else. Otherwise it remains on
-       the current branch.
-Surprisingly when git-rebase-todo's content is only a "noop" just
-closing the editor without removing the contents also seems to be lying
-as it checks
--- 
-Kaartic
-
-QUOTE
-
-“It is impossible to live without failing at something, unless you live
-so cautiously that you might as well not have lived at all – in which
-case, you fail by default.”
-
-      - J. K. Rowling
-
-
-WIKIPEDIA: DID YOU KNOW?
-
-Only 33% of internet users in India have heard of Wikipedia !!
-
-* What do you think could be the reason behind this?
-
-* What are ways in which the awareness about Wikipedia in India and
-other countries be increased ?
-
-Reference:
-
-* Give your ideas for increasing the awareness of Wikipedia in India and
-in other countries and get a Grant from the Wikimedia Foundation to
-bring your idea to life.
-
-  https://meta.wikimedia.org/wiki/Grants:IdeaLab/Inspire
-
-* Know more about the awareness problem of Wikipedia
-
-  https://meta.wikimedia.org/wiki/New_Readers/Awareness
-
-  https://meta.wikimedia.org/wiki/New_Readers/Next_steps/Raising_awareness
-
---=-IxJgYBL7VRXucOy8poS8--
-
+Duy
