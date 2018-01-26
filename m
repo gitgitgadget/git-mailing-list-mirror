@@ -2,111 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD0291F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 21:46:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA7141F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 22:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751404AbeAZVqF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 16:46:05 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34770 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751297AbeAZVqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 16:46:04 -0500
-Received: by mail-pf0-f194.google.com with SMTP id e76so1123887pfk.1
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 13:46:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YPy+mcAeV4KgrljBGyP3LF9VL4LgorcCcEWPq5/JlW0=;
-        b=cYDI+z1rihQp6XP+ii23GaHXtCusM87xwbolGUsE2nSvzL+0YO+H/ka734D/HdaWIw
-         ZVV+UmlXi/xNrUn/yUZyo7VUmyoKQwxpLTByyiXuB3FJ16xixI4/Ec92OzX7gAnzt7Qu
-         ImNPQOQdA1FyEl3/JetxyFCorfabtXddVQ4T+EWA6kSDtswMtXQD8mwUo24TRbJA5uOX
-         n9FIEDh1JNe95CRMgEjFwWzucnBsa5TZIIvmZlDShJSCHAyB5Guwy0X4c2PAHEnKRc5V
-         xXa8+Q8bj2hGQibPMnXT5v5wairIljWyTVDdFV80P8Qh7XttitleRGP4Kq7X5TsROhPu
-         rSZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YPy+mcAeV4KgrljBGyP3LF9VL4LgorcCcEWPq5/JlW0=;
-        b=D8xIb7KqTq2xfR8Q7kDSQaxTt07cQ/2awlrulGc5H2RPITVV0gow/Fyx+847mANgO6
-         +JosZ6866XpMHwei7Ms7bBbzLu0oLu2GnhvzbE93+/A2lAjV75LGwThRyzR0iQnvIPm0
-         PFsrUXv6Kj1iAm9T6/iZpT7hIP/FuCEj69fDF80WT8dTvRTbLqeVZbSOYph6wg1M2Bs1
-         iJLIIpm0IbiXbjdZBgfQx8kxxdoZzUArfTbaRerNKUdgULVWYWUcs3zutXVeZ4WnBVKw
-         eRLtnP097Ops3Q/uRANbo9yiWh1nCfBKSrpXl9FmVg0NfbJypaOUq8tJ18B3uM/uA4An
-         nBVw==
-X-Gm-Message-State: AKwxytfp/AHX+kE7JAIGp2t4j548pYx2rC5cnpV4e+M9Uj4QcnYBFsQ1
-        UQzn8kSunx07kTlsADTu7vW/Lq+O
-X-Google-Smtp-Source: AH8x224AdwArGo+iktaPRGiHVcEVz7BdodR//mFvKSwnUCafexI4jJolPLz1q9Vgh2FjBIhcgiHjlg==
-X-Received: by 2002:a17:902:59c2:: with SMTP id d2-v6mr15786487plj.306.1517003163740;
-        Fri, 26 Jan 2018 13:46:03 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
-        by smtp.gmail.com with ESMTPSA id a15sm20322515pfl.98.2018.01.26.13.46.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 13:46:03 -0800 (PST)
+        id S1751698AbeAZWEw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 17:04:52 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52008 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751394AbeAZWEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 17:04:51 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 225ABCF732;
+        Fri, 26 Jan 2018 17:04:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=9yl7xSQalWWW4GdwjRuoBPmcRnA=; b=mB/mmY
+        7KidFTs/JYAZolet0F7sBlmNb6FKab61W3Yw2yGVkAggUhp1vdK7iZhC3BcxcMSP
+        HQheBgwsZgb0r16vtaLVx5KJzPGGufLZn16WLV32Vm4hgvekbZ5zIozVO0Tec3v0
+        eyzxqDAbZ3mU9jtsk2xOOnrqEgdlHaxZXsXUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wgO/b+YfR4qFkST1aGSUS0b3OVAv9yCV
+        2crXIHjsXj9ecLXrt9gByLi1+/rVtqLymr7IHj1A4emTHdBifFOAGE5jnJKPmheC
+        JZe3udBJvyXcqamikqM5RWWQG2ouJvVCK5Ha94utOUH2W647rCGhGh5jWF6/fflT
+        3eDz+ZUe/zU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19EF3CF731;
+        Fri, 26 Jan 2018 17:04:51 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 84920CF730;
+        Fri, 26 Jan 2018 17:04:50 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH RFC 03/24] cat-file: split expand_atom into 2 functions
-References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
-        <0102016133ff3afb-6bab2c11-e0f3-4bef-9626-fbcc826bcb15-000000@eu-west-1.amazonses.com>
-Date:   Fri, 26 Jan 2018 13:46:02 -0800
-In-Reply-To: <0102016133ff3afb-6bab2c11-e0f3-4bef-9626-fbcc826bcb15-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Fri, 26 Jan 2018 19:43:40 +0000")
-Message-ID: <xmqqvafo5m5h.fsf@gitster.mtv.corp.google.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        peff@peff.net, git@jeffhostetler.com, sbeller@google.com,
+        dstolee@microsoft.com
+Subject: Re: [PATCH 05/14] packed-graph: implement construct_graph()
+In-Reply-To: <87vafowce2.fsf@linux-m68k.org> (Andreas Schwab's message of
+        "Fri, 26 Jan 2018 22:14:45 +0100")
+References: <20180125140231.65604-1-dstolee@microsoft.com>
+        <20180125140231.65604-6-dstolee@microsoft.com>
+        <xmqq607o732t.fsf@gitster.mtv.corp.google.com>
+        <87vafowce2.fsf@linux-m68k.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+Date:   Fri, 26 Jan 2018 17:04:49 -0500
+Message-ID: <xmqq1sicuvi6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: EE1EC318-02E4-11E8-8BF6-D3940C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> Split expand_atom function into 2 different functions,
-> expand_atom_into_fields prepares variable for further filling,
-> (new) expand_atom creates resulting string.
-> Need that for further reusing of formatting logic from ref-filter.
+> On Jan 26 2018, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored by: Jeff King <peff@peff.net>
-> ---
->  builtin/cat-file.c | 73 +++++++++++++++++++++++++++++-------------------------
->  1 file changed, 39 insertions(+), 34 deletions(-)
+>> Also, would >>32 be a problem if commit.date is an uint32 (and
+>> shifting all its bits out to the right)?
+>
+> It would be undefined.
 
-As expand_atom() is file-scope static and its callers are well
-isolated, it is OK to change its meaning while restructuring the
-code like this patch does (as opposed to a public function to which
-new callers may be added on other topics in flight).
-
-The split itself looks sensible, but expand_atom_into_fields() is a
-questionable name.  expand_atom() does fill the data in sb, but
-calling expand_atom_into_fields() does not fill any data into
-separated fields---it merely prepares somebody else to do so.
-
-Helped by this comment:
-
-	/*
-	 * If mark_query is true, we do not expand anything, but rather
-	 * just mark the object_info with items we wish to query.
-	 */
-	int mark_query;
-
-we can guess that a better name would mention or hint "object_info",
-"query" and probably "prepare" (because we would do so before
-actually querying).
-
-I am not sure if separating the logic into these two functions is a
-good way to organize things.  When a new %(atom) is introduced, it
-is more likely that a programmer adds it to one but forgets to make
-a matching change to the other, no?  (here, "I am not sure" is just
-that.  It is very different from "I am sure this is wrong").
-
-Thanks.
+Yup, exactly.  Thanks.
