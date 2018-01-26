@@ -8,154 +8,174 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF7F1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40F7C1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752341AbeAZTnp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:43:45 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:43860
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751478AbeAZTnl (ORCPT
+        id S1752246AbeAZTnm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:43:42 -0500
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:37172
+        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751291AbeAZTnl (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 26 Jan 2018 14:43:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1516995820;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=381zL0KNf8DTaW20KKLuDcSCAjHqyxcruyerK5O3kLY=;
-        b=THtnBacYlDyS0G8ZLI6zsvqdFHFpPzNKJR+gexR7449oWIJuBNaVYO4L1KNN6Muk
-        GtyDzG1UbMvTuFhYW9Kqj3WrcMq1iowfpuZ2nBC8SZ2S35CliobFJ8+p3mO0jGymSML
-        Oqk3lxAQrAmnnBqqdXE/6ttkSli6IKXyi+L3SO8Q=
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=jFP4Rzw3ga+js/KYeLO9x/mEdt3jqpQEMM7D3eSbfSw=;
+        b=WSyY2WnSq++tRsPJRqqEeDpBYnNRZqzMV8Bx32gDhMnRHOTsl9soWpz/BIRwENXI
+        3n6bFA6of2HEel8zxHo0C4m6jEX+SOmN0v7S2oIyCHVQhUSJZOKZj/EwXXv99Qv/1cc
+        oN0n+CbYJv9cAQ33gaEv5O8oR606iWL82QMDVdNo=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016133ff3b59-b5619bdf-930f-4cf7-8dd4-e36f8e3635ff-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
-References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC 18/24] ref-filter: make valid_atom general again
+Message-ID: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+Subject: [PATCH RFC 01/24] ref-filter: get rid of goto
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Fri, 26 Jan 2018 19:43:40 +0000
-X-SES-Outgoing: 2018.01.26-54.240.7.12
+X-SES-Outgoing: 2018.01.26-54.240.7.18
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stop using valid_cat_file_atom, making the code more general.
-Further commits will contain some tests, docs and
-support of new features.
+Get rid of goto command in ref-filter for better readability.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- ref-filter.c | 46 ++++++++++++----------------------------------
- 1 file changed, 12 insertions(+), 34 deletions(-)
+ ref-filter.c | 103 ++++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 53 insertions(+), 50 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index bfbc7c83fdd47..4d0d4f081227d 100644
+index f9e25aea7a97e..37337b57aacf4 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -359,8 +359,8 @@ static struct valid_atom {
- 	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
- } valid_atom[] = {
- 	{ "refname" , FIELD_STR, refname_atom_parser },
--	{ "objecttype" },
--	{ "objectsize", FIELD_ULONG },
-+	{ "objecttype", FIELD_STR, objecttype_atom_parser },
-+	{ "objectsize", FIELD_ULONG, objectsize_atom_parser },
- 	{ "objectname", FIELD_STR, objectname_atom_parser },
- 	{ "tree" },
- 	{ "parent" },
-@@ -397,12 +397,6 @@ static struct valid_atom {
- 	{ "if", FIELD_STR, if_atom_parser },
- 	{ "then" },
- 	{ "else" },
--};
--
--static struct valid_atom valid_cat_file_atom[] = {
--	{ "objectname" },
--	{ "objecttype", FIELD_STR, objecttype_atom_parser },
--	{ "objectsize", FIELD_ULONG, objectsize_atom_parser },
- 	{ "rest" },
- 	{ "deltabase", FIELD_STR, deltabase_atom_parser },
- };
-@@ -432,7 +426,6 @@ struct atom_value {
-  * Used to parse format string and sort specifiers
-  */
- static int parse_ref_filter_atom(const struct ref_format *format,
--				 const struct valid_atom *valid_atom, int n_atoms,
- 				 const char *atom, const char *ep)
- {
- 	const char *sp;
-@@ -462,13 +455,13 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	atom_len = (arg ? arg : ep) - sp;
- 
- 	/* Is the atom a valid one? */
--	for (i = 0; i < n_atoms; i++) {
-+	for (i = 0; i < ARRAY_SIZE(valid_atom); i++) {
- 		int len = strlen(valid_atom[i].name);
- 		if (len == atom_len && !memcmp(valid_atom[i].name, sp, len))
- 			break;
- 	}
- 
--	if (n_atoms <= i)
-+	if (ARRAY_SIZE(valid_atom) <= i)
- 		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
- 
- 	/* Add it in, including the deref prefix */
-@@ -762,15 +755,9 @@ int verify_ref_format(struct ref_format *format)
- 			return error(_("malformed format string %s"), sp);
- 		/* sp points at "%(" and ep points at the closing ")" */
- 
--		if (is_cat) {
--			at = parse_ref_filter_atom(format, valid_cat_file_atom,
--						   ARRAY_SIZE(valid_cat_file_atom), sp + 2, ep);
--		} else {
--			at = parse_ref_filter_atom(format, valid_atom,
--						   ARRAY_SIZE(valid_atom), sp + 2, ep);
--			if (skip_prefix(used_atom[at].name, "color:", &color))
--				format->need_color_reset_at_eol = !!strcmp(color, "reset");
--		}
-+		at = parse_ref_filter_atom(format, sp + 2, ep);
-+		if (skip_prefix(used_atom[at].name, "color:", &color))
-+			format->need_color_reset_at_eol = !!strcmp(color, "reset");
- 
- 		cp = ep + 1;
- 	}
-@@ -2244,18 +2231,10 @@ int format_ref_array_item(struct ref_array_item *info,
- 		ep = strchr(sp, ')');
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
--		if (is_cat) {
--			if(get_ref_atom_value(info,
--				parse_ref_filter_atom(format, valid_cat_file_atom,
--					ARRAY_SIZE(valid_cat_file_atom), sp + 2, ep),
--					&atomv))
--				return -1;
--		} else
--			get_ref_atom_value(info,
--				   parse_ref_filter_atom(format, valid_atom,
--							 ARRAY_SIZE(valid_atom),
--							 sp + 2, ep),
--				   &atomv);
-+		if(get_ref_atom_value(info,
-+				      parse_ref_filter_atom(format, sp + 2, ep),
-+				      &atomv))
-+			return -1;
- 		atomv->handler(atomv, &state);
- 	}
- 	if (is_cat && strlen(format->format) == 0)
-@@ -2307,8 +2286,7 @@ static int parse_sorting_atom(const char *atom)
- 	 */
- 	struct ref_format dummy = REF_FORMAT_INIT;
- 	const char *end = atom + strlen(atom);
--	return parse_ref_filter_atom(&dummy, valid_atom,
--				     ARRAY_SIZE(valid_atom), atom, end);
-+	return parse_ref_filter_atom(&dummy, atom, end);
+@@ -1354,16 +1354,60 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+ 	return show_ref(&atom->u.refname, ref->refname);
  }
  
- /*  If no sorting option is given, use refname to sort as default */
++static void need_object(struct ref_array_item *ref) {
++	struct object *obj;
++	const struct object_id *tagged;
++	unsigned long size;
++	int eaten;
++	void *buf = get_obj(&ref->objectname, &obj, &size, &eaten);
++	if (!buf)
++		die(_("missing object %s for %s"),
++		    oid_to_hex(&ref->objectname), ref->refname);
++	if (!obj)
++		die(_("parse_object_buffer failed on %s for %s"),
++		    oid_to_hex(&ref->objectname), ref->refname);
++
++	grab_values(ref->value, 0, obj, buf, size);
++	if (!eaten)
++		free(buf);
++
++	/*
++	 * If there is no atom that wants to know about tagged
++	 * object, we are done.
++	 */
++	if (!need_tagged || (obj->type != OBJ_TAG))
++		return;
++
++	/*
++	 * If it is a tag object, see if we use a value that derefs
++	 * the object, and if we do grab the object it refers to.
++	 */
++	tagged = &((struct tag *)obj)->tagged->oid;
++
++	/*
++	 * NEEDSWORK: This derefs tag only once, which
++	 * is good to deal with chains of trust, but
++	 * is not consistent with what deref_tag() does
++	 * which peels the onion to the core.
++	 */
++	buf = get_obj(tagged, &obj, &size, &eaten);
++	if (!buf)
++		die(_("missing object %s for %s"),
++		    oid_to_hex(tagged), ref->refname);
++	if (!obj)
++		die(_("parse_object_buffer failed on %s for %s"),
++		    oid_to_hex(tagged), ref->refname);
++	grab_values(ref->value, 1, obj, buf, size);
++	if (!eaten)
++		free(buf);
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  */
+ static void populate_value(struct ref_array_item *ref)
+ {
+-	void *buf;
+-	struct object *obj;
+-	int eaten, i;
+-	unsigned long size;
+-	const struct object_id *tagged;
++	int i;
+ 
+ 	ref->value = xcalloc(used_atom_cnt, sizeof(struct atom_value));
+ 
+@@ -1477,53 +1521,12 @@ static void populate_value(struct ref_array_item *ref)
+ 
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct atom_value *v = &ref->value[i];
+-		if (v->s == NULL)
+-			goto need_obj;
++		if (v->s == NULL) {
++			need_object(ref);
++			break;
++		}
+ 	}
+ 	return;
+-
+- need_obj:
+-	buf = get_obj(&ref->objectname, &obj, &size, &eaten);
+-	if (!buf)
+-		die(_("missing object %s for %s"),
+-		    oid_to_hex(&ref->objectname), ref->refname);
+-	if (!obj)
+-		die(_("parse_object_buffer failed on %s for %s"),
+-		    oid_to_hex(&ref->objectname), ref->refname);
+-
+-	grab_values(ref->value, 0, obj, buf, size);
+-	if (!eaten)
+-		free(buf);
+-
+-	/*
+-	 * If there is no atom that wants to know about tagged
+-	 * object, we are done.
+-	 */
+-	if (!need_tagged || (obj->type != OBJ_TAG))
+-		return;
+-
+-	/*
+-	 * If it is a tag object, see if we use a value that derefs
+-	 * the object, and if we do grab the object it refers to.
+-	 */
+-	tagged = &((struct tag *)obj)->tagged->oid;
+-
+-	/*
+-	 * NEEDSWORK: This derefs tag only once, which
+-	 * is good to deal with chains of trust, but
+-	 * is not consistent with what deref_tag() does
+-	 * which peels the onion to the core.
+-	 */
+-	buf = get_obj(tagged, &obj, &size, &eaten);
+-	if (!buf)
+-		die(_("missing object %s for %s"),
+-		    oid_to_hex(tagged), ref->refname);
+-	if (!obj)
+-		die(_("parse_object_buffer failed on %s for %s"),
+-		    oid_to_hex(tagged), ref->refname);
+-	grab_values(ref->value, 1, obj, buf, size);
+-	if (!eaten)
+-		free(buf);
+ }
+ 
+ /*
 
 --
 https://github.com/git/git/pull/452
