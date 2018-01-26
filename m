@@ -2,249 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A01321FAE2
-	for <e@80x24.org>; Fri, 26 Jan 2018 21:33:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD0291F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 21:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752508AbeAZVdm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 16:33:42 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:45841 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751273AbeAZVdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 16:33:41 -0500
-Received: by mail-pg0-f65.google.com with SMTP id m136so1034675pga.12
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 13:33:41 -0800 (PST)
+        id S1751404AbeAZVqF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 16:46:05 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34770 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751297AbeAZVqE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 16:46:04 -0500
+Received: by mail-pf0-f194.google.com with SMTP id e76so1123887pfk.1
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 13:46:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T9h5JfErAGlWCPlfdzWK1I7GEAUGsgcQVuPwT18n/84=;
-        b=EaZvSHdEpir44f+6BlS5Nh7m9Lg9QyeFFPsVCpb/rylIyBVBT2q/3KBtxU9lfuB5Ws
-         jWOx41brEuyAUOSERPvyqvmrhvD6CPhOa7cd9XWCvYX4gbD58YoxsoRmchofnuisobJT
-         1b0I3+3+X2T+TbDjB9VYFbGIfZ0zkJO7o/rlkTdGwmr/gfdFEUzKk6KkngiWLjHOZHbm
-         TpNcJJvCl1W26RjJwasa3HKoB31QWMMrEgJ8bIWM3K9ouP33FLuyv3EIsb3LW8vRgRF/
-         rAQwxz/NcqcWvcgfV+iIjLVljPbCUpdQGex4R9W3HiMfpbl471rO0cpO/ZQU79kOCp+C
-         G+UQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YPy+mcAeV4KgrljBGyP3LF9VL4LgorcCcEWPq5/JlW0=;
+        b=cYDI+z1rihQp6XP+ii23GaHXtCusM87xwbolGUsE2nSvzL+0YO+H/ka734D/HdaWIw
+         ZVV+UmlXi/xNrUn/yUZyo7VUmyoKQwxpLTByyiXuB3FJ16xixI4/Ec92OzX7gAnzt7Qu
+         ImNPQOQdA1FyEl3/JetxyFCorfabtXddVQ4T+EWA6kSDtswMtXQD8mwUo24TRbJA5uOX
+         n9FIEDh1JNe95CRMgEjFwWzucnBsa5TZIIvmZlDShJSCHAyB5Guwy0X4c2PAHEnKRc5V
+         xXa8+Q8bj2hGQibPMnXT5v5wairIljWyTVDdFV80P8Qh7XttitleRGP4Kq7X5TsROhPu
+         rSZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T9h5JfErAGlWCPlfdzWK1I7GEAUGsgcQVuPwT18n/84=;
-        b=Pnk2ywqS9fXaevrEcJXojVIiHY8vrgbqOIa3MacHsCeMp4cHye6tremDD30j6oN9MB
-         BdkRMNoiVusz2JElL+vTd7yiEp9XG6I3N/BqS9lzaCffnh9MJuayP8b+qmnWbuqZZHit
-         Qc0RDQniLA8tEvAYxTkUKffd2sKE6sbk6vlscIjWdq8NIV+XDJj/4V4G7IpcHrOygpci
-         ZZV2Dbt04+LypXutY6dx0okssyBK6YplFVUC172QjkYEfLhRzKfmHrNlOnGko7qIafmP
-         FdUY1KJ4f4RMQw4UTZ3yuquNfD3lh0sqfSJH0sEb9yL60W2iMa1Tuuw/IcxG33g4FfHA
-         PbjQ==
-X-Gm-Message-State: AKwxytf2QCcwoBdtbnaciNDkUL1pJYIK1YL17nCkMztJNvQpU4SR0Zuv
-        6nQVFpqICjXGB5Fs64yKdpNfuA==
-X-Google-Smtp-Source: AH8x225F73PolECy2aqvvbzc9NckLTzEd7gttd9yuj+AO6M5+zwWlqi7oEyBKxu1oVWp7yPrImnBPw==
-X-Received: by 10.101.64.4 with SMTP id f4mr16034790pgp.171.1517002420532;
-        Fri, 26 Jan 2018 13:33:40 -0800 (PST)
-Received: from google.com ([2620:0:100e:402:c861:974a:7ff5:46bb])
-        by smtp.gmail.com with ESMTPSA id m67sm18894001pfi.157.2018.01.26.13.33.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 26 Jan 2018 13:33:39 -0800 (PST)
-Date:   Fri, 26 Jan 2018 13:33:38 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 05/27] upload-pack: factor out processing lines
-Message-ID: <20180126213338.GB17576@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-6-bmwill@google.com>
- <CAGZ79kYbhR-y7WkhFgQ-YBkWaNXWuadDAGXaAzWDyJBzDSqc2w@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YPy+mcAeV4KgrljBGyP3LF9VL4LgorcCcEWPq5/JlW0=;
+        b=D8xIb7KqTq2xfR8Q7kDSQaxTt07cQ/2awlrulGc5H2RPITVV0gow/Fyx+847mANgO6
+         +JosZ6866XpMHwei7Ms7bBbzLu0oLu2GnhvzbE93+/A2lAjV75LGwThRyzR0iQnvIPm0
+         PFsrUXv6Kj1iAm9T6/iZpT7hIP/FuCEj69fDF80WT8dTvRTbLqeVZbSOYph6wg1M2Bs1
+         iJLIIpm0IbiXbjdZBgfQx8kxxdoZzUArfTbaRerNKUdgULVWYWUcs3zutXVeZ4WnBVKw
+         eRLtnP097Ops3Q/uRANbo9yiWh1nCfBKSrpXl9FmVg0NfbJypaOUq8tJ18B3uM/uA4An
+         nBVw==
+X-Gm-Message-State: AKwxytfp/AHX+kE7JAIGp2t4j548pYx2rC5cnpV4e+M9Uj4QcnYBFsQ1
+        UQzn8kSunx07kTlsADTu7vW/Lq+O
+X-Google-Smtp-Source: AH8x224AdwArGo+iktaPRGiHVcEVz7BdodR//mFvKSwnUCafexI4jJolPLz1q9Vgh2FjBIhcgiHjlg==
+X-Received: by 2002:a17:902:59c2:: with SMTP id d2-v6mr15786487plj.306.1517003163740;
+        Fri, 26 Jan 2018 13:46:03 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id a15sm20322515pfl.98.2018.01.26.13.46.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 13:46:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH RFC 03/24] cat-file: split expand_atom into 2 functions
+References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+        <0102016133ff3afb-6bab2c11-e0f3-4bef-9626-fbcc826bcb15-000000@eu-west-1.amazonses.com>
+Date:   Fri, 26 Jan 2018 13:46:02 -0800
+In-Reply-To: <0102016133ff3afb-6bab2c11-e0f3-4bef-9626-fbcc826bcb15-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Fri, 26 Jan 2018 19:43:40 +0000")
+Message-ID: <xmqqvafo5m5h.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYbhR-y7WkhFgQ-YBkWaNXWuadDAGXaAzWDyJBzDSqc2w@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/26, Stefan Beller wrote:
-> On Thu, Jan 25, 2018 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Factor out the logic for processing shallow, deepen, deepen_since, and
-> > deepen_not lines into their own functions to simplify the
-> > 'receive_needs()' function in addition to making it easier to reuse some
-> > of this logic when implementing protocol_v2.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  upload-pack.c | 113 ++++++++++++++++++++++++++++++++++++++--------------------
-> >  1 file changed, 74 insertions(+), 39 deletions(-)
-> >
-> > diff --git a/upload-pack.c b/upload-pack.c
-> > index 2ad73a98b..42d83d5b1 100644
-> > --- a/upload-pack.c
-> > +++ b/upload-pack.c
-> > @@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
-> >         packet_flush(1);
-> >  }
-> >
-> > +static int process_shallow(const char *line, struct object_array *shallows)
-> > +{
-> > +       const char *arg;
-> > +       if (skip_prefix(line, "shallow ", &arg)) {
-> 
-> stylistic nit:
-> 
->     You could invert the condition in each of the process_* functions
->     to just have
-> 
->         if (!skip_prefix...))
->             return 0
-> 
->         /* less indented code goes here */
-> 
->         return 1;
-> 
->     That way we have less indentation as well as easier code.
->     (The reader doesn't need to keep in mind what the else
->     part is about; it is a rather local decision to bail out instead
->     of having the return at the end of the function.)
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-I was trying to move the existing code into helper functions so
-rewriting them in transit may make it less reviewable?
+> Split expand_atom function into 2 different functions,
+> expand_atom_into_fields prepares variable for further filling,
+> (new) expand_atom creates resulting string.
+> Need that for further reusing of formatting logic from ref-filter.
+>
+> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored by: Jeff King <peff@peff.net>
+> ---
+>  builtin/cat-file.c | 73 +++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 39 insertions(+), 34 deletions(-)
 
-> 
-> > +               struct object_id oid;
-> > +               struct object *object;
-> > +               if (get_oid_hex(arg, &oid))
-> > +                       die("invalid shallow line: %s", line);
-> > +               object = parse_object(&oid);
-> > +               if (!object)
-> > +                       return 1;
-> > +               if (object->type != OBJ_COMMIT)
-> > +                       die("invalid shallow object %s", oid_to_hex(&oid));
-> > +               if (!(object->flags & CLIENT_SHALLOW)) {
-> > +                       object->flags |= CLIENT_SHALLOW;
-> > +                       add_object_array(object, NULL, shallows);
-> > +               }
-> > +               return 1;
-> > +       }
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +static int process_deepen(const char *line, int *depth)
-> > +{
-> > +       const char *arg;
-> > +       if (skip_prefix(line, "deepen ", &arg)) {
-> > +               char *end = NULL;
-> > +               *depth = (int) strtol(arg, &end, 0);
-> > +               if (!end || *end || *depth <= 0)
-> > +                       die("Invalid deepen: %s", line);
-> > +               return 1;
-> > +       }
-> > +
-> > +       return 0;
-> > +}
-> > +
-> > +static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
-> > +{
-> > +       const char *arg;
-> > +       if (skip_prefix(line, "deepen-since ", &arg)) {
-> > +               char *end = NULL;
-> > +               *deepen_since = parse_timestamp(arg, &end, 0);
-> > +               if (!end || *end || !deepen_since ||
-> > +                   /* revisions.c's max_age -1 is special */
-> > +                   *deepen_since == -1)
-> > +                       die("Invalid deepen-since: %s", line);
-> > +               *deepen_rev_list = 1;
-> > +               return 1;
-> > +       }
-> > +       return 0;
-> > +}
-> > +
-> > +static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
-> > +{
-> > +       const char *arg;
-> > +       if (skip_prefix(line, "deepen-not ", &arg)) {
-> > +               char *ref = NULL;
-> > +               struct object_id oid;
-> > +               if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
-> > +                       die("git upload-pack: ambiguous deepen-not: %s", line);
-> > +               string_list_append(deepen_not, ref);
-> > +               free(ref);
-> > +               *deepen_rev_list = 1;
-> > +               return 1;
-> > +       }
-> > +       return 0;
-> > +}
-> > +
-> >  static void receive_needs(void)
-> >  {
-> >         struct object_array shallows = OBJECT_ARRAY_INIT;
-> > @@ -745,49 +814,15 @@ static void receive_needs(void)
-> >                 if (!line)
-> >                         break;
-> >
-> > -               if (skip_prefix(line, "shallow ", &arg)) {
-> > -                       struct object_id oid;
-> > -                       struct object *object;
-> > -                       if (get_oid_hex(arg, &oid))
-> > -                               die("invalid shallow line: %s", line);
-> > -                       object = parse_object(&oid);
-> > -                       if (!object)
-> > -                               continue;
-> > -                       if (object->type != OBJ_COMMIT)
-> > -                               die("invalid shallow object %s", oid_to_hex(&oid));
-> > -                       if (!(object->flags & CLIENT_SHALLOW)) {
-> > -                               object->flags |= CLIENT_SHALLOW;
-> > -                               add_object_array(object, NULL, &shallows);
-> > -                       }
-> > +               if (process_shallow(line, &shallows))
-> >                         continue;
-> > -               }
-> > -               if (skip_prefix(line, "deepen ", &arg)) {
-> > -                       char *end = NULL;
-> > -                       depth = strtol(arg, &end, 0);
-> > -                       if (!end || *end || depth <= 0)
-> > -                               die("Invalid deepen: %s", line);
-> > +               if (process_deepen(line, &depth))
-> >                         continue;
-> > -               }
-> > -               if (skip_prefix(line, "deepen-since ", &arg)) {
-> > -                       char *end = NULL;
-> > -                       deepen_since = parse_timestamp(arg, &end, 0);
-> > -                       if (!end || *end || !deepen_since ||
-> > -                           /* revisions.c's max_age -1 is special */
-> > -                           deepen_since == -1)
-> > -                               die("Invalid deepen-since: %s", line);
-> > -                       deepen_rev_list = 1;
-> > +               if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
-> >                         continue;
-> > -               }
-> > -               if (skip_prefix(line, "deepen-not ", &arg)) {
-> > -                       char *ref = NULL;
-> > -                       struct object_id oid;
-> > -                       if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
-> > -                               die("git upload-pack: ambiguous deepen-not: %s", line);
-> > -                       string_list_append(&deepen_not, ref);
-> > -                       free(ref);
-> > -                       deepen_rev_list = 1;
-> > +               if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
-> >                         continue;
-> > -               }
-> > +
-> >                 if (!skip_prefix(line, "want ", &arg) ||
-> >                     get_oid_hex(arg, &oid_buf))
-> >                         die("git upload-pack: protocol error, "
-> > --
-> > 2.16.0.rc1.238.g530d649a79-goog
-> >
+As expand_atom() is file-scope static and its callers are well
+isolated, it is OK to change its meaning while restructuring the
+code like this patch does (as opposed to a public function to which
+new callers may be added on other topics in flight).
 
--- 
-Brandon Williams
+The split itself looks sensible, but expand_atom_into_fields() is a
+questionable name.  expand_atom() does fill the data in sb, but
+calling expand_atom_into_fields() does not fill any data into
+separated fields---it merely prepares somebody else to do so.
+
+Helped by this comment:
+
+	/*
+	 * If mark_query is true, we do not expand anything, but rather
+	 * just mark the object_info with items we wish to query.
+	 */
+	int mark_query;
+
+we can guess that a better name would mention or hint "object_info",
+"query" and probably "prepare" (because we would do so before
+actually querying).
+
+I am not sure if separating the logic into these two functions is a
+good way to organize things.  When a new %(atom) is introduced, it
+is more likely that a programmer adds it to one but forgets to make
+a matching change to the other, no?  (here, "I am not sure" is just
+that.  It is very different from "I am sure this is wrong").
+
+Thanks.
