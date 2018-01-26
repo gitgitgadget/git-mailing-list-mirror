@@ -2,167 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AAB01F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DDE51F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:43:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752007AbeAZTiy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:38:54 -0500
-Received: from mail-yw0-f195.google.com ([209.85.161.195]:38690 "EHLO
-        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751990AbeAZTix (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 14:38:53 -0500
-Received: by mail-yw0-f195.google.com with SMTP id m84so583956ywd.5
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:38:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PpDcIZa+g1q8uY4+qC7ki3bs7uZ+FmkTn6Mv/bv+bp8=;
-        b=ADkZxine39/W8H/bxA0U9JYFJ3OYVfCVRKPM6NndGTHLR43XLHH0gpeHvlOSOEVon7
-         stVcEZecQ8YuQJ+9HautuXZZESAUC1QPLWRAMhlwD8bXmo6nQsHVmaSrvDf5u0pWvW13
-         MdYVt9fS0thf4Pe7msa0rG9ua4qGvF9NIoOkyts9bb1CFnSCh/5eks+F49iDCqzc90/J
-         duXAOEcCaLJpjfVTwHxxIoXV4voHd0wIcZ7+I/bHXcA8ek70Wt04UvJUxmMni7tcoy4V
-         KmLtlWXD/eVJIvzV64IC7IIRQkXjM9ucPDsn/YsDzUu3X6gciddtFhlVmZ8Cl1a+amaz
-         /U0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PpDcIZa+g1q8uY4+qC7ki3bs7uZ+FmkTn6Mv/bv+bp8=;
-        b=FTvm2wjoHd/ebmRMudGZcJ3gmXyI/lR+O+srkaWSiOlapW8Q8td95XR0whe4jultbD
-         f1Ix3Tr2FyhqMsaH9M8rfrcLNhlHbNLXxf5LteHIeJwg0S5vm3btzRZgYyWxVGWlYOXf
-         w3Tc7pjO5f1IL/ZgyaDZkhejJECUtOKXkCrPxzc/D+neyjdoQQdNNYDuRB3UVQyGnmYz
-         CGaOZmISdn11440IvoXXg8xFqCCj6g+Eqgmw1+bQUx/m7PGd2SrmJqa+UVMUCcnCtExL
-         u9N6+Lkm83CHXATrSEGZVHIY/chU9vDEOp+VP3ep6E2OXbgePjsleEYQXKtKy1nfVVMU
-         9saA==
-X-Gm-Message-State: AKwxytcSmHAf40W2olmnMhW16VP/FEx9aieOI7Gk7s9pPwU5M70di671
-        0eQ9qCcnTN2bcYFHiMnCuGX00ito+52xgNDiwocjsw==
-X-Google-Smtp-Source: AH8x227qO8cqWLeVKPfQBKxwKU9B1DcdDYyYnTz9N1EnidYZjSrvu21Tl/DoYNbCNwpK5jzigOyU76GfJN4Wlz9ykc0=
-X-Received: by 10.129.108.149 with SMTP id h143mr12002962ywc.373.1516995531977;
- Fri, 26 Jan 2018 11:38:51 -0800 (PST)
+        id S1752273AbeAZTno (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:43:44 -0500
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:43864
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751824AbeAZTnl (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 26 Jan 2018 14:43:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1516995820;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=zE+x3PsTit2wZUkfjMiZxE1BIcsJyhid1gquDkYpPRU=;
+        b=G2ZUmEhHU9YQ0Ey1kBN2ZQLU+C1PiorRYcTFa7u+X6GOMS+DwsTLVtbvlVcoFQm1
+        7lvT35zhB6MU/4or+HpmiUtx4gMSt0H9y5OaqTArdDX76oWQJ95ChF5q25bNwxFtgkH
+        IBSzhkzrnl0y6MxLzCW2ydFgPj/IUME7Uxe/aZpo=
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102016133ff3b5d-2a898107-6989-411d-b7c5-f349e897873e-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+Subject: [PATCH RFC 23/24] cat-file: tests for new atoms added
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 11:38:51 -0800 (PST)
-In-Reply-To: <20180125140231.65604-12-dstolee@microsoft.com>
-References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-12-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Jan 2018 11:38:51 -0800
-Message-ID: <CAGZ79kbR_GUGRhXBU187LchHKqxFd42Rc=w+jOEfrigmEAgNaw@mail.gmail.com>
-Subject: Re: [PATCH 11/14] commit: integrate packed graph with commit parsing
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 26 Jan 2018 19:43:40 +0000
+X-SES-Outgoing: 2018.01.26-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
-> Teach Git to inspect a packed graph to supply the contents of a
-> struct commit when calling parse_commit_gently(). This implementation
-> satisfies all post-conditions on the struct commit, including loading
-> parents, the root tree, and the commit date. The only loosely-expected
-> condition is that the commit buffer is loaded into the cache. This
-> was checked in log-tree.c:show_log(), but the "return;" on failure
-> produced unexpected results (i.e. the message line was never terminated).
-> The new behavior of loading the buffer when needed prevents the
-> unexpected behavior.
->
-> If core.graph is false, then do not load the graph and behave as usual.
->
-> In test script t5319-graph.sh, add output-matching conditions on read-
-> only graph operations.
->
-> By loading commits from the graph instead of parsing commit buffers, we
-> save a lot of time on long commits walks. Here are some performance
-> results for a copy of the Linux repository where 'master' has 704,766
-> reachable commits and is behind 'origin/master' by 19,610 commits.
->
-> | Command                          | Before | After  | Rel % |
-> |----------------------------------|--------|--------|-------|
-> | log --oneline --topo-order -1000 |  5.9s  |  0.7s  | -88%  |
-> | branch -vv                       |  0.42s |  0.27s | -35%  |
-> | rev-list --all                   |  6.4s  |  1.0s  | -84%  |
-> | rev-list --all --objects         | 32.6s  | 27.6s  | -15%  |
+Add some tests for new formatting atoms from ref-filter.
+Some of new atoms are supported automatically,
+some of them are expanded into empty string
+(because they are useless for some types of objects),
+some of them could be supported later in other patches.
 
-This sounds impressive!
+Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored by: Jeff King <peff@peff.net>
+---
+ t/t1006-cat-file.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-> @@ -383,19 +384,27 @@ int parse_commit_gently(struct commit *item, int quiet_on_missing)
->
->         if (!item)
->                 return -1;
-> +
-> +       // If we already parsed, but got it from the graph, then keep going!
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index b19f332694620..e72fcaf0e02c5 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -20,6 +20,19 @@ maybe_remove_timestamp () {
+     fi
+ }
+ 
++test_atom () {
++    name=$1
++    sha1=$2
++    atoms=$3
++    expected=$4
++
++    test_expect_success "$name" '
++	echo "$expected" >expect &&
++	echo $sha1 | git cat-file --batch-check="$atoms" >actual &&
++	test_cmp expect actual
++    '
++}
++
+ run_tests () {
+     type=$1
+     sha1=$2
+@@ -119,6 +132,13 @@ $content"
+ 	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
+ 	test_cmp expect actual
+     '
++
++    for atom in refname parent body trailers upstream push symref flag
++    do
++	test_atom "Check %($atom) gives empty output" "$sha1" "%($atom)" ""
++    done
++
++    test_atom "Check %(HEAD) gives only one space as output" "$sha1" '%(HEAD)' ' '
+ }
+ 
+ hello_content="Hello World"
+@@ -140,6 +160,12 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 	test_cmp expect actual
+ '
+ 
++shortname=`echo $hello_sha1 | sed 's/^.\{0\}\(.\{7\}\).*/\1/'`
++test_atom 'Check format option %(objectname:short) works' "$hello_sha1" '%(objectname:short)' "$shortname"
++
++test_atom 'Check format option %(align) is not broken' \
++    "$hello_sha1" "%(align:8)%(objecttype)%(end)%(objectname)" "blob    $hello_sha1"
++
+ tree_sha1=$(git write-tree)
+ tree_size=33
+ tree_pretty_content="100644 blob $hello_sha1	hello"
+@@ -157,6 +183,17 @@ $commit_message"
+ 
+ run_tests 'commit' $commit_sha1 $commit_size "$commit_content" "$commit_content" 1
+ 
++test_atom "Check format option %(if) is not broken" "$commit_sha1" \
++    "%(if)%(author)%(then)%(objectname)%(end)" "$commit_sha1"
++test_atom "Check %(tree) works for commit" "$commit_sha1" "%(tree)" "$tree_sha1"
++test_atom "Check %(numparent) works for commit" "$commit_sha1" "%(numparent)" "0"
++test_atom "Check %(authorname) works for commit" "$commit_sha1" "%(authorname)" "$GIT_AUTHOR_NAME"
++test_atom "Check %(authoremail) works for commit" "$commit_sha1" "%(authoremail)" "<$GIT_AUTHOR_EMAIL>"
++test_atom "Check %(committername) works for commit" "$commit_sha1" "%(committername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(committeremail) works for commit" "$commit_sha1" "%(committeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for commit" "$commit_sha1" "%(subject)" "$commit_message"
++test_atom "Check %(contents) works for commit" "$commit_sha1" "%(contents)" "$commit_message"
++
+ tag_header_without_timestamp="object $hello_sha1
+ type blob
+ tag hellotag
+@@ -171,6 +208,17 @@ tag_size=$(strlen "$tag_content")
+ 
+ run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
+ 
++test_atom "Check %(object) works for tag" "$tag_sha1" "%(object)" "$hello_sha1"
++test_atom "Check %(type) works for tag" "$tag_sha1" "%(type)" "blob"
++test_atom "Check %(tag) works for tag" "$tag_sha1" "%(tag)" "hellotag"
++test_atom "Check %(taggername) works for tag" "$tag_sha1" "%(taggername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(taggeremail) works for tag" "$tag_sha1" "%(taggeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for tag" "$tag_sha1" "%(subject)" "$tag_description"
++test_atom "Check %(contents) works for tag" "$tag_sha1" "%(contents)" "$tag_description"
++
++test_atom "Check %(color) gives no additional output" "$sha1" \
++    "%(objectname) %(color:green) %(objecttype)" "$sha1  $type"
++
+ test_expect_success \
+     "Reach a blob from a tag pointing to it" \
+     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
 
-comment style.
-
->         if (item->object.parsed)
->                 return 0;
-> +
-> +       if (check_packed && parse_packed_commit(item))
-> +               return 0;
-> +
->         buffer = read_sha1_file(item->object.oid.hash, &type, &size);
->         if (!buffer)
->                 return quiet_on_missing ? -1 :
->                         error("Could not read %s",
-> -                            oid_to_hex(&item->object.oid));
-> +                       oid_to_hex(&item->object.oid));
->         if (type != OBJ_COMMIT) {
->                 free(buffer);
->                 return error("Object %s not a commit",
-> -                            oid_to_hex(&item->object.oid));
-> +                       oid_to_hex(&item->object.oid));
->         }
-> +
->         ret = parse_commit_buffer(item, buffer, size);
-> +
-
-I guess the new lines are for readability?
-Not sure if will play out nicely with merges in this area, though.
-(I touch this area of the code as well in the not yet sent out series
-adding the repository as an argument all over the place. Not your
-problem, just me getting anxious)
-
-> @@ -34,6 +34,8 @@
->  #define GRAPH_CHUNKLOOKUP_SIZE (5 * 12)
->  #define GRAPH_MIN_SIZE (GRAPH_CHUNKLOOKUP_SIZE + GRAPH_FANOUT_SIZE + \
->                         GRAPH_OID_LEN + sizeof(struct packed_graph_header))
-> +/* global storage */
-> +struct packed_graph *packed_graph = 0;
->
->  struct object_id *get_graph_head_oid(const char *pack_dir, struct object_id *oid)
->  {
-> @@ -209,6 +211,225 @@ struct packed_graph *load_packed_graph_one(const char *graph_file, const char *p
->         return graph;
->  }
->
-> +static void prepare_packed_graph_one(const char *obj_dir)
-> +{
-> +       char *graph_file;
-> +       struct object_id oid;
-> +       struct strbuf pack_dir = STRBUF_INIT;
-> +       strbuf_addstr(&pack_dir, obj_dir);
-> +       strbuf_add(&pack_dir, "/pack", 5);
-> +
-> +       if (!get_graph_head_oid(pack_dir.buf, &oid))
-> +               return;
-> +
-> +       graph_file = get_graph_filename_oid(pack_dir.buf, &oid);
-> +
-> +       packed_graph = load_packed_graph_one(graph_file, pack_dir.buf);
-> +       strbuf_release(&pack_dir);
-> +}
-> +
-> +static int prepare_packed_graph_run_once = 0;
-
-Okay. :(
-Seeing new globals like these, gives me extra motivation to
-get the object store series going.
+--
+https://github.com/git/git/pull/452
