@@ -2,91 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A06F1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:11:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 705411F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752487AbeAZTLg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:11:36 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:40754 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751998AbeAZTLf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 14:11:35 -0500
-Received: by mail-qt0-f196.google.com with SMTP id s39so3888958qth.7
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:11:35 -0800 (PST)
+        id S1752915AbeAZTUC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:20:02 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:39046 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752543AbeAZTUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 14:20:01 -0500
+Received: by mail-pf0-f196.google.com with SMTP id e11so883963pff.6
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=72j58soZL0wMaGAIA9C8KPcBxAUrA8RYhBMRnMpTD7k=;
-        b=DvRyDgtChux3QwZO9zzs1aGdWUVLHhx+2kYIN6z3aHOH/GR2CyElf6+x+Lkyu2TgEu
-         eJm4EViUyy7Tz0vj4e3/HTEPHo/MvY9WzbIYCA/aTPN6gSmXmRTVM8qVz9A52gOQYIw8
-         ArkGKJtCZLfN/ZTcF6z4ThZZ8xB9DlrOLGCPvgS7Hx1ikU2M2NegkcOTgf2DL+IWOaEa
-         +PzTvU/ymb+6LeHUzhBPOiGfhDUFZ844OKVymt+nYNY1J58vC7WsHTm4mwNX4fFhNX7m
-         zsJwrvrzXr+28aNS8HRUHAjb8PecY/xJJ7Lb41PC+5pvuMb1mlU146VaHISzPChvYI93
-         VTnA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=k5jULqZTuRwvgg9MG9HgTIITEBk6ilZixuA05+CPklg=;
+        b=KEGGBxPkFrmQbD2MTFDHQMuf4r9tJlOSY0jIdk8odv7TvCukfuVl03g8ZWhGf5317k
+         Puc+ydQwMgc3a6+Rji6PxbdGw3wWvt2m4KVrMEFlw73XfNggobqT4rcj7oaljpSXvTpo
+         z4svyj2Lvi5iF0Sa8QSVbC6YvmtGHE3fHzvXVU5o8Nh3iaiB0pEPn8gkl/naHLRT+GZU
+         +MT8+zyBuBJttEZwdKucxqd9W3TFrzitMkZuraaVASPDn9sf/ois12hQqdD6Vf06rTN9
+         FX5unOG+g1i0kiXbbv/62rRJSb7fiuCh6RrEFCacxm1IwbENNVKn0ncMmoWbLXG8HCqt
+         0Ylw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=72j58soZL0wMaGAIA9C8KPcBxAUrA8RYhBMRnMpTD7k=;
-        b=ptkM1RCA0odbo31Tldsb48hg5vynRfV1xeflZAc8ozNiom5pMJadqdQGtQVjLBY362
-         a4k8leDIUXvxLfkpJUzD7GKQBeGE34LTOib076/POWX1uXZ9gd0EAHQHj5ke06FyOmjA
-         RcR2LLyLoGM+pXokPz1s3U/abQWbrIJ6AD0Qdz+/zuuPlQ4gxXEbmBV2Pmjr7rpsTCF6
-         Dr3DY3OznqpJAEfOraqwITKPQIS2yhxGyIlO58wJNEDBEqbhbHW7+G9Pq1fa+KplSrr8
-         HkBN1M5BBYgT1F63s1SYuSC7sebcZJlvTqTPgE3IqWMXQCZerQSteEhfljmSuaxiO5kW
-         BnIA==
-X-Gm-Message-State: AKwxytfgO7zQcnw58AUR6tVR95SopA6gxK3NRRTvkayZb7xDoYCFD7Mv
-        4fKBE+hzd4WgydLTItG8KAnX3fDQpxB1VQ1x+tU=
-X-Google-Smtp-Source: AH8x226xHRdJKH7OuLlBfwL57qIFXDJviF1dVx+H4kNvVoUvQZqaAn9b6vNkzWTc8xKBgW01R4FTnZ4fXMPJ+/cBY5Y=
-X-Received: by 10.200.7.74 with SMTP id k10mr26357428qth.333.1516993894537;
- Fri, 26 Jan 2018 11:11:34 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=k5jULqZTuRwvgg9MG9HgTIITEBk6ilZixuA05+CPklg=;
+        b=mUfhUzzl8DfGAgU8IrmQRWCUZ9ppLXcsqpkPv/7ZtpqmJmZ5Rc5Ra20dT2VzoVcaPP
+         VDA35UQ9Sh4/WATU9kLTrXQjV4k/wwWAMbX6QSTvi68v24YSY4Te267qkTnOYfvH9e2I
+         ebgjGxfXFMfpjZiKApV0HuxmBqLsmy4WmjitK7foXGv0qK1R9q1cJjGgEZxIo9roiUlp
+         gCvRjz5ERqtMKvIXMZZ06rqmAwVFzWVoz9Yp5U7AXEGFV5mN16D89U1/KKFadGnS0o7b
+         N8P4OJGMD4i8QTGvZ3jAat02+D8fhyeFwugShUYeavZKrtJh2Oe2el0EqEE0lJ1HAGw4
+         2ipA==
+X-Gm-Message-State: AKwxytepucJ4ftaZto1yVnnY1nG7D7tt19XTYtXSF7jho2qocj6Y959T
+        wogIigsdIWbkDO8bTZj0Csk=
+X-Google-Smtp-Source: AH8x227pTc60qc+x/gzyuDulXMC4QgLx3euwbbbHh5qgFO2Od/0ehaGdrJjEf633BBNnhTTZE3G8uw==
+X-Received: by 10.99.188.2 with SMTP id q2mr12539198pge.67.1516994401032;
+        Fri, 26 Jan 2018 11:20:01 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id p20sm16163318pfh.100.2018.01.26.11.20.00
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 11:20:00 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 08/10] t: forbid piping into 'test_i18ngrep'
+References: <20180126123708.21722-1-szeder.dev@gmail.com>
+        <20180126123708.21722-9-szeder.dev@gmail.com>
+        <xmqq1sic8omp.fsf@gitster.mtv.corp.google.com>
+        <CAM0VKjn401p4fbF-mJrpaQrgOHGHZ1HtRNx9n+CV+jn4n2a1Uw@mail.gmail.com>
+Date:   Fri, 26 Jan 2018 11:19:59 -0800
+In-Reply-To: <CAM0VKjn401p4fbF-mJrpaQrgOHGHZ1HtRNx9n+CV+jn4n2a1Uw@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 26 Jan 2018 19:51:56
+ +0100")
+Message-ID: <xmqqo9lg77hc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 26 Jan 2018 11:11:33 -0800 (PST)
-In-Reply-To: <20180126095520.919-3-pclouds@gmail.com>
-References: <20180126095520.919-1-pclouds@gmail.com> <20180126095520.919-3-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 26 Jan 2018 14:11:33 -0500
-X-Google-Sender-Auth: 72wk3hZyVuTX3icHkgvbLdLdwLc
-Message-ID: <CAPig+cSjxiOTEKuOR9zGrY=Z_RoSBPHaiyNkzp-tXjSVNj3RHg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rebase: add --show-patch
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 4:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> It is useful to see the full patch while resolving conflicts in a
-> rebase. The only way to do it now is
->
->     less .git/rebase-*/patch
->
-> which could turn out to be a lot longer to type [1] if you are in a
-> linked worktree, or not at top-dir. On top of that, an ordinary user
-> should not need to peek into .git directory. The new option is
-> provided to examine the patch.
-> [...]
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> @@ -840,6 +840,10 @@ To continue rebase after editing, run:
-> +show-patch)
-> +       cmt=3D"$(cat "$state_dir/stopped-sha")"
-> +       exec git format-patch --subject-prefix=3D --stdout "${cmt}^!"
-> +       ;;
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-What is the behavior if a rebase (or conflicted rebase) is not in
-progress? Stated differently, do we only make it this far if
-$state_dir/stopped_sha exists?
+> With 'test_i18ngrep' outside the 'test_expect_success' block!?
+> Definitely too contrived. :)
+
+Well, I think you got the idea.  The point is that test_i18ngrep may
+not be the only thing that is redirected into, but can just be a
+part of a block of commands, and the "probing" read will hurt.
