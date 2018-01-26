@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 479F31F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD681F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752085AbeAZMh3 (ORCPT <rfc822;e@80x24.org>);
+        id S1752097AbeAZMhc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 07:37:32 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:39736 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752080AbeAZMh3 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 26 Jan 2018 07:37:29 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:37541 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751731AbeAZMh0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 07:37:26 -0500
-Received: by mail-wr0-f193.google.com with SMTP id f11so410866wre.4
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:25 -0800 (PST)
+Received: by mail-wr0-f196.google.com with SMTP id z48so405349wrz.6
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LvhcmLmnSFbQtakXmdwnRQEWZrM/3qrgej0xOzD7SCc=;
-        b=PqWrwWghz7k4QG8WC9CS8zb9rv9ccYupKlJGkq8jZiJ/7AAY1eIs3Nmilmp5mmcYhV
-         C1uHpxUdQTwFsxd0qlpZAGzuxwZ9Z9nEde51zBcjAhnzkgUj0GA8fP1LqfFrj6dAhCEY
-         BdTsAUGnvng48nzTuSX2/BN3vIF8bc0EAtN2JLWL+jVAkqEOov+rIjJ2Nv+2I/0E+UOp
-         N6kKGMqxr78eJe1ozAhTsvpHpR4nxp9NhhgVi4ZO3YtE0QKtIOjphJYLh5Ih2UVGmuXx
-         6Vo0NoKArZ+yGxG0YHVteyezHx82alRL4fBi7BLdniNnzF537ZU1JPs3kq/SCFlp5kKC
-         nF/w==
+        bh=B+LOhe9cwirc6jdzV1lxJI8ekNjgy4bfYK6Oc3YxbSA=;
+        b=TpjzvDXxCwsqnaMeG7Kes/APaFlQApOPall0nSLXczmL9PVq/81mFGJJcspFluWPhM
+         p/vej5gKr2MaXyPI0NAYMf2f8cLaKrlenpPDj7HGzmAhrBKTFJGcUkckzFby29tJgU4I
+         SN7e67AEnNbuUUppI20s/1OtQLhjt/TOQOW4uqXLFWLr0mnQCRcj27CNbbmeGlvPWoDk
+         DHGVsyqMK5eWL5oIRM6vhEYnhtii/1laNH2knZnWFOjus6jI3sZRxQglamY3FcmA/CAV
+         Nvywmu18RvB/xOwxMEJ/cNcy4hQ1SbXTJjujY4RQlTpsUwVGw0bKsyDE+7pE2FSpSuEI
+         PwsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LvhcmLmnSFbQtakXmdwnRQEWZrM/3qrgej0xOzD7SCc=;
-        b=XOr7QLX+nuFStW03VMJNKyfsfouxuQ9W1RnWBYtmoa6eNfq8IYpOqZUOGNKT7WWmns
-         UlIkJBqjYw82hqTv+IOCddLPvqvk/H6nIIYtwJD54lYRi6SRQdby3oXJm2VD9U/EEVWh
-         CSWQ9bj8F/6ivWaQ1JiJIbZHngMkuXU98Svlxo2XOJKqWfWaDLoeo8YMY30+hVocXAOQ
-         HM7fW8sbfKDCmt0t+pjkMPk4Um0V8jcpEOWtdAgENy0rU8ht/tZEN4oToAjfbEB3wDaP
-         ztW1vfgApGb+/DY8NI2fusiE96GsuyJ128QLLvcBBxzGWO3nvW3P00TUwwOttOqY4eXU
-         53HQ==
-X-Gm-Message-State: AKwxytdXQNucH0rrKuoqhjpI2+3weYnv8Yz/YOwLAPleYzFZWW9igMfN
-        QToyhjTlvoYly4mmw41Fb2YG4A==
-X-Google-Smtp-Source: AH8x225k+wWRGplsZvaX7C0frk+WlDBAaV6RRnWhi5RauXXGqt6cao9kjRgAQcl4pFsbnrnLpGc0Ww==
-X-Received: by 10.223.208.132 with SMTP id y4mr11382581wrh.141.1516970244955;
-        Fri, 26 Jan 2018 04:37:24 -0800 (PST)
+        bh=B+LOhe9cwirc6jdzV1lxJI8ekNjgy4bfYK6Oc3YxbSA=;
+        b=jkEyHUup5kJrhHShISaiVMDHJcdwCBFbm+Z6tIqfF7ijEgPzLvotWPLFyOXV8PSWCC
+         t9gObLoPjCgwP84YCylNsMLMl1UltpUvVWEFWfzUzhVCLFsQLB3SRP8ZuF2ZqiDrO9UD
+         WOmhvfd7fGytfWllnkVeX0YabBI8Wu4m3nTB7v82Ti317A6uB4PRfgHydHSJH3BDpRYW
+         MEiLPZgqdWsBcp/yrHgYCvzWWdAdHVad2LehsqiNIFvO/vSif0EnYp6I+aJ6hcDne0C4
+         Hxo84R4rEMHbtY36pqe5mUtteJNVA4u9Av3RY3dia1+3YCHYFZ33Vzb2kHPHI/LLjQKT
+         o0iQ==
+X-Gm-Message-State: AKwxytfVr3Z5u3NDxSX6Gn1VcopgmUoI12xs6wFl8OsDtoLU+ANJxOXF
+        nSnbCdCcZTUaE3VfWSEgAfmU2w==
+X-Google-Smtp-Source: AH8x227rXeg1noHgeIfpMyYJJN2hLuGTvo/km7VjtQqXewqXrRG8DNg2ssO+FFtw3BOWm5OqDPBBhw==
+X-Received: by 10.223.186.10 with SMTP id o10mr10081962wrg.150.1516970247789;
+        Fri, 26 Jan 2018 04:37:27 -0800 (PST)
 Received: from localhost.localdomain (x590dab0e.dyn.telefonica.de. [89.13.171.14])
-        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.24
+        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 04:37:24 -0800 (PST)
+        Fri, 26 Jan 2018 04:37:27 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 04/10] t4001: don't run 'git status' upstream of a pipe
-Date:   Fri, 26 Jan 2018 13:37:02 +0100
-Message-Id: <20180126123708.21722-5-szeder.dev@gmail.com>
+Subject: [PATCH 07/10] t: move 'test_i18ncmp' and 'test_i18ngrep' to 'test-lib-functions.sh'
+Date:   Fri, 26 Jan 2018 13:37:05 +0100
+Message-Id: <20180126123708.21722-8-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.1.155.g5159265b1
 In-Reply-To: <20180126123708.21722-1-szeder.dev@gmail.com>
 References: <20180126123708.21722-1-szeder.dev@gmail.com>
@@ -67,51 +67,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The primary purpose of three tests in 't4001-diff-rename.sh' is to
-check rename detection in 'git status', but all three do so by running
-'git status' upstream of a pipe, hiding its exit code.  Consequently,
-the test could continue even if 'git status' exited with error.
-
-Use an intermediate file between 'git status' and 'test_i18ngrep' to
-catch a potential failure of the former.
+Both 'test_i18ncmp' and 'test_i18ngrep' helper functions are supposed
+to be called from our test scripts, so they should be in
+'test-lib-functions.sh'.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t4001-diff-rename.sh | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ t/test-lib-functions.sh | 26 ++++++++++++++++++++++++++
+ t/test-lib.sh           | 26 --------------------------
+ 2 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-index eadf4f624..a07816d56 100755
---- a/t/t4001-diff-rename.sh
-+++ b/t/t4001-diff-rename.sh
-@@ -134,11 +134,15 @@ test_expect_success 'favour same basenames over different ones' '
- 	git rm path1 &&
- 	mkdir subdir &&
- 	git mv another-path subdir/path1 &&
--	git status | test_i18ngrep "renamed: .*path1 -> subdir/path1"'
-+	git status >out &&
-+	test_i18ngrep "renamed: .*path1 -> subdir/path1" out
-+'
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 1701fe2a0..92ed02937 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -705,6 +705,32 @@ test_cmp_bin() {
+ 	cmp "$@"
+ }
  
- test_expect_success 'favour same basenames even with minor differences' '
- 	git show HEAD:path1 | sed "s/15/16/" > subdir/path1 &&
--	git status | test_i18ngrep "renamed: .*path1 -> subdir/path1"'
-+	git status >out &&
-+	test_i18ngrep "renamed: .*path1 -> subdir/path1" out
-+'
++# Use this instead of test_cmp to compare files that contain expected and
++# actual output from git commands that can be translated.  When running
++# under GETTEXT_POISON this pretends that the command produced expected
++# results.
++test_i18ncmp () {
++	test -n "$GETTEXT_POISON" || test_cmp "$@"
++}
++
++# Use this instead of "grep expected-string actual" to see if the
++# output from a git command that can be translated either contains an
++# expected string, or does not contain an unwanted one.  When running
++# under GETTEXT_POISON this pretends that the command produced expected
++# results.
++test_i18ngrep () {
++	if test -n "$GETTEXT_POISON"
++	then
++	    : # pretend success
++	elif test "x!" = "x$1"
++	then
++		shift
++		! grep "$@"
++	else
++		grep "$@"
++	fi
++}
++
+ # Call any command "$@" but be more verbose about its
+ # failure. This is handy for commands like "test" which do
+ # not output anything when they fail.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 9a0a21f49..852b22c80 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1062,32 +1062,6 @@ else
+ 	test_set_prereq C_LOCALE_OUTPUT
+ fi
  
- test_expect_success 'two files with same basename and same content' '
- 	git reset --hard &&
-@@ -148,7 +152,8 @@ test_expect_success 'two files with same basename and same content' '
- 	git add dir &&
- 	git commit -m 2 &&
- 	git mv dir other-dir &&
--	git status | test_i18ngrep "renamed: .*dir/A/file -> other-dir/A/file"
-+	git status >out &&
-+	test_i18ngrep "renamed: .*dir/A/file -> other-dir/A/file" out
- '
- 
- test_expect_success 'setup for many rename source candidates' '
+-# Use this instead of test_cmp to compare files that contain expected and
+-# actual output from git commands that can be translated.  When running
+-# under GETTEXT_POISON this pretends that the command produced expected
+-# results.
+-test_i18ncmp () {
+-	test -n "$GETTEXT_POISON" || test_cmp "$@"
+-}
+-
+-# Use this instead of "grep expected-string actual" to see if the
+-# output from a git command that can be translated either contains an
+-# expected string, or does not contain an unwanted one.  When running
+-# under GETTEXT_POISON this pretends that the command produced expected
+-# results.
+-test_i18ngrep () {
+-	if test -n "$GETTEXT_POISON"
+-	then
+-	    : # pretend success
+-	elif test "x!" = "x$1"
+-	then
+-		shift
+-		! grep "$@"
+-	else
+-		grep "$@"
+-	fi
+-}
+-
+ test_lazy_prereq PIPE '
+ 	# test whether the filesystem supports FIFOs
+ 	test_have_prereq !MINGW,!CYGWIN &&
 -- 
 2.16.1.155.g5159265b1
 
