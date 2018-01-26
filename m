@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD681F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC5EE1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752097AbeAZMhc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 07:37:32 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:39736 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752080AbeAZMh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 07:37:29 -0500
-Received: by mail-wr0-f196.google.com with SMTP id z48so405349wrz.6
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:28 -0800 (PST)
+        id S1752099AbeAZMhf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 07:37:35 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51291 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752078AbeAZMhb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 07:37:31 -0500
+Received: by mail-wm0-f68.google.com with SMTP id r71so1001023wmd.1
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B+LOhe9cwirc6jdzV1lxJI8ekNjgy4bfYK6Oc3YxbSA=;
-        b=TpjzvDXxCwsqnaMeG7Kes/APaFlQApOPall0nSLXczmL9PVq/81mFGJJcspFluWPhM
-         p/vej5gKr2MaXyPI0NAYMf2f8cLaKrlenpPDj7HGzmAhrBKTFJGcUkckzFby29tJgU4I
-         SN7e67AEnNbuUUppI20s/1OtQLhjt/TOQOW4uqXLFWLr0mnQCRcj27CNbbmeGlvPWoDk
-         DHGVsyqMK5eWL5oIRM6vhEYnhtii/1laNH2knZnWFOjus6jI3sZRxQglamY3FcmA/CAV
-         Nvywmu18RvB/xOwxMEJ/cNcy4hQ1SbXTJjujY4RQlTpsUwVGw0bKsyDE+7pE2FSpSuEI
-         PwsA==
+        bh=w8xygMV0IGlI8uTLEgexzNsp36b5BnRK8Fgrf7Zp9RI=;
+        b=l6Vd8KmWuprR3um5h2Ey2xPlPEeXLFfx4RfDLF7L9bM04Aow4y49E5eobFWfWn8apX
+         59YGJ0e/dLXG3Der0Q15m/9OAbxTcQLe5NYJMIR8Wh9JqjzDWNgE7p+vQM2dNZFUBbH8
+         h5JrNTZbcCG7Axy35zrjdKLjTVdOESE/9a0gppCTvEM9SaC8TOqn6+t7DPpo+UugBybQ
+         DAgI75AYsJSn2r0sIWxAWck2WLa8TS7OUxaikhGoOOpSLZEGr0LVe4iCM46lw5plquHi
+         ErTXN3czqXkdvty8w2pLj0hZSzWEei/QcJy8eeSN80QWeU4xxWavm4663ODWob3kefiK
+         U+sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=B+LOhe9cwirc6jdzV1lxJI8ekNjgy4bfYK6Oc3YxbSA=;
-        b=jkEyHUup5kJrhHShISaiVMDHJcdwCBFbm+Z6tIqfF7ijEgPzLvotWPLFyOXV8PSWCC
-         t9gObLoPjCgwP84YCylNsMLMl1UltpUvVWEFWfzUzhVCLFsQLB3SRP8ZuF2ZqiDrO9UD
-         WOmhvfd7fGytfWllnkVeX0YabBI8Wu4m3nTB7v82Ti317A6uB4PRfgHydHSJH3BDpRYW
-         MEiLPZgqdWsBcp/yrHgYCvzWWdAdHVad2LehsqiNIFvO/vSif0EnYp6I+aJ6hcDne0C4
-         Hxo84R4rEMHbtY36pqe5mUtteJNVA4u9Av3RY3dia1+3YCHYFZ33Vzb2kHPHI/LLjQKT
-         o0iQ==
-X-Gm-Message-State: AKwxytfVr3Z5u3NDxSX6Gn1VcopgmUoI12xs6wFl8OsDtoLU+ANJxOXF
-        nSnbCdCcZTUaE3VfWSEgAfmU2w==
-X-Google-Smtp-Source: AH8x227rXeg1noHgeIfpMyYJJN2hLuGTvo/km7VjtQqXewqXrRG8DNg2ssO+FFtw3BOWm5OqDPBBhw==
-X-Received: by 10.223.186.10 with SMTP id o10mr10081962wrg.150.1516970247789;
-        Fri, 26 Jan 2018 04:37:27 -0800 (PST)
+        bh=w8xygMV0IGlI8uTLEgexzNsp36b5BnRK8Fgrf7Zp9RI=;
+        b=Q9jpKuVC/Rh2a+Vzii8gQ95dlqWn4g1n966F8k5C8+AtVxTsceqmHkBNai4iOevblJ
+         ENnCyIi5Bs5EmsM8gb+M44iclxbsYOEKjBhf/sK0Tymiagrz2qF2jQffMlwwSgHwFty7
+         Pvd3EO86r9kLPLuX+4bBzpqFnL+Xt8fH/PGkXX/8uhCBbyA/tmaVVbOHG33PnCkrARJ0
+         M3Moax0OISjleLDMOUgb9CHNPvwi4dUfGlFC4vhUKkDQsKMjAXomnd/u0Xi8io9MqkEk
+         L+HDtjs9QK4IC+PKXe4muHkmdLGeQ31+4/5uL1Ejcjk4k5zoT6zbrQH2z1p2Cp41qrNh
+         TV/Q==
+X-Gm-Message-State: AKwxytc/KwRGGxhHI5/KNbgeCmym47RQJWcbdLBhBa8Tqn02zAlDFM7i
+        r2ncDaXOmzG8HLXLWyIRBJ+Icg==
+X-Google-Smtp-Source: AH8x225LNrnDdaYf2hinAPz07NndUZSyHOqEpsFhRpVnitkm5omwI10v8S0vEoScw8BXIGlqT0DnnQ==
+X-Received: by 10.28.145.84 with SMTP id t81mr9417584wmd.25.1516970250636;
+        Fri, 26 Jan 2018 04:37:30 -0800 (PST)
 Received: from localhost.localdomain (x590dab0e.dyn.telefonica.de. [89.13.171.14])
-        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.27
+        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 04:37:27 -0800 (PST)
+        Fri, 26 Jan 2018 04:37:30 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 07/10] t: move 'test_i18ncmp' and 'test_i18ngrep' to 'test-lib-functions.sh'
-Date:   Fri, 26 Jan 2018 13:37:05 +0100
-Message-Id: <20180126123708.21722-8-szeder.dev@gmail.com>
+Subject: [PATCH 10/10] t: make 'test_i18ngrep' more informative on failure
+Date:   Fri, 26 Jan 2018 13:37:08 +0100
+Message-Id: <20180126123708.21722-11-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.1.155.g5159265b1
 In-Reply-To: <20180126123708.21722-1-szeder.dev@gmail.com>
 References: <20180126123708.21722-1-szeder.dev@gmail.com>
@@ -67,90 +67,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Both 'test_i18ncmp' and 'test_i18ngrep' helper functions are supposed
-to be called from our test scripts, so they should be in
-'test-lib-functions.sh'.
+When 'test_i18ngrep' can't find the expected pattern, it exits
+completely silently; when its negated form does find the pattern that
+shouldn't be there, it prints the matching line(s) but otherwise exits
+without any error message.  This leaves the developer puzzled about
+what could have gone wrong.
+
+Make 'test_i18ngrep' more informative on failure by printing an error
+message including the invoked 'grep' command and the contents of the
+file it had to scan through.
+
+Note that this "dump the scanned file" part is not quite perfect, as
+it dumps only the file specified as the function's last positional
+parameter, thus assuming that there is only a single file parameter.
+I think that's a reasonable assumption to make, one that holds true in
+the current code base.  And even if someone were to scan multiple
+files at once in the future, the worst thing that could happen is that
+the verbose error message won't include the contents of all those
+files, only the last one.  Alas, we can't really do any better than
+this, because checking whether the other positional parameters match a
+filename can result in false positives: 't3400-rebase.sh' and
+'t3404-rebase-interactive.sh' contain one test each, where the
+'test_i18ngrep's pattern verbatimely matches a file in the trash
+directory.  Note that the absence of a file parameter is not an issue,
+because the lint check added in the previous commit ensures that
+'test_i18ngrep' never reads from its standard input, consequently
+there must be a file parameter.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/test-lib-functions.sh | 26 ++++++++++++++++++++++++++
- t/test-lib.sh           | 26 --------------------------
- 2 files changed, 26 insertions(+), 26 deletions(-)
+ t/test-lib-functions.sh | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 1701fe2a0..92ed02937 100644
+index b543fd0e0..1f1d89d7a 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -705,6 +705,32 @@ test_cmp_bin() {
- 	cmp "$@"
- }
+@@ -731,14 +731,31 @@ test_i18ngrep () {
  
-+# Use this instead of test_cmp to compare files that contain expected and
-+# actual output from git commands that can be translated.  When running
-+# under GETTEXT_POISON this pretends that the command produced expected
-+# results.
-+test_i18ncmp () {
-+	test -n "$GETTEXT_POISON" || test_cmp "$@"
-+}
-+
-+# Use this instead of "grep expected-string actual" to see if the
-+# output from a git command that can be translated either contains an
-+# expected string, or does not contain an unwanted one.  When running
-+# under GETTEXT_POISON this pretends that the command produced expected
-+# results.
-+test_i18ngrep () {
-+	if test -n "$GETTEXT_POISON"
-+	then
-+	    : # pretend success
-+	elif test "x!" = "x$1"
-+	then
-+		shift
-+		! grep "$@"
-+	else
-+		grep "$@"
-+	fi
-+}
-+
- # Call any command "$@" but be more verbose about its
- # failure. This is handy for commands like "test" which do
- # not output anything when they fail.
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 9a0a21f49..852b22c80 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1062,32 +1062,6 @@ else
- 	test_set_prereq C_LOCALE_OUTPUT
- fi
- 
--# Use this instead of test_cmp to compare files that contain expected and
--# actual output from git commands that can be translated.  When running
--# under GETTEXT_POISON this pretends that the command produced expected
--# results.
--test_i18ncmp () {
--	test -n "$GETTEXT_POISON" || test_cmp "$@"
--}
--
--# Use this instead of "grep expected-string actual" to see if the
--# output from a git command that can be translated either contains an
--# expected string, or does not contain an unwanted one.  When running
--# under GETTEXT_POISON this pretends that the command produced expected
--# results.
--test_i18ngrep () {
--	if test -n "$GETTEXT_POISON"
--	then
+ 	if test -n "$GETTEXT_POISON"
+ 	then
 -	    : # pretend success
 -	elif test "x!" = "x$1"
--	then
--		shift
++		# pretend success
++		return 0
++	fi
++
++	if test "x!" = "x$1"
+ 	then
+ 		shift
 -		! grep "$@"
--	else
++		! grep "$@" && return 0
++
++		echo >&2 "error: grep '! $@' did find a match in:"
+ 	else
 -		grep "$@"
--	fi
--}
--
- test_lazy_prereq PIPE '
- 	# test whether the filesystem supports FIFOs
- 	test_have_prereq !MINGW,!CYGWIN &&
++		grep "$@" && return 0
++
++		echo >&2 "error: grep '$@' didn't find a match in:"
+ 	fi
++	(
++		eval "f=\"\${$#}\""
++		if test -s "$f"
++		then
++			cat >&2 "$f"
++		else
++			echo "<File '$f' is empty>"
++		fi
++	)
++	return 1
+ }
+ 
+ # Call any command "$@" but be more verbose about its
 -- 
 2.16.1.155.g5159265b1
 
