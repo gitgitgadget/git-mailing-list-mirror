@@ -2,94 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DATE_IN_PAST_24_48,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AE281F404
-	for <e@80x24.org>; Sat, 27 Jan 2018 19:59:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08A301F404
+	for <e@80x24.org>; Sat, 27 Jan 2018 21:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752810AbeA0T7y (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jan 2018 14:59:54 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:53252 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751982AbeA0T7x (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 14:59:53 -0500
-Received: by mail-wm0-f53.google.com with SMTP id t74so7181980wme.3
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 11:59:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=ZEozudJ6vyGjmDEG7OQzWzkBw7AY9A/52V7KY5k3tqw=;
-        b=kIwRq5HUR8OxOJXh25z+80iBaWYRRoNq4vQXAwT7dw17lrGXQ6eODf2sbe6JiaBiIA
-         yVG4XxJShrWAxpii+5KDlKOu8ozM/OvupTp6A5xE+ETEUluDyXijIhbFNCAGKuAbqqPq
-         Eqe34WQCMvr6xVA06n6GZzQCHOqyfj2YbijdTGAcqQoahgpxDrQKX0p4GBULaO16llgC
-         72KUoFcM1+gh+fKshZhtjBPTv6VIBYfPd6yIwopR2gWZAECfsvNUwmoO5YHQk8Fg5hfl
-         htaiW43/RwA+7ACxbjLl8/B+gVo29p5M+pLrX/4xwWd8/zYSWjjDGrfAtrNEVrVy9Op6
-         jIMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=ZEozudJ6vyGjmDEG7OQzWzkBw7AY9A/52V7KY5k3tqw=;
-        b=LH+E3isvrTgYCffHQJWoy3YgHykYJ/Zhe+PVHgZJyotQK9VhMiAYtNCvLqbRt8Yguo
-         hxSpxbQyUHJcP2T45IVfyUBzLPStNWi/7Ldj97pajJ6kV2tdr877j704SZRo0pti2AHA
-         PKIJmGbOwZgz4hoARSPMXDGDNmFpPDG6AtbY+9EMRoIMuJJ96gW9te7fwM2k4R7NJkrC
-         BGFRqObw9kVkqHS7GDBlq366oP1gNeOgdiflLpJK/CtshFQmmaxAlZlB6IrtDaofuLRX
-         faz6YmDk8fRQ+Svm4vtR30FjeE5pYwPm7D31fDbXJBUdkG5gxnpkfuNMsAZ40fVnhdb1
-         bHvw==
-X-Gm-Message-State: AKwxytfMkvoN4tDI10xklFlgZATqgjAg9Qymf6a7J0z42V9o28u6uvys
-        rMOOK8DLWodNIIUfbq7JYmk=
-X-Google-Smtp-Source: AH8x224YUSt4Uzaubc6D5CZO8eKW6R695/OlHa6Oah3yinHYTf5GVPBTcZkUHbkiBaGLIImU8L9Zxg==
-X-Received: by 10.80.231.129 with SMTP id b1mr39614678edn.219.1517083191980;
-        Sat, 27 Jan 2018 11:59:51 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id y5sm4268545ede.71.2018.01.27.11.59.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 11:59:51 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Filip Jorissen <filip.jorissen@kuleuven.be>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cloned repository has file changes -> bug?
-References: <BCFDB3A3-B515-4932-AC67-F720AEB4B0BE@kuleuven.be>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <BCFDB3A3-B515-4932-AC67-F720AEB4B0BE@kuleuven.be>
-Date:   Sat, 27 Jan 2018 20:59:50 +0100
-Message-ID: <87607nvzrd.fsf@evledraar.gmail.com>
+        id S1752566AbeA0VL5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 16:11:57 -0500
+Received: from mx2.suse.de ([195.135.220.15]:37008 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751467AbeA0VL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 16:11:57 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 00684ADD5
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 21:07:32 +0000 (UTC)
+Date:   Fri, 26 Jan 2018 18:32:30 +0100
+From:   Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+To:     git@vger.kernel.org
+Subject: git send-email sets date
+Message-ID: <20180126183230.0ae0c76b@kitsune.suse.cz>
+Organization: SUSE Linux
+X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
-On Sat, Jan 27 2018, Filip Jorissen jotted:
+git send-email sets the message date to author date.
 
-> I think our git repository is bugged. The reason why I say this is the
-> following. When cloning the repository, the newly cloned repository
-> immediately has file changes[...].
+This is wrong because the message will most likely not get delivered
+when the author date differs from current time. It might give slightly
+better results with commit date instead of author date but can't is
+just skip that header and leave it to the mailer?
 
-If you run this:
+It does not even seem to have an option to suppress adding the date
+header.
 
-    git ls-files | tr '[:upper:]' '[:lower:]' | sort | uniq -D | grep '^'
+Thanks
 
-You'll see that the reason is that you have files that differ only in
-case.
-
-You are using a Mac, and Macs by default think that files that are
-different binary strings are the same file, since they don't consider
-case to be relevant. The file FOO, foo and FoO and fOo are all the same
-file as far as your Mac is concerned, but would be 4 different files on
-Linux.
-
-> How can I fix the repository?
-
-You could check it out on a OS that considers files that differ in case
-to be different files, e.g. on Linux, move them around, push it, and new
-clones should work on your Mac.
-
-Alternatively I hear that you can create a loopback case-sensitive FS
-image on Macs.
+Michal
