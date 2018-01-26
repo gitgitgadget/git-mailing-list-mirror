@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C72F61F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A06F1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:11:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752988AbeAZTIq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:08:46 -0500
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33324 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752931AbeAZTIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 14:08:31 -0500
-Received: by mail-vk0-f68.google.com with SMTP id w201so918347vkw.0
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:08:30 -0800 (PST)
+        id S1752487AbeAZTLg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:11:36 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:40754 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751998AbeAZTLf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 14:11:35 -0500
+Received: by mail-qt0-f196.google.com with SMTP id s39so3888958qth.7
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:11:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=a1v8qJ4HdKiOQ7kK0tfXtjl5JNsuScmjmkS+KuQOvFQ=;
-        b=sy6lV0wYr+vkP3m+pZ12xogdeLeZRAkj66V8tYM1UV5DmlieqtNVCHtmqXaAeEZtTh
-         5Rfp1oeecI+eQsCDs/u71ZwSD+EhEWPGCvtEoYlXpt/WsF19R94lZJbzQeW7aFE4+bI/
-         gvc/Pom4EKQkLa5Gf6ULSrB4cZVl/y8ShghGPpWfIWLUAq3L9lXFo51CyereH1ufmN5r
-         pl2l2yX0TQm2EH/9lcNf4da4bqCihuiOsjoiHQQln/psxStWpztnt6y3QsX/JkFH3Amb
-         Xcxr4+iZ0GF+ZK5ioZ/pWonRHMSkwpqOzsuslrQnmSAu/x57jTwJ4d4URWbh8P9R1C4/
-         KL9Q==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=72j58soZL0wMaGAIA9C8KPcBxAUrA8RYhBMRnMpTD7k=;
+        b=DvRyDgtChux3QwZO9zzs1aGdWUVLHhx+2kYIN6z3aHOH/GR2CyElf6+x+Lkyu2TgEu
+         eJm4EViUyy7Tz0vj4e3/HTEPHo/MvY9WzbIYCA/aTPN6gSmXmRTVM8qVz9A52gOQYIw8
+         ArkGKJtCZLfN/ZTcF6z4ThZZ8xB9DlrOLGCPvgS7Hx1ikU2M2NegkcOTgf2DL+IWOaEa
+         +PzTvU/ymb+6LeHUzhBPOiGfhDUFZ844OKVymt+nYNY1J58vC7WsHTm4mwNX4fFhNX7m
+         zsJwrvrzXr+28aNS8HRUHAjb8PecY/xJJ7Lb41PC+5pvuMb1mlU146VaHISzPChvYI93
+         VTnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=a1v8qJ4HdKiOQ7kK0tfXtjl5JNsuScmjmkS+KuQOvFQ=;
-        b=rzyzKkcHRZeqAg+YkhQTr9pPfhbGWuBVJ2mklJduoWH0zNyCU/IXGynnsiPp7sB3DQ
-         rZMAT7RM4qdGtfEJC2jEU1COspywIENAmf7mnf/y2BFGd4EZT5jqTlB6j+IvDfGDJXdr
-         uHCCcp4f3bJxK6iE53bFbm5/Ytk50MdaRnpLwCBxtea6lRe8MK+xdXOoUR9OG7A5o1Qc
-         jngtzh3C9gpmq6msoNxf4g4spblHWA83gu6q6PS/UH3txy/BerXx46CJxNj2SPO1WJwa
-         psWhGoZMkmdWvLhiIdnR0xxtYA/dH7BmnvA2G6THwx5fEVXPl2cix2jex/9J3I1wbWEd
-         C6fg==
-X-Gm-Message-State: AKwxyteSr69X7ih529DG43fo5xX0IGidzqyuftDqj8cwIchuhMRcXMIQ
-        QtGL1E8CtW9wfkhEzQ3UTtH6y1eIp1YyydV3zhk=
-X-Google-Smtp-Source: AH8x2263ymvCdfyC9Cbr0wzPIKtJw7owKokKXhqwxEZUdGR5WAZCNrma02MnCd4L0CVTYFuJ66MKcjjoB9bytPlLX74=
-X-Received: by 10.31.221.131 with SMTP id u125mr9739594vkg.80.1516993710509;
- Fri, 26 Jan 2018 11:08:30 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=72j58soZL0wMaGAIA9C8KPcBxAUrA8RYhBMRnMpTD7k=;
+        b=ptkM1RCA0odbo31Tldsb48hg5vynRfV1xeflZAc8ozNiom5pMJadqdQGtQVjLBY362
+         a4k8leDIUXvxLfkpJUzD7GKQBeGE34LTOib076/POWX1uXZ9gd0EAHQHj5ke06FyOmjA
+         RcR2LLyLoGM+pXokPz1s3U/abQWbrIJ6AD0Qdz+/zuuPlQ4gxXEbmBV2Pmjr7rpsTCF6
+         Dr3DY3OznqpJAEfOraqwITKPQIS2yhxGyIlO58wJNEDBEqbhbHW7+G9Pq1fa+KplSrr8
+         HkBN1M5BBYgT1F63s1SYuSC7sebcZJlvTqTPgE3IqWMXQCZerQSteEhfljmSuaxiO5kW
+         BnIA==
+X-Gm-Message-State: AKwxytfgO7zQcnw58AUR6tVR95SopA6gxK3NRRTvkayZb7xDoYCFD7Mv
+        4fKBE+hzd4WgydLTItG8KAnX3fDQpxB1VQ1x+tU=
+X-Google-Smtp-Source: AH8x226xHRdJKH7OuLlBfwL57qIFXDJviF1dVx+H4kNvVoUvQZqaAn9b6vNkzWTc8xKBgW01R4FTnZ4fXMPJ+/cBY5Y=
+X-Received: by 10.200.7.74 with SMTP id k10mr26357428qth.333.1516993894537;
+ Fri, 26 Jan 2018 11:11:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Fri, 26 Jan 2018 11:08:30 -0800 (PST)
-In-Reply-To: <xmqq607o8ouy.fsf@gitster.mtv.corp.google.com>
-References: <20180126123708.21722-1-szeder.dev@gmail.com> <20180126123708.21722-8-szeder.dev@gmail.com>
- <xmqq607o8ouy.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 26 Jan 2018 20:08:30 +0100
-Message-ID: <CAM0VKjn1uzO8JB_0eGV_LHRdrBPgd8rmjwoW1BTJgSV49AOdCA@mail.gmail.com>
-Subject: Re: [PATCH 07/10] t: move 'test_i18ncmp' and 'test_i18ngrep' to 'test-lib-functions.sh'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Received: by 10.12.175.239 with HTTP; Fri, 26 Jan 2018 11:11:33 -0800 (PST)
+In-Reply-To: <20180126095520.919-3-pclouds@gmail.com>
+References: <20180126095520.919-1-pclouds@gmail.com> <20180126095520.919-3-pclouds@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 26 Jan 2018 14:11:33 -0500
+X-Google-Sender-Auth: 72wk3hZyVuTX3icHkgvbLdLdwLc
+Message-ID: <CAPig+cSjxiOTEKuOR9zGrY=Z_RoSBPHaiyNkzp-tXjSVNj3RHg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] rebase: add --show-patch
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,41 +64,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 7:19 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Fri, Jan 26, 2018 at 4:55 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> It is useful to see the full patch while resolving conflicts in a
+> rebase. The only way to do it now is
 >
->> Both 'test_i18ncmp' and 'test_i18ngrep' helper functions are supposed
->> to be called from our test scripts, so they should be in
->> 'test-lib-functions.sh'.
->>
->> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
->> ---
->>  t/test-lib-functions.sh | 26 ++++++++++++++++++++++++++
->>  t/test-lib.sh           | 26 --------------------------
->>  2 files changed, 26 insertions(+), 26 deletions(-)
+>     less .git/rebase-*/patch
 >
-> Hmph.  I do not care too much either way, but I had an impression
-> that test-lib-functions.sh is meant to be more generic (i.e. those
-> who want can steal it from us and use it in their project without
-> dragging too much of the local convention we employ in this project)
-> than what is in test-lib.sh, which can heavily be specific to Git,
-> and I also had an impression that gettext-poison build is quite a
-> local convention we use in this project, not applicable to other
-> people.
+> which could turn out to be a lot longer to type [1] if you are in a
+> linked worktree, or not at top-dir. On top of that, an ordinary user
+> should not need to peek into .git directory. The new option is
+> provided to examine the patch.
+> [...]
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> @@ -840,6 +840,10 @@ To continue rebase after editing, run:
+> +show-patch)
+> +       cmt=3D"$(cat "$state_dir/stopped-sha")"
+> +       exec git format-patch --subject-prefix=3D --stdout "${cmt}^!"
+> +       ;;
 
-Well, there are a lot of Git-specific functions in
-'test-lib-functions.sh' already:
-
-test_set_index_version
-test_tick
-debug
-test_commit
-test_merge
-test_chmod
-test_unconfig
-test_config{,_global}
-test_cmp_rev
-test_create_repo
-test_ln_s_add
-test_normalize_bool
-nongit
+What is the behavior if a rebase (or conflicted rebase) is not in
+progress? Stated differently, do we only make it this far if
+$state_dir/stopped_sha exists?
