@@ -2,82 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CDB61F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:23:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E51F11F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752939AbeAZTXO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 14:23:14 -0500
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:37730 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752872AbeAZTXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 14:23:10 -0500
-Received: by mail-pf0-f175.google.com with SMTP id p1so894233pfh.4
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:23:10 -0800 (PST)
+        id S1752804AbeAZTXc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 14:23:32 -0500
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:46554 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753004AbeAZTXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 14:23:25 -0500
+Received: by mail-ua0-f180.google.com with SMTP id j23so966049uak.13
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 11:23:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5vKfJrz8TAV/QX+DC7QCP7PJauietB+hbam+ko293Jo=;
-        b=fzrA/CpqUIEXclfk2gRzsfOm0zWFabKkNP3HIoQRB/vnSqX22lXNzvU4sTuxzFQlFV
-         YX7ChQy2u6AdMd1qtouExuPPMuwgxGWclGKFHMrTWRWldmGwyqI8PBzapx55KpIkCIx/
-         a+sg6v94VgbT1hlBuxRIHiEFf0S3metO2HMM8V2969wdlcJO5mlaX8OcZlFTB+SkGqR+
-         Yun60/e67kANP78nZNTgWbnSCtBnwsb0kC5jspd7onEl+Nwm2VQOcDY4ZmgTeRdV64YA
-         UgdHdsqcS38bR47uvXqnbsuYPwcXwy4ipG5rmkrGAZsjl+XogpuChp1mzEH81SeSukQW
-         2XjA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yg7W10Dla5I4agBcqWnWdLiOb27Ejr6U3V8tby75AO0=;
+        b=TIRMnyTWpStD9Zaf4bxhHih80TTQamVRpzDkgu91wN3ykO9jivTwQKw9vTZbCrpANi
+         0YM99dxy98HBSCNJzajB6OCJmdWGer2CdtFzRjmILU5hR2QfV1JAGvP7bQlMDb41Jyrq
+         dYcFZ718+Ncs7WmIJC7GM219hLeoRIqsp6DcHWRK7s1x1qgUsN3qGqulFaZtMEbwz8KR
+         uQtSQhMCf9fGZFwTfWYFfWzv2zCwng250oawMvOu2TIBpbDPzDOraQ5nO6gMnsoUtMtH
+         rtZyJXmqmqi+b5GaRtfDLajVL6p0DeNilBh7gMKq2746JbBSOInwtf2ZrqfrlPwV9Zd8
+         YxfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5vKfJrz8TAV/QX+DC7QCP7PJauietB+hbam+ko293Jo=;
-        b=dJ2XqMg6+MZTKFLDgy3d2m2+bRYVYhVgRmBIhxTFD9pFtUU4sfFo5cJE1glbVgvorn
-         j9r6/F0d091AhemM6mlXFujTfH2lkRoxJz/cR3zsUgIJmbtYcA7DMwJ9xv2iCdaMd+j9
-         J/K/qA1i95y4V/ecgXANVR8+Fw3cyk7YEp2GIoJ8pAbIhQ/fpWHRa9MOSU2d64TW5PG5
-         tIeAwAtTzWcgXXRib0o+CnZh5l1fy0fOa1VRVcv66Soa9nPCUds43BPmLcYJIczBPIRA
-         OhBhL+5gieEg7SMtoWC+uLOVoWk0DzeG5ZUCF+JZP58MD7fLOwHmpKmGinRxbZY7FKQ1
-         CWHg==
-X-Gm-Message-State: AKwxytfmGCZwBdUXAL86KYm2luok48HEXvOdDc5Ap27BmOSct48YX9Az
-        qmH6Ls5MIrAkp92lUmMCaC4=
-X-Google-Smtp-Source: AH8x227Azd4rmSfb9e8DVX9nJLLXSesmAO2IzHVySvbeU828UWGNPEod/7q2Qfz8iFI1SQsBH4lEnw==
-X-Received: by 2002:a17:902:aa88:: with SMTP id d8-v6mr14789335plr.171.1516994589869;
-        Fri, 26 Jan 2018 11:23:09 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
-        by smtp.gmail.com with ESMTPSA id o69sm21210279pfj.32.2018.01.26.11.23.09
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 11:23:09 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
-References: <20180126123708.21722-1-szeder.dev@gmail.com>
-        <20180126123708.21722-6-szeder.dev@gmail.com>
-        <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
-        <CAM0VKjm0uveCRpNy8H+inwTKa6fzHAjGn=f9tmQ4p1MCWGuirQ@mail.gmail.com>
-Date:   Fri, 26 Jan 2018 11:23:08 -0800
-In-Reply-To: <CAM0VKjm0uveCRpNy8H+inwTKa6fzHAjGn=f9tmQ4p1MCWGuirQ@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 26 Jan 2018 20:20:02
- +0100")
-Message-ID: <xmqqk1w477c3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yg7W10Dla5I4agBcqWnWdLiOb27Ejr6U3V8tby75AO0=;
+        b=Yx5NxXpidpSFJOq1PtPNKmHSVIpJrHQHVvcLLGHIewH30YjLdrVtzBN9N6ATYIdUIW
+         RSXb545s78uh9/MauNvwuETvyi6Wau0Kh6LwgrgROmTgzi73Ql+guJlfJPibXEhBZaY+
+         u46XGenCqiFxxcck8QjVHFig4S1dfcC4+vwpmyLdPCsmqU+iz6m8s9GkuLqgg1kQIYwd
+         IYU+iJ4xLURpItvhPlAMR3m0pM4xi0tI40qi3mdqnyuI02hO7HSCd2PxNJSNMMBZ+YcZ
+         3swx+fc5dbxHzLRxje7hJjXmBDv//NeCDujpOAay41xg+o82GQn+uvmYGyu8NXFX0xnO
+         IeMQ==
+X-Gm-Message-State: AKwxytfoVquB8bhQTWBCyHXpFQPoZTNXWs/iMHtzo8XvInQzjNx9C4fO
+        qrzxcgMgAB7i7PQWFjCQErENSr82wyDIMImKSfw=
+X-Google-Smtp-Source: AH8x225DwDvmaJftpYVaToYdNasiiPWEikieVRPdGs0SG4pfiXiJxUwVoKdn+AfKkNbX6OQ8m6jUhHnrf+fkaHJDv34=
+X-Received: by 10.159.57.111 with SMTP id i47mr11394508uag.79.1516994605091;
+ Fri, 26 Jan 2018 11:23:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.32.12 with HTTP; Fri, 26 Jan 2018 11:23:24 -0800 (PST)
+In-Reply-To: <20180126185007.GG27618@sigill.intra.peff.net>
+References: <20180126123708.21722-1-szeder.dev@gmail.com> <20180126123708.21722-11-szeder.dev@gmail.com>
+ <20180126185007.GG27618@sigill.intra.peff.net>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 26 Jan 2018 20:23:24 +0100
+Message-ID: <CAM0VKj=Qsbkog+rj94bZOk=G-XBsXAqQnRUo4eCXQq2LKjre-w@mail.gmail.com>
+Subject: Re: [PATCH 10/10] t: make 'test_i18ngrep' more informative on failure
+To:     Jeff King <peff@peff.net>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Fri, Jan 26, 2018 at 7:50 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jan 26, 2018 at 01:37:08PM +0100, SZEDER G=C3=A1bor wrote:
+>
+>> When 'test_i18ngrep' can't find the expected pattern, it exits
+>> completely silently; when its negated form does find the pattern that
+>> shouldn't be there, it prints the matching line(s) but otherwise exits
+>> without any error message.  This leaves the developer puzzled about
+>> what could have gone wrong.
+>>
+>> Make 'test_i18ngrep' more informative on failure by printing an error
+>> message including the invoked 'grep' command and the contents of the
+>> file it had to scan through.
+>
+> I think this is an improvement. You can also use "-x" to get a better
+> sense of exactly which command failed,
 
-> No, GETTEXT_POISON only affects the translated messages, but those
-> 'grep' invocations looked only at refnames and formatting.
-
-You are right for this specific case, but I was talking more from
-general principle---running test_i18ngrep on an output from grep
-should be flagged as anti-pattern (I recall vaguly finding an
-instance not in too distant past).
+Yeah, I know...  but I have some issues with running tests with '-x'; I
+suspect PEBKAC, but haven't yet got around to investigate.
