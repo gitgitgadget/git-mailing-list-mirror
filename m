@@ -2,98 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C82A71F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 14:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114D51F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 16:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753224AbeAZOlv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 09:41:51 -0500
-Received: from mout.gmx.net ([212.227.15.19]:63553 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753075AbeAZOlu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 09:41:50 -0500
-Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.193.1]) by
- mail.gmx.com (mrgmx001 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MIMUZ-1ed8ys3wHX-004DXs; Fri, 26 Jan 2018 15:41:14 +0100
-Date:   Fri, 26 Jan 2018 15:41:12 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Patryk Obara <patryk.obara@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH] setup: recognise extensions.objectFormat
-In-Reply-To: <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801261002570.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <66fb698096ed14ee58b2611f41f2e3e5dfa49059.1516798941.git.patryk.obara@gmail.com> <CACsJy8BFsXAMAGYjKp8EBrepqZwgKrAtqRKyiKLOydWbpzZWWA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752325AbeAZQmu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 11:42:50 -0500
+Received: from mail-io0-f181.google.com ([209.85.223.181]:40528 "EHLO
+        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751720AbeAZQmt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 11:42:49 -0500
+Received: by mail-io0-f181.google.com with SMTP id t22so1035287ioa.7
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 08:42:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=M4AmbnFdMKvAj3AEuWavTNdB/j/zXYGii0t/Kkr+i14=;
+        b=Bm/35AB0qf9zZ8lY8e7c0OgQ/dS7NalpDlkujCHVfK44nFipRM6MD4932gZs0DX+1a
+         LeJSGjLPxNZLmGa8W3PSkeDz/GxaRZH7807vAP+W1BXXsI/AD//bsXgDNWGEedOUxnmn
+         u2EK4HReUouVgLU+bT/fKuE1/TfX6iymlZf6kdi+iMR72IIawMH+g/aZHrbxklFLE1lG
+         4kCOmQmL6DaeY6FSV4LwOAJ2X9jxn8PDB2UWMfE0+iO/ueo4HjlEgC1CyETZ/coDF8W0
+         CrTlGS9+tthLfNH9pfbytwmZlRKNJOZ0/pkE8SbsdDcZTf0pRtzApVaHvNyzmXAciEhL
+         JwqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=M4AmbnFdMKvAj3AEuWavTNdB/j/zXYGii0t/Kkr+i14=;
+        b=ql5R22/h01VF9VN43uJ72UPALPuSEtV0+J+hbIoDv33KuczFmoY+Au5f8Tm1/HztTQ
+         yNVrNJmc2bvi54V0LjmlTjlGcpGJmASxh9p+LcDwlOCe7J9LCPNDkRLoX7oMJa8ocH1Q
+         MUib7LZqq2yWLL7CRZlnchyKTtS/9N9+hACUAHet7vzqcVwByELtsT5beW7FELRcIIPw
+         UYeYbvMBaRxmSXVWNe0by/gvHnmxIexXcDjeknpOoXe3eIAmp1yAeX6EO1C+p0339Udd
+         RotBkPyN7qRNyinyl6MPFj+EWROGZoLuAZJPqyq8Xio3cIp86d5DQDQjPpnCcul1eY7O
+         MhYA==
+X-Gm-Message-State: AKwxytdLgBK2YgxlAwtiKMlCzZNWOT7tAkMSbnxaPeSquu0HSL69sMbJ
+        bmoYeqvJo5cLZhaKTD2CtWuSas1guczsP1Oq3kI=
+X-Google-Smtp-Source: AH8x2272abnT1/729yg3kTKrZ37ZTLxA5uEgJMSLYcX6yZiix9S96fpKLJV3nRi97ySRtweKqTvUHDOvTTiABtoOh3U=
+X-Received: by 10.107.200.11 with SMTP id y11mr2805897iof.116.1516984968703;
+ Fri, 26 Jan 2018 08:42:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HhgIu2q+INViopPBrgIufVl0rtgk7Bcwc/xppEzgIdbPUpvPB09
- ubk6DpKoF7u83Qw+Y1/vnLKwkkoNfax2D11Nr1TaWx7bE5gNY0KNW6SQUlkCVGi0sM5gBUx
- EXHxs8BAo8bYJMzqa9CW2gLVM9YTk5GKvejS/G/3gHWIW22LsdIrTpghbyK6z5ns2oAjMVp
- 7Q2x7XSO1u7XropAu4mNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ElSi+tcZPsk=:p1iQwu0jX094KIkZom63JJ
- wt/PSVM5VtqOBoQM9ICjdrKunEgHrrjWSrnB5htS16R1u/Op552Ypr842lHxIlasOUf+KswMb
- 0v2rebDG5vOCTWUktG8jAPfaov358VTgAAsZUMsJlcmI6AAnkWqp9jLEY+Ts99B9afck2cJaY
- 7M4FLiaQu6IPXn0OM7GnYah1kpzMEeRkLPRhpVO0aBnAuEr4INctpoWYPjcu/Xmo40Tu36s40
- QMKYOAaQKUeiP5BKLU4MnuPW1HJili+Ky4QJipFYHa9mYI/sq1nynT9I01B+rcFNoPtQ0Mlbj
- AopT40Zpfxoas0R+LtHJ1Jmg0nks8Wl9G26+WN6PrHjlRsJsGyz0KoMRR01guCVqGzV3b3+ry
- 7DgaP9kUz5VLvn8FTGaI00g/gtYRkFt5IOtHFiP+WDXmCmutZiV+IbXU6X1XnuscRH/Ryq7HJ
- fTtOINOzZbYp3F5KoenujP9ki7ZSmbpt/Y8/Aat/v5ooX221e2eXb/d4o9Oq00egShstBtg0q
- mJU/vUkb+zm2/j0N1CsJ3Z8FVE8OJQYZMaYHdi/BYh6ec0z1T9G2cxWZEgkB0Vb0dDoGHZ2QE
- ryX66Y5mf1hQGF9z1MoWiOpzP9k+FIMGJo3wdC7v5XkkayUIQT7D4YGl2HMZpUSpbwTlJ08Hi
- yXJPsEXP8rvYzIhIdY8znVNfE7L4IEI1fvNtEBumxMLBotzz4seCMWSweBwC8rgGrjzjP2Fvu
- lh99R8+blkrWAojwuxfWukzUWRMHlic3E/fVulEmN7pzQABC/Z7V6gz0etBP2UEauwlRgXcnU
- WyaY7sy
+Received: by 10.79.149.87 with HTTP; Fri, 26 Jan 2018 08:42:48 -0800 (PST)
+In-Reply-To: <CAL21Bm=h4o5k2mQ7vob3m-6N-YZ4Rmr5X3_w90ifpR53_+Wnyw@mail.gmail.com>
+References: <CAL21BmkTbr9qYK3+bsbwh9aDQ1twqrNkyUdbaFPSAn5y7ov40Q@mail.gmail.com>
+ <CAP8UFD14V-3T0kV=VxYLdozGp5yT-Rzio7PiY8sFn_rVUDxnjA@mail.gmail.com> <CAL21Bm=h4o5k2mQ7vob3m-6N-YZ4Rmr5X3_w90ifpR53_+Wnyw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 26 Jan 2018 17:42:48 +0100
+Message-ID: <CAP8UFD31oUtoPMN+S_r5YoKrSN4p_QgZQPE6dF20Wdf6o6vdJw@mail.gmail.com>
+Subject: Re: Please review my code
+To:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+On Fri, Jan 26, 2018 at 11:32 AM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
+=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+> 2018-01-25 23:22 GMT+03:00 Christian Couder <christian.couder@gmail.com>:
+>> On Thu, Jan 25, 2018 at 6:20 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=
+=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
+>>> Please look at my code:
+>>> https://github.com/telezhnaya/git/commits/catfile
+>>> You could send me any ideas here or in Github.
+>>
+>> I left some comments on GitHub. My main suggestion is to try to get
+>> rid of the is_cat global and if possible to remove the "struct
+>> expand_data *cat_file_info" global.
+>
+> Thanks for your comments, I find them very useful. Most of issues are
+> fixed except the main one, that you mentioned here :)
 
-On Thu, 25 Jan 2018, Duy Nguyen wrote:
+Ok, no problem, we will see what happens on the mailing list.
 
-> On Wed, Jan 24, 2018 at 8:09 PM, Patryk Obara <patryk.obara@gmail.com> wrote:
-> > This extension selects which hashing algorithm from vtable should be
-> > used for reading and writing objects in the object store.  At the moment
-> > supports only single value (sha-1).
-> >
-> > In case value of objectFormat is an unknown hashing algorithm, Git
-> > command will fail with following message:
-> >
-> >   fatal: unknown repository extensions found:
-> >           objectformat = <value>
-> >
-> > To indicate, that this specific objectFormat value is not recognised.
-> >
-> > The objectFormat extension is not allowed in repository marked as
-> > version 0 to prevent any possibility of accidentally writing a NewHash
-> > object in the sha-1 object store. This extension behaviour is different
-> > than preciousObjects extension (which is allowed in repo version 0).
-> 
-> This config is so sensitive I wonder if we should forbid changing it
-> via git-config. You can't simply change this and expect anything to
-> work anyway.
+It looks like the for-each-ref documentation has not been changed though.
 
-I don't think it makes sense to forbid `git config` from changing these
-values, as it is all-too-easy to change them via `git config -e` *anyway*.
-And we already have the repositoryFormat precedent with the exact same
-issue.
+Otherwise it looks good to me and perhaps you could send your series
+to the mailing list even if it's long. For the first version, you may
+want to add "RFC" in the subject of the patch emails you send.
 
-In my opinion, it would only complicate the code, for very little (if at
-all noticable) benefit.
-
-Ciao,
-Dscho
+Thanks,
