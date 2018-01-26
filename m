@@ -2,106 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B081F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:17:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA8EB1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751411AbeAZSRQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:17:16 -0500
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:45918 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751264AbeAZSRP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:17:15 -0500
-Received: by mail-yb0-f175.google.com with SMTP id k127so499555ybc.12
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:17:15 -0800 (PST)
+        id S1751427AbeAZSTU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:19:20 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:38065 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751264AbeAZSTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:19:19 -0500
+Received: by mail-pf0-f196.google.com with SMTP id k19so783180pfj.5
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:19:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=oSidcUGGx+DI4tuChNeu64aq2n0/bttS09FgAgafsMA=;
-        b=lqb1oTfPPvF1yHIVFTWdAW5k5dPQBhkvKTye2S461qf8vu4IZSmf5Al79G7WveWQnx
-         GXhHQbQWKrkutJYDhRfUVoEe6M8uItyoqzukwI29r5igIBm8WNF2q+LKoQ/XHy7gg6CZ
-         BdsE0HdKeWa+kZhRBph78Vc+L8OtTb6o/jGQQl5EVjsUFj6z+3T42K0YNgX58YQiCrab
-         uskRNXLTMaG2AtjmQyjaNhLF7KawVGmEkWIk7pgA87YCiD8vXn3p9foQABICrj1XVIFF
-         69wkPYln0n4sz6Jme0do6Ys0hflqgwnsvxwYK/XwUCCzKSe3GXKbpVJpUtn/Rn/nyf7X
-         s8yg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=fHJdVNh59EyKWcvL4vbPE8FEMkE5FgyT6oynf5Ux5dU=;
+        b=Mxq3lJdelFd64QXY+ObsqJhWJIv87mw5Bh1e1kEs2apC3ICWSUs/+Iesw3AEfX79pr
+         rxOv7P31B0pZEUNuBDwIILwS/SbNKpdoin9OVnVyr3I4ySZrBNmFNIaBBBMmWjN6CWaG
+         Ya8Jm2Ek0vp03SBI0jfrk2TVUqNKZPeg2EI91uwfwbAP2LvW3Evo8lDQXw5Pf8cxlBMi
+         tTSoeQUOMhGTiOEH9mwibKBNB8IPyqgVXv9eqzARqcb+RDasaI3PLT+6ok8aA8E/CfJz
+         NWhx1Gm9/Qndd6pEDkclsrVqXnDVuGAGQciZDe1bOa6Cjy/TWsZlbVTNHwoS3Of8OWBW
+         QdAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=oSidcUGGx+DI4tuChNeu64aq2n0/bttS09FgAgafsMA=;
-        b=dLJMkTLNkIdwF57pvCrjOW4AKQbkJIvQfKE37Jl41A5dOH17Gk1asWhRuwiFQEV9pg
-         zXixy6sb5nxK2ZIsLgvZ1SEZCIeWfSzKk1xA8mzr//peG7w4soYoC47qc8Un8gxF5ZjO
-         uj2kis5hNupq3YtbKzOJ4u3riTFSlYMgUA3SHuBATDnQDCHBP0DOQjh2Jj0+I8/AYZBa
-         FysJP6rG81/zIbApXz+k7DMgKKjYQTi2JMhVWj6EOrcXcY40JY0JkorKHytpC0AHsTPg
-         L0W3ZZTPw2ao/P8/k1FRC1Mfc6UV3DJNlKzv47cl7UdTvlMLxDz9tug+UFcepb5H23M0
-         rXeQ==
-X-Gm-Message-State: AKwxyte9sc5BepzQDt9kT5FDskTksjbGFFS3ibU+RjgBPBw1bD5fMfMe
-        7n+AwhFGvlY3wPGe5Mo1OnvIDbSW9TH+GAW0ZXsRVw==
-X-Google-Smtp-Source: AH8x22685DIZGZgVmdu86I5yL9Ijy9neyomEsU346vQTj5YIHO6DE+KWJXt7Z2FG/je1AyIr7oBQhCZxStLX3B7iRXI=
-X-Received: by 10.37.163.198 with SMTP id e64mr11914199ybi.438.1516990634178;
- Fri, 26 Jan 2018 10:17:14 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=fHJdVNh59EyKWcvL4vbPE8FEMkE5FgyT6oynf5Ux5dU=;
+        b=c7oHyp3DEzTZCn8xPeg1XiICIuMg17A+JS2uXn+yxSHP+p8Z0ukbdqiqdd32w4RuXG
+         B0/HJfIEIEpWv9TP9yxah7pHOTV3uq6ckWFpf+wkpo0V/NYqCHirdCxtYKB6UL00Zdh7
+         pmZ+IZlAPX0m/WfG3w/XrFh0Kjw2HgKqtYxDU+6cf8W8Kus02CwegOH2YvmPh/8Y6I2l
+         K8JdVUsBWCW9sFhZPlcOKGUFe8z4bai56OzLfYPFUHzhAKDL3O/bmWvVv9AqBeMndKtJ
+         7UdeC1kOhA9JXe+K9kfxkenFYN2N8qI5eTCHBv8lBxRL/lUhTb45CiESZpxwlhFxI+RU
+         YVGw==
+X-Gm-Message-State: AKwxytcART3nkDtwSzKj4y7aUzC9lYWF1mURSQ52ZNdzZFu2ETPaPzt9
+        ojUtQ+uAi4nAtX4JtcH9ZOY=
+X-Google-Smtp-Source: AH8x224OT3BeQQl9+DfEmyY7fGNAXBV5VFzUM/5m6T5ydAI26cwWbBeQmmyqK0oV1NsxdngrTNhD2g==
+X-Received: by 2002:a17:902:7b8f:: with SMTP id w15-v6mr15292939pll.219.1516990758864;
+        Fri, 26 Jan 2018 10:19:18 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id h69sm19935880pfe.20.2018.01.26.10.19.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 10:19:18 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 07/10] t: move 'test_i18ncmp' and 'test_i18ngrep' to 'test-lib-functions.sh'
+References: <20180126123708.21722-1-szeder.dev@gmail.com>
+        <20180126123708.21722-8-szeder.dev@gmail.com>
+Date:   Fri, 26 Jan 2018 10:19:17 -0800
+In-Reply-To: <20180126123708.21722-8-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Fri, 26 Jan 2018 13:37:05 +0100")
+Message-ID: <xmqq607o8ouy.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 10:17:13 -0800 (PST)
-In-Reply-To: <6b72406f-90cd-194e-1f5f-02a43b7b60a5@gmail.com>
-References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-2-dstolee@microsoft.com>
- <CAGZ79kbVoJpP3d_jgJ9Ekn=9NBMaKVNoapjygz7BxABxP2dCBg@mail.gmail.com> <6b72406f-90cd-194e-1f5f-02a43b7b60a5@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Jan 2018 10:17:13 -0800
-Message-ID: <CAGZ79kZUYW-NJYUfPco_SUDdO29Wo_cKW1-gxsFGvR0-3vV0NQ@mail.gmail.com>
-Subject: Re: [PATCH 01/14] graph: add packed graph design document
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> +- A graph file is stored in a file named 'graph-<oid>.graph' in the pack
->>> +  directory.
->>
->> (guessing)
->> where every commit up to <oid> is included in the file.
+SZEDER Gábor <szeder.dev@gmail.com> writes:
+
+> Both 'test_i18ncmp' and 'test_i18ngrep' helper functions are supposed
+> to be called from our test scripts, so they should be in
+> 'test-lib-functions.sh'.
 >
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  t/test-lib-functions.sh | 26 ++++++++++++++++++++++++++
+>  t/test-lib.sh           | 26 --------------------------
+>  2 files changed, 26 insertions(+), 26 deletions(-)
+
+Hmph.  I do not care too much either way, but I had an impression
+that test-lib-functions.sh is meant to be more generic (i.e. those
+who want can steal it from us and use it in their project without
+dragging too much of the local convention we employ in this project)
+than what is in test-lib.sh, which can heavily be specific to Git,
+and I also had an impression that gettext-poison build is quite a
+local convention we use in this project, not applicable to other
+people.
+
 >
-> Sorry, the <oid> is the hash of the graph contents (up to its trailing bytes
-> that contain <oid> in binary).
-
->> So maybe I do not understand the <oid> after all, yet.
->
->
-> Perhaps I should instead use <hash> instead of <oid>, since it is not an
-> actual Git object but instead the hash of the graph contents. The
-> 'graph_head' file simply stores the <oid> as plain-text hex characters.
-
-Yes, please use hash. Oid (object id) means to me the identification of
-a Git object, whereas here we only use the hash to
-(1) check if that file is valid (consistent, no bit flips in that;
-    --verify would do this)
-(2) to have a different file name for each file such that we can have
-    multiple graph files at once, e.g. build the next file in the background
-    while using the old file to keep working.
-(3) any other use case?
-
-For (2) we could use `mkstemp` as well, but the property of (1) is nice
-to have.
-
-When using <hash> you probably mean sha1. When writing the hash
-transition document, we discussed about uses of sha1 apart from
-object naming, such as the use here or in the new pack file format
-and we thought it would be ok to keep sha1 for the purpose of (1),
-but as we may want to lose the sha1 code in the far future, it may be
-easier to migrate that hash to the new hash function, too. So
-it is easy to confuse that hash with OIDs because it is the same hash
-function throughout time.
-
-Thanks,
-Stefan
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 1701fe2a0..92ed02937 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -705,6 +705,32 @@ test_cmp_bin() {
+>  	cmp "$@"
+>  }
+>  
+> +# Use this instead of test_cmp to compare files that contain expected and
+> +# actual output from git commands that can be translated.  When running
+> +# under GETTEXT_POISON this pretends that the command produced expected
+> +# results.
+> +test_i18ncmp () {
+> +	test -n "$GETTEXT_POISON" || test_cmp "$@"
+> +}
+> +
+> +# Use this instead of "grep expected-string actual" to see if the
+> +# output from a git command that can be translated either contains an
+> +# expected string, or does not contain an unwanted one.  When running
+> +# under GETTEXT_POISON this pretends that the command produced expected
+> +# results.
+> +test_i18ngrep () {
+> +	if test -n "$GETTEXT_POISON"
+> +	then
+> +	    : # pretend success
+> +	elif test "x!" = "x$1"
+> +	then
+> +		shift
+> +		! grep "$@"
+> +	else
+> +		grep "$@"
+> +	fi
+> +}
+> +
+>  # Call any command "$@" but be more verbose about its
+>  # failure. This is handy for commands like "test" which do
+>  # not output anything when they fail.
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 9a0a21f49..852b22c80 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1062,32 +1062,6 @@ else
+>  	test_set_prereq C_LOCALE_OUTPUT
+>  fi
+>  
+> -# Use this instead of test_cmp to compare files that contain expected and
+> -# actual output from git commands that can be translated.  When running
+> -# under GETTEXT_POISON this pretends that the command produced expected
+> -# results.
+> -test_i18ncmp () {
+> -	test -n "$GETTEXT_POISON" || test_cmp "$@"
+> -}
+> -
+> -# Use this instead of "grep expected-string actual" to see if the
+> -# output from a git command that can be translated either contains an
+> -# expected string, or does not contain an unwanted one.  When running
+> -# under GETTEXT_POISON this pretends that the command produced expected
+> -# results.
+> -test_i18ngrep () {
+> -	if test -n "$GETTEXT_POISON"
+> -	then
+> -	    : # pretend success
+> -	elif test "x!" = "x$1"
+> -	then
+> -		shift
+> -		! grep "$@"
+> -	else
+> -		grep "$@"
+> -	fi
+> -}
+> -
+>  test_lazy_prereq PIPE '
+>  	# test whether the filesystem supports FIFOs
+>  	test_have_prereq !MINGW,!CYGWIN &&
