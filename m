@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEB7E1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 759A01F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 12:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752131AbeAZMhp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 07:37:45 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37543 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751565AbeAZMh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 07:37:27 -0500
-Received: by mail-wr0-f194.google.com with SMTP id f11so410906wre.4
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:26 -0800 (PST)
+        id S1752119AbeAZMho (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 07:37:44 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55016 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751731AbeAZMha (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 07:37:30 -0500
+Received: by mail-wm0-f67.google.com with SMTP id i186so995339wmi.4
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=b5Q++QOxFy7nEHePkQZGojiZZu6JxRX5dPLI/it+3lY=;
-        b=ftXb44iwLBt8LGnnT/QI+VYXPaZEldQMq3wxJ2XlweG8aEeZuS+DYn2k0Cx65GLlGo
-         Lq9xkS1bCXISUVMf4xNOXIqFGEOciQ879Sfh3bEyKJ2EstHRS5jKdQW9T2mScU5E9sgu
-         jWIWDdCt7ExwaG7GDF0JBHzSTOmGrptxqujVoRC44/6xzoww4PPPW75PGJ5EjZSP12IB
-         YvRsmHyqllgoj85Qy4XASvmp9Iegs62XtlrnWOKgdhJlljX6B7ycXedac9irCCcmiJnm
-         YE+MBI2iH3lDUiF4Mc1FZQbCmYfDAVLplCor0rKRM7K2MwS5k4W3oIAL75FbEA1toKxi
-         fADQ==
+        bh=lUhkvQ/J9v+xYlAPJdit98dqMQkkuswJlg3+48rzgQU=;
+        b=iKdGwqj0RP6iuqZk6VuxSW04iGnOspeQ3AdiLCqVl31t1cuTquQbs7dEUY8yYEYwMJ
+         SAgKDEvDcgsGSkuqaEBGRyY/8+PAfo0OMvKYXWs0KKgkL9w4F+Cm8DwA9rMbGSeoYD7t
+         rfEIpOFASk8LT3R49vfbgH3lARru7R6GOu51szCStSoSf3HyH2uQA4wJikq3yoEsnimX
+         VcZ8sKNT7ctkwVZ5m7nxhYvqaP5jVWUkDv04617UffzsvHwrNlSFGT7l4keMq8cjxQ43
+         /F5bmcFdUdipNanBGMDCI4GBw2mbZ/jTbGE0GRcT4Exp3S9m/SjMl0u7SmYuyJa/Pyct
+         cuRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=b5Q++QOxFy7nEHePkQZGojiZZu6JxRX5dPLI/it+3lY=;
-        b=fto1FH167mIcpU0E8gQlTUVeoh4C9aIy3066ujvAfwYDUmuOjsQ18ZSFUrBEjjqKff
-         NQAE30TFmoF5/DnP4+iDS0hi4kwDwSbTQL4ECm9c7ICh1ONFdJuPk3fQXA4Q7jQHJGXn
-         9tcSDbauOFvqICCp8dau4FSxF8kdv+u+gYYQBOCTCKAkTefAoFkSjC+9FojyDQKcnZfQ
-         8PJgPKT18sWMkIW+fVn1lzWYgVgeV718puZC90MXev7r3qXmTFUjriVoesBfwii2kjFe
-         mCxL9AelEbJ/fhcpf7tliQf1g0YVjv/8bu7Pm854S309Ni0U8jr8qgF4R7MxUTFQ//CE
-         daAg==
-X-Gm-Message-State: AKwxytc0UhcBHdePHYj2lBe2q/6v6p5DsczlZ60H/o81Qb9OxdLp5kTn
-        6hFwFTfPChpBDuaWn8ADXUfCPw==
-X-Google-Smtp-Source: AH8x226ymkmEp+S4T/2aGvX1KyLJpTeTeqqMdSg/zrRqc/dsK/QBc/S8sOtzLwPCCf6PPfOBUe7umg==
-X-Received: by 10.223.142.56 with SMTP id n53mr11025285wrb.54.1516970245865;
-        Fri, 26 Jan 2018 04:37:25 -0800 (PST)
+        bh=lUhkvQ/J9v+xYlAPJdit98dqMQkkuswJlg3+48rzgQU=;
+        b=EMJSUwfoIOzsZ3VgFZr2TxkTJqIC+9kuAcS9Kaj1N/EqSo7MImNOSDMnBg7ui+L2uT
+         iYDQrhzarM7OURIo9kjCGiQfXkzPdjCZeupicUxBPRDSmk4gV06UwrlaRhCHl2Yo+wBo
+         sJatkS1qJ2DYc/qpUPNIKjdKsdjJbZ3/vmY8XW+biXFMNXe2EwUcUvzzkUvjOHnhlJDn
+         pIZ7k3N5MUn5LT4QHO2A6ch2MjqrPnwgRXh6iggSwnbM8pzwGu7OmlvPJPs2Q9j7WKfo
+         P0hgucBwxpKUFLRqNjO8qva2UqfCbfsbXcooLEbnXZV8bfXlGhqFScN9dg8auTbJOVUF
+         V3Pw==
+X-Gm-Message-State: AKwxytcBswjRdcRtu4y6scpVpMCOTKcXVLHu2U91+pCSyOTMIs94C5vS
+        +gMmiYuvz9hRsCHw+M5Zv7lq0w==
+X-Google-Smtp-Source: AH8x225wTz/sQRULT1pZeUe6G7jzXcmP46ElwlprYQrR5BDgByXiXJX5vjf0BDRbtiOMeqxIP0yWng==
+X-Received: by 10.28.54.157 with SMTP id y29mr11530359wmh.36.1516970248777;
+        Fri, 26 Jan 2018 04:37:28 -0800 (PST)
 Received: from localhost.localdomain (x590dab0e.dyn.telefonica.de. [89.13.171.14])
-        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.25
+        by smtp.gmail.com with ESMTPSA id d17sm4756626wrd.50.2018.01.26.04.37.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 04:37:25 -0800 (PST)
+        Fri, 26 Jan 2018 04:37:28 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
-Date:   Fri, 26 Jan 2018 13:37:03 +0100
-Message-Id: <20180126123708.21722-6-szeder.dev@gmail.com>
+Subject: [PATCH 08/10] t: forbid piping into 'test_i18ngrep'
+Date:   Fri, 26 Jan 2018 13:37:06 +0100
+Message-Id: <20180126123708.21722-9-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.1.155.g5159265b1
 In-Reply-To: <20180126123708.21722-1-szeder.dev@gmail.com>
 References: <20180126123708.21722-1-szeder.dev@gmail.com>
@@ -67,40 +67,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the tests in 't5510-fetch.sh' checks the output of 'git fetch'
-using 'test_i18ngrep', and while doing so it prefilters the output
-with 'grep' before piping the result into 'test_i18ngrep'.
+When checking a git command's output with 'test_i18ngrep', it's
+tempting to conveniently pipe the git command's standard output into
+'test_i18ngrep'.  Unfortunately, this is an anti-pattern, because it
+hides the git command's exit code, and the test could continue even if
+the command exited with error.
 
-This prefiltering is unnecessary, with the appropriate pattern
-'test_i18ngrep' can do it all by itself.  Furthermore, piping data
-into 'test_i18ngrep' will interfere with the linting that will be
-added in a later patch.
+Add a bit of linting to 'test_i18ngrep' to detect when data is fed to
+its standard input and to error out with a "bug in the test script"
+message.
+
+Note that this change will also forbid cases where 'test_i18ngrep'
+would legitimately read its standard input, e.g.
+
+  - when its standard input is redirected from a file, or
+
+  - when a git command's standard output is first written to an
+    intermediate file, which is then preprocessed by a non-git command
+    before the results are piped into 'test_i18ngrep'.
+
+See two of the previous patches for the only such cases we had in our
+test suite.  However, reliably preventing this antipattern is arguably
+more important than supporting these cases, which can be worked around
+by only minor inconveniences.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t5510-fetch.sh | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ t/test-lib-functions.sh | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 668c54be4..3debc87d4 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -222,12 +222,9 @@ test_expect_success 'fetch uses remote ref names to describe new refs' '
- 	(
- 		cd descriptive &&
- 		git fetch o 2>actual &&
--		grep " -> refs/crazyheads/descriptive-branch$" actual |
--		test_i18ngrep "new branch" &&
--		grep " -> descriptive-tag$" actual |
--		test_i18ngrep "new tag" &&
--		grep " -> crazy$" actual |
--		test_i18ngrep "new ref"
-+		test_i18ngrep "new branch.* -> refs/crazyheads/descriptive-branch$" actual &&
-+		test_i18ngrep "new tag.* -> descriptive-tag$" actual &&
-+		test_i18ngrep "new ref.* -> crazy$" actual
- 	) &&
- 	git checkout master
- '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 92ed02937..e381d50d0 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -719,6 +719,10 @@ test_i18ncmp () {
+ # under GETTEXT_POISON this pretends that the command produced expected
+ # results.
+ test_i18ngrep () {
++	( read line ) &&
++	error "bug in the test script: data on test_i18ngrep's stdin;" \
++	      "perhaps a git command's output is piped into it?"
++
+ 	if test -n "$GETTEXT_POISON"
+ 	then
+ 	    : # pretend success
 -- 
 2.16.1.155.g5159265b1
 
