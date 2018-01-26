@@ -2,106 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA4271F576
-	for <e@80x24.org>; Fri, 26 Jan 2018 10:32:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DFBF1F576
+	for <e@80x24.org>; Fri, 26 Jan 2018 10:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753188AbeAZKcP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 05:32:15 -0500
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:42953 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753142AbeAZKcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 05:32:14 -0500
-Received: by mail-qt0-f170.google.com with SMTP id c2so101870qtn.9
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 02:32:14 -0800 (PST)
+        id S1752260AbeAZKkZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 05:40:25 -0500
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:36896 "EHLO
+        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752079AbeAZKkW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 05:40:22 -0500
+Received: by mail-oi0-f51.google.com with SMTP id t78so40240oih.4
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 02:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aU9J/S3r9QjE++yg5ACRHfjsmVbnSWlXDD4ko9RU4qQ=;
-        b=dRltAm8IoHst5jEmyasBrWucKmNwmaMv+MYyrQPJY6oCngv1zRW8Oi5U7kfo+jfbXn
-         IV9cAyYK8820M66cS3zNMbozP+jWkUQ9HVWDmRQbnaxfHmkKro4anIhm544j1PFunWrX
-         Qss0MYu2awbZW5Z5yz2dLUZB5gyP5MVP5Hns2gdMPi1ZBrSjk6f135ZM+g0eVrGo4rbT
-         W4haYNF5s9PUi0hnZ02vKLUb0F0e3mYhe16JNVlKqxuaJqr+sDCp7Xi1YykLkM8ovdZ7
-         Vy8DsNA17dFTbttYzYRf1whWMDYvmmgFtCjwrLpjRYx/TorrNywKqjySbWh59+9XHeZL
-         xNjQ==
+         :cc;
+        bh=RsweXR40thgX+VynI9czlpSVt8teMCSC1H178KIVQjE=;
+        b=Hl2PQwRhtC/T7dUlD5nZxkRNnK3Xy9jMd/pkGcagnHzALg8s4o9R9RgTKGg9u7YXek
+         ivmPlVX2tSOL2ljPXQUB0fvKhtiDzHceK13qscq8cW2BKuASeP82A34d3pLoEzdKAJ5t
+         YpFBQkHq8+HHddSt8ZvOC8x4yLEtoOzqBc+/MmhC1QAOY5ypjD6EaU3fseLD1c89+QeO
+         oAqfkIlXGHORmorRrepvNp9gu8g4rz4CMhcSttu2riClJUX3fWleIIxIaYmaHyKq3mxI
+         IwIQMIoTLB8LLUxHtIdMJq4vEkC0EQ+vmYGWew4vCepJvHBmL50vXnzANaqoLhmSlv5N
+         89aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aU9J/S3r9QjE++yg5ACRHfjsmVbnSWlXDD4ko9RU4qQ=;
-        b=af3xzuvPkzO5+UwQsijw/CACglAddVWHhkikjHZuTEy8L+KH0tzIJGHV2s3RVb3oAM
-         /gTJbM9hC1cPSE8rYsxkb4+SzDtu2+oheSRNa6Rb8MNWBad5MOza4sG6KwSGEl12mLJN
-         IPhlOMmcbzo/Vrj7V9lXWr6GATrHpBUZJ0dJsibmfg9s0YCJhhH0OIMI9oDcVkyM2YHW
-         bEFAytw+hotrO379GyZBodITv8yLe5hyHUAT+FZzyKCn8Rx4Sq92ApEc++HGaAk02a1C
-         He4ggpBwlnS6vWb4K6oYFQJqISKVuKnmeb/rQUC69eWG6k8R58lfgQPMQvZMvmvLRIjh
-         usEQ==
-X-Gm-Message-State: AKwxyterzSXfjVcOFx0/Qo+wg+f5Ewye6g6sl6I9/0HP5KI7HEciF/ki
-        nIBxWhQVF7zO1RBw1swPuvTtBxVNVoyiYdeWrXFp3w==
-X-Google-Smtp-Source: AH8x227YHwhQKbinCeXuETPCgeuKFASnsN1cGDA2DkLzix8Q1BPtKawYsWuW4u9aCcdkjlwIKJu2CMFv5EDD9B0v2sA=
-X-Received: by 10.200.26.69 with SMTP id q5mr21291747qtk.174.1516962733552;
- Fri, 26 Jan 2018 02:32:13 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=RsweXR40thgX+VynI9czlpSVt8teMCSC1H178KIVQjE=;
+        b=XHo38Caa4LKKimrD1K7k6O8ZjgioowTj7UAfk7qk2SifAxPBd44PCQIAcOqKa6y3YZ
+         ZKnCv3MPr1Y09cZoFKciDtZPQACZWs3x7MjS7IalBMTIBIBQyykSwclLH2fS8EZfNanf
+         IgTM9DcFFEgb+JKlxFxTAwGvUZZ7RMPGpknga/VgjywwD5g3t0NOyEEevGfpdCP+n7ll
+         y66guvuQfH+qtt0jXm1K5fpCssh117y1/8hbuncQVtgjlEQb+q6RH9BzSx6gyWw8w3mk
+         O0vcJIeK9U0MTtZlMziQ8hk87fnH0RZmfN00VIWvWOq7lEzq+dJdSSH45kOF6kQIsund
+         H5xA==
+X-Gm-Message-State: AKwxytemANzqEchPe1doh1CnczQLGpWxPUHe1Fbn9FFXNsakJB1Eift4
+        WAzpOnJFhaPiiuvuVyRGeYY/ytlD0rM03BPc8Vg=
+X-Google-Smtp-Source: AH8x224/ZbCYvA2upKT17rVYYk3MzYFjnA/HOLsMPqdlKoAD2YGykhACdy1NKJA0hErMaKujNjdW0OdejfTEyIikRro=
+X-Received: by 10.202.171.207 with SMTP id u198mr1808517oie.253.1516963222221;
+ Fri, 26 Jan 2018 02:40:22 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.200.28.54 with HTTP; Fri, 26 Jan 2018 02:32:13 -0800 (PST)
-In-Reply-To: <CAP8UFD14V-3T0kV=VxYLdozGp5yT-Rzio7PiY8sFn_rVUDxnjA@mail.gmail.com>
-References: <CAL21BmkTbr9qYK3+bsbwh9aDQ1twqrNkyUdbaFPSAn5y7ov40Q@mail.gmail.com>
- <CAP8UFD14V-3T0kV=VxYLdozGp5yT-Rzio7PiY8sFn_rVUDxnjA@mail.gmail.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Fri, 26 Jan 2018 13:32:13 +0300
-Message-ID: <CAL21Bm=h4o5k2mQ7vob3m-6N-YZ4Rmr5X3_w90ifpR53_+Wnyw@mail.gmail.com>
-Subject: Re: Please review my code
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Received: by 10.74.144.218 with HTTP; Fri, 26 Jan 2018 02:39:51 -0800 (PST)
+In-Reply-To: <20180125235838.138135-13-bmwill@google.com>
+References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-13-bmwill@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 26 Jan 2018 17:39:51 +0700
+Message-ID: <CACsJy8BHh+Kv=om+rc6=TM60E1j9=wq4rRBvKB8HLfNTMa51Rg@mail.gmail.com>
+Subject: Re: [PATCH v2 12/27] serve: introduce git-serve
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>, stolee@gmail.com,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-25 23:22 GMT+03:00 Christian Couder <christian.couder@gmail.com>:
-> Hi Olga,
->
-> On Thu, Jan 25, 2018 at 6:20 PM, =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=
-=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@gmail.com> wrote:
->> Hi everyone,
->> I haven't sent the code by mailing lists because 25 commits (every
->> commit in separate message) look like a spam.
->
-> Yeah, so now that you added tests, it might be interesting to see if
-> the patch series can be refactored to be shorter or to be clearer.
->
->> Please look at my code:
->> https://github.com/telezhnaya/git/commits/catfile
->> You could send me any ideas here or in Github.
->
-> I left some comments on GitHub. My main suggestion is to try to get
-> rid of the is_cat global and if possible to remove the "struct
-> expand_data *cat_file_info" global.
+On Fri, Jan 26, 2018 at 6:58 AM, Brandon Williams <bmwill@google.com> wrote:
+> + Detailed Design
+> +=================
+> +
+> +A client can request to speak protocol v2 by sending `version=2` in the
+> +side-channel `GIT_PROTOCOL` in the initial request to the server.
+> +
+> +In protocol v2 communication is command oriented.  When first contacting a
+> +server a list of capabilities will advertised.  Some of these capabilities
 
-Thanks for your comments, I find them very useful. Most of issues are
-fixed except the main one, that you mentioned here :)
-I left the comment on GitHub.
-https://github.com/telezhnaya/git/commit/403ab584fbf543acef1ecdf279ce31f4fc=
-2ced3f
+s/will advertised/will be advertised/
 
-Thanks again!
-Olga
+> + Capability Advertisement
+> +--------------------------
+> +
+> +A server which decides to communicate (based on a request from a client)
+> +using protocol version 2, notifies the client by sending a version string
+> +in its initial response followed by an advertisement of its capabilities.
+> +Each capability is a key with an optional value.  Clients must ignore all
+> +unknown keys.
 
->
->> The main idea of the patch is to get rid of using custom formatting in
->> cat-file and start using general one from ref-filter.
->> Additional bonus is that cat-file becomes to support many new
->> formatting commands like %(if), %(color), %(committername) etc.
->
-> Yeah, that is a really nice result.
->
->> I remember I need to rewrite docs, I will do that in the near future.
->
-> Great, thanks,
-> Christian.
+With have a convention in $GIT_DIR/index file format that's probably a
+good thing to follow here: lowercase keys are optional, such unknown
+keys can (and must) be ignored. Uppercase keys are mandatory. If a
+client can't understand one of those keys, abort. This gives the
+server a way to "select" clients and introduce incompatible changes if
+we ever have to.
+
+> Semantics of unknown values are left to the definition of
+> +each key.  Some capabilities will describe commands which can be requested
+> +to be executed by the client.
+> +
+> +    capability-advertisement = protocol-version
+> +                              capability-list
+> +                              flush-pkt
+> +
+> +    protocol-version = PKT-LINE("version 2" LF)
+> +    capability-list = *capability
+> +    capability = PKT-LINE(key[=value] LF)
+> +
+> +    key = 1*CHAR
+> +    value = 1*CHAR
+> +    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
+
+Is this a bit too restricted for "value"? Something like "." (e.g.
+version) or "@" (I wonder if anybody will add an capability that
+contains an email address). Unless there's a good reason to limit it,
+should we just go full ascii (without control codes)?
+
+> +A client then responds to select the command it wants with any particular
+> +capabilities or arguments.  There is then an optional section where the
+> +client can provide any command specific parameters or queries.
+> +
+> +    command-request = command
+> +                     capability-list
+> +                     (command-args)
+> +                     flush-pkt
+> +    command = PKT-LINE("command=" key LF)
+> +    command-args = delim-pkt
+> +                  *arg
+> +    arg = 1*CHAR
+> +
+> +The server will then check to ensure that the client's request is
+> +comprised of a valid command as well as valid capabilities which were
+> +advertised.  If the request is valid the server will then execute the
+> +command.
+
+What happens when the request is not valid? Or..
+
+> +When a command has finished
+
+How does the client know a command has finished? Is it up to each
+command design?
+
+More or less related it bugs me that I have a translated git client,
+but I still receive remote error messages in English. It's a hard
+problem, but I'm hoping that we won't need to change the core protocol
+to support that someday. Although we could make rule now that side
+channel message could be sent in "printf"-like form, where the client
+can translate the format string and substitutes placeholders with real
+values afterward...
+
+> a client can either request that another
+> +command be executed or can terminate the connection by sending an empty
+> +request consisting of just a flush-pkt.
+> +
+> + Capabilities
+> +~~~~~~~~~~~~~~
+> +
+> +There are two different types of capabilities: normal capabilities,
+> +which can be used to to convey information or alter the behavior of a
+> +request, and command capabilities, which are the core actions that a
+> +client wants to perform (fetch, push, etc).
+> +
+> + agent
+> +-------
+> +
+> +The server can advertise the `agent` capability with a value `X` (in the
+> +form `agent=X`) to notify the client that the server is running version
+> +`X`.  The client may optionally send its own agent string by including
+> +the `agent` capability with a value `Y` (in the form `agent=Y`) in its
+> +request to the server (but it MUST NOT do so if the server did not
+> +advertise the agent capability). The `X` and `Y` strings may contain any
+> +printable ASCII characters except space (i.e., the byte range 32 < x <
+> +127), and are typically of the form "package/version" (e.g.,
+> +"git/1.8.3.1"). The agent strings are purely informative for statistics
+> +and debugging purposes, and MUST NOT be used to programmatically assume
+> +the presence or absence of particular features.
+> +
+> + stateless-rpc
+> +---------------
+> +
+> +If advertised, the `stateless-rpc` capability indicates that the server
+> +supports running commands in a stateless-rpc mode, which means that a
+> +command lasts for only a single request-response round.
+> +
+> +Normally a command can last for as many rounds as are required to
+> +complete it (multiple for negotiation during fetch or no additional
+> +trips in the case of ls-refs).  If the client sends the `stateless-rpc`
+> +capability with a value of `true` (in the form `stateless-rpc=true`)
+> +then the invoked command must only last a single round.
+
+Speaking of stateless-rpc, I remember last time this topic was brought
+up, there was some discussion to kind of optimize it for http as well,
+to fit the "client sends request, server responds data" model and
+avoid too many round trips (ideally everything happens in one round
+trip). Does it evolve to anything real? All the cool stuff happened
+while I was away, sorry if this was discussed and settled.
+-- 
+Duy
