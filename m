@@ -7,125 +7,93 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D3031F576
-	for <e@80x24.org>; Fri, 26 Jan 2018 11:37:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FBC51F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 12:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751744AbeAZLhU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 06:37:20 -0500
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:43924 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751480AbeAZLhS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 06:37:18 -0500
-Received: by mail-ua0-f193.google.com with SMTP id i5so100143uai.10
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 03:37:18 -0800 (PST)
+        id S1751831AbeAZMP3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 07:15:29 -0500
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:45886 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751546AbeAZMP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 07:15:27 -0500
+Received: by mail-qt0-f180.google.com with SMTP id x27so675130qtm.12
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 04:15:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t44Jk0hShVqSheYmI+h7OL4b7ocqodVamGTLd+DPf+o=;
-        b=EpHGWVM5dvJDZeVlTEpnwjMj2H1U+hJIHLWkZyGw4dwHzsM+qZAUBhJO693PS7Or6O
-         2CuiCGx+3o4XgoYUKTorA4z4zCa/CHv3v7E632XlzJjDSi5No3FnTKXvOpfUl6Q2vpnE
-         QkNc7SkeLGvdyehXubC0y8j4o3qhpsDxiHOkEH5hlEf5xlvlfY7P4OnuysCTlTmt8ISf
-         iqERajGxHHQSc98T61L0WaX7u4FKto+vKUaqxvbyPzWkiUA+WBe3zHnPxRDyO94KHqIr
-         d34Z2CgcYoshU6gTyIJMeCLPVitu0qz4Z8ro5Sbac/uqLRVcJ8oQPiiOdZPM7otF7PjJ
-         +QvQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=C2ZCzbGQJ1HP58kywBCp6PDV4PrGrLxBkQKKJDxDVLk=;
+        b=dBhdHZjbYz0sr5y7S1quvHoZnhSEWKw8cUdg09ioY1kiUfLb7qpYo/2IBSTevxUJdn
+         Fi9iN+2TGMDMtj5Nc1eP3I8NwSso7CuBs791t+d3GQExU/pc0f/i+/JfUUrDNhg71BE4
+         43zEhF9mN7F+wSSzBmLdZPgHQ8yMcuvxZ1s8DtAc/5lBuUG8xvJHIoW/EcBe06PrCccR
+         +Jzwau5N+bm4amTmt80WHQ1cRtV8YkPv4HBKeoL28JZZM6qEFRKZaiCZSiSc1QyJx6xA
+         r/2BcK49bWnennwHqxyXDiHtFjsBDN4rvoOBevLd3AQsBrwyes4M3hDtHlCEU2SwM40t
+         BsnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t44Jk0hShVqSheYmI+h7OL4b7ocqodVamGTLd+DPf+o=;
-        b=Cq2XHnlI490tkLiJ5l6Ugd7ws694wmPQtAC55BXzSPfN1imB0yO0qMy3nrYfTTpo8N
-         oRsGO6lzoP6tyYayX3o9T8/EBp2DmUxCIi7KIxP4HBh+50GoSmtBpYdiGQbqCJvBW7HI
-         FdSsxHmgRq4aXQE/w4mLhf4jEPXufNsGdtoMXLIEWGYiow7QxhGUUS/LC44cqDIS3Eg0
-         w7j8Hu9wfBgwUCfc4/OH20cVS4gy/taXB0mbPdn+QsN8hNiub67X+TLlZ3z+QMp0cv8Q
-         4CNIEFfAFNM/dQVyKqQMomjML1hfstMSW8WKl1yUpd4RgzLM9OpCfdVzBUMBilxtgHuO
-         E8BQ==
-X-Gm-Message-State: AKwxytcLxR2yPne0j73ozEOEk6clFyeXpdyuJb9fL9SPZRyaoMfIlCEM
-        JjNxzyDaYxFwzvhnFw3UkMX/hinOYFk9ECnw7Ak=
-X-Google-Smtp-Source: AH8x224DIi4KCd1UcI7M04PWqV9RLHQwVMHHuuc0TU3DCeGqHlJgowMMR5h/sCvc+BncEBFgPe3t07I/75xAhjSfwdU=
-X-Received: by 10.159.57.111 with SMTP id i47mr10135652uag.79.1516966638234;
- Fri, 26 Jan 2018 03:37:18 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=C2ZCzbGQJ1HP58kywBCp6PDV4PrGrLxBkQKKJDxDVLk=;
+        b=a6ApNrBZE3Xptrkm37dOLHFsI3trhckGwEvpzRj+BGTVyF8YITWTPLwcjdVU8pfVzx
+         Zw+YVlfbweI2C85hHmzwEil+A74sM3yEa0KLSwtd5dsDaKVOgOzGVN3nwTkhvxVYQmA5
+         TM1JfWEoMVzYBVc9lIlaZW0S4bGjeWYozQ7QviaRnjswNCD894Y/YiyP4SY4BsOVFvWO
+         fA9HetTHDoRTDTQ+Yci+FonSJNHsZm+vAHN1p0ccIc1PdPc3Z2Z2xcThZ4REyTre7I0Q
+         dHvqvOpz+FMFvwvopJY1oYwTr5uP5D4pgik0PpI8JPvAtMqjGo3ql+l5JOe8xf30cMGi
+         HSOQ==
+X-Gm-Message-State: AKwxytdGE6urFrQs2BY4mxycMcDYBazVRQfeobYsWY5K+8TJMvDfSSOK
+        r99kPlElfQ631P5J9z8Ybd0=
+X-Google-Smtp-Source: AH8x226ZP3d82Bj/tAYjYb7ME7Q/5QNJU8nUCasHhQZ7xnAXJLOpGwW5UASjOWQ5K7uPKMmQrm5CzQ==
+X-Received: by 10.55.217.20 with SMTP id u20mr19163357qki.52.1516968926814;
+        Fri, 26 Jan 2018 04:15:26 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id d16sm3337524qkj.47.2018.01.26.04.15.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jan 2018 04:15:26 -0800 (PST)
+Subject: Re: [PATCH 00/14] Serialized Commit Graph
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        git@jeffhostetler.com, sbeller@google.com, dstolee@microsoft.com
+References: <20180125140231.65604-1-dstolee@microsoft.com>
+ <871siex7pc.fsf@evledraar.gmail.com>
+ <fe9d20da-eb70-d725-0530-cab1c029a0c8@gmail.com>
+ <87wp05wnaw.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b06bed0e-59e6-c678-792b-4fe57c849037@gmail.com>
+Date:   Fri, 26 Jan 2018 07:15:25 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Fri, 26 Jan 2018 03:37:17 -0800 (PST)
-In-Reply-To: <20180105202711.24311-4-newren@gmail.com>
-References: <20180105202711.24311-1-newren@gmail.com> <20180105202711.24311-4-newren@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 26 Jan 2018 12:37:17 +0100
-Message-ID: <CAM0VKj=qhJQJ7uJWbBouSTYD0frA1zp1gwXzMVXuTiF+C6GH+g@mail.gmail.com>
-Subject: Re: [PATCHv6 03/31] directory rename detection: testcases to avoid
- taking detection too far
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, git@matthieu-moy.fr
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87wp05wnaw.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 5, 2018 at 9:26 PM, Elijah Newren <newren@gmail.com> wrote:
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t6043-merge-rename-directories.sh | 153 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 153 insertions(+)
+On 1/25/2018 6:06 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Jan 25 2018, Derrick Stolee jotted:
+>> Oops! This is my mistake. The correct command should be:
+>>
+>>   git show-ref -s | git graph --write --update-head --stdin-commits
+>>
+>> Without "--stdin-commits" the command will walk all packed objects
+>> to look for commits and then build the graph. That's why it's taking
+>> so long. That method takes several minutes on the Linux repo, but with
+>> --stdin-commits it should take as long as "git log >/dev/null".
+> Thanks, it took around 15m to finish with the command I initially ran on
+> my test repo.
 >
-> diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-directories.sh
-> index f36493289..239819f2d 100755
-> --- a/t/t6043-merge-rename-directories.sh
-> +++ b/t/t6043-merge-rename-directories.sh
+> Then the `merge-base --is-ancestor` performance problem I was
+> complaining about in
+> https://public-inbox.org/git/87608bawoa.fsf@evledraar.gmail.com/ takes
+> around 1s with your series, 5s without it. Nice.
 
-> +test_expect_success '3b-check: Avoid implicit rename if involved as source on current side' '
-> +       (
-> +               cd 3b &&
-> +
-> +               git checkout A^0 &&
-> +
-> +               test_must_fail git merge -s recursive B^0 >out &&
-> +               test_i18ngrep CONFLICT.*rename/rename.*z/d.*x/d.*w/d out &&
-> +               test_i18ngrep ! CONFLICT.*rename/rename.*y/d &&
+Thanks for testing this! May I ask how many commits are in your repo? 
+One way to find out is to run 'git graph --read' and it will tell you 
+how many commits are in the serialized graph.
 
-The filename argument is missing in the above line.
-
-Why does the test still succeed, then?  Because 'test_i18ngrep' is
-expected not to find the given pattern, and of course it won't find the
-pattern if its input is empty as it comes from /dev/null instead of the
-appropriate file.
-
-
-> +
-> +               git ls-files -s >out &&
-> +               test_line_count = 5 out &&
-> +               git ls-files -u >out &&
-> +               test_line_count = 3 out &&
-> +               git ls-files -o >out &&
-> +               test_line_count = 1 out &&
-> +
-> +               git rev-parse >actual \
-> +                       :0:y/b :0:y/c :1:z/d :2:x/d :3:w/d &&
-> +               git rev-parse >expect \
-> +                       O:z/b O:z/c O:z/d O:z/d O:z/d &&
-> +               test_cmp expect actual &&
-> +
-> +               test_path_is_missing z/d &&
-> +               git hash-object >actual \
-> +                       x/d w/d &&
-> +               git rev-parse >expect \
-> +                       O:z/d O:z/d &&
-> +               test_cmp expect actual
-> +       )
-> +'
-> +
-> +###########################################################################
-> +# Rules suggested by section 3:
-> +#
-> +#   Avoid directory-rename-detection for a path, if that path is the source
-> +#   of a rename on either side of a merge.
-> +###########################################################################
-> +
->  test_done
-> --
-> 2.14.2
->
+Thanks,
+-Stolee
