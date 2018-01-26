@@ -2,198 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DFBF1F576
-	for <e@80x24.org>; Fri, 26 Jan 2018 10:40:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 652751F576
+	for <e@80x24.org>; Fri, 26 Jan 2018 11:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752260AbeAZKkZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 05:40:25 -0500
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:36896 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752079AbeAZKkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 05:40:22 -0500
-Received: by mail-oi0-f51.google.com with SMTP id t78so40240oih.4
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 02:40:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RsweXR40thgX+VynI9czlpSVt8teMCSC1H178KIVQjE=;
-        b=Hl2PQwRhtC/T7dUlD5nZxkRNnK3Xy9jMd/pkGcagnHzALg8s4o9R9RgTKGg9u7YXek
-         ivmPlVX2tSOL2ljPXQUB0fvKhtiDzHceK13qscq8cW2BKuASeP82A34d3pLoEzdKAJ5t
-         YpFBQkHq8+HHddSt8ZvOC8x4yLEtoOzqBc+/MmhC1QAOY5ypjD6EaU3fseLD1c89+QeO
-         oAqfkIlXGHORmorRrepvNp9gu8g4rz4CMhcSttu2riClJUX3fWleIIxIaYmaHyKq3mxI
-         IwIQMIoTLB8LLUxHtIdMJq4vEkC0EQ+vmYGWew4vCepJvHBmL50vXnzANaqoLhmSlv5N
-         89aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RsweXR40thgX+VynI9czlpSVt8teMCSC1H178KIVQjE=;
-        b=XHo38Caa4LKKimrD1K7k6O8ZjgioowTj7UAfk7qk2SifAxPBd44PCQIAcOqKa6y3YZ
-         ZKnCv3MPr1Y09cZoFKciDtZPQACZWs3x7MjS7IalBMTIBIBQyykSwclLH2fS8EZfNanf
-         IgTM9DcFFEgb+JKlxFxTAwGvUZZ7RMPGpknga/VgjywwD5g3t0NOyEEevGfpdCP+n7ll
-         y66guvuQfH+qtt0jXm1K5fpCssh117y1/8hbuncQVtgjlEQb+q6RH9BzSx6gyWw8w3mk
-         O0vcJIeK9U0MTtZlMziQ8hk87fnH0RZmfN00VIWvWOq7lEzq+dJdSSH45kOF6kQIsund
-         H5xA==
-X-Gm-Message-State: AKwxytemANzqEchPe1doh1CnczQLGpWxPUHe1Fbn9FFXNsakJB1Eift4
-        WAzpOnJFhaPiiuvuVyRGeYY/ytlD0rM03BPc8Vg=
-X-Google-Smtp-Source: AH8x224/ZbCYvA2upKT17rVYYk3MzYFjnA/HOLsMPqdlKoAD2YGykhACdy1NKJA0hErMaKujNjdW0OdejfTEyIikRro=
-X-Received: by 10.202.171.207 with SMTP id u198mr1808517oie.253.1516963222221;
- Fri, 26 Jan 2018 02:40:22 -0800 (PST)
+        id S1751438AbeAZLM1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 06:12:27 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:62276 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751355AbeAZLMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 06:12:25 -0500
+Received: from [192.168.2.201] ([92.22.6.159])
+        by smtp.talktalk.net with SMTP
+        id f1vjeqHZENSVVf1vje4nqE; Fri, 26 Jan 2018 11:12:23 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1516965143;
+        bh=BcpPSQfMf+sRRpPFHDxdXGLdZ5EWWCLHklYk1BMDzXw=;
+        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
+        b=IQXkS8+t8B4oGvrFpEkCKhEZfvvjUzQHhzCsor+LwuX5wGbEB6jUeyqo9ueYny+Ti
+         f9+HmMPfkJL/410SvTKKRqMwTMcJIMxdnzSH/X7Pz9Jez0a3GiIaFDlVqIH102pzww
+         48rZCNPhFkpM7N6E0iZ1vXPqVz7Y2r21MifAXk/0=
+X-Originating-IP: [92.22.6.159]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=NYGW7yL4 c=1 sm=1 tr=0 a=zHCrIP3pJrCm+L4FAUKT3Q==:117
+ a=zHCrIP3pJrCm+L4FAUKT3Q==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=wpn1FvXkZpQtFJ2W3DEA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] rebase: add --show-patch
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git@vger.kernel.org
+References: <20180126095520.919-1-pclouds@gmail.com>
+ <20180126095520.919-3-pclouds@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <4d7eb4c8-8d48-7c8d-259a-ba6b2f64def0@talktalk.net>
+Date:   Fri, 26 Jan 2018 11:12:22 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.74.144.218 with HTTP; Fri, 26 Jan 2018 02:39:51 -0800 (PST)
-In-Reply-To: <20180125235838.138135-13-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-13-bmwill@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 26 Jan 2018 17:39:51 +0700
-Message-ID: <CACsJy8BHh+Kv=om+rc6=TM60E1j9=wq4rRBvKB8HLfNTMa51Rg@mail.gmail.com>
-Subject: Re: [PATCH v2 12/27] serve: introduce git-serve
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>, stolee@gmail.com,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20180126095520.919-3-pclouds@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfJDHvUQQa80cIojmqRlNe49dFAdhhJ3AScbj/WkC8y9kw8e+8sQ66NLUyUcf+Hr+8xsB4GSBTVcQiVnurz8pAFo268hRToIDSyuc6Ik/SqKB3hae7Lua
+ thg/KGqtLkxRW7ClUJES7BfXPL1fHC0l2OHiLomeiMGtsgtvrvgeTTcmb4ZV5vKmgCb7Sr5b32pxRxbhlntH4XUA4ylqMbyTXpc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 6:58 AM, Brandon Williams <bmwill@google.com> wrote:
-> + Detailed Design
-> +=================
+On 26/01/18 09:55, Nguyễn Thái Ngọc Duy wrote:
+> 
+> It is useful to see the full patch while resolving conflicts in a
+> rebase. The only way to do it now is
+> 
+>     less .git/rebase-*/patch
+> 
+> which could turn out to be a lot longer to type [1] if you are in a
+> linked worktree, or not at top-dir. On top of that, an ordinary user
+> should not need to peek into .git directory. The new option is
+> provided to examine the patch.
+> 
+> [1] A conflict caused by git-rebase--am.sh does show the path to this
+>     patch file so you could copy/paste. But then after some time and
+>     lots of commands to resolve the conflict, that path is likely
+>     scrolled out of your terminal.
+> 
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Documentation/git-rebase.txt           |  5 +++-
+>  contrib/completion/git-completion.bash |  4 +--
+>  git-rebase--am.sh                      |  3 +++
+>  git-rebase--interactive.sh             |  4 +++
+>  git-rebase--merge.sh                   |  4 +++
+>  git-rebase.sh                          |  7 +++++-
+>  t/t3400-rebase.sh                      | 34 ++++++++++++++++++++++++++
+>  t/t3404-rebase-interactive.sh          |  6 +++++
+>  8 files changed, 63 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 8a861c1e0d..4fd571d393 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -12,7 +12,7 @@ SYNOPSIS
+>  	[<upstream> [<branch>]]
+>  'git rebase' [-i | --interactive] [options] [--exec <cmd>] [--onto <newbase>]
+>  	--root [<branch>]
+> -'git rebase' --continue | --skip | --abort | --quit | --edit-todo
+> +'git rebase' --continue | --skip | --abort | --quit | --edit-todo | --show-patch
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -250,6 +250,9 @@ leave out at most one of A and B, in which case it defaults to HEAD.
+>  --edit-todo::
+>  	Edit the todo list during an interactive rebase.
+>  
+> +--show-patch::
+> +	Show the current patch in an interactive rebase.
 > +
-> +A client can request to speak protocol v2 by sending `version=2` in the
-> +side-channel `GIT_PROTOCOL` in the initial request to the server.
-> +
-> +In protocol v2 communication is command oriented.  When first contacting a
-> +server a list of capabilities will advertised.  Some of these capabilities
+>  -m::
+>  --merge::
+>  	Use merging strategies to rebase.  When the recursive (default) merge
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 1e9105f6d5..b70da4990f 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1992,11 +1992,11 @@ _git_rebase ()
+>  {
+>  	__git_find_repo_path
+>  	if [ -f "$__git_repo_path"/rebase-merge/interactive ]; then
+> -		__gitcomp "--continue --skip --abort --quit --edit-todo"
+> +		__gitcomp "--continue --skip --abort --quit --edit-todo --show-patch"
+>  		return
+>  	elif [ -d "$__git_repo_path"/rebase-apply ] || \
+>  	     [ -d "$__git_repo_path"/rebase-merge ]; then
+> -		__gitcomp "--continue --skip --abort --quit"
+> +		__gitcomp "--continue --skip --abort --quit --show-patch"
+>  		return
+>  	fi
+>  	__git_complete_strategy && return
+> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+> index 14c50782e0..564a4a5830 100644
+> --- a/git-rebase--am.sh
+> +++ b/git-rebase--am.sh
+> @@ -27,6 +27,9 @@ skip)
+>  	move_to_original_branch
+>  	return
+>  	;;
+> +show-patch)
+> +	exec git am --show-patch
+> +	;;
+>  esac
+>  
+>  if test -z "$rebase_root"
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index d47bd29593..01cc002efd 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -840,6 +840,10 @@ To continue rebase after editing, run:
+>  
+>  	exit
+>  	;;
+> +show-patch)
+> +	cmt="$(cat "$state_dir/stopped-sha")"
+> +	exec git format-patch --subject-prefix= --stdout "${cmt}^!"
+> +	;;
+>  esac
+>  
+>  comment_for_reflog start
+> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> index 06a4723d4d..5c513a9736 100644
+> --- a/git-rebase--merge.sh
+> +++ b/git-rebase--merge.sh
+> @@ -137,6 +137,10 @@ skip)
+>  	finish_rb_merge
+>  	return
+>  	;;
+> +show-patch)
+> +	cmt="$(cat "$state_dir/current")"
+> +	exec git format-patch --subject-prefix= --stdout "${cmt}^!"
+> +	;;
+>  esac
 
-s/will advertised/will be advertised/
+Here and in the git-rebase--interactive you have access to the SHA of
+the failed pick so you could run git log --patch and git colored output
+and it would use the pager in the same way as 'git am --show-patch' does
 
-> + Capability Advertisement
-> +--------------------------
-> +
-> +A server which decides to communicate (based on a request from a client)
-> +using protocol version 2, notifies the client by sending a version string
-> +in its initial response followed by an advertisement of its capabilities.
-> +Each capability is a key with an optional value.  Clients must ignore all
-> +unknown keys.
+Best Wishes
 
-With have a convention in $GIT_DIR/index file format that's probably a
-good thing to follow here: lowercase keys are optional, such unknown
-keys can (and must) be ignored. Uppercase keys are mandatory. If a
-client can't understand one of those keys, abort. This gives the
-server a way to "select" clients and introduce incompatible changes if
-we ever have to.
-
-> Semantics of unknown values are left to the definition of
-> +each key.  Some capabilities will describe commands which can be requested
-> +to be executed by the client.
-> +
-> +    capability-advertisement = protocol-version
-> +                              capability-list
-> +                              flush-pkt
-> +
-> +    protocol-version = PKT-LINE("version 2" LF)
-> +    capability-list = *capability
-> +    capability = PKT-LINE(key[=value] LF)
-> +
-> +    key = 1*CHAR
-> +    value = 1*CHAR
-> +    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
-
-Is this a bit too restricted for "value"? Something like "." (e.g.
-version) or "@" (I wonder if anybody will add an capability that
-contains an email address). Unless there's a good reason to limit it,
-should we just go full ascii (without control codes)?
-
-> +A client then responds to select the command it wants with any particular
-> +capabilities or arguments.  There is then an optional section where the
-> +client can provide any command specific parameters or queries.
-> +
-> +    command-request = command
-> +                     capability-list
-> +                     (command-args)
-> +                     flush-pkt
-> +    command = PKT-LINE("command=" key LF)
-> +    command-args = delim-pkt
-> +                  *arg
-> +    arg = 1*CHAR
-> +
-> +The server will then check to ensure that the client's request is
-> +comprised of a valid command as well as valid capabilities which were
-> +advertised.  If the request is valid the server will then execute the
-> +command.
-
-What happens when the request is not valid? Or..
-
-> +When a command has finished
-
-How does the client know a command has finished? Is it up to each
-command design?
-
-More or less related it bugs me that I have a translated git client,
-but I still receive remote error messages in English. It's a hard
-problem, but I'm hoping that we won't need to change the core protocol
-to support that someday. Although we could make rule now that side
-channel message could be sent in "printf"-like form, where the client
-can translate the format string and substitutes placeholders with real
-values afterward...
-
-> a client can either request that another
-> +command be executed or can terminate the connection by sending an empty
-> +request consisting of just a flush-pkt.
-> +
-> + Capabilities
-> +~~~~~~~~~~~~~~
-> +
-> +There are two different types of capabilities: normal capabilities,
-> +which can be used to to convey information or alter the behavior of a
-> +request, and command capabilities, which are the core actions that a
-> +client wants to perform (fetch, push, etc).
-> +
-> + agent
-> +-------
-> +
-> +The server can advertise the `agent` capability with a value `X` (in the
-> +form `agent=X`) to notify the client that the server is running version
-> +`X`.  The client may optionally send its own agent string by including
-> +the `agent` capability with a value `Y` (in the form `agent=Y`) in its
-> +request to the server (but it MUST NOT do so if the server did not
-> +advertise the agent capability). The `X` and `Y` strings may contain any
-> +printable ASCII characters except space (i.e., the byte range 32 < x <
-> +127), and are typically of the form "package/version" (e.g.,
-> +"git/1.8.3.1"). The agent strings are purely informative for statistics
-> +and debugging purposes, and MUST NOT be used to programmatically assume
-> +the presence or absence of particular features.
-> +
-> + stateless-rpc
-> +---------------
-> +
-> +If advertised, the `stateless-rpc` capability indicates that the server
-> +supports running commands in a stateless-rpc mode, which means that a
-> +command lasts for only a single request-response round.
-> +
-> +Normally a command can last for as many rounds as are required to
-> +complete it (multiple for negotiation during fetch or no additional
-> +trips in the case of ls-refs).  If the client sends the `stateless-rpc`
-> +capability with a value of `true` (in the form `stateless-rpc=true`)
-> +then the invoked command must only last a single round.
-
-Speaking of stateless-rpc, I remember last time this topic was brought
-up, there was some discussion to kind of optimize it for http as well,
-to fit the "client sends request, server responds data" model and
-avoid too many round trips (ideally everything happens in one round
-trip). Does it evolve to anything real? All the cool stuff happened
-while I was away, sorry if this was discussed and settled.
--- 
-Duy
+Phillip
