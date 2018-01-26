@@ -7,67 +7,65 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 465AE1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 13:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74AA61F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 13:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752685AbeAZNWn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 08:22:43 -0500
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:40199 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751495AbeAZNWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 08:22:40 -0500
-Received: by mail-qt0-f169.google.com with SMTP id s39so1154527qth.7
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 05:22:40 -0800 (PST)
+        id S1752513AbeAZNZP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 08:25:15 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:47051 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752473AbeAZNZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 08:25:13 -0500
+Received: by mail-qt0-f176.google.com with SMTP id o35so1133491qtj.13
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 05:25:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=kOHXtOGYoYjBSc4Ybys9sN84+yIBegpTIrSfcbudE9c=;
-        b=idlxCgQqVLVABGFeBimtocGqiNiRQELPRavdHfyegu+V3Nu4ref9YzVTelIaj5es4F
-         spF0VeVzNyohxrYW6Sjivvq/hZ46w5UJc+yBVMDzWymCfiNlZHNMki8jFhR82z5EhESh
-         FFO6/bdvnhsHgOFcMwuYixYqf5fXssrAAPJNTf2dAqLUTJpfhdfEJjcmJv2CjZcnD6V7
-         psoM5fb+SYc6mfIyUvFVBU3mjXPkYobCgWcxfhJ0GjnNuPa6Hux+8nBCGyQ+GMyes211
-         +FE33reBI3GzeTVmo0eWaN5nzktnbJ4+gu0U1w5/tu9dq3FeRi6ilHUOoMk9ck7QD2Zk
-         F6aA==
+        bh=XRIvSmLdhiY6w5Rpbwlk5TQ5DBLSIjdNtEpvk0Zb07U=;
+        b=Yx0zElcorERs83nG8z3uftgtp3MEeTY7RBg5wGkxpx4zUZeJ6WPPhAu0lrjj2S13Zy
+         4DODIc/iPFy6OeZrK8S8e4HzZyJv6mAAIhRPOh9XVK85WaWBhdkJNy73ithpUDz/V4sZ
+         Y/F9EHADynHJyAppygs8yTX8ncNk/3XVvkT8l5G6cpT/Zh3ui11qSZuFkpT1V8fDjJN7
+         LM61ldl4HBth7P2JxTpjakHqrJa0DG9skWSFSDktxoZuEk9rZ9qRYnl/q6NhJPQLbCUO
+         wCFsXNWWtM+2wsupTJ+up45ldoaYCl1EyTpEUxzt6rVKf0C9hSbV7F6CQNmsmSAlJJRN
+         n6hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=kOHXtOGYoYjBSc4Ybys9sN84+yIBegpTIrSfcbudE9c=;
-        b=Nj5AcAxswX1Zg7JQF3WT5RqUpS9TBUbiFPIMdqrwDuT4TvE8blNfV4Xk4TWMj3zlzt
-         Yrxwn8nq6d2/l62DeJrDa/glNKaFnxFC9OD7eoM9L4x0/7txikFAF3+0zcYsdAzHJqtm
-         xoS3JDU13ShM0Hf1eoPCoeWvm2+ppbYB2oUeaX6FoCfn71/IqhES66k/2SzPhY3uuJsc
-         nt8AisAVDHyGfE+dnlnZH8gGemSmC+ZrZ5JCvnftc786GvSxEoK7O+7JLuJEAj7WBCmq
-         wX7K8VRpsVaV+RYnP98gqErn5XUwfdSx/Y7ZhrSxvro1qP3Yl3w158MEbm5TpilxZUEk
-         XevA==
-X-Gm-Message-State: AKwxyte3v7ov+m5fxJonK2QGzl1p6KIo6dFt+YD27n/wxsLkv0mRHxsf
-        4rnEQ5qYVwQBpaG3v4zaDmM=
-X-Google-Smtp-Source: AH8x224fr0jjika+gY83CVgqT+hsHLoSQ0OM3ande253c3mnP8A+AL9uvs4zuSW1LFvf+wO1QogfjQ==
-X-Received: by 10.237.58.226 with SMTP id o89mr23515644qte.207.1516972959771;
-        Fri, 26 Jan 2018 05:22:39 -0800 (PST)
+        bh=XRIvSmLdhiY6w5Rpbwlk5TQ5DBLSIjdNtEpvk0Zb07U=;
+        b=Jk9B1gn+USpp1uVEjofHgJM5uxsIW65oxOF1O1VME0sAwtSNbQHNEeGfvnB3RwUzZz
+         FblFnRfnZwJm8I4anNiz1WE1JdCahUwss336Tu1hb9Q+5iSz/n+YAVBuGbtz2Lf8ErJ/
+         rcDOIEBEqPfXp+fcvqSLuFZ4EJYY1P/cQa1G8xFBS2AcUf5If++h6b9uoelON1uHR3dq
+         9/rmpFHGQSHuEnT6hBryFGc0RGJYAEvaQq/8pp7fpOgABxuG1z0Aa6f7rBK8B10/Hj4p
+         WrvpL1qjd9BTI7Ko33dBfbYCLFqOzmdd1uNDgW3IP4loyg5bR0prVnMkRiBa5+Mlz3gf
+         F/2w==
+X-Gm-Message-State: AKwxytfZiKdtjn9Rck7ZGuSkyY7s7xy1nmGQ7q4DHg/7eXXUx8pd6wgs
+        RT+KcM0osJXrMdwIV9HM7z8=
+X-Google-Smtp-Source: AH8x224OFQVqnWDG4CEvRmQmYm7wzTjUwVpYj3UM5FRrHPeMKqqzt83/gzzUfiaV1OvU1kmGWKzOig==
+X-Received: by 10.200.5.11 with SMTP id u11mr6759557qtg.196.1516973112787;
+        Fri, 26 Jan 2018 05:25:12 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id v45sm5562928qtc.45.2018.01.26.05.22.38
+        by smtp.gmail.com with ESMTPSA id f129sm3345272qke.82.2018.01.26.05.25.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Jan 2018 05:22:39 -0800 (PST)
+        Fri, 26 Jan 2018 05:25:12 -0800 (PST)
 Subject: Re: [PATCH 04/14] packed-graph: add format document
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <20180125140231.65604-1-dstolee@microsoft.com>
  <20180125140231.65604-5-dstolee@microsoft.com>
- <xmqqr2qd8ug8.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZkhCmmF9hPRaf7RygDuWJd3edMDiAki8CDTJw3xG6BCg@mail.gmail.com>
- <xmqqmv118tde.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kap0bdpcHqLM128mc_f2aEoemRJSFUNpU2xvegtOMcTkg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c6ccbd6f-ef97-3240-7cdc-6ef7a3f95cf6@gmail.com>
-Date:   Fri, 26 Jan 2018 08:22:38 -0500
+Message-ID: <5d70ca39-e844-3565-42ed-c09cb1529d34@gmail.com>
+Date:   Fri, 26 Jan 2018 08:25:11 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqmv118tde.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAGZ79kap0bdpcHqLM128mc_f2aEoemRJSFUNpU2xvegtOMcTkg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -76,9 +74,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/25/2018 5:06 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
->
+On 1/25/2018 5:07 PM, Stefan Beller wrote:
+> On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
 >> Add document specifying the binary format for packed graphs. This
 >> format allows for:
 >>
@@ -97,6 +94,10 @@ On 1/25/2018 5:06 PM, Junio C Hamano wrote:
 >> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 >> ---
 >>   Documentation/technical/graph-format.txt | 88 ++++++++++++++++++++++++++++++++
+> So this is different from Documentation/technical/packed-graph.txt,
+> which gives high level design and this gives the details on how
+> to set bits.
+>
 >>   1 file changed, 88 insertions(+)
 >>   create mode 100644 Documentation/technical/graph-format.txt
 >>
@@ -108,67 +109,126 @@ On 1/25/2018 5:06 PM, Junio C Hamano wrote:
 >> @@ -0,0 +1,88 @@
 >> +Git commit graph format
 >> +=======================
-> Good that this is not saying "graph format" but is explicit that it
-> is about "commit".  Do the same for the previous steps.  Especially,
-> builtin/graph.c that does not have much to do with graph.c is not a
-> good way forward ;-)
+>> +
+>> +The Git commit graph stores a list of commit OIDs and some associated
+>> +metadata, including:
+>> +
+>> +- The generation number of the commit. Commits with no parents have
+>> +  generation number 1; commits with parents have generation number
+>> +  one more than the maximum generation number of its parents. We
+>> +  reserve zero as special, and can be used to mark a generation
+>> +  number invalid or as "not computed".
+>> +
+>> +- The root tree OID.
+>> +
+>> +- The commit date.
+>> +
+>> +- The parents of the commit, stored using positional references within
+>> +  the graph file.
+>> +
+>> +== graph-*.graph files have the following format:
+>> +
+>> +In order to allow extensions that add extra data to the graph, we organize
+>> +the body into "chunks" and provide a binary lookup table at the beginning
+>> +of the body. The header includes certain values, such as number of chunks,
+>> +hash lengths and types.
+>> +
+>> +All 4-byte numbers are in network order.
+>> +
+>> +HEADER:
+>> +
+>> +       4-byte signature:
+>> +           The signature is: {'C', 'G', 'P', 'H'}
+>> +
+>> +       1-byte version number:
+>> +           Currently, the only valid version is 1.
+>> +
+>> +       1-byte Object Id Version (1 = SHA-1)
+>> +
+>> +       1-byte Object Id Length (H)
+>    This is 20 or 40 for sha1 ? (binary or text representation?)
 
-:+1:
+20 for binary.
 
-> I do like the fact that later parents of octopus merges are moved
-> out of way to make the majority of records fixed length, but I am
-> not sure if the "up to two parents are recorded in line" is truly
-> the best arrangement.  Aren't majority of commits single-parent,
-> thereby wasting 4 bytes almost always?
 >
-> Will 32-bit stay to be enough for everybody?  Wouldn't it make sense
-> to at least define them to be indices into arrays (i.e. scaled to
-> element size), not "offsets", to recover a few lost bits?
+>> +       1-byte number (C) of "chunks"
+>> +
+>> +CHUNK LOOKUP:
+>> +
+>> +       (C + 1) * 12 bytes listing the table of contents for the chunks:
+>> +           First 4 bytes describe chunk id. Value 0 is a terminating label.
+>> +           Other 8 bytes provide offset in current file for chunk to start.
+> ... offset [in bytes/words/4k blocks?] in ...
 
-I incorrectly used the word "offset" when I mean "array position" for 
-the edge values.
+bytes.
 
-> What's the point of storing object id length?  If you do not
-> understand the object ID scheme, knowing only the length would not
-> do you much good anyway, no?  And if you know the hashing scheme
-> specified by Object ID version, you already know the length, no?
-
-I'll go read the OID transition document to learn more, but I didn't 
-know if there were plans for things like "Use SHA3 but with different 
-hash lengths depending on user requirements". One side benefit is that 
-we immediately know the width of our commit and tree references within 
-the commit graph file without needing to consult a table of hash 
-definitions.
-
-
-On 1/25/2018 5:18 PM, Stefan Beller wrote:
-> git.git has ~37k non-merge commits and ~12k merge commits,
-> (35 of them have 3 or more parents).
 >
-> So 75% would waste the 4 bytes of the second parent.
+>> +           (Chunks are ordered contiguously in the file, so you can infer
+>> +               the length using the next chunk position if necessary.)
+>> +
+>> +       The remaining data in the body is described one chunk at a time, and
+>> +       these chunks may be given in any order. Chunks are required unless
+>> +       otherwise specified.
+>> +
+>> +CHUNK DATA:
+>> +
+>> +       OID Fanout (ID: {'O', 'I', 'D', 'F'}) (256 * 4 bytes)
+>> +           The ith entry, F[i], stores the number of OIDs with first
+>> +           byte at most i. Thus F[255] stores the total
+>> +           number of commits (N).
+> So F[0] > 0 for git.git for example.
 >
-> However the first parent is still there, so any operation that only needs
-> the first parent (git bisect --first-parent?) would still be fast.
-> Not sure if that is common.
-
-The current API boundary does not support this, as parse_commit_gently() 
-is not aware of the --first-parent option. The benefits of injecting 
-that information are probably not worth the complication.
-
-On 1/25/2018 5:29 PM, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
+> Or another way: To lookup a 01xxx, I need to look at
+> entry(F[00] + 1 )...entry(F[01]).
 >
->> The downside of just having one parent or pointer into the edge list
->> would be to penalize 25% of the commit lookups with an indirection
->> compared to ~0% (the 35 octopus'). I'd rather want to optimize for
->> speed than disk size? (4 bytes for 37k is 145kB for git.git, which I
->> find is not a lot).
-> My comment is not about disk size but is about the size of working
-> set (or "size of array element").
-I do want to optimize for speed over space, at least for two-parent 
-commits. Hopefully my clarification about offset/array position 
-clarifies Junio's concerns here.
+> Makes sense.
+>
+>> +
+>> +       OID Lookup (ID: {'O', 'I', 'D', 'L'}) (N * H bytes)
+>> +           The OIDs for all commits in the graph.
+> ... sorted ascending.
+>
+>
+>> +       Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
+>> +           * The first H bytes are for the OID of the root tree.
+>> +           * The next 8 bytes are for the int-ids of the first two parents of
+>> +             the ith commit. Stores value 0xffffffff if no parent in that position.
+>> +             If there are more than two parents, the second value has its most-
+>> +             significant bit on and the other bits store an offset into the Large
+>> +             Edge List chunk.
+> s/an offset into/position in/ ? (otherwise offset in bytes?)
+>
+>> +           * The next 8 bytes store the generation number of the commit and the
+>> +             commit time in seconds since EPOCH. The generation number uses the
+>> +             higher 30 bits of the first 4 bytes, while the commit time uses the
+>> +             32 bits of the second 4 bytes, along with the lowest 2 bits of the
+>> +             lowest byte, storing the 33rd and 34th bit of the commit time.
+> This allows for a maximum generation number of
+> 1.073.741.823 (2^30 -1) = 1 billion,
+> and a max time stamp of later than 2100.
+>
+> Do you allow negative time stamps?
+>
+>
+>> +
+>> +       [Optional] Large Edge List (ID: {'E', 'D', 'G', 'E'})
+>> +           This list of 4-byte values store the second through nth parents for
+>> +           all octoput merges. The second parent value in the commit data is a
+> octopus
+>
+>> +           negative number pointing into this list. Then iterate through this
+>> +           list starting at that position until reaching a value with the most-
+>> +           significant bit on. The other bits correspond to the int-id of the
+>> +           last parent.
+>> +
+>> +TRAILER:
+>> +
+>> +       H-byte HASH-checksum of all of the above.
+>> --
+>> 2.16.0
+>>
 
-Thanks,
+Thanks for the detailed comments here!
 -Stolee
+
 
