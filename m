@@ -8,195 +8,173 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88E751F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 19:44:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0CA1F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 19:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752574AbeAZToF (ORCPT <rfc822;e@80x24.org>);
+        id S1752561AbeAZToF (ORCPT <rfc822;e@80x24.org>);
         Fri, 26 Jan 2018 14:44:05 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:43862
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752065AbeAZTnl (ORCPT
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:57616
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752047AbeAZTnl (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 26 Jan 2018 14:43:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1516995820;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=dLsTyVO1pGM8Qm1nuluUvske2+WGSef/H1XKg9eRdR8=;
-        b=avmfSwJD7eRdi5MGUG5vD0U8SUtzcFulBkZOqKunwQ2+bmY9xg+eEP7Of/z/FnUe
-        WH3mygYaEQyxshVWL9v9pfpA4ADSeP9NtUNHAx1badzD6MLGDMrrGxfFQzrG1K0CNRN
-        amBKnT3xPBrB2l/kXoIEPu1myqBhkQhBdj9pAZlQ=
+        bh=nOxaFWz5rCv+HSO8o10cABmlK7WO+19ikj3AvqAVXoM=;
+        b=DS6iYCeppBxNiDUyjWBrLz6xrGiluJ4XSXf98RPt2qdPSGyNAHGUfI7SuYe77cK+
+        gmaE4TsmAhRwp5t2QqsZKxS1OINFIIHYgcqNyVZl6QRwm8bRcjgR4AeHTT0yrmERify
+        qhTr9CbIm66g6nGUHaJvkU30ZmmlL5XJymKx9Me8=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016133ff3b3f-26fceb2a-c1ef-447b-9013-caccccc052f9-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016133ff3b3d-001897ca-5d18-45e6-bd4c-118aa9a3d659-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
 References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC 17/24] cat-file: reuse printing logic from ref-filter
+Subject: [PATCH RFC 16/24] ref-filter: make cat_file_info independent
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Fri, 26 Jan 2018 19:43:40 +0000
-X-SES-Outgoing: 2018.01.26-54.240.7.12
+X-SES-Outgoing: 2018.01.26-54.240.7.19
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reuse code from ref-filter to print resulting message.
+Remove connection between expand_data variable
+in cat-file and in ref-filter.
+It will help further to get rid of using expand_data in cat-file.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 52 +++++-----------------------------------------------
- ref-filter.c       | 30 +++++++++++++++++++++++++++---
- 2 files changed, 32 insertions(+), 50 deletions(-)
+ builtin/cat-file.c |  2 +-
+ ref-filter.c       | 29 +++++++++++++++--------------
+ ref-filter.h       |  1 -
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index bd803856537b8..26b35bef4ba02 100644
+index 3a52c551f366a..bd803856537b8 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -176,45 +176,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+@@ -290,6 +290,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	item.start_of_request = obj_name;
+ 
+ 	if (populate_value(&item)) return;
++	data->type = item.type;
+ 
+ 	strbuf_expand(&buf, opt->format.format, expand_format, &item);
+ 	strbuf_addch(&buf, '\n');
+@@ -392,7 +393,6 @@ static int batch_objects(struct batch_options *opt)
+ 	 * object.
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+-	opt->format.cat_file_data = &data;
+ 	opt->format.is_cat = 1;
+ 	opt->format.all_objects = opt->all_objects;
+ 	verify_ref_format(&opt->format);
+diff --git a/ref-filter.c b/ref-filter.c
+index 29a1b75c93181..906a5344949f7 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -100,7 +100,7 @@ static struct used_atom {
+ 	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+-struct expand_data *cat_file_info;
++struct expand_data cat_file_info;
+ static int is_cat = 0;
+ 
+ static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
+@@ -256,9 +256,9 @@ static void objectname_atom_parser(const struct ref_format *format, struct used_
+ static void objectsize_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+-		cat_file_info->info.sizep = &cat_file_info->size;
++		cat_file_info.info.sizep = &cat_file_info.size;
+ 	else if (!strcmp(arg, "disk"))
+-		cat_file_info->info.disk_sizep = &cat_file_info->disk_size;
++		cat_file_info.info.disk_sizep = &cat_file_info.disk_size;
+ 	else
+ 		die(_("urecognized %%(objectsize) argument: %s"), arg);
+ }
+@@ -266,7 +266,7 @@ static void objectsize_atom_parser(const struct ref_format *format, struct used_
+ static void objecttype_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+-		cat_file_info->info.typep = &cat_file_info->type;
++		cat_file_info.info.typep = &cat_file_info.type;
+ 	else
+ 		die(_("urecognized %%(objecttype) argument: %s"), arg);
+ }
+@@ -274,7 +274,7 @@ static void objecttype_atom_parser(const struct ref_format *format, struct used_
+ static void deltabase_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+-		cat_file_info->info.delta_base_sha1 = cat_file_info->delta_base_oid.hash;
++		cat_file_info.info.delta_base_sha1 = cat_file_info.delta_base_oid.hash;
+ 	else
+ 		die(_("urecognized %%(deltabase) argument: %s"), arg);
+ }
+@@ -752,7 +752,6 @@ int verify_ref_format(struct ref_format *format)
+ {
+ 	const char *cp, *sp;
+ 
+-	cat_file_info = format->cat_file_data;
+ 	is_cat = format->is_cat;
+ 	format->need_color_reset_at_eol = 0;
+ 	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
+@@ -779,8 +778,8 @@ int verify_ref_format(struct ref_format *format)
+ 		format->need_color_reset_at_eol = 0;
+ 	if (is_cat && format->all_objects) {
+ 		struct object_info empty = OBJECT_INFO_INIT;
+-		if (!memcmp(&cat_file_info->info, &empty, sizeof(empty)))
+-			cat_file_info->skip_object_info = 1;
++		if (!memcmp(&cat_file_info.info, &empty, sizeof(empty)))
++			cat_file_info.skip_object_info = 1;
+ 	}
+ 	return 0;
+ }
+@@ -1470,18 +1469,20 @@ static void need_object(struct ref_array_item *ref) {
+ 
+ static int check_and_fill_for_cat(struct ref_array_item *ref)
+ {
+-	if (!cat_file_info->skip_object_info &&
+-	    sha1_object_info_extended(ref->objectname.hash, &cat_file_info->info,
++	if (!cat_file_info.info.typep)
++		cat_file_info.info.typep = &cat_file_info.type;
++	if (!cat_file_info.skip_object_info &&
++	    sha1_object_info_extended(ref->objectname.hash, &cat_file_info.info,
+ 				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+ 		const char *e = ref->start_of_request;
+ 		printf("%s missing\n", e ? e : oid_to_hex(&ref->objectname));
+ 		fflush(stdout);
+ 		return -1;
+ 	}
+-	ref->type = cat_file_info->type;
+-	ref->size = cat_file_info->size;
+-	ref->disk_size = cat_file_info->disk_size;
+-	ref->delta_base_oid = &cat_file_info->delta_base_oid;
++	ref->type = cat_file_info.type;
++	ref->size = cat_file_info.size;
++	ref->disk_size = cat_file_info.disk_size;
++	ref->delta_base_oid = &cat_file_info.delta_base_oid;
  	return 0;
  }
  
--static int is_atom(const char *atom, const char *s, int slen)
--{
--	int alen = strlen(atom);
--	return alen == slen && !memcmp(atom, s, alen);
--}
--
--static void expand_atom(struct strbuf *sb, const char *atom, int len,
--			 struct ref_array_item *item)
--{
--	if (is_atom("objectname", atom, len))
--		strbuf_addstr(sb, oid_to_hex(&item->objectname));
--	else if (is_atom("objecttype", atom, len))
--		strbuf_addstr(sb, typename(item->type));
--	else if (is_atom("objectsize", atom, len))
--		strbuf_addf(sb, "%lu", item->size);
--	else if (is_atom("objectsize:disk", atom, len))
--		strbuf_addf(sb, "%"PRIuMAX, (uintmax_t)item->disk_size);
--	else if (is_atom("rest", atom, len)) {
--		if (item->rest)
--			strbuf_addstr(sb, item->rest);
--	} else if (is_atom("deltabase", atom, len))
--		strbuf_addstr(sb, oid_to_hex(item->delta_base_oid));
--}
--
--static size_t expand_format(struct strbuf *sb, const char *start, void *data)
--{
--	const char *end;
--	struct ref_array_item *item = data;
--
--	if (*start != '(')
--		return 0;
--	end = strchr(start + 1, ')');
--	if (!end)
--		die("format element '%s' does not end in ')'", start);
--
--	expand_atom(sb, start + 1, end - start - 1, item);
--	return end - start + 1;
--}
--
- static void batch_write(struct batch_options *opt, const void *data, int len)
- {
- 	if (opt->buffer_output) {
-@@ -282,22 +243,19 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 			       struct expand_data *data)
- {
--	struct strbuf buf = STRBUF_INIT;
- 	struct ref_array_item item = {0};
- 
- 	item.objectname = data->oid;
- 	item.rest = data->rest;
- 	item.start_of_request = obj_name;
- 
--	if (populate_value(&item)) return;
--	data->type = item.type;
--
--	strbuf_expand(&buf, opt->format.format, expand_format, &item);
--	strbuf_addch(&buf, '\n');
--	batch_write(opt, buf.buf, buf.len);
--	strbuf_release(&buf);
-+	if (show_ref_array_item(&item, &opt->format))
-+		return;
-+	if (!opt->buffer_output)
-+		fflush(stdout);
- 
- 	if (opt->print_contents) {
-+		data->type = item.type;
- 		print_object_or_die(opt, data);
- 		batch_write(opt, "\n", 1);
- 	}
-diff --git a/ref-filter.c b/ref-filter.c
-index 906a5344949f7..bfbc7c83fdd47 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1522,7 +1522,21 @@ int populate_value(struct ref_array_item *ref)
- 			name++;
- 		}
- 
--		if (starts_with(name, "refname"))
-+		if (is_cat) {
-+			if (starts_with(name, "objectname"))
-+				v->s = oid_to_hex(&ref->objectname);
-+			else if (starts_with(name, "objecttype"))
-+				v->s = typename(ref->type);
-+			else if (starts_with(name, "objectsize")) {
-+				v->s = xstrfmt("%lu", ref->size);
-+			} else if (starts_with(name, "objectsize:disk")) {
-+				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)ref->disk_size);
-+			} else if (starts_with(name, "rest"))
-+				v->s = ref->rest;
-+			else if (starts_with(name, "deltabase"))
-+				v->s = xstrdup(oid_to_hex(ref->delta_base_oid));
-+			continue;
-+		} else if (starts_with(name, "refname"))
- 			refname = get_refname(atom, ref);
- 		else if (starts_with(name, "symref"))
- 			refname = get_symref(atom, ref);
-@@ -2219,6 +2233,7 @@ int format_ref_array_item(struct ref_array_item *info,
- {
- 	const char *cp, *sp, *ep;
- 	struct ref_formatting_state state = REF_FORMATTING_STATE_INIT;
-+	int retval = 0;
- 
- 	state.quote_style = format->quote_style;
- 	push_stack_element(&state.stack);
-@@ -2229,13 +2244,22 @@ int format_ref_array_item(struct ref_array_item *info,
- 		ep = strchr(sp, ')');
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
--		get_ref_atom_value(info,
-+		if (is_cat) {
-+			if(get_ref_atom_value(info,
-+				parse_ref_filter_atom(format, valid_cat_file_atom,
-+					ARRAY_SIZE(valid_cat_file_atom), sp + 2, ep),
-+					&atomv))
-+				return -1;
-+		} else
-+			get_ref_atom_value(info,
- 				   parse_ref_filter_atom(format, valid_atom,
- 							 ARRAY_SIZE(valid_atom),
- 							 sp + 2, ep),
- 				   &atomv);
- 		atomv->handler(atomv, &state);
- 	}
-+	if (is_cat && strlen(format->format) == 0)
-+		retval = check_and_fill_for_cat(info);
- 	if (*cp) {
- 		sp = cp + strlen(cp);
- 		append_literal(cp, sp, &state);
-@@ -2249,7 +2273,7 @@ int format_ref_array_item(struct ref_array_item *info,
- 		die(_("format: %%(end) atom missing"));
- 	strbuf_addbuf(final_buf, &state.stack->output);
- 	pop_stack_element(&state.stack);
--	return 0;
-+	return retval;
- }
- 
- int show_ref_array_item(struct ref_array_item *info,
+diff --git a/ref-filter.h b/ref-filter.h
+index 4af89c4c86bee..d8064086f36a9 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -118,7 +118,6 @@ struct ref_format {
+ 	 * Helps to move all formatting logic from cat-file to ref-filter,
+ 	 * hopefully would be reduced later.
+ 	 */
+-	struct expand_data *cat_file_data;
+ 	int is_cat;
+ 	int all_objects;
+ };
 
 --
 https://github.com/git/git/pull/452
