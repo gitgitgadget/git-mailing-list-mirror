@@ -2,89 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FE331F576
-	for <e@80x24.org>; Fri, 26 Jan 2018 09:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00431F576
+	for <e@80x24.org>; Fri, 26 Jan 2018 09:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752863AbeAZJZe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 04:25:34 -0500
-Received: from mail-ot0-f177.google.com ([74.125.82.177]:35415 "EHLO
-        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752814AbeAZJZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 04:25:29 -0500
-Received: by mail-ot0-f177.google.com with SMTP id w26so211872otj.2
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 01:25:29 -0800 (PST)
+        id S1753126AbeAZJzb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 04:55:31 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:41228 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752980AbeAZJz1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 04:55:27 -0500
+Received: by mail-pf0-f195.google.com with SMTP id c6so7977398pfi.8
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 01:55:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5MfFSCXc+/4GDv2VHgUWDdWz1kufQobVdp/5J4t81GM=;
-        b=ugvcY7LXGnvbVDzHfhfdQhHQI8jdz3OT4LlZNMc8a50/mxCf+sO7g1I7goVLnC8Hxz
-         fiowauUAltdsbzBEFJI6nf5TXgG+kY5eFIvCqpXrDo+h3oj4oJric2Yaoc6Qzyp8TJ4F
-         W3DXFyoxNkxDIOrJZa/IWMJVbU0pLAgjD3SquqEm1KZaPJgtgylmvHwakGz4TaY62o2O
-         wK0eJ9ZY4eO2D0NmMQolFFtOvC9MyJylm63hy+MXd9NS7AiJB950yJ06OGj87h0t3cVA
-         BcZ2EcQMkicS+5QPfyE5f0xZJ5IaRi5xCjt/QVV6hkr6m6/oP38t1raKQu0yP+RXMvPg
-         TAvQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oE2ypPBH2Vm4PMeG8P10JQGnSeKhETvbvc7iCDiQw/s=;
+        b=AWUtaOUjlJ1Mv/a7gKEyzDOOtT4Ft2PmB1rOzkD0+IwP+Kzat0dA5gJBZ2HXREMyLF
+         h0TpcVPdynwZr7/nTM0ATHDyVW/WRQvF4h9VawzhUkqtx8bY9rCuEFM3zl2+sL/QSPMD
+         B069HnC26FhmzOCK3wcHHePAl0Q9K7BqNSAG1k/rK3HlUpPtofsLlHJKmIGoWwDyQh9s
+         7WnquoLzD/dWTbSgFIsAKXNCIBmE84eX/wfT7bBqEWTHKXnc9E6DWIwe6pSiOQY4GWg6
+         6b3OfJhX0RMVPenJsoHChwfxPbaxE1QWYqbUYKKtqvDqiFBY/7g6zN8lxNR4BC1Sw0k7
+         RNcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5MfFSCXc+/4GDv2VHgUWDdWz1kufQobVdp/5J4t81GM=;
-        b=X7T8Ik4DNIqReynZLU4WRndi8+JN8EzaPBaXNrB+GG2cSOel/JGp5eJGEZvdaztVWy
-         QBCO63B7+ImZZQxkfIgmdvFpVlhXx59h7AMt6Cnlb2ipRBfIUiDKnROosyeezW895mbO
-         rDPdu0zxk3TYQsbDQJI7U1yyqmJFgwR83gw/IEXglKq0iWYsZR3iP0Sg21NXqc4zXEUx
-         BZiMpemysJcenP4trEBrLwqeIhXhx3cqSNCWhG9AlJpYevsNB1fCby3dArh77Dbcgd7b
-         qjm7xEj5tytoEx9E+oRWVDyQgNHj7YRNG/dK4gxI0Sa2jow+6gHmES9xvKz/Sf5WJKdg
-         9niA==
-X-Gm-Message-State: AKwxytecpv2HtCEq3/SlJMY13Sm6/DmBAH0rvIgkYjJPd/INOVAOEDui
-        s595vaDeCzJaWzxjh1ecNn9M4xNCryjNwRRn4Jw=
-X-Google-Smtp-Source: AH8x2277Kh0cBQQy07ATXUOKtomxr7I3YxRZrYPGUr5+3mfECoONT4ZgjVR8I6IOTdc6WsXp95EW0W2eMqomVmb9L8k=
-X-Received: by 10.157.112.12 with SMTP id k12mr3626544otj.165.1516958729202;
- Fri, 26 Jan 2018 01:25:29 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oE2ypPBH2Vm4PMeG8P10JQGnSeKhETvbvc7iCDiQw/s=;
+        b=HyyX/NquOLHMZS3SByACm1hujto4CjvJJrWd7Aiv7TDH+I4sfJtf7rpOTxBRAr0t76
+         F2zb4jW8+vmg/KEbwLaZmZ35BAM7C/jJiX8vlKI8ntEZ6bIB414JoMpWmdaJI+AXRGlL
+         4Km8lwZbd46IxpUKYGQ0BUtGE1/+1ziZw5aqE8TKfG+M73oKKZAUGUy9Wc2066sfxjRQ
+         SSTvItIDCmQu6kEUftsOMRAqI+u6cfZ/AvcImG5GK7m4J7Wk5/mrxx5OXehptRn1djrY
+         wJ72s9wE0rrmIFDYj5ZL1lfJHjJ/7mX5a8NTw3DwIYr0f/Vh62dxgXErtb3FiP5giwT0
+         6MGg==
+X-Gm-Message-State: AKwxytfegnvxN0Y83s1AGr9wt2k2nwRpk7XqU+Yggn1UvfIkf7MROZSX
+        VzrYWXnbeGaVNO4KEX7msso9Ag==
+X-Google-Smtp-Source: AH8x226WcRlyKzsQq5eu0sLhZiABSSiJAiIN05bmAIK+bW6ZujQj1SA84Luz9Gaeuk/1PhwAWbhS7w==
+X-Received: by 2002:a17:902:6115:: with SMTP id t21-v6mr14366459plj.322.1516960527175;
+        Fri, 26 Jan 2018 01:55:27 -0800 (PST)
+Received: from ash ([171.232.97.171])
+        by smtp.gmail.com with ESMTPSA id m65sm21680546pfc.150.2018.01.26.01.55.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jan 2018 01:55:26 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 26 Jan 2018 16:55:21 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 0/2] Add "git rebase --show-patch"
+Date:   Fri, 26 Jan 2018 16:55:18 +0700
+Message-Id: <20180126095520.919-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.205.g271f633410
 MIME-Version: 1.0
-Received: by 10.74.144.218 with HTTP; Fri, 26 Jan 2018 01:24:58 -0800 (PST)
-In-Reply-To: <1516953056.8886.3.camel@gmail.com>
-References: <CACsJy8Dzh5E8JUDkwFmYTwS6KgqGc_1rJBVsDCoC9EpcSShN2Q@mail.gmail.com>
- <1516953056.8886.3.camel@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 26 Jan 2018 16:24:58 +0700
-Message-ID: <CACsJy8DjXBv_HMbRFPjCLuYt-bk=Ec3VPKorXJ_SBJN8pDu=PQ@mail.gmail.com>
-Subject: Re: Bug, git rebase -i does not abort correctly
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 26, 2018 at 2:50 PM, Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
-> This might seem to be a bug as the comment in "git-rebase-todo" says,
->
->     However, if you remove everything, the rebase will be aborted.
->
-> But "man git rebase" clearly says,
->
->     If <branch> is specified, git rebase will perform an automatic "git
->     checkout <branch>" before doing anything else. Otherwise it remains
->     on
->     the current branch.
->
-> Junio has previously confirmed that "git rebase [-i] <upstream>
-> <branch>" is just a short hand for "git checkout <branch> && git rebase
-> [-i] <upstream>".[ref 1] So, it's not surprising that it left HEAD at
-> @~3 when you completely removed the contents of git-rebase-todo and
-> exited the editor.
->
-> Does that help solve your issue?
+When a conflict happens during a rebase, you often need to look at the
+original patch to see what the changes are. This requires opening your
+favourite pager with some random path inside $GIT_DIR.
 
-Sort of. It smells bad design to me when a mistake can easily become a
-feature. But with your help, I think I should be able to disable this
-feature on my local build. Thanks.
+This series makes that experience a bit better, by providing a command
+to read the patch. This is along the line of --edit-todo and --quit
+where you can just tell git what to do and not bother with details.
+
+My main focus is "git rebase", but because rebase uses "git am" behind
+the scene, "git am" gains --show-patch option too.
+
+There was something more I wanted to do, like coloring to the patch.
+But that probably will come later. I'll try to merge these two
+21-months-old patches first.
+
+Nguyễn Thái Ngọc Duy (2):
+  am: add --show-patch
+  rebase: add --show-patch
+
+ Documentation/git-am.txt               |  5 +++-
+ Documentation/git-rebase.txt           |  5 +++-
+ builtin/am.c                           | 23 ++++++++++++++---
+ contrib/completion/git-completion.bash |  6 ++---
+ git-rebase--am.sh                      |  3 +++
+ git-rebase--interactive.sh             |  4 +++
+ git-rebase--merge.sh                   |  4 +++
+ git-rebase.sh                          |  7 +++++-
+ t/t3400-rebase.sh                      | 34 ++++++++++++++++++++++++++
+ t/t3404-rebase-interactive.sh          |  6 +++++
+ t/t4150-am.sh                          |  5 ++++
+ 11 files changed, 93 insertions(+), 9 deletions(-)
+
 -- 
-Duy
+2.16.1.205.g271f633410
+
