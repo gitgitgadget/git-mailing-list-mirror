@@ -2,234 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B49BF1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 20:12:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29DE71F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 20:20:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751773AbeAZUMM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 15:12:12 -0500
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:39228 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751609AbeAZUML (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 15:12:11 -0500
-Received: by mail-yb0-f194.google.com with SMTP id 65so625777ybz.6
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 12:12:11 -0800 (PST)
+        id S1751732AbeAZUUB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 15:20:01 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:43810 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750836AbeAZUUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 15:20:00 -0500
+Received: by mail-pf0-f193.google.com with SMTP id y26so977389pfi.10
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 12:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HLr19xqoz/Cc54IVxfN+GumVXkJVTvnB8sPBYZ6tIUM=;
-        b=d/BgqA5deAybV0nD8/FG/DNIriXXKIytrI8kGptoOgwG+6fcpe87HOEfH6vZ8Ec0T0
-         t5kjUzq/MAYgYzeg111Yu3xmhow8epWKn/mhlGr0JFZo/0cdtVjJ2qW1hKgI3mTj9D/l
-         UWnKsryllbc2IoUh1ZqrAOstQHdSHOLoADzJz4mjdzZbWdTTJ2RlC6kkfHkDhXNO6Css
-         x7KtrgPcsGCHsOcunf7yK25ZL6VkpSC0Mi8lBYu4B+v1f3nGgEQFpO2TDw6Tt3PHrTJf
-         zjT3h3Yc1288jlIYjrSZsqOczVLErabhbPQ/H0oo3AuTHBkM59f/38QLqFz3kY9ZV3yJ
-         PMZQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HW0mvDFxgVZocvP6eU09mCwgisyfTDRNO1nhQXL11BM=;
+        b=VRjoX80O12+RhiM58jm1Rt9MjK6Yps+U1pJzeY4HKQ/thlJZ94aJgvIpd5ctJfaj6h
+         ytegixPnP+0lqIzJRST9eOizKZRw5CTBb6SpNE1OoXsRaz+i3FxlYQhH/kCA6O6DNRRw
+         bEnP69DU8MmpzmvPxRxZYt8IC5dQW7HXm37Xtbvbqr/4iM1y3A4KPRYseRaAEHuA+ffw
+         BedhrBrns3n6fB+ZcsQ44SFXy4YJMHJr7EVZqJigixgE6ryAn1FpK5Q/el4vv+IiI1z3
+         N+WsFvgz9ue2nXlYZVYalz8HZ6EUXkoda4vx/rEFU7fVCBCYCiWhM+nADIM9gtfgRv6X
+         vqDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HLr19xqoz/Cc54IVxfN+GumVXkJVTvnB8sPBYZ6tIUM=;
-        b=LhCHR2yLbeSdHKFgIHsNJTTSEJTCk6bldJSFjQl9dIK738zeuYu3vwgVqEBZiXU9zk
-         MyMF1y+lSt6AVTF4FPmohrgSjGPh58rDBcqteTdUbVwjiLDyYfSgxjO/cDK5wY1Ngh63
-         P/8wue1JX6Vwom+GujWzTpkQyb+VGR746KunpnwleUKt+a9XEELiBuRcP0vdw74a9ltF
-         Rt0+voj595ONiIs1OrTYAKtLmCFPKvibZuuthq4ncN+JV78mC2W+KHBc1IZ1ZhKm3iCM
-         H5jYI6HCm3eASDG3HYZ+Ct5IJtERYGnV91Y+gDrU9QZecYIy1nFBBWntv6M0cv+Zdij5
-         DIPA==
-X-Gm-Message-State: AKwxytfNMINUtDWeP9Ys//Nzk5xoOqBlRqcg/Zg+qRvnOGj4rkZpFMMc
-        +JxgYAcnOG0NjVHuS/qKPDJoWmGkv15XvhH8cpsPJw==
-X-Google-Smtp-Source: AH8x227GneaglB+QlgG0buDD8+aCmaBiSfJeFZLKq8T6pJm9TAEDFIyjZMXDQsBBbfdb1d3uGV99kHG3lFOuGEXt+E8=
-X-Received: by 10.37.34.8 with SMTP id i8mr12216668ybi.114.1516997530072; Fri,
- 26 Jan 2018 12:12:10 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HW0mvDFxgVZocvP6eU09mCwgisyfTDRNO1nhQXL11BM=;
+        b=XRzpQKKAIzZ3EpbCeFISP+2KylNMO2SxnsG1qPPj4KiuGgwq10EpEnb6iqZ1ImSZ8W
+         d3eM7tQQF39zn1jSScNYVOqo8CdN0C5q5BZ6upCay7htgnw3i+xvaHjKk8/YPpk4P0mJ
+         dvbpvFySJO+vAqF2SHnKhmWXSh/K8zQLmRji/JNURRWU1RlFvIHZ/Z9nXvDI5NBS1mxD
+         sY90Y5mdA7PPv32obX7xlgvOIu3lP9ZXepkSUpa+0ImdpsWTmJ4+tF7Uqm7Wb4hv6fUQ
+         2HCQi6kzo7Iz2GAo+ljhyuLW3CPd8Npijd8rQpZ4ATHy/3zaPku/27Xl17KsvFHXAthz
+         yMdg==
+X-Gm-Message-State: AKwxytdVFtJRHRu1V8qF3Sy+iVu+vJaL7mu9xWxd2/fLzKSDOvpc7BSq
+        YMe1CCRef0/345HU99IRbEw=
+X-Google-Smtp-Source: AH8x2277ozq8cDomWTXVS9PYmFo1q6CBMvP3HrBX23SSkCreC3gyKI0e98W1/gWvejTrciTc7SusrA==
+X-Received: by 10.98.89.198 with SMTP id k67mr20182074pfj.110.1516997998978;
+        Fri, 26 Jan 2018 12:19:58 -0800 (PST)
+Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
+        by smtp.gmail.com with ESMTPSA id q2sm8364223pgf.10.2018.01.26.12.19.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 26 Jan 2018 12:19:58 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH RFC 01/24] ref-filter: get rid of goto
+References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+Date:   Fri, 26 Jan 2018 12:19:56 -0800
+In-Reply-To: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+        (Olga Telezhnaya's message of "Fri, 26 Jan 2018 19:43:40 +0000")
+Message-ID: <xmqqfu6s74pf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 12:12:09 -0800 (PST)
-In-Reply-To: <20180125235838.138135-6-bmwill@google.com>
-References: <20180103001828.205012-1-bmwill@google.com> <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-6-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 Jan 2018 12:12:09 -0800
-Message-ID: <CAGZ79kYbhR-y7WkhFgQ-YBkWaNXWuadDAGXaAzWDyJBzDSqc2w@mail.gmail.com>
-Subject: Re: [PATCH v2 05/27] upload-pack: factor out processing lines
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 25, 2018 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> Factor out the logic for processing shallow, deepen, deepen_since, and
-> deepen_not lines into their own functions to simplify the
-> 'receive_needs()' function in addition to making it easier to reuse some
-> of this logic when implementing protocol_v2.
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+
+> Get rid of goto command in ref-filter for better readability.
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
+> Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored by: Jeff King <peff@peff.net>
 > ---
->  upload-pack.c | 113 ++++++++++++++++++++++++++++++++++++++--------------------
->  1 file changed, 74 insertions(+), 39 deletions(-)
+
+How was this patch "mentored by" these two folks?  Have they already
+reviewed and gave you OK, or are you asking them to also help reviewing
+with this message?  Mostly just being curious.
+
+It is not convincning that this splitting the last part of a single
+function into a separate helper function that is called from only
+one place improves readability.  If better readability is the
+purpose, I would even say
+
+         for (i = 0; i < used_atom_cnt; i++) {
+		if (...)
+-			goto need_obj;
++			break;
+	}
+-	return;
++	if (used_atom_cnt <= i)
+		return;
+
+-need_obj:
+
+would make the result easier to follow with a much less impact.
+
+If we later in the series will use this new helper function from
+other places, it certainly makes sense to create a new helper like
+this patch does, but then "get rid of goto for readability" is not
+the justification for such a change.
+
+>  ref-filter.c | 103 ++++++++++++++++++++++++++++++-----------------------------
+>  1 file changed, 53 insertions(+), 50 deletions(-)
 >
-> diff --git a/upload-pack.c b/upload-pack.c
-> index 2ad73a98b..42d83d5b1 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
->         packet_flush(1);
+> diff --git a/ref-filter.c b/ref-filter.c
+> index f9e25aea7a97e..37337b57aacf4 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1354,16 +1354,60 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+>  	return show_ref(&atom->u.refname, ref->refname);
 >  }
->
-> +static int process_shallow(const char *line, struct object_array *shallows)
-> +{
-> +       const char *arg;
-> +       if (skip_prefix(line, "shallow ", &arg)) {
+>  
+> +static void need_object(struct ref_array_item *ref) {
 
-stylistic nit:
-
-    You could invert the condition in each of the process_* functions
-    to just have
-
-        if (!skip_prefix...))
-            return 0
-
-        /* less indented code goes here */
-
-        return 1;
-
-    That way we have less indentation as well as easier code.
-    (The reader doesn't need to keep in mind what the else
-    part is about; it is a rather local decision to bail out instead
-    of having the return at the end of the function.)
-
-> +               struct object_id oid;
-> +               struct object *object;
-> +               if (get_oid_hex(arg, &oid))
-> +                       die("invalid shallow line: %s", line);
-> +               object = parse_object(&oid);
-> +               if (!object)
-> +                       return 1;
-> +               if (object->type != OBJ_COMMIT)
-> +                       die("invalid shallow object %s", oid_to_hex(&oid));
-> +               if (!(object->flags & CLIENT_SHALLOW)) {
-> +                       object->flags |= CLIENT_SHALLOW;
-> +                       add_object_array(object, NULL, shallows);
-> +               }
-> +               return 1;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int process_deepen(const char *line, int *depth)
-> +{
-> +       const char *arg;
-> +       if (skip_prefix(line, "deepen ", &arg)) {
-> +               char *end = NULL;
-> +               *depth = (int) strtol(arg, &end, 0);
-> +               if (!end || *end || *depth <= 0)
-> +                       die("Invalid deepen: %s", line);
-> +               return 1;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
-> +{
-> +       const char *arg;
-> +       if (skip_prefix(line, "deepen-since ", &arg)) {
-> +               char *end = NULL;
-> +               *deepen_since = parse_timestamp(arg, &end, 0);
-> +               if (!end || *end || !deepen_since ||
-> +                   /* revisions.c's max_age -1 is special */
-> +                   *deepen_since == -1)
-> +                       die("Invalid deepen-since: %s", line);
-> +               *deepen_rev_list = 1;
-> +               return 1;
-> +       }
-> +       return 0;
-> +}
-> +
-> +static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
-> +{
-> +       const char *arg;
-> +       if (skip_prefix(line, "deepen-not ", &arg)) {
-> +               char *ref = NULL;
-> +               struct object_id oid;
-> +               if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
-> +                       die("git upload-pack: ambiguous deepen-not: %s", line);
-> +               string_list_append(deepen_not, ref);
-> +               free(ref);
-> +               *deepen_rev_list = 1;
-> +               return 1;
-> +       }
-> +       return 0;
-> +}
-> +
->  static void receive_needs(void)
->  {
->         struct object_array shallows = OBJECT_ARRAY_INIT;
-> @@ -745,49 +814,15 @@ static void receive_needs(void)
->                 if (!line)
->                         break;
->
-> -               if (skip_prefix(line, "shallow ", &arg)) {
-> -                       struct object_id oid;
-> -                       struct object *object;
-> -                       if (get_oid_hex(arg, &oid))
-> -                               die("invalid shallow line: %s", line);
-> -                       object = parse_object(&oid);
-> -                       if (!object)
-> -                               continue;
-> -                       if (object->type != OBJ_COMMIT)
-> -                               die("invalid shallow object %s", oid_to_hex(&oid));
-> -                       if (!(object->flags & CLIENT_SHALLOW)) {
-> -                               object->flags |= CLIENT_SHALLOW;
-> -                               add_object_array(object, NULL, &shallows);
-> -                       }
-> +               if (process_shallow(line, &shallows))
->                         continue;
-> -               }
-> -               if (skip_prefix(line, "deepen ", &arg)) {
-> -                       char *end = NULL;
-> -                       depth = strtol(arg, &end, 0);
-> -                       if (!end || *end || depth <= 0)
-> -                               die("Invalid deepen: %s", line);
-> +               if (process_deepen(line, &depth))
->                         continue;
-> -               }
-> -               if (skip_prefix(line, "deepen-since ", &arg)) {
-> -                       char *end = NULL;
-> -                       deepen_since = parse_timestamp(arg, &end, 0);
-> -                       if (!end || *end || !deepen_since ||
-> -                           /* revisions.c's max_age -1 is special */
-> -                           deepen_since == -1)
-> -                               die("Invalid deepen-since: %s", line);
-> -                       deepen_rev_list = 1;
-> +               if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
->                         continue;
-> -               }
-> -               if (skip_prefix(line, "deepen-not ", &arg)) {
-> -                       char *ref = NULL;
-> -                       struct object_id oid;
-> -                       if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
-> -                               die("git upload-pack: ambiguous deepen-not: %s", line);
-> -                       string_list_append(&deepen_not, ref);
-> -                       free(ref);
-> -                       deepen_rev_list = 1;
-> +               if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
->                         continue;
-> -               }
-> +
->                 if (!skip_prefix(line, "want ", &arg) ||
->                     get_oid_hex(arg, &oid_buf))
->                         die("git upload-pack: protocol error, "
-> --
-> 2.16.0.rc1.238.g530d649a79-goog
->
+Style.  The opening brace at the beginning of the function sits on
+its own line alone.
