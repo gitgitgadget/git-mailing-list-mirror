@@ -2,115 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDA511F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 18:16:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23B081F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 18:17:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751917AbeAZSQF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 13:16:05 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:39070 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeAZSQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 13:16:04 -0500
-Received: by mail-pf0-f195.google.com with SMTP id e11so773675pff.6
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:16:04 -0800 (PST)
+        id S1751411AbeAZSRQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 13:17:16 -0500
+Received: from mail-yb0-f175.google.com ([209.85.213.175]:45918 "EHLO
+        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751264AbeAZSRP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 13:17:15 -0500
+Received: by mail-yb0-f175.google.com with SMTP id k127so499555ybc.12
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 10:17:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=TAf1cUwZnUzJwyUVstnkdn0zpgWMXpZ/eqPe0zwTvus=;
-        b=dX68eOBERB4bLhuJAxAaFb7yDDpX4s7o13pqDHEQcnM7MWQrQ4sEiZDpSR4TZXLqCS
-         tOETfjsuZonkM+P9PIh/CvUz17nrChhDOFebz1xgahhplGd2/626+GlceQhwmsD+ZULX
-         ThHMr0RafXeKbXtrrNX+X9YS7ZBkz4BjdndoQ7Oa06uEzFFhO0phBLlMP0FVX+0tgWBs
-         ClYwKYM8ccBwGd26HqTl0Illd1evNhOcqKIukmE7Z1Osx6CZh7TGAKqQzAB9qKHND3UT
-         IxlPvFwt/kpipgT0JJNX0x6I/ZsTRLeVWFqDRsfZ6GBkFPgvwSj4cmKqlumeealWu9Ze
-         hm1A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oSidcUGGx+DI4tuChNeu64aq2n0/bttS09FgAgafsMA=;
+        b=lqb1oTfPPvF1yHIVFTWdAW5k5dPQBhkvKTye2S461qf8vu4IZSmf5Al79G7WveWQnx
+         GXhHQbQWKrkutJYDhRfUVoEe6M8uItyoqzukwI29r5igIBm8WNF2q+LKoQ/XHy7gg6CZ
+         BdsE0HdKeWa+kZhRBph78Vc+L8OtTb6o/jGQQl5EVjsUFj6z+3T42K0YNgX58YQiCrab
+         uskRNXLTMaG2AtjmQyjaNhLF7KawVGmEkWIk7pgA87YCiD8vXn3p9foQABICrj1XVIFF
+         69wkPYln0n4sz6Jme0do6Ys0hflqgwnsvxwYK/XwUCCzKSe3GXKbpVJpUtn/Rn/nyf7X
+         s8yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=TAf1cUwZnUzJwyUVstnkdn0zpgWMXpZ/eqPe0zwTvus=;
-        b=gXZpn1/9HLahGoRw0FvSYQsfNb5tHhD3sjykECZqM7y9iDobNrRe0enYjQEeODOfHg
-         Q8PHY9JFj32uo35yhjfKs/pj9XXEYJdV42vtbk06rgox/KyOQte/7116bsZgQO+BuXyM
-         ipw3SmMeUnlNmeR3Ipb+JzpdtbJBWKi7A5yV7TNvvK35YRbfHK3bmcyTU5bn2/JdCSrM
-         3yXg+k6FjSxxsiRh6Y8gruqYV6ecsmX/BviiT+55wIcWnuk+b8MYIzB9O+VPZG+GfNlz
-         XdnrkiiqJaq3tnJ9RP0NEsxj0+rpr4HCIKh3of1qzHh1cBFNQ/hCD1BwqzC/REr2Yy1Z
-         epog==
-X-Gm-Message-State: AKwxytfyECUIG0qK9qUohTXG4zTFdr2lYsstEIEwgn4qR4UAx1JvPuOi
-        P5U+h44N5h8BUd2mVbPJ7s8s1tCp
-X-Google-Smtp-Source: AH8x2273jIzdhaciRWNnz7d+nhntPoRs0i1TJ9HbZpqXZZ8WvK2FnbsvLjU7fAuoD7Iz3W9oduaCYQ==
-X-Received: by 2002:a17:902:3281:: with SMTP id z1-v6mr15027129plb.431.1516990563910;
-        Fri, 26 Jan 2018 10:16:03 -0800 (PST)
-Received: from localhost ([2620:0:1000:8622:3d49:4bb2:1738:a537])
-        by smtp.gmail.com with ESMTPSA id b8sm18399428pff.31.2018.01.26.10.16.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 26 Jan 2018 10:16:03 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 05/10] t5510: consolidate 'grep' and 'test_i18ngrep' patterns
-References: <20180126123708.21722-1-szeder.dev@gmail.com>
-        <20180126123708.21722-6-szeder.dev@gmail.com>
-Date:   Fri, 26 Jan 2018 10:16:01 -0800
-In-Reply-To: <20180126123708.21722-6-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Fri, 26 Jan 2018 13:37:03 +0100")
-Message-ID: <xmqqa7x08p0e.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oSidcUGGx+DI4tuChNeu64aq2n0/bttS09FgAgafsMA=;
+        b=dLJMkTLNkIdwF57pvCrjOW4AKQbkJIvQfKE37Jl41A5dOH17Gk1asWhRuwiFQEV9pg
+         zXixy6sb5nxK2ZIsLgvZ1SEZCIeWfSzKk1xA8mzr//peG7w4soYoC47qc8Un8gxF5ZjO
+         uj2kis5hNupq3YtbKzOJ4u3riTFSlYMgUA3SHuBATDnQDCHBP0DOQjh2Jj0+I8/AYZBa
+         FysJP6rG81/zIbApXz+k7DMgKKjYQTi2JMhVWj6EOrcXcY40JY0JkorKHytpC0AHsTPg
+         L0W3ZZTPw2ao/P8/k1FRC1Mfc6UV3DJNlKzv47cl7UdTvlMLxDz9tug+UFcepb5H23M0
+         rXeQ==
+X-Gm-Message-State: AKwxyte9sc5BepzQDt9kT5FDskTksjbGFFS3ibU+RjgBPBw1bD5fMfMe
+        7n+AwhFGvlY3wPGe5Mo1OnvIDbSW9TH+GAW0ZXsRVw==
+X-Google-Smtp-Source: AH8x22685DIZGZgVmdu86I5yL9Ijy9neyomEsU346vQTj5YIHO6DE+KWJXt7Z2FG/je1AyIr7oBQhCZxStLX3B7iRXI=
+X-Received: by 10.37.163.198 with SMTP id e64mr11914199ybi.438.1516990634178;
+ Fri, 26 Jan 2018 10:17:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.207.9 with HTTP; Fri, 26 Jan 2018 10:17:13 -0800 (PST)
+In-Reply-To: <6b72406f-90cd-194e-1f5f-02a43b7b60a5@gmail.com>
+References: <20180125140231.65604-1-dstolee@microsoft.com> <20180125140231.65604-2-dstolee@microsoft.com>
+ <CAGZ79kbVoJpP3d_jgJ9Ekn=9NBMaKVNoapjygz7BxABxP2dCBg@mail.gmail.com> <6b72406f-90cd-194e-1f5f-02a43b7b60a5@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 26 Jan 2018 10:17:13 -0800
+Message-ID: <CAGZ79kZUYW-NJYUfPco_SUDdO29Wo_cKW1-gxsFGvR0-3vV0NQ@mail.gmail.com>
+Subject: Re: [PATCH 01/14] graph: add packed graph design document
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
-
-> One of the tests in 't5510-fetch.sh' checks the output of 'git fetch'
-> using 'test_i18ngrep', and while doing so it prefilters the output
-> with 'grep' before piping the result into 'test_i18ngrep'.
+>>> +- A graph file is stored in a file named 'graph-<oid>.graph' in the pack
+>>> +  directory.
+>>
+>> (guessing)
+>> where every commit up to <oid> is included in the file.
 >
-> This prefiltering is unnecessary, with the appropriate pattern
-> 'test_i18ngrep' can do it all by itself.  Furthermore, piping data
-> into 'test_i18ngrep' will interfere with the linting that will be
-> added in a later patch.
-
-It is very likely that the prefiltering "grep" will not even see
-what it is looking for under GETTEXT_POISON build in the first
-place, so this conversion is the right thing to do from that point
-of view as well.
-
-
-
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->  t/t5510-fetch.sh | 9 +++------
->  1 file changed, 3 insertions(+), 6 deletions(-)
+> Sorry, the <oid> is the hash of the graph contents (up to its trailing bytes
+> that contain <oid> in binary).
+
+>> So maybe I do not understand the <oid> after all, yet.
 >
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 668c54be4..3debc87d4 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -222,12 +222,9 @@ test_expect_success 'fetch uses remote ref names to describe new refs' '
->  	(
->  		cd descriptive &&
->  		git fetch o 2>actual &&
-> -		grep " -> refs/crazyheads/descriptive-branch$" actual |
-> -		test_i18ngrep "new branch" &&
-> -		grep " -> descriptive-tag$" actual |
-> -		test_i18ngrep "new tag" &&
-> -		grep " -> crazy$" actual |
-> -		test_i18ngrep "new ref"
-> +		test_i18ngrep "new branch.* -> refs/crazyheads/descriptive-branch$" actual &&
-> +		test_i18ngrep "new tag.* -> descriptive-tag$" actual &&
-> +		test_i18ngrep "new ref.* -> crazy$" actual
->  	) &&
->  	git checkout master
->  '
+>
+> Perhaps I should instead use <hash> instead of <oid>, since it is not an
+> actual Git object but instead the hash of the graph contents. The
+> 'graph_head' file simply stores the <oid> as plain-text hex characters.
+
+Yes, please use hash. Oid (object id) means to me the identification of
+a Git object, whereas here we only use the hash to
+(1) check if that file is valid (consistent, no bit flips in that;
+    --verify would do this)
+(2) to have a different file name for each file such that we can have
+    multiple graph files at once, e.g. build the next file in the background
+    while using the old file to keep working.
+(3) any other use case?
+
+For (2) we could use `mkstemp` as well, but the property of (1) is nice
+to have.
+
+When using <hash> you probably mean sha1. When writing the hash
+transition document, we discussed about uses of sha1 apart from
+object naming, such as the use here or in the new pack file format
+and we thought it would be ok to keep sha1 for the purpose of (1),
+but as we may want to lose the sha1 code in the far future, it may be
+easier to migrate that hash to the new hash function, too. So
+it is easy to confuse that hash with OIDs because it is the same hash
+function throughout time.
+
+Thanks,
+Stefan
