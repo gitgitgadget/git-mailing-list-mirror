@@ -7,63 +7,65 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D60AB1F404
-	for <e@80x24.org>; Fri, 26 Jan 2018 13:08:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC411F404
+	for <e@80x24.org>; Fri, 26 Jan 2018 13:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbeAZNIQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 08:08:16 -0500
-Received: from mail-qt0-f172.google.com ([209.85.216.172]:41904 "EHLO
-        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751174AbeAZNIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 08:08:16 -0500
-Received: by mail-qt0-f172.google.com with SMTP id i1so1044673qtj.8
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 05:08:15 -0800 (PST)
+        id S1751450AbeAZNNS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 08:13:18 -0500
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:38454 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751447AbeAZNNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 08:13:16 -0500
+Received: by mail-qt0-f170.google.com with SMTP id z10so1095820qti.5
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 05:13:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=l94w+M9jXM99wNfT1/p7zOLmf4R3PyvtsIcqBS9Q/3M=;
-        b=ab/iQ5+DPlFn6y6wF5J14LfPiHUjwbANi2EEc6d+GAVBTELEE2EBavdxSauVgns5HF
-         K+lidW1rbVEdWyvN3FCOweXPOLEGwUsTGQQsp8ncw0NW9kNToYCJy4juOtg6XYk+lWJG
-         FlVA+GmgPOPlToalJlD/JhIMo621j6SPCbyTQlhPQCXFTkxp8r0uKpSWnfaaDxz3TDl3
-         25B4IVymJo3afcCDYXXnf+fJpwej0wWYLmOh1GvBKGe1+PZaEmmn17Oezd6vzv0LKfSb
-         fTAMEMT5VoZig52txJ20Cj3HL1WfqKNJHtm8GUCdh2uoaVMbtSyytYko6kZ9X2/DSCaK
-         3X8Q==
+        bh=GswvuQUPYzjb9uppiBSXGu08puDK6ov15/Sjf0UtKkU=;
+        b=fWl/rxBSlke7whod/Cit95pvGmyG7B+oxPtToAYXcdM6lOwIhmVnweb79y+Hkcu+KM
+         rHvhRF79llEMECTKYvz8sS3kfoZ0u/LFn1FoQlg8jT4yFUh4ZEOg8KaJYymCa0+V6etk
+         qch0ET0mbNdGC4WR+9/gmzJegD2B6oMcvkYhkr8wfksTm2lblZ5ZIehZlzPn3ypgjHZy
+         iGs7aQ9mdIDvxM3XqIwP24c6G79aIwQwhRgYb7svsLMqQo9bKbFgjVnqA4A4b9Cj9/JS
+         PkwnhnDO8j2Hnyx7fVdAxUQw8W95h2AgFLtlY3YpvmsNelXbMLaaBIY38tGcDfwRaiYd
+         sxjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=l94w+M9jXM99wNfT1/p7zOLmf4R3PyvtsIcqBS9Q/3M=;
-        b=Q66DuhWEe0xgSTRIUPPe7xGDBQAdd9Wzl27td+Ebr+7PpdiZsbcp3pyoDxAT0PcTFk
-         nMTbUampiK82lyJ/3lWSUciwI/Ri8QqY9m6OimXo9QbPejgEoJWU5TJIftYZYqT51Tap
-         3X0396cBJdsiBKuEUcJ8XgLvUvpt6ZMDCV58BtT7N/8rb9BM2yjiSoBYBHXDgsq9wYCc
-         HgsoNUwlNxqBzKyAI11qMc2i6tP1/Ho/ziYSaOo7iq3MxY7/9YoENwjZZYZMU3ysoNex
-         W+dioorvi1s9ytu5N8sOhwZzBkUITsOb+rzTKa68HGRpJs8qjq9Lnm9FCwE31o9U0GpG
-         6UlA==
-X-Gm-Message-State: AKwxytdrVYnyR2WWlcpFp3EpdnFZp28araW/UYWEqSipqBN6R+2JpYP5
-        CaJfiNHqOhOYtS8TBr6QYgY=
-X-Google-Smtp-Source: AH8x2245KpxqMkQr9G5Y2mbuhnM64Ihh4FPGKyeyvxLh/vixugJiX3I78jeNm+h1iWdWI9NzfxkAqA==
-X-Received: by 10.200.33.195 with SMTP id 3mr22435888qtz.1.1516972095318;
-        Fri, 26 Jan 2018 05:08:15 -0800 (PST)
+        bh=GswvuQUPYzjb9uppiBSXGu08puDK6ov15/Sjf0UtKkU=;
+        b=Uc7IYyvcee6ScBjDTOTxDuOpYrf5I/yOXHR0sHK3GguKqDVrPCjsoV3U9pb+SsbnU/
+         IodjhmzQww3Dc7z69pORFr/6s/GSHUWWU2rhhheMEKkrP/UpKa9buDn3lPVNKiR8OSpA
+         VZn4OaLgMVwsoaSHgQFGv/osY2pCcPv2mw0UOtwmA0P8S0Vtn6VhmvR/A6kL9dGof1cM
+         J2g6KVvZXoIJrdSV21JU0xz8peo6gqAwBf/wz8F9jfGt1hPoTuggFIrfZks4IFyvv9is
+         2lf3WCcGggWHiAon4qd+x/dulPS8QCgG2iLSGFcAv4TtB2hNHAcODnr0nfPrx+jnlHHP
+         6zow==
+X-Gm-Message-State: AKwxyte35qzzcNlBECiSFdycC1BrEUd0tQVpg/hnAL4J7fctSiY0EcSM
+        hKXKQ4wdNFZBkRoWkKQAjNr3lU1kU90=
+X-Google-Smtp-Source: AH8x2260pUNLBwfjjvbq1BEkak7QLtz+5MdP+vNvPyyV4oEzyjokxTAiwgcU4Om0plqYlcQ98xZ6ZA==
+X-Received: by 10.237.37.154 with SMTP id x26mr22992777qtc.78.1516972396242;
+        Fri, 26 Jan 2018 05:13:16 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id p103sm3452464qkp.74.2018.01.26.05.08.14
+        by smtp.gmail.com with ESMTPSA id d76sm3342613qkb.84.2018.01.26.05.13.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 26 Jan 2018 05:08:14 -0800 (PST)
-Subject: Re: [PATCH 02/14] packed-graph: add core.graph setting
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, git@jeffhostetler.com,
-        sbeller@google.com, dstolee@microsoft.com
+        Fri, 26 Jan 2018 05:13:15 -0800 (PST)
+Subject: Re: [PATCH 03/14] packed-graph: create git-graph builtin
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 References: <20180125140231.65604-1-dstolee@microsoft.com>
- <20180125140231.65604-3-dstolee@microsoft.com>
- <xmqqvafp8vib.fsf@gitster.mtv.corp.google.com>
+ <20180125140231.65604-4-dstolee@microsoft.com>
+ <CAGZ79ka61UCXWAP4X8CTdCSiPUBnsO1_-wNSkGmV0VjZyAqcpw@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <de0577f6-e076-873f-7573-d284423597ae@gmail.com>
-Date:   Fri, 26 Jan 2018 08:08:13 -0500
+Message-ID: <a29fc66e-8063-d134-b6d2-4be38de161f4@gmail.com>
+Date:   Fri, 26 Jan 2018 08:13:14 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqvafp8vib.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAGZ79ka61UCXWAP4X8CTdCSiPUBnsO1_-wNSkGmV0VjZyAqcpw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -72,34 +74,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/25/2018 4:43 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On 1/25/2018 4:45 PM, Stefan Beller wrote:
+> On Thu, Jan 25, 2018 at 6:02 AM, Derrick Stolee <stolee@gmail.com> wrote:
+>> Teach Git the 'graph' builtin that will be used for writing and
+>> reading packed graph files. The current implementation is mostly
+>> empty, except for a check that the core.graph setting is enabled
+>> and a '--pack-dir' option.
+> I wonder if this builtin should not respect the boolean core graph,
+> as this new builtin commands' whole existence
+> is to deal with these new files?
 >
->> The packed graph feature is controlled by the new core.graph config
->> setting. This defaults to 0, so the feature is opt-in.
->>
->> The intention of core.graph is that a user can always stop checking
->> for or parsing packed graph files if core.graph=0.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->>   Documentation/config.txt | 3 +++
->>   cache.h                  | 1 +
->>   config.c                 | 5 +++++
->>   environment.c            | 1 +
->>   4 files changed, 10 insertions(+)
-> Before you get too married to the name "graph", is it reasonable to
-> assume that the commit ancestry graph is the primary "graph" that
-> should come to users' minds when a simple word "graph" is used in
-> the context of discussing Git?  I suspect not.
->
-> Let's not just call this "core.graph" and "packed-graph", and in
-> addition give some adjective before "graph".
+> As you assume this builtin as a plumbing command, I would
+> expect it to pay less attention to config rather than more.
 
-I was too focused that I wanted the word "graph" but "graph.c" already 
-existed in source root that I came up with "packed-graph.c" just to have 
-a separate filename. Clearly, "commit-graph" should be used instead. In 
-v2, I'll use "/commit-graph.c" and "/builtin/commit-graph.c".
+My thought was to alert the caller "This graph isn't going to be good 
+for anything!" and fail quickly before doing work. You do have a good 
+point, and I think we can remove that condition here. When we integrate 
+with other commands ('repack', 'fetch', 'clone') we will want a 
+different setting that signals automatically writing the graph and we 
+don't want those to fail because they are not aware of a second config 
+setting.
+
+>
+>> @@ -408,6 +408,7 @@ static struct cmd_struct commands[] = {
+>>          { "fsck-objects", cmd_fsck, RUN_SETUP },
+>>          { "gc", cmd_gc, RUN_SETUP },
+>>          { "get-tar-commit-id", cmd_get_tar_commit_id },
+>> +       { "graph", cmd_graph, RUN_SETUP_GENTLY },
+> Why gently, though?
+>
+>  From reading the docs (and assumptions on further patches)
+> we'd want to abort if there is no .git dir to be found?
+>
+> Or is a future patch having manual logic? (e.g. if pack-dir is
+> given, the command may be invoked from outside a git dir)
+
+You are right. I inherited this from my MIDX patch which can operate on 
+a list of IDX files without a .git folder. The commit graph operations 
+need an ODB.
 
 Thanks,
 -Stolee
+
