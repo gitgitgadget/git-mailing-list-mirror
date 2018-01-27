@@ -2,117 +2,265 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADE851F404
-	for <e@80x24.org>; Sat, 27 Jan 2018 01:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D31A1F404
+	for <e@80x24.org>; Sat, 27 Jan 2018 01:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752132AbeA0Bgv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 Jan 2018 20:36:51 -0500
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:41015 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752110AbeA0Bgu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 Jan 2018 20:36:50 -0500
-Received: by mail-ot0-f174.google.com with SMTP id r23so511182ote.8
-        for <git@vger.kernel.org>; Fri, 26 Jan 2018 17:36:50 -0800 (PST)
+        id S1751417AbeA0BkL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 Jan 2018 20:40:11 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36983 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751169AbeA0BkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 Jan 2018 20:40:10 -0500
+Received: by mail-pf0-f196.google.com with SMTP id p1so1389552pfh.4
+        for <git@vger.kernel.org>; Fri, 26 Jan 2018 17:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3onnBbboHG6oiAHtK61dYMCgc1S1xjLSkB1+itjdq6E=;
-        b=iuDQFPCwQa6MdU6NgtBM4CsTQlsa1HrlWQJGERW/MrBsRoKd/3Nvz3WKTtFNeiZGbq
-         2S4lrvh9+Qro67umk5uM/wi6/uBCKGv/HYizi/+fSUkkGfMW/6JhZwtrqQDdqt9NtUAn
-         OQb9tcJFeYMpRfsC6BvymJ6eZPdBwpZz/FX5Pi/yKxxCs7qpHxBSsueWUly8c3+hTpEa
-         yF2VhONLY4sEH6gtFOFSDFFL/YE3Lrfvv9OOelMPtVvK+4u0oTw7Tfkbw0Ss7YMBypod
-         oV3u1Xx1lEWXqdV38e66wv62uYqvhywg/ZvSXJHPDXYWp/oiN1yfiuW/uJPcsODFIJ1t
-         T4Ag==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=thUYifaAgcMTmNiJnRVhQaVUHG9X5DkWVXv3LgMZH3k=;
+        b=HZxJkBveP/pa16/ipLek5YiFI8wU/0atus8IjMds6+1CnfcrcteuzD8cMd0Hrlcf6d
+         cpQWKVAIBcEIPTgtMDq22Xro7RMyNuEz2ZxjJpysrUdh40ao103qxLjrE0IMUx5+lrnK
+         mc+PTIW3PRQ4ZU21Gncr6hKK8IHdXqtO2DsSiNQYol8d7RILDMDdhV66MNnQuYnU8Dx7
+         UCM3wlY4ZKoPUlxUi3L1rHtVHZigC8Ob4ntTYvv2Kc50WJA2hT3fyhnYRgMrx/M0n4w1
+         QMVcA06v1f5rmHqYaUvAIGOUf4gKqhSnFdxRZlTgPAJfzt6z/Sybj4iv53Vwh/f8pSLG
+         th5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3onnBbboHG6oiAHtK61dYMCgc1S1xjLSkB1+itjdq6E=;
-        b=MKw/DFW2pFwu8LjcEhmYYFaj7m6yrHBFsLh18jLL7N8DjT3MFyXnFLGsD0zZ4mRj6p
-         aWoJv4tYjM2/AnzoLXURAe51I1WW5XaqjZoc7FgeDiUlrHQfeOGA/IwfvpHhj2Geaizb
-         NO5XWs5F75gGvSc1gYEs8/olQl/9u3+ei9UghV37vbqaGNPZmhsddmyl2yta8KIlaLdp
-         HaGOCRpoolCozhcRRYHwStPWP/Uz/7sL61Y2Bi/yd62WAuD/B/LgaKm7XDne4heVP51H
-         3Eyx2pIF6Nvt4ubHNjtRwu9udEZF/YBOofo65dt/PSOFUo8nNQvq0BBPeVSte2fGV154
-         df3w==
-X-Gm-Message-State: AKwxytfbe4TIYvbuKm2KhiXtpGV6MtyC4GTZpocb60Rp8Sqho1LKXpOO
-        37ulOSJXnrv0lo7+4rqGeB410By9ZHCM5ggD//I=
-X-Google-Smtp-Source: AH8x224OqlIIOSiDc8Tom3e7wv5tC0wBdWicIyHBmccFlTz6nwzV9NZDkmgLLe30V8XHosh697pOgMRU4uuKdTRWF2A=
-X-Received: by 10.157.87.133 with SMTP id q5mr17091611oth.106.1517017009838;
- Fri, 26 Jan 2018 17:36:49 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=thUYifaAgcMTmNiJnRVhQaVUHG9X5DkWVXv3LgMZH3k=;
+        b=TAhhziu9Vo8aGNmnsSDmPY9TsNijUnoanaugEH6KdqEQw4TW8iCto3FZZsaj4n/cmu
+         0EwcitwRDsBb+U+4Hyi5h65G4FxZWACHKzJ6cVoUpymcGkiIPBrfdjbD27kZ6+xtnsZO
+         G4c7fwBeDUdZMb+W5GTYQRQApg5W87kk2LPptv2iGDfAXiZNEbBoq/32sNumE9DQErbq
+         oCtl0+j99+sg3ExTMbzhqNjt5MErhfoBNjmuQTb7j6ONZkEmQM/6ieW5ic81izY9tXau
+         05jcOpCe4teEhnMwE3fZhshK4O73qLxTlljZFZcJjmaYlAcmCq8XKxauvVT0MAezcGeC
+         4zYQ==
+X-Gm-Message-State: AKwxytctmypyjAE5tMXIphb88fzDKyB46k6+lxqvS8d2WNeSZyZCHo4C
+        Xeujulqt3ISD1HNlBimUkDC65w==
+X-Google-Smtp-Source: AH8x226qNja22R3b/bV4kkg6Kfh29lvRStYAq7uVuuP9xlZMSTLIpfTAJsEMRV//sUdkbDLXvhOwGA==
+X-Received: by 10.98.211.21 with SMTP id q21mr20307046pfg.89.1517017208751;
+        Fri, 26 Jan 2018 17:40:08 -0800 (PST)
+Received: from ash ([171.232.97.171])
+        by smtp.gmail.com with ESMTPSA id y1sm10099443pge.78.2018.01.26.17.40.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jan 2018 17:40:08 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 27 Jan 2018 08:40:01 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, benpeart@microsoft.com, alexmv@dropbox.com,
+        christian.couder@gmail.com, dturner@twopensource.com,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] trace: measure where the time is spent in the index-heavy operations
+Date:   Sat, 27 Jan 2018 08:39:56 +0700
+Message-Id: <20180127013956.21420-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.205.g271f633410
+In-Reply-To: <CACsJy8BpO0s6facg+zcKC9icijpefkipM326n6xOArjn=ZW6+w@mail.gmail.com>
+References: <CACsJy8BpO0s6facg+zcKC9icijpefkipM326n6xOArjn=ZW6+w@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.8.133 with HTTP; Fri, 26 Jan 2018 17:36:19 -0800 (PST)
-In-Reply-To: <87efmcw3fa.fsf@evledraar.gmail.com>
-References: <87efmcw3fa.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 27 Jan 2018 08:36:19 +0700
-Message-ID: <CACsJy8BpO0s6facg+zcKC9icijpefkipM326n6xOArjn=ZW6+w@mail.gmail.com>
-Subject: Re: Some rough edges of core.fsmonitor
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        David Turner <dturner@twopensource.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 27, 2018 at 7:28 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> 3) A lot of time spend reading the index (or something..)
+All the known heavy code blocks are measured (except object database
+access). This should help identify if an optimization is effective or
+not. An unoptimized git-status would give something like below (92% of
+time is accounted).
 
-I'm resending a patch from my old index-helper series. It should
-measure all big time consuming blocks in git. Maybe we should get it
-merged...
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ This was in my old index-helper series. The series was replaced by
+ fsmonitor but perhaps some measurements like this still helps.
 
-> While the hook itself takes ~20ms (and watchman itself 1/4 of that)
-> status as a whole takes much longer. gprof reveals:
->
->     Each sample counts as 0.01 seconds.
->       %   cumulative   self              self     total
->      time   seconds   seconds    calls  ms/call  ms/call  name
->      15.38      0.02     0.02   221690     0.00     0.00  memihash
+ In my old version I measured packed-refs read time too. But
+ packed-refs is mmap'd now, no need to worry about it (or at least its
+ initial cost).
 
-This sounds like name-hash to me.
+ diff-lib.c      |  4 ++++
+ dir.c           |  2 ++
+ name-hash.c     |  3 +++
+ preload-index.c |  2 ++
+ read-cache.c    | 11 +++++++++++
+ 5 files changed, 22 insertions(+)
 
->      15.38      0.04     0.02   221689     0.00     0.00  create_from_dis=
-k
->       7.69      0.05     0.01  2216897     0.00     0.00  git_bswap32
->       7.69      0.06     0.01   222661     0.00     0.00  ce_path_match
->       7.69      0.07     0.01   221769     0.00     0.00  hashmap_add
->       7.69      0.08     0.01    39941     0.00     0.00  prep_exclude
->       7.69      0.09     0.01    39940     0.00     0.00  strbuf_addch
->       7.69      0.10     0.01        1    10.00    10.00  read_one
->       7.69      0.11     0.01        1    10.00    10.00  refresh_index
->       7.69      0.12     0.01        1    10.00    10.00  tweak_fsmonitor
->       7.69      0.13     0.01                             preload_thread
->
-> The index is 24M in this case, I guess it's unpacking it, but I wonder
-> if this couldn't be much faster if we saved away the result of the last
-> "status" in something that's quick to access, and then if nothing
+diff --git a/diff-lib.c b/diff-lib.c
+index 8104603a3b..a228e1a219 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -92,6 +92,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 	int diff_unmerged_stage = revs->max_count;
+ 	unsigned ce_option = ((option & DIFF_RACY_IS_MODIFIED)
+ 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
++	uint64_t start = getnanotime();
+ 
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+ 
+@@ -246,6 +247,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 	}
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
++	trace_performance_since(start, "diff-files");
+ 	return 0;
+ }
+ 
+@@ -512,6 +514,7 @@ static int diff_cache(struct rev_info *revs,
+ int run_diff_index(struct rev_info *revs, int cached)
+ {
+ 	struct object_array_entry *ent;
++	uint64_t start = getnanotime();
+ 
+ 	ent = revs->pending.objects;
+ 	if (diff_cache(revs, &ent->item->oid, ent->name, cached))
+@@ -521,6 +524,7 @@ int run_diff_index(struct rev_info *revs, int cached)
+ 	diffcore_fix_diff_index(&revs->diffopt);
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
++	trace_performance_since(start, "diff-index");
+ 	return 0;
+ }
+ 
+diff --git a/dir.c b/dir.c
+index 7c4b45e30e..4479a02a49 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2248,6 +2248,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 		   const char *path, int len, const struct pathspec *pathspec)
+ {
+ 	struct untracked_cache_dir *untracked;
++	uint64_t start = getnanotime();
+ 
+ 	if (has_symlink_leading_path(path, len))
+ 		return dir->nr;
+@@ -2286,6 +2287,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 		dir->nr = i;
+ 	}
+ 
++	trace_performance_since(start, "read directory %.*s", len, path);
+ 	if (dir->untracked) {
+ 		static struct trace_key trace_untracked_stats = TRACE_KEY_INIT(UNTRACKED_STATS);
+ 		trace_printf_key(&trace_untracked_stats,
+diff --git a/name-hash.c b/name-hash.c
+index 45c98db0a0..ada66f066a 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -578,6 +578,8 @@ static void threaded_lazy_init_name_hash(
+ 
+ static void lazy_init_name_hash(struct index_state *istate)
+ {
++	uint64_t start = getnanotime();
++
+ 	if (istate->name_hash_initialized)
+ 		return;
+ 	hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
+@@ -600,6 +602,7 @@ static void lazy_init_name_hash(struct index_state *istate)
+ 	}
+ 
+ 	istate->name_hash_initialized = 1;
++	trace_performance_since(start, "initialize name hash");
+ }
+ 
+ /*
+diff --git a/preload-index.c b/preload-index.c
+index 2a83255e4e..4d08d44874 100644
+--- a/preload-index.c
++++ b/preload-index.c
+@@ -78,6 +78,7 @@ static void preload_index(struct index_state *index,
+ {
+ 	int threads, i, work, offset;
+ 	struct thread_data data[MAX_PARALLEL];
++	uint64_t start = getnanotime();
+ 
+ 	if (!core_preload_index)
+ 		return;
+@@ -108,6 +109,7 @@ static void preload_index(struct index_state *index,
+ 		if (pthread_join(p->pthread, NULL))
+ 			die("unable to join threaded lstat");
+ 	}
++	trace_performance_since(start, "preload index");
+ }
+ #endif
+ 
+diff --git a/read-cache.c b/read-cache.c
+index 2eb81a66b9..1f00aee6a2 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1372,6 +1372,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 	const char *typechange_fmt;
+ 	const char *added_fmt;
+ 	const char *unmerged_fmt;
++	uint64_t start = getnanotime();
+ 
+ 	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
+ 	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
+@@ -1442,6 +1443,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 
+ 		replace_index_entry(istate, i, new);
+ 	}
++	trace_performance_since(start, "refresh index");
+ 	return has_errors;
+ }
+ 
+@@ -1877,12 +1879,15 @@ int read_index_from(struct index_state *istate, const char *path)
+ 	int ret;
+ 	char *base_sha1_hex;
+ 	const char *base_path;
++	uint64_t start;
+ 
+ 	/* istate->initialized covers both .git/index and .git/sharedindex.xxx */
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
+ 
++	start = getnanotime();
+ 	ret = do_read_index(istate, path, 0);
++	trace_performance_since(start, "read cache %s", path);
+ 
+ 	split_index = istate->split_index;
+ 	if (!split_index || is_null_sha1(split_index->base_sha1)) {
+@@ -1897,6 +1902,7 @@ int read_index_from(struct index_state *istate, const char *path)
+ 
+ 	base_sha1_hex = sha1_to_hex(split_index->base_sha1);
+ 	base_path = git_path("sharedindex.%s", base_sha1_hex);
++	start = getnanotime();
+ 	ret = do_read_index(split_index->base, base_path, 1);
+ 	if (hashcmp(split_index->base_sha1, split_index->base->sha1))
+ 		die("broken index, expect %s in %s, got %s",
+@@ -1906,6 +1912,9 @@ int read_index_from(struct index_state *istate, const char *path)
+ 	freshen_shared_index(base_sha1_hex, 0);
+ 	merge_base_index(istate);
+ 	post_read_index_from(istate);
++	trace_performance_since(start, "read cache %s",
++				git_path("sharedindex.%s",
++					 sha1_to_hex(split_index->base_sha1)));
+ 	return ret;
+ }
+ 
+@@ -2244,6 +2253,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 	struct ondisk_cache_entry_extended ondisk;
+ 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+ 	int drop_cache_tree = 0;
++	uint64_t start = getnanotime();
+ 
+ 	for (i = removed = extended = 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+@@ -2374,6 +2384,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
+ 		return -1;
+ 	istate->timestamp.sec = (unsigned int)st.st_mtime;
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
++	trace_performance_since(start, "write index, changed mask = %x", istate->cache_changed);
+ 	return 0;
+ }
+ 
+-- 
+2.16.1.205.g271f633410
 
-No we could do better, we could cache parsed index content so
-everybody benefits. I demonstrated it with my "index v254" patch a
-while back:
-
-https://public-inbox.org/git/1399980019-8706-1-git-send-email-pclouds@gmail=
-.com/
-
-With the patch I'm sending soon, we can see how much time reading an
-index take out of that ~140-150ms (and we probably can cut down index
-read time to like 10-20% when cached).
-
-> changed we just report that, and no need to re-write the index (or just
-> write the "it was clean at this time" part).
-
-Hmm.. does an index write increase that much time?
---=20
-Duy
