@@ -2,143 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92C761F404
-	for <e@80x24.org>; Sat, 27 Jan 2018 13:10:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 053F61F404
+	for <e@80x24.org>; Sat, 27 Jan 2018 13:36:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752552AbeA0NKC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jan 2018 08:10:02 -0500
-Received: from mail-pl0-f52.google.com ([209.85.160.52]:46103 "EHLO
-        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751904AbeA0NKB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 08:10:01 -0500
-Received: by mail-pl0-f52.google.com with SMTP id 36so666987ple.13
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 05:10:01 -0800 (PST)
+        id S1752715AbeA0NgO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 08:36:14 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:52419 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752556AbeA0NgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 08:36:13 -0500
+Received: by mail-wm0-f49.google.com with SMTP id g1so6122124wmg.2
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 05:36:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=eHz1JF9N+QxfUlWwj2tabvGsBbKHGBe2+/oBlckLZSg=;
-        b=G6K9nPoGdmMLR/XWLDSthGKrpge6djTNkkBXRnU0X6uerWPNSgkquynWfCTEIWqZms
-         F+354ut/uHaHjomAikqL7dSw+v2wcOStIBaWRHxPj+M6el1s+JF4JRYBBODZAnYYQWaD
-         QxQd8CXL6WbETiAHGpFbqbFexIyoNAC0ByZCFm2yu/QMmM1uqN6wgNZRDHw219YaSnnO
-         Od+moHLd1kXbt1ZN2s3uoxRY5rpH/OUsI16JPy4LnTgK3KuyARul+Qkju897j0YFUHsT
-         svyr9BH/p7akaY7iYX0I67rTfxTJY2l8Mn0Huj+sdf9D82+GTfcHsRQsL5XXuwHS970C
-         sClQ==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hKzOQl9flth2eMWYN2Kj9UlfsVW9H9GKgk4bAxetFOA=;
+        b=tBtUJcjgIoepv+SPr4Baj5qUwk7vwZ6YAj29VjeuoSdY69dfwgK2CykdwiTCyT1ech
+         njP96JTZ5zoWLwPsz3OiqEVpdXITpEcZKczYmn/L0ioMHZ13T4vxJ/C6MuhtCl4UZJgq
+         oemUzjpkcIFfOGJx7csUSIXFH8eP7bgbIxLN89If207wPJnfSRvg+pVIxC+fbk4UecaX
+         RNo6FCi0lceHaeGrWLnCO29uMSxeg8xxOZLnKZ2O6dEAPkrWIoWoI1iEWQTt5CQEPMat
+         5OHMSQQhGtUkc39Vy7FI1QklQPAPkp8Q8yQgHCmFHyf1nVr4HZu7JGRZQqzaEWLaHPcG
+         q9pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=eHz1JF9N+QxfUlWwj2tabvGsBbKHGBe2+/oBlckLZSg=;
-        b=EPCp73U072K84LLjrXaLjYrIp7KWnwm7SugJ2OxTgwjMjQZisxHNSiLPL4QCUUsH9S
-         FJgTGPbuK4VuqCAmgajRJcnLoeh88Z6F1NahGelrtUlihJss4/hlyu5y6VCSdQNEc1tA
-         aTUnrXncvEKn89lHuwqlv8+DH6zG4KJ4JkABfX1G0OnYJSOffWkhEFXPnPpCUF5645pt
-         VPaZIQRKmios/gQh2QG9xAnOnu+NNU0S8mEKiJA97RN7FtMKiGq0z08A4qR9nXteBqks
-         1LsvDn5p5GyN0oZlabQ7MfB7INxlnNqkQ3/8HJApfw6X2ers7jRlWBIFS8PCUlJ9g9Ry
-         NAkw==
-X-Gm-Message-State: AKwxytdy4P5IAbdEMO2LOMWwQmcTT9ehp0YX2GnMPtOHuQ7kJgqdEAtL
-        xEy+MAYjZ8l/XXmNWQHGTgM=
-X-Google-Smtp-Source: AH8x227Qlw7+XY6A3SMbgl5RyqtpvstYdcdK+jvckO12upxMgH7mAkgbK1mJ4r/nirxGBAngLM++LA==
-X-Received: by 2002:a17:902:624:: with SMTP id 33-v6mr16532265plg.327.1517058600778;
-        Sat, 27 Jan 2018 05:10:00 -0800 (PST)
-Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id w2sm11071043pgm.59.2018.01.27.05.09.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 27 Jan 2018 05:09:59 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 27 Jan 2018 20:09:54 +0700
-Date:   Sat, 27 Jan 2018 20:09:54 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Some rough edges of core.fsmonitor
-Message-ID: <20180127130954.GA19922@ash>
-References: <87efmcw3fa.fsf@evledraar.gmail.com>
- <CACsJy8BpO0s6facg+zcKC9icijpefkipM326n6xOArjn=ZW6+w@mail.gmail.com>
- <87bmhfwmqa.fsf@evledraar.gmail.com>
- <CACsJy8CJtW3LZ+4Z_06uM4rJO88FXsNvcw+zzVqdFpsQUKrvrg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8CJtW3LZ+4Z_06uM4rJO88FXsNvcw+zzVqdFpsQUKrvrg@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=hKzOQl9flth2eMWYN2Kj9UlfsVW9H9GKgk4bAxetFOA=;
+        b=uhHBrfKUVBwppY7P+oAd1cvzdriayO0eO/7FJtvEIP+MdyMnRLCu8qArquX54jDzVo
+         cRnSz3Aos/MK22cAeUy00C8J3fKpwMslUKB+OHioj0sqoX+l4T5MrIEYD5pMIjcZ9mOU
+         Idgb8Z2yR+weLl3VkmBT65x201lrHiipHg4Edza+9Tx0WbyWQbe8o50lNa05QTfZBPzC
+         a4ArmoVfF108bXKsknbUcvAQba4wmeTeCfvUR03UfLmn047oRSLft30RafVol3O3dxhd
+         Cpf15VnCiIwEhSn+1CUkgEsx5FuxZMdPkYQdC2FVSmHMiNgdJOTlCo6fHWEHZog9IDvt
+         bxyg==
+X-Gm-Message-State: AKwxytcAn+QLwp2X7OijYusbNEJaY98Fe3MQwXU9olmkU6ZB/1CwZNxi
+        GGFWzQhFiHVbZoPaL06TooQ=
+X-Google-Smtp-Source: AH8x226+4SGxvSeqpuxpz7erqClJtuGtLrfEq/Zrz5dRLQ4FERfGUn721m7nz9Vls9EaIDRmL9KeXA==
+X-Received: by 10.28.64.67 with SMTP id n64mr11864530wma.147.1517060172041;
+        Sat, 27 Jan 2018 05:36:12 -0800 (PST)
+Received: from slxbook4.fritz.box (p5DDB4014.dip0.t-ipconnect.de. [93.219.64.20])
+        by smtp.gmail.com with ESMTPSA id y204sm5708302wmg.44.2018.01.27.05.36.10
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 27 Jan 2018 05:36:11 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [ANNOUNCE] Git Merge Contributor's Summit Mar 7, 2018, Barcelona
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180119001034.GA29172@sigill.intra.peff.net>
+Date:   Sat, 27 Jan 2018 14:36:10 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F92D899E-C54B-4004-A957-FD167BD0E470@gmail.com>
+References: <20180119001034.GA29172@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 27, 2018 at 07:39:27PM +0700, Duy Nguyen wrote:
-> On Sat, Jan 27, 2018 at 6:43 PM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> > a) no fsmonitor
-> >
-> >     $ time GIT_TRACE_PERFORMANCE=1 ~/g/git/git-status
-> >     12:32:44.947651 read-cache.c:1890       performance: 0.053153609 s: read cache .git/index
-> >     12:32:44.967943 preload-index.c:112     performance: 0.020161093 s: preload index
-> >     12:32:44.974217 read-cache.c:1446       performance: 0.006230611 s: refresh index
-> >
-> > ...
-> >
-> > b) with fsmonitor
-> >
-> >     $ time GIT_TRACE_PERFORMANCE=1 ~/g/git/git-status
-> >     12:34:23.833625 read-cache.c:1890       performance: 0.049485685 s: read cache .git/index
-> >     12:34:23.838622 preload-index.c:112     performance: 0.001221197 s: preload index
-> >     12:34:23.858723 fsmonitor.c:170         performance: 0.020059647 s: fsmonitor process '.git/hooks/fsmonitor-watchman'
-> >     12:34:23.871532 read-cache.c:1446       performance: 0.032870818 s: refresh index
-> 
-> Hmm.. why does refresh take longer with fsmonitor/watchman? With the
-> help from watchman, we know what files are modified. We don't need
-> manual stat()'ing and this line should be lower than the "no
-> fsmonitor" case, which is 0.006230611s.
+Hi Peff,
 
-Ahh.. my patch probably does not see that fsmonitor could be activated
-lazily inside refresh_index() call. The patch below should fix it.
+I would like to register to the contributor summit :-)
 
-But between your normal refresh time (0.020 preload + 0.006 actual
-refresh) and fsmonitor taking 0.020 just to talk to watchman, this
-repo seems "too small" for fsmonitor/watchman to shine.
+---
 
-I'm still a bit curious that refresh index time, after excluding 0.020
-for fsmonitor, is stil 0.012s. What does it do? It should really be
-doing nothing. Either way, read index time seems to be the elephant in
-the room now.
+As I am writing you, I thought I could ask you a question:
 
--- 8< --
-diff --git a/read-cache.c b/read-cache.c
-index eac74bc9f1..d60e0a8480 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1367,12 +1367,21 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 	unsigned int options = (CE_MATCH_REFRESH |
- 				(really ? CE_MATCH_IGNORE_VALID : 0) |
- 				(not_new ? CE_MATCH_IGNORE_MISSING : 0));
-+	int ignore_fsmonitor = options & CE_MATCH_IGNORE_FSMONITOR;
- 	const char *modified_fmt;
- 	const char *deleted_fmt;
- 	const char *typechange_fmt;
- 	const char *added_fmt;
- 	const char *unmerged_fmt;
--	uint64_t start = getnanotime();
-+	uint64_t start;
-+
-+	/*
-+	 * If fsmonitor is used, force its communication early to
-+	 * accurately measure how long this function takes without it.
-+	 */
-+	if (!ignore_fsmonitor)
-+		refresh_fsmonitor(istate);
-+	start = getnanotime();
- 
- 	modified_fmt = (in_porcelain ? "M\t%s\n" : "%s: needs update\n");
- 	deleted_fmt = (in_porcelain ? "D\t%s\n" : "%s: needs update\n");
--- 8< --
+"git verify-pack" tells me the "size-in-packfile" which is
+kind of the "real" size of a file in a Git repo. Are you=20
+aware of a way to get this number via the GitHub API?
+
+We have written a GitHub bot (soon to be open sourced!) that
+warns about large files. We query the file size via Repo Content
+API [1]. Largish text files usually compress well and therefore
+our bot generates false positive warnings.
+
+I assume it is not possible to query "size-in-packfile" via GitHub
+API as this is kind of an internal and not necessarily stable
+number. But I thought maybe you happen to know some way!
+
+Thanks,
+Lars
+
+
+
+[1] https://developer.github.com/v3/repos/contents/#get-content
+
+PS: In my last email I asked you about AsciiDoc rendering via *.adoc
+    extension on GitHub. Your argument that Git has custom AsciiDoc=20
+    configs and attributes convinced me to not propose that idea on=20
+    the list.
+
+
+> On 19 Jan 2018, at 01:10, Jeff King <peff@peff.net> wrote:
+>=20
+> Git Merge 2018 is happening on March 8th; there will be a =
+Contributor's
+> Summit the day before. Here are the details:
+>=20
+>  When: Wednesday, March 7, 2018. 10am-5pm.
+>  Where: Convent Dels =C3=80ngels[1], Barcelona, Spain
+>  What: Round-table discussion about Git
+>  Who: All contributors to Git or related projects in the Git ecosystem
+>       are invited; if you're not sure if you qualify, just ask!
+>=20
+> In order to attend, you'll need to register ahead of time. There's a
+> super-secret link to do so; email me and I will provide it.
+> Registration is free, and comes with a ticket to the main conference =
+on
+> the 8th (which I encourage you to attend, but you don't have to).
+>=20
+> As with past years, the agenda is whatever we choose. We'll have room
+> for about 25 people with "boardroom-style seating" and a projector.
+> Come prepared with topics to present or discuss.
+>=20
+> If you're interested in financial aid for traveling to the conference,
+> please send an email to git@sfconservancy.org.  And please do so soon
+> (let's say by the end of next week, Jan 26th), so that we have an idea
+> of the number and size of requests before making any grants.
+>=20
+> -Peff
+>=20
+> [1] =
+https://www.google.com/maps/place/Convent+Dels+Angels/@41.3827189,2.165298=
+2,17z/data=3D!3m1!4b1!4m5!3m4!1s0x12a4a310123f3dc1:0x4588a81b66dce9dc!8m2!=
+3d41.3827189!4d2.1674869
+
