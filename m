@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD7511F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD0A1F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753235AbeA1ANr (ORCPT <rfc822;e@80x24.org>);
+        id S1753241AbeA1ANr (ORCPT <rfc822;e@80x24.org>);
         Sat, 27 Jan 2018 19:13:47 -0500
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:36339 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752582AbeA1ANi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 19:13:38 -0500
-Received: by mail-lf0-f43.google.com with SMTP id t79so5039131lfe.3
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:37 -0800 (PST)
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:34412 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752878AbeA1ANf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 19:13:35 -0500
+Received: by mail-lf0-f66.google.com with SMTP id k19so5062027lfj.1
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=Lf/wxNLOaRIbjnJKLRPs2MnBVRuQP64PDjjKeP3YlOo=;
-        b=LZLF8zSRT5SbkikqDgYIztxM8hz113UVHTZoOf/Lv77eNprWCGZOtslA9Ijh51wIhq
-         dOQ96eu6JughoG9fjMO53RS0wyR3+zsZiTJqd6IDx1lRRsJG6svt+JUyYsBrSVofXAjO
-         T9TD0luptpYojZduf5LEJTZFkOFQxJVNTUndj0M2edEtvAUrzTLo+0BSw9uZv7ovl2PN
-         eKuiPpgEIJWpYBwHrkBxLEcMUlZWyKoSvjffA+c8YonRLTqyEOMZ4jhjYEHOwFUEghmW
-         Q4qXHkcQxKzNkg+4kGfHAE4qsivYWA3jZTASMX0b032Fgar9J/VDDOfWrA6pJij06hU2
-         PprQ==
+        bh=66NSRlPsXci4wHFv/dWXrjaICU+bcYQXBJquavTqGxk=;
+        b=mAzlXZfk/wUGGeIxfsi9hOwI2J818dgdVDYVmSLCMIcBLNY77+bUVH1x4tcZ7A+iH6
+         eMANriIYTQgZOeDgsVfsahA+2zlkUIPD4/Fk6GU9Kndr2I69ASzV4Eu/bBZ/9e47d6AH
+         cE6CwwZ/Sm8f028easHwCsbJKIm+UlQU/9oPYiNtQNiosw5NPP83CApm3U6b/nLB8N/R
+         wME6Pe/0jUakRRnpU5JdwEe65JUgAr18Z5kzKR2XzgJGAnXdD0XJlFpfnO1QywPG14gA
+         AkgySxOKS7652qHR8FsWjiBUwiotcvILMLYuMa6U4VG3du0Ms3A0AI87ok39K0chVUr6
+         bCKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=Lf/wxNLOaRIbjnJKLRPs2MnBVRuQP64PDjjKeP3YlOo=;
-        b=PxpOS9itykdNs5ZGY7Rc3rDAH3I3NbRuJBXzZb2N/fbPW3J8xS2jXd8V2ldcj0zpBO
-         QmXl0gfBaFhuHE1QBAfnFWN/LR6GAcHI86/cY3XlcaT2aieE1Bw0DwFCILyQiwjiULG0
-         kQ//nAwniAna3vVZfh3USqQixajsrGpeWlX2WTuBPmnHXDBVHUCdFrHxSH47THFKfMPn
-         Be+/BdfQ4zOdrBHr7xgBMtCVvWC+WLD/Kp8gqRXX+t7eEmC/o/PqivqWXIBMhh1UfeQV
-         HYWtTPL/26hH/kqXBYkXWjSBSAsk26PzjPeiMHLsL7NcWCUfo6la/DwQBXmYNniJ/l8W
-         Zl8g==
-X-Gm-Message-State: AKwxytcGJ/IiWRBAM7AD9T1BHSElwmYS7btMSO0C+MhhEeT9bblXXrez
-        qyNbbrc8UZ3TZ1t9rAXjLnYLBSPh
-X-Google-Smtp-Source: AH8x224KGQk5M4bLlO74Yfghi9RYp+G1UawL5+1XecWAtC2dnWwafNND0ei6dxmRns2drsnFopXZWA==
-X-Received: by 10.25.42.196 with SMTP id q65mr9146491lfq.133.1517098416161;
-        Sat, 27 Jan 2018 16:13:36 -0800 (PST)
+        bh=66NSRlPsXci4wHFv/dWXrjaICU+bcYQXBJquavTqGxk=;
+        b=Czl0csnxg54ajK4+bThQccNDHJ00YavzlnwR/9KM+kUiEcNRib0t4GsO6Z8WuG3mV+
+         ssIBooaJkiiUQ3HDcrOu7ZkbRxz6bSDiV0iIrzff2rxHB+QO1eIHYdLmONhjySChDCNe
+         z5CWMS92OhofFmiB6AajFXX2J+ppGx/e5BhEuN6q+1GM7uJ2JY79gnJM54EhQvtQFGJN
+         7pR2Q84qflbVLSQyyEFtC5Qh7S16ENA4TT8/rDm9FRH/9ktZp3r/XkdAuRh8QsfHG+hq
+         l4xEqM0X3ti/GKJkuj5qSctJjXKOIkKnT8/Lkwmlnegu9Lc70NXaOCLyzO4bb6ojoMOr
+         2Kcg==
+X-Gm-Message-State: AKwxytfdkqk41JSZSm2nqfgsgLCVpnpCR0UURplUB/dGndC4740c+tKT
+        ug7+89qSyE5+0xu4HX42OLJFq413
+X-Google-Smtp-Source: AH8x227dJ/+tvEady4vdzhJVpfdYLr9HMWShPonGcZwvzvt9dtgo51f6qpidHKDbNVxzTaCgHUYr1Q==
+X-Received: by 10.25.28.82 with SMTP id c79mr10283115lfc.44.1517098413694;
+        Sat, 27 Jan 2018 16:13:33 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.34
+        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 16:13:35 -0800 (PST)
+        Sat, 27 Jan 2018 16:13:32 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 09/12] sha1_file: convert write_sha1_file to object_id
-Date:   Sun, 28 Jan 2018 01:13:19 +0100
-Message-Id: <fa83dcab99b1bcf0a66df344838d91a61bf382bc.1517097306.git.patryk.obara@gmail.com>
+Subject: [PATCH v4 07/12] notes: convert combine_notes_* to object_id
+Date:   Sun, 28 Jan 2018 01:13:17 +0100
+Message-Id: <3840cc87d45e774603a98f3789a96070b8001b1f.1517097306.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1517097306.git.patryk.obara@gmail.com>
 References: <cover.1516790478.git.patryk.obara@gmail.com>
@@ -68,535 +68,191 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the definition and declaration of write_sha1_file to
-struct object_id and adjust usage of this function.
-
-This commit also converts static function write_sha1_file_prepare, as it
-is closely related.
-
-Rename these functions to write_object_file and
-write_object_file_prepare respectively.
-
-Replace sha1_to_hex, hashcpy and hashclr with their oid equivalents
-wherever possible.
+Convert the definition and declarations of combine_notes_* functions
+to struct object_id and adjust usage of these functions.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- apply.c                  |  8 ++++----
- builtin/checkout.c       |  3 +--
- builtin/mktag.c          |  6 +++---
- builtin/mktree.c         | 10 +++++-----
- builtin/notes.c          |  8 ++++----
- builtin/receive-pack.c   | 11 ++++++-----
- builtin/replace.c        |  2 +-
- builtin/tag.c            |  2 +-
- builtin/unpack-objects.c |  9 ++++++---
- cache-tree.c             |  5 +++--
- cache.h                  |  4 +++-
- commit.c                 |  2 +-
- match-trees.c            |  2 +-
- merge-recursive.c        |  5 +++--
- notes-cache.c            |  2 +-
- notes.c                  |  9 ++++-----
- read-cache.c             |  6 +++---
- sha1_file.c              | 29 +++++++++++++++--------------
- 18 files changed, 65 insertions(+), 58 deletions(-)
+ notes.c | 46 +++++++++++++++++++++++-----------------------
+ notes.h | 25 +++++++++++++++----------
+ 2 files changed, 38 insertions(+), 33 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 57ab8a8a29..4cd4504008 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3554,7 +3554,7 @@ static int try_threeway(struct apply_state *state,
- 
- 	/* Preimage the patch was prepared for */
- 	if (patch->is_new)
--		write_sha1_file("", 0, blob_type, pre_oid.hash);
-+		write_object_file("", 0, blob_type, &pre_oid);
- 	else if (get_oid(patch->old_sha1_prefix, &pre_oid) ||
- 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
- 		return error(_("repository lacks the necessary blob to fall back on 3-way merge."));
-@@ -3570,7 +3570,7 @@ static int try_threeway(struct apply_state *state,
- 		return -1;
- 	}
- 	/* post_oid is theirs */
--	write_sha1_file(tmp_image.buf, tmp_image.len, blob_type, post_oid.hash);
-+	write_object_file(tmp_image.buf, tmp_image.len, blob_type, &post_oid);
- 	clear_image(&tmp_image);
- 
- 	/* our_oid is ours */
-@@ -3583,7 +3583,7 @@ static int try_threeway(struct apply_state *state,
- 			return error(_("cannot read the current contents of '%s'"),
- 				     patch->old_name);
- 	}
--	write_sha1_file(tmp_image.buf, tmp_image.len, blob_type, our_oid.hash);
-+	write_object_file(tmp_image.buf, tmp_image.len, blob_type, &our_oid);
- 	clear_image(&tmp_image);
- 
- 	/* in-core three-way merge between post and our using pre as base */
-@@ -4291,7 +4291,7 @@ static int add_index_file(struct apply_state *state,
- 			}
- 			fill_stat_cache_info(ce, &st);
- 		}
--		if (write_sha1_file(buf, size, blob_type, ce->oid.hash) < 0) {
-+		if (write_object_file(buf, size, blob_type, &ce->oid) < 0) {
- 			free(ce);
- 			return error(_("unable to create backing store "
- 				       "for newly created file %s"), path);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c54c78df54..191b96c49c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -227,8 +227,7 @@ static int checkout_merged(int pos, const struct checkout *state)
- 	 * (it also writes the merge result to the object database even
- 	 * when it may contain conflicts).
- 	 */
--	if (write_sha1_file(result_buf.ptr, result_buf.size,
--			    blob_type, oid.hash))
-+	if (write_object_file(result_buf.ptr, result_buf.size, blob_type, &oid))
- 		die(_("Unable to add merge result for '%s'"), path);
- 	free(result_buf.ptr);
- 	ce = make_cache_entry(mode, oid.hash, path, 2, 0);
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 031b750f06..beb552847b 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -151,7 +151,7 @@ static int verify_tag(char *buffer, unsigned long size)
- int cmd_mktag(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	unsigned char result_sha1[20];
-+	struct object_id result;
- 
- 	if (argc != 1)
- 		usage("git mktag");
-@@ -165,10 +165,10 @@ int cmd_mktag(int argc, const char **argv, const char *prefix)
- 	if (verify_tag(buf.buf, buf.len) < 0)
- 		die("invalid tag signature file");
- 
--	if (write_sha1_file(buf.buf, buf.len, tag_type, result_sha1) < 0)
-+	if (write_object_file(buf.buf, buf.len, tag_type, &result) < 0)
- 		die("unable to write tag file");
- 
- 	strbuf_release(&buf);
--	printf("%s\n", sha1_to_hex(result_sha1));
-+	printf("%s\n", oid_to_hex(&result));
- 	return 0;
- }
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index da0fd8cd70..8dd9f52f77 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -40,7 +40,7 @@ static int ent_compare(const void *a_, const void *b_)
- 				 b->name, b->len, b->mode);
- }
- 
--static void write_tree(unsigned char *sha1)
-+static void write_tree(struct object_id *oid)
- {
- 	struct strbuf buf;
- 	size_t size;
-@@ -57,7 +57,7 @@ static void write_tree(unsigned char *sha1)
- 		strbuf_add(&buf, ent->sha1, 20);
- 	}
- 
--	write_sha1_file(buf.buf, buf.len, tree_type, sha1);
-+	write_object_file(buf.buf, buf.len, tree_type, oid);
- 	strbuf_release(&buf);
- }
- 
-@@ -142,7 +142,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
- int cmd_mktree(int ac, const char **av, const char *prefix)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int nul_term_line = 0;
- 	int allow_missing = 0;
- 	int is_batch_mode = 0;
-@@ -181,8 +181,8 @@ int cmd_mktree(int ac, const char **av, const char *prefix)
- 			 */
- 			; /* skip creating an empty tree */
- 		} else {
--			write_tree(sha1);
--			puts(sha1_to_hex(sha1));
-+			write_tree(&oid);
-+			puts(oid_to_hex(&oid));
- 			fflush(stdout);
- 		}
- 		used=0; /* reset tree entry buffer for re-use in batch mode */
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 7c81761645..39304ba743 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -198,9 +198,9 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
- 	}
- }
- 
--static void write_note_data(struct note_data *d, unsigned char *sha1)
-+static void write_note_data(struct note_data *d, struct object_id *oid)
- {
--	if (write_sha1_file(d->buf.buf, d->buf.len, blob_type, sha1)) {
-+	if (write_object_file(d->buf.buf, d->buf.len, blob_type, oid)) {
- 		error(_("unable to write note object"));
- 		if (d->edit_path)
- 			error(_("the note contents have been left in %s"),
-@@ -459,7 +459,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 
- 	prepare_note_data(&object, &d, note ? note->hash : NULL);
- 	if (d.buf.len || allow_empty) {
--		write_note_data(&d, new_note.hash);
-+		write_note_data(&d, &new_note);
- 		if (add_note(t, &object, &new_note, combine_notes_overwrite))
- 			die("BUG: combine_notes_overwrite failed");
- 		commit_notes(t, "Notes added by 'git notes add'");
-@@ -619,7 +619,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (d.buf.len || allow_empty) {
--		write_note_data(&d, new_note.hash);
-+		write_note_data(&d, &new_note);
- 		if (add_note(t, &object, &new_note, combine_notes_overwrite))
- 			die("BUG: combine_notes_overwrite failed");
- 		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index b7ce7c7f52..75e7f18ace 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -69,7 +69,7 @@ static int sent_capabilities;
- static int shallow_update;
- static const char *alt_shallow_file;
- static struct strbuf push_cert = STRBUF_INIT;
--static unsigned char push_cert_sha1[20];
-+static struct object_id push_cert_oid;
- static struct signature_check sigcheck;
- static const char *push_cert_nonce;
- static const char *cert_nonce_seed;
-@@ -633,8 +633,9 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		int bogs /* beginning_of_gpg_sig */;
- 
- 		already_done = 1;
--		if (write_sha1_file(push_cert.buf, push_cert.len, "blob", push_cert_sha1))
--			hashclr(push_cert_sha1);
-+		if (write_object_file(push_cert.buf, push_cert.len, "blob",
-+				      &push_cert_oid))
-+			oidclr(&push_cert_oid);
- 
- 		memset(&sigcheck, '\0', sizeof(sigcheck));
- 		sigcheck.result = 'N';
-@@ -655,9 +656,9 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		strbuf_release(&gpg_status);
- 		nonce_status = check_nonce(push_cert.buf, bogs);
- 	}
--	if (!is_null_sha1(push_cert_sha1)) {
-+	if (!is_null_oid(&push_cert_oid)) {
- 		argv_array_pushf(&proc->env_array, "GIT_PUSH_CERT=%s",
--				 sha1_to_hex(push_cert_sha1));
-+				 oid_to_hex(&push_cert_oid));
- 		argv_array_pushf(&proc->env_array, "GIT_PUSH_CERT_SIGNER=%s",
- 				 sigcheck.signer ? sigcheck.signer : "");
- 		argv_array_pushf(&proc->env_array, "GIT_PUSH_CERT_KEY=%s",
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 814bf6bfde..83d3235721 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -410,7 +410,7 @@ static int create_graft(int argc, const char **argv, int force)
- 
- 	check_mergetags(commit, argc, argv);
- 
--	if (write_sha1_file(buf.buf, buf.len, commit_type, new.hash))
-+	if (write_object_file(buf.buf, buf.len, commit_type, &new))
- 		die(_("could not write replacement commit for: '%s'"), old_ref);
- 
- 	strbuf_release(&buf);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index a7e6a5b0f2..8885e21ddc 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -187,7 +187,7 @@ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *resu
- {
- 	if (sign && do_sign(buf) < 0)
- 		return error(_("unable to sign the tag"));
--	if (write_sha1_file(buf->buf, buf->len, tag_type, result->hash) < 0)
-+	if (write_object_file(buf->buf, buf->len, tag_type, result) < 0)
- 		return error(_("unable to write tag file"));
- 	return 0;
- }
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 85a40d1af7..397371eb3d 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -172,7 +172,8 @@ static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
- {
- 	struct object_id oid;
- 
--	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), oid.hash) < 0)
-+	if (write_object_file(obj_buf->buffer, obj_buf->size,
-+			      typename(obj->type), &oid) < 0)
- 		die("failed to write object %s", oid_to_hex(&obj->oid));
- 	obj->flags |= FLAG_WRITTEN;
- }
-@@ -237,14 +238,16 @@ static void write_object(unsigned nr, enum object_type type,
- 			 void *buf, unsigned long size)
- {
- 	if (!strict) {
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-+		if (write_object_file(buf, size, typename(type),
-+				      &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 		obj_list[nr].obj = NULL;
- 	} else if (type == OBJ_BLOB) {
- 		struct blob *blob;
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-+		if (write_object_file(buf, size, typename(type),
-+				      &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
-diff --git a/cache-tree.c b/cache-tree.c
-index 6574eeb80d..597114f604 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -406,9 +406,10 @@ static int update_one(struct cache_tree *it,
- 			oidcpy(&it->oid, &oid);
- 		else
- 			to_invalidate = 1;
--	} else if (dryrun)
-+	} else if (dryrun) {
- 		hash_object_file(buffer.buf, buffer.len, tree_type, &it->oid);
--	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->oid.hash)) {
-+	} else if (write_object_file(buffer.buf, buffer.len, tree_type,
-+				     &it->oid)) {
- 		strbuf_release(&buffer);
- 		return -1;
- 	}
-diff --git a/cache.h b/cache.h
-index d5d78d6a51..d80141eb64 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1240,7 +1240,9 @@ extern int sha1_object_info(const unsigned char *, unsigned long *);
- extern int hash_object_file(const void *buf, unsigned long len,
- 			    const char *type, struct object_id *oid);
- 
--extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
-+extern int write_object_file(const void *buf, unsigned long len,
-+			     const char *type, struct object_id *oid);
-+
- extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, struct object_id *oid, unsigned flags);
- 
- extern int pretend_object_file(void *, unsigned long, enum object_type,
-diff --git a/commit.c b/commit.c
-index 643f3daec3..0d32532872 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1567,7 +1567,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 		goto out;
- 	}
- 
--	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret->hash);
-+	result = write_object_file(buffer.buf, buffer.len, commit_type, ret);
- out:
- 	strbuf_release(&buffer);
- 	return result;
-diff --git a/match-trees.c b/match-trees.c
-index afb771c4f5..0ca99d5162 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -214,7 +214,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 		rewrite_with = oid2;
- 	}
- 	oidcpy(rewrite_here, rewrite_with);
--	status = write_sha1_file(buf, sz, tree_type, result->hash);
-+	status = write_object_file(buf, sz, tree_type, result);
- 	free(buf);
- 	return status;
- }
-diff --git a/merge-recursive.c b/merge-recursive.c
-index cc5fa0a949..fe3c0c8076 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1009,8 +1009,9 @@ static int merge_file_1(struct merge_options *o,
- 			if ((merge_status < 0) || !result_buf.ptr)
- 				ret = err(o, _("Failed to execute internal merge"));
- 
--			if (!ret && write_sha1_file(result_buf.ptr, result_buf.size,
--						    blob_type, result->oid.hash))
-+			if (!ret &&
-+			    write_object_file(result_buf.ptr, result_buf.size,
-+					      blob_type, &result->oid))
- 				ret = err(o, _("Unable to add %s to database"),
- 					  a->path);
- 
-diff --git a/notes-cache.c b/notes-cache.c
-index 010ad236cb..398e61d5e9 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -88,7 +88,7 @@ int notes_cache_put(struct notes_cache *c, struct object_id *key_oid,
- {
- 	struct object_id value_oid;
- 
--	if (write_sha1_file(data, size, "blob", value_oid.hash) < 0)
-+	if (write_object_file(data, size, "blob", &value_oid) < 0)
- 		return -1;
- 	return add_note(&c->tree, key_oid, &value_oid, NULL);
- }
 diff --git a/notes.c b/notes.c
-index 09ef1ce33a..ce9a8f53f8 100644
+index c7f21fae44..3f4f94507a 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -667,7 +667,7 @@ static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
- 		ret = tree_write_stack_finish_subtree(n);
- 		if (ret)
- 			return ret;
--		ret = write_sha1_file(n->buf.buf, n->buf.len, tree_type, s.hash);
-+		ret = write_object_file(n->buf.buf, n->buf.len, tree_type, &s);
- 		if (ret)
- 			return ret;
- 		strbuf_release(&n->buf);
-@@ -825,7 +825,7 @@ int combine_notes_concatenate(struct object_id *cur_oid,
+@@ -270,8 +270,8 @@ static int note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 				if (!oidcmp(&l->val_oid, &entry->val_oid))
+ 					return 0;
+ 
+-				ret = combine_notes(l->val_oid.hash,
+-						    entry->val_oid.hash);
++				ret = combine_notes(&l->val_oid,
++						    &entry->val_oid);
+ 				if (!ret && is_null_oid(&l->val_oid))
+ 					note_tree_remove(t, tree, n, entry);
+ 				free(entry);
+@@ -786,8 +786,8 @@ static int prune_notes_helper(const struct object_id *object_oid,
+ 	return 0;
+ }
+ 
+-int combine_notes_concatenate(unsigned char *cur_sha1,
+-		const unsigned char *new_sha1)
++int combine_notes_concatenate(struct object_id *cur_oid,
++			      const struct object_id *new_oid)
+ {
+ 	char *cur_msg = NULL, *new_msg = NULL, *buf;
+ 	unsigned long cur_len, new_len, buf_len;
+@@ -795,18 +795,18 @@ int combine_notes_concatenate(unsigned char *cur_sha1,
+ 	int ret;
+ 
+ 	/* read in both note blob objects */
+-	if (!is_null_sha1(new_sha1))
+-		new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
++	if (!is_null_oid(new_oid))
++		new_msg = read_sha1_file(new_oid->hash, &new_type, &new_len);
+ 	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
+ 		free(new_msg);
+ 		return 0;
+ 	}
+-	if (!is_null_sha1(cur_sha1))
+-		cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
++	if (!is_null_oid(cur_oid))
++		cur_msg = read_sha1_file(cur_oid->hash, &cur_type, &cur_len);
+ 	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
+ 		free(cur_msg);
+ 		free(new_msg);
+-		hashcpy(cur_sha1, new_sha1);
++		oidcpy(cur_oid, new_oid);
+ 		return 0;
+ 	}
+ 
+@@ -825,20 +825,20 @@ int combine_notes_concatenate(unsigned char *cur_sha1,
  	free(new_msg);
  
  	/* create a new blob object from buf */
--	ret = write_sha1_file(buf, buf_len, blob_type, cur_oid->hash);
-+	ret = write_object_file(buf, buf_len, blob_type, cur_oid);
+-	ret = write_sha1_file(buf, buf_len, blob_type, cur_sha1);
++	ret = write_sha1_file(buf, buf_len, blob_type, cur_oid->hash);
  	free(buf);
  	return ret;
  }
-@@ -905,7 +905,7 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
- 				 string_list_join_lines_helper, &buf))
- 		goto out;
  
--	ret = write_sha1_file(buf.buf, buf.len, blob_type, cur_oid->hash);
-+	ret = write_object_file(buf.buf, buf.len, blob_type, cur_oid);
- 
- out:
- 	strbuf_release(&buf);
-@@ -1147,8 +1147,7 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
- 	ret = for_each_note(t, flags, write_each_note, &cb_data) ||
- 	      write_each_non_note_until(NULL, &cb_data) ||
- 	      tree_write_stack_finish_subtree(&root) ||
--	      write_sha1_file(root.buf.buf, root.buf.len, tree_type,
--			      result->hash);
-+	      write_object_file(root.buf.buf, root.buf.len, tree_type, result);
- 	strbuf_release(&root.buf);
- 	return ret;
- }
-diff --git a/read-cache.c b/read-cache.c
-index 2eb81a66b9..01bcf7dd84 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -631,10 +631,10 @@ static struct cache_entry *create_alias_ce(struct index_state *istate,
- 
- void set_object_name_for_intent_to_add_entry(struct cache_entry *ce)
+-int combine_notes_overwrite(unsigned char *cur_sha1,
+-		const unsigned char *new_sha1)
++int combine_notes_overwrite(struct object_id *cur_oid,
++			    const struct object_id *new_oid)
  {
--	unsigned char sha1[20];
--	if (write_sha1_file("", 0, blob_type, sha1))
-+	struct object_id oid;
-+	if (write_object_file("", 0, blob_type, &oid))
- 		die("cannot create an empty blob in the object database");
--	hashcpy(ce->oid.hash, sha1);
-+	oidcpy(&ce->oid, &oid);
- }
- 
- int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags)
-diff --git a/sha1_file.c b/sha1_file.c
-index 4c44c60cec..d1569b1b96 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1419,9 +1419,9 @@ void *read_object_with_reference(const unsigned char *sha1,
- 	}
- }
- 
--static void write_sha1_file_prepare(const void *buf, unsigned long len,
--                                    const char *type, unsigned char *sha1,
--                                    char *hdr, int *hdrlen)
-+static void write_object_file_prepare(const void *buf, unsigned long len,
-+				      const char *type, struct object_id *oid,
-+				      char *hdr, int *hdrlen)
- {
- 	git_SHA_CTX c;
- 
-@@ -1432,7 +1432,7 @@ static void write_sha1_file_prepare(const void *buf, unsigned long len,
- 	git_SHA1_Init(&c);
- 	git_SHA1_Update(&c, hdr, *hdrlen);
- 	git_SHA1_Update(&c, buf, len);
--	git_SHA1_Final(sha1, &c);
-+	git_SHA1_Final(oid->hash, &c);
- }
- 
- /*
-@@ -1490,7 +1490,7 @@ int hash_object_file(const void *buf, unsigned long len, const char *type,
- {
- 	char hdr[32];
- 	int hdrlen = sizeof(hdr);
--	write_sha1_file_prepare(buf, len, type, oid->hash, hdr, &hdrlen);
-+	write_object_file_prepare(buf, len, type, oid, hdr, &hdrlen);
+-	hashcpy(cur_sha1, new_sha1);
++	oidcpy(cur_oid, new_oid);
  	return 0;
  }
  
-@@ -1633,7 +1633,8 @@ static int freshen_packed_object(const unsigned char *sha1)
- 	return 1;
- }
- 
--int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1)
-+int write_object_file(const void *buf, unsigned long len, const char *type,
-+		      struct object_id *oid)
+-int combine_notes_ignore(unsigned char *cur_sha1,
+-		const unsigned char *new_sha1)
++int combine_notes_ignore(struct object_id *cur_oid,
++			 const struct object_id *new_oid)
  {
- 	char hdr[32];
- 	int hdrlen = sizeof(hdr);
-@@ -1641,10 +1642,10 @@ int write_sha1_file(const void *buf, unsigned long len, const char *type, unsign
- 	/* Normally if we have it in the pack then we do not bother writing
- 	 * it out into .git/objects/??/?{38} file.
- 	 */
--	write_sha1_file_prepare(buf, len, type, sha1, hdr, &hdrlen);
--	if (freshen_packed_object(sha1) || freshen_loose_object(sha1))
-+	write_object_file_prepare(buf, len, type, oid, hdr, &hdrlen);
-+	if (freshen_packed_object(oid->hash) || freshen_loose_object(oid->hash))
+ 	return 0;
+ }
+@@ -848,17 +848,17 @@ int combine_notes_ignore(unsigned char *cur_sha1,
+  * newlines removed.
+  */
+ static int string_list_add_note_lines(struct string_list *list,
+-				      const unsigned char *sha1)
++				      const struct object_id *oid)
+ {
+ 	char *data;
+ 	unsigned long len;
+ 	enum object_type t;
+ 
+-	if (is_null_sha1(sha1))
++	if (is_null_oid(oid))
  		return 0;
--	return write_loose_object(sha1, hdr, hdrlen, buf, len, 0);
-+	return write_loose_object(oid->hash, hdr, hdrlen, buf, len, 0);
+ 
+ 	/* read_sha1_file NUL-terminates */
+-	data = read_sha1_file(sha1, &t, &len);
++	data = read_sha1_file(oid->hash, &t, &len);
+ 	if (t != OBJ_BLOB || !data || !len) {
+ 		free(data);
+ 		return t != OBJ_BLOB || !data;
+@@ -884,17 +884,17 @@ static int string_list_join_lines_helper(struct string_list_item *item,
+ 	return 0;
  }
  
- int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
-@@ -1656,7 +1657,7 @@ int hash_sha1_file_literally(const void *buf, unsigned long len, const char *typ
- 	/* type string, SP, %lu of the length plus NUL must fit this */
- 	hdrlen = strlen(type) + 32;
- 	header = xmalloc(hdrlen);
--	write_sha1_file_prepare(buf, len, type, oid->hash, header, &hdrlen);
-+	write_object_file_prepare(buf, len, type, oid, header, &hdrlen);
+-int combine_notes_cat_sort_uniq(unsigned char *cur_sha1,
+-		const unsigned char *new_sha1)
++int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
++				const struct object_id *new_oid)
+ {
+ 	struct string_list sort_uniq_list = STRING_LIST_INIT_DUP;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret = 1;
  
- 	if (!(flags & HASH_WRITE_OBJECT))
- 		goto cleanup;
-@@ -1767,7 +1768,7 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	}
+ 	/* read both note blob objects into unique_lines */
+-	if (string_list_add_note_lines(&sort_uniq_list, cur_sha1))
++	if (string_list_add_note_lines(&sort_uniq_list, cur_oid))
+ 		goto out;
+-	if (string_list_add_note_lines(&sort_uniq_list, new_sha1))
++	if (string_list_add_note_lines(&sort_uniq_list, new_oid))
+ 		goto out;
+ 	string_list_remove_empty_items(&sort_uniq_list, 0);
+ 	string_list_sort(&sort_uniq_list);
+@@ -905,7 +905,7 @@ int combine_notes_cat_sort_uniq(unsigned char *cur_sha1,
+ 				 string_list_join_lines_helper, &buf))
+ 		goto out;
  
- 	if (write_object)
--		ret = write_sha1_file(buf, size, typename(type), oid->hash);
-+		ret = write_object_file(buf, size, typename(type), oid);
- 	else
- 		ret = hash_object_file(buf, size, typename(type), oid);
- 	if (re_allocated)
-@@ -1789,8 +1790,8 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
- 				 get_safe_crlf(flags));
+-	ret = write_sha1_file(buf.buf, buf.len, blob_type, cur_sha1);
++	ret = write_sha1_file(buf.buf, buf.len, blob_type, cur_oid->hash);
  
- 	if (write_object)
--		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
--				      oid->hash);
-+		ret = write_object_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+					oid);
- 	else
- 		ret = hash_object_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
- 				       oid);
-@@ -1908,7 +1909,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
- 			return error_errno("readlink(\"%s\")", path);
- 		if (!(flags & HASH_WRITE_OBJECT))
- 			hash_object_file(sb.buf, sb.len, blob_type, oid);
--		else if (write_sha1_file(sb.buf, sb.len, blob_type, oid->hash))
-+		else if (write_object_file(sb.buf, sb.len, blob_type, oid))
- 			rc = error("%s: failed to insert into database", path);
- 		strbuf_release(&sb);
- 		break;
+ out:
+ 	strbuf_release(&buf);
+diff --git a/notes.h b/notes.h
+index 3848c2fb3f..88da38b5f4 100644
+--- a/notes.h
++++ b/notes.h
+@@ -9,27 +9,32 @@
+  * When adding a new note annotating the same object as an existing note, it is
+  * up to the caller to decide how to combine the two notes. The decision is
+  * made by passing in a function of the following form. The function accepts
+- * two SHA1s -- of the existing note and the new note, respectively. The
++ * two object_ids -- of the existing note and the new note, respectively. The
+  * function then combines the notes in whatever way it sees fit, and writes the
+- * resulting SHA1 into the first SHA1 argument (cur_sha1). A non-zero return
++ * resulting oid into the first argument (cur_oid). A non-zero return
+  * value indicates failure.
+  *
+- * The two given SHA1s shall both be non-NULL and different from each other.
+- * Either of them (but not both) may be == null_sha1, which indicates an
+- * empty/non-existent note. If the resulting SHA1 (cur_sha1) is == null_sha1,
++ * The two given object_ids shall both be non-NULL and different from each
++ * other. Either of them (but not both) may be == null_oid, which indicates an
++ * empty/non-existent note. If the resulting oid (cur_oid) is == null_oid,
+  * the note will be removed from the notes tree.
+  *
+  * The default combine_notes function (you get this when passing NULL) is
+  * combine_notes_concatenate(), which appends the contents of the new note to
+  * the contents of the existing note.
+  */
+-typedef int (*combine_notes_fn)(unsigned char *cur_sha1, const unsigned char *new_sha1);
++typedef int (*combine_notes_fn)(struct object_id *cur_oid,
++				const struct object_id *new_oid);
+ 
+ /* Common notes combinators */
+-int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1);
+-int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1);
+-int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1);
+-int combine_notes_cat_sort_uniq(unsigned char *cur_sha1, const unsigned char *new_sha1);
++int combine_notes_concatenate(struct object_id *cur_oid,
++			      const struct object_id *new_oid);
++int combine_notes_overwrite(struct object_id *cur_oid,
++			    const struct object_id *new_oid);
++int combine_notes_ignore(struct object_id *cur_oid,
++			 const struct object_id *new_oid);
++int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
++				const struct object_id *new_oid);
+ 
+ /*
+  * Notes tree object
 -- 
 2.14.3
 
