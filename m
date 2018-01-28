@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6DF51F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26C5C1F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753146AbeA1ANi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jan 2018 19:13:38 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:42375 "EHLO
+        id S1753015AbeA1ANf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 19:13:35 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:43184 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752352AbeA1ANg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 19:13:36 -0500
-Received: by mail-lf0-f67.google.com with SMTP id q17so5017968lfa.9
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:35 -0800 (PST)
+        with ESMTP id S1752352AbeA1ANb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 19:13:31 -0500
+Received: by mail-lf0-f67.google.com with SMTP id o89so5012984lfg.10
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=V0ifA3oPEOS05sBUgw/zzcgOyAtZ+wqHy7M8Szjm8Fw=;
-        b=G29aQGTBlhrNyYW1eeQRlHIe9C7K0X28PrhjauRVZiazeP1+qvA1j7h/MOzNG163GD
-         74iDrLxe8z32jqKe8HjsHV9pGuNXrvMj0bOepZFJIvMsyHdWzQ3cms3F06zEz/qgtFcR
-         n9AZilmrA6A4H4UeXhMhnyS+miIqe/f6ggepkeswhkmvfjHvDE/KvYeJzlhVU+RF/69Q
-         8CdS57v3WsIzlP9YPqW14qHhVfLXD5OCn4TpceUVGqpEvdGbzQ7+UhiSkJ1eSEbsqmRg
-         rj0PoJoCG7YM0qxnPlPTY4mVEAkvn23SUcBmshrVjO4QASb1FPVWgkh7o1llmsmvsRa1
-         G4Sw==
+        bh=tpJwMZYL+oxH8z9scd8jSR0RztMPKX+ty7luNp1tKbg=;
+        b=hu6UylaSIrRGSsXsrCSS9qS/fCzlM9/R1wkXL16melP1DESaHjs8FL6foE/IMqFBLS
+         WjrIZTQ6K1HSKQGu+59Th7IhXRbGGyLUoPMrXKwy7Hq8fedbnUCcbrDv8RgXzkdW4/aO
+         FI25w1yVCr4kh8W6sQqphgSnbywUg85ZcH899CkxaiP9DkVyLFp5iTgWtEIOfbMpbTLf
+         YB3EdHkSv8NH/jt5CEjsiPWFPKwhVeJET4GGFTY9ro/kuDL8pWAKO5+Oz/N9GxbQekQT
+         ziDK0a3QlfFFG87ZRMRl5IoAxYVM30QV/KoClL0J8zyuLeXFd0YjG4SPIIp9NeXjRwFl
+         1qng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=V0ifA3oPEOS05sBUgw/zzcgOyAtZ+wqHy7M8Szjm8Fw=;
-        b=QgKo/WZLeCFDs0MD72akmv5xu/CNTD+BPgghSkUT+b3ZiaYhQhViIbbcj+pOjrStmy
-         rfGoMj/3hfg5bV1ULA6DztjmmFZDO/EQ3JGeSeWFWnsoFRr3wmX+eYfQO4VSw0/uLsNQ
-         ycHDlicJ6VQKtKK5Nmh/kMYVmimGoAJjXUd7qB9T5yNZXGB2uoFWnRtvfOwP3eT9APHl
-         uFlBDWr4nPs2qNbkjHNWni2btfjssxhFacaUZJzcfcR+psxWWU1AHhn3svRQbmKn9jd/
-         Du/Se0PMHxv5StWbvwWp7q9ZbEljiPl4+n8eORkduV6+4GETy92qe2bww6H4piBn9cVT
-         FlBw==
-X-Gm-Message-State: AKwxytdJCVsTd9fFblSJQtYesm/03659WOb0j7XPSh9pPlw8qZyS0tSh
-        EPNMhyl84WdRq2jc69Y4D2BtXCWv
-X-Google-Smtp-Source: AH8x224bvCeKH5IlTeEDMNa/ajS9mPFLnxfendGXC3tWd7wOzCa+JfYHiLh4iGPqa54LDhqrYOAu1A==
-X-Received: by 10.25.143.12 with SMTP id r12mr11463697lfd.30.1517098414911;
-        Sat, 27 Jan 2018 16:13:34 -0800 (PST)
+        bh=tpJwMZYL+oxH8z9scd8jSR0RztMPKX+ty7luNp1tKbg=;
+        b=sdWC1wW6Dc899BqPj4SQETQUHlGTakPAU0AsR3LhBxsp3g37xgaKv4BKLvVBsruxHP
+         kFM4nsyjsvy/in48Zn9Xo1aHA0QA5V7yus192rUx/tnxWIUfBerTLOz/ry+i0HN2ekdu
+         oFIpHwtfMPGZwnwy0JWZx7coBR5w17gLJ0KKYKblEj/sgueB2E32nU3xXX+NQRjduFyW
+         RBe8pJCRVhCLc1pCWZpC76Vuy3i2WC8bK5gw6TId+XszxfyT54w/iw+SOofWNOg1cvgu
+         Cn3dWgbsArkCmI97qsdrRSuTjRkyJJ7qyU95M57G3U2oFMIhlUmShYZbIyErKTFJoKEi
+         pLCw==
+X-Gm-Message-State: AKwxytfRre25h+SaNhnG5EajcmzfwK9q+BDLZA7PwUr8Dn3Q3v9A9M1q
+        L1+LKoJADczmofSKHjdb5FtSdseR
+X-Google-Smtp-Source: AH8x224hUILwFmi7cCvJN2jIPfeMGTw5zCQFZyjeUAWsikQCISDW0dnE/321TMqxjqbj1P0a3fe9qQ==
+X-Received: by 10.25.208.210 with SMTP id h201mr9823951lfg.22.1517098409988;
+        Sat, 27 Jan 2018 16:13:29 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.33
+        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 16:13:33 -0800 (PST)
+        Sat, 27 Jan 2018 16:13:28 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 08/12] notes: convert write_notes_tree to object_id
-Date:   Sun, 28 Jan 2018 01:13:18 +0100
-Message-Id: <5e4e97a31b3cdf96e40853d48628dfcc7d7339c8.1517097306.git.patryk.obara@gmail.com>
+Subject: [PATCH v4 04/12] cache: clear whole hash buffer with oidclr
+Date:   Sun, 28 Jan 2018 01:13:14 +0100
+Message-Id: <ca4fac44f11c767c6042404ed9ed0c2e1b2f5369.1517097306.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1517097306.git.patryk.obara@gmail.com>
 References: <cover.1516790478.git.patryk.obara@gmail.com>
@@ -68,107 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the definition and declaration of write_notes_tree to
-struct object_id and adjust usage of this function.
+As long as GIT_SHA1_RAWSZ is equal to GIT_MAX_RAWSZ there's no problem,
+but when new hashing algorithm will be in place this memset will clear
+only 20-byte prefix of hash buffer.
 
-Additionally, improve style of small part of this function, as old
-formatting made it hard to understand at glance what this part of
-code is doing.
+Alternatively, hashclr implementation could be adjusted, but this
+function is almost removed from codebase already.  Separate
+implementation of oidclr prevents potential buffer overrun in case
+someone incorrectly used hashclr on object_id in future.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- notes-cache.c |  2 +-
- notes-utils.c |  2 +-
- notes.c       | 16 +++++++++-------
- notes.h       |  4 ++--
- 4 files changed, 13 insertions(+), 11 deletions(-)
+ cache.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/notes-cache.c b/notes-cache.c
-index d2f87147cc..010ad236cb 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -54,7 +54,7 @@ int notes_cache_write(struct notes_cache *c)
- 	if (!c->tree.dirty)
- 		return 0;
+diff --git a/cache.h b/cache.h
+index 08f2b81e1b..d5d78d6a51 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1029,7 +1029,7 @@ static inline void hashclr(unsigned char *hash)
  
--	if (write_notes_tree(&c->tree, tree_oid.hash))
-+	if (write_notes_tree(&c->tree, &tree_oid))
- 		return -1;
- 	if (commit_tree(c->validity, strlen(c->validity), &tree_oid, NULL,
- 			&commit_oid, NULL, NULL) < 0)
-diff --git a/notes-utils.c b/notes-utils.c
-index 058c642dac..02407fe2a7 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -12,7 +12,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 
- 	assert(t->initialized);
- 
--	if (write_notes_tree(t, tree_oid.hash))
-+	if (write_notes_tree(t, &tree_oid))
- 		die("Failed to write notes tree to database");
- 
- 	if (!parents) {
-diff --git a/notes.c b/notes.c
-index 3f4f94507a..09ef1ce33a 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1123,11 +1123,12 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
- 	return for_each_note_helper(t, t->root, 0, 0, flags, fn, cb_data);
- }
- 
--int write_notes_tree(struct notes_tree *t, unsigned char *result)
-+int write_notes_tree(struct notes_tree *t, struct object_id *result)
+ static inline void oidclr(struct object_id *oid)
  {
- 	struct tree_write_stack root;
- 	struct write_each_note_data cb_data;
- 	int ret;
-+	int flags;
- 
- 	if (!t)
- 		t = &default_notes_tree;
-@@ -1141,12 +1142,13 @@ int write_notes_tree(struct notes_tree *t, unsigned char *result)
- 	cb_data.next_non_note = t->first_non_note;
- 
- 	/* Write tree objects representing current notes tree */
--	ret = for_each_note(t, FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
--				FOR_EACH_NOTE_YIELD_SUBTREES,
--			write_each_note, &cb_data) ||
--		write_each_non_note_until(NULL, &cb_data) ||
--		tree_write_stack_finish_subtree(&root) ||
--		write_sha1_file(root.buf.buf, root.buf.len, tree_type, result);
-+	flags = FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
-+		FOR_EACH_NOTE_YIELD_SUBTREES;
-+	ret = for_each_note(t, flags, write_each_note, &cb_data) ||
-+	      write_each_non_note_until(NULL, &cb_data) ||
-+	      tree_write_stack_finish_subtree(&root) ||
-+	      write_sha1_file(root.buf.buf, root.buf.len, tree_type,
-+			      result->hash);
- 	strbuf_release(&root.buf);
- 	return ret;
+-	hashclr(oid->hash);
++	memset(oid->hash, 0, GIT_MAX_RAWSZ);
  }
-diff --git a/notes.h b/notes.h
-index 88da38b5f4..0433f45db5 100644
---- a/notes.h
-+++ b/notes.h
-@@ -217,7 +217,7 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
-  * Write the given notes_tree structure to the object database
-  *
-  * Creates a new tree object encapsulating the current state of the given
-- * notes_tree, and stores its SHA1 into the 'result' argument.
-+ * notes_tree, and stores its object id into the 'result' argument.
-  *
-  * Returns zero on success, non-zero on failure.
-  *
-@@ -225,7 +225,7 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
-  * this function has returned zero. Please also remember to create a
-  * corresponding commit object, and update the appropriate notes ref.
-  */
--int write_notes_tree(struct notes_tree *t, unsigned char *result);
-+int write_notes_tree(struct notes_tree *t, struct object_id *result);
  
- /* Flags controlling the operation of prune */
- #define NOTES_PRUNE_VERBOSE 1
+ 
 -- 
 2.14.3
 
