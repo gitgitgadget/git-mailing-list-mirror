@@ -7,108 +7,86 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 477F21F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 19:16:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E10D61F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 19:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752350AbeA1TQM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 14:16:12 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58460 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752328AbeA1TQM (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 14:16:12 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1752118AbeA1TQR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 14:16:17 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56941 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752364AbeA1TQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jan 2018 14:16:16 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E3FDDD4812;
+        Sun, 28 Jan 2018 14:16:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=j3uoB5rxq64wJcJk3GBZYRmYIgc
+        =; b=hjcKvd0rqdxyZ6wH98vA7awtx9JTbhO9x/IxeNzUAWSg0nWB5cBEcZZ9jjk
+        Me5XpWbPgbBP2SemsWT0oTyTn8x+7DWpDD3s1oR+7/9JQiJSrT1UPPTtUNB3wH2q
+        ux0LKDqSMeNtjeDAOUTdwOOTm7Wj02HZl/QgJRxvVSZ4IH+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; q=dns; s=sasl; b=v4EGMWWoK5GX0G5xBXY6Y
+        YmN9AR+liYFr0D3Y9R4Xdyc2sR4WRnq/m/uIJOZ5xQRg/sXGwN29X3vb4SS0kPv0
+        j4bdwxWSTVHKCHFxJwoPFlz2knnv3G8q8J3VsXwKHaIJIy66Qq7FSRcm7Xjl3eAD
+        rb7bLtFHyRZX69X1SErDOk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB4AFD4811;
+        Sun, 28 Jan 2018 14:16:10 -0500 (EST)
+Received: from morphine.paradise.teonanacatl.net (unknown [47.202.85.221])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B13AE60402;
-        Sun, 28 Jan 2018 19:16:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517166971;
-        bh=4ClVKxxp/TXcrpuj045M3DhJ9N8Qjxp1B6SVHSVth7o=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QHNoNmFMp6xgvuXoSq8HFoaRsalHQMJSWZ4SWLvutdyDOqf+i2MH2lFeOTpZ2V/U4
-         SwHXfPbkrlmgDfmSnIN0jsRkssSjkPgqrZScITgqNSCQfA4jRlm1Y8Nnv7rzdlu8e7
-         THjcRTREHqUJ2Dj9iS8Bo90O5yBljgwoOsnG7vGDkRLzUdSU4L3LrPgMiZMCTy133v
-         QPDWnenLcDqmDNvpjlfCwqpj0kc6dRisAIgO4zKR+zqbgZ2V0EhGSpfiX7uNwihJGj
-         JC9xxr3Cq4WK5cucAz2S518Ew+Z7GLFm754QNPTgwzP47/4RgqlnIZCeGAxOyY0/Mf
-         UZvYE9RMnfgefjjv7hK+1v1+efA3xXP6PtKYiu5XDZSeGmIZJXnWmn1xg/R1x4IMOf
-         rTSBGMeiPQIr2AUkThYXphlFqTscTumTqFGyVtYjcvbYcjqeXGWSYjbDV5mgiNCvee
-         cs4Wblh6Vz75H/W2RDlBZHgkClhM4EvWkqlS6Q7JOzbGCDru+FW
-Date:   Sun, 28 Jan 2018 19:16:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 0/2] alternate hash test
-Message-ID: <20180128191605.GI431130@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20180128170639.216397-1-sandals@crustytoothpaste.net>
- <CACBZZX4TRuPV8j9XV=8gAMirQNTpEJBO8bmE9KBnnmoJ7b_m1g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="a7XSrSxqzVsaECgU"
-Content-Disposition: inline
-In-Reply-To: <CACBZZX4TRuPV8j9XV=8gAMirQNTpEJBO8bmE9KBnnmoJ7b_m1g@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AF88D4810;
+        Sun, 28 Jan 2018 14:16:09 -0500 (EST)
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: [PATCH] doc: mention 'git show' defaults to HEAD
+Date:   Sun, 28 Jan 2018 14:16:07 -0500
+Message-Id: <20180128191607.31199-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.16.1
+X-Pobox-Relay-ID: B2B63820-045F-11E8-A11F-692D1A68708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When 'git show' is called without any object it defaults to HEAD.  This
+has been true since d4ed9793fd ("Simplify common default options setup
+for built-in log family.", 2006-04-16).
 
---a7XSrSxqzVsaECgU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The SYNOPSIS suggests that the object argument is required.  Clarify
+that it is not required and note the default.
 
-On Sun, Jan 28, 2018 at 07:58:10PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> On Sun, Jan 28, 2018 at 6:06 PM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> If the goal is to smoke out hardcoded SHA1s in tests, isn't it easier
-> to instrument SHA-1 (e.g. our blk_sha1 copy, or our wrappers) to
-> pretend that whenever we ask for the hash for STRING to pretend we
-> asked for SOME_PREFIX + STRING?
->=20
-> Such an approach would have the advantage of being more portable
-> (easier to run these mock test), and also that if we ever move to
-> NewHash we could still test for this, we'd just always set the prefix
-> to compilation time(), and could thus guarantee that the hashes would
-> change every time git was built.
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
+This was mentioned in #git today by qaz.  It seems reasonable to document the
+default.
 
-That's certainly a possibility.  We could simply call the update
-function from the init function and prepend a NUL byte or something like
-that, which would definitely produce different results.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+ Documentation/git-show.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---a7XSrSxqzVsaECgU
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/git-show.txt b/Documentation/git-show.txt
+index 82a4125a2d..e73ef54017 100644
+--- a/Documentation/git-show.txt
++++ b/Documentation/git-show.txt
+@@ -9,7 +9,7 @@ git-show - Show various types of objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git show' [options] <object>...
++'git show' [options] [<object>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -35,7 +35,7 @@ This manual page describes only the most frequently used options.
+ OPTIONS
+ -------
+ <object>...::
+-	The names of objects to show.
++	The names of objects to show (defaults to 'HEAD').
+ 	For a more complete list of ways to spell object names, see
+ 	"SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
+ 
+-- 
+2.16.1
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpuIXUACgkQv1NdgR9S
-9ot0HxAAgP31HlPYNd5LzE8+LMylDZDD+7XlQWSRMvqSzfnjrBc1VAsN3S4y03SC
-cYsso7VkCzKkQ59IifAXwpissxqNbvjw0t3QhHRdWgoJlEwPh0rAMHcxgcyCovbz
-4eA+bd6TogFM+6AwQIK0/Lyh8cWPdNuguYogIq5zjORbPoxA1kt/aIN+4hYaTSMq
-qgS5kxQalx0rDgR8nry9vUqgbWmjQV5iVmerVZytFE8iCL3Ozl1YFPb5dkE4aEYQ
-6cuzBYUXK6gPQqkpFqAY57iUTlZ7SX/i5cT5xEg1wPZpP361OADeAV8V0byhlcpY
-md7KJPb98j4vd1bfVaCdXq7jg9V/P0qirs0Q9XYN8XF0NtRNi/Z3fFtIvl1WkCgu
-AR2eENYItxkvvp8cvCDStBn2goI5VClg+b+6uKCNCtzjRQfrAmHYwFUcflbLQYsu
-V7+wbYZlIgg+1h2S9Ks+UbV9gyRIHpSsd5K2YhozYybfw1C+dgOU1LDkPZewANKh
-b6uNAM1MtCEc/kXGA3ZS5Aqzp4pFHAsl0kZJCwbz7B/MtCo9PVHUHaFDmj6/T5LK
-3soKJdn36z+q1wQN+Y67uIa2KrdQudLmWT8z88+S2RrZ//mteTVTSu1HtjkfMyW+
-cRz9cFW4wDY1ngClJcbzO068/QU5n8OqS1O/s6IT2iMlNrcSWW4=
-=IjzW
------END PGP SIGNATURE-----
-
---a7XSrSxqzVsaECgU--
