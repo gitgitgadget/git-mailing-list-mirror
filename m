@@ -7,50 +7,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 731B81F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 15:28:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A0F01F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 15:40:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751992AbeA1P23 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 10:28:29 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58344 "EHLO
+        id S1751632AbeA1Pk3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 10:40:29 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58360 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751632AbeA1P22 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:28:28 -0500
+        by vger.kernel.org with ESMTP id S1751347AbeA1Pk2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:40:28 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id D1ECF60FBD;
-        Sun, 28 Jan 2018 15:28:26 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EBE1360FBD;
+        Sun, 28 Jan 2018 15:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517153307;
-        bh=YT1MDWt2WPNEh5vOC68/BmXXde+SYFe5auhrWZnusCQ=;
+        s=default; t=1517154027;
+        bh=8SogA6J//Ad6v6lJvxu2EO/os1LBlTyxFsCSLwfxr0Y=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=QiaXkwdwQEiJbh3ijx+NImENhMeIOSqQXP0202dLguSwcv0Wi5lSb4UetNeJwTB8C
-         2chLF3dGsAMgwlKzy+EYOpc0kLMmOjus3vtOIN51LHip9CsMpvEMxBWtJBIztsjoHI
-         BjRSUOAwho3ZavYQpBtdXpNnUtHB/FXPVwKEpaTWgFFzj2s1jddH4Ovf0LDknoxSbM
-         XQtIbzLqVgvMcuzC2rsq46Z9ruRz86c7AB2BjsZ8BdkkXGFzqp7ZUmYTKDJTUiqhCd
-         FdxTNmn8ShLG5nFqTCAtAMvoTKh/rEU1RVgEa6OgEcfLHLbaXwUEV/zej8TtoAZBCF
-         DJwTVE0x35qq7a7hn1P7zVv1hGTp32ooMrMqYWNaknOywcRIK5EbIDQ424BAXxzW+p
-         5tXEy7nzOrk1wfiTyovI9GGNkGQDpNhv0o/+NE/6/is6JTWBixvSATyUboq5dzJ9Lj
-         9RRCrto1T69SnHA5N14CQ3YIj2PUnu7nU8fryjW0j0z0lpl+vtJ
-Date:   Sun, 28 Jan 2018 15:28:22 +0000
+        b=PL6nGTTFvJW3Ba1R0YKZSIs0qdAn3ObfXZ+iyApLE6ssbEv1T5bpFKTzWiyiv4AI8
+         dyn7DPMf/Tg20OSqwou9j+B40z1clHkhfokhjbuLJD52W1safBX/0dOGbsgP4pXTG+
+         C23iZ3oNcFpNTDbphoZQqLIwbzaCzQfb89K52SM9EN+/pDh0a7/7zAg6bg2NIw8qyP
+         bNLsgvieXe0kikdGOcbSRNtoNQqm1P5HqoyRodebnsd2re4qRII7uJua8L/NOlYvoS
+         TrWMcFLQi6DanWBLFAaQ/RPK3CZy/WMFrdzJnYRdKAPINRgzVyzcNTrfOKwzt453Ar
+         PYF8nLj3FP8Kfo4Aj4ZgFOxNklp6okxezIrhYn5CCcHEaSNmAshHklxi7cPS8ukEsI
+         Eeagf0sbtOO5ns8Q3a5c/6g8Pi5yxxGZSzVvCoGgJo3Rq6Hng2ZVbYkd30qYvw0e/H
+         l4IXuuE/nteo5W6jWdbIq9qcviLG5BSUCiYixRYnuhSrds1YFBH
+Date:   Sun, 28 Jan 2018 15:40:22 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Filip Jorissen <filip.jorissen@kuleuven.be>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cloned repository has file changes -> bug?
-Message-ID: <20180128152822.GF431130@genre.crustytoothpaste.net>
+To:     Patryk Obara <patryk.obara@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes.Schindelin@gmx.de, sbeller@google.com
+Subject: Re: [PATCH v2 1/1] setup: recognise extensions.objectFormat
+Message-ID: <20180128154022.GG431130@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Filip Jorissen <filip.jorissen@kuleuven.be>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <BCFDB3A3-B515-4932-AC67-F720AEB4B0BE@kuleuven.be>
+        Patryk Obara <patryk.obara@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes.Schindelin@gmx.de, sbeller@google.com
+References: <cover.1517098675.git.patryk.obara@gmail.com>
+ <e430ad029facdd6209927d352f0e7545cdd0e435.1517098675.git.patryk.obara@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="O98KdSgI27dgYlM5"
+        protocol="application/pgp-signature"; boundary="ulDeV4rPMk/y39in"
 Content-Disposition: inline
-In-Reply-To: <BCFDB3A3-B515-4932-AC67-F720AEB4B0BE@kuleuven.be>
+In-Reply-To: <e430ad029facdd6209927d352f0e7545cdd0e435.1517098675.git.patryk.obara@gmail.com>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.15.0-rc8-amd64)
 User-Agent: Mutt/1.9.2 (2017-12-15)
@@ -61,61 +67,61 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---O98KdSgI27dgYlM5
+--ulDeV4rPMk/y39in
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 27, 2018 at 07:35:49PM +0000, Filip Jorissen wrote:
-> I think our git repository is bugged. The reason why I say this is the fo=
-llowing. When cloning the repository, the newly cloned repository immediate=
-ly has file changes. Steps to reproduce and illustration is at the end of t=
-his email. Git checkout does not work to remove the file changes. This beha=
-vior seems to be reproducible across multiple computers. Is this a bug? How=
- can I fix the repository?
->=20
-> Changes not staged for commit:
->   (use "git add <file>..." to update what will be committed)
->   (use "git checkout -- <file>..." to discard changes in working director=
-y)
->=20
-> 	modified:   IDEAS/Resources/ReferenceResults/Dymola/IDEAS_Fluid_HeatExch=
-angers_GroundHeatExchangers_Borefield_Examples_MultipleBoreholesWithHeatPum=
-p.txt
-> 	modified:   IDEAS/Resources/ReferenceResults/Dymola/IDEAS_Utilities_Psyc=
-hrometrics_Functions_Examples_SaturationPressure.txt
+On Sun, Jan 28, 2018 at 01:36:17AM +0100, Patryk Obara wrote:
+> This extension selects which hashing algorithm from vtable should be
+> used for reading and writing objects in the object store.  At the moment
+> supports only single value (sha-1).
 
-This repository has multiple files that differ only in case.  I take it
-=66rom your hostname that you're on a Mac, and by default macOS uses a
-case-insensitive file system.
+I think you want an "it" here: "At the moment *it* supports".
 
-Since the two files aren't identical, one or the other will show as
-modified.  You probably want to adjust the repository so that it doesn't
-have files differing only in case or use a case-sensitive file system.
+> In case value of objectFormat is an unknown hashing algorithm, Git
+> command will fail with following message:
+>=20
+>   fatal: unknown repository extensions found:
+> 	  objectformat =3D <value>
+>=20
+> To indicate, that this specific objectFormat value is not recognised.
+>=20
+> The objectFormat extension is not allowed in repository marked as
+> version 0 to prevent any possibility of accidentally writing a NewHash
+> object in the sha-1 object store. This extension behaviour is different
+> than preciousObjects extension (which is allowed in repo version 0).
+>=20
+> Add tests and documentation note about new extension.
+>=20
+> Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
+
+Other than that, the patch looks good to me.  I like that we reject
+invalid values immediately.  Adding documentation is good, too.
 --=20
 brian m. carlson / brian with sandals: Houston, Texas, US
 https://www.crustytoothpaste.net/~bmc | My opinion only
 OpenPGP: https://keybase.io/bk2204
 
---O98KdSgI27dgYlM5
+--ulDeV4rPMk/y39in
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.4 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpt7BUACgkQv1NdgR9S
-9ovxNhAAn4y6NEQ/yjdzAjXTj/lV9yuy9I9mWyQtOgCrMU+TNg/AMTFxUg5DXldb
-nRcxLwyxv8aqN/TLvzth++/MWa+zcqTXuCM42p757mLdRAb4mKsLWliCXK2KjnWW
-bh8clBYlhfRBCjiCRFZOYMApF7L7eMYRQb40JPBbPgivshVsxn9YZthQmPtvu3OQ
-TXnMkgkYItmEhSw9VmPDna7erUCVrYx01jLT5kh8QPW8TVHHdV+yIuMyS6nFSIJu
-5u0vZl8rT1ABJsEtNLE9lU/CZBQ+IjS3kZXtuoxZKpLYQs20hIwG6UOhGwo3FF4m
-7mFE0F0OcjVGTTSTrAo+ziUtKsNxjUDB6TtXBp3ZaKCYZxbKh/ekPwU3M3t9qVx9
-HRJ3Ey9Yyb3zxtbeCci/PLP78wSzeIbebjxIB3I4E8zL97F+2bpZ6IaUEhMKVsb/
-NvfFnvzB9AGN0JYLe88j86wMBAkazUzvnqluJdjm7z3vTSs3KKceVIAeoJbYnkZD
-VWGF71dgEAryVjfruDi7PCbCosJw7BI9LuCpC+7LAPwh/aYcXRMTEoeds0gF644E
-ZwfPENTrAG0WmoV7xd4HfT9jh8ougI+9TtkLTK65ueTvy2zrzwrWVS3E2QbctqH1
-TV7arLG6/rsiJTehYQL5KBndZ6DzdAkNJhD4eop7B3aEvA8TNh4=
-=b/cW
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpt7uUACgkQv1NdgR9S
+9ovDog/+MaX9+Z31/qkJZcKWp4zKJ0cUOfQg+v2sAyFbzDa+LmPJytcVm3JhV6lF
+j2fosTX5/moO3FyXzjzfaPrlMcXeqiuzzVi7swZkB6oDNQYmgucPJ5nzOINBmdaK
+mm4+xPviQ5N57keso/9AdnAAeuDN5/4LhUrurod+pzPPff7UqqvS4jisxBfBddBs
++Gkmht3j1jrrvq3jPIpRsQiEitclEeQjzd7XUs8UyK9+8l3ddp+l/4fD9186bbjP
+n6FBGFap1BwzWkfHYRr2onJQEPnIIUxGxZ1Kyshfb/3NR2hdCp7cLUzvOvfNhnt1
+PJwjnXfpfaFnO2n8PTFPMnA8Djud3Jv0DxZ+aUpz4o2LFLDSBQynCY0YgweJqK01
+vCxKvRfP/7qriRa/JRZL1hLK/3WAaR+jmQlt2a5NGCHpN4w0+mOtb/clEbknQcWe
+t18tpnEqtixtbwqvgHj1wFbIVpxMnJFXXa7yHKEhCHEcHAFr32O5v9+CdP1SswdY
+lQH6ZV1J+qUxTAW+69k9seorkg7gE8/wLzqQT+whkmByZYLwVZE+rLjSbvgLhGsE
+D+pCXfifxy2jBDUZgI6vpatPekjm2bDvb74Y/AxPyhMvZG275E9WUy6CrrC8TFKi
+6IyoK+wlzdiKYwaTWnjMqi+8etUWQVIyYn9bxvIc6czoGq3Z9UM=
+=Unpm
 -----END PGP SIGNATURE-----
 
---O98KdSgI27dgYlM5--
+--ulDeV4rPMk/y39in--
