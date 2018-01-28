@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D1AF1F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 00:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39C531F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 00:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753245AbeA1AOC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jan 2018 19:14:02 -0500
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:33586 "EHLO
+        id S1752856AbeA1ANd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 19:13:33 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:34407 "EHLO
         mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752762AbeA1ANe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 19:13:34 -0500
-Received: by mail-lf0-f67.google.com with SMTP id t139so5048351lff.0
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:33 -0800 (PST)
+        with ESMTP id S1751785AbeA1AN3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 19:13:29 -0500
+Received: by mail-lf0-f67.google.com with SMTP id k19so5061911lfj.1
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=n9IQ2itVJHvB0NygFkKUul/GHIkxapvZsY5CqONOKVA=;
-        b=O8+ywbxiMAC7xdo+bA/kHX20f/yz1UwNOVZpbCW9blOgdwhEMDu3AAXQPzHOKqSniU
-         qYfMJnJwSRB6PRa+deF0zKYF/YS0fckxcXPHt+cYgqS7bQJH18N9M8BRbpowCz85MQqh
-         GDJT2yF2DkaV4PuRtu5x9hFb34GcQRxJnMQFtL02I5Ka+m9qw2xju61gAlNmYDFViFhJ
-         PuJpdPxT1MszsH2Kut5vl+WKiQXrOPkH34fPsd8/5WE0jiEbzUrs1RltNdYnaQE31k7R
-         lVI8tvhTeE36RgYscibKoOMGyULggU4S5bPSAjyNX3HPf7iWI2zdXvcEoGu5UnJc82t3
-         lmSQ==
+        bh=TUFN2zhPoe2D4Ox+/gbbRhKv0LPtspsfR3iGN2e6iZE=;
+        b=JhmF3F0goFAdW4GGPzbX7Nj/09Y5dk3/iMVJSbT1WbbxZ1ZoQYmYW2gFEEgihBmPle
+         +RA1yDdcHS7rvv4icVpOZPoX8YLY+rSKNV2W5duzPk/P9R36Zs6rGNCsGzn8vzoCf5x8
+         T+CRbnaMbWja6/8nhIOPaqF72sLHC/K0Iy477m2nNmScXZYhxE3OQAzJH0orNYZawwj6
+         05dqO5WWhuOUjqXZFiDS7ISrc8V/cCjQQW1Q8BLPaMkyBi9wapGWpZTSpNjSj5z/7Ve/
+         YRxHlMaBeLY6i9CYzwr8DVihI82StGdfRaGQylNbn89Qw76ZqhJCKSHlxGqUXSRRIT8U
+         IGAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=n9IQ2itVJHvB0NygFkKUul/GHIkxapvZsY5CqONOKVA=;
-        b=rc8Gv1s2yVguMdYLhPgQ/gFIcYuPnpfitXMxLfR+KJ26EJ0BL/5gBS/RDqOUXgiQvT
-         AbqTQGJWHYDNgqdWU7GDHJCqbYdNWdp130BCeIRYogfbtiP4urkZkLZhr+eaXxBt8wjC
-         LjnvBeg/KCdMzjB/C7sfFtI2EJJuuW08EhTJyq7Sda/svdDFj0Nr/O1vyUP///6vnyNu
-         i46a7NkTNItjzwXSKPHZSLUJ59EmqtNTciAG6oBEmeV+KqKFJZSGwYqYM5ArtsaGhsvJ
-         nw5qZ1EzTxwEDZftma7W003r+Y2A45yiVZ9ET6sWpNpcxVxv+Ddnd2SCWyTbhbTIARnd
-         M+Zg==
-X-Gm-Message-State: AKwxytejJJr2LNObmJ//1CMmA6XmVPTOGuFvQp9te2sgqr8p+CdSUDdR
-        PThpdI575Rx7vYvAL5icrMH2GKtB
-X-Google-Smtp-Source: AH8x227TTrjYCRPpHZuKN33ebzCEKu2gThGpEpx5/q7+m/Aqe4vfvvJGPgjoqdoVC0U0MJvAmJHVRw==
-X-Received: by 10.25.181.3 with SMTP id e3mr11447638lff.90.1517098412343;
-        Sat, 27 Jan 2018 16:13:32 -0800 (PST)
+        bh=TUFN2zhPoe2D4Ox+/gbbRhKv0LPtspsfR3iGN2e6iZE=;
+        b=Ec/Q6FneQYeLtVyUDwlStiwYLTPr2Xzwj5LeFULmpefJfqAhKHNeOPuZslUtFHVqBO
+         mmrMSRsBFF6e8NAzxqR2I/joKi1qkHGhGpUvGqO0FCh0S0LP+fsKRREvwGT59X39fwHO
+         b9BU618+yD1MxeEl22QQ9rtBRpWh5fJeo2CmfTFpFYXv2+5awg4QFBRGW3p90DiX0KYg
+         AlyznTLyust9HMw9epeRrI8QgKVdPrBEMwhiJ+s+geyAUR8sBM/gbwCy6zr1kR27MnX0
+         yNrC1bxGAsKG4J6sbfch8i/UVW4aRqzCpb9EGJQSQtIqbLanhpOeX3pnOrFMS7N3Yso0
+         A0aQ==
+X-Gm-Message-State: AKwxytc//TsbrPsVWucaygAk8bzayuXMwqoM2XRmKIGaK80tH0r8YRS+
+        i/1Bkrlw38hojs5exoErigjoUjLp
+X-Google-Smtp-Source: AH8x2243u4ZrNvMnsURikuAmF9ZlJnvjYd3RabW1BBIqYFkLCLEMbv6609Kgy6xFi9loiopOG9WEAg==
+X-Received: by 10.46.21.68 with SMTP id 4mr11378670ljv.122.1517098407174;
+        Sat, 27 Jan 2018 16:13:27 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.31
+        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 16:13:31 -0800 (PST)
+        Sat, 27 Jan 2018 16:13:26 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 06/12] commit: convert commit_tree* to object_id
-Date:   Sun, 28 Jan 2018 01:13:16 +0100
-Message-Id: <8a134d3cfcee053da3b3e07bd348b6fa4cbf7639.1517097306.git.patryk.obara@gmail.com>
+Subject: [PATCH v4 02/12] dir: convert struct sha1_stat to use object_id
+Date:   Sun, 28 Jan 2018 01:13:12 +0100
+Message-Id: <f5f66d8ac64eccbd3741a6163cdc23629a6208c4.1517097306.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1517097306.git.patryk.obara@gmail.com>
 References: <cover.1516790478.git.patryk.obara@gmail.com>
@@ -68,263 +68,334 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the definitions and declarations of commit_tree and
-commit_tree_extended to use struct object_id and adjust all usages of
-these functions.
+Convert the declaration of struct sha1_stat. Adjust all usages of this
+struct and replace hash{clr,cmp,cpy} with oid{clr,cmp,cpy} wherever
+possible.  Rename it to struct oid_stat.
+
+Rename static function load_sha1_stat to load_oid_stat.
+
+Remove macro EMPTY_BLOB_SHA1_BIN, as it's no longer used.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- builtin/am.c          |  4 ++--
- builtin/commit-tree.c |  4 ++--
- builtin/commit.c      |  5 +++--
- builtin/merge.c       |  8 ++++----
- commit.c              | 15 +++++++--------
- commit.h              | 11 ++++++-----
- notes-cache.c         |  4 ++--
- notes-merge.c         |  9 ++++-----
- notes-utils.c         |  7 ++++---
- notes-utils.h         |  3 ++-
- 10 files changed, 36 insertions(+), 34 deletions(-)
+ cache.h                              |   2 -
+ dir.c                                | 104 +++++++++++++++++------------------
+ dir.h                                |  12 ++--
+ t/helper/test-dump-untracked-cache.c |   4 +-
+ 4 files changed, 58 insertions(+), 64 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index acfe9d3c8c..6e6abb05cd 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1641,8 +1641,8 @@ static void do_commit(const struct am_state *state)
- 		setenv("GIT_COMMITTER_DATE",
- 			state->ignore_date ? "" : state->author_date, 1);
+diff --git a/cache.h b/cache.h
+index e4e03ac51d..ed72933ba7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1047,8 +1047,6 @@ extern const struct object_id empty_tree_oid;
+ 	"\xe6\x9d\xe2\x9b\xb2\xd1\xd6\x43\x4b\x8b" \
+ 	"\x29\xae\x77\x5a\xd8\xc2\xe4\x8c\x53\x91"
+ extern const struct object_id empty_blob_oid;
+-#define EMPTY_BLOB_SHA1_BIN (empty_blob_oid.hash)
+-
  
--	if (commit_tree(state->msg, state->msg_len, tree.hash, parents, commit.hash,
--				author, state->sign_commit))
-+	if (commit_tree(state->msg, state->msg_len, &tree, parents, &commit,
-+			author, state->sign_commit))
- 		die(_("failed to write commit object"));
- 
- 	reflog_msg = getenv("GIT_REFLOG_ACTION");
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 2177251e24..e5bdf57b1e 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -117,8 +117,8 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 			die_errno("git commit-tree: failed to read");
- 	}
- 
--	if (commit_tree(buffer.buf, buffer.len, tree_oid.hash, parents,
--			commit_oid.hash, NULL, sign_commit)) {
-+	if (commit_tree(buffer.buf, buffer.len, &tree_oid, parents, &commit_oid,
-+			NULL, sign_commit)) {
- 		strbuf_release(&buffer);
- 		return 1;
- 	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4610e3d8e3..e5974a5999 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1794,8 +1794,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		append_merge_tag_headers(parents, &tail);
- 	}
- 
--	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->oid.hash,
--			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
-+	if (commit_tree_extended(sb.buf, sb.len, &active_cache_tree->oid,
-+				 parents, &oid, author_ident.buf, sign_commit,
-+				 extra)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
- 	}
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 30264cfd7c..92ba99a1a5 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -820,8 +820,8 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
- 	pptr = commit_list_append(head, pptr);
- 	pptr = commit_list_append(remoteheads->item, pptr);
- 	prepare_to_commit(remoteheads);
--	if (commit_tree(merge_msg.buf, merge_msg.len, result_tree.hash, parents,
--			result_commit.hash, NULL, sign_commit))
-+	if (commit_tree(merge_msg.buf, merge_msg.len, &result_tree, parents,
-+			&result_commit, NULL, sign_commit))
- 		die(_("failed to write commit object"));
- 	finish(head, remoteheads, &result_commit, "In-index merge");
- 	drop_save();
-@@ -845,8 +845,8 @@ static int finish_automerge(struct commit *head,
- 		commit_list_insert(head, &parents);
- 	strbuf_addch(&merge_msg, '\n');
- 	prepare_to_commit(remoteheads);
--	if (commit_tree(merge_msg.buf, merge_msg.len, result_tree->hash, parents,
--			result_commit.hash, NULL, sign_commit))
-+	if (commit_tree(merge_msg.buf, merge_msg.len, result_tree, parents,
-+			&result_commit, NULL, sign_commit))
- 		die(_("failed to write commit object"));
- 	strbuf_addf(&buf, "Merge made by the '%s' strategy.", wt_strategy);
- 	finish(head, remoteheads, &result_commit, buf.buf);
-diff --git a/commit.c b/commit.c
-index ff51c9f34a..643f3daec3 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1380,9 +1380,8 @@ void free_commit_extra_headers(struct commit_extra_header *extra)
- 	}
- }
- 
--int commit_tree(const char *msg, size_t msg_len,
--		const unsigned char *tree,
--		struct commit_list *parents, unsigned char *ret,
-+int commit_tree(const char *msg, size_t msg_len, const struct object_id *tree,
-+		struct commit_list *parents, struct object_id *ret,
- 		const char *author, const char *sign_commit)
+ static inline int is_empty_blob_sha1(const unsigned char *sha1)
  {
- 	struct commit_extra_header *extra = NULL, **tail = &extra;
-@@ -1511,8 +1510,8 @@ N_("Warning: commit message did not conform to UTF-8.\n"
-    "variable i18n.commitencoding to the encoding your project uses.\n");
- 
- int commit_tree_extended(const char *msg, size_t msg_len,
--			 const unsigned char *tree,
--			 struct commit_list *parents, unsigned char *ret,
-+			 const struct object_id *tree,
-+			 struct commit_list *parents, struct object_id *ret,
- 			 const char *author, const char *sign_commit,
- 			 struct commit_extra_header *extra)
- {
-@@ -1520,7 +1519,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	int encoding_is_utf8;
- 	struct strbuf buffer;
- 
--	assert_sha1_type(tree, OBJ_TREE);
-+	assert_sha1_type(tree->hash, OBJ_TREE);
- 
- 	if (memchr(msg, '\0', msg_len))
- 		return error("a NUL byte in commit log message not allowed.");
-@@ -1529,7 +1528,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
- 
- 	strbuf_init(&buffer, 8192); /* should avoid reallocs for the headers */
--	strbuf_addf(&buffer, "tree %s\n", sha1_to_hex(tree));
-+	strbuf_addf(&buffer, "tree %s\n", oid_to_hex(tree));
- 
- 	/*
- 	 * NOTE! This ordering means that the same exact tree merged with a
-@@ -1568,7 +1567,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 		goto out;
- 	}
- 
--	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret);
-+	result = write_sha1_file(buffer.buf, buffer.len, commit_type, ret->hash);
- out:
- 	strbuf_release(&buffer);
- 	return result;
-diff --git a/commit.h b/commit.h
-index 425f402775..0fb8271665 100644
---- a/commit.h
-+++ b/commit.h
-@@ -262,14 +262,15 @@ extern void append_merge_tag_headers(struct commit_list *parents,
- 				     struct commit_extra_header ***tail);
- 
- extern int commit_tree(const char *msg, size_t msg_len,
--		       const unsigned char *tree,
--		       struct commit_list *parents, unsigned char *ret,
-+		       const struct object_id *tree,
-+		       struct commit_list *parents, struct object_id *ret,
- 		       const char *author, const char *sign_commit);
- 
- extern int commit_tree_extended(const char *msg, size_t msg_len,
--				const unsigned char *tree,
--				struct commit_list *parents, unsigned char *ret,
--				const char *author, const char *sign_commit,
-+				const struct object_id *tree,
-+				struct commit_list *parents,
-+				struct object_id *ret, const char *author,
-+				const char *sign_commit,
- 				struct commit_extra_header *);
- 
- extern struct commit_extra_header *read_commit_extra_headers(struct commit *, const char **);
-diff --git a/notes-cache.c b/notes-cache.c
-index 17ee8602b3..d2f87147cc 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -56,8 +56,8 @@ int notes_cache_write(struct notes_cache *c)
- 
- 	if (write_notes_tree(&c->tree, tree_oid.hash))
- 		return -1;
--	if (commit_tree(c->validity, strlen(c->validity), tree_oid.hash, NULL,
--			commit_oid.hash, NULL, NULL) < 0)
-+	if (commit_tree(c->validity, strlen(c->validity), &tree_oid, NULL,
-+			&commit_oid, NULL, NULL) < 0)
- 		return -1;
- 	if (update_ref("update notes cache", c->tree.update_ref, &commit_oid,
- 		       NULL, 0, UPDATE_REFS_QUIET_ON_ERR) < 0)
-diff --git a/notes-merge.c b/notes-merge.c
-index 0f6573cb17..c09c5e0e47 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -642,9 +642,8 @@ int notes_merge(struct notes_merge_options *o,
- 		struct commit_list *parents = NULL;
- 		commit_list_insert(remote, &parents); /* LIFO order */
- 		commit_list_insert(local, &parents);
--		create_notes_commit(local_tree, parents,
--				    o->commit_msg.buf, o->commit_msg.len,
--				    result_oid->hash);
-+		create_notes_commit(local_tree, parents, o->commit_msg.buf,
-+				    o->commit_msg.len, result_oid);
- 	}
- 
- found_result:
-@@ -718,8 +717,8 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		strbuf_setlen(&path, baselen);
- 	}
- 
--	create_notes_commit(partial_tree, partial_commit->parents,
--			    msg, strlen(msg), result_oid->hash);
-+	create_notes_commit(partial_tree, partial_commit->parents, msg,
-+			    strlen(msg), result_oid);
- 	unuse_commit_buffer(partial_commit, buffer);
- 	if (o->verbosity >= 4)
- 		printf("Finalized notes merge commit: %s\n",
-diff --git a/notes-utils.c b/notes-utils.c
-index 5c8e70c98f..058c642dac 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -6,7 +6,7 @@
- 
- void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 			 const char *msg, size_t msg_len,
--			 unsigned char *result_sha1)
-+			 struct object_id *result_oid)
- {
- 	struct object_id tree_oid;
- 
-@@ -27,7 +27,8 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 		/* else: t->ref points to nothing, assume root/orphan commit */
- 	}
- 
--	if (commit_tree(msg, msg_len, tree_oid.hash, parents, result_sha1, NULL, NULL))
-+	if (commit_tree(msg, msg_len, &tree_oid, parents, result_oid, NULL,
-+			NULL))
- 		die("Failed to commit notes tree to database");
- }
- 
-@@ -47,7 +48,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 	strbuf_addstr(&buf, msg);
- 	strbuf_complete_line(&buf);
- 
--	create_notes_commit(t, NULL, buf.buf, buf.len, commit_oid.hash);
-+	create_notes_commit(t, NULL, buf.buf, buf.len, &commit_oid);
- 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
- 	update_ref(buf.buf, t->update_ref, &commit_oid, NULL, 0,
- 		   UPDATE_REFS_DIE_ON_ERR);
-diff --git a/notes-utils.h b/notes-utils.h
-index 1190578398..5d79cbef51 100644
---- a/notes-utils.h
-+++ b/notes-utils.h
-@@ -15,7 +15,8 @@
-  * The resulting commit SHA1 is stored in result_sha1.
+diff --git a/dir.c b/dir.c
+index 7c4b45e30e..22cadbda9d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -231,12 +231,10 @@ int within_depth(const char *name, int namelen,
+  *     1 along with { data, size } of the (possibly augmented) buffer
+  *       when successful.
+  *
+- * Optionally updates the given sha1_stat with the given OID (when valid).
++ * Optionally updates the given oid_stat with the given OID (when valid).
   */
- void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
--			 const char *msg, size_t msg_len, unsigned char *result_sha1);
-+			 const char *msg, size_t msg_len,
-+			 struct object_id *result_oid);
+-static int do_read_blob(const struct object_id *oid,
+-			struct sha1_stat *sha1_stat,
+-			size_t *size_out,
+-			char **data_out)
++static int do_read_blob(const struct object_id *oid, struct oid_stat *oid_stat,
++			size_t *size_out, char **data_out)
+ {
+ 	enum object_type type;
+ 	unsigned long sz;
+@@ -251,9 +249,9 @@ static int do_read_blob(const struct object_id *oid,
+ 		return -1;
+ 	}
  
- void commit_notes(struct notes_tree *t, const char *msg);
+-	if (sha1_stat) {
+-		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
+-		hashcpy(sha1_stat->sha1, oid->hash);
++	if (oid_stat) {
++		memset(&oid_stat->stat, 0, sizeof(oid_stat->stat));
++		oidcpy(&oid_stat->oid, oid);
+ 	}
  
+ 	if (sz == 0) {
+@@ -654,9 +652,8 @@ void add_exclude(const char *string, const char *base,
+ 
+ static int read_skip_worktree_file_from_index(const struct index_state *istate,
+ 					      const char *path,
+-					      size_t *size_out,
+-					      char **data_out,
+-					      struct sha1_stat *sha1_stat)
++					      size_t *size_out, char **data_out,
++					      struct oid_stat *oid_stat)
+ {
+ 	int pos, len;
+ 
+@@ -667,7 +664,7 @@ static int read_skip_worktree_file_from_index(const struct index_state *istate,
+ 	if (!ce_skip_worktree(istate->cache[pos]))
+ 		return -1;
+ 
+-	return do_read_blob(&istate->cache[pos]->oid, sha1_stat, size_out, data_out);
++	return do_read_blob(&istate->cache[pos]->oid, oid_stat, size_out, data_out);
+ }
+ 
+ /*
+@@ -795,9 +792,8 @@ static int add_excludes_from_buffer(char *buf, size_t size,
+  * ss_valid is non-zero, "ss" must contain good value as input.
+  */
+ static int add_excludes(const char *fname, const char *base, int baselen,
+-			struct exclude_list *el,
+-			struct index_state *istate,
+-			struct sha1_stat *sha1_stat)
++			struct exclude_list *el, struct index_state *istate,
++			struct oid_stat *oid_stat)
+ {
+ 	struct stat st;
+ 	int r;
+@@ -815,16 +811,16 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			return -1;
+ 		r = read_skip_worktree_file_from_index(istate, fname,
+ 						       &size, &buf,
+-						       sha1_stat);
++						       oid_stat);
+ 		if (r != 1)
+ 			return r;
+ 	} else {
+ 		size = xsize_t(st.st_size);
+ 		if (size == 0) {
+-			if (sha1_stat) {
+-				fill_stat_data(&sha1_stat->stat, &st);
+-				hashcpy(sha1_stat->sha1, EMPTY_BLOB_SHA1_BIN);
+-				sha1_stat->valid = 1;
++			if (oid_stat) {
++				fill_stat_data(&oid_stat->stat, &st);
++				oidcpy(&oid_stat->oid, &empty_blob_oid);
++				oid_stat->valid = 1;
+ 			}
+ 			close(fd);
+ 			return 0;
+@@ -837,22 +833,23 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 		}
+ 		buf[size++] = '\n';
+ 		close(fd);
+-		if (sha1_stat) {
++		if (oid_stat) {
+ 			int pos;
+-			if (sha1_stat->valid &&
+-			    !match_stat_data_racy(istate, &sha1_stat->stat, &st))
++			if (oid_stat->valid &&
++			    !match_stat_data_racy(istate, &oid_stat->stat, &st))
+ 				; /* no content change, ss->sha1 still good */
+ 			else if (istate &&
+ 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
+ 				 !ce_stage(istate->cache[pos]) &&
+ 				 ce_uptodate(istate->cache[pos]) &&
+ 				 !would_convert_to_git(istate, fname))
+-				hashcpy(sha1_stat->sha1,
+-					istate->cache[pos]->oid.hash);
++				oidcpy(&oid_stat->oid,
++				       &istate->cache[pos]->oid);
+ 			else
+-				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
+-			fill_stat_data(&sha1_stat->stat, &st);
+-			sha1_stat->valid = 1;
++				hash_sha1_file(buf, size, "blob",
++					       oid_stat->oid.hash);
++			fill_stat_data(&oid_stat->stat, &st);
++			oid_stat->valid = 1;
+ 		}
+ 	}
+ 
+@@ -930,7 +927,7 @@ struct exclude_list *add_exclude_list(struct dir_struct *dir,
+  * Used to set up core.excludesfile and .git/info/exclude lists.
+  */
+ static void add_excludes_from_file_1(struct dir_struct *dir, const char *fname,
+-				     struct sha1_stat *sha1_stat)
++				     struct oid_stat *oid_stat)
+ {
+ 	struct exclude_list *el;
+ 	/*
+@@ -941,7 +938,7 @@ static void add_excludes_from_file_1(struct dir_struct *dir, const char *fname,
+ 	if (!dir->untracked)
+ 		dir->unmanaged_exclude_files++;
+ 	el = add_exclude_list(dir, EXC_FILE, fname);
+-	if (add_excludes(fname, "", 0, el, NULL, sha1_stat) < 0)
++	if (add_excludes(fname, "", 0, el, NULL, oid_stat) < 0)
+ 		die("cannot use %s as an exclude file", fname);
+ }
+ 
+@@ -1180,7 +1177,7 @@ static void prep_exclude(struct dir_struct *dir,
+ 
+ 	while (current < baselen) {
+ 		const char *cp;
+-		struct sha1_stat sha1_stat;
++		struct oid_stat oid_stat;
+ 
+ 		stk = xcalloc(1, sizeof(*stk));
+ 		if (current < 0) {
+@@ -1223,8 +1220,8 @@ static void prep_exclude(struct dir_struct *dir,
+ 		}
+ 
+ 		/* Try to read per-directory file */
+-		hashclr(sha1_stat.sha1);
+-		sha1_stat.valid = 0;
++		oidclr(&oid_stat.oid);
++		oid_stat.valid = 0;
+ 		if (dir->exclude_per_dir &&
+ 		    /*
+ 		     * If we know that no files have been added in
+@@ -1252,7 +1249,7 @@ static void prep_exclude(struct dir_struct *dir,
+ 			strbuf_addstr(&sb, dir->exclude_per_dir);
+ 			el->src = strbuf_detach(&sb, NULL);
+ 			add_excludes(el->src, el->src, stk->baselen, el, istate,
+-				     untracked ? &sha1_stat : NULL);
++				     untracked ? &oid_stat : NULL);
+ 		}
+ 		/*
+ 		 * NEEDSWORK: when untracked cache is enabled, prep_exclude()
+@@ -1269,9 +1266,9 @@ static void prep_exclude(struct dir_struct *dir,
+ 		 * order, though, if you do that.
+ 		 */
+ 		if (untracked &&
+-		    hashcmp(sha1_stat.sha1, untracked->exclude_sha1)) {
++		    hashcmp(oid_stat.oid.hash, untracked->exclude_sha1)) {
+ 			invalidate_gitignore(dir->untracked, untracked);
+-			hashcpy(untracked->exclude_sha1, sha1_stat.sha1);
++			hashcpy(untracked->exclude_sha1, oid_stat.oid.hash);
+ 		}
+ 		dir->exclude_stack = stk;
+ 		current = stk->baselen;
+@@ -2228,13 +2225,13 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 
+ 	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
+ 	root = dir->untracked->root;
+-	if (hashcmp(dir->ss_info_exclude.sha1,
+-		    dir->untracked->ss_info_exclude.sha1)) {
++	if (oidcmp(&dir->ss_info_exclude.oid,
++		   &dir->untracked->ss_info_exclude.oid)) {
+ 		invalidate_gitignore(dir->untracked, root);
+ 		dir->untracked->ss_info_exclude = dir->ss_info_exclude;
+ 	}
+-	if (hashcmp(dir->ss_excludes_file.sha1,
+-		    dir->untracked->ss_excludes_file.sha1)) {
++	if (oidcmp(&dir->ss_excludes_file.oid,
++		   &dir->untracked->ss_excludes_file.oid)) {
+ 		invalidate_gitignore(dir->untracked, root);
+ 		dir->untracked->ss_excludes_file = dir->ss_excludes_file;
+ 	}
+@@ -2638,8 +2635,8 @@ void write_untracked_extension(struct strbuf *out, struct untracked_cache *untra
+ 	FLEX_ALLOC_MEM(ouc, exclude_per_dir, untracked->exclude_per_dir, len);
+ 	stat_data_to_disk(&ouc->info_exclude_stat, &untracked->ss_info_exclude.stat);
+ 	stat_data_to_disk(&ouc->excludes_file_stat, &untracked->ss_excludes_file.stat);
+-	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.sha1);
+-	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.sha1);
++	hashcpy(ouc->info_exclude_sha1, untracked->ss_info_exclude.oid.hash);
++	hashcpy(ouc->excludes_file_sha1, untracked->ss_excludes_file.oid.hash);
+ 	ouc->dir_flags = htonl(untracked->dir_flags);
+ 
+ 	varint_len = encode_varint(untracked->ident.len, varbuf);
+@@ -2816,13 +2813,12 @@ static void read_sha1(size_t pos, void *cb)
+ 	rd->data += 20;
+ }
+ 
+-static void load_sha1_stat(struct sha1_stat *sha1_stat,
+-			   const unsigned char *data,
+-			   const unsigned char *sha1)
++static void load_oid_stat(struct oid_stat *oid_stat, const unsigned char *data,
++			  const unsigned char *sha1)
+ {
+-	stat_data_from_disk(&sha1_stat->stat, data);
+-	hashcpy(sha1_stat->sha1, sha1);
+-	sha1_stat->valid = 1;
++	stat_data_from_disk(&oid_stat->stat, data);
++	hashcpy(oid_stat->oid.hash, sha1);
++	oid_stat->valid = 1;
+ }
+ 
+ struct untracked_cache *read_untracked_extension(const void *data, unsigned long sz)
+@@ -2850,12 +2846,12 @@ struct untracked_cache *read_untracked_extension(const void *data, unsigned long
+ 	uc = xcalloc(1, sizeof(*uc));
+ 	strbuf_init(&uc->ident, ident_len);
+ 	strbuf_add(&uc->ident, ident, ident_len);
+-	load_sha1_stat(&uc->ss_info_exclude,
+-		       next + ouc_offset(info_exclude_stat),
+-		       next + ouc_offset(info_exclude_sha1));
+-	load_sha1_stat(&uc->ss_excludes_file,
+-		       next + ouc_offset(excludes_file_stat),
+-		       next + ouc_offset(excludes_file_sha1));
++	load_oid_stat(&uc->ss_info_exclude,
++		      next + ouc_offset(info_exclude_stat),
++		      next + ouc_offset(info_exclude_sha1));
++	load_oid_stat(&uc->ss_excludes_file,
++		      next + ouc_offset(excludes_file_stat),
++		      next + ouc_offset(excludes_file_sha1));
+ 	uc->dir_flags = get_be32(next + ouc_offset(dir_flags));
+ 	exclude_per_dir = (const char *)next + ouc_offset(exclude_per_dir);
+ 	uc->exclude_per_dir = xstrdup(exclude_per_dir);
+diff --git a/dir.h b/dir.h
+index 11a047ba48..e7bb786a33 100644
+--- a/dir.h
++++ b/dir.h
+@@ -74,9 +74,9 @@ struct exclude_list_group {
+ 	struct exclude_list *el;
+ };
+ 
+-struct sha1_stat {
++struct oid_stat {
+ 	struct stat_data stat;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int valid;
+ };
+ 
+@@ -124,8 +124,8 @@ struct untracked_cache_dir {
+ };
+ 
+ struct untracked_cache {
+-	struct sha1_stat ss_info_exclude;
+-	struct sha1_stat ss_excludes_file;
++	struct oid_stat ss_info_exclude;
++	struct oid_stat ss_excludes_file;
+ 	const char *exclude_per_dir;
+ 	struct strbuf ident;
+ 	/*
+@@ -195,8 +195,8 @@ struct dir_struct {
+ 
+ 	/* Enable untracked file cache if set */
+ 	struct untracked_cache *untracked;
+-	struct sha1_stat ss_info_exclude;
+-	struct sha1_stat ss_excludes_file;
++	struct oid_stat ss_info_exclude;
++	struct oid_stat ss_excludes_file;
+ 	unsigned unmanaged_exclude_files;
+ };
+ 
+diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
+index f752532ffb..d7c55c2355 100644
+--- a/t/helper/test-dump-untracked-cache.c
++++ b/t/helper/test-dump-untracked-cache.c
+@@ -54,8 +54,8 @@ int cmd_main(int ac, const char **av)
+ 		printf("no untracked cache\n");
+ 		return 0;
+ 	}
+-	printf("info/exclude %s\n", sha1_to_hex(uc->ss_info_exclude.sha1));
+-	printf("core.excludesfile %s\n", sha1_to_hex(uc->ss_excludes_file.sha1));
++	printf("info/exclude %s\n", oid_to_hex(&uc->ss_info_exclude.oid));
++	printf("core.excludesfile %s\n", oid_to_hex(&uc->ss_excludes_file.oid));
+ 	printf("exclude_per_dir %s\n", uc->exclude_per_dir);
+ 	printf("flags %08x\n", uc->dir_flags);
+ 	if (uc->root)
 -- 
 2.14.3
 
