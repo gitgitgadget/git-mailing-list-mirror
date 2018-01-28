@@ -2,73 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE1231F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 22:23:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CEA31F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 22:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751960AbeA1WMq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 17:12:46 -0500
-Received: from imap.thunk.org ([74.207.234.97]:36690 "EHLO imap.thunk.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751867AbeA1WMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jan 2018 17:12:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org;
-         s=ef5046eb; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-        Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=jj8n1MtVY7PND78QfeWX85X1qvvWOmu0FGJII/J845U=; b=Ing0rKKsHwRSg0UqLsZWxx/Qji
-        LsbtnB28yNLO2gflmO5NjiLXr6ib/xVgp9y0d9G8dwfazdHj9mVv3x2Q7NlDT9E8JcLdDmBCRTBzm
-        9pC4Ll4+9yCnhvI23jOw2yUslmSCn7E4ywiXg08ojcD+JocKI7rgOxEDsSrAU29ugG1w=;
-Received: from root (helo=callcc.thunk.org)
-        by imap.thunk.org with local-esmtp (Exim 4.89)
-        (envelope-from <tytso@thunk.org>)
-        id 1efvBm-0006gH-2V; Sun, 28 Jan 2018 22:12:38 +0000
-Received: by callcc.thunk.org (Postfix, from userid 15806)
-        id 7D3D57A36E4; Sun, 28 Jan 2018 17:12:31 -0500 (EST)
-Date:   Sun, 28 Jan 2018 17:12:31 -0500
-From:   Theodore Ts'o <tytso@mit.edu>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     'Michal =?iso-8859-1?Q?Such=E1nek'?= <msuchanek@suse.de>,
-        git@vger.kernel.org,
-        "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Subject: Re: git send-email sets date
-Message-ID: <20180128221231.GB13621@thunk.org>
-References: <20180126183230.0ae0c76b@kitsune.suse.cz>
- <20180128151536.GE431130@genre.crustytoothpaste.net>
- <001601d39850$a0a48ae0$e1eda0a0$@iee.org>
+        id S932437AbeA1Wcb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 17:32:31 -0500
+Received: from mail-it0-f47.google.com ([209.85.214.47]:53224 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753715AbeA1Wc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jan 2018 17:32:29 -0500
+Received: by mail-it0-f47.google.com with SMTP id u62so6126434ita.2
+        for <git@vger.kernel.org>; Sun, 28 Jan 2018 14:32:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3luk3+qrXzaepuY6uD3VRtISVQc4ZJW2UPCPwk7oVNA=;
+        b=W+4nHrlkVnX1DYEku6E+93ZViLcmt/viaozmcgitEhOxOV9Fj8nm9ZPLf8Dbg0q2Hh
+         F1RwEq1DQHCbhhhiQextFZ56AUHyfozLIX/68WGbWyU+z7scUHF9OEL8IsQk4r0x8CEp
+         nDU2LynWWnlLomEmQVjO8VqtmYX17P9b/bEgJQ2NH46wpLZnvf8pfPrhfIycS6S0WhN6
+         FXAJDUqNT6K25MX3k9L0fEouS3ur3ZqpL+IeKDXKvOrE7Q/4OWBn275Du4EnCp0Jy1iO
+         uDvUsBs7uCExrCIvny0pacHFIbS1mK2qOFM5RwNfrYGPQPqOtGSqLVoHICHz4BAYB4xO
+         h/mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3luk3+qrXzaepuY6uD3VRtISVQc4ZJW2UPCPwk7oVNA=;
+        b=UrEucEhDd6/EC1ZvL/J2NwsyUzhh+Ste2Uxdy8RGWbgMUi8rAU97IJUvmKUMgROzXt
+         IMAsR2nU08IT9lCfeqxHutlEj1WZ9dPMqZCwBR4yN2vYiR5lLwy1hm7ELFKwCKIjp7e6
+         zRlQFocusoTnuPeC7vzHCcmqLZwOemdrSRXdB6wV79OROO80Ob9XippRxj1RHs6boMfr
+         ja6olvA72cQVqsBV0ROSR8BTaq0tW00LfZukmmJlOKF4VygnvXTei9eqYLguGIekKhEK
+         NQUIUJVVZbcy3s4MIcSmbGOZEwHxVqQdk4sX8AQketJuGiK27EZBTLUpj2DmtejFKDWz
+         2oWw==
+X-Gm-Message-State: AKwxytfQwLxQ7awgUj3CA7lIY8RXXjBHZr9NZSRtH8Y6ed1Ge84L5f3E
+        ez48rf4I2bewJcbpL0+mTpwR5lbJJgahNvkABiCxFA==
+X-Google-Smtp-Source: AH8x226sbI11h5yKAW/NibjTR9XIkMNKluKC+wEjdZs99i27TM3K3jD1Q4Je962fLAIAaX7sahUoEtCZqEHnTRPtC+k=
+X-Received: by 10.36.192.10 with SMTP id u10mr24793115itf.73.1517178749036;
+ Sun, 28 Jan 2018 14:32:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <001601d39850$a0a48ae0$e1eda0a0$@iee.org>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+Received: by 10.107.47.11 with HTTP; Sun, 28 Jan 2018 14:32:08 -0800 (PST)
+In-Reply-To: <20180126183230.0ae0c76b@kitsune.suse.cz>
+References: <20180126183230.0ae0c76b@kitsune.suse.cz>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 28 Jan 2018 23:32:08 +0100
+Message-ID: <CACBZZX7W4n9Q-uL0t1W1dttAxA=hU69fL9Tqsfe0wj5XP=O44w@mail.gmail.com>
+Subject: Re: git send-email sets date
+To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 28, 2018 at 03:56:57PM -0000, Philip Oakley wrote:
-> Michal, you may want to hack up an option that can automatically create 
-> that format if it is of use. I sometimes find the sort order an issue in 
-> some of my mail clients.
+On Fri, Jan 26, 2018 at 6:32 PM, Michal Such=C3=A1nek <msuchanek@suse.de> w=
+rote:
+> This is wrong because the message will most likely not get delivered
+> when the author date differs from current time.
 
-If there is a From: header in the beginning of the mail body, it is
-used as the Author instead of the From: header in the mail header.  It
-would make sense if there is a Date: header in the beginning of the
-mail body, it should be used instead of Date: field in the mail header.
+Others have covered other bases here, but I just wanted to ask about
+this. Are there really mail setups that refuse to deliver or accept
+messages whose Date headers don't match what the expect? I would think
+that such issues wouldn't be present in the wild since SMTP daemons
+need to deal with messages that are e.g. held locally somewhere, or
+the only make it to your server days afterwards due to your own
+downtime + client retries.
 
-The problem is that if existing git clients don't support this, it
-wouldn't be safe to start emmiting patches with that format for at
-least a year or two until the prerequisite version of git gets wide
-adoption.  Alternatively, there could be a git option which causes
-something like X-Git-Author-Date: to be set in the mail header.
-
-	       			  	   	- Ted
+Now if by "not get delivered" you mean they'll show up on the Nth page
+of your mailer because it sorts by the Date header, sure. That's a
+problem and quite common, tricky to solve due to the issues others
+have noted though.
