@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DCBC1F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 15:57:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DD211F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 15:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751876AbeA1P5q (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 10:57:46 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58384 "EHLO
+        id S1751980AbeA1P5u (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 10:57:50 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58432 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751674AbeA1P5l (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:57:41 -0500
+        by vger.kernel.org with ESMTP id S1751559AbeA1P5o (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:57:44 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 85F1961352;
-        Sun, 28 Jan 2018 15:57:39 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3870961390;
+        Sun, 28 Jan 2018 15:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517155059;
-        bh=S6wX5vqRMNSahWuCCiD2dCQGIPW9L3XbegDaykzQL0I=;
+        s=default; t=1517155063;
+        bh=temQzreer9kPAM8RPqKqV7bk2FwreWjt9+zEr4I1rwk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=K9cp8EW0rACC9sUs0nWOBM/8Y4OP9TU5ibBO7Wah495d1pXQPXfbsKuC/C8KSgIN+
-         /5kefsNEHpyRIaPdZNHbTvmkkA1swIBmCN5xCvvfJveM1I8v3WcMl1Zdms+HxmwRGB
-         qEpNS82dI/mgCfjIHMfnz1DhWSXxxZ+EH8Aa5lFWJJwV6ZZElnlavkCHzp2GsRUu6w
-         kpJgKCFqcelumi4mBsWPKVoz6KtPPA90QFvCG7S5aeyFypEW//Eghg8LWIrMoFS6x0
-         cMTnFaMCIJPxmZfligBe7H4RsPfS1iq8+SlstvGp6DOWESl7p1N7SA9dnhxfePHphl
-         cp9ZhElqxlHZgB/TpXL+XrRozkO9F7Bh/jiufLIZ4AQcKag34mBq///8BN4DzR4gxe
-         Jsc7/gquPIAHwWZsgkybZnnqO6seUZBcLqYMXkFMX4eoafd7tqrPqc4Ek0Y8Ez2YrT
-         tOxysNV8gnQpJD+XGhZSz5rLc3SfVqTJsqx/dVgoxhVUV3oOhXC
+        b=lDcj7yKdloKnko4qZke/tqLo8LLZ06s+Uf1+SdBmUsC/l6BERaJZC6mfwuwxSy0H2
+         fXZrU8x4DHx41c/c57izqF3IXjFO3JGhdK8ZFb+mnVzOyaDFF184L6IhP7n6QlT0LT
+         ijutvLIdDSrlyO7UJ0awHFDEhIX2duNi3jyQ7lOyJRV6JQHTmoHZD6LMJwEXbY/r91
+         R8FA1XVkF85VKh1a/uL1Zt6ilgmH5TL6cEmR8pks51vuH7E9qnOk0o0zs1C8Sntpc9
+         XkGeLOruWxRpXacwaAoQQ/LdMoxxoAolUJdNUYT2HtfXS2ks46YdZTAikCTYVFnTXE
+         9P46VlkKZTKMaXBAcfUISb1SEarqUoUXd1CjN6+iWBpMCgIvdvuGKYPGaZIMHhw9oL
+         FzLw1QU8CtgBjenh7ns7LyGSLc+1Zgca+L6CrcqO4IK1orOL+PkHRNrxGiDVjaIT00
+         3F8kRYqfFUecCXcY4hcKLGVNRkDnbY03DxCfvJcM1y7MyICtLYv
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 09/12] read-cache: abstract away uses of SHA-1
-Date:   Sun, 28 Jan 2018 15:57:19 +0000
-Message-Id: <20180128155722.880805-10-sandals@crustytoothpaste.net>
+Subject: [PATCH 12/12] bulk-checkin: abstract SHA-1 usage
+Date:   Sun, 28 Jan 2018 15:57:22 +0000
+Message-Id: <20180128155722.880805-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.315.g94e5d3ead4
 In-Reply-To: <20180128155722.880805-1-sandals@crustytoothpaste.net>
 References: <20180128155722.880805-1-sandals@crustytoothpaste.net>
@@ -52,189 +52,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert various uses of direct calls to SHA-1 and 20- and 40-based
-constants to use the_hash_algo instead.  Don't yet convert the on-disk
-data structures, which will be handled in a future commit.
+Convert uses of the direct SHA-1 functions to use the_hash_algo instead.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- read-cache.c | 54 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ bulk-checkin.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 2eb81a66b9..4f7aac23af 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1545,8 +1545,8 @@ int verify_ce_order;
- 
- static int verify_hdr(struct cache_header *hdr, unsigned long size)
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 5f79ed6ea3..8bcd1c8665 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -93,7 +93,7 @@ static int already_written(struct bulk_checkin_state *state, unsigned char sha1[
+  * with a new pack.
+  */
+ static int stream_to_pack(struct bulk_checkin_state *state,
+-			  git_SHA_CTX *ctx, off_t *already_hashed_to,
++			  git_hash_ctx *ctx, off_t *already_hashed_to,
+ 			  int fd, size_t size, enum object_type type,
+ 			  const char *path, unsigned flags)
  {
--	git_SHA_CTX c;
--	unsigned char sha1[20];
-+	git_hash_ctx c;
-+	unsigned char hash[GIT_MAX_RAWSZ];
- 	int hdr_version;
+@@ -127,7 +127,7 @@ static int stream_to_pack(struct bulk_checkin_state *state,
+ 				if (rsize < hsize)
+ 					hsize = rsize;
+ 				if (hsize)
+-					git_SHA1_Update(ctx, ibuf, hsize);
++					the_hash_algo->update_fn(ctx, ibuf, hsize);
+ 				*already_hashed_to = offset;
+ 			}
+ 			s.next_in = ibuf;
+@@ -192,7 +192,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 			   unsigned flags)
+ {
+ 	off_t seekback, already_hashed_to;
+-	git_SHA_CTX ctx;
++	git_hash_ctx ctx;
+ 	unsigned char obuf[16384];
+ 	unsigned header_len;
+ 	struct hashfile_checkpoint checkpoint;
+@@ -204,8 +204,8 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
  
- 	if (hdr->hdr_signature != htonl(CACHE_SIGNATURE))
-@@ -1558,10 +1558,10 @@ static int verify_hdr(struct cache_header *hdr, unsigned long size)
- 	if (!verify_index_checksum)
+ 	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
+ 			       typename(type), (uintmax_t)size) + 1;
+-	git_SHA1_Init(&ctx);
+-	git_SHA1_Update(&ctx, obuf, header_len);
++	the_hash_algo->init_fn(&ctx);
++	the_hash_algo->update_fn(&ctx, obuf, header_len);
+ 
+ 	/* Note: idx is non-NULL when we are writing */
+ 	if ((flags & HASH_WRITE_OBJECT) != 0)
+@@ -236,7 +236,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 		if (lseek(fd, seekback, SEEK_SET) == (off_t) -1)
+ 			return error("cannot seek back");
+ 	}
+-	git_SHA1_Final(result_sha1, &ctx);
++	the_hash_algo->final_fn(result_sha1, &ctx);
+ 	if (!idx)
  		return 0;
- 
--	git_SHA1_Init(&c);
--	git_SHA1_Update(&c, hdr, size - 20);
--	git_SHA1_Final(sha1, &c);
--	if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
-+	the_hash_algo->init_fn(&c);
-+	the_hash_algo->update_fn(&c, hdr, size - the_hash_algo->rawsz);
-+	the_hash_algo->final_fn(hash, &c);
-+	if (hashcmp(hash, (unsigned char *)hdr + size - the_hash_algo->rawsz))
- 		return error("bad index file sha1 signature");
- 	return 0;
- }
-@@ -1791,7 +1791,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		die_errno("cannot stat the open index");
- 
- 	mmap_size = xsize_t(st.st_size);
--	if (mmap_size < sizeof(struct cache_header) + 20)
-+	if (mmap_size < sizeof(struct cache_header) + the_hash_algo->rawsz)
- 		die("index file smaller than expected");
- 
- 	mmap = xmmap(NULL, mmap_size, PROT_READ, MAP_PRIVATE, fd, 0);
-@@ -1803,7 +1803,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	if (verify_hdr(hdr, mmap_size) < 0)
- 		goto unmap;
- 
--	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - 20);
-+	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - the_hash_algo->rawsz);
- 	istate->version = ntohl(hdr->hdr_version);
- 	istate->cache_nr = ntohl(hdr->hdr_entries);
- 	istate->cache_alloc = alloc_nr(istate->cache_nr);
-@@ -1831,7 +1831,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	istate->timestamp.sec = st.st_mtime;
- 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
- 
--	while (src_offset <= mmap_size - 20 - 8) {
-+	while (src_offset <= mmap_size - the_hash_algo->rawsz - 8) {
- 		/* After an array of active_nr index entries,
- 		 * there can be arbitrary number of extended
- 		 * sections, each of which is prefixed with
-@@ -1957,11 +1957,11 @@ int unmerged_index(const struct index_state *istate)
- static unsigned char write_buffer[WRITE_BUFFER_SIZE];
- static unsigned long write_buffer_len;
- 
--static int ce_write_flush(git_SHA_CTX *context, int fd)
-+static int ce_write_flush(git_hash_ctx *context, int fd)
- {
- 	unsigned int buffered = write_buffer_len;
- 	if (buffered) {
--		git_SHA1_Update(context, write_buffer, buffered);
-+		the_hash_algo->update_fn(context, write_buffer, buffered);
- 		if (write_in_full(fd, write_buffer, buffered) < 0)
- 			return -1;
- 		write_buffer_len = 0;
-@@ -1969,7 +1969,7 @@ static int ce_write_flush(git_SHA_CTX *context, int fd)
- 	return 0;
- }
- 
--static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
-+static int ce_write(git_hash_ctx *context, int fd, void *data, unsigned int len)
- {
- 	while (len) {
- 		unsigned int buffered = write_buffer_len;
-@@ -1991,7 +1991,7 @@ static int ce_write(git_SHA_CTX *context, int fd, void *data, unsigned int len)
- 	return 0;
- }
- 
--static int write_index_ext_header(git_SHA_CTX *context, int fd,
-+static int write_index_ext_header(git_hash_ctx *context, int fd,
- 				  unsigned int ext, unsigned int sz)
- {
- 	ext = htonl(ext);
-@@ -2000,26 +2000,26 @@ static int write_index_ext_header(git_SHA_CTX *context, int fd,
- 		(ce_write(context, fd, &sz, 4) < 0)) ? -1 : 0;
- }
- 
--static int ce_flush(git_SHA_CTX *context, int fd, unsigned char *sha1)
-+static int ce_flush(git_hash_ctx *context, int fd, unsigned char *hash)
- {
- 	unsigned int left = write_buffer_len;
- 
- 	if (left) {
- 		write_buffer_len = 0;
--		git_SHA1_Update(context, write_buffer, left);
-+		the_hash_algo->update_fn(context, write_buffer, left);
- 	}
- 
- 	/* Flush first if not enough space for SHA1 signature */
--	if (left + 20 > WRITE_BUFFER_SIZE) {
-+	if (left + the_hash_algo->rawsz > WRITE_BUFFER_SIZE) {
- 		if (write_in_full(fd, write_buffer, left) < 0)
- 			return -1;
- 		left = 0;
- 	}
- 
- 	/* Append the SHA1 signature at the end */
--	git_SHA1_Final(write_buffer + left, context);
--	hashcpy(sha1, write_buffer + left);
--	left += 20;
-+	the_hash_algo->final_fn(write_buffer + left, context);
-+	hashcpy(hash, write_buffer + left);
-+	left += the_hash_algo->rawsz;
- 	return (write_in_full(fd, write_buffer, left) < 0) ? -1 : 0;
- }
- 
-@@ -2100,7 +2100,7 @@ static void copy_cache_entry_to_ondisk(struct ondisk_cache_entry *ondisk,
- 	}
- }
- 
--static int ce_write_entry(git_SHA_CTX *c, int fd, struct cache_entry *ce,
-+static int ce_write_entry(git_hash_ctx *c, int fd, struct cache_entry *ce,
- 			  struct strbuf *previous_name, struct ondisk_cache_entry *ondisk)
- {
- 	int size;
-@@ -2167,7 +2167,7 @@ static int verify_index_from(const struct index_state *istate, const char *path)
- 	int fd;
- 	ssize_t n;
- 	struct stat st;
--	unsigned char sha1[20];
-+	unsigned char hash[GIT_MAX_RAWSZ];
- 
- 	if (!istate->initialized)
- 		return 0;
-@@ -2179,14 +2179,14 @@ static int verify_index_from(const struct index_state *istate, const char *path)
- 	if (fstat(fd, &st))
- 		goto out;
- 
--	if (st.st_size < sizeof(struct cache_header) + 20)
-+	if (st.st_size < sizeof(struct cache_header) + the_hash_algo->rawsz)
- 		goto out;
- 
--	n = pread_in_full(fd, sha1, 20, st.st_size - 20);
--	if (n != 20)
-+	n = pread_in_full(fd, hash, the_hash_algo->rawsz, st.st_size - the_hash_algo->rawsz);
-+	if (n != the_hash_algo->rawsz)
- 		goto out;
- 
--	if (hashcmp(istate->sha1, sha1))
-+	if (hashcmp(istate->sha1, hash))
- 		goto out;
- 
- 	close(fd);
-@@ -2235,7 +2235,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 			  int strip_extensions)
- {
- 	int newfd = tempfile->fd;
--	git_SHA_CTX c;
-+	git_hash_ctx c;
- 	struct cache_header hdr;
- 	int i, err = 0, removed, extended, hdr_version;
- 	struct cache_entry **cache = istate->cache;
-@@ -2273,7 +2273,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	hdr.hdr_version = htonl(hdr_version);
- 	hdr.hdr_entries = htonl(entries - removed);
- 
--	git_SHA1_Init(&c);
-+	the_hash_algo->init_fn(&c);
- 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
  
