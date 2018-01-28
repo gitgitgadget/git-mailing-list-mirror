@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E53801F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6DF51F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753082AbeA1ANg (ORCPT <rfc822;e@80x24.org>);
+        id S1753146AbeA1ANi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 19:13:38 -0500
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:42375 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752352AbeA1ANg (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 27 Jan 2018 19:13:36 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:37742 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752380AbeA1ANc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 19:13:32 -0500
-Received: by mail-lf0-f68.google.com with SMTP id 63so5046724lfv.4
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:32 -0800 (PST)
+Received: by mail-lf0-f67.google.com with SMTP id q17so5017968lfa.9
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=h3bmnLy1TpLcZnJgQq5WrClr6s8o9JofBu1CKx0nRV8=;
-        b=MscxtzXLF0bBzch3Cr9/JdlCwe0cQwnrnOPXy015k68mniM6eoXOQ+MFWQ4CydHr2i
-         HLjUGdOizJMIzNSG0bZkWOEEDZaL92mWzGJWQ40jYE6vzpegUBfKCqWbHaaqrunXvL2g
-         dLI6lZ45ggVx8DUGFGE182p/ZUFd3Urj36pf35UaVkwBSZVCPuLh/Xh0uSq+6eQKZhC+
-         lVFK7AvWOa78ZilAYkFAFKoCqrZRUi2ifDYgRF0+tkMcFPMZSoQwaCsAaJ2DuRaNQQh8
-         YHAF7B9S5U6YY4Wxyc/192lDmr9B4CoAD6A9lYzcCesnZF7lTJ14SO2z1aHsu6AZgmBO
-         rPqg==
+        bh=V0ifA3oPEOS05sBUgw/zzcgOyAtZ+wqHy7M8Szjm8Fw=;
+        b=G29aQGTBlhrNyYW1eeQRlHIe9C7K0X28PrhjauRVZiazeP1+qvA1j7h/MOzNG163GD
+         74iDrLxe8z32jqKe8HjsHV9pGuNXrvMj0bOepZFJIvMsyHdWzQ3cms3F06zEz/qgtFcR
+         n9AZilmrA6A4H4UeXhMhnyS+miIqe/f6ggepkeswhkmvfjHvDE/KvYeJzlhVU+RF/69Q
+         8CdS57v3WsIzlP9YPqW14qHhVfLXD5OCn4TpceUVGqpEvdGbzQ7+UhiSkJ1eSEbsqmRg
+         rj0PoJoCG7YM0qxnPlPTY4mVEAkvn23SUcBmshrVjO4QASb1FPVWgkh7o1llmsmvsRa1
+         G4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=h3bmnLy1TpLcZnJgQq5WrClr6s8o9JofBu1CKx0nRV8=;
-        b=XMu6a/LcgxLKbszX1Zea0U1c/0FjCZ41dcN/LtYjRjqSiqeChPQWTQOEfaAoIHplB1
-         NR/3bLsfeVJSLXeHnzOl5Gfqk1OQHSDs4g9nnb1wiQ/+8d9cLil7htmyOU0/y8R7ogPy
-         B/ZOLDvtL8suf1abyU4lxV08cqLuNT4cvZrqaBzwfFOHXy/tRDNJKPj5vTvorpWmidOp
-         BZ090vIYPjPEAurvIvGlitTISmy4cA311CBeVtIFjVqxGFXVdKBYZkT6tV74sg5mug4v
-         yH6RLo17zpuKegjN3MFBRZ7svmD2YqJCIDsuaZqsW6r1e0sQgEiUVqwFdvhbGktH5Q0X
-         2Vpw==
-X-Gm-Message-State: AKwxytfYzw1i/pk+4Uug2Cp6JE1RnRTMfg+Puoo2HBcYUXkkqptE6xAt
-        +VG+5pUQCf44ZEVryCBL4zyxTsg2
-X-Google-Smtp-Source: AH8x225jYqkZqeTiEi9c7U3Y+RJwjZd37Nuyjygoic6tGrFdfpU49VvpBKo9q/iUyV9vY4ccn4O75A==
-X-Received: by 10.25.78.155 with SMTP id u27mr12045660lfk.86.1517098411175;
-        Sat, 27 Jan 2018 16:13:31 -0800 (PST)
+        bh=V0ifA3oPEOS05sBUgw/zzcgOyAtZ+wqHy7M8Szjm8Fw=;
+        b=QgKo/WZLeCFDs0MD72akmv5xu/CNTD+BPgghSkUT+b3ZiaYhQhViIbbcj+pOjrStmy
+         rfGoMj/3hfg5bV1ULA6DztjmmFZDO/EQ3JGeSeWFWnsoFRr3wmX+eYfQO4VSw0/uLsNQ
+         ycHDlicJ6VQKtKK5Nmh/kMYVmimGoAJjXUd7qB9T5yNZXGB2uoFWnRtvfOwP3eT9APHl
+         uFlBDWr4nPs2qNbkjHNWni2btfjssxhFacaUZJzcfcR+psxWWU1AHhn3svRQbmKn9jd/
+         Du/Se0PMHxv5StWbvwWp7q9ZbEljiPl4+n8eORkduV6+4GETy92qe2bww6H4piBn9cVT
+         FlBw==
+X-Gm-Message-State: AKwxytdJCVsTd9fFblSJQtYesm/03659WOb0j7XPSh9pPlw8qZyS0tSh
+        EPNMhyl84WdRq2jc69Y4D2BtXCWv
+X-Google-Smtp-Source: AH8x224bvCeKH5IlTeEDMNa/ajS9mPFLnxfendGXC3tWd7wOzCa+JfYHiLh4iGPqa54LDhqrYOAu1A==
+X-Received: by 10.25.143.12 with SMTP id r12mr11463697lfd.30.1517098414911;
+        Sat, 27 Jan 2018 16:13:34 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.30
+        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 16:13:30 -0800 (PST)
+        Sat, 27 Jan 2018 16:13:33 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 05/12] match-trees: convert splice_tree to object_id
-Date:   Sun, 28 Jan 2018 01:13:15 +0100
-Message-Id: <43779db73a7300aaa235ee62b4ad443ecdefcf02.1517097306.git.patryk.obara@gmail.com>
+Subject: [PATCH v4 08/12] notes: convert write_notes_tree to object_id
+Date:   Sun, 28 Jan 2018 01:13:18 +0100
+Message-Id: <5e4e97a31b3cdf96e40853d48628dfcc7d7339c8.1517097306.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1517097306.git.patryk.obara@gmail.com>
 References: <cover.1516790478.git.patryk.obara@gmail.com>
@@ -68,116 +68,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the definition of static recursive splice_tree function to use
-struct object_id and adjust single caller.
+Convert the definition and declaration of write_notes_tree to
+struct object_id and adjust usage of this function.
+
+Additionally, improve style of small part of this function, as old
+formatting made it hard to understand at glance what this part of
+code is doing.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- match-trees.c | 46 ++++++++++++++++++++++------------------------
- 1 file changed, 22 insertions(+), 24 deletions(-)
+ notes-cache.c |  2 +-
+ notes-utils.c |  2 +-
+ notes.c       | 16 +++++++++-------
+ notes.h       |  4 ++--
+ 4 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/match-trees.c b/match-trees.c
-index 396b7338df..afb771c4f5 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -158,22 +158,20 @@ static void match_trees(const struct object_id *hash1,
+diff --git a/notes-cache.c b/notes-cache.c
+index d2f87147cc..010ad236cb 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -54,7 +54,7 @@ int notes_cache_write(struct notes_cache *c)
+ 	if (!c->tree.dirty)
+ 		return 0;
+ 
+-	if (write_notes_tree(&c->tree, tree_oid.hash))
++	if (write_notes_tree(&c->tree, &tree_oid))
+ 		return -1;
+ 	if (commit_tree(c->validity, strlen(c->validity), &tree_oid, NULL,
+ 			&commit_oid, NULL, NULL) < 0)
+diff --git a/notes-utils.c b/notes-utils.c
+index 058c642dac..02407fe2a7 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -12,7 +12,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 
+ 	assert(t->initialized);
+ 
+-	if (write_notes_tree(t, tree_oid.hash))
++	if (write_notes_tree(t, &tree_oid))
+ 		die("Failed to write notes tree to database");
+ 
+ 	if (!parents) {
+diff --git a/notes.c b/notes.c
+index 3f4f94507a..09ef1ce33a 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1123,11 +1123,12 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+ 	return for_each_note_helper(t, t->root, 0, 0, flags, fn, cb_data);
  }
  
- /*
-- * A tree "hash1" has a subdirectory at "prefix".  Come up with a
-- * tree object by replacing it with another tree "hash2".
-+ * A tree "oid1" has a subdirectory at "prefix".  Come up with a tree object by
-+ * replacing it with another tree "oid2".
-  */
--static int splice_tree(const unsigned char *hash1,
--		       const char *prefix,
--		       const unsigned char *hash2,
--		       unsigned char *result)
-+static int splice_tree(const struct object_id *oid1, const char *prefix,
-+		       const struct object_id *oid2, struct object_id *result)
+-int write_notes_tree(struct notes_tree *t, unsigned char *result)
++int write_notes_tree(struct notes_tree *t, struct object_id *result)
  {
- 	char *subpath;
- 	int toplen;
- 	char *buf;
- 	unsigned long sz;
- 	struct tree_desc desc;
--	unsigned char *rewrite_here;
--	const unsigned char *rewrite_with;
--	unsigned char subtree[20];
-+	struct object_id *rewrite_here;
-+	const struct object_id *rewrite_with;
-+	struct object_id subtree;
- 	enum object_type type;
- 	int status;
+ 	struct tree_write_stack root;
+ 	struct write_each_note_data cb_data;
+ 	int ret;
++	int flags;
  
-@@ -182,9 +180,9 @@ static int splice_tree(const unsigned char *hash1,
- 	if (*subpath)
- 		subpath++;
+ 	if (!t)
+ 		t = &default_notes_tree;
+@@ -1141,12 +1142,13 @@ int write_notes_tree(struct notes_tree *t, unsigned char *result)
+ 	cb_data.next_non_note = t->first_non_note;
  
--	buf = read_sha1_file(hash1, &type, &sz);
-+	buf = read_sha1_file(oid1->hash, &type, &sz);
- 	if (!buf)
--		die("cannot read tree %s", sha1_to_hex(hash1));
-+		die("cannot read tree %s", oid_to_hex(oid1));
- 	init_tree_desc(&desc, buf, sz);
- 
- 	rewrite_here = NULL;
-@@ -197,26 +195,26 @@ static int splice_tree(const unsigned char *hash1,
- 		if (strlen(name) == toplen &&
- 		    !memcmp(name, prefix, toplen)) {
- 			if (!S_ISDIR(mode))
--				die("entry %s in tree %s is not a tree",
--				    name, sha1_to_hex(hash1));
--			rewrite_here = (unsigned char *) oid->hash;
-+				die("entry %s in tree %s is not a tree", name,
-+				    oid_to_hex(oid1));
-+			rewrite_here = (struct object_id *)oid;
- 			break;
- 		}
- 		update_tree_entry(&desc);
- 	}
- 	if (!rewrite_here)
--		die("entry %.*s not found in tree %s",
--		    toplen, prefix, sha1_to_hex(hash1));
-+		die("entry %.*s not found in tree %s", toplen, prefix,
-+		    oid_to_hex(oid1));
- 	if (*subpath) {
--		status = splice_tree(rewrite_here, subpath, hash2, subtree);
-+		status = splice_tree(rewrite_here, subpath, oid2, &subtree);
- 		if (status)
- 			return status;
--		rewrite_with = subtree;
-+		rewrite_with = &subtree;
-+	} else {
-+		rewrite_with = oid2;
- 	}
--	else
--		rewrite_with = hash2;
--	hashcpy(rewrite_here, rewrite_with);
--	status = write_sha1_file(buf, sz, tree_type, result);
-+	oidcpy(rewrite_here, rewrite_with);
-+	status = write_sha1_file(buf, sz, tree_type, result->hash);
- 	free(buf);
- 	return status;
+ 	/* Write tree objects representing current notes tree */
+-	ret = for_each_note(t, FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
+-				FOR_EACH_NOTE_YIELD_SUBTREES,
+-			write_each_note, &cb_data) ||
+-		write_each_non_note_until(NULL, &cb_data) ||
+-		tree_write_stack_finish_subtree(&root) ||
+-		write_sha1_file(root.buf.buf, root.buf.len, tree_type, result);
++	flags = FOR_EACH_NOTE_DONT_UNPACK_SUBTREES |
++		FOR_EACH_NOTE_YIELD_SUBTREES;
++	ret = for_each_note(t, flags, write_each_note, &cb_data) ||
++	      write_each_non_note_until(NULL, &cb_data) ||
++	      tree_write_stack_finish_subtree(&root) ||
++	      write_sha1_file(root.buf.buf, root.buf.len, tree_type,
++			      result->hash);
+ 	strbuf_release(&root.buf);
+ 	return ret;
  }
-@@ -280,7 +278,7 @@ void shift_tree(const struct object_id *hash1,
- 	if (!*add_prefix)
- 		return;
+diff --git a/notes.h b/notes.h
+index 88da38b5f4..0433f45db5 100644
+--- a/notes.h
++++ b/notes.h
+@@ -217,7 +217,7 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+  * Write the given notes_tree structure to the object database
+  *
+  * Creates a new tree object encapsulating the current state of the given
+- * notes_tree, and stores its SHA1 into the 'result' argument.
++ * notes_tree, and stores its object id into the 'result' argument.
+  *
+  * Returns zero on success, non-zero on failure.
+  *
+@@ -225,7 +225,7 @@ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+  * this function has returned zero. Please also remember to create a
+  * corresponding commit object, and update the appropriate notes ref.
+  */
+-int write_notes_tree(struct notes_tree *t, unsigned char *result);
++int write_notes_tree(struct notes_tree *t, struct object_id *result);
  
--	splice_tree(hash1->hash, add_prefix, hash2->hash, shifted->hash);
-+	splice_tree(hash1, add_prefix, hash2, shifted);
- }
- 
- /*
-@@ -334,7 +332,7 @@ void shift_tree_by(const struct object_id *hash1,
- 		 * shift tree2 down by adding shift_prefix above it
- 		 * to match tree1.
- 		 */
--		splice_tree(hash1->hash, shift_prefix, hash2->hash, shifted->hash);
-+		splice_tree(hash1, shift_prefix, hash2, shifted);
- 	else
- 		/*
- 		 * shift tree2 up by removing shift_prefix from it
+ /* Flags controlling the operation of prune */
+ #define NOTES_PRUNE_VERBOSE 1
 -- 
 2.14.3
 
