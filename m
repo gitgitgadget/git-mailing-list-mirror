@@ -2,120 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C61F41F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 13:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDBAD1F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 15:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751665AbeA1NlX (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 08:41:23 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33893 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751518AbeA1NlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jan 2018 08:41:22 -0500
-Received: by mail-wr0-f195.google.com with SMTP id 36so4385016wrh.1
-        for <git@vger.kernel.org>; Sun, 28 Jan 2018 05:41:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Y8iA8MpDkoca7LBFQZY2chem4oo9DpcYmdv378MkAZE=;
-        b=gNLw+ZxdemOQrNcelSWEcrLiRbbAeVmNHGMx8BQCulxjB9g+P8JjftTJOFQgYvZBzu
-         AXon/sjRH2Qe47t1O620a5Zu9WHx6rOtckFXDkjxPr41omrvgr/NNGRadcc3qjbKHoOz
-         faLEhZU7h0HZpjFJA0s9Cbx7EV5OiDp2aWg4OSPdXZVKQ/h6dboQANgMJgl4J6QIZYWI
-         /sMgp+J5EQXeCL0+/RCXCOpezzpsudirXeVr9Yw8BBMUqXJAGZUg9dgtmy5cUCH6kL/O
-         GChdSSt9NJuo/8/PHJu6ShySuLBst9tZRwcMhb//86ImK0Qe8cP1fIkwF3CquGeIZsEe
-         J9lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Y8iA8MpDkoca7LBFQZY2chem4oo9DpcYmdv378MkAZE=;
-        b=E6unrKVZEyAe37v1yYOfcGp/OemLT421Ow9Jw5n4hdoUG9WFMa6exhqt/TfT2uYk6E
-         1wpS18mAC+YpHXBnCL5auUYdi0Wuu+wQsQKZqAX8dheLWEnNINL2rd9Rr4sWxMXveg7I
-         3cIaUGsTDtL1IMZZldqHsHxj/ZszMQ+0J9x8R1RndiNGGVRF+rbFoZIq33RDIX1IUW1U
-         iJFmhAT8UB6Z499wvb2NhpSrOEIGP19nypzQNAdCF3+JWPc7mTtjnMr0tp75OAO78/yU
-         lKKznROO3mMPjbruaPFthV+Fm2a3DAgWhQ2KEdFmCMD3DcmPdHaDP5qIWSMGYXtfRttf
-         uzug==
-X-Gm-Message-State: AKwxytcMjq1sFtyDTw3MCIQEc7Qfn++yb9D29SG2fWu8UNnpR7nLWHf0
-        URKm0xcTN/4Ep3x4ev6WubFwsCvhowDsekvfIg==
-X-Google-Smtp-Source: AH8x227+evLAxydNIowEe0+U3fFrivlPm3ThkTyxHNZwcHtx6i3vDy3ogawU2c/Rp6SXKgvqHBR5laXvCbpBh01Ywp4=
-X-Received: by 10.223.175.213 with SMTP id y21mr11699998wrd.135.1517146881580;
- Sun, 28 Jan 2018 05:41:21 -0800 (PST)
+        id S1751966AbeA1PPp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 10:15:45 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58338 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751699AbeA1PPo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:15:44 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 62D30609CB;
+        Sun, 28 Jan 2018 15:15:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1517152543;
+        bh=DwbSukBimATcRM7Jwhh5jguHC1U8CNd0Nwtcbg6Qruw=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hcIkFjqg3L9z8a5C1yax94pFpqfEUbIwZO5/6nPMDuh1QP7J6Tr9NpetHCxC++T5Y
+         lvu9xi6oGOjFhQhR7/O6kjvW8b7xYvElGg+3VCtcF16YOlt5zoITHIKWHD1d0514TA
+         Oa+IhMVDkF2TEZRk6tbH6bzoCxINhoyFzmqZIJwm+5P0tHbqIF0OUBYjjn8FXr8/FZ
+         CwTP7KZyotdkRAEW0Yb3m6LkULfdWgMZ8cew3+xCnO+mViFy2Kc/oUvzSJHpKybRY+
+         Ok0rdfpvRuC7A1q1CGtyeHS08fqfFkNa5OhdndRZVnIIEHqUnxLJshlhqBeJo8ST6B
+         +C4zrP8Av919h43venmdhsfelV+/RohyNq+jizP1EDEn8F+ftAFIH8VxwaTa9JDH/v
+         26vlB2sqBVaCKD+Hw9Rq64JpvfA41eHLizsY09y9Wa6wvEjr9dseLsatw/GUzJgfg3
+         T4hsHKnprIQ/JMRNWEQU+QPgGgpVolQb0z0A7rD8UdZGN27uN5M
+Date:   Sun, 28 Jan 2018 15:15:36 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc:     git@vger.kernel.org
+Subject: Re: git send-email sets date
+Message-ID: <20180128151536.GE431130@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        git@vger.kernel.org
+References: <20180126183230.0ae0c76b@kitsune.suse.cz>
 MIME-Version: 1.0
-Received: by 10.223.196.8 with HTTP; Sun, 28 Jan 2018 05:41:20 -0800 (PST)
-In-Reply-To: <87d127i5qs.fsf@evledraar.gmail.com>
-References: <157d942b-99a9-4a75-92b9-8eb8adb17032@googlegroups.com> <87d127i5qs.fsf@evledraar.gmail.com>
-From:   Michael Felt <aixtools@gmail.com>
-Date:   Sun, 28 Jan 2018 14:41:20 +0100
-Message-ID: <CANvxniWbhF+cuQFU+7qg1KYG9kMPLj6ENAd+d2kBvv6pXkgkfg@mail.gmail.com>
-Subject: Re: Git For Aix 6 and 7
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     raikrishna76@gmail.com,
-        git-packagers <git-packagers@googlegroups.com>,
-        git@vger.kernel.org, Thom May <thom@may.lt>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qFgkTsE6LiHkLPZw"
+Content-Disposition: inline
+In-Reply-To: <20180126183230.0ae0c76b@kitsune.suse.cz>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have git on my portal www.aixtools.net (See
-http://www.aixtools.net/index.php/git)
 
-These are installp packages - and what you install, you can uninstall.
+--qFgkTsE6LiHkLPZw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There are some dependencies (e.g., python, gnu grep, and a few
-others). Can't say I use it daily, but I do use it weekly.
+On Fri, Jan 26, 2018 at 06:32:30PM +0100, Michal Such=C3=A1nek wrote:
+> git send-email sets the message date to author date.
+>=20
+> This is wrong because the message will most likely not get delivered
+> when the author date differs from current time. It might give slightly
+> better results with commit date instead of author date but can't is
+> just skip that header and leave it to the mailer?
+>=20
+> It does not even seem to have an option to suppress adding the date
+> header.
 
-For additional questions or issues with this packaging - please post
-on http://forums.rootvg.net/aixtools - I see that a lot sooner than
-any email (on gmail).
+I'm pretty sure it's intended to work this way.
 
-HTH,
-Michael
+Without the Date header, we have no way of providing the author date
+when sending a patch.  git am will read this date and use it as the
+author date when applying patches, so if it's omitted, the author date
+will be wrong.
 
-On Thu, Jan 18, 2018 at 3:47 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Jan 18 2018, raikrishna jotted:
->
->> Hi Team,
->>
->> I have an urgent requirement to install Git client for Aix 6 and 7, coul=
-d
->> you please help send me or navigate me to the correct url.
->> My present infrastructure comprise of Aix and Linux servers , I am
->> successfully using Git on Linux however I am struggling to find correct
->> package for AIX platform.
->>
->> Appreciate your quick response.
->
-> Hi raikrishna. The git-packagers list is a rather small list so perhaps
-> someone on the general git list (CC'd) knows the answer to this.
->
-> I'm not aware of anyone providing binary git packages for AIX, but I
-> don't use it so maybe they exist.
->
-> The last mention on the mailing list I could find of someone packaging
-> it was this from Michael Felt's (CC'd)
-> https://public-inbox.org/git/CANvxniXkbAKgjm+NZ0cyyCToEYp23Kd8s4yxSqUOsAU=
-AHJSA7g@mail.gmail.com/
->
-> The last AIX-related patch to git is actually mine, but I haven't logged
-> into an AIX box in over a decade, see
-> https://github.com/chef/omnibus-software/commit/e247e36761#diff-3df898345=
-d670979b74acc0bf71d8c47
->
-> So it looks like there's a chef build recipe for it, maybe that's
-> something you can use?
->
-> I would not be surprised if building git on AIX, particularly with a
-> non-GNU toolchain, fails in all sorts of interesting ways. People here
-> on the list would be happy to help you work through those failures,
-> we're keen to port git to whatever we can get our hands on, but these
-> platforms experience quite a bit of bitrot.
+If you want to send patches with a different date, you can always insert
+the patch inline in your mailer using the scissors notation, which will
+allow your mailer to insert its own date while keeping the patch date
+separate.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--qFgkTsE6LiHkLPZw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpt6RgACgkQv1NdgR9S
+9otNsw//fToM5SjZuYaOJYr8oOuQFMV6g0aBcAZWFio5pJBMr3FVe+MLunxrGnaD
+fmjMqA3JZy0vCNw+irun0he+s8ZgmIuQ2HYQH8/3j7E+RMFlqKEyzFl17ttXlW7y
+twpCCIos32tgl6x/pyhwYGfEeZ0+uE2lzhHTplHdIVxoGOhmVVdimFQeMdot7U1z
+8s/r38TIhUnft6eCUW1Hk+fMDTPd0yPhSCUW8yEUVbUFqENFxZOkhZz1wWLnBlPQ
+iIwclmfhDQE8td462jsNxSPifYi94DDFFAtzDYF+FVwEXT6E6UG9SqCylbLHCx1d
+y3hx6X9/dcwDwMMilXeRv7yUlhIDSTNOMSCqbsD5ZoSQEPNaE1hVPLvnRMKSWjTk
+n4VkM8eMyauv07DS31YXt/aI58+KH0BRPBPh8DKIW+hjMfHlp/JrkbeFfaaTM1yF
+iz/aStlmeDQMyYKatAGUCBK1aFSkrAesP+a0FPdxYcpudmrL8bS0Ncklx8E+eAwo
+be/NSw/lkH4qIiaQC4XZjY8YNxWDdKDH5gMWOSEOj3rD1no4PLNnBjJZV+ejnCjB
+81rx+/KnOZHK8xm3ZjJ2Civmv/2cj+VKzwn4BWrgaIxsTWMC5QZWX1DiMjjneDFJ
+Xyj34Bh53bxl71BxFMhxzW/OXsiN4ycfMzMtz3vsqSig5pNAkLo=
+=twpI
+-----END PGP SIGNATURE-----
+
+--qFgkTsE6LiHkLPZw--
