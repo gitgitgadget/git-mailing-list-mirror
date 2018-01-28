@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48BD11F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6B11F404
+	for <e@80x24.org>; Sun, 28 Jan 2018 00:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753230AbeA1ANq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 Jan 2018 19:13:46 -0500
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:37748 "EHLO
-        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753115AbeA1ANi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 Jan 2018 19:13:38 -0500
-Received: by mail-lf0-f68.google.com with SMTP id 63so5046853lfv.4
-        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:38 -0800 (PST)
+        id S1753223AbeA1ANp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 Jan 2018 19:13:45 -0500
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:44127 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753159AbeA1ANk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 Jan 2018 19:13:40 -0500
+Received: by mail-lf0-f66.google.com with SMTP id v188so5004137lfa.11
+        for <git@vger.kernel.org>; Sat, 27 Jan 2018 16:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:in-reply-to
          :references;
-        bh=4HFe+561zdpiE7tEhQw/JLlpxc2NdI0tO9rUqT9qUpE=;
-        b=tb88jatFCjgZgOo4yZolrBPDd1Ut4IwbLbdtZoeMlyj1SnkHnfYLXOqJxZERUUF6oZ
-         I89isa11uECoV640ZbGgdknWuNyXXh3TTVhTn4JFlnyj9lt/zObhjCcgvMdH0hV2Ry1e
-         N5C6RcgvzC7uSukCn3ReUdfTtpfpm/KPE8plJ4GA3EYtCUyf5HpekPZtTbMmUItme+yI
-         w3KcaEk9/+wz1EJZiud0HfLXgXsQvF0K1qbsZvW61kddE6yj9YRJP/GFRnDC34rFP3iB
-         OQsxnTPe+q/mjsNqpEQrfs45EPWoJchc5ZB+Sebe9m/VI69R25LRRq7KkosidG7gRQWH
-         G/NA==
+        bh=6oaq8gZ234IKgvgE0oN13kzcAr9Zuibqnij5aluG1/M=;
+        b=I7b8ney2XwVw8dtX26aJ1190PTQbkHcz4+RESs4IlZQj2wnAM2+r39d7Z3NMtumSPX
+         Z75f2RU4uQ8g68iXPzl43DcqnJD0070F2N0a9OToK5M1udtVr6B1Il4TnC8z8cAN+MfJ
+         hr35edagTPst/PYb81JnNpcGPz72ADtKLb4m6pzWRM7SllSE3+qUycKGEJXfWsniI1N3
+         Gb5WTavL10Dhf6rosNblNgO2Za/Aigne55ubVDcL29DtRtVntdpydi6s6nQbUcZeFO5z
+         c3zIx9sh8eOb9zRMgN8uUowAVojBXkSQVKRXQYa1l15u0g+L8dXB63NlApepvPB4D3CM
+         HwjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=4HFe+561zdpiE7tEhQw/JLlpxc2NdI0tO9rUqT9qUpE=;
-        b=Rf2K9mrrIA4k0KYG5fsDbU6PKpFfIhkYlhlWDWmKw47tvKdWeW+p4NPBOguCThtKkh
-         oBLOzNAmbCKM9r8oQYqbClGqa0U9HgenjlxzBWBlqhEW7XuggZauv62M09riwvbXm3oP
-         pXtgPU1ERDUi0Ay178yIlhQU6x6Y7RbkeVj+EJAqxHY1oZxa1gNe/aM7Oo28TmC6GCT+
-         OGB+lTvJ/QSaxQbwXlpLQIU4eZUx570JWHEqfMoG4Nw7UYxMg6unsA053JQLOqCrMQQQ
-         6fCageYEeTp5MydNksNtWB1aTeCcvn0Zm9sqJsuTc3tOhuTTsdcN04tSS++fcOalCd7v
-         H6ZQ==
-X-Gm-Message-State: AKwxytdkP3AlYvB4wdkLYtUW6jzxbZXWtymSY5n67kaObMWTB2B00gLl
-        ad4sGqwmXdwOIxwnqY3f67xmY/gH
-X-Google-Smtp-Source: AH8x224AwUpwoedJniL3hq4C8RStaQ2dL3WBFpd9C0hRzyB8BxEZuYl9sEAzq3LkAsvUL71g9zFWyA==
-X-Received: by 10.25.158.67 with SMTP id h64mr10615567lfe.56.1517098417293;
-        Sat, 27 Jan 2018 16:13:37 -0800 (PST)
+        bh=6oaq8gZ234IKgvgE0oN13kzcAr9Zuibqnij5aluG1/M=;
+        b=HpFBP+9MKhne7LihlYNYWVmqvSdRTwImGHPrjSi1a5zo9V+joqGfOyTQAfBi89BI7L
+         jcaIeojCnSfPca32HYYoU7yhMKKuTU3YL/rf89VsRjWa1nN2Rv5lVHV0DiS0sBOTsYf9
+         RMaSJ784V8GBGu8V68gkgQKPRNXMEd+eSV09vZt4nzUgF4+OtrVMGRLo6wFOGlJErp2z
+         Y2FW2WV7Rh9wDaa2UX9nsknHc32paszaKEI8SvdLruFAp5UeVEVb6k8YFAzEYsRVFI5Q
+         AncIRzjhwGvBGaKLUsgwZoBgNNasp9ZnYy8hwM+BEnfrtBg9v7aT1c1fOXOqJG/XeJ1o
+         X42Q==
+X-Gm-Message-State: AKwxytf44OuzVU5Qfwb0vMVfuvhDst0OB7ZeF1IwI4i+Qa6MEXpksyUm
+        hZ+kk0xuEXG66u4eWVAWGwvFBJrn
+X-Google-Smtp-Source: AH8x224QF6rh3hT8wW9jrP4piXzNYtyK+M45lT87D8WGbFU2wzNC4Rg4alK2ynNCx/OWBVFYffjxJQ==
+X-Received: by 10.25.92.13 with SMTP id q13mr10223576lfb.69.1517098418613;
+        Sat, 27 Jan 2018 16:13:38 -0800 (PST)
 Received: from localhost.localdomain ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.36
+        by smtp.gmail.com with ESMTPSA id y26sm2144695lfk.30.2018.01.27.16.13.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 27 Jan 2018 16:13:36 -0800 (PST)
+        Sat, 27 Jan 2018 16:13:37 -0800 (PST)
 From:   Patryk Obara <patryk.obara@gmail.com>
 To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 10/12] sha1_file: convert force_object_loose to object_id
-Date:   Sun, 28 Jan 2018 01:13:20 +0100
-Message-Id: <ef417ce6bafc8f6c25f8a57581235af1f709b02d.1517097306.git.patryk.obara@gmail.com>
+Subject: [PATCH v4 11/12] sha1_file: convert write_loose_object to object_id
+Date:   Sun, 28 Jan 2018 01:13:21 +0100
+Message-Id: <24cb733eaa949af55d9e48c22d6f540217fa28c1.1517097306.git.patryk.obara@gmail.com>
 X-Mailer: git-send-email 2.14.3
 In-Reply-To: <cover.1517097306.git.patryk.obara@gmail.com>
 References: <cover.1516790478.git.patryk.obara@gmail.com>
@@ -68,71 +68,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the definition and declaration of force_object_loose to
-struct object_id and adjust usage of this function.
+Convert the definition and declaration of static write_loose_object
+function to struct object_id.
 
 Signed-off-by: Patryk Obara <patryk.obara@gmail.com>
 ---
- builtin/pack-objects.c |  2 +-
- cache.h                |  3 ++-
- sha1_file.c            | 10 +++++-----
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ sha1_file.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 6b9cfc289d..f38197543d 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2768,7 +2768,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
- 			if (!packlist_find(&to_pack, oid.hash, NULL) &&
- 			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
- 			    !loosened_object_can_be_discarded(&oid, p->mtime))
--				if (force_object_loose(oid.hash, p->mtime))
-+				if (force_object_loose(&oid, p->mtime))
- 					die("unable to force loose object");
- 		}
- 	}
-diff --git a/cache.h b/cache.h
-index d80141eb64..0a8be9c87f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1248,7 +1248,8 @@ extern int hash_sha1_file_literally(const void *buf, unsigned long len, const ch
- extern int pretend_object_file(void *, unsigned long, enum object_type,
- 			       struct object_id *oid);
- 
--extern int force_object_loose(const unsigned char *sha1, time_t mtime);
-+extern int force_object_loose(const struct object_id *oid, time_t mtime);
-+
- extern int git_open_cloexec(const char *name, int flags);
- #define git_open(name) git_open_cloexec(name, O_RDONLY)
- extern void *map_sha1_file(const unsigned char *sha1, unsigned long *size);
 diff --git a/sha1_file.c b/sha1_file.c
-index d1569b1b96..d9ee966d74 100644
+index d9ee966d74..59238f5bea 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1670,7 +1670,7 @@ int hash_sha1_file_literally(const void *buf, unsigned long len, const char *typ
- 	return status;
+@@ -1548,16 +1548,17 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+ 	return fd;
  }
  
--int force_object_loose(const unsigned char *sha1, time_t mtime)
-+int force_object_loose(const struct object_id *oid, time_t mtime)
+-static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+-			      const void *buf, unsigned long len, time_t mtime)
++static int write_loose_object(const struct object_id *oid, char *hdr,
++			      int hdrlen, const void *buf, unsigned long len,
++			      time_t mtime)
  {
- 	void *buf;
- 	unsigned long len;
-@@ -1679,13 +1679,13 @@ int force_object_loose(const unsigned char *sha1, time_t mtime)
- 	int hdrlen;
- 	int ret;
+ 	int fd, ret;
+ 	unsigned char compressed[4096];
+ 	git_zstream stream;
+ 	git_SHA_CTX c;
+-	unsigned char parano_sha1[20];
++	struct object_id parano_oid;
+ 	static struct strbuf tmp_file = STRBUF_INIT;
+-	const char *filename = sha1_file_name(sha1);
++	const char *filename = sha1_file_name(oid->hash);
  
--	if (has_loose_object(sha1))
-+	if (has_loose_object(oid->hash))
+ 	fd = create_tmpfile(&tmp_file, filename);
+ 	if (fd < 0) {
+@@ -1594,13 +1595,16 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+ 	} while (ret == Z_OK);
+ 
+ 	if (ret != Z_STREAM_END)
+-		die("unable to deflate new object %s (%d)", sha1_to_hex(sha1), ret);
++		die("unable to deflate new object %s (%d)", oid_to_hex(oid),
++		    ret);
+ 	ret = git_deflate_end_gently(&stream);
+ 	if (ret != Z_OK)
+-		die("deflateEnd on object %s failed (%d)", sha1_to_hex(sha1), ret);
+-	git_SHA1_Final(parano_sha1, &c);
+-	if (hashcmp(sha1, parano_sha1) != 0)
+-		die("confused by unstable object source data for %s", sha1_to_hex(sha1));
++		die("deflateEnd on object %s failed (%d)", oid_to_hex(oid),
++		    ret);
++	git_SHA1_Final(parano_oid.hash, &c);
++	if (oidcmp(oid, &parano_oid) != 0)
++		die("confused by unstable object source data for %s",
++		    oid_to_hex(oid));
+ 
+ 	close_sha1_file(fd);
+ 
+@@ -1645,7 +1649,7 @@ int write_object_file(const void *buf, unsigned long len, const char *type,
+ 	write_object_file_prepare(buf, len, type, oid, hdr, &hdrlen);
+ 	if (freshen_packed_object(oid->hash) || freshen_loose_object(oid->hash))
  		return 0;
--	buf = read_object(sha1, &type, &len);
-+	buf = read_object(oid->hash, &type, &len);
+-	return write_loose_object(oid->hash, hdr, hdrlen, buf, len, 0);
++	return write_loose_object(oid, hdr, hdrlen, buf, len, 0);
+ }
+ 
+ int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type,
+@@ -1663,7 +1667,7 @@ int hash_sha1_file_literally(const void *buf, unsigned long len, const char *typ
+ 		goto cleanup;
+ 	if (freshen_packed_object(oid->hash) || freshen_loose_object(oid->hash))
+ 		goto cleanup;
+-	status = write_loose_object(oid->hash, header, hdrlen, buf, len, 0);
++	status = write_loose_object(oid, header, hdrlen, buf, len, 0);
+ 
+ cleanup:
+ 	free(header);
+@@ -1685,7 +1689,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
  	if (!buf)
--		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
-+		return error("cannot read sha1_file for %s", oid_to_hex(oid));
+ 		return error("cannot read sha1_file for %s", oid_to_hex(oid));
  	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
--	ret = write_loose_object(sha1, hdr, hdrlen, buf, len, mtime);
-+	ret = write_loose_object(oid->hash, hdr, hdrlen, buf, len, mtime);
+-	ret = write_loose_object(oid->hash, hdr, hdrlen, buf, len, mtime);
++	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime);
  	free(buf);
  
  	return ret;
