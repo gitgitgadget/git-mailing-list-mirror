@@ -7,42 +7,42 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00AB21F404
-	for <e@80x24.org>; Sun, 28 Jan 2018 15:57:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208311FAE2
+	for <e@80x24.org>; Sun, 28 Jan 2018 15:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752000AbeA1P5g (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 10:57:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58374 "EHLO
+        id S1751644AbeA1P5k (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 10:57:40 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58382 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751843AbeA1P5d (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:57:33 -0500
+        by vger.kernel.org with ESMTP id S1751980AbeA1P5g (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 10:57:36 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5D474609D7;
-        Sun, 28 Jan 2018 15:57:32 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2370261350;
+        Sun, 28 Jan 2018 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517155052;
-        bh=3JdhUwtLSbcjJDxhrW0l7m+8RJAYkSJ7s3eBKGmMsi0=;
+        s=default; t=1517155055;
+        bh=1wcirzURI/Mxc9cmjRGAAy5OuoSRnubWrq+Sog3uISI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qrrI7e8v0246PLzOsCKGNa6j8nchSwwzw6B1IxpsljYjAc1qniGO3A4uK3W/Pi0pR
-         x3kHX50tp9iTSiwpepmUxQ5Me0EqnozK73DZyWxvrn1A4dpRB4C8E3MZ9RpqaeJo7Y
-         iD1GErHwm3hjGhBaYY/AfrK2JTENDkjCruc0SULM4PdBWa4AVO8/mrawqbhJ05qLAe
-         /XWEV9CNLayqdR/pZAhtUcqZLneFiOfUbCRBr1S+V6RQiN+okZDslCQ8M+cxoz9HbQ
-         4WfC++EbXWokcC34rX1Zlx8FIG9z4HP1k/FsC575H2SPmHdUcVZ4ozBVA3kDeyY2PX
-         YTskKRd4yMn6wG/uDJH3tYYmh3HsBNRJOMwlCwFMS7t9TBTLKRAb4HY33c3VGIDyl0
-         19UB45HAaVIct/Q7UIS7t7X7WDaOQhP9LbmDMtFC3wrmi2JSU6UeoKf3ZwFKL+Y1tZ
-         QLJ8ecuAuOEB2h7ju2wClDGOXxuEj6wSq8htz+RaAL8jSOPNDrO
+        b=nifGL+gCv2UEysJ+KHzJXogPV0S9oDKlBuZt/HekDLhqrp30t/6YwMRHinSnMZ/zc
+         UFeGZEtIY8GdIf882oybkNF3+itT9y4a73+nbBOgvW8nJY15NOAprwvaV+LK74toMe
+         upL242LiBDsFrLb/tegkYvzM7OcnSG30zRmbITvG74AXXyiaMIKQ4dkR3c8Ih/9R0G
+         yxUXP5zoDtuviccgx38tmRlLkek1aW/m+0b3psutlcL5Rd540Kyn7rN4VnVmfjZ/XK
+         q0vZA9GPfVadHg714i7EwveNrcPK6gNfkmKn0LEb2A0/csMl6xzKELgExP4DRKvS6i
+         /tFeVzLlauYOi6EJlPZ7EnMA8Jg1OgICgyaMgX48ks30xwzk0/DXYU1Jb9nJ1p/NCC
+         /oVyz5+JKjb+uM81iQBH+vXCT2zP+lPXYy9k5kwnHmSmyc2dda75kvXJx5DfWpmOUE
+         D27chnIzT/UjVopLi5o6W0Anmxu1lWGA2UCTbvG93HpxGwB65ym
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 01/12] hash: move SHA-1 macros to hash.h
-Date:   Sun, 28 Jan 2018 15:57:11 +0000
-Message-Id: <20180128155722.880805-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 04/12] builtin/unpack-objects: switch uses of SHA-1 to the_hash_algo
+Date:   Sun, 28 Jan 2018 15:57:14 +0000
+Message-Id: <20180128155722.880805-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.315.g94e5d3ead4
 In-Reply-To: <20180128155722.880805-1-sandals@crustytoothpaste.net>
 References: <20180128155722.880805-1-sandals@crustytoothpaste.net>
@@ -52,86 +52,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most of the other code dealing with SHA-1 and other hashes is located in
-hash.h, which is in turn loaded by cache.h.  Move the SHA-1 macros to
-hash.h as well, so we can use them in additional hash-related items in
-the future.
+Switch various uses of explicit calls to SHA-1 into references to
+the_hash_algo to better abstract away the various uses of it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 25 -------------------------
- hash.h  | 25 +++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 25 deletions(-)
+ builtin/unpack-objects.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index d8b975a571..bfde6f757a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -16,31 +16,6 @@
- #include "sha1-array.h"
- #include "repository.h"
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 62ea264c46..813ca31979 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -21,7 +21,7 @@ static unsigned char buffer[4096];
+ static unsigned int offset, len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+-static git_SHA_CTX ctx;
++static git_hash_ctx ctx;
+ static struct fsck_options fsck_options = FSCK_OPTIONS_STRICT;
  
--#ifndef platform_SHA_CTX
--/*
-- * platform's underlying implementation of SHA-1; could be OpenSSL,
-- * blk_SHA, Apple CommonCrypto, etc...  Note that including
-- * SHA1_HEADER may have already defined platform_SHA_CTX for our
-- * own implementations like block-sha1 and ppc-sha1, so we list
-- * the default for OpenSSL compatible SHA-1 implementations here.
-- */
--#define platform_SHA_CTX	SHA_CTX
--#define platform_SHA1_Init	SHA1_Init
--#define platform_SHA1_Update	SHA1_Update
--#define platform_SHA1_Final    	SHA1_Final
--#endif
--
--#define git_SHA_CTX		platform_SHA_CTX
--#define git_SHA1_Init		platform_SHA1_Init
--#define git_SHA1_Update		platform_SHA1_Update
--#define git_SHA1_Final		platform_SHA1_Final
--
--#ifdef SHA1_MAX_BLOCK_SIZE
--#include "compat/sha1-chunked.h"
--#undef git_SHA1_Update
--#define git_SHA1_Update		git_SHA1_Update_Chunked
--#endif
--
- #include <zlib.h>
- typedef struct git_zstream {
- 	z_stream z;
-diff --git a/hash.h b/hash.h
-index 7d7a864f5d..7122dea7b3 100644
---- a/hash.h
-+++ b/hash.h
-@@ -15,6 +15,31 @@
- #include "block-sha1/sha1.h"
- #endif
- 
-+#ifndef platform_SHA_CTX
-+/*
-+ * platform's underlying implementation of SHA-1; could be OpenSSL,
-+ * blk_SHA, Apple CommonCrypto, etc...  Note that including
-+ * SHA1_HEADER may have already defined platform_SHA_CTX for our
-+ * own implementations like block-sha1 and ppc-sha1, so we list
-+ * the default for OpenSSL compatible SHA-1 implementations here.
-+ */
-+#define platform_SHA_CTX	SHA_CTX
-+#define platform_SHA1_Init	SHA1_Init
-+#define platform_SHA1_Update	SHA1_Update
-+#define platform_SHA1_Final    	SHA1_Final
-+#endif
-+
-+#define git_SHA_CTX		platform_SHA_CTX
-+#define git_SHA1_Init		platform_SHA1_Init
-+#define git_SHA1_Update		platform_SHA1_Update
-+#define git_SHA1_Final		platform_SHA1_Final
-+
-+#ifdef SHA1_MAX_BLOCK_SIZE
-+#include "compat/sha1-chunked.h"
-+#undef git_SHA1_Update
-+#define git_SHA1_Update		git_SHA1_Update_Chunked
-+#endif
-+
  /*
-  * Note that these constants are suitable for indexing the hash_algos array and
-  * comparing against each other, but are otherwise arbitrary, so they should not
+@@ -62,7 +62,7 @@ static void *fill(int min)
+ 	if (min > sizeof(buffer))
+ 		die("cannot fill %d bytes", min);
+ 	if (offset) {
+-		git_SHA1_Update(&ctx, buffer, offset);
++		the_hash_algo->update_fn(&ctx, buffer, offset);
+ 		memmove(buffer, buffer + offset, len);
+ 		offset = 0;
+ 	}
+@@ -345,8 +345,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 	struct object_id base_oid;
+ 
+ 	if (type == OBJ_REF_DELTA) {
+-		hashcpy(base_oid.hash, fill(GIT_SHA1_RAWSZ));
+-		use(GIT_SHA1_RAWSZ);
++		hashcpy(base_oid.hash, fill(the_hash_algo->rawsz));
++		use(the_hash_algo->rawsz);
+ 		delta_data = get_data(delta_size);
+ 		if (dry_run || !delta_data) {
+ 			free(delta_data);
+@@ -564,15 +564,15 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
+ 		/* We don't take any non-flag arguments now.. Maybe some day */
+ 		usage(unpack_usage);
+ 	}
+-	git_SHA1_Init(&ctx);
++	the_hash_algo->init_fn(&ctx);
+ 	unpack_all();
+-	git_SHA1_Update(&ctx, buffer, offset);
+-	git_SHA1_Final(oid.hash, &ctx);
++	the_hash_algo->update_fn(&ctx, buffer, offset);
++	the_hash_algo->final_fn(oid.hash, &ctx);
+ 	if (strict)
+ 		write_rest();
+-	if (hashcmp(fill(GIT_SHA1_RAWSZ), oid.hash))
++	if (hashcmp(fill(the_hash_algo->rawsz), oid.hash))
+ 		die("final sha1 did not match");
+-	use(GIT_SHA1_RAWSZ);
++	use(the_hash_algo->rawsz);
+ 
+ 	/* Write the last part of the buffer to stdout */
+ 	while (len) {
