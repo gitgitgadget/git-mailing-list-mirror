@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49A511F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:38:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8BEC1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:39:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752292AbeA2Wiz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:38:55 -0500
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:56424 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752223AbeA2Wiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:38:54 -0500
-Received: by mail-qk0-f202.google.com with SMTP id z64so5381921qka.23
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:53 -0800 (PST)
+        id S1752326AbeA2WjB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:39:01 -0500
+Received: from mail-yb0-f201.google.com ([209.85.213.201]:46802 "EHLO
+        mail-yb0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751875AbeA2Wi4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:38:56 -0500
+Received: by mail-yb0-f201.google.com with SMTP id f142so6638835yba.13
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=vBd/EEoddUiYmymfNtQPgAlYcxoGScwta+kOjACNHaU=;
-        b=T25s2D+spVstx49SENsQ1SgZ699vOlrguKywkbWhI0Pn9+tOI6YzcwO7bamOaHiMup
-         qRDgJ4X4t5cUJYNS5+7u4sTSWtghJdeehUKD+46SUg80vze4hoLMcjZl9dvGtFBs7PPl
-         FvFvMKZJdMuXvfs9EbinnN/HlNaRSzy41NQZqAZTurizudG87Y/+1ix0lIDqRbnW31ou
-         JUED0yTepOzaAajIJrUAwso7Zgplp11gUJIqGyoV0mR4i51tE6QwcLERIunqyvfhA6rX
-         a1IxrKhZW33b+Rg3K+oPGqtws1JKNfgs1Ds8oBjRnDKjHc3LeQ76TuJguGYloVk52pXt
-         jNNQ==
+        bh=OtDNBTkJauSTMtaJ6wiRhWXK3YMEnUDL0PZnYGVIUBE=;
+        b=bDNDoow48VvEf21i/El+aeC/JfqpnldScb4ggZ4qyvLkJLhvkoc+ZbMCh415S9G4O8
+         GThoyWmclTG6b752oLPIyqBfuat0WKVLQbry7zxH50H/S/04knD9abaka/uDkwKx2XUI
+         azwrLUw/Cfe149oR6O7IdkxqsVPNMCw6grxxFPZ0lUAi1vNhPzki51/HRhZInOguCESN
+         WliZLZDojfL+WEbf5Y9SHfo1pV9rwO8MTjCfBGATd2Os4Eju9aaHIdoWkpPWd6+F8qF3
+         FqGZSlwuqi5YN9RcLgylfZ2ldyBFdVKpfCYRcG6tOQhzQQhy6GgaQeoHEuyWokg1FpPo
+         pCqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=vBd/EEoddUiYmymfNtQPgAlYcxoGScwta+kOjACNHaU=;
-        b=iYMDNCZ199lnMryHREScfnpeAQd3HRjrjZz2ToFXXanlIKCxlJx48Loj6WTfoAh9m6
-         wSbIZ8LdvnekQVHin87rieA5dPze3d+sje5oHh5nADBYi1nEYSsuNDhz0fjcy2iUw98u
-         teDvBUyLwS029khpfJZX50wITnHZoIZp+Eq9lJOmr6wAwIQGlexmJq5Vfoi2sVEThYr7
-         dCOYY3Xo/2AdygiOLmyIxyxJrz7ZiiA+x2l2cQS8M8qI0wPawIBVVNsWSqBOYlOdDgsY
-         iO/WL4snBMl98o8QZqjxe0yHdgsPdMJPoa/+gY9FiNNwO6kvzn77aSPYL9g7ts2AGyZQ
-         rUzA==
-X-Gm-Message-State: AKwxytdeM33rh3HaDC2bplVN0jLsUgT9A2jA1jpohxc4ZgVwrZOjQrfv
-        Oa6yMz4b1ZEPr/NYQjLaWhJr21Te9Zugd7GCQCDRvTmudheaZA3MDnLuli0FH0WCDFjxPafShWS
-        6cnZNnlabudQKQDDGfiNCyakj2+tgVOdsV3by95B6tFAxfGTnxadmIBCGzg==
-X-Google-Smtp-Source: AH8x224QfGoI3FbMMPkaNX9pr6ujkTewm+VYD6Kl/te79jsbT+KMtcNTPz4kiFbxJoC5BJ0pIt3msFJKHp8=
+        bh=OtDNBTkJauSTMtaJ6wiRhWXK3YMEnUDL0PZnYGVIUBE=;
+        b=psNhManiCy5b8VMrg/6wijCpww4YFrfEmqh+woydmITVUR1kDJKcxXnbL9kgHSRgzD
+         C2IHExJr1tq2jE9HD6l2Q6P7xZgGSBoKuO/yqmbzPcF+KuSHPY91TstWhZtu7X9RrxrZ
+         pMR4rMpwuzq/VFnj9iUAipjTdcb9hXlKDw6Jdq8bpXXNe46M3vMlHXrJ0B9ddKDYBZai
+         CDm7aecmLrFPGtJM1dFo9jgOHK6RDq3+/kAMTcYkyrenomJiYIXFv9BBmZmV2n+tSriY
+         /6+sI9qk13aOPd1kGAhVePffbpLBEa84zaAVTcRLJWOC6V3JixhEHa6hozOv/upvfHMY
+         3mdQ==
+X-Gm-Message-State: AKwxytf6RuZZ3pq9UlU3yCzUf9QAoo2ie74ypn3AX3MRp1rPJn+7fP+k
+        MXce6N4WdV1399fiHIttr3giAPkzyc96/J7xsaWo7D0wPAyshmuJietJZCwi6OBtdX1xUj7RkRC
+        px/caJvaDGi1uer9PNv8q6cWGnU0tqP/UDo+CMNWPdIgH1mACNi5KNa64pQ==
+X-Google-Smtp-Source: AH8x2264ROrAYRIswCg8tQhz1WAWMuazeni8jx1tQV2jc47Wu2DNrpy1Io53Ah83iJnyvMWabudZO+NHOz0=
 MIME-Version: 1.0
-X-Received: by 10.237.60.248 with SMTP id e53mr17965900qtf.38.1517265533304;
- Mon, 29 Jan 2018 14:38:53 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:37:22 -0800
+X-Received: by 10.13.222.69 with SMTP id h66mr11766901ywe.82.1517265535549;
+ Mon, 29 Jan 2018 14:38:55 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:37:23 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-32-bmwill@google.com>
+Message-Id: <20180129223728.30569-33-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 31/37] environment: rename 'template' variables
+Subject: [PATCH 32/37] diff: rename 'template' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,59 +68,42 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- cache.h       |  2 +-
- environment.c | 14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ diff.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 69b5a3bf8..5b8d49377 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1673,7 +1673,7 @@ struct pack_entry {
-  * usual "XXXXXX" trailer, and the resulting filename is written into the
-  * "template" buffer. Returns the open descriptor.
-  */
--extern int odb_mkstemp(struct strbuf *template, const char *pattern);
-+extern int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
- 
- /*
-  * Create a pack .keep file named "name" (which should generally be the output
-diff --git a/environment.c b/environment.c
-index 63ac38a46..98f77ea95 100644
---- a/environment.c
-+++ b/environment.c
-@@ -247,7 +247,7 @@ char *get_object_directory(void)
- 	return the_repository->objectdir;
- }
- 
--int odb_mkstemp(struct strbuf *template, const char *pattern)
-+int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+diff --git a/diff.c b/diff.c
+index d49732b3b..142a633e1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3660,15 +3660,15 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 			   int mode)
  {
- 	int fd;
- 	/*
-@@ -255,16 +255,16 @@ int odb_mkstemp(struct strbuf *template, const char *pattern)
- 	 * restrictive except to remove write permission.
- 	 */
- 	int mode = 0444;
--	git_path_buf(template, "objects/%s", pattern);
--	fd = git_mkstemp_mode(template->buf, mode);
-+	git_path_buf(temp_filename, "objects/%s", pattern);
-+	fd = git_mkstemp_mode(temp_filename->buf, mode);
- 	if (0 <= fd)
- 		return fd;
+ 	struct strbuf buf = STRBUF_INIT;
+-	struct strbuf template = STRBUF_INIT;
++	struct strbuf tempfile = STRBUF_INIT;
+ 	char *path_dup = xstrdup(path);
+ 	const char *base = basename(path_dup);
  
- 	/* slow path */
--	/* some mkstemp implementations erase template on failure */
--	git_path_buf(template, "objects/%s", pattern);
--	safe_create_leading_directories(template->buf);
--	return xmkstemp_mode(template->buf, mode);
-+	/* some mkstemp implementations erase temp_filename on failure */
-+	git_path_buf(temp_filename, "objects/%s", pattern);
-+	safe_create_leading_directories(temp_filename->buf);
-+	return xmkstemp_mode(temp_filename->buf, mode);
+ 	/* Generate "XXXXXX_basename.ext" */
+-	strbuf_addstr(&template, "XXXXXX_");
+-	strbuf_addstr(&template, base);
++	strbuf_addstr(&tempfile, "XXXXXX_");
++	strbuf_addstr(&tempfile, base);
+ 
+-	temp->tempfile = mks_tempfile_ts(template.buf, strlen(base) + 1);
++	temp->tempfile = mks_tempfile_ts(tempfile.buf, strlen(base) + 1);
+ 	if (!temp->tempfile)
+ 		die_errno("unable to create temp-file");
+ 	if (convert_to_working_tree(path,
+@@ -3683,7 +3683,7 @@ static void prep_temp_blob(const char *path, struct diff_tempfile *temp,
+ 	oid_to_hex_r(temp->hex, oid);
+ 	xsnprintf(temp->mode, sizeof(temp->mode), "%06o", mode);
+ 	strbuf_release(&buf);
+-	strbuf_release(&template);
++	strbuf_release(&tempfile);
+ 	free(path_dup);
  }
  
- int odb_pack_keep(const char *name)
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
