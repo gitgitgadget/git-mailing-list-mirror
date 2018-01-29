@@ -2,63 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0DAE1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 19:14:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7733F1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 19:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751593AbeA2TN7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 14:13:59 -0500
-Received: from mout.perfora.net ([74.208.4.197]:58526 "EHLO mout.perfora.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751581AbeA2TN6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 14:13:58 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Jan 2018 14:13:58 EST
-Received: from [192.168.1.104] ([194.237.255.67]) by mrelay.perfora.net
- (mreueus002 [74.208.5.2]) with ESMTPSA (Nemesis) id 0Mfoeo-1eRrBM2A56-00NAqb
- for <git@vger.kernel.org>; Mon, 29 Jan 2018 20:08:56 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-From:   H <agents@meddatainc.com>
-Subject: Location limits on development, staging and production environments
-Message-ID: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
-Date:   Mon, 29 Jan 2018 20:08:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1751832AbeA2TY5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 14:24:57 -0500
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:43511 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751812AbeA2TY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 14:24:56 -0500
+Received: by mail-pg0-f50.google.com with SMTP id n17so5216066pgf.10
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 11:24:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HhbOlzRWVO9jrKkfXJhAnMxkIm1J7L4KD7B8VJLOxlI=;
+        b=Nyao6Id5wmJHovNNHcTs93Ln85bHc6OAovzmflxtcdG7tO+7aSftBVyNr4QUHzKICb
+         iinuOyPxO1h1B7nC3TJ+hwFyHIoMoBSigMMksC3ENbpbptZg8NC/hvIt3R0SnSBe7UiL
+         ZMK2xBGN3DP/A7ZxEmg2adTALnv2+C3r7ebCoQm1surOHtM9VNmCH7VqzFSa2QwveLPG
+         bwgKlBJ2tL9OHfMgjr8YvWNDNCV3XfHqch4tcY9tI4kT797mhP/lVz8oe5/z6HKzi3jF
+         Qd/XOQmeXM0LhD2+5NfNqqJoHBMjTRsNMEIkRwsgwSa0sEuuso2Owvx2GpHxci6akdiX
+         8hgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HhbOlzRWVO9jrKkfXJhAnMxkIm1J7L4KD7B8VJLOxlI=;
+        b=CeG4aCX7tVo8aRYts73W69hXOQliMKshrIBrTe1HcJNbk11pSeCEljqPCSW5qz3lvY
+         nUJFBOE543u/1gc+4CyjsChx+MhRXtbCTrlMtwL8W3TYsCPvdnwF6cxbO4uUz6qOZERo
+         onqoV7xPJebodDr3adzekMhQ3wGsuk5sIjAXABnWQmMGjONUl0jO2SRFNdqydIMaDTmj
+         FMniN2cGLKTulVTRh4FLb2LHwED+2zrDZOYugSOZY/kd6ZyYB3n2Ghldm/utRZtUtAe1
+         uYOz/E04U2dtXXUUDf2zVOe+7S3Ya8kKr2oK4WVn1njl+43g54UEZXyqXqiNXZkp8McM
+         F14A==
+X-Gm-Message-State: AKwxytctZlrEPYNqb+tSfaXISyUMqDLUfmefPpHblHvfvtq2CKnJEURZ
+        0Ft2m5nf913iDbN0kGTumAE/jefQrFQ=
+X-Google-Smtp-Source: AH8x2271Z3vJscOephgoNNMZ8fZyldnNTMKQPmUf2FZF9BYRwTpRfFE+0PjyyH8k1TwXYDXmvcz+Sg==
+X-Received: by 10.98.85.195 with SMTP id j186mr23332741pfb.77.1517253895566;
+        Mon, 29 Jan 2018 11:24:55 -0800 (PST)
+Received: from google.com ([2620:0:100e:3010:b055:17d5:ab40:870d])
+        by smtp.gmail.com with ESMTPSA id q65sm34768563pfj.137.2018.01.29.11.24.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jan 2018 11:24:54 -0800 (PST)
+Date:   Mon, 29 Jan 2018 11:24:53 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Shawn Pearce has died
+Message-ID: <20180129192453.GA53791@google.com>
+References: <nycvar.QRO.7.76.6.1801291031040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <20180129172107.GA4185@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Provags-ID: V03:K0:/EBTJYY+hnPRMuOkvmKQ2Z++lHtxo2W6N9UVBqYAELCZAhCaRdP
- hLZz988mNiKiOk522bBYT19syjjspanpQvcNGCrPpqDUehEFiAGb49kynTYqBGMTDD8nFdK
- iNu3b+vf9Kn2Pa8vNIIbOIp5fnOYCBRsiVbjnAHDEH04xJdp3aO8oVYh05FCujQ6FxOida5
- GAJSARKPsFVwzxH9cpVBw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mO82UGfwD9o=:hedd1pFDE2n3CtMc6zmEUu
- LsPbW50lQHQjLycNP07P/tXcweN6ZSDWkkexS4X17O9XACQyR7qtSVe45abW1bF/4CSz0WjDB
- x+/KeZBYLsvmbEImvDOcOALlC4PRXRrIXnI8dIo0VrGxWiXT8BDOMied6REQ90LFgF1+13Weq
- I8TzJVjAixgJIzOPre3h213wRUzwxUnl3ZwRZH0lNMEXrACMs0lwi1RMzdZD3iVes/uJxWbJ0
- aqM5Pe3317FT1+EJsLDn2OkLdfyart3St3+ylVBUTbZzsxjykRShX3Eclj+82HghTq3CSE6EB
- lM7WwzQpA/uwlz91AE7SDacLS8ztVPm/2FFkPyJr9fNAUjmYwW5H48/EM85H2tQJyGarlg9A5
- Phx7dtbkhbY3JoCG21zmeZbovk1kPqjiCK6pHfhqw/c9jlGHznsSp03GCslubEZh9sHNusm3A
- s/e3AJJWmKq/aZa3NcDFGD5Dwc+uOLQ/FG3Nc34cmLn+16/O6uIxofVJ+k6t1uWmeMDbcIANx
- PEIugebrSwgg7ZWXqqbImOXIHki0ys55usfszIdIgFSShwSRhWNXxgpcwBRIwRsY29hOE+nAk
- EaW8kxpmb2MJTCalBNFoDE5gcBXZaHCmEGUp8ANdr+VoHcPCA9U7u9mULLC6Ya4rsVwUSFgrA
- MQ1vTq4fMZF6dPCqkxZv/m1fIT6H3OijEop7v6EHvhOEKZknctZuvpa/nqeqC3ME2j+2Ae1ct
- BQ7lXdRaNkRs1R0PFIyy3jIFWGwvjK5SdcOTDKl15iZ7cfX8ZjAGhHMcayc=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180129172107.GA4185@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am a newcomer to git looking to set up a web development environment where individual computers are used for development, the development.git, staging.git and production.git repositories are stored on an external server reachable by password-less ssh and the staging and production websites are on yet another server, also reachable by password-less ssh from the git-server (and the development machines).
+On 01/29, Jeff King wrote:
+> On Mon, Jan 29, 2018 at 10:33:08AM +0100, Johannes Schindelin wrote:
+> 
+> > I found these sad news in my timeline today:
+> > 
+> > https://twitter.com/cdibona/status/957822400518696960
+> 
+> Thanks for posting this.
+> 
+> I know Shawn has not been all that active on this list in the past few
+> years, so many may not know how active he has been behind the scenes:
+> 
+>  - serving on the Git project leadership committee
+> 
+>  - managing many of the contributors whose names you see here daily
 
-Locating the three git repositories on an external server works fine but I have not been able to have the staging and production deployment files on another server. I believe this is what is referred by GIT_WORK_TREE and based on what I found on the web I created a post-receive hook of staging.git with the two lines:
+I'm one of those contributors.  I'm very proud to have had Shawn's
+leadership and guidance while working on this project.  I would not be
+the engineer I am today without his guidance.  He was always quick to
+drop what he was doing to help and despite not having worked on the
+project himself in a while, he was able to answer, in detail, any
+technical questions I had.
 
-#!/bin/sh
-GIT_WORK_TREE=user@1.2.3.4:/var/www/html/dev.whatever git checkout -f master
+He's left a rather large void on our team, and he will be sorely missed.
 
-I believe this should deploy the files from the development work tree.
+> 
+>  - working on other Git ecosystem projects that aren't on this list
+>    (like JGit!)
+> 
+> Over the many years, I've found him consistently smart, hard-working,
+> funny, and just overall pleasant to work with. I'll miss him.
+> 
+> -Peff
 
-The above, however, fails. Should it work? I am running git 1.7.1 on CentOS 6.
-
+-- 
+Brandon Williams
