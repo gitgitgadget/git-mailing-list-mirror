@@ -2,92 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AECCE1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 17:03:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8B9B1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 17:11:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751417AbeA2RDD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 12:03:03 -0500
-Received: from mout.gmx.net ([212.227.15.15]:54412 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751262AbeA2RDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 12:03:02 -0500
-Received: from [192.168.0.129] ([37.201.193.1]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MA91t-1eUyQy2xkf-00BLFm; Mon, 29
- Jan 2018 18:02:57 +0100
-Date:   Mon, 29 Jan 2018 18:02:56 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive:
- clarify arguments
-In-Reply-To: <CA+P7+xoO4twSgYVNJ4WaTj80WHS_ViEOBOEVST1nX9UzRA4JxQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1801291802400.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-2-sbeller@google.com> <nycvar.QRO.7.76.6.1801182233480.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqinbxpp5m.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xoO4twSgYVNJ4WaTj80WHS_ViEOBOEVST1nX9UzRA4JxQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751537AbeA2RLl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 12:11:41 -0500
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:38739 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751464AbeA2RLk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 12:11:40 -0500
+Received: by mail-wr0-f181.google.com with SMTP id a1so8059218wri.5
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 09:11:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=hgb+wPBGNW1yz3OtQeCG4yx6LCzCuHE6pQok50wUPIs=;
+        b=LKaCePuokMeZzauJSC6lMzcLrWNz4m2B4j8PuiVjghLEhcupTzpLd0gIh+ATfZ90fV
+         xwg++KoBB20INqCX9K+oI1FCIdE0ATsDXSYl+HBTNtC4Sw9FTYABEKklnTeK41zwlQ7j
+         vRIYyzd0h4gtFA0nqnfsexY0fZ4FPqbXYsaNcmvn32ZtK1FBOc34KonlmUBzvJgQQRQt
+         aTxP6tfsK3dqQuj/tRoOMRNDjzQ1y4gBmevWVf8asZUV/85rmAC0Z4/AWSw5YV8VgMhC
+         ir8quZBmdsGge++utJfJIA3QzNNsVPkLFrxXhezWYCsv7XCOPfu2VahgREan6fJRl8Wg
+         vY0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=hgb+wPBGNW1yz3OtQeCG4yx6LCzCuHE6pQok50wUPIs=;
+        b=ri+ZZxeLu8a+++ORnPTprDNF8fywARezvwSf+baAz6FDbxy1WKZaCSM+LrAh8tZQuD
+         KhqLMVzNjE17HSu2TSsCEIsY+5Fi1VLxvgGS9PHDcKRc8M+FbPJA4+u2xKsA8d6MJsL1
+         idShbCev9gMO7XgSZTlFcSYPb+9oCbnBxmKqeqn37H/Vgsf7RRrZorYwGwqdUWuMP2mc
+         UEXlhXxqvpYRX8NubnkaoMJoDwZG7jjLyriZumty+CHf9+QoCURgusfm1JYldmstOVcw
+         9iiLu1X8ixKdcrsI0XTZt9VYi7wM56/wbo3GkfgEmUW0Lp9BIZmzxi4FqZqbHvLpZVD6
+         oqUQ==
+X-Gm-Message-State: AKwxytcJ5ud+V8UFSXpXQIHu9WsBpX5yK36sSkXWo/o7XQxij4ENY4vw
+        6Bokl2WFgCeZE8WwjYpOOfw=
+X-Google-Smtp-Source: AH8x2253DwhEdr2Hsg1730L5l/RK5pYXdcO04pGcoyVtHcLzdi2+5LcKX+h+B219YrIum2R0Edr3Og==
+X-Received: by 10.223.132.67 with SMTP id 61mr3274033wrf.120.1517245899281;
+        Mon, 29 Jan 2018 09:11:39 -0800 (PST)
+Received: from localhost.localdomain (x590c5617.dyn.telefonica.de. [89.12.86.23])
+        by smtp.gmail.com with ESMTPSA id x91sm13135300wrb.77.2018.01.29.09.11.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 29 Jan 2018 09:11:38 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Rowan Thorpe <rowan@rowanthorpe.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: "git fast-import" crashes parsing output from "fossil export --git"
+Date:   Mon, 29 Jan 2018 18:11:27 +0100
+Message-Id: <20180129171127.17097-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.1.158.ge6451079d
+In-Reply-To: <CACgDUr6XG+dZ+GJcf9+11Edf=q-=QLSkmgpGf=XmondaLaescA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nyIvVbeMc4aAZVky6DB0sMcM5xtknQkp3tF1IQqZZIJAhTmU15i
- pLUOpksxP8HUZbH2qJMR8uuz79AuBNDGLkfZouCheuKXCc47SqoKU5cPG6TKe6Qp4zhAPRz
- HOtUiwf7WLeIaN3yPq89fFOTeZ0OIgF0npFshPlumWkRQ/awbN+/JLVEAM3OA8jfsmNxjug
- TjfLy8xXvZ1BoTOjLY5rg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KtilAnyoJhY=:Na2SLx+9wRTwW2CG2ebdDx
- ECgMsjvnQI/jvbFPXaxN+7NHpxj0F5/WXN+m5gLFkeV20IBUVWYHrOM1SoW7MwiaBKIpqk+W/
- II6mSoO/qYXiHQqLpGuy0UK2Y3zQT86MTxAZEonCnStTY3EaCWDue54nMzYeCCRQ5BySQXHUR
- 6+ViX0BGZKOD9thZbm9S2fKU5qH9KVa2y8DWAz+nn5f2NvpkLdAqJbyUPzYWnkhDx2gDSYj0Y
- piJQCugyrZQsBV6O6WCfxLwcV6F2jhbZ44IUy8SH5a3NP42skVVjyHZdgyA5FFMb4T/ldJ+Dd
- nRsyLjxL5GvUIDP/oCOsl/P8Qx6y+Rfpiv0jdt/34aQqSDspl2Af0FJh2vx3gVRr1X/1b1s8g
- 3cBOL805qOiR2klHoshuMw2MD5ZsXUDTlvklI6anoBul3BxG1+5GR+deEP1d6qIkH4XPrFNGT
- 0eole0MvYAQECaeHE18yY3jK1xaaxDLDdAxPIGejihetOT1/HsRimmQlhB1IF5AuBtKU5Ql2M
- f3iv7dGXHD7FmCYFYRlWfz4LXxg8JBhozFwVjTOQMbRxxcejHdkaKP3OJE6yi7rBrNd+5QtLN
- ygWiXGTA1dtOUWIKZwOp9YoXJdsHhGpfhs6jdBF+a94Lq0hytmUydcoqxKxnrLztHZtLFrFtT
- +5gLpDl/ohD4yoNFfaxxl80iGoho5RJ8KYdpI0qsEtp2+uHaGs04CfpTO1wqF2Apj2BO4wwKs
- 7eAmBzgRC9e/+ENtiWzOjj4UtFvV3vdWOfh24o9Z7eCRGg5oeFYgHbs6bjSPd3VipNogqPM95
- S4rK5YVfQmlR/RpQLkS21hAo0gV0WWJXrZhBwJuqOEqJGDF/viYn+X/TerykiVZwRM7cd25
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Sat, 20 Jan 2018, Jacob Keller wrote:
-
-> On Fri, Jan 19, 2018 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> >> Good idea! I would rather do it as an introductory patch (that only
-> >> converts the existing list).
-> >>
-> >> As to `merge`: it is a bit more complicated ;-)
-> >>
-> >>       m, merge <original-merge-commit> ( <label> | "<label>..." ) [<oneline>]
-> >>               create a merge commit using the original merge commit's
-> >>               message (or the oneline, if "-" is given). Use a quoted
-> >>               list of commits to be merged for octopus merges.
-> >
-> > Is it just the message that is being reused?
-> >
-> > Aren't the trees of the original commit and its parents participate
-> > in creating the tree of the recreated merge?  One way to preserve an
-> > originally evil merge is to notice how it was made by taking the
-> > difference between the result of mechanical merge of original merge
-> > parents and the original merge result, and carry it forward when
-> > recreating the merge across new parents.  Just being curious.
-> >
+> "git fast-import" fails while trying to import the latest "Fossil"
+> fossil-sources (it dog-foods its own source-code). Namely, the below
+> pasted commands caused the crash report below them (I've trimmed
+> irrelevant noise from the report for brevity). One of the tests
+> included in Fossil uses example-files to test its handling of
+> filenames with special characters - in this case an embedded newline
+> in "abc[NEWLINE]def.txt" - and "git fast-import" causes the second
+> part of that filename (post-newline) to spill over as the "command" on
+> the next line of its input when transforming the "fossil export"
+> output into usable input. Considering git can handle such filenames, I
+> guess "git fast-import" not handling them counts as a bug - unless a
+> design-decision was made to not be as rigorous for the sake of
+> simplicity in the import protocol? Or is "fossil export" perhaps
+> outputting the filename incorrectly for the "fast-import" protocol
+> (maybe it needs some kind of quoting)?
 > 
-> It looks like currently that only the commit is kept, with no attempt
-> to recreate evil merges.
+> * Commands which cause the crash:
+> ----8<----
+> fossil clone https://www.fossil-scm.org/xfer fossil.fossil
+> git init fossil-git
+> cd fossil-git
+> fossil export --git ../fossil.fossil | git fast-import
+> ----8<----
+> 
+> * The part of "fossil export" output which breaks "git fast-import":
+> ----8<----
+> ...
+> 
+> commit refs/heads/test-ticket-d17d6e5b17
+> mark :26782
+> committer jan.nijtmans <jan.nijtmans> 1353531216 +0000
+> data 82
+> Just commit some weird filenames, even one with a newline in it, to
+> test the code.
+> from :26779
+> M 100644 :427 :abc
+> M 100644 :10049 abc
+> def.txt
 
-Yep. I even documented that somewhere ;-)
+A path like this must be quoted.  Quoting from 'git fast-import'
+manpage:
 
-Ciao,
-Dscho
+  A <path> string must use UNIX-style directory separators (forward
+  slash /), may contain any byte other than LF, and must not start
+  with double quote (").
+
+  A path can use C-style string quoting; this is accepted in all
+  cases and mandatory if the filename starts with double quote or
+  contains LF. In C-style quoting, the complete name should be
+  surrounded with double quotes, and any LF, backslash, or double
+  quote characters must be escaped by preceding them with a backslash
+  (e.g., "path/with\n, \\ and \" in it").
+ 
