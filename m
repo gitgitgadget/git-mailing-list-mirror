@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64F081F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:38:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A65EA1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752109AbeA2WiI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:38:08 -0500
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:38831 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752081AbeA2WiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:38:03 -0500
-Received: by mail-qk0-f201.google.com with SMTP id w200so5460580qkb.5
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:02 -0800 (PST)
+        id S1752179AbeA2WiV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:38:21 -0500
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:38783 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752172AbeA2WiO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:38:14 -0500
+Received: by mail-ua0-f201.google.com with SMTP id w27so7046811uaa.5
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=b2clzQ2xX309r/OwqvKkPT5m4xocf1TlEm2aiS5Ni44=;
-        b=p7k8xhv9RQ406jO/ITo//PADKOvT9VPbOr8uZ5Li/Wzj6os+Kl72NU/L0k5jMglyMm
-         uYK9dpFIH8QPLlcYbh0RM/hPKwApyZWLlF9vSUeCjjgFUHr80sp1nQFspf1Stj7+XjeA
-         XTAcIz3klfTWIrJXuYWpH7YVWxGCuYa5i6Fe8QqGcQl44tik8bZoAqfW3jaUJdZ/WLbT
-         E+JJ1oiXsUrxsJkbD4jHapmwQ/FY5conPEANhnYttO+eQr88hlnt9a6EAlLCLFFS5SdN
-         6hSE76wg9O4xJSD/eHzWfDWMMGjcqiQU77dKeHJvp/+TeWgMlNSN4fVxpy3F4rO4tb3w
-         kz2A==
+        bh=2uHLOLXQyf3lW9jHbtd1fqI3BlRk5lcAwQVr9dH/BoQ=;
+        b=lFc6AG4ITC4GVkoUPYBd23wAyfYYOSx6yXchbtc8KJnD7WB2v/gwYOU8h4Dr8axkP3
+         aqG39oZLhxO3GOzwGbSmwvFIg5N7nPQpri0XgwpvXMRDOYpf3v2yfSSRNoilphikXxNx
+         /IlroOVW1Zgoybis0KSCXI6ZXqrKiKrWLtX283G5xkoHpwkSd6TX//6NGMTAoDtlfQvM
+         U2QXB01MmlmSNCr5HAe5nnTzmrxu1z9b+WznuKeiI2VRx7PivsW2aCxiulDXa32uVCLg
+         Ny7NBdHwqVXNe4tVdD5cQD+QIvdI9yM2aj9CVlMjxy4JM2rU7O9ier7Jrzxh1Svz8N2s
+         82aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=b2clzQ2xX309r/OwqvKkPT5m4xocf1TlEm2aiS5Ni44=;
-        b=mS9kpqPz8K7Lv4N5msx2HUJGDaeu2QS5ub5urhGxO5me1h246+qknasHurKKM3/sQc
-         k2ggQ5uVBllgSZwpYrWsRoLdhyqa8hlOQTm4W1f90hoLdxUInk9A7otPXAFm354inlLA
-         jR0H+jM3nPwO6Sy8fK+y9FMSvfrALZentQihMgBpzdVjkZOmKKrIYyvTJEmLQQLFTU0z
-         DkNl6oKK2kb+Q7pTJi0Z20zudC/2IwgRASAq0NJTsGmAckd+0XGf8CFA/UzWAK5dZDiH
-         pw12x4F8wZy8mzgHP+aCk1nlCUgn7sJcefL3ss6h6oF9A/mGGO4F0nlWtKraeqVHEbVr
-         b6qQ==
-X-Gm-Message-State: AKwxytfzeCD4tug64omWbqqYUdC87Z4Tgo3ANBv2meDoEIaYIHvDYjze
-        /h7fUWGK1ELaXtVsjtx5VQ8IK3P1sMBKYnsrdUNNrOAbuPMYZcS5bCVQJBZRiE7sLGyK8TZVKCr
-        60ZloQ5RYOllSyLU8/dReDZswKmT+w9gdN6r9ixh6hrCzQVv/zh/SbAuBgg==
-X-Google-Smtp-Source: AH8x224Q/DvQ8AHB0DxkNkPngdQfMQRyW4Bth3opcbzJlEnXXF0iW2lpOf/v8TMSBy5GECTZQF+5rELKt5Q=
+        bh=2uHLOLXQyf3lW9jHbtd1fqI3BlRk5lcAwQVr9dH/BoQ=;
+        b=RzDdPGAaAlXDy8Qu1oO6pjtj09sDgQ0H0AUejcLpZkJajXARQJxN55PU6AG8+LRevh
+         THmuOqXrKGTUHGglknZFG46aVbGqIsyVtTKEPne+vSi9db+YtC+WQ1Zf3NdxJkjLnDIX
+         KWFmlqfVX2dGg/6cEYg7HqcTugiLKUOvfY96rg2IZ80obillP7k5TKSzD5nnUX6oeidZ
+         pTp5uXRDhWi3sLBHixFhBBT4hZaH7brOsGdr6EVWgzKrx6Vt5gldX03gApshtI910os9
+         Z0aGx7a9KczBCf67ZSLCNY1AZ4WPQc7+/4ZcUwPoLPVLEMP7M9Sdp9Q6LiaHXUNmIBlK
+         APqg==
+X-Gm-Message-State: AKwxytcMb6gWoqffSU6rkZmNIaN7OlDQMFfZCJg1sYkfZivxy4x/b9++
+        0uYZAFzKu120vvPaUHCJtUdCvmGIavamf5vK514vPkr+E/ev1E9clDJoyvyF65bioVpi6xNwA/9
+        mTaSj9WVS9rhdV7Z0aQM3juc4hhOcelSDZOwp2mxuqbud6Mz+6JrIWGghPA==
+X-Google-Smtp-Source: AH8x2247oaRNbuAaXmrextO+bukA283UpLdMabN0zQP5xKXg2l1lRgD/Ci+VfiL7D9OqTWS4gsO2KlXPvK0=
 MIME-Version: 1.0
-X-Received: by 10.200.56.45 with SMTP id q42mr17511387qtb.26.1517265482372;
- Mon, 29 Jan 2018 14:38:02 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:37:00 -0800
+X-Received: by 10.176.90.151 with SMTP id w23mr3329414uae.2.1517265493865;
+ Mon, 29 Jan 2018 14:38:13 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:37:05 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-10-bmwill@google.com>
+Message-Id: <20180129223728.30569-15-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 09/37] checkout: rename 'new' variables
+Subject: [PATCH 14/37] combine-diff: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,379 +68,64 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/checkout.c | 138 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 69 insertions(+), 69 deletions(-)
+ combine-diff.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c54c78df5..30f09ec50 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -54,14 +54,14 @@ struct checkout_opts {
- 	struct tree *source_tree;
- };
+diff --git a/combine-diff.c b/combine-diff.c
+index bc08c4c5b..14db48966 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -162,7 +162,7 @@ enum coalesce_direction { MATCH, BASE, NEW };
  
--static int post_checkout_hook(struct commit *old, struct commit *new,
-+static int post_checkout_hook(struct commit *old, struct commit *new_commit,
- 			      int changed)
+ /* Coalesce new lines into base by finding LCS */
+ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
+-				    struct lline *new, int lennew,
++				    struct lline *newline, int lennew,
+ 				    unsigned long parent, long flags)
  {
- 	return run_hook_le(NULL, "post-checkout",
- 			   oid_to_hex(old ? &old->object.oid : &null_oid),
--			   oid_to_hex(new ? &new->object.oid : &null_oid),
-+			   oid_to_hex(new_commit ? &new_commit->object.oid : &null_oid),
- 			   changed ? "1" : "0", NULL);
--	/* "new" can be NULL when checking out from the index before
-+	/* "new_commit" can be NULL when checking out from the index before
- 	   a commit exists. */
+ 	int **lcs;
+@@ -170,12 +170,12 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
+ 	struct lline *baseend, *newend = NULL;
+ 	int i, j, origbaselen = *lenbase;
  
- }
-@@ -473,7 +473,7 @@ static void setup_branch_path(struct branch_info *branch)
+-	if (new == NULL)
++	if (newline == NULL)
+ 		return base;
  
- static int merge_working_tree(const struct checkout_opts *opts,
- 			      struct branch_info *old,
--			      struct branch_info *new,
-+			      struct branch_info *new_branch_info,
- 			      int *writeout_error)
- {
- 	int ret;
-@@ -485,7 +485,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 	if (base == NULL) {
+ 		*lenbase = lennew;
+-		return new;
++		return newline;
+ 	}
  
- 	resolve_undo_clear();
- 	if (opts->force) {
--		ret = reset_tree(new->commit->tree, opts, 1, writeout_error);
-+		ret = reset_tree(new_branch_info->commit->tree, opts, 1, writeout_error);
- 		if (ret)
- 			return ret;
- 	} else {
-@@ -523,7 +523,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 					   &old->commit->object.oid :
- 					   the_hash_algo->empty_tree);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
--		tree = parse_tree_indirect(&new->commit->object.oid);
-+		tree = parse_tree_indirect(&new_branch_info->commit->object.oid);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
+ 	/*
+@@ -200,7 +200,7 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
+ 		directions[0][j] = NEW;
  
- 		ret = unpack_trees(2, trees, &topts);
-@@ -571,18 +571,18 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 			o.verbosity = 0;
- 			work = write_tree_from_memory(&o);
+ 	for (i = 1, baseend = base; i < origbaselen + 1; i++) {
+-		for (j = 1, newend = new; j < lennew + 1; j++) {
++		for (j = 1, newend = newline; j < lennew + 1; j++) {
+ 			if (match_string_spaces(baseend->line, baseend->len,
+ 						newend->line, newend->len, flags)) {
+ 				lcs[i][j] = lcs[i - 1][j - 1] + 1;
+@@ -241,7 +241,7 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
+ 			if (lline->prev)
+ 				lline->prev->next = lline->next;
+ 			else
+-				new = lline->next;
++				newline = lline->next;
+ 			if (lline->next)
+ 				lline->next->prev = lline->prev;
  
--			ret = reset_tree(new->commit->tree, opts, 1,
-+			ret = reset_tree(new_branch_info->commit->tree, opts, 1,
- 					 writeout_error);
- 			if (ret)
- 				return ret;
- 			o.ancestor = old->name;
--			o.branch1 = new->name;
-+			o.branch1 = new_branch_info->name;
- 			o.branch2 = "local";
--			ret = merge_trees(&o, new->commit->tree, work,
-+			ret = merge_trees(&o, new_branch_info->commit->tree, work,
- 				old->commit->tree, &result);
- 			if (ret < 0)
- 				exit(128);
--			ret = reset_tree(new->commit->tree, opts, 0,
-+			ret = reset_tree(new_branch_info->commit->tree, opts, 0,
- 					 writeout_error);
- 			strbuf_release(&o.obuf);
- 			if (ret)
-@@ -600,15 +600,15 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		die(_("unable to write new index file"));
- 
- 	if (!opts->force && !opts->quiet)
--		show_local_changes(&new->commit->object, &opts->diff_options);
-+		show_local_changes(&new_branch_info->commit->object, &opts->diff_options);
- 
- 	return 0;
- }
- 
--static void report_tracking(struct branch_info *new)
-+static void report_tracking(struct branch_info *new_branch_info)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	struct branch *branch = branch_get(new->name);
-+	struct branch *branch = branch_get(new_branch_info->name);
- 
- 	if (!format_tracking_info(branch, &sb))
- 		return;
-@@ -618,7 +618,7 @@ static void report_tracking(struct branch_info *new)
- 
- static void update_refs_for_switch(const struct checkout_opts *opts,
- 				   struct branch_info *old,
--				   struct branch_info *new)
-+				   struct branch_info *new_branch_info)
- {
- 	struct strbuf msg = STRBUF_INIT;
- 	const char *old_desc, *reflog_msg;
-@@ -645,14 +645,14 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 			free(refname);
+@@ -270,7 +270,7 @@ static struct lline *coalesce_lines(struct lline *base, int *lenbase,
  		}
- 		else
--			create_branch(opts->new_branch, new->name,
-+			create_branch(opts->new_branch, new_branch_info->name,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_force ? 1 : 0,
- 				      opts->new_branch_log,
- 				      opts->quiet,
- 				      opts->track);
--		new->name = opts->new_branch;
--		setup_branch_path(new);
-+		new_branch_info->name = opts->new_branch;
-+		setup_branch_path(new_branch_info);
  	}
  
- 	old_desc = old->name;
-@@ -662,40 +662,40 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 	reflog_msg = getenv("GIT_REFLOG_ACTION");
- 	if (!reflog_msg)
- 		strbuf_addf(&msg, "checkout: moving from %s to %s",
--			old_desc ? old_desc : "(invalid)", new->name);
-+			old_desc ? old_desc : "(invalid)", new_branch_info->name);
- 	else
- 		strbuf_insert(&msg, 0, reflog_msg, strlen(reflog_msg));
- 
--	if (!strcmp(new->name, "HEAD") && !new->path && !opts->force_detach) {
-+	if (!strcmp(new_branch_info->name, "HEAD") && !new_branch_info->path && !opts->force_detach) {
- 		/* Nothing to do. */
--	} else if (opts->force_detach || !new->path) {	/* No longer on any branch. */
--		update_ref(msg.buf, "HEAD", &new->commit->object.oid, NULL,
-+	} else if (opts->force_detach || !new_branch_info->path) {	/* No longer on any branch. */
-+		update_ref(msg.buf, "HEAD", &new_branch_info->commit->object.oid, NULL,
- 			   REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path &&
- 			    advice_detached_head && !opts->force_detach)
--				detach_advice(new->name);
--			describe_detached_head(_("HEAD is now at"), new->commit);
-+				detach_advice(new_branch_info->name);
-+			describe_detached_head(_("HEAD is now at"), new_branch_info->commit);
- 		}
--	} else if (new->path) {	/* Switch branches. */
--		if (create_symref("HEAD", new->path, msg.buf) < 0)
-+	} else if (new_branch_info->path) {	/* Switch branches. */
-+		if (create_symref("HEAD", new_branch_info->path, msg.buf) < 0)
- 			die(_("unable to update HEAD"));
- 		if (!opts->quiet) {
--			if (old->path && !strcmp(new->path, old->path)) {
-+			if (old->path && !strcmp(new_branch_info->path, old->path)) {
- 				if (opts->new_branch_force)
- 					fprintf(stderr, _("Reset branch '%s'\n"),
--						new->name);
-+						new_branch_info->name);
- 				else
- 					fprintf(stderr, _("Already on '%s'\n"),
--						new->name);
-+						new_branch_info->name);
- 			} else if (opts->new_branch) {
- 				if (opts->branch_exists)
--					fprintf(stderr, _("Switched to and reset branch '%s'\n"), new->name);
-+					fprintf(stderr, _("Switched to and reset branch '%s'\n"), new_branch_info->name);
- 				else
--					fprintf(stderr, _("Switched to a new branch '%s'\n"), new->name);
-+					fprintf(stderr, _("Switched to a new branch '%s'\n"), new_branch_info->name);
- 			} else {
- 				fprintf(stderr, _("Switched to branch '%s'\n"),
--					new->name);
-+					new_branch_info->name);
- 			}
- 		}
- 		if (old->path && old->name) {
-@@ -706,8 +706,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 	remove_branch_state();
- 	strbuf_release(&msg);
- 	if (!opts->quiet &&
--	    (new->path || (!opts->force_detach && !strcmp(new->name, "HEAD"))))
--		report_tracking(new);
-+	    (new_branch_info->path || (!opts->force_detach && !strcmp(new_branch_info->name, "HEAD"))))
-+		report_tracking(new_branch_info);
- }
- 
- static int add_pending_uninteresting_ref(const char *refname,
-@@ -787,7 +787,7 @@ static void suggest_reattach(struct commit *commit, struct rev_info *revs)
-  * HEAD.  If it is not reachable from any ref, this is the last chance
-  * for the user to do so without resorting to reflog.
-  */
--static void orphaned_commit_warning(struct commit *old, struct commit *new)
-+static void orphaned_commit_warning(struct commit *old, struct commit *new_commit)
- {
- 	struct rev_info revs;
- 	struct object *object = &old->object;
-@@ -799,7 +799,7 @@ static void orphaned_commit_warning(struct commit *old, struct commit *new)
- 	add_pending_object(&revs, object, oid_to_hex(&object->oid));
- 
- 	for_each_ref(add_pending_uninteresting_ref, &revs);
--	add_pending_oid(&revs, "HEAD", &new->object.oid, UNINTERESTING);
-+	add_pending_oid(&revs, "HEAD", &new_commit->object.oid, UNINTERESTING);
- 
- 	if (prepare_revision_walk(&revs))
- 		die(_("internal error in revision walk"));
-@@ -813,7 +813,7 @@ static void orphaned_commit_warning(struct commit *old, struct commit *new)
- }
- 
- static int switch_branches(const struct checkout_opts *opts,
--			   struct branch_info *new)
-+			   struct branch_info *new_branch_info)
- {
- 	int ret = 0;
- 	struct branch_info old;
-@@ -830,26 +830,26 @@ static int switch_branches(const struct checkout_opts *opts,
- 	if (old.path)
- 		skip_prefix(old.path, "refs/heads/", &old.name);
- 
--	if (!new->name) {
--		new->name = "HEAD";
--		new->commit = old.commit;
--		if (!new->commit)
-+	if (!new_branch_info->name) {
-+		new_branch_info->name = "HEAD";
-+		new_branch_info->commit = old.commit;
-+		if (!new_branch_info->commit)
- 			die(_("You are on a branch yet to be born"));
--		parse_commit_or_die(new->commit);
-+		parse_commit_or_die(new_branch_info->commit);
- 	}
- 
--	ret = merge_working_tree(opts, &old, new, &writeout_error);
-+	ret = merge_working_tree(opts, &old, new_branch_info, &writeout_error);
- 	if (ret) {
- 		free(path_to_free);
- 		return ret;
- 	}
- 
--	if (!opts->quiet && !old.path && old.commit && new->commit != old.commit)
--		orphaned_commit_warning(old.commit, new->commit);
-+	if (!opts->quiet && !old.path && old.commit && new_branch_info->commit != old.commit)
-+		orphaned_commit_warning(old.commit, new_branch_info->commit);
- 
--	update_refs_for_switch(opts, &old, new);
-+	update_refs_for_switch(opts, &old, new_branch_info);
- 
--	ret = post_checkout_hook(old.commit, new->commit, 1);
-+	ret = post_checkout_hook(old.commit, new_branch_info->commit, 1);
- 	free(path_to_free);
- 	return ret || writeout_error;
- }
-@@ -870,7 +870,7 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
--				struct branch_info *new,
-+				struct branch_info *new_branch_info,
- 				struct checkout_opts *opts,
- 				struct object_id *rev)
- {
-@@ -988,22 +988,22 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	argv++;
- 	argc--;
- 
--	new->name = arg;
--	setup_branch_path(new);
-+	new_branch_info->name = arg;
-+	setup_branch_path(new_branch_info);
- 
--	if (!check_refname_format(new->path, 0) &&
--	    !read_ref(new->path, &branch_rev))
-+	if (!check_refname_format(new_branch_info->path, 0) &&
-+	    !read_ref(new_branch_info->path, &branch_rev))
- 		oidcpy(rev, &branch_rev);
- 	else
--		new->path = NULL; /* not an existing branch */
-+		new_branch_info->path = NULL; /* not an existing branch */
- 
--	new->commit = lookup_commit_reference_gently(rev, 1);
--	if (!new->commit) {
-+	new_branch_info->commit = lookup_commit_reference_gently(rev, 1);
-+	if (!new_branch_info->commit) {
- 		/* not a commit */
- 		*source_tree = parse_tree_indirect(rev);
- 	} else {
--		parse_commit_or_die(new->commit);
--		*source_tree = new->commit->tree;
-+		parse_commit_or_die(new_branch_info->commit);
-+		*source_tree = new_branch_info->commit->tree;
- 	}
- 
- 	if (!*source_tree)                   /* case (1): want a tree */
-@@ -1043,7 +1043,7 @@ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
- }
- 
- static int checkout_branch(struct checkout_opts *opts,
--			   struct branch_info *new)
-+			   struct branch_info *new_branch_info)
- {
- 	if (opts->pathspec.nr)
- 		die(_("paths cannot be used with switching branches"));
-@@ -1072,21 +1072,21 @@ static int checkout_branch(struct checkout_opts *opts,
- 	} else if (opts->track == BRANCH_TRACK_UNSPECIFIED)
- 		opts->track = git_branch_track;
- 
--	if (new->name && !new->commit)
-+	if (new_branch_info->name && !new_branch_info->commit)
- 		die(_("Cannot switch branch to a non-commit '%s'"),
--		    new->name);
-+		    new_branch_info->name);
- 
--	if (new->path && !opts->force_detach && !opts->new_branch &&
-+	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
- 	    !opts->ignore_other_worktrees) {
- 		int flag;
- 		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
- 		if (head_ref &&
--		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new->path)))
--			die_if_checked_out(new->path, 1);
-+		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
-+			die_if_checked_out(new_branch_info->path, 1);
- 		free(head_ref);
- 	}
- 
--	if (!new->commit && opts->new_branch) {
-+	if (!new_branch_info->commit && opts->new_branch) {
- 		struct object_id rev;
- 		int flag;
- 
-@@ -1094,13 +1094,13 @@ static int checkout_branch(struct checkout_opts *opts,
- 		    (flag & REF_ISSYMREF) && is_null_oid(&rev))
- 			return switch_unborn_to_new_branch(opts);
- 	}
--	return switch_branches(opts, new);
-+	return switch_branches(opts, new_branch_info);
- }
- 
- int cmd_checkout(int argc, const char **argv, const char *prefix)
- {
- 	struct checkout_opts opts;
--	struct branch_info new;
-+	struct branch_info new_branch_info;
- 	char *conflict_style = NULL;
- 	int dwim_new_local_branch = 1;
- 	struct option options[] = {
-@@ -1138,7 +1138,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	memset(&opts, 0, sizeof(opts));
--	memset(&new, 0, sizeof(new));
-+	memset(&new_branch_info, 0, sizeof(new_branch_info));
- 	opts.overwrite_ignore = 1;
- 	opts.prefix = prefix;
- 	opts.show_progress = -1;
-@@ -1210,7 +1210,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 			opts.track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts.new_branch;
- 		int n = parse_branchname_arg(argc, argv, dwim_ok,
--					     &new, &opts, &rev);
-+					     &new_branch_info, &opts, &rev);
- 		argv += n;
- 		argc -= n;
- 	}
-@@ -1253,7 +1253,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 
- 	UNLEAK(opts);
- 	if (opts.patch_mode || opts.pathspec.nr)
--		return checkout_paths(&opts, new.name);
-+		return checkout_paths(&opts, new_branch_info.name);
- 	else
--		return checkout_branch(&opts, &new);
-+		return checkout_branch(&opts, &new_branch_info);
- }
+-	newend = new;
++	newend = newline;
+ 	while (newend) {
+ 		struct lline *lline = newend;
+ 		newend = newend->next;
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
