@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AA3E1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B93991F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:40:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752229AbeA2WkR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:40:17 -0500
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:39988 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752139AbeA2WiM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:38:12 -0500
-Received: by mail-oi0-f74.google.com with SMTP id s5so5933147oib.7
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:11 -0800 (PST)
+        id S1752081AbeA2WkZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:40:25 -0500
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:51122 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751457AbeA2WiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:38:07 -0500
+Received: by mail-vk0-f73.google.com with SMTP id z207so5820599vkd.17
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=IBoDRKBZg/4fIl3E60qE1aCLG0+lQvXoF9Y34/onxxc=;
-        b=HtsOpICGTR6KoXECtHmcPqFdTXXZd7TmUHcSmpB8mTdzriUuPJwwTYCKvSA4LgwDVp
-         U4MI4ZtnGUN4pgSjM9a3B5rFchUsgCEojeTZnOw6QD0UxwSFLJ3QxubfarXMehq3SAgc
-         7vE5LhXm6/UcoSq/0WSg1jD3HtswJV9sKcMKbE/rzeUk5Ce5ruF5xvYN6YG+7U8V7oZ3
-         iMCYvEBTso8b8mxNWwoLYpaW6Xr8TBOORgyj0XVKdQGSBTxReyms3LV7BRJHHFyzzCCg
-         Q+kCJlyjNnmp7AdHaMz7TDwYqX4WMosKKIZQ5bNL7o5wVcWEl0Dk8y+bsN+svcdIiQI8
-         CFlQ==
+        bh=3ckAHx9r3U2374gAG7LgH74f6F1HeUbsZqh8DLZElKw=;
+        b=q36VN5dsKWD/ytaURv1Si6kATv1QacfZ+SH1o4Mr7pNUiS1eloNVgk2ddFG+wmN3Nz
+         GqG4il3p1/o8an0IzMxb1hXbmus8aVFKrLx0Uo8EbuajsP5iKALE6a9B50m5vUJ5BHSp
+         iSWFqXzL1Jn1EHsHg9mPhFVFpW64hGpdKdBv2ymzlojnEyUKVuQuKcVSQnimMXh9NRJK
+         un+QUgaeer3lCS7QEyEIXji/np9RDIg3EhY0DubnZoQiTN415Q5cgCRP8/or+a4RVHcp
+         VfCpfy6KpEqkXf6vd0w1GaSBSaE++uq6qZ+opCFnrEbBZDsvOyUnX2J9TtZlBXetLsDM
+         WmDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=IBoDRKBZg/4fIl3E60qE1aCLG0+lQvXoF9Y34/onxxc=;
-        b=gFI09DtzsIUl7mhbUuRBY4x7vV40DsZDCwTZ0pJBmz/Q2Z8Scs/cVuAQZ3ESaFgQow
-         zvQR1ouPSoel7bptdNu+XxHd9iRoQX0pBy9zACbESi4b8xKbpJnAnW7/IhhHBr8Uwepu
-         XTXUz7smCB85+gEgtjSwrGh5RGKT+OMgUBC+ON/VDQ3QqLMuDBInEFauTobJ0hJDAwl9
-         f0Fya3LK3Bz7E2bTfLkaoysTptr3DnDtwPA9uXPbpVr3yx49wu9VoSMpQVv6ksyqfw0s
-         Civtm8ybhSP/gSrVJo9Lk24ZicuTgtAyyffNXKrwruR7dnQBVsnxb1uSwFLtIVmpxD7L
-         ipXA==
-X-Gm-Message-State: AKwxytcROd7NVkVJ+Ir4lwu2GGNQuEFxazQthXeEU0AaOA9LXkHqezsc
-        DM+oiJfso7gJsjFxs52YxVI5AT8I8C+CQm4n9Bd3eEf/4ZuJ8RFkDOrQ6mqVC1rhT/OnwHQooiJ
-        aWpIwUl0mXoC3mlw6a/oizTXar4SPjULMysUDCL0xa5PPlDoV8r/QtiIy7w==
-X-Google-Smtp-Source: AH8x226HDfgFz81lHMBXfxcN9Dr+q5pREiLL+RsIU5pPM5gBGu5WCG9caOSMRxOZk26dxWuVIDfGhgl7LDM=
+        bh=3ckAHx9r3U2374gAG7LgH74f6F1HeUbsZqh8DLZElKw=;
+        b=uoDLtbvSDguwO8ntG+nIzzfBLgZWO/LwdSWY6iMSd6fbbR+esX2HSGV79tN8aSCjtu
+         +TZZ8k7+Fc0aejRJOkOG0h+W9/+r5pk4eWUzYo+Ik1tuLxDmbAylWzq2YTXtrg/ilbdE
+         o+Lm1h7ck+cJvZ6jfGmFFWdFcHWo+JBH/BaFGpkrwhKgP9GyIkrZAwTTgDvojkBxZCXh
+         ws5oV/N+QXt6o3QQpgq4XA1vi4rW/ktsih79ZPOgGUKmvbKB16iTWJsdIi6iG46X0R8+
+         qu6IKU1WTa+6k6li0hkqv5+ZV4eKL+8CQ9UrHRZpbD2177aGZBm6m0QjzyfQaY0d5l1L
+         n5Jw==
+X-Gm-Message-State: AKwxytfeSyuFNgVebJGjbpGDusew55ghNT1YY6rNa5mFxltUuP/Be6DD
+        eeVu/8kAVSQS4XzUbYJggN76hpsvKY4WApa52xD/xllFyMXUl9a+nfZTSNbDdXsgrwNors0GzJ8
+        XsMRF2edf05Ef+pupMIQHRQvL8PSxb1ZT33w7iJ3gJ5n+5rsAZPxAANUEIg==
+X-Google-Smtp-Source: AH8x227LxKU4N0wnKANowl8gDTnZtGWkG2/+zFyqBvIEAb6mmwGlNwPexWoyv82vL2ECY/LNEe4nb0YMWek=
 MIME-Version: 1.0
-X-Received: by 10.157.6.108 with SMTP id 99mr14713216otn.96.1517265491427;
- Mon, 29 Jan 2018 14:38:11 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:37:04 -0800
+X-Received: by 10.31.252.9 with SMTP id a9mr12229695vki.101.1517265487061;
+ Mon, 29 Jan 2018 14:38:07 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:37:02 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-14-bmwill@google.com>
+Message-Id: <20180129223728.30569-12-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 13/37] remote: rename 'new' variables
+Subject: [PATCH 11/37] pack-redundant: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,167 +68,107 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/remote.c | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ builtin/pack-redundant.c | 48 ++++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d95bf904c..4f4783e70 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -322,7 +322,7 @@ static void read_branches(void)
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index aaa813632..e18b53df8 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -48,17 +48,17 @@ static inline void llist_item_put(struct llist_item *item)
  
- struct ref_states {
- 	struct remote *remote;
--	struct string_list new, stale, tracked, heads, push;
-+	struct string_list new_refs, stale, tracked, heads, push;
- 	int queried;
- };
- 
-@@ -337,12 +337,12 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 			die(_("Could not get fetch map for refspec %s"),
- 				states->remote->fetch_refspec[i]);
- 
--	states->new.strdup_strings = 1;
-+	states->new_refs.strdup_strings = 1;
- 	states->tracked.strdup_strings = 1;
- 	states->stale.strdup_strings = 1;
- 	for (ref = fetch_map; ref; ref = ref->next) {
- 		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
--			string_list_append(&states->new, abbrev_branch(ref->name));
-+			string_list_append(&states->new_refs, abbrev_branch(ref->name));
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
- 	}
-@@ -356,7 +356,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	free_refs(stale_refs);
- 	free_refs(fetch_map);
- 
--	string_list_sort(&states->new);
-+	string_list_sort(&states->new_refs);
- 	string_list_sort(&states->tracked);
- 	string_list_sort(&states->stale);
- 
-@@ -547,7 +547,7 @@ static int add_branch_for_removal(const char *refname,
- 
- struct rename_info {
- 	const char *old;
--	const char *new;
-+	const char *new_name;
- 	struct string_list *remote_branches;
- };
- 
-@@ -616,33 +616,33 @@ static int mv(int argc, const char **argv)
- 		usage_with_options(builtin_remote_rename_usage, options);
- 
- 	rename.old = argv[1];
--	rename.new = argv[2];
-+	rename.new_name = argv[2];
- 	rename.remote_branches = &remote_branches;
- 
- 	oldremote = remote_get(rename.old);
- 	if (!remote_is_configured(oldremote, 1))
- 		die(_("No such remote: %s"), rename.old);
- 
--	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
-+	if (!strcmp(rename.old, rename.new_name) && oldremote->origin != REMOTE_CONFIG)
- 		return migrate_file(oldremote);
- 
--	newremote = remote_get(rename.new);
-+	newremote = remote_get(rename.new_name);
- 	if (remote_is_configured(newremote, 1))
--		die(_("remote %s already exists."), rename.new);
-+		die(_("remote %s already exists."), rename.new_name);
- 
--	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
-+	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new_name);
- 	if (!valid_fetch_refspec(buf.buf))
--		die(_("'%s' is not a valid remote name"), rename.new);
-+		die(_("'%s' is not a valid remote name"), rename.new_name);
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s", rename.old);
--	strbuf_addf(&buf2, "remote.%s", rename.new);
-+	strbuf_addf(&buf2, "remote.%s", rename.new_name);
- 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
- 		return error(_("Could not rename config section '%s' to '%s'"),
- 				buf.buf, buf2.buf);
- 
- 	strbuf_reset(&buf);
--	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
-+	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
- 	git_config_set_multivar(buf.buf, NULL, NULL, 1);
- 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
- 	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
-@@ -655,8 +655,8 @@ static int mv(int argc, const char **argv)
- 			refspec_updated = 1;
- 			strbuf_splice(&buf2,
- 				      ptr-buf2.buf + strlen(":refs/remotes/"),
--				      strlen(rename.old), rename.new,
--				      strlen(rename.new));
-+				      strlen(rename.old), rename.new_name,
-+				      strlen(rename.new_name));
- 		} else
- 			warning(_("Not updating non-default fetch refspec\n"
- 				  "\t%s\n"
-@@ -673,7 +673,7 @@ static int mv(int argc, const char **argv)
- 		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
--			git_config_set(buf.buf, rename.new);
-+			git_config_set(buf.buf, rename.new_name);
- 		}
- 	}
- 
-@@ -704,7 +704,7 @@ static int mv(int argc, const char **argv)
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
- 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addf(&buf2, "remote: renamed %s to %s",
- 				item->string, buf.buf);
-@@ -719,11 +719,11 @@ static int mv(int argc, const char **argv)
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
- 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addstr(&buf2, item->util);
- 		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf3);
- 		strbuf_addf(&buf3, "remote: renamed %s to %s",
- 				item->string, buf.buf);
-@@ -822,7 +822,7 @@ static void clear_push_info(void *util, const char *string)
- 
- static void free_remote_ref_states(struct ref_states *states)
+ static inline struct llist_item *llist_item_get(void)
  {
--	string_list_clear(&states->new, 0);
-+	string_list_clear(&states->new_refs, 0);
- 	string_list_clear(&states->stale, 1);
- 	string_list_clear(&states->tracked, 0);
- 	string_list_clear(&states->heads, 0);
-@@ -907,7 +907,7 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- 	if (states->queried) {
- 		const char *fmt = "%s";
- 		const char *arg = "";
--		if (string_list_has_string(&states->new, name)) {
-+		if (string_list_has_string(&states->new_refs, name)) {
- 			fmt = _(" new (next fetch will store in remotes/%s)");
- 			arg = states->remote->name;
- 		} else if (string_list_has_string(&states->tracked, name))
-@@ -1176,7 +1176,7 @@ static int show(int argc, const char **argv)
+-	struct llist_item *new;
++	struct llist_item *new_item;
+ 	if ( free_nodes ) {
+-		new = free_nodes;
++		new_item = free_nodes;
+ 		free_nodes = free_nodes->next;
+ 	} else {
+ 		int i = 1;
+-		ALLOC_ARRAY(new, BLKSIZE);
++		ALLOC_ARRAY(new_item, BLKSIZE);
+ 		for (; i < BLKSIZE; i++)
+-			llist_item_put(&new[i]);
++			llist_item_put(&new_item[i]);
+ 	}
+-	return new;
++	return new_item;
+ }
  
- 		/* remote branch info */
- 		info.width = 0;
--		for_each_string_list(&states.new, add_remote_to_show_info, &info);
-+		for_each_string_list(&states.new_refs, add_remote_to_show_info, &info);
- 		for_each_string_list(&states.tracked, add_remote_to_show_info, &info);
- 		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
- 		if (info.list->nr)
+ static void llist_free(struct llist *list)
+@@ -80,26 +80,26 @@ static inline void llist_init(struct llist **list)
+ static struct llist * llist_copy(struct llist *list)
+ {
+ 	struct llist *ret;
+-	struct llist_item *new, *old, *prev;
++	struct llist_item *new_item, *old, *prev;
+ 
+ 	llist_init(&ret);
+ 
+ 	if ((ret->size = list->size) == 0)
+ 		return ret;
+ 
+-	new = ret->front = llist_item_get();
+-	new->sha1 = list->front->sha1;
++	new_item = ret->front = llist_item_get();
++	new_item->sha1 = list->front->sha1;
+ 
+ 	old = list->front->next;
+ 	while (old) {
+-		prev = new;
+-		new = llist_item_get();
+-		prev->next = new;
+-		new->sha1 = old->sha1;
++		prev = new_item;
++		new_item = llist_item_get();
++		prev->next = new_item;
++		new_item->sha1 = old->sha1;
+ 		old = old->next;
+ 	}
+-	new->next = NULL;
+-	ret->back = new;
++	new_item->next = NULL;
++	ret->back = new_item;
+ 
+ 	return ret;
+ }
+@@ -108,24 +108,24 @@ static inline struct llist_item *llist_insert(struct llist *list,
+ 					      struct llist_item *after,
+ 					       const unsigned char *sha1)
+ {
+-	struct llist_item *new = llist_item_get();
+-	new->sha1 = sha1;
+-	new->next = NULL;
++	struct llist_item *new_item = llist_item_get();
++	new_item->sha1 = sha1;
++	new_item->next = NULL;
+ 
+ 	if (after != NULL) {
+-		new->next = after->next;
+-		after->next = new;
++		new_item->next = after->next;
++		after->next = new_item;
+ 		if (after == list->back)
+-			list->back = new;
++			list->back = new_item;
+ 	} else {/* insert in front */
+ 		if (list->size == 0)
+-			list->back = new;
++			list->back = new_item;
+ 		else
+-			new->next = list->front;
+-		list->front = new;
++			new_item->next = list->front;
++		list->front = new_item;
+ 	}
+ 	list->size++;
+-	return new;
++	return new_item;
+ }
+ 
+ static inline struct llist_item *llist_insert_back(struct llist *list,
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
