@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 751F41F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 15:47:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06D301F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 15:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751810AbeA2Pr1 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 29 Jan 2018 10:47:27 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:37004 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751374AbeA2Pr0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 10:47:26 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w0TFlHC4058160
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 29 Jan 2018 10:47:18 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jack F'" <jack@bytes.nz>, <git@vger.kernel.org>
-References: <903a193c-0360-59bc-4d86-6470ac8dc1a8@bytes.nz>
-In-Reply-To: <903a193c-0360-59bc-4d86-6470ac8dc1a8@bytes.nz>
-Subject: RE: Missing ? wildcard character in gitignore documentation
-Date:   Mon, 29 Jan 2018 10:47:10 -0500
-Message-ID: <000f01d39918$70009eb0$5001dc10$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKVZzOJtk/08YHwkRyqQzrU/njAeaIHYKhA
-Content-Language: en-ca
+        id S1751822AbeA2P7V (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 10:59:21 -0500
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:42831 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751698AbeA2P7T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 10:59:19 -0500
+Received: by mail-lf0-f47.google.com with SMTP id q17so10698622lfa.9
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 07:59:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:in-reply-to:references;
+        bh=AEP100bvYHeFte3Q1keKeUWm/dgWSy4X+Mkf8ur+F8w=;
+        b=dsOeCw47brOqP8IugODqKgxbAYmJsIHZ5g5mDEgpQ5OUP/awMPpdHZkDFJfVY9RoTc
+         X2nEcbOUGngbE58FXKP0ElO3FAOINlqqTEbQQ66gZXrA2+NCMnohO9sCDfo/iyxQMl+Q
+         hEvBO6TA96RMYSIzj8KUgjRHJdg70her72c66SKCdZm1+8v/KlDmiyekRr6LGl2ywm4f
+         MlnMTcY7vahC7/8WMLJTaLeO0gZxyTf/I81e/Z9IACe33iUza99MOZBgex9mFCXIS828
+         q8RuRVbbmDB4oJEaRbh1U97XMoRaMH2lvn8xCnGqGU2+pHMAyDs6DUbynbte7KKqAjmZ
+         xU7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+         :references;
+        bh=AEP100bvYHeFte3Q1keKeUWm/dgWSy4X+Mkf8ur+F8w=;
+        b=E4DNYpGj0bOuKe9AYtEMAnjpcCrqwNV/DFeWEl/48GM5c/j5pT62SeODMibOquAxk6
+         zrdVnHqOI5AEl9Vn3zQChFPx2pPoj1qgsSJ8CGDq7QvdAfwMOkGnRuH8TfM4+e5e1KTc
+         LbF6U6TB9AGnEyaZFHsw6JePdJUfSdUoOHd9vBRh+hzorbf6+g2HL7rL1fd+CKeskpdu
+         yhdbzPWN2YBvjqSRaU/SvGp9zjBaCd+Z7d4og1d8WQkJPb2/WKn0wSTLZ/CY8DU1CKY3
+         KPtBtzmslQhI1cH+ivx1D7KR5Mg5SXb7bXKh6a3WJoybMImIeCb/79Vqy/d0jDYtmeE6
+         dxKw==
+X-Gm-Message-State: AKwxytdv3uIinIrZv3ohPit9DTfr+H2YF78Am5rn5j9vvksVJ9n4NJDI
+        pJvSXq18QmurB72Lhv6kRBewZSP2
+X-Google-Smtp-Source: AH8x225nftuSRR4ynO5rlj8n+QRi/b9lQe7BcxDOJwT2443lhvJ3+A7/HuqAbTh29rzWrCarSVeCaQ==
+X-Received: by 10.46.29.76 with SMTP id d73mr3263364ljd.70.1517241557397;
+        Mon, 29 Jan 2018 07:59:17 -0800 (PST)
+Received: from localhost.localdomain ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id p74sm697995ljp.13.2018.01.29.07.59.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 29 Jan 2018 07:59:16 -0800 (PST)
+From:   Patryk Obara <patryk.obara@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        sandals@crustytoothpaste.net
+Subject: [PATCH v3 0/1] setup: recognise extensions.objectFormat
+Date:   Mon, 29 Jan 2018 16:59:14 +0100
+Message-Id: <cover.1517241235.git.patryk.obara@gmail.com>
+X-Mailer: git-send-email 2.14.3
+In-Reply-To: <cover.1517098675.git.patryk.obara@gmail.com>
+References: <cover.1517098675.git.patryk.obara@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 29, 2018 6:30 AM, Jack F wrote:
-> I have just noticed that the documentation for gitignore is missing
-> documentation on using the ? to match any single character. I have included
-> a example below with git version 2.14.1.
-> 
-> |11:05:09 j ~/Development/ls-ignore [master] $ git status On branch
-> master Your branch is up-to-date with 'origin/master'. nothing to commit,
-> working tree clean 11:05:11 j ~/Development/ls-ignore [master] $ cat
-> .gitignore *~ node_modules yarn* 11:05:21 j ~/Development/ls-ignore
-> [master] $ touch test.swo 11:05:31 j ~/Development/ls-ignore [master]?1 $
-> git status On branch master Your branch is up-to-date with 'origin/master'.
-> Untracked files: (use "git add <file>..." to include in what will be committed)
-> test.swo nothing added to commit but untracked files present (use "git add"
-> to track) 11:05:35 j ~/Development/ls-ignore [master]?1 $ echo "*.sw?" >>
-> .gitignore 11:05:40 j ~/Development/ls-ignore [master]≠1 $ cat .gitignore *~
-> node_modules
-> yarn* *.sw? 11:05:51 j ~/Development/ls-ignore [master]≠1 $ git status On
-> branch master Your branch is up-to-date with 'origin/master'. Changes not
-> staged for commit: (use "git add <file>..." to update what will be
-> committed) (use "git checkout -- <file>..." to discard changes in working
-> directory) modified: .gitignore no changes added to commit (use "git add"
-> and/or "git commit -a")|
-> 
-> 
-> 
-> Noticed it when checking an npm package (ignore) that uses the
-> documentation (https://git-scm.com/docs/gitignore) to determine its
-> functionality. It is documented in https://git-scm.com/book/en/v2/Git-
-> Basics-Recording-Changes-to-the-Repository#Ignoring-Files
+Compred to v2:
 
-The implication of support for ? is there through the following paragraph from the gitignore documentation:
+Fixed commit message.
 
-    "Otherwise, Git treats the pattern as a shell glob suitable for consumption by fnmatch(3)
-    with the FNM_PATHNAME flag: wildcards in the pattern will not match a / in the
-    pathname. For example, "Documentation/*.html" matches "Documentation/git.html"
-    but not "Documentation/ppc/ppc.html" or "tools/perf/Documentation/perf.html"."
+Patryk Obara (1):
+  setup: recognise extensions.objectFormat
 
-Of course you have to go read fnmatch(3), so it might be good for expand on this here :).
-
-Cheers,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+ Documentation/technical/repository-version.txt | 12 ++++++++++++
+ setup.c                                        | 27 ++++++++++++++++++++++++++
+ t/t1302-repo-version.sh                        | 15 ++++++++++++++
+ 3 files changed, 54 insertions(+)
 
 
+base-commit: 5be1f00a9a701532232f57958efab4be8c959a29
+-- 
+2.14.3
 
