@@ -2,105 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7733F1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 19:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73F0E1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 19:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751832AbeA2TY5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 14:24:57 -0500
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:43511 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751812AbeA2TY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 14:24:56 -0500
-Received: by mail-pg0-f50.google.com with SMTP id n17so5216066pgf.10
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 11:24:56 -0800 (PST)
+        id S1752000AbeA2TgL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 14:36:11 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:51953 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751539AbeA2TgJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 14:36:09 -0500
+Received: by mail-wm0-f46.google.com with SMTP id r71so16624222wmd.1
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 11:36:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HhbOlzRWVO9jrKkfXJhAnMxkIm1J7L4KD7B8VJLOxlI=;
-        b=Nyao6Id5wmJHovNNHcTs93Ln85bHc6OAovzmflxtcdG7tO+7aSftBVyNr4QUHzKICb
-         iinuOyPxO1h1B7nC3TJ+hwFyHIoMoBSigMMksC3ENbpbptZg8NC/hvIt3R0SnSBe7UiL
-         ZMK2xBGN3DP/A7ZxEmg2adTALnv2+C3r7ebCoQm1surOHtM9VNmCH7VqzFSa2QwveLPG
-         bwgKlBJ2tL9OHfMgjr8YvWNDNCV3XfHqch4tcY9tI4kT797mhP/lVz8oe5/z6HKzi3jF
-         Qd/XOQmeXM0LhD2+5NfNqqJoHBMjTRsNMEIkRwsgwSa0sEuuso2Owvx2GpHxci6akdiX
-         8hgQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=cn1yhcIzcHBDycBnp9v9QeAdWrpaM/clC7/j1dssY1M=;
+        b=iM/tUxOKqaRrjUZG+vBoxSqh4V/1CS7kCUUjqrkBKPNSOqx+2mwETUCgFtS4gZmEwM
+         vtS/i5IhQEvF7nkfIopMqTPhFBSSlBeTxSpnVIGd7I0V+Edg7zyfvEZkbJ1uDvmEkqDB
+         nMgZiDg6/GxAghBWNIjSu3qxMm/fFoGLNJHz1HxbxyTCxzI1AFrcmROoIvgRT8Z/e+3v
+         apgyAMPQIfH/SuXzW9GE8qaqsVXCRfrhu0fxWywMQTKtZJkeRHVZBGkBQWAenRdymDVU
+         3NFlMIlxsvKcDxF60sL9dQYuOOzSlvoTtBgU9l77cApOKoBfpdRDI1VDa3wGsLAz4gNH
+         RYTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HhbOlzRWVO9jrKkfXJhAnMxkIm1J7L4KD7B8VJLOxlI=;
-        b=CeG4aCX7tVo8aRYts73W69hXOQliMKshrIBrTe1HcJNbk11pSeCEljqPCSW5qz3lvY
-         nUJFBOE543u/1gc+4CyjsChx+MhRXtbCTrlMtwL8W3TYsCPvdnwF6cxbO4uUz6qOZERo
-         onqoV7xPJebodDr3adzekMhQ3wGsuk5sIjAXABnWQmMGjONUl0jO2SRFNdqydIMaDTmj
-         FMniN2cGLKTulVTRh4FLb2LHwED+2zrDZOYugSOZY/kd6ZyYB3n2Ghldm/utRZtUtAe1
-         uYOz/E04U2dtXXUUDf2zVOe+7S3Ya8kKr2oK4WVn1njl+43g54UEZXyqXqiNXZkp8McM
-         F14A==
-X-Gm-Message-State: AKwxytctZlrEPYNqb+tSfaXISyUMqDLUfmefPpHblHvfvtq2CKnJEURZ
-        0Ft2m5nf913iDbN0kGTumAE/jefQrFQ=
-X-Google-Smtp-Source: AH8x2271Z3vJscOephgoNNMZ8fZyldnNTMKQPmUf2FZF9BYRwTpRfFE+0PjyyH8k1TwXYDXmvcz+Sg==
-X-Received: by 10.98.85.195 with SMTP id j186mr23332741pfb.77.1517253895566;
-        Mon, 29 Jan 2018 11:24:55 -0800 (PST)
-Received: from google.com ([2620:0:100e:3010:b055:17d5:ab40:870d])
-        by smtp.gmail.com with ESMTPSA id q65sm34768563pfj.137.2018.01.29.11.24.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jan 2018 11:24:54 -0800 (PST)
-Date:   Mon, 29 Jan 2018 11:24:53 -0800
-From:   Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=cn1yhcIzcHBDycBnp9v9QeAdWrpaM/clC7/j1dssY1M=;
+        b=IWf5LstkG0jmTWBEUYzg8Sj7SHZQVEg4DxF2IkLzb0rxsl576Bfixzuu9YA+vl/JNg
+         McQBylFEispxD3amSFE3ioJhUHEYS4pnm3XqP0osNZi0619mdua14aGz+kQtkFg6JpK/
+         QkozcZXm4jFG9c4T8UCYKzAZe6f58cg9hWLdBLeAqbavfyQCuZr/yOXrOXbI0Jbf6XiV
+         gmnaiZPqSJPSFGmfYD7lf1xpyF/MVVBT/Rn+Wi0D+BB9PFlvEvGh93UY4FqM0z1OKJ0K
+         DiyK6MNVLz4DRNfgYF0g/mSohLD3GRcecd0/izFioqZ8eU5oZP9mNn7USXS5a76JP+CW
+         J52Q==
+X-Gm-Message-State: AKwxytcgzThNCXjaZ57MSrVvZFQlVbKUc6wihlafbEPUZ3s22WDPpWWO
+        NspRTTvJKImy60PBoXrxbVM=
+X-Google-Smtp-Source: AH8x227PriBMhoEDOsO8XXADtWblmUOk2Y2ZjsdciVfenIVaLMpj1zKpuomJuGurNxhx5Wy73Rrw4Q==
+X-Received: by 10.80.170.69 with SMTP id p5mr49727291edc.10.1517254568541;
+        Mon, 29 Jan 2018 11:36:08 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id c45sm6626442edb.17.2018.01.29.11.36.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 29 Jan 2018 11:36:07 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
+        git@vger.kernel.org, chris@dibona.com, Scott@gasch.org
 Subject: Re: Shawn Pearce has died
-Message-ID: <20180129192453.GA53791@google.com>
-References: <nycvar.QRO.7.76.6.1801291031040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <20180129172107.GA4185@sigill.intra.peff.net>
+References: <nycvar.QRO.7.76.6.1801291031040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <87bmhcsnhv.fsf@evledraar.booking.com> <20180129172452.GB4185@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <20180129172452.GB4185@sigill.intra.peff.net>
+Date:   Mon, 29 Jan 2018 20:36:07 +0100
+Message-ID: <87372oo3tk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180129172107.GA4185@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/29, Jeff King wrote:
-> On Mon, Jan 29, 2018 at 10:33:08AM +0100, Johannes Schindelin wrote:
-> 
-> > I found these sad news in my timeline today:
-> > 
-> > https://twitter.com/cdibona/status/957822400518696960
-> 
-> Thanks for posting this.
-> 
-> I know Shawn has not been all that active on this list in the past few
-> years, so many may not know how active he has been behind the scenes:
-> 
->  - serving on the Git project leadership committee
-> 
->  - managing many of the contributors whose names you see here daily
 
-I'm one of those contributors.  I'm very proud to have had Shawn's
-leadership and guidance while working on this project.  I would not be
-the engineer I am today without his guidance.  He was always quick to
-drop what he was doing to help and despite not having worked on the
-project himself in a while, he was able to answer, in detail, any
-technical questions I had.
+On Mon, Jan 29 2018, Jeff King jotted:
 
-He's left a rather large void on our team, and he will be sorely missed.
+> On Mon, Jan 29, 2018 at 04:17:32PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>
+>> They don't want any flowers sent over to them, but I wonder if we
+>> couldn't make some sort of tribute to Shawn at the upcoming developer
+>> meeting in Barcelona (and find some way to have remote people contribute
+>> to it).
+>>
+>> E.g. a short video/audio of different people in the dev community
+>> sharing some story about Shawn, or a written list of memories
+>> contributed by and signed by various people.
+>>
+>> I don't know what that would look like exactly, but I think it would be
+>> a good thing for his family and especially for his children when they're
+>> grown to remember him by, to know that their father contributed to these
+>> software projects with people all over the world, and that all these
+>> people appreciated his work and him personally.
+>
+> I like this direction (though like you, I'm not sure exactly what it
+> should look like). I'm not sure what kind of video presence GitHub will
+> have at the contrib summit, but I'll see about getting some interview
+> footage there.
+>
+> Doing something written, though, may make it easier for remote people to
+> collaborate.
 
-> 
->  - working on other Git ecosystem projects that aren't on this list
->    (like JGit!)
-> 
-> Over the many years, I've found him consistently smart, hard-working,
-> funny, and just overall pleasant to work with. I'll miss him.
-> 
-> -Peff
+Since I suspect many people will want to participate in text form that
+wouldn't via video, here's an idea (not mutually exclusive with the
+video).
 
--- 
-Brandon Williams
+We gather text from people involved in git about Shawn. This gets added
+to a git repo, we fast-export it, have it printed as hardcover in
+fixed-width font, in "a format your dad made".
