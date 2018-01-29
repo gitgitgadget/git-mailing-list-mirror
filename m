@@ -2,118 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A808E1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 01:51:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3BC31F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 02:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932335AbeA2Bvp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 20:51:45 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58494 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932121AbeA2Bvo (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 20:51:44 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1751411AbeA2C6Q (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 21:58:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53732 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751234AbeA2C6P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 Jan 2018 21:58:15 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F51CD9366;
+        Sun, 28 Jan 2018 21:58:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=ktROhjZKm9dYWrPwg6W3vUhYKlc=; b=vSPdyaQ
+        0bwoeWD/3DrRR7FMdYtnUEi0khimg+CB3j+vgkfYGHwSMZs5HptN1fm2Ss/Coi0K
+        Mp46moblqEeSrDmCKGI9mur+PZDXN5ctFaBc4i8d94DrMNEKM1joFT2ItKTi1dBj
+        zAck+MPa3wuhDzwM/s/NeqqyPRCNIwBBXCZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=REI0piKeqE9dAM2SbKj7n7Y29UtWfi1g4
+        UwJYwQfmKrZktszfglKzLdjZ7/ad1sO6/VFaDbuW6t4U48KLNnki025s00XLxXkT
+        HcH3Zf7hDVhOMTkdo6eIE1hoWLvXr1pY0RAUGwyR9zOmea2c4jGGWY+gOeoNqJ91
+        YSWGXHDNSk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 86730D9365;
+        Sun, 28 Jan 2018 21:58:14 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 46AE260431
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 01:51:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517190701;
-        bh=NCK2r8pgMn2S+YrWPXEQhHEmgwhvAwr0+0Eyx0oVC2g=;
-        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=hVaDg5fpjmMekRtJ8DMVBqC87VLEQzTK8fn5HnZsPkKS0ySYo/+H6yDCtnWUAN0by
-         hM9mZXGIjEbUUp27D2L1IXlUNFn1wRMG03yBVkn011qNZMKeLQ0JsTcEHUidnncKU8
-         a2TgXFNko8ej2gr+Prxe+7RxX7VoP0g0CMWrGtsVxZrSHqG5DEfzmGbBpZD5gTKE9d
-         URV14d2ZZARkXi7LASAl6D+3Y3Fpl2wl3uT7TTXeo5gN5ZK91mocdm2dha0uFv6d+x
-         QCVnWnW7a1+Lms5cMRNLay1V8CZOmGnDD9aKbHiXzHWMcQCGhF//NC8aCEmgy4zcqc
-         NxG1vaPXeXmI/xmhMC+uWY9lZB5D9CRWgXcO9DWsQtE4ekydPKUsET06kazsYE7Iee
-         xfkzpAF/lFEeMqH0q12qjer5Bdgpgx+giyMuargDVfMYSzBqhWUs6rQUw/IkgQCqNX
-         OSunSKaGr112bkZDW1A1TJMoo1kX/sjqdL23BrHgdQ77Np9FlnT
-Date:   Mon, 29 Jan 2018 01:51:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Subject: t9128 failing randomly with svn 1.9?
-Message-ID: <20180129015134.GN431130@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10299D9363;
+        Sun, 28 Jan 2018 21:58:14 -0500 (EST)
+Date:   Sun, 28 Jan 2018 21:58:12 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
+Subject: Re: t9128 failing randomly with svn 1.9?
+Message-ID: <20180129025812.GD1427@zaya.teonanacatl.net>
+References: <20180129015134.GN431130@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4Y142/9l9nQlBiaj"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="csti59zOqP8qx56L"
 Content-Disposition: inline
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20180129015134.GN431130@genre.crustytoothpaste.net>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Pobox-Relay-ID: 3F79239A-04A0-11E8-AC2D-692D1A68708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---4Y142/9l9nQlBiaj
+--csti59zOqP8qx56L
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-While running tests for my object_id part 11 series, I noticed a random
-segfault in git svn while running t9128.  I've reproduced this on a
-different machine as well, using both Subversion 1.9.5 and 1.9.7 (Debian
-stable and unstable).  It is reproducible on master.
+brian m. carlson wrote:
+> While running tests for my object_id part 11 series, I noticed a random
+> segfault in git svn while running t9128.  I've reproduced this on a
+> different machine as well, using both Subversion 1.9.5 and 1.9.7 (Debian
+> stable and unstable).  It is reproducible on master.
+>=20
+> When the test fails, it fails on the "git svn tag tag3" step, and I get
+> the following:
+>=20
+> Copying file:///home/bmc/checkouts/git/t/trash%20directory.t9128-git-svn-=
+cmd-branch/svnrepo/trunk at r2 to file:///home/bmc/checkouts/git/t/trash%20=
+directory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3...
+> Found possible branch point: file:///home/bmc/checkouts/git/t/trash%20dir=
+ectory.t9128-git-svn-cmd-branch/svnrepo/trunk =3D> file:///home/bmc/checkou=
+ts/git/t/trash%20directory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3, 2
+> Found branch parent: (refs/remotes/origin/tags/tag3) 0604824a81a121ad05aa=
+f8caea65d8ca8f86c018
+> Following parent with do_switch
+> Successfully followed parent
+> r7 =3D f8467f2cee3bcead03e84cb51cf44f467a87457d (refs/remotes/origin/tags=
+/tag3)
+> error: git-svn died of signal 11
+>=20
+> Doing the following three times, I had two crashes.
+>=20
+> (set -e; for i in $(seq 1 20); do (cd t && ./t9128-git-svn-cmd-branch.sh =
+--verbose); done)
+>=20
+> I'm not really familiar with git svn or its internals, and I didn't see
+> anything recently on the list about this.  Is this issue known?
 
-When the test fails, it fails on the "git svn tag tag3" step, and I get
-the following:
+I see the same test fail randomly on Fedora (and I think on
+CentOS/RHEL, but I run the full tests more often on Fedora).
 
-Copying file:///home/bmc/checkouts/git/t/trash%20directory.t9128-git-svn-cm=
-d-branch/svnrepo/trunk at r2 to file:///home/bmc/checkouts/git/t/trash%20di=
-rectory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3...
-Found possible branch point: file:///home/bmc/checkouts/git/t/trash%20direc=
-tory.t9128-git-svn-cmd-branch/svnrepo/trunk =3D> file:///home/bmc/checkouts=
-/git/t/trash%20directory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3, 2
-Found branch parent: (refs/remotes/origin/tags/tag3) 0604824a81a121ad05aaf8=
-caea65d8ca8f86c018
-Following parent with do_switch
-Successfully followed parent
-r7 =3D f8467f2cee3bcead03e84cb51cf44f467a87457d (refs/remotes/origin/tags/t=
-ag3)
-error: git-svn died of signal 11
+For me, it's tests 3 and 4 which fail with the same error.
+I thought it was a failure in subversion or the perl
+bindings rather than git, so I simply disabled them in the
+Fedora builds.  The Debian packages skip 9128 as well (and
+9167, which fails similarly).
 
-Doing the following three times, I had two crashes.
+I've seen the failures in t9141 from 'git svn branch' as
+well.  I made a note to re-enable those tests after Jeff's
+work to make it easier to run with shell tracing enabled by
+default, but have not done so yet.
 
-(set -e; for i in $(seq 1 20); do (cd t && ./t9128-git-svn-cmd-branch.sh --=
-verbose); done)
+The 'git svn' tests are not run in Travis because the perl
+subversion bindings are not installed.  I haven't made time
+to try installing them and running the tests in Travis to
+see if the failures occur there, but I suspect they would.
 
-I'm not really familiar with git svn or its internals, and I didn't see
-anything recently on the list about this.  Is this issue known?
 --=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Going to trial with a lawyer who considers your whole life-style a
+Crime in Progress is not a happy prospect.
+    -- Hunter S. Thompson
 
---4Y142/9l9nQlBiaj
+
+--csti59zOqP8qx56L
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
+Version: GnuPG v2.0.14 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpufiUACgkQv1NdgR9S
-9ovDXw//W2CFe8TXjWOuDRJjLQc6EdSyYrfaN+0lrVw39w1v7VMFSrAfHxm+ht0t
-HQb6V/PkfNPcG39hu+8J6/+mJOxQjMMD26nwGQj3a2/8CaAyBms4EcR5LEdyaS5M
-jzlQQvY/RpAJbkEZNWBBIXQZfBsblSg8VFT88IqS6z/OiGFsMsDlKgYl+W1norBR
-bdZ9HfuoMjt9sSqnwLpqWVPHu4MSjHbRwCvN3sq0HN7mNFBXuP5QOLOqChfQ5Sod
-N4Nas6ICWroDdMRWreIITpPtI8EiZ0mYO0vpZkPTnuJnzgAtBTaWs87/DRZLwlYJ
-I20wIOxcJ3fcOXXk3dIroEIc5wyCKCrD91G9FZQfaCbNjP14YXJABsNSP1VewFJn
-0P91Urj4ZFegDA+C+vcpiUdxHC3AZKx9hwgKm3Ye+FVoNTBaM09gIJiAolgev60e
-PKBmTeshBFK4YojAK0sCqe9gTFQX0qNvVgQf0gtlJ3JOiMykTPrkq5yAbJj9Doe8
-kYLkt9He0Nnn6PStbyzqxPcB8EsQxCltu7sGP8rVHvfk2o7jk3zPbCq8xuYHDzKX
-RfSErVvF/qT8IMBAsFv/s/t5nSTSR/OkDrKeP8f2uLq8cFj4gPXiF2otZOhZhdph
-joW6QZpuVZbaBzolz7koAGXM6yjwp1j6joLKMhSLHukGC4V4gQo=
-=Dphb
+iQFEBAEBCAAuBQJabo3EJxhodHRwczovL3d3dy5wb2JveC5jb20vfnRtei9wZ3Av
+dG16LmFzYwAKCRBDJZOLvq8M41QcCACV7nQ303EHZEwPn61U8EKuajwhcyNYg2Gg
+a7zBLAJ5mD6XPeLzYEQIbh5xY7nTiZQsVBeUONoMUTCQhi7+e7pIrn1uoo3yOZHU
+fWZth4lu8li/NINuOvo56D1bXt/Rx43RlQRkwxF8sq7AFMkle0SFXsf3TYZXOqz3
+z86rIVcjkjh43LfKLPKVmBUXoDpHX3YSqQS3ShPiOJfArVipcRNmLiDL53s5YCY8
+0L/p9+h3iNxqX84+2OVgb5VnJ31AI+abAQquYYi7WdSmO9f0YiaGbsdyl1b/drmH
+j7nB/7LEeOh0lEZvE//Ge0C+SsVQwWUJeByBQcUQREE3POTMSgp5
+=8GAa
 -----END PGP SIGNATURE-----
 
---4Y142/9l9nQlBiaj--
+--csti59zOqP8qx56L--
