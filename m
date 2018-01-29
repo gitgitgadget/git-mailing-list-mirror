@@ -7,81 +7,131 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DE711F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 21:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B461F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 21:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751592AbeA2VrK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 16:47:10 -0500
-Received: from mout.gmx.net ([212.227.17.20]:51020 "EHLO mout.gmx.net"
+        id S1751573AbeA2VyA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 16:54:00 -0500
+Received: from mout.gmx.net ([212.227.15.15]:64823 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751439AbeA2VrJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 16:47:09 -0500
-Received: from minint-kr8j64v.europe.corp.microsoft.com ([37.201.193.1]) by
- mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MLvLE-1ehMew2Dvg-007oJc; Mon, 29 Jan 2018 22:47:02 +0100
-Date:   Mon, 29 Jan 2018 22:47:01 +0100 (STD)
+        id S1751473AbeA2Vx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 16:53:59 -0500
+Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.193.1]) by
+ mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0LaG7C-1f2j5J2uFy-00m2kc; Mon, 29 Jan 2018 22:53:55 +0100
+Date:   Mon, 29 Jan 2018 22:53:54 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     phillip.wood@dunelm.org.uk
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 3/8] sequencer: fast-forward merge commits, if possible
-In-Reply-To: <7e6906c9-d642-ee8d-82fd-29ee6c60e308@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1801292245030.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <9878bd57cc82daf08309943305460c1e8a050518.1516225925.git.johannes.schindelin@gmx.de> <7e6906c9-d642-ee8d-82fd-29ee6c60e308@talktalk.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 0/8] rebase -i: offer to recreate merge commits
+In-Reply-To: <xmqqmv19ppen.fsf@gitster.mtv.corp.google.com>
+Message-ID: <nycvar.QRO.7.76.6.1801292251240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <xmqqmv19ppen.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hGUil25hFdVPfq4iex2rQDhY3g97675jruD2ikw+Ifo4JooXv3K
- XLdL+77wx4GhtRqjdEBgHS7DOEhJIUBUBuykjfw3FUnGgIbrkR1hvENA73PDUSXvoCYJXo3
- q/HzW8f6Js3LW8Jgk7YkclawjXihA04In4dGGi3rqxhZjByFUbaE41povoMqP4rUvgmjv2N
- YGqGWaJ4gfnV/KQruBJlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1m2TjYHi5lk=:f2dJ/IW34vE9xqAoMSigEs
- pHiWOmJ4hW91h9bjty+sy8coVm8qml7lMwHyo9aoywqh1ZeqNw7xOgCsw9BnURzqDAWxaUVQ0
- CfLnxnXFt00zuE+tHtXM8lvCrycLNoX+7lXm+ol8A15KKMgW9ObQ/b09tNTQBDALfrVO8gZFq
- c13F9c+uWCFBxG8UOA/CBh6DqtvunwXbsAYHwxizDEIGnZ+k1PrJTncvaB8DDOrAHsRnXwM27
- 8sFxYrQmZm1XBORUnt1t+0E5HbPpxFOWVOEipoYRzjC+WoVH16UfVxuJWLZgX3EVOtSR3eWrC
- MNVRrFrE7rypMLkbG1AVKM8DDPyROeymZJGKpAJ3PdIxZIoOJbQoBXfA7RYx+eoTXo0H087ru
- VSb4vaZu3w0pMRVN63OTKVVCggMyfhUWRkJtWIKzxC31GHf0TQMNuDvlSqtzzb4Z2qv8GNRvg
- 1AIYwm3V4aCuTQsZPcRLxsxknZfFXSA3uX9Gk8RcH5rneTSDQM0RzKPVJguSZkO78ITt2FPoA
- hMWrGDuAn8bzkot/K9+ugejeU1aDpR91oQI16KSf+GAS8m5D7DnWuC3Yrbk/PjdFrj/HCAylh
- 328705b/uhhwYfVYLzxGSXpixLQ3t81ArIopmYFPh/zeMNQzlO7kN4J8yZ1ni5N6y4ubDOD8H
- lMhLdb/cA/B6DJt3Vhzl1nzZGJg4Si+HW9PU8OtiJFWx1kG8tmAvJKDV3SSmtc1wux8pT5SIx
- wJQ+gPBe5TNjxN3SZz1uJzJalqBElaGSFtqkiG5O5J6dvSw/i0L5FLHIi5CU2HBufGM6LINvY
- vURA2/NYqi7V06W3c51gmC9bDQGuTsQojBVnoGwMuMH/OV9lrwcw4P0OpG5KduTaJy0Slqq
+X-Provags-ID: V03:K0:2Jjogf1soIs3rLEJjd6M76oVV960DVxzwcYSsV6N0AjEdg3P7m9
+ H+hN8HHmg7ekxEL/x5kHjhNBYz8pbzce4GJcwsYqa/lPmdE3xQytZAqwYNrMQ5CZSbgORo6
+ 5CKQDWRunPM3LigaYTH1w/24mtCsSfN1jA+FwoMlWCe5wr3hYW4bQAUzwe6Ow7S7BIhCSn+
+ jIP3iHZukvmT+lWg87ANg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YR4jla9rNOo=:yvqCKvyDRmpOtOZ1DH20Sj
+ MY2GTLajSmXYzvNbqga3sQFBLpMSotTxd6F54jggp+lCMsj2K6pnbtTKMS0+txYW22MRusOGL
+ h0TspaERchEpI+sOSQiKpem9YRds+dBf6AGPVH0VB2jLZB7WktDOc+7FWlcpxBqvXUTkAeIVu
+ ZD7epJEIt4cX4gczbwfZPWlO6TxRTmoWYiVf8diPf4FZpuNtYB/Q/tafNPlUUssDhJSDGB2ZM
+ IbZ8EdKt4ov58EBrnF9+5+1ASx8NEOfZXqhqg6OMEkxXQ6FS8tYtO8a556Tsk6IrcbdPDxfpc
+ 6vsXmeF0x0eQ2SB+B5Y1R/JboqJwAty11BxMlD/KIurp/5NfrBd9CNETe8pWNEZE+S6z7Zmrt
+ GKpWJKOup1jyKJTcKfSSR6m9KC5vQjmoNtqcyCTKQPglGZvsniAFdZHt2S9WTzcm94ZKjg5qp
+ tr42A01ud4ZyLRgl01xTJ++sbn/4WkhjlIz7STiNq7YXN7MKMO2tfLwBkvD8s9G1d7iXiiP5V
+ nVeBl86awyMMZtMYYkfhHnQx4PtgGVeqCbveS+HoS+I/8NDa3lFtmEbKY6SDUiWx3k4+ISaEA
+ 3XYDNDuiU60yX/1qvcgbxNP74Gn3e3Y0X7Zi+PQy0BFDckNV4tfJf2TPYJHBtAg4CJWpyXOMc
+ 0b58EWbR4qiZ3FjqjRWWyOpj+esmWQzlZrq1BzfTiuFvEZfvIm0cRII3A7WkOFft5d0KAJtbZ
+ tdj+KPzvuPtbAIIEc063Xghh3a2SMRjF5urV8uC1BeEH5v4vsdtplDSMwxL8B4OhKF/wk7rZk
+ o+esXs8WwJGfJg7wthj7DSiDVlz3QJWLPD79rQBji9i6vl5o3NC/VvaDfoLdtJ+dFHUweEf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Junio,
 
-On Fri, 19 Jan 2018, Phillip Wood wrote:
+On Fri, 19 Jan 2018, Junio C Hamano wrote:
 
-> On 18/01/18 15:35, Johannes Schindelin wrote:
-> > 
-> > Just like with regular `pick` commands, if we are trying to recreate a
-> > merge commit, we now test whether the parents of said commit match HEAD
-> > and the commits to be merged, and fast-forward if possible.
-> > 
-> > This is not only faster, but also avoids unnecessary proliferation of
-> > new objects.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> I might have missed something but shouldn't this be checking
-> opts->allow_ff?
+> > Think of --recreate-merges as "--preserve-merges done right". It
+> > introduces new verbs for the todo list, `label`, `reset` and `merge`.
+> > For a commit topology like this:
+> >
+> >             A - B - C
+> >               \   /
+> >                 D
+> >
+> > the generated todo list would look like this:
+> >
+> >             # branch D
+> >             pick 0123 A
+> >             label branch-point
+> >             pick 1234 D
+> >             label D
+> >
+> >             reset branch-point
+> >             pick 2345 B
+> >             merge 3456 D C
+> 
+> Yup.  I've seen this design talked about on list in the past, and
+> I've always felt that this is "sequencer done right".
+> 
+> At the first glance, it may feel somewhat unsatisfying that "merge"
+> has to say effects of which commits should be reflected in the
+> result and which commot to take the log message from, i.e.
+> (recreated)D is merged to form the resulting tree, and 3456=C is
+> used for the log, to recreate C in the above example, while "pick"
+> always uses the same commit for both, i.e. recreated B inherits both
+> the changes and log message from the original B=2345 (or depending
+> on the readers' point of view, "merge" is allowed to use two
+> different commits, while "pick" is always limited to the same one).
+> 
+> But I think this distinction is probably fundamental and I am not
+> opposed to it at all.  The result of "pick" has only one parent, and
+> the parent is determined only by the previous actions and not by
+> anything on the "pick" line in the todo list.  But the result of
+> "merge" has to record all the other parents, and only the first
+> parent is determined implicitly by the previous actions.  We need to
+> tell the "merge" command about "3456=C" in order to recreate the
+> effect of original merge commit (i.e. changes between B and C) as
+> well as its log message, and we also need to tell it about label "D"
+> that it is the "other parent" that need to be recorded.
 
-Good point. This is the type of review for which I was hoping.
+Yes, this was the hard lesson of the failed preserve-merges design.
 
-> Another possible optimization is that if the parent branches have only
-> reworded commits or some commits that have been squashed but no other
-> changes then their trees will be the same as in the original merge
-> commit and so could be reused without calling merge_recursive().
+> Obviously "merge" command syntax should allow recreating an octopus,
+> so whenever I said "two" in the above, I meant "N".  The original
+> merge commit is needed so that the effect to replay (roughly: a
+> patch going to the original merge result from its first parent) can
+> be learned from the existing history, and all the other "N-1"
+> parents needs to be given (and they must have been already created
+> in the todo list) so that the resulting recreated merge can be
+> recorded with them as parents (in addition to the first parent that
+> is implicitly given as the result of all the previous steps).
 
-True. It is also a bit involved to check this condition, and I am not sure
-that it is worth the effort for my use case.
+I have two more patch series lined up after this one, the first one
+implements --root via the sequencer, and the second one indeed extends
+`merge` to handle octopus commits.
 
-So I would invite you to work on this after this patch series settles, if
-you are interested.
+> One interesting (and probably useful) thing to notice is that if A
+> were not rebased in the above sample picture, and only B were the
+> one that was tweaked, then a recreated C may use the same original D
+> as its side parent, and the mechanism outlined above naturally can
+> support it by allowing an un-rewritten commit to be given as a side
+> parent when "merge" is redoing C.
+
+I think that you will get a kick out of reading the commit message of the
+last commit, as it does talk about the problematic C: it *would* be
+rebased by default.
+
+In the next iteration I will actually switch around the default from
+rebase-cousins to no-rebase-cousins for that reason.
 
 Ciao,
 Dscho
