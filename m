@@ -2,89 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F95A1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 20:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3615C1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 20:42:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932545AbeA2U2p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 15:28:45 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:55099 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754258AbeA2UQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 15:16:04 -0500
-Received: by mail-wm0-f53.google.com with SMTP id i186so16752863wmi.4
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 12:16:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowanthorpe.com; s=base;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pzBvPg5MJJu1JePbVDWPeT40RnvfhO5gm1w7Qhi0Yvk=;
-        b=a0dEl41r99DEWpo6b3w+bQKQ0X0cZexakJDlv9DuyjZayM4LwQnMX59jzApMVUMUD2
-         UdAFfDnL4XEJVnWwQKfCqq4D89scucHCGQ02XVfxdJ+9gGFQg4ePjJ3g+chfaZ73Q6st
-         guku8NMsp0jKaePkhZj8zPS+Gnz9JRa4bi6zE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pzBvPg5MJJu1JePbVDWPeT40RnvfhO5gm1w7Qhi0Yvk=;
-        b=tfF80nnhucVnYErVzNw4y4f6y2NNWQ7L0qvkuAAWhUanK6C3QBp7YGFYYoCgOHP8EY
-         Q9I4mT/VJo9Vc0HsvU5k+uTOkLS0svnMX4kZIgeOV78Hbf7c/XjGPHZqTHvDvnE26YYR
-         HgwDYp2S78hIUG8+G2pF0ddChYSuBKeoFx2M3B7/Dn3T0AQzsquHbWQSNrvMHRW8WIqY
-         uOkHTiO6H4tSZQlGcim/Q/X/BMCO/lMyiNqf1LrEreslJHxzKCgXMauGWLGvKXPlfZ54
-         F5wx3n3Sm7Zmz197oC8WKG1OhS27o6QnmD6pAr74hijgmn8Hf20ds8gAPU3vydjpsYHw
-         czyw==
-X-Gm-Message-State: AKwxytfDfFkWMZHywh4uBY86dsKVkhdFOe5/TkYZ3bPQ88Zwo96jpIPc
-        8mcInhTJtenPrsiaMLAwp/B4jMWSTb3GC8B8JCSdLQ==
-X-Google-Smtp-Source: AH8x227KdDGqv6konX2il3dmHpE8JSOshOg6JlxqiVWd+EASdOExLeH9s9jvD8t85tjkSq96cL3kpq0+RlIrgYfza10=
-X-Received: by 10.80.143.162 with SMTP id y31mr47064360edy.1.1517256962783;
- Mon, 29 Jan 2018 12:16:02 -0800 (PST)
+        id S1752969AbeA2Umt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 15:42:49 -0500
+Received: from mout.gmx.net ([212.227.17.20]:49874 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751773AbeA2Umr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 15:42:47 -0500
+Received: from [192.168.0.129] ([37.201.193.1]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnTjW-1fFtKm3kb8-00hec6; Mon, 29
+ Jan 2018 21:42:43 +0100
+Date:   Mon, 29 Jan 2018 21:42:41 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 8/8] rebase -i: introduce
+ --recreate-merges=no-rebase-cousins
+In-Reply-To: <5FC5C1765B7648F7A166363BED3AFFA3@PhilipOakley>
+Message-ID: <nycvar.QRO.7.76.6.1801292134580.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <e3c3c703f8eae723c4fbbd08d2c329d81179dbee.1516225925.git.johannes.schindelin@gmx.de> <5FC5C1765B7648F7A166363BED3AFFA3@PhilipOakley>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.80.176.69 with HTTP; Mon, 29 Jan 2018 12:15:22 -0800 (PST)
-X-Originating-IP: [79.166.136.209]
-In-Reply-To: <20180129171127.17097-1-szeder.dev@gmail.com>
-References: <CACgDUr6XG+dZ+GJcf9+11Edf=q-=QLSkmgpGf=XmondaLaescA@mail.gmail.com>
- <20180129171127.17097-1-szeder.dev@gmail.com>
-From:   Rowan Thorpe <rowan@rowanthorpe.com>
-Date:   Mon, 29 Jan 2018 22:15:22 +0200
-Message-ID: <CACgDUr6_LCMJaMcBBTfqTEH6nJfLKXRqu-HKMDanhqdLfHzbPA@mail.gmail.com>
-Subject: Re: "git fast-import" crashes parsing output from "fossil export --git"
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zVA5YaXYpG7wgvwvFX0hwOXy6zVX9oQfBmeVTimcvizDxnSYKgl
+ 42kENNLGlewn7jCK1tQUZ+IPkgRfGhk/8n7yCEOz848LnAdLKgkBu/6yZ9i3DV5TZJfDAnJ
+ OMSMcezgoZwY8SfR5ar8aWt0FAKWZvviYJ4IsyYcRISqV5faOzTDvrT8kVGYqP4GFMax+Nr
+ UMyWvQLHecIrab49cNOBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7q8kePJSRPg=:/Ngg2PhfQl4+y78g/J9HEk
+ jmakzfDXJhzsBK5GROUVQJF/We1brVJZErgKvEQXLAIQwK809LTH7kUNOCO9JlfEJSlu2oXfk
+ 1A0XfAJKGBXwtV5VO89yJbIMRgPSaGo+A78PhqlpnGJRxoY9zmD//KVWIZSNahzS+57+6pLah
+ /qtgaPRgRuYc3ERXneZexPuM27otHYEg4KYSktHydC+U5vXDjl5QM0ZtlU40JrQOJ9MEsn64H
+ dpnpyvuPJ5kK0c4dkeshqich6Dj3Rs3AnLvFcaFe3ibWMQQqAO/ZIfETXqry//r2+Jbu+nuFE
+ OtXqbdsV0mpPh78sIdDQB2Vrk3/wu8Bw7BG+OQwK2ldsGumxauYOVIEtYvDNeC+qqF7XsVE1q
+ JzGcNevONjInmTjBlhO95od/zB7VDvALEOgTpdRdKdAbVRVWH1/v0+IxhDQd7Eyc+cqVax7N7
+ isV6ufsausmKTKXxWJqMTfUJpNgNzteemyvvnYnpOwcsYEG+Ca9mgP1oFDH0rUG8dIWKviyE5
+ pk2A0BECYjaNFclUoPshct7DMIOj+DbWWaMOV48Tfk3s8547EtbuZRLiqUuyH97wwJwhkKGmG
+ Zrz4YQH+M04uQn8CsOG5vAA125oQo8N67rn+A9q/hQSNL/4dyteVsScidtp8s9nGYWeaYYJv7
+ dAJQodntUcDHKV0RFGXFPwhp2HGkHnV7JJNYo9eLnzv8yfbdaLeA5AKFwbRvB/NkXKouD6bj+
+ UpiRrJYOTnxXw5IyZQ1KNGPlYsAQsdzBGLhca5swsSkuW7waAYJnYnKDUIijqEz04c1rvrk09
+ I4pcQaAlom1dDut3PaITnpL+AT8m3KLxen81pxZiumYUrPZmXXJl4RuQIUdsOpioYDWaPau
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29 January 2018 at 19:11, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrote=
-:
-> > ..[snip]..
-> > Just commit some weird filenames, even one with a newline in it, to
-> > test the code.
-> > from :26779
-> > M 100644 :427 :abc
-> > M 100644 :10049 abc
-> > def.txt
->
-> A path like this must be quoted.  Quoting from 'git fast-import'
-> manpage:
->
->   A <path> string must use UNIX-style directory separators (forward
->   slash /), may contain any byte other than LF, and must not start
->   with double quote (").
->
->   A path can use C-style string quoting; this is accepted in all
->   cases and mandatory if the filename starts with double quote or
->   contains LF. In C-style quoting, the complete name should be
->   surrounded with double quotes, and any LF, backslash, or double
->   quote characters must be escaped by preceding them with a backslash
->   (e.g., "path/with\n, \\ and \" in it").
+Hi Philip,
 
-Ah, thanks. I had skimmed that manpage quickly but obviously too
-quickly and somehow missed that paragraph. I will post the bug-report
-at Fossil, where it belongs. Sorry for the noise.
+On Thu, 18 Jan 2018, Philip Oakley wrote:
+
+> From: "Johannes Schindelin" <johannes.schindelin@gmx.de>
+> > This one is a bit tricky to explain, so let's try with a diagram:
+> >
+> >        C
+> >      /   \
+> > A - B - E - F
+> >  \   /
+> >    D
+> >
+> > To illustrate what this new mode is all about, let's consider what
+> > happens upon `git rebase -i --recreate-merges B`, in particular to
+> > the commit `D`. In the default mode, the new branch structure is:
+> >
+> >      --- C' --
+> >      /         \
+> > A - B ------ E' - F'
+> >      \    /
+> >        D'
+> >
+> > This is not really preserving the branch topology from before! The
+> > reason is that the commit `D` does not have `B` as ancestor, and
+> > therefore it gets rebased onto `B`.
+> >
+> > However, when recreating branch structure, there are legitimate use
+> > cases where one might want to preserve the branch points of commits that
+> > do not descend from the <upstream> commit that was passed to the rebase
+> > command, e.g. when a branch from core Git's `next` was merged into Git
+> > for Windows' master we will not want to rebase those commits on top of a
+> > Windows-specific commit. In the example above, the desired outcome would
+> > look like this:
+> >
+> >      --- C' --
+> >      /         \
+> > A - B ------ E' - F'
+> >  \        /
+> >   -- D' --
+> 
+> I'm not understanding this. I see that D properly starts from A, but
+> don't see why it is now D'. Surely it's unchanged.
+
+It is not necessarily unchanged, because this is an *interactive* rebase.
+If you mark `D` for `reword`, for example, it may be changed.
+
+I use the label D' in the mathematical sense, to indicate that D' is
+derived from D. It may even be identical to D, but the point is that it is
+in the todo list of the interactive rebase, so it can be changed. As
+opposed to, say, A and B. Those cannot be changed in this interactive
+rebase.
+
+> Maybe it's the arc/node confusion. Maybe even spell out that the rebased
+> commits from the command are B..HEAD, but that includes D, which may not
+> be what folk had expected. (not even sure if the reflog comes into
+> determining merge-bases here..)
+> 
+> I do think an exact definition is needed (e.g. via --ancestry-path or
+> its equivalent?).
+
+I don't find "ancestry path" any more intuitive a term than the
+mathematically correct "uncomparable".
+
+If you have a better way to explain this (without devolving into
+mathematical terminology), please let's hear it.
+
+Don't get me wrong, as a mathematician I am comfortable with very precise
+descriptions involving plenty of Greek symbols.
+
+But this documentation, and these commit messages do not target myself. I
+know perfectly well what I am talking about here. The target audience are
+software developers who may not have a background in mathematics, who do
+not even want to fully understand what the heck constitutes a Directed
+Acyclic Graph.
+
+So what we need here is plain English. And I had thought that the analogy
+with the family tree would be intuitive enough for even math haters to
+understand easily and quickly...
+
+Ciao,
+Dscho
