@@ -7,18 +7,18 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 906061F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 20:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39BB31F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 20:19:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932536AbeA2UTY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 15:19:24 -0500
-Received: from mout.web.de ([212.227.15.3]:65384 "EHLO mout.web.de"
+        id S932526AbeA2UTX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 15:19:23 -0500
+Received: from mout.web.de ([212.227.15.4]:53266 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754740AbeA2UTT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 15:19:19 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3jsn-1exVd81G6L-00rGac; Mon, 29
- Jan 2018 21:19:11 +0100
+        id S1753886AbeA2UTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 15:19:17 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MdLsp-1eNtxg3oEl-00IU9A; Mon, 29
+ Jan 2018 21:19:08 +0100
 From:   tboegi@web.de
 To:     lars.schneider@autodesk.com, git@vger.kernel.org, j6t@kdbg.org,
         sunshine@sunshineco.com, peff@peff.net,
@@ -26,32 +26,32 @@ To:     lars.schneider@autodesk.com, git@vger.kernel.org, j6t@kdbg.org,
         --to=larsxschneider@gmail.com
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v5 6/7] convert: add tracing for 'working-tree-encoding' attribute
-Date:   Mon, 29 Jan 2018 21:19:09 +0100
-Message-Id: <20180129201909.9441-1-tboegi@web.de>
+Subject: [PATCH v5 4/7] utf8: add function to detect a missing UTF-16/32 BOM
+Date:   Mon, 29 Jan 2018 21:19:05 +0100
+Message-Id: <20180129201905.9355-1-tboegi@web.de>
 X-Mailer: git-send-email 2.16.0.rc0.2.g64d3e4d0cc.dirty
 In-Reply-To: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
 References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:YvvVkCkhbLELQZq9vPb5QB+F+J7vbWZmnfavyLSgDFPAhOD6Bva
- pwPZ3qsiSAaYVU53aGb3aB3704FFOGDh9ZgrbkcHhGTOugSOvH+oi9k/QUyG817Gx0uPxFa
- yKGK1glOZWmOZwO2Bl55kn8pn9il0EjWdjDGSg2a7A45vYSlHOM5J5VckdyWX5vKndPENMD
- 7UHApzFEww2bHSn+MQOrw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YlywbgWvgp8=:hXskoQTbiwov8XIvYz0PuU
- 8W63csTbnUnsGvqSTfbr0pOA33YUOgiTa9hJ4I2dG0VElWf+xYyiwXjtw9o8pqoSZk4g1HWN2
- uPsFXHF6tNuVvb3CCsPP/n1Jjsii8ypdUiDgE7cTvLlreytf0HKDXnM9MpfGwy+PN1B3jdVKS
- EDLWuPDu3RGI/5CO0p2gOw+ZjSv58veJ4ZPS2tmr9k1xAjWs9Rbfx92WUXZ/OgLgk2sEb98lr
- +Ztl90xYNoIh/E99GzLKZIkA9PtKqUb4aQoHkpraCq+e7dGGC6hzbu/UqLD594Kq5Ubq2vlcV
- HSz+eCpcF9KSO6bDAuUWwAVSrBaQpFR/srcS7pLp/jvDyT1Myu5TYQgCfqEFFQLCw61j78PQy
- NFjSUmGNYNWC4bwK0JIL3U8tkzHuogbHPTDZDSn9tgre+20drednSVw+XVwi4SNJuto64bxfR
- 0vqVG71wkb5vRWc5h1yA6dAVW4pAa1bTU3wABh4aCQHzHPqmHJalbk8vReSVpA9w0ezCysv61
- ImZ50VlrfEMN+QMHmlwuyK0gKIEMsHL7mW9KJtnbyPRk+S3xJrQxqbo32LsnwxkrLGNFmIJ8R
- YWx4M7DI0LKgT7r2368OERpKOXK0JxZXn0yOHxygEbznZXBsUWNefDWHv5Ys9NCDXkeQj78mh
- 3FHIQvW3tJauLUDFWesVVK3viPpcWEZI6cjkJdQKZFGo1UMVUOzEjUBYqKaztSGZwWjmJ/vI6
- xKPExjEfbdB8IJnbLC6dH+I2cH9cKdgcegNpi5q9XjjK7zZ8ZTDP+KuMXVYh9I1KQTSKtDNRl
- 2EQuhodHr8aivU1PgkBvpFPRGhipKOhOMkXmeTo46fuYsIbreY=
+X-Provags-ID: V03:K0:QMI9UZBa97K9vxLw/A8Mcsm3KNwsjzld6Aygz+yiKX3q9n305og
+ jtz5/b4FELdHW9Q5sB0E4qa9xgroODUkcaSoexOZs90GKS0KS8rJhj0LLkp/sXnOQgUQ0fD
+ 0ITDmz52lD9vK1C40qFvw9GyQigYtit9DVAq8n6JVLDI3Gx4SaFJzAXRGCKQBKwbygda7z4
+ plZME845xohUediVuda/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xiBXtwd61zI=:am4GsY7cCBTbOaYBjNQvQW
+ CbrIfDfQts7JBO8xuS86TbDZsRaXwmr2IuSEmUuDD+SbgMZIjbLevQh85kYQBvTY1Qsj75TA9
+ WcMAgGry9zGQXxvcedotlDkLV21jypkMJzI28yofOTADOTSTXlh5Ydm6AwLz/ODlOkDoZEvZt
+ zmXJA9V4r2KyhQKk2R/y3cdzydOzVNBWRVlUARvcZ6TYplMylx1MBpsj/aXiJWqe1QoS3BRFv
+ 3E8eRD6oD2FSW5L0Mc95/fgIjuBp4v9KUkIMOM3gKYhqcD9AyMbBTFpRtLP54Y7sdIkX3F+ZI
+ dLVOaKLIJGiYM2dm8zQyERSr1ErCvvsHtEcM+GYsxBYLmp3qlZBjoe7cnNt7yqJvsQpnEqHuf
+ AdwXfZIvWrGyHjhN+Dv41rtalXJroPeOikVUsoBdtUPpZMCDC0aIdkuTRWKl4SXZMmPOUYTY8
+ EtLhcZVJ0YHlhYgMthKuSrJkfwm3wq4FK0RsP94ruRbRW4UfBiMHwTBTcRhVW6FXdpVnYPcWU
+ qbZ3KlNwXP9cwHbJFrsBaczi1OlY301ehw3BOrlm0rqaNafOa59VF12NvY8vQvG92BRLRtpjm
+ 7DOBWmqVjGARIX0CO9E//KpI0lx9NfOnF8VrLJq4gvEnV5DKmMBEE+EnIvRTgtWtIId6ddspv
+ zjz7MDp2mcYJKF8mSrnVoUSB0Dkji2bM5fmX5M46QAM4TF4iKr/s4DNwx3N05MxREHFFZRLAt
+ StCBM9EQE67V2uruUwzZ3foQzEVcbAzR697BbOQjbblMjYK8Y/AD9LVY687OBYkIl7GxVpSWJ
+ QK6ku+P78wh6ZBjnlg4/hMPOnK20UN3rus8376c/a3ENfEOKBQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,90 +59,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lars Schneider <larsxschneider@gmail.com>
 
-Add the GIT_TRACE_CHECKOUT_ENCODING environment variable to enable
-tracing for content that is reencoded with the 'working-tree-encoding'
-attribute. This is useful to debug encoding issues.
+If the endianness is not defined in the encoding name, then let's
+be strict and require a BOM to avoid any encoding confusion. The
+has_missing_utf_bom() function returns true if a required BOM is
+missing.
+
+The Unicode standard instructs to assume big-endian if there in no BOM
+for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
+in HTML5 recommends to assume little-endian to "deal with deployed
+content" [3]. Strictly requiring a BOM seems to be the safest option
+for content in Git.
+
+This function is used in a subsequent commit.
+
+[1] http://unicode.org/faq/utf_bom.html#gen6
+[2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
+     Section 3.10, D98, page 132
+[3] https://encoding.spec.whatwg.org/#utf-16le
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 Signed-off-by: Torsten Bögershausen <tboegi@web.de>
 ---
- convert.c                        | 28 ++++++++++++++++++++++++++++
- t/t0028-working-tree-encoding.sh |  2 ++
- 2 files changed, 30 insertions(+)
+ utf8.c | 13 +++++++++++++
+ utf8.h | 16 ++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/convert.c b/convert.c
-index 0c372069b..13fad490c 100644
---- a/convert.c
-+++ b/convert.c
-@@ -266,6 +266,29 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
- 
+diff --git a/utf8.c b/utf8.c
+index 914881cd1..f033fec1c 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -562,6 +562,19 @@ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
+ 	);
  }
  
-+static void trace_encoding(const char *context, const char *path,
-+			   const char *encoding, const char *buf, size_t len)
++int has_missing_utf_bom(const char *enc, const char *data, size_t len)
 +{
-+	static struct trace_key coe = TRACE_KEY_INIT(CHECKOUT_ENCODING);
-+	struct strbuf trace = STRBUF_INIT;
-+	int i;
-+
-+	strbuf_addf(&trace, "%s (%s, considered %s):\n", context, path, encoding);
-+	for (i = 0; i < len && buf; ++i) {
-+		strbuf_addf(
-+			&trace,"| \e[2m%2i:\e[0m %2x \e[2m%c\e[0m%c",
-+			i,
-+			(unsigned char) buf[i],
-+			(buf[i] > 32 && buf[i] < 127 ? buf[i] : ' '),
-+			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
-+		);
-+	}
-+	strbuf_addchars(&trace, '\n', 1);
-+
-+	trace_strbuf(&coe, &trace);
-+	strbuf_release(&trace);
++	return (
++	   !strcmp(enc, "UTF-16") &&
++	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
++	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
++	) || (
++	   !strcmp(enc, "UTF-32") &&
++	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
++	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
++	);
 +}
 +
- static struct encoding {
- 	const char *name;
- 	struct encoding *next;
-@@ -325,6 +348,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
- 			error(error_msg, path, enc->name);
- 	}
+ /*
+  * Returns first character length in bytes for multi-byte `text` according to
+  * `encoding`.
+diff --git a/utf8.h b/utf8.h
+index 4711429af..26b5e9185 100644
+--- a/utf8.h
++++ b/utf8.h
+@@ -79,4 +79,20 @@ void strbuf_utf8_align(struct strbuf *buf, align_type position, unsigned int wid
+  */
+ int has_prohibited_utf_bom(const char *enc, const char *data, size_t len);
  
-+	trace_encoding("source", path, enc->name, src, src_len);
- 	dst = reencode_string_len(src, src_len, default_encoding, enc->name,
- 				  &dst_len);
- 	if (!dst) {
-@@ -340,6 +364,7 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
- 		else
- 			error(msg, path, enc->name, default_encoding);
- 	}
-+	trace_encoding("destination", path, default_encoding, dst, dst_len);
- 
- 	/*
- 	 * UTF supports lossless round tripping [1]. UTF to other encoding are
-@@ -365,6 +390,9 @@ static int encode_to_git(const char *path, const char *src, size_t src_len,
- 					     enc->name, default_encoding,
- 					     &re_src_len);
- 
-+		trace_encoding("reencoded source", path, enc->name,
-+			       re_src, re_src_len);
++/*
++ * If the endianness is not defined in the encoding name, then we
++ * require a BOM. The function returns true if a required BOM is missing.
++ *
++ * The Unicode standard instructs to assume big-endian if there
++ * in no BOM for UTF-16/32 [1][2]. However, the W3C/WHATWG
++ * encoding standard used in HTML5 recommends to assume
++ * little-endian to "deal with deployed content" [3].
++ *
++ * [1] http://unicode.org/faq/utf_bom.html#gen6
++ * [2] http://www.unicode.org/versions/Unicode10.0.0/ch03.pdf
++ *     Section 3.10, D98, page 132
++ * [3] https://encoding.spec.whatwg.org/#utf-16le
++ */
++int has_missing_utf_bom(const char *enc, const char *data, size_t len);
 +
- 		if (!re_src || src_len != re_src_len ||
- 		    memcmp(src, re_src, src_len)) {
- 			const char* msg = _("encoding '%s' from %s to %s and "
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index 4d85b4277..0f36d4990 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -4,6 +4,8 @@ test_description='working-tree-encoding conversion via gitattributes'
- 
- . ./test-lib.sh
- 
-+GIT_TRACE_CHECKOUT_ENCODING=1 && export GIT_TRACE_CHECKOUT_ENCODING
-+
- test_expect_success 'setup test repo' '
- 	git config core.eol lf &&
- 
+ #endif
 -- 
 2.16.0.rc0.2.g64d3e4d0cc.dirty
 
