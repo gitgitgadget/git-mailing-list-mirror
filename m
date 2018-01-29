@@ -2,136 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7939B1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 18:47:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0DAE1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 19:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbeA2SrP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 13:47:15 -0500
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35516 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750959AbeA2SrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 13:47:14 -0500
-Received: by mail-wm0-f48.google.com with SMTP id r78so35742671wme.0
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 10:47:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:cc:content-transfer-encoding;
-        bh=fhfeO2d+jB5P+zshKGOnYLcQOWDOMaJFjKTfn8glxyQ=;
-        b=eZTcers7hwdfXc5QUI/HpGVU9q77Y5lPa/OcHWemxAvF2BqTKxNspRK8ttCTKfSh5P
-         9iR1QKfAXd3pGAUBsjmBlHgJJ6L5e3fpwDQSPCmm6mk6D8Xh3ruxpw2naEBRO9mdXw7P
-         4YEetz/VIeDTxSEYf1VlFrAv/UU0/+0TNOiw+ug7/pIe+xV5n2BuI2Z3atdaj5ucUhCb
-         Tw1CGD5OqSp42VdKkCdYOOeYD8RlINmpEKyMYIL+i/oivFYYNcS6I6DE87i45qa9N/jx
-         1EcWa5DwvQ0upv4Aes29etUO7mM4Rd0Ip55/s0/7/UzoiMQdxc9MGY99ZHTGIZRUKWHb
-         2eNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:cc:content-transfer-encoding;
-        bh=fhfeO2d+jB5P+zshKGOnYLcQOWDOMaJFjKTfn8glxyQ=;
-        b=W49fmv8jxTTL2YBJ0kByQfZA4ns69FGPVDL1RBjlG3qiswYRGcwCBPRPhcpafKcG+f
-         KiDlXncj8EccNZUckYTYcgk4ZRogBEaDXj3N12gzboaCVK6Z9hsIqmNEKiu5IkIHrCv2
-         pY8XAlvt0YRvoFNPiiyX/5rUqCUEjbfb4F6bz1ewpgK8RxKo6EKY8jhxgkJvt9cKS3hl
-         4ugyuGOzpHc6INs6Nwz5CNpeVMbXAm0KUwZWk2ck3i7c6gciq8neEMk2xlOVqdlWZvgn
-         TpUUBWyQmRv9k231WgfxXInxSnXDLvVbVzNdCoSSRSV0gsZfQdqcLJ//YRFyYRCT6+ST
-         DEbw==
-X-Gm-Message-State: AKwxytcLPU/YjhW5QIIFnwymugbOY2iE4axkdw1XTh9tKF1BIVCF3TzF
-        1nfQriEVCyVnf0VOVOSAoiH1PYjmCV/FfO3AXPa6Hnlg
-X-Google-Smtp-Source: AH8x224Nw6B+UGRuMfY1o34MNReik60uQauYdpHokbSNkqjrOCJzq/C5OA10QjNmMB6XFV6vMNnR2Fx1mDo7y5vIt1I=
-X-Received: by 10.28.0.207 with SMTP id 198mr18641400wma.115.1517251633335;
- Mon, 29 Jan 2018 10:47:13 -0800 (PST)
+        id S1751593AbeA2TN7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 14:13:59 -0500
+Received: from mout.perfora.net ([74.208.4.197]:58526 "EHLO mout.perfora.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751581AbeA2TN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 14:13:58 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Jan 2018 14:13:58 EST
+Received: from [192.168.1.104] ([194.237.255.67]) by mrelay.perfora.net
+ (mreueus002 [74.208.5.2]) with ESMTPSA (Nemesis) id 0Mfoeo-1eRrBM2A56-00NAqb
+ for <git@vger.kernel.org>; Mon, 29 Jan 2018 20:08:56 +0100
+To:     Git Mailing List <git@vger.kernel.org>
+From:   H <agents@meddatainc.com>
+Subject: Location limits on development, staging and production environments
+Message-ID: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
+Date:   Mon, 29 Jan 2018 20:08:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.223.195.61 with HTTP; Mon, 29 Jan 2018 10:46:42 -0800 (PST)
-In-Reply-To: <CABYAQkRPF1XB1LgMQXA1C9qD8buBedhKPWYRQ3v-WEzgF=sALw@mail.gmail.com>
-References: <nycvar.QRO.7.76.6.1801291031040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <87bmhcsnhv.fsf@evledraar.booking.com> <20180129172452.GB4185@sigill.intra.peff.net>
- <CABYAQkRPF1XB1LgMQXA1C9qD8buBedhKPWYRQ3v-WEzgF=sALw@mail.gmail.com>
-From:   Scott Gasch <scott@gasch.org>
-Date:   Mon, 29 Jan 2018 10:46:42 -0800
-X-Google-Sender-Auth: WytZy5BdFqtLSKsrK9_d8FZDqBE
-Message-ID: <CABYAQkQektHS0haxoOezFVr8KnCuAu=3CnWP2pB78528EOYfFw@mail.gmail.com>
-Subject: Re: Shawn Pearce has died
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-To:     unlisted-recipients:; (no To-header on input)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Provags-ID: V03:K0:/EBTJYY+hnPRMuOkvmKQ2Z++lHtxo2W6N9UVBqYAELCZAhCaRdP
+ hLZz988mNiKiOk522bBYT19syjjspanpQvcNGCrPpqDUehEFiAGb49kynTYqBGMTDD8nFdK
+ iNu3b+vf9Kn2Pa8vNIIbOIp5fnOYCBRsiVbjnAHDEH04xJdp3aO8oVYh05FCujQ6FxOida5
+ GAJSARKPsFVwzxH9cpVBw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mO82UGfwD9o=:hedd1pFDE2n3CtMc6zmEUu
+ LsPbW50lQHQjLycNP07P/tXcweN6ZSDWkkexS4X17O9XACQyR7qtSVe45abW1bF/4CSz0WjDB
+ x+/KeZBYLsvmbEImvDOcOALlC4PRXRrIXnI8dIo0VrGxWiXT8BDOMied6REQ90LFgF1+13Weq
+ I8TzJVjAixgJIzOPre3h213wRUzwxUnl3ZwRZH0lNMEXrACMs0lwi1RMzdZD3iVes/uJxWbJ0
+ aqM5Pe3317FT1+EJsLDn2OkLdfyart3St3+ylVBUTbZzsxjykRShX3Eclj+82HghTq3CSE6EB
+ lM7WwzQpA/uwlz91AE7SDacLS8ztVPm/2FFkPyJr9fNAUjmYwW5H48/EM85H2tQJyGarlg9A5
+ Phx7dtbkhbY3JoCG21zmeZbovk1kPqjiCK6pHfhqw/c9jlGHznsSp03GCslubEZh9sHNusm3A
+ s/e3AJJWmKq/aZa3NcDFGD5Dwc+uOLQ/FG3Nc34cmLn+16/O6uIxofVJ+k6t1uWmeMDbcIANx
+ PEIugebrSwgg7ZWXqqbImOXIHki0ys55usfszIdIgFSShwSRhWNXxgpcwBRIwRsY29hOE+nAk
+ EaW8kxpmb2MJTCalBNFoDE5gcBXZaHCmEGUp8ANdr+VoHcPCA9U7u9mULLC6Ya4rsVwUSFgrA
+ MQ1vTq4fMZF6dPCqkxZv/m1fIT6H3OijEop7v6EHvhOEKZknctZuvpa/nqeqC3ME2j+2Ae1ct
+ BQ7lXdRaNkRs1R0PFIyy3jIFWGwvjK5SdcOTDKl15iZ7cfX8ZjAGhHMcayc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I guess your email server doesn't like HTML messages... here's the plain te=
-xt:
+I am a newcomer to git looking to set up a web development environment where individual computers are used for development, the development.git, staging.git and production.git repositories are stored on an external server reachable by password-less ssh and the staging and production websites are on yet another server, also reachable by password-less ssh from the git-server (and the development machines).
 
-Chris, also on this email thread, is working on putting together some
-kind of video of Shawn's colleagues at Google talking about working
-with him.  Part of the thought is that his boys are going to want to
-know what there dad was like at some point later in their lives and it
-would be nice to capture the thoughts of the people who knew Shawn.
+Locating the three git repositories on an external server works fine but I have not been able to have the staging and production deployment files on another server. I believe this is what is referred by GIT_WORK_TREE and based on what I found on the web I created a post-receive hook of staging.git with the two lines:
 
-Chris: if people outside of Google wanted to include videos about what
-it was like knowing and working with Shawn, how could we do it?  Is
-there guidance (length?  format?)?  Deliver as an attachment over
-email to you?
+#!/bin/sh
+GIT_WORK_TREE=user@1.2.3.4:/var/www/html/dev.whatever git checkout -f master
 
-Thx,
-Scott
+I believe this should deploy the files from the development work tree.
 
-On Mon, Jan 29, 2018 at 10:39 AM, Scott Gasch <scott@gasch.org> wrote:
-> Chris, also on this email thread, is working on putting together some kin=
-d
-> of video of Shawn's colleagues at Google talking about working with him.
-> Part of the thought is that his boys are going to want to know what there
-> dad was like at some point later in their lives and it would be nice to
-> capture the thoughts of the people who knew Shawn.
->
-> Chris: if people outside of Google wanted to include videos about what it
-> was like knowing and working with Shawn, how could we do it?  Is there
-> guidance (length?  format?)?  Deliver as an attachment over email to you?
->
-> Thx,
-> Scott
->
->
->
->
-> On Mon, Jan 29, 2018 at 9:24 AM, Jeff King <peff@peff.net> wrote:
->>
->> On Mon, Jan 29, 2018 at 04:17:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
->>
->> > They don't want any flowers sent over to them, but I wonder if we
->> > couldn't make some sort of tribute to Shawn at the upcoming developer
->> > meeting in Barcelona (and find some way to have remote people contribu=
-te
->> > to it).
->> >
->> > E.g. a short video/audio of different people in the dev community
->> > sharing some story about Shawn, or a written list of memories
->> > contributed by and signed by various people.
->> >
->> > I don't know what that would look like exactly, but I think it would b=
-e
->> > a good thing for his family and especially for his children when they'=
-re
->> > grown to remember him by, to know that their father contributed to the=
-se
->> > software projects with people all over the world, and that all these
->> > people appreciated his work and him personally.
->>
->> I like this direction (though like you, I'm not sure exactly what it
->> should look like). I'm not sure what kind of video presence GitHub will
->> have at the contrib summit, but I'll see about getting some interview
->> footage there.
->>
->> Doing something written, though, may make it easier for remote people to
->> collaborate.
->>
->> -Peff
->
->
+The above, however, fails. Should it work? I am running git 1.7.1 on CentOS 6.
+
