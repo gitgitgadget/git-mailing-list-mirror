@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12C051F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:37:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CC771F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:37:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752053AbeA2Wht (ORCPT <rfc822;e@80x24.org>);
+        id S1752073AbeA2Whv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:37:51 -0500
+Received: from mail-ot0-f201.google.com ([74.125.82.201]:42344 "EHLO
+        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752040AbeA2Wht (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 29 Jan 2018 17:37:49 -0500
-Received: from mail-ot0-f202.google.com ([74.125.82.202]:54220 "EHLO
-        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752001AbeA2Whq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:37:46 -0500
-Received: by mail-ot0-f202.google.com with SMTP id z15so1161977otz.20
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:37:46 -0800 (PST)
+Received: by mail-ot0-f201.google.com with SMTP id e19so6448458otj.9
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=KYBIHKFJwejL3RtosYCE/PMErOAFqRFVCapkJikEl4U=;
-        b=CxNygtIfC/UAqWhVaWdRM1BYdCc0crhRj876FQYQtXW/s0Cx3seqa56TGuRQIuva+R
-         vaA4wSfd2xdn/DyTEx5sMN8u0Y6AsTt7GaMdo8c5f+5SGJyKPndn+MTnipzCqpudvCEj
-         rCmCIYkmjrTtcL9cqGdunkKpWGJYhKb2lNAz1NImfTHP7f0CoGRyuh+2PnB1mItp9sdJ
-         0hxcix2ikFE37dCVoRmbStVSlEbqdM6iskltp4xs9LbWPB6FQ+GNSb4YhxlEU7v8QpLt
-         MoiN7oyunRAHvcENE93yRaxEo27lB7i2hzTdxAJpsv0AxyHCU8roiYDwaG4FgRGnK9ZL
-         E7zA==
+        bh=7q3iIhvKJcVia2srYg44BBlrSaXoFtMZa5Yc6d35Fqg=;
+        b=mCP2SneCrpSQSMk2RaHb2fn8yMzlSyIBT01slkUo+K7w+FpCjezzRGAwES+bwUei8l
+         foeS6SWI0eKip7Nkmn9Q9rSIgV1dh0/V9slmtBtwiShtS/uW/oiMY27Moh2TwRR9cNQt
+         9LusZf/70HlxAl5MywW/Xa1S7Ho75gzYpVVJVLPLfdM5HHbjcTRzs6Jwx7sDAgOLo613
+         g02PKWZIkWLqjWph83wutPAfNSJ6AsTVHHd7m4+xt0W4EWTc/T53TsXD9cZ37SGub0rL
+         Xhc4DAijmt48gg1fGHd5JZgMwAGq3jOQGl7R+xmomfA0gY+0ul7svM8KlniibtyBvug5
+         xksw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=KYBIHKFJwejL3RtosYCE/PMErOAFqRFVCapkJikEl4U=;
-        b=XiA4Yas03cDkjyABruO31cQGdhtOw1n+dEjICJvjbvdwawENaK/yV+FTlKVg6u8fXC
-         2c4tqDl6qtFrdVC6Dd0QLurQQCX0jmQc0CKFUbjLvhJH05MB0Pj1qtorUS1IyO/LPUrG
-         V7d59hi7KEUZyOZGkxvFm9ciPiltajJ+5aeQa7urntMk8pMu8CfGbxKzWzLExGlp90bc
-         MFN5yEu0Zw0U/j9M5CiJZ1S3pNAeWK4zgtfx/J2A8xGv+NY8DrGn2B35WYxqnuUTOZYY
-         zmkAhdJSV1aMIdPI++k6UZjob5N0O7i8deiAH5gitmOOeAko0YwYE7Ktx9VuhujcU6FY
-         FKkg==
-X-Gm-Message-State: AKwxytcgRr7KEUt2iEWmfidVOLlzyvjMJKUvLoxvdeHQuOfYRg0BayyP
-        rc+cWfCDZQj6I8fOVZtK7mXhIYKjyPR8rpjR6mWPvnx4CsziDAwG4LttHDHcJvN/DUiajDcQL4m
-        6zkli/V+pi+G7KnZrJpl5rRxOpeINz5ji4TRenuXs38hyvROOzHTn4WqOLg==
-X-Google-Smtp-Source: AH8x227mjryxAyikoSbxszLODQLsoneo3AlMWCdM7rTnEoqk4zIWG69n3NqGB5cYi0wHcszUjq1OTYrpbe4=
+        bh=7q3iIhvKJcVia2srYg44BBlrSaXoFtMZa5Yc6d35Fqg=;
+        b=biHWDhLrQMaXBa7RSWwbN/AOAbvymy9XXyvzlIFZepH23aB0TLqPpoUGC97Y5IH5gs
+         aYPHM5wesyabzi23J8jKfWJ7UodzikUE7UnmO4SCEz0nPklglQvgy6TK0F/41Lc3XtAL
+         wdAWSHsrBtUtAj318zh27LKE1bNIrEn7DGUnDEaWOJkXgI+9PqX/wnRZstq+dvpCtCnk
+         ati4QEchcRLR1qM1XdYQxJeNU1DTiQtuKNs8Lz1KL40LCgkfX2sZoXMzAlHmujBxESMx
+         ASup2pOdJf76U7G6j7FJf8L+ZJGbckfL9hdFEyc7juG0mIksLfolnwXjMpXctrQLLS7E
+         V5iQ==
+X-Gm-Message-State: AKwxytfQUypP7Mm9tUiZ+sIhOcHRFXmNNJnR7z2G33wyTmfaOxgOa/99
+        35HIMVHUPzYWUuAvVNmzGAiT4GzDf2xF4JPS9hIhw1jHVAIDwUJ0S6kri/i0zlnfQsrVgEw80gq
+        SGijV2PZCKG6bw/8qz7Kk7aGb6eBmEkngf92EGFIr1PmPJL/9D/qe530+kQ==
+X-Google-Smtp-Source: AH8x225mYR9ad+0vWOBvSRDGaFwGG5VdlGwykS0tS0w3aUod6PY718c9zQSnEdbkY2fYkgsfCwwpEwF+iG0=
 MIME-Version: 1.0
-X-Received: by 10.157.50.21 with SMTP id t21mr17424764otc.94.1517265465857;
- Mon, 29 Jan 2018 14:37:45 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:36:53 -0800
+X-Received: by 10.157.85.177 with SMTP id m46mr3146920oth.106.1517265468225;
+ Mon, 29 Jan 2018 14:37:48 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:36:54 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-3-bmwill@google.com>
+Message-Id: <20180129223728.30569-4-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 02/37] object: rename function 'typename' to 'type_name'
+Subject: [PATCH 03/37] blame: rename 'this' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,783 +68,91 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/cat-file.c                     |  2 +-
- builtin/diff-tree.c                    |  2 +-
- builtin/fast-export.c                  |  8 ++++----
- builtin/fsck.c                         |  4 ++--
- builtin/grep.c                         |  2 +-
- builtin/index-pack.c                   | 12 ++++++------
- builtin/merge.c                        |  2 +-
- builtin/mktree.c                       |  4 ++--
- builtin/prune.c                        |  2 +-
- builtin/replace.c                      | 12 ++++++------
- builtin/tag.c                          |  2 +-
- builtin/unpack-objects.c               | 10 +++++-----
- builtin/verify-commit.c                |  2 +-
- bulk-checkin.c                         |  2 +-
- commit.c                               |  2 +-
- contrib/examples/builtin-fetch--tool.c |  2 +-
- fast-import.c                          | 16 ++++++++--------
- fsck.c                                 |  2 +-
- http-push.c                            |  2 +-
- log-tree.c                             |  2 +-
- object.c                               |  6 +++---
- object.h                               |  2 +-
- pack-check.c                           |  2 +-
- packfile.c                             |  2 +-
- reachable.c                            |  2 +-
- ref-filter.c                           |  4 ++--
- sequencer.c                            |  2 +-
- sha1_file.c                            | 20 ++++++++++----------
- sha1_name.c                            |  6 +++---
- submodule.c                            |  2 +-
- tag.c                                  |  2 +-
- walker.c                               |  4 ++--
- 32 files changed, 73 insertions(+), 73 deletions(-)
+ blame.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d06c66c77..c6b3b1bfb 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -229,7 +229,7 @@ static void expand_atom(struct strbuf *sb, const char *atom, int len,
- 		if (data->mark_query)
- 			data->info.typep = &data->type;
- 		else
--			strbuf_addstr(sb, typename(data->type));
-+			strbuf_addstr(sb, type_name(data->type));
- 	} else if (is_atom("objectsize", atom, len)) {
- 		if (data->mark_query)
- 			data->info.sizep = &data->size;
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index b775a7564..473615117 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -76,7 +76,7 @@ static int diff_tree_stdin(char *line)
- 	if (obj->type == OBJ_TREE)
- 		return stdin_diff_trees((struct tree *)obj, p);
- 	error("Object %s is a %s, not a commit or tree",
--	      oid_to_hex(&oid), typename(obj->type));
-+	      oid_to_hex(&oid), type_name(obj->type));
- 	return -1;
+diff --git a/blame.c b/blame.c
+index 2893f3c10..21c867664 100644
+--- a/blame.c
++++ b/blame.c
+@@ -998,28 +998,29 @@ unsigned blame_entry_score(struct blame_scoreboard *sb, struct blame_entry *e)
  }
  
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 796d0cd66..27b2cc138 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -240,7 +240,7 @@ static void export_blob(const struct object_id *oid)
- 		buf = read_sha1_file(oid->hash, &type, &size);
- 		if (!buf)
- 			die ("Could not read blob %s", oid_to_hex(oid));
--		if (check_sha1_signature(oid->hash, buf, size, typename(type)) < 0)
-+		if (check_sha1_signature(oid->hash, buf, size, type_name(type)) < 0)
- 			die("sha1 mismatch in blob %s", oid_to_hex(oid));
- 		object = parse_object_buffer(oid, type, size, buf, &eaten);
- 	}
-@@ -757,7 +757,7 @@ static void handle_tag(const char *name, struct tag *tag)
- 			if (tagged->type != OBJ_COMMIT) {
- 				die ("Tag %s tags unexported %s!",
- 				     oid_to_hex(&tag->object.oid),
--				     typename(tagged->type));
-+				     type_name(tagged->type));
- 			}
- 			p = (struct commit *)tagged;
- 			for (;;) {
-@@ -839,7 +839,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 		if (!commit) {
- 			warning("%s: Unexpected object of type %s, skipping.",
- 				e->name,
--				typename(e->item->type));
-+				type_name(e->item->type));
- 			continue;
- 		}
- 
-@@ -851,7 +851,7 @@ static void get_tags_and_duplicates(struct rev_cmdline_info *info)
- 			continue;
- 		default: /* OBJ_TAG (nested tags) is already handled */
- 			warning("Tag points to object of unexpected type %s, skipping.",
--				typename(commit->object.type));
-+				type_name(commit->object.type));
- 			continue;
- 		}
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 04846d46f..246237e81 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -70,7 +70,7 @@ static const char *printable_type(struct object *obj)
- 			object_as_type(obj, type, 0);
- 	}
- 
--	ret = typename(obj->type);
-+	ret = type_name(obj->type);
- 	if (!ret)
- 		ret = "unknown";
- 
-@@ -137,7 +137,7 @@ static int mark_object(struct object *obj, int type, void *data, struct fsck_opt
- 		printf("broken link from %7s %s\n",
- 			   printable_type(parent), describe_object(parent));
- 		printf("broken link from %7s %s\n",
--			   (type == OBJ_ANY ? "unknown" : typename(type)), "unknown");
-+			   (type == OBJ_ANY ? "unknown" : type_name(type)), "unknown");
- 		errors_found |= ERROR_REACHABLE;
- 		return 1;
- 	}
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ca4ac80d..eb1207095 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -627,7 +627,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		free(data);
- 		return hit;
- 	}
--	die(_("unable to grep from object of type %s"), typename(obj->type));
-+	die(_("unable to grep from object of type %s"), type_name(obj->type));
- }
- 
- static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 4c51aec81..8b87090e2 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -228,7 +228,7 @@ static unsigned check_object(struct object *obj)
- 		if (type != obj->type)
- 			die(_("object %s: expected type %s, found %s"),
- 			    oid_to_hex(&obj->oid),
--			    typename(obj->type), typename(type));
-+			    type_name(obj->type), type_name(type));
- 		obj->flags |= FLAG_CHECKED;
- 		return 1;
- 	}
-@@ -448,7 +448,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
- 	int hdrlen;
- 
- 	if (!is_delta_type(type)) {
--		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
-+		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), size) + 1;
- 		git_SHA1_Init(&c);
- 		git_SHA1_Update(&c, hdr, hdrlen);
- 	} else
-@@ -849,7 +849,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			obj = parse_object_buffer(oid, type, size, buf,
- 						  &eaten);
- 			if (!obj)
--				die(_("invalid %s"), typename(type));
-+				die(_("invalid %s"), type_name(type));
- 			if (do_fsck_object &&
- 			    fsck_object(obj, buf, size, &fsck_options))
- 				die(_("Error in object"));
-@@ -959,7 +959,7 @@ static void resolve_delta(struct object_entry *delta_obj,
- 	if (!result->data)
- 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
- 	hash_sha1_file(result->data, result->size,
--		       typename(delta_obj->real_type),
-+		       type_name(delta_obj->real_type),
- 		       delta_obj->idx.oid.hash);
- 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
- 		    &delta_obj->idx.oid);
-@@ -1379,7 +1379,7 @@ static void fix_unresolved_deltas(struct sha1file *f)
- 			continue;
- 
- 		if (check_sha1_signature(d->sha1, base_obj->data,
--				base_obj->size, typename(type)))
-+				base_obj->size, type_name(type)))
- 			die(_("local object %s is corrupt"), sha1_to_hex(d->sha1));
- 		base_obj->obj = append_obj_to_pack(f, d->sha1,
- 					base_obj->data, base_obj->size, type);
-@@ -1588,7 +1588,7 @@ static void show_pack_info(int stat_only)
- 			continue;
- 		printf("%s %-6s %lu %lu %"PRIuMAX,
- 		       oid_to_hex(&obj->idx.oid),
--		       typename(obj->real_type), obj->size,
-+		       type_name(obj->real_type), obj->size,
- 		       (unsigned long)(obj[1].idx.offset - obj->idx.offset),
- 		       (uintmax_t)obj->idx.offset);
- 		if (is_delta_type(obj->type)) {
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 30264cfd7..9dec14096 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -520,7 +520,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 		if (desc && desc->obj && desc->obj->type == OBJ_TAG) {
- 			strbuf_addf(msg, "%s\t\t%s '%s'\n",
- 				    oid_to_hex(&desc->obj->oid),
--				    typename(desc->obj->type),
-+				    type_name(desc->obj->type),
- 				    remote);
- 			goto cleanup;
- 		}
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index da0fd8cd7..b7b1cb51f 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -112,7 +112,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
- 	mode_type = object_type(mode);
- 	if (mode_type != type_from_string(ptr)) {
- 		die("entry '%s' object type (%s) doesn't match mode type (%s)",
--			path, ptr, typename(mode_type));
-+			path, ptr, type_name(mode_type));
- 	}
- 
- 	/* Check the type of object identified by sha1 */
-@@ -131,7 +131,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
- 			 * because the new tree entry will never be correct.
- 			 */
- 			die("entry '%s' object %s is a %s but specified type was (%s)",
--				path, sha1_to_hex(sha1), typename(obj_type), typename(mode_type));
-+				path, sha1_to_hex(sha1), type_name(obj_type), type_name(mode_type));
- 		}
- 	}
- 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index d2fdae680..c175f154e 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -52,7 +52,7 @@ static int prune_object(const struct object_id *oid, const char *fullpath,
- 	if (show_only || verbose) {
- 		enum object_type type = sha1_object_info(oid->hash, NULL);
- 		printf("%s %s\n", oid_to_hex(oid),
--		       (type > 0) ? typename(type) : "unknown");
-+		       (type > 0) ? type_name(type) : "unknown");
- 	}
- 	if (!show_only)
- 		unlink_or_warn(fullpath);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 10078ae37..42cf4f62a 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -56,8 +56,8 @@ static int show_reference(const char *refname, const struct object_id *oid,
- 			obj_type = sha1_object_info(object.hash, NULL);
- 			repl_type = sha1_object_info(oid->hash, NULL);
- 
--			printf("%s (%s) -> %s (%s)\n", refname, typename(obj_type),
--			       oid_to_hex(oid), typename(repl_type));
-+			printf("%s (%s) -> %s (%s)\n", refname, type_name(obj_type),
-+			       oid_to_hex(oid), type_name(repl_type));
- 		}
- 	}
- 
-@@ -168,8 +168,8 @@ static int replace_object_oid(const char *object_ref,
- 		die("Objects must be of the same type.\n"
- 		    "'%s' points to a replaced object of type '%s'\n"
- 		    "while '%s' points to a replacement object of type '%s'.",
--		    object_ref, typename(obj_type),
--		    replace_ref, typename(repl_type));
-+		    object_ref, type_name(obj_type),
-+		    replace_ref, type_name(repl_type));
- 
- 	check_ref_valid(object, &prev, &ref, force);
- 
-@@ -215,7 +215,7 @@ static void export_object(const struct object_id *oid, enum object_type type,
- 	argv_array_push(&cmd.args, "--no-replace-objects");
- 	argv_array_push(&cmd.args, "cat-file");
- 	if (raw)
--		argv_array_push(&cmd.args, typename(type));
-+		argv_array_push(&cmd.args, type_name(type));
- 	else
- 		argv_array_push(&cmd.args, "-p");
- 	argv_array_push(&cmd.args, oid_to_hex(oid));
-@@ -355,7 +355,7 @@ static void check_one_mergetag(struct commit *commit,
- 	struct tag *tag;
+ /*
+- * best_so_far[] and this[] are both a split of an existing blame_entry
+- * that passes blame to the parent.  Maintain best_so_far the best split
+- * so far, by comparing this and best_so_far and copying this into
++ * best_so_far[] and potential[] are both a split of an existing blame_entry
++ * that passes blame to the parent.  Maintain best_so_far the best split so
++ * far, by comparing potential and best_so_far and copying potential into
+  * bst_so_far as needed.
+  */
+ static void copy_split_if_better(struct blame_scoreboard *sb,
+ 				 struct blame_entry *best_so_far,
+-				 struct blame_entry *this)
++				 struct blame_entry *potential)
+ {
  	int i;
  
--	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_oid.hash);
-+	hash_sha1_file(extra->value, extra->len, type_name(OBJ_TAG), tag_oid.hash);
- 	tag = lookup_tag(&tag_oid);
- 	if (!tag)
- 		die(_("bad mergetag in commit '%s'"), ref);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index a7e6a5b0f..7e0881fba 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -220,7 +220,7 @@ static void create_tag(const struct object_id *object, const char *tag,
- 		    "tag %s\n"
- 		    "tagger %s\n\n",
- 		    oid_to_hex(object),
--		    typename(type),
-+		    type_name(type),
- 		    tag,
- 		    git_committer_info(IDENT_STRICT));
- 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 62ea264c4..e93079070 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -172,7 +172,7 @@ static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
- {
- 	struct object_id oid;
- 
--	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), oid.hash) < 0)
-+	if (write_sha1_file(obj_buf->buffer, obj_buf->size, type_name(obj->type), oid.hash) < 0)
- 		die("failed to write object %s", oid_to_hex(&obj->oid));
- 	obj->flags |= FLAG_WRITTEN;
- }
-@@ -237,14 +237,14 @@ static void write_object(unsigned nr, enum object_type type,
- 			 void *buf, unsigned long size)
- {
- 	if (!strict) {
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-+		if (write_sha1_file(buf, size, type_name(type), obj_list[nr].oid.hash) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 		obj_list[nr].obj = NULL;
- 	} else if (type == OBJ_BLOB) {
- 		struct blob *blob;
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
-+		if (write_sha1_file(buf, size, type_name(type), obj_list[nr].oid.hash) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
-@@ -258,12 +258,12 @@ static void write_object(unsigned nr, enum object_type type,
- 	} else {
- 		struct object *obj;
- 		int eaten;
--		hash_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash);
-+		hash_sha1_file(buf, size, type_name(type), obj_list[nr].oid.hash);
- 		added_object(nr, type, buf, size);
- 		obj = parse_object_buffer(&obj_list[nr].oid, type, size, buf,
- 					  &eaten);
- 		if (!obj)
--			die("invalid %s", typename(type));
-+			die("invalid %s", type_name(type));
- 		add_object_buffer(obj, buf, size);
- 		obj->flags |= FLAG_OPEN;
- 		obj_list[nr].obj = obj;
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index ba38ac9b1..05315ea7c 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -49,7 +49,7 @@ static int verify_commit(const char *name, unsigned flags)
- 		return error("%s: unable to read file.", name);
- 	if (type != OBJ_COMMIT)
- 		return error("%s: cannot verify a non-commit object of type %s.",
--				name, typename(type));
-+				name, type_name(type));
- 
- 	ret = run_gpg_verify(&oid, buf, size, flags);
- 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 3310fd210..bb788494f 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -203,7 +203,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 		return error("cannot find the current offset");
- 
- 	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
--			       typename(type), (uintmax_t)size) + 1;
-+			       type_name(type), (uintmax_t)size) + 1;
- 	git_SHA1_Init(&ctx);
- 	git_SHA1_Update(&ctx, obuf, header_len);
- 
-diff --git a/commit.c b/commit.c
-index ff51c9f34..cd9ace105 100644
---- a/commit.c
-+++ b/commit.c
-@@ -274,7 +274,7 @@ const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
- 			    oid_to_hex(&commit->object.oid));
- 		if (type != OBJ_COMMIT)
- 			die("expected commit for %s, got %s",
--			    oid_to_hex(&commit->object.oid), typename(type));
-+			    oid_to_hex(&commit->object.oid), type_name(type));
- 		if (sizep)
- 			*sizep = size;
+-	if (!this[1].suspect)
++	if (!potential[1].suspect)
+ 		return;
+ 	if (best_so_far[1].suspect) {
+-		if (blame_entry_score(sb, &this[1]) < blame_entry_score(sb, &best_so_far[1]))
++		if (blame_entry_score(sb, &potential[1]) <
++		    blame_entry_score(sb, &best_so_far[1]))
+ 			return;
  	}
-diff --git a/contrib/examples/builtin-fetch--tool.c b/contrib/examples/builtin-fetch--tool.c
-index a3eb19de0..22648c3af 100644
---- a/contrib/examples/builtin-fetch--tool.c
-+++ b/contrib/examples/builtin-fetch--tool.c
-@@ -15,7 +15,7 @@ static char *get_stdin(void)
  
- static void show_new(enum object_type type, unsigned char *sha1_new)
- {
--	fprintf(stderr, "  %s: %s\n", typename(type),
-+	fprintf(stderr, "  %s: %s\n", type_name(type),
- 		find_unique_abbrev(sha1_new, DEFAULT_ABBREV));
+ 	for (i = 0; i < 3; i++)
+-		blame_origin_incref(this[i].suspect);
++		blame_origin_incref(potential[i].suspect);
+ 	decref_split(best_so_far);
+-	memcpy(best_so_far, this, sizeof(struct blame_entry [3]));
++	memcpy(best_so_far, potential, sizeof(struct blame_entry[3]));
  }
  
-diff --git a/fast-import.c b/fast-import.c
-index b70ac025e..92b89d191 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1096,7 +1096,7 @@ static int store_object(
- 	git_zstream s;
- 
- 	hdrlen = xsnprintf((char *)hdr, sizeof(hdr), "%s %lu",
--			   typename(type), (unsigned long)dat->len) + 1;
-+			   type_name(type), (unsigned long)dat->len) + 1;
- 	git_SHA1_Init(&c);
- 	git_SHA1_Update(&c, hdr, hdrlen);
- 	git_SHA1_Update(&c, dat->buf, dat->len);
-@@ -2421,7 +2421,7 @@ static void file_change_m(const char *p, struct branch *b)
- 		else if (oe) {
- 			if (oe->type != OBJ_COMMIT)
- 				die("Not a commit (actually a %s): %s",
--					typename(oe->type), command_buf.buf);
-+					type_name(oe->type), command_buf.buf);
- 		}
- 		/*
- 		 * Accept the sha1 without checking; it expected to be in
-@@ -2448,7 +2448,7 @@ static void file_change_m(const char *p, struct branch *b)
- 					command_buf.buf);
- 		if (type != expected)
- 			die("Not a %s (actually a %s): %s",
--				typename(expected), typename(type),
-+				type_name(expected), type_name(type),
- 				command_buf.buf);
- 	}
- 
-@@ -2599,14 +2599,14 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 	} else if (oe) {
- 		if (oe->type != OBJ_BLOB)
- 			die("Not a blob (actually a %s): %s",
--				typename(oe->type), command_buf.buf);
-+				type_name(oe->type), command_buf.buf);
- 	} else if (!is_null_oid(&oid)) {
- 		enum object_type type = sha1_object_info(oid.hash, NULL);
- 		if (type < 0)
- 			die("Blob not found: %s", command_buf.buf);
- 		if (type != OBJ_BLOB)
- 			die("Not a blob (actually a %s): %s",
--			    typename(type), command_buf.buf);
-+			    type_name(type), command_buf.buf);
- 	}
- 
- 	construct_path_with_fanout(oid_to_hex(&commit_oid), *old_fanout, path);
-@@ -2914,7 +2914,7 @@ static void parse_new_tag(const char *arg)
- 		    "object %s\n"
- 		    "type %s\n"
- 		    "tag %s\n",
--		    oid_to_hex(&oid), typename(type), t->name);
-+		    oid_to_hex(&oid), type_name(type), t->name);
- 	if (tagger)
- 		strbuf_addf(&new_data,
- 			    "tagger %s\n", tagger);
-@@ -2985,10 +2985,10 @@ static void cat_blob(struct object_entry *oe, struct object_id *oid)
- 		die("Can't read object %s", oid_to_hex(oid));
- 	if (type != OBJ_BLOB)
- 		die("Object %s is a %s but a blob was expected.",
--		    oid_to_hex(oid), typename(type));
-+		    oid_to_hex(oid), type_name(type));
- 	strbuf_reset(&line);
- 	strbuf_addf(&line, "%s %s %lu\n", oid_to_hex(oid),
--						typename(type), size);
-+						type_name(type), size);
- 	cat_blob_write(line.buf, line.len);
- 	strbuf_release(&line);
- 	cat_blob_write(buf, size);
-diff --git a/fsck.c b/fsck.c
-index 032699e9a..5c8c12dde 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -821,7 +821,7 @@ static int fsck_tag_buffer(struct tag *tag, const char *data,
- 			ret = report(options, &tag->object,
- 				FSCK_MSG_TAG_OBJECT_NOT_TAG,
- 				"expected tag got %s",
--			    typename(type));
-+			    type_name(type));
- 			goto done;
- 		}
- 	}
-diff --git a/http-push.c b/http-push.c
-index 14435ab65..8814aa12e 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -362,7 +362,7 @@ static void start_put(struct transfer_request *request)
- 	git_zstream stream;
- 
- 	unpacked = read_sha1_file(request->obj->oid.hash, &type, &len);
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
-+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
- 
- 	/* Set it up */
- 	git_deflate_init(&stream, zlib_compression_level);
-diff --git a/log-tree.c b/log-tree.c
-index fca29d479..2eeddbeb3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -499,7 +499,7 @@ static void show_one_mergetag(struct commit *commit,
- 	int status, nth;
- 	size_t payload_size, gpg_message_offset;
- 
--	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), oid.hash);
-+	hash_sha1_file(extra->value, extra->len, type_name(OBJ_TAG), oid.hash);
- 	tag = lookup_tag(&oid);
- 	if (!tag)
- 		return; /* error message already given */
-diff --git a/object.c b/object.c
-index 0afdfd19b..0db33b26b 100644
---- a/object.c
-+++ b/object.c
-@@ -26,7 +26,7 @@ static const char *object_type_strings[] = {
- 	"tag",		/* OBJ_TAG = 4 */
- };
- 
--const char *typename(unsigned int type)
-+const char *type_name(unsigned int type)
- {
- 	if (type >= ARRAY_SIZE(object_type_strings))
- 		return NULL;
-@@ -166,7 +166,7 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
- 		if (!quiet)
- 			error("object %s is a %s, not a %s",
- 			      oid_to_hex(&obj->oid),
--			      typename(obj->type), typename(type));
-+			      type_name(obj->type), type_name(type));
- 		return NULL;
+ /*
+@@ -1046,12 +1047,12 @@ static void handle_split(struct blame_scoreboard *sb,
+ 	if (ent->num_lines <= tlno)
+ 		return;
+ 	if (tlno < same) {
+-		struct blame_entry this[3];
++		struct blame_entry potential[3];
+ 		tlno += ent->s_lno;
+ 		same += ent->s_lno;
+-		split_overlap(this, ent, tlno, plno, same, parent);
+-		copy_split_if_better(sb, split, this);
+-		decref_split(this);
++		split_overlap(potential, ent, tlno, plno, same, parent);
++		copy_split_if_better(sb, split, potential);
++		decref_split(potential);
  	}
  }
-@@ -265,7 +265,7 @@ struct object *parse_object(const struct object_id *oid)
  
- 	buffer = read_sha1_file(oid->hash, &type, &size);
- 	if (buffer) {
--		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
-+		if (check_sha1_signature(repl, buffer, size, type_name(type)) < 0) {
- 			free(buffer);
- 			error("sha1 mismatch %s", sha1_to_hex(repl));
- 			return NULL;
-diff --git a/object.h b/object.h
-index 87563d905..a5eb26380 100644
---- a/object.h
-+++ b/object.h
-@@ -53,7 +53,7 @@ struct object {
- 	struct object_id oid;
- };
+@@ -1273,7 +1274,7 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
+ 			struct diff_filepair *p = diff_queued_diff.queue[i];
+ 			struct blame_origin *norigin;
+ 			mmfile_t file_p;
+-			struct blame_entry this[3];
++			struct blame_entry potential[3];
  
--extern const char *typename(unsigned int type);
-+extern const char *type_name(unsigned int type);
- extern int type_from_string_gently(const char *str, ssize_t, int gentle);
- #define type_from_string(str) type_from_string_gently(str, -1, 0)
+ 			if (!DIFF_FILE_VALID(p->one))
+ 				continue; /* does not exist in parent */
+@@ -1292,10 +1293,10 @@ static void find_copy_in_parent(struct blame_scoreboard *sb,
  
-diff --git a/pack-check.c b/pack-check.c
-index 073c1fbd4..bd348592f 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -141,7 +141,7 @@ static int verify_packfile(struct packed_git *p,
- 			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
- 				    oid_to_hex(entries[i].oid.oid), p->pack_name,
- 				    (uintmax_t)entries[i].offset);
--		else if (check_sha1_signature(entries[i].oid.hash, data, size, typename(type)))
-+		else if (check_sha1_signature(entries[i].oid.hash, data, size, type_name(type)))
- 			err = error("packed %s from %s is corrupt",
- 				    oid_to_hex(entries[i].oid.oid), p->pack_name);
- 		else if (fn) {
-diff --git a/packfile.c b/packfile.c
-index 6657a0a49..0532a371b 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1357,7 +1357,7 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
- 		if (oi->typep)
- 			*oi->typep = ptot;
- 		if (oi->type_name) {
--			const char *tn = typename(ptot);
-+			const char *tn = type_name(ptot);
- 			if (tn)
- 				strbuf_addstr(oi->type_name, tn);
- 		}
-diff --git a/reachable.c b/reachable.c
-index 88d7d679d..191ebe3e6 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -94,7 +94,7 @@ static void add_recent_object(const struct object_id *oid,
- 		break;
- 	default:
- 		die("unknown object type for %s: %s",
--		    oid_to_hex(oid), typename(type));
-+		    oid_to_hex(oid), type_name(type));
- 	}
- 
- 	if (!obj)
-diff --git a/ref-filter.c b/ref-filter.c
-index f9e25aea7..9dae6cfe3 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -769,7 +769,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 		if (deref)
- 			name++;
- 		if (!strcmp(name, "objecttype"))
--			v->s = typename(obj->type);
-+			v->s = type_name(obj->type);
- 		else if (!strcmp(name, "objectsize")) {
- 			v->value = sz;
- 			v->s = xstrfmt("%lu", sz);
-@@ -795,7 +795,7 @@ static void grab_tag_values(struct atom_value *val, int deref, struct object *ob
- 		if (!strcmp(name, "tag"))
- 			v->s = tag->tag;
- 		else if (!strcmp(name, "type") && tag->tagged)
--			v->s = typename(tag->tagged->type);
-+			v->s = type_name(tag->tagged->type);
- 		else if (!strcmp(name, "object") && tag->tagged)
- 			v->s = xstrdup(oid_to_hex(&tag->tagged->oid));
- 	}
-diff --git a/sequencer.c b/sequencer.c
-index 4d3f60594..f6b77e6bd 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2348,7 +2348,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
- 			if (!lookup_commit_reference_gently(&oid, 1)) {
- 				enum object_type type = sha1_object_info(oid.hash, NULL);
- 				return error(_("%s: can't cherry-pick a %s"),
--					name, typename(type));
-+					name, type_name(type));
+ 			for (j = 0; j < num_ents; j++) {
+ 				find_copy_in_blob(sb, blame_list[j].ent,
+-						  norigin, this, &file_p);
++						  norigin, potential, &file_p);
+ 				copy_split_if_better(sb, blame_list[j].split,
+-						     this);
+-				decref_split(this);
++						     potential);
++				decref_split(potential);
  			}
- 		} else
- 			return error(_("%s: bad revision"), name);
-diff --git a/sha1_file.c b/sha1_file.c
-index 2c03458ea..2288bb75c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -805,7 +805,7 @@ int check_sha1_signature(const unsigned char *sha1, void *map,
- 		return -1;
- 
- 	/* Generate the header */
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(obj_type), size) + 1;
-+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(obj_type), size) + 1;
- 
- 	/* Sha1.. */
- 	git_SHA1_Init(&c);
-@@ -1240,7 +1240,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 			if (oi->delta_base_sha1)
- 				hashclr(oi->delta_base_sha1);
- 			if (oi->type_name)
--				strbuf_addstr(oi->type_name, typename(co->type));
-+				strbuf_addstr(oi->type_name, type_name(co->type));
- 			if (oi->contentp)
- 				*oi->contentp = xmemdupz(co->buf, co->size);
- 			oi->whence = OI_CACHED;
-@@ -1317,7 +1317,7 @@ int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
- {
- 	struct cached_object *co;
- 
--	hash_sha1_file(buf, len, typename(type), sha1);
-+	hash_sha1_file(buf, len, type_name(type), sha1);
- 	if (has_sha1_file(sha1) || find_cached_object(sha1))
- 		return 0;
- 	ALLOC_GROW(cached_objects, cached_object_nr + 1, cached_object_alloc);
-@@ -1683,7 +1683,7 @@ int force_object_loose(const unsigned char *sha1, time_t mtime)
- 	buf = read_object(sha1, &type, &len);
- 	if (!buf)
- 		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
--	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
-+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
- 	ret = write_loose_object(sha1, hdr, hdrlen, buf, len, mtime);
- 	free(buf);
- 
-@@ -1767,9 +1767,9 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	}
- 
- 	if (write_object)
--		ret = write_sha1_file(buf, size, typename(type), oid->hash);
-+		ret = write_sha1_file(buf, size, type_name(type), oid->hash);
- 	else
--		ret = hash_sha1_file(buf, size, typename(type), oid->hash);
-+		ret = hash_sha1_file(buf, size, type_name(type), oid->hash);
- 	if (re_allocated)
- 		free(buf);
- 	return ret;
-@@ -1789,10 +1789,10 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
- 				 get_safe_crlf(flags));
- 
- 	if (write_object)
--		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+		ret = write_sha1_file(sbuf.buf, sbuf.len, type_name(OBJ_BLOB),
- 				      oid->hash);
- 	else
--		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+		ret = hash_sha1_file(sbuf.buf, sbuf.len, type_name(OBJ_BLOB),
- 				     oid->hash);
- 	strbuf_release(&sbuf);
- 	return ret;
-@@ -1942,7 +1942,7 @@ void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
- 		die("%s is not a valid object", sha1_to_hex(sha1));
- 	if (type != expect)
- 		die("%s is not a valid '%s' object", sha1_to_hex(sha1),
--		    typename(expect));
-+		    type_name(expect));
- }
- 
- int for_each_file_in_obj_subdir(unsigned int subdir_nr,
-@@ -2187,7 +2187,7 @@ int read_loose_object(const char *path,
- 			goto out;
+ 			blame_origin_decref(norigin);
  		}
- 		if (check_sha1_signature(expected_sha1, *contents,
--					 *size, typename(*type))) {
-+					 *size, type_name(*type))) {
- 			error("sha1 mismatch for %s (expected %s)", path,
- 			      sha1_to_hex(expected_sha1));
- 			free(*contents);
-diff --git a/sha1_name.c b/sha1_name.c
-index 611c7d24d..e7c18ffc2 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -381,7 +381,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 
- 	advise("  %s %s%s",
- 	       find_unique_abbrev(oid->hash, DEFAULT_ABBREV),
--	       typename(type) ? typename(type) : "unknown type",
-+	       type_name(type) ? type_name(type) : "unknown type",
- 	       desc.buf);
- 
- 	strbuf_release(&desc);
-@@ -901,8 +901,8 @@ struct object *peel_to_type(const char *name, int namelen,
- 			if (name)
- 				error("%.*s: expected %s type, but the object "
- 				      "dereferences to %s type",
--				      namelen, name, typename(expected_type),
--				      typename(o->type));
-+				      namelen, name, type_name(expected_type),
-+				      type_name(o->type));
- 			return NULL;
- 		}
- 	}
-diff --git a/submodule.c b/submodule.c
-index 47ddc9b27..cd18400e8 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -831,7 +831,7 @@ static int check_has_commit(const struct object_id *oid, void *data)
- 		return 0;
- 	default:
- 		die(_("submodule entry '%s' (%s) is a %s, not a commit"),
--		    cb->path, oid_to_hex(oid), typename(type));
-+		    cb->path, oid_to_hex(oid), type_name(type));
- 	}
- }
- 
-diff --git a/tag.c b/tag.c
-index fcbe012f7..66210fd47 100644
---- a/tag.c
-+++ b/tag.c
-@@ -47,7 +47,7 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
- 				name_to_report ?
- 				name_to_report :
- 				find_unique_abbrev(oid->hash, DEFAULT_ABBREV),
--				typename(type));
-+				type_name(type));
- 
- 	buf = read_sha1_file(oid->hash, &type, &size);
- 	if (!buf)
-diff --git a/walker.c b/walker.c
-index 5d4d3733f..dffb9c8e3 100644
---- a/walker.c
-+++ b/walker.c
-@@ -22,7 +22,7 @@ void walker_say(struct walker *walker, const char *fmt, ...)
- static void report_missing(const struct object *obj)
- {
- 	fprintf(stderr, "Cannot obtain needed %s %s\n",
--		obj->type ? typename(obj->type): "object",
-+		obj->type ? type_name(obj->type): "object",
- 		oid_to_hex(&obj->oid));
- 	if (!is_null_oid(&current_commit_oid))
- 		fprintf(stderr, "while processing commit %s.\n",
-@@ -134,7 +134,7 @@ static int process_object(struct walker *walker, struct object *obj)
- 	}
- 	return error("Unable to determine requirements "
- 		     "of type %s for %s",
--		     typename(obj->type), oid_to_hex(&obj->oid));
-+		     type_name(obj->type), oid_to_hex(&obj->oid));
- }
- 
- static int process(struct walker *walker, struct object *obj)
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
