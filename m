@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D34731FAE2
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:55:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2060E1FAE2
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752022AbeA2WzO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:55:14 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56329 "EHLO mout.gmx.net"
+        id S1751970AbeA2WzR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:55:17 -0500
+Received: from mout.gmx.net ([212.227.15.19]:52114 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751970AbeA2WzM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:55:12 -0500
+        id S1752009AbeA2WzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:55:14 -0500
 Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.193.1]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0LvVYZ-1eoAJI1f19-010gRE; Mon, 29 Jan 2018 23:55:03 +0100
-Date:   Mon, 29 Jan 2018 23:55:02 +0100 (STD)
+ mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MCtql-1eWdQW14jr-009gdD; Mon, 29 Jan 2018 23:55:07 +0100
+Date:   Mon, 29 Jan 2018 23:55:06 +0100 (STD)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
@@ -29,122 +29,178 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2 08/10] sequencer: handle autosquash and post-rewrite for
- merge commands
+Subject: [PATCH v2 09/10] pull: accept --rebase=recreate to recreate the
+ branch topology
 In-Reply-To: <cover.1517266437.git.johannes.schindelin@gmx.de>
-Message-ID: <7449a6b30f15a00b80924b732cb6998cbee99e5e.1517266437.git.johannes.schindelin@gmx.de>
+Message-ID: <b944d8674039072972089e09bb10b9797f1f7070.1517266437.git.johannes.schindelin@gmx.de>
 References: <cover.1516225925.git.johannes.schindelin@gmx.de> <cover.1517266437.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FIx0JFaPUhFKg7V5+bq0kBPBF7Riiyg93y+aG6iB8Uv6hBajB8F
- o2v5fsrFdLP3ftCwR+CojwGegp8S9ozTm8hTKa6DXdtEW4hkBAiQ3mC1GwXV5VoN/YNuEyi
- Pe8ss1wdqYZm6Of6TkJJz+3sOPNOv1egpskKcuuB+Lk459KK6SsHu+rB3b+weBaaS64niY5
- mswdHLhcv1uMK+4rJ8rmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:d4wW+1Fce04=:fRau5cMb7w1vgEav5Cgp/s
- bXMhnU7Bo6hMTAdwO+kUpi3k4lzH/Sxn8k2hFCWzaNZdJ1yPgcJQCa6EHuvgEn4Z6coeQFH2v
- ihpMLmALHWwXk8wbnzcSGqQ8kJkwmVlIOrn6cZUmmANejSR6bgq8yx6x0jG0Yo2c5ZBX0nCq1
- 4I7myh0E6TYX3+sPB8iczPfyG1wsruiA+5lFkHHzQvSP40Lw1DcppSfLKtBwVSP8gv3iBB8bz
- e2St7d/FsuZeiVOWTx3atwaN00fYzKwn54ueVUV27UvJdZvCa1NQVj1bR01hkqZb+4yxRqol3
- KTJpcKKUl2KdQ+UbYTJBWloA3eq/cN6SfMxvNu4Q0N9TtdavKTOmV3SAr4dn1OaP27yQXIPz2
- FIlU8VS2w7pwiR7o9OJYYLoGy7B72WVbtLZPdpJz7tI3chIRM8N185F8Rmk0GmtImMESqvIoB
- zmVWsmFEYeFPVOT1457ikP/r/SxrsD/HY3p0DAE4GDmTCkNwx4rhrEwWJtKW4JisSFdW6eSsu
- yJcF8oYljBDm9ZZop9fDiVVh3yQMM+fI85BCPfbYTfP2So4viMHTZA4zJna6MJWG2Y0wd5ls4
- elXMwqLCJLYRxMQPwS2NchsrYcC+g4f7xQyfn7YQzlB0prroyk1231SwYM5qZWM8+tSTbmOyg
- y5wzab7Sr9FEow8dHioLmrG4g1Ybjv3r1MsSPCSwBwa0DZUMPkY7tKVmJ9YK8KltUn7MvKXzs
- yLoaTZxGmBgFK41QpXLK6wQsVjkDKkGvvY8S5QXsCfrMA0P1R98U5/stiFzHVlcTNrZUSNzRa
- B595n+LzOOUTpLWmwCtwhJ14NqIbR+PKwkNZBLAQi+AzK0v7J2RG/wS2Okw24iMt9Ga60gB
+X-Provags-ID: V03:K0:NoGcSqH6RVBLX9LlC1wxnYZUrnYhAffKXKGTdgRykOhGlDKo0j0
+ RTobZezx5xay+61LhZETxTWZO1e3RVgmLstebshtqyNrv+onoc+EErW0GRGjbeb30L9ht0a
+ 5u95CKgaCqdD5USulqbKlivzIbYP8Uh4ARV2dYuurXaYRcSr9RufPEQ70bH0HCFn0NcIZxB
+ ZWOfEYaW9/uCTqNcivHeA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TLQGVFmrMj8=:/fzZFLTJR3ADcsfroz/aLL
+ xrwxA4/gRl8qqIfqn80ysJx0jbEhP0lRbheb+rZs34LJuZBVGiKjsSlkrASYAixqg6al3luWa
+ bWlqn1NYcA7SagR3e5n4oPEuzaRTayMEteW0CBacn2+uS95/yr6LBWr16ny404XWkIHn9BJsB
+ hQJFgAMU5DCAGaOvxnZ07zfzPgjpVrQIDELrjH8o7rVt1YqjmpY6lK99BNaoQmc5TM4/UMrkY
+ Kme3K91qCAVqjf8iqvJfXY5C3rVoVJflNap5KeD6+eUW0aHXQHoWWhHTohGWIQsxvjyoaInu/
+ 7DxZcErA590j58paPbFZPBZNg3BpF5d1WpQZnBCVeHCPqlLc1v0/1SQkkksePM5XU9alqgJl7
+ gZMYpIn0tf6uKQHbHCYbSwBFwjNCUo5P+HdngL/5UYMWRlCUO1gztafZQGTingJAtX6ki+Zny
+ W1BFFHtnnbc/X1e9SAce7SZyTAAbj/CAYhBmvwNAO7Y/fSplQm/q/hzzGMp9NgjKSnMWgfeWy
+ twHtEIRHOD6Uh1NtNXE33VMEthIMZZtTzf9T72FEjwkx4rvuwFMnMTeX4HzCowAK90VpbkhTq
+ ZI/hd5SpY2OlXbgyrC+aSQOz+tCktgjX8aiOF9iEhh2t9sKrVtHmNkepBp3g4GlNY3VjsFi0E
+ pBW35kUbGgJZxE5rtExNlH1yw6lD2ETVpTZfBslaDsaNkigFBHW3jpMFTAvJxyMSoYnSDGt/O
+ xmpd9azoyt0odl2+IyLnuzoaLlGspM2f/Fi7VoFEbKaJyX33awLrQTACvt+SC8nJghcGh1tcj
+ FUY5DRUVgsdYU7yqHQiSfTIHXfC5Zai+QmsTJJ0kIbmzTeaWSnUdtSipnIoUhbqyBaKsaYB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous patches, we implemented the basic functionality of the
-`git rebase -i --recreate-merges` command, in particular the `merge`
-command to create merge commits in the sequencer.
+Similar to the `preserve` mode simply passing the `--preserve-merges`
+option to the `rebase` command, the `recreate` mode simply passes the
+`--recreate-merges` option.
 
-The interactive rebase is a lot more these days, though, than a simple
-cherry-pick in a loop. For example, it calls the post-rewrite hook (if
-any) after rebasing with a mapping of the old->new commits. And the
-interactive rebase also supports the autosquash mode, where commits
-whose oneline is of the form `fixup! <oneline>` or `squash! <oneline>`
-are rearranged to amend commits whose oneline they match.
-
-This patch implements the post-rewrite and autosquash handling for the
-`merge` command we just introduced. The other commands that were added
-recently (`label` and `reset`) do not create new commits, therefore
-post-rewrite & autosquash do not need to handle them.
+This will allow users to conveniently rebase non-trivial commit
+topologies when pulling new commits, without flattening them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c                       | 10 +++++++---
- t/t3430-rebase-recreate-merges.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 3 deletions(-)
+ Documentation/config.txt               |  8 ++++++++
+ Documentation/git-pull.txt             |  5 ++++-
+ builtin/pull.c                         | 14 ++++++++++----
+ builtin/remote.c                       |  2 ++
+ contrib/completion/git-completion.bash |  2 +-
+ 5 files changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index d5af315a440..4cc73775394 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2414,10 +2414,13 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			res = do_label(item->arg, item->arg_len);
- 		else if (item->command == TODO_RESET)
- 			res = do_reset(item->arg, item->arg_len);
--		else if (item->command == TODO_MERGE)
-+		else if (item->command == TODO_MERGE) {
- 			res = do_merge(item->commit,
- 				       item->arg, item->arg_len, opts);
--		else if (!is_noop(item->command))
-+			if (item->commit)
-+				record_in_rewritten(&item->commit->object.oid,
-+						    peek_command(todo_list, 1));
-+		} else if (!is_noop(item->command))
- 			return error(_("unknown command %d"), item->command);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92b3..da41ab246dc 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1058,6 +1058,10 @@ branch.<name>.rebase::
+ 	"git pull" is run. See "pull.rebase" for doing this in a non
+ 	branch-specific manner.
+ +
++When recreate, also pass `--recreate-merges` along to 'git rebase'
++so that locally committed merge commits will not be flattened
++by running 'git pull'.
+++
+ When preserve, also pass `--preserve-merges` along to 'git rebase'
+ so that locally committed merge commits will not be flattened
+ by running 'git pull'.
+@@ -2607,6 +2611,10 @@ pull.rebase::
+ 	pull" is run. See "branch.<name>.rebase" for setting this on a
+ 	per-branch basis.
+ +
++When recreate, also pass `--recreate-merges` along to 'git rebase'
++so that locally committed merge commits will not be flattened
++by running 'git pull'.
+++
+ When preserve, also pass `--preserve-merges` along to 'git rebase'
+ so that locally committed merge commits will not be flattened
+ by running 'git pull'.
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index ce05b7a5b13..b4f9f057ea9 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -101,13 +101,16 @@ Options related to merging
+ include::merge-options.txt[]
  
- 		todo_list->current++;
-@@ -3560,7 +3563,8 @@ int rearrange_squash(void)
- 		struct subject2item_entry *entry;
+ -r::
+---rebase[=false|true|preserve|interactive]::
++--rebase[=false|true|recreate|preserve|interactive]::
+ 	When true, rebase the current branch on top of the upstream
+ 	branch after fetching. If there is a remote-tracking branch
+ 	corresponding to the upstream branch and the upstream branch
+ 	was rebased since last fetched, the rebase uses that information
+ 	to avoid rebasing non-local changes.
+ +
++When set to recreate, rebase with the `--recreate-merges` option passed
++to `git rebase` so that locally created merge commits will not be flattened.
+++
+ When set to preserve, rebase with the `--preserve-merges` option passed
+ to `git rebase` so that locally created merge commits will not be flattened.
+ +
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 511dbbe0f6e..e33c84e0345 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -27,14 +27,16 @@ enum rebase_type {
+ 	REBASE_FALSE = 0,
+ 	REBASE_TRUE,
+ 	REBASE_PRESERVE,
++	REBASE_RECREATE,
+ 	REBASE_INTERACTIVE
+ };
  
- 		next[i] = tail[i] = -1;
--		if (item->command >= TODO_EXEC) {
-+		if (item->command >= TODO_EXEC &&
-+		    (item->command != TODO_MERGE || !item->commit)) {
- 			subjects[i] = NULL;
- 			continue;
+ /**
+  * Parses the value of --rebase. If value is a false value, returns
+  * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
+- * "preserve", returns REBASE_PRESERVE. If value is a invalid value, dies with
+- * a fatal error if fatal is true, otherwise returns REBASE_INVALID.
++ * "recreate", returns REBASE_RECREATE. If value is "preserve", returns
++ * REBASE_PRESERVE. If value is a invalid value, dies with a fatal error if
++ * fatal is true, otherwise returns REBASE_INVALID.
+  */
+ static enum rebase_type parse_config_rebase(const char *key, const char *value,
+ 		int fatal)
+@@ -47,6 +49,8 @@ static enum rebase_type parse_config_rebase(const char *key, const char *value,
+ 		return REBASE_TRUE;
+ 	else if (!strcmp(value, "preserve"))
+ 		return REBASE_PRESERVE;
++	else if (!strcmp(value, "recreate"))
++		return REBASE_RECREATE;
+ 	else if (!strcmp(value, "interactive"))
+ 		return REBASE_INTERACTIVE;
+ 
+@@ -130,7 +134,7 @@ static struct option pull_options[] = {
+ 	/* Options passed to git-merge or git-rebase */
+ 	OPT_GROUP(N_("Options related to merging")),
+ 	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
+-	  "false|true|preserve|interactive",
++	  "false|true|recreate|preserve|interactive",
+ 	  N_("incorporate changes by rebasing rather than merging"),
+ 	  PARSE_OPT_OPTARG, parse_opt_rebase },
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+@@ -798,7 +802,9 @@ static int run_rebase(const struct object_id *curr_head,
+ 	argv_push_verbosity(&args);
+ 
+ 	/* Options passed to git-rebase */
+-	if (opt_rebase == REBASE_PRESERVE)
++	if (opt_rebase == REBASE_RECREATE)
++		argv_array_push(&args, "--recreate-merges");
++	else if (opt_rebase == REBASE_PRESERVE)
+ 		argv_array_push(&args, "--preserve-merges");
+ 	else if (opt_rebase == REBASE_INTERACTIVE)
+ 		argv_array_push(&args, "--interactive");
+diff --git a/builtin/remote.c b/builtin/remote.c
+index d95bf904c3b..b7d0f7ce596 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -306,6 +306,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+ 				info->rebase = v;
+ 			else if (!strcmp(value, "preserve"))
+ 				info->rebase = NORMAL_REBASE;
++			else if (!strcmp(value, "recreate"))
++				info->rebase = NORMAL_REBASE;
+ 			else if (!strcmp(value, "interactive"))
+ 				info->rebase = INTERACTIVE_REBASE;
  		}
-diff --git a/t/t3430-rebase-recreate-merges.sh b/t/t3430-rebase-recreate-merges.sh
-index 5295bb03dc0..2eeda0c512b 100755
---- a/t/t3430-rebase-recreate-merges.sh
-+++ b/t/t3430-rebase-recreate-merges.sh
-@@ -157,4 +157,29 @@ test_expect_success 'refs/rewritten/* is worktree-local' '
- 	test_cmp_rev HEAD "$(cat wt/b)"
- '
- 
-+test_expect_success 'post-rewrite hook and fixups work for merges' '
-+	git checkout -b post-rewrite &&
-+	test_commit same1 &&
-+	git reset --hard HEAD^ &&
-+	test_commit same2 &&
-+	git merge -m "to fix up" same1 &&
-+	echo same old same old >same2.t &&
-+	test_tick &&
-+	git commit --fixup HEAD same2.t &&
-+	fixup="$(git rev-parse HEAD)" &&
-+
-+	mkdir -p .git/hooks &&
-+	test_when_finished "rm .git/hooks/post-rewrite" &&
-+	echo "cat >actual" | write_script .git/hooks/post-rewrite &&
-+
-+	test_tick &&
-+	git rebase -i --autosquash --recreate-merges HEAD^^^ &&
-+	printf "%s %s\n%s %s\n%s %s\n%s %s\n" >expect $(git rev-parse \
-+		$fixup^^2 HEAD^2 \
-+		$fixup^^ HEAD^ \
-+		$fixup^ HEAD \
-+		$fixup HEAD) &&
-+	test_cmp expect actual
-+'
-+
- test_done
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6893c3adabc..6f98c96fee9 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2182,7 +2182,7 @@ _git_config ()
+ 		return
+ 		;;
+ 	branch.*.rebase)
+-		__gitcomp "false true preserve interactive"
++		__gitcomp "false true recreate preserve interactive"
+ 		return
+ 		;;
+ 	remote.pushdefault)
 -- 
 2.16.1.windows.1
 
