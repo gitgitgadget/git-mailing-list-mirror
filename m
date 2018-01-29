@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC861FAE2
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:39:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4750A1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752339AbeA2WjH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:39:07 -0500
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:53558 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752331AbeA2WjF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:39:05 -0500
-Received: by mail-oi0-f74.google.com with SMTP id 24so409614oir.20
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:39:05 -0800 (PST)
+        id S1752358AbeA2WjL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:39:11 -0500
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:39089 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751937AbeA2WjI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:39:08 -0500
+Received: by mail-ua0-f201.google.com with SMTP id q28so6845335uaa.6
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:39:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=N7VczO8HRz4HLQGaXYdTM1T8/i3ZB18jFfPdfWaQiBU=;
-        b=XHymRte5nf0T7KX/8Em2gHvG5xUAPw+Mejv7bvIt31OXB5QnII1NPoqQptI5orG5Ps
-         /EveXE2tflr7EjVdkaSJtodRMM8GeGNb/DhynfbH4c9N9DN53LhUnRPmKLFJSM/7Bxza
-         KOjvuXY6EDexcf1oMZO8xJIzAhNVK9/YI1QXnchU7pvioQBE7wVGb+f+oDEGmAtZOPXz
-         2C7Hwt5gQh2+Xh5XSuO7iu7kBx55hEzxWobaMiTOlt86aYnZyO8qg9HOirJkT55C1tcW
-         DztEiLcFUVKwk7AaAL0nwYKAgqCDCwlCjLIHPmX2jr8VYL4TwU8bMKnvJQNVtIbQZN6+
-         y9Ag==
+        bh=nJ2HRATkUSl1L3ClsjUDGsQoSX43lxAMgOuUtOd2Ckc=;
+        b=lA7YNQlzf2v6+2/SMKJNcQVchahCFjMGdfq/Dj4mEVTkIamzPbHVz8BR86cpTcbFaV
+         xt9pCqWU5FMbuRFNqgRbNEczPBbsH7mOo9FFr/lEkUuUAfbgAoKJN4QTArHF5lh/OGIV
+         QuA5BFNsyPeHmfU5GXkuriinV9Z/pnDA2iPNgDCX6w1X5pxdd7p44o+u8SNqPbciAbM+
+         qal3ESsbJJxC1h7Sws2g7WibxUGziama5t0ANwrpRpaOCkv/rXpDz3Kdb9a8raCk2809
+         XnYjZRgP06GQpdwuPoZMym4sWFsxplX74w7JPFu/uk/sJVHEN3il47jTecIAFZ5D52h5
+         98cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=N7VczO8HRz4HLQGaXYdTM1T8/i3ZB18jFfPdfWaQiBU=;
-        b=NQ1Booiljio1M/oKRqmy3AAUpxUzFdNBwARXPj/+29zblgUZHW/E2BuOvu8EYpv9c6
-         CS7AaTnpKzlm/07/fzGBVLB3wEGUsEv/k8XePNZECxQH8swqGDEht9zl4/Fe5SQd9Lna
-         7GwbkLrf89+yoCx1c6BzVZLTj5pcvCWiJu0imwGQzBAsj/Y50PAY7m3cfNBY/MExJRBM
-         t3jDeaXo0OaftSfp9stKd/xAIffcNIJ3ZyxG2FxqzHIwT5RPFZ3g9xUk/jIkpjrGACi4
-         5r4vMZeqCPGdjIXzIE508foaqKHr6zECcpbMAu3i7QhgRlZsxXMhEq+OShC7tOpNyOVV
-         tXHg==
-X-Gm-Message-State: AKwxytdTU25wLJqTAva0qs5/s/1mdIP5s9nMABMUuI6oEU3QzGAYx/fd
-        mC1f5jAMNT2OZHL3PU/R3z/G6T54fi25cwISZMXKMlcyCIHW4KOr2c1zs33N6DDlhbxhPqRoBhT
-        pwO02yXgOMmPu0RT3wUgWAXpLuJfF7B3Jq2ajnTiBby8pyjlog7UfX4jZHA==
-X-Google-Smtp-Source: AH8x224quepJfKoY5+nW6dmcNmadhFxMLhtpOIHgczMqlcd3hvbYZh96G2qUr1X8pn6ffj0zPHONi6Qia6U=
+        bh=nJ2HRATkUSl1L3ClsjUDGsQoSX43lxAMgOuUtOd2Ckc=;
+        b=qr/8Oh+NKtBxqlvp91SNZtxI886NlU13r50aqQ8EHr+vdTZ+ixCeJZuOAuScT9x4yf
+         ZqNGMO4PvkxmK5bZVt41PEz3YsYUzAzKIzje45VQaW2tTs3n/xZjOgfdWa4gCKk8XskP
+         72gMmDkk7uNqZfGlursctxVauwzfRBuxwbyR+QHIm6qqqlOC0h0PL8TjpBySgURFRz2y
+         xW0FWoGJiWaDLFFfGW5/ARUxF3C/6dpgtdB+t82FZKkzu/kKkD8RinCdv3QB526V7Air
+         Dz3TB+VdobXJG9z5tDTu1DGl7vmMq1nSDcr2v05I8Ci/0Y18ae2d+XYUsxzchVG6YzdT
+         QaZQ==
+X-Gm-Message-State: AKwxytdSZ5DkdwXfeHsSQybF3Ih1wxbC4k706nDZfPyFB9wFeyw1AglO
+        0cbvGJJzrHXuFvkzAVo/Dmaf5Bp/pgp722lQeY2961VHKIqbnAEPL/JCd6KJMD0EPEOKJ5/ugZk
+        AlJSgv4fMzvQmUjWdm12MzPNqpI5YT8VozzpNuHCcuCJ2Li9N2xdyr61FNw==
+X-Google-Smtp-Source: AH8x224mM2OkgIX2b8eS+AaLCJHV09DZtyGUV5MdQWjXUFEGlEn+aySIB1iJvz6HY5lzFjCvS5Pz1BoQELM=
 MIME-Version: 1.0
-X-Received: by 10.202.228.143 with SMTP id b137mr16136975oih.14.1517265544972;
- Mon, 29 Jan 2018 14:39:04 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:37:27 -0800
+X-Received: by 10.31.85.196 with SMTP id j187mr12420752vkb.25.1517265547263;
+ Mon, 29 Jan 2018 14:39:07 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:37:28 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-37-bmwill@google.com>
+Message-Id: <20180129223728.30569-38-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 36/37] trailer: rename 'template' variables
+Subject: [PATCH 37/37] replace: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,38 +68,68 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- trailer.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/replace.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/trailer.c b/trailer.c
-index 5a4a2ecf9..c508c9b75 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1000,7 +1000,7 @@ static struct tempfile *trailers_tempfile;
- static FILE *create_in_place_tempfile(const char *file)
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 42cf4f62a..e48835b54 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -284,7 +284,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
  {
- 	struct stat st;
--	struct strbuf template = STRBUF_INIT;
-+	struct strbuf filename_template = STRBUF_INIT;
- 	const char *tail;
- 	FILE *outfile;
+ 	char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
+ 	enum object_type type;
+-	struct object_id old, new, prev;
++	struct object_id old, new_oid, prev;
+ 	struct strbuf ref = STRBUF_INIT;
  
-@@ -1014,11 +1014,11 @@ static FILE *create_in_place_tempfile(const char *file)
- 	/* Create temporary file in the same directory as the original */
- 	tail = strrchr(file, '/');
- 	if (tail != NULL)
--		strbuf_add(&template, file, tail - file + 1);
--	strbuf_addstr(&template, "git-interpret-trailers-XXXXXX");
-+		strbuf_add(&filename_template, file, tail - file + 1);
-+	strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
+ 	if (get_oid(object_ref, &old) < 0)
+@@ -300,14 +300,14 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
+ 	export_object(&old, type, raw, tmpfile);
+ 	if (launch_editor(tmpfile, NULL, NULL) < 0)
+ 		die("editing object file failed");
+-	import_object(&new, type, raw, tmpfile);
++	import_object(&new_oid, type, raw, tmpfile);
  
--	trailers_tempfile = xmks_tempfile_m(template.buf, st.st_mode);
--	strbuf_release(&template);
-+	trailers_tempfile = xmks_tempfile_m(filename_template.buf, st.st_mode);
-+	strbuf_release(&filename_template);
- 	outfile = fdopen_tempfile(trailers_tempfile, "w");
- 	if (!outfile)
- 		die_errno(_("could not open temporary file"));
+ 	free(tmpfile);
+ 
+-	if (!oidcmp(&old, &new))
++	if (!oidcmp(&old, &new_oid))
+ 		return error("new object is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_oid(object_ref, &old, "replacement", &new, force);
++	return replace_object_oid(object_ref, &old, "replacement", &new_oid, force);
+ }
+ 
+ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+@@ -386,7 +386,7 @@ static void check_mergetags(struct commit *commit, int argc, const char **argv)
+ 
+ static int create_graft(int argc, const char **argv, int force)
+ {
+-	struct object_id old, new;
++	struct object_id old, new_oid;
+ 	const char *old_ref = argv[0];
+ 	struct commit *commit;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -410,15 +410,15 @@ static int create_graft(int argc, const char **argv, int force)
+ 
+ 	check_mergetags(commit, argc, argv);
+ 
+-	if (write_sha1_file(buf.buf, buf.len, commit_type, new.hash))
++	if (write_sha1_file(buf.buf, buf.len, commit_type, new_oid.hash))
+ 		die(_("could not write replacement commit for: '%s'"), old_ref);
+ 
+ 	strbuf_release(&buf);
+ 
+-	if (!oidcmp(&old, &new))
++	if (!oidcmp(&old, &new_oid))
+ 		return error("new commit is the same as the old one: '%s'", oid_to_hex(&old));
+ 
+-	return replace_object_oid(old_ref, &old, "replacement", &new, force);
++	return replace_object_oid(old_ref, &old, "replacement", &new_oid, force);
+ }
+ 
+ int cmd_replace(int argc, const char **argv, const char *prefix)
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
