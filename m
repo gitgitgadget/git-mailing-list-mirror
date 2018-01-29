@@ -2,125 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0642F1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 21:02:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76B8B1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 21:05:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751941AbeA2VCV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 16:02:21 -0500
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:39906 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751755AbeA2VCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 16:02:19 -0500
-Received: by mail-vk0-f47.google.com with SMTP id a63so5426279vkg.6
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 13:02:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YGFchahv9yc3QO5kMD/+aDoUMxAzJHJnZihcaLxMUjw=;
-        b=g8itAd4D+qDPu4IwdkWFxpKs2F7FslidCjZxUMmiKRnDBbgkgdwOVP6F4ysCh1Kis4
-         eGUQpx8cUtIybElsmgLoNojcjA5SFR2QETIdMo7dB9zD8j8a8FRefAxULjdvT9dG11Wk
-         0VjV9sYbcC0aJAryA7lREtDX6WVHu80ZhemQe3ImdwYj7JbwSc+EKhx04y17RoJH68YX
-         wE/17OnbH0l7U8VkQX7Mb5eS+oBcxdMCM0bd6pYylxIcIORLMOD+//+PiDgBetULQ0ck
-         9XlC9toBtR88YCqiCi/ycNs/R2qJNxpsA7JfURtTgmAPSDHj8+OSv7mcIWghC9CGgERb
-         G4GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YGFchahv9yc3QO5kMD/+aDoUMxAzJHJnZihcaLxMUjw=;
-        b=ZrDMYqlTL/1IJDhUUPrF2bF8UHMPk0GAWoELVyMJhva1OYGE6wadbQDzOyZV+icAcr
-         xLzNFrwIABwJa4NcNzjkkH6gPTgTXjrZhyN9uMi7wc7qIG1/FyXa2RZwv9cs2BfJ2PLG
-         Vf74Jc4/FkyMULEMZiiZrf4+gj358c+YGgFlmyJZcSzURiSc7qPI0RNGL+7LTC2iv9Sm
-         qbECQWMBQpueOX0LWBIAd6TwVYAwRZOWq2e/+095cHhpEeYTEmBAO7GYQRIb4Kg2C1RI
-         /0ZQd7Z0sZs+xbvNQ47gRpqj+V2Y86PnDf/14ZutJscttSbzPaPLKIwYiFDcwCTKr5sh
-         FOwA==
-X-Gm-Message-State: AKwxytd3J4llXkmtIR6pi8pR4JqMt7ySnpWzR1hHdhyPw1wJwCyWjlqC
-        0grBr7COdABiqFQSweG1JSCKcr05PrXYN/v/Uy0XEg==
-X-Google-Smtp-Source: AH8x226kMKG0Wp3WmH0Mhc4RwUZ5zPaU7zUsawYDnA++rg15isQ9TgLdEt3ObG9nP/uv1S2a1bhQ/alq/msABNv8mQY=
-X-Received: by 10.31.213.7 with SMTP id m7mr19662415vkg.44.1517259737886; Mon,
- 29 Jan 2018 13:02:17 -0800 (PST)
+        id S1751864AbeA2VFd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 16:05:33 -0500
+Received: from mout.gmx.net ([212.227.15.19]:63048 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751812AbeA2VFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 16:05:31 -0500
+Received: from minint-kr8j64v.europe.corp.microsoft.com ([37.201.193.1]) by
+ mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MQQzk-1eCexH2JkC-00TpJv; Mon, 29 Jan 2018 22:05:27 +0100
+Date:   Mon, 29 Jan 2018 22:05:26 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 4/8] rebase-helper --make-script: introduce a flag to
+ recreate merges
+In-Reply-To: <CAPig+cSn_X-0iir-cKSd=P8p5QCxrR2qU_GBj7zDbv8zTc+AQw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801292200550.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <b9cb2d915aa4ff564b1960ce0352664b1d26eecb.1516225925.git.johannes.schindelin@gmx.de> <CAPig+cSn_X-0iir-cKSd=P8p5QCxrR2qU_GBj7zDbv8zTc+AQw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.176.2.237 with HTTP; Mon, 29 Jan 2018 13:02:17 -0800 (PST)
-In-Reply-To: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
-References: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 29 Jan 2018 13:02:17 -0800
-Message-ID: <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
-Subject: Re: Location limits on development, staging and production environments
-To:     H <agents@meddatainc.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:1cXcqYKRYMnLF7fsSwsBzQidxF9aFTZwn5qMlT8bwXoU+6xSB2o
+ My36BY/kx+dTKN6i0BiKfkG3glvvdJGMjTVWKYpVL5UgmKpjQwXG5RQGVYc3S+yNYwZlDnL
+ Tih8q/o6IkbL+ui1xyh0WUFG8DE+Ds/u8ZPq4q3rhHEKFrvuwaEUZFr677Dq2PSsWnFlJiy
+ 7dObfYa5SlH/dH2yIIh7g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LSVdKw3/TfU=:3jygqlpcA2wXrake5sAA0g
+ 0trHsoYsbbZucY4pTlgULEXYZNosGOhw8y6lAY4wWAE+oVXoUnduMuCH4CvhKtmhb/Jk12ufQ
+ LPZKaxB24YSJFHPNcnr0GXYSYs9ZypKETbWbPEEy1g0i2fRS563KxRgbcdXMdaH+w/p+VYKN7
+ 02sdhW2PqR/H/yVGb4UC51TjCYNUxrrClcqRffUV04zxh/I9+/AqrWQl+v1lqJ14ZcYk0YTGV
+ P6GaIflLpO5092AsCJX1KhKmBxPVQ2JUSoSOcJjt+1EVpxroum5DB84qGM8TcDVqa3MGmgpm9
+ 9k2mZwOpcjHg4q8AIj1uzpzEUAOCFEK8X9pXxZP0zW4dSdIPEkatFBzxOaV6PXIoVMuWUFfFM
+ h5hrXSP68j6gQcv6Hd4UZUKF9+54mR36XvUlOmru42YoeLjcU6PQ5bTPd/mepeicJnl0LdPfM
+ Qf7dEEePSjDrtbHG783k0pZitACHy7j4KqVHnlHvSWnJFoM59QAYFN/x17aN2tHb5JgDSRY5j
+ hcn4cVwzuD4CgPs68W9UnuVF3vOIWUOUrW8wxQDZD5jERXnVjqO/GoWrnwporJglR1dEj6Tuk
+ AY10ccaFAnJhkve/rCC+eXuUqVtlyDDbdcWLiMYO5xTlfSv/BG6DReWi64zKU40j/MH2tzAst
+ ZQmwtbyh5mAUyZ/WCwuha0iL+ZAsuFX0tmLuerAZbfIbcXzhNld/pceilPJOgGt9dzlTPkKrs
+ c745qw7M2lEphDlNu5aqdzop4UvLPa4R9F9FjBE7qcxDE5RDQDjrVO2ZNq1yrh3tOn/S/ImiY
+ eEa3nY2pmY8a61H6mB/5r6PlqiYY8w5ke9436ap2sYoEee07ykdEfsrgEtgKHpadEhwrrJJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 29, 2018 at 11:08 AM, H <agents@meddatainc.com> wrote:
-> I am a newcomer to git looking to set up a web development environment wh=
-ere individual computers are used for development, the development.git, sta=
-ging.git and production.git repositories are stored on an external server r=
-eachable by password-less ssh and the staging and production websites are o=
-n yet another server, also reachable by password-less ssh from the git-serv=
-er (and the development machines).
->
-> Locating the three git repositories on an external server works fine but =
-I have not been able to have the staging and production deployment files on=
- another server. I believe this is what is referred by GIT_WORK_TREE and ba=
-sed on what I found on the web I created a post-receive hook of staging.git=
- with the two lines:
->
-> #!/bin/sh
-> GIT_WORK_TREE=3Duser@1.2.3.4:/var/www/html/dev.whatever git checkout -f m=
-aster
->
-> I believe this should deploy the files from the development work tree.
->
-> The above, however, fails. Should it work? I am running git 1.7.1 on Cent=
-OS 6.
+Hi Eric,
 
-No, I wouldn't expect that to work. GIT_WORK_TREE is not remote-aware
-in that way. It's expected to be a normal-ish filesystem path.
+On Fri, 19 Jan 2018, Eric Sunshine wrote:
 
-Based on your description, and the hook you've written, it seems like
-your intention is for the source to automatically be fetched and
-checked out on the staging environment after each push. (This is
-dangerous, and likely _not_ what you actually want, but I'll get to
-that in a moment.)
+> On Thu, Jan 18, 2018 at 10:35 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> 
+> > structure (similar in spirit to --preserve-merges, but with a
+> > substantially less-broken design).
+> > [...]
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > diff --git a/sequencer.c b/sequencer.c
+> > @@ -2785,6 +2787,335 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+> > +static const char *label_oid(struct object_id *oid, const char *label,
+> > +                            struct label_state *state)
+> > +{
+> > +       [...]
+> > +       } else if (((len = strlen(label)) == GIT_SHA1_RAWSZ &&
+> > +                   !get_oid_hex(label, &dummy)) ||
+> > +                  hashmap_get_from_hash(&state->labels,
+> > +                                        strihash(label), label)) {
+> > +               /*
+> > +                * If the label already exists, or if the label is a valid full
+> > +                * OID, we append a dash and a number to make it unique.
+> > +                */
+> > +               [...]
+> > +               for (i = 2; ; i++) {
+> 
+> Why '2'? Is there some non-obvious significance to this value?
 
-One option would be to setup something like NFS, so the git-server can
-mount the filesystems from the staging and production nodes.
+I personally found it irritating to have labels "sequencer",
+"sequencer-1". It sounds *wrong* to have a "-1". Because it is the second
+label referring to the term "sequencer". So if there are two labels that
+both want to be named "sequencer", the first one wins, and the second one
+will be called "sequencer-2".
 
-A different, likely better, option would be to have the post-receive
-script on the git-server use straight ssh to trigger a checkout script
-on the staging server, e.g.:
-#!/bin/sh
-ssh example@staging-server -C /opt/deploy-staging.sh
+Hence the 2.
 
-Your deploy-staging script would then do something like:
-#!/bin/sh
-GIT_WORK_TREE=3D/var/www/html/dev.whatever git pull origin
+> > +static int make_script_with_merges(struct pretty_print_context *pp,
+> > +                                  struct rev_info *revs, FILE *out,
+> > +                                  unsigned flags)
+> > +{
+> > +       [...]
+> > +               is_octopus = to_merge && to_merge->next;
+> > +
+> > +               if (is_octopus)
+> > +                       BUG("Octopus merges not yet supported");
+> 
+> Is this a situation which the end-user can trigger by specifying a
+> merge with more than two parents? If so, shouldn't this be just a
+> normal error message rather than a (developer) bug message? Or, am I
+> misunderstanding?
 
-That said, though, having such a simple script is dangerous because
-Git is fully capable of having receiving multiple pushes concurrently,
-and they can all succeed as long as they're updating different
-branches. Since your script isn't considering what branches were
-changed by the push, it could end up triggering simultaneous git
-processes on the staging server all attempting to deploy concurrently.
+You are misunderstanding.
 
-The stdin for the post-receive hook receives details about which refs
-were changed, and you'll likely want to update your script to parse
-stdin and only try to deploy staging if a specific, relevant branch
-(master in your example) has changed.
+This is just a place-holder here. The patches to introduce support for
+octopus merges are already written. They are lined up after this here
+patch series, is all.
 
-Lastly, I'll note that using post-receive will make the pushing
-(remote) user wait while the staging server is deployed. If that
-process is likely to take very long, you might want to decouple the
-two somehow.
+As such, please do not occupy your mind on the specifics or even the
+upper-case of the "Octopus". This line is here only as a hint for the
+reviewer that this is not yet implemented. And BUG(...) was chosen because
+that way, we are not even tempted to waste the time of translators.
 
-Hope this helps!
+Speaking of wasting time... let's move on to further interesting code
+reviews.
+
+Ciao,
+Dscho
