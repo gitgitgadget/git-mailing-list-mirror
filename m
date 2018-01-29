@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 208221F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:39:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11E391F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:40:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752441AbeA2Wji (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:39:38 -0500
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:38308 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752197AbeA2Wi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:38:28 -0500
-Received: by mail-vk0-f74.google.com with SMTP id m190so5992785vkg.5
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:28 -0800 (PST)
+        id S1752232AbeA2WkF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:40:05 -0500
+Received: from mail-oi0-f74.google.com ([209.85.218.74]:53550 "EHLO
+        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752174AbeA2WiR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:38:17 -0500
+Received: by mail-oi0-f74.google.com with SMTP id 24so408431oir.20
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 14:38:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=cPDbWNZodJ7k3goNfV3xYa3nUC1Dh3AK2YMUVjHrF6w=;
-        b=hBXCha/EDTPPM1SjfkHylgxiWGh0EbAVY1fFwNPyuXU1Ci38YKZWpxZC4Qy8piHmNm
-         WJc0vtNQqeRu3WYXx5yGb7k0+Gc/fpwE+futk9Uga35idNLNbvJalw9dfylmo84irtEY
-         h/EGAFHzg6jZQ8xOo+D8QrPBOU+eXzg57eHmYOXkjLySMNzJESItRKDFCKXTejgi2AQN
-         7zVNGdQTa/Pn8vUtH3wIlVd2/UsSrKfq56jE4R+gB4eUQywZ5fxdoRRNZBRr5eFUMWG8
-         R85wvi/o9/i+baN2Mw49clgcMLgAAtH55n5s/TBskDTI8PG7dF24wQEdxPutiItC/79s
-         otxQ==
+        bh=HbPvmS+GugQ6/aSZPYq5/KCrJiRywF+JhnuD+Gb/CYU=;
+        b=rw9Xx36QsKjC91eej1WZmYlHjq1S3TCUZQf6BWpvfpdlAkf9QuZbrsRSVFZCu7zPlN
+         FKrW5YfjJfx29Q0f7Db8kjnp7dG3M744mqnfH5qPv36NPjtv0XyAezblMns5jp5TIknG
+         5Da1E1fGSmo0xLpQxs0q6HqnOqqWGkZAonKOjLnHEUDpN+qNv0NNhNA2rYXMM/mGvq/G
+         /t6Ljetm1J9ZCS0JQyWhmIQbyyu5lBJcaPNnw8kuAIoPDSLOLv4j0NvJKiCiAB0Nwn0q
+         UGDhQotJzibOrRb71zr+YAvRz8EEmxLYjEQGWuilvklv9Es/Y3g2b0SE3kRgKz3bhIBS
+         NwoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=cPDbWNZodJ7k3goNfV3xYa3nUC1Dh3AK2YMUVjHrF6w=;
-        b=lPpg7oOLOaNv8LGKc5/qDXJFs6/w+sCSXbHa0wAqvxVBmL1URa23hiW1+fjWVaxGkM
-         N9usFa6J8q6nBwJL6kKYa+OzY63ibEElxvSiqQmWCEx4LEs49iLZgwWhAq6jdVaZBlDe
-         uT3nQVmyFPR1I7P8i+OpiojZMxP+gzXmOmZ2+OzdQGcwT5Itk/s3s3aED2cyunAcFXOM
-         dU6ni+smcaslsJpNR06Gj34+4nOyq4sOlWDRW7I0DT3mZjX8MrpPI8xwYc0HCMqC6dD/
-         gW27TrYW4Ni/6j2tnlKlOsZ9iz2kOONji4E4i2m/Kz5Fhs37/wVVA3dIMmEG/xtUGfV9
-         wWgQ==
-X-Gm-Message-State: AKwxytdgcpRRiktgDNzkkw9zbfqecMgvVrIQt8xp0CP9Ep6ae4iy5LbM
-        Spok63zm4zH8UalLeWSwWkCF0ajnmZvQXsiv6i1fu1xMEngf/KVIRFVmL81fl2gq9ZT/fxiDDC1
-        WYAPDmhXH/636G6vszdc1StZsKOOQ7ArFZ80+dxqadKsMUTAaR0hvWNfqkQ==
-X-Google-Smtp-Source: AH8x2252tRAIkWeslH4+TSHOgUKunPGcpnbw/lZSH27FVralMjNih0E2YHnzeo66tVADI02RnFIySUqJ9ak=
+        bh=HbPvmS+GugQ6/aSZPYq5/KCrJiRywF+JhnuD+Gb/CYU=;
+        b=KkbU05fXph0oXJ9gmEZVUTVto31jsExI/4gdWC7suukV3k716SEZgh4dG/xUhQT3mt
+         lZF0ywZHM+40C3vAmYu1ob/MpiKDJZEjPZDHAQ64oIy7PfwDXTXoCDpaVMvzv2tQCOYp
+         HvtOpDGYqEb0rZN71N3lbxMtQ+oGBN6vUWxofI1TNTO9xzZCOESQJoh4bua9d0hXPc8g
+         mLDfPE3EtZxW9F1SLICEkmvFEofzCNWKna/UwCcvcRCW+i+bwmmuf6kCRps1fwQbynwN
+         ds1stOTXvKu9vhxEgXlEALlo7p8lvYkwPw9LV7qmYUx3mRjlbtgZ3SYi1Adp0B7J51jt
+         qm/w==
+X-Gm-Message-State: AKwxytcl+7bZdaXOWAcgDB3juzx/sdBieFK6Lr3oz6zhT65Tq0DVA/ZG
+        pxTs6xHr3PvVgfG/Dml2lKVUlMrdHGL359x+8Yb6azbh3q+PTLxPMtjQYbzyg8zA6dbakx5/mbQ
+        qCkFFIqr9kq3WkXsE+kPGmEi7LEHuxq8I/GOYHnSiDXOqJ7SiLw4EdF+O4g==
+X-Google-Smtp-Source: AH8x224X5YdjN9n6E2757Tvk/sy4c7R1kd4i7SQpXAUO0iLuZiYhf70viJpUbxRF8QiKj7NA51QrUpad3VQ=
 MIME-Version: 1.0
-X-Received: by 10.176.80.54 with SMTP id b51mr12757756uaa.125.1517265507818;
- Mon, 29 Jan 2018 14:38:27 -0800 (PST)
-Date:   Mon, 29 Jan 2018 14:37:11 -0800
+X-Received: by 10.157.61.245 with SMTP id l108mr17039730otc.38.1517265496257;
+ Mon, 29 Jan 2018 14:38:16 -0800 (PST)
+Date:   Mon, 29 Jan 2018 14:37:06 -0800
 In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-Message-Id: <20180129223728.30569-21-bmwill@google.com>
+Message-Id: <20180129223728.30569-16-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH 20/37] http: rename 'new' variables
+Subject: [PATCH 15/37] commit: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, avarab@gmail.com,
@@ -68,33 +68,54 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- http.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ commit.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/http.c b/http.c
-index 597771271..41cfa41a9 100644
---- a/http.c
-+++ b/http.c
-@@ -1194,14 +1194,14 @@ static struct fill_chain *fill_cfg;
+diff --git a/commit.c b/commit.c
+index cd9ace105..874b6e510 100644
+--- a/commit.c
++++ b/commit.c
+@@ -861,19 +861,19 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+ 	commit_list_insert(in->item, &ret);
  
- void add_fill_function(void *data, int (*fill)(void *))
+ 	for (i = in->next; i; i = i->next) {
+-		struct commit_list *new = NULL, *end = NULL;
++		struct commit_list *new_commits = NULL, *end = NULL;
+ 
+ 		for (j = ret; j; j = j->next) {
+ 			struct commit_list *bases;
+ 			bases = get_merge_bases(i->item, j->item);
+-			if (!new)
+-				new = bases;
++			if (!new_commits)
++				new_commits = bases;
+ 			else
+ 				end->next = bases;
+ 			for (k = bases; k; k = k->next)
+ 				end = k;
+ 		}
+-		ret = new;
++		ret = new_commits;
+ 	}
+ 	return ret;
+ }
+@@ -1617,11 +1617,11 @@ struct commit *get_merge_parent(const char *name)
+ struct commit_list **commit_list_append(struct commit *commit,
+ 					struct commit_list **next)
  {
--	struct fill_chain *new = xmalloc(sizeof(*new));
-+	struct fill_chain *new_fill = xmalloc(sizeof(*new_fill));
- 	struct fill_chain **linkp = &fill_cfg;
--	new->data = data;
--	new->fill = fill;
+-	struct commit_list *new = xmalloc(sizeof(struct commit_list));
+-	new->item = commit;
+-	*next = new;
 -	new->next = NULL;
-+	new_fill->data = data;
-+	new_fill->fill = fill;
-+	new_fill->next = NULL;
- 	while (*linkp)
- 		linkp = &(*linkp)->next;
--	*linkp = new;
-+	*linkp = new_fill;
+-	return &new->next;
++	struct commit_list *new_commit = xmalloc(sizeof(struct commit_list));
++	new_commit->item = commit;
++	*next = new_commit;
++	new_commit->next = NULL;
++	return &new_commit->next;
  }
  
- void fill_active_slots(void)
+ const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
