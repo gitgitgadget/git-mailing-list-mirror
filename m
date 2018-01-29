@@ -2,189 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2C111F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 00:10:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A808E1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 01:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753077AbeA2AKb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 Jan 2018 19:10:31 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:46765 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752677AbeA2AKa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 Jan 2018 19:10:30 -0500
-Received: by mail-qt0-f196.google.com with SMTP id o35so10632061qtj.13
-        for <git@vger.kernel.org>; Sun, 28 Jan 2018 16:10:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=hMXcxyfEWHFiNgo/6A8eBDUY7nZDmnd9ggcYgd195/4=;
-        b=RWHelecJPIhiSXLflwXtMoOGaYDF+0j4LKxCcEYqdDLRUDZ0WrA0BnSTMm+rsuZAGq
-         ElDFSQHfZ83MQ2ZpcP0bZ8JrcuAgNnAZ1OE4T4NmsiVseI3h5J7AaaBbAnZeajXyn33d
-         79a3Z83LtjpAa5Wl5ypJOFu1JdLAobfWzmOUFjGYn+3Klex360YdvyRCtgRxIRS+clYU
-         tasgsAMTyipcVLvsUzKPGKe6zAe7cUG+CciXmdTVLrQvm2VADuNZqXTDa8yisje8dqg7
-         Ul+MYYkogZ5k6Nu+cexcjeNs1si30rNnlv9NYnzI3lrnwTs42Kg+Oz1Cw+VJmriVoP8x
-         6hpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=hMXcxyfEWHFiNgo/6A8eBDUY7nZDmnd9ggcYgd195/4=;
-        b=Bn5sGLj4pLARsNATKoYwx56eL9TIQl0QnFTz1Y1mJh0DoZ0np4DDZWXijnFN2S/fPC
-         0jb1Hr/OMWfT/IexHxg45l1IJLLL3LSOWcs9Dl+3928XrzfvgMvLLx9cHbYcIQeMRELW
-         tVSlioymzt4hNTQM7oHvNOZ/RELbRct1nO1FSZwu5DTZeQOvu/ncV0Eyzhj+dZND2jSe
-         tIT+m3Y2cLs4659fL9O1JHXON6zFG9mYNeL4Zm/z8mO9wuZaix1NBzLlflV2VypwEnP3
-         zJ2BWqaJBEHs8u3Ku8LF6dwCLFzqd4bZ34VUKiGVJ9blKnPiPQeRo3HEb7OBjJNHiXHz
-         A0QA==
-X-Gm-Message-State: AKwxytfPLfVpAmKKkhvm+x4or7vp9+aBlonMAbvQbC9EgRl0AevdAgPC
-        85TjYR7BLh8hToaGtLS/6KITCQiqWwtHkpLWRTwanA==
-X-Google-Smtp-Source: AH8x2264u2/bZlCDGG3HlIR6KQYaQ+P2vt7prynInA9uL9jkEN42T95Af9DxQAFdsmS+wYHqpCqdXz1mEPtQydXRd6E=
-X-Received: by 10.200.27.91 with SMTP id p27mr35608377qtk.254.1517184629716;
- Sun, 28 Jan 2018 16:10:29 -0800 (PST)
+        id S932335AbeA2Bvp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 Jan 2018 20:51:45 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58494 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932121AbeA2Bvo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 Jan 2018 20:51:44 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 46AE260431
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 01:51:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1517190701;
+        bh=NCK2r8pgMn2S+YrWPXEQhHEmgwhvAwr0+0Eyx0oVC2g=;
+        h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
+         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+        b=hVaDg5fpjmMekRtJ8DMVBqC87VLEQzTK8fn5HnZsPkKS0ySYo/+H6yDCtnWUAN0by
+         hM9mZXGIjEbUUp27D2L1IXlUNFn1wRMG03yBVkn011qNZMKeLQ0JsTcEHUidnncKU8
+         a2TgXFNko8ej2gr+Prxe+7RxX7VoP0g0CMWrGtsVxZrSHqG5DEfzmGbBpZD5gTKE9d
+         URV14d2ZZARkXi7LASAl6D+3Y3Fpl2wl3uT7TTXeo5gN5ZK91mocdm2dha0uFv6d+x
+         QCVnWnW7a1+Lms5cMRNLay1V8CZOmGnDD9aKbHiXzHWMcQCGhF//NC8aCEmgy4zcqc
+         NxG1vaPXeXmI/xmhMC+uWY9lZB5D9CRWgXcO9DWsQtE4ekydPKUsET06kazsYE7Iee
+         xfkzpAF/lFEeMqH0q12qjer5Bdgpgx+giyMuargDVfMYSzBqhWUs6rQUw/IkgQCqNX
+         OSunSKaGr112bkZDW1A1TJMoo1kX/sjqdL23BrHgdQ77Np9FlnT
+Date:   Mon, 29 Jan 2018 01:51:34 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Subject: t9128 failing randomly with svn 1.9?
+Message-ID: <20180129015134.GN431130@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Sun, 28 Jan 2018 16:10:29 -0800 (PST)
-In-Reply-To: <1d98ac06-7cfd-c006-d3c5-9dcb385a17d8@lucaswerkmeister.de>
-References: <xmqqtvvbds42.fsf@gitster.mtv.corp.google.com> <20180127183132.19724-1-mail@lucaswerkmeister.de>
- <CAPig+cTetjQ9LSH68Fe5OTcj9TwQ9GSbGzdrjzHOhTAVFvrPxw@mail.gmail.com> <1d98ac06-7cfd-c006-d3c5-9dcb385a17d8@lucaswerkmeister.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 28 Jan 2018 19:10:29 -0500
-X-Google-Sender-Auth: gWbbxAfkDkTuQxT7Y6-TYIJzI5s
-Message-ID: <CAPig+cR1VXtc-wZxv3mZGsbTAzmtPbhnRPtBX97-8Rm9b6rpHQ@mail.gmail.com>
-Subject: Re: [PATCH v2] daemon: add --send-log-to=(stderr|syslog|none)
-To:     Lucas Werkmeister <mail@lucaswerkmeister.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4Y142/9l9nQlBiaj"
+Content-Disposition: inline
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 28, 2018 at 5:58 PM, Lucas Werkmeister
-<mail@lucaswerkmeister.de> wrote:
-> On 28.01.2018 07:40, Eric Sunshine wrote:
->> On Sat, Jan 27, 2018 at 1:31 PM, Lucas Werkmeister
->> <mail@lucaswerkmeister.de> wrote:
->>> This makes it possible to use --inetd while still logging to standard
->>> error. --syslog is retained as an alias for --send-log-to=3Dsyslog. A m=
-ode
->>> to disable logging explicitly is also provided.
->>>
->>> The combination of --inetd with --send-log-to=3Dstderr is useful, for
->>> instance, when running `git daemon` as an instanced systemd service
->>> (with associated socket unit). In this case, log messages sent via
->>> syslog are received by the journal daemon, but run the risk of being
->>> processed at a time when the `git daemon` process has already exited
->>> (especially if the process was very short-lived, e.g. due to client
->>> error), so that the journal daemon can no longer read its cgroup and
->>> attach the message to the correct systemd unit (see systemd/systemd#291=
-3
->>> [1]). Logging to stderr instead can solve this problem, because systemd
->>> can connect stderr directly to the journal daemon, which then already
->>> knows which unit is associated with this stream.
->>
->> The purpose of this patch would be easier to fathom if the problem was
->> presented first (systemd race condition), followed by the solution
->> (ability to log to stderr even when using --inetd), followed finally
->> by incidental notes ("--syslog is retained as an alias..." and ability
->> to disable logging).
->>
->> Not sure, though, if it's worth a re-roll.
->
-> I didn=E2=80=99t want to sound like I was just scratching my own itch ;) =
-I hope
-> this option is useful for other use-cases as well?
 
-If the reader does not know that --inetd implies --syslog, then
+--4Y142/9l9nQlBiaj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    This makes it possible to use --inetd while still logging to
-    standard error.
+While running tests for my object_id part 11 series, I noticed a random
+segfault in git svn while running t9128.  I've reproduced this on a
+different machine as well, using both Subversion 1.9.5 and 1.9.7 (Debian
+stable and unstable).  It is reproducible on master.
 
-leads to a "Huh?" moment since it is not self-contained. Had it said
+When the test fails, it fails on the "git svn tag tag3" step, and I get
+the following:
 
-    Add new option --send-log-to=3D(stderr|syslog|none) which
-    allows the implied --syslog by --inetd to be overridden.
+Copying file:///home/bmc/checkouts/git/t/trash%20directory.t9128-git-svn-cm=
+d-branch/svnrepo/trunk at r2 to file:///home/bmc/checkouts/git/t/trash%20di=
+rectory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3...
+Found possible branch point: file:///home/bmc/checkouts/git/t/trash%20direc=
+tory.t9128-git-svn-cmd-branch/svnrepo/trunk =3D> file:///home/bmc/checkouts=
+/git/t/trash%20directory.t9128-git-svn-cmd-branch/svnrepo/tags/tag3, 2
+Found branch parent: (refs/remotes/origin/tags/tag3) 0604824a81a121ad05aaf8=
+caea65d8ca8f86c018
+Following parent with do_switch
+Successfully followed parent
+r7 =3D f8467f2cee3bcead03e84cb51cf44f467a87457d (refs/remotes/origin/tags/t=
+ag3)
+error: git-svn died of signal 11
 
-it would have provided enough information to understand the purpose of
-the patch at a glance. Talking about the systemd race-condition first
-would also have explained the patch's purpose, and since the proposed
-solution is general (not specific to your use-case), scratching an
-itch is not a point against it.
+Doing the following three times, I had two crashes.
 
-Anyhow, it's not that big of a deal, but it did give me a bit of a
-pause when reading the first paragraph since it's customary on this
-project to start by explaining the problem.
+(set -e; for i in $(seq 1 20); do (cd t && ./t9128-git-svn-cmd-branch.sh --=
+verbose); done)
 
->> I understand that Junio suggested the name --send-log-to=3D, but I
->> wonder if the more concise --log=3D would be an possibility.
->
-> --log sounds to me like it could also indicate *what* to log (e.=E2=80=AF=
-g. =E2=80=9Clog
-> verbosely=E2=80=9D or =E2=80=9Cdon=E2=80=99t log client IPs=E2=80=9D). Bu=
-t perhaps --log-to=3D ?
+I'm not really familiar with git svn or its internals, and I didn't see
+anything recently on the list about this.  Is this issue known?
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Perhaps we can take into consideration precedent by other (non-Git)
-daemon-like commands when naming this option. (None come to my mind
-immediately, but I'm sure they're out there.)
+--4Y142/9l9nQlBiaj
+Content-Type: application/pgp-signature; name="signature.asc"
 
->>>                 if (!strcmp(arg, "--inetd")) {
->>>                         inetd_mode =3D 1;
->>> -                       log_syslog =3D 1;
->>> +                       log_destination =3D LOG_TO_SYSLOG;
->>
->> Hmm, so an invocation "--inetd --send-log-to=3Dstderr" works as
->> expected, but "--send-log-to=3Dstderr --inetd" doesn't; output goes to
->> syslog despite the explicit request for stderr. Counterintuitive. This
->> should probably distinguish between 'log_destination' being unset and
->> set explicitly; if unset, then, and only then, have --inetd imply
->> syslog. Perhaps something like this:
->>
->>     static enum log_destination {
->>         LOG_TO_UNSET =3D -1
->>         LOG_TO_NONE,
->>         LOG_TO_STDERR,
->>         LOG_TO_SYSLOG,
->>     } log_destination =3D LOG_TO_UNSET;
->>
->>     if (!strcmp(arg, "--inetd")) {
->>         inetd_mode =3D 1;
->>         if (log_destination =3D=3D LOG_TO_UNSET)
->>             log_destination =3D LOG_TO_SYSLOG;
->>         ...
->>     }
->>     ...
->>     if (log_destination =3D=3D LOG_TO_UNSET)
->>         log_destination =3D LOG_TO_STDERR
->>
->
-> I=E2=80=99m not sure if that=E2=80=99s worth the extra complication=E2=80=
-=A6 some existing
-> options behave the same way already, e.=E2=80=AFg. in `git rebase --stat
-> --quiet`, the `--stat` is ignored.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
 
-I took "last one wins" into consideration when writing the above but
-was not convinced that it applies to this case since --inetd and
---send-log-to=3D have no obvious relation to one another (unlike, say,
---verbose and --quiet or other similar combinations). Unless one reads
-the documentation very closely, output ending up in syslog despite
-"--send-log-to=3Dstderr --inetd" is just way too counterintuitive and
-may well lead to bug reports later on. Therefore, doing the additional
-work now to stave off such bug reports is likely worthwhile.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpufiUACgkQv1NdgR9S
+9ovDXw//W2CFe8TXjWOuDRJjLQc6EdSyYrfaN+0lrVw39w1v7VMFSrAfHxm+ht0t
+HQb6V/PkfNPcG39hu+8J6/+mJOxQjMMD26nwGQj3a2/8CaAyBms4EcR5LEdyaS5M
+jzlQQvY/RpAJbkEZNWBBIXQZfBsblSg8VFT88IqS6z/OiGFsMsDlKgYl+W1norBR
+bdZ9HfuoMjt9sSqnwLpqWVPHu4MSjHbRwCvN3sq0HN7mNFBXuP5QOLOqChfQ5Sod
+N4Nas6ICWroDdMRWreIITpPtI8EiZ0mYO0vpZkPTnuJnzgAtBTaWs87/DRZLwlYJ
+I20wIOxcJ3fcOXXk3dIroEIc5wyCKCrD91G9FZQfaCbNjP14YXJABsNSP1VewFJn
+0P91Urj4ZFegDA+C+vcpiUdxHC3AZKx9hwgKm3Ye+FVoNTBaM09gIJiAolgev60e
+PKBmTeshBFK4YojAK0sCqe9gTFQX0qNvVgQf0gtlJ3JOiMykTPrkq5yAbJj9Doe8
+kYLkt9He0Nnn6PStbyzqxPcB8EsQxCltu7sGP8rVHvfk2o7jk3zPbCq8xuYHDzKX
+RfSErVvF/qT8IMBAsFv/s/t5nSTSR/OkDrKeP8f2uLq8cFj4gPXiF2otZOhZhdph
+joW6QZpuVZbaBzolz7koAGXM6yjwp1j6joLKMhSLHukGC4V4gQo=
+=Dphb
+-----END PGP SIGNATURE-----
 
->>> +                       }
->>> +                       else if (!strcmp(v, "stderr")) {
->>
->> Style: cuddle 'else' with the braces: } else if (...) {
->>
->
-> Is that a general rule? I couldn=E2=80=99t find anything about it in
-> CodingGuidelines and daemon.c seemed to use both styles about evenly, so
-> I wasn=E2=80=99t sure what to use.
-
-It's not stated explicitly in CodingGuidelines, but there is one
-example of cuddling 'else' with braces in the section talking about
-braces and 'if' statements.
+--4Y142/9l9nQlBiaj--
