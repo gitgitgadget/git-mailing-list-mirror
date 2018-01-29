@@ -2,108 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8577E1F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 18:43:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7939B1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 18:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751725AbeA2Snz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 13:43:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55388 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751700AbeA2Snu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 13:43:50 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBC47D656E;
-        Mon, 29 Jan 2018 13:43:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=XWJGDKgCHY3YVPS7QZ1IYWKjKa0=; b=qsszS+D
-        d3DwIdn4dn0iNzBUSQaGrS0xlOTxI/ECk+Dj5l4LY0qHtuC5BFiurqnhHEQ5QD71
-        t/CbTratBT/8zIfFuV43dM4eGrk9XWMOkguMIkPZ77Q6h4rCB1rPg9mxsMmFsTo7
-        Emnsgq8tppH4sy8nPvDOhFKOK/fE2f1A62nA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=yL6PWPRHOK/TGpSc8eArLbo3NT5kgn3U1
-        7HYS5rbLZLnaKNJthQytTfwEoF0ZnA5RHYPc6ZAUhAitkG3Ev0/5uhXtKlJNPgzt
-        /hrULMfwn9kYF05G1ILTY9yUMKN3wVgKgyMGkWzS2q/6+QOcOrKFC6lBJrX3z1hF
-        VHB/mHzFZ0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E3F9AD656D;
-        Mon, 29 Jan 2018 13:43:47 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5E14BD656C;
-        Mon, 29 Jan 2018 13:43:47 -0500 (EST)
-Date:   Mon, 29 Jan 2018 13:43:45 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: t9128 failing randomly with svn 1.9?
-Message-ID: <20180129184345.GI1427@zaya.teonanacatl.net>
-References: <20180129015134.GN431130@genre.crustytoothpaste.net>
- <20180129025812.GD1427@zaya.teonanacatl.net>
- <20180129120627.al2xvx4yhhvwn6ih@untitled>
+        id S1751350AbeA2SrP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 13:47:15 -0500
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:35516 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750959AbeA2SrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 13:47:14 -0500
+Received: by mail-wm0-f48.google.com with SMTP id r78so35742671wme.0
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 10:47:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:cc:content-transfer-encoding;
+        bh=fhfeO2d+jB5P+zshKGOnYLcQOWDOMaJFjKTfn8glxyQ=;
+        b=eZTcers7hwdfXc5QUI/HpGVU9q77Y5lPa/OcHWemxAvF2BqTKxNspRK8ttCTKfSh5P
+         9iR1QKfAXd3pGAUBsjmBlHgJJ6L5e3fpwDQSPCmm6mk6D8Xh3ruxpw2naEBRO9mdXw7P
+         4YEetz/VIeDTxSEYf1VlFrAv/UU0/+0TNOiw+ug7/pIe+xV5n2BuI2Z3atdaj5ucUhCb
+         Tw1CGD5OqSp42VdKkCdYOOeYD8RlINmpEKyMYIL+i/oivFYYNcS6I6DE87i45qa9N/jx
+         1EcWa5DwvQ0upv4Aes29etUO7mM4Rd0Ip55/s0/7/UzoiMQdxc9MGY99ZHTGIZRUKWHb
+         2eNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:cc:content-transfer-encoding;
+        bh=fhfeO2d+jB5P+zshKGOnYLcQOWDOMaJFjKTfn8glxyQ=;
+        b=W49fmv8jxTTL2YBJ0kByQfZA4ns69FGPVDL1RBjlG3qiswYRGcwCBPRPhcpafKcG+f
+         KiDlXncj8EccNZUckYTYcgk4ZRogBEaDXj3N12gzboaCVK6Z9hsIqmNEKiu5IkIHrCv2
+         pY8XAlvt0YRvoFNPiiyX/5rUqCUEjbfb4F6bz1ewpgK8RxKo6EKY8jhxgkJvt9cKS3hl
+         4ugyuGOzpHc6INs6Nwz5CNpeVMbXAm0KUwZWk2ck3i7c6gciq8neEMk2xlOVqdlWZvgn
+         TpUUBWyQmRv9k231WgfxXInxSnXDLvVbVzNdCoSSRSV0gsZfQdqcLJ//YRFyYRCT6+ST
+         DEbw==
+X-Gm-Message-State: AKwxytcLPU/YjhW5QIIFnwymugbOY2iE4axkdw1XTh9tKF1BIVCF3TzF
+        1nfQriEVCyVnf0VOVOSAoiH1PYjmCV/FfO3AXPa6Hnlg
+X-Google-Smtp-Source: AH8x224Nw6B+UGRuMfY1o34MNReik60uQauYdpHokbSNkqjrOCJzq/C5OA10QjNmMB6XFV6vMNnR2Fx1mDo7y5vIt1I=
+X-Received: by 10.28.0.207 with SMTP id 198mr18641400wma.115.1517251633335;
+ Mon, 29 Jan 2018 10:47:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180129120627.al2xvx4yhhvwn6ih@untitled>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-X-Pobox-Relay-ID: 572D0AB8-0524-11E8-9711-D3940C78B957-09356542!pb-smtp2.pobox.com
+Received: by 10.223.195.61 with HTTP; Mon, 29 Jan 2018 10:46:42 -0800 (PST)
+In-Reply-To: <CABYAQkRPF1XB1LgMQXA1C9qD8buBedhKPWYRQ3v-WEzgF=sALw@mail.gmail.com>
+References: <nycvar.QRO.7.76.6.1801291031040.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87bmhcsnhv.fsf@evledraar.booking.com> <20180129172452.GB4185@sigill.intra.peff.net>
+ <CABYAQkRPF1XB1LgMQXA1C9qD8buBedhKPWYRQ3v-WEzgF=sALw@mail.gmail.com>
+From:   Scott Gasch <scott@gasch.org>
+Date:   Mon, 29 Jan 2018 10:46:42 -0800
+X-Google-Sender-Auth: WytZy5BdFqtLSKsrK9_d8FZDqBE
+Message-ID: <CABYAQkQektHS0haxoOezFVr8KnCuAu=3CnWP2pB78528EOYfFw@mail.gmail.com>
+Subject: Re: Shawn Pearce has died
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong wrote:
-> Todd Zullinger <tmz@pobox.com> wrote:
-> Just a guess, but it might be related to destruction order.
-> Running t9128 on a 32-bit Pentium-M, it took me 39 tries to
-> fail.
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 76a75d0b3d..2ba14269bb 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1200,6 +1200,11 @@ sub cmd_branch {
->  	$ctx->copy($src, $rev, $dst)
->  		unless $_dry_run;
->  
-> +	# Release resources held by ctx before creating another SVN::Ra
-> +	# so destruction is orderly.  This seems necessary Subversion 1.9.5
-> +	# to avoid segfaults.
-> +	$ctx = undef;
-> +
->  	$gs->fetch_all;
->  }
->  
-> I'll be looping t9128, t9141 and t9167 with that for a few
-> hours or day.  Will report back sooner if it fails.
-> I'm on an ancient 32-bit system, I guess you guys encountered
-> it on 64-bit machines?
+I guess your email server doesn't like HTML messages... here's the plain te=
+xt:
 
-Yeah.  I saw it on numerous architectures, x86 and x86_64.
-I believe I saw it on aarch64 and ppc as well, but I don't
-have build logs at hand to confirm.
+Chris, also on this email thread, is working on putting together some
+kind of video of Shawn's colleagues at Google talking about working
+with him.  Part of the thought is that his boys are going to want to
+know what there dad was like at some point later in their lives and it
+would be nice to capture the thoughts of the people who knew Shawn.
 
-I'm running the tests with and without your patch as well.
-So far I've run t9128 300 times with the patch and no
-failures.  Without it, it's failed 3 times in only a few
-dozen runs.  That's promising.
+Chris: if people outside of Google wanted to include videos about what
+it was like knowing and working with Shawn, how could we do it?  Is
+there guidance (length?  format?)?  Deliver as an attachment over
+email to you?
 
-Thanks for poking this Eric, and Brian for bringing it up.
-I had intended to look at it again and mention it,
-eventually. :)
+Thx,
+Scott
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-I figure that if God actually does exist, He's big enough to
-understand an honest difference of opinion.
-    -- Isaac Asimov
-
+On Mon, Jan 29, 2018 at 10:39 AM, Scott Gasch <scott@gasch.org> wrote:
+> Chris, also on this email thread, is working on putting together some kin=
+d
+> of video of Shawn's colleagues at Google talking about working with him.
+> Part of the thought is that his boys are going to want to know what there
+> dad was like at some point later in their lives and it would be nice to
+> capture the thoughts of the people who knew Shawn.
+>
+> Chris: if people outside of Google wanted to include videos about what it
+> was like knowing and working with Shawn, how could we do it?  Is there
+> guidance (length?  format?)?  Deliver as an attachment over email to you?
+>
+> Thx,
+> Scott
+>
+>
+>
+>
+> On Mon, Jan 29, 2018 at 9:24 AM, Jeff King <peff@peff.net> wrote:
+>>
+>> On Mon, Jan 29, 2018 at 04:17:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>
+>> > They don't want any flowers sent over to them, but I wonder if we
+>> > couldn't make some sort of tribute to Shawn at the upcoming developer
+>> > meeting in Barcelona (and find some way to have remote people contribu=
+te
+>> > to it).
+>> >
+>> > E.g. a short video/audio of different people in the dev community
+>> > sharing some story about Shawn, or a written list of memories
+>> > contributed by and signed by various people.
+>> >
+>> > I don't know what that would look like exactly, but I think it would b=
+e
+>> > a good thing for his family and especially for his children when they'=
+re
+>> > grown to remember him by, to know that their father contributed to the=
+se
+>> > software projects with people all over the world, and that all these
+>> > people appreciated his work and him personally.
+>>
+>> I like this direction (though like you, I'm not sure exactly what it
+>> should look like). I'm not sure what kind of video presence GitHub will
+>> have at the contrib summit, but I'll see about getting some interview
+>> footage there.
+>>
+>> Doing something written, though, may make it easier for remote people to
+>> collaborate.
+>>
+>> -Peff
+>
+>
