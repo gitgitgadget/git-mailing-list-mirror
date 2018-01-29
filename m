@@ -7,74 +7,98 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC5D21FAE2
-	for <e@80x24.org>; Mon, 29 Jan 2018 22:53:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01C9B1FAE2
+	for <e@80x24.org>; Mon, 29 Jan 2018 22:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbeA2Wxn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 17:53:43 -0500
-Received: from mout.gmx.net ([212.227.15.19]:51704 "EHLO mout.gmx.net"
+        id S1751875AbeA2Wyq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 17:54:46 -0500
+Received: from mout.gmx.net ([212.227.15.18]:60285 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751273AbeA2Wxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 17:53:42 -0500
+        id S1751529AbeA2Wyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 17:54:45 -0500
 Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.193.1]) by
- mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0LikE1-1fBmZh2C1l-00cw4e; Mon, 29 Jan 2018 23:53:36 +0100
-Date:   Mon, 29 Jan 2018 23:53:35 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
+ 0MTCDO-1eEH4S2ruI-00SBVB; Mon, 29 Jan 2018 23:54:38 +0100
+Date:   Mon, 29 Jan 2018 23:54:37 +0100 (STD)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 0/8] rebase -i: offer to recreate merge commits
-In-Reply-To: <xmqqwp08fhea.fsf@gitster.mtv.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1801292352290.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <xmqqwp08fhea.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+cc:     Stefan Beller <stefanbeller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 01/10] git-rebase--interactive: clarify arguments
+In-Reply-To: <cover.1517266437.git.johannes.schindelin@gmx.de>
+Message-ID: <474e71f85c613d3c5fe38acd505fa23960afd36b.1517266437.git.johannes.schindelin@gmx.de>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <cover.1517266437.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:o0cW/pTlrza+fqka2lQVKcpIOTR3cktej5r0Jb7jU31LwKb5TRi
- P6b7Mnj9Em4oDLKo3no2ayIHHQCIbgGZYZyV0fAmnZedWgQWiDmir5dexV7Ee7lMQxp/Dm0
- GQmyqi0+y/CzA76ae9pMvYDBQ0qiH5DpgO/Gfz/BxX3DlOCUpQOJwoGGbqpiO7nOiDWtWLr
- GRqo4A7NbwOgLPz6q4eAg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Y0x/ZbgZdkE=:vSJkPVDXssZF5ceHLyWvoi
- DSMXbgKJKzuTGYT48g/CmtjGuS8OXCUKY/vrsl0msWW6RQLVdADHcUdLE2UtcgsvzxKtNJEAT
- u87JrFnuU/voTH6OvuQYOE1tb63+MIiBUxt5m/yLoQFRCnCtS57vShKxZBCaEZJweW6ehmE1Z
- hRGD9aO1H4HIibCfAO2niuymMEEDSpPwOMb4VE68P/Ezn961gFCBIi+/ePxvjYV5nCnmIwHTC
- zBXYYnR8y5EQQVdyn90Vq6mnGRje7OLgaiV+VV6w73b54N0ntFylZtHuJd8gKWWlsC/XNb5v5
- vYLF5BHQiFtIcnUVHzaqD6NJ3955sU9NZlH9gcBdblxE0Z732d6LXaYyJ3naeWmy3tu5hsK5Z
- hKT0u0W5rIthgqyJMZfurRGtocgNNsozjl9m6Ac/M7Zxi585/VFVB5AuR7hFyCBAJPPoLATkF
- mkwf+szC/s9quje19LrSbVRB4c4vNR8f/Ny5w8D2gBZZRvdBZ/oC+vP5SO3lSHUg6nEB0sJ5z
- 0LHeAqAVTdeLOltv+KldTQb5f4H3dNOwRELb9FZn/C+0UpXPNaIp+66k67Tww+FTAUd3hMbHU
- VfLsHVMh+YFsMjiWzGtDndIOMqQeXHynzKhJHtjOHLHYIX9UbjocNVl/y15fhh9c+VpjFiLiS
- mnkwAFKKHYaaGQgjysNvF4UPZ5+85s4+3stUjJgmBdblOapnHoju/HCkTtWyNV8vBA4r5kun8
- VbxgrUsh+R/bxjCkIPwC1tJWTGTLH8WJUv7pL7WnKmo1QAeJYtWlgOEJW5CL4dfQkrLb5MH5N
- S8d7xY/aq9H1RFw2WIYiTW+MNR4NUtOe69J0t2Ef1Tf2AKsZflUYkpJ5KWwU0brTMMts3My
+X-Provags-ID: V03:K0:J8vvjHSkatc1iyfKQpsp8b9sq5Qu1aUSbBPfFJhWpWeQOK9iqaH
+ UmEYSs5JsxL49B8laqegVJASXj5i0Rpop25P3pasDObXb6GZ4EJvm2ukFNMii6wySVf4e0a
+ bdzfYqlA+jt703+eqS5H09u+jbpLV9jM3Vvz8ovgI/0zD8DNQxZArYNGgZs4zmaO6MvRnkV
+ OQ3ZmwC2CLANbHtP3gSRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JeK3Dz3QpnU=:e+jNljtGgh7EM1cdnsPMF3
+ eVo+fGx7SbK/GgsImGw0OoTQpp7Mbn8bDmZ8CUly6JcqcmPn5ym5EO8S5i9eHFDOeCeIc4OXc
+ yZ1sNsyiwriCbisIKYRyUQK4qls2LQbOZW8xYzp9s6nI6DWIMuacujYXWaMl9/smwHH56Ydkl
+ Cw0hWjz+uEK+4tMmamRFU1QM1mJzonwlLN6W+C2O0/zwDuxQZLEeSnr0ABYu2oq509utick8j
+ g+Q1PAjegxjFqJompVAksBSv4sn7kWgE0ex5GEXoaApJtNUXlU5yeW6RdjhKfIpp+9LlqpBKt
+ wDpfx4tMN2EhwXQrMgd3RCr9dATN5x241yW8fbtfcoeWzGMcygZT9Ag1IneNuH00OUjBGBu2k
+ 4fNVKWOuxa3NElJeNaeufejLCVkR/PKjownFrVufTKNqED13Gh4tfesGmr4xqkkw0X0b2OKGo
+ BptMqmr1eYcW5JmuD85bjsGZM+BS+BuksBDtQDPsyBz647SUak/GNOraAXyvNkGxGg+EbxCuM
+ NJfJ57ubGI5ECkLdHHYiEM50T7CgPBefvXqbJAGNKil8PM6uYgPW+g+otqm+IM+FjidMq7nze
+ /o0rYRyI9sGO8lz4ZQwLcFcWFGgJjGPEe5j3z3OVuAOgIztIdAP+O8JR139GkT50TIiqaXw/b
+ wkK+CskSvYY6A3BIgj/IwURhlhW9fBaspK2cmre/tBsTyz3+/0fWUg2Pi9Es/kze88/KqBLr9
+ g/rO4FlcJ02pjO4UT2TwwD7atXJPGaldrTHhLqlLsRfWSddoVvj3AMHDtlB7mgPOa9PqwtzuU
+ GmZogajAa+7zvE3vFWq+2xeIaeg/A8VedZveQywODGl3oFzPCTOJWPtP1r0CbabOEvSEVsI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Stefan Beller <stefanbeller@gmail.com>
 
-On Tue, 23 Jan 2018, Junio C Hamano wrote:
+Up to now each command took a commit as its first argument and ignored
+the rest of the line (usually the subject of the commit)
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > My original attempt was --preserve-merges, but that design was so
-> > limited that I did not even enable it in interactive mode.
-> > ...
-> > There are more patches in the pipeline, based on this patch series, but
-> > left for later in the interest of reviewable patch series: one mini
-> > series to use the sequencer even for `git rebase -i --root`, and another
-> > one to add support for octopus merges to --recreate-merges.
-> 
-> I left comments on a handful of them, but I do not think any of them
-> spotted a grave design issue to be a show stopper.  Overall, the
-> series was quite a pleasant read, even with those minor nits and
-> rooms for improvements.
+Now that we are about to introduce commands that take different
+arguments, clarify each command by giving the argument list.
 
-I objected to a couple obviously problematic suggestions, and I
-implemented all others (even those to which I did not respond
-specifically).
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-rebase--interactive.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index d47bd29593a..fcedece1860 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -155,13 +155,13 @@ reschedule_last_action () {
+ append_todo_help () {
+ 	gettext "
+ Commands:
+-p, pick = use commit
+-r, reword = use commit, but edit the commit message
+-e, edit = use commit, but stop for amending
+-s, squash = use commit, but meld into previous commit
+-f, fixup = like \"squash\", but discard this commit's log message
+-x, exec = run command (the rest of the line) using shell
+-d, drop = remove commit
++p, pick <commit> = use commit
++r, reword <commit> = use commit, but edit the commit message
++e, edit <commit> = use commit, but stop for amending
++s, squash <commit> = use commit, but meld into previous commit
++f, fixup <commit> = like \"squash\", but discard this commit's log message
++x, exec <commit> = run command (the rest of the line) using shell
++d, drop <commit> = remove commit
+ 
+ These lines can be re-ordered; they are executed from top to bottom.
+ " | git stripspace --comment-lines >>"$todo"
+-- 
+2.16.1.windows.1
+
+
