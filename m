@@ -2,235 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C0F81F404
-	for <e@80x24.org>; Mon, 29 Jan 2018 16:48:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AECCE1F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 17:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbeA2Qsd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 11:48:33 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:38672 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750959AbeA2Qsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 11:48:32 -0500
-Received: by mail-wm0-f53.google.com with SMTP id 141so34825604wme.3
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 08:48:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rowanthorpe.com; s=base;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=EZdFhXY7o85XohXSaQfpMuOtYSFYs+ikGyCqNk6khOc=;
-        b=ANZYrVwl5d9my7JhLQ7Zvf1y2cI0+kApWRzLkQ5DBMFpoxp6vZjmv+JGkRSQbNefLu
-         Y245k5ws2qCCHJjevvw+EDFXSyzdnm2HSHR7AhmbbmFVm0vwBMYqsg3RhElH6fUXpwN/
-         lHorhl47/j9dQpFGIF3ZjEEkxo1WUHj5AIQtw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EZdFhXY7o85XohXSaQfpMuOtYSFYs+ikGyCqNk6khOc=;
-        b=B5SFxhPB0aIRC52d2WJPmgvZ5myhCB7mX/xBUojkm3+7q9OdZW4CmZ1yuFwLBJIMHJ
-         DlTEAkK4PBf8JMPpqgq4qnP3yxDzNVxzlSopmjOF4vb0EbIr9sJIBl0FVhWLJGsyIrz6
-         hvMDFs86+zzWa1RWTC9l5BN0kCa+7l0IKEyZe/TZLi6hyg9LfLql6ClzNcuiv5LqSlWz
-         TrFdGJ278CCa3LqPCyJyJybKSjDfAPneHGkfteNxbonPfRZxZVf7xlY0hFsD3AewEC0+
-         ZvS67nt5g4HrF3ltE+AtKd1JzHA+K7/Ha2wFfzLZzB5DA1TmTs5vL4ILRb3u93HT0LGx
-         ilMQ==
-X-Gm-Message-State: AKwxytdp+iBoa+B4mDjAfu48nzG+/rTnIUyLlSZv09uy2pPWI8H3QgXa
-        lhSWaRy/68K6j26h2VW3vvX6CFTYSD8v6ADEqWwrNn4KLEQ=
-X-Google-Smtp-Source: AH8x226ct/WuF15JaFiMKlfB+/BOF9HhxBjly1BbAzskgFI+ggmsu3IGy3IG1+ACafCgAOlblTs19aIz6EZoAZcXUlY=
-X-Received: by 10.80.230.148 with SMTP id z20mr45792009edm.61.1517244511071;
- Mon, 29 Jan 2018 08:48:31 -0800 (PST)
+        id S1751417AbeA2RDD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 12:03:03 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54412 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751262AbeA2RDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 12:03:02 -0500
+Received: from [192.168.0.129] ([37.201.193.1]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MA91t-1eUyQy2xkf-00BLFm; Mon, 29
+ Jan 2018 18:02:57 +0100
+Date:   Mon, 29 Jan 2018 18:02:56 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Jacob Keller <jacob.keller@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH 9/8] [DO NOT APPLY, but squash?] git-rebase--interactive:
+ clarify arguments
+In-Reply-To: <CA+P7+xoO4twSgYVNJ4WaTj80WHS_ViEOBOEVST1nX9UzRA4JxQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801291802400.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <20180118183618.39853-1-sbeller@google.com> <20180118183618.39853-2-sbeller@google.com> <nycvar.QRO.7.76.6.1801182233480.31@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <xmqqinbxpp5m.fsf@gitster.mtv.corp.google.com>
+ <CA+P7+xoO4twSgYVNJ4WaTj80WHS_ViEOBOEVST1nX9UzRA4JxQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.80.176.69 with HTTP; Mon, 29 Jan 2018 08:47:50 -0800 (PST)
-X-Originating-IP: [79.166.136.209]
-From:   Rowan Thorpe <rowan@rowanthorpe.com>
-Date:   Mon, 29 Jan 2018 18:47:50 +0200
-Message-ID: <CACgDUr6XG+dZ+GJcf9+11Edf=q-=QLSkmgpGf=XmondaLaescA@mail.gmail.com>
-Subject: "git fast-import" crashes parsing output from "fossil export --git"
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:nyIvVbeMc4aAZVky6DB0sMcM5xtknQkp3tF1IQqZZIJAhTmU15i
+ pLUOpksxP8HUZbH2qJMR8uuz79AuBNDGLkfZouCheuKXCc47SqoKU5cPG6TKe6Qp4zhAPRz
+ HOtUiwf7WLeIaN3yPq89fFOTeZ0OIgF0npFshPlumWkRQ/awbN+/JLVEAM3OA8jfsmNxjug
+ TjfLy8xXvZ1BoTOjLY5rg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KtilAnyoJhY=:Na2SLx+9wRTwW2CG2ebdDx
+ ECgMsjvnQI/jvbFPXaxN+7NHpxj0F5/WXN+m5gLFkeV20IBUVWYHrOM1SoW7MwiaBKIpqk+W/
+ II6mSoO/qYXiHQqLpGuy0UK2Y3zQT86MTxAZEonCnStTY3EaCWDue54nMzYeCCRQ5BySQXHUR
+ 6+ViX0BGZKOD9thZbm9S2fKU5qH9KVa2y8DWAz+nn5f2NvpkLdAqJbyUPzYWnkhDx2gDSYj0Y
+ piJQCugyrZQsBV6O6WCfxLwcV6F2jhbZ44IUy8SH5a3NP42skVVjyHZdgyA5FFMb4T/ldJ+Dd
+ nRsyLjxL5GvUIDP/oCOsl/P8Qx6y+Rfpiv0jdt/34aQqSDspl2Af0FJh2vx3gVRr1X/1b1s8g
+ 3cBOL805qOiR2klHoshuMw2MD5ZsXUDTlvklI6anoBul3BxG1+5GR+deEP1d6qIkH4XPrFNGT
+ 0eole0MvYAQECaeHE18yY3jK1xaaxDLDdAxPIGejihetOT1/HsRimmQlhB1IF5AuBtKU5Ql2M
+ f3iv7dGXHD7FmCYFYRlWfz4LXxg8JBhozFwVjTOQMbRxxcejHdkaKP3OJE6yi7rBrNd+5QtLN
+ ygWiXGTA1dtOUWIKZwOp9YoXJdsHhGpfhs6jdBF+a94Lq0hytmUydcoqxKxnrLztHZtLFrFtT
+ +5gLpDl/ohD4yoNFfaxxl80iGoho5RJ8KYdpI0qsEtp2+uHaGs04CfpTO1wqF2Apj2BO4wwKs
+ 7eAmBzgRC9e/+ENtiWzOjj4UtFvV3vdWOfh24o9Z7eCRGg5oeFYgHbs6bjSPd3VipNogqPM95
+ S4rK5YVfQmlR/RpQLkS21hAo0gV0WWJXrZhBwJuqOEqJGDF/viYn+X/TerykiVZwRM7cd25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git fast-import" fails while trying to import the latest "Fossil"
-fossil-sources (it dog-foods its own source-code). Namely, the below
-pasted commands caused the crash report below them (I've trimmed
-irrelevant noise from the report for brevity). One of the tests
-included in Fossil uses example-files to test its handling of
-filenames with special characters - in this case an embedded newline
-in "abc[NEWLINE]def.txt" - and "git fast-import" causes the second
-part of that filename (post-newline) to spill over as the "command" on
-the next line of its input when transforming the "fossil export"
-output into usable input. Considering git can handle such filenames, I
-guess "git fast-import" not handling them counts as a bug - unless a
-design-decision was made to not be as rigorous for the sake of
-simplicity in the import protocol? Or is "fossil export" perhaps
-outputting the filename incorrectly for the "fast-import" protocol
-(maybe it needs some kind of quoting)?
+Hi,
 
-* Commands which cause the crash:
-----8<----
-fossil clone https://www.fossil-scm.org/xfer fossil.fossil
-git init fossil-git
-cd fossil-git
-fossil export --git ../fossil.fossil | git fast-import
-----8<----
+On Sat, 20 Jan 2018, Jacob Keller wrote:
 
-* The part of "fossil export" output which breaks "git fast-import":
-----8<----
-...
+> On Fri, Jan 19, 2018 at 12:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >
+> >> Good idea! I would rather do it as an introductory patch (that only
+> >> converts the existing list).
+> >>
+> >> As to `merge`: it is a bit more complicated ;-)
+> >>
+> >>       m, merge <original-merge-commit> ( <label> | "<label>..." ) [<oneline>]
+> >>               create a merge commit using the original merge commit's
+> >>               message (or the oneline, if "-" is given). Use a quoted
+> >>               list of commits to be merged for octopus merges.
+> >
+> > Is it just the message that is being reused?
+> >
+> > Aren't the trees of the original commit and its parents participate
+> > in creating the tree of the recreated merge?  One way to preserve an
+> > originally evil merge is to notice how it was made by taking the
+> > difference between the result of mechanical merge of original merge
+> > parents and the original merge result, and carry it forward when
+> > recreating the merge across new parents.  Just being curious.
+> >
+> 
+> It looks like currently that only the commit is kept, with no attempt
+> to recreate evil merges.
 
-commit refs/heads/test-ticket-d17d6e5b17
-mark :26782
-committer jan.nijtmans <jan.nijtmans> 1353531216 +0000
-data 82
-Just commit some weird filenames, even one with a newline in it, to
-test the code.
-from :26779
-M 100644 :427 :abc
-M 100644 :10049 abc
-def.txt
-M 100644 :427 str"i"ng.h
-M 100644 :427 str[ing.txt
-M 100644 :427 xyz<5.x
+Yep. I even documented that somewhere ;-)
 
-...
-----8<----
-
-Crash report [trimmed]:
-----8<----
-fast-import crash report:
-    fast-import process: 23836
-    parent process     : 23835
-    at 2018-01-29 15:12:07 +0000
-
-fatal: Unsupported command: def.txt
-
-Most Recent Commands Before Crash
----------------------------------
-  M 100644 :10003 src/tkt.c
-  M 100644 :9992 src/update.c
-  M 100644 :9838 src/wiki.c
-  M 100644 :9986 src/wikiformat.c
-  M 100644 :9995 src/xfer.c
-  M 100644 :10007 src/th_main.c
-
-  commit refs/heads/trunk
-  mark :26772
-  committer drh <drh> 1353449638 +0000
-  data 115
-  from :26770
-  M 100644 :9981 src/attach.c
-  M 100644 :10028 src/captcha.c
-  M 100644 :10012 src/info.c
-  M 100644 :9906 src/login.c
-  M 100644 :9965 src/style.c
-  M 100644 :10017 src/tkt.c
-  M 100644 :10025 src/wiki.c
-
-  commit refs/heads/th1Hooks
-  mark :26773
-  committer mistachkin <mistachkin> 1353449970 +0000
-  data 48
-  from :26771
-  M 100644 :10008 src/main.c
-
-  commit refs/heads/trunk
-  mark :26774
-  committer mistachkin <mistachkin> 1353450526 +0000
-  data 70
-  from :26772
-  M 100644 :9245 src/captcha.c
-  M 100644 :10030 src/login.c
-
-  commit refs/heads/th1Hooks
-  mark :26775
-  committer mistachkin <mistachkin> 1353452400 +0000
-  data 51
-  from :26773
-  M 100644 :10036 src/main.c
-
-  commit refs/heads/trunk
-  mark :26776
-  committer drh <drh> 1353459061 +0000
-  data 141
-  from :26774
-  M 100644 :10027 src/attach.c
-  M 100644 :9833 src/captcha.c
-  M 100644 :9904 src/setup.c
-  M 100644 :10031 src/style.c
-  M 100644 :10032 src/tkt.c
-  M 100644 :10033 src/wiki.c
-
-  commit refs/heads/trunk
-  mark :26777
-  committer drh <drh> 1353460136 +0000
-  data 56
-  from :26776
-  M 100644 :10037 src/captcha.c
-
-  commit refs/heads/ticket-d17d6e5b17
-  mark :26778
-  committer jan.nijtmans <jan.nijtmans> 1353489155 +0000
-  data 80
-  from :26767
-  M 100644 :10019 src/file.c
-  M 100644 :9846 src/rebuild.c
-  M 100644 :9677 src/vfile.c
-
-  commit refs/heads/ticket-d17d6e5b17
-  mark :26779
-  committer jan.nijtmans <jan.nijtmans> 1353489615 +0000
-  data 41
-  from :26778
-  M 100644 :10043 src/file.c
-
-  commit refs/heads/trunk
-  mark :26780
-  committer drh <drh> 1353510669 +0000
-  data 64
-  from :26777
-  M 100644 :9850 src/encode.c
-  M 100644 :10018 src/wikiformat.c
-
-  commit refs/heads/trunk
-  mark :26781
-  committer drh <drh> 1353515283 +0000
-  data 51
-  from :26780
-  M 100644 :10047 src/wikiformat.c
-
-  commit refs/heads/test-ticket-d17d6e5b17
-  mark :26782
-  committer jan.nijtmans <jan.nijtmans> 1353531216 +0000
-  data 82
-  from :26779
-  M 100644 :427 :abc
-  M 100644 :10049 abc
-* def.txt
-
-Active Branch LRU
------------------
-    active_branches = 5 cur, 5 max
-
-  pos  clock name
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1)   4672 refs/heads/test-ticket-d17d6e5b17
-   2)   4669 refs/heads/ticket-d17d6e5b17
-   3)   4654 refs/heads/dbReOpenConfigAttach
-   4)   4665 refs/heads/th1Hooks
-   5)   4671 refs/heads/trunk
-
-Inactive Branches
------------------
-...[loads of trimmed entries]...
-
-Marks
------
-...[loads of trimmed entries]...
-
--------------------
-END OF CRASH REPORT
-----8<----
+Ciao,
+Dscho
