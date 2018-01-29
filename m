@@ -2,102 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09B0B1FAE2
-	for <e@80x24.org>; Mon, 29 Jan 2018 23:16:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 527D91F404
+	for <e@80x24.org>; Mon, 29 Jan 2018 23:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbeA2XQz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 18:16:55 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:60394 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751363AbeA2XQy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 18:16:54 -0500
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 1FF601F404;
-        Mon, 29 Jan 2018 23:16:54 +0000 (UTC)
-Date:   Mon, 29 Jan 2018 23:16:53 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: [PATCH] git-svn: control destruction order to avoid segfault
-Message-ID: <20180129231653.GA22834@starla>
-References: <20180129015134.GN431130@genre.crustytoothpaste.net>
- <20180129025812.GD1427@zaya.teonanacatl.net>
- <20180129120627.al2xvx4yhhvwn6ih@untitled>
- <20180129184345.GI1427@zaya.teonanacatl.net>
+        id S1751439AbeA2XVr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 18:21:47 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:55456 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751357AbeA2XVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 18:21:46 -0500
+Received: by mail-wm0-f52.google.com with SMTP id 143so17532976wma.5
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 15:21:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=iS+jxGYg+hMchE4/MnmL62LCzyu/icH8DDCXrsbbX/g=;
+        b=OOyp3uWxBYf05e3p5s78wd99EetAdDTjUj0341jeiuO/RGstyS6t/CDyT3rPThNR65
+         3YRhvoDCpBdfjeaLBQNI1lL2KClX786gngzOI1Pto+Bk/0CVc1Ate5yfVh2g1wY9Fdui
+         ihIaUSZb4cmAas9wfo629Wz1nc/l/J0x2NWSc0vbSg0hUy36zwlTZoUA3uuajnmHiJpP
+         UMBt0H90cGXMRCbaxs2L57eGiiLKddZMHkoi5G53n+KPb62hv+UKWgzZju90xUdcv8EZ
+         L5CraPEv0uiVmIZuZxCA39AyrE5iHfC20bYGeq0Lxny4aFBYoJl+p/0DCqhG6aM3tgm9
+         jJdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=iS+jxGYg+hMchE4/MnmL62LCzyu/icH8DDCXrsbbX/g=;
+        b=EaAG9BpIlsXd5Gg5ZLK0SKT3AMMwyGVsz0RIKOcNamMvGETLCC234LWsGfqOJme1i1
+         UJh/Zx5+w3HMFAfKtZxB/POZyGJ2AszGnRTrHbWtEba66eeOM/mzltCUVml6A7XV/vgH
+         PSyO4rC75QaJ3qr3JDCgKPKvuIUVn6cxH1ViCUe3BXYWfceZJiNvcMKJfGSbn1sw5vKP
+         uHe7GjbGFXSQT9PMvFJF34OC23Qlo1IrQ9wZ9KyPJywquCAwzeTYGjzYLLmKyQ6GBvmW
+         Kz+Nh3NBzFTfr72AhBKUtjq5OU0pnAdPcuf3Egj5BcrafWor0onWXX/k4l40cwqhqyGW
+         puiA==
+X-Gm-Message-State: AKwxytdVhwvaMQ1NJ7ZB0SBycILpEKePTBkwYCQ/CZK62U2pk4xFbAY/
+        dU42oiyTZLW82uLFhOC9gyrBqc5L
+X-Google-Smtp-Source: AH8x226YUFxatEAUO1Q4x3qDa2bTiyuZ1cOl+Vq5gQX1+UyzUoEsYFM1jCFVyj1Je21EPTH6czHHtw==
+X-Received: by 10.80.134.44 with SMTP id o41mr48531073edo.243.1517268105062;
+        Mon, 29 Jan 2018 15:21:45 -0800 (PST)
+Received: from ?IPv6:2001:981:882f:1:b9c1:30fb:4a39:f18f? ([2001:981:882f:1:b9c1:30fb:4a39:f18f])
+        by smtp.gmail.com with ESMTPSA id g7sm6512893edf.76.2018.01.29.15.21.43
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jan 2018 15:21:44 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Ilija Pecelj <pecelj@gmail.com>
+Subject: Bug/comment
+Message-ID: <2df7b921-6fe2-d55f-4ef0-3f4f0bd69261@gmail.com>
+Date:   Tue, 30 Jan 2018 00:21:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180129184345.GI1427@zaya.teonanacatl.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> wrote:
-> I'm running the tests with and without your patch as well.
-> So far I've run t9128 300 times with the patch and no
-> failures.  Without it, it's failed 3 times in only a few
-> dozen runs.  That's promising.
+Though it might not be considered a bug 'per se' it is definitely wired. 
+Namely, when you type 'yes' word and hit enter in git bash for widnows, 
+the process enters infinite loop and just prints 'y' letter in new line. 
+It can be interrupted with CTRL+C. I'm not sure if it has any other 
+consequences other than printing letter 'y' in infinite loop.
 
-Thanks for confirming it works on other systems.
-Pull request and patch below:
 
-The following changes since commit 5be1f00a9a701532232f57958efab4be8c959a29:
+Cheers,
 
-  First batch after 2.16 (2018-01-23 13:21:10 -0800)
+Ilija
 
-are available in the Git repository at:
-
-  git://bogomips.org/git-svn.git svn-branch-segfault
-
-for you to fetch changes up to 2784b8d68faca823489949cbc69ead2f296cfc07:
-
-  git-svn: control destruction order to avoid segfault (2018-01-29 23:12:00 +0000)
-
-----------------------------------------------------------------
-Eric Wong (1):
-      git-svn: control destruction order to avoid segfault
-
- git-svn.perl | 5 +++++
- 1 file changed, 5 insertions(+)
-
----------8<---------
-Subject: [PATCH] git-svn: control destruction order to avoid segfault
-
-It seems necessary to control destruction ordering to avoid a
-segfault with SVN 1.9.5 when using "git svn branch".
-I've also reported the problem against libsvn-perl to Debian
-[Bug #888791], but releasing the SVN::Client instance can be
-beneficial anyways to save memory.
-
-ref: https://bugs.debian.org/888791
-Tested-by: Todd Zullinger <tmz@pobox.com>
-Reported-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Eric Wong <e@80x24.org>
----
- git-svn.perl | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 76a75d0b3d..a6b6c3e40c 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1200,6 +1200,11 @@ sub cmd_branch {
- 	$ctx->copy($src, $rev, $dst)
- 		unless $_dry_run;
- 
-+	# Release resources held by ctx before creating another SVN::Ra
-+	# so destruction is orderly.  This seems necessary with SVN 1.9.5
-+	# to avoid segfaults.
-+	$ctx = undef;
-+
- 	$gs->fetch_all;
- }
- 
--- 
-EW
