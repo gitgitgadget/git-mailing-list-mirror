@@ -7,160 +7,149 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32261F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 19:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 819BF1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 19:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752237AbeA3TPe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 14:15:34 -0500
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:45592 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752188AbeA3TPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 14:15:32 -0500
-Received: by mail-lf0-f44.google.com with SMTP id x196so16994045lfd.12
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 11:15:31 -0800 (PST)
+        id S1752329AbeA3T5P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 14:57:15 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:38939 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751753AbeA3T5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 14:57:14 -0500
+Received: by mail-wm0-f49.google.com with SMTP id b21so3534197wme.4
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 11:57:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=RuYZpIjBPES0u8yZqZRQiyrnBEH5uLbgPDKPhRd5ie8=;
-        b=Ca/W6mrrHXqo3Hj1RTmWzmijLapo+7NASVrOpwIudJCzDfX0CWr53x7g1iifse6EyW
-         w8giT2MiNSHaBz370b0YzyqnW5fbiJuClEalzzOpZs/syRd5VrTpyAoI28yxo+KgUS89
-         DEBulLicuA2a9N/MiXoXeC1xIwF5/qo/B+ErT3Rfyled+cuElbNEpfdwDGZ8h+7SDfj8
-         A/nvyzHJkGiw+4kWa+4Iwqz8ed1XAyBGN1HabyUkfKAqdgKJSCFm3gDc3xHHxdc+CVsh
-         6E8l4Ato0idhyRG+C/LKANFikJLLoNPTYUpbF3L8iqsRVLK2gsvMmwf5u8bgOlRvifzM
-         HS5g==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dbWc9CVO3Gxo5upph4pN2aKM1YZ5EIJSSOYOcEbsy50=;
+        b=o8UmjFkHb7l4sSiyKlIXlu45oVW5J8hXrm2qO+REtfQCWpDnerXB/ByJl5PsrKWGvq
+         fma8pRaGad5bRzR2dLEZDEvLcX+iQMPOdwoiNy5d4ckIxP5M4f8FACX8/dvhEF8miTDn
+         tYjDPncFTLQ+H7vnmRVHONgorL0QDth58/erIbU9FY6Zb4fZ0nA3bgr/U4uhLYU3Cg2h
+         jWwp52JqFMQaZEC4HQh8BlgwKLtuxU4Z28onK6Znba1W2BkqpTobUTKof1rDOYOBUOPb
+         11TESDJeZVsS5dI5cySkDYgq649wu+f47K3B17fhfXKHRhYY3XGwWh5N57qz86eLsCgy
+         tq6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=RuYZpIjBPES0u8yZqZRQiyrnBEH5uLbgPDKPhRd5ie8=;
-        b=ktoxbyrbNp5KXLvLzPju5/wT6K61V2NnPtE9RSn2yj9kCK3Zqj9K562FcakUMjNpzC
-         DHxLO5wfPBo3t7q/kiQn9ShFpDg95hH94Ys5wY54RxCiMMALSMv7BuI5I3fm2CXiO22K
-         uMuayJNyxNxxsu3PpTffnTo3AZVewRIE96bYIiVs7gZo+PoE0UtKqaP+4QPe1LNoe5Bf
-         Ype0/7ElhFdSQJqWpA4eIXj3lbkm8uxqHxCcfoArI9x7/ruKVuZnNBKaBp2QZQB3kC1T
-         BmCXtKl9txrZDDDdF0X7ipCoAmz+JsYzKeeS1eysLHDWujlKFULzJr3I0kspuiRHDzG+
-         9KxA==
-X-Gm-Message-State: AKwxytdv2VhRkYfkFbd9WaaQp3N1Gx2TA2sidTchoxX5H4kbF5noE+4v
-        AO42vyAJ+fHyFdRTfj+8rW5XpE5T9tA4AtdalTYcIDox
-X-Google-Smtp-Source: AH8x225FC/2A47Ox4r9UfPnMMtTvf2NAcl8zj379ocZaaYYXA6FcXJ4qIBREiOn9OWh1JtFZMFr3GXrgBlBeLTB6/n4=
-X-Received: by 10.25.156.20 with SMTP id f20mr12776340lfe.12.1517339730852;
- Tue, 30 Jan 2018 11:15:30 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dbWc9CVO3Gxo5upph4pN2aKM1YZ5EIJSSOYOcEbsy50=;
+        b=AJf4z2pPoXob4nlDKX2KqhBxzYlwdDVQAgjivEMGRwRAbAkEjylrreVl+HKacUvshQ
+         ImHTrGdqvSbEg17QVfb+u7MggET4UHFmDg7GA4hNMbdduXvf0hoHzcvVeuCp5nbgG7YR
+         Lg1ly/G11cqdVUUb+opHfkSk45V7WvQbVh9inFy+LZ5rSkV+AX4nBUPQfB27D8hXh3XK
+         xc6CfgaR1coecwT8G+25WpRp8snGIV878NOA75m+DZmSJ9oXCT8Q7zNMI8yLr2R9AFJe
+         OxSiU13o+vpUIgAlOl5/JnkwWBgUPm2NFqirymLu/JfhZvosci5bbhNY1LZTIdBKbm8D
+         Vo9A==
+X-Gm-Message-State: AKwxytfCO4mnP9+JpEicJG5Y1LowC3WVAtmrNQyywfjkzwRV9g3XukW/
+        SP3jCiJEnHVJZVQQRJGqAgl5mdrA
+X-Google-Smtp-Source: AH8x226ZT0UM+by4PtFLuwHV/AwP9F9Ru2DuCgf3P4/SIuQ6WRAMH7BzwFbuvgEJAdbsrOO7+6KTNQ==
+X-Received: by 10.28.225.133 with SMTP id y127mr20262743wmg.55.1517342232419;
+        Tue, 30 Jan 2018 11:57:12 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id k125sm30435279wmd.48.2018.01.30.11.57.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jan 2018 11:57:11 -0800 (PST)
+Subject: Re: git stash ; git stash pop unstages all staged changes
+To:     =?UTF-8?Q?Martin_H=c3=a4cker?= <mhaecker@schwarz-online.org>
+References: <454AAA27-B8D3-47F9-8E49-EC5415A26FCE@schwarz-online.org>
+Cc:     git@vger.kernel.org
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com>
+Date:   Tue, 30 Jan 2018 20:57:07 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Received: by 10.46.44.11 with HTTP; Tue, 30 Jan 2018 11:15:30 -0800 (PST)
-In-Reply-To: <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
-References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
- <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
-From:   Stephen R Guglielmo <srguglielmo@gmail.com>
-Date:   Tue, 30 Jan 2018 14:15:30 -0500
-Message-ID: <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
-Subject: Re: Bug Report: Subtrees and GPG Signed Commits
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <454AAA27-B8D3-47F9-8E49-EC5415A26FCE@schwarz-online.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, just following up on this bug report. I have not heard back. Is
-there additional information that's needed? Is there a better place to
-file bug reports?
+Hi Marten,
 
-Additionally, I have confirmed that this bug still exists with git
-version 2.16.1.
+On 30/01/2018 11:05, Martin Häcker wrote:
+> 
+> I just lost quite some work, because `git stash; git stash pop` 
+> doesn’t seem to understand the concept of the index correctly.
 
-Thanks
+I`m afraid it actually seems you`re not fully understanding how `git 
+stash pop` works - but the good news is none of your work is lost, as 
+long as you have the stash sha1 (or you can find/restore it through 
+`git fsck`).
 
-On Thu, Jan 18, 2018 at 11:19 AM, Stephen R Guglielmo
-<srguglielmo@gmail.com> wrote:
-> Hi, just following up on this bug report. I have not heard back. Is
-> there additional information that's needed? Is there a better place to
-> file bug reports?
->
-> Thanks
->
-> On Sat, Jan 6, 2018 at 5:45 PM, Stephen R Guglielmo
-> <srguglielmo@gmail.com> wrote:
->> Hi all,
->>
->> I've noticed an issue regarding the use of `git subtree add` and `git
->> subtree pull` when the subtree repository's commit (either HEAD or
->> whatever commit specified by the subtree command) is signed with GPG.
->> It seems to work properly if the commit is not signed but previous
->> commits are.
->>
->> The gist of the issue is that `git subtree add` does not add the
->> subree properly and a "fatal: Not a valid object name" error is
->> thrown. Running `git subtree pull` does not pull any upstream changes
->> after that ("'subtree' was never added").
->>
->> I have not done extensive testing, however, below are instructions to
->> reproduce the issue. This was tested using git version 2.15.1
->> installed via Homebrew on MacOS. I did not test with the built-in
->> version of git on MacOS.
->>
->> Thanks,
->> Steve
->>
->> # Create a new repository
->> mkdir repoA && cd repoA
->> git init
->> echo "Test File in Repo A" > FileA
->> git add -A && git commit -m 'Initial commit in repo A'
->>
->> # Create a second repository
->> cd .. && mkdir repoB && cd repoB
->> git init
->> echo "Test File in Repo B" > FileB
->> git add -A && git commit -m 'Initial commit in repo B'
->>
->> # Create a signed commit in repo B
->> echo "Signed Commit" >> FileB
->> git commit -a -S  -m 'Signed commit in repo B'
->>
->> # Now, add repoB as a subtree of RepoA
->> cd ../repoA
->> git subtree add --prefix repoB_subtree/ ../repoB/ master --squash
->> # Output:
->> git fetch ../repoB/ master
->> warning: no common commits
->> remote: Counting objects: 6, done.
->> remote: Compressing objects: 100% (2/2), done.
->> remote: Total 6 (delta 0), reused 0 (delta 0)
->> Unpacking objects: 100% (6/6), done.
->> From ../repoB
->>  * branch            master     -> FETCH_HEAD
->> fatal: Not a valid object name gpg: Signature made Sat Jan  6 17:38:31 2018 EST
->> gpg:                using RSA key 6900E9CFDD39B6A741D601F50999759F2DCF3E7C
->> gpg: Good signature from "Stephen Robert Guglielmo (Temple University
->> Computer Services) <srg@temple.edu>" [ultimate]
->> Primary key fingerprint: 6900 E9CF DD39 B6A7 41D6  01F5 0999 759F 2DCF 3E7C
->> 4b700b1a4ebb9e2c1011aafd6b0f720b38f059a4
->> # Note, git exits with status 128 at this point.
->>
->> # FileB was in fact added and staged to repoA, despite the "fatal"
->> above. Commit it:
->> git commit -m 'Add repoB subtree'
->>
->> # Ok, let's make another commit in repoB and try a `subtree pull`
->> instead of `subtree add`
->> cd ../repoB
->> echo "Another Line" >> FileB
->> git commit -a -S -m 'Another signed commit'
->> cd ../repoA
->> git subtree pull --prefix repoB_subtree/ ../repoB master --squash
->> # Output:
->> warning: no common commits
->> remote: Counting objects: 9, done.
->> remote: Compressing objects: 100% (3/3), done.
->> remote: Total 9 (delta 0), reused 0 (delta 0)
->> Unpacking objects: 100% (9/9), done.
->> From ../repoB
->>  * branch            master     -> FETCH_HEAD
->> Can't squash-merge: 'repoB_subtree' was never added.
->> # Note, git exits with status 1 at this point.
->>
->> # RepoB's third commit ('Another signed commit') is not pulled into
->> the subree in repo A.
->> # This can be verified by running a diff:
->> diff -qr --exclude ".git" repoB_subtree ../repoB
->> # Output:
->> Files repoB_subtree/FileB and ../repoB/FileB differ
+> What git stash does get right is that it does remove everything that 
+> is stashed from the current state of the repo, but what it doesn’t 
+> get right is restoring that state fatefully in `git stash pop`.
+
+According `git stash pop`[1] documentation, this is as expected, but 
+I see the confusing part:
+
+  Remove a single stashed state from the stash list and apply it on top 
+  of the current working tree state, i.e., do the inverse operation of 
+  `git stash push`. The working directory must match the index.
+
+It clearly says that stash is applied "on top of the current _working 
+tree_ state" (so _not_ index), but then it says "i.e., do the inverse 
+operation of `git stash push`", which is not exactly true (in regards 
+to index handling, no options provided explicitly).
+
+Later below, it notes what to do to restore index as well:
+
+  If the `--index` option is used, then tries to reinstate not only the 
+  working tree’s changes, but also the index’s ones. However, this can 
+  fail, when you have conflicts (which are stored in the index, where 
+  you therefore can no longer apply the changes as they were originally).
+
+> As a user, I would expect that `git stash pop` undoes the change that 
+> `git stash` inflicted.
+
+This seems as a fair expectation, especially when documentation 
+itself states that `git stash pop` is reverse operation of `git stash 
+push`...
+
+As to why `git stash pop` behaves like this, I would leave to someone 
+more informed to answer, what I myself managed to dig out so far is that 
+it seems `--index` was originally discussed to be a default indeed, 
+with `--skip-index` to turn it off if needed, see "[PATCH] Teach 
+git-stash to "apply --index""[2] (2007-07-02, Johannes Schindelin) 
+(note that `git stash pop` is essentially `git stash apply && git 
+stash drop`).
+
+For the reference, here are some similar topics:
+ - "[BUG] git stash doesn't use --index as default"[3] (2013-10-11, James)
+ - "Asymmetric default behavior of git stash"[4] (2013-08-27, Uwe Storbeck)
+ - "Newbie question: Is it possible to undo a stash?"[5] (2008-05-14, Iván V.)
+
+Finally, here`s your demo script, just modified to use `git stash 
+pop --index` instead, yielding desired results:
+
+  mkdir test
+  cd test
+  git init
+  touch foo
+  git add foo
+  git commit -m "initial commit"
+  echo "bar" >> foo
+  git status
+  git add foo
+  git status
+  echo "baz" >> foo
+  git diff
+  git status
+  git stash
+  git status
+  git stash pop --index
+  git diff
+
+
+Regards, Buga
+
+[1] https://git-scm.com/docs/git-stash#git-stash-pop--index-q--quietltstashgt
+[2] https://public-inbox.org/git/Pine.LNX.4.64.0707021213350.4438@racer.site/T/#u
+[3] https://public-inbox.org/git/1381467430.4130.38.camel@freed.purpleidea.com/T/#u
+[4] https://public-inbox.org/git/20130827132210.GA14266@ibr.ch/T/#u
+[5] https://public-inbox.org/git/509f40850805141256gce6ac1brf5ced6436f81dae8@mail.gmail.com/T/#u
