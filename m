@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9142D1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95B9F1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932168AbeA3XpH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:45:07 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36692 "EHLO
+        id S932218AbeA3XpX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:45:23 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58666 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754074AbeA3XpD (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:03 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJZq009741;
-        Tue, 30 Jan 2018 15:25:36 -0800
+        by vger.kernel.org with ESMTP id S932195AbeA3XpS (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:18 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN1n1025717;
+        Tue, 30 Jan 2018 15:25:35 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d6-4;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dt-1;
         Tue, 30 Jan 2018 15:25:35 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id B3E81221A56A;
-        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id E2DCB221A57F;
+        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id A12302CDE88;
-        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id D8D9A2CDE88;
+        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 30/31] merge-recursive: avoid spurious rename/rename conflict from dir renames
-Date:   Tue, 30 Jan 2018 15:25:32 -0800
-Message-Id: <20180130232533.25846-31-newren@gmail.com>
+Subject: [PATCH v7 16/31] merge-recursive: split out code for determining diff_filepairs
+Date:   Tue, 30 Jan 2018 15:25:18 -0800
+Message-Id: <20180130232533.25846-17-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -56,181 +56,157 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a file on one side of history was renamed, and merely modified on the
-other side, then applying a directory rename to the modified side gives u=
-s
-a rename/rename(1to2) conflict.  We should only apply directory renames t=
-o
-pairs representing either adds or renames.
-
-Making this change means that a directory rename testcase that was
-previously reported as a rename/delete conflict will now be reported as a
-modify/delete conflict.
+Create a new function, get_diffpairs() to compute the diff_filepairs
+between two trees.  While these are currently only used in
+get_renames(), I want them to be available to some new functions.  No
+actual logic changes yet.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                   |  4 +--
- t/t6043-merge-rename-directories.sh | 55 +++++++++++++++++--------------=
+ merge-recursive.c | 86 +++++++++++++++++++++++++++++++++++++++++--------=
 ------
- 2 files changed, 27 insertions(+), 32 deletions(-)
+ 1 file changed, 64 insertions(+), 22 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 62e4266d21..97859e1ab7 100644
+index 4e6d0c248e..8ac69e1cbb 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1960,7 +1960,7 @@ static void compute_collisions(struct hashmap *coll=
-isions,
- 		char *new_path;
- 		struct diff_filepair *pair =3D pairs->queue[i];
+@@ -1321,24 +1321,15 @@ static int conflict_rename_rename_2to1(struct mer=
+ge_options *o,
+ }
 =20
--		if (pair->status =3D=3D 'D')
-+		if (pair->status !=3D 'A' && pair->status !=3D 'R')
- 			continue;
- 		dir_rename_ent =3D check_dir_renamed(pair->two->path,
- 						   dir_renames);
-@@ -2187,7 +2187,7 @@ static struct string_list *get_renames(struct merge=
-_options *o,
- 		struct diff_filepair *pair =3D pairs->queue[i];
- 		char *new_path; /* non-NULL only with directory renames */
+ /*
+- * Get information of all renames which occurred between 'o_tree' and
+- * 'tree'. We need the three trees in the merge ('o_tree', 'a_tree' and
+- * 'b_tree') to be able to associate the correct cache entries with
+- * the rename information. 'tree' is always equal to either a_tree or b_=
+tree.
++ * Get the diff_filepairs changed between o_tree and tree.
+  */
+-static struct string_list *get_renames(struct merge_options *o,
+-				       struct tree *tree,
+-				       struct tree *o_tree,
+-				       struct tree *a_tree,
+-				       struct tree *b_tree,
+-				       struct string_list *entries)
++static struct diff_queue_struct *get_diffpairs(struct merge_options *o,
++					       struct tree *o_tree,
++					       struct tree *tree)
+ {
+-	int i;
+-	struct string_list *renames;
++	struct diff_queue_struct *ret;
+ 	struct diff_options opts;
 =20
--		if (pair->status =3D=3D 'D') {
-+		if (pair->status !=3D 'A' && pair->status !=3D 'R') {
- 			diff_free_filepair(pair);
- 			continue;
- 		}
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index 3d292f0c5f..f349f69984 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -2070,18 +2070,23 @@ test_expect_success '8b-check: Dual-directory ren=
-ame, one into the others way, w
- 	)
- '
-=20
--# Testcase 8c, rename+modify/delete
--#   (Related to testcases 5b and 8d)
-+# Testcase 8c, modify/delete or rename+modify/delete?
-+#   (Related to testcases 5b, 8d, and 9h)
- #   Commit O: z/{b,c,d}
- #   Commit A: y/{b,c}
- #   Commit B: z/{b,c,d_modified,e}
--#   Expected: y/{b,c,e}, CONFLICT(rename+modify/delete: x/d -> y/d or de=
-leted)
-+#   Expected: y/{b,c,e}, CONFLICT(modify/delete: on z/d)
- #
--#   Note: This testcase doesn't present any concerns for me...until you
--#         compare it with testcases 5b and 8d.  See notes in 8d for more
--#         details.
+-	renames =3D xcalloc(1, sizeof(struct string_list));
 -
--test_expect_success '8c-setup: rename+modify/delete' '
-+#   Note: It could easily be argued that the correct resolution here is
-+#         y/{b,c,e}, CONFLICT(rename/delete: z/d -> y/d vs deleted)
-+#         and that the modifed version of d should be present in y/ afte=
-r
-+#         the merge, just marked as conflicted.  Indeed, I previously di=
-d
-+#         argue that.  But applying directory renames to the side of
-+#         history where a file is merely modified results in spurious
-+#         rename/rename(1to2) conflicts -- see testcase 9h.  See also
-+#         notes in 8d.
+ 	diff_setup(&opts);
+ 	opts.flags.recursive =3D 1;
+ 	opts.flags.rename_empty =3D 0;
+@@ -1354,10 +1345,43 @@ static struct string_list *get_renames(struct mer=
+ge_options *o,
+ 	diffcore_std(&opts);
+ 	if (opts.needed_rename_limit > o->needed_rename_limit)
+ 		o->needed_rename_limit =3D opts.needed_rename_limit;
+-	for (i =3D 0; i < diff_queued_diff.nr; ++i) {
 +
-+test_expect_success '8c-setup: modify/delete or rename+modify/delete?' '
- 	test_create_repo 8c &&
- 	(
- 		cd 8c &&
-@@ -2114,32 +2119,32 @@ test_expect_success '8c-setup: rename+modify/dele=
-te' '
- 	)
- '
++	ret =3D malloc(sizeof(struct diff_queue_struct));
++	ret->queue =3D diff_queued_diff.queue;
++	ret->nr =3D diff_queued_diff.nr;
++	/* Ignore diff_queued_diff.alloc; we won't be changing size at all */
++
++	opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
++	diff_queued_diff.nr =3D 0;
++	diff_queued_diff.queue =3D NULL;
++	diff_flush(&opts);
++	return ret;
++}
++
++/*
++ * Get information of all renames which occurred in 'pairs', making use =
+of
++ * any implicit directory renames inferred from the other side of histor=
+y.
++ * We need the three trees in the merge ('o_tree', 'a_tree' and 'b_tree'=
+)
++ * to be able to associate the correct cache entries with the rename
++ * information; tree is always equal to either a_tree or b_tree.
++ */
++static struct string_list *get_renames(struct merge_options *o,
++				       struct diff_queue_struct *pairs,
++				       struct tree *tree,
++				       struct tree *o_tree,
++				       struct tree *a_tree,
++				       struct tree *b_tree,
++				       struct string_list *entries)
++{
++	int i;
++	struct string_list *renames;
++
++	renames =3D xcalloc(1, sizeof(struct string_list));
++
++	for (i =3D 0; i < pairs->nr; ++i) {
+ 		struct string_list_item *item;
+ 		struct rename *re;
+-		struct diff_filepair *pair =3D diff_queued_diff.queue[i];
++		struct diff_filepair *pair =3D pairs->queue[i];
 =20
--test_expect_success '8c-check: rename+modify/delete' '
-+test_expect_success '8c-check: modify/delete or rename+modify/delete' '
- 	(
- 		cd 8c &&
+ 		if (pair->status !=3D 'R') {
+ 			diff_free_filepair(pair);
+@@ -1382,9 +1406,6 @@ static struct string_list *get_renames(struct merge=
+_options *o,
+ 		item =3D string_list_insert(renames, pair->one->path);
+ 		item->util =3D re;
+ 	}
+-	opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
+-	diff_queued_diff.nr =3D 0;
+-	diff_flush(&opts);
+ 	return renames;
+ }
 =20
- 		git checkout A^0 &&
+@@ -1655,15 +1676,36 @@ static int handle_renames(struct merge_options *o=
+,
+ 			  struct string_list *entries,
+ 			  struct rename_info *ri)
+ {
++	struct diff_queue_struct *head_pairs, *merge_pairs;
++	int clean;
++
+ 	ri->head_renames =3D NULL;
+ 	ri->merge_renames =3D NULL;
 =20
- 		test_must_fail git merge -s recursive B^0 >out &&
--		test_i18ngrep "CONFLICT (rename/delete).* z/d.*y/d" out &&
-+		test_i18ngrep "CONFLICT (modify/delete).* z/d" out &&
+ 	if (!o->detect_rename)
+ 		return 1;
 =20
- 		git ls-files -s >out &&
--		test_line_count =3D 4 out &&
-+		test_line_count =3D 5 out &&
- 		git ls-files -u >out &&
--		test_line_count =3D 1 out &&
-+		test_line_count =3D 2 out &&
- 		git ls-files -o >out &&
- 		test_line_count =3D 1 out &&
+-	ri->head_renames  =3D get_renames(o, head, common, head, merge, entries=
+);
+-	ri->merge_renames =3D get_renames(o, merge, common, head, merge, entrie=
+s);
+-	return process_renames(o, ri->head_renames, ri->merge_renames);
++	head_pairs =3D get_diffpairs(o, common, head);
++	merge_pairs =3D get_diffpairs(o, common, merge);
++
++	ri->head_renames  =3D get_renames(o, head_pairs, head,
++					 common, head, merge, entries);
++	ri->merge_renames =3D get_renames(o, merge_pairs, merge,
++					 common, head, merge, entries);
++	clean =3D process_renames(o, ri->head_renames, ri->merge_renames);
++
++	/*
++	 * Some cleanup is deferred until cleanup_renames() because the
++	 * data structures are still needed and referenced in
++	 * process_entry().  But there are a few things we can free now.
++	 */
++
++	free(head_pairs->queue);
++	free(head_pairs);
++	free(merge_pairs->queue);
++	free(merge_pairs);
++
++	return clean;
+ }
 =20
- 		git rev-parse >actual \
--			:0:y/b :0:y/c :0:y/e :3:y/d &&
-+			:0:y/b :0:y/c :0:y/e :1:z/d :3:z/d &&
- 		git rev-parse >expect \
--			 O:z/b  O:z/c  B:z/e  B:z/d &&
-+			 O:z/b  O:z/c  B:z/e  O:z/d  B:z/d &&
- 		test_cmp expect actual &&
-=20
--		test_must_fail git rev-parse :1:y/d &&
--		test_must_fail git rev-parse :2:y/d &&
--		git ls-files -s y/d | grep ^100755 &&
--		test_path_is_file y/d
-+		test_must_fail git rev-parse :2:z/d &&
-+		git ls-files -s z/d | grep ^100755 &&
-+		test_path_is_file z/d &&
-+		test_path_is_missing y/d
- 	)
- '
-=20
-@@ -2153,16 +2158,6 @@ test_expect_success '8c-check: rename+modify/delet=
-e' '
- #
- #   Note: It would also be somewhat reasonable to resolve this as
- #             y/{b,c,e}, CONFLICT(rename/delete: x/d -> y/d or deleted)
--#   The logic being that the only difference between this testcase and 8=
-c
--#   is that there is no modification to d.  That suggests that instead o=
-f a
--#   rename/modify vs. delete conflict, we should just have a rename/dele=
-te
--#   conflict, otherwise we are being inconsistent.
--#
--#   However...as far as consistency goes, we didn't report a conflict fo=
-r
--#   path d_1 in testcase 5b due to a different file being in the way.  S=
-o,
--#   we seem to be forced to have cases where users can change things
--#   slightly and get what they may perceive as inconsistent results.  It
--#   would be nice to avoid that, but I'm not sure I see how.
- #
- #   In this case, I'm leaning towards: commit A was the one that deleted=
- z/d
- #   and it did the rename of z to y, so the two "conflicts" (rename vs.
-@@ -2907,7 +2902,7 @@ test_expect_success '9h-setup: Avoid dir rename on =
-merely modified path' '
- 	)
- '
-=20
--test_expect_failure '9h-check: Avoid dir rename on merely modified path'=
- '
-+test_expect_success '9h-check: Avoid dir rename on merely modified path'=
- '
- 	(
- 		cd 9h &&
-=20
-@@ -3951,7 +3946,7 @@ test_expect_success '12c-setup: Moving one director=
-y hierarchy into another w/ c
- 	)
- '
-=20
--test_expect_failure '12c-check: Moving one directory hierarchy into anot=
-her w/ content merge' '
-+test_expect_success '12c-check: Moving one directory hierarchy into anot=
-her w/ content merge' '
- 	(
- 		cd 12c &&
-=20
+ static void cleanup_rename(struct string_list *rename)
 --=20
 2.16.1.106.gf69932adfe
 
