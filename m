@@ -2,124 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB3591F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 20:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D3191F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 21:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753662AbeA3U66 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 15:58:58 -0500
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:43035 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753649AbeA3U65 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 15:58:57 -0500
-Received: by mail-wr0-f173.google.com with SMTP id 39so4010854wrb.10
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 12:58:57 -0800 (PST)
+        id S1754106AbeA3VJj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 16:09:39 -0500
+Received: from mail-wr0-f180.google.com ([209.85.128.180]:44202 "EHLO
+        mail-wr0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754078AbeA3VJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 16:09:31 -0500
+Received: by mail-wr0-f180.google.com with SMTP id v31so12716444wrc.11
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 13:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=fBuqSICVN1Tamh34xEV8NXwEVzdaUMng+59WK/5doa8=;
-        b=D5o4gBoi1i6VpcS1uHQigdxWuk1XnS/uQL2HB7/iFlhS+N82g3Q2mHD3BbtgsBSjSt
-         ACpwLB5g1emENFFzCSZEvSBwh0JfXw3ezM1mAFJgB5tmTszrUsLVNgxuX9Dgdikl4/Nz
-         Sfs/b/rgMLI+wIefWCX1QzTGmke84DGAXnnmbpUxm9K/q6SCJC5eqC0gdb4Ju9CgP8B0
-         W6tYGOkZZoFA+5KwEwr44I7IlT4qO/nJhMKgbfPRCqWDdQG7CdYDuxrTY9IqPPf217Yk
-         jwd4GdLzSMb+VOvEAw4ZA+SUYo0icCWUTVITux4DRpxl3d/NP9y4Qke3PmL+LzrHc1If
-         8m3A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DNcLqzJ37lhO4JRdlYcUrhlIPd0sT5gZnRaaDVN2Xa0=;
+        b=q0t04EwWbcwCu1GaW8qo5G4qc3hw0uuOWG43ECNnH+ReX2FDDz2pv0oNkFgxQmBA6F
+         RKj1q31cS0P68G/EUd4G7XD6/eXZO0HLJymyVo7sbZOHqbRIkhe5zeb75r96bj7/NLub
+         QleKpobz8vbMobBlK5FQuujkpVEBb0gVLux5wHNIY6F+Pt4WebCAb2q03yYjwmcyTXGL
+         ImEkoAdsjbeYiAU5lMZFzZMnUIaVRfwUvSplfJtAjntOiHTHE/OvOAmWNFVD6I4nVBBI
+         k1+pxtuR/Cb23wEGBg7I572wqAXbHtFvS9DpGOaTdgzc85WbnWcEpjeP/krgNQD1rpKU
+         zAIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=fBuqSICVN1Tamh34xEV8NXwEVzdaUMng+59WK/5doa8=;
-        b=qrApwJQwOLH2M14KJFVBfsha44/CSMF2pbGhQ0HKl2uiYCMD+Po/ohQslj1gbHm4DT
-         q5pF8J/N2BQa05zPyGwK7qysRysCSKkxscqL6oF2KYl9+Il+D8+ip506olqwzMYRxjnJ
-         vKHyYh2baZJTSiuATPwoWwhTJY29peQdHFyLK7eUslOngts35A6sCZEV0Ya4Fc2m4OCg
-         ddW6Z7l+dpD4YEQ6RT3XknCpIYEE7/LQrweAR24TvUgG5dU6EfgVMApws0Iry5eYlgl/
-         7zRqkj1iBzknEowjPiMbiiL9UyukUvL6U8Yzl6xPYtx9dvMo5/VjOhPKKPWRErK2AnHU
-         VxDg==
-X-Gm-Message-State: AKwxyteQXKCE69ics4dGApyrP1Xog4bQ3u9b6z5MGI8HL9K01AYrFgNw
-        kgEuYOGGPxHp0ShynrFOhZ0=
-X-Google-Smtp-Source: AH8x225IYpY+6Mrqv5sm76bNUt0GviBujPMuMUslLCCGmbOO9hFpKZRQjnXIXFvvjUmifh6Y4RVkGw==
-X-Received: by 10.223.182.153 with SMTP id j25mr25379286wre.43.1517345936527;
-        Tue, 30 Jan 2018 12:58:56 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB5B37.dip0.t-ipconnect.de. [93.219.91.55])
-        by smtp.gmail.com with ESMTPSA id 81sm13394118wmi.26.2018.01.30.12.58.55
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 Jan 2018 12:58:56 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 4/7] utf8: add function to detect a missing UTF-16/32 BOM
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqq4ln3upiv.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 30 Jan 2018 21:58:55 +0100
-Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Lars Schneider <lars.schneider@autodesk.com>,
-        Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: 7bit
-Message-Id: <BEE9E5DB-AB1A-4119-90E6-700186739C59@gmail.com>
-References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com> <20180129201905.9355-1-tboegi@web.de> <xmqq4ln3upiv.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DNcLqzJ37lhO4JRdlYcUrhlIPd0sT5gZnRaaDVN2Xa0=;
+        b=ROaqiluWDcP8U+3FjIgDoekx5pbw7ErTwjCFy18Dk9cTSA6SzwwN3N4WOHCy97+MjT
+         8v3ZgAmqAz4zIWRBUA9F2HNMZqhh1UvUMsxuwN2r2Z+h62VmM2ujQpAvtUNRtk+lETU3
+         5XjX91Z1SHORcYCUbf0qJz4YC/mnQzKZibdxvt8GDnSg0a115Y7i6fPvp8dnY5NJzkkq
+         CHU1GK1JeQdEfxCS6anSP9uvp4aeh4gd5M56+G+ALZhx0TXDP21vrOkY7vCeGnWE112h
+         iaFqnTRveHGBdD/EruJ/zvlWS+ah1GNtJ5yKSwwXqelsZpcmy18DUEogKwKXyUHkWV9a
+         NS3g==
+X-Gm-Message-State: AKwxyteQu0v43Cq0i+X05/B+NpXzsmrQ7SHfpZb/rnByPhlJCoae02z3
+        I3dv2fsXB8RQ1pSE9RPj9R8=
+X-Google-Smtp-Source: AH8x2265TPS+I9ahVk0mhlcVI+H0C3clrxawpov7yU+hoOZx5hHAK8wGqCMAs57tZWeFsLT478Gtjg==
+X-Received: by 10.223.157.200 with SMTP id q8mr228691wre.205.1517346570397;
+        Tue, 30 Jan 2018 13:09:30 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h16sm15628722wre.43.2018.01.30.13.09.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Jan 2018 13:09:29 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] alternate hash test
+References: <20180128170639.216397-1-sandals@crustytoothpaste.net>
+Date:   Tue, 30 Jan 2018 13:09:28 -0800
+In-Reply-To: <20180128170639.216397-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 28 Jan 2018 17:06:37 +0000")
+Message-ID: <xmqq4ln3t5o7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 30 Jan 2018, at 20:15, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> tboegi@web.de writes:
-> 
->> From: Lars Schneider <larsxschneider@gmail.com>
->> 
->> If the endianness is not defined in the encoding name, then let's
->> be strict and require a BOM to avoid any encoding confusion. The
->> has_missing_utf_bom() function returns true if a required BOM is
->> missing.
->> 
->> The Unicode standard instructs to assume big-endian if there in no BOM
->> for UTF-16/32 [1][2]. However, the W3C/WHATWG encoding standard used
->> in HTML5 recommends to assume little-endian to "deal with deployed
->> content" [3]. Strictly requiring a BOM seems to be the safest option
->> for content in Git.
-> 
-> I do not have strong opinion on encoding such policy-ish behaviour
-> as our default, but am I alone to find that "has missing X" is a
-> confusing name for a helper function?  "is missing X" (or "lacks
-> X") is a bit more understandable, I guess.
+> This series wires up an alternate hash implementation, namely
+> BLAKE2b-160.  The goal is to allow us to identify tests which rely on
+> the hash algorithm in use so that we can fix those tests.
 
-That might be a german/english translation thingy but I think I get
-your point. "has" implies there is something and "missing" implies
-there is nothing :)
+Yay.
 
-"is_missing_utf_bom()" might be even a bit unspecific as UTF-8
-is usually missing a UTF BOM but the function would still return 
-"false". Therefore, "is_missing_required_utf_bom()" might be 
-lengthy but should fit.
+> Provoking discussion of which hash to pick for NewHash is explicitly
+> *not* a goal for this series.  I'm only interested in the ability to
+> identify and fix tests.
 
-OK for you?
-
-- Lars
-
-
-> 
->> +int has_missing_utf_bom(const char *enc, const char *data, size_t len)
->> +{
->> +	return (
->> +	   !strcmp(enc, "UTF-16") &&
->> +	   !(has_bom_prefix(data, len, utf16_be_bom, sizeof(utf16_be_bom)) ||
->> +	     has_bom_prefix(data, len, utf16_le_bom, sizeof(utf16_le_bom)))
->> +	) || (
->> +	   !strcmp(enc, "UTF-32") &&
->> +	   !(has_bom_prefix(data, len, utf32_be_bom, sizeof(utf32_be_bom)) ||
->> +	     has_bom_prefix(data, len, utf32_le_bom, sizeof(utf32_le_bom)))
->> +	);
->> +}
-
+Double yay.
