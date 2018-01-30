@@ -2,142 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A3661F576
-	for <e@80x24.org>; Tue, 30 Jan 2018 11:33:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D49801F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 12:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751572AbeA3LdR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 06:33:17 -0500
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:44811 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751434AbeA3LdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 06:33:16 -0500
-Received: by mail-oi0-f67.google.com with SMTP id b3so4603066oib.11
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 03:33:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bnDhtA3V8pIiBCSGbgcopGQO5RdRflmhR2xehWfcwLU=;
-        b=JiSqcD3ZckDsYaKpCCuT3tHxW7sAOOxutYZSSRx1G4SWImkDeNsW+cLzKsOXFsfREU
-         WY2LLq/uZHmMwkelMZu7GOEV6Sk74e7CdCtJpL2Y/u6/dMJTYY/Xugy4U6IKNvzOA9J2
-         X9lhABSoGtaib71oylwal1hcD4p1Ta8tzpH3zVveuomGUrc1mW0OCMrWOVhli1o02S3C
-         LBBioDKDKgg8hBRhNqG5Qo9Fe6AB1SLK7VfDV5oDQSU7Wc1XPkzzofamVXlMgiRxa18b
-         h3+xWJ06gLOY2d4Hk+33VAc4KL3H4lwBu6xTl9tRG6n3zopmpHIlkoLgqd0CZ2Xo8dCH
-         vXyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bnDhtA3V8pIiBCSGbgcopGQO5RdRflmhR2xehWfcwLU=;
-        b=qSpmvSImO8vUF3iIXmUdVj79ZUAfTFT1U6bAv669585dTfBZTSucWZlMwhks6O0MM2
-         4Pdni45WvgzD8U7HAuLfR5N0oPrXLk3iL6SZunspWFGDOOh43BjQu+gZiHDH5/bQWve7
-         9A1bjuVgggjEizBBInWgetD1LNnJ4tdRNLFrxdbJ02gq0kE4PcOk24LN4KSLgL42Rhh4
-         HOkN9ZPLouRrzTpVUNXaKCqYr85c6LcLK398rc6wr00HccZSdk2vg1q/F0L6Y29QctUM
-         zb0OBcgnO1eMKwlGL5ogHWB90oZOhFMEDeBAHq05rVpiXPb0vHwiq3QH6NV+CjOe1uTQ
-         64xQ==
-X-Gm-Message-State: AKwxytcIZ576AcIFtZ5OBpgFzrFL4GIuUH4pfOgh6OlYqerZR4mDd7M0
-        W0oKN3V2rHwJyOCEb7h3FB+zZjyfDbiVmPaveZk=
-X-Google-Smtp-Source: AH8x225Rxuk90peTvX+0FdYApUOnAEofJKSrJa8S+Q9VvpISowlf+Yg0Xpu9YzICCSudUQa47g8mrCk7270uVknn9UQ=
-X-Received: by 10.202.171.207 with SMTP id u198mr8904635oie.253.1517311995657;
- Tue, 30 Jan 2018 03:33:15 -0800 (PST)
+        id S1751764AbeA3Mc7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 07:32:59 -0500
+Received: from mout.gmx.net ([212.227.17.20]:53235 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751611AbeA3Mc6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 07:32:58 -0500
+Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.195.59]) by
+ mail.gmx.com (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0M34eJ-1f05a31tvb-00srru; Tue, 30 Jan 2018 13:32:56 +0100
+Date:   Tue, 30 Jan 2018 13:32:55 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Add "git rebase --show-patch"
+In-Reply-To: <CACsJy8AH+xg3AB3qaqnFud4B8HHeyaO=8DqHL+p4HTTeSx6uYg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1801301331410.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <20180126095520.919-1-pclouds@gmail.com> <nycvar.QRO.7.76.6.1801291609060.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz> <CACsJy8AH+xg3AB3qaqnFud4B8HHeyaO=8DqHL+p4HTTeSx6uYg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Tue, 30 Jan 2018 03:32:45 -0800 (PST)
-In-Reply-To: <871si7ob9z.fsf@evledraar.gmail.com>
-References: <903a193c-0360-59bc-4d86-6470ac8dc1a8@bytes.nz>
- <000f01d39918$70009eb0$5001dc10$@nexbridge.com> <20180130101351.GA761@ash> <871si7ob9z.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 30 Jan 2018 18:32:45 +0700
-Message-ID: <CACsJy8BOnRrP4qXvsFcLBGukL=JzDbrA3kju87_ND3u36g=RsQ@mail.gmail.com>
-Subject: Re: Missing ? wildcard character in gitignore documentation
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Jack F <jack@bytes.nz>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323329-1217544816-1517315576=:35"
+X-Provags-ID: V03:K0:b6JqeLqE9k1wwmH1L5F/SKAV1z5snVSXmJnMs57i98LmchxBkcU
+ KpHh3Wh4p9xZUyGsLfsXuyWgAT19uAT8qlCQHarf5RvaTqSiPFOG1h9IPpbNtQUzWo4tnPc
+ mU/E1tnbUxxAn2/tu1mvoVg/9p/uXriJOhY06aQ2dESr6y5tBb5Ru3dHZ+KDhgjZkAD3Zf7
+ 9Yn6fc8GfdKZ7LfusYaIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iYx2FK/TteM=:owdltvX8PRU0ty2mTSgFDx
+ loGeO5O+16Lk6pcQ5nt9punOshejLlfDik/E3m482Smgr3Oe74yTkc5C8eutmeeSH3nqd6PdV
+ aTvQC+CzOLXFNmZB7nUL/+KCSmCZboUjDKuUFMrD/PbilgYzg/miGUL2f8LmVZi5QzxR/uDfw
+ SsC8NS2abL5LWXHDZf6j/9Kq3OMFgV1CiKDFxW1yEmeusOOCNSl6McOBSWLcgjl+U2CXNMdga
+ mN6TUcB+x6QlCsZeoO57Tclp0iQGll4I6Zi/S6bvAQf0fa4pB4Y9DPPaJbSkdxeoNl0AjlYrs
+ 3tQqXlc4oXIirFzRabvD6w7KCBKsp3zsrs6BzJ/virAzYmql/KmVLSOe1S9czTDtNP3yDymqE
+ LLnA+5HsSMydQzZE/jxAisRceMyRQTsFJ8eDAqCtk5/EnbDQUtSjGS+1T3COc8y9dBZ/x8ZXZ
+ 6ql6ofiNPXDYBd9rc5BL6CyG1O6HqyyQyK4XMMZv4QdF7cFN7T9zLHRhIbgJDOiEEDy2/XvYy
+ Ag9vn05EnOXE01Ts7YrK5vZB5CQkP4llAVi5idPuum++QUbznmtNT9dyH7CcJwYd656nNaig9
+ U0DfiOscwhDJNMFSmcDyTVaHw8iLBdvEGwpKTNGkQEjZ6om3PyL72gLV6HydsetUZxPqFGaRl
+ 8+zK4p/cri9O0XK3JBpMkV7O419ZpwxMODdvDTHxNpDOkEOOMyB2DbKoQzqCDSOLVW2vg9Hef
+ V7BdVbm1NWBonR8p5lkTNNCp8HX6INjIscPfkZTazQJSRM3NFGPMgU+1CMSpx1g1BuF8lrw63
+ 6Zkwj0dyLLo//dGWsnqOMutzvxBdh0nsdhLsMSidG4dicSoNDUbD+3zvGxIEqgLfqjY4lqs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 6:07 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Tue, Jan 30 2018, Duy Nguyen jotted:
->
->> On Mon, Jan 29, 2018 at 10:47:10AM -0500, Randall S. Becker wrote:
->>> The implication of support for ? is there through the following paragra=
-ph from the gitignore documentation:
->>>
->>>     "Otherwise, Git treats the pattern as a shell glob suitable for
->>>     consumption by fnmatch(3) with the FNM_PATHNAME flag: wildcards
->>>     in the pattern will not match a / in the pathname. For example,
->>>     "Documentation/*.html" matches "Documentation/git.html" but not
->>>     "Documentation/ppc/ppc.html" or
->>>     "tools/perf/Documentation/perf.html"."
->>>
->>> Of course you have to go read fnmatch(3), so it might be good for
->>> expand on this here :).
->>
->> I agree. How about something like this?
->>
->> -- 8< --
->> Subject: [PATCH] gitignore.txt: elaborate shell glob syntax
->>
->> `fnmatch(3)` is a great mention if the intended audience is
->> programmers. For normal users it's probably better to spell out what
->> a shell glob is.
->>
->> This paragraph is updated to roughly tell (or remind) what the main
->> wildcards are supposed to do. All the details are still hidden away
->> behind the `fnmatch(3)` wall because bringing the whole specification
->> here may be too much.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  Documentation/gitignore.txt | 11 +++++------
->>  1 file changed, 5 insertions(+), 6 deletions(-)
->>
->> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
->> index 63260f0056..0f4b1360bd 100644
->> --- a/Documentation/gitignore.txt
->> +++ b/Documentation/gitignore.txt
->> @@ -102,12 +102,11 @@ PATTERN FORMAT
->>     (relative to the toplevel of the work tree if not from a
->>     `.gitignore` file).
->>
->> - - Otherwise, Git treats the pattern as a shell glob suitable
->> -   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
->> -   wildcards in the pattern will not match a / in the pathname.
->> -   For example, "Documentation/{asterisk}.html" matches
->> -   "Documentation/git.html" but not "Documentation/ppc/ppc.html"
->> -   or "tools/perf/Documentation/perf.html".
->> + - Otherwise, Git treats the pattern as a shell glob: '{asterisk}'
->> +   matches anything except '/', '?' matches any one character except
->> +   '/' and '[]' matches one character in a selected range. See
->> +   fnmatch(3) and the FNM_PATHNAME flag for a more accurate
->> +   description.
->>
->>   - A leading slash matches the beginning of the pathname.
->>     For example, "/{asterisk}.c" matches "cat-file.c" but not
->
-> When reading the docs the other day I was thinking that we should
-> entirely git rid of these references to fnmatch(3) and write a
-> gitwildmatch man page.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-That's even better :) I forgot that we don't use fnmatch anymore.
+--8323329-1217544816-1517315576=:35
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> One of the reasons for why fnmatch() was removed as a supported backend
-> was because it couldn't be relied on as a backend, so it doesn't make
-> sense to be referring to that OS-level documentation, wildmatch also has
-> other features.
+Hi Duy,
 
+On Tue, 30 Jan 2018, Duy Nguyen wrote:
 
+> On Mon, Jan 29, 2018 at 10:09 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi Duy,
+> >
+> > On Fri, 26 Jan 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> >
+> >> When a conflict happens during a rebase, you often need to look at the
+> >> original patch to see what the changes are. This requires opening your
+> >> favourite pager with some random path inside $GIT_DIR.
+> >>
+> >> This series makes that experience a bit better, by providing a command
+> >> to read the patch. This is along the line of --edit-todo and --quit
+> >> where you can just tell git what to do and not bother with details.
+> >>
+> >> My main focus is "git rebase", but because rebase uses "git am" behind
+> >> the scene, "git am" gains --show-patch option too.
+> >
+> > Makes sense. I am not a 100% certain that 2/2 catches all rebase -i cor=
+ner
+> > cases, but I think the patches are good enough even for `next` already.
+>=20
+> Not so fast :) With Tim's suggestion about using a pseudo ref and
+> AEvar complaint about potential confusion, I might actually go with
+> pseudo ref for rebase (and leave "git am" in the cold for now).
 
---=20
-Duy
+The pseudo ref certainly has an appeal. For people very familiar with
+Git's peculiarities such as FETCH_HEAD. Such as myself.
+
+For users, it is probably substantially worse an experience than having a
+cmdmode like --show-patch in the very command they were just running.
+
+Ciao,
+Dscho
+--8323329-1217544816-1517315576=:35--
