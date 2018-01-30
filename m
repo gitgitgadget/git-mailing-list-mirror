@@ -2,103 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAD81F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 21:57:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 072631F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 22:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752490AbeA3V5B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 16:57:01 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36183 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751826AbeA3V5A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 16:57:00 -0500
-Received: by mail-wm0-f66.google.com with SMTP id f3so4128468wmc.1
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 13:57:00 -0800 (PST)
+        id S1752995AbeA3WCO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 17:02:14 -0500
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:33428 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751702AbeA3WCN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 17:02:13 -0500
+Received: by mail-yw0-f179.google.com with SMTP id x24so5970272ywj.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 14:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oeRpQgaXhRNBrFzVU0KOrq4hTHsECPeCwF6io2lJSh0=;
-        b=Yi8uD3OwVCHdb3Ks49qmPLAJzabKlIna4gCj4ezW/5mLc+1E48azch5EhqzMDPfGi+
-         C4jWf/XgscAxDruzFuuRvdH+ET97o7CugrOzx5T/Sbkng7IYv9x+ms6Ayassg/uSgMRA
-         GmtiPCIOHdDv//GUvn54oFgqCZ1pKn48lsAQ7/lveSF+cGk40fV+AXXFM8/CBsUCP5ao
-         3IISKvOsEZPfOt0AJ10T1qoonXBqyUcmmXNTuy5jVoL7sWv1WU4MDGVP0N4pg2KqOCPv
-         tAz0BJ0Zp/AcY+d2WxYs01RrnNKYLsr6dwYHMK/3TtLPAdSbS6tN8s8o29vtBgb9uCWo
-         hoFw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=09GSCUiu0P5pgCgcO/6d2y6xtK4BDW3kYJ4JOFLu5bo=;
+        b=KfdxVsl+Dq9bSyi3sS96LEDD8y5wCLxFPz+Bue4e/U5RJmxWvADIoIs8E0/cBiAgcR
+         P5iH++5iO9KGy7k5CFGm2HUSkyH80yO/PjZG0xwBthQd+U1Qbbd5IjO3a/IPahMs4R9S
+         +SIB2IC59L/wVjymQixWHjkvWljQpWM/5/+f1R7BXJoMS49NwSHgjCvMKsXusa4ngUvo
+         6etZ800z7k2b0V2pjLHZ5rL8mbu953CGgxTTyoabcSRZtI/oIarCL6AKjEXCGidV0w0a
+         n7deC1uvhpbrOUTdHx+0HdrDQWVh3NC2tDLTUYfFumLwGpX3gAKjTM1bIsLZ9W3YadZv
+         Ec5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oeRpQgaXhRNBrFzVU0KOrq4hTHsECPeCwF6io2lJSh0=;
-        b=tCMNpJLU0BfEIuwLEP9PHUWPVfhJpqDbt62sM2ePcfguMAhzibuTqi8gHOzBYs3wz7
-         0LSq1WfjRr+8iWiS5W2BV2kLkGy4nuu18fCkFu9QIo286615OQsCJukWWGiso3EQuXld
-         rnWap2/BFRMNbynSDARd/GipG080v9XbWWVNadDYLSZyuVWlvvyTZHk5M9CItWPF9McD
-         EdyLFqmufsITyVl32T0yqBhZtIheahaqUmS1xFuS5iesrG2ieQowUrO/uE0HWlk6BmYP
-         CrLOMfjjchiof23B5p66K5qwtQ4fVQasrwTHvi9r0Qq6a7dtra1DygNAbFB2xVj3plJp
-         6ohg==
-X-Gm-Message-State: AKwxytfO/nFNVdzd2DKMc3SjF6xF4I7SBUXKQqI2wzD/ZM8TrlJ9pm8E
-        rCOWL91acowgjsp829N7Mp8=
-X-Google-Smtp-Source: AH8x225c6Jj006wajk+/fZMa10yJpoSP/menJDwoTAz4g/Tcq4/XHHgKcppFupDQL57n1OJG1+b4Tg==
-X-Received: by 10.28.147.66 with SMTP id v63mr20538997wmd.118.1517349419343;
-        Tue, 30 Jan 2018 13:56:59 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 186sm17510074wmu.16.2018.01.30.13.56.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Jan 2018 13:56:58 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v5 5/7] convert: add 'working-tree-encoding' attribute
-References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
-        <20180129201908.9398-1-tboegi@web.de>
-        <xmqqzi4vt8n1.fsf@gitster-ct.c.googlers.com>
-        <396FBDFA-606F-41D9-988C-D6886089BC15@gmail.com>
-Date:   Tue, 30 Jan 2018 13:56:57 -0800
-In-Reply-To: <396FBDFA-606F-41D9-988C-D6886089BC15@gmail.com> (Lars
-        Schneider's message of "Tue, 30 Jan 2018 21:31:58 +0100")
-Message-ID: <xmqqfu6nrowm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=09GSCUiu0P5pgCgcO/6d2y6xtK4BDW3kYJ4JOFLu5bo=;
+        b=JvTE0M2cprLFWX292Z7+cZ/2g0d6J4GYE+fhuOfHQHN84ZXQQ1PAEoYddeqUJJX+Og
+         n2kHpIVR50oADbDrAuLgQttd/VtgooWG/4fqQwA8O+T9RimTj3jTsdhpT0tJL4wylQPX
+         iPGLzogkcScjRg0jKAfuy1f1aaotSYd1TeM5Qs5bnddpC1Npma8wHDFpVaAUQHSoSxOh
+         bEPoSj11GgqJEN5zEclNCJgRm/oA2SJfFudm4PpylRcIASh58m1E2yrbQhCXEmfqPJa8
+         H5RuluRMCKkg3eYeE/XkV1OcBMPqFacy4sBbIbTkAGPFWxkb+GqYaM6Si2FKcj0mn0HI
+         1RDw==
+X-Gm-Message-State: AKwxytcQjx1BA7bF5K3jWw0A1tyvARjOvS/wP7x/JKkHMZUp155ROpdY
+        WWaL29mfhPzFGQafKywB3T9h7lvt6JW/ffKvfzwNhg==
+X-Google-Smtp-Source: AH8x224aCe3tAWPKwXKK3LfpFpwdteJhaAdEmFH1KV7XO+Doi/AQ5GCfT8CQeoYQ08bOSiGdhO+wpCtCnKY3B0pwZ84=
+X-Received: by 10.129.156.134 with SMTP id t128mr20585756ywg.108.1517349732621;
+ Tue, 30 Jan 2018 14:02:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.37.207.9 with HTTP; Tue, 30 Jan 2018 14:02:12 -0800 (PST)
+In-Reply-To: <DDD544204D3240408540BFCC028E06882F12F237@FRCRPVV9EX5MSX.ww931.my-it-solutions.net>
+References: <DDD544204D3240408540BFCC028E06882F12F237@FRCRPVV9EX5MSX.ww931.my-it-solutions.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 30 Jan 2018 14:02:12 -0800
+Message-ID: <CAGZ79kab9oeZq4BJNBPaXA_uso3WQh_FBSE807E=ftBKvujsXQ@mail.gmail.com>
+Subject: Re: 2.15.1 - merge with submodule output issue
+To:     "FIGADERE, LAURENT" <laurent.figadere@atos.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
-
->> On 30 Jan 2018, at 21:05, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> tboegi@web.de writes:
->> 
->>> +	if ((conv_flags & CONV_WRITE_OBJECT) && !strcmp(enc->name, "SHIFT-JIS")) {
->>> +		char *re_src;
->>> +		int re_src_len;
->> 
->> I think it is a bad idea to 
->> 
->> (1) not check without CONV_WRITE_OBJECT here.
+On Tue, Jan 30, 2018 at 7:42 AM, FIGADERE, LAURENT
+<laurent.figadere@atos.net> wrote:
+> Dear git,
 >
-> The idea is to perform the roundtrip check *only* if we 
-> actually write to Git. In all other cases we don't care
-> if the encoding roundtrips.
+> I use since few weeks now git 2.15.1.
 >
-> "git checkout" is such a case where we don't care as 
-> noted by Peff here:
-> https://public-inbox.org/git/20171215095838.GA3567@sigill.intra.peff.net/
+> I did few trials but please find here my outputs.
 >
-> Do you agree?
+> To reproduce:
+> Use a top module git which include a submodule
+> First step: from a work area, I changed selected version of submodule in =
+master branch.
+> Then git add + git commit + git push
+> =EF=83=A8       A new commit on master branch has been published on my or=
+igin repository with the version v1.2 of submodule
+>
+> Second step: in my second workarea, I created a user branch mybranch, the=
+n selected another release of submodule
+> I added the update and then commit in mybranch.
+> =EF=83=A8       A new commit with release v2.0 of submodule is in my last=
+ SHA1 of mybranch
+>
+> Last step: in the second workarea, in mybranch, I first run =E2=80=98git =
+fetch=E2=80=99 and then =E2=80=98git merge origin/master=E2=80=99
+> I got a CONFLICT message of course due to the 2 different versions of sub=
+module.
+> Here the message:
+> warning: Failed to merge submodule submodule (commits don't follow merge-=
+base)
+> Auto-merging submodule
+> CONFLICT (submodule): Merge conflict in submodule
+> Automatic merge failed; fix conflicts and then commit the result.
+>
+> Now I thought that the command =E2=80=98git submodule=E2=80=99 provided a=
+n output with both versions of modules (local and remote).
+> But this is not the case in my environment:
+> [15:20:10] $ git submodule status
+> U0000000000000000000000000000000000000000 submodule
+>
+> And when I run the mergetool command I have this output:
+> [14:54:41] $ git mergetool
+> Merging:
+> submodule
+> Submodule merge conflict for 'submodule':
+>   {local}: submodule commit 08f86f2404d9f8f616262971a3127e69f39f9d11
+>   {remote}: submodule commit b3dd6fde4f02258b88ad0b2dba6474c126b499f7
+> Use (l)ocal or (r)emote, or (a)bort?
+>
+> So, it means it=E2=80=99s not usefull to determine which version has to b=
+e selected.
+> Is it a bug or perhaps I make something wrong?
 
-I am not sure why this is special cased and other codepaths have "if
-WRITE_OBJECT then die, otherwise error" checks, so no, I do not
-agree with your reasoning, at least not yet.
-
+It's not a bug, but the real feature has not been implemented yet.
