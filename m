@@ -2,139 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55A2A1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 21:15:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D20251F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 21:21:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752345AbeA3VPW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 16:15:22 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37588 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751968AbeA3VPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 16:15:20 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v71so3930004wmv.2
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 13:15:20 -0800 (PST)
+        id S1751880AbeA3VVj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 16:21:39 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:55388 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751662AbeA3VVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 16:21:38 -0500
+Received: by mail-wm0-f47.google.com with SMTP id 143so3979004wma.5
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 13:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=kT8X+b9rQDQ60Etr2hAyg0RyABzkH2q1QcI2oYiEJi4=;
-        b=mK1g3bhdje+clf8S7ZbH6kgnx+P8lqAuJe5ST9cSxd7v2QdWsOPpEkez9dU+45e3C0
-         OG2JCb62KxsP50qyATMBEbBxZqNtzs4+rbiiv6kyEZiND4TYlD/Rh05V9s2VHDKi5ZbT
-         KWidaBd/Fs7PXygAXE7mfXfiT7/UbCZcu9zMyS9NWbL2xUjT+eNqtHasM8pvWi1nnijY
-         pdHyMmXUkFb8fTUymSNToFT4ELQrgi3bJ+rnNSD5FRmJ3Q26ku7Jrtq6N8QAnIn8s1Bs
-         TWNfaOP00dwYeEfQNf3Rt1IZk143Zd8mmeoAuWpnK+HsnEr6Uva8CHxKuwzRVeEQM4op
-         lMpQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=5xMlh+7452YJvbf2Q3D8pIoRnvYsh3tCMIqz7mzvL28=;
+        b=Igu5RjPzrR/n3jK4/KJ78LGryVZ4J1EtbQAexLeec7idqQfmpSfbKdIGtPSobUX5u7
+         8ZzxufygOtmoeXjMTbfdfvOtaRcb7TGr0HRFNM5Lh9sxcmvyLbyOe3LkFJVJ512ZEQAo
+         nT2O4+nQlFBQCK7SWz+CKePKwMlqFmssgknkxY91YU3d4OILQRnPxMl93jzUVmolmhUz
+         aDFMBVY11i7/Dy/AMPX8h7+ODzzuu5QFmF8ppQRKBEWlVJoLzOyNfLirPb2l5w1crYzr
+         ryNwfsriwSJGHiFqvyQ6cRJnN3nhRjEnceyN1CVCb09nRFUOhpnRLTRwE2Vsmqsma4pf
+         q8Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=kT8X+b9rQDQ60Etr2hAyg0RyABzkH2q1QcI2oYiEJi4=;
-        b=Rqge2wT57+JrEdUk+lQauWh8N/EQZT2EZqkIhwNlzTYwEalJwX1duxmvvC84/KgWyp
-         qoYyqw0tX9+X+pchwDTBg8Zm/ohJiC3BRP8n3UMxAllYYTh3DbK1rphwC3DI+5DI6HsJ
-         hiYkdr7/mpfRwrnxP9anzcf/XRaqTwKCB9FJBRdpxVnmuRs1AAK/sfcJnnFI1Ed/xav/
-         pAcxOMmjpRemctj3PqUAwXkj2J8UMnf5deGUdDWpGSwZkHI3pL14MI4BvlHnCRpjWIGw
-         ED147t30iCP6hoBB+vM9Bwr51oIk3/7YREfWxTi2GweH0jM0C9W4zj9vcokqH5fYJUjv
-         9OXw==
-X-Gm-Message-State: AKwxytdQOm19Yn4gEGzSjnpp3ZG9mU+jx73qDMCig38+33N6ELw2X0Mc
-        jV2Ha0Cfw/YW8vrcJ65EZfneAtN5
-X-Google-Smtp-Source: AH8x225NeUaxw6/PNMCencY6bvlh/dXwamMS2H8uYFKuiYGX1isKh5WIQ//HqtP7tGoBUNw/F1K6Eg==
-X-Received: by 10.28.7.68 with SMTP id 65mr21177835wmh.9.1517346919253;
-        Tue, 30 Jan 2018 13:15:19 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e67sm29308576wmf.7.2018.01.30.13.15.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Jan 2018 13:15:18 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] git-svn: control destruction order to avoid segfault
-References: <20180129015134.GN431130@genre.crustytoothpaste.net>
-        <20180129025812.GD1427@zaya.teonanacatl.net>
-        <20180129120627.al2xvx4yhhvwn6ih@untitled>
-        <20180129184345.GI1427@zaya.teonanacatl.net>
-        <20180129231653.GA22834@starla>
-Date:   Tue, 30 Jan 2018 13:15:18 -0800
-In-Reply-To: <20180129231653.GA22834@starla> (Eric Wong's message of "Mon, 29
-        Jan 2018 23:16:53 +0000")
-Message-ID: <xmqqvafjrqu1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=5xMlh+7452YJvbf2Q3D8pIoRnvYsh3tCMIqz7mzvL28=;
+        b=pE+5GTpTF8mKEaJDVupsUcsF69lVb7im0r8hiYqTS6kAp4Q8BO+Zwf7lEjXGuIo7YB
+         CokgjgyEbAEdMK49tr0a/Itj/XaPUmxD+13tg/CCLLQivF162bMNXaIjr91uDXQmqf/0
+         AnvPHpl5nweQ+G1ksJzI0NwvY32rH3aCcCz9Y5x4W/7ALtN1ZsE50HomO/IlvOtDWqnv
+         itVU7ERZUTC9Jibf0r/tmVXKtmOSG3f3H9IkmwSUx0SpXm26ToHMwsQR0+VmUBuDnqn5
+         o09wGDLGgqf9dI+VdgXo7sCNsUre9Rxtkwx5y2qvFJuMu6GpY+vwH1jlFi0wN0w2CREK
+         K4zQ==
+X-Gm-Message-State: AKwxytfSrZ33hbO0IvEfE6mPyYsaKmv7rskAv+X4WU+kuUOhT+/KlDho
+        JLI3HNaAdPrdOhGluFlC1qOICJym
+X-Google-Smtp-Source: AH8x2247hB3E2+r0AcElt6o31Jjv5bdkHeY8BDHo8UDyI2Mp4dJknKodbvYAvXE0HhGFfFZBg+TNDg==
+X-Received: by 10.80.181.93 with SMTP id z29mr38862091edd.223.1517347296799;
+        Tue, 30 Jan 2018 13:21:36 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id c5sm8487748ede.30.2018.01.30.13.21.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 Jan 2018 13:21:35 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Anthony Ramine <n.oxyde@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "Kyle J . McKay" <mackyle@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 00/10] increase wildmatch test coverage
+Date:   Tue, 30 Jan 2018 21:21:14 +0000
+Message-Id: <20180130212124.2099-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.15.1.424.g9478a66081
+In-Reply-To: <20180104192657.28019-1-avarab@gmail.com>
+References: <20180104192657.28019-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+v5 has been a long time coming (20 days since I said I'd re-roll
+this), but hopefully this is a version that works well for everyone,
+including Windows users. Changes:
 
-> Todd Zullinger <tmz@pobox.com> wrote:
->> I'm running the tests with and without your patch as well.
->> So far I've run t9128 300 times with the patch and no
->> failures.  Without it, it's failed 3 times in only a few
->> dozen runs.  That's promising.
->
-> Thanks for confirming it works on other systems.
-> Pull request and patch below:
->
-> The following changes since commit 5be1f00a9a701532232f57958efab4be8c959a29:
->
->   First batch after 2.16 (2018-01-23 13:21:10 -0800)
->
-> are available in the Git repository at:
->
->   git://bogomips.org/git-svn.git svn-branch-segfault
->
-> for you to fetch changes up to 2784b8d68faca823489949cbc69ead2f296cfc07:
->
->   git-svn: control destruction order to avoid segfault (2018-01-29 23:12:00 +0000)
->
-> ----------------------------------------------------------------
-> Eric Wong (1):
->       git-svn: control destruction order to avoid segfault
->
->  git-svn.perl | 5 +++++
->  1 file changed, 5 insertions(+)
+Ævar Arnfjörð Bjarmason (10):
+  wildmatch test: indent with tabs, not spaces
+  wildmatch test: use more standard shell style
+  wildmatch test: don't try to vertically align our output
+  wildmatch test: use a paranoia pattern from nul_match()
+  wildmatch test: remove dead fnmatch() test code
 
-Thanks.  I'd actually apply this as a patch instead of pullilng, as
-I suspect you'd want it in 'maint' as well, though.
+No changes.
 
+  wildmatch test: use test_must_fail, not ! for test-wildmatch
 
-> ---------8<---------
-> Subject: [PATCH] git-svn: control destruction order to avoid segfault
->
-> It seems necessary to control destruction ordering to avoid a
-> segfault with SVN 1.9.5 when using "git svn branch".
-> I've also reported the problem against libsvn-perl to Debian
-> [Bug #888791], but releasing the SVN::Client instance can be
-> beneficial anyways to save memory.
->
-> ref: https://bugs.debian.org/888791
-> Tested-by: Todd Zullinger <tmz@pobox.com>
-> Reported-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  git-svn.perl | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 76a75d0b3d..a6b6c3e40c 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1200,6 +1200,11 @@ sub cmd_branch {
->  	$ctx->copy($src, $rev, $dst)
->  		unless $_dry_run;
->  
-> +	# Release resources held by ctx before creating another SVN::Ra
-> +	# so destruction is orderly.  This seems necessary with SVN 1.9.5
-> +	# to avoid segfaults.
-> +	$ctx = undef;
-> +
->  	$gs->fetch_all;
->  }
+NEW: Fix a tiny nit I spotted while re-rolling.
+
+  wildmatch test: perform all tests under all wildmatch() modes
+
+The testing of various wildmatch modes got factored into a
+function. It makes no difference to this patch, but makes a huge
+difference in readability to the follow-up patch.
+
+Also I stopped renaming "match" to "wildtest", I can't remeber why I
+did that in the first place, but no point in doing that, and this
+makes things easier to review...
+
+  wildmatch test: create & test files on disk in addition to in-memory
+
+Almost entirely based on feedback from Johannes:
+
+a) This is now much more friendly under -x, as little test code as
+possible outside actual tests.
+
+b) Factored out into functions
+
+c) Gave variables better names
+
+d) Hopefully runs under Windows now without errors, due to a blacklist
+of filenames that aren't allowed on Windows. Commit message now
+mentions this.
+
+e) This should be a lot faster than before, since I factored out the
+setup work being done for every test so it's only done
+
+f) At this point I can't remember who/where this was pointed out, but
+it was observed that I was using a very dangerous looking `rm -rf --
+*` pattern in the old test, turns out this could be replaced with a
+less scary `git clean -df`.
+
+  test-lib: add an EXPENSIVE_ON_WINDOWS prerequisite
+  wildmatch test: mark test as EXPENSIVE_ON_WINDOWS
+
+Follow-up my 87mv1raz9p.fsf@evledraar.gmail.com from the v4 thread,
+and create an EXPENSIVE_ON_WINDOWS prerequisite, which is then used
+for the file tests so they're skipped on Windows by default.
+
+Even though 8/10 should be faster now, and hopefully passes on
+Windows, I still expect it to be quite slow on Windows, so let's not
+run it there by default unless under GIT_TEST_LONG=1.
+
+ t/helper/test-wildmatch.c |   2 +
+ t/t3070-wildmatch.sh      | 655 +++++++++++++++++++++++++++++-----------------
+ t/test-lib.sh             |   4 +
+ 3 files changed, 416 insertions(+), 245 deletions(-)
+
+-- 
+2.15.1.424.g9478a66081
+
