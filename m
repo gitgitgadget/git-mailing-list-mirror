@@ -2,154 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819BF1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 19:57:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 622701F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 20:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752329AbeA3T5P (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 14:57:15 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:38939 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751753AbeA3T5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 14:57:14 -0500
-Received: by mail-wm0-f49.google.com with SMTP id b21so3534197wme.4
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 11:57:13 -0800 (PST)
+        id S1752792AbeA3UF0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 15:05:26 -0500
+Received: from mail-wr0-f178.google.com ([209.85.128.178]:33746 "EHLO
+        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752060AbeA3UFZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 15:05:25 -0500
+Received: by mail-wr0-f178.google.com with SMTP id s5so12571692wra.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 12:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dbWc9CVO3Gxo5upph4pN2aKM1YZ5EIJSSOYOcEbsy50=;
-        b=o8UmjFkHb7l4sSiyKlIXlu45oVW5J8hXrm2qO+REtfQCWpDnerXB/ByJl5PsrKWGvq
-         fma8pRaGad5bRzR2dLEZDEvLcX+iQMPOdwoiNy5d4ckIxP5M4f8FACX8/dvhEF8miTDn
-         tYjDPncFTLQ+H7vnmRVHONgorL0QDth58/erIbU9FY6Zb4fZ0nA3bgr/U4uhLYU3Cg2h
-         jWwp52JqFMQaZEC4HQh8BlgwKLtuxU4Z28onK6Znba1W2BkqpTobUTKof1rDOYOBUOPb
-         11TESDJeZVsS5dI5cySkDYgq649wu+f47K3B17fhfXKHRhYY3XGwWh5N57qz86eLsCgy
-         tq6Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zeYQrOwYxWgB2Jryi90xPn2L4E1AZVeDGJjrwkFNq6g=;
+        b=ZdVwPm3sSC3bHzZqc1erGujGLFNnEmOfR6Lt0Ee5pK/Zqn3QBlc30yUqW8xJHg5fog
+         48a3YCMDE2Vvdnd6PU5PjDQXVkg1bWLhWFSlncYCd8uqivszpIZSXMfi+EI6lDv9dodn
+         fMVdr/6zg6n6zL0NYFMK3YuNOG4M83hjFS8fNcN3FEZdeEh9M75SxdnT7R314cz3bni+
+         VpbfFBONXVWfquv/m6ggXtVRW8peM10qsCjN+r9jFUN5JEBdVSrcBVpoMdJMn79/6zT8
+         7CzqAmN/HKZgQqz2xZ5U0ktcK5ztAq3coHZSlr7wNVyBqyNYoUSc+dfxY+S4gwoMVh0E
+         6+FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dbWc9CVO3Gxo5upph4pN2aKM1YZ5EIJSSOYOcEbsy50=;
-        b=AJf4z2pPoXob4nlDKX2KqhBxzYlwdDVQAgjivEMGRwRAbAkEjylrreVl+HKacUvshQ
-         ImHTrGdqvSbEg17QVfb+u7MggET4UHFmDg7GA4hNMbdduXvf0hoHzcvVeuCp5nbgG7YR
-         Lg1ly/G11cqdVUUb+opHfkSk45V7WvQbVh9inFy+LZ5rSkV+AX4nBUPQfB27D8hXh3XK
-         xc6CfgaR1coecwT8G+25WpRp8snGIV878NOA75m+DZmSJ9oXCT8Q7zNMI8yLr2R9AFJe
-         OxSiU13o+vpUIgAlOl5/JnkwWBgUPm2NFqirymLu/JfhZvosci5bbhNY1LZTIdBKbm8D
-         Vo9A==
-X-Gm-Message-State: AKwxytfCO4mnP9+JpEicJG5Y1LowC3WVAtmrNQyywfjkzwRV9g3XukW/
-        SP3jCiJEnHVJZVQQRJGqAgl5mdrA
-X-Google-Smtp-Source: AH8x226ZT0UM+by4PtFLuwHV/AwP9F9Ru2DuCgf3P4/SIuQ6WRAMH7BzwFbuvgEJAdbsrOO7+6KTNQ==
-X-Received: by 10.28.225.133 with SMTP id y127mr20262743wmg.55.1517342232419;
-        Tue, 30 Jan 2018 11:57:12 -0800 (PST)
-Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
-        by smtp.gmail.com with ESMTPSA id k125sm30435279wmd.48.2018.01.30.11.57.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Jan 2018 11:57:11 -0800 (PST)
-Subject: Re: git stash ; git stash pop unstages all staged changes
-To:     =?UTF-8?Q?Martin_H=c3=a4cker?= <mhaecker@schwarz-online.org>
-References: <454AAA27-B8D3-47F9-8E49-EC5415A26FCE@schwarz-online.org>
-Cc:     git@vger.kernel.org
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com>
-Date:   Tue, 30 Jan 2018 20:57:07 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zeYQrOwYxWgB2Jryi90xPn2L4E1AZVeDGJjrwkFNq6g=;
+        b=iidMdt+enwihcEP0ogpNNrLArZ+IzFrIZS9cawvOF0IBoKtYWwF3f4A7wJCrBKz8zn
+         gRwe7sIa4dRa7dlMZq2eKwVAu9Ac5E1SD9USot0lBfw8QnZGd9aYR0KofqaiyFAZD0YI
+         Z4cWU6l8hsyilPahjwItbdNvofEDAzY+GDPdo0oxeX+m2HVaA9sBu91Az4JfO6Rv5rG5
+         V5swhdpZpoIb/Wh1sn/xR2pNEHDrqztmQQNLhSLmGhIxyyHhtGGqz7lcC2YhSpjAJUcy
+         aKmIFHuBL/j9yvJXmm8drSv/Q/LuzQRZsz03euEKpncrizp8iz3CwpGQD6Zbg1gRrJl0
+         HDMg==
+X-Gm-Message-State: AKwxytey/OumHdmg+y/e7v5LUsdeo/E2KCcpHV1XJB6ILZIWV/XUDrC/
+        /Zj529CoLgQBbzxTOf6K1Cs=
+X-Google-Smtp-Source: AH8x2255WoskEzUCsB2ibr7daPBSutA5WXwlKoDylQeIUC1m97anT/VcRnErvhQyNv2qAF3L9aw3CA==
+X-Received: by 10.223.150.208 with SMTP id u74mr13489909wrb.193.1517342723904;
+        Tue, 30 Jan 2018 12:05:23 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 14sm4894568wrb.47.2018.01.30.12.05.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Jan 2018 12:05:22 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     lars.schneider@autodesk.com, git@vger.kernel.org, j6t@kdbg.org,
+        sunshine@sunshineco.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
+        --to=larsxschneider@gmail.com,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v5 5/7] convert: add 'working-tree-encoding' attribute
+References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
+        <20180129201908.9398-1-tboegi@web.de>
+Date:   Tue, 30 Jan 2018 12:05:22 -0800
+In-Reply-To: <20180129201908.9398-1-tboegi@web.de> (tboegi@web.de's message of
+        "Mon, 29 Jan 2018 21:19:08 +0100")
+Message-ID: <xmqqzi4vt8n1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <454AAA27-B8D3-47F9-8E49-EC5415A26FCE@schwarz-online.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marten,
+tboegi@web.de writes:
 
-On 30/01/2018 11:05, Martin Häcker wrote:
-> 
-> I just lost quite some work, because `git stash; git stash pop` 
-> doesn’t seem to understand the concept of the index correctly.
+> +	if ((conv_flags & CONV_WRITE_OBJECT) && !strcmp(enc->name, "SHIFT-JIS")) {
+> +		char *re_src;
+> +		int re_src_len;
 
-I`m afraid it actually seems you`re not fully understanding how `git 
-stash pop` works - but the good news is none of your work is lost, as 
-long as you have the stash sha1 (or you can find/restore it through 
-`git fsck`).
+I think it is a bad idea to 
 
-> What git stash does get right is that it does remove everything that 
-> is stashed from the current state of the repo, but what it doesn’t 
-> get right is restoring that state fatefully in `git stash pop`.
+ (1) not check without CONV_WRITE_OBJECT here.
+ (2) hardcode SJIS and do this always and to SJIS alone.
 
-According `git stash pop`[1] documentation, this is as expected, but 
-I see the confusing part:
+For (1), a fix would be obvious (and that will resurrect the dead
+code below).
 
-  Remove a single stashed state from the stash list and apply it on top 
-  of the current working tree state, i.e., do the inverse operation of 
-  `git stash push`. The working directory must match the index.
+For (2), perhaps introduce a multi-value configuration variable
+core.checkRoundtripEncoding, whose default value consists of just
+SJIS, but allow users to add or clear it?
 
-It clearly says that stash is applied "on top of the current _working 
-tree_ state" (so _not_ index), but then it says "i.e., do the inverse 
-operation of `git stash push`", which is not exactly true (in regards 
-to index handling, no options provided explicitly).
+> +		re_src = reencode_string_len(dst, dst_len,
+> +					     enc->name, default_encoding,
+> +					     &re_src_len);
+> +
+> +		if (!re_src || src_len != re_src_len ||
+> +		    memcmp(src, re_src, src_len)) {
+> +			const char* msg = _("encoding '%s' from %s to %s and "
+> +					    "back is not the same");
+> +			if (conv_flags & CONV_WRITE_OBJECT)
+> +				die(msg, path, enc->name, default_encoding);
+> +			else
+> +				error(msg, path, enc->name, default_encoding);
 
-Later below, it notes what to do to restore index as well:
-
-  If the `--index` option is used, then tries to reinstate not only the 
-  working tree’s changes, but also the index’s ones. However, this can 
-  fail, when you have conflicts (which are stored in the index, where 
-  you therefore can no longer apply the changes as they were originally).
-
-> As a user, I would expect that `git stash pop` undoes the change that 
-> `git stash` inflicted.
-
-This seems as a fair expectation, especially when documentation 
-itself states that `git stash pop` is reverse operation of `git stash 
-push`...
-
-As to why `git stash pop` behaves like this, I would leave to someone 
-more informed to answer, what I myself managed to dig out so far is that 
-it seems `--index` was originally discussed to be a default indeed, 
-with `--skip-index` to turn it off if needed, see "[PATCH] Teach 
-git-stash to "apply --index""[2] (2007-07-02, Johannes Schindelin) 
-(note that `git stash pop` is essentially `git stash apply && git 
-stash drop`).
-
-For the reference, here are some similar topics:
- - "[BUG] git stash doesn't use --index as default"[3] (2013-10-11, James)
- - "Asymmetric default behavior of git stash"[4] (2013-08-27, Uwe Storbeck)
- - "Newbie question: Is it possible to undo a stash?"[5] (2008-05-14, Iván V.)
-
-Finally, here`s your demo script, just modified to use `git stash 
-pop --index` instead, yielding desired results:
-
-  mkdir test
-  cd test
-  git init
-  touch foo
-  git add foo
-  git commit -m "initial commit"
-  echo "bar" >> foo
-  git status
-  git add foo
-  git status
-  echo "baz" >> foo
-  git diff
-  git status
-  git stash
-  git status
-  git stash pop --index
-  git diff
-
-
-Regards, Buga
-
-[1] https://git-scm.com/docs/git-stash#git-stash-pop--index-q--quietltstashgt
-[2] https://public-inbox.org/git/Pine.LNX.4.64.0707021213350.4438@racer.site/T/#u
-[3] https://public-inbox.org/git/1381467430.4130.38.camel@freed.purpleidea.com/T/#u
-[4] https://public-inbox.org/git/20130827132210.GA14266@ibr.ch/T/#u
-[5] https://public-inbox.org/git/509f40850805141256gce6ac1brf5ced6436f81dae8@mail.gmail.com/T/#u
+The "error" side of this inner if() is dead code, I think.
