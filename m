@@ -2,41 +2,41 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 524C31F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B724D1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932214AbeA3XpW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:45:22 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36742 "EHLO
+        id S932212AbeA3XpV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:45:21 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36744 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932194AbeA3XpS (ORCPT
+        by vger.kernel.org with ESMTP id S932193AbeA3XpS (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:18 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJM7009740;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJM8009740;
         Tue, 30 Jan 2018 15:25:34 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d4-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d5-1;
         Tue, 30 Jan 2018 15:25:34 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 204E1221A563;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 42BDF221A56A;
         Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 17DEC2CDEB4;
+        by smtp.yojoe.local (Postfix) with ESMTP id 3C0D52CDEB7;
         Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 01/31] directory rename detection: basic testcases
-Date:   Tue, 30 Jan 2018 15:25:03 -0800
-Message-Id: <20180130232533.25846-2-newren@gmail.com>
+Subject: [PATCH v7 04/31] directory rename detection: partially renamed directory testcase/discussion
+Date:   Tue, 30 Jan 2018 15:25:06 -0800
+Message-Id: <20180130232533.25846-5-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -58,475 +58,148 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 442 ++++++++++++++++++++++++++++++=
+ t/t6043-merge-rename-directories.sh | 107 ++++++++++++++++++++++++++++++=
 ++++++
- 1 file changed, 442 insertions(+)
- create mode 100755 t/t6043-merge-rename-directories.sh
+ 1 file changed, 107 insertions(+)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-new file mode 100755
-index 0000000000..d045f0e31e
---- /dev/null
+index 8049ed5fc9..f0213f2bbd 100755
+--- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -0,0 +1,442 @@
-+#!/bin/sh
+@@ -735,4 +735,111 @@ test_expect_success '3b-check: Avoid implicit renam=
+e if involved as source on cu
+ #   of a rename on either side of a merge.
+ ########################################################################=
+###
+=20
 +
-+test_description=3D"recursive merge with directory renames"
-+# includes checking of many corner cases, with a similar methodology to:
-+#   t6042: corner cases with renames but not criss-cross merges
-+#   t6036: corner cases with both renames and criss-cross merges
++########################################################################=
+###
++# SECTION 4: Partially renamed directory; still exists on both sides of =
+merge
 +#
-+# The setup for all of them, pictorially, is:
++# What if we were to attempt to do directory rename detection when someo=
+ne
++# "mostly" moved a directory but still left some files around, or,
++# equivalently, fully renamed a directory in one commmit and then recrea=
+ted
++# that directory in a later commit adding some new files and then tried =
+to
++# merge?
 +#
-+#      A
-+#      o
-+#     / \
-+#  O o   ?
-+#     \ /
-+#      o
-+#      B
-+#
-+# To help make it easier to follow the flow of tests, they have been
-+# divided into sections and each test will start with a quick explanatio=
++# It's hard to divine user intent in these cases, because you can make a=
 n
-+# of what commits O, A, and B contain.
++# argument that, depending on the intermediate history of the side being
++# merged, that some users will want files in that directory to
++# automatically be detected and renamed, while users with a different
++# intermediate history wouldn't want that rename to happen.
 +#
-+# Notation:
-+#    z/{b,c}   means  files z/b and z/c both exist
-+#    x/d_1     means  file x/d exists with content d1.  (Purpose of the
-+#                     underscore notation is to differentiate different
-+#                     files that might be renamed into each other's path=
-s.)
-+
-+. ./test-lib.sh
-+
-+
++# I think that it is best to simply not have directory rename detection
++# apply to such cases.  My reasoning for this is four-fold: (1) it's
++# easiest for users in general to figure out what happened if we don't
++# apply directory rename detection in any such case, (2) it's an easy ru=
+le
++# to explain ["We don't do directory rename detection if the directory
++# still exists on both sides of the merge"], (3) we can get some hairy
++# edge/corner cases that would be really confusing and possibly not even
++# representable in the index if we were to even try, and [related to 3] =
+(4)
++# attempting to resolve this issue of divining user intent by examining
++# intermediate history goes against the spirit of three-way merges and i=
+s a
++# path towards crazy corner cases that are far more complex than what we=
+'re
++# already dealing with.
++#
++# This section contains a test for this partially-renamed-directory case=
+.
 +########################################################################=
 ###
-+# SECTION 1: Basic cases we should be able to handle
-+########################################################################=
-###
 +
-+# Testcase 1a, Basic directory rename.
-+#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d,e/f}
-+#   Expected: y/{b,c,d,e/f}
++# Testcase 4a, Directory split, with original directory still present
++#   (Related to testcase 1f)
++#   Commit O: z/{b,c,d,e}
++#   Commit A: y/{b,c,d}, z/e
++#   Commit B: z/{b,c,d,e,f}
++#   Expected: y/{b,c,d}, z/{e,f}
++#   NOTE: Even though most files from z moved to y, we don't want f to f=
+ollow.
 +
-+test_expect_success '1a-setup: Simple directory rename detection' '
-+	test_create_repo 1a &&
++test_expect_success '4a-setup: Directory split, with original directory =
+still present' '
++	test_create_repo 4a &&
 +	(
-+		cd 1a &&
++		cd 4a &&
 +
 +		mkdir z &&
 +		echo b >z/b &&
 +		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
 +		echo d >z/d &&
-+		mkdir z/e &&
-+		echo f >z/e/f &&
-+		git add z/d z/e/f &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1a-check: Simple directory rename detection' '
-+	(
-+		cd 1a &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 4 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:y/e/f &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    B:z/d    B:z/e/f &&
-+		test_cmp expect actual &&
-+
-+		git hash-object y/d >actual &&
-+		git rev-parse B:z/d >expect &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse HEAD:z/d &&
-+		test_must_fail git rev-parse HEAD:z/e/f &&
-+		test_path_is_missing z/d &&
-+		test_path_is_missing z/e/f
-+	)
-+'
-+
-+# Testcase 1b, Merge a directory with another
-+#   Commit O: z/{b,c},   y/d
-+#   Commit A: z/{b,c,e}, y/d
-+#   Commit B: y/{b,c,d}
-+#   Expected: y/{b,c,d,e}
-+
-+test_expect_success '1b-setup: Merge a directory with another' '
-+	test_create_repo 1b &&
-+	(
-+		cd 1b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir y &&
-+		echo d >y/d &&
-+		git add z y &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
 +		echo e >z/e &&
-+		git add z/e &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z/b y &&
-+		git mv z/c y &&
-+		rmdir z &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1b-check: Merge a directory with another' '
-+	(
-+		cd 1b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 4 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:y/e &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    O:y/d    A:z/e &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:z/e
-+	)
-+'
-+
-+# Testcase 1c, Transitive renaming
-+#   (Related to testcases 3a and 6d -- when should a transitive rename a=
-pply?)
-+#   (Related to testcases 9c and 9d -- can transitivity repeat?)
-+#   Commit O: z/{b,c},   x/d
-+#   Commit A: y/{b,c},   x/d
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c,d}  (because x/d -> z/d -> y/d)
-+
-+test_expect_success '1c-setup: Transitive renaming' '
-+	test_create_repo 1c &&
-+	(
-+		cd 1c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1c-check: Transitive renaming' '
-+	(
-+		cd 1c &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    O:x/d &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:x/d &&
-+		test_must_fail git rev-parse HEAD:z/d &&
-+		test_path_is_missing z/d
-+	)
-+'
-+
-+# Testcase 1d, Directory renames (merging two directories into one new o=
-ne)
-+#              cause a rename/rename(2to1) conflict
-+#   (Related to testcases 1c and 7b)
-+#   Commit O. z/{b,c},        y/{d,e}
-+#   Commit A. x/{b,c},        y/{d,e,m,wham_1}
-+#   Commit B. z/{b,c,n,wham_2}, x/{d,e}
-+#   Expected: x/{b,c,d,e,m,n}, CONFLICT:(y/wham_1 & z/wham_2 -> x/wham)
-+#   Note: y/m & z/n should definitely move into x.  By the same token, b=
-oth
-+#         y/wham_1 & z/wham_2 should too...giving us a conflict.
-+
-+test_expect_success '1d-setup: Directory renames cause a rename/rename(2=
-to1) conflict' '
-+	test_create_repo 1d &&
-+	(
-+		cd 1d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir y &&
-+		echo d >y/d &&
-+		echo e >y/e &&
-+		git add z y &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z x &&
-+		echo m >y/m &&
-+		echo wham1 >y/wham &&
-+		git add y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv y x &&
-+		echo n >z/n &&
-+		echo wham2 >z/wham &&
 +		git add z &&
 +		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		mkdir y &&
++		git mv z/b y/ &&
++		git mv z/c y/ &&
++		git mv z/d y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo f >z/f &&
++		git add z/f &&
++		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_failure '1d-check: Directory renames cause a rename/rename(2=
-to1) conflict' '
++test_expect_success '4a-check: Directory split, with original directory =
+still present' '
 +	(
-+		cd 1d &&
++		cd 4a &&
 +
 +		git checkout A^0 &&
 +
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		git merge -s recursive B^0 &&
 +
 +		git ls-files -s >out &&
-+		test_line_count =3D 8 out &&
++		test_line_count =3D 5 out &&
 +		git ls-files -u >out &&
-+		test_line_count =3D 2 out &&
++		test_line_count =3D 0 out &&
 +		git ls-files -o >out &&
-+		test_line_count =3D 3 out &&
++		test_line_count =3D 1 out &&
 +
 +		git rev-parse >actual \
-+			:0:x/b :0:x/c :0:x/d :0:x/e :0:x/m :0:x/n &&
++			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:z/e HEAD:z/f &&
 +		git rev-parse >expect \
-+			 O:z/b  O:z/c  O:y/d  O:y/e  A:y/m  B:z/n &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse :0:x/wham &&
-+		git rev-parse >actual \
-+			:2:x/wham :3:x/wham &&
-+		git rev-parse >expect \
-+			 A:y/wham  B:z/wham &&
-+		test_cmp expect actual &&
-+
-+		test_path_is_missing x/wham &&
-+		test_path_is_file x/wham~HEAD &&
-+		test_path_is_file x/wham~B^0 &&
-+
-+		git hash-object >actual \
-+			x/wham~HEAD x/wham~B^0 &&
-+		git rev-parse >expect \
-+			A:y/wham    B:z/wham &&
++			O:z/b    O:z/c    O:z/d    O:z/e    B:z/f &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+# Testcase 1e, Renamed directory, with all filenames being renamed too
-+#   Commit O: z/{oldb,oldc}
-+#   Commit A: y/{newb,newc}
-+#   Commit B: z/{oldb,oldc,d}
-+#   Expected: y/{newb,newc,d}
-+
-+test_expect_success '1e-setup: Renamed directory, with all files being r=
-enamed too' '
-+	test_create_repo 1e &&
-+	(
-+		cd 1e &&
-+
-+		mkdir z &&
-+		echo b >z/oldb &&
-+		echo c >z/oldc &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir y &&
-+		git mv z/oldb y/newb &&
-+		git mv z/oldc y/newc &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1e-check: Renamed directory, with all files being r=
-enamed too' '
-+	(
-+		cd 1e &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/newb HEAD:y/newc HEAD:y/d &&
-+		git rev-parse >expect \
-+			O:z/oldb    O:z/oldc    B:z/d &&
-+		test_cmp expect actual &&
-+		test_must_fail git rev-parse HEAD:z/d
-+	)
-+'
-+
-+# Testcase 1f, Split a directory into two other directories
-+#   (Related to testcases 3a, all of section 2, and all of section 4)
-+#   Commit O: z/{b,c,d,e,f}
-+#   Commit A: z/{b,c,d,e,f,g}
-+#   Commit B: y/{b,c}, x/{d,e,f}
-+#   Expected: y/{b,c}, x/{d,e,f,g}
-+
-+test_expect_success '1f-setup: Split a directory into two other director=
-ies' '
-+	test_create_repo 1f &&
-+	(
-+		cd 1f &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d >z/d &&
-+		echo e >z/e &&
-+		echo f >z/f &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		echo g >z/g &&
-+		git add z/g &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		mkdir y &&
-+		mkdir x &&
-+		git mv z/b y/ &&
-+		git mv z/c y/ &&
-+		git mv z/d x/ &&
-+		git mv z/e x/ &&
-+		git mv z/f x/ &&
-+		rmdir z &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '1f-check: Split a directory into two other director=
-ies' '
-+	(
-+		cd 1f &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 6 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:x/d HEAD:x/e HEAD:x/f HEAD:x/g &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    O:z/d    O:z/e    O:z/f    A:z/g &&
-+		test_cmp expect actual &&
-+		test_path_is_missing z/g &&
-+		test_must_fail git rev-parse HEAD:z/g
-+	)
-+'
-+
 +########################################################################=
 ###
-+# Rules suggested by testcases in section 1:
++# Rules suggested by section 4:
 +#
-+#   We should still detect the directory rename even if it wasn't just
-+#   the directory renamed, but the files within it. (see 1b)
-+#
-+#   If renames split a directory into two or more others, the directory
-+#   with the most renames, "wins" (see 1c).  However, see the testcases
-+#   in section 2, plus testcases 3a and 4a.
++#   Directory-rename-detection should be turned off for any directories =
+(as
++#   a source for renames) that exist on both sides of the merge.  (The "=
+as
++#   a source for renames" clarification is due to cases like 1c where
++#   the target directory exists on both sides and we do want the rename
++#   detection.)  But, sadly, see testcase 8b.
 +########################################################################=
 ###
 +
-+test_done
+ test_done
 --=20
 2.16.1.106.gf69932adfe
 
