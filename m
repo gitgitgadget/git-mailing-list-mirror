@@ -2,215 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F364F1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:16:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E49CC1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752992AbeA3XQS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:16:18 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36490 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752412AbeA3XQR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 18:16:17 -0500
-Received: by mail-wm0-f66.google.com with SMTP id f3so4422910wmc.1
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:16:17 -0800 (PST)
+        id S1752203AbeA3XRe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:17:34 -0500
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:42923 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751429AbeA3XRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 18:17:33 -0500
+Received: by mail-yw0-f174.google.com with SMTP id u17so6101579ywg.9
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:17:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0+RYfQ7PfKn/GCpT9boic0NI/6UWFdtjdLCQAoe4L5I=;
-        b=rIrVMI4YoTBzIded25TM6hBYxGtBR9+aNU537EWHbohK9vQHtMPnqGXasOSkto88Sp
-         wAaQNUw8Jkft3VoAAoFUKBwsZNGm0KbBOIpfDIg+8xGWZ2IA83FNb6oz8Mrdz7WR+0TU
-         csSO6Bl6CEZV7FAH2FnNTs2ls0Qc3OdbMdylM4f9b3oVS4WCV/02D/W98Z0mhKSzoxos
-         FUbrZYlq7ttQ3/XoYSc3k6WwSgKeOLaCQQXaNT3rUStjvchyB2EpvrDV32mbByYyQy7x
-         KywShgVqkSeUuEcKcxzH5XAVos7MdcuhZmp97WdS7T3rSSBBioXLdsMn/1v8ZpCTdFbN
-         VPpQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=RF2zaEOl9bHiF60FnK3Kbm+f+t9Mywr2/XhfeY26Ptg=;
+        b=KpYUi5KkJklOSKyNLVefgWWVWLX4GTngXLSAN2uxU2AZjzhde/HGwiABSkJr0KmyLz
+         NlOarmF7HeSUoG5DIi5hWBctQ3GopFFSjzzMcezmOWvIhGwymryGevIE729+CYapS32F
+         PU0IQB1s+1lQbTnVC48gWjYymldIGqEzE7yNkr79h0+dS+R+ngfONtAzckwkrlGLbh9p
+         BhRNVzL5mz0U6RvkjofoBy9h+R+v6tQl7i6rVCKRb1XGRo/ItxWzthpKQkOYR6zzdoqF
+         6vEnkseFE1AaH4FFgVFXBWzALspQySYO2X7JqroxlxMY+a8lVXY3Ozn69VcjRDJbC2fD
+         kBfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0+RYfQ7PfKn/GCpT9boic0NI/6UWFdtjdLCQAoe4L5I=;
-        b=KpjldphjDZvo4Mkupx3/0BFCQanC6KJPV5X/6t1jlCwes58XC63+WGx0YNFEXusxB6
-         pXxuoZZz/wDiXgF2Cb6ma7YvL859nfa9Whp8eRzHkLTde09v92xiXiq7ioav4HRAFcai
-         j6z75ChJY4PxQda9KzK1D1pMWIGUSvM8UPx4bFt2l/zXiW0o9UDS6y1wO+EUwrOeRSMm
-         QYErlsIBC2nCwPc6XJqr0yn51wyMNQqeufTDLkCYG0gdnmaD4X23qGgciaL+6Jnx341D
-         ftSbEJRNncWbAqa1nhlCzbyR6zSB8Lo1yUIze1zBFw9xrEVebjjt/7570bDSekLjorA6
-         HXJg==
-X-Gm-Message-State: AKwxytfGQVQMjavWLr8FXtrAQXEDfUAkE7H4rBjpJ6tKNgrvvxYaAKSM
-        eAFampJTqNXePBYnI54IqY/KmEQf
-X-Google-Smtp-Source: AH8x2279Gpm0bT+WBSrv6hhaoqhMzNjf6dsrptq6+hp3GnRSrUW3lLjpQ4dh+I9h5l8if5HSlL6uoA==
-X-Received: by 10.80.178.99 with SMTP id o90mr6873501edd.255.1517354176140;
-        Tue, 30 Jan 2018 15:16:16 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id d4sm8078664eda.78.2018.01.30.15.16.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 30 Jan 2018 15:16:15 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        David Turner <dturner@twopensource.com>
-Subject: Re: Some rough edges of core.fsmonitor
-References: <87efmcw3fa.fsf@evledraar.gmail.com> <26b9d795-b2b3-905d-c67a-83bc4e976894@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <26b9d795-b2b3-905d-c67a-83bc4e976894@gmail.com>
-Date:   Wed, 31 Jan 2018 00:16:14 +0100
-Message-ID: <87vafjlyyp.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=RF2zaEOl9bHiF60FnK3Kbm+f+t9Mywr2/XhfeY26Ptg=;
+        b=jCoW5bYuIBFekEE0/wGgouZgSr/i6XrOrlGLxPoXXfj0mBPd2M0rWBccZniohyU/ZU
+         G9ZH3WxSdOGTdL5gxR6RUxpR8iHPtAJprK4J/2Kx54OI7tC+ucPOLmMb4SwWU/8ayO6g
+         bAAsXPKm19Nkscsj/ywMoHE6W29EChKG/OtsC+kml+KGBplazC8PajY5JY4GeRoobfyr
+         Y1sFrv3aQzsKB2Y0JsSmk4QDavD66rGStgBoh9rBgHaLkese4Y6Qfqk3LiQAnfjHq50d
+         QLlYR+4M44+5D/ONTzWEwBT8wWe2shOTpGVzhdi4rd/dv1vXLbWikVuqUY1yMgJq/tLq
+         FrkA==
+X-Gm-Message-State: AKwxytdUde3ZOK1M7HuPrOlUkIZjSyDYcHizAyYQ6Atgf0KyL+Ij02o5
+        HX+eJUnipt4rc1zGnHshpasz2WQg3elIlVcJWyk07Q==
+X-Google-Smtp-Source: AH8x225A8ZFYoEmgDEc+h6UuPbpcino9UaZqJaUheZNfhnzWjE3vTe9FdT0usDHHfjwI95yh1GBYdFbJXfzRBKQFPMQ=
+X-Received: by 10.37.33.67 with SMTP id h64mr7808194ybh.39.1517354252113; Tue,
+ 30 Jan 2018 15:17:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.207.9 with HTTP; Tue, 30 Jan 2018 15:17:31 -0800 (PST)
+In-Reply-To: <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
+References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
+ <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com> <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 30 Jan 2018 15:17:31 -0800
+Message-ID: <CAGZ79kafgyOujDM4BsXdDUnP+iFk5mp2bYnX-Q65khW-weEhUg@mail.gmail.com>
+Subject: Re: Bug Report: Subtrees and GPG Signed Commits
+To:     Stephen R Guglielmo <srguglielmo@gmail.com>,
+        Avery Pennarun <apenwarr@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Jan 30 2018, Ben Peart jotted:
-
-> While some of these issues have been discussed in other threads, I
-> thought I'd summarize my thoughts here.
-
-Thanks for this & your other reply. I'm going to get to testing some of
-Duy's patches soon, and if you have some other relevant WIP I'd be happy
-to try them, but meanwhile replying to a few of these:
-
-> On 1/26/2018 7:28 PM, Ævar Arnfjörð Bjarmason wrote:
->> I just got around to testing this since it landed, for context some
->> previous poking of mine in [1].
->>
->> Issues / stuff I've noticed:
->>
->> 1) We end up invalidating the untracked cache because stuff in .git/
->> changed. For example:
->>
->>      01:09:24.975524 fsmonitor.c:173         fsmonitor process '.git/hooks/fsmonitor-watchman' returned success
->>      01:09:24.975548 fsmonitor.c:138         fsmonitor_refresh_callback '.git'
->>      01:09:24.975556 fsmonitor.c:138         fsmonitor_refresh_callback '.git/config'
->>      01:09:24.975568 fsmonitor.c:138         fsmonitor_refresh_callback '.git/index'
->>      01:09:25.122726 fsmonitor.c:91          write fsmonitor extension successful
->>
->> Am I missing something or should we do something like:
->>
->>      diff --git a/fsmonitor.c b/fsmonitor.c
->>      index 0af7c4edba..5067b89bda 100644
->>      --- a/fsmonitor.c
->>      +++ b/fsmonitor.c
->>      @@ -118,7 +118,12 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
->>
->>       static void fsmonitor_refresh_callback(struct index_state *istate, const char *name)
->>       {
->>      -       int pos = index_name_pos(istate, name, strlen(name));
->>      +       int pos;
->>      +
->>      +       if (!strcmp(name, ".git") || starts_with(name, ".git/"))
->>      +               return;
->>      +
->>      +       pos = index_name_pos(istate, name, strlen(name));
->>
->>              if (pos >= 0) {
->>                      struct cache_entry *ce = istate->cache[pos];
->>
->> With that patch applied status on a large repo[2] goes from a consistent
->> ~180-200ms to ~140-150ms, since we're not invalidating some of the UC
->> structure
->>
+On Tue, Jan 30, 2018 at 11:15 AM, Stephen R Guglielmo
+<srguglielmo@gmail.com> wrote:
+> Hi, just following up on this bug report. I have not heard back. Is
+> there additional information that's needed? Is there a better place to
+> file bug reports?
 >
-> I favor making this optimization by updating
-> untracked_cache_invalidate_path() so that it ignores paths under
-> get_git_dir() and doesn't invalidate the untracked cache or flag the
-> index as dirty.
-
-*nod*
-
->> 2) We re-write out the index even though we know nothing changed
->>
->> When you first run with core.fsmonitor it needs to
->> mark_fsmonitor_clean() for every path, but is there a reason for why we
->> wouldn't supply the equivalent of GIT_OPTIONAL_LOCKS=0 if all paths are
->> marked and we know from the hook that nothing changed? Why write out the
->> index again?
->>
+> Additionally, I have confirmed that this bug still exists with git
+> version 2.16.1.
 >
-> Writing out the index when core.fsmonitor is first turned on is
-> necessary to get the index extension added with the current state of
-> the dirty flags.  Given it is a one time cost, I don't think we have
-> anything worth trying to optimize here.
-
-Indeed, that makes sense. What I was showing here is even after the
-initial setup we continue to write it out when we know nothing changed.
-
-We do that anyway without fsmonitor, but this seemed like a worthwhile
-thing to optimize.
-
->> 3) A lot of time spend reading the index (or something..)
->>
->> While the hook itself takes ~20ms (and watchman itself 1/4 of that)
->> status as a whole takes much longer. gprof reveals:
->>
->>      Each sample counts as 0.01 seconds.
->>        %   cumulative   self              self     total
->>       time   seconds   seconds    calls  ms/call  ms/call  name
->>       15.38      0.02     0.02   221690     0.00     0.00  memihash
->>       15.38      0.04     0.02   221689     0.00     0.00  create_from_disk
->>        7.69      0.05     0.01  2216897     0.00     0.00  git_bswap32
->>        7.69      0.06     0.01   222661     0.00     0.00  ce_path_match
->>        7.69      0.07     0.01   221769     0.00     0.00  hashmap_add
->>        7.69      0.08     0.01    39941     0.00     0.00  prep_exclude
->>        7.69      0.09     0.01    39940     0.00     0.00  strbuf_addch
->>        7.69      0.10     0.01        1    10.00    10.00  read_one
->>        7.69      0.11     0.01        1    10.00    10.00  refresh_index
->>        7.69      0.12     0.01        1    10.00    10.00  tweak_fsmonitor
->>        7.69      0.13     0.01                             preload_thread
->>
->> The index is 24M in this case, I guess it's unpacking it, but I wonder
->> if this couldn't be much faster if we saved away the result of the last
->> "status" in something that's quick to access, and then if nothing
->> changed we just report that, and no need to re-write the index (or just
->> write the "it was clean at this time" part).
+> Thanks
 >
-> Yes, reading the index is slow.  We've made some improvements (not
-> computing the SHA, not validating the sort order, etc) and have one
-> more in progress that will reduce the malloc() cost.  I haven't found
-> any other easy optimizations but it would be great if you could find
-> more! To make significant improvements, I'm afraid it will take more
-> substantial changes to the in memory and on disk formats and updates
-> to the code to take advantage of those changes.
+> On Thu, Jan 18, 2018 at 11:19 AM, Stephen R Guglielmo
+> <srguglielmo@gmail.com> wrote:
+>> Hi, just following up on this bug report. I have not heard back. Is
+>> there additional information that's needed? Is there a better place to
+>> file bug reports?
+>>
+>> Thanks
+>>
+>> On Sat, Jan 6, 2018 at 5:45 PM, Stephen R Guglielmo
+>> <srguglielmo@gmail.com> wrote:
+>>> Hi all,
+>>>
+>>> I've noticed an issue regarding the use of `git subtree add` and `git
+>>> subtree pull` when the subtree repository's commit (either HEAD or
+>>> whatever commit specified by the subtree command) is signed with GPG.
+>>> It seems to work properly if the commit is not signed but previous
+>>> commits are.
+>>>
+>>> The gist of the issue is that `git subtree add` does not add the
+>>> subree properly and a "fatal: Not a valid object name" error is
+>>> thrown. Running `git subtree pull` does not pull any upstream changes
+>>> after that ("'subtree' was never added").
+>>>
+>>> I have not done extensive testing, however, below are instructions to
+>>> reproduce the issue. This was tested using git version 2.15.1
+>>> installed via Homebrew on MacOS. I did not test with the built-in
+>>> version of git on MacOS.
+>>>
+>>> Thanks,
+>>> Steve
+>>>
+>>> # Create a new repository
+>>> mkdir repoA && cd repoA
+>>> git init
+>>> echo "Test File in Repo A" > FileA
+>>> git add -A && git commit -m 'Initial commit in repo A'
+>>>
+>>> # Create a second repository
+>>> cd .. && mkdir repoB && cd repoB
+>>> git init
+>>> echo "Test File in Repo B" > FileB
+>>> git add -A && git commit -m 'Initial commit in repo B'
+>>>
+>>> # Create a signed commit in repo B
+>>> echo "Signed Commit" >> FileB
+>>> git commit -a -S  -m 'Signed commit in repo B'
+>>>
+>>> # Now, add repoB as a subtree of RepoA
+>>> cd ../repoA
+>>> git subtree add --prefix repoB_subtree/ ../repoB/ master --squash
+>>> # Output:
+>>> git fetch ../repoB/ master
+>>> warning: no common commits
+>>> remote: Counting objects: 6, done.
+>>> remote: Compressing objects: 100% (2/2), done.
+>>> remote: Total 6 (delta 0), reused 0 (delta 0)
+>>> Unpacking objects: 100% (6/6), done.
+>>> From ../repoB
+>>>  * branch            master     -> FETCH_HEAD
+>>> fatal: Not a valid object name gpg: Signature made Sat Jan  6 17:38:31 2018 EST
+>>> gpg:                using RSA key 6900E9CFDD39B6A741D601F50999759F2DCF3E7C
+>>> gpg: Good signature from "Stephen Robert Guglielmo (Temple University
+>>> Computer Services) <srg@temple.edu>" [ultimate]
+>>> Primary key fingerprint: 6900 E9CF DD39 B6A7 41D6  01F5 0999 759F 2DCF 3E7C
+>>> 4b700b1a4ebb9e2c1011aafd6b0f720b38f059a4
+>>> # Note, git exits with status 128 at this point.
+>>>
+>>> # FileB was in fact added and staged to repoA, despite the "fatal"
+>>> above. Commit it:
+>>> git commit -m 'Add repoB subtree'
+>>>
+>>> # Ok, let's make another commit in repoB and try a `subtree pull`
+>>> instead of `subtree add`
+>>> cd ../repoB
+>>> echo "Another Line" >> FileB
+>>> git commit -a -S -m 'Another signed commit'
+>>> cd ../repoA
+>>> git subtree pull --prefix repoB_subtree/ ../repoB master --squash
+>>> # Output:
+>>> warning: no common commits
+>>> remote: Counting objects: 9, done.
+>>> remote: Compressing objects: 100% (3/3), done.
+>>> remote: Total 9 (delta 0), reused 0 (delta 0)
+>>> Unpacking objects: 100% (9/9), done.
+>>> From ../repoB
+>>>  * branch            master     -> FETCH_HEAD
+>>> Can't squash-merge: 'repoB_subtree' was never added.
+>>> # Note, git exits with status 1 at this point.
+>>>
+>>> # RepoB's third commit ('Another signed commit') is not pulled into
+>>> the subree in repo A.
+>>> # This can be verified by running a diff:
+>>> diff -qr --exclude ".git" repoB_subtree ../repoB
+>>> # Output:
+>>> Files repoB_subtree/FileB and ../repoB/FileB differ
 
-What I was wondering (not very clearly) is whether an easier
-optimization for now would be to speed up the case where nothing
-changed, that would involve just reading some flag in the index (or
-elsewhere) saying nothing changed last time, then the timestamp the
-fsmonitor writes, and trusting the hook when it says nothing changed
-since that timestamp.
+There has not been feedback for a while on this thread.
+I think that is because subtrees are not in anyone's hot
+interest area currently.
 
->>
->> 4) core.fsmonitor=false behaves unexpectedly
->>
->> The code that reads this variable just treats it as a string, so we do a
->> bunch of work for nothing (and nothing warns) if this is set and 'false'
->> is executed. Any reason we couldn't do our standard boolean parsing
->> here? You couldn't call your hook 0/1/true/false, but that doesn't seem
->> like a big loss.
->>
->> 1. https://public-inbox.org/git/CACBZZX5a6Op7dH_g9WOFBnejh2zgNK4b34ygxA8daNDqvitFVA@mail.gmail.com/
->> 2. https://github.com/avar/2015-04-03-1M-git
->>
->
-> I'm torn on this one.  The core.fsmontior setting isn't a boolean
-> value, its a string that is the command to run when we need file
-> system changes.  It would be pretty simple to add a call to
-> git_parse_maybe_bool_text() to treat "false," "no," or "off" the same
-> as an empty string but that makes it look even more like a boolean
-> when it isn't.
+This is definitely the right place to submit&discuss bugs.
+Looking through "git log --format="%ae %s" -S subtree",
+it seems as if Avery (apenwarr@gmail.com) was mostly
+interested in developing subtrees, though I think he has
+moved on. Originally it was invented by Junio, who is
+the active maintainer of the project in 68faf68938
+(A new merge stragety 'subtree'., 2007-02-15)
 
-Yes, that makes sense. I wonder though if we should warn if the hook is
-set and returning non-zero, right now that failure case is silent, maybe
-the hook would like to return an exit code for "don't ask me", but it
-seems better to make that 125 (like git bisect skip) instead of !0,
-since that makes the hook failing completely indistinguishable to the
-user from the hook doing its job.
+Thanks,
+Stefan
