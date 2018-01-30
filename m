@@ -2,197 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A69C71F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 14:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E540F1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 14:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752842AbeA3OkQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 09:40:16 -0500
-Received: from mout.web.de ([212.227.15.14]:62460 "EHLO mout.web.de"
+        id S1751262AbeA3Osk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 09:48:40 -0500
+Received: from mout.perfora.net ([74.208.4.197]:64830 "EHLO mout.perfora.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752834AbeA3OkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 09:40:14 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LegAQ-1f6Izi0WY2-00qSAP; Tue, 30
- Jan 2018 15:40:04 +0100
-Date:   Tue, 30 Jan 2018 15:40:02 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH/RFC v5 7/7] Careful with CRLF when using e.g. UTF-16 for
- working-tree-encoding
-Message-ID: <20180130144002.GA30211@tor.lan>
-References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
- <20180129201911.9484-1-tboegi@web.de>
- <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com>
+        id S1751197AbeA3Osj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 09:48:39 -0500
+Received: from [192.168.1.104] ([194.237.255.67]) by mrelay.perfora.net
+ (mreueus001 [74.208.5.2]) with ESMTPSA (Nemesis) id 0MS3lE-1eJ03g2j7K-00TOgD
+ for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:48:39 +0100
+Subject: Re: Location limits on development, staging and production
+ environments
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
+ <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
+From:   H <agents@meddatainc.com>
+Message-ID: <e737ea6f-493f-f6e4-7491-ee9c19609ee2@meddatainc.com>
+Date:   Tue, 30 Jan 2018 15:48:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K0:7bu58FS0cJNHd4L1ybEV1lqmFEWe2Jn0ecp1HW0b+Jo76Sw5rs1
- XtCT7GS+z16i1+kOzzCJxXPFGTXSH6+iCmwPSGm+bDuwv9+2n+U8TBDoqjB5Qj8JCy9l/cW
- QrkCuj9AKz137C5fY3fZiEpCI0EhBYapZqhr14Xi57BQ62hpCMnqp8LN2UB5sAOhiH9qJQZ
- vT0PLJpdiaMPcwQwqXVlw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qdXj9ttWzoE=:k9VyJlTHDmwtjy/mtuaIdg
- VfLY8vlcdNzl9csBUtPjcc1WMN8CdX+HplU5hNFxKGiEA197ZlwANSRliGryBxAiRIfT7Jvan
- +yYtEnidQmyV/9g2sRfJYTDtLb2pAjVzovIfAMYCg1NW82ymClqXc+g7cuncrsOW8c/IdIJMm
- 7CoOOEFx2E5D6XjT5X2cOKHfQGCIvKb1qInwLV/l3vDFL0dExUU9RPt+tyegm0aXu0y9iHu8r
- c0zUiiz0/y/mXC++aAupXNWIVN4nwmorCuXJL1t53E7uuJYwLCwa0LYKMTzLIlcd1Yjrsq0Yp
- DkndBMM+7IDep0onkwott+PCiZnkjci3Go79/GtjcpBw9ZrXc+ycRvCOYNAfMNlqo7UANdTiL
- /Abk63tEogbhei/0Wla6Rw6etCnGAsa+rQ+wxDNkP/4P7RYA5iMLjLbJe6KK2mPhlb+kO2p4t
- MKMpIAXsNuXQ5X41gEHI7cT+WfG1VE6oEi33CqmiUJawM0L/vsmA3HKqZ+nDmU6bTmzPqLU91
- 5vhqIbkOOOwhJ7SZvOeuYTePrbKSY7+zge3wlmDyFqLwvG0J9uMWxdIPjYKhb4Kno5LUX23IC
- 5M5PrYFU/oNziswqNHemJHmnFjCaEaSaqMtR0jEKc6L6k7x7SusiGabY2cgms/toffiH/TjAb
- VzNPEjUh3g9wKNAGzhL/NkBgbEb4bv0Wz4QOLwIn6U/7rzgVp5ewhEUMn4G+c/nKlyeCq9SZa
- Xg1JBXZEImVQNax4ZoO3jnn8x+aQaOc1FbXYK+s4/AyqvoWd6v1Rd1VM4OQe5skwaNznwh6oP
- iYICCs9wUbjddmhqwMrm+tP+a41eg==
+In-Reply-To: <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Provags-ID: V03:K0:9uMx2RTV4LIwekZIs/1ZQGOQPt/klCgOz2iu1P1lI5Q4U6/swCj
+ qt8NR1JOnngZQpb8vCAxckDtL4kscVDahRMEAfYlpvzFnH/B7YS/siNw5st7jKaMbWJ+Q0F
+ IOxcdCf1YUq5qz9dS49nt9bcdf92Y1CP/o1BEdFR9+L5uxSzwV2pd3s+wHocDL3aUz8/q6M
+ Q709Pns/GzHZyGx2DnGsw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Q2HDoRsXUws=:a2Cs+H/evHxfSpBJ+ydsnR
+ YV5WBiZk9Zv8K882DKz37S2N28MDTByE9CBGuMHzQApOiJETlH2yXzvDffrG4fxst21BC0nsV
+ jM79/3ejyOgNGDGcbTkvPsf89uJ/7JVT4zH/KNxJUpSlUAG2/uXnNfS21wMdU9OOvnZ1FAttg
+ 4uR7ILGj0Hzb04OtMORoaxfp/ycK9fAyibhcrLtErGJsVX1X0JQtdcDsmpr9v3CQkOkAnJE/q
+ DjyjVy3flGODZ73pE2k7cF9evhvVDp0x5f3Z3I4hx7ESmJ3xfODQDg3kKp4cxH+Vgz4po3Ame
+ BZLZXUIdCPFBCIQlOxYPIskwY/N/qkUrLFfc/vjzxroqMTj9D5WtDRyXMKkgjIUztg1utcxmM
+ 1jDKYLcd+bnDd2F1dfR9Z4UeOHuJt0LYjisZ521kS3guz8HcAL4efYnGB6x+NAez7m8HIZHvr
+ HNf7ZqTfIVIzNDU9l7ooPRJ8NeRxHAbbRakPamZxoXVfx4lzr1N4CkAai8UDXFNA8GO/1CFVD
+ 7pEDjQxTZuMmEkaGjmNByvpEEc+/QXT8rvRVzYQJq7su92v5uYdA/HzeZxXhP3IStRdjS1Shd
+ hUiYx0ykpAt/pwvs1qEmC0QZIzOFCpvcsl+Dp6AEKoxnT2eKMZKi14oaHiBSqkWM7YbGX4Vqn
+ aqWVQqv2Y4c0ouDRfBO+dRe+wVMwugguIqBQm9D9zbo7jibjOk3BRUjNlKFauxh8htZUze6nt
+ H+9GOxrBcYAawJU+LrCo+vlkVF9jGA5I0NlGWWwSdVBZIO5DzD8kBm9SqkA=
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 12:23:47PM +0100, Lars Schneider wrote:
-> 
-> > On 29 Jan 2018, at 21:19, tboegi@web.de wrote:
-> > 
-> > From: Torsten Bögershausen <tboegi@web.de>
-> > 
-> > UTF-16 encoded files are treated as "binary" by Git, and no CRLF
-> > conversion is done.
-> > When the UTF-16 encoded files are converted into UF-8 using the new
-> s/UF-8/UTF-8/
-> 
-> 
-> > "working-tree-encoding", the CRLF are converted if core.autocrlf is true.
-> > 
-> > This may lead to confusion:
-> > A tool writes an UTF-16 encoded file with CRLF.
-> > The file is commited with core.autocrlf=true, the CLRF are converted into LF.
-> > The repo is pushed somewhere and cloned by a different user, who has
-> > decided to use core.autocrlf=false.
-> > He uses the same tool, and now the CRLF are not there as expected, but LF,
-> > make the file useless for the tool.
-> > 
-> > Avoid this (possible) confusion by ignoring core.autocrlf for all files
-> > which have "working-tree-encoding" defined.
-> 
-> Maybe I don't understand your use case but I think this will generate even 
-> more confusion because that's not what I would expect as a user. I think Git 
-> should behave consistently independent of the used encoding. Here are my arguments:
+On 01/29/2018 10:02 PM, Bryan Turner wrote:
+> On Mon, Jan 29, 2018 at 11:08 AM, H <agents@meddatainc.com> wrote:
+>> I am a newcomer to git looking to set up a web development environment where individual computers are used for development, the development.git, staging.git and production.git repositories are stored on an external server reachable by password-less ssh and the staging and production websites are on yet another server, also reachable by password-less ssh from the git-server (and the development machines).
+>>
+>> Locating the three git repositories on an external server works fine but I have not been able to have the staging and production deployment files on another server. I believe this is what is referred by GIT_WORK_TREE and based on what I found on the web I created a post-receive hook of staging.git with the two lines:
+>>
+>> #!/bin/sh
+>> GIT_WORK_TREE=user@1.2.3.4:/var/www/html/dev.whatever git checkout -f master
+>>
+>> I believe this should deploy the files from the development work tree.
+>>
+>> The above, however, fails. Should it work? I am running git 1.7.1 on CentOS 6.
+> No, I wouldn't expect that to work. GIT_WORK_TREE is not remote-aware
+> in that way. It's expected to be a normal-ish filesystem path.
+>
+> Based on your description, and the hook you've written, it seems like
+> your intention is for the source to automatically be fetched and
+> checked out on the staging environment after each push. (This is
+> dangerous, and likely _not_ what you actually want, but I'll get to
+> that in a moment.)
+>
+> One option would be to setup something like NFS, so the git-server can
+> mount the filesystems from the staging and production nodes.
+>
+> A different, likely better, option would be to have the post-receive
+> script on the git-server use straight ssh to trigger a checkout script
+> on the staging server, e.g.:
+> #!/bin/sh
+> ssh example@staging-server -C /opt/deploy-staging.sh
+>
+> Your deploy-staging script would then do something like:
+> #!/bin/sh
+> GIT_WORK_TREE=/var/www/html/dev.whatever git pull origin
+>
+> That said, though, having such a simple script is dangerous because
+> Git is fully capable of having receiving multiple pushes concurrently,
+> and they can all succeed as long as they're updating different
+> branches. Since your script isn't considering what branches were
+> changed by the push, it could end up triggering simultaneous git
+> processes on the staging server all attempting to deploy concurrently.
+>
+> The stdin for the post-receive hook receives details about which refs
+> were changed, and you'll likely want to update your script to parse
+> stdin and only try to deploy staging if a specific, relevant branch
+> (master in your example) has changed.
+>
+> Lastly, I'll note that using post-receive will make the pushing
+> (remote) user wait while the staging server is deployed. If that
+> process is likely to take very long, you might want to decouple the
+> two somehow.
+>
+> Hope this helps!
 
-To start with: I have probably seen too many repos with CRLF messed up.
+I should perhaps also have mentioned that although I am the only developer, I may use different computers to develop on. IOW, there should not be any conflict due to code being pushed by multiple developers.
 
-> 
->   (1) Legacy users are *not* affected. If you don't use the "working-tree-encoding"
->       attribute then nothing changes for you.
+Let's see if I understand this correctly:
 
-People who don't use "working-tree-encoding" are not affected,
-I never ment to state that.
+- Unless NFS is used, the git archive and the deployment of the website code in this case should reside on the same computer.
 
-I am thinking about people who use "working-tree-encoding" without thinking
-about line endings.
-Or the ones that have in mind that core.autocrlf=true will leave the
-line endings for UTF-16 encoded files as is, but that changes as soon as they
-are converted into UTF-8 and the "auto" check is now done
--after- the conversion. I would find that confusing.
+- The combination of the checkout script and the deploy-staging script should work provided not multiple updates to the same branch are pushed at the same time.
 
-> 
->   (2) If you use the "working-tree-encoding" attribute *and* you want to ensure 
->       your file keeps CRLF then you can define that in the attributes too. E.g.:
->       
->       *.proj textworking-tree-encoding=UTF-16 eol=crlf
+I will try this later today but any other hints or suggestions you may have would be greatly appreciated!
 
-That is a good one.
-If you ever plan a re-roll (I don't at the moment) the *.proj extemsion
-make much more sense in Documentation/gitattributes that *.tx
-There no text files encoded in UTF-16 wich are called xxx.txt, but those
-are non-ideal examples. *.proj makes good sense as an example.
-
-
-> 
-> - Lars
-> 
-> 
-> 
-> > The user can still use a .gitattributes file and specify the line endings
-> > like "text=auto", "text", or "text eol=crlf" and let that .gitattribute
-> > file travel together with push and clone.
-> > 
-> > Change convert.c to e more careful, simplify the initialization when
-> > attributes are retrived (and none are specified) and update the documentation.
-> > 
-> > Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> > ---
-> > Documentation/gitattributes.txt |  9 ++++++---
-> > convert.c                       | 15 ++++++++++++---
-> > 2 files changed, 18 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> > index a8dbf4be3..3665c4677 100644
-> > --- a/Documentation/gitattributes.txt
-> > +++ b/Documentation/gitattributes.txt
-> > @@ -308,12 +308,15 @@ Use the `working-tree-encoding` attribute only if you cannot store a file in
-> > UTF-8 encoding and if you want Git to be able to process the content as
-> > text.
-> > 
-> > +Note that when `working-tree-encoding` is defined, core.autocrlf is ignored.
-> > +Set the `text` attribute (or `text=auto`) to enable CRLF conversions.
-> > +
-> > Use the following attributes if your '*.txt' files are UTF-16 encoded
-> > -with byte order mark (BOM) and you want Git to perform automatic line
-> > -ending conversion based on your platform.
-> > +with byte order mark (BOM) and you want Git to perform line
-> > +ending conversion based on core.eol.
-> > 
-> > ------------------------
-> > -*.txt		text working-tree-encoding=UTF-16
-> > +*.txt		working-tree-encoding=UTF-16 text
-> > ------------------------
-> > 
-> > Use the following attributes if your '*.txt' files are UTF-16 little
-> > diff --git a/convert.c b/convert.c
-> > index 13fad490c..e7f11d1db 100644
-> > --- a/convert.c
-> > +++ b/convert.c
-> > @@ -1264,15 +1264,24 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
-> > 		}
-> > 		ca->checkout_encoding = git_path_check_encoding(ccheck + 5);
-> > 	} else {
-> > -		ca->drv = NULL;
-> > -		ca->crlf_action = CRLF_UNDEFINED;
-> > -		ca->ident = 0;
-> > +		memset(ca, 0, sizeof(*ca));
-> > 	}
-> > 
-> > 	/* Save attr and make a decision for action */
-> > 	ca->attr_action = ca->crlf_action;
-> > 	if (ca->crlf_action == CRLF_TEXT)
-> > 		ca->crlf_action = text_eol_is_crlf() ? CRLF_TEXT_CRLF : CRLF_TEXT_INPUT;
-> > +	/*
-> > +	 * Often UTF-16 encoded files are read and written by programs which
-> > +	 * really need CRLF, and it is important to keep the CRLF "as is" when
-> > +	 * files are committed with core.autocrlf=true and the repo is pushed.
-> > +	 * The CRLF would be converted into LF when the repo is cloned to
-> > +	 * a machine with core.autocrlf=false.
-> > +	 * Obey the "text" and "eol" attributes and be independent on the
-> > +	 * local core.autocrlf for all "encoded" files.
-> > +	 */
-> > +	if ((ca->crlf_action == CRLF_UNDEFINED) && ca->checkout_encoding)
-> > +		ca->crlf_action = CRLF_BINARY;
-> > 	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_FALSE)
-> > 		ca->crlf_action = CRLF_BINARY;
-> > 	if (ca->crlf_action == CRLF_UNDEFINED && auto_crlf == AUTO_CRLF_TRUE)
-> > -- 
-> > 2.16.0.rc0.2.g64d3e4d0cc.dirty
-> > 
-> 
