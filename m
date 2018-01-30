@@ -2,89 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F5871F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 029261F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754027AbeA3XlD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:41:03 -0500
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:44382 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752869AbeA3XlC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 18:41:02 -0500
-Received: by mail-vk0-f65.google.com with SMTP id q62so7936388vkb.11
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:41:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GNIe+jbrKbLH60nSY4fFnKTSNd4aDHxZkT8i1l2uQ1Q=;
-        b=mCv61hWXLK3OfjcV92DkN9E6rEf2/A/2fuBvcrivtHT2aR/tYUAfM9/5exVBKeksMx
-         OqkbmxfL9XGEQpEAFK3h99Mnoj1kgwT3lbqooVc+QX6HqOAYDbaxrW/MZR57d3BZo9J4
-         Z+CIWtcjINc94xRSLoupvdwUSoeemYF7O3hbl/ml37xA/fUuMEQV8xqDsll2bZRZviQy
-         HFlgauT2szZWDwVWaMGgXO9PCNefJxXGrF+M4olUqfV9F6Kp+hrKOSlm+hM2P0iVvfh1
-         c01WWyJRXLY7yKOxLH+q2N6BhVmJ/76P7Pmrn1iFmEsKpR6cPiYN0zdTA7Z2UlFR2sAf
-         7vLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GNIe+jbrKbLH60nSY4fFnKTSNd4aDHxZkT8i1l2uQ1Q=;
-        b=gKePm8BOAEl/GoA9SZNHsWk66opFxbcMC6Dmxtl5p5fy9ZcVByYY2zIZAQjBQUJXH8
-         T2XXzQYHXy9RIk7ho2bgtjk03K9eL7+X2ewY3tEnrZ3R6voVMH4tj/rZXSMd83kMzuu5
-         CAMJWPa4kaN7i+6PH8hXXuniAeu25friTBdSt0KUxVGtj3u7UrmyPyG2qw8HSbJn/RAO
-         S9hezPHPdbNGCrnI5cZdDSdQh628k93eMRtsBWS2RGqMQK7w7E7c5XL3rroV7LNTWYx7
-         wvISMBlew45WwZn/HmRoXcR0hxQk7fOyV+bh1WRxncjebbgvvFFp0JVwbgZOhom5r+Tf
-         Bm9A==
-X-Gm-Message-State: AKwxytcSaCrZIF9TbtPyycJuiGhpHJ/xBf+6gnrNsIExfZS077NTVta0
-        ThdnnMrYDL1Kh9zF5K96Iejl3HdkssbvlvV2FwE=
-X-Google-Smtp-Source: AH8x227xJRXEFVykhtjFn8sKNYZJsWIMkK05Fqlec25YIvtfkNKS8cRdoXE7s1vtZy2fZnESDrvnc3/oijCkWPWfnks=
-X-Received: by 10.31.96.196 with SMTP id u187mr25431168vkb.75.1517355661233;
- Tue, 30 Jan 2018 15:41:01 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.8.83 with HTTP; Tue, 30 Jan 2018 15:41:00 -0800 (PST)
+        id S932133AbeA3Xoj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:44:39 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58544 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754025AbeA3Xoh (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:44:37 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN1n3025717;
+        Tue, 30 Jan 2018 15:25:35 -0800
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dt-2;
+        Tue, 30 Jan 2018 15:25:35 -0800
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6CC9B221A56E;
+        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
+Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
+        by smtp.yojoe.local (Postfix) with ESMTP id 624062CDE88;
+        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
+        jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
+Subject: [PATCH v7 24/31] merge-recursive: when comparing files, don't include trees
+Date:   Tue, 30 Jan 2018 15:25:26 -0800
+Message-Id: <20180130232533.25846-25-newren@gmail.com>
+X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 30 Jan 2018 15:41:00 -0800
-Message-ID: <CABPp-BHf9=oLGchdUiYKz-eHs7_4fOZhKS=Y7iAhDkKX7FXZ-A@mail.gmail.com>
-Subject: Re: [PATCH v7 00/31] Add directory rename detection to git
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-01-30_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1711220000 definitions=main-1801300286
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
-> This patchset introduces directory rename detection to merge-recursive.  =
-See
+get_renames() would look up stage data that already existed (populated
+in get_unmerged(), taken from whatever unpack_trees() created), and if
+it didn't exist, would call insert_stage_data() to create the necessary
+entry for the given file.  The insert_stage_data() fallback becomes
+much more important for directory rename detection, because that creates
+a mechanism to have a file in the resulting merge that didn't exist on
+either side of history.  However, insert_stage_data(), due to calling
+get_tree_entry() loaded up trees as readily as files.  We aren't
+interested in comparing trees to files; the D/F conflict handling is
+done elsewhere.  This code is just concerned with what entries existed
+for a given path on the different sides of the merge, so create a
+get_tree_entry_if_blob() helper function and use it.
 
-And a meta question: Should I be trying to submit this feature some other w=
-ay?
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-recursive.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-I've really appreciated all the reviews[1], and the testcases are
-undoubtedly better because of them.  The code too, but the reviews
-have focused almost exclusively on the testcases so far.  Is
-merge-recursive just too hairy and my changes too large for folks to
-stomach tackling?  Is there something different I could do?
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 354d91d2a8..38dc0eefaf 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -418,6 +418,21 @@ static void get_files_dirs(struct merge_options *o, =
+struct tree *tree)
+ 	read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, o);
+ }
+=20
++static int get_tree_entry_if_blob(const unsigned char *tree,
++				  const char *path,
++				  unsigned char *hashy,
++				  unsigned int *mode_o)
++{
++	int ret;
++
++	ret =3D get_tree_entry(tree, path, hashy, mode_o);
++	if (S_ISDIR(*mode_o)) {
++		hashcpy(hashy, null_sha1);
++		*mode_o =3D 0;
++	}
++	return ret;
++}
++
+ /*
+  * Returns an index_entry instance which doesn't have to correspond to
+  * a real cache entry in Git's index.
+@@ -428,12 +443,12 @@ static struct stage_data *insert_stage_data(const c=
+har *path,
+ {
+ 	struct string_list_item *item;
+ 	struct stage_data *e =3D xcalloc(1, sizeof(struct stage_data));
+-	get_tree_entry(o->object.oid.hash, path,
+-			e->stages[1].oid.hash, &e->stages[1].mode);
+-	get_tree_entry(a->object.oid.hash, path,
+-			e->stages[2].oid.hash, &e->stages[2].mode);
+-	get_tree_entry(b->object.oid.hash, path,
+-			e->stages[3].oid.hash, &e->stages[3].mode);
++	get_tree_entry_if_blob(o->object.oid.hash, path,
++			       e->stages[1].oid.hash, &e->stages[1].mode);
++	get_tree_entry_if_blob(a->object.oid.hash, path,
++			       e->stages[2].oid.hash, &e->stages[2].mode);
++	get_tree_entry_if_blob(b->object.oid.hash, path,
++			       e->stages[3].oid.hash, &e->stages[3].mode);
+ 	item =3D string_list_insert(entries, path);
+ 	item->util =3D e;
+ 	return e;
+--=20
+2.16.1.106.gf69932adfe
 
-I'm curious for any thoughts on the matter.
-
-Thanks!
-Elijah
-
-[1] Especially Stefan who looked through all the patches, but also for
-spot reviews from Junio, Johannes Schindelin, Johanness Sixt, Adam
-Dinwoodie, and SZEDER G=C3=A1bor.  Also, a few interested comments from
-Philip Oakley and Jacob Keller.
