@@ -2,99 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ADA01F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 00:13:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C23A1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 00:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752113AbeA3ANt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 19:13:49 -0500
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:44847 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751778AbeA3ANs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 19:13:48 -0500
-Received: by mail-oi0-f65.google.com with SMTP id b3so3556557oib.11
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 16:13:48 -0800 (PST)
+        id S1751778AbeA3AQW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 19:16:22 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:46735 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751417AbeA3AQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 19:16:18 -0500
+Received: by mail-lf0-f54.google.com with SMTP id q194so12651631lfe.13
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 16:16:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Imks9l7xm6As74VntjPzmqpVRnxfYLjo99C1aK1U890=;
-        b=s/okx9FiNsvzmaxcrXrgmLnglWLqiqVcMbSBxZJHlJq4CkdS9EDQmslQWcrnMIdrWs
-         nzGz2hqK+EAV1W24N81dQGNfC0y0y2Zycu80ZYgiHzCf/Lj9lbupGhIcVbOl0rGUJS55
-         MvJphOnu89yZZXpCqfV61oDQ7BM4JOezlYhNrdKu5B2YmV3Wm85I203pHacqC1xgdvfq
-         ca0gf6ihgP3LJjzeFg/GO4ld8v718A4XobxrqGid0C0F9sXnR3TL9DkPKWxCNcSXD8NB
-         cDApvXKb9KrOe3dfdL5AxnQUd88J0uDuK9Oj0uySLWn/wAljQWo1cDormh3nxG8uoT10
-         ZUEg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=zIOrD757p+2urq7PAw10wJPx1iIfEf/yKeuhu5EilBw=;
+        b=aN64e4IihmjEGk/wk0SNsvOklZ5G/r6Zojlyw64meMahQKYZOjmG0AJ+3Xg2220Ono
+         gMSEu2CsVwR4pSLqt01O6B7Kcbv+/Ua3sIfwtGwAS9fdAx8jEL9J69VwsNhRZ+r8B/AS
+         wa5KxgRhmkwbhDqicnvVLOR30LQKN22FhyU67Ns2K7awWaQHzPRaqX/8pq1aQ1E+Cenh
+         wdhnGaSEpAMY6PqO9Qv09z57B584wq5CogL52HVliZknbT3DutG2yWcxGe1J1m2Nqktp
+         sFQhLJfgQr4R7Sj22OQg686evEmLA3vBSyPUDTi7FS3Y1pl6tQUrhV1WgZ/l5tPnKfhy
+         nilg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Imks9l7xm6As74VntjPzmqpVRnxfYLjo99C1aK1U890=;
-        b=sAmaybTY1KpkvjCFijKcjXtznX+PHsppe5cZwylg3aCSK2I9eeSU3K5t9SKmvGHyXC
-         ZgL2o70/iLg98pS0YoQpEqCtQrsB3lDBm0KZfNj0s4yZ9FC142jkHQSjIZ59UgbV3B86
-         j5hhg2aauD7E+3OcqBME/Z/KyUeOzkrrhigk/N5I6SYDIlShlZwlG3RxVM+PYtts5Jb1
-         VL80l6iKZwwTypq72DWDQLzu1M7XGEgwdg7YlbytkYrc6fxHAZF2iJm/1QZYyp17pkIT
-         gsAIhkZgCwDp5YqEuDGcziY+dkdb+Ydjd7udz+zYlUrkQpEs8eaxBVlBJNxR/eVeE+Zb
-         hjOw==
-X-Gm-Message-State: AKwxytezvhW+mlLuLhfqtTBJCVyYY6LtfhyCMkUk3vUuHBHu3JIL4VJX
-        7am+IYuXVjTNRuME1h6wgUyjmR2KD9of19It88A=
-X-Google-Smtp-Source: AH8x227C13cB7siTkNw7Mi+iuCkym7lshs+GV1qFhgrtU1BG2/yKJ20qcPw/rSaV5AeWuq8e4s+FH4ldZkEXuWKsddk=
-X-Received: by 10.202.196.208 with SMTP id u199mr18406987oif.117.1517271227681;
- Mon, 29 Jan 2018 16:13:47 -0800 (PST)
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zIOrD757p+2urq7PAw10wJPx1iIfEf/yKeuhu5EilBw=;
+        b=fuFtedeyPfnoD4ExBv2kPrC/kp02HV3shL1CkiLzIEm0pth9WIZfwAEh62TdwBbfxo
+         eQMRfGXTNbhY5du1W3Ljh0NZOQZT8cHSV/sdj/dizlb2NIP1cHnk1+5b8LtohIY2GMBb
+         ANozhO6m1M7XcFMIOXGm1mV4vSX31DTmLqlreBdHgTY72l96TO/GZKs8y5LvSjUJEIoc
+         i0l/YMKYxLJ/eoIBd6LU2dkloBDF+NtqfqAHvhY6nGiQe7aybMOr26Z54DAngFIlHb7m
+         LZU/m9xFEdeKJk4Kvkig7/nub0S0RiIWoksa5VxlkAs9+zLedWcA2UBUnSUD7lVpQ/2H
+         +zvQ==
+X-Gm-Message-State: AKwxyteEOP/bnOjB3xFW76y8F+J1k9bki2VsCxQ2o+mXFcORLuONw7kF
+        XJb2138LDDQttzp1eeFkMFneFyq3
+X-Google-Smtp-Source: AH8x227BVXIocRfSnKXPiim0/JMIMH084sLzVVFM8R6x6S57ghuErv3ES0T8TW0A7kSKr2QAoATu6w==
+X-Received: by 10.46.36.26 with SMTP id k26mr14672821ljk.14.1517271376960;
+        Mon, 29 Jan 2018 16:16:16 -0800 (PST)
+Received: from [192.168.1.138] ([188.121.16.104])
+        by smtp.gmail.com with ESMTPSA id d77sm1412246ljd.31.2018.01.29.16.16.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jan 2018 16:16:16 -0800 (PST)
+Subject: Re: How juggle branches?
+To:     Andrzej <borucki_andrzej@wp.pl>, git@vger.kernel.org
+References: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
+From:   Patryk Obara <patryk.obara@gmail.com>
+Message-ID: <1fd71dd9-f54a-16dc-5521-f6f4e7d6fc33@gmail.com>
+Date:   Tue, 30 Jan 2018 01:16:15 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
+ Thunderbird/58.0
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Mon, 29 Jan 2018 16:13:16 -0800 (PST)
-In-Reply-To: <20180129223728.30569-1-bmwill@google.com>
-References: <20180129223728.30569-1-bmwill@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 30 Jan 2018 07:13:16 +0700
-Message-ID: <CACsJy8Cm8HsopKisiJkwtPyfv-O6Ei3waew6CsKLXzKv7=TriQ@mail.gmail.com>
-Subject: Re: [PATCH 00/37] removal of some c++ keywords
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 5:36 AM, Brandon Williams <bmwill@google.com> wrote:
-> A while back there was some discussion of getting our codebase into a state
-> where we could use a c++ compiler if we wanted to (for various reason like
-> leveraging c++ only analysis tools, etc.).  Johannes Sixt had a very large
+On 29/01/2018 22:24, Andrzej wrote:
 
-I would be more convinced if I knew exactly what leverage we could
-have here (e.g. what tool, how many problems it caught...).
+> I am in master branch and am changing to hbase:
+> git checkout -b hbase
+> git push origin hbase
 
-> patch that achieved this but it wasn't in a state where it could be upstreamed.
-> I took that idea and did some removals of c++ keywords (new, template, try,
-> this, etc) but broke it up into several (well maybe more than several) patches.
-> I don't believe I've captured all of them in this series but this is at least
-> moving a step closer to being able to compile using a c++ compiler.
+These two commands create new branch called "hbase" in your local repo,
+and then in remote repo - so probably not what you wanted to do.
 
-Is it simpler (though hacky) to just  do
+> now worse:
+> I am in branch before_hbase and need change to master
+> git checkout -b master  - not works because master exists
 
-#ifdef __cplusplus
-#define new not_new
-#define try really_try
-...
+"git checkout -b name" creates new branch called "name", starting in 
+your latest commit and switches you to this new branch.
 
-somewhere in git-compat-util.h?
+"git checkout name" switches your working tree to branch "name".
 
-Do we use any C features that are incompatible with C++? (or do we not
-need to care?)
+So just drop "-b". You can read more in manual for git-checkout:
+https://git-scm.com/docs/git-checkout
 
-> I don't know if this is something the community still wants to move towards,
-> but if this is something people are still interested in, and this series is
-> wanted, then we can keep doing these sort of conversions in chunks slowly.
+(in polish) Jeśli masz jakieś konkretne pytania, to możesz napisać do
+mnie po polsku :).
 
-You're going to need to setup C++ build job on Travis or something to
-catch new C++ keywords from entering the code base as well if you move
-this to the end.
 -- 
-Duy
+| ← Ceci n'est pas une pipe
+Patryk Obara
