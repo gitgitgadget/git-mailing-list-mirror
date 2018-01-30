@@ -2,119 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E540F1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 14:48:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35FDE1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 15:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbeA3Osk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 09:48:40 -0500
-Received: from mout.perfora.net ([74.208.4.197]:64830 "EHLO mout.perfora.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751197AbeA3Osj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 09:48:39 -0500
-Received: from [192.168.1.104] ([194.237.255.67]) by mrelay.perfora.net
- (mreueus001 [74.208.5.2]) with ESMTPSA (Nemesis) id 0MS3lE-1eJ03g2j7K-00TOgD
- for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:48:39 +0100
-Subject: Re: Location limits on development, staging and production
- environments
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
- <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
-From:   H <agents@meddatainc.com>
-Message-ID: <e737ea6f-493f-f6e4-7491-ee9c19609ee2@meddatainc.com>
-Date:   Tue, 30 Jan 2018 15:48:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
-MIME-Version: 1.0
-In-Reply-To: <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Provags-ID: V03:K0:9uMx2RTV4LIwekZIs/1ZQGOQPt/klCgOz2iu1P1lI5Q4U6/swCj
- qt8NR1JOnngZQpb8vCAxckDtL4kscVDahRMEAfYlpvzFnH/B7YS/siNw5st7jKaMbWJ+Q0F
- IOxcdCf1YUq5qz9dS49nt9bcdf92Y1CP/o1BEdFR9+L5uxSzwV2pd3s+wHocDL3aUz8/q6M
- Q709Pns/GzHZyGx2DnGsw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Q2HDoRsXUws=:a2Cs+H/evHxfSpBJ+ydsnR
- YV5WBiZk9Zv8K882DKz37S2N28MDTByE9CBGuMHzQApOiJETlH2yXzvDffrG4fxst21BC0nsV
- jM79/3ejyOgNGDGcbTkvPsf89uJ/7JVT4zH/KNxJUpSlUAG2/uXnNfS21wMdU9OOvnZ1FAttg
- 4uR7ILGj0Hzb04OtMORoaxfp/ycK9fAyibhcrLtErGJsVX1X0JQtdcDsmpr9v3CQkOkAnJE/q
- DjyjVy3flGODZ73pE2k7cF9evhvVDp0x5f3Z3I4hx7ESmJ3xfODQDg3kKp4cxH+Vgz4po3Ame
- BZLZXUIdCPFBCIQlOxYPIskwY/N/qkUrLFfc/vjzxroqMTj9D5WtDRyXMKkgjIUztg1utcxmM
- 1jDKYLcd+bnDd2F1dfR9Z4UeOHuJt0LYjisZ521kS3guz8HcAL4efYnGB6x+NAez7m8HIZHvr
- HNf7ZqTfIVIzNDU9l7ooPRJ8NeRxHAbbRakPamZxoXVfx4lzr1N4CkAai8UDXFNA8GO/1CFVD
- 7pEDjQxTZuMmEkaGjmNByvpEEc+/QXT8rvRVzYQJq7su92v5uYdA/HzeZxXhP3IStRdjS1Shd
- hUiYx0ykpAt/pwvs1qEmC0QZIzOFCpvcsl+Dp6AEKoxnT2eKMZKi14oaHiBSqkWM7YbGX4Vqn
- aqWVQqv2Y4c0ouDRfBO+dRe+wVMwugguIqBQm9D9zbo7jibjOk3BRUjNlKFauxh8htZUze6nt
- H+9GOxrBcYAawJU+LrCo+vlkVF9jGA5I0NlGWWwSdVBZIO5DzD8kBm9SqkA=
-To:     unlisted-recipients:; (no To-header on input)
+        id S1752725AbeA3POJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 10:14:09 -0500
+Received: from mail-wm0-f47.google.com ([74.125.82.47]:33238 "EHLO
+        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751662AbeA3POH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 10:14:07 -0500
+Received: by mail-wm0-f47.google.com with SMTP id x4so4102013wmc.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 07:14:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=bFKgAOdm+eZFChtbiVcn4QvKVV+zDMbT/YnSkAGtZEs=;
+        b=IPVMjiFPkZFVZmwwgJkfhOp3EsRTZPNc2SJopQ2pcmXlpWibS0YO7y5AaYLeCD7wrd
+         i1uweVqR9KxQSJVeM16S0Dng18so8U/q2/9PhtGPrQDNRMxU3iAMDXsz+HY5hPSCwPwk
+         yCMvLydvnwliBBXMk0CrK/f2FZWrfHBy/5TngvP3mFIQPAE1OYeGlLPctAlq6T+tB1hA
+         C27OSUEr+Qi+Q6se6kcyiltJtz8Hw3ITq4yCkbO2j6s8EKEj7Y/I29A+Zkmuwrvb8T9C
+         +GoN2iYt7uVnQdp1X0C52NfqTj++yOl4EL2VBWl8ypbTIp4QavBuxkRHfFOB6msabKoO
+         w3fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=bFKgAOdm+eZFChtbiVcn4QvKVV+zDMbT/YnSkAGtZEs=;
+        b=VaNilnUpXfMIAkLpsysy4oOCd3FuxAWlJUSEkUDzECrCc1CtwnSIPxjuMjXk/XB8FN
+         FAgEzwmSXWULM38rsb0hIAi/GtTaVA2j+etiWSk3eStN0F3+FJJyhYz7ArdvQZ+KlYHd
+         K4n44CgL080QzrCUOsYxx2afqQmXSElqXXJSqQjefpJPDZYEJLUqcd4Icgc4jvsiJ7h5
+         hrB72Y/ADfzamj7CA4whk/FuO49q3feiLBiVIZ7k513ZHZAkpXXQV4g9ADNdzgzpLG7Y
+         as1ACjH+noPkJyUfy9pIUgy51vGam86zT0AZuT1qvk0qUZISGXXOtEhJB8CmCiI8UAZe
+         ZIhw==
+X-Gm-Message-State: AKwxytfk4FDpq4kYyyGiUtoEOPa6nWCKch2dfuEySfYSpJO1ngr2fI2g
+        vFXDx9FjiLXubwpUMsfOd4c=
+X-Google-Smtp-Source: AH8x226gA3k3J24Escz1L1wULzgDoT+EkZD6MreyRfnD8Akfor9xJENF7N6cvFLF9n+8C17CQazBFw==
+X-Received: by 10.28.28.139 with SMTP id c133mr20268326wmc.144.1517325246513;
+        Tue, 30 Jan 2018 07:14:06 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id f22sm11894891wmi.24.2018.01.30.07.14.04
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 30 Jan 2018 07:14:05 -0800 (PST)
+Content-Type: text/plain; charset=iso-8859-1
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH/RFC v5 7/7] Careful with CRLF when using e.g. UTF-16 for working-tree-encoding
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180130144002.GA30211@tor.lan>
+Date:   Tue, 30 Jan 2018 16:14:03 +0100
+Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <10091BA4-1069-4A65-9057-CAAD87F9B55F@gmail.com>
+References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com> <20180129201911.9484-1-tboegi@web.de> <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com> <20180130144002.GA30211@tor.lan>
+To:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/29/2018 10:02 PM, Bryan Turner wrote:
-> On Mon, Jan 29, 2018 at 11:08 AM, H <agents@meddatainc.com> wrote:
->> I am a newcomer to git looking to set up a web development environment where individual computers are used for development, the development.git, staging.git and production.git repositories are stored on an external server reachable by password-less ssh and the staging and production websites are on yet another server, also reachable by password-less ssh from the git-server (and the development machines).
->>
->> Locating the three git repositories on an external server works fine but I have not been able to have the staging and production deployment files on another server. I believe this is what is referred by GIT_WORK_TREE and based on what I found on the web I created a post-receive hook of staging.git with the two lines:
->>
->> #!/bin/sh
->> GIT_WORK_TREE=user@1.2.3.4:/var/www/html/dev.whatever git checkout -f master
->>
->> I believe this should deploy the files from the development work tree.
->>
->> The above, however, fails. Should it work? I am running git 1.7.1 on CentOS 6.
-> No, I wouldn't expect that to work. GIT_WORK_TREE is not remote-aware
-> in that way. It's expected to be a normal-ish filesystem path.
->
-> Based on your description, and the hook you've written, it seems like
-> your intention is for the source to automatically be fetched and
-> checked out on the staging environment after each push. (This is
-> dangerous, and likely _not_ what you actually want, but I'll get to
-> that in a moment.)
->
-> One option would be to setup something like NFS, so the git-server can
-> mount the filesystems from the staging and production nodes.
->
-> A different, likely better, option would be to have the post-receive
-> script on the git-server use straight ssh to trigger a checkout script
-> on the staging server, e.g.:
-> #!/bin/sh
-> ssh example@staging-server -C /opt/deploy-staging.sh
->
-> Your deploy-staging script would then do something like:
-> #!/bin/sh
-> GIT_WORK_TREE=/var/www/html/dev.whatever git pull origin
->
-> That said, though, having such a simple script is dangerous because
-> Git is fully capable of having receiving multiple pushes concurrently,
-> and they can all succeed as long as they're updating different
-> branches. Since your script isn't considering what branches were
-> changed by the push, it could end up triggering simultaneous git
-> processes on the staging server all attempting to deploy concurrently.
->
-> The stdin for the post-receive hook receives details about which refs
-> were changed, and you'll likely want to update your script to parse
-> stdin and only try to deploy staging if a specific, relevant branch
-> (master in your example) has changed.
->
-> Lastly, I'll note that using post-receive will make the pushing
-> (remote) user wait while the staging server is deployed. If that
-> process is likely to take very long, you might want to decouple the
-> two somehow.
->
-> Hope this helps!
 
-I should perhaps also have mentioned that although I am the only developer, I may use different computers to develop on. IOW, there should not be any conflict due to code being pushed by multiple developers.
+> On 30 Jan 2018, at 15:40, Torsten B=F6gershausen <tboegi@web.de> =
+wrote:
+>=20
+> On Tue, Jan 30, 2018 at 12:23:47PM +0100, Lars Schneider wrote:
+>>=20
+>>> On 29 Jan 2018, at 21:19, tboegi@web.de wrote:
+>>>=20
+>>> From: Torsten B=F6gershausen <tboegi@web.de>
+>>>=20
+>>> UTF-16 encoded files are treated as "binary" by Git, and no CRLF
+>>> conversion is done.
+>>> When the UTF-16 encoded files are converted into UF-8 using the new
+>> s/UF-8/UTF-8/
+>>=20
+>>=20
+>>> "working-tree-encoding", the CRLF are converted if core.autocrlf is =
+true.
+>>>=20
+>>> This may lead to confusion:
+>>> A tool writes an UTF-16 encoded file with CRLF.
+>>> The file is commited with core.autocrlf=3Dtrue, the CLRF are =
+converted into LF.
+>>> The repo is pushed somewhere and cloned by a different user, who has
+>>> decided to use core.autocrlf=3Dfalse.
+>>> He uses the same tool, and now the CRLF are not there as expected, =
+but LF,
+>>> make the file useless for the tool.
+>>>=20
+>>> Avoid this (possible) confusion by ignoring core.autocrlf for all =
+files
+>>> which have "working-tree-encoding" defined.
+>>=20
+>> Maybe I don't understand your use case but I think this will generate =
+even=20
+>> more confusion because that's not what I would expect as a user. I =
+think Git=20
+>> should behave consistently independent of the used encoding. Here are =
+my arguments:
+>=20
+> To start with: I have probably seen too many repos with CRLF messed =
+up.
+>=20
+>>=20
+>>  (1) Legacy users are *not* affected. If you don't use the =
+"working-tree-encoding"
+>>      attribute then nothing changes for you.
+>=20
+> People who don't use "working-tree-encoding" are not affected,
+> I never ment to state that.
+>=20
+> I am thinking about people who use "working-tree-encoding" without =
+thinking
+> about line endings.
+> Or the ones that have in mind that core.autocrlf=3Dtrue will leave the
+> line endings for UTF-16 encoded files as is, but that changes as soon =
+as they
+> are converted into UTF-8 and the "auto" check is now done
+> -after- the conversion. I would find that confusing.
+>=20
+>>=20
+>>  (2) If you use the "working-tree-encoding" attribute *and* you want =
+to ensure=20
+>>      your file keeps CRLF then you can define that in the attributes =
+too. E.g.:
+>>=20
+>>      *.proj textworking-tree-encoding=3DUTF-16 eol=3Dcrlf
+>=20
+> That is a good one.
+> If you ever plan a re-roll (I don't at the moment) the *.proj =
+extemsion
+> make much more sense in Documentation/gitattributes that *.tx
+> There no text files encoded in UTF-16 wich are called xxx.txt, but =
+those
+> are non-ideal examples. *.proj makes good sense as an example.
 
-Let's see if I understand this correctly:
+OK, I'll do that. Would that fix the problem which this patch tries to =
+address for you?
+(I would also explicitly add a paragraph to discuss line endings)
 
-- Unless NFS is used, the git archive and the deployment of the website code in this case should reside on the same computer.
-
-- The combination of the checkout script and the deploy-staging script should work provided not multiple updates to the same branch are pushed at the same time.
-
-I will try this later today but any other hints or suggestions you may have would be greatly appreciated!
-
+- Lars=
