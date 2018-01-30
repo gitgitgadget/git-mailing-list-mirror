@@ -7,54 +7,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB251F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 22:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 152E01F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753666AbeA3W6s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 17:58:48 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:38411 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753473AbeA3W6r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 17:58:47 -0500
-Received: by mail-yw0-f196.google.com with SMTP id m84so6081536ywd.5
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 14:58:47 -0800 (PST)
+        id S1753861AbeA3XBt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:01:49 -0500
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:33086 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753642AbeA3XBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 18:01:49 -0500
+Received: by mail-yw0-f195.google.com with SMTP id x24so6081057ywj.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 15:01:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=MkxngYjHh45ZPId4WtLNS5UCxGKjclLxQP0f7wA7C48=;
-        b=cKSNNuLadhD942mHxH7SH12QGmTpIMVKQ+4kseqm2u2PEZUeNz4/BPLNNsYCxbREWk
-         x40izWA5jCwJNHKoW+gUqhO1nSeQ+UBIco3iVYTQjhxB1x2YNRLE5c4mv8BLZG8kGcU8
-         HyfGxIoqP5uVCMIlMV6Is4PAmmF27nhwWoqdpb6/uiwKhCvfYpDoav8f8ayDvzS5qUta
-         wtrxiSWE0ZrH0BNYdnIMwftcyVE+dHkd/MMRF7u7iSw5YN0TjePMDtA7T+zHzPxcReyp
-         S2SyhTfSURZAxie12X4bNLvD1BzJgQWu0cLjp7lRDuDbXAJnMSENj4Jsa0HyKTyvNNts
-         Gc3w==
+        bh=9qo25kwxESkTocir1h4LOGaNTZ+hp0cuosfWr5Hc/B8=;
+        b=huboj5BKJDhCYcWdFHTTbHpPUUjuQ6nDORAJfza+9SBpgyWzl44mng88zTFgqXA0ia
+         J/yeVEvWBoiHu2gffuoSJrhofVRfsvixsvrSRzHfqB7duFir800pAmsi4cLFhInIpLWe
+         EorDpuvQrrdZ4WlaqswO8NftYmKONXjZbOHWOHgMWHS7qQcfpIPb08T2188IPCpK0bl8
+         w1e9T3NVKWflyT/IAWythLg806AYTsxB/5+DCPqcj6Hos+roInsVN3nk8TX+reb9bOfG
+         w9fbM+Tz2UGPf7hBEJKKKYqbSWAbYGb6zBaEkXC03LMnwaqkj47T8lcsjn2YqE+Nw+7k
+         BWYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=MkxngYjHh45ZPId4WtLNS5UCxGKjclLxQP0f7wA7C48=;
-        b=kB0l92jSEVocfcvN84XiPAvZ9+gmcZ8dPXefnRGTj0ZnFeA6zWF0cVQdDicFr2yxdO
-         bGai0wYdFL+afPaWSVm57m8oMWeTXt6cuXhhYHbls5xVxl91gX9Kdo+hki07j5aQb2BT
-         W1voBVRaPvNNJ8mAhUZYGnmqGCHUmd1hxyY168m2K8tw8IgNHGJdY5WSv81VCklmAa/m
-         MOnkuLRxqFtdL3a4IHBOhkRMHGFsGGe+SQNzXkIxZbEXZ6WJwCvwViIi39P7cuXX49G4
-         kMVbskSTceGH2QQsI8H95ARNcxtHof9XHyPXJ48r/iU9lvTiUh/7XdeEB38yv0VQMJW4
-         Suqw==
-X-Gm-Message-State: AKwxytdlQtqUpvax5eKANiFSrcmRO+vySGPIyrV1NgJpCiPTXgapJTlk
-        qE1CruhLI3MCa13BlipO4HokS8AHWE5LSEqX4Uq4ag==
-X-Google-Smtp-Source: AH8x227Hle0LDhSEeB5bH6StqnTPmGDDACPn4JdDC5KwqviUQW7V8CCd8iNTx7SUy7F992UOkmWQRl0MdiRFgVNoTMA=
-X-Received: by 10.129.119.131 with SMTP id s125mr20120767ywc.166.1517353126775;
- Tue, 30 Jan 2018 14:58:46 -0800 (PST)
+        bh=9qo25kwxESkTocir1h4LOGaNTZ+hp0cuosfWr5Hc/B8=;
+        b=fL4gWgdaK1BRh9ydxziiBteiji+naWu7Z3cVW4MQbMzJCsarFEYOCZknieJ02W19Tq
+         C422x2nGTR4bbjUSd+JgXexbKyx0Qp6tpeVgtSctOljYSPKjDZxocro4iGt1F5LhoT1S
+         VmWfae1WOquIBBOTnCrdZzMy/JOlCtN8j/lzxE4vjoFNvVgVM8biSNmsfl2IZ5dwWIZl
+         g3LL3BAq03ChmFkJ2jcWGTJHVU9fj9eNVjva+kkUdX4Th3L5IWj4iPKNJNQdKsX1qN8q
+         hlwFPrwKoorlcDWitR+i1VeF7NgFm1KlPB3nuBLoMhI2hh36qK7u8DsNloYbpI07f58Z
+         02pQ==
+X-Gm-Message-State: AKwxytdhUh10Ukr5fbqM8s23XlAwT6mFXcQrizhWU8Ek8pktz3BkhuQw
+        LLxKOHpdJ0uOnPAGA5JpEVG416vTETo11fvmELii0A==
+X-Google-Smtp-Source: AH8x227ExPIh56gVg3pHnKxdj4WSIaLQkfWExj/0Awn8UulgWcRyCIn7RlpyIkN2gF8RxbpI77vsgN9pNBg4RuqBcxM=
+X-Received: by 10.37.59.75 with SMTP id i72mr3305221yba.420.1517353307596;
+ Tue, 30 Jan 2018 15:01:47 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Tue, 30 Jan 2018 14:58:46 -0800 (PST)
-In-Reply-To: <20180129223728.30569-38-bmwill@google.com>
-References: <20180129223728.30569-1-bmwill@google.com> <20180129223728.30569-38-bmwill@google.com>
+Received: by 10.37.207.9 with HTTP; Tue, 30 Jan 2018 15:01:46 -0800 (PST)
+In-Reply-To: <xmqq7erzrn3f.fsf@gitster-ct.c.googlers.com>
+References: <20180129223728.30569-1-bmwill@google.com> <CACsJy8Cm8HsopKisiJkwtPyfv-O6Ei3waew6CsKLXzKv7=TriQ@mail.gmail.com>
+ <xmqq7erzrn3f.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 30 Jan 2018 14:58:46 -0800
-Message-ID: <CAGZ79kYwOc3vMsj8DWyNtudM-OBzyw8iTEfKK3nnOJM23GF78A@mail.gmail.com>
-Subject: Re: [PATCH 37/37] replace: rename 'new' variables
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+Date:   Tue, 30 Jan 2018 15:01:46 -0800
+Message-ID: <CAGZ79kZ-hZzKtv05d5_7O2ndNZvGkU7qYnrn52zwpqSTqCiygQ@mail.gmail.com>
+Subject: Re: [PATCH 00/37] removal of some c++ keywords
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -62,28 +66,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 29, 2018 at 2:37 PM, Brandon Williams <bmwill@google.com> wrote:
-> Rename C++ keyword in order to bring the codebase closer to being able
-> to be compiled with a C++ compiler.
+On Tue, Jan 30, 2018 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/replace.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+>> Is it simpler (though hacky) to just  do
+>>
+>> #ifdef __cplusplus
+>> #define new not_new
+>> #define try really_try
+>> ...
+>>
+>> somewhere in git-compat-util.h?
 >
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 42cf4f62a..e48835b54 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -284,7 +284,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
->  {
->         char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
->         enum object_type type;
-> -       struct object_id old, new, prev;
-> +       struct object_id old, new_oid, prev;
+> Very tempting, especially given that your approach automatically
+> would cover topics in flight without any merge conflict ;-)
+>
+> I agree that it is hacky and somewhat ugly, but the hackiness
+> somehow does not bother me too much in this case; perhaps because
+> attempting to use a C++ compiler may already be hacky in the first
+> place?
+>
+> It probably depends on the reason why we are doing this topic.  If a
+> report about our source code coming from the C++ oriented tool cite
+> the symbol names seen by machines, then the "hacky" approach will
+> give us "not_new" where Brandon's patch may give us "new_oid", or
+> whatever symbol that is more appropriate for the context it appears
+> than such an automated cute name.
+>
+>> Do we use any C features that are incompatible with C++? (or do we not
+>> need to care?)
+>
+> Good question.
 
-new is a keyword that often comes with a counterpart, here `old`.
-So while at it, also rename old to old_oid ?
-Do we care about the symmetry enough to warrant additional churn for this?
-
-Stefan
+implicit casts from void?
+e.g. xmalloc returns a void pointer, not the type requested.
+https://embeddedartistry.com/blog/2017/2/28/c-casting-or-oh-no-we-broke-malloc
