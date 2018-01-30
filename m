@@ -7,36 +7,37 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 029261F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:44:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 909BB1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:44:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932133AbeA3Xoj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:44:39 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58544 "EHLO
+        id S932138AbeA3Xol (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:44:41 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58542 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754025AbeA3Xoh (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:44:37 -0500
+        by vger.kernel.org with ESMTP id S932130AbeA3Xoj (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:44:39 -0500
+X-Greylist: delayed 1115 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jan 2018 18:44:37 EST
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN1n3025717;
-        Tue, 30 Jan 2018 15:25:35 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN7r8025766;
+        Tue, 30 Jan 2018 15:25:36 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dt-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dm-3;
         Tue, 30 Jan 2018 15:25:35 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6CC9B221A56E;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 9636C221A57A;
         Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 624062CDE88;
+        by smtp.yojoe.local (Postfix) with ESMTP id 8D6492CDE88;
         Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 24/31] merge-recursive: when comparing files, don't include trees
-Date:   Tue, 30 Jan 2018 15:25:26 -0800
-Message-Id: <20180130232533.25846-25-newren@gmail.com>
+Subject: [PATCH v7 28/31] merge-recursive: fix remaining directory rename + dirty overwrite cases
+Date:   Tue, 30 Jan 2018 15:25:30 -0800
+Message-Id: <20180130232533.25846-29-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -56,71 +57,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_renames() would look up stage data that already existed (populated
-in get_unmerged(), taken from whatever unpack_trees() created), and if
-it didn't exist, would call insert_stage_data() to create the necessary
-entry for the given file.  The insert_stage_data() fallback becomes
-much more important for directory rename detection, because that creates
-a mechanism to have a file in the resulting merge that didn't exist on
-either side of history.  However, insert_stage_data(), due to calling
-get_tree_entry() loaded up trees as readily as files.  We aren't
-interested in comparing trees to files; the D/F conflict handling is
-done elsewhere.  This code is just concerned with what entries existed
-for a given path on the different sides of the merge, so create a
-get_tree_entry_if_blob() helper function and use it.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ merge-recursive.c                   | 26 +++++++++++++++++++++++---
+ t/t6043-merge-rename-directories.sh |  8 ++++----
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 354d91d2a8..38dc0eefaf 100644
+index fba1a0d207..62e4266d21 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -418,6 +418,21 @@ static void get_files_dirs(struct merge_options *o, =
-struct tree *tree)
- 	read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, o);
- }
+@@ -1320,11 +1320,23 @@ static int handle_file(struct merge_options *o,
 =20
-+static int get_tree_entry_if_blob(const unsigned char *tree,
-+				  const char *path,
-+				  unsigned char *hashy,
-+				  unsigned int *mode_o)
-+{
-+	int ret;
-+
-+	ret =3D get_tree_entry(tree, path, hashy, mode_o);
-+	if (S_ISDIR(*mode_o)) {
-+		hashcpy(hashy, null_sha1);
-+		*mode_o =3D 0;
-+	}
-+	return ret;
-+}
-+
- /*
-  * Returns an index_entry instance which doesn't have to correspond to
-  * a real cache entry in Git's index.
-@@ -428,12 +443,12 @@ static struct stage_data *insert_stage_data(const c=
-har *path,
+ 	add =3D filespec_from_entry(&other, dst_entry, stage ^ 1);
+ 	if (add) {
++		int ren_src_was_dirty =3D was_dirty(o, rename->path);
+ 		char *add_name =3D unique_path(o, rename->path, other_branch);
+ 		if (update_file(o, 0, &add->oid, add->mode, add_name))
+ 			return -1;
+=20
+-		remove_file(o, 0, rename->path, 0);
++		if (ren_src_was_dirty) {
++			output(o, 1, _("Refusing to lose dirty file at %s"),
++			       rename->path);
++		}
++		/*
++		 * Stupid double negatives in remove_file; it somehow manages
++		 * to repeatedly mess me up.  So, just for myself:
++		 *    1) update_wd iff !ren_src_was_dirty.
++		 *    2) no_wd iff !update_wd
++		 *    3) so, no_wd =3D=3D !!ren_src_was_dirty =3D=3D ren_src_was_dirty
++		 */
++		remove_file(o, 0, rename->path, ren_src_was_dirty);
+ 		dst_name =3D unique_path(o, rename->path, cur_branch);
+ 	} else {
+ 		if (dir_in_way(rename->path, !o->call_depth, 0)) {
+@@ -1462,7 +1474,10 @@ static int conflict_rename_rename_2to1(struct merg=
+e_options *o,
+ 		char *new_path2 =3D unique_path(o, path, ci->branch2);
+ 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
+ 		       a->path, new_path1, b->path, new_path2);
+-		if (would_lose_untracked(path))
++		if (was_dirty(o, path))
++			output(o, 1, _("Refusing to lose dirty file at %s"),
++			       path);
++		else if (would_lose_untracked(path))
+ 			/*
+ 			 * Only way we get here is if both renames were from
+ 			 * a directory rename AND user had an untracked file
+@@ -2042,6 +2057,7 @@ static void apply_directory_rename_modifications(st=
+ruct merge_options *o,
  {
  	struct string_list_item *item;
- 	struct stage_data *e =3D xcalloc(1, sizeof(struct stage_data));
--	get_tree_entry(o->object.oid.hash, path,
--			e->stages[1].oid.hash, &e->stages[1].mode);
--	get_tree_entry(a->object.oid.hash, path,
--			e->stages[2].oid.hash, &e->stages[2].mode);
--	get_tree_entry(b->object.oid.hash, path,
--			e->stages[3].oid.hash, &e->stages[3].mode);
-+	get_tree_entry_if_blob(o->object.oid.hash, path,
-+			       e->stages[1].oid.hash, &e->stages[1].mode);
-+	get_tree_entry_if_blob(a->object.oid.hash, path,
-+			       e->stages[2].oid.hash, &e->stages[2].mode);
-+	get_tree_entry_if_blob(b->object.oid.hash, path,
-+			       e->stages[3].oid.hash, &e->stages[3].mode);
- 	item =3D string_list_insert(entries, path);
- 	item->util =3D e;
- 	return e;
+ 	int stage =3D (tree =3D=3D a_tree ? 2 : 3);
++	int update_wd;
+=20
+ 	/*
+ 	 * In all cases where we can do directory rename detection,
+@@ -2052,7 +2068,11 @@ static void apply_directory_rename_modifications(s=
+truct merge_options *o,
+ 	 * saying the file would have been overwritten), but it might
+ 	 * be dirty, though.
+ 	 */
+-	remove_file(o, 1, pair->two->path, 0 /* no_wd */);
++	update_wd =3D !was_dirty(o, pair->two->path);
++	if (!update_wd)
++		output(o, 1, _("Refusing to lose dirty file at %s"),
++		       pair->two->path);
++	remove_file(o, 1, pair->two->path, !update_wd);
+=20
+ 	/* Find or create a new re->dst_entry */
+ 	item =3D string_list_lookup(entries, new_path);
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index 89b2eacf38..a34c57d986 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -3362,7 +3362,7 @@ test_expect_success '11b-setup: Avoid losing dirty =
+file involved in directory re
+ 	)
+ '
+=20
+-test_expect_failure '11b-check: Avoid losing dirty file involved in dire=
+ctory rename' '
++test_expect_success '11b-check: Avoid losing dirty file involved in dire=
+ctory rename' '
+ 	(
+ 		cd 11b &&
+=20
+@@ -3504,7 +3504,7 @@ test_expect_success '11d-setup: Avoid losing not-up=
+todate with rename + D/F conf
+ 	)
+ '
+=20
+-test_expect_failure '11d-check: Avoid losing not-uptodate with rename + =
+D/F conflict' '
++test_expect_success '11d-check: Avoid losing not-uptodate with rename + =
+D/F conflict' '
+ 	(
+ 		cd 11d &&
+=20
+@@ -3583,7 +3583,7 @@ test_expect_success '11e-setup: Avoid deleting not-=
+uptodate with dir rename/rena
+ 	)
+ '
+=20
+-test_expect_failure '11e-check: Avoid deleting not-uptodate with dir ren=
+ame/rename(1to2)/add' '
++test_expect_success '11e-check: Avoid deleting not-uptodate with dir ren=
+ame/rename(1to2)/add' '
+ 	(
+ 		cd 11e &&
+=20
+@@ -3659,7 +3659,7 @@ test_expect_success '11f-setup: Avoid deleting not-=
+uptodate with dir rename/rena
+ 	)
+ '
+=20
+-test_expect_failure '11f-check: Avoid deleting not-uptodate with dir ren=
+ame/rename(2to1)' '
++test_expect_success '11f-check: Avoid deleting not-uptodate with dir ren=
+ame/rename(2to1)' '
+ 	(
+ 		cd 11f &&
+=20
 --=20
 2.16.1.106.gf69932adfe
 
