@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5261F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id 492601F404
 	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932235AbeA3Xpo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:45:44 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36792 "EHLO
+        id S1753593AbeA3Xpp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:45:45 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58670 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753456AbeA3Xpn (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:43 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJZp009741;
-        Tue, 30 Jan 2018 15:25:35 -0800
+        by vger.kernel.org with ESMTP id S932217AbeA3XpX (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:23 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN8up025769;
+        Tue, 30 Jan 2018 15:25:36 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d6-3;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4du-2;
         Tue, 30 Jan 2018 15:25:35 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 49C0D221A562;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id A0146221A562;
         Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 375772CDE88;
+        by smtp.yojoe.local (Postfix) with ESMTP id 978592CDEB4;
         Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 21/31] merge-recursive: add a new hashmap for storing file collisions
-Date:   Tue, 30 Jan 2018 15:25:23 -0800
-Message-Id: <20180130232533.25846-22-newren@gmail.com>
+Subject: [PATCH v7 29/31] directory rename detection: new testcases showcasing a pair of bugs
+Date:   Tue, 30 Jan 2018 15:25:31 -0800
+Message-Id: <20180130232533.25846-30-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -56,72 +56,364 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Directory renames with the ability to merge directories opens up the
-possibility of add/add/add/.../add conflicts, if each of the N
-directories being merged into one target directory all had a file with
-the same name.  We need a way to check for and report on such
-collisions; this hashmap will be used for this purpose.
+Add a testcase showing spurious rename/rename(1to2) conflicts occurring
+due to directory rename detection.
+
+Also add a pair of testcases dealing with moving directory hierarchies
+around that were suggested by Stefan Beller as "food for thought" during
+his review of an earlier patch series, but which actually uncovered a
+bug.  Round things out with a test that is a cross between the two
+testcases that showed existing bugs in order to make sure we aren't
+merely addressing problems in isolation but in general.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 23 +++++++++++++++++++++++
- merge-recursive.h |  7 +++++++
- 2 files changed, 30 insertions(+)
+ t/t6043-merge-rename-directories.sh | 296 ++++++++++++++++++++++++++++++=
+++++++
+ 1 file changed, 296 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9e9ad45d2a..ac968ad2ae 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -84,6 +84,29 @@ static void dir_rename_entry_init(struct dir_rename_en=
-try *entry,
- 	string_list_init(&entry->possible_new_dirs, 0);
- }
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index a34c57d986..3d292f0c5f 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -159,6 +159,7 @@ test_expect_success '1b-check: Merge a directory with=
+ another' '
+ # Testcase 1c, Transitive renaming
+ #   (Related to testcases 3a and 6d -- when should a transitive rename a=
+pply?)
+ #   (Related to testcases 9c and 9d -- can transitivity repeat?)
++#   (Related to testcase 12b -- joint-transitivity?)
+ #   Commit O: z/{b,c},   x/d
+ #   Commit A: y/{b,c},   x/d
+ #   Commit B: z/{b,c,d}
+@@ -2863,6 +2864,68 @@ test_expect_failure '9g-check: Renamed directory t=
+hat only contained immediate s
+ 	)
+ '
 =20
-+static struct collision_entry *collision_find_entry(struct hashmap *hash=
-map,
-+						    char *target_file)
-+{
-+	struct collision_entry key;
++# Testcase 9h, Avoid implicit rename if involved as source on other side
++#   (Extremely closely related to testcase 3a)
++#   Commit O: z/{b,c,d_1}
++#   Commit A: z/{b,c,d_2}
++#   Commit B: y/{b,c}, x/d_1
++#   Expected: y/{b,c}, x/d_2
++#   NOTE: If we applied the z/ -> y/ rename to z/d, then we'd end up wit=
+h
++#         a rename/rename(1to2) conflict (z/d -> y/d vs. x/d)
++test_expect_success '9h-setup: Avoid dir rename on merely modified path'=
+ '
++	test_create_repo 9h &&
++	(
++		cd 9h &&
 +
-+	hashmap_entry_init(&key, strhash(target_file));
-+	key.target_file =3D target_file;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\nd\n" >z/d &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
 +
-+static int collision_cmp(void *unused_cmp_data,
-+			 const struct collision_entry *e1,
-+			 const struct collision_entry *e2,
-+			 const void *unused_keydata)
-+{
-+	return strcmp(e1->target_file, e2->target_file);
-+}
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
-+static void collision_init(struct hashmap *map)
-+{
-+	hashmap_init(map, (hashmap_cmp_fn) collision_cmp, NULL, 0);
-+}
++		git checkout A &&
++		test_tick &&
++		echo more >>z/d &&
++		git add z/d &&
++		git commit -m "A" &&
 +
- static void flush_output(struct merge_options *o)
- {
- 	if (o->buffer_output < 2 && o->obuf.len) {
-diff --git a/merge-recursive.h b/merge-recursive.h
-index d7f4cc80c1..e1be27f57c 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -37,6 +37,13 @@ struct dir_rename_entry {
- 	struct string_list possible_new_dirs;
- };
++		git checkout B &&
++		mkdir y &&
++		mkdir x &&
++		git mv z/b y/ &&
++		git mv z/c y/ &&
++		git mv z/d x/ &&
++		rmdir z &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '9h-check: Avoid dir rename on merely modified path'=
+ '
++	(
++		cd 9h &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 3 out &&
++
++		git rev-parse >actual \
++			HEAD:y/b HEAD:y/c HEAD:x/d &&
++		git rev-parse >expect \
++			O:z/b    O:z/c    A:z/d &&
++		test_cmp expect actual
++	)
++'
++
+ ########################################################################=
+###
+ # Rules suggested by section 9:
+ #
+@@ -3696,4 +3759,237 @@ test_expect_success '11f-check: Avoid deleting no=
+t-uptodate with dir rename/rena
+ 	)
+ '
 =20
-+struct collision_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	char *target_file;
-+	struct string_list source_files;
-+	unsigned reported_already:1;
-+};
++########################################################################=
+###
++# SECTION 12: Everything else
++#
++# Tests suggested by others.  Tests added after implementation completed
++# and submitted.  Grab bag.
++########################################################################=
+###
 +
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
++# Testcase 12a, Moving one directory hierarchy into another
++#   (Related to testcase 9a)
++#   Commit O: node1/{leaf1,leaf2}, node2/{leaf3,leaf4}
++#   Commit A: node1/{leaf1,leaf2,node2/{leaf3,leaf4}}
++#   Commit B: node1/{leaf1,leaf2,leaf5}, node2/{leaf3,leaf4,leaf6}
++#   Expected: node1/{leaf1,leaf2,leaf5,node2/{leaf3,leaf4,leaf6}}
++
++test_expect_success '12a-setup: Moving one directory hierarchy into anot=
+her' '
++	test_create_repo 12a &&
++	(
++		cd 12a &&
++
++		mkdir -p node1 node2 &&
++		echo leaf1 >node1/leaf1 &&
++		echo leaf2 >node1/leaf2 &&
++		echo leaf3 >node2/leaf3 &&
++		echo leaf4 >node2/leaf4 &&
++		git add node1 node2 &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv node2/ node1/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		echo leaf5 >node1/leaf5 &&
++		echo leaf6 >node2/leaf6 &&
++		git add node1 node2 &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_success '12a-check: Moving one directory hierarchy into anot=
+her' '
++	(
++		cd 12a &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 6 out &&
++
++		git rev-parse >actual \
++			HEAD:node1/leaf1 HEAD:node1/leaf2 HEAD:node1/leaf5 \
++			HEAD:node1/node2/leaf3 \
++			HEAD:node1/node2/leaf4 \
++			HEAD:node1/node2/leaf6 &&
++		git rev-parse >expect \
++			O:node1/leaf1    O:node1/leaf2    B:node1/leaf5 \
++			O:node2/leaf3 \
++			O:node2/leaf4 \
++			B:node2/leaf6 &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 12b, Moving two directory hierarchies into each other
++#   (Related to testcases 1c and 12c)
++#   Commit O: node1/{leaf1, leaf2}, node2/{leaf3, leaf4}
++#   Commit A: node1/{leaf1, leaf2, node2/{leaf3, leaf4}}
++#   Commit B: node2/{leaf3, leaf4, node1/{leaf1, leaf2}}
++#   Expected: node1/node2/node1/{leaf1, leaf2},
++#             node2/node1/node2/{leaf3, leaf4}
++#   NOTE: Without directory renames, we would expect
++#                   node2/node1/{leaf1, leaf2},
++#                   node1/node2/{leaf3, leaf4}
++#         with directory rename detection, we note that
++#             commit A renames node2/ -> node1/node2/
++#             commit B renames node1/ -> node2/node1/
++#         therefore, applying those directory renames to the initial res=
+ult
++#         (making all four paths experience a transitive renaming), yiel=
+ds
++#         the expected result.
++#
++#         You may ask, is it weird to have two directories rename each o=
+ther?
++#         To which, I can do no more than shrug my shoulders and say tha=
+t
++#         even simple rules give weird results when given weird inputs.
++
++test_expect_success '12b-setup: Moving one directory hierarchy into anot=
+her' '
++	test_create_repo 12b &&
++	(
++		cd 12b &&
++
++		mkdir -p node1 node2 &&
++		echo leaf1 >node1/leaf1 &&
++		echo leaf2 >node1/leaf2 &&
++		echo leaf3 >node2/leaf3 &&
++		echo leaf4 >node2/leaf4 &&
++		git add node1 node2 &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv node2/ node1/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv node1/ node2/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '12b-check: Moving one directory hierarchy into anot=
+her' '
++	(
++		cd 12b &&
++
++		git checkout A^0 &&
++
++		git merge -s recursive B^0 &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 4 out &&
++
++		git rev-parse >actual \
++			HEAD:node1/node2/node1/leaf1 \
++			HEAD:node1/node2/node1/leaf2 \
++			HEAD:node2/node1/node2/leaf3 \
++			HEAD:node2/node1/node2/leaf4 &&
++		git rev-parse >expect \
++			O:node1/leaf1 \
++			O:node1/leaf2 \
++			O:node2/leaf3 \
++			O:node2/leaf4 &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 12c, Moving two directory hierarchies into each other w/ cont=
+ent merge
++#   (Related to testcase 12b)
++#   Commit O: node1/{       leaf1_1, leaf2_1}, node2/{leaf3_1, leaf4_1}
++#   Commit A: node1/{       leaf1_2, leaf2_2,  node2/{leaf3_2, leaf4_2}}
++#   Commit B: node2/{node1/{leaf1_3, leaf2_3},        leaf3_3, leaf4_3}
++#   Expected: Content merge conflicts for each of:
++#               node1/node2/node1/{leaf1, leaf2},
++#               node2/node1/node2/{leaf3, leaf4}
++#   NOTE: This is *exactly* like 12c, except that every path is modified=
+ on
++#         each side of the merge.
++
++test_expect_success '12c-setup: Moving one directory hierarchy into anot=
+her w/ content merge' '
++	test_create_repo 12c &&
++	(
++		cd 12c &&
++
++		mkdir -p node1 node2 &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\nleaf1\n" >node1/leaf1 &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\nleaf2\n" >node1/leaf2 &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\nleaf3\n" >node2/leaf3 &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\nleaf4\n" >node2/leaf4 &&
++		git add node1 node2 &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv node2/ node1/ &&
++		for i in `git ls-files`; do echo side A >>$i; done &&
++		git add -u &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv node1/ node2/ &&
++		for i in `git ls-files`; do echo side B >>$i; done &&
++		git add -u &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '12c-check: Moving one directory hierarchy into anot=
+her w/ content merge' '
++	(
++		cd 12c &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 &&
++
++		git ls-files -u >out &&
++		test_line_count =3D 12 out &&
++
++		git rev-parse >actual \
++			:1:node1/node2/node1/leaf1 \
++			:1:node1/node2/node1/leaf2 \
++			:1:node2/node1/node2/leaf3 \
++			:1:node2/node1/node2/leaf4 \
++			:2:node1/node2/node1/leaf1 \
++			:2:node1/node2/node1/leaf2 \
++			:2:node2/node1/node2/leaf3 \
++			:2:node2/node1/node2/leaf4 \
++			:3:node1/node2/node1/leaf1 \
++			:3:node1/node2/node1/leaf2 \
++			:3:node2/node1/node2/leaf3 \
++			:3:node2/node1/node2/leaf4 &&
++		git rev-parse >expect \
++			O:node1/leaf1 \
++			O:node1/leaf2 \
++			O:node2/leaf3 \
++			O:node2/leaf4 \
++			A:node1/leaf1 \
++			A:node1/leaf2 \
++			A:node1/node2/leaf3 \
++			A:node1/node2/leaf4 \
++			B:node2/node1/leaf1 \
++			B:node2/node1/leaf2 \
++			B:node2/leaf3 \
++			B:node2/leaf4 &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 --=20
 2.16.1.106.gf69932adfe
 
