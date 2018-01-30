@@ -2,152 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FDE1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 15:14:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 693A21F576
+	for <e@80x24.org>; Tue, 30 Jan 2018 15:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752725AbeA3POJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 10:14:09 -0500
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:33238 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751662AbeA3POH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 10:14:07 -0500
-Received: by mail-wm0-f47.google.com with SMTP id x4so4102013wmc.0
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 07:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bFKgAOdm+eZFChtbiVcn4QvKVV+zDMbT/YnSkAGtZEs=;
-        b=IPVMjiFPkZFVZmwwgJkfhOp3EsRTZPNc2SJopQ2pcmXlpWibS0YO7y5AaYLeCD7wrd
-         i1uweVqR9KxQSJVeM16S0Dng18so8U/q2/9PhtGPrQDNRMxU3iAMDXsz+HY5hPSCwPwk
-         yCMvLydvnwliBBXMk0CrK/f2FZWrfHBy/5TngvP3mFIQPAE1OYeGlLPctAlq6T+tB1hA
-         C27OSUEr+Qi+Q6se6kcyiltJtz8Hw3ITq4yCkbO2j6s8EKEj7Y/I29A+Zkmuwrvb8T9C
-         +GoN2iYt7uVnQdp1X0C52NfqTj++yOl4EL2VBWl8ypbTIp4QavBuxkRHfFOB6msabKoO
-         w3fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=bFKgAOdm+eZFChtbiVcn4QvKVV+zDMbT/YnSkAGtZEs=;
-        b=VaNilnUpXfMIAkLpsysy4oOCd3FuxAWlJUSEkUDzECrCc1CtwnSIPxjuMjXk/XB8FN
-         FAgEzwmSXWULM38rsb0hIAi/GtTaVA2j+etiWSk3eStN0F3+FJJyhYz7ArdvQZ+KlYHd
-         K4n44CgL080QzrCUOsYxx2afqQmXSElqXXJSqQjefpJPDZYEJLUqcd4Icgc4jvsiJ7h5
-         hrB72Y/ADfzamj7CA4whk/FuO49q3feiLBiVIZ7k513ZHZAkpXXQV4g9ADNdzgzpLG7Y
-         as1ACjH+noPkJyUfy9pIUgy51vGam86zT0AZuT1qvk0qUZISGXXOtEhJB8CmCiI8UAZe
-         ZIhw==
-X-Gm-Message-State: AKwxytfk4FDpq4kYyyGiUtoEOPa6nWCKch2dfuEySfYSpJO1ngr2fI2g
-        vFXDx9FjiLXubwpUMsfOd4c=
-X-Google-Smtp-Source: AH8x226gA3k3J24Escz1L1wULzgDoT+EkZD6MreyRfnD8Akfor9xJENF7N6cvFLF9n+8C17CQazBFw==
-X-Received: by 10.28.28.139 with SMTP id c133mr20268326wmc.144.1517325246513;
-        Tue, 30 Jan 2018 07:14:06 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id f22sm11894891wmi.24.2018.01.30.07.14.04
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 Jan 2018 07:14:05 -0800 (PST)
-Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH/RFC v5 7/7] Careful with CRLF when using e.g. UTF-16 for working-tree-encoding
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180130144002.GA30211@tor.lan>
-Date:   Tue, 30 Jan 2018 16:14:03 +0100
-Cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes.Schindelin@gmx.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <10091BA4-1069-4A65-9057-CAAD87F9B55F@gmail.com>
-References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com> <20180129201911.9484-1-tboegi@web.de> <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com> <20180130144002.GA30211@tor.lan>
-To:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1753046AbeA3Pmx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 10:42:53 -0500
+Received: from smtppost.atos.net ([193.56.114.166]:20056 "EHLO
+        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752127AbeA3Pmw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 10:42:52 -0500
+Received: from mail2-ext.my-it-solutions.net (mail2-ext.my-it-solutions.net) by smarthost6.atos.net with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 6de4_608a_f0a83584_74a1_4074_88e8_79d92b03b86c;
+        Tue, 30 Jan 2018 16:42:50 +0100
+Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
+        by mail2-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id w0UFgohd027978
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 16:42:50 +0100
+Received: from FRAUVJ99ET2MSX.ww931.my-it-solutions.net ([172.23.231.42])
+        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id w0UFgokJ031651
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 16:42:50 +0100
+Received: from FRAUVJ99ET3MSX.ww931.my-it-solutions.net (172.23.231.44) by
+ FRAUVJ99ET2MSX.ww931.my-it-solutions.net (172.23.231.42) with Microsoft SMTP
+ Server (TLS) id 14.3.361.1; Tue, 30 Jan 2018 16:42:50 +0100
+Received: from FRCRPVV9EX5MSX.ww931.my-it-solutions.net ([169.254.10.241]) by
+ FRAUVJ99ET3MSX.ww931.my-it-solutions.net ([172.23.231.44]) with mapi id
+ 14.03.0361.001; Tue, 30 Jan 2018 16:42:49 +0100
+From:   "FIGADERE, LAURENT" <laurent.figadere@atos.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: 2.15.1 - merge with submodule output issue
+Thread-Topic: 2.15.1 - merge with submodule output issue
+Thread-Index: AdOZ4Pnekz7pG8a1Tk6LKhBoxRkdDA==
+Date:   Tue, 30 Jan 2018 15:42:49 +0000
+Message-ID: <DDD544204D3240408540BFCC028E06882F12F237@FRCRPVV9EX5MSX.ww931.my-it-solutions.net>
+Accept-Language: fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.23.231.120]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-> On 30 Jan 2018, at 15:40, Torsten B=F6gershausen <tboegi@web.de> =
-wrote:
->=20
-> On Tue, Jan 30, 2018 at 12:23:47PM +0100, Lars Schneider wrote:
->>=20
->>> On 29 Jan 2018, at 21:19, tboegi@web.de wrote:
->>>=20
->>> From: Torsten B=F6gershausen <tboegi@web.de>
->>>=20
->>> UTF-16 encoded files are treated as "binary" by Git, and no CRLF
->>> conversion is done.
->>> When the UTF-16 encoded files are converted into UF-8 using the new
->> s/UF-8/UTF-8/
->>=20
->>=20
->>> "working-tree-encoding", the CRLF are converted if core.autocrlf is =
-true.
->>>=20
->>> This may lead to confusion:
->>> A tool writes an UTF-16 encoded file with CRLF.
->>> The file is commited with core.autocrlf=3Dtrue, the CLRF are =
-converted into LF.
->>> The repo is pushed somewhere and cloned by a different user, who has
->>> decided to use core.autocrlf=3Dfalse.
->>> He uses the same tool, and now the CRLF are not there as expected, =
-but LF,
->>> make the file useless for the tool.
->>>=20
->>> Avoid this (possible) confusion by ignoring core.autocrlf for all =
-files
->>> which have "working-tree-encoding" defined.
->>=20
->> Maybe I don't understand your use case but I think this will generate =
-even=20
->> more confusion because that's not what I would expect as a user. I =
-think Git=20
->> should behave consistently independent of the used encoding. Here are =
-my arguments:
->=20
-> To start with: I have probably seen too many repos with CRLF messed =
-up.
->=20
->>=20
->>  (1) Legacy users are *not* affected. If you don't use the =
-"working-tree-encoding"
->>      attribute then nothing changes for you.
->=20
-> People who don't use "working-tree-encoding" are not affected,
-> I never ment to state that.
->=20
-> I am thinking about people who use "working-tree-encoding" without =
-thinking
-> about line endings.
-> Or the ones that have in mind that core.autocrlf=3Dtrue will leave the
-> line endings for UTF-16 encoded files as is, but that changes as soon =
-as they
-> are converted into UTF-8 and the "auto" check is now done
-> -after- the conversion. I would find that confusing.
->=20
->>=20
->>  (2) If you use the "working-tree-encoding" attribute *and* you want =
-to ensure=20
->>      your file keeps CRLF then you can define that in the attributes =
-too. E.g.:
->>=20
->>      *.proj textworking-tree-encoding=3DUTF-16 eol=3Dcrlf
->=20
-> That is a good one.
-> If you ever plan a re-roll (I don't at the moment) the *.proj =
-extemsion
-> make much more sense in Documentation/gitattributes that *.tx
-> There no text files encoded in UTF-16 wich are called xxx.txt, but =
-those
-> are non-ideal examples. *.proj makes good sense as an example.
-
-OK, I'll do that. Would that fix the problem which this patch tries to =
-address for you?
-(I would also explicitly add a paragraph to discuss line endings)
-
-- Lars=
+RGVhciBnaXQsDQoNCkkgdXNlIHNpbmNlIGZldyB3ZWVrcyBub3cgZ2l0IDIuMTUuMS4NCg0KSSBk
+aWQgZmV3IHRyaWFscyBidXQgcGxlYXNlIGZpbmQgaGVyZSBteSBvdXRwdXRzLg0KDQpUbyByZXBy
+b2R1Y2U6DQpVc2UgYSB0b3AgbW9kdWxlIGdpdCB3aGljaCBpbmNsdWRlIGEgc3VibW9kdWxlDQpG
+aXJzdCBzdGVwOiBmcm9tIGEgd29yayBhcmVhLCBJIGNoYW5nZWQgc2VsZWN0ZWQgdmVyc2lvbiBv
+ZiBzdWJtb2R1bGUgaW4gbWFzdGVyIGJyYW5jaC4NClRoZW4gZ2l0IGFkZCArIGdpdCBjb21taXQg
+KyBnaXQgcHVzaA0K74OoCUEgbmV3IGNvbW1pdCBvbiBtYXN0ZXIgYnJhbmNoIGhhcyBiZWVuIHB1
+Ymxpc2hlZCBvbiBteSBvcmlnaW4gcmVwb3NpdG9yeSB3aXRoIHRoZSB2ZXJzaW9uIHYxLjIgb2Yg
+c3VibW9kdWxlDQoNClNlY29uZCBzdGVwOiBpbiBteSBzZWNvbmQgd29ya2FyZWEsIEkgY3JlYXRl
+ZCBhIHVzZXIgYnJhbmNoIG15YnJhbmNoLCB0aGVuIHNlbGVjdGVkIGFub3RoZXIgcmVsZWFzZSBv
+ZiBzdWJtb2R1bGUNCkkgYWRkZWQgdGhlIHVwZGF0ZSBhbmQgdGhlbiBjb21taXQgaW4gbXlicmFu
+Y2guDQrvg6gJQSBuZXcgY29tbWl0IHdpdGggcmVsZWFzZSB2Mi4wIG9mIHN1Ym1vZHVsZSBpcyBp
+biBteSBsYXN0IFNIQTEgb2YgbXlicmFuY2gNCg0KTGFzdCBzdGVwOiBpbiB0aGUgc2Vjb25kIHdv
+cmthcmVhLCBpbiBteWJyYW5jaCwgSSBmaXJzdCBydW4g4oCYZ2l0IGZldGNo4oCZIGFuZCB0aGVu
+IOKAmGdpdCBtZXJnZSBvcmlnaW4vbWFzdGVy4oCZDQpJIGdvdCBhIENPTkZMSUNUIG1lc3NhZ2Ug
+b2YgY291cnNlIGR1ZSB0byB0aGUgMiBkaWZmZXJlbnQgdmVyc2lvbnMgb2Ygc3VibW9kdWxlLg0K
+SGVyZSB0aGUgbWVzc2FnZToNCndhcm5pbmc6IEZhaWxlZCB0byBtZXJnZSBzdWJtb2R1bGUgc3Vi
+bW9kdWxlIChjb21taXRzIGRvbid0IGZvbGxvdyBtZXJnZS1iYXNlKSANCkF1dG8tbWVyZ2luZyBz
+dWJtb2R1bGUgDQpDT05GTElDVCAoc3VibW9kdWxlKTogTWVyZ2UgY29uZmxpY3QgaW4gc3VibW9k
+dWxlIA0KQXV0b21hdGljIG1lcmdlIGZhaWxlZDsgZml4IGNvbmZsaWN0cyBhbmQgdGhlbiBjb21t
+aXQgdGhlIHJlc3VsdC4gDQoNCk5vdyBJIHRob3VnaHQgdGhhdCB0aGUgY29tbWFuZCDigJhnaXQg
+c3VibW9kdWxl4oCZIHByb3ZpZGVkIGFuIG91dHB1dCB3aXRoIGJvdGggdmVyc2lvbnMgb2YgbW9k
+dWxlcyAobG9jYWwgYW5kIHJlbW90ZSkuDQpCdXQgdGhpcyBpcyBub3QgdGhlIGNhc2UgaW4gbXkg
+ZW52aXJvbm1lbnQ6DQpbMTU6MjA6MTBdICQgZ2l0IHN1Ym1vZHVsZSBzdGF0dXMgDQpVMDAwMDAw
+MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCBzdWJtb2R1bGUNCg0KQW5kIHdoZW4g
+SSBydW4gdGhlIG1lcmdldG9vbCBjb21tYW5kIEkgaGF2ZSB0aGlzIG91dHB1dDoNClsxNDo1NDo0
+MV0gJCBnaXQgbWVyZ2V0b29sIA0KTWVyZ2luZzogDQpzdWJtb2R1bGUgDQpTdWJtb2R1bGUgbWVy
+Z2UgY29uZmxpY3QgZm9yICdzdWJtb2R1bGUnOiANCiAge2xvY2FsfTogc3VibW9kdWxlIGNvbW1p
+dCAwOGY4NmYyNDA0ZDlmOGY2MTYyNjI5NzFhMzEyN2U2OWYzOWY5ZDExIA0KICB7cmVtb3RlfTog
+c3VibW9kdWxlIGNvbW1pdCBiM2RkNmZkZTRmMDIyNThiODhhZDBiMmRiYTY0NzRjMTI2YjQ5OWY3
+IA0KVXNlIChsKW9jYWwgb3IgKHIpZW1vdGUsIG9yIChhKWJvcnQ/IA0KDQpTbywgaXQgbWVhbnMg
+aXTigJlzIG5vdCB1c2VmdWxsIHRvIGRldGVybWluZSB3aGljaCB2ZXJzaW9uIGhhcyB0byBiZSBz
+ZWxlY3RlZC4NCklzIGl0IGEgYnVnIG9yIHBlcmhhcHMgSSBtYWtlIHNvbWV0aGluZyB3cm9uZz8N
+Cg0KSXQgd2lsbCBiZSB1c2VmdWxsIGlmIHdlIGNhbiBoYXYgZSB0aGlzIGluZm9ybWF0aW9uIGR1
+cmluZyBnaXQgbWVyZ2V0b29sIGNvbW1hbmQgbGlrZSB3aXRoIGdpdCBkZXNjcmliZSAuDQoNClRo
+YW5rcyBmb3IgeW91ciBoZWxwLiANCg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
+DQpMYXVyZW50IEZJR0FERVJFDQpDQUQgRW5naW5lZXINCkdCRFMgUkQgQXNpYyBWZXJpZmljYXRp
+b24NCiszMzEzMDgwNTM2MQ0KbGF1cmVudC5maWdhZGVyZUBhdG9zLm5ldA0KUnVlIEplYW4gSmF1
+cmVzIEJQIDY4DQo3ODM0MCBMZXMgQ2xheWVzLXNvdXMtQm9pcw0KRnJhbmNlDQp3d3cuQXRvcy5u
+ZXQNCg0KDQoNClRoaXMgZS1tYWlsIGFuZCB0aGUgZG9jdW1lbnRzIGF0dGFjaGVkIGFyZSBjb25m
+aWRlbnRpYWwgYW5kIGludGVuZGVkIHNvbGVseSBmb3IgdGhlIGFkZHJlc3NlZTsgaXQgbWF5IGFs
+c28gYmUgcHJpdmlsZWdlZC4gSWYgeW91IHJlY2VpdmUgdGhpcyBlLW1haWwgaW4gZXJyb3IsIHBs
+ZWFzZSBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBhbmQgZGVzdHJveSBpdC4gQXMgaXRz
+IGludGVncml0eSBjYW5ub3QgYmUgc2VjdXJlZCBvbiB0aGUgSW50ZXJuZXQsIHRoZSBBdG9zIGdy
+b3VwIGxpYWJpbGl0eSBjYW5ub3QgYmUgdHJpZ2dlcmVkIGZvciB0aGUgbWVzc2FnZSBjb250ZW50
+LiBBbHRob3VnaCB0aGUgc2VuZGVyIGVuZGVhdm9ycyB0byBtYWludGFpbiBhIGNvbXB1dGVyIHZp
+cnVzLWZyZWUgbmV0d29yaywgdGhlIHNlbmRlciBkb2VzIG5vdCB3YXJyYW50IHRoYXQgdGhpcyB0
+cmFuc21pc3Npb24gaXMgdmlydXMtZnJlZSBhbmQgd2lsbCBub3QgYmUgbGlhYmxlIGZvciBhbnkg
+ZGFtYWdlcyByZXN1bHRpbmcgZnJvbSBhbnkgdmlydXMgdHJhbnNtaXR0ZWQuDQoNCg0KDQoNCg==
