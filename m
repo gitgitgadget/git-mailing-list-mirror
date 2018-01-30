@@ -2,96 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C23A1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 00:16:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB6EB1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 00:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751778AbeA3AQW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 19:16:22 -0500
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:46735 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751417AbeA3AQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 19:16:18 -0500
-Received: by mail-lf0-f54.google.com with SMTP id q194so12651631lfe.13
-        for <git@vger.kernel.org>; Mon, 29 Jan 2018 16:16:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=zIOrD757p+2urq7PAw10wJPx1iIfEf/yKeuhu5EilBw=;
-        b=aN64e4IihmjEGk/wk0SNsvOklZ5G/r6Zojlyw64meMahQKYZOjmG0AJ+3Xg2220Ono
-         gMSEu2CsVwR4pSLqt01O6B7Kcbv+/Ua3sIfwtGwAS9fdAx8jEL9J69VwsNhRZ+r8B/AS
-         wa5KxgRhmkwbhDqicnvVLOR30LQKN22FhyU67Ns2K7awWaQHzPRaqX/8pq1aQ1E+Cenh
-         wdhnGaSEpAMY6PqO9Qv09z57B584wq5CogL52HVliZknbT3DutG2yWcxGe1J1m2Nqktp
-         sFQhLJfgQr4R7Sj22OQg686evEmLA3vBSyPUDTi7FS3Y1pl6tQUrhV1WgZ/l5tPnKfhy
-         nilg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zIOrD757p+2urq7PAw10wJPx1iIfEf/yKeuhu5EilBw=;
-        b=fuFtedeyPfnoD4ExBv2kPrC/kp02HV3shL1CkiLzIEm0pth9WIZfwAEh62TdwBbfxo
-         eQMRfGXTNbhY5du1W3Ljh0NZOQZT8cHSV/sdj/dizlb2NIP1cHnk1+5b8LtohIY2GMBb
-         ANozhO6m1M7XcFMIOXGm1mV4vSX31DTmLqlreBdHgTY72l96TO/GZKs8y5LvSjUJEIoc
-         i0l/YMKYxLJ/eoIBd6LU2dkloBDF+NtqfqAHvhY6nGiQe7aybMOr26Z54DAngFIlHb7m
-         LZU/m9xFEdeKJk4Kvkig7/nub0S0RiIWoksa5VxlkAs9+zLedWcA2UBUnSUD7lVpQ/2H
-         +zvQ==
-X-Gm-Message-State: AKwxyteEOP/bnOjB3xFW76y8F+J1k9bki2VsCxQ2o+mXFcORLuONw7kF
-        XJb2138LDDQttzp1eeFkMFneFyq3
-X-Google-Smtp-Source: AH8x227BVXIocRfSnKXPiim0/JMIMH084sLzVVFM8R6x6S57ghuErv3ES0T8TW0A7kSKr2QAoATu6w==
-X-Received: by 10.46.36.26 with SMTP id k26mr14672821ljk.14.1517271376960;
-        Mon, 29 Jan 2018 16:16:16 -0800 (PST)
-Received: from [192.168.1.138] ([188.121.16.104])
-        by smtp.gmail.com with ESMTPSA id d77sm1412246ljd.31.2018.01.29.16.16.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 29 Jan 2018 16:16:16 -0800 (PST)
-Subject: Re: How juggle branches?
-To:     Andrzej <borucki_andrzej@wp.pl>, git@vger.kernel.org
-References: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
-From:   Patryk Obara <patryk.obara@gmail.com>
-Message-ID: <1fd71dd9-f54a-16dc-5521-f6f4e7d6fc33@gmail.com>
-Date:   Tue, 30 Jan 2018 01:16:15 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
- Thunderbird/58.0
+        id S1751528AbeA3AZs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 19:25:48 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58502 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751417AbeA3AZr (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 29 Jan 2018 19:25:47 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A8784609CB;
+        Tue, 30 Jan 2018 00:25:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1517271946;
+        bh=lv4yfPAhPw8PBqoFSOxBRmPDSxHnuLJyfhGW7yhnvPI=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=R3c19FvD2k9yD5c0YnTqXbFxK6YootrObiUUpr3rbjnYDROesz8XheiVswAVdP1ps
+         7BUi8e6rHIB8VVe1D/sP1eyHmJ6ro+CjoLY/ddyhu6J7bP9nO5uhFokMOunR8t7jCJ
+         i7sc2wPEJml41wxl2GWsULmO+pyCBwpwHHoSw8kajLXEMOSP66IigCRkHZHnUQoIAi
+         9opnJAofE2qnieEaYeMUxf4YY+1KZL6MS8O7U8pviYnxpZZipQMqduAiYWl5wESxuW
+         ZAcWiPhdeEiTbmhYrGdgFR4g78Ier0k6g5OE2sAu+x5UfY1rG6z1Ev8ZnaENbo7ITT
+         8wbMkolYWDspzaltNCeGsu6IwztO5h2XciYYEN1Pn7hgQE9hNQNdwd83TVxR9JiTo/
+         e9b0y1bHRmUcOu0GPvAKK51ln9mTvZHbgy6hnaRiOdUYJyxybk3ifrhFCcct/81CoJ
+         T0HNDSSlXUQe54RkLXIda3z5d0D8CXRXf47fX1FagBIUBhSO79x
+Date:   Tue, 30 Jan 2018 00:25:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: t9128 failing randomly with svn 1.9?
+Message-ID: <20180130002539.GO431130@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>, Todd Zullinger <tmz@pobox.com>,
+        git@vger.kernel.org
+References: <20180129015134.GN431130@genre.crustytoothpaste.net>
+ <20180129025812.GD1427@zaya.teonanacatl.net>
+ <20180129120627.al2xvx4yhhvwn6ih@untitled>
 MIME-Version: 1.0
-In-Reply-To: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gqEssfNGWsEa4HfM"
+Content-Disposition: inline
+In-Reply-To: <20180129120627.al2xvx4yhhvwn6ih@untitled>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/01/2018 22:24, Andrzej wrote:
 
-> I am in master branch and am changing to hbase:
-> git checkout -b hbase
-> git push origin hbase
+--gqEssfNGWsEa4HfM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These two commands create new branch called "hbase" in your local repo,
-and then in remote repo - so probably not what you wanted to do.
+On Mon, Jan 29, 2018 at 12:06:27PM +0000, Eric Wong wrote:
+> Todd Zullinger <tmz@pobox.com> wrote:
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 76a75d0b3d..2ba14269bb 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1200,6 +1200,11 @@ sub cmd_branch {
+>  	$ctx->copy($src, $rev, $dst)
+>  		unless $_dry_run;
+> =20
+> +	# Release resources held by ctx before creating another SVN::Ra
+> +	# so destruction is orderly.  This seems necessary Subversion 1.9.5
+> +	# to avoid segfaults.
+> +	$ctx =3D undef;
+> +
 
-> now worse:
-> I am in branch before_hbase and need change to master
-> git checkout -b master  - not works because master exists
+This may be the right thing to do.  I've seen a decent number of cases
+in Perl where global destruction randomly causes segfaults.
 
-"git checkout -b name" creates new branch called "name", starting in 
-your latest commit and switches you to this new branch.
+>  	$gs->fetch_all;
+>  }
+> =20
+>=20
+> I'll be looping t9128, t9141 and t9167 with that for a few
+> hours or day.  Will report back sooner if it fails.
+> I'm on an ancient 32-bit system, I guess you guys encountered
+> it on 64-bit machines?
 
-"git checkout name" switches your working tree to branch "name".
+Yes, both systems are 64-bit Debian systems, one stable, and the other
+unstable.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-So just drop "-b". You can read more in manual for git-checkout:
-https://git-scm.com/docs/git-checkout
+--gqEssfNGWsEa4HfM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-(in polish) Jeśli masz jakieś konkretne pytania, to możesz napisać do
-mnie po polsku :).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
 
--- 
-| ← Ceci n'est pas une pipe
-Patryk Obara
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpvu4MACgkQv1NdgR9S
+9os9dA/+N19rJHZMVwgiFDX1a5wTU20Ah0S54d2akKIvdJ/492cYUHaomwF4/ZUf
+RZvPIikfIwovHIZ1QEfqz98KCOCoge/njjnydiLY36KpY1zMOdLon3XoBQIveOfv
+tLxxgch/6gLQrjFuH1lO91F1uqpDJ4jEagTQsimq7vIpSS5HDVnjlivC3kXBy9ta
+JVE4lZtN1oGXsGSFZ0ZreqjmoEyPsSslz1TXHbg6N5y0aXJFxmmu99rVVPlL93dd
+MUeHvQO9BF4RAF1aXkpXChf6rNcdRBfAGqtYt/QzyzGcboFXGPODsZMbj1WkORfY
+nZN6s5VcK68nQ7I9LTQiSDzpAFArtURDTPqPWWUbSa8BUqWigDkTVKjuW6EDyIYa
+yU+BBrqNZc1B4qaF9QB/IIDewfidBHoPdP4SUgqJo9f0xoZU6uvIazP2Js+oRPs7
++bqKSN5SIlMc6vLSHz1xVgRemQqQH1ntcYCX4GkO0DGunmCyqwFP+k1lz+HtHFyr
+HN7JtAQzmEUXY4gams4/mXcfmrjpvyvP862027bxd0l31NVqJD8FZVDDjsr2liLn
+y1wybDeGTfjMXA6+RdG+CaAQ5RDpTGFlkWGtVS2aam1GIH5JnS75/WsfpAtsamVQ
+v2AtBeYiuwiOrx36xFu66IyJGt5WqZmWc5mTE1IyUxuK+q27YHU=
+=bjEy
+-----END PGP SIGNATURE-----
+
+--gqEssfNGWsEa4HfM--
