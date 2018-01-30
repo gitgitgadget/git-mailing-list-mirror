@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 519D51F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5261F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752616AbeA3Xpk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:45:40 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36774 "EHLO
+        id S932235AbeA3Xpo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:45:44 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36792 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932201AbeA3Xpb (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:31 -0500
+        by vger.kernel.org with ESMTP id S1753456AbeA3Xpn (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:45:43 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOKDv009751;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJZp009741;
         Tue, 30 Jan 2018 15:25:35 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d8-2;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d6-3;
         Tue, 30 Jan 2018 15:25:35 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id EF588221A56A;
-        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 49C0D221A562;
+        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id E3C222CDEB4;
-        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id 375772CDE88;
+        Tue, 30 Jan 2018 15:25:35 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 17/31] merge-recursive: add a new hashmap for storing directory renames
-Date:   Tue, 30 Jan 2018 15:25:19 -0800
-Message-Id: <20180130232533.25846-18-newren@gmail.com>
+Subject: [PATCH v7 21/31] merge-recursive: add a new hashmap for storing file collisions
+Date:   Tue, 30 Jan 2018 15:25:23 -0800
+Message-Id: <20180130232533.25846-22-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -56,76 +56,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This just adds dir_rename_entry and the associated functions; code using
-these will be added in subsequent commits.
+Directory renames with the ability to merge directories opens up the
+possibility of add/add/add/.../add conflicts, if each of the N
+directories being merged into one target directory all had a file with
+the same name.  We need a way to check for and report on such
+collisions; this hashmap will be used for this purpose.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 35 +++++++++++++++++++++++++++++++++++
- merge-recursive.h |  8 ++++++++
- 2 files changed, 43 insertions(+)
+ merge-recursive.c | 23 +++++++++++++++++++++++
+ merge-recursive.h |  7 +++++++
+ 2 files changed, 30 insertions(+)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 8ac69e1cbb..3b6d0e3f70 100644
+index 9e9ad45d2a..ac968ad2ae 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -49,6 +49,41 @@ static unsigned int path_hash(const char *path)
- 	return ignore_case ? strihash(path) : strhash(path);
+@@ -84,6 +84,29 @@ static void dir_rename_entry_init(struct dir_rename_en=
+try *entry,
+ 	string_list_init(&entry->possible_new_dirs, 0);
  }
 =20
-+static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *ha=
-shmap,
-+						      char *dir)
++static struct collision_entry *collision_find_entry(struct hashmap *hash=
+map,
++						    char *target_file)
 +{
-+	struct dir_rename_entry key;
++	struct collision_entry key;
 +
-+	if (dir =3D=3D NULL)
-+		return NULL;
-+	hashmap_entry_init(&key, strhash(dir));
-+	key.dir =3D dir;
++	hashmap_entry_init(&key, strhash(target_file));
++	key.target_file =3D target_file;
 +	return hashmap_get(hashmap, &key, NULL);
 +}
 +
-+static int dir_rename_cmp(void *unused_cmp_data,
-+			  const struct dir_rename_entry *e1,
-+			  const struct dir_rename_entry *e2,
-+			  const void *unused_keydata)
++static int collision_cmp(void *unused_cmp_data,
++			 const struct collision_entry *e1,
++			 const struct collision_entry *e2,
++			 const void *unused_keydata)
 +{
-+	return strcmp(e1->dir, e2->dir);
++	return strcmp(e1->target_file, e2->target_file);
 +}
 +
-+static void dir_rename_init(struct hashmap *map)
++static void collision_init(struct hashmap *map)
 +{
-+	hashmap_init(map, (hashmap_cmp_fn) dir_rename_cmp, NULL, 0);
-+}
-+
-+static void dir_rename_entry_init(struct dir_rename_entry *entry,
-+				  char *directory)
-+{
-+	hashmap_entry_init(entry, strhash(directory));
-+	entry->dir =3D directory;
-+	entry->non_unique_new_dir =3D 0;
-+	strbuf_init(&entry->new_dir, 0);
-+	string_list_init(&entry->possible_new_dirs, 0);
++	hashmap_init(map, (hashmap_cmp_fn) collision_cmp, NULL, 0);
 +}
 +
  static void flush_output(struct merge_options *o)
  {
  	if (o->buffer_output < 2 && o->obuf.len) {
 diff --git a/merge-recursive.h b/merge-recursive.h
-index 80d69d1401..d7f4cc80c1 100644
+index d7f4cc80c1..e1be27f57c 100644
 --- a/merge-recursive.h
 +++ b/merge-recursive.h
-@@ -29,6 +29,14 @@ struct merge_options {
- 	struct string_list df_conflict_file_set;
+@@ -37,6 +37,13 @@ struct dir_rename_entry {
+ 	struct string_list possible_new_dirs;
  };
 =20
-+struct dir_rename_entry {
++struct collision_entry {
 +	struct hashmap_entry ent; /* must be the first member! */
-+	char *dir;
-+	unsigned non_unique_new_dir:1;
-+	struct strbuf new_dir;
-+	struct string_list possible_new_dirs;
++	char *target_file;
++	struct string_list source_files;
++	unsigned reported_already:1;
 +};
 +
  /* merge_trees() but with recursive ancestor consolidation */
