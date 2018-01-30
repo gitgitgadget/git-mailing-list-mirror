@@ -2,131 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63FB81F576
-	for <e@80x24.org>; Tue, 30 Jan 2018 10:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 601A31F576
+	for <e@80x24.org>; Tue, 30 Jan 2018 10:22:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751709AbeA3KOB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 05:14:01 -0500
-Received: from mail-it0-f67.google.com ([209.85.214.67]:40076 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751296AbeA3KN7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 05:13:59 -0500
-Received: by mail-it0-f67.google.com with SMTP id 196so12782787iti.5
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 02:13:59 -0800 (PST)
+        id S1751611AbeA3KWt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 05:22:49 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:45455 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751505AbeA3KWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 05:22:48 -0500
+Received: by mail-oi0-f67.google.com with SMTP id c189so6692491oib.12
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 02:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=HximeLp/NJEwy9sV9P768HuQ4eyNRCNowFxlMKC+2P8=;
-        b=OXcjyrZWnL+8IY/tjCHmJ2SBMQ5a2jeYNlzdsO/Z35Q4CsyYQBSl1gFDWLGuorY9Ki
-         X+xQo1JkQ5fGh68cncOMEJhX2Ba4fXr6kh3heyBqlsedNaDtkaQuxKZhWqD35Vc3UjVJ
-         pA33UjqesdA6tmWpn+b8kDZa19ucmJSh4ht9hPqJqMsWqRO/pmoemMxYkEQraJCZO9qp
-         QTY8tTfujUYVdWgB4QermQXERimdvey++Dz6u4tcXOI928AovTsaMVVXbdzrEUE46kYg
-         EorEKHoRvg3Tms2LUcUCtt52uOzJj4l4DwBodSGL0LL0E3dh6sF4tKTOR+BeAvCI1zp6
-         R5+A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MNDvudeeH+LNaYu+XJK4NYz6DfcWGiWY1idK1Gw5Tto=;
+        b=LJrseOpGkQwWbABbEagwoWQDtMa0/o7jUeG6xB5ZDglW5EYrN9x9F08F5mG+y2jVDW
+         Z0that84v3FROM52rC1n8k4xlTo2Q5EGaG1Fad/o5hrrlUHQmKaRk7+UOaaU7kBFhRt7
+         KFzBLjZRZxoJb/Oqbo4m5RkBnPn2puGKhzrfKSsq53qbMGmlluJC17DJ2V0uNahLgAQs
+         tH5KR8OB0IKR6uIwEuCQIN6EuW2K7C1+WNeSwb0RJI9nNwPFGC8tCfE78fFkomCYdJyi
+         M8rlTLCw6+sqKuc1/TE4POF4tpO3gNwsEZeqvDPyaXV/gEN4t2ftJj6umALaLmJUxLow
+         SU4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=HximeLp/NJEwy9sV9P768HuQ4eyNRCNowFxlMKC+2P8=;
-        b=W+pIqZAQLGx9PP1J0a1dikB2J1JsL4HKh2q4A0t9u3Kk5Et02F4PwB5kAG6/ehyycG
-         C9Ws9WRZU0fGRZVmffgofcVEQKjE9sDL9uRwX+TkPqwKknRgZg1iIdo241YxMl8tS2GL
-         Y/astKIRRSyn/OWfi4FeKs+IaaSCxFX4+hfZRaPsHXj/NymTFma+x0eXZM/8yXl3t6a8
-         V9AOUpRRUoJSZq3ecFqeOM7kcqlRw2P0hRnUOBEMAzpl/0jZ5KdU/hgbmSMf8hQ6F/f1
-         nFL3aBz/HHtP+rHbNKmIH7kbK0XANSKwcemzc0lO51jDdKWi6dbc0554d9eJ23GH40LM
-         Eteg==
-X-Gm-Message-State: AKwxyteaAtKFqKO9P2AXxyK/cVKdxNvnjawha+x4IP34PvXrUDQr4vhC
-        8EFdBynzYA2kiF2EqEKYCNCGlw==
-X-Google-Smtp-Source: AH8x226HPJHZa6bgPNi3HsFg5jmfAep01lhNkJ+MXG7Oyq7GYp1CFezgjDLo/KA0w2DQVTtY3DdyUw==
-X-Received: by 10.36.238.68 with SMTP id b65mr30582208iti.97.1517307239222;
-        Tue, 30 Jan 2018 02:13:59 -0800 (PST)
-Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id z62sm4687813ioe.49.2018.01.30.02.13.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 Jan 2018 02:13:58 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Tue, 30 Jan 2018 17:13:52 +0700
-Date:   Tue, 30 Jan 2018 17:13:52 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Jack F' <jack@bytes.nz>, git@vger.kernel.org
-Subject: Re: Missing ? wildcard character in gitignore documentation
-Message-ID: <20180130101351.GA761@ash>
-References: <903a193c-0360-59bc-4d86-6470ac8dc1a8@bytes.nz>
- <000f01d39918$70009eb0$5001dc10$@nexbridge.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MNDvudeeH+LNaYu+XJK4NYz6DfcWGiWY1idK1Gw5Tto=;
+        b=liKxuQfJtNhiY393GJlFSivCsu/m8ZfhkyUi7Akl5Pq6BCkY6z4JJEX2jQnNDeTWUA
+         gIhlCBv43s72w5Otqu0G40mJ3sNEhEQHsELc+LAM/V/84Nu/wx+IxMWZyjPgyiC4eeut
+         ljHKcnhKHs7w7bnr6x2Y67N+L2hRgNv7CyWCo6EIKfSTQFa2r70is73UggLz7+NobXXs
+         Yd0y5tXzeec8Nlvp186/vd5pi//KNTcFabEy8KHeJ552bDUt2n+OxGgni4mWWSQovdgl
+         VBoMnJfIc5WnGB3Wv11HELw8aCCL4GRNKFu/cmN99koyGACysmFm4gDD0HdxHMHJjxLp
+         2Wyw==
+X-Gm-Message-State: AKwxytfznq7XeGPcQdjV3+g8MMZmoQ21w+sh7hacJ3RnrZTCbZ/Cmj12
+        5vvgKLr8Sf2U1DB6QsyGSXhwxd+BRtxSXlfyKEk=
+X-Google-Smtp-Source: AH8x22647p4+J9jZP4avTtbGjcdwKhaqheerMOzHdi1/+jbnd0G6bIrXL+2WqslF311WEyC/hGFujpDIuTWFgfIwNxQ=
+X-Received: by 10.84.78.139 with SMTP id c11mr19617894oiy.297.1517307767453;
+ Tue, 30 Jan 2018 02:22:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <000f01d39918$70009eb0$5001dc10$@nexbridge.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.74.102.205 with HTTP; Tue, 30 Jan 2018 02:22:17 -0800 (PST)
+In-Reply-To: <20180127164735.GA23478@sigill.intra.peff.net>
+References: <20180122123154.8301-1-pclouds@gmail.com> <20180125115927.16196-1-pclouds@gmail.com>
+ <20180125115927.16196-3-pclouds@gmail.com> <20180127164735.GA23478@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 30 Jan 2018 17:22:17 +0700
+Message-ID: <CACsJy8B_LzT1UqPmFg72SbQ9c_c5U6y+Yjv+UMFBz+vaXeE0AQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] format-patch: reduce patch diffstat width to 72
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 29, 2018 at 10:47:10AM -0500, Randall S. Becker wrote:
-> The implication of support for ? is there through the following paragraph from the gitignore documentation:
-> 
->     "Otherwise, Git treats the pattern as a shell glob suitable for
->     consumption by fnmatch(3) with the FNM_PATHNAME flag: wildcards
->     in the pattern will not match a / in the pathname. For example,
->     "Documentation/*.html" matches "Documentation/git.html" but not
->     "Documentation/ppc/ppc.html" or
->     "tools/perf/Documentation/perf.html"."
-> 
-> Of course you have to go read fnmatch(3), so it might be good for
-> expand on this here :).
+On Sat, Jan 27, 2018 at 11:47 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jan 25, 2018 at 06:59:27PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+>> diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+>> index 9f563db20a..1e62333b46 100755
+>> --- a/t/t4052-stat-output.sh
+>> +++ b/t/t4052-stat-output.sh
+>> @@ -60,7 +60,7 @@ do
+>>               test_cmp expect actual
+>>       '
+>>  done <<\EOF
+>> -format-patch -1 --stdout
+>> +format-patch --stat=3D80 -1 --stdout
+>>  diff HEAD^ HEAD --stat
+>>  show --stat
+>>  log -1 --stat
+>
+> This hunk confused me. I think what is going on is this:
+>
+>   - we have a loop that runs the same test on several commands
+>
+>   - that loop expects format-patch, diff, etc, to have the same output
+>
+>   - now that format-patch differs from the other commands in its default
+>     length, we need to use a manual --stat-width to get identical output
+>
+> It seems like that kind of nullifies the point of some of the tests in
+> the loop, though, since they are meant to check the behavior without
+> --stat.
+>
+> OTOH, I think that case is tested later (in the other tests you
+> adjusted). So I guess these tests are just covering the "name vs bar
+> length" part?
 
-I agree. How about something like this?
-
--- 8< --
-Subject: [PATCH] gitignore.txt: elaborate shell glob syntax
-
-`fnmatch(3)` is a great mention if the intended audience is
-programmers. For normal users it's probably better to spell out what
-a shell glob is.
-
-This paragraph is updated to roughly tell (or remind) what the main
-wildcards are supposed to do. All the details are still hidden away
-behind the `fnmatch(3)` wall because bringing the whole specification
-here may be too much.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/gitignore.txt | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 63260f0056..0f4b1360bd 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -102,12 +102,11 @@ PATTERN FORMAT
-    (relative to the toplevel of the work tree if not from a
-    `.gitignore` file).
- 
-- - Otherwise, Git treats the pattern as a shell glob suitable
--   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
--   wildcards in the pattern will not match a / in the pathname.
--   For example, "Documentation/{asterisk}.html" matches
--   "Documentation/git.html" but not "Documentation/ppc/ppc.html"
--   or "tools/perf/Documentation/perf.html".
-+ - Otherwise, Git treats the pattern as a shell glob: '{asterisk}'
-+   matches anything except '/', '?' matches any one character except
-+   '/' and '[]' matches one character in a selected range. See
-+   fnmatch(3) and the FNM_PATHNAME flag for a more accurate
-+   description.
- 
-  - A leading slash matches the beginning of the pathname.
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
--- 
-2.16.1.205.g271f633410
-
--- 8< --
+My bad. My thought was.. "Hmm.. I would need to take format-patch out
+out the loop since it won't match exactly 80 columns anymore. That's a
+lot of work. Hey how about using this opportunity to test that --stat=3D
+can still override default settings?" I didn't realize the follow
+tests in that loop set stat width. I'll take format-patch out of the
+loop and deal with it separately.
+--=20
+Duy
