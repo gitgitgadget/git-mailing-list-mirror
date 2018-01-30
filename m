@@ -2,110 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B7351F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 16:41:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B10F1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 18:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752628AbeA3Qlw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 11:41:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34126 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751410AbeA3Qlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 11:41:51 -0500
-Received: (qmail 22997 invoked by uid 109); 30 Jan 2018 16:41:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jan 2018 16:41:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16255 invoked by uid 111); 30 Jan 2018 16:42:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 30 Jan 2018 11:42:30 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jan 2018 11:41:49 -0500
-Date:   Tue, 30 Jan 2018 11:41:48 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 1/1] setup: recognise extensions.objectFormat
-Message-ID: <20180130164148.GA5053@sigill.intra.peff.net>
-References: <cover.1517098675.git.patryk.obara@gmail.com>
- <e430ad029facdd6209927d352f0e7545cdd0e435.1517098675.git.patryk.obara@gmail.com>
- <20180130013759.GA27694@sigill.intra.peff.net>
- <e3c203f8-7971-40ce-8d9e-2dfe35f51a8a@gmail.com>
+        id S1752770AbeA3S0n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 13:26:43 -0500
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:43769 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752559AbeA3S0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 13:26:42 -0500
+Received: by mail-yw0-f180.google.com with SMTP id x190so5468800ywd.10
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 10:26:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=h4KQR4Epcpp1F6r9vo9ry1qyuAGjCpF1sk+lCVaNyzA=;
+        b=mENFrjXQZ3tjrfs/zeReoKOMHZ/FxG9zsbSTHNjDAGsAD1p9xNZomGJkYus+XTvd1g
+         ZgO98CqfnzXsnQ8Zr6Lnh+MWR0R1C8/g8OHRXFXEfvKBcwr3Zj3MIqwyQ2V0AasaDJ5d
+         OtPPJXqnibMHQeIlVjRxC3lM9f+BZIhQjM9CTsMxGzmu2F6frBU6xagyQ2f2xMGFOXIl
+         QVgg+h9gLkJGPI7bhzYzaA+/l033tXwv8ZP46XMVYTMEyempONXI8B8We0KPwIIFEYH+
+         +/dMVYAgfq9aIWm5cKYpnmDOP+fPq6CluDu4bGNvM7cxmxcMpuYvsBr+5RpvgoIJLn8W
+         S3XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=h4KQR4Epcpp1F6r9vo9ry1qyuAGjCpF1sk+lCVaNyzA=;
+        b=VFb3NV2ijBUzHJVjyIKXXXFnYA4wAFHgUi2QjyFtXmw3BAILbmI+6q6DSy55lXBXHt
+         U35BpsAazu3aXLWC2juUVIVpHtHmD8lGAohDmQMhOHe9SfQSYonQXc5M1/FlGNF/6eWR
+         Ezhp1n3B7DwRThBcndyTBxhFrkTGjf7gBVxRDHscuBGYufAOzW7t961DsP7qmMw5FeQj
+         75WrcljSg9YyFPsDgiOcpV6jMDuZiOig7FbNJRzf3cUkUyA+Uue0x7teVkjggWHRx16i
+         6Txvcze1GHw/+9KTTEFBLCPWU02XNZBD3WBhLTDpn4POiKTuzrfV82t9VB4/U5mpC2Gw
+         ao0w==
+X-Gm-Message-State: AKwxytc0Rx8MCQJiVyX/D9CJpqTIByLK7JIqWqlos/hrZ/Ubyvw7kCaC
+        QTfuCjD4hpM/LZAhVj6efuLcBcpOc7iYJzu9wlLhXg==
+X-Google-Smtp-Source: AH8x225rQMODUjTHvRctzAL+G4dbFCYO73HtqD3qrNsmTlDL5VuUbzWGYsfoxmZsh/rL4Y6LMrkX8GIHubhx5DMzWcM=
+X-Received: by 10.37.34.8 with SMTP id i8mr20696830ybi.114.1517336801827; Tue,
+ 30 Jan 2018 10:26:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e3c203f8-7971-40ce-8d9e-2dfe35f51a8a@gmail.com>
+Received: by 10.37.207.9 with HTTP; Tue, 30 Jan 2018 10:26:41 -0800 (PST)
+In-Reply-To: <1408921517058505@web15o.yandex.ru>
+References: <14657461479715884@web21h.yandex.ru> <CA+P7+xrKfqOb-3FhKxXdnF6g9PktNWNzY+ZnHJS=yuVo1YdXzg@mail.gmail.com>
+ <CAGZ79kZbGPneUXVEqJYhQAn+dfYve7qCjhO7QFaV1JBs3HD1aA@mail.gmail.com>
+ <CA+P7+xqMUPLC-aKW-fiS629_Owat8sCa5vp_bOwQTO8LP4hCzw@mail.gmail.com>
+ <12531516812201@web36o.yandex.ru> <446801516908691@web22j.yandex.ru> <1408921517058505@web15o.yandex.ru>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 30 Jan 2018 10:26:41 -0800
+Message-ID: <CAGZ79kZbhHugy4EOjXn4DO_XjpdrAnKhk56j4Ew2XGggGYQVyQ@mail.gmail.com>
+Subject: Re: Feature request: Improve diff algorithm
+To:     KES <kes-kes@yandex.ru>
+Cc:     Jacob Keller <jacob.keller@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 05:30:04PM +0100, Patryk Obara wrote:
+On Sat, Jan 27, 2018 at 5:08 AM, KES <kes-kes@yandex.ru> wrote:
+> One yet more:
+>
+> @@ -43,22 +44,25 @@ sub tariff_title {
+>  1;
+>
+>  __DATA__
+> -@@ control/tariff.css
+> -* {
+> -    margin: 0;
+> -    padding: 0;
+> -    border: 0;
+> -    -webkit-box-sizing: border-box;
+> -    box-sizing: border-box; }
+> -html {
+> -    background-color: #121212;
+> -    color: white;
+> -    font-family: 'Roboto', 'Arial',  sans-serif;
+> -    font-size: 16px; }
+> -a {
+> -    cursor: pointer; }
+>
+>
+> +@@ control/tariff_about_old.html.ep
+> +<div class="option__about">
+> +  <div class="option__info">
+> +    <div class="option__icon"><img src="<%= $icon %>"></div>
+> +    <h3 class="option__name"><%= $title %></h3>
+> +  </div>
+> +  <div class="option__duration">
+> +    <p><%== $option1 %><%= stash->{ comment1 }? "<span> (" .stash->{ comment1 }.")</span>": '' %></
+> +    <div class="switch option__switch">
+> +      <input class="switch__toggle" type="checkbox" checked id="<%= $id %>">
+> +      <label for="<%= $id %>"></label>
+> +    </div>
+> +    <p><%== $option2 %><%= stash->{ comment2 }? "<span> (" .stash->{ comment2 }.")</span>": '' %></
+> +  </div>
+> +</div>
+> +
+> +@@ control/tariff.css
+>  /*  BASE BUTTON FOR TARIFF CARD  */
+>  .button {
+>    display: -webkit-box;
+>
+> But it would be better if `@@ control/tariff.css` were untouched:
+>
+> @@ -43,22 +44,25 @@ sub tariff_title {
+>  1;
+>
+>  __DATA__
+> +
+> +
+> +@@ control/tariff_about_old.html.ep
+> +<div class="option__about">
+> +  <div class="option__info">
+> +    <div class="option__icon"><img src="<%= $icon %>"></div>
+> +    <h3 class="option__name"><%= $title %></h3>
+> +  </div>
+> +  <div class="option__duration">
+> +    <p><%== $option1 %><%= stash->{ comment1 }? "<span> (" .stash->{ comment1 }.")</span>": '' %></
+> +    <div class="switch option__switch">
+> +      <input class="switch__toggle" type="checkbox" checked id="<%= $id %>">
+> +      <label for="<%= $id %>"></label>
+> +    </div>
+> +    <p><%== $option2 %><%= stash->{ comment2 }? "<span> (" .stash->{ comment2 }.")</span>": '' %></
+> +  </div>
+> +</div>
+> +
+>  @@ control/tariff.css
+> -* {
+> -    margin: 0;
+> -    padding: 0;
+> -    border: 0;
+> -    -webkit-box-sizing: border-box;
+> -    box-sizing: border-box; }
+> -html {
+> -    background-color: #121212;
+> -    color: white;
+> -    font-family: 'Roboto', 'Arial',  sans-serif;
+> -    font-size: 16px; }
+> -a {
+> -    cursor: pointer; }
+> -
+> -
+>  /*  BASE BUTTON FOR TARIFF CARD  */
+>  .button {
+>    display: -webkit-box;
+>
 
-> > I don't have a strong opinion on this, but it does feel a little funny
-> > to add this extension now, before we quite know what the code that uses
-> > it is going to look like (or maybe we're farther along there than I
-> > realize).
-> 
-> Code using this is already in master - in the result of overwriting
-> data->hash_algo, every piece of code, that was modernised starts using
-> the selected hash algorithm (through the_hash_algo) instead of hardcoded
-> sha-1.
+Try the new option that Jonathan Tan implemented:
 
-Right, that part seems pretty simple. But in the long run, is that going
-to be enough for the hash transition? My impression is that the
-transition document is going to require a more nuanced view than "this
-is the hash algorithm for this repo".
+  git diff --anchor="@@ control/tariff.css"
 
-Putting code in master is OK; we can always refactor it. But once we
-add and document a user-facing config option like this, we have to
-support it forever. So that's really the step I was wondering about: are
-we sure this is what the user-facing config is going to look like?
+to produce the second diff.
 
-> > What do we gain by doing this now as opposed to later? By the design of
-> > the extension code, we should complain on older versions anyway. And by
-> > doing it now we carry a small risk that it might not give us the
-> > interface we want, and it will be slightly harder to paper over this
-> > failed direction.
-> 
-> Mostly convenience for developers, who want to work on transition. There's
-> no need to re-compile only for changing default hashing algorithm (which is
-> useful for testing and debugging). I could carry this patch around to every
-> NewHash-related branch, that I work on but it's annoying me already ;)
-
-OK, that makes some sense to me. Even if we may end up with a more
-nuanced config later, this is useful for getting the first step done:
-just making a standalone NewHash repo without worrying about
-interoperation with existing history.
-
-> > I originally wrote it the other way out of an abundance of
-> > backward-compatibility. After all "extension.*" doesn't mean anything in
-> > format 0, and somebody _could_ have added such a config key for their
-> > own purposes. But that's a pretty weak argument, and if we are going to
-> > start marking some extensions as forbidden there, we might as well do
-> > them all.
-> 
-> What about users, who are using new version of Git, but have it
-> misconfigured with preciousObjects and repo format 0? That's why I decided
-> to make repo format check specific to objectFormat extension (initially I
-> made it generic to all extensions).
-
-But that's sort of my point. It appears to be working, but the
-prior-version safety they think they have is not there. I think we're
-better off erring on the side of caution here, and letting them know
-forcefully that their config is bogus.
-
-> At the same time... there's extension.partialclone in pu and it does not
-> have check on repo format.
-
-IMHO it should (and we should just do it by enforcing it for all
-extensions automatically).
-
--Peff
+I wonder if we want to have a permanent store for these
+lines in given diffs, such that you only have to figure it out once.
+(And eventually the community will have a corpus of data to
+figure out how to improve the diff for real)
