@@ -2,172 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11A781F576
-	for <e@80x24.org>; Tue, 30 Jan 2018 10:38:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E610A1F576
+	for <e@80x24.org>; Tue, 30 Jan 2018 11:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbeA3Kis (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 05:38:48 -0500
-Received: from eight.schwarz.eu ([78.47.62.209]:50304 "EHLO eight.schwarz.eu"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751509AbeA3Kir (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 05:38:47 -0500
-X-Greylist: delayed 2026 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jan 2018 05:38:47 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=schwarz-online.org; s=x; h=To:Date:Message-Id:Subject:Mime-Version:
-        Content-Type:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=Iqgr5NEJOAjQKJMuE0EFYOsNTwzWiUJ69N2y0FWTEpI=; b=NomhTULYGBSa+Yxt3tpvvZJD4m
-        dA7WfpTHAPgAKggMkJKf/HYzR32kOqwfqYQQ+i2PGsG9AM56+u3295mUp/FZXOdQjJNM3P3iEkt5o
-        GJmruxqhj4QwI7B90P4QHW1bFv4KAziJLkWBgVUW5UlSCpp/O4GjVNk/7u7vSd1/t51OjgicrWsXC
-        niLN1X008wkg+YmPG2+u/lvB3IWFEBwP9Vq4TKpPjnCJnZRybVFMqnryedH7Ro9AaKg7lYS2tJmQ2
-        FFYi6S1RH+glWAmUm0+8677+qFgpkHj6FtsS83dNFRlrskekZo+5zkPkhSrDPeZAazPnfz6ydtgYo
-        C6GpXTqg==;
-From:   =?utf-8?Q?Martin_H=C3=A4cker?= <mhaecker@schwarz-online.org>
-Content-Type: multipart/signed;
-        boundary="Apple-Mail=_EF7E90A1-E40C-4BA3-8070-F02BED4F9425";
-        protocol="application/pgp-signature";
-        micalg=pgp-sha1
-X-Mao-Original-Outgoing-Id: 538999499.732083-7201fb32545a8ca551e1abf82ebe7d3b
-Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
-Subject: git stash ; git stash pop unstages all staged changes 
-Message-Id: <454AAA27-B8D3-47F9-8E49-EC5415A26FCE@schwarz-online.org>
-Date:   Tue, 30 Jan 2018 11:05:00 +0100
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.5.20)
-X-Received: by eight.schwarz.eu with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <mhaecker@schwarz-online.org>)
-        id 1egSmi-0006hc-G1; Tue, 30 Jan 2018 11:38:46 +0100
+        id S1751360AbeA3LH1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 06:07:27 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:54178 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751219AbeA3LH0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 06:07:26 -0500
+Received: by mail-wm0-f66.google.com with SMTP id t74so275998wme.3
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 03:07:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9ABgFpVoH7ej5lJarK9MB04ZU+sEnxvX4VaU0GBxCxA=;
+        b=F35NW5/6PoPaKuPujnuLhBQ62Kdn8NslorwPvQDPT4Fb2NLABOXJ5M9xUpIGcCdLdl
+         P5cmw6zTLYKf6pU5tidSkBjqToCPRBSfTn+n7Tk/Fvb2lI3JFK9V4bWor39UzQoHmX8t
+         +sCOBMXypcw5P8cOcc1quSQ6Epm8Ud6m+Y3qrYcpg++DXWFULhpVxT3Lqe4Zr3yI2k5k
+         a6eAJ171uXsho0bS/WKUeMfZ1LC426hWcdMLnYLDEatugpaKc6R1Vg9nq1hvr0XLTi8Y
+         ojBAbseGQEK+ViIfialMGYtqfVwHZamRVZ/Da1wwI2Jt5jCNtx01Eayw+xUaPYWWJr/k
+         I/Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=9ABgFpVoH7ej5lJarK9MB04ZU+sEnxvX4VaU0GBxCxA=;
+        b=K2pGrOpGKWRyyl/w8q+SxkVn43ZAjjrmfszYeJbZ0aYMZ7NedUHX+hlMUtDh66rqwq
+         Y8uT48DphtkJ30M06VdpiYooYayi+BEiEFiubGCyjjsf5qpP+gxJ48KvcK1ajzYMEae1
+         RQ2hjXEF/NYKUAoksai6wE+MyZslR5JA1oCoRTKmqBB9oUUPxUP7ls0t/pzZUftlOpVC
+         TGq9OkdtG1sg7Mdhatfy4/xI9IixlYePuZvMb/uoHo4xrzgq87QVuTVn07lLFIF/GBhT
+         vwwgJdiiVncKDIYgHTiDS0mOQkbJTJe3W4E00VgyLzdZB86znTtYLCznNLOIKEZsfrYe
+         9/bQ==
+X-Gm-Message-State: AKwxytekqkaPOMIMKYb07zWwTDOppWsr3NzYZmwtLv660kHsvMN8C+v7
+        7R7bQgrFa2lMQuGgDUMbvwg=
+X-Google-Smtp-Source: AH8x226BuYJhQT2/9HZ7U6OdfJj2NbivsRQH4dK3gD9oxn16JFiw05S6LvvkBaeuEpWQdz/oMd0piw==
+X-Received: by 10.28.192.24 with SMTP id q24mr21588127wmf.96.1517310444772;
+        Tue, 30 Jan 2018 03:07:24 -0800 (PST)
+Received: from evledraar (a83-163-48-134.adsl.xs4all.nl. [83.163.48.134])
+        by smtp.gmail.com with ESMTPSA id m11sm4895619wrf.75.2018.01.30.03.07.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 30 Jan 2018 03:07:23 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'Jack F' <jack@bytes.nz>, git@vger.kernel.org
+Subject: Re: Missing ? wildcard character in gitignore documentation
+References: <903a193c-0360-59bc-4d86-6470ac8dc1a8@bytes.nz> <000f01d39918$70009eb0$5001dc10$@nexbridge.com> <20180130101351.GA761@ash>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <20180130101351.GA761@ash>
+Date:   Tue, 30 Jan 2018 12:07:20 +0100
+Message-ID: <871si7ob9z.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Apple-Mail=_EF7E90A1-E40C-4BA3-8070-F02BED4F9425
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+On Tue, Jan 30 2018, Duy Nguyen jotted:
 
-Hi there,
+> On Mon, Jan 29, 2018 at 10:47:10AM -0500, Randall S. Becker wrote:
+>> The implication of support for ? is there through the following paragraph from the gitignore documentation:
+>>
+>>     "Otherwise, Git treats the pattern as a shell glob suitable for
+>>     consumption by fnmatch(3) with the FNM_PATHNAME flag: wildcards
+>>     in the pattern will not match a / in the pathname. For example,
+>>     "Documentation/*.html" matches "Documentation/git.html" but not
+>>     "Documentation/ppc/ppc.html" or
+>>     "tools/perf/Documentation/perf.html"."
+>>
+>> Of course you have to go read fnmatch(3), so it might be good for
+>> expand on this here :).
+>
+> I agree. How about something like this?
+>
+> -- 8< --
+> Subject: [PATCH] gitignore.txt: elaborate shell glob syntax
+>
+> `fnmatch(3)` is a great mention if the intended audience is
+> programmers. For normal users it's probably better to spell out what
+> a shell glob is.
+>
+> This paragraph is updated to roughly tell (or remind) what the main
+> wildcards are supposed to do. All the details are still hidden away
+> behind the `fnmatch(3)` wall because bringing the whole specification
+> here may be too much.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Documentation/gitignore.txt | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index 63260f0056..0f4b1360bd 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -102,12 +102,11 @@ PATTERN FORMAT
+>     (relative to the toplevel of the work tree if not from a
+>     `.gitignore` file).
+>
+> - - Otherwise, Git treats the pattern as a shell glob suitable
+> -   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
+> -   wildcards in the pattern will not match a / in the pathname.
+> -   For example, "Documentation/{asterisk}.html" matches
+> -   "Documentation/git.html" but not "Documentation/ppc/ppc.html"
+> -   or "tools/perf/Documentation/perf.html".
+> + - Otherwise, Git treats the pattern as a shell glob: '{asterisk}'
+> +   matches anything except '/', '?' matches any one character except
+> +   '/' and '[]' matches one character in a selected range. See
+> +   fnmatch(3) and the FNM_PATHNAME flag for a more accurate
+> +   description.
+>
+>   - A leading slash matches the beginning of the pathname.
+>     For example, "/{asterisk}.c" matches "cat-file.c" but not
 
-I just lost quite some work, because `git stash; git stash pop` =
-doesn=E2=80=99t seem to understand the concept of the index correctly.
+When reading the docs the other day I was thinking that we should
+entirely git rid of these references to fnmatch(3) and write a
+gitwildmatch man page.
 
-To reproduce:
-
-=E2=80=94 snip =E2=80=94
-dwt@crest ~/Desktop % mkdir test
-dwt@crest ~/Desktop % cd test
-dwt@crest ~/Desktop/test % git init
-Initialized empty Git repository in /Users/dwt/Desktop/test/.git/
-dwt@crest ~/Desktop/test (git)-[master] % touch foo
-dwt@crest ~/Desktop/test (git)-[master] % git add foo
-dwt@crest ~/Desktop/test (git)-[master] % git commit -m "initial commit"
-[master (root-commit) 893b428] initial commit
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 foo
-dwt@crest ~/Desktop/test (git)-[master] % echo "bar" >> foo
-dwt@crest ~/Desktop/test (git)-[master] % git status
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working =
-directory)
-
-	modified:   foo
-
-no changes added to commit (use "git add" and/or "git commit -a")
-dwt@crest ~/Desktop/test (git)-[master] % git add foo
-dwt@crest ~/Desktop/test (git)-[master] % git status
-On branch master
-Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-
-	modified:   foo
-
-dwt@crest ~/Desktop/test (git)-[master] % echo "baz" >> foo
-dwt@crest ~/Desktop/test (git)-[master] % git diff
-diff --git a/foo b/foo
-index 5716ca5..e2994c5 100644
---- a/foo
-+++ b/foo
-@@ -1 +1,2 @@
- bar
-+baz
-dwt@crest ~/Desktop/test (git)-[master] % git status
-On branch master
-Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-
-	modified:   foo
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working =
-directory)
-
-	modified:   foo
-
-dwt@crest ~/Desktop/test (git)-[master] % git stash
-Saved working directory and index state WIP on master: 893b428 initial =
-commit
-dwt@crest ~/Desktop/test (git)-[master] % git status
-On branch master
-nothing to commit, working tree clean
-dwt@crest ~/Desktop/test (git)-[master] % git stash pop
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working =
-directory)
-
-	modified:   foo
-
-no changes added to commit (use "git add" and/or "git commit -a")
-Dropped refs/stash@{0} (7a8d892120c0a231a529222dabeec1fd3594f514)
-dwt@crest ~/Desktop/test (git)-[master] % git diff
-diff --git a/foo b/foo
-index e69de29..e2994c5 100644
---- a/foo
-+++ b/foo
-@@ -0,0 +1,2 @@
-+bar
-+baz
-
-=E2=80=94 snap =E2=80=94
-
-What git stash does get right is that it does remove everything that is =
-stashed from the current state of the repo, but what it doesn=E2=80=99t =
-get right is restoring that state fatefully in `git stash pop`.
-
-As a user, I would expect that `git stash pop` undoes the change that =
-`git stash` inflicted.
-
-Best Regards,
-Martin H=C3=A4cker
-
---Apple-Mail=_EF7E90A1-E40C-4BA3-8070-F02BED4F9425
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iF0EARECAB0WIQRyALCMEeyeJp2h5aqZEm8JhZOQPgUCWnBDSwAKCRCZEm8JhZOQ
-Ps14AJ9glwZpLdDuZNuWoYq1KN4OfU1MRwCfdbsG4m5dNH9Cw07rAfAdOYV7GGE=
-=CZdc
------END PGP SIGNATURE-----
-
---Apple-Mail=_EF7E90A1-E40C-4BA3-8070-F02BED4F9425--
+One of the reasons for why fnmatch() was removed as a supported backend
+was because it couldn't be relied on as a backend, so it doesn't make
+sense to be referring to that OS-level documentation, wildmatch also has
+other features.
