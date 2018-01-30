@@ -2,126 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6EB1F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 00:25:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EEFB1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 01:21:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751528AbeA3AZs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 19:25:48 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58502 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751417AbeA3AZr (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 29 Jan 2018 19:25:47 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A8784609CB;
-        Tue, 30 Jan 2018 00:25:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517271946;
-        bh=lv4yfPAhPw8PBqoFSOxBRmPDSxHnuLJyfhGW7yhnvPI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=R3c19FvD2k9yD5c0YnTqXbFxK6YootrObiUUpr3rbjnYDROesz8XheiVswAVdP1ps
-         7BUi8e6rHIB8VVe1D/sP1eyHmJ6ro+CjoLY/ddyhu6J7bP9nO5uhFokMOunR8t7jCJ
-         i7sc2wPEJml41wxl2GWsULmO+pyCBwpwHHoSw8kajLXEMOSP66IigCRkHZHnUQoIAi
-         9opnJAofE2qnieEaYeMUxf4YY+1KZL6MS8O7U8pviYnxpZZipQMqduAiYWl5wESxuW
-         ZAcWiPhdeEiTbmhYrGdgFR4g78Ier0k6g5OE2sAu+x5UfY1rG6z1Ev8ZnaENbo7ITT
-         8wbMkolYWDspzaltNCeGsu6IwztO5h2XciYYEN1Pn7hgQE9hNQNdwd83TVxR9JiTo/
-         e9b0y1bHRmUcOu0GPvAKK51ln9mTvZHbgy6hnaRiOdUYJyxybk3ifrhFCcct/81CoJ
-         T0HNDSSlXUQe54RkLXIda3z5d0D8CXRXf47fX1FagBIUBhSO79x
-Date:   Tue, 30 Jan 2018 00:25:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
-Subject: Re: t9128 failing randomly with svn 1.9?
-Message-ID: <20180130002539.GO431130@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Eric Wong <e@80x24.org>, Todd Zullinger <tmz@pobox.com>,
-        git@vger.kernel.org
-References: <20180129015134.GN431130@genre.crustytoothpaste.net>
- <20180129025812.GD1427@zaya.teonanacatl.net>
- <20180129120627.al2xvx4yhhvwn6ih@untitled>
+        id S1752399AbeA3BVP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 20:21:15 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:42609 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752385AbeA3BVN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 20:21:13 -0500
+Received: by mail-qk0-f173.google.com with SMTP id k201so8148498qke.9
+        for <git@vger.kernel.org>; Mon, 29 Jan 2018 17:21:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=WKDpQ+jP2nxrhHG3BFtlr0IetJOXwhqjS8DkjiGq2gE=;
+        b=kD2NrUBlzmtr7KdSqj8jfIZ/0kj2UNfEL+GszwEyW+ZtT8T4pxB/Y9llQArNNE0ncL
+         XY3kxL1NOUzMHkxjTG56bYbDEWcM020nssDZlgy7Sqs8WmP/s0LwBBHRIw8m3gsPZ7yH
+         B/59onVC5HlSvPqURMRy54H3C4awtrpptH6bz4irdLfM8AeprTj2fJCvNFeX6SKtg9Zp
+         2/VXfcO1sxz34XtrC6heoprJOotNgXBy0ARO4qIpiL2iK0vCqKG/phasNJZc6Dhiw5u6
+         bmPfkZOAUIwu4nskKyjF3LNmRLXo/wknFi1iQce0yT0kSvDGtqCFG5XgSr89sHURsO3i
+         0p5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=WKDpQ+jP2nxrhHG3BFtlr0IetJOXwhqjS8DkjiGq2gE=;
+        b=mUz6qQHR/lxyCxyCr0AXuLBl+h3EVUh5x40FudIR/Lzb30ggyOaTtF5dxrnc/cQd1t
+         GL5d7BOtlx3DovSCpnadGdeJzm/Z/Se4N6amFWmOLqCHck9KDr/rc4nj6JAMCLwUZRn4
+         qdHhD5jS0nQMK5lWcGm3GLyfZEh8w+iEuTmWJl2ZB/uVRw+KZb2ZPha87HHw51BVXwqD
+         BH7m6so5sQOVbIL7qjsjs5F/kE1K943cFrpJq3N7R2ioznYDXzUDuvdDkI3uKC3c0m8+
+         6PwOI2++tHHKctO+lPp6Yg7O9rz8XGQ1ioVW4eYewWvcRz72UCBjci5yEKoELmOy6B5/
+         2vFg==
+X-Gm-Message-State: AKwxytdxeg6UpR1HjZZmzAG1AqV5xmII/p54qOC9wDMYc/8bkRHtO2R2
+        zvDA82UPQQ4RvVNCnPRdWdabnODs
+X-Google-Smtp-Source: AH8x224VPk6rodkLC92tSLBnBNX9TqySX5D9gi5VBAmbzmPxcL5BAGZUc5pTVgp+C9XPWhxdGe7fWw==
+X-Received: by 10.55.125.197 with SMTP id y188mr30997596qkc.111.1517275272791;
+        Mon, 29 Jan 2018 17:21:12 -0800 (PST)
+Received: from [192.168.1.105] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id l24sm11145744qtb.65.2018.01.29.17.21.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 29 Jan 2018 17:21:11 -0800 (PST)
+Subject: Re: Some rough edges of core.fsmonitor
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
+        Alex Vandiver <alexmv@dropbox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        David Turner <dturner@twopensource.com>
+References: <87efmcw3fa.fsf@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.1801282140330.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <CACBZZX74WcK4qX5O1E_6nxv7f4Vpns3O-7dcURbs+QneKsA87Q@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <56b8d8a3-9483-330d-64a4-ec0295b254ac@gmail.com>
+Date:   Mon, 29 Jan 2018 20:21:11 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gqEssfNGWsEa4HfM"
-Content-Disposition: inline
-In-Reply-To: <20180129120627.al2xvx4yhhvwn6ih@untitled>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
-User-Agent: Mutt/1.9.2 (2017-12-15)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <CACBZZX74WcK4qX5O1E_6nxv7f4Vpns3O-7dcURbs+QneKsA87Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---gqEssfNGWsEa4HfM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 29, 2018 at 12:06:27PM +0000, Eric Wong wrote:
-> Todd Zullinger <tmz@pobox.com> wrote:
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 76a75d0b3d..2ba14269bb 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1200,6 +1200,11 @@ sub cmd_branch {
->  	$ctx->copy($src, $rev, $dst)
->  		unless $_dry_run;
-> =20
-> +	# Release resources held by ctx before creating another SVN::Ra
-> +	# so destruction is orderly.  This seems necessary Subversion 1.9.5
-> +	# to avoid segfaults.
-> +	$ctx =3D undef;
-> +
+On 1/28/2018 5:28 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Sun, Jan 28, 2018 at 9:44 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
+>>
+>> On Sat, 27 Jan 2018, Ævar Arnfjörð Bjarmason wrote:
+>>
+>>> I just got around to testing this since it landed, for context some
+>>> previous poking of mine in [1].
+>>>
+>>> Issues / stuff I've noticed:
+>>>
+>>> 1) We end up invalidating the untracked cache because stuff in .git/
+>>> changed. For example:
+>>>
+>>>      01:09:24.975524 fsmonitor.c:173         fsmonitor process '.git/hooks/fsmonitor-watchman' returned success
+>>>      01:09:24.975548 fsmonitor.c:138         fsmonitor_refresh_callback '.git'
+>>>      01:09:24.975556 fsmonitor.c:138         fsmonitor_refresh_callback '.git/config'
+>>>      01:09:24.975568 fsmonitor.c:138         fsmonitor_refresh_callback '.git/index'
+>>>      01:09:25.122726 fsmonitor.c:91          write fsmonitor extension successful
+>>>
+>>> Am I missing something or should we do something like:
+>>>
+>>>      diff --git a/fsmonitor.c b/fsmonitor.c
+>>>      index 0af7c4edba..5067b89bda 100644
+>>>      --- a/fsmonitor.c
+>>>      +++ b/fsmonitor.c
+>>>      @@ -118,7 +118,12 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
+>>>
+>>>       static void fsmonitor_refresh_callback(struct index_state *istate, const char *name)
+>>>       {
+>>>      -       int pos = index_name_pos(istate, name, strlen(name));
+>>>      +       int pos;
+>>>      +
+>>>      +       if (!strcmp(name, ".git") || starts_with(name, ".git/"))
+>>>      +               return;
+>>>      +
+>>>      +       pos = index_name_pos(istate, name, strlen(name));
+>>
+>> I would much rather have the fsmonitor hook already exclude those.
+> 
+> As documented the fsmonitor-watchman hook we ship doesn't work as
+> described in githooks(5), unless "files in the working directory" is
+> taken to include .git/, but I haven't seen that ever used.
+> 
+> On the other hand relying on arbitrary user-provided hooks to do the
+> right thing at the cost of silent performance degradation is bad. If
+> we're going to expect the hook to remove these we should probably
+> warn/die here if it does send us .git/* files.
+> 
 
-This may be the right thing to do.  I've seen a decent number of cases
-in Perl where global destruction randomly causes segfaults.
+I'm not sure how often something is modified in the git directory when 
+nothing was modified in the working directory but this seems like a nice 
+optimization.
 
->  	$gs->fetch_all;
->  }
-> =20
->=20
-> I'll be looping t9128, t9141 and t9167 with that for a few
-> hours or day.  Will report back sooner if it fails.
-> I'm on an ancient 32-bit system, I guess you guys encountered
-> it on 64-bit machines?
+We can't just blindly ignore changes under ".git" as the git directory 
+may have been moved somewhere else.  Instead we'd need to use get_git_dir().
 
-Yes, both systems are 64-bit Debian systems, one stable, and the other
-unstable.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Rather than assuming the hook will optimize for this particular case, I 
+think a better solution would be to update 
+untracked_cache_invalidate_path() so that it doesn't invalidate the 
+untracked cache and mark the index as dirty when it was asked to 
+invalidate a path under GIT_DIR.  I can't think of a case when that 
+would be the desired behavior.
 
---gqEssfNGWsEa4HfM
-Content-Type: application/pgp-signature; name="signature.asc"
+Somewhat off topic but related to the overall performance discussion: 
+I've also thought the untracked cache shouldn't mark the index as dirty 
+except in the case where the extension is being added or removed.  We've 
+observed that it causes unnecessary index writes that actually slows 
+down overall performance.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
+Since it is a cache, it does not require the index to be written out for 
+correctness, it can simply update the cache again the next time it is 
+needed. This is typically faster than the cost of the index write so 
+makes things faster overall.  I adopted this same model with the 
+fsmonitor extension.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlpvu4MACgkQv1NdgR9S
-9os9dA/+N19rJHZMVwgiFDX1a5wTU20Ah0S54d2akKIvdJ/492cYUHaomwF4/ZUf
-RZvPIikfIwovHIZ1QEfqz98KCOCoge/njjnydiLY36KpY1zMOdLon3XoBQIveOfv
-tLxxgch/6gLQrjFuH1lO91F1uqpDJ4jEagTQsimq7vIpSS5HDVnjlivC3kXBy9ta
-JVE4lZtN1oGXsGSFZ0ZreqjmoEyPsSslz1TXHbg6N5y0aXJFxmmu99rVVPlL93dd
-MUeHvQO9BF4RAF1aXkpXChf6rNcdRBfAGqtYt/QzyzGcboFXGPODsZMbj1WkORfY
-nZN6s5VcK68nQ7I9LTQiSDzpAFArtURDTPqPWWUbSa8BUqWigDkTVKjuW6EDyIYa
-yU+BBrqNZc1B4qaF9QB/IIDewfidBHoPdP4SUgqJo9f0xoZU6uvIazP2Js+oRPs7
-+bqKSN5SIlMc6vLSHz1xVgRemQqQH1ntcYCX4GkO0DGunmCyqwFP+k1lz+HtHFyr
-HN7JtAQzmEUXY4gams4/mXcfmrjpvyvP862027bxd0l31NVqJD8FZVDDjsr2liLn
-y1wybDeGTfjMXA6+RdG+CaAQ5RDpTGFlkWGtVS2aam1GIH5JnS75/WsfpAtsamVQ
-v2AtBeYiuwiOrx36xFu66IyJGt5WqZmWc5mTE1IyUxuK+q27YHU=
-=bjEy
------END PGP SIGNATURE-----
-
---gqEssfNGWsEa4HfM--
+>> If you *must* add these comparisons, you have to use fspathcmp() and
+>> fspathncmp() instead (because case-insensitivity).
+> 
+> Thanks.
+> 
