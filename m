@@ -7,36 +7,37 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 382F51F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:44:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 859951F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 23:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932142AbeA3Xor (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:44:47 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36638 "EHLO
+        id S932100AbeA3Xoj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 18:44:39 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58542 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753456AbeA3Xop (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:44:45 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNOJZn009741;
+        by vger.kernel.org with ESMTP id S1753532AbeA3Xoh (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:44:37 -0500
+X-Greylist: delayed 1115 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Jan 2018 18:44:37 EST
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN8ul025769;
         Tue, 30 Jan 2018 15:25:34 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frr5qd2d6-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dp-1;
         Tue, 30 Jan 2018 15:25:34 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 58C17221A56E;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 8A1B3221A563;
         Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 4E9BE2CDEB4;
+        by smtp.yojoe.local (Postfix) with ESMTP id 8131C2CDE88;
         Tue, 30 Jan 2018 15:25:34 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
         jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 06/31] directory rename detection: testcases checking which side did the rename
-Date:   Tue, 30 Jan 2018 15:25:08 -0800
-Message-Id: <20180130232533.25846-7-newren@gmail.com>
+Subject: [PATCH v7 10/31] directory rename detection: tests for handling overwriting untracked files
+Date:   Tue, 30 Jan 2018 15:25:12 -0800
+Message-Id: <20180130232533.25846-11-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.106.gf69932adfe
 In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
 References: <20180130232533.25846-1-newren@gmail.com>
@@ -58,56 +59,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 336 ++++++++++++++++++++++++++++++=
+ t/t6043-merge-rename-directories.sh | 367 ++++++++++++++++++++++++++++++=
 ++++++
- 1 file changed, 336 insertions(+)
+ 1 file changed, 367 insertions(+)
 
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-index ac9c3e9974..fbeb8f4316 100755
+index b730256653..aa9af49edc 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -1172,4 +1172,340 @@ test_expect_failure '5d-check: Directory/file/fil=
-e conflict due to directory ren
- #   back to old handling.  But, sadly, see testcases 8a and 8b.
+@@ -2871,4 +2871,371 @@ test_expect_failure '9g-check: Renamed directory =
+that only contained immediate s
+ #   side of history for any implicit directory renames.
  ########################################################################=
 ###
 =20
-+
 +########################################################################=
 ###
-+# SECTION 6: Same side of the merge was the one that did the rename
++# SECTION 10: Handling untracked files
 +#
-+# It may sound obvious that you only want to apply implicit directory
-+# renames to directories if the _other_ side of history did the renaming=
-.
-+# If you did make an implementation that didn't explicitly enforce this
-+# rule, the majority of cases that would fall under this section would
-+# also be solved by following the rules from the above sections.  But
-+# there are still a few that stick out, so this section covers them just
-+# to make sure we also get them right.
++# unpack_trees(), upon which the recursive merge algorithm is based, abo=
+rts
++# the operation if untracked or dirty files would be deleted or overwrit=
+ten
++# by the merge.  Unfortunately, unpack_trees() does not understand renam=
+es,
++# and if it doesn't abort, then it muddies up the working directory befo=
+re
++# we even get to the point of detecting renames, so we need some special
++# handling, at least in the case of directory renames.
 +########################################################################=
 ###
 +
-+# Testcase 6a, Tricky rename/delete
-+#   Commit O: z/{b,c,d}
-+#   Commit A: z/b
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/b, CONFLICT(rename/delete, z/c -> y/c vs. NULL)
-+#   Note: We're just checking here that the rename of z/b and z/c to put
-+#         them under y/ doesn't accidentally catch z/d and make it look =
-like
-+#         it is also involved in a rename/delete conflict.
++# Testcase 10a, Overwrite untracked: normal rename/delete
++#   Commit O: z/{b,c_1}
++#   Commit A: z/b + untracked z/c + untracked z/d
++#   Commit B: z/{b,d_1}
++#   Expected: Aborted Merge +
++#       ERROR_MSG(untracked working tree files would be overwritten by m=
+erge)
 +
-+test_expect_success '6a-setup: Tricky rename/delete' '
-+	test_create_repo 6a &&
++test_expect_success '10a-setup: Overwrite untracked with normal rename/d=
+elete' '
++	test_create_repo 10a &&
 +	(
-+		cd 6a &&
++		cd 10a &&
 +
 +		mkdir z &&
 +		echo b >z/b &&
 +		echo c >z/c &&
-+		echo d >z/d &&
 +		git add z &&
 +		test_tick &&
 +		git commit -m "O" &&
@@ -118,193 +118,146 @@ like
 +
 +		git checkout A &&
 +		git rm z/c &&
-+		git rm z/d &&
 +		test_tick &&
 +		git commit -m "A" &&
 +
 +		git checkout B &&
-+		mkdir y &&
-+		git mv z/b y/ &&
-+		git mv z/c y/ &&
++		git mv z/c z/d &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_success '6a-check: Tricky rename/delete' '
++test_expect_success '10a-check: Overwrite untracked with normal rename/d=
+elete' '
 +	(
-+		cd 6a &&
++		cd 10a &&
 +
 +		git checkout A^0 &&
++		echo very >z/c &&
++		echo important >z/d &&
 +
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*z/c.*y/c" out &&
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "The following untracked working tree files would be ove=
+rwritten by merge" err &&
 +
 +		git ls-files -s >out &&
++		test_line_count =3D 1 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 4 out &&
++
++		echo very >expect &&
++		test_cmp expect z/c &&
++
++		echo important >expect &&
++		test_cmp expect z/d &&
++
++		git rev-parse HEAD:z/b >actual &&
++		git rev-parse O:z/b >expect &&
++		test_cmp expect actual
++	)
++'
++
++# Testcase 10b, Overwrite untracked: dir rename + delete
++#   Commit O: z/{b,c_1}
++#   Commit A: y/b + untracked y/{c,d,e}
++#   Commit B: z/{b,d_1,e}
++#   Expected: Failed Merge; y/b + untracked y/c + untracked y/d on disk =
++
++#             z/c_1 -> z/d_1 rename recorded at stage 3 for y/d +
++#       ERROR_MSG(refusing to lose untracked file at 'y/d')
++
++test_expect_success '10b-setup: Overwrite untracked with dir rename + de=
+lete' '
++	test_create_repo 10b &&
++	(
++		cd 10b &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git rm z/c &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv z/c z/d &&
++		echo e >z/e &&
++		git add z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10b-check: Overwrite untracked with dir rename + de=
+lete' '
++	(
++		cd 10b &&
++
++		git checkout A^0 &&
++		echo very >y/c &&
++		echo important >y/d &&
++		echo contents >y/e &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/delete).*Version B\^0 of y/d left in t=
+ree at y/d~B\^0" out &&
++		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing =
+to y/e~B\^0 instead" out &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 3 out &&
++		git ls-files -u >out &&
 +		test_line_count =3D 2 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 1 out &&
 +		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
++		test_line_count =3D 5 out &&
 +
 +		git rev-parse >actual \
-+			:0:y/b :3:y/c &&
++			:0:y/b :3:y/d :3:y/e &&
 +		git rev-parse >expect \
-+			 O:z/b  O:z/c &&
-+		test_cmp expect actual
++			O:z/b  O:z/c  B:z/e &&
++		test_cmp expect actual &&
++
++		echo very >expect &&
++		test_cmp expect y/c &&
++
++		echo important >expect &&
++		test_cmp expect y/d &&
++
++		echo contents >expect &&
++		test_cmp expect y/e
 +	)
 +'
 +
-+# Testcase 6b, Same rename done on both sides
-+#   (Related to testcases 6c and 8e)
-+#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   Note: If we did directory rename detection here, we'd move z/d into =
-y/,
-+#         but B did that rename and still decided to put the file into z=
-/,
-+#         so we probably shouldn't apply directory rename detection for =
-it.
++# Testcase 10c, Overwrite untracked: dir rename/rename(1to2)
++#   Commit O: z/{a,b}, x/{c,d}
++#   Commit A: y/{a,b}, w/c, x/d + different untracked y/c
++#   Commit B: z/{a,b,c}, x/d
++#   Expected: Failed Merge; y/{a,b} + x/d + untracked y/c +
++#             CONFLICT(rename/rename) x/c -> w/c vs y/c +
++#             y/c~B^0 +
++#             ERROR_MSG(Refusing to lose untracked file at y/c)
 +
-+test_expect_success '6b-setup: Same rename done on both sides' '
-+	test_create_repo 6b &&
++test_expect_success '10c-setup: Overwrite untracked with dir rename/rena=
+me(1to2)' '
++	test_create_repo 10c &&
 +	(
-+		cd 6b &&
++		cd 10c &&
 +
-+		mkdir z &&
++		mkdir z x &&
++		echo a >z/a &&
 +		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		mkdir z &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6b-check: Same rename done on both sides' '
-+	(
-+		cd 6b &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 0 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    B:z/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6c, Rename only done on same side
-+#   (Related to testcases 6b and 8e)
-+#   Commit O: z/{b,c}
-+#   Commit A: z/{b,c} (no change)
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   NOTE: Seems obvious, but just checking that the implementation doesn=
-'t
-+#         "accidentally detect a rename" and give us y/{b,c,d}.
-+
-+test_expect_success '6c-setup: Rename only done on same side' '
-+	test_create_repo 6c &&
-+	(
-+		cd 6c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		test_tick &&
-+		git commit --allow-empty -m "A" &&
-+
-+		git checkout B &&
-+		git mv z y &&
-+		mkdir z &&
-+		echo d >z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '6c-check: Rename only done on same side' '
-+	(
-+		cd 6c &&
-+
-+		git checkout A^0 &&
-+
-+		git merge -s recursive B^0 &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 0 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
-+
-+		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
-+		git rev-parse >expect \
-+			O:z/b    O:z/c    B:z/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 6d, We don't always want transitive renaming
-+#   (Related to testcase 1c)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: z/{b,c}, x/d (no change)
-+#   Commit B: y/{b,c}, z/d
-+#   Expected: y/{b,c}, z/d
-+#   NOTE: Again, this seems obvious but just checking that the implement=
-ation
-+#         doesn't "accidentally detect a rename" and give us y/{b,c,d}.
-+
-+test_expect_success '6d-setup: We do not always want transitive renaming=
-' '
-+	test_create_repo 6d &&
-+	(
-+		cd 6d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
++		echo c >x/c &&
 +		echo d >x/d &&
 +		git add z x &&
 +		test_tick &&
@@ -315,59 +268,152 @@ ation
 +		git branch B &&
 +
 +		git checkout A &&
++		mkdir w &&
++		git mv x/c w/c &&
++		git mv z/ y/ &&
 +		test_tick &&
-+		git commit --allow-empty -m "A" &&
++		git commit -m "A" &&
 +
 +		git checkout B &&
-+		git mv z y &&
-+		git mv x z &&
++		git mv x/c z/ &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_success '6d-check: We do not always want transitive renaming=
-' '
++test_expect_failure '10c-check: Overwrite untracked with dir rename/rena=
+me(1to2)' '
 +	(
-+		cd 6d &&
++		cd 10c &&
 +
 +		git checkout A^0 &&
++		echo important >y/c &&
 +
-+		git merge -s recursive B^0 &&
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B=
+\^0 instead" out &&
 +
 +		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
++		test_line_count =3D 6 out &&
 +		git ls-files -u >out &&
-+		test_line_count =3D 0 out &&
++		test_line_count =3D 3 out &&
 +		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
++		test_line_count =3D 3 out &&
 +
 +		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:z/d &&
++			:0:y/a :0:y/b :0:x/d :1:x/c :2:w/c :3:y/c &&
 +		git rev-parse >expect \
-+			O:z/b    O:z/c    O:x/d &&
++			 O:z/a  O:z/b  O:x/d  O:x/c  O:x/c  O:x/c &&
++		test_cmp expect actual &&
++
++		git hash-object y/c~B^0 >actual &&
++		git rev-parse O:x/c >expect &&
++		test_cmp expect actual &&
++
++		echo important >expect &&
++		test_cmp expect y/c
++	)
++'
++
++# Testcase 10d, Delete untracked w/ dir rename/rename(2to1)
++#   Commit O: z/{a,b,c_1},        x/{d,e,f_2}
++#   Commit A: y/{a,b},            x/{d,e,f_2,wham_1} + untracked y/wham
++#   Commit B: z/{a,b,c_1,wham_2}, y/{d,e}
++#   Expected: Failed Merge; y/{a,b,d,e} + untracked y/{wham,wham~B^0,wha=
+m~HEAD}+
++#             CONFLICT(rename/rename) z/c_1 vs x/f_2 -> y/wham
++#             ERROR_MSG(Refusing to lose untracked file at y/wham)
++
++test_expect_success '10d-setup: Delete untracked with dir rename/rename(=
+2to1)' '
++	test_create_repo 10d &&
++	(
++		cd 10d &&
++
++		mkdir z x &&
++		echo a >z/a &&
++		echo b >z/b &&
++		echo c >z/c &&
++		echo d >x/d &&
++		echo e >x/e &&
++		echo f >x/f &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z/c x/wham &&
++		git mv z/ y/ &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/f z/wham &&
++		git mv x/ y/ &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '10d-check: Delete untracked with dir rename/rename(=
+2to1)' '
++	(
++		cd 10d &&
++
++		git checkout A^0 &&
++		echo important >y/wham &&
++
++		test_must_fail git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep "CONFLICT (rename/rename)" out &&
++		test_i18ngrep "Refusing to lose untracked file at y/wham" out &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 6 out &&
++		git ls-files -u >out &&
++		test_line_count =3D 2 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 4 out &&
++
++		git rev-parse >actual \
++			:0:y/a :0:y/b :0:y/d :0:y/e :2:y/wham :3:y/wham &&
++		git rev-parse >expect \
++			 O:z/a  O:z/b  O:x/d  O:x/e  O:z/c     O:x/f &&
++		test_cmp expect actual &&
++
++		test_must_fail git rev-parse :1:y/wham &&
++
++		echo important >expect &&
++		test_cmp expect y/wham &&
++
++		git hash-object >actual \
++			y/wham~B^0 y/wham~HEAD &&
++		git rev-parse >expect \
++			O:x/f      O:z/c &&
 +		test_cmp expect actual
 +	)
 +'
 +
-+# Testcase 6e, Add/add from one-side
-+#   Commit O: z/{b,c}
-+#   Commit A: z/{b,c} (no change)
-+#   Commit B: y/{b,c,d_1}, z/d_2
-+#   Expected: y/{b,c,d_1}, z/d_2
-+#   NOTE: Again, this seems obvious but just checking that the implement=
-ation
-+#         doesn't "accidentally detect a rename" and give us y/{b,c} +
-+#         add/add conflict on y/d_1 vs y/d_2.
++# Testcase 10e, Does git complain about untracked file that's not in the=
+ way?
++#   Commit O: z/{a,b}
++#   Commit A: y/{a,b} + untracked z/c
++#   Commit B: z/{a,b,c}
++#   Expected: y/{a,b,c} + untracked z/c
 +
-+test_expect_success '6e-setup: Add/add from one side' '
-+	test_create_repo 6e &&
++test_expect_success '10e-setup: Does git complain about untracked file t=
+hat is not really in the way?' '
++	test_create_repo 10e &&
 +	(
-+		cd 6e &&
++		cd 10e &&
 +
 +		mkdir z &&
++		echo a >z/a &&
 +		echo b >z/b &&
-+		echo c >z/c &&
 +		git add z &&
 +		test_tick &&
 +		git commit -m "O" &&
@@ -377,51 +423,48 @@ ation
 +		git branch B &&
 +
 +		git checkout A &&
++		git mv z/ y/ &&
 +		test_tick &&
-+		git commit --allow-empty -m "A" &&
++		git commit -m "A" &&
 +
 +		git checkout B &&
-+		git mv z y &&
-+		echo d1 > y/d &&
-+		mkdir z &&
-+		echo d2 > z/d &&
-+		git add y/d z/d &&
++		echo c >z/c &&
++		git add z/c &&
 +		test_tick &&
 +		git commit -m "B"
 +	)
 +'
 +
-+test_expect_success '6e-check: Add/add from one side' '
++test_expect_failure '10e-check: Does git complain about untracked file t=
+hat is not really in the way?' '
 +	(
-+		cd 6e &&
++		cd 10e &&
 +
 +		git checkout A^0 &&
++		mkdir z &&
++		echo random >z/c &&
 +
-+		git merge -s recursive B^0 &&
++		git merge -s recursive B^0 >out 2>err &&
++		test_i18ngrep ! "following untracked working tree files would be overw=
+ritten by merge" err &&
 +
 +		git ls-files -s >out &&
-+		test_line_count =3D 4 out &&
++		test_line_count =3D 3 out &&
 +		git ls-files -u >out &&
 +		test_line_count =3D 0 out &&
 +		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
++		test_line_count =3D 3 out &&
 +
 +		git rev-parse >actual \
-+			HEAD:y/b HEAD:y/c HEAD:y/d HEAD:z/d &&
++			:0:y/a :0:y/b :0:y/c &&
 +		git rev-parse >expect \
-+			O:z/b    O:z/c    B:y/d    B:z/d &&
-+		test_cmp expect actual
++			 O:z/a  O:z/b  B:z/c &&
++		test_cmp expect actual &&
++
++		echo random >expect &&
++		test_cmp expect z/c
 +	)
 +'
-+
-+########################################################################=
-###
-+# Rules suggested by section 6:
-+#
-+#   Only apply implicit directory renames to directories if the other
-+#   side of history is the one doing the renaming.
-+########################################################################=
-###
 +
  test_done
 --=20
