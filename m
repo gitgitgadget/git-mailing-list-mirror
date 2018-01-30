@@ -2,146 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25A721F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 01:38:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DE6A1F404
+	for <e@80x24.org>; Tue, 30 Jan 2018 03:09:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752436AbeA3BiE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 Jan 2018 20:38:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33574 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752419AbeA3BiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 Jan 2018 20:38:02 -0500
-Received: (qmail 13751 invoked by uid 109); 30 Jan 2018 01:38:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 30 Jan 2018 01:38:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10124 invoked by uid 111); 30 Jan 2018 01:38:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 29 Jan 2018 20:38:41 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 Jan 2018 20:38:00 -0500
-Date:   Mon, 29 Jan 2018 20:38:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patryk Obara <patryk.obara@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 1/1] setup: recognise extensions.objectFormat
-Message-ID: <20180130013759.GA27694@sigill.intra.peff.net>
-References: <cover.1517098675.git.patryk.obara@gmail.com>
- <e430ad029facdd6209927d352f0e7545cdd0e435.1517098675.git.patryk.obara@gmail.com>
+        id S1752221AbeA3DJe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 Jan 2018 22:09:34 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58997 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752076AbeA3DJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 Jan 2018 22:09:34 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85152B8903;
+        Mon, 29 Jan 2018 22:09:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=iIHLXHS6v+0x3VVn7XdCGtHhtEs=; b=C+54eRG
+        yM9PTuj015NToHv1y+B0UoEnhSQgthBhfQdAEn1BFWdNR2CbIaq4ZLgXbkO47dpq
+        0rHGUuPrSOtzdFL4+hpkYGtb8Gne+7pLmy4U6WedvdyFtHDOeEiKNfmZDFhZb9aT
+        SKGf96NyxWuoTmBzy/1meySj2aZQqtn5I6JA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=XQyQujpqFV0EGhuvB0C251HjBkKn301/4
+        fvqIujCGM+kewvZKLzbA70HKkyu52172JHlpumvga/0xo36cTaT81IZrQkxrw2TD
+        25YZ7nPWl5ZQ4CRI/TfEzE5OlBLtMm7v5WjkX18x/MDsyUWwfvRtAbVRsw86NKrT
+        yRaINE2wvQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7DC6BB8901;
+        Mon, 29 Jan 2018 22:09:33 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1747FB88FD;
+        Mon, 29 Jan 2018 22:09:33 -0500 (EST)
+Date:   Mon, 29 Jan 2018 22:09:31 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Wong <e@80x24.org>
+Subject: Re: t9128 failing randomly with svn 1.9?
+Message-ID: <20180130030931.GK1427@zaya.teonanacatl.net>
+References: <20180129015134.GN431130@genre.crustytoothpaste.net>
+ <20180129025812.GD1427@zaya.teonanacatl.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="eT+isKliMkztK06K"
 Content-Disposition: inline
-In-Reply-To: <e430ad029facdd6209927d352f0e7545cdd0e435.1517098675.git.patryk.obara@gmail.com>
+In-Reply-To: <20180129025812.GD1427@zaya.teonanacatl.net>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Pobox-Relay-ID: FEA0E3FA-056A-11E8-A509-D3940C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 28, 2018 at 01:36:17AM +0100, Patryk Obara wrote:
 
-> This extension selects which hashing algorithm from vtable should be
-> used for reading and writing objects in the object store.  At the moment
-> supports only single value (sha-1).
-> 
-> In case value of objectFormat is an unknown hashing algorithm, Git
-> command will fail with following message:
-> 
->   fatal: unknown repository extensions found:
-> 	  objectformat = <value>
-> 
-> To indicate, that this specific objectFormat value is not recognised.
+--eT+isKliMkztK06K
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't have a strong opinion on this, but it does feel a little funny
-to add this extension now, before we quite know what the code that uses
-it is going to look like (or maybe we're farther along there than I
-realize).
+I wrote:
+> The 'git svn' tests are not run in Travis because the perl
+> subversion bindings are not installed.  I haven't made time
+> to try installing them and running the tests in Travis to
+> see if the failures occur there, but I suspect they would.
 
-What do we gain by doing this now as opposed to later? By the design of
-the extension code, we should complain on older versions anyway. And by
-doing it now we carry a small risk that it might not give us the
-interface we want, and it will be slightly harder to paper over this
-failed direction.
+Before anyone spends time wondering about this, I was
+apparently looking at the MacOS build logs rather than the
+Linux logs.  The git svn tests are indeed run in Travis, as
+long as you look at the right build logs. :/
 
-All that said, if people like brian, who are thinking more about this
-transition than I am, are onboard, I'm OK with it.
+Sadly (or amusingly), I think I looked at this before and
+made the same mistake, realized it, and then did it again
+today.  Hopefully if I make the same mistake again I'll
+realize it before I post it to the list. ;)
 
-> The objectFormat extension is not allowed in repository marked as
-> version 0 to prevent any possibility of accidentally writing a NewHash
-> object in the sha-1 object store. This extension behaviour is different
-> than preciousObjects extension (which is allowed in repo version 0).
+Anyway, the Travis Linux container uses Ubuntu Trusty, which
+has subversion 1.8.8.  I suppose that's why these random
+failures haven't turned up there.
 
-It wasn't intended that anyone would specify preciousObjects with repo
-version 0. It's a dangerous misconfiguration (because versions which
-predate the extensions mechanism won't actually respect it at all!).
+--=20
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I got stopped by a cop the other day.  He said, "Why'd you run that
+stop sign?"  I said, "Because I don't believe everything I read."
+    -- Stephen Wright
 
-So we probably ought to complain loudly on having anything in
-extensions.* when the repositoryformat is less than 1.
 
-I originally wrote it the other way out of an abundance of
-backward-compatibility. After all "extension.*" doesn't mean anything in
-format 0, and somebody _could_ have added such a config key for their
-own purposes. But that's a pretty weak argument, and if we are going to
-start marking some extensions as forbidden there, we might as well do
-them all.
+--eT+isKliMkztK06K
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Something like this:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.14 (GNU/Linux)
 
-diff --git a/cache.h b/cache.h
-index d8b975a571..259c4a5361 100644
---- a/cache.h
-+++ b/cache.h
-@@ -921,6 +921,7 @@ struct repository_format {
- 	int is_bare;
- 	int hash_algo;
- 	char *work_tree;
-+	int extensions_seen;
- 	struct string_list unknown_extensions;
- };
- 
-diff --git a/setup.c b/setup.c
-index 8cc34186ce..85dfcf330b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -413,6 +413,7 @@ static int check_repo_format(const char *var, const char *value, void *vdata)
- 	if (strcmp(var, "core.repositoryformatversion") == 0)
- 		data->version = git_config_int(var, value);
- 	else if (skip_prefix(var, "extensions.", &ext)) {
-+		data->extensions_seen = 1;
- 		/*
- 		 * record any known extensions here; otherwise,
- 		 * we fall through to recording it as unknown, and
-@@ -503,6 +504,11 @@ int verify_repository_format(const struct repository_format *format,
- 		return -1;
- 	}
- 
-+	if (format->version < 1 && format->extensions_seen) {
-+		strbuf_addstr(err, _("extensions found but repo version is < 1"));
-+		return -1;
-+	}
-+
- 	if (format->version >= 1 && format->unknown_extensions.nr) {
- 		int i;
- 
-diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-index ce4cff13bb..9e9f67d756 100755
---- a/t/t1302-repo-version.sh
-+++ b/t/t1302-repo-version.sh
-@@ -80,9 +80,10 @@ while read outcome version extensions; do
- done <<\EOF
- allow 0
- allow 1
-+abort 0 noop
- allow 1 noop
-+abort 0 no-such-extension
- abort 1 no-such-extension
--allow 0 no-such-extension
- EOF
- 
- test_expect_success 'precious-objects allowed' '
+iQFEBAEBCAAuBQJab+HoJxhodHRwczovL3d3dy5wb2JveC5jb20vfnRtei9wZ3Av
+dG16LmFzYwAKCRBDJZOLvq8M43c2CACuGN6ljmL+P4YpsPdXayfX39FqYKLEUkbJ
++3+3C7g4eSfnxtfYnd0ObUT23b5uVzBXbtp5aZxvjZA8Hmiokq3vCbWsqnhrZ1pt
+2JbEGhe+V+2nt7o7a01+EClBNbyE0JGMnfqGSGeIFRVz5HBFFBiwpZKLlMEDaGfa
+CngDV7t6EEC30hIQFSIwh/hZjqinKusWSI9jlPmZoegAYuFAU5ne7vPonlbto7x0
+VjwI2LHmP00aaTfiDvMBw/KpbBksdLyJXvo5523nh+atE4ig3f1BHCZbWmD6In2M
+oqUfR3JL0rdIi+rUucrNXgdjyCyTTQaVrRotQtc3IjAmPvrP4C62
+=dfdO
+-----END PGP SIGNATURE-----
+
+--eT+isKliMkztK06K--
