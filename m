@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C27261F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 11:07:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5D471F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 11:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753537AbeAaLG7 (ORCPT <rfc822;e@80x24.org>);
+        id S1753630AbeAaLHC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 06:07:02 -0500
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:44617 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753606AbeAaLG7 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 Jan 2018 06:06:59 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:39979 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753594AbeAaLGz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 06:06:55 -0500
-Received: by mail-pg0-f67.google.com with SMTP id g16so9755961pgn.7
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:55 -0800 (PST)
+Received: by mail-pf0-f196.google.com with SMTP id 17so10798490pfw.11
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NUMPwl2BhU4sFdA58zIbkm3Qo4TORS4zE11zeZ59uUI=;
-        b=c6nRzDNi/FWuka05zKhFPrugl9I+T5XYzoxhDyU1PQMr02PoUGHt5ER3PdE4snpygC
-         9UsKdqNy0CeHccgzymV1PZudhJsHj4ut1lJYBPpUYIMnWgzZAW3An3pRs+o4C1e4MUYT
-         At2ZQvDWt6gUbRNcqYbVlJ1LPHxn+TzcgghbGkiwOeyqSfmn1DQ2cYIlhsnjQ663f/RB
-         XJNvRGlHyIfdmyRUTYA6JWWklstgmH63pwYCjzitLhM2xlcuv99h46XfT5aRhEqDTiSS
-         EqjuGpRqSpo8AsYEFcdwRY8sotkC9ZM7GgtuMI56ko1EV9n2nn0At3ei5XumxrNcHXjF
-         LV0g==
+        bh=m/PtXP2N2cakDpD5BKn4VyHzp7kbxflj6OJGwE26pw4=;
+        b=I3BuDtteL11UVRoX2N7N2XYEq+SYIwTOV8cTLnAG1ww08ugjpHNqmUHKyjNiBQy/cV
+         dz+Q2q3hp+f3a61o9F6lDjh5xa9wRddBj+4ixM7z23NJUgiI0Uu3cTO4Df2q9woro+C1
+         uDU8eaQwuw6xdDcHTzkvAqBLznCDDNY0NTvxR6blfPt3rK2KNvdG3r1VQM3D+x0gIIwK
+         WfVmW4Eqngp7maD/JIOeGBAdo73h0aYvN50QRq2ENS4GmlaRhVEPFJavJJvAqdcw3crG
+         d9PymxiL7rE0HhODqF6MHo7fcyPcicQv9FwZ8Iu2Z/xkxIxfPAcD040UVQWoIHRn/kja
+         JsKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NUMPwl2BhU4sFdA58zIbkm3Qo4TORS4zE11zeZ59uUI=;
-        b=FneC+WbQHxksC+Y+6D5A9RJZLxZlJ+BU20YY5xUpH/VhdP1omKdhYrFw68TrRHEyx1
-         U/HN6h2yp5bdrVKuVco1MkaOhVZEgAxyUnLFeRWTmX1cew95etDmMJGdPsID2w14BzKW
-         a66ZnBwktF51/MVZGwkgnjtt3mkwpSTCexAoMSD+xBGJKvDWmwIF6YNozxVrNCZnj1W9
-         zT4/rFyDiXxq9DM8be+PZjq08dWxtC3K0hjQhk+33XECuXLDWJC9pgpMmqKenllH7WPk
-         U6ZEydkkygkZq6NG8OROsxdYcQDVla1suqaQouYwLx16qqOxtC6Mn/5BnBnOtZXgGA6V
-         I+zA==
-X-Gm-Message-State: AKwxytcldh7TlCHJOjKd9b2gAhjDNXkshXG64iq2jwu+Xh5A69gpxQN7
-        +ZFX7rCiUBdHHqEKCtfsiiKhSg==
-X-Google-Smtp-Source: AH8x2279lgRSsg023TmiITCPOCmRRufXiiIeOcJURFSJ8mfTe4ut3f3ybxmOD2k5l1RP+IpYw7HTnQ==
-X-Received: by 2002:a17:902:2e03:: with SMTP id q3-v6mr19809684plb.362.1517396814681;
-        Wed, 31 Jan 2018 03:06:54 -0800 (PST)
+        bh=m/PtXP2N2cakDpD5BKn4VyHzp7kbxflj6OJGwE26pw4=;
+        b=g7lIEfUm5cmCGo6yCmrzMLFk1RSweMjA8CO23A/eLmb8Q23lXFTtyhkSoceAjzHIoI
+         meDDbzVRnTZTp2fBat0YVBjAYfSt0dY5CV2V7+LUjl7eFKV1FToYLz8hOMbnW1l/utVr
+         UcG5hnW7IY9NxzJZW5tY5XDJLYOHncQqks9MM8fUs1wnCRwlPJYqs/QGZTtbIA5SODAq
+         Qz/G+ObSgjJgKBInKXWMX2TQIRO/IM4h3wXATl8Ry3X0UyOm6alU/HIp4rm6gLXPdGjN
+         FqbgxBmaUEce3QUneBg1Ep+/jTjctBov3bpO1d7rEI/ZpdpYaCAnI31DzpPoCjv4N5tQ
+         sAmw==
+X-Gm-Message-State: AKwxyteHP41FjQaDMGt9g/G5LK/DzmJQ8OTAzhcEOFzn99w4o6oPpU4N
+        q6qFNbx2BJAkiD8fxv7PC78rTg==
+X-Google-Smtp-Source: AH8x227NEbDL+rQkcJK17RViKiSQ3BqIwbnum6UNDzGVX32Gb+uKq7Qk9PiQpVOvBw0oys5l1hRkog==
+X-Received: by 2002:a17:902:12f:: with SMTP id 44-v6mr26792973plb.403.1517396819006;
+        Wed, 31 Jan 2018 03:06:59 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id z15sm26489711pgr.62.2018.01.31.03.06.52
+        by smtp.gmail.com with ESMTPSA id 3sm13587731pfo.117.2018.01.31.03.06.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 03:06:54 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:50 +0700
+        Wed, 31 Jan 2018 03:06:58 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:55 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 12/41] completion: use __gitcomp_builtin in _git_clone
-Date:   Wed, 31 Jan 2018 18:05:18 +0700
-Message-Id: <20180131110547.20577-13-pclouds@gmail.com>
+Subject: [PATCH v2 13/41] completion: use __gitcomp_builtin in _git_commit
+Date:   Wed, 31 Jan 2018 18:05:19 +0700
+Message-Id: <20180131110547.20577-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180131110547.20577-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -69,57 +69,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new completable options are:
+The new comletable options are:
 
---config
---dissociate
---ipv4
---ipv6
---jobs=
---progress
---reference-if-able
---separate-git-dir=
---shallow-exclude
---shallow-since=
---verbose
+--branch
+--gpg-sign
+--long
+--no-post-rewrite
+--null
+--porcelain
+--status
+
+--allow-empty is no longer completable because it's a hidden option
+since 4741edd549 (Remove deprecated OPTION_BOOLEAN for parsing arguments
+- 2013-08-03)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ contrib/completion/git-completion.bash | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c0f6f76c3c..393f86619d 100644
+index 393f86619d..8bbe94a94f 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1306,26 +1306,7 @@ _git_clone ()
- {
- 	case "$cur" in
- 	--*)
--		__gitcomp "
--			--local
--			--no-hardlinks
--			--shared
--			--reference
--			--quiet
--			--no-checkout
--			--bare
--			--mirror
--			--origin
--			--upload-pack
--			--template=
--			--depth
--			--single-branch
--			--no-tags
--			--branch
--			--recurse-submodules
--			--no-single-branch
--			--shallow-submodules
--			"
-+		__gitcomp_builtin clone "--no-single-branch"
+@@ -1339,16 +1339,7 @@ _git_commit ()
  		return
  		;;
+ 	--*)
+-		__gitcomp "
+-			--all --author= --signoff --verify --no-verify
+-			--edit --no-edit
+-			--amend --include --only --interactive
+-			--dry-run --reuse-message= --reedit-message=
+-			--reset-author --file= --message= --template=
+-			--cleanup= --untracked-files --untracked-files=
+-			--verbose --quiet --fixup= --squash=
+-			--patch --short --date --allow-empty
+-			"
++		__gitcomp_builtin commit "--no-edit --verify"
+ 		return
  	esac
+ 
 -- 
 2.16.1.205.g271f633410
 
