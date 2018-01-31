@@ -2,142 +2,257 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE1E1F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 13:49:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 024B21F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 14:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751662AbeAaNs7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 08:48:59 -0500
-Received: from mout.gmx.net ([212.227.15.18]:50401 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751447AbeAaNs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 08:48:58 -0500
-Received: from MININT-KR8J64V.europe.corp.microsoft.com ([37.201.195.59]) by
- mail.gmx.com (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MdKgV-1ePUSf32UF-00IWfN; Wed, 31 Jan 2018 14:48:50 +0100
-Date:   Wed, 31 Jan 2018 14:48:48 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/8] sequencer: introduce the `merge` command
-In-Reply-To: <nycvar.QRO.7.76.6.1801292230550.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Message-ID: <nycvar.QRO.7.76.6.1801311441430.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de> <b3b37af6-4b65-5a44-a395-6f75a4adc98e@talktalk.net> <CA+P7+xr4KtR4q8Y=-+pv2TzvP009zRVR6a_zh2GOZXt_LXrFOg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1801292230550.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752296AbeAaOIa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 09:08:30 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:35697 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751581AbeAaOI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 09:08:29 -0500
+Received: by mail-qk0-f196.google.com with SMTP id 69so1674430qkz.2
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 06:08:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=TNNwfGWOuWe4BKJSdM9TBAAVXJ45iPBsZSstFWi7hjw=;
+        b=LcbShOMS8HKkrcHseWClTQR/+M8HqsLerKw0iPCpMKTenWtYzlpXwD9PXCS2lQJLHP
+         Mp9SraJyfLrQ5kJ+SCy4Ne6UFMFc2NGfAxeMbvLSgDJvPBvYmpt+x6fQvihh3vnpQBhW
+         ozPZYGg+SPuHAosLx5nbEMtdJ93qhjjx58jXb5eOp56tA3sBoeRF8iPTvgmpv1anQIMZ
+         gEztsjbaIxMoqu5YX1iF0kX7IUFfA5uxiQZ0ZErXsVWAZ9hp5VHaedO4Flw0xYmgfwGD
+         dxTX7w6I1/y0tdVi+hhMhJxGkRTpNuV7f1/vs2DUq8x1UAiFyEFhmFVOaVYke9aXpEvK
+         tfmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=TNNwfGWOuWe4BKJSdM9TBAAVXJ45iPBsZSstFWi7hjw=;
+        b=LHL6MS5rKaPfpgtIoAlBkcJVxF018KdGaqhCLoNR4/Ml96nsQjQZYT4wPPuhb1mhqN
+         CPDpKp0i+lVNFEpZeydWb4asHwicOtFjrMAH7b1+aMQnDxJOGE5sOgUqQw98CfepcmJ4
+         zaA9IWVJofCsMU+QwAR0rCMtuaJO7GO2dIZfllWd/2a2QcFGhG2A6jWXhErYGoHIG/gU
+         OAx7yWxFuACtyCTlTcJBLZIEonuWxmX8P3ibgspavH28fYUSvjRJBuikrbZjeyWimCS8
+         vTwpU3UcNwiOi23TZ0RMQzkQkTPOkVe6gqWt84p2DcuV6y9D2vuiZp009s1FpaIvlSVt
+         sxcw==
+X-Gm-Message-State: AKwxytfksO99UxbyshfjBU7khE2/vE8lbLxE1U4+D+pL0klfhr/yjDkD
+        vWna721/54Oq54C7eFbTjjE=
+X-Google-Smtp-Source: AH8x22578oB6FWU/hQtVa61r3Yw5VfrpahC2H4qrbu7h0pOSAIbtUlQGa57UZdQyIVYnsf77YT5okw==
+X-Received: by 10.55.131.198 with SMTP id f189mr47641235qkd.250.1517407708910;
+        Wed, 31 Jan 2018 06:08:28 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id a123sm10963644qkf.22.2018.01.31.06.08.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Jan 2018 06:08:28 -0800 (PST)
+Subject: Re: [PATCH v2 05/27] upload-pack: factor out processing lines
+To:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-6-bmwill@google.com>
+ <CAGZ79kYbhR-y7WkhFgQ-YBkWaNXWuadDAGXaAzWDyJBzDSqc2w@mail.gmail.com>
+ <20180126213338.GB17576@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8df41c05-c1bf-b834-2815-0dfe6b1c7b09@gmail.com>
+Date:   Wed, 31 Jan 2018 09:08:27 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:7OU9pRCA1m6qK3ddaMRy3WQAA4nEqyUbY1RIN9wxBDMr4VaZTz8
- HU8br9xunftD5QLWgrEfzQtRvlloyw8JfbnShqQA8ea4bMfQMsN6dlzJ3mdKA3Nww3aQCr0
- 91jUp5B5UU8Rj/pWW5dAI475dNij2Lk4UaZtUUKKK90UjTupGoSUccAtZjlqOBqSWlZiJPk
- T1Ob8h2IFN7eotJBGuERQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:45Z9TeF3u/k=:uJJVIUCbKntY084aQ5WQYh
- ZCdio/LgMuvaGuDlKqOs1buX4/lFQo8Cx2Z6Q9fNygVzD3DcW/vW9U6OZq+Nt/BueG3QC+tcP
- sV/dChTaq9gsxM/mG13ZF6FBuKGV4hldimlLYC0IqBwia5EoOuzqH/Tshk9j7iUHgBiep+eZD
- mG3TVUlhoxAlDDe6eyniCeGRwkK9siCEN25hjFkQr7pSFqj7fTZrWD1Be0WREc7praXSJwEBT
- UrQ/L7nxFPTJjErdf+8AHar/asIsH4vTJpskl7rUrffNa8pqfYPlxvBPeHdpSjJZikkY3BLJK
- U92yxz8BCaWgEWODZP3VBf8Aq/BY0H/Fc0PUf4ShKt4HgmJC+jN5QUsKn72w5J0+vHFAv6hl6
- /IlMWNUh4xVk4b2pHRI+llu6lAR6gBkVev0vgT8ciceOEb19rk2vOB7a9vG7xAFIRN3IbuXQ1
- ePEE6rZTe6lNFphCIwWbBLgwJxF9fAIZsCWEp92Hb/EVCWjc2j7zIJiDms9HRSG46tLFoD4IA
- 3NQS/sGXffcpEMBgmZUzcPFYPnJQzj5AGq/F8feeH7eM8Il8FZKyu1JZhhXXHp/1ijqwKZidt
- r4uthWtvm+V2OFMKRELCCnLg3O27Cpk3ylcyjfeMx7hl3ImWbDAKQZA+60LTO9EnKxalpx0Nw
- FRWByOAKEDACz3y8cW6uXMnjYal1yEPuuAQsX5MdLt2CCnURUB6XZIT4PMZ+XABQ0eXbJ97ng
- mKiilgdVMwMiWBnHpd5Bd+NraRrqmtETlCn0ep9P0//xBdSIxD26VlBQHpJD/hFY9eY+xus8I
- l+WlyFsjqzprddTVsWYzHPkSfmd3o6s0kXQJaV6WqsqsG/pv92zH/XESzYa/bJrCax+i9V/
+In-Reply-To: <20180126213338.GB17576@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake & Phillip,
+On 1/26/2018 4:33 PM, Brandon Williams wrote:
+> On 01/26, Stefan Beller wrote:
+>> On Thu, Jan 25, 2018 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
+>>> Factor out the logic for processing shallow, deepen, deepen_since, and
+>>> deepen_not lines into their own functions to simplify the
+>>> 'receive_needs()' function in addition to making it easier to reuse some
+>>> of this logic when implementing protocol_v2.
+>>>
+>>> Signed-off-by: Brandon Williams <bmwill@google.com>
+>>> ---
+>>>   upload-pack.c | 113 ++++++++++++++++++++++++++++++++++++++--------------------
+>>>   1 file changed, 74 insertions(+), 39 deletions(-)
+>>>
+>>> diff --git a/upload-pack.c b/upload-pack.c
+>>> index 2ad73a98b..42d83d5b1 100644
+>>> --- a/upload-pack.c
+>>> +++ b/upload-pack.c
+>>> @@ -724,6 +724,75 @@ static void deepen_by_rev_list(int ac, const char **av,
+>>>          packet_flush(1);
+>>>   }
+>>>
+>>> +static int process_shallow(const char *line, struct object_array *shallows)
+>>> +{
+>>> +       const char *arg;
+>>> +       if (skip_prefix(line, "shallow ", &arg)) {
+>> stylistic nit:
+>>
+>>      You could invert the condition in each of the process_* functions
+>>      to just have
+>>
+>>          if (!skip_prefix...))
+>>              return 0
+>>
+>>          /* less indented code goes here */
+>>
+>>          return 1;
+>>
+>>      That way we have less indentation as well as easier code.
+>>      (The reader doesn't need to keep in mind what the else
+>>      part is about; it is a rather local decision to bail out instead
+>>      of having the return at the end of the function.)
+> I was trying to move the existing code into helper functions so
+> rewriting them in transit may make it less reviewable?
 
-On Mon, 29 Jan 2018, Johannes Schindelin wrote:
+I think the way you kept to the existing code as much as possible is 
+good and easier to review. Perhaps a style pass after the patch lands is 
+good for #leftoverbits.
 
-> On Sat, 20 Jan 2018, Jacob Keller wrote:
-> 
-> > On Fri, Jan 19, 2018 at 6:45 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> > > On 18/01/18 15:35, Johannes Schindelin wrote:
-> > >>
-> > >> This patch adds the `merge` command, with the following syntax:
-> > >>
-> > >>       merge <commit> <rev> <oneline>
-> > >
-> > > I'm concerned that this will be confusing for users. All of the other
-> > > rebase commands replay the changes in the commit hash immediately
-> > > following the command name. This command instead uses the first
-> > > commit to specify the message which is different to both 'git merge'
-> > > and the existing rebase commands. I wonder if it would be clearer to
-> > > have 'merge -C <commit> <rev> ...' instead so it's clear which
-> > > argument specifies the message and which the remote head to merge.
-> > > It would also allow for 'merge -c <commit> <rev> ...' in the future
-> > > for rewording an existing merge message and also avoid the slightly
-> > > odd 'merge - <rev> ...'. Where it's creating new merges I'm not sure
-> > > it's a good idea to encourage people to only have oneline commit
-> > > messages by making it harder to edit them, perhaps it could take
-> > > another argument to mean open the editor or not, though as Jake said
-> > > I guess it's not that common.
-> > 
-> > I actually like the idea of re-using commit message options like -C,
-> > -c,  and -m, so we could do:
-> > 
-> > merge -C <commit> ... to take message from commit
-> 
-> That is exactly how the Git garden shears do it.
-> 
-> I found it not very readable. That is why I wanted to get away from it in
-> --recreate-merges.
+>>
+>>> +               struct object_id oid;
+>>> +               struct object *object;
+>>> +               if (get_oid_hex(arg, &oid))
+>>> +                       die("invalid shallow line: %s", line);
+>>> +               object = parse_object(&oid);
+>>> +               if (!object)
+>>> +                       return 1;
+>>> +               if (object->type != OBJ_COMMIT)
+>>> +                       die("invalid shallow object %s", oid_to_hex(&oid));
+>>> +               if (!(object->flags & CLIENT_SHALLOW)) {
+>>> +                       object->flags |= CLIENT_SHALLOW;
+>>> +                       add_object_array(object, NULL, shallows);
+>>> +               }
+>>> +               return 1;
+>>> +       }
+>>> +
+>>> +       return 0;
+>>> +}
+>>> +
+>>> +static int process_deepen(const char *line, int *depth)
+>>> +{
+>>> +       const char *arg;
+>>> +       if (skip_prefix(line, "deepen ", &arg)) {
+>>> +               char *end = NULL;
+>>> +               *depth = (int) strtol(arg, &end, 0);
 
-I made up my mind. Even if it is not very readable, it is still better
-than the `merge A B` where the order of A and B magically determines their
-respective roles.
+nit: space between (int) and strtol?
 
-> > merge -c <commit> ...  to take the message from commit and open editor to edit
-> > merge -m "<message>" ... to take the message from the quoted test
-> > merge ... to merge and open commit editor with default message
+>>> +               if (!end || *end || *depth <= 0)
+>>> +                       die("Invalid deepen: %s", line);
+>>> +               return 1;
+>>> +       }
+>>> +
+>>> +       return 0;
+>>> +}
+>>> +
+>>> +static int process_deepen_since(const char *line, timestamp_t *deepen_since, int *deepen_rev_list)
+>>> +{
+>>> +       const char *arg;
+>>> +       if (skip_prefix(line, "deepen-since ", &arg)) {
+>>> +               char *end = NULL;
+>>> +               *deepen_since = parse_timestamp(arg, &end, 0);
+>>> +               if (!end || *end || !deepen_since ||
+>>> +                   /* revisions.c's max_age -1 is special */
+>>> +                   *deepen_since == -1)
+>>> +                       die("Invalid deepen-since: %s", line);
+>>> +               *deepen_rev_list = 1;
+>>> +               return 1;
+>>> +       }
+>>> +       return 0;
+>>> +}
+>>> +
+>>> +static int process_deepen_not(const char *line, struct string_list *deepen_not, int *deepen_rev_list)
+>>> +{
+>>> +       const char *arg;
+>>> +       if (skip_prefix(line, "deepen-not ", &arg)) {
+>>> +               char *ref = NULL;
+>>> +               struct object_id oid;
+>>> +               if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+>>> +                       die("git upload-pack: ambiguous deepen-not: %s", line);
+>>> +               string_list_append(deepen_not, ref);
+>>> +               free(ref);
+>>> +               *deepen_rev_list = 1;
+>>> +               return 1;
+>>> +       }
+>>> +       return 0;
+>>> +}
+>>> +
+>>>   static void receive_needs(void)
+>>>   {
+>>>          struct object_array shallows = OBJECT_ARRAY_INIT;
+>>> @@ -745,49 +814,15 @@ static void receive_needs(void)
+>>>                  if (!line)
+>>>                          break;
+>>>
+>>> -               if (skip_prefix(line, "shallow ", &arg)) {
+>>> -                       struct object_id oid;
+>>> -                       struct object *object;
+>>> -                       if (get_oid_hex(arg, &oid))
+>>> -                               die("invalid shallow line: %s", line);
+>>> -                       object = parse_object(&oid);
+>>> -                       if (!object)
+>>> -                               continue;
+>>> -                       if (object->type != OBJ_COMMIT)
+>>> -                               die("invalid shallow object %s", oid_to_hex(&oid));
+>>> -                       if (!(object->flags & CLIENT_SHALLOW)) {
+>>> -                               object->flags |= CLIENT_SHALLOW;
+>>> -                               add_object_array(object, NULL, &shallows);
+>>> -                       }
+>>> +               if (process_shallow(line, &shallows))
+>>>                          continue;
+>>> -               }
+>>> -               if (skip_prefix(line, "deepen ", &arg)) {
+>>> -                       char *end = NULL;
+>>> -                       depth = strtol(arg, &end, 0);
+>>> -                       if (!end || *end || depth <= 0)
+>>> -                               die("Invalid deepen: %s", line);
+>>> +               if (process_deepen(line, &depth))
+>>>                          continue;
+>>> -               }
+>>> -               if (skip_prefix(line, "deepen-since ", &arg)) {
+>>> -                       char *end = NULL;
+>>> -                       deepen_since = parse_timestamp(arg, &end, 0);
+>>> -                       if (!end || *end || !deepen_since ||
+>>> -                           /* revisions.c's max_age -1 is special */
+>>> -                           deepen_since == -1)
+>>> -                               die("Invalid deepen-since: %s", line);
+>>> -                       deepen_rev_list = 1;
+>>> +               if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
+>>>                          continue;
+>>> -               }
+>>> -               if (skip_prefix(line, "deepen-not ", &arg)) {
+>>> -                       char *ref = NULL;
+>>> -                       struct object_id oid;
+>>> -                       if (expand_ref(arg, strlen(arg), &oid, &ref) != 1)
+>>> -                               die("git upload-pack: ambiguous deepen-not: %s", line);
+>>> -                       string_list_append(&deepen_not, ref);
+>>> -                       free(ref);
+>>> -                       deepen_rev_list = 1;
+>>> +               if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
+>>>                          continue;
+>>> -               }
+>>> +
+>>>                  if (!skip_prefix(line, "want ", &arg) ||
+>>>                      get_oid_hex(arg, &oid_buf))
+>>>                          die("git upload-pack: protocol error, "
+>>> --
+>>> 2.16.0.rc1.238.g530d649a79-goog
+>>>
 
-I will probably implement -c, but not -m, and will handle the absence of
-the -C and -c options to construct a default merge message which can then
-be edited.
-
-The -m option just opens such a can of worms with dequoting, that's why I
-do not want to do that.
-
-BTW I am still trying to figure out how to present the oneline of the
-commit to merge (which is sometimes really helpful because the label might
-be less than meaningful) while *still* allowing for octopus merges.
-
-So far, what I have is this:
-
-	merge <original> <to-merge> <oneline>
-
-and for octopus:
-
-	merge <original> "<to-merge> <to-merge2>..." <oneline>...
-
-I think with the -C syntax, it would become something like
-
-	merge -C <original> <to-merge> # <oneline>
-
-and
-
-	merge -C <original> <to-merge> <to-merge2>...
-	# Merging: <oneline>
-	# Merging: <oneline2>
-	# ...
-
-The only qualm I have about this is that `#` really *is* a valid ref name.
-(Seriously, it is...). So that would mean that I'd have to disallow `#`
-as a label specificially.
-
-Thoughts?
-
-Ciao,
-Dscho
