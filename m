@@ -7,108 +7,347 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60B3F1F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 15:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3CC1F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 15:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752865AbeAaPBM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 10:01:12 -0500
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34156 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752307AbeAaPBL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 10:01:11 -0500
-Received: by mail-wm0-f42.google.com with SMTP id j21so8851805wmh.1
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 07:01:10 -0800 (PST)
+        id S932081AbeAaPWx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 10:22:53 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:43635 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932066AbeAaPWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 10:22:49 -0500
+Received: by mail-qt0-f194.google.com with SMTP id s3so22232121qtb.10
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 07:22:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ud/yVUlychgPYszToRyHWIpuot465fVn3d0IDk9+RoY=;
-        b=eeX4Fktw1G4/QZV4shocBrg4LDUuX8j2iJ9c1RtHOCd0CKwLuS9XUdGwTsXdgivOpf
-         Xqcq19Z+RgcdPLl6HueE/oA7vqlfVGMQgWyfG0QstrVI4q/+Vsv7dYxMMLgdadTTinBt
-         BS+pqoj9tDFeNtpI0u/emoMNlLE4h5ORVnjXnMrYK3EJvM+yhDzizlh0ANpQkoQ/8MaQ
-         hCuG+NiRt2hFLeDnigeEwh/vxlNAF7heX5/SWXEN1aYPz6yku+395wi8itMZVDwm4jSB
-         mVia8EA4bgDFH4bt4FPFM7W9gWbatiZkitHHdJlgwptol/AhvkUnJf9srW3T7eFwqPQn
-         rRzA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=BkhC02rDaHhJshXGGEvILXhzazIPrNqXP0uaGH7+4QY=;
+        b=mDUJZNdWjX7dv3NU3q2lNhzdPG6BYPdWTjjgLoP811QEC1iGz+Ir2i/tUFce36Lu7m
+         S1Us6Jofv8p0oRYxxre0QvgK4lg/1nSuED//S68lAJ7kqdKYUX3p0u23f5hjLAauyB1A
+         kGE9HDV4ckayMLrqBWF3/B8toqqdaz7M5KWjTaXoppsMRS2Quj9GH9yFFPDFH658Wrj3
+         QAzVHwdSy8XgJFbn3RBi8B8fgJ1lZENopbIRahBvJw9w9o7+HuGXlPxILreVZuEtPWzi
+         nOq1Gk4NinJz82cGLUjrfwOfQzcRCWcqShI8ycNblL8pTTG7tQdEzSZn0wFhp9OV9ifN
+         mFdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Ud/yVUlychgPYszToRyHWIpuot465fVn3d0IDk9+RoY=;
-        b=ZHiSzF3uF9ilS9KPhdR+9oXYQzoRAjmauhlPm5WfV0p+PzBGSjgPr9dXIbcIL8Zv8s
-         5xiW0c1XX0aRqyyoyaLKen9H7fZOcS6SDR3GbFjc+ewz3IwE6VUMACd7jmzOaphmtO3D
-         IzcF7IFTiLQgyYKvyC6zv1keFV3/zvvRwyaPYEWX1xQPqEUaawbnWpbwIAHS8kSykpBk
-         I9XnCERia5ecn6qSCBkkN5ZSriHOJpUHYEC0G3iGWXwwjP1mEXx6+JGB7Dwc5d4slUxX
-         7QWOkL10ODnAfj/O31WHs+l1DiRe1GmTWGk9yod2WuBp5LoSfPXT0YGebppP/NYfbvPC
-         /o+g==
-X-Gm-Message-State: AKwxytcRQx+Zd5tJ2jdPLETnvHSX45Rh4Nw0zMRUdKouYCcaZBgrzLP2
-        lIORDKjG5Im0rsLq2y0BKYZYRE0T
-X-Google-Smtp-Source: AH8x226IzEmlPAkcCi8wx1BNB9tKqdsCb4jGtXoBPt9KhddssnrVB6ZIvFoWlOkaq7Bt4gWC2+B56Q==
-X-Received: by 10.80.171.165 with SMTP id u34mr9834145edc.167.1517410870011;
-        Wed, 31 Jan 2018 07:01:10 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id 15sm9919416eds.54.2018.01.31.07.01.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 31 Jan 2018 07:01:08 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 00/41] Automate updating git-completion.bash a bit
-References: <20180131110547.20577-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <20180131110547.20577-1-pclouds@gmail.com>
-Date:   Wed, 31 Jan 2018 16:01:08 +0100
-Message-ID: <87po5qm5sb.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=BkhC02rDaHhJshXGGEvILXhzazIPrNqXP0uaGH7+4QY=;
+        b=faE6awjUMl3fjoMT3nx7JcDjNZ6o6f8mhJu3Y8yCXaEzYTOEJcu4c9bOJASqWS3ffI
+         a8xr+fOKkmwVoil1ddz8V6xXuMYSLzP7TozjNsO0u/ds2Nr9yyt9yAVJHv4LRLjvXHLW
+         K5G4uhYBBhl0xn+CVnb6UKhovq7eiNyLVscYuC+jJFfcOZzokBY56+NxrAoCuOw5dscP
+         8oF+9SE+ewpVMNFq+AM77Tit9Mox4t1XJALNoSjth+MEi6YMzLZBEWCLygiaRi0Uranf
+         NcZmWgThxLT54LsjpWGh6YJhG1Ewh/WY/uTvcRGC9dL7qPp6UZA+u8B6COlPi03RGQ4Q
+         nVMQ==
+X-Gm-Message-State: AKwxytexcztyXmP98tAwYVuZs9gGmR8xfAz8Mqwl2afZyHWnxJdyUW+s
+        zTLkXar5I/5YNgMJqs6wrSk=
+X-Google-Smtp-Source: AH8x226pbealPqnaVvRIGUAiPU3HQiuXqTsPLGIXKOnJJxn1xohv6NMUIYFHu+MRMj7VszSBCM1jIw==
+X-Received: by 10.237.36.152 with SMTP id t24mr56266965qtc.136.1517412168563;
+        Wed, 31 Jan 2018 07:22:48 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id 23sm7766757qtx.33.2018.01.31.07.22.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Jan 2018 07:22:47 -0800 (PST)
+Subject: Re: [PATCH v2 14/27] connect: request remote refs using v2
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, jrnieder@gmail.com
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-15-bmwill@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2007efc8-ec31-0267-9b83-392a9d2eaf4a@gmail.com>
+Date:   Wed, 31 Jan 2018 10:22:46 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180125235838.138135-15-bmwill@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jan 31 2018, Nguyễn Thái Ngọc Duy jotted:
-
-> I posted a proof of concept a while back [1]. This is the full version.
+On 1/25/2018 6:58 PM, Brandon Williams wrote:
+> Teach the client to be able to request a remote's refs using protocol
+> v2.  This is done by having a client issue a 'ls-refs' request to a v2
+> server.
 >
-> This series lets "git" binary help git-completion.bash to complete
-> --<stuff> so that when a new option is added, we don't have to update
-> git-completion.bash manually too (people often forget it). As a side
-> effect, about 180 more options are now completable.
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>   builtin/upload-pack.c  |  10 ++--
+>   connect.c              | 123 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>   remote.h               |   4 ++
+>   t/t5702-protocol-v2.sh |  28 +++++++++++
+>   transport.c            |   2 +-
+>   5 files changed, 160 insertions(+), 7 deletions(-)
+>   create mode 100755 t/t5702-protocol-v2.sh
 >
-> parse-options is updated to allow developers to flag certain options
-> not to be completable if they want finer control over it.  But by
-> default, new non-hidden options are completable. Negative forms must
-> be handled manually. That's for the next step.
->
-> The number of patches is high, but changes after the first four
-> patches and 33/41 are quite simple. I still need some eyeballs though
-> to make sure I have not accidentally allowed completion of dangerous
-> options. Details are broken down per command in each commit message.
->
-> If people want to play with this, I have a script [2] that shows all
-> completable options for most commands (I ignore some that are
-> shell-based because I don't touch them in this series). You can then
-> do a "diff" to see new/old options.
+> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+> index 8d53e9794..a757df8da 100644
+> --- a/builtin/upload-pack.c
+> +++ b/builtin/upload-pack.c
+> @@ -5,6 +5,7 @@
+>   #include "parse-options.h"
+>   #include "protocol.h"
+>   #include "upload-pack.h"
+> +#include "serve.h"
+>   
+>   static const char * const upload_pack_usage[] = {
+>   	N_("git upload-pack [<options>] <dir>"),
+> @@ -16,6 +17,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+>   	const char *dir;
+>   	int strict = 0;
+>   	struct upload_pack_options opts = { 0 };
+> +	struct serve_options serve_opts = SERVE_OPTIONS_INIT;
+>   	struct option options[] = {
+>   		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
+>   			 N_("quit after a single request/response exchange")),
+> @@ -48,11 +50,9 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+>   
+>   	switch (determine_protocol_version_server()) {
+>   	case protocol_v2:
+> -		/*
+> -		 * fetch support for protocol v2 has not been implemented yet,
+> -		 * so ignore the request to use v2 and fallback to using v0.
+> -		 */
+> -		upload_pack(&opts);
+> +		serve_opts.advertise_capabilities = opts.advertise_refs;
+> +		serve_opts.stateless_rpc = opts.stateless_rpc;
+> +		serve(&serve_opts);
+>   		break;
+>   	case protocol_v1:
+>   		/*
+> diff --git a/connect.c b/connect.c
+> index f2157a821..3c653b65b 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -12,9 +12,11 @@
+>   #include "sha1-array.h"
+>   #include "transport.h"
+>   #include "strbuf.h"
+> +#include "version.h"
+>   #include "protocol.h"
+>   
+>   static char *server_capabilities;
+> +static struct argv_array server_capabilities_v2 = ARGV_ARRAY_INIT;
+>   static const char *parse_feature_value(const char *, const char *, int *);
+>   
+>   static int check_ref(const char *name, unsigned int flags)
+> @@ -62,6 +64,33 @@ static void die_initial_contact(int unexpected)
+>   		      "and the repository exists."));
+>   }
+>   
+> +/* Checks if the server supports the capability 'c' */
+> +static int server_supports_v2(const char *c, int die_on_error)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < server_capabilities_v2.argc; i++) {
+> +		const char *out;
+> +		if (skip_prefix(server_capabilities_v2.argv[i], c, &out) &&
+> +		    (!*out || *out == '='))
+> +			return 1;
+> +	}
+> +
+> +	if (die_on_error)
+> +		die("server doesn't support '%s'", c);
+> +
+> +	return 0;
+> +}
+> +
+> +static void process_capabilities_v2(struct packet_reader *reader)
+> +{
+> +	while (packet_reader_read(reader) == PACKET_READ_NORMAL)
+> +		argv_array_push(&server_capabilities_v2, reader->line);
+> +
+> +	if (reader->status != PACKET_READ_FLUSH)
+> +		die("protocol error");
+> +}
+> +
+>   enum protocol_version discover_version(struct packet_reader *reader)
+>   {
+>   	enum protocol_version version = protocol_unknown_version;
+> @@ -85,7 +114,7 @@ enum protocol_version discover_version(struct packet_reader *reader)
+>   	/* Maybe process capabilities here, at least for v2 */
+>   	switch (version) {
+>   	case protocol_v2:
+> -		die("support for protocol v2 not implemented yet");
+> +		process_capabilities_v2(reader);
+>   		break;
+>   	case protocol_v1:
+>   		/* Read the peeked version line */
+> @@ -293,6 +322,98 @@ struct ref **get_remote_heads(struct packet_reader *reader,
+>   	return list;
+>   }
+>   
+> +static int process_ref_v2(const char *line, struct ref ***list)
+> +{
+> +	int ret = 1;
+> +	int i = 0;
 
-Thanks, looks great to me, especially caching the result of the
-completion.
+nit: you set 'i' here, but first use it in a for loop with blank 
+initializer. Perhaps keep the first assignment closer to the first use?
 
-> There's a small conflict with 'pu' because --prune-tags is added in
-> git-completion.bash. The solution is simple and beautiful: ignore
-> those changes, --prune-tags will be completable anyway :)
+> +	struct object_id old_oid;
+> +	struct ref *ref;
+> +	struct string_list line_sections = STRING_LIST_INIT_DUP;
+> +
+> +	if (string_list_split(&line_sections, line, ' ', -1) < 2) {
+> +		ret = 0;
+> +		goto out;
+> +	}
+> +
+> +	if (get_oid_hex(line_sections.items[i++].string, &old_oid)) {
+> +		ret = 0;
+> +		goto out;
+> +	}
+> +
+> +	ref = alloc_ref(line_sections.items[i++].string);
+> +
+> +	oidcpy(&ref->old_oid, &old_oid);
+> +	**list = ref;
+> +	*list = &ref->next;
+> +
+> +	for (; i < line_sections.nr; i++) {
+> +		const char *arg = line_sections.items[i].string;
+> +		if (skip_prefix(arg, "symref-target:", &arg))
+> +			ref->symref = xstrdup(arg);
+> +
+> +		if (skip_prefix(arg, "peeled:", &arg)) {
+> +			struct object_id peeled_oid;
+> +			char *peeled_name;
+> +			struct ref *peeled;
+> +			if (get_oid_hex(arg, &peeled_oid)) {
+> +				ret = 0;
+> +				goto out;
+> +			}
+> +
+> +			peeled_name = xstrfmt("%s^{}", ref->name);
+> +			peeled = alloc_ref(peeled_name);
+> +
+> +			oidcpy(&peeled->old_oid, &peeled_oid);
+> +			**list = peeled;
+> +			*list = &peeled->next;
+> +
+> +			free(peeled_name);
+> +		}
+> +	}
+> +
+> +out:
+> +	string_list_clear(&line_sections, 0);
+> +	return ret;
+> +}
+> +
+> +struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+> +			     struct ref **list, int for_push,
+> +			     const struct argv_array *ref_patterns)
+> +{
+> +	int i;
+> +	*list = NULL;
+> +
+> +	/* Check that the server supports the ls-refs command */
+> +	/* Issue request for ls-refs */
+> +	if (server_supports_v2("ls-refs", 1))
+> +		packet_write_fmt(fd_out, "command=ls-refs\n");
+> +
+> +	if (server_supports_v2("agent", 0))
+> +	    packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
+> +
+> +	packet_delim(fd_out);
+> +	/* When pushing we don't want to request the peeled tags */
+> +	if (!for_push)
+> +		packet_write_fmt(fd_out, "peel\n");
+> +	packet_write_fmt(fd_out, "symrefs\n");
+> +	for (i = 0; ref_patterns && i < ref_patterns->argc; i++) {
+> +		packet_write_fmt(fd_out, "ref-pattern %s\n",
+> +				 ref_patterns->argv[i]);
+> +	}
+> +	packet_flush(fd_out);
+> +
+> +	/* Process response from server */
+> +	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
+> +		if (!process_ref_v2(reader->line, &list))
+> +			die("invalid ls-refs response: %s", reader->line);
+> +	}
+> +
+> +	if (reader->status != PACKET_READ_FLUSH)
+> +		die("protocol error");
+> +
+> +	return list;
+> +}
+> +
+>   static const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp)
+>   {
+>   	int len;
+> diff --git a/remote.h b/remote.h
+> index 2016461df..21d0c776c 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -151,10 +151,14 @@ void free_refs(struct ref *ref);
+>   
+>   struct oid_array;
+>   struct packet_reader;
+> +struct argv_array;
+>   extern struct ref **get_remote_heads(struct packet_reader *reader,
+>   				     struct ref **list, unsigned int flags,
+>   				     struct oid_array *extra_have,
+>   				     struct oid_array *shallow_points);
+> +extern struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+> +				    struct ref **list, int for_push,
+> +				    const struct argv_array *ref_patterns);
+>   
+>   int resolve_remote_symref(struct ref *ref, struct ref *list);
+>   int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+> diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+> new file mode 100755
+> index 000000000..4bf4d61ac
+> --- /dev/null
+> +++ b/t/t5702-protocol-v2.sh
+> @@ -0,0 +1,28 @@
+> +#!/bin/sh
+> +
+> +test_description='test git wire-protocol version 2'
+> +
+> +TEST_NO_CREATE_REPO=1
+> +
+> +. ./test-lib.sh
+> +
+> +# Test protocol v2 with 'file://' transport
+> +#
+> +test_expect_success 'create repo to be served by file:// transport' '
+> +	git init file_parent &&
+> +	test_commit -C file_parent one
+> +'
+> +
+> +test_expect_success 'list refs with file:// using protocol v2' '
+> +	GIT_TRACE_PACKET=1 git -c protocol.version=2 \
+> +		ls-remote --symref "file://$(pwd)/file_parent" >actual 2>log &&
+> +
+> +	# Server responded using protocol v2
+> +	cat log &&
+> +	grep "git< version 2" log &&
+> +
+> +	git ls-remote --symref "file://$(pwd)/file_parent" >expect &&
+> +	test_cmp actual expect
+> +'
+> +
+> +test_done
+> diff --git a/transport.c b/transport.c
+> index 83d9dd1df..ffc6b2614 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -204,7 +204,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+>   	data->version = discover_version(&reader);
+>   	switch (data->version) {
+>   	case protocol_v2:
+> -		die("support for protocol v2 not implemented yet");
+> +		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
+>   		break;
+>   	case protocol_v1:
+>   	case protocol_v0:
 
-Yay! Also another good argument for this series, it took me until v3
-until I noticed I'd forgotten the bash completion:
-https://public-inbox.org/git/20180123221326.28495-1-avarab@gmail.com/
-
-> parse-options: add OPT_xxx_F() variants
-
-Not directly related to this series, but my own
-https://public-inbox.org/git/20170324231013.23346-1-avarab@gmail.com/
-which I've been meaning to clean up and re-submit also added some new
-macros to this file.
-
-I've been wondering what a good solution is to avoid a combinatorial
-explosion explosion of these macros in the longer term, but haven't come
-up with anthing.
