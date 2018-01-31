@@ -2,208 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E804B1F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 16:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 595281F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 16:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932262AbeAaQMj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 11:12:39 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:44527 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752120AbeAaQMi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 11:12:38 -0500
-Received: by mail-qk0-f177.google.com with SMTP id n188so4021876qkn.11
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 08:12:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=L1UEYqH3z51iio55hCh1gjbTgckbMvKer4cJXEyQ6Ms=;
-        b=EaC79J74CtwgQpOYTG0ijDqBRHeiyvb82RRfzHAjHZM8E4oDsx8Olp5ZACfRGMU8ZN
-         qBTiWKn9vqgD5srj1VLgnHlg2z/ODtUBVmp5mEd16FOv2sVjwo8EXIFPi2YXm3cs2Bzj
-         kKpkohd/8i1edeX5sEM4qr320Vjtl5AFPy8f9ORwnrRhkUS3MTindwPo8b+1R7V6AQGx
-         3xMDnuURDK3M1xSaNhv+9kw2X4hQGyT4SVmqdOb8nSNb1WzXxPXPM/gROABSdF7z3BhW
-         LNEkF2xKicmNHntpoLmi1K9ZN/ds9+41e9aH58MT14ZmeoTRhzJG9fHui+ByfBqGvGES
-         UJtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=L1UEYqH3z51iio55hCh1gjbTgckbMvKer4cJXEyQ6Ms=;
-        b=K/AwlgIHNm+R07/O58RFcKFoaGbfnMyxHrWIPpC+Ut0WKDdmrORvKIlTEECeu8DrAa
-         q3eEDtqlpxeD5KHUqIG+YFBTztBqRGZEEOQzm7ZDr5VOhKsk2HUPbOP23Lf2eXtMrAP+
-         lN8aonzAh/brp2yqv5ivDtO+CjyIRRYw5YzIgGcIGdutB2mCsYeWVxccRVo9ZZX3tXtO
-         l60rReB3787JzVugfWmnBjIBfm7AmpMMy3gKIE2bfLg/SByTatNclFuYv4Z5/psSqbj3
-         hfyionkTb4Q0Hd9mE8gHoDuFDynCfxMTCGtKq0xr14B48TkBtqLMVDu1BJugNX+YOA6I
-         CO4w==
-X-Gm-Message-State: AKwxytd36LPOwDNv95hRAO7PD/cLNEmxSGY6CItzUQ6lygyxwPPC0Ywx
-        HwTgEwPF8YUkEB+D1JeSm1I=
-X-Google-Smtp-Source: AH8x224CUqfr3MT0qEZl+61oF0GOnJVYaqtDCU4wO945cjynI5OzU8P3Xs0tb/6ghVJJMkTZmaPPHA==
-X-Received: by 10.55.106.193 with SMTP id f184mr35718419qkc.211.1517415157980;
-        Wed, 31 Jan 2018 08:12:37 -0800 (PST)
-Received: from [192.168.1.105] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id k2sm8880158qkc.88.2018.01.31.08.12.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 08:12:36 -0800 (PST)
-Subject: Re: Some rough edges of core.fsmonitor
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        David Turner <dturner@twopensource.com>, pclouds@gmail.com
-References: <87efmcw3fa.fsf@evledraar.gmail.com>
- <26b9d795-b2b3-905d-c67a-83bc4e976894@gmail.com>
- <87vafjlyyp.fsf@evledraar.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <ee8f571e-a4cc-e8d4-b490-072e1579ee65@gmail.com>
-Date:   Wed, 31 Jan 2018 11:12:36 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S1752618AbeAaQyL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 11:54:11 -0500
+Received: from mout.perfora.net ([74.208.4.196]:64402 "EHLO mout.perfora.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752372AbeAaQyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 11:54:10 -0500
+Received: from [192.168.1.104] ([194.237.255.67]) by mrelay.perfora.net
+ (mreueus003 [74.208.5.2]) with ESMTPSA (Nemesis) id 0MD7RC-1eWywn1euK-00GXLq
+ for <git@vger.kernel.org>; Wed, 31 Jan 2018 17:54:09 +0100
+Subject: Re: Location limits on development, staging and production
+ environments
+From:   H <agents@meddatainc.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <baf15388-adb4-ddce-889f-3e71b1574044@meddatainc.com>
+ <CAGyf7-GeEaCFeY7q3=-7cN6aLaWUBwbNAMAbtfHw6ZXanAy3hw@mail.gmail.com>
+ <e737ea6f-493f-f6e4-7491-ee9c19609ee2@meddatainc.com>
+Message-ID: <259af179-cdf1-1f27-95e4-b94f7ca12085@meddatainc.com>
+Date:   Wed, 31 Jan 2018 17:54:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <87vafjlyyp.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <e737ea6f-493f-f6e4-7491-ee9c19609ee2@meddatainc.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:GAyPDwOL/eU0havtfOTXUf6VpSDFwQAkpa6sD+AsD/lSW5iw+W7
+ hj0dpbjycU6g03L0fN/FiGHgMrQsL5k+FsyxeRe3JUWoAeYGHoKEbj24n9bO1ekMtP4BvZ1
+ KtEGqA6xyjOdXApcpriuEB1L9DWYaGAsDT7DRsZkL0auMVojg+fhVg8sKSoCOym/9PEroxn
+ 5uzkZn+pR+2jOrs9LEjlQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9n8RgBSKu9E=:Stneo98xV7zWWwnZaBW03f
+ 01CM/HiBoZVzARzy1yCT9d3Yvji/2SdnFce2H643lJqFvFVop/toJKoFpaEmA+raSBJYu7Abd
+ PH8lbIX4hC5BdgI6veiBs3S8SKfRf6fsBzUa6uZMJWhUoM1pREp5heufFAVctEBNw3ttEvIZw
+ cwrO+q+JBZS+YfA1sZLynVDBB78h4cj6cqCj0YYb0KXdzmKmOl18/2qhK1/JU7QBzHI4XoI28
+ 1EFYljVN3pS5EWh4TDZBWdgfpZvSpePcwz5ezmk+gfOts2tP+VArM46Ha1bRadfvhRfS0jeYX
+ 5hQgwbryFzQBhTt4VamZjmp9lh59w57lbockoihMYTuirz1jsMTaG+oMpLs5j4fyOEyjD4PGf
+ wNTN5sQRSiV60OaBB+MT9ucrYc3jd+87sRNMeaM7sWjvOzZag0xXyGrTVRW7407vOoqg2VlW3
+ YGrCcCDZhslQYJUp0FAAhRp+J3KDEbhmPUjEZ63EUPaCv52oGW4i1SPlYCh3DUuhtFhVrecQx
+ flByC98WoWthu+lfJtDUg6TQySUrfFVnxRmnvCWPP2BPe+371iYXlgOcpa0QmygiLRwWXYQcV
+ T3aGCZQHcZsotLKW07eCRFvyjhXzenGXQ0jKcMCS+4+zMIaYkB7OzfdxUcU7yZKHaaxgGlzSQ
+ eiYlYV9ilx2M3chsIRhvMzT0ysaRth2i7nQAfBdab5Kxhk7DcylOgQVckGznk0XEFP+ehp4VT
+ LoN3GPH3vSUspzVQWsND9s2XZ1IqFNjaovim8Rqg89OZUXPafYXzQfsMX/8=
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 1/30/2018 6:16 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Jan 30 2018, Ben Peart jotted:
-> 
->> While some of these issues have been discussed in other threads, I
->> thought I'd summarize my thoughts here.
-> 
-> Thanks for this & your other reply. I'm going to get to testing some of
-> Duy's patches soon, and if you have some other relevant WIP I'd be happy
-> to try them, but meanwhile replying to a few of these:
-> 
->> On 1/26/2018 7:28 PM, Ævar Arnfjörð Bjarmason wrote:
->>> I just got around to testing this since it landed, for context some
->>> previous poking of mine in [1].
+On 01/30/2018 03:48 PM, H wrote:
+> On 01/29/2018 10:02 PM, Bryan Turner wrote:
+>> On Mon, Jan 29, 2018 at 11:08 AM, H <agents@meddatainc.com> wrote:
+>>> I am a newcomer to git looking to set up a web development environment where individual computers are used for development, the development.git, staging.git and production.git repositories are stored on an external server reachable by password-less ssh and the staging and production websites are on yet another server, also reachable by password-less ssh from the git-server (and the development machines).
 >>>
->>> Issues / stuff I've noticed:
+>>> Locating the three git repositories on an external server works fine but I have not been able to have the staging and production deployment files on another server. I believe this is what is referred by GIT_WORK_TREE and based on what I found on the web I created a post-receive hook of staging.git with the two lines:
 >>>
->>> 1) We end up invalidating the untracked cache because stuff in .git/
->>> changed. For example:
+>>> #!/bin/sh
+>>> GIT_WORK_TREE=user@1.2.3.4:/var/www/html/dev.whatever git checkout -f master
 >>>
->>>       01:09:24.975524 fsmonitor.c:173         fsmonitor process '.git/hooks/fsmonitor-watchman' returned success
->>>       01:09:24.975548 fsmonitor.c:138         fsmonitor_refresh_callback '.git'
->>>       01:09:24.975556 fsmonitor.c:138         fsmonitor_refresh_callback '.git/config'
->>>       01:09:24.975568 fsmonitor.c:138         fsmonitor_refresh_callback '.git/index'
->>>       01:09:25.122726 fsmonitor.c:91          write fsmonitor extension successful
+>>> I believe this should deploy the files from the development work tree.
 >>>
->>> Am I missing something or should we do something like:
->>>
->>>       diff --git a/fsmonitor.c b/fsmonitor.c
->>>       index 0af7c4edba..5067b89bda 100644
->>>       --- a/fsmonitor.c
->>>       +++ b/fsmonitor.c
->>>       @@ -118,7 +118,12 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
->>>
->>>        static void fsmonitor_refresh_callback(struct index_state *istate, const char *name)
->>>        {
->>>       -       int pos = index_name_pos(istate, name, strlen(name));
->>>       +       int pos;
->>>       +
->>>       +       if (!strcmp(name, ".git") || starts_with(name, ".git/"))
->>>       +               return;
->>>       +
->>>       +       pos = index_name_pos(istate, name, strlen(name));
->>>
->>>               if (pos >= 0) {
->>>                       struct cache_entry *ce = istate->cache[pos];
->>>
->>> With that patch applied status on a large repo[2] goes from a consistent
->>> ~180-200ms to ~140-150ms, since we're not invalidating some of the UC
->>> structure
->>>
+>>> The above, however, fails. Should it work? I am running git 1.7.1 on CentOS 6.
+>> No, I wouldn't expect that to work. GIT_WORK_TREE is not remote-aware
+>> in that way. It's expected to be a normal-ish filesystem path.
 >>
->> I favor making this optimization by updating
->> untracked_cache_invalidate_path() so that it ignores paths under
->> get_git_dir() and doesn't invalidate the untracked cache or flag the
->> index as dirty.
-> 
-> *nod*
-> 
->>> 2) We re-write out the index even though we know nothing changed
->>>
->>> When you first run with core.fsmonitor it needs to
->>> mark_fsmonitor_clean() for every path, but is there a reason for why we
->>> wouldn't supply the equivalent of GIT_OPTIONAL_LOCKS=0 if all paths are
->>> marked and we know from the hook that nothing changed? Why write out the
->>> index again?
->>>
+>> Based on your description, and the hook you've written, it seems like
+>> your intention is for the source to automatically be fetched and
+>> checked out on the staging environment after each push. (This is
+>> dangerous, and likely _not_ what you actually want, but I'll get to
+>> that in a moment.)
 >>
->> Writing out the index when core.fsmonitor is first turned on is
->> necessary to get the index extension added with the current state of
->> the dirty flags.  Given it is a one time cost, I don't think we have
->> anything worth trying to optimize here.
-> 
-> Indeed, that makes sense. What I was showing here is even after the
-> initial setup we continue to write it out when we know nothing changed.
-> 
-> We do that anyway without fsmonitor, but this seemed like a worthwhile
-> thing to optimize.
-> 
+>> One option would be to setup something like NFS, so the git-server can
+>> mount the filesystems from the staging and production nodes.
+>>
+>> A different, likely better, option would be to have the post-receive
+>> script on the git-server use straight ssh to trigger a checkout script
+>> on the staging server, e.g.:
+>> #!/bin/sh
+>> ssh example@staging-server -C /opt/deploy-staging.sh
+>>
+>> Your deploy-staging script would then do something like:
+>> #!/bin/sh
+>> GIT_WORK_TREE=/var/www/html/dev.whatever git pull origin
+>>
+>> That said, though, having such a simple script is dangerous because
+>> Git is fully capable of having receiving multiple pushes concurrently,
+>> and they can all succeed as long as they're updating different
+>> branches. Since your script isn't considering what branches were
+>> changed by the push, it could end up triggering simultaneous git
+>> processes on the staging server all attempting to deploy concurrently.
+>>
+>> The stdin for the post-receive hook receives details about which refs
+>> were changed, and you'll likely want to update your script to parse
+>> stdin and only try to deploy staging if a specific, relevant branch
+>> (master in your example) has changed.
+>>
+>> Lastly, I'll note that using post-receive will make the pushing
+>> (remote) user wait while the staging server is deployed. If that
+>> process is likely to take very long, you might want to decouple the
+>> two somehow.
+>>
+>> Hope this helps!
+> I should perhaps also have mentioned that although I am the only developer, I may use different computers to develop on. IOW, there should not be any conflict due to code being pushed by multiple developers.
+>
+> Let's see if I understand this correctly:
+>
+> - Unless NFS is used, the git archive and the deployment of the website code in this case should reside on the same computer.
+>
+> - The combination of the checkout script and the deploy-staging script should work provided not multiple updates to the same branch are pushed at the same time.
+>
+> I will try this later today but any other hints or suggestions you may have would be greatly appreciated!
+>
+I modified post-receive in the hook directory of the staging git archive on server 1 as per your first example and created the deploy-staging.sh script on server 2 where the staging website resides in /var/www/html/dev.whatever (as well as the live website in /var/www/html/whatever. However, when trying out the deploy-staging.sh script, it fails with the error message "...not a git repository...". I do have git on server 2 but what else would I need to set up to run this successfully? Note that the git repository is on server 1 and I am deploying to server 2.
 
-There is already logic to avoid writing out the index unless there is 
-something that requires it.  In my testing, it was often the untracked 
-cache marking the index as dirty that was causing the unexpected writes.
-
-The patch to make the untracked cache only flag the index as dirty when 
-the feature is being turned on or off is pretty simple (see below).  The 
-challenge was that many of the untracked cache tests assume all changes 
-are saved to disk after every command so they fail after making this 
-change.  The patch below does a simple hack of checking for a test 
-environment variable and only forcing the index writes if it is set.
-
-Internally, we simply turned off the untracked cache as it's usefulness 
-in combination with GVFS is limited and without the patch, it actually 
-slowed down common operations more than it sped them up.
-
-Typically, changes to the untracked cache don't accumulate long before 
-the user does some operation that requires the index to be written out 
-at which point the untracked cache is updated as well.
-
-
-diff --git a/dir.c b/dir.c
-index 5e93a1350b..af1d33aae1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2256,7 +2256,8 @@ int read_directory(struct dir_struct *dir, struct 
-index_state *istate,
-                                  dir->untracked->gitignore_invalidated,
-                                  dir->untracked->dir_invalidated,
-                                  dir->untracked->dir_opened);
--               if (dir->untracked == istate->untracked &&
-+               if (getenv("GIT_TEST_UNTRACKED_CACHE") &&
-+                       dir->untracked == istate->untracked &&
-                     (dir->untracked->dir_opened ||
-                      dir->untracked->gitignore_invalidated ||
-                      dir->untracked->dir_invalidated))
-diff --git a/t/t7063-status-untracked-cache.sh 
-b/t/t7063-status-untracked-cache.sh
-index ea9383e8cb..e5811b6ef2 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -14,6 +14,8 @@ test_description='test untracked cache'
-  # See <20160803174522.5571-1-pclouds@gmail.com> if you want to know
-  # more.
-
-+export GIT_TEST_UNTRACKED_CACHE=true
-+
-  sync_mtime () {
-         if test_have_prereq BUSYBOX
-         then
-
+Thanks!
 
