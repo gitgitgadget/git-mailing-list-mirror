@@ -2,176 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D85511F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 17:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC0311F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 17:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753537AbeAaRjA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 12:39:00 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:41428 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753158AbeAaRi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 12:38:59 -0500
-Received: by mail-pg0-f68.google.com with SMTP id 141so5564pgd.8
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 09:38:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=Eoa7YoG+7SLImzp+34MCZOAsFlnjTaWWY/UAgtIB5cA=;
-        b=sju/wiGC45hwGodYI/6IEG1t2F3OdeJocJZXlI8JRvE0lh+aRCIIlWIGUbvmbi0HCO
-         pKkN0rrN5G9d5tdhzp5tlkA1Jg4P84rEO7RDFIc6dLpe0ZLhRPBdeWV4GxiNe8lTHPy5
-         uzksLLqU3qt3Gf1WUNuyVaPSwFVl1gF+55nGPDnMCmjCzOhOsoJdlC8ai26f/0xGjgIi
-         eW3flagWqBWW00XWEaqTSfdyOMrtyoULb95UCXEKwUYZX8CpN/9V3bWIz+FctklQsLe9
-         sBd9J2yhkeIjcGJ/NF67Q2lq962rIE1i/RT8Iuyy0Sew4HpLeh1Ss8Y0c5ao+HLuk0c7
-         otfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to;
-        bh=Eoa7YoG+7SLImzp+34MCZOAsFlnjTaWWY/UAgtIB5cA=;
-        b=azdqHF4N67fSJ4D7H5Qib5WixtRQQHCXkqfvV7XHu7VEN9GgKwhBkzDFvXib65aeSP
-         Hb8UrffYcP4psIcFZrqwy4oT2FfwfEJzVuAW7seywO2SOHORJpYsHGTC6Wfb5dBMPw9e
-         vf7Mmj5AKrVIG670tZ6T0pzh/otae6ggbxvp/MuADyyWuXru0sfARGBSIXIbNyLdmgZ1
-         lbBIvhfE0SzFass97+WCwNV2zmbBhoNQEszaZJiq+cgZQmUvgZVibP7UXWi/Xhrtabg8
-         oz1sn/fbRSvtwtzxdDreJ0C9CCClXSiLAyNCMSyd4pF4BoKC9yzrN1guXN0x5SFv5+Bx
-         +hWA==
-X-Gm-Message-State: AKwxyteZlGnDd+iXCcndXckZg0LFZaR6onxUqF5qaAd8cLvPQ4rrZDFm
-        oyJ77hIKJY53l81mEbPQMNihovQ8
-X-Google-Smtp-Source: AH8x226lOgT0c2EdvELGvg+VwXgwEH8ptbVPYD+AIirE9ltDIUbJrngOlX1MiP+/fCgpeO1Xg8VL4g==
-X-Received: by 10.101.96.132 with SMTP id t4mr26441921pgu.58.1517420338524;
-        Wed, 31 Jan 2018 09:38:58 -0800 (PST)
-Received: from [192.168.206.100] ([117.246.176.158])
-        by smtp.gmail.com with ESMTPSA id r3sm26570532pgf.46.2018.01.31.09.38.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 09:38:56 -0800 (PST)
-Subject: Re: Bug/comment
-To:     Andrew Ardill <andrew.ardill@gmail.com>,
-        Ilija Pecelj <pecelj@gmail.com>
-Cc:     git@vger.kernel.org
-References: <2df7b921-6fe2-d55f-4ef0-3f4f0bd69261@gmail.com>
- <CAH5451=Xdotsk-t56ZPdybuAURYbHYe8xzD7uU+ZZjSu3YtyWQ@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <c5b7b176-6814-66ac-fdd8-f90b0cc67649@gmail.com>
-Date:   Wed, 31 Jan 2018 23:08:49 +0530
+        id S1752808AbeAaR67 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 12:58:59 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:65461 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752097AbeAaR66 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 12:58:58 -0500
+Received: from [192.168.2.201] ([92.28.135.202])
+        by smtp.talktalk.net with SMTP
+        id gwetew4LHAp17gweteJgUC; Wed, 31 Jan 2018 17:58:56 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1517421536;
+        bh=4u89g6Que6nQrb7FPLIrXM2swXTgEmMc1qN1KLopqd8=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=FwSHGvdggQeMz5Tfe7+uhdkEB2fsdwFdkaG6Ny9J7nksoU9waTxRUt1Du2TgT4uW3
+         lbYcf68z3UXo4eV3CbfU629LPC3aEDhfPgm/F6g2SC//xezLrFHfehDvk3+tl3GJGt
+         ypvpIHkNX+HYMClMm5/KariQm9CgPP24LudkHTE4=
+X-Originating-IP: [92.28.135.202]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=EsGilWUA c=1 sm=1 tr=0 a=+9ZQAP2FB+pNrrgMTYJMPA==:117
+ a=+9ZQAP2FB+pNrrgMTYJMPA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=JsibEsFsbGGb-LjSmmgA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/8] sequencer: introduce the `merge` command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jacob Keller <jacob.keller@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+ <647382ac70bfb7035345304a32d08f4e7b51cd40.1516225925.git.johannes.schindelin@gmx.de>
+ <b3b37af6-4b65-5a44-a395-6f75a4adc98e@talktalk.net>
+ <CA+P7+xr4KtR4q8Y=-+pv2TzvP009zRVR6a_zh2GOZXt_LXrFOg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1801292230550.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <nycvar.QRO.7.76.6.1801311441430.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <640c350d-090c-ad0f-e6be-fc577bd184c2@talktalk.net>
+Date:   Wed, 31 Jan 2018 17:58:53 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+ Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <CAH5451=Xdotsk-t56ZPdybuAURYbHYe8xzD7uU+ZZjSu3YtyWQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="l6OMxYClwJkdZOsB0YNQ6jEsymIsk1oWl"
+In-Reply-To: <nycvar.QRO.7.76.6.1801311441430.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGGL+iT061FYXjLy+ouD9deIuZZuim784HnjR/qRGMrdajP8nNN29rawzE/yZhv0pg6cQkRMd/fchZ7I4iCvkeTvQhonScQ5NM7XxLF5lZmb/vwVu46a
+ ugz2fpRVg6MEaGwY9/bg7t2BEq8tolUtjGvtRWrrPvK8HWxsPGIgjAjTJvV4VtVXg6s9BtnXpL+iZlTpqjn/KIkzrdmVP3NFnnFZhuj5wllrAMlX+xB4SeKH
+ MHLNPuHELrN2EVbXweyQtS52PkhK+IM5Jp3Z0qU46QPATem9E1KYXd2jY/aT04m+yDmeT3yXXa6Jb2Alg4KFsJNEEQ59hCj8/FOsnwnNAlShpnar75iA/+YG
+ JGJMc3PV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---l6OMxYClwJkdZOsB0YNQ6jEsymIsk1oWl
-Content-Type: multipart/mixed; boundary="cf4iukjDSpqJ6lkRGRbsG9aZ4ILyzVSAv";
- protected-headers="v1"
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Andrew Ardill <andrew.ardill@gmail.com>, Ilija Pecelj <pecelj@gmail.com>
-Cc: git@vger.kernel.org
-Message-ID: <c5b7b176-6814-66ac-fdd8-f90b0cc67649@gmail.com>
-Subject: Re: Bug/comment
-References: <2df7b921-6fe2-d55f-4ef0-3f4f0bd69261@gmail.com>
- <CAH5451=Xdotsk-t56ZPdybuAURYbHYe8xzD7uU+ZZjSu3YtyWQ@mail.gmail.com>
-In-Reply-To: <CAH5451=Xdotsk-t56ZPdybuAURYbHYe8xzD7uU+ZZjSu3YtyWQ@mail.gmail.com>
+On 31/01/18 13:48, Johannes Schindelin wrote:
+> Hi Jake & Phillip,
+> 
+> On Mon, 29 Jan 2018, Johannes Schindelin wrote:
+> 
+>> On Sat, 20 Jan 2018, Jacob Keller wrote:
+>>
+>>> On Fri, Jan 19, 2018 at 6:45 AM, Phillip Wood <phillip.wood@talktalk.net> wrote:
+>>>> On 18/01/18 15:35, Johannes Schindelin wrote:
+>>>>>
+>>>>> This patch adds the `merge` command, with the following syntax:
+>>>>>
+>>>>>       merge <commit> <rev> <oneline>
+>>>>
+>>>> I'm concerned that this will be confusing for users. All of the other
+>>>> rebase commands replay the changes in the commit hash immediately
+>>>> following the command name. This command instead uses the first
+>>>> commit to specify the message which is different to both 'git merge'
+>>>> and the existing rebase commands. I wonder if it would be clearer to
+>>>> have 'merge -C <commit> <rev> ...' instead so it's clear which
+>>>> argument specifies the message and which the remote head to merge.
+>>>> It would also allow for 'merge -c <commit> <rev> ...' in the future
+>>>> for rewording an existing merge message and also avoid the slightly
+>>>> odd 'merge - <rev> ...'. Where it's creating new merges I'm not sure
+>>>> it's a good idea to encourage people to only have oneline commit
+>>>> messages by making it harder to edit them, perhaps it could take
+>>>> another argument to mean open the editor or not, though as Jake said
+>>>> I guess it's not that common.
+>>>
+>>> I actually like the idea of re-using commit message options like -C,
+>>> -c,  and -m, so we could do:
+>>>
+>>> merge -C <commit> ... to take message from commit
+>>
+>> That is exactly how the Git garden shears do it.
+>>
+>> I found it not very readable. That is why I wanted to get away from it in
+>> --recreate-merges.
+> 
+> I made up my mind. Even if it is not very readable, it is still better
+> than the `merge A B` where the order of A and B magically determines their
+> respective roles.
+> 
+>>> merge -c <commit> ...  to take the message from commit and open editor to edit
+>>> merge -m "<message>" ... to take the message from the quoted test
+>>> merge ... to merge and open commit editor with default message
+> 
+> I will probably implement -c, but not -m, and will handle the absence of
+> the -C and -c options to construct a default merge message which can then
+> be edited.
 
---cf4iukjDSpqJ6lkRGRbsG9aZ4ILyzVSAv
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+That sounds like a good plan (-c can always be added later), I'm really
+pleased you changed your mind on this, having the -C may be a bit ugly
+but I think it is valuable to have some way of distinguishing the
+message commit from the merge heads.
 
-On Tuesday 30 January 2018 05:32 AM, Andrew Ardill wrote:
-> Hi Ilija,
->=20
-> On 30 January 2018 at 10:21, Ilija Pecelj <pecelj@gmail.com> wrote:
->> Though it might not be considered a bug 'per se' it is definitely wire=
-d.
->> Namely, when you type 'yes' word and hit enter in git bash for widnows=
-, the
->> process enters infinite loop and just prints 'y' letter in new line.
->
-> ...
->
-> I agree it's a little weird if you have no idea what it's doing, but
-> it is very useful and very old, used by many many different scripts
-> etc, and so unlikely to change.
->
+> The -m option just opens such a can of worms with dequoting, that's why I
+> do not want to do that.
+> 
+> BTW I am still trying to figure out how to present the oneline of the
+> commit to merge (which is sometimes really helpful because the label might
+> be less than meaningful) while *still* allowing for octopus merges.
+> 
+> So far, what I have is this:
+> 
+> 	merge <original> <to-merge> <oneline>
+> 
+> and for octopus:
+> 
+> 	merge <original> "<to-merge> <to-merge2>..." <oneline>...
+> 
+> I think with the -C syntax, it would become something like
+> 
+> 	merge -C <original> <to-merge> # <oneline>
+> 
+> and
+> 
+> 	merge -C <original> <to-merge> <to-merge2>...
+> 	# Merging: <oneline>
+> 	# Merging: <oneline2>
+> 	# ...
+> 
+> The only qualm I have about this is that `#` really *is* a valid ref name.
+> (Seriously, it is...). So that would mean that I'd have to disallow `#`
+> as a label specificially.
+> 
+> Thoughts?
 
-Just to make things more clear, 'yes' is an UNIX utility (as hinted in
-the Wikipedia article link) that might come as part of Cygwin and is not
-a part of Git itself.
+As ':' is not a valid ref if you want a separator you could have
 
+	merge -C <original> <to-merge> : <oneline>
 
---=20
-Kaartic
+personally I'm not sure what value having a separator adds in this case.
+I think in the octopus case have a separate comment line for the subject
+of each merge head is a good idea - maybe the two head merge could just
+have the subject of the remote head in a comment below. I wonder if
+having the subject of the commit that is going to be used for the
+message may be a useful prompt in some cases but that's just making
+things more complicated.
 
-QUOTE
+Best Wishes
 
-=E2=80=9CIt is impossible to live without failing at something, unless yo=
-u live
-so cautiously that you might as well not have lived at all =E2=80=93 in w=
-hich
-case, you fail by default.=E2=80=9D
+Phillip
 
-      - J. K. Rowling
+> Ciao,
+> Dscho
+> 
 
-
-WIKIPEDIA: DID YOU KNOW?
-
-Only 33% of internet users in India have heard of Wikipedia !!
-
-* What do you think could be the reason behind this?
-
-* What are ways in which the awareness about Wikipedia in India and
-other countries be increased ?
-
-Reference:
-
-* Give your ideas for increasing the awareness of Wikipedia in India and
-in other countries and get a Grant from the Wikimedia Foundation to
-bring your idea to life.
-
-  https://meta.wikimedia.org/wiki/Grants:IdeaLab/Inspire
-
-* Know more about the awareness problem of Wikipedia
-
-  https://meta.wikimedia.org/wiki/New_Readers/Awareness
-
-  https://meta.wikimedia.org/wiki/New_Readers/Next_steps/Raising_awarenes=
-s
-
-
---cf4iukjDSpqJ6lkRGRbsG9aZ4ILyzVSAv--
-
---l6OMxYClwJkdZOsB0YNQ6jEsymIsk1oWl
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEmrp5T6QugsbUnN0Nveda2sPWGWkFAlpx/ykbHGthYXJ0aWMu
-c2l2YXJhYW1AZ21haWwuY29tAAoJEL3nWtrD1hlpdoUP/jxhFYQzGcfeSeAZGhUm
-rL4vvxh8HAdHFVSL5xWB2S+zS4NK/d95Xunz6wI5HV0x5yMDBeSp4PtLU5uabJZM
-02U2AB0L0Ol84RUtVJbgfnB+QwcFPKkEybBGj6tYB/lvQ/6PPXihm+s+Z7tyazsE
-4ggTeqpR6viKtgoX2+UE80Gfo+c2nY3F0IaftHZvELbqTrfKeZ+CGek76ar0oaR6
-Z5btANQq7N56Jo+6aaB6EFDxS4Euxc47dypW5hWflyJJ2Hvq87k8D21hkGNK2Osz
-ETYlKfZ9IEhrGqbmJY9mWpomVCXiUnxh2sRcUjXX75TPSBfjlJuuviXq1nkFjH3F
-w+gWWl2MJ3W+/IVKIa7sMdJQXmaRMj1O7SKZteU6gVig1wn8xY6MYtr6Enro12eM
-zb+m+UC7j6Ag1r8/JKxlFDaofPCngB5e8HW0tsnaIcxtBmR8suAUF7QgpT7ZMbf6
-f1TDmFQo9ssFewqzfuU/XM2JDkEHGEhoS1ZbYqq+O0jJU9XgpnVpJc4rXYA0hT6W
-6sqY9inBe477ChKulWI+JqM5S61w9Rvrmz4RQmJO75bFpevr5J85+FjTnMOYMc3y
-VvpFoGEbwEbscI8xoh3wAG8dAK1ixwF1MFT0tJcG0G1ruieeYVJEW34OkN4Y7D8j
-19uxrUcv1gDXjOn6P5N259TC
-=ednA
------END PGP SIGNATURE-----
-
---l6OMxYClwJkdZOsB0YNQ6jEsymIsk1oWl--
