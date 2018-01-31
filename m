@@ -2,507 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4B91F404
-	for <e@80x24.org>; Tue, 30 Jan 2018 23:46:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2210A1F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 00:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932190AbeA3Xqa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 18:46:30 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58764 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754079AbeA3XqO (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 30 Jan 2018 18:46:14 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w0UNN50T025761;
-        Tue, 30 Jan 2018 15:25:35 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2frq6qw4dn-1;
-        Tue, 30 Jan 2018 15:25:34 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 62A91221A575;
-        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 59C6F2CDE88;
-        Tue, 30 Jan 2018 15:25:34 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, sbeller@google.com, szeder.dev@gmail.com,
-        jrnieder@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v7 07/31] directory rename detection: more involved edge/corner testcases
-Date:   Tue, 30 Jan 2018 15:25:09 -0800
-Message-Id: <20180130232533.25846-8-newren@gmail.com>
-X-Mailer: git-send-email 2.16.1.106.gf69932adfe
-In-Reply-To: <20180130232533.25846-1-newren@gmail.com>
-References: <20180130232533.25846-1-newren@gmail.com>
+        id S1753548AbeAaAt3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 Jan 2018 19:49:29 -0500
+Received: from mail-ot0-f193.google.com ([74.125.82.193]:32921 "EHLO
+        mail-ot0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753271AbeAaAt2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 Jan 2018 19:49:28 -0500
+Received: by mail-ot0-f193.google.com with SMTP id q9so835463oti.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 16:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ck2cS5Co2ohdSAnqbCK/kYj20HwA2+7c5xl/tbktqLw=;
+        b=u2Cm1/uLW0XWJ8ByB1sqxPQ2CDPHCzHlPWP9Q2mtvOSlWqtpmyGy1ONmRLctvU516H
+         Z7ypakx9AbceuV5iV8NqR7GdT+tD4vcGGvtDRWYtnf2f/kVD6cKEyrUL8munXTD4h9Xo
+         /HYv+j0DkMeCIz6dBLaBoKmiQTALtmEIgl7+3YlIhHPNKCmI2l3g8sfHfMNYEdOTBGHt
+         H0e6iazjpp89uCTg0l/soiirTCg4KsyxumhacQu4wRanZ/6RnLBzc2bCmlTJHCbHHmhS
+         iM8ZQ6XOwRrJzUr6cr3qh/63wzxQe+TohQL+hIIgr/lNyA30yaaF9euFewFTaAelf5Ly
+         fFDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ck2cS5Co2ohdSAnqbCK/kYj20HwA2+7c5xl/tbktqLw=;
+        b=C4QD54mBasfnftKiyPnKMeh661Yh7JJCAoK5g/r+p50pkep21oD8LGCvX1WXTtSORM
+         Q273E2txWi4shWkHhzq8oKuINEnEnlEyA5pGQ5lzmJOtajdSZQqpDKdb6OlXyQqA5ReM
+         0cZZrrzs1DyayePIdVtr3TWmPoL0nh43y0E5GoHWAU7pCaPPzoqf+7W+SYgVHvZ41nCh
+         swJ7OC3QJdSQ9QtCIHsV6P3vx3BrUJ2xNlftvUQnM6O79GjwTtDjnHSkeC+ixp5UqYg9
+         a/tdRKHYFDBpj1zeX05C1Ta8QVJty0FapSXCn3KbXD+smjl/WQ3TvM6kWDAipY9UczzP
+         q6Kg==
+X-Gm-Message-State: AKwxytdEkSigWKooPoLPUHOmX2mh6vSWfkfvV8+pmCCG5LyksWgt1zyL
+        eC1YcupLmnq4wFLUS2PwVu4VCMlkEXbMa0IRlkI=
+X-Google-Smtp-Source: AH8x226F11CZ7GRgoGo/lZBF4DRvgBz0F1YXhAUvOpCV22cTtVD/NkZ3QLe4JY25sFDxIS4D89k17GUYUC7rYH5GVTM=
+X-Received: by 10.157.12.142 with SMTP id b14mr13637753otb.226.1517359768295;
+ Tue, 30 Jan 2018 16:49:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-01-30_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1801300286
+Received: by 10.74.102.205 with HTTP; Tue, 30 Jan 2018 16:48:57 -0800 (PST)
+In-Reply-To: <CAGZ79kZ-hZzKtv05d5_7O2ndNZvGkU7qYnrn52zwpqSTqCiygQ@mail.gmail.com>
+References: <20180129223728.30569-1-bmwill@google.com> <CACsJy8Cm8HsopKisiJkwtPyfv-O6Ei3waew6CsKLXzKv7=TriQ@mail.gmail.com>
+ <xmqq7erzrn3f.fsf@gitster-ct.c.googlers.com> <CAGZ79kZ-hZzKtv05d5_7O2ndNZvGkU7qYnrn52zwpqSTqCiygQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 31 Jan 2018 07:48:57 +0700
+Message-ID: <CACsJy8C98HD59DGgqyWtZzj2RVqFe9GN=810A6fs2mMYBh_53Q@mail.gmail.com>
+Subject: Re: [PATCH 00/37] removal of some c++ keywords
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t6043-merge-rename-directories.sh | 396 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 396 insertions(+)
+On Wed, Jan 31, 2018 at 6:01 AM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jan 30, 2018 at 2:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Duy Nguyen <pclouds@gmail.com> writes:
+>>
+>>> Is it simpler (though hacky) to just  do
+>>>
+>>> #ifdef __cplusplus
+>>> #define new not_new
+>>> #define try really_try
+>>> ...
+>>>
+>>> somewhere in git-compat-util.h?
+>>
+>> Very tempting, especially given that your approach automatically
+>> would cover topics in flight without any merge conflict ;-)
+>>
+>> I agree that it is hacky and somewhat ugly, but the hackiness
+>> somehow does not bother me too much in this case; perhaps because
+>> attempting to use a C++ compiler may already be hacky in the first
+>> place?
+>>
+>> It probably depends on the reason why we are doing this topic.  If a
+>> report about our source code coming from the C++ oriented tool cite
+>> the symbol names seen by machines, then the "hacky" approach will
+>> give us "not_new" where Brandon's patch may give us "new_oid", or
+>> whatever symbol that is more appropriate for the context it appears
+>> than such an automated cute name.
 
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index fbeb8f4316..68bd86f555 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -1508,4 +1508,400 @@ test_expect_success '6e-check: Add/add from one s=
-ide' '
- #   side of history is the one doing the renaming.
- ########################################################################=
-###
-=20
-+
-+########################################################################=
-###
-+# SECTION 7: More involved Edge/Corner cases
-+#
-+# The ruleset we have generated in the above sections seems to provide
-+# well-defined merges.  But can we find edge/corner cases that either (a=
-)
-+# are harder for users to understand, or (b) have a resolution that is
-+# non-intuitive or suboptimal?
-+#
-+# The testcases in this section dive into cases that I've tried to craft=
- in
-+# a way to find some that might be surprising to users or difficult for
-+# them to understand (the next section will look at non-intuitive or
-+# suboptimal merge results).  Some of the testcases are similar to ones
-+# from past sections, but have been simplified to try to highlight error
-+# messages using a "modified" path (due to the directory rename).  Are
-+# users okay with these?
-+#
-+# In my opinion, testcases that are difficult to understand from this
-+# section is due to difficulty in the testcase rather than the directory
-+# renaming (similar to how t6042 and t6036 have difficult resolutions du=
-e
-+# to the problem setup itself being complex).  And I don't think the
-+# error messages are a problem.
-+#
-+# On the other hand, the testcases in section 8 worry me slightly more..=
-.
-+########################################################################=
-###
-+
-+# Testcase 7a, rename-dir vs. rename-dir (NOT split evenly) PLUS add-oth=
-er-file
-+#   Commit O: z/{b,c}
-+#   Commit A: y/{b,c}
-+#   Commit B: w/b, x/c, z/d
-+#   Expected: y/d, CONFLICT(rename/rename for both z/b and z/c)
-+#   NOTE: There's a rename of z/ here, y/ has more renames, so z/d -> y/=
-d.
-+
-+test_expect_success '7a-setup: rename-dir vs. rename-dir (NOT split even=
-ly) PLUS add-other-file' '
-+	test_create_repo 7a &&
-+	(
-+		cd 7a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		mkdir w &&
-+		mkdir x &&
-+		git mv z/b w/ &&
-+		git mv z/c x/ &&
-+		echo d > z/d &&
-+		git add z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7a-check: rename-dir vs. rename-dir (NOT split even=
-ly) PLUS add-other-file' '
-+	(
-+		cd 7a &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*z/b.*y/b.*w/b" out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*z/c.*y/c.*x/c" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 7 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 6 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
-+
-+		git rev-parse >actual \
-+			:1:z/b :2:y/b :3:w/b :1:z/c :2:y/c :3:x/c :0:y/d &&
-+		git rev-parse >expect \
-+			 O:z/b  O:z/b  O:z/b  O:z/c  O:z/c  O:z/c  B:z/d &&
-+		test_cmp expect actual &&
-+
-+		git hash-object >actual \
-+			y/b   w/b   y/c   x/c &&
-+		git rev-parse >expect \
-+			O:z/b O:z/b O:z/c O:z/c &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7b, rename/rename(2to1), but only due to transitive rename
-+#   (Related to testcase 1d)
-+#   Commit O: z/{b,c},     x/d_1, w/d_2
-+#   Commit A: y/{b,c,d_2}, x/d_1
-+#   Commit B: z/{b,c,d_1},        w/d_2
-+#   Expected: y/{b,c}, CONFLICT(rename/rename(2to1): x/d_1, w/d_2 -> y_d=
-)
-+
-+test_expect_success '7b-setup: rename/rename(2to1), but only due to tran=
-sitive rename' '
-+	test_create_repo 7b &&
-+	(
-+		cd 7b &&
-+
-+		mkdir z &&
-+		mkdir x &&
-+		mkdir w &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d1 > x/d &&
-+		echo d2 > w/d &&
-+		git add z x w &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git mv w/d y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7b-check: rename/rename(2to1), but only due to tran=
-sitive rename' '
-+	(
-+		cd 7b &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 4 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 2 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 3 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :2:y/d :3:y/d &&
-+		git rev-parse >expect \
-+			 O:z/b  O:z/c  O:w/d  O:x/d &&
-+		test_cmp expect actual &&
-+
-+		test_path_is_missing y/d &&
-+		test_path_is_file y/d~HEAD &&
-+		test_path_is_file y/d~B^0 &&
-+
-+		git hash-object >actual \
-+			y/d~HEAD y/d~B^0 &&
-+		git rev-parse >expect \
-+			O:w/d    O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7c, rename/rename(1to...2or3); transitive rename may add comp=
-lexity
-+#   (Related to testcases 3b and 5c)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: y/{b,c}, w/d
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(x/d -> w/d vs. y/d)
-+#   NOTE: z/ was renamed to y/ so we do want to report
-+#         neither CONFLICT(x/d -> w/d vs. z/d)
-+#         nor CONFLiCT x/d -> w/d vs. y/d vs. z/d)
-+
-+test_expect_success '7c-setup: rename/rename(1to...2or3); transitive ren=
-ame may add complexity' '
-+	test_create_repo 7c &&
-+	(
-+		cd 7c &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git mv x w &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7c-check: rename/rename(1to...2or3); transitive ren=
-ame may add complexity' '
-+	(
-+		cd 7c &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/rename).*x/d.*w/d.*y/d" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 5 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :1:x/d :2:w/d :3:y/d &&
-+		git rev-parse >expect \
-+			 O:z/b  O:z/c  O:x/d  O:x/d  O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7d, transitive rename involved in rename/delete; how is it re=
-ported?
-+#   (Related somewhat to testcases 5b and 8d)
-+#   Commit O: z/{b,c}, x/d
-+#   Commit A: y/{b,c}
-+#   Commit B: z/{b,c,d}
-+#   Expected: y/{b,c}, CONFLICT(delete x/d vs rename to y/d)
-+#   NOTE: z->y so NOT CONFLICT(delete x/d vs rename to z/d)
-+
-+test_expect_success '7d-setup: transitive rename involved in rename/dele=
-te; how is it reported?' '
-+	test_create_repo 7d &&
-+	(
-+		cd 7d &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git rm -rf x &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7d-check: transitive rename involved in rename/dele=
-te; how is it reported?' '
-+	(
-+		cd 7d &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 1 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 1 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :0:y/c :3:y/d &&
-+		git rev-parse >expect \
-+			 O:z/b  O:z/c  O:x/d &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 7e, transitive rename in rename/delete AND dirs in the way
-+#   (Very similar to 'both rename source and destination involved in D/F=
- conflict' from t6022-merge-rename.sh)
-+#   (Also related to testcases 9c and 9d)
-+#   Commit O: z/{b,c},     x/d_1
-+#   Commit A: y/{b,c,d/g}, x/d/f
-+#   Commit B: z/{b,c,d_1}
-+#   Expected: rename/delete(x/d_1->y/d_1 vs. None) + D/F conflict on y/d
-+#             y/{b,c,d/g}, y/d_1~B^0, x/d/f
-+
-+#   NOTE: The main path of interest here is d_1 and where it ends up, bu=
-t
-+#         this is actually a case that has two potential directory renam=
-es
-+#         involved and D/F conflict(s), so it makes sense to walk throug=
-h
-+#         each step.
-+#
-+#         Commit A renames z/ -> y/.  Thus everything that B adds to z/
-+#         should be instead moved to y/.  This gives us the D/F conflict=
- on
-+#         y/d because x/d_1 -> z/d_1 -> y/d_1 conflicts with y/d/g.
-+#
-+#         Further, commit B renames x/ -> z/, thus everything A adds to =
-x/
-+#         should instead be moved to z/...BUT we removed z/ and renamed =
-it
-+#         to y/, so maybe everything should move not from x/ to z/, but
-+#         from x/ to z/ to y/.  Doing so might make sense from the logic=
- so
-+#         far, but note that commit A had both an x/ and a y/; it did th=
-e
-+#         renaming of z/ to y/ and created x/d/f and it clearly made the=
-se
-+#         things separate, so it doesn't make much sense to push these
-+#         together.  Doing so is what I'd call a doubly transitive renam=
-e;
-+#         see testcases 9c and 9d for further discussion of this issue a=
-nd
-+#         how it's resolved.
-+
-+test_expect_success '7e-setup: transitive rename in rename/delete AND di=
-rs in the way' '
-+	test_create_repo 7e &&
-+	(
-+		cd 7e &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		mkdir x &&
-+		echo d1 >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z y &&
-+		git rm x/d &&
-+		mkdir -p x/d &&
-+		mkdir -p y/d &&
-+		echo f >x/d/f &&
-+		echo g >y/d/g &&
-+		git add x/d/f y/d/g &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/d z/ &&
-+		rmdir x &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '7e-check: transitive rename in rename/delete AND di=
-rs in the way' '
-+	(
-+		cd 7e &&
-+
-+		git checkout A^0 &&
-+
-+		test_must_fail git merge -s recursive B^0 >out &&
-+		test_i18ngrep "CONFLICT (rename/delete).*x/d.*y/d" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 5 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 1 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 2 out &&
-+
-+		git rev-parse >actual \
-+			:0:x/d/f :0:y/d/g :0:y/b :0:y/c :3:y/d &&
-+		git rev-parse >expect \
-+			 A:x/d/f  A:y/d/g  O:z/b  O:z/c  O:x/d &&
-+		test_cmp expect actual &&
-+
-+		git hash-object y/d~B^0 >actual &&
-+		git rev-parse O:x/d >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
---=20
-2.16.1.106.gf69932adfe
+Well. the world after post processing is always ugly. But we could try
+"#define new new__" to get the not so ugly names. new_oid is
+definitely better regardless of c/c++ though so I could see that as a
+good cleanup.
 
+>>> Do we use any C features that are incompatible with C++? (or do we not
+>>> need to care?)
+>>
+>> Good question.
+>
+> implicit casts from void?
+> e.g. xmalloc returns a void pointer, not the type requested.
+> https://embeddedartistry.com/blog/2017/2/28/c-casting-or-oh-no-we-broke-malloc
+
+That causes lots of warnings but not errors (I bit the bullet and
+tried to compile git with g++). The next set of changes would be to
+reorganize nested enum/struct declarations. Even if nested, C
+considers these flat while C++ sees them in namespaces. There's some
+warnings about confusion with the new cool feature string literals,
+but that's easy to fix.
+
+There's also C99 designator in builtin/clean.c (I thought we avoided
+C99, I can start using this specific feature more now :D)
+
+I was stuck at the thread_local thing in index-pack.c and gave up. So
+I don't know what else we would need to change.
+-- 
+Duy
