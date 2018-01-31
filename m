@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D91041F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 11:06:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D8911F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 11:06:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753535AbeAaLGs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 06:06:48 -0500
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:41374 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752373AbeAaLGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 06:06:47 -0500
-Received: by mail-pf0-f193.google.com with SMTP id c6so12240203pfi.8
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:46 -0800 (PST)
+        id S1753586AbeAaLGx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 06:06:53 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33041 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753538AbeAaLGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 06:06:51 -0500
+Received: by mail-pf0-f194.google.com with SMTP id t5so12252584pfi.0
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bWzxoulP/5C35Y/ZQepwP58pjjRpjGPo8XOw4MhIVg8=;
-        b=O4XxDcBJ6MS9DKo3gbNEK9f7DQr5hUTAYszjeQU6mdlXm2xVtrOWuWfgKhb0R37TxE
-         4/0vKGxBDkf9K2dHHzSY19769mgoXe9rA0eMVKYirrME+BX+FJwAH0MXVCG1H78nnbVF
-         m/xd1Uhck2yPBTK6LKbHrnzGjYZjzUu7LoMMPursRTlZt0C1kHYbjXY/RGkIsbN2/Caa
-         4nIssGOVq3D+zzFrliZ02pTGRW60gMmuvosi+ctxU5Vr1q2QoohNa2OYUQaZiGzO+xgb
-         5juQ8BS2xbey5ySKXW4JT5muVsyegiI9a6yEyaY7asUHTbD2yY7CrD5MrBVCs/SGrYBs
-         VFqQ==
+        bh=9esBVIReiuWzujE+FAJjIBaxo3B0hen5kh+q3ocQSxo=;
+        b=L/uQMxBXmppTgdNV5il56Yskl4nvEB9vHsh12J2P2xXzPC05kUUH7tznoI3VGwCFJY
+         ovU1l9NL5CLZ/ywibM1Jibk/LV9u/RCmdWUuYO8KNXsJQDqXf+L17csRFNQzETAShhaF
+         xaxMIJB68wPWks4XW6k/txbVcCUEQQqJlvroNke0cNISwu29sUjIKhrC2YGHINO7Ct/L
+         8my7Cf27y42pPrAuo0rakpdtejONZcaKXqlS6QiiyrxADz6PjqRi3PRNZsa71MJL5ias
+         CXSJH9aRplgatUe7fWahc6+dKPDrcNP7cw9Mx8rkNT7DsurJFQuj/8Av/2qa6LPJG6Pb
+         NFLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bWzxoulP/5C35Y/ZQepwP58pjjRpjGPo8XOw4MhIVg8=;
-        b=LSl4PNBT1Pr0KNb2VsxIAjgsjfFiWWP023swlaNuwkqQqhm/DOvxT4NqyHAs8SqCfX
-         aCx2MJe4C0ijaX9BW3k9z2etIZalJiATPrM11vfgIqkNL0KbYaK1YpbvQFjZ0b6/tAGM
-         oNoYXEqYDaN4eKCjehC1K5sw4J9s4ZrD1Sl6fOdul1DLUL0ZZyyC5+c4almPBy5YykOk
-         cv/2MsSVYQTdkvpdJ5nRtQgSOeSSPyasbVE1nT9E3WtVtn0+emmMU+5cSYvdWD4ku7sG
-         RxK5NMUH4T7rDC7grWYdeW6vXUGebxRAxSyzd96enCf5jEj5JcUkxhBRcp4OskmIsfuC
-         JiKA==
-X-Gm-Message-State: AKwxytcuWTMU514dqcDoIBoZK3Lgrg3J9rYqFvAvwet3+gqiMKU9BzaC
-        tkd31+XaYxPQFlAs722YA8n5ew==
-X-Google-Smtp-Source: AH8x2254Yp/Qq6puerg1Y+ggQ/h6tmAsb4OFc0HnUrGFIGoBDkhM7dAxLiXd8YNgKfp6eR3hdfXxKg==
-X-Received: by 10.99.123.8 with SMTP id w8mr26114882pgc.201.1517396806261;
-        Wed, 31 Jan 2018 03:06:46 -0800 (PST)
+        bh=9esBVIReiuWzujE+FAJjIBaxo3B0hen5kh+q3ocQSxo=;
+        b=he/BhCCf+5XZHVRe933pdhKfo+PyxOjmwTtkpg1gw8/tbtDte3wKrMB7Sx7yfI088X
+         TA261lLfx45UaTPVMZYr/CF9ef8uEjNUY2psL+0mgdW7RRLz1DSuJtAjovMPvAKxB73V
+         0bZE8qHKVgt/Uo/U+mnIxNL8EuTrqPVn9aHyrtL3XCmd2yJ/n5F9oCXMVXVMBh4+/ndA
+         5xYYeHAyQnyun7ReCw/tqDPgGGAMZOQqYgCGt/KIcwUrIhxKG6ilTAQdbZvoLU6t0iZf
+         eSjj99oflzhIopQ/UO2jxzCdz6hnm8Ae9+20DXO46P3oz2V93FI6WE+0iSjQzcQqwvFB
+         mgvA==
+X-Gm-Message-State: AKwxyteh1F4LtlI7iZ2WxDnW3XEYpdggZtyjASF5wIFCLyn2XIjH1j53
+        B9Ky2cG/CMia6AGHPvSJQYISWA==
+X-Google-Smtp-Source: AH8x226nec2l3N9k/rsmNqa0AVv/u991H2+VeFw2Yqg0J5yc6IeKsUKsF5bmu0PJuZ4SM2Ua0C6mpg==
+X-Received: by 10.98.41.68 with SMTP id p65mr11322740pfp.86.1517396810489;
+        Wed, 31 Jan 2018 03:06:50 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id m24sm44414651pfj.184.2018.01.31.03.06.43
+        by smtp.gmail.com with ESMTPSA id p25sm38517475pfj.29.2018.01.31.03.06.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 03:06:45 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:42 +0700
+        Wed, 31 Jan 2018 03:06:50 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:46 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 10/41] completion: use __gitcomp_builtin in _git_cherry_pick
-Date:   Wed, 31 Jan 2018 18:05:16 +0700
-Message-Id: <20180131110547.20577-11-pclouds@gmail.com>
+Subject: [PATCH v2 11/41] completion: use __gitcomp_builtin in _git_clean
+Date:   Wed, 31 Jan 2018 18:05:17 +0700
+Message-Id: <20180131110547.20577-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180131110547.20577-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -69,33 +69,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new completable options are:
-
---allow-empty
---allow-empty-message
---ff
---gpg-sign
---keep-redundant-commits
---strategy-option
+The new completable options are --exclude and --interactive
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
+ builtin/clean.c                        | 2 +-
  contrib/completion/git-completion.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 3c4ca9a2ff..fad533a0a7 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -909,7 +909,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("do not print names of files removed")),
+ 		OPT__DRY_RUN(&dry_run, N_("dry run")),
+-		OPT__FORCE(&force, N_("force"), 0),
++		OPT__FORCE(&force, N_("force"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
+ 		OPT_BOOL('d', NULL, &remove_directories,
+ 				N_("remove whole directories")),
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 61880275ed..1b2e510cf6 100644
+index 1b2e510cf6..c0f6f76c3c 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1281,7 +1281,7 @@ _git_cherry_pick ()
- 	fi
+@@ -1293,7 +1293,7 @@ _git_clean ()
+ {
  	case "$cur" in
  	--*)
--		__gitcomp "--edit --no-commit --signoff --strategy= --mainline"
-+		__gitcomp_builtin cherry-pick
+-		__gitcomp "--dry-run --quiet"
++		__gitcomp_builtin clean
+ 		return
  		;;
- 	*)
- 		__git_complete_refs
+ 	esac
 -- 
 2.16.1.205.g271f633410
 
