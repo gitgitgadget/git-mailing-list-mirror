@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D74B61F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 20:42:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D99B91F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 21:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751634AbeAaUm1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 15:42:27 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:44267 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751190AbeAaUm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 15:42:26 -0500
-Received: by mail-qk0-f177.google.com with SMTP id n188so5167032qkn.11
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 12:42:26 -0800 (PST)
+        id S1753022AbeAaVEt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 16:04:49 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:37071 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753069AbeAaVEm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 16:04:42 -0500
+Received: by mail-qt0-f172.google.com with SMTP id d54so23706148qtd.4
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 13:04:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=BJ+pbCUoRNwsopTLMWmNGBYedRYZX4WkMt+TAAfWcps=;
-        b=E72G6lemyX7BensBljKM0q7gu1+O0zRlpPhwidT6mQCQUhjTt5Qk203aQHQXEVescU
-         iBgDf29+/z4Ghu0y7Uu7buIz9t5yrtiLdLVVzSh9tD97v9ifTCoOiJxy6a3x5Ex3xtBy
-         8TiQfnk9O38CsZy8Qy5KFnBCcJiyYyUk+WhQlXSo/icN+K8qokfcg8cI1Xu0VO59M3tO
-         v6NbO7W0AVQ7BuWf7xXghCffV+o5hv9gP3lGRrpSjWPOL7h6conDxmmqxak4UrD7f3uN
-         h/mnUFZQmssb8RJNv1qtRP8+ju39CorzXJBix9EPIRDzXFa6zKuF3CDskjZIYeowisIo
-         +m8Q==
+        bh=jUqXSalKpz7WStcXUcSrno07iHrVP0t/DLTKuty3O8c=;
+        b=q08TD6zMHZRYX8bLBXTOJfo111wTBD0Y/a0+3LhZ2ci7A4Jt7Rfm2DWrG5xPGxeuqg
+         IF2OMW+aGx+qX1P9lai6ivFuXaEoqdEKeDyLy7JVBDSGmLAKa8eFt9PxKGFaz9/v8IQr
+         2sd/Up5lyEwO+6xgkz3gZgCWS00v7qN/xZLlRosy3Bx7fMBnlOZSnWniKBEiR5puJZ6r
+         959kaN7MaMQH2u3SlRZ0ZhZSNuE9h6u9U3NjFoUTQwtaE8zynReFZc6E6kwcXTttTs8q
+         eelh6+cXgkSUHGk6KFVAgvoS7RtCxcbaQ28OA+OXywWLUJwP8IsQc9YN5ozCdKdO7kY7
+         zAhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=BJ+pbCUoRNwsopTLMWmNGBYedRYZX4WkMt+TAAfWcps=;
-        b=iL8Sor9VHknq1Vf9gbEtEY+SUKdDCX8gTBhzX9rvmC7bUEKzyQo4Ar0gUjNJ4eUVRZ
-         I72fncUo3G2e2FMZkD/56XOICmeWxglrQzW7jmqada5ZRcoMvhBUDEMVdNxENiwmP8tR
-         b8X+MEYMav7VvG7PEuxLnAq6UewGbufqVLJxkm2l9Dfp5EmVTzaFA2kB0Oa/2kzEwjIc
-         EIyzRemwt899xzDrGw0LktluRtDGuESuGuj5cU8GjerRb2MVdd2mXBI49M3nwnV3Q7kE
-         EOq+ZmR199Bt5RiKh6Fa2HnylAZZNploGJvL9PVbDrjKSK0z+sEr3YaPNmaTohAD07ba
-         spww==
-X-Gm-Message-State: AKwxytei2WwvcjOxVOQYTpYRMNl2+GO1tY34gbveBq7wsG8jt5L+AM1N
-        xQJ4bINUxbP0qYJsuHU4qYfeDaT/+NTFIHEebD4=
-X-Google-Smtp-Source: AH8x224lTngmDJHdYbGeSu2Ekq3JYbOSb+4xaLmHYmeh/pbUUPc27lHXRfmiP3tdJxxzWsA266YMLeFBYHjWOUglnEE=
-X-Received: by 10.55.143.193 with SMTP id r184mr47252963qkd.164.1517431346056;
- Wed, 31 Jan 2018 12:42:26 -0800 (PST)
+        bh=jUqXSalKpz7WStcXUcSrno07iHrVP0t/DLTKuty3O8c=;
+        b=nuUC93Cpdj1Plwou5eeB45Rfij6/TaZlVuCDDrifVHcbK6ElcZEk+loGY2zc4hh3wZ
+         9LxId0OJAjWpuwgtcoFh0WV72wCsY7X3peHh0IBqWxe1k6j8Nldutrn0+3H1+pYF9TDG
+         +vLnJ1enQeGd36B2D6FHX/jighNwzqNPC3j/J9E1nPepycTTiKEdCbP3j+VcsVrO4h5J
+         izV8DtiBRJ1Myeq7f2GxfzBgUoVLTQhm/0SQGJS8i7PkQabbO150e4F4FYrSWyB4D1ps
+         Vj29ZQLfBOkoupOsLRQa+GcHBLvCVmyNCrs6Z5Os1fVIuTeQb2u02GlJ6MOyZXb+IAOn
+         U5rw==
+X-Gm-Message-State: AKwxytccwOuac4C9GZYz/8mozHj+BX4XiBUXm+NJjB8RzDHI7+kvwFwB
+        CgvEf58ThybTsAXMMAxC0OvHjWHFoWuePU9bYSk=
+X-Google-Smtp-Source: AH8x227y6Te+Ja2cyUGGU6A3A/mRQuAfl6HtI8iUGn89ElEZ8O0IkvZI4YNQqYXM4U3TM0k9g7tumB5hRUcEsMgMET8=
+X-Received: by 10.200.27.91 with SMTP id p27mr13752414qtk.254.1517432681135;
+ Wed, 31 Jan 2018 13:04:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Wed, 31 Jan 2018 12:42:25 -0800 (PST)
-In-Reply-To: <20180131110547.20577-14-pclouds@gmail.com>
-References: <20180131110547.20577-1-pclouds@gmail.com> <20180131110547.20577-14-pclouds@gmail.com>
+Received: by 10.12.175.239 with HTTP; Wed, 31 Jan 2018 13:04:40 -0800 (PST)
+In-Reply-To: <20180131110547.20577-2-pclouds@gmail.com>
+References: <20180131110547.20577-1-pclouds@gmail.com> <20180131110547.20577-2-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 31 Jan 2018 15:42:25 -0500
-X-Google-Sender-Auth: d6vxD5bX_FjpXV2fZRdDrWunqDs
-Message-ID: <CAPig+cSq9T=r6uEqwxtaCtD1RQkeiavF7M24AvM=fo4nYhrhag@mail.gmail.com>
-Subject: Re: [PATCH v2 13/41] completion: use __gitcomp_builtin in _git_commit
+Date:   Wed, 31 Jan 2018 16:04:40 -0500
+X-Google-Sender-Auth: gJK7UA_Z_d-fvjQzqbRwJok0OKc
+Message-ID: <CAPig+cT5GkhFJ9XFDSirGjfoji4qUCM8LA6abdRsaT=g3prznQ@mail.gmail.com>
+Subject: Re: [PATCH v2 01/41] parse-options: support --git-completion-helper
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
@@ -66,21 +66,30 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jan 31, 2018 at 6:05 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
 <pclouds@gmail.com> wrote:
-> The new comletable options are:
-
-s/comletable/completable/
-
-> --branch
-> --gpg-sign
-> --long
-> --no-post-rewrite
-> --null
-> --porcelain
-> --status
+> This option is designed to be used by git-completion.bash. For many
+> simple cases, what we do in there is usually
 >
-> --allow-empty is no longer completable because it's a hidden option
-> since 4741edd549 (Remove deprecated OPTION_BOOLEAN for parsing arguments
-> - 2013-08-03)
+>     __gitcomp "lots of completion options"
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
+> which has to be manually updated when a new user-visible option is
+> added. With support from parse-options, we can write
+>
+>     __gitcomp "$(git command --git-completion-helper)"
+>
+> and get that list directly from the parser for free. Dangerous/Unpopular
+> options could be hidden with the new "NOCOMPLETE" flag.
+
+I wonder if this option should be named DANGEROUS rather than
+NOCOMPLETE to better reflect its intention. The reason I ask is that
+it is easy to imagine git-completion.bash some day growing a new
+configuration option to allow people to complete these "dangerous"
+options, as well, rather than us imposing, with no escape hatch, our
+idea of what should and should not complete.
+
+It's not uncommon for "bug reports" to be sent to the list stating
+that such-and-such option (say, --force) does not autocomplete. Our
+stock answer is "oh, that's a dangerous option, so you'll have to type
+it manually". If git-completion.bash gains new configuration to allow
+dangerous options, then our answer can become "oh, that's a dangerous
+option, if you really want it to complete, then enable
+GIT_COMPLETION_DANGEROUS" (or whatever).
