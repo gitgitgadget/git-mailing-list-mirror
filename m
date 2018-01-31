@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5F71F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 11:08:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50AAB1F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 11:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753045AbeAaLI2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 06:08:28 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:46675 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752337AbeAaLI0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 06:08:26 -0500
-Received: by mail-pg0-f67.google.com with SMTP id s9so9750572pgq.13
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:08:26 -0800 (PST)
+        id S1753625AbeAaLIe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 06:08:34 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:45905 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753090AbeAaLIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 06:08:31 -0500
+Received: by mail-pf0-f195.google.com with SMTP id a88so12238743pfe.12
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:08:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Jkbmwn8eZZfdAcxbhJ+/tL+PHXUtUjzwkfpJzaMrQGA=;
-        b=Egupk1s4sAttzq+Tig8MxsmjU5dKaLGiAxHxdhI9cIp2X8kYWRFPcqNbshDbfVlw1R
-         CV1CSFH85ccsD0J0U0Dd0BS12e9qRxyEje0GApLyTYsP0UFoHErMOXKuiJDqpo4K5gsA
-         Asr2eaA/nZ/qCepyYltUgh9bqirANXulkv+tAYMkS8Tql1ixmi41hnUU3783+Qll/n+W
-         BvGauPEBCcbOyPa7Li0/akIGNzYFVZCbr37K+buAu7KGol6ZNY005JehCOhgzJ4sNvYK
-         Thcf+erLppM6tPfPz3tgL/Z/J+os41VeNAHTrXR19kSCADqIySSRihRcvfKDVKmX19T7
-         czOQ==
+        bh=5aLdQeGMKNtyn0mHL3PtXqB45EME3G/bdgYewW6AEn4=;
+        b=HbvSDPLaM8QCT7CTQQFh6TP0Ht5m2FeFxytrM1tW59EBy8Ns3FGjcOAQwjT13acOm2
+         ddT4qnRR1ukfuFp7A2RLc82MyBAIA7Q4RTmdDOwX5hALfIibJlJBFnUh9yDSBzsvvv6+
+         aFaxzWRBsJndF/MNj4B2/lP0FyBbVrdQTFilrbjr4kU4YzkfRvUKXUoZQeMvDKTHEjkI
+         ZtOr93zR6N/UEsNrB6oOCqX5mLHHPjEJCT0a8cXdUNA9wbKvb2AgIVpOd4hLCWJJ06s1
+         Vma1T8Z2jjqxRUw7eLsaikxOwmpU4tzuu3X2vmO7OjGkJobFUU5qvTO0iqW9IBjv7hdN
+         TDIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Jkbmwn8eZZfdAcxbhJ+/tL+PHXUtUjzwkfpJzaMrQGA=;
-        b=ez18TOM7GwvWehnn0NGWeDzinurZRYELjSa+6RHmIxfgVvPXHrnatRT5RzCsH+VLtZ
-         /kbRoK4dM/cjz/boOG7mSvGMxMisLh71i8gYyVLH0VUqRn37MAB+Xsd7fKm1CYPDweIu
-         pDzwQbFsxp5nD9u/M8eclEcd/SQhUWz1z65rOXqdtdERtWFRXFIkMio0EYdvbYIxOiZw
-         qMff47boVl+7UwYE0Njy+mB/4+KqASAd+7OmQuafy1OpyY3x9ya9mMk6uACfLHKJp6gY
-         GsO6W6ptuAoupV+Lbvear+Go4Phq3YpMpJrvifTRzCMwpWD+J8qeHIpfiCVW9XrE47Yv
-         wxzA==
-X-Gm-Message-State: AKwxytexBtSiVGpg/WRk0eFVM5zmzJg4jPDHogzYxIC3paAmzODASVIY
-        qyzyabdmZW+nXy0R2slCwUeHeA==
-X-Google-Smtp-Source: AH8x227DgO9DVYu4oUsSzgKsQTfh5G3BtoxGkTbspYUyCwDMIdUpI2Rem4jSZ3aO74fWzeUxYzqkLw==
-X-Received: by 10.98.63.93 with SMTP id m90mr33295895pfa.231.1517396906068;
-        Wed, 31 Jan 2018 03:08:26 -0800 (PST)
+        bh=5aLdQeGMKNtyn0mHL3PtXqB45EME3G/bdgYewW6AEn4=;
+        b=dj5YXf9kd/ajlDyjGkQfNltsuaH1j/do4icETRHXUgzxQbPcNRMvZwhZVOCc+tDzIk
+         6vOVhj108x0awwe/o+yG03QhaINqxLCe0gmz4jp7FzjTwtt11urJVc5fr9KsGHnT00xi
+         3EAYIwZbdc5+nXXX4gm7vDJd4OBGKpNebbpnFPT3Fu5Gna/SIFVdTFEmTbzBDjkpGoxe
+         amhQkvMIDD5GwiNrBsCIqv11TzSf5YoSP29YXHReyrOHHyq2Z4K+DuqBrCbaERxgUtYq
+         5h7z92g0qL2A+KdWvp1/BCjUF4SAGUtMt9lLbemL9kYzHXhcVhmZswixs+7E9xb3WakD
+         oJFw==
+X-Gm-Message-State: AKwxytfzeQc+HdTDj931ASekGlCCApZiZ3IRLf48czqLPNXvh9xnbDZ1
+        mBWsHVA/HT+8QHcj036RJG2qdg==
+X-Google-Smtp-Source: AH8x227fGEshMrPCX9Uc1CY/qVwjKj1Rj7LKGP4yO6l1RaTEq3CXNvkn9MVHoCBZrFTimt2HRjtZ3g==
+X-Received: by 2002:a17:902:6c44:: with SMTP id h4-v6mr28657824pln.373.1517396910359;
+        Wed, 31 Jan 2018 03:08:30 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id p75sm43266811pfi.148.2018.01.31.03.08.23
+        by smtp.gmail.com with ESMTPSA id u26sm44035854pfk.126.2018.01.31.03.08.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 03:08:25 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:08:22 +0700
+        Wed, 31 Jan 2018 03:08:29 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:08:26 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 33/41] remote: force completing --mirror= instead of --mirror
-Date:   Wed, 31 Jan 2018 18:05:39 +0700
-Message-Id: <20180131110547.20577-34-pclouds@gmail.com>
+Subject: [PATCH v2 34/41] completion: use __gitcomp_builtin in _git_replace
+Date:   Wed, 31 Jan 2018 18:05:40 +0700
+Message-Id: <20180131110547.20577-35-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180131110547.20577-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -69,70 +69,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git remote --mirror" is a special case. Technically it is possible to
-specify --mirror without any argument. But we will get a "dangerous,
-deprecated!" warning in that case.
-
-This new parse-opt flag allows --git-completion-helper to always
-complete --mirror=, ignoring the dangerous use case.
+The new completable option is --raw.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/remote.c | 2 +-
- parse-options.c  | 2 ++
- parse-options.h  | 6 +++++-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ builtin/replace.c                      | 3 ++-
+ contrib/completion/git-completion.bash | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d95bf904c3..fce9e5c0f6 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -168,7 +168,7 @@ static int add(int argc, const char **argv)
- 		OPT_STRING('m', "master", &master, N_("branch"), N_("master branch")),
- 		{ OPTION_CALLBACK, 0, "mirror", &mirror, N_("push|fetch"),
- 			N_("set up remote as a mirror to push to or fetch from"),
--			PARSE_OPT_OPTARG, parse_mirror_opt },
-+			PARSE_OPT_OPTARG | PARSE_OPT_COMP_ARG, parse_mirror_opt },
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 10078ae371..0c1d8e1b08 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -439,7 +439,8 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
+ 		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
+-		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
++		OPT_BOOL_F('f', "force", &force, N_("replace the ref if it exists"),
++			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "raw", &raw, N_("do not pretty-print contents for --edit")),
+ 		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
  		OPT_END()
- 	};
- 
-diff --git a/parse-options.c b/parse-options.c
-index 29f4defdd6..979577ba2c 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -459,6 +459,8 @@ static int show_gitcomp(struct parse_opt_ctx_t *ctx,
- 		default:
- 			break;
- 		}
-+		if (opts->flags & PARSE_OPT_COMP_ARG)
-+			suffix = "=";
- 		printf(" --%s%s", opts->long_name, suffix);
- 	}
- 	fputc('\n', stdout);
-diff --git a/parse-options.h b/parse-options.h
-index fa75df17b4..f63151fbda 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -39,7 +39,8 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_NODASH = 32,
- 	PARSE_OPT_LITERAL_ARGHELP = 64,
- 	PARSE_OPT_SHELL_EVAL = 256,
--	PARSE_OPT_NOCOMPLETE = 512
-+	PARSE_OPT_NOCOMPLETE = 512,
-+	PARSE_OPT_COMP_ARG = 1024
- };
- 
- struct option;
-@@ -92,6 +93,9 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *				Useful for options with multiple parameters.
-  *   PARSE_OPT_NOCOMPLETE: by default all visible options are completable
-  *			   git-completion.bash. This option suppresses that.
-+ *   PARSE_OPT_COMP_ARG: this option forces to git-completion.bash to
-+ *			 complete an option as --name= not --name even if
-+ *			 the option takes optional argument.
-  *
-  * `callback`::
-  *   pointer to the callback to use for OPTION_CALLBACK or
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 7431ffc750..2f3f11451d 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2647,7 +2647,7 @@ _git_replace ()
+ {
+ 	case "$cur" in
+ 	--*)
+-		__gitcomp "--edit --graft --format= --list --delete"
++		__gitcomp_builtin replace
+ 		return
+ 		;;
+ 	esac
 -- 
 2.16.1.205.g271f633410
 
