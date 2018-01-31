@@ -2,76 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0E31F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 02:22:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B54221F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 06:39:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751842AbeAaCWw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 Jan 2018 21:22:52 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38276 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753146AbeAaCWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 Jan 2018 21:22:51 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 141so4902095wme.3
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 18:22:50 -0800 (PST)
+        id S1752492AbeAaGjx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 01:39:53 -0500
+Received: from mail-qk0-f175.google.com ([209.85.220.175]:44326 "EHLO
+        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751454AbeAaGjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 01:39:52 -0500
+Received: by mail-qk0-f175.google.com with SMTP id n188so2046459qkn.11
+        for <git@vger.kernel.org>; Tue, 30 Jan 2018 22:39:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5m7T1Hu3LmIBYquZCwl7nEG9imsHzkogUUULwGUCl24=;
-        b=aKu9QMPnhK79wkUpd4Gxmp3m+2cG7TMz8++tmsgZB+bTHIYCQddLxpj0OpI6YOVSp1
-         A2eULbDXLpauaJZMICtHwyVEtiTbZnLhO/ndQK1EJmgkQsI05VnuW1MJ2AdZcmAymXX+
-         0CrkLdCCffsvWbkMeS82XVcQjRNIEjJW7klLX/49g12ExIgY9jo2hHrcNcyjw9WowHrw
-         Alo5EeC0z/Fm43uSVV++8+V9Co0+dm0uJ9kWFEgt2+qSBQ8fb95LenxR1pzsxdNNeD+x
-         CnLtPoeFqTbiTmB9PFESJu6MpsRtMzub8ShHowcib0314j+UjDrreElQqiO8DS30xmo5
-         zVvw==
+         :cc:content-transfer-encoding;
+        bh=nXaGZvUmUiYqHl1Fnds2s9K5We9cWT/pTH/CZnwRyNA=;
+        b=h/ZlG7d87n0JiF/KZnEhDOWOHHKfg4VhA5uC7zRFwGOmIVe3lP5H4+UoX425nQ2D90
+         vNu6l/WldnkW+sz9kluoG6MMsL867agFNEJEtd7Hz5yMc5O8RXNHx50myNA7mr/l3Zni
+         yIDY21firLmuUs98HDVedWcO2yeDTGM0tvIDsN3uRaJqJWd4yVp9PPyLGcJHCN/7eVUD
+         tXZFl3k70+tSAmEGI17n93t25+Vd7DzTbF/HQWAgKEzkx0a388A3Zd2fGWByUkV+EwIf
+         lFIH2od2jKrX1oLSVudedVjwVO4zErE0wyVMDQiTlkpL7CZBbvCxQEHIrLz7Tvk7dwgm
+         x3Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5m7T1Hu3LmIBYquZCwl7nEG9imsHzkogUUULwGUCl24=;
-        b=Bha4nmNFZBzKRapAmDxurs82C+l4iyXBttPuXkD8pqouQ1vlOvtdvuXNfWYPrcNg7v
-         cholD0WOJi6wb4D8OvqkaL36u4kF4PPHnMTl6JwR6dsbi7VirXiU6PyNQXa32QD6kSVk
-         IMQREs3DnNvsnc5X0tibiTlgirpgDNRI+ub5xfzmdjUNftCNBhh5Nq7CWFUQEuqacgXC
-         oiwFqC7OUaO/MdL/4yv0GnMzYKzLsAySAl/ixmhHi9LuVXtTt+W8RH14HMEfjWn0s/pK
-         moFJfe/IH9VHkPpb3QOt+spY7ydBLOP4UKP0Hg7D2seU8s7CJKRL49Zqnjq8SaOojBgj
-         OMoQ==
-X-Gm-Message-State: AKwxyteRmf10k3GcSEeig0ExadhCE9Mj7/PtuKI4u32rQFyd/0daVAOl
-        P03+un3528SyNRdBTTuKPMI/o67MJ0KUZX266TpgQ2K4
-X-Google-Smtp-Source: AH8x2273jL8/FD+nNCyE7a4pubnsI0av4we8mIQdyhxKiyo5QEpR6oClfk14Y7oC9QjzOX4IOjLuoU07i9/qIra8mS4=
-X-Received: by 10.28.167.5 with SMTP id q5mr24393350wme.90.1517365369984; Tue,
- 30 Jan 2018 18:22:49 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nXaGZvUmUiYqHl1Fnds2s9K5We9cWT/pTH/CZnwRyNA=;
+        b=flq8AauuVhvVEwK83i3t+ji32JRcgMG+8n7R0Fjc2lTTE4DyXsaCgSp/pmPs6iLnsj
+         JSoB75cZDd+ivOpEICjKVDqHZpR64emVCThyT4DhrE4hCxw08Qpxlc9tDAkGNMCm4Btx
+         yphtYWuOWlaGa6D1xwOaqYyqrAYTnYuSdPnCVPthVaVIRNiposOnk65AP71S5QLs3hOh
+         VTVgvTtT7fC6zvYVukwwZxlI/IjDjWay4ze5EiwU93lZcRn+Tg10WFkcOaITHNvhNtZi
+         0K7Xl6eKCuTyfGueKEhJtdDw4APD8yAtu/oNcgmV6twSW/kbA+9NcGWHF3aOJeyk1yWu
+         6MqQ==
+X-Gm-Message-State: AKwxytca3a1ukBPtbCO8Clfh6aZUZL3imYPubTuIR795quuQQL9XOrjm
+        aBpOkJuFYAuJnmI1FHOVqoM5D5AuSkdXzElNnfo=
+X-Google-Smtp-Source: AH8x224pnX4YcRKQjQADLT0/C0ndapdzoDO3L3u6xkz1jkrDa8iZMohPq1FEX2nOwN7I2AzFfnBQJZijUje+xinumKs=
+X-Received: by 10.55.104.17 with SMTP id d17mr44788504qkc.306.1517380791723;
+ Tue, 30 Jan 2018 22:39:51 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.223.182.69 with HTTP; Tue, 30 Jan 2018 18:22:49 -0800 (PST)
-In-Reply-To: <1517348383-112294-7-git-send-email-dstolee@microsoft.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com> <1517348383-112294-7-git-send-email-dstolee@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 30 Jan 2018 18:22:49 -0800
-Message-ID: <CAGZ79kbt3+MLvw-UsigNq7mf7kxK3KhjJ-pEqFe1R03bNFMhKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/14] commit-graph: implement git-commit-graph --read
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Received: by 10.200.28.54 with HTTP; Tue, 30 Jan 2018 22:39:51 -0800 (PST)
+In-Reply-To: <xmqqd11rt6ks.fsf@gitster-ct.c.googlers.com>
+References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
+ <xmqqfu6s74pf.fsf@gitster.mtv.corp.google.com> <CAL21BmkOGE6UZQJTFQjq3qnmywwBJQOUXE7jSwP1_Vn6PZ8ezA@mail.gmail.com>
+ <xmqqd11rt6ks.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Wed, 31 Jan 2018 09:39:51 +0300
+Message-ID: <CAL21Bm=cMQ-dx1v9rRhEuZQW7BrHGsCMTmvy=ONrv0weLM+JJg@mail.gmail.com>
+Subject: Re: [PATCH RFC 01/24] ref-filter: get rid of goto
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +static void free_commit_graph(struct commit_graph **g)
-> +{
-> +       if (!g || !*g)
-> +               return;
-> +
-> +       close_commit_graph(*g);
-> +
-> +       free(*g);
-> +       *g = NULL;
+2018-01-30 23:49 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
+> =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F  <oly=
+atelezhnaya@gmail.com> writes:
+>
+>>> one place improves readability.  If better readability is the
+>>> purpose, I would even say
+>>>
+>>>          for (i =3D 0; i < used_atom_cnt; i++) {
+>>>                 if (...)
+>>> -                       goto need_obj;
+>>> +                       break;
+>>>         }
+>>> -       return;
+>>> +       if (used_atom_cnt <=3D i)
+>>>                 return;
+>>>
+>>> -need_obj:
+>>>
+>>> would make the result easier to follow with a much less impact.
+>>
+>> It's hard for me to read the code with goto, and as I know, it's not
+>> only my problem,...
+>
+> That sounds as if you are complaining "I wanted to get rid of goto
+> and you tell me not to do so???", but read what I showed above again
+> and notice that it is also getting rid of "goto".
 
-nit: You may want to use FREE_AND_NULL(*g) instead.
+No, I am not complaining. I tried to explain why I did everything that
+way. Sorry if it was not clear enough.
+
+>
+> The main difference from your version is that the original function
+> is still kept as a single unit of work, instead of two.
+
+And I am not sure that it is good, the function is too big and it
+actually does so many different separate pieces. If it is possible to
+shorten long function by getting some separate logic (that's our case,
+we do not request object until that final goto statement), I think
+it's good idea and we need to do so and simplify future reading. But,
+if you do not agree with this fact, please explain your position in
+detail, and I will change that place as you want.
+
+Thanks.
