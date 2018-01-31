@@ -2,109 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B54221F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 06:39:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6811F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 09:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752492AbeAaGjx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 01:39:53 -0500
-Received: from mail-qk0-f175.google.com ([209.85.220.175]:44326 "EHLO
-        mail-qk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751454AbeAaGjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 01:39:52 -0500
-Received: by mail-qk0-f175.google.com with SMTP id n188so2046459qkn.11
-        for <git@vger.kernel.org>; Tue, 30 Jan 2018 22:39:52 -0800 (PST)
+        id S1753085AbeAaJbE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 04:31:04 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:45818 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752367AbeAaJbB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 04:31:01 -0500
+Received: by mail-pg0-f67.google.com with SMTP id m136so9574256pga.12
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 01:31:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nXaGZvUmUiYqHl1Fnds2s9K5We9cWT/pTH/CZnwRyNA=;
-        b=h/ZlG7d87n0JiF/KZnEhDOWOHHKfg4VhA5uC7zRFwGOmIVe3lP5H4+UoX425nQ2D90
-         vNu6l/WldnkW+sz9kluoG6MMsL867agFNEJEtd7Hz5yMc5O8RXNHx50myNA7mr/l3Zni
-         yIDY21firLmuUs98HDVedWcO2yeDTGM0tvIDsN3uRaJqJWd4yVp9PPyLGcJHCN/7eVUD
-         tXZFl3k70+tSAmEGI17n93t25+Vd7DzTbF/HQWAgKEzkx0a388A3Zd2fGWByUkV+EwIf
-         lFIH2od2jKrX1oLSVudedVjwVO4zErE0wyVMDQiTlkpL7CZBbvCxQEHIrLz7Tvk7dwgm
-         x3Bg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Kg+9WeIO+Dr9BOvl5aBK3nIofDXKb5xvqbl291gWbtU=;
+        b=MI7fcrWYLrdmKQuZuN559Xmtrv6Rk9EC8D5uGO4/xL+Ka7GYsKu6wO9K9iSu1pV90j
+         MAZJAP6BRTK7T24+lLzhwxDuUNg6vkFU5lWBSP8N9XTK323e1HqBzJXblrBNRRJHdmpC
+         WiHKyzrHRg7R0jeWyA0VQ43UBAA82tFNCOXp1LQJ4goX8YGuVV4ZitfpawAX768UTtN4
+         cWU9Y9DtZvbAYHnoeZR8plvhcqPelWZmkWe0usecB+2M/BJEPCraP3pCm6jru9dNWEDK
+         R6lTxse1fcwCjO9zJqZ3HjXnr1b/dD5YvmaSzBRL/Q9C+RiKnkkkOE9BRGnMuI0DM7gs
+         19EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nXaGZvUmUiYqHl1Fnds2s9K5We9cWT/pTH/CZnwRyNA=;
-        b=flq8AauuVhvVEwK83i3t+ji32JRcgMG+8n7R0Fjc2lTTE4DyXsaCgSp/pmPs6iLnsj
-         JSoB75cZDd+ivOpEICjKVDqHZpR64emVCThyT4DhrE4hCxw08Qpxlc9tDAkGNMCm4Btx
-         yphtYWuOWlaGa6D1xwOaqYyqrAYTnYuSdPnCVPthVaVIRNiposOnk65AP71S5QLs3hOh
-         VTVgvTtT7fC6zvYVukwwZxlI/IjDjWay4ze5EiwU93lZcRn+Tg10WFkcOaITHNvhNtZi
-         0K7Xl6eKCuTyfGueKEhJtdDw4APD8yAtu/oNcgmV6twSW/kbA+9NcGWHF3aOJeyk1yWu
-         6MqQ==
-X-Gm-Message-State: AKwxytca3a1ukBPtbCO8Clfh6aZUZL3imYPubTuIR795quuQQL9XOrjm
-        aBpOkJuFYAuJnmI1FHOVqoM5D5AuSkdXzElNnfo=
-X-Google-Smtp-Source: AH8x224pnX4YcRKQjQADLT0/C0ndapdzoDO3L3u6xkz1jkrDa8iZMohPq1FEX2nOwN7I2AzFfnBQJZijUje+xinumKs=
-X-Received: by 10.55.104.17 with SMTP id d17mr44788504qkc.306.1517380791723;
- Tue, 30 Jan 2018 22:39:51 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Kg+9WeIO+Dr9BOvl5aBK3nIofDXKb5xvqbl291gWbtU=;
+        b=o3JaeUg9z8WAD+WLt3wbumFC5SkY7yR3sdgNH5T2ItEU3m586SWkCsln1qs5HRJS6C
+         RTxfr0DX+IPVXGzc2dRd3z/oX+BUIbptI3SiD7fQpbRymUu/y0E0pD3LH2xaBb1xfh7u
+         KfLI8CORZ8sTe7m2ttc/fa7ALjJYQyYWg+qVKzxXS/dGR89O2YHFfDc2Y990dOEkem2F
+         LdTuhGQL5WMhXwzGiBDf2AoguayxYAD7ErZfDcwH8kyeP5LkIqHNhpa+gZQus9VEHDcJ
+         aQh805R9tVUzWJWZOatz4LVBGCtLnXOWiMvvEKFAIDr8NGoQ9MpnXFVGYcRnbf291ZMO
+         kk8Q==
+X-Gm-Message-State: AKwxytd8fjxJEH8b1Okrh0YyPnGEWd3e2JFggmkx9IjjXb9N711Qk8R7
+        r016qjLP69b7YVReEqpXzgBVeQ==
+X-Google-Smtp-Source: AH8x224iExzU14yR3Zha67Cdd8J9vY+/pOypGoK254D+/y1SSe2mEHXLmoBQazEsWV5pYib3H2A3qg==
+X-Received: by 10.101.72.69 with SMTP id i5mr22637009pgs.9.1517391060879;
+        Wed, 31 Jan 2018 01:31:00 -0800 (PST)
+Received: from ash ([171.232.97.171])
+        by smtp.gmail.com with ESMTPSA id j1sm34125034pff.94.2018.01.31.01.30.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 31 Jan 2018 01:30:59 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 16:30:52 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        tim@tim-landscheidt.de,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2 0/3] Add "git rebase --show-patch"
+Date:   Wed, 31 Jan 2018 16:30:47 +0700
+Message-Id: <20180131093051.15525-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.205.g271f633410
+In-Reply-To: <20180126095520.919-1-pclouds@gmail.com>
+References: <20180126095520.919-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.200.28.54 with HTTP; Tue, 30 Jan 2018 22:39:51 -0800 (PST)
-In-Reply-To: <xmqqd11rt6ks.fsf@gitster-ct.c.googlers.com>
-References: <0102016133ff3a86-44d354ec-13c6-4c38-bc75-1ba4422db5a7-000000@eu-west-1.amazonses.com>
- <xmqqfu6s74pf.fsf@gitster.mtv.corp.google.com> <CAL21BmkOGE6UZQJTFQjq3qnmywwBJQOUXE7jSwP1_Vn6PZ8ezA@mail.gmail.com>
- <xmqqd11rt6ks.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Wed, 31 Jan 2018 09:39:51 +0300
-Message-ID: <CAL21Bm=cMQ-dx1v9rRhEuZQW7BrHGsCMTmvy=ONrv0weLM+JJg@mail.gmail.com>
-Subject: Re: [PATCH RFC 01/24] ref-filter: get rid of goto
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-01-30 23:49 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
-> =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F  <oly=
-atelezhnaya@gmail.com> writes:
->
->>> one place improves readability.  If better readability is the
->>> purpose, I would even say
->>>
->>>          for (i =3D 0; i < used_atom_cnt; i++) {
->>>                 if (...)
->>> -                       goto need_obj;
->>> +                       break;
->>>         }
->>> -       return;
->>> +       if (used_atom_cnt <=3D i)
->>>                 return;
->>>
->>> -need_obj:
->>>
->>> would make the result easier to follow with a much less impact.
->>
->> It's hard for me to read the code with goto, and as I know, it's not
->> only my problem,...
->
-> That sounds as if you are complaining "I wanted to get rid of goto
-> and you tell me not to do so???", but read what I showed above again
-> and notice that it is also getting rid of "goto".
+v2:
 
-No, I am not complaining. I tried to explain why I did everything that
-way. Sorry if it was not clear enough.
+- keeps --show-patch, but it's renamed to be more specific and
+  hopefully less misleading. Other names I thought of were
+  --show-patch-in-progress, --show-stopped-patch or
+  --show-conflict-patch but they don't look as good.
 
->
-> The main difference from your version is that the original function
-> is still kept as a single unit of work, instead of two.
+  Also, since this is a long option name, I don't think length
+  matters. You either go with tab completion, alias or short option
+  name when you want to type it fast.
 
-And I am not sure that it is good, the function is too big and it
-actually does so many different separate pieces. If it is possible to
-shorten long function by getting some separate logic (that's our case,
-we do not request object until that final goto statement), I think
-it's good idea and we need to do so and simplify future reading. But,
-if you do not agree with this fact, please explain your position in
-detail, and I will change that place as you want.
+- --show-patch now uses git show instead of format-patch, this
+  gives coloring for all rebase cases
 
-Thanks.
+- people who are not happy with --show-patch can roll their own with
+  the help from the pseudo ref ORIG_COMMIT
+
+Nguyễn Thái Ngọc Duy (3):
+  am: add --show-current-patch
+  rebase: add --show-current-patch
+  rebase: introduce and use pseudo-ref ORIG_COMMIT
+
+ Documentation/git-am.txt               |  6 +++-
+ Documentation/git-rebase.txt           |  7 +++-
+ builtin/am.c                           | 46 +++++++++++++++++++++++---
+ contrib/completion/git-completion.bash |  8 ++---
+ git-rebase--am.sh                      |  3 ++
+ git-rebase--interactive.sh             |  6 ++++
+ git-rebase--merge.sh                   |  5 +++
+ git-rebase.sh                          |  8 ++++-
+ sequencer.c                            |  3 ++
+ t/t3400-rebase.sh                      | 34 +++++++++++++++++++
+ t/t3404-rebase-interactive.sh          |  8 +++++
+ t/t4150-am.sh                          |  5 +++
+ 12 files changed, 128 insertions(+), 11 deletions(-)
+
+-- 
+2.16.1.205.g271f633410
+
