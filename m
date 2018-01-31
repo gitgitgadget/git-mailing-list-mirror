@@ -7,118 +7,153 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFB521F404
-	for <e@80x24.org>; Wed, 31 Jan 2018 22:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B34C01F404
+	for <e@80x24.org>; Wed, 31 Jan 2018 22:44:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752494AbeAaWOj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 17:14:39 -0500
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:44731 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751880AbeAaWOi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 17:14:38 -0500
-Received: by mail-qt0-f193.google.com with SMTP id l20so23896006qtj.11
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 14:14:38 -0800 (PST)
+        id S1751709AbeAaWoe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 17:44:34 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53347 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751655AbeAaWod (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 17:44:33 -0500
+Received: by mail-wm0-f67.google.com with SMTP id t74so2178939wme.3
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 14:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=+rKujInZVm7sx+d99KZ4qTEM01ixSddEZXfgYtC8S5w=;
-        b=uGG9AzEXtcVm31mJOx3EV+675sZZwKi7AEvr5p2c385oMLwKdgg0nyLksby+fA1fBQ
-         TtX2KXJqAaZUEgKgy53WiJiYK3u4s0kalSOh8OOXnl1CUy8zCnqwep+D2a7Rl6KAgRjZ
-         XmRAV5BSMPvMAt3IAGkM4N5jzldIfTFjbZBYEOJ7s0HMAw3XRPfad56Ud7FbTjY9SRYb
-         hAb1bTJ2spRSOVWBOq7AqTr+F5o3k+yfNx4JjDKBytonjlR7CsG1Josa3eEMRqu6HGtc
-         Gf4klkkHmzMCRcb3JL/A62t9lMQx1bHSz7FOVTrxoNq3SjRnCSRGpDLbteDsoN9YMwYt
-         lnWQ==
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tDrzFZXEdx7/0hnKY9dM+7NkbKHHNryOlLYyLwcNk70=;
+        b=i0RDRZ0xdr3RRuDotTKH9AO1cyhS+Y33MaHJoJZRyR8h+0iM9ZtyBzM3MkwBkbhGe+
+         hvBRJzi6Eqcy3CncTMBpvWKrna1594qufoA/UstL0icvXz5jxKuz62pTvxK2Or3yWMde
+         SaZaDpY0GOkdQIEtCoxVybqA++PUvW1LuMD13AKtuwyAvNsIgtHiP6Y8TNhr6rQ7DKjj
+         TtUpi32iewV/utoE8eIZz+OpFCarmxupLXTveoguRFLPQAjtDAMehyO49LzU0LkoE5+8
+         wOhq0Eo9OoX29YU7vaejapuYX2V6x+KMg70V9Ea/meyRvbjsBPZdX5Vux8tGKNPK9nax
+         BjJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+rKujInZVm7sx+d99KZ4qTEM01ixSddEZXfgYtC8S5w=;
-        b=pFnFgyckiTnylrVHWO04aonx9dICN6qHfEqpnH1JSskPTnlxorC2Lt5cuYkaGLUwRs
-         053Xf0zkT18/vTEmSTz0SZyc71qvQqpJlg5ScUNQNeavWnLuT4WXNO9sBdSGOMVZ1XJK
-         UdzW9VkTx0eKlatHzUvKBDGB5IBhbuZHEy76unTfSJ2a/ClWOIzplhX4p3OMth7RjtH0
-         qRVUNEvxusj0UYZ7m/FoW++WKzZGIgsNG87zNRluHWErbh7F80UY1VB0parlLeUH6WLY
-         c7Cr+z6aODa9U5Jv3RSmtsCi2W0MK/18yu570WZqAJ3zxTciDAg3jAX0oHWsS97/afcq
-         PoTQ==
-X-Gm-Message-State: AKwxyteYlMOjjAy23i9MrbCa0gBPpOeMxifyJkKLPu/oALqGQzMmhL5O
-        BnbbLrnge+ZaIlyY7i3pzvd12ULWRi0=
-X-Google-Smtp-Source: AH8x226CBkdLIpxuxaaozvT/0x7i8CVjSALB+7BqIlLmI3S349eDsWAq7VopE0Kn+fKCbtSghGhT4Q==
-X-Received: by 10.200.46.214 with SMTP id i22mr55668310qta.157.1517436877862;
-        Wed, 31 Jan 2018 14:14:37 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id s72sm12052482qki.50.2018.01.31.14.14.34
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tDrzFZXEdx7/0hnKY9dM+7NkbKHHNryOlLYyLwcNk70=;
+        b=P6C1WWSUX5snor3QytBUcgKHjh1kpER+3T4AeJCoI1x++4ZwjmmJvEbyGqper1h72j
+         PL+AOE80ExJ8KMNRSW+uYJ+i9lMgMQ4VaoFzZy52npkPt/NH+7b66rcsmYuYdFIrhi3I
+         cBrS18PQ7TRsUheQ/DpTnjBrSzbyW94YFIzTPI5qqn+/JSFpuVdhSSZdKKlMNZORFJRT
+         mzqkUrhLDd1GoDQHkDXWDqaRhstvvyFZNSLQV9LpgpPw570nseO425ncMZkIbbdVztxW
+         Q17V6AoWNlJLUnqBPZKB/+oD23X0MJffGWrFYAe61CEGBkenv53sWxW1jkOkgVCHlq9K
+         rJXA==
+X-Gm-Message-State: AKwxytdJt9uaK5A1zunmN1JLZg43C2VE3+OcaSXdfGl5RGPsmZwbwlfD
+        0P2NSUGLAjiMorWC56DCuLGuk1HDuXc=
+X-Google-Smtp-Source: AH8x226piRzoxsrmW077IExZXEVs0Zjfl+biP2rPFCI3pAWuroEvQ2odlZWjiwSMTMy3G6RGWPZ4mg==
+X-Received: by 10.28.150.86 with SMTP id y83mr17945286wmd.42.1517438672127;
+        Wed, 31 Jan 2018 14:44:32 -0800 (PST)
+Received: from [192.168.5.102] (cable-24-135-61-30.dynamic.sbb.rs. [24.135.61.30])
+        by smtp.gmail.com with ESMTPSA id x135sm752810wmf.35.2018.01.31.14.44.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 14:14:37 -0800 (PST)
-Subject: Re: [PATCH v2 14/27] connect: request remote refs using v2
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-15-bmwill@google.com>
- <2007efc8-ec31-0267-9b83-392a9d2eaf4a@gmail.com>
- <CAPig+cQvPdMtAWijJaez17m4_fdG6ho_EJW9t=KmnTpocquwgg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <514f4a9a-6c88-1dbd-e126-de4dc4c31a8f@gmail.com>
-Date:   Wed, 31 Jan 2018 17:14:33 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        Wed, 31 Jan 2018 14:44:31 -0800 (PST)
+Subject: Re: [PATCH v2 10/14] commit-graph: add core.commitgraph setting
+To:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, git@jeffhostetler.com,
+        sbeller@google.com, dstolee@microsoft.com
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+ <1517348383-112294-11-git-send-email-dstolee@microsoft.com>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <b6216601-603b-f1bd-36e6-58e9f84946d4@gmail.com>
+Date:   Wed, 31 Jan 2018 23:44:27 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQvPdMtAWijJaez17m4_fdG6ho_EJW9t=KmnTpocquwgg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <1517348383-112294-11-git-send-email-dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Derrick,
 
+On 30/01/2018 22:39, Derrick Stolee wrote:
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 0e25b2c92b..5b63559a2b 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -898,6 +898,9 @@ core.notesRef::
+>  This setting defaults to "refs/notes/commits", and it can be overridden by
+>  the `GIT_NOTES_REF` environment variable.  See linkgit:git-notes[1].
+>  
+> +core.commitgraph::
+             ^^^
+A small style nitpick - you may want to use "core.commitGraph" 
+throughout the series (note capital "G"), making it more readable and 
+aligning with the rest of `git config` variable names (using "bumpyCaps" 
+as per coding guidelines[1], and as seen a few lines below, at the 
+end of this very patch, too, "core.sparseCheckout").
 
-On 1/31/2018 3:10 PM, Eric Sunshine wrote:
-> On Wed, Jan 31, 2018 at 10:22 AM, Derrick Stolee <stolee@gmail.com> wrote:
->> On 1/25/2018 6:58 PM, Brandon Williams wrote:
->>>   +static int process_ref_v2(const char *line, struct ref ***list)
->>> +{
->>> +       int ret = 1;
->>> +       int i = 0;
->> nit: you set 'i' here, but first use it in a for loop with blank
->> initializer. Perhaps keep the first assignment closer to the first use?
-> Hmm, I see 'i' being incremented a couple times before the loop...
->
->>> +       if (string_list_split(&line_sections, line, ' ', -1) < 2) {
->>> +               ret = 0;
->>> +               goto out;
->>> +       }
->>> +
->>> +       if (get_oid_hex(line_sections.items[i++].string, &old_oid)) {
-> here...
->
->>> +               ret = 0;
->>> +               goto out;
->>> +       }
->>> +
->>> +       ref = alloc_ref(line_sections.items[i++].string);
-> and here...
->
->>> +
->>> +       oidcpy(&ref->old_oid, &old_oid);
->>> +       **list = ref;
->>> +       *list = &ref->next;
->>> +
->>> +       for (; i < line_sections.nr; i++) {
-> then it is used in the loop.
->
->>> +               const char *arg = line_sections.items[i].string;
->>> +               if (skip_prefix(arg, "symref-target:", &arg))
->>> +                       ref->symref = xstrdup(arg);
+> +	Enable git commit graph feature. Allows reading from .graph files.
+> +
+>  core.sparseCheckout::
+>  	Enable "sparse checkout" feature. See section "Sparse checkout" in
+>  	linkgit:git-read-tree[1] for more information.
+> diff --git a/cache.h b/cache.h
+> index d8b975a571..e50e447a4f 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -825,6 +825,7 @@ extern char *git_replace_ref_base;
+>  extern int fsync_object_files;
+>  extern int core_preload_index;
+>  extern int core_apply_sparse_checkout;
+> +extern int core_commitgraph;
+                        ^^^
+Similar nit here, might be "core_commit_graph" (throughout the 
+series) would align better with existing variable names around it 
+(note additional underscore between "commit" and "graph"), but also 
+with your own naming "scheme" used for cmd_commit_graph(), 
+builtin_commit_graph_usage[], construct_commit_graph(), etc.
 
-Thanks! Sorry I missed this.
+>  extern int precomposed_unicode;
+>  extern int protect_hfs;
+>  extern int protect_ntfs;
+> diff --git a/config.c b/config.c
+> index e617c2018d..99153fcfdb 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1223,6 +1223,11 @@ static int git_default_core_config(const char *var, const char *value)
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp(var, "core.commitgraph")) {
+> +		core_commitgraph = git_config_bool(var, value);
+> +		return 0;
+> +	}
+> +
+>  	if (!strcmp(var, "core.sparsecheckout")) {
+>  		core_apply_sparse_checkout = git_config_bool(var, value);
+>  		return 0;
+> diff --git a/environment.c b/environment.c
+> index 63ac38a46f..faa4323cc5 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -61,6 +61,7 @@ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+>  char *notes_ref_name;
+>  int grafts_replace_parents = 1;
+>  int core_apply_sparse_checkout;
+> +int core_commitgraph;
+>  int merge_log_config = -1;
+>  int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+>  unsigned long pack_size_limit_cfg;
+> 
 
--Stolee
+Thanks, Buga
+
+[1] https://github.com/git/git/blob/master/Documentation/CodingGuidelines
+
+  Externally Visible Names
+  
+  ...
+  
+  The section and variable names that consist of multiple words are
+  formed by concatenating the words without punctuations (e.g. `-`),
+  and are broken using bumpyCaps in documentation as a hint to the
+  reader.
