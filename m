@@ -2,100 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22F271F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 09:40:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2CF81F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 10:04:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753052AbeAaJkt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 04:40:49 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:41678 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752837AbeAaJkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 04:40:47 -0500
-Received: by mail-qk0-f193.google.com with SMTP id l29so13896522qkj.8
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 01:40:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=scif6HK6WoAqU4L5UxO4EeKspaiZup0lstEnCeppbEg=;
-        b=oS9waXOiBs0Cy70hF4qH+zNOt7ewdFa/STjK44strPrLZhm2e3EeifueKDU4QhQOHc
-         9GVM4MoTMx7swIln7Nto+xBQqo1NbnsbIarTLdGZNmAqK2TW0ALH9xnvOFY9QGmni6Sp
-         V7eVyhVVQ7ORWB3nuWykV888znavJyaneQW7garWDkHFDtyvaFrUXCXMvkQ991m9U7c9
-         WW1K/oZQIW22BB6Y/F2xiuND2mFhWLW8cmcgVBE1MjPjKuBQ0+TLyAqtrx+gKYzJ2kJ7
-         mBbguXncKmbDCfbF67ASGY1yqzNn2GlxobZw32ydsGXh7tkRWTgtEnT1rR3wisMwB6MN
-         iZXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=scif6HK6WoAqU4L5UxO4EeKspaiZup0lstEnCeppbEg=;
-        b=VVS5r9T141vQ6u2dc6ymSai48JEgaBGHTE3Pd3Pw93q7nB2iLbHRtVdHUyrRE/exB5
-         bgxo0TQETV1HuWtA2iMu+OxzkLib7J3/POBuf9g199MNT/PX/snYWReDENs/lN0dZDuC
-         iueOV8nBPikgmnWVrg2tZjBvk3ZOu/CDCcnMgByj1Q4fuP0weV7UwPTz5q1mw7bkKyAD
-         p0VLhN4lgSg3QQQKrZTQajzi89sQtb9pGNQr6YnUMHaYUQMtAMOa/aCgZDJhV4Ue44Md
-         mRjRkNjxFbuOZV03CmbO155a6+bbuRjG6L8+p8dwe0wqLNmFxvQ0L7gpPJTp1y95Ed7i
-         6Dhg==
-X-Gm-Message-State: AKwxytefDaYUkb9sN0xN4UDUon+jt8Z1poFTEEjGNb34pf+oGH/yP4Hb
-        82e9KTH/IEDNAiVkSoA4PGlo8P/engyGUZdEfbc=
-X-Google-Smtp-Source: AH8x225CEvrsyYYJH4/CJfTHxn+52KhPkI7Ui+wz5WbCKjlskh1PfLJMKPXzrWE+xnefiu4rOyYjv32bz+XUUtmx9b8=
-X-Received: by 10.55.177.135 with SMTP id a129mr17606704qkf.112.1517391646813;
- Wed, 31 Jan 2018 01:40:46 -0800 (PST)
+        id S1753656AbeAaKEM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 05:04:12 -0500
+Received: from smtpq1.mnd.mail.iss.as9143.net ([212.54.34.164]:36810 "EHLO
+        smtpq1.mnd.mail.iss.as9143.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753637AbeAaKEH (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 31 Jan 2018 05:04:07 -0500
+Received: from [212.54.34.118] (helo=smtp10.mnd.mail.iss.as9143.net)
+        by smtpq1.mnd.mail.iss.as9143.net with esmtp (Exim 4.86_2)
+        (envelope-from <git@jessiehernandez.com>)
+        id 1egpFO-0000Wp-8d
+        for git@vger.kernel.org; Wed, 31 Jan 2018 11:04:06 +0100
+Received: from 53544873.cm-6-5b.dynamic.ziggo.nl ([83.84.72.115] helo=jessiehernandez.com)
+        by smtp10.mnd.mail.iss.as9143.net with esmtp (Exim 4.86_2)
+        (envelope-from <git@jessiehernandez.com>)
+        id 1egpFO-0005EF-7C
+        for git@vger.kernel.org; Wed, 31 Jan 2018 11:04:06 +0100
+Received: by jessiehernandez.com (Postfix, from userid 112)
+        id 13BEA224EF; Wed, 31 Jan 2018 11:04:06 +0100 (CET)
+Received: from mail.jessiehernandez.com (localhost [127.0.0.1])
+        by jessiehernandez.com (Postfix) with ESMTP id 47C30224E9;
+        Wed, 31 Jan 2018 11:03:42 +0100 (CET)
+Received: from 185.46.212.85
+        (SquirrelMail authenticated user pi)
+        by mail.jessiehernandez.com with HTTP;
+        Wed, 31 Jan 2018 11:03:43 +0100
+Message-ID: <cb45d936ebc51f852ec50baf9d5e89a3.squirrel@mail.jessiehernandez.com>
+In-Reply-To: <CAPig+cRiyterpyJfayVmA5Ra_zzyVp6GGSNqe2Tx-Hrrif+U8A@mail.gmail.com>
+References: <615c04025165d0dff9d6e6b66bf11a41.squirrel@mail.jessiehernandez.com>
+    <CAPig+cRiyterpyJfayVmA5Ra_zzyVp6GGSNqe2Tx-Hrrif+U8A@mail.gmail.com>
+Date:   Wed, 31 Jan 2018 11:03:43 +0100
+Subject: Re: Creating sparse checkout in a new linked git worktree
+From:   "Jessie Hernandez" <git@jessiehernandez.com>
+To:     "Eric Sunshine" <sunshine@sunshineco.com>
+Cc:     git@jessiehernandez.co, git@jessiehernandez.com,
+        "Git List" <git@vger.kernel.org>
+Reply-To: git@jessiehernandez.co
+User-Agent: SquirrelMail/1.4.23 [SVN]
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Wed, 31 Jan 2018 01:40:46 -0800 (PST)
-In-Reply-To: <20180131093051.15525-2-pclouds@gmail.com>
-References: <20180126095520.919-1-pclouds@gmail.com> <20180131093051.15525-1-pclouds@gmail.com>
- <20180131093051.15525-2-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 31 Jan 2018 04:40:46 -0500
-X-Google-Sender-Auth: hksrBPnCDjPMpv9gk--vJxS4584
-Message-ID: <CAPig+cR24=0_NPekYaF+oG9OovDkv1Et-RpNvAHqE7Qd7g7QQA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] am: add --show-current-patch
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        tim@tim-landscheidt.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type:   text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-Priority: 3 (Normal)
+Importance: Normal
+X-SourceIP: 83.84.72.115
+X-Ziggo-spambar: /
+X-Ziggo-spamscore: 0.0
+X-Ziggo-spamreport: CMAE Analysis: v=2.3 cv=DLmhHRFb c=1 sm=1 tr=0 a=n+ob1Bm1t1G9OO4azozuvA==:17 a=8nJEP1OIZ-IA:10 a=RgaUWeydRksA:10 a=CdBCPKDxAAAA:8 a=QPbZCRsIvT8yICgZPaIA:9 a=wPNLvfGTeEIA:10 a=lDjxF1AZmdN7bNtopFhl:22
+ none
+X-Ziggo-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 31, 2018 at 4:30 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> Pointing the user to $GIT_DIR/rebase-apply may encourage them to mess
-> around in there, which is not a good thing. With this, the user does
-> not have to keep the path around somewhere (because after a couple of
-> commands, the path may be out of scrollback buffer) when they need to
-> look at the patch.
+> On Tue, Jan 30, 2018 at 9:25 AM, Jessie Hernandez
+> <git@jessiehernandez.com> wrote:
+>>> The sparse-checkout file is specific to each worktree, which allows you
+>> to control "sparsity" on a worktree by worktree basis. Therefore, you
+>> should create $GIT_DIR/worktrees/<id>/info/sparse-checkout instead
+>> (where <id> is "new-branch" in your example).
+>>
+>> Would it help if this was added to the documentation of git-read-tree
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
-> diff --git a/builtin/am.c b/builtin/am.c
-> @@ -2121,6 +2120,22 @@ static void am_abort(struct am_state *state)
-> +static int show_patch(struct am_state *state)
-> +{
-> +       struct strbuf sb =3D STRBUF_INIT;
-> +       int len;
-> +
-> +       len =3D strbuf_read_file(&sb, am_path(state, msgnum(state)), 0);
-> +       if (len < 0)
-> +               die_errno(_("failed to read '%s'"),
-> +                         am_path(state, msgnum(state)));
+> It probably would. Would you be interested in submitting a patch
+> (mentioning 'git rev-parse --git-path info/sparse-checkout', as
+> suggested by Duy)?
+>
+Sure. I will give it a try.
 
-Isn't this am_path() invocation inside die_errno() likely to clobber
-the 'errno' from strbuf_read_file() which you want to be reporting?
-
-> +       setup_pager();
-> +       write_in_full(1, sb.buf, sb.len);
-> +       strbuf_release(&sb);
-> +       return 0;
-> +}
