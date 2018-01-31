@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 033D81F576
-	for <e@80x24.org>; Wed, 31 Jan 2018 11:06:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 339721F576
+	for <e@80x24.org>; Wed, 31 Jan 2018 11:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753482AbeAaLGa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 06:06:30 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:38483 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752373AbeAaLG2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 Jan 2018 06:06:28 -0500
-Received: by mail-pf0-f194.google.com with SMTP id k19so12231325pfj.5
-        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:28 -0800 (PST)
+        id S1753490AbeAaLGe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 06:06:34 -0500
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:44474 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752373AbeAaLGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 Jan 2018 06:06:33 -0500
+Received: by mail-pf0-f193.google.com with SMTP id 17so10797516pfw.11
+        for <git@vger.kernel.org>; Wed, 31 Jan 2018 03:06:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gEEWG3foHc8lbX01kLgAi7mAy9PmUjLLZR1C6L/XpSU=;
-        b=pPyxoh64vbN5sQ6sGCuLCyK82khe3vuK0oGjwXM0KbTNBx0k2Ayjzh1ecxrrGaHiMc
-         rBxUvNYtcCL5tRtI8VkmO7dp8bXJRU04TgLdih6tzheHBkJE5uW6cxdHmgr3SK2yM9/V
-         W+EjoKbBsHk7VGrBddOfMXoojS3RnHxTKH8kRpH6uerU55Bep0pLrFJ5g1p1AyKE194h
-         MS99f1OWhp7SzgboCdCCf5MzABolRNf4BF45VeKJYCnAnOzZtIjPXs0i6PDESh4S3u6c
-         x3/Eb3C+ROzdBPWHTQPJz9SFqFNxZfWS9HPe1XUgO6bEkNXdlXkGEJ8sgEjda/Z4GMOO
-         DmQQ==
+        bh=bokUUZqOZ0qOFZRzgJTGrWIjEWq9gOTInnbQebGoS+s=;
+        b=IEnRPzkXNDwbAHpyu8u3z9mMK/uoHWSRAjA3rMGbJrcRnvIcesAJG/fLwQp4S3svT8
+         hy8N2y63GjVXdCxGAVLVfUHK3Qb79CT0Vx531TxaTV7YhyYY6w7kYcrp11FVGKa+OrEq
+         h6rYUrV/8x0reUQEW50fg/PbldRRMpWJEB7ZWwKWUgVmBpi0UNmOigkk2n8PLqn3hRCv
+         OHIE5au7NG0ZVUgDmGsw4qjFgAFoFmgwwirGlP7wcTbE76HzZyQ2f8Y5+hJx8x51hdOx
+         zxYMs3UiIoM9rjK/3Zb9BBIoh2XueRjvOnOkMgGTRcNnMHCZhcZ0yWZ/8vTIKnpY+j+e
+         KvFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gEEWG3foHc8lbX01kLgAi7mAy9PmUjLLZR1C6L/XpSU=;
-        b=szaPHvUcJbEWb0KC2xO5dBJTRo3gLY5UsO1VxtBB6yv24H61saae1TIvRo4p1qJ5E0
-         n0MQ1UoVsD7O6Leo0jFKFijt32xYWESXKUbHnkS4dF5dwm6Sy25mK70zfxcUwjK99OS5
-         UytrHjEDBWXhC/oYQhhxgqLlECQuz4CaLCTsZnkS4NE+QbkOVBlgO9LGXHrW4RM2Q+0V
-         SWNCQKiHTWFO/zdCEwfLSrO72CHP+H11I+9YNW3ZfWbrXA2kBLZnkezxtcrB9otNPFEA
-         qpxaWsBpkEkr0XvRbZN4P6AELKqZ3O1bG4zz0wzKf/URYHrHBcz6bTNftE8Kc5xSCldt
-         Lkaw==
-X-Gm-Message-State: AKwxytfzZbQZcrUZqb8WWfaZBmG5+F1D9/+SYaoq22/c96gQDGRWkOr/
-        hUk9+Tj2ZMcmpRNq+aoR0P4JBQ==
-X-Google-Smtp-Source: AH8x227RX/r4xVoWr08pKfKcbmSu7eJmYiNjc8gIgNwO9yfQhToQLPXTrtG5TLQlhQTGVhn8IzlzsQ==
-X-Received: by 2002:a17:902:5388:: with SMTP id c8-v6mr27099739pli.91.1517396788241;
-        Wed, 31 Jan 2018 03:06:28 -0800 (PST)
+        bh=bokUUZqOZ0qOFZRzgJTGrWIjEWq9gOTInnbQebGoS+s=;
+        b=O+zo15SGI6byrFHuhAfbGgO83Tdbd/4r8k/iWK0/nZUdYIEGuNylNj4B28bXAljdBQ
+         L8RY0k48QHRg/QbBz5HwdOp0nJOkNxZEJ97DBYcRENkp5VvGgjVD9LzE1l5BwQsVWvuQ
+         qC3hKm3rTfIt4A6d5ZSxQAUoCWi+TqMnbSJZU+xCCGPtI7GuxBJfsXEQ8frzwGgPbHbn
+         jAsMVnTBgHMxNuLXIVqa0YckHEBn9Q404PHkgyR1mof9EnTFbiBJTFWwdKuEP8wShszB
+         2YNpRVov0FJOCg0Y78t1nwxuUZ2AtqA27vIiUuZT3Z/wmlN04bbP8LB+7FSlWyln/Ebr
+         utsg==
+X-Gm-Message-State: AKwxytdB/uneWRy81N5U5/YJCnSiXBaTJgk0/N+j4bbrRnNkSRWXA2tT
+        Z6HWhGEN+PIO6RpzpIhqET8teg==
+X-Google-Smtp-Source: AH8x224R5j4GV8svZbQ4gql31Y4RjSVvLMDRg8/sndgBA0LlxhhbcawvFyPiRGt13bp35Mq7hZ3lOg==
+X-Received: by 10.98.231.11 with SMTP id s11mr33303753pfh.174.1517396792711;
+        Wed, 31 Jan 2018 03:06:32 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id f12sm25437511pga.67.2018.01.31.03.06.25
+        by smtp.gmail.com with ESMTPSA id 184sm39920007pfd.156.2018.01.31.03.06.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Jan 2018 03:06:27 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:24 +0700
+        Wed, 31 Jan 2018 03:06:32 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 31 Jan 2018 18:06:28 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 06/41] completion: use __gitcomp_builtin in _git_am
-Date:   Wed, 31 Jan 2018 18:05:12 +0700
-Message-Id: <20180131110547.20577-7-pclouds@gmail.com>
+Subject: [PATCH v2 07/41] completion: use __gitcomp_builtin in _git_apply
+Date:   Wed, 31 Jan 2018 18:05:13 +0700
+Message-Id: <20180131110547.20577-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180131110547.20577-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -71,104 +71,59 @@ X-Mailing-List: git@vger.kernel.org
 
 The new completable options are:
 
+--3way
+--allow-overlap
+--build-fake-ancestor=
 --directory
 --exclude
---gpg-sign
 --include
---keep-cr
---keep-non-patch
---message-id
---no-keep-cr
---patch-format
---quiet
---reject
---resolvemsg=
+
+--index-info is no longer completable but that's because it's renamed to
+--build-fake-ancestor in 26b2800768 (apply: get rid of --index-info in
+favor of --build-fake-ancestor - 2007-09-17)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/am.c                           | 16 ++++++++--------
- contrib/completion/git-completion.bash |  7 +------
- parse-options.h                        |  4 ++--
- rerere.h                               |  3 ++-
- 4 files changed, 13 insertions(+), 17 deletions(-)
+ apply.c                                | 5 +++--
+ contrib/completion/git-completion.bash | 9 +--------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index acfe9d3c8c..d42832dc0b 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2237,18 +2237,18 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 			PARSE_OPT_NOARG),
- 		OPT_STRING(0, "resolvemsg", &state.resolvemsg, NULL,
- 			N_("override error message when patch failure occurs")),
--		OPT_CMDMODE(0, "continue", &resume,
-+		OPT_CMDMODE_F(0, "continue", &resume,
- 			N_("continue applying patches after resolving a conflict"),
--			RESUME_RESOLVED),
--		OPT_CMDMODE('r', "resolved", &resume,
-+			RESUME_RESOLVED, PARSE_OPT_NOCOMPLETE),
-+		OPT_CMDMODE_F('r', "resolved", &resume,
- 			N_("synonyms for --continue"),
--			RESUME_RESOLVED),
--		OPT_CMDMODE(0, "skip", &resume,
-+			RESUME_RESOLVED, PARSE_OPT_NOCOMPLETE),
-+		OPT_CMDMODE_F(0, "skip", &resume,
- 			N_("skip the current patch"),
--			RESUME_SKIP),
--		OPT_CMDMODE(0, "abort", &resume,
-+			RESUME_SKIP, PARSE_OPT_NOCOMPLETE),
-+		OPT_CMDMODE_F(0, "abort", &resume,
- 			N_("restore the original branch and abort the patching operation."),
--			RESUME_ABORT),
-+			RESUME_ABORT, PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "committer-date-is-author-date",
- 			&state.committer_date_is_author_date,
- 			N_("lie about committer date")),
+diff --git a/apply.c b/apply.c
+index 321a9fa68d..65eb37e6a4 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4943,8 +4943,9 @@ int apply_parse_options(int argc, const char **argv,
+ 			N_("make sure the patch is applicable to the current index")),
+ 		OPT_BOOL(0, "cached", &state->cached,
+ 			N_("apply a patch without touching the working tree")),
+-		OPT_BOOL(0, "unsafe-paths", &state->unsafe_paths,
+-			N_("accept a patch that touches outside the working area")),
++		OPT_BOOL_F(0, "unsafe-paths", &state->unsafe_paths,
++			   N_("accept a patch that touches outside the working area"),
++			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "apply", force_apply,
+ 			N_("also apply the patch (use with --stat/--summary/--check)")),
+ 		OPT_BOOL('3', "3way", &state->threeway,
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 9aa3aa241b..ce53b78c81 100644
+index ce53b78c81..6f763c524e 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1110,12 +1110,7 @@ _git_am ()
+@@ -1123,14 +1123,7 @@ _git_apply ()
  		return
  		;;
  	--*)
 -		__gitcomp "
--			--3way --committer-date-is-author-date --ignore-date
+-			--stat --numstat --summary --check --index
+-			--cached --index-info --reverse --reject --unidiff-zero
+-			--apply --no-add --exclude=
 -			--ignore-whitespace --ignore-space-change
--			--interactive --keep --no-utf8 --signoff --utf8
--			--whitespace= --scissors
+-			--whitespace= --inaccurate-eof --verbose
+-			--recount --directory=
 -			"
-+		__gitcomp_builtin am "--no-utf8"
++		__gitcomp_builtin apply
  		return
  	esac
  }
-diff --git a/parse-options.h b/parse-options.h
-index 23c912b842..fa75df17b4 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -146,8 +146,8 @@ struct option {
- #define OPT_STRING_LIST(s, l, v, a, h) \
- 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
- 				      (h), 0, &parse_opt_string_list }
--#define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NULL, \
--				      (h), PARSE_OPT_NOARG, &parse_opt_tertiary }
-+#define OPT_UYN(s, l, v, h, f)      { OPTION_CALLBACK, (s), (l), (v), NULL, \
-+				      (h), PARSE_OPT_NOARG|(f), &parse_opt_tertiary }
- #define OPT_DATE(s, l, v, h) \
- 	{ OPTION_CALLBACK, (s), (l), (v), N_("time"),(h), 0,	\
- 	  parse_opt_approxidate_cb }
-diff --git a/rerere.h b/rerere.h
-index c2961feaaa..5e5a312e4c 100644
---- a/rerere.h
-+++ b/rerere.h
-@@ -37,6 +37,7 @@ extern void rerere_clear(struct string_list *);
- extern void rerere_gc(struct string_list *);
- 
- #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
--	N_("update the index with reused conflict resolution if possible"))
-+	N_("update the index with reused conflict resolution if possible"), \
-+	PARSE_OPT_NOCOMPLETE)
- 
- #endif
 -- 
 2.16.1.205.g271f633410
 
