@@ -2,92 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 424EC1F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 21:44:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5DEB1F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 22:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751916AbeBAVo0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 16:44:26 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:43779 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751715AbeBAVoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 16:44:25 -0500
-Received: by mail-pg0-f66.google.com with SMTP id f6so1854757pga.10
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 13:44:25 -0800 (PST)
+        id S1752023AbeBAWGj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 17:06:39 -0500
+Received: from mail-yw0-f182.google.com ([209.85.161.182]:42745 "EHLO
+        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751730AbeBAWGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 17:06:37 -0500
+Received: by mail-yw0-f182.google.com with SMTP id u17so11678015ywg.9
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 14:06:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Aast4X3y2aNVLvF1safCLqFu6DQSoPjcVZ+GathRtyU=;
-        b=HA3z7kcpNX1xgwZiej5JPWSXFUZuJCpo+/chwR7UuFQKvw2mnHaWNVKwlUaKH63RaL
-         W+YL3S+4OTcTH9kNrLg7kKxwJfXz/PTPph3KM0AXwGh7KkiI23QW7ve8hksy2EpbJKjU
-         dqKeHiz1hDilH+LLI8sQ6WFmUXjh/9KFSpRvu0m06HumI9vS3gPoKWzNkSveMGDHQ4Sk
-         brHAwyD59N0gqVLvJ/WrRB2jDp6tPV6qBBMpbsyDUPzvqfVzZk0Nf2EZn08bRoryvFUm
-         iOFEWBFfcoRA8Ihdm41pYRH4jptGqFDU8jxvz+6WBtFQXeNSjDFtNlNZEzZttALNnkfn
-         lpjw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=nfMiGHAB22qi9CxkFxd59sLd0pEMv2eI6PBktZNSClI=;
+        b=DC6C0lX2nsNxbyaBKESu62RA7yDyxhvELR1Fa6gFuJ5q39LKUE+RHPLaMzzxbCzOZ0
+         gLolBI2QhM4gPrQOHCp+ODNnfEq0gSEK8FKmI5Dk/tdxSKIHXpNIndA9oNa9S1qPFTER
+         IBaB4JKndVIvAnKVUMKTSwbQTUptcniUspWlxOAuE0PwxMPdU2X1kjpjFaZ60utxCzxQ
+         9sz4IxUTMmn6OSRH6ZwhXl+RcQM69S6GeIVxmGk9sesPZu1YdsZwAggEjbwZdBC9uHmo
+         Wdwq/JizuUGmoETwa0wSA5RbuT/kFzRWFF/UUwVPKOgcmokkvAUR9sCt3OqxeJGp10BJ
+         gIuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Aast4X3y2aNVLvF1safCLqFu6DQSoPjcVZ+GathRtyU=;
-        b=XHeZfi5h+cPaYPTFpN3clUJ0p9JXnROr73Pl4F5NjtR1xd90pQST+jghkmrwjAeGTv
-         tKbv4YqPpX3K4G4Bg/EdSidO+4E8mlHkNgqOYq8M+6xmbzb9k0AS/cLWVxYn3p2o0Nqs
-         Yd0DBZ+8kdVfSaSoualLe6oWHx5f6kDagU6l77RlvJbEv0dYCbysEhB5oM+b5eTTETeW
-         bO6whZh9u5fr5CGSHQc7ak1iXKegdVk5MAPyiruO20JYz8N4Yr+thUBs4p8dB3GO8Ag/
-         odoOzy4nzlfOiZ8YenYUIA3oXNBwdUHfudOg8ktZRBLc6CMxpHz7q96yd5i9NAM5qUEU
-         TBKw==
-X-Gm-Message-State: AKwxytcBdzI6CQpqWiAA1HD2XkL5MN5eps2iRXW9KrVpHAER9xr9M2QM
-        iWIpkMqukUAjc2HsQydgPs7YFg==
-X-Google-Smtp-Source: AH8x2249VTdjusSTG7Er1I4rVSj4adnRYZug+28MddoUv/8c4eK+5clBZJzcxqLRWsbG4BkoQeyMNQ==
-X-Received: by 10.99.181.13 with SMTP id y13mr25398604pge.196.1517521464605;
-        Thu, 01 Feb 2018 13:44:24 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id u25sm543071pfh.142.2018.02.01.13.44.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Feb 2018 13:44:23 -0800 (PST)
-Date:   Thu, 1 Feb 2018 13:44:22 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        git@jeffhostetler.com, sbeller@google.com, dstolee@microsoft.com
-Subject: Re: [PATCH v2 01/14] commit-graph: add format document
-Message-Id: <20180201134422.1662e936efb55b107cee2efa@google.com>
-In-Reply-To: <1517348383-112294-2-git-send-email-dstolee@microsoft.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
-        <1517348383-112294-2-git-send-email-dstolee@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=nfMiGHAB22qi9CxkFxd59sLd0pEMv2eI6PBktZNSClI=;
+        b=I9LbvXMRcb2L5aj4fbLnzQ3o8uRpKbsfSByyMQy4xF2rwZ/7TlCFnSxDeOBSDEeaA0
+         zuaxVBm8MljIEzpibo6SRWPEFIuq8aM3BqDeais1EQ5BYNW2WOPKtbXFDHEzzJz9nyQh
+         BnImHFc/pan8C1hicv/StkZYWlHUhLGxbl2DehcE6JRcP2z82WzniXuz38RmXRNNUNRf
+         YzyHQtswwOnwMDgbcSyDGTGnSqy2aGXsA4qiMlAiHuqOB1Rpx84dQCF48AWAnzxzQ+IC
+         EPtdQn6gRAgwQdNoCcNDUb+ER0wQ2PhpIazV7tb9q2m9Vd8KmjvJemYB/sYS1wEZeoEs
+         fGDw==
+X-Gm-Message-State: AKwxytfvhNl1rWhJhK5FBRHIBntALF4V8SwUtB9Edi9YgegqrPciz0Ck
+        BkE0ZoRVMdjRbfv+kUPU/m858jufjIwfK2dkdw/AWQ==
+X-Google-Smtp-Source: AH8x224NIKwx9zVAKp1PEOtQ4M2mRcbSE8tIwDIZ8GeQD/g5JQSoMZ9j945oEcX/nNsPosvQbLPvQLWNzWblc98fAUc=
+X-Received: by 10.37.133.12 with SMTP id w12mr17585393ybk.213.1517522796979;
+ Thu, 01 Feb 2018 14:06:36 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.37.207.9 with HTTP; Thu, 1 Feb 2018 14:06:36 -0800 (PST)
+In-Reply-To: <20180201021848.533188-1-sandals@crustytoothpaste.net>
+References: <20180201021848.533188-1-sandals@crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 1 Feb 2018 14:06:36 -0800
+Message-ID: <CAGZ79kZ5FT7hD4q+=-AVBUzTaHUjR1sQ3ksmJGHfXzon-az2xA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] object_id part 11 (the_hash_algo)
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 30 Jan 2018 16:39:30 -0500
-Derrick Stolee <stolee@gmail.com> wrote:
+On Wed, Jan 31, 2018 at 6:18 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> This series includes various changes to adopt the use of the_hash_algo
+> for abstracting hash algorithms away.
 
-> +  Commit Data (ID: {'C', 'G', 'E', 'T' }) (N * (H + 16) bytes)
-> +    * The first H bytes are for the OID of the root tree.
-> +    * The next 8 bytes are for the int-ids of the first two parents
-> +      of the ith commit. Stores value 0xffffffff if no parent in that
-> +      position. If there are more than two parents, the second value
-> +      has its most-significant bit on and the other bits store an array
-> +      position into the Large Edge List chunk.
+This series looks good to me.
 
-[snip]
-
-> +  Large Edge List (ID: {'E', 'D', 'G', 'E'})
-> +      This list of 4-byte values store the second through nth parents for
-> +      all octopus merges. The second parent value in the commit data is a
-> +      negative number pointing into this list. 
-
-Looking at the paragraph which I quoted before the [snip], this sentence
-is confusing (in particular, the second parent value is not interpreted
-as the normal two's-complement negative value, and the semantics of
-negative values indexing into the list is unclear). Maybe it's better to
-omit it entirely.
+>
+> Changes from v1:
+> * Fix comments referring to SHA-1.
+> * Switch hash function wrappers to take git_hash_ctx *.
+> * Use a const int variable for a constant value.
+> * Wrap an overly long line.
+>
+> brian m. carlson (12):
+>   hash: move SHA-1 macros to hash.h
+>   hash: create union for hash context allocation
+>   builtin/index-pack: improve hash function abstraction
+>   builtin/unpack-objects: switch uses of SHA-1 to the_hash_algo
+>   sha1_file: switch uses of SHA-1 to the_hash_algo
+>   fast-import: switch various uses of SHA-1 to the_hash_algo
+>   pack-check: convert various uses of SHA-1 to abstract forms
+>   pack-write: switch various SHA-1 values to abstract forms
+>   read-cache: abstract away uses of SHA-1
+>   csum-file: rename sha1file to hashfile
+>   csum-file: abstract uses of SHA-1
+>   bulk-checkin: abstract SHA-1 usage
+>
+>  builtin/index-pack.c     | 108 +++++++++++++++++++++++------------------------
+>  builtin/pack-objects.c   |  52 +++++++++++------------
+>  builtin/unpack-objects.c |  18 ++++----
+>  bulk-checkin.c           |  28 ++++++------
+>  cache.h                  |  25 -----------
+>  csum-file.c              |  46 ++++++++++----------
+>  csum-file.h              |  38 ++++++++---------
+>  fast-import.c            |  70 +++++++++++++++---------------
+>  hash.h                   |  40 +++++++++++++++---
+>  pack-bitmap-write.c      |  30 ++++++-------
+>  pack-check.c             |  32 +++++++-------
+>  pack-write.c             |  77 ++++++++++++++++-----------------
+>  pack.h                   |   4 +-
+>  read-cache.c             |  58 ++++++++++++-------------
+>  sha1_file.c              |  72 +++++++++++++++----------------
+>  15 files changed, 351 insertions(+), 347 deletions(-)
+>
