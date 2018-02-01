@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 992B91F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 02:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A37B81F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 02:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932199AbeBACTD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 Jan 2018 21:19:03 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58544 "EHLO
+        id S932207AbeBACTG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 Jan 2018 21:19:06 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58552 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932188AbeBACTA (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 31 Jan 2018 21:19:00 -0500
+        by vger.kernel.org with ESMTP id S932159AbeBACTD (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 31 Jan 2018 21:19:03 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5F72A609D7;
-        Thu,  1 Feb 2018 02:18:59 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 66F2160FBC;
+        Thu,  1 Feb 2018 02:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1517451539;
-        bh=3JdhUwtLSbcjJDxhrW0l7m+8RJAYkSJ7s3eBKGmMsi0=;
+        s=default; t=1517451540;
+        bh=EUbHXqrjeLUyjr9vy3gQIa8MvrYvukUZrghzWKb1BrI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=hLEpxBz56poW8FwPlb6h09tlZ2IiKxdqanP91jX64ElpJHzDYnx469upjTME37Nry
-         pduqJCrlupfMoCU4CG0kOZhKcsY6kC4XpL3xRsqh0DXk4B+IAiGJc3tCrLUjChVdoV
-         1D8jdsbsk9Ys2cHynf99QiKt9PdKp+C5KlKtnN3qEQEHqX4xxI7MyGX4Eo03t+Pczl
-         1ugH5PmeB2UKZ6PvoVIuSWKzRpeIrOw20qXjr6mDfYeDFISuUGIlh5TgrcyBzT3Kki
-         RSH4PHvVDUoU5aJz8FhZdfGMWgjZX5Ulgb3uJxXTUxk8o/DZ6WzVmYsCm7C/VF4Net
-         6jowOKmeoomLXE/T3FzLxQi8Zvhe+mcUQTxPMf4QuDBU+rpEPFNEcbailq4cBT3vDZ
-         8Jv+8x49zFM0EiyrPicKPDBLubj5HpapmfLpshTvyycY8CVOkQ5mZ5/rmqYqSx5CXD
-         cGqU8Py+3rSB0tNznQUx+Ea3aKeXGNVsFhZbG3j2lCt23mOSB3y
+        b=Huf+ybwigVs7kb5mhLpdlDadDtkaqvnuJAznea0V/PnEwM0qsC5+tOZZ62a/F2mZw
+         2m2ivslpjUKjrz4USEH5vp701+d3ZN9d95a64+46KFFQnCBbNrwNKgIGT9zdj+2tRt
+         OnUYRTtJRLOiPUaHzb8eou0dT42AI7UAtMcHE+O3/j6JhTAiX94YF39WJ65yerXBU4
+         mm1Jn0HsdysCnGCFxVyBxkpBG52dH+jLEEg8i+AE3HezDQJaCkmSgCyZe6UsSEWQhV
+         upYV+yZ6QsiSh9omaoKkaA6jgIYgNKOG26/TP9SB9h8De+0hrScyc/kKLLL7rwTTDu
+         wj5Mqwz9xZw1QOsln2opKJVTgMYpsMPa9cZq5J/WhmzIsYT7oSesLO8nGUsvcon7/o
+         Zv3yBvBbRPgG977ZdoVgKZ2uWdH2zE2WNbrcYG4CNJ4i599k5HbYtGuPpp+vnOIQ5N
+         hGfblZhgkaax6BBYvA99jxxejKG7SwPgYEoan3yfCqTEpwGJtpt
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Patryk Obara <patryk.obara@gmail.com>,
         Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 01/12] hash: move SHA-1 macros to hash.h
-Date:   Thu,  1 Feb 2018 02:18:37 +0000
-Message-Id: <20180201021848.533188-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 02/12] hash: create union for hash context allocation
+Date:   Thu,  1 Feb 2018 02:18:38 +0000
+Message-Id: <20180201021848.533188-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.16.1.315.g94e5d3ead4
 In-Reply-To: <20180201021848.533188-1-sandals@crustytoothpaste.net>
 References: <20180201021848.533188-1-sandals@crustytoothpaste.net>
@@ -53,86 +53,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most of the other code dealing with SHA-1 and other hashes is located in
-hash.h, which is in turn loaded by cache.h.  Move the SHA-1 macros to
-hash.h as well, so we can use them in additional hash-related items in
-the future.
+In various parts of our code, we want to allocate a structure
+representing the internal state of a hash algorithm.  The original
+implementation of the hash algorithm abstraction assumed we would do
+that using heap allocations, and added a context size element to struct
+git_hash_algo.  However, most of the existing code uses stack
+allocations and conversion would needlessly complicate various parts of
+the code.  Add a union for the purpose of allocating hash contexts on
+the stack and a typedef for ease of use.  Use this union for defining
+the init, update, and final functions to avoid casts.  Remove the ctxsz
+element for struct git_hash_algo, which is no longer very useful.
+
+This does mean that stack allocations will grow slightly as additional
+hash functions are added, but this should not be a significant problem,
+since we don't allocate many hash contexts.  The improved usability and
+benefits from avoiding dynamic allocation outweigh this small downside.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 25 -------------------------
- hash.h  | 25 +++++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 25 deletions(-)
+ hash.h      | 15 +++++++++------
+ sha1_file.c | 20 +++++++++-----------
+ 2 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index d8b975a571..bfde6f757a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -16,31 +16,6 @@
- #include "sha1-array.h"
- #include "repository.h"
- 
--#ifndef platform_SHA_CTX
--/*
-- * platform's underlying implementation of SHA-1; could be OpenSSL,
-- * blk_SHA, Apple CommonCrypto, etc...  Note that including
-- * SHA1_HEADER may have already defined platform_SHA_CTX for our
-- * own implementations like block-sha1 and ppc-sha1, so we list
-- * the default for OpenSSL compatible SHA-1 implementations here.
-- */
--#define platform_SHA_CTX	SHA_CTX
--#define platform_SHA1_Init	SHA1_Init
--#define platform_SHA1_Update	SHA1_Update
--#define platform_SHA1_Final    	SHA1_Final
--#endif
--
--#define git_SHA_CTX		platform_SHA_CTX
--#define git_SHA1_Init		platform_SHA1_Init
--#define git_SHA1_Update		platform_SHA1_Update
--#define git_SHA1_Final		platform_SHA1_Final
--
--#ifdef SHA1_MAX_BLOCK_SIZE
--#include "compat/sha1-chunked.h"
--#undef git_SHA1_Update
--#define git_SHA1_Update		git_SHA1_Update_Chunked
--#endif
--
- #include <zlib.h>
- typedef struct git_zstream {
- 	z_stream z;
 diff --git a/hash.h b/hash.h
-index 7d7a864f5d..7122dea7b3 100644
+index 7122dea7b3..eb30f59be3 100644
 --- a/hash.h
 +++ b/hash.h
-@@ -15,6 +15,31 @@
- #include "block-sha1/sha1.h"
- #endif
+@@ -55,9 +55,15 @@
+ /* Number of algorithms supported (including unknown). */
+ #define GIT_HASH_NALGOS (GIT_HASH_SHA1 + 1)
  
-+#ifndef platform_SHA_CTX
-+/*
-+ * platform's underlying implementation of SHA-1; could be OpenSSL,
-+ * blk_SHA, Apple CommonCrypto, etc...  Note that including
-+ * SHA1_HEADER may have already defined platform_SHA_CTX for our
-+ * own implementations like block-sha1 and ppc-sha1, so we list
-+ * the default for OpenSSL compatible SHA-1 implementations here.
-+ */
-+#define platform_SHA_CTX	SHA_CTX
-+#define platform_SHA1_Init	SHA1_Init
-+#define platform_SHA1_Update	SHA1_Update
-+#define platform_SHA1_Final    	SHA1_Final
-+#endif
+-typedef void (*git_hash_init_fn)(void *ctx);
+-typedef void (*git_hash_update_fn)(void *ctx, const void *in, size_t len);
+-typedef void (*git_hash_final_fn)(unsigned char *hash, void *ctx);
++/* A suitably aligned type for stack allocations of hash contexts. */
++union git_hash_ctx {
++	git_SHA_CTX sha1;
++};
++typedef union git_hash_ctx git_hash_ctx;
 +
-+#define git_SHA_CTX		platform_SHA_CTX
-+#define git_SHA1_Init		platform_SHA1_Init
-+#define git_SHA1_Update		platform_SHA1_Update
-+#define git_SHA1_Final		platform_SHA1_Final
-+
-+#ifdef SHA1_MAX_BLOCK_SIZE
-+#include "compat/sha1-chunked.h"
-+#undef git_SHA1_Update
-+#define git_SHA1_Update		git_SHA1_Update_Chunked
-+#endif
-+
- /*
-  * Note that these constants are suitable for indexing the hash_algos array and
-  * comparing against each other, but are otherwise arbitrary, so they should not
++typedef void (*git_hash_init_fn)(git_hash_ctx *ctx);
++typedef void (*git_hash_update_fn)(git_hash_ctx *ctx, const void *in, size_t len);
++typedef void (*git_hash_final_fn)(unsigned char *hash, git_hash_ctx *ctx);
+ 
+ struct git_hash_algo {
+ 	/*
+@@ -69,9 +75,6 @@ struct git_hash_algo {
+ 	/* A four-byte version identifier, used in pack indices. */
+ 	uint32_t format_id;
+ 
+-	/* The size of a hash context (e.g. git_SHA_CTX). */
+-	size_t ctxsz;
+-
+ 	/* The length of the hash in binary. */
+ 	size_t rawsz;
+ 
+diff --git a/sha1_file.c b/sha1_file.c
+index 3da70ac650..ec6ecea170 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -39,32 +39,32 @@ const struct object_id empty_blob_oid = {
+ 	EMPTY_BLOB_SHA1_BIN_LITERAL
+ };
+ 
+-static void git_hash_sha1_init(void *ctx)
++static void git_hash_sha1_init(git_hash_ctx *ctx)
+ {
+-	git_SHA1_Init((git_SHA_CTX *)ctx);
++	git_SHA1_Init(&ctx->sha1);
+ }
+ 
+-static void git_hash_sha1_update(void *ctx, const void *data, size_t len)
++static void git_hash_sha1_update(git_hash_ctx *ctx, const void *data, size_t len)
+ {
+-	git_SHA1_Update((git_SHA_CTX *)ctx, data, len);
++	git_SHA1_Update(&ctx->sha1, data, len);
+ }
+ 
+-static void git_hash_sha1_final(unsigned char *hash, void *ctx)
++static void git_hash_sha1_final(unsigned char *hash, git_hash_ctx *ctx)
+ {
+-	git_SHA1_Final(hash, (git_SHA_CTX *)ctx);
++	git_SHA1_Final(hash, &ctx->sha1);
+ }
+ 
+-static void git_hash_unknown_init(void *ctx)
++static void git_hash_unknown_init(git_hash_ctx *ctx)
+ {
+ 	die("trying to init unknown hash");
+ }
+ 
+-static void git_hash_unknown_update(void *ctx, const void *data, size_t len)
++static void git_hash_unknown_update(git_hash_ctx *ctx, const void *data, size_t len)
+ {
+ 	die("trying to update unknown hash");
+ }
+ 
+-static void git_hash_unknown_final(unsigned char *hash, void *ctx)
++static void git_hash_unknown_final(unsigned char *hash, git_hash_ctx *ctx)
+ {
+ 	die("trying to finalize unknown hash");
+ }
+@@ -75,7 +75,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		0x00000000,
+ 		0,
+ 		0,
+-		0,
+ 		git_hash_unknown_init,
+ 		git_hash_unknown_update,
+ 		git_hash_unknown_final,
+@@ -86,7 +85,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		"sha-1",
+ 		/* "sha1", big-endian */
+ 		0x73686131,
+-		sizeof(git_SHA_CTX),
+ 		GIT_SHA1_RAWSZ,
+ 		GIT_SHA1_HEXSZ,
+ 		git_hash_sha1_init,
