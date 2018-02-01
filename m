@@ -7,155 +7,94 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A925C1F576
-	for <e@80x24.org>; Thu,  1 Feb 2018 09:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68A941F576
+	for <e@80x24.org>; Thu,  1 Feb 2018 10:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751877AbeBAJ7V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 04:59:21 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:39506 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751628AbeBAJ7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 04:59:20 -0500
-Received: by mail-pg0-f65.google.com with SMTP id w17so12139124pgv.6
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 01:59:20 -0800 (PST)
+        id S1751873AbeBAKDL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 05:03:11 -0500
+Received: from mail-ot0-f180.google.com ([74.125.82.180]:42699 "EHLO
+        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751796AbeBAKDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 05:03:10 -0500
+Received: by mail-ot0-f180.google.com with SMTP id a7so13461439otk.9
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 02:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=DNjNQfNltsz5sivzUUbpZD/o7W1eMIj3Tkpjp6NZmRc=;
-        b=MyEMMfyvFThhsHst49pWhTsbfNUL0b6F9laBsVSMdYswzxdoxvqDUtdz4tumVXtbZh
-         Duhq6jNFlrfCQycjntaBS1olrKciWN27RIAhcSZl4QeGH792gL7UFxu13IWxq1t0MiU/
-         FAaFnL+fah3m2QAvp2975daWaFFOiLDJ6Ei88a7UhWsPTp7GHpJJXt38kJHhZPCwaRkU
-         u0boaTacT1fBITvir2TEDdAhF0rdSY7TJPAg+ZK6ilHb+FH+1YcWS2t3kTN341gziT+u
-         oLobZ4gan/zqlWjjxe/suju9WuYkedSd0ftRlFo4qaYGIlsPlRo+ANTJWCAj0WryxIqY
-         1n3A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=R4soU3CUhAcJHosTFpiTrifW9tEUAwTmLngOajZ55as=;
+        b=GjOg1CoCprRTtAAxIL+gQH/hHlwzN7mV1VVLuAFWxZc8yF0lQKz9+FRq1J9hr6F738
+         M73KgIiUHK7zLuIU2yQG0pDTSSmHPLJFWmLVvXFjCmh7YKQVPNXb9KeWVu7SzM20nefZ
+         VMuGm1Eohx6Hh66iUa8BzYKnvpfWEluFeTg4RUHQcl7xSyW+W5lWc5CwxIk7xEWgrg2N
+         5a5U6PXQ+Oy461xV9xgGEAFluEDQMgOmtllLwvEq47m1jMvEXVR+ap5lSewgs6t8JenK
+         /6hCY98KeTeOWi9+yLPlaxlZGqGDTMNOQUuKh7S6dEESeIw2ffVagKdoBqM/RzJFdeQs
+         +ONA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=DNjNQfNltsz5sivzUUbpZD/o7W1eMIj3Tkpjp6NZmRc=;
-        b=hb943Xaiid8vqXikc588cbmtL0fi1FrdB2Jrc8ZmVyOcZWK5Q74hIxs4azQYbMZgwp
-         VdDsp081LRpb/uMGRAn+DjrA49DxAmaW+hOHvh6bro7y5MoO/qEEpi6YNNZx2jtRWW71
-         kEGkZ1vijJxJ+PgXc6KKJ9tPP+wpRZ82LgWLxose2O2ka/UtNrKX12Zbz+AHJC6jLpcU
-         h3IHJkCqWQyqUiD2jqZv9UE8UoWt0cdAfXJOTtw/k3lZOd9YCxmiEt9tgQ04iL13BaCU
-         5scow0ASjf4YjYuxJvl3Tjaa2KzeUgedBYyvCmzHKE/E396l3+7q6bLMmab8qX7qtrqh
-         fn3A==
-X-Gm-Message-State: AKwxytfxqdj5duVQr64R5a+8ED/cfFRBcpfFTo8GPjSC15lNOk/FilKS
-        u6jqbDxAZcfFqOc1O8tT1TqgxQ==
-X-Google-Smtp-Source: AH8x227NNIid7e89EEYx5tFNB3hKguHCwXQSIYAcncmvUig4Jywr5AlmSv1eWaOuZT2FOxxj3Y0N5Q==
-X-Received: by 10.99.44.209 with SMTP id s200mr2228007pgs.407.1517479160053;
-        Thu, 01 Feb 2018 01:59:20 -0800 (PST)
-Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id v11sm28670180pgf.83.2018.02.01.01.59.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Feb 2018 01:59:19 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 16:59:15 +0700
-Date:   Thu, 1 Feb 2018 16:59:15 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>, tim@tim-landscheidt.de
-Subject: Re: [PATCH] gitignore.txt: elaborate shell glob syntax
-Message-ID: <20180201095914.GA6939@ash>
-References: <20180126095520.919-1-pclouds@gmail.com>
- <20180131093051.15525-1-pclouds@gmail.com>
- <20180131093051.15525-3-pclouds@gmail.com>
- <xmqqh8r1r4u1.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=R4soU3CUhAcJHosTFpiTrifW9tEUAwTmLngOajZ55as=;
+        b=szcJTZ1LiwcdraPAWvALE6zt1U+yAXouRTyQmcTybH0iAeOV+eqiNOvceArqT2eF0z
+         KHCfbj/YDJJ6q8oz+y8nCLefAjsceP15k00An/mzmex9Dam/8Xva7zqqcYqNqbId+M09
+         IyJdKdh1P4xUC6EvJx5D76D1uxE3svJifuVmG7bCvGC6TqVzbrPrhQgQJ7Lszdoj7Vnl
+         6MCRkLktsaAUARqDR1zeLEVi/R5MZAW+LEFFRiibpphYbBzljgDuR9bhEDrnSWSqU7LZ
+         e5Jdzl/CgVWboIG4pPrXSWmUaKDtQpMh9HHfx94ZjcqkyIAP19C9frN5qx0GeTWQz2cc
+         HKMQ==
+X-Gm-Message-State: AKwxyte5ytNdkcb35027GadPTAH35u+fDPafkTXBagg5nUX/Sj+CbQPq
+        IOKLB/9H4Aek1XjBPh+ttadcidzyrH2jKxoJgxw=
+X-Google-Smtp-Source: AH8x227XQ0MwZ5HtZSCdkJWaN0en/KAr91f/ArXNQgkjyw/dtlK/rV0zwFuU5yEasrqu4MaJ9KCGZlFI1re39HJD4eg=
+X-Received: by 10.157.47.177 with SMTP id r46mr16711421otb.301.1517479389792;
+ Thu, 01 Feb 2018 02:03:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqh8r1r4u1.fsf@gitster-ct.c.googlers.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.74.102.205 with HTTP; Thu, 1 Feb 2018 02:02:39 -0800 (PST)
+In-Reply-To: <xmqqlggdr519.fsf@gitster-ct.c.googlers.com>
+References: <20180126095520.919-1-pclouds@gmail.com> <20180131093051.15525-1-pclouds@gmail.com>
+ <20180131093051.15525-5-pclouds@gmail.com> <xmqqlggdr519.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 1 Feb 2018 17:02:39 +0700
+Message-ID: <CACsJy8D8PaDR0r+6AKMgPo9UBcWYQC8goaVkVhxMCXCa1E9F9A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] rebase: introduce and use pseudo-ref ORIG_COMMIT
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tim Landscheidt <tim@tim-landscheidt.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 31, 2018 at 03:22:46PM -0800, Junio C Hamano wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Thu, Feb 1, 2018 at 6:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> The new command `git rebase --show-current-patch` is useful for seeing
+>> the commit related to the current rebase state. Some however may find
+>> the "git show" command behind it too limiting. You may want to
+>> increase context lines, do a diff that ignores whitespaces...
+>>
+>> For these advanced use cases, the user can execute any command they
+>> want with the new pseudo ref ORIG_COMMIT.
+>>
+>> This also helps show where the stopped commit is from, which is hard
+>> to see from the previous patch which implements --show-current-patch.
+>>
+>> Helped-by: Tim Landscheidt <tim@tim-landscheidt.de>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>
+> Hmph, how is this new file conceptually different from existing ones
+> like CHERRY_PICK_HEAD?
 
-Argh.. stray patches strike again. It's not supposed to be in this
-thread but in
-
-https://public-inbox.org/git/%3C20180130101351.GA761@ash%3E/
-
-> 
-> >     `.gitignore` file).
-> >  
-> > - - Otherwise, Git treats the pattern as a shell glob suitable
-> > -   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
-> > -   wildcards in the pattern will not match a / in the pathname.
-> > -   For example, "Documentation/{asterisk}.html" matches
-> > -   "Documentation/git.html" but not "Documentation/ppc/ppc.html"
-> > -   or "tools/perf/Documentation/perf.html".
-> > + - Otherwise, Git treats the pattern as a shell glob: '{asterisk}'
-> > +   matches anything except '/', '?' matches any one character except
-> > +   '/' and '[]' matches one character in a selected range. See
-> > +   fnmatch(3) and the FNM_PATHNAME flag for a more accurate
-> > +   description.
-> 
-> Where the original did not quote single letters at all, this uses a
-> pair of single quotes.  Did you make sure it renders well in HTML
-> and manpage already or should I do that for you before applying?
-
-I didn't. I thought I didn't add any weird symbols. I was wrong. These
-are now wrapped as "`stuff`" to be displayed the same way as in nearby
-paragraphs. Verified both man and HTML pages are rendered well.
-
-> I think what you wrote is accurate enough already, and those who
-> want to go to fnmatch(3) would do so not for accuracy but for
-> authority ;-) Perhaps s/accurate/detailed/?
-
-Well there are rooms for guessing, for example "matches anything" does
-not tell you straight that it can match multiple characters. Anyway
-fixed too.
-
--- 8< --
-Subject: [PATCH v2] gitignore.txt: elaborate shell glob syntax
-
-`fnmatch(3)` is a great mention if the intended audience is
-programmers. For normal users it's probably better to spell out what
-a shell glob is.
-
-This paragraph is updated to roughly tell (or remind) what the main
-wildcards are supposed to do. All the details are still hidden away
-behind the `fnmatch(3)` wall because bringing the whole specification
-here may be too much.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/gitignore.txt | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 63260f0056..ff5d7f9ed6 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -102,12 +102,11 @@ PATTERN FORMAT
-    (relative to the toplevel of the work tree if not from a
-    `.gitignore` file).
- 
-- - Otherwise, Git treats the pattern as a shell glob suitable
--   for consumption by fnmatch(3) with the FNM_PATHNAME flag:
--   wildcards in the pattern will not match a / in the pathname.
--   For example, "Documentation/{asterisk}.html" matches
--   "Documentation/git.html" but not "Documentation/ppc/ppc.html"
--   or "tools/perf/Documentation/perf.html".
-+ - Otherwise, Git treats the pattern as a shell glob: "`*`" matches
-+   anything except "`/`", "`?`" matches any one character except "`/`"
-+   and "`[]`" matches one character in a selected range. See
-+   fnmatch(3) and the FNM_PATHNAME flag for a more detailed
-+   description.
- 
-  - A leading slash matches the beginning of the pathname.
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
--- 
-2.16.1.205.g271f633410
-
--- 8< --
+Conceptually the same, except that CHERRY_PICK_HEAD can't be reused
+because it's specifically tied to git-cherry-pick (there's even code
+that delete this ref if cherry-pick is run as part of rebase, and
+git-status uses this ref to see if a cherry-pick is in progress).
+There's also REVERT_HEAD in sequencer.c, same purpose but for
+git-revert. Perhaps I should rename this new ref to REBASE_HEAD to
+follow the same naming?
+--=20
+Duy
