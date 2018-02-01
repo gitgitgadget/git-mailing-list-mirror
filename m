@@ -2,96 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 187011F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 13:02:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3203A1F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 14:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752103AbeBANCx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 08:02:53 -0500
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:34070 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751949AbeBANCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 08:02:52 -0500
-Received: by mail-wm0-f44.google.com with SMTP id j21so2732029wmh.1
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 05:02:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=logLCiirjGMfxYoh3UH5UlT4fVlQ6CcwinHMsLbRMNQ=;
-        b=WJeqciEMzRjslrD8TImIsC+NWUbIPecXyJZ4cNbBVQwXtQDTJ6oNHoJrYr76LMK3Hp
-         eFZpFi07GCT/z/ie1pFUgCRA6bFGLVVhyvNJHfts4ZrrIcXmu5IIpYOGmB5o4L43sZ01
-         EVcSeEwKVNxlJ9WrGOtipKMYP3ueSHPKs860T6XWBnXQWOlmFM7i7xKkbHN1Vx52loPf
-         /AqTUt9SwXRFiZgG9+b8VYZFCmguwfd9uQJCYMJM8be/S6MrXF4oa+eEsZe7JIqF1d7s
-         ETEGyJMpMF5CrHaACKX6o+nzWRG6so2Bg4mxzlchZmG6huiMUI6uX5APK9aRUdnezvMU
-         qB3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=logLCiirjGMfxYoh3UH5UlT4fVlQ6CcwinHMsLbRMNQ=;
-        b=hLzGBGnlneYMRgCe36HTpvdGOUMWWhZ6JMiHh1XH8NYwnRAcaRgYhBhjSyA0H8BLOc
-         2wMkIO2o/CcIPex2iE4BQoScynE+GgSZyb5zzS3hTM9pqQ3FY4SGzZBiraTSa5S98Lkr
-         w7UlQTvQViYlYVAf3CXbF9qariCvzQchaygh82mi9GKM4kpajAke22UBfpqmp/ZmTTLi
-         Kt1T6N3DTvuDwiGq6MqRv/y8NLAwMxHSxBOSW283VABKwtftpjU58UiIMv8V+pFZG+Gb
-         XbZU15UxbWp15eUPZg4JE7qzUfCuDF0j3LIMXNLNHluDqMvcBmO0F0dgepHFSQMjSjaj
-         a8Sw==
-X-Gm-Message-State: AKwxytc2xntckMJFzHc5RPYOYadE/oI7FY6ld0JQS7vNTDZ0Cv3b/Ebi
-        d3eD7YEiWDrtA6GtO67mXAS2Idmf
-X-Google-Smtp-Source: AH8x2259l8ToKmUu3UMr9lWzD8vcPxE2UfkekITI2BCXXZfcw+voupthlX89lid33q/ttIeimuCsNA==
-X-Received: by 10.80.151.198 with SMTP id f6mr63260911edb.106.1517490171148;
-        Thu, 01 Feb 2018 05:02:51 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id h9sm6503956edi.79.2018.02.01.05.02.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Feb 2018 05:02:49 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ben Peart <benpeart@microsoft.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: t3404.6 breaks on master under GIT_FSMONITOR_TEST
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-Date:   Thu, 01 Feb 2018 14:02:49 +0100
-Message-ID: <87k1vwn9qe.fsf@evledraar.gmail.com>
+        id S1751666AbeBAOFI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 09:05:08 -0500
+Received: from mx2.suse.de ([195.135.220.15]:44178 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751526AbeBAOFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 09:05:06 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 4F78FABB2;
+        Thu,  1 Feb 2018 14:05:05 +0000 (UTC)
+Subject: Re: [PATCH] tag: add --edit option
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <450140f4-d410-4f1a-e5c1-c56d345a7f7c@suse.com>
+ <CAPig+cTFsp60KB+quuytW_nV2crLcjRV-PYN-3bO7tRY0_xu6w@mail.gmail.com>
+ <fb3387f9-a341-c4dc-fa37-581229fb2c1d@suse.de>
+ <bbc03595-cb31-63b8-3f4c-cfa04bb9ff27@suse.de>
+ <CAPig+cTEoM3qYRN6j=zSVv1LPx_ggVuxqTMMK0SpjtYEqOiBMA@mail.gmail.com>
+From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
+Openpgp: preference=signencrypt
+Message-ID: <4929bb41-54e7-4ba4-459f-e0d0649a14bf@suse.de>
+Date:   Thu, 1 Feb 2018 15:05:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
+ Thunderbird/58.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAPig+cTEoM3qYRN6j=zSVv1LPx_ggVuxqTMMK0SpjtYEqOiBMA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: fr-xx-classique+reforme1990
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The GIT_FSMONITOR_TEST variable allows you to roundtrip the fsmonitor
-codpath in the whole test suite. On both Debian & CentOS this breaks for
-me:
 
-    (cd t && GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all ./t3404-rebase-interactive.sh -i)
 
-Whereas this works:
+Le 01/02/2018 à 11:56, Eric Sunshine a écrit :
+> On Thu, Feb 1, 2018 at 5:43 AM, Nicolas Morey-Chaisemartin
+> <NMoreyChaisemartin@suse.de> wrote:
+>> Le 01/02/2018 à 11:34, Nicolas Morey-Chaisemartin a écrit :
+>>> Le 01/02/2018 à 11:16, Eric Sunshine a écrit :
+>>>> A little below this change is where launch_editor() is actually
+>>>> invoked. If it fails for some reason, it prints:
+>>>>
+>>>>     Please supply the message using either -m or -F option.
+>>>>
+>>>> which seems a bit counterintuitive if the user *did* specify one of
+>>>> those options along with --edit. I wonder if that message needs to be
+>>>> adjusted.
+>>>>
+>>> Yes I'll fix this.
+>> I just checked what commit.c does and it seems to behave as my patch:
+>>         if (launch_editor(git_path_commit_editmsg(), NULL, env.argv)) {
+>>             fprintf(stderr,
+>>             _("Please supply the message using either -m or -F option.\n"));
+>>
+>> To be honest the message is not that clear either.
+>> If I'm reading launch_editor right most (or all) its falire are du to a failure to launch the editor or the editor crashed/exited with an error.
+>> In this case, I wouldn't advise the user to use -m or -F but to fix its editor.
+> Indeed, I also looked at the implementation of launch_editor(), and my
+> "wondering" about whether the message needed adjustment was just that.
+> The message seems somewhat counterintuitive in this case, but I didn't
+> necessarily have a better suggestion. A valid response, therefore,
+> might be to punt on it and leave that change for the future, or
+> perhaps take it on as a second patch which adjusts the message in both
+> commands. I don't have strong feelings about it at this time.
 
-    (cd t && GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all GIT_SKIP_TESTS=t3404.6 ./t3404-rebase-interactive.sh -i)
-
-The entirety of the rest of the test suite still passes with
-GIT_FSMONITOR_TEST.
-
-This has been failing ever since GIT_FSMONITOR_TEST was introduced in
-883e248b8a ("fsmonitor: teach git to optionally utilize a file system
-monitor to speed up detecting new or changed files.", 2017-09-22). Under
--v -x -i:
-
-    + echo test_must_fail: command succeeded: env FAKE_LINES=exec_echo_foo_>file1 1 git rebase -i HEAD^
-    test_must_fail: command succeeded: env FAKE_LINES=exec_echo_foo_>file1 1 git rebase -i HEAD^
-    + return 1
-    error: last command exited with $?=1
-    not ok 6 - rebase -i with the exec command checks tree cleanness
-    #
-    #               git checkout master &&
-    #               set_fake_editor &&
-    #               test_must_fail env FAKE_LINES="exec_echo_foo_>file1 1" git rebase -i HEAD^ &&
-
-Maybe once this is fixed running the test suite under GIT_FSMONITOR_TEST
-would be a useful Travis target, but I don't know the current status of
-adding new options to Travis.
+It seems all the error paths from launch_editor have an error message.
+A simple "Editor failure, cancelling {commit, tag}" would probably be a better error message.
+I'll post another series for that.
