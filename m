@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D02D1F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 13:02:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 876451F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 13:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752543AbeBANCg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 08:02:36 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:38358 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752497AbeBANCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 08:02:35 -0500
-Received: by mail-pg0-f65.google.com with SMTP id y27so12364128pgc.5
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 05:02:34 -0800 (PST)
+        id S1752098AbeBANCk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 08:02:40 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:35075 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752038AbeBANCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 08:02:39 -0500
+Received: by mail-pl0-f66.google.com with SMTP id j19so3453652pll.2
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 05:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iXgqfGpAJ0ak7qQ8sbuHhEG/s+TbqajPUV3ochMMlac=;
-        b=VxxOzhxF3tUDk1Cr/C8N/ffLfe8voH5NPQ3eXX2C6qoSrz4pBVVwfRQSCZ9ViLK4ch
-         /c6/oCtlXP8PH3XEXWOZBa94AZBe2ckTb7BCX6/8NsptjOtL1oXE8go2C4r/b2Q3CwkR
-         RteF48jRtz1QyCUjQgXyBsExShLXqSyVPnd9nkxCmAS/pN5yQ53qn0v4vXIpdk1I46jB
-         9Yy7gyPh3+DYyr6QC+3nBz7vEP0IQooeAWufP5w9unhw85GYc/qcLvZVut0IbUfW0vhe
-         7agfuNkNT2D71P0kp119I1vtdQr3NV7kTeeomaPGLq/jY9BZOBp4UOaHTOLmh+BKxrpf
-         84Zw==
+        bh=s6x2I0oxLuYE1KkrpltdyuYChNJPC8lhQYLNq7LhxCU=;
+        b=a+Qw9u3m80eC3Ih4jpZgI4Al6aqE6KriGEnLkPd62Jv3c9b7XD8QpaEfVltw8xcXi2
+         WA87PUq9vRGKraPozNfjIkG1t/EUoANCnkX6HNWDhmyZUvyZmmUtHNX1D5VkuwjCmnfb
+         OYejMj2efg0eO1ulGCX5uWfrxtdjLCFBElhsDuAZ7Zdn+nfXFabae0eqQ6PbiXdAm3IR
+         SWldXg/4xeCy4ICeMK9eCNFyQoOcJpkJZ2w/7K6xUaXhTCKknROcC+x9YExeHIX5IgsZ
+         pNE9+LWSK35rh1SIk6Hg9hCSdefsEEf4dNGq5wbHtVjGF/txP3rQ2BqO/lCDoEty/Zec
+         P6MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iXgqfGpAJ0ak7qQ8sbuHhEG/s+TbqajPUV3ochMMlac=;
-        b=XvLxxTEwt6bKuPLDW0rap0Wg+vnUzdDoxYUfpqF4kPk2ZrVsYAEJtZq4N+fSNEYr9v
-         zrA6ZnfIrwZ1orXNChd8MUQeGNydRA2yI4+rMgD/UX/ZOS2c0tVrJznJz2dNJPfLn008
-         m/PBmEsvig7OyP9dW/ZzTb8bkRkDh6bF7Kv0CB1exsJc2mrVuhqtKifpKT5gwlf778/L
-         x9FHvp1axd+BZ6MQQ89u6ug45ZveSYZtQY3vyXiGL7zBkb05t4VSL0nAl5mTyuEThIEP
-         LSXjnTDIaJZWzSyMiPLJu8RIjIi1YOIgB7gYlcXgTneK1n1EfG+zQviNfJs0sJIRwVd3
-         Ntpg==
-X-Gm-Message-State: AKwxytcoXfHPM07FU/grB/3VkZmMyBWxRBDqawLIkEXYbo+Xy8kRHgmf
-        OFBBXLSWOOoj2+OdvTjkZPJWFw==
-X-Google-Smtp-Source: AH8x225A+0b8ixSBxcUlsmMIGdYzM4QPdA12KxbsHbPbdrzTwpcRoNJeZfR/3WP+a3iYNZCebIRJ7g==
-X-Received: by 10.98.202.84 with SMTP id n81mr36633280pfg.226.1517490153846;
-        Thu, 01 Feb 2018 05:02:33 -0800 (PST)
+        bh=s6x2I0oxLuYE1KkrpltdyuYChNJPC8lhQYLNq7LhxCU=;
+        b=I3JL9IYCaMS+UKVhgNQxF5ieD6Xr9lkB02iOnXPL3z5k7zKWxiUYdtaz57wXKK0zNx
+         Q8ZTSHTxZvIPLcNGLPCOdwejU3ZpsFsET5jebQmJ3BdPF9s0rUGtEudocwd2s/DAVy0N
+         jPb5TdH43t0eVEG6kfyLyoThNgxkpzArdzB5P1z6re/BY+H7eH4OufxAE3EsY6bMLiv8
+         gybXpJfcglQ9AguitJDVIJULp8KdnEgtw3e7tZ9VFAk+JwaGE06y0iCs5+x9BvcJlvlo
+         O3KcppJYCISFmyHWmjN+16/ppFyUeuPFKu91TpGpcdaQberluNxhwAPZHLNn0r7dkvIo
+         HVJQ==
+X-Gm-Message-State: AKwxytfckWWHYP4lkPmhuVbG6AdWtaxqco6bFyRy3NkzvEyzadbEHzHx
+        QpxCREM/TO+vSxwkcJ/4EDVUjw==
+X-Google-Smtp-Source: AH8x227LL3DzG/HaA527jWIC/9JQ9fwGHnIrdh9z/5I32Kd+kYS58GKsh2w+HIpMDf6nYXUkUqP0HQ==
+X-Received: by 2002:a17:902:7402:: with SMTP id g2-v6mr1612205pll.170.1517490158398;
+        Thu, 01 Feb 2018 05:02:38 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id 14sm29856292pga.12.2018.02.01.05.02.31
+        by smtp.gmail.com with ESMTPSA id y18sm47797478pfa.175.2018.02.01.05.02.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Feb 2018 05:02:33 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 20:02:28 +0700
+        Thu, 01 Feb 2018 05:02:37 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 20:02:34 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 1/2] diff.c: refactor pprint_rename() to use strbuf
-Date:   Thu,  1 Feb 2018 20:02:20 +0700
-Message-Id: <20180201130221.15563-2-pclouds@gmail.com>
+Subject: [PATCH v3 2/2] diff: add --stat-with-summary
+Date:   Thu,  1 Feb 2018 20:02:21 +0700
+Message-Id: <20180201130221.15563-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180201130221.15563-1-pclouds@gmail.com>
 References: <20180201130221.15563-1-pclouds@gmail.com>
@@ -69,140 +69,259 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of passing char* around, let function handle strbuf
-directly. All callers already use strbuf internally.
+Certain information is currently shown with --summary, but when used
+in combination with --stat it's a bit hard to read since info of the
+same file is in two places (--stat and --summary).
 
-This helps kill the "not free" exception in free_diffstat_info(). I
-don't think this code is so critical that we need to avoid some free()
-calls.
+On top of that, commits that add or remove files double the number of
+display lines, which could be a lot if you add or remove a lot of
+files.
 
-The other benefit comes in the next patch, where we append something
-in pname before returning from fill_print_name(). With strbuf, it's
-very simple. With "char *" we may have to resort to explicit
-reallocation and stuff.
+--stat-with-summary embeds most of --summary back in --stat in the
+little space between the file name part and the graph line, e.g. with
+commit 0433d533f1:
+
+   Documentation/merge-config.txt         |  4 +
+   builtin/merge.c                        |  2 +
+   ...-pull-verify-signatures.sh (new +x) | 81 ++++++++++++++
+   t/t7612-merge-verify-signatures.sh     | 45 ++++++++
+   4 files changed, 132 insertions(+)
+
+It helps both condensing information and saving some text
+space. What's new in diffstat is:
+
+- A new 0644 file is shown as (new)
+- A new 0755 file is shown as (new +x)
+- A new symlink is shown as (new +l)
+- A deleted file is shown as (gone)
+- A mode change adding executable bit is shown as (mode +x)
+- A mode change removing it is shown as (mode -x)
+
+Note that --stat-with-summary does not contain all the information
+--summary provides. Rewrite percentage is not shown but it could be
+added later, like R50% or C20%.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 59 ++++++++++++++++++++++++++--------------------------------
- 1 file changed, 26 insertions(+), 33 deletions(-)
+ Documentation/diff-options.txt                |  8 ++++
+ diff.c                                        | 42 ++++++++++++++++++-
+ diff.h                                        |  1 +
+ t/t4013-diff-various.sh                       |  5 +++
+ ...-pretty_--root_--stat-with-summary_initial | 12 ++++++
+ ...etty_-R_--root_--stat-with-summary_initial | 12 ++++++
+ ...diff-tree_--stat-with-summary_initial_mode |  4 ++
+ ...f-tree_-R_--stat-with-summary_initial_mode |  4 ++
+ 8 files changed, 87 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4013/diff.diff-tree_--pretty_--root_--stat-with-summary_initial
+ create mode 100644 t/t4013/diff.diff-tree_--pretty_-R_--root_--stat-with-summary_initial
+ create mode 100644 t/t4013/diff.diff-tree_--stat-with-summary_initial_mode
+ create mode 100644 t/t4013/diff.diff-tree_-R_--stat-with-summary_initial_mode
 
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c330c01ff0..595e4cd548 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -128,6 +128,14 @@ have to use `--diff-algorithm=default` option.
+ These parameters can also be set individually with `--stat-width=<width>`,
+ `--stat-name-width=<name-width>` and `--stat-count=<count>`.
+ 
++--stat-with-summary::
++	Output a condensed summary of extended header information such
++	as file creations or deletions ("new" or "gone", optionally "+l"
++	if it's a symlink) and mode changes ("+x" or "-x" for adding
++	or removing executable bit respectively) in diffstat. The
++	information is put betwen the filename part and the graph
++	part. Implies `--stat`.
++
+ --numstat::
+ 	Similar to `--stat`, but shows number of added and
+ 	deleted lines in decimal notation and pathname without
 diff --git a/diff.c b/diff.c
-index 0a9a0cdf18..9d874a670f 100644
+index 9d874a670f..6bf9867388 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -2045,11 +2045,10 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 	}
- }
+@@ -2129,6 +2129,7 @@ struct diffstat_t {
+ 		char *from_name;
+ 		char *name;
+ 		char *print_name;
++		const char *comments;
+ 		unsigned is_unmerged:1;
+ 		unsigned is_binary:1;
+ 		unsigned is_renamed:1;
+@@ -2205,6 +2206,9 @@ static void fill_print_name(struct diffstat_file *file)
+ 	else
+ 		quote_c_style(file->name, &pname, NULL, 0);
  
--static char *pprint_rename(const char *a, const char *b)
-+static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- {
- 	const char *old = a;
- 	const char *new = b;
--	struct strbuf name = STRBUF_INIT;
- 	int pfx_length, sfx_length;
- 	int pfx_adjust_for_slash;
- 	int len_a = strlen(a);
-@@ -2059,10 +2058,10 @@ static char *pprint_rename(const char *a, const char *b)
- 	int qlen_b = quote_c_style(b, NULL, NULL, 0);
- 
- 	if (qlen_a || qlen_b) {
--		quote_c_style(a, &name, NULL, 0);
--		strbuf_addstr(&name, " => ");
--		quote_c_style(b, &name, NULL, 0);
--		return strbuf_detach(&name, NULL);
-+		quote_c_style(a, name, NULL, 0);
-+		strbuf_addstr(name, " => ");
-+		quote_c_style(b, name, NULL, 0);
-+		return;
- 	}
- 
- 	/* Find common prefix */
-@@ -2109,19 +2108,18 @@ static char *pprint_rename(const char *a, const char *b)
- 	if (b_midlen < 0)
- 		b_midlen = 0;
- 
--	strbuf_grow(&name, pfx_length + a_midlen + b_midlen + sfx_length + 7);
-+	strbuf_grow(name, pfx_length + a_midlen + b_midlen + sfx_length + 7);
- 	if (pfx_length + sfx_length) {
--		strbuf_add(&name, a, pfx_length);
--		strbuf_addch(&name, '{');
-+		strbuf_add(name, a, pfx_length);
-+		strbuf_addch(name, '{');
- 	}
--	strbuf_add(&name, a + pfx_length, a_midlen);
--	strbuf_addstr(&name, " => ");
--	strbuf_add(&name, b + pfx_length, b_midlen);
-+	strbuf_add(name, a + pfx_length, a_midlen);
-+	strbuf_addstr(name, " => ");
-+	strbuf_add(name, b + pfx_length, b_midlen);
- 	if (pfx_length + sfx_length) {
--		strbuf_addch(&name, '}');
--		strbuf_add(&name, a + len_a - sfx_length, sfx_length);
-+		strbuf_addch(name, '}');
-+		strbuf_add(name, a + len_a - sfx_length, sfx_length);
- 	}
--	return strbuf_detach(&name, NULL);
- }
- 
- struct diffstat_t {
-@@ -2197,23 +2195,17 @@ static void show_graph(struct strbuf *out, char ch, int cnt,
- 
- static void fill_print_name(struct diffstat_file *file)
- {
--	char *pname;
-+	struct strbuf pname = STRBUF_INIT;
- 
- 	if (file->print_name)
- 		return;
- 
--	if (!file->is_renamed) {
--		struct strbuf buf = STRBUF_INIT;
--		if (quote_c_style(file->name, &buf, NULL, 0)) {
--			pname = strbuf_detach(&buf, NULL);
--		} else {
--			pname = file->name;
--			strbuf_release(&buf);
--		}
--	} else {
--		pname = pprint_rename(file->from_name, file->name);
--	}
--	file->print_name = pname;
-+	if (file->is_renamed)
-+		pprint_rename(&pname, file->from_name, file->name);
-+	else
-+		quote_c_style(file->name, &pname, NULL, 0);
++	if (file->comments)
++		strbuf_addf(&pname, " (%s)", file->comments);
 +
-+	file->print_name = strbuf_detach(&pname, NULL);
+ 	file->print_name = strbuf_detach(&pname, NULL);
  }
  
- static void print_stat_summary_inserts_deletes(struct diff_options *options,
-@@ -2797,8 +2789,7 @@ static void free_diffstat_info(struct diffstat_t *diffstat)
- 	int i;
- 	for (i = 0; i < diffstat->nr; i++) {
- 		struct diffstat_file *f = diffstat->files[i];
--		if (f->name != f->print_name)
--			free(f->print_name);
-+		free(f->print_name);
- 		free(f->name);
- 		free(f->from_name);
- 		free(f);
-@@ -5241,10 +5232,12 @@ static void show_rename_copy(struct diff_options *opt, const char *renamecopy,
- 		struct diff_filepair *p)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	char *names = pprint_rename(p->one->path, p->two->path);
-+	struct strbuf names = STRBUF_INIT;
+@@ -3239,6 +3243,32 @@ static void builtin_diff(const char *name_a,
+ 	return;
+ }
+ 
++static char *get_compact_summary(const struct diff_filepair *p, int is_renamed)
++{
++	if (!is_renamed) {
++		if (p->status == DIFF_STATUS_ADDED) {
++			if (S_ISLNK(p->two->mode))
++				return "new +l";
++			else if ((p->two->mode & 0777) == 0755)
++				return "new +x";
++			else
++				return "new";
++		} else if (p->status == DIFF_STATUS_DELETED)
++			return "gone";
++	}
++	if (S_ISLNK(p->one->mode) && !S_ISLNK(p->two->mode))
++		return "mode -l";
++	else if (!S_ISLNK(p->one->mode) && S_ISLNK(p->two->mode))
++		return "mode +l";
++	else if ((p->one->mode & 0777) == 0644 &&
++		 (p->two->mode & 0777) == 0755)
++		return "mode +x";
++	else if ((p->one->mode & 0777) == 0755 &&
++		 (p->two->mode & 0777) == 0644)
++		return "mode -x";
++	return NULL;
++}
 +
-+	pprint_rename(&names, p->one->path, p->two->path);
- 	strbuf_addf(&sb, " %s %s (%d%%)\n",
--			renamecopy, names, similarity_index(p));
--	free(names);
-+		    renamecopy, names.buf, similarity_index(p));
-+	strbuf_release(&names);
- 	emit_diff_symbol(opt, DIFF_SYMBOL_SUMMARY,
- 				 sb.buf, sb.len, 0);
- 	show_mode_change(opt, p, 0);
+ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 			     struct diff_filespec *one,
+ 			     struct diff_filespec *two,
+@@ -3258,6 +3288,8 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 
+ 	data = diffstat_add(diffstat, name_a, name_b);
+ 	data->is_interesting = p->status != DIFF_STATUS_UNKNOWN;
++	if (o->flags.stat_with_summary)
++		data->comments = get_compact_summary(p, data->is_renamed);
+ 
+ 	if (!one || !two) {
+ 		data->is_unmerged = 1;
+@@ -4300,6 +4332,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 	int graph_width = options->stat_graph_width;
+ 	int count = options->stat_count;
+ 	int argcount = 1;
++	unsigned with_summary = options->flags.stat_with_summary;
+ 
+ 	if (!skip_prefix(arg, "--stat", &arg))
+ 		die("BUG: stat option does not begin with --stat: %s", arg);
+@@ -4343,6 +4376,9 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 				count = strtoul(av[1], &end, 10);
+ 				argcount = 2;
+ 			}
++		} else if (skip_prefix(arg, "-with-summary", &arg)) {
++			with_summary = 1;
++			end = (char*)arg;
+ 		}
+ 		break;
+ 	case '=':
+@@ -4361,6 +4397,7 @@ static int stat_opt(struct diff_options *options, const char **av)
+ 	options->stat_graph_width = graph_width;
+ 	options->stat_width = width;
+ 	options->stat_count = count;
++	options->flags.stat_with_summary = with_summary;
+ 	return argcount;
+ }
+ 
+@@ -4542,7 +4579,10 @@ int diff_opt_parse(struct diff_options *options,
+ 	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+ 	else if (starts_with(arg, "--stat"))
+-		/* --stat, --stat-width, --stat-name-width, or --stat-count */
++		/*
++		 * --stat, --stat-width, --stat-name-width,
++		 * --stat-count or --stat-with-summary.
++		 */
+ 		return stat_opt(options, av);
+ 
+ 	/* renames options */
+diff --git a/diff.h b/diff.h
+index 6bd278aac1..d29560f822 100644
+--- a/diff.h
++++ b/diff.h
+@@ -93,6 +93,7 @@ struct diff_flags {
+ 	unsigned dirstat_by_line:1;
+ 	unsigned funccontext:1;
+ 	unsigned default_follow_renames:1;
++	unsigned stat_with_summary:1;
+ };
+ 
+ static inline void diff_flags_or(struct diff_flags *a,
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index f10798b2df..aa6f5da21c 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -361,6 +361,11 @@ diff --no-index --raw dir2 dir
+ diff --no-index --raw --abbrev=4 dir2 dir
+ :noellipses diff --no-index --raw --abbrev=4 dir2 dir
+ diff --no-index --raw --no-abbrev dir2 dir
++
++diff-tree --pretty --root --stat-with-summary initial
++diff-tree --pretty -R --root --stat-with-summary initial
++diff-tree --stat-with-summary initial mode
++diff-tree -R --stat-with-summary initial mode
+ EOF
+ 
+ test_expect_success 'log -S requires an argument' '
+diff --git a/t/t4013/diff.diff-tree_--pretty_--root_--stat-with-summary_initial b/t/t4013/diff.diff-tree_--pretty_--root_--stat-with-summary_initial
+new file mode 100644
+index 0000000000..105f29a92d
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--pretty_--root_--stat-with-summary_initial
+@@ -0,0 +1,12 @@
++$ git diff-tree --pretty --root --stat-with-summary initial
++commit 444ac553ac7612cc88969031b02b3767fb8a353a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:00:00 2006 +0000
++
++    Initial
++
++ dir/sub (new) | 2 ++
++ file0 (new)   | 3 +++
++ file2 (new)   | 3 +++
++ 3 files changed, 8 insertions(+)
++$
+diff --git a/t/t4013/diff.diff-tree_--pretty_-R_--root_--stat-with-summary_initial b/t/t4013/diff.diff-tree_--pretty_-R_--root_--stat-with-summary_initial
+new file mode 100644
+index 0000000000..45008d09fc
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--pretty_-R_--root_--stat-with-summary_initial
+@@ -0,0 +1,12 @@
++$ git diff-tree --pretty -R --root --stat-with-summary initial
++commit 444ac553ac7612cc88969031b02b3767fb8a353a
++Author: A U Thor <author@example.com>
++Date:   Mon Jun 26 00:00:00 2006 +0000
++
++    Initial
++
++ dir/sub (gone) | 2 --
++ file0 (gone)   | 3 ---
++ file2 (gone)   | 3 ---
++ 3 files changed, 8 deletions(-)
++$
+diff --git a/t/t4013/diff.diff-tree_--stat-with-summary_initial_mode b/t/t4013/diff.diff-tree_--stat-with-summary_initial_mode
+new file mode 100644
+index 0000000000..f99fcdc101
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_--stat-with-summary_initial_mode
+@@ -0,0 +1,4 @@
++$ git diff-tree --stat-with-summary initial mode
++ file0 (mode +x) | 0
++ 1 file changed, 0 insertions(+), 0 deletions(-)
++$
+diff --git a/t/t4013/diff.diff-tree_-R_--stat-with-summary_initial_mode b/t/t4013/diff.diff-tree_-R_--stat-with-summary_initial_mode
+new file mode 100644
+index 0000000000..8dc8f3fe95
+--- /dev/null
++++ b/t/t4013/diff.diff-tree_-R_--stat-with-summary_initial_mode
+@@ -0,0 +1,4 @@
++$ git diff-tree -R --stat-with-summary initial mode
++ file0 (mode -x) | 0
++ 1 file changed, 0 insertions(+), 0 deletions(-)
++$
 -- 
 2.16.1.75.ga05e3333b4
 
