@@ -2,128 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 459591F576
-	for <e@80x24.org>; Thu,  1 Feb 2018 10:15:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EBDE1F576
+	for <e@80x24.org>; Thu,  1 Feb 2018 10:16:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752135AbeBAKPR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 05:15:17 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:41131 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751749AbeBAKPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 05:15:07 -0500
-Received: by mail-wr0-f194.google.com with SMTP id v15so18289317wrb.8
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 02:15:06 -0800 (PST)
+        id S1751923AbeBAKQN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 05:16:13 -0500
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:34930 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751748AbeBAKQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 05:16:12 -0500
+Received: by mail-qt0-f172.google.com with SMTP id g14so25724727qti.2
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 02:16:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=So35UbupxFzygiOtATiXmMmyhIOxAZcjPXA4Owol6dY=;
-        b=E/sZW0l7FAn6K+Yb8wCZWDR3cxZWGTptic6FXWOQehXHZxDn/oIdGjnGt8G8on0XCk
-         aetDgGLS/AuQrMLTLHfK0nYD3X8mEX0XGMgyZJud2Mwid6OMOrnwnFYgP1lznkdX8qvU
-         do3hsLNAXSr6JxJ+qyxQPlTH/IaC2mSQOpVOWT+zXETRwdpvacv9M40dUVgAYEja9KCe
-         hotWaMAaHR8i+PWSSinajDNXv/ZMHWMHJIezeW0urVWYJ8RqMM8cWrd0TjajB7zuQOc5
-         Mjmhr/OPh8tsqN0xe+Jrb8el0BvaSesxJPlH7nNj1In3md4cuThTUgpuw6KnAEkAkZ5c
-         leXg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=34OupIy1iuTX+FIHryao63PLrrhs3jQAXb0yjdUod5U=;
+        b=NvQmTGHtbdh+qqyEZIVFS8zfQfQZ3XNMgCQjSVRIMXmK4EshWX4np0mDaEn/clrJ4e
+         sFYUScvvOSoZ/nfeZY3+PN0MOj2eWTfJbnLmA7LlIARlZT2tHfcA6i4ELboFPfUzcDrI
+         OGQJPkhS8h7GjUQ7z3NpNNrDS6l6TUS1vCghO3eBNO2DGRoNnMWxPKcRUi2l7Eeb4Kgk
+         vnPXh3lUFO2NHadKRZbqcHufCLWEPWYAP/PVwnIICipGRXrStxxtArvANkec40eaD8Y5
+         EU9CSBtwD+5k3UFlIwQ9p3LEKnNI+EFsvOA6LTFnxNfC/t5oqHEPtFbp5g4J26/4hL3N
+         Y9Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=So35UbupxFzygiOtATiXmMmyhIOxAZcjPXA4Owol6dY=;
-        b=uRNjCIMQz0Im4427YWlBU8tjPZkdRR43AbW63Opbs3JVTnsAcSgBxJ5MpLIdxlL0QZ
-         Ex6ftSSpyJYGFyyHW5q9TiHRE9H0MFTD0T2kR5Nonde7877RvOx4V/n+b9TDh92CW8/f
-         Jr5QOOKfXAdq/Z+ZwgX4ucj2UPrrHvqE66GJda4KwrK93fZ1oSlvLshYpNUIGDb36u2b
-         C31HPz2c+Rdz0cwOn4naKDlU2SvHjspE9HDsI54dccoKD4ubMUW6Tt11ZJzfcE/kMail
-         cUozgxoSH/uMucCnppF0uNeruINvZ3EzBfefI/1Bk1UX7b4KG3mfC5xPJPB9NyscATOG
-         GUiA==
-X-Gm-Message-State: AKwxytcdu4MD0MgIzVggK/pYxW7VXlMvhZhn0ykwmhBuFonprvk+akap
-        ovMm0PThleTQn5W5By8Vqxrdlws1
-X-Google-Smtp-Source: AH8x225SCYUmXKbgMiuTLr0I44ege2Q+PqDkRdDKuwJIkV9c8LOC3uu8GkQw5NYGqO0YLLt21YbVQA==
-X-Received: by 10.223.131.230 with SMTP id 93mr7793516wre.59.1517480105405;
-        Thu, 01 Feb 2018 02:15:05 -0800 (PST)
-Received: from localhost.localdomain (sud35-h04-89-95-107-230.dsl.sta.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id e16sm21203466wre.5.2018.02.01.02.15.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Feb 2018 02:15:01 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 2/3] perf/aggregate: add --reponame option
-Date:   Thu,  1 Feb 2018 11:14:33 +0100
-Message-Id: <20180201101434.5383-2-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.16.0.rc2.45.g09a1bbd803
-In-Reply-To: <20180201101434.5383-1-chriscool@tuxfamily.org>
-References: <20180201101434.5383-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=34OupIy1iuTX+FIHryao63PLrrhs3jQAXb0yjdUod5U=;
+        b=uDHLxYUg3Swg7cOHePuL/wg9pRgKiaqI7PSQ9rrbAzvLIVR8EvfwrgbG/LjKi9BcLx
+         QQEX24v6tfrTb+RoQHJ8l7rFgafdnbcaXyzaQKgkLO8XV6syA53oJ6HBPo4N2ncufJnY
+         edw3/coUeXdLwCVmtpEZ9v2f73qVO+7cCbBpeXcgh2/JEksCSAat74PnDqijTRZUvI9w
+         uEn7lw+uus3NbwPcGiUUhaLK1EzTx9PSMwPtW0pj0BD27vgAvQUcFUn7xWYgA8kumbVU
+         1pOh8MqrA1Quy7C2o8eOBkvYeamoLOLEiUep3EOm3LoXIXboUaeVN7QI8lRiT4yzuiWa
+         sy7w==
+X-Gm-Message-State: AKwxytcZrhszvrhurq+LBsJayFGo+YVvP6889SoZEpFQ9Xqua1YSEdkw
+        Immeye7F0uSGZIqCXkU8G32t4W0MPV5YITm74bw=
+X-Google-Smtp-Source: AH8x224H7UXuqz4Ykc7cmFBs2P0krodSHHhc8lsBf23/d20SxebtZzlamljPJPif7zJzPHhsyRB3aM0nShWiG9U7qRQ=
+X-Received: by 10.200.9.42 with SMTP id t39mr55790357qth.74.1517480171949;
+ Thu, 01 Feb 2018 02:16:11 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.175.239 with HTTP; Thu, 1 Feb 2018 02:16:11 -0800 (PST)
+In-Reply-To: <450140f4-d410-4f1a-e5c1-c56d345a7f7c@suse.com>
+References: <450140f4-d410-4f1a-e5c1-c56d345a7f7c@suse.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Feb 2018 05:16:11 -0500
+X-Google-Sender-Auth: tKJSfaGRlw10cHg99sfwf0MyWBo
+Message-ID: <CAPig+cTFsp60KB+quuytW_nV2crLcjRV-PYN-3bO7tRY0_xu6w@mail.gmail.com>
+Subject: Re: [PATCH] tag: add --edit option
+To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes it easier to use the aggregate script
-on the command line when one wants to get the
-"environment" fields set in the codespeed output.
+On Thu, Feb 1, 2018 at 4:49 AM, Nicolas Morey-Chaisemartin
+<nmoreychaisemartin@suse.com> wrote:
+> Add a --edit option whichs allows modifying the messages provided by -m or -F,
+> the same way git commit --edit does.
+>
+> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+> ---
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> @@ -224,7 +225,7 @@ static void create_tag(const struct object_id *object, const char *tag,
+> -       if (!opt->message_given) {
+> +       if (!opt->message_given || opt->use_editor) {
+>
+> -               if (!is_null_oid(prev)) {
+> +               if (opt->message_given) {
+> +                       write_or_die(fd, buf->buf, buf->len);
+> +                       strbuf_reset(buf);
+> +               } else if (!is_null_oid(prev)) {
+>                         write_tag_body(fd, prev);
+>                 } else {
 
-Previously setting GIT_REPO_NAME was needed
-for this purpose.
+A little below this change is where launch_editor() is actually
+invoked. If it fails for some reason, it prints:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/perf/aggregate.perl | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+    Please supply the message using either -m or -F option.
 
-The only change compared to v1 is a logical change suggested by Eric
-in the 'if ... elsif ... else ...' sequence that sets $environment.
+which seems a bit counterintuitive if the user *did* specify one of
+those options along with --edit. I wonder if that message needs to be
+adjusted.
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index bbf0f30898..a609292491 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -37,7 +37,7 @@ sub format_times {
- }
- 
- my (@dirs, %dirnames, %dirabbrevs, %prefixes, @tests,
--    $codespeed, $subsection);
-+    $codespeed, $subsection, $reponame);
- while (scalar @ARGV) {
- 	my $arg = $ARGV[0];
- 	my $dir;
-@@ -55,6 +55,15 @@ while (scalar @ARGV) {
- 		}
- 		next;
- 	}
-+	if ($arg eq "--reponame") {
-+		shift @ARGV;
-+		$reponame = $ARGV[0];
-+		shift @ARGV;
-+		if (! $reponame) {
-+			die "empty reponame";
-+		}
-+		next;
-+	}
- 	last if -f $arg or $arg eq "--";
- 	if (! -d $arg) {
- 		my $rev = Git::command_oneline(qw(rev-parse --verify), $arg);
-@@ -210,7 +219,9 @@ sub print_codespeed_results {
- 	}
- 
- 	my $environment;
--	if (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
-+	if ($reponame) {
-+		$environment = $reponame;
-+	} elsif (exists $ENV{GIT_PERF_REPO_NAME} and $ENV{GIT_PERF_REPO_NAME} ne "") {
- 		$environment = $ENV{GIT_PERF_REPO_NAME};
- 	} elsif (exists $ENV{GIT_TEST_INSTALLED} and $ENV{GIT_TEST_INSTALLED} ne "") {
- 		$environment = $ENV{GIT_TEST_INSTALLED};
--- 
-2.16.0.rc2.45.g09a1bbd803
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> @@ -452,6 +452,23 @@ test_expect_success \
+> +get_tag_header annotated-tag-edit $commit commit $time >expect
+> +echo "An edited message" >>expect
+> +test_expect_success 'set up editor' '
+> +       cat >editor <<-\EOF &&
+> +       #!/bin/sh
+> +       sed -e "s/A message/An edited message/g" <"$1" >"$1-"
+> +       mv "$1-" "$1"
+> +       EOF
+> +       chmod 755 editor
 
+If you use write_script() to create the fake editor, then it supplies
+the #!/bin/sh line for you and does the 'chmod', so you only need to
+supply the actual script payload. Also, other "editors" in this test
+file are named "fakeeditor", so perhaps follow suit.
+
+    write_script fakeeditor <<-\EOF
+        sed -e "s/A message/An edited message/g" <"$1" >"$1-"
+        mv "$1-" "$1"
+    EOF
