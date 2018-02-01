@@ -7,87 +7,132 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DEE11F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 12:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EABA1F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 12:48:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752062AbeBAMMC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 07:12:02 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:35047 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751916AbeBAMMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 07:12:01 -0500
-Received: by mail-wm0-f41.google.com with SMTP id r78so5260814wme.0
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 04:12:01 -0800 (PST)
+        id S1752594AbeBAMr7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 07:47:59 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:41092 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752257AbeBAMr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 07:47:58 -0500
+Received: by mail-pg0-f67.google.com with SMTP id 141so1730909pgd.8
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 04:47:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=JGXBxgxm0BITlMXRhurevKXqyoPsIAjUP0ADt+gnER0=;
-        b=Hxhkq0hm3N+yn2rMbPahAdbkHcbo7w8zWFCMNKvMZL8cw3/MI8GQkwtKM9AVTfVcAl
-         opPOEAPeqhOiGAtiAKNnCqTumVBbnHmWMwRGW9ubP7qV7WbS3atAa1DoKlOqkXqQqbiF
-         1N6CLMuBxvTmF3JDkqZnYOgaJHl9GjQKyT4TSz0zVehqp3zQ3rC5fDVvvR+y5asTo/rz
-         6H6WNtsCc+kgVdV5KpqyhNQNlXaQNhW8ipcBIwSnaFmf0naNLNQfORkJsdyMGigsifZG
-         reR1akNRijmasZvTjkrF5DNtMBBoiuYy/7ezZ1BNGxa/Ii1TNZ1k1EJEVeWEb7v668+J
-         iM0Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kJk1G7gNDCtfxklgQJxJRPozpLzCLcNXhsPzf+54Alw=;
+        b=nKLjveypWJyHEfKro7bMHId5XzWS6lYtx2i7GLWOCPVgiyDqfwJzV9jjqMnJUX5o6G
+         1ugqXVfP2CgIQCq7cMgXW8psLCe5URzadkfqJFxgVWoE5sK6RvpA323w5zFKjdMBFd3b
+         6NtbinHILZgFexgxgw+F7Rmij8M29X1FM6qKTZ1JF1XSHybMc2j4VHbBoQrxGDHRL8U0
+         rzukxITa7focj4hI6/vWqGkejGttjfg07mJULnnyViGbfL4JD2G2NTQnc1P7yUwab6qS
+         Zy72Vz7Yx01tHnAPZRkqGjlw3tgiki+BQrE88z4vGNikacGLpf+ejMziLadXFcRV/8Ve
+         HoCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=JGXBxgxm0BITlMXRhurevKXqyoPsIAjUP0ADt+gnER0=;
-        b=qSWjWQIYbIoesIn+vxE2Ebzg9adfmd+x0JNgDKQGVufHQJCFLDQ13OIoc8TEWZxNg/
-         l17ra6hce4LpA6La7ZdGPszbVSmFNHJT63+sINTGI1eIgTin1K7PKPFpR54AQlvvOls8
-         /RNVb/ln2sf4UnqF0xw3OySsXPS16QYODJ75x1B3v6EWpTz2hwaAYMfZDbNTlPkWLS46
-         mqVcs34bxrwnONZUx+ApjY1VJ81vXJt7ehCVN2R1mZwud9wcRG/yz++J50dD0Cwv8gyY
-         5s6iyrcHF69tO60ZELzsucSEJp/kJQRfFARmm9RlwqR1p+Ku6bpJLZkFW9TfUrZcn6l0
-         BWyA==
-X-Gm-Message-State: AKwxyteyysysLbRay/FePE/Ap/ac9GIOOedWmLh8wvvKPn7J5wrLiIC7
-        rEakWXQLhX3TAspKZzb30Gg=
-X-Google-Smtp-Source: AH8x226oR4e7uoOKm4sB87it2NQSkC4eKRILSCmtWmgJ5WtVFKGOq8hsarAIm5e1xTi1JrSrz1EIUQ==
-X-Received: by 10.80.241.89 with SMTP id z25mr31102684edl.104.1517487120398;
-        Thu, 01 Feb 2018 04:12:00 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id z8sm9789531edi.11.2018.02.01.04.11.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Feb 2018 04:11:59 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2018, #04; Wed, 31)
-References: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 01 Feb 2018 13:11:58 +0100
-Message-ID: <87lggcnc35.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kJk1G7gNDCtfxklgQJxJRPozpLzCLcNXhsPzf+54Alw=;
+        b=DgjoPcRMMepDJfCbjEulLZ8xwN34YY6d+Etae9OTekqfush6nVtq4e7e/y8VKW0sxQ
+         nOTU4DahzoIc5puDi2rHJvLxZLaMxcSm+5rzpkcYA0SOm/ihvBuh61oIAE8zdHpGprf/
+         d91B4erlYsZr1blNBbca9JKhXtlfD3cb9HMik8jv5Q+5MrOSGKLCR7V9Q8px3luD2tKw
+         KqZWHjW+Bk0tSUl/AJ2fMmfFL23NQZmOuCCWi/bTOyalGBtua2B7xNBiAS8uo30VWGiJ
+         A2InZwZUApthtpdBUc8h09X0266rUg50hPOcf2bEDPvCrxSUV6cx2WcnsaKWJddlMfuv
+         /qZw==
+X-Gm-Message-State: AKwxyteI/O7615NH1XDjkErgxxGCVcb5Bo5Dut2lfmw56vmfi5ElrFCW
+        sCN3Rt1fdTLA7cHLGk5NB6hFeQ==
+X-Google-Smtp-Source: AH8x227+NcvHtuGcEgLzn2HHvs7zI7OxRpQskCeY3l1+iGczvuJrZpGHipBesWGLDmzz8qJlewgsTA==
+X-Received: by 10.98.159.139 with SMTP id v11mr36190847pfk.64.1517489278098;
+        Thu, 01 Feb 2018 04:47:58 -0800 (PST)
+Received: from ash ([171.232.97.171])
+        by smtp.gmail.com with ESMTPSA id y7sm42078151pfe.48.2018.02.01.04.47.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 Feb 2018 04:47:57 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 19:47:51 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v3 0/2] wrap format-patch diffstats around 72 columns
+Date:   Thu,  1 Feb 2018 19:47:48 +0700
+Message-Id: <20180201124750.15032-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.205.g271f633410
+In-Reply-To: <20180125115927.16196-1-pclouds@gmail.com>
+References: <20180125115927.16196-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+v3 fixes tests in 2/2 that I overlooked (but Jeff didn't). Interdiff:
 
-On Thu, Feb 01 2018, Junio C. Hamano jotted:
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 1e62333b46..6e2cf933f7 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -19,17 +19,33 @@ test_expect_success 'preparation' '
+ 	git commit -m message "$name"
+ '
+ 
++cat >expect72 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++test_expect_success "format-patch: small change with long name gives more space to the name" '
++	git format-patch -1 --stdout >output &&
++	grep " | " output >actual &&
++	test_cmp expect72 actual
++'
++
+ while read cmd args
+ do
+-	cat >expect <<-'EOF'
++	cat >expect80 <<-'EOF'
+ 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+ 	EOF
+ 	test_expect_success "$cmd: small change with long name gives more space to the name" '
+ 		git $cmd $args >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp expect80 actual
+ 	'
++done <<\EOF
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
+ 
++while read cmd args
++do
+ 	cat >expect <<-'EOF'
+ 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+ 	EOF
+@@ -60,7 +76,7 @@ do
+ 		test_cmp expect actual
+ 	'
+ done <<\EOF
+-format-patch --stat=80 -1 --stdout
++format-patch -1 --stdout
+ diff HEAD^ HEAD --stat
+ show --stat
+ log -1 --stat
 
-> * nd/fix-untracked-cache-invalidation (2018-01-24) 5 commits
->  - dir.c: stop ignoring opendir() error in open_cached_dir()
->  - update-index doc: note a fixed bug in the untracked cache
->  - dir.c: fix missing dir invalidation in untracked code
->  - dir.c: avoid stat() in valid_cached_dir()
->  - status: add a failing test showing a core.untrackedCache bug
->
->  Some bugs around "untracked cache" feature have been fixed.
->
->  Will merge to 'next'.
 
-The "update-index doc: note a fixed bug in the untracked cache" needs to
-be amended so it doesn't say "Before 2.16, ":
+Nguyễn Thái Ngọc Duy (2):
+  format-patch: keep cover-letter diffstat wrapped in 72 columns
+  format-patch: reduce patch diffstat width to 72
 
-    https://github.com/gitster/git/commit/b9fc38c9f90b8bf2c9147ad536813b66aa45220d#diff-01fe1588047a177245bfaf82336cdeaeR467
+ builtin/log.c          |  7 ++++++-
+ t/t4052-stat-output.sh | 46 ++++++++++++++++++++++++++++--------------
+ 2 files changed, 37 insertions(+), 16 deletions(-)
 
-I'm not sure whether you're planning this for 2.16.2, or whether it'll
-be in 2.17.0, but the patch should be amended to mention either one of
-those.
+-- 
+2.16.1.205.g271f633410
 
-I can submit a replacement patch, but figured this was trivial enough
-(and you know more about the release plan) that you'd like to amend this
-locally.
