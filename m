@@ -6,42 +6,36 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6971F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 19:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D87D01F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 19:16:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752940AbeBATJs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 14:09:48 -0500
-Received: from siwi.pair.com ([209.68.5.199]:24120 "EHLO siwi.pair.com"
+        id S1753266AbeBATQZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 14:16:25 -0500
+Received: from siwi.pair.com ([209.68.5.199]:60581 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752574AbeBATJr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 14:09:47 -0500
+        id S1753197AbeBATQY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 14:16:24 -0500
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 8A3EC84585;
-        Thu,  1 Feb 2018 14:09:46 -0500 (EST)
+        by siwi.pair.com (Postfix) with ESMTP id 93D2184585;
+        Thu,  1 Feb 2018 14:16:23 -0500 (EST)
 Received: from [10.160.98.99] (unknown [167.220.148.99])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 21AB88457A;
-        Thu,  1 Feb 2018 14:09:46 -0500 (EST)
-Subject: Re: [PATCH 11/26] serve: introduce git-serve
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id 32DB48457F;
+        Thu,  1 Feb 2018 14:16:23 -0500 (EST)
+Subject: Re: [PATCH 12/26] ls-refs: introduce ls-refs server command
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com
 References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-12-bmwill@google.com>
- <d9a15c0a-35f3-8e9c-ddf2-34420ac7555b@jeffhostetler.com>
- <CAGZ79kZpD6m=5YP0dNuM70Yce=PyxLO6qr6aVpHKa_S9iyACww@mail.gmail.com>
+ <20180103001828.205012-13-bmwill@google.com>
 From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <af1e00f7-b91d-4c1e-bc0e-164371feeadc@jeffhostetler.com>
-Date:   Thu, 1 Feb 2018 14:09:45 -0500
+Message-ID: <e2fb1a05-3cbd-5226-7796-c5b89c9d3955@jeffhostetler.com>
+Date:   Thu, 1 Feb 2018 14:16:22 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZpD6m=5YP0dNuM70Yce=PyxLO6qr6aVpHKa_S9iyACww@mail.gmail.com>
+In-Reply-To: <20180103001828.205012-13-bmwill@google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -52,67 +46,68 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 2/1/2018 1:57 PM, Stefan Beller wrote:
-> On Thu, Feb 1, 2018 at 10:48 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->>
->> On 1/2/2018 7:18 PM, Brandon Williams wrote:
->>>
->>> Introduce git-serve, the base server for protocol version 2.
-[...]
->>> + Special Packets
->>> +-----------------
->>> +
->>> +In protocol v2 these special packets will have the following semantics:
->>> +
->>> +  * '0000' Flush Packet (flush-pkt) - indicates the end of a message
->>> +  * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
->>
->>
->> Previously, a 0001 pkt-line meant that there was 1 byte of data
->> following, right?
+On 1/2/2018 7:18 PM, Brandon Williams wrote:
+> Introduce the ls-refs server command.  In protocol v2, the ls-refs
+> command is used to request the ref advertisement from the server.  Since
+> it is a command which can be requested (as opposed to mandatory in v1),
+> a client can sent a number of parameters in its request to limit the ref
+> advertisement based on provided ref-patterns.
 > 
-> No, the length was including the length field, so 0005 would indicate that
-> there is one byte following, (+4 bytes of "0005" included)
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>   Documentation/technical/protocol-v2.txt | 26 +++++++++
+>   Makefile                                |  1 +
+>   ls-refs.c                               | 97 +++++++++++++++++++++++++++++++++
+>   ls-refs.h                               |  9 +++
+>   serve.c                                 |  2 +
+>   5 files changed, 135 insertions(+)
+>   create mode 100644 ls-refs.c
+>   create mode 100644 ls-refs.h
+> 
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index b87ba3816..5f4d0e719 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -89,3 +89,29 @@ terminate the connection.
+>   Commands are the core actions that a client wants to perform (fetch, push,
+>   etc).  Each command will be provided with a list capabilities and
+>   arguments as requested by a client.
+> +
+> + Ls-refs
+> +---------
+> +
+> +Ls-refs is the command used to request a reference advertisement in v2.
+> +Unlike the current reference advertisement, ls-refs takes in parameters
+> +which can be used to limit the refs sent from the server.
+> +
+> +Ls-ref takes in the following parameters wraped in packet-lines:
+> +
+> +  symrefs: In addition to the object pointed by it, show the underlying
+> +	   ref pointed by it when showing a symbolic ref.
+> +  peel: Show peeled tags.
+> +  ref-pattern <pattern>: When specified, only references matching the
+> +			 given patterns are displayed.
+> +
+> +The output of ls-refs is as follows:
+> +
+> +    output = *ref
+> +	     flush-pkt
+> +    ref = PKT-LINE((tip | peeled) LF)
+> +    tip = obj-id SP refname (SP symref-target)
+> +    peeled = obj-id SP refname "^{}"
+> +
+> +    symref = PKT-LINE("symref" SP symbolic-ref SP resolved-ref LF)
+> +    shallow = PKT-LINE("shallow" SP obj-id LF)
 
-d'oh.  right.  thanks!
+Do you want to talk about ordering requirements on this?
+I think packed-refs has one, but I'm not sure it matters here
+where the client or server sorts it.
 
->> Should we also consider increasing the pkt-line limit to 5 hex-digits
->> while we're at it ?   That would let us have 1MB buffers if that would
->> help with large packfiles.
-> 
-> AFAICT there is a static allocation of one pkt-line (of maximum size),
-> such that the code can read in a full packet and then process it.
-> If we'd increase the packet size we'd need the static buffer to be 1MB,
-> which sounds good for my developer machine. But I suspect it may be
-> too much for people using git on embedded devices?
+Are there any provisions for compressing the renames, like in the
+reftable spec or in index-v4 ?
 
-I got burned by that static buffer once upon a time when I wanted
-to have 2 streams going at the same time.  Hopefully, we can move
-that into the new reader structure at some point (if it isn't already).
+It doesn't need to be in the initial version.  Just asking.  We could
+always add a "ls-refs-2" command that builds upon this.
 
-> 
-> pack files larger than 64k are put into multiple pkt-lines, which is
-> not a big deal, as the overhead of 4bytes per 64k is negligible.
-> (also there is progress information in the side channel, which
-> would come in as a special packet in between real packets,
-> such that every 64k transmitted you can update your progress
-> meter; Not sure I feel strongly on fewer progress updates)
-> 
->>   Granted, we're throttled by the network,
->> so it might not matter.  Would it be interesting to have a 5 digit
->> prefix with parts of the high bits of first digit being flags ?
->> Or is this too radical of a change?
-> 
-> What would the flags be for?
-> 
-> As an alternative we could put the channel number in one byte,
-> such that we can have a side channel not just while streaming the
-> pack but all the time. (Again, not sure if that buys a lot for us)
-> 
-
-Delimiters like the 0001 and the side channel are a couple of
-ideas, but I was just thinking out loud.  And right, I'm not sure
-it gets us much right now.
-
+Thanks,
 Jeff
