@@ -2,208 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAFB91F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 18:49:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DFE1F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 18:56:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753387AbeBASt0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 13:49:26 -0500
-Received: from siwi.pair.com ([209.68.5.199]:28388 "EHLO siwi.pair.com"
+        id S1754504AbeBAS4p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 13:56:45 -0500
+Received: from mout.web.de ([212.227.17.12]:63915 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753294AbeBAStA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 13:49:00 -0500
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 15E8A84585;
-        Thu,  1 Feb 2018 13:49:00 -0500 (EST)
-Received: from [10.160.98.99] (unknown [167.220.148.99])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A8CAC84577;
-        Thu,  1 Feb 2018 13:48:59 -0500 (EST)
-Subject: Re: [PATCH 11/26] serve: introduce git-serve
-To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Cc:     sbeller@google.com, gitster@pobox.com, peff@peff.net,
-        philipoakley@iee.org, stolee@gmail.com, jrnieder@gmail.com
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180103001828.205012-12-bmwill@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d9a15c0a-35f3-8e9c-ddf2-34420ac7555b@jeffhostetler.com>
-Date:   Thu, 1 Feb 2018 13:48:59 -0500
+        id S1753562AbeBAS4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 13:56:44 -0500
+Received: from [192.168.178.36] ([91.20.50.7]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MIeUW-1ejWxi1TRI-002Imr; Thu, 01
+ Feb 2018 19:56:38 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] cocci: simplify check for trivial format strings
+Message-ID: <376eb2e8-0a95-233b-743b-cdc1caa49015@web.de>
+Date:   Thu, 1 Feb 2018 19:56:34 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.5.2
 MIME-Version: 1.0
-In-Reply-To: <20180103001828.205012-12-bmwill@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:MC84i/GXyuEuZL3BmdKq8bvZ6bb4X2vluk9AuSfgDynhnx9XacD
+ 2YlWTTtYYQ+dRvxu9X5NH9njdda1ZeISYE23ud1+hrZ3e88aRwnn+dVjNMlS5VJPi8x1Jvi
+ 35P9HF0pBZWjDMz9hXZyhythP/q9Mg3BkLw9yQq+JeC3kM3+BTNG8d+YTMAurUA15ECHoFv
+ s/85BHWEmmivIMg9I/VuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:skkvYbjxQ3o=:shWZECmkDPuvGWpv17XcBw
+ byfz8y/MTMW3tbPPylKBysiKYtz32Tku/xllgP2iD15cRyR8EdTWc0votaj1EBECZEhgQU6wH
+ pcy6tBb9Nol1cadE2zs/Igtta8oiYdJKMX1Di200M4H6B7REewjXsE6/pyCD7fDpOUlhQ+xl5
+ n6ysEfVmJgGsiFEk9CIfhnb25ADgE+sY21Z435+L//xN06tFeiLc28QBXPIPhuSD0qYeOTY5o
+ abLd0LWyx6zCMyeJwvxskEx/FagjPMK3M85MMRmVXMGVah2tzGHhjW7vSYG0byGvjWh9WLsMg
+ 3I4WMmq6mtOfhJF30DtzvcyIDGq4nFkYwieBxlzcyP7yHmlbQGVNOzWisdax5PKcjRHkJQvlo
+ HewyjSPARc2WzOCK9XvjigEy4yTjP1PCmQSCRw50u0JaZeX9hBnIh4y1y3smKfalTTYLyPfsU
+ VzYhrTH9yJmUAGRVATBQ4gfsu7mz2jJoJTXvNRmo9IPUSnbfak9Kp6zP5MBzysNXe20oveGmX
+ I4+tbN+Wb/PbroOkGU8sG/CxDTWGrRswI1zNj9i4LoDj6yQ2nnQaefGIkFlYcd9uzjARHa8Xu
+ YVBnieDFrami6EoFj9gwn7kE5JM11hgnjO8nQpFLGTOF+9jnGucVPHkZz3uUaFoW2SK8m1wBK
+ M78N2Umi2CfzUqRLrZzbNY4qTcy6OBfn7CpzXbQBpW5C1nseGokjYBesQcyIr0/yannZ5XKv+
+ tusLLoMMef4NA7nL3eDKBzNquFSu3l6bqZ5Mw5jG5r/KtP3Mvu39xt344oyoj6BhnCWT7CZlm
+ NlMZDzrjY4xF+XTvfs6iDffbbkflaG53uWjqj6t6XQ3tfVHbeA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+353d84c537 (coccicheck: make transformation for strbuf_addf(sb, "...")
+more precise) added a check to avoid transforming calls with format
+strings which contain percent signs, as that would change the result.
+It uses embedded Python code for that.  Simplify this rule by using the
+regular expression matching operator instead.
 
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+Inspired by the Coccinelle package in Debian experimental, which lost
+support for Python for some reason.  Tested only with that version
+(1.0.6.deb-3) and Debian testing's 1.0.4.deb-3+b3.
 
-On 1/2/2018 7:18 PM, Brandon Williams wrote:
-> Introduce git-serve, the base server for protocol version 2.
-> 
-> Protocol version 2 is intended to be a replacement for Git's current
-> wire protocol.  The intention is that it will be a simpler, less
-> wasteful protocol which can evolve over time.
-> 
-> Protocol version 2 improves upon version 1 by eliminating the initial
-> ref advertisement.  In its place a server will export a list of
-> capabilities and commands which it supports in a capability
-> advertisement.  A client can then request that a particular command be
-> executed by providing a number of capabilities and command specific
-> parameters.  At the completion of a command, a client can request that
-> another command be executed or can terminate the connection by sending a
-> flush packet.
-> 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->   .gitignore                              |   1 +
->   Documentation/technical/protocol-v2.txt |  91 ++++++++++++
->   Makefile                                |   2 +
->   builtin.h                               |   1 +
->   builtin/serve.c                         |  30 ++++
->   git.c                                   |   1 +
->   serve.c                                 | 239 ++++++++++++++++++++++++++++++++
->   serve.h                                 |  15 ++
->   8 files changed, 380 insertions(+)
->   create mode 100644 Documentation/technical/protocol-v2.txt
->   create mode 100644 builtin/serve.c
->   create mode 100644 serve.c
->   create mode 100644 serve.h
-> 
-> diff --git a/.gitignore b/.gitignore
-> index 833ef3b0b..2d0450c26 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -140,6 +140,7 @@
->   /git-rm
->   /git-send-email
->   /git-send-pack
-> +/git-serve
->   /git-sh-i18n
->   /git-sh-i18n--envsubst
->   /git-sh-setup
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> new file mode 100644
-> index 000000000..b87ba3816
-> --- /dev/null
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -0,0 +1,91 @@
-> + Git Wire Protocol, Version 2
-> +==============================
-> +
-> +This document presents a specification for a version 2 of Git's wire
-> +protocol.  Protocol v2 will improve upon v1 in the following ways:
-> +
-> +  * Instead of multiple service names, multiple commands will be
-> +    supported by a single service.
-> +  * Easily extendable as capabilities are moved into their own section
-> +    of the protocol, no longer being hidden behind a NUL byte and
-> +    limited by the size of a pkt-line (as there will be a single
-> +    capability per pkt-line).
-> +  * Separate out other information hidden behind NUL bytes (e.g. agent
-> +    string as a capability and symrefs can be requested using 'ls-refs')
-> +  * Reference advertisement will be omitted unless explicitly requested
-> +  * ls-refs command to explicitly request some refs
-> +
-> + Detailed Design
-> +=================
-> +
-> +A client can request to speak protocol v2 by sending `version=2` in the
-> +side-channel `GIT_PROTOCOL` in the initial request to the server.
-> +
-> +In protocol v2 communication is command oriented.  When first contacting a
-> +server a list of capabilities will advertised.  Some of these capabilities
-> +will be commands which a client can request be executed.  Once a command
-> +has completed, a client can reuse the connection and request that other
-> +commands be executed.
-> +
-> + Special Packets
-> +-----------------
-> +
-> +In protocol v2 these special packets will have the following semantics:
-> +
-> +  * '0000' Flush Packet (flush-pkt) - indicates the end of a message
-> +  * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
+ contrib/coccinelle/strbuf.cocci | 17 +----------------
+ 1 file changed, 1 insertion(+), 16 deletions(-)
 
-Previously, a 0001 pkt-line meant that there was 1 byte of data
-following, right?  Does this change that and/or prevent 1 byte
-packets?  (Not sure if it is likely, but the odd-tail of a packfile
-might get sent in a 0001 line, right?)  Or is it that 0001 is only
-special during the V2 negotiation stuff, but not during the packfile
-transmission?
-
-(I'm not against having this delimiter -- I think it is useful, but
-just curious if will cause problems elsewhere.)
-
-Should we also consider increasing the pkt-line limit to 5 hex-digits
-while we're at it ?   That would let us have 1MB buffers if that would
-help with large packfiles.  Granted, we're throttled by the network,
-so it might not matter.  Would it be interesting to have a 5 digit
-prefix with parts of the high bits of first digit being flags ?
-Or is this too radical of a change?
-
-
-> +
-> + Capability Advertisement
-> +--------------------------
-> +
-> +A server which decides to communicate (based on a request from a client)
-> +using protocol version 2, notifies the client by sending a version string
-> +in its initial response followed by an advertisement of its capabilities.
-> +Each capability is a key with an optional value.  Clients must ignore all
-> +unknown keys.  Semantics of unknown values are left to the definition of
-> +each key.  Some capabilities will describe commands which can be requested
-> +to be executed by the client.
-> +
-> +    capability-advertisement = protocol-version
-> +			       capability-list
-> +			       flush-pkt
-> +
-> +    protocol-version = PKT-LINE("version 2" LF)
-> +    capability-list = *capability
-> +    capability = PKT-LINE(key[=value] LF)
-> +
-> +    key = 1*CHAR
-> +    value = 1*CHAR
-> +    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
-> +
-> +A client then responds to select the command it wants with any particular
-> +capabilities or arguments.  There is then an optional section where the
-> +client can provide any command specific parameters or queries.
-> +
-> +    command-request = command
-> +		      capability-list
-> +		      (command-args)
-> +		      flush-pkt
-> +    command = PKT-LINE("command=" key LF)
-> +    command-args = delim-pkt
-> +		   *arg
-> +    arg = 1*CHAR
-> +
-> +The server will then check to ensure that the client's request is
-> +comprised of a valid command as well as valid capabilities which were
-> +advertised.  If the request is valid the server will then execute the
-> +command.
-> +
-> +A particular command can last for as many rounds as are required to
-> +complete the service (multiple for negotiation during fetch or no
-> +additional trips in the case of ls-refs).
-> +
-> +When finished a client should send an empty request of just a flush-pkt to
-> +terminate the connection.
-> +
-> + Commands in v2
-> +~~~~~~~~~~~~~~~~
-> +
-> +Commands are the core actions that a client wants to perform (fetch, push,
-> +etc).  Each command will be provided with a list capabilities and
-> +arguments as requested by a client.
-
+diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
+index 6fe8727421..e34eada1ad 100644
+--- a/contrib/coccinelle/strbuf.cocci
++++ b/contrib/coccinelle/strbuf.cocci
+@@ -1,21 +1,6 @@
+ @ strbuf_addf_with_format_only @
+ expression E;
+-constant fmt;
+-@@
+-  strbuf_addf(E,
+-(
+-  fmt
+-|
+-  _(fmt)
+-)
+-  );
+-
+-@ script:python @
+-fmt << strbuf_addf_with_format_only.fmt;
+-@@
+-cocci.include_match("%" not in fmt)
+-
+-@ extends strbuf_addf_with_format_only @
++constant fmt !~ "%";
+ @@
+ - strbuf_addf
+ + strbuf_addstr
+-- 
+2.16.1
