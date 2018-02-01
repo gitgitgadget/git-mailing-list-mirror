@@ -2,120 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB3AE1F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 23:00:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 098471F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 23:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751697AbeBAXAU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 18:00:20 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54960 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751567AbeBAXAS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 18:00:18 -0500
-Received: by mail-wm0-f66.google.com with SMTP id i186so9007994wmi.4
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 15:00:17 -0800 (PST)
+        id S1751581AbeBAXAn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 18:00:43 -0500
+Received: from mail-ua0-f170.google.com ([209.85.217.170]:37361 "EHLO
+        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751634AbeBAXAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 18:00:42 -0500
+Received: by mail-ua0-f170.google.com with SMTP id q8so13007420uae.4
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 15:00:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=PE24feJ51rR5fO4G8KYZFuolKTTJ0EbipTG5+EpSlYI=;
-        b=U/crMOCtOXeNdb4gaf1DEXtW7tAJUMJCBzgTFCY5CKgs9mQdGeNqdWQGj+KHwTCdki
-         VOouKyZA5101JcUxRECpD4tWa/X1T+2K25+wKotGyKe5m4eHwN57XesSNJH67vWI1OE2
-         6LP+hvcMDG0HDumiG6DXgYqWhJVeUSopfyXnkRGqn7Q2lc559n8Pc2w839+3MeW1Eq9I
-         riYrVerNFS2gI8lB/fTLvSIkcWLflauaZtKHXR1j4CSzgyOuET07jq8AHqXYS/sQ+1ux
-         RIAwW6DDXJVizSVh9J0FLJutbWC9UaNgxcl+IPrB2PW3ZvffbHtOHvu3H05u5aoTkiFU
-         Bz9w==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=tUSKe5mmRJcOXyle/tZOHXJLISpQXLf7vcpGPTOXJZo=;
+        b=dUqFCpZxuCHST0+J3Rd5p50CAJUk+WMzPkMPCc1P8OEH0pRlXOHybhFVu2FJtdL65/
+         zY6d6aFDddx8UR6QcuRvRsHNVqbSR/F99yyDB/XoRnaUXDRd61v93Pdty7yAqb1OQBdq
+         HFSvnldkkpAg6i/UWCBpfDvaoiObV0InIIKFTkW4MTDqza5aW3cXZ5+RPk1yDEQ1TTjC
+         /UOkpRHP8hE6y00zk+T8bHfg7I1UxvTn1y/f8BLJWZlp3tlFTgdYo82bvTfTWgZ0+LYn
+         50FZUIC3rYiG+TgxTlmgEKF3C39ZHA+EUnLUxpD/VgG2Ffyr3Zddt1L8LqWcChpcCsUx
+         02uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=PE24feJ51rR5fO4G8KYZFuolKTTJ0EbipTG5+EpSlYI=;
-        b=BjAyFLy8V5/8ZgDmvGAchKUkoK4t4ok9GoKPMNSdGKpu/2n4Vp/rayqVB+0YikMe+5
-         KTLmxc4ZsUFHqh40UgUa+f4NSrFmQjc+z8cSgZONie7a1lQVGbYHcE2VJkR1Fj444gzk
-         oVQithwseKfjYk81B8UqimdEVUqbN8dmIYmik4noSxBWEkaVxgzfjax6IYAM3/lsni/Z
-         V5zQ3e1VL8GM5ucbBOHqRgVgBnUb4fU54cc/BoTdIkCZPOTe0deBD6BP3Ygatn3KzcFX
-         /eapPVZRNe9+ZwjvKnWWLaBZHNVfGH2X+8bCzTWpGzJ1SuBPOtLqhlfSn72wN9/Iz9g4
-         DGfA==
-X-Gm-Message-State: AKwxytdkaMw/9wbg5z/w3Rh/v7paO3wYTEdgSxjd8b66neBY+aeRvktm
-        FHUdcZiWy0g9ILc2QRKaXeQwVuIV
-X-Google-Smtp-Source: AH8x227iWg5NzTix/jRNBqLvo365D9CvjvjDg3SVRYlGHE2HJqdkphtym1ejeKU6Nim3fIO1OtX3sQ==
-X-Received: by 10.80.176.163 with SMTP id j32mr52484244edd.270.1517526017185;
-        Thu, 01 Feb 2018 15:00:17 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id q11sm547383edj.64.2018.02.01.15.00.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 01 Feb 2018 15:00:16 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] dir.c: stop ignoring opendir() error in open_cached_dir()
-References: <20180118095036.29422-1-pclouds@gmail.com> <20180124093023.9071-1-pclouds@gmail.com> <20180124093023.9071-6-pclouds@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <20180124093023.9071-6-pclouds@gmail.com>
-Date:   Fri, 02 Feb 2018 00:00:15 +0100
-Message-ID: <87d11omi2o.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=tUSKe5mmRJcOXyle/tZOHXJLISpQXLf7vcpGPTOXJZo=;
+        b=ntp0ry/oDWEYh/CFTtblGJIolM16bBoXzJWCWk7UnapIUhf9Dnsg0v1HHQhKW0HFQf
+         AiepFCpiOC8dKbDzyHhEUCvK2rKIFQa867CK//0Jw4iJj1ijaaypyPVKvym7FIqvPlTe
+         VAW7JBkbXia7fAh9psNxb2VyRmFDb2WsMKwyI6Kz3ilE8OI1iZa5IH7us/VZyrCiUEdN
+         juCaAO5/QboSW+ts7YeOzQgt7x1kLLeWXU7fkeUlPEBh15IOuT0hWFmRJK+YLNogy2nK
+         NZpxtF11Ku7myOl4z/ZkT6GZDsDub7fcTV+GKSTAc2GRLD1rKDCqca4Fdys5TCs9pOJ2
+         K+gA==
+X-Gm-Message-State: AKwxyte37XUcxPDlo8zEEN+fIYPAiPiuUJSu7342c32U2PRxZnGk22Qs
+        tdfbvKe5GRY8a9OPs8Wx02sz8CtMDO8NfaozB60HJCfbLgo=
+X-Google-Smtp-Source: AH8x225R6DJslh95wM1Ny/3UqEEhrIftoyH6A2aijU4hKJfra6UTX47Ahgs/lROJ99lpuRDsIWNOOiYIPPoYRSbduco=
+X-Received: by 10.159.43.4 with SMTP id p4mr29778921uaj.142.1517526041338;
+ Thu, 01 Feb 2018 15:00:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.176.2.237 with HTTP; Thu, 1 Feb 2018 15:00:40 -0800 (PST)
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Thu, 1 Feb 2018 15:00:40 -0800
+Message-ID: <CAGyf7-He4in8JWUh9dpAwvoPkQz9hr8nCBpxOxhZEd8+jtqTpg@mail.gmail.com>
+Subject: 2 conflicts referencing the same path?
+To:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While investigating an issue with rendering conflicts on a pull
+request, I noticed that the merge was producing this output (sanitized
+for paths)
 
-On Wed, Jan 24 2018, Nguyễn Thái Ngọc Duy jotted:
+$ git merge --no-ff --log -m "Test" 190a25b6e0f32c7b8ccddf8c31e054149dece8b7
+CONFLICT (rename/add): Rename A->B in HEAD. B added in
+190a25b6e0f32c7b8ccddf8c31e054149dece8b7
+Adding as B~190a25b6e0f32c7b8ccddf8c31e054149dece8b7 instead
+...
+Auto-merging B
+CONFLICT (content): Merge conflicts in B
 
-> A follow-up to the recently fixed bugs in the untracked
-> invalidation. If opendir() fails it should show a warning, perhaps
-> this should die, but if this ever happens the error is probably
-> recoverable for the user, and dying would just make things worse.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  dir.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/dir.c b/dir.c
-> index 44b4dd2ec8..55736d3e2a 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1787,11 +1787,16 @@ static int open_cached_dir(struct cached_dir *cdir,
->  			   struct strbuf *path,
->  			   int check_only)
->  {
-> +	const char *c_path;
-> +
->  	memset(cdir, 0, sizeof(*cdir));
->  	cdir->untracked = untracked;
->  	if (valid_cached_dir(dir, untracked, istate, path, check_only))
->  		return 0;
-> -	cdir->fdir = opendir(path->len ? path->buf : ".");
-> +	c_path = path->len ? path->buf : ".";
-> +	cdir->fdir = opendir(c_path);
-> +	if (!cdir->fdir)
-> +		warning_errno(_("could not open directory '%s'"), c_path);
->  	if (dir->untracked) {
->  		invalidate_directory(dir->untracked, untracked);
->  		dir->untracked->dir_opened++;
+(There are several other conflicts listed "between" the two I'm
+showing here, various rename/add, add/add and content conflicts, but
+I'm trimming those out to focus on the lines that I think are relevant
+to my question.)
 
-I haven't found the root cause yet, but we should not release a 2.17
-with this patch.
+This merge produces 2 (or is it 3?) conflicts for the same B path:
+- Rename A to B in HEAD, add B in 190a25b
+- Content conflicts in B
 
-I tried deploying a 2.16.1 + various patches (including this) internally
-today, and on a test set of 236 machines with existing checkouts
-(already using untracked cache) 79 would spew "warning: could not open
-directory" warnings, warning about a lot of directories that did not
-exist at the currently checked-out commit.
+The version of B left in place _does_ contain conflict markers, after
+the merge processes completes. The version added as B~190a25b has no
+conflict markers; it just shows a small number of inserted lines.
 
-The warnings go away on a one-off:
+The merge in question produces 23 different CONFLICT lines, but aside
+from "composite" conflicts (rename/add, add/add) that can include the
+same path multiple times in their output, only this one path is
+mentioned in multiple CONFLICT lines.
 
-    git -c core.untrackedCache=false status
+I'm still trying to produce a set of steps that will allow a minimal
+reproduction, but I thought I'd post to the list just to see if anyone
+had any thoughts on how it could happen. Is it a "normal" (albeit
+rare) case? Or could it represent some sort of issue in Git's 3-way
+merge algorithm (in its behavior or perhaps in how the merge conflicts
+are logged)?
 
-So there's some issue where an existing index with stale UC will be used
-by a newer version of git, and will start very verbosely warning about
-every directory referenced that can't be found anymore.
+Any insights appreciated!
+Bryan Turner
