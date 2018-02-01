@@ -7,64 +7,58 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 674BA1F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 12:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E7C41F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 13:02:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752618AbeBAMsK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 07:48:10 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:42395 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752257AbeBAMsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 07:48:09 -0500
-Received: by mail-pl0-f65.google.com with SMTP id 11so3422073plc.9
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 04:48:09 -0800 (PST)
+        id S1752450AbeBANCa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 08:02:30 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:42510 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752337AbeBANC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 08:02:29 -0500
+Received: by mail-pl0-f68.google.com with SMTP id 11so3450264plc.9
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 05:02:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GnZa5/o31QXo37cePJiCj9x8Y55RmlgwSb35OzhTCLI=;
-        b=Se5qPKzCY+RoRcmYxqN2tCJpw9zTEYewUbU8PEpXyFJezUaWgCkPGbM/Haq3ZvuxfI
-         RhEv3PaR/6LMSP7RvQVMEBQaQ/Fwj74/iFhT1XpErTnpatw/6U5hUs4vNc2ubZygpSUy
-         0m0L4aEx9q/cZJGme/whv5wua/Mx47uuuuFgRxImTzWjRgjdDhQRKT5d1ZXi7ruiRErP
-         LxX1CzyRrMVlz1NQSq9JFQw1W8uuV8oCvXjlyrp1Lr6jj1A1kDJ8Cx+7/UUw4I4bXmap
-         bCD6Wq4Z19LsMSA+Y1AU8uSn9ueEpyyGvVmnBgGXy0/VUddD4RzKEFlvCwzT7uu4wrN5
-         06dA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MGBRR0KZtQj7eGHuZ1wJyAD5iTwWsOCAIMWGXSm5Qm0=;
+        b=TtuPSHHXpyEHQMHkaMqHXXo2VNxJPb6B5+vKIe9nvpTP2NAOrgX0ftPR7pavAp9tvk
+         LzIJm3vDlZhqVtbvj7ZNNDnxzPdK/IqAyesH2Rm5XlekFaCZ8uyBHHpB6efeb9J252mo
+         d5OuUxFF4zmD69VgvIyvkFnJZ3uOHdyWeq53JS5ZNuJUFnKGLmpbBb3ZDRDdC6sZfvt5
+         r763bRzQPaqCCb79tGHqPuy0bxhJ6HippB9QRrB3DmiMvcqGSTwBywGuXL8BOK2R8b67
+         DG5GJo8Em3t2VmsqlWNr9hKp4TfNUvdX+oaTO3todhMGtnSdETu9O4qJ4vxeI6K/8OuO
+         vagQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GnZa5/o31QXo37cePJiCj9x8Y55RmlgwSb35OzhTCLI=;
-        b=GYyTqLFVFOB7Myn83pu41pxFLQiAQlv7glIWzhND3vdLpfyvrFIgYIh36yUpRPqfm2
-         EfysYsxJLbDh4tZEvPot7kXWEH5x2amGRtFklaRPY8W8uNlGTa3FFdcfpVJJQu/VrOwu
-         QsmwZ/OH1hLKd57EMZdciITF7hzMzTrDrpzioC80iH1k5Ts2pi6HfqJWc+2kHuMUqaet
-         KxDA3HZOH+CazM6LahZpDrvvR6BJeH2adR0npH1ezM004Gyy2CDYvs/tENQtk4wwBcaj
-         rIpS40KxZZbUErSBM4eozzFeWKnRv5w/BPNyRmCs9cFNMr9yP+gnqEf2KZGfvm0ftW1h
-         bkJA==
-X-Gm-Message-State: AKwxytc6MTmLmtOI9JOvZvBKEiFhPDujvwH4ruESvQCsg+ecomc4kuUo
-        JdVewN0/+TVoysEKy9WY4Gd9ug==
-X-Google-Smtp-Source: AH8x227LEsm0y58WxUEhBnyDODosbvo7oI4TykdkJ/nTSyCJUvycS5xlDksyM+bTcuA6OuyTxBAF2Q==
-X-Received: by 2002:a17:902:10b:: with SMTP id 11-v6mr32691597plb.336.1517489288925;
-        Thu, 01 Feb 2018 04:48:08 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MGBRR0KZtQj7eGHuZ1wJyAD5iTwWsOCAIMWGXSm5Qm0=;
+        b=pCdZHsawO/+JS8gpiqZnraIMTNh38bBfbml1EfkjVYWmWQzXeQaijrmTSlJb+optfB
+         3vBsEOEMc7sZW7BA8y3cAkwM5/LU/eMKHCDnZsR1ZcclS/cfMuw0UFRfQ5THmu/J+ag4
+         rZ5apJrTQ+GK/R72k0iAYnGthZGHA89vJnyDvD6mJG6P8KspG8H2rKpAzJVGX1JO87Xp
+         yF0ZP44zrrf9PEwo5CgZ5WoC08nN4lO/Fm/dYQjPx6O3sC+I7I8BYBgQxjbnviH5ySwr
+         IZBYHcD5qUJ8Sm9mYSwhGNk5RI5HSwxuGnGy+lo6BnpsXh79hPkvK7jrCna95qcbD92w
+         S2Gg==
+X-Gm-Message-State: AKwxyteQ+t5uJREPyNQJaEMW3MMXsU4X+Z48yPrDb8yV2cDaN3nSpLj0
+        eIiRlzBhaeDlnBRmcU1Gpwd2wg==
+X-Google-Smtp-Source: AH8x225Ubp0Lf5C8HjENFFM7e0uOSBA9clfnLTLH4llGCkrcgtmIym0C0wOGE/ViSNh05VBSuuSnsQ==
+X-Received: by 2002:a17:902:4383:: with SMTP id j3-v6mr31212633pld.320.1517490148371;
+        Thu, 01 Feb 2018 05:02:28 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id 125sm42375690pff.19.2018.02.01.04.48.05
+        by smtp.gmail.com with ESMTPSA id r14sm45457711pfa.136.2018.02.01.05.02.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Feb 2018 04:48:08 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 19:48:03 +0700
+        Thu, 01 Feb 2018 05:02:27 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 20:02:22 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 2/2] format-patch: reduce patch diffstat width to 72
-Date:   Thu,  1 Feb 2018 19:47:50 +0700
-Message-Id: <20180201124750.15032-3-pclouds@gmail.com>
+Subject: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
+Date:   Thu,  1 Feb 2018 20:02:19 +0700
+Message-Id: <20180201130221.15563-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
-In-Reply-To: <20180201124750.15032-1-pclouds@gmail.com>
-References: <20180125115927.16196-1-pclouds@gmail.com>
- <20180201124750.15032-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,149 +67,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patches generated by format-patch are meant to be exchanged as emails,
-most of the time. And since it's generally agreed that text in mails
-should be wrapped around 70 columns or so, make sure these diffstat
-follow the convention (especially when used with --cover-letter since we
-already defaults to wrapping 72 columns). The default can still be
-overriden with command line options.
+Changes since v2 [1]:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/log.c          |  2 ++
- t/t4052-stat-output.sh | 46 ++++++++++++++++++++++++++++--------------
- 2 files changed, 33 insertions(+), 15 deletions(-)
+- goes back to my original version (yay!) where the extra info
+  is appended after the path name. More is described in 2/2
+- --compact-summary is now renamed --stat-with-summary and implies
+  --stat
+- 1/2 is just a cleanup patch to make it easier to add 2/2
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 96af897403..94ee177d56 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1617,6 +1617,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		(!rev.diffopt.output_format ||
- 		 rev.diffopt.output_format == DIFF_FORMAT_PATCH))
- 		rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY;
-+	if (!rev.diffopt.stat_width)
-+		rev.diffopt.stat_width = MAIL_DEFAULT_WRAP;
- 
- 	/* Always generate a patch */
- 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
-diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
-index 9f563db20a..6e2cf933f7 100755
---- a/t/t4052-stat-output.sh
-+++ b/t/t4052-stat-output.sh
-@@ -19,17 +19,33 @@ test_expect_success 'preparation' '
- 	git commit -m message "$name"
- '
- 
-+cat >expect72 <<-'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
-+EOF
-+test_expect_success "format-patch: small change with long name gives more space to the name" '
-+	git format-patch -1 --stdout >output &&
-+	grep " | " output >actual &&
-+	test_cmp expect72 actual
-+'
-+
- while read cmd args
- do
--	cat >expect <<-'EOF'
-+	cat >expect80 <<-'EOF'
- 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
- 	EOF
- 	test_expect_success "$cmd: small change with long name gives more space to the name" '
- 		git $cmd $args >output &&
- 		grep " | " output >actual &&
--		test_cmp expect actual
-+		test_cmp expect80 actual
- 	'
-+done <<\EOF
-+diff HEAD^ HEAD --stat
-+show --stat
-+log -1 --stat
-+EOF
- 
-+while read cmd args
-+do
- 	cat >expect <<-'EOF'
- 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
- 	EOF
-@@ -79,11 +95,11 @@ test_expect_success 'preparation for big change tests' '
- 	git commit -m message abcd
- '
- 
--cat >expect80 <<'EOF'
-- abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+cat >expect72 <<'EOF'
-+ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- EOF
--cat >expect80-graph <<'EOF'
--|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-+cat >expect72-graph <<'EOF'
-+|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- EOF
- cat >expect200 <<'EOF'
-  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-@@ -107,7 +123,7 @@ do
- 		test_cmp "$expect-graph" actual
- 	'
- done <<\EOF
--ignores expect80 format-patch -1 --stdout
-+ignores expect72 format-patch -1 --stdout
- respects expect200 diff HEAD^ HEAD --stat
- respects expect200 show --stat
- respects expect200 log -1 --stat
-@@ -135,7 +151,7 @@ do
- 		test_cmp "$expect-graph" actual
- 	'
- done <<\EOF
--ignores expect80 format-patch -1 --stdout
-+ignores expect72 format-patch -1 --stdout
- respects expect40 diff HEAD^ HEAD --stat
- respects expect40 show --stat
- respects expect40 log -1 --stat
-@@ -163,7 +179,7 @@ do
- 		test_cmp "$expect-graph" actual
- 	'
- done <<\EOF
--ignores expect80 format-patch -1 --stdout
-+ignores expect72 format-patch -1 --stdout
- respects expect40 diff HEAD^ HEAD --stat
- respects expect40 show --stat
- respects expect40 log -1 --stat
-@@ -250,11 +266,11 @@ show --stat
- log -1 --stat
- EOF
- 
--cat >expect80 <<'EOF'
-- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
-+cat >expect72 <<'EOF'
-+ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++
- EOF
--cat >expect80-graph <<'EOF'
--|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
-+cat >expect72-graph <<'EOF'
-+|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++
- EOF
- cat >expect200 <<'EOF'
-  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-@@ -278,7 +294,7 @@ do
- 		test_cmp "$expect-graph" actual
- 	'
- done <<\EOF
--ignores expect80 format-patch -1 --stdout
-+ignores expect72 format-patch -1 --stdout
- respects expect200 diff HEAD^ HEAD --stat
- respects expect200 show --stat
- respects expect200 log -1 --stat
-@@ -308,7 +324,7 @@ do
- 		test_cmp "$expect-graph" actual
- 	'
- done <<\EOF
--ignores expect80 format-patch -1 --stdout
-+ignores expect72 format-patch -1 --stdout
- respects expect1 diff HEAD^ HEAD --stat
- respects expect1 show --stat
- respects expect1 log -1 --stat
+[1] https://public-inbox.org/git/20180118100546.32251-1-pclouds@gmail.com/
+
+Nguyễn Thái Ngọc Duy (2):
+  diff.c: refactor pprint_rename() to use strbuf
+  diff: add --stat-with-summary
+
+ Documentation/diff-options.txt                     |   8 ++
+ diff.c                                             | 101 ++++++++++++++-------
+ diff.h                                             |   1 +
+ t/t4013-diff-various.sh                            |   5 +
+ ...pretty_--root_--stat-with-summary_initial (new) |  12 +++
+ ...tty_-R_--root_--stat-with-summary_initial (new) |  12 +++
+ ...iff-tree_--stat-with-summary_initial_mode (new) |   4 +
+ ...-tree_-R_--stat-with-summary_initial_mode (new) |   4 +
+ 8 files changed, 113 insertions(+), 34 deletions(-)
+
 -- 
-2.16.1.205.g271f633410
+2.16.1.75.ga05e3333b4
 
