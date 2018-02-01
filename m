@@ -2,175 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40BFC1F576
-	for <e@80x24.org>; Thu,  1 Feb 2018 09:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40CB01F576
+	for <e@80x24.org>; Thu,  1 Feb 2018 09:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751771AbeBAJty (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 04:49:54 -0500
-Received: from mx2.suse.de ([195.135.220.15]:43086 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751520AbeBAJtx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 04:49:53 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 1051EACDB
-        for <git@vger.kernel.org>; Thu,  1 Feb 2018 09:49:52 +0000 (UTC)
-From:   Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-Subject: [PATCH] tag: add --edit option
-To:     git@vger.kernel.org
-Message-ID: <450140f4-d410-4f1a-e5c1-c56d345a7f7c@suse.com>
-Date:   Thu, 1 Feb 2018 10:49:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
- Thunderbird/58.0
+        id S1752038AbeBAJyF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 04:54:05 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:44430 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751522AbeBAJyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 04:54:04 -0500
+Received: by mail-qt0-f174.google.com with SMTP id l20so25577333qtj.11
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 01:54:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=hpkW64RzLNDNZSAsvtlh2oaT05pNh9T9Ad+6LWDOrw4=;
+        b=nSV/1By6/UIetoHbeEctjootHPH72ehgfI6chadqRlSF3TR45dvz7acYE0mbxcRbF+
+         jyk0AbhgkaQ7g7l2swvxP9E/vN5Bcly7KS7mSGJ44Z6+uQ7e4sXM54jhazviwcI4KSUY
+         xAmBOSKS0oMDH60mDUjpMJg7b3jYbQoV2tQB7tMg4ny6mTTUohrgluXojLX2H/CkvOIi
+         pUy/+x37lVj3yG2hy88PCAkF43fxHfn3p/An5Om6BhTtpJCUidl3gucPuEK8Go5pA6e9
+         s6+dxpDXDN30GdfkZmGMClx6ETTdf5VYg9o9UwCGdj16eiqfjFouSYmEXPZzlw4+SENs
+         l4KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=hpkW64RzLNDNZSAsvtlh2oaT05pNh9T9Ad+6LWDOrw4=;
+        b=lI2LAZ+WXNHaV2miCNnfCXhodXoKllwpw9zBQEqbQdn1Detty3CT3rhjXaaGh8nImJ
+         i1WPgakWQ//QTn00q81lGGM+Owtv+usJ3/EQN9AO1TYQw6r9EwHBsxIQK3D9cc9bzSlN
+         12F69LVg77wHKL1MA2wKd5tTT1yHC+yejbpwCfGWcfv+5H2dHKd5cpHv+2udGcTJC/zZ
+         ZIPGpL1mwMI8nd28HIYCNzsg59c7yOo/AQPJmkCOcSRriuKsflmngQPpYxZBCr8nuzDR
+         yuDkHIhGteJ2fLef+GaAb9lIea9djh+HFEeg4vxq0J4KrSM0r/3EQ/4NQz1YnJxr/hYp
+         wdnA==
+X-Gm-Message-State: AKwxyteC/MObM18hjxOqlbfG+TLKFUr96GkR0cj2YahaZuDl0BgFtXyw
+        NbD0RUbtgUZLOSigNymbaTK6GXUsfOVVeQwiM9KftA==
+X-Google-Smtp-Source: AH8x224Y8KC8+g+9TzH8gk/svb3epdRYd8DH6JUyjx7B+k1cMBbzqTuOKYU9vOsb8YM0SjEf5lE1X39LJUWGKDU+1Ag=
+X-Received: by 10.200.27.91 with SMTP id p27mr16786766qtk.254.1517478843140;
+ Thu, 01 Feb 2018 01:54:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Language: fr-xx-classique+reforme1990
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.175.239 with HTTP; Thu, 1 Feb 2018 01:54:02 -0800 (PST)
+In-Reply-To: <CACsJy8B0D=u5fGA2QWuG6QG-fmReg=GayC54+pSFjXHDrnKh3w@mail.gmail.com>
+References: <20180131110547.20577-1-pclouds@gmail.com> <20180131110547.20577-2-pclouds@gmail.com>
+ <CAPig+cT5GkhFJ9XFDSirGjfoji4qUCM8LA6abdRsaT=g3prznQ@mail.gmail.com> <CACsJy8B0D=u5fGA2QWuG6QG-fmReg=GayC54+pSFjXHDrnKh3w@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Feb 2018 04:54:02 -0500
+X-Google-Sender-Auth: zkELSQZejHsiURnRUqfUrtOMPbA
+Message-ID: <CAPig+cSLYDJaxCyAH_zK0cat2-60OZGWGy_ZLHwitHfZ7oA78w@mail.gmail.com>
+Subject: Re: [PATCH v2 01/41] parse-options: support --git-completion-helper
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --edit option whichs allows modifying the messages provided by -m or -F,
-the same way git commit --edit does.
+On Wed, Jan 31, 2018 at 7:05 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, Feb 1, 2018 at 4:04 AM, Eric Sunshine <sunshine@sunshineco.com> w=
+rote:
+>> On Wed, Jan 31, 2018 at 6:05 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy <pclouds@gmail.com> wrote:
+>>> Dangerous/Unpopular
+>>> options could be hidden with the new "NOCOMPLETE" flag.
+>>
+>> I wonder if this option should be named DANGEROUS rather than
+>> NOCOMPLETE to better reflect its intention.
+>
+> It's not only for dangerous options (I forgot to mention this in the
+> commit message, I will in v3). The --continue|--abort|--skip should
+> only show up when you are in a middle of rebase/am/cherry-pick.
+> git-completion.bash handles this case separately and only put them in
+> the completion list  when appropriate. --git-completion-helper must
+> not include these or the trick done by git-completion.bash becomes
+> useless.
+>
+> Interesting. So we now have two classes of "no complete". One can't be
+> configurable (--continue|--abort|--skip) and one can. I'll use two
+> separate flags for these, though I'm not adding the configuration
+> option right now.
 
-Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
----
- Documentation/git-tag.txt |  6 ++++++
- builtin/tag.c             | 11 +++++++++--
- t/t7004-tag.sh            | 34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 49 insertions(+), 2 deletions(-)
+I don't see that as convincing argument for two classes of "no
+complete". Since git-completion.bash already special-cases
+rebase/am/cherry-pick for --continue|--abort|--skip, it is not far
+fetched that that special-case treatment can be extended slightly to
+also filter out those three options from the list returned by
+--git-completion-helper.
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 956fc019f984..b9e5a993bea0 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -167,6 +167,12 @@ This option is only applicable when listing tags without annotation lines.
- 	Implies `-a` if none of `-a`, `-s`, or `-u <keyid>`
- 	is given.
- 
-+-e::
-+--edit::
-+	The message taken from file with `-F` and command line with
-+	`-m` are usually used as the tag message unmodified.
-+	This option lets you further edit the message taken from these sources.
-+
- --cleanup=<mode>::
- 	This option sets how the tag message is cleaned up.
- 	The  '<mode>' can be one of 'verbatim', 'whitespace' and 'strip'.  The
-diff --git a/builtin/tag.c b/builtin/tag.c
-index a7e6a5b0f234..91c60829d5f9 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -194,6 +194,7 @@ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *resu
- 
- struct create_tag_options {
- 	unsigned int message_given:1;
-+	unsigned int use_editor:1;
- 	unsigned int sign;
- 	enum {
- 		CLEANUP_NONE,
-@@ -224,7 +225,7 @@ static void create_tag(const struct object_id *object, const char *tag,
- 		    tag,
- 		    git_committer_info(IDENT_STRICT));
- 
--	if (!opt->message_given) {
-+	if (!opt->message_given || opt->use_editor) {
- 		int fd;
- 
- 		/* write the template message before editing: */
-@@ -233,7 +234,10 @@ static void create_tag(const struct object_id *object, const char *tag,
- 		if (fd < 0)
- 			die_errno(_("could not create file '%s'"), path);
- 
--		if (!is_null_oid(prev)) {
-+		if (opt->message_given) {
-+			write_or_die(fd, buf->buf, buf->len);
-+			strbuf_reset(buf);
-+		} else if (!is_null_oid(prev)) {
- 			write_tag_body(fd, prev);
- 		} else {
- 			struct strbuf buf = STRBUF_INIT;
-@@ -372,6 +376,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 	struct ref_format format = REF_FORMAT_INIT;
- 	int icase = 0;
-+	int edit_flag = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -386,6 +391,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK('m', "message", &msg, N_("message"),
- 			     N_("tag message"), parse_msg_arg),
- 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
-+		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
- 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
- 		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
- 			N_("how to strip spaces and #comments from message")),
-@@ -524,6 +530,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("tag '%s' already exists"), tag);
- 
- 	opt.message_given = msg.given || msgfile;
-+	opt.use_editor = edit_flag;
- 
- 	if (!cleanup_arg || !strcmp(cleanup_arg, "strip"))
- 		opt.cleanup_mode = CLEANUP_ALL;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index a9af2de9960b..60e3a53f297f 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -452,6 +452,23 @@ test_expect_success \
- 	test_cmp expect actual
- '
- 
-+get_tag_header annotated-tag-edit $commit commit $time >expect
-+echo "An edited message" >>expect
-+test_expect_success 'set up editor' '
-+	cat >editor <<-\EOF &&
-+	#!/bin/sh
-+	sed -e "s/A message/An edited message/g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+	chmod 755 editor
-+'
-+test_expect_success \
-+	'creating an annotated tag with -m message --edit should succeed' '
-+	EDITOR=./editor	git tag -m "A message" --edit annotated-tag-edit &&
-+	get_tag_msg annotated-tag-edit >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >msgfile <<EOF
- Another message
- in a file.
-@@ -465,6 +482,23 @@ test_expect_success \
- 	test_cmp expect actual
- '
- 
-+get_tag_header file-annotated-tag-edit $commit commit $time >expect
-+sed -e "s/Another message/Another edited message/g" msgfile >>expect
-+test_expect_success 'set up editor' '
-+	cat >editor <<-\EOF &&
-+	#!/bin/sh
-+	sed -e "s/Another message/Another edited message/g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+	chmod 755 editor
-+'
-+test_expect_success \
-+	'creating an annotated tag with -F messagefile --edit should succeed' '
-+	EDITOR=./editor	git tag -F msgfile --edit file-annotated-tag-edit &&
-+	get_tag_msg file-annotated-tag-edit >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >inputmsg <<EOF
- A message from the
- standard input
--- 
-2.16.1.72.g5be1f00a9a70.dirty
-
+So, if that special case is handled entirely by the completion script,
+then that leaves only the "dangerous" options, which requires only a
+single flag.
