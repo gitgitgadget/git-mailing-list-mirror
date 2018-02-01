@@ -2,178 +2,368 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 648B91F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 17:21:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EE061F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 17:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752084AbeBARVG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 12:21:06 -0500
-Received: from mx2.suse.de ([195.135.220.15]:33136 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751378AbeBARVF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 12:21:05 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 1C77BAD1C
-        for <git@vger.kernel.org>; Thu,  1 Feb 2018 17:21:04 +0000 (UTC)
-From:   Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-Subject: [PATCHv2] tag: add --edit option
-To:     git@vger.kernel.org
-Message-ID: <e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com>
-Date:   Thu, 1 Feb 2018 18:21:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
- Thunderbird/58.0
+        id S1752292AbeBAR5J (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 12:57:09 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:44186 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751567AbeBAR5I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 12:57:08 -0500
+Received: by mail-pl0-f65.google.com with SMTP id f8so4089188plk.11
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 09:57:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=joykjXVcZV78YBzKliQceiDcmGU/ErNfSm5Gx0hqRKo=;
+        b=vSSpuhKiWB+DU+fhopwl/VEFHF6kE9c4Z9uWjJ2GDUGGlhwEP7gul0C398wM4WYEEC
+         SRPO2gSC4Nn+YafyP9MQ6D/TVYdR5RJrs725MWG3bgqM2+ZJcoP3s1U54cf0etkif29K
+         SAsd42uBSHlMolOF0IjjOC3rGvHBEYWNfoV2Jf4vcHzySK6VzgsU2IY+ft39Ym8CF6VL
+         omwF0JQOrDbgygIRdetzh8CarMeBAvd9gobtgzYpHuMdXDTHoNg+6C0kP3gAIOXv8eB7
+         tRRtM/HnkGLuSDqoyamS7O7KKvgG38no7eUEcJYAEpmq28pnuitX71qFcNUYEsNbLigW
+         AEUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=joykjXVcZV78YBzKliQceiDcmGU/ErNfSm5Gx0hqRKo=;
+        b=kJRWhvitzjSHttsdt4ZGqCKH4SeWYcy/oG0s6Q04A4Jcoqn51Tc+b/BmW2t+FAd0yl
+         3kHuQCf4uPMgGntO42XOUF/e/ciTbGQatss/kyrU+WpAwh/4UvXYaRqcI7xb7KLdjs47
+         oPb+wyFYwcP6+4loJ8fCLsTLg5uXKBOG+6RiZ7P+sMQcBmGaKBrvDTBaZ8jpNSWQRfTq
+         ai6dA8UfluOYL1Mjmko93KJi+/m1mss5X3jHifAq6fUBYXoIrgaW+3HC6qLAw6h5Uwr/
+         hwPzTngZi6wcP0a2OpuF43f0KVMojWJJKV6epbMcGq43K1QdRnYpQq0SmrnbxevnCA3A
+         6L1g==
+X-Gm-Message-State: AKwxyteUAvm8gMdenmgFVymZo6kZm9xnkhB6tjPtiZI+mKWoXPDtneme
+        7+goh3PRZDQbvklZLetH5We/FQ==
+X-Google-Smtp-Source: AH8x227q/kHOUPuEw6EKD64XpapyGrpkvKyRJzjNSUk0IHWI7KLSUynn85/r3lfPTZcGZ9UwDerpzQ==
+X-Received: by 2002:a17:902:6042:: with SMTP id a2-v6mr16059834plt.335.1517507827928;
+        Thu, 01 Feb 2018 09:57:07 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id h13sm195493pfd.14.2018.02.01.09.57.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Feb 2018 09:57:06 -0800 (PST)
+Date:   Thu, 1 Feb 2018 09:57:05 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
+        peff@peff.net, philipoakley@iee.org, jrnieder@gmail.com
+Subject: Re: [PATCH v2 08/27] connect: discover protocol version outside of
+ get_remote_heads
+Message-ID: <20180201175705.GA138727@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-9-bmwill@google.com>
+ <223c0249-24e3-d714-faa5-3c7166b92e99@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Language: fr-xx-classique+reforme1990
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <223c0249-24e3-d714-faa5-3c7166b92e99@gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --edit option whichs allows modifying the messages provided by -m or -F,
-the same way git commit --edit does.
+On 01/31, Derrick Stolee wrote:
+> On 1/25/2018 6:58 PM, Brandon Williams wrote:
+> > In order to prepare for the addition of protocol_v2 push the protocol
+> > version discovery outside of 'get_remote_heads()'.  This will allow for
+> > keeping the logic for processing the reference advertisement for
+> > protocol_v1 and protocol_v0 separate from the logic for protocol_v2.
+> > 
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >   builtin/fetch-pack.c | 16 +++++++++++++++-
+> >   builtin/send-pack.c  | 17 +++++++++++++++--
+> >   connect.c            | 27 ++++++++++-----------------
+> >   connect.h            |  3 +++
+> >   remote-curl.c        | 20 ++++++++++++++++++--
+> >   remote.h             |  5 +++--
+> >   transport.c          | 24 +++++++++++++++++++-----
+> >   7 files changed, 83 insertions(+), 29 deletions(-)
+> > 
+> > diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> > index 366b9d13f..85d4faf76 100644
+> > --- a/builtin/fetch-pack.c
+> > +++ b/builtin/fetch-pack.c
+> > @@ -4,6 +4,7 @@
+> >   #include "remote.h"
+> >   #include "connect.h"
+> >   #include "sha1-array.h"
+> > +#include "protocol.h"
+> >   static const char fetch_pack_usage[] =
+> >   "git fetch-pack [--all] [--stdin] [--quiet | -q] [--keep | -k] [--thin] "
+> > @@ -52,6 +53,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+> >   	struct fetch_pack_args args;
+> >   	struct oid_array shallow = OID_ARRAY_INIT;
+> >   	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+> > +	struct packet_reader reader;
+> >   	packet_trace_identity("fetch-pack");
+> > @@ -193,7 +195,19 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+> >   		if (!conn)
+> >   			return args.diag_url ? 0 : 1;
+> >   	}
+> > -	get_remote_heads(fd[0], NULL, 0, &ref, 0, NULL, &shallow);
+> > +
+> > +	packet_reader_init(&reader, fd[0], NULL, 0,
+> > +			   PACKET_READ_CHOMP_NEWLINE |
+> > +			   PACKET_READ_GENTLE_ON_EOF);
+> > +
+> > +	switch (discover_version(&reader)) {
+> > +	case protocol_v1:
+> > +	case protocol_v0:
+> > +		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
+> > +		break;
+> > +	case protocol_unknown_version:
+> > +		BUG("unknown protocol version");
+> 
+> Is this really a BUG in the client, or a bug/incompatibility in the server?
+> 
+> Perhaps I'm misunderstanding, but it looks like discover_version() will
+> die() on an unknown version (the die() is in
+> protocol.c:determine_protocol_version_client()). So maybe that's why this is
+> a BUG()?
+> 
+> If there is something to change here, this BUG() appears three more times.
 
-Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
----
+Yes, I have it labeled as a BUG because discover_version can't return an
+unknown protocol version.  If the server actually returns an unknown
+protocol version then it should be handled in
+protocol.c:determine_protocol_version_client() as you mentioned.
 
-Changes since v1:
-- Fix usage string
-- Use write_script to generate editor
-- Rename editor to fakeeditor to match the other tests in the testsuite
-- I'll post another series to fix the misleading messages in both commit.c and tag.c when launch_editor fails
+> 
+> > +	}
+> >   	ref = fetch_pack(&args, fd, conn, ref, dest, sought, nr_sought,
+> >   			 &shallow, pack_lockfile_ptr);
+> > diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+> > index fc4f0bb5f..83cb125a6 100644
+> > --- a/builtin/send-pack.c
+> > +++ b/builtin/send-pack.c
+> > @@ -14,6 +14,7 @@
+> >   #include "sha1-array.h"
+> >   #include "gpg-interface.h"
+> >   #include "gettext.h"
+> > +#include "protocol.h"
+> >   static const char * const send_pack_usage[] = {
+> >   	N_("git send-pack [--all | --mirror] [--dry-run] [--force] "
+> > @@ -154,6 +155,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+> >   	int progress = -1;
+> >   	int from_stdin = 0;
+> >   	struct push_cas_option cas = {0};
+> > +	struct packet_reader reader;
+> >   	struct option options[] = {
+> >   		OPT__VERBOSITY(&verbose),
+> > @@ -256,8 +258,19 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+> >   			args.verbose ? CONNECT_VERBOSE : 0);
+> >   	}
+> > -	get_remote_heads(fd[0], NULL, 0, &remote_refs, REF_NORMAL,
+> > -			 &extra_have, &shallow);
+> > +	packet_reader_init(&reader, fd[0], NULL, 0,
+> > +			   PACKET_READ_CHOMP_NEWLINE |
+> > +			   PACKET_READ_GENTLE_ON_EOF);
+> > +
+> > +	switch (discover_version(&reader)) {
+> > +	case protocol_v1:
+> > +	case protocol_v0:
+> > +		get_remote_heads(&reader, &remote_refs, REF_NORMAL,
+> > +				 &extra_have, &shallow);
+> > +		break;
+> > +	case protocol_unknown_version:
+> > +		BUG("unknown protocol version");
+> > +	}
+> >   	transport_verify_remote_names(nr_refspecs, refspecs);
+> > diff --git a/connect.c b/connect.c
+> > index 00e90075c..db3c9d24c 100644
+> > --- a/connect.c
+> > +++ b/connect.c
+> > @@ -62,7 +62,7 @@ static void die_initial_contact(int unexpected)
+> >   		      "and the repository exists."));
+> >   }
+> > -static enum protocol_version discover_version(struct packet_reader *reader)
+> > +enum protocol_version discover_version(struct packet_reader *reader)
+> >   {
+> >   	enum protocol_version version = protocol_unknown_version;
+> > @@ -234,7 +234,7 @@ enum get_remote_heads_state {
+> >   /*
+> >    * Read all the refs from the other end
+> >    */
+> > -struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+> > +struct ref **get_remote_heads(struct packet_reader *reader,
+> >   			      struct ref **list, unsigned int flags,
+> >   			      struct oid_array *extra_have,
+> >   			      struct oid_array *shallow_points)
+> > @@ -242,24 +242,17 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+> >   	struct ref **orig_list = list;
+> >   	int len = 0;
+> >   	enum get_remote_heads_state state = EXPECTING_FIRST_REF;
+> > -	struct packet_reader reader;
+> >   	const char *arg;
+> > -	packet_reader_init(&reader, in, src_buf, src_len,
+> > -			   PACKET_READ_CHOMP_NEWLINE |
+> > -			   PACKET_READ_GENTLE_ON_EOF);
+> > -
+> > -	discover_version(&reader);
+> > -
+> >   	*list = NULL;
+> >   	while (state != EXPECTING_DONE) {
+> > -		switch (packet_reader_read(&reader)) {
+> > +		switch (packet_reader_read(reader)) {
+> >   		case PACKET_READ_EOF:
+> >   			die_initial_contact(1);
+> >   		case PACKET_READ_NORMAL:
+> > -			len = reader.pktlen;
+> > -			if (len > 4 && skip_prefix(reader.line, "ERR ", &arg))
+> > +			len = reader->pktlen;
+> > +			if (len > 4 && skip_prefix(reader->line, "ERR ", &arg))
+> >   				die("remote error: %s", arg);
+> >   			break;
+> >   		case PACKET_READ_FLUSH:
+> > @@ -271,22 +264,22 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+> >   		switch (state) {
+> >   		case EXPECTING_FIRST_REF:
+> > -			process_capabilities(reader.line, &len);
+> > -			if (process_dummy_ref(reader.line)) {
+> > +			process_capabilities(reader->line, &len);
+> > +			if (process_dummy_ref(reader->line)) {
+> >   				state = EXPECTING_SHALLOW;
+> >   				break;
+> >   			}
+> >   			state = EXPECTING_REF;
+> >   			/* fallthrough */
+> >   		case EXPECTING_REF:
+> > -			if (process_ref(reader.line, len, &list, flags, extra_have))
+> > +			if (process_ref(reader->line, len, &list, flags, extra_have))
+> >   				break;
+> >   			state = EXPECTING_SHALLOW;
+> >   			/* fallthrough */
+> >   		case EXPECTING_SHALLOW:
+> > -			if (process_shallow(reader.line, len, shallow_points))
+> > +			if (process_shallow(reader->line, len, shallow_points))
+> >   				break;
+> > -			die("protocol error: unexpected '%s'", reader.line);
+> > +			die("protocol error: unexpected '%s'", reader->line);
+> >   		case EXPECTING_DONE:
+> >   			break;
+> >   		}
+> > diff --git a/connect.h b/connect.h
+> > index 01f14cdf3..cdb8979dc 100644
+> > --- a/connect.h
+> > +++ b/connect.h
+> > @@ -13,4 +13,7 @@ extern int parse_feature_request(const char *features, const char *feature);
+> >   extern const char *server_feature_value(const char *feature, int *len_ret);
+> >   extern int url_is_local_not_ssh(const char *url);
+> > +struct packet_reader;
+> > +extern enum protocol_version discover_version(struct packet_reader *reader);
+> > +
+> >   #endif
+> > diff --git a/remote-curl.c b/remote-curl.c
+> > index 0053b0954..9f6d07683 100644
+> > --- a/remote-curl.c
+> > +++ b/remote-curl.c
+> > @@ -1,6 +1,7 @@
+> >   #include "cache.h"
+> >   #include "config.h"
+> >   #include "remote.h"
+> > +#include "connect.h"
+> >   #include "strbuf.h"
+> >   #include "walker.h"
+> >   #include "http.h"
+> > @@ -13,6 +14,7 @@
+> >   #include "credential.h"
+> >   #include "sha1-array.h"
+> >   #include "send-pack.h"
+> > +#include "protocol.h"
+> >   static struct remote *remote;
+> >   /* always ends with a trailing slash */
+> > @@ -176,8 +178,22 @@ static struct discovery *last_discovery;
+> >   static struct ref *parse_git_refs(struct discovery *heads, int for_push)
+> >   {
+> >   	struct ref *list = NULL;
+> > -	get_remote_heads(-1, heads->buf, heads->len, &list,
+> > -			 for_push ? REF_NORMAL : 0, NULL, &heads->shallow);
+> > +	struct packet_reader reader;
+> > +
+> > +	packet_reader_init(&reader, -1, heads->buf, heads->len,
+> > +			   PACKET_READ_CHOMP_NEWLINE |
+> > +			   PACKET_READ_GENTLE_ON_EOF);
+> > +
+> > +	switch (discover_version(&reader)) {
+> > +	case protocol_v1:
+> > +	case protocol_v0:
+> > +		get_remote_heads(&reader, &list, for_push ? REF_NORMAL : 0,
+> > +				 NULL, &heads->shallow);
+> > +		break;
+> > +	case protocol_unknown_version:
+> > +		BUG("unknown protocol version");
+> > +	}
+> > +
+> >   	return list;
+> >   }
+> > diff --git a/remote.h b/remote.h
+> > index 1f6611be2..2016461df 100644
+> > --- a/remote.h
+> > +++ b/remote.h
+> > @@ -150,10 +150,11 @@ int check_ref_type(const struct ref *ref, int flags);
+> >   void free_refs(struct ref *ref);
+> >   struct oid_array;
+> > -extern struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
+> > +struct packet_reader;
+> > +extern struct ref **get_remote_heads(struct packet_reader *reader,
+> >   				     struct ref **list, unsigned int flags,
+> >   				     struct oid_array *extra_have,
+> > -				     struct oid_array *shallow);
+> > +				     struct oid_array *shallow_points);
+> >   int resolve_remote_symref(struct ref *ref, struct ref *list);
+> >   int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid);
+> > diff --git a/transport.c b/transport.c
+> > index 8e8779096..63c3dbab9 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -18,6 +18,7 @@
+> >   #include "sha1-array.h"
+> >   #include "sigchain.h"
+> >   #include "transport-internal.h"
+> > +#include "protocol.h"
+> >   static void set_upstreams(struct transport *transport, struct ref *refs,
+> >   	int pretend)
+> > @@ -190,13 +191,26 @@ static int connect_setup(struct transport *transport, int for_push)
+> >   static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
+> >   {
+> >   	struct git_transport_data *data = transport->data;
+> > -	struct ref *refs;
+> > +	struct ref *refs = NULL;
+> > +	struct packet_reader reader;
+> >   	connect_setup(transport, for_push);
+> > -	get_remote_heads(data->fd[0], NULL, 0, &refs,
+> > -			 for_push ? REF_NORMAL : 0,
+> > -			 &data->extra_have,
+> > -			 &data->shallow);
+> > +
+> > +	packet_reader_init(&reader, data->fd[0], NULL, 0,
+> > +			   PACKET_READ_CHOMP_NEWLINE |
+> > +			   PACKET_READ_GENTLE_ON_EOF);
+> > +
+> > +	switch (discover_version(&reader)) {
+> > +	case protocol_v1:
+> > +	case protocol_v0:
+> > +		get_remote_heads(&reader, &refs,
+> > +				 for_push ? REF_NORMAL : 0,
+> > +				 &data->extra_have,
+> > +				 &data->shallow);
+> > +		break;
+> > +	case protocol_unknown_version:
+> > +		BUG("unknown protocol version");
+> > +	}
+> >   	data->got_remote_heads = 1;
+> >   	return refs;
+> 
 
- Documentation/git-tag.txt |  6 ++++++
- builtin/tag.c             | 11 +++++++++--
- t/t7004-tag.sh            | 30 ++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 956fc019f984..b9e5a993bea0 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -167,6 +167,12 @@ This option is only applicable when listing tags without annotation lines.
- 	Implies `-a` if none of `-a`, `-s`, or `-u <keyid>`
- 	is given.
- 
-+-e::
-+--edit::
-+	The message taken from file with `-F` and command line with
-+	`-m` are usually used as the tag message unmodified.
-+	This option lets you further edit the message taken from these sources.
-+
- --cleanup=<mode>::
- 	This option sets how the tag message is cleaned up.
- 	The  '<mode>' can be one of 'verbatim', 'whitespace' and 'strip'.  The
-diff --git a/builtin/tag.c b/builtin/tag.c
-index a7e6a5b0f234..ce5cac3dd23f 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -194,6 +194,7 @@ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *resu
- 
- struct create_tag_options {
- 	unsigned int message_given:1;
-+	unsigned int use_editor:1;
- 	unsigned int sign;
- 	enum {
- 		CLEANUP_NONE,
-@@ -224,7 +225,7 @@ static void create_tag(const struct object_id *object, const char *tag,
- 		    tag,
- 		    git_committer_info(IDENT_STRICT));
- 
--	if (!opt->message_given) {
-+	if (!opt->message_given || opt->use_editor) {
- 		int fd;
- 
- 		/* write the template message before editing: */
-@@ -233,7 +234,10 @@ static void create_tag(const struct object_id *object, const char *tag,
- 		if (fd < 0)
- 			die_errno(_("could not create file '%s'"), path);
- 
--		if (!is_null_oid(prev)) {
-+		if (opt->message_given) {
-+			write_or_die(fd, buf->buf, buf->len);
-+			strbuf_reset(buf);
-+		} else if (!is_null_oid(prev)) {
- 			write_tag_body(fd, prev);
- 		} else {
- 			struct strbuf buf = STRBUF_INIT;
-@@ -372,6 +376,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
- 	struct ref_format format = REF_FORMAT_INIT;
- 	int icase = 0;
-+	int edit_flag = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
- 		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
-@@ -386,6 +391,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK('m', "message", &msg, N_("message"),
- 			     N_("tag message"), parse_msg_arg),
- 		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
-+		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
- 		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
- 		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
- 			N_("how to strip spaces and #comments from message")),
-@@ -524,6 +530,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		die(_("tag '%s' already exists"), tag);
- 
- 	opt.message_given = msg.given || msgfile;
-+	opt.use_editor = edit_flag;
- 
- 	if (!cleanup_arg || !strcmp(cleanup_arg, "strip"))
- 		opt.cleanup_mode = CLEANUP_ALL;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index a9af2de9960b..063996ddc05c 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -452,6 +452,21 @@ test_expect_success \
- 	test_cmp expect actual
- '
- 
-+get_tag_header annotated-tag-edit $commit commit $time >expect
-+echo "An edited message" >>expect
-+test_expect_success 'set up editor' '
-+	write_script fakeeditor <<-\EOF
-+	sed -e "s/A message/An edited message/g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+'
-+test_expect_success \
-+	'creating an annotated tag with -m message --edit should succeed' '
-+	EDITOR=./fakeeditor	git tag -m "A message" --edit annotated-tag-edit &&
-+	get_tag_msg annotated-tag-edit >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >msgfile <<EOF
- Another message
- in a file.
-@@ -465,6 +480,21 @@ test_expect_success \
- 	test_cmp expect actual
- '
- 
-+get_tag_header file-annotated-tag-edit $commit commit $time >expect
-+sed -e "s/Another message/Another edited message/g" msgfile >>expect
-+test_expect_success 'set up editor' '
-+	write_script fakeeditor <<-\EOF
-+	sed -e "s/Another message/Another edited message/g" <"$1" >"$1-"
-+	mv "$1-" "$1"
-+	EOF
-+'
-+test_expect_success \
-+	'creating an annotated tag with -F messagefile --edit should succeed' '
-+	EDITOR=./fakeeditor	git tag -F msgfile --edit file-annotated-tag-edit &&
-+	get_tag_msg file-annotated-tag-edit >actual &&
-+	test_cmp expect actual
-+'
-+
- cat >inputmsg <<EOF
- A message from the
- standard input
 -- 
-2.16.1.72.g5be1f00a9a70.dirty
-
+Brandon Williams
