@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3DF21F404
-	for <e@80x24.org>; Thu,  1 Feb 2018 12:48:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 674BA1F404
+	for <e@80x24.org>; Thu,  1 Feb 2018 12:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752613AbeBAMsF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 07:48:05 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:44000 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752257AbeBAMsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 07:48:04 -0500
-Received: by mail-pf0-f194.google.com with SMTP id y26so15366746pfi.10
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 04:48:04 -0800 (PST)
+        id S1752618AbeBAMsK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 07:48:10 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:42395 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752257AbeBAMsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 07:48:09 -0500
+Received: by mail-pl0-f65.google.com with SMTP id 11so3422073plc.9
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 04:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z4iRWaDqrgHS5sXyHndzzfRTpZSxDHLz/IqzPK7mJrs=;
-        b=flYRY0aiYKq5YdY1vYsMMvQOwNpqoAPLYmChdRGlO8iPh9HygvrjBpMI7CF84JH3VS
-         LMr5dYxyNmGcAzU34/6LvyPKao67BEitjJyQ5tYx9ACzMjxYTMIf1u4KIpTybfMUZxk3
-         8fIDrDkdtgwIALTwQakGK8khbkkvUzcJIel6shGQzLhLrjvrWlX15XRM9LqOVrDdqM3K
-         FDwEm01gefyCJlh3PLoIVJwB0rUqSG1vJ4ZXtFeZdfpRkquFLrC8pZ0c91Ce/q7N2VyR
-         z3OifT9JQH99GO6ea5afzdG0+Fu/6qss9faHlyds1o04A+mCSb73kvJM/nAqSpmVW63k
-         vkpQ==
+        bh=GnZa5/o31QXo37cePJiCj9x8Y55RmlgwSb35OzhTCLI=;
+        b=Se5qPKzCY+RoRcmYxqN2tCJpw9zTEYewUbU8PEpXyFJezUaWgCkPGbM/Haq3ZvuxfI
+         RhEv3PaR/6LMSP7RvQVMEBQaQ/Fwj74/iFhT1XpErTnpatw/6U5hUs4vNc2ubZygpSUy
+         0m0L4aEx9q/cZJGme/whv5wua/Mx47uuuuFgRxImTzWjRgjdDhQRKT5d1ZXi7ruiRErP
+         LxX1CzyRrMVlz1NQSq9JFQw1W8uuV8oCvXjlyrp1Lr6jj1A1kDJ8Cx+7/UUw4I4bXmap
+         bCD6Wq4Z19LsMSA+Y1AU8uSn9ueEpyyGvVmnBgGXy0/VUddD4RzKEFlvCwzT7uu4wrN5
+         06dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z4iRWaDqrgHS5sXyHndzzfRTpZSxDHLz/IqzPK7mJrs=;
-        b=gYyKlZcI6IffndN3MpJiQz6ukp5kLAUROHXjH3KuWiA4PSl0LEvmoEpHMZum0oQMnX
-         +zqrvfIX60dTHNYdt26NE1vdxYLJI3Idap7SfPUA6dAe29NJ+jDULqHzgUVwX4EFR+Fu
-         WpoKsZYLtGe629kuCqZEER/4lczmGugo1cNNwA+gNfEOTgTjq8isJ6mEEkSdJVmQ2Wtj
-         pCp2m2YRrLg4x6ydJTXPfylbhit//YpuZmn7L/C9/fghN4GIEN3z4WNm7iGRrk66iR8z
-         8Azj0fsi0hA2XWXHsIDRu6hBUmD7bmHmEydp0Rzr1e39zj22Xj+3VzmjQerPNtyp/Cv+
-         EK+Q==
-X-Gm-Message-State: AKwxyteUlrjdNyxD85Tcuj2DwIhc/cdXW3EI3UCCec30zmq6HHsxP1bt
-        anOJUEh8Lq4pppxg5llwkIsBTQ==
-X-Google-Smtp-Source: AH8x224CqA+kxpxpDZzBOCqJx6P6oZMZUjJEXMV4nJme6P0KjTKsw1LaL3YOFLiOix6IrXlyLQAYtg==
-X-Received: by 10.99.177.76 with SMTP id g12mr12351329pgp.269.1517489283551;
-        Thu, 01 Feb 2018 04:48:03 -0800 (PST)
+        bh=GnZa5/o31QXo37cePJiCj9x8Y55RmlgwSb35OzhTCLI=;
+        b=GYyTqLFVFOB7Myn83pu41pxFLQiAQlv7glIWzhND3vdLpfyvrFIgYIh36yUpRPqfm2
+         EfysYsxJLbDh4tZEvPot7kXWEH5x2amGRtFklaRPY8W8uNlGTa3FFdcfpVJJQu/VrOwu
+         QsmwZ/OH1hLKd57EMZdciITF7hzMzTrDrpzioC80iH1k5Ts2pi6HfqJWc+2kHuMUqaet
+         KxDA3HZOH+CazM6LahZpDrvvR6BJeH2adR0npH1ezM004Gyy2CDYvs/tENQtk4wwBcaj
+         rIpS40KxZZbUErSBM4eozzFeWKnRv5w/BPNyRmCs9cFNMr9yP+gnqEf2KZGfvm0ftW1h
+         bkJA==
+X-Gm-Message-State: AKwxytc6MTmLmtOI9JOvZvBKEiFhPDujvwH4ruESvQCsg+ecomc4kuUo
+        JdVewN0/+TVoysEKy9WY4Gd9ug==
+X-Google-Smtp-Source: AH8x227LEsm0y58WxUEhBnyDODosbvo7oI4TykdkJ/nTSyCJUvycS5xlDksyM+bTcuA6OuyTxBAF2Q==
+X-Received: by 2002:a17:902:10b:: with SMTP id 11-v6mr32691597plb.336.1517489288925;
+        Thu, 01 Feb 2018 04:48:08 -0800 (PST)
 Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id q82sm28403233pfa.58.2018.02.01.04.48.00
+        by smtp.gmail.com with ESMTPSA id 125sm42375690pff.19.2018.02.01.04.48.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Feb 2018 04:48:03 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 19:47:58 +0700
+        Thu, 01 Feb 2018 04:48:08 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 01 Feb 2018 19:48:03 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <avarab@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 1/2] format-patch: keep cover-letter diffstat wrapped in 72 columns
-Date:   Thu,  1 Feb 2018 19:47:49 +0700
-Message-Id: <20180201124750.15032-2-pclouds@gmail.com>
+Subject: [PATCH v3 2/2] format-patch: reduce patch diffstat width to 72
+Date:   Thu,  1 Feb 2018 19:47:50 +0700
+Message-Id: <20180201124750.15032-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.205.g271f633410
 In-Reply-To: <20180201124750.15032-1-pclouds@gmail.com>
 References: <20180125115927.16196-1-pclouds@gmail.com>
@@ -73,44 +73,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already wrap shortlog around 72 columns in cover letters. Do the same
-for diffstat (also in cover letters).
+Patches generated by format-patch are meant to be exchanged as emails,
+most of the time. And since it's generally agreed that text in mails
+should be wrapped around 70 columns or so, make sure these diffstat
+follow the convention (especially when used with --cover-letter since we
+already defaults to wrapping 72 columns). The default can still be
+overriden with command line options.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/log.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/log.c          |  2 ++
+ t/t4052-stat-output.sh | 46 ++++++++++++++++++++++++++++--------------
+ 2 files changed, 33 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index 46b4ca13e5..96af897403 100644
+index 96af897403..94ee177d56 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -29,6 +29,8 @@
- #include "gpg-interface.h"
- #include "progress.h"
+@@ -1617,6 +1617,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		(!rev.diffopt.output_format ||
+ 		 rev.diffopt.output_format == DIFF_FORMAT_PATCH))
+ 		rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY;
++	if (!rev.diffopt.stat_width)
++		rev.diffopt.stat_width = MAIL_DEFAULT_WRAP;
  
-+#define MAIL_DEFAULT_WRAP 72
+ 	/* Always generate a patch */
+ 	rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+diff --git a/t/t4052-stat-output.sh b/t/t4052-stat-output.sh
+index 9f563db20a..6e2cf933f7 100755
+--- a/t/t4052-stat-output.sh
++++ b/t/t4052-stat-output.sh
+@@ -19,17 +19,33 @@ test_expect_success 'preparation' '
+ 	git commit -m message "$name"
+ '
+ 
++cat >expect72 <<-'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
++EOF
++test_expect_success "format-patch: small change with long name gives more space to the name" '
++	git format-patch -1 --stdout >output &&
++	grep " | " output >actual &&
++	test_cmp expect72 actual
++'
 +
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
+ while read cmd args
+ do
+-	cat >expect <<-'EOF'
++	cat >expect80 <<-'EOF'
+ 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+ 	EOF
+ 	test_expect_success "$cmd: small change with long name gives more space to the name" '
+ 		git $cmd $args >output &&
+ 		grep " | " output >actual &&
+-		test_cmp expect actual
++		test_cmp expect80 actual
+ 	'
++done <<\EOF
++diff HEAD^ HEAD --stat
++show --stat
++log -1 --stat
++EOF
  
-@@ -1044,7 +1046,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
++while read cmd args
++do
+ 	cat >expect <<-'EOF'
+ 	 ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1 +
+ 	EOF
+@@ -79,11 +95,11 @@ test_expect_success 'preparation for big change tests' '
+ 	git commit -m message abcd
+ '
  
- 	shortlog_init(&log);
- 	log.wrap_lines = 1;
--	log.wrap = 72;
-+	log.wrap = MAIL_DEFAULT_WRAP;
- 	log.in1 = 2;
- 	log.in2 = 4;
- 	log.file = rev->diffopt.file;
-@@ -1061,6 +1063,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+-cat >expect80 <<'EOF'
+- abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++cat >expect72 <<'EOF'
++ abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ EOF
+-cat >expect80-graph <<'EOF'
+-|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++cat >expect72-graph <<'EOF'
++|  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ EOF
+ cat >expect200 <<'EOF'
+  abcd | 1000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+@@ -107,7 +123,7 @@ do
+ 		test_cmp "$expect-graph" actual
+ 	'
+ done <<\EOF
+-ignores expect80 format-patch -1 --stdout
++ignores expect72 format-patch -1 --stdout
+ respects expect200 diff HEAD^ HEAD --stat
+ respects expect200 show --stat
+ respects expect200 log -1 --stat
+@@ -135,7 +151,7 @@ do
+ 		test_cmp "$expect-graph" actual
+ 	'
+ done <<\EOF
+-ignores expect80 format-patch -1 --stdout
++ignores expect72 format-patch -1 --stdout
+ respects expect40 diff HEAD^ HEAD --stat
+ respects expect40 show --stat
+ respects expect40 log -1 --stat
+@@ -163,7 +179,7 @@ do
+ 		test_cmp "$expect-graph" actual
+ 	'
+ done <<\EOF
+-ignores expect80 format-patch -1 --stdout
++ignores expect72 format-patch -1 --stdout
+ respects expect40 diff HEAD^ HEAD --stat
+ respects expect40 show --stat
+ respects expect40 log -1 --stat
+@@ -250,11 +266,11 @@ show --stat
+ log -1 --stat
+ EOF
  
- 	memcpy(&opts, &rev->diffopt, sizeof(opts));
- 	opts.output_format = DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
-+	opts.stat_width = MAIL_DEFAULT_WRAP;
- 
- 	diff_setup_done(&opts);
- 
+-cat >expect80 <<'EOF'
+- ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
++cat >expect72 <<'EOF'
++ ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++
+ EOF
+-cat >expect80-graph <<'EOF'
+-|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 ++++++++++++++++++++
++cat >expect72-graph <<'EOF'
++|  ...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++
+ EOF
+ cat >expect200 <<'EOF'
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | 1000 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+@@ -278,7 +294,7 @@ do
+ 		test_cmp "$expect-graph" actual
+ 	'
+ done <<\EOF
+-ignores expect80 format-patch -1 --stdout
++ignores expect72 format-patch -1 --stdout
+ respects expect200 diff HEAD^ HEAD --stat
+ respects expect200 show --stat
+ respects expect200 log -1 --stat
+@@ -308,7 +324,7 @@ do
+ 		test_cmp "$expect-graph" actual
+ 	'
+ done <<\EOF
+-ignores expect80 format-patch -1 --stdout
++ignores expect72 format-patch -1 --stdout
+ respects expect1 diff HEAD^ HEAD --stat
+ respects expect1 show --stat
+ respects expect1 log -1 --stat
 -- 
 2.16.1.205.g271f633410
 
