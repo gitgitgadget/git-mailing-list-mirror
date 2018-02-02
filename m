@@ -2,94 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35C331F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 22:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F22351F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 22:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751671AbeBBWb6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 17:31:58 -0500
-Received: from mail-pl0-f50.google.com ([209.85.160.50]:38581 "EHLO
-        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751582AbeBBWb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 17:31:56 -0500
-Received: by mail-pl0-f50.google.com with SMTP id 13so7231635plb.5
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 14:31:56 -0800 (PST)
+        id S1751792AbeBBWgj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 17:36:39 -0500
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:43116 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751470AbeBBWgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 17:36:38 -0500
+Received: by mail-pf0-f194.google.com with SMTP id y26so18038534pfi.10
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 14:36:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WTSSGCAp1IxnP5xRmU+ZZj+mq9JmZTLd84qP8GXpPkk=;
-        b=Pc2VZ3LaMEQ1nuv+eRugG7QtmUop1LoBxPvXvaU44oquM2/D/QnPTBofPRl4ApzVpN
-         G2DIWYsQuz1lWh6JRR3dVlNa8xG2HjrFtp1IY3LXZSzbjGa4jG3plybpANrXr2beS9pv
-         HK0rah8oeIxM/RbhhcD6B457JSw6g+nJtXXlRvDV9pbphbTcC4JcCi/K7Wqjdvd0M3Yd
-         msvGfVpwgr0hSuKucytsvW+JD17Jg3aKkb4zzfWwDQwettESITanwbO2v5y5CtGG7R1X
-         A1kgeQjaVhjJhCpATrk2+H2K0PdgaK0OE8DTOZnaZS6PgcG9AJhtb5tHox2FTGM0igmi
-         O3xg==
+        h=from:to:cc:subject:date:message-id;
+        bh=nOALoN+Kagh7eBzDKnWE+QiXnLCoYgPJj3vzzJJvsFU=;
+        b=JDb7Vko+mlJwU+ye1nFTRQHRk//NKS1u1Tgsa65bSNU9dukKALtdAhhgEe0foMkyDl
+         vzk9jWeA1dADSXtumbsp8/zdsrwXTBW/n5VH4TqfKS1UW/hvSMl+gl8TA3ROCEy6THpw
+         1DWwyal/p9mHOm80SSXq0N1P5NHKWTgwJ6DW7loDHZHm/q7Q3aqBlY0PraZc6vhpLHlN
+         oDLZ1XHHZeMFC50IZhHQI3aaZjxMFvs+WzP+3wCZqVsbh+xfiHqsfM260d8SS0p4exck
+         xWPrsgaLKW9sAU+mkARfwznpqebcNM50A8ajRIps68SJ8ko/3LpNJdJG2Lb4NfYnQUuI
+         HRYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WTSSGCAp1IxnP5xRmU+ZZj+mq9JmZTLd84qP8GXpPkk=;
-        b=uGOOnKNxolXCoUB6uC62oDPm58+bxDSasp03EjahCMwRuj0P/UEIa9uS8kirQPyfT7
-         CfF2/GBKTmY6wcKDLfxNmiTN5NmguVx/oFo24cBmQ2Rwi1FrOQuuh8yAD6WoeFIjBdNd
-         2Rrtw3J8wppY85/mD7RkBcV12XHfj9hi9kGDbL0B15pGqRkH6zrpphYyKgXIfLg7Lpru
-         6HCyQNdz245DU6714OP05zXGaXrgLhRDcu2EFOHA+cif2DdY37a6rln5qjzBLyBeZu29
-         QfHMV816Hxc+TQZj3UgAyVqkCxpOjifsaiwFpE6a0LfFIVEQLtCBHcgFA0lueZrX5yLr
-         n+Ow==
-X-Gm-Message-State: AKwxytd3BUtn6NfqQmBoZ1nMJ0zagSNv/U9ol91SZUV+qtt51stax59d
-        X7YOlLlQ2RlnohSFW2ve9IUD+A==
-X-Google-Smtp-Source: AH8x226x3yAwh3BCs0zv1KgccETBhOvE0cjIZOP5GsRETXeCDOHP2Ic6g1+SS1eBd7apGucpSx0dYw==
-X-Received: by 2002:a17:902:f83:: with SMTP id 3-v6mr12447221plz.287.1517610716167;
-        Fri, 02 Feb 2018 14:31:56 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id d4sm4277477pgv.24.2018.02.02.14.31.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 14:31:55 -0800 (PST)
-Date:   Fri, 2 Feb 2018 14:31:54 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 13/27] ls-refs: introduce ls-refs server command
-Message-ID: <20180202223154.GA187827@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-14-bmwill@google.com>
- <CAGZ79kb14ciUoyHLAxmh0jGwwPYFVjGayrn9R2f+4+88A8=xsA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kb14ciUoyHLAxmh0jGwwPYFVjGayrn9R2f+4+88A8=xsA@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nOALoN+Kagh7eBzDKnWE+QiXnLCoYgPJj3vzzJJvsFU=;
+        b=ZsRkNf8wgAMQ5Gfr1EQaPODn2+h2HWXhk7Hy/yrXcr1DlllUZ8a6LGkXkIEvBs28im
+         TObZnBEgSpDWEW2c9Ifh8q53EYZWOF9S3O3phQr1Zhp2IST9c3Q3pBC0FO6q8KyJqAxO
+         POAKEDypqjj2Tm85p0n5ywNTNuIS5HVmTE8r5TdSOVBuxnvwTIFN+dNwyIch+Iiell/2
+         rt5AqQRRgpjxSV7GGo5YKBpU5jf4Rgs0Pu+Dcb6yOEIdT9RsyBVDmIX6hDPwbCB3IyAW
+         ARUw3ApRgxxepTHPZDbE/7/e/dvPPu5FxuZTB4c3x1QJ56te5SuDvoejmZ5hi7I2f9MB
+         jN1w==
+X-Gm-Message-State: AKwxytfGTLOCGX0OYg0H+kCcj8rbdCr9WRj6Y5a+m61obtdlJAm2RIFS
+        +0/L7jsGpvCwMW5k1NfH32DO8TvGmwc=
+X-Google-Smtp-Source: AH8x226OwTJxNM0lEBb+0iOKycGheR7QOKDAnkCeykDWNqSBEHiY4Vt3qVkeau7ZYBg0V0XOdsNdXw==
+X-Received: by 10.98.196.13 with SMTP id y13mr698163pff.73.1517610997966;
+        Fri, 02 Feb 2018 14:36:37 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id b81sm5878168pfm.25.2018.02.02.14.36.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Feb 2018 14:36:37 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com
+Subject: [PATCH 0/2] Refactor hash search with fanout table
+Date:   Fri,  2 Feb 2018 14:36:29 -0800
+Message-Id: <cover.1517609773.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.15.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/26, Stefan Beller wrote:
-> On Thu, Jan 25, 2018 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
-> 
-> > +ls-refs takes in the following parameters wrapped in packet-lines:
-> > +
-> > +    symrefs
-> > +       In addition to the object pointed by it, show the underlying ref
-> > +       pointed by it when showing a symbolic ref.
-> > +    peel
-> > +       Show peeled tags.
-> 
-> Would it make sense to default these two to on, and rather have
-> optional no-symrefs and no-peel ?
-> 
-> That would save bandwidth in the default case, I would think.
+After reviewing Derrick's Serialized Git Commit Graph patches [1], I
+noticed that "[PATCH v2 11/14] commit: integrate commit graph with
+commit parsing" contains (in bsearch_graph) a repeat of some packfile
+functionality. Here is a pack that refactors that functionality out.
 
-Maybe?  That would save sending those strings for each request
+Derrick, consider incorporating these patches in your next reroll.
+
+[1] https://public-inbox.org/git/1517348383-112294-1-git-send-email-dstolee@microsoft.com/
+
+Jonathan Tan (2):
+  packfile: remove GIT_DEBUG_LOOKUP log statements
+  packfile: refactor hash search with fanout table
+
+ packfile.c    | 30 +++++-------------------------
+ sha1-lookup.c | 24 ++++++++++++++++++++++++
+ sha1-lookup.h | 21 +++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 25 deletions(-)
 
 -- 
-Brandon Williams
+2.16.0.rc1.238.g530d649a79-goog
+
