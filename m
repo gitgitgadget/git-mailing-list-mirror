@@ -2,97 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C781FAE2
-	for <e@80x24.org>; Fri,  2 Feb 2018 19:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73AE41F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 19:16:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752647AbeBBTBE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 14:01:04 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51849 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752181AbeBBTBC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 14:01:02 -0500
-Received: by mail-wm0-f68.google.com with SMTP id r71so14745478wmd.1
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:01:01 -0800 (PST)
+        id S1753236AbeBBTQH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 14:16:07 -0500
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34991 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752249AbeBBTQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 14:16:06 -0500
+Received: by mail-qk0-f173.google.com with SMTP id 69so12115099qkz.2
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:16:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=U2EIWx2EkE+3Fr2sVShVP5N5olRiCgAA8UsQ57W6O/8=;
-        b=qYvDCM2jvbv2ZDjbcSAI0t+DrFwT96LlOvOYbkrFz+dWJn0kNzllPlqbAJqS1JOXoW
-         54xTxtYVxkeQ2YoQYOTvR1K9CCSTXpIbY3vvtluMhR3pV2XHZ1B1crpvWlC8aEm92Khn
-         ldckKDgwcUukxHLZz6DZiFKDHo9MkWGHlWole5CUm94SNoT5XtvpuBA6YjeNCpahTnIS
-         pBN1KDwXjUK44t1IPzXeYxYU8F7Tq4rS5iASYL365boaiC8tB9Ifb0N2LuoFA+EBfCiF
-         ZMX9LlgVCb/dItEVXrRUNqe6eYl7TkBbwJ75F6XlCz+QflaKgvs4kZbLarCmZHoF664q
-         HNAw==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=PsFaaEm2G2QyhkbdbT8Kb/mVRpyFLtlg3cdEdgOpnP0=;
+        b=RINZjbYS0RntaJdg46WE9SDFs0hAt/iVSpdaq6bGDRyr3UutYlgIVABPX6kybBTtAK
+         +lgubW+V3Yiq5CeEEYslj0iOxfbB0UNtPQaRgAQJ3ay6us/4ztu7aSlQBj1Rnna3gtaG
+         sztDQasnNmUnPph6m3pLwBeQIcI/8Tmg9zW/qFmS3BYR27bYf9RO/fVSliSnhvbVTvfr
+         yQAzqEfKH6qvOjoOzLMWgDbbkMfg8cDwB8I7KTql2UItzlfbtE7Y9OiSbEHHes2mgpaU
+         eMFJ6dpdUuihILT4qVU6G912maY979qLqo+B9uW7xX9BUDPQIZ9vgGaIfYyPPSlfgapw
+         lP4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=U2EIWx2EkE+3Fr2sVShVP5N5olRiCgAA8UsQ57W6O/8=;
-        b=AtqYbQSSotIJfugJ/hblHGExhhuPqCwLtxycFSc1L+pc+CLb/ckcVOWNqM7o0O48xs
-         1ybUIEWcqPFru5/yXanHtDMylVBXAjXARYbATbBR0MW15BqVm6tPHo87dDozvlcrQmSp
-         bxR2hsf5Lr6Nl3GVuDki1YcDjkNNzKOOA+MruzFlZJNW73Peo4xWd4fha2xbxYeHaMx9
-         ohLZXA53P4QDxRzxSxtD1fEJQpxNBTy94cchtvzDGntOlI9TakJa5x3y7wtskQAaoIbZ
-         /mzDI2bqDMgXH5+1z4SKcbJJ+kBLpLCSDw/6JdFujBvfL1FEnv2T0caPl+yajab+xUUc
-         G3gw==
-X-Gm-Message-State: AKwxyteQEJ3c+FBFZUP37ifXylnbLnU1UPcBHkw25+IqxUALj+0I+uKZ
-        O3dbsmsPYkXA/V4gbiP2010=
-X-Google-Smtp-Source: AH8x2261V0B7tiKoO13GYUnoVPGSKjdVsJIKp6SDVxXI83jQYwkpcSTNEsLjomwsYQJquQ9legXjNg==
-X-Received: by 10.28.100.213 with SMTP id y204mr31272959wmb.24.1517598060773;
-        Fri, 02 Feb 2018 11:01:00 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k60sm4802430wrc.2.2018.02.02.11.00.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 11:01:00 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Tim Landscheidt <tim@tim-landscheidt.de>
-Subject: Re: [PATCH v2 3/3] rebase: introduce and use pseudo-ref ORIG_COMMIT
-References: <20180126095520.919-1-pclouds@gmail.com>
-        <20180131093051.15525-1-pclouds@gmail.com>
-        <20180131093051.15525-5-pclouds@gmail.com>
-        <xmqqlggdr519.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8D8PaDR0r+6AKMgPo9UBcWYQC8goaVkVhxMCXCa1E9F9A@mail.gmail.com>
-Date:   Fri, 02 Feb 2018 11:00:59 -0800
-In-Reply-To: <CACsJy8D8PaDR0r+6AKMgPo9UBcWYQC8goaVkVhxMCXCa1E9F9A@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 1 Feb 2018 17:02:39 +0700")
-Message-ID: <xmqqy3kbcj2s.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=PsFaaEm2G2QyhkbdbT8Kb/mVRpyFLtlg3cdEdgOpnP0=;
+        b=lcJvESL88WwHCFyD01arTOg+yZRe3rNwPnBMPAS6zDM0436ozv0ufWctEPiC4tp8ZT
+         152cnTNeSIqqnj3zF8d00eZGRMMZuH+M96NAmIELlnuo7DDHb3pjneXQbJSwfJvLkKlH
+         FEMnfMo0OMsmkM6bgbUn49muND68GEmG20zh4iIP7+E5ikx1ieGMm0wzN/0xAKGo3F7Q
+         Srkf7HA8wG5cscwypCAdOajSAlo4AiYNrPDy/oPy6ryaBKoqgoyoQTGm/UKVywSlIY2L
+         TMBSJ257unvZmqCMOc/q7mMVH1ocHzHa3voZhvf1vNGw1jZscABZGSaEHTkjX6Xmw7iY
+         J0Mg==
+X-Gm-Message-State: AKwxyte9+YFMfQRI9K9MnY8q6U1s+6xFT57qMhJ6qqAJiCrIriZpdroT
+        WvpUVZI3wCNl0ook2kM8Kv5hf0lf1qGUvVGhPGQ=
+X-Google-Smtp-Source: AH8x224L9e5Aq1mRl1YV9WaHhzD6f9jDrINqW2zHdV4fVhekE68do6qLqJuVa69dzg8XTdpyGXPM6h84RjBt9l1WENo=
+X-Received: by 10.55.123.69 with SMTP id w66mr61186350qkc.326.1517598965189;
+ Fri, 02 Feb 2018 11:16:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 11:16:04 -0800 (PST)
+In-Reply-To: <52737deb-a5dc-27d6-3c0c-0d8b8de991c5@suse.com>
+References: <e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com>
+ <CAPig+cT8vKyhq6DvFMz-0CPRO-Y7R4EE_JhN6yuiSUNXW8-Yww@mail.gmail.com>
+ <fa3f512a-bd77-80c7-4fec-071639f62d26@suse.com> <CAPig+cTDHsBSPZ+o+jh9bDvJ7NcZ3DGe+penppPwyupCJzmhAA@mail.gmail.com>
+ <52737deb-a5dc-27d6-3c0c-0d8b8de991c5@suse.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 2 Feb 2018 14:16:04 -0500
+X-Google-Sender-Auth: FnQD_lzbE01DvRVv3ZOuyjfNGfo
+Message-ID: <CAPig+cQF2HzmtVdHqtQcOf0B-yA8Kpj-CZbPmdQotGwtdYpxvw@mail.gmail.com>
+Subject: Re: [PATCHv2] tag: add --edit option
+To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Thu, Feb 1, 2018 at 6:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> ...
->> Hmph, how is this new file conceptually different from existing ones
->> like CHERRY_PICK_HEAD?
+On Fri, Feb 2, 2018 at 11:48 AM, Nicolas Morey-Chaisemartin
+<nmoreychaisemartin@suse.com> wrote:
+> What message do you suggest ?  As I said in a previous mail, a
+> simple "Editor failure, cancelling {commit, tag}" should be enough
+> as launch_editor already outputs error messages describing what
+> issue the editor had.
 >
-> Conceptually the same, except that CHERRY_PICK_HEAD can't be reused
-> because it's specifically tied to git-cherry-pick (there's even code
-> that delete this ref if cherry-pick is run as part of rebase, and
-> git-status uses this ref to see if a cherry-pick is in progress).
-> There's also REVERT_HEAD in sequencer.c, same purpose but for
-> git-revert. Perhaps I should rename this new ref to REBASE_HEAD to
-> follow the same naming?
+> I don't think suggesting moving to --no-edit || -m || -F is that
+> helpful.  It's basically saying your setup is broken, but you can
+> workaround by setting those options (and not saying that you're
+> going to have some more issues later one).
 
-I just found "ORIG_COMMIT" too similar to "ORIG_HEAD" that is
-totally a different thing and feared unnecessary confusion.  I think
-you are correct to suggest that REBASE_HEAD would be more in line
-with the naming convention with the sequencer-like operations.
+If it's the case the launch_editor() indeed outputs an appropriate
+error message, then the existing error message from tag.c is already
+appropriate when --edit is not specified. It's only the --edit case
+that the tag.c's additional message is somewhat weird. And, in fact,
+suppressing tag.c's message might be the correct thing to do in the
+--edit case:
 
-Thanks.
+    static void create_tag(...) {
+        ...
+if (launch_editor(...)) {
+   if (!opt->use_editor)
+       fprintf(stderr, _("... use either -m or -F ..."));
+            exit(1);
+}
+
+I don't feel strongly about it either way and am fine with just
+punting on the issue until someone actually complains about it.
