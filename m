@@ -2,83 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBDCA1F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 23:36:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A971F1F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 23:39:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752118AbeBBXgo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 18:36:44 -0500
-Received: from mail-yw0-f196.google.com ([209.85.161.196]:32926 "EHLO
-        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752084AbeBBXgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 18:36:43 -0500
-Received: by mail-yw0-f196.google.com with SMTP id x24so14454688ywj.0
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:36:43 -0800 (PST)
+        id S1752068AbeBBXjE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 18:39:04 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:44194 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751827AbeBBXjC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 18:39:02 -0500
+Received: by mail-wr0-f194.google.com with SMTP id v31so24063346wrc.11
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:39:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=gGXPAv60DdZbUf930l2rnuJ/EAzlyoTZkQcclq7I3rI=;
-        b=rv1xNIMu5hV0opFCZhZve+yJm5RlQB79yI1/74ceyjiF4Ci9JEr9O6Mxc7a0u++jjC
-         ERSs5CZaB0WIYvXFLf+6k+lEfXNnVYRUJA46zPwEBf9zJlworJY/DkNI6IdUY/AYt1d6
-         b6flv/ISCq1qwQBowbo4S+U1/viLQnTX3osXyskz7k5WaPS3jIQLSu5pEp893IUhmH2f
-         ITZ5yyV6KuWC+Q+13tESn5byUM+J3hzBYN9pGgvGkqPndKF3JZMqlt6Wf4wxUR/Q54mH
-         x3trdZxbCXMGlOaw+ZC9paXubtqtBL5l3Bjj0SyOQ59i7dGYqEwLGNf5uHEb50FgnDtQ
-         Q2Ig==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YKe0T3yrRpQWdSmVHokhJxpfU2u9S5WVLmJ7YE68ies=;
+        b=NxzMUE/Fu7fLgvMoHHD72dn9/Lj5rQ9IOQa8NbMqcxSiFGxmfG9IPdGgQHXmE4e7fp
+         glgm+af5qfOneMbF0krPlSYiCK70qfaD7YVlwBh83JvjAZ7Okmo6e0ZJNjTdnYA9GKA6
+         KrMepX0Lo7+/hpnfcgI+y50EqPMp6gyVz1eH/DN/Pd3FkgNhSvC6Cv5sGZECjU12mXTp
+         ujheaq1ACIoVrgtWpM77qe5yk0aFvbwR/YCZftDYOUET2GQ1g2x3C/IsokUnmBlGcn5S
+         X7lAnRZg+tBlUJWDBSE+P9LlqhlM21Ivz0RNSkJjzP59sVZMENg++DNvsEHXPjVjURG9
+         ZDuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=gGXPAv60DdZbUf930l2rnuJ/EAzlyoTZkQcclq7I3rI=;
-        b=maXdWDmBmW8xNQM/2NJr5vyHzK7+X4c8BmzTaqHChbB661zih5R0rmCrFnyPpKa8+m
-         Hl9vaT8ND0eCUN4iYT6ydfHtkC4RpnMZic730qvBvyo7XuYmBJJM4qro2Ap7qzv+W57H
-         HVDG1RFPq/2rX67xISPiH5MRjCS/UPSQyrnUycUTQhpAVxN5RfeX/jvNkfMnWg7Nx3Js
-         ciQn3U6D4CCVdWYwZjZsfrdgf2J0P0wh++HmtE6v2NRadu6okWjO75px37CNjM7Rijg0
-         SNFmiTK5jJvQj5RJVDTQ59263ZrSAaaCZL1yxY4x0aDx8xXSCAn8POImxcvP11z+Ulso
-         LmCA==
-X-Gm-Message-State: AKwxytd/qTAvFgMEdm1IN+kWdMZYEEXvyKMVnT/jlfeo2XbeX+9urp/e
-        UDcDFRdM4gh73+XDM+yc6SRRsu8GaMZK+OnYCq8ouA==
-X-Google-Smtp-Source: AH8x225ivzRJJEelqkUbdHrrUJ9w4gLaKwrNg2AsBkOo41YA/nwCaPeyVWwL+7UPTPEfdNBDHRxUcXIxP6Xvmm2fnoA=
-X-Received: by 10.37.133.12 with SMTP id w12mr20063108ybk.213.1517614602337;
- Fri, 02 Feb 2018 15:36:42 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YKe0T3yrRpQWdSmVHokhJxpfU2u9S5WVLmJ7YE68ies=;
+        b=oZikT2TgMlOFfNyTQ2YCfENPsrD58ogcPec56OdLa8b5+kG8HNLXu2owx3iSZo8jfG
+         IL0tdiZPhwjoZb8U2qufGpJKZnO24wgT6oGV0Uez80vl5OvFnP15ja8itS7zy/WgQU2V
+         Kwg0z/LDZPNjxyaM0D6afbfIvXLZvHfJZ2GzdXIrle2Se+pvLVWt900x5qEH6KVRTVHM
+         kAR8bGGuVLN9wMDIHX3YYRsA7GK4bX/pT5d7jLtgwafufj782hzJEYFjpT33cmPhV3sp
+         0q1bb6CUV2yXvARaetFt0Ikp+BvKxpPOSwmJIGEGsnm4g5WWeeDSPQ/Lca9QnRIWlSis
+         zAdA==
+X-Gm-Message-State: AKwxyte5o94LklwTRxZNoXRhDnS2APpc8Nw6pnViYSWuw9GmHlprjGpK
+        FiSuigs1Xot3/o+b2orjmsA=
+X-Google-Smtp-Source: AH8x226NZv803NEcVGEIKR8JQ+NVsbye3jWZieW9QZNqSv2sH+6Wc9IU6H0VoqNMC4BZgquKDREPGA==
+X-Received: by 10.223.200.140 with SMTP id k12mr16512355wrh.146.1517614741530;
+        Fri, 02 Feb 2018 15:39:01 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e15sm3059703wmd.26.2018.02.02.15.39.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Feb 2018 15:39:00 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephen R Guglielmo <srguglielmo@gmail.com>
+Cc:     Avery Pennarun <apenwarr@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Subject: Re: Bug Report: Subtrees and GPG Signed Commits
+References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
+        <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
+        <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
+        <CAGZ79kafgyOujDM4BsXdDUnP+iFk5mp2bYnX-Q65khW-weEhUg@mail.gmail.com>
+        <xmqqy3kfq6a9.fsf@gitster-ct.c.googlers.com>
+        <CAHqTa-0kdkDUjH1nw=4JPAivtyL84zfZ5t8Dj1UYXPrMd7Poqw@mail.gmail.com>
+        <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
+Date:   Fri, 02 Feb 2018 15:39:00 -0800
+In-Reply-To: <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
+        (Stephen R. Guglielmo's message of "Wed, 31 Jan 2018 07:33:57 -0500")
+Message-ID: <xmqqpo5narmz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 2 Feb 2018 15:36:41 -0800 (PST)
-In-Reply-To: <20180130232533.25846-14-newren@gmail.com>
-References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-14-newren@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 2 Feb 2018 15:36:41 -0800
-Message-ID: <CAGZ79kYid-XUrXdGPDW+wy8-xMPAz7Dj016Urz-wpG3F=Ae=hA@mail.gmail.com>
-Subject: Re: [PATCH v7 13/31] merge-recursive: introduce new functions to
- handle rename logic
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
-> The amount of logic in merge_trees() relative to renames was just a few
-> lines, but split it out into new handle_renames() and cleanup_renames()
-> functions to prepare for additional logic to be added to each.  No code or
-> logic changes, just a new place to put stuff for when the rename detection
-> gains additional checks.
->
-> Note that process_renames() records pointers to various information (such
-> as diff_filepairs) into rename_conflict_info structs.  Even though the
-> rename string_lists are not directly used once handle_renames() completes,
-> we should not immediately free the lists at the end of that function
-> because they store the information referenced in the rename_conflict_info,
-> which is used later in process_entry().  Thus the reason for a separate
-> cleanup_renames().
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+Stephen R Guglielmo <srguglielmo@gmail.com> writes:
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> On Tue, Jan 30, 2018 at 6:37 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
+>>
+>> Sorry I can't help more.
+>>
+>> Good luck,
+>>
+>> Avery
+>
+> Thanks all for the discussion/replies.
+>
+> We use subtrees extensively in our environment right now. The "sub"
+> repos (90+) are located on GitHub, while the "main/parent" repo is
+> provided by a vendor on website hosting infrastructure.
+>
+> I will take a look at:
+> git/Documentation/CodingGuidelines
+> git/Documentation/SubmittingPatches
+> git/contrib/subtree/
+>
+> Should I follow up in this thread with a patch (it might be a while)?
+
+These three are good place to start at.  You may find the output of
+"git shortlog --no-merges --since=N.months contrib/subtree" and "git
+blame contrib/subtree" also a good source of whom to ask for help.
+As we said on this thread, this is a corner of the contrib/ section
+that nobody seems to be actively working on, so if you really depend
+on it working well, you might have to take the ownership of it ;-)
+
+Thanks.
+
+
