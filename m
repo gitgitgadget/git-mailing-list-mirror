@@ -2,148 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA371F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 00:46:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 963571F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 00:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752830AbeBBAqC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Feb 2018 19:46:02 -0500
-Received: from mail-ua0-f193.google.com ([209.85.217.193]:33571 "EHLO
-        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752675AbeBBAp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 19:45:57 -0500
-Received: by mail-ua0-f193.google.com with SMTP id p12so13160219uad.0
-        for <git@vger.kernel.org>; Thu, 01 Feb 2018 16:45:57 -0800 (PST)
+        id S1752056AbeBBAxn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 19:53:43 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35289 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751732AbeBBAxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 19:53:41 -0500
+Received: by mail-wr0-f196.google.com with SMTP id w50so20968963wrc.2
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 16:53:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=5Dy91tGBf4rSyPyaDMoEL1/qmWBjp/ISqX1nzB2JlTc=;
-        b=RJNupE2tEn+XLiBjF6dhlBK1B2z/EDnKGEmki9+B0hhV+feeJDsU5uIfoGVC3Hs7Sr
-         UTIX934oI5jIdsgy1Hdr2/dctiOyBjxtnUW8pzUYSO7TJrvqzX6Us/3jgQWTSe2Mwbda
-         DZjsFMoG8bFI8Iju/6ty6m46Q0phOvTWqfRdB/hb9PcYfWTXxMpHzMlGhKP57F6Zk1vM
-         OH9hpOawaamZMvI6Whb5FxxqlRHXamZ2o52efWwOX/W6D7MZQgK4RMWIWrZAR5i+eQj0
-         pcDOdvgkYfBkWf6xVPu5Xs+qoTiMGGIdwAT8ElblieUl21nK88RgnvA5EX7ve3SFCL73
-         Ck9A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hcwMH4lWc5T+QWXNFG0Y5aE8x0rd1lza3ukHyk6Yf0U=;
+        b=IgRRRPbp9ruk3JyDdkqYfyzemyVKn6OUnrBtyv+uM95tQAew8EF8E7Mj6NA3hKFxmi
+         0xy0Q/TAJ3xMEyBlHUpRX2Gzgj/3XNFtKY7lWR93p2XaU+E5pUrRm0juUtxDzXiO0JZJ
+         PYUrDYSu+H/FAkF508e+F4Ingp4Zc3weqvCaifqjq5JobUsVfgQ9nctyY/ijlkv+hzkV
+         h63INxXiDoO293+GarZpfKO4NZbLpx6waAyjtHdA05Du7TP0QB90tlokkWZLoOsjh7BD
+         bclePp8cCBYOJ74A3E79sny/kF1teUPWrbSEE+1BJc58/GfxiiJewVxgzYM2STFJi9kv
+         Jn1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=5Dy91tGBf4rSyPyaDMoEL1/qmWBjp/ISqX1nzB2JlTc=;
-        b=AiKj+RP34o9l94PyLt5xiAPoHzDuYJ9rhXTKURhRUh28P+pNSEZY3fAcMaDyghRR5V
-         o47G2ZqIa0n2OphIGi59cNE2+s9cxkNyS93Enazr3iV4Nh+NeJpHIxJE0sMmtZutPCcq
-         vfECYYHfg0J5sP9sWlL8U8UclzpoJniHf+4D9j0NgFY9MC2eBWmnO8NoZaBtBW7JOFbX
-         1j2rajtLjCSx9DY28t4V8RhRDsJYZn76pra2aNXMKK7Izm0waUMjw6PBDFRtHtqvCKY1
-         e82Lk+H9DEhLjAwwA6mZpPN6HM4c8muf0U59tNusQxwIa2+TUlPnOhA51U1TVjJbdSKf
-         Q+xw==
-X-Gm-Message-State: AKwxytdiujNcj9xJD6/eDHNo1SdZCVWr8gJVNOKdJnX8IQns65EpuQM4
-        7+69+BZLy3cbQSuFjZsLC8r/3iggRX2S3o4fje42wQ==
-X-Google-Smtp-Source: AH8x224AbR4SgIC+e6bNX5BbnTJ4EzuNOl9pTN0SOM0BZ/hxmdAweCKxlgmU1GjAOMUTwql2yQM5hfYD4cvQD4SinRY=
-X-Received: by 10.176.5.70 with SMTP id 64mr30638807uax.87.1517532356340; Thu,
- 01 Feb 2018 16:45:56 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hcwMH4lWc5T+QWXNFG0Y5aE8x0rd1lza3ukHyk6Yf0U=;
+        b=CGKIUfSu/OsE9DAmfENPamsT2xtedhmUS0Os8Bq37ZA8Ce2hIsI7Prfar0Hmv+sZuJ
+         giz37/W9sAz0x7B5igSMihNWoqXrqqDcV+jhDbQLRrvUilB/ZKAq8WK1X4oSqViwIGKZ
+         DPUrWAvGRm/Z9AAGqeJlkWvUgTNRoY5sTKOwyafxacpL9RuHX1NrJWAc3YvlZ4eCmX+Z
+         5Ht7W4m3/htkCdHXr3A+7mHcs/1L/2gU7qjcKqmvvEqOePsnbfAZqYrIMfMEHysiW5jU
+         KLfOkVDGvFY6iDXj/FkMPm1iNg/WR1Ae7DXPnwi9G3oO5yksi785/ja5hY+2Q3ZXUnWi
+         JsnQ==
+X-Gm-Message-State: AKwxytcO5qIMhOkhAb39VG0MbhLzisPop4GydjPDz6dyWjvFTCL4/jfc
+        sApNZy+SfZ/+KluJYuE7D7o=
+X-Google-Smtp-Source: AH8x224R21wSDFiHh0w/KiaThXMLmigSD8pK2l662zBq44X4Znrv2lI/Zn1e1sstB5Nlvp7O6TTZWg==
+X-Received: by 10.223.175.196 with SMTP id y4mr26663078wrd.195.1517532820711;
+        Thu, 01 Feb 2018 16:53:40 -0800 (PST)
+Received: from localhost.localdomain (x4db049fc.dyn.telefonica.de. [77.176.73.252])
+        by smtp.gmail.com with ESMTPSA id y6sm274529wmy.14.2018.02.01.16.53.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 01 Feb 2018 16:53:40 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        git@jeffhostetler.com, sbeller@google.com, dstolee@microsoft.com
+Subject: Re: [PATCH v2 03/14] commit-graph: create git-commit-graph builtin
+Date:   Fri,  2 Feb 2018 01:53:35 +0100
+Message-Id: <20180202005335.23410-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.1.158.ge6451079d
+In-Reply-To: <1517348383-112294-4-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com> <1517348383-112294-4-git-send-email-dstolee@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.176.8.83 with HTTP; Thu, 1 Feb 2018 16:45:55 -0800 (PST)
-In-Reply-To: <CAGyf7-He4in8JWUh9dpAwvoPkQz9hr8nCBpxOxhZEd8+jtqTpg@mail.gmail.com>
-References: <CAGyf7-He4in8JWUh9dpAwvoPkQz9hr8nCBpxOxhZEd8+jtqTpg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 1 Feb 2018 16:45:55 -0800
-Message-ID: <CABPp-BGJiS96_wXTp4dpVG4CpTEt--KGELykofimP-Wh4nFhdg@mail.gmail.com>
-Subject: Re: 2 conflicts referencing the same path?
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
+> new file mode 100644
+> index 0000000000..c8ea548dfb
+> --- /dev/null
+> +++ b/Documentation/git-commit-graph.txt
+> @@ -0,0 +1,7 @@
+> +git-commit-graph(1)
+> +============
 
-On Thu, Feb 1, 2018 at 3:00 PM, Bryan Turner <bturner@atlassian.com> wrote:
-> While investigating an issue with rendering conflicts on a pull
-> request, I noticed that the merge was producing this output (sanitized
-> for paths)
->
-> $ git merge --no-ff --log -m "Test" 190a25b6e0f32c7b8ccddf8c31e054149dece8b7
-> CONFLICT (rename/add): Rename A->B in HEAD. B added in
-> 190a25b6e0f32c7b8ccddf8c31e054149dece8b7
-> Adding as B~190a25b6e0f32c7b8ccddf8c31e054149dece8b7 instead
-> ...
-> Auto-merging B
-> CONFLICT (content): Merge conflicts in B
->
-> (There are several other conflicts listed "between" the two I'm
-> showing here, various rename/add, add/add and content conflicts, but
-> I'm trimming those out to focus on the lines that I think are relevant
-> to my question.)
->
-> This merge produces 2 (or is it 3?) conflicts for the same B path:
-> - Rename A to B in HEAD, add B in 190a25b
-> - Content conflicts in B
+Here the length of the '====' must match the length of the title line
+above, or AsciiDoc will complain about missing document title.
 
-Right, so the merge-base has just one (relevant) file, A.  For sake of
-argument, let's say it's contents is "hello\nworld".
-
-One side of history, leading to HEAD, also has one (relevant) file,
-which was a rename of A->B which also changed its contents to say
-"hello\nbeautiful\nworld"
-
-The other side of history, leading to commit 190a25 has two files.
-The original A, whose contents has changed to say
-"hello\namazing\nworld", and a new file called B.
-
-When you merge the two, the "hello world" file has been modified
-differently on the two sides as well as having been renamed from A->B,
-AND there was a separate file also placed at B on the other side of
-history which gets in the way.  Git resolves the
-two-files-getting-in-the-way-of-each-other (the rename/add) by moving
-one of the two out of the way (though it really ought to move both out
-of the way, but that's a tangent).  And it resolves the conflicting
-content changes in the other B by doing a content merge with conflict
-markers, giving a file with contents of the form:
-
-"""
-hello
-<<<<<<
-beautiful
-======
-amazing
->>>>>>
-world
-"""
-
-and it treats that B (from the "rename") as more important than other
-(the "add") which it shows by recording it at B.
-
-> I'm still trying to produce a set of steps that will allow a minimal
-> reproduction, but I thought I'd post to the list just to see if anyone
-> had any thoughts on how it could happen. Is it a "normal" (albeit
-> rare) case? Or could it represent some sort of issue in Git's 3-way
-> merge algorithm (in its behavior or perhaps in how the merge conflicts
-> are logged)?
-
-It is "normal" to get this, and functioning as intended, albeit fairly
-rare.  rename/rename(1to2) and rename/rename(2to1) conflicts could
-provide very similar situations.
-
-rename/add conflicts have three issues I know about[1], but that
-didn't include the output messages being suboptimal.  That might just
-mean my mind has been warped by reading merge-recursive.c or that I'm
-too familiar with it, so I don't notice how much it could be improved.
-If you can think of how to improve the messages, I'm happy to listen,
-especially since I'm trying to find time to continue my rewrite of
-merge-recursive.  It'd have to apply to other rename cases, as noted
-above (and, in particular, each side of a rename/rename(1to2) can
-further be involved in other collisions, such as rename/add or
-rename/rename(2to1), so it could get hairy quick if the solution isn't
-simple enough.)
-
-[1] https://public-inbox.org/git/20171120221944.15431-6-newren@gmail.com/;
-that patch and the others in the series are waiting for the directory
-rename detection series to progress before I resubmit.
-
-Elijah
