@@ -2,84 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185A01F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 18:42:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FF101F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 18:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752563AbeBBSmJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 13:42:09 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38499 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755049AbeBBSmE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 13:42:04 -0500
-Received: by mail-wm0-f68.google.com with SMTP id 141so14239707wme.3
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:42:03 -0800 (PST)
+        id S1754465AbeBBSqH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 13:46:07 -0500
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36011 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753826AbeBBSqB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 13:46:01 -0500
+Received: by mail-pf0-f176.google.com with SMTP id k5so1761682pff.3
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:46:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=wIrAHs5SvQfoUqX2ZKl5MUrJ2Hp2Ff01wXrZZzlqP+Q=;
-        b=S1zwF22oOxUAjkGpQgRSkm27gK6kiJAe0FhgGEir1e8Bvx+l0ZoqzxPdfL38FIjfTJ
-         nQAIbubK7KKgeuxRajLh7STVLaTNXRIBmtPn/VyHHohKDx8QDPOqISOnspspZ8MOlsFO
-         cx9hJ4n8m6jNucu/3orRNCLxEkcFwlhbr3adBwmkKpetgl03h6GTHx6uBhYkB4yaMkGm
-         6avh0dS1912fZ64qQ0BALw1/7Vd7qW6o9CtAfVmpID/jMxjZGoFIGeBH+YTcBLjY8b25
-         Z2StPolaDRtp6WJR/lMEYwM+N5phPOl594+VP8YZ5vf0SPvFzyRupUdD9QtY0PrtUdMa
-         nLqw==
+        d=blackthorn-media.com; s=google;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9Kixi7QZHlUIpQi7oHonMco3fgLoAWIO+3bjNrLdWvs=;
+        b=BI0xnrkpxXXN4+/42pvupkuFNn3ZOYZlHuyCfaFn6pzJ1z6aqP9l7F1zVQkhxcBEC6
+         DbjK/rpyjgvz/l2J2g9fQJFimO9bW1Fl93k1t2brksmLi68xxlFguu9+nZBODXbd1fPI
+         Un2Z88ZW55DD3fMtP/6cCdPffiHWHZz17mjlc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=wIrAHs5SvQfoUqX2ZKl5MUrJ2Hp2Ff01wXrZZzlqP+Q=;
-        b=C3Phhq5otTyFlhLDmiy4S/KnEzt1+W97PSKmifxkpuEdfDeHIlny7OnIlgkMm8glO4
-         vVPEZ4FboaoIQtjOUDNYLw/QvE9kOd8AsugnHpMjSfT2vqXW5QV7zAFg4vlBcVtVRJYR
-         ANjSNC8o6FoHtFcgla1K+h9Y1C8Vey3cDjBIVHbp2HS5Z50u9PBtnTXc6mdIbtAvWs7p
-         KWizEvut0cpK07oI6pPimkcoqew0cTqIAJKKNGTnkq3EdCRahWiDS7uTQe5eCI5XBSVF
-         Figw5FME39srikokHBQeg4dNcY7hPQiVRKTg2vhXSnpwC8+HpSn6A8il+AezfsBt1kF7
-         cztQ==
-X-Gm-Message-State: AKwxyteh6d0hzNd+rSHnZmjgVZEyq5YBfHF9t+w8A8HibbKKuLlFSjTl
-        eb1ThjNJHoAivBH0u7FpZb1psWIs
-X-Google-Smtp-Source: AH8x226n/HKoEd5pqIXPVqXvrB/dpTvQxCzl/GR+xhmG1u/ZI9HyGfKwP9ekDCKxDxT1Sbp17uZ4oQ==
-X-Received: by 10.28.184.82 with SMTP id i79mr3112961wmf.6.1517596922498;
-        Fri, 02 Feb 2018 10:42:02 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t4sm1258512wmt.16.2018.02.02.10.42.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 10:42:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v3 0/2] wrap format-patch diffstats around 72 columns
-References: <20180125115927.16196-1-pclouds@gmail.com>
-        <20180201124750.15032-1-pclouds@gmail.com>
-Date:   Fri, 02 Feb 2018 10:42:00 -0800
-In-Reply-To: <20180201124750.15032-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Thu, 1 Feb 2018 19:47:48 +0700")
-Message-ID: <xmqq7ervdyiv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=9Kixi7QZHlUIpQi7oHonMco3fgLoAWIO+3bjNrLdWvs=;
+        b=bMlvfQujN8RztrTT6fQwqoajfQO02MCSRB8drSSGx47SHmS4OaEFXVhjuFtOl2LcIL
+         tIZouTXgJevSLl/JMqxq0ss3yeRzR8F25Q32xqnZUZRE6JDTl0MV9dvcDu7XugArK79F
+         vhgoZJByNEZm5xM4peNVZtUrBvwQ9mjmHh/ihIEg8jk2Apd29zVhgq8JHqc7s4XmI2uK
+         tYGFcGBJEjIGixPa+WMBscErUmpPOySJplFbt3E1H1XRuK7Fc9gG14Lsa+xOPLo3o46P
+         R2AA8cwHDJE4824pXAApMjfbvcCKb7WbkV2a8+oZy5IzSeiHZNlt0nbE5hj7FmWng1Gx
+         tNfg==
+X-Gm-Message-State: AKwxytfpK4DqLv310pYJpq65T+4k7zFTOzhiwotRQs+mC4xTvybjZ3L2
+        KVTX4EsHD5u7wc0QYqs9C6n5oUywaj8=
+X-Google-Smtp-Source: AH8x225USA7w4wVyoBv5SJ18hgzfrFvEszkas6xcDnZgtr3a6BNErb6MbxLr7LDt+VtL6TP83s4snA==
+X-Received: by 10.99.37.193 with SMTP id l184mr22660533pgl.30.1517597161166;
+        Fri, 02 Feb 2018 10:46:01 -0800 (PST)
+Received: from [10.10.2.117] ([38.88.196.250])
+        by smtp.gmail.com with ESMTPSA id j11sm3889690pgq.86.2018.02.02.10.46.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Feb 2018 10:46:00 -0800 (PST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: Re: Git on Windows maps creation time onto changed time
+From:   Keith Goldfarb <keith@blackthorn-media.com>
+In-Reply-To: <c1e419ae-feae-5a31-ead6-20b25fa92f85@kdbg.org>
+Date:   Fri, 2 Feb 2018 10:45:59 -0800
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <040E3C3E-BC8E-4658-A882-5149D10AD408@blackthorn-media.com>
+References: <CCB76F06-DBA9-4342-8830-402F8AF9854A@blackthorn-media.com>
+ <c1e419ae-feae-5a31-ead6-20b25fa92f85@kdbg.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+X-Mailer: Apple Mail (2.3445.5.20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+> The purpose of these values is to allow to notice a change on the file =
+system without going through the actual file data. Duplicating st_mtime =
+would be pointless.
 
-> v3 fixes tests in 2/2 that I overlooked (but Jeff didn't). Interdiff:
-> ...
-> Nguyễn Thái Ngọc Duy (2):
->   format-patch: keep cover-letter diffstat wrapped in 72 columns
->   format-patch: reduce patch diffstat width to 72
+Well, I agree with the first statement. I disagree with the 2nd. It=E2=80=99=
+s not pointless to fix a problem, and in theory the creation date of a =
+file can never change.
 
-Thanks, will replace.  I think we are pretty in good shape with
-this change now.
+> Don't do that then. Use core.trustctime.
 
+I am. Unfortunately, my problem isn=E2=80=99t solved by that alone. =
+Perhaps this deserves its own thread, but on Windows the st_ino field is =
+set to zero. This can also trigger a false positive, causing the whole =
+cache to be rebuilt unnecessarily.
+
+K.=
