@@ -2,54 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.0 required=3.0 tests=BAYES_40,
-	FREEMAIL_REPLYTO_END_DIGIT,FROM_NO_USER,RCVD_IN_DNSWL_HI,RCVD_IN_SBL,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28DD51F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 00:17:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C45331F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 00:23:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751574AbeBBARl convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 1 Feb 2018 19:17:41 -0500
-Received: from mail.mkdc.co.kr ([222.236.44.117]:37854 "EHLO mkdc.co.kr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751555AbeBBARk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Feb 2018 19:17:40 -0500
-Received: from [37.49.227.170] ([37.49.227.170])
-        (authenticated bits=0)
-        by mkdc.co.kr (8.14.4/8.14.4) with ESMTP id w11NNiV2108402
-        for <git@vger.kernel.org>; Fri, 2 Feb 2018 09:17:37 +0900
-Message-Id: <201802020017.w11NNiV2108402@mkdc.co.kr>
-Content-Type: text/plain; charset="iso-8859-1"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: F.LLI PISTOLESI Snc
-To:     git@vger.kernel.org
-From:   ". F.LLI PISTOLESI Snc" <>
-Date:   Fri, 02 Feb 2018 01:17:26 +0100
-Reply-To: tm6428726@gmail.com
+        id S1751632AbeBBAXb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Feb 2018 19:23:31 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:35995 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751579AbeBBAX0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Feb 2018 19:23:26 -0500
+Received: by mail-pl0-f65.google.com with SMTP id v3so4822233plg.3
+        for <git@vger.kernel.org>; Thu, 01 Feb 2018 16:23:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=J9XeJm5PJGo++84MdOolBZQOhIJZD8koOoD20Zbu6wk=;
+        b=DtUF2RViw9InSXdZZcGDXH8ahplyxj/tC0SqZc4i5KRbEvWta3MUNbAoMk+6xxafuK
+         89jupkyg2bO5bT/rgorWlNX7WvjK+AEFtmB0EPpS996ti6oMSri4icQSUsLLxgaFkhgx
+         rHvv4pJJjzsjtzLLfQEHoYak+f7QbUnW+vjrAr9Tz+QE+dxAzBBuoY7KgdjpbAVzWhvq
+         PRH/z2TD9nJeE4GUk4z8f+pVp5B3Wea4nbje7CLDKbABUNFwOlQFDx6PB1YfMq3PnMH/
+         iSrDgd2o3Hq0ZSn7zcvLazj900TMyZveT/HL1afDqQWeDBZwX5CQCnQFR5kHgMnVFsoa
+         MJIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=J9XeJm5PJGo++84MdOolBZQOhIJZD8koOoD20Zbu6wk=;
+        b=EBz7M1O9Q6GuVj4kLAfeA+g2l3RPACaSARgwbuyV1ldwn5HjO/3BPQQwN44C3rUAmb
+         iEcc4Ru8WNamtagz9DSWuNtT2MgOlfy4X9jbbF1iGLoeC4cyA7F9DnjQmR1vDiHH3+J0
+         dWY6XVvFIp/l5HVUdLoRwwWFNxAbRIDl6aonJ/Sbe+Av/hYG/acpVkwjYRBV2X1GJYK1
+         4rHKSkIa8kDqnPjoANyDoz8komq1vXAjdNPV2OrrZUZuBxB/DkXoRc8dJWZTD9M5rITv
+         ZANToeZ51zPBchtN7G0oPH3wuiBweN2hNf2hl9ESdYtx2e+ht8S4HhtXO2+eaPRTKLQD
+         iQfA==
+X-Gm-Message-State: AKwxyteqV6+2DBH1eUiI36KLB81OO9ReIR28MQAvqX8a8ARfKnnNk1TI
+        DGBbWj4yYzDMcBJ9/K9R6hTiHQ==
+X-Google-Smtp-Source: AH8x225TTwTpYLVfJsD+UukNfY9g7rTW0LYYKB+MocBeoevn11xs5N592GJLsTf60XOyxaqa1fOfdQ==
+X-Received: by 2002:a17:902:9a97:: with SMTP id w23-v6mr34029906plp.100.1517531005434;
+        Thu, 01 Feb 2018 16:23:25 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id a24sm748894pff.160.2018.02.01.16.23.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Feb 2018 16:23:24 -0800 (PST)
+Date:   Thu, 1 Feb 2018 16:23:24 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        git@jeffhostetler.com, sbeller@google.com, dstolee@microsoft.com
+Subject: Re: [PATCH v2 06/14] commit-graph: implement git-commit-graph
+ --read
+Message-Id: <20180201162324.fa8b38531955ee5378e5c5ff@google.com>
+In-Reply-To: <1517348383-112294-7-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+        <1517348383-112294-7-git-send-email-dstolee@microsoft.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello ,
+On Tue, 30 Jan 2018 16:39:35 -0500
+Derrick Stolee <stolee@gmail.com> wrote:
 
-I am looking for a reliable supplier /manufacturer of products for sell in Europe.
+> Teach git-commit-graph to read commit graph files and summarize their contents.
 
-I came across your listing and wanted to get some information regarding minimum Order Quantities, FOB pricing and also the possibility of packaging including payments terms.
-
-So could you please get back to be with the above informations as soon as possible .
-
-My email is :tm6428726@gmail.com
-
-Many thanks and i looking forward to hearing from you and hopefully placing an order with you company.
-
-Best Regards
-Lorenzo Delleani.
-
-F.LLI PISTOLESI Snc Company P.O. box 205
-2740 AE Waddinxveen
-The Netherlands
+One overall question - is the "read" command meant to be a command used
+by the end user, or is it here just to test that some aspects of reading
+works? If the former, I'm not sure how useful it is. And if the latter,
+I think that it is more useful to just implementing something that reads
+it, then make the 11/14 change (modifying parse_commit_gently) and
+include a perf test to show that your commit graph reading is both
+correct and (performance-)effective.
