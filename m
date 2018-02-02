@@ -3,116 +3,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D6811F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 19:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4003E1F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 19:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753348AbeBBT3j (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 14:29:39 -0500
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:52638 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752737AbeBBT3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 14:29:37 -0500
-Received: by mail-wm0-f51.google.com with SMTP id g1so14790345wmg.2
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:29:36 -0800 (PST)
+        id S1752590AbeBBTj1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 14:39:27 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:45516 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752378AbeBBTj0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 14:39:26 -0500
+Received: by mail-wr0-f194.google.com with SMTP id h9so10590120wre.12
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:39:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=thb3meF3LJH+I7T/WkGEZs33qBHxPlJ53ZUpnlFlDLU=;
-        b=unQzgnpaIWi7UYmOkgG8z9rc0pS8xnMMs9BlC8SS+n96Cu+x+O8oqgNmKSV3woFnJF
-         KcLHcrl7nzPm/OsSsmbxbvrbpmpGMzS701/uVk/rdXIlLKl4HSTIyCsc/+Y/HP2Saje1
-         z3Vd6JbqESRNFYvCN7q0pYv+r5HRUFO5WwAU9Vorpp1Dfujc28IexjABbG7/FN/g4fce
-         fC11O7eg/9CecU2Tr+GdnDHJaGy5tYFrNS2IJCtMypAExMQKwy2GQ34ksAESreZ4ovYN
-         aIqIHRaMZFC3KyfR6KqDrIxoffW+eV7V454wBk+tT472DbMwySxmYnr+vVHzHfQac96O
-         jn1w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=u1U22BA1YbeEd21hs9t4xHbSqc6AwG/7DkIs1O19WDM=;
+        b=CRMjH7tQ1sQMWJzEtx30rZm60GHcEJ4TsmW5kvX9YNlSQ4z/sIvvfozqXtY6YsumzS
+         VJeurQrCOTmOaS+yeLREplAO2kMkg2yJ/fVrlp7kifpMtyaoHZREEHdqS16F2BlgXQSs
+         GPOB8TEVCD5lSbKAB3uoizZcP9qXxZjdJ+LHJ3QCUheuGRvY5tNQ4I4RFEU/Kx8JZDdq
+         yEX5RFUJ7fXTFaZRK2sjnHNgRlOuX05QdFQ8rQ6O37sFUE4nTEZ67jEf3NKRdieWi4cI
+         1P/p1aeseFEncxHw8mXyI4NwGBSQXbmvwyv0Gxr6xy1NLVezFtjBlCCY2gz/tC42vYP8
+         Ql0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=thb3meF3LJH+I7T/WkGEZs33qBHxPlJ53ZUpnlFlDLU=;
-        b=knoILlpwLHLel8QGnYGvu9dy3MIDtdZGpVAUUofvXSti9ERwk7r39+oDWcSZv6pBs6
-         OAV1hO6o1H0bz7hrZ2xzCXRwi6PKYJ6IWlhwQiDMaqnwztmzukIO8eUQQ6snhRegtA4p
-         SRtIUVFhI3SotE9Gb+8Gr4PY2EKvgdAE6G3Vw80U43lGqe6Y/0a+PYJT8NcqvJp4Kv31
-         e6FB9erlc1swyhIp0e9NNiane3XbeDQv5n2A0oNV5+3eySkCoYG0y4UF21J76+my5ota
-         enHmU8Fuv8otl0FnY6CFXbyBzqHiKEISnNhzyMqop+1TPRdQKmwSIQU0/OENYWv6yC/C
-         T0xg==
-X-Gm-Message-State: AKwxytexw6/BTVtPDrtyWAmbvpSEO1HPUF4AY/ZyFf+AvQ0P1wERxRJT
-        Qo0YJr5K895V576nU06oI64=
-X-Google-Smtp-Source: AH8x226MrtDegKIx/NBI3Vom4ymf43MvFxkhyQwc9KNcE+NgYxVCJ26X+g0mV/b/4IVD7vF9hWwsKQ==
-X-Received: by 10.28.236.24 with SMTP id k24mr32173998wmh.8.1517599775835;
-        Fri, 02 Feb 2018 11:29:35 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id b72sm1994638wmf.2.2018.02.02.11.29.34
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=u1U22BA1YbeEd21hs9t4xHbSqc6AwG/7DkIs1O19WDM=;
+        b=mc8MyBdJdxmm8c8DAiZp+0p/+6I8YMlO7fWQFL5okJHWhitng+B1qm419ws8GuwqqR
+         9wfg9b1M0MBgx4fXfocu9lgpKwzzLySfseUQemEg/yXAtzAu0NQSmMKAhAQadlRiVQoN
+         OPnb3DyI2FOs9RMWqmxlfNbtOHeTcagrO5XTfB4S7mhnKYLj2yYKo5Jwnbzoj6BW+Py4
+         FcpYY2fsq8zxIXPyu2xHPvLsEpjlRkT5kmOzUnZun8q/1BC0gJKNxDdQowVb5oVydBdC
+         O6Y8yfNVxDvtRCnccwgYCu2MOIzZv09E+OH+4wkVCDaXYYYYmhPHzf/oqLY3BvH0oH1u
+         b5oA==
+X-Gm-Message-State: AKwxytfI1cf/+MJFff71UaCTwJApwNgZh0FuWLwyUxg9YS3Yvv/xoEYO
+        AXmKeWm364wNY8Vx5LTQgZA=
+X-Google-Smtp-Source: AH8x224I3XVZ02TcXTSg3OXCa7kGc/endctWfWHDsxb+dJaB+/kcQFbCnIQfamDCRR06MV9DdZtmUQ==
+X-Received: by 10.223.133.148 with SMTP id 20mr2335588wrt.176.1517600364459;
+        Fri, 02 Feb 2018 11:39:24 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 89sm3036162wrq.16.2018.02.02.11.39.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 11:29:34 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2018, #04; Wed, 31)
-References: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com> <87lggcnc35.fsf@evledraar.gmail.com> <xmqq8tcbqnbr.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqq8tcbqnbr.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 02 Feb 2018 20:29:32 +0100
-Message-ID: <878tcbmbqb.fsf@evledraar.gmail.com>
+        Fri, 02 Feb 2018 11:39:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 01/12] hash: move SHA-1 macros to hash.h
+References: <20180201021848.533188-1-sandals@crustytoothpaste.net>
+        <20180201021848.533188-2-sandals@crustytoothpaste.net>
+Date:   Fri, 02 Feb 2018 11:39:22 -0800
+In-Reply-To: <20180201021848.533188-2-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 1 Feb 2018 02:18:37 +0000")
+Message-ID: <xmqqmv0rchat.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On Fri, Feb 02 2018, Junio C. Hamano jotted:
+> +#ifndef platform_SHA_CTX
+> +/*
+> + * platform's underlying implementation of SHA-1; could be OpenSSL,
+> + * blk_SHA, Apple CommonCrypto, etc...  Note that including
+> + * SHA1_HEADER may have already defined platform_SHA_CTX for our
+> + * own implementations like block-sha1 and ppc-sha1, so we list
+> + * the default for OpenSSL compatible SHA-1 implementations here.
+> + */
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> On Thu, Feb 01 2018, Junio C. Hamano jotted:
->>
->>> * nd/fix-untracked-cache-invalidation (2018-01-24) 5 commits
->>>  - dir.c: stop ignoring opendir() error in open_cached_dir()
->>>  - update-index doc: note a fixed bug in the untracked cache
->>>  - dir.c: fix missing dir invalidation in untracked code
->>>  - dir.c: avoid stat() in valid_cached_dir()
->>>  - status: add a failing test showing a core.untrackedCache bug
->>>
->>>  Some bugs around "untracked cache" feature have been fixed.
->>>
->>>  Will merge to 'next'.
->>
->> The "update-index doc: note a fixed bug in the untracked cache" needs to
->> be amended so it doesn't say "Before 2.16, ":
->
-> True; we could just say "earlier", but I am inclined to suggest that
-> we get drop it altogether.  Description of historical bugs is of no
-> interest with the version that already fixes them, so the _only_
-> value the doc update adds is to tell readers that the untracked
-> cache feature is still not well proven, and core.untrackedCache may
-> serve as an escape hatch from its bugs by disabling the mechanism
-> added for the feature.  I am *not* opposed to a replacement of the
-> patch that just says something like "This feature has been cause of
-> bugs even in recent versions of Git, and you may want to disable it
-> as a workaround when you are hit by an otherwise undiscovered bug in
-> this area", though.
+This nit has been with us for a long time, but "Note that including
+SHA1_HEADER may have..." has been way too stale a comment for quite
+some time.  It was made different from "including SHA1_HEADER" by
+f18f816c ("hash.h: move SHA-1 implementation selection into a header
+file", 2017-03-11).
 
- - It's my experience that most users today who aren't *nix graybeards
-   don't use the documentation shipped on their system as their primary
-   source for docs.
+Perhaps
 
-   They go to Google and might find the manpage there. Thus this
-   documentation will be read by users on pre-2.17 (or whenever this bug
-   fix gets included).
+	Note that we may have already defined platform_SHA_CTX for our
+	own implementations like block-sha1 and ppc-sha1, so we list
+	...
 
- - This is very useful information if you're deploying
-   core.untrackedCache across a site with differing git versions. Just
-   because you have 2.17 doesn't mean everywhere you're about to deploy
-   core.untrackedCache does.
-
- - In general I agree that we shouldn't be documenting old bugs, but I
-   think in this case it makes sense since the bug's really bad. Without
-   thinking to disable core.untrackedCache there's seemingly no way to
-   fix it without wiping away the index, which might lose you work.
+or something.
