@@ -2,95 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73AE41F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 19:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C31311F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 19:17:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753236AbeBBTQH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 14:16:07 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:34991 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752249AbeBBTQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 14:16:06 -0500
-Received: by mail-qk0-f173.google.com with SMTP id 69so12115099qkz.2
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:16:05 -0800 (PST)
+        id S1753269AbeBBTRJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 14:17:09 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:46752 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752575AbeBBTRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 14:17:07 -0500
+Received: by mail-wr0-f194.google.com with SMTP id g21so23528181wrb.13
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 11:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=PsFaaEm2G2QyhkbdbT8Kb/mVRpyFLtlg3cdEdgOpnP0=;
-        b=RINZjbYS0RntaJdg46WE9SDFs0hAt/iVSpdaq6bGDRyr3UutYlgIVABPX6kybBTtAK
-         +lgubW+V3Yiq5CeEEYslj0iOxfbB0UNtPQaRgAQJ3ay6us/4ztu7aSlQBj1Rnna3gtaG
-         sztDQasnNmUnPph6m3pLwBeQIcI/8Tmg9zW/qFmS3BYR27bYf9RO/fVSliSnhvbVTvfr
-         yQAzqEfKH6qvOjoOzLMWgDbbkMfg8cDwB8I7KTql2UItzlfbtE7Y9OiSbEHHes2mgpaU
-         eMFJ6dpdUuihILT4qVU6G912maY979qLqo+B9uW7xX9BUDPQIZ9vgGaIfYyPPSlfgapw
-         lP4g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=K33Y+E6nOGr4F2RVlO8tUFcbFhAi/0xVt4BrWAHkJ28=;
+        b=pg0/9ErMZBEcjIUUvD44ZPKUTTjqNVreU0srpdZNt03PmU+57uMmjVi9HrfVVWJwY9
+         7CTvlFQK9Zj1usk5yWxBWlodBkBK9RxaVuOWQOLsr//0hEoXFi0n84gK5hrug1dhVsli
+         Zfa+VZMSyk4cqoK5E0p6N54Qrkm/Fpky9n7q86XencCb8lwesXXTX80bFK9NP2X4xHQi
+         fjB7SEUkP0vben07CFTmy6nXqrGoHS6acuKpUSuJ7PTS7x0kRXTlD4KECH/NBTHjW9ba
+         HuI1OdOcF6uObrqlw5QIj1EJZnuNiBJSxiaEPq5l390TBAtmhtRsoDwqI773tRM10O7w
+         Z7Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=PsFaaEm2G2QyhkbdbT8Kb/mVRpyFLtlg3cdEdgOpnP0=;
-        b=lcJvESL88WwHCFyD01arTOg+yZRe3rNwPnBMPAS6zDM0436ozv0ufWctEPiC4tp8ZT
-         152cnTNeSIqqnj3zF8d00eZGRMMZuH+M96NAmIELlnuo7DDHb3pjneXQbJSwfJvLkKlH
-         FEMnfMo0OMsmkM6bgbUn49muND68GEmG20zh4iIP7+E5ikx1ieGMm0wzN/0xAKGo3F7Q
-         Srkf7HA8wG5cscwypCAdOajSAlo4AiYNrPDy/oPy6ryaBKoqgoyoQTGm/UKVywSlIY2L
-         TMBSJ257unvZmqCMOc/q7mMVH1ocHzHa3voZhvf1vNGw1jZscABZGSaEHTkjX6Xmw7iY
-         J0Mg==
-X-Gm-Message-State: AKwxyte9+YFMfQRI9K9MnY8q6U1s+6xFT57qMhJ6qqAJiCrIriZpdroT
-        WvpUVZI3wCNl0ook2kM8Kv5hf0lf1qGUvVGhPGQ=
-X-Google-Smtp-Source: AH8x224L9e5Aq1mRl1YV9WaHhzD6f9jDrINqW2zHdV4fVhekE68do6qLqJuVa69dzg8XTdpyGXPM6h84RjBt9l1WENo=
-X-Received: by 10.55.123.69 with SMTP id w66mr61186350qkc.326.1517598965189;
- Fri, 02 Feb 2018 11:16:05 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=K33Y+E6nOGr4F2RVlO8tUFcbFhAi/0xVt4BrWAHkJ28=;
+        b=A3uXl/sO9U0fqzQg6EzNRvosU3SdLjuG4tlfiJNP0WpBzlxk2RIhqcXaKfFIcqwNHL
+         qL0jSTdOKc9T1O92pDcUv6qwn4pVNtIZSfFhJAA2W1qhGR95YLhTg+Rb2FvTFn77N2tO
+         OsyRZxUQKFbrcDpF1mnz96Jwq9pxsL0Qdpf4cYhXQoFDdGbYpc9e3rMvqBmNR2SPzQ05
+         3Tyf9RPaR2koz2ABw56J/wi6N0gyw/VVA8Kx5C2KWJUN+EbUgn86ATTPW1unBUswWqhW
+         NCZOnnDi50aDY9ZykQw01BpmAp57QCucRvd5nc4Y68KAfda+xnkGKN9keixPQWQEJLYA
+         mnbg==
+X-Gm-Message-State: AKwxytcNBClqVngC/OVLm5MzxaIPAn3YUZPc4Scwz2CNYl2YOwytmRol
+        CIvZYDQFNNysW5hjCeYGhYE=
+X-Google-Smtp-Source: AH8x227ut1l36ubcIWPmipwzZe2WBC6cVjasomhJPWON+DZXGNo3J8H0ECcxsp0EOrxnNnKPusiu9g==
+X-Received: by 10.223.168.49 with SMTP id l46mr26758459wrc.29.1517599026168;
+        Fri, 02 Feb 2018 11:17:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c14sm9003642wmh.2.2018.02.02.11.17.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Feb 2018 11:17:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH/RFC v5 7/7] Careful with CRLF when using e.g. UTF-16 for working-tree-encoding
+References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
+        <20180129201911.9484-1-tboegi@web.de>
+        <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com>
+        <20180130144002.GA30211@tor.lan>
+        <10091BA4-1069-4A65-9057-CAAD87F9B55F@gmail.com>
+        <20180131172837.GA32723@tor.lan>
+Date:   Fri, 02 Feb 2018 11:17:04 -0800
+In-Reply-To: <20180131172837.GA32723@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Wed, 31 Jan 2018 18:28:37 +0100")
+Message-ID: <xmqqtvuzcibz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 11:16:04 -0800 (PST)
-In-Reply-To: <52737deb-a5dc-27d6-3c0c-0d8b8de991c5@suse.com>
-References: <e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com>
- <CAPig+cT8vKyhq6DvFMz-0CPRO-Y7R4EE_JhN6yuiSUNXW8-Yww@mail.gmail.com>
- <fa3f512a-bd77-80c7-4fec-071639f62d26@suse.com> <CAPig+cTDHsBSPZ+o+jh9bDvJ7NcZ3DGe+penppPwyupCJzmhAA@mail.gmail.com>
- <52737deb-a5dc-27d6-3c0c-0d8b8de991c5@suse.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 2 Feb 2018 14:16:04 -0500
-X-Google-Sender-Auth: FnQD_lzbE01DvRVv3ZOuyjfNGfo
-Message-ID: <CAPig+cQF2HzmtVdHqtQcOf0B-yA8Kpj-CZbPmdQotGwtdYpxvw@mail.gmail.com>
-Subject: Re: [PATCHv2] tag: add --edit option
-To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 2, 2018 at 11:48 AM, Nicolas Morey-Chaisemartin
-<nmoreychaisemartin@suse.com> wrote:
-> What message do you suggest ?  As I said in a previous mail, a
-> simple "Editor failure, cancelling {commit, tag}" should be enough
-> as launch_editor already outputs error messages describing what
-> issue the editor had.
+Torsten Bögershausen <tboegi@web.de> writes:
+
+> There are 2 opposite opionions/user expectations here:
 >
-> I don't think suggesting moving to --no-edit || -m || -F is that
-> helpful.  It's basically saying your setup is broken, but you can
-> workaround by setting those options (and not saying that you're
-> going to have some more issues later one).
+> a) They are binary in the working tree, so git should leave the line endings
+>    as is. (Unless specified otherwise in the .attributes file)
+> ...
+> b) They are text files in the index. Git will convert line endings
+>    if core.autocrlf is true (or the .gitattributes file specifies "-text")
 
-If it's the case the launch_editor() indeed outputs an appropriate
-error message, then the existing error message from tag.c is already
-appropriate when --edit is not specified. It's only the --edit case
-that the tag.c's additional message is somewhat weird. And, in fact,
-suppressing tag.c's message might be the correct thing to do in the
---edit case:
+I sense that you seem to be focusing on the distinction between "in
+the working tree" vs "in the index" while contrasting.  The "binary
+vs text" in your "binary in wt, text in index" is based on the
+default heuristics without any input from end-users or the project
+that uses Git that happens to contain such files.  If the users and
+the project that uses Git want to treat contents in a path as text,
+it is text even when it is (re-)encoded to UTF-16, no?
 
-    static void create_tag(...) {
-        ...
-if (launch_editor(...)) {
-   if (!opt->use_editor)
-       fprintf(stderr, _("... use either -m or -F ..."));
-            exit(1);
-}
-
-I don't feel strongly about it either way and am fine with just
-punting on the issue until someone actually complains about it.
+Such files may be (mis)classified as binary with the default
+heuristics when there is no help from what is written in the
+.gitattributes file, but here we are talking about the case where
+the user explicitly tells us it is in UTF-16, right?  Is there such a
+thing as UTF-16 binary?
