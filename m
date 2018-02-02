@@ -2,93 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E74701F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 18:36:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 185A01F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 18:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752644AbeBBSgz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 13:36:55 -0500
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:37017 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752210AbeBBSgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 13:36:53 -0500
-Received: by mail-yw0-f179.google.com with SMTP id v139so13892253ywg.4
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:36:52 -0800 (PST)
+        id S1752563AbeBBSmJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 13:42:09 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:38499 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755049AbeBBSmE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 13:42:04 -0500
+Received: by mail-wm0-f68.google.com with SMTP id 141so14239707wme.3
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:42:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NzbcglO2uSSlWqra3Q0tUtIuGoDQ/2RsHMxa0AmnvXQ=;
-        b=dsD3/t34V1xy+q+CKwcHxAl52LLU0Be+wrV5zZ6SrtLhqaghDKMyj2hPiL0qxjrjwm
-         9onw3FVnPPVi8tQ36q2ApsgAosckYvJWWNkMcUfb4AKBUk737Xr8RfgKRzIxqeOvOFpV
-         H/fU+5ZMGHoWL9dO58lYADJRfIX+ukhROwBR2TP1bjzxqU9Izyz7DD4KvMZX50V9eHAZ
-         ZhwoSsasrUc5w/Mg9C+Cf+pbbcidy8sdp1NCBDeZjDPCvF6j4MaFAJfroI7I2WyqW6yY
-         2rylRDav/3Va7yGWo8Tg++OpZ1mFa338TpOY2mEaF1rqrhjPePhmv9YPwI7l4B215LI6
-         UwDQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=wIrAHs5SvQfoUqX2ZKl5MUrJ2Hp2Ff01wXrZZzlqP+Q=;
+        b=S1zwF22oOxUAjkGpQgRSkm27gK6kiJAe0FhgGEir1e8Bvx+l0ZoqzxPdfL38FIjfTJ
+         nQAIbubK7KKgeuxRajLh7STVLaTNXRIBmtPn/VyHHohKDx8QDPOqISOnspspZ8MOlsFO
+         cx9hJ4n8m6jNucu/3orRNCLxEkcFwlhbr3adBwmkKpetgl03h6GTHx6uBhYkB4yaMkGm
+         6avh0dS1912fZ64qQ0BALw1/7Vd7qW6o9CtAfVmpID/jMxjZGoFIGeBH+YTcBLjY8b25
+         Z2StPolaDRtp6WJR/lMEYwM+N5phPOl594+VP8YZ5vf0SPvFzyRupUdD9QtY0PrtUdMa
+         nLqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NzbcglO2uSSlWqra3Q0tUtIuGoDQ/2RsHMxa0AmnvXQ=;
-        b=m64t7Z15rFSh936HH1qN23VKd0elrZTT0d9YgTIOswhUUWX5hvb1zPkh+q2OvalDPF
-         dRZPUpXJsya5jTtQ4+F1euWJ5eo/rUBEeQWFHzUsZw24veeWODA5kBQogqJtGznfbjgA
-         9yPWCnNv4Me9GRY0VQEuy5buIKw7m1yYhTnq/D3ZRGuVpHMlNE9UFFc2tWk2QyDxrSg1
-         lQXVIxQNzF+o+3M7MpEYkaFz5ZL/kADeXhWrTJzVUHN5HIelbFODRpHaMNxFMTCEFjJm
-         01a770D7c22CMxanRKdbZtmprjmZhuWhP56PS8J+uZilCbmaHMawRrucBsB+KdAfW8lo
-         KIbQ==
-X-Gm-Message-State: AKwxytdhr0OsEKZkXTtwBeIUmwsI+/NKGrcqZbqN3hicBI+IXZas6mS4
-        Gq/WwowLYbTuOvIFbBfat4dZQ3w18yRGeMNGhJG28A==
-X-Google-Smtp-Source: AH8x224CMwcXvcynOs0BtbSllToWKP4tx1OcsFcUbh+c2eNpPDgWVS4prVH93x8UziszcMZFGRGDzNr1JpGfD+rKFo8=
-X-Received: by 10.129.122.73 with SMTP id v70mr27471865ywc.156.1517596612003;
- Fri, 02 Feb 2018 10:36:52 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=wIrAHs5SvQfoUqX2ZKl5MUrJ2Hp2Ff01wXrZZzlqP+Q=;
+        b=C3Phhq5otTyFlhLDmiy4S/KnEzt1+W97PSKmifxkpuEdfDeHIlny7OnIlgkMm8glO4
+         vVPEZ4FboaoIQtjOUDNYLw/QvE9kOd8AsugnHpMjSfT2vqXW5QV7zAFg4vlBcVtVRJYR
+         ANjSNC8o6FoHtFcgla1K+h9Y1C8Vey3cDjBIVHbp2HS5Z50u9PBtnTXc6mdIbtAvWs7p
+         KWizEvut0cpK07oI6pPimkcoqew0cTqIAJKKNGTnkq3EdCRahWiDS7uTQe5eCI5XBSVF
+         Figw5FME39srikokHBQeg4dNcY7hPQiVRKTg2vhXSnpwC8+HpSn6A8il+AezfsBt1kF7
+         cztQ==
+X-Gm-Message-State: AKwxyteh6d0hzNd+rSHnZmjgVZEyq5YBfHF9t+w8A8HibbKKuLlFSjTl
+        eb1ThjNJHoAivBH0u7FpZb1psWIs
+X-Google-Smtp-Source: AH8x226n/HKoEd5pqIXPVqXvrB/dpTvQxCzl/GR+xhmG1u/ZI9HyGfKwP9ekDCKxDxT1Sbp17uZ4oQ==
+X-Received: by 10.28.184.82 with SMTP id i79mr3112961wmf.6.1517596922498;
+        Fri, 02 Feb 2018 10:42:02 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t4sm1258512wmt.16.2018.02.02.10.42.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Feb 2018 10:42:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v3 0/2] wrap format-patch diffstats around 72 columns
+References: <20180125115927.16196-1-pclouds@gmail.com>
+        <20180201124750.15032-1-pclouds@gmail.com>
+Date:   Fri, 02 Feb 2018 10:42:00 -0800
+In-Reply-To: <20180201124750.15032-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 1 Feb 2018 19:47:48 +0700")
+Message-ID: <xmqq7ervdyiv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Fri, 2 Feb 2018 10:36:51 -0800 (PST)
-In-Reply-To: <20180201153349.c94fe3de6b632e2fd8f843cf@google.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
- <1517348383-112294-6-git-send-email-dstolee@microsoft.com> <20180201153349.c94fe3de6b632e2fd8f843cf@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 2 Feb 2018 10:36:51 -0800
-Message-ID: <CAGZ79kb8kHAb6HYrxY_oMq5v3p1+AHX_ad40nwUEwiDKe=i+Ng@mail.gmail.com>
-Subject: Re: [PATCH v2 05/14] commit-graph: implement git-commit-graph --write
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 1, 2018 at 3:33 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Tue, 30 Jan 2018 16:39:34 -0500
-> Derrick Stolee <stolee@gmail.com> wrote:
->
->> diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
->> index c8ea548dfb..3f3790d9a8 100644
->> --- a/Documentation/git-commit-graph.txt
->> +++ b/Documentation/git-commit-graph.txt
->> @@ -5,3 +5,21 @@ NAME
->>  ----
->>  git-commit-graph - Write and verify Git commit graphs (.graph files)
->>
->> +
->> +SYNOPSIS
->> +--------
->> +[verse]
->> +'git commit-graph' --write <options> [--pack-dir <pack_dir>]
->
-> Subcommands (like those in git submodule) generally don't take "--", as
-> far as I know.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Then you know only the ugly side of Git. ;)
+> v3 fixes tests in 2/2 that I overlooked (but Jeff didn't). Interdiff:
+> ...
+> Nguyễn Thái Ngọc Duy (2):
+>   format-patch: keep cover-letter diffstat wrapped in 72 columns
+>   format-patch: reduce patch diffstat width to 72
 
-It is true for git-submodule and a few others (the minority of commands IIRC)
-git-tag for example takes subcommands such as --list or --verify.
-https://public-inbox.org/git/xmqqiomodkt9.fsf@gitster.dls.corp.google.com/
+Thanks, will replace.  I think we are pretty in good shape with
+this change now.
+
