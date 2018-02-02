@@ -2,97 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE3F11F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 18:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3387D1F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 18:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753882AbeBBSJf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 13:09:35 -0500
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:39266 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753176AbeBBSJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 13:09:27 -0500
-Received: by mail-wr0-f195.google.com with SMTP id f6so21745329wra.6
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:09:27 -0800 (PST)
+        id S1754583AbeBBSXq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 13:23:46 -0500
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:38652 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754564AbeBBSXa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 13:23:30 -0500
+Received: by mail-yw0-f179.google.com with SMTP id m84so13854757ywd.5
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 10:23:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=gZ+V5gXXzaL8I5CQeuWITOsdZkN6LLDaFt5LQRlpqpc=;
-        b=k7xsqVvEIMTap/mm9TRbXhQE5CSq77poxfK/vr97xajU7VtbTrqX5tB0kMJFz7FStA
-         tt3jxoWKe9nnATrV8lBwZP7IN2LwLykcVsXqzhwcuZ56kiLRr/N4xx9ZVyszO3xQfCzN
-         ceVkelDnnLw0ulLwywOFkBRYnpjI/K9pVIUnW70TZCxf3If4icYryVbEhhkeWX5Uk5to
-         TTnEfcASIIt+/JqL/eC6vTIn6D6cF0BiZonjhHUuFTleAawkFISKrksVOz3ewmyNdy95
-         Cai8hT3x07jCmky3mRUiRHtkedj0LaeB4SGD0qldTFuiBLDqqo6p1YVG9N2nyTTmZH3t
-         rFKQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gB3lr545oDWbV1XD9gDDglnGE4/N7v0Xq7KYjNjNGUY=;
+        b=dp64g9NF4wj21PgYL7AvChx8U/Ceo+upRff2ZXsGOU4Lad4mElcqm8UuaFbP7PWzt6
+         790lmy7voORHMzT2wo6d9xR+Eixo10tGGzEJyTqmuIng9ZUnqlRgkQZ+SlcfB+y2VTeZ
+         K2akq3HzzVeYLRPRCbvZY4bsjTilZW9iyvgVAT4kSA/GfIYxgqIrkUJtQH19TKzoIMON
+         AxsabgxhgJFoTkmyvHGjSuXFTDGl/hGu+E42XcVZmE8/jxrTWQsX2Tre8DKU22+pvqUu
+         MgJXDddB5eHU/szncxPFH0iysmuLM/NdB4ERuQJQMUySYsuUB7Dtp2tAwn4uc5hhl1g+
+         Podg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=gZ+V5gXXzaL8I5CQeuWITOsdZkN6LLDaFt5LQRlpqpc=;
-        b=eAFloVqVDr0smiLHSpDv+QZ+nev+NpyiRKfbAxSPrlzoUAN983f/SfH7uRPf2quO3O
-         n1dBSDR5HFU+P+TCovs1DVZPpEpfBWF5YJMYDf0ldl6g/EyKtbqikGqnZhLrAjoJL+ct
-         Ai6eGZAoOgYTn095SoYBh7mp7o+Fmk2bxJbi+awtYsqJvrd3mCoUX0/Yc3EzkH9Tm++O
-         Q+/adF1WiR1LMg9M/cIh5gaK8913+IlHjuz2aPWGXkLS/OvXEiM1xfjxSzs2FirxLk4z
-         MPcP9MArHfwNzTgOtK5xrgegk5UgjbK53RWDqvqS4gZlzyWDORJ37iz6KdcnRd2i0WXb
-         dtJQ==
-X-Gm-Message-State: AKwxytdM+8hU4AUJ4TWI1ecBV23a4Evz9UtEzwqnQ2CyKoR9iosdFvgD
-        mBrvV+W3tjISgdipcT8awxg=
-X-Google-Smtp-Source: AH8x226xF+iRL278r9uF251bDPmayUUrMCY1Xej5SHoKMhMs1/5Wq+qgBOlubamI5GQrqgP6p+b8Jw==
-X-Received: by 10.223.132.195 with SMTP id 61mr5605846wrg.187.1517594966016;
-        Fri, 02 Feb 2018 10:09:26 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t4sm1221524wmt.16.2018.02.02.10.09.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 10:09:25 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jan 2018, #04; Wed, 31)
-References: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com>
-        <87mv0tm0l7.fsf@evledraar.booking.com>
-Date:   Fri, 02 Feb 2018 10:09:24 -0800
-In-Reply-To: <87mv0tm0l7.fsf@evledraar.booking.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 01 Feb 2018 12:05:40 +0100")
-Message-ID: <xmqq4lmzqn57.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gB3lr545oDWbV1XD9gDDglnGE4/N7v0Xq7KYjNjNGUY=;
+        b=phkhd1lbuIZrsIGmzbxXH6+/t2O0f5GkLndnOMGwWEcOFraCS6JZIimyD9eFCg5bAC
+         8jtVHHkWCdKy63O90w2qMpziKuYauRiA9ZBd6xIDnycI1aCFdzMtPepw8uRiOXrmN+DX
+         NOKsrtLlzP7D7BEcYWXnk7BLttlfrrnhaUMlM1qtQLIUhqm8+gb/xJwN4I0WIrS7uCbR
+         /S8d1l+t++e93GIkErTmjIT/n9tRsSFyLxy7RZRVSck0QKtagwbgeYhim9qJsULCgwQA
+         R/B2KmDnX01chIuCCNIOfhHM8uWknywh6mmmy+pZm4iBo2gPBpEC/Rr0yYz0IP/WtT10
+         RulA==
+X-Gm-Message-State: AKwxytfOx0guTJx0De4mkrkEQaLjKWFaXRrMiu+15GOEkEJXRn+8PCra
+        AqJPsclogBnRFS2goBgXheyAZft+++pkqBZnm3Zv4A==
+X-Google-Smtp-Source: AH8x227yPbZ/iQ1nV5vvhF1HagKUpBUMfWIRhXAZ5AWGm/yYXbC/8jR3dAH+X4OW15fAa/f0MK3ngZNWWDqQWwU5AVk=
+X-Received: by 10.37.37.87 with SMTP id l84mr6595718ybl.386.1517595808796;
+ Fri, 02 Feb 2018 10:23:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.207.9 with HTTP; Fri, 2 Feb 2018 10:23:28 -0800 (PST)
+In-Reply-To: <CANri+EwfsgS-s0TeeX0E6XoCnmCeq=CB0UDQ9=gjSXbe8C_5GQ@mail.gmail.com>
+References: <CANri+EwfsgS-s0TeeX0E6XoCnmCeq=CB0UDQ9=gjSXbe8C_5GQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 2 Feb 2018 10:23:28 -0800
+Message-ID: <CAGZ79kZX2FsEjD04zr5-oufU6dLhiOhBkxv4u8VEwL0OPRFtiA@mail.gmail.com>
+Subject: Re: how to ignore whitespace changes with --color-moved (git diff
+ move detection)?
+To:     timothee.cour2@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
-> On Thu, Feb 01 2018, Junio C. Hamano jotted:
+On Thu, Feb 1, 2018 at 6:13 PM, Timothee Cour <thelastmammoth@gmail.com> wrote:
+> this PR from october 2017 was discussing a patch that'd introduce
+> `--color-moved-[no-]ignore-space-change`
+> https://public-inbox.org/git/20171025224620.27657-3-sbeller@google.com/
 >
->> * ab/wildmatch-tests (2018-01-30) 10 commits
-> The 2018-01-30 series is the update mentioned in
-> 87vaga9mgf.fsf@evledraar.gmail.com. You probably noticed this / just
-> didn't adjust the note since you queued in in pu already, but just in
-> case: the known issues in it have been resolved, but hopefully Johannes
-> Schindelin can test it on Windows & report.
+> however not sure what happened since then as I can't find in `git help
+> diff` options even after `brew install --HEAD git`
 
-Thanks for a correction.  Very much appreciated.  Let's start moving
-this forward then.
->> * ab/sha1dc-build (2017-12-12) 4 commits
->>  . Makefile: use the sha1collisiondetection submodule by default
->>  - sha1dc_git.h: re-arrange an ifdef chain for a subsequent change
->>  - Makefile: under "make dist", include the sha1collisiondetection submodule
->>  - Makefile: don't error out under DC_SHA1_EXTERNAL if DC_SHA1_SUBMODULE=auto
-> Do you want to peel of 4/4 and just keep 1-3 should I submit another
-> version without 4/4?
+I proposed it, but it wasn't going anywhere, because we seemed to have
+a little disagreement over how a reasonable UX looks like.
 
-Nah, let's just discard the tip one without prejudice and move the
-remainder forward.
+The previous patch[1] in the series you link to, proposed 6 new
+command line flags (3 flags + their negatives), which was deemed
+inappropriate for the user ("which combination of these flags do you
+need to give to get a good result?"), but I cannot find a reference for
+that, I just vaguely recall that discussion.
 
-Thanks.
+[1] https://public-inbox.org/git/20171025224620.27657-2-sbeller@google.com/
+
+
+> it's a really useful feature as it's a common use case (ppl move
+> blocks and reformat in same PR)
+
+Thanks for the encouraging words. For now you can
+use '--color-moved -w' as Jeff King suggests, but that may
+not be exactly what you want, because this
+* creates the diff ignoring whitespaces
+* and then colors the moved lines (also ignoring white spaces)
+but when you want to
+* obtain a real diff (no trickery with whitespaces)
+* and then have some coloring aid ignoring white spaces
+you are out of luck for now. Maybe you have a good idea for
+the UX design? (What do we need there? Maybe an option
+equivalent of `--color-moved-[no]-ignore-all-space` is sufficient
+for all practical purposes?)
+
+> If it's not merged in git repo yet is there an easy way to try out
+> this feature? (even if experimental)
+
+Can you compile Git yourself instead of installing it from homebrew?
+(See "Build Git from source on OS X" on
+https://www.atlassian.com/git/tutorials/install-git for example)
+In that case, you can just patch your local version of Git with the
+patches that you found. Download them as raw, and "git am"
+them before running make.
+
+Stefan
