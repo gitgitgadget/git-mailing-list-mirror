@@ -7,120 +7,187 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7B731F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 14:34:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86D091F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 15:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751967AbeBBOei (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 09:34:38 -0500
-Received: from mail-vk0-f66.google.com ([209.85.213.66]:37677 "EHLO
-        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751835AbeBBOeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 09:34:37 -0500
-Received: by mail-vk0-f66.google.com with SMTP id g83so13569305vki.4
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 06:34:36 -0800 (PST)
+        id S1752319AbeBBPE5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 10:04:57 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36011 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751916AbeBBPEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 10:04:53 -0500
+Received: by mail-wm0-f54.google.com with SMTP id f3so13039818wmc.1
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 07:04:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/evX7oCoPxXNWUKy1TrrzGF94LXvrBK99L9LCu0t8Vc=;
-        b=rtV/Eh4TLBni3NWa1JOkXEtCJ1hlrfPZUyJiviYEK8xsaF0llfC2hiSnlPh4y/qRpU
-         iz6Gu8ONxkURtTNFA2BpwckzQGmt9nA0Au1Xl25bH1au5xBJSy65zYuXBjDC4k0rBlNm
-         M1RrjAqBBbz5P5kLK3NjuTk0SWoAwWcsRfFM2Swcngc83J+1RFjGO+zLlGERyYG2vMSr
-         WqyNoMiivhLKg7GoY9sdwGR0wvNTRd8VfsGRix95M28Fsn9KEarGn0My2z0GLIGuOAyx
-         SV25w4NBBobwIty2+CuJkSSvzBD2eCME2je/B9+LUBN3VGzZFXszUN36xO8poQQrb1jq
-         YX9Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=1jvgeMXr3dOT0XNOPmKfFNuDXQSGRWpPHnhDkk1++b8=;
+        b=czXZ4YmJLGeXrBC+HfvdgYvNMm4GN4+E3jOrAr93VfxmGQRk7xoUcFbzS9kRvoW6WT
+         TDNaTqMdZyWQCjNofwS0nXLVQtXito+85u/wWVCdaQ1y8mbSvLKVM9FxPC/yCDOLAxlz
+         Uw+FMaP1dP0I9zjgAOwo2GQvuwBj9qFkd0UeFpzoTYW/Qn98sLfMMhRI4RRSMmfKAAU6
+         UFHQJbytFBM+/V2mHRBsL8mTjorbVoTsJP2RlySFXRtm+k7QxWs6eoZNGZppCJUdt8xW
+         hvZSXYVV3h8GP8aNb6bigIKDmLPpeXWkKHYA78jz95xDyX2Vd1qkd+f8Ud2ZdF4sxtNL
+         uN9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/evX7oCoPxXNWUKy1TrrzGF94LXvrBK99L9LCu0t8Vc=;
-        b=tSfZNHukCakLSwL5cUfgICklqI2zOY5Q5yKnWtXQ18/N8pnPfPyfVgzxbKeTYjnk2G
-         ZiqHfSbcLb3SaEqyZdqYC85XaaKJ2p75Q1NRMeO5zo2ik+Mww1FP9xCBwJwFS7ZcU/Jo
-         nYF0n/hmBVmNWYVu7mZzJ4g7U/Xn1R9CeRc91S783XgttmpMVzaadksRI55iP3hLVJIW
-         MULlb38R8bLcoQqR65vyDoBf49ek3Qa7wVQg2zD70GD1gLVhRZuBTEZaFxXrA1lVWdO0
-         W1r/E5NjcSWk045rqtD8Qh/8VA3HaFvaFolKA2yQo+pr6V/zzlrXx6BTmjdDDEapt2RC
-         8NEQ==
-X-Gm-Message-State: AKwxytfK5vGoZLCkOyQwpXsXNeXw7YV03fDndXaZH/BHU9olSblPX2y5
-        6c32D08edY9wA1XyDrF36swFQkU0FfsOoBIUEL8=
-X-Google-Smtp-Source: AH8x227yjGVUvudWGNkGohXuXe+aUheC7ou0Ngh9cNd4j0k9w6G2Hp7fC7XM+Y0fd21LTGxoqvokJVc4vZkknOYji2w=
-X-Received: by 10.31.60.69 with SMTP id j66mr23590786vka.155.1517582076105;
- Fri, 02 Feb 2018 06:34:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=1jvgeMXr3dOT0XNOPmKfFNuDXQSGRWpPHnhDkk1++b8=;
+        b=jMje2Kj5ImwWobvMr1tKBmgx1xbR2ucziIyyQGsbqs6Jwj4HuOLur6CdkmgnOTNJBO
+         MzHt9/Rh6j+HnvEn397YCvtFDnqCQGXqF1Nt9Dml9wry8IV3SgMVVPCrnv5Ojs/nvqIs
+         Nb5bZyK67aNKlOyU++FudM06BI69IA2pXXlJjOEpRA3xR6c85HASSLIsdNarSGgUHVBe
+         2BehzV0GNBE4Iml1Xi4bGgZTWxJ4BVglus9qQwngPIQB/izDWUhu3jhqmTGURwiu7Ll/
+         ckiF8pMOZg9L9xNVuaKTyzhlK5TOSMN28jIag51LruS/BIuBv/29plkkqJSHVLXovRBs
+         zY5w==
+X-Gm-Message-State: AKwxyteKbexRPSo99wXh6OWNJ5Ms5f1969W2D+fwVUWZUZRYN/qi8DQi
+        zqoGUr3qhPxuKKqrbewZhzk=
+X-Google-Smtp-Source: AH8x224kFbrW42nqUeFuA0FJNANbc27GM2bleVUsPCCt3hQx4ORUNcGQWceHITcEePsDfupLnT1uFg==
+X-Received: by 10.28.46.22 with SMTP id u22mr28460628wmu.47.1517583892350;
+        Fri, 02 Feb 2018 07:04:52 -0800 (PST)
+Received: from localhost.localdomain (x4db2a0d5.dyn.telefonica.de. [77.178.160.213])
+        by smtp.gmail.com with ESMTPSA id m6sm2909029wmb.6.2018.02.02.07.04.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 02 Feb 2018 07:04:51 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        git@jeffhostetler.com, sbeller@google.com, dstolee@microsoft.com
+Subject: Re: [PATCH v2 09/14] commit-graph: teach git-commit-graph --delete-expired
+Date:   Fri,  2 Feb 2018 16:04:41 +0100
+Message-Id: <20180202150441.27206-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.16.1.158.ge6451079d
+In-Reply-To: <1517348383-112294-10-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com> <1517348383-112294-10-git-send-email-dstolee@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Fri, 2 Feb 2018 06:34:35 -0800 (PST)
-In-Reply-To: <376eb2e8-0a95-233b-743b-cdc1caa49015@web.de>
-References: <376eb2e8-0a95-233b-743b-cdc1caa49015@web.de>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 2 Feb 2018 15:34:35 +0100
-Message-ID: <CAM0VKjnoux1CBq-HvzRW14hXZyviG_z_Rv-qv7d0kakh18zXcw@mail.gmail.com>
-Subject: Re: [PATCH] cocci: simplify check for trivial format strings
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 1, 2018 at 7:56 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> 353d84c537 (coccicheck: make transformation for strbuf_addf(sb, "...")
-> more precise) added a check to avoid transforming calls with format
-> strings which contain percent signs, as that would change the result.
-> It uses embedded Python code for that.  Simplify this rule by using the
-> regular expression matching operator instead.
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> Inspired by the Coccinelle package in Debian experimental, which lost
-> support for Python for some reason.  Tested only with that version
-> (1.0.6.deb-3) and Debian testing's 1.0.4.deb-3+b3.
+> Teach git-commit-graph to delete the graph previously referenced by 'graph_head'
+> when writing a new graph file and updating 'graph_head'. This prevents
+> data creep by storing a list of useless graphs. Be careful to not delete
+> the graph if the file did not change.
 
-FWIW, it appears to be working fine with Coccinelle version
-1.0.0~rc19.deb-3 running on Travis CI.
-Applied it on top of 'rs/strbuf-cocci-workaround' currently at cd9a4b6d9
-(cocci: use format keyword instead of a literal string, 2018-01-19)
-along with an other patch to show the resulting suggestions in
-'.../*.cocci.patch' files, and the results look fine:
+We have to be careful with deleting the previously referenced graph
+file right away after generating the new one.  Consider two processes
+running concurrently, one writing new graph files with
+--delete-expire', and the other reading the commit graph, e.g. a
+future graph-aware 'git gc' and 'git log --topo-order':
 
-  https://travis-ci.org/szeder/git/jobs/336573242#L1466
+  1. 'log' reads the hash of the graph file from graph-head.
+  2. 'gc' writes the new graph and graph head files and deletes the
+     old graph file.
+  3. 'log' tries to open the the graph file with the hash it just
+     read, but that file is already gone.
 
-and are the same as without this patch:
+At this point 'log' could simply error out, but that would be rather
+unfriendly.  Or it could try harder and could just ignore the missing
+graph file and walk revisions the old school way.  It would be slower,
+depending on the history size maybe much slower, but it would work.
+Good.
 
-  https://travis-ci.org/szeder/git/jobs/336257153#L1466
+However, in addition to the reader trying harder, I think we should
+also consider making the writer more careful, too, and only delete a
+stale graph file after a certain grace period is elapsed; similar to
+how 'git gc' only deletes old loose objects.  And then perhaps it
+should delete all graph files that are older than that grace period;
+as it is, neither '--clear' nor '--delete-expired' seem to care about
+graph files that aren't or weren't referenced by the graph-head.
 
 
->
->  contrib/coccinelle/strbuf.cocci | 17 +----------------
->  1 file changed, 1 insertion(+), 16 deletions(-)
->
-> diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.=
-cocci
-> index 6fe8727421..e34eada1ad 100644
-> --- a/contrib/coccinelle/strbuf.cocci
-> +++ b/contrib/coccinelle/strbuf.cocci
-> @@ -1,21 +1,6 @@
->  @ strbuf_addf_with_format_only @
->  expression E;
-> -constant fmt;
-> -@@
-> -  strbuf_addf(E,
-> -(
-> -  fmt
-> -|
-> -  _(fmt)
-> -)
-> -  );
-> -
-> -@ script:python @
-> -fmt << strbuf_addf_with_format_only.fmt;
-> -@@
-> -cocci.include_match("%" not in fmt)
-> -
-> -@ extends strbuf_addf_with_format_only @
-> +constant fmt !~ "%";
->  @@
->  - strbuf_addf
->  + strbuf_addstr
-> --
-> 2.16.1
+> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+> index 4970dec133..766f09e6fc 100644
+> --- a/builtin/commit-graph.c
+> +++ b/builtin/commit-graph.c
+
+> @@ -121,6 +122,17 @@ static int graph_write(void)
+>  	if (graph_hash)
+>  		printf("%s\n", oid_to_hex(graph_hash));
+>  
+> +
+> +	if (opts.delete_expired && opts.update_head && opts.has_existing &&
+> +	    oidcmp(graph_hash, &opts.old_graph_hash)) {
+> +		char *old_path = get_commit_graph_filename_hash(opts.pack_dir,
+> +								&opts.old_graph_hash);
+> +		if (remove_path(old_path))
+> +			die("failed to remove path %s", old_path);
+> +
+> +		free(old_path);
+> +	}
+> +
+>  	free(graph_hash);
+>  	return 0;
+>  }
+> @@ -139,6 +151,8 @@ int cmd_commit_graph(int argc, const char **argv, const char *prefix)
+>  			N_("write commit graph file")),
+>  		OPT_BOOL('u', "update-head", &opts.update_head,
+>  			N_("update graph-head to written graph file")),
+> +		OPT_BOOL('d', "delete-expired", &opts.delete_expired,
+> +			N_("delete expired head graph file")),
+>  		{ OPTION_STRING, 'H', "graph-hash", &opts.graph_hash,
+>  			N_("hash"),
+>  			N_("A hash for a specific graph file in the pack-dir."),
+
+Like '--update-head', '--delete-expired' is silently ignored when it's
+not used with '--write'.
+
+
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index 6e3b62b754..b56a6d4217 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+
+> +test_expect_success 'write graph with merges' \
+> +    'graph3=$(git commit-graph --write --update-head --delete-expired) &&
+> +     test_path_is_file ${packdir}/graph-${graph3}.graph &&
+> +     test_path_is_missing ${packdir}/graph-${graph2}.graph &&
+> +     test_path_is_file ${packdir}/graph-${graph1}.graph &&
+> +     test_path_is_file ${packdir}/graph-head &&
+> +     echo ${graph3} >expect &&
+> +     cmp -n 40 expect ${packdir}/graph-head &&
+
+printf and test_cmp.
+
+> +     git commit-graph --read --graph-hash=${graph3} >output &&
+> +     _graph_read_expect "23" "${packdir}" &&
+> +     cmp expect output'
+> +
+> +test_expect_success 'write graph with nothing new' \
+> +    'graph4=$(git commit-graph --write --update-head --delete-expired) &&
+> +     test_path_is_file ${packdir}/graph-${graph4}.graph &&
+> +     test_path_is_file ${packdir}/graph-${graph1}.graph &&
+> +     test_path_is_file ${packdir}/graph-head &&
+> +     echo ${graph4} >expect &&
+> +     cmp -n 40 expect ${packdir}/graph-head &&
+
+Likewise.
+
+> +     git commit-graph --read --graph-hash=${graph4} >output &&
+> +     _graph_read_expect "23" "${packdir}" &&
+> +     cmp expect output'
+> +
+>  test_expect_success 'clear graph' \
+>      'git commit-graph --clear &&
+>       test_path_is_missing ${packdir}/graph-${graph2}.graph &&
+> +     test_path_is_file ${packdir}/graph-${graph1}.graph &&
+>       test_path_is_missing ${packdir}/graph-head'
+>  
+>  test_expect_success 'setup bare repo' \
+> @@ -121,7 +185,7 @@ test_expect_success 'write graph in bare repo' \
+>       echo ${graphbare} >expect &&
+>       cmp -n 40 expect ${baredir}/graph-head &&
+>       git commit-graph --read --graph-hash=${graphbare} >output &&
+> -     _graph_read_expect "18" "${baredir}" &&
+> +     _graph_read_expect "23" "${baredir}" &&
+>       cmp expect output'
+>  
+>  test_done
+> -- 
+> 2.16.0.15.g9c3cf44.dirty
+
+
