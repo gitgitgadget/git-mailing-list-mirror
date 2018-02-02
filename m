@@ -2,102 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBCD61F576
-	for <e@80x24.org>; Fri,  2 Feb 2018 09:46:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E16F1F576
+	for <e@80x24.org>; Fri,  2 Feb 2018 09:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751812AbeBBJqb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 04:46:31 -0500
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:38635 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750795AbeBBJq2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 04:46:28 -0500
-Received: by mail-qt0-f176.google.com with SMTP id z10so30146923qti.5
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 01:46:28 -0800 (PST)
+        id S1751554AbeBBJtd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 04:49:33 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:54127 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750795AbeBBJtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 04:49:31 -0500
+Received: by mail-wm0-f45.google.com with SMTP id t74so11302376wme.3
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 01:49:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=hU7ZkMsYcVbo538ZbE60Kq9oIB8hTU5bR1T21ZxcMAI=;
-        b=uwbeYMShXOS94E+uRQ+IKVc+/bHnZaPuxcbxl6ghf67+gH+tLg5Jo5UkDqsTRkbklI
-         KuxwUiVR3z9SE/NkO23nMNcyWy3+1sFxC2pOu5swpa6d6HZbXo/IFhX6LmVV49J5KmiZ
-         c08QaukhkNgALMnzqA3P8tEiqNv7IFIJHUkGAsyKDpsqaNdQxA11kZ14YUGWiMW1TBfx
-         DCqxd3I4HB2nF7+B97k7cjkfhIAfDv5mXSOeYDEbksQVvwJQVl5szbitNyus/E32t98R
-         4EfCRA0Lpo1j4D5r2Xk2iUQ6PXc3q/05RY0a2Tif+rYpD289wa8kPPe+ldmXZEw/aaiQ
-         6N2Q==
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-transfer-encoding;
+        bh=HJ667W5CEh3O5ICzF5lZYagRHXbk4m+9n9lDJt/cCvI=;
+        b=W5NWAk0ncTxMJ9qGEU7H9qsBbqBTlFp1b/6EiSE3DWhrl/qySInU+JH2RE7FXWkqyq
+         wSInrdzwH7ExEo9kb13ofXvPho1KO5vNhix/6I89Ztpbjk/LbL4liBYfKCSuWtMdF99k
+         wot4Z1YvYvGFj64ZTJ3HlJNFV8pyNQiEmtR7E2NSqYReMndyJ9KqivjcY3ku9qK06KrJ
+         Ibk3zVy8/SHe6mP20pGGVDw0rHbxRbmygdly5HdSxlmsCEY8HDeo2BETrV23LvGZ1/tX
+         Dav0p4E8z17gsHTYM0KnRF6jTeVRmWLk0DoikwYh0bCb4foKdJnTPpgxBdCR+mxreuEs
+         L5mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=hU7ZkMsYcVbo538ZbE60Kq9oIB8hTU5bR1T21ZxcMAI=;
-        b=C4KyugSEzGogbDzni/9ZuVph2r4XmtupkkybV4nAgSx8ZsJisJfdJg73VBQQVZOFqm
-         pcs/OnQusvlPp8O//RNOQ2dQCIE0UKAq15itEc3lVfG5pgDWQvG9zX/Imh58zeBH/t6w
-         OxqSHCnUILC+nb9/WNqIRICoo3O/92p6JfGznDL7GR5gURT4fpCgJELHJaQSNdHVs1Fz
-         NC20swBqGLNqAnOHz/HXqfG7F3/Vn9xm8lO0y4oFOvOiiJcP/07mkCB+MCo/pyg+5sEX
-         U2eajQ/MnT0PmTNGjpJoIZqhCmC8w1XG5OU48yuERSDrCbDcaMHEqygsAHlh6AEwQ591
-         CD7Q==
-X-Gm-Message-State: AKwxytf4hzWweVL9lEyEn/7Lv/FYRDm5F3Y8RNbnfy928MgU2PQvRvHs
-        AK5DlXILyGUy14Rdma/JjwJtckaE7VU86dJbKL0=
-X-Google-Smtp-Source: AH8x225d1zJi4NqlA/DcFl2jSDDen7rBepotoCyayxMWG1IgffV3HcoiOnsSVhqGf+Lc9CehBju8RLFuSv4FphhKq8k=
-X-Received: by 10.200.45.109 with SMTP id o42mr3047559qta.277.1517564787979;
- Fri, 02 Feb 2018 01:46:27 -0800 (PST)
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-transfer-encoding;
+        bh=HJ667W5CEh3O5ICzF5lZYagRHXbk4m+9n9lDJt/cCvI=;
+        b=hm43PhDoG5qgAfgPjlXEXT9KDjYK4+pf0JTZO5qpmxOTRtZr0SY5HNt84pI25NONCt
+         NvlyRu3r1ocIDMPNHm4WjocORmvGhxdr8IAbRSh418PQ6l3QaJQyc69pO/acArsIeSmo
+         5QaT4neM+r/qIAt8Mhr9PEPJjOGzaWQQOGFWpWLhousWxDNRWxF4rkAD2+kB6MT+PerH
+         krIjYsBT7c7a7uwHTYn2tlR+HNpus7BdMstAxxxS1u4SzHsfNOwpF8Hv68Y4nXfRy3VR
+         xE94bKj4nUQ/FlhwIZA7LEZJjhZw7FJtDdrGO2HFK6BiCa6ecQlk1ZIwex8WoWzoKTxr
+         m3AA==
+X-Gm-Message-State: AKwxytc4nAEDpwb/h4dCS13YfG0QUtIlTria/Q2qtQhGcWcDCK319Ylw
+        zBnMGnOdoWd4bjZ/KGc1xeA=
+X-Google-Smtp-Source: AH8x225uXRk0HCSUuMqW7TDT/iiQBEbryBi6Jv+Ui9g5QIrWpOiAA+Fp2HlaVzD+ZrnJZtaLn3fecQ==
+X-Received: by 10.80.144.169 with SMTP id c38mr67223064eda.210.1517564969792;
+        Fri, 02 Feb 2018 01:49:29 -0800 (PST)
+Received: from [192.168.0.104] (d8D86700B.access.telenet.be. [141.134.112.11])
+        by smtp.gmail.com with ESMTPSA id s23sm1336756edm.15.2018.02.02.01.49.28
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 02 Feb 2018 01:49:29 -0800 (PST)
+Message-ID: <5A743428.6040804@gmail.com>
+Date:   Fri, 02 Feb 2018 10:49:28 +0100
+From:   Mark Nauwelaerts <mark.nauwelaerts@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0 SeaMonkey/2.22
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 01:46:27 -0800 (PST)
-In-Reply-To: <20180202092511.GA28946@ash>
-References: <20180126095520.919-1-pclouds@gmail.com> <20180131093051.15525-1-pclouds@gmail.com>
- <20180131093051.15525-2-pclouds@gmail.com> <CAPig+cR24=0_NPekYaF+oG9OovDkv1Et-RpNvAHqE7Qd7g7QQA@mail.gmail.com>
- <xmqqpo5pr5wr.fsf@gitster-ct.c.googlers.com> <20180202092511.GA28946@ash>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 2 Feb 2018 04:46:27 -0500
-X-Google-Sender-Auth: 5eAsF41zemU7gV-X-He_fMCHiq4
-Message-ID: <CAPig+cQKMxwadf9aGyC5ESa-vxDy9PzrYo+m+JaVQ3S=12PyQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] am: add --show-current-patch
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Tim Landscheidt <tim@tim-landscheidt.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     Hareesh Rajan <hareesh.rajan@gmail.com>, git@vger.kernel.org
+Subject: Re: Git remote helper's fast export options
+References: <CAPm4vtnDdF31wx2VrarGk_uX9zQOubiD+LA7gsP_9qKFpqt28g@mail.gmail.com> <CAPm4vt=oAa848JqVHeOK28+qf6KoM56_JEWzZjou7X_-fFsk3w@mail.gmail.com>
+In-Reply-To: <CAPm4vt=oAa848JqVHeOK28+qf6KoM56_JEWzZjou7X_-fFsk3w@mail.gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 2, 2018 at 4:25 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jan 31, 2018 at 02:59:32PM -0800, Junio C Hamano wrote:
->> Eric Sunshine <sunshine@sunshineco.com> writes:
->> > On Wed, Jan 31, 2018 at 4:30 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
- Duy <pclouds@gmail.com> wrote:
->> >> +       len =3D strbuf_read_file(&sb, am_path(state, msgnum(state)), =
-0);
->> >> +       if (len < 0)
->> >> +               die_errno(_("failed to read '%s'"),
->> >> +                         am_path(state, msgnum(state)));
->> >
->> > Isn't this am_path() invocation inside die_errno() likely to clobber
->> > the 'errno' from strbuf_read_file() which you want to be reporting?
->> True.
+On 01/02/18 00:14, Hareesh Rajan wrote:
+> Hi,
 >
-> Thanks both. Good catch. Of course I will fix this in the re-roll, but
-> should we also do something for the current code base with the
-> following patch?
+> I use git remote helper to export/import repository content. Git
+> internally uses fast-export command and it seems like the options to
+> detect move and copy (-M/-C) are not being used.
+> Logging this issue requesting a fix to the remote helper to generate
+> rename and copy commands in the output dump.
 >
-> -       die_errno(_("could not read '%s'"), am_path(state, file));
-> +       saved_errno =3D errno;
-> +       path =3D am_path(state, file);
-> +       errno =3D saved_errno;
-> +       die_errno(_("could not read '%s'"), path);
+> Git version: 2.14.1
+>
+> Thanks,
+> Hareesh
+This may have to do with a few changes that happened there recently; see 
+https://public-inbox.org/git/1514112729-31647-1-git-send-email-mark.nauwelaerts@gmail.com/ 
+for a few patches addressing that.
 
-Rather than worrying about catching these at review time, I had been
-thinking about a solution which automates it using variadic macros.
-Something like:
-
-    #define die_errno(...) do { \
-        int saved_errno_ =3D errno; \
-        die_errno_(saved_errno_, __VA_ARGS__); \
-        } while (0);
+Mark.
