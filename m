@@ -2,61 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 129C11FAE2
-	for <e@80x24.org>; Fri,  2 Feb 2018 09:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBCD61F576
+	for <e@80x24.org>; Fri,  2 Feb 2018 09:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751470AbeBBJgI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 04:36:08 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:40940 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751425AbeBBJgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 04:36:06 -0500
-Received: by mail-ot0-f172.google.com with SMTP id x4so19698363otg.7
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 01:36:06 -0800 (PST)
+        id S1751812AbeBBJqb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 04:46:31 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:38635 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750795AbeBBJq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 04:46:28 -0500
+Received: by mail-qt0-f176.google.com with SMTP id z10so30146923qti.5
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 01:46:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Cm1HRiURfvwP2dwu3oaeorwxx7U+519KN94+pw4XLdY=;
-        b=mYA6zX3OB6H2lzUks/gBZDfjLS5xvG+J95/ksRkOTr1awP09aOnpGbt4KOhreFgcY+
-         So+nU01IIb/dOtfCvQFEMussLOL3Qx7avC/hWzkQWAirGn5yylyOpkYjy4ah1OPt/tVI
-         2/4mLr5ZUAQibNTyjE2L7890YzlR9hQ9NQUAa3lK6AF0aOhMR/e9iYrhcmR3V7GLeL1g
-         eJJxTgPk1EEyX1pYlKGUJYnC+PEaGjkr8W9aRAOxMvPdZWrbvC+FlaM31IOm1Gw/QRpT
-         5Xq4jb/CvZOVIC38HYWkYrGOEOn35641LdLxE82L8/W8wGVep606b1fxRUaadLgpC5T7
-         Uc3g==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=hU7ZkMsYcVbo538ZbE60Kq9oIB8hTU5bR1T21ZxcMAI=;
+        b=uwbeYMShXOS94E+uRQ+IKVc+/bHnZaPuxcbxl6ghf67+gH+tLg5Jo5UkDqsTRkbklI
+         KuxwUiVR3z9SE/NkO23nMNcyWy3+1sFxC2pOu5swpa6d6HZbXo/IFhX6LmVV49J5KmiZ
+         c08QaukhkNgALMnzqA3P8tEiqNv7IFIJHUkGAsyKDpsqaNdQxA11kZ14YUGWiMW1TBfx
+         DCqxd3I4HB2nF7+B97k7cjkfhIAfDv5mXSOeYDEbksQVvwJQVl5szbitNyus/E32t98R
+         4EfCRA0Lpo1j4D5r2Xk2iUQ6PXc3q/05RY0a2Tif+rYpD289wa8kPPe+ldmXZEw/aaiQ
+         6N2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Cm1HRiURfvwP2dwu3oaeorwxx7U+519KN94+pw4XLdY=;
-        b=Gmje0BTDYRhahnrIsY4aEU9NDgqpuWuDXKq32y7VkXOZVhbet3yqjgdOVS2H8TKBSQ
-         7BHGVEiorfX3kr8eVA+NYYxV1jw0BcryI5OMo9AFWSB2W16+RDNHrN5Zy6qw/mmNi+CK
-         yHJrvYBZUTJ/H22QVyYE1e+enN5MayJ/2KeM9/V6hdcV5gguQcE/npxoiMAWDT9pAETn
-         aDAf2JapO+tVkKJK1Kv61e9kp8ySWvTGmM1WHqbChU6gt89YagzQ5A2A0G+P1oFsNkiO
-         ZCcVeWHXgeQBFZeTyx0EnYjH1btPOBpmXLqSWe5X5eq1clnD0tnujEZ0ey5mwMftmBVl
-         jaBA==
-X-Gm-Message-State: AKwxyteNN5OczvqEwPJC0i9IXYTVMtdM4/m7HxQm21EbVoA0Opk8F6/k
-        u9jR8qbBhHJazh15FXoe9YnO94lPSnRNsemSBnI=
-X-Google-Smtp-Source: AH8x226Kq09AveQDJbL8vli1IoGIayy09E/tY3dllHl10Eoy/42IphECURAzJbyTyRzYu9SEVPOTIDUXFxQTv9Xr+AU=
-X-Received: by 10.157.47.177 with SMTP id r46mr19647980otb.301.1517564165623;
- Fri, 02 Feb 2018 01:36:05 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=hU7ZkMsYcVbo538ZbE60Kq9oIB8hTU5bR1T21ZxcMAI=;
+        b=C4KyugSEzGogbDzni/9ZuVph2r4XmtupkkybV4nAgSx8ZsJisJfdJg73VBQQVZOFqm
+         pcs/OnQusvlPp8O//RNOQ2dQCIE0UKAq15itEc3lVfG5pgDWQvG9zX/Imh58zeBH/t6w
+         OxqSHCnUILC+nb9/WNqIRICoo3O/92p6JfGznDL7GR5gURT4fpCgJELHJaQSNdHVs1Fz
+         NC20swBqGLNqAnOHz/HXqfG7F3/Vn9xm8lO0y4oFOvOiiJcP/07mkCB+MCo/pyg+5sEX
+         U2eajQ/MnT0PmTNGjpJoIZqhCmC8w1XG5OU48yuERSDrCbDcaMHEqygsAHlh6AEwQ591
+         CD7Q==
+X-Gm-Message-State: AKwxytf4hzWweVL9lEyEn/7Lv/FYRDm5F3Y8RNbnfy928MgU2PQvRvHs
+        AK5DlXILyGUy14Rdma/JjwJtckaE7VU86dJbKL0=
+X-Google-Smtp-Source: AH8x225d1zJi4NqlA/DcFl2jSDDen7rBepotoCyayxMWG1IgffV3HcoiOnsSVhqGf+Lc9CehBju8RLFuSv4FphhKq8k=
+X-Received: by 10.200.45.109 with SMTP id o42mr3047559qta.277.1517564787979;
+ Fri, 02 Feb 2018 01:46:27 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Fri, 2 Feb 2018 01:35:35 -0800 (PST)
-In-Reply-To: <CAPig+cQzdFhUzwDykO8su=ne0qZr6=51vTxXbMYYnceuH_N=iw@mail.gmail.com>
-References: <20180124095357.19645-1-pclouds@gmail.com> <20180124095357.19645-3-pclouds@gmail.com>
- <CAPig+cQzdFhUzwDykO8su=ne0qZr6=51vTxXbMYYnceuH_N=iw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 2 Feb 2018 16:35:35 +0700
-Message-ID: <CACsJy8ALCro_4n0u2TBp8Lon_2kX49w9UcAnD8awHmsoriQ7-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/7] worktree.c: add update_worktree_location()
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 01:46:27 -0800 (PST)
+In-Reply-To: <20180202092511.GA28946@ash>
+References: <20180126095520.919-1-pclouds@gmail.com> <20180131093051.15525-1-pclouds@gmail.com>
+ <20180131093051.15525-2-pclouds@gmail.com> <CAPig+cR24=0_NPekYaF+oG9OovDkv1Et-RpNvAHqE7Qd7g7QQA@mail.gmail.com>
+ <xmqqpo5pr5wr.fsf@gitster-ct.c.googlers.com> <20180202092511.GA28946@ash>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 2 Feb 2018 04:46:27 -0500
+X-Google-Sender-Auth: 5eAsF41zemU7gV-X-He_fMCHiq4
+Message-ID: <CAPig+cQKMxwadf9aGyC5ESa-vxDy9PzrYo+m+JaVQ3S=12PyQQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] am: add --show-current-patch
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tim Landscheidt <tim@tim-landscheidt.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,42 +68,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 2, 2018 at 3:23 PM, Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
-> On Wed, Jan 24, 2018 at 4:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> diff --git a/worktree.c b/worktree.c
->> @@ -326,6 +326,24 @@ int validate_worktree(const struct worktree *wt, st=
-ruct strbuf *errmsg)
->> +void update_worktree_location(struct worktree *wt, const char *path_)
->> +{
->> +       struct strbuf path =3D STRBUF_INIT;
->> +
->> +       if (is_main_worktree(wt))
->> +               die("BUG: can't relocate main worktree");
->> +
->> +       strbuf_add_absolute_path(&path, path_);
->> +       if (fspathcmp(wt->path, path.buf)) {
->> +               write_file(git_common_path("worktrees/%s/gitdir",
->> +                                          wt->id),
->> +                          "%s/.git", real_path(path.buf));
+On Fri, Feb 2, 2018 at 4:25 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Jan 31, 2018 at 02:59:32PM -0800, Junio C Hamano wrote:
+>> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> > On Wed, Jan 31, 2018 at 4:30 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc=
+ Duy <pclouds@gmail.com> wrote:
+>> >> +       len =3D strbuf_read_file(&sb, am_path(state, msgnum(state)), =
+0);
+>> >> +       if (len < 0)
+>> >> +               die_errno(_("failed to read '%s'"),
+>> >> +                         am_path(state, msgnum(state)));
+>> >
+>> > Isn't this am_path() invocation inside die_errno() likely to clobber
+>> > the 'errno' from strbuf_read_file() which you want to be reporting?
+>> True.
 >
-> For the path stored in 'worktrees/<id>/gitdir' (and in wt->path), this
-> and other worktree-related code sometimes treats it only as "absolute
-> path" and sometimes as "real path". As a reviewer, I'm having trouble
-> understanding the logic of why, how, and when this distinction is
-> made. Can you explain a bit to help clarify when "absolute path" is
-> good enough and when "real path" is needed?
+> Thanks both. Good catch. Of course I will fix this in the re-roll, but
+> should we also do something for the current code base with the
+> following patch?
+>
+> -       die_errno(_("could not read '%s'"), am_path(state, file));
+> +       saved_errno =3D errno;
+> +       path =3D am_path(state, file);
+> +       errno =3D saved_errno;
+> +       die_errno(_("could not read '%s'"), path);
 
-Of the top of my head, I think it's "anything but a relative path".
-real_path() is normally used to normalize paths before I compare them.
-Writing a normalized path down is nice to avoid "../" but I don't
-think it's strictly necessary. Well, it's also prettier when you have
-to print the path out. Printing "/foo/bar/abc/../../xyz" is not nice.
+Rather than worrying about catching these at review time, I had been
+thinking about a solution which automates it using variadic macros.
+Something like:
 
-Hmm.. looking back in add_worktree(), we also write "gitdir" with
-real_path(). I think the problem here is that I should have
-real_path()'d "path.buf" _before_ doing fspathcmp(). Maybe that's
-where the confusion's from.
---=20
-Duy
+    #define die_errno(...) do { \
+        int saved_errno_ =3D errno; \
+        die_errno_(saved_errno_, __VA_ARGS__); \
+        } while (0);
