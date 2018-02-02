@@ -2,93 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FECE1F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 21:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35C331F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 22:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752095AbeBBVxQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 16:53:16 -0500
-Received: from mout.gmx.net ([212.227.15.18]:58619 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751544AbeBBVxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 16:53:14 -0500
-Received: from [192.168.0.129] ([37.201.195.106]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M23zf-1f28dH0FR5-00u3IG; Fri, 02
- Feb 2018 22:53:12 +0100
-Date:   Fri, 2 Feb 2018 22:53:10 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-cc:     shiftkey@github.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.16.1(2)
-In-Reply-To: <0MFuWk-1eTyyv270g-00EthZ@mail.gmx.com>
-Message-ID: <nycvar.QRO.7.76.6.1802022240420.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <0MFuWk-1eTyyv270g-00EthZ@mail.gmx.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751671AbeBBWb6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 17:31:58 -0500
+Received: from mail-pl0-f50.google.com ([209.85.160.50]:38581 "EHLO
+        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751582AbeBBWb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 17:31:56 -0500
+Received: by mail-pl0-f50.google.com with SMTP id 13so7231635plb.5
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 14:31:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WTSSGCAp1IxnP5xRmU+ZZj+mq9JmZTLd84qP8GXpPkk=;
+        b=Pc2VZ3LaMEQ1nuv+eRugG7QtmUop1LoBxPvXvaU44oquM2/D/QnPTBofPRl4ApzVpN
+         G2DIWYsQuz1lWh6JRR3dVlNa8xG2HjrFtp1IY3LXZSzbjGa4jG3plybpANrXr2beS9pv
+         HK0rah8oeIxM/RbhhcD6B457JSw6g+nJtXXlRvDV9pbphbTcC4JcCi/K7Wqjdvd0M3Yd
+         msvGfVpwgr0hSuKucytsvW+JD17Jg3aKkb4zzfWwDQwettESITanwbO2v5y5CtGG7R1X
+         A1kgeQjaVhjJhCpATrk2+H2K0PdgaK0OE8DTOZnaZS6PgcG9AJhtb5tHox2FTGM0igmi
+         O3xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WTSSGCAp1IxnP5xRmU+ZZj+mq9JmZTLd84qP8GXpPkk=;
+        b=uGOOnKNxolXCoUB6uC62oDPm58+bxDSasp03EjahCMwRuj0P/UEIa9uS8kirQPyfT7
+         CfF2/GBKTmY6wcKDLfxNmiTN5NmguVx/oFo24cBmQ2Rwi1FrOQuuh8yAD6WoeFIjBdNd
+         2Rrtw3J8wppY85/mD7RkBcV12XHfj9hi9kGDbL0B15pGqRkH6zrpphYyKgXIfLg7Lpru
+         6HCyQNdz245DU6714OP05zXGaXrgLhRDcu2EFOHA+cif2DdY37a6rln5qjzBLyBeZu29
+         QfHMV816Hxc+TQZj3UgAyVqkCxpOjifsaiwFpE6a0LfFIVEQLtCBHcgFA0lueZrX5yLr
+         n+Ow==
+X-Gm-Message-State: AKwxytd3BUtn6NfqQmBoZ1nMJ0zagSNv/U9ol91SZUV+qtt51stax59d
+        X7YOlLlQ2RlnohSFW2ve9IUD+A==
+X-Google-Smtp-Source: AH8x226x3yAwh3BCs0zv1KgccETBhOvE0cjIZOP5GsRETXeCDOHP2Ic6g1+SS1eBd7apGucpSx0dYw==
+X-Received: by 2002:a17:902:f83:: with SMTP id 3-v6mr12447221plz.287.1517610716167;
+        Fri, 02 Feb 2018 14:31:56 -0800 (PST)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id d4sm4277477pgv.24.2018.02.02.14.31.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 02 Feb 2018 14:31:55 -0800 (PST)
+Date:   Fri, 2 Feb 2018 14:31:54 -0800
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 13/27] ls-refs: introduce ls-refs server command
+Message-ID: <20180202223154.GA187827@google.com>
+References: <20180103001828.205012-1-bmwill@google.com>
+ <20180125235838.138135-1-bmwill@google.com>
+ <20180125235838.138135-14-bmwill@google.com>
+ <CAGZ79kb14ciUoyHLAxmh0jGwwPYFVjGayrn9R2f+4+88A8=xsA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:24fYRADnn/4t3eppk0H4MquQuOLx//PJ2qCkFOYX1PITp3pK1T2
- 5M71LbjliMjygP/lT+ntLmggFCP1H4pHndr7QFRt7S+YsMDMTTkYSlcJxVZHIj0E0mIkH0S
- qjOfn9C4zro4AqNzVMKkCpSyIjJiuppYLoOYilC1z2ngFffXLNEbmmUh4/vjsg3tU1UrLkM
- ZVHPORXjf1mWWUSUfnJbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3qraTIjloJ0=:XGPnmPWTeDXBLd4LIdGDcY
- HJ0t9gKOpDaINECvX31yIBYSdPTGRD9FeyAutLC5ltMFSdEBX5WMV3Co2r0eW2ywuj6e6PtTC
- J09JvkwPxzfW2uR6l0x6cAzknOSzWEQr6VLx28TMdcy2WJbeMbskKzlMRrZFB2LbBJvu4vlzk
- yGLyzdFziJOFzb06ww+EVma6tsXkk8N+JpkZbJlfwLFZ9Ia4erhk6atlCe0EYkDplRvfF/VQb
- BWaEInxvge5c1gjjP29XPw8E4bNWLjZWp5Mk+pkvxO4i+qN5Whh8HZm70EGwWFfXXcOrhOrpM
- FJq+IxYYJC7YM/iiDE7mV2hc8AYvN8b0AWtMGRJqlwyBeNvAh12R6IvbYgx1s+v6CqBYIFFXt
- 83KryXw05yLZplG2nUdNNvyJt6IPq9CYfuJnOlZkoKuPs1+9X+ByLinHNTn9XhtB0NNjv/28b
- +zhX4wr3miLsMIeXpXP3A+dX5eBqb/+AMB/BUdBzl8ETuAvvRU7yDHhUorvM0Tc4Lf1yVu/Bp
- m3J+rOGlOV4XESeqU9LFSNKwd3CKY6z3SxRcyunt1Oxr9vQdNiO9HkXZJFXXWRqdZmHQLy5AI
- JXM3zFTOHPErVu/LNh76qfyUf9RZOr0z+Yuxh1QdHy/lmMBxvnZQOIfvHrH+8r/+9VTUvcgvZ
- vD3saVm2U4/HrrEmakGyPez0tsESpOQIeAoBhEQ95pI2C0gajV0aH3Q81yps8vAcf4EotR9Fu
- jb6hsHjjV+Abqsr67GAlRtliwkMnmWvYiifVX+mzPxqeiLDnif2R62ug5trvCIaj5cFZS1jL1
- 3H9EgRVisULsuRbjxpyKrpsDNKqjykxJTwsaXO6zifFSRgWXDCYWKIJBRnzR5yBIVZO71du
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb14ciUoyHLAxmh0jGwwPYFVjGayrn9R2f+4+88A8=xsA@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all, in particular packagers,
-
-On Fri, 2 Feb 2018, Johannes Schindelin wrote:
-
-> It is my pleasure to announce that Git for Windows 2.16.1(2) is
-> available from:
+On 01/26, Stefan Beller wrote:
+> On Thu, Jan 25, 2018 at 3:58 PM, Brandon Williams <bmwill@google.com> wrote:
 > 
->         https://git-for-windows.github.io/
+> > +ls-refs takes in the following parameters wrapped in packet-lines:
+> > +
+> > +    symrefs
+> > +       In addition to the object pointed by it, show the underlying ref
+> > +       pointed by it when showing a symbolic ref.
+> > +    peel
+> > +       Show peeled tags.
+> 
+> Would it make sense to default these two to on, and rather have
+> optional no-symrefs and no-peel ?
+> 
+> That would save bandwidth in the default case, I would think.
 
-Typically, every Git for Windows version is accompanied with updates to
-the Pacman repository, so that the packagers can use a Git for Windows SDK
-to bundle their updated packages.
+Maybe?  That would save sending those strings for each request
 
-In Git for Windows, due to Sebastian Schuberth's prodding not to abuse
-GitHub to serve essentially static files, we use BinTray instead.
-
-Sadly, BinTray "rate-limited" Git for Windows' account "due to overuse".
-That means that there is currently no convenient update via `pacman -Syu`.
-
-There have been glitches in the past, where uploads "succeeded" but the
-files still had not been available for download, and other uploads that
-did not succeed because the BinTray service was down even if their status
-page claimed "all green".
-
-Obviously, I contacted their support immediately, as I had done in the
-past. This time I got a response that I should expect delays because I am
-not a customer with a support contract.
-
-Needless to say, I am very disappointed with BinTray at the moment. I
-spent a substantial amount of time to automate the uploads, and I hate the
-idea that all of that was for naught because we might have to switch to a
-more reliable hoster.
-
-In the meantime, I will upload the respective Pacman packages to
-https://github.com/git-for-windows/git/releases/tag/v2.16.1.windows.2
-
-Ciao,
-Johannes
+-- 
+Brandon Williams
