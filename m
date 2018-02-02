@@ -2,107 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A971F1F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 23:39:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80CE01F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 23:41:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752068AbeBBXjE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 18:39:04 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:44194 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751827AbeBBXjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 18:39:02 -0500
-Received: by mail-wr0-f194.google.com with SMTP id v31so24063346wrc.11
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:39:02 -0800 (PST)
+        id S1752442AbeBBXlv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 18:41:51 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:45626 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751786AbeBBXlt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 18:41:49 -0500
+Received: by mail-yw0-f196.google.com with SMTP id b16so11638518ywh.12
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:41:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YKe0T3yrRpQWdSmVHokhJxpfU2u9S5WVLmJ7YE68ies=;
-        b=NxzMUE/Fu7fLgvMoHHD72dn9/Lj5rQ9IOQa8NbMqcxSiFGxmfG9IPdGgQHXmE4e7fp
-         glgm+af5qfOneMbF0krPlSYiCK70qfaD7YVlwBh83JvjAZ7Okmo6e0ZJNjTdnYA9GKA6
-         KrMepX0Lo7+/hpnfcgI+y50EqPMp6gyVz1eH/DN/Pd3FkgNhSvC6Cv5sGZECjU12mXTp
-         ujheaq1ACIoVrgtWpM77qe5yk0aFvbwR/YCZftDYOUET2GQ1g2x3C/IsokUnmBlGcn5S
-         X7lAnRZg+tBlUJWDBSE+P9LlqhlM21Ivz0RNSkJjzP59sVZMENg++DNvsEHXPjVjURG9
-         ZDuw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4ylpXcGkSIkf5srlOvXlDN0bexMxTHaDsE9PpTiCcfw=;
+        b=hqGLvGOdMNuHuo8b+8UuQmT6J2WUeqqC+Pu6ymFnsIPrLQrsEAk9hmP5zN6UGDOfcP
+         M8OdrVG605YZkljZDauZUfeywqP7P+MdQi5dTXqbikG2iy9rjJVPlFo0+cR8u6vHC+3v
+         99Gdo2wtFjKsLFuaBWGQDZUNk5lncwcEHc9/TLOCvFQvfBK3yiRHYUzECcp2x/IHLBaL
+         wKgGInoxA5o8dY7K0a5habMZptTh1hnuRqQHOQDAwnDqwQNMxla1MGw4TGspiBkUqk6k
+         ibFFqohMuy35Cura6y8XbDW5fTScWcTYz6YDvSuFUa4u0k1omRXMBvCzenwjsfCH9PSX
+         /lhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YKe0T3yrRpQWdSmVHokhJxpfU2u9S5WVLmJ7YE68ies=;
-        b=oZikT2TgMlOFfNyTQ2YCfENPsrD58ogcPec56OdLa8b5+kG8HNLXu2owx3iSZo8jfG
-         IL0tdiZPhwjoZb8U2qufGpJKZnO24wgT6oGV0Uez80vl5OvFnP15ja8itS7zy/WgQU2V
-         Kwg0z/LDZPNjxyaM0D6afbfIvXLZvHfJZ2GzdXIrle2Se+pvLVWt900x5qEH6KVRTVHM
-         kAR8bGGuVLN9wMDIHX3YYRsA7GK4bX/pT5d7jLtgwafufj782hzJEYFjpT33cmPhV3sp
-         0q1bb6CUV2yXvARaetFt0Ikp+BvKxpPOSwmJIGEGsnm4g5WWeeDSPQ/Lca9QnRIWlSis
-         zAdA==
-X-Gm-Message-State: AKwxyte5o94LklwTRxZNoXRhDnS2APpc8Nw6pnViYSWuw9GmHlprjGpK
-        FiSuigs1Xot3/o+b2orjmsA=
-X-Google-Smtp-Source: AH8x226NZv803NEcVGEIKR8JQ+NVsbye3jWZieW9QZNqSv2sH+6Wc9IU6H0VoqNMC4BZgquKDREPGA==
-X-Received: by 10.223.200.140 with SMTP id k12mr16512355wrh.146.1517614741530;
-        Fri, 02 Feb 2018 15:39:01 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e15sm3059703wmd.26.2018.02.02.15.39.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 15:39:00 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen R Guglielmo <srguglielmo@gmail.com>
-Cc:     Avery Pennarun <apenwarr@gmail.com>,
-        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
-Subject: Re: Bug Report: Subtrees and GPG Signed Commits
-References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
-        <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
-        <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
-        <CAGZ79kafgyOujDM4BsXdDUnP+iFk5mp2bYnX-Q65khW-weEhUg@mail.gmail.com>
-        <xmqqy3kfq6a9.fsf@gitster-ct.c.googlers.com>
-        <CAHqTa-0kdkDUjH1nw=4JPAivtyL84zfZ5t8Dj1UYXPrMd7Poqw@mail.gmail.com>
-        <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
-Date:   Fri, 02 Feb 2018 15:39:00 -0800
-In-Reply-To: <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
-        (Stephen R. Guglielmo's message of "Wed, 31 Jan 2018 07:33:57 -0500")
-Message-ID: <xmqqpo5narmz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4ylpXcGkSIkf5srlOvXlDN0bexMxTHaDsE9PpTiCcfw=;
+        b=phvkgaBCWHim91frHe+QQ+Pe1+VKFhjSMAlLQ36dL574COw7ribGeRMirVjhsemvF0
+         ckIhs5tvt8QM0iItcTUWJMTeWOw6wjO29IxA4ihkWqLTr1Fn9Z205IgCK760I4zLgItF
+         aT5P81TdktlruonYZPRJMSepFNoj+Cvcoi1CWIilYrkOL6U+X8LQjl9NGOU9qUOjxTdO
+         00RdAEw1hik5EWeksKB9dHb896ctTjReyBVWrkCEAhka375ZtpVf8kFA3I4FQbzfvX2r
+         x7hlfs4bLf2h5HAq4hsdBFvvCE17IB1js9pbt1gp4B72JiYseV/6JDZGnRYojdHh4XRT
+         KRQA==
+X-Gm-Message-State: AKwxytc46rHQQUezJuf3pXBPF+5YO1S1NA10996n29t0hAqWX7fkHYAl
+        fDoaX9i7cIEvnggwUtAklwh4t241vn/uG5EBqwQN6g==
+X-Google-Smtp-Source: AH8x225PtYRQszK5HXb5DFmFIVlX+buV6MxspkZUjj4TC7qsT4nGSn1il1kbiIbICyskMLxPDcvT0WdCCS6LtRNIlEY=
+X-Received: by 10.37.219.83 with SMTP id g80mr28496183ybf.201.1517614908753;
+ Fri, 02 Feb 2018 15:41:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.37.207.9 with HTTP; Fri, 2 Feb 2018 15:41:48 -0800 (PST)
+In-Reply-To: <20180130232533.25846-15-newren@gmail.com>
+References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-15-newren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 2 Feb 2018 15:41:48 -0800
+Message-ID: <CAGZ79kYdUOWp4AQAv+7bWxe6f2ewd3=L87CkRd6LKBLF_TroXA@mail.gmail.com>
+Subject: Re: [PATCH v7 14/31] merge-recursive: fix leaks of allocated renames
+ and diff_filepairs
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen R Guglielmo <srguglielmo@gmail.com> writes:
-
-> On Tue, Jan 30, 2018 at 6:37 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
->>
->> Sorry I can't help more.
->>
->> Good luck,
->>
->> Avery
+On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
+> get_renames() has always zero'ed out diff_queued_diff.nr while only
+> manually free'ing diff_filepairs that did not correspond to renames.
+> Further, it allocated struct renames that were tucked away in the
+> return string_list.  Make sure all of these are deallocated when we
+> are done with them.
 >
-> Thanks all for the discussion/replies.
->
-> We use subtrees extensively in our environment right now. The "sub"
-> repos (90+) are located on GitHub, while the "main/parent" repo is
-> provided by a vendor on website hosting infrastructure.
->
-> I will take a look at:
-> git/Documentation/CodingGuidelines
-> git/Documentation/SubmittingPatches
-> git/contrib/subtree/
->
-> Should I follow up in this thread with a patch (it might be a while)?
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 
-These three are good place to start at.  You may find the output of
-"git shortlog --no-merges --since=N.months contrib/subtree" and "git
-blame contrib/subtree" also a good source of whom to ask for help.
-As we said on this thread, this is a corner of the contrib/ section
-that nobody seems to be actively working on, so if you really depend
-on it working well, you might have to take the ownership of it ;-)
+Thanks for spotting the memleaks and fixing them in here.
 
-Thanks.
-
-
+If this series takes longer to review/cook, this patch
+could go in separately? (with the last patch undone :/)
