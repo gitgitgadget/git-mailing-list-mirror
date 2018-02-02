@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB9241F576
-	for <e@80x24.org>; Fri,  2 Feb 2018 11:23:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC7451F576
+	for <e@80x24.org>; Fri,  2 Feb 2018 11:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751469AbeBBLXD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 06:23:03 -0500
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:42601 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750805AbeBBLXC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 06:23:02 -0500
-Received: by mail-qt0-f178.google.com with SMTP id c2so30400497qtn.9
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 03:23:01 -0800 (PST)
+        id S1751514AbeBBLrQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 06:47:16 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:45821 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750773AbeBBLrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 06:47:14 -0500
+Received: by mail-qt0-f196.google.com with SMTP id x27so30460315qtm.12
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 03:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-transfer-encoding;
-        bh=hhh2Th7RXROwGqMsU3a35ff5YKb1tD4na3lq3t/hdSw=;
-        b=h7iMgiadJAzWpJg8PbaJGB3w+ICqsvLW2o4YLSyVyJq9hG4BazTr+xJ4s50t/cBNI3
-         yfWuucj88pzLJojSnqauDowgdXWZXyMDCbjz/W6LkVvaUx1xgf5uu63xBxFlYFvcCRuy
-         +XZHH56NYrtjVK8CaCiVgPcbEw+VekjdgBn2I8UaziAmwAXYS1EHQoxSE6g/OYMs8Ahn
-         FbM7bgvHnaaKMJGkj84mPjyRorG3zJDDjOoGq8fP/kSkBsyY5zqz5HxJm44UEBCKgUoU
-         D+42SkzG+ufN3rbzpWSb54ONqJ8H9HUUf8TyMaiI5n0QUM8uITJ9cH6ZNUTxrWucLjQl
-         ipHA==
+        bh=pH/4L8AVcsX6lc+ISIXkYKu9TYRYgo6WY7CVkRR+FVM=;
+        b=aaKmKsQl4xICqZW1wzr6kqX6E+AWNLDPkxLkwKmUGKCdKT3ROOd9H8xzCYIFG3m/rt
+         b7CNgsG0ZUgf0C7MjIyxUwy05cIKNvsSNgZhrLbhBVjSN4u1m8hFY9C7he+HPbDSKxkn
+         nKnermbeVv3zzDjqmXhCXgnDdeGLWrjjl29bXcEOFg/nRh+7i3D1TzMZWo45qLuY63Rw
+         gGPfTXG0wJOZ/HyfsbIabgHAT6oKcH4kmwbDuDjCMycM/5Va+gBhIkaY9apkWc/YJqDb
+         poQSUASSMojl6V78Ybjg71ZACeUmljg7yklnUw71mpl+epmwL9uC+e4coeFmA6dDIJBd
+         XvkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=hhh2Th7RXROwGqMsU3a35ff5YKb1tD4na3lq3t/hdSw=;
-        b=IF0lLye8pGXEXIG1KquV/dzLxVb/Ed4XfaxooUUrxtAcZmr+6L3Kh6JgTXHL20LC7m
-         8myNE64B2Oi4KvgslBN3X2DS+jHqkL/+CavFmgP/a1mN02vIVbxII6nHcrEM1fNL0veM
-         jWtD5xpox4Tz44p3fa3TCkRrMOB4U+KIrwdUwQOxsG25QqN/BkDg//WPQTytkEwHeqh+
-         llA0kOs301Xv5eqWczy7wDNW31SwZ5NGLRCKeYluUhYcifAoj5Mg/NcBodnpGPWQpd4v
-         AaiAuLf/VkQXqd34TLjq12nMU0d/XKNU8PvygizJ+jZG1UG+w3X9KfxdJrFcML0q2qZk
-         XDIw==
-X-Gm-Message-State: AKwxytdFqbLLhp00htD0uu4iTNEmM8tqqV48bAsv3Kp1X2Qcq+AUCrnF
-        4W1iNrexQmR3GsBSbuiWglAIjN/++Xyi7hPgiaE=
-X-Google-Smtp-Source: AH8x225FtUXfmVvhAYNTn1tEJ38XrDl9vbZkPwKOHoOuP9maVWKRd3BVROuZp+QLsE4iMjx6/EbMotxEFVYQNfaLH9w=
-X-Received: by 10.200.15.218 with SMTP id f26mr64443953qtk.237.1517570581158;
- Fri, 02 Feb 2018 03:23:01 -0800 (PST)
+        bh=pH/4L8AVcsX6lc+ISIXkYKu9TYRYgo6WY7CVkRR+FVM=;
+        b=p/gSvhjUcZw4BCF3TsGcPEIzr+9kne/Jd1+8vVMxtwNaNV9GQycJuuoDE4uzHN/bvI
+         TfezZujwzwY/9RMoOO8goeVLJz739ASMmMtkeewn0TG3v9h4JrqC92QxxmQaY8QGmr0j
+         Sauc9KVp50wnDPetI28dfYlnjp6Q2C96dqf5cRWuV1BCpOx3WJ+RSlvQkmFVHpnF99aw
+         cuGuJvNNaC+d9qz05pneQxCCydKRpQF8ulEIw+KNwrEfBgNXGWJpKWaqWSQMXPMT2KBC
+         SyFMqy2SwKyJvP925MDRDbOZ2NJv61+n8P6z603s0JkSswOq0CwLiGlzdd8hzIwesy2K
+         qnlg==
+X-Gm-Message-State: AKwxytfy+VmYExgcX+o8enZC81J1oq7iP8jWD1D0eDWuGsvpf08icYXl
+        mu3GYl7aHTmawH7mGham8N2ifhV+SOTW3vT1CD6Dbg==
+X-Google-Smtp-Source: AH8x2268a2G20FIo5bd34+YPJWahQGn8Xejt1f+t56P5X9196hKgpi3PGH+xdqqAWyIrX8SRPu3uhYPa/SEXAtkL4EA=
+X-Received: by 10.200.15.218 with SMTP id f26mr64549041qtk.237.1517572033584;
+ Fri, 02 Feb 2018 03:47:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 03:23:00 -0800 (PST)
-In-Reply-To: <CAPig+cQeQRppb2y4YyQnqWWnCO0TXE-PjfTAhxakCJNk45ec1w@mail.gmail.com>
-References: <20180124095357.19645-1-pclouds@gmail.com> <20180124095357.19645-4-pclouds@gmail.com>
- <CAPig+cQeQRppb2y4YyQnqWWnCO0TXE-PjfTAhxakCJNk45ec1w@mail.gmail.com>
+Received: by 10.12.175.239 with HTTP; Fri, 2 Feb 2018 03:47:13 -0800 (PST)
+In-Reply-To: <20180124095357.19645-7-pclouds@gmail.com>
+References: <20180124095357.19645-1-pclouds@gmail.com> <20180124095357.19645-7-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 2 Feb 2018 06:23:00 -0500
-X-Google-Sender-Auth: yfVcV2B7A-8ufA6oyAOtCAvqPJI
-Message-ID: <CAPig+cRYL6-jEgsQoiQokNSd0zq5zoFkMHBA0Vp9kqa0LvMnsA@mail.gmail.com>
-Subject: Re: [PATCH 3/7] worktree move: new command
+Date:   Fri, 2 Feb 2018 06:47:13 -0500
+X-Google-Sender-Auth: AQqC-12ZFiDucAdQcx9l8rBWcWw
+Message-ID: <CAPig+cQvVreeggOj52bVLS6R0ZCar_yfUcyLbN3-nLG81eOQaA@mail.gmail.com>
+Subject: Re: [PATCH 6/7] worktree remove: new command
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
@@ -66,20 +65,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 2, 2018 at 4:15 AM, Eric Sunshine <sunshine@sunshineco.com> wro=
-te:
-> On Wed, Jan 24, 2018 at 4:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> +static int move_worktree(int ac, const char **av, const char *prefix)
->> +{
->> +       [...]
->> +       worktrees =3D get_worktrees(0);
->> +       wt =3D find_worktree(worktrees, prefix, av[0]);
->> +       if (!wt)
->> +               die(_("'%s' is not a working tree"), av[0]);
->
-> This is still leaking 'worktrees'[1]. You probably want
-> free_worktrees() immediately after the find_worktree() invocation.
+On Wed, Jan 24, 2018 at 4:53 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
+<pclouds@gmail.com> wrote:
+> This command allows to delete a worktree. Like 'move' you cannot
+> remove the main worktree, or one with submodules inside [1].
+> [...]
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -688,6 +689,132 @@ static int move_worktree(int ac, const char **av, c=
+onst char *prefix)
+> +static void check_clean_worktree(struct worktree *wt,
+> +                                const char *original_path)
+> +{
+> +       [...]
+> +       validate_no_submodules(wt);
 
-Sorry, free_worktrees() after the last use of 'wt' since you still
-need to access its fields, which would be the end of the function.
+It's slightly strange seeing worktree validation in a function
+checking whether the worktree is clean since submodule validation
+isn't an issue of cleanliness. I'd have expected the caller to invoke
+it instead:
+
+    int remove_worktree(...) {
+        ...
+        if (!force) {
+            validate_no_submodules(wt);
+            check_clean_worktree(wt, av[0]);
+        }
+        ...
+    }
+
+On the other hand, I could imagine it being called here as appropriate
+if submodule validation eventually also checks submodule cleanliness
+as hinted by the commit message.
+
+> +       argv_array_pushf(&child_env, "%s=3D%s/.git",
+> +                        GIT_DIR_ENVIRONMENT, wt->path);
+> +       argv_array_pushf(&child_env, "%s=3D%s",
+> +                        GIT_WORK_TREE_ENVIRONMENT, wt->path);
+> +       memset(&cp, 0, sizeof(cp));
+> +       argv_array_pushl(&cp.args, "status",
+> +                        "--porcelain", "--ignore-submodules=3Dnone",
+> +                        NULL);
+> +       cp.env =3D child_env.argv;
+> +       cp.git_cmd =3D 1;
+> +       cp.dir =3D wt->path;
+> +       cp.out =3D -1;
+> +       ret =3D start_command(&cp);
+> +       if (ret)
+> +               die_errno(_("failed to run git-status on '%s'"),
+> +                         original_path);
+
+Minor: I think there was some effort recently to remove "git-foo"
+style mentions from documentation and error messages. Perhaps this
+could be "failed to run 'git status' on '%s'". Ditto below.
+
+> +       ret =3D xread(cp.out, buf, sizeof(buf));
+> +       if (ret)
+> +               die(_("'%s' is dirty, use --force to delete it"),
+> +                   original_path);
+> +       close(cp.out);
+> +       ret =3D finish_command(&cp);
+> +       if (ret)
+> +               die_errno(_("failed to run git-status on '%s', code %d"),
+> +                         original_path, ret);
+> +}
+> +
+> +static int delete_git_work_tree(struct worktree *wt)
+> +{
+> +       struct strbuf sb =3D STRBUF_INIT;
+> +       int ret =3D 0;
+> +
+> +       strbuf_addstr(&sb, wt->path);
+> +       if (remove_dir_recursively(&sb, 0)) {
+> +               error_errno(_("failed to delete '%s'"), sb.buf);
+> +               ret =3D -1;
+> +       }
+> +       strbuf_release(&sb);
+> +
+> +       return ret;
+> +}
+
+Style nit: In the very similar delete_git_dir(), just below, there is
+no blank line before 'return'.
+
+> +
+> +static int delete_git_dir(struct worktree *wt)
+> +{
+> +       struct strbuf sb =3D STRBUF_INIT;
+> +       int ret =3D 0;
+> +
+> +       strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
+> +       if (remove_dir_recursively(&sb, 0)) {
+> +               error_errno(_("failed to delete '%s'"), sb.buf);
+> +               ret =3D -1;
+> +       }
+> +       strbuf_release(&sb);
+> +       return ret;
+> +}
+> +
+> +static int remove_worktree(int ac, const char **av, const char *prefix)
+> +{
+> +       [...]
+> +       if (reason) {
+> +               if (*reason)
+> +                       die(_("cannot remove a locked working tree, lock =
+reason: %s"),
+> +                           reason);
+> +               die(_("cannot remove a locked working tree"));
+> +       }
+> +       if (validate_worktree(wt, &errmsg))
+> +               die(_("validation failed, cannot remove working tree:\n%s=
+"),
+> +                   errmsg.buf);
+
+Minor: Same concern as in 3/7 about the multi-line error message
+making scripted handling of error message collection more difficult.
+
+> +       strbuf_release(&errmsg);
+> +
+> +       if (!force)
+> +               check_clean_worktree(wt, av[0]);
+> +
+> +       ret |=3D delete_git_work_tree(wt);
+> +       /*
+> +        * continue on even if ret is non-zero, there's no going back
+> +        * from here.
+> +        */
+> +       ret |=3D delete_git_dir(wt);
+> +
+> +       free_worktrees(worktrees);
+> +       return ret;
+> +}
+> diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
+> @@ -90,4 +90,30 @@ test_expect_success 'move main worktree' '
+> +test_expect_success 'remove locked worktree' '
+> +       git worktree lock destination &&
+> +       test_must_fail git worktree remove destination &&
+> +       git worktree unlock destination
+> +'
+
+Perhaps place 'unlock' in test_when_finished()[1].
+
+> +test_expect_success 'remove worktree with dirty tracked file' '
+> +       echo dirty >>destination/init.t &&
+> +       test_must_fail git worktree remove destination
+> +'
+> +
+> +test_expect_success 'remove worktree with untracked file' '
+> +       git -C destination checkout init.t &&
+
+Reversion of 'init.t' probably belongs in the preceding test which
+modified it, wrapped in test_when_finished()[1].
+
+> +       : >destination/untracked &&
+> +       test_must_fail git worktree remove destination
+> +'
+
+[1]: https://public-inbox.org/git/CAPig+cSV9_6j6Nkptma3BewKW8QQcem7gwFCb42V=
+BW4Xe0Vr2w@mail.gmail.com/
