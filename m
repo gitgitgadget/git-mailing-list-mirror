@@ -2,78 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0722E1F404
-	for <e@80x24.org>; Fri,  2 Feb 2018 23:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBDCA1F404
+	for <e@80x24.org>; Fri,  2 Feb 2018 23:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752588AbeBBXac (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Feb 2018 18:30:32 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:51282 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751990AbeBBXab (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Feb 2018 18:30:31 -0500
-Received: by mail-wm0-f67.google.com with SMTP id r71so15802441wmd.1
-        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:30:30 -0800 (PST)
+        id S1752118AbeBBXgo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Feb 2018 18:36:44 -0500
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:32926 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752084AbeBBXgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Feb 2018 18:36:43 -0500
+Received: by mail-yw0-f196.google.com with SMTP id x24so14454688ywj.0
+        for <git@vger.kernel.org>; Fri, 02 Feb 2018 15:36:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Ey/6VzSaE6fE+FC4dVH0MeEULxKOo/ELm7hA3HpXmh4=;
-        b=VFurms/IDl9FRXdiom6NdBz5gi4JDK2asVX+U5zavE+6MsJhWoDRWurV2MFuAwlSjC
-         LV8IKQlLqXQjCiq+hF7C1b2tNQsefJ2YiX+9tQI1lXCMBB2fcPNKluNEJnrY1px+fT6O
-         7AxrOrT6iqPVyn0Kft/byj4yZM9BvilzmFW1kTcDudU6pZmRF7jyNaxRSQMFlvhChGZX
-         J4CD3J7aVU07hTbc5rbJczsseOES2gMtUqFYGlnq/S2rk71kR2mXduAX+qwpXK5ROEUb
-         z7D8rr/iioWWX5/8PBLk5kzsKboG2kBsWO5zoiiRUebJkrHsKDRoRoqKjACEAh+BcQbJ
-         6N9A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=gGXPAv60DdZbUf930l2rnuJ/EAzlyoTZkQcclq7I3rI=;
+        b=rv1xNIMu5hV0opFCZhZve+yJm5RlQB79yI1/74ceyjiF4Ci9JEr9O6Mxc7a0u++jjC
+         ERSs5CZaB0WIYvXFLf+6k+lEfXNnVYRUJA46zPwEBf9zJlworJY/DkNI6IdUY/AYt1d6
+         b6flv/ISCq1qwQBowbo4S+U1/viLQnTX3osXyskz7k5WaPS3jIQLSu5pEp893IUhmH2f
+         ITZ5yyV6KuWC+Q+13tESn5byUM+J3hzBYN9pGgvGkqPndKF3JZMqlt6Wf4wxUR/Q54mH
+         x3trdZxbCXMGlOaw+ZC9paXubtqtBL5l3Bjj0SyOQ59i7dGYqEwLGNf5uHEb50FgnDtQ
+         Q2Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Ey/6VzSaE6fE+FC4dVH0MeEULxKOo/ELm7hA3HpXmh4=;
-        b=PtbaBBoe/ioW77zgK0VHQC9fZKVnSt2hFU+jPUD2x3ubLe0RxkAbJyqCXQ7t+2ZY3W
-         J5FI2i0kUNmhIqr9GZzy3rP+g6OKn345Bl8DvDRryrHGoSWcXnnb7fAgnBHYkoRnx7pB
-         xZ0B/GCc1aEp8zRKiHjquL758l+C6HD7Fs1QmPBoL86npIDL3jB3DXGBo1kcBrZ48Amq
-         QAroIuSm9GJ3SABpHvSFaW07BvWZ8oPeaak7yChyFsMp5ubRJkuRLcbm2t4ja7wcSDL3
-         aE5/VgjbZ3+F49TBs3JNzRB4xS4yNjKHzvgMVoyirmCyTR/WQ7NPzFtZ6hUjoUqrC7m4
-         ocGw==
-X-Gm-Message-State: AKwxytcw40/y9foGmXoTH+s4Q+Rkh2HF4U23siH/665avCcSx5qu+va7
-        F6ocUF6t1tuPr9vTI5axqHo=
-X-Google-Smtp-Source: AH8x224ad15rMBhIPXPBfOlv2FSj8NVPDoMqhkQSAwIzussiA272KBO6QqJ1l6mUZFeWUiaeVnghUA==
-X-Received: by 10.28.194.2 with SMTP id s2mr29542856wmf.55.1517614229808;
-        Fri, 02 Feb 2018 15:30:29 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u98sm8321084wrc.69.2018.02.02.15.30.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 02 Feb 2018 15:30:29 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH 0/2] Refactor hash search with fanout table
-References: <cover.1517609773.git.jonathantanmy@google.com>
-Date:   Fri, 02 Feb 2018 15:30:28 -0800
-In-Reply-To: <cover.1517609773.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Fri, 2 Feb 2018 14:36:29 -0800")
-Message-ID: <xmqqtvuzas17.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=gGXPAv60DdZbUf930l2rnuJ/EAzlyoTZkQcclq7I3rI=;
+        b=maXdWDmBmW8xNQM/2NJr5vyHzK7+X4c8BmzTaqHChbB661zih5R0rmCrFnyPpKa8+m
+         Hl9vaT8ND0eCUN4iYT6ydfHtkC4RpnMZic730qvBvyo7XuYmBJJM4qro2Ap7qzv+W57H
+         HVDG1RFPq/2rX67xISPiH5MRjCS/UPSQyrnUycUTQhpAVxN5RfeX/jvNkfMnWg7Nx3Js
+         ciQn3U6D4CCVdWYwZjZsfrdgf2J0P0wh++HmtE6v2NRadu6okWjO75px37CNjM7Rijg0
+         SNFmiTK5jJvQj5RJVDTQ59263ZrSAaaCZL1yxY4x0aDx8xXSCAn8POImxcvP11z+Ulso
+         LmCA==
+X-Gm-Message-State: AKwxytd/qTAvFgMEdm1IN+kWdMZYEEXvyKMVnT/jlfeo2XbeX+9urp/e
+        UDcDFRdM4gh73+XDM+yc6SRRsu8GaMZK+OnYCq8ouA==
+X-Google-Smtp-Source: AH8x225ivzRJJEelqkUbdHrrUJ9w4gLaKwrNg2AsBkOo41YA/nwCaPeyVWwL+7UPTPEfdNBDHRxUcXIxP6Xvmm2fnoA=
+X-Received: by 10.37.133.12 with SMTP id w12mr20063108ybk.213.1517614602337;
+ Fri, 02 Feb 2018 15:36:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.37.207.9 with HTTP; Fri, 2 Feb 2018 15:36:41 -0800 (PST)
+In-Reply-To: <20180130232533.25846-14-newren@gmail.com>
+References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-14-newren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 2 Feb 2018 15:36:41 -0800
+Message-ID: <CAGZ79kYid-XUrXdGPDW+wy8-xMPAz7Dj016Urz-wpG3F=Ae=hA@mail.gmail.com>
+Subject: Re: [PATCH v7 13/31] merge-recursive: introduce new functions to
+ handle rename logic
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
+> The amount of logic in merge_trees() relative to renames was just a few
+> lines, but split it out into new handle_renames() and cleanup_renames()
+> functions to prepare for additional logic to be added to each.  No code or
+> logic changes, just a new place to put stuff for when the rename detection
+> gains additional checks.
+>
+> Note that process_renames() records pointers to various information (such
+> as diff_filepairs) into rename_conflict_info structs.  Even though the
+> rename string_lists are not directly used once handle_renames() completes,
+> we should not immediately free the lists at the end of that function
+> because they store the information referenced in the rename_conflict_info,
+> which is used later in process_entry().  Thus the reason for a separate
+> cleanup_renames().
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 
-> After reviewing Derrick's Serialized Git Commit Graph patches [1], I
-> noticed that "[PATCH v2 11/14] commit: integrate commit graph with
-> commit parsing" contains (in bsearch_graph) a repeat of some packfile
-> functionality. Here is a pack that refactors that functionality out.
-
-Yay.  I had exactly the same reaction to that part of the series.
-
-Thansk.
-
+Reviewed-by: Stefan Beller <sbeller@google.com>
