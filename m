@@ -2,86 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BA041F576
-	for <e@80x24.org>; Sun,  4 Feb 2018 09:57:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23CF01F576
+	for <e@80x24.org>; Sun,  4 Feb 2018 11:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750868AbeBDJ5v (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Feb 2018 04:57:51 -0500
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:35737 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750818AbeBDJ5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Feb 2018 04:57:50 -0500
-Received: by mail-qk0-f172.google.com with SMTP id 69so16081010qkz.2
-        for <git@vger.kernel.org>; Sun, 04 Feb 2018 01:57:49 -0800 (PST)
+        id S1751916AbeBDLbp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Feb 2018 06:31:45 -0500
+Received: from mail-io0-f178.google.com ([209.85.223.178]:39236 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751788AbeBDLbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Feb 2018 06:31:43 -0500
+Received: by mail-io0-f178.google.com with SMTP id b198so27439328iof.6
+        for <git@vger.kernel.org>; Sun, 04 Feb 2018 03:31:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=PBXFu0+2HPe6/3ty8s4lG0WAIFV0FGMSTgV4/edo7aQ=;
-        b=B3fEAABQI0FHVIS6yInCArulLw5pohzBJ4zpO9WjgxPIYq01YhjrxRp11KxWOBy5DW
-         VT8n0Pj1OA1UakKkJL5XbkyCPaxcWHpt/to4lQLoqq2SptnD0F6z8+VpcjsHE4KMy6Zr
-         69PRg1WMDwX3Tu8hpYKB4KCjRtHWjEirvKBdwz1xmHE1xoKKEZyzVqd+Cr4pKjQ1uu0q
-         tAoA6iMUhyIKdCvH7yFCQR6w2OUeNb6OEG4dMUCZyWtubBx1l55GDyT8aNIp3oyAZBCZ
-         sWjEAio7sXwVLvEMYB+S8LuS0imxlutY2hbQS2nX9nUJzktIJHDDiWMkihC0+s3jtmXU
-         41Mw==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ehAduVq//esLmTtKIjo2Yt2kHXFa/1VhRGVMfUMYJEY=;
+        b=WoZlvaeAvCfNjB3lXID+L7lqvMnfbzIi9Y7HtmslvWwMtG0el+Fqhe3StyRcfVNvFn
+         XnehK+Sr17pka3wamUvY6KtRHYiLCuPaXM+TxGC7JpX+Etxz03KfZMAMk64ARnLXKoXz
+         BzWBN1bGD++jOxSd2MfgIr7oPZRjWE6YeAU5d2lRmuvroQDsIkA0zawaN05XIIteWaIQ
+         iwypxy+X72wipOYDyWzicIHHA+IMK+w7fNaOHe0FeBAlBMIKuM+ciPF5nmiZsYqtgnrP
+         H3NdfCXU+NP0/VE5AsU9z9F5nTyHrp88syIITxeqtGsd9gKEYeXfjM9NKP6iiWEAAQqv
+         H/7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=PBXFu0+2HPe6/3ty8s4lG0WAIFV0FGMSTgV4/edo7aQ=;
-        b=DW4wobCbavEtKFOlDq2wEdE1hcDEsRNdSlKM4H8HKoY85RH3Wv4ftgn/BcTRTLn6Fj
-         kRmJ56ym62hQqk4UaqxhzVjJF+eu6+yXcpA9r4KkGVB+iz9RLIqE52yrpNfJ/PVix9AD
-         4SPBGlV7qzjp4cIp6zTERBdNffxypoHPwoY9cB2F/OdLaWK4fBxuiw46FF667Yw6vYeD
-         dnuLl5lWYIJvxp974JG6ZJMhI1xrR2s1tkQya0TDSx5bGY86TVjR5+upG1Cp/kAJR8/c
-         ZO/rC7jpmK4efORUsM3L1B5izTeMomEcvOCTz49fTsiWNrOaM7EsVr/yTwfbgmo1EbzX
-         tumw==
-X-Gm-Message-State: APf1xPCimtPyW8bCyCPRpI1uOBsOp4gSO+lN/+BRIRyamg1NvTFXOWgH
-        Z7udynqaVYdmyApjL4CNDbuyl3SQsV4d7aMArvs=
-X-Google-Smtp-Source: AH8x226gyV9I46h0Nagkvc3mJ9nXPkgTeTTJog4bP999+j12Swop+9CIRqWzBB0coPBA2dFZxjAfdtUCCHX/qKmPJu4=
-X-Received: by 10.55.16.137 with SMTP id 9mr8203937qkq.189.1517738269309; Sun,
- 04 Feb 2018 01:57:49 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Sun, 4 Feb 2018 01:57:48 -0800 (PST)
-In-Reply-To: <CACsJy8BKpniRxzDa8tOzEu=UVB0kMgv-n0tqZgp0Jreruqq-mg@mail.gmail.com>
-References: <1e618c0c-81ba-fa7e-8039-748bdfa5a6d9@web.de> <CACsJy8BKpniRxzDa8tOzEu=UVB0kMgv-n0tqZgp0Jreruqq-mg@mail.gmail.com>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ehAduVq//esLmTtKIjo2Yt2kHXFa/1VhRGVMfUMYJEY=;
+        b=NODhQyAIgFmFpjPLPY9lJpdgOlHk3CBjQuGrfwFs0xNfgue0cDpbSIORdPkDigaFGN
+         it8lJJxUdnol4IkAV3iJYTtQicFhkgUk/UTopa8dBx+auwEqxBpt/5KDRGFa6tDx8Qvr
+         y9WVAAj1E6/h7pusyBiG+o03lxMUfRW5TFrzmyz65V8TP0yz8PJ+XkOHDilXiP69KJq9
+         Yx8a/+fmAA651V6NKuVV4C6cLKpWc+vqYf5pR+2DsalCj2tgfJy0EiAjg/EPeaDLedkf
+         SdjP7Or+yaCwBFZRKA1VaTgCrKeDMKXjFCoT9ot2Ze1RuDWIaa0lR6HdhJcifQdpgt3H
+         UXeQ==
+X-Gm-Message-State: AKwxytfCqvzPBYgt7jnZ0V9fK8m2P5ERvgualf8+OrCcJ4LuoJk8oC6g
+        DpNq6AB7TyrK5sDmiaqcax0=
+X-Google-Smtp-Source: AH8x2261nEVZa8G22+izDW0zHDBP40LMh9gtxqSlIwiXnCIeZETGOXChslYCv/P2hJsXca+psgEthQ==
+X-Received: by 10.107.70.4 with SMTP id t4mr46349751ioa.234.1517743902440;
+        Sun, 04 Feb 2018 03:31:42 -0800 (PST)
+Received: from flurp.local (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id n89sm3739034ioe.46.2018.02.04.03.31.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 04 Feb 2018 03:31:41 -0800 (PST)
+Date:   Sun, 4 Feb 2018 06:31:35 -0500
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 4 Feb 2018 04:57:48 -0500
-X-Google-Sender-Auth: DF826CWgaMv2wPl2f0ZVmtHmXcM
-Message-ID: <CAPig+cQXT1ov4MjzSzqiLBzr4wN1XcP7aSxMP+_dhtWtYwhDAA@mail.gmail.com>
-Subject: Re: contrib/completion/git-completion.bash: declare -g is not portable
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     Chen Jingpiao <chenjingpiao@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH] commit: add a commit.signOff config variable
+Message-ID: <20180204113135.GA28130@flurp.local>
+References: <20180204020318.4363-1-chenjingpiao@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180204020318.4363-1-chenjingpiao@gmail.com>
+User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 4, 2018 at 4:45 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sun, Feb 4, 2018 at 12:20 AM, Torsten B=C3=B6gershausen <tboegi@web.de=
-> wrote:
->> After running t9902-completion.sh on Mac OS I got a failure
->> in this style:
->
-> Sorry I was new with this bash thingy. Jeff already answered this (and
-> I will fix it in the re-roll) but just for my own information, what
-> bash version is shipped with Mac OS?
+On Sun, Feb 04, 2018 at 10:03:18AM +0800, Chen Jingpiao wrote:
+> Add the commit.signOff configuration variable to use the -s or --signoff
+> option of git commit by default.
+> 
+> Signed-off-by: Chen Jingpiao <chenjingpiao@gmail.com>
+> ---
+> 
+> Though we can configure signoff using format.signOff variable. Someone like to
+> add Signed-off-by line by the committer.
 
-The MacOS bash is very old; note the copyright date:
+This commentary explains why this feature is desirable, therefore it
+would be a good idea to include this in the commit message itself.
 
-    % /bin/bash --version
-    GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin16)
-    Copyright (C) 2007 Free Software Foundation, Inc.
+> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+> @@ -505,6 +505,75 @@ Myfooter: x" &&
+> +test_expect_success "commit.signoff=true and --signoff omitted" '
+> +	echo 7 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=true commit -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	(
+> +		echo thank you
+> +		echo
+> +		git var GIT_COMMITTER_IDENT |
+> +		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
+> +	) >expected &&
+> +	test_cmp expected actual
+> +'
 
-A recent bash installed manually (not from Apple):
+The bodies of these test are quite noisy, doing a lot of work that isn't
+really necessary, which makes it difficult to figure out what is really
+being tested. Other tests in this script already check that the commit
+message is properly formatted when Signed-off-by: is inserted so you
+don't need to repeat all that boilerplate here.
 
-    % /usr/local/bin/bash --version
-    GNU bash, version 4.4.18(1)-release (x86_64-apple-darwin16.7.0)
-    Copyright (C) 2016 Free Software Foundation, Inc.
+Instead, you are interested only in whether or not Signed-off-by: has
+been added to the message. For that purpose, you can use a simple 'grep'
+expression.
+
+The amount of copy/paste code in these six tests is also unfortunate.
+Rather than merely repeating the same code over and over, you could
+instead parameterize the test. For instance, you could run all six tests
+via a simple for-loop:
+
+--- >8 ---
+for cfg in true false
+do
+    for opt in '' --signoff --no-signoff
+    do
+        case "$opt:$cfg" in
+        --signoff:*|:true) expect= ;;
+        --no-signoff:*|:false) expect=! ;;
+        esac
+        test_expect_success "commit.signoff=$cfg & ${opt:---signoff omitted}" '
+            git -c commit.signoff=$cfg commit --allow-empty -m x $opt &&
+            eval "$expect git log -1 --format=%B | grep ^Signed-off-by:"
+        '
+    done
+done
+--- >8 ---
+
+A final consideration is that tests run slowly on Windows, and although
+it's nice to be thorough by testing all six combinations, you can
+probably exercise the new code sufficiently by instead testing just two
+combinations. For instance, instead of all six combinations, test just
+these two:
+
+--- >8 ---
+test_expect_success 'commit.signoff=true & --signoff omitted' '
+    git -c commit.signoff=true commit --allow-empty -m x &&
+    git log -1 --format=%B | grep ^Signed-off-by:
+'
+
+test_expect_success 'commit.signoff=true & --no-signoff' '
+    git -c commit.signoff=true commit --allow-empty -m x --no-signoff &&
+    ! git log -1 --format=%B | grep ^Signed-off-by:
+'
+--- >8 ---
+
+> +test_expect_success "commit.signoff=true and --signoff" '
+> +	echo 8 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=true commit --signoff -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	(
+> +		echo thank you
+> +		echo
+> +		git var GIT_COMMITTER_IDENT |
+> +		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
+> +	) >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success "commit.signoff=true and --no-signoff" '
+> +	echo 9 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=true commit --no-signoff -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	echo thank you >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success "commit.signoff=false and --signoff omitted" '
+> +	echo 10 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=false commit -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	echo thank you >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success "commit.signoff=false and --signoff" '
+> +	echo 11 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=false commit --signoff -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	(
+> +		echo thank you
+> +		echo
+> +		git var GIT_COMMITTER_IDENT |
+> +		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
+> +	) >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success "commit.signoff=false and --no-signoff" '
+> +	echo 12 >positive &&
+> +	git add positive &&
+> +	git -c commit.signoff=false commit --no-signoff -m "thank you" &&
+> +	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
+> +	echo thank you >expected &&
+> +	test_cmp expected actual
+> +'
