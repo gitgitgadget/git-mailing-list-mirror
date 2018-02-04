@@ -2,263 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 879F41F404
-	for <e@80x24.org>; Sat,  3 Feb 2018 23:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C87D61F404
+	for <e@80x24.org>; Sun,  4 Feb 2018 02:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752858AbeBCXIf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Feb 2018 18:08:35 -0500
-Received: from lucaswerkmeister.de ([94.130.58.99]:42854 "EHLO
-        lucaswerkmeister.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752701AbeBCXId (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Feb 2018 18:08:33 -0500
-Received: from localhost (unknown [IPv6:2a02:8109:9a3f:f575:be5f:f4ff:fecb:74cd])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mail@lucaswerkmeister.de)
-        by lucaswerkmeister.de (Postfix) with ESMTPSA id 2838A1A8626;
-        Sun,  4 Feb 2018 00:08:26 +0100 (CET)
-Authentication-Results: lucaswerkmeister.de; dmarc=fail (p=none dis=none) header.from=lucaswerkmeister.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lucaswerkmeister.de;
-        s=mail; t=1517699307;
-        bh=NeoiBoWAEbOyfCrDZ+kGjp9UIgh0CxOkm2VIlIXPFE4=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-         MIME-Version:Content-Type:Content-Transfer-Encoding:From:Reply-To:
-         Subject:Date:To:Cc:In-Reply-To:References:Message-Id:Sender:
-         Content-Type:Content-Transfer-Encoding:Content-Disposition:
-         Mime-Version;
-        b=to5BMEy1Xcmyg4YbpykxT5smHEazNccSPG/0PSsKfyTJKga5Fl7koVQgGuM273HHR
-         fBYgMZWFV6Yo6b+FDFZibBQGe+nSXSAWcBz1eRDzOBnu8EQ4+6QemZS2TpGq8IfbKp
-         Gk+xMgwtqP4bLR2VTCsHZw6fiGEL8BNZQPCQ3A2U=
-From:   Lucas Werkmeister <mail@lucaswerkmeister.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Lucas Werkmeister <mail@lucaswerkmeister.de>
-Subject: [PATCH v3] daemon: add --log-destination=(stderr|syslog|none)
-Date:   Sun,  4 Feb 2018 00:08:01 +0100
-Message-Id: <20180203230801.30345-1-mail@lucaswerkmeister.de>
-X-Mailer: git-send-email 2.16.1
-In-Reply-To: <CAPig+cR1VXtc-wZxv3mZGsbTAzmtPbhnRPtBX97-8Rm9b6rpHQ@mail.gmail.com>
-References: <CAPig+cR1VXtc-wZxv3mZGsbTAzmtPbhnRPtBX97-8Rm9b6rpHQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1751103AbeBDCD2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Feb 2018 21:03:28 -0500
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:41627 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750764AbeBDCD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Feb 2018 21:03:26 -0500
+Received: by mail-pl0-f68.google.com with SMTP id k8so7035270pli.8
+        for <git@vger.kernel.org>; Sat, 03 Feb 2018 18:03:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=rhwBjjxaLRXnvPg7r5hbJKh2ANNl7jRPgKfNsq/kXGg=;
+        b=E4AgaZfMNRc9RIgpjfTezBXFpvjOhCR5AGhD21ezWlq5bDHNpHRV3CE02Q20QvsOmA
+         LY2Y0/q0yb5o+s7+h4tqhy/2cE7XTa/85VE+2d+oRgrJetvR87ISI8j+YI28lT8Ixkv7
+         TgBbGiZLEkVBRY3i3TIoFeizaOS8VfdtMlflmnjjpEb8uiTUDzG8br4NlFF5WindRmvD
+         pxhO9mX6X+VvEcxx78xVps4lrBQTlIdf9zvZAqruGfUaDcDmSJ+9ohYXohj5QrMDR6OL
+         UFmwFauB7K35Eeo4PWGh6Jvz9xgnf3rlq4Lb1DEcoRwjLDtNqAJ/3N+YUA2EE2T/XW5o
+         NTSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=rhwBjjxaLRXnvPg7r5hbJKh2ANNl7jRPgKfNsq/kXGg=;
+        b=pgULH/zJpqrftp4MByJBSZ3xKUyyOyNtiFjsviGGofaXctCOM0FXAA+qhdSzJgl6Zl
+         RTsBvttiSFslS+3zOBcBHv2vadXzibaaYkUKVjrcrpgImb0oHpsYqqb+O5Uqr7F04i18
+         9QxsMBeKsew7ZOheJ70fS6eCxHe0HEq2kFQKRYKocfoaFLY3+CnM8v6U1Y5OUZ/fLnid
+         MDXLvv3vjTfRxjXPCB0ErvAWIF0494mGx0NkEIG2qNZvRv9aV7LiK/RidE6GHxtlLvEP
+         sL6k2w/wORNoNMc0414in5rGoXLcPmf06yBfSEiV2o0xESadDDWiEQR/B1v/YsVp1AiY
+         SWDw==
+X-Gm-Message-State: APf1xPDlxTYzB6Spmsy6DiG3pKBlh/528rl954kLPSOTtLvVHCcZElFM
+        4PQamdNxyafwL3FxG6LBOQEUDA==
+X-Google-Smtp-Source: AH8x225/x5M5gWzQpsBKUffg4/HRnIkvpK3UaELLx/HTf38mpxO7V1blJQQT1mYz/oFNMXCr6Oqc6A==
+X-Received: by 2002:a17:902:7d96:: with SMTP id a22-v6mr3141074plm.296.1517709805842;
+        Sat, 03 Feb 2018 18:03:25 -0800 (PST)
+Received: from localhost ([183.18.27.48])
+        by smtp.gmail.com with ESMTPSA id y5sm10664740pfd.163.2018.02.03.18.03.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 03 Feb 2018 18:03:25 -0800 (PST)
+From:   Chen Jingpiao <chenjingpiao@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Chen Jingpiao <chenjingpiao@gmail.com>
+Subject: [GSoC][PATCH] commit: add a commit.signOff config variable
+Date:   Sun,  4 Feb 2018 10:03:18 +0800
+Message-Id: <20180204020318.4363-1-chenjingpiao@gmail.com>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This new option can be used to override the implicit --syslog of
---inetd, or to disable all logging. (While --detach also implies
---syslog, --log-destination=stderr with --detach is useless since
---detach disassociates the process from the original stderr.) --syslog
-is retained as an alias for --log-destination=syslog.
+Add the commit.signOff configuration variable to use the -s or --signoff
+option of git commit by default.
 
---log-destination always overrides implicit --syslog regardless of
-option order. This is different than the “last one wins” logic that
-applies to some implicit options elsewhere in Git, but should hopefully
-be less confusing. (I also don’t know if *all* implicit options in Git
-follow “last one wins”.)
-
-The combination of --inetd with --log-destination=stderr is useful, for
-instance, when running `git daemon` as an instanced systemd service
-(with associated socket unit). In this case, log messages sent via
-syslog are received by the journal daemon, but run the risk of being
-processed at a time when the `git daemon` process has already exited
-(especially if the process was very short-lived, e.g. due to client
-error), so that the journal daemon can no longer read its cgroup and
-attach the message to the correct systemd unit (see systemd/systemd#2913
-[1]). Logging to stderr instead can solve this problem, because systemd
-can connect stderr directly to the journal daemon, which then already
-knows which unit is associated with this stream.
-
-[1]: https://github.com/systemd/systemd/issues/2913
-
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Lucas Werkmeister <mail@lucaswerkmeister.de>
+Signed-off-by: Chen Jingpiao <chenjingpiao@gmail.com>
 ---
 
-Notes:
-    Next version on my quest to make git-daemon logging more reliable :)
-    many thanks to Eric Sunshine for review. Main changes this version:
-    
-    - Rename --send-log-to to --log-destination, following the
-      postgresql option. A cursory search didn’t turn up any other
-      daemons with a similar option – suggestions welcome!
-    - Make explicit --log-destination always override implicit --syslog,
-      regardless of option order.
+Though we can configure signoff using format.signOff variable. Someone like to
+add Signed-off-by line by the committer.
 
- Documentation/git-daemon.txt | 26 ++++++++++++++++++++++---
- daemon.c                     | 45 +++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 61 insertions(+), 10 deletions(-)
+ Documentation/config.txt     |  4 +++
+ Documentation/git-commit.txt |  2 ++
+ builtin/commit.c             |  4 +++
+ t/t7501-commit.sh            | 69 ++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 79 insertions(+)
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index 3c91db7be..a0106e6aa 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -20,6 +20,7 @@ SYNOPSIS
- 	     [--inetd |
- 	      [--listen=<host_or_ipaddr>] [--port=<n>]
- 	      [--user=<user> [--group=<group>]]]
-+	     [--log-destination=(stderr|syslog|none)]
- 	     [<directory>...]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92..5dec3f0cb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1303,6 +1303,10 @@ commit.gpgSign::
+ 	convenient to use an agent to avoid typing your GPG passphrase
+ 	several times.
  
- DESCRIPTION
-@@ -80,7 +81,8 @@ OPTIONS
- 	do not have the 'git-daemon-export-ok' file.
- 
- --inetd::
--	Have the server run as an inetd service. Implies --syslog.
-+	Have the server run as an inetd service. Implies --syslog (may be
-+	overridden with `--log-destination=`).
- 	Incompatible with --detach, --port, --listen, --user and --group
- 	options.
- 
-@@ -110,8 +112,26 @@ OPTIONS
- 	zero for no limit.
- 
- --syslog::
--	Log to syslog instead of stderr. Note that this option does not imply
--	--verbose, thus by default only error conditions will be logged.
-+	Short for `--log-destination=syslog`.
++commit.signOff::
++	A boolean value which lets you enable the `-s/--signoff` option of
++	`git commit` by default. See linkgit:git-commit[1].
 +
-+--log-destination=<destination>::
-+	Send log messages to the specified destination.
-+	Note that this option does not imply --verbose,
-+	thus by default only error conditions will be logged.
-+	The <destination> defaults to `stderr`, and must be one of:
-++
-+--
-+stderr::
-+	Write to standard error.
-+	Note that if `--detach` is specified,
-+	the process disconnects from the real standard error,
-+	making this destination effectively equivalent to `none`.
-+syslog::
-+	Write to syslog, using the `git-daemon` identifier.
-+none::
-+	Disable all logging.
-+--
-++
+ commit.status::
+ 	A boolean to enable/disable inclusion of status information in the
+ 	commit message template when using an editor to prepare the commit
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f970a4342..7a28ea765 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -166,6 +166,8 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	the rights to submit this work under the same license and
+ 	agrees to a Developer Certificate of Origin
+ 	(see http://developercertificate.org/ for more information).
++	See the `commit.signOff` configuration variable in
++	linkgit:git-config[1].
  
- --user-path::
- --user-path=<path>::
-diff --git a/daemon.c b/daemon.c
-index e37e343d0..f28400e3f 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -9,7 +9,12 @@
- #define initgroups(x, y) (0) /* nothing */
- #endif
- 
--static int log_syslog;
-+static enum log_destination {
-+	LOG_DESTINATION_UNSET = -1,
-+	LOG_DESTINATION_NONE = 0,
-+	LOG_DESTINATION_STDERR = 1,
-+	LOG_DESTINATION_SYSLOG = 2,
-+} log_destination;
- static int verbose;
- static int reuseaddr;
- static int informative_errors;
-@@ -25,6 +30,7 @@ static const char daemon_usage[] =
- "           [--access-hook=<path>]\n"
- "           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>]\n"
- "                      [--detach] [--user=<user> [--group=<group>]]\n"
-+"           [--log-destination=(stderr|syslog|none)]\n"
- "           [<directory>...]";
- 
- /* List of acceptable pathname prefixes */
-@@ -74,11 +80,14 @@ static const char *get_ip_address(struct hostinfo *hi)
- 
- static void logreport(int priority, const char *err, va_list params)
- {
--	if (log_syslog) {
-+	switch (log_destination) {
-+	case LOG_DESTINATION_SYSLOG: {
- 		char buf[1024];
- 		vsnprintf(buf, sizeof(buf), err, params);
- 		syslog(priority, "%s", buf);
--	} else {
-+		break;
-+	}
-+	case LOG_DESTINATION_STDERR:
- 		/*
- 		 * Since stderr is set to buffered mode, the
- 		 * logging of different processes will not overlap
-@@ -88,6 +97,10 @@ static void logreport(int priority, const char *err, va_list params)
- 		vfprintf(stderr, err, params);
- 		fputc('\n', stderr);
- 		fflush(stderr);
-+		break;
-+	case LOG_DESTINATION_NONE:
-+	case LOG_DESTINATION_UNSET:
-+		break;
+ -n::
+ --no-verify::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 4610e3d8e..324213254 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1548,6 +1548,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
  	}
- }
- 
-@@ -1289,7 +1302,6 @@ int cmd_main(int argc, const char **argv)
- 		}
- 		if (!strcmp(arg, "--inetd")) {
- 			inetd_mode = 1;
--			log_syslog = 1;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--verbose")) {
-@@ -1297,9 +1309,22 @@ int cmd_main(int argc, const char **argv)
- 			continue;
- 		}
- 		if (!strcmp(arg, "--syslog")) {
--			log_syslog = 1;
-+			log_destination = LOG_DESTINATION_SYSLOG;
- 			continue;
- 		}
-+		if (skip_prefix(arg, "--log-destination=", &v)) {
-+			if (!strcmp(v, "syslog")) {
-+				log_destination = LOG_DESTINATION_SYSLOG;
-+				continue;
-+			} else if (!strcmp(v, "stderr")) {
-+				log_destination = LOG_DESTINATION_STDERR;
-+				continue;
-+			} else if (!strcmp(v, "none")) {
-+				log_destination = LOG_DESTINATION_NONE;
-+				continue;
-+			} else
-+				die("Unknown log destination %s", v);
-+		}
- 		if (!strcmp(arg, "--export-all")) {
- 			export_all_trees = 1;
- 			continue;
-@@ -1356,7 +1381,6 @@ int cmd_main(int argc, const char **argv)
- 		}
- 		if (!strcmp(arg, "--detach")) {
- 			detach = 1;
--			log_syslog = 1;
- 			continue;
- 		}
- 		if (skip_prefix(arg, "--user=", &v)) {
-@@ -1402,7 +1426,14 @@ int cmd_main(int argc, const char **argv)
- 		usage(daemon_usage);
- 	}
- 
--	if (log_syslog) {
-+	if (log_destination == LOG_DESTINATION_UNSET) {
-+		if (inetd_mode || detach)
-+			log_destination = LOG_DESTINATION_SYSLOG;
-+		else
-+			log_destination = LOG_DESTINATION_STDERR;
++	if (!strcmp(k, "commit.signoff")) {
++		signoff = git_config_bool(k, v);
++		return 0;
 +	}
+ 	if (!strcmp(k, "commit.verbose")) {
+ 		int is_bool;
+ 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index fa61b1a4e..46733ed2a 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -505,6 +505,75 @@ Myfooter: x" &&
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success "commit.signoff=true and --signoff omitted" '
++	echo 7 >positive &&
++	git add positive &&
++	git -c commit.signoff=true commit -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	(
++		echo thank you
++		echo
++		git var GIT_COMMITTER_IDENT |
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
++	) >expected &&
++	test_cmp expected actual
++'
 +
-+	if (log_destination == LOG_DESTINATION_SYSLOG) {
- 		openlog("git-daemon", LOG_PID, LOG_DAEMON);
- 		set_die_routine(daemon_die);
- 	} else
++test_expect_success "commit.signoff=true and --signoff" '
++	echo 8 >positive &&
++	git add positive &&
++	git -c commit.signoff=true commit --signoff -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	(
++		echo thank you
++		echo
++		git var GIT_COMMITTER_IDENT |
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success "commit.signoff=true and --no-signoff" '
++	echo 9 >positive &&
++	git add positive &&
++	git -c commit.signoff=true commit --no-signoff -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	echo thank you >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success "commit.signoff=false and --signoff omitted" '
++	echo 10 >positive &&
++	git add positive &&
++	git -c commit.signoff=false commit -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	echo thank you >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success "commit.signoff=false and --signoff" '
++	echo 11 >positive &&
++	git add positive &&
++	git -c commit.signoff=false commit --signoff -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	(
++		echo thank you
++		echo
++		git var GIT_COMMITTER_IDENT |
++		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
++	) >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success "commit.signoff=false and --no-signoff" '
++	echo 12 >positive &&
++	git add positive &&
++	git -c commit.signoff=false commit --no-signoff -m "thank you" &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	echo thank you >expected &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'multiple -m' '
+ 
+ 	>negative &&
 -- 
-2.16.1
+2.16.1.70.g5ccd54536
 
