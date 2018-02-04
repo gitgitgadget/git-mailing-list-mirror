@@ -2,201 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C87D61F404
-	for <e@80x24.org>; Sun,  4 Feb 2018 02:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0279C1F404
+	for <e@80x24.org>; Sun,  4 Feb 2018 02:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751103AbeBDCD2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Feb 2018 21:03:28 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:41627 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750764AbeBDCD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Feb 2018 21:03:26 -0500
-Received: by mail-pl0-f68.google.com with SMTP id k8so7035270pli.8
-        for <git@vger.kernel.org>; Sat, 03 Feb 2018 18:03:26 -0800 (PST)
+        id S1751651AbeBDCEm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Feb 2018 21:04:42 -0500
+Received: from mail-ua0-f180.google.com ([209.85.217.180]:46261 "EHLO
+        mail-ua0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750764AbeBDCEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Feb 2018 21:04:41 -0500
+Received: by mail-ua0-f180.google.com with SMTP id j23so16592396uak.13
+        for <git@vger.kernel.org>; Sat, 03 Feb 2018 18:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=rhwBjjxaLRXnvPg7r5hbJKh2ANNl7jRPgKfNsq/kXGg=;
-        b=E4AgaZfMNRc9RIgpjfTezBXFpvjOhCR5AGhD21ezWlq5bDHNpHRV3CE02Q20QvsOmA
-         LY2Y0/q0yb5o+s7+h4tqhy/2cE7XTa/85VE+2d+oRgrJetvR87ISI8j+YI28lT8Ixkv7
-         TgBbGiZLEkVBRY3i3TIoFeizaOS8VfdtMlflmnjjpEb8uiTUDzG8br4NlFF5WindRmvD
-         pxhO9mX6X+VvEcxx78xVps4lrBQTlIdf9zvZAqruGfUaDcDmSJ+9ohYXohj5QrMDR6OL
-         UFmwFauB7K35Eeo4PWGh6Jvz9xgnf3rlq4Lb1DEcoRwjLDtNqAJ/3N+YUA2EE2T/XW5o
-         NTSA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0hSrSiwwKNrKb9s26W0QSTqVOCpP02x+0GDd3eWK5ng=;
+        b=tOo7qWIX7r3XTHaRKcRpS3bi7VengL6gGsDcDeuDEDDW0tUTXv2b3kERBB5C1msrA9
+         x0Xa5Cekd3bkxtnaWlmmKJ8ciC53OOC29+hbaff77MFpxwhZghbnMiOm7HoOglQaEZ/B
+         nGkeMOq8MkBmQf1nRV/aF7BmiY3UJqoATWN6Iz+MnlUuNWwD/GgV/kbRVtjQqXQU5rc8
+         2LWck+LozZ22Bjbbm4DHsp3hcqxaF1SE6V3G5AfzXkqDCyT7O6vTNrG6E2kLowDpRLg9
+         rye9uHQ1oMyJ4lItkCQzx8iL+LMzEseiJF5ObRhtW5hOGeGCOhgQRYQwsel/jpu2bvgu
+         UevQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=rhwBjjxaLRXnvPg7r5hbJKh2ANNl7jRPgKfNsq/kXGg=;
-        b=pgULH/zJpqrftp4MByJBSZ3xKUyyOyNtiFjsviGGofaXctCOM0FXAA+qhdSzJgl6Zl
-         RTsBvttiSFslS+3zOBcBHv2vadXzibaaYkUKVjrcrpgImb0oHpsYqqb+O5Uqr7F04i18
-         9QxsMBeKsew7ZOheJ70fS6eCxHe0HEq2kFQKRYKocfoaFLY3+CnM8v6U1Y5OUZ/fLnid
-         MDXLvv3vjTfRxjXPCB0ErvAWIF0494mGx0NkEIG2qNZvRv9aV7LiK/RidE6GHxtlLvEP
-         sL6k2w/wORNoNMc0414in5rGoXLcPmf06yBfSEiV2o0xESadDDWiEQR/B1v/YsVp1AiY
-         SWDw==
-X-Gm-Message-State: APf1xPDlxTYzB6Spmsy6DiG3pKBlh/528rl954kLPSOTtLvVHCcZElFM
-        4PQamdNxyafwL3FxG6LBOQEUDA==
-X-Google-Smtp-Source: AH8x225/x5M5gWzQpsBKUffg4/HRnIkvpK3UaELLx/HTf38mpxO7V1blJQQT1mYz/oFNMXCr6Oqc6A==
-X-Received: by 2002:a17:902:7d96:: with SMTP id a22-v6mr3141074plm.296.1517709805842;
-        Sat, 03 Feb 2018 18:03:25 -0800 (PST)
-Received: from localhost ([183.18.27.48])
-        by smtp.gmail.com with ESMTPSA id y5sm10664740pfd.163.2018.02.03.18.03.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 03 Feb 2018 18:03:25 -0800 (PST)
-From:   Chen Jingpiao <chenjingpiao@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Chen Jingpiao <chenjingpiao@gmail.com>
-Subject: [GSoC][PATCH] commit: add a commit.signOff config variable
-Date:   Sun,  4 Feb 2018 10:03:18 +0800
-Message-Id: <20180204020318.4363-1-chenjingpiao@gmail.com>
-X-Mailer: git-send-email 2.16.1.72.g5be1f00
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0hSrSiwwKNrKb9s26W0QSTqVOCpP02x+0GDd3eWK5ng=;
+        b=Lae2AvxYLPvgkjcgogEk+pw6uvjEDvYKA+NVZnIoC/da9mrpQotShhRo650Yu5kaFQ
+         RYDliw103YI7o6NxWRUkvr3tMavyeSiy9y0lpxqN24msxQU3p8mMAlw7rRXrKDuxDBHt
+         gXQAGgLIm3LJrFgVBSVhoGMElvTvttTcfRINIUSdhFjYwjSpqyrfVHTT/90DKnBsgzNP
+         3klfwjcb2gyvlOJPKWicBqflQfuN4RW64sr/MJJwnOB4MHNyd7VsQXRm/C09gaEhBZc0
+         MprQEMoE+Q8fi8Ri+UBMp4KWou4vAGbOIzIleoOfKdAYlqSv7ToxgNMiORjTPIqxUTQh
+         WaNA==
+X-Gm-Message-State: AKwxytcNzUfxXRKmL5sjC0jEekmEF802Is1tiTmRbGOEAYR5dxIfcVoJ
+        Hhdi+9gZevvB2kJ0RgvFf8y7eqxKjBBKYtLLE1g=
+X-Google-Smtp-Source: AH8x224e2ntCzr8m4yEkfzmO4TJ0lT56DNUyGClNu7mGdPfMbburkxUgInoQZYoBI96piJ0QLLWy/b3Vqo1CI0SsrJ8=
+X-Received: by 10.176.67.4 with SMTP id k4mr20577726uak.55.1517709880100; Sat,
+ 03 Feb 2018 18:04:40 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.176.1.33 with HTTP; Sat, 3 Feb 2018 18:04:39 -0800 (PST)
+In-Reply-To: <CABPp-BGh7QTTfu3kgH4KO5DrrXiQjtrNhx_uaQsB6fHXT+9hLQ@mail.gmail.com>
+References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-20-newren@gmail.com>
+ <CAGZ79kb2+tpr0K0x2VVfFR-u3W2htvbxokxfKBpG60mNjXGPEw@mail.gmail.com> <CABPp-BGh7QTTfu3kgH4KO5DrrXiQjtrNhx_uaQsB6fHXT+9hLQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 3 Feb 2018 18:04:39 -0800
+Message-ID: <CABPp-BGwAu7_+BJR+43G2SysmBMnZYEBtHnwjMZBRn5XDPubWg@mail.gmail.com>
+Subject: Re: [PATCH v7 19/31] merge-recursive: add get_directory_renames()
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the commit.signOff configuration variable to use the -s or --signoff
-option of git commit by default.
+On Sat, Feb 3, 2018 at 2:32 PM, Elijah Newren <newren@gmail.com> wrote:
+> On Fri, Feb 2, 2018 at 5:02 PM, Stefan Beller <sbeller@google.com> wrote:
+>> On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
 
-Signed-off-by: Chen Jingpiao <chenjingpiao@gmail.com>
----
+>>> +       while (*--end_of_new == *--end_of_old &&
+>>> +              end_of_old != old_path &&
+>>> +              end_of_new != new_path)
+>>> +               ; /* Do nothing; all in the while loop */
+>>
+>> We have to compare manually as we'd want to find
+>> the first non-equal and there doesn't seem to be a good
+>> library function for that.
+>>
+>> Assuming many repos are UTF8 (including in their paths),
+>> how does this work with display characters longer than one char?
+>> It should be fine as we cut at the slash?
+>
+> Oh, UTF-8.  Ugh.
+> Can UTF-8 characters, other than '/', have a byte whose value matches
+> (unsigned char)('/')?  If so, then I'll need to figure out how to do
+> utf-8 character parsing.  Anyone have pointers?
 
-Though we can configure signoff using format.signOff variable. Someone like to
-add Signed-off-by line by the committer.
+Well, after digging around for a while, I found this claim on the
+Wikipedia page for UTF-8:
 
- Documentation/config.txt     |  4 +++
- Documentation/git-commit.txt |  2 ++
- builtin/commit.c             |  4 +++
- t/t7501-commit.sh            | 69 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 79 insertions(+)
+  Since ASCII bytes do not occur when encoding non-ASCII code points
+into UTF-8, UTF-8 is safe to use within most programming and document
+languages that interpret certain ASCII characters in a special way,
+such as "/" in filenames, "\" in escape sequences, and "%" in printf.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0e25b2c92..5dec3f0cb 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1303,6 +1303,10 @@ commit.gpgSign::
- 	convenient to use an agent to avoid typing your GPG passphrase
- 	several times.
- 
-+commit.signOff::
-+	A boolean value which lets you enable the `-s/--signoff` option of
-+	`git commit` by default. See linkgit:git-commit[1].
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index f970a4342..7a28ea765 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -166,6 +166,8 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 	the rights to submit this work under the same license and
- 	agrees to a Developer Certificate of Origin
- 	(see http://developercertificate.org/ for more information).
-+	See the `commit.signOff` configuration variable in
-+	linkgit:git-config[1].
- 
- -n::
- --no-verify::
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4610e3d8e..324213254 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1548,6 +1548,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.signoff")) {
-+		signoff = git_config_bool(k, v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "commit.verbose")) {
- 		int is_bool;
- 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index fa61b1a4e..46733ed2a 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -505,6 +505,75 @@ Myfooter: x" &&
- 	test_cmp expected actual
- '
- 
-+test_expect_success "commit.signoff=true and --signoff omitted" '
-+	echo 7 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=true commit -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	(
-+		echo thank you
-+		echo
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "commit.signoff=true and --signoff" '
-+	echo 8 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=true commit --signoff -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	(
-+		echo thank you
-+		echo
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "commit.signoff=true and --no-signoff" '
-+	echo 9 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=true commit --no-signoff -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	echo thank you >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "commit.signoff=false and --signoff omitted" '
-+	echo 10 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=false commit -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	echo thank you >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "commit.signoff=false and --signoff" '
-+	echo 11 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=false commit --signoff -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	(
-+		echo thank you
-+		echo
-+		git var GIT_COMMITTER_IDENT |
-+		sed -e "s/>.*/>/" -e "s/^/Signed-off-by: /"
-+	) >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success "commit.signoff=false and --no-signoff" '
-+	echo 12 >positive &&
-+	git add positive &&
-+	git -c commit.signoff=false commit --no-signoff -m "thank you" &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	echo thank you >expected &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
--- 
-2.16.1.70.g5ccd54536
-
+So, unless I'm reading something wrong here, I think that means this
+code is just fine as it is.
