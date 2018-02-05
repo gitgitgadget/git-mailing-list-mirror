@@ -2,203 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1666C1F576
-	for <e@80x24.org>; Mon,  5 Feb 2018 09:56:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 055621F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 10:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752582AbeBEJ4R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 04:56:17 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:40277 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752250AbeBEJ4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 04:56:14 -0500
-Received: by mail-pg0-f68.google.com with SMTP id g2so2244332pgn.7
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 01:56:14 -0800 (PST)
+        id S1752260AbeBEKnw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 05:43:52 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:40741 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751979AbeBEKnu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 05:43:50 -0500
+Received: by mail-pg0-f66.google.com with SMTP id g2so2340310pgn.7
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 02:43:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=W8Pa7ID1wmxK2Of7bGVrHYmoVlnvhcHsZq8lhblugyM=;
-        b=VZ6rp8E6ZxhYXdevKVWf4bJBnytvUKOxDek3sQDUhExewbN0zAuu1Sb3QFjTJxvJwZ
-         hjOAkEI/xIQZ6ou18YEq+SqIQLmN1of3Yk4Iizek+2JL3KQ2zeGcNRmcf7O9z35iJC18
-         WkVv3R9MdFgQjsCsCcyKPnCmtC6fWBmSFEzqeBToUWG0SCy+yIUUKOsn4yvj/enmr0Co
-         shWZ4NwLp5Uls6eppi5Jx4Q7ZnyYwH+V1wrOzkuTCM3qU6FSViw6yfykzby+TED49jgk
-         fvIyA23mEo/NifKgHyamUB19FqmffoIYJADTGu1HVNtUqmJd5DwPTb0zawXHcecINlxG
-         dcsQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=tCLU/a5BsoVeB6rx6C6hv+WSxPphGawT7G0rlbGPBCw=;
+        b=NV4gTAcYM5KPf4Qcqv5qNCLhlcjqxV/RcLxUeOA02jVKfG85z26QXmvnT9ZRGx93n4
+         dcA0m+ePJvfaLfalg6s1Qw/plgxszHqp9kb/BDlZ0vIDEwo9+nMT76cW4qbPTfhTzFBy
+         aLazGSapQTKVMDYVcdwBRGR5StJDO6uj7LZAHgT0sD5YaQrCugrAQcoHSh8qB2HPS+FW
+         2r+heXlP6zH/+kn58gguDbPGxwsVuwCcuLUDTltRF/zi3fDKBsEsbrEvU1/9cmL5Wc6+
+         iEu54GO6RZCJ4M7B5iXuVsu6NJJQl9r+wEAczdMum60MiWbJWvkQsJtUzZU4sayIGev9
+         aVwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=W8Pa7ID1wmxK2Of7bGVrHYmoVlnvhcHsZq8lhblugyM=;
-        b=Xv76EjKa5z331uRhNUGPjObwS8F9dNgz2ftjtk5RY4R75wDkVR5lNyeeJ52uTWS5hw
-         XW4NgxQ0S0AWdRBgF1Z6lI9vUBAx4sBW8sGBwVDwO+l0NvU8qoIL+TyhXfbzvQbEevd2
-         5QbsDdYxYOz9ZKC/ExFx6aVKrL0n7n/PATl+YI547LHuTu03x/Bwy/n5ce74ixMOLt67
-         Z0H5fjNj1aVUScTIXEt8GD4oCECC4LbawB0cDrEIOzeX9OlVYMxk0VZ6zf+4LfbDqGAP
-         XSxxPzQ6sIxOOkRQt4RRjTh9eXV9jkLsmwAwmHwcZPDODgSzHyI3ZQWi6lbv3hJof3kL
-         0kEQ==
-X-Gm-Message-State: APf1xPDCyXtOb0ia5AJVkpQqy3QYmxtt40lUK93705Oq4AE9j72D7aA5
-        ZwfEIbJSjk6kJ4unOxn1EoWPAQ==
-X-Google-Smtp-Source: AH8x224vNxKCC+/KCeX881T8C7PXv3Y+kKDokmUfKnx5XYUbJHq/cVkCKANE2rY6S6/cppiei3QLig==
-X-Received: by 10.98.181.14 with SMTP id y14mr7184009pfe.216.1517824574094;
-        Mon, 05 Feb 2018 01:56:14 -0800 (PST)
-Received: from ash ([171.232.97.171])
-        by smtp.gmail.com with ESMTPSA id s5sm16940473pfg.29.2018.02.05.01.56.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=tCLU/a5BsoVeB6rx6C6hv+WSxPphGawT7G0rlbGPBCw=;
+        b=kJ24NUCD7apB+6nJkUUY2kFawEWmI0xeVW0uPKHFnDlprwkQuWrFUd6JADG+CNXKwX
+         9UWhvQK0RRvbnjDu2XLGiDMVEGiNZcSYfcKvpWBE0SrZj1YRPLD/aqH+seE7UO0kGpms
+         4ryViTEpGb7RHqBueMc7p9Win+xjU175HAGRBJv92I3NieifF9yS6lhTYx5EEjlqiuZP
+         k8F5SqZyjPN56ESzmf2TRXTgDQ3S0kJFl3Ks324JzD83o5zaNFzsMJvaErnuUSDQY2ZI
+         kv3OIraNnARaNIFIJWZvUBVmmhm+NpY17IXz4hRkiMMNYLLW/U9RnfV0Mal+xiDWAXpf
+         IW6A==
+X-Gm-Message-State: APf1xPAk7IWoEkl6Ib6g43PbuaVcqkZKXHqpQwNGPdHQRsAZ4lgEVDSD
+        lxxcF/J2++q2NVp2UuhAKVV29A==
+X-Google-Smtp-Source: AH8x224UXx/IYJC1jD9KV8F9Q6s1+Zumklc9L1tpwR7Oa941+XzrRY+vpOHE18Bd6vLpzZ8YkZxxAA==
+X-Received: by 10.98.66.86 with SMTP id p83mr295066pfa.229.1517827430113;
+        Mon, 05 Feb 2018 02:43:50 -0800 (PST)
+Received: from localhost ([14.122.163.127])
+        by smtp.gmail.com with ESMTPSA id w12sm15657368pfd.86.2018.02.05.02.43.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Feb 2018 01:56:12 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 05 Feb 2018 16:56:08 +0700
-Date:   Mon, 5 Feb 2018 16:56:08 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 01/41] parse-options: support --git-completion-helper
-Message-ID: <20180205095608.GA12370@ash>
-References: <20180131110547.20577-1-pclouds@gmail.com>
- <20180131110547.20577-2-pclouds@gmail.com>
- <CAPig+cT5GkhFJ9XFDSirGjfoji4qUCM8LA6abdRsaT=g3prznQ@mail.gmail.com>
- <CACsJy8B0D=u5fGA2QWuG6QG-fmReg=GayC54+pSFjXHDrnKh3w@mail.gmail.com>
- <CAPig+cSLYDJaxCyAH_zK0cat2-60OZGWGy_ZLHwitHfZ7oA78w@mail.gmail.com>
- <CACsJy8D5iGVDHKoMeQjm+Seea_pTixsb8Xq6D1w17Y9M42iAPw@mail.gmail.com>
- <CAPig+cRWzvcDUjw7CR78nZ0cbE-mPkB1a4UZqiChR0NUKSZOVw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRWzvcDUjw7CR78nZ0cbE-mPkB1a4UZqiChR0NUKSZOVw@mail.gmail.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        Mon, 05 Feb 2018 02:43:49 -0800 (PST)
+From:   Chen Jingpiao <chenjingpiao@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sunshine@sunshineco.com, Chen Jingpiao <chenjingpiao@gmail.com>
+Subject: [GSoC][PATCH v2] commit: add a commit.signOff config variable
+Date:   Mon,  5 Feb 2018 18:40:59 +0800
+Message-Id: <20180205104059.4759-1-chenjingpiao@gmail.com>
+X-Mailer: git-send-email 2.16.1.72.g5be1f00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 01, 2018 at 02:16:46PM -0500, Eric Sunshine wrote:
-> On Thu, Feb 1, 2018 at 5:21 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Thu, Feb 1, 2018 at 4:54 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> >> I don't see that as convincing argument for two classes of "no
-> >> complete". Since git-completion.bash already special-cases
-> >> rebase/am/cherry-pick for --continue|--abort|--skip, it is not far
-> >> fetched that that special-case treatment can be extended slightly to
-> >> also filter out those three options from the list returned by
-> >> --git-completion-helper.
-> >
-> > I agree that is possible, but it's a bit tricky to do the filtering
-> > right in bash (all options are sent back as one line instead of one
-> > per line, which is easier to process by command line tools).
-> 
-> Perhaps I'm missing something, but wouldn't filtering out those
-> options directly in Bash require only this?
-> 
->     % x='--foo --bar --snoo'
->     % echo ${x/--bar}
->     --foo --snoo
+Add the commit.signOff configuration variable to use the -s or --signoff
+option of git commit by default.
 
-OK how about some thing like this fixup patch? __gitcomp_builtin now
-allows to add extra options as well as remove some.
+Convenience for those who prefer to add Signed-off-by line by the committer
+instead of using format.signOff variable.
 
--- 8< --
-Subject: [PATCH] fixup! git-completion.bash: introduce __gitcomp_builtin
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Chen Jingpiao <chenjingpiao@gmail.com>
 ---
- contrib/completion/git-completion.bash | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index cfd24c5764..ecd5896064 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -284,24 +284,31 @@ __gitcomp ()
- #
- #    __gitcomp "$(git xxx --git-completion-helper) ..."
- #
--# except that the value from $(git) is cached
-+# except that the output is cached. Accept 1-3 arguments:
-+# 1: the git command to execute, this is also the cache key
-+# 2: extra options to be added on top (e.g. negative forms)
-+# 3: options to be excluded
- __gitcomp_builtin ()
- {
- 	# spaces must be replaced with underscore for multi-word
- 	# commands, e.g. "git remote add" becomes remote_add.
- 	local cmd="$1"
--	shift
-+	local incl="$2"
-+	local excl="$3"
+Previous version of the patch:
+[v1]: https://public-inbox.org/git/20180204020318.4363-1-chenjingpiao@gmail.com/
+
+Changes in v2:
+	* Update commit message: Move commentary explains to commit message.
+	* Update test: Just test two combinations.
+	Suggested-by: Eric Sunshine <sunshine@sunshineco.com>
+
+ Documentation/config.txt     |  4 ++++
+ Documentation/git-commit.txt |  2 ++
+ builtin/commit.c             |  4 ++++
+ t/t7501-commit.sh            | 10 ++++++++++
+ 4 files changed, 20 insertions(+)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92..5dec3f0cb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1303,6 +1303,10 @@ commit.gpgSign::
+ 	convenient to use an agent to avoid typing your GPG passphrase
+ 	several times.
  
- 	local var=__gitcomp_builtin_"${cmd/-/_}"
- 	local options
- 	eval "options=\$$var"
++commit.signOff::
++	A boolean value which lets you enable the `-s/--signoff` option of
++	`git commit` by default. See linkgit:git-commit[1].
++
+ commit.status::
+ 	A boolean to enable/disable inclusion of status information in the
+ 	commit message template when using an editor to prepare the commit
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f970a4342..7a28ea765 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -166,6 +166,8 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	the rights to submit this work under the same license and
+ 	agrees to a Developer Certificate of Origin
+ 	(see http://developercertificate.org/ for more information).
++	See the `commit.signOff` configuration variable in
++	linkgit:git-config[1].
  
- 	if [ -z "$options" ]; then
--		declare -g "$var=$(__git ${cmd/_/ } --git-completion-helper)"
--		eval "options=\$$var"
-+		options="$(__git ${cmd/_/ } --git-completion-helper) $incl "
-+		for i in $excl; do
-+			options="${options/$i /}"
-+		done
-+		eval "$var=\"$options\""
- 	fi
+ -n::
+ --no-verify::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 4610e3d8e..324213254 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1548,6 +1548,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.signoff")) {
++		signoff = git_config_bool(k, v);
++		return 0;
++	}
+ 	if (!strcmp(k, "commit.verbose")) {
+ 		int is_bool;
+ 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index fa61b1a4e..adaaeea5b 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -505,6 +505,16 @@ Myfooter: x" &&
+ 	test_cmp expected actual
+ '
  
--	__gitcomp "$options $*"
-+	__gitcomp "$options"
- }
++test_expect_success 'commit.signoff=true & --signoff omitted' '
++	git -c commit.signoff=true commit --allow-empty -m x &&
++	git log -1 --format=%B | grep ^Signed-off-by:
++'
++
++test_expect_success 'commit.signoff=true & --no-signoff' '
++	git -c commit.signoff=true commit --allow-empty -m x --no-signoff &&
++	! git log -1 --format=%B | grep ^Signed-off-by:
++'
++
+ test_expect_success 'multiple -m' '
  
- # Variation of __gitcomp_nl () that appends to the existing list of
+ 	>negative &&
 -- 
-2.16.1.207.gedba492059
+2.16.1.70.g5ccd54536
 
--- 8< --
-
-Usage would be something like this
-
--- 8< --
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ecd5896064..049bfc3320 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1103,12 +1103,13 @@ __git_count_arguments ()
- }
- 
- __git_whitespacelist="nowarn warn error error-all fix"
-+__git_am_inprogress_options="--skip --continue --resolved --abort"
- 
- _git_am ()
- {
- 	__git_find_repo_path
- 	if [ -d "$__git_repo_path"/rebase-apply ]; then
--		__gitcomp "--skip --continue --resolved --abort"
-+		__gitcomp "$__git_am_inprogress_options"
- 		return
- 	fi
- 	case "$cur" in
-@@ -1117,7 +1118,8 @@ _git_am ()
- 		return
- 		;;
- 	--*)
--		__gitcomp_builtin am "--no-utf8"
-+		__gitcomp_builtin am "--no-utf8" \
-+			"$__git_am_inprogress_options"
- 		return
- 	esac
- }
--- 8< --
-
-I think I'm keeping the flag name PARSE_OPT_NOCOMPLETE for now
-though. There are a few options that don't fit in "dangerous"
-category, e.g.
-
-- "gc --auto" is hidden because it does not make sense to type it
-  directly. Same story for "push --thin".
-
-- "grep --ext-grep" is no-op
-
-- --null, --exit-code and others are for scripting and not that often
-  typed.
---
-Duy
