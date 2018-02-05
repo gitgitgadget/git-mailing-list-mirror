@@ -7,67 +7,71 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 208B01F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:13:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9331F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:14:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752110AbeBFANp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:13:45 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:36948 "EHLO
+        id S1752213AbeBFAOB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:14:01 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:38298 "EHLO
         mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752187AbeBFANc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:13:32 -0500
-Received: by mail-pl0-f66.google.com with SMTP id ay8so114058plb.4
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:13:32 -0800 (PST)
+        with ESMTP id S1752203AbeBFAN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:13:59 -0500
+Received: by mail-pl0-f66.google.com with SMTP id 13so114391plb.5
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P4cDL7bcG0zRmpeSz3aQadTDkFkL2tAodZCZ4LkPt5s=;
-        b=RffXPA9vVm2bWzpG0Jm+mJRReOKyZMlzh3CKcQyRshThNiw21nKZ9Cb1uiFqScczQC
-         14vjQ/Hztw4aEfXc5zr2EdUqBfe1QMWCGRGjE4lip6L+qgxoFg0HUTkhnQDduzOF2s34
-         VU1kAraf6NDw2JTk5b77Vr4ROE1DXLOAqy5ZgL2dcFnd9hgAgeDUTP2Y6zGri2un4v3F
-         AFesfyNJa+LpIl2q5uAbAelwEt9z2pSIGjYqa9CazzIvjvfliChhdIYFGrIG8YX8nhzN
-         BOiSCVCxoVohv6A8HLznbYtFC8HKH/R1ayJxqET+BrrBJ9bR62pKUuo2bC0Azu9wYwSy
-         0Bow==
+        bh=OaZR5A1rKwRWxbjRp50jUbzmqsJaloc9k9jHsjUh9cg=;
+        b=EZCmHJJy0/seDzkDLmHKRjKHpMxnWocyTFW+42OeUIaZTfuIhThv63MYivzJtE93qq
+         8yxRnx6RT9e41/UDAEepUMo8i9VXputScFBdHAbFyqfWirZ9QsY0e5YQ8jXZ588IwCNC
+         /VYuztaEyxf8mJnj7FIAwvU0sXktcu91phpUo/KJqZuHeNy/U253E4wSoQafnEqyRTmA
+         yeKXKcuQkbu4W0iuPv2V1tqeRdnnywpkWKg8pkK92i/0dxODlGPfvG57qa5B8T3TZvFI
+         tQFa7DAJbhodF1pHn+s2D724FUdlJdC1zsqhkmhDfzGap1w1h8XFF2N/SUoaXSPtvet9
+         1zlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=P4cDL7bcG0zRmpeSz3aQadTDkFkL2tAodZCZ4LkPt5s=;
-        b=KitL9L8bg2SEtosnliEzzeZ/LKywaQ3zmLk5UNvqBvtvmhL2kH1VoxLFS9BScNYoat
-         rAG+p5sAIvIOUHtWJzDnkJgtCIMcetoVu2VCMq0h8SBI4WsdrbJULgaQTxqCUXAXPvqq
-         t+2pKdoE9IPPWUm/5WnHZ3eplrT+WimrK3NVZ3iFs0IneTArFUJoS1ZcTXyERq3hCGhE
-         793x9NmIVwMB6AC0afQexA/nzTsyroUgcWHmi85I8aXFFXrDhkZK7y2oCa1ewJcnsmiJ
-         JCFYPtaaLkWAzFfkCgLGHxYDTNh/i8tfiajXf29MU6p3SdpEa+MJPqK/8+vV1DUFNm1w
-         1cBg==
-X-Gm-Message-State: APf1xPAhkvgU22j9qltzPQFdtuNYqpZCPFw9PwH5RsY+8ywO7ir97EmT
-        6qWsg6tF60QcNHOwLrxXDtFDtUEOCeI=
-X-Google-Smtp-Source: AH8x227hJZMkdBDmWktKtxNI2fyHGPpg4Vn+zEO8Uqy9K7jcJ0rNOld5hCn+7UuzT6Tt35zytWIonw==
-X-Received: by 2002:a17:902:34f:: with SMTP id 73-v6mr548256pld.122.1517876011618;
-        Mon, 05 Feb 2018 16:13:31 -0800 (PST)
+        bh=OaZR5A1rKwRWxbjRp50jUbzmqsJaloc9k9jHsjUh9cg=;
+        b=UG+eUaBhTo7piuKqVRfAr/UsK7i6uVoiyGr4wyyDKidHL8TPY6wUfRj4kepHp4HGWv
+         O9T+LnX+IiU6XV15iusP5WPIkJdcV7qvccHi3z46Pt14GIVsC/t6fO7f5HPuELhFhVRa
+         ESMEJTe98AKP9KGaDy0T/ANil63Fvc8qYw6LxVScVF/6zw33d0FQ4G3hJKjV12QeYaRp
+         i6Eij8k9VxzI40YMA4vDv2thaZgymealz6rOwYAKl+C6DIiGnha8u9ldCIElGKvctP4V
+         29ZDpoq6bZfii5l7RgRPFQ63qkHoFByvxD0H1Jg9RsKMRycIfm2KuowYsPtd1lq4MxCi
+         8vhw==
+X-Gm-Message-State: APf1xPAS4rCcjNeSAqwNO+qB/8BkEnfp/MY9ro+4hZSQHbwiuZiQ/Xr6
+        2Ag07OamcFFuEHt8yYtmnQxoRq3QiKUVZXnN0VR2BmunDYli7yzOIe6+1DGeImX1tvmoebEc9ay
+        yJf1ShbMK
+X-Google-Smtp-Source: AH8x22624KdHrPfgbNXbwPRIyZC+ZcuX96JVrGLAV/MdTaCHKdvm/9D+5NZXIAbufjSQaBSjiUMR+A==
+X-Received: by 2002:a17:902:5303:: with SMTP id b3-v6mr512404pli.133.1517876037885;
+        Mon, 05 Feb 2018 16:13:57 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id v73sm19184390pfk.84.2018.02.05.16.13.29
+        by smtp.gmail.com with ESMTPSA id k195sm13737675pgc.61.2018.02.05.16.13.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:13:30 -0800 (PST)
+        Mon, 05 Feb 2018 16:13:57 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 090/194] object: add repository argument to lookup_commit_reference
-Date:   Mon,  5 Feb 2018 15:55:51 -0800
-Message-Id: <20180205235735.216710-70-sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 091/194] object: add repository argument to lookup_commit
+Date:   Mon,  5 Feb 2018 15:55:52 -0800
+Message-Id: <20180205235735.216710-71-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
  <20180205235735.216710-1-sbeller@google.com>
+X-ccpol: medium
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of lookup_commit_reference
-to be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
+From: Jonathan Nieder <jrnieder@gmail.com>
+
+Add a repository argument to allow callers of lookup_commit to be more
+specific about which repository to handle. This is a small mechanical
+change; it doesn't change the implementation to handle repositories
+other than the_repository yet.
 
 As with the previous commits, use a macro to catch callers passing a
 repository other than the_repository at compile time.
@@ -78,552 +82,396 @@ the diff produced by `make coccicheck`.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- bisect.c                               |  2 +-
- blame.c                                |  2 +-
- branch.c                               |  2 +-
- builtin/branch.c                       |  7 ++++---
- builtin/clone.c                        |  3 ++-
- builtin/describe.c                     |  2 +-
+ builtin/am.c                           |  3 ++-
+ builtin/commit-tree.c                  |  4 +++-
+ builtin/commit.c                       |  2 +-
  builtin/diff-tree.c                    |  2 +-
- builtin/log.c                          |  7 ++++---
- builtin/merge-base.c                   |  5 +++--
- builtin/notes.c                        |  3 ++-
- builtin/pull.c                         | 15 ++++++++++-----
- builtin/reset.c                        |  4 ++--
- builtin/rev-parse.c                    |  6 +++---
- builtin/show-branch.c                  |  2 +-
- builtin/tag.c                          |  2 +-
- bundle.c                               |  3 ++-
- commit.c                               |  6 +++---
- commit.h                               |  4 +++-
+ builtin/fast-export.c                  |  2 +-
+ builtin/fmt-merge-msg.c                |  2 +-
+ builtin/merge-base.c                   |  2 +-
+ builtin/verify-commit.c                |  4 +++-
+ commit.c                               |  7 ++++---
+ commit.h                               |  3 ++-
  contrib/coccinelle/object_parser.cocci |  7 +++++++
- notes-merge.c                          |  5 +++--
- parse-options-cb.c                     |  2 +-
- remote.c                               |  4 ++--
- revision.c                             |  4 ++--
- sequencer.c                            |  4 ++--
- sha1_name.c                            |  4 ++--
- submodule.c                            | 10 +++++-----
- 26 files changed, 69 insertions(+), 48 deletions(-)
+ fetch-pack.c                           |  3 ++-
+ log-tree.c                             |  2 +-
+ notes-utils.c                          |  4 +++-
+ object.c                               |  2 +-
+ sequencer.c                            |  2 +-
+ sha1_name.c                            |  2 +-
+ shallow.c                              | 17 ++++++++++-------
+ tag.c                                  |  2 +-
+ tree.c                                 |  2 +-
+ 20 files changed, 47 insertions(+), 27 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 2f3008b078..c3066bd972 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -717,7 +717,7 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+diff --git a/builtin/am.c b/builtin/am.c
+index 32002a8661..83bc22649e 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1629,7 +1629,8 @@ static void do_commit(const struct am_state *state)
  
- static struct commit *get_commit_reference(const struct object_id *oid)
- {
--	struct commit *r = lookup_commit_reference(oid);
-+	struct commit *r = lookup_commit_reference(the_repository, oid);
- 	if (!r)
- 		die(_("Not a valid commit name %s"), oid_to_hex(oid));
- 	return r;
-diff --git a/blame.c b/blame.c
-index 98761c32d5..1aab6228cc 100644
---- a/blame.c
-+++ b/blame.c
-@@ -101,7 +101,7 @@ static struct commit_list **append_parent(struct commit_list **tail, const struc
- {
- 	struct commit *parent;
- 
--	parent = lookup_commit_reference(oid);
-+	parent = lookup_commit_reference(the_repository, oid);
- 	if (!parent)
- 		die("no such commit %s", oid_to_hex(oid));
- 	return &commit_list_insert(parent, tail)->next;
-diff --git a/branch.c b/branch.c
-index 2672054f0b..0b7aaa1aca 100644
---- a/branch.c
-+++ b/branch.c
-@@ -301,7 +301,7 @@ void create_branch(const char *name, const char *start_name,
- 		break;
- 	}
- 
--	if ((commit = lookup_commit_reference(&oid)) == NULL)
-+	if ((commit = lookup_commit_reference(the_repository, &oid)) == NULL)
- 		die(_("Not a valid branch point: '%s'."), start_name);
- 	oidcpy(&oid, &commit->object.oid);
- 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 8dcc2ed058..2d752c6614 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -126,7 +126,8 @@ static int branch_merged(int kind, const char *name,
- 		    (reference_name = reference_name_to_free =
- 		     resolve_refdup(upstream, RESOLVE_REF_READING,
- 				    &oid, NULL)) != NULL)
--			reference_rev = lookup_commit_reference(&oid);
-+			reference_rev = lookup_commit_reference(the_repository,
-+								&oid);
- 	}
- 	if (!reference_rev)
- 		reference_rev = head_rev;
-@@ -159,7 +160,7 @@ static int check_branch_commit(const char *branchname, const char *refname,
- 			       const struct object_id *oid, struct commit *head_rev,
- 			       int kinds, int force)
- {
--	struct commit *rev = lookup_commit_reference(oid);
-+	struct commit *rev = lookup_commit_reference(the_repository, oid);
- 	if (!rev) {
- 		error(_("Couldn't look up commit object for '%s'"), refname);
- 		return -1;
-@@ -213,7 +214,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	}
- 
- 	if (!force) {
--		head_rev = lookup_commit_reference(&head_oid);
-+		head_rev = lookup_commit_reference(the_repository, &head_oid);
- 		if (!head_rev)
- 			die(_("Couldn't look up commit object for HEAD"));
- 	}
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ecd71b9444..6efe189846 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -690,7 +690,8 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 			install_branch_config(0, head, option_origin, our->name);
- 		}
- 	} else if (our) {
--		struct commit *c = lookup_commit_reference(&our->old_oid);
-+		struct commit *c = lookup_commit_reference(the_repository,
-+							   &our->old_oid);
- 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
- 		update_ref(msg, "HEAD", &c->object.oid, NULL, REF_NO_DEREF,
- 			   UPDATE_REFS_DIE_ON_ERR);
-diff --git a/builtin/describe.c b/builtin/describe.c
-index f1172a8bf0..5bd0920ebd 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -295,7 +295,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
- 	unsigned long seen_commits = 0;
- 	unsigned int unannotated_cnt = 0;
- 
--	cmit = lookup_commit_reference(oid);
-+	cmit = lookup_commit_reference(the_repository, oid);
- 
- 	n = find_commit_name(&cmit->object.oid);
- 	if (n && (tags || all || n->prio == 2)) {
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index ab491efa9e..603f619532 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -11,7 +11,7 @@ static struct rev_info log_tree_opt;
- 
- static int diff_tree_commit_oid(const struct object_id *oid)
- {
--	struct commit *commit = lookup_commit_reference(oid);
-+	struct commit *commit = lookup_commit_reference(the_repository, oid);
- 	if (!commit)
- 		return -1;
- 	return log_tree_commit(&log_tree_opt, commit);
-diff --git a/builtin/log.c b/builtin/log.c
-index 2c3579b1f7..529e19ce6f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -901,8 +901,8 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
- 	o2 = rev->pending.objects[1].item;
- 	flags1 = o1->flags;
- 	flags2 = o2->flags;
--	c1 = lookup_commit_reference(&o1->oid);
--	c2 = lookup_commit_reference(&o2->oid);
-+	c1 = lookup_commit_reference(the_repository, &o1->oid);
-+	c2 = lookup_commit_reference(the_repository, &o2->oid);
- 
- 	if ((flags1 & UNINTERESTING) == (flags2 & UNINTERESTING))
- 		die(_("Not a range."));
-@@ -1850,7 +1850,8 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
- {
- 	struct object_id oid;
- 	if (get_oid(arg, &oid) == 0) {
--		struct commit *commit = lookup_commit_reference(&oid);
-+		struct commit *commit = lookup_commit_reference(the_repository,
-+								&oid);
- 		if (commit) {
- 			commit->object.flags |= flags;
- 			add_pending_object(revs, &commit->object, arg);
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 3b7600150b..bbead6f33e 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
+ 	if (!get_oid_commit("HEAD", &parent)) {
+ 		old_oid = &parent;
+-		commit_list_insert(lookup_commit(&parent), &parents);
++		commit_list_insert(lookup_commit(the_repository, &parent),
++				   &parents);
+ 	} else {
+ 		old_oid = NULL;
+ 		say(state, stderr, _("applying to an empty history"));
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index a54fb362ce..4f4fcace3b 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
 @@ -6,6 +6,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "parse-options.h"
-+#include "repository.h"
- 
- static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
- {
-@@ -42,7 +43,7 @@ static struct commit *get_commit_reference(const char *arg)
- 
- 	if (get_oid(arg, &revkey))
- 		die("Not a valid object name %s", arg);
--	r = lookup_commit_reference(&revkey);
-+	r = lookup_commit_reference(the_repository, &revkey);
- 	if (!r)
- 		die("Not a valid commit name %s", arg);
- 
-@@ -171,7 +172,7 @@ static int handle_fork_point(int argc, const char **argv)
- 	if (get_oid(commitname, &oid))
- 		die("Not a valid object name: '%s'", commitname);
- 
--	derived = lookup_commit_reference(&oid);
-+	derived = lookup_commit_reference(the_repository, &oid);
- 	memset(&revs, 0, sizeof(revs));
- 	revs.initial = 1;
- 	for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 1bd3994caa..18128eb439 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -12,6 +12,7 @@
- #include "builtin.h"
- #include "notes.h"
+ #include "cache.h"
+ #include "config.h"
  #include "object-store.h"
 +#include "repository.h"
- #include "blob.h"
- #include "pretty.h"
- #include "refs.h"
-@@ -711,7 +712,7 @@ static int merge_commit(struct notes_merge_options *o)
- 
- 	if (get_oid("NOTES_MERGE_PARTIAL", &oid))
- 		die(_("failed to read ref NOTES_MERGE_PARTIAL"));
--	else if (!(partial = lookup_commit_reference(&oid)))
-+	else if (!(partial = lookup_commit_reference(the_repository, &oid)))
- 		die(_("could not find commit from NOTES_MERGE_PARTIAL."));
- 	else if (parse_commit(partial))
- 		die(_("could not parse commit from NOTES_MERGE_PARTIAL."));
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 511dbbe0f6..90aa922260 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -758,10 +758,13 @@ static int get_octopus_merge_base(struct object_id *merge_base,
- {
- 	struct commit_list *revs = NULL, *result;
- 
--	commit_list_insert(lookup_commit_reference(curr_head), &revs);
--	commit_list_insert(lookup_commit_reference(merge_head), &revs);
-+	commit_list_insert(lookup_commit_reference(the_repository, curr_head),
-+			   &revs);
-+	commit_list_insert(lookup_commit_reference(the_repository, merge_head),
-+			   &revs);
- 	if (!is_null_oid(fork_point))
--		commit_list_insert(lookup_commit_reference(fork_point), &revs);
-+		commit_list_insert(lookup_commit_reference(the_repository, fork_point),
-+				   &revs);
- 
- 	result = get_octopus_merge_bases(revs);
- 	free_commit_list(revs);
-@@ -935,9 +938,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			struct commit_list *list = NULL;
- 			struct commit *merge_head, *head;
- 
--			head = lookup_commit_reference(&orig_head);
-+			head = lookup_commit_reference(the_repository,
-+						       &orig_head);
- 			commit_list_insert(head, &list);
--			merge_head = lookup_commit_reference(&merge_heads.oid[0]);
-+			merge_head = lookup_commit_reference(the_repository,
-+							     &merge_heads.oid[0]);
- 			if (is_descendant_of(merge_head, list)) {
- 				/* we can fast-forward this without invoking rebase */
- 				opt_ff = "--ff-only";
-diff --git a/builtin/reset.c b/builtin/reset.c
-index e15f595799..ea600bc62a 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -327,7 +327,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		struct commit *commit;
- 		if (get_oid_committish(rev, &oid))
- 			die(_("Failed to resolve '%s' as a valid revision."), rev);
--		commit = lookup_commit_reference(&oid);
-+		commit = lookup_commit_reference(the_repository, &oid);
- 		if (!commit)
- 			die(_("Could not parse object '%s'."), rev);
- 		oidcpy(&oid, &commit->object.oid);
-@@ -404,7 +404,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		update_ref_status = reset_refs(rev, &oid);
- 
- 		if (reset_type == HARD && !update_ref_status && !quiet)
--			print_new_head_line(lookup_commit_reference(&oid));
-+			print_new_head_line(lookup_commit_reference(the_repository, &oid));
- 	}
- 	if (!pathspec.nr)
- 		remove_branch_state();
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 74aa644cbb..b5515df1ae 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -280,8 +280,8 @@ static int try_difference(const char *arg)
- 		if (symmetric) {
- 			struct commit_list *exclude;
- 			struct commit *a, *b;
--			a = lookup_commit_reference(&oid);
--			b = lookup_commit_reference(&end);
-+			a = lookup_commit_reference(the_repository, &oid);
-+			b = lookup_commit_reference(the_repository, &end);
- 			exclude = get_merge_bases(a, b);
- 			while (exclude) {
- 				struct commit *commit = pop_commit(&exclude);
-@@ -333,7 +333,7 @@ static int try_parent_shorthands(const char *arg)
- 		return 0;
- 	}
- 
--	commit = lookup_commit_reference(&oid);
-+	commit = lookup_commit_reference(the_repository, &oid);
- 	if (exclude_parent &&
- 	    exclude_parent > commit_list_count(commit->parents)) {
- 		*dotdot = '^';
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index fb90c9ab3e..03c98efbe5 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -811,7 +811,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 			       MAX_REVS), MAX_REVS);
- 		if (get_oid(ref_name[num_rev], &revkey))
- 			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
--		commit = lookup_commit_reference(&revkey);
-+		commit = lookup_commit_reference(the_repository, &revkey);
- 		if (!commit)
- 			die(_("cannot find commit %s (%s)"),
- 			    ref_name[num_rev], oid_to_hex(&revkey));
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 014d7c9e9b..1fad1e6733 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -309,7 +309,7 @@ static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
+ #include "commit.h"
+ #include "tree.h"
+ #include "builtin.h"
+@@ -60,7 +61,8 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			if (get_oid_commit(argv[i], &oid))
+ 				die("Not a valid object name %s", argv[i]);
+ 			assert_sha1_type(oid.hash, OBJ_COMMIT);
+-			new_parent(lookup_commit(&oid), &parents);
++			new_parent(lookup_commit(the_repository, &oid),
++				   &parents);
+ 			continue;
  		}
- 		free(buf);
  
--		if ((c = lookup_commit_reference(oid)) != NULL)
-+		if ((c = lookup_commit_reference(the_repository, oid)) != NULL)
- 			strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
- 		break;
- 	case OBJ_TREE:
-diff --git a/bundle.c b/bundle.c
-index 1b5f1beb3b..d9579f851e 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -378,7 +378,8 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- 			 * in terms of a tag (e.g. v2.0 from the range
- 			 * "v1.0..v2.0")?
- 			 */
--			struct commit *one = lookup_commit_reference(&oid);
-+			struct commit *one = lookup_commit_reference(the_repository,
-+								     &oid);
- 			struct object *obj;
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8a87701414..cd3144f9f4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1464,7 +1464,7 @@ static void print_summary(const char *prefix, const struct object_id *oid,
+ 	struct strbuf author_ident = STRBUF_INIT;
+ 	struct strbuf committer_ident = STRBUF_INIT;
  
- 			if (e->item == &(one->object)) {
+-	commit = lookup_commit(oid);
++	commit = lookup_commit(the_repository, oid);
+ 	if (!commit)
+ 		die(_("couldn't look up newly created commit"));
+ 	if (parse_commit(commit))
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 603f619532..62c435a65f 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -25,7 +25,7 @@ static int stdin_diff_commit(struct commit *commit, const char *p)
+ 
+ 	/* Graft the fake parents locally to the commit */
+ 	while (isspace(*p++) && !parse_oid_hex(p, &oid, &p)) {
+-		struct commit *parent = lookup_commit(&oid);
++		struct commit *parent = lookup_commit(the_repository, &oid);
+ 		if (!pptr) {
+ 			/* Free the real parent list */
+ 			free_commit_list(commit->parents);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 14a27d539f..322adfd408 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -958,7 +958,7 @@ static void import_marks(char *input_file)
+ 			/* only commits */
+ 			continue;
+ 
+-		commit = lookup_commit(&oid);
++		commit = lookup_commit(the_repository, &oid);
+ 		if (!commit)
+ 			die("not a commit? can't happen: %s", oid_to_hex(&oid));
+ 
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 49fd7ea1d2..3e99d10218 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -573,7 +573,7 @@ static void find_merge_parents(struct merge_parents *result,
+ 		commit_list_insert(parent, &parents);
+ 		add_merge_parent(result, &obj->oid, &parent->object.oid);
+ 	}
+-	head_commit = lookup_commit(head);
++	head_commit = lookup_commit(the_repository, head);
+ 	if (head_commit)
+ 		commit_list_insert(head_commit, &parents);
+ 	reduce_heads_replace(&parents);
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index bbead6f33e..08d91b1f0c 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -124,7 +124,7 @@ static void add_one_commit(struct object_id *oid, struct rev_collect *revs)
+ 	if (is_null_oid(oid))
+ 		return;
+ 
+-	commit = lookup_commit(oid);
++	commit = lookup_commit(the_repository, oid);
+ 	if (!commit ||
+ 	    (commit->object.flags & TMP_MARK) ||
+ 	    parse_commit(commit))
+diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
+index 29f5e5507c..b0ae18ec33 100644
+--- a/builtin/verify-commit.c
++++ b/builtin/verify-commit.c
+@@ -9,6 +9,7 @@
+ #include "config.h"
+ #include "builtin.h"
+ #include "object-store.h"
++#include "repository.h"
+ #include "commit.h"
+ #include "run-command.h"
+ #include <signal.h>
+@@ -27,7 +28,8 @@ static int run_gpg_verify(const struct object_id *oid, const char *buf, unsigned
+ 
+ 	memset(&signature_check, 0, sizeof(signature_check));
+ 
+-	ret = check_commit_signature(lookup_commit(oid), &signature_check);
++	ret = check_commit_signature(lookup_commit(the_repository, oid),
++				     &signature_check);
+ 	print_signature_buffer(&signature_check, flags);
+ 
+ 	signature_check_clear(&signature_check);
 diff --git a/commit.c b/commit.c
-index b6e253f1af..b943b97aee 100644
+index b943b97aee..2137a0b9c6 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -32,14 +32,14 @@ struct commit *lookup_commit_reference_gently_the_repository(
- 	return object_as_type(obj, OBJ_COMMIT, quiet);
+@@ -49,7 +49,7 @@ struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref
+ 	return c;
  }
  
--struct commit *lookup_commit_reference(const struct object_id *oid)
-+struct commit *lookup_commit_reference_the_repository(const struct object_id *oid)
+-struct commit *lookup_commit(const struct object_id *oid)
++struct commit *lookup_commit_the_repository(const struct object_id *oid)
  {
- 	return lookup_commit_reference_gently(the_repository, oid, 0);
- }
- 
- struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name)
- {
--	struct commit *c = lookup_commit_reference(oid);
-+	struct commit *c = lookup_commit_reference(the_repository, oid);
- 	if (!c)
- 		die(_("could not parse %s"), ref_name);
- 	if (oidcmp(oid, &c->object.oid)) {
-@@ -65,7 +65,7 @@ struct commit *lookup_commit_reference_by_name(const char *name)
- 
- 	if (get_oid_committish(name, &oid))
- 		return NULL;
--	commit = lookup_commit_reference(&oid);
-+	commit = lookup_commit_reference(the_repository, &oid);
- 	if (parse_commit(commit))
- 		return NULL;
- 	return commit;
+ 	struct object *obj = lookup_object(the_repository, oid->hash);
+ 	if (!obj)
+@@ -359,7 +359,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ 		 */
+ 		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
+ 			continue;
+-		new_parent = lookup_commit(&parent);
++		new_parent = lookup_commit(the_repository, &parent);
+ 		if (new_parent)
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+ 	}
+@@ -367,7 +367,8 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ 		int i;
+ 		struct commit *new_parent;
+ 		for (i = 0; i < graft->nr_parent; i++) {
+-			new_parent = lookup_commit(&graft->parent[i]);
++			new_parent = lookup_commit(the_repository,
++						   &graft->parent[i]);
+ 			if (!new_parent)
+ 				continue;
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
 diff --git a/commit.h b/commit.h
-index 2ce5597066..9159165fde 100644
+index 9159165fde..61e01112eb 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -47,7 +47,9 @@ void add_name_decoration(enum decoration_type type, const char *name, struct obj
+@@ -46,7 +46,8 @@ enum decoration_type {
+ void add_name_decoration(enum decoration_type type, const char *name, struct object *obj);
  const struct name_decoration *get_name_decoration(const struct object *obj);
  
- struct commit *lookup_commit(const struct object_id *oid);
--struct commit *lookup_commit_reference(const struct object_id *oid);
-+#define lookup_commit_reference(r, o) \
-+		lookup_commit_reference_##r(o)
-+struct commit *lookup_commit_reference_the_repository(const struct object_id *oid);
- #define lookup_commit_reference_gently(r, o, q) \
- 		lookup_commit_reference_gently_##r(o, q)
- struct commit *lookup_commit_reference_gently_the_repository(
+-struct commit *lookup_commit(const struct object_id *oid);
++#define lookup_commit(r, o) lookup_commit_##r(o)
++struct commit *lookup_commit_the_repository(const struct object_id *oid);
+ #define lookup_commit_reference(r, o) \
+ 		lookup_commit_reference_##r(o)
+ struct commit *lookup_commit_reference_the_repository(const struct object_id *oid);
 diff --git a/contrib/coccinelle/object_parser.cocci b/contrib/coccinelle/object_parser.cocci
-index 7c1ef62e6d..bc00029f8c 100644
+index bc00029f8c..c3cc4dfc9e 100644
 --- a/contrib/coccinelle/object_parser.cocci
 +++ b/contrib/coccinelle/object_parser.cocci
-@@ -67,3 +67,10 @@ expression F;
-  lookup_commit_reference_gently(
+@@ -74,3 +74,10 @@ expression E;
+  lookup_commit_reference(
  +the_repository,
-  E, F)
+  E)
 +
 +@@
 +expression E;
 +@@
-+ lookup_commit_reference(
++ lookup_commit(
 ++the_repository,
 + E)
-diff --git a/notes-merge.c b/notes-merge.c
-index 1053c65e83..ea701827ba 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -2,6 +2,7 @@
+diff --git a/fetch-pack.c b/fetch-pack.c
+index ee1e65688a..f38beea6a3 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -491,7 +491,8 @@ static int find_common(struct fetch_pack_args *args,
+ 				case ACK_ready:
+ 				case ACK_continue: {
+ 					struct commit *commit =
+-						lookup_commit(result_oid);
++						lookup_commit(the_repository,
++							      result_oid);
+ 					if (!commit)
+ 						die(_("invalid commit %s"), oid_to_hex(result_oid));
+ 					if (args->stateless_rpc
+diff --git a/log-tree.c b/log-tree.c
+index 1137506884..9fb333605b 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -147,7 +147,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
+ 
+ static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
+ {
+-	struct commit *commit = lookup_commit(&graft->oid);
++	struct commit *commit = lookup_commit(the_repository, &graft->oid);
+ 	if (!commit)
+ 		return 0;
+ 	add_name_decoration(DECORATION_GRAFTED, "grafted", &commit->object);
+diff --git a/notes-utils.c b/notes-utils.c
+index 5c8e70c98f..3ef5340c6e 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -3,6 +3,7 @@
  #include "commit.h"
  #include "refs.h"
- #include "object-store.h"
+ #include "notes-utils.h"
 +#include "repository.h"
- #include "diff.h"
- #include "diffcore.h"
- #include "xdiff-interface.h"
-@@ -553,7 +554,7 @@ int notes_merge(struct notes_merge_options *o,
- 	else if (!check_refname_format(o->local_ref, 0) &&
- 		is_null_oid(&local_oid))
- 		local = NULL; /* local_oid == null_oid indicates unborn ref */
--	else if (!(local = lookup_commit_reference(&local_oid)))
-+	else if (!(local = lookup_commit_reference(the_repository, &local_oid)))
- 		die("Could not parse local commit %s (%s)",
- 		    oid_to_hex(&local_oid), o->local_ref);
- 	trace_printf("\tlocal commit: %.7s\n", oid_to_hex(&local_oid));
-@@ -571,7 +572,7 @@ int notes_merge(struct notes_merge_options *o,
- 			die("Failed to resolve remote notes ref '%s'",
- 			    o->remote_ref);
+ 
+ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 			 const char *msg, size_t msg_len,
+@@ -19,7 +20,8 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 		/* Deduce parent commit from t->ref */
+ 		struct object_id parent_oid;
+ 		if (!read_ref(t->ref, &parent_oid)) {
+-			struct commit *parent = lookup_commit(&parent_oid);
++			struct commit *parent = lookup_commit(the_repository,
++							      &parent_oid);
+ 			if (parse_commit(parent))
+ 				die("Failed to find/parse commit %s", t->ref);
+ 			commit_list_insert(parent, &parents);
+diff --git a/object.c b/object.c
+index c9ce89cf37..6676887315 100644
+--- a/object.c
++++ b/object.c
+@@ -209,7 +209,7 @@ struct object *parse_object_buffer(const struct object_id *oid, enum object_type
+ 			}
  		}
--	} else if (!(remote = lookup_commit_reference(&remote_oid))) {
-+	} else if (!(remote = lookup_commit_reference(the_repository, &remote_oid))) {
- 		die("Could not parse remote commit %s (%s)",
- 		    oid_to_hex(&remote_oid), o->remote_ref);
- 	}
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index c6679cb2cd..624fcee6f4 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -87,7 +87,7 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
- 		return -1;
- 	if (get_oid(arg, &oid))
- 		return error("malformed object name %s", arg);
--	commit = lookup_commit_reference(&oid);
-+	commit = lookup_commit_reference(the_repository, &oid);
- 	if (!commit)
- 		return error("no such commit %s", arg);
- 	commit_list_insert(commit, opt->value);
-diff --git a/remote.c b/remote.c
-index a9386476fe..ecfa60a975 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2039,13 +2039,13 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
- 	/* Cannot stat if what we used to build on no longer exists */
- 	if (read_ref(base, &oid))
- 		return -1;
--	theirs = lookup_commit_reference(&oid);
-+	theirs = lookup_commit_reference(the_repository, &oid);
- 	if (!theirs)
- 		return -1;
- 
- 	if (read_ref(branch->refname, &oid))
- 		return -1;
--	ours = lookup_commit_reference(&oid);
-+	ours = lookup_commit_reference(the_repository, &oid);
- 	if (!ours)
- 		return -1;
- 
-diff --git a/revision.c b/revision.c
-index 629af0dca5..5c5375ac54 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1563,8 +1563,8 @@ static int handle_dotdot_1(const char *arg, char *dotdot,
- 		struct commit *a, *b;
- 		struct commit_list *exclude;
- 
--		a = lookup_commit_reference(&a_obj->oid);
--		b = lookup_commit_reference(&b_obj->oid);
-+		a = lookup_commit_reference(the_repository, &a_obj->oid);
-+		b = lookup_commit_reference(the_repository, &b_obj->oid);
- 		if (!a || !b)
- 			return dotdot_missing(arg, dotdot, revs, symmetric);
- 
+ 	} else if (type == OBJ_COMMIT) {
+-		struct commit *commit = lookup_commit(oid);
++		struct commit *commit = lookup_commit(the_repository, oid);
+ 		if (commit) {
+ 			if (parse_commit_buffer(commit, buffer, size))
+ 				return NULL;
 diff --git a/sequencer.c b/sequencer.c
-index d0c3c808aa..d24586bc6f 100644
+index d24586bc6f..4d259d9ae4 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -857,7 +857,7 @@ static int update_squash_messages(enum todo_command command,
+@@ -497,7 +497,7 @@ static int is_index_unchanged(void)
+ 	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
+ 		return error(_("could not resolve HEAD commit"));
  
- 		if (get_oid("HEAD", &head))
- 			return error(_("need a HEAD to fixup"));
--		if (!(head_commit = lookup_commit_reference(&head)))
-+		if (!(head_commit = lookup_commit_reference(the_repository, &head)))
- 			return error(_("could not read HEAD"));
- 		if (!(head_message = get_commit_buffer(head_commit, NULL)))
- 			return error(_("could not read HEAD's commit message"));
-@@ -1300,7 +1300,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
- 	if (status < 0)
- 		return -1;
- 
--	item->commit = lookup_commit_reference(&commit_oid);
-+	item->commit = lookup_commit_reference(the_repository, &commit_oid);
- 	return !item->commit;
- }
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 160fec7062..ea169a28c1 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -849,7 +849,7 @@ static int get_parent(const char *name, int len,
- 
- 	if (ret)
- 		return ret;
--	commit = lookup_commit_reference(&oid);
-+	commit = lookup_commit_reference(the_repository, &oid);
- 	if (parse_commit(commit))
- 		return -1;
- 	if (!idx) {
-@@ -877,7 +877,7 @@ static int get_nth_ancestor(const char *name, int len,
- 	ret = get_oid_1(name, len, &oid, GET_OID_COMMITTISH);
- 	if (ret)
- 		return ret;
--	commit = lookup_commit_reference(&oid);
-+	commit = lookup_commit_reference(the_repository, &oid);
- 	if (!commit)
- 		return -1;
- 
-diff --git a/submodule.c b/submodule.c
-index 1504812842..aec62e6c7d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -515,8 +515,8 @@ static void show_submodule_header(struct diff_options *o, const char *path,
- 	 * Attempt to lookup the commit references, and determine if this is
- 	 * a fast forward or fast backwards update.
- 	 */
--	*left = lookup_commit_reference(one);
--	*right = lookup_commit_reference(two);
-+	*left = lookup_commit_reference(the_repository, one);
-+	*right = lookup_commit_reference(the_repository, two);
+-	head_commit = lookup_commit(&head_oid);
++	head_commit = lookup_commit(the_repository, &head_oid);
  
  	/*
- 	 * Warn about missing commits in the submodule project, but only if
-@@ -1820,9 +1820,9 @@ int merge_submodule(struct object_id *result, const char *path,
+ 	 * If head_commit is NULL, check_commit, called from
+diff --git a/sha1_name.c b/sha1_name.c
+index ea169a28c1..45b7d6be91 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -374,7 +374,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 
+ 	type = sha1_object_info(the_repository, oid->hash, NULL);
+ 	if (type == OBJ_COMMIT) {
+-		struct commit *commit = lookup_commit(oid);
++		struct commit *commit = lookup_commit(the_repository, oid);
+ 		if (commit) {
+ 			struct pretty_print_context pp = {0};
+ 			pp.date_mode.type = DATE_SHORT;
+diff --git a/shallow.c b/shallow.c
+index b62dd2c5fb..97c483239a 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -32,7 +32,7 @@ int register_shallow(const struct object_id *oid)
+ {
+ 	struct commit_graft *graft =
+ 		xmalloc(sizeof(struct commit_graft));
+-	struct commit *commit = lookup_commit(oid);
++	struct commit *commit = lookup_commit(the_repository, oid);
+ 
+ 	oidcpy(&graft->oid, oid);
+ 	graft->nr_parent = -1;
+@@ -244,7 +244,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ 	if (graft->nr_parent != -1)
  		return 0;
+ 	if (data->flags & SEEN_ONLY) {
+-		struct commit *c = lookup_commit(&graft->oid);
++		struct commit *c = lookup_commit(the_repository, &graft->oid);
+ 		if (!c || !(c->object.flags & SEEN)) {
+ 			if (data->flags & VERBOSE)
+ 				printf("Removing %s from .git/shallow\n",
+@@ -606,7 +606,8 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 
+ 	/* Mark potential bottoms so we won't go out of bound */
+ 	for (i = 0; i < nr_shallow; i++) {
+-		struct commit *c = lookup_commit(&oid[shallow[i]]);
++		struct commit *c = lookup_commit(the_repository,
++						 &oid[shallow[i]]);
+ 		c->object.flags |= BOTTOM;
  	}
  
--	if (!(commit_base = lookup_commit_reference(base)) ||
--	    !(commit_a = lookup_commit_reference(a)) ||
--	    !(commit_b = lookup_commit_reference(b))) {
-+	if (!(commit_base = lookup_commit_reference(the_repository, base)) ||
-+	    !(commit_a = lookup_commit_reference(the_repository, a)) ||
-+	    !(commit_b = lookup_commit_reference(the_repository, b))) {
- 		MERGE_WARNING(path, "commits not present");
- 		return 0;
- 	}
+@@ -617,7 +618,8 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 		int bitmap_size = DIV_ROUND_UP(pi.nr_bits, 32) * sizeof(uint32_t);
+ 		memset(used, 0, sizeof(*used) * info->shallow->nr);
+ 		for (i = 0; i < nr_shallow; i++) {
+-			const struct commit *c = lookup_commit(&oid[shallow[i]]);
++			const struct commit *c = lookup_commit(the_repository,
++							       &oid[shallow[i]]);
+ 			uint32_t **map = ref_bitmap_at(&pi.ref_bitmap, c);
+ 			if (*map)
+ 				used[shallow[i]] = xmemdupz(*map, bitmap_size);
+@@ -687,7 +689,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	for (i = dst = 0; i < info->nr_theirs; i++) {
+ 		if (i != dst)
+ 			info->theirs[dst] = info->theirs[i];
+-		c = lookup_commit(&oid[info->theirs[i]]);
++		c = lookup_commit(the_repository, &oid[info->theirs[i]]);
+ 		bitmap = ref_bitmap_at(ref_bitmap, c);
+ 		if (!*bitmap)
+ 			continue;
+@@ -708,7 +710,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	for (i = dst = 0; i < info->nr_ours; i++) {
+ 		if (i != dst)
+ 			info->ours[dst] = info->ours[i];
+-		c = lookup_commit(&oid[info->ours[i]]);
++		c = lookup_commit(the_repository, &oid[info->ours[i]]);
+ 		bitmap = ref_bitmap_at(ref_bitmap, c);
+ 		if (!*bitmap)
+ 			continue;
+@@ -730,7 +732,8 @@ static void post_assign_shallow(struct shallow_info *info,
+ int delayed_reachability_test(struct shallow_info *si, int c)
+ {
+ 	if (si->need_reachability_test[c]) {
+-		struct commit *commit = lookup_commit(&si->shallow->oid[c]);
++		struct commit *commit = lookup_commit(the_repository,
++						      &si->shallow->oid[c]);
+ 
+ 		if (!si->commits) {
+ 			struct commit_array ca;
+diff --git a/tag.c b/tag.c
+index d8174e0405..da2fe4f2ee 100644
+--- a/tag.c
++++ b/tag.c
+@@ -150,7 +150,7 @@ int parse_tag_buffer_the_repository(struct tag *item, const void *data, unsigned
+ 	} else if (!strcmp(type, tree_type)) {
+ 		item->tagged = (struct object *)lookup_tree(the_repository, &oid);
+ 	} else if (!strcmp(type, commit_type)) {
+-		item->tagged = (struct object *)lookup_commit(&oid);
++		item->tagged = (struct object *)lookup_commit(the_repository, &oid);
+ 	} else if (!strcmp(type, tag_type)) {
+ 		item->tagged = (struct object *)lookup_tag(the_repository, &oid);
+ 	} else {
+diff --git a/tree.c b/tree.c
+index b0d8610c41..6e0aafa805 100644
+--- a/tree.c
++++ b/tree.c
+@@ -100,7 +100,7 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
+ 		else if (S_ISGITLINK(entry.mode)) {
+ 			struct commit *commit;
+ 
+-			commit = lookup_commit(entry.oid);
++			commit = lookup_commit(the_repository, entry.oid);
+ 			if (!commit)
+ 				die("Commit %s in submodule path %s%s not found",
+ 				    oid_to_hex(entry.oid),
 -- 
 2.15.1.433.g936d1b9894.dirty
 
