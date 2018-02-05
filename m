@@ -3,126 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 979231F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 21:19:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADAA41FAE2
+	for <e@80x24.org>; Mon,  5 Feb 2018 21:26:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751774AbeBEVTm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 16:19:42 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34026 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751728AbeBEVTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 16:19:40 -0500
-Received: by mail-wm0-f68.google.com with SMTP id j21-v6so14989367wmh.1
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 13:19:40 -0800 (PST)
+        id S1751995AbeBEV0Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 16:26:16 -0500
+Received: from mail-ua0-f194.google.com ([209.85.217.194]:46502 "EHLO
+        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751927AbeBEV0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 16:26:14 -0500
+Received: by mail-ua0-f194.google.com with SMTP id j23so19634382uak.13
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 13:26:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=moNLulBwbT4Aztkts1uiK7xF6BswYPnKTSzkbNxsit4=;
-        b=ZwaZvOIbHKiBjDzX+IyRfzniQ70ASBf2UPWMPjojE36j0jIb2LDKihS9K4rROj5UWM
-         0sEAlROHJ7B8UzHY3IydBLSZrJtZZ8lwk6f8CkYstY5diwuFWI92gckMCQQ0t6gZcYbi
-         2UPpfDHlEEcnCWVB+B0p2zqsbLbH7Wd7gYeCQo6ps7V4vtYhTglfgoIA6uTSAWhAZOnV
-         E3g6lGjm2lbfoUZ8yzpTp4B3JeUzdptoNqH3A+KO6Kt0x5KBx4KwwgzRtDD+CH6jQ5GJ
-         qAwQbXA2ZTVAriUZG1apWGXJ+F9h9CZBmBnBK2G6BhjY82A4rjlV9+HI6SG5LB0O08x3
-         i1qw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YKBVG6zeW7Ii/cSJAA/r7BgMLkmff1DZkEzFF0aJWyg=;
+        b=tGSYaCs4Vy1KwLKaOgpTNYYBVgvAa9EHz9/f4JeI3mIM36L/Lc5fhHtwfiyVwncga4
+         cqIB5Yey6Co8GcXIIeynTAZ7rWejYIzzWT0DnoFEH1qHY3QrB0rEP2ZB2iiJH70Qjnh9
+         2yaw4HLul9qvlA2iK1KQhNyMy5F7boL5tsJcVl2GMYtM5AYVHv6D2hvYdxmKsmjw6/So
+         5LgVzkgCxjysHa11tiB7XpqJhWdo8rnhEMT2uXCnC9O16PqVNb8mDRG5KsCT9UDQB8o8
+         uxb+bCqyoy5NfeyZ/cgNF7I1IFg7y6OTcHZTsNJzCCG5mK1BtVkTzBUS8hy9G6cdtAFy
+         +BAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=moNLulBwbT4Aztkts1uiK7xF6BswYPnKTSzkbNxsit4=;
-        b=aSNPGWr3zLiSKsb8Xik+YGZ7s4X94JUYm/WpevTH4c9YZvbL70WqOH5oyuU4dLFk+o
-         Y9k3bUMA6HcIPuCv4uDvhsWNJszozH3bXZ3muoQlolY5Lj1doBJJcwQTRtrPakwoHJNM
-         BFULTiZaLS3nsAK0Di7a6Y8tL7hvC5TNK/vw9WqjqpcvXya9F0F37tMpROKFnZE0IoL8
-         NdUu6nKrDLIpTGs7sYJi4d8ECLx8QsKvGWIyLt7Pr6LAM6N7fm2bfIF7X1rgk9nF+y69
-         fCUWAY/4dlgtDyHe26ChevIYwWCXUalKD6HRRoES7kj92WXlH/r0uhak+ewlgHF3xqAY
-         wx3g==
-X-Gm-Message-State: APf1xPCptmSmPhKtcnvRSVHpoqyNPe4x51ghRjM0aRPld47ZXDb8Lbqe
-        SO4MUtSAQYKBlqQlZpu38Fw=
-X-Google-Smtp-Source: AH8x227If0WsFMMFTv1uc1RG1mcIgfU9AACcdjbVIZg8DkEn8GOTivPfob2JjonyMPOHdnfA9pFaTQ==
-X-Received: by 10.28.199.201 with SMTP id x192mr85855wmf.45.1517865579303;
-        Mon, 05 Feb 2018 13:19:39 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 5sm5613694wre.35.2018.02.05.13.19.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 13:19:38 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH RFC v2 14/25] ref-filter: add is_cat flag
-References: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
-        <0102016165b8b44c-a6d5c188-a9f2-4c5a-8cfb-6094af8f0163-000000@eu-west-1.amazonses.com>
-Date:   Mon, 05 Feb 2018 13:19:37 -0800
-In-Reply-To: <0102016165b8b44c-a6d5c188-a9f2-4c5a-8cfb-6094af8f0163-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Mon, 5 Feb 2018 11:27:39 +0000")
-Message-ID: <xmqq4lmv9lsm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YKBVG6zeW7Ii/cSJAA/r7BgMLkmff1DZkEzFF0aJWyg=;
+        b=RlVicC81C5raiaEIQ7VkwsT1OGeNG+oPGgJWxooeqwnUfPG+vpWdjVrRQopd3IhfoG
+         UA67uwHnVFEERTf5G76/t65j9gmIYnCdr5xX1p4RoTPC5gJRblOdU5T0NWLWqloOxQNQ
+         8hFcQW8hSlo/K0+RgoZZ6i+q7DKbmKEPffJ6huMmolkc+SvNq5MhoIzxx/js+35K3CC1
+         GrLsbUTJB+B5dnKCbg+G5yHn67drA7AJi1VLgPUTu+4z4KJCZsnXxTF2OtCwSXwSkFCr
+         6wrTvZuQfDGlxXGYUz34zwUV3+oCC8UwO3gdfMeFIHIEa/Bl5IQbETgKrpUL/FZ4YKsy
+         dnYA==
+X-Gm-Message-State: APf1xPB1brNh3IQ5w3tYnrmk1maMc8kbR5QSG6t6aX/2X/khdGfUGDo7
+        9Ox+a9bwYXTaOR5b7E62l4hJHSGjAiKgYj/wibg=
+X-Google-Smtp-Source: AH8x226haYDCR9FpZDnE4lz08BQK9N1uyZm0EdhqMD/2rdkij+ZEr1wTXN58b49VZq7yxDOnVU3neIXXRcqjcmZUyt8=
+X-Received: by 10.159.38.33 with SMTP id 30mr215295uag.9.1517865973719; Mon,
+ 05 Feb 2018 13:26:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.1.33 with HTTP; Mon, 5 Feb 2018 13:26:13 -0800 (PST)
+In-Reply-To: <CAGZ79kYsYkKVgF-Bwe3HNFraaYC0DWruXE92E4x8b0oJd_Bg6w@mail.gmail.com>
+References: <20180130232533.25846-1-newren@gmail.com> <20180130232533.25846-28-newren@gmail.com>
+ <CAGZ79kYsYkKVgF-Bwe3HNFraaYC0DWruXE92E4x8b0oJd_Bg6w@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 5 Feb 2018 13:26:13 -0800
+Message-ID: <CABPp-BH=09HtTO11G6a6gjGS35oBCjzO55+pR3KN3XuXedre_Q@mail.gmail.com>
+Subject: Re: [PATCH v7 27/31] merge-recursive: fix overwriting dirty files
+ involved in renames
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+On Mon, Feb 5, 2018 at 12:52 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jan 30, 2018 at 3:25 PM, Elijah Newren <newren@gmail.com> wrote:
+>> This fixes an issue that existed before my directory rename detection
+>> patches that affects both normal renames and renames implied by
+>> directory rename detection.  Additional codepaths that only affect
+>> overwriting of directy files that are involved in directory rename
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 34a54db168265..91290b62450b3 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -101,6 +101,7 @@ static struct used_atom {
->  } *used_atom;
->  static int used_atom_cnt, need_tagged, need_symref;
->  struct expand_data *cat_file_info;
-> +static int is_cat = 0;
->   ...
-> @@ -739,6 +740,7 @@ int verify_ref_format(struct ref_format *format)
->  	const char *cp, *sp;
->  
->  	cat_file_info = format->cat_file_data;
-> +	is_cat = format->is_cat;
+Ugh, "dirty" not "directy".  I must have gotten my fingers trained to
+type "directory" too much.  I'll fix that up.
 
-Eek.  The global cat_file_info itself may already be bad enough, but
-now we have another one?
-
-Hopefully these are all cleaned up in later steps in the series?
-
->  	format->need_color_reset_at_eol = 0;
->  	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
->  		const char *color, *ep = strchr(sp, ')');
-> @@ -748,7 +750,7 @@ int verify_ref_format(struct ref_format *format)
->  			return error(_("malformed format string %s"), sp);
->  		/* sp points at "%(" and ep points at the closing ")" */
->  
-> -		if (format->cat_file_data)
-> +		if (is_cat)
->  			at = parse_ref_filter_atom(format, valid_cat_file_atom,
->  						   ARRAY_SIZE(valid_cat_file_atom), sp + 2, ep);
->  		else {
-> @@ -1438,7 +1440,7 @@ int populate_value(struct ref_array_item *ref)
->  			ref->symref = "";
->  	}
->  
-> -	if (cat_file_info && check_and_fill_for_cat(ref))
-> +	if (is_cat && check_and_fill_for_cat(ref))
->  		return -1;
->  
->  	/* Fill in specials first */
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 5c6e019998716..69271e8c39f40 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -125,6 +125,7 @@ struct ref_format {
->  	 * hopefully would be reduced later.
->  	 */
->  	struct expand_data *cat_file_data;
-> +	int is_cat;
->  };
->  
->  #define REF_FORMAT_INIT { NULL, 0, -1 }
+>> detection will be added in a subsequent commit.
+>>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
 >
-> --
-> https://github.com/git/git/pull/452
+> So this fixes bugs in the current rename detection with
+> overwriting untracked files? Then this is an additional
+> selling point of this series, maybe worth covering in the
+> cover letter!
+
+Yes, with a nitpick: the existing issue it fixes is with dirty files
+(by which I mean uncommitted changes to tracked files) involved in
+renames rather than being an issue with untracked files.
+
+I did mention this fix in my original cover letter[1], but it would
+have been really easy to miss because it was a really long cover
+letter, and the mention came at the very end.  Quoting from it:
+
+"""
+These last three deal with untracked and dirty file overwriting
+headaches.  The middle patch in particular, isn't just a fix for
+directory rename detection but fixes a bug in current versions of git
+in overwriting dirty files that are involved in a rename.  That patch
+could be backported and submitted independent of this series, but the
+final patch depends heavily on it.
+"""
+
+[1] https://public-inbox.org/git/20171110190550.27059-1-newren@gmail.com/
