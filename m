@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C62741F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:01:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08CFB1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbeBFAB2 (ORCPT <rfc822;e@80x24.org>);
+        id S1752123AbeBFABb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:01:31 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:39976 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752100AbeBFAB2 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 19:01:28 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:39971 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751544AbeBFAB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:01:26 -0500
-Received: by mail-pg0-f66.google.com with SMTP id g2so121739pgn.7
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:01:26 -0800 (PST)
+Received: by mail-pg0-f67.google.com with SMTP id g2so121819pgn.7
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jXIalC6Qw/O/PUvTjDRWPGZKv+PhZdqYt81bf05pk0Q=;
-        b=COK4wLc7FN0HgVMQOVVPlP0CkY421BNhN+MkTmhwtiB/R4X4igonPoCEFNHdhSU0P6
-         X/Lbs84sIxClLtqYBjmXmUDIQXi/N9DFZnICYB8nJ6j1BrsM4PIObiu7Tbd2pC3+OQn1
-         VCsE8ihJntIg+/KfemSjhw75YJfqd0QpJPj2DFQrZlHeM4tTXxNUOeum0xChi3YzA2OL
-         +UlHV0228zRstfVOdC15UZtavukEzFfa4gD9SVmnnwN+5t6UiSBWBsSBQdYIX8SQzyPy
-         2MyC+aShVMdqVYT6NozZK8mlz/F8oa8Pe1T+5QPIE0LdXfvhdIkaiyEgtwjDtOJmdlPq
-         /oig==
+        bh=4uB1HLdUIhqx5IUot2j+SiE+TJuCK2cXFlSIGUBR2F0=;
+        b=pZ83ol0RkpfC6EOJTbOBl90N++wpsGVUQE2hnQsbe3sI8ltTjZ0hvhDmywr0/r27av
+         1ITn0JSq12jwuXNB9h3I1MGg7Al7kncnI9hWsmzrdMOlEJKAAqW0Qm9i1xyBDctqNDtm
+         obTIbVugkjSWN5VhPXWdKFU53WDHLkD6JIC2I0Niiqmw3Z0/kJpCOQAjYQLjaLqudCzp
+         lbGVk2YvIaTxDxSVsBWfgXOkHeLOyGOmtC7rtlJplOoLGnxMbzWHbahqC28GR+8U86dR
+         cMi5VO5dMY33xRaJGKD1pJMXgzQiRQpvu6hdLeZ0QpmX7ZHiIPRJf5vVpzN8Cb1U5k8a
+         QSdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=jXIalC6Qw/O/PUvTjDRWPGZKv+PhZdqYt81bf05pk0Q=;
-        b=aEBzwmEYIh9brosIH6l3ddHFQnnrhPe5QaCMtzsSqRqDDxPle9Ff4rqSsSRP5Ayv09
-         p4+oChXptHEWV9KFI88qxXPOfnjsejow5IhGH86OGdhlb9xEIGIF6Pm3J6a17EpZ9MUN
-         yXgslWdNTEdE9q8qd9yDQsnIYKeKwnRtq92S8klNp8gWlADPXKg9XbCOMao69UY+3aDq
-         bprRhQacML27Ku6QqiyP1mRaLNVvYURbPxbQaWhmSJHGjHKEVgOgoGKqSjnmMNPuvAvI
-         KgrE++vv+rAOSBZ2nHk3XYvWbnk4H7hWH4CAXsHIQL33CNIWRghtG9cnQNs2T1g0djBr
-         grqg==
-X-Gm-Message-State: APf1xPC7J4cODvagBDc+CZHjiuCofMaOz1CnJVsZIuD8v9nXWN13KdCD
-        cHx88I0mcowzsuaWlGs+OZLT+KUMzrQ=
-X-Google-Smtp-Source: AH8x227Veoz6fYpG0Z7kMESutUHkV6M0Cogx8QElYes3RLoBYxk3WqPYBslUOZNXAc+JWdtkRQrG6Q==
-X-Received: by 10.101.64.74 with SMTP id h10mr394959pgp.200.1517875285993;
-        Mon, 05 Feb 2018 16:01:25 -0800 (PST)
+        bh=4uB1HLdUIhqx5IUot2j+SiE+TJuCK2cXFlSIGUBR2F0=;
+        b=EfoZgaeKvCvG8JGA1BD5AREswWjczReb3urVjFhMCRSBMm0Jej8IGA8RlYKCzUEF0y
+         rRhRACOYS5NCPrDIj1asHI3ev3R8XQSiUI9EgndiUzxyhr92pXB5TB/jHV9tadSElQv5
+         tS8PtvrZhg3W2VmYmjVsoWGIJG2btiQJKlu4xxsjc73JQfwcYtcIoNJE62snNnlgqVMd
+         ViqbSvS6GFE067heL4lBObOMI2dayjaJOcrojfjxUCAIam/wxQExlqJGBqdH4nySuF0+
+         WIET7QFbbJ486hTzScai7IO7jiweLRlCTDiFs5osSR5EwCDFvR5LAVpIRqO3+cxLsb6Y
+         O4gQ==
+X-Gm-Message-State: APf1xPBbTrcrmgmi1XO4SEzXgJA+b72arjDtsHcCKv3FE0Z3ketpF5Fg
+        6vM2cnX3o2AirXoYCHYYHdUfyYDYa6g=
+X-Google-Smtp-Source: AH8x225RhvBuwz0ONlnrgaXRSsXZEn7Eo8sej3JvPOtID09LdUjX0F9oYMnCeR/hpA+m2J162pB+EA==
+X-Received: by 10.98.87.2 with SMTP id l2mr519152pfb.46.1517875287308;
+        Mon, 05 Feb 2018 16:01:27 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id d4sm14379382pgc.58.2018.02.05.16.01.25
+        by smtp.gmail.com with ESMTPSA id k14sm18778927pfb.15.2018.02.05.16.01.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:01:25 -0800 (PST)
+        Mon, 05 Feb 2018 16:01:26 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 037/194] pack: allow map_sha1_file to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:54:58 -0800
-Message-Id: <20180205235735.216710-17-sbeller@google.com>
+Subject: [PATCH 038/194] pack: allow sha1_loose_object_info to handle arbitrary repositories
+Date:   Mon,  5 Feb 2018 15:54:59 -0800
+Message-Id: <20180205235735.216710-18-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -69,41 +69,44 @@ From: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- object-store.h | 3 +--
- sha1_file.c    | 5 +++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sha1_file.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index fe2187fd65..57b8d89738 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -61,8 +61,7 @@ struct packed_git {
-  * is overwritten each time the function is called.
-  */
- extern const char *sha1_file_name(struct repository *r, const unsigned char *sha1);
--#define map_sha1_file(r, s, sz) map_sha1_file_##r(s, sz)
--extern void *map_sha1_file_the_repository(const unsigned char *sha1, unsigned long *size);
-+extern void *map_sha1_file(struct repository *r, const unsigned char *sha1, unsigned long *size);
- 
- extern void prepare_alt_odb(struct repository *r);
- 
 diff --git a/sha1_file.c b/sha1_file.c
-index 590b857391..786e904eab 100644
+index 786e904eab..1e867bc293 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -964,9 +964,10 @@ static void *map_sha1_file_1(struct repository *r, const char *path,
- 	return map;
+@@ -1156,10 +1156,9 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+ 	return parse_sha1_header_extended(hdr, &oi, 0);
  }
  
--void *map_sha1_file_the_repository(const unsigned char *sha1, unsigned long *size)
-+void *map_sha1_file(struct repository *r,
-+		    const unsigned char *sha1, unsigned long *size)
+-#define sha1_loose_object_info(r, s, o, f) sha1_loose_object_info_##r(s, o, f)
+-static int sha1_loose_object_info_the_repository(const unsigned char *sha1,
+-						 struct object_info *oi,
+-						 int flags)
++static int sha1_loose_object_info(struct repository *r,
++				  const unsigned char *sha1,
++				  struct object_info *oi, int flags)
  {
--	return map_sha1_file_1(the_repository, NULL, sha1, size);
-+	return map_sha1_file_1(r, NULL, sha1, size);
- }
+ 	int status = 0;
+ 	unsigned long mapsize;
+@@ -1183,14 +1182,14 @@ static int sha1_loose_object_info_the_repository(const unsigned char *sha1,
+ 	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
+ 		const char *path;
+ 		struct stat st;
+-		if (stat_sha1_file(the_repository, sha1, &st, &path) < 0)
++		if (stat_sha1_file(r, sha1, &st, &path) < 0)
+ 			return -1;
+ 		if (oi->disk_sizep)
+ 			*oi->disk_sizep = st.st_size;
+ 		return 0;
+ 	}
  
- static int unpack_sha1_short_header(git_zstream *stream,
+-	map = map_sha1_file(the_repository, sha1, &mapsize);
++	map = map_sha1_file(r, sha1, &mapsize);
+ 	if (!map)
+ 		return -1;
+ 
 -- 
 2.15.1.433.g936d1b9894.dirty
 
