@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9E21F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:59:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F9471F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752364AbeBEX7g (ORCPT <rfc822;e@80x24.org>);
+        id S1752370AbeBEX7k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:59:40 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:46095 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752356AbeBEX7g (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 18:59:36 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:37442 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752353AbeBEX7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:59:35 -0500
-Received: by mail-pl0-f65.google.com with SMTP id ay8so92246plb.4
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:59:35 -0800 (PST)
+Received: by mail-pl0-f67.google.com with SMTP id 36so78435ple.13
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:59:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RoohsnlxWdI660D4voYjXS4lWeIF/vbLAOazqrWlA6M=;
-        b=tWnkMi18Odx5S6mownWv0WMXWHopgKlSl5rNbxq9hk94oV2dyXY0vGTfJqLaciO69V
-         x4Dr7s8t65Kkcchihxjj0dVc/LAQcw7mFI5hDvTj6Gv/br85IuYoIj0mk7YYTwL13nNn
-         B48Lp/0MGAtvRx+9epAUbFG5+Hh2JZi2SvnLC4QeuMJB8nn+DpMdvfUUmjzuh8LG40X2
-         iU3bIfL2PiFozWSoauwS5ZGGTNYkbO/c+MAj+/wCI062ByOSuuFkAjLVQ9HQU63a+SF4
-         8GDp+ANBAp7Bqx5LB4ru7rrMGtyT7hQbKEL9Fziuezi559zFjH5AT093DcFTHs/vBhGx
-         e45g==
+        bh=YlBo8O6gGYk0fpTQUf+R+If4f8v7ZHCOfoM9Xz0zxCo=;
+        b=M94wj/vkJIKjHyccmrDX+RaJLXQRO8QbDTfGSiRYG2xe1d7BVP54nkFToIejETPWjT
+         UhgbNoFxJIM/1GdU0LRtN+x1RHEibCMjn6FNLRqfuXU/Bv0plq6er0yiuzcpvdH2VRht
+         R2nsHWzjaLmDWawyqpUDQKm4Q246ivegSsC40tzHi6uVMYBWM1VdVl1yHHu/uycxck2J
+         2MHfZsgGT503sWz/8jk4GSYZGZZrPAFrFPW1xu9EWT6ql5U1wSGs4LBAjpG2FwtxVUgi
+         hQHMU4ghh/LCqIk0KWoyJCtLXPpx5fvSTfzbmbtgH3UQrKUEIcZFip6ckCTmblyruNQ5
+         CR5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RoohsnlxWdI660D4voYjXS4lWeIF/vbLAOazqrWlA6M=;
-        b=HGq9+z1WhLs9p0ftQOMN/yQlOs23nLX5Wi4XLHCUmhYNdWph3DI3bJSAtkpxnNbVUM
-         HqeDDcNm94PH4yNZYyrNI0AlfjVV8KBEUAujbzVNKpxnUGONaKTsgRuPpY9vb1ImLmXf
-         h5N9JlceQnAGspfJ7I76W1Vjt+4Fpt8KJBQjngqgyCH1vJNxmWH4Dp92M4CcuVakBNB6
-         5XJtbtvTJy6JlaOFsaLRpBUt0GB7qwBZ030j/M7NvHTs/WDNmyOLHU+MXQHVlgIhDQmA
-         KYde6y5svAw4zN94JNcOyXi5NvCOisx/k6hGxwCf+jfz9ZmunNwwRSJdy8wZALcqsKG2
-         +knw==
-X-Gm-Message-State: APf1xPBvmS6LW8zueamuVXK/jlMAEKwYkEUFhfBn/Gve8E4hzrsoqX4l
-        KjuKP+52fDGbmS+qyUVw4P07tCVhmfE=
-X-Google-Smtp-Source: AH8x226H8J9cyeq9JHqM02QwepHiNj+Z2tKVRTLDUW3oPzevSM2N0izt7ASGfOVosmri6t8X29n+Fw==
-X-Received: by 2002:a17:902:6c44:: with SMTP id h4-v6mr481542pln.373.1517875173964;
-        Mon, 05 Feb 2018 15:59:33 -0800 (PST)
+        bh=YlBo8O6gGYk0fpTQUf+R+If4f8v7ZHCOfoM9Xz0zxCo=;
+        b=o3sNHRJ6RtKo8cHJj6hAtKC0/1hKiU28CVbvt8DIR7IEg+1pBZsECt2gH40DYqf0ua
+         yhoFbNMXGsYffmrJ38S1WGDPYPDm6ME0vAhVwtKsUsWP9Z85+fB2K0ffn278nlcTWdO0
+         4l1KhVYv5SR3koXplGoyMADNiwOAWvahm3GE4s6uwDdpwK/6W9fDj6K5AX/hBNrAmJi9
+         4yGXGvaP+ny0Gx6r0g7YeLiohJlcnLEQw4gw0pfgyR+Ofv3/TDwm0mli+BJXobsCKwWw
+         wXX1QV7RbsWA34CjpnDulC1/PFDlQ0zLffc8NCIFMH8l1lbWcqIKVn3ANwuvGbhX/MJp
+         b0Jg==
+X-Gm-Message-State: APf1xPBezAvHrU7vx7oxi4FRv922XrZoB/iYz39DEm/wJnip5eSkyS5m
+        Brj56DPWE1/1DzxXEm9Ozb1LvKQwDiA=
+X-Google-Smtp-Source: AH8x226Jg2PBlbeQM8vSz9Ksc2wINA993uCCATosI9E+up7e5XsREa6Uz4yITq/Z6sgGCebxbzPp5A==
+X-Received: by 2002:a17:902:8585:: with SMTP id e5-v6mr480771plo.165.1517875175310;
+        Mon, 05 Feb 2018 15:59:35 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id q2sm13048265pgf.10.2018.02.05.15.59.33
+        by smtp.gmail.com with ESMTPSA id s5sm19812638pfg.29.2018.02.05.15.59.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:59:33 -0800 (PST)
+        Mon, 05 Feb 2018 15:59:34 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 029/194] pack: allow prepare_packed_git_mru to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:54:50 -0800
-Message-Id: <20180205235735.216710-9-sbeller@google.com>
+Subject: [PATCH 030/194] pack: allow prepare_packed_git_one to handle arbitrary repositories
+Date:   Mon,  5 Feb 2018 15:54:51 -0800
+Message-Id: <20180205235735.216710-10-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -73,28 +73,39 @@ Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index d1533ec948..fd7dfc816e 100644
+index fd7dfc816e..2b73e62a44 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -864,14 +864,13 @@ static void rearrange_packed_git(struct repository *r)
- 		set_next_packed_git, sort_pack);
+@@ -726,8 +726,8 @@ static void report_pack_garbage(struct string_list *list)
+ 	report_helper(list, seen_bits, first, list->nr);
  }
  
--#define prepare_packed_git_mru(r) prepare_packed_git_mru_##r()
--static void prepare_packed_git_mru_the_repository(void)
-+static void prepare_packed_git_mru(struct repository *r)
+-#define prepare_packed_git_one(r, o, l) prepare_packed_git_one_##r(o, l)
+-static void prepare_packed_git_one_the_repository(char *objdir, int local)
++static void prepare_packed_git_one(struct repository *r,
++				   char *objdir, int local)
  {
- 	struct packed_git *p;
+ 	struct strbuf path = STRBUF_INIT;
+ 	size_t dirnamelen;
+@@ -760,8 +760,7 @@ static void prepare_packed_git_one_the_repository(char *objdir, int local)
+ 		base_len = path.len;
+ 		if (strip_suffix_mem(path.buf, &base_len, ".idx")) {
+ 			/* Don't reopen a pack we already have. */
+-			for (p = the_repository->objects.packed_git; p;
+-			     p = p->next) {
++			for (p = r->objects.packed_git; p; p = p->next) {
+ 				size_t len;
+ 				if (strip_suffix(p->pack_name, ".pack", &len) &&
+ 				    len == base_len &&
+@@ -774,7 +773,7 @@ static void prepare_packed_git_one_the_repository(char *objdir, int local)
+ 			     * corresponding .pack file that we can map.
+ 			     */
+ 			    (p = add_packed_git(path.buf, path.len, local)) != NULL)
+-				install_packed_git(the_repository, p);
++				install_packed_git(r, p);
+ 		}
  
--	mru_clear(&the_repository->objects.packed_git_mru);
--	for (p = the_repository->objects.packed_git; p; p = p->next)
--		mru_append(&the_repository->objects.packed_git_mru, p);
-+	mru_clear(&r->objects.packed_git_mru);
-+	for (p = r->objects.packed_git; p; p = p->next)
-+		mru_append(&r->objects.packed_git_mru, p);
- }
- 
- void prepare_packed_git_the_repository(void)
+ 		if (!report_garbage)
 -- 
 2.15.1.433.g936d1b9894.dirty
 
