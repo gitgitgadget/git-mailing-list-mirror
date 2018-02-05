@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08CFB1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EF861F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:01:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752123AbeBFABb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:01:31 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:39976 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752100AbeBFAB2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:01:28 -0500
-Received: by mail-pg0-f67.google.com with SMTP id g2so121819pgn.7
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:01:28 -0800 (PST)
+        id S1752038AbeBFAB4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:01:56 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34727 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751089AbeBFABy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:01:54 -0500
+Received: by mail-pg0-f66.google.com with SMTP id s73so137880pgc.1
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4uB1HLdUIhqx5IUot2j+SiE+TJuCK2cXFlSIGUBR2F0=;
-        b=pZ83ol0RkpfC6EOJTbOBl90N++wpsGVUQE2hnQsbe3sI8ltTjZ0hvhDmywr0/r27av
-         1ITn0JSq12jwuXNB9h3I1MGg7Al7kncnI9hWsmzrdMOlEJKAAqW0Qm9i1xyBDctqNDtm
-         obTIbVugkjSWN5VhPXWdKFU53WDHLkD6JIC2I0Niiqmw3Z0/kJpCOQAjYQLjaLqudCzp
-         lbGVk2YvIaTxDxSVsBWfgXOkHeLOyGOmtC7rtlJplOoLGnxMbzWHbahqC28GR+8U86dR
-         cMi5VO5dMY33xRaJGKD1pJMXgzQiRQpvu6hdLeZ0QpmX7ZHiIPRJf5vVpzN8Cb1U5k8a
-         QSdQ==
+        bh=/iXQjbqFe5EAQJeFbpCIWF3M+Os+sBfR8jVkhbYDicQ=;
+        b=SibFqEZktyEt3DMpa26z19uU1H9ZSD6DcPArqozeF8ZPKJ6uGtyYJ739V1Q1XnAUSj
+         K8U7vCw0UV3x+61tBnivjVQOByiql2MGdUyb9g2/XLJevYdM/ooZDimG5I8Zt9sUtM64
+         droK4ooCiANLhJPFFyLpBAZ5BkpKW9s8tk39vFldJl1CD0ENRO13dyjIZGmZlirQqmrR
+         xlSkVP8GxDtngUksmm4K6mw90CUH3WJRUtwzEA4hTbkkgbxUKSy02v39L1P9x23qUvZ4
+         pL2WJpxFLPfUaP2fXRHcSo2XonNm8LNZbefRW5VISpCn5rSpdMOtqke+HDQTgzzEVVdy
+         finA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4uB1HLdUIhqx5IUot2j+SiE+TJuCK2cXFlSIGUBR2F0=;
-        b=EfoZgaeKvCvG8JGA1BD5AREswWjczReb3urVjFhMCRSBMm0Jej8IGA8RlYKCzUEF0y
-         rRhRACOYS5NCPrDIj1asHI3ev3R8XQSiUI9EgndiUzxyhr92pXB5TB/jHV9tadSElQv5
-         tS8PtvrZhg3W2VmYmjVsoWGIJG2btiQJKlu4xxsjc73JQfwcYtcIoNJE62snNnlgqVMd
-         ViqbSvS6GFE067heL4lBObOMI2dayjaJOcrojfjxUCAIam/wxQExlqJGBqdH4nySuF0+
-         WIET7QFbbJ486hTzScai7IO7jiweLRlCTDiFs5osSR5EwCDFvR5LAVpIRqO3+cxLsb6Y
-         O4gQ==
-X-Gm-Message-State: APf1xPBbTrcrmgmi1XO4SEzXgJA+b72arjDtsHcCKv3FE0Z3ketpF5Fg
-        6vM2cnX3o2AirXoYCHYYHdUfyYDYa6g=
-X-Google-Smtp-Source: AH8x225RhvBuwz0ONlnrgaXRSsXZEn7Eo8sej3JvPOtID09LdUjX0F9oYMnCeR/hpA+m2J162pB+EA==
-X-Received: by 10.98.87.2 with SMTP id l2mr519152pfb.46.1517875287308;
-        Mon, 05 Feb 2018 16:01:27 -0800 (PST)
+        bh=/iXQjbqFe5EAQJeFbpCIWF3M+Os+sBfR8jVkhbYDicQ=;
+        b=hEEk0MGmeiZndpr8SlwRTe6SWqlFMXmtwWGwqA67MNumuEvGNMAhI0Uc+kGMWtP22O
+         3sszvOqQTo3QaV/w34JkD+2W6dB6aO6mQc8t/0bANEn31GFZXT8EsNcCCM0AKOShXRp0
+         zPdUtHpwACvYedymOoklHHXyI6PfsygxB9pMGDMD5xcJ7+Px29GIPFDXq1CREDPlMnp5
+         GVZkv2hrc95ZVDz3qPG2WOk95Kkj+PgDGeNAwtS6H2CYTlY7UajBIlSFYfKDYkQ6kOPY
+         F0P5R/m4q3e5GSkmbnEFHJG1k0MB2IbcubV0CSp2cBBzX+vMvy7N3hD1fsHBRbLScAqk
+         g5Ag==
+X-Gm-Message-State: APf1xPBvn+HY1pt+SmEUaQ3DDOmSRsWdZNK2hGmh5UiGJLdkSG58Pb4T
+        tnSIgrq4nKMMyZcSzlP3J38s41XaWe8=
+X-Google-Smtp-Source: AH8x226DRUuyqZLxcZ1ulYqybar4NMAgsbImuG0iTMRJ56QoNToY/ow+iuVKwYWoQhFGtkLVClburg==
+X-Received: by 10.98.228.5 with SMTP id r5mr494249pfh.193.1517875313549;
+        Mon, 05 Feb 2018 16:01:53 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id k14sm18778927pfb.15.2018.02.05.16.01.26
+        by smtp.gmail.com with ESMTPSA id z125sm18508989pfz.27.2018.02.05.16.01.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:01:26 -0800 (PST)
+        Mon, 05 Feb 2018 16:01:53 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 038/194] pack: allow sha1_loose_object_info to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:54:59 -0800
-Message-Id: <20180205235735.216710-18-sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 039/194] replace_object.c: rename to use dash in file name
+Date:   Mon,  5 Feb 2018 15:55:00 -0800
+Message-Id: <20180205235735.216710-19-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,49 +64,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+This is more consistent with the project style. The majority of
+Git's source files use dashes in preference to underscores in their file
+names.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Noticed while adding a header corresponding to this file.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- sha1_file.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ Makefile                             | 2 +-
+ replace_object.c => replace-object.c | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename replace_object.c => replace-object.c (100%)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 786e904eab..1e867bc293 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1156,10 +1156,9 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	return parse_sha1_header_extended(hdr, &oi, 0);
- }
- 
--#define sha1_loose_object_info(r, s, o, f) sha1_loose_object_info_##r(s, o, f)
--static int sha1_loose_object_info_the_repository(const unsigned char *sha1,
--						 struct object_info *oi,
--						 int flags)
-+static int sha1_loose_object_info(struct repository *r,
-+				  const unsigned char *sha1,
-+				  struct object_info *oi, int flags)
- {
- 	int status = 0;
- 	unsigned long mapsize;
-@@ -1183,14 +1182,14 @@ static int sha1_loose_object_info_the_repository(const unsigned char *sha1,
- 	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
- 		const char *path;
- 		struct stat st;
--		if (stat_sha1_file(the_repository, sha1, &st, &path) < 0)
-+		if (stat_sha1_file(r, sha1, &st, &path) < 0)
- 			return -1;
- 		if (oi->disk_sizep)
- 			*oi->disk_sizep = st.st_size;
- 		return 0;
- 	}
- 
--	map = map_sha1_file(the_repository, sha1, &mapsize);
-+	map = map_sha1_file(r, sha1, &mapsize);
- 	if (!map)
- 		return -1;
- 
+diff --git a/Makefile b/Makefile
+index 1a9b23b679..84aeabe320 100644
+--- a/Makefile
++++ b/Makefile
+@@ -873,7 +873,7 @@ LIB_OBJS += refs/packed-backend.o
+ LIB_OBJS += refs/ref-cache.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += remote.o
+-LIB_OBJS += replace_object.o
++LIB_OBJS += replace-object.o
+ LIB_OBJS += repository.o
+ LIB_OBJS += rerere.o
+ LIB_OBJS += resolve-undo.o
+diff --git a/replace_object.c b/replace-object.c
+similarity index 100%
+rename from replace_object.c
+rename to replace-object.c
 -- 
 2.15.1.433.g936d1b9894.dirty
 
