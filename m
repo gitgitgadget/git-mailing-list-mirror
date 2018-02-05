@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AD5A1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B55C1F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752171AbeBEX4J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:56:09 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:34798 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752018AbeBEXzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:55:51 -0500
-Received: by mail-pl0-f66.google.com with SMTP id q17so94593pll.1
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:51 -0800 (PST)
+        id S1752173AbeBEX4M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:56:12 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:42963 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752071AbeBEXzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:55:48 -0500
+Received: by mail-pg0-f68.google.com with SMTP id m28so105069pgc.9
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=z4lJx1JA7AwGSLPA/26bQVIPnNanBO7K6dKKWxtcGVc=;
-        b=o//jDCzEq//4hZumZU2tJji9ThoH35EnS+CvUdzgyFDzSfyCesTPBRPeW35NuAkWJF
-         KjKfUnl7MAGoUlq2EqmkyDI2A+WN1R1Ez2YZdgzGU+gF4TexK+YY/WT1jd60qsVXPKW0
-         JUYn4n/IensdaxgGQ491mqE8JxCeOTb37OLQ4ur4rOIbvoMm6OeFx4C6ElUWwKIcQlLt
-         ZGVIFFU6/K45hvVZnAq2leavn+a6idGWIiOKuqjnjJjxmYTyMRdRGbFujE7bQS1j8ewM
-         z99rtY0bjGVqhahkBsXTR5l3MfyR1wmuQ3J4NPKOXsOr5KheL6eG/rmDkR41aoMYkwWu
-         ZbdQ==
+        bh=doFvFj1oTq6hWI6vYNVk0g+5+he2D0gYp5MuwT4J4cE=;
+        b=BAMLJYL24mfKE5qWbEb66CnoHjuNvPTmWi+Zb1y/Fnl3Yqw6NJBdm72HUNdxFg3/RF
+         p1C74eCrYawOIvqSZw5L9o4OL2FMxUVukrS5J5BBeSRnKPFKwHL/a7E127mf3URJPSQh
+         M4yu0PdZtkRuqJRQkIjs3UlAQGiL7dcQv+1/K+RHM+UT2GNByWZpw7IR54zUyWx48qoO
+         hCjOH69h5XXdXc7xwSJXeAOqf0lorpquuX9iq3JxPi4e/RJj9scmB3lSJCiJxvGIU+kY
+         qRws17/Zz24KGgpJO4dk8ytzOGy07+uIetjjxrnytX2Kca4RMi4xp3dq2fzy8JYgpqdS
+         UhXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=z4lJx1JA7AwGSLPA/26bQVIPnNanBO7K6dKKWxtcGVc=;
-        b=Ue/lGAz02serYOtIhcC7sGyyfSYwBQH7fFBhXLJv7Cg/kznR+aB9WPFzCXB3txurI7
-         8kSzUFQb66A/x7qmsdh3EA1kbnpVVc01ltYn7gqEkC1jM5hWgJ4O8ZfqrtbyBgrnFP6G
-         kQim0QoB0ztn+k18CuoJf7MKkm9E6OaZGoCpPj7mMdN8Vha0Fcktf246OQyhVU1+3cK0
-         TXxrTFIu+HiprUzT+HMsr4Ot+jo0DLsI2b6SC0pCWWXZquW8BNear6abZmwujDxfHkrM
-         w7t3ABA1oWA98WcOoNYLMgzaYlhdh45u52cOb53abCse+ejgQmowsbEwMvhjZVhpV4F9
-         tVXQ==
-X-Gm-Message-State: APf1xPDYIaW8qAoAsihniUgEnmf3SdKfe4kQp+0Khqs6w804N3UFP2SI
-        9SDHmu8WAhgKpz/D4wn2P4q2DXeyGxE=
-X-Google-Smtp-Source: AH8x224JFxQsLGM8xLEfTCT1aAFGjzr4nVrvGZsB4Xrg9gHfkS+GbfnzoQJqO/Hni7ikd+6Ec2/N3Q==
-X-Received: by 2002:a17:902:8284:: with SMTP id y4-v6mr493926pln.194.1517874950502;
-        Mon, 05 Feb 2018 15:55:50 -0800 (PST)
+        bh=doFvFj1oTq6hWI6vYNVk0g+5+he2D0gYp5MuwT4J4cE=;
+        b=RRVpM7Iu1Xk0Py13umOoVE05vQ+djEFoi+e/M+cMedEC9SWz/z33HbkVBupIQVDPHA
+         qXrLRmNbvxJk6rzqXsGXH1CgBzuutrHM1IssZR2fSvOQ7hqAidJ5FG+bvmZWHGkRwfth
+         7ZyOrpqXgNBzGTGuyJxwKLMhavxbO0HYhyn2qIilGzC+nJVTLhpXs1lX83XtTGiDs06n
+         pjDg8nW+bgLHA81PfrTB3jmbs7WzVSujNdnDQdos9zvROQzseUSWTu/qIkdxcCgsy8Vr
+         hCGrZOknd6MTm72Zza54teDC4Vk9VD67N+TjRbFvKRNdL5/QyAVXHSl4WBxEjCDyrLe5
+         YZhA==
+X-Gm-Message-State: APf1xPBCBhgB5RVB1Hba82pxHxWMRTq7r/xW/t/oF0dQ4DGWnipmG1x1
+        uYTEcMPNOvo/ZWJKLP5yZ4NtYbqo51s=
+X-Google-Smtp-Source: AH8x224iWgCTZiii7CKAItyHfTpLOGqtHxcYjLjeiqkYGif1EsBeyz5pi5tWO8OwiMMi5t+YrHKlPg==
+X-Received: by 10.98.133.93 with SMTP id u90mr502286pfd.134.1517874947736;
+        Mon, 05 Feb 2018 15:55:47 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id f12sm15400383pga.67.2018.02.05.15.55.49
+        by smtp.gmail.com with ESMTPSA id p1sm15782241pgr.44.2018.02.05.15.55.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:55:49 -0800 (PST)
+        Mon, 05 Feb 2018 15:55:47 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 013/194] sha1_file: add repository argument to sha1_loose_object_info
-Date:   Mon,  5 Feb 2018 15:52:07 -0800
-Message-Id: <20180205235508.216277-14-sbeller@google.com>
+Subject: [PATCH 011/194] sha1_file: add repository argument to open_sha1_file
+Date:   Mon,  5 Feb 2018 15:52:05 -0800
+Message-Id: <20180205235508.216277-12-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,8 +63,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the sha1_loose_object_info caller
-to be more specific about which repository to act on. This is a small
+Add a repository argument to allow the open_sha1_file caller to be
+more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -74,36 +74,33 @@ repository other than the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ sha1_file.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 24832c4b32..514f59c390 100644
+index 6abdb8c488..9fa7243907 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1152,9 +1152,10 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
- 	return parse_sha1_header_extended(hdr, &oi, 0);
- }
- 
--static int sha1_loose_object_info(const unsigned char *sha1,
--				  struct object_info *oi,
--				  int flags)
-+#define sha1_loose_object_info(r, s, o, f) sha1_loose_object_info_##r(s, o, f)
-+static int sha1_loose_object_info_the_repository(const unsigned char *sha1,
-+						 struct object_info *oi,
-+						 int flags)
+@@ -900,7 +900,9 @@ static int stat_sha1_file_the_repository(const unsigned char *sha1,
+  * Like stat_sha1_file(), but actually open the object and return the
+  * descriptor. See the caveats on the "path" parameter above.
+  */
+-static int open_sha1_file(const unsigned char *sha1, const char **path)
++#define open_sha1_file(r, s, p) open_sha1_file_##r(s, p)
++static int open_sha1_file_the_repository(const unsigned char *sha1,
++					 const char **path)
  {
- 	int status = 0;
- 	unsigned long mapsize;
-@@ -1267,7 +1268,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 
- 	if (!find_pack_entry(real, &e)) {
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(real, oi, flags))
-+		if (!sha1_loose_object_info(the_repository, real, oi, flags))
- 			return 0;
- 
- 		/* Not a loose object; someone else may have just packed it. */
+ 	int fd;
+ 	struct alternate_object_database *alt;
+@@ -939,7 +941,7 @@ static void *map_sha1_file_1(const char *path,
+ 	if (path)
+ 		fd = git_open(path);
+ 	else
+-		fd = open_sha1_file(sha1, &path);
++		fd = open_sha1_file(the_repository, sha1, &path);
+ 	map = NULL;
+ 	if (fd >= 0) {
+ 		struct stat st;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
