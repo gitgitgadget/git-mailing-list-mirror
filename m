@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E11281F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C75D1F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752141AbeBEXz7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:55:59 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:37436 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752060AbeBEXzo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:55:44 -0500
-Received: by mail-pg0-f66.google.com with SMTP id o1so113167pgn.4
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:44 -0800 (PST)
+        id S1752155AbeBEX4B (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:56:01 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:33050 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751544AbeBEXzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:55:45 -0500
+Received: by mail-pl0-f67.google.com with SMTP id t4so93345plo.0
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HThM2jcmBnOY3Ubd2pA32DAlbmhx+71ldc+74RHhGe0=;
-        b=et06sz63J5Qlui5Fmaso/uMtMOlFx7fZSUjjQxezKjSUO4dYvjILpZfJfg6xPt8XiA
-         k+VrgYbuXJblFsVvwsQa66AALtMgY1bsWMAQC4G69G4qGeOfAss1MXUZ74fLf/AqMYBE
-         6qi7BhUPVRvphw3ysyikSxEHZ50OiurWjWIHi0H0XEzHc1ev9Qw2SVkMB+jKZYExD21j
-         PutwRnj7innT28hdo8GsskNcr4gJr/O6h+z9tlAP+RRovFgDmGnjh8UbZPHUQSD+v6qA
-         ipH0Wlbtb8m/XTFHLhh2tROkkEZJBtvdkx7CaBRb4zbNA0kO6BEf2DxBCpHS61NEkb/w
-         Tc/A==
+        bh=bDwgb2fvGSZKF6hljuS8PWI99gPa5Ef2PIDJEgnoZJQ=;
+        b=DnvxGaxzStmTAnSxhyJDX+DbS8MiuZdHri2nUxWJbY6GiilJc9m76IzWmncCTJVU8B
+         7HnQwz1G2Wtm8Ilk7t+pixCPV9U/xOzCxTjuhUtlzWQknU9HgxJD4hLk5H6lvm+hDTQe
+         CRePufiS5cIgCZI1tHWFQaieWA3O1PwCfgiInqOc2/nGx2smzVAi+KNeGrgR44EBim6G
+         DGBl1VLBjchTaJ8GFx19ckJRmO6CXMcMbnEx8VDRQeLq3IyyyXjH9qcxmxfiyqstS6i+
+         aKUErWZZXGo0Y3LDfHD9ady7bISbMelwOHa2tXeI7TouNPIUmygfbTZFgxByrsiESjz3
+         TuJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=HThM2jcmBnOY3Ubd2pA32DAlbmhx+71ldc+74RHhGe0=;
-        b=uj6GkL1s70bKUr1HM6btYFSgYSXB8oztyULlB61KHElNb0j0YKnvySCqep+jf8iWpO
-         4n2OxPTGNar5dOGrQ1AjUFUNp5R1cubad+Sw5WkEeJX/re4YShNXVLilFaX0DMq3f8sr
-         fZ2KKX3S6ijIbde4XmkBMrzfJXU/56w8jLCEdw9+hN+zCUF5PJGlvCD5csD8mYLiiT9j
-         JT7I9AySGBH5dTHIME9jmvYQk16bH9hGjGZ//lO8LWNL0BjapC1WWkS6b7BJLBwwWjsA
-         LfMb/NTjWdfDIhWWuJZ7ToJi5O2SzzxyQvH3dQ3yrrhThiAijvhTt7xOIuOYhKMwVT+B
-         c7ZA==
-X-Gm-Message-State: APf1xPBMex6jp4GDCjhMcRFirdNvkPi/5mO1vahaMTFxEofj85aTed6/
-        NI86UU34Q2pKfStkc9NsFbMwaE0dFoM=
-X-Google-Smtp-Source: AH8x224d6YVNLHwSlfe6AZTJtkWLdlcxvEoqQZp1mFzb8azYe63AnuFXIBm3BqVB5/ZTX+0zJ0kP3g==
-X-Received: by 10.99.114.90 with SMTP id c26mr374772pgn.427.1517874943631;
-        Mon, 05 Feb 2018 15:55:43 -0800 (PST)
+        bh=bDwgb2fvGSZKF6hljuS8PWI99gPa5Ef2PIDJEgnoZJQ=;
+        b=bSdyeq4LjGjS5MgY4c238mSR4o5QDoxoTNua0XVxOKXmTiD/LxeJwF39511R39j88Q
+         4h4P1I1biBCRgJGI0ehS2eLxW6YQVPXNfFuKEUb23wjwhoY3gGTgbwm+reMlWmlb5DAi
+         wxK0zIOh1AnI7cg0KNoTJXNOiejYKhK21REeBcZZBh23rGvWuoLbuGKg7jx79ngAF4Eu
+         A0qvsf+V7SxUaKfC1+vKdxFJf8P81g5ea5cg4aSRcOayxu4eAizjlxVP41yA6rivCZ6u
+         Oc7/LsvN9jMzt16SLA8TCC3gwCRVsM8PiZlyg5bajGGXi8iMXFlNMpwnEKVnLnMaHx2G
+         dC9Q==
+X-Gm-Message-State: APf1xPDcrUzUQa3Q5CJjTDDTkWAMDS2A60tTh3bIehc9nO2P/U+jb8+v
+        oo+g89KLuN3g3x67J/HPwOTm6JCFiwg=
+X-Google-Smtp-Source: AH8x226hoxPoKWYkrW+HHs4CRcOAknQnClvbn6k52dRGs6PeiVVJUaleooXcbDmPc3PNkFOmp6mOmA==
+X-Received: by 2002:a17:902:7b81:: with SMTP id w1-v6mr463380pll.295.1517874945032;
+        Mon, 05 Feb 2018 15:55:45 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i9sm20729818pfi.154.2018.02.05.15.55.42
+        by smtp.gmail.com with ESMTPSA id q65sm14389998pfi.115.2018.02.05.15.55.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:55:43 -0800 (PST)
+        Mon, 05 Feb 2018 15:55:44 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 008/194] sha1_file: add repository argument to read_info_alternates
-Date:   Mon,  5 Feb 2018 15:52:02 -0800
-Message-Id: <20180205235508.216277-9-sbeller@google.com>
+Subject: [PATCH 009/194] sha1_file: add repository argument to link_alt_odb_entries
+Date:   Mon,  5 Feb 2018 15:52:03 -0800
+Message-Id: <20180205235508.216277-10-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,63 +63,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the read_info_alternates caller to
-be more specific about which repository to read from. This is a small
+Add a repository argument to allow the link_alt_odb_entries caller to
+be more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
-As with the previous commit, use a macro to catch callers passing a
+As with the previous commits, use a macro to catch callers passing a
 repository other than the_repository at compile time.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sha1_file.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 1e17246f5c..acb00b9680 100644
+index acb00b9680..d9f9046f31 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -393,7 +393,9 @@ static int alt_odb_usable_the_repository(struct strbuf *path,
-  * SHA1, an extra slash for the first level indirection, and the
-  * terminating NUL.
-  */
--static void read_info_alternates(const char * relative_base, int depth);
-+#define read_info_alternates(r, rb, d) read_info_alternates_##r(rb, d)
-+static void read_info_alternates_the_repository(const char *relative_base,
-+						int depth);
- #define link_alt_odb_entry(r, e, rb, d, n) link_alt_odb_entry_##r(e, rb, d, n)
- static int link_alt_odb_entry_the_repository(const char *entry,
- 	const char *relative_base, int depth, const char *normalized_objdir)
-@@ -434,7 +436,7 @@ static int link_alt_odb_entry_the_repository(const char *entry,
- 	ent->next = NULL;
- 
- 	/* recursively add alternates */
--	read_info_alternates(pathbuf.buf, depth + 1);
-+	read_info_alternates(the_repository, pathbuf.buf, depth + 1);
- 
- 	strbuf_release(&pathbuf);
- 	return 0;
-@@ -500,7 +502,8 @@ static void link_alt_odb_entries(const char *alt, int sep,
- 	strbuf_release(&objdirbuf);
+@@ -471,8 +471,12 @@ static const char *parse_alt_odb_entry(const char *string,
+ 	return end;
  }
  
--static void read_info_alternates(const char * relative_base, int depth)
-+static void read_info_alternates_the_repository(const char *relative_base,
+-static void link_alt_odb_entries(const char *alt, int sep,
+-				 const char *relative_base, int depth)
++#define link_alt_odb_entries(r, a, s, rb, d) \
++	link_alt_odb_entries_##r(a, s, rb, d)
++static void link_alt_odb_entries_the_repository(const char *alt,
++						int sep,
++						const char *relative_base,
 +						int depth)
  {
- 	char *path;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -684,7 +687,7 @@ void prepare_alt_odb(void)
- 			&the_repository->objects.alt_odb_list;
- 	link_alt_odb_entries(alt, PATH_SEP, NULL, 0);
+ 	struct strbuf objdirbuf = STRBUF_INIT;
+ 	struct strbuf entry = STRBUF_INIT;
+@@ -515,7 +519,7 @@ static void read_info_alternates_the_repository(const char *relative_base,
+ 		return;
+ 	}
  
--	read_info_alternates(get_object_directory(), 0);
-+	read_info_alternates(the_repository, get_object_directory(), 0);
+-	link_alt_odb_entries(buf.buf, '\n', relative_base, depth);
++	link_alt_odb_entries(the_repository, buf.buf, '\n', relative_base, depth);
+ 	strbuf_release(&buf);
+ 	free(path);
+ }
+@@ -569,7 +573,8 @@ void add_to_alternates_file(const char *reference)
+ 		if (commit_lock_file(&lock))
+ 			die_errno("unable to move new alternates file into place");
+ 		if (the_repository->objects.alt_odb_tail)
+-			link_alt_odb_entries(reference, '\n', NULL, 0);
++			link_alt_odb_entries(the_repository, reference,
++					     '\n', NULL, 0);
+ 	}
+ 	free(alts);
+ }
+@@ -582,7 +587,8 @@ void add_to_alternates_memory(const char *reference)
+ 	 */
+ 	prepare_alt_odb();
+ 
+-	link_alt_odb_entries(reference, '\n', NULL, 0);
++	link_alt_odb_entries(the_repository, reference,
++			     '\n', NULL, 0);
  }
  
- /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+ /*
+@@ -685,7 +691,8 @@ void prepare_alt_odb(void)
+ 
+ 	the_repository->objects.alt_odb_tail =
+ 			&the_repository->objects.alt_odb_list;
+-	link_alt_odb_entries(alt, PATH_SEP, NULL, 0);
++	link_alt_odb_entries(the_repository, alt,
++			     PATH_SEP, NULL, 0);
+ 
+ 	read_info_alternates(the_repository, get_object_directory(), 0);
+ }
 -- 
 2.15.1.433.g936d1b9894.dirty
 
