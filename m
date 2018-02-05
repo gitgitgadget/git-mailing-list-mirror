@@ -7,278 +7,166 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA1B1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 14:15:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A581F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 14:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753093AbeBEOPE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 09:15:04 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:40770 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752612AbeBEOPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 09:15:01 -0500
-Received: by mail-qk0-f196.google.com with SMTP id d18so32684162qke.7
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 06:15:01 -0800 (PST)
+        id S1752994AbeBEOaW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 09:30:22 -0500
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:43876 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752961AbeBEOaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 09:30:20 -0500
+Received: by mail-lf0-f54.google.com with SMTP id o89so42007098lfg.10
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 06:30:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=hO6oIy9BeEsVZH7tDyI2x4+yPYH9A7aTyA3oMsSAvAU=;
-        b=IamjHc09kyYNWMzdFoMPnz7QLqZVrKHYb9BCnWj3tCw97FZ+XEYlTzrEMT74CCjyKU
-         IIVGCY3tBovzTEPQDTmvehsfPM4vFaUJt8fbbeq2T9hTw1N5NEsSG7hr1ZoVIB+eq5ig
-         4Dw1P3sNhSVBunQFCIf4WE0Q1D03Bzt1y0YLZyMirxsipbTmVbAAAuCFzEe3Pya+SbGi
-         6FnQUvu4PkcNPlNk7bUkkjz3xqbKAvcvCMAuE8a0Jb+LUa+HkRe98Lg8CzjM5CDQlCrJ
-         g69YN5ia2RCbuXpmLy8v+hJgyQBca7R68n8VtJhoQxpwxtWNswa7AZTrgZqUhdnmmq9l
-         +Ovg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=f1SWBVzK98nZb73RzMoOyaOTQbTMSlFDM6b+HJbKS8A=;
+        b=U1H3Vus3E9MiSTTKNq/FBVj8629WFQyK/1tiTTCyMPCvLw90eqznbsevXze7m2Unhh
+         Py6no6Lv4VKusZlUIUQ/W6Juu2NLk6T4NFUSZ8tUII5ZDwBDLGn3L4+DAl1Miy8Gx2is
+         ZWUQll+cup89KMOoMZ3e9NsYgGTdb4b3HfqRJKKMKHwPKhngVsOPPhv2igiuTCbUBG0w
+         fWPhG5rcB+wJPBpF96DYgVpSxAw1UJVpTrnHIUL0we7Gx6KKqjc5u2Pu65l1uHzg0WQb
+         U1NueaqbWVTH9QnLJijcxFUsWzmaj4CijeCpYb5PXq4Oo3LaZmGMEZBYLCnucNKh/ONZ
+         WklQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=hO6oIy9BeEsVZH7tDyI2x4+yPYH9A7aTyA3oMsSAvAU=;
-        b=UlHj+rEqTfGL7+AZbcQ/V3f38QK2B22MJpAyPqcb7y7R1IR8p5FBacOV9h+GdClaoy
-         zEvmZ35C//EaMrx+ILgLz3uFpiT4ZBRW9sNqGtw6qKeIJbiC0eR12cQU0GSNOmf8CTpi
-         pwzpIjCBwD2olns53Znj2IykEiXWzZVZL8/gJrvMhhtSV+LGnDN01Rqu1fbaG5DdMkBd
-         ABf7xknvdj/nQ7G0wGbd7OGLsr8iYD39yf+c/5wpcNlWNsYbIQiRW8fhunKI8jIwYgH3
-         3bImeUkSg4THUPu5J8Bbt0XWlhoPvgcNoJqit92Vzclb4ISFo3EQZi/pfT8UxXG97jv3
-         Iplw==
-X-Gm-Message-State: AKwxytdhOoSaXCOs0DNLllvqjIZ5RPbYA+HwATFd62X430GjCE2+8LiH
-        JNyGpBdEoYU/mg2TJEzNBSk=
-X-Google-Smtp-Source: AH8x225YzbVjigBecistwVP9GOMm9gdHWP0uISDEayc8msu9SPaCP6TZtEZSCvEjjLjc8Fbtc5HRIg==
-X-Received: by 10.55.177.131 with SMTP id a125mr67278063qkf.101.1517840100852;
-        Mon, 05 Feb 2018 06:15:00 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id e5sm5257994qkj.64.2018.02.05.06.14.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Feb 2018 06:14:59 -0800 (PST)
-Subject: Re: [PATCH v2 10/27] protocol: introduce enum protocol_version value
- protocol_v2
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, jrnieder@gmail.com
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180125235838.138135-1-bmwill@google.com>
- <20180125235838.138135-11-bmwill@google.com>
- <815183f7-f449-1286-6dee-7cf6064bc5a1@gmail.com>
- <20180202224454.GB187827@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <592b2701-de7d-293b-f374-a885bdd827df@gmail.com>
-Date:   Mon, 5 Feb 2018 09:14:59 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=f1SWBVzK98nZb73RzMoOyaOTQbTMSlFDM6b+HJbKS8A=;
+        b=jXDoCQ6znD35O8CBKEdBtuwIM6mWjF2wonUq2sNWgr0C8rZFLRq87ac8jytoMFCjuL
+         lNUx92g6l5epu8q1m4j7FlGChwFXfhzuT8PfQp7Nj/0GYi2XEZoX+4xPdxH0e/TH+Pif
+         n7P4DQqrEpGB88sUZN8KbShwTmhgHG1+X+xay4AknlI4jPF58giav4G/jCgjBYD37Wy3
+         KERq+eZbaQ7/nslhA6UQhc22FHU7abuVsxicZI8SkWhUi6cWswH776i0jzD6oYrhxfZd
+         ObXHvQyci21WNjDoplQzJT+EgZ1CL6+7SjoHqfTuwJ2pf+2YSd5WE/93STmVk95o/nIi
+         A08A==
+X-Gm-Message-State: AKwxytfNzPTCMUS7x2DmAytGF9P9ltDlRv/zAYVGPcpwTeN7McGIICa9
+        40f1SNkbdzajM4jtTD3EkMmJMIvQKByWzgvZvJva6bM5
+X-Google-Smtp-Source: AH8x226YTRy3+kuv4EYbZjbbaJ9QFGiaIWQwo5dZmfYP+2XvD0omyrQDb7UF5CUuqDNYxixKxQB+Eo08fOoBfftyDZ4=
+X-Received: by 10.46.62.24 with SMTP id l24mr20501893lja.25.1517841018906;
+ Mon, 05 Feb 2018 06:30:18 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20180202224454.GB187827@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.46.44.11 with HTTP; Mon, 5 Feb 2018 06:30:18 -0800 (PST)
+In-Reply-To: <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
+References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
+ <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
+ <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
+ <CAGZ79kafgyOujDM4BsXdDUnP+iFk5mp2bYnX-Q65khW-weEhUg@mail.gmail.com>
+ <xmqqy3kfq6a9.fsf@gitster-ct.c.googlers.com> <CAHqTa-0kdkDUjH1nw=4JPAivtyL84zfZ5t8Dj1UYXPrMd7Poqw@mail.gmail.com>
+ <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
+From:   Stephen R Guglielmo <srguglielmo@gmail.com>
+Date:   Mon, 5 Feb 2018 09:30:18 -0500
+Message-ID: <CADfK3RWAcb0m+m_U51JLA9tNyru_7XEsfy55i5EUsKh98jGFtA@mail.gmail.com>
+Subject: Re: Bug Report: Subtrees and GPG Signed Commits
+To:     Avery Pennarun <apenwarr@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/2/2018 5:44 PM, Brandon Williams wrote:
-> On 01/31, Derrick Stolee wrote:
->> On 1/25/2018 6:58 PM, Brandon Williams wrote:
->>> Introduce protocol_v2, a new value for 'enum protocol_version'.
->>> Subsequent patches will fill in the implementation of protocol_v2.
+On Wed, Jan 31, 2018 at 7:33 AM, Stephen R Guglielmo
+<srguglielmo@gmail.com> wrote:
+> On Tue, Jan 30, 2018 at 6:37 PM, Avery Pennarun <apenwarr@gmail.com> wrote:
+>> On Tue, Jan 30, 2018 at 6:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>> There has not been feedback for a while on this thread.
+>>>> I think that is because subtrees are not in anyone's hot
+>>>> interest area currently.
+>>>>
+>>>> This is definitely the right place to submit&discuss bugs.
+>>>> Looking through "git log --format="%ae %s" -S subtree",
+>>>> it seems as if Avery (apenwarr@gmail.com) was mostly
+>>>> interested in developing subtrees, though I think he has
+>>>> moved on. Originally it was invented by Junio, who is
+>>>> the active maintainer of the project in 68faf68938
+>>>> (A new merge stragety 'subtree'., 2007-02-15)
 >>>
->>> Signed-off-by: Brandon Williams <bmwill@google.com>
->>> ---
->>>    builtin/fetch-pack.c   | 3 +++
->>>    builtin/receive-pack.c | 6 ++++++
->>>    builtin/send-pack.c    | 3 +++
->>>    builtin/upload-pack.c  | 7 +++++++
->>>    connect.c              | 3 +++
->>>    protocol.c             | 2 ++
->>>    protocol.h             | 1 +
->>>    remote-curl.c          | 3 +++
->>>    transport.c            | 9 +++++++++
->>>    9 files changed, 37 insertions(+)
+>>> Thanks for trying to help, but I have *NOTHING* to do with the "git
+>>> subtree" subcommand (and I personally have no interest in it).  What
+>>> I did was a subtree merge strategy (i.e. "git merge -s subtree"),
+>>> which is totally a different thing.
 >>>
->>> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
->>> index 85d4faf76..f492e8abd 100644
->>> --- a/builtin/fetch-pack.c
->>> +++ b/builtin/fetch-pack.c
->>> @@ -201,6 +201,9 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
->>>    			   PACKET_READ_GENTLE_ON_EOF);
->>>    	switch (discover_version(&reader)) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
->>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->>> index b7ce7c7f5..3656e94fd 100644
->>> --- a/builtin/receive-pack.c
->>> +++ b/builtin/receive-pack.c
->>> @@ -1963,6 +1963,12 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
->>>    		unpack_limit = receive_unpack_limit;
->>>    	switch (determine_protocol_version_server()) {
->>> +	case protocol_v2:
->>> +		/*
->>> +		 * push support for protocol v2 has not been implemented yet,
->>> +		 * so ignore the request to use v2 and fallback to using v0.
->>> +		 */
->>> +		break;
->>>    	case protocol_v1:
->>>    		/*
->>>    		 * v1 is just the original protocol with a version string,
->>> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
->>> index 83cb125a6..b5427f75e 100644
->>> --- a/builtin/send-pack.c
->>> +++ b/builtin/send-pack.c
->>> @@ -263,6 +263,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->>>    			   PACKET_READ_GENTLE_ON_EOF);
->>>    	switch (discover_version(&reader)) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		get_remote_heads(&reader, &remote_refs, REF_NORMAL,
->>> diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
->>> index 2cb5cb35b..8d53e9794 100644
->>> --- a/builtin/upload-pack.c
->>> +++ b/builtin/upload-pack.c
->>> @@ -47,6 +47,13 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
->>>    		die("'%s' does not appear to be a git repository", dir);
->>>    	switch (determine_protocol_version_server()) {
->>> +	case protocol_v2:
->>> +		/*
->>> +		 * fetch support for protocol v2 has not been implemented yet,
->>> +		 * so ignore the request to use v2 and fallback to using v0.
->>> +		 */
->>> +		upload_pack(&opts);
->>> +		break;
->>>    	case protocol_v1:
->>>    		/*
->>>    		 * v1 is just the original protocol with a version string,
->>> diff --git a/connect.c b/connect.c
->>> index db3c9d24c..f2157a821 100644
->>> --- a/connect.c
->>> +++ b/connect.c
->>> @@ -84,6 +84,9 @@ enum protocol_version discover_version(struct packet_reader *reader)
->>>    	/* Maybe process capabilities here, at least for v2 */
->>>    	switch (version) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    		/* Read the peeked version line */
->>>    		packet_reader_read(reader);
->>> diff --git a/protocol.c b/protocol.c
->>> index 43012b7eb..5e636785d 100644
->>> --- a/protocol.c
->>> +++ b/protocol.c
->>> @@ -8,6 +8,8 @@ static enum protocol_version parse_protocol_version(const char *value)
->>>    		return protocol_v0;
->>>    	else if (!strcmp(value, "1"))
->>>    		return protocol_v1;
->>> +	else if (!strcmp(value, "2"))
->>> +		return protocol_v2;
->>>    	else
->>>    		return protocol_unknown_version;
->>>    }
->>> diff --git a/protocol.h b/protocol.h
->>> index 1b2bc94a8..2ad35e433 100644
->>> --- a/protocol.h
->>> +++ b/protocol.h
->>> @@ -5,6 +5,7 @@ enum protocol_version {
->>>    	protocol_unknown_version = -1,
->>>    	protocol_v0 = 0,
->>>    	protocol_v1 = 1,
->>> +	protocol_v2 = 2,
->>>    };
->>>    /*
->>> diff --git a/remote-curl.c b/remote-curl.c
->>> index 9f6d07683..dae8a4a48 100644
->>> --- a/remote-curl.c
->>> +++ b/remote-curl.c
->>> @@ -185,6 +185,9 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
->>>    			   PACKET_READ_GENTLE_ON_EOF);
->>>    	switch (discover_version(&reader)) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		get_remote_heads(&reader, &list, for_push ? REF_NORMAL : 0,
->>> diff --git a/transport.c b/transport.c
->>> index 2378dcb38..83d9dd1df 100644
->>> --- a/transport.c
->>> +++ b/transport.c
->>> @@ -203,6 +203,9 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
->>>    	data->version = discover_version(&reader);
->>>    	switch (data->version) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		get_remote_heads(&reader, &refs,
->>> @@ -250,6 +253,9 @@ static int fetch_refs_via_pack(struct transport *transport,
->>>    		refs_tmp = get_refs_via_connect(transport, 0);
->>>    	switch (data->version) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		refs = fetch_pack(&args, data->fd, data->conn,
->>> @@ -585,6 +591,9 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
->>>    		args.push_cert = SEND_PACK_PUSH_CERT_NEVER;
->>>    	switch (data->version) {
->>> +	case protocol_v2:
->>> +		die("support for protocol v2 not implemented yet");
->>> +		break;
->>>    	case protocol_v1:
->>>    	case protocol_v0:
->>>    		ret = send_pack(&args, data->fd, data->conn, remote_refs,
->> With a macro approach to version selection, this change becomes simpler in
->> some ways and harder in others.
+>>> David Greene offered to take it over in 2015, and then we saw some
+>>> activity by David Aguilar in 2016, but otherwise the subcommand from
+>>> contrib/ has pretty much been dormant these days.
 >>
->> It is simpler in that we can have the macro from the previous commits just
->> fall back to version 0 behavior.
+>> Strictly speaking, the 'git subtree' command does in fact use 'git
+>> merge -s subtree' under the covers, so Junio is at least partly
+>> responsible for giving me the idea :)
 >>
->> It is harder in that this commit would need one of two options:
+>> I actually have never looked into how signed commits work and although
+>> I still use git-subtree occasionally (it hasn't needed any
+>> maintenance, for my simple use cases), I have never used it with
+>> signed commits.
 >>
->> 1. A macro that performs an arbitrary statement when given v2, which would
->> be the die() for these actions not in v2.
->> 2. A macro that clearly states v2 is not supported and calls die() on v2.
+>> git-subtree maintains a cache that maps commit ids in the "original
+>> project" with their equivalents in the "merged project."  If there's
+>> something magic about how commit ids work with signed commits, I could
+>> imagine that causing the "no a valid object name" problems.  Or,
+>> git-subtree in --squash mode actually generates new commit objects
+>> using some magic of its own.  If it were to accidentally copy a
+>> signature into a commit that no longer matches the original, I imagine
+>> that new object might get rejected.
 >>
->> Here is my simple, untested attempt at a union of these options:
+>> Unfortunately I don't have time to look into it.  The git-subtree code
+>> is pretty straightforward, though, so if Stephen has an hour or two to
+>> look deeper it's probably possible to fix it up.  The tool is not
+>> actually as magical and difficult as it might seem at first glance :)
 >>
->> #define ON_PROTOCOL_VERSION(version,v0,v2) switch(version) {\
->> case protocol_v2:\
->>      (v2);\
->>      break;\
->> case protocol_v1:\
->> case protocol_v0:\
->>      (v0);\
->>      break;\
->> case protocol_unknown_version:\
->>      BUG("unknown protocol version");\
->> }
->> #define ON_PROTOCOL_VERSION_V0_FALLBACK(version,v0) switch(version) {\
->> case protocol_v2:\
->> case protocol_v1:\
->> case protocol_v0:\
->>      (v0);\
->>      break;\
->> case protocol_unknown_version:\
->>      BUG("unknown protocol version");\
->> }
->> #define ON_PROTOCOL_VERSION_V0_ONLY(version,v0) \
->>      ON_PROTOCOL_VERSION(version,v0,\
->>                  BUG("support for protocol v2 not implemented yet"))
+>> Sorry I can't help more.
+>>
+>> Good luck,
+>>
+>> Avery
 >
-> While I understand wanting to isolate the switch statement code, I think
-> that creating such a macro would make reading the code much more
-> difficult (and a pain to get right).  Really I don't want to try my hand
-> at crafting such a macro :D
+> Thanks all for the discussion/replies.
 >
+> We use subtrees extensively in our environment right now. The "sub"
+> repos (90+) are located on GitHub, while the "main/parent" repo is
+> provided by a vendor on website hosting infrastructure.
+>
+> I will take a look at:
+> git/Documentation/CodingGuidelines
+> git/Documentation/SubmittingPatches
+> git/contrib/subtree/
+>
+> Should I follow up in this thread with a patch (it might be a while)?
+>
+> Thanks!
+> Steve
 
-Sounds good. You're right that the macro approach is more likely to be 
-used incorrectly.
+Hi all,
 
--Stolee
+It looks like I've found the cause of the issue. I have
+log.showsignature=true in my gitconfig. The toptree_for_commit()
+function calls `git log` and passes the output to `git commit-tree` in
+new_squash_commit(). Apparently commit-tree doesn't like GPG sigs.
+
+The fix was simple: --no-show-signature. However, I believe this was
+added in git v2.10.0, so it's not fully backwards compatible. I'm open
+to suggestions on a better fix if this is not acceptable.
+
+Thanks!
+
+
+https://github.com/srguglielmo/git/commit/822c8a45d049f86ea5c59c0b434303964e4e6f3d
+
+
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index cc033af73..dec085a23 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -475,7 +475,7 @@ squash_msg () {
+
+ toptree_for_commit () {
+        commit="$1"
+-       git log -1 --pretty=format:'%T' "$commit" -- || exit $?
++       git log --no-show-signature -1 --pretty=format:'%T' "$commit"
+-- || exit $?
+ }
+
+ subtree_for_commit () {
