@@ -8,139 +8,148 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90D331F576
-	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 527031F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752961AbeBEL2M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 06:28:12 -0500
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:44216
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752860AbeBEL1k (ORCPT
+        id S1752968AbeBEL2O (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 06:28:14 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:42250
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752843AbeBEL1k (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 06:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1517830059;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=zE+x3PsTit2wZUkfjMiZxE1BIcsJyhid1gquDkYpPRU=;
-        b=jA8Dgyx57kb/r4gods5MfpC8QpsEI6dbrNu3sunUKAi/nroguYHMnt4kY82EqJB9
-        0o7zXuhbia/9W3ID/RLJDYNlOSRBI/74otyoALBPEIQ8l2xFtVjGOjIkv/EJ5my2d9z
-        iY3N98K6t4NptTReB6/h+AQbwOWDL0wX82iETTYg=
+        bh=GUWiJJ22cULqgpFXsfv1+t0QgPIchAttJUDE+gqaZZg=;
+        b=h2NZzGgdlBzbJkE4+C20vQOQq0YuO1oxHGUp1hiuOYrK1VNklVsZIfV0yreMs8pk
+        QHurnEtQZvK5gdfWOW7fmmcXsVNVRSHm30qa+TDDrRj4BDk2qJynAW96bFv5HctnHSE
+        I31ydynoGgdzHx3tifYgMdYtX6YJYXsH9U4e0jsQ=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016165b8b479-a61894ea-257d-42a7-af7d-607124715633-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016165b8b459-938aff59-da10-4b83-9e42-cd6feb06adb5-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
 References: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC v2 24/25] cat-file: tests for new atoms added
+Subject: [PATCH RFC v2 15/25] ref_filter: add is_atom_used function
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Mon, 5 Feb 2018 11:27:39 +0000
-X-SES-Outgoing: 2018.02.05-54.240.7.12
+X-SES-Outgoing: 2018.02.05-54.240.7.17
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add some tests for new formatting atoms from ref-filter.
-Some of new atoms are supported automatically,
-some of them are expanded into empty string
-(because they are useless for some types of objects),
-some of them could be supported later in other patches.
+Delete all items related to split_on_whitespace from ref-filter
+and add new function for handling the logic.
+Now cat-file could invoke that function to implementing its logic.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- t/t1006-cat-file.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ builtin/cat-file.c |  8 +++-----
+ ref-filter.c       | 17 +++++++++++++++--
+ ref-filter.h       | 10 +++-------
+ 3 files changed, 21 insertions(+), 14 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index b19f332694620..e72fcaf0e02c5 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -20,6 +20,19 @@ maybe_remove_timestamp () {
-     fi
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index e8e788f41b890..a55138f1fd1d1 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -382,8 +382,7 @@ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct expand_data data;
+-	int save_warning;
+-	int retval = 0;
++	int save_warning, is_rest, retval = 0;
+ 
+ 	if (!opt->format.format)
+ 		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
+@@ -397,8 +396,6 @@ static int batch_objects(struct batch_options *opt)
+ 	opt->format.cat_file_data = &data;
+ 	opt->format.is_cat = 1;
+ 	verify_ref_format(&opt->format);
+-	if (opt->cmdmode)
+-		data.split_on_whitespace = 1;
+ 
+ 	if (opt->all_objects) {
+ 		struct object_info empty = OBJECT_INFO_INIT;
+@@ -437,9 +434,10 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
++	is_rest = opt->cmdmode || is_atom_used(&opt->format, "rest");
+ 
+ 	while (strbuf_getline(&buf, stdin) != EOF) {
+-		if (data.split_on_whitespace) {
++		if (is_rest) {
+ 			/*
+ 			 * Split at first whitespace, tying off the beginning
+ 			 * of the string and saving the remainder (or NULL) in
+diff --git a/ref-filter.c b/ref-filter.c
+index 91290b62450b3..bbcd507d179a9 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -494,8 +494,6 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atom[i].name, "symref"))
+ 		need_symref = 1;
+-	if (is_cat && !strcmp(valid_atom[i].name, "rest"))
+-		cat_file_info->split_on_whitespace = 1;
+ 	return at;
  }
  
-+test_atom () {
-+    name=$1
-+    sha1=$2
-+    atoms=$3
-+    expected=$4
-+
-+    test_expect_success "$name" '
-+	echo "$expected" >expect &&
-+	echo $sha1 | git cat-file --batch-check="$atoms" >actual &&
-+	test_cmp expect actual
-+    '
+@@ -731,6 +729,21 @@ static const char *find_next(const char *cp)
+ 	return NULL;
+ }
+ 
++/* Search for atom in given format. */
++int is_atom_used(const struct ref_format *format, const char *atom)
++{
++	const char *cp, *sp;
++	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
++		const char *ep = strchr(sp, ')');
++		int atom_len = ep - sp - 2;
++		sp += 2;
++		if (atom_len == strlen(atom) && !memcmp(sp, atom, atom_len))
++			return 1;
++		cp = ep + 1;
++	}
++	return 0;
 +}
 +
- run_tests () {
-     type=$1
-     sha1=$2
-@@ -119,6 +132,13 @@ $content"
- 	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
- 	test_cmp expect actual
-     '
-+
-+    for atom in refname parent body trailers upstream push symref flag
-+    do
-+	test_atom "Check %($atom) gives empty output" "$sha1" "%($atom)" ""
-+    done
-+
-+    test_atom "Check %(HEAD) gives only one space as output" "$sha1" '%(HEAD)' ' '
- }
+ /*
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
+diff --git a/ref-filter.h b/ref-filter.h
+index 69271e8c39f40..f590e5d694df4 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -86,13 +86,6 @@ struct expand_data {
+ 	const char *rest;
+ 	struct object_id delta_base_oid;
  
- hello_content="Hello World"
-@@ -140,6 +160,12 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
- 	test_cmp expect actual
- '
+-	/*
+-	 * Whether to split the input on whitespace before feeding it to
+-	 * get_sha1; this is decided during the mark_query phase based on
+-	 * whether we have a %(rest) token in our format.
+-	 */
+-	int split_on_whitespace;
+-
+ 	/*
+ 	 * After a mark_query run, this object_info is set up to be
+ 	 * passed to sha1_object_info_extended. It will point to the data
+@@ -187,4 +180,7 @@ void pretty_print_ref(const char *name, const unsigned char *sha1,
+ /* Fill the values of request and prepare all data for final string creation */
+ int populate_value(struct ref_array_item *ref);
  
-+shortname=`echo $hello_sha1 | sed 's/^.\{0\}\(.\{7\}\).*/\1/'`
-+test_atom 'Check format option %(objectname:short) works' "$hello_sha1" '%(objectname:short)' "$shortname"
++/* Search for atom in given format. */
++int is_atom_used(const struct ref_format *format, const char *atom);
 +
-+test_atom 'Check format option %(align) is not broken' \
-+    "$hello_sha1" "%(align:8)%(objecttype)%(end)%(objectname)" "blob    $hello_sha1"
-+
- tree_sha1=$(git write-tree)
- tree_size=33
- tree_pretty_content="100644 blob $hello_sha1	hello"
-@@ -157,6 +183,17 @@ $commit_message"
- 
- run_tests 'commit' $commit_sha1 $commit_size "$commit_content" "$commit_content" 1
- 
-+test_atom "Check format option %(if) is not broken" "$commit_sha1" \
-+    "%(if)%(author)%(then)%(objectname)%(end)" "$commit_sha1"
-+test_atom "Check %(tree) works for commit" "$commit_sha1" "%(tree)" "$tree_sha1"
-+test_atom "Check %(numparent) works for commit" "$commit_sha1" "%(numparent)" "0"
-+test_atom "Check %(authorname) works for commit" "$commit_sha1" "%(authorname)" "$GIT_AUTHOR_NAME"
-+test_atom "Check %(authoremail) works for commit" "$commit_sha1" "%(authoremail)" "<$GIT_AUTHOR_EMAIL>"
-+test_atom "Check %(committername) works for commit" "$commit_sha1" "%(committername)" "$GIT_COMMITTER_NAME"
-+test_atom "Check %(committeremail) works for commit" "$commit_sha1" "%(committeremail)" "<$GIT_COMMITTER_EMAIL>"
-+test_atom "Check %(subject) works for commit" "$commit_sha1" "%(subject)" "$commit_message"
-+test_atom "Check %(contents) works for commit" "$commit_sha1" "%(contents)" "$commit_message"
-+
- tag_header_without_timestamp="object $hello_sha1
- type blob
- tag hellotag
-@@ -171,6 +208,17 @@ tag_size=$(strlen "$tag_content")
- 
- run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
- 
-+test_atom "Check %(object) works for tag" "$tag_sha1" "%(object)" "$hello_sha1"
-+test_atom "Check %(type) works for tag" "$tag_sha1" "%(type)" "blob"
-+test_atom "Check %(tag) works for tag" "$tag_sha1" "%(tag)" "hellotag"
-+test_atom "Check %(taggername) works for tag" "$tag_sha1" "%(taggername)" "$GIT_COMMITTER_NAME"
-+test_atom "Check %(taggeremail) works for tag" "$tag_sha1" "%(taggeremail)" "<$GIT_COMMITTER_EMAIL>"
-+test_atom "Check %(subject) works for tag" "$tag_sha1" "%(subject)" "$tag_description"
-+test_atom "Check %(contents) works for tag" "$tag_sha1" "%(contents)" "$tag_description"
-+
-+test_atom "Check %(color) gives no additional output" "$sha1" \
-+    "%(objectname) %(color:green) %(objecttype)" "$sha1  $type"
-+
- test_expect_success \
-     "Reach a blob from a tag pointing to it" \
-     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
+ #endif /*  REF_FILTER_H  */
 
 --
 https://github.com/git/git/pull/452
