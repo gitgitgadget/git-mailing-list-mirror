@@ -8,29 +8,28 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0741F576
-	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09E911F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752936AbeBEL2A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 06:28:00 -0500
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:42252
+        id S1752944AbeBEL2G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 06:28:06 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:42248
         "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752806AbeBEL1k (ORCPT
+        by vger.kernel.org with ESMTP id S1752840AbeBEL1k (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 06:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1517830059;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=HfnSoBT2gOUrSXKHQT75Ab3H1HxAmZMfr5Crm+n7+pc=;
-        b=LKykryyh61mt8/E3+ofVzuf+U/FN/PfqTGDGGkKxt7vM/Osq9qV/SH3H85bUvM+l
-        4DKpYIUsgIZc6qUvhb8KDK30d8VTKhAjK4CZEMSak3Bu8WQ4HP0qGTKiuWWDKtSiOJX
-        nljV9KeGdEvrMq5QFnwtSi1TqlQLb5b9J1pnxe2Y=
+        bh=JxaorqxvP61g7dNeFDDENo1m1QvLP+cXDqhX+18RohU=;
+        b=Zup4lml9ge5d7pDFoLfhvFYJo2I5pCb9WmnnDvueXLwndC7JSo+QQMBFloBH1uEo
+        NKUo6PN3qNKxC1VSNTE8Yfs6DIWDMdNMXgL8LKYzLTqvFYShCCzygEWcSrFszYkQTLg
+        2fg/eKUpIQDQuk1jeawzFcM2LaRNKhAYtpGWwi/U=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016165b8b42b-18bf5fff-cc40-471f-b633-26eeef71c989-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016165b8b444-99fcbf50-ab35-4781-821a-a0dc90ed813b-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
 References: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC v2 04/25] ref-filter: make valid_atom as function
- parameter
+Subject: [PATCH RFC v2 03/25] cat-file: reuse struct ref_format
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -42,91 +41,85 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make valid_atom as a function parameter,
-there could be another variable further.
-Need that for further reusing of formatting logic in cat-file.c.
-
-We do not need to allow users to pass their own valid_atom variable in
-global functions like verify_ref_format() because in the end we want to
-have same set of valid atoms for all commands. But, as a first step
-of migrating, I create further another version of valid_atom
-for cat-file.
+Start using ref_format struct instead of simple char*.
+Need that for further reusing of formatting logic from ref-filter.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- ref-filter.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ builtin/cat-file.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 9ed5e66066a7a..5e7ed0f338490 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -325,7 +325,7 @@ static void head_atom_parser(const struct ref_format *format, struct used_atom *
- 	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, NULL, NULL);
- }
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index f5fa4fd75af26..98fc5ec069a49 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -13,15 +13,16 @@
+ #include "tree-walk.h"
+ #include "sha1-array.h"
+ #include "packfile.h"
++#include "ref-filter.h"
  
--static struct {
-+static struct valid_atom {
- 	const char *name;
- 	cmp_type cmp_type;
- 	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
-@@ -396,6 +396,7 @@ struct atom_value {
-  * Used to parse format string and sort specifiers
-  */
- static int parse_ref_filter_atom(const struct ref_format *format,
-+				 const struct valid_atom *valid_atom, int n_atoms,
- 				 const char *atom, const char *ep)
- {
- 	const char *sp;
-@@ -425,13 +426,13 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 	atom_len = (arg ? arg : ep) - sp;
+ struct batch_options {
++	struct ref_format format;
+ 	int enabled;
+ 	int follow_symlinks;
+ 	int print_contents;
+ 	int buffer_output;
+ 	int all_objects;
+ 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
+-	const char *format;
+ };
  
- 	/* Is the atom a valid one? */
--	for (i = 0; i < ARRAY_SIZE(valid_atom); i++) {
-+	for (i = 0; i < n_atoms; i++) {
- 		int len = strlen(valid_atom[i].name);
- 		if (len == atom_len && !memcmp(valid_atom[i].name, sp, len))
- 			break;
+ static const char *force_path;
+@@ -348,7 +349,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 		return;
  	}
  
--	if (ARRAY_SIZE(valid_atom) <= i)
-+	if (n_atoms <= i)
- 		die(_("unknown field name: %.*s"), (int)(ep-atom), atom);
+-	strbuf_expand(&buf, opt->format, expand_format, data);
++	strbuf_expand(&buf, opt->format.format, expand_format, data);
+ 	strbuf_addch(&buf, '\n');
+ 	batch_write(opt, buf.buf, buf.len);
+ 	strbuf_release(&buf);
+@@ -441,8 +442,8 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
  
- 	/* Add it in, including the deref prefix */
-@@ -708,7 +709,8 @@ int verify_ref_format(struct ref_format *format)
- 		if (!ep)
- 			return error(_("malformed format string %s"), sp);
- 		/* sp points at "%(" and ep points at the closing ")" */
--		at = parse_ref_filter_atom(format, sp + 2, ep);
-+		at = parse_ref_filter_atom(format, valid_atom,
-+					   ARRAY_SIZE(valid_atom), sp + 2, ep);
- 		cp = ep + 1;
+-	if (!opt->format)
+-		opt->format = "%(objectname) %(objecttype) %(objectsize)";
++	if (!opt->format.format)
++		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
  
- 		if (skip_prefix(used_atom[at].name, "color:", &color))
-@@ -2145,7 +2147,9 @@ int format_ref_array_item(struct ref_array_item *info,
- 		if (cp < sp)
- 			append_literal(cp, sp, &state);
- 		if (get_ref_atom_value(info,
--				       parse_ref_filter_atom(format, sp + 2, ep),
-+				       parse_ref_filter_atom(format, valid_atom,
-+							     ARRAY_SIZE(valid_atom),
-+							     sp + 2, ep),
- 				       &atomv))
- 			return -1;
- 		atomv->handler(atomv, &state);
-@@ -2198,7 +2202,8 @@ static int parse_sorting_atom(const char *atom)
+ 	/*
+ 	 * Expand once with our special mark_query flag, which will prime the
+@@ -451,7 +452,7 @@ static int batch_objects(struct batch_options *opt)
  	 */
- 	struct ref_format dummy = REF_FORMAT_INIT;
- 	const char *end = atom + strlen(atom);
--	return parse_ref_filter_atom(&dummy, atom, end);
-+	return parse_ref_filter_atom(&dummy, valid_atom,
-+				     ARRAY_SIZE(valid_atom), atom, end);
- }
+ 	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+-	strbuf_expand(&buf, opt->format, expand_format, &data);
++	strbuf_expand(&buf, opt->format.format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
+@@ -543,7 +544,7 @@ static int batch_option_callback(const struct option *opt,
  
- /*  If no sorting option is given, use refname to sort as default */
+ 	bo->enabled = 1;
+ 	bo->print_contents = !strcmp(opt->long_name, "batch");
+-	bo->format = arg;
++	bo->format.format = arg;
+ 
+ 	return 0;
+ }
+@@ -552,7 +553,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ {
+ 	int opt = 0;
+ 	const char *exp_type = NULL, *obj_name = NULL;
+-	struct batch_options batch = {0};
++	struct batch_options batch = { REF_FORMAT_INIT };
+ 	int unknown_type = 0;
+ 
+ 	const struct option options[] = {
 
 --
 https://github.com/git/git/pull/452
