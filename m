@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B55C1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06D2E1F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752173AbeBEX4M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:56:12 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:42963 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752071AbeBEXzs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:55:48 -0500
-Received: by mail-pg0-f68.google.com with SMTP id m28so105069pgc.9
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:48 -0800 (PST)
+        id S1752177AbeBEX4Q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:56:16 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39025 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752105AbeBEXzx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:55:53 -0500
+Received: by mail-pl0-f65.google.com with SMTP id o13so84287pli.6
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=doFvFj1oTq6hWI6vYNVk0g+5+he2D0gYp5MuwT4J4cE=;
-        b=BAMLJYL24mfKE5qWbEb66CnoHjuNvPTmWi+Zb1y/Fnl3Yqw6NJBdm72HUNdxFg3/RF
-         p1C74eCrYawOIvqSZw5L9o4OL2FMxUVukrS5J5BBeSRnKPFKwHL/a7E127mf3URJPSQh
-         M4yu0PdZtkRuqJRQkIjs3UlAQGiL7dcQv+1/K+RHM+UT2GNByWZpw7IR54zUyWx48qoO
-         hCjOH69h5XXdXc7xwSJXeAOqf0lorpquuX9iq3JxPi4e/RJj9scmB3lSJCiJxvGIU+kY
-         qRws17/Zz24KGgpJO4dk8ytzOGy07+uIetjjxrnytX2Kca4RMi4xp3dq2fzy8JYgpqdS
-         UhXg==
+        bh=GLMH5vYcahI0A+V+auoH6COeB/SnGD/Md9aD2ch6ZbU=;
+        b=UOUtZdV+sN0vVjzl7D0DlTxql5BNV05pHnpdWRAvD33zSdzBu79BVIZ+prFi9Um01f
+         CFCoz6WWkN44I0YkSjxoh0wtDuHyp9Bl0YvJzqwKjb9Bf1V+0FTC2nySklr2YrVl/9WX
+         zqPFvFoqqdDFTYnm/1Vo/pxeXBUW5vhkTJWYnoxLv6rYpJR9w/GVe1HpWb+OvSUnafyU
+         9R1woDhxvnOoPxL5UVU+ySg55bN4FW/MTXW6Gsjb92F+PKk7VbQL+brSw+I6ZocWbKvA
+         uGhPvsYhBdBhMt/qE4RqAsjUU0TjxIylKIHwSG+DF5NKHALCog2yuQ9RxIydFZxwJGIR
+         D+Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=doFvFj1oTq6hWI6vYNVk0g+5+he2D0gYp5MuwT4J4cE=;
-        b=RRVpM7Iu1Xk0Py13umOoVE05vQ+djEFoi+e/M+cMedEC9SWz/z33HbkVBupIQVDPHA
-         qXrLRmNbvxJk6rzqXsGXH1CgBzuutrHM1IssZR2fSvOQ7hqAidJ5FG+bvmZWHGkRwfth
-         7ZyOrpqXgNBzGTGuyJxwKLMhavxbO0HYhyn2qIilGzC+nJVTLhpXs1lX83XtTGiDs06n
-         pjDg8nW+bgLHA81PfrTB3jmbs7WzVSujNdnDQdos9zvROQzseUSWTu/qIkdxcCgsy8Vr
-         hCGrZOknd6MTm72Zza54teDC4Vk9VD67N+TjRbFvKRNdL5/QyAVXHSl4WBxEjCDyrLe5
-         YZhA==
-X-Gm-Message-State: APf1xPBCBhgB5RVB1Hba82pxHxWMRTq7r/xW/t/oF0dQ4DGWnipmG1x1
-        uYTEcMPNOvo/ZWJKLP5yZ4NtYbqo51s=
-X-Google-Smtp-Source: AH8x224iWgCTZiii7CKAItyHfTpLOGqtHxcYjLjeiqkYGif1EsBeyz5pi5tWO8OwiMMi5t+YrHKlPg==
-X-Received: by 10.98.133.93 with SMTP id u90mr502286pfd.134.1517874947736;
-        Mon, 05 Feb 2018 15:55:47 -0800 (PST)
+        bh=GLMH5vYcahI0A+V+auoH6COeB/SnGD/Md9aD2ch6ZbU=;
+        b=MBBauWrVNPr6ScVlABR4PMCYANw0YAvR8+dFIOAR/Mtw9sEyF308Pc41iym56QHRb7
+         jxzzeaAv50kCNIg/r1idjuLZe2zX+DvrvDQP1R8dYccgtihGeH+ctuxy76IZoQaF+kcz
+         e3lF7gJnEWU3rNuTp3oCVHwfTdty7O+/T3N/Ma7U3Gs2foUU/3RQTrmDWVzk9cjYTmj+
+         2o+duLW+DfrMK6B5/gwIKUllm82q6NJRTet5HDnTdO6DuhUYQSKTWwfLJg+m6XpKvxTT
+         6cZyRcNHh0rj0oXdxuLHeufmapAeuk5YVnhpGqAstMruynLpOIc/o3ZfKP/BYwnk/V1Z
+         LPng==
+X-Gm-Message-State: APf1xPB2LOUPYU/Fkew0McJ8JroM/HHGrqaLIJhuK34jGuN2YzRUljny
+        3bQ0FtHMfi34C6XmXCstQos6qY+zEw8=
+X-Google-Smtp-Source: AH8x22772kmrVW0Z9G0tbRaXfOks7GbXv1yHzFxtAYFweq4DG/JucOBBWPNM7VhSM7aastFUdeZ5NA==
+X-Received: by 2002:a17:902:9897:: with SMTP id s23-v6mr490936plp.238.1517874951747;
+        Mon, 05 Feb 2018 15:55:51 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id p1sm15782241pgr.44.2018.02.05.15.55.46
+        by smtp.gmail.com with ESMTPSA id y131sm18979846pfg.69.2018.02.05.15.55.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:55:47 -0800 (PST)
+        Mon, 05 Feb 2018 15:55:51 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 011/194] sha1_file: add repository argument to open_sha1_file
-Date:   Mon,  5 Feb 2018 15:52:05 -0800
-Message-Id: <20180205235508.216277-12-sbeller@google.com>
+Subject: [PATCH 014/194] object-store: add repository argument to prepare_alt_odb
+Date:   Mon,  5 Feb 2018 15:52:08 -0800
+Message-Id: <20180205235508.216277-15-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,44 +63,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the open_sha1_file caller to be
-more specific about which repository to act on. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
+Add a repository argument to allow prepare_alt_odb callers to be more
+specific about which repository to handle. This is a small mechanical
+change; it doesn't change the implementation to handle repositories
+other than the_repository yet.
 
 As with the previous commits, use a macro to catch callers passing a
 repository other than the_repository at compile time.
 
+While at it, move the declaration to object-store.h, where it should
+be easier to find.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/fsck.c |  2 +-
+ cache.h        |  1 -
+ object-store.h |  3 +++
+ packfile.c     |  2 +-
+ sha1_file.c    | 13 +++++++------
+ sha1_name.c    |  3 ++-
+ 6 files changed, 14 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index d4d249c2ed..00ec8eecf0 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -695,7 +695,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	} else {
+ 		fsck_object_dir(get_object_directory());
+ 
+-		prepare_alt_odb();
++		prepare_alt_odb(the_repository);
+ 		for (alt = the_repository->objects.alt_odb_list;
+ 				alt; alt = alt->next)
+ 			fsck_object_dir(alt->path);
+diff --git a/cache.h b/cache.h
+index 459fd01dbb..70518e24ce 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1592,7 +1592,6 @@ struct alternate_object_database {
+ 
+ 	char path[FLEX_ARRAY];
+ };
+-extern void prepare_alt_odb(void);
+ extern char *compute_alternate_path(const char *path, struct strbuf *err);
+ typedef int alt_odb_fn(struct alternate_object_database *, void *);
+ extern int foreach_alt_odb(alt_odb_fn, void*);
+diff --git a/object-store.h b/object-store.h
+index 99f77d10cd..e749c952d5 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -54,4 +54,7 @@ struct packed_git {
+ 	char pack_name[FLEX_ARRAY]; /* more */
+ };
+ 
++#define prepare_alt_odb(r) prepare_alt_odb_##r()
++extern void prepare_alt_odb_the_repository(void);
++
+ #endif /* OBJECT_STORE_H */
+diff --git a/packfile.c b/packfile.c
+index 31c4ea54ae..fbb2385bad 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -879,7 +879,7 @@ void prepare_packed_git(void)
+ 	if (the_repository->objects.packed_git_initialized)
+ 		return;
+ 	prepare_packed_git_one(get_object_directory(), 1);
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next)
+ 		prepare_packed_git_one(alt->path, 0);
+ 	rearrange_packed_git();
 diff --git a/sha1_file.c b/sha1_file.c
-index 6abdb8c488..9fa7243907 100644
+index 514f59c390..779bfd4079 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -900,7 +900,9 @@ static int stat_sha1_file_the_repository(const unsigned char *sha1,
-  * Like stat_sha1_file(), but actually open the object and return the
-  * descriptor. See the caveats on the "path" parameter above.
-  */
--static int open_sha1_file(const unsigned char *sha1, const char **path)
-+#define open_sha1_file(r, s, p) open_sha1_file_##r(s, p)
-+static int open_sha1_file_the_repository(const unsigned char *sha1,
-+					 const char **path)
+@@ -23,6 +23,7 @@
+ #include "sha1-lookup.h"
+ #include "bulk-checkin.h"
+ #include "repository.h"
++#include "object-store.h"
+ #include "streaming.h"
+ #include "dir.h"
+ #include "mru.h"
+@@ -585,7 +586,7 @@ void add_to_alternates_memory(const char *reference)
+ 	 * Make sure alternates are initialized, or else our entry may be
+ 	 * overwritten when they are.
+ 	 */
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 
+ 	link_alt_odb_entries(the_repository, reference,
+ 			     '\n', NULL, 0);
+@@ -671,7 +672,7 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+ 	struct alternate_object_database *ent;
+ 	int r = 0;
+ 
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	for (ent = the_repository->objects.alt_odb_list; ent; ent = ent->next) {
+ 		r = fn(ent, cb);
+ 		if (r)
+@@ -680,7 +681,7 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+ 	return r;
+ }
+ 
+-void prepare_alt_odb(void)
++void prepare_alt_odb_the_repository(void)
  {
- 	int fd;
+ 	const char *alt;
+ 
+@@ -729,7 +730,7 @@ static int check_and_freshen_local(const unsigned char *sha1, int freshen)
+ static int check_and_freshen_nonlocal(const unsigned char *sha1, int freshen)
+ {
  	struct alternate_object_database *alt;
-@@ -939,7 +941,7 @@ static void *map_sha1_file_1(const char *path,
- 	if (path)
- 		fd = git_open(path);
- 	else
--		fd = open_sha1_file(sha1, &path);
-+		fd = open_sha1_file(the_repository, sha1, &path);
- 	map = NULL;
- 	if (fd >= 0) {
- 		struct stat st;
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
+ 		const char *path = alt_sha1_path(alt, sha1);
+ 		if (check_and_freshen_file(path, freshen))
+@@ -885,7 +886,7 @@ static int stat_sha1_file_the_repository(const unsigned char *sha1,
+ 	if (!lstat(*path, st))
+ 		return 0;
+ 
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	errno = ENOENT;
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
+ 		*path = alt_sha1_path(alt, sha1);
+@@ -914,7 +915,7 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
+ 		return fd;
+ 	most_interesting_errno = errno;
+ 
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	for (alt = the_repository->objects.alt_odb_list; alt; alt = alt->next) {
+ 		*path = alt_sha1_path(alt, sha1);
+ 		fd = git_open(*path);
+diff --git a/sha1_name.c b/sha1_name.c
+index 016c883b5c..3e490ee8f6 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -11,6 +11,7 @@
+ #include "sha1-array.h"
+ #include "packfile.h"
+ #include "repository.h"
++#include "object-store.h"
+ 
+ static int get_oid_oneline(const char *, struct object_id *, struct commit_list *);
+ 
+@@ -353,7 +354,7 @@ static int init_object_disambiguation(const char *name, int len,
+ 
+ 	ds->len = len;
+ 	ds->hex_pfx[len] = '\0';
+-	prepare_alt_odb();
++	prepare_alt_odb(the_repository);
+ 	return 0;
+ }
+ 
 -- 
 2.15.1.433.g936d1b9894.dirty
 
