@@ -2,118 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07B8D1FAE2
-	for <e@80x24.org>; Mon,  5 Feb 2018 18:17:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E42911F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 18:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753102AbeBESRN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 13:17:13 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:33622 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752738AbeBESRM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 13:17:12 -0500
-Received: by mail-pl0-f67.google.com with SMTP id t4so12296989plo.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 10:17:12 -0800 (PST)
+        id S1753659AbeBESeG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 13:34:06 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:45713 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753681AbeBESbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 13:31:37 -0500
+Received: by mail-wr0-f193.google.com with SMTP id h9so17660483wre.12
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 10:31:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=f4XCRgCL8G4zeKXYth5OREG3znEGP+8qIzbxfjk2l+I=;
-        b=WJQ95k31ZyYTxnGWWKvIiEpFwM0i3cYqCmUptXY6fj0Jynj4m/gO8p988kPQLgM32i
-         TNl13E/Plx+ZesFOSqFmY4LDIqWGlzvsIScm/EurZGowidH3GE2smqmYF1q23JxwyvUq
-         foIE/jo7ctuyzHi92Q6zAWZbm4NgsaCQhiXyC1pgoOEAtUW4peSaXB7TKM/NHBeT9Rux
-         xscFLZ92f8sjPV+SM9svNFirSsfqJ1yuDBQD/r+MjjK4jjc6dNNisZsUlpa20N36undX
-         1ysTZ+9rJjmaZEMFJjpeNGAo9YogMAWXug7fqU8CVv2l7SM0hytHR+zLWZ4tYxMcUXdj
-         drKg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+BOh0pNF4BfpJOuRECRY8Y+rUc8H0GZg7Oo1R0lcZwc=;
+        b=jGJqnnOfKpJeZtvvaRAKweUVg9ZJkXlwC96VHQIm4mQQCyccQy7DLPcRfAhCaoTBf+
+         diVscZBwB2jfSDmFDF69pkBLJllIckehBwZtIUiJqVQ6NJnZmvpGiRG0fHJZFcnxwlsR
+         96qZHFrJAoNnW1J4kzBxHu5nCTUDRbRLc3sMdeGS24ptCEE/B7fsxhnh69ElDxUbhfiu
+         6DamM3lKld3rLjxFD1Vpm2xLbL8FY3/BtY7Lk7FfKMFsgBELG2IIZMNsYRDz1TzFsy6S
+         NAn5RCpzcXp3utl86r2SWK+jaFIMcmxvtfX59L+CmyGE1Z6cL44zY9jjeyLeVEUm4dQS
+         1QZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=f4XCRgCL8G4zeKXYth5OREG3znEGP+8qIzbxfjk2l+I=;
-        b=pcl0Mth3lv8sb96Ube7xymUy7RvKc+OmQoHjLS+wxmIoFRUHgXqg3U1UDgteC1cAim
-         PfQs5cvtBkRIf8l8J71BYAX8fnSDl8NBKGsxdj5A09lGetfAEcYPerOVSOfjS0epraPb
-         kw3lDEkpyNHdu0KGkZuJTcPyIitpPmMTqMW3q25hKTR4msTDFyrfjlOWLL0O41IT+2pE
-         hgJothgZdOj0Aanx9q6IoEkzvinkYejKx/LNoq/8aUgyVr0wj0iqiBDm7jpiJ/fKqWoi
-         fIqjk1k5k9BtN34ObW3EFnY+RWwk2NIkqMHgge6pmbRO5bmpl4W96IWHD2KZ9KwJ9O6e
-         dK3A==
-X-Gm-Message-State: APf1xPAVAt9U8okU3z3n4OdZj8F3W5DJdKGSe80dMaUISW9msPPIJrCb
-        C6bkau7hDiGNc7JQg6NlCcpLfDYLaXJQOx0NrSA=
-X-Google-Smtp-Source: AH8x224v1BGLJShjjhxXsEGdBMaTc5CY5LxgoIjxobe+WHCVBOgR6xGSElZ2vb/h+s0ENLEvIGN+gnbLys09dedOdlQ=
-X-Received: by 2002:a17:902:6c44:: with SMTP id h4-v6mr7811693pln.373.1517854631704;
- Mon, 05 Feb 2018 10:17:11 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=+BOh0pNF4BfpJOuRECRY8Y+rUc8H0GZg7Oo1R0lcZwc=;
+        b=ZZeoRAw+odgHCJWcvK7npUdYO4ubaEyLneXZiXk6jE7kDd8jXMw/X6J83taxeG5/lU
+         jkOKokUzl72GPKzwgoVLDWykA0X0NXoH07ZsG1ZmURd9JR1ux9TOSzzC1FZdJq7OM/ow
+         jxSJbQZOWfWm2bIkQRFWDI5yVpos0DFFnqpUE0dzLwZ6vrWW7JpyUpL8i3usawtDqyRH
+         UAZwS/VI5wDpAV1qatrCm8HOGftHj9Xtk47StaoSYzWZFu6xdY+S0rw/GtYD3upXIQwF
+         Tt7wnMJx62uuKowhscYB0x68EZhl4zcfgZM8BlzzF3k/7V6uCrSB17V+wJ9XmOjUiyhV
+         4AwQ==
+X-Gm-Message-State: APf1xPDm33Km2pVkbVBsDjJW8THyaCMYOXAy49x5EqQ3926gifM1IpSJ
+        YGMR32+qoGvpqZZnn1dfv8c=
+X-Google-Smtp-Source: AH8x225yWNkx6PsT0HDufGkuJQMdwfoBS+mi0i5VHkde8V4RtOSlsxiJW3Cds/EQHWcZztLF9LQS7A==
+X-Received: by 10.223.201.147 with SMTP id f19mr4943904wrh.61.1517855495935;
+        Mon, 05 Feb 2018 10:31:35 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 204sm9241482wmx.0.2018.02.05.10.31.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Feb 2018 10:31:35 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Lucas Werkmeister <mail@lucaswerkmeister.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v4] daemon: add --log-destination=(stderr|syslog|none)
+References: <772ae5fc-5f92-3494-613a-a44c0073e8d7@lucaswerkmeister.de>
+        <20180204183037.23162-1-mail@lucaswerkmeister.de>
+        <CAPig+cSOH-V9aZDALOEX56ENXChexOVWzsgKgtvDULryqP0Kyw@mail.gmail.com>
+Date:   Mon, 05 Feb 2018 10:31:34 -0800
+In-Reply-To: <CAPig+cSOH-V9aZDALOEX56ENXChexOVWzsgKgtvDULryqP0Kyw@mail.gmail.com>
+        (Eric Sunshine's message of "Sun, 4 Feb 2018 14:36:14 -0500")
+Message-ID: <xmqqlgg7b855.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.236.140.151 with HTTP; Mon, 5 Feb 2018 10:16:31 -0800 (PST)
-In-Reply-To: <20180205175500.GA104086@aiede.svl.corp.google.com>
-References: <CAAXyoMOp2OdgTVZN2FyP-u1ha9PjwHkTDq-pyu-4GrjP91X70A@mail.gmail.com>
- <CAAXyoMMxuF=LUTWJkPL8GmFCgL-xacPBAgRE2Qr97CgF7yppgA@mail.gmail.com>
- <handler.873424.D873424.151784496817038.ackdone@bugs.debian.org> <20180205175500.GA104086@aiede.svl.corp.google.com>
-From:   Yangfl <mmyangfl@gmail.com>
-Date:   Tue, 6 Feb 2018 02:16:31 +0800
-Message-ID: <CAAXyoMN_DYHO0BX1fn+97+GPPPFLGya3nCi4SEvDJDRL3-6=dA@mail.gmail.com>
-Subject: Re: git: handling HTTPS proxy w/ password inappropriately
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     873424@bugs.debian.org, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-06 1:55 GMT+08:00 Jonathan Nieder <jrnieder@gmail.com>:
-> Hi,
->
-> Yangfl <mmyangfl@gmail.com> wrote[1]:
->
->> not affected any more
->
-> Can you say a little more about this?  Do you mean that newer versions
-> of Git are working better for you or that your proxy setup changed?
->
-> This looks similar to
-> https://public-inbox.org/git/CAHnnmh6QCnHTycbMDLjfFYoXW4dErTZoTHsPrkYdhZKnXcHHYQ@mail.gmail.com/
-> to me, which makes me fear it hasn't been fixed.
->
-> Thanks,
-> Jonathan
->
-> [1] http://bugs.debian.org/873424
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I just repeated it three times to make sure it works perfectly.
-However, I still see 2 connection attempts in my wireshark, the first
-one without password (then FINed), and the following one with.
+> On Sun, Feb 4, 2018 at 1:30 PM, Lucas Werkmeister
+> <mail@lucaswerkmeister.de> wrote:
+>> This new option can be used to override the implicit --syslog of
+>> ...
+> Thanks. With the 'log_destination' initialization bug fixed, this
+> version looks good; I didn't find anything else worth commenting upon.
+> Ævar's micronits[1] could be addressed by a follow-up patch (if
+> desirable), but probably needn't hold up this patch.
+>
+> [1]: https://public-inbox.org/git/871si0mvo0.fsf@evledraar.gmail.com/
 
-$ git --version
-git version 2.15.1
+Nicely done.  Thanks, all.
 
-Versions of packages git depends on:
-ii  git-man          1:2.15.1-3
-ii  libc6            2.26-4
-ii  libcurl3-gnutls  7.58.0-2
-ii  liberror-perl    0.17025-1
-ii  libexpat1        2.2.5-3
-ii  libpcre2-8-0     10.22-5
-ii  perl             5.26.1-4
-ii  zlib1g           1:1.2.8.dfsg-5
-
-Versions of packages git recommends:
-ii  less                         487-0.1
-ii  openssh-client [ssh-client]  1:7.6p1-3
-ii  patch                        2.7.5-1+b2
-
-Versions of packages git suggests:
-ii  gettext-base                          0.19.8.1-4
-pn  git-cvs                               <none>
-pn  git-daemon-run | git-daemon-sysvinit  <none>
-pn  git-doc                               <none>
-pn  git-el                                <none>
-pn  git-email                             <none>
-pn  git-gui                               <none>
-pn  git-mediawiki                         <none>
-pn  git-svn                               <none>
-pn  gitk                                  <none>
-pn  gitweb                                <none>
+Will queue.
