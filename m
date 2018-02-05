@@ -2,117 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 170EC1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 02:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F3861F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 09:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752292AbeBECSx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Feb 2018 21:18:53 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:46603 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752177AbeBECSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Feb 2018 21:18:44 -0500
-Received: by mail-pl0-f65.google.com with SMTP id 36so10790535ple.13
-        for <git@vger.kernel.org>; Sun, 04 Feb 2018 18:18:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ejJdXcb34pHLc1hHX+FsKAmwcuFCGdaDADcuhVFckKo=;
-        b=g2fy0QdXighgJ6CaB26JZOyEsYOCyLYxtGex7os05j2xGMs9C+zn6+Kfu88YQaCwss
-         G5b37ncjXjhbIjO2nIWuSgc71uRTZwKeLhnQ37YQW9OhsO2ddM4ElRoioYgJvXqT5Y5z
-         1q8K+FXXNSIqxkbPFloOL+m/yPMgRIaAFKh/C1fof2qKg9FIfdkeSmdVGQ5fySnA4qtl
-         BtBcBf8zzp9jwW4B4YJG0sKPN1RMqcYbEOD7hxoerYlPBl60JFb2rL0IPecuKjXPf8hc
-         p8Z8okEGo7OWvLiD8UJGaFdgoCwEX2HgraKKI4MUKZajVs7Mnq67Bo60gv6PIqJRFmSV
-         nFcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ejJdXcb34pHLc1hHX+FsKAmwcuFCGdaDADcuhVFckKo=;
-        b=W6EAhJkPA2IK8f7zE8C0QPUqC7ljfi/wDn09Kjuktsc0/GlLtyodJmzXKDRuuejnT+
-         61fnjcYewdayuTewF2tS74nezZ2bfQM7oArxhpnjqKZQpzqTwdkNv6yqxDyjra7T8FaQ
-         fYkM8MrW2r+Uw7Bg5O8xAjc4BAMv2hByh2hzWWB4QwVEmHK9WWk9Gcr18kX7XkKf8BT5
-         kbNfV0JSu8sJBtND0eZgOB+/MHdUCZnVgT1UzXpuopgjooqouq+Q0PygeSlU0bvdrAxt
-         U3lOLnhcxZGhC0N4d9MRD5s0MqxRgQ574ybwSYYr0b96ylRhIN2i4sNMxu0lE8WNbE6p
-         xbmQ==
-X-Gm-Message-State: AKwxytdX7JmsMOa0SLuI+JFEoGpyMrY0WKZvLej25/IIEhBZOeOVWm0t
-        zxCEioqY7XWrANmtPPhuw6qJ3g==
-X-Google-Smtp-Source: AH8x227CRRw/ZULBieIoBm41ftvAgq9drgYyi5bT54GBn5ci/EdkwvXEr5GWwSIPo2nE8pxj6Gbw2w==
-X-Received: by 2002:a17:902:a607:: with SMTP id u7-v6mr26609232plq.71.1517797124463;
-        Sun, 04 Feb 2018 18:18:44 -0800 (PST)
-Received: from duynguyen.dek-tpc.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id y18sm15675996pfa.175.2018.02.04.18.18.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 04 Feb 2018 18:18:43 -0800 (PST)
-Date:   Mon, 5 Feb 2018 09:18:33 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/3] worktree: teach "add" to check out existing
- branches
-Message-ID: <20180205021833.GB17847@duynguyen.dek-tpc.internal>
-References: <20180121120208.12760-1-t.gummerer@gmail.com>
- <20180204221305.28300-1-t.gummerer@gmail.com>
- <20180204221305.28300-4-t.gummerer@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180204221305.28300-4-t.gummerer@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        id S1752607AbeBEJMJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 04:12:09 -0500
+Received: from eight.schwarz.eu ([78.47.62.209]:36644 "EHLO eight.schwarz.eu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751834AbeBEJMH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 04:12:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=schwarz-online.org; s=x; h=To:Date:Message-Id:Subject:Mime-Version:
+        Content-Type:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=oMiJcSxxZa7bFEmQFcbnYPmnUibLI3n2aLIhEY37y3w=; b=WkUJvITpV4CQaEWgcd3zMZVZCV
+        JPwZm6HcKEhxc5JN205H9e/qNRolhxs19knUdTl2Gb73oBAlqODyj+OlwRqgZyGLJ+1Djqx5rZYHZ
+        ML+3XvU/3HXtpp9LgL/5ZcmD3ph1t/H+bvZXV/X0E0hOcs/q6QFcHh8r24jXdtEzdIFiGkXaMdLeu
+        Zm5LKz5UQEan7fnu2ezsOkXyClyujJ78PMLInA7krvXDUPsJg8iPJ1fwKwAPgFGgZ/0iI5FTZAJ4X
+        EVmEax1BnsYB8h2y+G70uiv03MxSI0hLYVIHD23rU00+KL42bCYH7FfRqycOsV//V/sjU2LddI6Zs
+        BeFV8P+w==;
+From:   =?utf-8?Q?Martin_H=C3=A4cker?= <mhaecker@schwarz-online.org>
+Content-Type: multipart/signed;
+        boundary="Apple-Mail=_AC371013-1571-4FF0-9192-E448116027A4";
+        protocol="application/pgp-signature";
+        micalg=pgp-sha1
+X-Mao-Original-Outgoing-Id: 539514724.977883-455b55ba728d32a4098a144b36e33e54
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: Missing git options
+Message-Id: <AD196D8E-04DB-4274-ADEB-D914A79628B3@schwarz-online.org>
+Date:   Mon, 5 Feb 2018 10:12:05 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.5.20)
+X-Received: by eight.schwarz.eu with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <mhaecker@schwarz-online.org>)
+        id 1eicon-00010E-UQ; Mon, 05 Feb 2018 10:12:06 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 04, 2018 at 10:13:05PM +0000, Thomas Gummerer wrote:
-> -	if (opts->new_branch)
-> +	if (opts->checkout_existing_branch)
-> +		fprintf(stderr, _(", checking out existing branch '%s'"),
-> +			refname);
-> +	else if (opts->new_branch)
->  		fprintf(stderr, _(", creating new branch '%s'"), opts->new_branch);
 
-I wonder if "creating branch" and "checkout out branch" are enough.
+--Apple-Mail=_AC371013-1571-4FF0-9192-E448116027A4
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-> @@ -423,14 +427,25 @@ static int add(int ac, const char **av, const char *prefix)
->  	if (ac < 2 && !opts.new_branch && !opts.detach) {
->  		int n;
->  		const char *s = worktree_basename(path, &n);
-> -		opts.new_branch = xstrndup(s, n);
-> -		if (guess_remote) {
-> -			struct object_id oid;
-> -			const char *remote =
-> -				unique_tracking_name(opts.new_branch, &oid);
-> -			if (remote)
-> -				branch = remote;
-> +		const char *branchname = xstrndup(s, n);
-> +		struct strbuf ref = STRBUF_INIT;
-> +
-> +		if (!strbuf_check_branch_ref(&ref, branchname) &&
-> +		    ref_exists(ref.buf)) {
-> +			branch = branchname;
-> +			opts.checkout_existing_branch = 1;
-> +			UNLEAK(branch);
-> +		} else {
-> +			opts.new_branch = branchname;
-> +			if (guess_remote) {
-> +				struct object_id oid;
-> +				const char *remote =
-> +					unique_tracking_name(opts.new_branch, &oid);
+Hi there,
 
-Deep indentation may be a sign that it's time to move all this code to
-a separate function, maybe dwim_branch() or something.
+I just recently learned that not all command line switches seem to =
+automatically correlate to options in the git configuration.
 
-> +				if (remote)
-> +					branch = remote;
-> +			}
->  		}
-> +		strbuf_release(&ref);
->  	}
->  
->  	if (ac == 2 && !opts.new_branch && !opts.detach) {
+This seems something that should be relatively easy to fix.
+
+What I=E2=80=99m most missing is
+
+=E2=80=94 snip =E2=80=94
+[log]
+	graph =3D true
+	patch =3D true
+=E2=80=94 snap =E2=80=94
+
+which would / should correspond to `git log =E2=80=94graph =E2=80=94patch`=
+.
+
+What do you guys think?
+
+Best Regards,
+Martin H=C3=A4cker
+
+--Apple-Mail=_AC371013-1571-4FF0-9192-E448116027A4
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF0EARECAB0WIQRyALCMEeyeJp2h5aqZEm8JhZOQPgUCWngf5QAKCRCZEm8JhZOQ
+PnBQAJ9ufd+eECPfD+r6MuTaedDwmM7avACgz49jJLOIFtyyUv4y/zcGv1l1zvA=
+=Jp5R
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_AC371013-1571-4FF0-9192-E448116027A4--
