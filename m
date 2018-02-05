@@ -8,118 +8,78 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09E911F576
-	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9880D1F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 11:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752944AbeBEL2G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 06:28:06 -0500
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:42248
-        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752840AbeBEL1k (ORCPT
+        id S1752955AbeBEL2J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 06:28:09 -0500
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:59198
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752863AbeBEL1k (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 06:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1517830059;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=JxaorqxvP61g7dNeFDDENo1m1QvLP+cXDqhX+18RohU=;
-        b=Zup4lml9ge5d7pDFoLfhvFYJo2I5pCb9WmnnDvueXLwndC7JSo+QQMBFloBH1uEo
-        NKUo6PN3qNKxC1VSNTE8Yfs6DIWDMdNMXgL8LKYzLTqvFYShCCzygEWcSrFszYkQTLg
-        2fg/eKUpIQDQuk1jeawzFcM2LaRNKhAYtpGWwi/U=
+        bh=j3n9vkQi8yyTXI+r61USzwtCgcUKUoASCh7/ePcgnOo=;
+        b=I6yQOp1CYYkKVa20eH3Mna/uq50o3i3ucm4dfyX1MiL6UHvIkA5j31xkoZ0f/NOW
+        OtjMUPCDQgEtw5JzYHYzBENgNiRwP/JoCvFeNgICEmzt1MansfQL9TPf7sKAzMvrVgg
+        T2YCO+cGJannGsSW6dUbXWgAXte5BUZF/9kDlMZg=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016165b8b444-99fcbf50-ab35-4781-821a-a0dc90ed813b-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016165b8b47f-c7aaef74-cbf3-45eb-b1d3-a8f94f814a84-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
 References: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC v2 03/25] cat-file: reuse struct ref_format
+Subject: [PATCH RFC v2 25/25] cat-file: update of docs
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Mon, 5 Feb 2018 11:27:39 +0000
-X-SES-Outgoing: 2018.02.05-54.240.7.17
+X-SES-Outgoing: 2018.02.05-54.240.7.19
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Start using ref_format struct instead of simple char*.
-Need that for further reusing of formatting logic from ref-filter.
+Update the docs for cat-file command. Some new formatting atoms added
+because of reusing ref-filter code.
+We do not support cat-file atoms in general formatting logic
+(there is just the support for cat-file), that is why some of the atoms
+are still explained in cat-file docs.
+We need to move these explanations when atoms will be supported
+by other commands.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ Documentation/git-cat-file.txt | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index f5fa4fd75af26..98fc5ec069a49 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -13,15 +13,16 @@
- #include "tree-walk.h"
- #include "sha1-array.h"
- #include "packfile.h"
-+#include "ref-filter.h"
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index f90f09b03fae5..90639ac21d0e8 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -187,17 +187,8 @@ linkgit:git-rev-parse[1].
+ You can specify the information shown for each object by using a custom
+ `<format>`. The `<format>` is copied literally to stdout for each
+ object, with placeholders of the form `%(atom)` expanded, followed by a
+-newline. The available atoms are:
+-
+-`objectname`::
+-	The 40-hex object name of the object.
+-
+-`objecttype`::
+-	The type of the object (the same as `cat-file -t` reports).
+-
+-`objectsize`::
+-	The size, in bytes, of the object (the same as `cat-file -s`
+-	reports).
++newline. The available atoms are the same as that of
++linkgit:git-for-each-ref[1], but there are some additional ones:
  
- struct batch_options {
-+	struct ref_format format;
- 	int enabled;
- 	int follow_symlinks;
- 	int print_contents;
- 	int buffer_output;
- 	int all_objects;
- 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
--	const char *format;
- };
- 
- static const char *force_path;
-@@ -348,7 +349,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
- 		return;
- 	}
- 
--	strbuf_expand(&buf, opt->format, expand_format, data);
-+	strbuf_expand(&buf, opt->format.format, expand_format, data);
- 	strbuf_addch(&buf, '\n');
- 	batch_write(opt, buf.buf, buf.len);
- 	strbuf_release(&buf);
-@@ -441,8 +442,8 @@ static int batch_objects(struct batch_options *opt)
- 	int save_warning;
- 	int retval = 0;
- 
--	if (!opt->format)
--		opt->format = "%(objectname) %(objecttype) %(objectsize)";
-+	if (!opt->format.format)
-+		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
- 
- 	/*
- 	 * Expand once with our special mark_query flag, which will prime the
-@@ -451,7 +452,7 @@ static int batch_objects(struct batch_options *opt)
- 	 */
- 	memset(&data, 0, sizeof(data));
- 	data.mark_query = 1;
--	strbuf_expand(&buf, opt->format, expand_format, &data);
-+	strbuf_expand(&buf, opt->format.format, expand_format, &data);
- 	data.mark_query = 0;
- 	if (opt->cmdmode)
- 		data.split_on_whitespace = 1;
-@@ -543,7 +544,7 @@ static int batch_option_callback(const struct option *opt,
- 
- 	bo->enabled = 1;
- 	bo->print_contents = !strcmp(opt->long_name, "batch");
--	bo->format = arg;
-+	bo->format.format = arg;
- 
- 	return 0;
- }
-@@ -552,7 +553,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- {
- 	int opt = 0;
- 	const char *exp_type = NULL, *obj_name = NULL;
--	struct batch_options batch = {0};
-+	struct batch_options batch = { REF_FORMAT_INIT };
- 	int unknown_type = 0;
- 
- 	const struct option options[] = {
+ `objectsize:disk`::
+ 	The size, in bytes, that the object takes up on disk. See the
 
 --
 https://github.com/git/git/pull/452
