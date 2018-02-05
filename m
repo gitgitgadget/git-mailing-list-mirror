@@ -2,74 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A741D1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 20:16:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36A841F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 20:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751914AbeBEUQl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 15:16:41 -0500
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:33454 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750949AbeBEUQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 15:16:39 -0500
-Received: by mail-qk0-f169.google.com with SMTP id c82so6279672qka.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 12:16:39 -0800 (PST)
+        id S1751319AbeBEUU2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 15:20:28 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:39713 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750943AbeBEUU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 15:20:27 -0500
+Received: by mail-wr0-f195.google.com with SMTP id f6so29329670wra.6
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 12:20:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=3pfy8Jnihd6vfW16X66WSk82M7lmdXU4buDE6skOzFI=;
-        b=pHxrVcrn2HQvg06O9q8igYG7I9fNHAX4uNeXHuQPYSDWBZv5DdrNpytec0chuxX3P9
-         MjimkCbidKWW2SX91IjySGcllkQD48FTmBjd7L31L44BhQhYu9t0f2XtUfWXuBPjdjYb
-         KNRuCi5nT1dNOQeGUJIviD+ZgoKkYXo7A6yLtdRg18J1GeJnhCU+ElVQtnVxotrF9fXk
-         PZ9UB/D565QxRqSSXkbO13v+xCvGG9Zv+N3N6+UFUUo+27wPppa0B6vZk4RiZ9coJmpJ
-         iI942elAB4P31YIg76sJgB0uglCk7BR9CCgDAZKec2R3AVXh2W8sm+xN61haWLaeI3NQ
-         3fIQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3f75zXZ9N+J7yMOXuwkL0nB33RXgKCmYnjRS6qFy16s=;
+        b=Kh7HshMQUuDjI+dukIbFH03/56focu/cHagoFw/TYa2eG5RzZa1rOhr6P7h2aNgh6z
+         zK0FK6tzSmqdmJJjirCgOSsaqMGupTi2V19tiSX6SfQaYCLNJ5LajsPzWgr9CoCgdIFy
+         xjJPE1dUl2f7xPoxr4GgKGC65xa0AW0vDVzANoY2mZ7HGhOS6/G3It7cmUM4Jn3x1O9l
+         nQidaz55aqtbk7c0+U64GIUSqw4nocwwNukx3R5cJ0MCXo5mElMLN04GJz5BaorSHGkU
+         L3M1AxM76o9RQyFl5mF/nFDJ45Nm3Njj+CapcHgk5XGwjScRHo6w9MMajPYJkKUSO8Cs
+         AoZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=3pfy8Jnihd6vfW16X66WSk82M7lmdXU4buDE6skOzFI=;
-        b=I4HFghv2cJKGqCJQg4cgtrDp6RRNBoTgLmJNoHwUydta5BSK+AsI0XTh9pWGzl3nVT
-         xRUoGfDW05BGx67SsHfCIbvIKncZ5yY1NHdHEMOvjg7P0FUvGpzGsaWMgYhmKIhNPU/+
-         OnfwQ673mHW37qJ8W4nQuwutKPvk+Z+K/eb/5jjNanxoqEuOomVF81T6kSpw0L8GvebJ
-         BCKVx9Pe1rxynPYlo4gEVPMfe7ZlprO8c5PCbB467sqhPDzeaOpt4F9sFSjLIakyf9qC
-         CqY0tBchss5oRnd1redmOWSNNAyM2eEkFonDMkLlPmCsGVNxa2sBK7w50sAKa2mXUNtr
-         PY7A==
-X-Gm-Message-State: APf1xPCjP1DqMJzbJZSUj34lph0NJ3Xyu0jDOZpxrCqhwjAV7+/l/ZeI
-        PvDo36Lf9X+/+0bxL8r2fLQNyNbl7W+Z4NoVH8FwlkF8
-X-Google-Smtp-Source: AH8x225YzllZAxL2fpJULYOCJ5hWRAaYu35mZ41fKQieR0VKK8YCgzYtI1qwZ6cOS7kLdzsO2wdpBkV8kSyTbDor+7c=
-X-Received: by 10.55.66.77 with SMTP id p74mr12272873qka.205.1517861798783;
- Mon, 05 Feb 2018 12:16:38 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3f75zXZ9N+J7yMOXuwkL0nB33RXgKCmYnjRS6qFy16s=;
+        b=SfTV6RbtGuO7KHzqY3oHqS4btI4Zc+sE92fuRThdZEtSC3iA5jAjKG0HKpkuOe8Swy
+         fxY4bBdD+zYtmIky+lvsa8mt96a8NLQsOucDsS9/5byRxi9ur8sdDvCgBg77koEPl3rA
+         a7eRtvalDpbeeENQwjdA9YBqf7w2tECEPSTbuxsVRgfylDTQl9/NEv/XElADwgPpzT3n
+         Tf+SEFIeZ4W6BF9IPA22jYEhqWRekHmh3nnVy9FQGiwIHYaiZ3DXeWCeNXEMmPXWeiu0
+         qc+cRQYX3bfj8aD/GaKD3XA0ySc5shFJxdj18fegCwWc5uGHQehiMZkV13e0umcwjb/A
+         2+vA==
+X-Gm-Message-State: APf1xPBYXgdEsPqRvvkK1UbpTP2gnClROsA6TbPnUK3SJtQMY7AybHFV
+        xtidxTt3dCEhUQDaUJsMyRQ=
+X-Google-Smtp-Source: AH8x226BzQqSqvzeTXGlgLqsQ0BeiWIh6Q0oe8fbVdCZr4DlTlyDFP7g5+Y/HsleCEpu/QzvENQjqQ==
+X-Received: by 10.223.196.78 with SMTP id a14mr5500wrg.251.1517862025692;
+        Mon, 05 Feb 2018 12:20:25 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q15sm11508926wra.54.2018.02.05.12.20.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 05 Feb 2018 12:20:25 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/3] worktree: teach "add" to check out existing branches
+References: <20180121120208.12760-1-t.gummerer@gmail.com>
+        <20180204221305.28300-1-t.gummerer@gmail.com>
+        <20180204221305.28300-4-t.gummerer@gmail.com>
+        <20180205021833.GB17847@duynguyen.dek-tpc.internal>
+Date:   Mon, 05 Feb 2018 12:20:24 -0800
+In-Reply-To: <20180205021833.GB17847@duynguyen.dek-tpc.internal> (Duy Nguyen's
+        message of "Mon, 5 Feb 2018 09:18:33 +0700")
+Message-ID: <xmqqh8qv9ojb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.138.10 with HTTP; Mon, 5 Feb 2018 12:16:38 -0800 (PST)
-From:   Ian Norton <inorton@gmail.com>
-Date:   Mon, 5 Feb 2018 20:16:38 +0000
-Message-ID: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
-Subject: Are concurrent git operations on the same repo safe?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I'm generally used to the idea that if a thing is not marked as
-"thread-safe" then it isn't thread safe, but I thought I'd ask anyway
-to be sure.
+> On Sun, Feb 04, 2018 at 10:13:05PM +0000, Thomas Gummerer wrote:
+>> -	if (opts->new_branch)
+>> +	if (opts->checkout_existing_branch)
+>> +		fprintf(stderr, _(", checking out existing branch '%s'"),
+>> +			refname);
+>> +	else if (opts->new_branch)
+>>  		fprintf(stderr, _(", creating new branch '%s'"), opts->new_branch);
+>
+> I wonder if "creating branch" and "checkout out branch" are enough.
 
-Is it safe for me to do several operations with git concurrently on
-the same local repo? Specifically I'm trying to speed up "git
-submodule update" by doing several at the same time.  I've noticed
-some odd side effects afterwards though when trying to commit changes
-to my super project.
-
-Apologies if this is answered elsewhere, my google-foo is weak today.
-
-Many thanks
-
-Ian
+Yeah, I think new/existing are redundant.  If these were shown at
+the same time, then the extra adjectives would help differenciating
+them visually, but they are never shown at the same time, so...
