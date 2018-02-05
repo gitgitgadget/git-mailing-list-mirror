@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9E3C1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:10:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4063B1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:10:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbeBFAKS (ORCPT <rfc822;e@80x24.org>);
+        id S1752117AbeBFAKU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:10:20 -0500
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:38571 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752103AbeBFAKS (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 19:10:18 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34962 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752039AbeBFAKQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:10:16 -0500
-Received: by mail-pg0-f68.google.com with SMTP id o13so150064pgs.2
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:10:16 -0800 (PST)
+Received: by mail-pg0-f44.google.com with SMTP id l18so142682pgc.5
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:10:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KHMPtZ8LWf8NKCRSooxd069vD/yt4pWxvV0NG7EKmvE=;
-        b=MyrBImYpVPRuL8a0WcFZ5esVqYkzkDZoOsmbLtETXiMJe6HVrFZQg6YT9MfLU7WArr
-         jbPvD+Qbc2HO5SQFCjNoiZLkqr9sfi0iz1vc2EcP/BcKX8Jxw+mMuzNupXl8NaleK8kS
-         B9CqIsh9Y2RkWnbfrmnBKMgHF78vR7lvxZH99Sc1dL8/6bMW5lbDnvT8c1devHLabhZT
-         zQF+J/qQ6rWVG0MXu0XoziejSZJV3DySJAKyDulfRMx4HYWyMHw/YHYpNiCY5GR5dJg2
-         rkSheqRRoQAKTBHKyKliHkN7YBemeZksZAd11+H4lVW+Kti6IwhWl+zjI7SlnkpvDaCh
-         G0Pg==
+        bh=XiWFY2H86Ukrc0LyNjGCiIMz4+AF7LQQFiX8TGnIz6Y=;
+        b=SNz+wHnuSYavaDZO/xZJ6ACrsJoH4OptafsfC1WX6/XTXsNt4912Vxb/EDgQDLaVUP
+         3SfxKUhfUZjXOWbZyp6E+Qh56vz+Ad48gz+FG+QzYLegt/R6dqoxCy6Q16FlWOansdo4
+         VKmKHHeZvZsN4my+YyWQweYcvu2tghQoplrrydUfttlM3TFrj5HB7iPnatsxWTamRx+a
+         ZE/8qBLbuIXm8jhRB7lM3tw87egBR9inyfGbcXlDnbmWPCPnzL9iBtzOJgZcAhjpByZZ
+         xvdlz9sgRwNkslGD4M6QWVUAzTINrx+t7sKyCJxjzqdNRjkEEaEx8tQcj8yttz8iSn/0
+         sWPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KHMPtZ8LWf8NKCRSooxd069vD/yt4pWxvV0NG7EKmvE=;
-        b=pYIOooy1lQlhnUZsO+u3FUta3wcaMfG2FyXRsuvTt9gigdx/V/I2r85vC9x2qNirkI
-         RByFQEwElrzrqc+IN8vPXh86jw6mNTa5iswR0AAbWeqRXVtNHoiRqGNYcAJeRPNzynnk
-         e91WKM8iamp7J6JGcQyDH5HZxG/uewik9U+mWgUo/INnuxbVuDU3dq69riujkdyHv3mK
-         JLu5r3d1J7IBfsfEBO3sh1506NGMVkIwbzgv6Qg7YOoHLBwgxZuFGlxWWBzmxIV6IrzN
-         +OfsiNGjnTJgmVIbnli4N08Hsqdi9K0vGDcSK3jFA1eiJJG/d+QTxrneanbjNfGtvvhz
-         zaaw==
-X-Gm-Message-State: APf1xPBkfE1x+hIXjQfpKd+o0KQ34/8L1u9nXkpLsq6km5DxMVpc2Ov/
-        8TkRknaI0gMyjj84fowUwjyRAmpmtTg=
-X-Google-Smtp-Source: AH8x227DO67KWJ5qv+LdgSVhp8Vsafg6yhjTuaau3N7zlRp5eAgJibm6/a8ozXTYmfdseTUi2Kchjg==
-X-Received: by 10.101.80.69 with SMTP id k5mr396763pgo.443.1517875815848;
-        Mon, 05 Feb 2018 16:10:15 -0800 (PST)
+        bh=XiWFY2H86Ukrc0LyNjGCiIMz4+AF7LQQFiX8TGnIz6Y=;
+        b=IKZqgZtm7Qlnnff3T5gnW4iTi10t4xIqkkj9YrFmZGEt4ZO6scED3qjSUpx7jBT4Nw
+         yVL8ARVxnPZw8BPDknX7bjBWUk+1bY+ME/u3PoOAT1pJIdwlA2eo0RLLre+cuhzdIsDK
+         1HZiYGr3zc/RGS9MNhjNGY0ndRsa9AY3KYHt9nLcPUnp1g2RUBjpb9d4sFeQsYjhX4Um
+         GlX38yExrBfFzsA4h2Ze+cx40JwpOIfZ3n+IlS6dbB6WHvdPOXLYibzHe0ITLPRva6d9
+         n7dQsyzSIopxokvE17kBx7/sZXzs6C7KnS60aAQvp7Pm8sX7Yh/eJ7u/z7Gp8z0Bk/eI
+         mcUQ==
+X-Gm-Message-State: APf1xPDo2wEZ8F9zROFhNs8BGBFq2hmRlnZlaqgLyxl9g5vLQC/8X4yP
+        m0ZSoiMMgt0KA0F/n62XgEc0DJKryIo=
+X-Google-Smtp-Source: AH8x227XB+E0ftMl5EV8TPPd+lCiRn0C3mDXqN/0Hhacrj+5UVwi+G4G/o05vtGoHcbKIk3t2eoWOw==
+X-Received: by 10.98.83.71 with SMTP id h68mr524788pfb.198.1517875817192;
+        Mon, 05 Feb 2018 16:10:17 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i128sm18595508pfg.83.2018.02.05.16.10.13
+        by smtp.gmail.com with ESMTPSA id j25sm7634254pfk.38.2018.02.05.16.10.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:10:13 -0800 (PST)
+        Mon, 05 Feb 2018 16:10:16 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 075/194] fetch, push: do not use submodule as alternate in has_commits check
-Date:   Mon,  5 Feb 2018 15:55:36 -0800
-Message-Id: <20180205235735.216710-55-sbeller@google.com>
+Subject: [PATCH 076/194] push: add test showing bad interaction of replace refs and submodules
+Date:   Mon,  5 Feb 2018 15:55:37 -0800
+Message-Id: <20180205235735.216710-56-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,112 +64,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Both fetch and push still use alternates to access submodules in some
-other code paths, but this is progress towards eliminating the alternates
-hack that conflates access to the_repository and other repositories.
+The ref subsystem has not been migrated yet to access the object store
+via passed in repository objects. As a result replace when the object store
+tries to access replace refs in a repository other than the_repository
+it produces errors:
+
+  error: refs/replace/3afabef75c627b894cccc3bcae86837abc7c32fe does not point to a valid object!
+
+Add a test demonstrating this failure.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+
+squash! push: add test showing bad interaction of replace refs and submodules
+
+replace-objects: evaluate replacement refs without using the object store
+
+Pass DO_FOR_EACH_INCLUDE_BROKEN when iterating over replacement refs
+so that the iteration does not require opening the named objects from
+the object store. This avoids a dependency cycle between object access
+and replace ref iteration.
+
+Moreover the ref subsystem has not been migrated yet to access the object
+store via passed in repository objects.  As a result, without this patch
+when the object store tries to access replace refs in a repository other
+than the_repository it produces errors:
+
+   error: refs/replace/3afabef75c627b894cccc3bcae86837abc7c32fe does not point to a valid object!
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 52 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 38 insertions(+), 14 deletions(-)
+ t/t5531-deep-submodule-push.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/submodule.c b/submodule.c
-index dc57c176e8..1504812842 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -811,14 +811,15 @@ static int append_oid_to_argv(const struct object_id *oid, void *data)
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index 39cb2c1c34..8b2aa5a0f4 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -308,6 +308,22 @@ test_expect_success 'submodule entry pointing at a tag is error' '
+ 	test_i18ngrep "is a tag, not a commit" err
+ '
  
- struct has_commit_data {
- 	int result;
--	const char *path;
-+	struct repository *repo;
- };
- 
- static int check_has_commit(const struct object_id *oid, void *data)
- {
- 	struct has_commit_data *cb = data;
-+	struct repository *r = cb->repo;
- 
--	enum object_type type = sha1_object_info(the_repository, oid->hash, NULL);
-+	enum object_type type = sha1_object_info(r, oid->hash, NULL);
- 
- 	switch (type) {
- 	case OBJ_COMMIT:
-@@ -832,24 +833,43 @@ static int check_has_commit(const struct object_id *oid, void *data)
- 		return 0;
- 	default:
- 		die(_("submodule entry '%s' (%s) is a %s, not a commit"),
--		    cb->path, oid_to_hex(oid), typename(type));
-+		    r->submodule_prefix, oid_to_hex(oid), typename(type));
- 	}
- }
- 
-+/*
-+ * Initialize 'out' based on the provided submodule path.
-+ *
-+ * Unlike repo_submodule_init, this tolerates submodules not present
-+ * in .gitmodules. NEEDSWORK: The repo_submodule_init behavior is
-+ * preferrable. This function exists only to preserve historical behavior.
-+ *
-+ * Returns 0 on success, -1 when the submodule is not present.
-+ */
-+static int open_submodule(struct repository *out, const char *path)
-+{
-+	struct strbuf sb = STRBUF_INIT;
++test_expect_success 'replace ref does not interfere with submodule access' '
++	test_commit -C work/gar/bage one &&
++	test_commit -C work/gar/bage two &&
++	git -C work/gar/bage reset HEAD^^ &&
++	git -C work/gar/bage replace two one &&
++	test_when_finished "git -C work/gar/bage replace -d two" &&
 +
-+	if (submodule_to_gitdir(&sb, path))
-+		return -1;
++	test_commit -C work/gar/bage three &&
++	git -C work add gar/bage &&
++	git -C work commit -m "advance submodule" &&
 +
-+	if (repo_init(out, sb.buf, NULL)) {
-+		strbuf_release(&sb);
-+		return -1;
-+	}
++	git -C work push --recurse-submodules=on-demand ../pub.git master 2>err &&
++	! grep error err &&
++	! grep fatal err
++'
 +
-+	out->submodule_prefix = xstrdup(path);
-+
-+	strbuf_release(&sb);
-+	return 0;
-+}
-+
- static int submodule_has_commits(const char *path, struct oid_array *commits)
- {
--	struct has_commit_data has_commit = { 1, path };
-+	struct repository sub;
-+	struct has_commit_data has_commit = { 1, &sub };
- 
--	/*
--	 * Perform a cheap, but incorrect check for the existence of 'commits'.
--	 * This is done by adding the submodule's object store to the in-core
--	 * object store, and then querying for each commit's existence.  If we
--	 * do not have the commit object anywhere, there is no chance we have
--	 * it in the object store of the correct submodule and have it
--	 * reachable from a ref, so we can fail early without spawning rev-list
--	 * which is expensive.
--	 */
--	if (add_submodule_odb(path))
-+	if (open_submodule(&sub, path))
- 		return 0;
- 
- 	oid_array_for_each_unique(commits, check_has_commit, &has_commit);
-@@ -878,6 +898,7 @@ static int submodule_has_commits(const char *path, struct oid_array *commits)
- 		strbuf_release(&out);
- 	}
- 
-+	repo_clear(&sub);
- 	return has_commit.result;
- }
- 
-@@ -897,6 +918,9 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
- 		 */
- 		return 0;
- 
-+	/* The submodule odb is needed for access to its refs. */
-+	if (add_submodule_odb(path))
-+		BUG("submodule '%s' is both present and absent", path);
- 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 		struct strbuf buf = STRBUF_INIT;
+ test_expect_success 'push fails if recurse submodules option passed as yes' '
+ 	(
+ 		cd work/gar/bage &&
 -- 
 2.15.1.433.g936d1b9894.dirty
 
