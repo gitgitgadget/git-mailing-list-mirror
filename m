@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73F971F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:55:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C8631F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:55:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbeBEXzu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:55:50 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:33039 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752018AbeBEXzj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:55:39 -0500
-Received: by mail-pl0-f68.google.com with SMTP id t4so93175plo.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:39 -0800 (PST)
+        id S1752107AbeBEXzx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:55:53 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36630 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752038AbeBEXzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:55:41 -0500
+Received: by mail-pg0-f67.google.com with SMTP id x25so118633pge.3
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4SaMk+DHYRgGB0SyKYMF0OM9jdTmJCu0bEJT0f9GYwM=;
-        b=lS+7fm1AOGgj/xCji7rm78O44ZF/rSbnI0cFTATUCAoXwY34JQlYsmmE+i2WYbbWOi
-         wikdizPWlJzc6+KuxF5HEF5gYpq0NmYL8QFxqBfJqfQqoyKTMCYFfpCSWEtewaxMB4Kd
-         QwdjA3GLN31taqLmYBequRQI9zoV/+QDjH/U8MpfDsNs9yIyZEENIrMl4g5uz6S8kHkk
-         Rbj2K9l9cdXM0L5UfrzNgnALzosVUPNzwyfODHrec3ZI5leLFNboY0XIPoyIEY4c+ESS
-         TnlVF/hL09hZ38ftDF3z0AQuVi/+ZXNKN3TErTH6aneDPaoER+u+eFOH73q11PN7CdG5
-         +r+Q==
+        bh=6LJ7pbUjQXxXuZnq0FeP8Zbp+8ZpKWNzqmFngN+75qg=;
+        b=pt1D10oajBJPZH4glH99s3GHsqVgXJcxfxUbkOv8BppRGzbT1rkNrLT4WCRwgf9Z5N
+         sf45JANRyCl3GdjpWZYMeE3m1891ij619UZL0fEZR3qJMgQ1E2cou4gLqsrMoDBIS4km
+         Ba34VdjWkGP1XEnqgMPYEjMmm48R2Sm1fFT6hFj9Q2OSy7Av2gLnKUItFXPHZh/4bzt8
+         ApnDZUV5RJ6Q2kW/RE0vIADA8+BOI9vcr4G+FkVC5Hh8oY+VgP5qrgibuiBgU9zmeSsV
+         VKd5hjjCG9lcGmG6FLXP+y1ex9MKLnzAFbuvU6phsEJPm4thjic7LNU1OyjHw6aHnHvh
+         ssBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4SaMk+DHYRgGB0SyKYMF0OM9jdTmJCu0bEJT0f9GYwM=;
-        b=il/3Vt70L1ButN2o0Dp6OHa06tr5gfW2yhoNVm4OEFa/fpMOdQba2AHlx+kleAx4iS
-         mxOzmLH2XT5lNz2aPPxZQ/R13bsGabEylt/ziw6rX8+g8ypR9GFfcB9mb7OtMrH98zcZ
-         HCpLAUw0Bgr/5zIy+0WrG8rMPOL67+abNXHY5APOnX7VUuR1f3bzAAF6sGso6Rc1Y+/H
-         q2lN1+VTNI7UeK8oCvVRXX6SlYKSJgQMz5lO5YMe8z/4jN0KhIgf0fghzdA8T4ND2X6B
-         qEai9bbN35uGSfJoE9zZk0mX7wSnUGbRV9nVwwOHcZhpRWUokERLs8QRPXFpasz3Bxs+
-         ZawA==
-X-Gm-Message-State: APf1xPCAv5E7MOaa6AfrkCwDQwA0uzvq02ls1atknBHTKMWtBhu7ri7P
-        OF6Lm8ZvpigxbbuqeJrQftcB1yuiPFk=
-X-Google-Smtp-Source: AH8x225D9FMPd1L0FVloKJWccyoY8bFtuvtnazXk+VGKb+4srlijWZHD2Qj3eF1nm62nJuANElDh5Q==
-X-Received: by 2002:a17:902:1e5:: with SMTP id b92-v6mr515345plb.144.1517874938154;
-        Mon, 05 Feb 2018 15:55:38 -0800 (PST)
+        bh=6LJ7pbUjQXxXuZnq0FeP8Zbp+8ZpKWNzqmFngN+75qg=;
+        b=rq9hi2zsTkVS4f0jlSP9SLwmnOQ7xE4oLwME5jE1WWaJa7V8Ppl/6CQVYKdM4rjc+o
+         KjP5YAL+4X52VkVr2R9fn7fiQpH8c16iulRmBoT6UeBBWbQ8apBN8/JujuBJ7knKx9vS
+         NIkbG8tdcJM+56WG0dr5gFv+zHP+xGEeQOXipkAC1Jk1OpfALoqKagp0P6SkeLqlQjL6
+         wrPc8E7OTP211XIhw+3jQV1eEWqVA2PH3C1QhGti9ym/WE7ZhrLTwjulZzUN/UVVPOZ9
+         EwmGY9Riy2BNXD1HkIYLFkH2Dr1wwfz81BwtQthM5y/EBM0HBNu23jTzhYMLvCBtg+M+
+         QTsw==
+X-Gm-Message-State: APf1xPDTU8hkMHG+oYCwR6FfdqNL3XlnrZDo0zrqPXBOj9FWL8dbW9um
+        YZ9PllLziIR1a9E3yYyIuh04s4xRX9s=
+X-Google-Smtp-Source: AH8x224+ZqSNGDkekPohFWfiW8kzGO7jg9LL0y9/3/Lrx2JxOp/xGflOH360+SrGCGzTvHUN51rjWw==
+X-Received: by 10.98.248.1 with SMTP id d1mr484911pfh.222.1517874940784;
+        Mon, 05 Feb 2018 15:55:40 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id v22sm19778179pfa.158.2018.02.05.15.55.36
+        by smtp.gmail.com with ESMTPSA id k3sm15746762pff.41.2018.02.05.15.55.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:55:36 -0800 (PST)
+        Mon, 05 Feb 2018 15:55:40 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 004/194] pack: move prepare_packed_git_run_once to object store
-Date:   Mon,  5 Feb 2018 15:51:58 -0800
-Message-Id: <20180205235508.216277-5-sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 006/194] sha1_file: add repository argument to alt_odb_usable
+Date:   Mon,  5 Feb 2018 15:52:00 -0800
+Message-Id: <20180205235508.216277-7-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,72 +63,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+Add a repository argument to allow the alt_odb_usable caller to be
+more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
 
-Each repository's object store can be initialized independently, so
-they must not share a run_once variable.
+Since the implementation does not yet work with other repositories,
+use a wrapper macro to enforce that the caller passes in
+the_repository as the first argument. It would be more appealing to
+use BUILD_ASSERT_OR_ZERO to enforce this, but that doesn't work
+because it requires a compile-time constant and common compilers like
+gcc 4.8.4 do not consider "r == the_repository" a compile-time
+constant.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- object-store.h | 8 +++++++-
- packfile.c     | 7 +++----
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ sha1_file.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index e2a59a0611..14129fbba1 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -15,8 +15,14 @@ struct object_store {
- 
- 	struct alternate_object_database *alt_odb_list;
- 	struct alternate_object_database **alt_odb_tail;
-+
-+	/*
-+	 * Whether packed_git has already been populated with this repository's
-+	 * packs.
-+	 */
-+	unsigned packed_git_initialized : 1;
- };
--#define OBJECT_STORE_INIT { NULL, MRU_INIT, NULL, NULL }
-+#define OBJECT_STORE_INIT { NULL, MRU_INIT, NULL, NULL, 0 }
- 
- struct packed_git {
- 	struct packed_git *next;
-diff --git a/packfile.c b/packfile.c
-index 11b0e6613c..177aa219f9 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -873,12 +873,11 @@ static void prepare_packed_git_mru(void)
- 		mru_append(&the_repository->objects.packed_git_mru, p);
- }
- 
--static int prepare_packed_git_run_once = 0;
- void prepare_packed_git(void)
+diff --git a/sha1_file.c b/sha1_file.c
+index 2826d5d6ed..ca002a272d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -350,7 +350,9 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
+ /*
+  * Return non-zero iff the path is usable as an alternate object database.
+  */
+-static int alt_odb_usable(struct strbuf *path, const char *normalized_objdir)
++#define alt_odb_usable(r, p, n) alt_odb_usable_##r(p, n)
++static int alt_odb_usable_the_repository(struct strbuf *path,
++					 const char *normalized_objdir)
  {
  	struct alternate_object_database *alt;
  
--	if (prepare_packed_git_run_once)
-+	if (the_repository->objects.packed_git_initialized)
- 		return;
- 	prepare_packed_git_one(get_object_directory(), 1);
- 	prepare_alt_odb();
-@@ -886,13 +885,13 @@ void prepare_packed_git(void)
- 		prepare_packed_git_one(alt->path, 0);
- 	rearrange_packed_git();
- 	prepare_packed_git_mru();
--	prepare_packed_git_run_once = 1;
-+	the_repository->objects.packed_git_initialized = 1;
- }
+@@ -418,7 +420,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base,
+ 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+ 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
  
- void reprepare_packed_git(void)
- {
- 	approximate_object_count_valid = 0;
--	prepare_packed_git_run_once = 0;
-+	the_repository->objects.packed_git_initialized = 0;
- 	prepare_packed_git();
- }
- 
+-	if (!alt_odb_usable(&pathbuf, normalized_objdir)) {
++	if (!alt_odb_usable(the_repository, &pathbuf, normalized_objdir)) {
+ 		strbuf_release(&pathbuf);
+ 		return -1;
+ 	}
 -- 
 2.15.1.433.g936d1b9894.dirty
 
