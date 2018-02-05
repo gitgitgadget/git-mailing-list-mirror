@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C75D1F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB0B1F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752155AbeBEX4B (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:56:01 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:33050 "EHLO
+        id S1752161AbeBEX4F (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:56:05 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:43093 "EHLO
         mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751544AbeBEXzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:55:45 -0500
-Received: by mail-pl0-f67.google.com with SMTP id t4so93345plo.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:45 -0800 (PST)
+        with ESMTP id S1751792AbeBEXzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:55:47 -0500
+Received: by mail-pl0-f67.google.com with SMTP id f4so77121plr.10
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=bDwgb2fvGSZKF6hljuS8PWI99gPa5Ef2PIDJEgnoZJQ=;
-        b=DnvxGaxzStmTAnSxhyJDX+DbS8MiuZdHri2nUxWJbY6GiilJc9m76IzWmncCTJVU8B
-         7HnQwz1G2Wtm8Ilk7t+pixCPV9U/xOzCxTjuhUtlzWQknU9HgxJD4hLk5H6lvm+hDTQe
-         CRePufiS5cIgCZI1tHWFQaieWA3O1PwCfgiInqOc2/nGx2smzVAi+KNeGrgR44EBim6G
-         DGBl1VLBjchTaJ8GFx19ckJRmO6CXMcMbnEx8VDRQeLq3IyyyXjH9qcxmxfiyqstS6i+
-         aKUErWZZXGo0Y3LDfHD9ady7bISbMelwOHa2tXeI7TouNPIUmygfbTZFgxByrsiESjz3
-         TuJA==
+        bh=BK4+7lSRWh8hw2wAGxwcRknCSO57F3Aj+Hp5y+F1u1Y=;
+        b=bZc5Ue0eJTkLkpU3hhRrljVY8Jn5zrmj/vlE72ShfuIiBcxA/ZPPa5GEhniSBmsYNK
+         Dp3InUis6Ht0dyUy55dm3E7eq9icjdtiRrn2KhYkhNxAtyziJqz3HMRFMvgpSTXr/LB6
+         Aijea3O0xLXnnPlsDaMv+50POnIg2As0S7xqmT+SWdb82YgoqZ+iTwZdrUhF+Jir+iBc
+         eA3Xz8JxnsvLccVb9eWZGlqQOXd1Nha/xKYoe9iOivJ3ghONiSzQcHadleGfhHRRFXzb
+         y67ddNMhRhQxhi4MgrnkkemX5jGYiJeHRCUJgww7lMXvJiam08Oqm4vzymK8TfpXNPFF
+         RR3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=bDwgb2fvGSZKF6hljuS8PWI99gPa5Ef2PIDJEgnoZJQ=;
-        b=bSdyeq4LjGjS5MgY4c238mSR4o5QDoxoTNua0XVxOKXmTiD/LxeJwF39511R39j88Q
-         4h4P1I1biBCRgJGI0ehS2eLxW6YQVPXNfFuKEUb23wjwhoY3gGTgbwm+reMlWmlb5DAi
-         wxK0zIOh1AnI7cg0KNoTJXNOiejYKhK21REeBcZZBh23rGvWuoLbuGKg7jx79ngAF4Eu
-         A0qvsf+V7SxUaKfC1+vKdxFJf8P81g5ea5cg4aSRcOayxu4eAizjlxVP41yA6rivCZ6u
-         Oc7/LsvN9jMzt16SLA8TCC3gwCRVsM8PiZlyg5bajGGXi8iMXFlNMpwnEKVnLnMaHx2G
-         dC9Q==
-X-Gm-Message-State: APf1xPDcrUzUQa3Q5CJjTDDTkWAMDS2A60tTh3bIehc9nO2P/U+jb8+v
-        oo+g89KLuN3g3x67J/HPwOTm6JCFiwg=
-X-Google-Smtp-Source: AH8x226hoxPoKWYkrW+HHs4CRcOAknQnClvbn6k52dRGs6PeiVVJUaleooXcbDmPc3PNkFOmp6mOmA==
-X-Received: by 2002:a17:902:7b81:: with SMTP id w1-v6mr463380pll.295.1517874945032;
-        Mon, 05 Feb 2018 15:55:45 -0800 (PST)
+        bh=BK4+7lSRWh8hw2wAGxwcRknCSO57F3Aj+Hp5y+F1u1Y=;
+        b=qjFCfjs8VR+qFAbomeRwSPns2xTrtn6CaQCRlNLKyTpTo+lIKfbmveuCSQl3rxp9ly
+         4NjbxBRMwdqrRiKZPSx11c0kmzqjKWrYp7qah94ntP43XRTtrJ+xL8Wp/UdBtBWADS86
+         rndl7wLTJzKa9V5G0vwFfpVIrmBsKpylHMGwIyRapbR9v3VhAXxlGS4DTLBMaBzTGo9y
+         kj2EbAY06B3FccrzDRPz8F2rsHCM4Ph32gx7ryGySj80AMyUEzA0wzH6h7CK5CMfOzoD
+         BzHh+koChy8yCkiqKWamhCgzBxa7VRFW/kKzl//ePRYwklfTHg+E8IE4DL7/4+8rY57l
+         /sJA==
+X-Gm-Message-State: APf1xPDyDJkBs+ekzKhAcyVizmormxQyW2Mo6Dfo1r0mZQQgc3v6b+Ml
+        FP93NBZgUQhSvKbgDaw5aZEWSg5+aH0=
+X-Google-Smtp-Source: AH8x2262S+4NbXuLQxIEJ61D02zq473UkldL/j+0f8IwglCOywreu9rgyl5zA701KQMKkc85QJJkhw==
+X-Received: by 2002:a17:902:8f8a:: with SMTP id z10-v6mr457911plo.395.1517874946477;
+        Mon, 05 Feb 2018 15:55:46 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id q65sm14389998pfi.115.2018.02.05.15.55.44
+        by smtp.gmail.com with ESMTPSA id w27sm15049011pge.54.2018.02.05.15.55.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:55:44 -0800 (PST)
+        Mon, 05 Feb 2018 15:55:45 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 009/194] sha1_file: add repository argument to link_alt_odb_entries
-Date:   Mon,  5 Feb 2018 15:52:03 -0800
-Message-Id: <20180205235508.216277-10-sbeller@google.com>
+Subject: [PATCH 010/194] sha1_file: add repository argument to stat_sha1_file
+Date:   Mon,  5 Feb 2018 15:52:04 -0800
+Message-Id: <20180205235508.216277-11-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,8 +63,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the link_alt_odb_entries caller to
-be more specific about which repository to act on. This is a small
+Add a repository argument to allow the stat_sha1_file caller to be
+more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -74,67 +74,43 @@ repository other than the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ sha1_file.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index acb00b9680..d9f9046f31 100644
+index d9f9046f31..6abdb8c488 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -471,8 +471,12 @@ static const char *parse_alt_odb_entry(const char *string,
- 	return end;
- }
- 
--static void link_alt_odb_entries(const char *alt, int sep,
--				 const char *relative_base, int depth)
-+#define link_alt_odb_entries(r, a, s, rb, d) \
-+	link_alt_odb_entries_##r(a, s, rb, d)
-+static void link_alt_odb_entries_the_repository(const char *alt,
-+						int sep,
-+						const char *relative_base,
-+						int depth)
+@@ -875,8 +875,9 @@ int git_open_cloexec(const char *name, int flags)
+  * Note that it may point to static storage and is only valid until another
+  * call to sha1_file_name(), etc.
+  */
+-static int stat_sha1_file(const unsigned char *sha1, struct stat *st,
+-			  const char **path)
++#define stat_sha1_file(r, s, st, p) stat_sha1_file_##r(s, st, p)
++static int stat_sha1_file_the_repository(const unsigned char *sha1,
++					 struct stat *st, const char **path)
  {
- 	struct strbuf objdirbuf = STRBUF_INIT;
- 	struct strbuf entry = STRBUF_INIT;
-@@ -515,7 +519,7 @@ static void read_info_alternates_the_repository(const char *relative_base,
- 		return;
- 	}
+ 	struct alternate_object_database *alt;
  
--	link_alt_odb_entries(buf.buf, '\n', relative_base, depth);
-+	link_alt_odb_entries(the_repository, buf.buf, '\n', relative_base, depth);
- 	strbuf_release(&buf);
- 	free(path);
- }
-@@ -569,7 +573,8 @@ void add_to_alternates_file(const char *reference)
- 		if (commit_lock_file(&lock))
- 			die_errno("unable to move new alternates file into place");
- 		if (the_repository->objects.alt_odb_tail)
--			link_alt_odb_entries(reference, '\n', NULL, 0);
-+			link_alt_odb_entries(the_repository, reference,
-+					     '\n', NULL, 0);
- 	}
- 	free(alts);
- }
-@@ -582,7 +587,8 @@ void add_to_alternates_memory(const char *reference)
- 	 */
- 	prepare_alt_odb();
+@@ -1174,7 +1175,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
+ 		const char *path;
+ 		struct stat st;
+-		if (stat_sha1_file(sha1, &st, &path) < 0)
++		if (stat_sha1_file(the_repository, sha1, &st, &path) < 0)
+ 			return -1;
+ 		if (oi->disk_sizep)
+ 			*oi->disk_sizep = st.st_size;
+@@ -1373,7 +1374,7 @@ void *read_sha1_file_extended(const unsigned char *sha1,
+ 		die("replacement %s not found for %s",
+ 		    sha1_to_hex(repl), sha1_to_hex(sha1));
  
--	link_alt_odb_entries(reference, '\n', NULL, 0);
-+	link_alt_odb_entries(the_repository, reference,
-+			     '\n', NULL, 0);
- }
+-	if (!stat_sha1_file(repl, &st, &path))
++	if (!stat_sha1_file(the_repository, repl, &st, &path))
+ 		die("loose object %s (stored in %s) is corrupt",
+ 		    sha1_to_hex(repl), path);
  
- /*
-@@ -685,7 +691,8 @@ void prepare_alt_odb(void)
- 
- 	the_repository->objects.alt_odb_tail =
- 			&the_repository->objects.alt_odb_list;
--	link_alt_odb_entries(alt, PATH_SEP, NULL, 0);
-+	link_alt_odb_entries(the_repository, alt,
-+			     PATH_SEP, NULL, 0);
- 
- 	read_info_alternates(the_repository, get_object_directory(), 0);
- }
 -- 
 2.15.1.433.g936d1b9894.dirty
 
