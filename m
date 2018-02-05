@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 553FD1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:08:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08AE41F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:08:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752117AbeBFAIx (ORCPT <rfc822;e@80x24.org>);
+        id S1752085AbeBFAI4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:08:56 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:41159 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752069AbeBFAIx (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 19:08:53 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:41156 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751878AbeBFAIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:08:52 -0500
-Received: by mail-pg0-f65.google.com with SMTP id 141so132867pgd.8
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:08:52 -0800 (PST)
+Received: by mail-pg0-f67.google.com with SMTP id 141so132910pgd.8
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:08:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vf3htiIKAmFhumIOcurPmZeuhSPt8Dc4g3YIusvwO6c=;
-        b=M9a31Y8AVi8eHyZ/XzbWQzTHjNaBPa2dPyVjpOFFjNPtHNYrDIYLaH1rzCSKHiNV6g
-         4KEsTZz4nyu4E5bxPb+IcvGSENO1WSELZAd/nbyzCReffSsCFv5Jjmir2D6Hh/rWGGik
-         pI87B1jO+NCuC7tN45/pGZSF1U8au7zqOMbQhMaJF1X8N3+hb5+qrCCpr2guQONOHQJj
-         ELgJllYoifbOWDTUkQ33jS54ROzQUz6bitqzk8CHzl23Y7riF7tTGa3HzEakB01dRmuT
-         ubcSv3pUEKAQ/ie0pMVQpALsXobulBSSOQ0/W5szxmkJURyZEWyx50tJ9wrFTOsMwmZw
-         FhIg==
+        bh=TQMVPu8JmdxHu6mkcKQxHEqDdfbFS4Blk7/y05Q3qs8=;
+        b=PqT7866LV1w6QHHrHTok2jjaq2Wxqc7qvxojhm80smcxV8KCQCtUbYT5tBuT5o8XUB
+         CWutvk0Qepn89KC3PPaovrogd/TRmr9MhufWhy1FFzC9+LyRwGKUc40IKxdxEqXbHchj
+         rSU9PQ39mAZroynVisMeYDb0pHQYCVrf/LekUFqfmmzp4Ka0/Yvblj13cl2CYPBgvXSr
+         SiDjCrT0FORaXkwIbivZxZqSoWxjEBjBE8IkWlu3QM8Zis8kq6pDHpD9AiCEBNlwWcdj
+         MEZ4KyYBfEVPSxU61QwHkoHhu1VclnbHdZv3hNUDzSIefV7g6+hpI+5XWqH+bVb2cKKa
+         5fLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vf3htiIKAmFhumIOcurPmZeuhSPt8Dc4g3YIusvwO6c=;
-        b=JUSOL5cS5/Ru7b47agy8rIm9qM6k8p1UbeRpZTo6PJmkqSpMgSVbKaLYIEUgYLaw+s
-         CJzbf06cgB2vpZjK2LTclpqsXS6giq6pDC4e4Hl3nMRcjPCs0DE6ayrDW0i2+dtoIMyT
-         cKQ+OxNC/CGV0ULhJC8Wsv8JDk/Kv8JtHkUeBmRZJSKoayuRqORIn1469wUHt8m3hpHp
-         4264CvvWnLMPLrCcQtIt7gnQRjbYslbWqORD5IXm2YD7lRVMD0HVE6aWYX9ubSfYuEGA
-         KleDnRG303psjiOKcrlkOAWcV2NUtz6p9jKfHzmPhiS3fZUWjAkfFBFYJB4jmq0phSL2
-         dQtg==
-X-Gm-Message-State: APf1xPAvj25owP/2HBhyVJLuXuRR6dKTQ/llVOiagD+mmi9fp34u8d1g
-        9fzeaamnjMHhrT6V+MVQdYPgpkBy+gM=
-X-Google-Smtp-Source: AH8x2271VOXzNSEHBvT7x9RBUcbZc5ik2sb1z5UIRWXQd6ZPhPe199Gur/qCxuLx4QMlUQvsMqp/ZA==
-X-Received: by 10.99.6.19 with SMTP id 19mr437202pgg.222.1517875731182;
-        Mon, 05 Feb 2018 16:08:51 -0800 (PST)
+        bh=TQMVPu8JmdxHu6mkcKQxHEqDdfbFS4Blk7/y05Q3qs8=;
+        b=kWWvM2BGUUOgOd2KWw4ZNsmuUtEy95jWWXczUqf69QdWg0LPIE2l/21cYGUKG+77xV
+         BoSNQUvT2JY4PXBm8JHhZVDxASWbO5P1LFbYzALZJ2kW1Tkk5h4atRjnpiW0LIEyVaox
+         GMM0Fo4Hl5qrvsd1PdBdz+v1lrWM79wtjFzHYVJu4ySRNY90bsF5ZA7ryQuLRmzeBhbu
+         Y+jGaSUruSksMoDxIA6WeqxV6+QXCr78vyWBuJhNKiETl7fvmbG3wxoegwDjFH8bcfvq
+         y24TZpA8KsyWPGuF4HQHSFUPsPJLQ+cFi48ps2Fq2UhRIQTHOymE6GLAOo24fE/rVmpj
+         i4qA==
+X-Gm-Message-State: APf1xPB+PNxwfJQ9ZbKxJ2cvBG5yM5DwEHqP305d+Q0E3zvx5943uMlf
+        zgrZATN/ZItiokTA3Ksz9mOAqfLOeRI=
+X-Google-Smtp-Source: AH8x224nhxyMGC0OrhvZS4sSwpT9CYzwzEH/xC5v14qxYjFtTRKf6FnlC+h10Es6wX+3UMSpnUNEsQ==
+X-Received: by 10.98.237.6 with SMTP id u6mr526466pfh.190.1517875732555;
+        Mon, 05 Feb 2018 16:08:52 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id z186sm14851478pgb.70.2018.02.05.16.08.50
+        by smtp.gmail.com with ESMTPSA id q10sm9587512pfl.106.2018.02.05.16.08.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:08:50 -0800 (PST)
+        Mon, 05 Feb 2018 16:08:51 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH 069/194] pack: add repository argument to find_pack_entry
-Date:   Mon,  5 Feb 2018 15:55:30 -0800
-Message-Id: <20180205235735.216710-49-sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 070/194] packfile: add repository argument to read_object
+Date:   Mon,  5 Feb 2018 15:55:31 -0800
+Message-Id: <20180205235735.216710-50-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,10 +64,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jonathan Nieder <jrnieder@gmail.com>
-
-Add a repository argument to allow callers of find_pack_entry to be
-more specific about which repository to handle. This is a small
+Add a repository argument to allow the callers of read_object
+to be more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
 
@@ -77,78 +75,35 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- packfile.c  | 4 ++--
- packfile.h  | 3 ++-
- sha1_file.c | 6 +++---
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ packfile.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 61e84a789c..f641f6329a 100644
+index f641f6329a..56b2db8b06 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1835,7 +1835,7 @@ static int fill_pack_entry(const unsigned char *sha1,
-  * Iff a pack file contains the object named by sha1, return true and
-  * store its location to e.
-  */
--int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
-+int find_pack_entry_the_repository(const unsigned char *sha1, struct pack_entry *e)
+@@ -1447,8 +1447,10 @@ struct unpack_entry_stack_ent {
+ 	unsigned long size;
+ };
+ 
+-static void *read_object(const unsigned char *sha1, enum object_type *type,
+-			 unsigned long *size)
++#define read_object(r, s, t, sz) read_object_##r(s, t, sz)
++static void *read_object_the_repository(const unsigned char *sha1,
++					enum object_type *type,
++					unsigned long *size)
  {
- 	struct mru_entry *p;
- 
-@@ -1855,7 +1855,7 @@ int find_pack_entry(const unsigned char *sha1, struct pack_entry *e)
- int has_sha1_pack(const unsigned char *sha1)
- {
- 	struct pack_entry e;
--	return find_pack_entry(sha1, &e);
-+	return find_pack_entry(the_repository, sha1, &e);
- }
- 
- int has_pack_index(const unsigned char *sha1)
-diff --git a/packfile.h b/packfile.h
-index bb1d92b849..b42e5c2db1 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -141,7 +141,8 @@ extern int packed_object_info_the_repository(struct packed_git *pack, off_t offs
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
- 
--extern int find_pack_entry(const unsigned char *sha1, struct pack_entry *e);
-+#define find_pack_entry(r, s, e) find_pack_entry_##r(s, e)
-+extern int find_pack_entry_the_repository(const unsigned char *sha1, struct pack_entry *e);
- 
- extern int has_sha1_pack(const unsigned char *sha1);
- 
-diff --git a/sha1_file.c b/sha1_file.c
-index 299e8be72c..7e06ece5f3 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1272,7 +1272,7 @@ int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct o
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 	void *content;
+@@ -1592,7 +1594,7 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 				      sha1_to_hex(base_sha1), (uintmax_t)obj_offset,
+ 				      p->pack_name);
+ 				mark_bad_packed_object(p, base_sha1);
+-				base = read_object(base_sha1, &type, &base_size);
++				base = read_object(the_repository, base_sha1, &type, &base_size);
+ 				external_base = base;
+ 			}
  		}
- 	}
- 
--	if (!find_pack_entry(real, &e)) {
-+	if (!find_pack_entry(the_repository, real, &e)) {
- 		/* Most likely it's a loose object. */
- 		if (!sha1_loose_object_info(the_repository, real, oi, flags))
- 			return 0;
-@@ -1282,7 +1282,7 @@ int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct o
- 			return -1;
- 		} else {
- 			reprepare_packed_git(the_repository);
--			if (!find_pack_entry(real, &e))
-+			if (!find_pack_entry(the_repository, real, &e))
- 				return -1;
- 		}
- 	}
-@@ -1648,7 +1648,7 @@ static int freshen_loose_object(const unsigned char *sha1)
- static int freshen_packed_object(const unsigned char *sha1)
- {
- 	struct pack_entry e;
--	if (!find_pack_entry(sha1, &e))
-+	if (!find_pack_entry(the_repository, sha1, &e))
- 		return 0;
- 	if (e.p->freshened)
- 		return 1;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
