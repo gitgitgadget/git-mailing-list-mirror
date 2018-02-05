@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 959731F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9E3C1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752105AbeBFAJv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:09:51 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:42858 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752069AbeBFAJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:09:49 -0500
-Received: by mail-pl0-f68.google.com with SMTP id 11so101522plc.9
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:09:49 -0800 (PST)
+        id S1752105AbeBFAKS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:10:18 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34962 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752039AbeBFAKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:10:16 -0500
+Received: by mail-pg0-f68.google.com with SMTP id o13so150064pgs.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:10:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qQ/Xb9ji6KAZxM4hoGSIeY+xg01S5XEBLzvIwDngjzo=;
-        b=JhipYMpd5NPyALXx2s6kddQtqaB6xUVaAoiatUKbLE30y+AMsyW1qnisrBatasW0Tu
-         50kx5QlQiNEJY+4f9uF5AdyqBOA8fzaIsp2y0tOl3LydKT0BcmcCD0QOxRw5UJh8mUAX
-         B2XdrtxBrTOb07yeGOYcGtrj1e2eUIHtgIM3cUgakhbuhz9YQoHhHW9Qap78eweon4V3
-         a9BoER3kxWOH0ymv75GMnOKmcsEzEg97gDR8zexco7XVDNLJmnYedKVin5wxC7IcO089
-         CZhoq8zTw3gI18NHebvW/TcLMiFj4f94dYVFwG6FEsx2Cp79ZZib2mGqB8jXC8JwDr5x
-         /XKw==
+        bh=KHMPtZ8LWf8NKCRSooxd069vD/yt4pWxvV0NG7EKmvE=;
+        b=MyrBImYpVPRuL8a0WcFZ5esVqYkzkDZoOsmbLtETXiMJe6HVrFZQg6YT9MfLU7WArr
+         jbPvD+Qbc2HO5SQFCjNoiZLkqr9sfi0iz1vc2EcP/BcKX8Jxw+mMuzNupXl8NaleK8kS
+         B9CqIsh9Y2RkWnbfrmnBKMgHF78vR7lvxZH99Sc1dL8/6bMW5lbDnvT8c1devHLabhZT
+         zQF+J/qQ6rWVG0MXu0XoziejSZJV3DySJAKyDulfRMx4HYWyMHw/YHYpNiCY5GR5dJg2
+         rkSheqRRoQAKTBHKyKliHkN7YBemeZksZAd11+H4lVW+Kti6IwhWl+zjI7SlnkpvDaCh
+         G0Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qQ/Xb9ji6KAZxM4hoGSIeY+xg01S5XEBLzvIwDngjzo=;
-        b=rUBxhLFUdR/lyBBnFlLP8hsHrOz6jWrvJ8K3nAljK3cfSTbVcN1FiuQleAnKRtyGXC
-         jg0IlfG4V1Wu1/+X9NM2FKeqi3WLb+N19fhOYiO54dwwKDGOR/ZGSaUaci0h6Adfrm04
-         q1HTHDqrfYFreHS1pZYPUaN51tpSoSkR5nmIwBi0cNlUGDTDUqRv1Vq/pPbo80j6+gFJ
-         0pzOkuoz8VtLuI2sFPyEXAS5cLKwJscY2aYlloQGgmE9F+mt+ueCO2x5LERA/sRRIPHx
-         OuCKk3bGG1QLUktWfGmMZsjY33O7oqcySO7aiTVRHK9WBJdPqPiVmXBjnHYvWmCGxv+h
-         swKQ==
-X-Gm-Message-State: APf1xPCrSr7hWDYeUd6/Ar77fMPLQoQB2CF1uyGmjv90SkJzw8d7ds4U
-        NIObv1WxUIzxACwL/zp2cb4vD5M3v/c=
-X-Google-Smtp-Source: AH8x224Q4l5TmDzAfd4dQpokW0V8gghuP9c5Q6g17yrhaHfE7+a8UwMs14uF1RwYS2J8EcfKiZ4N4w==
-X-Received: by 2002:a17:902:3064:: with SMTP id u91-v6mr497538plb.421.1517875788108;
-        Mon, 05 Feb 2018 16:09:48 -0800 (PST)
+        bh=KHMPtZ8LWf8NKCRSooxd069vD/yt4pWxvV0NG7EKmvE=;
+        b=pYIOooy1lQlhnUZsO+u3FUta3wcaMfG2FyXRsuvTt9gigdx/V/I2r85vC9x2qNirkI
+         RByFQEwElrzrqc+IN8vPXh86jw6mNTa5iswR0AAbWeqRXVtNHoiRqGNYcAJeRPNzynnk
+         e91WKM8iamp7J6JGcQyDH5HZxG/uewik9U+mWgUo/INnuxbVuDU3dq69riujkdyHv3mK
+         JLu5r3d1J7IBfsfEBO3sh1506NGMVkIwbzgv6Qg7YOoHLBwgxZuFGlxWWBzmxIV6IrzN
+         +OfsiNGjnTJgmVIbnli4N08Hsqdi9K0vGDcSK3jFA1eiJJG/d+QTxrneanbjNfGtvvhz
+         zaaw==
+X-Gm-Message-State: APf1xPBkfE1x+hIXjQfpKd+o0KQ34/8L1u9nXkpLsq6km5DxMVpc2Ov/
+        8TkRknaI0gMyjj84fowUwjyRAmpmtTg=
+X-Google-Smtp-Source: AH8x227DO67KWJ5qv+LdgSVhp8Vsafg6yhjTuaau3N7zlRp5eAgJibm6/a8ozXTYmfdseTUi2Kchjg==
+X-Received: by 10.101.80.69 with SMTP id k5mr396763pgo.443.1517875815848;
+        Mon, 05 Feb 2018 16:10:15 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id c29sm18258350pfd.172.2018.02.05.16.09.47
+        by smtp.gmail.com with ESMTPSA id i128sm18595508pfg.83.2018.02.05.16.10.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:09:47 -0800 (PST)
+        Mon, 05 Feb 2018 16:10:13 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 074/194] object-store: allow sha1_object_info to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:55:35 -0800
-Message-Id: <20180205235735.216710-54-sbeller@google.com>
+Subject: [PATCH 075/194] fetch, push: do not use submodule as alternate in has_commits check
+Date:   Mon,  5 Feb 2018 15:55:36 -0800
+Message-Id: <20180205235735.216710-55-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,307 +64,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This involves also adapting sha1_object_info_extended and a some
-internal functions that are used to implement these. It all has to
-happen in one patch, because of a single recursive chain of calls visits
-all these functions.
+Both fetch and push still use alternates to access submodules in some
+other code paths, but this is progress towards eliminating the alternates
+hack that conflates access to the_repository and other repositories.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- object-store.h | 13 ++++++-------
- packfile.c     | 58 ++++++++++++++++++++++++++++------------------------------
- packfile.h     |  8 ++++----
- sha1_file.c    | 24 +++++++++++++-----------
- 4 files changed, 51 insertions(+), 52 deletions(-)
+ submodule.c | 52 ++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index 4ff60e3be0..6930cfef82 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -91,10 +91,7 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
- }
+diff --git a/submodule.c b/submodule.c
+index dc57c176e8..1504812842 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -811,14 +811,15 @@ static int append_oid_to_argv(const struct object_id *oid, void *data)
  
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
--
--#define sha1_object_info(r, sha1, size) \
--	sha1_object_info_##r(sha1, size)
--extern int sha1_object_info_the_repository(const unsigned char *, unsigned long *);
-+extern int sha1_object_info(struct repository *r, const unsigned char *sha1, unsigned long *sizep);
- extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
- extern int write_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
- extern int hash_sha1_file_literally(const void *buf, unsigned long len, const char *type, struct object_id *oid, unsigned flags);
-@@ -166,8 +163,10 @@ struct object_info {
- #define OBJECT_INFO_SKIP_CACHED 4
- /* Do not retry packed storage after checking packed and loose storage */
- #define OBJECT_INFO_QUICK 8
--#define sha1_object_info_extended(r, s, oi, f) \
--		sha1_object_info_extended_##r(s, oi, f)
--extern int sha1_object_info_extended_the_repository(const unsigned char *, struct object_info *, unsigned flags);
-+
-+extern int sha1_object_info_extended(struct repository *r,
-+				     const unsigned char *sha1,
-+				     struct object_info *oi,
-+				     unsigned flags);
- 
- #endif /* OBJECT_STORE_H */
-diff --git a/packfile.c b/packfile.c
-index 178d2e0ddd..6a8d5edf6d 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1082,9 +1082,9 @@ static const unsigned char *get_delta_base_sha1(struct packed_git *p,
- 		return NULL;
- }
- 
--#define retry_bad_packed_offset(r, p, o) \
--	retry_bad_packed_offset_##r(p, o)
--static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t obj_offset)
-+static int retry_bad_packed_offset(struct repository *r,
-+				   struct packed_git *p,
-+				   off_t obj_offset)
- {
- 	int type;
- 	struct revindex_entry *revidx;
-@@ -1094,7 +1094,7 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
- 		return OBJ_BAD;
- 	sha1 = nth_packed_object_sha1(p, revidx->nr);
- 	mark_bad_packed_object(p, sha1);
--	type = sha1_object_info(the_repository, sha1, NULL);
-+	type = sha1_object_info(r, sha1, NULL);
- 	if (type <= OBJ_NONE)
- 		return OBJ_BAD;
- 	return type;
-@@ -1102,13 +1102,12 @@ static int retry_bad_packed_offset_the_repository(struct packed_git *p, off_t ob
- 
- #define POI_STACK_PREALLOC 64
- 
--#define packed_to_object_type(r, p, o, t, w, c) \
--	packed_to_object_type_##r(p, o, t, w, c)
--static enum object_type packed_to_object_type_the_repository(struct packed_git *p,
--							     off_t obj_offset,
--							     enum object_type type,
--							     struct pack_window **w_curs,
--							     off_t curpos)
-+static enum object_type packed_to_object_type(struct repository *r,
-+					      struct packed_git *p,
-+					      off_t obj_offset,
-+					      enum object_type type,
-+					      struct pack_window **w_curs,
-+					      off_t curpos)
- {
- 	off_t small_poi_stack[POI_STACK_PREALLOC];
- 	off_t *poi_stack = small_poi_stack;
-@@ -1135,7 +1134,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- 		if (type <= OBJ_NONE) {
- 			/* If getting the base itself fails, we first
- 			 * retry the base, otherwise unwind */
--			type = retry_bad_packed_offset(the_repository, p, base_offset);
-+			type = retry_bad_packed_offset(r, p, base_offset);
- 			if (type > OBJ_NONE)
- 				goto out;
- 			goto unwind;
-@@ -1163,7 +1162,7 @@ static enum object_type packed_to_object_type_the_repository(struct packed_git *
- unwind:
- 	while (poi_stack_nr) {
- 		obj_offset = poi_stack[--poi_stack_nr];
--		type = retry_bad_packed_offset(the_repository, p, obj_offset);
-+		type = retry_bad_packed_offset(r, p, obj_offset);
- 		if (type > OBJ_NONE)
- 			goto out;
- 	}
-@@ -1250,15 +1249,15 @@ static void detach_delta_base_cache_entry(struct delta_base_cache_entry *ent)
- 	free(ent);
- }
- 
--#define cache_or_unpack_entry(r, p, bo, bs, t) cache_or_unpack_entry_##r(p, bo, bs, t)
--static void *cache_or_unpack_entry_the_repository(struct packed_git *p, off_t base_offset,
--	unsigned long *base_size, enum object_type *type)
-+static void *cache_or_unpack_entry(struct repository *r, struct packed_git *p,
-+				   off_t base_offset, unsigned long *base_size,
-+				   enum object_type *type)
- {
- 	struct delta_base_cache_entry *ent;
- 
- 	ent = get_delta_base_cache_entry(p, base_offset);
- 	if (!ent)
--		return unpack_entry(the_repository, p, base_offset, type, base_size);
-+		return unpack_entry(r, p, base_offset, type, base_size);
- 
- 	if (type)
- 		*type = ent->type;
-@@ -1312,8 +1311,8 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	hashmap_add(&delta_base_cache, ent);
- }
- 
--int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
--				      struct object_info *oi)
-+int packed_object_info(struct repository *r, struct packed_git *p,
-+		       off_t obj_offset, struct object_info *oi)
- {
- 	struct pack_window *w_curs = NULL;
- 	unsigned long size;
-@@ -1325,7 +1324,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
- 	 * a "real" type later if the caller is interested.
- 	 */
- 	if (oi->contentp) {
--		*oi->contentp = cache_or_unpack_entry(the_repository, p, obj_offset, oi->sizep,
-+		*oi->contentp = cache_or_unpack_entry(r, p, obj_offset, oi->sizep,
- 						      &type);
- 		if (!*oi->contentp)
- 			type = OBJ_BAD;
-@@ -1359,7 +1358,7 @@ int packed_object_info_the_repository(struct packed_git *p, off_t obj_offset,
- 
- 	if (oi->typep || oi->typename) {
- 		enum object_type ptot;
--		ptot = packed_to_object_type(the_repository, p, obj_offset,
-+		ptot = packed_to_object_type(r, p, obj_offset,
- 					     type, &w_curs, curpos);
- 		if (oi->typep)
- 			*oi->typep = ptot;
-@@ -1448,10 +1447,10 @@ struct unpack_entry_stack_ent {
- 	unsigned long size;
+ struct has_commit_data {
+ 	int result;
+-	const char *path;
++	struct repository *repo;
  };
  
--#define read_object(r, s, t, sz) read_object_##r(s, t, sz)
--static void *read_object_the_repository(const unsigned char *sha1,
--					enum object_type *type,
--					unsigned long *size)
-+static void *read_object(struct repository *r,
-+			 const unsigned char *sha1,
-+			 enum object_type *type,
-+			 unsigned long *size)
+ static int check_has_commit(const struct object_id *oid, void *data)
  {
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	void *content;
-@@ -1459,14 +1458,13 @@ static void *read_object_the_repository(const unsigned char *sha1,
- 	oi.sizep = size;
- 	oi.contentp = &content;
+ 	struct has_commit_data *cb = data;
++	struct repository *r = cb->repo;
  
--	if (sha1_object_info_extended(the_repository, sha1, &oi, 0) < 0)
-+	if (sha1_object_info_extended(r, sha1, &oi, 0) < 0)
- 		return NULL;
- 	return content;
+-	enum object_type type = sha1_object_info(the_repository, oid->hash, NULL);
++	enum object_type type = sha1_object_info(r, oid->hash, NULL);
+ 
+ 	switch (type) {
+ 	case OBJ_COMMIT:
+@@ -832,24 +833,43 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ 		return 0;
+ 	default:
+ 		die(_("submodule entry '%s' (%s) is a %s, not a commit"),
+-		    cb->path, oid_to_hex(oid), typename(type));
++		    r->submodule_prefix, oid_to_hex(oid), typename(type));
+ 	}
  }
  
--void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
--				  enum object_type *final_type,
--				  unsigned long *final_size)
-+void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
-+		   enum object_type *final_type, unsigned long *final_size)
++/*
++ * Initialize 'out' based on the provided submodule path.
++ *
++ * Unlike repo_submodule_init, this tolerates submodules not present
++ * in .gitmodules. NEEDSWORK: The repo_submodule_init behavior is
++ * preferrable. This function exists only to preserve historical behavior.
++ *
++ * Returns 0 on success, -1 when the submodule is not present.
++ */
++static int open_submodule(struct repository *out, const char *path)
++{
++	struct strbuf sb = STRBUF_INIT;
++
++	if (submodule_to_gitdir(&sb, path))
++		return -1;
++
++	if (repo_init(out, sb.buf, NULL)) {
++		strbuf_release(&sb);
++		return -1;
++	}
++
++	out->submodule_prefix = xstrdup(path);
++
++	strbuf_release(&sb);
++	return 0;
++}
++
+ static int submodule_has_commits(const char *path, struct oid_array *commits)
  {
- 	struct pack_window *w_curs = NULL;
- 	off_t curpos = obj_offset;
-@@ -1596,7 +1594,7 @@ void *unpack_entry_the_repository(struct packed_git *p, off_t obj_offset,
- 				      sha1_to_hex(base_sha1), (uintmax_t)obj_offset,
- 				      p->pack_name);
- 				mark_bad_packed_object(p, base_sha1);
--				base = read_object(the_repository, base_sha1, &type, &base_size);
-+				base = read_object(r, base_sha1, &type, &base_size);
- 				external_base = base;
- 			}
- 		}
-diff --git a/packfile.h b/packfile.h
-index 6d10871d25..f8d2825cce 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -125,8 +125,7 @@ extern off_t nth_packed_object_offset(const struct packed_git *, uint32_t n);
- extern off_t find_pack_entry_one(const unsigned char *sha1, struct packed_git *);
+-	struct has_commit_data has_commit = { 1, path };
++	struct repository sub;
++	struct has_commit_data has_commit = { 1, &sub };
  
- extern int is_pack_valid(struct packed_git *);
--#define unpack_entry(r, p, of, ot, s) unpack_entry_##r(p, of, ot, s)
--extern void *unpack_entry_the_repository(struct packed_git *, off_t, enum object_type *, unsigned long *);
-+extern void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object_type *, unsigned long *);
- extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-@@ -136,8 +135,9 @@ extern void release_pack_memory(size_t);
- /* global flag to enable extra checks when accessing packed objects */
- extern int do_check_packed_object_crc;
+-	/*
+-	 * Perform a cheap, but incorrect check for the existence of 'commits'.
+-	 * This is done by adding the submodule's object store to the in-core
+-	 * object store, and then querying for each commit's existence.  If we
+-	 * do not have the commit object anywhere, there is no chance we have
+-	 * it in the object store of the correct submodule and have it
+-	 * reachable from a ref, so we can fail early without spawning rev-list
+-	 * which is expensive.
+-	 */
+-	if (add_submodule_odb(path))
++	if (open_submodule(&sub, path))
+ 		return 0;
  
--#define packed_object_info(r, p, o, oi) packed_object_info_##r(p, o, oi)
--extern int packed_object_info_the_repository(struct packed_git *pack, off_t offset, struct object_info *);
-+extern int packed_object_info(struct repository *r,
-+			      struct packed_git *pack,
-+			      off_t offset, struct object_info *);
+ 	oid_array_for_each_unique(commits, check_has_commit, &has_commit);
+@@ -878,6 +898,7 @@ static int submodule_has_commits(const char *path, struct oid_array *commits)
+ 		strbuf_release(&out);
+ 	}
  
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
-diff --git a/sha1_file.c b/sha1_file.c
-index 7e06ece5f3..c296b76329 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1237,13 +1237,14 @@ static int sha1_loose_object_info(struct repository *r,
- 	return (status < 0) ? status : 0;
++	repo_clear(&sub);
+ 	return has_commit.result;
  }
  
--int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct object_info *oi, unsigned flags)
-+int sha1_object_info_extended(struct repository *r, const unsigned char *sha1,
-+			      struct object_info *oi, unsigned flags)
- {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
- 	struct pack_entry e;
- 	int rtype;
- 	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
--				    lookup_replace_object(the_repository, sha1) :
-+				    lookup_replace_object(r, sha1) :
- 				    sha1;
- 
- 	if (is_null_sha1(real))
-@@ -1272,17 +1273,17 @@ int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct o
- 		}
- 	}
- 
--	if (!find_pack_entry(the_repository, real, &e)) {
-+	if (!find_pack_entry(r, real, &e)) {
- 		/* Most likely it's a loose object. */
--		if (!sha1_loose_object_info(the_repository, real, oi, flags))
-+		if (!sha1_loose_object_info(r, real, oi, flags))
- 			return 0;
- 
- 		/* Not a loose object; someone else may have just packed it. */
- 		if (flags & OBJECT_INFO_QUICK) {
- 			return -1;
- 		} else {
--			reprepare_packed_git(the_repository);
--			if (!find_pack_entry(the_repository, real, &e))
-+			reprepare_packed_git(r);
-+			if (!find_pack_entry(r, real, &e))
- 				return -1;
- 		}
- 	}
-@@ -1294,11 +1295,10 @@ int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct o
+@@ -897,6 +918,9 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
  		 */
  		return 0;
  
--	rtype = packed_object_info(the_repository, e.p, e.offset, oi);
-+	rtype = packed_object_info(r, e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real);
--		return sha1_object_info_extended(the_repository, real, oi,
--						 0);
-+		return sha1_object_info_extended(r, real, oi, 0);
- 	} else if (oi->whence == OI_PACKED) {
- 		oi->u.packed.offset = e.offset;
- 		oi->u.packed.pack = e.p;
-@@ -1310,14 +1310,16 @@ int sha1_object_info_extended_the_repository(const unsigned char *sha1, struct o
- }
- 
- /* returns enum object_type or negative */
--int sha1_object_info_the_repository(const unsigned char *sha1, unsigned long *sizep)
-+int sha1_object_info(struct repository *r,
-+		     const unsigned char *sha1,
-+		     unsigned long *sizep)
- {
- 	enum object_type type;
- 	struct object_info oi = OBJECT_INFO_INIT;
- 
- 	oi.typep = &type;
- 	oi.sizep = sizep;
--	if (sha1_object_info_extended(the_repository, sha1, &oi,
-+	if (sha1_object_info_extended(r, sha1, &oi,
- 				      OBJECT_INFO_LOOKUP_REPLACE) < 0)
- 		return -1;
- 	return type;
++	/* The submodule odb is needed for access to its refs. */
++	if (add_submodule_odb(path))
++		BUG("submodule '%s' is both present and absent", path);
+ 	if (for_each_remote_ref_submodule(path, has_remote, NULL) > 0) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+ 		struct strbuf buf = STRBUF_INIT;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
