@@ -8,29 +8,28 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFB3F1F576
-	for <e@80x24.org>; Mon,  5 Feb 2018 11:27:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 618E91F576
+	for <e@80x24.org>; Mon,  5 Feb 2018 11:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752885AbeBEL1o (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 06:27:44 -0500
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:41050
+        id S1752891AbeBEL1q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 06:27:46 -0500
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:41060
         "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752312AbeBEL1k (ORCPT
+        by vger.kernel.org with ESMTP id S1752612AbeBEL1k (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 06:27:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1517830059;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=vdRkP85+55EXyoELa3FWM4PObi25dlDZUy6iKsYVKwY=;
-        b=Fd0Bz1wG0Ym2AyqvUvUJcTOonyJx2mweYtq2bqB2N1i5x35Ws85gPbHrL/AnVizq
-        WZ6NERzz4NvyDxlSUJexxqFtnC9jUcL36b+1Iq2kYdF1F1f/cokAVeBsaS/+CpckPy/
-        gALMCjCHnRXdrmOd14CIuvi0u8Vd2SQmqD004h4k=
+        bh=loNOHdjoQ5wlnzbCqYluGYFXFhdSyc5jtBxCkRVhKNA=;
+        b=Ci5ZseDMx3+tb0Kl5xLAFJd4hqNZFIA8c/EdYOYdD1OLiBRCCQkE7dy3X62nKTl4
+        yi7J3xsy9cFZoyMzasOOWZ8iFmeATz/eevyhRLSErZZtkIH+IrINmZCqSPHBc1zJ2bK
+        q7zDwnO2Ydvy0NFCDYfFQ/s63n/YilfMd6tfep8w=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102016165b8b426-befe124b-fbe7-4b83-b7e0-c340b4f6dd57-000000@eu-west-1.amazonses.com>
+Message-ID: <0102016165b8b4bd-0dc70183-2c3d-4c12-8fb0-7a9685b278b8-000000@eu-west-1.amazonses.com>
 In-Reply-To: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
 References: <0102016165b8b3c4-54efe4c4-6d19-435d-b5b9-6c727771353b-000000@eu-west-1.amazonses.com>
-Subject: [PATCH RFC v2 05/25] cat-file: move struct expand_data into
- ref-filter
+Subject: [PATCH RFC v2 22/25] ref-filter: work with objectsize:disk
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -42,113 +41,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Need that for further reusing of formatting logic in cat-file.
-Have plans to get rid of using expand_data in cat-file at all,
-and use it only in ref-filter for collecting, formatting and printing
-needed data.
+Make a temporary solution for commands that could use
+objectsize:disk atom.
+It's better to fill it with value or give an error if there is no value
+for this atom, but as a first solution we do dothing.
+It means that if objectsize:disk is used, we put an empty string there.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 36 ------------------------------------
- ref-filter.h       | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 36 deletions(-)
+ ref-filter.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 98fc5ec069a49..37d6096d201b5 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -176,42 +176,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	return 0;
- }
- 
--struct expand_data {
--	struct object_id oid;
--	enum object_type type;
--	unsigned long size;
--	off_t disk_size;
--	const char *rest;
--	struct object_id delta_base_oid;
--
--	/*
--	 * If mark_query is true, we do not expand anything, but rather
--	 * just mark the object_info with items we wish to query.
--	 */
--	int mark_query;
--
--	/*
--	 * Whether to split the input on whitespace before feeding it to
--	 * get_sha1; this is decided during the mark_query phase based on
--	 * whether we have a %(rest) token in our format.
--	 */
--	int split_on_whitespace;
--
--	/*
--	 * After a mark_query run, this object_info is set up to be
--	 * passed to sha1_object_info_extended. It will point to the data
--	 * elements above, so you can retrieve the response from there.
--	 */
--	struct object_info info;
--
--	/*
--	 * This flag will be true if the requested batch format and options
--	 * don't require us to call sha1_object_info, which can then be
--	 * optimized out.
--	 */
--	unsigned skip_object_info : 1;
--};
--
- static int is_atom(const char *atom, const char *s, int slen)
- {
- 	int alen = strlen(atom);
-diff --git a/ref-filter.h b/ref-filter.h
-index b75c8ac45248e..17f2ac24d2739 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -72,6 +72,42 @@ struct ref_filter {
- 		verbose;
- };
- 
-+struct expand_data {
-+	struct object_id oid;
-+	enum object_type type;
-+	unsigned long size;
-+	off_t disk_size;
-+	const char *rest;
-+	struct object_id delta_base_oid;
-+
-+	/*
-+	 * If mark_query is true, we do not expand anything, but rather
-+	 * just mark the object_info with items we wish to query.
-+	 */
-+	int mark_query;
-+
-+	/*
-+	 * Whether to split the input on whitespace before feeding it to
-+	 * get_sha1; this is decided during the mark_query phase based on
-+	 * whether we have a %(rest) token in our format.
-+	 */
-+	int split_on_whitespace;
-+
-+	/*
-+	 * After a mark_query run, this object_info is set up to be
-+	 * passed to sha1_object_info_extended. It will point to the data
-+	 * elements above, so you can retrieve the response from there.
-+	 */
-+	struct object_info info;
-+
-+	/*
-+	 * This flag will be true if the requested batch format and options
-+	 * don't require us to call sha1_object_info, which can then be
-+	 * optimized out.
-+	 */
-+	unsigned skip_object_info : 1;
-+};
-+
- struct ref_format {
- 	/*
- 	 * Set these to define the format; make sure you call
+diff --git a/ref-filter.c b/ref-filter.c
+index aa15dd0b4723e..b21358aea476b 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -826,8 +826,10 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 			v->value = sz;
+ 			v->s = xstrfmt("%lu", sz);
+ 		} else if (!strcmp(name, "objectsize:disk")) {
+-			v->value = cat_file_info.disk_size;
+-			v->s = xstrfmt("%"PRIuMAX, (uintmax_t)v->value);
++			if (is_cat) {
++				v->value = cat_file_info.disk_size;
++				v->s = xstrfmt("%"PRIuMAX, (uintmax_t)v->value);
++			}
+ 		} else if (deref)
+ 			grab_objectname(name, obj->oid.hash, v, &used_atom[i]);
+ 	}
 
 --
 https://github.com/git/git/pull/452
