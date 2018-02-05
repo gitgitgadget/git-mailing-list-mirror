@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFF2D1FAE3
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:03:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610AF1FAE2
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbeBFADt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:03:49 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:45803 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752018AbeBFADs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:03:48 -0500
-Received: by mail-pg0-f67.google.com with SMTP id m136so113044pga.12
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:03:47 -0800 (PST)
+        id S1751824AbeBFADY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:03:24 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:44974 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752068AbeBFADV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:03:21 -0500
+Received: by mail-pl0-f65.google.com with SMTP id f8so89385plk.11
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:03:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SuMzYN6+KD7P2MrGvCsnFrYCWif0tquahhoye6TIg/g=;
-        b=I/KTDVSFbU+jO7eMHoVDuEmvujI1BkI9Ee4BHEXJRN9/VUqVjMBss8KwmGOolFkLYM
-         s7cVvPX++8CvOq7rw3Z8m+hmERort49RcHhVH9C3Q03AseQx17OZpcVfm5S7coUk+RXx
-         BQ9AYQTKDwxo3WW/v0jyI/nC0py6FfMoAfGF7PowzshTnqMsLnd06nTduH2QuAx1iiBY
-         8FAcs6WGIXfIv3/81GatTNPn0UVSz9nVqh/4/6pFC0A6fMxc4DNdzYNmD8yMDNyN1IZN
-         YVAplHrFLM4lMQGqzmZOPcgWFH4JnlhF3sMk7gxU/ni6+S6oK1PMJJTd9iKJ/UquMvoX
-         nctA==
+        bh=nRYuo+IOlMeaQYUmtEvaavYW0B7/ZlEu1MHFo6cjvV0=;
+        b=QWGiq4h5oScc77E18qPqTdRLvKm9AxH9LWgVyJUgk55JvMFu9d8FoSTufQ7Gfx6HWj
+         8wcJh2J7az3DjX1dvBO5bLz7/JuXHYyDmyukg+cy7dXvy4Xhr1zsVAtNK2tjAxsXfhOY
+         Oh4lMuj+kmi/7WKfOWEyLRjhFSjR18jpC+pf8zv2AKy8QnsyQuoAG7zrBouPtMVSov2o
+         ldNaqq18zO2P9oyYPo57hNJi2x7/cVmEfbLWtCeL1nLqZ/YD4EFfmsV0E8lw9mgg7qr8
+         lMWdE7z2RiVYGrd9cXXKdg1GJGbdvtGt/WVSUmwAEiuiD6qEXVN3S3oeyRY1HHzhSahJ
+         FCmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SuMzYN6+KD7P2MrGvCsnFrYCWif0tquahhoye6TIg/g=;
-        b=r/J9Rr8FSJTdqRi+ZHwdth8kQ5dt0C7UxBLXytakrgKgyNA1urASaNTaZ+eWMwvloG
-         Un4yv5qcwLTvm8JnPdIOT28hKLeGh9s5XC41RnIjkArryHHJLht761D8mZpjT/LdgOwv
-         Vo0ES1VDEyie45wlUdCyS38wfyAwKzNHfAJVL2E73Tngisls/04k0Hi5IYKjbBgcVjjj
-         ux4xQFOayCKVsTzZgXAVel7tD1W6J8ZzsH02HUam9FRH+yvyDaXJOvWIEfe/DEu1q05C
-         PGnCtAJ6Lcyb5Gm31Nwlv6FGJEPCQwp+T2AxDmjLRpMBVV+eGChVu1OpkJd6LevH3e2j
-         A1GA==
-X-Gm-Message-State: APf1xPC4nyN88K98HkLmsn5Jpgh3wLyZCqp6sf4hdt3Lq1v6RmR9oHJb
-        hWGV3fGmAy1BxNAAnS6O2aFnoSXkEdk=
-X-Google-Smtp-Source: AH8x225esLqE6kvh5A44mZVDbT1gcY+4AE8FFXuLbusIxxusPts4FxccaLQTJXH8MuJprnpSEdZ1wQ==
-X-Received: by 10.99.126.93 with SMTP id o29mr395775pgn.201.1517875427028;
-        Mon, 05 Feb 2018 16:03:47 -0800 (PST)
+        bh=nRYuo+IOlMeaQYUmtEvaavYW0B7/ZlEu1MHFo6cjvV0=;
+        b=UyKCMWoimLc6m1V8vfUqsNJ3Zh4ORiQQXMEjApIR5fx2corUHiZFDLwcSyoMIkHa5u
+         828YMUKfIRrs4zDjkM2jASV2yQ0QFCwHWpFB7yYtn2JOdM/pVoWooI2kxrV5NBBO6tfg
+         v+aw+obuxTEJMumwHRXJByDZho7DReTiPXvTa+Khnsl+fvNhcPtTot8XYYKNsR8h4ce8
+         oAImTpPEIKp1Nao97lfu9HzkHNvkmXg7R7AhD3XNK1KftgG6HpvEUjq5yDcZeUo+bGyT
+         He3jBKLgd5FZkIFNPfFnncFfKwXFPjQ5/57jX1kAuEvoK/JMaN/HW5+zYFUoOt95fq4h
+         w0og==
+X-Gm-Message-State: APf1xPBq+B+mkghWfOw+p9uQEQdDPDPz/Z5FcvP8PfYxwUjSwwkBz8gV
+        kp8Llc9nE+hzod91LWnehqrUHF8+P70=
+X-Google-Smtp-Source: AH8x225wtyV5WMolh/Z30tZ1r+uW/Cj3+PuRIrt+AU2iYt9wCTBhW6nyquDBt0H2B4gAVarZbMyA9g==
+X-Received: by 2002:a17:902:2884:: with SMTP id f4-v6mr501366plb.35.1517875400672;
+        Mon, 05 Feb 2018 16:03:20 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id m3sm15426411pgs.90.2018.02.05.16.03.46
+        by smtp.gmail.com with ESMTPSA id 137sm14080017pge.74.2018.02.05.16.03.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:03:46 -0800 (PST)
+        Mon, 05 Feb 2018 16:03:18 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 047/194] object-store: move lookup_replace_object to replace-object.h
-Date:   Mon,  5 Feb 2018 15:55:08 -0800
-Message-Id: <20180205235735.216710-27-sbeller@google.com>
+Subject: [PATCH 046/194] object-store: move replace_objects back to object-store
+Date:   Mon,  5 Feb 2018 15:55:07 -0800
+Message-Id: <20180205235735.216710-26-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -66,137 +66,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Nieder <jrnieder@gmail.com>
 
-lookup_replace_object is a low-level function that most users of the
-object store do not need to use directly.
-
-Move it to replace-object.h to avoid a dependency loop in an upcoming
-change to its inline definition that will make use of repository.h.
+This way, object-store.h does not need to #include replace-object.h,
+avoiding a header dependency loop in an upcoming change to the inline
+definition of the lookup_replace_object function.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/mktag.c  |  1 +
- object-store.h   | 19 -------------------
- object.c         |  1 +
- replace-object.h | 22 ++++++++++++++++++++++
- sha1_file.c      |  1 +
- streaming.c      |  1 +
- 6 files changed, 26 insertions(+), 19 deletions(-)
+ object-store.h   | 13 ++++++++++---
+ replace-object.h | 11 -----------
+ 2 files changed, 10 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 04eadc7b24..93934e8e4b 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -1,6 +1,7 @@
- #include "builtin.h"
- #include "tag.h"
- #include "object-store.h"
-+#include "replace-object.h"
- 
- /*
-  * A signature file has a very simple fixed format: four lines
 diff --git a/object-store.h b/object-store.h
-index cf06a54782..4ac0ffdb98 100644
+index 31628c49dc..cf06a54782 100644
 --- a/object-store.h
 +++ b/object-store.h
-@@ -88,25 +88,6 @@ static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *
- 	return read_sha1_file_extended(sha1, type, size, 1);
- }
+@@ -3,7 +3,6 @@
  
--/*
-- * This internal function is only declared here for the benefit of
-- * lookup_replace_object().  Please do not call it directly.
-- */
--extern const unsigned char *do_lookup_replace_object(const unsigned char *sha1);
--
--/*
-- * If object sha1 should be replaced, return the replacement object's
-- * name (replaced recursively, if necessary).  The return value is
-- * either sha1 or a pointer to a permanently-allocated value.  When
-- * object replacement is suppressed, always return sha1.
-- */
--static inline const unsigned char *lookup_replace_object(const unsigned char *sha1)
--{
--	if (!check_replace_refs)
--		return sha1;
--	return do_lookup_replace_object(sha1);
--}
--
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern int sha1_object_info(const unsigned char *, unsigned long *);
- extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
-diff --git a/object.c b/object.c
-index 4d2ae6851c..fc0ccbefef 100644
---- a/object.c
-+++ b/object.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "object.h"
- #include "object-store.h"
-+#include "replace-object.h"
- #include "blob.h"
- #include "tree.h"
- #include "commit.h"
+ #include "strbuf.h"
+ #include "mru.h"
+-#include "replace-object.h"
+ #include "alternates.h"
+ 
+ /* in packfile.h */
+@@ -32,7 +31,15 @@ struct object_store {
+ 	 * Objects that should be substituted by other objects
+ 	 * (see git-replace(1)).
+ 	 */
+-	struct replace_objects replacements;
++	struct replace_objects {
++		/*
++		 * An array of replacements.  The array is kept sorted by the original
++		 * sha1.
++		 */
++		struct replace_object **items;
++
++		int alloc, nr;
++	} replacements;
+ 
+ 	/*
+ 	 * A fast, rough count of the number of objects in the repository.
+@@ -49,7 +56,7 @@ struct object_store {
+ 	unsigned packed_git_initialized : 1;
+ };
+ #define OBJECT_STORE_INIT \
+-	{ NULL, MRU_INIT, ALTERNATES_INIT, REPLACE_OBJECTS_INIT, 0, 0, 0 }
++	{ NULL, MRU_INIT, ALTERNATES_INIT, { NULL, 0, 0 }, 0, 0, 0 }
+ 
+ struct packed_git {
+ 	struct packed_git *next;
 diff --git a/replace-object.h b/replace-object.h
-index e05713b951..668bbed1da 100644
+index 483335ffcc..e05713b951 100644
 --- a/replace-object.h
 +++ b/replace-object.h
-@@ -1,9 +1,31 @@
+@@ -1,17 +1,6 @@
  #ifndef REPLACE_OBJECT_H
  #define REPLACE_OBJECT_H
  
-+#include "cache.h"
-+#include "repository.h"
-+
+-struct replace_objects {
+-	/*
+-	 * An array of replacements.  The array is kept sorted by the original
+-	 * sha1.
+-	 */
+-	struct replace_object **items;
+-
+-	int alloc, nr;
+-};
+-#define REPLACE_OBJECTS_INIT { NULL, 0, 0 }
+-
  struct replace_object {
  	unsigned char original[20];
  	unsigned char replacement[20];
- };
- 
-+/*
-+ * This internal function is only declared here for the benefit of
-+ * lookup_replace_object().  Please do not call it directly.
-+ */
-+extern const unsigned char *do_lookup_replace_object(const unsigned char *sha1);
-+
-+/*
-+ * If object sha1 should be replaced, return the replacement object's
-+ * name (replaced recursively, if necessary).  The return value is
-+ * either sha1 or a pointer to a permanently-allocated value.  When
-+ * object replacement is suppressed, always return sha1.
-+ */
-+static inline const unsigned char *lookup_replace_object(const unsigned char *sha1)
-+{
-+	if (!check_replace_refs)
-+		return sha1;
-+	return do_lookup_replace_object(sha1);
-+}
-+
- #endif /* REPLACE_OBJECT_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index 2584465e9c..8ee86f8ede 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -25,6 +25,7 @@
- #include "bulk-checkin.h"
- #include "repository.h"
- #include "object-store.h"
-+#include "replace-object.h"
- #include "loose-object.h"
- #include "streaming.h"
- #include "path.h"
-diff --git a/streaming.c b/streaming.c
-index 47fca9aba0..c47600e719 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -5,6 +5,7 @@
- #include "streaming.h"
- #include "repository.h"
- #include "object-store.h"
-+#include "replace-object.h"
- #include "packfile.h"
- 
- enum input_source {
 -- 
 2.15.1.433.g936d1b9894.dirty
 
