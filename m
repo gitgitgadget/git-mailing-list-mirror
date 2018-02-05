@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13D11F404
-	for <e@80x24.org>; Mon,  5 Feb 2018 23:59:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E384A1F404
+	for <e@80x24.org>; Mon,  5 Feb 2018 23:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752272AbeBEX7E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 18:59:04 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:36523 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751839AbeBEX6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 18:58:41 -0500
-Received: by mail-pl0-f68.google.com with SMTP id v3so94453plg.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:58:40 -0800 (PST)
+        id S1752315AbeBEX7R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 18:59:17 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:39089 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752100AbeBEX7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 18:59:08 -0500
+Received: by mail-pg0-f65.google.com with SMTP id w17so117241pgv.6
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 15:59:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YxSJCF7Vm/Q56SREI5HfGVh3pMnkVsJJYVDNPMOih88=;
-        b=m4H7farVEK4StlkAhe/InY0aUK5MuIs6FOahvHgl5mzwd8SorYgwCcFtNU3yXhquV6
-         X+AtbZ6BLBEU1e615xgAWVEOiDAx4ESgA1zvYfBxnVTXhig2yXVLK7TiGjJHMxkkKnxe
-         jT/hj/HBHOe/CX9SFlsV3LnOnz76Jwj3+NXEwrRxp49YhMT7GSMYmhWrfnbz0QjzN7aD
-         1vyLHy2No560PXbz4BnZjA2xDRa/dj1czdxfNijhD/k0CqicGA+xCCxq9EZJJ6+z7gYq
-         RfR7Xeqkiyiu/SE53nQNBFo89nO3V5HjyS5WZg+A9Ek2CaMv9a11j7B9FYtlc9YVMOlu
-         Fn6A==
+        bh=QWSPBtoSf44uqHRzhgRCpXaL7EhLo3M40FvozVqEjaM=;
+        b=sd+0MZvcAyvla62zfi3kf/b7y8Gv9/tRVW5W1UisGHCLt/XbYAhQaM/55ZUr2PwXeP
+         hzuEBfaXgtoHhEXSk3dsAcfQO/LJMj7vAYxLrzRWH4NYAcYWopUSSycxeIcmloNWVQzj
+         oq4+wP94S2Y10GzdljCwwwcDkPdsiWh9R1eGVNer8r3Ex73m0dyC2OMLGhgYHvFJOChU
+         k1ABM01crjGVpfAAa7B9Ltf4UTXy0MZfHNBugP9OExENdSvkwqTJTVWQwLesQ4ljy5k7
+         SWZksH5EzrRrf03BDepug167QdslYjI6FrcAzI9lk77QyA1MDm27ojWWwOPuRg5ASNf6
+         0GEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YxSJCF7Vm/Q56SREI5HfGVh3pMnkVsJJYVDNPMOih88=;
-        b=onbnDaqnfI/jr2Ija1nRORjjnARjJPOZWbN6D6xE/6+LRVzJFniwt7JyE9YhigzjP9
-         TRusP8oO2IzJegyw0e11xww/VxbfFtKiX0iPh70gQCzwmsFYV7QlcQHXkTb4cv7s+TpI
-         IfWGgGB5Tfd3f5pfPeKIJWGPrSkoH+wr7R5ol5wOjtolXXYInPw/hHwU6TVqq4egOpPc
-         L9+INxglTLVo+5VNo+fIvGoBAhrzCuqSo4xMuuVuG5oq9YWG5wOl3B1bxKQCZscnOJ1C
-         HNxxYbc7H7nTVXD8oWBU5Z+nq/C5MKXffk3ovYZ1gGTDtVV1/xw06qx7iNselCN+dNEM
-         PkHA==
-X-Gm-Message-State: APf1xPDd/hGgeqzP82AL9tQfBD96p7oQpkeK+QlYm5XFeFHeWqdGCJUC
-        duukM9iVIOSrY+1jcwJDVQPg0amDufk=
-X-Google-Smtp-Source: AH8x225I4t2DKyfDY2xU5UesTPcua48zqHv39NJbJHPDF3f7D5zSqJLdNck3cQCL8yxCqAGBeGuEeQ==
-X-Received: by 2002:a17:902:b486:: with SMTP id y6-v6mr519418plr.70.1517875119986;
-        Mon, 05 Feb 2018 15:58:39 -0800 (PST)
+        bh=QWSPBtoSf44uqHRzhgRCpXaL7EhLo3M40FvozVqEjaM=;
+        b=PZuKiS8ZwJA4lWXAeAg42kvH/tqDazCxXOpW/E0KG4rGMBeXh3/DWWfZEsNF+T86WP
+         HZe4MHh3RGhPbTzU6QvnHkFBKEAypSTORMPr+WKEX77pki8iLJuxDc6DjARxwMJ3gG5X
+         SV6KuWWyttTAocZiKWYIixLqcJEJlxxrp98BjDtey52SUIpACZrOalLzdHiTpuo3XPGm
+         +2CXHeks7DEp9/MBGPw4h8jN/Ii0D7Ym9Nz+pY12C0+p1RxVagXr07gDQgdeWSBw00pj
+         n0Fz/6hXEEWs1LspgjO1A9kY6j0Q8G2XXV+JrjDPDJjBZCwA/dF2ONfeeq6wxB0xeITR
+         Bq8A==
+X-Gm-Message-State: APf1xPDI6INZbdhFNd7CtN66Z4PqGvKn/e8h/2mrJThfTU2sVMxkTjr2
+        ZxIVpYZhesdzDXA+aCgN950HLtav4NE=
+X-Google-Smtp-Source: AH8x2242aFMwrz+qhMjBJhFSV7ChOiq5bTVewfSBC9qlLxKB6HZc4IW+XA4SAS4Zq6cufmVM/vDUeA==
+X-Received: by 10.101.74.4 with SMTP id s4mr403890pgq.105.1517875147614;
+        Mon, 05 Feb 2018 15:59:07 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id v73sm19159038pfk.84.2018.02.05.15.58.39
+        by smtp.gmail.com with ESMTPSA id v1sm17676803pfg.33.2018.02.05.15.59.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 15:58:39 -0800 (PST)
+        Mon, 05 Feb 2018 15:59:07 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 026/194] object-store: allow foreach_alt_odb to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:54:47 -0800
-Message-Id: <20180205235735.216710-6-sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 028/194] pack: allow rearrange_packed_git to handle arbitrary repositories
+Date:   Mon,  5 Feb 2018 15:54:49 -0800
+Message-Id: <20180205235735.216710-8-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,56 +64,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Jonathan Nieder <jrnieder@gmail.com>
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- object-store.h |  3 +--
- sha1_file.c    | 14 +++++++-------
- 2 files changed, 8 insertions(+), 9 deletions(-)
+ packfile.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/object-store.h b/object-store.h
-index fcf36c7370..518da80367 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -68,7 +68,6 @@ extern void *map_sha1_file_the_repository(const unsigned char *sha1, unsigned lo
- extern void prepare_alt_odb(struct repository *r);
- 
- typedef int alt_odb_fn(struct alternate_object_database *, void *);
--#define foreach_alt_odb(r, fn, cb) foreach_alt_odb_##r(fn, cb)
--extern int foreach_alt_odb_the_repository(alt_odb_fn, void*);
-+extern int foreach_alt_odb(struct repository *r, alt_odb_fn, void*);
- 
- #endif /* OBJECT_STORE_H */
-diff --git a/sha1_file.c b/sha1_file.c
-index be67c69c75..ca492eb741 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -665,18 +665,18 @@ char *compute_alternate_path(const char *path, struct strbuf *err)
- 	return ref_git;
+diff --git a/packfile.c b/packfile.c
+index 05b4505b2c..d1533ec948 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -857,11 +857,10 @@ static int sort_pack(const void *a_, const void *b_)
+ 	return -1;
  }
  
--int foreach_alt_odb_the_repository(alt_odb_fn fn, void *cb)
-+int foreach_alt_odb(struct repository *r, alt_odb_fn fn, void *cb)
+-#define rearrange_packed_git(r) rearrange_packed_git_##r()
+-static void rearrange_packed_git_the_repository(void)
++static void rearrange_packed_git(struct repository *r)
  {
- 	struct alternate_object_database *ent;
--	int r = 0;
-+	int ret = 0;
- 
--	prepare_alt_odb(the_repository);
--	for (ent = the_repository->objects.alt_odb_list; ent; ent = ent->next) {
--		r = fn(ent, cb);
--		if (r)
-+	prepare_alt_odb(r);
-+	for (ent = r->objects.alt_odb_list; ent; ent = ent->next) {
-+		ret = fn(ent, cb);
-+		if (ret)
- 			break;
- 	}
--	return r;
-+	return ret;
+-	the_repository->objects.packed_git = llist_mergesort(
+-		the_repository->objects.packed_git, get_next_packed_git,
++	r->objects.packed_git = llist_mergesort(
++		r->objects.packed_git, get_next_packed_git,
+ 		set_next_packed_git, sort_pack);
  }
  
- void prepare_alt_odb(struct repository *r)
 -- 
 2.15.1.433.g936d1b9894.dirty
 
