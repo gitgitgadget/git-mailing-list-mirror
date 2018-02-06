@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7751E1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:32:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81CF91F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752493AbeBFAcC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:32:02 -0500
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:45584 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752378AbeBFAb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:31:56 -0500
-Received: by mail-pg0-f68.google.com with SMTP id m136so171136pga.12
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:31:56 -0800 (PST)
+        id S1752494AbeBFAcF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:32:05 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:42118 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752488AbeBFAb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:31:57 -0500
+Received: by mail-pl0-f65.google.com with SMTP id 11so135124plc.9
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:31:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=J7rdB73xJy8eMEtrkrC009Oii47d5bX7s9OBFHkz58Y=;
-        b=Th+zjBIuXcncyCYvpCHGsELQz5yICrfV7rG/p58h99cgps0YJkzU9BMB4kJ064ZLDO
-         jOcbgEBvkKgLLzqUAM12vK7StrNJo59liBdaj35LQj42dK6QnsnV35stYVpeZauS8kca
-         pOT/l112WK3dHgryT3MR6diFG3c3qk4ds5JaXyDadZvLs51yXpxArzVcqC44qwCuKGy3
-         BLnblq9/BGi9sSSCbFHinm0HZMEdf4rPI38C6jwHyZDQIJC+kov5hkwAPZOSvefSyQA2
-         Lc91A1abyw+IvjmaqHILJvagBFswj/muzICxQpr6uOTQcUaQeBezwetfTUMTi4hFZeo6
-         TQFg==
+        bh=bKu1QvH0IxehEjBIFBk7C0My0q9F412TOldch9dHSsg=;
+        b=RuFbrHW5eXINPWM9qheF+aV20pLSoVL58HyIToMPrjITpP2jictjKwIvsrRyHrCFsL
+         fYE27ICpsyRJrzDtUHzYO8IjCWJ0kuXkMlMNzdMK63v7In4ycbMV+9X9vEAquPJ6+L9c
+         T1WK8gUK+4p68obs0/dHT6N6w7kKz5nAcQzYL+HTwH4z2PW0ENQbochtpyqc5xr3yGCa
+         VeEnQXwIAPxP1qiUAnEt1X11fejgoBoAhpr8fSJt63aXAB7xhVv2dhbmYbZd394rKuqe
+         tuNbfXOnsK7h91SWJ64B3y8nQEM0uz1pUZ907lulMMAUhQtvSg+DclEHYqKOadvO5H4n
+         G7Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=J7rdB73xJy8eMEtrkrC009Oii47d5bX7s9OBFHkz58Y=;
-        b=inbWFBgdafEZvMaXucZJ639goMc236ndPQARPMWSBtt89Rqc8u7jSjdw5D83kLVclI
-         4DH5q1WLPRz6/6GPRwSXgDNRlQa3AK0eXykt0mh5B0sGZB4hSp+Pn+kArtTB87Zw2DdQ
-         I8a4x5qMyN/22q29cdGh4PGvgmlfuAE720noTbwMh66Wv4o31ZCp6UJhRJaxR3NEUz//
-         pWn8nozwi++IyvwgSfU/kw4Tk0FtMvgu7KDeNYxiV1nrA5od/kQu/VK112r338Be+eHy
-         kwTuxMF51HvB0rYkFiZ1mHENFE4iecnjAqSgUUBPDxQGNAG+DOJSrgF49Ju85jL78C3I
-         /hJw==
-X-Gm-Message-State: APf1xPArNhcn5BAQxHeJzmPjJCGGdTB0Fi6hiJYRprtDWTteMijnlcQH
-        JOCfMunE3gl2tX/QuavlIzj4s2Q5UjU=
-X-Google-Smtp-Source: AH8x225iyhz2s1ZCgqFIX3uC7bxBY7CuBWI+cygUsqsj1o0CN3aF7N31juNo0znrU3p+21pvsEGMrw==
-X-Received: by 10.99.122.2 with SMTP id v2mr443983pgc.151.1517877115585;
-        Mon, 05 Feb 2018 16:31:55 -0800 (PST)
+        bh=bKu1QvH0IxehEjBIFBk7C0My0q9F412TOldch9dHSsg=;
+        b=qXU90opDjK1c/eaenpZbu92zre20YosJQMaaQVXku0rXZ5laB1e6ClYeEJyc9KQ375
+         EYmFeaiQ8EXpy+Y+XrAKv8zOllA9lEClEDGwy9xTout3iOmXw74qCFmd2s5PVw+slXMi
+         RyQ0+vgpX/p1fhvOJ579b7Wj5p/aZLGgT74bI7+s72u6AbCoyTt718vS/zlSde593uUJ
+         1QK6N0ET1hwQofHuaAnAWzHhoncoMe+9utHPaltkZRyZsOdDdvTv4drBSfyT+c1IyzdD
+         WvUovw2uN5x1AIz6ygWOjYSf3nsyN4H68pUQDLBTSRVLdp7XaJjtexxXzRXny00SpEnO
+         nhTw==
+X-Gm-Message-State: APf1xPDWgvBPeXStrjMP90OsOWJcxmQb/fLwuuQhglVZJ0dZMh/fge5+
+        rjFfK4EceNHC2vywm2fNhCzp8byCSoQ=
+X-Google-Smtp-Source: AH8x2241nYJYyHiSRa//EO1e/isOUOeKOJQYuWVtxeRvuRE4vssM6vLaVOne63yd0DyH8I/DylbCvQ==
+X-Received: by 2002:a17:902:b28a:: with SMTP id u10-v6mr544211plr.241.1517877116906;
+        Mon, 05 Feb 2018 16:31:56 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id l64sm19547546pfi.46.2018.02.05.16.31.54
+        by smtp.gmail.com with ESMTPSA id s5sm19865513pfg.29.2018.02.05.16.31.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:31:55 -0800 (PST)
+        Mon, 05 Feb 2018 16:31:56 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 186/194] pretty: allow logmsg_reencode to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 16:17:41 -0800
-Message-Id: <20180206001749.218943-88-sbeller@google.com>
+Subject: [PATCH 187/194] commit: add repository argument to in_merge_bases_many
+Date:   Mon,  5 Feb 2018 16:17:42 -0800
+Message-Id: <20180206001749.218943-89-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -65,63 +65,84 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit.h | 3 +--
- pretty.c | 8 ++++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ commit.c  | 4 ++--
+ commit.h  | 3 ++-
+ remote.c  | 2 +-
+ shallow.c | 5 +++--
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/commit.h b/commit.h
-index 77e131d15b..7bdc808018 100644
---- a/commit.h
-+++ b/commit.h
-@@ -129,8 +129,7 @@ void free_commit_list(struct commit_list *list);
- struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
- 
- extern int has_non_ascii(const char *text);
--#define logmsg_reencode(r, c, e, o) logmsg_reencode_##r(c, e ,o)
--extern const char *logmsg_reencode_the_repository(const struct commit *commit,
-+extern const char *logmsg_reencode(struct repository *r, const struct commit *commit,
- 				   char **commit_encoding,
- 				   const char *output_encoding);
- extern const char *skip_blank_lines(const char *msg);
-diff --git a/pretty.c b/pretty.c
-index 30d53369b5..6dce4bb3c0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -595,14 +595,14 @@ static char *replace_encoding_header(char *buf, const char *encoding)
- 	return strbuf_detach(&tmp, NULL);
+diff --git a/commit.c b/commit.c
+index b74086d43d..98e04b949f 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1049,7 +1049,7 @@ int is_descendant_of(struct commit *commit, struct commit_list *with_commit)
+ /*
+  * Is "commit" an ancestor of one of the "references"?
+  */
+-int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit **reference)
++int in_merge_bases_many_the_repository(struct commit *commit, int nr_reference, struct commit **reference)
+ {
+ 	struct commit_list *bases;
+ 	int ret = 0, i;
+@@ -1074,7 +1074,7 @@ int in_merge_bases_many(struct commit *commit, int nr_reference, struct commit *
+  */
+ int in_merge_bases(struct commit *commit, struct commit *reference)
+ {
+-	return in_merge_bases_many(commit, 1, &reference);
++	return in_merge_bases_many(the_repository, commit, 1, &reference);
  }
  
--const char *logmsg_reencode_the_repository(const struct commit *commit,
-+const char *logmsg_reencode(struct repository *r, const struct commit *commit,
- 			    char **commit_encoding,
- 			    const char *output_encoding)
- {
- 	static const char *utf8 = "UTF-8";
- 	const char *use_encoding;
- 	char *encoding;
--	const char *msg = get_commit_buffer(the_repository, commit, NULL);
-+	const char *msg = get_commit_buffer(r, commit, NULL);
- 	char *out;
+ struct commit_list *reduce_heads(struct commit_list *heads)
+diff --git a/commit.h b/commit.h
+index 7bdc808018..ea2c5f528c 100644
+--- a/commit.h
++++ b/commit.h
+@@ -233,7 +233,8 @@ extern struct trace_key trace_shallow;
  
- 	if (!output_encoding || !*output_encoding) {
-@@ -630,7 +630,7 @@ const char *logmsg_reencode_the_repository(const struct commit *commit,
- 		 * the cached copy from get_commit_buffer, we need to duplicate it
- 		 * to avoid munging the cached copy.
- 		 */
--		if (msg == get_cached_commit_buffer(the_repository, commit, NULL))
-+		if (msg == get_cached_commit_buffer(r, commit, NULL))
- 			out = xstrdup(msg);
- 		else
- 			out = (char *)msg;
-@@ -644,7 +644,7 @@ const char *logmsg_reencode_the_repository(const struct commit *commit,
- 		 */
- 		out = reencode_string(msg, output_encoding, use_encoding);
- 		if (out)
--			unuse_commit_buffer(the_repository, commit, msg);
-+			unuse_commit_buffer(r, commit, msg);
- 	}
+ int is_descendant_of(struct commit *, struct commit_list *);
+ int in_merge_bases(struct commit *, struct commit *);
+-int in_merge_bases_many(struct commit *, int, struct commit **);
++#define in_merge_bases_many(r, c, n, co) in_merge_bases_many_##r(c, n, co)
++int in_merge_bases_many_the_repository(struct commit *, int, struct commit **);
  
- 	/*
+ extern int interactive_add(int argc, const char **argv, const char *prefix, int patch);
+ extern int run_add_interactive(const char *revision, const char *patch_mode,
+diff --git a/remote.c b/remote.c
+index a4cf885012..0c253b82e8 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1396,7 +1396,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 			 * Is this tag, which they do not have, reachable from
+ 			 * any of the commits we are sending?
+ 			 */
+-			if (!in_merge_bases_many(commit, sent_tips.nr, sent_tips.tip))
++			if (!in_merge_bases_many(the_repository, commit, sent_tips.nr, sent_tips.tip))
+ 				continue;
+ 
+ 			/* Add it in */
+diff --git a/shallow.c b/shallow.c
+index 64a4fcb57f..f43e94c8e8 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -720,7 +720,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 		for (j = 0; j < bitmap_nr; j++)
+ 			if (bitmap[0][j] &&
+ 			    /* Step 7, reachability test at commit level */
+-			    !in_merge_bases_many(c, ca.nr, ca.commits)) {
++			    !in_merge_bases_many(the_repository, c, ca.nr, ca.commits)) {
+ 				update_refstatus(ref_status, info->ref->nr, *bitmap);
+ 				dst++;
+ 				break;
+@@ -748,7 +748,8 @@ int delayed_reachability_test(struct shallow_info *si, int c)
+ 			si->nr_commits = ca.nr;
+ 		}
+ 
+-		si->reachable[c] = in_merge_bases_many(commit,
++		si->reachable[c] = in_merge_bases_many(the_repository,
++						       commit,
+ 						       si->nr_commits,
+ 						       si->commits);
+ 		si->need_reachability_test[c] = 0;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
