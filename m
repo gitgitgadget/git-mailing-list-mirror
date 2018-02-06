@@ -2,75 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 370C31F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 20:33:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E23D1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 20:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753117AbeBFUd0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 15:33:26 -0500
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:36532 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752832AbeBFUdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 15:33:25 -0500
-Received: by mail-yw0-f176.google.com with SMTP id q6so2306200ywg.3
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 12:33:25 -0800 (PST)
+        id S1753010AbeBFUgV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 15:36:21 -0500
+Received: from mail-pl0-f50.google.com ([209.85.160.50]:39846 "EHLO
+        mail-pl0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751632AbeBFUgU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 15:36:20 -0500
+Received: by mail-pl0-f50.google.com with SMTP id o13so1995749pli.6
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 12:36:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=0W+rqnvwsPqEbJsTrq7kmKV8va3GZbTg2QweA437Ehk=;
-        b=ZVOdY3ovlcx0N3T7cXlMRvAM6SnkZQXg3M3D69RtVYc/VZBBLvTo+PVab2idIf4ReN
-         x7zIzxhPZWVJa4IVv/pnJQlw3qD8EFCZcTqQdyDXT2e2E3hD2i8vb+Fsxzx1eP/0C/xI
-         zzq4Pt+5aFURLrJwZxWKWzsMHBWlZzyAiIHFgzxaYQPUaguZeLOuvWtY74G/3658+Oqn
-         +y/+DvBbLrzsDFOUImmVH7d/y6pLywl/DEjI9JwWPnmhcBBd5oFVcfGzH18E8Dt4Sg+i
-         8Vlh2j+MFuNT6yyPMOXvgWe05ap9jO+Dq/59pBK2Ywoepm5dKWnCz1c6HU44LMOK/Q72
-         fVug==
+        h=from:to:cc:subject:date:message-id;
+        bh=zodYpGzM28wR/DoUGeyi8qNIb4ovyuaYzaEqDi6UkL4=;
+        b=cuZfkYvf9FACVTvKbIzbFz8vLiHzZGGeFEAfMiepmxrF6SquLArocno6QqD9oHSdMa
+         HeVimqKbPrO9LzCN+LAY0pc2XxORtVKBa5YWU4g5Nf43KgYt6ddRhoav3kTFzMO9j0H4
+         Dc+QDf4Xu29EWngybfMUvCAii62Dt4OwT//ghkhJxCPwCDnmZOmNseCdgPqSoCrbzQk1
+         /n83YqDvtJvKRyUv92AeQa8G1AvWE/gGaAbFqU8Ar+NAKaMqoIW2+pT6UTtB7uwXwhvy
+         LefbZ7SztlEiFlAXLGZHsq8f66jteUTf7YfRrqXAU7BExTzgFlzMGK6S4qYiSNu6qFji
+         jqng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=0W+rqnvwsPqEbJsTrq7kmKV8va3GZbTg2QweA437Ehk=;
-        b=tywSmL5aQxk1DFJp9mh4Wv/udJHC3k2GCi5jEy6Tmb0SmKD8iSdYbHniW34O8R1xUY
-         Vn/s7xCPxHghxUN5msWVF2WbieJHf/XXcwcxrPIwltkfr8HJfFtr3AjDHjP+mcSquoPO
-         ChWIVwgVBIXcJtwB3bKqYbm+veZKAQfgcoJPT8pvUMl+6/7t1QpGE8ILud8TFwaRyqHN
-         iEp+q9j0GzpHltglreZ4tEb/8MZhKy1J2Vf/CDYNuXbCIkpXyTqUxycALPnKpAR7LnoJ
-         ws4OCS0dDIQJXHa+1zKciWzJIu3S4D8DVT1oO0yEGze+agVrFk0e2+10BP9C+KttmKkh
-         1i9A==
-X-Gm-Message-State: APf1xPB8Pw9/22hX+juX2c6/pJzFm01nkbvoz6ajz4MsFXz8zFfpu6Bj
-        U3kXQs2eEgF37hc664OlQ5HB3bOVPvThr3qOZPZODQ==
-X-Google-Smtp-Source: AH8x225mEeZqJvhH7B2EKGP8IBQIlS50y80xTlSkd69BbEtqVqQReb59xXC+uDb2lVdyOGGBQel6c9MW7VNvcTQhfRU=
-X-Received: by 10.37.34.138 with SMTP id i132mr1888837ybi.114.1517949204973;
- Tue, 06 Feb 2018 12:33:24 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 12:33:24 -0800 (PST)
-In-Reply-To: <CAPig+cTjUAYRbaF_CLAmtYf56cL2hhvYc4VLrE8DX-MiryCWXA@mail.gmail.com>
-References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
- <20180205235735.216710-55-sbeller@google.com> <CAPig+cTjUAYRbaF_CLAmtYf56cL2hhvYc4VLrE8DX-MiryCWXA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Feb 2018 12:33:24 -0800
-Message-ID: <CAGZ79kYRg4URASwy5Xf7iZR_CQsGxcVDzfS040Yyc7z1uKKqZw@mail.gmail.com>
-Subject: Re: [PATCH 075/194] fetch, push: do not use submodule as alternate in
- has_commits check
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=zodYpGzM28wR/DoUGeyi8qNIb4ovyuaYzaEqDi6UkL4=;
+        b=BU/2EqFK3Oi6SmIleerksZysEL4aBQl8/RW19IFSIZjhHOV4sGBvdPlfxTSQToEdnR
+         a+s72rpKekZvy/OVt07wsdpYhSI/tjT8gYQ6iBasz8XYb9AXBUwWTsbM7uRdqoPMIems
+         wFe6xLZyUD05GrsXIPEMgQki+OOGSjHlYTIEI3gcUVt+zg5FH8blMjsNTM4UTz4U7W+i
+         FpPhYgT5LRBC2DwH93W27u5TXVyM0RV8i6pDz/ZZp7vGTVD98uoN49aaiWgD4zn/hJnw
+         mOKfIKiJ1lGsH61TVjU+wl2xeu91T1MKguyRgGvEcn0UMhR4Sdc/qCzT+w8nTbMb5vnX
+         y3AA==
+X-Gm-Message-State: APf1xPCNR54L1waJct6owKtcBCyr2VHX9wzGRLVyJPPouB+IPVTFbfVQ
+        NCMoO5ictZ2MXBPVJFEb/uq3idEXIz8=
+X-Google-Smtp-Source: AH8x227o6W395QvTtc3UPtDo7neDKryN+B1l2QpqQRjGdzCk1sN9MTWOnhpmeU8MkqKdK/9AXPj2qA==
+X-Received: by 2002:a17:902:3381:: with SMTP id b1-v6mr3639474plc.20.1517949379230;
+        Tue, 06 Feb 2018 12:36:19 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id a13sm13883295pgd.1.2018.02.06.12.36.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Feb 2018 12:36:18 -0800 (PST)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, mhagger@alum.mit.edu
+Subject: [PATCH] files-backend: unlock packed store only if locked
+Date:   Tue,  6 Feb 2018 12:36:15 -0800
+Message-Id: <20180206203615.68504-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 5, 2018 at 8:20 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+In commit 42c7f7ff9685 ("commit_packed_refs(): remove call to
+`packed_refs_unlock()`", 2017-06-23), a call to packed_refs_unlock() was
+added to files_initial_transaction_commit() in order to compensate for
+removing that call from commit_packed_refs(). However, that call was
+added in the cleanup section, which is run even if the packed_ref_store
+was never locked (which happens if an error occurs earlier in the
+function).
 
-> Or just combine these two error cases:
->
->     if (submodule_to_gitdir(...) || repo_init(...)) {
->         strbuf_release(...);
->         return -1;
->     }
+Create a new cleanup goto target which runs packed_refs_unlock(), and
+ensure that only goto statements after a successful invocation of
+packed_refs_lock() jump there.
 
-will fix, thanks!
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+I noticed this when one of our servers sent duplicate refs in its ref
+advertisement (noticed through GIT_TRACE_PACKET). With this change (and
+before the aforementioned commit 42c7f7ff9685), the error message is
+"fatal: multiple updates for ref '<ref>' not allowed", which gives a
+bigger clue to the problem. Currently, it is "fatal: BUG:
+packed_refs_unlock() called when not locked".
+
+(I couldn't replicate this problem in C Git.)
+---
+ refs/files-backend.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f75d960e1..89bc5584a 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2931,13 +2931,14 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 
+ 	if (initial_ref_transaction_commit(packed_transaction, err)) {
+ 		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
++		goto locked_cleanup;
+ 	}
+ 
++locked_cleanup:
++	packed_refs_unlock(refs->packed_ref_store);
+ cleanup:
+ 	if (packed_transaction)
+ 		ref_transaction_free(packed_transaction);
+-	packed_refs_unlock(refs->packed_ref_store);
+ 	transaction->state = REF_TRANSACTION_CLOSED;
+ 	string_list_clear(&affected_refnames, 0);
+ 	return ret;
+-- 
+2.16.0.rc1.238.g530d649a79-goog
+
