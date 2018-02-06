@@ -2,148 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67A9E1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 16:23:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE481F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 17:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752599AbeBFQXb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 11:23:31 -0500
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:53197 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752236AbeBFQX3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 11:23:29 -0500
-Received: by mail-wm0-f49.google.com with SMTP id g1so4849466wmg.2
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 08:23:28 -0800 (PST)
+        id S1752924AbeBFRbG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 12:31:06 -0500
+Received: from mail-yw0-f179.google.com ([209.85.161.179]:34642 "EHLO
+        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752817AbeBFRas (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 12:30:48 -0500
+Received: by mail-yw0-f179.google.com with SMTP id t201so1891409ywf.1
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 09:30:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=0i/uipL3DWO4fjId65Jq8sXPzVXOoBm6Y9sUyjIOPQ0=;
-        b=dybSBVfawvL1eMypsDceicSPzU+i3gP4YVEWShmyFWbzpGRGAxuIwaubRX7kghTvrM
-         3BJnujpx6KO162U1I1ZW05FP+ngC9mLpajza0lsv/U6lvIAccqljVqeFQu2SMeH/6GRS
-         F20PxrsmMsJ0JtYnLRSd+hNhSwFvHdM4AjfSrdgwGwjm4PFAWHbi/HvOvcv/Vn4ATp2i
-         pHlv5tiMpu7+v2YLBVr8flcZloYb7/tvVqsAZUGuZjamo4kl/LgxQss2PanDYcSQP9FG
-         HO2mZb9dLcePCvaWYhiROwlGIyRIlUPJDyax/TUKoo2gXm05CVybNDx8dbt7NIFtixL7
-         W3Gw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rEDXS2bRRSNjc2kjxNITg4u90FKsETOAVVD4thXDziE=;
+        b=S61FItpFncAi42F8Bb5FRYUhxr604k6kp2yle0ZlBfRX6zIkZj9SYBMd3JYluG5Bbg
+         JFz191fnbzLIm4Zt+MijGJH1FH5H7+/2SIkFX2Gg9iIGXghdnbh0tyE8nL6buOUnLVAg
+         BOgLPDWQbb7+K/SUYXIBhFp/XOMAmCh27l+YPQh8KZVvJht2MJgTdQ99giXltwZgsvm+
+         B0djMT7EGJ8inv42+wNhT7S3ivmd5GtF3rAE3Qhse89EqqUb+JKZ0LBp+uK1l0tenQkp
+         o8QyHMa5GMcGZktloBDTUOS22U1ldwA0CZAsr9Z5H75FTxLIMfaKkcIXkbDloaU3HgzP
+         88QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=0i/uipL3DWO4fjId65Jq8sXPzVXOoBm6Y9sUyjIOPQ0=;
-        b=rFqhHqUqx7aVAP4DZIXM5km53Ox9QoCTvAW7wr/iBZ/w7CIvm2X5WMlpL3JS9uPtvL
-         re/imUatA/z+BUjyTFuYxXvxIEf0VSkEAWsf6FNX+KIsbbwoMaE0fSY58c9cY3ymbDWL
-         TuAFd3vJlfBam9nHdgyMtBNlXurST04U5svZrcsfXDGWQS3ZtAzi+9EeygJ3ubF4M5jB
-         6mGUonGIKwMNK9iB41d8rcp+nVLSlc5sLqmP6S5pWByMO9omgJ9uSgqualwOIshw5BoE
-         7hKPCE/DfllJbLGnWLeZFFuTDPpjulFVylbexJvz00XsnP8OgHAKLdugcwOHPkWzQx27
-         gPtw==
-X-Gm-Message-State: APf1xPAoS5T83k+ESWAtr7r74qJ2vylQKRNkG+g1LB52tNH+UJsZ/5ym
-        agtZvDKjrgUtowQzN4bPsQN36p8O
-X-Google-Smtp-Source: AH8x227obiFEnnyre2Idvp46ZKyKRp5rOnpROyu4ihN9zkhekkvRgNTNJbGgo3XQbfFTIFsGRKy0dw==
-X-Received: by 10.80.142.194 with SMTP id x2mr4609471edx.274.1517934207465;
-        Tue, 06 Feb 2018 08:23:27 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id f5sm8905184edb.65.2018.02.06.08.23.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Feb 2018 08:23:26 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        Michael Schubert <mschub@elegosoft.com>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 00/11] document & test fetch pruning & add fetch.pruneTags
-References: <20180121000304.32323-1-avarab@gmail.com> <20180123221326.28495-1-avarab@gmail.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <20180123221326.28495-1-avarab@gmail.com>
-Date:   Tue, 06 Feb 2018 17:23:25 +0100
-Message-ID: <87h8quytmq.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rEDXS2bRRSNjc2kjxNITg4u90FKsETOAVVD4thXDziE=;
+        b=iuYFTq0Re1YFYwtvRnC5hKVQCD/IpkPwUxKZX2leS0ZBccmNQbhaJTgIvgr4OB+GGm
+         msgFQ7ztLwXRoowThEcPtS/FIv+QgXG9vLhy2mbPPth9w09LtUtZ9NkPZ1a/ld13wKCK
+         lWGnPHJfj4rAD74Ld+AvF3jznZGmUTWKUUscee3OaN4U5EGTjVTPiSDh0lZ0d2sr/1sZ
+         YuKmouq3b2NAmaIKc3BxvzfFe9iJP8+wBHDE1QdfJ+j94vFfBlY+vma3uSz32W4YOdyT
+         cLX2XXJa3yti1JwwZP2C4S+fSTJjSOMhz4+AliJnhvm+pB8JlHXRl9o35Frnkv/XMoLb
+         RfEg==
+X-Gm-Message-State: APf1xPDI0tIERJt4bDWHZF6LFwNzRW69pz2tWmEztKJbZLuU7Pn/wx/x
+        JEKk+bORDUVPJ3tj70H/FivaltoV+kfmbE0kZhnjzQ==
+X-Google-Smtp-Source: AH8x226MyPg6+HcjUTUsVWq5afXOYQACNozOSj2NeZuJ7OclxLV/F3gXJ7iSmUNnasmL1Pnr7+ZG6FN4LkZpaGnRroI=
+X-Received: by 10.129.108.196 with SMTP id h187mr1958344ywc.249.1517938247855;
+ Tue, 06 Feb 2018 09:30:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 09:30:47 -0800 (PST)
+In-Reply-To: <CACsJy8Bhu6RvedKgOx8uExrJuo0-b66JvnZA9d9v4Uk6mSwPQQ@mail.gmail.com>
+References: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
+ <CACsJy8Bhu6RvedKgOx8uExrJuo0-b66JvnZA9d9v4Uk6mSwPQQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 6 Feb 2018 09:30:47 -0800
+Message-ID: <CAGZ79kb+SB3q720Q_QbpPTLsY-gfsYHGdSvK2TGOtRXwLMQyOg@mail.gmail.com>
+Subject: Re: Are concurrent git operations on the same repo safe?
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ian Norton <inorton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Feb 6, 2018 at 2:16 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Feb 6, 2018 at 3:16 AM, Ian Norton <inorton@gmail.com> wrote:
+>> Hi all,
+>>
+>> I'm generally used to the idea that if a thing is not marked as
+>> "thread-safe" then it isn't thread safe, but I thought I'd ask anyway
+>> to be sure.
+>>
+>> Is it safe for me to do several operations with git concurrently on
+>> the same local repo?
+>
+> Off the top of my head, object database access (e.g. things in
+> .git/objects), refs updates (.git/refs) and .git/index should handle
+> concurrent operations fine (or in the worst case you get "some
+> operation is ongoing, aborted" and you need to try again but not
+> corruption or anything else). I think we generally try to make it safe
+> concurrently.
+>
+>> Specifically I'm trying to speed up "git
+>> submodule update" by doing several at the same time.  I've noticed
+>> some odd side effects afterwards though when trying to commit changes
+>> to my super project.
+>
+> submodule is a hot area with lots of development lately I think,
+> perhaps you're seeing some bugs... CCing at least one submodule
+> person...
+>
+>> Apologies if this is answered elsewhere, my google-foo is weak today.
+>>
+>> Many thanks
+>>
+>> Ian
 
-On Tue, Jan 23 2018, Ævar Arnfjörð Bjarmason jotted:
+"git submodule update" has the network part parallelized,
+but not the local part IIRC. (That is cloning/fetching submodules
+can be done with "-j <n>", but the local checkout is still serial for
+UX purposes, i.e. it wants to stop at the first conflict and only
+have one conflict at a time)
 
-> I'm now just skipping quoting things like +refs/... on the
-> command-line, which as grepping the rest of the test suite shows is
-> fine, this eliminated the need for "fetch tests: double quote a
-> variable for interpolation" so I've ejected it.
+Which odd side effects do you see?
+I'd be curious to see if that is a bug in the code or documentation.
 
-There's a segfault bug in 11/11, which wasn't found because the test
-suite doesn't test `git fetch <url>` just `git fetch <named>` and this
-is handled differently.
-
-I'll send a fix soon, but don't merge this down from pu for now.
-
-In order to test for that I brought that cmdline quoting patch back, I
-can't find a better way to do that, and in addition I have this similar
-WIP patch:
-
-    diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-    index 2f5bd966be..8fe4f3c13b 100755
-    --- a/t/t5510-fetch.sh
-    +++ b/t/t5510-fetch.sh
-    @@ -549,13 +549,39 @@ set_config_tristate () {
-     }
-
-     test_configured_prune () {
-    +	test_configured_prune_guts "$@" "name"
-    +	test_configured_prune_guts "$@" "link"
-    +}
-    +
-    +test_configured_prune_guts () {
-     	fetch_prune=$1
-     	remote_origin_prune=$2
-     	expected_branch=$3
-     	expected_tag=$4
-     	cmdline=$5
-    -
-    -	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${5:+ $5}; branch:$3 tag:$4" '
-    +	mode=$6
-    +
-    +	if ! test -e prune-guts-setup
-    +	then
-    +		test_expect_success 'prune_guts setup' '
-    +			git -C one config remote.origin.url >one.remote-url &&
-    +			git -C one config remote.origin.fetch >one.remote-fetch &&
-    +			touch prune-guts-setup
-    +		'
-    +	fi
-    +
-    +	if test "$mode" = 'link'
-    +	then
-    +		remote_url="file://$(cat one.remote-url)"
-    +		remote_fetch="$(cat one.remote-fetch)"
-    +		cmdline_setup="\"$remote_url\" \"$remote_fetch\""
-    +		if test "$cmdline" != ""
-    +		then
-    +			cmdline=$(printf "%s" "$cmdline" | sed -e 's! origin! "'"$remote_url"'"!g')
-    +		fi
-    +	fi
-    +
-    +	test_expect_success "$mode prune fetch.prune=$1 remote.origin.prune=$2${5:+ $5}; branch:$3 tag:$4" '
-     		# make sure a newbranch is there in . and also in one
-     		git branch -f newbranch &&
-     		git tag -f newtag &&
-    @@ -563,7 +589,7 @@ test_configured_prune () {
-     			cd one &&
-     			test_unconfig fetch.prune &&
-     			test_unconfig remote.origin.prune &&
-    -			git fetch &&
-    +			git fetch '"$cmdline_setup"' &&
-     			git rev-parse --verify refs/remotes/origin/newbranch &&
-     			git rev-parse --verify refs/tags/newtag
-     		) &&
-
-It'll be amended a bit more, but the general idea is there, because of
-how this whole quoting mess looks like I have to resort to the above
-hack outside of the test setup.
+Thanks,
+Stefan
