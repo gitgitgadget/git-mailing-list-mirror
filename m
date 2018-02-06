@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A767A1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:29:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F88F1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752222AbeBFA3g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:29:36 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:46318 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752290AbeBFA3e (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752327AbeBFA3j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:29:39 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:42585 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752038AbeBFA3e (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 19:29:34 -0500
-Received: by mail-pl0-f66.google.com with SMTP id 36so124983ple.13
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:29:33 -0800 (PST)
+Received: by mail-pg0-f68.google.com with SMTP id m28so174932pgc.9
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7ddhDdqMlt8JbJtOMGDYEYGbKhox4PSku8EeMi16HUg=;
-        b=VRBuZipM2TFEK+z87rnkaHhF1BodCydldmRZHvHvk7nA1r5MtdYUFjQCgrupbUCLlH
-         hBVpTE0cbMQcCGqAXSRR2TDKxAoXxW7QElRTyhbGD/cPIEoGbGa13wK1sSVNtEsmpWXe
-         flCc6136saSKnzG3auYPXCHOaJCJpag39DhWGOTQuDaFRhrhrxwyk/j1DP9QFm45g1pz
-         MzmBDk/fkdyxrsvglp8ZuE0P7tiEEYwhHAxP587U1idTGwU9UUdYsd/XT3OtKCX31+7K
-         AZv2ehaV9f1Azz4Kp0y9nuZ2J9t/HqvpnGpvaEu5oOkPRHeil1U1mjqNwrB8SOwGP55N
-         WB9w==
+        bh=PljHpDTiFk+wMfqdQbK+xwBFa51YgrqsXOsgpIyWHX4=;
+        b=O3N6rNrNXWmwKIW6xQzCVy2IGDOGhM9LhrUZ5rrpTpEFroRzpqWEygtBzHDoVq59F/
+         7GRam+iSdeP4h8r7zBOSLW4Xg80VIhU/D0KOG4EolD1FKncOJUwVe8HStTozFDomHgP9
+         FQ6kbdTUjTk/aOzZ6oQ1XZA9ZBayyasCzL/4lDhLCcGd7WtODXLMjeczKt9tYf5fF/OI
+         MxHK4+hP5G7Qtfsgy9kJO19WzjC1V9s/aCxMQrH0Mg0VoRB5Vg0SM+US96zbdeA/TDbD
+         BvNmJz3wRR5uuCQrkKr65D2XXrrbQrbqhNwhe58/PdAJFJJiyE0T/sI/9aV9DuNuKIII
+         ScXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7ddhDdqMlt8JbJtOMGDYEYGbKhox4PSku8EeMi16HUg=;
-        b=KLKMHcZoK4P9Vb1Jpyrb1sAO8b9XSYwOG+uK52HpmRE5w0qHwcc+MC2ePOumdgxH2h
-         JdKYy0NT8m9izkI8VzZA1Ji8s7wfOK/SuBdCBASKt9DuLPq2Kkm12pKSK5AeTo1teeLy
-         hooegxKsCjI66K8PurSnOVc32jawtDHn//Knu7PKEcROJVkRKvhcpaIAG0pcdFOL7hYc
-         LkAioGvDGBJdlSRIq3fy6vYiAyzx0YJQq+uuAN6fsJWK8f9TglEi/NqjOaALnd3MD9rh
-         /NdFEfBK7hkxTgwRos5wbgIcNHxSEQ4wXn7Ocj0jRILxHMT36zH6wkBqQh4nOEzlL+tM
-         qMQw==
-X-Gm-Message-State: APf1xPASpFrEt10f4naHownukB++husXGaBQlC8RGHiO5jDKC3VDT2n+
-        LKV3dAXEe9pni/PeZjHMVF8nb9id5SM=
-X-Google-Smtp-Source: AH8x226o/xjw8TCuRlhTRT0B5q6K7He6rHrpeVIki+icaDwt/ok87x68W0KNuLYY59j56bAfhFUSNA==
-X-Received: by 2002:a17:902:8498:: with SMTP id c24-v6mr563853plo.450.1517876972626;
-        Mon, 05 Feb 2018 16:29:32 -0800 (PST)
+        bh=PljHpDTiFk+wMfqdQbK+xwBFa51YgrqsXOsgpIyWHX4=;
+        b=loPAWYSU6tY0YwU4fD8qNkX6hEeIs+nEHLxQVWQxq78rGGY70/75oyxnzimXnPbFP3
+         sk1W/ofywuawY30kOF72Z8JwOgFd4pNcpefqLLp6Cmmf/+Txh8Lm6VUuffn28Swhgjc9
+         AF0+ya/hY8Qzm6Lqr6wVv66wRRA00URZGVfYQ8ViciXtPxsKCxWyjp9TlSAXSDR7rmcX
+         0yYPv0KS1+kkvf2FekUPUJFMtSOblSlGJLNeDID7mIW59HAokjLuLotCKLFGJBZL394v
+         gJoguiPsutVjEXt5D7OPZ5nYGw8ulcNtRwPVw4qkr1bGla8h3uEK41AwZihBpeEai8zY
+         LvPA==
+X-Gm-Message-State: APf1xPBdORjL5LrgyUZzOWov98o91juIW0u178OcoXkF3XFO92ohA55L
+        7uvGTJYT7Z1C0BGPf9xKtbhG2QW1Y0Q=
+X-Google-Smtp-Source: AH8x225Ngx9OOHm9ojrQferAP8yxBXNl+WaV8aRDuRmBWbsWqeXxZ/tndrh32QD2wNnUJk76rGRIwg==
+X-Received: by 10.99.149.8 with SMTP id p8mr444813pgd.186.1517876973895;
+        Mon, 05 Feb 2018 16:29:33 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id e67sm17803052pfd.23.2018.02.05.16.29.31
+        by smtp.gmail.com with ESMTPSA id n63sm15411155pgn.39.2018.02.05.16.29.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:29:32 -0800 (PST)
+        Mon, 05 Feb 2018 16:29:33 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 172/194] commit: allow get_merge_bases to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 16:17:27 -0800
-Message-Id: <20180206001749.218943-74-sbeller@google.com>
+Subject: [PATCH 173/194] blob: allow lookup_blob to handle arbitrary repositories
+Date:   Mon,  5 Feb 2018 16:17:28 -0800
+Message-Id: <20180206001749.218943-75-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -65,39 +65,46 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- commit.c | 4 ++--
- commit.h | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ blob.c | 10 +++++-----
+ blob.h |  3 +--
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 8b1e35d2a1..33f5442dc1 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1025,9 +1025,9 @@ struct commit_list *get_merge_bases_many_dirty(struct commit *one,
- 	return get_merge_bases_many_0(the_repository, one, n, twos, 0);
- }
+diff --git a/blob.c b/blob.c
+index 7c661f178a..5dcaf63697 100644
+--- a/blob.c
++++ b/blob.c
+@@ -4,13 +4,13 @@
  
--struct commit_list *get_merge_bases_the_repository(struct commit *one, struct commit *two)
-+struct commit_list *get_merge_bases(struct repository *r, struct commit *one, struct commit *two)
+ const char *blob_type = "blob";
+ 
+-struct blob *lookup_blob_the_repository(const struct object_id *oid)
++struct blob *lookup_blob(struct repository *r, const struct object_id *oid)
  {
--	return get_merge_bases_many_0(the_repository, one, 1, &two, 1);
-+	return get_merge_bases_many_0(r, one, 1, &two, 1);
+-	struct object *obj = lookup_object(the_repository, oid->hash);
++	struct object *obj = lookup_object(r, oid->hash);
+ 	if (!obj)
+-		return create_object(the_repository, oid->hash,
+-				     alloc_blob_node(the_repository));
+-	return object_as_type(the_repository, obj, OBJ_BLOB, 0);
++		return create_object(r, oid->hash,
++				     alloc_blob_node(r));
++	return object_as_type(r, obj, OBJ_BLOB, 0);
  }
  
- /*
-diff --git a/commit.h b/commit.h
-index e671ce68db..7fe6bb0b22 100644
---- a/commit.h
-+++ b/commit.h
-@@ -180,8 +180,7 @@ struct commit_graft *read_graft_line(struct strbuf *line);
- int register_commit_graft(struct repository *r, struct commit_graft *, int);
- struct commit_graft *lookup_commit_graft(struct repository *r, const struct object_id *oid);
+ int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size)
+diff --git a/blob.h b/blob.h
+index 08bc34487a..1664872055 100644
+--- a/blob.h
++++ b/blob.h
+@@ -9,8 +9,7 @@ struct blob {
+ 	struct object object;
+ };
  
--#define get_merge_bases(r, r1, r2) get_merge_bases_##r(r1, r2)
--extern struct commit_list *get_merge_bases_the_repository(struct commit *rev1, struct commit *rev2);
-+extern struct commit_list *get_merge_bases(struct repository *r, struct commit *rev1, struct commit *rev2);
- extern struct commit_list *get_merge_bases_many(struct commit *one, int n, struct commit **twos);
- extern struct commit_list *get_octopus_merge_bases(struct commit_list *in);
+-#define lookup_blob(r, o) lookup_blob_##r(o)
+-struct blob *lookup_blob_the_repository(const struct object_id *oid);
++struct blob *lookup_blob(struct repository *r, const struct object_id *oid);
+ 
+ int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size);
  
 -- 
 2.15.1.433.g936d1b9894.dirty
