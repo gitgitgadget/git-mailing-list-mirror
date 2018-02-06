@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B9E61F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:22:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5697E1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752074AbeBFAWU (ORCPT <rfc822;e@80x24.org>);
+        id S1752173AbeBFAWW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:22:22 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35576 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752110AbeBFAWU (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Feb 2018 19:22:20 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:42137 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751872AbeBFAWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:22:18 -0500
-Received: by mail-pl0-f65.google.com with SMTP id 11so120355plc.9
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:22:18 -0800 (PST)
+Received: by mail-pg0-f68.google.com with SMTP id o13so174915pgs.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2X53XxCpZyEGbH6S4W+ANAmn3crFMAbaewublQZLaIo=;
-        b=CYZBH3K0Ztjb8CYg5VJYgUYZDP9WmWqi+Y5KG7WRZFco54/SwT/bbhDX9kWgx+DLqM
-         KvqBTWcoFDcBpzhIPKZjoiNhR6gKS8k5b9eFv2meND1hIorDUQBaG/RKXzIEP5QMZxVY
-         /LBWh9CwWp7F3tmbelw+KJ21Xn+6/WUPMAHReAGRoVnnluWnZtdK9P4hHSBlq2x5zmG8
-         UkI/D1qTsJn5bKeDEx82c7Nb1KtOJE2PJ9uDSE47ibelYPt7c4ceTdxHygis6JzuocLh
-         fl2oVzcMoEPT3jabUrFEm3k+cHINnHjg2S+tNBIHZPx18b5I1XElWW2AHyz1CcBoHEmj
-         qQ3w==
+        bh=diO8kgw/u6V9c6WK7ClEDbZSUkWfE6fZYEJczDKpqd0=;
+        b=YSZfkWoDdFaON7zsPwD8/bttTrT5rgpl5sp0X1YmI7+CncLmQwO7rMe0HyHasJdhLL
+         NpMt+v4dw+0ctu3vR1ib/LDEd/IMszYR/2J/+vfUZUgVLY7csErDB/s/oe9rk0krIGPi
+         zGxKUK8ApxTlOxmkE3RHKpYt4PJC9U0rIiD9HPgyJRvbLiKAlq+Pl7eIc19y1O3lTVFI
+         xstcREc2TpsYPN/mIMGvrIThcneGv1WbBwNCVbZnJjDqwODraAM2eUkpFNMibtx+tJev
+         tksi4F+H5bXMwTQypcI/CHKAGwOf3aEv1Uw3CW/5pqrnvbufz2ZDUmZyUTMKzpFf7/9v
+         Cj+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=2X53XxCpZyEGbH6S4W+ANAmn3crFMAbaewublQZLaIo=;
-        b=GsCRJKmgrwOml8rCosNbq0YMww2Tqvf8nA6hDGbDoh9NP/6ItX/5fUnX1ATC5LLLGG
-         NYfAI+Zi6w5r27DRpMe6aziGPYH6oT1Llkd2n+Y36koucbdvDGrt8o+9/NpYE3oeuPZa
-         4Ox48pYvy/8DjdTxx7xm69xdYS/4i9f0uaDtnk8eLpr9LxIp+dbGz7EXbYZiMuLOlSvg
-         TE55mweyQVlu7FhpCENYARvZ4ZkT6/MKqAAzU0SJgYNQyYsIUJPzzj1D02GIa7lSoFY/
-         LILbGw3yL829TVY41aUE0O6huEfgpnW3/RWlg/wVLSSyQ2SV+IHAT9n6McsDJUF3fYzI
-         3gsA==
-X-Gm-Message-State: APf1xPDhikx/xNA47AJNwBRYj5VUTlLi+eNCvdHNeMZh7jH8yzOKafq6
-        enJBzs53Wrn/hJxUtfu8yUReb8TdlSE=
-X-Google-Smtp-Source: AH8x224BeFrUB5CVxnPvQqU7r4ER6VLyVsD0wSr2MGfQZ4leGEIWOauML7vT9+6UbHBEELgiBmv/3Q==
-X-Received: by 2002:a17:902:44a4:: with SMTP id l33-v6mr542383pld.115.1517876537667;
-        Mon, 05 Feb 2018 16:22:17 -0800 (PST)
+        bh=diO8kgw/u6V9c6WK7ClEDbZSUkWfE6fZYEJczDKpqd0=;
+        b=cdy1LiGCvpMarhby+b9hB/ASoHP6efTmp/BcUlL7FhdHutQaFdAxwnKAnhdFUt9JVc
+         7uHhlziI0bzmyqdoNBfVfzMGPDsGuy4mZj4ZP+xnmcgoYJvuTyq6n364XWhSyGjr1Wrl
+         sAXQCjAcXxQYUpp6P2F5JhWsSIaSHtE0RhNtJb3O2RgVsNRTUz31MmcYEpFDDcHcqXRx
+         DRPcAwAqX8ZuhsegWlSKPxCSil5wwLyKA1m/5XAzQs7mZidsfA2TblgIEtt4R4xEy/Ai
+         7JtrgGrvmdBybAE4LSOSqlWsjrd8IJ/ZDbgvlvLezUbzs+96WcMbv+ZGG18KNWpy/Idm
+         bFgQ==
+X-Gm-Message-State: APf1xPCoNtTBg1WGPO7eoUjhK18+6aANA+KUq3SNQ2I3dKVYNmryuFu/
+        MExWFtU+exe1XS7QO7uweOGAiOTkbyA=
+X-Google-Smtp-Source: AH8x225WsypGpkbuqYlsPh0Ycri24BHg3IHLFTVAhXJVzsbnrb0Cx0Y/saFM7eu4VLJnudUN263IFQ==
+X-Received: by 10.99.60.86 with SMTP id i22mr416003pgn.399.1517876538931;
+        Mon, 05 Feb 2018 16:22:18 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id p69sm19970176pfk.7.2018.02.05.16.22.17
+        by smtp.gmail.com with ESMTPSA id j12sm300403pfa.95.2018.02.05.16.22.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:22:17 -0800 (PST)
+        Mon, 05 Feb 2018 16:22:18 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 126/194] streaming: allow open_istream to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 16:16:41 -0800
-Message-Id: <20180206001749.218943-28-sbeller@google.com>
+Cc:     Stefan Beller <sbeller@google.com>
+Subject: [PATCH 127/194] alternates: convert add_to_alternates_memory to handle arbitrary repos
+Date:   Mon,  5 Feb 2018 16:16:42 -0800
+Message-Id: <20180206001749.218943-29-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,60 +63,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- streaming.c | 11 ++++++-----
- streaming.h |  3 +--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ alternates.h | 3 +--
+ sha1_file.c  | 7 +++----
+ tmp-objdir.c | 1 +
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/streaming.c b/streaming.c
-index cd52f517eb..2373395afe 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -137,22 +137,23 @@ static enum input_source istream_source(struct repository *r,
- 	}
+diff --git a/alternates.h b/alternates.h
+index e4520ae5c7..b3d8d57ba4 100644
+--- a/alternates.h
++++ b/alternates.h
+@@ -56,8 +56,7 @@ extern void add_to_alternates_file_the_repository(const char *dir);
+  * recursive alternates it points to), but do not modify the on-disk alternates
+  * file.
+  */
+-#define add_to_alternates_memory(r, d) add_to_alternates_memory_##r(d)
+-extern void add_to_alternates_memory_the_repository(const char *dir);
++extern void add_to_alternates_memory(struct repository *r, const char *dir);
+ 
+ /*
+  * Returns a scratch strbuf pre-filled with the alternate object directory,
+diff --git a/sha1_file.c b/sha1_file.c
+index 743ada360d..3c39e34c72 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -581,16 +581,15 @@ void add_to_alternates_file_the_repository(const char *reference)
+ 	free(alts);
  }
  
--struct git_istream *open_istream_the_repository(const unsigned char *sha1,
-+struct git_istream *open_istream(struct repository *r,
-+				 const unsigned char *sha1,
- 				 enum object_type *type,
- 				 unsigned long *size,
- 				 struct stream_filter *filter)
+-void add_to_alternates_memory_the_repository(const char *reference)
++void add_to_alternates_memory(struct repository *r, const char *reference)
  {
- 	struct git_istream *st;
- 	struct object_info oi = OBJECT_INFO_INIT;
--	const unsigned char *real = lookup_replace_object(the_repository, sha1);
--	enum input_source src = istream_source(the_repository, real, type, &oi);
-+	const unsigned char *real = lookup_replace_object(r, sha1);
-+	enum input_source src = istream_source(r, real, type, &oi);
+ 	/*
+ 	 * Make sure alternates are initialized, or else our entry may be
+ 	 * overwritten when they are.
+ 	 */
+-	prepare_alt_odb(the_repository);
++	prepare_alt_odb(r);
  
- 	if (src < 0)
- 		return NULL;
+-	link_alt_odb_entries(the_repository, reference,
+-			     '\n', NULL, 0);
++	link_alt_odb_entries(r, reference, '\n', NULL, 0);
+ }
  
- 	st = xmalloc(sizeof(*st));
--	if (open_istream_tbl[src](the_repository, st, &oi, real, type)) {
--		if (open_istream_incore(the_repository, st, &oi, real, type)) {
-+	if (open_istream_tbl[src](r, st, &oi, real, type)) {
-+		if (open_istream_incore(r, st, &oi, real, type)) {
- 			free(st);
- 			return NULL;
- 		}
-diff --git a/streaming.h b/streaming.h
-index 9f4d5aeee2..cb36ce4c02 100644
---- a/streaming.h
-+++ b/streaming.h
-@@ -8,8 +8,7 @@
- /* opaque */
- struct git_istream;
- 
--#define open_istream(r, s, t, sz, f) open_istream_##r(s, t, sz, f)
--extern struct git_istream *open_istream_the_repository(const unsigned char *, enum object_type *, unsigned long *, struct stream_filter *);
-+extern struct git_istream *open_istream(struct repository *, const unsigned char *, enum object_type *, unsigned long *, struct stream_filter *);
- extern int close_istream(struct git_istream *);
- extern ssize_t read_istream(struct git_istream *, void *, size_t);
- 
+ /*
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index a9334d3fc5..acd55680c8 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "tmp-objdir.h"
+ #include "alternates.h"
++#include "repository.h"
+ #include "dir.h"
+ #include "sigchain.h"
+ #include "string-list.h"
 -- 
 2.15.1.433.g936d1b9894.dirty
 
