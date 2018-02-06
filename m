@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E54101F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 04:20:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 607231F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 04:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752178AbeBFEUq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 23:20:46 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:36313 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752132AbeBFEUp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 23:20:45 -0500
-Received: by mail-qk0-f176.google.com with SMTP id 15so738857qkl.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:20:44 -0800 (PST)
+        id S1752622AbeBFE1J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 23:27:09 -0500
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:37803 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752575AbeBFE1F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 23:27:05 -0500
+Received: by mail-qt0-f175.google.com with SMTP id s27so646580qts.4
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=67X18y0EQqkcnJqrU96J9m0PKBFPuXv/JHNEfrok4yg=;
-        b=I0CdqrC1kuAWRGgqn+FVvATP8a23TEKqJU7+iz41WEhw9XUaAtb85zMYCIaMRfKslL
-         hEnTqnv76KpbWcg0m5VqkR0Deiw3zQaCh5tEXTB+NGtcP0cm3hA8+xbTtJxyoWOPbOsV
-         R/6eOa5ENm9yUUvYa16aoGYx9atNREBa8tLEK7sbFLHU9Ga40Xp3TmU7Is2IXhIfnm+w
-         IEITZ5UHePr6b2wDl86FwaAE7Ll0XwCD++XVeWOzr1hL9pBC4HjtUx4/h1OjLAnDeYt7
-         b200o6nHhDIL9upMDwsUqqZzRXjikBF0adzKLEytPfcnWD70ocBRzrJVPXLrxuilC+nY
-         7jEw==
+        bh=sX3yh8Ur/eT3u7p4oKwnYrneCWN2WBdUAhsfBrCNMFw=;
+        b=H9daQqFpKTdY3/9zrykQlPaVHkJx6BBOwjOA2PWARsMitYcSRXVgUfs3I8TDgQFn58
+         MX4CVE8hSxf7TGa3LFFj63TWBiEEHskEkOzJqkV5VbNWX2/ERzxE0Y9SJAwpnkru49Hv
+         y/6BaHvq7typ2CqfpOmeRA/JC3urN94JGw+ldjntsUaNNh8ENf4PBihfgS8l+KhM/nft
+         y8stnXmHgFkkTU6lZ81V83sA3t336oxEESUmm9JEEWT+OKnuBGiBeOYn0Mv6GljU9tcQ
+         D9PztV/7bqRpBzbCkNxO5a3phJm9e/N3baI6LeziSR+AWqJYq82qtZvIocC/A9jK70s8
+         hg/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=67X18y0EQqkcnJqrU96J9m0PKBFPuXv/JHNEfrok4yg=;
-        b=Vv3gH9aM7YqPc9kEjyjoOsmbs4cGjTdrSSFPWLYn2bUffRwiU62CQwv3XrkyCTgzmk
-         QfuHfBQGUO4bPqX4DMpxZ8TWhAEADWzn3NPDyV6qr89GPRNvx7PpOsibpREU82/5RB99
-         pzmXeolFAUzYMZ47zyUwLkZTMmz9T9/E6JixKwH7rKozK9paoDgwY5km8r2JD4jgq64K
-         XsTMUrP/VdpEA2i8Tb1eQHR0ajFIYqxiO6ecKMmsBpZ+xNFG3eUyP6oTx7HsSDenXyvK
-         pBnE1gAaq+tJ8brm0W3iKrfIDtoQOBlURQc7wbFnvxOdXah+nI6BZb9D2AgpD5977Fv7
-         QYBg==
-X-Gm-Message-State: APf1xPALf+tndpeYddnWlNMOllRY7oaJiOA+KpiFxv+OHyMWpXwDjbr3
-        44dQpZQdmRLh4RkVjC1pCEzu2aGUOz24e5oVtFw=
-X-Google-Smtp-Source: AH8x224RY3EBxjZozsValSSYjAFMwKjEgEsjeEfjRL84ujrPyqgb570Pf2V/YTJ5KRWErmxRJGDSTxvRWqd1en5nsPA=
-X-Received: by 10.55.177.135 with SMTP id a129mr1669757qkf.112.1517890844439;
- Mon, 05 Feb 2018 20:20:44 -0800 (PST)
+        bh=sX3yh8Ur/eT3u7p4oKwnYrneCWN2WBdUAhsfBrCNMFw=;
+        b=uKIh5Mj6kR8GT4b8Zm4zUsugIHu6ekky+w9BO9ZU84RZyQbQR+Lo1A+1dwXx8kevXY
+         c4nnNBneO3rQxhefNmLrD8qlEatktbxPqxW/8AhtNxu5e5aPYWzI5T1GxHrBD/+go9Gn
+         wKc1b8QyfZvyh1ozvIqfgbuV3tzGzxSAvhsymfcdX+8NyYuDXVdyta+R+3qaCEGKO5ka
+         XY9DGY17ORx0GA8MhNpBVYwRd9A6F2hsAjdguQaUlYtXc1ZAwsj0b89lYLsXDrblE3Iz
+         OXHfIXLHl/Dz7eCmk9hHDomdAOTm9AIHR95X3LPO7JOTHUVgLMeA4DFPAUW9B0mnYU+x
+         iH4Q==
+X-Gm-Message-State: APf1xPBP8PfelddkLvD1g290oWPE7WvLx/0gqXPbmdTTjMDzSFxjvGyU
+        JIEA2kZGzhV15MdRQ8VTkGWxfHNRMfckwl45KlM=
+X-Google-Smtp-Source: AH8x225CkU8hzRcp+TTPQIfDoo3pj/JLPahogxroV9WRsI7zyguNUJnZJEJMdp9vNH+3gUF1MEefvA+R+jGxfrAQCoI=
+X-Received: by 10.200.82.4 with SMTP id r4mr827176qtn.75.1517891225038; Mon,
+ 05 Feb 2018 20:27:05 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Mon, 5 Feb 2018 20:20:44 -0800 (PST)
-In-Reply-To: <20180205235735.216710-55-sbeller@google.com>
+Received: by 10.12.175.239 with HTTP; Mon, 5 Feb 2018 20:27:04 -0800 (PST)
+In-Reply-To: <20180205235735.216710-39-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
- <20180205235735.216710-55-sbeller@google.com>
+ <20180205235735.216710-39-sbeller@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 5 Feb 2018 23:20:44 -0500
-X-Google-Sender-Auth: 94yucWxK029UChjlW9jn7EgJbQY
-Message-ID: <CAPig+cTjUAYRbaF_CLAmtYf56cL2hhvYc4VLrE8DX-MiryCWXA@mail.gmail.com>
-Subject: Re: [PATCH 075/194] fetch, push: do not use submodule as alternate in
- has_commits check
+Date:   Mon, 5 Feb 2018 23:27:04 -0500
+X-Google-Sender-Auth: v23VKWQW-G1dHj1WiBTN_x5HPZE
+Message-ID: <CAPig+cTnucxCf5=24UBKGU5q_n0mwn0eB1pCLdiA77qXn-1n7Q@mail.gmail.com>
+Subject: Re: [PATCH 059/194] refs: store the main ref store inside the
+ repository struct
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -66,41 +65,21 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Feb 5, 2018 at 6:55 PM, Stefan Beller <sbeller@google.com> wrote:
-> Both fetch and push still use alternates to access submodules in some
-> other code paths, but this is progress towards eliminating the alternates
-> hack that conflates access to the_repository and other repositories.
+> diff --git a/refs.c b/refs.c
+> @@ -1609,9 +1609,6 @@ static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
+> -/* A pointer to the ref_store for the main repository: */
+> -static struct ref_store *main_ref_store;
+> diff --git a/repository.h b/repository.h
+> @@ -33,6 +33,11 @@ struct repository {
+>          */
+>         struct object_store objects;
 >
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/submodule.c b/submodule.c
-> @@ -832,24 +833,43 @@ static int check_has_commit(const struct object_id *oid, void *data)
-> +static int open_submodule(struct repository *out, const char *path)
-> +{
-> +       struct strbuf sb = STRBUF_INIT;
-> +
-> +       if (submodule_to_gitdir(&sb, path))
-> +               return -1;
+> +       /*
+> +        * The store in which the refs are hold.
+> +        */
+> +       struct ref_store *main_ref_store;
 
-submodule_to_gitdir() makes no promise that it has not made
-allocations to 'sb' when it returns -1, so this is potentially
-leaking. Therefore, you should strbuf_release() here.
-
-> +
-> +       if (repo_init(out, sb.buf, NULL)) {
-> +               strbuf_release(&sb);
-> +               return -1;
-> +       }
-
-Or just combine these two error cases:
-
-    if (submodule_to_gitdir(...) || repo_init(...)) {
-        strbuf_release(...);
-        return -1;
-    }
-
-> +       out->submodule_prefix = xstrdup(path);
-> +
-> +       strbuf_release(&sb);
-> +       return 0;
-> +}
+Do items moved to the 'repository' structure need to be freed when the
+'repository' itself is freed? Is that being done by a different patch?
+If so, it would ease review burden for the freeing to happen in the
+same patch in which the item is moved to the 'repository'.
