@@ -2,134 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C73A1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 01:39:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DDF1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 01:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752103AbeBFBjq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 20:39:46 -0500
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:37874 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751514AbeBFBjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 20:39:44 -0500
-Received: by mail-qt0-f195.google.com with SMTP id s27so282925qts.4
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 17:39:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BVxkfqMPEfPOUnZUKMKSUt1PXM/QZRzbRVUuFvTu41M=;
-        b=TozhnCb+3B4co+QAcA86TPrDsLJ1qB3xvMWmwSZVneI0kYlZM6pU4cb4IYSbmAh9DK
-         jI8EHTO4ZuoFKSxFk/B472UJoChtB/kIxdtnVQoACv/VycqYhQKQnqMK7gDqyKnffMfT
-         6A61mJWCG/T3J18KS6r6XScNPFSxoEXZtUSlHpFlc3m5PdbEp/8XiucFaUSVMWuz3kI8
-         Q8MoT5uBdQJISnoqNCyrb+4TGkiFmyKOQf3mxxdXFAT0WDxhvR97es4yMO55qt9BsRGt
-         LYYuNa26gfi9Je0NszLr/bleXkGw3P5XWItyFFMf2f1M1VZJiVsGZGb7rO8e1xiNnGG2
-         p/Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=BVxkfqMPEfPOUnZUKMKSUt1PXM/QZRzbRVUuFvTu41M=;
-        b=tWuGohOBIGJtUF5nz0Fvxdfl5z3/aWDiBdq5nsgzUnCPSC0MvLpvK+jZlREBHLakSj
-         ezqJKO8LBndDyI9jmXZQNSr2pV8JZz/9T5YQRIaGeo2C5N/XGDLniKrvRNtLBRy5oVlY
-         KgiLgAsnvh/myxbdYjz5/bcaCpJ2WTQ+8vvSvsGMgyeK+8DAgmHiQJljEl5FZqIvG5Hd
-         pXqeb+gVz1Ck5BRGurKKlBFkbzC79qpmyQsmwPxIMvkM2PEouQLXixFBensP3lUkMLKR
-         irxXH29D/obFVh1XA8RbaxcF3NEvW5brH4g0lY8aNK0YewCDEggTZ5Hcc8fvCzPWDHDx
-         uDog==
-X-Gm-Message-State: APf1xPA430HFXD1gOH/wJPj3xW5OfB1ntDKU4t1Kqjybs71R8+xaLSX8
-        BIK0HT8+vJucrLdvVK7L480=
-X-Google-Smtp-Source: AH8x227UgnAryOGoxhr3hg7Mv0//rmdGCXU6VazuVtIHwtT+xdXQfAK+7Oq+gSqsto805NCaa1lGCw==
-X-Received: by 10.200.47.103 with SMTP id k36mr1185054qta.151.1517881183575;
-        Mon, 05 Feb 2018 17:39:43 -0800 (PST)
-Received: from [192.168.1.105] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id a77sm6558695qkb.41.2018.02.05.17.39.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Feb 2018 17:39:42 -0800 (PST)
-Subject: Re: [PATCH v1] dir.c: don't flag the index as dirty for changes to
- the untracked cache
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com, bmwill@google.com,
-        avarab@gmail.com
-References: <20180205195619.31064-1-benpeart@microsoft.com>
- <xmqqd11j9mx2.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <6ff2ecb4-7e37-3b06-3722-cccec2329934@gmail.com>
-Date:   Mon, 5 Feb 2018 20:39:43 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752401AbeBFBpF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 20:45:05 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58716 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752126AbeBFBpD (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 20:45:03 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 418836042C;
+        Tue,  6 Feb 2018 01:45:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1517881502;
+        bh=otxffA2QSn2npenjsa8/61tovdLLGFEw/XLe6ALjVsU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=uL7dRGs0F8dFddc+frPcEUxXx1T3at1sYXw5g4PGD6yX84UoSRxizv5pzfvpptr2A
+         GjX1m6F4fdBn8VO8wYSYm2Hpx8CqdhIMkcdQIGkbNwEOaFksRzk3+Kt974qA1XIEEq
+         xNXbvKSG1yydTga/IjwIUweVZbxf8BV70IBZdKO7WX5iI0NIyoG69pj8uo3Rxwe4Jj
+         uKpveyRPOtKsXYPnXtYm1kcFjt4ayZXIPtvuV2c368zHI5jAnZHhuDM22iqIV0xFKj
+         DqO4zPxWx9bb5JsP102TSwiVI1y+FR9yMNX4Lv4cZHJIBVfNIlnqtJUBtAKPJxkLHd
+         5T7VX8Un/Eg+oPa9qGwgMQkaIq1j/ylwKjcN1CmyJhPkiePi60lP/RDp21uz7jrONH
+         TnxxfFTEAhKlDfPKDG3XFHVxswKsaj9fu/cTNq+uKW59TsgG3/UL1Yl50/hSEBpZWZ
+         KMNUIR0CJIraSvd7CTUao5hJfKMTRE5C7ylJYwlKescOVT5N+7T
+Date:   Tue, 6 Feb 2018 01:44:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 042/194] object-store: move alternates API to new
+ alternates.h
+Message-ID: <20180206014457.GE7904@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <20180205235508.216277-1-sbeller@google.com>
+ <20180205235735.216710-1-sbeller@google.com>
+ <20180205235735.216710-22-sbeller@google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd11j9mx2.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wtjvnLv0o8UUzur2"
+Content-Disposition: inline
+In-Reply-To: <20180205235735.216710-22-sbeller@google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+--wtjvnLv0o8UUzur2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 2/5/2018 3:55 PM, Junio C Hamano wrote:
-> Ben Peart <benpeart@microsoft.com> writes:
-> 
->> The untracked cache saves its current state in the UNTR index extension.
->> Currently, _any_ change to that state causes the index to be flagged as dirty
->> and written out to disk.  Unfortunately, the cost to write out the index can
->> exceed the savings gained by using the untracked cache.  Since it is a cache
->> that can be updated from the current state of the working directory, there is
->> no functional requirement that the index be written out for every change to the
->> untracked cache.
->>
->> Update the untracked cache logic so that it no longer forces the index to be
->> written to disk except in the case where the extension is being turned on or
->> off.  When some other git command requires the index to be written to disk, the
->> untracked cache will take advantage of that to save it's updated state as well.
->> This results in a performance win when looked at over common sequences of git
->> commands (ie such as a status followed by add, commit, etc).
->>
->> After this patch, all the logic to track statistics for the untracked cache
->> could be removed as it is only used by debug tracing used to debug the untracked
->> cache.
->>
->> Signed-off-by: Ben Peart <benpeart@microsoft.com>
->> ---
->>
-> 
-> OK, so in other words (note: not a suggestion to use different
-> wording in the log message; just making sure I got the motivation
-> behind this change correctly), without this new environment
-> variable, changes to untracked cache alone (due to observed changes
-> in the filesystem) does not count as "in-core index changed so we
-> need to write it back to the disk".
-> 
+On Mon, Feb 05, 2018 at 03:55:03PM -0800, Stefan Beller wrote:
+> From: Jonathan Nieder <jrnieder@gmail.com>
+>=20
+> This should make these functions easier to find and object-store.h
+> less overwhelming to read.
+>=20
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  alternates.h                | 68 +++++++++++++++++++++++++++++++++++++++=
+++++++
+>  builtin/clone.c             |  1 +
+>  builtin/count-objects.c     |  1 +
+>  builtin/fsck.c              |  3 +-
+>  builtin/grep.c              |  1 +
+>  builtin/submodule--helper.c |  1 +
+>  cache.h                     | 52 ----------------------------------
+>  object-store.h              | 16 +++++------
+>  packfile.c                  |  3 +-
+>  sha1_file.c                 | 23 +++++++--------
+>  sha1_name.c                 |  3 +-
+>  submodule.c                 |  1 +
+>  t/helper/test-ref-store.c   |  1 +
+>  tmp-objdir.c                |  1 +
+>  transport.c                 |  1 +
+>  15 files changed, 102 insertions(+), 74 deletions(-)
+>  create mode 100644 alternates.h
+>=20
+> diff --git a/alternates.h b/alternates.h
+> new file mode 100644
+> index 0000000000..df5dc67e2e
+> --- /dev/null
+> +++ b/alternates.h
+> @@ -0,0 +1,68 @@
+> +#ifndef ALTERNATES_H
+> +#define ALTERNATES_H
+> +
+> +#include "strbuf.h"
+> +#include "sha1-array.h"
+> +
+> +struct alternates {
+> +	struct alternate_object_database *list;
+> +	struct alternate_object_database **tail;
+> +};
+> +#define ALTERNATES_INIT { NULL, NULL }
 
-Correct
+I was surprised to find that this patch not only moves the alternates
+API to a new location, but introduces this struct.  I certainly think
+the struct is a good idea, but it should probably go in a separate
+patch, or at least get a mention in the commit message.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-> That makes sense to me.
-> 
-> Is it envisioned that we want to have similar but different "testing
-> only" behaviour around this area?  If not, this environment variable
-> sounds more like "force-flush untracked cache", not "test untracked
-> cache", to me.
-> 
+--wtjvnLv0o8UUzur2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Many of the tests make a change and then verify that the on disk 
-structure was updated correctly.  This was the simplest way to keep 
-those tests functioning. I don't imagine this would be used for anything 
-other than enabling the tests.  I hate naming so am happy to name it 
-which ever you think is best. :)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
 
->> +GIT_TEST_UNTRACKED_CACHE=true
->> +export GIT_TEST_UNTRACKED_CACHE
->> +
->>   sync_mtime () {
->>   	find . -type d -ls >/dev/null
->>   }
->>
->> base-commit: 5be1f00a9a701532232f57958efab4be8c959a29
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlp5CJgACgkQv1NdgR9S
+9ouZmA/+LydD6VwFu/hfMRoBNs85K80tXboND/aXhKWpEDPSpNDyl1BY6BWstGzV
+f1gadcmRZZj+NEY6qglVwCcRmyfYzrNE/dhTWQlgPBxJj1VGBYnshxZZh/tJMNCO
+9vYhd3+RZH9BvX8jNaqKydokHKsALkysxunG7FZ7GHUEkr9CiC9x85CxgHGU89Fe
+siqqVrC+jQW6mftyXmVx4QWam/ogRnHTFnfaEBW0h0Qc7G/M5GBs6yL+J7B6crY7
+Qgjvb/cHbUIIlcLM4TDk3VOWHI6U8fk4GhUl+jU3gPav+sK7YV1tZmWEJTzvg1GE
+T1eqS7taBIpOtFMSTJFKKcKH45dBFWcC/BA05qhv0SUo1dlNjxcHOohlyCnZelBE
+qpPF6+0K+baXYarG/u2/5SZ6gnO5//jLrWYpxEr1JRLzk8+bcgRv/77+0x2qgrUv
+OyG7N2k8pm9inV1WzdjzCzGmMCeCFo8eU8MfwYSs0T6Wx0A+R+M/qo04a/ELH/w0
+E3ua2gJQSuCIyZPjCI+az7hP9sqBqgIwUY+c3AHXgZN4R7Her3RZGiNlEDUjzPId
+RdnZEwusfs62NgfOIC1CJ3ilbHImKe+ExLmTM0rx2tY4I4HRsIdDxPGJwtFmfVCM
+efH2B2ae3pNa+1Hgmpqg+ujpfguBztj4zDqVe1feKBxBwv1M+Q4=
+=PzqO
+-----END PGP SIGNATURE-----
+
+--wtjvnLv0o8UUzur2--
