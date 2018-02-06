@@ -2,100 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A36731F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 04:39:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 714B61F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 04:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752201AbeBFEjf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 23:39:35 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:40256 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752132AbeBFEjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 23:39:33 -0500
-Received: by mail-pg0-f65.google.com with SMTP id g2so628052pgn.7
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:39:33 -0800 (PST)
+        id S1752293AbeBFEm4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 23:42:56 -0500
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:34898 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752257AbeBFEmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 23:42:54 -0500
+Received: by mail-qt0-f176.google.com with SMTP id g14so784082qti.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:42:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DYgaLtGt9Y+tNxus4GINl/swE/nkIjatew6X8LHJwWw=;
-        b=aAslD8kc6j8K/qakSHlZWl4K1cUWJpn9MhxUmI+DmB3i1VMEFuP7aaZPiJtdLbwUJk
-         M6Y4M/V8+WZxjDrmaLTuv06gAzRIhSxUSr3m7/s1H8o0xI/JuUpsDj+ZinLSLJHarmDC
-         CiOi0bAurq0IwXIWnMYocTGnHVfSE2ORFEVw/8Oyv9Q+Cd0AUKDaJhNBe9VGvV8A45Au
-         fV3fC30alwtu/NW9MRa3r85u0Ztqd0xVey4N2FWMqv/3IAREmjK9DrYyRkPnZ3H2RgrJ
-         mjK+BfQjrw4MYzRxUnzZHoU0rvG8pTiptiuD0qpADO9Cc3yt5eNft6mNj5+N/0DybEqx
-         pyJg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=HGz407G+AVsZ+lDgsNqVqppMY3DhmfTPqjcqDPZobrI=;
+        b=bwWFkXES7C9j5p8psTiW3E7vgdYZuuAx0hJqhojr5JRxiAR07FImI0P42lPmK4aGdr
+         dRBcFXET2grCwQwNNVIFA1ZIMpov7lR3DtagfSJ4/RX+caKioKgHd02vCICGC4BKbYpO
+         ++xO0qEG25lZFOv8ciFOwGj0EzWWQ8+QKxvB9/YNShpE7L8Rk0+7UsxFW84/SxpmKkgz
+         BF3wVttGuvWYafkFbF50KcoJY5sTwabf/3ax3XaS46Z6Lf19eQKufMAHV4TPSWPNP1uB
+         LAIhpHqp9sWgvl/D/rs80sTd68XxCMr9GnI3sqX46cEtj5CCcA09PlRjg0kaeoUtDFvp
+         qWZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DYgaLtGt9Y+tNxus4GINl/swE/nkIjatew6X8LHJwWw=;
-        b=Jx3OJgNRQw0RH6WFWRq9Aben+/wYuj/RT404285i1nXQ88iKwForKCJw/Dg8DXnG9C
-         b8AHqD4Vv2oanh8q5AU62X4AFHPEqXSZyLgMM8ViYiothxURuyP8er33v7guGTyKJBKA
-         M/KR4mziQyN9ZBhtCtpMP9bmuIBN750VdOVhLCrJXGr2UpDf7eEloTLMJu6tJmY3vgaD
-         EiblSZVXEAMiJRgPzOnDnRj6mRgFmLc3L/ZsHqgCcZfG2JBsdlBPjOO+lwFC42MznPiV
-         dae/+1TbJQt1rclvpeX4ET+dhYfOVr4odHmRdVrpC0SKomT1vPNn9vwTejAz5gSkC3pz
-         hOng==
-X-Gm-Message-State: APf1xPCXgCRAuBAiAWwdsKOFO1ILWRtIwFZgeRdx7AHLhe+RpZbVsuX/
-        4KcVA9DkvafphcaW9Tt7NxM=
-X-Google-Smtp-Source: AH8x227J2QARWJY45SctnyVUzGeMcCy5KHcTfJVuCVYomMHezKVQ0Y6HqG1/U5gRFBWU+y/tDZQQ5Q==
-X-Received: by 10.101.86.15 with SMTP id l15mr957498pgs.340.1517891972960;
-        Mon, 05 Feb 2018 20:39:32 -0800 (PST)
-Received: from localhost ([139.199.219.104])
-        by smtp.gmail.com with ESMTPSA id d64sm18912719pfa.91.2018.02.05.20.39.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Feb 2018 20:39:32 -0800 (PST)
-Date:   Tue, 6 Feb 2018 12:37:23 +0800
-From:   Chen Jingpiao <chenjingpiao@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com
-Subject: Re: [GSoC][PATCH v2] commit: add a commit.signOff config variable
-Message-ID: <20180206043723.GB30460@localhost>
-References: <20180205104059.4759-1-chenjingpiao@gmail.com>
- <xmqq4lmvb5sz.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=HGz407G+AVsZ+lDgsNqVqppMY3DhmfTPqjcqDPZobrI=;
+        b=tbTLnPQ6ZFWZYS9qNznGGuagSZbzg0UjaX04l5MeYR7qSHjx5bWCVwLWhbKi8AkjjD
+         s6TxrDgecng2IoWArqDmWHRVsFNXacwmLluARgpJqDXjzVSpw7buFMQXl3Tldekcc4VE
+         QYgB6jlVC4MQKA+1uEVd6JVL5GAWJb5T6rI4wVvMx56FBHRVjq96Bmk8iWBFGRienhMr
+         qULFGPo0yta+0RHxtJELKizUkeqWF7+Y6BtAsYgtAXpQE9X6KqSTWfBbJzJX5F5NCQ//
+         q66xkzY2SPjtoLL0BE8t7qn8MOlLHwqecX9aSPr4yVwKEoCu2cEegmY1XCniwD+zDZog
+         /ZJA==
+X-Gm-Message-State: APf1xPDM2VTeP3vE8Ig1WEByNhoO+LwsfmuGoLvEbYguYmeCYzBGgYUJ
+        U77omMTGeY0Q+LJYP2RS+XMyZpUnn0Up0a6RDIR0rA==
+X-Google-Smtp-Source: AH8x226ugJC5ieTir7dvHgasCXcXHFu5rUuZkQ1XmTIAz3Vh2cPNKU+2usHvNQAj4Am7ZrMmN9sMw21v7w5ivkl/jLo=
+X-Received: by 10.200.45.109 with SMTP id o42mr1707797qta.277.1517892174078;
+ Mon, 05 Feb 2018 20:42:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4lmvb5sz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.12.175.239 with HTTP; Mon, 5 Feb 2018 20:42:53 -0800 (PST)
+In-Reply-To: <xmqqmv0n80ue.fsf@gitster-ct.c.googlers.com>
+References: <xmqqmv0n80ue.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 5 Feb 2018 23:42:53 -0500
+X-Google-Sender-Auth: KcA_Hf9ibsQiMsNRVuxIWxZramo
+Message-ID: <CAPig+cTFSWJX3FyXA6JJPhd1TT9eS0QOtm_R2qB6SX8W60ZWtA@mail.gmail.com>
+Subject: Re: [RFH/PATCH] blame: tighten command line parser
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/05 11:22, Junio C Hamano wrote:
-> Chen Jingpiao <chenjingpiao@gmail.com> writes:
-> 
-> > Add the commit.signOff configuration variable to use the -s or --signoff
-> > option of git commit by default.
-> 
-> This is a rather old topic.  Here is one from 2006:
-> 
->     https://public-inbox.org/git/Pine.LNX.4.63.0611281426311.30004@wbgn013.biozentrum.uni-wuerzburg.de/
-> 
-> which was referred to in another discussion in late 2008:
-> 
->     https://public-inbox.org/git/20081227070228.6117@nanako3.lavabit.com/
->     https://public-inbox.org/git/7vabaijvxl.fsf@gitster.siamese.dyndns.org/
-> 
-> I am not sure if the reasons why the last effort was retracted still
-> apply to this round (the world certainly has changed in the past 10
-> years); it would be good to explain why this time it is different
-> ;-).
-> 
-> Assuming that the new configuration variable is a desirable thing to
-> add, the change to the code looks OK.  Documentation updates may
-> need more thought in the light of past discussions, though.
-> 
-> Thanks.
+On Mon, Feb 5, 2018 at 6:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> The command line parser of "git blame" is prepared to take an
+> ancient odd argument order "blame <path> <rev>" in addition to the
+> usual "blame [<rev>] <path>".  It has at least two negative
+> ramifications:
+>
+>  - In order to tell these two apart, it checks if the last command
+>    line argument names a path in the working tree, using
+>    file_exists().  However, "blame <rev> <path>" is a request to
+>    explalin each and every line in the contents of <path> stored in
 
-I agree with Johannes Schindelin once said "a signoff _has_ to be a
-conscious act, or else  it will lose its meaning."
-I think I shouldn't add this configuration variable. Thank you.
+s/explalin/explain/
 
---
-Chen Jingpiao
+>    revision <rev> and does not need to have a working tree version
+>    of the file.  A check with file_exists() is simply wrong.
+>
+>  - To coerce that mistaken file_exists() check to work, the code
+>    calls setup_work_tree() before doing so, because the path it has
+>    is relative to the top-level of the project tree.  However,
+>    "blame <rev> <path>" MUST be usable even in a bare repository,
+>    and there is no reason for letting setup_work_tree() to complain
+
+s/to complain/complain/
+
+>    and die with "This operation must be run in a work tree".
+>
+> To correct the former, switch to check if the last token is a
+> revision (and if so, parse arguments using "blame <path> <rev>"
+> rule).  Correct the latter by getting rid of setup_work_tree() and
+> file_exists() check--the only case the call to this function matters
+> is when we are running "blame <path>" (i.e. no starting revision and
+> asking to blame the working tree file at <path>, digging through the
+> HEAD revision), but there is a call in setup_scoreboard() just
+> before it calls fake_working_tree_commit().
+>
+> Also attempt to give a bit more sensible error message when "blame
+> XYZ" is given and XYZ cannot be a path.
+>
+>    side note: I am not happy with the "only one arg, which is a rev,
+>    given in a bare repository" condition to give the new error
+>    message, but this should be a good starting point.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
