@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 924251F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3EF1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752268AbeBFAZq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:25:46 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:43284 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752171AbeBFAZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:25:42 -0500
-Received: by mail-pl0-f67.google.com with SMTP id f4so123095plr.10
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:25:42 -0800 (PST)
+        id S1752441AbeBFAZt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:25:49 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:40334 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752238AbeBFAZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:25:44 -0500
+Received: by mail-pl0-f66.google.com with SMTP id g18so131527plo.7
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:25:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pgA7dGf7DctlYAAHaf6MfbnhCrRjfww0hNyLanGvGnE=;
-        b=SW29oNZFLhzxQQ9Y5WMStIURSKQj3qOHHDrcPgtpXSsOsozd0yCTbRSsAQM+xKaH3U
-         Czgevqo9u3WWCti0Ur2wonbbohvg08+Z5riSetwR4eokwIspL7nvUsnNSC4UzK/b6bdS
-         Se39K2+koQQMltwS7/3FCeNiKUNJTkt/6ucrFWVQEMsmZ3nyHeTVcRjlPIn4N/9xtI1I
-         dbzlw61tvrQUvoE86GQxfF1gXVX2C1Q4UvNMp1zIaSpxXe+Iaswp9JWiQG7T/5GVbC72
-         RlnVxYpEsHSH2yDbiCxf1dfxNkKuNMzHfHTRk9k+vGnob+nX/k37F8mAfsnMxqwrmcEl
-         1iRw==
+        bh=bqQ9OIC3sH50ZdfKleU67UvY24k7yQruAvFybVwuD9I=;
+        b=FGBbG1HS6q0e+cwPnHU9CPM2Rg3DhNFUoVQS4W8robDre973dWiCFtlsGCxJHrTzWu
+         90MPGb3N7/QC5rPefpzn6WS0JvO1hNx7ZdSng7Y8wRACgDgCMikayWQsZ39hv68RmSl1
+         Rhc0kRkbz8IVQixQE7aUD7pqgww+MkXnOTLVgGNMFy5jwHtsXVwkqvyhVYboUhCudJWE
+         KR0SbXUDoNWPnyTZfywrPG5bXlJH6bLy6nJ87S1lS2t6vmPqZpKsCL/yp2h3sksmzF1Z
+         qBW84O2AOCVhwEC1NB0zm/oNPTgWJuj8ik9RfSjcZNGXCXBABxwrFTNFInf9Py2JgH4m
+         //ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=pgA7dGf7DctlYAAHaf6MfbnhCrRjfww0hNyLanGvGnE=;
-        b=QcdR/uIY7LclvNf+Ve4T2EuSm3Z9NKoWneAuu5GB4rf/I9A2BbKpB8vbh1tpMpCd1E
-         jjGGLim+eWBUnxEoOKGjDAA2ySoYNrAKML1InVcNYiHGGnOIi5N465hyUkBHjowaTfDc
-         t7A/18ZkIZzr03gTQnehpgDQ/uNN3jo+jI3r5UWYPeFwLHP/ls6AXxDraO2IM6A9Yo+N
-         PMIV6SQh6qc3l8M+Lc+uIOOt+CHsNGaKVerDo+crNfMN4H/SxCj4BXmNSBPd/OOu1W1B
-         9YcxcjUcCxWbX1YhnOVOROc869zRlK/9NpivzU1HWTRawc7QI0J4MCqO1Qk/SAH7b107
-         v7RA==
-X-Gm-Message-State: APf1xPBXhx8LUKjI+zKD1pyLLRQ36tEaJGOpmWnbXEFEvKWXpg0BO/o7
-        ulaQhyCJoNYsPhtSXiAOgyfglGrHPDs=
-X-Google-Smtp-Source: AH8x227hxUA4bBU38yQsi44bbrdnWR2wNHd4vR6kHJLnag13t/scJbqQxoLFul1vdO02TifLfoZtCA==
-X-Received: by 2002:a17:902:183:: with SMTP id b3-v6mr542427plb.383.1517876741967;
-        Mon, 05 Feb 2018 16:25:41 -0800 (PST)
+        bh=bqQ9OIC3sH50ZdfKleU67UvY24k7yQruAvFybVwuD9I=;
+        b=Sijz78jN1rqGUXKq2D6Fv9WOv4MZlsRdQvCgnzlZVnarPu+vYpl7E2ToGy1XIHb1wg
+         SjjZz3HRdg97y3y/vhOWiKEMoUCEOmtfWPWxHE+sHLvTvKz9i4bamBRp1UvAVaQEwM+p
+         yjn2IzqKsmszDbWp693DKgiCUFLYkDAOxbj2ktAP4hyhba5cdKLIaccVn84OZudaYevM
+         0wkitL6LVjQNx3woMY5MqcQpNSL4BVYMbnNYRYe/7G4pbXEIgwN8usfue5XgV8MkpYJC
+         VC878bsm5/xjZGndVr/4NiUlZz2fXSYH5CBlAtvgu6FjUhIEPUoX5I/FA1wzEAzw+1XT
+         pTiQ==
+X-Gm-Message-State: APf1xPDugqFjLINj6sUJtgfwfACp8P9Z+FjP0XvK6easKvpTeMl9FHYK
+        lB75yKOkOlJr6j2w/lWZdtWz/lYRJXA=
+X-Google-Smtp-Source: AH8x22735aIR0eDZ8K1tfxw+XcdBsZZ+hu6fwoc5q141SnS4uwPxjWdnW6C9PfF/zPo6pCcB7oCbcA==
+X-Received: by 2002:a17:902:8d81:: with SMTP id v1-v6mr558898plo.430.1517876743224;
+        Mon, 05 Feb 2018 16:25:43 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id j12sm306927pfa.95.2018.02.05.16.25.41
+        by smtp.gmail.com with ESMTPSA id r24sm18781757pfg.51.2018.02.05.16.25.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:25:41 -0800 (PST)
+        Mon, 05 Feb 2018 16:25:42 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 148/194] commit: add repository argument to free_commit_buffer
-Date:   Mon,  5 Feb 2018 16:17:03 -0800
-Message-Id: <20180206001749.218943-50-sbeller@google.com>
+Subject: [PATCH 149/194] commit: allow commit buffer functions to handle arbitrary repositories
+Date:   Mon,  5 Feb 2018 16:17:04 -0800
+Message-Id: <20180206001749.218943-51-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -63,98 +63,212 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of free_commit_buffer to
-be more specific about which repository to handle. This is a small
-mechanical change; it doesn't change the implementation to handle
-repositories other than the_repository yet.
-
-As with the previous commits, use a macro to catch callers passing a
-repository other than the_repository at compile time.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/fsck.c     | 2 +-
- builtin/log.c      | 4 ++--
- builtin/rev-list.c | 2 +-
- commit.c           | 2 +-
- commit.h           | 3 ++-
- 5 files changed, 7 insertions(+), 6 deletions(-)
+ builtin/index-pack.c |  2 +-
+ commit.c             | 33 ++++++++++++++++++++++-----------
+ commit.h             | 17 ++++++++---------
+ object.h             |  6 +++++-
+ repository.c         |  6 ++++++
+ 5 files changed, 42 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 2e8b298384..01c612f75f 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -365,7 +365,7 @@ static int fsck_obj(struct object *obj)
- 	if (obj->type == OBJ_TREE)
- 		free_tree_buffer((struct tree *)obj);
- 	if (obj->type == OBJ_COMMIT)
--		free_commit_buffer((struct commit *)obj);
-+		free_commit_buffer(the_repository, (struct commit *)obj);
- 	return err;
- }
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index 7080c5f776..12426e685f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -386,7 +386,7 @@ static int cmd_log_walk(struct rev_info *rev)
- 			 * We may show a given commit multiple times when
- 			 * walking the reflogs.
- 			 */
--			free_commit_buffer(commit);
-+			free_commit_buffer(the_repository, commit);
- 			free_commit_list(commit->parents);
- 			commit->parents = NULL;
- 		}
-@@ -1813,7 +1813,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		    open_next_file(rev.numbered_files ? NULL : commit, NULL, &rev, quiet))
- 			die(_("Failed to create output files"));
- 		shown = log_tree_commit(&rev, commit);
--		free_commit_buffer(commit);
-+		free_commit_buffer(the_repository, commit);
- 
- 		/* We put one extra blank line between formatted
- 		 * patches and this flag is used by log-tree code
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index e28e7426a5..142ba35fdb 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -193,7 +193,7 @@ static void finish_commit(struct commit *commit, void *data)
- 		free_commit_list(commit->parents);
- 		commit->parents = NULL;
- 	}
--	free_commit_buffer(commit);
-+	free_commit_buffer(the_repository, commit);
- }
- 
- static inline void finish_object__ma(struct object *obj)
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index f78e9d2e65..b2b6021ad3 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -870,7 +870,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 			}
+ 			if (obj->type == OBJ_COMMIT) {
+ 				struct commit *commit = (struct commit *) obj;
+-				if (detach_commit_buffer(commit, NULL) != data)
++				if (detach_commit_buffer(the_repository, commit, NULL) != data)
+ 					die("BUG: parse_object_buffer transmogrified our buffer");
+ 			}
+ 			obj->flags |= FLAG_CHECKED;
 diff --git a/commit.c b/commit.c
-index fa578a2d22..8ef8619dec 100644
+index 8ef8619dec..a5e570f057 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -297,7 +297,7 @@ void unuse_commit_buffer_the_repository(const struct commit *commit, const void
+@@ -248,18 +248,29 @@ struct commit_buffer {
+ 	unsigned long size;
+ };
+ define_commit_slab(buffer_slab, struct commit_buffer);
+-static struct buffer_slab buffer_slab = COMMIT_SLAB_INIT(1, buffer_slab);
++struct buffer_slab the_repository_buffer_slab = COMMIT_SLAB_INIT(1, the_repository_buffer_slab);
+ 
+-void set_commit_buffer_the_repository(struct commit *commit, void *buffer, unsigned long size)
++void alloc_buffer_slab(struct repository *r)
+ {
+-	struct commit_buffer *v = buffer_slab_at(&buffer_slab, commit);
++	r->parsed_objects.buffer_slab = xcalloc(1, sizeof(struct buffer_slab));
++	init_buffer_slab(r->parsed_objects.buffer_slab);
++}
++
++void free_commit_slab(struct repository *r)
++{
++	free(r->parsed_objects.buffer_slab);
++}
++
++void set_commit_buffer(struct repository *r, struct commit *commit, void *buffer, unsigned long size)
++{
++	struct commit_buffer *v = buffer_slab_at(r->parsed_objects.buffer_slab, commit);
+ 	v->buffer = buffer;
+ 	v->size = size;
+ }
+ 
+-const void *get_cached_commit_buffer_the_repository(const struct commit *commit, unsigned long *sizep)
++const void *get_cached_commit_buffer(struct repository *r, const struct commit *commit, unsigned long *sizep)
+ {
+-	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(r->parsed_objects.buffer_slab, commit);
+ 	if (!v) {
+ 		if (sizep)
+ 			*sizep = 0;
+@@ -290,25 +301,25 @@ const void *get_commit_buffer(const struct commit *commit, unsigned long *sizep)
+ 	return ret;
+ }
+ 
+-void unuse_commit_buffer_the_repository(const struct commit *commit, const void *buffer)
++void unuse_commit_buffer(struct repository *r, const struct commit *commit, const void *buffer)
+ {
+-	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(r->parsed_objects.buffer_slab, commit);
+ 	if (!(v && v->buffer == buffer))
  		free((void *)buffer);
  }
  
--void free_commit_buffer(struct commit *commit)
-+void free_commit_buffer_the_repository(struct commit *commit)
+-void free_commit_buffer_the_repository(struct commit *commit)
++void free_commit_buffer(struct repository *r, struct commit *commit)
  {
- 	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
+-	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(r->parsed_objects.buffer_slab, commit);
  	if (v) {
+ 		FREE_AND_NULL(v->buffer);
+ 		v->size = 0;
+ 	}
+ }
+ 
+-const void *detach_commit_buffer(struct commit *commit, unsigned long *sizep)
++const void *detach_commit_buffer(struct repository *r, struct commit *commit, unsigned long *sizep)
+ {
+-	struct commit_buffer *v = buffer_slab_peek(&buffer_slab, commit);
++	struct commit_buffer *v = buffer_slab_peek(r->parsed_objects.buffer_slab, commit);
+ 	void *ret;
+ 
+ 	if (!v) {
 diff --git a/commit.h b/commit.h
-index 85dd52d1bf..8892989b1d 100644
+index 8892989b1d..0d3ccd7279 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -108,7 +108,8 @@ void unuse_commit_buffer_the_repository(const struct commit *, const void *buffe
+@@ -75,19 +75,20 @@ static inline int parse_commit_the_repository(struct commit *item)
+ }
+ void parse_commit_or_die(struct commit *item);
+ 
++extern void alloc_buffer_slab(struct repository *r);
++extern void free_commit_slab(struct repository *r);
++
+ /*
+  * Associate an object buffer with the commit. The ownership of the
+  * memory is handed over to the commit, and must be free()-able.
+  */
+-#define set_commit_buffer(r, c, b, s) set_commit_buffer_##r(c, b, s)
+-void set_commit_buffer_the_repository(struct commit *, void *buffer, unsigned long size);
++void set_commit_buffer(struct repository *r, struct commit *, void *buffer, unsigned long size);
+ 
+ /*
+  * Get any cached object buffer associated with the commit. Returns NULL
+  * if none. The resulting memory should not be freed.
+  */
+-#define get_cached_commit_buffer(r, c, s) get_cached_commit_buffer_##r(c, s)
+-const void *get_cached_commit_buffer_the_repository(const struct commit *, unsigned long *size);
++const void *get_cached_commit_buffer(struct repository *r, const struct commit *, unsigned long *size);
+ 
+ /*
+  * Get the commit's object contents, either from cache or by reading the object
+@@ -102,20 +103,18 @@ const void *get_commit_buffer(const struct commit *, unsigned long *size);
+  * from an earlier call to get_commit_buffer.  The buffer may or may not be
+  * freed by this call; callers should not access the memory afterwards.
+  */
+-#define unuse_commit_buffer(r, c, b) unuse_commit_buffer_##r(c, b)
+-void unuse_commit_buffer_the_repository(const struct commit *, const void *buffer);
++void unuse_commit_buffer(struct repository *r, const struct commit *, const void *buffer);
+ 
  /*
   * Free any cached object buffer associated with the commit.
   */
--void free_commit_buffer(struct commit *);
-+#define free_commit_buffer(r, c) free_commit_buffer_##r(c)
-+void free_commit_buffer_the_repository(struct commit *);
+-#define free_commit_buffer(r, c) free_commit_buffer_##r(c)
+-void free_commit_buffer_the_repository(struct commit *);
++void free_commit_buffer(struct repository *r, struct commit *);
  
  /*
   * Disassociate any cached object buffer from the commit, but do not free it.
+  * The buffer (or NULL, if none) is returned.
+  */
+-const void *detach_commit_buffer(struct commit *, unsigned long *sizep);
++const void *detach_commit_buffer(struct repository *r, struct commit *, unsigned long *sizep);
+ 
+ /* Find beginning and length of commit subject. */
+ int find_commit_subject(const char *commit_buffer, const char **subject);
+diff --git a/object.h b/object.h
+index 513f5eaef4..65b5326e0f 100644
+--- a/object.h
++++ b/object.h
+@@ -5,6 +5,8 @@ struct object_parser {
+ 	struct object **obj_hash;
+ 	int nr_objs, obj_hash_size;
+ 
++	struct buffer_slab *buffer_slab;
++
+ 	/* parent substitutions from .git/info/grafts and .git/shallow */
+ 	struct commit_graft **grafts;
+ 	int grafts_alloc, grafts_nr;
+@@ -17,12 +19,14 @@ struct object_parser {
+ 	unsigned commit_count;
+ };
+ 
++extern struct buffer_slab the_repository_buffer_slab;
+ extern struct alloc_state the_repository_blob_state;
+ extern struct alloc_state the_repository_tree_state;
+ extern struct alloc_state the_repository_commit_state;
+ extern struct alloc_state the_repository_tag_state;
+ extern struct alloc_state the_repository_object_state;
+-#define OBJECT_PARSER_INIT { NULL, 0, 0, NULL, 0, 0, \
++#define OBJECT_PARSER_INIT { NULL, 0, 0, &the_repository_buffer_slab, \
++	NULL, 0, 0, \
+ 	&the_repository_blob_state, \
+ 	&the_repository_tree_state, \
+ 	&the_repository_commit_state, \
+diff --git a/repository.c b/repository.c
+index f76f0ddd37..0cf019bb9b 100644
+--- a/repository.c
++++ b/repository.c
+@@ -2,6 +2,7 @@
+ #include "repository.h"
+ #include "object-store.h"
+ #include "config.h"
++#include "commit.h"
+ #include "submodule-config.h"
+ 
+ /* The main repository */
+@@ -187,6 +188,8 @@ int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
+ 	ALLOC_GROW(open_repos, open_repos_nr + 1, open_repos_alloc);
+ 	open_repos[open_repos_nr++] = repo;
+ 
++	alloc_buffer_slab(repo);
++
+ 	return 0;
+ 
+ error:
+@@ -249,6 +252,9 @@ int repo_submodule_init(struct repository *submodule,
+ void repo_free(struct repository *repo)
+ {
+ 	int i;
++
++	free_commit_slab(repo);
++
+ 	for (i = 0; i < open_repos_nr; i++) {
+ 		if (open_repos[i] != repo)
+ 			continue;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
