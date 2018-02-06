@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 735191F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:19:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05CD31F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:19:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752192AbeBFATE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:19:04 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:41519 "EHLO
+        id S1752201AbeBFAT1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:19:27 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:38717 "EHLO
         mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752074AbeBFAS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:18:59 -0500
-Received: by mail-pg0-f66.google.com with SMTP id 141so153637pgd.8
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:18:58 -0800 (PST)
+        with ESMTP id S1751872AbeBFATZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:19:25 -0500
+Received: by mail-pg0-f66.google.com with SMTP id l18so161565pgc.5
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:19:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RwGuxHZxsXlKrjQQ/Dp+o7xQnbtpWWlJwEq3/U66zLM=;
-        b=X/M4AX72PtaQGr726HNVtOBGzgUubVovqymbng4jSZAuswmAP1Msg/PF1/GmnPtZrY
-         IocNjqGnptlp7grOXeEkCSS+6KDemwbLQDFzeehLZgNvUCXSv6vjuutIIzoRBYI69YyS
-         x5YqVJTHjl1JBz9NQx6Cw1WysOd4e/UL0zBJ0pIYkHgPGHosdFzoBGJjxQ4ChVHCg6D6
-         BTb24poOxUyHs2NbsmJ599rFUYxEEuvIU3nGyQrWg/dchJemSlNsK9IhXmUSXEjj0ZYE
-         7i/xgEtdNjSsY89VP3vjdQL/kyhvnwJHWto0jbu/ryxa1JL3kW2VZQPFFyFDBT/cMZPU
-         VIgA==
+        bh=aq5f9Epm2v2KCaU73X6PULI/DRkF6Dcl3qVTsF2boNM=;
+        b=tiChxBiEgVn9EMjmrIDr3xqviqpnu8L4EV3fYfYZ6zEp7eljMI8y4Yyn49L2xN1ouM
+         shhVj/KqB/XaI/6A428cYJD4MVz+7nh0XBdy5nMU9mrPfs8iBK5N5mBiMMlfwjpXdOos
+         LnwPWJdZJHE0WX73+oKZeG9vmKrynfv9XndnElmnFxkRDUd0vj24qzPridsFaJMLP+hz
+         DAPDgnqF7ORCWNb+nbSoJRogOBcVMZNlUxnP5dMuCUg8C5sb+gRDV+Q/ySFOjJtaTD14
+         4r3sgoxudVtjk6mmRPnpQEYG6bogXhoy5xmy6XnNb9BftMjuZztmhMS543xWz5EfYMjQ
+         /8CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RwGuxHZxsXlKrjQQ/Dp+o7xQnbtpWWlJwEq3/U66zLM=;
-        b=axogVTAkedo1ozZ4Xs2YhY509GKVS8QmjpdPSGVGKxvBIniKbzqiy4djEB2HYOqMqE
-         TyW2soDZlKGvFbKTlRecgiVYoDpOJkyQLIdEqruxISsLn6M4XqZNLDXQ/z3FYVhlPo9o
-         lSTRmi91rN2AFCu1zQO8oOe7f8MANf6MoyeP21AXfRBuG1WC15FUXtD7bP5d0B564LW1
-         s5vj7p/dww/G5ssg6SJmRdGe6l/W2lAuWT8VkMXkP4LrU0pePUy9YyPBFM9iY3y1QPAt
-         BAFxfwyZg263dFnnad76R1Aoj+YzR6MQorumpRfHlfu09VjlB+faiPnknFPXGZbYZM5+
-         jvrA==
-X-Gm-Message-State: APf1xPAtfUHci0sSTnWalGw9g1F+7j1ZtqyMfaxc4xxLE0YwjWKjjitF
-        F19HajAB6nKcRFZLwMoYsYTrd2Bwux4=
-X-Google-Smtp-Source: AH8x224lPXmPPGyXaORh7SWrMR9YSVw+WzzWl6foxqj4/+ryNxYXqpgUtx00xE5wkGdlcR57qlJPSA==
-X-Received: by 10.99.116.92 with SMTP id e28mr424660pgn.227.1517876337993;
-        Mon, 05 Feb 2018 16:18:57 -0800 (PST)
+        bh=aq5f9Epm2v2KCaU73X6PULI/DRkF6Dcl3qVTsF2boNM=;
+        b=B6B4gx8vHI+y2oiIGKGvACfQDe7ZsSKxnRwekLzqPL8IZeOYOiajzpg8gBO2tr0/Kr
+         l6oEviP0MjBv1hAwqvJxCrD01UrVA4eQSPyOmdzGqrp/qa9+zs2PEwN/ZZ+bil7Pm+tr
+         xVT/fO1NexUZieq/a1stOtyEnhmklyfRvzIj6HRTXTHudu2rWOYz1xi17BFOjHLddyaC
+         Kw0xBRIJuIQwAj+J0agDi3MtAZ3UzuFtGknEYG2E3+I3qjgZWPqxxk1KWRJjvNc9p2QE
+         08cfxCSe6pPEwTGll4V4v3JL4p6zr4cygWMcoabrVUxDHdhnrtsRXeNGJ6ZJ6HvZe8L+
+         /BaQ==
+X-Gm-Message-State: APf1xPCi19Wmlr0G6X5N6b1hIu0NII6BL6R0Z3Ae8Eg+p2wSE//8tEDy
+        MBrHLYF0AuS3DMx+LtYoIYj95Tzdibc=
+X-Google-Smtp-Source: AH8x226vkvaVjvqUBLlry6Y2pmC7vwsUKXC0vkr5WQ0I6xj4Btpf9pndJr8XoX+IpjyQB9/Pq62k3Q==
+X-Received: by 10.99.119.195 with SMTP id s186mr425777pgc.203.1517876364466;
+        Mon, 05 Feb 2018 16:19:24 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id s90sm19328968pfi.139.2018.02.05.16.18.57
+        by smtp.gmail.com with ESMTPSA id l10sm10187440pfc.133.2018.02.05.16.19.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:18:57 -0800 (PST)
+        Mon, 05 Feb 2018 16:19:23 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 107/194] alternates: add repository argument to add_to_alternates_file
-Date:   Mon,  5 Feb 2018 16:16:22 -0800
-Message-Id: <20180206001749.218943-9-sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 108/194] alternates: add repository argument to add_to_alternates_memory
+Date:   Mon,  5 Feb 2018 16:16:23 -0800
+Message-Id: <20180206001749.218943-10-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,7 +64,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow callers of add_to_alternates_file
+From: Jonathan Nieder <jrnieder@gmail.com>
+
+Add a repository argument to allow callers of add_to_alternates_memory
 to be more specific about which repository to handle. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -75,83 +77,91 @@ repository other than the_repository at compile time.
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- alternates.h    | 3 ++-
- builtin/clone.c | 9 +++++----
- sha1_file.c     | 2 +-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ alternates.h              | 3 ++-
+ builtin/grep.c            | 2 +-
+ sha1_file.c               | 2 +-
+ submodule.c               | 2 +-
+ t/helper/test-ref-store.c | 2 +-
+ tmp-objdir.c              | 2 +-
+ 6 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/alternates.h b/alternates.h
-index df5dc67e2e..2d06b71e50 100644
+index 2d06b71e50..e4520ae5c7 100644
 --- a/alternates.h
 +++ b/alternates.h
-@@ -48,7 +48,8 @@ struct alternate_object_database *alloc_alt_odb(const char *dir);
-  * Add the directory to the on-disk alternates file; the new entry will also
-  * take effect in the current process.
+@@ -56,7 +56,8 @@ extern void add_to_alternates_file_the_repository(const char *dir);
+  * recursive alternates it points to), but do not modify the on-disk alternates
+  * file.
   */
--extern void add_to_alternates_file(const char *dir);
-+#define add_to_alternates_file(r, d) add_to_alternates_file_##r(d)
-+extern void add_to_alternates_file_the_repository(const char *dir);
+-extern void add_to_alternates_memory(const char *dir);
++#define add_to_alternates_memory(r, d) add_to_alternates_memory_##r(d)
++extern void add_to_alternates_memory_the_repository(const char *dir);
  
  /*
-  * Add the directory to the in-memory list of alternates (along with any
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 6efe189846..548255f955 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -11,6 +11,7 @@
- #include "builtin.h"
- #include "config.h"
- #include "lockfile.h"
-+#include "repository.h"
- #include "alternates.h"
- #include "parse-options.h"
- #include "fetch-pack.h"
-@@ -330,7 +331,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 	} else {
- 		struct strbuf sb = STRBUF_INIT;
- 		strbuf_addf(&sb, "%s/objects", ref_git);
--		add_to_alternates_file(sb.buf);
-+		add_to_alternates_file(the_repository, sb.buf);
- 		strbuf_release(&sb);
- 	}
+  * Returns a scratch strbuf pre-filled with the alternate object directory,
+diff --git a/builtin/grep.c b/builtin/grep.c
+index a9a908d92a..a83e87a676 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -433,7 +433,7 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
+ 	 * object.
+ 	 */
+ 	grep_read_lock();
+-	add_to_alternates_memory(submodule.objectdir);
++	add_to_alternates_memory(the_repository, submodule.objectdir);
+ 	grep_read_unlock();
  
-@@ -372,12 +373,12 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
- 		if (!line.len || line.buf[0] == '#')
- 			continue;
- 		if (is_absolute_path(line.buf)) {
--			add_to_alternates_file(line.buf);
-+			add_to_alternates_file(the_repository, line.buf);
- 			continue;
- 		}
- 		abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
- 		if (!normalize_path_copy(abs_path, abs_path))
--			add_to_alternates_file(abs_path);
-+			add_to_alternates_file(the_repository, abs_path);
- 		else
- 			warning("skipping invalid relative alternate: %s/%s",
- 				src_repo, line.buf);
-@@ -456,7 +457,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
- 		struct strbuf alt = STRBUF_INIT;
- 		get_common_dir(&alt, src_repo);
- 		strbuf_addstr(&alt, "/objects");
--		add_to_alternates_file(alt.buf);
-+		add_to_alternates_file(the_repository, alt.buf);
- 		strbuf_release(&alt);
- 	} else {
- 		struct strbuf src = STRBUF_INIT;
+ 	if (oid) {
 diff --git a/sha1_file.c b/sha1_file.c
-index 0c2e215ae5..066aa187a1 100644
+index 066aa187a1..aa564e3ad4 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -538,7 +538,7 @@ struct alternate_object_database *alloc_alt_odb(const char *dir)
- 	return ent;
+@@ -581,7 +581,7 @@ void add_to_alternates_file_the_repository(const char *reference)
+ 	free(alts);
  }
  
--void add_to_alternates_file(const char *reference)
-+void add_to_alternates_file_the_repository(const char *reference)
+-void add_to_alternates_memory(const char *reference)
++void add_to_alternates_memory_the_repository(const char *reference)
  {
- 	struct lock_file lock = LOCK_INIT;
- 	char *alts = git_pathdup("objects/info/alternates");
+ 	/*
+ 	 * Make sure alternates are initialized, or else our entry may be
+diff --git a/submodule.c b/submodule.c
+index 9c4c01ba73..f9426beff1 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -165,7 +165,7 @@ static int add_submodule_odb(const char *path)
+ 		ret = -1;
+ 		goto done;
+ 	}
+-	add_to_alternates_memory(objects_directory.buf);
++	add_to_alternates_memory(the_repository, objects_directory.buf);
+ done:
+ 	strbuf_release(&objects_directory);
+ 	return ret;
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 93ea6f781e..8442ee8146 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -31,7 +31,7 @@ static const char **get_store(const char **argv, struct ref_store **refs)
+ 		ret = strbuf_git_path_submodule(&sb, gitdir, "objects/");
+ 		if (ret)
+ 			die("strbuf_git_path_submodule failed: %d", ret);
+-		add_to_alternates_memory(sb.buf);
++		add_to_alternates_memory(the_repository, sb.buf);
+ 		strbuf_release(&sb);
+ 
+ 		*refs = get_submodule_ref_store(gitdir);
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index bf34315adf..a9334d3fc5 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -288,5 +288,5 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
+ 
+ void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
+ {
+-	add_to_alternates_memory(t->path.buf);
++	add_to_alternates_memory(the_repository, t->path.buf);
+ }
 -- 
 2.15.1.433.g936d1b9894.dirty
 
