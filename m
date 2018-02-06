@@ -7,85 +7,103 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 588451F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 22:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82ADE1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 22:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753605AbeBFWYM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 17:24:12 -0500
-Received: from mail-yw0-f176.google.com ([209.85.161.176]:45769 "EHLO
-        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753515AbeBFWYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 17:24:11 -0500
-Received: by mail-yw0-f176.google.com with SMTP id b16so2511832ywh.12
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 14:24:11 -0800 (PST)
+        id S1753519AbeBFWnU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 17:43:20 -0500
+Received: from mail-yw0-f170.google.com ([209.85.161.170]:44720 "EHLO
+        mail-yw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753171AbeBFWnT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 17:43:19 -0500
+Received: by mail-yw0-f170.google.com with SMTP id x62so2543473ywg.11
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 14:43:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wAVhFdnWAbkCrATVhROQDfW7PtVgnYreIgVn4T27Pdg=;
-        b=bj9uF4/BGf/LKoFKmv899CdJ9FBq5O6HZ+1AUIinhoLVwK0wtkfEoWZnN1uHGuKsFX
-         qyD11xR+amlZiy/rLATQpwpqn4uUDYRJqO1cVowHjvKgJH34jkjYPgr9lrdw6js3cA4X
-         zGh9ltDvc0zqEvrPzyR11YqJcQSWOJLtuyaT822TEsQo1y8ojnYqNPCOe2tSdC0NOOQ2
-         BiCT8y46EUEUInex2dSim+v+kon50xMj2U3OOYssmuj59RwP5uxutaAB1JKy2bf3JFmN
-         KjMi2nNN0AKjNToQuGsRmu31wLrmDPv3TiNVpyDP6nnSwHEP9cmX5w+LoMMBJkuAaXuM
-         VDsw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=6g9ZtGeVv6Q8C+iP7CyMFRMcC6r4DSq1oSkSppEEUck=;
+        b=P+nSosBQ6u+dFRyzOcyQz10puhF4fDn4nII2JUef5orsmwgWEeCD0cd9Z4nA5kZv+W
+         KHi7fWD7P7ZOsJ8SlYKdFpEsH/NGf92kGZy18jzuAiMdHSykx3xYsJAL+eWJVompE+aN
+         lcu0ImOnTBvLsg+ymIYzK44cPbsSjtS6W9i1VFlK7XozI/PrWopFL3kSXOCoqqMUG/YJ
+         3G0SVlPQlPDsnfwzNrWIufuOdbrfs98z92l4NjjhrKPUWEBT03lY/uaHnESuuRDb8Iwu
+         4yWOySzMFJD/fOetbukyQlc9iCTRVhjl3AeM4h7vxTCWR7wo247UY+wHnJvMQZbXfOCH
+         RQFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wAVhFdnWAbkCrATVhROQDfW7PtVgnYreIgVn4T27Pdg=;
-        b=YPaGCv6ZYQsuyAiTeqKIj10EkoHpDqsGf0igDZ6znyYJKmmyRLUJ9OT2oMa+cYq/Mb
-         g1OsfPC2hHG5wQ8CkVQ3XH3lxAfhfNT93NpzBS1bnDkRyp1vZRvqQf/CAU31ajevWA+K
-         p2iDnAnh35Hsk18N4Bby/8iQGsQvFi/BpnxPLsi7uvhnGoIGg4lG+80Kaib1qNImYLAO
-         zkT2l81RFglhQlsuMrhoCOMMEPSR4gUdMjV2L08q1IeJEzeR9dGkuSe0K6kRGBJ1QyrU
-         MdUydF1NINZ6Wmvv1oYxnG3k8yINPiRgjjdT7ri7CdpsebUnL3kjatdB9ySCmyfzCM63
-         IT0w==
-X-Gm-Message-State: APf1xPAj+Nf3Lmoy38OXYjkgWcyyq5mW2FMpsBO1Tz6pj9raHt2D/wir
-        bVxT8Lj36bEsfMfUzzLf/Od50Q+ddQEAi4xEfQZt0w==
-X-Google-Smtp-Source: AH8x225yFputVapB/oJuI1zXCyMk7G2DZe80YcaUTwhIQqE7VHYl83u748PLp4/oSVIKr2SxKVUiEc2xS8OSP26fr9E=
-X-Received: by 10.37.101.11 with SMTP id z11mr1948734ybb.201.1517955850581;
- Tue, 06 Feb 2018 14:24:10 -0800 (PST)
+         :message-id:subject:to;
+        bh=6g9ZtGeVv6Q8C+iP7CyMFRMcC6r4DSq1oSkSppEEUck=;
+        b=su6aSOGIwfRX7LuI0sI9yRvrQYjZJqh+6c8w3egB87I069ucGRaj9ORnBZ3javp0vV
+         w6hc2CCIBynQ/V1vGy/w2zai/3jcicCtVKr0UGu7zVxIe31Qhia5aZKhl7m+FvlrGGAV
+         OYWNfRm8Kd4gw0VJNY4F3heLaP+y4zgsztGb7IWIw/UcaL2afX8gkgULwncznJ+GeRFZ
+         6QIVjvHYFk8J6pyy7nqWB8w6ovhmZyhfBFuaEV4IeAI2wdC0nncrxRe1v4HSi2pfE+Sr
+         8ljvhIbDakwu7CMZdjeoIP6UK0I5KMTPGKWD+R3+7kw6ubt/Nf72EYHDRwUw0RK9WTTV
+         165Q==
+X-Gm-Message-State: APf1xPBghBnPnCs3uGJogMpuf4hIDueX+5y2pq6TydR+855oy5ktu1bC
+        7V02HuDA3ety0MpXYmwOakSDWQ4nk79ex58/Ls5/fobLRdU=
+X-Google-Smtp-Source: AH8x225BFtHjKvrCclDRXCPF2ULkdg9CtCJppG3cSgfE3INfF2JUpjlxK2o4Jz9kXWYTdBh+5BSMYXsXPKDAjZpMnQo=
+X-Received: by 10.129.156.134 with SMTP id t128mr2563874ywg.108.1517956998604;
+ Tue, 06 Feb 2018 14:43:18 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 14:24:09 -0800 (PST)
-In-Reply-To: <CAHd499A26paeZ=WgpdEkU233XbMrfVhgPGB3FHwaFObRKVqQDg@mail.gmail.com>
-References: <CAHd499A26paeZ=WgpdEkU233XbMrfVhgPGB3FHwaFObRKVqQDg@mail.gmail.com>
+Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 14:43:18 -0800 (PST)
+In-Reply-To: <20180206022033.GG7904@genre.crustytoothpaste.net>
+References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
+ <20180205235735.216710-56-sbeller@google.com> <20180206022033.GG7904@genre.crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Feb 2018 14:24:09 -0800
-Message-ID: <CAGZ79kZaYiOpp9pu2dY+W-Y2zq-d4HBp=hAbE3UrLKhn8-cXSA@mail.gmail.com>
-Subject: Re: An option to ignore submodules in stash push?
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
+Date:   Tue, 6 Feb 2018 14:43:18 -0800
+Message-ID: <CAGZ79kakYV3aeWcEZDnboLyUodDgE2UU9C4ad8kq8_PRE17HHA@mail.gmail.com>
+Subject: Re: [PATCH 076/194] push: add test showing bad interaction of replace
+ refs and submodules
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 7:56 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
-> I haven't seen such an option, but I think it would be nice to be able
-> to ignore submodules when creating a stash. When I stash changes in a
-> directory, almost always I intend to only stash real files, not
-> modified submodules. When I pop the stash later, it gets disrupted due
-> to submodule conflicts. To avoid getting the conflicts in the first
-> place, it would be nice to somehow specify:
+On Mon, Feb 5, 2018 at 6:20 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Feb 05, 2018 at 03:55:37PM -0800, Stefan Beller wrote:
+>> The ref subsystem has not been migrated yet to access the object store
+>> via passed in repository objects. As a result replace when the object store
+>> tries to access replace refs in a repository other than the_repository
+>> it produces errors:
+>>
+>>   error: refs/replace/3afabef75c627b894cccc3bcae86837abc7c32fe does not point to a valid object!
+>>
+>> Add a test demonstrating this failure.
+>>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>>
+>> squash! push: add test showing bad interaction of replace refs and submodules
+>>
+>> replace-objects: evaluate replacement refs without using the object store
+>>
+>> Pass DO_FOR_EACH_INCLUDE_BROKEN when iterating over replacement refs
+>> so that the iteration does not require opening the named objects from
+>> the object store. This avoids a dependency cycle between object access
+>> and replace ref iteration.
+>>
+>> Moreover the ref subsystem has not been migrated yet to access the object
+>> store via passed in repository objects.  As a result, without this patch
+>> when the object store tries to access replace refs in a repository other
+>> than the_repository it produces errors:
+>>
+>>    error: refs/replace/3afabef75c627b894cccc3bcae86837abc7c32fe does not point to a valid object!
+>>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
 >
-> $ git stash push --no-submodules -- MyDirectory/
->
-> Would this make sense?
+> It appears you have multiple independent commit messages here.
 
-What kind of submodule conflicts arise?
+I will drop this patch; it appears as if it was targeted to be part of
+006f3f28af (replace-objects: evaluate replacement refs without
+using the object store, 2017-09-12), which landed.
 
-I remember a recent bugfix with apparent submodules, which
-were not touched.
+We can revive this test outside of this long series if we feel inclined.
 
-https://public-inbox.org/git/CABPp-BHDrw_dAESic3xK7kC3jMgKeNQuPQF69OpbVYhRkbhJsw@mail.gmail.com
-
-https://github.com/git/git/commit/c641ca67072946f95f87e7b21f13f3d4e73701e3
-which is included in 2.16.1
-
-But this is me taking a wild guess, can you say more about your use case
-and what the actual problem is (and what the expected behavior is, favorably
-as a script) ?
-
-Thanks,
+Thanks for spotting!
 Stefan
