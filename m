@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109391F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B77CC1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752274AbeBFAU3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:20:29 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:47051 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752037AbeBFAUZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:20:25 -0500
-Received: by mail-pg0-f65.google.com with SMTP id s9so146732pgq.13
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:20:25 -0800 (PST)
+        id S1752189AbeBFAUx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:20:53 -0500
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34273 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750879AbeBFAUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:20:52 -0500
+Received: by mail-pg0-f67.google.com with SMTP id s73so176736pgc.1
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:20:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JlLtBkKVKBMi+3lcKg5tM6QX72Xo9rhucdw5vt6rcro=;
-        b=NMgvBpnkzPvQoy52V2Sgk+ID6Yvb8c9pRbsw/ly+Ncb46nW/Ifa+zX5ha/+Lz9Yj9/
-         90M2xypSLodJGl+WhTPyeN9g36GtaqB0Xp+6iUYdVXhNJeQ4cgvhS6QahrCDDKje6emA
-         Fx5DxqhdF0b2jGAx14t687VONIREk7zVSsbyCAUpzVg3XJkX2l8Vdp8+CxW19CRyYXBo
-         hugU/Q+fPFyBMpCAoosz8RuMVHUDhpQ1UGHn21Hs7LVlp0P9ol0Xdaidk1qIGc3dO4qU
-         Ri0TjR2QV6rqXM4sAqQN84S8WoyzVFX3RUYjEEPa6kQsUJq5/E45XRu1mtvoMVfFqRAN
-         o5jA==
+        bh=KHBFr/62kUR6/1/hCGi0l83zmMptMUl0BLaXfIFTRVY=;
+        b=CHXioy5aH4vvU0yuQ7nhqeVe0oqJMIb+/0FRVGteGAYaaVDe9mbtO2lrQ7NxCluJgh
+         OF9txMjbQ0E+H60k2rxpcx2zXcdIxRFaTiG0/ltNaqFPvFLCT3qepdLzLchSvGO1Sa4F
+         Lh9sIQXFom+91njDG/4Pez1u5Mdmvxb5RBn023eoIgNMCu2EvufB279CJusLc8ib73Hu
+         t2zwnIEyoCtlcIqOc4FRtapqXzq5Jaxq0iTTUCVOB9BUqvQ0s6uXPjDAJJa/5/xwbl+j
+         q3uyYdmkQHri1PIiHkDjxLJh8MYwHoYVwwJRLVj1GF342R7eWGzXYwPMv7qzONUEPSDy
+         RfPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JlLtBkKVKBMi+3lcKg5tM6QX72Xo9rhucdw5vt6rcro=;
-        b=sq4fjExuYdZQ1bWoopcmRXADsBRfbltoUlo7/LYVigiHS8nhdPjQOs9EKd/sgPH095
-         BAsyVRQt9hMEM7jKQNUl680wZsLo3hoPO3plk9IMLNRR1/2Lh/yE9n5zjyZ5AHmRj5kX
-         6BDnK5Ya2KwmoQUntyeXfuWjkQOddWNDlMeUyMFM+cxfzdxZT9+IGirgfEP0eYpRCTAH
-         DC8BzxC64P2W5ned1RoS8gxZEuz1tPcB1n1TfJ76003Ahr8w0I4UI5bFrjRVnX1mYENM
-         kQ7Q+5wYwXY+m84yImVoV4SsA4bLdwIm+xDH1hMElYrD18UgBIL+LHZ3MOGzAx8PT67w
-         L/UQ==
-X-Gm-Message-State: APf1xPD7KsgKoRe0/lusWUe6mxr7s1YxKd/lhEm+yEgm4fW7d3YdM/U0
-        1WenJFqcKKf0o78WLTpM0VlsKtrtx8o=
-X-Google-Smtp-Source: AH8x227FVRcqd83MJVTVZXpvVbpbze1GxvzVnkFIrtmk8X4kLPSxUZ99W2PTUqEl3YRuDmgiKbPQ0w==
-X-Received: by 10.99.163.92 with SMTP id v28mr427928pgn.432.1517876424945;
-        Mon, 05 Feb 2018 16:20:24 -0800 (PST)
+        bh=KHBFr/62kUR6/1/hCGi0l83zmMptMUl0BLaXfIFTRVY=;
+        b=TrxUWfL2JFYs1xQw+D6PEW4EMPenpf3RwRINcRWPqv2VE+kKpkKC82fJ6BgQUptl+k
+         sqVlxPrgbmC7CTjYI6IxiTt+Ph6uuZk66Oa8M62ZxcUy5DqL8lRTUttJQptGsddd+7bs
+         o37Yx8li3IgXYoymA6PO+vpJYIf9ZVm4awv4fSKDaOMb9CvH2Qm0eh8Qc9xzVsSwM8Xn
+         Mj9lRLjlqD1bKHoE/o62XNm/BQLyIo2pPZHDjyrRO/pqq84G2Pq18eeQk7LMOEGMJPfe
+         rpBKHfrmY/wLWs+BBBaxXRLHXqgys7yfaXw1UEDQO9k182sa1VR1cjqhrs9c9AdbofhN
+         WGYw==
+X-Gm-Message-State: APf1xPBFe7vLp5eNkxn3TGeC7sFpE/iHCH94RTUky3Vq3DvshknhC/Gs
+        nna1KCOfP4q45WvvfUizA07YvkFs+68=
+X-Google-Smtp-Source: AH8x225Ne0mNjyYc2FvV5Hhux+OjsbmekLSrwZ3aFEFtTrAeAtcfgzaJfvwtcb8rsvfHcmD3FgG5mw==
+X-Received: by 10.98.107.71 with SMTP id g68mr551435pfc.96.1517876451228;
+        Mon, 05 Feb 2018 16:20:51 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id n64sm9604123pfk.184.2018.02.05.16.20.24
+        by smtp.gmail.com with ESMTPSA id m83sm19448371pfk.107.2018.02.05.16.20.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:20:24 -0800 (PST)
+        Mon, 05 Feb 2018 16:20:50 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 116/194] packfile: allow has_packed_and_bad to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 16:16:31 -0800
-Message-Id: <20180206001749.218943-18-sbeller@google.com>
+Subject: [PATCH 117/194] streaming: add repository argument to open_istream_fn
+Date:   Mon,  5 Feb 2018 16:16:32 -0800
+Message-Id: <20180206001749.218943-19-sbeller@google.com>
 X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
 In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com>
@@ -64,46 +64,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a repository argument to allow the callers of open_istream_fn
+to be more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+Unlike the previous commits, this uses a run time check to make sure
+the passed repository is the_repository instead of a compile time check.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- packfile.c | 4 ++--
- packfile.h | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ streaming.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 28453739b2..21ca15b1ce 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1004,12 +1004,12 @@ void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1)
- 	p->num_bad_objects++;
- }
+diff --git a/streaming.c b/streaming.c
+index f0ff5e7245..8c1e1a1601 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -15,7 +15,8 @@ enum input_source {
+ 	pack_non_delta = 2
+ };
  
--const struct packed_git *has_packed_and_bad_the_repository(const unsigned char *sha1)
-+const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1)
+-typedef int (*open_istream_fn)(struct git_istream *,
++typedef int (*open_istream_fn)(struct repository *,
++			       struct git_istream *,
+ 			       struct object_info *,
+ 			       const unsigned char *,
+ 			       enum object_type *);
+@@ -29,7 +30,9 @@ struct stream_vtbl {
+ 
+ #define open_method_decl(name) \
+ 	int open_istream_ ##name \
+-	(struct git_istream *st, struct object_info *oi, \
++	(struct repository *r, \
++	 struct git_istream *st, \
++	 struct object_info *oi, \
+ 	 const unsigned char *sha1, \
+ 	 enum object_type *type)
+ 
+@@ -147,8 +150,8 @@ struct git_istream *open_istream(const unsigned char *sha1,
+ 		return NULL;
+ 
+ 	st = xmalloc(sizeof(*st));
+-	if (open_istream_tbl[src](st, &oi, real, type)) {
+-		if (open_istream_incore(st, &oi, real, type)) {
++	if (open_istream_tbl[src](the_repository, st, &oi, real, type)) {
++		if (open_istream_incore(the_repository, st, &oi, real, type)) {
+ 			free(st);
+ 			return NULL;
+ 		}
+@@ -338,6 +341,9 @@ static struct stream_vtbl loose_vtbl = {
+ 
+ static open_method_decl(loose)
  {
- 	struct packed_git *p;
- 	unsigned i;
++	if (r != the_repository)
++		BUG("r != the_repository");
++
+ 	st->u.loose.mapped = map_sha1_file(the_repository,
+ 					   sha1, &st->u.loose.mapsize);
+ 	if (!st->u.loose.mapped)
+@@ -433,6 +439,9 @@ static open_method_decl(pack_non_delta)
+ 	struct pack_window *window;
+ 	enum object_type in_pack_type;
  
--	for (p = the_repository->objects.packed_git; p; p = p->next)
-+	for (p = r->objects.packed_git; p; p = p->next)
- 		for (i = 0; i < p->num_bad_objects; i++)
- 			if (!hashcmp(sha1, p->bad_object_sha1 + 20 * i))
- 				return p;
-diff --git a/packfile.h b/packfile.h
-index b5122d455e..42593940b0 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -141,8 +141,7 @@ extern int packed_object_info(struct repository *r,
++	if (r != the_repository)
++		BUG("r != the_repository");
++
+ 	st->u.in_pack.pack = oi->u.packed.pack;
+ 	st->u.in_pack.pos = oi->u.packed.offset;
+ 	window = NULL;
+@@ -490,6 +499,9 @@ static struct stream_vtbl incore_vtbl = {
  
- extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
- 
--#define has_packed_and_bad(r, s) has_packed_and_bad_##r(s)
--extern const struct packed_git *has_packed_and_bad_the_repository(const unsigned char *sha1);
-+extern const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1);
- 
- extern int find_pack_entry(struct repository *r,
- 			   const unsigned char *sha1,
+ static open_method_decl(incore)
+ {
++	if (r != the_repository)
++		BUG("r != the_repository");
++
+ 	st->u.incore.buf = read_sha1_file_extended(the_repository, sha1,
+ 						   type, &st->size, 0);
+ 	st->u.incore.read_ptr = 0;
 -- 
 2.15.1.433.g936d1b9894.dirty
 
