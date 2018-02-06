@@ -2,148 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA4FD1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 22:54:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF3CF1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 23:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753664AbeBFWy4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 17:54:56 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:19173 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753506AbeBFWyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 17:54:55 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w16MsjJB021680
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 6 Feb 2018 17:54:45 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Jonathan Nieder'" <jrnieder@gmail.com>,
-        "'Salvatore Bonaccorso'" <carnil@debian.org>
-Cc:     <889680@bugs.debian.org>, <git@vger.kernel.org>
-References: <151785928011.30076.5964248840190566119.reportbug@eldamar.local> <20180205204312.GB104086@aiede.svl.corp.google.com>
-In-Reply-To: <20180205204312.GB104086@aiede.svl.corp.google.com>
-Subject: RE: git: CVE-2018-1000021: client prints server sent ANSI escape codes to the terminal, allowing for unverified messages to potentially execute arbitrary commands
-Date:   Tue, 6 Feb 2018 17:54:37 -0500
-Message-ID: <00b601d39f9d$7a40b820$6ec22860$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
+        id S1753881AbeBFXBB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 18:01:01 -0500
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:44422 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753803AbeBFXAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 18:00:47 -0500
+Received: by mail-pg0-f68.google.com with SMTP id r1so1709444pgn.11
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 15:00:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wpZCrxUEmycMR6RNln2X+rRsAp3cZvtuueANo5t90u8=;
+        b=BcZbl32MREDetVJh+ruuUfWLcRhL2nC0A1+okarX7A+ZcYUB2Kdq8lXck5KzTXKIRY
+         nZqJ+e63wreF53lGbAPF+HM5uRvn1Ajxnln6vtrogFGnRbs80FLV3q1B5d1Dy90K6CPb
+         3AsWnX/2mD9VNDhWBtf+/TyA7mVMk+5U7a0ylcNjom+vUs4a6NjoDSrMhML/i0yYlrUq
+         y8A/gnCOaQmg00QEg6ftieIqbvhNQAsqk1IfM1m8RDh+2YoHe8d0PUx0N/vBtJah4fPn
+         FpbSQPJtbvBI2py/+/xgGhyDRHV+JskV97RMgoGqJ7kOf5JCK0+nLsCCZdM74PTlogQu
+         7yaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wpZCrxUEmycMR6RNln2X+rRsAp3cZvtuueANo5t90u8=;
+        b=Sk7+Es465v8kE3bxCvNxEB3714hT9nVLDC0bzsZTxlnBIhwNp8cZT3KUEbDWW9uuOp
+         CxSaTzWVTDpnHmxtlQuKb4lhzWSlByiluW0tt45etEeeZXk0lFUvOsNGtiWO/nLFRFfo
+         qdpaWEbOk5ZbyArPQPYByffJDmD/mea9wnAApZV8ckC9qOOY4h65Ekk1LN7t8Ehj8xsc
+         TS3BfhNi9z6ekpmTEBb1pvJSssWSgTbNQoXRgMeawrq7Bej2GjfHnMPIvwJsWXlehwy2
+         2NZjIzyWHNA0OlwkWiEJskcMXQ+v3tt2nDqvNEs5pie6KM2uZzghTN0fTDWM2aIeDLMA
+         J5PA==
+X-Gm-Message-State: APf1xPB1UR34k3TsHadm3leTVOkJSofnQP5Qo+ax9w7lcqhHYFSuhztg
+        1rQYGzLPymvRHuWN+leV8W2T2iCnx+w=
+X-Google-Smtp-Source: AH8x226b9mCT7QtVvFFQj+PGEwNjERrhX8ihsYb0Eo9WmDc1AHMGAZJ6ME+dcApfQ7dNI1rbDuo7PA==
+X-Received: by 10.98.196.13 with SMTP id y13mr3908939pff.73.1517958046171;
+        Tue, 06 Feb 2018 15:00:46 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id v11sm48999pgf.83.2018.02.06.15.00.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Feb 2018 15:00:45 -0800 (PST)
+Date:   Tue, 6 Feb 2018 15:00:44 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, gitster@pobox.com, sbeller@google.com
+Subject: Re: [PATCH v1 1/5] submodule foreach: correct '$path' in nested
+ submodules from a subdirectory
+Message-Id: <20180206150044.1bffbb573c088d38c8e44bf5@google.com>
+In-Reply-To: <20180206145406.b759164cead02cd3bb3fdce0@google.com>
+References: <20180202045745.5076-1-pc44800@gmail.com>
+        <20180202045745.5076-2-pc44800@gmail.com>
+        <20180206145406.b759164cead02cd3bb3fdce0@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQKV3ZfFIFJAb10h2veIue2qrUCm7wI76Kt+ogGYXmA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 5, 2018 3:43 PM, Jonathan Nieder wrote:
-> 
-> Salvatore Bonaccorso wrote[1]:
-> 
-> > the following vulnerability was published for git.
-> >
-> > CVE-2018-1000021[0]:
-> > |client prints server sent ANSI escape codes to the terminal, allowing
-> > |for unverified messages to potentially execute arbitrary commands
-> >
-> > Creating this bug to track the issue in the BTS. Apparently the CVE
-> > was sssigned without notifying/discussing it with upstream, at least
-> > according to [1].
-> >
-> > If you fix the vulnerability please also make sure to include the CVE
-> > (Common Vulnerabilities & Exposures) id in your changelog entry.
-> >
-> > For further information see:
-> >
-> > [0] https://security-tracker.debian.org/tracker/CVE-2018-1000021
-> >     https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1000021
-> > [1] https://bugzilla.novell.com/show_bug.cgi?id=1079389#c1
-> 
-> Thanks.  Upstream was notified about this and we dropped the ball on
-> passing it on to a more public forum.  Sorry about that.
-> 
-> I'd be interested in your advice on this.  There are cases where the user
-may
-> *want* ANSI escape codes to be passed through without change and other
-> cases where the user doesn't want that.  Commands like "git diff" pass
-their
-> output through a pager by default, which itself may or may not sanitize
-the
-> output.
-> 
-> In other words, there are multiple components at play:
-> 
->  1. A terminal.  IMHO, it is completely inexcusable these days for a
->     terminal to allow arbitrary code execution by writing output to
->     it.  If bugs of that kind still exist, I think we should fix them
->     (and perhaps even make it a requirement in Debian policy to make
->     the expectations clear for new terminals).
-> 
->     That said, for defense in depth, it can be useful to also guard
->     against this kind of issue in other components.  In particular:
-> 
->  2. A pager.  Are there clear guidelines for what it is safe and not
->     safe for a pager to write to a terminal?
-> 
->     "less -R" tries to only allow ANSI "color" escape sequences
->     through but I wouldn't be surprised if there are some cases it
->     misses.
-> 
->  3. Output formats.  Some git commands are designed for scripting
->     and do not have a sensible way to sanitize their output without
->     breaking scripts.  Fortunately, in the case of "git diff", git
->     has a notion of a "binary patch" where everything is sanitized,
->     at the cost of the output being unreadable to a human (email-safe
->     characters but not something that a human can read at a glance).
->     So if we know what sequences to avoid writing to stdout, then we
->     can treat files with those sequences as binary.
-> 
-> Pointers welcome.
+On Tue, 6 Feb 2018 14:54:06 -0800
+Jonathan Tan <jonathantanmy@google.com> wrote:
 
-One possible (albeit brute force) approach, in dealing with the specifics of
-this CVE, may be to explicitly translate ESC-] into BLANK-], leaving a
-potential attack visible but ineffective. This only addresses the attack
-vector documented in the particular CVE but it can be done efficiently. The
-sequence does not appear significant in ANSI - the CVE documents the xterm
-situation.  Checking very old termcap, the impact would be on unfiltering
-emulations derived (this is a sample) from nec 5520, freedom 100, Sun
-workstations sun-s/-e-s, fortune, etc. Based on the seemingly limited use of
-this sequence, having a config item may be overkill, but it could be set
-enabled by default.
+> > There are two different possible solutions that have more value:
+> > (a) The path value is documented as the path from the toplevel of the
+> >     superproject to the mount point of the submodule.
+> >     In this case we would want to have path='sub/nested'.
+> > 
+> > (b) As Ramsay noticed the documented value is wrong. For the non-nested
+> >     case the path is equal to the relative path from $pwd to the
+> >     submodules working directory. When following this model,
+> >     the expected value would be path='../sub/nested'.
+>
+> A third solution is to use "nested" - that is, the name of the submodule
+> directory relative to its superproject. (It's currently documented as
+> "the name of the submodule directory relative to the superproject".)
+> Having said that, (b) is probably better.
 
-What I don't know - and it's not explicitly in the CVE - is just how many
-other terminal types with similar vulnerabilities are out there, but I'm
-suspecting it's larger than one would guess - mostly, it seems like this
-particular sequence is intended to be used for writing status line output
-(line 25?) instead of sticking it in a prompt. This can be used prettifies a
-lengthy bash prompt to display the current branch and repository at the
-bottom of the screen instead of in the inline prompt, but that's the user's
-choice and not something git has to deal with. There were some green-screen
-terminals with other weird ESC sequences back in the day that could really
-get into trouble with this, including loading/executing programs in terminal
-memory via output - really. I'm sure it seemed like a good idea at the time,
-but I can see how it could have been used for evil.
+[snip]
 
-A more general solution might be to permit the configuration of a list of
-blocked character sequences and apply those as a filter. Something like
-core.filter-mask="\E]", "\EA".
+> > +cat >expect <<EOF
+> > +Entering '../nested1'
+> > +$pwd/clone2-nested1-nested1-$nested1sha1
+> > +Entering '../nested1/nested2'
+> > +$pwd/clone2/nested1-nested2-nested2-$nested2sha1
+> > +Entering '../nested1/nested2/nested3'
+> > +$pwd/clone2/nested1/nested2-nested3-nested3-$nested3sha1
+> > +Entering '../nested1/nested2/nested3/submodule'
+> > +$pwd/clone2/nested1/nested2/nested3-submodule-submodule-$submodulesha1
+> > +Entering '../sub1'
+> > +$pwd/clone2-foo1-sub1-$sub1sha1
+> > +Entering '../sub2'
+> > +$pwd/clone2-foo2-sub2-$sub2sha1
+> > +Entering '../sub3'
+> > +$pwd/clone2-foo3-sub3-$sub3sha1
+> > +EOF
+> > +
+> > +test_expect_success 'test "submodule foreach --recursive" from subdirectory' '
+> > +	(
+> > +		cd clone2/untracked &&
+> > +		git submodule foreach --recursive "echo \$toplevel-\$name-\$sm_path-\$sha1" >../../actual
+> > +	) &&
+> > +	test_i18ncmp expect actual
+> > +'
 
-Just my $0.02 ramblings.
-
-Cheers,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+Wait a minute...this seems like you're using my "third solution". If we
+were using either (a) or (b), $sm_path would contain slashes in the case
+of nested submodules, right?
