@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 607231F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 04:27:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 188451F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 04:30:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752622AbeBFE1J (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 23:27:09 -0500
-Received: from mail-qt0-f175.google.com ([209.85.216.175]:37803 "EHLO
-        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752575AbeBFE1F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 23:27:05 -0500
-Received: by mail-qt0-f175.google.com with SMTP id s27so646580qts.4
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:27:05 -0800 (PST)
+        id S1752156AbeBFEa5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 23:30:57 -0500
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:42762 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752132AbeBFEa4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 23:30:56 -0500
+Received: by mail-qt0-f196.google.com with SMTP id i8so742429qtj.9
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 20:30:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=sX3yh8Ur/eT3u7p4oKwnYrneCWN2WBdUAhsfBrCNMFw=;
-        b=H9daQqFpKTdY3/9zrykQlPaVHkJx6BBOwjOA2PWARsMitYcSRXVgUfs3I8TDgQFn58
-         MX4CVE8hSxf7TGa3LFFj63TWBiEEHskEkOzJqkV5VbNWX2/ERzxE0Y9SJAwpnkru49Hv
-         y/6BaHvq7typ2CqfpOmeRA/JC3urN94JGw+ldjntsUaNNh8ENf4PBihfgS8l+KhM/nft
-         y8stnXmHgFkkTU6lZ81V83sA3t336oxEESUmm9JEEWT+OKnuBGiBeOYn0Mv6GljU9tcQ
-         D9PztV/7bqRpBzbCkNxO5a3phJm9e/N3baI6LeziSR+AWqJYq82qtZvIocC/A9jK70s8
-         hg/A==
+        bh=kH/57ASpY0hVpadwch30OtFHJfIAzyHLpG5HtL1FEF4=;
+        b=AMl0Rgy32i+ExPPbbxQZuD45+CbTjePAe+pVP2BLsTL1LkUX0v6F+REvm8LMj6cdAI
+         zWe8dQznxGnaq+CLiU3Cwrz2rGIlukp/Tre6WLsJGth37SOb7lIewKjwTCRgx48MUz5L
+         YSn+tmDXBzYO8WIabacuV6twoVcLU5m9tA1+29VJl8NfKEb+1AiQyGiBkNSiWXeXhCKB
+         exR+IY8C7cIh2Sg84pW4dfaovh4n357FoeQg0tQ7vtpnN5ZdfXSrtYBrg2F8sd7DtvzI
+         4Cgeq5GE7PavusjMQqY5uAE3xU5SlC8NX5KJSNnOxql/7gOwnv/GNtYsq73PDSWBD9t6
+         rgsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=sX3yh8Ur/eT3u7p4oKwnYrneCWN2WBdUAhsfBrCNMFw=;
-        b=uKIh5Mj6kR8GT4b8Zm4zUsugIHu6ekky+w9BO9ZU84RZyQbQR+Lo1A+1dwXx8kevXY
-         c4nnNBneO3rQxhefNmLrD8qlEatktbxPqxW/8AhtNxu5e5aPYWzI5T1GxHrBD/+go9Gn
-         wKc1b8QyfZvyh1ozvIqfgbuV3tzGzxSAvhsymfcdX+8NyYuDXVdyta+R+3qaCEGKO5ka
-         XY9DGY17ORx0GA8MhNpBVYwRd9A6F2hsAjdguQaUlYtXc1ZAwsj0b89lYLsXDrblE3Iz
-         OXHfIXLHl/Dz7eCmk9hHDomdAOTm9AIHR95X3LPO7JOTHUVgLMeA4DFPAUW9B0mnYU+x
-         iH4Q==
-X-Gm-Message-State: APf1xPBP8PfelddkLvD1g290oWPE7WvLx/0gqXPbmdTTjMDzSFxjvGyU
-        JIEA2kZGzhV15MdRQ8VTkGWxfHNRMfckwl45KlM=
-X-Google-Smtp-Source: AH8x225CkU8hzRcp+TTPQIfDoo3pj/JLPahogxroV9WRsI7zyguNUJnZJEJMdp9vNH+3gUF1MEefvA+R+jGxfrAQCoI=
-X-Received: by 10.200.82.4 with SMTP id r4mr827176qtn.75.1517891225038; Mon,
- 05 Feb 2018 20:27:05 -0800 (PST)
+        bh=kH/57ASpY0hVpadwch30OtFHJfIAzyHLpG5HtL1FEF4=;
+        b=tGCqgwWNM2FOe+wWQVDoA34VH2/IC2Er+/PwtzM0+teOP94nH/AU+scdvd78Pmx2aR
+         BSyvKR/xE0J7gVcszSrIdTMsKgKu4gFwDki6iHhA05rmPKQVOlJCkxTyoriDYVHgKVsN
+         BuTW6Q671OBPoL/1XQ2ETp21blD5xlC8fbkS17VFhO9cqS/WfOPr47WZNuVTuz3RWJ6V
+         USMe1HI9f6NZYReyhIYwjDI+Knvstqlz6FAenCpvfR/+tl7Bo8X+yYI9jAYd0EpctZEC
+         xO+Uyb+RZ16Uml0gQ/pLLULz1KIdcs0iknWVds8OqN3mFKylEtO+cJ1E4lwbILSc3n2b
+         eI7w==
+X-Gm-Message-State: APf1xPCoQculPLbc7ZPW5EfkNOZcWfY4Cimo7fmDB81Ue++4xuioV72U
+        0giu1LBzqZqwCsRihhox2A453M9IFrawg8T4KRs=
+X-Google-Smtp-Source: AH8x224bNBXfqFB5ot22qBKuHIzZ4iNpOnrp+SGdGTqIIHbnk2+OieRwysLkLRVAe8Qa4HduDYjYk1icvBxC/DaFMhA=
+X-Received: by 10.200.27.67 with SMTP id p3mr1671301qtk.254.1517891455536;
+ Mon, 05 Feb 2018 20:30:55 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Mon, 5 Feb 2018 20:27:04 -0800 (PST)
-In-Reply-To: <20180205235735.216710-39-sbeller@google.com>
+Received: by 10.12.175.239 with HTTP; Mon, 5 Feb 2018 20:30:55 -0800 (PST)
+In-Reply-To: <20180205235735.216710-30-sbeller@google.com>
 References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
- <20180205235735.216710-39-sbeller@google.com>
+ <20180205235735.216710-30-sbeller@google.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 5 Feb 2018 23:27:04 -0500
-X-Google-Sender-Auth: v23VKWQW-G1dHj1WiBTN_x5HPZE
-Message-ID: <CAPig+cTnucxCf5=24UBKGU5q_n0mwn0eB1pCLdiA77qXn-1n7Q@mail.gmail.com>
-Subject: Re: [PATCH 059/194] refs: store the main ref store inside the
- repository struct
+Date:   Mon, 5 Feb 2018 23:30:55 -0500
+X-Google-Sender-Auth: Otmh0w_yUa2UhZt6fgnfnbI2niQ
+Message-ID: <CAPig+cRjQVJ5+ae+7Z=J-Sd_YDj1=L9=CYELbriTMYFkdZ+w+w@mail.gmail.com>
+Subject: Re: [PATCH 050/194] replace-object: check_replace_refs is safe in
+ multi repo environment
 To:     Stefan Beller <sbeller@google.com>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,21 +65,24 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Mon, Feb 5, 2018 at 6:55 PM, Stefan Beller <sbeller@google.com> wrote:
-> diff --git a/refs.c b/refs.c
-> @@ -1609,9 +1609,6 @@ static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
-> -/* A pointer to the ref_store for the main repository: */
-> -static struct ref_store *main_ref_store;
-> diff --git a/repository.h b/repository.h
-> @@ -33,6 +33,11 @@ struct repository {
->          */
->         struct object_store objects;
+> In e1111cef23 (inline lookup_replace_object() calls, 2011-05-15) a shortcut
+> for checking the object replacement was added by setting check_replace_refs
+> to 0 once the replacements were evaluated to not exist. This works fine in
+> with the assumption of only one repository in existence.
 >
-> +       /*
-> +        * The store in which the refs are hold.
-> +        */
-> +       struct ref_store *main_ref_store;
+> The assumption won't hold true any more when we work on multiple instances
+> of a repository structs (e.g. one struct per submodule), as the first
+> repository to be inspected may have no replacements and would set the
+> global variable. Other repositories would then completely omit their
+> evaluation of replacements.
+>
+> This reverts back the meaning of the flag `check_replace_refs` of
+> "Do we need to check with the lookup table?" to "Do we need read the
 
-Do items moved to the 'repository' structure need to be freed when the
-'repository' itself is freed? Is that being done by a different patch?
-If so, it would ease review burden for the freeing to happen in the
-same patch in which the item is moved to the 'repository'.
+s/need read/need to read/
+
+> replacement definition?", adding the bypassing logic to
+> lookup_replace_object after the replacement definition was read.
+> As with the original patch, delay the renaming of the global variable
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
