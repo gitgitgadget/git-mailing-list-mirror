@@ -2,107 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24A041F576
-	for <e@80x24.org>; Tue,  6 Feb 2018 10:20:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4686C1F576
+	for <e@80x24.org>; Tue,  6 Feb 2018 11:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752763AbeBFKUo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 05:20:44 -0500
-Received: from mail-oi0-f43.google.com ([209.85.218.43]:45399 "EHLO
-        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752278AbeBFKUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 05:20:42 -0500
-Received: by mail-oi0-f43.google.com with SMTP id c189so938337oib.12
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 02:20:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lcP6jAS8t5OPTaD46LGtjgL/SxR5tZeEHqNVGoWziZs=;
-        b=YZFAoMjUJOKx4GHo7pe64QdZkbIIZH0HXVv3RYugcN3LR+8xZAS4CQu9l0CWtsEJfi
-         UxtSztuRxH5BNYlM2p2c2yhzqCsBJcxgiLcgyG2Urjhsm789x9BN3GYc2SUL5y7NMJ2J
-         t3G1k8bR/Duj5fjKXU5u+au2nG8+CSdJVgxfHygalPbjAVR1NSoF40RQB/yDMLs5qf6E
-         KJdNKIteSl4Nc26nzLHsO4+FYaKgWz1i83IUGujnNypXeXS9beJMXPtOsyTi7yiJ4swQ
-         itlybtwhW/Z2j+hMXGahHSy/30QCNZku2oxUt0oqwnvDp9da74zPv5bAVcz0DeV7jmIa
-         HK+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lcP6jAS8t5OPTaD46LGtjgL/SxR5tZeEHqNVGoWziZs=;
-        b=lC2UVtZhsmY7mj/DSF9w72NGdvq3FTSizE9ryzoKNGH3dihNMT7MX4GcH501oLJbOM
-         1TmonGKJ/ADDKq+Hv/9o42oQooeGkPjYTw6Rw+e5IXCZBuIi4CDLfD0hEPR+pK/gTYNI
-         py7zOP/QJTsv4Yn9DgzytklCbolrOWtZn0nmvWQ7onHxQUFfY8f2pIVzH0La0V1OrPPL
-         oHoS8tXTfjCx3gXN+AewRxKoHvWc1OSTfwEmgQ1KlMM9c+qcv4kp+1FBEero8mwZOEiF
-         cWD+S0ndU9P2qCSiZ1yXBSDyelNntHQGPIn7vjbQmjTt2SdxSUPVq4MW0BYLegJct9hT
-         4nxw==
-X-Gm-Message-State: APf1xPDXXgWBTSYPFzFRgG6JeBoSuI9kQ9XGIXuwMthF8bzlr78tC0mU
-        4rsHemoHrPwHQauurt1o608RL3ncUrG0CgEA1V0=
-X-Google-Smtp-Source: AH8x225Id/i+YsoHxOY0WcwKAkrNWfeG6wLRrjSh3dRg3qvmQeitFBNOtaEfnxn2QQ57BYWVTrBfw2cKE9ycXoG5pis=
-X-Received: by 10.202.177.136 with SMTP id a130mr1144813oif.252.1517912441931;
- Tue, 06 Feb 2018 02:20:41 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Tue, 6 Feb 2018 02:20:11 -0800 (PST)
-In-Reply-To: <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com>
-References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
- <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com> <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 6 Feb 2018 17:20:11 +0700
-Message-ID: <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1752324AbeBFLNQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 06:13:16 -0500
+Received: from eight.schwarz.eu ([78.47.62.209]:40200 "EHLO eight.schwarz.eu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752248AbeBFLNO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 06:13:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=schwarz-online.org; s=x; h=To:References:Message-Id:Cc:Date:In-Reply-To:
+        From:Subject:Mime-Version:Content-Type:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=fTjftyrwnzGbpWEgCYJupYPIE6jz0SNSoT3hip85OE0=; b=j69PjjPlI5raJD08Y1XVJCPMU
+        UI76PvrN1REEMpM2x7Kyi9nMSvw1fpeqvfvgGDM4zdPpR39zyAyLBUufPxAybi5PLNrbph4nQ47bc
+        0K3SnaJaegK5aQwHRwL5wuPNO+BoF383vU9BkhOx4Fhg/S5F8P1Rp4xqmkCActn4v+xUxnBJO6ttO
+        EG/w86fK87Av5X/bkTsemMxF/f8oU4YHC2Cy9ttFukHJHjVs67Inc+GkbRdpq4z0U6qcikT4OBVnm
+        E5LwdjErziASaOYyYF8+Gk9fQi6tuvkKrYB8DMFtiKQ/6FbISdlbEYJP2wy5EC2fz1mv9ZBe7CuCr
+        muVX9Uetg==;
+Content-Type: multipart/signed;
+        boundary="Apple-Mail=_185916C1-7FA6-4AB2-93CB-6B72651282A9";
+        protocol="application/pgp-signature";
+        micalg=pgp-sha1
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: Re: Missing git options
+From:   =?utf-8?Q?Martin_H=C3=A4cker?= <mhaecker@schwarz-online.org>
+In-Reply-To: <20180206004313.GC7904@genre.crustytoothpaste.net>
+Date:   Tue, 6 Feb 2018 12:13:12 +0100
+Cc:     git@vger.kernel.org
+X-Mao-Original-Outgoing-Id: 539608392.457639-4ef20576b383f2d85ebacb61f5e359dc
+Message-Id: <C6AF93BC-048F-4944-AB87-36AC2A5C5466@schwarz-online.org>
+References: <AD196D8E-04DB-4274-ADEB-D914A79628B3@schwarz-online.org>
+ <20180206004313.GC7904@genre.crustytoothpaste.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: Apple Mail (2.3445.5.20)
+X-Received: by eight.schwarz.eu with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <mhaecker@schwarz-online.org>)
+        id 1ej1BZ-0000qz-HR; Tue, 06 Feb 2018 12:13:13 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 1:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Sat, Feb 3, 2018 at 2:59 AM, Junio C Hamano <gitster@pobox.com> wrote=
-:
->>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->>>
->>>> Changes since v2 [1]:
->>>>
->>>> - goes back to my original version (yay!) where the extra info
->>>>   is appended after the path name. More is described in 2/2
->>>> - --compact-summary is now renamed --stat-with-summary and implies
->>>>   --stat
->>>> - 1/2 is just a cleanup patch to make it easier to add 2/2
->>>
->>> It may be just me and other old timers, but --X-with-Y naming means
->>> quite different thing around these commands, and --stat-with-summary
->>> would hint, at least to us, that it would behave as if the two
->>> options "--stat --summary" are given at the same time.
->>>
->>> And from that point of view, the new name is a bit confusing one.
->>
->> I don't have any good alternative name to be honest. It's kinda hard
->> to come up with another word that says "extended header information
->> such as creations, renames and mode changes", except maybe the vague
->> name --stat-extended?
->
-> I actually think compact-summary was a good way to phrase it.
->
-> Personally, I think it was a UI mistake that --summary can be given
-> independently with or without --stat (instead, there shouldn't have
-> been the --summary option, and instead when it was added, --stat
-> just should have gained an extra kind of output).  A single option
-> that can give both kinds of info may be a good way forward, so
-> another possibility may be --summary-in-stat (meaning: the info
-> given by summary is included in stat output).  I dunno.
->
 
-+Eric maybe he has some idea (sorry I forgot to include people from
-the last round).
---=20
-Duy
+--Apple-Mail=_185916C1-7FA6-4AB2-93CB-6B72651282A9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+Hi all,
+
+> Am 06.02.2018 um 01:43 schrieb brian m. carlson =
+<sandals@crustytoothpaste.net>:
+>=20
+> I think this is likely to cause problems.  Many people use git log =
+with
+> --pretty to format commit hashes or messages into other programs.  I'm
+> aware of multiple tools that will simply break if --graph or --patch
+> become the default.  Requiring people to retrofit their tools to use
+> --no-graph or --no-patch is likely to be a burden.
+
+While I share your concern, this is something that will completely =
+freeze development of the git tui which I cannot imagine is wanted.
+
+If this where my tool, I would much rather advertise an output format =
+specifically for scripting.
+
+An interim solution could be something like an `=E2=80=94ignore-configurat=
+ion` option that allows script writers to get predictable output. This =
+however still freezes the default output of git forever.
+
+So you will need something like =
+=E2=80=94output-for=3Dscripting|json|xml|whatever sooner or later. =
+Mixing up the TUI for humans and for scripts is not going to be fun to =
+evolve.
+
+Best Regards,
+Martin H=C3=A4cker
+
+
+--Apple-Mail=_185916C1-7FA6-4AB2-93CB-6B72651282A9
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iF0EARECAB0WIQRyALCMEeyeJp2h5aqZEm8JhZOQPgUCWnmNyAAKCRCZEm8JhZOQ
+PqCrAKDJD0o/IZ0lcy70exiJcWrFmZ5mwwCfcB3WEt/2D6XXQkP9ng4pMEXTmTQ=
+=ymgM
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_185916C1-7FA6-4AB2-93CB-6B72651282A9--
