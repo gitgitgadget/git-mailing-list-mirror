@@ -2,101 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2191F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 20:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61CC91F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 20:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbeBFU0E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 15:26:04 -0500
-Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:42011 "EHLO
-        outbound-ss-1812.hostmonster.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751558AbeBFU0D (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 6 Feb 2018 15:26:03 -0500
-X-Greylist: delayed 1410 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Feb 2018 15:26:03 EST
-Received: from cmgw3 (cmgw4 [10.0.90.84])
-        by gproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id E8D7F175D18
-        for <git@vger.kernel.org>; Tue,  6 Feb 2018 13:02:29 -0700 (MST)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmgw3 with 
-        id 7Y2S1x00y0QvKlu01Y2VjV; Tue, 06 Feb 2018 13:02:29 -0700
-X-Authority-Analysis: v=2.2 cv=XM9AcUpE c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=Op4juWPpsa0A:10 a=0WrjZphy2NLBcgfklpoA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
-        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=hF+IXKzo5VudM0EFP/vT30DspnmEdbfhNYEJlpocvR8=; b=bMcb2Q8NC6auxmrRsrTbVfFixu
-        Ldyda0b1FyEQ1SnWcuhgR8nuJA8W8VqXbpQ3R/rjzSEAZNqViXDYLTeh33pkcnEEQRWSbBTtddjRc
-        mHfDlRMTiUN4R4to8tXDg8x61;
-Received: from [50.226.24.42] (port=53250 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89_1)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1ej9Ri-0007Tk-7R; Tue, 06 Feb 2018 13:02:26 -0700
-Message-ID: <1517947345.10111.103.camel@mad-scientist.net>
-Subject: Re: "git branch" issue in 2.16.1
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Jason Racey <jason@eluvio.com>, git@vger.kernel.org
-Date:   Tue, 06 Feb 2018 15:02:25 -0500
-In-Reply-To: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com>
-References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com>
-Organization: I may be mad, but I'm a professional!
+        id S1752947AbeBFU0f (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 15:26:35 -0500
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:37148 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751558AbeBFU0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 15:26:33 -0500
+Received: by mail-qt0-f181.google.com with SMTP id s27so3941821qts.4
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 12:26:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WLF/pA3Zjnlh02bbNICxpinO68KpxmHdpJxgGMomJY0=;
+        b=bv07UEam+Im2ioTGnIcXWQ1wWBeMVkzrSGQwtoz1ADT0/RCmImYPSR127unS9MxAOv
+         3AIMTmDKod1nRX4FU8Kd8nVRQ2BwfPnRezouBmGxgsWeYAmjYno3rx/N0OFh4mVU/79+
+         TlS/tZeu7oyk7Mfx5LIVwXbmVr7JZYYBlccAMgh+iCw4XswBF2NZkQA9GVJ1ETIlcmxM
+         M2y3mEMM5PPZ6H8Tsgz70LQaMDGorKPQ/LjecuKlOFxWhLkiMOaIsz4pFpLJrEzqk1X/
+         4Bn5PFyjCT9F9l5ybH/ORrKVpzmLVieHNLmeB+N8Dk/KTUGxQm725b+Q446aPL+tveHT
+         lp2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WLF/pA3Zjnlh02bbNICxpinO68KpxmHdpJxgGMomJY0=;
+        b=HxY7sAEzv0nzeohudN/49E8sPR/+8+5g7KZdpKIPpJjj1PCYLl9LzTzu0lANnZSdVZ
+         HdTDiZwpLgJXJ4ut+Wm8BOh/blhVL92TrPIpP1PudsdqgwFn0PCI+I0YGtgQNSVrTRbI
+         WFDtFDq7jlwkaVsKy6D61um0FIF+wop98SCUMPVb1Gp9h3nSG7xVywmDi4oLOQgNWgxX
+         KNjIxy4jZDvhC/iOAyi6sXpwJx013IDP9/WOxMEMNvY+CAJiGBLN5kkyR71UhXolw2ls
+         99TJFSFjVR2ABoKpwS50xbCCC2Gx1PDMYCg69GlEw7byMbXBv48b+oSdx8pOCnmyysIq
+         ikog==
+X-Gm-Message-State: APf1xPDq+KXeYItanC3uSaXWuCleQ+0S5JBcVg5B7+acB5E0bjc0vSzc
+        M9Frpcxg8wYWxbG02BNSPldTwTi2h+Rz2g4QCV7kTo6q
+X-Google-Smtp-Source: AH8x22615vHJBiQpybfoOw4XginMJ/gkgz+GCX6gEIl9kDIo8K6Yr1rz7kRhaHmR9mm5AtRam1FnN9XGZ1C0yerUVqo=
+X-Received: by 10.237.52.162 with SMTP id x31mr5540068qtd.72.1517948793215;
+ Tue, 06 Feb 2018 12:26:33 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.12.138.10 with HTTP; Tue, 6 Feb 2018 12:26:32 -0800 (PST)
+In-Reply-To: <20180206201047.GE104086@aiede.svl.corp.google.com>
+References: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
+ <20180206201047.GE104086@aiede.svl.corp.google.com>
+From:   Ian Norton <inorton@gmail.com>
+Date:   Tue, 6 Feb 2018 20:26:32 +0000
+Message-ID: <CAGUnuBHRH5NV31yDiBPdZouNicdfU9z9iPK1wcBNrEhoo+Xw8A@mail.gmail.com>
+Subject: Re: Are concurrent git operations on the same repo safe?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.26.1-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Exim-ID: 1ej9Ri-0007Tk-7R
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:53250
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2018-02-06 at 11:49 -0800, Jason Racey wrote:
-> After upgrading git from 2.16.0 to 2.16.1 (via Homebrew - I’m on
-> macOS) I noticed that the “git branch” command appears to display the
-> branch listing in something similar to a vi editor - though not quite
-> the same. I don’t know the technical term for this state. You can’t
-> actually edit the output of the command, but you’re in a state where
-> you have to type “q” to exit and then the list disappears. It’s very
-> inconvenient and it doesn’t seem like it was by design. I’m using zsh
-> in iTerm2 if that helps. Thanks.
+Sure, my office is still devoid of power, i'll have to get back to you
+to be more precise but I was using a morally equivalent process to
+https://gitlab.com/inorton/git-multi-sync
 
-I think you mean that you're in the pager (less(1), most likely). 
-Many/most Git commands that can generate a large amount of output (git
-log, git diff, git show, etc.) will automatically send the output to a
-pager so you can scroll through it easily.
+cd repo
+python -m gitmultisync --update-submodules
 
+where I had a superproject containing 5-6 submodules, some of which
+were quite large (1-2Gb history)
 
-The man page for git branch says:
+Afterwards, I had trouble doing "git pull -r" in my submodules to pull
+in newer changes.
 
-  CONFIGURATION
-       pager.branch is only respected when listing branches, i.e., when --list
-       is used or implied. The default is to use a pager. See git-config(1).
-
-So, if you never want to use the pager for git branch output you can
-configure the pager.branch option to set it always off.
-
-Or you can use "git branch | cat" so that stdout is not a terminal :).
+On 6 February 2018 at 20:10, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ian Norton wrote:
+>
+>>                      Specifically I'm trying to speed up "git
+>> submodule update" by doing several at the same time.
+>
+> Can you say more about this?  E.g. how can I reproduce your experience?
+> Is there a script I can run?
+>
+> Thanks,
+> Jonathan
