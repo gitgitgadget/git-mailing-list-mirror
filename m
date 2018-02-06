@@ -7,103 +7,106 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE481F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 17:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D3321F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 17:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752924AbeBFRbG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 12:31:06 -0500
-Received: from mail-yw0-f179.google.com ([209.85.161.179]:34642 "EHLO
-        mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752817AbeBFRas (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 12:30:48 -0500
-Received: by mail-yw0-f179.google.com with SMTP id t201so1891409ywf.1
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 09:30:48 -0800 (PST)
+        id S1752777AbeBFRtB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 12:49:01 -0500
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:34174 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752612AbeBFRs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 12:48:58 -0500
+Received: by mail-yw0-f174.google.com with SMTP id t201so1934463ywf.1
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 09:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rEDXS2bRRSNjc2kjxNITg4u90FKsETOAVVD4thXDziE=;
-        b=S61FItpFncAi42F8Bb5FRYUhxr604k6kp2yle0ZlBfRX6zIkZj9SYBMd3JYluG5Bbg
-         JFz191fnbzLIm4Zt+MijGJH1FH5H7+/2SIkFX2Gg9iIGXghdnbh0tyE8nL6buOUnLVAg
-         BOgLPDWQbb7+K/SUYXIBhFp/XOMAmCh27l+YPQh8KZVvJht2MJgTdQ99giXltwZgsvm+
-         B0djMT7EGJ8inv42+wNhT7S3ivmd5GtF3rAE3Qhse89EqqUb+JKZ0LBp+uK1l0tenQkp
-         o8QyHMa5GMcGZktloBDTUOS22U1ldwA0CZAsr9Z5H75FTxLIMfaKkcIXkbDloaU3HgzP
-         88QA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=RW8gon/SNBPo0kghkTLONY4OjWtE5lAd6a5zfdsoLQI=;
+        b=Y8kj04klgUBRRdRrxGpm4p8NSnzi1WPMTuDqHewY+a1UfQPeGsBQZRKMnGwZwBU7Zs
+         zXgU6mkEDr9xwJQyLDfieYWwQkt05ufiPh0r6LN/QbRJ97A+c7jiNJ+xSA+ak6VP69In
+         x7xoLLpgIWjR3gfMxQx7QBESnyuQqZ7BXjXZe+rZDRXRjQWFL9OcmkNWrgbdjvcNa5hy
+         LPHRrgqgeAvk1WxVyoTJCcvo4ctwX3Q2aOjDUXrLdTdP52PDFEryqKkK28oSAjjE9evr
+         t/GermDjwUC4sk9qta9ZKS7m2sJ8FhuN7/GObLy/IW4EIUGBdpp7CgLiFSFQqSwpcMtS
+         F4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rEDXS2bRRSNjc2kjxNITg4u90FKsETOAVVD4thXDziE=;
-        b=iuYFTq0Re1YFYwtvRnC5hKVQCD/IpkPwUxKZX2leS0ZBccmNQbhaJTgIvgr4OB+GGm
-         msgFQ7ztLwXRoowThEcPtS/FIv+QgXG9vLhy2mbPPth9w09LtUtZ9NkPZ1a/ld13wKCK
-         lWGnPHJfj4rAD74Ld+AvF3jznZGmUTWKUUscee3OaN4U5EGTjVTPiSDh0lZ0d2sr/1sZ
-         YuKmouq3b2NAmaIKc3BxvzfFe9iJP8+wBHDE1QdfJ+j94vFfBlY+vma3uSz32W4YOdyT
-         cLX2XXJa3yti1JwwZP2C4S+fSTJjSOMhz4+AliJnhvm+pB8JlHXRl9o35Frnkv/XMoLb
-         RfEg==
-X-Gm-Message-State: APf1xPDI0tIERJt4bDWHZF6LFwNzRW69pz2tWmEztKJbZLuU7Pn/wx/x
-        JEKk+bORDUVPJ3tj70H/FivaltoV+kfmbE0kZhnjzQ==
-X-Google-Smtp-Source: AH8x226MyPg6+HcjUTUsVWq5afXOYQACNozOSj2NeZuJ7OclxLV/F3gXJ7iSmUNnasmL1Pnr7+ZG6FN4LkZpaGnRroI=
-X-Received: by 10.129.108.196 with SMTP id h187mr1958344ywc.249.1517938247855;
- Tue, 06 Feb 2018 09:30:47 -0800 (PST)
+         :message-id:subject:to;
+        bh=RW8gon/SNBPo0kghkTLONY4OjWtE5lAd6a5zfdsoLQI=;
+        b=Ou02Ei0kI0IbtsECFPdsPUnRWhUL211qnXyqI1C6aAxSBn1oteeS54sg1ANr7nYAcT
+         3Lwl6pawiOKPVkWKvexAGXdxENA9HnQo9JPi3T+t7jltf+JPO3tKeuZqP8mWdPuIAZUJ
+         LDgB+Pb/6Hiv2gMlzShgyMOS8+c4hFJs/vclEEtWTBW8SJ3mFxcferBVU8IWWCYmjOQy
+         1gQUBZBjfPtYFyU2apT+9bzMuVeeluHFq01Q378VZe6ysQhszZpRg/cr01Y69XwvA+/C
+         7L45DTkLzh09SbXr+ZlM76pynWIXhY/fATjLZhMb4OpYlMlOcgQwGGMVupjUjT0WZl4r
+         lgRA==
+X-Gm-Message-State: APf1xPD+DEJtGX1MJWLXr4vEL4vu2llB3HjuHShHHJ2wS0a1uwUTirBB
+        DzKyl9Pw3vXkHgyNbgHTX3PyLjEXG8r9t4StMl5yLQ==
+X-Google-Smtp-Source: AH8x227LxijDXx6+o9v5uaRhyLf7zaP4EYKScutfSLtWYOf92IGKcVdQ5p1HVQ3zmQv05dbyXBtgyb/TUTo0b6tRfKg=
+X-Received: by 10.37.34.138 with SMTP id i132mr1513308ybi.114.1517939337453;
+ Tue, 06 Feb 2018 09:48:57 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 09:30:47 -0800 (PST)
-In-Reply-To: <CACsJy8Bhu6RvedKgOx8uExrJuo0-b66JvnZA9d9v4Uk6mSwPQQ@mail.gmail.com>
-References: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
- <CACsJy8Bhu6RvedKgOx8uExrJuo0-b66JvnZA9d9v4Uk6mSwPQQ@mail.gmail.com>
+Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 09:48:56 -0800 (PST)
+In-Reply-To: <20180206011940.GD7904@genre.crustytoothpaste.net>
+References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
+ <20180205235735.216710-5-sbeller@google.com> <20180206011940.GD7904@genre.crustytoothpaste.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Feb 2018 09:30:47 -0800
-Message-ID: <CAGZ79kb+SB3q720Q_QbpPTLsY-gfsYHGdSvK2TGOtRXwLMQyOg@mail.gmail.com>
-Subject: Re: Are concurrent git operations on the same repo safe?
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ian Norton <inorton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 6 Feb 2018 09:48:56 -0800
+Message-ID: <CAGZ79kYAjs17RvRyo4rErR+ymkKfyORZ7xBSCDm_q0b-E6BqiA@mail.gmail.com>
+Subject: Re: [PATCH 025/194] object-store: allow prepare_alt_odb to handle
+ arbitrary repositories
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 2:16 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Feb 6, 2018 at 3:16 AM, Ian Norton <inorton@gmail.com> wrote:
->> Hi all,
+On Mon, Feb 5, 2018 at 5:19 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Mon, Feb 05, 2018 at 03:54:46PM -0800, Stefan Beller wrote:
+>> @@ -434,12 +433,12 @@ static int link_alt_odb_entry_the_repository(const char *entry,
+>>       ent = alloc_alt_odb(pathbuf.buf);
 >>
->> I'm generally used to the idea that if a thing is not marked as
->> "thread-safe" then it isn't thread safe, but I thought I'd ask anyway
->> to be sure.
->>
->> Is it safe for me to do several operations with git concurrently on
->> the same local repo?
+>>       /* add the alternate entry */
+>> -     *the_repository->objects.alt_odb_tail = ent;
+>> -     the_repository->objects.alt_odb_tail = &(ent->next);
+>> +     *r->objects.alt_odb_tail = ent;
+>> +     r->objects.alt_odb_tail = &(ent->next);
+>>       ent->next = NULL;
 >
-> Off the top of my head, object database access (e.g. things in
-> .git/objects), refs updates (.git/refs) and .git/index should handle
-> concurrent operations fine (or in the worst case you get "some
-> operation is ongoing, aborted" and you need to try again but not
-> corruption or anything else). I think we generally try to make it safe
-> concurrently.
->
->> Specifically I'm trying to speed up "git
->> submodule update" by doing several at the same time.  I've noticed
->> some odd side effects afterwards though when trying to commit changes
->> to my super project.
->
-> submodule is a hot area with lots of development lately I think,
-> perhaps you're seeing some bugs... CCing at least one submodule
-> person...
->
->> Apologies if this is answered elsewhere, my google-foo is weak today.
->>
->> Many thanks
->>
->> Ian
+> I'm sure I'm missing something obvious, but it's not clear to me that
+> this transformation is correct.  Could you perhaps say a few words about
+> why it is?
 
-"git submodule update" has the network part parallelized,
-but not the local part IIRC. (That is cloning/fetching submodules
-can be done with "-j <n>", but the local checkout is still serial for
-UX purposes, i.e. it wants to stop at the first conflict and only
-have one conflict at a time)
+This is a pretty open ended question, so I'll give it a try:
 
-Which odd side effects do you see?
-I'd be curious to see if that is a bug in the code or documentation.
+* ent is a local variable that is newly allocated using `alloc_alt_odb`.
+  `alloc_alt_odb` has no hidden dependencies on a specific repository,
+  it uses FLEX_ALLOC_STR, which is defined in cache.h as a wrapper
+  around xcalloc/memcpy
+
+* Before this patch we always used the_repository->objects.alt_odb_tail,
+  but with this patch there is no reference "alt_odb.tail" of the_repository,
+  but only of a given arbitrary repository.
+
+  Usually we convert only one function at a time. (Chose that function,
+  which calls only already converted functions, because then passing in
+  r instead of the_repository still compiles correctly)
+
+  The additional messiness comes from a cycle:
+  read_info_alternates
+    -> link_alt_odb_entries
+      -> link_alt_odb_entry
+        -> read_info_alternates
+
+  That is why we cannot just convert one function, but we have to convert
+  the whole strongly connected component in this graph of functions.
+  This is why this patch is so messy and touches multiple functions at once.
+
+* While I hope this helps, I assume you want me to repeat this or other
+  hints in the commit message, too.
 
 Thanks,
 Stefan
