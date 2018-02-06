@@ -2,178 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 300571F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:33:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FA891F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752411AbeBFAdA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:33:00 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:41880 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752331AbeBFAc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:32:56 -0500
-Received: by mail-pl0-f67.google.com with SMTP id k8so136754pli.8
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KkTipXxket9djzyjS2dfr6bbHdzxeZU+CVu13KEMQ04=;
-        b=p4f6LwcGzICDEnm8yfeTN5F8KBDBMyNBu9nVdNr7biEOcOCju+8Q/xqFiRvj60eylm
-         oAzxBLnkCnw/JO8VKsovBMxfY1Gfzib+0dBMeBEJqmO3HXxev+JFo7sSGPPuYfj3RQW4
-         6XZgleLPWYDPzeS/tvDihNrt3wNyCJ60HmjQHB06B8fg0NLf4MsT1lBMO3w43EJyZc1R
-         WneZ0IGXNTTruHaAMy3Pg5Uxh8JUKMtXkkw2BejsEDROzdMLTAHfeBtJtu5lgkaXkUuL
-         VMmGkfbkmeGahBgmzMOaPugjbtKHncSRPWNLnbO+6XnChiN4k84nA8Wdn6YJtVrtHGLD
-         IXXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KkTipXxket9djzyjS2dfr6bbHdzxeZU+CVu13KEMQ04=;
-        b=GkooKPNrzK/U/sHI9jSkdXrd1fzB95z80bZvjnh2kGfHTpDm+BT7MW724ObBTvL4pT
-         +mguqtIU8r5u8SLM0oVN/tf38a31HikNrCVxFmnhKyk0B+sm1dJ0myEuRxh2325S58gg
-         fUzmgT9934NZ9OVe3IO4dLdWHTU/DAIo2DbKng5SE6xKz/2Dt2KaJAyplc8FqETAR7Nu
-         ft4DGUl3RRrrVnyQK5lcRTV0wYDQQuSAGtMmOVkkRKEon2FyZpr1WkLFUmDMTqRxq0KO
-         Ba9wghwnTLW6jNyr7aNPq/EOKwPTvgI30YD7NsLe76iUXYC2Aj204oipzB0+bnYVMce2
-         yuOQ==
-X-Gm-Message-State: APf1xPCeNazu737QH3ZshP8J66/5wVqCbd6MxfmiG9gpo+WwMFcTVDt6
-        mBng7e7v9NcEVsOlRW9wW0rqegHE4lI=
-X-Google-Smtp-Source: AH8x225Q6AdMQs5Te7gbAEy5FKfIQ9N8ywlaArNa8LF2/cEq0wRQV3aa1fwwhBdhHIM2yc2ls9PopA==
-X-Received: by 2002:a17:902:7892:: with SMTP id q18-v6mr593750pll.232.1517877175746;
-        Mon, 05 Feb 2018 16:32:55 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id q65sm23178785pfj.148.2018.02.05.16.32.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:32:55 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 194/194] submodule: use submodule repos for object lookup
-Date:   Mon,  5 Feb 2018 16:17:49 -0800
-Message-Id: <20180206001749.218943-96-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
-In-Reply-To: <20180206001749.218943-1-sbeller@google.com>
-References: <20180205235508.216277-1-sbeller@google.com>
- <20180206001749.218943-1-sbeller@google.com>
+        id S1752285AbeBFAeK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:34:10 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58686 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751834AbeBFAeI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Feb 2018 19:34:08 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 850286042C;
+        Tue,  6 Feb 2018 00:34:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1517877246;
+        bh=JQPf3PMyqoj0LJmVcPML8IEeuPZ+3F1Pq9CoUlS+5SM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=jhbGuhjc7ydOWFDxJU9H6dE4mh/Pd/RuNrNBrRkjh3oe/wbGtIVU3273lPaRjh86A
+         UGk0Jt9Mdn++DylH17Pwj1cY2WFD6frRghTp3dmr5wxtQjk/OT4rNDma2SS6TMbL1V
+         rjkDQhmOgTF6OOktsNVnxXy0MO5LE68/UuMT3Xng2tOzxj9iElh0qMJgx8NwiG7DT3
+         mMyzANDKsXptBOeWW7IHAE3RUMGWESQcYEC7ba3q8Js+7VMEJhVenfU+0YIqO1Tya2
+         nugZnhwg26JDH4CZSYshLVjEs/ciHsEFRbhO5xzFYXBR61655YlhjYO/lgpw77QG13
+         SIBX95vDVhImqX3X9MYuaDlansYICUUscfqcG/AeaKQe7b8wnJKnjsIc7ZYjS/eupM
+         kPDmyQQqiZAmS2y2t6r7TuKmE1bgfSiL/8/cUYnlbi+LcYw35sLsW6qNmEZJtXcfZ9
+         /apGNiJNtVq2YOhCS0SjM8639MlTY3TGveEoeTYUIIINuwggvkP
+Date:   Tue, 6 Feb 2018 00:34:00 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Patryk Obara <patryk.obara@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 00/12] object_id part 11 (the_hash_algo)
+Message-ID: <20180206003359.GB7904@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Patryk Obara <patryk.obara@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <20180201021848.533188-1-sandals@crustytoothpaste.net>
+ <xmqqinbfcgzo.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eHhjakXzOLJAF9wJ"
+Content-Disposition: inline
+In-Reply-To: <xmqqinbfcgzo.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This converts the 'show_submodule_header' function to use
-the repository API properly, such that the submodule objects
-are not added to the main object store.
 
-When using the inline diff of submodules, the object store is not
-polluted with objects from the submodules. When using the "log"
-summary, we still have to pollute the object store, as the
-revision walking is not converted yet.
+--eHhjakXzOLJAF9wJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+On Fri, Feb 02, 2018 at 11:46:03AM -0800, Junio C Hamano wrote:
+> Thanks for working on this.  All changes looked sensible (even
+> though I spotted one nit in the original, which was moved as-is,
+> which does not count as a "change" ;-)).
 
-diff --git a/submodule.c b/submodule.c
-index 6b6c5a6710..9bd337ce99 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -441,19 +441,19 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	return prepare_revision_walk(rev);
- }
- 
--#define print_submodule_summary(r, rev, o) print_submodule_summary_##r(rev, o)
--static void print_submodule_summary_the_repository(struct rev_info *rev, struct diff_options *o)
-+static void print_submodule_summary(struct repository *r, struct rev_info *rev, struct diff_options *o)
- {
- 	static const char format[] = "  %m %s";
- 	struct strbuf sb = STRBUF_INIT;
- 	struct commit *commit;
- 
-+	/* NEEDSWORK: get_revision is not adapted to repository handling? */
- 	while ((commit = get_revision(rev))) {
- 		struct pretty_print_context ctx = {0};
- 		ctx.date_mode = rev->date_mode;
- 		ctx.output_encoding = get_log_output_encoding();
- 		strbuf_setlen(&sb, 0);
--		format_commit_message(the_repository, commit, format, &sb,
-+		format_commit_message(r, commit, format, &sb,
- 				      &ctx);
- 		strbuf_addch(&sb, '\n');
- 		if (commit->object.flags & SYMMETRIC_LEFT)
-@@ -513,7 +513,8 @@ static int open_submodule(struct repository *out, const char *path)
-  * attempt to lookup both the left and right commits and put them into the
-  * left and right pointers.
-  */
--static void show_submodule_header(struct diff_options *o, const char *path,
-+static void show_submodule_header(struct diff_options *o, struct repository *sub,
-+		const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule,
- 		struct commit **left, struct commit **right,
-@@ -534,7 +535,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
- 	else if (is_null_oid(two))
- 		message = "(submodule deleted)";
- 
--	if (add_submodule_odb(path)) {
-+	if (open_submodule(sub, path) < 0) {
- 		if (!message)
- 			message = "(commits not present)";
- 		goto output_header;
-@@ -544,8 +545,8 @@ static void show_submodule_header(struct diff_options *o, const char *path,
- 	 * Attempt to lookup the commit references, and determine if this is
- 	 * a fast forward or fast backwards update.
- 	 */
--	*left = lookup_commit_reference(the_repository, one);
--	*right = lookup_commit_reference(the_repository, two);
-+	*left = lookup_commit_reference(sub, one);
-+	*right = lookup_commit_reference(sub, two);
- 
- 	/*
- 	 * Warn about missing commits in the submodule project, but only if
-@@ -555,7 +556,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
- 	     (!is_null_oid(two) && !*right))
- 		message = "(commits not present)";
- 
--	*merge_bases = get_merge_bases(the_repository, *left, *right);
-+	*merge_bases = get_merge_bases(sub, *left, *right);
- 	if (*merge_bases) {
- 		if ((*merge_bases)->item == *left)
- 			fast_forward = 1;
-@@ -589,8 +590,9 @@ void show_submodule_summary(struct diff_options *o, const char *path,
- 	struct rev_info rev;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
-+	struct repository sub;
- 
--	show_submodule_header(o, path, one, two, dirty_submodule,
-+	show_submodule_header(o, &sub, path, one, two, dirty_submodule,
- 			      &left, &right, &merge_bases);
- 
- 	/*
-@@ -607,7 +609,7 @@ void show_submodule_summary(struct diff_options *o, const char *path,
- 		goto out;
- 	}
- 
--	print_submodule_summary(the_repository, &rev, o);
-+	print_submodule_summary(&sub, &rev, o);
- 
- out:
- 	if (merge_bases)
-@@ -625,8 +627,9 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 	struct commit_list *merge_bases = NULL;
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct strbuf sb = STRBUF_INIT;
-+	struct repository sub;
- 
--	show_submodule_header(o, path, one, two, dirty_submodule,
-+	show_submodule_header(o, &sub, path, one, two, dirty_submodule,
- 			      &left, &right, &merge_bases);
- 
- 	/* We need a valid left and right commit to display a difference */
--- 
-2.15.1.433.g936d1b9894.dirty
+I forgot to ask: do you want a reroll which fixes this, or just a
+follow-up patch on top to fix the comment?
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
+--eHhjakXzOLJAF9wJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlp49/cACgkQv1NdgR9S
+9otgWA/9FwoSMW284GE+5Vxj1iySbzeyCdpPKctlekankgvsl9F6R00GKrmD3YCb
+8WtfG5bkqfPoyyxy6Vb2aTa4/kFnmMxq+ei9JPEuuqjaHscVCURykK9V+WzBy32m
+K5DNfx9OPMSKijDQYG0LbswfQhoDKS46h8ORgdR3QAGCNnba66ZC6oCagA8s6YfR
+EpIZJVoZCGX0tbLgDiBUWGya6HrFx18kqWBjd3LTZHiR6+XzCHNhdRHF9POaNydv
+nK7KGIeLIKBf1Jd/eE2o1+A1WEUhgR8LTikwyR0VnYByLJUyHVMpJwn9OOjAALxL
+AKRGyh+MvRuk8onsf+Q6A1+MBYm/p9LvrZ5XfS41wkR4aDVBZEeQceYPOZ6+DnZ+
+vnh410OFMLVQLO3kagD327LztsvaRGYQNpiJjC8V8YgYFwZT6MYEtWqR5qUil1QV
+GOhtiiB8b6kTzc4ZbpNnaV7kiMOJ9pME9yfROsGE/JGU8g6sUn+lvCZZaVhu3Fvb
+S0ujNuRdmh/qYQFXJIuLA+i/naapLQfjJIjQSidEXJKCm5oEKij7gvXrIdSz5XYq
+pUt/HR5K3+F14f9QLEy2qP8JDheRrLpgqqA2j3XoXj/glBZjnEOcFC61HEnQqszG
+2KczOgo45lHdRjhm6vus5hJ6Z7KLZj3taU0NfEKISN2MQjczYjY=
+=eYhb
+-----END PGP SIGNATURE-----
+
+--eHhjakXzOLJAF9wJ--
