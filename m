@@ -2,82 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 897841F576
-	for <e@80x24.org>; Tue,  6 Feb 2018 09:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A40D1F576
+	for <e@80x24.org>; Tue,  6 Feb 2018 09:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752335AbeBFJZb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 04:25:31 -0500
-Received: from mail.javad.com ([54.86.164.124]:60746 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752207AbeBFJZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 04:25:28 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id A495B3E89D;
-        Tue,  6 Feb 2018 09:25:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517909127;
-        bh=N2X1480SP7lplVXWn9m3mo1xMk8oJUCikiMkju+2XRo=; l=675;
-        h=Received:From:To:Subject;
-        b=K5FDY0ggwsXSJ8l0CAGQm/Ut/pmA3SyDGoIp9sdT8QT+C7cNyvuIYS5n4CeIJAncO
-         02Nt0APcisdZKC6H6wCsQ4cgvtZjrVESwNE04a1E/uxNTW4GfUHK7gGp+e4bQVFLSI
-         t2EtJ3HOkoTM01a/LAMjYImZQzrAT2eVjn8KeiZg=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517909127;
-        bh=N2X1480SP7lplVXWn9m3mo1xMk8oJUCikiMkju+2XRo=; l=675;
-        h=Received:From:To:Subject;
-        b=K5FDY0ggwsXSJ8l0CAGQm/Ut/pmA3SyDGoIp9sdT8QT+C7cNyvuIYS5n4CeIJAncO
-         02Nt0APcisdZKC6H6wCsQ4cgvtZjrVESwNE04a1E/uxNTW4GfUHK7gGp+e4bQVFLSI
-         t2EtJ3HOkoTM01a/LAMjYImZQzrAT2eVjn8KeiZg=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1eizVG-0007qO-2a; Tue, 06 Feb 2018 12:25:26 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: cherry-pick '-m' curiosity
-References: <87wozry7z4.fsf@javad.com>
-        <CAGZ79kZ5ZiETM7L6DRr1pSXMGBPPyOazsM8Gi0E9jrMYfwrfdA@mail.gmail.com>
-Date:   Tue, 06 Feb 2018 12:25:26 +0300
-In-Reply-To: <CAGZ79kZ5ZiETM7L6DRr1pSXMGBPPyOazsM8Gi0E9jrMYfwrfdA@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 5 Feb 2018 14:03:12 -0800")
-Message-ID: <87eflyv5a1.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1752379AbeBFJlr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 04:41:47 -0500
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:35748 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752246AbeBFJlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 04:41:45 -0500
+Received: by mail-lf0-f48.google.com with SMTP id a204so1792131lfa.2
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 01:41:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=oEJus/EUYTERC/TUvdXM1WH3CIYs9eFMh2n+KKtNL8g=;
+        b=rdsaSjp1uPlbt6NFfPWYZmVPKRrdV3b/uoB8hacampVFIjIq+taeoUZOZqHZCU+5nd
+         wW0UWCtoY9IXP4M+LUYDwEW4c/hwjjaFMj3flrT9Gxob+p9Y4eXfjOMhtsD05Ki/gRIR
+         hZkDi9cBG36+42OQtoZ3aYR8ScOFcKXg4jE7Pl+TOipriWYMWAj6gBpjHLmFXnwDmeRv
+         9zHP+eSSE9bljWaA/MAGAYKd14iNvuuU5R/UB5OxM+BtRigo3oCb9gkq0XIMW63jHpRL
+         8Q7mB7qfXZl5Tdbqc7B3Qtrqt8SAQ5micAJ1xCFA8wnPDHgneMX83VZLTICdAFW2Rzdq
+         oldQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=oEJus/EUYTERC/TUvdXM1WH3CIYs9eFMh2n+KKtNL8g=;
+        b=FVpZVEnKQBVuMfRKKOL47WbINUZA20qQErvTnfCXBCKi2SrtWZpT9eUWFsVE0q1AxO
+         0XoP9L3xdio33vZxyhd7+qCQ0gKqSohB1p4o/xf74ENx11m3zfBEivCfL3o5meZJuVQ9
+         T+TCKjoRrwQSwQebxxEFDoyG2+mkJE/rck6A4sf/aQQT1KegWSkpVQhy45irZ9L10EhW
+         0UkBCwz5VVeNJC6NERXuk1fh8LNw1j+0GVuRbLG2dvCkdnwvLei8DBLN6A4un6aW2F1Y
+         TZF3zQ0zaDKo3hU7Mbfi/Fk2cmhEQZf8ftPr+F+oNTvisu52clUCiyJiK6HFIob9LCsM
+         ZStQ==
+X-Gm-Message-State: APf1xPCyIvYdHXi03PmnujgGtqXXhm5PwyExLct+n0GhicilpPXV7T6D
+        KXxG+jIwrV0AEu2x90inieKcBYOjaQ1f28G6pllMzQ==
+X-Google-Smtp-Source: AH8x224q9fBhCwEqMi6E2OrmNOPSgjKnt3R2ZdDXLT4fnv5Wqe7KAgoeEK2ywd+8Rmo/k4uTQcwF6mvkLPBlsCwNqFA=
+X-Received: by 10.46.5.210 with SMTP id 201mr1271722ljf.34.1517910103136; Tue,
+ 06 Feb 2018 01:41:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.25.181.210 with HTTP; Tue, 6 Feb 2018 01:41:42 -0800 (PST)
+From:   Zsolt SZALAI <zs.szalai@gmail.com>
+Date:   Tue, 6 Feb 2018 10:41:42 +0100
+Message-ID: <CAOKXNqBSqEP7aikjM1GE=p7jWBsN13Xy3qVL-on7RnrUrwi+bg@mail.gmail.com>
+Subject: repository history?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
-> On Mon, Feb 5, 2018 at 3:46 AM, Sergey Organov <sorganov@gmail.com> wrote:
->> Hello,
->>
->> $ git help cherry-pick
->>
->> -m parent-number, --mainline parent-number
->>            Usually you cannot cherry-pick a merge because you do not
->>            know which side of the merge should be considered the
->>            mainline.
->>
->> Isn't it always the case that "mainline" is the first parent, as that's
->> how "git merge" happens to work?
->>
->> Is, say, "-m 2" ever useful?
->
-> Say you want to backport everything except that topic using cherry-picks.
-> Then -m2 would be useful?
+I wonder if there is a feature with which the history of the
+repository can be listed?
+i am interested in especially the usecases of pull and push, i.e. to
+query when the a branch was refreshed with remote changes and which
+commits were pulled, things like that.
+Is this possible?
 
-Didn't get the idea, sorry. Care to clarify?
-
--- Sergey
+Thanks,
+Zsolt
