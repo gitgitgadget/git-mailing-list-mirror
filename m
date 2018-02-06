@@ -7,140 +7,109 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7BDA1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 18:28:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 551F11F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 18:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753074AbeBFS22 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 13:28:28 -0500
-Received: from mail-it0-f49.google.com ([209.85.214.49]:51043 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753252AbeBFS17 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 13:27:59 -0500
-Received: by mail-it0-f49.google.com with SMTP id x128so3688241ite.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 10:27:59 -0800 (PST)
+        id S1752966AbeBFSzn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 13:55:43 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:38071 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752529AbeBFSzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 13:55:41 -0500
+Received: by mail-qt0-f182.google.com with SMTP id z10so3668351qti.5
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 10:55:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=kz6jmf2d5S/CZxHZA5s39U3WKlGHoXtYnRNZ3Be3WHc=;
-        b=HDRVG8v7J25e7F8Akxltdytg/u6NT3DCY5i/j0qhrPD09vGWLn6t6bvSXppASLba7R
-         C3V39eYbxim68vyTnthEvSGcD2RjCZ2stRX20eevDXOlWm+uXsQN0WtMtZpaLXAZVGEk
-         Ie4UeJbXd1Vl5Qu+QmE+Eu/bkAkecfPRcLMn5nWWM+v1/ucF7RqCm/24aUhwDGxdg+FM
-         87aHk0ggCG6kdd3dnqox5qu6Ka/HNWOcqAKlStK8vlopisMYNVz8X0+0atgur93okFtD
-         I2slxhnuWF8tQQ/R6QbyeuEPnrGmFevrLP/HrgGGXDe18JeWStWkkEqlkOYoFgBa4oSn
-         PAnA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=uK4QE0VAO0SlgxCk+a178ajj0ejRr/dCfqiwUAbtIr8=;
+        b=MKfKvwi5BZtWk+ieqmsFgNU35diRVcKL/69YDF+JcaH12sPTc2eex4J9L4/SNDWudS
+         5drIX6BTbc7TGNG/llN4yl/jYNZQAcWhZBrBARwverk4RJ426g31f6Wqbq02hYdYxYAB
+         DPDMs0O+sPK8vWo/WWQHjwsCuGikF0hdrnzzA4Ocd3PB7bJ1ZLrRfyPZHgyq4Lx2rMKI
+         emnIyyjPXnEfLoWZbjPyq2n4Jd65KrQWVUAgqy696CGH9kJt2fEA/sE7Kb5FjIYjSe6L
+         fvEN80QliJEIP8MexOiEGfDGwT7N6VEYmt9NwIH3YgeZyEXNSBK8fNruShehByP01LA9
+         fqaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=kz6jmf2d5S/CZxHZA5s39U3WKlGHoXtYnRNZ3Be3WHc=;
-        b=YdbDGkF7QkP1kJGF3MkVdDScDIMgtc6pw/dr0S9izN1LmI8C5k6mlZUtIQ/MjTzl/+
-         CkOSvtrfrxhLuSNiQsNZ0YM59GR3aMvI2VFjcv3tc7ieiBS19Pdp+KUXhygKvN9MHrJO
-         4CazjgDrKXMbt8iZejI2/X94bMTzW54l15Gh40KIdSz6xHO0HKzl+TUaecHsxj3evHy3
-         YtkaNxQrPOA6bw/MParZ5AicnDIJKmS4wFRh4rAbDkFLw6tqYX/649C5fzPKxWlPq68j
-         JL10Eqc+PGQcp24CK2jvkc/n4bZ3Kr+YwcEAmnUYncGLFyntiJyGP7YPBc31DsymHXRF
-         w9iw==
-X-Gm-Message-State: APf1xPCMEKDEEpIVcQJ+enyFuIHJjReQxNLikNngv+oTUIDvARSzHB3y
-        D39wINSIvL54IH49kIogTP4qSOEQ
-X-Google-Smtp-Source: AH8x224fG5prrqmHAgxapyKYneBQtvEdQkAfcoI/tz5DCfxlU7Uy9/7c1kv1HUESlBu9Jxh/nAFaMg==
-X-Received: by 10.36.228.200 with SMTP id o191mr4265503ith.143.1517941678460;
-        Tue, 06 Feb 2018 10:27:58 -0800 (PST)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i22sm7261054ioo.39.2018.02.06.10.27.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Feb 2018 10:27:57 -0800 (PST)
-Date:   Tue, 6 Feb 2018 10:27:55 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Martin =?iso-8859-1?Q?H=E4cker?= <mhaecker@schwarz-online.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: Missing git options
-Message-ID: <20180206182755.GD104086@aiede.svl.corp.google.com>
-References: <AD196D8E-04DB-4274-ADEB-D914A79628B3@schwarz-online.org>
- <20180206004313.GC7904@genre.crustytoothpaste.net>
- <C6AF93BC-048F-4944-AB87-36AC2A5C5466@schwarz-online.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=uK4QE0VAO0SlgxCk+a178ajj0ejRr/dCfqiwUAbtIr8=;
+        b=DbT+f04jmsFXioRcYKyDybKDGC96XHt782ruulL12o5uPubVIhNQOsDV/sHT4UZ66e
+         YSwKwReu3HLk9HuWieY0e8RYggak3dW5O5WTHTteyeuf6CWmrYc3twGyMrDmG+EiAqjm
+         ZC106+nsdFZddM3xCic1OwDWZVSNlZHOleLtSvl12j0oRYqO233Hu7W7J/9C0F5ftnsS
+         kq0Ov8HCBFD8nDQIxkGJ57JyBrb0+BYutxhEYOaiCHW3vx71AYQAl+RWe063Vq+QK8Jq
+         EXFRoi3E+Tn4GpXspIEcyCxUTgNoeGsCtRkPZKOsjrqktfjRsZa6TeuNfXiHxdBZe0YU
+         /LQQ==
+X-Gm-Message-State: APf1xPDIaeu6vtmCy2C3cCUfErZ0H9sAPwzMeX/zkmjQZHITNPlvrmp3
+        ANnjsGQQmn3RmWr33qQcf+c=
+X-Google-Smtp-Source: AH8x225kwaTg9rlOPEXrUcogzJPkMpJRx7UQoNW0SjXFCGJlz2wCoxtSXlHX0wrnFc1F9XAhfOBrWw==
+X-Received: by 10.200.28.145 with SMTP id f17mr4989266qtl.15.1517943341141;
+        Tue, 06 Feb 2018 10:55:41 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:88ad:1fb1:3dd7:9d03? ([2001:4898:8010:0:71e3:1fb1:3dd7:9d03])
+        by smtp.gmail.com with ESMTPSA id j6sm4000654qke.11.2018.02.06.10.55.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Feb 2018 10:55:40 -0800 (PST)
+Subject: Re: [PATCH v2 05/14] commit-graph: implement git-commit-graph --write
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <dstolee@microsoft.com>, szeder.dev@gmail.com
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+ <1517348383-112294-6-git-send-email-dstolee@microsoft.com>
+ <20180201153349.c94fe3de6b632e2fd8f843cf@google.com>
+ <CAGZ79kb8kHAb6HYrxY_oMq5v3p1+AHX_ad40nwUEwiDKe=i+Ng@mail.gmail.com>
+ <xmqq607fc8j8.fsf@gitster-ct.c.googlers.com>
+ <25571438-bdb1-81ce-ac5e-18dd0b6292d5@gmail.com>
+ <20180203092806.GA25927@sigill.intra.peff.net>
+ <xmqqd11jb7ca.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4dce1997-e0fe-8a7f-622f-94f409f822ec@gmail.com>
+Date:   Tue, 6 Feb 2018 13:55:38 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <C6AF93BC-048F-4944-AB87-36AC2A5C5466@schwarz-online.org>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+In-Reply-To: <xmqqd11jb7ca.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Martin Häcker wrote:
->> Am 06.02.2018 um 01:43 schrieb brian m. carlson <sandals@crustytoothpaste.net>:
-
->> I think this is likely to cause problems.  Many people use git log with
->> --pretty to format commit hashes or messages into other programs.  I'm
->> aware of multiple tools that will simply break if --graph or --patch
->> become the default.  Requiring people to retrofit their tools to use
->> --no-graph or --no-patch is likely to be a burden.
+On 2/5/2018 1:48 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> While I share your concern, this is something that will completely
-> freeze development of the git tui which I cannot imagine is wanted.
+>> The big advantage of your scheme is that you can update the graph index
+>> without repacking. The traditional advice has been that you should
+>> always do a full repack during a gc (since it gives the most delta
+>> opportunities). So metadata like reachability bitmaps were happy to tied
+>> to packs, since you're repacking anyway during a gc. But my
+>> understanding is that this doesn't really fly with the Windows
+>> repository, where it's simply so big that you never obtain a single
+>> pack, and just pass around slices of history in pack format.
+>>
+>> So I think I'm OK with the direction here of keeping metadata caches
+>> separate from the pack storage.
+> OK.  I guess that the topology information surviving repacking is a
+> reason good enough to keep this separate from pack files, and I
+> agree with your "If they're not tied to packs,..." below, too.
+>
+> Thanks.
+>
+>> If they're not tied to packs, then I think having a separate builtin
+>> like this is the best approach. It gives you a plumbing command to
+>> experiment with, and it can easily be called from git-gc.
+>>
+>> -Peff
 
-On the contrary, we take things on a case by case basis.  Brian
-described a cost to your proposed change and you described a benefit;
-the next step would be to figure out a way to accomplish what you're
-aiming to do in a way that maximizes the benefit and minimizes the
-cost.
+Thanks for all the advice here. In addition to the many cleanups that 
+were suggested, I'm going to take a try at the "subcommand" approach. 
+I'll use git-submodule--helper and git-remote as models for my 
+implementation.
 
-In other words, it is not that we never change default output formats,
-but we do care a lot about helping existing users.  One way of doing
-that is to provide more convenient machine-readable versions of some
-commands so that it is obvious to script writers what to use.
-
-As Stefan Beller mentioned, "git log" is in interesting case, in that
-the scripting commands exist:
-
- - "git rev-list" to list commits satisfying some criteria
- - "git diff-tree --stdin" to show information about those commits
-
-But these commands were not sufficiently discoverable and easy to use,
-so people end up using "git log" for scripting anyway.  We provide
-
- - "git log --format" to produce log output with a fixed format, and
-   in particular
-
- - "git log --format=raw" to print raw objects
-
-It's perfectly normal and common to change what "git log
---format=medium" (the default format) prints, as long as we take into
-account the effect on existing users.  In particular:
-
- - Some scripts do not care about the *exact* format from "git log"
-   but are using the output for a particular purpose (e.g. to generate
-   release notes that they distribute along with compiler output).
-   If these scripts start _sometimes_ using --graph instead based on
-   configuration, this would be disruptive to some users.
-
- - Making --format suppress `log.graph` configuration feels confusing
-   and hard to explain to me.  --graph --format=<x> would mean something
-   different from -c log.graph=true --format=<x>, except when <x> =
-   medium, or "--format=medium" would mean something different from not
-   specifying --format at all even though medium is the default format.
-
-In that context, it feels simpler to me to use aliases:
-
-	[alias]
-		l = log --oneline --graph --patch
-
-That way, it does not confuse scripts, and even better, it is easier
-to type, as "git l".
-
-I would be happy to see some documentation pointing users to the
-alias feature for this purpose.
-
-As an example of changing the default "git log" format, see the
-history in "git log --grep=decorate".  I am all for that kind of
-change, but I don't think --graph or --patch falls into this category.
-
-Thanks and hope that helps,
-Jonathan
+Thanks,
+-Stolee
