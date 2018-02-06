@@ -2,101 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 889161F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 20:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 996FE1F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 20:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752975AbeBFUFz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 15:05:55 -0500
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:34610 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752965AbeBFUFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 15:05:54 -0500
-Received: by mail-yw0-f178.google.com with SMTP id t201so2249339ywf.1
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 12:05:54 -0800 (PST)
+        id S1753081AbeBFULB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 15:11:01 -0500
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:38746 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752742AbeBFUKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 15:10:50 -0500
+Received: by mail-pf0-f174.google.com with SMTP id q79so1107307pfl.5
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 12:10:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DuI0fXvwCeHjUy7xqiT+W554gaSnKqDk6rgp1MBNNnI=;
-        b=lBHXIUGn8U/DDuI6pDyjRrwCh6rTG34prnDQXRFX7z5dlvgFKQIfMJ0fSaZODfAMwP
-         uIXVWQf/YrHvHVcL/wyFM0zZH+9cbms2nD9gmku0Uhe8vGZsT1QI8hKx+nKxffcKvOzP
-         UWnNaUxnLKVswOX5+VCXhs/6cOeDEGKzxb+QFM1V6PG0E57gJ+6CR3sbbLK47Xsl21sS
-         HgjVwoWTg2u1OcsbjMuq9GtYPBaG4dDkBQ+uhUlwNCULsF/uJqnBpM6itFSaphE8RwB5
-         k8Hj0/ntLqo50KcduxVYKyC+JONu17Eh2lVxOMrE/F0rE3gtmy23igNlKbic/gpKSyb9
-         NMYA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=OHwOX6j6NV6j6kwfF2WmPRcJjOyloomWOIaNL3ZzItk=;
+        b=GPpgiLlueOWY6wUMtJmpD6lqXqdbFx2uBDuJe38pQHZM4OSeik29daW4p46GS+IH6P
+         3oD1dOGbltfFZXc0gBgCtIaLrfZ8IfIACJuKF8ygZKaRs2vYB8bkCZicbWzAaScsnP/m
+         gCJshm+5c0IYIExMcGcmpEW7dvR0YE0GPZUIdbmH2OHviM7wKaczDEtonVFG5QSmurYb
+         BNwp+vTDswUkI+KDuqIfh1jwO6PlENp/Qf6YPMcw3krQBMjUsHgCb3r2ijuz1po0aJ4L
+         4eYyyB2rLJ2FxMam2+8aK6MgHTjDVkTDjI5w0zNGvtlkO3AS0mWIFi85LCeaDJWR3Cx1
+         mWUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DuI0fXvwCeHjUy7xqiT+W554gaSnKqDk6rgp1MBNNnI=;
-        b=P1xeOp8V7IehcsR/PlG8rLLdC0J86M22E65FSnpEIAWh7Iao1L4sgMhu3wUMnWgAuk
-         wIoPAmZzw9XXnKvfg89jqWua2bH3vCTzQNc0nGxtV3RPPqo+FMBeqClkoyYPbWXjhd6Z
-         JJsO1gfLgSDOkUi76Wn+318ABDmmDf93DP2uQL/207Ju9sFuF1i6CsKtKvFuLjmBpJPK
-         ky0wrunvFJ7No5zM0eQA9eVRLE7DckuuOgJYe9jQ+A8E1qN6AWr6GwtTzwHACLwEUz9w
-         AuRzmrpUgrz9Z3BLCtjVZWKQslGv8lHswAQbIEuz3mEw2DYkWa9jI+r30dkMR+Je52LG
-         +HRQ==
-X-Gm-Message-State: APf1xPAip4HzBEceNSg3LMFuC7yy+8tRGBO2S1X7aLRNc9ZPUoKr/p3p
-        RvPToHF8UZEQXdzW3/pt5bt7qBb+45lKsJPvU5kIjg==
-X-Google-Smtp-Source: AH8x224xBbFROrNJM/A7VfitdrSyxHimB96GbBzMzTxpwsnH0ejoAzv/wP1gTSa+O3sNiad9J93BXsAVVfyk7MD9El4=
-X-Received: by 10.37.37.87 with SMTP id l84mr2361265ybl.386.1517947553331;
- Tue, 06 Feb 2018 12:05:53 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=OHwOX6j6NV6j6kwfF2WmPRcJjOyloomWOIaNL3ZzItk=;
+        b=qC2Blg8V7//WvSTFFRh3PTKbtaOhPeYL/3GIPaD2fpVHc5jaUuUrE2ANRvRAjJaYyy
+         o3kmhgn5vpwxmRNsS0ts9rlNE8HUKwjs7r7ZBpRYZC/Ej+iuyy/FynQyEM3K7GALemAf
+         SWzhCjzMU8+ILNyFAmAh3+pXajldX9dWiDGTGBcWGMY92NLel+XEBNA2Yv9g2iUIUwam
+         zkIK+VP16VyY6mdH7hW9+kBoqR4IuM8TeHTkr2B1qJ0GUnyn1zuhN2pga5a5OItdzlpo
+         3KnvGYVMzuxi+J2aoyHixnQnyU5Rt5qKEl+5Xp0E6e+VaygogCPv2UJ1ULjKY/w4v4DG
+         76fw==
+X-Gm-Message-State: APf1xPDlhBYoC4rsQXoYyA4R+ZuG9j0Mxv3R13G5ivb3bM9WGvVUUoGf
+        vt37aYRy2Y+IEHbrQiyfwGM=
+X-Google-Smtp-Source: AH8x227vfvdUNUeC9qPIFaJZuktDE63JXehZC7fndIbXjcNgriSyNb8InBrMw0qdhVXDCLnZJabtpQ==
+X-Received: by 10.99.0.139 with SMTP id 133mr2825160pga.267.1517947850045;
+        Tue, 06 Feb 2018 12:10:50 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v28sm19353838pgc.47.2018.02.06.12.10.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 06 Feb 2018 12:10:49 -0800 (PST)
+Date:   Tue, 6 Feb 2018 12:10:47 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Ian Norton <inorton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Are concurrent git operations on the same repo safe?
+Message-ID: <20180206201047.GE104086@aiede.svl.corp.google.com>
+References: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Tue, 6 Feb 2018 12:05:52 -0800 (PST)
-In-Reply-To: <20180206195754.GE1427@zaya.teonanacatl.net>
-References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com> <20180206195754.GE1427@zaya.teonanacatl.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Feb 2018 12:05:52 -0800
-Message-ID: <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
-Subject: Re: "git branch" issue in 2.16.1
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jason Racey <jason@eluvio.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGUnuBHY9nQvGiROm4S_JvBWMrzieHC1FE50fJqxaauzZhH7xw@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 11:57 AM, Todd Zullinger <tmz@pobox.com> wrote:
-> Hi Jason,
->
-> Jason Racey wrote:
->> After upgrading git from 2.16.0 to 2.16.1 (via Homebrew -
->> I=E2=80=99m on macOS) I noticed that the =E2=80=9Cgit branch=E2=80=9D co=
-mmand
->> appears to display the branch listing in something similar
->> to a vi editor - though not quite the same. I don=E2=80=99t know
->> the technical term for this state. You can=E2=80=99t actually edit
->> the output of the command, but you=E2=80=99re in a state where you
->> have to type =E2=80=9Cq=E2=80=9D to exit and then the list disappears.
->> It=E2=80=99s very inconvenient and it doesn=E2=80=99t seem like it was b=
-y
->> design. I=E2=80=99m using zsh in iTerm2 if that helps. Thanks.
->
-> In 2.16.0 `git branch --list` is sent to a pager by default.
-> (Without arguments, --list is the default, so this applies
-> to `git branch`).
->
-> You can set pager.branch to false to disable this in the
-> config, or use git --no-pager branch to do so for a single
-> invocation.
->
-> I can't say why you're seeing this with 2.16.1 and not
-> 2.16.0, but I'm not familiar with homebrew, so perhaps
-> something didn't work as intended in 2.16.0.
->
+Ian Norton wrote:
 
-Maybe the number of branches changed since then?
-As the pager only comes to life when the output fills
-more than your screen. Quick workarounds:
-* buy a bigger screen
-* have fewer branches.
+>                      Specifically I'm trying to speed up "git
+> submodule update" by doing several at the same time.
 
-:-)
+Can you say more about this?  E.g. how can I reproduce your experience?
+Is there a script I can run?
 
-Stefan
+Thanks,
+Jonathan
