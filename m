@@ -7,91 +7,94 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 526CC1F404
-	for <e@80x24.org>; Tue,  6 Feb 2018 00:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5FA51F404
+	for <e@80x24.org>; Tue,  6 Feb 2018 00:07:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752393AbeBFAHk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Feb 2018 19:07:40 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:38097 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751914AbeBFAHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Feb 2018 19:07:30 -0500
-Received: by mail-pg0-f66.google.com with SMTP id l18so136959pgc.5
-        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:07:30 -0800 (PST)
+        id S1752218AbeBFAHx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Feb 2018 19:07:53 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37116 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751914AbeBFAHw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Feb 2018 19:07:52 -0500
+Received: by mail-pg0-f65.google.com with SMTP id o1so138560pgn.4
+        for <git@vger.kernel.org>; Mon, 05 Feb 2018 16:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5UmkpueRV1mttYoQSe5nhlouybBv59CUSjr5W5tTCG8=;
-        b=N2d+bUeJbhGdyMOgI90MA6QerNWipDDvBA4v82cOSy9YBG2Pg0eyKkBqlNpN7r7cWc
-         td5Apsxk8ekkWXy3vYHNMMeFRFmanMwu7t8Y0m5f5+3zb+oF8+ipEyn6BxiCqAw7FbTe
-         56sdYa8A7DOSpF1N3/48uLUKDDtNebGwobfhsJX5HNGohx3xrb+RHcp21XlzCSnVakNF
-         FcGRmEbxhr2jDvWEfMLl3N1ZlF2ZDbonFA4hQsNEj6QOPYVIo64q0MshIAJIQGN4SzIP
-         TFd38Eb/gbJdo/g6HPtTjZDkaxc4Pmsd0OMSb8DN6XFI5AiyBdvETirxVpDOA3zz30HQ
-         xbkg==
+        h=from:to:cc:subject:date:message-id;
+        bh=ap3E8P62/sM+8sa6SQHs4/QZWfuOL1Re+b8vpNNYz68=;
+        b=F1FiIHIHV+8ezA3OJFKJFe4WuN3nJbyH49eQSE5aEWCn5muJPgGJN0KNHIA1jt77Kx
+         gbx2yoLxZMeCV6rELRIPaLAa68vl0CkJ1LedskA7OaM7BxFdm59/juL90dBCbqXmXF4O
+         BsxgRALGtBtW7RfsMBPGSqT3hPpwlMHfFRSp0hzDgGKua2WUqmrLNXNTrHTb227Y9BHu
+         gJRAz1eg7bYAxVOCHqftWUcJQOtPzQOHgWGlpUKIAKyWE4TACJbzRYcGuX8MDICFEj8+
+         2H/yhJcjIhfn0njXmU2+oiKRfDpVBqrQCUH88WZlDVH7cG9XemulkclU+rjsixFqKuUl
+         MeTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5UmkpueRV1mttYoQSe5nhlouybBv59CUSjr5W5tTCG8=;
-        b=YPtlIVrJmDKtNwJ8LT1ARg95msD/AgPKFux1VoNhoJP5BUikoToI4oEjRH4tBgQRdO
-         HmnFSXkK9YIn91fHaGeA/SD4+NVrTPWs/lf2ZCq1oqtG2iwELS0QAg1cpBbRUrugEFww
-         n7PkBlfLeXcTOIq90NmTUEg2jTLl0CbculzxNzOnHExksJM5q7U/+jd4gcjvXjwaX2wL
-         g+XaeYndj+bAnebdPUpM0uQzSfesqL0fiZ5WDNpKzq6E5lO8t1+qmww4o0rubZnRAn6E
-         Pfq++pPXei5WwY8fZ2NbgOc+kqk8o5SecJq24nPCWBHZooavj1RrYb5ibnwaMCPsjEWk
-         eREQ==
-X-Gm-Message-State: APf1xPCXQ6fFhagUjbDwbUV+vnXylLl+JSWC7naNxx96mfWscGRUSGQ+
-        C8Zy7WGIFioKBgA9mM4OCsQrvdMi1gE=
-X-Google-Smtp-Source: AH8x226Vxsyg7BQ7+rO5RIM2BYo/vMe0hdG/WIybSw/2lMqIEPos+XPeBIdyNkMkvnBOZbg1+WEwpg==
-X-Received: by 10.98.83.71 with SMTP id h68mr518359pfb.198.1517875649150;
-        Mon, 05 Feb 2018 16:07:29 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ap3E8P62/sM+8sa6SQHs4/QZWfuOL1Re+b8vpNNYz68=;
+        b=p4aNJevqS3lZMYQhm7u5SmEJlMCbMPEimW/QClZgkGqpb+/q8zNHPG1Sb/V34hpAa5
+         qWE9tLTgCqfV4k5M49U0Hrblu7YDuY7KKOvOOHZD1MLhurbsvbG9weAxwYXAK68+O3wu
+         xdBjwVGI6prMi+xxLVQXaZHvWpCnT3ikVGRJdJ1eNpdgUxfh3VBiO8kYHYBw0ZIMTJtM
+         2cd2LIawofJHBSLZ1irZyOHeh/R+V7U02wuI/eqAuQp2Cwp1gBt3k4eV/jASua7G/8yF
+         Ru8EswMwXOa7++JaoTZwZO48dA1IlHsD9FvvZdj1v+RrP6kXqp7zgGYc1siZJL7epkkV
+         Q4Ww==
+X-Gm-Message-State: APf1xPA/SNeushEi5av0C7v95SirzJsxtGLuiBG3FpLlpLvqfJu1WuPn
+        cwsUc95wPx0KzSsjBWsnC1y2w5YSg3A=
+X-Google-Smtp-Source: AH8x224wVmgq2FUnNaaE4QxDKlb2hZPYJIF7e6QSwtBpIvrePMH/KJSsSyYjdpzlH4wOcJHzXe4i1w==
+X-Received: by 10.99.107.201 with SMTP id g192mr396732pgc.295.1517875671118;
+        Mon, 05 Feb 2018 16:07:51 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id n1sm5678642pfh.185.2018.02.05.16.07.28
+        by smtp.gmail.com with ESMTPSA id q87sm223256pfk.71.2018.02.05.16.07.50
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 05 Feb 2018 16:07:28 -0800 (PST)
+        Mon, 05 Feb 2018 16:07:50 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 064/194] repository: allow lookup_replace_object to handle arbitrary repositories
-Date:   Mon,  5 Feb 2018 15:55:25 -0800
-Message-Id: <20180205235735.216710-44-sbeller@google.com>
-X-Mailer: git-send-email 2.15.1.433.g936d1b9894.dirty
-In-Reply-To: <20180205235735.216710-1-sbeller@google.com>
-References: <20180205235508.216277-1-sbeller@google.com>
- <20180205235735.216710-1-sbeller@google.com>
+Subject: [PATCH] Documentation/git-send-email.txt: improve batching help
+Date:   Mon,  5 Feb 2018 16:07:43 -0800
+Message-Id: <20180206000743.217503-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This clarifies that the relogin delay *must* be used in combination of
+`--batch-size` as there is no default for batch size, if the batch size
+is not given, we ignore the relogin delay argument.
+While at it, fix a typo in the batch size help.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- replace-object.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/git-send-email.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/replace-object.h b/replace-object.h
-index c61ee66e95..f4666afc2a 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -21,14 +21,14 @@ extern const unsigned char *do_lookup_replace_object(struct repository *r, const
-  * either sha1 or a pointer to a permanently-allocated value.  When
-  * object replacement is suppressed, always return sha1.
-  */
--#define lookup_replace_object(r, s) lookup_replace_object_##r(s)
--static inline const unsigned char *lookup_replace_object_the_repository(const unsigned char *sha1)
-+static inline const unsigned char *lookup_replace_object(struct repository *r,
-+							 const unsigned char *sha1)
- {
- 	if (!check_replace_refs ||
--	    (the_repository->objects.replacements.prepared &&
--	     the_repository->objects.replacements.nr == 0))
-+	    (r->objects.replacements.prepared &&
-+	     r->objects.replacements.nr == 0))
- 		return sha1;
--	return do_lookup_replace_object(the_repository, sha1);
-+	return do_lookup_replace_object(r, sha1);
- }
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 8060ea35c5..887a38a608 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -250,7 +250,7 @@ must be used for each option.
  
- #endif /* REPLACE_OBJECT_H */
+ --batch-size=<num>::
+ 	Some email servers (e.g. smtp.163.com) limit the number emails to be
+-	sent per session (connection) and this will lead to a faliure when
++	sent per session (connection) and this will lead to a failure when
+ 	sending many messages.  With this option, send-email will disconnect after
+ 	sending $<num> messages and wait for a few seconds (see --relogin-delay)
+ 	and reconnect, to work around such a limit.  You may want to
+@@ -259,9 +259,9 @@ must be used for each option.
+ 	`sendemail.smtpBatchSize` configuration variable.
+ 
+ --relogin-delay=<int>::
+-	Waiting $<int> seconds before reconnecting to SMTP server. Used together
+-	with --batch-size option.  Defaults to the `sendemail.smtpReloginDelay`
+-	configuration variable.
++	Waiting $<int> seconds before reconnecting to SMTP server. Must be
++	used together with --batch-size option.  Defaults to the
++	`sendemail.smtpReloginDelay` configuration variable.
+ 
+ Automating
+ ~~~~~~~~~~
 -- 
-2.15.1.433.g936d1b9894.dirty
+2.16.0.rc1.238.g530d649a79-goog
 
