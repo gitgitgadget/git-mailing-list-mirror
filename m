@@ -2,97 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D59E91F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 10:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F5E91F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 10:37:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753409AbeBGKAs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 05:00:48 -0500
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:37992 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752758AbeBGKAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 05:00:47 -0500
-Received: by mail-qk0-f177.google.com with SMTP id w128so338603qkb.5
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 02:00:46 -0800 (PST)
+        id S1753852AbeBGKg6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 05:36:58 -0500
+Received: from mail-ot0-f196.google.com ([74.125.82.196]:45016 "EHLO
+        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753497AbeBGKg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 05:36:57 -0500
+Received: by mail-ot0-f196.google.com with SMTP id l5so342698otj.11
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 02:36:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=i0Y/KFmo8dkzOb/XmvIJZfM+hBcAdKo4E+0dGinKRy0=;
-        b=F9MNAST9vuvQwW43rmxm12//oxUng96LAmv0Iiqco7Ya6eWxciDNLYqE3VaLH1a/1i
-         FMA7kcXFJZWci12eiZMMS3AjXSuoQnlvXWyX8S6rkLY8RVNC6SBGn4JTQIFKeRSn4MK9
-         mZhwfU+Ux5jAx3aF1n5aqIrKUAX8Dt87jJfnCJglgvRCLZ9Wr6ai1BhR0amniPWjTG2Z
-         j6KpMqKW1VXCJp6F/5Ht/Q4oSfCyLpmLcC7Cb7sPdZqjh6DrSz4u0JWbTVbS8EdcN8wq
-         sO0anU2R7bWI+a5vF/JE/JzycbnF7QZuvUk9PhlpFb5AhXSF2l1eXMBjBNSCckK5bq5f
-         Hp/A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vY/2dD6oGSmjgkwoy4tL7KNK5wb3Ol4jFmEaPkcAq3Y=;
+        b=dxRFxTwhjE3i2OjcvEHQv6deFt0p+ZsbtxY5AEZQsSIlhRejY5unCoEIdSQkwR674t
+         BzzN3rdM2qtAvZ3OHEn5pjBKvqD/GAInfGBGiGHdRG67p9yY7Xy4pyp6+5w/qGTgzo1k
+         oMGrkeqTYAxoDmnZHmD/Tmb0S8CRo7xDG/zAmLldEDKS5+heZaJLeTOtDuTkfxhI2W1K
+         3O8PwGobG1/Qbx65J3QTgCw11fE4eLvnR/btm9XjSn4wibG9AoVU/+C9VIWROUG9mE2O
+         Z3YlxncMA0oGZTucMfcp28cTy0RlUozRSWVNLWNYDfTZRmsHnodinuemI3sVxpro4DyW
+         NN0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=i0Y/KFmo8dkzOb/XmvIJZfM+hBcAdKo4E+0dGinKRy0=;
-        b=LreMj3lgjiu56TDIJgTmjtnYA7t/8gMuMiUDIz15G8l+EWI67szscc6Q9J0xKQkTo2
-         ANcah4sJidw8vjvPEzd9uSWs8Zb7sNjWMd2AstG3M/em0V1OEDVoDxKK8DpbaHuYHfdK
-         XhGM32h6SVDxCj/pCSeTME3vc4O7N89XYo68iIW0HlKHzlyLuQ8N0Nlyh7Q2WlJTMsgC
-         fbt9SC+k7jBo6qF5wHkggVIpByYsfQLIg3hcFCIA/ALZKC+6EedzbXonwKSDGX907RnG
-         bjd5jBpfOT6js1wJqV9mcQY+Zy/GIwc+xkuhF9E10r3u+MbEWRP+qvlVPtuh36lVrCJB
-         qVEQ==
-X-Gm-Message-State: APf1xPA8cUhhDPZXcD/8D4ucXe9FvODUeOUKhmYDzoxknU+Ilqsv0paF
-        ZezymHUhVBBQVbF+6OkkRKwgHdP5QzdDe2UJmI8=
-X-Google-Smtp-Source: AH8x227aEAIH5yO/H04wFBu3j0vTQ/zLqrPgxaoy1srbql/36+MDksHo6c/Ow+Q0795mi50X5vdv/PuKooFuaTor4jE=
-X-Received: by 10.55.123.69 with SMTP id w66mr7961654qkc.326.1517997646346;
- Wed, 07 Feb 2018 02:00:46 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vY/2dD6oGSmjgkwoy4tL7KNK5wb3Ol4jFmEaPkcAq3Y=;
+        b=YmaJM/mluEQEvGF6VFz9LOWclkcvNClgroVWKDhSy/SMxtSqNoKdX1hUhOAJfymoBK
+         FklXzKm/foM+30RzK6/bj9G5nfBTHmUEilpCffhyjSa0bjwqCQ3SkeDDw6KeK0rNn/CG
+         pl794yB/cRzPzEi3dTAHNtcvvSBYNqCr7+SKlX8z9SQU2aKia040Rp5hAVj4SASfHWjW
+         bocgBIPsREpnYNh3tudNjJYSPe1GB85/V7Fxdu/1NH5lATOUziH3PE/WVLzEvEujWaNu
+         h9hfHyFjozxiDkAPJpTpR5vwUF3TaVQoYpt6mEGjW4Y05AtPyq5Na2qyGaH2kwz5y4DL
+         3reg==
+X-Gm-Message-State: APf1xPB594vgmme5DMYVpIwiS/Z8Gn1vcCgsbD0m+zGgwTIAbeX1/OrC
+        I+wC/zm96xYKZ7z1A1DUPLwYTcwwjKaSn8h24kc=
+X-Google-Smtp-Source: AH8x224CzG/biIBjh7PQB0Z8cU0nLpvfyZ7c3YLpZ2EXCRmM0PSTiVvqtoJmfRmyOTOKQYNEXvNUi7CfdX+rgD0nFuE=
+X-Received: by 10.157.31.47 with SMTP id x44mr4255149otd.165.1517999817278;
+ Wed, 07 Feb 2018 02:36:57 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 02:00:45 -0800 (PST)
-In-Reply-To: <88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com>
-References: <88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Feb 2018 05:00:45 -0500
-X-Google-Sender-Auth: 6vGc10kTu6rDb5-3Cf0X4X_NCMY
-Message-ID: <CAPig+cQ=Uvp5k7NprzqU1Cfi1b0jj5T63Nxzqg+O5ucinD9fmQ@mail.gmail.com>
-Subject: Re: [PATCHv3] tag: add --edit option
-To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 10.74.102.205 with HTTP; Wed, 7 Feb 2018 02:36:26 -0800 (PST)
+In-Reply-To: <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
+References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
+ <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com> <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
+ <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 7 Feb 2018 17:36:26 +0700
+Message-ID: <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 3:36 AM, Nicolas Morey-Chaisemartin
-<nmoreychaisemartin@suse.com> wrote:
-> Add a --edit option whichs allows modifying the messages provided by -m or -F,
-> the same way git commit --edit does.
+On Wed, Feb 7, 2018 at 4:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Tue, Feb 6, 2018 at 5:20 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+>> On Tue, Feb 6, 2018 at 1:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Duy Nguyen <pclouds@gmail.com> writes:
+>>> I actually think compact-summary was a good way to phrase it.
+>>>
+>>> Personally, I think it was a UI mistake that --summary can be given
+>>> independently with or without --stat (instead, there shouldn't have
+>>> been the --summary option, and instead when it was added, --stat
+>>> just should have gained an extra kind of output).  A single option
+>>> that can give both kinds of info may be a good way forward, so
+>>> another possibility may be --summary-in-stat (meaning: the info
+>>> given by summary is included in stat output).  I dunno.
+>>
+>> +Eric maybe he has some idea (sorry I forgot to include people from
+>> the last round).
 >
-> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
-> ---
-> Changes since v2 ( https://public-inbox.org/git/e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com ):
->  * Add [-e] to git tag summary
+> What about the earlier suggestion[1] (and minor follow-ups[2,3]) of
+> making this another option to --stat= (for instance, --stat=compact)?
+> Did that idea get shot down or am I misunderstanding the question
+> here.
 
-Thanks, I think this addresses all my comments from previous rounds.
-Just a couple minor style issues below...
+I thought that was something like
+--stat[=<width>[,<name-width>[,<count>,[compact]]]] and turning on
+"compact" alone would get awkward because you need to specify all
+those widths and counts too. --stat=compact as a separate form, with
+no combination with any other stat params, does not feel justified. We
+could just do --stat-compact then. Perhaps we can allow compact to
+appear anywhere in --stat=, and not just the end? The --stat= syntax
+would be
 
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> @@ -452,6 +452,21 @@ test_expect_success \
-> +> +test_expect_success \
-> +       'creating an annotated tag with -m message --edit should succeed' '
-> +       EDITOR=./fakeeditor     git tag -m "A message" --edit annotated-tag-edit &&
+--stat=[<option>[,<option>[,<option>...]]]
 
-Whitespace between 'fakeeditor' and 'git' is a tab but should be a space.
+where option could be keyword ones like compact or anything else in
+future, or <keyword>=<value> form. <option> could also be a number,
+but in that case the three consecutive number options will present
+width, name-width and count in this order.
 
-> +       get_tag_msg annotated-tag-edit >actual &&
-> +       test_cmp expect actual
-> +'
-> @@ -465,6 +480,21 @@ test_expect_success \
-> +test_expect_success \
-> +       'creating an annotated tag with -F messagefile --edit should succeed' '
-> +       EDITOR=./fakeeditor     git tag -F msgfile --edit file-annotated-tag-edit &&
+Or we could simply add new --stat= syntax _without_ "<option> as
+numbers". widths and counts must be specified keywords as well, e.g.
+--stat=width=40,name-width=20,count=10,compact and leave the old
+syntax "--stat=<width>,<name-width>,<count>" alone.
 
-Ditto.
+Then we still need to decide the new keyword for this feature, I feel
+compact is a bit too vague (I read --stat=compact as "it's compact
+stat", not "stat with compact summary"), so perhaps
+--stat=compact-summary, or just --stat=summary?
 
-> +       get_tag_msg file-annotated-tag-edit >actual &&
-> +       test_cmp expect actual
-> +'
+> [1]: https://public-inbox.org/git/CAPig+cQLgs59JYxcmK30qY307ArwqJx6pNOo95Z39_jJ9+D6+g@mail.gmail.com/
+> [2]: https://public-inbox.org/git/CACsJy8B5qrN8T1aai3y3nfEc5baqn2Xkk6vZozMp5Lh-mPZ0VQ@mail.gmail.com/
+> [3]: https://public-inbox.org/git/CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com/
+-- 
+Duy
