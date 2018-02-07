@@ -2,108 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD33A1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 18:42:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6DF11F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 18:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754049AbeBGSmt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 13:42:49 -0500
-Received: from bsmtp1.bon.at ([213.33.87.15]:54772 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753941AbeBGSms (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 13:42:48 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3zc9Dk5dSGz5tlB;
-        Wed,  7 Feb 2018 19:42:46 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 53B4B1D02;
-        Wed,  7 Feb 2018 19:42:46 +0100 (CET)
-Subject: Re: [PATCH] t0050: remove the unused $test_case variable
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <20180206231303.8483-1-avarab@gmail.com>
- <bf3ad52d-4aa3-8678-9466-3996f6cba11c@kdbg.org>
- <87fu6dz0h6.fsf@evledraar.gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a8bc404e-fca8-6d64-21c4-df6d6879bee7@kdbg.org>
-Date:   Wed, 7 Feb 2018 19:42:46 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.5.2
+        id S1754118AbeBGSnB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 13:43:01 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60906 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753941AbeBGSnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 13:43:00 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA8D3C9152;
+        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=xfwsP1weG3ZwyP+nsE8GCXcAloU=; b=lUmegwK
+        mx3wAHE0PDg+0Fd+SzUN/H4+K1rxkIuhx5J0urKsicrDVVCugK0rUVkW9F0Ho51a
+        /FltsmRY1mEpLTkZAvV9TeDVwxH1ntZcslLK3kX0RnmOc35L3n6AUQbqjsiMut0E
+        BE5ob2N2+8rTqDTkL/1kojoqOsxgTdOzMHNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=wewWHkIBZaY+MNEMLEuvIrKFzP+jyb1WK
+        8xGKwl5dSjZrHh5vGAEk96qrQa/XRa3QwiZ7xLGMh+MSih6hihmWfnI552O1Yvh6
+        1c4P5ChLhvE6KtmDnI/XFT60rlCo4Z/KrxgMPw5iHcJMjDAwZ6LECmAvACyoSfwh
+        EHk0NE+6sk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0FC7C9150;
+        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 110C5C914F;
+        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
+Date:   Wed, 7 Feb 2018 13:42:57 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: categorization, documentation and packaging of "git core"
+ commands
+Message-ID: <20180207184257.GM1427@zaya.teonanacatl.net>
+References: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41>
+ <20180207172902.GL1427@zaya.teonanacatl.net>
+ <alpine.LFD.2.21.1802071308250.9047@localhost.localdomain>
 MIME-Version: 1.0
-In-Reply-To: <87fu6dz0h6.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1802071308250.9047@localhost.localdomain>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Pobox-Relay-ID: B817E762-0C36-11E8-B3A6-692D1A68708C-09356542!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.02.2018 um 09:07 schrieb Ævar Arnfjörð Bjarmason:
+Robert P. J. Day wrote:
+> On Wed, 7 Feb 2018, Todd Zullinger wrote:
 > 
-> On Wed, Feb 07 2018, Johannes Sixt jotted:
-> 
->> Am 07.02.2018 um 00:13 schrieb Ævar Arnfjörð Bjarmason:
->>> The $test_case variable hasn't been used since
->>> decd3c0c28 ("t0050-*.sh: mark the rename (case change) test as
->>> passing", 2014-11-28) when its last user went away.
->>>
->>> Let's remove the "say" as well, since it's obvious from subsequent
->>> output that we're testing on a case sensitive filesystem.
+>> Robert P. J. Day wrote:
+>>> first, here are the executables under /usr/libexec/git-core/ that
+>>> are unreferenced by that web page, but that should be fine as
+>>> almost all of them would be considered underlying helpers or
+>>> utilities (except for things like git-subtree, but we're still
+>>> unclear on its status, right?):
 >>
->> Am I misunderstanding the message? I think it reports properties of
->> the test environment. And the tests do run on case-insensitive
->> filesystems. IMO, the message should be kept.
+>> I don't think there's anything unclear about git subtree's status.
+>> It's in contrib/ within the source, so it's not part of the core git
+>> suite.  Some distributions (Fedora being one of them) ship a
+>> git-subtree package to provide it for users who want it.
 > 
-> It's obvious from subsequent output whether the FS is case sensitive or
-> not, so I thought it was redundant to keep this report at the top since
-> we didn't have the variable setting anymore.
+>   not true, "git-subtree" is part of fedora's lowest-level
+> "git-core" package.
 
-There are test cases that do different things depending on whether the 
-CASE_INSENSITIVE_FS prerequisite is set. I think it was the intent to 
-report whether it is set and not whether one or the other value of the 
-(now unused) variable is used somewhere.
+Eek, my apologies for providing bad information.  I really
+should know the Fedora git packaging better than that. :/
 
-BTW, the message texts do not show which variant is taken (these are 
-without your patch):
+Amusingly, I did suggest packaging it as a subpackage
+specifically to avoid any confusion that it was a core
+command in the Fedora bug which requested it be included in
+the git packaging:
 
-On Windows:
+    https://bugzilla.redhat.com/show_bug.cgi?id=864651
 
-t>sh t0050-filesystem.sh
-will test on a case insensitive filesystem
-will test on a filesystem lacking symbolic links
-ok 1 - detection of case insensitive filesystem during repo init
-ok 2 - detection of filesystem w/o symlink support during repo init
-ok 3 - setup case tests
-ok 4 - rename (case change)
-ok 5 - merge (case change)
-not ok 6 - add (with different case) # TODO known breakage
-ok 7 - setup unicode normalization tests
-ok 8 - rename (silent unicode normalization)
-ok 9 - merge (silent unicode normalization)
-# still have 1 known breakage(s)
-# passed all remaining 8 test(s)
-1..9
+I'll see about changing that going forward in the Fedora
+packaging.  I think it deserves to be in a subpackage.
 
-On Linux:
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Doing a job RIGHT the first time gets the job done.
+Doing the job WRONG fourteen times gives you job security.
 
-t@master:1002> ./t0050-filesystem.sh
-ok 1 - detection of case insensitive filesystem during repo init
-ok 2 - detection of filesystem w/o symlink support during repo init
-ok 3 - setup case tests
-ok 4 - rename (case change)
-ok 5 - merge (case change)
-ok 6 # skip add (with different case) (missing CASE_INSENSITIVE_FS)
-ok 7 - setup unicode normalization tests
-ok 8 - rename (silent unicode normalization)
-ok 9 - merge (silent unicode normalization)
-# passed all 9 test(s)
-1..9
-
-I'd even argue that there should be messages on Linux, too.
-
--- Hannes
