@@ -2,98 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FECE1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 20:45:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF70F1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 20:47:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754642AbeBGUpW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 15:45:22 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44230 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754281AbeBGUpW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 15:45:22 -0500
-Received: (qmail 29867 invoked by uid 109); 7 Feb 2018 20:45:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 20:45:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2304 invoked by uid 111); 7 Feb 2018 20:46:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 15:46:04 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 15:45:20 -0500
-Date:   Wed, 7 Feb 2018 15:45:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Andreas Kalz <andreas-kalz@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bug? Error during commit
-Message-ID: <20180207204520.GA31757@sigill.intra.peff.net>
-References: <trinity-cb66d9d6-9035-4c98-948e-6857a7bd4de2-1517838396145@3c-app-gmx-bs16>
- <trinity-5e3c4029-b348-4bd5-9337-215808436a12-1517838482997@3c-app-gmx-bs16>
- <CACsJy8CGQ4ynYFT0mY1DfcGGdzwP36eonMvr-kEZazX_82ag2Q@mail.gmail.com>
+        id S1754681AbeBGUrG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 15:47:06 -0500
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:35033 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754411AbeBGUrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 15:47:05 -0500
+Received: by mail-wm0-f49.google.com with SMTP id r78so5896707wme.0
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 12:47:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=8vommcE9QMIPi4SDsXw/76BKZGHYvz/WepjUy+cJIao=;
+        b=Vn+j47THbQs0NXeaMwp7dRuRoy6JPdoW8VtUVRD/BzUMg7vCaVdeu9KndnWSBfP1Y5
+         GXVtPUiFhe0Uz2zP0rBf+ezpJSu4G8C3CeKBrnREbVgfcXg4rj7U87tSvrlODy0TQLX/
+         CQYBXIkgcWLPWq14ybq1rEKjSGGd/8L5sVoLwZxqtZhNU4CFHqKb4AfkAMdJDt7SEzQO
+         Dw3SY/PuWwc1ozcGI70hb8ct0fve6oYskE/yKlXvEMNca8Pvz2aKETZ4Da+/XnbEit8x
+         5TpJtpgU+002BGyRsIVymsY4Bnaa+v4RcFTvCGEQSAEyioD92qTbE/3LoPlTIaPzS3h8
+         bBiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8vommcE9QMIPi4SDsXw/76BKZGHYvz/WepjUy+cJIao=;
+        b=c9t7qWyA0bU84aUeGIimTEQEQz+2isb620Eh2yGJ6cqL6+kcvNefEXb2pdcxBJFPTD
+         FvdU1IPwtkePAT0bes72fFLQvKPFfH7TPQTQMHbBu8t8aRpgoFh/JbG67mkI7gC/I1wY
+         QLJwUgZjKnpS9wYPiaPbd5XKKIAoUyIIas8NrvazdUGnUYfrAj4iIjA45vm94+lC54c9
+         uuHlfnt9h0lIkrLvXWfHOD4JjpE0pBZ3iU9x5zzOwrhbCRuNe4xOn/baqiCfkmMFoeM5
+         nTLs0Th9Z9sD5gxMsXiR7YFbMeJbo8pCbF8uANdkd8BkKuNmkJZU5RXclKceRljQS75Y
+         E1Kw==
+X-Gm-Message-State: APf1xPBQ57u14+DwSbDAJVdSD073C7jgGAVo0HoRE0fqxVl/G0g/Gd2C
+        4uPQiqKOs9Jr2C3Gzk0tog0=
+X-Google-Smtp-Source: AH8x226ANnt+nV6s5mjNvuUda05rD09ve5jM6oUa3jZy4Radk08Y3/UNBfpdff1DmnuUBQ5130lWVw==
+X-Received: by 10.28.106.26 with SMTP id f26mr5568114wmc.36.1518036424231;
+        Wed, 07 Feb 2018 12:47:04 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j31sm3806095wra.97.2018.02.07.12.47.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Feb 2018 12:47:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCHv3] tag: add --edit option
+References: <88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com>
+        <CAPig+cQ=Uvp5k7NprzqU1Cfi1b0jj5T63Nxzqg+O5ucinD9fmQ@mail.gmail.com>
+Date:   Wed, 07 Feb 2018 12:47:02 -0800
+In-Reply-To: <CAPig+cQ=Uvp5k7NprzqU1Cfi1b0jj5T63Nxzqg+O5ucinD9fmQ@mail.gmail.com>
+        (Eric Sunshine's message of "Wed, 7 Feb 2018 05:00:45 -0500")
+Message-ID: <xmqq7ero7cjd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CGQ4ynYFT0mY1DfcGGdzwP36eonMvr-kEZazX_82ag2Q@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 05, 2018 at 08:59:52PM +0700, Duy Nguyen wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> On Mon, Feb 5, 2018 at 8:48 PM, Andreas Kalz <andreas-kalz@gmx.de> wrote:
-> > Hello,
-> >
-> > I am using git frequently and usually it is running great.
-> >
-> > I read to write to this eMail address regarding problems and possible bugs.
-> > I am using git version 2.16.1.windows.2 / 64 Bit and during commit the following error message comes up:
-> > e:\Internet>git commit -m 2018-01-27
-> > fatal: unable to generate diffstat for Thunderbird/andreas-kalz.de/Mail/pop.gmx.net/Inbox
-> > [master f74cf30] 2018-01-27
-> >
-> > I also tried this before with an older git version with same problem.
-> >
-> > Can you help me with this problem please? Thanks in advance.
-> 
-> I think if you add -q to that "git commit" command, diffstat is not
-> generated and you can get past that. If that particular commit can be
-> published in public, it'll help us find out why diffstat could not be
-> generated.
+> On Tue, Feb 6, 2018 at 3:36 AM, Nicolas Morey-Chaisemartin
+> <nmoreychaisemartin@suse.com> wrote:
+>> Add a --edit option whichs allows modifying the messages provided by -m or -F,
+>> the same way git commit --edit does.
+>>
+>> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+>> ---
+>> Changes since v2 ( https://public-inbox.org/git/e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com ):
+>>  * Add [-e] to git tag summary
+>
+> Thanks, I think this addresses all my comments from previous rounds.
+> Just a couple minor style issues below...
+>
+>> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+>> @@ -452,6 +452,21 @@ test_expect_success \
+>> +> +test_expect_success \
+>> +       'creating an annotated tag with -m message --edit should succeed' '
+>> +       EDITOR=./fakeeditor     git tag -m "A message" --edit annotated-tag-edit &&
+>
+> Whitespace between 'fakeeditor' and 'git' is a tab but should be a space.
+>
+>> +       get_tag_msg annotated-tag-edit >actual &&
+>> +       test_cmp expect actual
+>> +'
+>> @@ -465,6 +480,21 @@ test_expect_success \
+>> +test_expect_success \
+>> +       'creating an annotated tag with -F messagefile --edit should succeed' '
+>> +       EDITOR=./fakeeditor     git tag -F msgfile --edit file-annotated-tag-edit &&
+>
+> Ditto.
+>
+>> +       get_tag_msg file-annotated-tag-edit >actual &&
+>> +       test_cmp expect actual
+>> +'
 
-I think that's the first time I've seen that particular error. :)
+Also, GIT_EDITOR takes precedence over EDITOR, so these two new
+tests should use it instead, just like other existing tests do.
 
-I think the only reason that xdiff would report failure is if malloc()
-failed, or if one of the files exceeds MAX_XDIFF_SIZE, which is ~1GB.
-I think we'd usually avoid doing a text diff on anything over
-core.bigFileThreshold, though.
+Will try to amend locally before queuing, so unless I botch that (or
+others find other things to tweak), no need to re-send.
 
-But it doesn't seem to work:
-
-  $ yes | head -c $((1024*1024*1024 - 10*1024*1024)) >file
-  $ git add file
-  $ git commit -m one
-  $ yes | head -c $((1024*1024*1024)) >file
-  $ git commit -am two
-  fatal: unable to generate diffstat for file
-
-What's weird is that if I run "git show --stat" on the same commit, it
-works! So there's something about how commit invokes the diff that
-doesn't let the big-file check kick in.
-
-It looks like the logic in diff_filespec_is_binary() will only check
-big_file_threshold if we haven't already loaded the contents into RAM.
-So "commit" does that, but "diff" is more careful about not loading the
-file contents.
-
-I think we probably ought to consider anything over big_file_threshold
-to be binary, no matter what. Possibly even if the user gave us a
-.gitattribute that says "no really, this is text". Because that 1GB
-limit is a hard limit that the code can't cope with; our options are
-either to generate a binary diff or to die.
-
--Peff
+Thanks, both.
