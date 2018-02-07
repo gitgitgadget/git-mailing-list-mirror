@@ -7,93 +7,78 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DCC81F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 11:49:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB381F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 11:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753679AbeBGLtE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 06:49:04 -0500
-Received: from mail-oi0-f48.google.com ([209.85.218.48]:38151 "EHLO
-        mail-oi0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753535AbeBGLtD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 06:49:03 -0500
-Received: by mail-oi0-f48.google.com with SMTP id j15so437851oii.5
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 03:49:03 -0800 (PST)
+        id S1753630AbeBGLvW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 06:51:22 -0500
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:41125 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753496AbeBGLvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 06:51:22 -0500
+Received: by mail-oi0-f41.google.com with SMTP id m83so438301oik.8
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 03:51:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=07yaSzYDcvFaX46kEiX67/tbf3u6lNXbj+8pHstGhmE=;
-        b=DqCzLPUq0yjQVdeJf/XNP9Q2FpCj32SyG0iZTChcgPX9ESMgyRX34qpNZxPWuLdqWr
-         S4pPDgMdEtohsyoMxRBv3krmzeqClMDWWVAUNdy1YGU+Lvb7dUYk2WtNFrBWLTuUCZuW
-         yIOw2jd0Ci7HlVMM5pVFShM89oOYI3KAscBXIymxxFTBDunXHmzOou/Ntf5PI8PeK2GH
-         ahElV/p8BbagUCgkHi9tHywyeCF4GI/uoX5eUq/GnGpS574zb7uAexML3LAv7msonUtV
-         jYdZpuJYmQrmnDvGxzXj+KP+jiI4WLXah+A2Lqh8HO4ziLWVV4IdWRfiG0QwNI6OLT59
-         Fxxg==
+        bh=CLSAAj4k8jXo8gvwjdxKCsPJUNuQZus3XxRCTole2aA=;
+        b=hoBJ5CkSycFYgyzas/7Q/ExK8xV7bxg47o29WJlknK6M0EJ1PSgl6DcTWpvJKzhJE6
+         oZhg7uP0Aw1bPGRkYKNGGiJ0PMndXY4QoCQ2EnG8TRQ0EUgMUyxVkPpAA37j1ijkXKkQ
+         QyvNWN78IzG8irepalHXz2J8O/ZOaIkfYmyq+Dn7t3ZHp8VBkoxYN+4any5LNZ+zVWu8
+         jaG8BYUQs3Il+jZgcYI+SEuj3ZuAgaqOAnxg5adzMgtTVnO6Ovv5T7MQpzfIxSjgFEcG
+         TXrsSh3jUzhHS3pq/HrMhpD+EKnfw6inXdKBHPFEcl06nglviScVxasL7PZw4hFpmpuQ
+         xibg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=07yaSzYDcvFaX46kEiX67/tbf3u6lNXbj+8pHstGhmE=;
-        b=OBb6YMeHIX46jBxpyI7UDs47q4wD9gg31jJ5p4RZWXr8QzAH0O0s/338dfQjYpiGJO
-         EOG/RwbdTAvopdKUEckR8psjBq3RQRa2eXlv/9so4wlNL85CKSMuKjsHOo7hC2ikZ1F8
-         iVyes9FNaOda2mS9E872Bz9bO/pPdCcsbiFV/B55O3wOww3IJSU8IF1FYR6hfmrY4ui0
-         Qghun7xdBSq/wmW8sADfOweLHX4lr9KmH1mA2L4KuE0Jm4gkNA9FCLVYdwjFgLAe9Hys
-         +Jq4fLR4swxizFcFMojPmgZ+6ekYqKqwAR33MVWMXGec2J2zOwnGpwurtJfzZYIbDjnv
-         grNw==
-X-Gm-Message-State: APf1xPAGIscyQHV3W8voAvAWnPDDiBBI6e3QiLhlVeAXMF710XwKmqyV
-        Qhl2JVjl7y6ps5OVsAw+cyRFpQDJX6niY/EW4SQ=
-X-Google-Smtp-Source: AH8x2255VFeU/aA6TI0op3w7L2sCxTzuxSgyADDnDduheusFVRiLbZr00uwMps2qJ7I8p/otUau/LVzEYDZggf+kh00=
-X-Received: by 10.202.107.194 with SMTP id g185mr3988378oic.268.1518004142872;
- Wed, 07 Feb 2018 03:49:02 -0800 (PST)
+        bh=CLSAAj4k8jXo8gvwjdxKCsPJUNuQZus3XxRCTole2aA=;
+        b=gq1QbAXvDcyLfEjqO2RmXjgAa7P8l7Ffs4IpSQ97uLPy1oJIWoq4OrRqplR+SzH4J0
+         x2A1agb8y7AbZlqkhNOG0raWh2iBvP6UxCJX+mFZIxmdXD5yQ19VPEJEOzIHlEuZPJDd
+         bpr8gi/xRj2Zv8TOfdoqPZ0nu0RmKCEhUQNFKc6q50qfWOwhiiPn6B8ZdBBanRGmBLbh
+         v+/rvDfBU0FFfDbLJFPMTbU5ioDFd8WxKjvD29viuHOhHCXLFJtfZ8tQ6ZMYnTdL8+nH
+         rO6rZ+v7SEnUuQN1MN7UUwz9rZ7QYaXobH40xJpnF+plhFkT88/pMT3UkYl0DZpheHXo
+         8p6Q==
+X-Gm-Message-State: APf1xPDmraDyZNNyNoEffcZMgWixoN14h71bq6Sf08Ztlf69FJ6IBtbD
+        syWIHKCs0Rt6d3HsaXAaQG3y1Il1DxYrwryLTCo=
+X-Google-Smtp-Source: AH8x225gQ68UDpk2oE3kvryxnmZLIYPn+jxUoA+0TVDsEALFEh4XF3LYw+K4Y7trkFIvkigyX77I8SHmFyM9ULGLszg=
+X-Received: by 10.202.171.207 with SMTP id u198mr3802895oie.253.1518004281679;
+ Wed, 07 Feb 2018 03:51:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Wed, 7 Feb 2018 03:48:32 -0800 (PST)
-In-Reply-To: <20180205235508.216277-1-sbeller@google.com>
-References: <20180205235508.216277-1-sbeller@google.com>
+Received: by 10.74.102.205 with HTTP; Wed, 7 Feb 2018 03:50:51 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1802070637190.7359@android-a172fe96dd584b41>
+References: <alpine.LFD.2.21.1802070547040.5530@android-a172fe96dd584b41>
+ <CACsJy8Dt_TjfRk05oNW8DXrdn6s_QV8NQZKnnrgGkj3WTN_=3A@mail.gmail.com> <alpine.LFD.2.21.1802070637190.7359@android-a172fe96dd584b41>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 7 Feb 2018 18:48:32 +0700
-Message-ID: <CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 000/194] Moving global state into the repository object
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 7 Feb 2018 18:50:51 +0700
+Message-ID: <CACsJy8CWkjoFvDmB_EEvrJR=4snFqnVGUKvo_vR33asOXB3CWw@mail.gmail.com>
+Subject: Re: is http://git-scm.com an *official* git-affiliated site?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 6:51 AM, Stefan Beller <sbeller@google.com> wrote:
-> This series moves a lot of global state into the repository struct.
-> It applies on top of 2512f15446149235156528dafbe75930c712b29e (2.16.0)
-> It can be found at https://github.com/stefanbeller/git/tree/object-store
+On Wed, Feb 7, 2018 at 6:41 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> On Wed, 7 Feb 2018, Duy Nguyen wrote:
 >
-> Motivation for this series:
-> * Easier to reason about code when all state is stored in one place,
->   for example for multithreading
-> * Easier to move to processing submodules in-process instead of
->   calling a processes for the submodule handling.
->   The last patch demonstrates this.
+>> On Wed, Feb 7, 2018 at 5:54 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+>> >
+>> >   i ask WRT whether it should be up to date. i'm currently writing a
+>> > number of git-related wiki pages, and i want to link to whatever are
+>> > the canonical man pages for various git commands,
+>>
+>> I think this one is updated often by Junio (Git maintainer)
+>>
+>> https://www.kernel.org/pub/software/scm/git/docs/
+>
+>   whoops, just noticed that there is still no entry for "git subtree"
+> there; is there something about that git command that makes it so hard
+> to track down? :-)
 
-I have a mixed feeling about this. The end game is to keep
-"the_repository" references as minimum as possible, right? Like we
-only need to mention in in cmd_xxx() and not all over the place. If
-so, yay!!
-
-Something else.. maybe "struct repository *" should not be a universal
-function argument to avoid global states. Like sha1_file.c is mostly about the
-object store, and I see that you added object store struct (nice!).
-These sha1 related function should take the object_store* (which
-probably is a combination of both packed and loose stores since they
-depend on each other), not repository*. This way if a function needs
-both access to object store and ref store, we can see the two
-dependencies from function arguments.
-
-The alternate object store, if modeled right, could share the same
-object store interface. But I don't think we should do anything that
-big right now, just put alternate object store inside object_store.
-
-Similarly those functions in blob.c, commit.c, tree.c... should take
-object_parser* as argument instead of repository*. Maybe there's a
-better name for this than object_parser. parsed_object_store I guess.
-Or maybe just object_pool.
+git-subtree is not an official command, so it's not there.
 -- 
 Duy
