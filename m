@@ -2,99 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED261F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 14:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C8E21F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 15:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754514AbeBGOvj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 09:51:39 -0500
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:43338 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754421AbeBGOvi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 09:51:38 -0500
-Received: by mail-qt0-f169.google.com with SMTP id m11so1946010qtn.10
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 06:51:37 -0800 (PST)
+        id S1754475AbeBGPIT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 10:08:19 -0500
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:34898 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754436AbeBGPIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 10:08:09 -0500
+Received: by mail-vk0-f65.google.com with SMTP id n132so725732vke.2
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 07:08:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=KzYgSGkQtV3sqyYEvVkcEVbz3O5OnyoM365sjAI5V90=;
-        b=T6tNB0Oe5uiPCUWlKjQ3MPK1rNn4U/D8iroRvw8EKyZSbPiLD4suQrU1ucQLElnMPR
-         rag4j8L8BV66B4pebpPIW70QE2mZcaFP9rfv7Sb7bcVWA/cMfs1hmILq1+CbcgaMeRFq
-         TwrTf11HVjNALCg0vaGUhVa5bsegx8UOOCYx7GI0XFoq+BfcjiXjLt4qKa8qVPnCpXhH
-         GaDbEtsbYZaM+v1FgN20i7jPooaaKutP5h0c+VX8O9WXYOtrOToSWO6XLuFlua3rvPB+
-         x50J82sl2EuzXz0sqJ+UHnfsE+cxPrpmIf64q6iYyPkvcrOx2eQiubeqAsnFzT/UxGJA
-         J6fw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+O64kNXbnS/Y2/0cWpN6VyxkXc+sLEIh/cnndPuvfCc=;
+        b=uKc6OfQnBlaRLXNaaLa2b/jT5Y0WB23cRbHMbniGFegRBppL804Jx+AQSp8co70L63
+         MeFPkmPvszpPIqGL3zQK5TGLU3OHR0SaPWmwi4hK+DPW8EAdEzQxS5PvjYkTFkSGatro
+         akbcriR3s8neKdTCwhb3t9K8rvXJrg7PU3PAfYA56y1wGWwYmoH9C0udKHtbhL0oL8le
+         tP4bOdLjiU8oBFH0mbSt0RNtQaDb0uUeUzznd/KcinVHNpqojAE5YgjnkiFXFXKJU1BN
+         ejGyoZB1oT0EZgZzTpez6yiC+G3bnn+FJuSXa2vBNtbAcSST410h+MhFXfWo+oygZrBD
+         JuOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=KzYgSGkQtV3sqyYEvVkcEVbz3O5OnyoM365sjAI5V90=;
-        b=r7/Dmr3WHObvew/p9lQgVnYAey3+bUOZO0aLI/HpWVCNtxk2SBsLCnJ6pifptZL3KD
-         2T3pcRvJCV3p5f+y/zlcO7z9tMLePBBd7AeHiKKasnBwkHm2DMeZdsfDsNgg2m8Z54GX
-         4fTpRKwB3NoFAwhc5RHaaWVWT/7A3BevX5CUZqHr5vqv1YC/zZQyfhYyp8BU/gxZ6QyE
-         NRIvH5F87KW+DuW5pKlJ8tOL5Rj+v5B5U6UHGvi71b+F5KQh+uBrMgI6QgI67hfFjWw3
-         zpg1HkiDEzv0JvTEIZ51o7jzfhgOicGL8U8VRhIfe4ExJ3uiNOQxOzF9RCK9+up/AF3K
-         hD9w==
-X-Gm-Message-State: APf1xPCjFjTufZ1LVCD3AYhjucNUrZU5kaPp45bV1oaN+jqHWt1Qme62
-        jIyHQtgQUZczmKOVZ574iHk8Tm1hL9oQJhid+ukEHVQ6
-X-Google-Smtp-Source: AH8x227hIw4mdNSQk8GiV846FyCeDc0LmBkFIcgUKmX5cCB6PehDawIIRT+8SOCjUQYQJmpxGxfh4PgffLDSBBXe78Q=
-X-Received: by 10.200.54.252 with SMTP id b57mr9995777qtc.187.1518015097264;
- Wed, 07 Feb 2018 06:51:37 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+O64kNXbnS/Y2/0cWpN6VyxkXc+sLEIh/cnndPuvfCc=;
+        b=K8lOf1ejOnptfO/XGXeg6Z9Xi5jmKkiBCV3cxZxxAKEkcYWK/NFHGK6OcxeqplCw9k
+         HhxLak9bNg2xfBQkSyUD69ImncZnaYYQJjENGiR9w5NFokaGPYHlrD3HJ0VsLB3gG8as
+         7VAaHt72eC8ZCDn0QbL810T5beioOkDNG1oj+BW+5ny+PT00v58s9diRCI5DooSyT846
+         jN08jJvGyeOb/TWVmSV8cCGRjdqLBYEACs9vE42vlYwS5RRnPkGPrF560PGd/TlrHxwb
+         yOamMOHe3SiMMJgNFhhSOSYTMSk6sIqEafXJk0sSvAy6a0r7PokI89VVZYx62twy/TeZ
+         Qghw==
+X-Gm-Message-State: APf1xPDxP6zzPptUbYk8tnIAdW+6bA2HDCHwNy71gUP6CVuUoj+R4F23
+        hGQQz2cabZHG4feUFKY+09YQ9DXZMliQypysWYY=
+X-Google-Smtp-Source: AH8x225yu3WEzHO2bl7Ou9EKSh9/OSr5biO/L/bKAavW//hPi8xMKCNzUAVH9S51u+9wr6zUrBGufrtkKXq85k8jKOQ=
+X-Received: by 10.31.190.79 with SMTP id o76mr4480954vkf.12.1518016087838;
+ Wed, 07 Feb 2018 07:08:07 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.237.42.114 with HTTP; Wed, 7 Feb 2018 06:51:16 -0800 (PST)
-From:   Daniel Karp <danielkarp@gmail.com>
-Date:   Wed, 7 Feb 2018 09:51:16 -0500
-Message-ID: <CAOv5hWewPHqy5KQVBthskx0Ww6cdvpAJrEgSti1Ai4uLxg94Cg@mail.gmail.com>
-Subject: Bug report: Subtree split including extra commits
-To:     git@vger.kernel.org
+Received: by 10.176.32.12 with HTTP; Wed, 7 Feb 2018 07:08:07 -0800 (PST)
+In-Reply-To: <b7f45961-35c8-6e13-646c-9574fb5d56da@gmail.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+ <1517348383-112294-5-git-send-email-dstolee@microsoft.com>
+ <20180202153212.29746-1-szeder.dev@gmail.com> <b7f45961-35c8-6e13-646c-9574fb5d56da@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 7 Feb 2018 16:08:07 +0100
+Message-ID: <CAM0VKj=wmkBNH=psCRztXFrC13RiG1EaSw89Q6LJaNsdJDEFHg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/14] commit-graph: implement construct_commit_graph()
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, git@jeffhostetler.com,
+        Stefan Beller <sbeller@google.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apologies if this is the wrong place to send a bug report for
-Contributed software.
+On Mon, Feb 5, 2018 at 5:06 PM, Derrick Stolee <stolee@gmail.com> wrote:
+> On 2/2/2018 10:32 AM, SZEDER G=C3=A1bor wrote:
 
-I've run into what seems like an issue/bug with git subtree.
+>> In my git repo, with 9 pack files at the moment, i.e. not that big a
+>> repo and not that many pack files:
+>>
+>>    $ time ./git commit-graph --write --update-head
+>>    4df41a3d1cc408b7ad34bea87b51ec4ccbf4b803
+>>
+>>    real    0m27.550s
+>>    user    0m27.113s
+>>    sys     0m0.376s
+>>
+>> In comparison, performing a good old revision walk to gather all the
+>> info that is written into the graph file:
+>>
+>>    $ time git log --all --topo-order --format=3D'%H %T %P %cd' |wc -l
+>>    52954
+>>
+>>    real    0m0.903s
+>>    user    0m0.972s
+>>    sys     0m0.058s
+>
+>
+> Two reasons this is in here:
+>
+> (1) It's easier to get the write implemented this way and add the reachab=
+le
+> closure later (which I do).
+>
+> (2) For GVFS, we want to add all commits that arrived in a "prefetch pack=
+"
+> to the graph even if we do not have a ref that points to the commit yet. =
+We
+> expect many commits to become reachable soon and having them in the graph
+> saves a lot of time in merge-base calculations.
+>
+> So, (1) is for patch simplicity, and (2) is why I want it to be an option=
+ in
+> the final version. See the --stdin-packs argument later for a way to do t=
+his
+> incrementally.
+>
+> I expect almost all users to use the reachable closure method with
+> --stdin-commits (and that's how I will integrate automatic updates with
+> 'fetch', 'repack', and 'gc' in a later patch).
 
-I am trying to split a single directory of our repo into its own repo
-using git subtree. I ran the the following command from our project
-root:
-git subtree split --prefix=geekui2 -b geekui2-split
-where geekui2 is the name of the subdir.
+I see.  I was about to ask about the expected use-cases of the
+'--stdin-packs' option, considering how much slower it is to enumerate
+all objects in pack files, but run out of time after patch 10.
 
-For commits before mid 2017, the created split branch contains our
-entire commit history, regardless whether or not they include changes
-in geekui2. For commits after that point, the commits are properly
-filtered to include only commits that contain changes in geekui2.
+The run-time using '--stdin-commits' is indeed great:
 
-The upshot is that if I push the branch to a new repo, and check out
-one of those earlier commits, I can essentially recover the entire
-codebase of our application (at that point), not just the content in
-geekui2. Since our goal was to share part of our repo while keeping
-the rest of it private, this is obviously a problem.
+  $ time { git for-each-ref --format=3D'%(objectname)' refs/heads/ | ./git
+    commit-graph --write --update-head --stdin-commits ; }
+  82fe9a5cd715ff578f01f7f44e0611d7902d20c8
 
-I've also tried using git-subrepo for this split--it seems to
-correctly filter the commits, excluding all commits without changes to
-geekui2. So something seems to be going wrong with the way git-subtree
-handles this relative to git subrepo.
+  real  0m0.985s
+  user  0m0.916s
+  sys   0m0.024s
 
-Unfortunately, there is a lot going on in our repo--I have no idea how
-I would generate a minimal reproduction of this.
+Considering the run-time difference, I think in the end it would be a
+better default for a plain 'git commit-graph --write' to traverse
+history from all refs, and it should enumerate pack files only if
+explicitly told so via '--stdin-packs'.
 
-While our repo is private, I'm happy to help try to help debug this if
-someone wants to take a look at this issue, although it is not my area
-of expertise.
+To be clear: I'm not saying that traversing history should already be
+the default when introducing construct_commit_graph() and '--write'.  If
+enumerating pack files keeps the earlier patches simpler and easier to
+review, then by all means stick with it, and only change the
+'--stdin-*'-less behavior near the end of the series, when all the
+building blocks are already in place (but then mention this in the early
+commit messages).
 
-My git version is 2.16.1, and I am running it on macOS 10.12.6.
 
-I am not subscribed to the git mailing list, so if anyone wants to get
-in touch with me about this, I'm most likely to see it if you send an
-email.
+I have also noticed a segfault when feeding non-commit object names to
+'--stdin-commits', i.e. when I run the above command without restricting
+'git for-each-ref' to branches and it listed object names of tags as
+well.
 
---
-Daniel Karp
+  $ git rev-parse v2.16.1 |./git commit-graph --write --update-head
+--stdin-commits
+  error: Object eb5fcb24f69e13335cf6a6a1b1d4553fa2b0f202 not a commit
+  error: Object eb5fcb24f69e13335cf6a6a1b1d4553fa2b0f202 not a commit
+  error: Object eb5fcb24f69e13335cf6a6a1b1d4553fa2b0f202 not a commit
+  Segmentation fault
+
+(gdb) bt
+#0  __memcpy_avx_unaligned ()
+    at ../sysdeps/x86_64/multiarch/memcpy-avx-unaligned.S:126
+#1  0x00000000004ea97c in sha1write (f=3D0x356bbf0, buf=3D0x4, count=3D20)
+    at csum-file.c:104
+#2  0x00000000004d98e1 in write_graph_chunk_data (f=3D0x356bbf0, hash_len=
+=3D20,
+    commits=3D0x3508de0, nr_commits=3D50615) at commit-graph.c:506
+#3  0x00000000004da9ca in construct_commit_graph (
+    pack_dir=3D0x8ff360 ".git/objects/pack", pack_indexes=3D0x0, nr_packs=
+=3D0,
+    commit_hex=3D0x8ff790, nr_commits=3D1) at commit-graph.c:818
+#4  0x000000000044184e in graph_write () at builtin/commit-graph.c:149
+#5  0x0000000000441a8c in cmd_commit_graph (argc=3D0, argv=3D0x7fffffffe310=
+,
+    prefix=3D0x0) at builtin/commit-graph.c:224
+#6  0x0000000000405a0a in run_builtin (p=3D0x8ad950 <commands+528>, argc=3D=
+4,
+    argv=3D0x7fffffffe310) at git.c:346
+#7  0x0000000000405ce4 in handle_builtin (argc=3D4, argv=3D0x7fffffffe310)
+    at git.c:555
+#8  0x0000000000405ec8 in run_argv (argcp=3D0x7fffffffe1cc, argv=3D0x7fffff=
+ffe1c0)
+    at git.c:607
+#9  0x0000000000406079 in cmd_main (argc=3D4, argv=3D0x7fffffffe310) at git=
+.c:684
+#10 0x00000000004a85c8 in main (argc=3D5, argv=3D0x7fffffffe308)
+    at common-main.c:43
