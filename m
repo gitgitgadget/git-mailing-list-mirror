@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07791F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CA7D1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754260AbeBGBNY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 20:13:24 -0500
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:44190 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754223AbeBGBNW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:13:22 -0500
-Received: by mail-oi0-f74.google.com with SMTP id w135so1851725oie.11
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:22 -0800 (PST)
+        id S932164AbeBGBN3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:13:29 -0500
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:47050 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754268AbeBGBN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:13:26 -0500
+Received: by mail-qk0-f202.google.com with SMTP id v68so3138457qki.13
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=LbJMlIMyc6KlQKERjWKxRE4r4P4rOxFjjeHAPZ88US4=;
-        b=opZk3ES3Rz1ntBK9ufdio64rY8F6/TfHVRWbPbMY21vnuCBTXWCISzQoY3zx9PqkWX
-         +Y5UNl1g/wJLLdse9cEKB6//QaQ5WhyyR4OceWx7rPCo9VQUKehK2rEu/vaRBg8U9ZdW
-         xCutiWY3pi5b8+K/SXcllnjbLw9A+uBimbcPNgHrdXT7mz1ZlBHMf3UxULmB79XRPiCZ
-         hlmuindMjvSilBY667dN+/7GqvJBc8vyJzZDqOO440fZ6mUVEJz54mXd114LZTpedB96
-         72FGJsXgrsvkWCsT52O427q75y3TGqONHkjwACciiTLuPGaM90mT+1Ut9vP0579npqDi
-         /JOQ==
+        bh=xwpzpo2dYqc44aGcu5jQCPWMBSLpLgGUeCLc5xZuvEI=;
+        b=cvDruOFYjxdGAuHXlRJuP1lHmOVL5p1JflwhiGxdPG2LPwlT0KvPiZw0wDb3b0erRp
+         dmf9hhM4sod5vtbjT4KsMyy2n987NVfC2JQU0VReTy5hZqoPavcBr4vIHeyaC/yhBWDX
+         +/COPKnKFxrw2m/F/LM9axuUpLKvMNtQzjoeCbYlgjadFy32/wh7s8ArUhZ7IQprUe+I
+         zWBVyp/dxAgqKtSP5Wpl5AeNZGzOggEacrWx2eYl4NHpyKVD+JNxleUNOHs9dRSrokzl
+         8F7/e3QiMZv9fVATwdOyNsGBRm6VGeProETNi97iszgmD1S6HNoBn92ZZyVkWYhbgG+F
+         UIjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=LbJMlIMyc6KlQKERjWKxRE4r4P4rOxFjjeHAPZ88US4=;
-        b=t+h4NOaPfqkiLUDg2R58faRD0qREWJqd1IZX93vkQcGI17W5/zc/f9fPAKWE1EfJRQ
-         alx0Ro0024dPhfTX4ACl2cV0u6VR30gjbpPCNJE6PmM/BLbshPZdqXIieoKe2Wp1DKHe
-         cqubpApFDqu2oBwAGJXb81GhdjVmhl7+LgtdqA8SVnksjy2tGNfo++EtviIFTu6SdYKL
-         gF3LaT05HrHtoE1MUa7YhbRJvFR9pim408AUmdVrTyM2TV+tbYwt3Ory8dUhPE0OzV0O
-         qM0Y6XwIloqfQ293znkHPYbh6fJj8HkYuXgAqW4kCudMMB8bo74OB3vLLRDl1WroXiGW
-         iyIg==
-X-Gm-Message-State: APf1xPDq1VR/OONrwL9iILJjXkExKFwkjSRxlGMfhUgEX7z6MnHO964Y
-        okbF6KjLWxjp6deCTOcUovS5v5QjvcjuoOU5GsEAN7lEfncjKMc2RmUXv6ms1XHSp16ERUTohEF
-        4bGoi0MS8nOQ0b0SAlJJF9R80KFOH+xqbeAObWwJ06q0aN0kBgINbDcqmGw==
-X-Google-Smtp-Source: AH8x226Zsv1TZZdFT8LyhOyiws7AWoKD2B2wnlMy2ME543d7LSg38hN552nk6WA21Qh+0h8S/EQN5DlLfWw=
+        bh=xwpzpo2dYqc44aGcu5jQCPWMBSLpLgGUeCLc5xZuvEI=;
+        b=ToWRIuqsTN55GmDe7JUVcH2at8kYizGQRW55TmEtCAmlj2mLii/77Qr0KGZZFIw0F4
+         QveHaYdQnavOD3lm/xs7dbxmnVIn1Jy/ZPaO4fFzDSOIpc9HWF36yNW6r4tZb+hO/Aro
+         lDoF1B1WxeQL+QSkbeKaMAhVIUmbVhNZpiPU52RWsT/p0fgRmeQC8VKYg1c5JQUbTwqU
+         n8gWPczT8xewZSbahRFGfJeYR4tLwhWUEdUB/SOmGObpA3fmiWPvKZXkLKbxC0qNeZYx
+         5W90cb80kav8Yug+chet0LUDbYDusVhSKsTzvKSWwe0aICdfhDB9DuUtNPrZ1oMdYEaz
+         4a5w==
+X-Gm-Message-State: APf1xPDTvV3q94133q0fuGi76ZK+QJTESz40VqIf08R6cLP7eI0FKcey
+        /adEvo8Bo/gkXfEfgJseTadX84N0uo65O8T8njWUzc9RH+wsNq+B9Z8cxmyRAcCgCvd8tcm5wIi
+        mHdLZWJwXAmpZUsM1hnmVncWiK20quAQvr2FwgE/7eDyJ0mVTAAEYCYM0RQ==
+X-Google-Smtp-Source: AH8x2250AIMPfbyrdTYofhKPo6dXvQNV7dw6uoU8CwvrqDRsArQdiRBs+MIAFX47Tjoc70BpeZ+gnQ4n4GI=
 MIME-Version: 1.0
-X-Received: by 10.157.19.36 with SMTP id f33mr2201716ote.36.1517966001660;
- Tue, 06 Feb 2018 17:13:21 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:12:39 -0800
+X-Received: by 10.237.60.14 with SMTP id t14mr3257562qte.19.1517966006022;
+ Tue, 06 Feb 2018 17:13:26 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:12:41 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-3-bmwill@google.com>
+Message-Id: <20180207011312.189834-5-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 02/35] pkt-line: introduce struct packet_reader
+Subject: [PATCH v3 04/35] upload-pack: convert to a builtin
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -64,156 +64,319 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sometimes it is advantageous to be able to peek the next packet line
-without consuming it (e.g. to be able to determine the protocol version
-a server is speaking).  In order to do that introduce 'struct
-packet_reader' which is an abstraction around the normal packet reading
-logic.  This enables a caller to be able to peek a single line at a time
-using 'packet_reader_peek()' and having a caller consume a line by
-calling 'packet_reader_read()'.
+In order to allow for code sharing with the server-side of fetch in
+protocol-v2 convert upload-pack to be a builtin.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- pkt-line.c | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- pkt-line.h | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 117 insertions(+)
+ Makefile              |   3 +-
+ builtin.h             |   1 +
+ builtin/upload-pack.c |  67 +++++++++++++++++++++++++++++++
+ git.c                 |   1 +
+ upload-pack.c         | 107 ++++++++++++--------------------------------------
+ upload-pack.h         |  13 ++++++
+ 6 files changed, 109 insertions(+), 83 deletions(-)
+ create mode 100644 builtin/upload-pack.c
+ create mode 100644 upload-pack.h
 
-diff --git a/pkt-line.c b/pkt-line.c
-index af0d2430f..4fc9ad4b0 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -406,3 +406,62 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
- 	}
- 	return sb_out->len - orig_len;
- }
-+
-+/* Packet Reader Functions */
-+void packet_reader_init(struct packet_reader *reader, int fd,
-+			char *src_buffer, size_t src_len,
-+			int options)
-+{
-+	memset(reader, 0, sizeof(*reader));
-+
-+	reader->fd = fd;
-+	reader->src_buffer = src_buffer;
-+	reader->src_len = src_len;
-+	reader->buffer = packet_buffer;
-+	reader->buffer_size = sizeof(packet_buffer);
-+	reader->options = options;
-+}
-+
-+enum packet_read_status packet_reader_read(struct packet_reader *reader)
-+{
-+	if (reader->line_peeked) {
-+		reader->line_peeked = 0;
-+		return reader->status;
-+	}
-+
-+	reader->status = packet_read_with_status(reader->fd,
-+						 &reader->src_buffer,
-+						 &reader->src_len,
-+						 reader->buffer,
-+						 reader->buffer_size,
-+						 &reader->pktlen,
-+						 reader->options);
-+
-+	switch (reader->status) {
-+	case PACKET_READ_EOF:
-+		reader->pktlen = -1;
-+		reader->line = NULL;
-+		break;
-+	case PACKET_READ_NORMAL:
-+		reader->line = reader->buffer;
-+		break;
-+	case PACKET_READ_FLUSH:
-+		reader->pktlen = 0;
-+		reader->line = NULL;
-+		break;
-+	}
-+
-+	return reader->status;
-+}
-+
-+enum packet_read_status packet_reader_peek(struct packet_reader *reader)
-+{
-+	/* Only allow peeking a single line */
-+	if (reader->line_peeked)
-+		return reader->status;
-+
-+	/* Peek a line by reading it and setting peeked flag */
-+	packet_reader_read(reader);
-+	reader->line_peeked = 1;
-+	return reader->status;
-+}
-diff --git a/pkt-line.h b/pkt-line.h
-index 06c468927..7d9f0e537 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -111,6 +111,64 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
-  */
- ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
+diff --git a/Makefile b/Makefile
+index 1a9b23b67..b7ccc05fa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -639,7 +639,6 @@ PROGRAM_OBJS += imap-send.o
+ PROGRAM_OBJS += sh-i18n--envsubst.o
+ PROGRAM_OBJS += shell.o
+ PROGRAM_OBJS += show-index.o
+-PROGRAM_OBJS += upload-pack.o
+ PROGRAM_OBJS += remote-testsvn.o
  
-+struct packet_reader {
-+	/* source file descriptor */
-+	int fd;
+ # Binary suffix, set to .exe for Windows builds
+@@ -909,6 +908,7 @@ LIB_OBJS += tree-diff.o
+ LIB_OBJS += tree.o
+ LIB_OBJS += tree-walk.o
+ LIB_OBJS += unpack-trees.o
++LIB_OBJS += upload-pack.o
+ LIB_OBJS += url.o
+ LIB_OBJS += urlmatch.o
+ LIB_OBJS += usage.o
+@@ -1026,6 +1026,7 @@ BUILTIN_OBJS += builtin/update-index.o
+ BUILTIN_OBJS += builtin/update-ref.o
+ BUILTIN_OBJS += builtin/update-server-info.o
+ BUILTIN_OBJS += builtin/upload-archive.o
++BUILTIN_OBJS += builtin/upload-pack.o
+ BUILTIN_OBJS += builtin/var.o
+ BUILTIN_OBJS += builtin/verify-commit.o
+ BUILTIN_OBJS += builtin/verify-pack.o
+diff --git a/builtin.h b/builtin.h
+index 42378f3aa..f332a1257 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -231,6 +231,7 @@ extern int cmd_update_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_update_server_info(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_archive(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix);
++extern int cmd_upload_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_var(int argc, const char **argv, const char *prefix);
+ extern int cmd_verify_commit(int argc, const char **argv, const char *prefix);
+ extern int cmd_verify_tag(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+new file mode 100644
+index 000000000..2cb5cb35b
+--- /dev/null
++++ b/builtin/upload-pack.c
+@@ -0,0 +1,67 @@
++#include "cache.h"
++#include "builtin.h"
++#include "exec_cmd.h"
++#include "pkt-line.h"
++#include "parse-options.h"
++#include "protocol.h"
++#include "upload-pack.h"
 +
-+	/* source buffer and its size */
-+	char *src_buffer;
-+	size_t src_len;
-+
-+	/* buffer that pkt-lines are read into and its size */
-+	char *buffer;
-+	unsigned buffer_size;
-+
-+	/* options to be used during reads */
-+	int options;
-+
-+	/* status of the last read */
-+	enum packet_read_status status;
-+
-+	/* length of data read during the last read */
-+	int pktlen;
-+
-+	/* the last line read */
-+	const char *line;
-+
-+	/* indicates if a line has been peeked */
-+	int line_peeked;
++static const char * const upload_pack_usage[] = {
++	N_("git upload-pack [<options>] <dir>"),
++	NULL
 +};
 +
-+/*
-+ * Initialize a 'struct packet_reader' object which is an
-+ * abstraction around the 'packet_read_with_status()' function.
-+ */
-+extern void packet_reader_init(struct packet_reader *reader, int fd,
-+			       char *src_buffer, size_t src_len,
-+			       int options);
++int cmd_upload_pack(int argc, const char **argv, const char *prefix)
++{
++	const char *dir;
++	int strict = 0;
++	struct upload_pack_options opts = { 0 };
++	struct option options[] = {
++		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
++			 N_("quit after a single request/response exchange")),
++		OPT_BOOL(0, "advertise-refs", &opts.advertise_refs,
++			 N_("exit immediately after initial ref advertisement")),
++		OPT_BOOL(0, "strict", &strict,
++			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
++		OPT_INTEGER(0, "timeout", &opts.timeout,
++			    N_("interrupt transfer after <n> seconds of inactivity")),
++		OPT_END()
++	};
 +
-+/*
-+ * Perform a packet read and return the status of the read.
-+ * The values of 'pktlen' and 'line' are updated based on the status of the
-+ * read as follows:
-+ *
-+ * PACKET_READ_ERROR: 'pktlen' is set to '-1' and 'line' is set to NULL
-+ * PACKET_READ_NORMAL: 'pktlen' is set to the number of bytes read
-+ *		       'line' is set to point at the read line
-+ * PACKET_READ_FLUSH: 'pktlen' is set to '0' and 'line' is set to NULL
-+ */
-+extern enum packet_read_status packet_reader_read(struct packet_reader *reader);
++	packet_trace_identity("upload-pack");
++	check_replace_refs = 0;
 +
-+/*
-+ * Peek the next packet line without consuming it and return the status.
-+ * The next call to 'packet_reader_read()' will perform a read of the same line
-+ * that was peeked, consuming the line.
-+ *
-+ * Peeking multiple times without calling 'packet_reader_read()' will return
-+ * the same result.
-+ */
-+extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
++	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
 +
- #define DEFAULT_PACKET_MAX 1000
- #define LARGE_PACKET_MAX 65520
- #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
++	if (argc != 1)
++		usage_with_options(upload_pack_usage, options);
++
++	if (opts.timeout)
++		opts.daemon_mode = 1;
++
++	setup_path();
++
++	dir = argv[0];
++
++	if (!enter_repo(dir, strict))
++		die("'%s' does not appear to be a git repository", dir);
++
++	switch (determine_protocol_version_server()) {
++	case protocol_v1:
++		/*
++		 * v1 is just the original protocol with a version string,
++		 * so just fall through after writing the version string.
++		 */
++		if (opts.advertise_refs || !opts.stateless_rpc)
++			packet_write_fmt(1, "version 1\n");
++
++		/* fallthrough */
++	case protocol_v0:
++		upload_pack(&opts);
++		break;
++	case protocol_unknown_version:
++		BUG("unknown protocol version");
++	}
++
++	return 0;
++}
+diff --git a/git.c b/git.c
+index c870b9719..f71073dc8 100644
+--- a/git.c
++++ b/git.c
+@@ -478,6 +478,7 @@ static struct cmd_struct commands[] = {
+ 	{ "update-server-info", cmd_update_server_info, RUN_SETUP },
+ 	{ "upload-archive", cmd_upload_archive },
+ 	{ "upload-archive--writer", cmd_upload_archive_writer },
++	{ "upload-pack", cmd_upload_pack },
+ 	{ "var", cmd_var, RUN_SETUP_GENTLY },
+ 	{ "verify-commit", cmd_verify_commit, RUN_SETUP },
+ 	{ "verify-pack", cmd_verify_pack },
+diff --git a/upload-pack.c b/upload-pack.c
+index d5de18127..2ad73a98b 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -6,7 +6,6 @@
+ #include "tag.h"
+ #include "object.h"
+ #include "commit.h"
+-#include "exec_cmd.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
+@@ -15,15 +14,10 @@
+ #include "sigchain.h"
+ #include "version.h"
+ #include "string-list.h"
+-#include "parse-options.h"
+ #include "argv-array.h"
+ #include "prio-queue.h"
+ #include "protocol.h"
+-
+-static const char * const upload_pack_usage[] = {
+-	N_("git upload-pack [<options>] <dir>"),
+-	NULL
+-};
++#include "upload-pack.h"
+ 
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -61,7 +55,6 @@ static int keepalive = 5;
+  * otherwise maximum packet size (up to 65520 bytes).
+  */
+ static int use_sideband;
+-static int advertise_refs;
+ static int stateless_rpc;
+ static const char *pack_objects_hook;
+ 
+@@ -977,33 +970,6 @@ static int find_symref(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-static void upload_pack(void)
+-{
+-	struct string_list symref = STRING_LIST_INIT_DUP;
+-
+-	head_ref_namespaced(find_symref, &symref);
+-
+-	if (advertise_refs || !stateless_rpc) {
+-		reset_timeout();
+-		head_ref_namespaced(send_ref, &symref);
+-		for_each_namespaced_ref(send_ref, &symref);
+-		advertise_shallow_grafts(1);
+-		packet_flush(1);
+-	} else {
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
+-	}
+-	string_list_clear(&symref, 1);
+-	if (advertise_refs)
+-		return;
+-
+-	receive_needs();
+-	if (want_obj.nr) {
+-		get_common_commits();
+-		create_pack_file();
+-	}
+-}
+-
+ static int upload_pack_config(const char *var, const char *value, void *unused)
+ {
+ 	if (!strcmp("uploadpack.allowtipsha1inwant", var)) {
+@@ -1032,58 +998,35 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 	return parse_hide_refs_config(var, value, "uploadpack");
+ }
+ 
+-int cmd_main(int argc, const char **argv)
++void upload_pack(struct upload_pack_options *options)
+ {
+-	const char *dir;
+-	int strict = 0;
+-	struct option options[] = {
+-		OPT_BOOL(0, "stateless-rpc", &stateless_rpc,
+-			 N_("quit after a single request/response exchange")),
+-		OPT_BOOL(0, "advertise-refs", &advertise_refs,
+-			 N_("exit immediately after initial ref advertisement")),
+-		OPT_BOOL(0, "strict", &strict,
+-			 N_("do not try <directory>/.git/ if <directory> is no Git directory")),
+-		OPT_INTEGER(0, "timeout", &timeout,
+-			    N_("interrupt transfer after <n> seconds of inactivity")),
+-		OPT_END()
+-	};
+-
+-	packet_trace_identity("upload-pack");
+-	check_replace_refs = 0;
+-
+-	argc = parse_options(argc, argv, NULL, options, upload_pack_usage, 0);
+-
+-	if (argc != 1)
+-		usage_with_options(upload_pack_usage, options);
+-
+-	if (timeout)
+-		daemon_mode = 1;
+-
+-	setup_path();
+-
+-	dir = argv[0];
++	struct string_list symref = STRING_LIST_INIT_DUP;
+ 
+-	if (!enter_repo(dir, strict))
+-		die("'%s' does not appear to be a git repository", dir);
++	stateless_rpc = options->stateless_rpc;
++	timeout = options->timeout;
++	daemon_mode = options->daemon_mode;
+ 
+ 	git_config(upload_pack_config, NULL);
+ 
+-	switch (determine_protocol_version_server()) {
+-	case protocol_v1:
+-		/*
+-		 * v1 is just the original protocol with a version string,
+-		 * so just fall through after writing the version string.
+-		 */
+-		if (advertise_refs || !stateless_rpc)
+-			packet_write_fmt(1, "version 1\n");
+-
+-		/* fallthrough */
+-	case protocol_v0:
+-		upload_pack();
+-		break;
+-	case protocol_unknown_version:
+-		BUG("unknown protocol version");
++	head_ref_namespaced(find_symref, &symref);
++
++	if (options->advertise_refs || !stateless_rpc) {
++		reset_timeout();
++		head_ref_namespaced(send_ref, &symref);
++		for_each_namespaced_ref(send_ref, &symref);
++		advertise_shallow_grafts(1);
++		packet_flush(1);
++	} else {
++		head_ref_namespaced(check_ref, NULL);
++		for_each_namespaced_ref(check_ref, NULL);
+ 	}
++	string_list_clear(&symref, 1);
++	if (options->advertise_refs)
++		return;
+ 
+-	return 0;
++	receive_needs();
++	if (want_obj.nr) {
++		get_common_commits();
++		create_pack_file();
++	}
+ }
+diff --git a/upload-pack.h b/upload-pack.h
+new file mode 100644
+index 000000000..a71e4dc7e
+--- /dev/null
++++ b/upload-pack.h
+@@ -0,0 +1,13 @@
++#ifndef UPLOAD_PACK_H
++#define UPLOAD_PACK_H
++
++struct upload_pack_options {
++	int stateless_rpc;
++	int advertise_refs;
++	unsigned int timeout;
++	int daemon_mode;
++};
++
++void upload_pack(struct upload_pack_options *options);
++
++#endif /* UPLOAD_PACK_H */
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
