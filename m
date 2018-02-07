@@ -2,117 +2,264 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD8C51F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 09:18:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD1EE1F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 09:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753733AbeBGJSw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 04:18:52 -0500
-Received: from mail-eopbgr30079.outbound.protection.outlook.com ([40.107.3.79]:42583
-        "EHLO EUR03-AM5-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1753734AbeBGJSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 04:18:49 -0500
+        id S1753356AbeBGJWJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 04:22:09 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:42108 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753700AbeBGJWH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 04:22:07 -0500
+Received: by mail-pf0-f195.google.com with SMTP id b25so77319pfd.9
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ercogmbh.onmicrosoft.com; s=selector1-erco-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=Dbtyo/Zw7CsehTqPPfD4b+0r5hbBiCdi6QVgA2qIShs=;
- b=DfE5QlrCViVOhXFQ+gJW7K4xjFhzp+2TI+uMlrgzwWDFiEggVA+B6QqOS0pkwhcFLSNXA5t5qRnL099gpJ6u+0XF3i4ltno/oZnt0afjuZtEpdtUccVzywSLKh1M/Z7tEt95hD1QO6PuALo0Qz15N4HAheTQHZV/z66v5Vn9HE8=
-Received: from AM6PR0402MB3464.eurprd04.prod.outlook.com (52.133.19.33) by
- AM6PR0402MB3574.eurprd04.prod.outlook.com (52.133.20.11) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.464.11; Wed, 7 Feb 2018 09:18:46 +0000
-Received: from AM6PR0402MB3464.eurprd04.prod.outlook.com
- ([fe80::1842:5191:fe23:6817]) by AM6PR0402MB3464.eurprd04.prod.outlook.com
- ([fe80::1842:5191:fe23:6817%13]) with mapi id 15.20.0485.009; Wed, 7 Feb 2018
- 09:18:46 +0000
-From:   "Ehrt, Michael" <m.ehrt@erco.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Windows: mintty.exe classified as exploit by AV software
-Thread-Topic: Windows: mintty.exe classified as exploit by AV software
-Thread-Index: AdOf836w8dLtsE8ESyarVOoffI6Gdg==
-Date:   Wed, 7 Feb 2018 09:18:46 +0000
-Message-ID: <AM6PR0402MB34640AF9BB8DD9DB1BB2241CE6FC0@AM6PR0402MB3464.eurprd04.prod.outlook.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=m.ehrt@erco.com; 
-x-originating-ip: [193.158.86.123]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;AM6PR0402MB3574;7:efFwAef9RwLlizeBo1X40uCUQvZ34K0zyT/ipsbWwCgVX9YWSpRh/DRgM6Gs7SyyVQxWKoDUBqYfCubtwK9DWNTt3o+EgdOYadLwSDP2dFDOIRVFCLp1wF6LWDy0AxZYJbijUXlIQHMDIiKoIeWolsJBx7hOv9yAj0GkZxM5bs6wt2ifOaQ1TYcT6DJpR7jdDwkK9diOUhFumTVE+2kk0OBoCj/3NKBSQ1rM8NRX7T3ELpcyvS5g5uW3qeDe6yjx
-x-ms-exchange-antispam-srfa-diagnostics: SSOS;
-x-ms-office365-filtering-correlation-id: 7370c234-9d60-4a06-41c3-08d56e0bcab2
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(5600026)(4604075)(3008032)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603307)(7153060)(7193020);SRVR:AM6PR0402MB3574;
-x-ms-traffictypediagnostic: AM6PR0402MB3574:
-x-microsoft-antispam-prvs: <AM6PR0402MB35746920BF8B7992836AB738E6FC0@AM6PR0402MB3574.eurprd04.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(192374486261705)(67617419657146);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040501)(2401047)(5005006)(8121501046)(3231101)(2400082)(944501161)(93006095)(93001095)(10201501046)(3002001)(6041288)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123560045)(20161123564045)(20161123562045)(6072148)(201708071742011);SRVR:AM6PR0402MB3574;BCL:0;PCL:0;RULEID:;SRVR:AM6PR0402MB3574;
-x-forefront-prvs: 0576145E86
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(346002)(396003)(39380400002)(39850400004)(366004)(53754006)(199004)(189003)(5660300001)(55016002)(6436002)(25786009)(8676002)(106356001)(2351001)(6306002)(2900100001)(9686003)(105586002)(53936002)(2906002)(81166006)(81156014)(8936002)(1730700003)(186003)(3280700002)(3660700001)(5640700003)(68736007)(6116002)(3846002)(6916009)(316002)(102836004)(97736004)(86362001)(6506007)(59450400001)(74316002)(305945005)(7736002)(7696005)(26005)(99286004)(33656002)(14454004)(2501003)(966005)(478600001)(5250100002)(66066001)(460985005);DIR:OUT;SFP:1101;SCL:1;SRVR:AM6PR0402MB3574;H:AM6PR0402MB3464.eurprd04.prod.outlook.com;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
-received-spf: None (protection.outlook.com: erco.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: wgRgxsjc1ITLVijk1KZro69nDpkD2ua/bkN37auGti73tuq7RWiNLQCGF5JEWHG3l1/LOuObyuxJgGa3kf3OwQ==
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SPZ2WZraVaGWllth3KLcyPBOU7HVFP7tuZpzSXqulwY=;
+        b=LI19n0Rliqb6uEX+G0SzRVedjqHzK+8qxjSPJUrh0zAFsGBRpHpYAqkh81cchz7fYw
+         IMR282pY2kMQbblUJ7TLDhUJ2ncig8z9ZgHw+RU2dH75B6YXRwYfbuAKNBy8atfL/D5B
+         AMVY2IvZPlWCDjF9vSvUWQd/VuAvT3Pnkjt/07bPckKpqg9iZPDNPQwL8NXVfU/RvevL
+         GACuyDb9FiSGONTMmuN9qzn0t31dR0nb47wbksDJXA0MCMjhZjpj6flUFGmtloOsMiv5
+         yYWbZrAOaxx5oRzExDOonqb/NjFhIakoWvxsXhbC9wFec8P2OTQslnHh48N2lojZr3vT
+         vmjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SPZ2WZraVaGWllth3KLcyPBOU7HVFP7tuZpzSXqulwY=;
+        b=tntUgdFdXqHaJcqA1nbkBu1i4886ML5e/oDOIBKNWE6RjToI6diC82CnzW7H3z0e6m
+         XfQVNeDutO34susThK1Hueo3x0WYjw023qgFRn4CtPrKOcjO0Z5kT+Jr5dQrwnDnS3OR
+         ux+Pjhy7McGSTagibW5OrVz4VWKG+5ZtIEzChP41k5Hdh51eqEtAiOLHsRNgfsOpP4sC
+         +qCp5QL0+MQnnobKhDhTDc0iVTMfijP4GqHOAzBzF0DJqu60dx/d+rEHhvjowd92zyZ1
+         hpaNPOIFbmy8Imo10HmeX0Utn+xMPnxC6jWlWpLs0DzA5DRMf6fLutJtcam1KAzxdxP1
+         96Ww==
+X-Gm-Message-State: APf1xPBxZasoN/KCkuwkWsNdVvQmk7hq54CS14Y2qowNjPDEEj6084BU
+        65fkFUu+N7am3v4TqpQs1J4=
+X-Google-Smtp-Source: AH8x2270sH666KM+jnaWn1AaTE+AJe3Dg0VFVRyzlncFXgC9Tai209m67EVpMGFHi+OAG7ZFc2W8ig==
+X-Received: by 10.98.20.77 with SMTP id 74mr5408236pfu.45.1517995326473;
+        Wed, 07 Feb 2018 01:22:06 -0800 (PST)
+Received: from ash ([171.233.100.40])
+        by smtp.gmail.com with ESMTPSA id u26sm2704553pfk.126.2018.02.07.01.22.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 07 Feb 2018 01:22:05 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 07 Feb 2018 16:22:01 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <peartben@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Alex Vandiver <alexmv@dropbox.com>, git@vger.kernel.org,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2] dir.c: ignore paths containing .git when invalidating untracked cache
+Date:   Wed,  7 Feb 2018 16:21:41 +0700
+Message-Id: <20180207092141.4312-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.207.gedba492059
+In-Reply-To: <20180207092141.4312-1-pclouds@gmail.com>
+References: <20180204093823.3671-1-pclouds@gmail.com>
+ <20180207092141.4312-1-pclouds@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: erco.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7370c234-9d60-4a06-41c3-08d56e0bcab2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Feb 2018 09:18:46.6699
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 16350171-e77d-4924-83a3-94b4b29cf63e
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR0402MB3574
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+read_directory() code ignores all paths named ".git" even if it's not
+a valid git repository. See treat_path() for details. Since ".git" is
+basically invisible to read_directory(), when we are asked to
+invalidate a path that contains ".git", we can safely ignore it
+because the slow path would not consider it anyway.
 
-a few days ago I installed version 2.16.1.2, downloaded from https://git-sc=
-m.com/download/win on my Windows 7 system. The OS is Windows 7 Enterprise 6=
-4bit, Build 7601/SP1, in case it matters. This is a first time install, not=
- an upgrade.
+This helps when fsmonitor is used and we have a real ".git" repo at
+worktree top. Occasionally .git/index will be updated and if the
+fsmonitor hook does not filter it, untracked cache is asked to
+invalidate the path ".git/index".
 
-Our current virus protection software is Cylance, from https://www.cylance.=
-com/en_us/home.html
+Without this patch, we invalidate the root directory unncessarily,
+which:
 
-During install, several executions of=20
-C:\Program Files\Git\usr\bin\bash.exe
-were blocked, the violation being given as "Stack Pivot". Our admins then t=
-emporarily lifted some rules for my device so that I could properly install=
- it.
+- makes read_directory() fall back to slow path for root directory
+  (slower)
 
-But now, when I start ...
-"C:\Program Files\Git\git-bash.exe" --cd-to-home
-... Cylance classifies it as an Exploit, and blocks execution with the foll=
-owing messages:
-Category: Exploit
-Event: Blocked
-Details: Violation: StackProtect; Application: C:\Program Files\Git\usr\bin=
-\mintty.exe
-(Screenshot available if needed)
+- makes the index dirty (because UNTR extension is updated). Depending
+  on the index size, writing it down could also be slow.
 
-If I start ...
-C:\Program Files\Git\usr\bin\mintty.exe
-directly, and choose the 64 bit version from the dialog, it is allowes to s=
-tart without getting blocked.
+A note about the new "safe_path" knob. Since this new check could be
+relatively expensive, avoid it when we know it's not needed. If the
+path comes from the index, it can't contain ".git". If it does
+contain, we may be screwed up at many more levels, not just this one.
 
-My current problem is that the security guys don't want to see this softwar=
-e installed on my machine because of this.
-And as Cylance is not a pattern-based AV, it's not something that will go a=
-way by waiting for the next daily update ...
+Noticed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ My v1 was rubbish. It's no wonder Ben didn't see my intention. v2
+ corrects the "is .git in a given path?" logic and adds a test to
+ verify it.
 
-Any ideas about this?
+ dir.c                       | 10 ++++++----
+ dir.h                       |  2 +-
+ fsmonitor.c                 |  2 +-
+ fsmonitor.h                 |  2 +-
+ t/t7519-status-fsmonitor.sh | 39 +++++++++++++++++++++++++++++++++++++
+ unpack-trees.c              |  2 +-
+ 6 files changed, 49 insertions(+), 8 deletions(-)
 
-Thanks
-
-Michael
+diff --git a/dir.c b/dir.c
+index 7c4b45e30e..fce45fc55e 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1773,7 +1773,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
+ 	if (!de)
+ 		return treat_path_fast(dir, untracked, cdir, istate, path,
+ 				       baselen, pathspec);
+-	if (is_dot_or_dotdot(de->d_name) || !strcmp(de->d_name, ".git"))
++	if (is_dot_or_dotdot(de->d_name) || !fspathcmp(de->d_name, ".git"))
+ 		return path_none;
+ 	strbuf_setlen(path, baselen);
+ 	strbuf_addstr(path, de->d_name);
+@@ -2968,10 +2968,12 @@ static int invalidate_one_component(struct untracked_cache *uc,
+ }
+ 
+ void untracked_cache_invalidate_path(struct index_state *istate,
+-				     const char *path)
++				     const char *path, int safe_path)
+ {
+ 	if (!istate->untracked || !istate->untracked->root)
+ 		return;
++	if (!safe_path && !verify_path(path))
++		return;
+ 	invalidate_one_component(istate->untracked, istate->untracked->root,
+ 				 path, strlen(path));
+ }
+@@ -2979,13 +2981,13 @@ void untracked_cache_invalidate_path(struct index_state *istate,
+ void untracked_cache_remove_from_index(struct index_state *istate,
+ 				       const char *path)
+ {
+-	untracked_cache_invalidate_path(istate, path);
++	untracked_cache_invalidate_path(istate, path, 1);
+ }
+ 
+ void untracked_cache_add_to_index(struct index_state *istate,
+ 				  const char *path)
+ {
+-	untracked_cache_invalidate_path(istate, path);
++	untracked_cache_invalidate_path(istate, path, 1);
+ }
+ 
+ /* Update gitfile and core.worktree setting to connect work tree and git dir */
+diff --git a/dir.h b/dir.h
+index 11a047ba48..06df057054 100644
+--- a/dir.h
++++ b/dir.h
+@@ -350,7 +350,7 @@ static inline int dir_path_match(const struct dir_entry *ent,
+ int cmp_dir_entry(const void *p1, const void *p2);
+ int check_dir_entry_contains(const struct dir_entry *out, const struct dir_entry *in);
+ 
+-void untracked_cache_invalidate_path(struct index_state *, const char *);
++void untracked_cache_invalidate_path(struct index_state *, const char *, int safe_path);
+ void untracked_cache_remove_from_index(struct index_state *, const char *);
+ void untracked_cache_add_to_index(struct index_state *, const char *);
+ 
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 0af7c4edba..6d7bcd5d0e 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -130,7 +130,7 @@ static void fsmonitor_refresh_callback(struct index_state *istate, const char *n
+ 	 * as it could be a new untracked file.
+ 	 */
+ 	trace_printf_key(&trace_fsmonitor, "fsmonitor_refresh_callback '%s'", name);
+-	untracked_cache_invalidate_path(istate, name);
++	untracked_cache_invalidate_path(istate, name, 0);
+ }
+ 
+ void refresh_fsmonitor(struct index_state *istate)
+diff --git a/fsmonitor.h b/fsmonitor.h
+index cd3cc0ccf2..65f3743636 100644
+--- a/fsmonitor.h
++++ b/fsmonitor.h
+@@ -65,7 +65,7 @@ static inline void mark_fsmonitor_invalid(struct index_state *istate, struct cac
+ {
+ 	if (core_fsmonitor) {
+ 		ce->ce_flags &= ~CE_FSMONITOR_VALID;
+-		untracked_cache_invalidate_path(istate, ce->name);
++		untracked_cache_invalidate_path(istate, ce->name, 1);
+ 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_invalid '%s'", ce->name);
+ 	}
+ }
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index eb2d13bbcf..756beb0d8e 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -314,4 +314,43 @@ test_expect_success 'splitting the index results in the same state' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR' '
++	test_create_repo dot-git &&
++	(
++		cd dot-git &&
++		mkdir -p .git/hooks &&
++		: >tracked &&
++		: >modified &&
++		mkdir dir1 &&
++		: >dir1/tracked &&
++		: >dir1/modified &&
++		mkdir dir2 &&
++		: >dir2/tracked &&
++		: >dir2/modified &&
++		write_integration_script &&
++		git config core.fsmonitor .git/hooks/fsmonitor-test &&
++		git update-index --untracked-cache &&
++		git update-index --fsmonitor &&
++		GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace-before" \
++		git status &&
++		test-dump-untracked-cache >../before
++	) &&
++	cat >>dot-git/.git/hooks/fsmonitor-test <<-\EOF &&
++	printf ".git\0"
++	printf ".git/index\0"
++	printf "dir1/.git\0"
++	printf "dir1/.git/index\0"
++	EOF
++	(
++		cd dot-git &&
++		GIT_TRACE_UNTRACKED_STATS="$TRASH_DIRECTORY/trace-after" \
++		git status &&
++		test-dump-untracked-cache >../after
++	) &&
++	grep "directory invalidation" trace-before >>before &&
++	grep "directory invalidation" trace-after >>after &&
++	# UNTR extension unchanged, dir invalidation count unchanged
++	test_cmp before after
++'
++
+ test_done
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 96c3327f19..9a327696c5 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1506,7 +1506,7 @@ static void invalidate_ce_path(const struct cache_entry *ce,
+ 	if (!ce)
+ 		return;
+ 	cache_tree_invalidate_path(o->src_index, ce->name);
+-	untracked_cache_invalidate_path(o->src_index, ce->name);
++	untracked_cache_invalidate_path(o->src_index, ce->name, 1);
+ }
+ 
+ /*
+-- 
+2.16.1.207.gedba492059
 
