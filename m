@@ -7,85 +7,86 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E964F1F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 09:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577AD1F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 09:54:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753419AbeBGJwF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 04:52:05 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:43449 "EHLO
+        id S1753424AbeBGJyN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 04:54:13 -0500
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:40362 "EHLO
         mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753356AbeBGJwE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 04:52:04 -0500
-Received: by mail-qk0-f193.google.com with SMTP id y204so296443qkb.10
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:52:04 -0800 (PST)
+        with ESMTP id S1752758AbeBGJyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 04:54:12 -0500
+Received: by mail-qk0-f193.google.com with SMTP id e20so315203qkm.7
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:54:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=MJ1dfZcs8EArnv1yP+y6WDfV7W9K5eqkdQZGFewBqiQ=;
-        b=cFfOtutaANJ4KctO7c+1R1l+n5DgCwkRdN7npRhiu13qB0mtcqfCZkAi/VAed9CXzr
-         +omZ9Vcb394IAjsxBFRdd2AyyafMBNdFH++BnDmQ1rMir2qgmOKM/4Mw4YdGDbM6e4lt
-         usJJXarFWDs9aNVde70gvMlE2OSofUdPJAXBQoB9bp79doDQu17kUGCg5+NU/p8Bwinw
-         Bx/e9gfRICUDiiLEX1VDzwaBLyeYs2Nk1ck5ls1OKaQg4YEx+G41LQn73Ko37S2AgZYa
-         K4eyRG8LLZXM7LoUiNmWPMMzXxAlBsDNLEBwU210qOm2uA/R9vkmVEsjfv4CyF26jrjA
-         bmHQ==
+        bh=54bSMjx24W/UwrETOLbsXufCb2aQVFalhd4fh+srA0g=;
+        b=HZTBEfRIKQy7GolrrGcFEmywVi8/08GhKbUMvwSPzOx8x6ZlqXsz8ZzO1YO2tDpJxy
+         vfqKEzLI/RaAcuKnn5qeLX08jKMZKXjvAGnWFlNIFNWFPESGARNxAm2pHGBf0rCNR1Jf
+         yMMcripRQx1n7akh8ATJ4acncoUi9ee1GbEVmy3/xicxPJNx3TekfKkUhgYESB0LAE9P
+         nzFq9TogDJzzilSfCEpK71YAw1ZKttaEPdNzamww+LA6RZ5gMj5wTm+VuhdI2pRIAdGU
+         TtfmNiUybYR15yrnui/cB22Lm0JbIsJRC14li61fXKrsUHwBbQ+uNGmyEbL+tv/eU1LW
+         so0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=MJ1dfZcs8EArnv1yP+y6WDfV7W9K5eqkdQZGFewBqiQ=;
-        b=ncM/GU7btVoLYDREGMb2eVQ/5LEht3BUK27qmYaygRTOoEtcQOZjlV4CW1hkEYa+L9
-         ba8NMs12rTrPFNN+f8MaLGqPddMZxG4SsuBGcov3pQQiVN2adQL27HDf+zZ+nJixqE12
-         RLsppW3sW/ZowNsa3UK8xu+sbvv0DURJNvAYauKil7pb3wY2jOIzOfLBrdCu7RAM0hTr
-         Ao2ud1UvOjt/Rc77Q87yZbRuMpHiD836LHMjqpH2aBjPNERvyRB7/RfU5ct7rzMH/PAs
-         ZMiZ7bAE22gN0Tz5zA29BNrWiXKTkzX4EOYdm2QQOBLt/FLjy1fXpEsUDyRNbwTEN+i5
-         kRqg==
-X-Gm-Message-State: APf1xPCO7ldZsY/9U1xO68BjFdYgptwfVvkF56Lhyh8S+jrCzk8naS1t
-        Oo0AuTRgAKgPcvkkNhZBbK5HAmStRrmTfMggyp0=
-X-Google-Smtp-Source: AH8x226UsExQlSrXhWL/SasRC4kdM3eSj/l3lK8le9cH9LngQc6mHCTHyQR0C37b4qW0eEMBusWgJXaVA0tEkN3DOxU=
-X-Received: by 10.55.123.69 with SMTP id w66mr7931297qkc.326.1517997123835;
- Wed, 07 Feb 2018 01:52:03 -0800 (PST)
+        bh=54bSMjx24W/UwrETOLbsXufCb2aQVFalhd4fh+srA0g=;
+        b=Ivejbhxqm4vuZX9a1+8XW8Ck/ieMW2X3nueXyiGcgCUOivdEJuvCDfl6GGYaz2dX+G
+         SrOcT2rrOgLA1j4fy3vK314hw5ChVjNUQbNs7H4wzBxK0q+h6LE26A1afAkMCrHB8APD
+         eJuvdGFMz/vaXkaZGyTZSbB5Q1TyTr3V11WP0O6VaXJexTUsJNerHiiDkAYpw/ihbyla
+         Renap+RVbpXncG4tAdT8UprK3dqFOT66Tfh6xLkAEE/tOShBcydbjAftiYuXPMDb76Ot
+         I9es9gc4dGyp39oFea9ZbjtTKRh15sCHh+np7J+bPha6VZzw7iBpKG0lcta0vcd/6DqO
+         l9xQ==
+X-Gm-Message-State: APf1xPDLeZiscynyNCHJ6Bu6WPL705ZoXgfIYV8S7dXMMmFcTo9MMSn9
+        NL+bvv6yVMXUQrSNZjhSc1PHlRF0JyrPHtE74Jo=
+X-Google-Smtp-Source: AH8x225++Dzj6DcH8Ics3/VpWdEK2EKelTKNu7HPapvmeM0aok2382qvY6DJHTQwpcwBnAxGlLNUlSzygS8XPIXgGtM=
+X-Received: by 10.55.177.135 with SMTP id a129mr8329810qkf.112.1517997251615;
+ Wed, 07 Feb 2018 01:54:11 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 01:52:03 -0800 (PST)
-In-Reply-To: <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
-References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
- <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
- <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com> <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
+Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 01:54:11 -0800 (PST)
+In-Reply-To: <CAGZ79kYYZ-dmHA5jZeKTk9TFxn+7_zzxLPR7jNS4X8+K-JU_dg@mail.gmail.com>
+References: <20180205235508.216277-1-sbeller@google.com> <CAGZ79kYYZ-dmHA5jZeKTk9TFxn+7_zzxLPR7jNS4X8+K-JU_dg@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Feb 2018 04:52:03 -0500
-X-Google-Sender-Auth: cQlHi7b3wh7Jsv1Opf-wT5HaMEM
-Message-ID: <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 7 Feb 2018 04:54:11 -0500
+X-Google-Sender-Auth: jYshAIalz693HgWDg0oUHHHkfk4
+Message-ID: <CAPig+cSFcjV8RfWhaZsy2CqYG0JYfn4u0vKkf_XkUAmC12uONA@mail.gmail.com>
+Subject: Re: [RFC PATCH 000/194] Moving global state into the repository object
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 5:20 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, Feb 6, 2018 at 1:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Duy Nguyen <pclouds@gmail.com> writes:
->> I actually think compact-summary was a good way to phrase it.
->>
->> Personally, I think it was a UI mistake that --summary can be given
->> independently with or without --stat (instead, there shouldn't have
->> been the --summary option, and instead when it was added, --stat
->> just should have gained an extra kind of output).  A single option
->> that can give both kinds of info may be a good way forward, so
->> another possibility may be --summary-in-stat (meaning: the info
->> given by summary is included in stat output).  I dunno.
+On Tue, Feb 6, 2018 at 3:25 PM, Stefan Beller <sbeller@google.com> wrote:
+>> Any suggestions welcome!
 >
-> +Eric maybe he has some idea (sorry I forgot to include people from
-> the last round).
+> Eric repeatedly points out leaking memory.
+>
+> As of today we do not care about memory leaking as it is cleaned
+> up at the end of the program anyway, for example the objects
+> hash table is never cleared.
 
-What about the earlier suggestion[1] (and minor follow-ups[2,3]) of
-making this another option to --stat= (for instance, --stat=compact)?
-Did that idea get shot down or am I misunderstanding the question
-here.
+Is this still true/desirable when multiple 'repos' are involved?
 
-[1]: https://public-inbox.org/git/CAPig+cQLgs59JYxcmK30qY307ArwqJx6pNOo95Z39_jJ9+D6+g@mail.gmail.com/
-[2]: https://public-inbox.org/git/CACsJy8B5qrN8T1aai3y3nfEc5baqn2Xkk6vZozMp5Lh-mPZ0VQ@mail.gmail.com/
-[3]: https://public-inbox.org/git/CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com/
+> In a resend I will put the infrastructure in place to free the memory via
+> adding
+>
+>   raw_object_store_clear(struct raw_object_store *)
+>   object_parser_clear(struct object_parser *)
+>   ref_store_clear(struct ref_store *)
+>
+> and calling these functions on repo destruction. The functions
+> itself will be empty code-wise and contain TODO comments listing
+> all variables that need care.
+
+I'm confused. If you go to the effort of inserting TODO's why not go
+all the way and instead insert the actual code?
+
+> Follow up patches can figure out what is best to do, such as closing
+> the memleaks. As repo_clear is not called for the_repository
+> we'd even keep the property of relying on fast cleanup by the OS.
