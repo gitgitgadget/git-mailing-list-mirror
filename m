@@ -2,156 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEEA41F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 17:36:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48151F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 17:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932109AbeBGRgP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 12:36:15 -0500
-Received: from mout.gmx.net ([212.227.17.21]:65229 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753828AbeBGRgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 12:36:13 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx101 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 0MfzEP-1eOMI90sMf-00NQ19; Wed, 07 Feb 2018 18:36:08 +0100
-Date:   Wed, 7 Feb 2018 18:36:06 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Sergey Organov <sorganov@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-In-Reply-To: <87k1vpqq85.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1802071818240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de> <87k1vpqq85.fsf@javad.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:CrQBmR4nZycErbDMCtey7S720OIBtrN2WNgTfAVALuOKypgjQGU
- VVnNYoZMj32x0G/HgwWOnsKlMwULQYokiTG4r32qH52V513jDiBcMoqmVMltiFSkO0xpmSz
- LsQeDxhtn9xNXyF2Do+GV+f13tokNRo9brXrKWgQsRbK0InS0GuBV5y9zIQIJejRTlyqvoF
- REyVQnpBxDE+E7GdBUEaQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UMaaqJMN9To=:RS2R9u9sgkfx5ah0aKBieh
- PG2BkQLlr2wflmiGtAUACbKHatzFpsdj9hAC4Cc6dcgi2ontpLNwMhOaRvI+5D4pJrjN1oC4J
- IfqL6qrfs/zj03Eaku4qOArol2bZ1cE//xXbLJFS3G6BbuetA2mbn/j/egXkrEk+hXb8V5AUu
- MvwLEgatHqF5wyQaLm6QaCafYwbRUjBbeFeWwlPBL6ODa33lHyiaypabPhgXQ7jIwgSF6G8zJ
- kUUhoMvEX6gy32Gl1DsN/JN2ZAGnCu5U+vQToIb2OJtdt7G9/ZweiVjodBIRKJBein2m27mpc
- Ro87G4l/SRKroidrztmLkfcasvTfDOd2jrynKyCeJgYWH6DT2Bgy1s6R3dXajNQvIr+cAzzZ2
- LJj/4I3KlQdTrJQ0BQJlOWEFJ0D4icwdWggkuB3DbdN4nc+RHi68c8/zyJNuQcBpXLCtMMX/i
- x4EM2QchdcIxx7EMswf8WBBYXesLPBW6eo+8xwdNx/k/ehJ6bSOyHUaSIRY52JNj8bqEzzSul
- WO+LqDNkeSI+4jTCqOqucdP3Kr4qC5QxvppQ1KOInHBr/yhZkR9E9aggME2soY1JsIq44ps3x
- VC7etNvQIjqIMeSJ8+UGPigAzh4cKamSFrCtfKxdVRQGkIZaIyT1S+Y9YJK99u0OvTx8F0s6W
- rDMfUXPUIkXkJvrLMqkb92yOrlFQhsOYvjNC3hff67k8cZMZIqE1VzlsKvZhdf+GWDyyvoA93
- GPF79+kNh7Pao0pYeLdxXfFFdhFNamni2RqK/yuby1oSjsCXJDmItFj89kn+lUhSuGdB+WJcR
- d5T+HhjpNiuU4Q9I4fHnRW9r0E3VwWarPAKqV2motJSrF8Dyus=
+        id S1754311AbeBGRyf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 12:54:35 -0500
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:52612 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754151AbeBGRy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 12:54:26 -0500
+Received: by mail-wm0-f43.google.com with SMTP id g1so4754194wmg.2
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 09:54:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aIO2s8pIwMxFESZLvrz2yg2rF1H5SwJH+l45uAHxu/w=;
+        b=QOt9aBo+Pijb5gE6RiHFQtmoPHqHDc6HwmJSbNQnRk2E8K/Xqv9mTSZD6wXfMeyDuJ
+         Yr4YZdSsHZu6La0Qpu+57sEyMRDoMnWRVYu8+7RnrFCdkyRsIzVSPFbyWcqkuTNRUWdT
+         JNH0eINaDbDsDKMYOEv0nF7XfQcJtc/SQAbDBko+LpeGVF4Zs+2OmZbXsX9RAZIimd2L
+         pShs9XWnEhoJBRInqD2aQF4hCqaciUuD3KY0S8btmlpsTqx7bpTH8Oh72M8vRVCV0yEd
+         uPOqNSPGdN/em/hY8hqZ+YXXyr6LTGYOx9pKJ6hZtD+w0VfkOMPOGY2LEPuM4vMUskH+
+         +2kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aIO2s8pIwMxFESZLvrz2yg2rF1H5SwJH+l45uAHxu/w=;
+        b=CxQKoNTOXZUFP3FzYT++EzT20HcDFl0E4eIZn3QYKpymMJ/xiBQ+bwpI3dOjIRzbT6
+         kkAw5XsjFks5HV0Vw0Wviw6nECGPFvYTnRQ4uORUE+dxjH5sCXX6RBBfv2JFO6oCzR28
+         zk7RDYZEyszW6lkhPNBELqxV2KmPdNYlwQXNIhDe1sLLZZt36Ecnw6q8lq9gfWo5UHqC
+         w5bG1psPaK/DUmzKeSl1Qgro8muMjS1Wvnl8Y1orKAhSL6agnz/FOMIJoDHDWtcIrJch
+         UMOUxvky5gxciTZYzIOvD75o41jLzmAtrOrkeKuAvJfahz388Zw3sWQaGKal6doTnb2J
+         d7kQ==
+X-Gm-Message-State: APf1xPC49tRxdPWEGEGJOiO/ZBuj4suoxkQoisvtV50MvYchAAGsozQu
+        6BsEK0KoVNEiJbbckFzhHgKGAy/0
+X-Google-Smtp-Source: AH8x2251o4Og0ewtSf3AyKJUuKk+C1E4iw2poyaRvBEOBA9jSmNRRsgouqHMWAwQinFvAuVkgxs9hw==
+X-Received: by 10.28.71.198 with SMTP id m67mr5966367wmi.40.1518026065585;
+        Wed, 07 Feb 2018 09:54:25 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id b35sm4864926wra.13.2018.02.07.09.54.24
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Feb 2018 09:54:24 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: "git branch" issue in 2.16.1
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
+Date:   Wed, 7 Feb 2018 18:54:23 +0100
+Cc:     Todd Zullinger <tmz@pobox.com>, Jason Racey <jason@eluvio.com>,
+        git <git@vger.kernel.org>, Paul Smith <paul@mad-scientist.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5A7788B0-6250-4D1F-A86D-E3155C03EF0C@gmail.com>
+References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com> <20180206195754.GE1427@zaya.teonanacatl.net> <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-On Wed, 7 Feb 2018, Sergey Organov wrote:
+> On 06 Feb 2018, at 21:05, Stefan Beller <sbeller@google.com> wrote:
+>=20
+> On Tue, Feb 6, 2018 at 11:57 AM, Todd Zullinger <tmz@pobox.com> wrote:
+>> Hi Jason,
+>>=20
+>> Jason Racey wrote:
+>>> After upgrading git from 2.16.0 to 2.16.1 (via Homebrew -
+>>> I=E2=80=99m on macOS) I noticed that the =E2=80=9Cgit branch=E2=80=9D =
+command
+>>> appears to display the branch listing in something similar
+>>> to a vi editor - though not quite the same. I don=E2=80=99t know
+>>> the technical term for this state. You can=E2=80=99t actually edit
+>>> the output of the command, but you=E2=80=99re in a state where you
+>>> have to type =E2=80=9Cq=E2=80=9D to exit and then the list =
+disappears.
+>>> It=E2=80=99s very inconvenient and it doesn=E2=80=99t seem like it =
+was by
+>>> design. I=E2=80=99m using zsh in iTerm2 if that helps. Thanks.
+>>=20
+>> In 2.16.0 `git branch --list` is sent to a pager by default.
+>> (Without arguments, --list is the default, so this applies
+>> to `git branch`).
+>>=20
+>> You can set pager.branch to false to disable this in the
+>> config, or use git --no-pager branch to do so for a single
+>> invocation.
+>>=20
+>> I can't say why you're seeing this with 2.16.1 and not
+>> 2.16.0, but I'm not familiar with homebrew, so perhaps
+>> something didn't work as intended in 2.16.0.
+>>=20
+>=20
+> Maybe the number of branches changed since then?
+> As the pager only comes to life when the output fills
+> more than your screen. Quick workarounds:
+> * buy a bigger screen
+> * have fewer branches.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> [...]
-> 
-> > +--recreate-merges::
-> > +	Recreate merge commits instead of flattening the history by replaying
-> > +	merges. Merge conflict resolutions or manual amendments to merge
-> > +	commits are not preserved.
-> 
-> I wonder why you guys still hold on replaying "merge-the-operation"
-> instead of replaying "merge-the-result"?
+Hmmm... there might be more to it. I just noticed the
+pager behavior on macOS, too. Consider this call:
 
-This misses the point of rebasing: you want to replay the changes.
+$ git diff --shortstat
 
-> The latter, the merge commit itself, no matter how exactly it was
-> created in the first place, is the most valuable thing git keeps about
-> the merge, and you silently drop it entirely!
+This should generate at most one line of output. On Linux
+the pager is never used. On macOS the pager is always used.
 
-You miss another very crucial point. I don't blame you, as you certainly
-have not used the Git garden shears for years.
+I tried older versions of Git on macOS and experienced the
+same behavior.
 
-Let me explain the scenario which comes up plenty of times in my work with
-Git for Windows. We have a thicket of some 70 branches on top of git.git's
-latest release. These branches often include fixup! and squash! commits
-and even more complicated constructs that rebase cannot handle at all at
-the moment, such as reorder-before! and reorder-after! (for commits that
-really need to go into a different branch).
+@Jason: That might be a bug on macOS. However, I am surprised
+you only noticed it after upgrading from 2.16.0 to 2.16.1.
+Do you recall anything else you've changed?
 
-Even if you do not have such a complicated setup, it is quite possible
-that you need to include a commit in your development that needs to be
-dropped before contributing your work. Think e.g. removing the `-O2` flag
-when compiling with GCC because GDB gets utterly confused with executables
-compiled with `-O2` while single-stepping. This could be an initial commit
-called `TO-DROP` or some such.
+- Lars
 
-And guess what happens if you drop that `pick` line in your todo list and
-then the `merge` command simply tries to re-create the original merge
-commit's changes?
-
-Exactly. The merge will become an evil merge, and will introduce that very
-much not-wanted and therefore-dropped changes.
-
-> OTOH, git keeps almost no information about "merge-the-operation", so
-> it's virtually impossible to reliably replay the operation
-> automatically, and yet you try to.
-
-That is true. However, the intended use case is not to allow you to
-recreate funny merges. Its use case is to allow you to recreate merges.
-
-At a later stage, I might introduce support to detect `-s ours` merges,
-because they are easy to detect. But even then, it will be an opt-in.
-
-> IMHO that was severe mistake in the original --preserve-merges, and you
-> bring with you to this new --recreate-merges... It's sad.
-
-Please refrain from drawing this discussion into an emotional direction.
-That is definitely not helpful.
-
-> Even more sad as solution is already known for years:
-> 
->     bc00341838a8faddcd101da9e746902994eef38a
->     Author: Johannes Sixt <j6t@kdbg.org>
->     Date:   Sun Jun 16 15:50:42 2013 +0200
->     
->         rebase -p --first-parent: redo merge by cherry-picking first-parent change
-> 
-> and it works like a charm.
-
-It might work for you, as you probably used --preserve-merges, and dealt
-with the fact that you could neither drop nor reorder commits.
-
-So --preserve-merges --first-parent is probably what you were looking for.
-
-Instead, --recreate-merges is all about allowing the same level of freedom
-as with regular interactive rebases, but recreating the original commit
-topology (and allowing to change it, too).
-
-Therefore, I think that it would be even harmful to allow
---recreate-merges --first-parent *because it would cause evil merges*!
-
-And I totally could see myself being vexed again about options that worked
-perfectly well (just like --preserve-merges) being completely messed up by
-allowing it to be combined with options *that they cannot work with* (just
-like --preserve-merges --interactive, a *huge* mistake causing so many
-annoying "bug" reports: I *never intended it that way because I knew it
-would not work as users expect*).
-
-So no, I do not think that --recreate-merges --first-parent is a good idea
-at all. Unless you try to do that non-interactively only, *and disallow it
-in interactive mode*. Because the entire point of the interactive rebase
-is to allow reordering and dropping commits, in --recreate-merges even
-moving, introducing and dropping merge commits. The --first-parent option
-flies in the face of this idea.
-
-Ciao,
-Johannes
