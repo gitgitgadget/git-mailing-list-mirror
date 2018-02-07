@@ -2,79 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C67191F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 17:15:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A64D1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 17:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754377AbeBGRPS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 12:15:18 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:59080 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753390AbeBGRPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 12:15:17 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w17HF5lK067196
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 7 Feb 2018 12:15:05 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Andreas Schwab'" <schwab@linux-m68k.org>
-Cc:     "'Jonathan Nieder'" <jrnieder@gmail.com>,
-        "'Salvatore Bonaccorso'" <carnil@debian.org>,
-        <889680@bugs.debian.org>, <git@vger.kernel.org>
-References: <151785928011.30076.5964248840190566119.reportbug@eldamar.local>    <20180205204312.GB104086@aiede.svl.corp.google.com>     <00b601d39f9d$7a40b820$6ec22860$@nexbridge.com> <871shwpwrm.fsf@linux-m68k.org>
-In-Reply-To: <871shwpwrm.fsf@linux-m68k.org>
-Subject: RE: git: CVE-2018-1000021: client prints server sent ANSI escape codes to the terminal, allowing for unverified messages to potentially execute arbitrary commands
-Date:   Wed, 7 Feb 2018 12:15:00 -0500
-Message-ID: <001f01d3a037$3296deb0$97c49c10$@nexbridge.com>
+        id S1754813AbeBGRZo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 12:25:44 -0500
+Received: from mail-ua0-f177.google.com ([209.85.217.177]:44564 "EHLO
+        mail-ua0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754582AbeBGRZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 12:25:43 -0500
+Received: by mail-ua0-f177.google.com with SMTP id x4so1048200uaj.11
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 09:25:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=egSnN4izahiI++aJyzp+hNk35yA+tc2d2aNRCBrN7YI=;
+        b=FpcRSstf4W3XlDerIZZoYZNQKMsdEW0XzPk7nCrRJ5lwocv/ftrfrT3gGyNlRl2eAp
+         +3GDmy9PbjW4rOKaVRtyT93RGGGvRJIYZg5t2XIykUDlP7YGfG//nMUv4TjOQlu2//Py
+         CoKlYJRjUs3cRkq4Hrhtu17TXiVCw6MFq3NJ6JWei4KO2ZsIH1ZeyG2xx3+gc82rW3/r
+         v0EpUjcrFBjJimCqZuUbWBX1K9IfDo3OIBM2I4p4wbtYus85fB7PWKpOpEfs0oIrSVe0
+         S+mhIaYvTMtHRB0wD+BqMcvJIDM1s3zKpXftOnM5YUP8BtdEGYa1LQDHiBqDQOX1txh6
+         UVYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=egSnN4izahiI++aJyzp+hNk35yA+tc2d2aNRCBrN7YI=;
+        b=EAdUmR0m5393w01McJGKNlFuo14f+21+VtKx8QGN4MpLSnecrZWKQ72Kvy0I6b6x3N
+         Wsl1KhBp5iKgclUgH5o8ngsHCuom+2DbObYe3f+okTWDzQJlR1AcnvE/JYuIll/iilwR
+         nVvAQQh1ztoAyFm8mPm1HtV1qPBdSt2vn5/D1+MhRCpdesnAgxPx2oWE2ncTG1XqgHuL
+         mmsJCxnZRunObZ6kC4Pzgvve+fKQsZptAjflN+2tRH60al56Oc/ytVijDXD7kwD8kOmL
+         sH2D5w2nkBk0LQ+nJPoILAJjl+bDYVoGzPYcMVZ4nT3OMmDAzJJ2fxN9w9xa1LBgC66/
+         viuA==
+X-Gm-Message-State: APf1xPAOvwSe4z6E70+9G7gyzVmlQjPXHWl9kW3ohAPg7iYIehbh+3Tx
+        bJTQON+aL7OJkINEx5F47UFcwzdR98ikjX3XNYo=
+X-Google-Smtp-Source: AH8x225bHOH6uflbCgvtqPV45UbaK/rlbWJEcbVTzGLPbsDhANKMksn+ir6d/SHO+mab4Fxx1Y/M1OlKuB6MNePVqm8=
+X-Received: by 10.159.48.141 with SMTP id j13mr6066815uab.147.1518024342563;
+ Wed, 07 Feb 2018 09:25:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQKV3ZfFIFJAb10h2veIue2qrUCm7wI76Kt+AcIxEegBMg5L/6HrMO1w
+Received: by 10.176.1.33 with HTTP; Wed, 7 Feb 2018 09:25:42 -0800 (PST)
+In-Reply-To: <20180207132157.GB16018@sigill.intra.peff.net>
+References: <CABPp-BHVD19ZoAmWhQd9aN-v+qB7Ryq9Z-wobLYtJf_b6RWgzQ@mail.gmail.com>
+ <CAGZ79kYstN9ATPGKZjnk-hJ6jRsx9Oz0b2hQ5cTiqVqMNDCsyA@mail.gmail.com>
+ <CABPp-BHkLLrJDTQwHTYpqC0Cg7Wv_wDr14Fq_LXneg+OzzRngg@mail.gmail.com> <20180207132157.GB16018@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 7 Feb 2018 09:25:42 -0800
+Message-ID: <CABPp-BH0rSELVJV11MJM=KFU2jAEuhVTzUUBskghgku+y_ozDQ@mail.gmail.com>
+Subject: Re: BUG: fetch in certain repo always gives "did not send all
+ necessary objects"
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 7, 2018 11:53 AM, Andreas Schwab wrote:
-> On Feb 06 2018, "Randall S. Becker" <rsbecker@nexbridge.com> wrote:
-> 
-> > What I don't know - and it's not explicitly in the CVE - is just how
-> > many other terminal types with similar vulnerabilities are out there,
-> > but I'm suspecting it's larger than one would guess - mostly, it seems
-> > like this particular sequence is intended to be used for writing
-> > status line output (line 25?) instead of sticking it in a prompt. This
-> > can be used prettifies a lengthy bash prompt to display the current
-> > branch and repository at the bottom of the screen instead of in the
-> > inline prompt, but that's the user's choice and not something git has
-> > to deal with. There were some green-screen terminals with other weird
-> > ESC sequences back in the day that could really get into trouble with
-> > this, including loading/executing programs in terminal memory via
-> > output - really. I'm sure it seemed like a good idea at the time, but I
-can see
-> how it could have been used for evil.
-> 
-> Do you also want to block "+++AT"?  :-)
+On Wed, Feb 7, 2018 at 5:21 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Feb 06, 2018 at 04:00:32PM -0800, Elijah Newren wrote:
+>
+>> It took me hours to figure it out, after users ran out of ideas and
+>> came and asked me for help.  (Maybe if I was familiar with worktree,
+>> and knew they had been using it, then I might have guessed that "HEAD"
+>> meant "not your actual HEAD but the HEAD of the vestige of some other
+>> worktree").
+>
+> Yeah, this is the obvious thing that seems like it ought to be improved.
+<snip>
+> Unfortunately fixing that is a little tricky. In this case the stack
+> looks like:
+>
+>   parse_object_or_die (oid=0x7fffffffd690, name=0x555555792880 "HEAD") at object.c:239
+>   add_one_ref (path=0x555555792880 "HEAD", oid=0x7fffffffd690, flag=0, cb_data=0x7fffffffd8e0) at reachable.c:38
+>   refs_head_ref (refs=0x555555a65430, fn=0x5555556b6ef5 <add_one_ref>, cb_data=0x7fffffffd8e0) at refs.c:1316
+>   other_head_refs (fn=0x5555556b6ef5 <add_one_ref>, cb_data=0x7fffffffd8e0) at worktree.c:404
+>
+> So other_head_refs knows that it's looking at the worktrees. And it
+> passes the alternate ref-store to refs_head_ref(), with "add_one_ref" as
+> the callback. But the knowledge that we're not talking about the real
+> "HEAD" is lost as we cross that callback boundary. We'd need to either
+> add another parameter to the callback, or have some way of talking about
+> "HEAD in this worktree" as a refname (which AFAIK we don't have).
 
-Oh dear. Oh dear. You *do* know that actually could be bad. I wonder how
-many git users are still using dial-up to clone/push. Of course, they would
-probably not even see this message after trying to download it.
+Can we use "worktrees/${WORKTREE}/HEAD"?  It already satisfies all the
+necessary rev-parse rules...
 
-Chuckles,
-Randall
-
--- Brief whoami:
- NonStop developer since approximately 211288444200000000
- UNIX developer since approximately 421664400
--- In my real life, I talk too much.
-
-
-
+(And on a slight tangent...do we want to start disallowing the
+creation of branches/tags whose name starts with "worktrees/",
+"refs/", "hooks/", or other paths that exists under gitdir?  Making a
+branch named "refs/heads/foo" so that it fully-qualifies as
+"refs/heads/refs/heads/foo" is always fun)
