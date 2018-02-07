@@ -2,124 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B48151F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 17:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5221FAE2
+	for <e@80x24.org>; Wed,  7 Feb 2018 18:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754311AbeBGRyf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 12:54:35 -0500
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:52612 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754151AbeBGRy0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 12:54:26 -0500
-Received: by mail-wm0-f43.google.com with SMTP id g1so4754194wmg.2
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 09:54:26 -0800 (PST)
+        id S1754215AbeBGSGp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 13:06:45 -0500
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:39493 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753965AbeBGSGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 13:06:45 -0500
+Received: by mail-yw0-f176.google.com with SMTP id v196so682862ywc.6
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 10:06:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=aIO2s8pIwMxFESZLvrz2yg2rF1H5SwJH+l45uAHxu/w=;
-        b=QOt9aBo+Pijb5gE6RiHFQtmoPHqHDc6HwmJSbNQnRk2E8K/Xqv9mTSZD6wXfMeyDuJ
-         Yr4YZdSsHZu6La0Qpu+57sEyMRDoMnWRVYu8+7RnrFCdkyRsIzVSPFbyWcqkuTNRUWdT
-         JNH0eINaDbDsDKMYOEv0nF7XfQcJtc/SQAbDBko+LpeGVF4Zs+2OmZbXsX9RAZIimd2L
-         pShs9XWnEhoJBRInqD2aQF4hCqaciUuD3KY0S8btmlpsTqx7bpTH8Oh72M8vRVCV0yEd
-         uPOqNSPGdN/em/hY8hqZ+YXXyr6LTGYOx9pKJ6hZtD+w0VfkOMPOGY2LEPuM4vMUskH+
-         +2kQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=f4ZNg2hSxJ1vJuUfzkEc0ppatLp8XVvqb6MUln1cpAo=;
+        b=qoqXQbNS0gCW2BHqs3wJxLpWRUr/WRXurIajOYwG0fBsmPVZRaYUtKPBj/CZjAgBvC
+         EsG8hRtPDxTCyR1xJ9FoYLo0uf+lnULM9Ppurwd7O28tr2ZIzefmpRbmZLlIPBzEcC3B
+         cMhfhe5atWvn0aa7SSf5QC8GBHLBNns7MwhG+gY1pute6uzPEszwLq1BeAC9HTFEuVBY
+         aCDDlvrDgKWfRppnwuzLFB1g7xjqoXBuqUL5P+yfM3dQkqputiu+X1ZIbNfUUso5mlf2
+         5Ss9SjZ2ZuGMdsjjUvQuoOu61/dpDkjABetbs3sUZTCaJ/lLHCuFP0ufN02a5xF59vPC
+         ILZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=aIO2s8pIwMxFESZLvrz2yg2rF1H5SwJH+l45uAHxu/w=;
-        b=CxQKoNTOXZUFP3FzYT++EzT20HcDFl0E4eIZn3QYKpymMJ/xiBQ+bwpI3dOjIRzbT6
-         kkAw5XsjFks5HV0Vw0Wviw6nECGPFvYTnRQ4uORUE+dxjH5sCXX6RBBfv2JFO6oCzR28
-         zk7RDYZEyszW6lkhPNBELqxV2KmPdNYlwQXNIhDe1sLLZZt36Ecnw6q8lq9gfWo5UHqC
-         w5bG1psPaK/DUmzKeSl1Qgro8muMjS1Wvnl8Y1orKAhSL6agnz/FOMIJoDHDWtcIrJch
-         UMOUxvky5gxciTZYzIOvD75o41jLzmAtrOrkeKuAvJfahz388Zw3sWQaGKal6doTnb2J
-         d7kQ==
-X-Gm-Message-State: APf1xPC49tRxdPWEGEGJOiO/ZBuj4suoxkQoisvtV50MvYchAAGsozQu
-        6BsEK0KoVNEiJbbckFzhHgKGAy/0
-X-Google-Smtp-Source: AH8x2251o4Og0ewtSf3AyKJUuKk+C1E4iw2poyaRvBEOBA9jSmNRRsgouqHMWAwQinFvAuVkgxs9hw==
-X-Received: by 10.28.71.198 with SMTP id m67mr5966367wmi.40.1518026065585;
-        Wed, 07 Feb 2018 09:54:25 -0800 (PST)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id b35sm4864926wra.13.2018.02.07.09.54.24
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Feb 2018 09:54:24 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: "git branch" issue in 2.16.1
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
-Date:   Wed, 7 Feb 2018 18:54:23 +0100
-Cc:     Todd Zullinger <tmz@pobox.com>, Jason Racey <jason@eluvio.com>,
-        git <git@vger.kernel.org>, Paul Smith <paul@mad-scientist.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5A7788B0-6250-4D1F-A86D-E3155C03EF0C@gmail.com>
-References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com> <20180206195754.GE1427@zaya.teonanacatl.net> <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=f4ZNg2hSxJ1vJuUfzkEc0ppatLp8XVvqb6MUln1cpAo=;
+        b=cKJcCzSCpLokSSZSPu/+LsxI1uVoODzJ7xDmtTl+odJLrRE7Vb9JbbSsiKovL+Yuo8
+         k+ZCTBrZh8CPJkvRQNvNIaZHTRrVDPn1Yqm+lOxBmuIGwPg4RbO3LZLDYAdGJh8p7Uma
+         8rikGypoeEbmSmGDisevPvSGv0YfvPJhiw231vP2O2S6Iml+1V+kX5LVxRqrcmy2pRNV
+         txZ/2OegrPH6gbDQvCSNeJ/Kz4ToHSJeRIJUgCAVbw60irh8VGbw0b2RpDL3uDXEr4Z3
+         176yxEG1N4SZaMXZLRY3FTzxW/L5nJ6dh9ZGcOuFF3P2ae5ygw1wdHyudhiZfQyAIP2a
+         KwZA==
+X-Gm-Message-State: APf1xPA0F1XUFe2dLfjYHpjDS5ME04+OLZSZpoGK0w2X1JJhAZFlanFZ
+        KO7cCDks++1kwP2i7A5YvlL/54cdPFCpiarWmWKH3Q==
+X-Google-Smtp-Source: AH8x225faT8+o3Jf9F7/xGnDnfGDFzgLWt9zFzw6yzPhsF/Kl2YHzSqjsfDiedqSy5NJ0uKEWy6vFALBe8uJDmej+WI=
+X-Received: by 10.129.108.149 with SMTP id h143mr4517151ywc.373.1518026803807;
+ Wed, 07 Feb 2018 10:06:43 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.37.207.9 with HTTP; Wed, 7 Feb 2018 10:06:43 -0800 (PST)
+In-Reply-To: <CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com>
+References: <20180205235508.216277-1-sbeller@google.com> <CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Feb 2018 10:06:43 -0800
+Message-ID: <CAGZ79kabQ1WvxxjFV+fgq8b142yNrtGZC_Vqac+5b3CkUpbi2w@mail.gmail.com>
+Subject: Re: [RFC PATCH 000/194] Moving global state into the repository object
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Feb 7, 2018 at 3:48 AM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, Feb 6, 2018 at 6:51 AM, Stefan Beller <sbeller@google.com> wrote:
+>> This series moves a lot of global state into the repository struct.
+>> It applies on top of 2512f15446149235156528dafbe75930c712b29e (2.16.0)
+>> It can be found at https://github.com/stefanbeller/git/tree/object-store
+>>
+>> Motivation for this series:
+>> * Easier to reason about code when all state is stored in one place,
+>>   for example for multithreading
+>> * Easier to move to processing submodules in-process instead of
+>>   calling a processes for the submodule handling.
+>>   The last patch demonstrates this.
+>
+> I have a mixed feeling about this. The end game is to keep
+> "the_repository" references as minimum as possible, right? Like we
+> only need to mention in in cmd_xxx() and not all over the place. If
+> so, yay!!
 
-> On 06 Feb 2018, at 21:05, Stefan Beller <sbeller@google.com> wrote:
->=20
-> On Tue, Feb 6, 2018 at 11:57 AM, Todd Zullinger <tmz@pobox.com> wrote:
->> Hi Jason,
->>=20
->> Jason Racey wrote:
->>> After upgrading git from 2.16.0 to 2.16.1 (via Homebrew -
->>> I=E2=80=99m on macOS) I noticed that the =E2=80=9Cgit branch=E2=80=9D =
-command
->>> appears to display the branch listing in something similar
->>> to a vi editor - though not quite the same. I don=E2=80=99t know
->>> the technical term for this state. You can=E2=80=99t actually edit
->>> the output of the command, but you=E2=80=99re in a state where you
->>> have to type =E2=80=9Cq=E2=80=9D to exit and then the list =
-disappears.
->>> It=E2=80=99s very inconvenient and it doesn=E2=80=99t seem like it =
-was by
->>> design. I=E2=80=99m using zsh in iTerm2 if that helps. Thanks.
->>=20
->> In 2.16.0 `git branch --list` is sent to a pager by default.
->> (Without arguments, --list is the default, so this applies
->> to `git branch`).
->>=20
->> You can set pager.branch to false to disable this in the
->> config, or use git --no-pager branch to do so for a single
->> invocation.
->>=20
->> I can't say why you're seeing this with 2.16.1 and not
->> 2.16.0, but I'm not familiar with homebrew, so perhaps
->> something didn't work as intended in 2.16.0.
->>=20
->=20
-> Maybe the number of branches changed since then?
-> As the pager only comes to life when the output fills
-> more than your screen. Quick workarounds:
-> * buy a bigger screen
-> * have fewer branches.
+Yes. And the super-end-game long after this series is to have
+    cmd_xxx(struct repository *r, argc, argv)
+or so.
 
-Hmmm... there might be more to it. I just noticed the
-pager behavior on macOS, too. Consider this call:
+> Something else.. maybe "struct repository *" should not be a universal
+> function argument to avoid global states. Like sha1_file.c is mostly about the
+> object store, and I see that you added object store struct (nice!).
+> These sha1 related function should take the object_store* (which
+> probably is a combination of both packed and loose stores since they
+> depend on each other), not repository*. This way if a function needs
+> both access to object store and ref store, we can see the two
+> dependencies from function arguments.
 
-$ git diff --shortstat
+I tried that in the beginning and it blew up a couple of times when I realized
+that I forgot to pass through one of these dependencies.
+Maybe we can go to the repository and shrink the scope in a follow up?
 
-This should generate at most one line of output. On Linux
-the pager is never used. On macOS the pager is always used.
+> The alternate object store, if modeled right, could share the same
+> object store interface. But I don't think we should do anything that
+> big right now, just put alternate object store inside object_store.
 
-I tried older versions of Git on macOS and experienced the
-same behavior.
+yup that is the case, see struct raw_object_store at the end of the series
+https://github.com/stefanbeller/git/blob/object-store-v2/object-store.h
 
-@Jason: That might be a bug on macOS. However, I am surprised
-you only noticed it after upgrading from 2.16.0 to 2.16.1.
-Do you recall anything else you've changed?
+> Similarly those functions in blob.c, commit.c, tree.c... should take
+> object_parser* as argument instead of repository*. Maybe there's a
+> better name for this than object_parser. parsed_object_store I guess.
+> Or maybe just object_pool.
 
-- Lars
+Note that the initial few patches are misleading in the name,
+https://public-inbox.org/git/20180205235735.216710-59-sbeller@google.com/
+which splits up the object handling into two layers, the "physical" layer
+(where to get the data from, mmaping pack files, alternates, streams of bytes),
+which is "struct raw_object_store objects;" in the repository, and the
+"object" layer, which is about parsing the objects and making sense of the data
+(which tree belongs to a commit, dereferencing tags)
 
+So maybe I'll try to make the first layer into its own series, such
+that we'll have a smaller series.
+
+Thanks,
+Stefan
+
+> --
+> Duy
