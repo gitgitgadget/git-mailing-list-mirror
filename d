@@ -1,61 +1,71 @@
-From: Lee Shing <admin@orile.org>
-Subject: Greetings
-Date: Tue, 20 Sep 2011 04:46:13 +0100
-Message-ID: <73578a68-4040-445a-8a85-47e2341e5c74@AUSP01MHUB07.collaborationhost.net>
-Reply-To: <leeshing@yahoo.cn>
+From: Majid Al Futtaim <salam.tmfood@gmail.com>
+Subject: As-salam..............
+Date: Wed, 21 May 2014 17:28:23 +0800
+Message-ID: <537c71cf.28d4440a.2835.3994@mx.google.com>
+Reply-To: majid_al.futtaim@myself.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-To: Undisclosed recipients:;
-X-From: git-owner@vger.kernel.org Tue Sep 20 05:47:02 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <Majid@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 21 11:28:54 2014
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1R5rIT-0004I0-T2
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Sep 2011 05:47:02 +0200
+	id 1Wn2pR-0006K4-SL
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 11:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756680Ab1ITDq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Sep 2011 23:46:56 -0400
-Received: from mail131.messagelabs.com ([216.82.242.99]:12233 "EHLO
-	mail131.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756873Ab1ITDqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Sep 2011 23:46:55 -0400
-X-Env-Sender: admin@orile.org
-X-Msg-Ref: server-2.tower-131.messagelabs.com!1316490413!1392108!3
-X-Originating-IP: [216.166.12.98]
-X-StarScan-Version: 6.3.6; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 13078 invoked from network); 20 Sep 2011 03:46:55 -0000
-Received: from out001.collaborationhost.net (HELO out001.collaborationhost.net) (216.166.12.98)
-  by server-2.tower-131.messagelabs.com with RC4-SHA encrypted SMTP; 20 Sep 2011 03:46:55 -0000
-Received: from User (10.2.3.210) by smtp.collaborationhost.net (10.2.0.59)
- with Microsoft SMTP Server id 8.3.137.0; Mon, 19 Sep 2011 22:45:57 -0500
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+	id S1751524AbaEUJ2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 05:28:49 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:48899 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751073AbaEUJ2s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 May 2014 05:28:48 -0400
+Received: by mail-pd0-f182.google.com with SMTP id r10so1227968pdi.13
+        for <git@vger.kernel.org>; Wed, 21 May 2014 02:28:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:content-type:mime-version:content-transfer-encoding
+         :content-description:subject:to:from:date:reply-to;
+        bh=HOyPgt3j/S4ZBkQf2BlefSo62wfz1gzXOTznaiEZxiA=;
+        b=HxauYhcGHspvQ61FAtg+T+6aBiqFbZRMwVdfhhfV/tWJxF/KfnpfIlvBwkSoy2e35l
+         Hl42SCI75hJfLis6/cov5GIcv1CKprirEdgIc29D2j9dZ3SC9aMJuKjvZnAHp7PzVNrI
+         9a/MIMIPrpb80zxkxGoYLLOSPxjBVW77IA3CdsD8jzAM7egS3gKTXex7ziIMaMS80PM/
+         ZGsaFXq4PhD55StSqIs/IbG/ozQQFhFLZR9MSOFYWaNZTLjJ+qbUrZF/hfeCDRKwC9ZX
+         PpX2s65F4TNzbZRKkkuvHGX5axvdXSJnDULCur+m8l7/mnM1qmYrsdaH0taHIUPIA+/5
+         SXbw==
+X-Received: by 10.66.102.39 with SMTP id fl7mr56703718pab.43.1400664528506;
+        Wed, 21 May 2014 02:28:48 -0700 (PDT)
+Received: from [10.1.1.1] ([120.141.116.253])
+        by mx.google.com with ESMTPSA id nh8sm7174098pbc.25.2014.05.21.02.28.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 02:28:47 -0700 (PDT)
+X-Google-Original-From: Majid Al Futtaim
+Content-Description: Mail message body
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.8 points;
- *  1.6 URG_BIZ BODY: Contains urgent matter
- * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
- *      [score: 0.3953]
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?216.166.12.98>]
- *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/181729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249778>
 
-Greetings,
+As-salam Sir, 
+ 
+Regarding to possible investment, I wish to bring to your notice my interest to partner with you on any great business investment opportunity. 
+ 
+Please kindly furnish me with any business details and a proposal for a Joint venture partnership with you. Looking forward to going into good business relationship with you. 
 
-I am Mr. Lee Shing, Principal Assurance manager for the Nanyang Commercial Bank of China. An investment was placed under my management eight years ago by a customer who is now deceased. I need your
-assistance in investing these funds. If you're interested contact me via my private email   lshing1515@yahoo.com.hk
+Please provide this detail for me to know you better and proceed. 
+My direct email is :   majid_al.futtaim@myself.com  or majidalfuttaim@hotmail.com
 
-If you're not interested in my offer do not respond to this email.Awaiting your urgent reply.
+ 1. Your full names:
+ 2. Your contact address:
+ 3. Your profession:
+ 4. Your telephone mobile and fax number:
+ 5.Age
 
-Thanks and my regards,
-Lee Shing
+6 The Type of business you will like me to invest on and also tell me little about yourself, I hope to hear from you soon.
+May the peace of Almighty Allah be with you.
+Regards,
+Majid Al Futtaim..
