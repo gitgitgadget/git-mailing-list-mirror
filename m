@@ -2,103 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE651F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 20:19:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF2AA1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 20:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754547AbeBGUTV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 15:19:21 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:50879 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754266AbeBGUTU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 15:19:20 -0500
-Received: by mail-wm0-f54.google.com with SMTP id f71so5467191wmf.0
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 12:19:19 -0800 (PST)
+        id S1754466AbeBGU1d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 15:27:33 -0500
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:36317 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754327AbeBGU13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 15:27:29 -0500
+Received: by mail-yw0-f176.google.com with SMTP id t129so995763ywc.3
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 12:27:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rnq3IT114fUuhpfHZowZKwjyGz33hvyJcUSXtvSecjc=;
-        b=CmmT7R41Dha5HIo07Mg3jUmU3jNnTrdHTLYV6lSZQAthnWJFD8TICacghdA0xv2AbC
-         UQfIUo/hcR+um5WsQLad4ltU6zjSXfVwr6RkqviUY89aAnacodSK7qtaHIJjbsEg9ywh
-         55HTYmaUH1v0qzm/ecAY63GLCM+M6BbF7/G1EWp3YOEwVbBy3Fv/7mY/2zb4R7KVKy5g
-         lfr8rnkQAmVsfG6dO5iDOLJ6BvKS7qQ/NJaFp1SsZfEXtk7ISHQctowFazw0ELVcNiT7
-         EJqVi3QD3S7XrOR9Rze5SJwo0tUFF50eS5dEbyOrwqJzs/844ua3YDpOH4JcfUzY36Iv
-         Vy0Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OR9HXfolBuhyuMJawoEG71CWGc9xXSnHrz9id1sG54k=;
+        b=jaS/u3s0IdubrQArjLOn5xjvi9gvGJbsd8P8ekr0N7dvwXeWfQ2PflkiU3SqcYA2+L
+         pv7RwOzJKUwlgddDZ2eSTFkDd2ZTmwhL40nm/L1CdBlMd94ZPKtPKary8pZOlmNzmoss
+         4uiSyB89vLcMmSlAIYiNZgTWS0vPPXEtEylkfv6wiqmermAaEUklRMZzwhWjtfDBPfsh
+         YpOakO3EcWw9C+4TgqTtX0XdFdlZ1aiVcGXXIg9hIerTBCODopCCff80G3Y9pNAhAcwO
+         FFJMX+/pmKR8tp0P9H4NuETjihfCJ+Jcbx5nNotkEbhiCIvtFqsaO6r5y+4v2NZY/Epd
+         A0vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rnq3IT114fUuhpfHZowZKwjyGz33hvyJcUSXtvSecjc=;
-        b=dll7FgN/ZJPt6Mhhq4SlXAba7/ImwfwdR+4meIh3XqUArlIyGwuSlVj6weAg1SqAV2
-         h4gmnHVyosz8bu6ZqYd9BEpZ3N+UncvX/gOP4PccHBqDOQFXHIIdNEujCcPjz1TXFWmx
-         U1WkT/zsv2LaFJN8AQU+02dFmiVYewKyqH/CnY7eSiZSOUIf3i3TldrxP2cz8FFMrmtz
-         T1III8QT3lhURpizFzLFXPPJynPDxoIePPecOpJZ9UMC/QMMcGYuoJXKHOxoqtfRga9X
-         8Ml5OOu1zLP24aHQw5NvtT2do2EEjJHjaTfIiF+LL6YsAGHqowZthAr06rEWg4Ms2rro
-         sFeg==
-X-Gm-Message-State: APf1xPBFpZ0aeMiK8kJAOrY7XHWGTqf65BlOjNZ11+ZfGqFHv3JiPcGG
-        x8jt8Vq1F4b6FH45oTSN3+cvxcd1
-X-Google-Smtp-Source: AH8x225axlsiMpauz+zspST1yyy6DmtCQ03LvKN2sPFYwByQiGzlS1dLScrDmzJS0E1E94NWDJD8ig==
-X-Received: by 10.28.207.131 with SMTP id f125mr5320241wmg.32.1518034758863;
-        Wed, 07 Feb 2018 12:19:18 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 56sm3903420wrt.23.2018.02.07.12.19.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Feb 2018 12:19:18 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Todd Zullinger <tmz@pobox.com>, Jason Racey <jason@eluvio.com>,
-        git <git@vger.kernel.org>, Paul Smith <paul@mad-scientist.net>
-Subject: Re: "git branch" issue in 2.16.1
-References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com>
-        <20180206195754.GE1427@zaya.teonanacatl.net>
-        <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
-        <5A7788B0-6250-4D1F-A86D-E3155C03EF0C@gmail.com>
-        <20180207200859.GA9141@sigill.intra.peff.net>
-Date:   Wed, 07 Feb 2018 12:19:17 -0800
-In-Reply-To: <20180207200859.GA9141@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 7 Feb 2018 15:08:59 -0500")
-Message-ID: <xmqqbmh07dtm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OR9HXfolBuhyuMJawoEG71CWGc9xXSnHrz9id1sG54k=;
+        b=Pv4EENj6zSoYzWxzAW1//FUuW4A0OsWTVWBYb0Sg96XPCF6yqFYoMwtRuvp0S8JMDD
+         4zRlQBj1Cbf5DsSElBgGHSOhD9g35UMGWGbAUwtmzmUIOGKMEmdxm9TRd8q8H1Pc6hHv
+         1Dm8bdLWrInaMWJWuLtz83qJTycrWoZVuUp+YMCVWrc31+TKt5n8eH6kO/OR+eypjjTw
+         8nxj56/5LvQglhE9igKhqyDYVPhiaFjPBVTF2l2Dd60M+7LyqCM445k6rAtNLQRjKZj8
+         CcGgbAko6VXPkjXeA6LcILbq6AvgJNSOPEyQMc4IFV/bsvVZgYYe1IrrqjLudYu3bt8U
+         nwzg==
+X-Gm-Message-State: APf1xPCnWaTVZPdVYlbQLaVFu9Li3W+0d9JtYtPLZOK77xTv/hL48Or8
+        TkNPkLSIovWPFfbb9ppNNfVBmYSgDjyFO+T5YFKBlQ==
+X-Google-Smtp-Source: AH8x227lqJ95Xrh/rDt7dKc/07fBVp8hxxe6M7Cc6DGZlBu9M/dTvjIwebb7ZKnlGh8O4rBSjk833pSBRIse9z/IcVc=
+X-Received: by 10.37.101.11 with SMTP id z11mr4315453ybb.201.1518035248405;
+ Wed, 07 Feb 2018 12:27:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.37.207.9 with HTTP; Wed, 7 Feb 2018 12:27:27 -0800 (PST)
+In-Reply-To: <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
+References: <20171216013130.GB188893@aiede.mtv.corp.google.com>
+ <20171231191156.28359-1-stefanmoch@mail.de> <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Feb 2018 12:27:27 -0800
+Message-ID: <CAGZ79kbX4uhDpdp0kH=8+5tj_zLWZbtbMUb5WWtOeXWRQz8K3Q@mail.gmail.com>
+Subject: Re: feature-request: git "cp" like there is git mv.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Moch <stefanmoch@mail.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Simon Doodkin <helpmepro1@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Feb 7, 2018 at 11:49 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Moch <stefanmoch@mail.de> writes:
+>
+>> * Jonathan Nieder <jrnieder@gmail.com> [2017-12-15T17:31:30-0800]:
+>>> This sounds like a reasonable thing to add.  See builtin/mv.c for how
+>>> "git mv" works if you're looking for inspiration.
+>>>
+>>> cmd_mv in that file looks rather long, so I'd also be happy if someone
+>>> interested refactors to break it into multiple self-contained pieces
+>>> for easier reading (git mostly follows
+>>> https://www.kernel.org/doc/html/latest/process/coding-style.html#functions).
+>>
+>> I looked at builtin/mv.c and have a rough idea how to split it
+>> up to support both mv and cp commands.
+>>
+>> But first I noticed and removed a redundant check in cmd_mv,
+>> also added a test case to check if mv --dry-run does not move
+>> the file.
+>
+> I guess these two patches went unnoticed when posted at the end of
+> last year.  Reading them again, I think they are good changes.
+>
+> As a no-op clean-up of a127331c ("mv: allow moving nested
+> submodules", 2016-04-19), the attached would also make sense, I
+> would think.
+>
+> Thanks.
+>
+>  builtin/mv.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 9662804d23..9cb07990fd 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -266,10 +266,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+>                 const char *src = source[i], *dst = destination[i];
+>                 enum update_mode mode = modes[i];
+>                 int pos;
+> -               if (show_only || verbose)
+> -                       printf(_("Renaming %s to %s\n"), src, dst);
+> -               if (show_only)
+> +               if (show_only) {
+> +                       if (verbose)
+> +                               printf(_("Renaming %s to %s\n"), src, dst);
+>                         continue;
+> +               }
 
-> Keep in mind that we always run the pager, since we don't know ahead of
-> time how much output will be generated. It's just that with certain
-> configurations of "less", it may exit if it sees EOF before there's a
-> whole screen worth of data.
->
-> This is controlled by the "-F" option. By default, Git will set LESS=FRX
-> in the environment if you do not already have a $LESS environment. So
-> some other possibilities are:
->
->   1. You have $LESS in your environment (without "F") on one platform
->      but not the other.
->
->   2. Git was built with a different PAGER_ENV Makefile variable on one
->      platform versus the other (that's what controls the baked-in LESS
->      defaults).
->
->   3. "less" somehow behaves differently on macOS. The "F" behavior is
->      quite old, but possibly there's some platform-specific bug.
+This is actually changing behavior to
 
-4. Between your two runs, you do not have that many branches to fill
-   the screen vertically in either case, but only in one case you
-   have a branch with very long name (or perhaps "branch -l -v" made
-   a line longer), and you have S and F in LESS environment.  The
-   case that shows branches with short names will cause pager to
-   exit at the end, while the other one, because it wants to allow
-   you to scroll sideways, will not.
+    if (show_only && verbose)
+        print(...)
 
+    if show_only
+        continue
+
+The second part is already there as is, only the printing behavior
+actually changes.
+
+So I might be missing the obvious here for the claim of no-op?
+
+Looking up further we have (line 177):
+
+    if (show_only)
+        printf(_("Checking rename of '%s' to '%s'\n"), src, dst);
+
+which prints regardless of verbosity.
