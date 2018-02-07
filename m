@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 454301F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:15:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1AD1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:15:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932295AbeBGBO6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 20:14:58 -0500
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:48505 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932220AbeBGBNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:13:51 -0500
-Received: by mail-vk0-f74.google.com with SMTP id o64so2158550vka.15
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:51 -0800 (PST)
+        id S932292AbeBGBO5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:14:57 -0500
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:53171 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932235AbeBGBOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:14:02 -0500
+Received: by mail-qt0-f201.google.com with SMTP id z13so3030075qtb.19
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:14:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=cK513e6BNKPqiS3G2kqkCEVEcpHWayMuq0BwUJqt23M=;
-        b=JVDLVRwv5CFfhAEACh+zy6nJY6dOi8Viz7hT3+qJ3oS0QPFxCEQTDw1AtQ1chN5/lB
-         +65Mx0EWGnW67vTZf0CdmLshY8sr5aHs0A9stasZBgTdt1G2tA2wPmIrmL3C680C38Vi
-         NrzFhsk9NXkK1br3tF6zI6VhuVpYWB++WrAK9rxnedYma0jOor9GlFd8jhW5CCLpO7G6
-         dsG2Kh0deiaHN0V/hefchN4cZeDU2iJPRVhtM3hXTbzB1Q8DdaGUkHaDvRgRRIqzbNjQ
-         AvgQudlu68BWk6kP6r9r9e5gl/BCojeIi5295a7fRTLDM1MO19S1a25nNXLZv22XEH1n
-         U74Q==
+        bh=zEtoV+2i2LnXzDzBRlJxRgXCDyB383w3Su+tdwPQ08k=;
+        b=EgdDVX/KSplkxGSJmsHN5coRB7ayhM5rUCEzOspj1545A4Rzr/sGfKFF5Qr1GWjhTR
+         DV1e2NKg9P2jFwcoHW1TYR3Nhyy8UyyhGBOWFlkHNHLB6eMx+1vSrchNhloN14S0gQY0
+         k9njoPY19Fld0JQGBkDxeTR6R/QsrPWJQtNCn9IrLudWuRf6i/mvhLn9HZEUlukV28pk
+         YtP9ZtQPFVHlpGov8gZrRiJ2BSlGd5gi61wfzFvZvhbs5ul+oyl1Bjeuy3FG8/+M8iPK
+         aTh8Xz1BJrvjZD2MVT/0KmCfeYq5vI0XK4pTVKsspZBFoBUL28a2SaigCyCz5PGI9utp
+         bs9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=cK513e6BNKPqiS3G2kqkCEVEcpHWayMuq0BwUJqt23M=;
-        b=rG0H/9/Ndud62cOn66unTbOPbWkRyX6WVezV1qZMrh95dJSVPshUbfx60mb+VMpAko
-         755rKpt3GSoZDp1yDTFJ2wYX20dSyLu5862+VzmtlzaCHfeLwRgLWXHTeWQ3hWockJQo
-         3kce2E+93K6L+DfHHzmP+AB/nq0YPlGPPXDIi5RwNvpsBRLlcr/o+wmGqWVqpCFIaLDa
-         gbLEA1zoY1DQY6Jx7svfmil1K0o+eW32UWvpR2hoyUEpkMLFvXRZF4rO2ffRbJWYDeVE
-         viCJMgSEHSH5xtRapfYZH2j0oJ+sPBfYXbyhxqHLyD0E5KcKcA+shHkCMHaLqy3t/dgc
-         25eA==
-X-Gm-Message-State: APf1xPCcaqzq9oJ3EdRuk6Cki7HZMHeMrCGHdjnQ4g/RAB1pMO4iF4XM
-        LcHpHKrCpNeFhUbtpscNR1hCRE+l1PyxzW315wleDHXPgk13jK0b5Yb58+PTQcvYanNMBWxT9zO
-        8/nVzo0K028z5gsl/6i5tKi09CrfbPolTkShVmAet9/ez+pJYI3RfiCtmBw==
-X-Google-Smtp-Source: AH8x2240F6mbWu1Wd6Qm/lAi9LDHjfpQit7BwSGJx+vqbmg5EQDxNsoChrOVOg6Fsflr8+W1tVqhp4vYX4I=
+        bh=zEtoV+2i2LnXzDzBRlJxRgXCDyB383w3Su+tdwPQ08k=;
+        b=Zdcm6WNWhQmSSMciHSw70dkhS/TUmeQUHmbcD+t+/ZPznjVSRAXnNiYPJh1kaOChYI
+         gehMry3u7NAmgstc4kH7IGcYr3A+xkUSgWqoqE10wGwIIGyeIJPFJNaQAjSDQ/v2PgJi
+         fHQ2rXoJwgwvcFrRYstU5eCbDJoMdtzAvcQNhZKgV0XV6HXZTZJzBlo8pPvjvX1vkpmp
+         nuLV0BE5qGipN+g4aZcPXvpYgpeiAq11R1HJ3fARQrR26JNd8TjsD4GxrKFOQhWy1V+o
+         o7B7Eve4CFVbIvRBF0s9ZrJQrxDIF+RVbf7kBmEQcaiL08bju7FHjHKcWyh1JUDX6DAr
+         93lQ==
+X-Gm-Message-State: APf1xPDX37Mu/V+L2fibhVdTCjBuI+mguk52Q2magW4fcH8iInmDBFBe
+        ZscyNcF6WcHVu9nhVdpTi1UxqMcnhFCt14e+n27LIumLA4fo6X1Q81VbWaLPWPF0Sc+NQa4C/zo
+        5e0i+RbYbg6foMlkYY2bIxtLkjBTH2oBo7wYb7LydHYt2wVH9++tWuruzpw==
+X-Google-Smtp-Source: AH8x227hc0apaTX1r4uG+MxyJFYql1SYcAjBmv7TbZrQltWtFhlp5XtomhgzuIWG2X1/PdMJbjOQ7f8MHe8=
 MIME-Version: 1.0
-X-Received: by 10.159.51.100 with SMTP id a36mr2105051uac.97.1517966030528;
- Tue, 06 Feb 2018 17:13:50 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:12:52 -0800
+X-Received: by 10.237.59.91 with SMTP id q27mr3158990qte.21.1517966041851;
+ Tue, 06 Feb 2018 17:14:01 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:12:57 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-16-bmwill@google.com>
+Message-Id: <20180207011312.189834-21-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 15/35] transport: convert get_refs_list to take a list of
- ref patterns
+Subject: [PATCH v3 20/35] upload-pack: introduce fetch server command
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -65,133 +64,494 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the 'struct transport' virtual function 'get_refs_list()' to
-optionally take an argv_array of ref patterns.  When communicating with
-a server using protocol v2 these ref patterns can be sent when
-requesting a listing of their refs allowing the server to filter the
-refs it sends based on the sent patterns.
+Introduce the 'fetch' server command.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport-helper.c   |  5 +++--
- transport-internal.h |  4 +++-
- transport.c          | 16 +++++++++-------
- 3 files changed, 15 insertions(+), 10 deletions(-)
+ Documentation/technical/protocol-v2.txt | 127 +++++++++++++++
+ serve.c                                 |   2 +
+ t/t5701-git-serve.sh                    |   1 +
+ upload-pack.c                           | 281 ++++++++++++++++++++++++++++++++
+ upload-pack.h                           |   5 +
+ 5 files changed, 416 insertions(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 508015023..4c334b5ee 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -1026,7 +1026,8 @@ static int has_attribute(const char *attrs, const char *attr) {
- 	}
- }
+diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+index ef81df868..4d5096dae 100644
+--- a/Documentation/technical/protocol-v2.txt
++++ b/Documentation/technical/protocol-v2.txt
+@@ -144,3 +144,130 @@ The output of ls-refs is as follows:
+     ref-attribute = (symref | peeled)
+     symref = "symref-target:" symref-target
+     peeled = "peeled:" obj-id
++
++ fetch
++-------
++
++`fetch` is the command used to fetch a packfile in v2.  It can be looked
++at as a modified version of the v1 fetch where the ref-advertisement is
++stripped out (since the `ls-refs` command fills that role) and the
++message format is tweaked to eliminate redundancies and permit easy
++addition of future extensions.
++
++Additional features not supported in the base command will be advertised
++as the value of the command in the capability advertisement in the form
++of a space separated list of features, e.g.  "<command>=<feature 1>
++<feature 2>".
++
++A `fetch` request can take the following parameters wrapped in
++packet-lines:
++
++    want <oid>
++	Indicates to the server an object which the client wants to
++	retrieve.
++
++    have <oid>
++	Indicates to the server an object which the client has locally.
++	This allows the server to make a packfile which only contains
++	the objects that the client needs. Multiple 'have' lines can be
++	supplied.
++
++    done
++	Indicates to the server that negotiation should terminate (or
++	not even begin if performing a clone) and that the server should
++	use the information supplied in the request to construct the
++	packfile.
++
++    thin-pack
++	Request that a thin pack be sent, which is a pack with deltas
++	which reference base objects not contained within the pack (but
++	are known to exist at the receiving end). This can reduce the
++	network traffic significantly, but it requires the receiving end
++	to know how to "thicken" these packs by adding the missing bases
++	to the pack.
++
++    no-progress
++	Request that progress information that would normally be sent on
++	side-band channel 2, during the packfile transfer, should not be
++	sent.  However, the side-band channel 3 is still used for error
++	responses.
++
++    include-tag
++	Request that annotated tags should be sent if the objects they
++	point to are being sent.
++
++    ofs-delta
++	Indicate that the client understands PACKv2 with delta referring
++	to its base by position in pack rather than by an oid.  That is,
++	they can read OBJ_OFS_DELTA (ake type 6) in a packfile.
++
++The response of `fetch` is broken into a number of sections separated by
++delimiter packets (0001), with each section beginning with its section
++header.
++
++    output = *section
++    section = (acknowledgments | packfile)
++	      (flush-pkt | delim-pkt)
++
++    acknowledgments = PKT-LINE("acknowledgments" LF)
++		      *(ready | nak | ack)
++    ready = PKT-LINE("ready" LF)
++    nak = PKT-LINE("NAK" LF)
++    ack = PKT-LINE("ACK" SP obj-id LF)
++
++    packfile = PKT-LINE("packfile" LF)
++	       [PACKFILE]
++
++----
++    acknowledgments section
++	* Always begins with the section header "acknowledgments"
++
++	* The server will respond with "NAK" if none of the object ids sent
++	  as have lines were common.
++
++	* The server will respond with "ACK obj-id" for all of the
++	  object ids sent as have lines which are common.
++
++	* A response cannot have both "ACK" lines as well as a "NAK"
++	  line.
++
++	* The server will respond with a "ready" line indicating that
++	  the server has found an acceptable common base and is ready to
++	  make and send a packfile (which will be found in the packfile
++	  section of the same response)
++
++	* If the client determines that it is finished with negotiations
++	  by sending a "done" line, the acknowledgments sections can be
++	  omitted from the server's response as an optimization.
++
++	* If the server has found a suitable cut point and has decided
++	  to send a "ready" line, then the server can decide to (as an
++	  optimization) omit any "ACK" lines it would have sent during
++	  its response.  This is because the server will have already
++	  determined the objects it plans to send to the client and no
++	  further negotiation is needed.
++
++----
++    packfile section
++	* Always begins with the section header "packfile"
++
++	* The transmission of the packfile begins immediately after the
++	  section header
++
++	* The data transfer of the packfile is always multiplexed, using
++	  the same semantics of the 'side-band-64k' capability from
++	  protocol version 1.  This means that each packet, during the
++	  packfile data stream, is made up of a leading 4-byte pkt-line
++	  length (typical of the pkt-line format), followed by a 1-byte
++	  stream code, followed by the actual data.
++
++	  The stream code can be one of:
++		1 - pack data
++		2 - progress messages
++		3 - fatal error message just before stream aborts
++
++	* This section is only included if the client has sent 'want'
++	  lines in its request and either requested that no more
++	  negotiation be done by sending 'done' or if the server has
++	  decided it has found a sufficient cut point to produce a
++	  packfile.
+diff --git a/serve.c b/serve.c
+index c7925c5c7..05cc434cf 100644
+--- a/serve.c
++++ b/serve.c
+@@ -6,6 +6,7 @@
+ #include "argv-array.h"
+ #include "ls-refs.h"
+ #include "serve.h"
++#include "upload-pack.h"
  
--static struct ref *get_refs_list(struct transport *transport, int for_push)
-+static struct ref *get_refs_list(struct transport *transport, int for_push,
-+				 const struct argv_array *ref_patterns)
- {
- 	struct helper_data *data = transport->data;
- 	struct child_process *helper;
-@@ -1039,7 +1040,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 
- 	if (process_connect(transport, for_push)) {
- 		do_take_over(transport);
--		return transport->vtable->get_refs_list(transport, for_push);
-+		return transport->vtable->get_refs_list(transport, for_push, ref_patterns);
- 	}
- 
- 	if (data->push && for_push)
-diff --git a/transport-internal.h b/transport-internal.h
-index 3c1a29d72..a67657ce3 100644
---- a/transport-internal.h
-+++ b/transport-internal.h
-@@ -3,6 +3,7 @@
- 
- struct ref;
- struct transport;
-+struct argv_array;
- 
- struct transport_vtable {
- 	/**
-@@ -21,7 +22,8 @@ struct transport_vtable {
- 	 * the ref without a huge amount of effort, it should store it
- 	 * in the ref's old_sha1 field; otherwise it should be all 0.
- 	 **/
--	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
-+	struct ref *(*get_refs_list)(struct transport *transport, int for_push,
-+				     const struct argv_array *ref_patterns);
- 
- 	/**
- 	 * Fetch the objects for the given refs. Note that this gets
-diff --git a/transport.c b/transport.c
-index ffc6b2614..c54a44630 100644
---- a/transport.c
-+++ b/transport.c
-@@ -72,7 +72,7 @@ struct bundle_transport_data {
- 	struct bundle_header header;
+ static int always_advertise(struct repository *r,
+ 			    struct strbuf *value)
+@@ -52,6 +53,7 @@ struct protocol_capability {
+ static struct protocol_capability capabilities[] = {
+ 	{ "agent", agent_advertise, NULL },
+ 	{ "ls-refs", always_advertise, ls_refs },
++	{ "fetch", always_advertise, upload_pack_v2 },
  };
  
--static struct ref *get_refs_from_bundle(struct transport *transport, int for_push)
-+static struct ref *get_refs_from_bundle(struct transport *transport, int for_push, const struct argv_array *ref_patterns)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	struct ref *result = NULL;
-@@ -189,7 +189,8 @@ static int connect_setup(struct transport *transport, int for_push)
- 	return 0;
- }
+ static void advertise_capabilities(void)
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index 33536254e..202cb782d 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -9,6 +9,7 @@ test_expect_success 'test capability advertisement' '
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
+ 	ls-refs
++	fetch
+ 	0000
+ 	EOF
  
--static struct ref *get_refs_via_connect(struct transport *transport, int for_push)
-+static struct ref *get_refs_via_connect(struct transport *transport, int for_push,
-+					const struct argv_array *ref_patterns)
- {
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
-@@ -204,7 +205,8 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- 	data->version = discover_version(&reader);
- 	switch (data->version) {
- 	case protocol_v2:
--		get_remote_refs(data->fd[1], &reader, &refs, for_push, NULL);
-+		get_remote_refs(data->fd[1], &reader, &refs, for_push,
-+				ref_patterns);
- 		break;
- 	case protocol_v1:
- 	case protocol_v0:
-@@ -250,7 +252,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.update_shallow = data->options.update_shallow;
+diff --git a/upload-pack.c b/upload-pack.c
+index 1e8a9e1ca..c6518a24d 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -18,6 +18,7 @@
+ #include "prio-queue.h"
+ #include "protocol.h"
+ #include "upload-pack.h"
++#include "serve.h"
  
- 	if (!data->got_remote_heads)
--		refs_tmp = get_refs_via_connect(transport, 0);
-+		refs_tmp = get_refs_via_connect(transport, 0, NULL);
- 
- 	switch (data->version) {
- 	case protocol_v2:
-@@ -568,7 +570,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	int ret = 0;
- 
- 	if (!data->got_remote_heads)
--		get_refs_via_connect(transport, 1);
-+		get_refs_via_connect(transport, 1, NULL);
- 
- 	memset(&args, 0, sizeof(args));
- 	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
-@@ -1028,7 +1030,7 @@ int transport_push(struct transport *transport,
- 		if (check_push_refs(local_refs, refspec_nr, refspec) < 0)
- 			return -1;
- 
--		remote_refs = transport->vtable->get_refs_list(transport, 1);
-+		remote_refs = transport->vtable->get_refs_list(transport, 1, NULL);
- 
- 		if (flags & TRANSPORT_PUSH_ALL)
- 			match_flags |= MATCH_REFS_ALL;
-@@ -1137,7 +1139,7 @@ int transport_push(struct transport *transport,
- const struct ref *transport_get_remote_refs(struct transport *transport)
- {
- 	if (!transport->got_remote_refs) {
--		transport->remote_refs = transport->vtable->get_refs_list(transport, 0);
-+		transport->remote_refs = transport->vtable->get_refs_list(transport, 0, NULL);
- 		transport->got_remote_refs = 1;
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -1065,3 +1066,283 @@ void upload_pack(struct upload_pack_options *options)
+ 		create_pack_file();
  	}
+ }
++
++struct upload_pack_data {
++	struct object_array wants;
++	struct oid_array haves;
++
++	unsigned stateless_rpc : 1;
++
++	unsigned use_thin_pack : 1;
++	unsigned use_ofs_delta : 1;
++	unsigned no_progress : 1;
++	unsigned use_include_tag : 1;
++	unsigned done : 1;
++};
++
++#define UPLOAD_PACK_DATA_INIT { OBJECT_ARRAY_INIT, OID_ARRAY_INIT, 0, 0, 0, 0, 0, 0 }
++
++static void upload_pack_data_clear(struct upload_pack_data *data)
++{
++	object_array_clear(&data->wants);
++	oid_array_clear(&data->haves);
++}
++
++static int parse_want(const char *line)
++{
++	const char *arg;
++	if (skip_prefix(line, "want ", &arg)) {
++		struct object_id oid;
++		struct object *o;
++
++		if (get_oid_hex(arg, &oid))
++			die("git upload-pack: protocol error, "
++			    "expected to get oid, not '%s'", line);
++
++		o = parse_object(&oid);
++		if (!o) {
++			packet_write_fmt(1,
++					 "ERR upload-pack: not our ref %s",
++					 oid_to_hex(&oid));
++			die("git upload-pack: not our ref %s",
++			    oid_to_hex(&oid));
++		}
++
++		if (!(o->flags & WANTED)) {
++			o->flags |= WANTED;
++			add_object_array(o, NULL, &want_obj);
++		}
++
++		return 1;
++	}
++
++	return 0;
++}
++
++static int parse_have(const char *line, struct oid_array *haves)
++{
++	const char *arg;
++	if (skip_prefix(line, "have ", &arg)) {
++		struct object_id oid;
++
++		if (get_oid_hex(arg, &oid))
++			die("git upload-pack: expected SHA1 object, got '%s'", arg);
++		oid_array_append(haves, &oid);
++		return 1;
++	}
++
++	return 0;
++}
++
++static void process_args(struct argv_array *args, struct upload_pack_data *data)
++{
++	int i;
++
++	for (i = 0; i < args->argc; i++) {
++		const char *arg = args->argv[i];
++
++		/* process want */
++		if (parse_want(arg))
++			continue;
++		/* process have line */
++		if (parse_have(arg, &data->haves))
++			continue;
++
++		/* process args like thin-pack */
++		if (!strcmp(arg, "thin-pack")) {
++			use_thin_pack = 1;
++			continue;
++		}
++		if (!strcmp(arg, "ofs-delta")) {
++			use_ofs_delta = 1;
++			continue;
++		}
++		if (!strcmp(arg, "no-progress")) {
++			no_progress = 1;
++			continue;
++		}
++		if (!strcmp(arg, "include-tag")) {
++			use_include_tag = 1;
++			continue;
++		}
++		if (!strcmp(arg, "done")) {
++			data->done = 1;
++			continue;
++		}
++
++		/* ignore unknown lines maybe? */
++		die("unexpect line: '%s'", arg);
++	}
++}
++
++static void read_haves(struct upload_pack_data *data)
++{
++	struct packet_reader reader;
++	packet_reader_init(&reader, 0, NULL, 0,
++			   PACKET_READ_CHOMP_NEWLINE);
++
++	while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
++
++		if (parse_have(reader.line, &data->haves))
++			continue;
++		if (!strcmp(reader.line, "done")) {
++			data->done = 1;
++			continue;
++		}
++	}
++	if (reader.status != PACKET_READ_FLUSH)
++		die("ERROR");
++}
++
++static int process_haves(struct oid_array *haves, struct oid_array *common)
++{
++	int i;
++
++	/* Process haves */
++	for (i = 0; i < haves->nr; i++) {
++		const struct object_id *oid = &haves->oid[i];
++		struct object *o;
++		int we_knew_they_have = 0;
++
++		if (!has_object_file(oid))
++			continue;
++
++		oid_array_append(common, oid);
++
++		o = parse_object(oid);
++		if (!o)
++			die("oops (%s)", oid_to_hex(oid));
++		if (o->type == OBJ_COMMIT) {
++			struct commit_list *parents;
++			struct commit *commit = (struct commit *)o;
++			if (o->flags & THEY_HAVE)
++				we_knew_they_have = 1;
++			else
++				o->flags |= THEY_HAVE;
++			if (!oldest_have || (commit->date < oldest_have))
++				oldest_have = commit->date;
++			for (parents = commit->parents;
++			     parents;
++			     parents = parents->next)
++				parents->item->object.flags |= THEY_HAVE;
++		}
++		if (!we_knew_they_have)
++			add_object_array(o, NULL, &have_obj);
++	}
++
++	return 0;
++}
++
++static int send_acks(struct oid_array *acks, struct strbuf *response)
++{
++	int i;
++
++	packet_buf_write(response, "acknowledgments\n");
++
++	/* Send Acks */
++	if (!acks->nr)
++		packet_buf_write(response, "NAK\n");
++
++	for (i = 0; i < acks->nr; i++) {
++		packet_buf_write(response, "ACK %s\n",
++				 oid_to_hex(&acks->oid[i]));
++	}
++
++	if (ok_to_give_up()) {
++		/* Send Ready */
++		packet_buf_write(response, "ready\n");
++		return 1;
++	}
++
++	return 0;
++}
++
++static int process_haves_and_send_acks(struct upload_pack_data *data)
++{
++	struct oid_array common = OID_ARRAY_INIT;
++	struct strbuf response = STRBUF_INIT;
++	int ret = 0;
++
++	process_haves(&data->haves, &common);
++	if (data->done) {
++		ret = 1;
++	} else if (send_acks(&common, &response)) {
++		packet_buf_delim(&response);
++		ret = 1;
++	} else {
++		/* Add Flush */
++		packet_buf_flush(&response);
++		ret = 0;
++	}
++
++	/* Send response */
++	write_or_die(1, response.buf, response.len);
++	strbuf_release(&response);
++
++	oid_array_clear(&data->haves);
++	oid_array_clear(&common);
++	return ret;
++}
++
++enum fetch_state {
++	FETCH_PROCESS_ARGS = 0,
++	FETCH_READ_HAVES,
++	FETCH_SEND_ACKS,
++	FETCH_SEND_PACK,
++	FETCH_DONE,
++};
++
++int upload_pack_v2(struct repository *r, struct argv_array *keys,
++		   struct argv_array *args)
++{
++	enum fetch_state state = FETCH_PROCESS_ARGS;
++	struct upload_pack_data data = UPLOAD_PACK_DATA_INIT;
++	use_sideband = LARGE_PACKET_MAX;
++
++	while (state != FETCH_DONE) {
++		switch (state) {
++		case FETCH_PROCESS_ARGS:
++			process_args(args, &data);
++
++			if (!want_obj.nr) {
++				/*
++				 * Request didn't contain any 'want' lines,
++				 * guess they didn't want anything.
++				 */
++				state = FETCH_DONE;
++			} else if (data.haves.nr) {
++				/*
++				 * Request had 'have' lines, so lets ACK them.
++				 */
++				state = FETCH_SEND_ACKS;
++			} else {
++				/*
++				 * Request had 'want's but no 'have's so we can
++				 * immedietly go to construct and send a pack.
++				 */
++				state = FETCH_SEND_PACK;
++			}
++			break;
++		case FETCH_READ_HAVES:
++			read_haves(&data);
++			state = FETCH_SEND_ACKS;
++			break;
++		case FETCH_SEND_ACKS:
++			if (process_haves_and_send_acks(&data))
++				state = FETCH_SEND_PACK;
++			else
++				state = FETCH_DONE;
++			break;
++		case FETCH_SEND_PACK:
++			packet_write_fmt(1, "packfile\n");
++			create_pack_file();
++			state = FETCH_DONE;
++			break;
++		case FETCH_DONE:
++			continue;
++		}
++	}
++
++	upload_pack_data_clear(&data);
++	return 0;
++}
+diff --git a/upload-pack.h b/upload-pack.h
+index a71e4dc7e..6b7890238 100644
+--- a/upload-pack.h
++++ b/upload-pack.h
+@@ -10,4 +10,9 @@ struct upload_pack_options {
  
+ void upload_pack(struct upload_pack_options *options);
+ 
++struct repository;
++struct argv_array;
++extern int upload_pack_v2(struct repository *r, struct argv_array *keys,
++			  struct argv_array *args);
++
+ #endif /* UPLOAD_PACK_H */
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
