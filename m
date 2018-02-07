@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD1EE1F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 09:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7A551F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 09:23:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753356AbeBGJWJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 04:22:09 -0500
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:42108 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753700AbeBGJWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 04:22:07 -0500
-Received: by mail-pf0-f195.google.com with SMTP id b25so77319pfd.9
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:22:06 -0800 (PST)
+        id S1753713AbeBGJWE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 04:22:04 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:39071 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753608AbeBGJWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 04:22:01 -0500
+Received: by mail-pg0-f65.google.com with SMTP id w17so63120pgv.6
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:22:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
         bh=SPZ2WZraVaGWllth3KLcyPBOU7HVFP7tuZpzSXqulwY=;
-        b=LI19n0Rliqb6uEX+G0SzRVedjqHzK+8qxjSPJUrh0zAFsGBRpHpYAqkh81cchz7fYw
-         IMR282pY2kMQbblUJ7TLDhUJ2ncig8z9ZgHw+RU2dH75B6YXRwYfbuAKNBy8atfL/D5B
-         AMVY2IvZPlWCDjF9vSvUWQd/VuAvT3Pnkjt/07bPckKpqg9iZPDNPQwL8NXVfU/RvevL
-         GACuyDb9FiSGONTMmuN9qzn0t31dR0nb47wbksDJXA0MCMjhZjpj6flUFGmtloOsMiv5
-         yYWbZrAOaxx5oRzExDOonqb/NjFhIakoWvxsXhbC9wFec8P2OTQslnHh48N2lojZr3vT
-         vmjg==
+        b=g905+qeUBhihQgceRD0+cmKNIkDIf7Hr7Hl23JZDrijbb/7VR8hkm9H0eWSrdvkdSv
+         WVYZWisNm6r80Zi60O9G+6q3HmJnpE8xWFYijaJGdKL5I2DHT04M0vsSdLE7BcEDfrX4
+         h1gaUBjUAs0BoB6bboFM3W0vtObjdpUMGK0tB5Dw7QyO1lHHKC4C6c8FebCLeOexXRyA
+         C86mb30u65Xqe6DiIiXnl4QJ0hc/fUDhr/XVByqI2A7kCUPYS/MJyrMfQz0r4moBxIgc
+         3WOjjsTVBcghpaRAQtJ+QIzduMnzyoGgBE+YVPcNoxpLYKJswQ+ukE1RFj1yblOQLxPF
+         AceQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
         bh=SPZ2WZraVaGWllth3KLcyPBOU7HVFP7tuZpzSXqulwY=;
-        b=tntUgdFdXqHaJcqA1nbkBu1i4886ML5e/oDOIBKNWE6RjToI6diC82CnzW7H3z0e6m
-         XfQVNeDutO34susThK1Hueo3x0WYjw023qgFRn4CtPrKOcjO0Z5kT+Jr5dQrwnDnS3OR
-         ux+Pjhy7McGSTagibW5OrVz4VWKG+5ZtIEzChP41k5Hdh51eqEtAiOLHsRNgfsOpP4sC
-         +qCp5QL0+MQnnobKhDhTDc0iVTMfijP4GqHOAzBzF0DJqu60dx/d+rEHhvjowd92zyZ1
-         hpaNPOIFbmy8Imo10HmeX0Utn+xMPnxC6jWlWpLs0DzA5DRMf6fLutJtcam1KAzxdxP1
-         96Ww==
-X-Gm-Message-State: APf1xPBxZasoN/KCkuwkWsNdVvQmk7hq54CS14Y2qowNjPDEEj6084BU
-        65fkFUu+N7am3v4TqpQs1J4=
-X-Google-Smtp-Source: AH8x2270sH666KM+jnaWn1AaTE+AJe3Dg0VFVRyzlncFXgC9Tai209m67EVpMGFHi+OAG7ZFc2W8ig==
-X-Received: by 10.98.20.77 with SMTP id 74mr5408236pfu.45.1517995326473;
-        Wed, 07 Feb 2018 01:22:06 -0800 (PST)
+        b=eYwBxnX3jhJs2s6wyTjmV9899LxRnc8d5+YyXBWv2MCzp7Jp2QyXdl+R3wbSR+Fmpd
+         zjKZGkQzUk3ToE2N1iWcgMbPla7mb/8s1Isw2QFOxjuX4nQjcCFza8kUlkPCOxdY3yWZ
+         IfBaudB1k/DuCYAMtZjWj26XhKKQieVmclVRn8EVwBxEsy08ESz1b3I0R1wbU6PqyRtq
+         DJ3CaQJ8WPr4FrW6Iagr0XL6otkNLVbLGHnLtXYgA8zbc1FiYP3/XkWMxmm109Ho3QFR
+         iB6sb8oJIMVCa5FqGGmPmInLXD/zeD0inNFBueYCrwi+e2nwS/3UzZ/7np+wMYIfrHNN
+         yrkA==
+X-Gm-Message-State: APf1xPC3S6kseaIkd6JJoMwwj7BKNSug5RktsJCa2dapzX/yRdP9Y4h2
+        pJbHQ9jqNVHjx3LGKn88Iu0=
+X-Google-Smtp-Source: AH8x227fxVAUDfuFYN5m9+IDIgvapXxCKdeCnGgqVsXtPM8rA1rdgH/OEecKek94bgrHxmRhow4wLA==
+X-Received: by 10.98.8.206 with SMTP id 75mr5390776pfi.172.1517995320887;
+        Wed, 07 Feb 2018 01:22:00 -0800 (PST)
 Received: from ash ([171.233.100.40])
-        by smtp.gmail.com with ESMTPSA id u26sm2704553pfk.126.2018.02.07.01.22.02
+        by smtp.gmail.com with ESMTPSA id h8sm3245617pfk.121.2018.02.07.01.21.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 07 Feb 2018 01:22:05 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 07 Feb 2018 16:22:01 +0700
+        Wed, 07 Feb 2018 01:22:00 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 07 Feb 2018 16:21:54 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -63,12 +63,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 Subject: [PATCH v2] dir.c: ignore paths containing .git when invalidating untracked cache
-Date:   Wed,  7 Feb 2018 16:21:41 +0700
-Message-Id: <20180207092141.4312-2-pclouds@gmail.com>
+Date:   Wed,  7 Feb 2018 16:21:40 +0700
+Message-Id: <20180207092141.4312-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.207.gedba492059
-In-Reply-To: <20180207092141.4312-1-pclouds@gmail.com>
+In-Reply-To: <20180204093823.3671-1-pclouds@gmail.com>
 References: <20180204093823.3671-1-pclouds@gmail.com>
- <20180207092141.4312-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
