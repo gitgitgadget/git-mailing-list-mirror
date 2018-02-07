@@ -2,120 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6D21F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 19:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ECEC1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 19:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754867AbeBGTto (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 14:49:44 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:42017 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754301AbeBGTtm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 14:49:42 -0500
-Received: by mail-wr0-f196.google.com with SMTP id 41so2342333wrc.9
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 11:49:42 -0800 (PST)
+        id S1754695AbeBGTuh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 14:50:37 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:38722 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754157AbeBGTuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 14:50:35 -0500
+Received: by mail-qk0-f196.google.com with SMTP id w128so2700383qkb.5
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 11:50:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZcoymGFIJ6fl3IDDoIFyE5ZB4lu9U4gRY4KQYjn0Rlg=;
-        b=iCnHZTnBwS1Rs24COVB7R6zt/sPzlpJldNeADAzf+gsNv1qr/m/cYodyujeMyTast5
-         aCYSJEzhB6WNmlJ/oO0EG+xCeIdfYIGodj2prLyOLZsOJDmAU5zYvkCN3P4gc98dHSdS
-         NcEuXSU9/ZeYY35RqV8zoMIhPnGLFkXiHZ5x6wf/FMbIdQgFw8PYUqXhzy4TojNCs0pK
-         Xo+WnV57w9IwYCydSK3qBmrk/44oQx/lGmshHVudlem9gwvitslRbwT16LypCtObv8uj
-         NLsSdDV2CxoAJhcZ9t4msbIQu88+W8sOvxyJQnCGO0vzFrC/9tpSHX0pqaivUVZTKUWa
-         PGyA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=zdjECoXdqk8qGkykru153/Qmv3BqIYbxGH8JQaaD/xI=;
+        b=ZylukewV2noDsgvrtJvlComWa+fy0rsSSJ1VzSsViagg84DfDb6WfEbpa2fp4rn48V
+         000lkGjY7tMfs0wVuyZ43ACFGWKy+PnjPcHrMwT8v/osKppna+zp1UwoBmzRINijl5Xp
+         tfBT4Er7sk4JxcvzBuSaPde6lq0ikuYyN7MyNtJKAJTFFpsSIdyE/5REdSVzoNBzoe0N
+         i6UkkVgccdBECuZvt30Jq4VS8UQJoniDnPvUitbcedY0Pe99SjoNpKMf7fITPUPOanmY
+         cP6xytq8BOYyLbNXyyiZp9o85pKwARCdXjtekMREdueLobp8EGt6FPaor5YPmSu9J0Ls
+         zy1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZcoymGFIJ6fl3IDDoIFyE5ZB4lu9U4gRY4KQYjn0Rlg=;
-        b=WB56Y1wYHBtaQSJ5+8khcyNgC909OVRqXkdqP+bgPhIHCmyXcTi92ZoP0DgMo6hJbk
-         brN/2ZC+epa4ziPjqdfkb/GPl4bFH6Cb27dzVON1B4QTuAakAN4weEAdRG+6hUSqiuLM
-         2jFURnkyNI2T4l88Y0XD6P0Meg1T3DEERgiBSq+eMJvzjIOZThUs+UZe2PxRKTApycnL
-         yKCnkt3dijGNHvqcUjBK7DlLb4uH4gUFFeKCS9Hob6ZESb0kx5qkQ3oubXh8wh0/hg0x
-         Z+HKfltzoZcqsZUez4/Nf2hHXtGPbOQA+YGJZiMX2LM4MW32Td2yUNDiceTJLglnu3L9
-         6ETQ==
-X-Gm-Message-State: APf1xPA72YGGsUGPEXcC0UD597WQerVGop1k7jNy/liOdNApQ/CezZUY
-        fA9AlUiGMgtDreeNyRsX56U=
-X-Google-Smtp-Source: AH8x2255egHTjEJHt747cVb3sS8nmlNf8OBFoVmavcckwpDlL7sFktGJI2ldrwkvTWjiL0gCQQuocw==
-X-Received: by 10.223.142.105 with SMTP id n96mr6320178wrb.54.1518032981094;
-        Wed, 07 Feb 2018 11:49:41 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e67sm6523699wmf.7.2018.02.07.11.49.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Feb 2018 11:49:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Moch <stefanmoch@mail.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Simon Doodkin <helpmepro1@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: feature-request: git "cp" like there is git mv.
-References: <20171216013130.GB188893@aiede.mtv.corp.google.com>
-        <20171231191156.28359-1-stefanmoch@mail.de>
-Date:   Wed, 07 Feb 2018 11:49:39 -0800
-In-Reply-To: <20171231191156.28359-1-stefanmoch@mail.de> (Stefan Moch's
-        message of "Sun, 31 Dec 2017 20:11:54 +0100")
-Message-ID: <xmqqinb87f70.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=zdjECoXdqk8qGkykru153/Qmv3BqIYbxGH8JQaaD/xI=;
+        b=C4mHQ7prZ3QjWVaT1dzxGvXrgyrbrvSejflu839t72CkA4y17YqZrh3tJungu7jofW
+         DS0woUYbuweH9J0TP0nAM+s7g1DYcqC1ykm4jDiSLoSVZDnSyqNVHVQcUVnQr6QApQn4
+         PNOWEj/Eo4ZIzK4nh9GUKmY4L9kzqNmB2y7Qpih62WMgCvpFoIFAjZyVfk0cx6uSrfSa
+         puS7nd7gNuMKdnSS+U5hRmSE1gAg6z0jEpUI85+exuFBP//CVO7Yq/zEWNQPeLxnTHi1
+         aIb6n4AdduDC6wUJaLu4AIYBO6ponv0S/Yl6bjRJRkAAR60+0m+U0S8+FRtARvegzJNn
+         9zlA==
+X-Gm-Message-State: APf1xPBS5gfl6/sbwE9jHBTEaqg3PQaLh14cFcUJOODMQi5Ow6ajF2LE
+        N8osSus+JEkB0IR/JykuKQKWMeQ2yuexd0R9zSg=
+X-Google-Smtp-Source: AH8x226xNa6FiVH6DNQxeEJyeYAKd5vcTtVcq+JOtHmktHW+UizYeweFOKI7/C55Ty4qpifdM4dOLmqatuO6pQe78Qw=
+X-Received: by 10.55.177.135 with SMTP id a129mr11109502qkf.112.1518033034399;
+ Wed, 07 Feb 2018 11:50:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 11:50:33 -0800 (PST)
+In-Reply-To: <20180207194547.1412-1-sbeller@google.com>
+References: <xmqqlgpppri7.fsf@gitster.mtv.corp.google.com> <20180207194547.1412-1-sbeller@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 7 Feb 2018 14:50:33 -0500
+X-Google-Sender-Auth: uDHQ2Oe1zYUrUU-fgwnTKpWApZA
+Message-ID: <CAPig+cQZr=UN3KC3LnaKy=oUYd1inbtDgi_pDuhPXf9HgFOdNw@mail.gmail.com>
+Subject: Re: [PATCH] send-email: have default batch size when relogin delay is given
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, mina86@mina86.com,
+        mst@kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+        Jan Viktorin <viktorin@rehivetech.com>, zxq_yx_007@163.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Moch <stefanmoch@mail.de> writes:
-
-> * Jonathan Nieder <jrnieder@gmail.com> [2017-12-15T17:31:30-0800]:
->> This sounds like a reasonable thing to add.  See builtin/mv.c for how
->> "git mv" works if you're looking for inspiration.
->> 
->> cmd_mv in that file looks rather long, so I'd also be happy if someone
->> interested refactors to break it into multiple self-contained pieces
->> for easier reading (git mostly follows
->> https://www.kernel.org/doc/html/latest/process/coding-style.html#functions).
+On Wed, Feb 7, 2018 at 2:45 PM, Stefan Beller <sbeller@google.com> wrote:
+> When the batch size is neither configured nor given on the command
+> line, but the relogin delay is given, then the user is not using the
+> the feature as intended. But as the user gave a relogin delay, there is
+> clearly the intention to delay sending out emails. Assume a batch size
+> of 1 instead of silently ignoring the given relogin delay.
 >
-> I looked at builtin/mv.c and have a rough idea how to split it
-> up to support both mv and cp commands.
->
-> But first I noticed and removed a redundant check in cmd_mv,
-> also added a test case to check if mv --dry-run does not move
-> the file.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> @@ -379,6 +379,12 @@ unless ($rc) {
+> +if (defined $relogin_delay) {
+> +       if (not defined $batch_size) {
+> +               $batch_size = 1;
+> +       }
+> +}
 
-I guess these two patches went unnoticed when posted at the end of
-last year.  Reading them again, I think they are good changes.
+Maybe also print a message that this batch size has been used as
+default lest the user wonder why it's sending "slowly" without
+apparently batching anything.
 
-As a no-op clean-up of a127331c ("mv: allow moving nested
-submodules", 2016-04-19), the attached would also make sense, I
-would think.
-
-Thanks.
-
- builtin/mv.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 9662804d23..9cb07990fd 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -266,10 +266,11 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		const char *src = source[i], *dst = destination[i];
- 		enum update_mode mode = modes[i];
- 		int pos;
--		if (show_only || verbose)
--			printf(_("Renaming %s to %s\n"), src, dst);
--		if (show_only)
-+		if (show_only) {
-+			if (verbose)
-+				printf(_("Renaming %s to %s\n"), src, dst);
- 			continue;
-+		}
- 		if (mode != INDEX && rename(src, dst) < 0) {
- 			if (ignore_errors)
- 				continue;
-
+Alternately, complain and die if both options are not specified.
