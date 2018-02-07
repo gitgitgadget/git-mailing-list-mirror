@@ -2,100 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CEC41F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 20:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AC291F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 21:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932104AbeBGUxo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 15:53:44 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34760 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932099AbeBGUxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 15:53:43 -0500
-Received: by mail-wr0-f196.google.com with SMTP id z6so2537009wrb.1
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 12:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NWKWG7AD0ZRVw/39e8wRR950zKVBM1y55ikZD7kNhXo=;
-        b=jHiGdfPc+96L8gP3Ji0x5/cu6CUMFKHWLs5PvGD3hNki8u+PHsIjw8e36XaLVJans0
-         1AvT7nrfKZ6vSdR0GRcba5og4k7hnmGExbrPVXt328Rjt7qFLMUB9fiFv/MKArFGQu+Z
-         tAyWYPZSjcTqugvjM/ZeDko7BHKahFEx+ymICewLxyW+nu/+8B2UR+ppWF6BVDESJ2gY
-         i3Xfj5ZyqJepDVjw/4UNJJvpUmwiv+DkqgMnfvg34vXfF4MsrSKdoevwyuJVAM9X9nJB
-         EY1TNjQ3AlYd2DqCQgcc9ZGB+lbgeoSwa/MftNQNkxNQ0MwfRBYZkxyFpDRli/swqKna
-         JrgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NWKWG7AD0ZRVw/39e8wRR950zKVBM1y55ikZD7kNhXo=;
-        b=PVvzRXu5CbZ7qcLh/uSR6nxzbgczaoOTKKGN6PT34ZlwjKfbdIpJ69+0rJwhY7168W
-         DG3YMlPKWO3R9dFHaRSZz8Duins5uBC5j2jvyfrwU+pur/G1pqE3kkDfPPJ9bnHgJ2v+
-         S0zCKpqTYNCgOPJvyH3T63y+zutbysGoAFportNTpmqjru2bJuHDSeHbj3ULk1H9DB6N
-         hBOYnGO7mxwX9qZeKqX+ME0y/cLZ4FEHQ5MnFsM0mgfLmVeYlWkzX+oMsW5y1shF1Cu0
-         nG5C7C598VL2EQ6vpqfOYIn5hKa4BKsuHQeYkVjtFdxdrmN14DiIr1FETz/G08yTZJlp
-         8rww==
-X-Gm-Message-State: APf1xPBr/cuYRY2klQZEGbr6OZX2khhgusyVha6SJxSGX5SXZOnt2vOJ
-        l+UtTcbnd05y/mmdFmkgC5TroyxD
-X-Google-Smtp-Source: AH8x226kEsG2WfnBah/qgKo7nPPT61CJPAOm8C/mNPa3dIPeMm3wTmTQj1Jrf1larJVN+fgxp7N06w==
-X-Received: by 10.223.160.176 with SMTP id m45mr6711081wrm.119.1518036821520;
-        Wed, 07 Feb 2018 12:53:41 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l2sm2330384wre.6.2018.02.07.12.53.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Feb 2018 12:53:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        mhagger@alum.mit.edu, Mathias Rav <m@git.strova.dk>
-Subject: Re: [PATCH] files-backend: unlock packed store only if locked
-References: <20180206203615.68504-1-jonathantanmy@google.com>
-        <20180207144251.GB27420@sigill.intra.peff.net>
-        <20180207103245.d500efb67cc73cf31087f4be@google.com>
-Date:   Wed, 07 Feb 2018 12:53:40 -0800
-In-Reply-To: <20180207103245.d500efb67cc73cf31087f4be@google.com> (Jonathan
-        Tan's message of "Wed, 7 Feb 2018 10:32:45 -0800")
-Message-ID: <xmqq372c7c8b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S932146AbeBGVSf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 16:18:35 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63080 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755093AbeBGVSd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 16:18:33 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 574B8C5001;
+        Wed,  7 Feb 2018 16:18:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=Fdp26Y+QGuHQqzkmq56hiGmv4kQ=; b=NXc7+mc
+        +2YT/ywVee0sfbd8qplHdKMinSh4b8mkv7iGfjaRE0A6Pte+cDqnkOA/3kTGI5tr
+        lKpV/GM6Eqn1aMxh4VYmntQycxfpTYW1TtOSPzOcPQU22iCrBo4IhbIRSndHXOyV
+        OheH63Pt5GhtwW3Ph5UQrQwutnPgbOfVWneQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=EkX6OkfMQfCujU1fha39F5SajLSJdRI8R
+        CQf31VYpUAnOuPTBLMPpiI/rufUCeSZKyzx+8dN4+LjBqq2ppmcsx8FhC8H7DCGo
+        TnK659QBg2/cJmkSNI5IIg6CqIhFCSgjbyygIuggVuSm6u3buvBO/bShBA05Emjx
+        YoAlSYzUBI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FDCDC5000;
+        Wed,  7 Feb 2018 16:18:32 -0500 (EST)
+Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0750C4FFF;
+        Wed,  7 Feb 2018 16:18:31 -0500 (EST)
+Date:   Wed, 7 Feb 2018 16:18:30 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: categorization, documentation and packaging of "git core"
+ commands
+Message-ID: <20180207211830.GO1427@zaya.teonanacatl.net>
+References: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41>
+ <20180207172902.GL1427@zaya.teonanacatl.net>
+ <alpine.LFD.2.21.1802071529080.14481@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.21.1802071529080.14481@localhost.localdomain>
+User-Agent: Mutt/1.9.1 (2017-09-22)
+X-Pobox-Relay-ID: 72DD347A-0C4C-11E8-8225-D3940C78B957-09356542!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Robert P. J. Day wrote:
+> not to belabour this (and i'm sure it's *way* too late for that),
+> but fedora has the following packaging scheme.  first, there's a bunch
+> of stuff in "git-core", which has no dependencies on any other
+> git-related packages.
 
-> On Wed, 7 Feb 2018 09:42:51 -0500
-> Jeff King <peff@peff.net> wrote:
->
->> But this all seemed strangely familiar... I think this is the same bug
->> as:
->> 
->>   https://public-inbox.org/git/20180118143841.1a4c674d@novascotia/
->> 
->> which is queued as mr/packed-ref-store-fix. It's listed as "will merge
->> to next" in the "what's cooking" from Jan 31st.
->
-> Ah...thanks, I didn't notice that.
->
->> I actually like this double-label a bit more than what is queued on
->> mr/packed-ref-store-fix, though I am OK with either solution.
->
-> Same here.
+The split in Fedora between git and git-core is done to
+minimize the dependencies required for a minimal git
+install.  The initial reason was to to allow installing the
+git-core package on systems, in containers, etc. without
+requiring perl and its various dependencies to be installed.
 
-I do agree that the double-label approach is more future-proof way,
-especially if we anticipate that there will be more code after the
-"attempt initial ref transaction commit" block before the
-packed-ref-store is unlocked.  On the other hand, introduction of
-the locked_cleanup label can be done as part of such a change that
-adds new code that needs to be skipped, so I am OK with what is
-queued there.
+The name git-core was not chosen to imply any official
+status as core versus contrib from upstream.
 
-Thanks, all.
+(Farther back in the past, the main git package (and the
+upstream tarball, IIRC) was named git-core due to conflicts
+with another tool named git (GNU interactive tools).)
+
+> so with fedora, "git" drags in "git-core" and a small number of
+> additional git utilities. all of this leads one to wonder -- is there
+> any comprehensible relationship between:
+> 
+>   1) commands that claim to be in the "git suite"
+>   2) commands that come from contrib/
+>   3) commands listed at
+>      https://www.kernel.org/pub/software/scm/git/docs/
+>   4) how different distros package all of the above
+> 
+> as i think we've noticed, it's not at all clear how git decides what
+> is and isn't part of the "official" git suite.
+
+I don't think there's any good reason to use the packaging
+of any distribution as the source for what the git project
+considers officially part of the suite.  For that, you
+should look at the git source and particularly
+contrib/README.  The first paragraph says:
+
+    Although these pieces are available as part of the official git
+    source tree, they are in somewhat different status.  The
+    intention is to keep interesting tools around git here, maybe
+    even experimental ones, to give users an easier access to them,
+    and to give tools wider exposure, so that they can be improved
+    faster.
+
+If anything the Fedora packging does in the splitting or
+naming of the git packages is something the git project
+feels is incorrect or needlessly confusing, I (with my
+Fedora maintainer hat on) would be happy to make any changes
+I can to improve things.
+
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Some god must protect drunkards and fools, there are so many of them
+still around.
 
