@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5361F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:13:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EF841F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932219AbeBGBNs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 20:13:48 -0500
-Received: from mail-ua0-f201.google.com ([209.85.217.201]:33579 "EHLO
-        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932213AbeBGBNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:13:44 -0500
-Received: by mail-ua0-f201.google.com with SMTP id z11so2450153uaz.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:44 -0800 (PST)
+        id S932227AbeBGBNy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:13:54 -0500
+Received: from mail-ot0-f202.google.com ([74.125.82.202]:34980 "EHLO
+        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932199AbeBGBNq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:13:46 -0500
+Received: by mail-ot0-f202.google.com with SMTP id i11so2161539otb.2
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=BkElmfd40SwMUN+v/6AKjsPGJDWfuK+23eZ1zaG9abM=;
-        b=FQGyPRV12/iKp9dC7iDePD8aa21pYiHNDaaPgBkSleKURzCTbokNoYXwKTaT0kn/BW
-         6shgwzLjMOVdaMTS/L73Czhj9damOFR+XZcXV9rHjzp8Ie4PxSB6JM9xJ7nub2NEA+IU
-         74hlo9jmQaIaWif5ZyyvwWtc0xRCAcMf8QP8K2U+5/9qCiRwMoYJRMCuRByxMyoNN/on
-         v/aoRSng56cxZ9jrWQto6f+HbVm9+azEtl20sX0xOCZhc3V2F+DmXe4zweLAJEP+nPGf
-         LYEatcbmaS9I+maDXKTGE5RHHiPr1fQfJU2reaKNYD5uIWAWF+p5x+49mI+980JX/T61
-         wtfQ==
+        bh=rVAKoZfNt3B9MS0c0LSaBPI7otIkhGmUp1kb1GT2D94=;
+        b=sBGo0eNuaxAwn+xwsz6ISTIQmyXEz/9ckE+YIE9j2ENfiuBl48oIplFWjhuUUXIqTm
+         tcxh+CSNVkZR/KVAg/UjaduTpQI7WqM2xp0onTlrsxiJ4bwveK5hnqMKBbS2ZrtfXb1i
+         7dWtkeprfNSPtJ6DBKXCI6Fg+jm9YmKwL8nCUAwrOULZGB71oH/uLYAFji/V9SPC4Txh
+         /3QOPPsKc7sVvWWt1BgyK5r7QogiRKk6Wyuut7tEJQqpa2zFwUs3Dw6AVumKVKjnIHbn
+         90ZT62o/cIbjNPCXlNe/H9vNvT3Xm3IUin7IKA3IstF1XgRnuAKsJcOxGJAGYIz9tqQK
+         gBlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=BkElmfd40SwMUN+v/6AKjsPGJDWfuK+23eZ1zaG9abM=;
-        b=aaeyXF+KzK3TL6K8Yfx+nMd0TX10eUs2fAYt6t7xQhtc90cfkk7Ex3q/L3rR0e/m5b
-         o7MoCf2yEbiHl5w9JShSjD3xf3RWhrk5t5kUzlNZBy8ZXc9TUXXDBa0cfatUTjDz/Mjz
-         J95f1eSLgQTletzUcq7u5fJNeNH/bvuYY45tfx8qVA7dfE1b4RkenQyUpG95WOfcbFN/
-         0izK3nXzRSoi6BsWCxunVnQUbjh+619OvLQOK0en5gHOq5PqhmF267WUckOxexXVfb3Q
-         qk4D3K3wwipGEGQiVA8/wVzJA+RQr6e6iiI2A/+YGTCoeMbWzUb8lk7JGJJ5vHInYE23
-         VLwQ==
-X-Gm-Message-State: APf1xPDp/i7tS3FVWGq8AU1JNb+i5RKUtuXdO/YxVmwQUzcOMfTYvJbR
-        qG7n1GC9fAVSxrhMRvsTQciWYZlKCRKruTx92mehRlDfd6Cb81r8l2hz+YCmU3DhpwPy/7mcevS
-        FG1o+51A76Lszz+25fujoUscLLP8A05xVu08l+7cllHkry3VI0UytW1OuqA==
-X-Google-Smtp-Source: AH8x226L11wPba8TgBm+b7ca/OwTxJgAVI7GUQgmSX//pgGS+Z2qZTm1+bE+ZkX2/6YstdBssdigIRs/0xk=
+        bh=rVAKoZfNt3B9MS0c0LSaBPI7otIkhGmUp1kb1GT2D94=;
+        b=BJNf5awLnz6It6YVjuFIBhVAUFopaeM+a59U62GPxIzDgXqaXUQJp43XMxBJ18mDRN
+         rsH3LjjcopsXQzxeof9wiubw6cLfnXK6jexkrq3a/trcyX7rBlYvlFNdMCcSeDTOoImr
+         Nh6hcNpiPZeBK/YxMbO0OZywgTRFj8O2tzngRd7twzc+q3M01fMp56nJHNh3bIpizYS2
+         q81s9KUP4XeSv1fmu5yr5XnZixfqn4n+/FG76rRl3yp0GutbGKHKwkNf0gQrDQ/DW4Pw
+         PmwHS/plYM2SXYOIul1X21Bl6mabN1k95YdynIIxrOpUauZLgEytAlwA9ZsKDDQ4K8gs
+         vvnw==
+X-Gm-Message-State: APf1xPAtsDImwWGK2atBYDafOoxPI9U/2sgB3MeR+VMBnlceYl/st/+z
+        93wUNd+Oy5YjP0PHGas/KQ+CZiHTzBuZ3wW7kAzyDNzgGf6ogsQ71KmhqN/moz1rfZoW+daXToI
+        i5/Y9/aX+C7amp1Fg2Q1fn8s/K60+FOStHoUdiNYGEd51CqRJpqKoEUwHpA==
+X-Google-Smtp-Source: AH8x227DYCtPJooyCC6QIaJW+8bGN0LZC44t4NV+P5rfSR8Jo6CN316qMUiFOVsYfH/UA9t7IkLhbssp/Ts=
 MIME-Version: 1.0
-X-Received: by 10.31.8.145 with SMTP id 139mr2179455vki.83.1517966023317; Tue,
- 06 Feb 2018 17:13:43 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:12:49 -0800
+X-Received: by 10.202.65.65 with SMTP id o62mr1900223oia.21.1517966025522;
+ Tue, 06 Feb 2018 17:13:45 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:12:50 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-13-bmwill@google.com>
+Message-Id: <20180207011312.189834-14-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 12/35] serve: introduce git-serve
+Subject: [PATCH v3 13/35] ls-refs: introduce ls-refs server command
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -64,594 +64,352 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce git-serve, the base server for protocol version 2.
-
-Protocol version 2 is intended to be a replacement for Git's current
-wire protocol.  The intention is that it will be a simpler, less
-wasteful protocol which can evolve over time.
-
-Protocol version 2 improves upon version 1 by eliminating the initial
-ref advertisement.  In its place a server will export a list of
-capabilities and commands which it supports in a capability
-advertisement.  A client can then request that a particular command be
-executed by providing a number of capabilities and command specific
-parameters.  At the completion of a command, a client can request that
-another command be executed or can terminate the connection by sending a
-flush packet.
+Introduce the ls-refs server command.  In protocol v2, the ls-refs
+command is used to request the ref advertisement from the server.  Since
+it is a command which can be requested (as opposed to mandatory in v1),
+a client can sent a number of parameters in its request to limit the ref
+advertisement based on provided ref-patterns.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- .gitignore                              |   1 +
- Documentation/technical/protocol-v2.txt | 114 +++++++++++++++
- Makefile                                |   2 +
- builtin.h                               |   1 +
- builtin/serve.c                         |  30 ++++
- git.c                                   |   1 +
- serve.c                                 | 250 ++++++++++++++++++++++++++++++++
- serve.h                                 |  15 ++
- t/t5701-git-serve.sh                    |  60 ++++++++
- 9 files changed, 474 insertions(+)
- create mode 100644 Documentation/technical/protocol-v2.txt
- create mode 100644 builtin/serve.c
- create mode 100644 serve.c
- create mode 100644 serve.h
- create mode 100755 t/t5701-git-serve.sh
+ Documentation/technical/protocol-v2.txt |  32 +++++++++
+ Makefile                                |   1 +
+ ls-refs.c                               |  96 ++++++++++++++++++++++++++
+ ls-refs.h                               |   9 +++
+ serve.c                                 |   8 +++
+ t/t5701-git-serve.sh                    | 115 ++++++++++++++++++++++++++++++++
+ 6 files changed, 261 insertions(+)
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
 
-diff --git a/.gitignore b/.gitignore
-index 833ef3b0b..2d0450c26 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -140,6 +140,7 @@
- /git-rm
- /git-send-email
- /git-send-pack
-+/git-serve
- /git-sh-i18n
- /git-sh-i18n--envsubst
- /git-sh-setup
 diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-new file mode 100644
-index 000000000..f87372f9b
---- /dev/null
+index f87372f9b..ef81df868 100644
+--- a/Documentation/technical/protocol-v2.txt
 +++ b/Documentation/technical/protocol-v2.txt
-@@ -0,0 +1,114 @@
-+ Git Wire Protocol, Version 2
-+==============================
+@@ -112,3 +112,35 @@ printable ASCII characters except space (i.e., the byte range 32 < x <
+ "git/1.8.3.1"). The agent strings are purely informative for statistics
+ and debugging purposes, and MUST NOT be used to programmatically assume
+ the presence or absence of particular features.
 +
-+This document presents a specification for a version 2 of Git's wire
-+protocol.  Protocol v2 will improve upon v1 in the following ways:
++ ls-refs
++---------
 +
-+  * Instead of multiple service names, multiple commands will be
-+    supported by a single service
-+  * Easily extendable as capabilities are moved into their own section
-+    of the protocol, no longer being hidden behind a NUL byte and
-+    limited by the size of a pkt-line (as there will be a single
-+    capability per pkt-line)
-+  * Separate out other information hidden behind NUL bytes (e.g. agent
-+    string as a capability and symrefs can be requested using 'ls-refs')
-+  * Reference advertisement will be omitted unless explicitly requested
-+  * ls-refs command to explicitly request some refs
-+  * Designed with http and stateless-rpc in mind.  With clear flush
-+    semantics the http remote helper can simply act as a proxy.
++`ls-refs` is the command used to request a reference advertisement in v2.
++Unlike the current reference advertisement, ls-refs takes in parameters
++which can be used to limit the refs sent from the server.
 +
-+ Detailed Design
-+=================
++Additional features not supported in the base command will be advertised
++as the value of the command in the capability advertisement in the form
++of a space separated list of features, e.g.  "<command>=<feature 1>
++<feature 2>".
 +
-+A client can request to speak protocol v2 by sending `version=2` in the
-+side-channel `GIT_PROTOCOL` in the initial request to the server.
++ls-refs takes in the following parameters wrapped in packet-lines:
 +
-+In protocol v2 communication is command oriented.  When first contacting a
-+server a list of capabilities will advertised.  Some of these capabilities
-+will be commands which a client can request be executed.  Once a command
-+has completed, a client can reuse the connection and request that other
-+commands be executed.
++    symrefs
++	In addition to the object pointed by it, show the underlying ref
++	pointed by it when showing a symbolic ref.
++    peel
++	Show peeled tags.
++    ref-pattern <pattern>
++	When specified, only references matching the one of the provided
++	patterns are displayed.
 +
-+ Special Packets
-+-----------------
++The output of ls-refs is as follows:
 +
-+In protocol v2 these special packets will have the following semantics:
-+
-+  * '0000' Flush Packet (flush-pkt) - indicates the end of a message
-+  * '0001' Delimiter Packet (delim-pkt) - separates sections of a message
-+
-+ Capability Advertisement
-+--------------------------
-+
-+A server which decides to communicate (based on a request from a client)
-+using protocol version 2, notifies the client by sending a version string
-+in its initial response followed by an advertisement of its capabilities.
-+Each capability is a key with an optional value.  Clients must ignore all
-+unknown keys.  Semantics of unknown values are left to the definition of
-+each key.  Some capabilities will describe commands which can be requested
-+to be executed by the client.
-+
-+    capability-advertisement = protocol-version
-+			       capability-list
-+			       flush-pkt
-+
-+    protocol-version = PKT-LINE("version 2" LF)
-+    capability-list = *capability
-+    capability = PKT-LINE(key[=value] LF)
-+
-+    key = 1*CHAR
-+    value = 1*CHAR
-+    CHAR = 1*(ALPHA / DIGIT / "-" / "_")
-+
-+A client then responds to select the command it wants with any particular
-+capabilities or arguments.  There is then an optional section where the
-+client can provide any command specific parameters or queries.
-+
-+    command-request = command
-+		      capability-list
-+		      (command-args)
-+		      flush-pkt
-+    command = PKT-LINE("command=" key LF)
-+    command-args = delim-pkt
-+		   *arg
-+    arg = 1*CHAR
-+
-+The server will then check to ensure that the client's request is
-+comprised of a valid command as well as valid capabilities which were
-+advertised.  If the request is valid the server will then execute the
-+command.
-+
-+When a command has finished a client can either request that another
-+command be executed or can terminate the connection by sending an empty
-+request consisting of just a flush-pkt.
-+
-+ Capabilities
-+~~~~~~~~~~~~~~
-+
-+There are two different types of capabilities: normal capabilities,
-+which can be used to to convey information or alter the behavior of a
-+request, and command capabilities, which are the core actions that a
-+client wants to perform (fetch, push, etc).
-+
-+All commands must only last a single round and be stateless from the
-+perspective of the server side.  All state MUST be retained and managed
-+by the client process.  This permits simple round-robin load-balancing
-+on the server side, without needing to worry about state management.
-+
-+Clients MUST NOT require state management on the server side in order to
-+function correctly.
-+
-+ agent
-+-------
-+
-+The server can advertise the `agent` capability with a value `X` (in the
-+form `agent=X`) to notify the client that the server is running version
-+`X`.  The client may optionally send its own agent string by including
-+the `agent` capability with a value `Y` (in the form `agent=Y`) in its
-+request to the server (but it MUST NOT do so if the server did not
-+advertise the agent capability). The `X` and `Y` strings may contain any
-+printable ASCII characters except space (i.e., the byte range 32 < x <
-+127), and are typically of the form "package/version" (e.g.,
-+"git/1.8.3.1"). The agent strings are purely informative for statistics
-+and debugging purposes, and MUST NOT be used to programmatically assume
-+the presence or absence of particular features.
++    output = *ref
++	     flush-pkt
++    ref = PKT-LINE(obj-id SP refname *(SP ref-attribute) LF)
++    ref-attribute = (symref | peeled)
++    symref = "symref-target:" symref-target
++    peeled = "peeled:" obj-id
 diff --git a/Makefile b/Makefile
-index 3b849c060..18c255428 100644
+index 18c255428..e50927cfb 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -881,6 +881,7 @@ LIB_OBJS += revision.o
- LIB_OBJS += run-command.o
- LIB_OBJS += send-pack.o
- LIB_OBJS += sequencer.o
-+LIB_OBJS += serve.o
- LIB_OBJS += server-info.o
- LIB_OBJS += setup.o
- LIB_OBJS += sha1-array.o
-@@ -1014,6 +1015,7 @@ BUILTIN_OBJS += builtin/rev-parse.o
- BUILTIN_OBJS += builtin/revert.o
- BUILTIN_OBJS += builtin/rm.o
- BUILTIN_OBJS += builtin/send-pack.o
-+BUILTIN_OBJS += builtin/serve.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
-diff --git a/builtin.h b/builtin.h
-index f332a1257..3f3fdfc28 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -215,6 +215,7 @@ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
- extern int cmd_revert(int argc, const char **argv, const char *prefix);
- extern int cmd_rm(int argc, const char **argv, const char *prefix);
- extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
-+extern int cmd_serve(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/serve.c b/builtin/serve.c
+@@ -825,6 +825,7 @@ LIB_OBJS += list-objects-filter-options.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+ LIB_OBJS += log-tree.o
++LIB_OBJS += ls-refs.o
+ LIB_OBJS += mailinfo.o
+ LIB_OBJS += mailmap.o
+ LIB_OBJS += match-trees.o
+diff --git a/ls-refs.c b/ls-refs.c
 new file mode 100644
-index 000000000..d3fd240bb
+index 000000000..70682b4f7
 --- /dev/null
-+++ b/builtin/serve.c
-@@ -0,0 +1,30 @@
-+#include "cache.h"
-+#include "builtin.h"
-+#include "parse-options.h"
-+#include "serve.h"
-+
-+static char const * const serve_usage[] = {
-+	N_("git serve [<options>]"),
-+	NULL
-+};
-+
-+int cmd_serve(int argc, const char **argv, const char *prefix)
-+{
-+	struct serve_options opts = SERVE_OPTIONS_INIT;
-+
-+	struct option options[] = {
-+		OPT_BOOL(0, "stateless-rpc", &opts.stateless_rpc,
-+			 N_("quit after a single request/response exchange")),
-+		OPT_BOOL(0, "advertise-capabilities", &opts.advertise_capabilities,
-+			 N_("exit immediately after advertising capabilities")),
-+		OPT_END()
-+	};
-+
-+	/* ignore all unknown cmdline switches for now */
-+	argc = parse_options(argc, argv, prefix, options, serve_usage,
-+			     PARSE_OPT_KEEP_DASHDASH |
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+	serve(&opts);
-+
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index f71073dc8..f85d682b6 100644
---- a/git.c
-+++ b/git.c
-@@ -461,6 +461,7 @@ static struct cmd_struct commands[] = {
- 	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
- 	{ "rm", cmd_rm, RUN_SETUP },
- 	{ "send-pack", cmd_send_pack, RUN_SETUP },
-+	{ "serve", cmd_serve, RUN_SETUP },
- 	{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
- 	{ "show", cmd_show, RUN_SETUP },
- 	{ "show-branch", cmd_show_branch, RUN_SETUP },
-diff --git a/serve.c b/serve.c
-new file mode 100644
-index 000000000..cf23179b9
---- /dev/null
-+++ b/serve.c
-@@ -0,0 +1,250 @@
++++ b/ls-refs.c
+@@ -0,0 +1,96 @@
 +#include "cache.h"
 +#include "repository.h"
-+#include "config.h"
-+#include "pkt-line.h"
-+#include "version.h"
++#include "refs.h"
++#include "remote.h"
 +#include "argv-array.h"
-+#include "serve.h"
++#include "ls-refs.h"
++#include "pkt-line.h"
 +
-+static int agent_advertise(struct repository *r,
-+			   struct strbuf *value)
-+{
-+	if (value)
-+		strbuf_addstr(value, git_user_agent_sanitized());
-+	return 1;
-+}
-+
-+struct protocol_capability {
-+	/*
-+	 * The name of the capability.  The server uses this name when
-+	 * advertising this capability, and the client uses this name to
-+	 * specify this capability.
-+	 */
-+	const char *name;
-+
-+	/*
-+	 * Function queried to see if a capability should be advertised.
-+	 * Optionally a value can be specified by adding it to 'value'.
-+	 * If a value is added to 'value', the server will advertise this
-+	 * capability as "<name>=<value>" instead of "<name>".
-+	 */
-+	int (*advertise)(struct repository *r, struct strbuf *value);
-+
-+	/*
-+	 * Function called when a client requests the capability as a command.
-+	 * The command request will be provided to the function via 'keys', the
-+	 * capabilities requested, and 'args', the command specific parameters.
-+	 *
-+	 * This field should be NULL for capabilities which are not commands.
-+	 */
-+	int (*command)(struct repository *r,
-+		       struct argv_array *keys,
-+		       struct argv_array *args);
++struct ls_refs_data {
++	unsigned peel;
++	unsigned symrefs;
++	struct argv_array patterns;
 +};
 +
-+static struct protocol_capability capabilities[] = {
-+	{ "agent", agent_advertise, NULL },
-+};
-+
-+static void advertise_capabilities(void)
++/*
++ * Check if one of the patterns matches the tail part of the ref.
++ * If no patterns were provided, all refs match.
++ */
++static int ref_match(const struct argv_array *patterns, const char *refname)
 +{
-+	struct strbuf capability = STRBUF_INIT;
-+	struct strbuf value = STRBUF_INIT;
++	char *pathbuf;
 +	int i;
 +
-+	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
-+		struct protocol_capability *c = &capabilities[i];
++	if (!patterns->argc)
++		return 1; /* no restriction */
 +
-+		if (c->advertise(the_repository, &value)) {
-+			strbuf_addstr(&capability, c->name);
-+
-+			if (value.len) {
-+				strbuf_addch(&capability, '=');
-+				strbuf_addbuf(&capability, &value);
-+			}
-+
-+			strbuf_addch(&capability, '\n');
-+			packet_write(1, capability.buf, capability.len);
-+		}
-+
-+		strbuf_reset(&capability);
-+		strbuf_reset(&value);
-+	}
-+
-+	packet_flush(1);
-+	strbuf_release(&capability);
-+	strbuf_release(&value);
-+}
-+
-+static struct protocol_capability *get_capability(const char *key)
-+{
-+	int i;
-+
-+	if (!key)
-+		return NULL;
-+
-+	for (i = 0; i < ARRAY_SIZE(capabilities); i++) {
-+		struct protocol_capability *c = &capabilities[i];
-+		const char *out;
-+		if (skip_prefix(key, c->name, &out) && (!*out || *out == '='))
-+			return c;
-+	}
-+
-+	return NULL;
-+}
-+
-+static int is_valid_capability(const char *key)
-+{
-+	const struct protocol_capability *c = get_capability(key);
-+
-+	return c && c->advertise(the_repository, NULL);
-+}
-+
-+static int is_command(const char *key, struct protocol_capability **command)
-+{
-+	const char *out;
-+
-+	if (skip_prefix(key, "command=", &out)) {
-+		struct protocol_capability *cmd = get_capability(out);
-+
-+		if (!cmd || !cmd->advertise(the_repository, NULL) || !cmd->command)
-+			die("invalid command '%s'", out);
-+		if (*command)
-+			die("command already requested");
-+
-+		*command = cmd;
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+int has_capability(const struct argv_array *keys, const char *capability,
-+		   const char **value)
-+{
-+	int i;
-+	for (i = 0; i < keys->argc; i++) {
-+		const char *out;
-+		if (skip_prefix(keys->argv[i], capability, &out) &&
-+		    (!*out || *out == '=')) {
-+			if (value) {
-+				if (*out == '=')
-+					out++;
-+				*value = out;
-+			}
++	pathbuf = xstrfmt("/%s", refname);
++	for (i = 0; i < patterns->argc; i++) {
++		if (!wildmatch(patterns->argv[i], pathbuf, 0)) {
++			free(pathbuf);
 +			return 1;
 +		}
 +	}
-+
++	free(pathbuf);
 +	return 0;
 +}
 +
-+enum request_state {
-+	PROCESS_REQUEST_KEYS = 0,
-+	PROCESS_REQUEST_ARGS,
-+	PROCESS_REQUEST_DONE,
-+};
-+
-+static int process_request(void)
++static int send_ref(const char *refname, const struct object_id *oid,
++		    int flag, void *cb_data)
 +{
-+	enum request_state state = PROCESS_REQUEST_KEYS;
-+	struct packet_reader reader;
-+	struct argv_array keys = ARGV_ARRAY_INIT;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	struct protocol_capability *command = NULL;
++	struct ls_refs_data *data = cb_data;
++	const char *refname_nons = strip_namespace(refname);
++	struct strbuf refline = STRBUF_INIT;
 +
-+	packet_reader_init(&reader, 0, NULL, 0,
-+			   PACKET_READ_CHOMP_NEWLINE |
-+			   PACKET_READ_GENTLE_ON_EOF);
++	if (!ref_match(&data->patterns, refname))
++		return 0;
 +
-+	/*
-+	 * Check to see if the client closed their end before sending another
-+	 * request.  If so we can terminate the connection.
-+	 */
-+	if (packet_reader_peek(&reader) == PACKET_READ_EOF)
-+		return 1;
-+	reader.options = PACKET_READ_CHOMP_NEWLINE;
++	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
++	if (data->symrefs && flag & REF_ISSYMREF) {
++		struct object_id unused;
++		const char *symref_target = resolve_ref_unsafe(refname, 0,
++							       &unused,
++							       &flag);
 +
-+	while (state != PROCESS_REQUEST_DONE) {
-+		switch (packet_reader_read(&reader)) {
-+		case PACKET_READ_EOF:
-+			BUG("Should have already died when seeing EOF");
-+		case PACKET_READ_NORMAL:
-+			break;
-+		case PACKET_READ_FLUSH:
-+			state = PROCESS_REQUEST_DONE;
-+			continue;
-+		case PACKET_READ_DELIM:
-+			if (state != PROCESS_REQUEST_KEYS)
-+				die("protocol error");
-+			state = PROCESS_REQUEST_ARGS;
-+			/*
-+			 * maybe include a check to make sure that a
-+			 * command/capabilities were given.
-+			 */
-+			continue;
-+		}
++		if (!symref_target)
++			die("'%s' is a symref but it is not?", refname);
 +
-+		switch (state) {
-+		case PROCESS_REQUEST_KEYS:
-+			/* collect request; a sequence of keys and values */
-+			if (is_command(reader.line, &command) ||
-+			    is_valid_capability(reader.line))
-+				argv_array_push(&keys, reader.line);
-+			else
-+				die("unknown capability '%s'", reader.line);
-+			break;
-+		case PROCESS_REQUEST_ARGS:
-+			/* collect arguments for the requested command */
-+			argv_array_push(&args, reader.line);
-+			break;
-+		case PROCESS_REQUEST_DONE:
-+			continue;
-+		}
++		strbuf_addf(&refline, " symref-target:%s", symref_target);
 +	}
 +
-+	/*
-+	 * If no command and no keys were given then the client wanted to
-+	 * terminate the connection.
-+	 */
-+	if (!keys.argc && !args.argc)
-+		return 1;
++	if (data->peel) {
++		struct object_id peeled;
++		if (!peel_ref(refname, &peeled))
++			strbuf_addf(&refline, " peeled:%s", oid_to_hex(&peeled));
++	}
 +
-+	if (!command)
-+		die("no command requested");
++	strbuf_addch(&refline, '\n');
++	packet_write(1, refline.buf, refline.len);
 +
-+	command->command(the_repository, &keys, &args);
-+
-+	argv_array_clear(&keys);
-+	argv_array_clear(&args);
++	strbuf_release(&refline);
 +	return 0;
 +}
 +
-+/* Main serve loop for protocol version 2 */
-+void serve(struct serve_options *options)
++int ls_refs(struct repository *r, struct argv_array *keys, struct argv_array *args)
 +{
-+	if (options->advertise_capabilities || !options->stateless_rpc) {
-+		/* serve by default supports v2 */
-+		packet_write_fmt(1, "version 2\n");
++	int i;
++	struct ls_refs_data data = { 0, 0, ARGV_ARRAY_INIT };
 +
-+		advertise_capabilities();
-+		/*
-+		 * If only the list of capabilities was requested exit
-+		 * immediately after advertising capabilities
-+		 */
-+		if (options->advertise_capabilities)
-+			return;
++	for (i = 0; i < args->argc; i++) {
++		const char *arg = args->argv[i];
++		const char *out;
++
++		if (!strcmp("peel", arg))
++			data.peel = 1;
++		else if (!strcmp("symrefs", arg))
++			data.symrefs = 1;
++		else if (skip_prefix(arg, "ref-pattern ", &out))
++			argv_array_pushf(&data.patterns, "*/%s", out);
 +	}
 +
-+	/*
-+	 * If stateless-rpc was requested then exit after
-+	 * a single request/response exchange
-+	 */
-+	if (options->stateless_rpc) {
-+		process_request();
-+	} else {
-+		for (;;)
-+			if (process_request())
-+				break;
-+	}
++	head_ref_namespaced(send_ref, &data);
++	for_each_namespaced_ref(send_ref, &data);
++	packet_flush(1);
++	argv_array_clear(&data.patterns);
++	return 0;
 +}
-diff --git a/serve.h b/serve.h
+diff --git a/ls-refs.h b/ls-refs.h
 new file mode 100644
-index 000000000..fe65ba9f4
+index 000000000..9e4c57bfe
 --- /dev/null
-+++ b/serve.h
-@@ -0,0 +1,15 @@
-+#ifndef SERVE_H
-+#define SERVE_H
++++ b/ls-refs.h
+@@ -0,0 +1,9 @@
++#ifndef LS_REFS_H
++#define LS_REFS_H
 +
++struct repository;
 +struct argv_array;
-+extern int has_capability(const struct argv_array *keys, const char *capability,
-+			  const char **value);
++extern int ls_refs(struct repository *r, struct argv_array *keys,
++		   struct argv_array *args);
 +
-+struct serve_options {
-+	unsigned advertise_capabilities;
-+	unsigned stateless_rpc;
-+};
-+#define SERVE_OPTIONS_INIT { 0 }
-+extern void serve(struct serve_options *options);
++#endif /* LS_REFS_H */
+diff --git a/serve.c b/serve.c
+index cf23179b9..c7925c5c7 100644
+--- a/serve.c
++++ b/serve.c
+@@ -4,8 +4,15 @@
+ #include "pkt-line.h"
+ #include "version.h"
+ #include "argv-array.h"
++#include "ls-refs.h"
+ #include "serve.h"
+ 
++static int always_advertise(struct repository *r,
++			    struct strbuf *value)
++{
++	return 1;
++}
 +
-+#endif /* SERVE_H */
+ static int agent_advertise(struct repository *r,
+ 			   struct strbuf *value)
+ {
+@@ -44,6 +51,7 @@ struct protocol_capability {
+ 
+ static struct protocol_capability capabilities[] = {
+ 	{ "agent", agent_advertise, NULL },
++	{ "ls-refs", always_advertise, ls_refs },
+ };
+ 
+ static void advertise_capabilities(void)
 diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-new file mode 100755
-index 000000000..affbad097
---- /dev/null
+index affbad097..33536254e 100755
+--- a/t/t5701-git-serve.sh
 +++ b/t/t5701-git-serve.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
+@@ -8,6 +8,7 @@ test_expect_success 'test capability advertisement' '
+ 	cat >expect <<-EOF &&
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
++	ls-refs
+ 	0000
+ 	EOF
+ 
+@@ -57,4 +58,118 @@ test_expect_success 'request invalid command' '
+ 	test_i18ngrep "invalid command" err
+ '
+ 
++# Test the basics of ls-refs
++#
++test_expect_success 'setup some refs and tags' '
++	test_commit one &&
++	git branch dev master &&
++	test_commit two &&
++	git symbolic-ref refs/heads/release refs/heads/master &&
++	git tag -a -m "annotated tag" annotated-tag
++'
 +
-+test_description='test git-serve and server commands'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'test capability advertisement' '
-+	cat >expect <<-EOF &&
-+	version 2
-+	agent=git/$(git version | cut -d" " -f3)
++test_expect_success 'basics of ls-refs' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
 +	0000
 +	EOF
 +
-+	git serve --advertise-capabilities >out &&
++	cat >expect <<-EOF &&
++	$(git rev-parse HEAD) HEAD
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release
++	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag
++	$(git rev-parse refs/tags/one) refs/tags/one
++	$(git rev-parse refs/tags/two) refs/tags/two
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
 +	test-pkt-line unpack <out >actual &&
 +	test_cmp actual expect
 +'
 +
-+test_expect_success 'stateless-rpc flag does not list capabilities' '
-+	# Empty request
++test_expect_success 'basic ref-patterns' '
 +	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	ref-pattern master
++	ref-pattern one
 +	0000
 +	EOF
-+	git serve --stateless-rpc >out <in &&
-+	test_must_be_empty out &&
 +
-+	# EOF
-+	git serve --stateless-rpc >out &&
-+	test_must_be_empty out
-+'
-+
-+test_expect_success 'request invalid capability' '
-+	test-pkt-line pack >in <<-EOF &&
-+	foobar
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/tags/one) refs/tags/one
 +	0000
 +	EOF
-+	test_must_fail git serve --stateless-rpc 2>err <in &&
-+	test_i18ngrep "unknown capability" err
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
 +'
 +
-+test_expect_success 'request with no command' '
++test_expect_success 'wildcard ref-patterns' '
 +	test-pkt-line pack >in <<-EOF &&
-+	agent=git/test
++	command=ls-refs
++	0001
++	ref-pattern refs/heads/*
 +	0000
 +	EOF
-+	test_must_fail git serve --stateless-rpc 2>err <in &&
-+	test_i18ngrep "no command requested" err
-+'
 +
-+test_expect_success 'request invalid command' '
-+	test-pkt-line pack >in <<-EOF &&
-+	command=foo
-+	agent=git/test
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release
 +	0000
 +	EOF
-+	test_must_fail git serve --stateless-rpc 2>err <in &&
-+	test_i18ngrep "invalid command" err
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
 +'
 +
-+test_done
++test_expect_success 'peel parameter' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	peel
++	ref-pattern refs/tags/*
++	0000
++	EOF
++
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/tags/annotated-tag) refs/tags/annotated-tag peeled:$(git rev-parse refs/tags/annotated-tag^{})
++	$(git rev-parse refs/tags/one) refs/tags/one
++	$(git rev-parse refs/tags/two) refs/tags/two
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
++'
++
++test_expect_success 'symrefs parameter' '
++	test-pkt-line pack >in <<-EOF &&
++	command=ls-refs
++	0001
++	symrefs
++	ref-pattern refs/heads/*
++	0000
++	EOF
++
++	cat >expect <<-EOF &&
++	$(git rev-parse refs/heads/dev) refs/heads/dev
++	$(git rev-parse refs/heads/master) refs/heads/master
++	$(git rev-parse refs/heads/release) refs/heads/release symref-target:refs/heads/master
++	0000
++	EOF
++
++	git serve --stateless-rpc <in >out &&
++	test-pkt-line unpack <out >actual &&
++	test_cmp actual expect
++'
++
+ test_done
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
