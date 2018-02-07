@@ -2,97 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D0271F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 18:17:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B89801F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 18:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754108AbeBGSRI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 13:17:08 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43974 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753794AbeBGSRI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 13:17:08 -0500
-Received: (qmail 22376 invoked by uid 109); 7 Feb 2018 18:17:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 18:17:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 650 invoked by uid 111); 7 Feb 2018 18:17:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 13:17:50 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 13:17:06 -0500
-Date:   Wed, 7 Feb 2018 13:17:06 -0500
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Subject: Re: BUG: fetch in certain repo always gives "did not send all
- necessary objects"
-Message-ID: <20180207181706.GA4227@sigill.intra.peff.net>
-References: <CABPp-BHVD19ZoAmWhQd9aN-v+qB7Ryq9Z-wobLYtJf_b6RWgzQ@mail.gmail.com>
- <CAGZ79kYstN9ATPGKZjnk-hJ6jRsx9Oz0b2hQ5cTiqVqMNDCsyA@mail.gmail.com>
- <CABPp-BHkLLrJDTQwHTYpqC0Cg7Wv_wDr14Fq_LXneg+OzzRngg@mail.gmail.com>
- <20180207132157.GB16018@sigill.intra.peff.net>
- <CABPp-BH0rSELVJV11MJM=KFU2jAEuhVTzUUBskghgku+y_ozDQ@mail.gmail.com>
+        id S1754075AbeBGST3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 13:19:29 -0500
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:33560 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753794AbeBGST1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 13:19:27 -0500
+Received: by mail-wr0-f176.google.com with SMTP id s5so2095593wra.0
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 10:19:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ztKTXpZtJhTyiSzr52IuY4zs7ffZS6xNli9jZ1opUz0=;
+        b=KWlF/lhXXeIQQiLKwECUQ4o+wrSusaFw0hicX71zV1I+CSodZMPv/gTORR8zXxR7+I
+         hUbB4cw2WqFS+KTA+E/ItVDn/1O9t0hLzBAYRHiIkiw13ZWVXRMs0IErpBw4hSOwa5/J
+         eG3yCOBXBqhXhwSt9xj6P9OrRUykgIvGaJmHVyPYvDSFz7tliSPZ7/2S8covPBg+v7sp
+         3in3EpYSLulhVhETJwAwcbP2PoamfxEmwQGIt7cjdQ47Jb8kCT8M8STgO4vi34yR3Gjs
+         Q44/n6Z7i2wZgFV9IDNOuH0WQM+xXdyArwBJbSxI6SB0qND3fPFbv+/TXdV3JEQDLJZF
+         T7Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ztKTXpZtJhTyiSzr52IuY4zs7ffZS6xNli9jZ1opUz0=;
+        b=ITSTl30NLNtMYk4DGsB+HI40XX/osDimhTvT4KVBcgbenmoBTN9gj213FYFUBYTNlz
+         rarVDfnYPoh8a4c5WI7lcRnMM5iJp4q1T7AY0tFMM8bDwg+xUTc0OxGM2SX7PMkxrj8z
+         g6LbBUttPT+oPRkN0gVPu2xJEMSrk34DSD4eCxmvvGkze5idYT3YU9mGZnhKthx/kFPe
+         GeVOo+N1mc/Y1OvAItoNnAA7fwNVRGTaM8H9SqCt8vHz2XDjK9C5/JKe+VvYufNLg8OA
+         Q8naBzJHauhNpD8SHmqLt9riPXBKoY6/AffU9P9k7GPib23RmNK0s64RGighGK1qEQ7p
+         z3GA==
+X-Gm-Message-State: APf1xPAcLhyw7XnvvfThX1rfIDaZx8SCSPQbZpzTVTUX5u27+SsTESxT
+        3qoJqfhC5YMIVLMiGmoJSJk=
+X-Google-Smtp-Source: AH8x226GBrGf7FbtxYEKuJRbXuIPoNz1xFaFZWStOi6Rh9arGVXqLw8IlBSfz7TYhivI7tog89TX6Q==
+X-Received: by 10.223.164.197 with SMTP id h5mr6577934wrb.108.1518027565449;
+        Wed, 07 Feb 2018 10:19:25 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v75sm4760644wrb.12.2018.02.07.10.19.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Feb 2018 10:19:24 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
+References: <20180201130221.15563-1-pclouds@gmail.com>
+        <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
+        <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
+        <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
+        <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com>
+Date:   Wed, 07 Feb 2018 10:19:23 -0800
+In-Reply-To: <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 7 Feb 2018 17:36:26 +0700")
+Message-ID: <xmqqy3k47jdg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BH0rSELVJV11MJM=KFU2jAEuhVTzUUBskghgku+y_ozDQ@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 07, 2018 at 09:25:42AM -0800, Elijah Newren wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> > So other_head_refs knows that it's looking at the worktrees. And it
-> > passes the alternate ref-store to refs_head_ref(), with "add_one_ref" as
-> > the callback. But the knowledge that we're not talking about the real
-> > "HEAD" is lost as we cross that callback boundary. We'd need to either
-> > add another parameter to the callback, or have some way of talking about
-> > "HEAD in this worktree" as a refname (which AFAIK we don't have).
-> 
-> Can we use "worktrees/${WORKTREE}/HEAD"?  It already satisfies all the
-> necessary rev-parse rules...
+> ...
+> Then we still need to decide the new keyword for this feature, I feel
+> compact is a bit too vague (I read --stat=compact as "it's compact
+> stat", not "stat with compact summary"), so perhaps
+> --stat=compact-summary, or just --stat=summary?
 
-True, but it's mostly an accident that it works. And once we have ref
-backends besides the filesystem, it will probably stop working.
-
-I think there was discussion at some point of embedding worktree refs
-into the normal ref namespace, but I don't know what came of it (it's
-not a feature I've followed very closely).
-
-> (And on a slight tangent...do we want to start disallowing the
-> creation of branches/tags whose name starts with "worktrees/",
-> "refs/", "hooks/", or other paths that exists under gitdir?  Making a
-> branch named "refs/heads/foo" so that it fully-qualifies as
-> "refs/heads/refs/heads/foo" is always fun)
-
-We recently taught the porcelain to disallow a branch named "HEAD".
-Though I think there are actually two related problems with different
-solutions. One is saying something like:
-
-  git checkout -b HEAD
-
-or:
-
-  git checkout -b refs/heads/foo
-
-both of which will not do what you want, and leave you with a
-funnily-named branch in the ref namespace.
-
-But that's separate from the fact that:
-
-  git rev-parse info/refs
-
-will look at a file that is not a ref at all. Long-term I think the
-solution is storage formats that don't mingle with other files. But we
-could probably teach even the files-backend that any ref at the
-top-level is supposed to be either in refs/, or to consist only of
-"[A-Z_]".
-
--Peff
+Yup, this is about giving summary in a compact way, not about giving
+a compact stat information.  I agree with all the above reasoning,
+and that is why I said that your "compact-summary" was a good way to
+refer to the feature.
