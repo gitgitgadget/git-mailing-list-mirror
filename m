@@ -2,119 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F5E91F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 10:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F045E1F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 10:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753852AbeBGKg6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 05:36:58 -0500
-Received: from mail-ot0-f196.google.com ([74.125.82.196]:45016 "EHLO
-        mail-ot0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753497AbeBGKg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 05:36:57 -0500
-Received: by mail-ot0-f196.google.com with SMTP id l5so342698otj.11
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 02:36:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vY/2dD6oGSmjgkwoy4tL7KNK5wb3Ol4jFmEaPkcAq3Y=;
-        b=dxRFxTwhjE3i2OjcvEHQv6deFt0p+ZsbtxY5AEZQsSIlhRejY5unCoEIdSQkwR674t
-         BzzN3rdM2qtAvZ3OHEn5pjBKvqD/GAInfGBGiGHdRG67p9yY7Xy4pyp6+5w/qGTgzo1k
-         oMGrkeqTYAxoDmnZHmD/Tmb0S8CRo7xDG/zAmLldEDKS5+heZaJLeTOtDuTkfxhI2W1K
-         3O8PwGobG1/Qbx65J3QTgCw11fE4eLvnR/btm9XjSn4wibG9AoVU/+C9VIWROUG9mE2O
-         Z3YlxncMA0oGZTucMfcp28cTy0RlUozRSWVNLWNYDfTZRmsHnodinuemI3sVxpro4DyW
-         NN0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vY/2dD6oGSmjgkwoy4tL7KNK5wb3Ol4jFmEaPkcAq3Y=;
-        b=YmaJM/mluEQEvGF6VFz9LOWclkcvNClgroVWKDhSy/SMxtSqNoKdX1hUhOAJfymoBK
-         FklXzKm/foM+30RzK6/bj9G5nfBTHmUEilpCffhyjSa0bjwqCQ3SkeDDw6KeK0rNn/CG
-         pl794yB/cRzPzEi3dTAHNtcvvSBYNqCr7+SKlX8z9SQU2aKia040Rp5hAVj4SASfHWjW
-         bocgBIPsREpnYNh3tudNjJYSPe1GB85/V7Fxdu/1NH5lATOUziH3PE/WVLzEvEujWaNu
-         h9hfHyFjozxiDkAPJpTpR5vwUF3TaVQoYpt6mEGjW4Y05AtPyq5Na2qyGaH2kwz5y4DL
-         3reg==
-X-Gm-Message-State: APf1xPB594vgmme5DMYVpIwiS/Z8Gn1vcCgsbD0m+zGgwTIAbeX1/OrC
-        I+wC/zm96xYKZ7z1A1DUPLwYTcwwjKaSn8h24kc=
-X-Google-Smtp-Source: AH8x224CzG/biIBjh7PQB0Z8cU0nLpvfyZ7c3YLpZ2EXCRmM0PSTiVvqtoJmfRmyOTOKQYNEXvNUi7CfdX+rgD0nFuE=
-X-Received: by 10.157.31.47 with SMTP id x44mr4255149otd.165.1517999817278;
- Wed, 07 Feb 2018 02:36:57 -0800 (PST)
+        id S1753630AbeBGKyJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 05:54:09 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:44685 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753454AbeBGKyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 05:54:08 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:56230 helo=android-a172fe96dd584b41)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1ejNMe-0005y1-2e
+        for git@vger.kernel.org; Wed, 07 Feb 2018 05:54:08 -0500
+Date:   Wed, 7 Feb 2018 05:54:06 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@android-a172fe96dd584b41
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: is http://git-scm.com an *official* git-affiliated site?
+Message-ID: <alpine.LFD.2.21.1802070547040.5530@android-a172fe96dd584b41>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Wed, 7 Feb 2018 02:36:26 -0800 (PST)
-In-Reply-To: <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
-References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
- <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
- <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com> <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
- <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 7 Feb 2018 17:36:26 +0700
-Message-ID: <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 7, 2018 at 4:52 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Feb 6, 2018 at 5:20 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Tue, Feb 6, 2018 at 1:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Duy Nguyen <pclouds@gmail.com> writes:
->>> I actually think compact-summary was a good way to phrase it.
->>>
->>> Personally, I think it was a UI mistake that --summary can be given
->>> independently with or without --stat (instead, there shouldn't have
->>> been the --summary option, and instead when it was added, --stat
->>> just should have gained an extra kind of output).  A single option
->>> that can give both kinds of info may be a good way forward, so
->>> another possibility may be --summary-in-stat (meaning: the info
->>> given by summary is included in stat output).  I dunno.
->>
->> +Eric maybe he has some idea (sorry I forgot to include people from
->> the last round).
->
-> What about the earlier suggestion[1] (and minor follow-ups[2,3]) of
-> making this another option to --stat= (for instance, --stat=compact)?
-> Did that idea get shot down or am I misunderstanding the question
-> here.
 
-I thought that was something like
---stat[=<width>[,<name-width>[,<count>,[compact]]]] and turning on
-"compact" alone would get awkward because you need to specify all
-those widths and counts too. --stat=compact as a separate form, with
-no combination with any other stat params, does not feel justified. We
-could just do --stat-compact then. Perhaps we can allow compact to
-appear anywhere in --stat=, and not just the end? The --stat= syntax
-would be
+  i ask WRT whether it should be up to date. i'm currently writing a
+number of git-related wiki pages, and i want to link to whatever are
+the canonical man pages for various git commands, but that site seems
+a bit off.
 
---stat=[<option>[,<option>[,<option>...]]]
+  if one follows a link to get here:
 
-where option could be keyword ones like compact or anything else in
-future, or <keyword>=<value> form. <option> could also be a number,
-but in that case the three consecutive number options will present
-width, name-width and count in this order.
+https://git-scm.com/doc
 
-Or we could simply add new --stat= syntax _without_ "<option> as
-numbers". widths and counts must be specified keywords as well, e.g.
---stat=width=40,name-width=20,count=10,compact and leave the old
-syntax "--stat=<width>,<name-width>,<count>" alone.
+there is another link to the "Reference Manual" that promises "The
+official and comprehensive man pages that are included in the Git
+package itself."
 
-Then we still need to decide the new keyword for this feature, I feel
-compact is a bit too vague (I read --stat=compact as "it's compact
-stat", not "stat with compact summary"), so perhaps
---stat=compact-summary, or just --stat=summary?
+  but upon getting there:
 
-> [1]: https://public-inbox.org/git/CAPig+cQLgs59JYxcmK30qY307ArwqJx6pNOo95Z39_jJ9+D6+g@mail.gmail.com/
-> [2]: https://public-inbox.org/git/CACsJy8B5qrN8T1aai3y3nfEc5baqn2Xkk6vZozMp5Lh-mPZ0VQ@mail.gmail.com/
-> [3]: https://public-inbox.org/git/CACsJy8CPHk+aXHr-mkHZi27s=c3+ny8D9CSuzOSO8PweviBcqQ@mail.gmail.com/
+https://git-scm.com/docs
+
+it seems clear that that page doesn't come close to covering all of
+the available git commands.
+
+  as an example, there is a link "submodule" on that page, which does
+indeed take one to the page https://git-scm.com/docs/git-submodule. so
+far, so good.
+
+  however, while there is no link for the "worktree" command, there
+does in fact exist a similarly-named web page
+https://git-scm.com/docs/git-worktree.
+
+  finally, there is no reference to the git "subtree" command, either
+as a link *or* as an existing web page
+https://git-scm.com/docs/git-subtree. it all seems kind of arbitrary.
+
+  is there an actual, canonical set of online web pages for all
+current git commands one should use?
+
+rday
+
 -- 
-Duy
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
