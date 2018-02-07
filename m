@@ -2,162 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D98501F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 00:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 499261F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:13:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932180AbeBGA6Y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 19:58:24 -0500
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34063 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932142AbeBGA6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 19:58:23 -0500
-Received: by mail-pg0-f49.google.com with SMTP id s73so1843807pgc.1
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 16:58:23 -0800 (PST)
+        id S1754222AbeBGBNT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:13:19 -0500
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:38690 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754189AbeBGBNS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:13:18 -0500
+Received: by mail-qk0-f201.google.com with SMTP id b67so3136958qkh.5
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZGQcPOlvsCVH7nuZRNjBLC6EdF80i4F273Awb/Y8UvM=;
-        b=UCc4vqE+l7JxSf3AGMvDA4YwLla8vkt6W3FtqTw8DUUjZ2VqpnIlN67M8q1xtEO+Z+
-         L1X6VVLOX+dqgJNJW1XYrQaKmlShz7UCyRjBw8oldv8MpcqxozkZw+ZYWDYIMpAVodXl
-         7LuyKDtKUV4NydwTlmbuWv5Qc2VOVOz3yz2PUuv6YlqrEj/UPbLuMqbKM14AVg2ndImA
-         KsCywq+GHUH4WJnXpp2DjBkp/wE439DrsI7BEFOVu7jFTdzVaTVD29U1KTalSlbBAy3H
-         f0k8yDJtEOyVucaz3O+8A63zyUV75EajRWUuOQxtiimot9xRHj4u3F42XOLt/Rez0yOh
-         pK6w==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=BTVkQzmi9dJEUIKuYO+WYKZMMpI1FeXtgdlL7Jn7WiE=;
+        b=IJLU/3PV1xU3SZz6pegWEl0LNhz00KvlO42McdCWniRmrKExShhH6QO3QCNcMW1jox
+         QfkMLsJ43Z9Ufwfm/Bup44+4TX3pcPwilnbGCmWsOOZ0PQWjy1EQZTBFRPJlQYs73Lhp
+         pgYfD2uTrjodBLUsKYON2Uy4GTQQdwh60P9KcmnTDRhkfXrnWFHEyYV9txAc2zNukXZZ
+         EmFQ8y8RZcPAOfXMLFp0YwOd3bwXPcnbScDjtY0Q2oPqozzJ5Z/p2RhF4V0pF13es0xe
+         W5+702MU2s2oxRfTKmGZbDxzN+lDI3zyxt+AF7HpCFuiqWcIzXGsKREm/dA0DF/Q3gVj
+         yYFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZGQcPOlvsCVH7nuZRNjBLC6EdF80i4F273Awb/Y8UvM=;
-        b=oQMXBlIzJ+0dCL9Ba+c4n/N2YJhQlDJ6AjogSFzxHqj1YXs6YuAH5HhJAYaMcDqwqP
-         TtXTXMpG6NHV7JdXjtfGCunfVDw4SnTi+PjWV32U2rFJpDbKppNgs/9FT7qiO5sBnH9D
-         nQScj1hRzWxtVcGy36qSIsHfoBOvELMQvQBiCWZPDB1xTq7XUqFiWNqFTgrns/WLOIyf
-         L5JpGzwluFwdqWtHpAd3amOahbyJmStNC6kqo17Xx69P0uSnnpRGeF1Q6X/h3rSQ5UOg
-         yTl/wjOG3VbDDlXX7xd9zeK7cIGSRWUgok8GixZByivNUZ5K21zPaTG1cL3IHEHDgdCg
-         u5Hw==
-X-Gm-Message-State: APf1xPAW6e4SxHxo+Azt7peYtH23b+a/Mp1W9QRatGPr5zx4I9aZhxCV
-        G1o6eBpx+JrIM8Lag+xJudwHBQ==
-X-Google-Smtp-Source: AH8x226w7DKrTWqG2+qFrFbXGVTrbJzriSRek7NhflrMiW/6DQ/fxFTW2drosIMlOuflQdnX5HhZSw==
-X-Received: by 10.99.107.200 with SMTP id g191mr3327327pgc.165.1517965102617;
-        Tue, 06 Feb 2018 16:58:22 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id a84sm397946pfc.116.2018.02.06.16.58.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 06 Feb 2018 16:58:21 -0800 (PST)
-Date:   Tue, 6 Feb 2018 16:58:20 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com,
-        peff@peff.net, philipoakley@iee.org, jrnieder@gmail.com
-Subject: Re: [PATCH v2 00/27] protocol version 2
-Message-ID: <20180207005820.GB222904@google.com>
-References: <20180103001828.205012-1-bmwill@google.com>
- <20180125235838.138135-1-bmwill@google.com>
- <56044237-4086-faeb-730e-807858a082a8@gmail.com>
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=BTVkQzmi9dJEUIKuYO+WYKZMMpI1FeXtgdlL7Jn7WiE=;
+        b=kX+u4WxthxwW3RMgQiyYxvOpj/kdpibGhMbzFp+Dq3Ow2ARlhrOn10paxXVv7liDsi
+         2fhqmq+hI5CtYk7SbBDOgFpEkhPvdDPQumrOaKs6sMP7JfEeck8qI/2UHeje7kzHlOk1
+         cya6EJvk2YgTAuZxXqu/b7X2rt2ch+A2n7WW2OrvNyuJydDEziDyfqJ/Va78paU3+kGi
+         pEkuiu3oQQ61nakniLDTWU11WaameTb6vuVX39jg3x7gVln9PjsYF9MUd1oW1rbaWfE7
+         YGDmCziMuvr4UHjvn9aPAeBDe6/acy2E2uhwYY0f/6uj/sxj/sGV2EIt6jqM6kXrVUKA
+         SSOQ==
+X-Gm-Message-State: APf1xPAkd+fmz9dHI46gsZpPWb4EDQoLsACJuR8cBDi1s8r/v5vTGn9G
+        CEeFvq/oDcUGhKYUbUcBo0lwcYAIF8fD+DazXAaFWyj7UcPOgNpqv+4VXqs3BZtqp+Ww+HFuaRh
+        r/CqhpnnPQE6Z+OFv3z0/i9rLlsRYrQLtA+D3qoZYTWWqlZnwvpKCd7ORXA==
+X-Google-Smtp-Source: AH8x225m/zihlaRnPHTuDmiNhS6Z7yY3fGXQ8i1K4EgtQVJhHri0S062M+Z6BQNxt35r/Kf4eag1/OZoCww=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <56044237-4086-faeb-730e-807858a082a8@gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+X-Received: by 10.237.36.182 with SMTP id t51mr3367970qtc.12.1517965997171;
+ Tue, 06 Feb 2018 17:13:17 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:12:37 -0800
+In-Reply-To: <20180125235838.138135-1-bmwill@google.com>
+Message-Id: <20180207011312.189834-1-bmwill@google.com>
+References: <20180125235838.138135-1-bmwill@google.com>
+X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
+Subject: [PATCH v3 00/35] protocol version 2
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
+        jrnieder@gmail.com, stolee@gmail.com, git@jeffhostetler.com,
+        pclouds@gmail.com, Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/31, Derrick Stolee wrote:
-> Sorry for chiming in with mostly nitpicks so late since sending this
-> version. Mostly, I tried to read it to see if I could understand the scope
-> of the patch and how this code worked before. It looks very polished, so I
-> the nits were the best I could do.
-> 
-> On 1/25/2018 6:58 PM, Brandon Williams wrote:
-> > Changes in v2:
-> >   * Added documentation for fetch
-> >   * changes #defines for state variables to be enums
-> >   * couple code changes to pkt-line functions and documentation
-> >   * Added unit tests for the git-serve binary as well as for ls-refs
-> 
-> I'm a fan of more unit-level testing, and I think that will be more
-> important as we go on with these multiple configuration options.
-> 
-> > Areas for improvement
-> >   * Push isn't implemented, right now this is ok because if v2 is requested the
-> >     server can just default to v0.  Before this can be merged we may want to
-> >     change how the client request a new protocol, and not allow for sending
-> >     "version=2" when pushing even though the user has it configured.  Or maybe
-> >     its fine to just have an older client who doesn't understand how to push
-> >     (and request v2) to die if the server tries to speak v2 at it.
-> > 
-> >     Fixing this essentially would just require piping through a bit more
-> >     information to the function which ultimately runs connect (for both builtins
-> >     and remote-curl)
-> 
-> Definitely save push for a later patch. Getting 'fetch' online did require
-> 'ls-refs' at the same time. Future reviews will be easier when adding one
-> command at a time.
-> 
-> > 
-> >   * I want to make sure that the docs are well written before this gets merged
-> >     so I'm hoping that someone can do a through review on the docs themselves to
-> >     make sure they are clear.
-> 
-> I made a comment in the docs about the architectural changes. While I think
-> a discussion on that topic would be valuable, I'm not sure that's the point
-> of the document (i.e. documenting what v2 does versus selling the value of
-> the patch). I thought the docs were clear for how the commands work.
-> 
-> >   * Right now there is a capability 'stateless-rpc' which essentially makes sure
-> >     that a server command completes after a single round (this is to make sure
-> >     http works cleanly).  After talking with some folks it may make more sense
-> >     to just have v2 be stateless in nature so that all commands terminate after
-> >     a single round trip.  This makes things a bit easier if a server wants to
-> >     have ssh just be a proxy for http.
-> > 
-> >     One potential thing would be to flip this so that by default the protocol is
-> >     stateless and if a server/command has a state-full mode that can be
-> >     implemented as a capability at a later point.  Thoughts?
-> 
-> At minimum, all commands should be designed with a "stateless first"
-> philosophy since a large number of users communicate via HTTP[S] and any
-> decisions that make stateless communication painful should be rejected.
+Changes in v3:
+ * There were some comments about how the protocol should be designed
+   stateless first.  I've made this change and instead of having to
+   supply the `stateless-rpc=true` capability to force stateless
+   behavior, the protocol just requires all commands to be stateless.
+ 
+ * Added some patches towards the end of the series to force the client
+   to not request to use protocol v2 when pushing (even if configured to
+   use v2).  This is to ease the roll-out process of a push command in
+   protocol v2.  This way when servers gain the ability to accept
+   pushing in v2 (and they start responding using v2 when requests are
+   sent to the git-receive-pack endpoint) that clients who still don't
+   understand how to push using v2 won't request to use v2 and then die
+   when they recognize that the server does indeed know how to accept a
+   push under v2.
 
-I agree with this and my next version will run with this philosophy in
-mind (v2 will be stateless by default).
+ * I implemented the `shallow` feature for fetch.  This feature
+   encapsulates the existing functionality of all the shallow/deepen
+   capabilities in v0.  So now a server can process shallow requests.
 
-> 
-> >   * Shallow repositories and shallow clones aren't supported yet.  I'm working
-> >     on it and it can be either added to v2 by default if people think it needs
-> >     to be in there from the start, or we can add it as a capability at a later
-> >     point.
-> 
-> I'm happy to say the following:
-> 
-> 1. Shallow repositories should not be used for servers, since they cannot
-> service all requests.
-> 
-> 2. Since v2 has easy capability features, I'm happy to leave shallow for
-> later. We will want to verify that a shallow clone command reverts to v1.
-> 
-> 
-> I fetched bw/protocol-v2 with tip 13c70148, built, set 'protocol.version=2'
-> in the config, and tested fetches against GitHub and VSTS just as a
-> compatibility test. Everything worked just fine.
-> 
-> Is there an easy way to test the existing test suite for clone and fetch
-> using protocol v2 to make sure there are no regressions with
-> protocol.version=2 in the config?
+ * Various other small tweaks that I can't remember :)
 
-Yes there already exist interop tests for testing the addition of
-requesting a new protocol at //t/interop/i5700-protocol-transition.sh
+After all of that I think the series is in a pretty good state, baring
+any more critical reviewing feedback.
 
-> 
-> Thanks,
-> -Stolee
+Thanks!
+
+Brandon Williams (35):
+  pkt-line: introduce packet_read_with_status
+  pkt-line: introduce struct packet_reader
+  pkt-line: add delim packet support
+  upload-pack: convert to a builtin
+  upload-pack: factor out processing lines
+  transport: use get_refs_via_connect to get refs
+  connect: convert get_remote_heads to use struct packet_reader
+  connect: discover protocol version outside of get_remote_heads
+  transport: store protocol version
+  protocol: introduce enum protocol_version value protocol_v2
+  test-pkt-line: introduce a packet-line test helper
+  serve: introduce git-serve
+  ls-refs: introduce ls-refs server command
+  connect: request remote refs using v2
+  transport: convert get_refs_list to take a list of ref patterns
+  transport: convert transport_get_remote_refs to take a list of ref
+    patterns
+  ls-remote: pass ref patterns when requesting a remote's refs
+  fetch: pass ref patterns when fetching
+  push: pass ref patterns when pushing
+  upload-pack: introduce fetch server command
+  fetch-pack: perform a fetch using v2
+  upload-pack: support shallow requests
+  fetch-pack: support shallow requests
+  connect: refactor git_connect to only get the protocol version once
+  connect: don't request v2 when pushing
+  transport-helper: remove name parameter
+  transport-helper: refactor process_connect_service
+  transport-helper: introduce stateless-connect
+  pkt-line: add packet_buf_write_len function
+  remote-curl: create copy of the service name
+  remote-curl: store the protocol version the server responded with
+  http: allow providing extra headers for http requests
+  http: don't always add Git-Protocol header
+  remote-curl: implement stateless-connect command
+  remote-curl: don't request v2 when pushing
+
+ .gitignore                              |   1 +
+ Documentation/technical/protocol-v2.txt | 338 +++++++++++++++++
+ Makefile                                |   7 +-
+ builtin.h                               |   2 +
+ builtin/clone.c                         |   2 +-
+ builtin/fetch-pack.c                    |  21 +-
+ builtin/fetch.c                         |  14 +-
+ builtin/ls-remote.c                     |   7 +-
+ builtin/receive-pack.c                  |   6 +
+ builtin/remote.c                        |   2 +-
+ builtin/send-pack.c                     |  20 +-
+ builtin/serve.c                         |  30 ++
+ builtin/upload-pack.c                   |  74 ++++
+ connect.c                               | 352 +++++++++++++-----
+ connect.h                               |   7 +
+ fetch-pack.c                            | 319 +++++++++++++++-
+ fetch-pack.h                            |   4 +-
+ git.c                                   |   2 +
+ http.c                                  |  25 +-
+ http.h                                  |   2 +
+ ls-refs.c                               |  96 +++++
+ ls-refs.h                               |   9 +
+ pkt-line.c                              | 149 +++++++-
+ pkt-line.h                              |  77 ++++
+ protocol.c                              |   2 +
+ protocol.h                              |   1 +
+ remote-curl.c                           | 257 ++++++++++++-
+ remote.h                                |   9 +-
+ serve.c                                 | 260 +++++++++++++
+ serve.h                                 |  15 +
+ t/helper/test-pkt-line.c                |  64 ++++
+ t/t5701-git-serve.sh                    | 176 +++++++++
+ t/t5702-protocol-v2.sh                  | 239 ++++++++++++
+ transport-helper.c                      |  84 +++--
+ transport-internal.h                    |   4 +-
+ transport.c                             | 116 ++++--
+ transport.h                             |   9 +-
+ upload-pack.c                           | 625 ++++++++++++++++++++++++--------
+ upload-pack.h                           |  21 ++
+ 39 files changed, 3088 insertions(+), 360 deletions(-)
+ create mode 100644 Documentation/technical/protocol-v2.txt
+ create mode 100644 builtin/serve.c
+ create mode 100644 builtin/upload-pack.c
+ create mode 100644 ls-refs.c
+ create mode 100644 ls-refs.h
+ create mode 100644 serve.c
+ create mode 100644 serve.h
+ create mode 100644 t/helper/test-pkt-line.c
+ create mode 100755 t/t5701-git-serve.sh
+ create mode 100755 t/t5702-protocol-v2.sh
+ create mode 100644 upload-pack.h
 
 -- 
-Brandon Williams
+2.16.0.rc1.238.g530d649a79-goog
+
