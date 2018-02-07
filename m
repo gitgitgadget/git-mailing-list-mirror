@@ -2,67 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CABD1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 13:10:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D95B71F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 13:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754194AbeBGNKU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 08:10:20 -0500
-Received: from smtp6-g21.free.fr ([212.27.42.6]:47950 "EHLO smtp6-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753693AbeBGNKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 08:10:19 -0500
-Received: from [192.168.1.108] (unknown [164.177.97.114])
-        (Authenticated sender: jn.avila)
-        by smtp6-g21.free.fr (Postfix) with ESMTPSA id 18D137803C9
-        for <git@vger.kernel.org>; Wed,  7 Feb 2018 13:10:15 +0000 (UTC)
-Subject: Re: is http://git-scm.com an *official* git-affiliated site?
-References: <alpine.LFD.2.21.1802070547040.5530@android-a172fe96dd584b41>
- <87eflxyqrn.fsf@evledraar.gmail.com>
- <20180207125415.GA16314@sigill.intra.peff.net>
-To:     git <git@vger.kernel.org>
-From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-Message-ID: <fa326209-7f1d-1833-c9e1-007f9a445754@free.fr>
-Date:   Wed, 7 Feb 2018 14:10:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1754047AbeBGNSP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 08:18:15 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:52854 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753648AbeBGNSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 08:18:13 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:58378 helo=android-a172fe96dd584b41)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1ejPc4-0007Gc-Ev
+        for git@vger.kernel.org; Wed, 07 Feb 2018 08:18:12 -0500
+Date:   Wed, 7 Feb 2018 08:18:09 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@android-a172fe96dd584b41
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: categorization, documentation and packaging of "git core" commands
+Message-ID: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-In-Reply-To: <20180207125415.GA16314@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: fr
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/02/2018, Jeff King wrote:
 
-> On Wed, Feb 07, 2018 at 12:37:32PM +0100, Ævar Arnfjörð Bjarmason wrote:
->
->
->> It's not fully auto-generated so stuff like git-worktree doesn't get
->> added automatically, I just added a PR for that:
->> https://github.com/git/git-scm.com/pull/1133
-> Thanks for doing that. I'm also open to auto-generating the index if we
-> can come up with well-organized output.
->
-> -Peff
+  (related to earlier thread but different enough that i'll start
+fresh.)
 
+  based on the collection of man page links here:
 
-I did not know that git-worktree is not considered ready for general
-consumption. It has been present in the release notes for quite some
-time now.
+https://www.kernel.org/pub/software/scm/git/docs/
 
+i took a look at how git 2.14.3 is laid out on my fedora 27 system,
+particularly all of the executables under /usr/libexec/git-core/.
+after manually cross-checking all of those executables against the
+links on the docs page, here's what i learned.
 
-If there's something available from the git repo to drive the build of
-the index, that would be a good way to advert the publicly available
-commands of git.
+  first, here are the executables under /usr/libexec/git-core/ that
+are unreferenced by that web page, but that should be fine as almost
+all of them would be considered underlying helpers or utilities
+(except for things like git-subtree, but we're still unclear on its
+status, right?):
 
+  git-add--interactive
+  git-bisect--helper
+  git-credential-cache--daemon
+  git-credential-libsecret
+  git-credential-netrc
+  git-difftool--helper
+  git-fsck-objects
+  git-gui--askpass
+  git-init-db
+  git-merge-octopus
+  git-merge-ours
+  git-merge-recursive
+  git-merge-resolve
+  git-merge-subtree
+  git-mergetool--lib
+  git-rebase--am
+  git-rebase--helper
+  git-rebase--interactive
+  git-rebase--merge
+  git-remote-ext
+  git-remote-fd
+  git-remote-ftp
+  git-remote-ftps
+  git-remote-http
+  git-remote-https
+  git-sh-i18n--envsubst
+  git-stage
+  git-submodule--helper
+  git-subtree
+  git-web--browse
 
-JN
+on the other hand (and this is not so much a git issue as a fedora
+packaging issue), there are a number of command links at that web page
+that are supplied by distinct RPM packages rather than by the basic
+fedora git package, so one would need to install the following
+packages to get some of those commands on fedora:
 
+  * gitk
+  * git-cvs
+  * git-svn
+  * git-p4
+  * git-email (provides git-send-email)
+
+finally, from fedora, i am utterly unable to find a package that
+provides git-archimport. pretty sure fedora used to have a "git-arch"
+package but it's not there now.
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
