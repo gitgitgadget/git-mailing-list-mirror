@@ -6,76 +6,86 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49EB01F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 14:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A77251F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 14:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754346AbeBGOiK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 09:38:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43676 "HELO cloud.peff.net"
+        id S1754138AbeBGOmy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 09:42:54 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43692 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754335AbeBGOiJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 09:38:09 -0500
-Received: (qmail 11670 invoked by uid 109); 7 Feb 2018 14:38:09 -0000
+        id S1754026AbeBGOmx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 09:42:53 -0500
+Received: (qmail 11912 invoked by uid 109); 7 Feb 2018 14:42:54 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 14:38:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 14:42:54 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30551 invoked by uid 111); 7 Feb 2018 14:38:51 -0000
+Received: (qmail 30610 invoked by uid 111); 7 Feb 2018 14:43:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 09:38:51 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 09:43:35 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 09:38:07 -0500
-Date:   Wed, 7 Feb 2018 09:38:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 09:42:51 -0500
+Date:   Wed, 7 Feb 2018 09:42:51 -0500
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/10] t5812: add 'test_i18ngrep's missing filename
- parameter
-Message-ID: <20180207143807.GA27420@sigill.intra.peff.net>
-References: <20180126123708.21722-1-szeder.dev@gmail.com>
- <20180126123708.21722-3-szeder.dev@gmail.com>
- <20180126182734.GB27618@sigill.intra.peff.net>
- <CAM0VKjkf=51i1YPqdNm=pyPHaNNguXLu0T1iHDYv28jW92QTow@mail.gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, mhagger@alum.mit.edu,
+        Junio C Hamano <gitster@pobox.com>,
+        Mathias Rav <m@git.strova.dk>
+Subject: Re: [PATCH] files-backend: unlock packed store only if locked
+Message-ID: <20180207144251.GB27420@sigill.intra.peff.net>
+References: <20180206203615.68504-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKjkf=51i1YPqdNm=pyPHaNNguXLu0T1iHDYv28jW92QTow@mail.gmail.com>
+In-Reply-To: <20180206203615.68504-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 07, 2018 at 02:53:17PM +0100, SZEDER Gábor wrote:
+On Tue, Feb 06, 2018 at 12:36:15PM -0800, Jonathan Tan wrote:
 
-> > The "too old" curl is older than 7.19.4, which we actually fail to build
-> > with since v2.12.0. So they probably did not even get as far as the
-> > tests. ;)
+> In commit 42c7f7ff9685 ("commit_packed_refs(): remove call to
+> `packed_refs_unlock()`", 2017-06-23), a call to packed_refs_unlock() was
+> added to files_initial_transaction_commit() in order to compensate for
+> removing that call from commit_packed_refs(). However, that call was
+> added in the cleanup section, which is run even if the packed_ref_store
+> was never locked (which happens if an error occurs earlier in the
+> function).
 > 
-> Oh, OK, I was not aware of that.  The oldest non-maintenance release
-> with the missing filename parameter is v2.7.0, so that's still a 5
-> releases time frame to notice it.
+> Create a new cleanup goto target which runs packed_refs_unlock(), and
+> ensure that only goto statements after a successful invocation of
+> packed_refs_lock() jump there.
 
-Actually, I'm wrong. It looks like we did finally fix it in f18777ba6e
-(http: fix handling of missing CURLPROTO_*, 2017-08-11), which is in
-v2.15. So:
+The explanation and patch look good to me.
 
-> Anyway, I'm preparing v2 of this series, and I'm not sure what to do
-> about this.
-> 
->   - Should I simply drop the "your curl version is too old" pattern?  It
->     would make sense, but it just doesn't feel quite right to remove it
->     while the corresponding printf() is still there, even if it can't be
->     triggered anymore.  However, cleaning up the curl version checks in
->     http.c to remove this message is beyond the scope of this patch
->     series.
-> 
->   - Or leave it almost-as-is, only dropping the now unnecessary curly
->     braces as Simon pointed out.  And perhaps a bit of update to the
->     commit message.
-> 
-> I'd prefer the second option.
+But this all seemed strangely familiar... I think this is the same bug
+as:
 
-Yeah, I think just leave it as-is. Thanks.
+  https://public-inbox.org/git/20180118143841.1a4c674d@novascotia/
+
+which is queued as mr/packed-ref-store-fix. It's listed as "will merge
+to next" in the "what's cooking" from Jan 31st.
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index f75d960e1..89bc5584a 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2931,13 +2931,14 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+>  
+>  	if (initial_ref_transaction_commit(packed_transaction, err)) {
+>  		ret = TRANSACTION_GENERIC_ERROR;
+> -		goto cleanup;
+> +		goto locked_cleanup;
+>  	}
+>  
+> +locked_cleanup:
+> +	packed_refs_unlock(refs->packed_ref_store);
+>  cleanup:
+>  	if (packed_transaction)
+>  		ref_transaction_free(packed_transaction);
+> -	packed_refs_unlock(refs->packed_ref_store);
+
+I actually like this double-label a bit more than what is queued on
+mr/packed-ref-store-fix, though I am OK with either solution.
 
 -Peff
