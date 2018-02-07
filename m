@@ -2,114 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C18D21F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 06:16:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 579B11F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 06:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753211AbeBGGQc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 01:16:32 -0500
-Received: from mail.javad.com ([54.86.164.124]:35552 "EHLO mail.javad.com"
+        id S1753376AbeBGGcH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 01:32:07 -0500
+Received: from mout.web.de ([217.72.192.78]:54000 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753066AbeBGGQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 01:16:29 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 6C5C43E89E;
-        Wed,  7 Feb 2018 06:16:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517984188;
-        bh=Xlh2BoKt+hbfFiyqpaAZB0jKrFcBWx9iYqi4MblKEXM=; l=1169;
-        h=Received:From:To:Subject;
-        b=mD8neLgquykaW+vgzG0oRKWcnXbQFOK3L8Q/T0/ZTyswe3XgD2hhrkxwSN4zkdNde
-         YhCxg7SLrASrFK93Yw26Mwy5btnwm25qGkUpck9ZUdFAEnoWdE9Zh36bHGEor//p6a
-         xQDtzl9WkkXZFJmbFqPQfkHRD5A4g7SboEba8rfQ=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517984188;
-        bh=Xlh2BoKt+hbfFiyqpaAZB0jKrFcBWx9iYqi4MblKEXM=; l=1169;
-        h=Received:From:To:Subject;
-        b=mD8neLgquykaW+vgzG0oRKWcnXbQFOK3L8Q/T0/ZTyswe3XgD2hhrkxwSN4zkdNde
-         YhCxg7SLrASrFK93Yw26Mwy5btnwm25qGkUpck9ZUdFAEnoWdE9Zh36bHGEor//p6a
-         xQDtzl9WkkXZFJmbFqPQfkHRD5A4g7SboEba8rfQ=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517984188;
-        bh=Xlh2BoKt+hbfFiyqpaAZB0jKrFcBWx9iYqi4MblKEXM=; l=1169;
-        h=Received:From:To:Subject;
-        b=mD8neLgquykaW+vgzG0oRKWcnXbQFOK3L8Q/T0/ZTyswe3XgD2hhrkxwSN4zkdNde
-         YhCxg7SLrASrFK93Yw26Mwy5btnwm25qGkUpck9ZUdFAEnoWdE9Zh36bHGEor//p6a
-         xQDtzl9WkkXZFJmbFqPQfkHRD5A4g7SboEba8rfQ=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517984188;
-        bh=Xlh2BoKt+hbfFiyqpaAZB0jKrFcBWx9iYqi4MblKEXM=; l=1169;
-        h=Received:From:To:Subject;
-        b=mD8neLgquykaW+vgzG0oRKWcnXbQFOK3L8Q/T0/ZTyswe3XgD2hhrkxwSN4zkdNde
-         YhCxg7SLrASrFK93Yw26Mwy5btnwm25qGkUpck9ZUdFAEnoWdE9Zh36bHGEor//p6a
-         xQDtzl9WkkXZFJmbFqPQfkHRD5A4g7SboEba8rfQ=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1517984188;
-        bh=Xlh2BoKt+hbfFiyqpaAZB0jKrFcBWx9iYqi4MblKEXM=; l=1169;
-        h=Received:From:To:Subject;
-        b=mD8neLgquykaW+vgzG0oRKWcnXbQFOK3L8Q/T0/ZTyswe3XgD2hhrkxwSN4zkdNde
-         YhCxg7SLrASrFK93Yw26Mwy5btnwm25qGkUpck9ZUdFAEnoWdE9Zh36bHGEor//p6a
-         xQDtzl9WkkXZFJmbFqPQfkHRD5A4g7SboEba8rfQ=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1ejJ1u-0001As-Bh; Wed, 07 Feb 2018 09:16:26 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-Date:   Wed, 07 Feb 2018 09:16:26 +0300
-In-Reply-To: <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 18 Jan 2018 16:35:48 +0100
-        (STD)")
-Message-ID: <87k1vpqq85.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751022AbeBGGcG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 01:32:06 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ljamy-1fGA7J1YGe-00bZEv; Wed, 07
+ Feb 2018 07:31:49 +0100
+Date:   Wed, 7 Feb 2018 07:31:47 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH/RFC v5 7/7] Careful with CRLF when using e.g. UTF-16 for
+ working-tree-encoding
+Message-ID: <20180207063147.GA22714@tor.lan>
+References: <xmqqshawfgaa.fsf@gitster.mtv.corp.google.com>
+ <20180129201911.9484-1-tboegi@web.de>
+ <55B6C3D5-4131-4636-AD0E-20759EDBE8CD@gmail.com>
+ <20180130144002.GA30211@tor.lan>
+ <10091BA4-1069-4A65-9057-CAAD87F9B55F@gmail.com>
+ <20180131172837.GA32723@tor.lan>
+ <xmqqtvuzcibz.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqtvuzcibz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:gjCu2jDrRlgdxLqzG3WDQoj47KIh56rdTzLwXVy0wc2YSIyJ94O
+ XsTo8tOmFBvfrEhfhI+BR2LBRJv1VCpP3llx6aZzIExsub3aNnD6xuFjzEGC/RBzDfZtHk4
+ hKr63Hkb38MseuxgxD1oGri8CGpbXuVIDnCNk56rm1+EqNJP8bblr26EYuKXpPuO9CoUdK3
+ OcFJofcTTsOvtRHsD42Yw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IfxnZ5AqrvQ=:0y4LpxyQj2Sn6haHmLG/xc
+ naksxjGeq4QnvGlekLgHZFfhGwznSqp8oupmgSZW73HyymeCueU9bmi6SZZZ56W/nk7miwxhJ
+ 3/8gFFwc8iq8C+Ltol+uLZrOc24XjSwOZ5BjK+C4+ZL+mG1RseGdIKem6IQ12w4nPatlRKbqU
+ YDKIy66YeJDFD2rIQfVIeIrBZoho7c4NEkvxjSm/4CGEme99E2HlgOBILxCumG5dA+S6WQhzd
+ EPOf3i/mSUztH6SnDRU2NvrEzRPv43skSU+8B59kZaRwnsNrCln8+dayf59wljJYFBughpVQ2
+ gutAr6bdW9NFaNQgRAGEsaG3EEdD7dAPAzWBXAOfHqESe0tLVEx+VSTxGwBe4T8zFOM1/moRo
+ 0ZeRtXSQMo0GDeo8iXmwFoScd0kVmnvhjtDdUhq9EzSe0+1QlEnvdOQh9MsgZOJuYNmmqKEsO
+ wkygg2sp18UTukH5/bzw46EXG5Hpge46n5emwVo+3kYRdK+M+U+mPuUspCruhI7+qJuGUgPWo
+ OOdUc2oNrPGxJsdC1pqV6IDn2gfvGqtnCrBPHxbq6Xm4LXaudgSI6BcL17595zZKKV2bjxN8w
+ fd3XgKwoK7DBbRrg1VU8jXxmiegMkPRuoCFFRKg7k3csB5tiRDsugd4gMcaNCZKYR5XQoR75c
+ LhJL8d8EwXq6i3FvdTApCdv6YlOcbknAQl+YF06bzn8B1mI6wyJodYG8U+N+TKJOcrOim+iPx
+ 723Pz8NPS0Tctgbe+zRS7Hb6+zdGO6iBJMUlVp6KKzWkH+rR2aGLQNyrb+tFOg8wA3BXMUk7s
+ bRloBNX+NszFrLll4jvvTP1MnQtWA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Fri, Feb 02, 2018 at 11:17:04AM -0800, Junio C Hamano wrote:
+> Torsten Bögershausen <tboegi@web.de> writes:
+> 
+> > There are 2 opposite opionions/user expectations here:
+> >
+> > a) They are binary in the working tree, so git should leave the line endings
+> >    as is. (Unless specified otherwise in the .attributes file)
+> > ...
+> > b) They are text files in the index. Git will convert line endings
+> >    if core.autocrlf is true (or the .gitattributes file specifies "-text")
+> 
+> I sense that you seem to be focusing on the distinction between "in
+> the working tree" vs "in the index" while contrasting.  The "binary
+> vs text" in your "binary in wt, text in index" is based on the
+> default heuristics without any input from end-users or the project
+> that uses Git that happens to contain such files.  If the users and
+> the project that uses Git want to treat contents in a path as text,
+> it is text even when it is (re-)encoded to UTF-16, no?
+> 
+> Such files may be (mis)classified as binary with the default
+> heuristics when there is no help from what is written in the
+> .gitattributes file, but here we are talking about the case where
+> the user explicitly tells us it is in UTF-16, right?  Is there such a
+> thing as UTF-16 binary?
 
-[...]
+I don't think so, by definiton UTF-16 is ment to be text.
+(this means that git ls-files --eol needs some update, I can have a look)
 
-> +--recreate-merges::
-> +	Recreate merge commits instead of flattening the history by replaying
-> +	merges. Merge conflict resolutions or manual amendments to merge
-> +	commits are not preserved.
+Do we agree that UTF-16 is text ?
+If yes, could Git assume that the "text" attribute is set when
+working-tree-encoding is set ?
 
-I wonder why you guys still hold on replaying "merge-the-operation"
-instead of replaying "merge-the-result"? The latter, the merge commit
-itself, no matter how exactly it was created in the first place, is the
-most valuable thing git keeps about the merge, and you silently drop it
-entirely! OTOH, git keeps almost no information about
-"merge-the-operation", so it's virtually impossible to reliably replay
-the operation automatically, and yet you try to.
+I would even go a step further and demand that the user -must- make a decision
+about the line endings for working-tree-encoded files:
+working-tree-encoding=UTF-16                 # illegal, die()
+working-tree-encoding=UTF-16 text=auto       # illegal, die()
+working-tree-encoding=UTF-16 -text           # no eol conversion
+working-tree-encoding=UTF-16 text            # eol according to core.eol
+working-tree-encoding=UTF-16 text eol=lf     # LF
+working-tree-encoding=UTF-16 text eol=crlf   # CRLF
 
-IMHO that was severe mistake in the original --preserve-merges, and you
-bring with you to this new --recreate-merges... It's sad. Even more sad
-as solution is already known for years:
+What do you think ?
 
-    bc00341838a8faddcd101da9e746902994eef38a
-    Author: Johannes Sixt <j6t@kdbg.org>
-    Date:   Sun Jun 16 15:50:42 2013 +0200
-    
-        rebase -p --first-parent: redo merge by cherry-picking first-parent change
 
-and it works like a charm.
-
--- Sergey
 
