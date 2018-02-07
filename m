@@ -7,86 +7,92 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 577AD1F576
-	for <e@80x24.org>; Wed,  7 Feb 2018 09:54:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D59E91F576
+	for <e@80x24.org>; Wed,  7 Feb 2018 10:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753424AbeBGJyN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 04:54:13 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:40362 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752758AbeBGJyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 04:54:12 -0500
-Received: by mail-qk0-f193.google.com with SMTP id e20so315203qkm.7
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 01:54:12 -0800 (PST)
+        id S1753409AbeBGKAs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 05:00:48 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:37992 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752758AbeBGKAr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 05:00:47 -0500
+Received: by mail-qk0-f177.google.com with SMTP id w128so338603qkb.5
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 02:00:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=54bSMjx24W/UwrETOLbsXufCb2aQVFalhd4fh+srA0g=;
-        b=HZTBEfRIKQy7GolrrGcFEmywVi8/08GhKbUMvwSPzOx8x6ZlqXsz8ZzO1YO2tDpJxy
-         vfqKEzLI/RaAcuKnn5qeLX08jKMZKXjvAGnWFlNIFNWFPESGARNxAm2pHGBf0rCNR1Jf
-         yMMcripRQx1n7akh8ATJ4acncoUi9ee1GbEVmy3/xicxPJNx3TekfKkUhgYESB0LAE9P
-         nzFq9TogDJzzilSfCEpK71YAw1ZKttaEPdNzamww+LA6RZ5gMj5wTm+VuhdI2pRIAdGU
-         TtfmNiUybYR15yrnui/cB22Lm0JbIsJRC14li61fXKrsUHwBbQ+uNGmyEbL+tv/eU1LW
-         so0w==
+        bh=i0Y/KFmo8dkzOb/XmvIJZfM+hBcAdKo4E+0dGinKRy0=;
+        b=F9MNAST9vuvQwW43rmxm12//oxUng96LAmv0Iiqco7Ya6eWxciDNLYqE3VaLH1a/1i
+         FMA7kcXFJZWci12eiZMMS3AjXSuoQnlvXWyX8S6rkLY8RVNC6SBGn4JTQIFKeRSn4MK9
+         mZhwfU+Ux5jAx3aF1n5aqIrKUAX8Dt87jJfnCJglgvRCLZ9Wr6ai1BhR0amniPWjTG2Z
+         j6KpMqKW1VXCJp6F/5Ht/Q4oSfCyLpmLcC7Cb7sPdZqjh6DrSz4u0JWbTVbS8EdcN8wq
+         sO0anU2R7bWI+a5vF/JE/JzycbnF7QZuvUk9PhlpFb5AhXSF2l1eXMBjBNSCckK5bq5f
+         Hp/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=54bSMjx24W/UwrETOLbsXufCb2aQVFalhd4fh+srA0g=;
-        b=Ivejbhxqm4vuZX9a1+8XW8Ck/ieMW2X3nueXyiGcgCUOivdEJuvCDfl6GGYaz2dX+G
-         SrOcT2rrOgLA1j4fy3vK314hw5ChVjNUQbNs7H4wzBxK0q+h6LE26A1afAkMCrHB8APD
-         eJuvdGFMz/vaXkaZGyTZSbB5Q1TyTr3V11WP0O6VaXJexTUsJNerHiiDkAYpw/ihbyla
-         Renap+RVbpXncG4tAdT8UprK3dqFOT66Tfh6xLkAEE/tOShBcydbjAftiYuXPMDb76Ot
-         I9es9gc4dGyp39oFea9ZbjtTKRh15sCHh+np7J+bPha6VZzw7iBpKG0lcta0vcd/6DqO
-         l9xQ==
-X-Gm-Message-State: APf1xPDLeZiscynyNCHJ6Bu6WPL705ZoXgfIYV8S7dXMMmFcTo9MMSn9
-        NL+bvv6yVMXUQrSNZjhSc1PHlRF0JyrPHtE74Jo=
-X-Google-Smtp-Source: AH8x225++Dzj6DcH8Ics3/VpWdEK2EKelTKNu7HPapvmeM0aok2382qvY6DJHTQwpcwBnAxGlLNUlSzygS8XPIXgGtM=
-X-Received: by 10.55.177.135 with SMTP id a129mr8329810qkf.112.1517997251615;
- Wed, 07 Feb 2018 01:54:11 -0800 (PST)
+        bh=i0Y/KFmo8dkzOb/XmvIJZfM+hBcAdKo4E+0dGinKRy0=;
+        b=LreMj3lgjiu56TDIJgTmjtnYA7t/8gMuMiUDIz15G8l+EWI67szscc6Q9J0xKQkTo2
+         ANcah4sJidw8vjvPEzd9uSWs8Zb7sNjWMd2AstG3M/em0V1OEDVoDxKK8DpbaHuYHfdK
+         XhGM32h6SVDxCj/pCSeTME3vc4O7N89XYo68iIW0HlKHzlyLuQ8N0Nlyh7Q2WlJTMsgC
+         fbt9SC+k7jBo6qF5wHkggVIpByYsfQLIg3hcFCIA/ALZKC+6EedzbXonwKSDGX907RnG
+         bjd5jBpfOT6js1wJqV9mcQY+Zy/GIwc+xkuhF9E10r3u+MbEWRP+qvlVPtuh36lVrCJB
+         qVEQ==
+X-Gm-Message-State: APf1xPA8cUhhDPZXcD/8D4ucXe9FvODUeOUKhmYDzoxknU+Ilqsv0paF
+        ZezymHUhVBBQVbF+6OkkRKwgHdP5QzdDe2UJmI8=
+X-Google-Smtp-Source: AH8x227aEAIH5yO/H04wFBu3j0vTQ/zLqrPgxaoy1srbql/36+MDksHo6c/Ow+Q0795mi50X5vdv/PuKooFuaTor4jE=
+X-Received: by 10.55.123.69 with SMTP id w66mr7961654qkc.326.1517997646346;
+ Wed, 07 Feb 2018 02:00:46 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 01:54:11 -0800 (PST)
-In-Reply-To: <CAGZ79kYYZ-dmHA5jZeKTk9TFxn+7_zzxLPR7jNS4X8+K-JU_dg@mail.gmail.com>
-References: <20180205235508.216277-1-sbeller@google.com> <CAGZ79kYYZ-dmHA5jZeKTk9TFxn+7_zzxLPR7jNS4X8+K-JU_dg@mail.gmail.com>
+Received: by 10.12.175.239 with HTTP; Wed, 7 Feb 2018 02:00:45 -0800 (PST)
+In-Reply-To: <88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com>
+References: <88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Feb 2018 04:54:11 -0500
-X-Google-Sender-Auth: jYshAIalz693HgWDg0oUHHHkfk4
-Message-ID: <CAPig+cSFcjV8RfWhaZsy2CqYG0JYfn4u0vKkf_XkUAmC12uONA@mail.gmail.com>
-Subject: Re: [RFC PATCH 000/194] Moving global state into the repository object
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Wed, 7 Feb 2018 05:00:45 -0500
+X-Google-Sender-Auth: 6vGc10kTu6rDb5-3Cf0X4X_NCMY
+Message-ID: <CAPig+cQ=Uvp5k7NprzqU1Cfi1b0jj5T63Nxzqg+O5ucinD9fmQ@mail.gmail.com>
+Subject: Re: [PATCHv3] tag: add --edit option
+To:     Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 6, 2018 at 3:25 PM, Stefan Beller <sbeller@google.com> wrote:
->> Any suggestions welcome!
+On Tue, Feb 6, 2018 at 3:36 AM, Nicolas Morey-Chaisemartin
+<nmoreychaisemartin@suse.com> wrote:
+> Add a --edit option whichs allows modifying the messages provided by -m or -F,
+> the same way git commit --edit does.
 >
-> Eric repeatedly points out leaking memory.
->
-> As of today we do not care about memory leaking as it is cleaned
-> up at the end of the program anyway, for example the objects
-> hash table is never cleared.
+> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
+> ---
+> Changes since v2 ( https://public-inbox.org/git/e99947cf-93ba-9376-f059-7f6a369d3ad5@suse.com ):
+>  * Add [-e] to git tag summary
 
-Is this still true/desirable when multiple 'repos' are involved?
+Thanks, I think this addresses all my comments from previous rounds.
+Just a couple minor style issues below...
 
-> In a resend I will put the infrastructure in place to free the memory via
-> adding
->
->   raw_object_store_clear(struct raw_object_store *)
->   object_parser_clear(struct object_parser *)
->   ref_store_clear(struct ref_store *)
->
-> and calling these functions on repo destruction. The functions
-> itself will be empty code-wise and contain TODO comments listing
-> all variables that need care.
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> @@ -452,6 +452,21 @@ test_expect_success \
+> +> +test_expect_success \
+> +       'creating an annotated tag with -m message --edit should succeed' '
+> +       EDITOR=./fakeeditor     git tag -m "A message" --edit annotated-tag-edit &&
 
-I'm confused. If you go to the effort of inserting TODO's why not go
-all the way and instead insert the actual code?
+Whitespace between 'fakeeditor' and 'git' is a tab but should be a space.
 
-> Follow up patches can figure out what is best to do, such as closing
-> the memleaks. As repo_clear is not called for the_repository
-> we'd even keep the property of relying on fast cleanup by the OS.
+> +       get_tag_msg annotated-tag-edit >actual &&
+> +       test_cmp expect actual
+> +'
+> @@ -465,6 +480,21 @@ test_expect_success \
+> +test_expect_success \
+> +       'creating an annotated tag with -F messagefile --edit should succeed' '
+> +       EDITOR=./fakeeditor     git tag -F msgfile --edit file-annotated-tag-edit &&
+
+Ditto.
+
+> +       get_tag_msg file-annotated-tag-edit >actual &&
+> +       test_cmp expect actual
+> +'
