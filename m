@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7B461F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2F9B1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932287AbeBGBOp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 20:14:45 -0500
-Received: from mail-ua0-f202.google.com ([209.85.217.202]:52127 "EHLO
-        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932264AbeBGBO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:14:29 -0500
-Received: by mail-ua0-f202.google.com with SMTP id f5so2358409ual.18
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:14:28 -0800 (PST)
+        id S932256AbeBGBOR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:14:17 -0500
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:54135 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932244AbeBGBOO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:14:14 -0500
+Received: by mail-qk0-f201.google.com with SMTP id u194so2800469qka.20
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:14:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=0OoJ9vPoF2rshRW/ACPT+v+iRpCqOVuNSr9wbmzw6ls=;
-        b=eDzYBt4E/VqeSQlAKUZ61X6Ib++J9T5fq1DcWNFGqeQd2B6LYLXlTLF9LWCu+5lcPy
-         js8li/FveF5Apd8OIyfbCsood0v4nHJDtpGQRhQMc0HdFCc0WCz7t1TgXgWv2fCPx9r2
-         vzlu5YrUpNaMEN2kgtQvDYCizgaEAYQkWWQ5E6oOE0DPWHrryZ7/53urB0EyCInBbp0t
-         pQiEMUeHyn3Sua+erSRHjJgf9J0JiRWiVbcaU0CBswOuzPG80Ut7qZ4WsKrvh6tHCkEr
-         r0SDIKkv8wpR+i5bO/5wSVCkIM/W+/B19i0ukIh6P+I85ydrODmr8TwLUCDNggGgBUCP
-         9UGA==
+        bh=0mdrb/4mibI0H1JFgUadNgc1619i3Z8m3wRLcgcC3iw=;
+        b=fcDrDN8OGkKdsaLaCVKuhxqiqHwNoCAfN4cE4+X6eq/Oj7N+OaSR30/Cc3ne7Tv+Ef
+         YXltiz2a9i59z+aghomXpIC+GZTOXRwgy5EFsqNh8dxDSz5buAve9vXy9etVariOgGeU
+         bjtIJSKKwyRwJGbRvNMgLXKdd/rUftlZFUmGvdu51Qh2zM70W3h+aQDzO4ljBYlkkbPu
+         2NsSByR5vvkfeCARVV/iRNOqNds9ABaYPwI3CHXnwcHE1MNJNmiZxFcAPQFt+IjvzZ9r
+         J6HV3CT9Xl/5SckaZFKe+iFi98qZanHEBWQPnHVOUr+cuEQELVtKTaMDCwBzm1qAIuAX
+         4COQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=0OoJ9vPoF2rshRW/ACPT+v+iRpCqOVuNSr9wbmzw6ls=;
-        b=Ib5w+g36B717a9VFYp1nwnX7xAENvP/MSJ47SMvBVLYMbKFQ/JsQSd+TR4x65zStdU
-         SnrfK/slXGkrkYGhs8HtP5vQr3amuaTFNSq1PTeYlhtEiwsFGcrHrSIas3SG+X2HneWj
-         6M+s4KTK6FhJ25dmCVJmbm9/oeRerIljHR6tr6G/L8DVk4r1y6ssD3JmoMwIHT4aa+9q
-         A+DPnuWBfiOUkftP2IVwjerg1TH1UPIcjexPBnGwJTFjxG2DoqpSOlj3QF/YZIyTVNcy
-         WNuDv1xBNHn6acz2vB9BIa8mqILQ5lHm4CeZvyc+bTIyr/8VbwPkFyNIYKZxp4li1SVp
-         MTTw==
-X-Gm-Message-State: APf1xPCxyRLELHtAAxC7mVAU6GZ/8O3dxAUKBB99DaTwL8Dx89M48WrH
-        vqAs6/yXFzANUBOcp3Qa4tlcIQSamebQRDqQXD/Wai99GC+Nn4GK/KL7yh/87+HNfjIcKxGlAsF
-        z9OY/rB9cAEBoqCqoNfvPZIcjQAWBCotOliPoHIod9VteELV1ThXJDLDOFQ==
-X-Google-Smtp-Source: AH8x224yjsLYrLVTmIPkaqWaZg5Jllo8K1UJL19b4VwKLUyFFi876GvZb/mOCn1iW4ORcXZxHUiAT/fh1To=
+        bh=0mdrb/4mibI0H1JFgUadNgc1619i3Z8m3wRLcgcC3iw=;
+        b=n2ydZ3n6gwWHtxv5n8L1gJ/JEDNWpzEBAOIMh6Z1ekXvIimOKk9et1H7yEjS3Z4TVI
+         QnGRcVP7ecQJWsXPOSJn3frzMkRgJpDgbAv6Zz/8SN3ctkRH7sy5xf3fy0igp4ebFuHA
+         Yiks0xIa9oSkc3CxJlp+/2nUAKcU4f1dtYtV4WH08LwBcfRfOa0/R6bqDkSNN5cgA0o+
+         rqdDKsonEeNzXxAQroAcYp4U59/mKFl4Fyi4ZFsInqPh1mHEeQhw56JYgbUmTyCZAjA+
+         BgOJqBNw10LPv1siQJefo415E7JBQbmBzzCwZn6AQ7+yyIIyJ7QxlLR9yhUc/AL/UPOf
+         PmgQ==
+X-Gm-Message-State: APf1xPAaRkGxJETiXMcfK8qg9vLB0+wdpbQnc0U7vY3h5bMNqqwb65Wg
+        fPEIaqdXe20Rl+enFBF7Lz9OCyXonM8dr2PTxqstcIQsiILx+ONW48E52pICwgFhFATFBS41WSG
+        KTsKps2aTISJk5MVc30R+RPgxSf6k6WGEJxC8zYqxR1+Q5Z3STMP6QffhUg==
+X-Google-Smtp-Source: AH8x226g2L7EmJWcRr7WTSluiXp6GhpZLjFBs2NxT2yAkFoPa7KDeZchbgwRF9o6WGCCpmJ3hA5odwOC37k=
 MIME-Version: 1.0
-X-Received: by 10.176.90.111 with SMTP id m44mr2155135uad.73.1517966068316;
- Tue, 06 Feb 2018 17:14:28 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:13:08 -0800
+X-Received: by 10.233.230.66 with SMTP id x2mr3227866qkl.1.1517966053723; Tue,
+ 06 Feb 2018 17:14:13 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:13:02 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-32-bmwill@google.com>
+Message-Id: <20180207011312.189834-26-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 31/35] remote-curl: store the protocol version the server
- responded with
+Subject: [PATCH v3 25/35] connect: don't request v2 when pushing
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -65,38 +64,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Store the protocol version the server responded with when performing
-discovery.  This will be used in a future patch to either change the
-'Git-Protocol' header sent in subsequent requests or to determine if a
-client needs to fallback to using a different protocol version.
+In order to be able to ship protocol v2 with only supporting fetch, we
+need clients to not issue a request to use protocol v2 when pushing
+(since the client currently doesn't know how to push using protocol v2).
+This allows a client to have protocol v2 configured in
+`protocol.version` and take advantage of using v2 for fetch and falling
+back to using v0 when pushing while v2 for push is being designed.
+
+We could run into issues if we didn't fall back to protocol v2 when
+pushing right now.  This is because currently a server will ignore a request to
+use v2 when contacting the 'receive-pack' endpoint and fall back to
+using v0, but when push v2 is rolled out to servers, the 'receive-pack'
+endpoint will start responding using v2.  So we don't want to get into a
+state where a client is requesting to push with v2 before they actually
+know how to push using v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- remote-curl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ connect.c              |  8 ++++++++
+ t/t5702-protocol-v2.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 4086aa733..c54035843 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -171,6 +171,7 @@ struct discovery {
- 	size_t len;
- 	struct ref *refs;
- 	struct oid_array shallow;
-+	enum protocol_version version;
- 	unsigned proto_git : 1;
- };
- static struct discovery *last_discovery;
-@@ -184,7 +185,8 @@ static struct ref *parse_git_refs(struct discovery *heads, int for_push)
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_GENTLE_ON_EOF);
+diff --git a/connect.c b/connect.c
+index dbf4def65..37a6a8935 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1212,6 +1212,14 @@ struct child_process *git_connect(int fd[2], const char *url,
+ 	enum protocol protocol;
+ 	enum protocol_version version = get_protocol_version_config();
  
--	switch (discover_version(&reader)) {
-+	heads->version = discover_version(&reader);
-+	switch (heads->version) {
- 	case protocol_v2:
- 		die("support for protocol v2 not implemented yet");
- 		break;
++	/*
++	 * NEEDSWORK: If we are trying to use protocol v2 and we are planning
++	 * to perform a push, then fallback to v0 since the client doesn't know
++	 * how to push yet using v2.
++	 */
++	if (version == protocol_v2 && !strcmp("git-receive-pack", prog))
++		version = protocol_v0;
++
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+ 	 */
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 16304d1c8..60e43bcf5 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -82,6 +82,28 @@ test_expect_success 'pull with git:// using protocol v2' '
+ 	grep "fetch< version 2" log
+ '
+ 
++test_expect_success 'push with git:// and a config of v2 does not request v2' '
++	# Till v2 for push is designed, make sure that if a client has
++	# protocol.version configured to use v2, that the client instead falls
++	# back and uses v0.
++
++	test_commit -C daemon_child three &&
++
++	# Push to another branch, as the target repository has the
++	# master branch checked out and we cannot push into it.
++	GIT_TRACE_PACKET=1 git -C daemon_child -c protocol.version=2 \
++		push origin HEAD:client_branch 2>log &&
++
++	git -C daemon_child log -1 --format=%s >actual &&
++	git -C "$daemon_parent" log -1 --format=%s client_branch >expect &&
++	test_cmp expect actual &&
++
++	# Client requested to use protocol v2
++	! grep "push> .*\\\0\\\0version=2\\\0$" log &&
++	# Server responded using protocol v2
++	! grep "push< version 2" log
++'
++
+ stop_git_daemon
+ 
+ # Test protocol v2 with 'file://' transport
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
