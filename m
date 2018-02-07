@@ -2,66 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28F2E1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 12:56:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CABD1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 13:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753643AbeBGM4w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 07:56:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43512 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753478AbeBGM4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 07:56:51 -0500
-Received: (qmail 6769 invoked by uid 109); 7 Feb 2018 12:56:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 12:56:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29855 invoked by uid 111); 7 Feb 2018 12:57:33 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 07:57:33 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 07:56:49 -0500
-Date:   Wed, 7 Feb 2018 07:56:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     pedro rijo <pedrorijo91@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
+        id S1754194AbeBGNKU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 08:10:20 -0500
+Received: from smtp6-g21.free.fr ([212.27.42.6]:47950 "EHLO smtp6-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753693AbeBGNKT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 08:10:19 -0500
+Received: from [192.168.1.108] (unknown [164.177.97.114])
+        (Authenticated sender: jn.avila)
+        by smtp6-g21.free.fr (Postfix) with ESMTPSA id 18D137803C9
+        for <git@vger.kernel.org>; Wed,  7 Feb 2018 13:10:15 +0000 (UTC)
 Subject: Re: is http://git-scm.com an *official* git-affiliated site?
-Message-ID: <20180207125649.GA16018@sigill.intra.peff.net>
 References: <alpine.LFD.2.21.1802070547040.5530@android-a172fe96dd584b41>
- <CACsJy8Dt_TjfRk05oNW8DXrdn6s_QV8NQZKnnrgGkj3WTN_=3A@mail.gmail.com>
- <CAPMsMoAOX-c+w6OUaZ-hZ9ideE=K_4UYp7eHO4wcEESm-Z0z6Q@mail.gmail.com>
+ <87eflxyqrn.fsf@evledraar.gmail.com>
+ <20180207125415.GA16314@sigill.intra.peff.net>
+To:     git <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
+Message-ID: <fa326209-7f1d-1833-c9e1-007f9a445754@free.fr>
+Date:   Wed, 7 Feb 2018 14:10:07 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <20180207125415.GA16314@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPMsMoAOX-c+w6OUaZ-hZ9ideE=K_4UYp7eHO4wcEESm-Z0z6Q@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 07, 2018 at 11:34:51AM +0000, pedro rijo wrote:
+On 07/02/2018, Jeff King wrote:
 
-> The command list under https://git-scm.com/docs doesn't show all the
-> commands. It's a manually curated list as we can see at
-> 
-> - https://github.com/git/git-scm.com/blob/master/app/views/doc/ref.html.erb
-> - https://github.com/git/git-scm.com/tree/master/app/views/shared/ref
-> 
-> I'm not sure if the goal ever was to list all available commands or to just
-> list some important existing commands (cc @Peff).
+> On Wed, Feb 07, 2018 at 12:37:32PM +0100, Ævar Arnfjörð Bjarmason wrote:
 >
-> If we want to list all available commands, there's some work that must be
-> done in order to automate that, since it's not feasible to manually add
-> each new command.
+>
+>> It's not fully auto-generated so stuff like git-worktree doesn't get
+>> added automatically, I just added a PR for that:
+>> https://github.com/git/git-scm.com/pull/1133
+> Thanks for doing that. I'm also open to auto-generating the index if we
+> can come up with well-organized output.
+>
+> -Peff
 
-I think we _could_ just add all commands, but there's some value in
-organizing them. I'm not sure if there's enough information in git.git
-to do that organization. But we could also have a curated list of some
-subset of the commands, and then dump the rest in an alphabetized index.
 
--Peff
+I did not know that git-worktree is not considered ready for general
+consumption. It has been present in the release notes for quite some
+time now.
+
+
+If there's something available from the git repo to drive the build of
+the index, that would be a good way to advert the publicly available
+commands of git.
+
+
+JN
+
