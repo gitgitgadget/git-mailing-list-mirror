@@ -1,105 +1,59 @@
-From: Tema Williams <cityelectronicsplaza@gmail.com>
-Subject: WE NEED YOUR HELP URGENTLY.
-Date: Mon, 11 Apr 2016 10:03:02 +0200
-Message-ID: <CAGys7DqqEhLUGFmu9FoYrBKDFFgOsBmuVBDAg6H8FhUFDp7+qQ@mail.gmail.com>
-Reply-To: temawilliams18@yahoo.com
+From: "Troy Wood" <Dudley.Lopez@dasferienland.de>
+Subject: RE:Your home funds have been released
+Date: Sun, 30 Jul 2006 21:05:26 -0300 (EDT)
+Message-ID: <7083680.8135693582690.JavaMail.root@mailxxu08.eqpm5>
+Reply-To: poshuc@dasferienland.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Mon Apr 11 10:03:19 2016
+Content-Type: text/plain
+X-From: git-owner@vger.kernel.org Mon Jul 31 02:48:42 2006
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1apWoW-0008LM-Rc
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Apr 2016 10:03:17 +0200
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1G7LxW-00053O-27
+	for gcvg-git@gmane.org; Mon, 31 Jul 2006 02:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbcDKIDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Apr 2016 04:03:09 -0400
-Received: from mail-lf0-f68.google.com ([209.85.215.68]:36259 "EHLO
-	mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751312AbcDKIDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Apr 2016 04:03:05 -0400
-Received: by mail-lf0-f68.google.com with SMTP id p81so18520354lfb.3
-        for <git@vger.kernel.org>; Mon, 11 Apr 2016 01:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to;
-        bh=gGjWAZ/eE2OEcARbvBk/E248hW+KMqbXfavIOtPJ0H8=;
-        b=uPXraJtL4ccjSmkJDa1CSAgacWNzPZ28VlW7VY5APvzvK+Stp2DBLDcONYMDFBc8ne
-         7kXd8xRHQLguOaAAwKX8Uj7qyDGKt6YOroERdi0XStAVXWkZjK0DZDfzZdurx6A0VFL1
-         IsyCyKCuStsjZtXRbrs/FJP01clVFd4zlOPA+Jf0keoXAfUq1GCAjRpu/NwtwgaZqlUF
-         dkQfsiwOjv6pYD+fwmhzkx+m0FeQ9nqw3R6Fhwphh6CcBPARbwWEqS1A7foehjNTbY0F
-         5yR5UVdXgQiKKXkV1LN3BU419JmntQ2SZygzPh0mSNz5yapAXRpTOcKdpSW7YJE0y92g
-         PZtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:reply-to:date:message-id:subject
-         :from:to;
-        bh=gGjWAZ/eE2OEcARbvBk/E248hW+KMqbXfavIOtPJ0H8=;
-        b=S/cOnPTWzPSkh9yTeyFdIvWMow9VgK+HDBbOnErJAqBtYRxxrGLK/Pc4BxVlLlDtad
-         TPQUtUOcSp/OVZryOCFX5jWNHshf+iVN/v7+yKXfKghhBPlKaTbvUAifGDB5+cJBJtuR
-         tOszgrDjaLSJfQ/ILd674fDosmkMdDLa1mYtrMbXm50eq9CDKRJ8SvnXRkgaUA6RM2pF
-         te2unQkwqSPyXyqI2SNgWMid71LK/6Jg1i25YDVcYn0AHLaf2gm9FUPj/E/kLojpwHys
-         kSuUqqyhQp0HU7OXGhlKw12EciV7qknUcLnGWKdkmI8CkGW81TnaCotG4NNaYBmTGrH/
-         X4cw==
-X-Gm-Message-State: AD7BkJI/pjLZhFHIOMrrWrH3HWVSElVwZUPeQyGtVGZMM3vROn+SVwfo5fpFnsRDJJHFI4aXlMescSKca/O3Gg==
-X-Received: by 10.112.235.5 with SMTP id ui5mr8187012lbc.111.1460361782779;
- Mon, 11 Apr 2016 01:03:02 -0700 (PDT)
-Received: by 10.25.87.2 with HTTP; Mon, 11 Apr 2016 01:03:02 -0700 (PDT)
+	id S932407AbWGaAsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 30 Jul 2006 20:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbWGaAsf
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Jul 2006 20:48:35 -0400
+Received: from adsl_basico_24570-178.etb.net.co ([201.245.70.178]:6111 "EHLO
+	wiener-lab.com.co") by vger.kernel.org with ESMTP id S932407AbWGaAse
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jul 2006 20:48:34 -0400
+Received: from 12DE4B8 ([210.22.15.94] RDNS failed) by wiener-lab.com.co with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 30 Jul 2006 19:05:29 -0500
+Received: by mail7151.rm00.net id mx7tjwgdzw2m for <aafde@abcimaging.com>; Sun, 30 Jul 2006 21:05:26 -0300 (envelope-from <venoir@bounce1.rm07.net>) 
+To: aafde@abcimaging.com, git@vger.kernel.org,
+	ddissettqldf@vger.kernel.org, atiles@vger.net, susich@vger.net,
+	reynoza@vger.net
+x-mid: 496631
+X-OriginalArrivalTime: 31 Jul 2006 00:05:30.0015 (UTC) FILETIME=[08C6CAF0:01C6B435]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 11.3 points;
- *  1.8 SUBJ_ALL_CAPS Subject is all capitals
- *  2.2 DEAR_SOMETHING BODY: Contains 'Dear (something)'
- *  1.1 NA_DOLLARS BODY: Talks about a million North American dollars
- *  1.2 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  2.0 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
- *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
- *  1.5 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/291208>
+X-Spam-Report: 6.8 points;
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  2.0 RCVD_IN_SORBS_DUL RBL: SORBS: sent directly from dynamic IP address
+ *      [201.245.70.178 listed in dnsbl.sorbs.net]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?210.22.15.94>]
+ *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
+ *      [URIs: snip.cc]
+ *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
+ *      [URIs: snip.cc]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24483>
 
-Dear Sir/madam,
+I would like to offer you the opportunity to minimize your monthly rent/mort payments by more than 33%.
+We guarantee to beat your current rate, below are some of todays.
 
-With due respect and to the glory of Almighty God whom we worship I
-call upon you to assist my family.
-Please Permit me to inform you of my desire of going into business
-relationship with you.
-
-My name is Tema Williams,The only Son of late Chief PATRICK WILLIAMS.
-My father was a very wealthy cocoa merchant in Abidjan but we are from
-Sierra Leone
-After my Father death I and my Family move to South Africa as refugee.
-
-My father was poisoned to death by his business associates on one of
-their outings on a business trip. Before his death in a private
-hospital in Abidjan he secretly called me on his bed side and told me
-that he has the sum of ($12.000,000 MILLION US DOLLAR) kept with a
-security and finance company in South Africa,He also explained to me
-that it was because of this wealth that he was poisoned by his
-business associates,that I should seek for a beneficiary in any
-country of my choice where I will transfer this money and use it for
-investment.I am honorably seeking for your assistance to transfer our
-fund out of South Africa.Upon the successful transfer of this fund,we
-shall make arrangement for me,my mother and younger sister to come
-over to your country to further our Education and invest in a
-profitable business that you may suggest.
-
-More over,I am willing to offer you 20% of the total sum as
-compensation for your effort/input after the successful transfer of
-this fund into your nominated bank account overseas.
-
-As we depend on God, and with God all things are possible.
-Anticipating to hear from you today.
-
-Thanks and God bless.
-PLEASE CALL ME +27787597591
+$155,000 at 3,95%
+$235,000 at 4,15%
+$295,000 at 3,55%
+$232,000 at 4,55%
 
 
-Best regards,
+Please follow the link below to the best investment you'll ever make.
 
-Tema Williams
-(for the family)
+http://snip.cc/353 
