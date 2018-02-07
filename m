@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8D1E1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 349431F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932267AbeBGBOY (ORCPT <rfc822;e@80x24.org>);
+        id S932270AbeBGBO1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:14:27 -0500
+Received: from mail-ot0-f201.google.com ([74.125.82.201]:40098 "EHLO
+        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932264AbeBGBOY (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 6 Feb 2018 20:14:24 -0500
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:48508 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932252AbeBGBOW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:14:22 -0500
-Received: by mail-vk0-f74.google.com with SMTP id o64so2159130vka.15
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:14:22 -0800 (PST)
+Received: by mail-ot0-f201.google.com with SMTP id w4so2136081ote.7
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:14:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=PppxHk/x/apyMZlUIvQ30XXfmrq25IXR54pjZT3jDNE=;
-        b=u6SaFOU1t7fZIUwwACGMsMGgLWakIy+3ZYKEjrwcD5FnqtoYr5nRinxstvI0LIGL/5
-         G6VEUDZ6Q/4dN9guQy8EKrxHSmG4mRauVr/XeqUX8H/O4etuKhycatXWsAZXtbKC9dw+
-         P8TOEUu8W8tlCBvhirGU/OydmuEbYcJ3aF0GE3bpRO1tQ+eMSOZUIpEblJ1E3PpcO1PS
-         3u8qiK8CkNM4ItIeFCpkmFsWXObSbk0QAam2AjEiY2vrMZ8GGfCN//9MRnHHJxGYLn5q
-         782Wyow02H+Mh5Y6AEgGCqCnmlfd19KvmzBOGG69ymaqQtrNKN9FtGcLfb37af2PtY6O
-         WxMA==
+        bh=xpf+upqz1TsGzk1gh9pSXJmCRPXcurTIg0NN67V/1hw=;
+        b=fuzgPtUWhPuKG9PrCGxZnW1szekv06zLEtj5bTav/29HDk1A3vnLI1fg5EaIsFcCGt
+         j5DtsKBL7OHqJUmY+uvIvAXyO1zTSMUdHClxycaoH0jrCFd6PZ+UYtLUtKSciqXwzRLP
+         xVZudhC9oYaChDPVx4Ny8iGNjjtC0PEyHeRKnG5YAydUKUJb/CoCPFGU5Qg372jeDbpH
+         FshyO/0H0X1HmLT5V3pd4+dw/s4ZagDSmvhBr2e5gC76OQKdwFXkN9WndIkeLkph36EK
+         4x7KARfSzqZCgYWNWVqOVS4NXYxohHegOJcyYcjGqN//dYxkB5PRRCN94eJBC3/XR5VQ
+         J0Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=PppxHk/x/apyMZlUIvQ30XXfmrq25IXR54pjZT3jDNE=;
-        b=ORyrk4GcDTQwtSNbkWhNB5kH5QvG4D2IhJLyo2Qse7cErmCwXKMuP5hpXPRkMtrj8t
-         RNSbHTHmbtKAfEXpG4JNQCVz5bDTs8rFsHbsOj3t9Ph1g33yU5g5H70lNQgGYLxlgWgY
-         kXF/NyQqZ0kjTUgfmcqTSIrTCzrKBO05wsNhQ1bgjsRFBoY6h+p/XrLFgr4sI3ibmqD3
-         hqV50JjTWhox7/xqAOTe7q6Q3wuWpT3oljR4Fur7d6TlDM/oBbCvixpPshs84i3vKEml
-         m91KfcsdmkqXEDYkg/b7Zz1fd09smFt3SRTF1Z3fXJn6eWcObMYsKAW9sdCH8iyS6d3C
-         xSdw==
-X-Gm-Message-State: APf1xPAC9U7YT2bz5pAzxudLEZzbANlsxmqbBjX6bFQD7K+u3zmz42Ob
-        IAQKCJZN4MClILNei9Hp2ZTh7zPm+LgETXvGtYEzcRPPO63aoohMly4jqE/UN/cVkIPOpv0zC4d
-        lGFhyjZqFuKzDpNtunDoBrQI6HMWsfe+u85X5KVRDmktctKCXVdj4hEgVrA==
-X-Google-Smtp-Source: AH8x227jfbhb2be2w8VQdWlKxwqeE8+1yZDlCggCSdaIf2ir6vwhdEOby0f3T01NDNpZwbSzoODNlN/K6zE=
+        bh=xpf+upqz1TsGzk1gh9pSXJmCRPXcurTIg0NN67V/1hw=;
+        b=WurRRUmKLKdMN5hcKSSFJTHNL7oSbCl4Qm/jpTkNAyjYuitfHp9F/q66/ZGuAdoGQj
+         9JQ9IL+UCtriW3bSCTN9M3w2ASBg4D6rLPssa0RbjpWsw6lrtE/QQ6SUvkZVTKKBz8yG
+         FlsR8ATE6Y9N51ZD7Jy7wN1SSv1AcTa4X0ZAX/T3o2/4Gt9yDD/KGcSrOy0z7puUk4bn
+         3KjDzX7fERbibVYIa5LZjaMLXdlpR8Kk3CwKcjEJ4OBxIsTCYkS17mLxtCKGro1o5unS
+         OblAuyhhyMi4gSO/xC6oH3u1KGlgspCi/g2UeVRzQpy0lJRT8qQFgpOtIi6hMQKx7OOn
+         FIEQ==
+X-Gm-Message-State: APf1xPBYWNMHmYTDhVXI1HM88cWexdH5UiFnQeD30h2k4e8eTSts+w+R
+        3Qh+dBCv2eAPKXDw2Rh1YgMU8grehyh7K8H48M+r0uOqlrs2CU1sD88M1mcGpbdU+bO1DfXzm17
+        e3A5kJpyKftP78ybz6IJdz0mS5H4gvyIQJkqbaj1uaynYE4r9L3jC0iEOyw==
+X-Google-Smtp-Source: AH8x224E8ZziCgQXMWG8+U6rkHbyWPEX6uaRMIcWKLOz/4guPgee1v+NE88fmNql1N03/zqWuZMBy7YqZ2U=
 MIME-Version: 1.0
-X-Received: by 10.31.3.207 with SMTP id f76mr2071859vki.41.1517966061316; Tue,
- 06 Feb 2018 17:14:21 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:13:05 -0800
+X-Received: by 10.202.114.203 with SMTP id p194mr2268018oic.62.1517966063647;
+ Tue, 06 Feb 2018 17:14:23 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:13:06 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-29-bmwill@google.com>
+Message-Id: <20180207011312.189834-30-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 28/35] transport-helper: introduce stateless-connect
+Subject: [PATCH v3 29/35] pkt-line: add packet_buf_write_len function
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -64,89 +64,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the transport-helper capability 'stateless-connect'.  This
-capability indicates that the transport-helper can be requested to run
-the 'stateless-connect' command which should attempt to make a
-stateless connection with a remote end.  Once established, the
-connection can be used by the git client to communicate with
-the remote end natively in a stateless-rpc manner as supported by
-protocol v2.  This means that the client must send everything the server
-needs in a single request as the client must not assume any
-state-storing on the part of the server or transport.
-
-If a stateless connection cannot be established then the remote-helper
-will respond in the same manner as the 'connect' command indicating that
-the client should fallback to using the dumb remote-helper commands.
+Add the 'packet_buf_write_len()' function which allows for writing an
+arbitrary length buffer into a 'struct strbuf' and formatting it in
+packet-line format.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- transport-helper.c | 8 ++++++++
- transport.c        | 1 +
- transport.h        | 6 ++++++
- 3 files changed, 15 insertions(+)
+ pkt-line.c | 16 ++++++++++++++++
+ pkt-line.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index c032a2a87..82eb57c4a 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -26,6 +26,7 @@ struct helper_data {
- 		option : 1,
- 		push : 1,
- 		connect : 1,
-+		stateless_connect : 1,
- 		signed_tags : 1,
- 		check_connectivity : 1,
- 		no_disconnect_req : 1,
-@@ -188,6 +189,8 @@ static struct child_process *get_helper(struct transport *transport)
- 			refspecs[refspec_nr++] = xstrdup(arg);
- 		} else if (!strcmp(capname, "connect")) {
- 			data->connect = 1;
-+		} else if (!strcmp(capname, "stateless-connect")) {
-+			data->stateless_connect = 1;
- 		} else if (!strcmp(capname, "signed-tags")) {
- 			data->signed_tags = 1;
- 		} else if (skip_prefix(capname, "export-marks ", &arg)) {
-@@ -612,6 +615,11 @@ static int process_connect_service(struct transport *transport,
- 	if (data->connect) {
- 		strbuf_addf(&cmdbuf, "connect %s\n", name);
- 		ret = run_connect(transport, &cmdbuf);
-+	} else if (data->stateless_connect) {
-+		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
-+		ret = run_connect(transport, &cmdbuf);
-+		if (ret)
-+			transport->stateless_rpc = 1;
- 	}
+diff --git a/pkt-line.c b/pkt-line.c
+index 726e109ca..5a8a17ecc 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -215,6 +215,22 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+ 	va_end(args);
+ }
  
- 	strbuf_release(&cmdbuf);
-diff --git a/transport.c b/transport.c
-index c275f46ed..9125174f7 100644
---- a/transport.c
-+++ b/transport.c
-@@ -250,6 +250,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 		data->options.check_self_contained_and_connected;
- 	args.cloning = transport->cloning;
- 	args.update_shallow = data->options.update_shallow;
-+	args.stateless_rpc = transport->stateless_rpc;
- 
- 	if (!data->got_remote_heads)
- 		refs_tmp = get_refs_via_connect(transport, 0, NULL);
-diff --git a/transport.h b/transport.h
-index 4b656f315..9eac809ee 100644
---- a/transport.h
-+++ b/transport.h
-@@ -55,6 +55,12 @@ struct transport {
- 	 */
- 	unsigned cloning : 1;
- 
-+	/*
-+	 * Indicates that the transport is connected via a half-duplex
-+	 * connection and should operate in stateless-rpc mode.
-+	 */
-+	unsigned stateless_rpc : 1;
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len)
++{
++	size_t orig_len, n;
 +
- 	/*
- 	 * These strings will be passed to the {pre, post}-receive hook,
- 	 * on the remote side, if both sides support the push options capability.
++	orig_len = buf->len;
++	strbuf_addstr(buf, "0000");
++	strbuf_add(buf, data, len);
++	n = buf->len - orig_len;
++
++	if (n > LARGE_PACKET_MAX)
++		die("protocol error: impossibly long line");
++
++	set_packet_header(&buf->buf[orig_len], n);
++	packet_trace(buf->buf + orig_len + 4, n - 4, 1);
++}
++
+ int write_packetized_from_fd(int fd_in, int fd_out)
+ {
+ 	static char buf[LARGE_PACKET_DATA_MAX];
+diff --git a/pkt-line.h b/pkt-line.h
+index 16fe8bdbf..63724d4bf 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -26,6 +26,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_delim(struct strbuf *buf);
+ void packet_write(int fd_out, const char *buf, size_t size);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++void packet_buf_write_len(struct strbuf *buf, const char *data, size_t len);
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int write_packetized_from_fd(int fd_in, int fd_out);
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
