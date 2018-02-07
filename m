@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52051F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 20:03:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 169411F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 20:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754129AbeBGUDe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 15:03:34 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:34375 "EHLO
-        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754048AbeBGUDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 15:03:34 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:34262 helo=localhost.localdomain)
-        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89_1)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1ejVwL-0002NB-5p; Wed, 07 Feb 2018 15:03:33 -0500
-Date:   Wed, 7 Feb 2018 15:03:31 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Todd Zullinger <tmz@pobox.com>
-cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: categorization, documentation and packaging of "git core"
- commands
-In-Reply-To: <20180207172902.GL1427@zaya.teonanacatl.net>
-Message-ID: <alpine.LFD.2.21.1802071500220.14248@localhost.localdomain>
-References: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41> <20180207172902.GL1427@zaya.teonanacatl.net>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1754320AbeBGUJC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 15:09:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44178 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754238AbeBGUJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 15:09:01 -0500
+Received: (qmail 28098 invoked by uid 109); 7 Feb 2018 20:09:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 07 Feb 2018 20:09:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2053 invoked by uid 111); 7 Feb 2018 20:09:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 07 Feb 2018 15:09:44 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Feb 2018 15:08:59 -0500
+Date:   Wed, 7 Feb 2018 15:08:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, Todd Zullinger <tmz@pobox.com>,
+        Jason Racey <jason@eluvio.com>, git <git@vger.kernel.org>,
+        Paul Smith <paul@mad-scientist.net>
+Subject: Re: "git branch" issue in 2.16.1
+Message-ID: <20180207200859.GA9141@sigill.intra.peff.net>
+References: <2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvio.com>
+ <20180206195754.GE1427@zaya.teonanacatl.net>
+ <CAGZ79kaxf3qUyOe6R-LCgyLtwzrwhB=y767tk2qPbC_KR473ig@mail.gmail.com>
+ <5A7788B0-6250-4D1F-A86D-E3155C03EF0C@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5A7788B0-6250-4D1F-A86D-E3155C03EF0C@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 7 Feb 2018, Todd Zullinger wrote:
+On Wed, Feb 07, 2018 at 06:54:23PM +0100, Lars Schneider wrote:
 
-> Robert P. J. Day wrote:
+> > Maybe the number of branches changed since then?
+> > As the pager only comes to life when the output fills
+> > more than your screen. Quick workarounds:
+> > * buy a bigger screen
+> > * have fewer branches.
+> 
+> Hmmm... there might be more to it. I just noticed the
+> pager behavior on macOS, too. Consider this call:
+> 
+> $ git diff --shortstat
+> 
+> This should generate at most one line of output. On Linux
+> the pager is never used. On macOS the pager is always used.
+> 
+> I tried older versions of Git on macOS and experienced the
+> same behavior.
 
-... snip ...
+Keep in mind that we always run the pager, since we don't know ahead of
+time how much output will be generated. It's just that with certain
+configurations of "less", it may exit if it sees EOF before there's a
+whole screen worth of data.
 
-> > finally, from fedora, i am utterly unable to find a package that
-> > provides git-archimport. pretty sure fedora used to have a
-> > "git-arch" package but it's not there now.
->
-> It hasn't been in Fedora since 2011.  The tla command which is
-> required for git-archimport was retired, thus we removed the
-> git-arch package.  The rpm changelog shows this:
->
-> * Tue Jul 26 2011 Todd Zullinger <tmz@pobox.com> - 1.7.6-4
-> - Drop git-arch on fedora >= 16, the tla package has been retired
->
-> As does the git history for the package:
->
->     https://src.fedoraproject.org/rpms/git/c/3f0dc974fa
->
-> The tla package was retired because it failed to build for
-> several releases:
->
->     https://src.fedoraproject.org/rpms/tla/blob/master/f/dead.package
+This is controlled by the "-F" option. By default, Git will set LESS=FRX
+in the environment if you do not already have a $LESS environment. So
+some other possibilities are:
 
-  huh ... well, that raises the question, if tla has been unbuildable
-for that long (possibly for other distros), what is the value in
-continuing to support git-archimport?
+  1. You have $LESS in your environment (without "F") on one platform
+     but not the other.
 
-  https://www.kernel.org/pub/software/scm/git/docs/git-archimport.html
+  2. Git was built with a different PAGER_ENV Makefile variable on one
+     platform versus the other (that's what controls the baked-in LESS
+     defaults).
 
-i don't really care one way or the other, but perhaps git-archimport
-should be broken out as a "non-core" component of git. related post
-coming shortly ...
+  3. "less" somehow behaves differently on macOS. The "F" behavior is
+     quite old, but possibly there's some platform-specific bug.
 
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                        http://crashcourse.ca
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+-Peff
