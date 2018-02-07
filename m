@@ -2,98 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6DF11F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 18:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC45B1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 19:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754118AbeBGSnB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 13:43:01 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60906 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753941AbeBGSnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 13:43:00 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA8D3C9152;
-        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=xfwsP1weG3ZwyP+nsE8GCXcAloU=; b=lUmegwK
-        mx3wAHE0PDg+0Fd+SzUN/H4+K1rxkIuhx5J0urKsicrDVVCugK0rUVkW9F0Ho51a
-        /FltsmRY1mEpLTkZAvV9TeDVwxH1ntZcslLK3kX0RnmOc35L3n6AUQbqjsiMut0E
-        BE5ob2N2+8rTqDTkL/1kojoqOsxgTdOzMHNw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=wewWHkIBZaY+MNEMLEuvIrKFzP+jyb1WK
-        8xGKwl5dSjZrHh5vGAEk96qrQa/XRa3QwiZ7xLGMh+MSih6hihmWfnI552O1Yvh6
-        1c4P5ChLhvE6KtmDnI/XFT60rlCo4Z/KrxgMPw5iHcJMjDAwZ6LECmAvACyoSfwh
-        EHk0NE+6sk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0FC7C9150;
-        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
-Received: from zaya.teonanacatl.net (unknown [173.67.181.41])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 110C5C914F;
-        Wed,  7 Feb 2018 13:42:59 -0500 (EST)
-Date:   Wed, 7 Feb 2018 13:42:57 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: categorization, documentation and packaging of "git core"
- commands
-Message-ID: <20180207184257.GM1427@zaya.teonanacatl.net>
-References: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41>
- <20180207172902.GL1427@zaya.teonanacatl.net>
- <alpine.LFD.2.21.1802071308250.9047@localhost.localdomain>
+        id S932079AbeBGTAk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 14:00:40 -0500
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:35279 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753995AbeBGTAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 14:00:39 -0500
+Received: by mail-yw0-f195.google.com with SMTP id u21so815179ywc.2
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 11:00:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pDGYF7+fvk6rVNtwtl7YEnM6Axr27EbbbXjbmjrXpuk=;
+        b=jXgBtutSOvu+OHEzX3B+s8gFPqQPUiqTprYrOwnZo2CULONY1s6HcBWOQ1QC90CfEw
+         VVwjkZTVvpjkF4h/RccUIpO8uxzI3znkZdnSHDyYrDrW53tnav73wYJiwdPnbbKgtC9d
+         6vv3rD+KnuYJDzINPLkV8LQc3ZmG0RRaNxUh0E8kL4p3kgAMS9MJD8uVNEBfII/9A6RS
+         CFtYL6Oml2kJR8mcgw/VcdKfh9eNs+4iAqwqhSV1D0R9YYvRyBknaRSkO7D6dh5D6UOE
+         lIm8LW2tj/TqXdXQ7byCMCHc5p8RrHNlTs4vCxFQ1oq/DQkeHYg4V9bq6TUB95s+bKwZ
+         f/QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pDGYF7+fvk6rVNtwtl7YEnM6Axr27EbbbXjbmjrXpuk=;
+        b=H0LMEgQ8wpp9MVp0SHz5BQ6eWtyueU4P8IJ5nKwV840l8Yea2GXW2guYgsk4mdcWr0
+         dnzY4wLaY8/D/TpoOsCoR0O+zvmFpMTOMNe0AKVuDS4r+P55sELkqLCwlX04F2JD8Nri
+         4EbQC9f/YcOwzeqHTLfIxpevSk+R/SDSYQlu5/jKPmTuT8OpXwRiGiPHQZu3q0szJdbD
+         /J1ax9XOd5YHEFib8pPIY79zHX09r2Q+nVQTnjFG8d5ezHdkXjjw3sOB0QrjloHRpg4e
+         4Ff9NwymJjIliWc9jU6K9nZ0c6mtAtDGjZY/wv3BMcvrrkHeU8vfDqXzhs+OLKSSK1Zh
+         rEJA==
+X-Gm-Message-State: APf1xPAdu00zbVzcZGYh0mxuHmanf160RpAUSowlI5UdWKWPtUlPAME8
+        /97PpAlA8im75u4HOMcXLYRR2wyfrAsBaOYa4/ngYitM
+X-Google-Smtp-Source: AH8x227+cyRc2PVn/f2v7fu15hpANeLMN6aSwiSpeWFPWI/NRJBJgXM+Fpqs1Gof8ZLGkt3kUDSL+Xqa8EIA+/Z5VWU=
+X-Received: by 10.129.119.131 with SMTP id s125mr4532220ywc.166.1518030038378;
+ Wed, 07 Feb 2018 11:00:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.1802071308250.9047@localhost.localdomain>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-X-Pobox-Relay-ID: B817E762-0C36-11E8-B3A6-692D1A68708C-09356542!pb-smtp1.pobox.com
+Received: by 10.37.207.9 with HTTP; Wed, 7 Feb 2018 11:00:37 -0800 (PST)
+In-Reply-To: <20180207011312.189834-23-bmwill@google.com>
+References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-23-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Feb 2018 11:00:37 -0800
+Message-ID: <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
+Subject: Re: [PATCH v3 22/35] upload-pack: support shallow requests
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robert P. J. Day wrote:
-> On Wed, 7 Feb 2018, Todd Zullinger wrote:
-> 
->> Robert P. J. Day wrote:
->>> first, here are the executables under /usr/libexec/git-core/ that
->>> are unreferenced by that web page, but that should be fine as
->>> almost all of them would be considered underlying helpers or
->>> utilities (except for things like git-subtree, but we're still
->>> unclear on its status, right?):
->>
->> I don't think there's anything unclear about git subtree's status.
->> It's in contrib/ within the source, so it's not part of the core git
->> suite.  Some distributions (Fedora being one of them) ship a
->> git-subtree package to provide it for users who want it.
-> 
->   not true, "git-subtree" is part of fedora's lowest-level
-> "git-core" package.
+On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
+> Add the 'shallow' feature to the protocol version 2 command 'fetch'
+> which indicates that the server supports shallow clients and deepen
+> requets.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  Documentation/technical/protocol-v2.txt |  67 +++++++++++++++-
+>  serve.c                                 |   2 +-
+>  t/t5701-git-serve.sh                    |   2 +-
+>  upload-pack.c                           | 138 +++++++++++++++++++++++---------
+>  upload-pack.h                           |   3 +
+>  5 files changed, 173 insertions(+), 39 deletions(-)
+>
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index 4d5096dae..fedeb6b77 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -201,12 +201,42 @@ packet-lines:
+>         to its base by position in pack rather than by an oid.  That is,
+>         they can read OBJ_OFS_DELTA (ake type 6) in a packfile.
+>
+> +    shallow <oid>
+> +       A client must notify the server of all objects for which it only
 
-Eek, my apologies for providing bad information.  I really
-should know the Fedora git packaging better than that. :/
+s/all objects/all commits/ for preciseness
 
-Amusingly, I did suggest packaging it as a subpackage
-specifically to avoid any confusion that it was a core
-command in the Fedora bug which requested it be included in
-the git packaging:
+> +       has shallow copies of (meaning that it doesn't have the parents
+> +       of a commit) by supplying a 'shallow <oid>' line for each such
+> +       object so that the serve is aware of the limitations of the
+> +       client's history.
+> +
+> +    deepen <depth>
+> +       Request that the fetch/clone should be shallow having a commit depth of
+> +       <depth> relative to the remote side.
 
-    https://bugzilla.redhat.com/show_bug.cgi?id=864651
+What does depth mean? number of commits, or number of edges?
+Are there any special numbers (-1, 0, 1, max int) ?
 
-I'll see about changing that going forward in the Fedora
-packaging.  I think it deserves to be in a subpackage.
+From reading ahead: "Cannot be used with deepen-since, but
+can be combined with deepen-relative" ?
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Doing a job RIGHT the first time gets the job done.
-Doing the job WRONG fourteen times gives you job security.
 
+> +
+> +    deepen-relative
+> +       Requests that the semantics of the "deepen" command be changed
+> +       to indicate that the depth requested is relative to the clients
+> +       current shallow boundary, instead of relative to the remote
+> +       refs.
+> +
+> +    deepen-since <timestamp>
+> +       Requests that the shallow clone/fetch should be cut at a
+> +       specific time, instead of depth.  Internally it's equivalent of
+> +       doing "rev-list --max-age=<timestamp>". Cannot be used with
+> +       "deepen".
+> +
+> +    deepen-not <rev>
+> +       Requests that the shallow clone/fetch should be cut at a
+> +       specific revision specified by '<rev>', instead of a depth.
+> +       Internally it's equivalent of doing "rev-list --not <rev>".
+> +       Cannot be used with "deepen", but can be used with
+> +       "deepen-since".
+
+What happens if those are given in combination?
