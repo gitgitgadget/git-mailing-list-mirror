@@ -1,71 +1,55 @@
-From: Majid Al Futtaim <salam.tmfood@gmail.com>
-Subject: As-salam..............
-Date: Wed, 21 May 2014 17:28:23 +0800
-Message-ID: <537c71cf.28d4440a.2835.3994@mx.google.com>
-Reply-To: majid_al.futtaim@myself.com
+From: Peter <wong1@pewong350.onmicrosoft.com>
+Subject: PORTFOLIO
+Date: Fri, 23 May 2014 00:53:52 +0200
+Message-ID: <3685ed68-232f-4e99-9a9f-e882d9f1becf@AM3PR06MB324.eurprd06.prod.outlook.com>
+Reply-To: <ppwong12@aol.jp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-To: Recipients <Majid@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 21 11:28:54 2014
+To: Recipients <wong1@pewong350.onmicrosoft.com>
+X-From: git-owner@vger.kernel.org Fri May 23 01:09:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wn2pR-0006K4-SL
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 11:28:54 +0200
+	id 1Wnc7I-00056C-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbaEUJ2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 05:28:49 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:48899 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbaEUJ2s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2014 05:28:48 -0400
-Received: by mail-pd0-f182.google.com with SMTP id r10so1227968pdi.13
-        for <git@vger.kernel.org>; Wed, 21 May 2014 02:28:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:content-type:mime-version:content-transfer-encoding
-         :content-description:subject:to:from:date:reply-to;
-        bh=HOyPgt3j/S4ZBkQf2BlefSo62wfz1gzXOTznaiEZxiA=;
-        b=HxauYhcGHspvQ61FAtg+T+6aBiqFbZRMwVdfhhfV/tWJxF/KfnpfIlvBwkSoy2e35l
-         Hl42SCI75hJfLis6/cov5GIcv1CKprirEdgIc29D2j9dZ3SC9aMJuKjvZnAHp7PzVNrI
-         9a/MIMIPrpb80zxkxGoYLLOSPxjBVW77IA3CdsD8jzAM7egS3gKTXex7ziIMaMS80PM/
-         ZGsaFXq4PhD55StSqIs/IbG/ozQQFhFLZR9MSOFYWaNZTLjJ+qbUrZF/hfeCDRKwC9ZX
-         PpX2s65F4TNzbZRKkkuvHGX5axvdXSJnDULCur+m8l7/mnM1qmYrsdaH0taHIUPIA+/5
-         SXbw==
-X-Received: by 10.66.102.39 with SMTP id fl7mr56703718pab.43.1400664528506;
-        Wed, 21 May 2014 02:28:48 -0700 (PDT)
-Received: from [10.1.1.1] ([120.141.116.253])
-        by mx.google.com with ESMTPSA id nh8sm7174098pbc.25.2014.05.21.02.28.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 02:28:47 -0700 (PDT)
-X-Google-Original-From: Majid Al Futtaim
+	id S1753510AbaEVXJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:09:22 -0400
+Received: from mail-db3hn0251.outbound.protection.outlook.com ([157.55.234.251]:14592
+	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753509AbaEVXJU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 May 2014 19:09:20 -0400
+Received: from [192.168.1.15] (212.117.160.107) by
+ AM3PR06MB324.eurprd06.prod.outlook.com (10.242.108.20) with Microsoft SMTP
+ Server (TLS) id 15.0.944.11; Thu, 22 May 2014 22:54:12 +0000
 Content-Description: Mail message body
+X-Originating-IP: [212.117.160.107]
+X-ClientProxiedBy: BN1PR07CA0068.namprd07.prod.outlook.com (10.255.193.43)
+ To AM3PR06MB324.eurprd06.prod.outlook.com (10.242.108.20)
+X-Forefront-PRVS: 021975AE46
+X-Forefront-Antispam-Report: SFV:SPM;SFS:(6039001)(6009001)(6049001)(428001)(189002)(199002)(86362001)(86372001)(86902001)(54356999)(19580395003)(53806999)(86442001)(50466002)(79102001)(77982001)(92726001)(50986999)(87976001)(551934003)(83072002)(74502001)(83322001)(19580405001)(4396001)(66066001)(74662001)(76576001)(53256004)(85852003)(80022001)(20776003)(81542001)(99396002)(46102001)(325944007)(81342001)(31696002)(47776003)(43066003)(76482001)(42186004)(102836001)(64706001)(64872006)(74316001)(33646001)(221733001)(86632001)(23756003)(21056001)(89136004)(101416001)(62346011);DIR:OUT;SFP:1501;SCL:5;SRVR:AM3PR06MB324;H:[192.168.1.15];FPR:;MLV:spm;PTR:InfoNoRecords;MX:1;A:0;LANG:en;
+Received-SPF: None (: pewong350.onmicrosoft.com does not designate permitted
+ sender hosts)
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=wong1@pewong350.onmicrosoft.com; 
+X-OriginatorOrg: pewong350.onmicrosoft.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249958>
 
-As-salam Sir, 
- 
-Regarding to possible investment, I wish to bring to your notice my interest to partner with you on any great business investment opportunity. 
- 
-Please kindly furnish me with any business details and a proposal for a Joint venture partnership with you. Looking forward to going into good business relationship with you. 
+Hello
 
-Please provide this detail for me to know you better and proceed. 
-My direct email is :   majid_al.futtaim@myself.com  or majidalfuttaim@hotmail.com
+I have an investment portfolio that involves money deposited in my bank in China which I can easily transfer to you as beneficiary. The transaction is risk free because it has been strategically planned to complete successfully.
 
- 1. Your full names:
- 2. Your contact address:
- 3. Your profession:
- 4. Your telephone mobile and fax number:
- 5.Age
+Contact me on my email address below for more details.
 
-6 The Type of business you will like me to invest on and also tell me little about yourself, I hope to hear from you soon.
-May the peace of Almighty Allah be with you.
-Regards,
-Majid Al Futtaim..
+Best regards,
+
+Peter Wong
+Email: ppwong12@aol.jp
