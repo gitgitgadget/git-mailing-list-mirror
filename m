@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11C9B1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7CBA1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 01:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932232AbeBGBN5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Feb 2018 20:13:57 -0500
-Received: from mail-ot0-f202.google.com ([74.125.82.202]:33258 "EHLO
-        mail-ot0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932199AbeBGBNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Feb 2018 20:13:55 -0500
-Received: by mail-ot0-f202.google.com with SMTP id r48so2160650otb.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:55 -0800 (PST)
+        id S932234AbeBGBN7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Feb 2018 20:13:59 -0500
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:36599 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932229AbeBGBN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Feb 2018 20:13:58 -0500
+Received: by mail-qk0-f202.google.com with SMTP id z192so3145717qkb.3
+        for <git@vger.kernel.org>; Tue, 06 Feb 2018 17:13:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=REgx5Guhpvfv4sCPoiwjaYHeOX1bAwQm2ihsIIdrhXY=;
-        b=qt4dn8IunDUZ8ulXVMg2ZKq3bIezklTeAZAyXRg43jx7hdmeKgdD+aoRXyPx+hjD4n
-         JAriLw6L9OZ2apC8evvIiIyFbvrRKPAyK2fol+rFtjag7Tw3SzzaUAInvZ/0HdQajG7G
-         SZ8bQPzbLuJCeSLHMkV7k+IoNcHi6QH2toUNt9b02kvhJVVRosCZoYrC9VLALPjLHlez
-         HL7y/O4nq2eUmF4aXjIpOKpigs5gYv77IpPBGP9Fiw7QJR3mK9ge1+DS3BuQJ1s84+Z/
-         CJnqWyqONx2Izxyti7zY8GGHps9Y1rWx9tUDiyU+98ZyhbUcAVfFZ58GT2WMzXAY7oAM
-         4ivQ==
+        bh=TKAQutYfLKNEFF5uCAodZKOdyGfax+qkLTXuG+mEqxA=;
+        b=uEJOTPvOpGcoAAJicQqHZo+JqNF7Gg8qJJ4YviodXrGM/553x7InUkf4Aj9GEQtjF8
+         1Fl9gv01Sss5kvepBA9oDBM/7oZsn/uJY2pHvOQu9Rkz/Ey0ccynGbMT6Vhi19hY0Sfg
+         9nJZBLnDj0LISb+j76LKWLuI0Fh8ru52jPuYCeDAh1pwEEPGPNnLM4d3UqGc0Gds4Dus
+         00azi9jrxq8T+RyQ3VDhVuhqLod6PLlDEEwfTlRTaOyXjPm+2UTLD2xU4XJBGwie46ps
+         J9mlfRnBz0Ytgv0RvqTjEVvgA9QpJ/7rkQa1OSQdpggLl14ftzuoxxkpRnFbyk33G0lN
+         2+fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=REgx5Guhpvfv4sCPoiwjaYHeOX1bAwQm2ihsIIdrhXY=;
-        b=F2eWhCTiVPH/ARmOKtCO9qmUFqLiUToXA/Wmh8NTZAZv90+j0PQRLn/p6IMaPr05wt
-         jBhBbzyVfpnezEvP8P74xjz8Ec1Vzzg1gQSqn/0IYEk1VGo4fB+bBwb1MAoxN/owH+yY
-         wJrOdhzaaoWpoWN62KSvWD5ezBxFGPG+/mYFdsOJaB/2eiXr7jpcZXltTLkH9Rfqlp2Y
-         GVtO4IwDTVyxwZbxSnS+xdU2hojXGE1iwXzCfqE3qtU62bj6RwOkF9/Vg9eCNWDHQiIE
-         ItKzLefDEAiKBvSjQv1b7/NqJ052kHZp8egPmubUyBD1CCHqQgSohe7lgmBmRDFO5IMM
-         0BfA==
-X-Gm-Message-State: APf1xPDA70Uk4FAX/Uspkp2fBSmRvPCjc+w/kwwEP5/SxLt3eCaJaPU1
-        R3+SJNRoQTTikEaZQJdnptjbw8Wr0RyPIWwoB+vprf7BD0z6GTPOK4f0CNMCVuowyNo0lyb1C6E
-        jdYoPwq9uDkQ2wthZKtjPDKENH66lb0hZG2NzZ+s2OiMABAygxSWGeWHrZw==
-X-Google-Smtp-Source: AH8x2244o8x4uE4MXGINP5fr4/OjMUGKw5NEroQnbE3WO8+to/AjPQfe3axHq7r5MEnfeqLBSrTRyfonkMg=
+        bh=TKAQutYfLKNEFF5uCAodZKOdyGfax+qkLTXuG+mEqxA=;
+        b=t9mHfmJ0ZM95B1mphJFaGsmgWJLPdb+kWUCuEDZ9TMa+/lDlydgCo8k7kq4OXMTyLE
+         ydslSYCV0D1LGPadQXmTTDTJT19pP9vf7lDdRNgr0m6qvg6T4FfH37zJ3AtH5EImQ8oM
+         L/ha0PX9qaT4dblPs1cPNogqqacRSDWDMptbClStO1GPT+Amakz0qyCemcPEGi17zcSm
+         HID9MjhcuquT9emkSVyANq5S/4SVPayjuua6uqPnrx6dvSUkHHC4jUw8uaoBMuwJ3GX8
+         0l8GLmiyr8p5zzL70ljtTItGFuyDrx9QbFRYVqZAMM7I0tIBYEN1nLUgXK6F/ye0kji7
+         wehQ==
+X-Gm-Message-State: APf1xPBK0uYj8aooqHSbaJY0PHiNpLIOGbfdVm2VfzcnYocsmAXXelIo
+        bxGaeBy4/hBeYJZSFBSIwcAStkPDGbW6WRb86W7B2UU5yNuz7uWw5lFVvp71m7yyde63lV32DV9
+        Lr1GZU12LCXn09EwpKBsn9nzx7YOv1Hu+VZk8yRvANz47TG5AHB8mv/x8uQ==
+X-Google-Smtp-Source: AH8x226s7ng1/kkx+mreU4h986N3eFdz1jEuWCWJsEM/55Kn53HXeQempWS2tXDTmq+CFjCEJx160nt1fis=
 MIME-Version: 1.0
-X-Received: by 10.157.3.196 with SMTP id f62mr2324068otf.54.1517966034979;
- Tue, 06 Feb 2018 17:13:54 -0800 (PST)
-Date:   Tue,  6 Feb 2018 17:12:54 -0800
+X-Received: by 10.200.3.13 with SMTP id q13mr3459243qtg.2.1517966037272; Tue,
+ 06 Feb 2018 17:13:57 -0800 (PST)
+Date:   Tue,  6 Feb 2018 17:12:55 -0800
 In-Reply-To: <20180207011312.189834-1-bmwill@google.com>
-Message-Id: <20180207011312.189834-18-bmwill@google.com>
+Message-Id: <20180207011312.189834-19-bmwill@google.com>
 References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-Subject: [PATCH v3 17/35] ls-remote: pass ref patterns when requesting a
- remote's refs
+Subject: [PATCH v3 18/35] fetch: pass ref patterns when fetching
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
@@ -65,82 +64,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Construct an argv_array of the ref patterns supplied via the command
-line and pass them to 'transport_get_remote_refs()' to be used when
-communicating protocol v2 so that the server can limit the ref
-advertisement based on the supplied patterns.
+Construct a list of ref patterns to be passed to
+'transport_get_remote_refs()' from the refspec to be used during the
+fetch.  This list of ref patterns will be used to allow the server to
+filter the ref advertisement when communicating using protocol v2.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-remote.c    |  7 +++++--
- t/t5702-protocol-v2.sh | 16 ++++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+ builtin/fetch.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index c6e9847c5..caf1051f3 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -43,6 +43,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	int show_symref_target = 0;
- 	const char *uploadpack = NULL;
- 	const char **pattern = NULL;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 850382f55..8128450bf 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -332,11 +332,21 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	struct ref *rm;
+ 	struct ref *ref_map = NULL;
+ 	struct ref **tail = &ref_map;
 +	struct argv_array ref_patterns = ARGV_ARRAY_INIT;
  
- 	struct remote *remote;
- 	struct transport *transport;
-@@ -74,8 +75,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (argc > 1) {
- 		int i;
- 		pattern = xcalloc(argc, sizeof(const char *));
--		for (i = 1; i < argc; i++)
-+		for (i = 1; i < argc; i++) {
- 			pattern[i - 1] = xstrfmt("*/%s", argv[i]);
-+			argv_array_push(&ref_patterns, argv[i]);
-+		}
- 	}
+ 	/* opportunistically-updated references: */
+ 	struct ref *orefs = NULL, **oref_tail = &orefs;
  
- 	remote = remote_get(dest);
-@@ -96,7 +99,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	if (uploadpack != NULL)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
- 
--	ref = transport_get_remote_refs(transport, NULL);
-+	ref = transport_get_remote_refs(transport, &ref_patterns);
- 	if (transport_disconnect(transport))
- 		return 1;
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 1e42b5588..a33ff6597 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -30,6 +30,14 @@ test_expect_success 'list refs with git:// using protocol v2' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'ref advertisment is filtered with ls-remote using protocol v2' '
-+	GIT_TRACE_PACKET=1 git -c protocol.version=2 \
-+		ls-remote "$GIT_DAEMON_URL/parent" master 2>log &&
+-	const struct ref *remote_refs = transport_get_remote_refs(transport, NULL);
++	const struct ref *remote_refs;
 +
-+	grep "ref-pattern master" log &&
-+	! grep "refs/tags/" log
-+'
++	for (i = 0; i < refspec_count; i++) {
++		if (!refspecs[i].exact_sha1)
++			argv_array_push(&ref_patterns, refspecs[i].src);
++	}
 +
- stop_git_daemon
++	remote_refs = transport_get_remote_refs(transport, &ref_patterns);
++
++	argv_array_clear(&ref_patterns);
  
- # Test protocol v2 with 'file://' transport
-@@ -50,4 +58,12 @@ test_expect_success 'list refs with file:// using protocol v2' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'ref advertisment is filtered with ls-remote using protocol v2' '
-+	GIT_TRACE_PACKET=1 git -c protocol.version=2 \
-+		ls-remote "file://$(pwd)/file_parent" master 2>log &&
-+
-+	grep "ref-pattern master" log &&
-+	! grep "refs/tags/" log
-+'
-+
- test_done
+ 	if (refspec_count) {
+ 		struct refspec *fetch_refspec;
 -- 
 2.16.0.rc1.238.g530d649a79-goog
 
