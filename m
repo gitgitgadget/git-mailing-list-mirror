@@ -7,84 +7,80 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3DA1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 19:23:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E33401F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 19:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754108AbeBGTXw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 14:23:52 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:55420 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753995AbeBGTXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 14:23:51 -0500
-Received: by mail-wm0-f65.google.com with SMTP id 143so5193411wma.5
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 11:23:51 -0800 (PST)
+        id S1754448AbeBGT0e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 14:26:34 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:38563 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754103AbeBGT0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 14:26:32 -0500
+Received: by mail-wr0-f195.google.com with SMTP id t94so2284339wrc.5
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 11:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Mepra+7A55MFV99AyRDLQf+uIHw45tHvG5VdSQO3Sx0=;
-        b=G8LRLWHEaIEseHbjOEATJbcfv1MGa5i+URERZg+BkNp29289lqWIYaochxqXz++KSz
-         gVz3fckL6R+SoNhc2A0/qO/vyaEtmgscACrDu9NjatONZ2/iyX8ZCDWR0bKhkHIbxML/
-         lDyS3UMyUxXzI9gqxbDxTFLX9TLHgTC7iOjKJ4eTCKFNKHxidmkatZdBgCtasF9Ho3Aj
-         /idLRts3FgDO+hsATZ3+yO40wbKAm6PLo09xDMbKJzwbPxlzksh57103xmDdJqu92mzB
-         RbAF/IXGP6oZuRpn7wP7jyMlNjbRgG8990Np9AwDOf1ceREsqtEkJl31UGImwDEXirtG
-         WzcA==
+         :user-agent:mime-version;
+        bh=P7hqjRTG25MTUuSz8xJTAj4DBHic9hgw0TAGaMTQ9Uw=;
+        b=Anl79bo7hqslUjofjCAlgMmCmN0H/KrevO3WFUaY77G9NQPrhRDb+uQN4rPCZkHkhi
+         XYQrfaI07JtK/NGZQFlxS5Tf4w98WuugOY+ocsMnAkyRW3I+MwgXsGWVIsE8LGJnH/UM
+         pDQnMkbcE1+UkI+1OY5i4+3BaQvA6zGTqEuje5yE/38VbcSI4gPn5s34R72xMA+joSER
+         Vlnw1pdlkfEBRB0KBDVYGTeKarOPeYLXZB1kwouKXWVbx7TkgOAfhsVNy02oLYwIu3Uk
+         VCUY8ddpvHU6qsrV3UWuLc9tD/IyLOpCINTelo0ezgJz/QtTOoBs+sBCFDDA3fEjwkvV
+         zCuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Mepra+7A55MFV99AyRDLQf+uIHw45tHvG5VdSQO3Sx0=;
-        b=gmJR/jk05YH53J2eEZmqfeudIW+csKHP0bOAH3IC8HF0k+vI4at4ROnIxWCowO8OgB
-         K/zmsporAn7+1IwNk36lRm4FzsEJoDAm25O5cGaJ2i8Uh9GFuDeoDCTTp5bN9FycDzHa
-         KjHF256zpHJGoyczM5kHB3Ka6vbCVL7JmSutYngfcrJFiiKj3d92wFkF/aWVpi+ztuX3
-         iS6JKMb35FgiW3CxVTqrfAmysR95rC0oqaIPhX/BfKMxTKSWxDVyhcK1/fETAC1B0L8Q
-         4bHVrdtVru2LVCcFAWGE3lvE6KJr25V7VBAZrmIOiJ87oFcRfZ7Gba+/ilG89XBDe527
-         YTnw==
-X-Gm-Message-State: APf1xPDFKyR7uFoWeojJcwt9khV46oUNIM6aX1bLq5T8dKZYU5kCzLKY
-        tFw04sruyKM1zXS0IbbwSjI=
-X-Google-Smtp-Source: AH8x224rpXw86Xv9/6BdH7lSKdE1GDrc4YgYL+n+O+lkKn22fcAcP3xcBMSeTt+LItjmVCmzRhbjnw==
-X-Received: by 10.28.192.24 with SMTP id q24mr5908153wmf.96.1518031430136;
-        Wed, 07 Feb 2018 11:23:50 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=P7hqjRTG25MTUuSz8xJTAj4DBHic9hgw0TAGaMTQ9Uw=;
+        b=tc0tm109m2M7/ZMZxuDxQsM1G9KWyKvpmji73MNPrJZeW/rBmmMPg3k+siTqCbPBqO
+         dReNIFuLJlQb6ar9eKHJGMIAglEOV5PNR5Qh2fh+RXYhwVXrUYjLStOk0SaLFvcg8rXO
+         p0DKHmJZBLDPfpFSfUP43sSE1j88UNVXISUFJmhkB3XHvAN+CaaVy7pOCKP3QNR77rUC
+         fSs+aCbXiGr0QbPmIkPIbKEAJ/mUKEwbCqlOAu6TRldUlFrUc8r7FhJx+xWsM00wrwzZ
+         Ph7CVnHR/1k4dSM9AW/zHaZ0to0brgdju5VUsumu5B6xm5hXDwuisJzRP/obK6h4RCI6
+         0gqQ==
+X-Gm-Message-State: APf1xPDEPuhL8coQLSrFXfE3pxb/hhS7goKB2X1w3zbnGIVCb/ekrauk
+        P2cxv5bKA0gzOTdimKXl53c=
+X-Google-Smtp-Source: AH8x2277m0m76inyZSDSxJTzVWqFCqFrLrl+IM4bXw2DbMQxh662xbWYOOqWiZGq7ARrY0CQ/mjS9w==
+X-Received: by 10.223.187.10 with SMTP id r10mr6602111wrg.177.1518031591546;
+        Wed, 07 Feb 2018 11:26:31 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o13sm2905587wrc.62.2018.02.07.11.23.49
+        by smtp.gmail.com with ESMTPSA id h200sm2144551wme.11.2018.02.07.11.26.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Feb 2018 11:23:49 -0800 (PST)
+        Wed, 07 Feb 2018 11:26:30 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 00/41] Automate updating git-completion.bash a bit
-References: <20180131110547.20577-1-pclouds@gmail.com>
-Date:   Wed, 07 Feb 2018 11:23:48 -0800
-In-Reply-To: <20180131110547.20577-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 31 Jan 2018 18:05:06 +0700")
-Message-ID: <xmqqr2pw7ge3.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Genki Sky <sky@genki.is>, git@vger.kernel.org
+Subject: Re: [PATCH v2] rebase: add --allow-empty-message option
+References: <9d0414b869f21f38b81f92ee0619fd76410cbcfc.1517552392.git.sky@genki.is>
+        <05bedbb20d5f02a9fe1a74996038f7ca42e35829.1517774326.git.sky@genki.is>
+        <nycvar.QRO.7.76.6.1802061552090.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 07 Feb 2018 11:26:30 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1802061552090.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Tue, 6 Feb 2018 15:53:46 +0100
+        (STD)")
+Message-ID: <xmqqmv0k7g9l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I posted a proof of concept a while back [1]. This is the full version.
+> Very nice. I looked over the patch (sorry, I have too little time to test
+> this thoroughly, but then, it is the custom on this here mailing list to
+> just review the patch as per the mail) and it looks very good to me.
 >
-> This series lets "git" binary help git-completion.bash to complete
-> --<stuff> so that when a new option is added, we don't have to update
-> git-completion.bash manually too (people often forget it). As a side
-> effect, about 180 more options are now completable.
->
-> parse-options is updated to allow developers to flag certain options
-> not to be completable if they want finer control over it.  But by
-> default, new non-hidden options are completable. Negative forms must
-> be handled manually. That's for the next step.
+> Junio, if you like, please add a "Reviewed-by:" line for me.
 
-Everybody seems to be in favour of the approach taken by this
-series.  Is it in a good enough shape that we can merge it to 'next'
-and then go incremental from now on?  Or do we want to keep it in
-'pu' to give easier access to volunteer guinea pigs and wait until
-the way to handle '--no-foo' options are figured out?
+Will do.  You do not have to apologize for not "testing" it; nobody
+expects _you_ to test every change you come across on the list, and
+other people (including the CI) are testing without advertising ;-).
+
+
+
+
