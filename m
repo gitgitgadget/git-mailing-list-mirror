@@ -2,81 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEFCF1F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 22:03:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CF9C1F404
+	for <e@80x24.org>; Wed,  7 Feb 2018 22:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750736AbeBGWDY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 17:03:24 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:52782 "EHLO smtp.gaspard.ninja"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750726AbeBGWDX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 17:03:23 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Feb 2018 17:03:23 EST
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id f1574422
-        for <git@vger.kernel.org>;
-        Wed, 7 Feb 2018 21:56:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=to
-        :from:subject:message-id:date:mime-version:content-type
-        :content-transfer-encoding; s=grym-20170528; bh=sJpyUHTivZq+sPBV
-        yCEaOvQEkMY=; b=aH5OVR4wz4bmXwQ9kd4BBW+20MIc5BKI5EHk/mZc2Dy9mTU0
-        Sp/jcGC39BxfnzPzP65qQR4uvdBSt1i+BMdJEgfvx4HOMMwWEi0ACViAGzzpeYQn
-        G9iJZOMHDszPc1TQpp0HwHbq5BSvemJ8vQnU+9ac2ppO8MW/23y3rp4ivAY=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 0f2bdbc0 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO)
-        for <git@vger.kernel.org>;
-        Wed, 7 Feb 2018 21:56:42 +0000 (UTC)
-To:     git@vger.kernel.org
-From:   Leo Gaspard <leo@gaspard.io>
-Subject: Fetch-hooks
-Message-ID: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
-Date:   Wed, 7 Feb 2018 22:56:41 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        id S1751075AbeBGWGm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 17:06:42 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36692 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750736AbeBGWGl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 17:06:41 -0500
+Received: by mail-pg0-f48.google.com with SMTP id x25so853708pge.3
+        for <git@vger.kernel.org>; Wed, 07 Feb 2018 14:06:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lFcNTssSmmOrnnmbTifNbBc0Ero+yDO9Zm/TzVren/Y=;
+        b=l1MA5oiqpRnXAgWg9+XRjT4z6vXzuqDH0SmP8oPKChmVVURKNepP8J6vs6nhELYMUe
+         zxQ37FcYqZqECPIgMa9GxAMvr6i9kvYrIhPpWC+MCC58L+CDL6Z9twn+TQldRuy9LPmR
+         DYHxhojVqo+ZM0/eTHiPQVt+fZWcyKsVCAHUY1rVq5LAidubZJxTFXgO+SK+/zBSaUBL
+         uT80J8/x8Pkqml3yXYVzxgmV2rbNVLGoUPIwDtMC9PZCeCdkagWNpBcPqiLlJvcDja7R
+         FTEq+8r1riRvABZo98IuQrKzTNGhwv/nuKcJl/JP+DYyD+gdGRP8u2PMGBvDghxaU3HO
+         zFFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lFcNTssSmmOrnnmbTifNbBc0Ero+yDO9Zm/TzVren/Y=;
+        b=S4bORLb/BODGpWRpRlrQAcjcjqus4kLndhAcDK07cXLuMD4J18FmPH7SAvZZKoY5Oo
+         LrJ8gozD39ze+GtjOLg4e1qpUaksKb9JzRezDr0PZewE+dwwNCXxkLATQ0A/ts38wlV/
+         AtqutaYfTeWcTt84WosHhE7HcvOL7rC7gu5MNh7/SLVvmq0S+Q4hctiYpgWiSsaYKMKb
+         VfCMuUcCIiOoFM5lRyw2oPusQ8GtmKz6tywjdRoQDF0gZXGktRHFOfAdfLqoXb8dxN2S
+         DwMPKmLB2Eqhm+BlB4Y7Y9sUrQdXBWPTrQbv2NYz/rzCiSdwKbBeYaLFXAB7R6hwiscn
+         BTUg==
+X-Gm-Message-State: APf1xPDudTyvHfvEEGkrFeJ20AgSN8QYOhYOsdpQag0O/+v+592vO/5d
+        lLj8b5jsBQ99GUVhvEOv+ftKdqrR1LI=
+X-Google-Smtp-Source: AH8x225EQtQff4fI9yxxktel06A3ZRz800jegZ9D9y7yWoo0u6NFwhFDd0gYgVK+WzCFZGds24E1cg==
+X-Received: by 10.101.97.165 with SMTP id i5mr6069416pgv.55.1518041200633;
+        Wed, 07 Feb 2018 14:06:40 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id k7sm4767551pgo.31.2018.02.07.14.06.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 07 Feb 2018 14:06:39 -0800 (PST)
+Date:   Wed, 7 Feb 2018 14:06:38 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 025/194] object-store: allow prepare_alt_odb to handle
+ arbitrary repositories
+Message-Id: <20180207140638.a4ff04513e10e1fc3f2d7c9c@google.com>
+In-Reply-To: <20180205235735.216710-5-sbeller@google.com>
+References: <20180205235508.216277-1-sbeller@google.com>
+        <20180205235735.216710-1-sbeller@google.com>
+        <20180205235735.216710-5-sbeller@google.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Mon,  5 Feb 2018 15:54:46 -0800
+Stefan Beller <sbeller@google.com> wrote:
 
-tl;dr: Is there currently a way to have fetch hooks, and if not do you
-think it could be a nice feature?
+> +	/*
+> +	 * Path to the alternate object database, relative to the
+> +	 * current working directory.
+> +	 */
+>  	char path[FLEX_ARRAY];
 
-I was in the process of implementing hooks for git that ensure the
-repository is always cleanly signed by someone allowed to by the
-repository itself. I think I've completed the signature-checking part
-[1] and the push hook [2] (even though it isn't really configurable at
-the moment).
+I would prefer this to be commented:
 
-However, I was starting to think about handling the fetch step, and
-couldn't find any fetch hook. Is there one?
+  Path to the alternative object store. If this is a relative path, it
+  is relative to the current working directory.
 
-If not, would you think it is would be a good idea to add one, that
-would eg. be passed the commit-before, commit-after and could block the
-changing of the reference if it failed?
+to show that it is not necessarily relative, but the current version is
+fine too.
 
-The only other solution I could think of is using a separate script for
-fetching, but that would be fragile, as the user could always not think
-about it well and run a git fetch, breaking the objective that after the
-first clone all commits were correctly signature-checked.
+> +		/*
+> +		 * Paths in alt are relative to the cwd. We ignore environment
+> +		 * settings like this for all repositories except for
+> +		 * the_repository, so we don't have to worry about transforming
+> +		 * the path to be relative to another repository.
+> +		 */
+> +		link_alt_odb_entries(r, alt, PATH_SEP, NULL, 0);
 
-Thanks for reading me!
-Leo
+I find the comment confusing - it makes more sense for the reason for us
+not worrying about transforming the path is that the paths as stored in
+struct alternate_object_database are relative to the CWD, not that we
+ignore environment variables for certain repositories.
 
-PS1: I am not subscribed to the ML.
+I think it's best to remove this comment, and instead add a comment to
+read_info_alternates() before its call to link_alt_odb_entries(),
+explaining that paths in the alternates file are relative to
+"info/alternates", not to the CWD (since that is the exceptional case).
 
-PS2: I've tried asking freenode#git, without success so far.
-
-
-[1]
-https://github.com/Ekleog/signed-git/blob/master/git-hooks/check-range-signed.sh
-
-[2] https://github.com/Ekleog/signed-git/blob/master/git-hooks/pre-push
+All the patches prior to this look good. Thanks especially for the
+consistent naming convention of the patch titles.
