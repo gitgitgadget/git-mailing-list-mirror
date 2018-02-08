@@ -2,104 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA2941F404
-	for <e@80x24.org>; Wed,  7 Feb 2018 23:44:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C85F51F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 00:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750984AbeBGXoG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Feb 2018 18:44:06 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:40839 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750729AbeBGXoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Feb 2018 18:44:05 -0500
-Received: by mail-pl0-f65.google.com with SMTP id g18-v6so1052091plo.7
-        for <git@vger.kernel.org>; Wed, 07 Feb 2018 15:44:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yOUebeGRSd3N3lVkMPIw+gyRm/bqtSmSGmPZNdc2y4s=;
-        b=rGaGdOmhpYaLBbF1INcJS8g6S1QsP+GokcLzjmT1XymA+po0YDMIxtZPOODkhLoW/3
-         VZ9X0IxJxpH332t2gR8FZkWmLx7cyfnpguT4udB8CxZaLTgfMi7xK7/ZsYvW5/schmXm
-         iUjhEDuHiQ2979Fb0jX5iln1coAGuhhUimrXeNg2RuPRihqs9x38wOqn1pSJwFk44Ued
-         DsBMQHRw/m8zkcDxTx80YtLcjs/sEO/41vLBfG630nDoD+YM7X9rj4VNiEuCNYmytpri
-         WRg+0OnAlMtoLzLgvNXAq9tc0Y0xeNOh0FM14fbEBOSrFQLyXQ9g41iI0oeu8nI42jGO
-         HZoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=yOUebeGRSd3N3lVkMPIw+gyRm/bqtSmSGmPZNdc2y4s=;
-        b=Ac+3j4c9/94oQszaaEmJJJro8YF4Shyl4kOY+v3Ty+jXL+OQOH/DrgdKbl0Pgezbxp
-         QgRPO+zVBJ2U9mTx5pzoVzmD+vJKt7nRVeEfoQQqYY8PPfClxppadCZjCzHkiglJnsPS
-         7bJzJeXEGC3gbjHzXQZTNzp8dsvGZAEfDm2uNDzwhfytps/NV0did/30+zdIPyHWR3EZ
-         X1PqDpjsuEpNDBnPT3GvSn3rxt2BN0rwOb32Sk3t+0HKX6lWJK1dfnAu5VyTgOD13afb
-         wxv4oTP2Cjqcszy08AFQqRMJwLlXf8ITNsjjTqm8OtTHHT1lhBTV6fTk/eNNLY/Oe6Bh
-         sKkQ==
-X-Gm-Message-State: APf1xPCpL1NskydmV9wgI6TC050rKSvkvF4PTe1fB2AzmLNfGrN54Vea
-        mskwOaw3ygIzBW70YgC9QtqAcg==
-X-Google-Smtp-Source: AH8x226scwEI8/Cl1NbbOVamGwGP3NghyBpmlmXTerbwKVC/Z941cISCmqSzCiayknYGSX+7pE/bvg==
-X-Received: by 2002:a17:902:59c9:: with SMTP id d9-v6mr7577865plj.146.1518047044748;
-        Wed, 07 Feb 2018 15:44:04 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id w12sm6011821pfd.86.2018.02.07.15.44.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Feb 2018 15:44:04 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
-To:     sunshine@sunshineco.com
-Cc:     artagnon@gmail.com, avarab@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, mina86@mina86.com, mst@kernel.org,
-        pbonzini@redhat.com, sbeller@google.com, viktorin@rehivetech.com,
-        zxq_yx_007@163.com
-Subject: [PATCH] send-email: error out when relogin delay is missing
-Date:   Wed,  7 Feb 2018 15:43:59 -0800
-Message-Id: <20180207234359.31493-1-sbeller@google.com>
-X-Mailer: git-send-email 2.16.0.rc1.238.g530d649a79-goog
-In-Reply-To: <CAPig+cQZr=UN3KC3LnaKy=oUYd1inbtDgi_pDuhPXf9HgFOdNw@mail.gmail.com>
-References: <CAPig+cQZr=UN3KC3LnaKy=oUYd1inbtDgi_pDuhPXf9HgFOdNw@mail.gmail.com>
+        id S1751562AbeBHAG2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Feb 2018 19:06:28 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:52844 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750745AbeBHAG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Feb 2018 19:06:28 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id f5373d64;
+        Thu, 8 Feb 2018 00:06:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
+        subject:to:cc:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=piUNvi6asE4PMFxpVG5K1vr/V+A=; b=fZduuOqMLbJ53c
+        3YSlQPI9nVhZMu6ENBVi+8Ol8y8D1XUDUAXqsyLR/E8B3nNzIPtewTiQlFx9d4Qp
+        kiXHZPhrIz2Cl39xzMvz8QlC4K2Xdm4nsNupoj2DQJvk0pGfK+cl61xJpAYiTQ46
+        4DdgQe+4OCeOVLeJV1fD6tO+DK6iM=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 83e3c208 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
+        Thu, 8 Feb 2018 00:06:26 +0000 (UTC)
+Subject: Re: Fetch-hooks
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, joey@kitenet.net
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+From:   Leo Gaspard <leo@gaspard.io>
+Message-ID: <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+Date:   Thu, 8 Feb 2018 01:06:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <87inb8mn0w.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the batch size is neither configured nor given on the command
-line, but the relogin delay is given, then the current code ignores
-the relogin delay setting.
+On 02/07/2018 11:51 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Feb 07 2018, Leo Gaspard jotted:
+> 
+>> Hello,
+>>
+>> tl;dr: Is there currently a way to have fetch hooks, and if not do you
+>> think it could be a nice feature?
+>>
+>> I was in the process of implementing hooks for git that ensure the
+>> repository is always cleanly signed by someone allowed to by the
+>> repository itself. I think I've completed the signature-checking part
+>> [1] and the push hook [2] (even though it isn't really configurable at
+>> the moment).
+>>
+>> However, I was starting to think about handling the fetch step, and
+>> couldn't find any fetch hook. Is there one?
+>>
+>> If not, would you think it is would be a good idea to add one, that
+>> would eg. be passed the commit-before, commit-after and could block the
+>> changing of the reference if it failed?
+>>
+>> The only other solution I could think of is using a separate script for
+>> fetching, but that would be fragile, as the user could always not think
+>> about it well and run a git fetch, breaking the objective that after the
+>> first clone all commits were correctly signature-checked.
+>>
+>> Thanks for reading me!
+>> Leo
+>>
+>> PS1: I am not subscribed to the ML.
+>>
+>> PS2: I've tried asking freenode#git, without success so far.
+>>
+>>
+>> [1]
+>> https://github.com/Ekleog/signed-git/blob/master/git-hooks/check-range-signed.sh
+>>
+>> [2] https://github.com/Ekleog/signed-git/blob/master/git-hooks/pre-push
+> 
+> There is no fetch hook, however you may find that the
+> post-{checkout,merge} hooks are suitable for what you want to do.
+> 
+> Setting those to some custom comand is a common pattern for
+> e.g. compiling some assets on "git pull", so you could similarly check
+> the commits from HEAD, of course those are post-* hooks, so they won't
+> stop the checkout.
 
-This is unsafe as there was some intention when setting the batch size.
-One workaround would be to just assume a batch size of 1 as a default.
-This however may be bad UX, as then the user may wonder why it is sending
-slowly without apparent batching.
+Hmm, I don't think these would fit the bill. For post-merge, simply
+because I spend my life rebasing stuff around, and very rarely merge.
+For post-checkout, it could work, but then I'd need to keep track
+manually of up to where the commits have been checked and to search the
+git graph for the latest checked ancestor (as otherwise checking-out
+another branch then checking-out the first branch again would likely
+trigger a failure, due to the keyring being dynamic), so it would likely
+be a dealbreaker, due to the hook becoming too complex to be trusted.
 
-Error out for now instead of potentially confusing the user.
-As 5453b83bdf (send-email: --batch-size to work around some SMTP
-server limit, 2017-05-21) lays out, we rather want to not have this
-interface anyway and would rather want to react on the server throttling
-dynamically.
+(Just in case you wonder, by “the keyring being dynamic” I mean the PGP
+keys allowed to sign commits are stored directly inside the git repository)
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- git-send-email.perl | 3 +++
- 1 file changed, 3 insertions(+)
+That said, I just came upon [1] (esp. the description [2] and the patch
+[3]), and wondered: it looks like the patch was abandoned midway in
+favor of a hook refactoring. Would you happen to know whether the hook
+refactoring eventually took place, and/or whether this patch was
+resubmitted later, and/or whether it would still be possible to merge
+this now? (not having any experience with git's internals yet, I don't
+really know whether these are stupid questions or not)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 340b5c8482..bc0d3ade16 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -379,6 +379,9 @@ unless ($rc) {
- die __("Cannot run git format-patch from outside a repository\n")
- 	if $format_patch and not $repo;
- 
-+die __("When a batch size is given, the relogin delay must be set\n")
-+	if defined $relogin_delay and not defined $batch_size;
-+
- # Now, let's fill any that aren't set in with defaults:
- 
- sub read_config {
--- 
-2.16.0.rc1.238.g530d649a79-goog
+Thanks!
+Leo
 
+PS: Cc'ing Joey, as you most likely know best what eventually happened,
+if you can remember it?
+
+
+[1] https://marc.info/?t=132477041500001&r=1&w=2
+
+[2] https://marc.info/?l=git&m=132483581218382&w=2
+
+[3] https://marc.info/?l=git&m=132486687023893&w=2
