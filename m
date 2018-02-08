@@ -2,135 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE5891F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 21:04:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D67931F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 21:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752375AbeBHVEO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 16:04:14 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:40180 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752322AbeBHVEK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 16:04:10 -0500
-Received: by mail-yw0-f180.google.com with SMTP id j128so3636480ywg.7
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 13:04:09 -0800 (PST)
+        id S1752218AbeBHVGY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 16:06:24 -0500
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:51076 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752126AbeBHVGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 16:06:23 -0500
+Received: by mail-wm0-f53.google.com with SMTP id f71so11873368wmf.0
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 13:06:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=TdP6bfWhvkrNqi1pUFWKATmjOwy7oIqlRXhQ8rZh/EA=;
-        b=nRbzlwuKhbiIWo1g/+prN1RhJB7uCFbuXxp5KGH/zdfZcY88advGYMzY58qCZDmDsM
-         CwLyszJruda4kEwqAoasepNqVyu/A4MWvK0OQrqq7V+/+uFnJ33eOlWz6YLkTVxXgtCZ
-         zcpYTE7mXID77iDJR45c68laFrcCW3Gec0lkZv8IN03momfteKKEXo6O1A21sI++ZQCA
-         P/N+e+lKdi4ricWA4qdQ9krKuL42aJVz3UrNzzH+PwEdcq++h5w+NAkU1qr5Px3hIJ9x
-         NKQx14Xfd0eDU457+kWYc/KZFgbHM7cr+X57Rl2cHH6Miq/qvLwBamaifvLKhWiLkjfA
-         kJwg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=qwuiuX4QC+1z0l1jyY2ULu0+Z9j7L05u1C9zh9XpoTU=;
+        b=s2N/NH2PcjMm4adM2tLUpOg+i4rirnyQZXthy5h3fu8Mp2hExpUam10GIB8fdUCBR0
+         m2RaV5P1b6MqU8Q2eNa+lFGhqW+e7m5ixDc3U895T3py0A7wJTfV35NJ5O4wD81QYXs6
+         ZYqlTGvlxTZ7OCC2+iAr5iBwBshSv1w02hk7h29Z7Wfppp2C7FQmUTkA88TExPyEFsoS
+         Wov9rJawmfJTNzu3RZUs5DLLY4lRA/b3kjoccL2QapG7KPaDryqkI+afb1e0210Fdhxw
+         5V9Hb4xX/+RDiAWTk+GFMG+Xo0fq2tfqD/rzwpwPlqbZULMs4zSAAySmSYDFugm4ewPG
+         auNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=TdP6bfWhvkrNqi1pUFWKATmjOwy7oIqlRXhQ8rZh/EA=;
-        b=tb8ITeQiDqzxKIIOkB8wxhlxcewXIJVgQCcHfh5UNeIQ4fd3puVNFsGns9/5pdJGim
-         5/6p+lzzrrP8UqhayKuAleP+YD9m5VElCQPB0+UlTjo3JJVum/KHLAzYdan/UtLTN4vy
-         8yFNu7I4jABgc3lCE+XJhysMyNVv9alc8DC4puwxqo8VKDXMPUa2iROHgTXcnYYu5iJI
-         COl4LtPH8CXcTMmBW3srX/hnPVlg0mcMMW5Yho5VRFVJdZVnEWT22MskvxGd/kvPT77x
-         l5Y0AoxmCcdLLErVpcgVlXPg2sfF4JiIl0s6mzM6RwM/EiFT4LNcagtkjSiowwiJzhKT
-         kzGg==
-X-Gm-Message-State: APf1xPB4o7F04tuUWama6wmaYpcDXwIaVGrFgBAv0POARwJX33PovIZH
-        +9Xxd5m1DuUBNpcU+iuja/QCy+8dnUoCVK6a6xhsRg==
-X-Google-Smtp-Source: AH8x227cId0uGXAb7y3DvU3CX07wLl+ekSf/s4CzWvVjsNy2pUTYqyO7PW++NqcPYuDPNn90N6VNdBrqCdxUR9xRG+M=
-X-Received: by 10.37.12.130 with SMTP id 124mr276523ybm.39.1518123849002; Thu,
- 08 Feb 2018 13:04:09 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=qwuiuX4QC+1z0l1jyY2ULu0+Z9j7L05u1C9zh9XpoTU=;
+        b=FsxZFy3Kayk31GkVX2wEoND4DG2q+BPgIujFXFQz0TC9yoiVaQHzq0wgajFISEhRsB
+         tV/zhy53/SjHzaB2my8JK0lKmt9gg0YnPAqQ5nN3QtbJlXNwPNxY5lePIR916UzVSK2T
+         EYRxEl1a++Ubvc6QDB9ILj5il5SHt3JpRBGQ3fA6Sb3aSIqcrIUglI+COUgi8T00h6kG
+         kFbDS7CsvOyYJ3w8XLTJj3Q3f+MdHDAm9zCd7bqDGvy2GUOYFmLXnNIFv9cg0oDf+IIQ
+         8+Pc70LQcUy70A5XuvOdGYgqfwlkZ84wmM1GKPSlmUYFaxB8uZ4HeKIlBfZgQ/betuqE
+         pVPA==
+X-Gm-Message-State: APf1xPANAJx9j/TvBquKJ3oY6icwC9BaHpjcGNcKxPoqhHOBvLm8d9Ms
+        wnK4GP5whmbVfZzm4D4lVGg=
+X-Google-Smtp-Source: AH8x225jaB04iOCHOvAMxQaPyB0IcrvtigK7Pq02L3n+6liZ9xDJYoxQfJ3zITa2AY3EXEHQw2mm1w==
+X-Received: by 10.28.156.67 with SMTP id f64mr287867wme.11.1518123982135;
+        Thu, 08 Feb 2018 13:06:22 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id f19sm800342wmf.23.2018.02.08.13.06.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 08 Feb 2018 13:06:21 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Leo Gaspard <leo@gaspard.io>
+Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org
+Subject: Re: Fetch-hooks
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io> <87inb8mn0w.fsf@evledraar.gmail.com> <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io> <20180208153040.GA5180@kitenet.net> <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+Date:   Thu, 08 Feb 2018 22:06:19 +0100
+Message-ID: <87bmgzmbsk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Thu, 8 Feb 2018 13:04:08 -0800 (PST)
-In-Reply-To: <20180208204309.GA4541@sigill.intra.peff.net>
-References: <20180208201546.194935-1-sbeller@google.com> <20180208204309.GA4541@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 8 Feb 2018 13:04:08 -0800
-Message-ID: <CAGZ79kb+xEVZagqqNCHCPQUbfH89N7fdrO7dp6WHRGgJJje28Q@mail.gmail.com>
-Subject: Re: [PATCH] color.h: document and modernize header
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 12:43 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 08, 2018 at 12:15:46PM -0800, Stefan Beller wrote:
+
+On Thu, Feb 08 2018, Leo Gaspard jotted:
+
+> On 02/08/2018 04:30 PM, Joey Hess wrote:
+>> Leo Gaspard wrote:
+>>> That said, I just came upon [1] (esp. the description [2] and the patch
+>>> [3]), and wondered: it looks like the patch was abandoned midway in
+>>> favor of a hook refactoring. Would you happen to know whether the hook
+>>> refactoring eventually took place, and/or whether this patch was
+>>> resubmitted later, and/or whether it would still be possible to merge
+>>> this now? (not having any experience with git's internals yet, I don't
+>>> really know whether these are stupid questions or not)
+>>>
+>>> PS: Cc'ing Joey, as you most likely know best what eventually happened,
+>>> if you can remember it?
+>>
+>> I don't remember it well, but reviewing the thread, I think it foundered
+>> on this comment by Junio:
+>>
+>>> That use case sounds like that "git fetch" is called as a first class UI,
+>>> which is covered by "git myfetch" (you can call it "git annex fetch")
+>>> wrapper approach, the canonical example of a hook that we explicitly do
+>>                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>> not want to add.
+>>   ^^^^^^^^^^^^^^^
+>>
+>> While I still think a fetch hook would be a good idea for reasons of
+>> composability, I then just went off and implemented such a wrapper for
+>> my own particular use case, and the wrapper program then grew to cover
+>> use cases that a hook would not have been able to cover, so ...
 >
->>  int color_fprintf(FILE *fp, const char *color, const char *fmt, ...)
->>  {
->>       va_list args;
->> diff --git a/color.h b/color.h
->> index fd2b688dfb..8c7e6c41c2 100644
->> --- a/color.h
->> +++ b/color.h
->> @@ -72,26 +72,50 @@ extern int color_stdout_is_tty;
->>   * Use the first one if you need only color config; the second is a convenience
->>   * if you are just going to change to git_default_config, too.
->>   */
->> -int git_color_config(const char *var, const char *value, void *cb);
->> -int git_color_default_config(const char *var, const char *value, void *cb);
->> +extern int git_color_config(const char *var, const char *value, void *cb);
->> +extern int git_color_default_config(const char *var, const char *value, void *cb);
->
-> Hmph, I thought we weren't adding "extern" everywhere. See:
->
->   https://public-inbox.org/git/xmqq8tea5hxi.fsf@gitster.mtv.corp.google.com/
->
-> Other than that, these changes mostly look like improvements. A few
+> Hmm, OK, so I guess I'll try to update the patch when I get some time to
+> delve into git's internals, as my use case (forbidding some fetches)
+> couldn't afaik be covered by a wrapper hook.
 
-...
+Per my reading of
+https://public-inbox.org/git/20111224234212.GA21533@gnu.kitenet.net/
+what Joey implemented is not what you described in your initial mail.
 
-> Those are all suggestions. Given that there's no documentation currently
-> on most of these, I think even if you don't take any of my suggestions,
-> this would still be a net improvement (modulo the "extern" thing).
+His is a *post*-fetch hook, we've already done the fetch and are just
+telling you as a courtesy what refs changed. You could also implement
+this as some cronjob that polls git for-each-ref but it's easier as a
+hook, fine.
 
-A funny and sad rant about why clear communication matters:
+What you're describing is something like a pre-fetch hook analogous to
+the pre-receive hooks, where you're fed refs updated on the remote on
+stdin, and can say you don't want some of those to be updated.
 
-[Once upon a time, maybe 2 years ago] I had the impression that the old
-code is nicely written and was consistently marked extern in header files.
-(which btw is consistent with variable declarations, they need the extern).
-All the new code doesn't make use of extern, so I had this on my low prio
-todo list, that eventually all code converges to have 'extern'
-functions in headers.
+This may just be a lack of imagination on my part, but I don't see how
+that's sensible at all.
 
-C.f. the following commits, found via
-  git log -p --author=Beller -S extern
+The refs we fetch are our *copy* of the remote refs, why would you not
+want to track the upstream remote. You're going to refuse some branches
+and what? Be further behind until some point in the future where the tip
+is GPG-signed and you accept it, at which poich you'll need to do more
+work than if you were up-to-date with the almost-GPG-signed version?
 
-  5ec8274b84 (xdiff-interface: export comparing and hashing strings,
-  2017-10-25) adding new externs
+I think you're confusing two things here. One is the reasonable concern
+of wanting to not have your local copy of remote refs have undesirable
+content, but a pre-fetch hook is not the way to accomplish that.
 
-  1ecbf31d02 (hashmap: migrate documentation from Documentation/technical
-  into header, 2017-06-30), a cleanup, which doesn't touch externs
+The other is e.g. to ensure that you never locally check out some "bad"
+ref, we don't have hook support for that, but could add it,
+e.g. git-checkout and git reset --hard could be taught about some
+pre-checkout hook.
 
-  a6d7eb2c7a (pull: optionally rebase submodules (remote submodule
-  changes only), 2017-06-23) new code using externs
-
-  bd26756112 (submodule.h: add extern keyword to functions, 2016-12-20)
-  (The commit message is as accurate as it gets)
-
-You may sense a pattern here: I currently have the very firm understanding
-we use the extern keyword in our codebase.
-
-And I can also attest that this was not always the case, as back in the
-day I remember writing patches without the extern keyword only to be told:
-(A) be similar to the function in the next lines
-(B) the standard is to use extern
-and I was convinced it was a bad decision to prefix declarations with
-the extern keyword, but followed along as I don't want to have style
-in the way of writing features.
-
-  $ cat Documentation/CodingGuidelines |grep extern
-  $ # oh no it's empty!
-
-Care to add a section to our coding guidelines?
-
-Thanks,
-Stefan
+You could also have some intermediate step between these two, where
+e.g. your refspec for "origin" is
+"+refs/heads/*:refs/remotes/origin-untrusted/*" instead of the default
+"+refs/heads/*:refs/remotes/origin/*", you fetch all refs to that
+location, then you move them (with some alias/hook) to
+"refs/remotes/origin/*" once they're seen to be "OK".
