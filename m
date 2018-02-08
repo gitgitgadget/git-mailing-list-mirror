@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 198601F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 16:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89B941F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 16:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752432AbeBHQUf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 11:20:35 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35400 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752026AbeBHQUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 11:20:33 -0500
-Received: by mail-wm0-f65.google.com with SMTP id r78so11074871wme.0
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 08:20:33 -0800 (PST)
+        id S1752230AbeBHQU5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 11:20:57 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50885 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752465AbeBHQUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 11:20:20 -0500
+Received: by mail-wm0-f66.google.com with SMTP id f71so10490501wmf.0
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 08:20:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rTVBHEtL0/iF4f+MiUIvasdbqJZNh2Wac2DqwxizskM=;
-        b=jtcdqgtXeFr8qtI0jcZZW1OmFYJObXbGtiRUASrZKKNjusjI5AxAzbhVI4uaEvD+1T
-         r46zY8c8zm6inExavKImDoSTo2jRKJi0I/uqf5qr6zhYIc9INIsUM1hxS2TDYRrKwiRD
-         r6dMq+YmfuHUU9n1qKkUSvRFK3bkkNLpxq1JPAMNHS2Oz6BXWbR5opmbm733kah1ftnT
-         79UilEmE8xHLxGYurF6aneXwKFfU+RuklduHOq7bGQ3P//3Q1I4SGFk46mYRG5wGs+pq
-         O42QCP8okggVqcSwu6qsYlWtKwnXdeTXARE7LDYw5zOfgFiYlu5U3kneJBRA7S7Wc8sC
-         POjw==
+        bh=rRMzb7/74bOPaX0oAEnWPwBVs/b5ATRqlH9AUtsCxsI=;
+        b=JBPsAWVvHBj+fYfg7v6jghNn29eEgijloow/3BhoRpQsyes3IiKVDspOqZbFbuwBdw
+         +CPrxl1ydu+Hc9qIN5P6z/RqSPiYOocieahHmLOASuvUF78rBzu8cabpanwQdoRu7zlF
+         KEhHf+V8qjBA7I9xYUksAvFNQSuJLZfoHsEhPCMWtJlEH2o2VB6w6IuIpadcgBIF+DB6
+         n0sEvCqPDVIb47YVMKxOuRyIWY8IzcCcHVP0Lk0v1VI4DZtMhKpQEITPpPykwqd9R1Ih
+         2LQlBWWN6VQSE8eTnGAdomBxy1mKVsLbL2rOSZWGcFuPohLXZQEESV/l7IYtT6mDY7N+
+         MLBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=rTVBHEtL0/iF4f+MiUIvasdbqJZNh2Wac2DqwxizskM=;
-        b=bjPS4NQZ9YEsio/QYQ8s+QM0AiJIJ4XIotfpQ59TPKrojaG/W8WG4wBJ/fkJa5MprN
-         HBjz3KxoI1BjZdmz/oca+4xvA1sZD2jNg3lu5ySNabkAg74ovoJUYZyd4MQEcqQhn+Cd
-         lfbeoUL57GujrOIA+zuvDc3C7rURaeVOldYaqLXHpMCTDPKaDLnCnR0SZY40pbbzuwr8
-         /OF1cp0OZLAWqgXAHWZosJT0rumRalJZnkhoLXNvCC+eLUhQUA7VoHLxHPbDVgDwtTye
-         mcGYsEhju96P/PXrmJ51KGIFEKMz6gt0rn7l4cNQiMAHIaxryhzqmEndrbAVHJtKWBMT
-         s51A==
-X-Gm-Message-State: APf1xPAJfrHfEejIjcwqrmJU6JlXn6DUmgqSzenlh73JHAlA2XqxvybI
-        94UdlZC/USHouSvLeBYxqhyMQSHb
-X-Google-Smtp-Source: AH8x226+pVY/AkuRMxiZRdMAdjLhhVLffW7ZDuohuDvtUqhkaIQoBoo2lewlYoRE93Gfdl+2I8guKg==
-X-Received: by 10.28.14.10 with SMTP id 10mr1665490wmo.2.1518106832077;
-        Thu, 08 Feb 2018 08:20:32 -0800 (PST)
+        bh=rRMzb7/74bOPaX0oAEnWPwBVs/b5ATRqlH9AUtsCxsI=;
+        b=JBnviuXJY5R1CwA9Nxo6x9sOdsz4W6TdXWiK82TtqsGGwVa4LNSrJxOk7TlIJfZqjZ
+         Wo6fHN3qFwtnL2vo0IUJlNupMD1ayMLYKcOyqSlhMdfwVbE+QYOxvbyE0/D5lp2DD1xT
+         2SQ8yOyaI+7SZrFI1j183ScCvVL+pFMkk/17wf9zfPogkX62BJChka2G65r0bYxF6aLB
+         08JkxpeTBPiTWxKTz8ytm/1mFzQ8I8DDsJlP4NQW5edtsDAbRA2/DdckWeli+M5SgB32
+         TQNb0XrKP7tMvim0C1xj26zyN40rmdpdocc7/GZ1hUgcAKt2bvqKODyyKIgqasbIzzsS
+         Xbqw==
+X-Gm-Message-State: APf1xPB9DbojxhYMBTAQfOfbAmXiT431dvRv5Vz4AjgQ5bgP85hD+2Hz
+        d4y4WUozq50lEV5MJ14qKZz8Rn7W
+X-Google-Smtp-Source: AH8x226kE957+YpOouS/hW71S+IwoWSIv1guY1UV/GmY9HmpUDYu49hsWw0Z19WMfimsncbAnm3Kcg==
+X-Received: by 10.28.191.131 with SMTP id o3mr1459424wmi.81.1518106819119;
+        Thu, 08 Feb 2018 08:20:19 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m1sm332532wrb.78.2018.02.08.08.20.30
+        by smtp.gmail.com with ESMTPSA id m1sm332532wrb.78.2018.02.08.08.20.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Feb 2018 08:20:31 -0800 (PST)
+        Thu, 08 Feb 2018 08:20:18 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Daniel Barkalow <barkalow@iabervon.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 17/17] fetch: make the --fetch-prune work with <url>
-Date:   Thu,  8 Feb 2018 16:19:36 +0000
-Message-Id: <20180208161936.8196-18-avarab@gmail.com>
+Subject: [PATCH v2 10/17] fetch tests: expand case/esac for later change
+Date:   Thu,  8 Feb 2018 16:19:29 +0000
+Message-Id: <20180208161936.8196-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180208161936.8196-1-avarab@gmail.com>
 References: <20180208161936.8196-1-avarab@gmail.com>
@@ -77,121 +77,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the new --prune-tags option work properly when git-fetch is
-invoked with a <url> parameter instead of a <remote name>
-parameter.
-
-This change is split off from the introduction of --prune-tags due to
-the relative complexity of munging the incoming argv, which is easier
-to review as a separate change.
+Expand a compact case/esac statement for a later change that'll add
+more logic to the body of the "*" case. This is a whitespace-only
+change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-fetch.txt | 21 ++++++---------------
- builtin/fetch.c             | 17 ++++++++++++++---
- t/t5510-fetch.sh            |  6 +++---
- 3 files changed, 23 insertions(+), 21 deletions(-)
+ t/t5510-fetch.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index 574206d139..03666f6215 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -175,24 +175,15 @@ It's reasonable to e.g. configure `fetch.pruneTags=true` in
- run, without making every invocation of `git fetch` without `--prune`
- an error.
- 
--Another special case of `--prune-tags` is that
--`refs/tags/*:refs/tags/*` will not be implicitly provided if an URL is
--being fetched. I.e.:
--
--------------------------------------------------
--$ git fetch <url> --prune --prune-tags
--------------------------------------------------
--
--Will prune no tags, as opposed to:
-+Pruning tags with `--prune-tags` also works when fetching a URL
-+instead of a named remote. These will all prune tags not found on
-+origin:
- 
- ------------------------------------------------
- $ git fetch origin --prune --prune-tags
--------------------------------------------------
--
--To prune tags given a URL supply the refspec explicitly:
--
--------------------------------------------------
--$ git fetch <url> --prune 'refs/tags/*:refs/tags/*'
-+$ git fetch origin --prune 'refs/tags/*:refs/tags/*'
-+$ git fetch <url of origin> --prune --prune-tags
-+$ git fetch <url of origin> --prune 'refs/tags/*:refs/tags/*'
- ------------------------------------------------
- 
- OUTPUT
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 55a0fc37be..c96f17a9a3 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1283,7 +1283,10 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
- 	static const char **refs = NULL;
- 	struct refspec *refspec;
- 	int ref_nr = 0;
-+	int j = 0;
- 	int exit_code;
-+	int maybe_prune_tags;
-+	int remote_via_config = remote_is_configured(remote, 0);
- 
- 	if (!remote)
- 		die(_("No remote repository specified.  Please, specify either a URL or a\n"
-@@ -1311,13 +1314,21 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
- 			prune_tags = PRUNE_TAGS_BY_DEFAULT;
- 	}
- 
--	if (prune_tags_ok && prune_tags && remote_is_configured(remote, 0))
-+	maybe_prune_tags = prune_tags_ok && prune_tags;
-+	if (maybe_prune_tags && remote_via_config)
- 		add_prune_tags_to_fetch_refspec(remote);
- 
-+	if (argc > 0 || (maybe_prune_tags && !remote_via_config)) {
-+		size_t nr_alloc = st_add3(argc, maybe_prune_tags, 1);
-+		refs = xcalloc(nr_alloc, sizeof(const char *));
-+		if (maybe_prune_tags) {
-+			refs[j++] = xstrdup("refs/tags/*:refs/tags/*");
-+			ref_nr++;
-+		}
-+	}
-+
- 	if (argc > 0) {
--		int j = 0;
- 		int i;
--		refs = xcalloc(st_add(argc, 1), sizeof(const char *));
- 		for (i = 0; i < argc; i++) {
- 			if (!strcmp(argv[i], "tag")) {
- 				i++;
 diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 6f3ab7695a..297590814d 100755
+index 88d38e0819..dfc749f576 100755
 --- a/t/t5510-fetch.sh
 +++ b/t/t5510-fetch.sh
-@@ -748,9 +748,9 @@ test_configured_prune unset unset unset true pruned  kept \
- test_configured_prune_type unset unset unset unset kept kept     "origin --prune-tags" "name"
- test_configured_prune_type unset unset unset unset kept kept     "origin --prune-tags" "link"
- test_configured_prune_type unset unset unset unset pruned pruned "origin --prune --prune-tags" "name"
--test_configured_prune_type unset unset unset unset kept   kept   "origin --prune --prune-tags" "link"
-+test_configured_prune_type unset unset unset unset kept   pruned "origin --prune --prune-tags" "link"
- test_configured_prune_type unset unset unset unset pruned pruned "--prune --prune-tags origin" "name"
--test_configured_prune_type unset unset unset unset kept   kept   "--prune --prune-tags origin" "link"
-+test_configured_prune_type unset unset unset unset kept   pruned "--prune --prune-tags origin" "link"
- test_configured_prune_type unset unset true  unset pruned pruned "--prune origin" "name"
- test_configured_prune_type unset unset true  unset kept   pruned "--prune origin" "link"
- test_configured_prune_type unset unset unset true  pruned pruned "--prune origin" "name"
-@@ -772,7 +772,7 @@ test_expect_success 'remove remote.origin.fetch "one"' '
- 	)
- '
- test_configured_prune_type unset unset unset unset kept pruned "origin --prune --prune-tags" "name"
--test_configured_prune_type unset unset unset unset kept kept   "origin --prune --prune-tags" "link"
-+test_configured_prune_type unset unset unset unset kept pruned "origin --prune --prune-tags" "link"
+@@ -543,8 +543,12 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
+ set_config_tristate () {
+ 	# var=$1 val=$2
+ 	case "$2" in
+-	unset)  test_unconfig "$1" ;;
+-	*)	git config "$1" "$2" ;;
++	unset)
++		test_unconfig "$1"
++		;;
++	*)
++		git config "$1" "$2"
++		;;
+ 	esac
+ }
  
- test_expect_success 'all boundary commits are excluded' '
- 	test_commit base &&
 -- 
 2.15.1.424.g9478a66081
 
