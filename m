@@ -2,157 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C2D01F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 12:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24C561F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 13:53:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752372AbeBHMe3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 07:34:29 -0500
-Received: from mout.gmx.net ([212.227.15.18]:39062 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752317AbeBHMe0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 07:34:26 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx003 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 0MfVYB-1eMLMu2rpz-00P6gs; Thu, 08 Feb 2018 13:34:19 +0100
-Date:   Thu, 8 Feb 2018 13:34:18 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=98yvind_R=C3=B8nningstad?= <ronningstad@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-In-Reply-To: <xmqqpo5g5qd3.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1802081317320.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de> <87k1vpqq85.fsf@javad.com> <nycvar.QRO.7.76.6.1802071818240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <1518044326.7000.4.camel@gmail.com> <xmqqpo5g5qd3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751079AbeBHNxT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 08:53:19 -0500
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:37079 "EHLO
+        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750876AbeBHNxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 08:53:18 -0500
+Received: by mail-lf0-f45.google.com with SMTP id f137so6510607lfe.4
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 05:53:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=u6MqRh295VtZmVk3pahr7lFdv2zrw7BU9WpbJi45p94=;
+        b=EzBydgzU/GiWPGGesh/dwXxMCiYEAd1UM1VGrzgRmvdRVlCKo/bCzKdO+OSjAOc7hT
+         3YlwRBQPQhpQBoYinrJaU6UlEDIuAfBxB/j7zotvZcA6u7SdLKsdp88IlGASFeg025P9
+         TOQWdAJUH4IvwpvY0M5uCDoJu0zWGHAfGOfR4e2AinOpJVw7Sc+tVv4D0sRsw2cU6buo
+         R4OKdnLu6oASz6eWGz1uUax/W1kUj42PIK+eaMmC8YdQE0xYZi4AydoLI78QwprLtLbw
+         c2rPogbdO5yO+YL2Ar9kP6ZQ/BG/DmZZT8PXnv21ISEjdfNr/DIClHbeUGH6lgJhXzBO
+         Hm8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=u6MqRh295VtZmVk3pahr7lFdv2zrw7BU9WpbJi45p94=;
+        b=bvMA/6xN83kj6YVQbpdC+e9W0HEvRRvtPKv8d/BIkjSii02deAj2t8NPti+LdIC/fO
+         4oRi/juViSMJcZ8T/DQxue065YuGEZ4arFBBBC1eHmIEomPaDiDO7RCj76hmH2B3+Bb7
+         VdsYs+g2Y3pETzynq16Rzz4oshxjBQNbtTl/e/afHz3KeW/44e5bcY+LaCxQBvRsO9ic
+         FlYWKwGjnTrwSqb9gLr3YHncjzVId1vMqJ1uRSsAL55p+YXxaWQJP2fQzb9gfHOjSnh/
+         lSOCfOXm3KOVsphIE6Rm1/89euI4luYipj5HQRn8KVxHpUIarQvh1OED3Fr8unTyQzIs
+         lxIw==
+X-Gm-Message-State: APf1xPBzwP2ezznDvFTb78m1TMQJDN6OmmEjIMYJuKMMOwKkA+J5DIey
+        gEITYNl7quS60+u/YQhOfdokB8DIiF7GwtdGtRg=
+X-Google-Smtp-Source: AH8x2279blIiURGI8jjW4yTIW+2NPm/bL5/OcA5rCH7vPdCSoBP+lJD2OPhnDbr8qOXMIzLY4O2o7sUM6HMgkXUKOh8=
+X-Received: by 10.46.125.3 with SMTP id y3mr570979ljc.23.1518097996885; Thu,
+ 08 Feb 2018 05:53:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1931537259-1518093259=:35"
-X-Provags-ID: V03:K0:BQ/ETqs0ao1gwdmB7vlyhbeduTNQXPTLBQVLkoc6ryxvTPp9lq9
- BYD7/2w3EDK2kbjRLWdUvdIbZJRS59FIvqaLX8VXXj214GmCX2xBhjWSvMk2aO/wmFS2nvy
- Y8odQkATIE2UVQfHu3q/1tg0UzmTLD/NvO4/0bKGZx2AUyxgUHewlYBXZKB05GPtsse+drk
- nwPeh1KmczkK1DHk0mYig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pCLQjE1S3Nc=:pLn8xVKBDfsf5PYykgv4nR
- c1fGEKvx0TKx0Riorv7mm/Y9xoQengYwN68+VSE7dBj33L/qiLvcqPxbCCHX6nst36JYy+2bN
- OQTFAFHhACcMBuFq5QDatj31CCz8RsaJCFnfnf2Rd41km55MWrGAKmtR/5/+jZJlkGqu+f+Ws
- ZxVlvDDQ39X74ngpNgCsPTvz+gsS7i50NLomcrcyw+5rgJ1YWny/Ooub4jKSxEXSVqLDvJ08n
- 0z/fzPsgql967BSl5Bfjcj+TQRfPvQetlvy6fy/vTywozAttmKp5U4Phqfy93fPUVETD4NYgT
- lZDQcYbzKv5RoBt0lid6a57HlxgnmW3yAVOsgGCPhgdmHCZv3j8+icjLVvMy9aIO1SK4huY79
- YMpN2M3J18JYtCAp2Vhp9QUO9dwicDZ9rx9xWZgv5nx+Bg+xXdEF2TNvFhAAIpA3X79EGlzKZ
- DymotHuHDkMAfCKe50YyuC0j55eTew+YBoWFp+wnlg4SGLXWM7p7xuQ3Mi7D/FA8o9LcE5h7r
- QTNiXc2c2RvXveME8OZ4jitCnIuS2qnHy2aNRZJclk7tdLYg44WB69gmPMZIiRlvwJh73P75V
- iHVdiC2ZtGX+xDkSQ7sG1KCHFShbFSKGP0ZITPaiGOIU61yfDexKo/c8PpmUUUOvQzUjKa5uX
- SKwdLNVKwqmotQEYiHs63O30i4ri9vn9A/izr4uxpm0F/gsCXCmmRcM3qx2egZq4CrnOUOfJ8
- 3RtwRc/LdAoUkroDOz08fxZjyF4q7JN203gDyfUoAS7ryOpWkn/bjOl3MYQkO3+r3/dDuu2/U
- YLmIJwU/kukRYII1Z5Q0PV4ReSrCzEHcnjDNQPv9E2OlTQWDXM=
+Received: by 10.46.125.26 with HTTP; Thu, 8 Feb 2018 05:53:16 -0800 (PST)
+In-Reply-To: <xmqqh8qvb7h4.fsf@gitster-ct.c.googlers.com>
+References: <CADfK3RWXDuE=hYD==4sHXO1iJeOiVDOp7hBqhBtSn7gnQ+x7Qg@mail.gmail.com>
+ <CADfK3RU4WJLV9EtieWYQzzRBoJkpyE+w178WQk+wj6soFwKW7g@mail.gmail.com>
+ <CADfK3RVJdk3zK7+eE45-PSkb=_v86wrC0TzY+hUmAkfO0Dea=w@mail.gmail.com>
+ <CAGZ79kafgyOujDM4BsXdDUnP+iFk5mp2bYnX-Q65khW-weEhUg@mail.gmail.com>
+ <xmqqy3kfq6a9.fsf@gitster-ct.c.googlers.com> <CAHqTa-0kdkDUjH1nw=4JPAivtyL84zfZ5t8Dj1UYXPrMd7Poqw@mail.gmail.com>
+ <CADfK3RXOqB7wKnXCWxgyDeov-Y7rVQiWFUa_hKZk=j9ReY9JDQ@mail.gmail.com>
+ <CADfK3RWAcb0m+m_U51JLA9tNyru_7XEsfy55i5EUsKh98jGFtA@mail.gmail.com> <xmqqh8qvb7h4.fsf@gitster-ct.c.googlers.com>
+From:   Stephen R Guglielmo <srguglielmo@gmail.com>
+Date:   Thu, 8 Feb 2018 08:53:16 -0500
+Message-ID: <CADfK3RV1qo_jP=WD6ZF2U9bH2Xf+GJWbC9T4a3YK+C08O0O50Q@mail.gmail.com>
+Subject: Re: Bug Report: Subtrees and GPG Signed Commits
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Avery Pennarun <apenwarr@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Feb 5, 2018 at 1:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Given that all references to this shell function seem to do
+>
+>         sometree=$(toptree_for_commit $something)
+>
+> and then $sometree is used as if it were a tree object name, I can
+> understand why the lack of --no-show-signature in the original
+> breaks it when the user has show-signature configured.
+>
+> It probably makes more sense to replace the "git log" with something
+> more appropirate for the job, like
+>
+>         git rev-parse --verify "$commit^{tree}"
+>
+> though.
 
---8323329-1931537259-1518093259=:35
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Junio,
 
-Hi Junio,
+Thanks for the feedback. I read the documentation on `rev-parse` and I
+agree it makes more sense for this case. I've modified
+`toptree_for_commit()` to use `rev-parse` instead. However, there's a
+few other calls to `log` that I'm not sure can be replaced. For those,
+I've kept `--no-show-signature`, making this require at least v2.10.0.
 
-On Wed, 7 Feb 2018, Junio C Hamano wrote:
+Below is the full diff against v2.16.1. Or, for the GitHub-savvy among us:
 
-> =C3=98yvind R=C3=B8nningstad <ronningstad@gmail.com> writes:
->=20
-> >> So no, I do not think that --recreate-merges --first-parent is a good
-> > idea
-> >> at all. Unless you try to do that non-interactively only, *and
-> > disallow it
-> >> in interactive mode*.
->=20
-> Correct.  If the original side branch has commits A, B and C, you
-> are rebuilding the topic to have only A and C but not B and then
-> recreate the merge of that rebuilt topic, then you absolutely do not
-> want "cherry-pick -m1" of the original merge when recreating the
-> merge, as that would resurrect the effect of having B.  The same
-> argument applies if you rebuilt the topic with A and C and then a
-> new commit D.  "cherry-pick -m1" of the original would do a wrong
-> thing.
->=20
-> When there is no such fixing up, "cherry-pick -m1" is the right
-> thing to do, though, so it probably makes sense to pick merges that
-> way when the side topic being merged consists of the same commits as
-> the original.
-
-Please note that there are a lot of conditions of "fixing up". A lot more
-than just dropping, reordering or adding `pick`s.
-
-> I do not think that the code structure in the topic as posted makes it
-> impossible (or unnecessarily hard) to give an enhancement like that in
-> the future as a follow-up series.
-
-Just to give you one concrete example: when I recently rebased some
-patches (no reording or dropping involved here!) and one of the picks
-failed with merge conflicts, I realized that that particular commit
-introduced incorrect formatting and fixed that right away (verifying that
-no other commits introduced incorrect formatting, of course).
-
-With your new cute idea to magically cherry-pick -m1, this change would
-have been magically dropped from the subsequent merge commits!
-
-And let me pick a bit on the statement "I do not think that ... makes it
-impossible (or unnecessarily hard) ...": I absolutely agree. I absolutely
-agree that it is not impossible or unnecessarily hard to introduce
-features *that are confusing the users because they are inconsistent with
-the expectations how such a command should operate*.
-
-So the question is not so much whether we can introduce a feature that
-makes no sense. Of course we can, we are decent software developers.
-
-The question is: will this be confusing, inconsistent behavior that
-violates the Principle of Least Surprise?
-
-In that respect, introducing conditional code that would `cherry-pick -m1`
-when the todo list is unchanged so far (and only then) is an absolute no,
-no, no. It would be all three: confusing, inconsistent and violating the
-Principle of Least Surprise.
-
-So how about introducing support for `--recreate-merges --first-parent`
-and allowing to combine it with `--interactive`? Also violating all three.
-
-I can see how you *could* argue that `--recreate-merges --first-parent` is
-a Good Thing. I really can. It would even recreate evil merges.
-
-But in interactive mode?
-
-Nope. It would cause all kind of pain, not the least on me, because I know
-how many people ask me about `--preserve-merges --interactive` and its
-confusing and inconsistent behavior that violates the Principle of Least
-Surprise.
-
-So as long as y'all don't go anywhere near "oh, let's just introduce
---recreate-merges --first-parent and *then also support it in
---interactive because we can even if it hurts the user experience", I
-agree that it could be a good follow-up patch series.
-
-Taking a step back, I have to wonder, though, why we stumble over our feet
-trying to cross bridges that are one farther than the one we currently
-have to cross.
-
-By now, it should be clear why the default mode of --recreate-merges
-*cannot* be --first-parent.
-
-And before --recreate-merges is said and done, we should maybe work on
-getting it said and done, rather than musing about what comes next? I, for
-one, would really like to focus my time on getting *this* patch series
-reviewed and included.
+https://github.com/srguglielmo/git/compare/8279ed033f703d4115bee620dccd32a9ec94d9aa...srguglielmo:4b92b4494da057ed52c2ff8c329457a1c294d135
 
 Thanks,
-Johannes
---8323329-1931537259-1518093259=:35--
+Steve
+
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index dec085a23..9594ca4b5 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -297,7 +297,7 @@ find_latest_squash () {
+     main=
+     sub=
+     git log --grep="^git-subtree-dir: $dir/*\$" \
+-        --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
++        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' HEAD |
+     while read a b junk
+     do
+         debug "$a $b $junk"
+@@ -341,7 +341,7 @@ find_existing_splits () {
+     main=
+     sub=
+     git log --grep="^git-subtree-dir: $dir/*\$" \
+-        --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
++        --no-show-signature --pretty=format:'START %H%n%s%n%n%b%nEND%n' $revs |
+     while read a b junk
+     do
+         case "$a" in
+@@ -382,7 +382,7 @@ copy_commit () {
+     # We're going to set some environment vars here, so
+     # do it in a subshell to get rid of them safely later
+     debug copy_commit "{$1}" "{$2}" "{$3}"
+-    git log -1 --pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
++    git log --no-show-signature -1
+--pretty=format:'%an%n%ae%n%aD%n%cn%n%ce%n%cD%n%B' "$1" |
+     (
+         read GIT_AUTHOR_NAME
+         read GIT_AUTHOR_EMAIL
+@@ -462,8 +462,8 @@ squash_msg () {
+         oldsub_short=$(git rev-parse --short "$oldsub")
+         echo "Squashed '$dir/' changes from $oldsub_short..$newsub_short"
+         echo
+-        git log --pretty=tformat:'%h %s' "$oldsub..$newsub"
+-        git log --pretty=tformat:'REVERT: %h %s' "$newsub..$oldsub"
++        git log --no-show-signature --pretty=tformat:'%h %s' "$oldsub..$newsub"
++        git log --no-show-signature --pretty=tformat:'REVERT: %h %s'
+"$newsub..$oldsub"
+     else
+         echo "Squashed '$dir/' content from commit $newsub_short"
+     fi
+@@ -475,7 +475,7 @@ squash_msg () {
+
+ toptree_for_commit () {
+     commit="$1"
+-    git log -1 --pretty=format:'%T' "$commit" -- || exit $?
++    git rev-parse --verify "$commit^{tree}" || exit $?
+ }
+
+ subtree_for_commit () {
