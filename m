@@ -2,54 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5817A1F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 14:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C68BC1F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 14:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752100AbeBHODn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 09:03:43 -0500
-Received: from mx4.wp.pl ([212.77.101.12]:32621 "EHLO mx4.wp.pl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751963AbeBHODm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 09:03:42 -0500
-Received: (wp-smtpd smtp.wp.pl 15720 invoked from network); 8 Feb 2018 15:03:39 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=1024a;
-          t=1518098620; bh=42oZPApHgqanAHUa7lxpQuwnyMRWgbkO4y+fr+oyH3g=;
-          h=Subject:From:To;
-          b=wVI2GVKLDqgQcUM2aWb1w/7kU07RiyCFVVILwcHWvssVj6PQqI7hW+o72zT7L16Am
-           w0Zk8cQM014s1aUYMCQAr5JgZ/4TnYf72HF0zQjFbSDa1b6PtVsDLmFU5eH05R+7Ar
-           zdJU+VHD/ntsY7ofCV0ElZwkGD29+s6cbYVzK//M=
-Received: from public-gprs351598.centertel.pl (HELO [192.168.0.102]) (borucki_andrzej@wp.pl@[37.47.4.175])
-          (envelope-sender <borucki_andrzej@wp.pl>)
-          by smtp.wp.pl (WP-SMTPD) with SMTP
-          for <git@vger.kernel.org>; 8 Feb 2018 15:03:39 +0100
-Subject: Automatic parameters completion
-From:   Andrzej <borucki_andrzej@wp.pl>
-To:     git@vger.kernel.org
-References: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
-Message-ID: <131f3b0f-0002-2823-d64b-ffd16fff8dfa@wp.pl>
-Date:   Thu, 8 Feb 2018 15:03:44 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751706AbeBHOXC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 09:23:02 -0500
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:39625 "EHLO
+        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750882AbeBHOXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 09:23:02 -0500
+Received: by mail-lf0-f44.google.com with SMTP id x20so4686817lff.6
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 06:23:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=IcWjy8Abh/x6t3kXiZMxHpYP7amE3Ysi17W0dgJ+CXQ=;
+        b=lsrO5X2UpNeZEEBs0VzQxntx563PsjLoq09OIsQTCAVmRpPASbG1FLBRMfpv2p+g7+
+         8kPy0KWjRpqZpoJUbFtHQDfTEqOhMnKq7l4yBmHDNgv0n/uIOJGWUZqHN8gJn8cl4Tj0
+         UzdPKAYW8cjEjnJWDl6U46dujOdYM5pKAdlsky8N5SSgNzuU1y8Mkj6ipUPoCDud0BRh
+         Uu0KwxgRUB3DId9PBecMLkUyfdQMguT682m4nwwjq3LJgiFLN5s8bJf3D+sVzHhyJDKj
+         kHoBpBJF/zCExYsqmMjSzD1np0Rt77qeU2thMA7XfSLhQYlX307iu5/8K0KZQae9Y3do
+         v/pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=IcWjy8Abh/x6t3kXiZMxHpYP7amE3Ysi17W0dgJ+CXQ=;
+        b=lHalWeDVI5b+wQ4diGjUhOluwEzxjg87gxKYkwsSu1Q5c/BIFzI3wsB82pelRW5sOg
+         gN5W9OshEEoa8sQpjUWjqyp4Kwpwje7U1uYnasXUmXDnvIQoRQKu57hKkzBpvhQmYyN2
+         IqnjWBcwSyj7BWVUtbvGCDAmZsCHRN6IZIFbWMyKyOq9FWnqAzLoGlQ0fLZi/Twb9kZ4
+         C017ERF9yWbSz/2Cqoie+izbPgKh7/zKKgrqvswj0VznI9BgK7PSHrFCNZ5zJo+MNhH4
+         3SmjPURLAyGpHydUdUTkKcZ6nuJMtTf5TMaS5d07AhMiKZ5sMJsDlxAaRoWGNfccsH7x
+         Qggw==
+X-Gm-Message-State: APf1xPADi9g9QJGiwW3vwwhaV5nORaMUXJYvN0797gure2pSiNIqmrBW
+        g1P4QKNxQ+bvRH9NsguFNKkfRYndGVsDn/roK9A=
+X-Google-Smtp-Source: AH8x225zLQSS+RASEiz5ysU72HUvPOp7RYY15YO1XuiWbP/NOWTxWw7IhehzRr8/4D/UvtnGmjUgvPz8Vz6CNJTUcYE=
+X-Received: by 10.25.213.19 with SMTP id m19mr683266lfg.4.1518099780451; Thu,
+ 08 Feb 2018 06:23:00 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-WP-MailID: e579cebb457861405b45a427b8a993f6
-X-WP-AV: skaner antywirusowy Poczty Wirtualnej Polski
-X-WP-SPAM: NO 0000000 [McNt]                               
+Received: by 10.46.125.26 with HTTP; Thu, 8 Feb 2018 06:22:59 -0800 (PST)
+In-Reply-To: <131f3b0f-0002-2823-d64b-ffd16fff8dfa@wp.pl>
+References: <29b0272d-7854-592d-5e1c-3a4f0d347bd1@wp.pl> <131f3b0f-0002-2823-d64b-ffd16fff8dfa@wp.pl>
+From:   Stephen R Guglielmo <srguglielmo@gmail.com>
+Date:   Thu, 8 Feb 2018 09:22:59 -0500
+Message-ID: <CADfK3RWXJyFWPUds1Q2qQS-w-Kwh8jKmO9VWCAgueo434LSYcg@mail.gmail.com>
+Subject: Re: Automatic parameters completion
+To:     Andrzej <borucki_andrzej@wp.pl>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have Linux Mint and its terminal besides usual completion (add file 
-name when type first letter and press tab) also can complete git 
-parameters. How is doing this? Bash knows git or bash has special 
-interface to completion and git uses it?
-I want in my Linux program apply this mechanism.
+On Thu, Feb 8, 2018 at 9:03 AM, Andrzej <borucki_andrzej@wp.pl> wrote:
+> I have Linux Mint and its terminal besides usual completion (add file name
+> when type first letter and press tab) also can complete git parameters. How
+> is doing this? Bash knows git or bash has special interface to completion
+> and git uses it?
+> I want in my Linux program apply this mechanism.
+
+Various shells include support for completion of git parameters. These
+completion functions may be enabled by default in your distribution.
+For example, zsh has vcs_info[1]. There are also scripts included in
+git (contrib/completion) [2] to do this.
+
+[1] http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Version-Control-Information
+[2] https://github.com/git/git/tree/master/contrib/completion
