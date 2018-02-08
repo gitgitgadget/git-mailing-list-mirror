@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 043C51F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 23:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A5A1F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 23:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752441AbeBHXQO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 18:16:14 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:41395 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752426AbeBHXQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 18:16:13 -0500
-Received: by mail-wr0-f194.google.com with SMTP id u60so3701416wrb.8
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 15:16:13 -0800 (PST)
+        id S1752240AbeBHXV2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 18:21:28 -0500
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35586 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752058AbeBHXV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 18:21:28 -0500
+Received: by mail-wr0-f193.google.com with SMTP id w50so6446448wrc.2
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 15:21:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=4lYNztJ00N56t4Tshxk/G4hZIUJx9eMPKkLilALu2v8=;
-        b=cLP/pKE7u+SsAyBwe3PINKmW3eRxH6l9MDpFiNrvlcssKGNlsu9p+hmX209B5abXhH
-         QEUF2CoQjhHUWQnKlcoH6Mll8TbW1R1W0PfXSBGdLNTrEKVoQ6fujFlZvZnmECdkjb2R
-         dA7I9DFhgNEcdwq49N8ujlGwB4OyPUetDCshfFGM1JBKO4CVLcuBiShPJGVvP3+Ounok
-         hfZwdCPsrOH6zEtBAK6w8l+bbvNYBlh8joRQ5RrLVqxSKxKz9/g1H0Y+gv8ltR9HUJFb
-         dvRyp5TzDHDnj7lbSxXb5koEnHmK9wxXfoyLubkCcqVnDc/eGSpqSE64FYQhHsMbQUK+
-         w2ZA==
+        bh=fU7a6y+teXg0u6+HErqRxLpz/P0kLj+1PG43gNCd84s=;
+        b=h4kdwREy111VbKeW9W7IGpwVIg7/2C2gjhM8mbnMRKE+pR4+RIFkGZWb3Wp021zkjH
+         kdhhFiDSN+RFpV17ROVIML5i8hECxtp278X27b76pLNszl6YKXxgBKrjuNFvLJGqviws
+         +7peBU0nT5KzYKY+iqBqs06Z28Rbhy2G8gpwyS6+BdoXxRjZ4UfinWfQRvSAR5FtoE24
+         aFIxnnjBKNP3Ye+tfJAIv8GAAQaKCQS301+SNDBjriKkKN6hFzUlQzu50kYbFFnLl/xM
+         TuWhvfiyVoYosTrR8gMkYBqOvTKF4ji/Gx43IBe/czycL728vftRrY0ErrbIN8fAFx3P
+         a2CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=4lYNztJ00N56t4Tshxk/G4hZIUJx9eMPKkLilALu2v8=;
-        b=UrZe7u9lHA1fc7QwtINaeV0zrAp8/F3odedXhcd7wRyopZVgOPLaMnPtap7WzuY9w0
-         Le/6sJHYcgENDQKoRwzin2b/M4PTF8QLPnGGDNtg1jazx+Fe7Fy4qBBPK4SpOgMFrlJo
-         qdDBzqO411nt0hOTybHfn/lHVi/FC3eunTPLLRKC6cKskICj6vxNpbhO8xYu6LVUm3He
-         AmK3bGQ4B/Xr2slAAyz698E/KEliVPcfy0nPmj8RavSxD3xbH8hdvb8KnnLtCaO0riqm
-         nkQEvIQpoxERAYYGu+Dk/na5/tO1i4VtrW5U3TfAmQziZQ4hfVrHHpxnzY/cTYV0jRyG
-         vYiA==
-X-Gm-Message-State: APf1xPAvH+cXIXwVFmvL8ZzSYAuj1Bau23TCuGWzlXuJ0NqmQbGAH5iX
-        F9dF7Ayq01+vq6I3XxlkJUA=
-X-Google-Smtp-Source: AH8x224diYjWT67au6c/VaPSghl8W7Y4SvMvKQ7wC23cAFIH+y9elr3Hu1xTIiDE49OrBu2twkUB9w==
-X-Received: by 10.223.173.2 with SMTP id p2mr634733wrc.107.1518131772261;
-        Thu, 08 Feb 2018 15:16:12 -0800 (PST)
+        bh=fU7a6y+teXg0u6+HErqRxLpz/P0kLj+1PG43gNCd84s=;
+        b=gPTWzer7bGthvkstn56+Or61kC9CIQKWuawupEuP4il6TN8VIaBQ5NOtwDPR/yKe/p
+         w44Y4nPUvaO40Lnatzkp/OYde7Z4/CnkfRdDBSCTWHWKJX23r/tPHUOQJEzDFNUMpP7M
+         dkT+slQD2yNgnD/DbWnjPyd4F694FRAogaY0sEcxmAVShx2cpIdr3/6txeIvBAvo99nZ
+         WfE10awyETbwD+0HhP8U2Ou2B5XCqbnHdRXl6Nqql0eMPgr/J3gHbqSGdHeHrntBSOg6
+         ygdthusd8Bt9WvH1jZShy70V8vPJFrii4RLkwCum8MwFRe3p4Fvj8xkXFaUCFtslK6Va
+         jgUQ==
+X-Gm-Message-State: APf1xPCoSoyEyok8ycY8auGvDFJsLQdEKBT4zCkEmgrgSMvBvnc3j4es
+        AzMykS+x4t97QKF99dcn+S8=
+X-Google-Smtp-Source: AH8x225mf3UT1WOHzqSM8LtIDcTpjhqcB3lXhjspzMIHZk65pmTHnCb17vJEGdtDDAm+yASa3hO9qQ==
+X-Received: by 10.223.209.71 with SMTP id b7mr614091wri.141.1518132086509;
+        Thu, 08 Feb 2018 15:21:26 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j31sm1359808wra.97.2018.02.08.15.16.11
+        by smtp.gmail.com with ESMTPSA id y90sm1529147wrc.24.2018.02.08.15.21.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Feb 2018 15:16:11 -0800 (PST)
+        Thu, 08 Feb 2018 15:21:25 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
         peff@peff.net, jonathantanmy@google.com, sbeller@google.com,
         szeder.dev@gmail.com
-Subject: Re: [PATCH v3 01/14] commit-graph: add format document
+Subject: Re: [PATCH v3 03/14] commit-graph: create git-commit-graph builtin
 References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
         <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-2-git-send-email-dstolee@microsoft.com>
-        <xmqq8tc3qitf.fsf@gitster-ct.c.googlers.com>
-        <68287af0-a4ec-d2ab-bbcc-84326871120b@gmail.com>
-Date:   Thu, 08 Feb 2018 15:16:10 -0800
-In-Reply-To: <68287af0-a4ec-d2ab-bbcc-84326871120b@gmail.com> (Derrick
-        Stolee's message of "Thu, 8 Feb 2018 16:33:21 -0500")
-Message-ID: <xmqq8tc36pj9.fsf@gitster-ct.c.googlers.com>
+        <1518122258-157281-4-git-send-email-dstolee@microsoft.com>
+        <xmqqzi4jp3y5.fsf@gitster-ct.c.googlers.com>
+        <9c473af6-fc67-5612-07dd-54b2a6e24ff0@gmail.com>
+Date:   Thu, 08 Feb 2018 15:21:24 -0800
+In-Reply-To: <9c473af6-fc67-5612-07dd-54b2a6e24ff0@gmail.com> (Derrick
+        Stolee's message of "Thu, 8 Feb 2018 16:36:20 -0500")
+Message-ID: <xmqq4lmr6paj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,13 +74,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Derrick Stolee <stolee@gmail.com> writes:
 
-> You're right that this data is redundant. It is easy to describe the
-> width of the tables using the OID length, so it is convenient to have
-> that part of the format. Also, it is good to have 4-byte alignment
-> here, so we are not wasting space.
->
-> There isn't a strong reason to put that here, but I don't have a great
-> reason to remove it, either.
+> I wanted to have the smallest footprint as possible in the objects
+> directory, and the .git/objects directory currently only holds
+> folders.
 
-Redundant information that can go out of sync is a great enough
-reason not to have it in the first place.
+When we cull stale files from pack directory, we rely on the related
+files to share pack-<hash>.* pattern.  It is better not to contaminate
+the directory with unrelated cruft.
+
+As this is purely optional auxiliary information used for optimization,
+perhaps .git/objects/info is a better place?  I dunno.
+
+In any case, even if its default position ends up in .git/objects/pack/,
+if this thing conceptually does not have any ties with packs
+(i.e. it is not a corruption if the graph file also described
+topologies including loose objects, and it is not a corruption if
+the graph file did not cover objects in all packs), then the end
+user visible option name shouldn't say "--pack-dir".  "--graph-dir"
+that defaults to .git/objects/pack/ might be acceptable but it still
+feels wrong.
+
+
