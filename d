@@ -1,31 +1,30 @@
 From: "wonga" <wongafasteasyloanza.co@gmail.com>
 Subject: fast & easy loan from wonga
-Date: Fri, 17 Apr 2015 18:32:39 +0200
-Message-ID: <8AB1993D-63D8-41DE-9115-67B8B87F6AE0@OWNERCO-I8OUCIB>
+Date: Sun, 19 Apr 2015 16:34:59 +0200
+Message-ID: <5A245A40-F183-4850-9ABF-D5E81D9997F4@OWNERCO-I8OUCIB>
 Reply-To: <wongafastloanza.co@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_0104_01C2AA85.0BA081F0"
+	boundary="----=_NextPart_000_00B8_01C2AA85.0B228500"
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Apr 20 14:26:13 2015
+X-From: git-owner@vger.kernel.org Wed Apr 22 17:12:17 2015
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1YkAmA-0001yy-2g
-	for gcvg-git-2@plane.gmane.org; Mon, 20 Apr 2015 14:26:11 +0200
+	id 1YkwJu-00031R-Kv
+	for gcvg-git-2@plane.gmane.org; Wed, 22 Apr 2015 17:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735AbbDTM0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Apr 2015 08:26:04 -0400
-Received: from [165.225.151.177] ([165.225.151.177]:61727 "EHLO
+	id S934303AbbDVPL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Apr 2015 11:11:58 -0400
+Received: from [165.225.151.177] ([165.225.151.177]:63621 "EHLO
 	OWNERCO-I8OUCIB" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754595AbbDTM0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Apr 2015 08:26:03 -0400
-X-Greylist: delayed 148615 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Apr 2015 08:26:03 EDT
-Received: from User (8ta-151-163-207.telkomadsl.co.za [41.151.163.207])
+	with ESMTP id S934075AbbDVPLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Apr 2015 11:11:55 -0400
+Received: from User (8ta-228-176-02.telkomadsl.co.za [197.228.176.2])
 	by OWNERCO-I8OUCIB with ESMTPA
-	; Fri, 17 Apr 2015 09:32:47 -0700
+	; Sun, 19 Apr 2015 07:35:13 -0700
 X-Priority: 3
 X-MSMail-Priority: Normal
 X-Mailer: Microsoft Outlook Express 6.00.2800.1081
@@ -37,18 +36,18 @@ X-Mailing-List: git@vger.kernel.org
 X-Spam-Report: 7.0 points;
  *  2.8 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
  *  4.2 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/267594>
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_0104_01C2AA85.0BA081F0
+------=_NextPart_000_00B8_01C2AA85.0B228500
 Content-Type: text/plain;
 	charset="_iso-2022-jp$ESC"
 Content-Transfer-Encoding: 7bit
 
 please open attachment file.
 
-------=_NextPart_000_0104_01C2AA85.0BA081F0
+------=_NextPart_000_00B8_01C2AA85.0B228500
 Content-Type: application/msword;
 	name="3.5% WONGA EXPRESS LOANS PROMOTION-1.doc"
 Content-Transfer-Encoding: base64
@@ -1274,4 +1273,4 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAAAAA==
 
-------=_NextPart_000_0104_01C2AA85.0BA081F0--
+------=_NextPart_000_00B8_01C2AA85.0B228500--
