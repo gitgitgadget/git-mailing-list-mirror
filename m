@@ -2,91 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9C51F576
-	for <e@80x24.org>; Thu,  8 Feb 2018 08:08:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0148D1F576
+	for <e@80x24.org>; Thu,  8 Feb 2018 08:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751094AbeBHIIO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 03:08:14 -0500
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:37890 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbeBHIIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 03:08:13 -0500
-Received: by mail-qt0-f196.google.com with SMTP id z10so5119040qti.5
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 00:08:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Cx4l0xxAJp9k50J9vM/xvnbfoetMhmUqAZqZ8cG5V7U=;
-        b=IG2IMt10ibHuesNN9p+DgOprSnUPHHzGbHj+Wm84aEveXdqN8hiMexeFXudqJtHXBp
-         d3cbYZNkHfXLaL+YhxbcAVmwLL5bPAGQskro9sx+w78ueqslpXWGLK+JvH8vJSmw1sBT
-         t7GNdOdbqwbtUwnxOVkidWPHt+oablufJvlhb5dGg5D3wQWqvhN0gvcGlRJfdTTK7EkG
-         2JYS6j3UIycLoGSoZ5n1A1nT5WOf9WL7argCrx2/dUr2vSAbEdNEqFNmEHbWpp4VQP0z
-         6cMJlfHBCeXuuHlptnEUNwe5i0UHav8rTGIs39Rj1jd6jXSZJ5pbxxKkRtE5Ks2P5OVw
-         Fspg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Cx4l0xxAJp9k50J9vM/xvnbfoetMhmUqAZqZ8cG5V7U=;
-        b=DD5KsR4qTTW1OJ6uRF0A9935m9bUNnHQNIlkYvRGsf0ipCGT0YpRAswSIk52fp5O3H
-         7bzA7Ut/EqPuG2x+48VYO1M0reK4StQ8J0iwCtlhzzwkLGofG2RY8yHSS9/Y9hJe1sHH
-         Eg/lciidMYLuoxu0xyk/dkoBL8mw6nJxYhYG79n/sOgcK+TC+RwOeP3FYKL7QTYOFzHd
-         Ma2esrs4S+GJtDRrHPj5TQ/XRBIN2N1SAVp2vRpOZ7EHetGuIBh8dEgHC1hAQoeyy6xx
-         JsI8VLW7MHALoiVu5oB66oEROnljnG9gPNGd6F4Ed2c+vK3a8seYWfbAM/kPfuh1THN8
-         n9cQ==
-X-Gm-Message-State: APf1xPDJhWN+Ybamkg9sMWbljq/IrO6nfnlawUwyoM+EsW3c+P5Wa04u
-        fwZkHJEcIO9nM9wUuj8DElkDxSUKxAuduPx0QLo=
-X-Google-Smtp-Source: AH8x224VxJU2ri+QeEKpCZZfKD/eCylC/l3cHBd+ULr6Pg6s87Vs5PEd2IwDLCDo5za/Co6133DZcVk+XGmkQYbL3fs=
-X-Received: by 10.237.37.68 with SMTP id w4mr13008223qtc.242.1518077292426;
- Thu, 08 Feb 2018 00:08:12 -0800 (PST)
+        id S1750969AbeBHIWW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 03:22:22 -0500
+Received: from mx2.suse.de ([195.135.220.15]:35290 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750882AbeBHIWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 03:22:22 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id BE79AAB49;
+        Thu,  8 Feb 2018 08:22:20 +0000 (UTC)
+Subject: Re: [PATCHv4] tag: add --edit option
+From:   Nicolas Morey-Chaisemartin <nmoreychaisemartin@suse.com>
+To:     git@vger.kernel.org
+Cc:     sunshine@sunshineco.com
+References: <09e24322-7eee-6c83-1db0-318815155fac@suse.com>
+Openpgp: preference=signencrypt
+Message-ID: <7e44c238-6264-e9a5-b159-7cf2905c6a13@suse.com>
+Date:   Thu, 8 Feb 2018 09:22:20 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
+ Thunderbird/58.0
 MIME-Version: 1.0
-Received: by 10.12.175.239 with HTTP; Thu, 8 Feb 2018 00:08:11 -0800 (PST)
-In-Reply-To: <20180207234359.31493-1-sbeller@google.com>
-References: <CAPig+cQZr=UN3KC3LnaKy=oUYd1inbtDgi_pDuhPXf9HgFOdNw@mail.gmail.com>
- <20180207234359.31493-1-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 8 Feb 2018 03:08:11 -0500
-X-Google-Sender-Auth: NEeVFDc7h3kVAyGDldEZqi8BhXs
-Message-ID: <CAPig+cQejz+1ZWep31hw0pjxUoewRt+-2WATtw6PEusfvhn8EA@mail.gmail.com>
-Subject: Re: [PATCH] send-email: error out when relogin delay is missing
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Ramkumar Ramachandra <artagnon@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, mina86@mina86.com,
-        mst@kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
-        Jan Viktorin <viktorin@rehivetech.com>, zxq_yx_007@163.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <09e24322-7eee-6c83-1db0-318815155fac@suse.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Content-Language: fr-xx-classique+reforme1990
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 7, 2018 at 6:43 PM, Stefan Beller <sbeller@google.com> wrote:
-> [...]
-> Error out for now instead of potentially confusing the user.
-> As 5453b83bdf (send-email: --batch-size to work around some SMTP
-> server limit, 2017-05-21) lays out, we rather want to not have this
-> interface anyway and would rather want to react on the server throttling
-> dynamically.
+Please ignore !
+
+v3 with the nits fixed was picked by Junio
+
+Le 07/02/2018 à 17:55, Nicolas Morey-Chaisemartin a écrit :
+> Add a --edit option whichs allows modifying the messages provided by -m or -F,
+> the same way git commit --edit does.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.com>
 > ---
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> @@ -379,6 +379,9 @@ unless ($rc) {
-> +die __("When a batch size is given, the relogin delay must be set\n")
-> +       if defined $relogin_delay and not defined $batch_size;
+>
+> Fixes since v3 ( https://public-inbox.org/git/88e7c122-599f-4ab1-6d65-c75f7a3ae8bb@suse.com/ ):
+>  * Replace tab by space in t/t7004-tag.sh
+>
+>
+>  Documentation/git-tag.txt |  8 +++++++-
+>  builtin/tag.c             | 11 +++++++++--
+>  t/t7004-tag.sh            | 30 ++++++++++++++++++++++++++++++
+>  3 files changed, 46 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+> index 956fc019f984..1d17101bac39 100644
+> --- a/Documentation/git-tag.txt
+> +++ b/Documentation/git-tag.txt
+> @@ -9,7 +9,7 @@ git-tag - Create, list, delete or verify a tag object signed with GPG
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
+> +'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>] [-e]
+>  	<tagname> [<commit> | <object>]
+>  'git tag' -d <tagname>...
+>  'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+> @@ -167,6 +167,12 @@ This option is only applicable when listing tags without annotation lines.
+>  	Implies `-a` if none of `-a`, `-s`, or `-u <keyid>`
+>  	is given.
+>  
+> +-e::
+> +--edit::
+> +	The message taken from file with `-F` and command line with
+> +	`-m` are usually used as the tag message unmodified.
+> +	This option lets you further edit the message taken from these sources.
+> +
+>  --cleanup=<mode>::
+>  	This option sets how the tag message is cleaned up.
+>  	The  '<mode>' can be one of 'verbatim', 'whitespace' and 'strip'.  The
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index a7e6a5b0f234..ce5cac3dd23f 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -194,6 +194,7 @@ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *resu
+>  
+>  struct create_tag_options {
+>  	unsigned int message_given:1;
+> +	unsigned int use_editor:1;
+>  	unsigned int sign;
+>  	enum {
+>  		CLEANUP_NONE,
+> @@ -224,7 +225,7 @@ static void create_tag(const struct object_id *object, const char *tag,
+>  		    tag,
+>  		    git_committer_info(IDENT_STRICT));
+>  
+> -	if (!opt->message_given) {
+> +	if (!opt->message_given || opt->use_editor) {
+>  		int fd;
+>  
+>  		/* write the template message before editing: */
+> @@ -233,7 +234,10 @@ static void create_tag(const struct object_id *object, const char *tag,
+>  		if (fd < 0)
+>  			die_errno(_("could not create file '%s'"), path);
+>  
+> -		if (!is_null_oid(prev)) {
+> +		if (opt->message_given) {
+> +			write_or_die(fd, buf->buf, buf->len);
+> +			strbuf_reset(buf);
+> +		} else if (!is_null_oid(prev)) {
+>  			write_tag_body(fd, prev);
+>  		} else {
+>  			struct strbuf buf = STRBUF_INIT;
+> @@ -372,6 +376,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
+>  	struct ref_format format = REF_FORMAT_INIT;
+>  	int icase = 0;
+> +	int edit_flag = 0;
+>  	struct option options[] = {
+>  		OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
+>  		{ OPTION_INTEGER, 'n', NULL, &filter.lines, N_("n"),
+> @@ -386,6 +391,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  		OPT_CALLBACK('m', "message", &msg, N_("message"),
+>  			     N_("tag message"), parse_msg_arg),
+>  		OPT_FILENAME('F', "file", &msgfile, N_("read message from file")),
+> +		OPT_BOOL('e', "edit", &edit_flag, N_("force edit of tag message")),
+>  		OPT_BOOL('s', "sign", &opt.sign, N_("annotated and GPG-signed tag")),
+>  		OPT_STRING(0, "cleanup", &cleanup_arg, N_("mode"),
+>  			N_("how to strip spaces and #comments from message")),
+> @@ -524,6 +530,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  		die(_("tag '%s' already exists"), tag);
+>  
+>  	opt.message_given = msg.given || msgfile;
+> +	opt.use_editor = edit_flag;
+>  
+>  	if (!cleanup_arg || !strcmp(cleanup_arg, "strip"))
+>  		opt.cleanup_mode = CLEANUP_ALL;
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index a9af2de9960b..0630f2dee24b 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -452,6 +452,21 @@ test_expect_success \
+>  	test_cmp expect actual
+>  '
+>  
+> +get_tag_header annotated-tag-edit $commit commit $time >expect
+> +echo "An edited message" >>expect
+> +test_expect_success 'set up editor' '
+> +	write_script fakeeditor <<-\EOF
+> +	sed -e "s/A message/An edited message/g" <"$1" >"$1-"
+> +	mv "$1-" "$1"
+> +	EOF
+> +'
+> +test_expect_success \
+> +	'creating an annotated tag with -m message --edit should succeed' '
+> +	EDITOR=./fakeeditor git tag -m "A message" --edit annotated-tag-edit &&
+> +	get_tag_msg annotated-tag-edit >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  cat >msgfile <<EOF
+>  Another message
+>  in a file.
+> @@ -465,6 +480,21 @@ test_expect_success \
+>  	test_cmp expect actual
+>  '
+>  
+> +get_tag_header file-annotated-tag-edit $commit commit $time >expect
+> +sed -e "s/Another message/Another edited message/g" msgfile >>expect
+> +test_expect_success 'set up editor' '
+> +	write_script fakeeditor <<-\EOF
+> +	sed -e "s/Another message/Another edited message/g" <"$1" >"$1-"
+> +	mv "$1-" "$1"
+> +	EOF
+> +'
+> +test_expect_success \
+> +	'creating an annotated tag with -F messagefile --edit should succeed' '
+> +	EDITOR=./fakeeditor git tag -F msgfile --edit file-annotated-tag-edit &&
+> +	get_tag_msg file-annotated-tag-edit >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  cat >inputmsg <<EOF
+>  A message from the
+>  standard input
 
-This only makes sense is 'batch-size' is specified but not 'relogin'.
-If the other way around, then the error is confusing. How about this
-instead?
-
-    "--batch-size and --relogin must be specified together"
-
-...or something.
