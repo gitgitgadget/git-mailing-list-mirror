@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F45E1F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 20:38:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BD421F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 20:38:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752482AbeBHUic (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 15:38:32 -0500
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:38252 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeBHUhz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 15:37:55 -0500
-Received: by mail-qk0-f196.google.com with SMTP id w128so7351698qkb.5
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 12:37:54 -0800 (PST)
+        id S1752470AbeBHUib (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 15:38:31 -0500
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36486 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752135AbeBHUh5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 15:37:57 -0500
+Received: by mail-qt0-f195.google.com with SMTP id q18so1152182qtl.3
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 12:37:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X8eB6P0eGBCTHI3JMy+1MiOCVfS/GSCHtyNkpk7j3o4=;
-        b=CpDKN6Ma+qwnPGy87H8YSlr2iUOSWLHbbm7cLtFedY2zliXxv+v0mg9mgRsuk9ViJ5
-         6zZOQv5LLx8ot/pnDQBHHfQARQJzaaVvcuiaLK4HhjMIfNzbgpy0fTtYeHAMV6Pm5zbY
-         6TCeCIr0FmkEiJ3wUuvNwlSiJMUK44Akp9SxqySskIqVJAOeKwNpepi8Ohmjt968iNu5
-         VzuBkWnB5Apqv9my8jsi3TdvVgslA6oECqQm6ACfZFWoRwfLFcOF0bESqPNodNgF3Osd
-         VJEJIboWFRJuqzIbk7G9G0uT31y6fjlbwCC7WVPpH43VffgwbwpHSSkZQv/Pp0nLkt+T
-         d6lA==
+        bh=533WNkGZ9+R3YcS8m7IzvYX/WQUsSNbXb/jbuAW8vmM=;
+        b=lkFZMcd770co4Z0hRKReTayopXbbG1wBaj8+aQ5fRk5+poVir/afL19tSJ7DI/miJE
+         vAV/vndCjObH1XXLv86jtAh2vcFVX6mswNp2c4kItVyLu6k9M7cLlWv5/er2VA1VGy4b
+         j5bqrsw/WQKZHN5dGF65olmu9plcv/la3Vz3SPAzIe4Ub0QrmlILc913XAXneJJbv91T
+         WBgkf/KNZ+cis1CvD10WudiQOg1a1GW3Hgb7H9ALYaMlMGfRNARmrDAnjiLka7/aQKZZ
+         8OWX52j5EbGqXPSWVhn+WNKgNWwKnXMRNPa1GbKGU2LTxnYdSWvdiwi9/AMrtpZ9rsQs
+         oXpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=X8eB6P0eGBCTHI3JMy+1MiOCVfS/GSCHtyNkpk7j3o4=;
-        b=TVcQAMZhP2ELTp97y8eT8bMNdesNL4KoWaXfE9GNc+YZRV+hkzwlKAKJ6zCayQCMUF
-         nsga8MaXNXdwfHLrd4BLOo6ud66FuY4A5cdLb7b3mxfTPiGIxlaQ+scjf0DPnfVQCMAT
-         aUX0wikk0tS4UINIM2hMmXlKokeY3O78xqCucE3pMlZ8aNz/5XE3yEHk7JYap7KKqplb
-         as8nKE9+YsckuPCFJwdt5js6MMB9QbG9U5ipIGmDsJyVEek+dN9Mou1QuhdsWEYlQh7F
-         l+41353p7mpwQvRgioXv1uz21Z0qISBgNjJ+SiwmpGxEtCKIfD+SjhmMBAB0U0mkD68a
-         lu4w==
-X-Gm-Message-State: APf1xPC63el7yNI8WRbjIr0eiJ6+zm4Vl5C9F/tG6Xk6KZxirC+oKMmm
-        N5RL9nI068hHn6vrxF78aQr5c1D6Ofo=
-X-Google-Smtp-Source: AH8x2262zaiAnEkZfYLzOyD2xKyhx5HiH5QJQGIdOgL4qGHkLf57uHYInQxwPuFzzPwW1IZiGeBITw==
-X-Received: by 10.55.118.133 with SMTP id r127mr422345qkc.149.1518122273795;
-        Thu, 08 Feb 2018 12:37:53 -0800 (PST)
+        bh=533WNkGZ9+R3YcS8m7IzvYX/WQUsSNbXb/jbuAW8vmM=;
+        b=RsS7suzQQlRrSlieTW1ABJuFddpns8Ma5Qfz+uWzb/9L+yIyhHWkW3k3rFHPrltJO/
+         Tyh2GXsdxvI4EObWoNcIFYIfGaSgvqF4ZlQja3ZWng5z+OPV41WIiS2YsLHwoiCYzyKI
+         GhJ3royt0NAFlvFkm69mIbZ/jZvz+PjzakNAZnM+y9hawKB6lm5VNtrrCmablM3K95M1
+         auzQHPZmb0vsIRA/Dro5AOHNeiKUQrzumXHhWRY5cid/6PfZi2fbdd+/RYjJxa7+b59l
+         zx1CQAWzYYqsAK1+vjt10n+JxOWUPjqV479eKx3UThnH4UpPucqLQPuXyyj2n67MiTjw
+         jSIw==
+X-Gm-Message-State: APf1xPDCbO8NKZUChS019GQDHvXSwMYo62TzIVX9QsBwn2XByd3mHXRm
+        1QL7E1bXM9TvEACs3WQvGBZmnC6zrv4=
+X-Google-Smtp-Source: AH8x227Ix4TiP2q0qHWJWdULe/ErPtUR51/k9TrLhg/R2hGrixozHmuZ9Y+zMQgZ1Di3BeU0Y5P1WA==
+X-Received: by 10.237.42.120 with SMTP id k53mr756426qtf.283.1518122276053;
+        Thu, 08 Feb 2018 12:37:56 -0800 (PST)
 Received: from stolee-linux.corp.microsoft.com ([2001:4898:8010:0:eb4a:5dff:fe0f:7308])
-        by smtp.gmail.com with ESMTPSA id 58sm636735qtm.51.2018.02.08.12.37.52
+        by smtp.gmail.com with ESMTPSA id 58sm636735qtm.51.2018.02.08.12.37.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Feb 2018 12:37:53 -0800 (PST)
+        Thu, 08 Feb 2018 12:37:55 -0800 (PST)
 From:   Derrick Stolee <stolee@gmail.com>
 X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     dstolee@microsoft.com, git@jeffhostetler.com, gitster@pobox.com,
         peff@peff.net, jonathantanmy@google.com, sbeller@google.com,
         szeder.dev@gmail.com
-Subject: [PATCH v3 02/14] graph: add commit graph design document
-Date:   Thu,  8 Feb 2018 15:37:26 -0500
-Message-Id: <1518122258-157281-3-git-send-email-dstolee@microsoft.com>
+Subject: [PATCH v3 04/14] commit-graph: implement write_commit_graph()
+Date:   Thu,  8 Feb 2018 15:37:28 -0500
+Message-Id: <1518122258-157281-5-git-send-email-dstolee@microsoft.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
 References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
@@ -66,209 +66,423 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add Documentation/technical/commit-graph.txt with details of the planned
-commit graph feature, including future plans.
+Teach Git to write a commit graph file by checking all packed objects
+to see if they are commits, then store the file in the given pack
+directory.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/technical/commit-graph.txt | 189 +++++++++++++++++++++++++++++++
- 1 file changed, 189 insertions(+)
- create mode 100644 Documentation/technical/commit-graph.txt
+ Makefile       |   1 +
+ commit-graph.c | 368 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit-graph.h |  13 ++
+ 3 files changed, 382 insertions(+)
+ create mode 100644 commit-graph.c
+ create mode 100644 commit-graph.h
 
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
+diff --git a/Makefile b/Makefile
+index fc40b816dc..eeaeb6a745 100644
+--- a/Makefile
++++ b/Makefile
+@@ -761,6 +761,7 @@ LIB_OBJS += color.o
+ LIB_OBJS += column.o
+ LIB_OBJS += combine-diff.o
+ LIB_OBJS += commit.o
++LIB_OBJS += commit-graph.o
+ LIB_OBJS += compat/obstack.o
+ LIB_OBJS += compat/terminal.o
+ LIB_OBJS += config.o
+diff --git a/commit-graph.c b/commit-graph.c
 new file mode 100644
-index 0000000000..fc86b06041
+index 0000000000..cb47b68871
 --- /dev/null
-+++ b/Documentation/technical/commit-graph.txt
-@@ -0,0 +1,189 @@
-+Git Commit Graph Design Notes
-+=============================
++++ b/commit-graph.c
+@@ -0,0 +1,368 @@
++#include "cache.h"
++#include "config.h"
++#include "git-compat-util.h"
++#include "pack.h"
++#include "packfile.h"
++#include "commit.h"
++#include "object.h"
++#include "revision.h"
++#include "sha1-lookup.h"
++#include "commit-graph.h"
 +
-+Git walks the commit graph for many reasons, including:
++#define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
++#define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
++#define GRAPH_CHUNKID_OIDLOOKUP 0x4f49444c /* "OIDL" */
++#define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
++#define GRAPH_CHUNKID_LARGEEDGES 0x45444745 /* "EDGE" */
 +
-+1. Listing and filtering commit history.
-+2. Computing merge bases.
++#define GRAPH_DATA_WIDTH 36
 +
-+These operations can become slow as the commit count grows. The merge
-+base calculation shows up in many user-facing commands, such as 'merge-base'
-+or 'status' and can take minutes to compute depending on history shape.
++#define GRAPH_VERSION_1 0x1
++#define GRAPH_VERSION GRAPH_VERSION_1
 +
-+There are two main costs here:
++#define GRAPH_OID_VERSION_SHA1 1
++#define GRAPH_OID_LEN_SHA1 20
++#define GRAPH_OID_VERSION GRAPH_OID_VERSION_SHA1
++#define GRAPH_OID_LEN GRAPH_OID_LEN_SHA1
 +
-+1. Decompressing and parsing commits.
-+2. Walking the entire graph to avoid topological order mistakes.
++#define GRAPH_LARGE_EDGES_NEEDED 0x80000000
++#define GRAPH_PARENT_MISSING 0x7fffffff
++#define GRAPH_EDGE_LAST_MASK 0x7fffffff
++#define GRAPH_PARENT_NONE 0x70000000
 +
-+The commit graph file is a supplemental data structure that accelerates
-+commit graph walks. If a user downgrades or disables the 'core.commitGraph'
-+config setting, then the existing ODB is sufficient. The file is stored
-+next to packfiles either in the .git/objects/pack directory or in the pack
-+directory of an alternate.
++#define GRAPH_LAST_EDGE 0x80000000
 +
-+The commit graph file stores the commit graph structure along with some
-+extra metadata to speed up graph walks. By listing commit OIDs in lexi-
-+cographic order, we can identify an integer position for each commit and
-+refer to the parents of a commit using those integer positions. We use
-+binary search to find initial commits and then use the integer positions
-+for fast lookups during the walk.
++#define GRAPH_FANOUT_SIZE (4 * 256)
++#define GRAPH_CHUNKLOOKUP_WIDTH 12
++#define GRAPH_CHUNKLOOKUP_SIZE (5 * GRAPH_CHUNKLOOKUP_WIDTH)
++#define GRAPH_MIN_SIZE (GRAPH_CHUNKLOOKUP_SIZE + GRAPH_FANOUT_SIZE + \
++			GRAPH_OID_LEN + 8)
 +
-+A consumer may load the following info for a commit from the graph:
++char* get_commit_graph_filename_hash(const char *pack_dir,
++				     struct object_id *hash)
++{
++	size_t len;
++	struct strbuf path = STRBUF_INIT;
++	strbuf_addstr(&path, pack_dir);
++	strbuf_addstr(&path, "/graph-");
++	strbuf_addstr(&path, oid_to_hex(hash));
++	strbuf_addstr(&path, ".graph");
 +
-+1. The commit OID.
-+2. The list of parents, along with their integer position.
-+3. The commit date.
-+4. The root tree OID.
-+5. The generation number (see definition below).
++	return strbuf_detach(&path, &len);
++}
 +
-+Values 1-4 satisfy the requirements of parse_commit_gently().
++static void write_graph_chunk_fanout(struct sha1file *f,
++				     struct commit **commits,
++				     int nr_commits)
++{
++	uint32_t i, count = 0;
++	struct commit **list = commits;
++	struct commit **last = commits + nr_commits;
 +
-+Define the "generation number" of a commit recursively as follows:
++	/*
++	 * Write the first-level table (the list is sorted,
++	 * but we use a 256-entry lookup to be able to avoid
++	 * having to do eight extra binary search iterations).
++	 */
++	for (i = 0; i < 256; i++) {
++		while (list < last) {
++			if ((*list)->object.oid.hash[0] != i)
++				break;
++			count++;
++			list++;
++		}
 +
-+ * A commit with no parents (a root commit) has generation number one.
++		sha1write_be32(f, count);
++	}
++}
 +
-+ * A commit with at least one parent has generation number one more than
-+   the largest generation number among its parents.
++static void write_graph_chunk_oids(struct sha1file *f, int hash_len,
++				   struct commit **commits, int nr_commits)
++{
++	struct commit **list, **last = commits + nr_commits;
++	for (list = commits; list < last; list++)
++		sha1write(f, (*list)->object.oid.hash, (int)hash_len);
++}
 +
-+Equivalently, the generation number of a commit A is one more than the
-+length of a longest path from A to a root commit. The recursive definition
-+is easier to use for computation and observing the following property:
++static int commit_pos(struct commit **commits, int nr_commits,
++		      const struct object_id *oid, uint32_t *pos)
++{
++	uint32_t first = 0, last = nr_commits;
 +
-+    If A and B are commits with generation numbers N and M, respectively,
-+    and N <= M, then A cannot reach B. That is, we know without searching
-+    that B is not an ancestor of A because it is further from a root commit
-+    than A.
++	while (first < last) {
++		uint32_t mid = first + (last - first) / 2;
++		struct object_id *current;
++		int cmp;
 +
-+    Conversely, when checking if A is an ancestor of B, then we only need
-+    to walk commits until all commits on the walk boundary have generation
-+    number at most N. If we walk commits using a priority queue seeded by
-+    generation numbers, then we always expand the boundary commit with highest
-+    generation number and can easily detect the stopping condition.
++		current = &(commits[mid]->object.oid);
++		cmp = oidcmp(oid, current);
++		if (!cmp) {
++			*pos = mid;
++			return 1;
++		}
++		if (cmp > 0) {
++			first = mid + 1;
++			continue;
++		}
++		last = mid;
++	}
 +
-+This property can be used to significantly reduce the time it takes to
-+walk commits and determine topological relationships. Without generation
-+numbers, the general heuristic is the following:
++	*pos = first;
++	return 0;
++}
 +
-+    If A and B are commits with commit time X and Y, respectively, and
-+    X < Y, then A _probably_ cannot reach B.
++static void write_graph_chunk_data(struct sha1file *f, int hash_len,
++				   struct commit **commits, int nr_commits)
++{
++	struct commit **list = commits;
++	struct commit **last = commits + nr_commits;
++	uint32_t num_large_edges = 0;
 +
-+This heuristic is currently used whenever the computation can make
-+mistakes with topological orders (such as "git log" with default order),
-+but is not used when the topological order is required (such as merge
-+base calculations, "git log --graph").
++	while (list < last) {
++		struct commit_list *parent;
++		uint32_t int_id;
++		uint32_t packedDate[2];
 +
-+In practice, we expect some commits to be created recently and not stored
-+in the commit graph. We can treat these commits as having "infinite"
-+generation number and walk until reaching commits with known generation
-+number.
++		parse_commit(*list);
++		sha1write(f, (*list)->tree->object.oid.hash, hash_len);
 +
-+Design Details
-+--------------
++		parent = (*list)->parents;
 +
-+- A graph file is stored in a file named 'graph-<hash>.graph' in the pack
-+  directory. This could be stored in an alternate.
++		if (!parent)
++			int_id = GRAPH_PARENT_NONE;
++		else if (!commit_pos(commits, nr_commits,
++				     &(parent->item->object.oid), &int_id))
++			int_id = GRAPH_PARENT_MISSING;
 +
-+- The most-recent graph file hash is stored in a 'graph-head' file for
-+  immediate access and storing backup graphs. This could be stored in an
-+  alternate, and refers to a 'graph-<hash>.graph' file in the same pack
-+  directory.
++		sha1write_be32(f, int_id);
 +
-+- The core.commitGraph config setting must be on to consume graph files.
++		if (parent)
++			parent = parent->next;
 +
-+- The file format includes parameters for the object id length and hash
-+  algorithm, so a future change of hash algorithm does not require a change
-+  in format.
++		if (!parent)
++			int_id = GRAPH_PARENT_NONE;
++		else if (parent->next)
++			int_id = GRAPH_LARGE_EDGES_NEEDED | num_large_edges;
++		else if (!commit_pos(commits, nr_commits,
++				    &(parent->item->object.oid), &int_id))
++			int_id = GRAPH_PARENT_MISSING;
 +
-+Current Limitations
-+-------------------
++		sha1write_be32(f, int_id);
 +
-+- Only one graph file is used at one time. This allows the integer position
-+  to seek into the single graph file. It is possible to extend the model
-+  for multiple graph files, but that is currently not part of the design.
++		if (parent && parent->next) {
++			do {
++				num_large_edges++;
++				parent = parent->next;
++			} while (parent);
++		}
 +
-+- .graph files are managed only by the 'commit-graph' builtin. These are not
-+  updated automatically during clone, fetch, repack, or creating new commits.
++		if (sizeof((*list)->date) > 4)
++			packedDate[0] = htonl(((*list)->date >> 32) & 0x3);
++		else
++			packedDate[0] = 0;
 +
-+- There is no '--verify' option for the 'commit-graph' builtin to verify the
-+  contents of the graph file agree with the contents in the ODB.
++		packedDate[1] = htonl((*list)->date);
++		sha1write(f, packedDate, 8);
 +
-+- When rewriting the graph, we do not check for a commit still existing
-+  in the ODB, so garbage collection may remove commits.
++		list++;
++	}
++}
 +
-+- Generation numbers are not computed in the current version. The file
-+  format supports storing them, along with a mechanism to upgrade from
-+  a file without generation numbers to one that uses them.
++static void write_graph_chunk_large_edges(struct sha1file *f,
++					  struct commit **commits,
++					  int nr_commits)
++{
++	struct commit **list = commits;
++	struct commit **last = commits + nr_commits;
++	struct commit_list *parent;
 +
-+Future Work
-+-----------
++	while (list < last) {
++		int num_parents = 0;
++		for (parent = (*list)->parents; num_parents < 3 && parent;
++		     parent = parent->next)
++			num_parents++;
 +
-+- The file format includes room for precomputed generation numbers. These
-+  are not currently computed, so all generation numbers will be marked as
-+  0 (or "uncomputed"). A later patch will include this calculation.
++		if (num_parents <= 2) {
++			list++;
++			continue;
++		}
 +
-+- The commit graph is currently incompatible with commit grafts. This can be
-+  remedied by duplicating or refactoring the current graft logic.
++		/* Since num_parents > 2, this initializer is safe. */
++		for (parent = (*list)->parents->next; parent; parent = parent->next) {
++			uint32_t int_id, swap_int_id;
++			uint32_t last_edge = 0;
++			if (!parent->next)
++				last_edge |= GRAPH_LAST_EDGE;
 +
-+- After computing and storing generation numbers, we must make graph
-+  walks aware of generation numbers to gain the performance benefits they
-+  enable. This will mostly be accomplished by swapping a commit-date-ordered
-+  priority queue with one ordered by generation number. The following
-+  operations are important candidates:
++			if (commit_pos(commits, nr_commits,
++				       &(parent->item->object.oid),
++				       &int_id))
++				swap_int_id = htonl(int_id | last_edge);
++			else
++				swap_int_id = htonl(GRAPH_PARENT_MISSING | last_edge);
 +
-+    - paint_down_to_common()
-+    - 'log --topo-order'
++			sha1write(f, &swap_int_id, 4);
++		}
 +
-+- The graph currently only adds commits to a previously existing graph.
-+  When writing a new graph, we could check that the ODB still contains
-+  the commits and choose to remove the commits that are deleted from the
-+  ODB. For performance reasons, this check should remain optional.
++		list++;
++	}
++}
 +
-+- Currently, parse_commit_gently() requires filling in the root tree
-+  object for a commit. This passes through lookup_tree() and consequently
-+  lookup_object(). Also, it calls lookup_commit() when loading the parents.
-+  These method calls check the ODB for object existence, even if the
-+  consumer does not need the content. For example, we do not need the
-+  tree contents when computing merge bases. Now that commit parsing is
-+  removed from the computation time, these lookup operations are the
-+  slowest operations keeping graph walks from being fast. Consider
-+  loading these objects without verifying their existence in the ODB and
-+  only loading them fully when consumers need them. Consider a method
-+  such as "ensure_tree_loaded(commit)" that fully loads a tree before
-+  using commit->tree.
++static int commit_compare(const void *_a, const void *_b)
++{
++	struct object_id *a = *(struct object_id **)_a;
++	struct object_id *b = *(struct object_id **)_b;
++	return oidcmp(a, b);
++}
 +
-+- The current design uses the 'commit-graph' builtin to generate the graph.
-+  When this feature stabilizes enough to recommend to most users, we should
-+  add automatic graph writes to common operations that create many commits.
-+  For example, one coulde compute a graph on 'clone', 'fetch', or 'repack'
-+  commands.
++struct packed_commit_list {
++	struct commit **list;
++	int nr;
++	int alloc;
++};
 +
-+- A server could provide a commit graph file as part of the network protocol
-+  to avoid extra calculations by clients.
++struct packed_oid_list {
++	struct object_id **list;
++	int nr;
++	int alloc;
++};
 +
-+Related Links
-+-------------
-+[0] https://bugs.chromium.org/p/git/issues/detail?id=8
-+    Chromium work item for: Serialized Commit Graph
++static int if_packed_commit_add_to_list(const struct object_id *oid,
++					struct packed_git *pack,
++					uint32_t pos,
++					void *data)
++{
++	struct packed_oid_list *list = (struct packed_oid_list*)data;
++	enum object_type type;
++	unsigned long size;
++	void *inner_data;
++	off_t offset = nth_packed_object_offset(pack, pos);
++	inner_data = unpack_entry(pack, offset, &type, &size);
 +
-+[1] https://public-inbox.org/git/20110713070517.GC18566@sigill.intra.peff.net/
-+    An abandoned patch that introduced generation numbers.
++	if (inner_data)
++		free(inner_data);
 +
-+[2] https://public-inbox.org/git/20170908033403.q7e6dj7benasrjes@sigill.intra.peff.net/
-+    Discussion about generation numbers on commits and how they interact
-+    with fsck.
++	if (type != OBJ_COMMIT)
++		return 0;
 +
-+[3] https://public-inbox.org/git/20170907094718.b6kuzp2uhvkmwcso@sigill.intra.peff.net/t/#m7a2ea7b355aeda962e6b86404bcbadc648abfbba
-+    More discussion about generation numbers and not storing them inside
-+    commit objects. A valuable quote:
++	ALLOC_GROW(list->list, list->nr + 1, list->alloc);
++	list->list[list->nr] = xmalloc(sizeof(struct object_id));
++	oidcpy(list->list[list->nr], oid);
++	(list->nr)++;
 +
-+    "I think we should be moving more in the direction of keeping
-+     repo-local caches for optimizations. Reachability bitmaps have been
-+     a big performance win. I think we should be doing the same with our
-+     properties of commits. Not just generation numbers, but making it
-+     cheap to access the graph structure without zlib-inflating whole
-+     commit objects (i.e., packv4 or something like the "metapacks" I
-+     proposed a few years ago)."
++	return 0;
++}
 +
-+[4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
-+    A patch to remove the ahead-behind calculation from 'status'.
++struct object_id *write_commit_graph(const char *pack_dir)
++{
++	struct packed_oid_list oids;
++	struct packed_commit_list commits;
++	struct sha1file *f;
++	int i, count_distinct = 0;
++	struct strbuf tmp_file = STRBUF_INIT;
++	unsigned char final_hash[GIT_MAX_RAWSZ];
++	char *graph_name;
++	int fd;
++	uint32_t chunk_ids[5];
++	uint64_t chunk_offsets[5];
++	int num_long_edges;
++	struct object_id *f_hash;
++	char *fname;
++	struct commit_list *parent;
++
++	oids.nr = 0;
++	oids.alloc = 1024;
++	ALLOC_ARRAY(oids.list, oids.alloc);
++
++	for_each_packed_object(if_packed_commit_add_to_list, &oids, 0);
++
++	QSORT(oids.list, oids.nr, commit_compare);
++
++	count_distinct = 1;
++	for (i = 1; i < oids.nr; i++) {
++		if (oidcmp(oids.list[i-1], oids.list[i]))
++			count_distinct++;
++	}
++
++	commits.nr = 0;
++	commits.alloc = count_distinct;
++	ALLOC_ARRAY(commits.list, commits.alloc);
++
++	num_long_edges = 0;
++	for (i = 0; i < oids.nr; i++) {
++		int num_parents = 0;
++		if (i > 0 && !oidcmp(oids.list[i-1], oids.list[i]))
++			continue;
++
++		commits.list[commits.nr] = lookup_commit(oids.list[i]);
++		parse_commit(commits.list[commits.nr]);
++
++		for (parent = commits.list[commits.nr]->parents;
++		     parent; parent = parent->next)
++			num_parents++;
++
++		if (num_parents > 2)
++			num_long_edges += num_parents - 1;
++
++		commits.nr++;
++	}
++
++	strbuf_addstr(&tmp_file, pack_dir);
++	strbuf_addstr(&tmp_file, "/tmp_graph_XXXXXX");
++
++	fd = git_mkstemp_mode(tmp_file.buf, 0444);
++	if (fd < 0)
++		die_errno("unable to create '%s'", tmp_file.buf);
++
++	graph_name = strbuf_detach(&tmp_file, NULL);
++	f = sha1fd(fd, graph_name);
++
++	sha1write_be32(f, GRAPH_SIGNATURE);
++
++	sha1write_u8(f, GRAPH_VERSION);
++	sha1write_u8(f, GRAPH_OID_VERSION);
++	sha1write_u8(f, GRAPH_OID_LEN);
++	sha1write_u8(f, 4); /* number of chunks */
++
++	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
++	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
++	chunk_ids[2] = GRAPH_CHUNKID_DATA;
++	chunk_ids[3] = GRAPH_CHUNKID_LARGEEDGES;
++	chunk_ids[4] = 0;
++
++	chunk_offsets[0] = 8 + GRAPH_CHUNKLOOKUP_SIZE;
++	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
++	chunk_offsets[2] = chunk_offsets[1] + GRAPH_OID_LEN * commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + (GRAPH_OID_LEN + 16) * commits.nr;
++	chunk_offsets[4] = chunk_offsets[3] + 4 * num_long_edges;
++
++	for (i = 0; i <= 4; i++) {
++		uint32_t chunk_write[3];
++
++		chunk_write[0] = htonl(chunk_ids[i]);
++		chunk_write[1] = htonl(chunk_offsets[i] >> 32);
++		chunk_write[2] = htonl(chunk_offsets[i] & 0xffffffff);
++		sha1write(f, chunk_write, 12);
++	}
++
++	write_graph_chunk_fanout(f, commits.list, commits.nr);
++	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_large_edges(f, commits.list, commits.nr);
++
++	sha1close(f, final_hash, CSUM_CLOSE | CSUM_FSYNC);
++
++	f_hash = xmalloc(sizeof(struct object_id));
++	hashcpy(f_hash->hash, final_hash);
++	fname = get_commit_graph_filename_hash(pack_dir, f_hash);
++
++	if (rename(graph_name, fname))
++		die("failed to rename %s to %s", graph_name, fname);
++
++	free(oids.list);
++	oids.alloc = 0;
++	oids.nr = 0;
++
++	return f_hash;
++}
++
+diff --git a/commit-graph.h b/commit-graph.h
+new file mode 100644
+index 0000000000..4756f6ba5b
+--- /dev/null
++++ b/commit-graph.h
+@@ -0,0 +1,13 @@
++#ifndef COMMIT_GRAPH_H
++#define COMMIT_GRAPH_H
++
++#include "git-compat-util.h"
++#include "commit.h"
++
++extern char* get_commit_graph_filename_hash(const char *pack_dir,
++					    struct object_id *hash);
++
++extern struct object_id *write_commit_graph(const char *pack_dir);
++
++#endif
 +
 -- 
 2.15.1.45.g9b7079f
