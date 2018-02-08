@@ -2,137 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35ED21F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 21:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 683D71F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 22:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752179AbeBHVnQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 16:43:16 -0500
-Received: from mail-yw0-f193.google.com ([209.85.161.193]:38572 "EHLO
-        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeBHVnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 16:43:15 -0500
-Received: by mail-yw0-f193.google.com with SMTP id m84so3714156ywd.5
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 13:43:15 -0800 (PST)
+        id S1752154AbeBHWAU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 17:00:20 -0500
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:35747 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751094AbeBHWAT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 17:00:19 -0500
+Received: by mail-qk0-f196.google.com with SMTP id c4so5324570qkm.2
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 14:00:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xJNCKLW+nIte1EFYH1oc1Dupm5iihifMY0aWcGLOs/k=;
-        b=ME3RNw+t2iiXHOM/kT/hm/Dbe1R3gGpvr/DIWTgKcz8w6TNPhCM1i08+5G2ZdOqBeY
-         ncLpxOnU05ZSR8dcDLBWy6z0trYvEdS5SLbUyVxYQuP3sQnOTooX33SoaPziOkrLsDVZ
-         zF37deGahaPGnYdq949l/tlGDssi6DFn9xHpZfz/8Wa9Vp3rucbHNZqkhR9dlniBJSHz
-         YPNQlUgXaLjCXQKh0AWVm29fY3GHFyrhkOx8G4q6XsC+yDlipcuQ3yqXxKRl3BAli5M9
-         QmHYqbJKiFf0pGOa42Tzt1wP4/57uejSvlVC7nQ+ySMXVBsroSv62QXz+XGwK6fe88iO
-         eUOg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=rTM8vZnlYJcx6GQk8fdL+cC5NI6luowi8Y8lyax2tDM=;
+        b=pBp7L28eahsJ0C9270WVpqmTPAYc96Hq+SI6X1cBqkyXPhpgvURW73vemPBmpd1c30
+         P0cdbZL5V/SBulUQO9NMI3x25fAbfLqXI53bJCnwW/RHZ3QluYOhN7MRFRwZybEEGiWm
+         NKhmomFuQMVQN7H029iXQ33SKEEpxnBD/KlFywo1JFCokc3w+azgmFd6MvmMyt8Id6Jg
+         kV1GQFlDULb70xiQzZQgw62EzHgymg7wsxs+8oSA7+w5qpwisBomSsIS9McclrT9cZrz
+         +O9lim/fDdqNJrXuYj6MvEuD7z/NspJCgcJf871da7wCj82bfMbvvxcY+vfFkcCrwnDQ
+         1hVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xJNCKLW+nIte1EFYH1oc1Dupm5iihifMY0aWcGLOs/k=;
-        b=sJGTa5MF1NfVH7gRN6XmOrOyg0katZnf1lbtKyvuEmA3heWAv0ZeX8K6KbNDgfm0Jg
-         f4RUqX+FiYlOpElBvpDx49A/HrNv8zqJoSkwLw+CCpSpsk0LhsYsigrnNLmqddMmNXFW
-         CsM3iQt7CZsBrzDByPuGrZe3PMhQfKN7AyJSqxwW3yjngdb/XmWXLsUQt3FWFoqN8ZA4
-         pDzBryOqOB4ff4q3VC1FSNt5zRXK5tEyyKfASP47mlqs8kIBaebYkd6QWU4DcQJFhIPf
-         9bnn40DG2pgJ461qJi1HnZOhZryRLcx3rXXrvFNPnBbtYa1nW0UacUwVzUV62VvW/NHb
-         6/vQ==
-X-Gm-Message-State: APf1xPCxWQ+o8vHLFOkSHP5ZIayJP65f3CC4RWWBN3lbCNesrp85YDOJ
-        V8VEwkJnqSeaf68UHR9py51dXb8yu4oq8K3gF/3AeAtW
-X-Google-Smtp-Source: AH8x226gdNkhJb2aMcKjxka8S5xXuOTNKwVtlCGsIYnvaOFov76e6smHGO4WFWc3I4Im+FFOcnfcKTG2Pae2P49JI2k=
-X-Received: by 10.37.59.204 with SMTP id i195mr367730yba.420.1518126194354;
- Thu, 08 Feb 2018 13:43:14 -0800 (PST)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=rTM8vZnlYJcx6GQk8fdL+cC5NI6luowi8Y8lyax2tDM=;
+        b=fLpO8sokWff42QlVV4cxzPUlcTBGkzf2iJ+FwMsFPjhj9VztuUqJ6pgzGJCvVqWTEC
+         /HuQQsEj2CwSpmnkhDZrMREtAXWZfFFeIPVgUdFH0xRP85AyTzQZDLTRziBHyq7umHsC
+         08XcQ5Gyxk994y3hJ0ae96Um2ZF2DCSwYEwe3QbXwzWN+JSm0H72ImLiFdFpNLj7Eg7K
+         XfYF/pIb0FO/VGLfmE74b5JgWbWyMCgGJGAkRohBRy1M3Rv8lRUVD0+KamTEW1Ut6Tx+
+         n18DhtTvCrJmjg9L7qUyCW6YCqfBFxTihv8I6QZ88QxjljYBGc/ARaSxnFuefK8/N53s
+         +Zmw==
+X-Gm-Message-State: APf1xPAlybAxUWWElZUaTf7ol+velXDOM1yHRP3bU9+hSotjbwQOaI06
+        jGIF/tmZ5EScABlyDMMqihTxcudI8301EGt5DH8=
+X-Google-Smtp-Source: AH8x224ABBdg/mJifOINVSmM7CYDHwsvuMDL8g3vs7FrEg5XwvGPovX2vsN2K38xi/L72q031AXsXs3wfhGmhP9ftac=
+X-Received: by 10.55.36.68 with SMTP id w65mr737076qkg.132.1518127218621; Thu,
+ 08 Feb 2018 14:00:18 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.207.9 with HTTP; Thu, 8 Feb 2018 13:43:13 -0800 (PST)
-In-Reply-To: <20180208213806.GA6381@sigill.intra.peff.net>
-References: <20180208201546.194935-1-sbeller@google.com> <20180208204309.GA4541@sigill.intra.peff.net>
- <CAGZ79kb+xEVZagqqNCHCPQUbfH89N7fdrO7dp6WHRGgJJje28Q@mail.gmail.com> <20180208213806.GA6381@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 8 Feb 2018 13:43:13 -0800
-Message-ID: <CAGZ79kYjHMYO19bJUQNWXyiwOp3HwiiAYuOHO9O7VnxUzzC1Tg@mail.gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: mention "static" and "extern"
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
+Received: by 10.12.137.133 with HTTP; Thu, 8 Feb 2018 14:00:18 -0800 (PST)
+In-Reply-To: <CAGZ79kZ1WA15cybgi9u5h2fh37TOjYmDpLdHgFfyLGBf8pUwpg@mail.gmail.com>
+References: <CAPig+cQZr=UN3KC3LnaKy=oUYd1inbtDgi_pDuhPXf9HgFOdNw@mail.gmail.com>
+ <20180207234359.31493-1-sbeller@google.com> <CAPig+cQejz+1ZWep31hw0pjxUoewRt+-2WATtw6PEusfvhn8EA@mail.gmail.com>
+ <CAGZ79kZ1WA15cybgi9u5h2fh37TOjYmDpLdHgFfyLGBf8pUwpg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 8 Feb 2018 17:00:18 -0500
+X-Google-Sender-Auth: HXvq33Vsld-vyUiTpT0CIUNrMRo
+Message-ID: <CAPig+cRyx1KHJMn97mNy_BmX1D+cGEqVUT6x3Bw+tmsUOE3J+w@mail.gmail.com>
+Subject: Re: [PATCH] send-email: error out when relogin delay is missing
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Ramkumar Ramachandra <artagnon@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, mina86@mina86.com,
+        mst@kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+        Jan Viktorin <viktorin@rehivetech.com>,
+        xiaoqiang zhao <zxq_yx_007@163.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 1:38 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 08, 2018 at 01:04:08PM -0800, Stefan Beller wrote:
->
->> You may sense a pattern here: I currently have the very firm understanding
->> we use the extern keyword in our codebase.
+On Thu, Feb 8, 2018 at 1:21 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Feb 8, 2018 at 12:08 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Wed, Feb 7, 2018 at 6:43 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> +die __("When a batch size is given, the relogin delay must be set\n")
+>>> +       if defined $relogin_delay and not defined $batch_size;
 >>
->> And I can also attest that this was not always the case, as back in the
->> day I remember writing patches without the extern keyword only to be told:
->> (A) be similar to the function in the next lines
->> (B) the standard is to use extern
->> and I was convinced it was a bad decision to prefix declarations with
->> the extern keyword, but followed along as I don't want to have style
->> in the way of writing features.
+>> This only makes sense is 'batch-size' is specified but not 'relogin'.
+>> If the other way around, then the error is confusing. How about this
+>> instead?
+>>     "--batch-size and --relogin must be specified together"
+>> ...or something.
 >
-> It definitely was the case that people used to suggest "extern". I think
-> this was a Linus-ism from the early days, and I have been hating it for
-> almost 12 years now. ;)
->
->>   $ cat Documentation/CodingGuidelines |grep extern
->>   $ # oh no it's empty!
->>
->> Care to add a section to our coding guidelines?
->
-> Here's a patch.
->
-> -- >8 --
-> Subject: [PATCH] CodingGuidelines: mention "static" and "extern"
->
-> It perhaps goes without saying that file-local stuff should
-> be marked static, but it does not hurt to remind people.
->
-> Less obvious is that we are settling on "do not include
-> extern in function declarations". It is already the default
-> unless the function was previously declared static (but if
-> you are following a static declaration with an unmarked one,
-> you should think about why you are declaring the thing
-> twice). And so it just becomes an extra noise-word in our
-> header files.
->
-> We used to give the opposite advice, so there are quite a
-> few "extern" markers in early Git code. But this at least
-> makes a concrete suggestion that we can follow going
-> forward.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+> I like this for its expressiveness as it would have helped me a lot.
+> I dislike this because it is incorrect when you use the config options
+> instead of command line arguments.
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+Perhaps:
 
-... and now I can resend that patch, after fixing it to
-follow our style. :)
-
-> ---
->  Documentation/CodingGuidelines | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index c4cb5ff0d4..48aa4edfbd 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -386,6 +386,11 @@ For C programs:
->   - Use Git's gettext wrappers to make the user interface
->     translatable. See "Marking strings for translation" in po/README.
->
-> + - Variables and functions local to a given source file should be marked
-> +   with "static". Variables that are visible to other source files
-> +   must be declared with "extern" in header files. However, function
-> +   declarations should not use "extern", as that is already the default.
-> +
->  For Perl programs:
->
->   - Most of the C guidelines above apply.
-> --
-> 2.16.1.365.g89f5777adf
->
+    "`batch-size` and `relogin` must be specified together
+      (via command-line or configuration option)"
