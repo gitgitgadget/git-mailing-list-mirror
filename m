@@ -2,136 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22A381F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 15:37:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09A2D1F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 15:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752091AbeBHPhj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 10:37:39 -0500
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:37368 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752059AbeBHPhi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 10:37:38 -0500
-Received: by mail-wm0-f53.google.com with SMTP id v71so10768160wmv.2
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 07:37:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:user-agent:date:message-id:mime-version;
-        bh=xFca/rZ4NYwZ24D/8XgrCVdiPEQlFpOt7vCJm/qddNM=;
-        b=H8ax/bDklxZPTzAxmVybVCpW3eqxoYfjsmB+QLV69LGYTVV3toxwfvbQ6anSr/LBIg
-         OrSnZJir4JOcS116eKFrI1/X8BljMKrHe2lQJ4Bc9vU1B1LExKQA5A979Bj13hhJ5J1V
-         g9uaE/nlPQCV6LZ3UP0hMpNUhc4n+KKUDoP+9R35YhVLMSgPsYGYrL00xrBk9EG6bmOe
-         /3XwXxr0cZ3ZnPe3/5pMe2/VEZQYaG9JUg4C3SiStwtX6udGIUIJzt2OL4n3IK5lxFi+
-         ZjM441x1ceH8RMYnwFzVdVo7X4ISj5/0mKgaWEbzcDlPm2VzI/wrGYpTmIHWW2NPXo9e
-         JNpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:user-agent:date:message-id
-         :mime-version;
-        bh=xFca/rZ4NYwZ24D/8XgrCVdiPEQlFpOt7vCJm/qddNM=;
-        b=qyUfKZlekwLaU0mrf9s5jyNMQuU3trOvfq1XCL/KdXGyeN1YGZnE/i/rGo0bVpxtD8
-         fszdGX9zFk/oTGLOhnHVDqA4MuTDPXdGqsex4WS1LHLvhY94OZWU1nShCVpdWtPKFEdu
-         eAJyJo1U0QJh+B/YwKx2MRrMMS7v7SbSoRYOwEyTCz0BzoWWmGr9EOJDH3GHDK0L9IqT
-         wLN4ME2maPArFxBpvicOavcICK5eIz0B58kLLkdtLsn3zfdDwqkLGi3bYsXn2GowVIkD
-         SFk2TakhAE/2CI00S/JMl2C0NSiPES40xOUEvn3iG6/yy8wLArBhRB47XFF0JPq5AVeO
-         0J0w==
-X-Gm-Message-State: APf1xPCn5JIEt6+Kq0dRBfGXhjyQoQ4bLgOoEmGpBYUdS8DSHZdjKZA7
-        Rt4OjsNBp8I06aAsglrQl8yBaQCE
-X-Google-Smtp-Source: AH8x225byO+eOBS6FwGNETQHkNwP50o070XQjGmBIaZZiBvolGdT4S5tZZhivM0pYfjVK/V87EuLjQ==
-X-Received: by 10.80.165.201 with SMTP id b9mr2095733edc.211.1518104256924;
-        Thu, 08 Feb 2018 07:37:36 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id x7sm94469edi.27.2018.02.08.07.37.35
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 08 Feb 2018 07:37:35 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: How to produce a loose ref+size explosion via pruning + git-gc
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-Date:   Thu, 08 Feb 2018 16:37:32 +0100
-Message-ID: <87fu6bmr0j.fsf@evledraar.gmail.com>
+        id S1752179AbeBHPiE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 10:38:04 -0500
+Received: from kitenet.net ([66.228.36.95]:38402 "EHLO kitenet.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752135AbeBHPiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 10:38:02 -0500
+X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Feb 2018 10:38:02 EST
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1518103840; bh=oo1PkNAlcr5RycBYBkA4kguVRzf1G86XXIW7IKn6rrs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BPVzGpPou2t0Z+Uund5YP/NtPYM9f3MWtwTtS1fwM4OKIn+Ghx1xmAmQCMlZhVe5+
+         IFh1SrJaZBegYvjqNjCUulXQThpvO+6DTEIDhzkEaSt9ogXwucdWpeT/51pBluzqCq
+         CJ55fGmq+/mzjNfimYAW1GK5iPUpZOn4oOnIgWIs=
+Date:   Thu, 8 Feb 2018 11:30:40 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     Leo Gaspard <leo@gaspard.io>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Fetch-hooks
+Message-ID: <20180208153040.GA5180@kitenet.net>
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+ <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3MwIy2ne0vdjdPXF"
+Content-Disposition: inline
+In-Reply-To: <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+User-Agent: Mutt/1.9.3 (2018-01-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'll probably submit docs for this eventually, but the docs in my
---prune-tags series were already hard enough to review. Try running this
 
-    (
-        rm -rf /tmp/git &&
-        git clone https://github.com/git/git /tmp/git &&
-        cd /tmp/git >/dev/null &&
-        du -sh .git &&
-        git rev-list --all origin/master.. | wc -l &&
-        for clone in gitster peff avar chriscool mhagger pclouds Microsoft
-        do
-            git remote add $clone https://github.com/$clone/git &&
-            git fetch -q $clone
-        done &&
-        git gc &&
-        du -sh .git &&
-        git rev-list --all origin/master.. | wc -l &&
-        git fetch -q origin --prune 'refs/tags/*:refs/tags/*' &&
-        for remote in $(git remote | grep -v origin)
-        do
-            git remote rm $remote
-        done &&
-        git gc &&
-        du -sh .git &&
-        git rev-list --all origin/master.. | wc -l
-    )
+--3MwIy2ne0vdjdPXF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The output is:
+Leo Gaspard wrote:
+> That said, I just came upon [1] (esp. the description [2] and the patch
+> [3]), and wondered: it looks like the patch was abandoned midway in
+> favor of a hook refactoring. Would you happen to know whether the hook
+> refactoring eventually took place, and/or whether this patch was
+> resubmitted later, and/or whether it would still be possible to merge
+> this now? (not having any experience with git's internals yet, I don't
+> really know whether these are stupid questions or not)
+>=20
+> PS: Cc'ing Joey, as you most likely know best what eventually happened,
+> if you can remember it?
 
-    108M    .git
-    2222
-    160M    .git
-    62220
-    1.9G    .git
-    2222
+I don't remember it well, but reviewing the thread, I think it foundered
+on this comment by Junio:
 
-I.e. a fresh clone of git.git is 108MB, add a few more repos that have
-diverged quite a bit in its network ad it's 160MB repacked.
+> That use case sounds like that "git fetch" is called as a first class UI,
+> which is covered by "git myfetch" (you can call it "git annex fetch")
+> wrapper approach, the canonical example of a hook that we explicitly do
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> not want to add.
+  ^^^^^^^^^^^^^^^
 
-Now remove those remotes and "git gc" and it's 1.9GB, even though it's
-divergent by the same 2222 commits from master as the 108MB, but after
-running:
+While I still think a fetch hook would be a good idea for reasons of
+composability, I then just went off and implemented such a wrapper for
+my own particular use case, and the wrapper program then grew to cover
+use cases that a hook would not have been able to cover, so ...
 
-    git prune --expire=now
+--=20
+see shy jo
 
-It becomes ~108MB again.
+--3MwIy2ne0vdjdPXF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Now this is all expected behavior, we've made a bunch of objects
-unreferenced, so they all get exploded into loose objects, which takes a
-lot of space.
+-----BEGIN PGP SIGNATURE-----
 
-It's an interesting caveat when setting fetch.prune=true on checkouts
-that didn't previously have it and might have lots of brances to be
-pruned.
+iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAlp8bR0ACgkQ2xLbD/Bf
+jzioew/+LHaQHpjBUQ3GkK/UoBjDGh2GjyKo65coBVeY1ixK5Qh2AeKmG0sXP4m0
+z22Lq5BxbqbkRJ/Z28+Q32Ih+VN4me0RyHDuIt75+J6E6npHSUGUYm0Sb89prdpz
+Ce5dVC9+DE6Cajo5l83EFNjJiMz6tMyI0uLazGiFy4fzGAt4wIKVXJcKK4j4Q7i0
+wOf/YmJevbaQqdE36+fz/w1Mu6FAjqXnyTOJNZsEsWDesRwzZiUnNCd4RsF5lko0
+ctcPxKU+JeOFDYj6MlDkWhhokM+IJh/Mik7TRWAyGuN3sHJlwml67EToWOCsKEAS
+fTjbcsYivhPLGMrm/4gv/9jqvohVL56TXMF8nd4kMUU9/Rn9NrBcH1FfS2eSwc7J
+k/24KXwSW3bq3sGXIEVuvfFldjMTaZIZd0NJMolWP4yrJOMJReweS0YZ9SsOHdmh
+BNhmEOh5WmBoGtlF2uBpARu24E9U4+FJ3YzY3tii5IqCpiL1gq1+h/Ont0Id+lUe
+BoQSu68mtXd2uy6QiO8R84av3KSB3WISBkUEKcWCPiHhZnXta/E5r3gw1POvOxz4
+DmzRNQ5f4qA3l6JnUgSDaT/uHCAj2BhkvV7j6L0iMLxVy6sgGcBVoWKIH4eQPrHv
+t2QyZr2LQLmcNRv0H1q/B328KOZbNj+08ar5U+nyH0h4w1nYqsI=
+=nal8
+-----END PGP SIGNATURE-----
 
-For reasons I won't go into I'd had that disabled for a while here at
-work, and after re-enabling it we had some repos whose .git is usually
-2.5G explode to 30G once git-gc ran.
-
-The workaround is to set gc.pruneExpire low enough that when the gc hits
-all those objects get deleted, I set it to 1 day (from the default of 2
-weeks).
-
-But it doesn't help with repos that have already run git-gc and exploded
-in size, much to the confusion of users on those systems, those need a
-manual git-prune.
-
-Potential solutions to this have been discussed ad-nauseam here on
-list. Let's not go into that (unless someone feels like it).
-
-I mainly wanted to send this for later reference, and have some
-searchable record in case someone's confused when they turn on prune and
-their repo increases to 10x the previous size.
+--3MwIy2ne0vdjdPXF--
