@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BEE21F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 15:57:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B314F1F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 15:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752159AbeBHP5M (ORCPT <rfc822;e@80x24.org>);
+        id S1752175AbeBHP5O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 10:57:14 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:43737 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752100AbeBHP5M (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 8 Feb 2018 10:57:12 -0500
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:44537 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751786AbeBHP5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 10:57:09 -0500
-Received: by mail-wr0-f171.google.com with SMTP id v31so5199190wrc.11
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 07:57:09 -0800 (PST)
+Received: by mail-wr0-f194.google.com with SMTP id b52so5213566wrd.10
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 07:57:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6l0qALuJxjOBBBI/kn/FxMyxgoJwMO8ZDL1GHQ8vMkw=;
-        b=ARle1JK9U0bVzR+NWkdwkYrrEN0AyM3fqt3WBQl8qgswVS8rYBXT2OLMi3xJnVbr+w
-         sQkl+6oJ58p91EYMGkfw3+EM+sRuBaXduv6hWm8a4B0psNh6w6rtuK0PBjsFYfPkJFeG
-         DQ571AYUsG05XIZCQ1jtv7v29yxnw8Kk293GNSYw3uQEGC2A8FRX4YkN/XLJGMVnavmM
-         8a+gLB8YjbK+YyWSwsaA3tszgmtD47plYQCVx/7xerOSa5QepfdOSpxlQs8ZVA3uIB9X
-         Wk8Z8KXCpzmL0vU0JrncxsglMSl3LDHPKYso0k76CHfUDFYt3VVXV2yi0JPXOqv+XRrg
-         OPSA==
+        bh=R3HtMZRyjAG9O2gdcK+e5A1mLingoxlPsIt6ga6a1cg=;
+        b=ggy9QJL1Ly5BHyeNCaa3OqEFeZ/qpPsV4nAJgF/2piGEYe8gnKu9P0JJTfmbXf05XC
+         a2lsMcMT4Y0vzMsBOGAVofZfcdxLlbVRsOYQGI4YpCsqESCa/2M+63cswkX7lbZ1+cXh
+         Ubu0cGBsTM6sV44usKnUXiNTDoIy/anplCuCAegWgj/xsvd7PGslGbK8hZqhFk0Japwg
+         Jdvi+OZyzulHuWE1q9tDOGqYe0eqt0GFgWYmkMT51BrpNbwaotC/gb10A43tBAnB8as+
+         b0xFH+0uw/v3gb0JpQTfQ3RhKwwE5Kwxmrw4WLIHblbIlqvpvxcSidDGWIHZ72LpkDp0
+         9g0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6l0qALuJxjOBBBI/kn/FxMyxgoJwMO8ZDL1GHQ8vMkw=;
-        b=ICZxCyBIF8R2IckeoU8GghWx+4KcsumLdOP5i7nDAFCbd6k/vEvMOFLxSCqf3AAtBW
-         bxz4PA0GpAE+Sm4jK9lcEUoaW00Yc+ymhE79l7Lfm8N7Ki1TTB68V5b9lG6Lyzy5QzQU
-         kBsIfsiCz4MhlkOtD6piSuMv9Zlu1VMdva+skE5MFdwj28lN69q1V4YFmkG4BJQF7oqS
-         udvibGhVWOWtTm+XA2d79Zf8Ys7T768vFhZfXDk7wB/bWHkR4bTT61ylWTLc3DkNLHhc
-         1ITs1j9T8s+6PggTzdoHrCO9BxIR1SlJIz5w+FEbq6njMsaqeJe6AOzAZlApQrmSOv/R
-         /NKA==
-X-Gm-Message-State: APf1xPCqMRk/QmhB1p2o8AYBDYLZxHUVFjyvKsFkZHqw1FoozUqCGuYT
-        d2rF6CE5ndu/T3d6vTP7MQk=
-X-Google-Smtp-Source: AH8x224ZcjasdoGRTYKKfKEDhj9o8mGYuv8v/pnVRz6xAkP7TSPRhnepT0eCzLHmXf+o/0qKsFHr4A==
-X-Received: by 10.223.196.237 with SMTP id o42mr1127630wrf.188.1518105428519;
-        Thu, 08 Feb 2018 07:57:08 -0800 (PST)
+        bh=R3HtMZRyjAG9O2gdcK+e5A1mLingoxlPsIt6ga6a1cg=;
+        b=SRM9WPw8pMENY6sJPq8plPBRpJbvcsg98rncMPVWoFatnZVySOqXK04sJ9CglBnsUf
+         +/Lkc7kilo+N2jxROltQvhLE/qNQ0nuSu4MW7u2LeF++LXbR74RRYjDQdrZEuOFUAw5a
+         LRJOQA+ECNRt5FsZHDmpmzX5qMmQwR5ubRXiQiBUVX3JOOQ+h3MvVMk4MvPkD0YNBHNt
+         WqNMuw5zKUonRG6rm1H1Pf5DrW1yC/f/cL8y/6ngVCAWsO+crlgaDI2AxsvdGhXroxSE
+         T/LaBcHO1tMR35KZp/YG2yt6u2ekTPDjoi7fYrQM7G8Ams8YwQw4jvAIuOSaDuBXQcQa
+         NPzg==
+X-Gm-Message-State: APf1xPDdLmhtdKX+TZX+vq5vFY6Df4hybEKUNTdWoemXJPmhAilYHK1e
+        dvT+p5CglBDqvi+37iZuFC0=
+X-Google-Smtp-Source: AH8x224Pu2fyX4ZFIuC3zglbyHu0+1SFdFpKHmFKoqAT2Jw1CPAY0eMfM02RkX1x3qyAzW81GKJMPw==
+X-Received: by 10.223.195.92 with SMTP id e28mr1347182wrg.8.1518105431325;
+        Thu, 08 Feb 2018 07:57:11 -0800 (PST)
 Received: from localhost.localdomain (x4db2a6c8.dyn.telefonica.de. [77.178.166.200])
-        by smtp.gmail.com with ESMTPSA id p14sm308880wrg.42.2018.02.08.07.57.07
+        by smtp.gmail.com with ESMTPSA id p14sm308880wrg.42.2018.02.08.07.57.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Feb 2018 07:57:08 -0800 (PST)
+        Thu, 08 Feb 2018 07:57:10 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 1/9] t5541: add 'test_i18ngrep's missing filename parameter
-Date:   Thu,  8 Feb 2018 16:56:48 +0100
-Message-Id: <20180208155656.9831-2-szeder.dev@gmail.com>
+Subject: [PATCH v2 4/9] t4001: don't run 'git status' upstream of a pipe
+Date:   Thu,  8 Feb 2018 16:56:51 +0100
+Message-Id: <20180208155656.9831-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.16.1.158.ge6451079d
 In-Reply-To: <20180208155656.9831-1-szeder.dev@gmail.com>
 References: <20180126123708.21722-1-szeder.dev@gmail.com>
@@ -68,33 +68,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test 'push --no-progress silences progress but not status' runs
-'test_i18ngrep' without specifying a filename parameter.  This has
-remained unnoticed since its introduction in e304aeba2 (t5541: test
-more combinations of --progress, 2012-05-01), because that
-'test_i18ngrep' is supposed to check that the given pattern is not
-present in its input, and of course it won't find that pattern if its
-input is empty (as it comes from /dev/null).  This also means that
-this test could miss a potential breakage of 'git push --no-progress'.
+The primary purpose of three tests in 't4001-diff-rename.sh' is to
+check rename detection in 'git status', but all three do so by running
+'git status' upstream of a pipe, hiding its exit code.  Consequently,
+the test could continue even if 'git status' exited with error.
+
+Use an intermediate file between 'git status' and 'test_i18ngrep' to
+catch a potential failure of the former.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t5541-http-push-smart.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t4001-diff-rename.sh | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index d38bf32470..21340e89c9 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -234,7 +234,7 @@ test_expect_success TTY 'push --no-progress silences progress but not status' '
- 	test_commit no-progress &&
- 	test_terminal git push --no-progress >output 2>&1 &&
- 	test_i18ngrep "^To http" output &&
--	test_i18ngrep ! "^Writing objects"
-+	test_i18ngrep ! "^Writing objects" output
+diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+index eadf4f6244..a07816d560 100755
+--- a/t/t4001-diff-rename.sh
++++ b/t/t4001-diff-rename.sh
+@@ -134,11 +134,15 @@ test_expect_success 'favour same basenames over different ones' '
+ 	git rm path1 &&
+ 	mkdir subdir &&
+ 	git mv another-path subdir/path1 &&
+-	git status | test_i18ngrep "renamed: .*path1 -> subdir/path1"'
++	git status >out &&
++	test_i18ngrep "renamed: .*path1 -> subdir/path1" out
++'
+ 
+ test_expect_success 'favour same basenames even with minor differences' '
+ 	git show HEAD:path1 | sed "s/15/16/" > subdir/path1 &&
+-	git status | test_i18ngrep "renamed: .*path1 -> subdir/path1"'
++	git status >out &&
++	test_i18ngrep "renamed: .*path1 -> subdir/path1" out
++'
+ 
+ test_expect_success 'two files with same basename and same content' '
+ 	git reset --hard &&
+@@ -148,7 +152,8 @@ test_expect_success 'two files with same basename and same content' '
+ 	git add dir &&
+ 	git commit -m 2 &&
+ 	git mv dir other-dir &&
+-	git status | test_i18ngrep "renamed: .*dir/A/file -> other-dir/A/file"
++	git status >out &&
++	test_i18ngrep "renamed: .*dir/A/file -> other-dir/A/file" out
  '
  
- test_expect_success 'push --progress shows progress to non-tty' '
+ test_expect_success 'setup for many rename source candidates' '
 -- 
 2.16.1.158.ge6451079d
 
