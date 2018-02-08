@@ -2,137 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D6221F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 17:45:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8E01F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 18:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752337AbeBHRpV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 12:45:21 -0500
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:46151 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752192AbeBHRpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 12:45:16 -0500
-Received: by mail-qk0-f193.google.com with SMTP id d125so6653401qkg.13
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 09:45:16 -0800 (PST)
+        id S1751848AbeBHSOB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 13:14:01 -0500
+Received: from mail-pl0-f49.google.com ([209.85.160.49]:35543 "EHLO
+        mail-pl0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751094AbeBHSOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 13:14:01 -0500
+Received: by mail-pl0-f49.google.com with SMTP id j19so232650pll.2
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 10:14:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=M4dCOqiibDBZ2H6KWJQA4foMT+Uf2it5JOCKsqKfIpg=;
-        b=FxzECiS89QA9jnbPSmCXtYeRms2INJrAKxJWBZlzYV3X8ZIW2L631OcTmMlhsDAA6U
-         guBgD1B1HVE5MzhGXQOI0uyyvWr7gVqO8rMFGoD8pJ/Z0FDjY90OEav6cHvzUTM4vRjH
-         Y7sCPPPUb//o1hOx2PtEdP6eE75qs37JKJtFrQlzLQfqQBABCvtGBcPc/zxFj4xHtMs6
-         oBmmU9HcnShS01CsRvFERJDR+afn10flMGj+wf7hCJ209dJhj+UrRjPV+d0Jz5LWCBlL
-         cApuntKzrVl3qEr1CVJvJM8fh+dPuFf+vQEFNLraNBs5L8B+Kni+moPSBiHMyT/YZZmL
-         4nTA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=69HJUPUm6kz7/LX+PJQ8w6NC4haorphVIcbFmkqojsk=;
+        b=d11dFpjoUwk20j8pvSYndTkUYmLfkFsAf6uOSQYy3yAy9NQ0ukmjNKihBl4pvKzahA
+         jIeAnm9v9hdNwCCtpXVS4aRvBomHe5SXHdYfkEnSLewz+H+irq6/NvjeFmov2sBO0eR5
+         rOYtr510ISkbYAigiA2bV0tG88bEwVCxqioPHNhg5lh5YJFw8UShMwYcIXoLRxYCbisO
+         iOvb1uy6geDxGMMS5cfoHMOvGh3poR75lP0SH8OO0ZERzSV9m8WU1sPUFhUwtvMxkPZ6
+         xFGSmkbk6DJ9Spi2fZSNcEkNosYxIuDQR5uF3jRPzpUHiMFi/e6P78DKhZNXyVIChi49
+         PL6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=M4dCOqiibDBZ2H6KWJQA4foMT+Uf2it5JOCKsqKfIpg=;
-        b=glZo1VHviIvZqL6jXsDnzTqMGtAnv3/hbnBoPAnUuC2bW1lSN6vDo4whBn5NDqoYWt
-         L/XB+T6cH58j2Q4oT+WNEIKBmeJcT0dNIaMdwVMYp733IvwGdiJZLp09rRd/7LVHHxTK
-         p4xHlVl9/+yNVFe8qUmEZToUiOEiyeg/Am23tnsq4caMk5yub8oRgjdh8AcLInTYwhRX
-         ljYZp2snplG6Nj5uuqsSjCiMOa52OQhDFCLZd1UAZfM/zdgw86GCE/CUlokq4RugNZkb
-         eWzo6nVd4YvVftnyQmR8+IBrR6go0gRJwUoKFXbTQzqFiUU2ais4Y2HDEt/TQMb7wvFE
-         tfQw==
-X-Gm-Message-State: APf1xPCgQhlXIrZ3iogok0Xtd4DBpCa1aveyuHN6GUyxQ2Q0oMv9pHid
-        kHtYe/esqyUczkXYDZpGoD8=
-X-Google-Smtp-Source: AH8x226fB1EErblCbAXihUC8YZ67rqn0WTxgZm9W5nTjrDdae1X3gTxjG29CDrBu3UdGLwPnokfPuQ==
-X-Received: by 10.55.27.231 with SMTP id m100mr11285qkh.17.1518111915613;
-        Thu, 08 Feb 2018 09:45:15 -0800 (PST)
-Received: from [192.168.1.105] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id p8sm338090qtj.84.2018.02.08.09.45.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Feb 2018 09:45:14 -0800 (PST)
-Subject: Re: [PATCH v1] name-hash: properly fold directory names in
- adjust_dirname_case()
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     git@vger.kernel.org, prohaska@zib.de, gitster@pobox.com,
-        sunshine@sunshineco.com, novalis@novalis.org
-References: <20180208004156.36224-1-benpeart@microsoft.com>
- <20180208172153.GA30760@tor.lan>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <8a6b704f-409d-9a29-2229-d792d0f503ae@gmail.com>
-Date:   Thu, 8 Feb 2018 12:45:13 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
-MIME-Version: 1.0
-In-Reply-To: <20180208172153.GA30760@tor.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=69HJUPUm6kz7/LX+PJQ8w6NC4haorphVIcbFmkqojsk=;
+        b=KTls31B3CroOys87RHVyFZhu8OGzuw8VDFF/RnpyoSkYq+YfwqSasgCrtAa9/PqRBO
+         kRoWUvOUvXjoW36jMGrR5ed2A04Io1+eFfhiunnXG1e6nbBwHiJdxVbjgk1mOHr7HQDL
+         NWLuYdK/W3//1kE/K3Db8ccLdLIzxL5Ip533bdtAglpY29/XXf1D8IHDCwm/LDDUYmWb
+         zYft63IIskFWkvei6l/vdW2n/dK65czc22EIEiWabSw5BFV6xai5ikXVgtuIREy3MoWj
+         /TQaeDBUWIGfvzlNH/APsXyv1w0NjvEPm9M8F7HdtfUfHx6IW8oec/Zqcz2iqg9cVeOq
+         C6IA==
+X-Gm-Message-State: APf1xPD0o62ohiqO68QlXIFJealq4WhDTbk9f3LSnIgY7cLZ4cJ/ZLjA
+        ANqN1lFre9vRIzrPyjB5xU9stuQ6uko=
+X-Google-Smtp-Source: AH8x224jA72q1aT3+Csc8B0wgaYoB48dEVcrKe1imEowxPi4cKegpynUKLmhvHJYRVQVhHbUrhe15A==
+X-Received: by 2002:a17:902:1e5:: with SMTP id b92-v6mr18872plb.144.1518113640555;
+        Thu, 08 Feb 2018 10:14:00 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id s5sm1624939pfg.29.2018.02.08.10.13.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 08 Feb 2018 10:13:59 -0800 (PST)
+Date:   Thu, 8 Feb 2018 10:13:58 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] docs/interpret-trailers: fix agreement error
+Message-Id: <20180208101358.af4ecca9865dca4f04431bce@google.com>
+In-Reply-To: <20180208025614.872885-1-sandals@crustytoothpaste.net>
+References: <20180208025614.872885-1-sandals@crustytoothpaste.net>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu,  8 Feb 2018 02:56:14 +0000
+"brian m. carlson" <sandals@crustytoothpaste.net> wrote:
 
+>  Existing trailers are extracted from the input message by looking for
+> -a group of one or more lines that (i) are all trailers, or (ii) contains at
+> -least one Git-generated or user-configured trailer and consists of at
+> +a group of one or more lines that (i) are all trailers, or (ii) contain at
+> +least one Git-generated or user-configured trailer and consist of at
+>  least 25% trailers.
+>  The group must be preceded by one or more empty (or whitespace-only) lines.
+>  The group must either be at the end of the message or be the last
 
-On 2/8/2018 12:21 PM, Torsten Bögershausen wrote:
-> On Wed, Feb 07, 2018 at 07:41:56PM -0500, Ben Peart wrote:
-> []
-> 
->> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
->> index b29d749bb7..219c96594c 100755
->> --- a/t/t0050-filesystem.sh
->> +++ b/t/t0050-filesystem.sh
->> @@ -80,7 +80,17 @@ test_expect_success 'merge (case change)' '
->>   	git merge topic
->>   '
->>   
->> -
->> +test_expect_success CASE_INSENSITIVE_FS 'add directory (with different case)' '
->> +	git reset --hard initial &&
->> +	mkdir -p dir1 &&
->> +	mkdir -p dir1/dir2 &&
->> +	touch dir1/dir2/a &&
->> +	touch dir1/dir2/b &&
->> +	git add dir1/dir2/a &&
->> +	git add dir1/DIR2/b &&
->> +	camel=$(git ls-files | grep dir2) &&
->> +	test $(echo "$camel" | wc -l) = 2
->> +'
->>   
-> 
-> There is nothing wrong with with "wc -l", but:
-> a more new-style would probably use test_line_count() here.
-> 
-> My personal favorite would be to spell out what we expect and run a diff.
-> When it fails, we can see what fails, and the function would look
-> like this:
-> 
+Ah, good catch. Maybe "a group of one or more lines that (i) consists of all
+trailers, or (ii) contains ..."?
 
-I agree with you completely that this is a better format and is easier 
-to read.  All the new tests I've been writing follow this same pattern.
-
-In this particular test file, I opted (for better and for worse) to 
-stick with the style of all the other tests rather than 1) have this one 
-test be very different than all the others or 2) rewriting all the 
-existing tests in the new style.
-
-> 
-> test_expect_success CASE_INSENSITIVE_FS 'add directory (with different case)' '
-> 	git reset --hard initial &&
-> 	mkdir -p dir1 &&
-> 	mkdir -p dir1/dir2 &&
-> 	touch dir1/dir2/a &&
-> 	touch dir1/dir2/b &&
-> 	git add dir1/dir2/a &&
-> 	git add dir1/DIR2/b &&
-> 	git ls-files | grep dir2 | sort >actual &&
-> 	cat >expected <<-\EOF &&
-> 	dir1/dir2/a
-> 	dir1/dir2/b
-> 	EOF
-> 	test_cmp expected actual
-> '
-> 
-> 
-> 
+I'm also OK with the patch as-is.
