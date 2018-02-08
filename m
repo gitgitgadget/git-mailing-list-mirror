@@ -2,144 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1414E1F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 20:43:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE5891F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 21:04:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752218AbeBHUnh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 15:43:37 -0500
-Received: from userp2120.oracle.com ([156.151.31.85]:48786 "EHLO
-        userp2120.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751756AbeBHUng (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 15:43:36 -0500
-Received: from pps.filterd (userp2120.oracle.com [127.0.0.1])
-        by userp2120.oracle.com (8.16.0.22/8.16.0.22) with SMTP id w18Kg9br134593
-        for <git@vger.kernel.org>; Thu, 8 Feb 2018 20:43:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id; s=corp-2017-10-26;
- bh=bg811kCaKepgtErxr0uuqjdACDI4XHzsh9G8NN0qbME=;
- b=o4lYR0ZRXD5KiIFdrHU8V/riBFisrgvIiAjTdb+HHkDw0RCZVDzVxXAu4POqLGhgnBTK
- F8gBacpsqBlv9XUPeWgWFuZoaUHbfmmSSK3+DZnluqZsoc0VvBabkmnipIol5i80ESkb
- Eg4B0jzU9mXvtRA6d8IVwPgMV1xXPg7+rt+5b4gUSBks8NP/SWEA1uCsJFHEmnQICwFA
- F0VDNsPvXWZN2u40tGbKpyy+q3Ff8m41RzzyNCHr/77ejaZpXGXNeZ+6NkABGk0PA6F2
- lTcK8MzwAZWL/Ev2Pw4QTrrATIhIUCt6n3x8dk+ikBG4hxby0l0WnFYcBqD3CYOCD1mo dg== 
-Received: from userv0021.oracle.com (userv0021.oracle.com [156.151.31.71])
-        by userp2120.oracle.com with ESMTP id 2g0vs08aj9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 20:43:35 +0000
-Received: from localhost.localdomain (dhcp-10-175-2-118.vpn.oracle.com [10.175.2.118])
-        by userv0021.oracle.com (8.14.4/8.14.4) with ESMTP id w18KhXUX025833;
-        Thu, 8 Feb 2018 20:43:34 GMT
-From:   gregory.herrero@oracle.com
-To:     git@vger.kernel.org
-Cc:     Gregory Herrero <gregory.herrero@oracle.com>
-Subject: [PATCH] rebase -p: fix incorrect commit message when calling `git merge`.
-Date:   Thu,  8 Feb 2018 21:42:41 +0100
-Message-Id: <20180208204241.19324-1-gregory.herrero@oracle.com>
-X-Mailer: git-send-email 2.16.1
-X-Proofpoint-Virus-Version: vendor=nai engine=5900 definitions=8799 signatures=668665
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=48 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1711220000 definitions=main-1802080239
+        id S1752375AbeBHVEO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 16:04:14 -0500
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:40180 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbeBHVEK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 16:04:10 -0500
+Received: by mail-yw0-f180.google.com with SMTP id j128so3636480ywg.7
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 13:04:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TdP6bfWhvkrNqi1pUFWKATmjOwy7oIqlRXhQ8rZh/EA=;
+        b=nRbzlwuKhbiIWo1g/+prN1RhJB7uCFbuXxp5KGH/zdfZcY88advGYMzY58qCZDmDsM
+         CwLyszJruda4kEwqAoasepNqVyu/A4MWvK0OQrqq7V+/+uFnJ33eOlWz6YLkTVxXgtCZ
+         zcpYTE7mXID77iDJR45c68laFrcCW3Gec0lkZv8IN03momfteKKEXo6O1A21sI++ZQCA
+         P/N+e+lKdi4ricWA4qdQ9krKuL42aJVz3UrNzzH+PwEdcq++h5w+NAkU1qr5Px3hIJ9x
+         NKQx14Xfd0eDU457+kWYc/KZFgbHM7cr+X57Rl2cHH6Miq/qvLwBamaifvLKhWiLkjfA
+         kJwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TdP6bfWhvkrNqi1pUFWKATmjOwy7oIqlRXhQ8rZh/EA=;
+        b=tb8ITeQiDqzxKIIOkB8wxhlxcewXIJVgQCcHfh5UNeIQ4fd3puVNFsGns9/5pdJGim
+         5/6p+lzzrrP8UqhayKuAleP+YD9m5VElCQPB0+UlTjo3JJVum/KHLAzYdan/UtLTN4vy
+         8yFNu7I4jABgc3lCE+XJhysMyNVv9alc8DC4puwxqo8VKDXMPUa2iROHgTXcnYYu5iJI
+         COl4LtPH8CXcTMmBW3srX/hnPVlg0mcMMW5Yho5VRFVJdZVnEWT22MskvxGd/kvPT77x
+         l5Y0AoxmCcdLLErVpcgVlXPg2sfF4JiIl0s6mzM6RwM/EiFT4LNcagtkjSiowwiJzhKT
+         kzGg==
+X-Gm-Message-State: APf1xPB4o7F04tuUWama6wmaYpcDXwIaVGrFgBAv0POARwJX33PovIZH
+        +9Xxd5m1DuUBNpcU+iuja/QCy+8dnUoCVK6a6xhsRg==
+X-Google-Smtp-Source: AH8x227cId0uGXAb7y3DvU3CX07wLl+ekSf/s4CzWvVjsNy2pUTYqyO7PW++NqcPYuDPNn90N6VNdBrqCdxUR9xRG+M=
+X-Received: by 10.37.12.130 with SMTP id 124mr276523ybm.39.1518123849002; Thu,
+ 08 Feb 2018 13:04:09 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.37.207.9 with HTTP; Thu, 8 Feb 2018 13:04:08 -0800 (PST)
+In-Reply-To: <20180208204309.GA4541@sigill.intra.peff.net>
+References: <20180208201546.194935-1-sbeller@google.com> <20180208204309.GA4541@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 8 Feb 2018 13:04:08 -0800
+Message-ID: <CAGZ79kb+xEVZagqqNCHCPQUbfH89N7fdrO7dp6WHRGgJJje28Q@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Gregory Herrero <gregory.herrero@oracle.com>
+On Thu, Feb 8, 2018 at 12:43 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 08, 2018 at 12:15:46PM -0800, Stefan Beller wrote:
+>
+>>  int color_fprintf(FILE *fp, const char *color, const char *fmt, ...)
+>>  {
+>>       va_list args;
+>> diff --git a/color.h b/color.h
+>> index fd2b688dfb..8c7e6c41c2 100644
+>> --- a/color.h
+>> +++ b/color.h
+>> @@ -72,26 +72,50 @@ extern int color_stdout_is_tty;
+>>   * Use the first one if you need only color config; the second is a convenience
+>>   * if you are just going to change to git_default_config, too.
+>>   */
+>> -int git_color_config(const char *var, const char *value, void *cb);
+>> -int git_color_default_config(const char *var, const char *value, void *cb);
+>> +extern int git_color_config(const char *var, const char *value, void *cb);
+>> +extern int git_color_default_config(const char *var, const char *value, void *cb);
+>
+> Hmph, I thought we weren't adding "extern" everywhere. See:
+>
+>   https://public-inbox.org/git/xmqq8tea5hxi.fsf@gitster.mtv.corp.google.com/
+>
+> Other than that, these changes mostly look like improvements. A few
 
-Since commit dd6fb0053 ("rebase -p: fix quoting when calling `git
-merge`"), commit message of the merge commit being rebased is passed to
-the merge command using a subshell executing 'git rev-parse --sq-quote'.
+...
 
-Double quotes are needed around this subshell so that, newlines are
-kept for the git merge command.
+> Those are all suggestions. Given that there's no documentation currently
+> on most of these, I think even if you don't take any of my suggestions,
+> this would still be a net improvement (modulo the "extern" thing).
 
-Before this patch, following merge message:
+A funny and sad rant about why clear communication matters:
 
-    "Merge mybranch into mynewbranch
+[Once upon a time, maybe 2 years ago] I had the impression that the old
+code is nicely written and was consistently marked extern in header files.
+(which btw is consistent with variable declarations, they need the extern).
+All the new code doesn't make use of extern, so I had this on my low prio
+todo list, that eventually all code converges to have 'extern'
+functions in headers.
 
-    Awesome commit."
+C.f. the following commits, found via
+  git log -p --author=Beller -S extern
 
-becomes:
+  5ec8274b84 (xdiff-interface: export comparing and hashing strings,
+  2017-10-25) adding new externs
 
-    "Merge mybranch into mynewbranch Awesome commit."
+  1ecbf31d02 (hashmap: migrate documentation from Documentation/technical
+  into header, 2017-06-30), a cleanup, which doesn't touch externs
 
-after a rebase -p.
+  a6d7eb2c7a (pull: optionally rebase submodules (remote submodule
+  changes only), 2017-06-23) new code using externs
 
-Fixes: "dd6fb0053 rebase -p: fix quoting when calling `git merge`"
-Reported-by: Jamie Iles <jamie.iles@oracle.com>
-Suggested-by: Vegard Nossum <vegard.nossum@oracle.com>
-Suggested-by: Quentin Casasnovas <quentin.casasnovas@oracle.com>
-Signed-off-by: Gregory Herrero <gregory.herrero@oracle.com>
----
- git-rebase--interactive.sh   |  2 +-
- t/t3408-rebase-multi-line.sh | 26 +++++++++++++++++++++++++-
- 2 files changed, 26 insertions(+), 2 deletions(-)
+  bd26756112 (submodule.h: add extern keyword to functions, 2016-12-20)
+  (The commit message is as accurate as it gets)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d47bd2959..ab6a5883e 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -396,7 +396,7 @@ pick_one_preserving_merges () {
- 					--sq-quote "$gpg_sign_opt")} \
- 				$allow_rerere_autoupdate "$merge_args" \
- 				"$strategy_args" \
--				-m $(git rev-parse --sq-quote "$msg_content") \
-+				-m "$(git rev-parse --sq-quote "$msg_content")" \
- 				"$new_parents"
- 			then
- 				printf "%s\n" "$msg_content" > "$GIT_DIR"/MERGE_MSG
-diff --git a/t/t3408-rebase-multi-line.sh b/t/t3408-rebase-multi-line.sh
-index 6b84e6042..e217fb4fb 100755
---- a/t/t3408-rebase-multi-line.sh
-+++ b/t/t3408-rebase-multi-line.sh
-@@ -24,8 +24,23 @@ But otherwise with a sane description." &&
- 	>elif &&
- 	git add elif &&
- 	test_tick &&
--	git commit -m second
-+	git commit -m second &&
- 
-+	git checkout -b side2 &&
-+	>afile &&
-+	git add afile &&
-+	test_tick &&
-+	git commit -m third &&
-+	echo hello > afile &&
-+	test_tick &&
-+	git commit -a -m fourth &&
-+	git checkout -b side-merge &&
-+	git reset --hard HEAD^^ &&
-+	git merge --no-ff -m "A merge commit log message that has a long
-+summary that spills over multiple lines.
-+
-+But otherwise with a sane description." side2 &&
-+	git branch side-merge-original
- '
- 
- test_expect_success rebase '
-@@ -36,6 +51,15 @@ test_expect_success rebase '
- 	git cat-file commit side@{1} | sed -e "1,/^\$/d" >expect &&
- 	test_cmp expect actual
- 
-+'
-+test_expect_success rebasep '
-+
-+	git checkout side-merge &&
-+	git rebase -p side &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	git cat-file commit side-merge-original | sed -e "1,/^\$/d" >expect &&
-+	test_cmp expect actual
-+
- '
- 
- test_done
--- 
-2.16.1
+You may sense a pattern here: I currently have the very firm understanding
+we use the extern keyword in our codebase.
 
+And I can also attest that this was not always the case, as back in the
+day I remember writing patches without the extern keyword only to be told:
+(A) be similar to the function in the next lines
+(B) the standard is to use extern
+and I was convinced it was a bad decision to prefix declarations with
+the extern keyword, but followed along as I don't want to have style
+in the way of writing features.
+
+  $ cat Documentation/CodingGuidelines |grep extern
+  $ # oh no it's empty!
+
+Care to add a section to our coding guidelines?
+
+Thanks,
+Stefan
