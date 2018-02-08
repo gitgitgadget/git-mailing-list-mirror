@@ -2,85 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC0BF1FAE2
-	for <e@80x24.org>; Thu,  8 Feb 2018 17:02:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C1F71F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 17:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752087AbeBHRCq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 12:02:46 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:53448 "EHLO smtp.gaspard.ninja"
+        id S1752089AbeBHRWH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 12:22:07 -0500
+Received: from mout.web.de ([212.227.15.14]:38135 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751544AbeBHRCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 12:02:45 -0500
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id f0f4c7d9;
-        Thu, 8 Feb 2018 17:02:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
-        subject:to:cc:references:from:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        grym-20170528; bh=1ESFupT/2BgVh7RtVqsS10U3l3I=; b=fNgt1H6oyOcr4S
-        B7D2x252uRWPGPI4bHSkbDJvmraxdzHomrBobYH84/TQiREXs9eK5OHw1CNDpT/U
-        jCKtN2XKmcEjUIxJuUxaJMhi0qHibQ9GPjlbAcNwVnBBgjX9YI16/Zn/WZEpEJQ0
-        twQfy6UqvpLpsScQ3eGr7xBs4sg2c=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 3e10b14f (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
-        Thu, 8 Feb 2018 17:02:44 +0000 (UTC)
-Subject: Re: Fetch-hooks
-To:     Joey Hess <id@joeyh.name>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
- <87inb8mn0w.fsf@evledraar.gmail.com>
- <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
-From:   Leo Gaspard <leo@gaspard.io>
-Message-ID: <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
-Date:   Thu, 8 Feb 2018 18:02:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751988AbeBHRWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 12:22:06 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MLyCC-1ec9r43pUa-007mHa; Thu, 08
+ Feb 2018 18:21:55 +0100
+Date:   Thu, 8 Feb 2018 18:21:53 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     git@vger.kernel.org, prohaska@zib.de, gitster@pobox.com,
+        sunshine@sunshineco.com, novalis@novalis.org
+Subject: Re: [PATCH v1] name-hash: properly fold directory names in
+ adjust_dirname_case()
+Message-ID: <20180208172153.GA30760@tor.lan>
+References: <20180208004156.36224-1-benpeart@microsoft.com>
 MIME-Version: 1.0
-In-Reply-To: <20180208153040.GA5180@kitenet.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180208004156.36224-1-benpeart@microsoft.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K0:rrsU7eisOXDz5sZ/nGl9fv/b0lkwxEdfScobnV71CVCjnBjMpWg
+ yqMjWUPhv3CmoCG990KOCv4P5ckcF/LS50W+VjGErNRxWaB82Fz60tcpfLGxbOMBnrGLzIC
+ WHTBXrNe+3QZwSinu8UWzYPP5QWWeiBZGwfb51RxM5FZfLpN/b0+SShelTaKsF9DFj2tBTG
+ i3Zqj0FPJLxdD2KBJvQEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Qurj6xwZU5M=:s5H7yWzJ29bkK5oZK0kUA5
+ ouIu4dRCf1cwn7FgT81oieixJ16UKinhmh89XLYMTq1tpx+s3XnGwA99cRgSB71TdK+hkS4Hr
+ bEztnIV2UOhcL8C6UfmFc4+0nYmWQN/xhP5Y8mnOWXKHMXbWxJ3SJEtcwJiEDFrvaxSnGNZDp
+ w6w2H45osPtkg9RYJZ8o0es0Xsnwmnj0d8Qt1oFIcD6wC+gmGPd5UVf+P3WCLA9y3CFzyFJNY
+ Gsojwks6hnLbdHWbVtl8cfyvw17f5qcQE4uOkZ4GienMC+93INsGd9KmG2NXYpYbr+raMA0Lu
+ RNpjtposen/GGBgLBQEkLsvPHqFhSrn/L2+XT2nrvs2i0s4FAiiM7CLu810c0p0HGIld9u3DX
+ 2Q8XhCbrCiCPFg9z6ixLNFyTLshM5NHfFuzMI0IaxMpfw6wxG43AIKtEA2Qk8YsyN2dT96YtD
+ ICnPp6R5SeC3Qi4F2+78ZdDlz641PYcHAsSmqDRS65y2UkXouna/nVvQZGOR4YDAg5UrMBwJz
+ QiYWkkdd8DtABV1F+aMae7Sq1tC2khoC8LOVC9kPKVtAdhKgmlo0ee+wFa7k7ItanWstyUJxE
+ Xp6cvSIXgDrK0BEHdpCOLeNcD2q7i8VxH0jBmVU3Z6hXUJLKl5eHR7X6nKQXpHJx8sLrJBo4U
+ /R0VyFye3v8R+vkOcFXbzlsjN8xO7kQA/rla5BjU/ak065Ne1Y++essbzXz9j+8eC1SWPNMFb
+ 1ybrpPv5t+KX9bo25YgFQ9zd+VpCpZzyM2oax30FZ5HV/yjqQQQWwp8NxrHZ/glxBfHl7OBTs
+ ymllK6AavGYyZ+JsSSre6ZTHxBO1w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08/2018 04:30 PM, Joey Hess wrote:
-> Leo Gaspard wrote:
->> That said, I just came upon [1] (esp. the description [2] and the patch
->> [3]), and wondered: it looks like the patch was abandoned midway in
->> favor of a hook refactoring. Would you happen to know whether the hook
->> refactoring eventually took place, and/or whether this patch was
->> resubmitted later, and/or whether it would still be possible to merge
->> this now? (not having any experience with git's internals yet, I don't
->> really know whether these are stupid questions or not)
->>
->> PS: Cc'ing Joey, as you most likely know best what eventually happened,
->> if you can remember it?
-> 
-> I don't remember it well, but reviewing the thread, I think it foundered
-> on this comment by Junio:
-> 
->> That use case sounds like that "git fetch" is called as a first class UI,
->> which is covered by "git myfetch" (you can call it "git annex fetch")
->> wrapper approach, the canonical example of a hook that we explicitly do
->                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> not want to add.
->   ^^^^^^^^^^^^^^^
-> 
-> While I still think a fetch hook would be a good idea for reasons of
-> composability, I then just went off and implemented such a wrapper for
-> my own particular use case, and the wrapper program then grew to cover
-> use cases that a hook would not have been able to cover, so ...
+On Wed, Feb 07, 2018 at 07:41:56PM -0500, Ben Peart wrote:
+[]
 
-Hmm, OK, so I guess I'll try to update the patch when I get some time to
-delve into git's internals, as my use case (forbidding some fetches)
-couldn't afaik be covered by a wrapper hook.
+> diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+> index b29d749bb7..219c96594c 100755
+> --- a/t/t0050-filesystem.sh
+> +++ b/t/t0050-filesystem.sh
+> @@ -80,7 +80,17 @@ test_expect_success 'merge (case change)' '
+>  	git merge topic
+>  '
+>  
+> -
+> +test_expect_success CASE_INSENSITIVE_FS 'add directory (with different case)' '
+> +	git reset --hard initial &&
+> +	mkdir -p dir1 &&
+> +	mkdir -p dir1/dir2 &&
+> +	touch dir1/dir2/a &&
+> +	touch dir1/dir2/b &&
+> +	git add dir1/dir2/a &&
+> +	git add dir1/DIR2/b &&
+> +	camel=$(git ls-files | grep dir2) &&
+> +	test $(echo "$camel" | wc -l) = 2
+> +'
+>  
 
-Thanks for the feedback!
-Leo
+There is nothing wrong with with "wc -l", but:
+a more new-style would probably use test_line_count() here.
+
+My personal favorite would be to spell out what we expect and run a diff.
+When it fails, we can see what fails, and the function would look
+like this:
+
+
+test_expect_success CASE_INSENSITIVE_FS 'add directory (with different case)' '
+	git reset --hard initial &&
+	mkdir -p dir1 &&
+	mkdir -p dir1/dir2 &&
+	touch dir1/dir2/a &&
+	touch dir1/dir2/b &&
+	git add dir1/dir2/a &&
+	git add dir1/DIR2/b &&
+	git ls-files | grep dir2 | sort >actual &&
+	cat >expected <<-\EOF &&
+	dir1/dir2/a
+	dir1/dir2/b
+	EOF
+	test_cmp expected actual
+'
+
+
+
