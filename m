@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89B941F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 16:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670F21F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 16:21:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752230AbeBHQU5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 11:20:57 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:50885 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752465AbeBHQUU (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752482AbeBHQUU (ORCPT <rfc822;e@80x24.org>);
         Thu, 8 Feb 2018 11:20:20 -0500
-Received: by mail-wm0-f66.google.com with SMTP id f71so10490501wmf.0
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 08:20:20 -0800 (PST)
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39706 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752261AbeBHQUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 11:20:18 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b21so11042502wme.4
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 08:20:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rRMzb7/74bOPaX0oAEnWPwBVs/b5ATRqlH9AUtsCxsI=;
-        b=JBPsAWVvHBj+fYfg7v6jghNn29eEgijloow/3BhoRpQsyes3IiKVDspOqZbFbuwBdw
-         +CPrxl1ydu+Hc9qIN5P6z/RqSPiYOocieahHmLOASuvUF78rBzu8cabpanwQdoRu7zlF
-         KEhHf+V8qjBA7I9xYUksAvFNQSuJLZfoHsEhPCMWtJlEH2o2VB6w6IuIpadcgBIF+DB6
-         n0sEvCqPDVIb47YVMKxOuRyIWY8IzcCcHVP0Lk0v1VI4DZtMhKpQEITPpPykwqd9R1Ih
-         2LQlBWWN6VQSE8eTnGAdomBxy1mKVsLbL2rOSZWGcFuPohLXZQEESV/l7IYtT6mDY7N+
-         MLBg==
+        bh=xWX+qnq4vDLiMtUKHAJuyIW9bWmnPaqNhf+1BKCOUm0=;
+        b=aLDnJ6GrY14hMsKJ9T9dVsejU1EM/N8wxF6nW7QjNvlVwonBrYbnQsoLC4FADKn1SA
+         CZJqwXObp8eAjFTpkySt9cFbRK5rnSFkCAgnJ2mWVRm3LmbPt638Vf00jVW+6SpaC+ID
+         wzWpZc3rTIUHNcGIQzN4wXLlJ4p67En5KkYe7PJXb3CXxGKgIYPgvy+TSnotheLe5cex
+         rjLcmkC/aZcl37NG1RruKoFFUi5XlMHSEtcx5H24PlivWuy4xmuC+1b4gd6YJq3RF9aD
+         5r36YRf+Qi4vwz4XdsbteM6PpaF4uRdhohruIfLRthZTjJBeg4yylLsF6gy/kfE3fpEC
+         Ay9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=rRMzb7/74bOPaX0oAEnWPwBVs/b5ATRqlH9AUtsCxsI=;
-        b=JBnviuXJY5R1CwA9Nxo6x9sOdsz4W6TdXWiK82TtqsGGwVa4LNSrJxOk7TlIJfZqjZ
-         Wo6fHN3qFwtnL2vo0IUJlNupMD1ayMLYKcOyqSlhMdfwVbE+QYOxvbyE0/D5lp2DD1xT
-         2SQ8yOyaI+7SZrFI1j183ScCvVL+pFMkk/17wf9zfPogkX62BJChka2G65r0bYxF6aLB
-         08JkxpeTBPiTWxKTz8ytm/1mFzQ8I8DDsJlP4NQW5edtsDAbRA2/DdckWeli+M5SgB32
-         TQNb0XrKP7tMvim0C1xj26zyN40rmdpdocc7/GZ1hUgcAKt2bvqKODyyKIgqasbIzzsS
-         Xbqw==
-X-Gm-Message-State: APf1xPB9DbojxhYMBTAQfOfbAmXiT431dvRv5Vz4AjgQ5bgP85hD+2Hz
-        d4y4WUozq50lEV5MJ14qKZz8Rn7W
-X-Google-Smtp-Source: AH8x226kE957+YpOouS/hW71S+IwoWSIv1guY1UV/GmY9HmpUDYu49hsWw0Z19WMfimsncbAnm3Kcg==
-X-Received: by 10.28.191.131 with SMTP id o3mr1459424wmi.81.1518106819119;
-        Thu, 08 Feb 2018 08:20:19 -0800 (PST)
+        bh=xWX+qnq4vDLiMtUKHAJuyIW9bWmnPaqNhf+1BKCOUm0=;
+        b=FXSE4noJtqx1Ul7w1iHJXrejBo/al72WDnoFERA549tgWvEz/ZX2htolDtXhFvkgJ7
+         a7sh2Ajv7YbnEem1L65d1vzKIopy5oetsR+0lTzukQI0GHYP65ng6F6uNndrNf1/a8qI
+         jhOga0BaBxKrWfzjW4LCTpOwb4eEe7KuyO4R3L4PVHMP4vngHUgK35McDM0GMgcfNVdK
+         BfInEQiIIsXmDeYfGWjvKBg6BO4Js8QEDxjST8reUSzLSUg3HeKcDQNpgHtSAoR80MKs
+         4dPaIl/JL1SvCg3XyObAfkkN9V0I41zwRNxfvYa/Zc+wyVOCErkHpI48nSNvQgXrB1gi
+         /wkA==
+X-Gm-Message-State: APf1xPBoeStGfk1kHS0U03F5LXmdt+sDrUsVz9mCBsqvTy9+Aki+IAxH
+        I49EHu2IZ89q86iS0LDkEj/Lzvft
+X-Google-Smtp-Source: AH8x225Hb3WoQzqonTfwT9XZWBnvaxlno4UvOeJHJR1ORo9ej4pfbXrCsUyHx50ZuHTWefIfVCRUaA==
+X-Received: by 10.28.247.11 with SMTP id v11mr1645461wmh.27.1518106817343;
+        Thu, 08 Feb 2018 08:20:17 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m1sm332532wrb.78.2018.02.08.08.20.17
+        by smtp.gmail.com with ESMTPSA id m1sm332532wrb.78.2018.02.08.08.20.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Feb 2018 08:20:18 -0800 (PST)
+        Thu, 08 Feb 2018 08:20:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Daniel Barkalow <barkalow@iabervon.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 10/17] fetch tests: expand case/esac for later change
-Date:   Thu,  8 Feb 2018 16:19:29 +0000
-Message-Id: <20180208161936.8196-11-avarab@gmail.com>
+Subject: [PATCH v2 09/17] fetch tests: double quote a variable for interpolation
+Date:   Thu,  8 Feb 2018 16:19:28 +0000
+Message-Id: <20180208161936.8196-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180208161936.8196-1-avarab@gmail.com>
 References: <20180208161936.8196-1-avarab@gmail.com>
@@ -77,34 +77,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expand a compact case/esac statement for a later change that'll add
-more logic to the body of the "*" case. This is a whitespace-only
-change.
+If the $cmdline variable contains arguments with spaces they won't be
+interpolated correctly, since the body of the test is single quoted,
+and because test-lib.sh does its own eval().
+
+This will be used in a subsequent commit to pass arguments that need
+to be quoted to git-fetch, i.e. a file:// path to fetch, which will
+have a space in it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5510-fetch.sh | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ t/t5510-fetch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 88d38e0819..dfc749f576 100755
+index dacdb8759c..88d38e0819 100755
 --- a/t/t5510-fetch.sh
 +++ b/t/t5510-fetch.sh
-@@ -543,8 +543,12 @@ test_expect_success "should be able to fetch with duplicate refspecs" '
- set_config_tristate () {
- 	# var=$1 val=$2
- 	case "$2" in
--	unset)  test_unconfig "$1" ;;
--	*)	git config "$1" "$2" ;;
-+	unset)
-+		test_unconfig "$1"
-+		;;
-+	*)
-+		git config "$1" "$2"
-+		;;
- 	esac
- }
+@@ -578,7 +578,7 @@ test_configured_prune () {
+ 			set_config_tristate fetch.prune $fetch_prune &&
+ 			set_config_tristate remote.origin.prune $remote_origin_prune &&
  
+-			git fetch $cmdline &&
++			git fetch '"$cmdline"' &&
+ 			case "$expected_branch" in
+ 			pruned)
+ 				test_must_fail git rev-parse --verify refs/remotes/origin/newbranch
 -- 
 2.15.1.424.g9478a66081
 
