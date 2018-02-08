@@ -2,138 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B879D1F576
-	for <e@80x24.org>; Thu,  8 Feb 2018 11:50:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE0D21F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 12:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751998AbeBHLuZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 06:50:25 -0500
-Received: from mail-it0-f44.google.com ([209.85.214.44]:55666 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750929AbeBHLuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 06:50:24 -0500
-Received: by mail-it0-f44.google.com with SMTP id b66so6156223itd.5
-        for <git@vger.kernel.org>; Thu, 08 Feb 2018 03:50:24 -0800 (PST)
+        id S1752432AbeBHMFl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 07:05:41 -0500
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:43574 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752154AbeBHMFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 07:05:39 -0500
+Received: by mail-oi0-f53.google.com with SMTP id 4so3285030ois.10
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 04:05:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eFGkjTta50WtRCVw3+viZJllsFlP6C+Yioi4RqMyGDs=;
-        b=nhDeXVnng1UpF2mOxyD8/Ye9rB3f3qCVHxbJhA9AWNqh4P9xhLqOPd8jkziAoABSRc
-         /meeflNCFSj6Lt7bPAK8sS00YLSwGjdSQOYqlBrMbYwOs9Wln9Vx3kb7NkcatAJyAMdI
-         B09l8c8GY5bMmyGbHhdsBi87xmaSt6pEDgDM8Lpp5l/VK47gDjcLAi39Ub739lN7Bix3
-         3mMAminQ0FBLQlOCtMkCXre/ErwDo7hflfY3NoF0cjDSCAGx/+M4jtiuKGU3bsyYTlya
-         zxldCXsc9ot5PB6uaQof0RVQkL38Zds2hCLClWTNUSMYKc4IGfHUyYggIGUs4+oir54Q
-         FmAw==
+         :cc:content-transfer-encoding;
+        bh=7jhpvP3/gjbJ8epG9Ukcf5RL/CLt7nZqVY3rgG4VUG4=;
+        b=nHifsDHJSDS03qWGO+pZU6nPP44E1xEycph8zsJdpT/vYKBzPyDzk2UUOWgjh7fcwC
+         aZ2XjnPsN8jSuafAQwfFQT4yaut8MBb1o/JdSOfFkbl0LLLdBYD8er1br0T05R6tk+aY
+         3ttKFkdU9qK41ItC3+FpEgF6rJRNjLJehJIhhlIQigAmoERP4sVyMSR9bQ8oE8fMiLXB
+         pYryPZfybiSzLmz+lVczCFlVDzx3yfhp1VZSEg3XyTHxb30sF1nzPW4I0brRqsO7BMZz
+         GEYjP84NJ8CnwRwVdLuT808nKUJ0X381ohoG+unwZwzG9IXizvymR6tGXvyImXntGuVS
+         Vmpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eFGkjTta50WtRCVw3+viZJllsFlP6C+Yioi4RqMyGDs=;
-        b=MCDl2tMPdOynvRkO1kwgl0TVMhiWT/2nCHaVlMAc7m0Lk1Wpg+a2BapnA5CKGikSZ9
-         uvasqBjs1BsMl9BX/YqO0kSL8K2x/WZD+dVpqTzXwgb4EQZu5pwonUGHlgUI53Te7asi
-         GXLIi2F4rQh5wWrqtjuT+pFSl3MOfNVazpLL8ttYeeTBd4cM79l3PM55NbQ2eM82s3Zv
-         mrtrTNsM1fj/A1FLRT3MWJWgU/7rMYXyTzvlZxAr7GrgVP5fuaMVXx22YUENM+OdSTir
-         gUS5HTWvJIvcbKPXVXUDqUFrOFmkgndxANw4eraZXMiNEloKgNE6zo8jESxL8Cdhm/ND
-         ffoA==
-X-Gm-Message-State: APf1xPCPOdojX2T/rxDrQpg1t6jp1vik0d3jE0d7l4jdRhwDDvS8oZ6L
-        v1yWZKRaK/eMc3wiaLWXNF0WyqKndEt1LzjJT4PZtA==
-X-Google-Smtp-Source: AH8x224W2dsNPukxfkcmxxvZrnCH6xoRmmmc74gYpPwrSrxEu9Jfze35P/UkOxZ3T75VGzPoFFmP879TMXNB9V1pGhg=
-X-Received: by 10.36.224.141 with SMTP id c135mr1021893ith.144.1518090623769;
- Thu, 08 Feb 2018 03:50:23 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7jhpvP3/gjbJ8epG9Ukcf5RL/CLt7nZqVY3rgG4VUG4=;
+        b=fikGswX8lMB+toy2EZ/oxp+bVA+Q5YeV6pcV3wtH9NKRflUf9y6eMkfKE9D7jCZKJ5
+         F0663ml0lVprVcHPW56X4Gg+nSMBA9nSaRtxnp09D4X86yrkqlXqjWz/ZQEoZoTcqfZd
+         4Whp6NTPYNTPJ2v+IelZaXYtuXLakmxpwPpd8P8Twu96DErh47SWvEdEVWD3AI3Cw/cd
+         DzXdMjftKaCbRgYM1INnJaIPiOahgYjJP8dfZAQZ0eqyguNhCpW9Mqm4lRgO/c8eZYxJ
+         jyP/yDLXXN00L8BgFgxm0yE+bPa3eXMO2HKSLNQxEYOx4LJTYf6UsA/Caz0GNVJ02sK+
+         EnuA==
+X-Gm-Message-State: APf1xPADU31AhisJBUqGRwq5xdY7/YpszpcdJVhoZ66mhVoUDPacccQ8
+        lxcKe7qYHWjUVGJvH0ZSrCI01nHHgKw3qA4T+pk=
+X-Google-Smtp-Source: AH8x227jzrs1C4vrbozgQwkQVJOhPgwStj04u5sDoqnLMEH56qYp52hRSgzGGTDWWB2qvZKkA3FIUTGKwXrA2w4zfh0=
+X-Received: by 10.202.196.208 with SMTP id u199mr310043oif.117.1518091538834;
+ Thu, 08 Feb 2018 04:05:38 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.79.33.203 with HTTP; Thu, 8 Feb 2018 03:50:08 -0800 (PST)
-In-Reply-To: <20180208112508.GA3506@sigill.intra.peff.net>
-References: <CAF=vhqdJ2fByjSVt37b34wQUFo5_tb7rHbCddsaCzdvKywSBdg@mail.gmail.com>
- <20180208112508.GA3506@sigill.intra.peff.net>
-From:   "Nick O'Leary" <nick.oleary@gmail.com>
-Date:   Thu, 8 Feb 2018 11:50:08 +0000
-Message-ID: <CAF=vhqdq47sb6wH7PEUif5ZjGJzKaO7fW-hbHVz3c=vp2AMBMg@mail.gmail.com>
-Subject: Re: Unexpected git diff output during merge conflict
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Received: by 10.74.102.205 with HTTP; Thu, 8 Feb 2018 04:05:08 -0800 (PST)
+In-Reply-To: <xmqqr2pw7ge3.fsf@gitster-ct.c.googlers.com>
+References: <20180131110547.20577-1-pclouds@gmail.com> <xmqqr2pw7ge3.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 8 Feb 2018 19:05:08 +0700
+Message-ID: <CACsJy8AJGr_5vjDGVp7h-2DbOvi3=uY3waoSm+Ko-muAuLxdoA@mail.gmail.com>
+Subject: Re: [PATCH v2 00/41] Automate updating git-completion.bash a bit
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah, the whitespace that was added to enable the >>> markers to be
-added... that makes sense.
-
-Which means the output is correct and some assumptions my code makes
-about the format of the Combined Diff are wrong.
-
-Thanks!
-Nick
-
-
-
-On 8 February 2018 at 11:25, Jeff King <peff@peff.net> wrote:
-> On Thu, Feb 08, 2018 at 10:51:57AM +0000, Nick O'Leary wrote:
+On Thu, Feb 8, 2018 at 2:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
->> $ git diff README.md
->> diff --cc README.md
->> index 61d78b2,620d806..0000000
->> --- a/README.md
->> +++ b/README.md
->> @@@ -1,7 -1,1 +1,11 @@@
->>  -This is my default readme
->> ++<<<<<<< HEAD
->>  +merged-history-test
->>  +===================
->>  +
->>  +### About
->>  +
->>  +This is your project's README.md file. It helps users understand what your
->> - project does, how to use it and anything else they may need to know.
->> ++project does, how to use it and anything else they may need to know.
->> ++=======
->> ++This is my default readme
->> ++>>>>>>> dev
+>> I posted a proof of concept a while back [1]. This is the full version.
 >>
->> This does not look right to me. The 'This is my default readme' line
->> has ++ at the start - suggesting its new to both parent copies of the
->> file, which isn't the case - it came from the dev branch so should be
->> prefixed with '+ '.
->> I'm also not clear why the line beginning 'project does' has both a -
->> and ++ prefix.
+>> This series lets "git" binary help git-completion.bash to complete
+>> --<stuff> so that when a new option is added, we don't have to update
+>> git-completion.bash manually too (people often forget it). As a side
+>> effect, about 180 more options are now completable.
+>>
+>> parse-options is updated to allow developers to flag certain options
+>> not to be completable if they want finer control over it.  But by
+>> default, new non-hidden options are completable. Negative forms must
+>> be handled manually. That's for the next step.
 >
-> Are you sure there aren't whitespace differences in those two lines?
->
-> For instance, if I do:
->
->   # base commit
->   git init
->   git commit --allow-empty -m base
->
->   # one side; note missing newline!
->   printf 'this is my default readme' >file
->   git add file
->   git commit -m default
->
->   # other side
->   git checkout -b other HEAD^
->   {
->         echo this is a longer
->         echo and more involved
->         echo README
->   } >file
->   git add file
->   git commit -m longer
->
->   # and now merge and get a conflict
->   git merge master
->
-> Then I get similar output to you.  The content with merge-conflicts
-> can't represent the original lack-of-newline for that file, because of
-> course there's another ">>>" line after it.
->
-> If I swap out the printf for echo, adding the newline, then it produces
-> the output you'd expect.
->
-> -Peff
+> Everybody seems to be in favour of the approach taken by this
+> series.  Is it in a good enough shape that we can merge it to 'next'
+> and then go incremental from now on?
+
+Not until v3. v2 breaks Mac OS because I used some fancy bash feature.
+There are some good improvements in __gitcomp_builtin() suggested by
+Eric and Szeder, which will be in v3 as well.
+
+> Or do we want to keep it in
+> 'pu' to give easier access to volunteer guinea pigs and wait until
+> the way to handle '--no-foo' options are figured out?
+
+Oh the --no-foo thing is definitely not part of this version. Once
+this series lands though, people can start improving --no-foo per
+command, even in parallel. "git foo -h" will also benefit from that
+effort because we will be able to show --no- form only when we mean to
+allow --no-.
+--=20
+Duy
