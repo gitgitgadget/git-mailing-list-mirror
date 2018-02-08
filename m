@@ -2,148 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 612331F404
-	for <e@80x24.org>; Thu,  8 Feb 2018 22:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18811F404
+	for <e@80x24.org>; Thu,  8 Feb 2018 22:26:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752185AbeBHWS6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Feb 2018 17:18:58 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:53794 "EHLO smtp.gaspard.ninja"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751094AbeBHWS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Feb 2018 17:18:57 -0500
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 3baa1356;
-        Thu, 8 Feb 2018 22:18:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
-        subject:to:cc:references:from:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        grym-20170528; bh=YMgwo/eI9czS8H+SO8DBG1LVe20=; b=LXwhWFPOWltwzd
-        6KY7dltnfGaTLeKOr22YiPbfGOShmqnd0fWEpWAYM+SVuS07Zee+7FrnrD4AKLu4
-        LK/zO3xDFv5aGrPpsAe9kk2runwfR8aALwPNRrAb1LELqD2u4mhHnSJ+SW569sZ6
-        8wm0Y4RpI9PrmcEBLNsSvT1+Q1IeI=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 89778a41 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
-        Thu, 8 Feb 2018 22:18:55 +0000 (UTC)
-Subject: Re: Fetch-hooks
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org
-References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
- <87inb8mn0w.fsf@evledraar.gmail.com>
- <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
- <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
- <87bmgzmbsk.fsf@evledraar.gmail.com>
-From:   Leo Gaspard <leo@gaspard.io>
-Message-ID: <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
-Date:   Thu, 8 Feb 2018 23:18:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751317AbeBHW0f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Feb 2018 17:26:35 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:42434 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750750AbeBHW0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Feb 2018 17:26:34 -0500
+Received: by mail-qt0-f194.google.com with SMTP id i8so8264499qtj.9
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 14:26:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=NJXqYT2CEjxVCB+Dyx+JnwzN8fjN5M5ZUg49wAMc06I=;
+        b=DhZQ285D4oA5d0XslcvJCtBlQr2lRIyjp3CVxZFboPvthTwhQwOUDXQngwHq2oEgH3
+         cRvnXoaGw3NhHChe9u7P8p0oNJpEoeGV6PH0t2jwCFGw8ve3yJx1QBQqa8QZ5CCT0Oua
+         si6W1JTtpaSpiILpFiC45SHQIx0eS1GK/HJHOEOo3bMiYZyMdAiUZWrCEGv9koxa8MCs
+         Gw9W5Puyc6I4YM894e5krbtfzeo8a3UNHNw5SzQtxDCd3F6Y+YesJhyy1Fw/+/thIPX+
+         2cefkqWUv4bh3RfNl5jOBVzol4KI/JICkMak8xYT5wmKWIoFuof5w6sYyPMmRboNuzZs
+         iZMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=NJXqYT2CEjxVCB+Dyx+JnwzN8fjN5M5ZUg49wAMc06I=;
+        b=fQvN3+98Afky3XIFj4f08W9wJNkMKVJEsEHGj+9Q3WSV96KkD6MNizxRb6VayXo1kt
+         Q2TvoiBTUB1Ae+qrXUqcPhifUp/SFxGe7ZPSp5BYR26gF+GZvDfNRVhgo/BD708u67LE
+         pLbBwqTkNNkTOSZfjGsC5buqRTIcAiXkj6h8Fc0Us5+Mubpc799InfEoPI48M4UaYzJA
+         dga29Fd9nfGFmXVfaNkypB2rxMVSD7SgC5ICe4VaD8+M2MINbWeYF2oQclnoupX8cSMy
+         QfCeiOjTc7e7SkcD9xSWvNp1bO+i5YCNNz9tCcZfpjAZ/HBneBr1GziGbVWabi3/j32f
+         ndXg==
+X-Gm-Message-State: APf1xPC+ViVooOCvbOxKZgi8/5EcV/ohn97Kf911c555vknoFlfHFfCt
+        Gdlc5dcyYRDqrtE0CcaaRpZtZpBh9mi3jIN1+D8gBg==
+X-Google-Smtp-Source: AH8x224cqKJ7yaDi1151zizUF0OWGeFHS4WRpJgTUr68k+xtg2VEy8TiV42apUCRVYNQ1ggWw0pvuZIm+iUJN4a+DxE=
+X-Received: by 10.200.51.66 with SMTP id u2mr1248055qta.127.1518128793828;
+ Thu, 08 Feb 2018 14:26:33 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <87bmgzmbsk.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Received: by 10.12.137.133 with HTTP; Thu, 8 Feb 2018 14:26:33 -0800 (PST)
+In-Reply-To: <20180208204309.GA4541@sigill.intra.peff.net>
+References: <20180208201546.194935-1-sbeller@google.com> <20180208204309.GA4541@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 8 Feb 2018 17:26:33 -0500
+X-Google-Sender-Auth: tgG9o7YtalakfFUQnTh0ZM3UB-w
+Message-ID: <CAPig+cTZuf5rMNN6aSztX-jKrJkuRpVcJj+xmrSsO6ngrHhU6Q@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08/2018 10:06 PM, Ævar Arnfjörð Bjarmason wrote:>> Hmm, OK, so I
-guess I'll try to update the patch when I get some time to
->> delve into git's internals, as my use case (forbidding some fetches)
->> couldn't afaik be covered by a wrapper hook.
-> 
-> Per my reading of
-> https://public-inbox.org/git/20111224234212.GA21533@gnu.kitenet.net/
-> what Joey implemented is not what you described in your initial mail.
-> 
-> His is a *post*-fetch hook, we've already done the fetch and are just
-> telling you as a courtesy what refs changed. You could also implement
-> this as some cronjob that polls git for-each-ref but it's easier as a
-> hook, fine.
+On Thu, Feb 8, 2018 at 3:43 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 08, 2018 at 12:15:46PM -0800, Stefan Beller wrote:
+>> +/*
+>> + * Resolve the constants as returned by git_config_colorbool()
+>> + * (specifically "auto") to a boolean answer.
+>> + */
+>> +extern int want_color(int var);
+>
+> This explanation left me even more confused about what should go in
+> "var", and I think I'm the one who wrote the function. ;)
 
-I was thinking along the lines of
-    https://marc.info/?l=git&m=132486687023893&w=2
-with high-level description at
-    https://marc.info/?l=git&m=132480559712592&w=2
+Agreed, this still fails to (directly) answer the question I asked in
+[1] about what 'var' is.
 
-With the high-level description given here, I'm pretty sure I can hack a
-hook together to make things work as I want them to.
+> I think the point is that "var" is a quad-state variable (yes, no, auto,
+> or "unknown") and we are converting to a boolean. This would probably be
+> a lot more clear if GIT_COLOR_* were all enum values and not #defines,
+> and this function took the matching enum type.
+>
+> So I think that's what you were trying to name with "constants as
+> returned by...", but it definitely took me some thinking to parse it.
 
-> What you're describing is something like a pre-fetch hook analogous to
-> the pre-receive hooks, where you're fed refs updated on the remote on
-> stdin, and can say you don't want some of those to be updated.
-> 
-> This may just be a lack of imagination on my part, but I don't see how
-> that's sensible at all.
-> 
-> The refs we fetch are our *copy* of the remote refs, why would you not
-> want to track the upstream remote. You're going to refuse some branches
-> and what? Be further behind until some point in the future where the tip
-> is GPG-signed and you accept it, at which poich you'll need to do more
-> work than if you were up-to-date with the almost-GPG-signed version?
+Rather than talking about plural "constants" (which makes it more
+confusing), it would likely be helpful for it to say (explicitly) that
+the caller passes in the result of git_config_colorbool() as 'var'.
 
-That's about it. I want all fetching to be blocked in case of the tip
-not being signed. As there is a pre-push hook ensuring committers don't
-forget to sign before pushing, the only case the tip could not be signed
-is in case of an attack, which means it's better to just force-push
-master because any git repo that fetched it is doomed anyway. Definitely
-would not want to allow an untrusted revision get into anything that
-could even remotely be taken as “endorsed” by the user.
+Or something like that.
 
-(BTW, in order to avoid the case of someone forgetting to sign the
-commit and not having installed the pre-push hook, there can be holes in
-the commit-signing chain, the drawback being that the committer pushing
-a signed commit takes responsibility for all unsigned commits directly
-preceding his -- allowing them to recover in case of a mistaken push)
+>> +/*
+>> + * Output the formatted string in the specified color (and then reset to normal
+>> + * color so subsequent output is uncolored). Omits the color encapsulation if
+>> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+>> + * the color. The `color_print_strbuf` prints the given pre-formatted strbuf
+>> + * instead, up to its first NUL character.
+>> + */
+>
+> It probably doesn't matter much in practice, but the color_print_strbuf
+> behavior sounds like a bug. Shouldn't it print the whole strbuf, even if
+> it has an embedded NUL?
 
-> I think you're confusing two things here. One is the reasonable concern
-> of wanting to not have your local copy of remote refs have undesirable
-> content, but a pre-fetch hook is not the way to accomplish that.
+I (parenthetically) suggested[1] the same about fixing the
+bug/misbehavior, though doing so is outside the scope of this
+particular patch.
 
-Well, a pre-fetch hook is a possible way of accomplishing that, and I
-don't know of any better one?
-
-> The other is e.g. to ensure that you never locally check out some "bad"
-> ref, we don't have hook support for that, but could add it,
-> e.g. git-checkout and git reset --hard could be taught about some
-> pre-checkout hook.
-
-Issue is, once we have to fix checkout and reset, all other commands
-that potentially touch the worktree also have to be fixed (eg. I don't
-know whether worktree add triggers pre-checkout?)
-
-Also, this requires the hook to store a database of all the paths that
-have been checked, because there is no logic in how one may choose to
-checkout the repo. While having a tweak-fetch hook would make the
-implementation straightforward, because at the time of invoking the hook
-the “refname at remote” commit is already trusted, and the “object name”
-is the commit whose validity we want to check, so we just have to check
-the path between those two. (I don't know if you checked my current
-scripts, but basically as the set of allowed PGP keys can change at any
-commit, it's only possible to check a commit path, not a single commit
-out-of-nowhere)
-
-The only issue that could arise with a tweak-fetch hook is in case of a
-force-fetch (and even maybe it's not even an actual issue, I haven't
-given it real thought yet), but this can reasonably be banned, as once a
-commit is signed it enters the “real” master branch, that should never
-be moved backward, as it can't be the sign of an attack.
-
-> You could also have some intermediate step between these two, where
-> e.g. your refspec for "origin" is
-> "+refs/heads/*:refs/remotes/origin-untrusted/*" instead of the default
-> "+refs/heads/*:refs/remotes/origin/*", you fetch all refs to that
-> location, then you move them (with some alias/hook) to
-> "refs/remotes/origin/*" once they're seen to be "OK".
-
-That is indeed another possibility, but then the idea is to make things
-as transparent as possible for the end-user, not to completely change
-their git workflow. As such, considering only signed commits to be part
-of the upstream seems to make sense to me?
-
-Cheers,
-Leo
+[1]: https://public-inbox.org/git/CAPig+cQVGsQk3tj43V6f3rFTD8smDxqWvug_u4__EWxOQG90xA@mail.gmail.com/
