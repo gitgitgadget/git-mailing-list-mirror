@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B4431F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 21:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 512BD1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 21:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752853AbeBIV2J (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 16:28:09 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:55018 "EHLO smtp.gaspard.ninja"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752807AbeBIV2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 16:28:08 -0500
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 7fe68339;
-        Fri, 9 Feb 2018 21:28:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
-        subject:cc:references:from:to:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        grym-20170528; bh=jmnBN6+CFDgsRz/cu9sfcNQT5sU=; b=djzHBDSZle+44B
-        K77X5KC+BNHnkc19esuj/vbyf+nZgIDnenASmZsEW0Z9hYMXeuIkSWD0Am6D3Hd1
-        vGQ5pOWxgghv8GCpMmqqDi0/7nb3A0e4Xc7/zwHbSrpaD8Oyw8DK1s/ldj4ALO6s
-        Xzufn75Bx31jv2BU6Do8KzjJkk8x8=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 2d5759e0 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
-        Fri, 9 Feb 2018 21:28:06 +0000 (UTC)
-Subject: [PATCH 0/2] fetch: add tweak-fetch hook
-Cc:     Joey Hess <id@joeyh.name>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
- <87inb8mn0w.fsf@evledraar.gmail.com>
- <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
- <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
- <3a5a2827-0f69-3a11-2664-51a60eefebf1@gaspard.io>
- <20180209202044.GA6783@kitenet.net>
-From:   Leo Gaspard <leo@gaspard.io>
-To:     git@vger.kernel.org
-Message-ID: <30753d19-d77d-1a1a-ba42-afcd6fbb4223@gaspard.io>
-Date:   Fri, 9 Feb 2018 22:28:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752859AbeBIVkJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 16:40:09 -0500
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:33842 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750993AbeBIVkI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 16:40:08 -0500
+Received: by mail-wm0-f54.google.com with SMTP id j21so405749wmh.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 13:40:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=137Lo4Z1kZy4Rqj0RYaOErwbBqUzzf0qU0eIkpF4z+Q=;
+        b=DQezFBXXQN1fzf9wBW6NG0e3NvzuR+PkAAsIJpn0p1KP5w9qzZaf6GWI26yf2RU45s
+         AvwHyXJFphYJkNsKWvDSuVr6oVL0Pc//KywkLs6VUuvpEtro8aKyzHXIha1hIQGOyndH
+         OFjUOpD3O6+nJCYI3QrXySWYdGCR2eACqZbYjpyQiDtLubzgsXSji5LAdtyIkJmjRH6X
+         N57P6bHkmVHooqgrXZgg2LU4/7pYdAtQvNE+6Iksb+lBE8ltARTO/CQzeWx4pD445tlf
+         SRWt8U+cbTT7zv0fa/wn51CNU986T+G01xelb04+4Xx5mkItsbHBaLKYI7QKYeywV5B6
+         3XmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=137Lo4Z1kZy4Rqj0RYaOErwbBqUzzf0qU0eIkpF4z+Q=;
+        b=uWyCMcNTh9xMuYZz5Vi/7VPGkPrlTkAOdulRAPBiLApcmBDmyRplMI7NLPCUnN2sfw
+         bvIgA4vQtMlIGiwq+nJ7qErr960+wV2ckCTya9GZV7YTzwmZxCimQ9C/Fox3jKo7ymZv
+         W+hFvM4dGZlgluDilOaF7s7jdZgKom6XBxcQfCU8+4V2WAWt6UwxwZoCTV/2C73E3Or3
+         25qNMRLkvVfnHvmmTlUTYihti4ch7BFPQp6l4grPluNmDq/1T6Zm9dJapMb+F1AVZge+
+         aprUUkng+X16F5VvW6PDZzOt0KfGOZYbkMIWdrx1CWn9m2ieEnZ1POxEqPzinUqbfwVL
+         YKsg==
+X-Gm-Message-State: APf1xPA1Z/xrrL1vtl4fze1gNQXEYPYIlbva/W9a0oYgeGvJtC13jHIU
+        QXxI3B9AaipAzkks9GPHMSeUM8RO
+X-Google-Smtp-Source: AH8x225FSkOQQqyiOcMowDKpsnLB+guKEJR82g1/fFjP/4EAdV+22ecan00kZMNUrNO9bMGOV+HIfA==
+X-Received: by 10.28.85.194 with SMTP id j185mr2926631wmb.31.1518212406702;
+        Fri, 09 Feb 2018 13:40:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 5sm3559520wre.35.2018.02.09.13.40.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 13:40:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] update-index doc: note new caveats in 2.17
+References: <xmqq6076xabo.fsf@gitster-ct.c.googlers.com>
+        <20180209210431.409-1-avarab@gmail.com>
+Date:   Fri, 09 Feb 2018 13:40:05 -0800
+In-Reply-To: <20180209210431.409-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 9 Feb 2018 21:04:29 +0000")
+Message-ID: <xmqq4lmpx2oa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180209202044.GA6783@kitenet.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/09/2018 09:20 PM, Joey Hess wrote:> Yes; my patches are under the
-same GPL-2 as the rest of git.
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-Thanks! So here comes my patch series, heavily based on yours.
+> When users upgrade to 2.17 they're going to have git yelling at them
+> (as my users did) on existing checkouts, with no indication whatsoever
+> that it's due to the UC or how to fix it.
 
-There are some things to bear in mind while reviewing it:
+Wait.  Are you saying that the new warning is "warning" against a
+condition that is not an error?
 
- * This is my first real attempt at contributing to git, which means I
-could be very very far off-track
+> ... doesn't it only warn under that mode? I.e.:
+>
+>     -"could not open directory '%s'")
+>     +"core.untrackedCache: could not open directory '%s'")
 
- * Most of it is based on trying to make the 6-year-old patch series
-work and pass all the tests, so if a new feature has been added since
-then I likely didn't notice it or don't know how to handle it correctly
+For example, if it attempts to open a directory which does *not*
+have to exist, and sees an error from opendir() due to ENOENT, then
+I do not think it should be giving a warning.  If we positively know
+that a directory should exist there and we cannot open it, of course
+we should warn.  Also, if we know a directory should be readable
+when it exists, then we should be warning when we see an error other
+than ENOENT.
 
-There are still three TODO's in the code:
-
- * In the documentation, one stating that I don't really get what this
-“ignore” parameter exactly does, and whether it should be handled
-specially (a prime example of a new feature I'm not really sure how to
-handle, somewhere in the code it's written all the “ignore” references
-are at the end of the list, but I'm already not self-confident enough
-about the difference between “merge” and “not-for-merge” to even
-consider making a good choice about how to handle “ignore”)
-
- * In `builtins/fetch.c`, function `do_fetch`, there is a conflict of
-interest between placing the `prune` before the `fetch` (as done by
-commit 10a6cc889 ("fetch --prune: Run prune before fetching",
-2014-01-02)), and placing the `fetch` before the `prune` (which would
-allow hooks that rename the local-ref to not be prune'd and then
-re-fetched when doing a `git fetch --prune` -- without that a hook that
-would want to both read the old commit information and rename the
-local-ref would not be able to). Or maybe this question means actually
-there should be a third solution? but I don't really know what. Maybe
-also hooking into the prune operation?
-
- * In `templates/hooks--tweak-fetch.sample`, the “check this actually
-works” todo, as I'd rather first check this patch series is not too far
-off-topic before doing non-essential work -- anyway another version of
-the patch series will be required for the other two TODO's, so I can fix
-it at this point.
-
-That being said, what do you think about these patches?
-
-Thanks for your time!
-Leo Gaspard
+So...
