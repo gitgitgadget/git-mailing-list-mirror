@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9571F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17B471F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750981AbeBILCn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:02:43 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:34266 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750952AbeBILCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:02:42 -0500
-Received: by mail-pl0-f66.google.com with SMTP id q17so1324438pll.1
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:02:42 -0800 (PST)
+        id S1751028AbeBILCt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 06:02:49 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:46849 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750997AbeBILCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:02:48 -0500
+Received: by mail-pg0-f66.google.com with SMTP id a11so3390053pgu.13
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:02:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=A9ro4kRFsaP1bZ+MU39cLbcvhKUsdBsoByDBJTp/Q8s=;
-        b=IPhhWBFKLc2iHSsMyjouXQn7ZJ+TRqK75QcNZh6YfH1G5oG/caX9WiA8RKCV0OzYvM
-         mklp0cTPp3JBRgPW9dEP6ZP0zISkINlJb6Hy4W1pqSPZTjlIVuQT40QuxmTQqDb9TTIU
-         z/kmVdOX50hyBwOglwtKZjS4017Y1Upu+JYIARhuJvPaxr+JEpvVV6QjL/Ua0SUoTnr6
-         RHu0yaZzjAsDDmD7YQmp4zcInwozqjKnYqmYErzIt2jBz/M9m1AXwUKblBg5eiydOlZ/
-         06TXyX8T6VZR3ed7xi5FgQF92/XJidKYsi8m+RkVJ8racDnTjFvRwGwOWPlo+8n9GxKA
-         ntBw==
+        bh=yuZ14cFRKa89U30YkHQwykDmt5zFfHl9RC7HlDTnrbo=;
+        b=t4njroZgEF9CVzflLxKwb35pPeK2R6UduwyW2xjwvfR7+K00pYsG1k3AVPmbnAWskL
+         akopPpSL33J9uIVGDYbDwkNm8Z6SD3/IT0qC/vkdkWA0oV5Wb+L2vzPveW43RAO1CY8O
+         Tcc2WAxpv1Ho+NwRsKPm2+4pru6hrOa988vR4aRlKFJ/zJcqDL4oGSCcCFxSPhll50xD
+         X0lQ5dD+yAs4E8YNxjFFmhblsbqS2dPRlT5GTTWbZczsrFmeAal1LVqu0vo4hFEDhDNG
+         ew0TEgCaBiqCZ4hTA3YZiN1soiU0zgRNmN3Q2e02uRwNWD+hOSGiYw7Kewez0Yld2/p8
+         FHpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=A9ro4kRFsaP1bZ+MU39cLbcvhKUsdBsoByDBJTp/Q8s=;
-        b=fatPCL5Qiusorxf9tdkwlsIojX1IC/T56QW6VgtbaDaXlwpfThWEz4eDrvHAF8Aca5
-         x5uhYf6FMmmHMIZ+SWKSQSsDXy5CwZDLqz19FaP77JQI2e2Pal65H6o0XiN0yMVaYYQU
-         ThvRMiRb8+92woXOKgmudYyyxcxf3FR86VXdA6UvDcXgBsZX5xnIJTaS9okdiTUcGOMA
-         fbARB+EHHFhq7XmdHNpS/3ek7LtbZMQfKg9OTwe3d4fF2wOSAfZL69dZv9AkojnABPOE
-         /2xJGTVlyBiCFFuLWTDYfX6uilAGGqwyF0IBAm42rp0h4PSxDalejWitXSz3cFlfb3z4
-         bTVw==
-X-Gm-Message-State: APf1xPCXb3/Fnc5j8BN9bZnr06w2xq6OemsG0mEvdOcw79dG4w4jkJbT
-        O4xMSSaWUryBsyJIwPu4mmtUew==
-X-Google-Smtp-Source: AH8x2268eQc9rVUhNbMXhOxNcf/tgCCZ2n1pcg/DqV42OxWqCUqNNFjs7nhd0OWDFd9ioxaevXDV5g==
-X-Received: by 2002:a17:902:6d09:: with SMTP id s9-v6mr2250983plk.176.1518174161616;
-        Fri, 09 Feb 2018 03:02:41 -0800 (PST)
+        bh=yuZ14cFRKa89U30YkHQwykDmt5zFfHl9RC7HlDTnrbo=;
+        b=sBUWaXtAfUdrARloN1y2f/vKiYX8g51oMouoOG6CFKirnlovCxPqVP8jc78jS5Odcc
+         rPOjwUpQ2HXpIdbPsYNUmo2OeTMh87uKZoymDigUhj/+ssc7zzYVVE1t+5/lGHsGVJtz
+         5BzEtdWhscyeEluYKDDTNH5HSzH5/X1LunvlOCpN8lqnbC4VQzgLDlso7wvgQEw9hq0R
+         CrfZuIyyqJetY68VWzliELgnzeAOSWX3k8x7fp9IqEkCBLinVarp/uxDwy3LtltULzQS
+         aAptiPh3KeaJupk0KIBcO+nIb8C+n86/0OAiDFUvVdMj2Ssz61zfik7DHlYDSnbqpLrQ
+         wOTg==
+X-Gm-Message-State: APf1xPAv9FF8OJ36t5QD307rhi6uBl5GkgaWPXyPw/wYV9xtv3BrB18k
+        0CcYT1y9J5zEnSZERcS30Kzaaw==
+X-Google-Smtp-Source: AH8x227kkx8oNwUk3XIU3xt1FTdyELoCl9rdSP8wGpCwAvBk+DU7lcDqSXNdUCQ1PgxZt2KJmjEFqQ==
+X-Received: by 10.99.191.78 with SMTP id i14mr2121941pgo.9.1518174167556;
+        Fri, 09 Feb 2018 03:02:47 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id g2sm4659951pgq.43.2018.02.09.03.02.38
+        by smtp.gmail.com with ESMTPSA id s89sm5484487pfk.35.2018.02.09.03.02.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 03:02:40 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:02:36 +0700
+        Fri, 09 Feb 2018 03:02:47 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:02:41 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 01/42] parse-options: support --git-completion-helper
-Date:   Fri,  9 Feb 2018 18:01:40 +0700
-Message-Id: <20180209110221.27224-2-pclouds@gmail.com>
+Subject: [PATCH v3 02/42] parse-options: add OPT_xxx_F() variants
+Date:   Fri,  9 Feb 2018 18:01:41 +0700
+Message-Id: <20180209110221.27224-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.207.gedba492059
 In-Reply-To: <20180209110221.27224-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -74,110 +74,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option is designed to be used by git-completion.bash. For many
-simple cases, what we do in there is usually
-
-    __gitcomp "lots of completion options"
-
-which has to be manually updated when a new user-visible option is
-added. With support from parse-options, we can write
-
-    __gitcomp "$(git command --git-completion-helper)"
-
-and get that list directly from the parser for free. Dangerous/Unpopular
-options could be hidden with the new "NOCOMPLETE" flag.
+These macros allow us to add extra parse-options flag, the main one in
+my mind is PARSE_OPT_NOCOMPLETE to hide certain options from
+--git-completion-helper.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- parse-options.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
- parse-options.h |  5 ++++-
- 2 files changed, 48 insertions(+), 1 deletion(-)
+ parse-options.h | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index fca7159646..29f4defdd6 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -425,6 +425,46 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
- 	parse_options_check(options);
- }
- 
-+/*
-+ * TODO: we are not completing the --no-XXX form yet because there are
-+ * many options that do not suppress it properly.
-+ */
-+static int show_gitcomp(struct parse_opt_ctx_t *ctx,
-+			const struct option *opts)
-+{
-+	for (; opts->type != OPTION_END; opts++) {
-+		const char *suffix = "";
-+
-+		if (!opts->long_name)
-+			continue;
-+		if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
-+			continue;
-+
-+		switch (opts->type) {
-+		case OPTION_GROUP:
-+			continue;
-+		case OPTION_STRING:
-+		case OPTION_FILENAME:
-+		case OPTION_INTEGER:
-+		case OPTION_MAGNITUDE:
-+		case OPTION_CALLBACK:
-+			if (opts->flags & PARSE_OPT_NOARG)
-+				break;
-+			if (opts->flags & PARSE_OPT_OPTARG)
-+				break;
-+			if (opts->flags & PARSE_OPT_LASTARG_DEFAULT)
-+				break;
-+			suffix = "=";
-+			break;
-+		default:
-+			break;
-+		}
-+		printf(" --%s%s", opts->long_name, suffix);
-+	}
-+	fputc('\n', stdout);
-+	exit(0);
-+}
-+
- static int usage_with_options_internal(struct parse_opt_ctx_t *,
- 				       const char * const *,
- 				       const struct option *, int, int);
-@@ -455,6 +495,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 		if (internal_help && ctx->total == 1 && !strcmp(arg + 1, "h"))
- 			goto show_usage;
- 
-+		/* lone --git-completion-helper is asked by git-completion.bash */
-+		if (ctx->total == 1 && !strcmp(arg + 1, "-git-completion-helper"))
-+			return show_gitcomp(ctx, options);
-+
- 		if (arg[1] != '-') {
- 			ctx->opt = arg + 1;
- 			switch (parse_short_opt(ctx, options)) {
 diff --git a/parse-options.h b/parse-options.h
-index af711227ae..a5caa0bb1d 100644
+index a5caa0bb1d..05a6839019 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -38,7 +38,8 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LASTARG_DEFAULT = 16,
- 	PARSE_OPT_NODASH = 32,
- 	PARSE_OPT_LITERAL_ARGHELP = 64,
--	PARSE_OPT_SHELL_EVAL = 256
-+	PARSE_OPT_SHELL_EVAL = 256,
-+	PARSE_OPT_NOCOMPLETE = 512
+@@ -115,19 +115,24 @@ struct option {
+ 	intptr_t defval;
  };
  
- struct option;
-@@ -89,6 +90,8 @@ typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-  *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
-  *				(i.e. '<argh>') in the help message.
-  *				Useful for options with multiple parameters.
-+ *   PARSE_OPT_NOCOMPLETE: by default all visible options are completable
-+ *			   by git-completion.bash. This option suppresses that.
-  *
-  * `callback`::
-  *   pointer to the callback to use for OPTION_CALLBACK or
++#define OPT_BIT_F(s, l, v, h, b, f) { OPTION_BIT, (s), (l), (v), NULL, (h), \
++				      PARSE_OPT_NOARG|(f), NULL, (b) }
++#define OPT_COUNTUP_F(s, l, v, h, f) { OPTION_COUNTUP, (s), (l), (v), NULL, \
++				       (h), PARSE_OPT_NOARG|(f) }
++#define OPT_SET_INT_F(s, l, v, h, i, f) { OPTION_SET_INT, (s), (l), (v), NULL, \
++					  (h), PARSE_OPT_NOARG | (f), NULL, (i) }
++#define OPT_BOOL_F(s, l, v, h, f)   OPT_SET_INT_F(s, l, v, h, 1, f)
++
+ #define OPT_END()                   { OPTION_END }
+ #define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, \
+ 				      (h), PARSE_OPT_NOARG}
+ #define OPT_GROUP(h)                { OPTION_GROUP, 0, NULL, NULL, NULL, (h) }
+-#define OPT_BIT(s, l, v, h, b)      { OPTION_BIT, (s), (l), (v), NULL, (h), \
+-				      PARSE_OPT_NOARG, NULL, (b) }
++#define OPT_BIT(s, l, v, h, b)      OPT_BIT_F(s, l, v, h, b, 0)
+ #define OPT_NEGBIT(s, l, v, h, b)   { OPTION_NEGBIT, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG, NULL, (b) }
+-#define OPT_COUNTUP(s, l, v, h)     { OPTION_COUNTUP, (s), (l), (v), NULL, \
+-				      (h), PARSE_OPT_NOARG }
+-#define OPT_SET_INT(s, l, v, h, i)  { OPTION_SET_INT, (s), (l), (v), NULL, \
+-				      (h), PARSE_OPT_NOARG, NULL, (i) }
+-#define OPT_BOOL(s, l, v, h)        OPT_SET_INT(s, l, v, h, 1)
++#define OPT_COUNTUP(s, l, v, h)     OPT_COUNTUP_F(s, l, v, h, 0)
++#define OPT_SET_INT(s, l, v, h, i)  OPT_SET_INT_F(s, l, v, h, i, 0)
++#define OPT_BOOL(s, l, v, h)        OPT_BOOL_F(s, l, v, h, 0)
+ #define OPT_HIDDEN_BOOL(s, l, v, h) { OPTION_SET_INT, (s), (l), (v), NULL, \
+ 				      (h), PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 1}
+ #define OPT_CMDMODE(s, l, v, h, i)  { OPTION_CMDMODE, (s), (l), (v), NULL, \
 -- 
 2.16.1.207.gedba492059
 
