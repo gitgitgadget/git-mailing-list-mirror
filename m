@@ -2,108 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 171ED1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 23:15:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 436061F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 23:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753256AbeBIXPn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 18:15:43 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47748 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753233AbeBIXPl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 9 Feb 2018 18:15:41 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w19NDc4E002217;
-        Fri, 9 Feb 2018 15:13:38 -0800
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2fwbtpshbh-1;
-        Fri, 09 Feb 2018 15:13:38 -0800
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id C55572244D04;
-        Fri,  9 Feb 2018 15:13:30 -0800 (PST)
-Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id BC5E92CDEED;
-        Fri,  9 Feb 2018 15:13:30 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 2/3] t1450-fsck: Add tests for HEAD of other worktrees
-Date:   Fri,  9 Feb 2018 15:13:29 -0800
-Message-Id: <20180209231330.4457-3-newren@gmail.com>
-X-Mailer: git-send-email 2.16.1.75.gc01c8fdd7d
-In-Reply-To: <20180209231330.4457-1-newren@gmail.com>
-References: <20180209231330.4457-1-newren@gmail.com>
+        id S1753257AbeBIXPu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 18:15:50 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:52762 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753227AbeBIXPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 18:15:48 -0500
+Received: by mail-wm0-f65.google.com with SMTP id g1so248253wmg.2
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 15:15:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=l//BzxFunUPpPVX4+aDuzzGbu+5MGTBeVfe4D+wpvyo=;
+        b=gr88u6XQQB1FQd+d5nLYSP8+FETC+G3EPAsDFoyrcPEPF1gXmRt4gIOE3F7PLvEV2k
+         8rvIyxFrnr8UvhNB5Tf6aAl3W7Oc7VClhQ1uh4bf6RF76NGwlOOmFdmiP1bRFvpF9M6G
+         3GokSebcLhlyRW7PbKYeXSQgxu2PBg0wBMCeM7z+0qLnrJFHyizyM9B0env9UWaFam9F
+         UBJ0QGuDSVT6yLsQKSTIu/hgjz6YYG6aW+Eb1/XUvYGNrQmtZ2IGlnbjgSaILxHxZkFv
+         /84GuUsFZDjxK2I7oL0nlRh9TRzYlTdzDHzGwTdeSwRAdqSclzGQReVjVQoLdFLVSJjg
+         HO8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=l//BzxFunUPpPVX4+aDuzzGbu+5MGTBeVfe4D+wpvyo=;
+        b=BtNgqvwrRpTH2iU/hmOe81rNd+0rQEzPE1yUzSTqeeHA/J0Xso6BGGYGgu2UfSHt2J
+         M6WD5EhbT8l/oo77CJSTeLmOOm/4F5dirMyaP9rAJK3UDJG6ctbank5KIYnu5qtsZXUB
+         dnLHAPMVfnPjh6VBA3/zrfyECDakJizfg9WtbuGK4mFhd3PsILpbRXyPRQFOFyMvEIVp
+         4MToBKCQR7i7TP3+Q2ExPgiHl2andDcVtWOKwERNN0xXzt5GI4AYj9QPCzTMtgE44HQR
+         fdGJnwWrQ/vsqs5nPAZMEa+bIwnwQV1BOn27Mc3VhhnT9ou4ZyQGVHeLpGrxyhSwq3ki
+         1nDA==
+X-Gm-Message-State: APf1xPARvRH7AZSLD3LFrc9QaedFBYzoKKyQqX479eCO6lTFtwb1g656
+        K8iavcbjTQGLZ2rdkRnjDtk=
+X-Google-Smtp-Source: AH8x224dZGPCK4v8eLL4mjXmchcAb10JyP5uyQnWRQThL/APOXc7qY0/9RldK7NIle/6e+Rw6lIthA==
+X-Received: by 10.28.238.202 with SMTP id j71mr3220376wmi.34.1518218147408;
+        Fri, 09 Feb 2018 15:15:47 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n24sm156517wmi.21.2018.02.09.15.15.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 15:15:46 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 046/194] object-store: move replace_objects back to object-store
+References: <20180205235508.216277-1-sbeller@google.com>
+        <20180205235735.216710-1-sbeller@google.com>
+        <20180205235735.216710-26-sbeller@google.com>
+Date:   Fri, 09 Feb 2018 15:15:46 -0800
+In-Reply-To: <20180205235735.216710-26-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 5 Feb 2018 15:55:07 -0800")
+Message-ID: <xmqqzi4hu53x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-02-09_13:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=958 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1711220000 definitions=main-1802090293
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t1450-fsck.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Stefan Beller <sbeller@google.com> writes:
 
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index cb4b66e29d..fa94c59458 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -102,6 +102,33 @@ test_expect_success 'HEAD link pointing at a funny p=
-lace' '
- 	grep "HEAD points to something strange" out
- '
-=20
-+test_expect_failure 'other worktree HEAD link pointing at a funny object=
-' '
-+	test_when_finished "rm -rf .git/worktrees" &&
-+	mkdir -p .git/worktrees/other &&
-+	echo 0000000000000000000000000000000000000000 >.git/worktrees/other/HEA=
-D &&
-+	test_must_fail git fsck 2>out &&
-+	cat out &&
-+	grep "worktrees/other/HEAD: detached HEAD points" out
-+'
-+
-+test_expect_failure 'other worktree HEAD link pointing at missing object=
-' '
-+	test_when_finished "rm -rf .git/worktrees" &&
-+	mkdir -p .git/worktrees/other &&
-+	echo "Contents missing from repo" | git hash-object --stdin >.git/workt=
-rees/other/HEAD &&
-+	test_must_fail git fsck 2>out &&
-+	cat out &&
-+	grep "worktrees/other/HEAD: invalid sha1 pointer" out
-+'
-+
-+test_expect_failure 'other worktree HEAD link pointing at a funny place'=
- '
-+	test_when_finished "rm -rf .git/worktrees" &&
-+	mkdir -p .git/worktrees/other &&
-+	echo "ref: refs/funny/place" >.git/worktrees/other/HEAD &&
-+	test_must_fail git fsck 2>out &&
-+	cat out &&
-+	grep "worktrees/other/HEAD points to something strange" out
-+'
-+
- test_expect_success 'email without @ is okay' '
- 	git cat-file commit HEAD >basis &&
- 	sed "s/@/AT/" basis >okay &&
---=20
-2.16.1.75.gc01c8fdd7d
+> @@ -32,7 +31,15 @@ struct object_store {
+>  	 * Objects that should be substituted by other objects
+>  	 * (see git-replace(1)).
+>  	 */
+> -	struct replace_objects replacements;
+> +	struct replace_objects {
+> +		/*
+> +		 * An array of replacements.  The array is kept sorted by the original
+> +		 * sha1.
+> +		 */
+> +		struct replace_object **items;
+> +
+> +		int alloc, nr;
+> +	} replacements;
+>  
+>  	/*
+>  	 * A fast, rough count of the number of objects in the repository.
+> @@ -49,7 +56,7 @@ struct object_store {
+>  	unsigned packed_git_initialized : 1;
+>  };
+>  #define OBJECT_STORE_INIT \
+> -	{ NULL, MRU_INIT, ALTERNATES_INIT, REPLACE_OBJECTS_INIT, 0, 0, 0 }
+> +	{ NULL, MRU_INIT, ALTERNATES_INIT, { NULL, 0, 0 }, 0, 0, 0 }
 
+Not the primary thrust of this topic, but we may want to convert
+these to use designated initializers after this series is done.
