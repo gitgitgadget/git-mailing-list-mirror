@@ -2,120 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 411141F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 06:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F2371F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 06:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750863AbeBIGu0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 01:50:26 -0500
-Received: from mail.javad.com ([54.86.164.124]:50866 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750828AbeBIGuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 01:50:25 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 5C15A41B94;
-        Fri,  9 Feb 2018 06:50:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518159024;
-        bh=/wAwTCvFl/XzTieigJUy/efpLX6jpLfHfhh7fldW+jc=; l=1946;
-        h=Received:From:To:Subject;
-        b=cTPWI4rcDeCZzTm9YVEeh3jo9fQ+6rzVP9GuuWdp/uVSpqaaUWQYBpn1O7cAgzceo
-         SthaLRpVz15bFE5RoAUtaf1YgvyZuvMipAlrL73YpZcKcONA5LVEkQ12xbe8wXgBvC
-         S7HuUQrqC3rLnJ7p7OU1B7yIGFlkRpCT+3nnd4Os=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518159024;
-        bh=/wAwTCvFl/XzTieigJUy/efpLX6jpLfHfhh7fldW+jc=; l=1946;
-        h=Received:From:To:Subject;
-        b=cTPWI4rcDeCZzTm9YVEeh3jo9fQ+6rzVP9GuuWdp/uVSpqaaUWQYBpn1O7cAgzceo
-         SthaLRpVz15bFE5RoAUtaf1YgvyZuvMipAlrL73YpZcKcONA5LVEkQ12xbe8wXgBvC
-         S7HuUQrqC3rLnJ7p7OU1B7yIGFlkRpCT+3nnd4Os=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518159024;
-        bh=/wAwTCvFl/XzTieigJUy/efpLX6jpLfHfhh7fldW+jc=; l=1946;
-        h=Received:From:To:Subject;
-        b=cTPWI4rcDeCZzTm9YVEeh3jo9fQ+6rzVP9GuuWdp/uVSpqaaUWQYBpn1O7cAgzceo
-         SthaLRpVz15bFE5RoAUtaf1YgvyZuvMipAlrL73YpZcKcONA5LVEkQ12xbe8wXgBvC
-         S7HuUQrqC3rLnJ7p7OU1B7yIGFlkRpCT+3nnd4Os=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518159024;
-        bh=/wAwTCvFl/XzTieigJUy/efpLX6jpLfHfhh7fldW+jc=; l=1946;
-        h=Received:From:To:Subject;
-        b=cTPWI4rcDeCZzTm9YVEeh3jo9fQ+6rzVP9GuuWdp/uVSpqaaUWQYBpn1O7cAgzceo
-         SthaLRpVz15bFE5RoAUtaf1YgvyZuvMipAlrL73YpZcKcONA5LVEkQ12xbe8wXgBvC
-         S7HuUQrqC3rLnJ7p7OU1B7yIGFlkRpCT+3nnd4Os=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1ek2Vp-0004Jy-K6; Fri, 09 Feb 2018 09:50:21 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-Date:   Fri, 09 Feb 2018 09:50:21 +0300
-In-Reply-To: <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 18 Jan 2018 16:35:48 +0100
-        (STD)")
-Message-ID: <874lmqirma.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1751132AbeBIG66 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 01:58:58 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:39216 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751124AbeBIG65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 01:58:57 -0500
+Received: by mail-qt0-f194.google.com with SMTP id f4so9378860qtj.6
+        for <git@vger.kernel.org>; Thu, 08 Feb 2018 22:58:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=CafI/Cf2FLlumOfKAJBDiqz8J18mA45E3ufLIreeVQo=;
+        b=Uu3hlXLts4rb0nTsKTaDaFe7XAbosmeffCxUBfaXImve8l4dgcwVpwyNqhxwZrIYLm
+         9jL9DOEJLcSdg6hrc/qMptoJhWOgkaA6m/sK3pcbHEEknNVbnKxi0jZT8FMeMaO5Nu4A
+         HrylQe5l50nn7f/gUs1sJ8i4lKEVHj7dou8/RgsZDMBEHyU5hX+bnK4WKHZjrUie3RE/
+         eC30YAb9I57x5eDhGpnW8f1NhMrgZv1JvHy5pKhpu0S9L5UzdXGDbTY5Pnk8e236Afst
+         fiZPUQxkCsVrZLy9fLbblaxvEBxPeOvMMqs6ifqGKzDseEMA/YYF72x0FzOCiidFReYm
+         XsbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=CafI/Cf2FLlumOfKAJBDiqz8J18mA45E3ufLIreeVQo=;
+        b=WKtJSCTN2vGm4i5zuAdhhfXrN1Jel6ou09mv1WkQqFLhbznk4qcfYqAnIvveseSLvj
+         a4oTo6ageryS0W7QdO8lP6IxVUwYwSO/DDoF2HAoqzayWcOj/d9OlBo+yltU4++mkWCV
+         9Sh3PGeFn4vcwxcoDdi+bm6L8GYZDbn9yDFtUHFZ/gZuZJh3zppwuXa48s5tWfAm+9xw
+         I4qIB9g3BXI2WbaHsaX2mYvw7X/RSGg4KDXxOLXRH4e5xjBpRypDUfGAgXEiVqKvt8gV
+         d+0yhhkDMl5lU0EBL6a7e/j+2qhfymBSyI6Et8YJYorwI5UWu/TnILw/GSa0I1acXJ71
+         ubQA==
+X-Gm-Message-State: APf1xPA0FS09ASjTvLRDrpjI7ZSMlfExuIOApsiCtlUdGxwcVT8GU8as
+        wsj/NptgWImg3fFG4V3acIL9tJE1UvmBg0kX8YI=
+X-Google-Smtp-Source: AH8x225BYwhgEcbJ85YkmaqNLQ3jzKmMB68+EhXeyjRm7qrYT+FvWGcTsRpiXIhyT+QhBUjtkh5BJJViAHrfyWiRfBw=
+X-Received: by 10.237.37.168 with SMTP id x37mr2882917qtc.78.1518159536629;
+ Thu, 08 Feb 2018 22:58:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.137.133 with HTTP; Thu, 8 Feb 2018 22:58:55 -0800 (PST)
+In-Reply-To: <20180208161936.8196-17-avarab@gmail.com>
+References: <20180123221326.28495-1-avarab@gmail.com> <20180208161936.8196-1-avarab@gmail.com>
+ <20180208161936.8196-17-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 9 Feb 2018 01:58:55 -0500
+X-Google-Sender-Auth: AUe62ZOgJFQTQRRkM3Ysux1VxeU
+Message-ID: <CAPig+cS3OCi9CDykF-5EAx=J3ouXPo+7HE_CB8DfmWccBxyxgA@mail.gmail.com>
+Subject: Re: [PATCH v2 16/17] fetch: add a --fetch-prune option and
+ fetch.pruneTags config
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Jeff King <peff@peff.net>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Thu, Feb 8, 2018 at 11:19 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Add a --fetch-prune option to git-fetch, along with fetch.pruneTags
+> config option. [...]
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> @@ -592,6 +592,15 @@ test_configured_prune_type () {
+> +               if test "$fetch_prune_tags" =3D 'true' ||
+> +                  test "$remote_origin_prune_tags" =3D 'true'
+> +               then
+> +                       if ! printf '%s' "$cmdline" | grep -q refs/remote=
+s/origin/
 
-[...]
+Is $cmdline guaranteed to end with a newline? Historically, not all
+'grep's would be able to match the last line if it was not properly
+terminated. Perhaps you want '%s\n' instead?
 
-> With this patch, the goodness of the Git garden shears comes to `git
-> rebase -i` itself. Passing the `--recreate-merges` option will generate
-> a todo list that can be understood readily, and where it is obvious
-> how to reorder commits. New branches can be introduced by inserting
-> `label` commands and calling `merge - <label> <oneline>`. And once this
-> mode has become stable and universally accepted, we can deprecate the
-> design mistake that was `--preserve-merges`.
+> +                       then
+> +                               new_cmdline=3D"$new_cmdline refs/tags/*:r=
+efs/tags/*"
+> +                       fi
+> +               fi
+> +
+> @@ -705,6 +714,66 @@ test_configured_prune true  true  unset unset kept  =
+ pruned \
+> +# When --prune-tags is supplied it's ignored if an explict refspec is
 
-This doesn't explain why you introduced this new --recreate-merges. Why
-didn't you rather fix --preserve-merges to generate and use new todo
-list format?
+s/explict/explicit/
 
-It doesn't seem likely that todo list created by one Git version is to
-be ever used by another, right? Is there some hidden reason here? Some
-tools outside of Git that use old todo list format, maybe?
+> +# given, same for the configuration options.
+> +
+> +# Pruning that also takes place if s!origin!<file:// url of remote>!,
+> +# or otherwise uses the file://-specific codepath. However, because
+> +# there's no implicit +refs/heads/*:refs/remotes/origin/* refspec and
+> +# supplying it on the command-line negate --prune-tags the branches
 
-Then, if new option indeed required, please look at the resulting manual:
+s/negate/&s/
+s/--prune-tags/&,/
 
---recreate-merges::
-	Recreate merge commits instead of flattening the history by replaying
-	merges. Merge conflict resolutions or manual amendments to merge
-	commits are not preserved.
-
--p::
---preserve-merges::
-	Recreate merge commits instead of flattening the history by replaying
-	commits a merge commit introduces. Merge conflict resolutions or manual
-	amendments to merge commits are not preserved.
-
-
-Don't you think more explanations are needed there in the manual on
-why do we have 2 separate options with almost the same yet subtly
-different description? Is this subtle difference even important? How?
-
-I also have trouble making sense of "Recreate merge commits instead of
-flattening the history by replaying merges." Is it "<Recreate merge
-commits by replaying merges> instead of <flattening the history>" or is it
-rather "<Recreate merge commits> instead of <flattening the history by
-replaying merges>?
-
--- Sergey
+> +# will not be pruned.
