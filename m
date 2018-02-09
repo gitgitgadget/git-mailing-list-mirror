@@ -2,93 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA55A1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 20:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C7A21F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 20:27:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752644AbeBIUUx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 15:20:53 -0500
-Received: from kitenet.net ([66.228.36.95]:44810 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752218AbeBIUUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 15:20:53 -0500
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1518207644; bh=s9UMgLu/VPU+Nhz/j3Ku2KckCe7Gzsqg1N0P0U02uto=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LoR6TPEiBTb7FByMOMGtUdXovNe/FeBH9RSnMD3ExH2xJXlIO3cdtcGVhK7Abrrmg
-         /ldP7ApsK6l/elfFK0f8drVdjWB0JakAca9zEW9IlK7p75WOCrksaAAlbv6gn8l8dF
-         +aAC8PE67SiHJGAyD2tFjCXdr9MZ5nntpa2Q2l00=
-Date:   Fri, 9 Feb 2018 16:20:44 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Leo Gaspard <leo@gaspard.io>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Fetch-hooks
-Message-ID: <20180209202044.GA6783@kitenet.net>
-References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
- <87inb8mn0w.fsf@evledraar.gmail.com>
- <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
- <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
- <3a5a2827-0f69-3a11-2664-51a60eefebf1@gaspard.io>
+        id S1752659AbeBIU1f (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 15:27:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47296 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752218AbeBIU1f (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 15:27:35 -0500
+Received: (qmail 8198 invoked by uid 109); 9 Feb 2018 20:27:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 09 Feb 2018 20:27:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24875 invoked by uid 111); 9 Feb 2018 20:28:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 09 Feb 2018 15:28:18 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Feb 2018 15:27:33 -0500
+Date:   Fri, 9 Feb 2018 15:27:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>,
+        Michael Schubert <mschub@elegosoft.com>,
+        Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2 11/17] fetch tests: fetch <url> <spec> as well as
+ fetch [<remote>]
+Message-ID: <20180209202733.GA18966@sigill.intra.peff.net>
+References: <20180123221326.28495-1-avarab@gmail.com>
+ <20180208161936.8196-1-avarab@gmail.com>
+ <20180208161936.8196-12-avarab@gmail.com>
+ <CAPig+cS4xhyYSnUHXshB=2SPYELe_HXUwxL-OGU4zx=PMFXdqg@mail.gmail.com>
+ <87zi4ikjyr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="qMm9M+Fa2AknHoGS"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3a5a2827-0f69-3a11-2664-51a60eefebf1@gaspard.io>
-User-Agent: Mutt/1.9.3 (2018-01-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87zi4ikjyr.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 09, 2018 at 09:05:00PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
---qMm9M+Fa2AknHoGS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> >> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> >> @@ -548,18 +548,52 @@ set_config_tristate () {
+> >>         *)
+> >>                 git config "$1" "$2"
+> >> +               key=$(echo $1 | sed -e 's/^remote\.origin/fetch/')
+> >
+> > Faster (thus more Windows-friendly) assuming that $1 always starts
+> > with "remote.origin":
+> >
+> >     key=fetch${u#remote.origin}
+> 
+> Tests fail with this and I'm not excited to be the first user in git's
+> test suite to use some novel shell feature, no existing uses of
+> ${u[...].
+> 
+> I also think stuff like this is on the wrong side of cleverness
+> v.s. benefit. I can't find any reference to this syntax in bash or dash
+> manpages (forward-search "${u"), but echo | sed is obvious, and it's not
+> going to make a big difference for Windows.
 
-Leo Gaspard wrote:
-> I just wanted to check, you did not put the Signed-off-by line in
-> patches in https://marc.info/?l=3Dgit&m=3D132491485901482&w=3D2
->=20
-> Could you confirm that the patches you sent are =E2=80=9Ccovered under an
-> appropriate open source license and I have the right under that license
-> to submit that work with modifications, whether created in whole or in
-> part by me, under the same open source license (unless I am permitted to
-> submit under a different license), as indicated in the file=E2=80=9D, so =
-that I
-> could send the patch I wrote based on yours with a Signed-off-by line of
-> my own without breaking the DCO?
+The "u" isn't the magic, it's the "#". I.e.:
 
-Yes; my patches are under the same GPL-2 as the rest of git.
+  key=fetch${1#remote.origin}
 
---=20
-see shy jo
+and it's used all over the place in our scripts.  I'm not sure why Eric
+wrote "u". :)
 
---qMm9M+Fa2AknHoGS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAlp+ApkACgkQ2xLbD/Bf
-jzgKhg//cWPhtSUOaLCeTUeX4YqWcZQSdW5UJZaA3Y/BKJwoP+Dk+EGwjrq5jQJh
-ce4uWK837d6jcS4MiA3Amh+POIo0v9GKPAfcWW05/igVhwy3TRvwpopPbon7x+vb
-hCUAZDrTu56/g98bTJWlMqwHZxV9GNwH5tc9c5lAfxzcUCOc+aG7poDJxi5qIPvh
-Fh2hYl+PkwOaPmbGQuMwj4y5CLYMwXvvMv8JsZXO+jZ5J2NOEZT6FTJLqITbUgLD
-t2siZxtkDWEqkFvcWjwyixlvgCHCyA1AgHO82ZkhMsRIMcrCyHCBi5YmiH6YJVlJ
-yLNfbq4WnHJ8Oa/Z1MbkbZ8O4qpONJSdHml5w7fql8YmyNHj50vfhq+g1E/gDmWc
-7VVB01j2i1DUI8E1yeNMPsfxqzj0i0z8c8tsogmO6xoZWeJNc25Rm2v4bvEf4mBB
-T/3tIY1CoxJ3dZlk6lZRZN0Yebnc5xWHyefhMvvxAVQcFkR2SzAg12aHPFFov0/9
-b/xy2cimOfjbLMNzwM2PccPMplS53/0YYXm79bOPgAa309Zd3TSUS/oVyhp91s7S
-4U2Q9gIkViCsSwM0rIRccJK+NjFaZyrNM6kCfUeeTSNpXrlWM6Kbm5brX0qV9vWr
-zSIuRZnSSen4Q3dvg0h2LXrHIXc2Cf5LZ2cs/rDC3zM/IXDyUi0=
-=CgjN
------END PGP SIGNATURE-----
-
---qMm9M+Fa2AknHoGS--
+-Peff
