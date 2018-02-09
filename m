@@ -3,68 +3,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E74F1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 18:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3C461F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 18:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751317AbeBISWo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 13:22:44 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:37914 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751004AbeBISWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 13:22:43 -0500
-Received: by mail-wr0-f194.google.com with SMTP id t94so9147865wrc.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:22:42 -0800 (PST)
+        id S1751550AbeBISaR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 13:30:17 -0500
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:52347 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751031AbeBISaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 13:30:16 -0500
+Received: by mail-wm0-f46.google.com with SMTP id g1so16999562wmg.2
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:30:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5Xc4vqLx3jqFBB/4vieDa7jCut5XseNr3qBky5XuRm0=;
-        b=RnXcDhNnmOiklcdwZlfMc5y2Bxe2IbfA6Al89QDC/CH9QpiJvU09lob1T+G90ZFN90
-         eJD+Aw3ny3pKNpi9OnZTfQhjd9ub+u9GLdzNI7w8Myn7LLGiDnx/w06aWLO2/5oayVIW
-         s/MzVhlmI4NjLuiTtUIJ7cjV/4rYyyFxgn82W8+N9C3N5aT222xJFuo2ohWb74uZeexW
-         Okt3+1WDJ898R+evAENC4diqgoNWTVY60py1oMeKe5hVCWbrEeqOjyMjWM+FhoBrTZuU
-         /YW27oa5T9Vn2nFjttkDKw9K4r0dS4bvLxprddPUTUGGAJuOyG9Bql+8RO40UmJFcTTJ
-         sjoA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Q/7BLvLcU6SQ6N/SQ9q249zFem5V7/dwgmAiu9FkbAQ=;
+        b=dmErUuv4ekUO8gfw+rbWNkzYNcUIBYh8I35Heu/Z+tW51+x7FTWbLzygnysCt6UdTo
+         32kzu22WPrQ8d+W7ZhJmeImAYHbJI1GUGXu8KCBcN7HmwqApWAhsesSjtPFq9LKM6c0H
+         Wyp/B+EQyEgohQxWF0Pkm94POAXPdfFkBdzXBwxGjXECDN712uCG/bp9xTWkl9Qbu1vY
+         pqVHWZW6ASsQkEzemuy9UhffuU6Skt+S1H5tvWWx2T4+jSPkOnospcGNYv3IEJVuNumi
+         YmI5DQuFitIYi4vbEJklCorLTVeE2Fc4Z70/kwowXHzABTVSgFiQriVdbkkEuMFBEodN
+         fhtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5Xc4vqLx3jqFBB/4vieDa7jCut5XseNr3qBky5XuRm0=;
-        b=k38Aya/Pwujd4t0cJaJqzPj+ilO6ckWd1gqKIeDroCCc0Nq9hC32KIMyPc1eYj9yuK
-         kzuRTnQNnDEhfrJ09Z8c6ULtboHvSfvTRp60ccDqdqZROOzaVpeUwaBBL+G5Jag9v0y6
-         qmBPpb5ni2qfNiQzVo92Cz8gASw2fkzSaHXOi1KsMu+mbpDVaWavuOzScK+pfeCqY0GY
-         uPQN4ibdriJkWIY/0i80THnIyIwectJlFt4JOtcZSUf75T116JJsK5ZlOAsZhSbgDRqF
-         ZgWR3RU/FsRw9U5XcPNI2ytR5/j4HWMfVC8PTO/FuVrMf0ME8YiJmsVfhdNwQWmXERoY
-         bNew==
-X-Gm-Message-State: APf1xPDpGQNLPJXkW5733p+7rSLAFjyLKUkfdjLy2TxkyCXW2qr7IHDv
-        oHpqN25gZNIgAogdSrYhAeI=
-X-Google-Smtp-Source: AH8x224LIWmf4Yh+O50nWgR2tSXzzboZW2abmqdL7yN80mdwAqJpaudYL0E4uiGQPlDthb9t83L/7A==
-X-Received: by 10.223.173.239 with SMTP id w102mr3226789wrc.110.1518200561581;
-        Fri, 09 Feb 2018 10:22:41 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f22sm2846642wmi.24.2018.02.09.10.22.40
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=Q/7BLvLcU6SQ6N/SQ9q249zFem5V7/dwgmAiu9FkbAQ=;
+        b=C0Dimhdz34UgVLtgnx0dQ9C9qO9Kvuv2uRI3qjqPTwhr2/DAbtueySbkDr5n0uFyoc
+         gxr8B+RWAvpBszsQ//KxmiI6J/ULzQHaSHOlzlCXDeSdsjqDsFsTXMNr1ndpTyoibits
+         b1l5va2D+EzzhWsCyG07EcYjLRisiAcjJNqt9mE9VoDSJvVJuZW3T4eYYWWphWOPtMaG
+         /bDPSoEXTQ57VEGCQLF8+yIV0MIfg38pX4NafW/6CYft9KKGpvj76fWHYQkj7AEVnvK4
+         oOX6ly5lUGWrB3VWfkqQZmYMpGtxedndplQnYwzi2WSJXqHYh6x8KsQ6BHEH8w2OgNY4
+         0d8A==
+X-Gm-Message-State: APf1xPCoZNAHbbth/tzyOHw7KAfycmurvO6M8maUaosoOY/Yz/yJJU33
+        6aXnIZ5BcBMafNzcyC0E24E=
+X-Google-Smtp-Source: AH8x224lol18AIPYRlZ46Mee7AvsCdO4FrJ7lIafu1C1jRibecKhaulki8P6IlGUIuzJ+1+pyUq36A==
+X-Received: by 10.28.107.69 with SMTP id g66mr2655899wmc.145.1518201015475;
+        Fri, 09 Feb 2018 10:30:15 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id p29sm3902945wmf.9.2018.02.09.10.30.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 10:22:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] t1404: use 'test_must_fail stderr=<file>'
-References: <20180209024235.3431-1-szeder.dev@gmail.com>
-        <20180209024235.3431-4-szeder.dev@gmail.com>
-        <CAPig+cTtC8WaqJg301WE+EN2RYzka-+pOoJZNZFzjqsHtx+M-Q@mail.gmail.com>
-        <CAM0VKjnnt0Nq6GQXWaq6Jq_tvOzJx-KsEBjs-7NS2bim0UH+Og@mail.gmail.com>
-Date:   Fri, 09 Feb 2018 10:22:39 -0800
-In-Reply-To: <CAM0VKjnnt0Nq6GQXWaq6Jq_tvOzJx-KsEBjs-7NS2bim0UH+Og@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 9 Feb 2018 04:33:22
- +0100")
-Message-ID: <xmqqh8qqxbtc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        Fri, 09 Feb 2018 10:30:14 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2018, #04; Wed, 31)
+References: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com> <87mv0tm0l7.fsf@evledraar.booking.com> <nycvar.QRO.7.76.6.1802091805590.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <nycvar.QRO.7.76.6.1802091805590.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Fri, 09 Feb 2018 19:30:12 +0100
+Message-ID: <874lmqm2x7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -73,19 +66,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> On Fri, Feb 9, 2018 at 4:16 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
->> On Thu, Feb 8, 2018 at 9:42 PM, SZEDER Gábor <szeder.dev@gmail.com> wrote:
->>> Instead of 'test_must_fail git cmd... 2>output.err', which redirects
->>> the standard error of the 'test_must_fail' helper function as well,
->>> causing various issues as discussed in the previous patch.
->>
->> ECANTPARSE: This either wants to say:
->>
->>     "Instead of <foo>, do <bar>."
+On Fri, Feb 09 2018, Johannes Schindelin jotted:
+
+> Hi,
 >
-> The "do <bar>" part is in the subject line.
+> On Thu, 1 Feb 2018, Ævar Arnfjörð Bjarmason wrote:
+>
+>> On Thu, Feb 01 2018, Junio C. Hamano jotted:
+>>
+>> > * ab/wildmatch-tests (2018-01-30) 10 commits
+>> >  - wildmatch test: mark test as EXPENSIVE_ON_WINDOWS
+>> >  - test-lib: add an EXPENSIVE_ON_WINDOWS prerequisite
+>> >  - wildmatch test: create & test files on disk in addition to in-memory
+>> >  - wildmatch test: perform all tests under all wildmatch() modes
+>> >  - wildmatch test: use test_must_fail, not ! for test-wildmatch
+>> >  - wildmatch test: remove dead fnmatch() test code
+>> >  - wildmatch test: use a paranoia pattern from nul_match()
+>> >  - wildmatch test: don't try to vertically align our output
+>> >  - wildmatch test: use more standard shell style
+>> >  - wildmatch test: indent with tabs, not spaces
+>> >
+>> >  More tests for wildmatch functions.
+>> >
+>> >  Expecting an update.
+>> >  cf. <87vaga9mgf.fsf@evledraar.gmail.com>
+>>
+>> The 2018-01-30 series is the update mentioned in
+>> 87vaga9mgf.fsf@evledraar.gmail.com. You probably noticed this / just
+>> didn't adjust the note since you queued in in pu already, but just in
+>> case: the known issues in it have been resolved, but hopefully Johannes
+>> Schindelin can test it on Windows & report.
+>
+> Sorry, I did not have time to look at this. All I can say is that the `pu`
+> builds are green for a couple of days already. Which I celebrate!
 
-Please don't.  The title should not be a half-sentence that begins
-the first paragraph.
+Thanks, if you get time it would be great to know if:
+
+    time GIT_TEST_LONG=1 ./t3070-wildmatch.sh
+
+Runs cleanly for you, and how long it takes now. Even though it's going
+to take a long time still, I optimized the test a lot so I expect it'll
+be quicker.
