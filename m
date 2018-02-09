@@ -2,75 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 000821F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 13:47:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 264191F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 13:52:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753505AbeBINrk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 08:47:40 -0500
-Received: from mail-io0-f177.google.com ([209.85.223.177]:47085 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753364AbeBINrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 08:47:37 -0500
-Received: by mail-io0-f177.google.com with SMTP id f34so9664907ioi.13
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 05:47:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LH39K0H2PYnqmIFSVg3ugD6B1IhXsGI2/TAESVdtBeU=;
-        b=qyAyzAityjpLR8DM7VapB+kKbX1Ck3B24ujFM/8AC+7wviLI5G8CyemRH52LLZqopi
-         Modgk3DQiXKDjERQD8qcCWtsl48A58SAnZUYJi0wqwpCLrw1DchWBEwcb+OPvR6UUHrE
-         ghElNsdriNcGOYIUkxm4F+bp0YyIG0UfeOFuprJKbaiRS1gzbC2mwuNnhZyOgqyWcYFq
-         Di/Mjb7uHCmb59GCC8yXTtlxo/QzS6XaCrjo400mAKChdQl5/pKj2G7A4wIXkpWq4Hf6
-         yAIwhrknjjI6z+vX7vpFY7INrVlXpOLIOxGMUUY63+3VMdhyAKlz8tIq/30OFLGasdmw
-         VH0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LH39K0H2PYnqmIFSVg3ugD6B1IhXsGI2/TAESVdtBeU=;
-        b=TxdsAaaoQgC9ZLfiZzDlfoe1eVjYr9NOMEgVXti+iWx+BooCOWVYEIVtjQ75EwEQie
-         UxDf+MWwo91gwuDHOb8tWNHrawXX+fOeL4ekB8ofy/sv2sZNAbyxM6DbObBwypzUKry6
-         X7gUDK72EZfSUlY4oqsohAdZ+OUuUgb0WzO8PtKCVUjplIJDYc7/GgjcLKN4RZy+cH3N
-         6SlcKrxIyX1bfBFf5hdpIqiMFsvRVWNSsTsQVW+QtUj3X5b5nnmf60QDLMbhzU/2S3g1
-         f3uNaiZkaKIsCC5HFExrtkj08FBaP5g0bblNj/b+rJIP/aHc1A4SX74FkTm0MMnMEqQz
-         FE+A==
-X-Gm-Message-State: APf1xPC6gJY6VCGRJW/YnvZbcJhlHo0arq1a9wNbbkjP801LMUl1ZtZZ
-        LB9+QMKYLjSI0/u2o104etZiKWS4QKSplRDVbZVAWQ==
-X-Google-Smtp-Source: AH8x227dPzfaxHKzsH2ll0R5v4rg9UQ861WApwRvyCAoQqGVvp4uoT8ywQTo2S7ffjCNE4me7TAIf9ql6gk+IKwN/O0=
-X-Received: by 10.107.59.77 with SMTP id i74mr2932303ioa.180.1518184056929;
- Fri, 09 Feb 2018 05:47:36 -0800 (PST)
+        id S1753189AbeBINv6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 08:51:58 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:58852 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751090AbeBINv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 08:51:56 -0500
+Received: from 69-196-158-250.dsl.teksavvy.com ([69.196.158.250]:43924 helo=android-a172fe96dd584b41)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1ek95n-000734-Fb; Fri, 09 Feb 2018 08:51:55 -0500
+Date:   Fri, 9 Feb 2018 08:51:53 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@android-a172fe96dd584b41
+To:     Todd Zullinger <tmz@pobox.com>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: categorization, documentation and packaging of "git core"
+ commands
+In-Reply-To: <20180207211830.GO1427@zaya.teonanacatl.net>
+Message-ID: <alpine.LFD.2.21.1802090848250.7128@android-a172fe96dd584b41>
+References: <alpine.LFD.2.21.1802070801470.19185@android-a172fe96dd584b41> <20180207172902.GL1427@zaya.teonanacatl.net> <alpine.LFD.2.21.1802071529080.14481@localhost.localdomain> <20180207211830.GO1427@zaya.teonanacatl.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 10.79.150.155 with HTTP; Fri, 9 Feb 2018 05:47:36 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1802090817550.6248@android-a172fe96dd584b41>
-References: <alpine.LFD.2.21.1802090817550.6248@android-a172fe96dd584b41>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 9 Feb 2018 14:47:36 +0100
-Message-ID: <CAP8UFD2HGVQSnMrG4-eABv104Og1JBbUfTd7TvpP8sT30AXbEA@mail.gmail.com>
-Subject: Re: "git bisect run make" adequate to locate first unbuildable commit?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 9, 2018 at 2:20 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->
->   writing a short tutorial on "git bisect" and, all the details of
-> special exit code 125 aside, if one wanted to locate the first
-> unbuildable commit, would it be sufficient to just run?
->
->   $ git bisect run make
->
->   as i read it, make returns either 0, 1 or 2 so there doesn't appear
-> to be any possibility of weirdness with clashing with a 125 exit code.
-> am i overlooking some subtle detail here i should be aware of? thanks.
+On Wed, 7 Feb 2018, Todd Zullinger wrote:
 
-I think you are not overlooking anything.
+> Robert P. J. Day wrote:
+> > not to belabour this (and i'm sure it's *way* too late for that),
+> > but fedora has the following packaging scheme.  first, there's a
+> > bunch of stuff in "git-core", which has no dependencies on any
+> > other git-related packages.
+>
+> The split in Fedora between git and git-core is done to minimize the
+> dependencies required for a minimal git install.  The initial reason
+> was to to allow installing the git-core package on systems, in
+> containers, etc. without requiring perl and its various dependencies
+> to be installed.
+>
+> The name git-core was not chosen to imply any official status as
+> core versus contrib from upstream.
+
+  ... snip ...
+
+  oh, i understand completely (i particularly like that fedora
+supports a "git-extras" package with loads of cool stuff). remember
+that this all started when i pointed out that, over at
+https://git-scm.com/doc, there is a link entitled "Reference Manual"
+(https://git-scm.com/docs) that assures the reader, "The official and
+comprehensive man pages that are included in the Git package itself",
+so it's just a matter of someone deciding what *exactly* corresponds
+to "the Git package itself" to make sure all relevant man pages can be
+found there.
+
+  just being pedantic, as is my wont.
+
+rday
