@@ -2,75 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBEBB1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 19:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8742F1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 19:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752233AbeBITMj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 14:12:39 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:54802 "EHLO smtp.gaspard.ninja"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752210AbeBITMO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 14:12:14 -0500
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id f48fa37a;
-        Fri, 9 Feb 2018 19:12:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
-        subject:from:to:cc:references:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        grym-20170528; bh=aSbpws8v+EE+KzaFJji4nFge7JQ=; b=kDHgYIDdBVzehf
-        Q+V7m94JBbB0OBi7QIrXwD+KO4ynXMOyV8waPwTMC4p2WM+aQgpudSR7VX8H8JrF
-        xNQXMBn37rsluKt3m3Vdo1t1kLX3/51Quwg9lOz5w1wfV9f+tW0fSpoqn5qWMUNt
-        nlm7Sor4tKHOJkYU8vCh3fYNpdqYU=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 67d024d0 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
-        Fri, 9 Feb 2018 19:12:12 +0000 (UTC)
-Subject: Re: Fetch-hooks
-From:   Leo Gaspard <leo@gaspard.io>
-To:     Joey Hess <id@joeyh.name>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
- <87inb8mn0w.fsf@evledraar.gmail.com>
- <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
- <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
-Message-ID: <3a5a2827-0f69-3a11-2664-51a60eefebf1@gaspard.io>
-Date:   Fri, 9 Feb 2018 20:12:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1752446AbeBITPK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 14:15:10 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:44491 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752436AbeBITPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 14:15:09 -0500
+Received: by mail-wr0-f196.google.com with SMTP id v65so2492404wrc.11
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 11:15:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=iZe+LBR6a6JGgW8C4By328RRE+Cd9LrnMwSyagRarSc=;
+        b=VrL8BweOCvXkiuSfGbp8oPyWpfb8avpBLs6H2bnOVq9Pkod0ZaAMmZ920eGPza8iEx
+         NZTQ8+efSqFD0GBLtlyk0UD+xfKSnp09FNOtk10EiyTfmdzW0rtC0ag9blyaBER1bF+R
+         ftVsHcz6vkx8mxJeF7mljZHHFMGuvkxoKePt6RlUjgBjZewHn/r2nQ+HN/rZn3CQeRcU
+         xwlG4LSOQJNgQYqo4vi1YAFD0W645bfGQMuiN9zvrB0NaJIpAZttYeR0QA9lgSPfdW5s
+         AsbIR1Ir0Sx53Mw/gMMIURke72rnSc+OPbTCOMzYPNn3cR5YShPjdtmsTxrJF3btWI/h
+         E0jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=iZe+LBR6a6JGgW8C4By328RRE+Cd9LrnMwSyagRarSc=;
+        b=cOpyBFmoB6Vj9BNW1V2HxIu/SxUJq20rz0//fTIVBF754lVgMGD/ne673fkyEZCreH
+         8vc291cOoPVBuRsNsQHV5syKRx0ClOKhnN1izDwcAAmu6MPncOV8xdooLR0mIFNcYSaA
+         u142SNPqhb1b/6KhCDwzpn3bpO+B1DiqqPrzrWyH33KHDaTGEA/BvQ1iMfTOBKnwffFm
+         hc8tet6vulFbHOkAZ7sdKvCNb5pIuRnpO33vaeRQR0eYdHkHdii3Xs1za558DEHjgFGY
+         sNniYMHPJXTKzWr9v7VFVLZopHE5GbNpP8NG3KpuNkChCmSaXPlUIpPBHx9n99V/ukKf
+         BCXw==
+X-Gm-Message-State: APf1xPBTLxd7CUfPbmSbreBxMPFtH7X1anZMw0zRiBlJDr6RdvluqPaR
+        4CK1YCyYDyS8g6QsGLcVdrX8UGl9
+X-Google-Smtp-Source: AH8x224BnMAVYcIBESV0JQojNq2f/IGuY6YFACWcdA86IDc3puA/kMpq0OQ2q7N+RvcDNKQVx0tZDA==
+X-Received: by 10.223.156.205 with SMTP id h13mr3700798wre.123.1518203708137;
+        Fri, 09 Feb 2018 11:15:08 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id y6sm2841062wmy.14.2018.02.09.11.15.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 11:15:07 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alexander Shopov <ash@kambanaria.org>
+Cc:     git@vger.kernel.org, martin.agren@gmail.com, bmwill@google.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        worldhello.net@gmail.com, j6t@kdbg.org, sunshine@sunshineco.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH 1/1] Mark messages for translations
+References: <20180209074404.2902-1-ash@kambanaria.org>
+        <20180206073812.GA14133@sigill.intra.peff.net>
+        <20180209074404.2902-2-ash@kambanaria.org>
+        <xmqqlgg2xbx0.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 09 Feb 2018 11:15:06 -0800
+In-Reply-To: <xmqqlgg2xbx0.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 09 Feb 2018 10:20:27 -0800")
+Message-ID: <xmqqwozmvuth.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/08/2018 06:02 PM, Leo Gaspard wrote:
-> On 02/08/2018 04:30 PM, Joey Hess wrote:
->> [...]
-> 
-> Hmm, OK, so I guess I'll try to update the patch when I get some time to
-> delve into git's internals, as my use case (forbidding some fetches)
-> couldn't afaik be covered by a wrapper hook.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Joey,
+>> -	if ! grep "Invalid gitfile format" .err
+>> +	if ! test_i18ngrep "invalid gitfile format" .err
+>
+> Shouldn't this rather be like so instead?
+>
+> 	if test_i18ngrep ! "invalid gitfile format" .err
+>
+> Ditto for the other negated use of test_i18ngrep we see in the same
+> file in this patch.
 
-I just wanted to check, you did not put the Signed-off-by line in
-patches in https://marc.info/?l=git&m=132491485901482&w=2
+Sorry, my thinko.  These two ones want to be written in the patch
+as-is.
 
-Could you confirm that the patches you sent are “covered under an
-appropriate open source license and I have the right under that license
-to submit that work with modifications, whether created in whole or in
-part by me, under the same open source license (unless I am permitted to
-submit under a different license), as indicated in the file”, so that I
-could send the patch I wrote based on yours with a Signed-off-by line of
-my own without breaking the DCO?
-
-Thanks!
-Leo
