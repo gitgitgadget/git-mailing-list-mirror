@@ -2,130 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A77E91F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 13:53:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 062CF1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 14:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753721AbeBINqB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 08:46:01 -0500
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:38525 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752664AbeBINp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 08:45:57 -0500
-Received: by mail-qk0-f194.google.com with SMTP id w128so10014758qkb.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 05:45:57 -0800 (PST)
+        id S1751047AbeBIOUC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 09:20:02 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36160 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750981AbeBIOUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 09:20:01 -0500
+Received: by mail-wm0-f66.google.com with SMTP id f3so16600693wmc.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 06:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=5T8tdqb0j27C0ARTg8DNn2v8G0ATEiYifHBV5pa2am0=;
-        b=ko9cwjvtl3FBR+BkW+zfGqUBX/856rlteN/65254ox6f1p7JO1Z58GqZYHqVzhG2sl
-         9dZfTXulNOQt7aRA7qzypuE+Ak8koQKbHJfeQ0YejHGEuuAyxWsQBmQagT51nvoPSWmV
-         B5+jRSIylK4cQF6M8FFsFZkn3Q4SSdTAyV4rY7Yia3MR91tBn7CsGu01hb/P0ndon9n2
-         yxVbX7d9gC1VP/cDrayM287o69ytBReFCbv7/xkS12CHc3kIy2Dvs6csVGVk98lWbM1L
-         HeBbpiW9CV0ALbrmHwZ3tyMMytzcuH2aJM5DFdZAxctY2Q1EhO3L/7E+AM1qdlCdtw2n
-         IbaQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=bJSTZfD0s7lkDKzEoqyHqgDMbz2LmcuNFSz8S7KyW2c=;
+        b=jqvpyzoKKgEzyxYd8Xf92tDybeIv3t00Vnr7zfnAemRymPF85f4qMtPfYmNiHA/G5y
+         cTKc1xziD69wsivRuTsVtfTpAacoBze36CWWlWvRT7QLnu+5HR8p1PE9IiYFDC0UqteI
+         ynUqGwRXRc4BJ04y0UKcPu0Mv0MObfLEYfLiABJmLxudXxGo9Mmaryj3H+eE+v9UlfEm
+         qqwHrUBAxR9WqY7BAwL+0NGMFvRSJ92TPydnHTOWRt5nTeHPkmgAwDLt5saSd7E5rQm+
+         V3gMfbTNDjPXIpqPUkwO+8ka3P9ZDwd3WJh6fQlN0u01BkDNAgHRNNEsySjxU9fzRXVV
+         vhKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=5T8tdqb0j27C0ARTg8DNn2v8G0ATEiYifHBV5pa2am0=;
-        b=D3ELV7jaoEBrWwvvqmLKorYm+zTv/X92a+ikuH+emEpfafGj6h8RPELPMdWiAo0Ckj
-         UV3Nm3WYI0B7hDQ8uzTh8Xa6WpZWyynpNLL475l3Uuiv6sZRzDvbgVvQH20+jnFClKs/
-         GDXAo7puroNyTcZ+IVhLa++MMgyGPPSmqnkSxB5NTo5f/+09PI9m2j6r5Ipzyva3Kmiu
-         NZBf8Zbvmsi4l3SVDJh5peY5IVG0r4Us606CmwBwNqp7xVKAidORrZ9fGhNRe1q9QE/i
-         JrLM9VqwvuqDXTJ9fQiwku2PK3JLNGyh5ThKcphpq/RBb0ps24P+hgMDsXHz6Bx/aNf1
-         8V6g==
-X-Gm-Message-State: APf1xPDvI2OZLgQGzWtOC/mRc65iAWXsZWtWPwNYtM+bBm9eQlcZQ5Bp
-        0hg0ZCCoqwHdBrMECbeGKgc=
-X-Google-Smtp-Source: AH8x2255t3V3/KrYWR4NR/t3evkFTsqqI1jNIxhOmfdYr1IpOGm/C5N/ETvSf/Xr+5TYQQFnKGRf3w==
-X-Received: by 10.55.108.199 with SMTP id h190mr4137119qkc.78.1518183956655;
-        Fri, 09 Feb 2018 05:45:56 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id s189sm1840923qke.16.2018.02.09.05.45.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 05:45:55 -0800 (PST)
-Subject: Re: [PATCH v3 14/14] commit-graph: build graph from starting commits
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>, git@jeffhostetler.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, jonathantanmy@google.com,
-        Stefan Beller <sbeller@google.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
- <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
- <1518122258-157281-15-git-send-email-dstolee@microsoft.com>
- <CAM0VKjk-JvCNebTiHVm16vtwKpLF+N-gfGNL=7sYR=OVTb979w@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <054043b5-7f2e-0b69-d770-ab23b756f82b@gmail.com>
-Date:   Fri, 9 Feb 2018 08:45:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=bJSTZfD0s7lkDKzEoqyHqgDMbz2LmcuNFSz8S7KyW2c=;
+        b=efKLL306nMm/x57Tfb6eKj1b/uZIHLE+/m8n8eFFszt8JN4QXDjCqJiIXZqXxX9ztk
+         2puNLv+XnXiHmIClMjWXJ7reo3Y2CWNxzcsv52MiY+6k9w7WPYYX9+UruVxAkW5EqKTv
+         hyItB6j30+dlZNnVDU29tha/kh/wHoNFJzifSfXs59UPkYKbccHdqsQLNyWT3j6ZQnRJ
+         RlRCheSAvoycEb9GsxVZbmRpPBId6nbag78FcYaFVd0DaKF49bbp7pl4ylU9kHgNNsOq
+         b4qwLzugiDVFiOgc961afbHJlGEtXx8HK8wIRVA6sfNUiCo97/LP3iPKrc7sFIbFL05v
+         RARQ==
+X-Gm-Message-State: APf1xPB0DuxrEC9nNveyLYOnfRNZy8qKky4yoG8PpJjWHMvuoEOhsnh2
+        T1x5NUnHecPddWQPYg3NoAdbM5Ag
+X-Google-Smtp-Source: AH8x225wBsX/F8AJAqhdNMfTWHqLNBnGReH7EaWUcGMIFf6DL1HKcPqrqArV/qDNjhhmyguA5cCxKg==
+X-Received: by 10.28.181.72 with SMTP id e69mr2031782wmf.7.1518185999504;
+        Fri, 09 Feb 2018 06:19:59 -0800 (PST)
+Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
+        by smtp.gmail.com with ESMTPSA id h14sm2519940wrb.29.2018.02.09.06.19.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 06:19:58 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v3 42/42] git-completion.bash: add GIT_COMPLETION_OPTIONS=all config
+References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com> <20180209110221.27224-43-pclouds@gmail.com>
+User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
+In-reply-to: <20180209110221.27224-43-pclouds@gmail.com>
+Date:   Fri, 09 Feb 2018 15:19:57 +0100
+Message-ID: <877ermmeia.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKjk-JvCNebTiHVm16vtwKpLF+N-gfGNL=7sYR=OVTb979w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/9/2018 8:02 AM, SZEDER Gábor wrote:
-> On Thu, Feb 8, 2018 at 9:37 PM, Derrick Stolee <stolee@gmail.com> wrote:
->> Teach git-commit-graph to read commits from stdin when the
->> --stdin-commits flag is specified. Commits reachable from these
->> commits are added to the graph. This is a much faster way to construct
->> the graph than inspecting all packed objects, but is restricted to
->> known tips.
->>
->> For the Linux repository, 700,000+ commits were added to the graph
->> file starting from 'master' in 7-9 seconds, depending on the number
->> of packfiles in the repo (1, 24, or 120).
-> It seems something went wrong with '--stdin-commits' in v3, look:
+
+On Fri, Feb 09 2018, Nguyễn Thái Ngọc Duy jotted:
+
+> By default, some option names (mostly --force, scripting related or for
+> internal use) are not completable for various reasons. When
+> GIT_COMPLETION_OPTIONS is set to all, all options (except hidden ones)
+> are completable.
 >
->    ~/src/git (commit-graph-v2 %)$ time { git rev-parse HEAD | ./git
-> commit-graph --write --update-head --stdin-commits ; }
->    ee3223fe116bf7031a6c1ad6d41e0456beefa754
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |  6 +++++-
+>  parse-options.c                        | 11 +++++++----
+>  2 files changed, 12 insertions(+), 5 deletions(-)
 >
->    real  0m1.199s
->    user  0m1.123s
->    sys   0m0.024s
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 0ddf40063b..0cfa489a8e 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -36,6 +36,10 @@
+>  #
+>  #     When set to "1", do not include "DWIM" suggestions in git-checkout
+>  #     completion (e.g., completing "foo" when "origin/foo" exists).
+> +#
+> +#   GIT_COMPLETION_OPTIONS
+> +#
+> +#     When set to "all", complete all possible options
+
+I was going to suggest some wording like:
+
+    When set to "all", include options considered unsafe such as --force
+    in the completion.
+
+However per your cover letter it's not just used for that:
+
+     10 --force
+      4 --rerere-autoupdate
+      1 --unsafe-paths
+      1 --thin
+      1 --overwrite-ignore
+      1 --open-files-in-pager
+      1 --null
+      1 --ext-grep
+      1 --exit-code
+      1 --auto
+
+I wonder if we shouldn't just make this only about --force, I don't see
+why "git grep --o<TAB>" should only show --or but not
+--open-files-in-pager, and e.g. "git grep --<TAB>" is already verbose so
+we're not saving much by excluding those.
+
+Then this could just become:
+
+    GIT_COMPLETION_SHOWUNSAFEOPTIONS=1
+
+Or other similar boolean variable, for consistency with all the "*SHOW*
+variables already in git-completion.bash.
+
+>  case "$COMP_WORDBREAKS" in
+>  *:*) : great ;;
+> @@ -303,7 +307,7 @@ __gitcomp_builtin ()
+>  	if [ -z "$options" ]; then
+>  		# leading and trailing spaces are significant to make
+>  		# option removal work correctly.
+> -		options=" $(__git ${cmd/_/ } --git-completion-helper) $incl "
+> +		options=" $(__git ${cmd/_/ } --git-completion-helper=$GIT_COMPLETION_OPTIONS) $incl "
+>  		for i in $excl; do
+>  			options="${options/ $i / }"
+>  		done
+> diff --git a/parse-options.c b/parse-options.c
+> index 979577ba2c..5b8b2b376e 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -430,14 +430,17 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+>   * many options that do not suppress it properly.
+>   */
+>  static int show_gitcomp(struct parse_opt_ctx_t *ctx,
+> -			const struct option *opts)
+> +			const struct option *opts,
+> +			const char *arg)
+>  {
+>  	for (; opts->type != OPTION_END; opts++) {
+>  		const char *suffix = "";
 >
->    ~/src/git (commit-graph-v3 %)$ time { git rev-parse HEAD | ./git
-> commit-graph write --update-head --stdin-commits ; }
->    ee3223fe116bf7031a6c1ad6d41e0456beefa754
+>  		if (!opts->long_name)
+>  			continue;
+> -		if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
+> +		if (opts->flags & PARSE_OPT_HIDDEN)
+> +			continue;
+> +		if ((opts->flags & PARSE_OPT_NOCOMPLETE) && strcmp(arg, "all"))
+>  			continue;
 >
->    real  0m30.766s
->    user  0m29.120s
->    sys   0m0.546s
-
-Thanks, Szeder. You're right. This is the diff that I forgot to apply in 
-the last commit:
-
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 28d043b..175b967 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -257,7 +257,7 @@ static int graph_write(int argc, const char **argv)
-
-         has_existing = !!get_graph_head_hash(opts.pack_dir, 
-&old_graph_hash);
-
--       if (opts.stdin_packs) {
-+       if (opts.stdin_packs || opts.stdin_commits) {
-                 struct strbuf buf = STRBUF_INIT;
-                 nr_lines = 0;
-                 alloc_lines = 128;
-
-
-I'll work to create a test that ensures we are only adding commits 
-reachable from specific commits to prevent this regression.
-
-Thanks,
--Stolee
+>  		switch (opts->type) {
+> @@ -498,8 +501,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+>  			goto show_usage;
+>
+>  		/* lone --git-completion-helper is asked by git-completion.bash */
+> -		if (ctx->total == 1 && !strcmp(arg + 1, "-git-completion-helper"))
+> -			return show_gitcomp(ctx, options);
+> +		if (ctx->total == 1 && skip_prefix(arg + 1, "-git-completion-helper=", &arg))
+> +			return show_gitcomp(ctx, options, arg);
+>
+>  		if (arg[1] != '-') {
+>  			ctx->opt = arg + 1;
