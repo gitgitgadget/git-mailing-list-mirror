@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21F341F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 20:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD9911F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 20:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752832AbeBIUdK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 15:33:10 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:56189 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752775AbeBIUcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 15:32:48 -0500
-Received: by mail-wm0-f66.google.com with SMTP id 143so17480963wma.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 12:32:47 -0800 (PST)
+        id S1752828AbeBIUdJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 15:33:09 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:43477 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752592AbeBIUdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 15:33:04 -0500
+Received: by mail-wr0-f195.google.com with SMTP id b52so9437840wrd.10
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 12:33:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=GnSeJiE6rtSKrAAjuFRoJn4LRzozN7VQmlIved8BCu0=;
-        b=d9/64InZhDld6DTPTE1E9Clz6ymZ/ipvueDPkDSLCSJaBiyYmONUTfGkhEiLnRg/xx
-         RORe3Q+y+rZEizjaQAM/3cRo69kr5uPmCElIoqsn28ARWuC/O7ti/DhrA+4me41brtiB
-         MyBpwwNTa/LIHKQtkahBrQiW3iEjnBm65tTzf2n5eBi3WIrEwkPw7N4EE4dP5OfdxLzu
-         taI7F8oCQu5K7nICNTbv7owHGqEEbPCU3/6Sp3RYFpCccViyUweC/kduQfap87LgwIY2
-         hMcmI70qXsVISpEDU795v0BUQPl2KxOiR9BzrvCiyEZADwaSbYUy2kWmuTURkQ5gflCH
-         RFFw==
+        bh=16icXLLyxTowzsfiDvW8fGZ8ejK3caTkR3xBXIRWtLQ=;
+        b=LDgJnfQ3PKN/TAtZL9cGNE/kMIwV+cPppDdWQ+CvvZixi4LhxR7xwWsEQnJKp6/+vD
+         qms0vUWGu8Fj5U5uW/DPevYNtU6HZFKiSfDVxskAknj2z5NH71M/hPqJ/gYJJeyrYTIj
+         f1mdJla4RHQMgFUi14De16FGGpYQWzejT81THx0RbZFHFZC0t/aIv00kdQAejkUFQfdn
+         78/hV+FWA9AIYJaClC1McX1Nia8sov7RB7whyGvY8l0ghlsC2UqEj1VyW3Os9enn5O29
+         gn8MyJnsA94dBnBS5k33yn+CzeSAcBJWcwJlQ7M7xwlBJpWliB7JFWJSVoDqtz03Aauv
+         m8Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=GnSeJiE6rtSKrAAjuFRoJn4LRzozN7VQmlIved8BCu0=;
-        b=EME+uzElferrWAD8T/l6p0mx9NlGx4cQueDQ3pwOkZCUml0eYEGmT4QEueUz0liGTe
-         moLUCY9kxf4ybx/Dq2AFfeFBU6v/JBT0BLvH9NRkbrFhUM15qjjm+uwOVRk4x6lF/i//
-         3VCR2kqCGt80xwmEdiEtlz1ozjeGAw1E+e9hpD9wwRlTy2JL8AbFeTAbSUtxxYUAXUbH
-         /Tb86glFEcy7OODYClPcAfbc9oo/8+Xu01GIyvzH96I5hlgdygWwquYR5k8fph+IzRai
-         iBn9pJD0YJcvRWjX47+C6hL1Igm4+PaE65RYxQmac9PO3bJTizH04NpKp1efLbfqVcPM
-         xDwQ==
-X-Gm-Message-State: APf1xPDrWsd2oLOcXIgO3vq0vql0YaXJd6bkWpoXoSjyAW64U88ha/2Q
-        InF/U7CBWgbPP698oqgBo3yvhl93
-X-Google-Smtp-Source: AH8x226/7yGl4/eS9icya5HXG5yeYa7KH3dHG6HyQfXT+bjsksflXK+MiCS2PJiqUeCXhqezHUyvGw==
-X-Received: by 10.28.113.150 with SMTP id d22mr2915954wmi.127.1518208366704;
-        Fri, 09 Feb 2018 12:32:46 -0800 (PST)
+        bh=16icXLLyxTowzsfiDvW8fGZ8ejK3caTkR3xBXIRWtLQ=;
+        b=LM23M4+mQRxtfodUQzWTUjAEcMfOS2npSlx18BnWrqHAzz2jIsWr7P98RE+tp+9x0J
+         2Xcix50mJdlDY9Rko+6trKTATcSY+FGnr2ifopSjIZafjedt9ypS9lJXoew53tASe/hJ
+         IYhtr/YCr52wI1LxNsiuAiBhZmSSxO6ypd7v+RnvS5XTMbP7bPY2JbbbXGSuSVzoeqKY
+         uygeyFwpVCElIXxYJADaKme3WJ2cGgnRTL1x2nzt+HZuYVf183i499GRUiU8uarfQKg3
+         1/Ww8whhJUB1BoVvRYQ6GidkErHqsB9Tg67u2bgp5x6qpm9rCfrVgiKsaawairTlyOQX
+         WiZg==
+X-Gm-Message-State: APf1xPB088wEi3EyZ+FLrbyUIzzNuT638+DfNwTpx/rdr6wm5dCVv3op
+        nAurXVFxfRaPijyk0H/S82DkaN2a
+X-Google-Smtp-Source: AH8x225ufyzGV3GjPEvCbqXXJKcyEV13v3wmIsdwA2xM3INxpPt+83MgzEw+SSeEMcWYHYvKbVj/cA==
+X-Received: by 10.223.156.207 with SMTP id h15mr3164482wre.281.1518208383032;
+        Fri, 09 Feb 2018 12:33:03 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id y90sm5750233wrc.24.2018.02.09.12.32.45
+        by smtp.gmail.com with ESMTPSA id y90sm5750233wrc.24.2018.02.09.12.33.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 12:32:45 -0800 (PST)
+        Fri, 09 Feb 2018 12:33:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Daniel Barkalow <barkalow@iabervon.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 07/17] fetch tests: add a tag to be deleted to the pruning tests
-Date:   Fri,  9 Feb 2018 20:32:06 +0000
-Message-Id: <20180209203216.11560-8-avarab@gmail.com>
+Subject: [PATCH v5 14/17] git-fetch & config doc: link to the new PRUNING section
+Date:   Fri,  9 Feb 2018 20:32:13 +0000
+Message-Id: <20180209203216.11560-15-avarab@gmail.com>
 X-Mailer: git-send-email 2.15.1.424.g9478a66081
 In-Reply-To: <20180209203216.11560-1-avarab@gmail.com>
 References: <20180209203216.11560-1-avarab@gmail.com>
@@ -77,146 +77,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a tag to be deleted to the fetch --prune tests. The tag is always
-kept for now, which is the expected behavior, but now I can add a test
-for tag pruning in a later commit.
+Amend the documentation for fetch.prune, fetch.<name>.prune and
+--prune to link to the recently added PRUNING section.
+
+I'd have liked to link directly to it with "<<PRUNING>>" from
+fetch-options.txt, since it's included in git-fetch.txt (git-pull.txt
+also includes it, but doesn't include that option). However making a
+reference across files yields this error:
+
+    [...]/Documentation/git-fetch.xml:226: element xref: validity
+    error : IDREF attribute linkend references an unknown ID "PRUNING"
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5510-fetch.sh | 93 ++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 53 insertions(+), 40 deletions(-)
+ Documentation/config.txt        | 6 +++++-
+ Documentation/fetch-options.txt | 3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index ab8b25344d..fad65bd885 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -552,21 +552,25 @@ test_configured_prune () {
- 	fetch_prune=$1
- 	remote_origin_prune=$2
- 	expected_branch=$3
--	cmdline=$4
-+	expected_tag=$4
-+	cmdline=$5
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e25b2c92b..0f27af5760 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1398,7 +1398,8 @@ fetch.unpackLimit::
  
--	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${4:+ $4}; branch:$3" '
-+	test_expect_success "prune fetch.prune=$1 remote.origin.prune=$2${5:+ $5}; branch:$3 tag:$4" '
- 		# make sure a newbranch is there in . and also in one
- 		git branch -f newbranch &&
-+		git tag -f newtag &&
- 		(
- 			cd one &&
- 			test_unconfig fetch.prune &&
- 			test_unconfig remote.origin.prune &&
- 			git fetch &&
--			git rev-parse --verify refs/remotes/origin/newbranch
-+			git rev-parse --verify refs/remotes/origin/newbranch &&
-+			git rev-parse --verify refs/tags/newtag
- 		) &&
+ fetch.prune::
+ 	If true, fetch will automatically behave as if the `--prune`
+-	option was given on the command line.  See also `remote.<name>.prune`.
++	option was given on the command line.  See also `remote.<name>.prune`
++	and the PRUNING section of linkgit:git-fetch[1].
  
- 		# now remove it
- 		git branch -d newbranch &&
-+		git tag -d newtag &&
+ fetch.output::
+ 	Control how ref update status is printed. Valid values are
+@@ -2944,6 +2945,9 @@ remote.<name>.prune::
+ 	remove any remote-tracking references that no longer exist on the
+ 	remote (as if the `--prune` option was given on the command line).
+ 	Overrides `fetch.prune` settings, if any.
+++
++See also `remote.<name>.prune` and the PRUNING section of
++linkgit:git-fetch[1].
  
- 		# then test
- 		(
-@@ -582,6 +586,14 @@ test_configured_prune () {
- 			kept)
- 				git rev-parse --verify refs/remotes/origin/newbranch
- 				;;
-+			esac &&
-+			case "$expected_tag" in
-+			pruned)
-+				test_must_fail git rev-parse --verify refs/tags/newtag
-+				;;
-+			kept)
-+				git rev-parse --verify refs/tags/newtag
-+				;;
- 			esac
- 		)
- 	'
-@@ -590,44 +602,45 @@ test_configured_prune () {
- # $1 config: fetch.prune
- # $2 config: remote.<name>.prune
- # $3 expect: branch to be pruned?
--# $4 git-fetch $cmdline:
-+# $4 expect: tag to be pruned?
-+# $5 git-fetch $cmdline:
- #
--#                     $1    $2    $3     $4
--test_configured_prune unset unset kept   ""
--test_configured_prune unset unset kept   "--no-prune"
--test_configured_prune unset unset pruned "--prune"
--
--test_configured_prune false unset kept   ""
--test_configured_prune false unset kept   "--no-prune"
--test_configured_prune false unset pruned "--prune"
--
--test_configured_prune true  unset pruned ""
--test_configured_prune true  unset pruned "--prune"
--test_configured_prune true  unset kept   "--no-prune"
--
--test_configured_prune unset false kept   ""
--test_configured_prune unset false kept   "--no-prune"
--test_configured_prune unset false pruned "--prune"
--
--test_configured_prune false false kept   ""
--test_configured_prune false false kept   "--no-prune"
--test_configured_prune false false pruned "--prune"
--
--test_configured_prune true  false kept   ""
--test_configured_prune true  false pruned "--prune"
--test_configured_prune true  false kept   "--no-prune"
--
--test_configured_prune unset true  pruned ""
--test_configured_prune unset true  kept   "--no-prune"
--test_configured_prune unset true  pruned "--prune"
--
--test_configured_prune false true  pruned ""
--test_configured_prune false true  kept   "--no-prune"
--test_configured_prune false true  pruned "--prune"
--
--test_configured_prune true  true  pruned ""
--test_configured_prune true  true  pruned "--prune"
--test_configured_prune true  true  kept   "--no-prune"
-+#                     $1    $2    $3     $4     $5
-+test_configured_prune unset unset kept   kept   ""
-+test_configured_prune unset unset kept   kept   "--no-prune"
-+test_configured_prune unset unset pruned kept   "--prune"
+ remotes.<group>::
+ 	The list of remotes which are fetched by "git remote update
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index fb6bebbc61..9f5c85ad96 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -74,6 +74,9 @@ ifndef::git-pull[]
+ 	line or in the remote configuration, for example if the remote
+ 	was cloned with the --mirror option), then they are also
+ 	subject to pruning.
+++
++See the PRUNING section below for more details.
 +
-+test_configured_prune false unset kept   kept   ""
-+test_configured_prune false unset kept   kept   "--no-prune"
-+test_configured_prune false unset pruned kept   "--prune"
-+
-+test_configured_prune true  unset pruned kept   ""
-+test_configured_prune true  unset pruned kept   "--prune"
-+test_configured_prune true  unset kept   kept   "--no-prune"
-+
-+test_configured_prune unset false kept   kept   ""
-+test_configured_prune unset false kept   kept   "--no-prune"
-+test_configured_prune unset false pruned kept   "--prune"
-+
-+test_configured_prune false false kept   kept   ""
-+test_configured_prune false false kept   kept   "--no-prune"
-+test_configured_prune false false pruned kept   "--prune"
-+
-+test_configured_prune true  false kept   kept   ""
-+test_configured_prune true  false pruned kept   "--prune"
-+test_configured_prune true  false kept   kept   "--no-prune"
-+
-+test_configured_prune unset true  pruned kept   ""
-+test_configured_prune unset true  kept   kept   "--no-prune"
-+test_configured_prune unset true  pruned kept   "--prune"
-+
-+test_configured_prune false true  pruned kept   ""
-+test_configured_prune false true  kept   kept   "--no-prune"
-+test_configured_prune false true  pruned kept   "--prune"
-+
-+test_configured_prune true  true  pruned kept   ""
-+test_configured_prune true  true  pruned kept   "--prune"
-+test_configured_prune true  true  kept   kept   "--no-prune"
+ endif::git-pull[]
  
- test_expect_success 'all boundary commits are excluded' '
- 	test_commit base &&
+ ifndef::git-pull[]
 -- 
 2.15.1.424.g9478a66081
 
