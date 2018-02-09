@@ -3,85 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21F261F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 22:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4D6E1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 23:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752910AbeBIW6W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 17:58:22 -0500
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:37670 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752521AbeBIW6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 17:58:21 -0500
-Received: by mail-wm0-f50.google.com with SMTP id v71so198640wmv.2
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 14:58:20 -0800 (PST)
+        id S1753144AbeBIXMW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 18:12:22 -0500
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:32805 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753114AbeBIXMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 18:12:22 -0500
+Received: by mail-wm0-f66.google.com with SMTP id x4so643076wmc.0
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 15:12:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=w6d84J0gH7hCEh19PmB7DbGfCt/BSq21flB6rmZqEQM=;
-        b=gsqQoauHRq6SbV1k/1V1TqFtBqjYm83f4wO/uLXfCt7TtC6ewRPOWbuiEtwrKW3pmw
-         Q6azUqlZqTWzQMOJRYGzs6hniipWLLkrPK7IqwdZrm5GTiCpgWFgDXBUQm1mI1+ZHIjP
-         bAyfcZGNEIJHJPfJUUsggI+56H81GKu+Vlha2d/Q+UCLcFl/NFp5l0Uqv0+Kq/Y5/P4L
-         rbgfWMWnxaKPKQCEzUDMCDMtPOb+jI0FJknArKs/Qw17MCXotdzdFyDEHZC+Ikuuo2L3
-         9RGJps48/hUpR2VrKIR9KOH+jq/EeX30UCBKa9goG/PvWqQ+E5e+k4cLmPyHFjVJlMfU
-         my5A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=KHF/h206nvY7IGctztP5abmEiwMZVDDtTOBHT6/T3I4=;
+        b=YD0LQ8ILiL0BIggZO00Kp+ZgVTNYizUt4UKV+92FlZN/Ox8y8rIsmOETPw/9Hv80Bq
+         d4rLsA/XLzw+D82WZ6gu+fCiIKCh5fdKzzyoSf8KCtqI5IcT87KFvXlr3vC4OkK/W9qq
+         hJsFyYyiMVb/Bkfh0+NsPUaVwDipgacWAAHRSYcka+Att7VXPxRs2TB+8sVJYjNPyMht
+         GjeLK0ZFxRH0skRK1PojRPE22D+wq4hohjH/CJVLtXXIUqM9sd6kG41ma16JNe97JooJ
+         8D/Wp/5qDZbG1q0Cl4knXhYoiHr+53mcUaaFoodVAnHfT1HbRkzJQ+jjgPp/MWZI0Ujz
+         m0Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=w6d84J0gH7hCEh19PmB7DbGfCt/BSq21flB6rmZqEQM=;
-        b=peCd33D5I01RRo4pNY/fl8/4MiyDKOhuTrmOAWFrKbI9u7EGG6nHyLyBz6x52nOzPv
-         VPafN9yWV+gz4FMoAIlD+XAwlNUpVgnjCOPXqcyFhA/bzQsInVomnezNvc80VKdE58ts
-         P1EEpQSFZUIZT92ruxnkKwA6VS+4LTysAxFBajUTQBFhNdzppBbdOqyzEybjQ/r7Mt32
-         XqVz8nnBC4RgknU4uuCmxCCvANOJhpN0xseJQoUcV03KGE1HfmS6b9KlU5nB1sVtXp97
-         gpige5EinwyrjLcHtBBlS6spbrpEAOwKncHWJlRQ4OjrD21JD1Pbwox8gSTluvKSqAu7
-         2aOA==
-X-Gm-Message-State: APf1xPBWDZn8guKVG9LVluIdRM2lUxvjOvi1yUtIugQKMR9HmvsDsHd8
-        X6/mMfbvEwj1InkDCcZ7ooNKIcT2
-X-Google-Smtp-Source: AH8x2272Il0Zjxd4YP4o09ZVNZ+buloLDTuS11LVj75M7G/X0VNGH3kBLlNkJ57HPj26Gi+K867GOg==
-X-Received: by 10.80.135.196 with SMTP id 4mr5556162edz.262.1518217100337;
-        Fri, 09 Feb 2018 14:58:20 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id d30sm1730080edd.90.2018.02.09.14.58.19
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=KHF/h206nvY7IGctztP5abmEiwMZVDDtTOBHT6/T3I4=;
+        b=st60LA45ZRuqWIFIPIE9ksg2teBPwN6CCm1Jn779sClO1Yc2nKVHK2euM0ZyFjsiyk
+         1tOoAuEtJpdbHGyK4G5J0kA1heO20vFA6tu9WJ+1MRz3DUA2nTL4pi7eesgSRjziNVjl
+         LjyIuNTa/xio7TmFW56/zh+lKEooPOTU7VOoBVj5gnaj8a4TuVqd4kVx2wXCfkzVxtma
+         Ojv//VSoAJJBOfnoam9PhT71vlAeQkwYAxQ8qUyvWVQlm7IH58XXHyXmVED8I4EDcUcJ
+         R2t1v3UowuLTjPfe6oNqA5IjdG04F3v7xwsd7+ad/M0cvPN5ZG2uF6LaOSOKIU59xluk
+         ldig==
+X-Gm-Message-State: APf1xPCCZYb2t2xvrlzbl22SeV60kYlxV7HP0QgH8SnCGbsAEX1JikGv
+        0dWCgkEqg1OkgxyrXY8wvZw=
+X-Google-Smtp-Source: AH8x224S5UtFoOIaYdfMAJIHVGsJu/oiguXP56n240lBi7mMUmWj/NzmZgOvVty6uEyC0xwQsVCgDg==
+X-Received: by 10.28.69.65 with SMTP id s62mr3352231wma.78.1518217940448;
+        Fri, 09 Feb 2018 15:12:20 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j132sm217939wmd.38.2018.02.09.15.12.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 14:58:19 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] update-index doc: note a fixed bug in the untracked cache
-References: <20180209210431.409-1-avarab@gmail.com> <xmqq6076xabo.fsf@gitster-ct.c.googlers.com> <20180209210431.409-2-avarab@gmail.com> <xmqqwozlvnij.fsf@gitster-ct.c.googlers.com> <87mv0hbykc.fsf@evledraar.gmail.com> <xmqq8tc1vkua.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqq8tc1vkua.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 09 Feb 2018 23:58:18 +0100
-Message-ID: <87k1vlbwj9.fsf@evledraar.gmail.com>
+        Fri, 09 Feb 2018 15:12:19 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 042/194] object-store: move alternates API to new alternates.h
+References: <20180205235508.216277-1-sbeller@google.com>
+        <20180205235735.216710-1-sbeller@google.com>
+        <20180205235735.216710-22-sbeller@google.com>
+        <20180206014457.GE7904@genre.crustytoothpaste.net>
+Date:   Fri, 09 Feb 2018 15:12:18 -0800
+In-Reply-To: <20180206014457.GE7904@genre.crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 6 Feb 2018 01:44:57 +0000")
+Message-ID: <xmqq4lmpvju5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On Fri, Feb 09 2018, Junio C. Hamano jotted:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>> +#include "strbuf.h"
+>> +#include "sha1-array.h"
+>> +
+>> +struct alternates {
+>> +	struct alternate_object_database *list;
+>> +	struct alternate_object_database **tail;
+>> +};
+>> +#define ALTERNATES_INIT { NULL, NULL }
 >
->>> Will queue with the above typofix, together with the other one.  I
->>> am not sure if we want to say "Before 2.17", though.
->>
->> I'm just keeping in mind the user who later on upgrades git from say
->> 2.14 to 2.18 or something, and is able to find in the docs when/why this
->> new warning got added, which helps diagnose it.
->
-> Ah, no, that is not what I meant.  I just didn't think '2.17' in
-> that sentence may not be understood as "Git version 2.17" by most
-> readers.
+> I was surprised to find that this patch not only moves the alternates
+> API to a new location, but introduces this struct.  I certainly think
+> the struct is a good idea, but it should probably go in a separate
+> patch, or at least get a mention in the commit message.
 
-Ah, I see. Yes I agree, sorry. Do you mind fixing it up to just say
-"Before Git version 2.17, ..." ?
+Yeah, I tend to agree that splitting it into two patches may make
+more sense, especially given that this is already close to 200 patch
+series ;-)
+
