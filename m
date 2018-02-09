@@ -2,195 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3F9D1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 18:04:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA5FD1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 18:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752331AbeBISEJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 13:04:09 -0500
-Received: from mout.web.de ([212.227.15.3]:53763 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751144AbeBISDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 13:03:53 -0500
-Received: from [192.168.178.36] ([91.20.50.7]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lvk9E-1el6AE3IaK-017TYY; Fri, 09
- Feb 2018 19:03:50 +0100
-Subject: Re: [PATCH 2/2] packfile: refactor hash search with fanout table
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Cc:     stolee@gmail.com
-References: <cover.1517609773.git.jonathantanmy@google.com>
- <007f3a4c84cb1c07255404ad1ea9f797129c5cf0.1517609773.git.jonathantanmy@google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <cfbde137-dbac-8796-f49f-2a543303d33a@web.de>
-Date:   Fri, 9 Feb 2018 19:03:48 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751052AbeBISUb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 13:20:31 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:38702 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbeBISUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 13:20:30 -0500
+Received: by mail-wr0-f196.google.com with SMTP id t94so9142292wrc.5
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=FEisuEGWQChPpWBajsv7s0NDT2IlT9ksyeJsTBDQCvg=;
+        b=rclVx+JeYUKzRGvkDdl9WuEZNWBE80r5HXHyp2m1eD2G1hJ6oGIUwqHKrgBxj31Yt6
+         Wqd7vRuh4/tXv35WZg9ybz83nh2moW+6H6OUzinKYqufzU775kNVuIV9ZBWmdBF03wpO
+         uxwQ4iDk143mc2nxoUcke3yBQmWi2ZSEcW1nmx5sgmwJTy60/ybf3DH8Q+6XxhhU6Skn
+         cTb7tedOiDAPVFL1hCLdeQYSBMOdQGrIAREVxy4q2uuddtcjez0Hs7r/LmbWpufI5nco
+         xArkNV7N7QH6HpzDseF5U0wfow8jFPYnpciZZxm8IzkF1AaL44J4FjTDCTcoQqGsGkG6
+         n3Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=FEisuEGWQChPpWBajsv7s0NDT2IlT9ksyeJsTBDQCvg=;
+        b=ZIEEt6iYfNa6HpG12iaScI3haG/zJqS2d+pt5ni2MASW99DgQOeiiCeyTJ83XQLXQW
+         r1dJI9Kc3JAVeXXGXItQn0l4uHZpkLxrx4og+qpbbTp74wJX8q8EYFkDe+UPyOnhdJc1
+         0EGGFQCHOe0xmAysJywK1e335gtxLCWUJndVna0xIPEvdPE+OVPqbR6W6i8r/igIEDrW
+         cNx9RPYYg7o1dmk65MiSNEEjxfRLamYyqJe89BCDiR/TC+sFTb3kktkIs78rNMilRD6i
+         kvC9FZr6sCSPTYAY8C8OrfpUG1hL6Ts0TCF7HuTZ8TqcbBkpNAFUma6+olSOrNR6Crcd
+         YxrQ==
+X-Gm-Message-State: APf1xPDWJFILZtkO3goMY3/k5cV4fXzHKOanw8rR20WpqLeGZGwZOaWs
+        n9ISiRZyL1l9Upv6bcWiogU=
+X-Google-Smtp-Source: AH8x224dmy/eAeG6S1Gd5CH7EtDWD+aSJXpiw8iSS5CIFIxDSGihGV71t4Ls1t46d7IjhIlnWOzPNw==
+X-Received: by 10.223.185.34 with SMTP id k31mr2958640wrf.245.1518200428964;
+        Fri, 09 Feb 2018 10:20:28 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x91sm4846603wrb.77.2018.02.09.10.20.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 10:20:28 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alexander Shopov <ash@kambanaria.org>
+Cc:     git@vger.kernel.org, martin.agren@gmail.com, bmwill@google.com,
+        peff@peff.net, sandals@crustytoothpaste.net,
+        worldhello.net@gmail.com, j6t@kdbg.org, sunshine@sunshineco.com,
+        pclouds@gmail.com
+Subject: Re: [PATCH 1/1] Mark messages for translations
+References: <20180209074404.2902-1-ash@kambanaria.org>
+        <20180206073812.GA14133@sigill.intra.peff.net>
+        <20180209074404.2902-2-ash@kambanaria.org>
+Date:   Fri, 09 Feb 2018 10:20:27 -0800
+In-Reply-To: <20180209074404.2902-2-ash@kambanaria.org> (Alexander Shopov's
+        message of "Fri, 9 Feb 2018 08:44:04 +0100")
+Message-ID: <xmqqlgg2xbx0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <007f3a4c84cb1c07255404ad1ea9f797129c5cf0.1517609773.git.jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:KqBzUcDsfOrxiWUsI4drp9YfhLMrDK+eBPhyndr+nwvK10F+cID
- sy6I9iyo0zBgUsPpeBK6dRhljDmWnMAQgruK/mAHWpx/JrsXiAFtcxVnITek7Fecun1yr+X
- ytbtJMEznZlgPRFobAWISr3b1bo8+T6fAieZfn74TwUBbms1E8DvFl0o3ODqnN0FcLhfcyK
- YG5b/o5x/rrFi0IS8tWaA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:p2Oiq97FH7U=:S9jmHDSiMa5tgz57HWbfE6
- djtMt+WwvDkzCAhB5L3aV1jFyMludAA5GwRwhuAaOpsQqbgXNq7kPbdaGTI1oXYWEd5slXUjL
- W0oVJm80CG3mXe42Pana48xMuTzGQV7J3e4u5hMECSk1ORQUq2upRUizzPmgUn1P+ONQ9WkWh
- SjW7nfuRXpx3Xv/kUJi6PKsAEDld/AC2TgJIKh2KSMPFKwJuxbxYeDhQjwnlhsDaFTvGiJ7if
- AzF2gRuoIJSOVxY6w3bQBD66fjVRpKkzTzmj8fpWPp7xFNNpAMuKOyyD5aBShaK6gf9czJa3W
- 4pNXSKb9FkOacRMVj2M37TsnjkNg5fkMq9Iml6Y2+7o/Vi71A/EGSmyYvBczPwuSxDdnFqo5J
- uAYK+Crfmok4lkPolN8bLoyNMfSoa2/md9qHNhqhotJUdTBuSDvSIY871UNr1Dez6n/oYdty6
- 0JPwlb8VQp4eNPYFW24spONs/Jy5Fi/1Aw0Y14QiYAcOyBggAnSWWKjYM/TYe7JAoy2LCxoAN
- 60/hhx+BT16VRuA46bSp7M+A3a+QOFDm4nRUhjqJP+YBKqz6Jo/mKq9W+XUBQNtWxVKZ0jdMD
- R65CGyD6LjRQBkEqTTN7DM2zshqxRQ8qoSHN03RotuuMSi1YenJDvGQ0YWYZe0hLOK+3esFZN
- ZQHuqgVIJZmDith0VUYzr6ncyjXZK0h8PwlLaWF/xXR5zF7mIrxoqh+X+h86BucrFhwoF9Czj
- a+UrILuQc7heFDfjbch6J70O1KX4n5PzvDFiVMq6UVTskT23yUOlysbNfkCTuEN7y+E/MAkX2
- vcmHQLdLUpmlthHIrne0eNXh8BCYd5BlZqP7KNFixDZMH4kuHc=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.02.2018 um 23:36 schrieb Jonathan Tan:
-> Subsequent patches will introduce file formats that make use of a fanout
-> array and a sorted table containing hashes, just like packfiles.
-> Refactor the hash search in packfile.c into its own function, so that
-> those patches can make use of it as well.
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->   packfile.c    | 19 +++++--------------
->   sha1-lookup.c | 24 ++++++++++++++++++++++++
->   sha1-lookup.h | 21 +++++++++++++++++++++
->   3 files changed, 50 insertions(+), 14 deletions(-)
-> 
-> diff --git a/packfile.c b/packfile.c
-> index 58bdced3b..29f5dc239 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -1712,7 +1712,8 @@ off_t find_pack_entry_one(const unsigned char *sha1,
->   {
->   	const uint32_t *level1_ofs = p->index_data;
->   	const unsigned char *index = p->index_data;
-> -	unsigned hi, lo, stride;
-> +	unsigned stride;
-> +	int ret;
->   
->   	if (!index) {
->   		if (open_pack_index(p))
-> @@ -1725,8 +1726,6 @@ off_t find_pack_entry_one(const unsigned char *sha1,
->   		index += 8;
->   	}
->   	index += 4 * 256;
-> -	hi = ntohl(level1_ofs[*sha1]);
-> -	lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
->   	if (p->index_version > 1) {
->   		stride = 20;
->   	} else {
-> @@ -1734,17 +1733,9 @@ off_t find_pack_entry_one(const unsigned char *sha1,
->   		index += 4;
->   	}
->   
-> -	while (lo < hi) {
-> -		unsigned mi = lo + (hi - lo) / 2;
-> -		int cmp = hashcmp(index + mi * stride, sha1);
-> -
-> -		if (!cmp)
-> -			return nth_packed_object_offset(p, mi);
-> -		if (cmp > 0)
-> -			hi = mi;
-> -		else
-> -			lo = mi+1;
-> -	}
-> +	ret = bsearch_hash(sha1, level1_ofs, index, stride);
-> +	if (ret >= 0)
-> +		return nth_packed_object_offset(p, ret);
+Alexander Shopov <ash@kambanaria.org> writes:
 
-Going from unsigned to signed int means the patch breaks support for
-more than 2G pack entries, which was put with 326bf39677 (Use uint32_t
-for all packed object counts.) in 2007.
+> Small changes in messages to fit the style and typography of rest
+> Reuse already translated messages if possible
+> Do not translate messages aimed at developers of git
+> Fix unit tests depending on the original string
+> Use `test_i18ngrep` for tests with translatable strings
+> Change and verifyrest of tests via `make GETTEXT_POISON=1 test`
 
->   	return 0;
->   }
->   
-> diff --git a/sha1-lookup.c b/sha1-lookup.c
-> index 4cf3ebd92..d11c5e526 100644
-> --- a/sha1-lookup.c
-> +++ b/sha1-lookup.c
-> @@ -99,3 +99,27 @@ int sha1_pos(const unsigned char *sha1, void *table, size_t nr,
->   	} while (lo < hi);
->   	return -lo-1;
->   }
-> +
-> +int bsearch_hash(const unsigned char *sha1, const void *fanout_,
-> +		 const void *table_, size_t stride)
-> +{
-> +	const uint32_t *fanout = fanout_;
+Perhaps end each sentence with a full-stop?
 
-Why hide the type?  It doesn't make the function more generic.
+> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+> index 9670e8cbe..797dcf95b 100755
+> --- a/t/t0002-gitfile.sh
+> +++ b/t/t0002-gitfile.sh
+> @@ -31,7 +31,7 @@ test_expect_success 'bad setup: invalid .git file format' '
+>  		echo "git rev-parse accepted an invalid .git file"
+>  		false
+>  	fi &&
+> -	if ! grep "Invalid gitfile format" .err
+> +	if ! test_i18ngrep "invalid gitfile format" .err
 
-> +	const unsigned char *table = table_;
-> +	int hi, lo;
-> +
-> +	hi = ntohl(fanout[*sha1]);
-> +	lo = ((*sha1 == 0x0) ? 0 : ntohl(fanout[*sha1 - 1]));
-> +
-> +	while (lo < hi) {
-> +		unsigned mi = lo + (hi - lo) / 2;
-> +		int cmp = hashcmp(table + mi * stride, sha1);
-> +
-> +		if (!cmp)
-> +			return mi;
-> +		if (cmp > 0)
-> +			hi = mi;
-> +		else
-> +			lo = mi + 1;
-> +	}
-> +	return -lo - 1;
-> +}
-> diff --git a/sha1-lookup.h b/sha1-lookup.h
-> index cf5314f40..3c59e9cb1 100644
-> --- a/sha1-lookup.h
-> +++ b/sha1-lookup.h
-> @@ -7,4 +7,25 @@ extern int sha1_pos(const unsigned char *sha1,
->   		    void *table,
->   		    size_t nr,
->   		    sha1_access_fn fn);
-> +
-> +/*
-> + * Searches for sha1 in table, using the given fanout table to determine the
-> + * interval to search, then using binary search. Returns the element index of
-> + * the position found if successful, -i-1 if not (where i is the index of the
-> + * least element that is greater than sha1).
-> + *
-> + * Takes the following parameters:
-> + *
-> + *  - sha1: the hash to search for
-> + *  - fanout: a 256-element array of NETWORK-order 32-bit integers; the integer
-> + *    at position i represents the number of elements in table whose first byte
-> + *    is less than or equal to i
-> + *  - table: a sorted list of hashes with optional extra information in between
-> + *  - stride: distance between two consecutive elements in table (should be
-> + *    GIT_MAX_RAWSZ or greater)
-> + *
-> + * This function does not verify the validity of the fanout table.
-> + */
-> +extern int bsearch_hash(const unsigned char *sha1, const void *fanout,
-> +			const void *table, size_t stride);
->   #endif
-> 
+Shouldn't this rather be like so instead?
 
-Why not use sha1_pos()?  I guess because it avoids the overhead of the
-accessor function, right?  And I wonder how much of difference it makes.
+	if test_i18ngrep ! "invalid gitfile format" .err
 
-A binary search function for embedded hashes just needs the key, a
-pointer to the first hash in the array, the stride and the number of
-elements.  It can then be used with or without a fanout table, making it
-more versatile.  Just a thought.
-
-René
+Ditto for the other negated use of test_i18ngrep we see in the same
+file in this patch.
