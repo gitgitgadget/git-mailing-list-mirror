@@ -2,95 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 512BD1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 21:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2E571F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 21:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752859AbeBIVkJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 16:40:09 -0500
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:33842 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750993AbeBIVkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 16:40:08 -0500
-Received: by mail-wm0-f54.google.com with SMTP id j21so405749wmh.1
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 13:40:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=137Lo4Z1kZy4Rqj0RYaOErwbBqUzzf0qU0eIkpF4z+Q=;
-        b=DQezFBXXQN1fzf9wBW6NG0e3NvzuR+PkAAsIJpn0p1KP5w9qzZaf6GWI26yf2RU45s
-         AvwHyXJFphYJkNsKWvDSuVr6oVL0Pc//KywkLs6VUuvpEtro8aKyzHXIha1hIQGOyndH
-         OFjUOpD3O6+nJCYI3QrXySWYdGCR2eACqZbYjpyQiDtLubzgsXSji5LAdtyIkJmjRH6X
-         N57P6bHkmVHooqgrXZgg2LU4/7pYdAtQvNE+6Iksb+lBE8ltARTO/CQzeWx4pD445tlf
-         SRWt8U+cbTT7zv0fa/wn51CNU986T+G01xelb04+4Xx5mkItsbHBaLKYI7QKYeywV5B6
-         3XmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=137Lo4Z1kZy4Rqj0RYaOErwbBqUzzf0qU0eIkpF4z+Q=;
-        b=uWyCMcNTh9xMuYZz5Vi/7VPGkPrlTkAOdulRAPBiLApcmBDmyRplMI7NLPCUnN2sfw
-         bvIgA4vQtMlIGiwq+nJ7qErr960+wV2ckCTya9GZV7YTzwmZxCimQ9C/Fox3jKo7ymZv
-         W+hFvM4dGZlgluDilOaF7s7jdZgKom6XBxcQfCU8+4V2WAWt6UwxwZoCTV/2C73E3Or3
-         25qNMRLkvVfnHvmmTlUTYihti4ch7BFPQp6l4grPluNmDq/1T6Zm9dJapMb+F1AVZge+
-         aprUUkng+X16F5VvW6PDZzOt0KfGOZYbkMIWdrx1CWn9m2ieEnZ1POxEqPzinUqbfwVL
-         YKsg==
-X-Gm-Message-State: APf1xPA1Z/xrrL1vtl4fze1gNQXEYPYIlbva/W9a0oYgeGvJtC13jHIU
-        QXxI3B9AaipAzkks9GPHMSeUM8RO
-X-Google-Smtp-Source: AH8x225FSkOQQqyiOcMowDKpsnLB+guKEJR82g1/fFjP/4EAdV+22ecan00kZMNUrNO9bMGOV+HIfA==
-X-Received: by 10.28.85.194 with SMTP id j185mr2926631wmb.31.1518212406702;
-        Fri, 09 Feb 2018 13:40:06 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 5sm3559520wre.35.2018.02.09.13.40.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 13:40:06 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/2] update-index doc: note new caveats in 2.17
-References: <xmqq6076xabo.fsf@gitster-ct.c.googlers.com>
-        <20180209210431.409-1-avarab@gmail.com>
-Date:   Fri, 09 Feb 2018 13:40:05 -0800
-In-Reply-To: <20180209210431.409-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 9 Feb 2018 21:04:29 +0000")
-Message-ID: <xmqq4lmpx2oa.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752881AbeBIVpB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 16:45:01 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:55066 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752845AbeBIVpA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 16:45:00 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 82c905f1;
+        Fri, 9 Feb 2018 21:44:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=from
+        :to:cc:subject:date:message-id:in-reply-to:references
+        :mime-version:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=z4JryMA4Yf5mjxYj1hGUTjlbfxI=; b=VGBzm7GPWHseQX
+        FA+PvgocshmUzHeMzAvOgL+fIPOttBmLwvdXsaeoeDH5tHNEdS4EW5IzFbxDLGlI
+        Z/NaPMMrNVd06o1wJWe+vwZMGb/8qny92vSAYWyWZCmF2mXY7CVNvR2Q0UoFMTzK
+        oIBRgkBJsL6/pmqaHisXf7pIk+lQk=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 19777d35;
+        Fri, 9 Feb 2018 21:44:59 +0000 (UTC)
+Received: from localhost (llwynog [local])
+        by llwynog (OpenSMTPD) with ESMTPA id e6270f31;
+        Fri, 9 Feb 2018 21:44:59 +0000 (UTC)
+From:   Leo Gaspard <leo@gaspard.io>
+To:     git@vger.kernel.org
+Cc:     Joey Hess <id@joeyh.name>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?q?L=C3=A9o=20Gaspard?= <leo@gaspard.io>
+Subject: [PATCH 1/2] fetch: preparations for tweak-fetch hook
+Date:   Fri,  9 Feb 2018 22:44:57 +0100
+Message-Id: <20180209214458.16135-1-leo@gaspard.io>
+X-Mailer: git-send-email 2.16.1
+In-Reply-To: <30753d19-d77d-1a1a-ba42-afcd6fbb4223@gaspard.io>
+References: <30753d19-d77d-1a1a-ba42-afcd6fbb4223@gaspard.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+From: Léo Gaspard <leo@gaspard.io>
 
-> When users upgrade to 2.17 they're going to have git yelling at them
-> (as my users did) on existing checkouts, with no indication whatsoever
-> that it's due to the UC or how to fix it.
+No behavior changes yet, only some groundwork for the next change.
 
-Wait.  Are you saying that the new warning is "warning" against a
-condition that is not an error?
+The refs_result structure combines a status code with a ref map, which
+can be NULL even on success. This will be needed when there's a
+tweak-fetch hook, because it can filter out all refs, while still
+succeeding.
 
-> ... doesn't it only warn under that mode? I.e.:
->
->     -"could not open directory '%s'")
->     +"core.untrackedCache: could not open directory '%s'")
+fetch_refs returns a refs_result, so that it can modify the ref_map.
 
-For example, if it attempts to open a directory which does *not*
-have to exist, and sees an error from opendir() due to ENOENT, then
-I do not think it should be giving a warning.  If we positively know
-that a directory should exist there and we cannot open it, of course
-we should warn.  Also, if we know a directory should be readable
-when it exists, then we should be warning when we see an error other
-than ENOENT.
+Based-on-patch-by: Joey Hess <joey@kitenet.net>
+Signed-off-by: Leo Gaspard <leo@gaspard.io>
+---
+ builtin/fetch.c | 68 +++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 44 insertions(+), 24 deletions(-)
 
-So...
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 7bbcd26fa..76dc05f61 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -34,6 +34,11 @@ enum {
+ 	TAGS_SET = 2
+ };
+ 
++struct refs_result {
++	struct ref *new_refs;
++	int status;
++};
++
+ static int fetch_prune_config = -1; /* unspecified */
+ static int prune = -1; /* unspecified */
+ #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+@@ -57,6 +62,18 @@ static int shown_url = 0;
+ static int refmap_alloc, refmap_nr;
+ static const char **refmap_array;
+ 
++static int add_existing(const char *refname, const struct object_id *oid,
++			int flag, void *cbdata)
++{
++	struct string_list *list = (struct string_list *)cbdata;
++	struct string_list_item *item = string_list_insert(list, refname);
++	struct object_id *old_oid = xmalloc(sizeof(*old_oid));
++
++	oidcpy(old_oid, oid);
++	item->util = old_oid;
++	return 0;
++}
++
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "fetch.prune")) {
+@@ -217,18 +234,6 @@ static void add_merge_config(struct ref **head,
+ 	}
+ }
+ 
+-static int add_existing(const char *refname, const struct object_id *oid,
+-			int flag, void *cbdata)
+-{
+-	struct string_list *list = (struct string_list *)cbdata;
+-	struct string_list_item *item = string_list_insert(list, refname);
+-	struct object_id *old_oid = xmalloc(sizeof(*old_oid));
+-
+-	oidcpy(old_oid, oid);
+-	item->util = old_oid;
+-	return 0;
+-}
+-
+ static int will_fetch(struct ref **head, const unsigned char *sha1)
+ {
+ 	struct ref *rm = *head;
+@@ -920,15 +925,20 @@ static int quickfetch(struct ref *ref_map)
+ 	return check_connected(iterate_ref_map, &rm, &opt);
+ }
+ 
+-static int fetch_refs(struct transport *transport, struct ref *ref_map)
++static struct refs_result fetch_refs(struct transport *transport,
++		struct ref *ref_map)
+ {
+-	int ret = quickfetch(ref_map);
+-	if (ret)
+-		ret = transport_fetch_refs(transport, ref_map);
+-	if (!ret)
+-		ret |= store_updated_refs(transport->url,
++	struct refs_result ret;
++	ret.status = quickfetch(ref_map);
++	if (ret.status) {
++		ret.status = transport_fetch_refs(transport, ref_map);
++	}
++	if (!ret.status) {
++		ret.new_refs = ref_map;
++		ret.status |= store_updated_refs(transport->url,
+ 				transport->remote->name,
+-				ref_map);
++				ret.new_refs);
++	}
+ 	transport_unlock_pack(transport);
+ 	return ret;
+ }
+@@ -1048,9 +1058,11 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
+ 	return transport;
+ }
+ 
+-static void backfill_tags(struct transport *transport, struct ref *ref_map)
++static struct refs_result backfill_tags(struct transport *transport,
++		struct ref *ref_map)
+ {
+ 	int cannot_reuse;
++	struct refs_result res;
+ 
+ 	/*
+ 	 * Once we have set TRANS_OPT_DEEPEN_SINCE, we can't unset it
+@@ -1069,12 +1081,14 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map)
+ 	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
+ 	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
+ 	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
+-	fetch_refs(transport, ref_map);
++	res = fetch_refs(transport, ref_map);
+ 
+ 	if (gsecondary) {
+ 		transport_disconnect(gsecondary);
+ 		gsecondary = NULL;
+ 	}
++
++	return res;
+ }
+ 
+ static int do_fetch(struct transport *transport,
+@@ -1083,6 +1097,7 @@ static int do_fetch(struct transport *transport,
+ 	struct string_list existing_refs = STRING_LIST_INIT_DUP;
+ 	struct ref *ref_map;
+ 	struct ref *rm;
++	struct refs_result res;
+ 	int autotags = (transport->remote->fetch_tags == 1);
+ 	int retcode = 0;
+ 
+@@ -1135,7 +1150,10 @@ static int do_fetch(struct transport *transport,
+ 				   transport->url);
+ 		}
+ 	}
+-	if (fetch_refs(transport, ref_map)) {
++
++	res = fetch_refs(transport, ref_map);
++	ref_map = res.new_refs;
++	if (res.status) {
+ 		free_refs(ref_map);
+ 		retcode = 1;
+ 		goto cleanup;
+@@ -1148,8 +1166,10 @@ static int do_fetch(struct transport *transport,
+ 		struct ref **tail = &ref_map;
+ 		ref_map = NULL;
+ 		find_non_local_tags(transport, &ref_map, &tail);
+-		if (ref_map)
+-			backfill_tags(transport, ref_map);
++		if (ref_map) {
++			res = backfill_tags(transport, ref_map);
++			ref_map = res.new_refs;
++		}
+ 		free_refs(ref_map);
+ 	}
+ 
+-- 
+2.16.1
+
