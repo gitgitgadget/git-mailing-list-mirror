@@ -2,109 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87A711F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 22:14:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D701F1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 22:24:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753025AbeBIWOc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 17:14:32 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:56244 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752982AbeBIWOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 17:14:30 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 143so56384wma.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 14:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=6d5r993SkakFwqcE6cphbIDflVcJpZAcLvK0hNGHrsE=;
-        b=usRaKMrekmWcvQbHTlNCEFNANi1XbXO8NTY1+Lb6GXdn4vzrEMxRkSUbCpjlMIr2S8
-         ZPGBdoQfNmF+jWhR9nc0LivoFOh6zZWHSIJzD5GjvCGSE1OMhRdhsYvpqrEvCP4sacbC
-         cy4zAoqxikHSs9KnCmCHJNivSzDek/V7UQ6Fh0w7yPdsVBnikqGBxwFzRzq4g1AZDIgd
-         vYxMwEBn9N7TtDW3QLASAQx0lmqdXWO8LVW2N/NsGYJa7Ryxz5YvyI69J/cv+3uilFb/
-         y/MpebSKF8a5d79ykt4RyRvt64rfB9zP9SbUJquOX004S0FOg0EGJbwPNPxZS5bsSk+g
-         hnoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=6d5r993SkakFwqcE6cphbIDflVcJpZAcLvK0hNGHrsE=;
-        b=n+L8BLRYaMGIKxmhT9jX9X8R+UUpU9IYU5BiFQyjYBdvRZ1DcqWXQ698dJPGwHXaKU
-         5GT2eTtl2t0naiOojSIkLYJJgDMOShiiWz4buleN8h4tw7CGzifupn49rEsSAMTC30HN
-         pqxMwQpihZ9ouWKS2tKr4rRpfNdsxIKxlBafR35/CmZpMfvy5lDRLMWLz/jq81+q46s8
-         LiHjCPxIaQTWc10eHC73TMz8ZF1q4GBcdTL3JKI97u+YZOMJ7cLhCLI9/Yo5+exseorI
-         379PSR3pM9lmuJn3LcreecXynHfTyWT15U86uPZvPadlTrxjADJeBKVa0lyegHCnJseV
-         suMg==
-X-Gm-Message-State: APf1xPDxIR4U4FaZN5UVVisgL+mAqYyQ3cz5IohoVAbduFjuP6syTkBl
-        ABX3jkXJUUMpWFZZqJF9IUP8lgnJ
-X-Google-Smtp-Source: AH8x2255noUkEPHLSsTBtNN0RDnALL5BXjvGdtPfgrDk63+7JcXlgWtL766jipJPbMojkoh9dyE2HA==
-X-Received: by 10.80.243.13 with SMTP id p13mr5820129edm.186.1518214469458;
-        Fri, 09 Feb 2018 14:14:29 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id o47sm1858726edc.10.2018.02.09.14.14.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 14:14:28 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] update-index doc: note a fixed bug in the untracked cache
-References: <20180209210431.409-1-avarab@gmail.com> <xmqq6076xabo.fsf@gitster-ct.c.googlers.com> <20180209210431.409-2-avarab@gmail.com> <xmqqwozlvnij.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <xmqqwozlvnij.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 09 Feb 2018 23:14:27 +0100
-Message-ID: <87mv0hbykc.fsf@evledraar.gmail.com>
+        id S1753112AbeBIWYw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 17:24:52 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:55118 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752522AbeBIWYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 17:24:51 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 181a85e4;
+        Fri, 9 Feb 2018 22:24:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
+        subject:to:cc:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=EHTaKtZCKlh4fQmvE5tVuOeZrGU=; b=GZKnW7AWIQeCXA
+        zZw5dLILx9ARJJLOO1CL6HgRtDaWPKb+InPOZ2P75zu9libwkqxBV2CfipsRsUmo
+        j3hzUTvttZzBjnamezfLbxDQQKR1ouVFlk5AmC7RqXcZriykcEMye7Q+83FQl1co
+        +rtcEj2cEL76HR4eQlVzLTSzcqoKc=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 34c1252f (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
+        Fri, 9 Feb 2018 22:24:48 +0000 (UTC)
+Subject: Re: Fetch-hooks
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+ <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+ <20180208153040.GA5180@kitenet.net>
+ <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+ <87bmgzmbsk.fsf@evledraar.gmail.com>
+ <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
+ <87po5dbz1a.fsf@evledraar.gmail.com>
+From:   Leo Gaspard <leo@gaspard.io>
+Message-ID: <25bd770c-6a48-5b5d-04cc-6d02784ea3e7@gaspard.io>
+Date:   Fri, 9 Feb 2018 23:24:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
+In-Reply-To: <87po5dbz1a.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/09/2018 11:04 PM, Ævar Arnfjörð Bjarmason wrote:>>> You could also
+have some intermediate step between these two, where
+>>> e.g. your refspec for "origin" is
+>>> "+refs/heads/*:refs/remotes/origin-untrusted/*" instead of the default
+>>> "+refs/heads/*:refs/remotes/origin/*", you fetch all refs to that
+>>> location, then you move them (with some alias/hook) to
+>>> "refs/remotes/origin/*" once they're seen to be "OK".
+>>
+>> That is indeed another possibility, but then the idea is to make things
+>> as transparent as possible for the end-user, not to completely change
+>> their git workflow. As such, considering only signed commits to be part
+>> of the upstream seems to make sense to me?
+> 
+> I mean this would be something that would be part of a post-fetch hook,
+> so it would be as transparent as what you're doing to the user, with the
+> difference that it doesn't need to involve changes to what you slurp
+> down from the server.
+> 
+> I.e. we'd just fetch into refs/remotes/origin-untrusted/, then we run
+> your post-fetch hook and you go over the new refs, and copy what you
+> like (usually everything) to refs/remotes/origin/*.
 
-On Fri, Feb 09 2018, Junio C. Hamano jotted:
+Hmm... but that would then require a post-fetch hook, wouldn't it? And
+about a post-fetch hook, if I understood correctly, Junio in [1] had a
+quite nice argument against it:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> +Before 2.17, the untracked cache had a bug where replacing a directory
->> +with a symlink to another directory could cause it to incorrectly show
->> +files tracked by git as untracked. See the "status: add a failing test
->> +showing a core.untrackedCache bug" commit to git.git. A workaround for
->> +that was (and this might work for other undiscoverd bugs in the
->> +future):
->
-> s/undiscoverd/undiscovered/
->
-> But more importantly, would it help _us_ to encourage people to
-> squelch the diagnoses without telling us about potential breakage, I
-> wonder, by telling them to do this for other undiscovered cases,
-> too?
+    Although I do not deeply care between such a "trigger to only
+    notify, no touching" hook and a full-blown "allow hook writers to
+    easily lie about what happened in the fetch" hook, I was hoping that
+    we would get this right and useful if we were spending our brain
+    bandwidth on it. I am not very fond of an easier "trigger to only
+    notify" hook because people are bound to misuse the interface and
+    try updating the refs anyway, making it easy to introduce
+    inconsistencies between refs and FETCH_HEAD that will confuse the
+    later "merge" step.
 
-You mean including something like "if you see this the git ML would like
-to hear about it"?
+Otherwise, if it doesn't require a post-fetch hook, then it would
+require the end-user to first fetch, then run the
+`copy-trusted-refs-over` script, which would add stuff to the user's
+workflow.
 
-> Will queue with the above typofix, together with the other one.  I
-> am not sure if we want to say "Before 2.17", though.
+Did I miss another possibility?
 
-I'm just keeping in mind the user who later on upgrades git from say
-2.14 to 2.18 or something, and is able to find in the docs when/why this
-new warning got added, which helps diagnose it.
+> [...]
+> 
+> One thing that's not discussed yet, and I know just enough about for it
+> to tingle my spidey sense, but not enough to say for sure (CC'd Jeff &
+> Brandon who know more) is that this feature once shipped might cause
+> higher load on git hosting providers.
+> 
+> This is because people will inevitably use it in popular projects for
+> some custom filtering, and because you're continually re-fetching and
+> inspecting stuff what used to be a really cheap no-op "pull" most of the
+> time is a more expensive negotiation every time before the client
+> rejects the refs again, and worse for hosting providers because you have
+> bespoke ref fetching strategies you have less odds of being able to
+> cache both the negotiation and the pack you serve.
+> 
+> I.e. you want this for some security feature where 99.99% of the time
+> you accept all refs, but most people will probably use this to implement
+> dynamic Turing-complete refspecs.
+> 
+> Maybe that's worrying about nothing, but worth thinking about.
 
->> +
->> +----------------
->> +$ git -c core.untrackedCache=false status
->> +----------------
->> +
->> +This bug has also been shown to affect non-symlink cases of replacing
->> +a directory with a file when it comes to the internal structures of
->> +the untracked cache, but no case has been found where this resulted in
->> +wrong "git status" output.
->> +
->>  File System Monitor
->>  -------------------
+Well... First, I must say I didn't really understand your last paragraph
+about Turing-complete refspecs.
+
+But my understanding of how the fetch-hook patchset I sent this evening
+works is that it first receives all the objects from the hosting
+provider, then locally moves the refs, but never actually discards the
+downloaded objects (well, until a `git gc` I guess).
+
+So I don't think the network traffic with the provider would be any
+different wrt. what it is now, even if a tweak-fetch hook rejects some
+commits? Then again I don't know git's internals enough to be have even
+a bit of certainty about what I'm saying right now, so...
+
+
+[1] https://marc.info/?l=git&m=132480559712592&w=2
