@@ -2,89 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B2DC1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 19:29:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D11F1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 19:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752266AbeBIT26 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 14:28:58 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38548 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbeBIT25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 14:28:57 -0500
-Received: by mail-wm0-f67.google.com with SMTP id 141so18144431wme.3
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 11:28:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JA9xXxTr1kS6uSqGsyHFl9InTARzDUyA29BCO+kTyBw=;
-        b=pqpwSGolo+9MMyD5OdomVVHralZUWuIDUIL/PQXd1QdWyYiWzheJgCKBi/mQEYnYZf
-         h845CF93MlN8VJrg+hk9zK0pHqD9iha3ijE5zC4U8mCLCo+tXH3v+uSAA5nAFYFUPG25
-         Rm2q2IsvcVGUJ1m3NS+4FFOuQ3kcUXjg1P1o3prme6UjG/h94xCDOyISBw6PdnaGnkPq
-         E4lJACAhV8Y1YfCwwjIPULiSKknlrNRmmS8eIrM/Trd7kKmxQbogck8PyfcFFn2qSRhR
-         EnoQsiCoTAWHtDgkiFCwcKfL1YyBRL1Yeb1KTS6Cfej/zajHZZmx7oFmqwv80i7Sf2kv
-         NkMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JA9xXxTr1kS6uSqGsyHFl9InTARzDUyA29BCO+kTyBw=;
-        b=euyNIOvl/y5OgwRvDX9FArIBiZ4VnzWiDMcR/xosjrCzyZEA+zBCes5Ve0Abi9Vib6
-         01RtLdxfJsNoy3+Jo+D3vzP1+pLKlUgIh1WMQr/oQpuRpHGjqZEVIu4rDVTGLRB5wTRT
-         3PDjVg2oQtdQRjnnxv4X7YMfUnuovuCoqFyv6/NGnr+WVFgiur7j6r27VtsxPghaxVgO
-         B/QI8vK+CYd+4cp6EoizUeP/9d0DueXyNUCFsSJuRIPS9eQWH/HAnSvPAyU4PaIKMpR7
-         AGTCS8L2cGihDStIu+4HvaN37QTFgqKYBgxKE65BkwSop2CIBmcCMhUx5Vx6916VgHr7
-         6WGg==
-X-Gm-Message-State: APf1xPBkppeRhhR2CkaVAxqkbzWgla9a1pqwvQ49R+g2VoqfL9WUVlGZ
-        hTfv6FqlXHPdHwmAMlkWrLY=
-X-Google-Smtp-Source: AH8x226K2ICiFUgkRTcal0iT0R999faZ4jkW+F2IrgeGXJLbOBV/BGW6/ZkKZLiW/Aem52nIlUF3TQ==
-X-Received: by 10.28.25.129 with SMTP id 123mr3157456wmz.2.1518204535505;
-        Fri, 09 Feb 2018 11:28:55 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u98sm3733992wrc.69.2018.02.09.11.28.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 11:28:54 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     lars.schneider@autodesk.com
-Cc:     git@vger.kernel.org, tboegi@web.de, j6t@kdbg.org,
-        sunshine@sunshineco.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Johannes.Schindelin@gmx.de,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH v6 4/7] utf8: add function to detect a missing UTF-16/32 BOM
-References: <20180209132830.55385-1-lars.schneider@autodesk.com>
-        <20180209132830.55385-5-lars.schneider@autodesk.com>
-Date:   Fri, 09 Feb 2018 11:28:53 -0800
-In-Reply-To: <20180209132830.55385-5-lars.schneider@autodesk.com> (lars
-        schneider's message of "Fri, 9 Feb 2018 14:28:27 +0100")
-Message-ID: <xmqqshaavu6i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752860AbeBITan (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 14:30:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47180 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752403AbeBITam (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 14:30:42 -0500
+Received: (qmail 5553 invoked by uid 109); 9 Feb 2018 19:30:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 09 Feb 2018 19:30:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24307 invoked by uid 111); 9 Feb 2018 19:31:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 09 Feb 2018 14:31:24 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Feb 2018 14:30:39 -0500
+Date:   Fri, 9 Feb 2018 14:30:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Alexander Shopov <ash@kambanaria.org>, git@vger.kernel.org,
+        martin.agren@gmail.com, bmwill@google.com,
+        sandals@crustytoothpaste.net, worldhello.net@gmail.com,
+        j6t@kdbg.org, sunshine@sunshineco.com, pclouds@gmail.com
+Subject: Re: [PATCH 1/1] Mark messages for translations
+Message-ID: <20180209193039.GA15554@sigill.intra.peff.net>
+References: <20180209074404.2902-1-ash@kambanaria.org>
+ <20180206073812.GA14133@sigill.intra.peff.net>
+ <20180209074404.2902-2-ash@kambanaria.org>
+ <xmqqlgg2xbx0.fsf@gitster-ct.c.googlers.com>
+ <xmqqwozmvuth.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwozmvuth.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-lars.schneider@autodesk.com writes:
+On Fri, Feb 09, 2018 at 11:15:06AM -0800, Junio C Hamano wrote:
 
-> From: Lars Schneider <larsxschneider@gmail.com>
->
-> If the endianness is not defined in the encoding name, then let's
-> ...
-> [3] https://encoding.spec.whatwg.org/#utf-16le
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->
-> utf
-> ---
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> >> -	if ! grep "Invalid gitfile format" .err
+> >> +	if ! test_i18ngrep "invalid gitfile format" .err
+> >
+> > Shouldn't this rather be like so instead?
+> >
+> > 	if test_i18ngrep ! "invalid gitfile format" .err
+> >
+> > Ditto for the other negated use of test_i18ngrep we see in the same
+> > file in this patch.
+> 
+> Sorry, my thinko.  These two ones want to be written in the patch
+> as-is.
 
-Huh?
+Yes, I think so, but we may want to avoid this anti-pattern (since
+usually "! test_i18ngrep" is a sign of something wrong. It seems like
+these tests are doing more manual reporting work than is necessary, and
+could just be relying on helpers to report errors.
 
->  utf8.c | 13 +++++++++++++
->  utf8.h | 16 ++++++++++++++++
->  2 files changed, 29 insertions(+)
+Something like the patch below, though I'm not sure if we'd want to
+leave it as "grep" (if applying on master), or have "test_i18ngrep" in
+the preimage (if basing on top of Alexander's patch).
+
+-Peff
+
+---
+ t/t0002-gitfile.sh | 54 +++++++----------------------------
+ 1 file changed, 11 insertions(+), 43 deletions(-)
+
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 9670e8cbe6..74b7307997 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -10,15 +10,6 @@ objpath() {
+ 	echo "$1" | sed -e 's|\(..\)|\1/|'
+ }
+ 
+-objck() {
+-	p=$(objpath "$1")
+-	if test ! -f "$REAL/objects/$p"
+-	then
+-		echo "Object not found: $REAL/objects/$p"
+-		false
+-	fi
+-}
+-
+ test_expect_success 'initial setup' '
+ 	REAL="$(pwd)/.real" &&
+ 	mv .git "$REAL"
+@@ -26,30 +17,14 @@ test_expect_success 'initial setup' '
+ 
+ test_expect_success 'bad setup: invalid .git file format' '
+ 	echo "gitdir $REAL" >.git &&
+-	if git rev-parse 2>.err
+-	then
+-		echo "git rev-parse accepted an invalid .git file"
+-		false
+-	fi &&
+-	if ! grep "Invalid gitfile format" .err
+-	then
+-		echo "git rev-parse returned wrong error"
+-		false
+-	fi
++	test_must_fail git rev-parse 2>.err &&
++	test_i18ngrep "Invalid gitfile format" .err
+ '
+ 
+ test_expect_success 'bad setup: invalid .git file path' '
+ 	echo "gitdir: $REAL.not" >.git &&
+-	if git rev-parse 2>.err
+-	then
+-		echo "git rev-parse accepted an invalid .git file path"
+-		false
+-	fi &&
+-	if ! grep "Not a git repository" .err
+-	then
+-		echo "git rev-parse returned wrong error"
+-		false
+-	fi
++	test_must_fail git rev-parse 2>.err &&
++	test_i18ngrep "Not a git repository" .err
+ '
+ 
+ test_expect_success 'final setup + check rev-parse --git-dir' '
+@@ -60,7 +35,7 @@ test_expect_success 'final setup + check rev-parse --git-dir' '
+ test_expect_success 'check hash-object' '
+ 	echo "foo" >bar &&
+ 	SHA=$(cat bar | git hash-object -w --stdin) &&
+-	objck $SHA
++	test_path_is_file "$REAL/objects/$(objpath $SHA)"
+ '
+ 
+ test_expect_success 'check cat-file' '
+@@ -69,29 +44,22 @@ test_expect_success 'check cat-file' '
+ '
+ 
+ test_expect_success 'check update-index' '
+-	if test -f "$REAL/index"
+-	then
+-		echo "Hmm, $REAL/index exists?"
+-		false
+-	fi &&
++	test_path_is_missing "$REAL/index" &&
+ 	rm -f "$REAL/objects/$(objpath $SHA)" &&
+ 	git update-index --add bar &&
+-	if ! test -f "$REAL/index"
+-	then
+-		echo "$REAL/index not found"
+-		false
+-	fi &&
+-	objck $SHA
++	test_path_is_file "$REAL/index" &&
++	test_path_is_file "$REAL/objects/$(objpath $SHA)" &&
++	false
+ '
+ 
+ test_expect_success 'check write-tree' '
+ 	SHA=$(git write-tree) &&
+-	objck $SHA
++	test_path_is_file "$REAL/objects/$(objpath $SHA)"
+ '
+ 
+ test_expect_success 'check commit-tree' '
+ 	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
+-	objck $SHA
++	test_path_is_file "$REAL/objects/$(objpath $SHA)"
+ '
+ 
+ test_expect_success 'check rev-list' '
