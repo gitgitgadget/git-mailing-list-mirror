@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2FD91F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 743251F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752343AbeBILFQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:05:16 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:38849 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752184AbeBILEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:04:48 -0500
-Received: by mail-pg0-f66.google.com with SMTP id l18so3398111pgc.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:04:48 -0800 (PST)
+        id S1752337AbeBILFP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 06:05:15 -0500
+Received: from mail-io0-f196.google.com ([209.85.223.196]:40961 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752322AbeBILFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:05:13 -0500
+Received: by mail-io0-f196.google.com with SMTP id f4so9209020ioh.8
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:05:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XaacT6BUf6Hvv7sGO9sAK/ZMCA+TfDM3g4PQSBquPJQ=;
-        b=QjyMSzl2SdESvhzYdZkzg2j/yCbOu/45YTbApMre12+/8j61CGzIut5nbY04eBQ7A7
-         jgWNTO0Vtm6PJ+YAXjyUAlUy0ual3HjmCSYZvqrcspLX+udG+tlykKt8ByrS8vhVHCCQ
-         qeZI5+bJySzRy1lsg5FtaVbS0KLjJ9fwA6l/Dgs8/MkGFJZtggQx46hJsYxrxQ7x++Kr
-         E35glCwq5hCb487Ko/gu7WlMzoTNevND2nCbi0XTqdbrj5gQ4UwzfEaVWLYLOqyq/Aa1
-         bx36E9qFdkg90vqb9KTw0a3n8AkuV/EDSYK106fHVb/SqZxo21zzWxUUyQfLoWaCRnlv
-         j81w==
+        bh=4EeBnrW6e/po/2JcUhIwlVUITR6Ofg/baUPMuAxyizY=;
+        b=aK/0wod4AIm67EsPNJZet/7fK9Dz0kUVUIMA1GvjkyYyU/1ztCC2z7VmB8qw5vJR7L
+         o0/FqhxEpWfcOgEzO+rIGmWeopw17Tlm3P6lHsIWhhqtFlUQDOKKlhj+XtCibOf7Qx3W
+         NpAhZg88gghqE8z98wQ85tTHzZ864byyDOEpGAXcEJgj2kqK5aUTSNuq37ZDbyaZdZQ6
+         38YnzDSe74JVjrrIpabBr6eIs4W/icJjGloReRMAsUHxvet4/0QwCqa/cEkh9YxVKzV9
+         gHIyS6Q660x56KJipQHfajPWWes4jqu3ctUQ2Sm7c9rooWMAZkPCia9qCD1VpfW595e3
+         ZwVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XaacT6BUf6Hvv7sGO9sAK/ZMCA+TfDM3g4PQSBquPJQ=;
-        b=oOD+heRQTs4E8UTt9gdwlgpwO9US/99Koo8g6lVc+rMdDfvdpjzQVvieF6AZpDrDE7
-         J7uAD5CjJ0+B1GDwJxqAlmm2ZTNYSUshDCPsCcn/6D5W870k/UfYh87C9blcyKb3raMP
-         qs9+lnnyS4Dg1ucyClxm3esdeIBaFcJrvreTnOSoj95oDyWGUzw7ba9FRH0viKuc5qnV
-         UpzbsC3SozEMW6S0t79wuJ+gAA1gt0QcDwJVFvZFuuCw5st1IdNe915hpxOkFpApQLhy
-         MzI1QfitaPRS9xBNHTfKcuhHGbOhS7wMJf6AAP9Dp1GwjIhTXOdLV0/Wp4uUK19mrwiN
-         DbOA==
-X-Gm-Message-State: APf1xPD/df8tr5LJsTs/C0vBUzSQc/BNTeB6SVLKVql5ABkZpxxgh+rl
-        9oeeIF5itKzFSp8ZI9UM1gHpCw==
-X-Google-Smtp-Source: AH8x226agKKgonrRSnWNNPentMLDstKG0PeTkRJ3qjn3C8k8tXzYrGhxtpKsg1wRmrV+hGQH5w3/fQ==
-X-Received: by 10.98.211.218 with SMTP id z87mr2507984pfk.54.1518174287740;
-        Fri, 09 Feb 2018 03:04:47 -0800 (PST)
+        bh=4EeBnrW6e/po/2JcUhIwlVUITR6Ofg/baUPMuAxyizY=;
+        b=okRLLPH9oYJd0dntE8pbWVgeZx1SuCMbQSZX4R2K7bswvqxnu51TrxcTrC4QfxJMup
+         lMvaTfE4RGJT/5atCovQ5AdCYj2yYiUid179OE9h7y/kHk2q81XA6AFh6HEXJmvGR7Q6
+         CoO20yQ2J/f0Xfudo45jp416lgTp6N7cgLyrfpAbdgOjpscneauRfWwwECpIOtWVfl0O
+         wgR3koLRdOqBoosMAtO61eNortj7y8el35t1cU9NRvl9lRM8LEq3jqwFaUcGn28Te/Of
+         uicWqbWrQkOIlM0ESPq/mywZ97mJjes8/R9j+gR0DFzIJbfVVR2OGhHlQhYeOKWePxjS
+         QSug==
+X-Gm-Message-State: APf1xPDXXS7q6ETlGpjkhPxKQ56Zu7yyMQLfdvbdj2Fz8hwnOHI1MsVK
+        f0TC3jsCyxeQYQF80sjDii0ChA==
+X-Google-Smtp-Source: AH8x225fBEQ68Qg1O19D388Fv09HrAk5DmTPGSERiwcmmu0hUvw/ZjJVfJlPgWXcpvLfYC6/DCFRRA==
+X-Received: by 10.107.151.72 with SMTP id z69mr2579221iod.185.1518174313127;
+        Fri, 09 Feb 2018 03:05:13 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id a6sm4316274pgq.56.2018.02.09.03.04.44
+        by smtp.gmail.com with ESMTPSA id e1sm2477642ioe.13.2018.02.09.03.05.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 03:04:47 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:04:42 +0700
+        Fri, 09 Feb 2018 03:05:12 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:05:08 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 24/42] completion: use __gitcomp_builtin in _git_ls_remote
-Date:   Fri,  9 Feb 2018 18:02:03 +0700
-Message-Id: <20180209110221.27224-25-pclouds@gmail.com>
+Subject: [PATCH v3 29/42] completion: use __gitcomp_builtin in _git_notes
+Date:   Fri,  9 Feb 2018 18:02:08 +0700
+Message-Id: <20180209110221.27224-30-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.207.gedba492059
 In-Reply-To: <20180209110221.27224-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -74,43 +74,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new completable options are --quiet and --upload-pack=.
+The new completable options are:
+
+--allow-empty (notes add and notes append)
+--for-rewrite= (notes copy)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/ls-remote.c                    | 5 +++--
- contrib/completion/git-completion.bash | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ builtin/notes.c                        |  4 ++--
+ contrib/completion/git-completion.bash | 14 ++++++++------
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-index c4be98ab9e..540d56429f 100644
---- a/builtin/ls-remote.c
-+++ b/builtin/ls-remote.c
-@@ -60,8 +60,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "refs", &flags, N_("do not show peeled tags"), REF_NORMAL),
- 		OPT_BOOL(0, "get-url", &get_url,
- 			 N_("take url.<base>.insteadOf into account")),
--		OPT_SET_INT(0, "exit-code", &status,
--			    N_("exit with exit code 2 if no matching refs are found"), 2),
-+		OPT_SET_INT_F(0, "exit-code", &status,
-+			      N_("exit with exit code 2 if no matching refs are found"),
-+			      2, PARSE_OPT_NOCOMPLETE),
- 		OPT_BOOL(0, "symref", &show_symref_target,
- 			 N_("show underlying ref in addition to the object pointed by it")),
+diff --git a/builtin/notes.c b/builtin/notes.c
+index b52e71c73e..6990683bd4 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -413,7 +413,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			parse_reuse_arg},
+ 		OPT_BOOL(0, "allow-empty", &allow_empty,
+ 			N_("allow storing empty note")),
+-		OPT__FORCE(&force, N_("replace existing notes"), 0),
++		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
  		OPT_END()
+ 	};
+ 
+@@ -484,7 +484,7 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	struct notes_tree *t;
+ 	const char *rewrite_cmd = NULL;
+ 	struct option options[] = {
+-		OPT__FORCE(&force, N_("replace existing notes"), 0),
++		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "stdin", &from_stdin, N_("read objects from stdin")),
+ 		OPT_STRING(0, "for-rewrite", &rewrite_cmd, N_("command"),
+ 			   N_("load rewriting config for <command> (implies "
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1ea06b6e17..e22ea60bc8 100644
+index c7b8b37f19..60127daebf 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1630,7 +1630,7 @@ _git_ls_remote ()
- {
- 	case "$cur" in
- 	--*)
--		__gitcomp "--heads --tags --refs --get-url --symref"
-+		__gitcomp_builtin ls-remote
- 		return
+@@ -1835,7 +1835,7 @@ _git_notes ()
+ 
+ 	case "$subcommand,$cur" in
+ 	,--*)
+-		__gitcomp '--ref'
++		__gitcomp_builtin notes
  		;;
- 	esac
+ 	,*)
+ 		case "$prev" in
+@@ -1851,15 +1851,17 @@ _git_notes ()
+ 	add,--reedit-message=*|append,--reedit-message=*)
+ 		__git_complete_refs --cur="${cur#*=}"
+ 		;;
+-	add,--*|append,--*)
+-		__gitcomp '--file= --message= --reedit-message=
+-				--reuse-message='
++	add,--*)
++		__gitcomp_builtin notes_add
++		;;
++	append,--*)
++		__gitcomp_builtin notes_append
+ 		;;
+ 	copy,--*)
+-		__gitcomp '--stdin'
++		__gitcomp_builtin notes_copy
+ 		;;
+ 	prune,--*)
+-		__gitcomp '--dry-run --verbose'
++		__gitcomp_builtin notes_prune
+ 		;;
+ 	prune,*)
+ 		;;
 -- 
 2.16.1.207.gedba492059
 
