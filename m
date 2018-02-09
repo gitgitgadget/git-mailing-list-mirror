@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 262391F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:05:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1776E1F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:05:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751070AbeBILFU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:05:20 -0500
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:33141 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752362AbeBILFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:05:18 -0500
-Received: by mail-pl0-f66.google.com with SMTP id t4so1328348plo.0
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:05:18 -0800 (PST)
+        id S1752362AbeBILFZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 06:05:25 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:34483 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751185AbeBILFY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:05:24 -0500
+Received: by mail-pl0-f67.google.com with SMTP id q17so1327390pll.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:05:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/iHe+pzGRghA8CEzQPDgPpzbrX6hFJyC1G/H+TzdZL8=;
-        b=GCZXOnGKtLPonjIwM8Dyc9JU0MAtL2i7FeWtvd5hH0pRYVa/T1sBQkX4XMX7HDuyfS
-         sSEEgFRREGITkC09FlOO1n9PusvEpdvcGB5O4eBtuXoyeduJnnDrCN/NifVHhwRq9db7
-         GncSmTJuznUYOFiYVSFugiMKO3Crw9hnO3Yb9tEygidrut0SrF8VTI5WFtQaUj9RMzv3
-         caP+3CrziMZhJpx6Ge2HyOHljgSecovLAfJWNtQaCBwxCdTVzogYWhCNcdsGiPe3Utuj
-         7+vFYHidoJw998IbxTFAHGctmAT96WTZ3UDuEXXapUq7SE7rn9TS2g7diwLaoNVXosGW
-         BtcA==
+        bh=3vLrCOLYCsNuek2qw68jPhsHg/Gi+Wx06hvkZB0JOZ4=;
+        b=sokZpAJTHVTpeXntggDWg/jXYqly0RJctZlO7pRSAnKmDFawjfziBLZgY9BKbhz/Zw
+         l6MElp/URZuMTNuG260zjbjfbx+smPs+EOsEh3ZUs5taLSOUPpFCAEZt7P6LdoY48ckk
+         xp25Vk7JHkSkzxEHrRUiPx1I+OTFz0UOrSAUT6oFn4EGeQXDn4jKp4jDRhtlRMpv7OSt
+         pk0B/7/PBgdV7Xf/0tFDasVDwJi8USBJwbsnboJUKNcOR308un1RUdyAGQficooU3HDA
+         A+ahaaxkY7ucaotNX+1MgEMAt+nbT3rfcpHU26tWPKd6Nv2U/Cs+Z71f4cbd/1Ob7XOU
+         Co0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/iHe+pzGRghA8CEzQPDgPpzbrX6hFJyC1G/H+TzdZL8=;
-        b=frEZWtWPccEsDjmosR3sMe6UQY3ueNxwpidz5przHbTQS8oTPTF9l3TsT2WS5Ah/eR
-         Mvq5JS8owIK2Y4qWMDE6Dtu47ykPtvGbINwfZmGnkLs5xmtdak5f80TtpH9UWpbvzPGD
-         jdsw1u7XjjbvW7TS56l8H4+ysSKf4durqcnUX18weQZjZAtl+IG/38XqhWzQDwr9DzZV
-         4D1XzF+TNhEa7vGvlfg5aTV1O2dFQLGo8pEYVMB2x9yRpoLToj/66QgUXLdRzfvjo538
-         dNQts17lNKBr+Mbh0FsnJR3jEarl2Nkk3IWCExm+EhKX/WGmbDd/unFJeMDrw08fSJxt
-         uf+w==
-X-Gm-Message-State: APf1xPD+F+WpIo4T3+4KdgqReYYBCh1gE293UdnSmc6bppZA/TFrnUgR
-        7USgyPRZNg9Sbv6ZRuDbZD/NyA==
-X-Google-Smtp-Source: AH8x227THBpStDYOpNIsxgp0fHHouseUjWQEXH3aGH7rQwOQCEigV95gBUxLV3hiQwxJUL+LWjb1lg==
-X-Received: by 2002:a17:902:526d:: with SMTP id z100-v6mr2236071plh.396.1518174318270;
-        Fri, 09 Feb 2018 03:05:18 -0800 (PST)
+        bh=3vLrCOLYCsNuek2qw68jPhsHg/Gi+Wx06hvkZB0JOZ4=;
+        b=crvfjAINHtqn+eIpTdSUfc8WGX4HkObWk7L4NcRemf2oRavkoC5prt/5PJbj2tIE0/
+         FSSyRhsRVgI7fawgaIRehI21qVYBi0aznfOCRsHzC9uupU0QPzOaDcOaX3zIJNLwXSb6
+         vpskQR0MgA5mE5b9p4osgTlAmd6nT36yIDfBtT6glrEKjQalhrUMXgF+toF0bh4bvZeD
+         Ef1UzV8Rz61MvPkr0X4hh/8mvEl5AVFzoohuipmow6bFw0ebxbBEi644maQWkaOoEjRt
+         7KGkOpnKAKbjybG6KXdWU2i4NBE7EXMN63BZWAQ7p+9Nytz1ws4YxvFoHcyNny52uhd7
+         kIkg==
+X-Gm-Message-State: APf1xPCTVswJsN0IKQkjb9Mvi6Y2kq9G/3vJgU4JW5d89yIQklxBPUg0
+        z0u0btDa9bLxYcoILalZO7VN0g==
+X-Google-Smtp-Source: AH8x225aL5flfVb63BPWckqSsa/Lzhqlq3yjIVUILYWB+QT3zwnPOW0eIOBK6707+TbWv2pKVDT97Q==
+X-Received: by 2002:a17:902:8601:: with SMTP id f1-v6mr2274958plo.380.1518174323427;
+        Fri, 09 Feb 2018 03:05:23 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id 16sm5465984pfq.181.2018.02.09.03.05.15
+        by smtp.gmail.com with ESMTPSA id d82sm7741556pfk.166.2018.02.09.03.05.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 03:05:17 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:05:13 +0700
+        Fri, 09 Feb 2018 03:05:22 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:05:18 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 30/42] completion: use __gitcomp_builtin in _git_pull
-Date:   Fri,  9 Feb 2018 18:02:09 +0700
-Message-Id: <20180209110221.27224-31-pclouds@gmail.com>
+Subject: [PATCH v3 31/42] completion: use __gitcomp_builtin in _git_push
+Date:   Fri,  9 Feb 2018 18:02:10 +0700
+Message-Id: <20180209110221.27224-32-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.207.gedba492059
 In-Reply-To: <20180209110221.27224-1-pclouds@gmail.com>
 References: <20180131110547.20577-1-pclouds@gmail.com>
@@ -74,76 +74,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is really nice. Since pull_options[] already declares all
-passthru options to 'merge' or 'fetch', a single
+The new completable options are:
 
-    git pull --git-completion-helper
-
-would provide all completable options (--no- variants are a separate
-issue). Dead shell variables can now be deleted.
-
-New completable options are:
-
---allow-unrelated-histories
+--atomic
+--exec=
 --ipv4
 --ipv6
---jobs
---refmap=
---signoff
---strategy-option=
+--no-verify
+--porcelain
+--progress
+--push-option
+--signed
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ builtin/push.c                         | 2 +-
+ contrib/completion/git-completion.bash | 7 +------
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
+diff --git a/builtin/push.c b/builtin/push.c
+index 1c28427d82..013c20d616 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -548,7 +548,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
+ 			N_("control recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+-		OPT_BOOL( 0 , "thin", &thin, N_("use thin pack")),
++		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", N_("receive pack program")),
+ 		OPT_STRING( 0 , "exec", &receivepack, "receive-pack", N_("receive pack program")),
+ 		OPT_BIT('u', "set-upstream", &flags, N_("set upstream for git pull/status"),
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 60127daebf..697fca0c4b 100644
+index 697fca0c4b..d8d9e8f0de 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -1448,12 +1448,6 @@ _git_difftool ()
- 
- __git_fetch_recurse_submodules="yes on-demand no"
- 
--__git_fetch_options="
--	--quiet --verbose --append --upload-pack --force --keep --depth=
--	--tags --no-tags --all --prune --dry-run --recurse-submodules=
--	--unshallow --update-shallow
--"
--
- _git_fetch ()
- {
- 	case "$cur" in
-@@ -1754,14 +1748,6 @@ _git_log ()
- 	__git_complete_revlist
- }
- 
--# Common merge options shared by git-merge(1) and git-pull(1).
--__git_merge_options="
--	--no-commit --no-stat --log --no-log --squash --strategy
--	--commit --stat --no-squash --ff --no-ff --ff-only --edit --no-edit
--	--verify-signatures --no-verify-signatures --gpg-sign
--	--quiet --verbose --progress --no-progress
--"
--
- _git_merge ()
- {
- 	__git_complete_strategy && return
-@@ -1887,12 +1873,11 @@ _git_pull ()
+@@ -1928,12 +1928,7 @@ _git_push ()
  		return
  		;;
  	--*)
 -		__gitcomp "
--			--rebase --no-rebase
--			--autostash --no-autostash
--			$__git_merge_options
--			$__git_fetch_options
+-			--all --mirror --tags --dry-run --force --verbose
+-			--quiet --prune --delete --follow-tags
+-			--receive-pack= --repo= --set-upstream
+-			--force-with-lease --force-with-lease= --recurse-submodules=
 -		"
-+		__gitcomp_builtin pull "--no-autostash --no-commit --no-edit
-+					--no-ff --no-log --no-progress --no-rebase
-+					--no-squash --no-stat --no-tags
-+					--no-verify-signatures"
-+
++		__gitcomp_builtin push
  		return
  		;;
  	esac
