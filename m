@@ -7,143 +7,112 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F20D51F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:06:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C4081F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752416AbeBILGW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:06:22 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:45860 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752159AbeBILGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:06:21 -0500
-Received: by mail-pl0-f67.google.com with SMTP id p5so1314962plo.12
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:06:21 -0800 (PST)
+        id S1751049AbeBIL1T (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 06:27:19 -0500
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35853 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750924AbeBIL1S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:27:18 -0500
+Received: by mail-wm0-f65.google.com with SMTP id f3so15657195wmc.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:27:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NSa6lPeZz1fb12/YI7IhjF7Uo/g89HIzysWS3Gse68w=;
-        b=EkL/w3kyYDJI9gwgKcqkGY/z/u5dn2KmUF55hCZpyEuf0KO7gA2lWh6PQCbqaYqnQm
-         fGK7dnGNt7WeI1ump0SHXmlUwPjWWtZAuDNZUfRwVQ0mdwUulqqIs1cuk0eDRL6mEEJ4
-         788BIWo8NYQToBxXalQV+tI0JbCs69s9zxasI3CyujOXmUejjXchNAvmD3svgt2Q1uuD
-         S5uEE1CfRJkDtKlACL5jHppKHVZUX9vTKYOQwv4DYSGmtZk+QQMZBwvf0oFKYlZuQ1nM
-         8/JOI/Wpcab8hbWkYfNUfjQb2SCZB5RdFktv8V8HMqPok2Xqywr5QkfPozcDgVOsKCWU
-         FeGw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=myW+L0GBWgahpbMCtCvbq6/HiDq9NBAkKgCoLvpfsvs=;
+        b=nISERhrltX+JBR3ITg34/IsB0nG+aCr2IPuiQh9ovz2rEpnDFpGTt3JdzGLWfMSfuh
+         znYtlttEqnVm3RM8YofJg6XK5FZG/mc+PeTNH/PGQR3kAGbIB4RuNXZDybghvNFa9RdF
+         deRxXyKLCWwFmaPj+yZbgA6R+6y8UWTdE0uCrvKkYiJY+kBm1xruo3IsGt78+xaauJx1
+         F0Hj9AIiBiOuIQPLhajzOu8QCd/aNyXqIqgW+DK7TzPYMf/WpJz0gkJITGWpsXGj2V8V
+         nGP5Kp2K+T7nedAKOqBX4RSiRBNjKVaV8iqywkjWe+qeJ5vzlV9n4mg34ZnSugn0PCUn
+         lJGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NSa6lPeZz1fb12/YI7IhjF7Uo/g89HIzysWS3Gse68w=;
-        b=dKdZWa9CkK+Fu5dUEa/BP1dGCLqwonIcbPpb/fUmXUakcTdDkVibGPDBvDIXpAI4S9
-         kFdpL7fTS3I8tnYaJZpQec9BMBvrmKMFXYciNlCuNOwWqL4ToniCP63cEAglSG/APGJD
-         mwQg/sKUHreiMcB4NE/OQoP3YKgvKEf9ntqLzPcUNh7DVVh1PqOpkSTgqgSgZDVEr3rw
-         8QQsh2JUGI46N0aeJwr7IU2gXk4fiB+u7SxiDfyER8X5h2Wu8eUzuB+lzcG2q6ZbdaWO
-         JXlJvGuG9ZBV+39YINjXghaHxEw4oTlERnZ3EjobQ+LB6jFVAKZ69JfKE7jopVj1T9EP
-         OksQ==
-X-Gm-Message-State: APf1xPDzR0r/DBg4zNv16NHPNMFnhtuCOhjjziJmT2T3gLeAme5C/QBh
-        NmE7VDff7ex7yKT0wS0g8thfhA==
-X-Google-Smtp-Source: AH8x225KP2y1ymJ6b9ZhxzqdipQPjuUZvbrurr3jIwwAARNzSo584hIu3uMe1SCjG1scjAMLOOc0MA==
-X-Received: by 2002:a17:902:7889:: with SMTP id q9-v6mr2247990pll.114.1518174380557;
-        Fri, 09 Feb 2018 03:06:20 -0800 (PST)
-Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id z5sm4782490pge.11.2018.02.09.03.06.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Feb 2018 03:06:20 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:06:15 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v3 42/42] git-completion.bash: add GIT_COMPLETION_OPTIONS=all config
-Date:   Fri,  9 Feb 2018 18:02:21 +0700
-Message-Id: <20180209110221.27224-43-pclouds@gmail.com>
-X-Mailer: git-send-email 2.16.1.207.gedba492059
-In-Reply-To: <20180209110221.27224-1-pclouds@gmail.com>
-References: <20180131110547.20577-1-pclouds@gmail.com>
- <20180209110221.27224-1-pclouds@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=myW+L0GBWgahpbMCtCvbq6/HiDq9NBAkKgCoLvpfsvs=;
+        b=OYCCqB1yNFp5k3D/aX7qjeqLpQdvRMjnvdVLBnoDH4kEcCnKuH9jpBxv8El5sgYyfU
+         zQN78dtGBTACueqc3Wo55VNga4QOXv+WIVL91XW1iQqdFbMAvt0pHHN82i8MHAZgW0fM
+         T55YwfbzUAqZAucl2ZuTXsZxQOPHVj4A0dOUm4cGU7kqtzvnqcINSTgELaEmUUbp5zea
+         nQbqUsbxXh0gS68Jtz2rCUeHUrfhperA0vWr8XgEMvOZ7tMg7spxGa0r8gKbxy3zQkwO
+         webGlSrypeZKAvNoaEq+M59tUvcrZ+G7VvpwD5l1iFjRquHOIGYzV/Pr8jmjbYqJ29JH
+         giPw==
+X-Gm-Message-State: APf1xPD1uxu0H9g/B5fPIIwYGykkwVoc4PvYcRxq5MgYF3HaIxysZMpo
+        gSnAnY7qCt8CgutFy78TJNrTLf7G
+X-Google-Smtp-Source: AH8x225S5u+ccYNz2WjHw7cENWNqWxmSrDEKZlreOw+XPVbg9upagpSviljnvZ8Wbr9p9bLy3++oTg==
+X-Received: by 10.28.182.86 with SMTP id g83mr1713763wmf.75.1518175637182;
+        Fri, 09 Feb 2018 03:27:17 -0800 (PST)
+Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
+        by smtp.gmail.com with ESMTPSA id p10sm2656966wrh.96.2018.02.09.03.27.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 09 Feb 2018 03:27:16 -0800 (PST)
+Date:   Fri, 9 Feb 2018 11:27:27 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] worktree: improve message when creating a new
+ worktree
+Message-ID: <20180209112727.GG2130@hank>
+References: <20180121120208.12760-1-t.gummerer@gmail.com>
+ <20180204221305.28300-1-t.gummerer@gmail.com>
+ <20180204221305.28300-2-t.gummerer@gmail.com>
+ <20180205021202.GA17847@duynguyen.dek-tpc.internal>
+ <CAPig+cRLohiqR_Drh7P0q3XbvC22WLjNwH0YLZo3dqFzZZuAPw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRLohiqR_Drh7P0q3XbvC22WLjNwH0YLZo3dqFzZZuAPw@mail.gmail.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By default, some option names (mostly --force, scripting related or for
-internal use) are not completable for various reasons. When
-GIT_COMPLETION_OPTIONS is set to all, all options (except hidden ones)
-are completable.
+On 02/07, Eric Sunshine wrote:
+> On Sun, Feb 4, 2018 at 9:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> > As a former translator, I'm not thrilled to see a sentence broken into
+> > two pieces like this. I'm not a Japanese translator, but I think this
+> > sentence is translated differently when the translator sees the whole
+> > line "Preparing ..., setting ...".
+> >
+> > I think the purpose of "Preparing..." in the first place is to show
+> > something when git is busy checkout out the worktree. As long as we
+> > print it before git-reset, we should be good.
+> 
+> The original message was "Enter <worktree>" which had the potential to
+> confuse someone into thinking the working directory had changed[1], so
+> it was changed to "Preparing...". The reason for keeping that message
+> (rather than dropping it outright) was to provide context to messages
+> printed after it, especially messages such as "HEAD is now at..."
+> which might otherwise confuse the reader into thinking that HEAD in
+> the current worktree changed rather than HEAD in the new
+> worktree[2,3].
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- contrib/completion/git-completion.bash |  6 +++++-
- parse-options.c                        | 11 +++++++----
- 2 files changed, 12 insertions(+), 5 deletions(-)
+Thanks for the background!  In that light, since we're already
+customizing the "HEAD is now at..." message, is it worth dropping the
+message now, maybe using something like "Worktree HEAD is now at ...",
+or something similar?
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 0ddf40063b..0cfa489a8e 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -36,6 +36,10 @@
- #
- #     When set to "1", do not include "DWIM" suggestions in git-checkout
- #     completion (e.g., completing "foo" when "origin/foo" exists).
-+#
-+#   GIT_COMPLETION_OPTIONS
-+#
-+#     When set to "all", complete all possible options
- 
- case "$COMP_WORDBREAKS" in
- *:*) : great ;;
-@@ -303,7 +307,7 @@ __gitcomp_builtin ()
- 	if [ -z "$options" ]; then
- 		# leading and trailing spaces are significant to make
- 		# option removal work correctly.
--		options=" $(__git ${cmd/_/ } --git-completion-helper) $incl "
-+		options=" $(__git ${cmd/_/ } --git-completion-helper=$GIT_COMPLETION_OPTIONS) $incl "
- 		for i in $excl; do
- 			options="${options/ $i / }"
- 		done
-diff --git a/parse-options.c b/parse-options.c
-index 979577ba2c..5b8b2b376e 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -430,14 +430,17 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
-  * many options that do not suppress it properly.
-  */
- static int show_gitcomp(struct parse_opt_ctx_t *ctx,
--			const struct option *opts)
-+			const struct option *opts,
-+			const char *arg)
- {
- 	for (; opts->type != OPTION_END; opts++) {
- 		const char *suffix = "";
- 
- 		if (!opts->long_name)
- 			continue;
--		if (opts->flags & (PARSE_OPT_HIDDEN | PARSE_OPT_NOCOMPLETE))
-+		if (opts->flags & PARSE_OPT_HIDDEN)
-+			continue;
-+		if ((opts->flags & PARSE_OPT_NOCOMPLETE) && strcmp(arg, "all"))
- 			continue;
- 
- 		switch (opts->type) {
-@@ -498,8 +501,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 			goto show_usage;
- 
- 		/* lone --git-completion-helper is asked by git-completion.bash */
--		if (ctx->total == 1 && !strcmp(arg + 1, "-git-completion-helper"))
--			return show_gitcomp(ctx, options);
-+		if (ctx->total == 1 && skip_prefix(arg + 1, "-git-completion-helper=", &arg))
-+			return show_gitcomp(ctx, options, arg);
- 
- 		if (arg[1] != '-') {
- 			ctx->opt = arg + 1;
--- 
-2.16.1.207.gedba492059
+This would loose the information about the identifier of the worktree,
+but from a coarse look at the man page it doesn't seem like we
+advertise that widely (The only thing related to it I could find is
 
+    If the last path components in the working tree's path is unique among
+    working trees, it can be used to identify worktrees. For example if
+    you only have two working trees, at "/abc/def/ghi" and "/abc/def/ggg",
+    then "ghi" or "def/ghi" is enough to point to the former working tree.
+
+for which we don't need to print the identifier anywhere.  We don't
+seem to mention the case where the last part is unique, and we add a
+number to make the identifier unique.
+
+So given that maybe it would even be better to hide the part about the
+identifier, as it seems more like an implementation detail than
+relevant to the end user?
+
+> [1]: https://public-inbox.org/git/55A8F4B1.9060304@drmicha.warpmail.net/
+> [2]: https://public-inbox.org/git/CAPig+cRSHwmmF9cCUbRrDCCW4kvg9PeOUxP5VQpSGfxzMxHWOQ@mail.gmail.com/
+> [3]: https://public-inbox.org/git/CAPig+cSLs4-uKicVMBSKnEro_FYD722Hs1_U6qzTriM8Ciok2Q@mail.gmail.com/
