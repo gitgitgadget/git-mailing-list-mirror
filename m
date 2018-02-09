@@ -3,108 +3,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3C461F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 18:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47B861F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 18:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751550AbeBISaR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 13:30:17 -0500
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:52347 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbeBISaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 13:30:16 -0500
-Received: by mail-wm0-f46.google.com with SMTP id g1so16999562wmg.2
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:30:16 -0800 (PST)
+        id S1751145AbeBISgX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 13:36:23 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34263 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbeBISgW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 13:36:22 -0500
+Received: by mail-wr0-f195.google.com with SMTP id j19so2852257wre.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Q/7BLvLcU6SQ6N/SQ9q249zFem5V7/dwgmAiu9FkbAQ=;
-        b=dmErUuv4ekUO8gfw+rbWNkzYNcUIBYh8I35Heu/Z+tW51+x7FTWbLzygnysCt6UdTo
-         32kzu22WPrQ8d+W7ZhJmeImAYHbJI1GUGXu8KCBcN7HmwqApWAhsesSjtPFq9LKM6c0H
-         Wyp/B+EQyEgohQxWF0Pkm94POAXPdfFkBdzXBwxGjXECDN712uCG/bp9xTWkl9Qbu1vY
-         pqVHWZW6ASsQkEzemuy9UhffuU6Skt+S1H5tvWWx2T4+jSPkOnospcGNYv3IEJVuNumi
-         YmI5DQuFitIYi4vbEJklCorLTVeE2Fc4Z70/kwowXHzABTVSgFiQriVdbkkEuMFBEodN
-         fhtg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=gGR/MV1a++qQpnhNP2FH4i2D/yH6qLe1Jtv6QE+UeD0=;
+        b=QuZydxt1ebvV0nMmZW7momcUjvIah5Ua/sINwVSFMljiaLRP2w627QY15z/F4dfpAi
+         1kXh7FcIFRn6/c01N6cGEuyxFdArlB+ztOfhou71X1falSJz2P0iDd0R4cm7Lbw14pBv
+         12ZrJxoj86DHgZ5sOvVaeg3QwRjjg3eAORRdjT/pEqX4qD1Lr7xwrUM4TDaohdQdKssm
+         XAOhyA5kocoEAQx5TUiwtwAtZcc9K0Kp26EZE2+4afu1avyBp1bWegeID2lEvpjsI7k/
+         aGepve0GFrnlZPCRhOgzPDdpdOT7vEpnW1pH0G3q2lsNZVvNDa/eiVR/arGELwXV+wfI
+         BhgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Q/7BLvLcU6SQ6N/SQ9q249zFem5V7/dwgmAiu9FkbAQ=;
-        b=C0Dimhdz34UgVLtgnx0dQ9C9qO9Kvuv2uRI3qjqPTwhr2/DAbtueySbkDr5n0uFyoc
-         gxr8B+RWAvpBszsQ//KxmiI6J/ULzQHaSHOlzlCXDeSdsjqDsFsTXMNr1ndpTyoibits
-         b1l5va2D+EzzhWsCyG07EcYjLRisiAcjJNqt9mE9VoDSJvVJuZW3T4eYYWWphWOPtMaG
-         /bDPSoEXTQ57VEGCQLF8+yIV0MIfg38pX4NafW/6CYft9KKGpvj76fWHYQkj7AEVnvK4
-         oOX6ly5lUGWrB3VWfkqQZmYMpGtxedndplQnYwzi2WSJXqHYh6x8KsQ6BHEH8w2OgNY4
-         0d8A==
-X-Gm-Message-State: APf1xPCoZNAHbbth/tzyOHw7KAfycmurvO6M8maUaosoOY/Yz/yJJU33
-        6aXnIZ5BcBMafNzcyC0E24E=
-X-Google-Smtp-Source: AH8x224lol18AIPYRlZ46Mee7AvsCdO4FrJ7lIafu1C1jRibecKhaulki8P6IlGUIuzJ+1+pyUq36A==
-X-Received: by 10.28.107.69 with SMTP id g66mr2655899wmc.145.1518201015475;
-        Fri, 09 Feb 2018 10:30:15 -0800 (PST)
-Received: from evledraar (178-84-79-100.dynamic.upc.nl. [178.84.79.100])
-        by smtp.gmail.com with ESMTPSA id p29sm3902945wmf.9.2018.02.09.10.30.14
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=gGR/MV1a++qQpnhNP2FH4i2D/yH6qLe1Jtv6QE+UeD0=;
+        b=U0Ar3ABAxEegpmJM5jwg9mfjyuee8r4JrF703fYLiCVmFBbluxkuYhEILXLyK42g72
+         7W/nPZXmQCBVAD7qb1iOfqEsxEJRdTMIHpaIOFSJ691qtYtItLbvvjEuRQvzMuVtFH/E
+         odv9nBpDvSbyGs2020yv8Rrb2Mnen1gwhzh24EWzf3nFpDjBimRO9JJTNVD7dpoo7GNr
+         3pHEmxPx1wu525gTvBDDtmCpEY2xNvT5jctu4YTk5yI/+OIFWxzD9xzDS4oAWAJ5llqx
+         D31vfTTIqV63KzikyT70oFxt4H2/WZ8ds3jOuzmt5Qp8IUmPsPa6exHIPUEGDd81TiB8
+         wiag==
+X-Gm-Message-State: APf1xPCh8RBMAjkX5NUIjwFe8ztPzRyUafltLhemiB9zfiEcgCtCI+x6
+        TyvuQXtynH0K8IGBhbqeseUm/Z5m
+X-Google-Smtp-Source: AH8x226xucbgLdMKyYmnYU/ksyHl1HNn43w/6I75SOcUW/fkmcJEz+39pCFlF0G1LVfxusQcSBGjVQ==
+X-Received: by 10.223.171.67 with SMTP id r3mr2959287wrc.80.1518201380690;
+        Fri, 09 Feb 2018 10:36:20 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 39sm3320390wrz.85.2018.02.09.10.36.19
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 10:30:14 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2018, #04; Wed, 31)
-References: <xmqqd11pr0he.fsf@gitster-ct.c.googlers.com> <87mv0tm0l7.fsf@evledraar.booking.com> <nycvar.QRO.7.76.6.1802091805590.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-User-agent: Debian GNU/Linux 9.3 (stretch); Emacs 25.1.1; mu4e 1.0-alpha3
-In-reply-to: <nycvar.QRO.7.76.6.1802091805590.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Fri, 09 Feb 2018 19:30:12 +0100
-Message-ID: <874lmqm2x7.fsf@evledraar.gmail.com>
+        Fri, 09 Feb 2018 10:36:20 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/3] t: teach 'test_must_fail' to save the command's stderr to a file
+References: <20180209024235.3431-1-szeder.dev@gmail.com>
+        <20180209024235.3431-3-szeder.dev@gmail.com>
+        <20180209142131.GA18701@sigill.intra.peff.net>
+Date:   Fri, 09 Feb 2018 10:36:19 -0800
+In-Reply-To: <20180209142131.GA18701@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 9 Feb 2018 09:21:31 -0500")
+Message-ID: <xmqqd11exb6k.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Fri, Feb 09 2018, Johannes Schindelin jotted:
-
-> Hi,
+>   2. The "-x" problems aren't specific to test_must_fail at all. They're
+>      a general issue with shell functions.
 >
-> On Thu, 1 Feb 2018, Ævar Arnfjörð Bjarmason wrote:
+> I'm not entirely happy with saying "if you want to use -x, please use
+> bash". But given that it actually solves the problems everywhere with no
+> further effort, is it really that bad a solution?
 >
->> On Thu, Feb 01 2018, Junio C. Hamano jotted:
->>
->> > * ab/wildmatch-tests (2018-01-30) 10 commits
->> >  - wildmatch test: mark test as EXPENSIVE_ON_WINDOWS
->> >  - test-lib: add an EXPENSIVE_ON_WINDOWS prerequisite
->> >  - wildmatch test: create & test files on disk in addition to in-memory
->> >  - wildmatch test: perform all tests under all wildmatch() modes
->> >  - wildmatch test: use test_must_fail, not ! for test-wildmatch
->> >  - wildmatch test: remove dead fnmatch() test code
->> >  - wildmatch test: use a paranoia pattern from nul_match()
->> >  - wildmatch test: don't try to vertically align our output
->> >  - wildmatch test: use more standard shell style
->> >  - wildmatch test: indent with tabs, not spaces
->> >
->> >  More tests for wildmatch functions.
->> >
->> >  Expecting an update.
->> >  cf. <87vaga9mgf.fsf@evledraar.gmail.com>
->>
->> The 2018-01-30 series is the update mentioned in
->> 87vaga9mgf.fsf@evledraar.gmail.com. You probably noticed this / just
->> didn't adjust the note since you queued in in pu already, but just in
->> case: the known issues in it have been resolved, but hopefully Johannes
->> Schindelin can test it on Windows & report.
->
-> Sorry, I did not have time to look at this. All I can say is that the `pu`
-> builds are green for a couple of days already. Which I celebrate!
+> For the error messages from test_must_fail, could we go in the same
+> direction, and send them to descriptor 4 rather than 2? We've already
+> staked out descriptor 4 as something magical that must be left alone
+> (see 9be795fb). If we can rely on that, then it becomes a convenient way
+> for functions to make sure their output is going to the script's stderr.
 
-Thanks, if you get time it would be great to know if:
+That sounds clever and rather attractive.  It isn't that much of an
+layering violation for test-lib-functions.sh::test_must_fail to have
+such an intimate knowledge on how test_-lib.sh::test_eval_ sets up
+the file descriptors, either.
 
-    time GIT_TEST_LONG=1 ./t3070-wildmatch.sh
-
-Runs cleanly for you, and how long it takes now. Even though it's going
-to take a long time still, I optimized the test a lot so I expect it'll
-be quicker.
