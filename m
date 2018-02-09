@@ -2,117 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C4081F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24C3F1F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:29:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751049AbeBIL1T (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:27:19 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35853 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750924AbeBIL1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:27:18 -0500
-Received: by mail-wm0-f65.google.com with SMTP id f3so15657195wmc.1
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:27:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=myW+L0GBWgahpbMCtCvbq6/HiDq9NBAkKgCoLvpfsvs=;
-        b=nISERhrltX+JBR3ITg34/IsB0nG+aCr2IPuiQh9ovz2rEpnDFpGTt3JdzGLWfMSfuh
-         znYtlttEqnVm3RM8YofJg6XK5FZG/mc+PeTNH/PGQR3kAGbIB4RuNXZDybghvNFa9RdF
-         deRxXyKLCWwFmaPj+yZbgA6R+6y8UWTdE0uCrvKkYiJY+kBm1xruo3IsGt78+xaauJx1
-         F0Hj9AIiBiOuIQPLhajzOu8QCd/aNyXqIqgW+DK7TzPYMf/WpJz0gkJITGWpsXGj2V8V
-         nGP5Kp2K+T7nedAKOqBX4RSiRBNjKVaV8iqywkjWe+qeJ5vzlV9n4mg34ZnSugn0PCUn
-         lJGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=myW+L0GBWgahpbMCtCvbq6/HiDq9NBAkKgCoLvpfsvs=;
-        b=OYCCqB1yNFp5k3D/aX7qjeqLpQdvRMjnvdVLBnoDH4kEcCnKuH9jpBxv8El5sgYyfU
-         zQN78dtGBTACueqc3Wo55VNga4QOXv+WIVL91XW1iQqdFbMAvt0pHHN82i8MHAZgW0fM
-         T55YwfbzUAqZAucl2ZuTXsZxQOPHVj4A0dOUm4cGU7kqtzvnqcINSTgELaEmUUbp5zea
-         nQbqUsbxXh0gS68Jtz2rCUeHUrfhperA0vWr8XgEMvOZ7tMg7spxGa0r8gKbxy3zQkwO
-         webGlSrypeZKAvNoaEq+M59tUvcrZ+G7VvpwD5l1iFjRquHOIGYzV/Pr8jmjbYqJ29JH
-         giPw==
-X-Gm-Message-State: APf1xPD1uxu0H9g/B5fPIIwYGykkwVoc4PvYcRxq5MgYF3HaIxysZMpo
-        gSnAnY7qCt8CgutFy78TJNrTLf7G
-X-Google-Smtp-Source: AH8x225S5u+ccYNz2WjHw7cENWNqWxmSrDEKZlreOw+XPVbg9upagpSviljnvZ8Wbr9p9bLy3++oTg==
-X-Received: by 10.28.182.86 with SMTP id g83mr1713763wmf.75.1518175637182;
-        Fri, 09 Feb 2018 03:27:17 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id p10sm2656966wrh.96.2018.02.09.03.27.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 03:27:16 -0800 (PST)
-Date:   Fri, 9 Feb 2018 11:27:27 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/3] worktree: improve message when creating a new
- worktree
-Message-ID: <20180209112727.GG2130@hank>
-References: <20180121120208.12760-1-t.gummerer@gmail.com>
- <20180204221305.28300-1-t.gummerer@gmail.com>
- <20180204221305.28300-2-t.gummerer@gmail.com>
- <20180205021202.GA17847@duynguyen.dek-tpc.internal>
- <CAPig+cRLohiqR_Drh7P0q3XbvC22WLjNwH0YLZo3dqFzZZuAPw@mail.gmail.com>
+        id S1751124AbeBIL3V convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 9 Feb 2018 06:29:21 -0500
+Received: from smtppost.atos.net ([193.56.114.164]:32071 "EHLO
+        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750918AbeBIL3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:29:20 -0500
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Feb 2018 06:29:19 EST
+Received: from mail3-ext.my-it-solutions.net (mail3-ext.my-it-solutions.net) by smarthost5.atos.net with smtp
+        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+         id 5f99_76a1_304cd36c_65f2_44d1_8d38_42ca3fa04139;
+        Fri, 09 Feb 2018 12:22:01 +0100
+Received: from mail1-int.my-it-solutions.net ([10.92.32.11])
+        by mail3-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id w19BM1AJ026450
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+        for <git@vger.kernel.org>; Fri, 9 Feb 2018 12:22:01 +0100
+Received: from DEFTHW99ETTMSX.ww931.my-it-solutions.net ([10.86.142.101])
+        by mail1-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id w19BLuGN016524
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Fri, 9 Feb 2018 12:21:56 +0100
+Received: from DEERLM99EX2MSX.ww931.my-it-solutions.net ([169.254.2.222]) by
+ DEFTHW99ETTMSX.ww931.my-it-solutions.net ([10.86.142.101]) with mapi id
+ 14.03.0361.001; Fri, 9 Feb 2018 12:21:56 +0100
+From:   "Fechter, Juergen" <juergen.fechter@atos.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Issue: Git Gui: show ssh key don't show key type id_ed25519.pub
+Thread-Topic: Issue: Git Gui: show ssh key don't show key type id_ed25519.pub
+Thread-Index: AdOhmBPXmGKkjCZoQnC+ke1VDA/hXA==
+Date:   Fri, 9 Feb 2018 11:21:56 +0000
+Message-ID: <F65780F29E48994380E2BCE87C6F071101146AB1@DEERLM99EX2MSX.ww931.my-it-solutions.net>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.86.142.15]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cRLohiqR_Drh7P0q3XbvC22WLjNwH0YLZo3dqFzZZuAPw@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/07, Eric Sunshine wrote:
-> On Sun, Feb 4, 2018 at 9:12 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> > As a former translator, I'm not thrilled to see a sentence broken into
-> > two pieces like this. I'm not a Japanese translator, but I think this
-> > sentence is translated differently when the translator sees the whole
-> > line "Preparing ..., setting ...".
-> >
-> > I think the purpose of "Preparing..." in the first place is to show
-> > something when git is busy checkout out the worktree. As long as we
-> > print it before git-reset, we should be good.
-> 
-> The original message was "Enter <worktree>" which had the potential to
-> confuse someone into thinking the working directory had changed[1], so
-> it was changed to "Preparing...". The reason for keeping that message
-> (rather than dropping it outright) was to provide context to messages
-> printed after it, especially messages such as "HEAD is now at..."
-> which might otherwise confuse the reader into thinking that HEAD in
-> the current worktree changed rather than HEAD in the new
-> worktree[2,3].
+Hello,
 
-Thanks for the background!  In that light, since we're already
-customizing the "HEAD is now at..." message, is it worth dropping the
-message now, maybe using something like "Worktree HEAD is now at ...",
-or something similar?
+Maybe someone can fix this issue.
+Thanks
 
-This would loose the information about the identifier of the worktree,
-but from a coarse look at the man page it doesn't seem like we
-advertise that widely (The only thing related to it I could find is
+Git Gui: show ssh key don't show key type id_ed25519.pub
+Setup
+. Which version of Git for Windows are you using? Is it 32-bit or 64-bit?
+$ git --version --build-options
 
-    If the last path components in the working tree's path is unique among
-    working trees, it can be used to identify worktrees. For example if
-    you only have two working trees, at "/abc/def/ghi" and "/abc/def/ggg",
-    then "ghi" or "def/ghi" is enough to point to the former working tree.
+** 2.16.1windows.2 **
 
-for which we don't need to print the identifier anywhere.  We don't
-seem to mention the case where the last part is unique, and we add a
-number to make the identifier unique.
+. Which version of Windows are you running? Vista, 7, 8, 10? Is it 32-bit or 64-bit?
+$ cmd.exe /c ver
 
-So given that maybe it would even be better to hide the part about the
-identifier, as it seems more like an implementation detail than
-relevant to the end user?
+** Microsoft Windows [Version 10.0.16299.214] **
+. What options did you set as part of the installation? Or did you choose the
+defaults?
+# One of the following:
+> type "C:\Program Files\Git\etc\install-options.txt"
+> type "C:\Program Files (x86)\Git\etc\install-options.txt"
+> type "%USERPROFILE%\AppData\Local\Programs\Git\etc\install-options.txt"
+$ cat /etc/install-options.txt
 
-> [1]: https://public-inbox.org/git/55A8F4B1.9060304@drmicha.warpmail.net/
-> [2]: https://public-inbox.org/git/CAPig+cRSHwmmF9cCUbRrDCCW4kvg9PeOUxP5VQpSGfxzMxHWOQ@mail.gmail.com/
-> [3]: https://public-inbox.org/git/CAPig+cSLs4-uKicVMBSKnEro_FYD722Hs1_U6qzTriM8Ciok2Q@mail.gmail.com/
+** insert your machine's response here **
+. Any other interesting things about your environment that might be related
+to the issue you're seeing?
+** insert your response here **
+Details
+. Which terminal/shell are you running Git from? e.g Bash/CMD/PowerShell/other
+** insert your response here **
+. What commands did you run to trigger this issue? If you can provide a
+http://stackoverflow.com/help/mcve
+this will help us understand the issue.
+** insert your commands here **
+. What did you expect to occur after running these commands?
+** insert here **
+. What actually happened instead?
+** insert here **
+. If the problem was occurring with a specific repository, can you provide the
+URL to that repository to help us with testing?
+** insert URL here **
+Description
+Under ~/.ssh are only one ssh key pair of type ed25519
+( id_ed25519 and id_ed25519.pub)
+Git GUI don't show it
+C:\Users\goldfinger2\.ssh>dir /b
+agent.env
+authorized_keys
+id_ed25519
+id_ed25519.pub
+Win32-OpenSSH Beta currently supports only one key type (ed25519).
+https://github.com/PowerShell/Win32-OpenSSH/issues/973
+https://blogs.msdn.microsoft.com/powershell/2017/12/15/using-the-openssh-beta-in-windows-10-fall-creators-update-and-windows-server-1709/
+Steps to Reproduce
+1. Open Git Gui
+2. Select Help
+3. Show SSH Key : No Keys found
+Expected behavior: Showing the ed25519 Key
+Reproduces how often: 100%
+Additional information
+The problem is located in the find_ssh_key function in sshkey.tcl.
+Which is not searching after id_ed25519.pub
+find_ssh_key {} {
+
+        foreach name {~/.ssh/id_dsa.pub ~/.ssh/id_rsa.pub ~/.ssh/identity.pub} {
+
+>> This looks like a problem in upstream Git GUI. Would you mind reporting this to the Git mailing list at git@vger.kernel.org? 
+>> Or even better, write the patch yourself? ;-) This looks like a problem in upstream Git GUI. 
+>> Would you mind reporting this to the Git mailing list at git@vger.kernel.org? Or even better, write the patch yourself? ;-) 
+
