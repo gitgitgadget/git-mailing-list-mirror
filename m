@@ -2,97 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 436061F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 23:15:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7B621F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 23:49:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753257AbeBIXPu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 18:15:50 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52762 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753227AbeBIXPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 18:15:48 -0500
-Received: by mail-wm0-f65.google.com with SMTP id g1so248253wmg.2
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 15:15:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=l//BzxFunUPpPVX4+aDuzzGbu+5MGTBeVfe4D+wpvyo=;
-        b=gr88u6XQQB1FQd+d5nLYSP8+FETC+G3EPAsDFoyrcPEPF1gXmRt4gIOE3F7PLvEV2k
-         8rvIyxFrnr8UvhNB5Tf6aAl3W7Oc7VClhQ1uh4bf6RF76NGwlOOmFdmiP1bRFvpF9M6G
-         3GokSebcLhlyRW7PbKYeXSQgxu2PBg0wBMCeM7z+0qLnrJFHyizyM9B0env9UWaFam9F
-         UBJ0QGuDSVT6yLsQKSTIu/hgjz6YYG6aW+Eb1/XUvYGNrQmtZ2IGlnbjgSaILxHxZkFv
-         /84GuUsFZDjxK2I7oL0nlRh9TRzYlTdzDHzGwTdeSwRAdqSclzGQReVjVQoLdFLVSJjg
-         HO8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=l//BzxFunUPpPVX4+aDuzzGbu+5MGTBeVfe4D+wpvyo=;
-        b=BtNgqvwrRpTH2iU/hmOe81rNd+0rQEzPE1yUzSTqeeHA/J0Xso6BGGYGgu2UfSHt2J
-         M6WD5EhbT8l/oo77CJSTeLmOOm/4F5dirMyaP9rAJK3UDJG6ctbank5KIYnu5qtsZXUB
-         dnLHAPMVfnPjh6VBA3/zrfyECDakJizfg9WtbuGK4mFhd3PsILpbRXyPRQFOFyMvEIVp
-         4MToBKCQR7i7TP3+Q2ExPgiHl2andDcVtWOKwERNN0xXzt5GI4AYj9QPCzTMtgE44HQR
-         fdGJnwWrQ/vsqs5nPAZMEa+bIwnwQV1BOn27Mc3VhhnT9ou4ZyQGVHeLpGrxyhSwq3ki
-         1nDA==
-X-Gm-Message-State: APf1xPARvRH7AZSLD3LFrc9QaedFBYzoKKyQqX479eCO6lTFtwb1g656
-        K8iavcbjTQGLZ2rdkRnjDtk=
-X-Google-Smtp-Source: AH8x224dZGPCK4v8eLL4mjXmchcAb10JyP5uyQnWRQThL/APOXc7qY0/9RldK7NIle/6e+Rw6lIthA==
-X-Received: by 10.28.238.202 with SMTP id j71mr3220376wmi.34.1518218147408;
-        Fri, 09 Feb 2018 15:15:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n24sm156517wmi.21.2018.02.09.15.15.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 15:15:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 046/194] object-store: move replace_objects back to object-store
-References: <20180205235508.216277-1-sbeller@google.com>
-        <20180205235735.216710-1-sbeller@google.com>
-        <20180205235735.216710-26-sbeller@google.com>
-Date:   Fri, 09 Feb 2018 15:15:46 -0800
-In-Reply-To: <20180205235735.216710-26-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 5 Feb 2018 15:55:07 -0800")
-Message-ID: <xmqqzi4hu53x.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1753244AbeBIXti (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 18:49:38 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:55196 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752521AbeBIXtg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 18:49:36 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id d37e69f2;
+        Fri, 9 Feb 2018 23:49:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
+        subject:to:cc:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=3cVUNlBZ+h6TUoztN2TOpQuNK4Q=; b=HbyVA/7YOa7k5M
+        k3/ZPPo/0BZU/62nDzYfMWlREZUXSANdeOo7vL2XM2wZzm9vWCjxsni7rivXFpJg
+        d+ywWigwhPKXh/fj2rOPY4eYwaUXctRCCr8XUVYtnbBcchrn6HQGR0mPZp+X8SPh
+        /2NOQAq7LGbKHzsX/PTPUDz/2i4FE=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 336111cd (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
+        Fri, 9 Feb 2018 23:49:35 +0000 (UTC)
+Subject: Re: Fetch-hooks
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+Cc:     Joey Hess <id@joeyh.name>, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+ <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+ <20180208153040.GA5180@kitenet.net>
+ <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+ <87bmgzmbsk.fsf@evledraar.gmail.com>
+ <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
+ <87po5dbz1a.fsf@evledraar.gmail.com>
+ <20180209223011.GA24578@sigill.intra.peff.net>
+From:   Leo Gaspard <leo@gaspard.io>
+Message-ID: <87e7c3b8-3b3c-1cb0-9b11-e4bf3044e539@gaspard.io>
+Date:   Sat, 10 Feb 2018 00:49:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180209223011.GA24578@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 02/09/2018 11:30 PM, Jeff King wrote:
+> On Fri, Feb 09, 2018 at 11:04:17PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>> One thing that's not discussed yet, and I know just enough about for it
+>> to tingle my spidey sense, but not enough to say for sure (CC'd Jeff &
+>> Brandon who know more) is that this feature once shipped might cause
+>> higher load on git hosting providers.
+>>
+>> This is because people will inevitably use it in popular projects for
+>> some custom filtering, and because you're continually re-fetching and
+>> inspecting stuff what used to be a really cheap no-op "pull" most of the
+>> time is a more expensive negotiation every time before the client
+>> rejects the refs again, and worse for hosting providers because you have
+>> bespoke ref fetching strategies you have less odds of being able to
+>> cache both the negotiation and the pack you serve.
+> 
+> Most of the discussion so far seems to be about "accept this ref or
+> don't accept this ref", which seems OK. But if you are going to do
+> custom tweaking like rewriting objects, or making it common to refuse
+> some refs, then I think things get pretty inefficient for _everybody_.
+> 
+> The negotiation for future fetches uses the existing refs as the
+> starting point. And if we don't know that we have the objects because
+> there are no refs pointing at them, they're going to get transferred
+> again. That's extra load no the server, and extra time for the user
+> waiting on the network.
 
-> @@ -32,7 +31,15 @@ struct object_store {
->  	 * Objects that should be substituted by other objects
->  	 * (see git-replace(1)).
->  	 */
-> -	struct replace_objects replacements;
-> +	struct replace_objects {
-> +		/*
-> +		 * An array of replacements.  The array is kept sorted by the original
-> +		 * sha1.
-> +		 */
-> +		struct replace_object **items;
-> +
-> +		int alloc, nr;
-> +	} replacements;
->  
->  	/*
->  	 * A fast, rough count of the number of objects in the repository.
-> @@ -49,7 +56,7 @@ struct object_store {
->  	unsigned packed_git_initialized : 1;
->  };
->  #define OBJECT_STORE_INIT \
-> -	{ NULL, MRU_INIT, ALTERNATES_INIT, REPLACE_OBJECTS_INIT, 0, 0, 0 }
-> +	{ NULL, MRU_INIT, ALTERNATES_INIT, { NULL, 0, 0 }, 0, 0, 0 }
+Oh. I thought the protocol git used was something like
+client: I want to fetch refs A and B
+server: so you'll need objects 12345678 and 90ABCDEF, A and B both point
+to 12345678
+client: please give me object 12345678
+server: here it is
+[...]
 
-Not the primary thrust of this topic, but we may want to convert
-these to use designated initializers after this series is done.
+I was clearly wrong, thanks! (and thanks Ævar for your explanation in
+the side-thread, too!)
+
+> I tend to agree with the direction of thinking you outlined: you're
+> generally better off completing the fetch to a local namespace that
+> tracks the other side completely, and then manipulating the local refs
+> as you see fit (e.g., fetching into refs/quarantine, and then migrating
+> "good" refs over to refs/remotes/origin).
+
+Hmm... so do I understand it correctly when I say the process you're
+thinking about works like this?
+ * User installs hook for my-remote by running [something]
+ * User runs git fetch
+ * git fetch fetches remote refs/heads/* to local refs/quarantine/* (so
+I guess [something] changes the remote.my-remote.fetch refmap)
+ * When this is done `git fetch` runs a notification-only post-fetch
+hook (that would need to be added)
+ * The post-fetch hook then performs whatever it wants and updates the
+references in refs/remotes/my-remote/*
+
+So the changes that are required are:
+ * Adding a notification-only post-fetch hook
+ * For handling tags, there is a need to have a refmap for tags. Maybe
+adding a remote.my-remote.fetchTags refmap, that would be used when
+running with --tags, and having it default to “refs/tags/*:refs/tags/*”
+to keep the current behavior by default?
+
+The only remaining issue I can think of is: How do we avoid the issue of
+the
+trigger-only-hook-inciting-bad-behavior-by-hook-authors-who-really-want-modification
+raised in the side-thread that Junio wrote in [1]? Maybe just writing in
+the documentation that the hook should use a quarantine-like approach if
+it wants modification would be enough to not have hook authors try to
+modify the ref in the post-fetch hook?
+
+Thanks for all your thoughts, and hope we're getting somewhere!
+Leo
+
+
+PS: I'll read over the reviews once I'm all clear as to what exactly is
+wanted for this patch, as most likely they'll just be dumped, given the
+current state of affairs.
+
+[1] https://marc.info/?l=git&m=132480559712592&w=2
