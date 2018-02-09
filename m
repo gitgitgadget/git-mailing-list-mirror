@@ -2,100 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA5FD1F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 18:20:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E74F1F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 18:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751052AbeBISUb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 13:20:31 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:38702 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751004AbeBISUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 13:20:30 -0500
-Received: by mail-wr0-f196.google.com with SMTP id t94so9142292wrc.5
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:20:30 -0800 (PST)
+        id S1751317AbeBISWo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 13:22:44 -0500
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:37914 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbeBISWn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 13:22:43 -0500
+Received: by mail-wr0-f194.google.com with SMTP id t94so9147865wrc.5
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:22:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FEisuEGWQChPpWBajsv7s0NDT2IlT9ksyeJsTBDQCvg=;
-        b=rclVx+JeYUKzRGvkDdl9WuEZNWBE80r5HXHyp2m1eD2G1hJ6oGIUwqHKrgBxj31Yt6
-         Wqd7vRuh4/tXv35WZg9ybz83nh2moW+6H6OUzinKYqufzU775kNVuIV9ZBWmdBF03wpO
-         uxwQ4iDk143mc2nxoUcke3yBQmWi2ZSEcW1nmx5sgmwJTy60/ybf3DH8Q+6XxhhU6Skn
-         cTb7tedOiDAPVFL1hCLdeQYSBMOdQGrIAREVxy4q2uuddtcjez0Hs7r/LmbWpufI5nco
-         xArkNV7N7QH6HpzDseF5U0wfow8jFPYnpciZZxm8IzkF1AaL44J4FjTDCTcoQqGsGkG6
-         n3Ig==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=5Xc4vqLx3jqFBB/4vieDa7jCut5XseNr3qBky5XuRm0=;
+        b=RnXcDhNnmOiklcdwZlfMc5y2Bxe2IbfA6Al89QDC/CH9QpiJvU09lob1T+G90ZFN90
+         eJD+Aw3ny3pKNpi9OnZTfQhjd9ub+u9GLdzNI7w8Myn7LLGiDnx/w06aWLO2/5oayVIW
+         s/MzVhlmI4NjLuiTtUIJ7cjV/4rYyyFxgn82W8+N9C3N5aT222xJFuo2ohWb74uZeexW
+         Okt3+1WDJ898R+evAENC4diqgoNWTVY60py1oMeKe5hVCWbrEeqOjyMjWM+FhoBrTZuU
+         /YW27oa5T9Vn2nFjttkDKw9K4r0dS4bvLxprddPUTUGGAJuOyG9Bql+8RO40UmJFcTTJ
+         sjoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FEisuEGWQChPpWBajsv7s0NDT2IlT9ksyeJsTBDQCvg=;
-        b=ZIEEt6iYfNa6HpG12iaScI3haG/zJqS2d+pt5ni2MASW99DgQOeiiCeyTJ83XQLXQW
-         r1dJI9Kc3JAVeXXGXItQn0l4uHZpkLxrx4og+qpbbTp74wJX8q8EYFkDe+UPyOnhdJc1
-         0EGGFQCHOe0xmAysJywK1e335gtxLCWUJndVna0xIPEvdPE+OVPqbR6W6i8r/igIEDrW
-         cNx9RPYYg7o1dmk65MiSNEEjxfRLamYyqJe89BCDiR/TC+sFTb3kktkIs78rNMilRD6i
-         kvC9FZr6sCSPTYAY8C8OrfpUG1hL6Ts0TCF7HuTZ8TqcbBkpNAFUma6+olSOrNR6Crcd
-         YxrQ==
-X-Gm-Message-State: APf1xPDWJFILZtkO3goMY3/k5cV4fXzHKOanw8rR20WpqLeGZGwZOaWs
-        n9ISiRZyL1l9Upv6bcWiogU=
-X-Google-Smtp-Source: AH8x224dmy/eAeG6S1Gd5CH7EtDWD+aSJXpiw8iSS5CIFIxDSGihGV71t4Ls1t46d7IjhIlnWOzPNw==
-X-Received: by 10.223.185.34 with SMTP id k31mr2958640wrf.245.1518200428964;
-        Fri, 09 Feb 2018 10:20:28 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x91sm4846603wrb.77.2018.02.09.10.20.28
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=5Xc4vqLx3jqFBB/4vieDa7jCut5XseNr3qBky5XuRm0=;
+        b=k38Aya/Pwujd4t0cJaJqzPj+ilO6ckWd1gqKIeDroCCc0Nq9hC32KIMyPc1eYj9yuK
+         kzuRTnQNnDEhfrJ09Z8c6ULtboHvSfvTRp60ccDqdqZROOzaVpeUwaBBL+G5Jag9v0y6
+         qmBPpb5ni2qfNiQzVo92Cz8gASw2fkzSaHXOi1KsMu+mbpDVaWavuOzScK+pfeCqY0GY
+         uPQN4ibdriJkWIY/0i80THnIyIwectJlFt4JOtcZSUf75T116JJsK5ZlOAsZhSbgDRqF
+         ZgWR3RU/FsRw9U5XcPNI2ytR5/j4HWMfVC8PTO/FuVrMf0ME8YiJmsVfhdNwQWmXERoY
+         bNew==
+X-Gm-Message-State: APf1xPDpGQNLPJXkW5733p+7rSLAFjyLKUkfdjLy2TxkyCXW2qr7IHDv
+        oHpqN25gZNIgAogdSrYhAeI=
+X-Google-Smtp-Source: AH8x224LIWmf4Yh+O50nWgR2tSXzzboZW2abmqdL7yN80mdwAqJpaudYL0E4uiGQPlDthb9t83L/7A==
+X-Received: by 10.223.173.239 with SMTP id w102mr3226789wrc.110.1518200561581;
+        Fri, 09 Feb 2018 10:22:41 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f22sm2846642wmi.24.2018.02.09.10.22.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 10:20:28 -0800 (PST)
+        Fri, 09 Feb 2018 10:22:41 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexander Shopov <ash@kambanaria.org>
-Cc:     git@vger.kernel.org, martin.agren@gmail.com, bmwill@google.com,
-        peff@peff.net, sandals@crustytoothpaste.net,
-        worldhello.net@gmail.com, j6t@kdbg.org, sunshine@sunshineco.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH 1/1] Mark messages for translations
-References: <20180209074404.2902-1-ash@kambanaria.org>
-        <20180206073812.GA14133@sigill.intra.peff.net>
-        <20180209074404.2902-2-ash@kambanaria.org>
-Date:   Fri, 09 Feb 2018 10:20:27 -0800
-In-Reply-To: <20180209074404.2902-2-ash@kambanaria.org> (Alexander Shopov's
-        message of "Fri, 9 Feb 2018 08:44:04 +0100")
-Message-ID: <xmqqlgg2xbx0.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] t1404: use 'test_must_fail stderr=<file>'
+References: <20180209024235.3431-1-szeder.dev@gmail.com>
+        <20180209024235.3431-4-szeder.dev@gmail.com>
+        <CAPig+cTtC8WaqJg301WE+EN2RYzka-+pOoJZNZFzjqsHtx+M-Q@mail.gmail.com>
+        <CAM0VKjnnt0Nq6GQXWaq6Jq_tvOzJx-KsEBjs-7NS2bim0UH+Og@mail.gmail.com>
+Date:   Fri, 09 Feb 2018 10:22:39 -0800
+In-Reply-To: <CAM0VKjnnt0Nq6GQXWaq6Jq_tvOzJx-KsEBjs-7NS2bim0UH+Og@mail.gmail.com>
+        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Fri, 9 Feb 2018 04:33:22
+ +0100")
+Message-ID: <xmqqh8qqxbtc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexander Shopov <ash@kambanaria.org> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> Small changes in messages to fit the style and typography of rest
-> Reuse already translated messages if possible
-> Do not translate messages aimed at developers of git
-> Fix unit tests depending on the original string
-> Use `test_i18ngrep` for tests with translatable strings
-> Change and verifyrest of tests via `make GETTEXT_POISON=1 test`
+> On Fri, Feb 9, 2018 at 4:16 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Thu, Feb 8, 2018 at 9:42 PM, SZEDER Gábor <szeder.dev@gmail.com> wrote:
+>>> Instead of 'test_must_fail git cmd... 2>output.err', which redirects
+>>> the standard error of the 'test_must_fail' helper function as well,
+>>> causing various issues as discussed in the previous patch.
+>>
+>> ECANTPARSE: This either wants to say:
+>>
+>>     "Instead of <foo>, do <bar>."
+>
+> The "do <bar>" part is in the subject line.
 
-Perhaps end each sentence with a full-stop?
-
-> diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-> index 9670e8cbe..797dcf95b 100755
-> --- a/t/t0002-gitfile.sh
-> +++ b/t/t0002-gitfile.sh
-> @@ -31,7 +31,7 @@ test_expect_success 'bad setup: invalid .git file format' '
->  		echo "git rev-parse accepted an invalid .git file"
->  		false
->  	fi &&
-> -	if ! grep "Invalid gitfile format" .err
-> +	if ! test_i18ngrep "invalid gitfile format" .err
-
-Shouldn't this rather be like so instead?
-
-	if test_i18ngrep ! "invalid gitfile format" .err
-
-Ditto for the other negated use of test_i18ngrep we see in the same
-file in this patch.
+Please don't.  The title should not be a half-sentence that begins
+the first paragraph.
