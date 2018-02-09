@@ -7,94 +7,93 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B82291F576
-	for <e@80x24.org>; Fri,  9 Feb 2018 11:04:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9CF1F576
+	for <e@80x24.org>; Fri,  9 Feb 2018 11:04:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751700AbeBILEa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 06:04:30 -0500
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:41679 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752126AbeBILE2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 06:04:28 -0500
-Received: by mail-wr0-f173.google.com with SMTP id u60so5073871wrb.8
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:04:28 -0800 (PST)
+        id S1752166AbeBILEd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 06:04:33 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:44180 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752126AbeBILEc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 06:04:32 -0500
+Received: by mail-pl0-f65.google.com with SMTP id f8so1309731plk.11
+        for <git@vger.kernel.org>; Fri, 09 Feb 2018 03:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=huBnYP9rzDtQhS30b2NKdTvstUISsMjRFQduLYSGefs=;
-        b=Yp7lm1+yFg0mJaZCrXw9upYW9qKKYHJkEIeqrKmwmWttNrqliCZ6SHzyfLShP076wW
-         9k6t46Le/g2NfVHea1MlH35y8fJXlZKAbKHDdHF06j+s2jUFgkFQPDeICA/q+33Ds61p
-         LOztjttQmnGxcxk94qWmd+JbdtwUa1hkabFdIHh4gWmN8rakgUB61JC8AY5gPMqrP0pz
-         v+IdE2RXBnVobE3VpNEhFILYFybQJe8UpR3uRlPAzRwV3w8+YyoJXgmXBg/X9UjfzkXG
-         3g/Vv8YAxvDVkSsuFhUQsuyF2z1Ea6EsYO5WYX0QRUlBety2WWubdAHzTkBwzPG0BXL/
-         WFlg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ATHdXcAJS/CcJlqzwZaZ2/rXIligSusD1iHHwqU/0oo=;
+        b=QeHmAK6raBLZz0qV62skwmGUR685GrZjIfWrBffAXsumw9Zw/XVfe2TGmS+bDLdHIz
+         yrFnH+IyiLnQZj8MIfiUoSF44wsctd92h8cWQ5MRtTXJ/B32YVK268hgLhIqQZ649b5T
+         vc4JFz75Ldm1DYR7kmpAzOKhcJGN3HnvtVZI+ukiBGvv6+4NrjcorI/SRoeMO+BRKtje
+         5G9Hvabzq891UjGDHD5JjMBu3bqV23Z+WgnsXf0kSwcanSfjE1S8qGQWRhavNq1x6Pjs
+         HO+3JGc5uaxq0EZ15pQc9VqgwlHSgCRnMF0EobVRAdJwpfteDFT6C1KshgkWySNYsYS1
+         G1zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=huBnYP9rzDtQhS30b2NKdTvstUISsMjRFQduLYSGefs=;
-        b=cOxFDIi9TcXOInZDTmYVLUMvvYp4ATZayX3KhdtpVBNbErSUUUb7eoBGMN/IPmlj7a
-         PYrOpG881iNYTNiiTjut7nEdt/sK1OXCZpsCM4w2JkZS8dRAtvPzVt0E9Ed6yJpxg8dU
-         ZXbFSanKmc5Lv7m1WV6ehPn4GGav4lfhHMoYVU8mybgOfmff4meGZj9fEnRnw4RBLwmE
-         TDDlXV+GIbsGpEq0vbqOYzzopnuVW9bHO3Er0IeBpG9AV1sQ/cur8quiGJWUK1dQ1/3H
-         YqayxdZPJgAo/6CzWAy7nI51gDGzKb1PzOP66kSS5ZHXFjTGTIznTeZlS5EcMFFfkMq5
-         XRzQ==
-X-Gm-Message-State: APf1xPDxSt0/sv+H0bwoGWC3a5gVN7PUl8/t1BrKuIugWflmniU1N63t
-        4AKJAI9zbuEuUvlYNPQ77m0=
-X-Google-Smtp-Source: AH8x226QgAZkZXT5FBp0/zeJ0FciaHTXbq1dIe0vSlUsMJisPhKobDPPgDvVU0L0zr1tQujUHokePg==
-X-Received: by 10.223.186.67 with SMTP id t3mr1888137wrg.201.1518174267460;
-        Fri, 09 Feb 2018 03:04:27 -0800 (PST)
-Received: from localhost (cpc73832-dals21-2-0-cust969.20-2.cable.virginm.net. [81.110.231.202])
-        by smtp.gmail.com with ESMTPSA id h194sm4653386wma.8.2018.02.09.03.04.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 03:04:26 -0800 (PST)
-Date:   Fri, 9 Feb 2018 11:04:38 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 3/3] worktree: teach "add" to check out existing
- branches
-Message-ID: <20180209110437.GF2130@hank>
-References: <20180121120208.12760-1-t.gummerer@gmail.com>
- <20180204221305.28300-1-t.gummerer@gmail.com>
- <20180204221305.28300-4-t.gummerer@gmail.com>
- <20180205021833.GB17847@duynguyen.dek-tpc.internal>
- <20180205202332.GE2130@hank>
- <CACsJy8BEKYqW+Ne_WY2RBaSbb9OKcjREtrawStj=eJsVsia_Jw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ATHdXcAJS/CcJlqzwZaZ2/rXIligSusD1iHHwqU/0oo=;
+        b=Ke0aGEDRT6H4rmxvK/ptkQ3FxkWx+xAr/kmx+6baHrm/9JqJS9zu8qBf6e8+PBoBrJ
+         H6h3a5OGinjrFQHaRUiG+NR2PmPwwigChVmStujnRmQvGNhq7BAB3FhHpD6n07yhLfyW
+         sJRPWHjISqVyQQwSKqmIyWMth9Cv7izO/W6Z0S+VYk5f0jlTpvQK7tQ90gjRapbGJxJn
+         xtm0l+0VtYm+Q1L+gXLpVFLo6jIWVt9sAqHDYu0mTVHXNYwq+4bnAjgUU5MhJ9Ma2Q56
+         iBwX3mmVgbNKciPxkimybDL/0sNxfnqeR/l/+gByyzLk74uZJCXfgasxKSXdcbpV5UnY
+         Ta0g==
+X-Gm-Message-State: APf1xPDwxnyz6Nr9Ppi1vjHSKSeNwFOnOxA/ttzqS4te35ydhn9OxuJD
+        sCJbdUyHE9vLM9xfhUEh2cMoUw==
+X-Google-Smtp-Source: AH8x225xYCysQgW5vfjKRqjLzdz2OzcsMMG1xJ1QNdP1PewtD8ezvqpU7rklRaPi26XRTWxXzYskxg==
+X-Received: by 2002:a17:902:824:: with SMTP id 33-v6mr2211760plk.258.1518174271414;
+        Fri, 09 Feb 2018 03:04:31 -0800 (PST)
+Received: from ash ([171.232.93.137])
+        by smtp.gmail.com with ESMTPSA id i9sm5635719pfi.154.2018.02.09.03.04.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 09 Feb 2018 03:04:30 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Fri, 09 Feb 2018 18:04:26 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v3 21/42] completion: use __gitcomp_builtin in _git_help
+Date:   Fri,  9 Feb 2018 18:02:00 +0700
+Message-Id: <20180209110221.27224-22-pclouds@gmail.com>
+X-Mailer: git-send-email 2.16.1.207.gedba492059
+In-Reply-To: <20180209110221.27224-1-pclouds@gmail.com>
+References: <20180131110547.20577-1-pclouds@gmail.com>
+ <20180209110221.27224-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8BEKYqW+Ne_WY2RBaSbb9OKcjREtrawStj=eJsVsia_Jw@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/06, Duy Nguyen wrote:
-> On Tue, Feb 6, 2018 at 3:23 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > On 02/05, Duy Nguyen wrote:
-> >> On Sun, Feb 04, 2018 at 10:13:05PM +0000, Thomas Gummerer wrote:
-> >> > -   if (opts->new_branch)
-> >> > +   if (opts->checkout_existing_branch)
-> >> > +           fprintf(stderr, _(", checking out existing branch '%s'"),
-> >> > +                   refname);
-> >> > +   else if (opts->new_branch)
-> >> >             fprintf(stderr, _(", creating new branch '%s'"), opts->new_branch);
-> >>
-> >> I wonder if "creating branch" and "checkout out branch" are enough.
-> >
-> > I thought printing the branch name might be a good idea just to show
-> > more clearly what the dwim did.
-> 
-> No no printing branch name is definitely a good idea, especially when
-> I think of one thing and type another. I shortened my example phrases
-> too much. It should have been "creating branch %s" and "checkout out
-> branch %s"
+No new completable options!
 
-Ah sorry I misunderstood.  Yeah I think that makes sense then :)
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> -- 
-> Duy
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 60d27253ee..08f024a0ba 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1583,7 +1583,7 @@ _git_help ()
+ {
+ 	case "$cur" in
+ 	--*)
+-		__gitcomp "--all --guides --info --man --web"
++		__gitcomp_builtin help
+ 		return
+ 		;;
+ 	esac
+-- 
+2.16.1.207.gedba492059
+
