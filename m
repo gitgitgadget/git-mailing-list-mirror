@@ -2,111 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 167541F404
-	for <e@80x24.org>; Fri,  9 Feb 2018 18:59:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFE11F404
+	for <e@80x24.org>; Fri,  9 Feb 2018 19:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752441AbeBIS7O (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 13:59:14 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:39062 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752426AbeBIS7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 13:59:13 -0500
-Received: by mail-wr0-f196.google.com with SMTP id f6so9247347wra.6
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 10:59:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ySq1AJJuyb55Anebr4aTntP/XLZ4UvxesgMc/jgqCAw=;
-        b=V8ip/OERpLs6wGbUyHHO1r0vbGo8Jfho3hGepNWY/quXNVx90aYJZb1RYKwvQzbmqY
-         3snn589pfty3uILMlzVmIBAsZJMfQh2VfvJ2OjQfqu/YfEH5Q3bPMzMvGUevR5vJtG5X
-         hg8fseNVyf4qQOcCKmFMAgAzQcGGn00V0rMDy7utGDwKnSkgbQZqPZ427SzeKRGTlDqt
-         M7V/XXjCYzWgDdHGlj8o61mLARag6LBU8/uiHCFo1jsHy/9Lkk21m/Lzr5ESbsO+C+UN
-         +VimLS2xAh8ny3QI7aupISNSrt522OhbIayQmZV1drkXWalZqN4RsSunaIBT9/bVh6xm
-         wbFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ySq1AJJuyb55Anebr4aTntP/XLZ4UvxesgMc/jgqCAw=;
-        b=Zzn/yIt+z6u2LFBIsS0pY24MrefykGRf4NFktnfUcLyv5Z0RN2N4DNdNPjjTd6ZALu
-         okCoJMm5gNI8d9ZEgCY7uVYZPF/st9MGaQIHZlyNjnW4XAWJbB4+HD12vqNdMK23N9S/
-         wSANmg5mh0KCbfMHmcXxY7RvRiAFxcoJdhq0hMgnyV7hhk6K1v3tDMXgJX+v+8qSOBBv
-         gCFQ9opCxRGgxi1O2aU+hWGaQwj6ojrlh5p34pS65/ivA1GOcPDHQrVpjungQf2cxrOH
-         mSL4w9x000msXxA8Fwtp4/itjwgEClbZlLq//5lwqDVJ/c6MHZWopc5mY/iVFBiWs3/4
-         PoYw==
-X-Gm-Message-State: APf1xPCd0oQUDdS6heBf06bnTDCD/xLXdQIcSIo6a+8vvmqKsIA1lglK
-        wLGR0VeVjwJhtMKOiusT+zgON5FA
-X-Google-Smtp-Source: AH8x226yf6Qqwdvr1PmUDpvpRJy8wPTe2E+GPRrls/2zjbJKHg3F2vsxUiwnOaPAOr3E1o3uikVlLg==
-X-Received: by 10.223.195.141 with SMTP id p13mr3216505wrf.19.1518202752266;
-        Fri, 09 Feb 2018 10:59:12 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x127sm2473453wmb.36.2018.02.09.10.59.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Feb 2018 10:59:11 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 04/42] git-completion.bash: introduce __gitcomp_builtin
-References: <20180131110547.20577-1-pclouds@gmail.com>
-        <20180209110221.27224-1-pclouds@gmail.com>
-        <20180209110221.27224-5-pclouds@gmail.com>
-Date:   Fri, 09 Feb 2018 10:59:10 -0800
-In-Reply-To: <20180209110221.27224-5-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 9 Feb 2018 18:01:43 +0700")
-Message-ID: <xmqq1shuxa4h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S1752268AbeBITDc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 14:03:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47122 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752159AbeBITDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 14:03:32 -0500
+Received: (qmail 4170 invoked by uid 109); 9 Feb 2018 19:03:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 09 Feb 2018 19:03:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23923 invoked by uid 111); 9 Feb 2018 19:04:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 09 Feb 2018 14:04:15 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Feb 2018 14:03:30 -0500
+Date:   Fri, 9 Feb 2018 14:03:30 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/3] t: teach 'test_must_fail' to save the command's
+ stderr to a file
+Message-ID: <20180209190329.GA15005@sigill.intra.peff.net>
+References: <20180209024235.3431-1-szeder.dev@gmail.com>
+ <20180209024235.3431-3-szeder.dev@gmail.com>
+ <20180209142131.GA18701@sigill.intra.peff.net>
+ <xmqqd11exb6k.fsf@gitster-ct.c.googlers.com>
+ <20180209185710.GA23403@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20180209185710.GA23403@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Fri, Feb 09, 2018 at 01:57:10PM -0500, Jeff King wrote:
 
-> +# This function is equivalent to
-> +#
-> +#    __gitcomp "$(git xxx --git-completion-helper) ..."
-> +#
-> +# except that the output is cached. Accept 1-3 arguments:
-> +# 1: the git command to execute, this is also the cache key
-> +# 2: extra options to be added on top (e.g. negative forms)
-> +# 3: options to be excluded
+> Here's what it looks like as a patch.
+> 
+> -- >8 --
+> Subject: [PATCH] t: send verbose test-helper output to fd 4
 
-The options="${options/ $i / }" substitution in a loop is cute.  The
-third argument to this helper is an IFS separated list of regular
-expressions to match options that we do not want to see in the
-completion, so 
+That applies on 'master'. If we go this route, we'd want this on
+sg/test-i18ngrep, which is in 'next' right now:
 
-	__gitcomp_builtin foo '' '--a[^ ]*'
+-- >8 --
+Subject: [PATCH] test_i18n_grep: send error messages to fd 4
 
-presumably would exclude all options whose names begin with 'a' ;-).
+These were newly added in 63b1a175ee (t: make
+'test_i18ngrep' more informative on failure, 2018-02-08),
+and so missed the conversion in commit X.
 
-> +	if [ -z "$options" ]; then
-> +		# leading and trailing spaces are significant to make
-> +		# option removal work correctly.
-> +		options=" $(__git ${cmd/_/ } --git-completion-helper) $incl "
-> +		for i in $excl; do
-> +			options="${options/ $i / }"
-> +		done
-> +		eval "$var=\"$options\""
-> +	fi
-> +
-> +	__gitcomp "$options"
-> +}
-> +
->  # Variation of __gitcomp_nl () that appends to the existing list of
->  # completion candidates, COMPREPLY.
->  __gitcomp_nl_append ()
+Signed-off-by: Jeff King <peff@peff.net>
+---
+(The X above is whatever you queue the original at).
+
+ t/test-lib-functions.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index cddddd2082..aabee13e5d 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -742,18 +742,18 @@ test_i18ngrep () {
+ 		shift
+ 		! grep "$@" && return 0
+ 
+-		echo >&2 "error: '! grep $@' did find a match in:"
++		echo >&4 "error: '! grep $@' did find a match in:"
+ 	else
+ 		grep "$@" && return 0
+ 
+-		echo >&2 "error: 'grep $@' didn't find a match in:"
++		echo >&4 "error: 'grep $@' didn't find a match in:"
+ 	fi
+ 
+ 	if test -s "$last_arg"
+ 	then
+-		cat >&2 "$last_arg"
++		cat >&4 "$last_arg"
+ 	else
+-		echo >&2 "<File '$last_arg' is empty>"
++		echo >&4 "<File '$last_arg' is empty>"
+ 	fi
+ 
+ 	return 1
+-- 
+2.16.1.464.gc4bae515b7
+
