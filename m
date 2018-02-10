@@ -2,162 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0E021F404
-	for <e@80x24.org>; Sat, 10 Feb 2018 18:36:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E11F1F404
+	for <e@80x24.org>; Sat, 10 Feb 2018 19:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751122AbeBJSgt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 13:36:49 -0500
-Received: from grym.ekleog.org ([94.23.42.210]:55894 "EHLO smtp.gaspard.ninja"
+        id S1752003AbeBJTbl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 14:31:41 -0500
+Received: from mout.gmx.net ([212.227.17.20]:51411 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750835AbeBJSgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 13:36:48 -0500
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 77c7d4c4;
-        Sat, 10 Feb 2018 18:36:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
-        subject:to:cc:references:from:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        grym-20170528; bh=EAWnBdBB0lMQBtfC4t4czF1th7w=; b=2pGsoOFWkxUybs
-        zRXYrZ9AKg+ArFu61z6XrFnj1J+WGTtnoKMUcRExhEgTMhUGXbo8jBMlICYW+Hbz
-        ECNyZGXuXS3MB3XIqFWh9ifp/zJV0mlVwI4l/ENIUDzS4mlAb7Uhm8auxNzUWNlZ
-        bE02qHEkGBP+Sosvmcuw6oEDZ8T6U=
-Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 7da92812 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
-        Sat, 10 Feb 2018 18:36:47 +0000 (UTC)
-Subject: Re: Fetch-hooks
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Joey Hess <id@joeyh.name>, git@vger.kernel.org,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
- <20180208153040.GA5180@kitenet.net>
- <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
- <87bmgzmbsk.fsf@evledraar.gmail.com>
- <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
- <87po5dbz1a.fsf@evledraar.gmail.com>
- <20180209223011.GA24578@sigill.intra.peff.net>
- <87e7c3b8-3b3c-1cb0-9b11-e4bf3044e539@gaspard.io>
- <20180210001317.GA26856@sigill.intra.peff.net>
- <3de8dec0-12c9-56e2-5902-97755f78ab50@gaspard.io>
- <20180210122131.GB21843@sigill.intra.peff.net>
-From:   Leo Gaspard <leo@gaspard.io>
-Message-ID: <5abf8565-1aa1-c101-83a7-90781682bc7a@gaspard.io>
-Date:   Sat, 10 Feb 2018 19:36:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751622AbeBJTbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 14:31:40 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx102 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 0MMpYB-1ec5Ll1Uyd-008YeN; Sat, 10 Feb 2018 20:31:34 +0100
+Date:   Sat, 10 Feb 2018 20:31:33 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
+In-Reply-To: <xmqq607sgway.fsf@gitster.mtv.corp.google.com>
+Message-ID: <nycvar.QRO.7.76.6.1802102030570.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de> <xmqq607sgway.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20180210122131.GB21843@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:lXbXtTGjx9z1XeDNCXdudBEEa/6J7UJ4Kp0g4BurnjhuLthlV8g
+ BLPDq+IqwI8bL/o/IpudbO24YUATlGw8RhGCG0B0DqDgfRaC62phRAe0d+58lrSRxP6nDIz
+ FQAFoRqRNIfVXlaaCIblmdXJUkhJVBCgQRNv/crW6HWMb1PuFSvXjDo3szn6g3ZQ63bUwH4
+ Vc32xHKUrsGKu+EVo88fQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OCu9PuZ99/A=:2zwIIuYTUwDe9qth4VGA5p
+ cTuuJCmnQeX+19ma+RbJ++ZWJpbtRQVQJUusCFF7ZA+GeW6Ay1A4XtAWnkVVPFJPtbwHPeFSM
+ aV38NShRJ259Kptsm9mNs4bceAY/eQqLnphN/8VMGWbFi6RbCxD7nIgBMeZcDpJBpuz53zl6E
+ ucev/LsO3Zd9L/iBliSNq5EbW9XCoYnJNDB2NPmArLu2UPJ/gUMGGFRrs3muj1RHu84PutTQQ
+ zWg+THMeSCd0WppyP8LFf/kFUWZ3B0r9FpDePUIl1PBLu/afEtIT9hskpIS7ytLPzgCzIspxh
+ tCjbVke4lCooo13OGIOsbCcSdoHNnYINLw1z5eccGLgQH9DYQdXSv8sXXswZarChRwtAOnuo8
+ z5Tevnln1Ao7nvLmbpXyRmHPim5PGbz4RLQQLLlLib7qRx8kaYz2i3eErke21BvFS/t1bTv/X
+ a+4N811RfoY6A3I4uQmXO5wX8nCCl9pRgG6aY6we91qov2k2YxxLw2sWWiOqSs3FWhNJIdaHx
+ q+c+vbei2Vh5plEodoEaZHw+8MOzJYvMQuu6JnWfGo7ocIUOfdaLw2egDw8ef6lbHJ2WdchK0
+ fQ7mx9ghkCjaAL+WVsOGm05VKyENqcZaSgBkS3ydB6tZUIY0vt8vFa++XA/mHj+J4kVjofDET
+ ugDGBHEEkFLOXX7SEJE5wK2mYj/KkoP76LwGTSStgR5wvJTnNGlGYf4NoAi5w2BCpk3vYpdtg
+ +pPvgz8CqJhtcFKwmX9yciQMPiKuJfj0DDOOrN/5DC6zuFFXQx4b7RZ4mN6QHOoKK+T3BTsBN
+ IPnlf3tbUJleTKRGfK5gRkuWdJrwgEDfj9mSV5ZLMWUXQQolJs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/10/2018 01:21 PM, Jeff King wrote:
-> On Sat, Feb 10, 2018 at 01:37:20AM +0100, Leo Gaspard wrote:
+Hi Junio,
+
+On Tue, 23 Jan 2018, Junio C Hamano wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
->>> Yeah, tag-following may be a little tricky, because it usually wants to
->>> write to refs/tags/. One workaround would be to have your config look
->>> like this:
->>>
->>>   [remote "origin"]
->>>   fetch = +refs/heads/*:refs/quarantine/origin/heads/*
->>>   fetch = +refs/tags/*:refs/quarantine/origin/tags/*
->>>   tagOpt = --no-tags
->>>
->>> That's not exactly the same thing, because it would fetch all tags, not
->>> just those that point to the history on the branches. But in most
->>> repositories and workflows the distinction doesn't matter.
->>
->> Hmm... apart from the implementation complexity (of which I have no
->> idea), is there an argument against the idea of adding a
->> remote.<name>.fetchTagsTo refmap similar to remote.<name>.fetch but used
->> every time a tag is fetched? (well, maybe not exactly similar to
->> remote.<name>.fetch because we know the source is going to be
->> refs/tags/*; so just having the part of .fetch past the ':' would be
->> more like what's needed I guess)
+> > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> > index 8a861c1e0d6..1d061373288 100644
+> > --- a/Documentation/git-rebase.txt
+> > +++ b/Documentation/git-rebase.txt
+> > @@ -368,6 +368,11 @@ The commit list format can be changed by setting the configuration option
+> >  rebase.instructionFormat.  A customized instruction format will automatically
+> >  have the long commit hash prepended to the format.
+> >  
+> > +--recreate-merges::
+> > +	Recreate merge commits instead of flattening the history by replaying
+> > +	merges. Merge conflict resolutions or manual amendments to merge
+> > +	commits are not preserved.
+> > +
 > 
-> I don't think it would be too hard to implement, and is at least
-> logically consistent with the way we handle tags.
+> It is sensible to postpone tackling "evil merges" in this initial
+> iteration of the series, and "manual amendments ... not preserved"
+> is a reasonable thing to document.  But do we want to say a bit more
+> about conflicting merges?  "conflict resolutions ... not preserved"
+> sounds as if it does not stop and instead record the result with
+> conflict markers without even letting rerere to kick in, which
+> certainly is not the impression you wanted to give to the readers.
 > 
-> If we were designing from scratch, I do think this would all be helped
-> immensely by having more separation of refs fetched from remotes. There
-> was a proposal in the v1.8 era to fetch everything for a remote,
-> including tags, into "refs/remotes/origin/heads/",
-> "refs/remotes/origin/tags/", etc. And then we'd teach the lookup side to
-> look for tags in each of the remote-tag namespaces.
-> 
-> I still think that would be a good direction to go, but it would be a
-> big project (which is why the original stalled).
+> I am imagining that it will stop and give control back to the end
+> user just like a conflicted "pick" would, and allow "rebase
+> --continue" to record resolution from the working tree, and just
+> like conflicted "pick", it would allow rerere() to help end users
+> recall previous resolution.
 
-Hmm... would this also drown the remote.<name>.fetch map? Also, I think
-this behavior could be emulated with fetch and fetchTagsTo, and it would
-look like:
-[remote "my-remote"]
-    fetch = +refs/heads/*:refs/remotes/my-remote/heads/*
-    fetchTagsTo = refs/remotes/my-remote/tags/*
-The remaining issue being to teach the lookup side to look for tags in
-all the remote-tag namespaces (and the fact it's a breaking change).
+This is my current version:
 
-That said, actually I just noticed an issue in the “add a
-remote.<name>.fetch option to fetch to refs/quarantine then have the
-post-fetch hook do the work”: it means if I run `git pull`, then:
- 1. The remote references will be pulled to refs/quarantine/...
- 2. The post-fetch hook will copy the accepted ones to refs/remotes/...
- 3. The `git merge FETCH_HEAD` called by pull will merge FETCH_HEAD into
-local branches... and so merge from refs/quarantine.
+--recreate-merges[=(rebase-cousins|no-rebase-cousins)]::
+        Recreate merge commits instead of flattening the history by replaying
+        merges. Merge conflict resolutions or manual amendments to merge
+        commits are not recreated automatically, but have to be recreated
+        manually.
 
-A solution would be to also update FETCH_HEAD in the post-fetch hook,
-but then we're back to the issue raised by Junio after the “*HOWEVER*”
-of [1]: the hook writer has to maintain consistency between the “copied”
-references and FETCH_HEAD.
-
-So, when thinking about it, I'm back to thinking the proper hook
-interface should be the one of the tweak-fetch hook, but its
-implementation should make it not go crazy on remote servers. And so
-that the implementation should do all this refs/quarantine wizardry
-inside git itself.
-
-So basically what I'm getting at at the moment is that git fetch should:
- 1. fetch all the references to refs/real-remotes/<name>/{insert here a
-copy of the refs/ tree of <name>}
- 2. figure out what the “expected” names for these references will by,
-by looking at remote.<name>.fetch (and at whether --tags was passed)
- 3. for each “expected” name,
-     1. if a tweak-fetch hook is present, call it with the
-refs/real-remotes/... refname and the “expected end-name” from
-remote.<name>.fetch
-     2. based on the hook's result, potentially to move the “expected
-end-name” to another commit than the one referenced by refs/real-remotes/...
-     3. move the “expected” name to the commit referenced in
-refs/real-remotes
-
-Which would make the tweak-fetch hook interface simpler (though more
-restrictive, but I don't have any real use case for the other change
-possibilities) than it is now:
- 1. feed the hook with lines of
-“refs/real-remotes/my-remote/heads/my-branch
-refs/remotes/my-remote/my-branch” (assuming remote.my-remote.fetch is
-“normal”) or “refs/real-remotes/my-remote/tags/my-tag refs/tags/my-tag”
-(if my-tag is being fetched from my-remote)
- 2. read lines of “<refspec> refs/remotes/my-remote/my-branch”, that
-will re-point my-branch to <refspec> instead of
-refs/real-remotes/my-remote/heads/my-branch. In order to avoid any
-issue, the hook is not allowed to pass as second output a reference that
-was not passed as second input.
-
-This way, the behavior of the tweak-fetch hook is reasonably preserved
-(at least for my use case), and there is no additional load on the
-servers thanks to the up-to-date references being stored in
-refs/real-remotes/<name>/<refspec>
-
-Does this reasoning make any sense?
-
-
-[1] https://marc.info/?l=git&m=132478296309094&w=2
+Ciao,
+Dscho
