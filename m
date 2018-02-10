@@ -2,122 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4F391F404
-	for <e@80x24.org>; Sat, 10 Feb 2018 12:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 860401F404
+	for <e@80x24.org>; Sat, 10 Feb 2018 15:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751009AbeBJMii (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 07:38:38 -0500
-Received: from mout.web.de ([212.227.15.14]:43185 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750961AbeBJMih (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 07:38:37 -0500
-Received: from [192.168.178.36] ([79.237.247.111]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M6Df8-1eukug3V62-00yCHu; Sat, 10
- Feb 2018 13:38:32 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Adam Spiers <git@adamspiers.org>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] check-ignore: fix mix of directories and other file types
-Message-ID: <a6cf7660-8c80-c588-0cb7-88d507e56b06@web.de>
-Date:   Sat, 10 Feb 2018 13:38:29 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        id S1751157AbeBJP1Y (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 10:27:24 -0500
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:7645 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751143AbeBJP1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 10:27:23 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id kX3henn7zjFUbkX3heUuPu; Sat, 10 Feb 2018 15:27:22 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=TJE1cxta c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8
+ a=pGLkceISAAAA:8 a=fGO4tVQLAAAA:8 a=yMhMjlubAAAA:8 a=1XWaLZrsAAAA:8
+ a=NEAV23lmAAAA:8 a=KbOr2bDaXEMFKBTIZlsA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
+ a=QEXdDO2ut3YA:10 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <00CF0CF5FAFD47F6BA3478838677BBAB@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <noloader@gmail.com>, "Git List" <git@vger.kernel.org>
+References: <CAH8yC8nodewYm-J3ye5Lnq-Zf9JziejL8L3TxTEwVoq8hD--HA@mail.gmail.com> <BD73CAACE3734EE89EE1CFBE1DC55FEC@PhilipOakley>
+Subject: Re: Crash when clone includes magic filenames on Windows
+Date:   Sat, 10 Feb 2018 15:27:22 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:jRXUXGgkjxwhhs/zPoUmZ8qa7qiPv5Fass3hvcTzK4is5/QYkDP
- tU5Dtr42aRxFi60i3k6DFRWEAHfjIW4uM5oKFpTlwi4VsB5T/0xlIsLUr1Xkh3maN3mud2o
- D0l2N1VFs2GYYA6FHpnB/i0clCMmvavVWAdy1dJKy7ziAfjibHe8E2PHJagG0ZxQSiMUsYF
- 167095UWYn4HI3nqT9TbQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MMKWXU9SHr8=:5spEjPTuYMHYbpEZgV/HEI
- aYT6U37BF6hbm0KW1SoQhMtzJRvlhOAaa3PVpXYmo2+qJNTiQF70IHqQrCzdb89ibkaPf/COu
- UZen7q8UOUzGBBFuQKmxm5aP/X6i9n5xqIj1DSJgGQQCbV1SsrADDgKkK5GFpaz6IVhicFp03
- kQzCS5n7E3q1EjOJt64I2bByIlgAEAGbr247g0ioBbSVTlWFaIxh3qyz36v3Tb8f7j82RZbwC
- k2XPkBVAuRVWDLt7UORDx9n/kT2zNGsBGCUtaP4wZL8FKVHbERD0h72p6mEviYUUlklIb2tff
- c4msd2hkv8ksfaFJiF/fpeIrxitDY9wbtjBbgihZMwbfuyTyNs4J9w2cObtBGLKoOneJQm4KL
- CqLGCJKJ6Bbzup8pfptz9mfugB4U+CXkfLHHnbJs/Nv8BegqmeKSq/r9d5EJLicZ/GKaLHHkj
- vwkhJUmELwvPHB3rUQfCYk4A3YSNi3Vtb16uYEuw+Sp2DJ4s9wEemUTnTEmh1eTghSpH3IenJ
- YAfVTqP5J5rMrWtb4KpXch2aGXXQyUbrd7LQXFoO/Uae5SMZN/bqyPwbY7FrCZMxcZoP//v0U
- aJK+aA9cgr45jkwxD8zJJeJP6NjlXvll7CepT6z5cysmo8mYkevOFQI81uflhFr9UtXtPJ5eq
- t7x/V5iY296g3uodcytxHwb2nR6TuzXT+3lvpHmGsfSPVo7Z3oc5ghIuRJV/IqFMqbPxgt/d7
- S7rTMDmeJ3WXxh2xs1d+ZmtIPlPbWZD+kAn0srH7/TYhxIoufGmpFP9iUhcpUSKHeHKrL4Uo9
- 1JflZR6two0f2rCX57sk3+58n0lq1hUhkbbk4ZFyX6sDhbNfFY=
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180209-2, 09/02/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfOUT6EHbqelUqYXyCF9hn65lxG3G35sHdSa6ZqUNEo6l7okKAhlauZTN7M7iz5YpBnBHzuM8r22vqO7Kco30Piu7avfq8DoPDnedfYz8XjMyTpqFW9vb
+ 4EWLoAl2+2lVn4Yo9F4BFIJ0XsDxhpbXoHxe+Xxd9fMu+h/JPttUBIcP24zT//7Ckw91JwVh8pYUmkS/YmQYqi7pHwvTTYKewu4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In check_ignore(), the first pathspec item determines the dtype for any
-subsequent ones.  That means that a pathspec matching a regular file can
-prevent following pathspecs from matching directories, which makes no
-sense.  Fix that by determining the dtype for each pathspec separately,
-by passing the value DT_UNKNOWN to last_exclude_matching() each time.
+From: "Philip Oakley" <philipoakley@iee.org>
+> From: "Jeffrey Walton" <noloader@gmail.com>
+>> Hi Everyone,
+>>
+>> I'm seeing this issue on Windows: https://pastebin.com/YfB25E4T . It
+>> seems the filename AUX is the culprit. Also see
+>> https://blogs.msdn.microsoft.com/oldnewthing/20031022-00/?p=42073 .
+>> (Thanks to Milleneumbug on Stack Overflow).
+>>
+>> I did not name the file, someone else did. I doubt the filename will be
+>> changed.
+>>
+>> Searching is not turning up much information:
+>> https://www.google.com/search?q=git+"magic+filenames"+windows
+>>
+>> Does anyone know how to sidestep the issue on Windows?
+>>
+>> Jeff
+>>
+> This comes up on the Git-for-Windows (GfW) issues fairly often
+> https://github.com/git-for-windows/git/issues.
+>
+> The fetch part of the clone is sucessful, but the final checkout step
+> fails when the AUX (or any other prohibited filename - that's proper
+> cabkward compatibility for you) is to be checked out then the file system
+> (FS) refuses and the checkout 'fails. You do however have the full repo
+> locally.
+>
+> The trick is probably then to set up a sparse checkout so the AUX is never
+> included on the FS.
+>
+> However it is an open 'up-for-grabs' project to add such a check in GfW.
+>
+> Philip
+One option maybe to extend the $GIT_DIR/info/sparse-checkout capability and
+add a specific $GIT_DIR/info/never-sparse-checkout file that could carry the
+complement (files & dirs) options that are platform applicable (no AUX, no
+COM1, no colons, etc.;-), so that it does not conflict with the users'
+regular sparse checkout selection in $GIT_DIR/info/sparse-checkout. It's
+probably easier to understand that way.
+--
+Philip
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/check-ignore.c |  3 ++-
- t/t0008-ignores.sh     | 20 ++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 3e280b9c7a..ec9a959e08 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -72,7 +72,7 @@ static int check_ignore(struct dir_struct *dir,
- {
- 	const char *full_path;
- 	char *seen;
--	int num_ignored = 0, dtype = DT_UNKNOWN, i;
-+	int num_ignored = 0, i;
- 	struct exclude *exclude;
- 	struct pathspec pathspec;
- 
-@@ -104,6 +104,7 @@ static int check_ignore(struct dir_struct *dir,
- 		full_path = pathspec.items[i].match;
- 		exclude = NULL;
- 		if (!seen[i]) {
-+			int dtype = DT_UNKNOWN;
- 			exclude = last_exclude_matching(dir, &the_index,
- 							full_path, &dtype);
- 		}
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index d27f438bf4..54a4703ef1 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -775,6 +775,26 @@ test_expect_success PIPE 'streaming support for --stdin' '
- 	echo "$response" | grep "^::	two"
- '
- 
-+test_expect_success 'existing file and directory' '
-+	test_when_finished "rm one" &&
-+	test_when_finished "rmdir top-level-dir" &&
-+	>one &&
-+	mkdir top-level-dir &&
-+	git check-ignore one top-level-dir >actual &&
-+	grep one actual &&
-+	grep top-level-dir actual
-+'
-+
-+test_expect_success 'existing directory and file' '
-+	test_when_finished "rm one" &&
-+	test_when_finished "rmdir top-level-dir" &&
-+	>one &&
-+	mkdir top-level-dir &&
-+	git check-ignore top-level-dir one >actual &&
-+	grep one actual &&
-+	grep top-level-dir actual
-+'
-+
- ############################################################################
- #
- # test whitespace handling
--- 
-2.16.1
