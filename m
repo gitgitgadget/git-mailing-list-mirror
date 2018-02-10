@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65EEB1F576
-	for <e@80x24.org>; Sat, 10 Feb 2018 10:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96A741F576
+	for <e@80x24.org>; Sat, 10 Feb 2018 10:25:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751030AbeBJKYR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 05:24:17 -0500
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:35294 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750933AbeBJKYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 05:24:16 -0500
-Received: by mail-oi0-f42.google.com with SMTP id e15so7924594oiy.2
-        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:24:16 -0800 (PST)
+        id S1751092AbeBJKZD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 05:25:03 -0500
+Received: from mail-ot0-f172.google.com ([74.125.82.172]:41490 "EHLO
+        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751028AbeBJKZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 05:25:02 -0500
+Received: by mail-ot0-f172.google.com with SMTP id r23so10040542ote.8
+        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:25:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Q5TMY1JiWP6K43GrcGWOUYtPHDgZD2bxxN9hSrD2aoc=;
-        b=Q6imJfZkqyJ9wTzmkGxhCa2+Pb8zVIMhieSTcfHTI39TsgvtlyhPOA1Q+QLJgFBq+q
-         /0ic36xFcg42LkFvQXk/LtN3Duvq3RjeTU18g/HBCiufy8Ps4A+Zdv+M8H+I21AAKZlw
-         O+bhRQJ0EveK+f3dFcxNOV2lX9APfcwlkgOud+BWOJ0pNw6bSpWovCyfU0QnDGr+9pyx
-         NkYsO61u0g1STMr2UHhgaCQPAL/VwvwptwHVn0tKnPtIdAO6y5QFGdgRHBWTxaWMCEZQ
-         xnV8k1l0m98xG2JAtGqApj070VBp3U33WZ2mjMqj2wz4FQj/Pzo7xqbJ6CXh292+yyT9
-         oLQg==
+        bh=8wlwdh/Dm5fd44C8ijjY58TKqqN2+GhiEQossFCyCjg=;
+        b=NNLRyIJ1H18ERy7kwTl6ACD9LXxV17q9ta1DpAY0ydqh2Po8NFyZGW8H/qQuaUYXZT
+         w5ZG2VbRqWm/FbYUYxL/MFDXL/O8JgTCKEVvsXKDiAp7V9eVebrj95gb3a2SZpyuO/qM
+         vSRd7pY1sTqZ/OIhjwfgZGAEq3StRSl9dZe+UEsAmC9e1O8PX3KbmpzDz7wf+TNE9YKW
+         sj73a3PV9jSNho7C6oQmn0AD+rSavX3w3MfD3hSWxomj/ZndXDXFkuBEyBxKIg4bdJ4s
+         5li58FF/AJQpibEKZxQOmtTdFGbhkZGTm3MJNnFMM+FyQT83b0h22QBZRSOZEhzfkpcG
+         MnGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Q5TMY1JiWP6K43GrcGWOUYtPHDgZD2bxxN9hSrD2aoc=;
-        b=N/xKe+DlzAw0A4v/BH+zgYpPJBtovtxuq1xuDF/T9VXfmefqZi3+hlqiCr0ewRRTqL
-         Bv/gTZw0h1EaH1L26NgRijWdWrY9UbfMac5P5d9vknc44Fj0/JAvIsPaG4msLJj0KceQ
-         1TgYIgKQ3oXoRjFCWAEUZ2M/Y5oLEsRRw6eawXYtbalv+elSNPeKpXHF3telnEev82Cd
-         Wixu5kwQzeDcaFkBI2noXRqmh5yTtOP+CKHf33fIbiVxfoAACebY3dtuMIIPobYqdhdV
-         /x+6rlCMPYaYhN0DcJnDXxbLNgAvfhL5unSGhEB65vpb7JaB9KO8WG5baKBWRiVzqDqB
-         3WPg==
-X-Gm-Message-State: APf1xPBxgta+2cTazmIM9sMb+eYxp9lFDVzeKIDakOUO8SqUOD4oDx3s
-        AVV+tlOIffIg+8DQw5XiPOLK3hPg93G20wm4w9Y=
-X-Google-Smtp-Source: AH8x227OXwJKfzpm6ZcHyU7d273WTJTDkNcGPkfTzEIzzJvxga67Ifr3rfLBbtxeyqKcYFdkK8Ub06DQ8L+nQo1SoMo=
-X-Received: by 10.202.177.136 with SMTP id a130mr3820297oif.252.1518258255866;
- Sat, 10 Feb 2018 02:24:15 -0800 (PST)
+        bh=8wlwdh/Dm5fd44C8ijjY58TKqqN2+GhiEQossFCyCjg=;
+        b=Oi2dW8JCicm68Ef8OdDiTz/WoA9CJMOsNcBNc4EbbcO160atbOTcxV6f0KBcvQESBk
+         9ZfZ3Mh3E6xewiXvuTTk9LWY4g3uFgmv0oylQMgFcU84u2cmuUKRBU5oy9ipTX9OsXyz
+         jNpoQVMwphNjfVzIsEZ1r9lZ3zt5ZKuoS8PCis3E0OEmBzFVQCLTBUSnSYN+wAWdzsmm
+         clDA6XZBsfJrf0D0RL2aaNRSboTON/6VajQct4lTZH2iL2Sk41ZdRE8VGotvUmAMPFDq
+         bb7S3vIZ10sDrL6dyNuRN67Ch+a67ZZ4gUmXgv7ZZdDfqB2fuLhArQ+DuI8Ez+CoUv6y
+         8mig==
+X-Gm-Message-State: APf1xPDKMVV49o4NEyasqqLGqVw0RqBhx8nNHzNLGfKIdCsmAoJ35tVj
+        /1xzb7qE2BOojt79dhJ6dk9DwHqiBlw3/wB1EWE=
+X-Google-Smtp-Source: AH8x224RGrbK6YDSWPgz3OTbqUeY8R2iWS1jTRJyHbo80lHJDy+Z+JhXuVZEy1rNXZ5sl8L0bXr6fdHLb1rEsA5OL8c=
+X-Received: by 10.157.53.5 with SMTP id o5mr4246862otc.181.1518258302077; Sat,
+ 10 Feb 2018 02:25:02 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:23:45 -0800 (PST)
-In-Reply-To: <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
-References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-23-bmwill@google.com> <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
+Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:24:31 -0800 (PST)
+In-Reply-To: <xmqqy3k47jdg.fsf@gitster-ct.c.googlers.com>
+References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
+ <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com> <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
+ <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
+ <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com> <xmqqy3k47jdg.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Feb 2018 17:23:45 +0700
-Message-ID: <CACsJy8DhLzkxAr7oaBfb22x-bOOPxXxsKKwo5WKJ8p=19BSezg@mail.gmail.com>
-Subject: Re: [PATCH v3 22/35] upload-pack: support shallow requests
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
+Date:   Sat, 10 Feb 2018 17:24:31 +0700
+Message-ID: <CACsJy8ByZzR4GqVus=__RUg7W390e2ABoCb1ANewb5KRmBuV4Q@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 2:00 AM, Stefan Beller <sbeller@google.com> wrote:
->> +
->> +    deepen-relative
->> +       Requests that the semantics of the "deepen" command be changed
->> +       to indicate that the depth requested is relative to the clients
->> +       current shallow boundary, instead of relative to the remote
->> +       refs.
->> +
->> +    deepen-since <timestamp>
->> +       Requests that the shallow clone/fetch should be cut at a
->> +       specific time, instead of depth.  Internally it's equivalent of
->> +       doing "rev-list --max-age=<timestamp>". Cannot be used with
->> +       "deepen".
->> +
->> +    deepen-not <rev>
->> +       Requests that the shallow clone/fetch should be cut at a
->> +       specific revision specified by '<rev>', instead of a depth.
->> +       Internally it's equivalent of doing "rev-list --not <rev>".
->> +       Cannot be used with "deepen", but can be used with
->> +       "deepen-since".
+On Thu, Feb 8, 2018 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
 >
-> What happens if those are given in combination?
+>> ...
+>> Then we still need to decide the new keyword for this feature, I feel
+>> compact is a bit too vague (I read --stat=compact as "it's compact
+>> stat", not "stat with compact summary"), so perhaps
+>> --stat=compact-summary, or just --stat=summary?
+>
+> Yup, this is about giving summary in a compact way, not about giving
+> a compact stat information.  I agree with all the above reasoning,
+> and that is why I said that your "compact-summary" was a good way to
+> refer to the feature.
 
-It should be described in the old protocol document or I did a bad job
-documenting it. Some of these can be combined (I think it's AND logic
-from rev-list point of view), with the exception of --depth which does
-not use rev-list underneath and cannot be combined with the others.
+OK I'll wait for a few days. If there's no comment, I'll go with
+--stat=compact-summary.
 -- 
 Duy
