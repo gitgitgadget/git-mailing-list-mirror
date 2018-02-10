@@ -2,125 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC0E71F404
-	for <e@80x24.org>; Sat, 10 Feb 2018 16:57:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C33B21F404
+	for <e@80x24.org>; Sat, 10 Feb 2018 18:03:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750880AbeBJQ51 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 11:57:27 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58798 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750832AbeBJQ50 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 10 Feb 2018 11:57:26 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B679760402;
-        Sat, 10 Feb 2018 16:57:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1518281845;
-        bh=DCpnpzrP5Fnc8Chm3RsHeCdJQTbTwHVbifOfWkbMKfk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YXHeXszZkBQQlCYIl6YyykZaWBsIHcMRnDdDs0Nfis9BHbIotl2DjGZTttmJmSI0s
-         ADEc/U5LWkZoW8PWW6SHxSNNcqQhda/v6NLtE4mdsFbE+sijW3YQel4Zl4oMqx7MCU
-         9wDkFXd8OtLTGTiBW2YNZ4RiO3U3vr7yTLDCbDe29ca0TWC7IZxT6kuoudcxiALkBI
-         P5GgucjU2l5e7i9ZOsSUyAMkWDqmpUe/bhrVIb53ylLtG5QZwOyIg0MHH/24i9UKCt
-         F1ONNtMwnHMF+eci3xAE9hqvQza0gx5xWfXaYV5H2SfdxQl/z0v0Ba1wKSAAmKW2vx
-         BkaJlUBSxV2AD+mh8SSvJUDNo7fXO8gmOlKTvlKdVdDNgxh8td8nvaRIudXM9L7YNJ
-         zXxTuv6YjYrLQY9MoB4aNg58HLHBespAy1J1/nANWa/lEGwH20G53DTQN3OZX+sj1X
-         HZMnsKFs9mfi+6XKbZj45JowiUERkjbFV7udtMQ0IgBtm/BTZ3I
-Date:   Sat, 10 Feb 2018 16:57:19 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1751055AbeBJSDh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 13:03:37 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:55852 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750961AbeBJSDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 13:03:37 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id 7f60d9c3;
+        Sat, 10 Feb 2018 18:03:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
+        subject:from:to:cc:references:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=/MrI6tcWGUs/dx8Epuu4eJcT7K4=; b=C7tXu0SuEHqkVI
+        e35EsS+ew2JvBhygPCYWzsQ3Vj3dbXVrKrJe2t0DgU+8yqPv9tkeEeIvTHzgFcce
+        RRsdJv4FkU6oWHN4hkNqEBulW0jGsSZCUiRutwD+XCCFyZdfxyy41O1hjsaiRydU
+        wjR6Yt12LLvDwlun4T/Pf59ErSUHk=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id 56fc30d0 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
+        Sat, 10 Feb 2018 18:03:35 +0000 (UTC)
+Subject: Re: Fetch-hooks
+From:   Leo Gaspard <leo@gaspard.io>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] docs/interpret-trailers: fix agreement error
-Message-ID: <20180210165719.GE785098@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20180208025614.872885-1-sandals@crustytoothpaste.net>
- <20180208101358.af4ecca9865dca4f04431bce@google.com>
- <xmqqeflvql6m.fsf@gitster-ct.c.googlers.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Joey Hess <id@joeyh.name>, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+ <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+ <20180208153040.GA5180@kitenet.net>
+ <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+ <87bmgzmbsk.fsf@evledraar.gmail.com>
+ <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
+ <87po5dbz1a.fsf@evledraar.gmail.com>
+ <20180209223011.GA24578@sigill.intra.peff.net>
+ <87e7c3b8-3b3c-1cb0-9b11-e4bf3044e539@gaspard.io>
+ <20180210001317.GA26856@sigill.intra.peff.net>
+ <3de8dec0-12c9-56e2-5902-97755f78ab50@gaspard.io>
+ <xmqqvaf5tzw6.fsf@gitster-ct.c.googlers.com>
+ <9ab95c53-61e5-06a3-535e-a8916b3e5ec1@gaspard.io>
+Message-ID: <92130c51-9e5d-39e9-3129-046295ecb353@gaspard.io>
+Date:   Sat, 10 Feb 2018 19:03:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fWddYNRDgTk9wQGZ"
-Content-Disposition: inline
-In-Reply-To: <xmqqeflvql6m.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
-User-Agent: Mutt/1.9.3 (2018-01-21)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <9ab95c53-61e5-06a3-535e-a8916b3e5ec1@gaspard.io>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/10/2018 02:33 AM, Leo Gaspard wrote:> I guess the very early part
+of the discussion you're speaking of is what
+> I was assuming after reading
+>     https://marc.info/?l=git&m=132478296309094&w=2
+> 
+> [...]
+> 
+> So the reason for a post-fetch in my opinion is the same as for a
+> pre-push / pre-commit: not changing the user's workflow, while providing
+> additional features.
+Well, re-reading my email, it looks aggressive to me now... sorry about
+that!
 
---fWddYNRDgTk9wQGZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What I meant was basically, that in my mind pre-push or pre-commit are
+also local-only things, and they are really useful in that they allow to
+block the push or the commit if some conditions are not met (eg. block
+commit with trailing whitespace, or block push of unsigned commits).
 
-On Thu, Feb 08, 2018 at 12:29:53PM -0800, Junio C Hamano wrote:
-> Jonathan Tan <jonathantanmy@google.com> writes:
->=20
-> > On Thu,  8 Feb 2018 02:56:14 +0000
-> > "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
-> >
-> >>  Existing trailers are extracted from the input message by looking for
-> >> -a group of one or more lines that (i) are all trailers, or (ii) conta=
-ins at
-> >> -least one Git-generated or user-configured trailer and consists of at
-> >> +a group of one or more lines that (i) are all trailers, or (ii) conta=
-in at
-> >> +least one Git-generated or user-configured trailer and consist of at
-> >>  least 25% trailers.
-> >>  The group must be preceded by one or more empty (or whitespace-only) =
-lines.
-> >>  The group must either be at the end of the message or be the last
-> >
-> > Ah, good catch. Maybe "a group of one or more lines that (i) consists o=
-f all
-> > trailers, or (ii) contains ..."?
->=20
-> Your version reads better perhaps because it talks about "a group"
-> without placing undue stress on the fact that the member of the
-> group are usually multiple---I guess it is better over Brian's?
+In pretty much the same way, what I'm really looking for is a way to
+“block the fetch” (from a user-visible standpoint) -- like pre-push but
+in the opposite direction. I hope such a goal is not an anti-pattern for
+hook design?
 
-I'm happy to make the change to be all singular instead.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+In order to do this, I first tried updating this tweak-fetch hook patch
+from late 2011, and then learned that it would cause too high a load on
+servers. Then, while brainstorming another solution, this idea of a
+notification-only post-fetch hook arose. But, as I noticed while writing
+my previous answer, this suffers the same
+the-hook-writer-must-correctly-update-FETCH_HEAD-concurrently-with-remote-branch
+issue that you pointed out just after the “*HOWEVER*” in [1]. So that
+solution is likely a bad solution too. I guess we'll continue the search
+for a good solution in the side-thread with Peff, hoping to figure one out.
 
---fWddYNRDgTk9wQGZ
-Content-Type: application/pgp-signature; name="signature.asc"
+That being said about what I meant in my last email, obviously you're
+the one who has the say on what goes in or not! And if it's an
+anti-feature I'd much rather know it now than after spending a few
+nights coding :)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
+So, what do you think about this use case I'm thinking of? (ie.
+“blocking the fetch” like pre-push “blocks the push” and pre-commit
+“blocks the commit”?)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlp/JG4ACgkQv1NdgR9S
-9ouN/A/+Nh1qOguXiRiYd7WekX2XqTJp3hZPiGmBei53YjQ6CNebl519Dxo9P1gB
-LaQVUi9CWDPhiwfWbHR3HenzSAneghnSicxnBcGpSL0FuK8wS4Vxj78CRrZgAfgK
-j/bcNDW4IVb9z72fb4OggTvrSMgtESD4HjM2f5k2PwwTkxxmf2knlwcSqpRM3X+v
-kC1pPnbDZ7wpk+7sQMX8j/lf8JAEDUoXMV3Mw5KftXDDOMaFntixliWtf3AWZir3
-Rz5kRSxAsIR6ih1V+DrfBSbzLMGwXWf16kWTp3RDpQRp1fUc5hXEfFG+O2SHnJNw
-gZUQY1vOGTkQsZaGkHFaOmaooQgefZQA3s6V9AdJlkf1/gxUYyUeJik92cqo9U/b
-XYypz+gqmX5Bsu/vxbpISmv/tdb7nwycRMsmoK4kroo+C8BAkAfdSniEW0Bub37b
-SjnIKX+/I2M1+6m/AfvASBwM6NaQu/abO56ZHUJYK8pJmU6dgldqmQd6q8J4FizI
-dxan8uJQuRRRvDVdfgmmEpz5Vj5MgRFsz+/L6qG2miAB3o/SJ/9WXXaSbRHLasJM
-BfR7kmf/t9phF11xjrOzUxMgOp4vZLqLDqA478+kkYOX/0kID16vpvHLvLFgX9pe
-crMfYV2cJSutJHo5UoJF2QNar0yc5snTx4f9TfYvXO2xLw+dkJE=
-=+IBM
------END PGP SIGNATURE-----
 
---fWddYNRDgTk9wQGZ--
+[1] https://marc.info/?l=git&m=132478296309094&w=2
