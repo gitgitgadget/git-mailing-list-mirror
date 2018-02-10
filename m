@@ -7,126 +7,91 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80ECD1F576
-	for <e@80x24.org>; Sat, 10 Feb 2018 10:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65EEB1F576
+	for <e@80x24.org>; Sat, 10 Feb 2018 10:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751230AbeBJKVh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 05:21:37 -0500
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:44512 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751116AbeBJKVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 05:21:36 -0500
-Received: by mail-oi0-f54.google.com with SMTP id b3so7913393oib.11
-        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:21:36 -0800 (PST)
+        id S1751030AbeBJKYR (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 05:24:17 -0500
+Received: from mail-oi0-f42.google.com ([209.85.218.42]:35294 "EHLO
+        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750933AbeBJKYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 05:24:16 -0500
+Received: by mail-oi0-f42.google.com with SMTP id e15so7924594oiy.2
+        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:24:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=+UVDJ1N0GF2XdpCIqSxBJYBAUu/JRdMTmeBCJlnn8rM=;
-        b=oYJVODoKPv0kUatWdQa8QVOoHAraoL76/9AJ2En6qFoizZdkt5hyX9Dv6/V3l+dch3
-         TlIKy0T62FhgCzwtsbt0Qh3DHJxMQPgSdDV9w/Wf94NuUqb32acOIwcIQm0fz5uQ1frA
-         HlN/oa2aucgF+gsxCESAvmr8UC+BQbkcMwFHXmG1ezZisOcAO1uqvDSUR3Uuud+cyxIQ
-         hZ3n3m9GuOgWG5IlVrQ6Tsv96yMO36ycctiawpiV8pqv/+ae0PUFRpb+VT3eZaXQhNPY
-         x3fCY71X7pQqIUlE7MNTWasHoxtksQk1KMAv6XqFByqZS1kqFEuERDijaAbpZKD9CE8+
-         05Aw==
+        bh=Q5TMY1JiWP6K43GrcGWOUYtPHDgZD2bxxN9hSrD2aoc=;
+        b=Q6imJfZkqyJ9wTzmkGxhCa2+Pb8zVIMhieSTcfHTI39TsgvtlyhPOA1Q+QLJgFBq+q
+         /0ic36xFcg42LkFvQXk/LtN3Duvq3RjeTU18g/HBCiufy8Ps4A+Zdv+M8H+I21AAKZlw
+         O+bhRQJ0EveK+f3dFcxNOV2lX9APfcwlkgOud+BWOJ0pNw6bSpWovCyfU0QnDGr+9pyx
+         NkYsO61u0g1STMr2UHhgaCQPAL/VwvwptwHVn0tKnPtIdAO6y5QFGdgRHBWTxaWMCEZQ
+         xnV8k1l0m98xG2JAtGqApj070VBp3U33WZ2mjMqj2wz4FQj/Pzo7xqbJ6CXh292+yyT9
+         oLQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=+UVDJ1N0GF2XdpCIqSxBJYBAUu/JRdMTmeBCJlnn8rM=;
-        b=pQCf1An0D8hULdoVFMNKYFnadRrMKbNpIJRaDaImM6cFKoeOuu47AzlyPco396MMrW
-         LyNK6g5IFyPN+n/3P7sGgHGIcIHV/OinErYM/52RqGY+i/OUIhrIDOQ5+XyjfwrH2qXB
-         KUgv3KAFgQYY3/i0qzPooz8Tlarj4a3H4yg3lJ/rx4elP6puC2eHZK6786seh6rDw6Zs
-         kTgL7o1w1WT9AhAlhhTeIVxQFJiZLXhAMmrKgcIBZ5855tKKxYzexSCU0fuZBlaBZZOy
-         s8/TLTEWTB3cBPdmzDHVz7UHaaDdWzcrFNWOwLyrgCh0XXt/4wGB/Ds1OAMiGPDLdujC
-         inAA==
-X-Gm-Message-State: APf1xPC85M4UiBtaRIavLNCTOgFyd57FdyZK+Cx89RySmluhuW7gx/o/
-        xWJK1GG7X23LEC09pAaTGd0RYmGV0yi/SDDyxDI=
-X-Google-Smtp-Source: AH8x227lhR29omvzLB1IF/mUt9ihWV9RkAhv2T4FAinaZkD/jFrvdklndOVtMarwJvoYv3fOy6Ykb+egAPSJLsZq5iY=
-X-Received: by 10.202.66.10 with SMTP id p10mr3788485oia.297.1518258095870;
- Sat, 10 Feb 2018 02:21:35 -0800 (PST)
+        bh=Q5TMY1JiWP6K43GrcGWOUYtPHDgZD2bxxN9hSrD2aoc=;
+        b=N/xKe+DlzAw0A4v/BH+zgYpPJBtovtxuq1xuDF/T9VXfmefqZi3+hlqiCr0ewRRTqL
+         Bv/gTZw0h1EaH1L26NgRijWdWrY9UbfMac5P5d9vknc44Fj0/JAvIsPaG4msLJj0KceQ
+         1TgYIgKQ3oXoRjFCWAEUZ2M/Y5oLEsRRw6eawXYtbalv+elSNPeKpXHF3telnEev82Cd
+         Wixu5kwQzeDcaFkBI2noXRqmh5yTtOP+CKHf33fIbiVxfoAACebY3dtuMIIPobYqdhdV
+         /x+6rlCMPYaYhN0DcJnDXxbLNgAvfhL5unSGhEB65vpb7JaB9KO8WG5baKBWRiVzqDqB
+         3WPg==
+X-Gm-Message-State: APf1xPBxgta+2cTazmIM9sMb+eYxp9lFDVzeKIDakOUO8SqUOD4oDx3s
+        AVV+tlOIffIg+8DQw5XiPOLK3hPg93G20wm4w9Y=
+X-Google-Smtp-Source: AH8x227OXwJKfzpm6ZcHyU7d273WTJTDkNcGPkfTzEIzzJvxga67Ifr3rfLBbtxeyqKcYFdkK8Ub06DQ8L+nQo1SoMo=
+X-Received: by 10.202.177.136 with SMTP id a130mr3820297oif.252.1518258255866;
+ Sat, 10 Feb 2018 02:24:15 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:21:05 -0800 (PST)
-In-Reply-To: <20180207204520.GA31757@sigill.intra.peff.net>
-References: <trinity-cb66d9d6-9035-4c98-948e-6857a7bd4de2-1517838396145@3c-app-gmx-bs16>
- <trinity-5e3c4029-b348-4bd5-9337-215808436a12-1517838482997@3c-app-gmx-bs16>
- <CACsJy8CGQ4ynYFT0mY1DfcGGdzwP36eonMvr-kEZazX_82ag2Q@mail.gmail.com> <20180207204520.GA31757@sigill.intra.peff.net>
+Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:23:45 -0800 (PST)
+In-Reply-To: <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
+References: <20180125235838.138135-1-bmwill@google.com> <20180207011312.189834-1-bmwill@google.com>
+ <20180207011312.189834-23-bmwill@google.com> <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Feb 2018 17:21:05 +0700
-Message-ID: <CACsJy8C72Gv4D46tOmgTqi=8aHVG7D=yZR2F7VPLRcm1e_jTYg@mail.gmail.com>
-Subject: Re: Bug? Error during commit
-To:     Jeff King <peff@peff.net>
-Cc:     Andreas Kalz <andreas-kalz@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 10 Feb 2018 17:23:45 +0700
+Message-ID: <CACsJy8DhLzkxAr7oaBfb22x-bOOPxXxsKKwo5WKJ8p=19BSezg@mail.gmail.com>
+Subject: Re: [PATCH v3 22/35] upload-pack: support shallow requests
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 3:45 AM, Jeff King <peff@peff.net> wrote:
-> On Mon, Feb 05, 2018 at 08:59:52PM +0700, Duy Nguyen wrote:
+On Thu, Feb 8, 2018 at 2:00 AM, Stefan Beller <sbeller@google.com> wrote:
+>> +
+>> +    deepen-relative
+>> +       Requests that the semantics of the "deepen" command be changed
+>> +       to indicate that the depth requested is relative to the clients
+>> +       current shallow boundary, instead of relative to the remote
+>> +       refs.
+>> +
+>> +    deepen-since <timestamp>
+>> +       Requests that the shallow clone/fetch should be cut at a
+>> +       specific time, instead of depth.  Internally it's equivalent of
+>> +       doing "rev-list --max-age=<timestamp>". Cannot be used with
+>> +       "deepen".
+>> +
+>> +    deepen-not <rev>
+>> +       Requests that the shallow clone/fetch should be cut at a
+>> +       specific revision specified by '<rev>', instead of a depth.
+>> +       Internally it's equivalent of doing "rev-list --not <rev>".
+>> +       Cannot be used with "deepen", but can be used with
+>> +       "deepen-since".
 >
->> On Mon, Feb 5, 2018 at 8:48 PM, Andreas Kalz <andreas-kalz@gmx.de> wrote:
->> > Hello,
->> >
->> > I am using git frequently and usually it is running great.
->> >
->> > I read to write to this eMail address regarding problems and possible bugs.
->> > I am using git version 2.16.1.windows.2 / 64 Bit and during commit the following error message comes up:
->> > e:\Internet>git commit -m 2018-01-27
->> > fatal: unable to generate diffstat for Thunderbird/andreas-kalz.de/Mail/pop.gmx.net/Inbox
->> > [master f74cf30] 2018-01-27
->> >
->> > I also tried this before with an older git version with same problem.
->> >
->> > Can you help me with this problem please? Thanks in advance.
->>
->> I think if you add -q to that "git commit" command, diffstat is not
->> generated and you can get past that. If that particular commit can be
->> published in public, it'll help us find out why diffstat could not be
->> generated.
->
-> I think that's the first time I've seen that particular error. :)
->
-> I think the only reason that xdiff would report failure is if malloc()
-> failed, or if one of the files exceeds MAX_XDIFF_SIZE, which is ~1GB.
-> I think we'd usually avoid doing a text diff on anything over
-> core.bigFileThreshold, though.
->
-> But it doesn't seem to work:
->
->   $ yes | head -c $((1024*1024*1024 - 10*1024*1024)) >file
->   $ git add file
->   $ git commit -m one
->   $ yes | head -c $((1024*1024*1024)) >file
->   $ git commit -am two
->   fatal: unable to generate diffstat for file
->
-> What's weird is that if I run "git show --stat" on the same commit, it
-> works! So there's something about how commit invokes the diff that
-> doesn't let the big-file check kick in.
+> What happens if those are given in combination?
 
-I have a flashback about checking big_file_threshold in this code. I
-vaguely remember doing something in this code but not sure if it was
-merged.
-
-I finally found 6bf3b81348 (diff --stat: mark any file larger than
-core.bigfilethreshold binary - 2014-08-16) so it's merged after all,
-but this commit is about --stat apparently ;-)
-
-> It looks like the logic in diff_filespec_is_binary() will only check
-> big_file_threshold if we haven't already loaded the contents into RAM.
-> So "commit" does that, but "diff" is more careful about not loading the
-> file contents.
->
-> I think we probably ought to consider anything over big_file_threshold
-> to be binary, no matter what. Possibly even if the user gave us a
-> .gitattribute that says "no really, this is text". Because that 1GB
-> limit is a hard limit that the code can't cope with; our options are
-> either to generate a binary diff or to die.
-
-Agreed. While at there perhaps we need to improve this "unable to
-generate diffstat" message a bit too.
+It should be described in the old protocol document or I did a bad job
+documenting it. Some of these can be combined (I think it's AND logic
+from rev-list point of view), with the exception of --depth which does
+not use rev-list underneath and cannot be combined with the others.
 -- 
 Duy
