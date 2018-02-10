@@ -2,97 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_URI_ONLY,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 860401F404
-	for <e@80x24.org>; Sat, 10 Feb 2018 15:27:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC0E71F404
+	for <e@80x24.org>; Sat, 10 Feb 2018 16:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751157AbeBJP1Y (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 10:27:24 -0500
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:7645 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751143AbeBJP1X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 10:27:23 -0500
-Received: from PhilipOakley ([92.29.14.162])
-        by smtp.talktalk.net with SMTP
-        id kX3henn7zjFUbkX3heUuPu; Sat, 10 Feb 2018 15:27:22 +0000
-X-Originating-IP: [92.29.14.162]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=TJE1cxta c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
- a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=xtxXYLxNAAAA:8
- a=pGLkceISAAAA:8 a=fGO4tVQLAAAA:8 a=yMhMjlubAAAA:8 a=1XWaLZrsAAAA:8
- a=NEAV23lmAAAA:8 a=KbOr2bDaXEMFKBTIZlsA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
- a=QEXdDO2ut3YA:10 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <00CF0CF5FAFD47F6BA3478838677BBAB@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     <noloader@gmail.com>, "Git List" <git@vger.kernel.org>
-References: <CAH8yC8nodewYm-J3ye5Lnq-Zf9JziejL8L3TxTEwVoq8hD--HA@mail.gmail.com> <BD73CAACE3734EE89EE1CFBE1DC55FEC@PhilipOakley>
-Subject: Re: Crash when clone includes magic filenames on Windows
-Date:   Sat, 10 Feb 2018 15:27:22 -0000
-Organization: OPDS
+        id S1750880AbeBJQ51 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 11:57:27 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58798 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750832AbeBJQ50 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 10 Feb 2018 11:57:26 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B679760402;
+        Sat, 10 Feb 2018 16:57:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1518281845;
+        bh=DCpnpzrP5Fnc8Chm3RsHeCdJQTbTwHVbifOfWkbMKfk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=YXHeXszZkBQQlCYIl6YyykZaWBsIHcMRnDdDs0Nfis9BHbIotl2DjGZTttmJmSI0s
+         ADEc/U5LWkZoW8PWW6SHxSNNcqQhda/v6NLtE4mdsFbE+sijW3YQel4Zl4oMqx7MCU
+         9wDkFXd8OtLTGTiBW2YNZ4RiO3U3vr7yTLDCbDe29ca0TWC7IZxT6kuoudcxiALkBI
+         P5GgucjU2l5e7i9ZOsSUyAMkWDqmpUe/bhrVIb53ylLtG5QZwOyIg0MHH/24i9UKCt
+         F1ONNtMwnHMF+eci3xAE9hqvQza0gx5xWfXaYV5H2SfdxQl/z0v0Ba1wKSAAmKW2vx
+         BkaJlUBSxV2AD+mh8SSvJUDNo7fXO8gmOlKTvlKdVdDNgxh8td8nvaRIudXM9L7YNJ
+         zXxTuv6YjYrLQY9MoB4aNg58HLHBespAy1J1/nANWa/lEGwH20G53DTQN3OZX+sj1X
+         HZMnsKFs9mfi+6XKbZj45JowiUERkjbFV7udtMQ0IgBtm/BTZ3I
+Date:   Sat, 10 Feb 2018 16:57:19 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] docs/interpret-trailers: fix agreement error
+Message-ID: <20180210165719.GE785098@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Christian Couder <chriscool@tuxfamily.org>
+References: <20180208025614.872885-1-sandals@crustytoothpaste.net>
+ <20180208101358.af4ecca9865dca4f04431bce@google.com>
+ <xmqqeflvql6m.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 180209-2, 09/02/2018), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfOUT6EHbqelUqYXyCF9hn65lxG3G35sHdSa6ZqUNEo6l7okKAhlauZTN7M7iz5YpBnBHzuM8r22vqO7Kco30Piu7avfq8DoPDnedfYz8XjMyTpqFW9vb
- 4EWLoAl2+2lVn4Yo9F4BFIJ0XsDxhpbXoHxe+Xxd9fMu+h/JPttUBIcP24zT//7Ckw91JwVh8pYUmkS/YmQYqi7pHwvTTYKewu4=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="fWddYNRDgTk9wQGZ"
+Content-Disposition: inline
+In-Reply-To: <xmqqeflvql6m.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Philip Oakley" <philipoakley@iee.org>
-> From: "Jeffrey Walton" <noloader@gmail.com>
->> Hi Everyone,
->>
->> I'm seeing this issue on Windows: https://pastebin.com/YfB25E4T . It
->> seems the filename AUX is the culprit. Also see
->> https://blogs.msdn.microsoft.com/oldnewthing/20031022-00/?p=42073 .
->> (Thanks to Milleneumbug on Stack Overflow).
->>
->> I did not name the file, someone else did. I doubt the filename will be
->> changed.
->>
->> Searching is not turning up much information:
->> https://www.google.com/search?q=git+"magic+filenames"+windows
->>
->> Does anyone know how to sidestep the issue on Windows?
->>
->> Jeff
->>
-> This comes up on the Git-for-Windows (GfW) issues fairly often
-> https://github.com/git-for-windows/git/issues.
->
-> The fetch part of the clone is sucessful, but the final checkout step
-> fails when the AUX (or any other prohibited filename - that's proper
-> cabkward compatibility for you) is to be checked out then the file system
-> (FS) refuses and the checkout 'fails. You do however have the full repo
-> locally.
->
-> The trick is probably then to set up a sparse checkout so the AUX is never
-> included on the FS.
->
-> However it is an open 'up-for-grabs' project to add such a check in GfW.
->
-> Philip
-One option maybe to extend the $GIT_DIR/info/sparse-checkout capability and
-add a specific $GIT_DIR/info/never-sparse-checkout file that could carry the
-complement (files & dirs) options that are platform applicable (no AUX, no
-COM1, no colons, etc.;-), so that it does not conflict with the users'
-regular sparse checkout selection in $GIT_DIR/info/sparse-checkout. It's
-probably easier to understand that way.
---
-Philip
 
+--fWddYNRDgTk9wQGZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Feb 08, 2018 at 12:29:53PM -0800, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>=20
+> > On Thu,  8 Feb 2018 02:56:14 +0000
+> > "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
+> >
+> >>  Existing trailers are extracted from the input message by looking for
+> >> -a group of one or more lines that (i) are all trailers, or (ii) conta=
+ins at
+> >> -least one Git-generated or user-configured trailer and consists of at
+> >> +a group of one or more lines that (i) are all trailers, or (ii) conta=
+in at
+> >> +least one Git-generated or user-configured trailer and consist of at
+> >>  least 25% trailers.
+> >>  The group must be preceded by one or more empty (or whitespace-only) =
+lines.
+> >>  The group must either be at the end of the message or be the last
+> >
+> > Ah, good catch. Maybe "a group of one or more lines that (i) consists o=
+f all
+> > trailers, or (ii) contains ..."?
+>=20
+> Your version reads better perhaps because it talks about "a group"
+> without placing undue stress on the fact that the member of the
+> group are usually multiple---I guess it is better over Brian's?
+
+I'm happy to make the change to be all singular instead.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--fWddYNRDgTk9wQGZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlp/JG4ACgkQv1NdgR9S
+9ouN/A/+Nh1qOguXiRiYd7WekX2XqTJp3hZPiGmBei53YjQ6CNebl519Dxo9P1gB
+LaQVUi9CWDPhiwfWbHR3HenzSAneghnSicxnBcGpSL0FuK8wS4Vxj78CRrZgAfgK
+j/bcNDW4IVb9z72fb4OggTvrSMgtESD4HjM2f5k2PwwTkxxmf2knlwcSqpRM3X+v
+kC1pPnbDZ7wpk+7sQMX8j/lf8JAEDUoXMV3Mw5KftXDDOMaFntixliWtf3AWZir3
+Rz5kRSxAsIR6ih1V+DrfBSbzLMGwXWf16kWTp3RDpQRp1fUc5hXEfFG+O2SHnJNw
+gZUQY1vOGTkQsZaGkHFaOmaooQgefZQA3s6V9AdJlkf1/gxUYyUeJik92cqo9U/b
+XYypz+gqmX5Bsu/vxbpISmv/tdb7nwycRMsmoK4kroo+C8BAkAfdSniEW0Bub37b
+SjnIKX+/I2M1+6m/AfvASBwM6NaQu/abO56ZHUJYK8pJmU6dgldqmQd6q8J4FizI
+dxan8uJQuRRRvDVdfgmmEpz5Vj5MgRFsz+/L6qG2miAB3o/SJ/9WXXaSbRHLasJM
+BfR7kmf/t9phF11xjrOzUxMgOp4vZLqLDqA478+kkYOX/0kID16vpvHLvLFgX9pe
+crMfYV2cJSutJHo5UoJF2QNar0yc5snTx4f9TfYvXO2xLw+dkJE=
+=+IBM
+-----END PGP SIGNATURE-----
+
+--fWddYNRDgTk9wQGZ--
