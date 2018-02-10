@@ -2,85 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96A741F576
-	for <e@80x24.org>; Sat, 10 Feb 2018 10:25:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0385D1F576
+	for <e@80x24.org>; Sat, 10 Feb 2018 10:29:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751092AbeBJKZD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 05:25:03 -0500
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:41490 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbeBJKZC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 05:25:02 -0500
-Received: by mail-ot0-f172.google.com with SMTP id r23so10040542ote.8
-        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:25:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8wlwdh/Dm5fd44C8ijjY58TKqqN2+GhiEQossFCyCjg=;
-        b=NNLRyIJ1H18ERy7kwTl6ACD9LXxV17q9ta1DpAY0ydqh2Po8NFyZGW8H/qQuaUYXZT
-         w5ZG2VbRqWm/FbYUYxL/MFDXL/O8JgTCKEVvsXKDiAp7V9eVebrj95gb3a2SZpyuO/qM
-         vSRd7pY1sTqZ/OIhjwfgZGAEq3StRSl9dZe+UEsAmC9e1O8PX3KbmpzDz7wf+TNE9YKW
-         sj73a3PV9jSNho7C6oQmn0AD+rSavX3w3MfD3hSWxomj/ZndXDXFkuBEyBxKIg4bdJ4s
-         5li58FF/AJQpibEKZxQOmtTdFGbhkZGTm3MJNnFMM+FyQT83b0h22QBZRSOZEhzfkpcG
-         MnGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8wlwdh/Dm5fd44C8ijjY58TKqqN2+GhiEQossFCyCjg=;
-        b=Oi2dW8JCicm68Ef8OdDiTz/WoA9CJMOsNcBNc4EbbcO160atbOTcxV6f0KBcvQESBk
-         9ZfZ3Mh3E6xewiXvuTTk9LWY4g3uFgmv0oylQMgFcU84u2cmuUKRBU5oy9ipTX9OsXyz
-         jNpoQVMwphNjfVzIsEZ1r9lZ3zt5ZKuoS8PCis3E0OEmBzFVQCLTBUSnSYN+wAWdzsmm
-         clDA6XZBsfJrf0D0RL2aaNRSboTON/6VajQct4lTZH2iL2Sk41ZdRE8VGotvUmAMPFDq
-         bb7S3vIZ10sDrL6dyNuRN67Ch+a67ZZ4gUmXgv7ZZdDfqB2fuLhArQ+DuI8Ez+CoUv6y
-         8mig==
-X-Gm-Message-State: APf1xPDKMVV49o4NEyasqqLGqVw0RqBhx8nNHzNLGfKIdCsmAoJ35tVj
-        /1xzb7qE2BOojt79dhJ6dk9DwHqiBlw3/wB1EWE=
-X-Google-Smtp-Source: AH8x224RGrbK6YDSWPgz3OTbqUeY8R2iWS1jTRJyHbo80lHJDy+Z+JhXuVZEy1rNXZ5sl8L0bXr6fdHLb1rEsA5OL8c=
-X-Received: by 10.157.53.5 with SMTP id o5mr4246862otc.181.1518258302077; Sat,
- 10 Feb 2018 02:25:02 -0800 (PST)
+        id S1751314AbeBJK3m (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 05:29:42 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:53045 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751210AbeBJK3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 05:29:42 -0500
+Received: from PhilipOakley ([92.29.14.162])
+        by smtp.talktalk.net with SMTP
+        id kSPcedJkTQS2UkSPcejoNh; Sat, 10 Feb 2018 10:29:40 +0000
+X-Originating-IP: [92.29.14.162]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=WbR8UwpX c=1 sm=1 tr=0 a=NXc+vVEgz70gitWznrz3ig==:117
+ a=NXc+vVEgz70gitWznrz3ig==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=fGO4tVQLAAAA:8 a=yMhMjlubAAAA:8 a=1XWaLZrsAAAA:8 a=NEAV23lmAAAA:8
+ a=RjlvyoGj4PKBH3jMlusA:9 a=QEXdDO2ut3YA:10
+Message-ID: <BD73CAACE3734EE89EE1CFBE1DC55FEC@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     <noloader@gmail.com>, "Git List" <git@vger.kernel.org>
+References: <CAH8yC8nodewYm-J3ye5Lnq-Zf9JziejL8L3TxTEwVoq8hD--HA@mail.gmail.com>
+Subject: Re: Crash when clone includes magic filenames on Windows
+Date:   Sat, 10 Feb 2018 10:29:40 -0000
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:24:31 -0800 (PST)
-In-Reply-To: <xmqqy3k47jdg.fsf@gitster-ct.c.googlers.com>
-References: <20180201130221.15563-1-pclouds@gmail.com> <xmqqefm3cgd7.fsf@gitster-ct.c.googlers.com>
- <CACsJy8B5DYpSQnJiLK8r4naaBh0YWLGwn9FuvM6EhP74E4E_CA@mail.gmail.com>
- <xmqq8tc7b6yt.fsf@gitster-ct.c.googlers.com> <CACsJy8CQLnzX6vijE+WHE3_nwqVfFiNWFb_rcA-Lw_fvGf=aFw@mail.gmail.com>
- <CAPig+cR9RycfLz0C6tXA4iPXdqoyczfij8CBaU4MmRGRmuRhSQ@mail.gmail.com>
- <CACsJy8AiBq__c0UET5ywMbTTz_MJNo-bZ-qAaoGZXdMNnECcaQ@mail.gmail.com> <xmqqy3k47jdg.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Feb 2018 17:24:31 +0700
-Message-ID: <CACsJy8ByZzR4GqVus=__RUg7W390e2ABoCb1ANewb5KRmBuV4Q@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] diff: add --stat-with-summary (was --compact-summary)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 180209-2, 09/02/2018), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfNrJJY0tvMx0YUt9M7g+/wIji6JPZy2cLqDI/TAiVpGH/hpPfZzE6ibmKhMgheMrQ9xchqwD2OJy/hv4/mpJyBa3fE3seHFEh1kOl4MyjiHE91GkHI10
+ paGJJdRNFoxMpVK4R4pUpGiSl++RzwGBxz1SyagAIJzNOkA7w/BssAbrNZ3M9JYayeMQ7zCnpbvYoyS689O2ARWEFije104LZGw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 1:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+From: "Jeffrey Walton" <noloader@gmail.com>
+> Hi Everyone,
 >
->> ...
->> Then we still need to decide the new keyword for this feature, I feel
->> compact is a bit too vague (I read --stat=compact as "it's compact
->> stat", not "stat with compact summary"), so perhaps
->> --stat=compact-summary, or just --stat=summary?
+> I'm seeing this issue on Windows: https://pastebin.com/YfB25E4T . It
+> seems the filename AUX is the culprit. Also see
+> https://blogs.msdn.microsoft.com/oldnewthing/20031022-00/?p=42073 .
+> (Thanks to Milleneumbug on Stack Overflow).
 >
-> Yup, this is about giving summary in a compact way, not about giving
-> a compact stat information.  I agree with all the above reasoning,
-> and that is why I said that your "compact-summary" was a good way to
-> refer to the feature.
+> I did not name the file, someone else did. I doubt the filename will be 
+> changed.
+>
+> Searching is not turning up much information:
+> https://www.google.com/search?q=git+"magic+filenames"+windows
+>
+> Does anyone know how to sidestep the issue on Windows?
+>
+> Jeff
+>
+This comes up on the Git-for-Windows (GfW) issues fairly often 
+https://github.com/git-for-windows/git/issues.
 
-OK I'll wait for a few days. If there's no comment, I'll go with
---stat=compact-summary.
--- 
-Duy
+The fetch part of the clone is sucessful, but the final checkout step fails 
+when the AUX (or any other prohibited filename - that's proper cabkward 
+compatibility for you) is to be checked out then the file system (FS) 
+refuses and the checkout 'fails. You do however have the full repo locally.
+
+The trick is probably then to set up a sparse checkout so the AUX is never 
+included on the FS.
+
+However it is an open 'up-for-grabs' project to add such a check in GfW.
+
+Philip 
+
