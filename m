@@ -7,97 +7,90 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C7641F576
-	for <e@80x24.org>; Sat, 10 Feb 2018 10:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 104BC1F576
+	for <e@80x24.org>; Sat, 10 Feb 2018 11:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750946AbeBJKg5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Feb 2018 05:36:57 -0500
-Received: from mail-ot0-f179.google.com ([74.125.82.179]:35573 "EHLO
-        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750832AbeBJKg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Feb 2018 05:36:56 -0500
-Received: by mail-ot0-f179.google.com with SMTP id a2so10084230otf.2
-        for <git@vger.kernel.org>; Sat, 10 Feb 2018 02:36:56 -0800 (PST)
+        id S1751009AbeBJLV1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Feb 2018 06:21:27 -0500
+Received: from mail-ot0-f194.google.com ([74.125.82.194]:44957 "EHLO
+        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750942AbeBJLV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Feb 2018 06:21:27 -0500
+Received: by mail-ot0-f194.google.com with SMTP id l5so10111130otj.11
+        for <git@vger.kernel.org>; Sat, 10 Feb 2018 03:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=nNNabxv97jbEOCJR/tr5WY9E0QHyU2PyI1mzZwTuyjU=;
-        b=hqVWcaZ7RG3e252CJy5oK8s2HhWI7RPBpU6M1+HWcXIHA8oR7iJHgapHb/MRzWJb5S
-         8Zn4zq0UvTrGDsKjnZbBJtGS8xhQhynN+6RGYK8NEQtlY5SuCsQWyErjWbDUaQNqRljL
-         4wvpjwnjBsMNJKUtBXfH+o8qzjRIw6XJZ4O6gYtjmWitzD7NlDnfliQBW9XDZxNaM2e0
-         BqmdqcQmbMQFDtbmVaUwPS5ZK6cw9QlTJAC8VyD7bFtYFcJ9LTQ/M9eVN74u34UwUEuX
-         ueBlVUy5dMgBLJaFIZDD0W8oO0C2KQRSVKVE1OBFMM+o6tLW0kQidb0iojvqvvXGeAa+
-         2ANg==
+        bh=5fUo7UIiGvQFgykhwxQjUV+Mk2j4DUYQe5RqSZ4A/wI=;
+        b=ubocu+0aWGNfhuzzy4H2FWYzeg0IPoRrB8uCJcot3EGA7MAXApLOSAjWY1V+FSCKdY
+         nGXd1N03nRn56OBX4Xf9muxoz+kRAOAkcpO5sHNfx9D40epolRPnotb75Fdjjm5jvzaL
+         PYZ5f7agByojoCgyzHkVsApZYYbMc2BZNNJ0ZRg9QYRrE++JFH7c5R+6UBYY2HALAFSW
+         7HwRXeqgCzesC538FYUrI6ezTDChK2U+44PvV6AH5bz9r0+wfR6zT2QbNb96g4E7R9iV
+         iLk/9JUoCqM6npXRnAvwxC7PF0GUuvlnv+b3ITRHMNR9auYXMmzTNIjmueZMh1ZMAX5f
+         cnKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=nNNabxv97jbEOCJR/tr5WY9E0QHyU2PyI1mzZwTuyjU=;
-        b=Ynh0kCQPXO+k0taWwMdqX3k7s6JGow6RYZZx83hgb5laNTXT7IhAKgtSJtnr38ikN3
-         BGm85kxSm4KiWRKTyTrgwZiQq4BbcBW0LrR7FSN/eH7y3kc+I07PaxrBj4PloTOw0M8f
-         YLwscYenZwMEC7EP20EUkQMfpJyKFlvNdtIEDBem88/t4pIxWUcYHBr76z9MFzDOQ8Ac
-         fjJPQq+IPWqAEHtBt8/51fIDmenE3ZIn2U6zLdqzdOs2Ud0E+M5pxuvQACpTQ5kfp0c6
-         rHOFESST6DsH2bhEK53gYJoWw0/wyPvpkApp59Vfem7lKnNcwdHTBK/9j7aHuMIuHdPs
-         MVtw==
-X-Gm-Message-State: APf1xPBMVJFlZVomnEfYtNmZwqEM+oQ/IzCPXu1Cbhx7EWF/uQqmP5P4
-        NEVIyqoJavENix/lgRa+By3MrHzn8JqtCrAUwyE=
-X-Google-Smtp-Source: AH8x225DiNj4Y9K9Kqdwj16b9Ewh6Y/0lLPc4Jp07y9bmWDTka7J0jwWVwysOqN2zn6Mk4Sv20CkBPdWDy8jPBpgtWo=
-X-Received: by 10.157.53.5 with SMTP id o5mr4264594otc.181.1518259015812; Sat,
- 10 Feb 2018 02:36:55 -0800 (PST)
+        bh=5fUo7UIiGvQFgykhwxQjUV+Mk2j4DUYQe5RqSZ4A/wI=;
+        b=gh7aIWTAQuUamfmMz+5RcvAzY2OwPiyDGy7LNYkuwH6IeV0qsiuMWzUGP7iK+QDpQz
+         CvxshmMmlZtMqP86vVfHKdG8ehvVzg6gNcWpHziup5acLLKdEGxJW4j1GmTGRmlfjb+0
+         +Kz0MoFE2n6MzKbFmuWQCGgGYFUvpNfQC9sBQ2MZRObwff9ZA5of2IfYh53WRDbRticr
+         Ho3NFBPsikJ+eyh9nqH0g3wBhlQ1IVOK5i8ikBHTlPN2mJzf+65pZvWa/NB30If7ffgy
+         tXo9UqqwokCcy3LMwDMWNXyIRzumOEWnZcE7r3HKAxS0X3tQh6txrYIp/jNdB0W6vltn
+         j1+Q==
+X-Gm-Message-State: APf1xPBWjLgcMSWFbLyvnrWLV8tcFe7DTNYHvTqK8wxGtQ5s70RDHB8O
+        OemVhpBaQJUPEZwfsnMhMJeR11iQPQqXeGu7nE/vww==
+X-Google-Smtp-Source: AH8x226PKf3EKhZ1B6xkRQKAMOKLtcql7VQPY9rLPy6obXcC2KZj+V/zkypvmiGULbmWd5fFjCYzd2cVekLTcwxt4QY=
+X-Received: by 10.157.31.47 with SMTP id x44mr4709984otd.165.1518261686505;
+ Sat, 10 Feb 2018 03:21:26 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 02:36:25 -0800 (PST)
-In-Reply-To: <CAGZ79kabQ1WvxxjFV+fgq8b142yNrtGZC_Vqac+5b3CkUpbi2w@mail.gmail.com>
-References: <20180205235508.216277-1-sbeller@google.com> <CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com>
- <CAGZ79kabQ1WvxxjFV+fgq8b142yNrtGZC_Vqac+5b3CkUpbi2w@mail.gmail.com>
+Received: by 10.74.102.205 with HTTP; Sat, 10 Feb 2018 03:20:56 -0800 (PST)
+In-Reply-To: <CACsJy8Dp1j5GJtHGowK+Vk4KBBUtqOkTfx3U0PNN9DmKO1e-mA@mail.gmail.com>
+References: <20180121120208.12760-1-t.gummerer@gmail.com> <20180204221305.28300-1-t.gummerer@gmail.com>
+ <20180204221305.28300-2-t.gummerer@gmail.com> <20180205021202.GA17847@duynguyen.dek-tpc.internal>
+ <CAPig+cRLohiqR_Drh7P0q3XbvC22WLjNwH0YLZo3dqFzZZuAPw@mail.gmail.com>
+ <20180209112727.GG2130@hank> <CACsJy8Dp1j5GJtHGowK+Vk4KBBUtqOkTfx3U0PNN9DmKO1e-mA@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 10 Feb 2018 17:36:25 +0700
-Message-ID: <CACsJy8DvkjqL0i7mGbFQmAm0Ncvr4SeRMeZTzUzGdMB0Y86aeA@mail.gmail.com>
-Subject: Re: [RFC PATCH 000/194] Moving global state into the repository object
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 10 Feb 2018 18:20:56 +0700
+Message-ID: <CACsJy8BOvU_z-uLrFmzFyryMXHNDfc_FUN_4i4NnVXWoShaBLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] worktree: improve message when creating a new worktree
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 8, 2018 at 1:06 AM, Stefan Beller <sbeller@google.com> wrote:
->> Something else.. maybe "struct repository *" should not be a universal
->> function argument to avoid global states. Like sha1_file.c is mostly about the
->> object store, and I see that you added object store struct (nice!).
->> These sha1 related function should take the object_store* (which
->> probably is a combination of both packed and loose stores since they
->> depend on each other), not repository*. This way if a function needs
->> both access to object store and ref store, we can see the two
->> dependencies from function arguments.
+On Fri, Feb 9, 2018 at 7:08 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Feb 9, 2018 at 6:27 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>> This would loose the information about the identifier of the worktree,
+>> but from a coarse look at the man page it doesn't seem like we
+>> advertise that widely
+>>
+>> ...
+>>
+>> So given that maybe it would even be better to hide the part about the
+>> identifier, as it seems more like an implementation detail than
+>> relevant to the end user?
 >
-> I tried that in the beginning and it blew up a couple of times when I realized
-> that I forgot to pass through one of these dependencies.
-> Maybe we can go to the repository and shrink the scope in a follow up?
+> Exactly. I'd rather hide it. I haven't found any good reason that a
+> user needs to know these IDs unless they poke into $GIT_DIR/worktrees,
+> but they should not need to.
 
-I think it's a good thing to do. We need to make these implicit
-dependencies explicit sooner or later.
+Just FYI. I mentioned elsewhere [1] the possibility of a new extended
+ref syntax to refer to e.g. HEAD from a different worktree. Such
+syntax may make use of this id (which also means we might need to give
+the user control over these ids and not just always auto generate
+them).
 
-Also, perhaps at the earlier steps you don't need to add everything to
-the_respository yet. You can have the_object_store, the_parsed_object
-(and we already have get_main_ref_store()), then use them internally
-without touching the API, which helps reduce code change. For example,
-read_sha1_file() could be converted to take "struct object_store *"
-all the way
+But that's for the future. If/When that thing comes, we can worry
+about displaying id here then. For now I still think it's ok to hide
+it.
 
-void *read_sha1_file_extended(const unsigned char *sha1,
-      enum object_type *type,
-      unsigned long *size,
-      int lookup_replace)
-{
-        struct object_store *store = &the_object_store;
-        ...
-        // more access to "store"
-}
-
-When every piece is in place, the API change can be made be removing
-that "store = &the_object_store" line and make "store" an argument of
-read_sha1_file().
+[1] https://public-inbox.org/git/20180210095952.GA9035@ash/T/#u
 -- 
 Duy
