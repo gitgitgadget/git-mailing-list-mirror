@@ -2,183 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDF71F404
-	for <e@80x24.org>; Sat, 10 Feb 2018 01:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 050211F404
+	for <e@80x24.org>; Sat, 10 Feb 2018 01:33:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751049AbeBJB2X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Feb 2018 20:28:23 -0500
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33730 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751028AbeBJB2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Feb 2018 20:28:22 -0500
-Received: by mail-wr0-f194.google.com with SMTP id s5so9965518wra.0
-        for <git@vger.kernel.org>; Fri, 09 Feb 2018 17:28:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=sdrOXRfuguAVOmlanFD9z9qor7CeJZYNAiyjv9UO4+I=;
-        b=T2BICLlMfZ+jepF93E9Zd7rXDR8G0+hiNELmy0Ura8wouMcEg+PfgedxnviWEjurDE
-         ffAKLeLRvkWNccbsqCfbANIUUr6RtK7sXX+GGm07QFqCUX1+K2jn/U3VhTBDRgPpbv1y
-         HIXeu0PmamKuy5GlOorX6sjcAmq8NDet8M0cgapXmktw7gPu/+LaVStC2kuqJ8Jrh+rg
-         B57N6SBiAOboFmOpLzRaJqfiaiuIA52MCg7Msx+THi4TUN3SLuKnrYDVf0Io7A6UlLgk
-         Aam62Vehi/hRfCwRFXXytFMvc2OMcSasvTILThwtJ54spsNfa/SRdcepUy+p5EhB+JX1
-         H5CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=sdrOXRfuguAVOmlanFD9z9qor7CeJZYNAiyjv9UO4+I=;
-        b=f466ECy80U7E3b7fst+levOegtyRxMm7PQ73Q7QwdvZdwHBxw2ByCsdkLi3SZIfFj8
-         /zd5kQNzHkcjQegOcb2JcGDWNowDSbM4qAD1AOBZQoDPd+nciK6UgGUf1QMd5cRCptQI
-         CxaFlh6Pn0pS88yVk1Qci7D52ZONepzqL8Qgp4QE2oEjOtQaGYzqBcoI6a2pjmr9gGnE
-         yu9vngf5f2E2F942f90B4UlqXELyWa2FlG4Ixk6gl+Gydxg1uPjgp0bUuSlXinPcp0M5
-         Cqc2YS463Cn9qz6amZQ3yUHt40iQ/wA3ho9W/MKQPIuZfT7W1FaUaW9X3OwCZ6HhMC3r
-         M4DQ==
-X-Gm-Message-State: APf1xPC/qqxnEOe/0bnthcw8Vkjt0i8bZVkMa1Qq75JFiKuZPOUifdC3
-        KcCA5O4gGzP7FNA2bMrjCIU=
-X-Google-Smtp-Source: AH8x227csKaPOuhsfSKtPyIt+6ptGqzJDDlXsuklRFDSWyiTGS6LpphRbj43fPAG4cHNKsL1Kn+uhw==
-X-Received: by 10.223.182.169 with SMTP id j41mr4145784wre.203.1518226100943;
-        Fri, 09 Feb 2018 17:28:20 -0800 (PST)
-Received: from slxbook4.fritz.box (p5DDB474A.dip0.t-ipconnect.de. [93.219.71.74])
-        by smtp.gmail.com with ESMTPSA id y90sm6529460wrc.24.2018.02.09.17.28.19
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Feb 2018 17:28:20 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] worktree: set worktree environment in post-checkout hook
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180210010132.33629-1-lars.schneider@autodesk.com>
-Date:   Sat, 10 Feb 2018 02:28:16 +0100
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
-        matthew.k.gumbel@intel.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E0DC5330-F3D5-4945-A206-B583F83F0DFD@gmail.com>
-References: <20180210010132.33629-1-lars.schneider@autodesk.com>
-To:     lars.schneider@autodesk.com
-X-Mailer: Apple Mail (2.3124)
+        id S1750933AbeBJBdW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Feb 2018 20:33:22 -0500
+Received: from grym.ekleog.org ([94.23.42.210]:55310 "EHLO smtp.gaspard.ninja"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750832AbeBJBdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Feb 2018 20:33:21 -0500
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTP id a2084a78;
+        Sat, 10 Feb 2018 01:33:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=gaspard.io; h=
+        subject:to:cc:references:from:message-id:date:mime-version
+        :in-reply-to:content-type:content-transfer-encoding; s=
+        grym-20170528; bh=yE3N4yJS8XAYNFwHQoJmnPckAAE=; b=Vmmdh1s4nB462y
+        A55isiR88EZzJJZlHO2RwMiXT+y83viwnMeephbfja0K2kLtDsrD54hGLduNIGA9
+        ZBFAQp3TypQbf3I7awewrSSKAWM5Qd5RMRkmOegPO+LuUM2hiTLXNYJw6bMf+Kuu
+        QE6bpu1Dqnc4ZOGD+zWqdpZ4bDdKw=
+Received: by smtp.gaspard.ninja (OpenSMTPD) with ESMTPSA id aec8e495 (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128:NO);
+        Sat, 10 Feb 2018 01:33:19 +0000 (UTC)
+Subject: Re: Fetch-hooks
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Joey Hess <id@joeyh.name>, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>
+References: <5898be69-4211-d441-494d-93477179cf0e@gaspard.io>
+ <87inb8mn0w.fsf@evledraar.gmail.com>
+ <c8d1eb4d-c3d2-5834-a46b-931e825315aa@gaspard.io>
+ <20180208153040.GA5180@kitenet.net>
+ <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+ <87bmgzmbsk.fsf@evledraar.gmail.com>
+ <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
+ <87po5dbz1a.fsf@evledraar.gmail.com>
+ <20180209223011.GA24578@sigill.intra.peff.net>
+ <87e7c3b8-3b3c-1cb0-9b11-e4bf3044e539@gaspard.io>
+ <20180210001317.GA26856@sigill.intra.peff.net>
+ <3de8dec0-12c9-56e2-5902-97755f78ab50@gaspard.io>
+ <xmqqvaf5tzw6.fsf@gitster-ct.c.googlers.com>
+From:   Leo Gaspard <leo@gaspard.io>
+Message-ID: <9ab95c53-61e5-06a3-535e-a8916b3e5ec1@gaspard.io>
+Date:   Sat, 10 Feb 2018 02:33:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqvaf5tzw6.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 02/10/2018 02:08 AM, Junio C Hamano wrote:
+> Leo Gaspard <leo@gaspard.io> writes:
+> 
+>> On 02/10/2018 01:13 AM, Jeff King wrote:
+>>> On Sat, Feb 10, 2018 at 12:49:31AM +0100, Leo Gaspard wrote:
+>>>> So the changes that are required are:
+>>>>  * Adding a notification-only post-fetch hook
+> 
+> Maybe I missed a very early part of the discussion, but why does
+> this even need a hook?  There are some numbers [*1*] of classes of
+> valid reasons we may want to have hooks triggered by operations, but
+> "always do something locally after doing something else locally,
+> regardless of the outcome of that something else" feels like the
+> most typical anti-pattern that we do not want a hook for.  If you
+> are doing "git fetch" (or "git pull"), you already know you are
+> doing that and you donot need a notification.  You just create a
+> workflow specific script that calls fetch or pull, followed by
+> whatever you want to do and use that, instead of doing "git pull",
+> and that is not any extra work than writing a hook and installing
+> it.
+> 
+> Unlike something like post-receive, which happens on the remote side
+> where you may not even have an interactive access to, in response to
+> the operation you locally do (i.e. "git push"), fetching and then
+> doing something else in a repository you fetch into has no reason to
+> be done as a hook.
 
-> On 10 Feb 2018, at 02:01, lars.schneider@autodesk.com wrote:
->=20
-> From: Lars Schneider <larsxschneider@gmail.com>
->=20
-> In ade546be47 (worktree: invoke post-checkout hook (unless
-> --no-checkout), 2017-12-07) we taught Git to run the post-checkout =
-hook
-> in worktrees. Unfortunately, the environment of the hook was not made
-> aware of the worktree. Consequently, a 'git rev-parse --show-toplevel'
-> call in the post-checkout hook would return a wrong result.
->=20
-> Fix this by setting the 'GIT_WORK_TREE' environment variable to make
-> Git calls within the post-checkout hook aware of the worktree.
->=20
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->=20
-> Hi,
->=20
-> I think this is a bug in Git 2.16. We noticed it because it caused a
-> problem in Git LFS [1]. The modified test case fails with Git 2.16 and
-> succeeds with this patch.
->=20
-> Cheers,
-> Lars
->=20
->=20
-> [1] https://github.com/git-lfs/git-lfs/issues/2848
->=20
->=20
-> Notes:
->    Base Ref: v2.16.1
->    Web-Diff: https://github.com/larsxschneider/git/commit/214e9342e7
->    Checkout: git fetch https://github.com/larsxschneider/git =
-fix-worktree-add-v1 && git checkout 214e9342e7
->=20
-> builtin/worktree.c      |  7 +++++--
-> t/t2025-worktree-add.sh | 11 +++++++++--
-> 2 files changed, 14 insertions(+), 4 deletions(-)
->=20
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 7cef5b120b..032f9b86bf 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -345,9 +345,12 @@ static int add_worktree(const char *path, const =
-char *refname,
-> 	 * Hook failure does not warrant worktree deletion, so run hook =
-after
-> 	 * is_junk is cleared, but do return appropriate code when hook =
-fails.
-> 	 */
-> -	if (!ret && opts->checkout)
-> -		ret =3D run_hook_le(NULL, "post-checkout", =
-oid_to_hex(&null_oid),
-> +	if (!ret && opts->checkout) {
-> +		struct argv_array env =3D ARGV_ARRAY_INIT;
-> +		argv_array_pushf(&env, "GIT_WORK_TREE=3D%s", =
-absolute_path(path));
-> +		ret =3D run_hook_le(env.argv, "post-checkout", =
-oid_to_hex(&null_oid),
-> 				  oid_to_hex(&commit->object.oid), "1", =
-NULL);
+I guess the very early part of the discussion you're speaking of is what
+I was assuming after reading
+    https://marc.info/?l=git&m=132478296309094&w=2
 
-As I hit "send" I realized that I forgot to cleanup.
-@Junio: Can you squash this in?
+Then, it's always possible to just write workflow-specific scripts that
+manually run git fetch then copy the refs (resp. run git fetch then copy
+the refs then run git merge) to get git myfetch (resp. git mypull) [1].
 
-	argv_array_clear(&env);
+But then, the question is, why is there a pre-push hook? it's already
+possible to have a custom script that first runs the hook then runs git
+push, for most if not all of the use cases of the pre-push hook. Yet the
+possibility to not change the end-user's workflow is what makes pre-push
+(or pre-commit, with which the similarity is perhaps even more obvious)
+so useful.
 
-Thanks,
-Lars
+So the reason for a post-fetch in my opinion is the same as for a
+pre-push / pre-commit: not changing the user's workflow, while providing
+additional features.
 
-> +	}
->=20
-> 	argv_array_clear(&child_env);
-> 	strbuf_release(&sb);
-> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-> index 2b95944973..d022ac0c26 100755
-> --- a/t/t2025-worktree-add.sh
-> +++ b/t/t2025-worktree-add.sh
-> @@ -455,19 +455,26 @@ post_checkout_hook () {
-> 	mkdir -p .git/hooks &&
-> 	write_script .git/hooks/post-checkout <<-\EOF
-> 	echo $* >hook.actual
-> +	git rev-parse --show-toplevel >>hook.actual
-> 	EOF
-> }
->=20
-> test_expect_success '"add" invokes post-checkout hook (branch)' '
-> 	post_checkout_hook &&
-> -	printf "%s %s 1\n" $_z40 $(git rev-parse HEAD) >hook.expect &&
-> +	cat >hook.expect <<-EOF &&
-> +		$_z40 $(git rev-parse HEAD) 1
-> +		$(pwd)/gumby
-> +	EOF
-> 	git worktree add gumby &&
-> 	test_cmp hook.expect hook.actual
-> '
->=20
-> test_expect_success '"add" invokes post-checkout hook (detached)' '
-> 	post_checkout_hook &&
-> -	printf "%s %s 1\n" $_z40 $(git rev-parse HEAD) >hook.expect &&
-> +	cat >hook.expect <<-EOF &&
-> +		$_z40 $(git rev-parse HEAD) 1
-> +		$(pwd)/grumpy
-> +	EOF
-> 	git worktree add --detach grumpy &&
-> 	test_cmp hook.expect hook.actual
-> '
->=20
-> base-commit: 8279ed033f703d4115bee620dccd32a9ec94d9aa
-> --
-> 2.16.1
->=20
 
+[1]
+
+Which makes me notice that actually the post-fetch hook technique we
+were discussing with Peff suffers the same not-updating-FETCH_HEAD issue
+that was discussed in this early thread: a `git pull` would try to merge
+from refs/quarantine, I guess. So things are a bit harder than we thought.
+
+I guess the tweak-fetch hook could be left “as-is”, but with git
+automatically doing the “quarantine-ing” thing transparently so that the
+references that the end-user (or the hook for that matter) see are the
+“curated” ones? Then it's too late for me to think efficiently right
+now, so that idea may be stupid or over-complex.
