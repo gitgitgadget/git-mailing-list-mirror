@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 009C51F576
-	for <e@80x24.org>; Sun, 11 Feb 2018 09:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45D271F576
+	for <e@80x24.org>; Sun, 11 Feb 2018 09:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752688AbeBKJnr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Feb 2018 04:43:47 -0500
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36742 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752273AbeBKJnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Feb 2018 04:43:45 -0500
-Received: by mail-pf0-f194.google.com with SMTP id p8so878503pff.3
-        for <git@vger.kernel.org>; Sun, 11 Feb 2018 01:43:45 -0800 (PST)
+        id S1752713AbeBKJnw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Feb 2018 04:43:52 -0500
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:46543 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752273AbeBKJnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Feb 2018 04:43:51 -0500
+Received: by mail-pf0-f195.google.com with SMTP id z79so2981968pff.13
+        for <git@vger.kernel.org>; Sun, 11 Feb 2018 01:43:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cOL5XXYSE7y0lXkyNZKGcWIz+bJryYsyyMHLv1X8P5k=;
-        b=j4iXH0HOC9wQ+Wzsk9ecsr59EJUzXGQEBSytR0CSXxVmK6yoy00nyb1QT2qojuVwd9
-         tpE39tJKX845U7kd99W/+7Oraww5unf3ygYC1kEueE40W4ToCDQyPzQAuLq+PF7pGQ3a
-         nKK2tz60G/gI/ZWpmAjcE5wrzkALvO6obAAyRMkZSeE7damL3v81pRuvLLP6UDKPNqcR
-         HH3Bk2M38+GQczBTj4c6yEjpjzbrGRMV6pqhDfTeBi+9q5Ay8oBSNvZ39+ViFsa+LUwi
-         xDF+7Y+1WbtcfmwWJxXe+9WQNVk6o9BcfevlB8ylLce+HV82vr5zMRSSXp5d0HMNOLtV
-         k2+A==
+        bh=67CVJD6EbGSY74jSvLcyjcP4m6nwTkIC4D8Su6Mjay4=;
+        b=m6dlNa1nZFAr3UM74nkIOzw1UJSNqp0L70WvA/vf3Ja3WykvY9U6dzNssskdWWPHsK
+         0TaGTBAHW2KwdtdVYF4us16tbY2NRDVvXugsj6y07Y4ZIJvSyyYc1+4qOmyX9KrmbFxE
+         Bblf3M8LS0/Ng700g/WoCZ01+9NG8Wh4gQZ5or1PXYgGcUfzs4d+IE5dLspd2vt/rQoP
+         t7Zysi4ZStRhW+Mppuo6w2tLABaYSJezgTJHwVTWbry19PyZhWubwUhHvwUIGwRgqGui
+         1lkpimMDpMDQzaknwSAem1pqAJi37R6PX+JVBHyaLXtk112ZJ6ITxWJ6OzBf/8w0O1om
+         VjNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cOL5XXYSE7y0lXkyNZKGcWIz+bJryYsyyMHLv1X8P5k=;
-        b=Q5dz4tIJy4+J33/IYE1VUHmt7Q/Loe8iEJQ7bAy+PS73+E73u2he+xGeFJG/Pae0nL
-         EmB7Yn54RI1aDrErZfMVFZ53z21RRLwJBzQqtQZqP1YhvOM3WKSd0fazJkKFN60juxVI
-         DdZBqD46DZFV13I3I6iF56lJ1M3no+SbdxJztqo5htUgVM8A5Utjm69CD8lZqaZ49doD
-         nsd7cj7rcRsWDWEpQwikXVF1Ai+2jbkbIPo4upYwI4+j+9nnKR9eusgrkOEsT3h0+FoU
-         Em1lHM3h8QW3x/iqw6QHRW3e45U20rSfLP4dzhAcgSNp0WtDcxEoZofUnDrFV7VyJBSa
-         sdCQ==
-X-Gm-Message-State: APf1xPDMqrFcRgwE/JwjeJPrxiH+Na49zlFERVTyPj7xVWzdls+BHCrr
-        ABao0uMszZLec01k5pzf/t9ISw==
-X-Google-Smtp-Source: AH8x2264eBbRv9UzaNQ/5VgUwW5BseZWpU60ZQOaTxqputNRISD2dht9ptaMhpGjxO7LTbLQKlBZGQ==
-X-Received: by 10.101.66.76 with SMTP id d12mr6695182pgq.45.1518342224944;
-        Sun, 11 Feb 2018 01:43:44 -0800 (PST)
+        bh=67CVJD6EbGSY74jSvLcyjcP4m6nwTkIC4D8Su6Mjay4=;
+        b=PJMVu9QJdzSpd3ZGPRwz+ygIsQLHkiugeKZIU0ay0OpkWiNaZT85wgLY7FubFvp7qY
+         DT+0h4O7iYEnoXDX6wqNjt9T4VCPlndTCoDEdAAKTtG9w+0v0ii9huTURQOa2Gd3W3V/
+         QgpwvuNZgSvQ7RvJw7geqpoqx+KImO9EgQfNOWtjQK/1lvmMq//OprdIq3fWPsQj7kKS
+         D6XwE89Jy8bZgV1qjwbnNJu+SNPCCE3qRro7ZijSDuBaYJMZSIXfrexZt3kmvuZZz/rO
+         Eq4xWNmwp6VwA4uHkoXMJDDG/qG3Ow1dyFT4hFh0AXwug0sHoT9C8w0n3qHkzy3DFDsr
+         uMvQ==
+X-Gm-Message-State: APf1xPBg5oYnT/TTGB0d2wd66rANtPag86vEOxqL8icoBr7CunHfF3J1
+        3N4ym/q1u9uekw0M6hHYbwTKww==
+X-Google-Smtp-Source: AH8x224Y5Am0Ae/Gg505Qz1kQOOgEaK+N5ZnREw20wU+vovAJPZKnTbPNR7AH8haba2prQeITDtETg==
+X-Received: by 10.99.186.22 with SMTP id k22mr912352pgf.7.1518342230331;
+        Sun, 11 Feb 2018 01:43:50 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id l84sm20259789pfb.153.2018.02.11.01.43.40
+        by smtp.gmail.com with ESMTPSA id v69sm19550567pfi.65.2018.02.11.01.43.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Feb 2018 01:43:43 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sun, 11 Feb 2018 16:43:37 +0700
+        Sun, 11 Feb 2018 01:43:49 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sun, 11 Feb 2018 16:43:45 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -61,12 +61,13 @@ Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
         tim@tim-landscheidt.de,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 0/3] Add "git rebase --show-current-patch"
-Date:   Sun, 11 Feb 2018 16:43:25 +0700
-Message-Id: <20180211094328.6157-1-pclouds@gmail.com>
+Subject: [PATCH v3 1/3] am: add --show-current-patch
+Date:   Sun, 11 Feb 2018 16:43:26 +0700
+Message-Id: <20180211094328.6157-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.399.g632f88eed1
-In-Reply-To: <20180131093051.15525-1-pclouds@gmail.com>
+In-Reply-To: <20180211094328.6157-1-pclouds@gmail.com>
 References: <20180131093051.15525-1-pclouds@gmail.com>
+ <20180211094328.6157-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,235 +76,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compared to v2:
+Pointing the user to $GIT_DIR/rebase-apply may encourage them to mess
+around in there, which is not a good thing. With this, the user does
+not have to keep the path around somewhere (because after a couple of
+commands, the path may be out of scrollback buffer) when they need to
+look at the patch.
 
-- the potential loss of errno before it's printed out in builtin/am.c
-  is fixed.
-- keep update_ref() in sequencer.c non-fatal like this rest
-- rename ORIG_COMMIT to REBASE_HEAD
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-am.txt               |  6 ++++-
+ builtin/am.c                           | 32 ++++++++++++++++++++++----
+ contrib/completion/git-completion.bash |  2 +-
+ t/t4150-am.sh                          |  5 ++++
+ 4 files changed, 39 insertions(+), 6 deletions(-)
 
-Interdiff:
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 6da9296bf8..0b29e48221 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -253,7 +253,7 @@ leave out at most one of A and B, in which case it defaults to HEAD.
- --show-current-patch::
- 	Show the current patch in an interactive rebase or when rebase
- 	is stopped because of conflicts. This is the equivalent of
--	`git show ORIG_COMMIT`.
-+	`git show REBASE_HEAD`.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 12879e4029..0f426ae874 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -16,7 +16,7 @@ SYNOPSIS
+ 	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+ 	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
+ 	 [(<mbox> | <Maildir>)...]
+-'git am' (--continue | --skip | --abort)
++'git am' (--continue | --skip | --abort | --show-current-patch)
  
- -m::
- --merge::
+ DESCRIPTION
+ -----------
+@@ -167,6 +167,10 @@ default.   You can use `--no-utf8` to override this.
+ --abort::
+ 	Restore the original branch and abort the patching operation.
+ 
++--show-current-patch::
++	Show the patch being applied when "git am" is stopped because
++	of conflicts.
++
+ DISCUSSION
+ ----------
+ 
 diff --git a/builtin/am.c b/builtin/am.c
-index bf9b356340..21aedec41f 100644
+index acfe9d3c8c..07abfb8f83 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -1011,7 +1011,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
+@@ -1831,8 +1831,7 @@ static void am_run(struct am_state *state, int resume)
+ 			git_config_get_bool("advice.amworkdir", &advice_amworkdir);
  
- 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
- 		die_errno(_("failed to create directory '%s'"), state->dir);
--	delete_ref(NULL, "ORIG_COMMIT", NULL, REF_NO_DEREF);
-+	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+ 			if (advice_amworkdir)
+-				printf_ln(_("The copy of the patch that failed is found in: %s"),
+-						am_path(state, "patch"));
++				printf_ln(_("Use 'git am --show-current-patch' to see the failed patch"));
  
- 	if (split_mail(state, patch_format, paths, keep_cr) < 0) {
- 		am_destroy(state);
-@@ -1111,7 +1111,7 @@ static void am_next(struct am_state *state)
- 
- 	oidclr(&state->orig_commit);
- 	unlink(am_path(state, "original-commit"));
--	delete_ref(NULL, "ORIG_COMMIT", NULL, REF_NO_DEREF);
-+	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
- 
- 	if (!get_oid("HEAD", &head))
- 		write_state_text(state, "abort-safety", oid_to_hex(&head));
-@@ -1443,8 +1443,8 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
- 
- 	oidcpy(&state->orig_commit, &commit_oid);
- 	write_state_text(state, "original-commit", oid_to_hex(&commit_oid));
--	update_ref("am", "ORIG_COMMIT", &commit_oid,
--		   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	update_ref("am", "REBASE_HEAD", &commit_oid,
-+		   NULL, REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
- 
- 	return 0;
+ 			die_user_resolve(state);
+ 		}
+@@ -2121,6 +2120,23 @@ static void am_abort(struct am_state *state)
+ 	am_destroy(state);
  }
-@@ -2127,6 +2127,7 @@ static void am_abort(struct am_state *state)
- static int show_patch(struct am_state *state)
- {
- 	struct strbuf sb = STRBUF_INIT;
+ 
++static int show_patch(struct am_state *state)
++{
++	struct strbuf sb = STRBUF_INIT;
 +	const char *patch_path;
- 	int len;
- 
- 	if (!is_null_oid(&state->orig_commit)) {
-@@ -2140,10 +2141,10 @@ static int show_patch(struct am_state *state)
- 		return ret;
- 	}
- 
--	len = strbuf_read_file(&sb, am_path(state, msgnum(state)), 0);
++	int len;
++
 +	patch_path = am_path(state, msgnum(state));
 +	len = strbuf_read_file(&sb, patch_path, 0);
- 	if (len < 0)
--		die_errno(_("failed to read '%s'"),
--			  am_path(state, msgnum(state)));
++	if (len < 0)
 +		die_errno(_("failed to read '%s'"), patch_path);
++
++	setup_pager();
++	write_in_full(1, sb.buf, sb.len);
++	strbuf_release(&sb);
++	return 0;
++}
++
+ /**
+  * parse_options() callback that validates and sets opt->value to the
+  * PATCH_FORMAT_* enum value corresponding to `arg`.
+@@ -2149,7 +2165,8 @@ enum resume_mode {
+ 	RESUME_APPLY,
+ 	RESUME_RESOLVED,
+ 	RESUME_SKIP,
+-	RESUME_ABORT
++	RESUME_ABORT,
++	RESUME_SHOW_PATCH
+ };
  
- 	setup_pager();
- 	write_in_full(1, sb.buf, sb.len);
+ static int git_am_config(const char *k, const char *v, void *cb)
+@@ -2171,6 +2188,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	int patch_format = PATCH_FORMAT_UNKNOWN;
+ 	enum resume_mode resume = RESUME_FALSE;
+ 	int in_progress;
++	int ret = 0;
+ 
+ 	const char * const usage[] = {
+ 		N_("git am [<options>] [(<mbox> | <Maildir>)...]"),
+@@ -2249,6 +2267,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 		OPT_CMDMODE(0, "abort", &resume,
+ 			N_("restore the original branch and abort the patching operation."),
+ 			RESUME_ABORT),
++		OPT_CMDMODE(0, "show-current-patch", &resume,
++			N_("show the patch being applied."),
++			RESUME_SHOW_PATCH),
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+ 			&state.committer_date_is_author_date,
+ 			N_("lie about committer date")),
+@@ -2359,11 +2380,14 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	case RESUME_ABORT:
+ 		am_abort(&state);
+ 		break;
++	case RESUME_SHOW_PATCH:
++		ret = show_patch(&state);
++		break;
+ 	default:
+ 		die("BUG: invalid resume value");
+ 	}
+ 
+ 	am_state_release(&state);
+ 
+-	return 0;
++	return ret;
+ }
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index deea688e0e..8777805c9f 100644
+index 3683c772c5..56ca445fa8 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -439,7 +439,7 @@ __git_refs ()
- 			track=""
- 			;;
- 		*)
--			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD ORIG_COMMIT; do
-+			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD REBASE_HEAD; do
- 				case "$i" in
- 				$match*)
- 					if [ -e "$dir/$i" ]; then
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index ef72bd5871..a613156bcb 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -199,14 +199,14 @@ make_patch () {
- 
- die_with_patch () {
- 	echo "$1" > "$state_dir"/stopped-sha
--	git update-ref ORIG_COMMIT "$1"
-+	git update-ref REBASE_HEAD "$1"
- 	make_patch "$1"
- 	die "$2"
- }
- 
- exit_with_patch () {
- 	echo "$1" > "$state_dir"/stopped-sha
--	git update-ref ORIG_COMMIT "$1"
-+	git update-ref REBASE_HEAD "$1"
- 	make_patch $1
- 	git rev-parse --verify HEAD > "$amend"
- 	gpg_sign_opt_quoted=${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")}
-@@ -843,7 +843,7 @@ To continue rebase after editing, run:
- 	exit
- 	;;
- show-current-patch)
--	exec git show ORIG_COMMIT --
-+	exec git show REBASE_HEAD --
- 	;;
- esac
- 
-@@ -860,7 +860,7 @@ fi
- 
- orig_head=$(git rev-parse --verify HEAD) || die "$(gettext "No HEAD?")"
- mkdir -p "$state_dir" || die "$(eval_gettext "Could not create temporary \$state_dir")"
--rm -f "$(git rev-parse --git-path ORIG_COMMIT)"
-+rm -f "$(git rev-parse --git-path REBASE_HEAD)"
- 
- : > "$state_dir"/interactive || die "$(gettext "Could not mark as interactive")"
- write_basic_state
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 70966c32c3..957688f236 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -57,7 +57,7 @@ call_merge () {
- 	echo "$msgnum" >"$state_dir/msgnum"
- 	cmt="$(cat "$state_dir/cmt.$msgnum")"
- 	echo "$cmt" > "$state_dir/current"
--	git update-ref ORIG_COMMIT "$cmt"
-+	git update-ref REBASE_HEAD "$cmt"
- 	hd=$(git rev-parse --verify HEAD)
- 	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
- 	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
-@@ -139,14 +139,14 @@ skip)
- 	return
- 	;;
- show-current-patch)
--	exec git show ORIG_COMMIT --
-+	exec git show REBASE_HEAD --
- 	;;
- esac
- 
- mkdir -p "$state_dir"
- echo "$onto_name" > "$state_dir/onto_name"
- write_basic_state
--rm -f "$(git rev-parse --git-path ORIG_COMMIT)"
-+rm -f "$(git rev-parse --git-path REBASE_HEAD)"
- 
- msgnum=0
- for cmt in $(git rev-list --reverse --no-merges "$revisions")
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 1db4301b90..a13a581fe6 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -182,7 +182,7 @@ You can run "git stash pop" or "git stash drop" at any time.
- }
- 
- finish_rebase () {
--	rm -f "$(git rev-parse --git-path ORIG_COMMIT)"
-+	rm -f "$(git rev-parse --git-path REBASE_HEAD)"
- 	apply_autostash &&
- 	{ git gc --auto || true; } &&
- 	rm -rf "$state_dir"
-diff --git a/sequencer.c b/sequencer.c
-index fe907a0701..f692221999 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1792,8 +1792,9 @@ static int make_patch(struct commit *commit, struct replay_opts *opts)
- 	p = short_commit_name(commit);
- 	if (write_message(p, strlen(p), rebase_path_stopped_sha(), 1) < 0)
- 		return -1;
--	update_ref("rebase", "ORIG_COMMIT", &commit->object.oid,
--		   NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	if (update_ref("rebase", "REBASE_HEAD", &commit->object.oid,
-+		       NULL, REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR))
-+		res |= error(_("could not update %s"), "REBASE_HEAD");
- 
- 	strbuf_addf(&buf, "%s/patch", get_dir(opts));
- 	memset(&log_tree_opt, 0, sizeof(log_tree_opt));
-@@ -2045,7 +2046,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			unlink(rebase_path_author_script());
- 			unlink(rebase_path_stopped_sha());
- 			unlink(rebase_path_amend());
--			delete_ref(NULL, "ORIG_COMMIT", NULL, REF_NO_DEREF);
-+			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
- 		}
- 		if (item->command <= TODO_SQUASH) {
- 			if (is_rebase_i(opts))
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 2be4abcb7b..72d9564747 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -306,8 +306,8 @@ test_expect_success 'rebase--merge.sh and --show-current-patch' '
- 		test_must_fail git rebase --merge --onto init HEAD^ &&
- 		git rebase --show-current-patch >actual.patch &&
- 		GIT_TRACE=1 git rebase --show-current-patch >/dev/null 2>stderr &&
--		grep "show.*ORIG_COMMIT" stderr &&
--		test "$(git rev-parse ORIG_COMMIT)" = "$(git rev-parse two)"
-+		grep "show.*REBASE_HEAD" stderr &&
-+		test "$(git rev-parse REBASE_HEAD)" = "$(git rev-parse two)"
- 	)
+@@ -1077,7 +1077,7 @@ _git_am ()
+ {
+ 	__git_find_repo_path
+ 	if [ -d "$__git_repo_path"/rebase-apply ]; then
+-		__gitcomp "--skip --continue --resolved --abort"
++		__gitcomp "--skip --continue --resolved --abort --show-current-patch"
+ 		return
+ 	fi
+ 	case "$cur" in
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 73b67b4280..23abf42abc 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -662,6 +662,11 @@ test_expect_success 'am pauses on conflict' '
+ 	test -d .git/rebase-apply
  '
  
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index c0fe0193bb..23a54a4c49 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -227,10 +227,10 @@ test_expect_success 'stop on conflicting pick' '
- 
- test_expect_success 'show conflicted patch' '
- 	GIT_TRACE=1 git rebase --show-current-patch >/dev/null 2>stderr &&
--	grep "show.*ORIG_COMMIT" stderr &&
-+	grep "show.*REBASE_HEAD" stderr &&
- 	# the original stopped-sha1 is abbreviated
- 	stopped_sha1="$(git rev-parse $(cat ".git/rebase-merge/stopped-sha"))" &&
--	test "$(git rev-parse ORIG_COMMIT)" = "$stopped_sha1"
-+	test "$(git rev-parse REBASE_HEAD)" = "$stopped_sha1"
- '
- 
- test_expect_success 'abort' '
++test_expect_success 'am --show-current-patch' '
++	git am --show-current-patch >actual.patch &&
++	test_cmp .git/rebase-apply/0001 actual.patch
++'
++
+ test_expect_success 'am --skip works' '
+ 	echo goodbye >expected &&
+ 	git am --skip &&
 -- 
 2.16.1.399.g632f88eed1
 
