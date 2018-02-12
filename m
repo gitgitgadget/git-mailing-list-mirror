@@ -2,108 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D04281F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 21:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C6181F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 22:14:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932471AbeBLV7a (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 16:59:30 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:43763 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932383AbeBLV73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 16:59:29 -0500
-Received: by mail-io0-f194.google.com with SMTP id 72so19008368iom.10;
-        Mon, 12 Feb 2018 13:59:29 -0800 (PST)
+        id S932641AbeBLWOP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 17:14:15 -0500
+Received: from mail-qk0-f182.google.com ([209.85.220.182]:40136 "EHLO
+        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932563AbeBLWOO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 17:14:14 -0500
+Received: by mail-qk0-f182.google.com with SMTP id e20so20273958qkm.7
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 14:14:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=I/516FsDdAH7kL1/NwCUwVFmaWuBC3WwUl4Nsyi1m1w=;
-        b=YcoRkSjr5XPcoq6Lfgnit/6Q7XaN4SBlh99vijfnWF09eTN8HHP3F5la9Cy/r5yHAt
-         E0JKazfoO3WHOc/iHJCJaVRVxrdn7iRAew9LeAdFs+q7e9/cW0ot8rgO0NA88MM8q2lW
-         p42N8jpCUqxH5IYKmOAum05i9ur9bPUUAGAnVaDXDx8yhfFoZ/8q+Qmj89e0Ke4J7bpz
-         IHxt3ktjlZd5F/sV0CDvZIgfWezXTnAPGjEVbtXL20+M5Y4/oqTle+O5lBgQLlz8i2Zz
-         qX2+V3ywwVVtTItEZzpemgSusuT1JGa1Zim5guib94NTMcd9v4UwCCmKNaUjXqcrpYwZ
-         kV8A==
+        bh=A1tTnXIQ90bx9HPxPb9SfzWw7HGpgsuV96U85SI7lwI=;
+        b=fiXpzB9ZjCvd/cS11jxTx8KAd8nR614XGxMYiossCCHRqSNFMiSxoQB16p5HfOqI+z
+         Q1a4r81L07wBofasjqPOj2NldTo/DIeQMngghFp8El91VXyNac4tlolClpV3jcotUwtF
+         F0OHU8RWdwBMTyPXa79MJ0TL1HliYpRBf2AIeyjug5P4eeufCZcTOGCE1qkbhZERaaaf
+         zdBEkpLDSfOV1IP+LWvI3UIQrlKWBhNO9oGghwySR2U22RuSIDHXe13p8t9sISj4aVVB
+         UPEQIp/ZrWOHzet1BLC/P47WbaDnxbJIp0qMYaKGrxie6/apYgL5o7inMk8Zs4cMPQIc
+         DGXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=I/516FsDdAH7kL1/NwCUwVFmaWuBC3WwUl4Nsyi1m1w=;
-        b=Lt1lZdI6cpERSLHC2iJrfirV5BSny+2lHgXw40kUMHLaFlangbCiWJsNDWAf46NZNJ
-         ne2Eq4HKK1UhAh9bXhCQ9KBqVTHH0vf6l8xbHSM8SxG6Keb1FqhM5fFQvpI8Z9YQiGvC
-         +DoO1A1Vj64Rt/185v1GUOvSAjow7FN5uSd2vINj6qR+xdR00s9GSmJuQ8iKWAWUH01U
-         OUdBVnhKGHDwleiOfQ0YjvOcoSeMhxogRf+A71CKf/dQtJ2aAkCEsZGbfjl3noGfPVP7
-         EJuNaLroVok9JZY6yc3eHZWw2gi30vBoavYW2/2itMQnYDXIzXrDLVk8Fvz5ayfhMIH2
-         faHA==
-X-Gm-Message-State: APf1xPDrOCGywpEX4a6SUyihULEJW8Ov7vZpDJ+Z6dwbKhJkopStbSmy
-        4IaZYhMT/2JmwX3qExi/+pYyKI2gpp0UNxqRP00=
-X-Google-Smtp-Source: AH8x225y3uwgwkWIbJCbF5Y/hSZ/WuQ6kUNXLRfufMKtOyfaYIB+zhXPB9ef7WRSMl3uyF4VjidRErORXr5w13neh2E=
-X-Received: by 10.107.81.20 with SMTP id f20mr15232405iob.174.1518472768438;
- Mon, 12 Feb 2018 13:59:28 -0800 (PST)
+        bh=A1tTnXIQ90bx9HPxPb9SfzWw7HGpgsuV96U85SI7lwI=;
+        b=McZZAc5LQbrwbfcCS/DF4sizkaLu6F5sopPyQdjvO4tpCPSyVkAfetsvK+ywW6x3/6
+         P01AgcTx5CReeew8rIJSwkye+f0uf9uIGOHS9wK0jfPyrWBlXnGYmuGdgbM7Vj0B3Dzb
+         g2GlEd/20DavdIqgx4g9MCkMdyzmX4HBSn7ZU8nHWzVfbBXbJBQkMhDf5HunI3ZenQVR
+         WgcdNHmaplPLEAFmoYOU28aAV90TQWykpoUe+zCCj5ia4TqmFXviCADv4+dp9z4sNlvA
+         XS9hnGmmKbzDOLyDrwfL9TNXHq6wRNrT4TmshEbVnWTApyfYxj3oIf0zAqQ8SXDTjL5G
+         Tnuw==
+X-Gm-Message-State: APf1xPCYU3YmzACHiMkfku/7ibG65fvhs26RqdVdsFOETIokMOLW6LjF
+        vx2pl1KPaO3LffkeF6p6Cr3xEtZW/8LL53u8m2I=
+X-Google-Smtp-Source: AH8x224jvByGBx2wAQNeHN4ArrvOuuFGuo6QpBtDRiCTEo3yyS2+HmUxS9tuUD391/IDwWCqgfu49m74McIfKmrJrs4=
+X-Received: by 10.55.36.68 with SMTP id w65mr18736761qkg.132.1518473653379;
+ Mon, 12 Feb 2018 14:14:13 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.135.221 with HTTP; Mon, 12 Feb 2018 13:59:27 -0800 (PST)
-In-Reply-To: <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com>
-References: <20180213080036.3bf3a908@canb.auug.org.au> <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
- <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com> <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Mon, 12 Feb 2018 13:59:27 -0800
-X-Google-Sender-Auth: o1Ew_raxS7sRcXPJ9oDXFf85NZY
-Message-ID: <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
-Subject: Re: linux-next: unnecessary merge in the v4l-dvb tree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
-        Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 14:14:12 -0800 (PST)
+In-Reply-To: <20180212201922.74051-1-sbeller@google.com>
+References: <20180208222851.GA8850@sigill.intra.peff.net> <20180212201922.74051-1-sbeller@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Feb 2018 17:14:12 -0500
+X-Google-Sender-Auth: ooERhJ82Pvnw62OhV5j9YFUJ1Ug
+Message-ID: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 1:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> But I wonder why "update to upstream" is merging a signed tag in the
-> first place.  Wouldn't downstream's "try to keep up with" pull be
-> grabbing from branch tips, not tags?
+On Mon, Feb 12, 2018 at 3:19 PM, Stefan Beller <sbeller@google.com> wrote:
+> Add documentation explaining the functions in color.h.
+> While at it, mark them extern and migrate the function `color_set`
+> into grep.c, where the only callers are.
 
-I'm actually encouraging maintainers to *not* start their work on some
-random "kernel of the day".
+This re-roll no longer marks functions as 'extern', so the commit
+message saying that it does seems rather odd.
 
-Particularly during the kernel merge window, the upstream master
-branch can be pretty flaky. It's *not* a good point to start new
-development on, so if you're a maintainer, you really don't want to
-use that as the basis for your work for the next merge window.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/color.h b/color.h
+> @@ -76,22 +76,47 @@ int git_color_config(const char *var, const char *value, void *cb);
+> +/*
+> + * Return a boolean whether to use color,
+> + * resolving ambigious settings such as GIT_COLOR_AUTO, which is returned
+> + * by git_config_colorbool().
+> + */
+>  int want_color(int var);
 
-So I encourage people to use a stable point for new development, and
-particularly actual release kernels. The natural way to do that is
-obviously just to create a new branch:
+I'm probably being dense, but (if I hadn't had Peff's explanation[1]
+to fall back on), based upon the comment block alone, I'd still have
+no idea what I'm supposed to pass in as 'var'. Partly this is due to
+the comment block not mentioning 'var' explicitly; it talks about
+GIT_COLOR_AUTO and git_config_colorbool() abstractly, and, as a
+reader, I can't tell if those are supposed to be passed in as 'var' or
+if the function somehow grabs them out of the environment. Partly it's
+due to the name "var" not conveying any useful meaning. Perhaps take
+Peff's hint and state explicitly that the passed-in value is one of
+GIT_COLOR_UNKNOWN, GIT_COLOR_NEVER, GIT_COLOR_ALWAYS, GIT_COLOR_AUTO,
+then further explain that that value comes from
+git_config_colorbool(), possibly modified by local option processing,
+such as --color.
 
-   git checkout -b topicbranch v4.15
+[1]: https://public-inbox.org/git/20180208222851.GA8850@sigill.intra.peff.net/
 
-and now you have a good new clean branch for your development.
+> +/*
+> + * Output the formatted string in the specified color (and then reset to normal
+> + * color so subsequent output is uncolored). Omits the color encapsulation if
+> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+> + * the color. The `color_print_strbuf` prints the given pre-formatted strbuf
+> + * instead, up to its first NUL character.
+> + */
 
-But clearly we've got a few people who have gotten used to the whole
-"git pull" convenience of both fetching and updating.
-
-Some maintainers don't even use topic branches, because their main
-work is just merging work by subdevelepoers (that goes for my own
-tree: I use topic branches for merging patch queues and to
-occasionally track my own experimental patches, but 99% of the time
-I'm just on "master" and obviously pull other peoples branches).
-
-And some maintainers end up using multiple repositories as branches
-(the old _original_ git model). Again, you can just use "git fetch +
-git reset", of course, but that's a bit unsafe. In contrast, doing
-"git pull --ff-only" is a safe convenient operation that does both the
-fetch and the update to whatever state.
-
-But you do need that "--ff-only" to avoid the merge.
-
-              Linus
+Perhaps prefix the last sentence with "BUG:" since we don't want
+people relying on this NUL bug/misfeature.
