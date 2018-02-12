@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 068591F576
-	for <e@80x24.org>; Mon, 12 Feb 2018 09:50:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36EDF1F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 09:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933397AbeBLJuc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 04:50:32 -0500
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:34657 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933377AbeBLJu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 04:50:28 -0500
-Received: by mail-ot0-f194.google.com with SMTP id l10so13482562oth.1
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 01:50:28 -0800 (PST)
+        id S933400AbeBLJui (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 04:50:38 -0500
+Received: from mail-io0-f194.google.com ([209.85.223.194]:47047 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933377AbeBLJud (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 04:50:33 -0500
+Received: by mail-io0-f194.google.com with SMTP id k80so5265093ioe.13
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 01:50:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tpCuAc3Rkr9W0J8i49fjhhHZBD1iCVzjNAap4liINL4=;
-        b=uGfErgZlcfwK77CsLMA+AQa6uPsL/l5/GhgOzBbU7itd11lNLJQ1rdFyYKOjK9Do5R
-         bYMr+DL4x2knfWczxNpxmWwkFJ4oywqlqEJ8Jj8rUPRznUaosMIOPI/q66TbWFh/+YS+
-         QoJt0zewnFDZb2fUh7cS5SbcIqGn53rmLWGPXu3nOwzA64w8YfZWAlcSKWkyiJhqmiaE
-         1Cgdd4NVv4wSaQJKa4JzbkTVHF0hZgzO/Q3FqeIDeyLrOT8kwV9NQY0zm1jwahoDIfoc
-         FuiSUiPM8WK434uNs6RgVS9GzWDdKkCgHKYe00x7L0WiKNJ1pbOPYt9WhF645eDTOq3d
-         JDQQ==
+        bh=szJDvLAmdbpl6KxkX3KFBHIbVlHuu8EsXhO3lv9krHw=;
+        b=bBsvRokW3pbUwYyWwyRGlV5XwhJXpLb/m178bAPmynA69aqvsXfAGswvh4+6vkjf0G
+         zr9OfA1eUkpsU5iSHPiW+Xtz6553i3tIOhv+e3O0fP5y4dHxNKQiddsmq7o5XTNvWTgI
+         /43DgbOjAjpre/kIBcX3qql19piRZoWCRFtHzt57O4C1eEij0IS+d7S03vXPEdodu3oL
+         kKoPcIlK23uTqTOCD39shsAXYONrKqoPspbLwiRiCb+/o3FIVrezWvzXe//yI1elpatn
+         nimHypd+L3++xzPB5qjJ5WaRHu2WtM78Bd7+MpZzkuhU3fXEScpKAMKJh0ZfZA9tzZxA
+         qmfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tpCuAc3Rkr9W0J8i49fjhhHZBD1iCVzjNAap4liINL4=;
-        b=ejxDBoWo4vAy4K6NLo26N4J8SAl2xPDxDKF6m4xf3wKvjFBcG3UAdHSIQrkW5NQuuf
-         NDf3pKdYhA7gPNjfw3DL78Nd21QFcNWQ0jtv8p5kqcQKaHGpy92fCrIWTsRxjm0HQ5Tk
-         nBcaVcRPopqORFiUHG20Db7UfohYqx9gi0zbjWjYNZk4JA5EVDMyLjYfxTW9rJZg7Cet
-         X6JG9aodrUMZR1eZJEzqgofJgdbp4vP4U8NQFa9E2qEjHT+Ata2UgTG/7d0ARt0rEERK
-         auABxFiahBsEbS+Y87kVrL9G62T/wlC8Z91+wb3mRML2t01MYmHbwbCSo/WXwElInFgL
-         xKVg==
-X-Gm-Message-State: APf1xPBiu8cIOPZKRaJmOagSz+Z1tWgP4/PTDTDUrUxV/gmOD/NHbIog
-        mpZDQ8lJuaArQzV0qspqZmrJ1g==
-X-Google-Smtp-Source: AH8x226tm/HoYVRVSdl8j3clR3CkqKvoGMGg+1MBr05a4EpmDuc3JPTnLORGl5YT8JWhSinaZp8svQ==
-X-Received: by 10.157.54.241 with SMTP id s46mr7963612otd.261.1518429027436;
-        Mon, 12 Feb 2018 01:50:27 -0800 (PST)
+        bh=szJDvLAmdbpl6KxkX3KFBHIbVlHuu8EsXhO3lv9krHw=;
+        b=LfuSVRN7Wr5xQxoJ1nlKlOvlvBck2LSw7s8Go7ZQcGJjC8cAaK6VeAji85og3x6UX8
+         MbhyrPcWHqpXUNF80i41I187HuCnFEtmNgVIydXkc/dK+P+kuL/J1/xjAUGqygGsFB15
+         QsOcu78r6+yaw3bHWGxkIP/CN4k40YpyvGNygFJaoJDE7TT7sIVtswISakbtg+23syO8
+         73rTsu+Wi7eOBOrsCxOiSQt5+9C44EzHPBEMl4CjxrIS2ZI5zp3XFV0OPs7AjLBFFuc9
+         sK2fMjGbrqNfdswuwveu2FpcOYGlIz6ugchPDwl+0ixi/HHlUJlui4Q7MoV5jO+Hlx9h
+         GkUg==
+X-Gm-Message-State: APf1xPBmiakolDM+bw/wYuj3mXqRQYI1JYjDvZjXtzdvOQIfO6ax0dJ9
+        +cSK0Y8ggm1N63DF7gsSpbYu/Q==
+X-Google-Smtp-Source: AH8x2248fmC+OJ7NQreb0FercbJIrJN+Ja+65rumnRWXhrz+leYdw7mloHCamiyXEoTfljCz65RCGw==
+X-Received: by 10.107.28.201 with SMTP id c192mr11915357ioc.26.1518429032959;
+        Mon, 12 Feb 2018 01:50:32 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id r185sm3990903oie.34.2018.02.12.01.50.24
+        by smtp.gmail.com with ESMTPSA id y91sm10171336ioi.62.2018.02.12.01.50.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Feb 2018 01:50:26 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Mon, 12 Feb 2018 16:50:21 +0700
+        Mon, 12 Feb 2018 01:50:32 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Mon, 12 Feb 2018 16:50:27 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         kaartic.sivaraam@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 4/7] worktree move: accept destination as directory
-Date:   Mon, 12 Feb 2018 16:49:37 +0700
-Message-Id: <20180212094940.23834-5-pclouds@gmail.com>
+Subject: [PATCH v2 5/7] worktree move: refuse to move worktrees with submodules
+Date:   Mon, 12 Feb 2018 16:49:38 +0700
+Message-Id: <20180212094940.23834-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.399.g632f88eed1
 In-Reply-To: <20180212094940.23834-1-pclouds@gmail.com>
 References: <20180124095357.19645-1-pclouds@gmail.com>
@@ -73,101 +73,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to "mv a b/", which is actually "mv a b/a", we extract basename
-of source worktree and create a directory of the same name at
-destination if dst path is a directory.
+Submodules contains .git files with relative paths. After a worktree
+move, these files need to be updated or they may point to nowhere.
+
+This is a bandage patch to make sure "worktree move" don't break
+people's worktrees by accident. When .git file update code is in
+place, this validate_no_submodules() could be removed.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/worktree.c       | 11 ++++++++++-
- strbuf.c                 |  8 ++++++++
- strbuf.h                 |  3 +++
- t/t2028-worktree-move.sh | 11 +++++++++++
- 4 files changed, 32 insertions(+), 1 deletion(-)
+ Documentation/git-worktree.txt |  2 +-
+ builtin/worktree.c             | 23 +++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 4fa1dd3a48..e6764ee8e0 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -79,7 +79,7 @@ with `--reason`.
+ move::
+ 
+ Move a working tree to a new location. Note that the main working tree
+-cannot be moved.
++or linked working trees containing submodules cannot be moved.
+ 
+ prune::
+ 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 8b9482d1e5..6fe41313c9 100644
+index 6fe41313c9..4789cebe11 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -631,8 +631,17 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 		die(_("'%s' is not a working tree"), av[0]);
- 	if (is_main_worktree(wt))
- 		die(_("'%s' is a main working tree"), av[0]);
-+	if (is_directory(dst.buf)) {
-+		const char *sep = find_last_dir_sep(wt->path);
-+
-+		if (!sep)
-+			die(_("could not figure out destination name from '%s'"),
-+			    wt->path);
-+		strbuf_trim_trailing_dir_sep(&dst);
-+		strbuf_addstr(&dst, sep);
-+	}
- 	if (file_exists(dst.buf))
--		die(_("target '%s' already exists"), av[1]);
-+		die(_("target '%s' already exists"), dst.buf);
- 
- 	reason = is_worktree_locked(wt);
- 	if (reason) {
-diff --git a/strbuf.c b/strbuf.c
-index 1df674e919..46930ad027 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -95,6 +95,7 @@ void strbuf_trim(struct strbuf *sb)
- 	strbuf_rtrim(sb);
- 	strbuf_ltrim(sb);
- }
-+
- void strbuf_rtrim(struct strbuf *sb)
- {
- 	while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
-@@ -102,6 +103,13 @@ void strbuf_rtrim(struct strbuf *sb)
- 	sb->buf[sb->len] = '\0';
+@@ -606,6 +606,27 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+ 	return ret;
  }
  
-+void strbuf_trim_trailing_dir_sep(struct strbuf *sb)
++static void validate_no_submodules(const struct worktree *wt)
 +{
-+	while (sb->len > 0 && is_dir_sep((unsigned char)sb->buf[sb->len - 1]))
-+		sb->len--;
-+	sb->buf[sb->len] = '\0';
++	struct index_state istate = { NULL };
++	int i, found_submodules = 0;
++
++	if (read_index_from(&istate, worktree_git_path(wt, "index")) > 0) {
++		for (i = 0; i < istate.cache_nr; i++) {
++			struct cache_entry *ce = istate.cache[i];
++
++			if (S_ISGITLINK(ce->ce_mode)) {
++				found_submodules = 1;
++				break;
++			}
++		}
++	}
++	discard_index(&istate);
++
++	if (found_submodules)
++		die(_("working trees containing submodules cannot be moved"));
 +}
 +
- void strbuf_ltrim(struct strbuf *sb)
+ static int move_worktree(int ac, const char **av, const char *prefix)
  {
- 	char *b = sb->buf;
-diff --git a/strbuf.h b/strbuf.h
-index 14c8c10d66..e6cae5f439 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -179,6 +179,9 @@ extern void strbuf_trim(struct strbuf *);
- extern void strbuf_rtrim(struct strbuf *);
- extern void strbuf_ltrim(struct strbuf *);
+ 	struct option options[] = {
+@@ -643,6 +664,8 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+ 	if (file_exists(dst.buf))
+ 		die(_("target '%s' already exists"), dst.buf);
  
-+/* Strip trailing directory separators */
-+extern void strbuf_trim_trailing_dir_sep(struct strbuf *);
++	validate_no_submodules(wt);
 +
- /**
-  * Replace the contents of the strbuf with a reencoded form.  Returns -1
-  * on error, 0 on success.
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 0f8abc0854..deb486cd8e 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -85,4 +85,15 @@ test_expect_success 'move main worktree' '
- 	test_must_fail git worktree move . def
- '
- 
-+test_expect_success 'move worktree to another dir' '
-+	toplevel="$(pwd)" &&
-+	mkdir some-dir &&
-+	git worktree move destination some-dir &&
-+	test_path_is_missing source &&
-+	git worktree list --porcelain | grep "^worktree.*/some-dir/destination" &&
-+	git -C some-dir/destination log --format=%s >actual2 &&
-+	echo init >expected2 &&
-+	test_cmp expected2 actual2
-+'
-+
- test_done
+ 	reason = is_worktree_locked(wt);
+ 	if (reason) {
+ 		if (*reason)
 -- 
 2.16.1.399.g632f88eed1
 
