@@ -7,102 +7,101 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7AD1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 19:01:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 280AE1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 19:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753836AbeBLTBC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 14:01:02 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:41175 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753550AbeBLTBB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 14:01:01 -0500
-Received: by mail-yw0-f180.google.com with SMTP id f12so1802780ywb.8
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 11:01:00 -0800 (PST)
+        id S1751538AbeBLTIq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 14:08:46 -0500
+Received: from mail-yw0-f181.google.com ([209.85.161.181]:44566 "EHLO
+        mail-yw0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751196AbeBLTIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 14:08:45 -0500
+Received: by mail-yw0-f181.google.com with SMTP id y187so3204466ywg.11
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 11:08:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=BQjJt5k1VrYLokrjGGLmozeBIJmdDvLJhZvrCh7JyUk=;
-        b=gFZlJD8VyOBObIPI/+wLpJCGLrUeUXMm+0ePEx6tbCgXq+Z9FIr/jYrXwW9H5lcLt6
-         dW80r+TftJrfnUm2I7X7dO2EOt82dQxsYO0Zry+n/kRlP5X/9grS/ll1hlR/GeM7XuYD
-         +zY1AUEVjT2m/hcqnr0iA53gz+RP5j17rXKFCo+J50UuccW59HsIVwaeZgjL1W2v0p/0
-         8dapCOJ+dEJvV3ry9jqDv0Ks1OyLlsVgVe26aNp7x1vhPCnHfva65w4L0QIM6pqjXqP6
-         9m29o3WpDZE3/bO86KdwQFlM+piUmwdBgAbmInhzng7t9vga4i8PSNJwCf/BQmgs9KVA
-         cnbA==
+        bh=7DCW0twy5jppCi5XUMU7ilfhYzbSEl3dBvo7k99UHiA=;
+        b=lN+4AjJhc8a0PpP6+UyL9AWibQAM3OF2L1qOwyjqs9sxEav0P4DZbuMroIUazT68Ki
+         vQfpW247SRfgATKUZSYwBMPCywciXQEFLD7/dW1RGNQops+uRz2NJ/jadXChGYYJ9Xo6
+         OOYcq5ksS4t9/xlXAzRYIZhyqvEGQEASc7VcJ2nEWyxGrhhHOLhPc+uKmpp+zA3AMgxJ
+         CzCrO3ewaLz/tSM1zjCuXVteQQGoaHtuVIyIewUeNwzxx/KIzIEX8jnD8KoiV8yPakIu
+         n/BxztrBN8DAinuTlMY6KdaujvXd7rgsHhJ8P1QVZdeKblCMSbPbnVku+xzTPqosm7QF
+         WmQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=BQjJt5k1VrYLokrjGGLmozeBIJmdDvLJhZvrCh7JyUk=;
-        b=Eshq0t+T+iMf8v4rczcIptViX7ZjHvncaMc6xwkmBcl6OAiMHuCe4Ifll2BnWVrAE5
-         YN17NtLXmcjDJumz2I6229ggDfsVdzOnZ1R8DpnQ/4r8mvq/BElcsPY6Akhup8SjoL09
-         8QTpljdFgN1eYtFiLV7PM16QS+NJr9yjzFoJwIxQTs2gRBQFtQsYwFDIhR3TjdQqjQlG
-         cLbX8AEePp3+ZeAoI4D+rOgNI+T2dTrFUPIe+am7LXx620z+uTttPW4lTB/LFafw8bUn
-         T1cIZGmhbdJVQ/76HHbw86K2iBiin+6kt16L2XAMTDOJ+N9xDP6mJOhk/eKdGoyblpzN
-         81eg==
-X-Gm-Message-State: APf1xPBnulC8sdyyBlRC5RdNsu4kP7tiOoiKU1wQEuUB9+8k6Dv1yVUE
-        JWEIQyLZUqJRoqCRy5C0A1y8u55NM9Wb6q/Je7Am6w==
-X-Google-Smtp-Source: AH8x226EAuYJ/POVeeb5v5EQsUlrex+hwGz6E2F70WXzz0XUHmcRZZRi99nILNAFaYtW/Q/EybNX83f9+wDX7p9Guwg=
-X-Received: by 10.129.11.8 with SMTP id 8mr8433145ywl.156.1518462060121; Mon,
- 12 Feb 2018 11:01:00 -0800 (PST)
+        bh=7DCW0twy5jppCi5XUMU7ilfhYzbSEl3dBvo7k99UHiA=;
+        b=TA5c1MyYG63sWlF34Cw7vD9NArCZ6wuBac3OyRqUqYP1G2H6apgH4VnDQVqEu8v2LX
+         fCQE9xA4EGDgZbbNgV8jEqzybboqS3JPzWWStkm6dX1h8lRkjQBDLFEiqeD3Ltc93fqz
+         k8YFMChWHzpHq5OIG363DbW06GvQgRYixvfbiZ31kiJXCrMrHBG9WcAnDYiXOL3NXf7g
+         gS4ot3beq8+kPktc1iCJ7rIp/4mJ1v4eXeJLB5ImeskWZNCd9ti2JGiy0fSRHWyOCxqy
+         4qxMYmmJuIr0ErDQoKEo0TBQWQ56/RK4h8JmEnzEuwcWCcDsOp5IGBvJo/RVR/ikELia
+         pcsQ==
+X-Gm-Message-State: APf1xPD8Rn/bvraUT5IRu9wX6KHVDzDCs/RvY9ujufNwb7RriiYyI8fK
+        42VcHxnNr5LaSwaWA2DZjK9cbJCo4nOAxDButV6XBTF3Ttk=
+X-Google-Smtp-Source: AH8x225T5nhYZV9M8M1ucxGR9p6++OyGRofIfkmzR1w5Y22icw7Y3CDBmrhnPoaiLQ88UjSjpvXgHAoBM5Nw6Zk1myI=
+X-Received: by 10.37.101.11 with SMTP id z11mr8448850ybb.201.1518462524104;
+ Mon, 12 Feb 2018 11:08:44 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.37.207.203 with HTTP; Mon, 12 Feb 2018 11:00:59 -0800 (PST)
-In-Reply-To: <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
-References: <20180205235508.216277-1-sbeller@google.com> <20180205235508.216277-4-sbeller@google.com>
- <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
+Received: by 10.37.207.203 with HTTP; Mon, 12 Feb 2018 11:08:43 -0800 (PST)
+In-Reply-To: <xmqqzi4hu53x.fsf@gitster-ct.c.googlers.com>
+References: <20180205235508.216277-1-sbeller@google.com> <20180205235735.216710-1-sbeller@google.com>
+ <20180205235735.216710-26-sbeller@google.com> <xmqqzi4hu53x.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 12 Feb 2018 11:00:59 -0800
-Message-ID: <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
-Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru
- to object store
+Date:   Mon, 12 Feb 2018 11:08:43 -0800
+Message-ID: <CAGZ79kbFc6fsajRtUQYtNxPq05cb=U+juHDESGoJMRrZuKVsqQ@mail.gmail.com>
+Subject: Re: [PATCH 046/194] object-store: move replace_objects back to object-store
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 9, 2018 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Feb 9, 2018 at 3:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
->> Patch generated by
->>
->>  2. Applying the semantic patch contrib/coccinelle/packed_git.cocci
->>     to adjust callers.
->
-> About this part...
->
->> diff --git a/contrib/coccinelle/packed_git.cocci b/contrib/coccinelle/packed_git.cocci
->> new file mode 100644
->> index 0000000000..da317a51a9
->> --- /dev/null
->> +++ b/contrib/coccinelle/packed_git.cocci
->> @@ -0,0 +1,7 @@
->> +@@ @@
->> +- packed_git
->> ++ the_repository->objects.packed_git
+>> @@ -32,7 +31,15 @@ struct object_store {
+>>        * Objects that should be substituted by other objects
+>>        * (see git-replace(1)).
+>>        */
+>> -     struct replace_objects replacements;
+>> +     struct replace_objects {
+>> +             /*
+>> +              * An array of replacements.  The array is kept sorted by the original
+>> +              * sha1.
+>> +              */
+>> +             struct replace_object **items;
 >> +
->> +@@ @@
->> +- packed_git_mru
->> ++ the_repository->objects.packed_git_mru
->
-> The above is correct for one-time transition turning pre-transition
-> code to post the_repository world, but I am not sure if we want to
-> have it in contrib/coccinelle/, where "make coccicheck" looks at, as
-> a way to continuously keep an eye on "style" violations like using
-> strbuf_addf() for a constant when strbuf_addstr() suffices.
->
-> Wouldn't we need a mechanism to ensure that this file will *not* be
-> used in "make coccicheck" somehow?
->
+>> +             int alloc, nr;
+>> +     } replacements;
+>>
+>>       /*
+>>        * A fast, rough count of the number of objects in the repository.
+>> @@ -49,7 +56,7 @@ struct object_store {
+>>       unsigned packed_git_initialized : 1;
+>>  };
+>>  #define OBJECT_STORE_INIT \
+>> -     { NULL, MRU_INIT, ALTERNATES_INIT, REPLACE_OBJECTS_INIT, 0, 0, 0 }
+>> +     { NULL, MRU_INIT, ALTERNATES_INIT, { NULL, 0, 0 }, 0, 0, 0 }
 
-I can omit the cocci files from the patches, if that is better for maintenance.
+Maybe we can move the REPLACE_OBJECTS_INIT just before the
+definition of OBJECT_STORE_INIT, so we'd not need to touch this line here.
 
-I thought it may be a helpful
-for merging this series with the rest of the evolved code base which
-may make use of one of the converted functions. So instead of fixing
-that new instance manually, cocinelle could do that instead.
+>
+> Not the primary thrust of this topic, but we may want to convert
+> these to use designated initializers after this series is done.
+
+I agree.
+
+I feel cbc0f81d96 (strbuf: use designated initializers in STRBUF_INIT,
+2017-07-10)
+may need longer cooking until all the interesting architectures have
+tried picking up
+the latest release, though.
 
 Stefan
