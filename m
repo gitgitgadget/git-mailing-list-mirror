@@ -2,85 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB2431F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 20:21:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17D21F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 20:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932109AbeBLUVN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 15:21:13 -0500
-Received: from mout.gmx.net ([212.227.17.21]:57673 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752319AbeBLUVM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 15:21:12 -0500
-Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
- ([37.201.195.115]) by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 0LrNoG-1efb0o3V6K-0134BB; Mon, 12 Feb 2018 21:21:06 +0100
-Date:   Mon, 12 Feb 2018 21:21:05 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
-To:     Sergey Organov <sorganov@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-In-Reply-To: <874lmmerdu.fsf@javad.com>
-Message-ID: <nycvar.QRO.7.76.6.1802122118420.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-References: <cover.1516225925.git.johannes.schindelin@gmx.de> <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de> <874lmqirma.fsf@javad.com> <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
- <874lmmerdu.fsf@javad.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753010AbeBLUba (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 15:31:30 -0500
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:35087 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbeBLUb3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 15:31:29 -0500
+Received: by mail-qt0-f194.google.com with SMTP id g14so1132069qti.2
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 12:31:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=YiVfXkuiiFmGHfvbBkFBKjhNl2lj6ELuEybXjEXNeB8=;
+        b=aHzqvxFhFZ7/IcaUvBEjOfsmjg3DZNHc4ZbqJxxe14deYb078tE71s104UuARqkvZ1
+         YmS4naC/sBAY/b81AHsvwTKfzIRvkBf78K2wmayWgvLVY0dw2UGf7Bqrbcum5tQ+Sz20
+         Z1cPeTvoHJkP3Ek3Entq9OSjAuDej1k1feCUlBxJO1lf8yc1ODqM7cdPBDXSfhd9jXEU
+         vocGfxdHGy999vvx7EYbtcChkEhr4p7aqnNT/Kx5dJbn3CdVQVs17doxKd3C/vvxH3qV
+         SKkUocygquEtNtfhZUb5ryeN6/VLRnVDCy749cVbiv/5qAZQAq52DrnYIpt1WHA9wmYV
+         xtDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=YiVfXkuiiFmGHfvbBkFBKjhNl2lj6ELuEybXjEXNeB8=;
+        b=lNxckhLwhTupgjzYmvut+lzK8gQ+43lj44ld/uxFx+075IIp0KsSRyqBSDms1iiQRy
+         48U7DZW6lgSTEziomzwvIuktXK05e6MTdw/udOEpEc9UwuqCO3H0rrQlZnzA+DbSWYaN
+         ayhjKO2MJnPPqUI3oek/N1wCQsDH+nZ783B+PbosisnQVOSv7LAXSMJlMZZb+jBGmyYP
+         xWOTWTmCYz4iXo42MCA8/LzEZYwEXGQMmGzpHXq6nYviQNV0SiBvgtxrvIAyzFEthJ3V
+         68ESvKAXT8E4HhkVYBvWCsuwskHz7g9yqYAIj6rHNbDwyF3PD5uk//yG5BNpjbFg2eqM
+         J9mg==
+X-Gm-Message-State: APf1xPD7WjUi8K6XUvfskE7MyvunpB4yRoBJAwGt7JMYnK+gTtcSNUSi
+        8CX8MP5LDC8wgAkcsI0HMZ7JRcn1/5+sQcPSnlvrnw==
+X-Google-Smtp-Source: AH8x224oEqJ8mnn1RQZqvml7oyFmkQAoM41tTEVf8GAC0qvL34oGz5TUkSswZjVxAG7jJ0oqEfK7CRgQzzEL56mj+Ds=
+X-Received: by 10.200.51.100 with SMTP id u33mr15241286qta.127.1518467489207;
+ Mon, 12 Feb 2018 12:31:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Vkk6g3eTXWCSnbtdkQexac4rF6T0Bsg+evbXgHlatyMxqR2kQnn
- EDFtwpRwUvWQsqHHG1SzXqFuc/yCqeBX1jAHXrT7bwaP5BLW/2F1BQRh9RfmADtkUGoqRco
- E64kRgCdDYFMYndcfd7o7SPuh8RBl8X/xkXv0U1fC3z/hqWEraJDR6gaEJ62kWhr+U8AJYW
- Q9sUgpuOxWFWXBHziR+Mg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mVqqS/skkUc=:AU96b4AlYW8wvLTICmpnf6
- oygA7VcI+PH0r9YJQqlHyY1HgohS3ccRvFEktb1k5C+4LgJjM7jOEhG1oy6K8h2Vejp8nPRLq
- 5Ts3zUhZKqnulRsK2oVM4zkYEoGWC40CRM4HIACu7QzaCvZmz50EIQc+fGfpKL9sKC9UGBlP4
- 22+kRMby85/If22wF3TDLt5Fxuqa5NL5LDga9Tv1/T/aTQny7zPcHhi9wAI4j0wDgIanZ+9Gc
- rauHkHfk/OFia3/jwB6pEsltqqu7r/s/MVdyjaSdZustV0l7rk73llXBCa09RWcLEYCKB37Rr
- OXnhv7m/udkJbku8pIPNy8e+OE6vcRP7z+z+pdwxJ9wVhyu/WOb14tx0iAnD3MHjCQv8YEm0T
- 8jPTvSjeULSx4+Erly+4uv3sAxZZ1De+8TGSOXm8BblJR2cn+Cyqf2OMOy0LZR4gBtltprUNL
- O0NWIcqFknFLFwi11MxtcUI+ItZ89xkJirGvISpm6TW4hGxy4za70cfQE7pbjV8iJo8Q4iGSM
- R5rGKz8hf6j8wjoqvVN9h9Ej5ah++VLf5uSMx4q9GpikssAQkGU5mkRumC5yew2vB3dlD63PV
- gmDRUBlARQl0ZdY3iqfmSprM6ZKJWBQ80cDn+F+UkEyr3NDuprUqqEZqlcZ2Pzw/JPNNUUKCA
- +c/zTmWZM2zx9pQgS14GeDzKpiEYgSzfr5wOo1zL27MffSbn6p85YZ8HFh9NF1y4bFE4kZdHA
- uE1JE+5O8U9GESkNNEjEHyWNqzgn/expldrJ2aqYNCLushk6hBDyKtjal1twBiM6g9Ay9mulI
- Ls1iTm3dU9Uub9v4rJ4HozhaS/OnykoFkiNFqHrzq+qOQf0ScI=
+Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 12:31:28 -0800 (PST)
+In-Reply-To: <xmqq7erit2wo.fsf@gitster-ct.c.googlers.com>
+References: <20180210010132.33629-1-lars.schneider@autodesk.com>
+ <20180212031526.40039-1-sunshine@sunshineco.com> <20180212031526.40039-3-sunshine@sunshineco.com>
+ <xmqq7erit2wo.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Feb 2018 15:31:28 -0500
+X-Google-Sender-Auth: mlnUy8LjWFkT40tRUobh1doRHuE
+Message-ID: <CAPig+cQ6Tq3J=bS8ymDqiXqUvoUiP59T=FGZgMw2FOAx0vyo=Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] worktree: add: change to new worktree directory
+ before running hook
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sergey,
+On Mon, Feb 12, 2018 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>> Fix this by changing to the new worktree's directory before running
+>> the hook, and adjust the tests to verify that the hook is indeed run
+>> within the correct directory.
+>
+> I like the approach taken by this replacement better.  Just to make
+> sure I understand the basic idea, let me rephrase what these two
+> patches are doing:
+>
+>  - "path" that is made absolute in this step is where the new
+>    worktree is created, i.e. the top-level of the working tree in
+>    the new worktree.  We chdir there and then run the hook script.
 
-On Mon, 12 Feb 2018, Sergey Organov wrote:
+Sorry for misleading. The "absolute path" stuff in this patch is
+unnecessary; it's probably just left-over from Lars's proposal which
+did need to make it absolute when setting GIT_WORK_TREE, and I likely
+didn't think hard enough to realize that it doesn't need to be
+absolute just for chdir(). I'll drop the unnecessary
+absolute_pathdup() in the re-roll.
 
-> Thanks for explanations, and could you please answer this one:
-> 
-> [...]
-> 
-> >> I also have trouble making sense of "Recreate merge commits instead of
-> >> flattening the history by replaying merges." Is it "<Recreate merge
-> >> commits by replaying merges> instead of <flattening the history>" or is it
-> >> rather "<Recreate merge commits> instead of <flattening the history by
-> >> replaying merges>?
+(The hook path in patch 1/2, on the other hand, does need to be made
+absolute since find_hook() returns a relative path before we've
+chdir()'d into the new worktree.)
 
-I thought I had answered that one.
+>  - Even though we often see hooks executed inside .git/ directory,
+>    for post-checkout, the top-level of the working tree is the right
+>    place, as that is where the hook is run by "git checkout" [...]
 
-Flattening the history is what happens in regular rebase (i.e. without
---recreate-merges and without --preserve-merges).
+Patch 1/2's commit message is a bit sloppy in its description of this.
+I'll tighten it up in the re-roll.
 
-The idea to recreate merges is of course to *not* flatten the history.
+I'm also not fully convinced that these new overloads of run_hook_*()
+are warranted since it's hard to imagine any other case when they
+would be useful. It may make sense just to have builtin/worktree.c run
+the hook itself for this one-off case.
 
-Maybe there should have been a comma after "history" to clarify what the
-sentence means.
+> I wonder if we need to clear existing GIT_DIR/GIT_WORK_TREE from the
+> environment, though.  When a user with a funny configuration (where
+> these two environment variables are pointing at unusual places) uses
+> "git worktree add" to create another worktree for the repository, it
+> would not be sufficient to chdir to defeat them that are appropriate
+> for the original, and not for the new, worktree, would it?
 
-The wording is poor either way, but you are also not a native speaker so
-we have to rely on, say, Eric to help us out here.
-
-Ciao,
-Johannes
+Good point. I'll look into sanitizing the environment.
