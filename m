@@ -2,112 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C969B1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 21:40:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4B101F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 21:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932403AbeBLVkX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 16:40:23 -0500
-Received: from mout.web.de ([212.227.17.12]:46783 "EHLO mout.web.de"
+        id S932424AbeBLVk0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 16:40:26 -0500
+Received: from mout.web.de ([212.227.17.12]:37001 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932204AbeBLVkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 16:40:22 -0500
+        id S932204AbeBLVkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 16:40:24 -0500
 Received: from [192.168.178.36] ([79.237.252.254]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MNtLj-1ergY91nch-007RBW; Mon, 12
- Feb 2018 22:40:14 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ljamy-1eETvQ38Z6-00bZHA; Mon, 12
+ Feb 2018 22:40:20 +0100
 Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru
  to object store
-To:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
 References: <20180205235508.216277-1-sbeller@google.com>
  <20180205235508.216277-4-sbeller@google.com>
  <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
  <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+ <xmqqsha5sywh.fsf@gitster-ct.c.googlers.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <adb2500e-d95d-bbaa-aa22-ee10d9613401@web.de>
-Date:   Mon, 12 Feb 2018 22:40:13 +0100
+Message-ID: <212094a6-f1bd-c4cd-01f9-e819a701cfac@web.de>
+Date:   Mon, 12 Feb 2018 22:40:20 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.6.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+In-Reply-To: <xmqqsha5sywh.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:xBvKzAJGX8OJAuJ+XxmDXMw0AH2wRfCqY2LqDfHx9S157JNbhO0
- pRFTvVmb5rtimII1MDWQTKqLtgduhUj5OSk6gluR3xLSBx73mwccIeyKSe8Vy+KFxacWv0+
- P/rEj/vrCgSFJNPnO7DW8+Ix+ZjJE8jqfK11iXqvt/Y3IDqbGWCgImvPEootTX6k+3Pqq4R
- 3bfpIVmgup9ER1ifVoDwg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/+Gkdk5KTMo=:z27VqSMbr/AbW+IQKBCEBw
- DRECSV9ylT9kEyMfDXv2+wzXDkY8xHPUDwicfUv7r+9B3dXWaAeaNbx9QyJw8zoW7XTnITjha
- 3Ncr1FUpalJ5SViEp/SB29hDOJCM45/avmEXAy8z0ky7LIB7rV0i6jJhv0V+rujhuc9RZ8l+L
- it1350DCVPxZ/R7mmVQVseeEqNjpJH04OQbFTzULt8C7sbG+f7CnPJmaKkJnbn20EoDSCM6tK
- grhtlrVaahVkzhj1mL252sfPSVwM/Fx6XxfiwDtqly/wBqzYv2xoF3fSYqG5T0OJ4BpSYkrJi
- ja9ohC+gQIvso0Wa7cFqif2VUpdseNhI4E4AK2shiEZdNVDxxh0vuCF+ooka3NSBtHgnoqO5X
- TSAtckJfCSTko+zG1fM82YhZOLzsDzRvhI+5prMRiX0CMwZGqHVCJCGIB+VwIPLVpDQtzZgO9
- SXynpJ4Px+DTqH+M8c0Iq6IyMkr+89/llhr6UD+OYhpJSu2/5puj5GYWfw45bkBew3UTGT2dC
- 3PWXt/H8CsMcOrTyC1gOyaCx16i6CnvdzHOV7+CedYAScpSfR9I43HGRzp9zRA/N8gyKJq4eA
- ChhqwYdmK/dMNEdxLTMeytXogjE49qtuBnr3yB3He5D153jJNwTOcZN5Ru6mBNOkCjEgY2d92
- RuL0CAwqgtMiBq+pIuz30aK5ylzyWh6eowIwFd2rYNufJiwV4qGFgRA8z60uZ2bCgZ9GQFH/o
- uMBQfIEmCy4znKNWWJ0F2wjh7ffwbswJkyrRu33CUh5CfpcYNyK0AMstZJNUp7zZNOLSUrKGb
- KZTad9p62NsHRmqMeGqGD8DaV9+K0vQ5pCZsLcVl9UaWap5kqs=
+X-Provags-ID: V03:K0:3E0PfjHIydrJa1jIBpEc9nT5LjEcGPnMdy76nNUW8cwmmO28kE/
+ IWBSTS5hKRn+I+w7eqk4BiVmglDCPnOADAY1Jmr3+VI1ssv0KT3+dbFTb6dr209RFc/+u21
+ HKgjUA6/92SdVJThYxVwG8nP61RNsrltpGNuanetD5FK9+oxTQHrqAhv29iESXrDZDLZmA7
+ KOrUYUdTx+FRnAp8P1lUA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gDNFb9M7g7c=:jqxanNcgQKnTNk7bxhyKxs
+ lX+QsjrwFt7rsm0ZAL+nyDugmlH8Kk1k4x7L8vQoaE052B/Luyr0txDl/+ByRC1PoWJRV5VBY
+ DrpArC5W0Ru+ME/PYFVcBq91RgQNi0t55LIcaa3fcR+xzyiLGvyq832uPQq/qgLtHQAjxhpSe
+ IiNQxIAyK3M5uPsysjGJ5a4NHXKscBGFXTpiIjNVLsiywulnKN4NLi1jlXh3Fhn+FNMgw+V8L
+ MlFmEszYTtbt01qDLHeQjk/czTFbOli7VfHdqwwmswLkBluN9MVdwxNbXiiVa4TTR1f+h37wT
+ IAknIWJNcPCudHliTnd/oIY7wsQdbuHJ61gIm8zhwks/G/QlJc2VMYb2ba+7/RFGZBIZIAK2X
+ w9M1QYp7s0jE42ihpkEhWIOtZQlXewwuF8nYuCW8sgNiQBrX7X6mM9p6XT2jKu7mcIqiPoM8V
+ lBvmEH5U6iHz/5+HZxCbvBvGsxxVhoBndjHxNNNwRUxr0Q7TCLRxCp3MCptd65338JLZWatMo
+ OMCGdekNTTZZkWtfUc0AefGMusP4p6H2hWbY+G6SEa3F+B0J3/yHsvXiRPaj+hEPgxg8Igxzl
+ zAa+MFiogvHKbS3d/7wCCqzUurruv1dihRptsjfH9G2y4uOfsfaYz0dgcEDf0raYmULuMYSVa
+ 9A+Qil3qQAx5JXeDca/7GkUqkHh2/6LHRMjZuWhYgehcz9u+iXyec3s16VUP+i9MipxlgRLxO
+ LrwzKXN2a2yi5mzqzo+rwYbAlBNS8u5VArUoF+lGQekUBGSKbC/ajuiXuCaINd+fzZoYqr9uB
+ hiS7KGAdoahxTDV7jAElmOGtMj3l+6wVTxf/NBThLRq7AqUZXk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[removed rene.scharfe@lsrfire.ath.cx from cc:; I lost that domain a few
- years ago.  Thanks for the heads-up, Stefan!]
-
-Am 12.02.2018 um 20:00 schrieb Stefan Beller:
-> On Fri, Feb 9, 2018 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Patch generated by
->>>
->>>   2. Applying the semantic patch contrib/coccinelle/packed_git.cocci
->>>      to adjust callers.
->>
->> About this part...
->>
->>> diff --git a/contrib/coccinelle/packed_git.cocci b/contrib/coccinelle/packed_git.cocci
->>> new file mode 100644
->>> index 0000000000..da317a51a9
->>> --- /dev/null
->>> +++ b/contrib/coccinelle/packed_git.cocci
->>> @@ -0,0 +1,7 @@
->>> +@@ @@
->>> +- packed_git
->>> ++ the_repository->objects.packed_git
->>> +
->>> +@@ @@
->>> +- packed_git_mru
->>> ++ the_repository->objects.packed_git_mru
->>
->> The above is correct for one-time transition turning pre-transition
->> code to post the_repository world, but I am not sure if we want to
->> have it in contrib/coccinelle/, where "make coccicheck" looks at, as
->> a way to continuously keep an eye on "style" violations like using
->> strbuf_addf() for a constant when strbuf_addstr() suffices.
->>
->> Wouldn't we need a mechanism to ensure that this file will *not* be
->> used in "make coccicheck" somehow?
-
-object_id.cocci is similar in this regard -- once the conversion is
-done, we won't need it anymore.
-
-> I can omit the cocci files from the patches, if that is better for maintenance.
+Am 12.02.2018 um 22:04 schrieb Junio C Hamano:
+> Stefan Beller <sbeller@google.com> writes:
 > 
-> I thought it may be a helpful
-> for merging this series with the rest of the evolved code base which
-> may make use of one of the converted functions. So instead of fixing
-> that new instance manually, cocinelle could do that instead.
+>> I thought it may be a helpful
+>> for merging this series with the rest of the evolved code base which
+>> may make use of one of the converted functions. So instead of fixing
+>> that new instance manually, cocinelle could do that instead.
+> 
+> Having the .cocci used for the conversion *somewhere* would indeed
+> be helpful, as it allows me to (1) try reproducing this patch by
+> somebody else using the file and following the steps in order to
+> audit this patch and (2) catch new places that need to be migrated
+> in in-flight topics.
+> 
+> But placing it in contrib/coccinelle/ has other side effects.
 
-Right, merging should be easier -- instead of fixing conflicts manually,
-Coccinelle could regenerate the patch.
+Running "make coccicheck" takes longer.  What other downsides are
+there?
+
+> I can think of two precedents in this project, namely:
+> 
+>   - fixup-builtins in 36e5e70e ("Start deprecating "git-command" in
+>     favor of "git command"", 2007-06-30)
+> 
+>   - convert-cache in d98b46f8 ("Do SHA1 hash _before_ compression.",
+>     2005-04-20)
+> 
+> that are about tools that is useful during a transition period but
+> can and should be removed after transition is over.  These two were
+> done as one-off and added at the top-level, but perhaps we want a
+> new directory at the top (e.g. devtools/) to add things like this
+> and hold them while they are relevant?
+
+Semantic patches for completed transformations can be removed as
+well (or archived, e.g. by renaming to .cocci.done or so).
 
 René
