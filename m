@@ -7,122 +7,65 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5538E1FAE2
-	for <e@80x24.org>; Mon, 12 Feb 2018 16:21:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3D4E1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 16:24:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964888AbeBLQV0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 11:21:26 -0500
-Received: from mail-io0-f177.google.com ([209.85.223.177]:45733 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964875AbeBLQVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 11:21:25 -0500
-Received: by mail-io0-f177.google.com with SMTP id p188so17824235ioe.12
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 08:21:24 -0800 (PST)
+        id S964923AbeBLQY3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 11:24:29 -0500
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:53307 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964916AbeBLQY2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 11:24:28 -0500
+Received: by mail-wm0-f41.google.com with SMTP id t74so10681345wme.3
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 08:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=l4NolcW8NOx3m73I0tCMOdDAeJacv35lrBX/D3u6tiU=;
-        b=Y9YOT5cwoz+cc67rR0cYf8ioyVNBzGlAYr9g1J4lEli7TvMiDWO545XUMHJVBaFr7P
-         x7ctK5UasMVS1LK7Sw5Fnqwp/UG7MrUDRXT8saHqxnD8NwJ6ws64rHz1lr1jZn3a4ic2
-         joXnjOp/whjrzCspDxMbpjZWRNu03K66386YkBdugQ1/OmHVKNgPIOabCGlJV/uPAjhx
-         /RR6owTGupoRInPw2SK7xykAT3CSiDOjkSt2StcDv8GRfaJ6vBoBBJS62kb7m/yIBww7
-         /Wgul0eLJvv3G8hl8EKUaan9di2hbemZ9eg7AOTSz3uPSAMpfXmKGKBnTziq6XLGKMC4
-         NOyg==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=kYlLAO1oRqWSYblLEa5MANWicKkiSz0orWU5R9tgh9s=;
+        b=JJzO4tk4VIVjJMJ7GvsSmNTL6SUCBT07tygmvpQ77Es/CmU+zc8Hi8WXSh0kjE5tgl
+         naJXuk2WVAsfrWdZ9nMEmd6LKXVQR6J+L018v9Za1q2/xO9Npqx4Acd+rXQYhOOaKY7p
+         Nq6v6/FzuET0Ab/WfHF7r6UBBZ3gcEvYKXN0Ptas7w6gYVUgklAgGqBQp3l5+xGh4dqh
+         roI3hk+b6cSEZPxcTQUNPfOlR7LithxW78TwEkl/JMZePvtLGLRi1R649X8+HuSh0Iw0
+         TExrasdjHKNBmFkAZMEf/I7l4bnS0KGDDJRnSPzet4+baW2t1tZa9xxGk8WCEuwHDk6D
+         Adlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=l4NolcW8NOx3m73I0tCMOdDAeJacv35lrBX/D3u6tiU=;
-        b=iBfYkwdjCJxFjRc1/HsVPbO2Ke+K362/Twqf161p0EFGnK80QBTPLb6qI9gkn71nKO
-         sT9GWWHmYVMy1KwR1P0lHJbrl2NIqnA0TokdJUT7GlqB0ATycK6/N19QTD0Rx+FpwZY0
-         XoNjFQdv3J1VRQzCmF7q86p8leZGQ/1UM9uJSb/X+THMpPtOFiUR628gFGkYT8QDGpAf
-         kgg3KxIZNjWqiJAOWJXEccACV0Amqv/aiRdfZg+/MqyniUA60t4cmGjK0j0p8BQKF9cv
-         U7hrz7uCPvQ2HAeqRjcI3KNozd6lJ+ct4GFoGWJKZlKZlll+yw10A7fjHzZAGn3Us5cs
-         ZBew==
-X-Gm-Message-State: APf1xPCr9QOjLoF77z0MsooeuiijiZ7f8dZhvIS+Dl972O5rSoYxlyFs
-        3e/YEVl5k0ByrFSL/+5/uWDnF+7/kCTKGAIbG8Q=
-X-Google-Smtp-Source: AH8x226IVxBN5CjJ5hZyTS74aeXECQ4gI0Mx2hLXAtEYMqt8autS6UdKsJFIDmDP/RrH++eTKZQ9aHWrNY9S449fuTc=
-X-Received: by 10.107.168.232 with SMTP id e101mr2359804ioj.180.1518452484127;
- Mon, 12 Feb 2018 08:21:24 -0800 (PST)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=kYlLAO1oRqWSYblLEa5MANWicKkiSz0orWU5R9tgh9s=;
+        b=k/uX7SBw89/uGQs9EnI/z92n0YYFZ48JqOMxOJj5G9+e+iFezzaw+HgVZOlmGMsPNS
+         z/auWRM0ROdXv5EPFuxlEotJttu3gTrgpn6qOfJ3qzoPd2CuXCH692d6fYPZSqxiFuAJ
+         3ynkWKF5kt6MiAf7Toe9afaRsL+uRXRmBFVX+MMtfB0pDIlRSw0u8yOqe5nCmEql2Vu1
+         Hl/yWyBmJbBqVk89qQHNIwkr+EKYypzMec8lpUSJ3EMtOdFaNlKvopBIbyKuryaubFkg
+         uEPplmY1P+FyY6Yci7vWn5zIZRXdqEKNombe/xo0Cim6zxspXFQnlvQmeh5RZMa7WvYX
+         f/vA==
+X-Gm-Message-State: APf1xPBkCgakQ+41oKwayUvjwWj1fk2vXf4vkioruBXsJYVGwSjAStmC
+        /AqJC0hmd724bx7XeBIIwEtnBQ==
+X-Google-Smtp-Source: AH8x225emebfbTDcv6JklxGWD+P6yrLkB3LLs+KAG3mTXy8Yu3g8UVQRT50CQaWfxD+LkU94p6YgQw==
+X-Received: by 10.28.245.25 with SMTP id t25mr3751769wmh.77.1518452666702;
+        Mon, 12 Feb 2018 08:24:26 -0800 (PST)
+Received: from [173.194.76.16] (gate.reksoft.ru. [188.64.144.36])
+        by smtp.googlemail.com with ESMTPSA id d73sm7531219wma.25.2018.02.12.08.24.25
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Feb 2018 08:24:26 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Basin Ilya <basinilya@gmail.com>
+Subject: partial fetch
+Message-ID: <3086333a-031d-0c98-a610-d5e36992d298@gmail.com>
+Date:   Mon, 12 Feb 2018 19:24:26 +0300
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.79.150.155 with HTTP; Mon, 12 Feb 2018 08:21:23 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1802120522580.17810@localhost.localdomain>
-References: <alpine.LFD.2.21.1802091431360.10982@localhost.localdomain>
- <xmqqo9kyvthx.fsf@gitster-ct.c.googlers.com> <alpine.LFD.2.21.1802120522580.17810@localhost.localdomain>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 12 Feb 2018 17:21:23 +0100
-Message-ID: <CAP8UFD03TDGBU3t3+m2OmhyJt6sNcPhMZ2ejzufX3x-_1EEDHA@mail.gmail.com>
-Subject: Re: totally confused as to what "git bisect skip" is supposed to do
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 11:44 AM, Robert P. J. Day
-<rpjday@crashcourse.ca> wrote:
-> On Fri, 9 Feb 2018, Junio C Hamano wrote:
->
->> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
->>
->> >   i'm confused ... why, after skipping a good chunk in the interval
->> > [v4.13,v4.14], do i still have exactly 7300 revisions to bisect? what
->> > am i so hopelessly misunderstanding here?
->>
->> Are you really "skipping" a chunk in the interval?
->>
->> I thought that "git bisect skip" is a way for you to respond, when
->> "git bisect" gave you a commit to test, saying "sorry, I cannot test
->> that exact version, please offer me something else to test".  And
->> each time you say that, you are not narrowing the search space in
->> any way, so it is understandable that the numver of candidate bad
->> commits will not decrease.
->
->   this might be an issue of terminology, then, as "man git-bisect"
-> clearly suggests you can skip a range:
->
->     You can also skip a range of commits, instead of just one
->     commit, using range notation. For example:
->
->            $ git bisect skip v2.5..v2.6
->
->     This tells the bisect process that no commit after v2.5, up to
->     and including v2.6, should be tested.
-
-Yeah, I think this is kind of a terminology related.
-
-First when git bisect says "Bisecting: XXX revisions left to test
-after this" it doesn't mean that all those revisions left will
-actually be tested, as git bisect's purpose is to avoid testing as
-many revisions as possible.
-
-So the XXX revisions are actually the revisions that possibly contain
-the first bad commit.
-
-And, as Junio wrote, when you tell git bisect that you cannot test
-some revisions, it doesn't mean that those revisions cannot contain
-the first bad commit.
-
-> my issue (if this is indeed an issue) is that if i select to skip a
-> sizable range of commits to test, should that not result in git bisect
-> telling me it now has far fewer revisions to test? if i, in fact,
-> manage to "disqualify" a number of commits from testing, is there no
-> visual confirmation that i now have fewer commits to test?
-
-I hope that the above clarification I gave is enough, but maybe the
-following will help you.
-
-If you cannot test let's say 20 commits because there is build problem
-in those commits, and in the end Git tells you that the first bad
-commit could be any of 3 commits, 2 of them that were previously
-marked with skip, then you could still, if you wanted, fix those
-commits, so that they can be built and test them.
-
-So yeah if we only talk about the current bisection, the skipped
-commits will not be tested, but if we talk about completely finishing
-the bisection and finding the first bad commit, then those commits
-could still be tested.
+Hi.
+In 2017 a set of patches titled "add object filtering for partial fetch" was accepted. Is it what I think it is? Will we be able to download only a subdirectory from a
+large project?
