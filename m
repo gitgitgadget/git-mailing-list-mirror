@@ -2,72 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA8211F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 05:22:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBB731F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 07:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750838AbeBLFWW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 00:22:22 -0500
-Received: from mail.javad.com ([54.86.164.124]:47121 "EHLO mail.javad.com"
+        id S1751659AbeBLHid (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 02:38:33 -0500
+Received: from mail.javad.com ([54.86.164.124]:39719 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750824AbeBLFWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 00:22:20 -0500
+        id S1751171AbeBLHic (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 02:38:32 -0500
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 6DB5F3E926;
-        Mon, 12 Feb 2018 05:22:19 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 2430741B1D;
+        Mon, 12 Feb 2018 07:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518412939;
-        bh=VkzNdjtavc6BEVQSBvKjCuf9zGiLYZBVBSheuS8g2mw=; l=4653;
+        s=default; t=1518421111;
+        bh=e79/am2P4jqSy+L2rUlQ1xQaDBner8l5HtPD+8noZzU=; l=2577;
         h=Received:From:To:Subject;
-        b=QCGfz+JwumuzMcVB76Ki5GgfP8XQORS0RvFtZj9POQTPz9FoBQpDC1NuaKKSscGK4
-         bRQIwZeB9qF/CQHy50dKBLSdNEP4E2DmZqFELbcr1Q+b28EGAGsZdhr4IQT7K+98E7
-         bDTqeDL3zXbH9xWiySQaClq4TbJ+gdf59LzYWN98=
+        b=a18gtLD3WAJIbJMAqy7RfWtuXopqJ+0LZEeUgTY5RP2DTnlHwnZIYodIGTqkIn+ld
+         qVCADlOzx2eZZZuXJxbm1Yd0gnrwdikq6KQzzqEibIqGI9fQQEH/K+JEvrVMffpRRu
+         PG3g26GzetVODjG1eZcjyVoHHaiHydNs+HcU90GI=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518412939;
-        bh=VkzNdjtavc6BEVQSBvKjCuf9zGiLYZBVBSheuS8g2mw=; l=4653;
+        s=default; t=1518421111;
+        bh=e79/am2P4jqSy+L2rUlQ1xQaDBner8l5HtPD+8noZzU=; l=2577;
         h=Received:From:To:Subject;
-        b=QCGfz+JwumuzMcVB76Ki5GgfP8XQORS0RvFtZj9POQTPz9FoBQpDC1NuaKKSscGK4
-         bRQIwZeB9qF/CQHy50dKBLSdNEP4E2DmZqFELbcr1Q+b28EGAGsZdhr4IQT7K+98E7
-         bDTqeDL3zXbH9xWiySQaClq4TbJ+gdf59LzYWN98=
+        b=a18gtLD3WAJIbJMAqy7RfWtuXopqJ+0LZEeUgTY5RP2DTnlHwnZIYodIGTqkIn+ld
+         qVCADlOzx2eZZZuXJxbm1Yd0gnrwdikq6KQzzqEibIqGI9fQQEH/K+JEvrVMffpRRu
+         PG3g26GzetVODjG1eZcjyVoHHaiHydNs+HcU90GI=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518412939;
-        bh=VkzNdjtavc6BEVQSBvKjCuf9zGiLYZBVBSheuS8g2mw=; l=4653;
+        s=default; t=1518421111;
+        bh=e79/am2P4jqSy+L2rUlQ1xQaDBner8l5HtPD+8noZzU=; l=2577;
         h=Received:From:To:Subject;
-        b=QCGfz+JwumuzMcVB76Ki5GgfP8XQORS0RvFtZj9POQTPz9FoBQpDC1NuaKKSscGK4
-         bRQIwZeB9qF/CQHy50dKBLSdNEP4E2DmZqFELbcr1Q+b28EGAGsZdhr4IQT7K+98E7
-         bDTqeDL3zXbH9xWiySQaClq4TbJ+gdf59LzYWN98=
+        b=a18gtLD3WAJIbJMAqy7RfWtuXopqJ+0LZEeUgTY5RP2DTnlHwnZIYodIGTqkIn+ld
+         qVCADlOzx2eZZZuXJxbm1Yd0gnrwdikq6KQzzqEibIqGI9fQQEH/K+JEvrVMffpRRu
+         PG3g26GzetVODjG1eZcjyVoHHaiHydNs+HcU90GI=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518412939;
-        bh=VkzNdjtavc6BEVQSBvKjCuf9zGiLYZBVBSheuS8g2mw=; l=4653;
+        s=default; t=1518421111;
+        bh=e79/am2P4jqSy+L2rUlQ1xQaDBner8l5HtPD+8noZzU=; l=2577;
         h=Received:From:To:Subject;
-        b=QCGfz+JwumuzMcVB76Ki5GgfP8XQORS0RvFtZj9POQTPz9FoBQpDC1NuaKKSscGK4
-         bRQIwZeB9qF/CQHy50dKBLSdNEP4E2DmZqFELbcr1Q+b28EGAGsZdhr4IQT7K+98E7
-         bDTqeDL3zXbH9xWiySQaClq4TbJ+gdf59LzYWN98=
+        b=a18gtLD3WAJIbJMAqy7RfWtuXopqJ+0LZEeUgTY5RP2DTnlHwnZIYodIGTqkIn+ld
+         qVCADlOzx2eZZZuXJxbm1Yd0gnrwdikq6KQzzqEibIqGI9fQQEH/K+JEvrVMffpRRu
+         PG3g26GzetVODjG1eZcjyVoHHaiHydNs+HcU90GI=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518421111;
+        bh=e79/am2P4jqSy+L2rUlQ1xQaDBner8l5HtPD+8noZzU=; l=2577;
+        h=Received:From:To:Subject;
+        b=a18gtLD3WAJIbJMAqy7RfWtuXopqJ+0LZEeUgTY5RP2DTnlHwnZIYodIGTqkIn+ld
+         qVCADlOzx2eZZZuXJxbm1Yd0gnrwdikq6KQzzqEibIqGI9fQQEH/K+JEvrVMffpRRu
+         PG3g26GzetVODjG1eZcjyVoHHaiHydNs+HcU90GI=
 Authentication-Results: mail.javad.com;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
 Received-SPF: pass (mail.javad.com: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <osv@osv.gnss.ru>)
-        id 1el6ZE-0008Eu-6k; Mon, 12 Feb 2018 08:22:16 +0300
+        id 1el8h3-0008SO-6S; Mon, 12 Feb 2018 10:38:29 +0300
 From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
 References: <cover.1516225925.git.johannes.schindelin@gmx.de>
         <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-        <874lmqirma.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Mon, 12 Feb 2018 08:22:16 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Sun, 11 Feb 2018 00:06:28 +0100
-        (STD)")
-Message-ID: <87zi4edbp3.fsf@javad.com>
+        <87k1vpqq85.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802071818240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87o9kyitf7.fsf@javad.com>
+        <ec5c7aa2-b36b-aca8-d82f-9d131ac83b41@kdbg.org>
+Date:   Mon, 12 Feb 2018 10:38:29 +0300
+In-Reply-To: <ec5c7aa2-b36b-aca8-d82f-9d131ac83b41@kdbg.org> (Johannes Sixt's
+        message of "Fri, 9 Feb 2018 08:13:07 +0100")
+Message-ID: <87a7wed5e2.fsf@javad.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,123 +85,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Hi Sergey,
+> Am 09.02.2018 um 07:11 schrieb Sergey Organov:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>> Let me explain the scenario which comes up plenty of times in my work with
+>>> Git for Windows. We have a thicket of some 70 branches on top of git.git's
+>>> latest release. These branches often include fixup! and squash! commits
+>>> and even more complicated constructs that rebase cannot handle at all at
+>>> the moment, such as reorder-before! and reorder-after! (for commits that
+>>> really need to go into a different branch).
+>>
+>> I sympathize, but a solution that breaks even in simple cases can't be
+>> used reliably to solve more complex problems, sorry. Being so deep
+>> into your problems, I think you maybe just aren't seeing forest for the
+>> trees [1].
 >
-> On Fri, 9 Feb 2018, Sergey Organov wrote:
->
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->> 
->> [...]
->> 
->> > With this patch, the goodness of the Git garden shears comes to `git
->> > rebase -i` itself. Passing the `--recreate-merges` option will generate
->> > a todo list that can be understood readily, and where it is obvious
->> > how to reorder commits. New branches can be introduced by inserting
->> > `label` commands and calling `merge - <label> <oneline>`. And once this
->> > mode has become stable and universally accepted, we can deprecate the
->> > design mistake that was `--preserve-merges`.
->> 
->> This doesn't explain why you introduced this new --recreate-merges. Why
->> didn't you rather fix --preserve-merges to generate and use new todo
->> list format?
->
-> Because that would of course break existing users of
-> --preserve-merges.
+> Hold your horses! Dscho has a point here. --preserve-merges
+> --first-parent works only as long as you don't tamper with the side
+> branches. If you make changes in the side branches during the same
+> rebase operation, this --first-parent mode would undo that change.
 
-How exactly? Doesn't "--recreate-merges" produce the same result as
-"--preserve-merges" if run non-interactively?
+He has a point indeed, but it must not be used as an excuse to silently
+damage user data, as if there are no other options!
 
-> So why not --preserve-merges=v2? Because that would force me to maintain
-> --preserve-merges forever. And I don't want to.
->
->> It doesn't seem likely that todo list created by one Git version is to
->> be ever used by another, right?
->
-> No. But by scripts based on `git rebase -p`.
->
->> Is there some hidden reason here? Some tools outside of Git that use old
->> todo list format, maybe?
->
-> Exactly.
->
-> I did mention such a tool: the Git garden shears:
->
-> 	https://github.com/git-for-windows/build-extra/blob/master/shears.sh
->
-> Have a look at it. It will inform the discussion.
+Simple --first-parent won't always fit, it's obvious. I used
+--first-parent patch as mere illustration of concept, it's rather
+"rebase [-i] --keep-the-f*g-shape" itself that should behave. There
+should be no need for actual --first-parent that only fits
+no-manual-editing use-cases.
 
-I've searched for "-p" in the script, but didn't find positives for
-either "-p" or "--preserve-merges". How it would break if it doesn't use
-them? What am I missing?
+Look at it as if it's a scale where --first-parent is on one side, and
+"blind re-merge" is on the other. The right answer(s) lie somewhere
+in-between, but I think they are much closer to --first-parent than they
+are to "blind re-merge".
 
->
->> Then, if new option indeed required, please look at the resulting manual:
->> 
->> --recreate-merges::
->> 	Recreate merge commits instead of flattening the history by replaying
->> 	merges. Merge conflict resolutions or manual amendments to merge
->> 	commits are not preserved.
->> 
->> -p::
->> --preserve-merges::
->> 	Recreate merge commits instead of flattening the history by replaying
->> 	commits a merge commit introduces. Merge conflict resolutions or manual
->> 	amendments to merge commits are not preserved.
->
-> As I stated in the cover letter, there are more patches lined up after
-> this patch series.
+> (And, yes, its result would be called an "evil merge", and that scary
+> name _should_ frighten you!)
 
-Good, but I thought this one should better be self-consistent anyway.
-What if those that come later aren't included?
-
->
-> Have a look at https://github.com/git/git/pull/447, especially the latest
-> commit in there which is an early version of the deprecation I intend to
-> bring about.
-
-You shouldn't want a deprecation at all should you have re-used
---preserve-merges in the first place, and I still don't see why you
-haven't. 
-
->
-> Also, please refrain from saying things like... "Don't you think ..."
->
-> If you don't like the wording, I wold much more appreciate it if a better
-> alternative was suggested.
-
-Sorry, but how can I suggest one if I don't understand what you are
-doing here in the first place? That's why I ask you.
-
->
->> Don't you think more explanations are needed there in the manual on
->> why do we have 2 separate options with almost the same yet subtly
->> different description? Is this subtle difference even important? How?
->> 
->> I also have trouble making sense of "Recreate merge commits instead of
->> flattening the history by replaying merges." Is it "<Recreate merge
->> commits by replaying merges> instead of <flattening the history>" or is it
->> rather "<Recreate merge commits> instead of <flattening the history by
->> replaying merges>?
->
-> The documentation of the --recreate-merges option is not meant to explain
-> the difference to --preserve-merges. It is meant to explain the difference
-> to regular `git rebase -i`, which flattens the commit history into a
-> single branch without merge commits (in fact, all merge commits are simply
-> ignored).
-
-Yeah, that's obvious, but the point is that resulting manual is ended
-up being confusing.
-
-> And I would rather not start to describe the difference between
-> --recreate-merges and --preserve-merges because I want to deprecate the
-> latter, and describing the difference as I get the sense is your wish
-> would simply mean more work because it would have to be added and then
-> removed again.
-
-I suspect you actually didn't need those new option in the first place,
-and that's the core reason of these troubles.
+(It won't always be "evil merge", and it still doesn't frighten even if
+it will, provided git stops making them more evil then they actually
+deserve, and it isn't an excuse to silently distort user data anyway!)
 
 -- Sergey
+
+[1] The "--first-parent" here would rather keep that change from
+propagation to the main-line, not undo it, and sometimes it's even the
+right thing to do ("-x ours" for the original merge being one example).
+Frequently though it is needed on main-line indeed, and there should be
+a way to tell git to propagate the change to the main-line, but even
+then automatic blind unattended re-merge is wrong answer and I'm sure
+git can be made to do better than that.
