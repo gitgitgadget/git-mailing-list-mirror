@@ -2,83 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AD6D1F404
-	for <e@80x24.org>; Sun, 11 Feb 2018 18:52:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1139C1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 00:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753642AbeBKSwk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 11 Feb 2018 13:52:40 -0500
-Received: from parikesit.satu.rumahweb.com ([103.247.9.189]:55795 "EHLO
-        parikesit.satu.rumahweb.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753619AbeBKSwk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 11 Feb 2018 13:52:40 -0500
-X-Greylist: delayed 3577 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Feb 2018 13:52:39 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=anaufalm.com; s=default; h=Message-ID:Subject:To:From:Date:
-        Content-Transfer-Encoding:Content-Type:MIME-Version:Sender:Reply-To:Cc:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=q9iiWEZ9JkypfhuK66OSbAHBMNANVnZi0Fnq78d7g5s=; b=fbZ+CgdOzEXR9qWicazOXaQex
-        pqZMbBOgBZwW9uGgzo5Mekmi1okiuVcc3ya9jsnvOxdsAGaFruJl1wNCDpDLSLTj1Kn+JiQGNUWXW
-        jXyLEkMty6jr6Q0dgVXEdRxov5c87f40UygfPCtQ86XMWcy8AF4XNU7wVrepkouaks115xTjRIdzf
-        h08/Qi1SFNrUNUoRxMUU2xqqsNeD9zmEhNPnRHBNLALp5tq9VAZy1zrJ4LkmO7+NunXfSuh2jVmMw
-        X9+rclsnsb+0R4L7MszHdbSFUMMxZJT436WEfyf83c3xhu0ksfLda1ktTCFX/LpaN43JfzwN7Qm0+
-        tZhFPuOuw==;
-Received: from [::1] (port=41460 helo=anaufalm.com)
-        by parikesit.iixcp.rumahweb.com with esmtpa (Exim 4.89_1)
-        (envelope-from <halo@anaufalm.com>)
-        id 1ekvoC-0003Nx-FK
-        for git@vger.kernel.org; Mon, 12 Feb 2018 00:53:00 +0700
+        id S932259AbeBLAQb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 11 Feb 2018 19:16:31 -0500
+Received: from avasout01.plus.net ([84.93.230.227]:45780 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932244AbeBLAQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Feb 2018 19:16:31 -0500
+Received: from [10.0.2.15] ([80.189.70.162])
+        by smtp with ESMTPA
+        id l1nIeIRUyykf2l1nJe74xR; Mon, 12 Feb 2018 00:16:29 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=B8mXLtlM c=1 sm=1 tr=0
+ a=zzlqjQC3YyNvDZl/Gy+4mg==:117 a=zzlqjQC3YyNvDZl/Gy+4mg==:17
+ a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8 a=PS1KL46r0XjL7vOh31YA:9
+ a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH 0/2] test_i18ngrep
+Message-ID: <27cb6114-2aa7-c2cc-c3dc-4ac4e318d5f7@ramsayjones.plus.com>
+Date:   Mon, 12 Feb 2018 00:16:28 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 12 Feb 2018 00:53:00 +0700
-From:   halo@anaufalm.com
-To:     git@vger.kernel.org
-Subject: REQUEST NEW TRANSLATION (INDONESIAN/id_ID)
-Message-ID: <f5c147253f852d1243613a77e2c8d97b@anaufalm.com>
-X-Sender: halo@anaufalm.com
-User-Agent: Roundcube Webmail/1.3.3
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - parikesit.iixcp.rumahweb.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - anaufalm.com
-X-Get-Message-Sender-Via: parikesit.iixcp.rumahweb.com: authenticated_id: halo@anaufalm.com
-X-Authenticated-Sender: parikesit.iixcp.rumahweb.com: halo@anaufalm.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-CMAE-Envelope: MS4wfONq3odd5fGWXd0ZDxAebafSeYByQ8cZNzTwr3RxeCISgQ9o+zzbMdXpY085NPOUqcue188e4anIFJ4dQ5QV3LQoUKWiiwcgP3ZPsB43jzXjMcjprpH0
+ pENbxRkBgsmQnhQJIxe/tdP/L8M1kljaYA2HrTcHeADec+kM3CaNqCs+jGeyqa6bUzkaumMn5Ie11g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git-l10n Team
 
-I want to join to this project as a translator for Indonesian language 
-(ID)
-I have read the README file located in the 
-https://github.com/git-l10n/git-po/blob/master/po/README directory
+These patches resulted from an experiment of yours [1], I wrote these up
+last year, then promptly forgot about them! ;-)
 
-I also have a fork repository master (git-l10n) to my repository 
-(anaufalm), and also I have edited the TEAMS file by adding my name as a 
-translator for Indonesia (id). And also I created a new file `id.po` 
-which I copy from file` ca.po` as the source. Because I not find 
-original file as english, like `en.po`.
+These patches were built on top of v2.16, and the second patch has a simple
+conflict with commit 93b4b0313c ("t5536: let 'test_i18ngrep' read the file
+without redirection", 2018-02-08), which is in the 'next' branch.
 
-Furthermore, if approved, I will translate the file asap.
+The conflict looks like so:
 
-Thank you.
+  $ git diff
+  diff --cc t/t5536-fetch-conflicts.sh
+  index 644736b8a,38381df5e..000000000
+  --- a/t/t5536-fetch-conflicts.sh
+  +++ b/t/t5536-fetch-conflicts.sh
+  @@@ -22,7 -22,7 +22,11 @@@ verify_stderr () 
+          cat >expected &&
+          # We're not interested in the error
+          # "fatal: The remote end hung up unexpectedly":
+  ++<<<<<<< HEAD
+   +      test_i18ngrep -E '^(fatal|warning):' error | grep -v 'hung up' >actual | sort &&
+  ++=======
+  +       grep -E '^(fatal|warning):' <error | grep -v 'hung up' >actual &&
+  ++>>>>>>> master-i18n
+          test_i18ncmp expected actual
+    }
+    
+  $ 
+  
+The resolution is to simply take the 'master-i18n' text. However, if you
+prefer, I can rebuild these patches on top of 'next' and re-submit. Just
+let me know.
 
----
+Note that I replaced an 'test_i18ngrep -E' with 'grep -E' rather than egrep.
+(the grep man page claims that egrep, fgrep and rgrep are deprecated, but I
+think that has been the case for as long as I can remember, so don't hold
+your breath!).
 
-My repository (fork): https://github.com/anaufalm/git-id
-PR link request TEAMS: https://github.com/git-l10n/git-po/pull/288
-PR link add id.po file: https://github.com/git-l10n/git-po/pull/289
+[1] https://public-inbox.org/git/%3Cxmqqvahawirr.fsf@gitster.mtv.corp.google.com%3E/
+
+Ramsay Jones (2):
+  t4151: consolidate multiple calls to test_i18ngrep
+  t5556: replace test_i18ngrep with a simple grep
+
+ t/t4151-am-abort.sh        | 5 ++---
+ t/t5536-fetch-conflicts.sh | 2 +-
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+-- 
+2.16.0
