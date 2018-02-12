@@ -8,28 +8,28 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D6A91F576
-	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 742CF1F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933042AbeBLIKD (ORCPT <rfc822;e@80x24.org>);
+        id S933040AbeBLIKD (ORCPT <rfc822;e@80x24.org>);
         Mon, 12 Feb 2018 03:10:03 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:58624
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:58626
         "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932985AbeBLIIz (ORCPT
+        by vger.kernel.org with ESMTP id S932987AbeBLIIz (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 03:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1518422934;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=j3n9vkQi8yyTXI+r61USzwtCgcUKUoASCh7/ePcgnOo=;
-        b=FDwI1qdbxeYgHlguHdaQ6uhgzjwXYI2QYi+dB/+AOrkDkE+fMnAHajLmih2c7T70
-        RetyHJqfzS5lebnGLlfMQP02n4WCUtnkA5uLz5GcMv1vs4RxMDpkaeVJPKpKIh+pQ3K
-        vovh9yA+gDiDkdZ4oiiZu+keCjza6FJraJoOcA/Q=
+        bh=2xe69z5iKE31cXc/818zjaVf6+t795AD5yqhu7s5aDk=;
+        b=Eue+FaIJe9b0NfjoGQLqgIF8hqSrW7pEHf4xZyOVJHvmY0HgvpK6kH+K7VcNd8b4
+        KTC/ZBGYP/2OvmHmRoESyiptGRZ1liwN9sfKa89mW+MiQVWC/21erDSBqW7xv5R1/Dt
+        AYjH5dQYkhBq5uyBIyn9WI11Xy4sln9oYD5I8ga8=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020161890f4391-9f76231a-4768-461b-80b9-02cada27a943-000000@eu-west-1.amazonses.com>
+Message-ID: <01020161890f435c-c3044984-d9aa-4aaf-90e3-1affa109b3b3-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
 References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 23/23] cat-file: update of docs
+Subject: [PATCH v3 12/23] cat-file: start reusing populate_value()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -41,45 +41,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update the docs for cat-file command. Some new formatting atoms added
-because of reusing ref-filter code.
-We do not support cat-file atoms in general formatting logic
-(there is just the support for cat-file), that is why some of the atoms
-are still explained in cat-file docs.
-We need to move these explanations when atoms will be supported
-by other commands.
+Move logic related to getting object info from cat-file to ref-filter.
+It will help to reuse whole formatting logic from ref-filter further.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- Documentation/git-cat-file.txt | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ builtin/cat-file.c | 17 ++++-------------
+ ref-filter.c       | 20 ++++++++++++++++++++
+ ref-filter.h       |  1 +
+ 3 files changed, 25 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index f90f09b03fae5..90639ac21d0e8 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -187,17 +187,8 @@ linkgit:git-rev-parse[1].
- You can specify the information shown for each object by using a custom
- `<format>`. The `<format>` is copied literally to stdout for each
- object, with placeholders of the form `%(atom)` expanded, followed by a
--newline. The available atoms are:
--
--`objectname`::
--	The 40-hex object name of the object.
--
--`objecttype`::
--	The type of the object (the same as `cat-file -t` reports).
--
--`objectsize`::
--	The size, in bytes, of the object (the same as `cat-file -s`
--	reports).
-+newline. The available atoms are the same as that of
-+linkgit:git-for-each-ref[1], but there are some additional ones:
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 0c362828ad81e..6db57e3533806 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -285,21 +285,12 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct ref_array_item item = {0};
  
- `objectsize:disk`::
- 	The size, in bytes, that the object takes up on disk. See the
+-	if (!data->skip_object_info &&
+-	    sha1_object_info_extended(data->oid.hash, &data->info,
+-				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+-		printf("%s missing\n",
+-		       obj_name ? obj_name : oid_to_hex(&data->oid));
+-		fflush(stdout);
+-		return;
+-	}
+-
+ 	item.oid = data->oid;
+-	item.type = data->type;
+-	item.size = data->size;
+-	item.disk_size = data->disk_size;
+ 	item.rest = data->rest;
+-	item.delta_base_oid = &data->delta_base_oid;
++	item.objectname = obj_name;
++
++	if (populate_value(&item))
++		return;
+ 
+ 	strbuf_expand(&buf, opt->format.format, expand_format, &item);
+ 	strbuf_addch(&buf, '\n');
+diff --git a/ref-filter.c b/ref-filter.c
+index d09ec1bde6d54..3f92a27d98b6c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1403,6 +1403,23 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
+ 	return show_ref(&atom->u.refname, ref->refname);
+ }
+ 
++static int check_and_fill_for_cat(struct ref_array_item *ref)
++{
++	if (!cat_file_info->skip_object_info &&
++	    sha1_object_info_extended(ref->oid.hash, &cat_file_info->info,
++				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
++		const char *e = ref->objectname;
++		printf("%s missing\n", e ? e : oid_to_hex(&ref->oid));
++		fflush(stdout);
++		return -1;
++	}
++	ref->type = cat_file_info->type;
++	ref->size = cat_file_info->size;
++	ref->disk_size = cat_file_info->disk_size;
++	ref->delta_base_oid = &cat_file_info->delta_base_oid;
++	return 0;
++}
++
+ /*
+  * Parse the object referred by ref, and grab needed value.
+  * Return 0 if everything was successful, -1 otherwise.
+@@ -1424,6 +1441,9 @@ int populate_value(struct ref_array_item *ref)
+ 			ref->symref = "";
+ 	}
+ 
++	if (cat_file_info && check_and_fill_for_cat(ref))
++		return -1;
++
+ 	/* Fill in specials first */
+ 	for (i = 0; i < used_atom_cnt; i++) {
+ 		struct used_atom *atom = &used_atom[i];
+diff --git a/ref-filter.h b/ref-filter.h
+index 87b026b8b76d0..5c6e019998716 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -45,6 +45,7 @@ struct ref_array_item {
+ 	off_t disk_size;
+ 	const char *rest;
+ 	struct object_id *delta_base_oid;
++	const char *objectname;
+ 	char refname[FLEX_ARRAY];
+ };
+ 
 
 --
 https://github.com/git/git/pull/452
