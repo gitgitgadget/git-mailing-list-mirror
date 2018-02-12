@@ -2,82 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5158D1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 18:56:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7AD1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 19:01:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753466AbeBLS4z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 13:56:55 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34508 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752972AbeBLS4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 13:56:54 -0500
-Received: by mail-wr0-f196.google.com with SMTP id m5so4219755wrg.1
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 10:56:53 -0800 (PST)
+        id S1753836AbeBLTBC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 14:01:02 -0500
+Received: from mail-yw0-f180.google.com ([209.85.161.180]:41175 "EHLO
+        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753550AbeBLTBB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 14:01:01 -0500
+Received: by mail-yw0-f180.google.com with SMTP id f12so1802780ywb.8
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 11:01:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/UUdMwsTPZGqorgst7ASuoar0USRYlBP1SmDJsKlOJg=;
-        b=fqlzDqcPXEhax10tINEHCnUK0ZEKjke6SfEyW3EP4KZsm4w1lemOm6ufc3Srxn2Wd0
-         cfl60uFn2XIk7r0UDQ6VukTZbPam6iRp0ZaB1u6imtvNLl05jrsnegKmZO60jR1qSIwX
-         vXaMSp2Jth6AUN8/Mc+PrLwYMsdtnz6+e/4wypCavQw8MOWC7+6AuxUG0zb9IsvAWzJd
-         FI+xISBJ89ZSZ5DHQuo43Ne6AVAFPI8M/M/j3tHX05RCTDvNXssXi7RM2BO78nrHjkJs
-         4Bt7+5wrp03SACmpiQC+QbFQgs92qYyj4krHUrYDeXePJVPIkpJ8V2niIdtQCLDcIAY9
-         Y5uA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BQjJt5k1VrYLokrjGGLmozeBIJmdDvLJhZvrCh7JyUk=;
+        b=gFZlJD8VyOBObIPI/+wLpJCGLrUeUXMm+0ePEx6tbCgXq+Z9FIr/jYrXwW9H5lcLt6
+         dW80r+TftJrfnUm2I7X7dO2EOt82dQxsYO0Zry+n/kRlP5X/9grS/ll1hlR/GeM7XuYD
+         +zY1AUEVjT2m/hcqnr0iA53gz+RP5j17rXKFCo+J50UuccW59HsIVwaeZgjL1W2v0p/0
+         8dapCOJ+dEJvV3ry9jqDv0Ks1OyLlsVgVe26aNp7x1vhPCnHfva65w4L0QIM6pqjXqP6
+         9m29o3WpDZE3/bO86KdwQFlM+piUmwdBgAbmInhzng7t9vga4i8PSNJwCf/BQmgs9KVA
+         cnbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/UUdMwsTPZGqorgst7ASuoar0USRYlBP1SmDJsKlOJg=;
-        b=eWlGzvT6cpobEM5O0ThU84yVKyrVUVQ//eHErrBUX88w5vvkyeF6s0wqjkt8MhDlOH
-         flGDcsv6ScDi/1hl7H60bnJpdUzuuW3MDpWnoZdwKDcQskuVjtUoglKRAlMlmKMbIlpq
-         R6G9ZDMkiL8ET53QxbQQj5lThSv0tDkVljrPAPeUqQ0U707iSkHfQx4RXIT6XXKMW4Bb
-         d+5MPAxPQB+r9Q+ZWf/sGC2sPAWom01PWR43n6Rq5MYtUkw8bc/77VgUXEuS/vFQFXFd
-         4EbLBx5PeaaFuUkHIvDfC7gGa93Grw45rKiNHkOxN5ZYt8wgrjCcMP4ewTcT0JlO2YPm
-         /6Fg==
-X-Gm-Message-State: APf1xPC/DuFXjQelxbykSLRLrY3sGNWJ/eoL2FavD641ATt6uVKVKwRw
-        vzX1rmdaYvXWMsHpMa0wEX8=
-X-Google-Smtp-Source: AH8x22482Qy4jrnbn+1xvGu9R3j91wHbLn0qj9t5qJdXMuf2wtQyT8U7d4ff91KNDZQHxdDxddjVuQ==
-X-Received: by 10.223.144.198 with SMTP id i64mr11635785wri.6.1518461812680;
-        Mon, 12 Feb 2018 10:56:52 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q81sm12865439wmd.3.2018.02.12.10.56.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 10:56:51 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        peff@peff.net, jonathantanmy@google.com, sbeller@google.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v3 07/14] commit-graph: update graph-head during write
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
-Date:   Mon, 12 Feb 2018 10:56:50 -0800
-In-Reply-To: <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
-        (Derrick Stolee's message of "Thu, 8 Feb 2018 15:37:31 -0500")
-Message-ID: <xmqqeflqt4st.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BQjJt5k1VrYLokrjGGLmozeBIJmdDvLJhZvrCh7JyUk=;
+        b=Eshq0t+T+iMf8v4rczcIptViX7ZjHvncaMc6xwkmBcl6OAiMHuCe4Ifll2BnWVrAE5
+         YN17NtLXmcjDJumz2I6229ggDfsVdzOnZ1R8DpnQ/4r8mvq/BElcsPY6Akhup8SjoL09
+         8QTpljdFgN1eYtFiLV7PM16QS+NJr9yjzFoJwIxQTs2gRBQFtQsYwFDIhR3TjdQqjQlG
+         cLbX8AEePp3+ZeAoI4D+rOgNI+T2dTrFUPIe+am7LXx620z+uTttPW4lTB/LFafw8bUn
+         T1cIZGmhbdJVQ/76HHbw86K2iBiin+6kt16L2XAMTDOJ+N9xDP6mJOhk/eKdGoyblpzN
+         81eg==
+X-Gm-Message-State: APf1xPBnulC8sdyyBlRC5RdNsu4kP7tiOoiKU1wQEuUB9+8k6Dv1yVUE
+        JWEIQyLZUqJRoqCRy5C0A1y8u55NM9Wb6q/Je7Am6w==
+X-Google-Smtp-Source: AH8x226EAuYJ/POVeeb5v5EQsUlrex+hwGz6E2F70WXzz0XUHmcRZZRi99nILNAFaYtW/Q/EybNX83f9+wDX7p9Guwg=
+X-Received: by 10.129.11.8 with SMTP id 8mr8433145ywl.156.1518462060121; Mon,
+ 12 Feb 2018 11:01:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.37.207.203 with HTTP; Mon, 12 Feb 2018 11:00:59 -0800 (PST)
+In-Reply-To: <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
+References: <20180205235508.216277-1-sbeller@google.com> <20180205235508.216277-4-sbeller@google.com>
+ <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 12 Feb 2018 11:00:59 -0800
+Message-ID: <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru
+ to object store
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Fri, Feb 9, 2018 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>> Patch generated by
+>>
+>>  2. Applying the semantic patch contrib/coccinelle/packed_git.cocci
+>>     to adjust callers.
+>
+> About this part...
+>
+>> diff --git a/contrib/coccinelle/packed_git.cocci b/contrib/coccinelle/packed_git.cocci
+>> new file mode 100644
+>> index 0000000000..da317a51a9
+>> --- /dev/null
+>> +++ b/contrib/coccinelle/packed_git.cocci
+>> @@ -0,0 +1,7 @@
+>> +@@ @@
+>> +- packed_git
+>> ++ the_repository->objects.packed_git
+>> +
+>> +@@ @@
+>> +- packed_git_mru
+>> ++ the_repository->objects.packed_git_mru
+>
+> The above is correct for one-time transition turning pre-transition
+> code to post the_repository world, but I am not sure if we want to
+> have it in contrib/coccinelle/, where "make coccicheck" looks at, as
+> a way to continuously keep an eye on "style" violations like using
+> strbuf_addf() for a constant when strbuf_addstr() suffices.
+>
+> Wouldn't we need a mechanism to ensure that this file will *not* be
+> used in "make coccicheck" somehow?
+>
 
-> It is possible to have multiple commit graph files in a pack directory,
-> but only one is important at a time. Use a 'graph_head' file to point
-> to the important file. Teach git-commit-graph to write 'graph_head' upon
-> writing a new commit graph file.
+I can omit the cocci files from the patches, if that is better for maintenance.
 
-Why this design, instead of what "repack -a" would do, iow, if there
-always is a singleton that is the only one that matters, shouldn't
-the creation of that latest singleton just clear the older ones
-before it returns control?
+I thought it may be a helpful
+for merging this series with the rest of the evolved code base which
+may make use of one of the converted functions. So instead of fixing
+that new instance manually, cocinelle could do that instead.
+
+Stefan
