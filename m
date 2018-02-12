@@ -2,114 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C826B1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 22:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FA231F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 23:43:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932918AbeBLWlj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 17:41:39 -0500
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:46031 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932698AbeBLWli (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 17:41:38 -0500
-Received: by mail-pg0-f51.google.com with SMTP id e11so2543613pgq.12
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 14:41:38 -0800 (PST)
+        id S932736AbeBLXmt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 18:42:49 -0500
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36677 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932378AbeBLXms (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 18:42:48 -0500
+Received: by mail-wr0-f196.google.com with SMTP id y3so16905791wrh.3;
+        Mon, 12 Feb 2018 15:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9yCTA4S03cTS66xvcbLO6ja8NEs6jz71bLFx5WXM4B0=;
-        b=tCwNTcCx5Oiggirwh3rjatfzTq0xmtPYjG0eLSKAZMPXINYyxhb8JBXYrvOJKvRg2k
-         T69mQ4WXbyored1qz9nw5Q+z2y5DcP0qignjjAXVHdPXbM5EWzJfTFa6puO2v2u0/xku
-         dvdYJWRCR5/A5+y1t4ajYHgE8WpTror9S8TS8QgsJy6dCAUdxcqDj5dNED6NW3U0jev3
-         MjSKdFIYb5QZY/TNYO/j6Kw7jEy0VUhqdXlbjLkm7ao+buTxdO+9S1fVlI1YCYWpRAb7
-         qND/jv5EfR47F/Pol3luOAHQRz7tFwukIVvTJk+SIk7VPAQhcn2emG4jFl7c1ZFoLZHS
-         PznA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YBLDfwExa24CSoWdz7nkEuyPvDqsTtlzaPeGyWSfNAM=;
+        b=o53SKV+mL8OSmLf8uU8enNTL51lgbZcPMIfapexV4/WolX3EraTAjyxGvT8ufQzsUu
+         uF9Kybr5d4fgt3iAwPRA5yrdOoJhRdjHYhhbpTG2AkcWRO7Nj7XsmSyw/2ug26ucDB05
+         7No1naAXTTAFckR7WrJcTkE/Q/bTFkVUl1OeoDUvCt9Oj0Dsao90GJ6+2Wus1uzawH6L
+         +C+swht9opy3/x1zM3XZc5/0plLQUIdiTwJBb2N9LLVle2Cj+pyfxgdbbiR/YOu59cd/
+         SKdjlQHszWhxI6Q4QtFz05v/rUMLHcZ9T77DfTEIxE/xFoienLOvk8ZB9TqI27BwlzOY
+         go3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9yCTA4S03cTS66xvcbLO6ja8NEs6jz71bLFx5WXM4B0=;
-        b=Bg0+OwI5UiUVsxkR8mOnHo1YMQxocJh8EjhYNBxWm2UXtSDMQ2rXcUH+J9dVxdRo9A
-         FZuEU9IqMhkOZdafS2iT0+B5PrJCQ/s+Xk/IF3wfN/pFrOPO0hFoVtDyfSSBEI7s0mPr
-         hwgkxYYt6EqcDzZs6FNBaXAnRUPf7VHbTQh5VW2crw1rAw1vSfR91XywgGIt6YxqWkXT
-         vdofC89Nbw5qnldokxi6QHoKB00ghRzt6ybKAJR/xxkd/bC0oN6x39Zf4wlhkznvTgvL
-         4NgoTMvFRTkDzlJahhQQBGvKxXcEkLTCIShHolbEwEW1Qr5akHB2tNbFGCP1HrX1n7cj
-         jOiQ==
-X-Gm-Message-State: APf1xPDBQHqOENdq8q/4P1rAMXcMr7XisVovlDMUjtDv8GZ6Q9hvp0xm
-        IqrAXuwdFpFsK0D1A0KVpogP8JtfltZ9pWyJQfTYSxp7
-X-Google-Smtp-Source: AH8x224DlbL3s9mosnVwEU8dtlSzihAUiQ5/EX5hctX88HsEVtw93YriTzXV6nuBlVjnR74G6R+clejaIO9iBtlt7/4=
-X-Received: by 10.98.150.14 with SMTP id c14mr12999040pfe.210.1518475297754;
- Mon, 12 Feb 2018 14:41:37 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YBLDfwExa24CSoWdz7nkEuyPvDqsTtlzaPeGyWSfNAM=;
+        b=dfpmvW5Pz+bF1It+vUHI9aGMEn/RHVlfCpnJWqWYQCaKQw5k0+sfF1oj7kbqFjZqdv
+         yYjrGvjH6yQ1uXlnpOk88GnCcqgymHivzCmmYE6JFAa9Gkb9HWzfiu6lLpWZphMvzXEx
+         OwgkDcbZTvvfYBVaJqHqilRBLDFFdTc7I5riYn8v88BJcxiNl+abGwdOao5ZxRH7+a22
+         I9Qt7pMOJCGKCCIn5o9hNKUlVQkby8qQ0q9x93TlA6s26qAeXlrmHGVR4uNvN7362l3C
+         f2DqegVlCux6nWV3zd+VitWwFHkddRJGxHFcz9dZFJ/8cNj5HUiOCt9cerVNa4pf5aKG
+         rlXA==
+X-Gm-Message-State: APf1xPA3AYJwLNuv+UCHUraJNVQiu6XMVpmtaOaOqk0SmUYp+mjuMRbb
+        KnleacBtaOdQZjcxNMNOiB8=
+X-Google-Smtp-Source: AH8x227x9M5kEVfO13czJtnwm7UegEaP8q7maDIw86yU1RluwLVbvapg9chk4IQPebbxjM48rtokaw==
+X-Received: by 10.223.151.106 with SMTP id r97mr4881114wrb.203.1518478966120;
+        Mon, 12 Feb 2018 15:42:46 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 62sm8279766wml.24.2018.02.12.15.42.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Feb 2018 15:42:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
+        Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
+        Linux-Next Mailing List <linux-next@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: linux-next: unnecessary merge in the v4l-dvb tree
+References: <20180213080036.3bf3a908@canb.auug.org.au>
+        <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
+        <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
+        <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com>
+        <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
+Date:   Mon, 12 Feb 2018 15:42:44 -0800
+In-Reply-To: <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
+        (Linus Torvalds's message of "Mon, 12 Feb 2018 13:59:27 -0800")
+Message-ID: <xmqqzi4drczv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.163.48 with HTTP; Mon, 12 Feb 2018 14:41:37 -0800 (PST)
-In-Reply-To: <xmqq4lmlsvhr.fsf@gitster-ct.c.googlers.com>
-References: <450ff45707b58d6796d55cd594b50686e5d62fc2.1518365675.git.martin.agren@gmail.com>
- <xmqq4lmlsvhr.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 12 Feb 2018 23:41:37 +0100
-Message-ID: <CAN0heSr5bRx7Lrzu4mfeHx3SuZ75bgpXUA75kM1HJ-h=+8dgPQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t7006: add tests for how git config paginates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12 February 2018 at 23:17, Junio C Hamano <gitster@pobox.com> wrote:
-> Martin =C3=85gren <martin.agren@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> And some maintainers end up using multiple repositories as branches
+> (the old _original_ git model). Again, you can just use "git fetch +
+> git reset", of course, but that's a bit unsafe. In contrast, doing
+> "git pull --ff-only" is a safe convenient operation that does both the
+> fetch and the update to whatever state.
 >
->> +test_expect_success TTY 'git config respects pager.config when setting'=
- '
->> +     rm -f paginated.out &&
->> +     test_terminal git -c pager.config config foo.bar bar &&
->> +     test -e paginated.out
->> +'
->
-> I am debating myself if this test should instead spell out what we
-> eventually want from the above test and make it expect_failure, just
-> like the next one.
+> But you do need that "--ff-only" to avoid the merge.
 
-That's a valid point. I was coming at it from the point of view of "the
-current behavior is well-defined and non-broken -- we'll soon change it,
-but that's more a redefinition, not a bugfix (as with --edit)". But I
-could go either way.
+OK.  I guess it is legit (and semi-sensible) for downstream
+contributors to "git pull --ff-only $upstream $release_tag_X" to
+bring their long-running topic currently based on release X-1 up to
+date with respect to release X.  It probably makes more sense than
+rebasing on top of release X, even though it makes a lot less sense
+than merging their topics into release X.
 
-There is some prior art in ma/branch-list-paginate, where I handled `git
-branch --set-upstream-to` similar to here, cf. d74b541e0b (branch:
-respect `pager.branch` in list-mode only, 2017-11-19).
+As you said, pull of a tag that forbids fast-forward by default is
+rather old development (I am kind of surprised that it was so old,
+in v1.7.9), so it may be a bit difficult to transition.
 
-> In addition to setting (which will start ignoring pager in later
-> steps), unsetting, replacing of a variable and renaming/removing a
-> section in a configuration should not page, I would suspect.  Should
-> we test them all?
+There is 
 
-I actually had several more tests in an early draft, including --unset.
-Similarly, testing all the --get-* would be possible but feels like
-overkill.  From the implementation, it's "obvious enough" (famous last
-words) that there are two classes of arguments, and by testing a few
-from each class we should be home free.
+	[pull]
+                ff = only
 
-This now comes to `git config` after `git tag` and `git branch`, where
-the "complexity" of the problem has been steadily increasing. (Off the
-top of my head, tag has two modes, branch has three, config has lots.)
-That the tests don't get more complex might be bad, or good. But all of
-these use the same basic API (DELAY_PAGER_CONFIG) in the same rather
-simple way. I actually almost had the feeling that these tests here were
-too much, considering that DELAY_PAGER_CONFIG gets tested quite a few
-times by now.
+but pull.ff is quite global, and not good for intermediate level
+maintainers who pull to integrate work of their downstream (for
+which they do want the current "do not ff, record the tag in a merge
+commit" behaviour) and also pull to catch up from their upstream
+(which they want "ff-when-able").  They need to control between
+ff=only and ff=when-able, depending on whom they are pulling from.
 
-Thanks for your comments. I'll ponder this, and see what I come up with.
-Maybe a changed approach, or maybe an extended commit message. Any
-further input welcome, as always.
+We may want per-remote equivalent for it, i.e. e.g.
 
-Martin
+	[pull]
+		ff=false ;# good default for collecting contributions
+
+	[remote "torvalds"] 
+		pullFF = only ;# good default for catching up
+
+or something like that, perhaps?
