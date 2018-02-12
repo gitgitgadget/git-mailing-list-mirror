@@ -2,70 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3D4E1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 16:24:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B14C1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 17:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964923AbeBLQY3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 11:24:29 -0500
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:53307 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964916AbeBLQY2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 11:24:28 -0500
-Received: by mail-wm0-f41.google.com with SMTP id t74so10681345wme.3
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 08:24:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=kYlLAO1oRqWSYblLEa5MANWicKkiSz0orWU5R9tgh9s=;
-        b=JJzO4tk4VIVjJMJ7GvsSmNTL6SUCBT07tygmvpQ77Es/CmU+zc8Hi8WXSh0kjE5tgl
-         naJXuk2WVAsfrWdZ9nMEmd6LKXVQR6J+L018v9Za1q2/xO9Npqx4Acd+rXQYhOOaKY7p
-         Nq6v6/FzuET0Ab/WfHF7r6UBBZ3gcEvYKXN0Ptas7w6gYVUgklAgGqBQp3l5+xGh4dqh
-         roI3hk+b6cSEZPxcTQUNPfOlR7LithxW78TwEkl/JMZePvtLGLRi1R649X8+HuSh0Iw0
-         TExrasdjHKNBmFkAZMEf/I7l4bnS0KGDDJRnSPzet4+baW2t1tZa9xxGk8WCEuwHDk6D
-         Adlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=kYlLAO1oRqWSYblLEa5MANWicKkiSz0orWU5R9tgh9s=;
-        b=k/uX7SBw89/uGQs9EnI/z92n0YYFZ48JqOMxOJj5G9+e+iFezzaw+HgVZOlmGMsPNS
-         z/auWRM0ROdXv5EPFuxlEotJttu3gTrgpn6qOfJ3qzoPd2CuXCH692d6fYPZSqxiFuAJ
-         3ynkWKF5kt6MiAf7Toe9afaRsL+uRXRmBFVX+MMtfB0pDIlRSw0u8yOqe5nCmEql2Vu1
-         Hl/yWyBmJbBqVk89qQHNIwkr+EKYypzMec8lpUSJ3EMtOdFaNlKvopBIbyKuryaubFkg
-         uEPplmY1P+FyY6Yci7vWn5zIZRXdqEKNombe/xo0Cim6zxspXFQnlvQmeh5RZMa7WvYX
-         f/vA==
-X-Gm-Message-State: APf1xPBkCgakQ+41oKwayUvjwWj1fk2vXf4vkioruBXsJYVGwSjAStmC
-        /AqJC0hmd724bx7XeBIIwEtnBQ==
-X-Google-Smtp-Source: AH8x225emebfbTDcv6JklxGWD+P6yrLkB3LLs+KAG3mTXy8Yu3g8UVQRT50CQaWfxD+LkU94p6YgQw==
-X-Received: by 10.28.245.25 with SMTP id t25mr3751769wmh.77.1518452666702;
-        Mon, 12 Feb 2018 08:24:26 -0800 (PST)
-Received: from [173.194.76.16] (gate.reksoft.ru. [188.64.144.36])
-        by smtp.googlemail.com with ESMTPSA id d73sm7531219wma.25.2018.02.12.08.24.25
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Feb 2018 08:24:26 -0800 (PST)
+        id S1752665AbeBLRXJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 12:23:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49302 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751271AbeBLRXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 12:23:08 -0500
+Received: (qmail 25231 invoked by uid 109); 12 Feb 2018 17:23:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Feb 2018 17:23:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9993 invoked by uid 111); 12 Feb 2018 17:23:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Feb 2018 12:23:52 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Feb 2018 12:23:06 -0500
+Date:   Mon, 12 Feb 2018 12:23:06 -0500
+From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-From:   Basin Ilya <basinilya@gmail.com>
-Subject: partial fetch
-Message-ID: <3086333a-031d-0c98-a610-d5e36992d298@gmail.com>
-Date:   Mon, 12 Feb 2018 19:24:26 +0300
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] describe: confirm that blobs actually exist
+Message-ID: <20180212172306.GA4918@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
-In 2017 a set of patches titled "add object filtering for partial fetch" was accepted. Is it what I think it is? Will we be able to download only a subdirectory from a
-large project?
+Prior to 644eb60bd0 (builtin/describe.c: describe a blob,
+2017-11-15), we noticed and complained about missing
+objects, since they were not valid commits:
+
+  $ git describe 0000000000000000000000000000000000000000
+  fatal: 0000000000000000000000000000000000000000 is not a valid 'commit' object
+
+After that commit, we feed any non-commit to lookup_blob(),
+and complain only if it returns NULL. But the lookup_*
+functions do not actually look at the on-disk object
+database at all. They return an entry from the in-memory
+object hash if present (and if it matches the requested
+type), and otherwise auto-create a "struct object" of the
+requested type.
+
+A missing object would hit that latter case: we create a
+bogus blob struct, walk all of history looking for it, and
+then exit successfully having produced no output.
+
+One reason nobody may have noticed this is that some related
+cases do still work OK:
+
+  1. If we ask for a tree by sha1, then the call to
+     lookup_commit_referecne_gently() would have parsed it,
+     and we would have its true type in the in-memory object
+     hash.
+
+  2. If we ask for a name that doesn't exist but isn't a
+     40-hex sha1, then get_oid() would complain before we
+     even look at the objects at all.
+
+We can fix this by replacing the lookup_blob() call with a
+check of the true type via sha1_object_info(). This is not
+quite as efficient as we could possibly make this check. We
+know in most cases that the object was already parsed in the
+earlier commit lookup, so we could call lookup_object(),
+which does auto-create, and check the resulting struct's
+type (or NULL).  However it's not worth the fragility nor
+code complexity to save a single object lookup.
+
+The new tests cover this case, as well as that of a
+tree-by-sha1 (which does work as described above, but was
+not explicitly tested).
+
+Noticed-by: Michael Haggerty <mhagger@alum.mit.edu>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/describe.c  | 2 +-
+ t/t6120-describe.sh | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 6fe1c51281..18c68ec7a4 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -502,7 +502,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	if (cmit)
+ 		describe_commit(&oid, &sb);
+-	else if (lookup_blob(&oid))
++	else if (sha1_object_info(oid.hash, NULL) == OBJ_BLOB)
+ 		describe_blob(oid, &sb);
+ 	else
+ 		die(_("%s is neither a commit nor blob"), arg);
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index a5d9015024..bae78c4e89 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -378,4 +378,12 @@ check_describe tags/A --all A
+ check_describe tags/c --all c
+ check_describe heads/branch_A --all --match='branch_*' branch_A
+ 
++test_expect_success 'describe complains about tree object' '
++	test_must_fail git describe HEAD^{tree}
++'
++
++test_expect_success 'describe complains about missing object' '
++	test_must_fail git describe $_z40
++'
++
+ test_done
+-- 
+2.16.1.464.gc4bae515b7
