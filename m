@@ -2,191 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E112A1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 20:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76C5A1F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 21:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754063AbeBLU64 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 15:58:56 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:46019 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753347AbeBLU6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 15:58:54 -0500
-Received: by mail-wr0-f196.google.com with SMTP id h9so16586601wre.12
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 12:58:53 -0800 (PST)
+        id S1754072AbeBLVES (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 16:04:18 -0500
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:40057 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753393AbeBLVER (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 16:04:17 -0500
+Received: by mail-wr0-f177.google.com with SMTP id o76so13474580wrb.7
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 13:04:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vOvt08gm/ae63a0x0R5BKcbDl5kjiErmWmaF8c/Dh/U=;
-        b=TjGNhmrzisnLTWwWW+pqwQbCUwOsctCNrshipAUKogdVmwV1SPfnh8Ss106ll3HjqT
-         FOQxivcTtbvICUU2GdYDt9XWtez/8eRDFvYLvlq5xjQ4L9BTasbuWX7qOGFyACtlytL9
-         zSWhY1//rn14FDyKRNW5uVq1dDbh3sL+D/xq1gIagFMDXN2K17t4qzTK+J77f0LAzOy9
-         kk0DMUzvzvkp6ARw9BWYgcBF2/EaZ0EmXJoAGYlZyT0C72hdxmedb5HGGKy5bYki8af9
-         BMp71FY1ZWu50I6xD9mkRJHMEi1oOqH4U+bod4rhu184LEyj9gcGQX6NtB0+XwLOgM1d
-         KG8A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=CY1YJQmUv2zPJotZBq52qk5yBB/lv5tDSiICoFE/MYA=;
+        b=c6MtsGZxFXOLzBODip49YHaVtBox/r5+C6a5jhH3f62R/IpgEURn3e7GlpFrjZuFc6
+         vshRMlSsrAUJJ4yrzGJF1kaIBGTVgG82MdsQIbrupisaORXYP63N5M6ZnQ8pLyzZAlxB
+         1QFwoCMyTrKFJXEufMRBmoiTbI0UST+BNXoKjbWahHUXNmz6w6tWtd3TGydMPe9EwuLa
+         MLB+y7bTm5TN/DjbfAadfWqTHsFDsXJDFbIiaUFSHdCGjKO29jPvbF+CZUoobSvAN/BN
+         vXBh6MSKIFqyDJHffoZ0aOMiWL27i9ucsxLDI/Y0HNoHF2VJQShTQ5ZPQZ05XFK8Nkm5
+         KuVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=vOvt08gm/ae63a0x0R5BKcbDl5kjiErmWmaF8c/Dh/U=;
-        b=A/RUzL2cHivecwaBxKVcgl0GWB8ymuL4NW5w12vvnGGi1zIV+Ulicb6yzkHxavaYzN
-         8WrP4wFN/iPK/qa8oUkgjxDVYmuwnOq2Of+qyKPDw0C7hnIWVdNxEou940ZdhCLtJsU+
-         JXkvU6+Mmt5Y/+CfZdE1U3ooAVcSgs+9WQZReBp80hItpNdjhqfLQb5u/aXNaxiO8fEA
-         bmkw9XDBVKZFpQ6TEcGEoOeuuhuXlZDp51rZZA9zpLk6gNzGJAFuPuWCowjbq5mvPBes
-         00VyUdO+b9yTxtl3DQjdWJyQKchu3WSyfUt2GjedtF6Rk7vwuiQfG1pfj/aYFqwwnHkY
-         Ii7Q==
-X-Gm-Message-State: APf1xPC36z23XACTBkiAEUjdtSHUlcd2YKx3kQrkGeoOQgMg50prG96q
-        ZvUrEsUgYHsA5udkroJp7HI=
-X-Google-Smtp-Source: AH8x225wiZraooM1fPaPegnJg1HJhiIWPmrWJVvKCoNpRqfiVjFyY6vzcP7rH/8pTit/Szk4FfAtrQ==
-X-Received: by 10.223.157.6 with SMTP id k6mr11367295wre.273.1518469132962;
-        Mon, 12 Feb 2018 12:58:52 -0800 (PST)
-Received: from neuczc13113nr.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id v13sm13288761wrf.71.2018.02.12.12.58.52
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Feb 2018 12:58:52 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 1/2] run-command: teach 'run_hook' about alternate worktrees
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20180212031526.40039-2-sunshine@sunshineco.com>
-Date:   Mon, 12 Feb 2018 21:58:50 +0100
-Cc:     git@vger.kernel.org, matthew.k.gumbel@intel.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <42C41062-D27D-4BB8-8D8D-9272D37FAE88@gmail.com>
-References: <20180210010132.33629-1-lars.schneider@autodesk.com> <20180212031526.40039-1-sunshine@sunshineco.com> <20180212031526.40039-2-sunshine@sunshineco.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=CY1YJQmUv2zPJotZBq52qk5yBB/lv5tDSiICoFE/MYA=;
+        b=rGqlkgaRRky3QRPfCnXvPgT5aPYmHBDqWUdT3OYJvZz+avjOtI5/Hp7qDShneFVOIV
+         erldTmKVL0gDzSJ9g9GciOGgxoX+DeM1EMKdjJxx9ztN/u5gruV46Au8Sm7PerBHryT5
+         cm3cxWgUMQ6/iAeC4GjPaAJ7csJ0aRPIfxVggk67E0vEAPUr5JVvnt+upV+Pju+abyqu
+         bnZ9M+R6vPydT+kmgjVC2wmz+bjWsttl8EOTmg7tI3ayJmjf7Q/ibmyE+QrJhQOh/mcQ
+         TX8QmeJwL5H0MBAoNRSlVmMjD4Srp//6N9XFgZgMsQVlfssHPL0YoK+pF5Iv/hLq1TqA
+         xlHQ==
+X-Gm-Message-State: APf1xPBiBqH4KSJmW9JO/rE0YHxHIxw8O3Gklb1dLpjghzZf0yf67RQQ
+        7r5fBfbjvzjVE4vRUSeTIQM=
+X-Google-Smtp-Source: AH8x224pmIRzt9nRXLWo0zTt3bUTGAFtfSC6rD49QVU77GtEtBA6kfR+++SNw7dHPFTcvgWtkTVrjQ==
+X-Received: by 10.223.184.36 with SMTP id h33mr11700808wrf.15.1518469455844;
+        Mon, 12 Feb 2018 13:04:15 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a53sm11319919wrc.52.2018.02.12.13.04.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Feb 2018 13:04:15 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru to object store
+References: <20180205235508.216277-1-sbeller@google.com>
+        <20180205235508.216277-4-sbeller@google.com>
+        <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+Date:   Mon, 12 Feb 2018 13:04:14 -0800
+In-Reply-To: <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 12 Feb 2018 11:00:59 -0800")
+Message-ID: <xmqqsha5sywh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
-> On 12 Feb 2018, at 04:15, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->=20
-> Git commands which run hooks do so at the top level of the worktree in
-> which the command itself was invoked. However, the 'git worktree'
-> command may need to run hooks within some other directory. For
-> instance, when "git worktree add" runs the 'post-checkout' hook, the
-> hook must be run within the newly-created worktree, not within the
-> worktree from which "git worktree add" was invoked.
->=20
-> To support this case, add 'run-hook' overloads which allow the
-> worktree directory to be specified.
->=20
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
-> run-command.c | 23 +++++++++++++++++++++--
-> run-command.h |  4 ++++
-> 2 files changed, 25 insertions(+), 2 deletions(-)
->=20
-> diff --git a/run-command.c b/run-command.c
-> index 31fc5ea86e..0e3995bbf9 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1197,7 +1197,8 @@ const char *find_hook(const char *name)
-> 	return path.buf;
-> }
->=20
-> -int run_hook_ve(const char *const *env, const char *name, va_list =
-args)
-> +int run_hook_cd_ve(const char *dir, const char *const *env, const =
-char *name,
-> +		   va_list args)
-> {
-> 	struct child_process hook =3D CHILD_PROCESS_INIT;
-> 	const char *p;
-> @@ -1206,9 +1207,10 @@ int run_hook_ve(const char *const *env, const =
-char *name, va_list args)
-> 	if (!p)
-> 		return 0;
->=20
-> -	argv_array_push(&hook.args, p);
-> +	argv_array_push(&hook.args, absolute_path(p));
-> 	while ((p =3D va_arg(args, const char *)))
-> 		argv_array_push(&hook.args, p);
-> +	hook.dir =3D dir;
-> 	hook.env =3D env;
-> 	hook.no_stdin =3D 1;
-> 	hook.stdout_to_stderr =3D 1;
-> @@ -1216,6 +1218,23 @@ int run_hook_ve(const char *const *env, const =
-char *name, va_list args)
-> 	return run_command(&hook);
-> }
->=20
-> +int run_hook_ve(const char *const *env, const char *name, va_list =
-args)
-> +{
-> +	return run_hook_cd_ve(NULL, env, name, args);
-> +}
+> I thought it may be a helpful
+> for merging this series with the rest of the evolved code base which
+> may make use of one of the converted functions. So instead of fixing
+> that new instance manually, cocinelle could do that instead.
 
-I think we have only one more user for this function:
-	builtin/commit.c:       ret =3D run_hook_ve(hook_env.argv,name, =
-args);
+Having the .cocci used for the conversion *somewhere* would indeed
+be helpful, as it allows me to (1) try reproducing this patch by
+somebody else using the file and following the steps in order to
+audit this patch and (2) catch new places that need to be migrated
+in in-flight topics.
 
-The other function 'run_hook_le' is used in a few places:
-	builtin/am.c:   ret =3D run_hook_le(NULL, "applypatch-msg", =
-am_path(state, "final-commit"), NULL);
-	builtin/am.c:   if (run_hook_le(NULL, "pre-applypatch", NULL))
-	builtin/am.c:   run_hook_le(NULL, "post-applypatch", NULL);
-	builtin/checkout.c:     return run_hook_le(NULL, =
-"post-checkout",
-	builtin/clone.c:        err |=3D run_hook_le(NULL, =
-"post-checkout", sha1_to_hex(null_sha1),
-	builtin/gc.c:   if (run_hook_le(NULL, "pre-auto-gc", NULL))
-	builtin/merge.c:        run_hook_le(NULL, "post-merge", squash ? =
-"1" : "0", NULL);
-	builtin/receive-pack.c: if (run_hook_le(env->argv, =
-push_to_checkout_hook,
+But placing it in contrib/coccinelle/ has other side effects.
 
-Would it be an option to just use the new function signature
-everywhere and remove the wrapper? Or do we value the old interface?
+I can think of two precedents in this project, namely:
 
-- Lars
+ - fixup-builtins in 36e5e70e ("Start deprecating "git-command" in
+   favor of "git command"", 2007-06-30)
 
+ - convert-cache in d98b46f8 ("Do SHA1 hash _before_ compression.",
+   2005-04-20)
 
-
-> +
-> +int run_hook_cd_le(const char *dir, const char *const *env, const =
-char *name, ...)
-> +{
-> +	va_list args;
-> +	int ret;
-> +
-> +	va_start(args, name);
-> +	ret =3D run_hook_cd_ve(dir, env, name, args);
-> +	va_end(args);
-> +
-> +	return ret;
-> +}
-> +
-> int run_hook_le(const char *const *env, const char *name, ...)
-> {
-> 	va_list args;
-> diff --git a/run-command.h b/run-command.h
-> index 3932420ec8..8beddffea8 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -66,7 +66,11 @@ int run_command(struct child_process *);
-> extern const char *find_hook(const char *name);
-> LAST_ARG_MUST_BE_NULL
-> extern int run_hook_le(const char *const *env, const char *name, ...);
-> +extern int run_hook_cd_le(const char *dir, const char *const *env,
-> +			  const char *name, ...);
-> extern int run_hook_ve(const char *const *env, const char *name, =
-va_list args);
-> +extern int run_hook_cd_ve(const char *dir, const char *const *env,
-> +			  const char *name, va_list args);
->=20
-> #define RUN_COMMAND_NO_STDIN 1
-> #define RUN_GIT_CMD	     2	/*If this is to be git sub-command */
-> --=20
-> 2.16.1.291.g4437f3f132
->=20
-
+that are about tools that is useful during a transition period but
+can and should be removed after transition is over.  These two were
+done as one-off and added at the top-level, but perhaps we want a
+new directory at the top (e.g. devtools/) to add things like this
+and hold them while they are relevant?
