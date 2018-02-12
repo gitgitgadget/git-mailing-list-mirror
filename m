@@ -2,107 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F20B81F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 19:37:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F1361F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 19:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751424AbeBLThu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 14:37:50 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:54226 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751305AbeBLThq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 14:37:46 -0500
-Received: by mail-wm0-f65.google.com with SMTP id t74so11722158wme.3
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 11:37:46 -0800 (PST)
+        id S1751013AbeBLToL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 14:44:11 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:40506 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750848AbeBLToK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 14:44:10 -0500
+Received: by mail-pl0-f66.google.com with SMTP id g18so5475549plo.7
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 11:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dRyowT6gTIb4QO2+P+iSXhCJpHu/zkdk4wf9TddCngs=;
-        b=HjDblPahmhJkfOydbZa6Cc4RixViBLGqKxxk/fjmtosx81zfkLZXx+g8LwaBx3TdS8
-         wBkeCCWSworwavys7/ai//Lk0qbt2V/N51hy5fsrJVlgMINB0iSskl4oDVoWBWoLDv9J
-         VL2t8hnbHYb3RPzKn//zvKynEY517CfXWbYdZngurOqWSwaVnFVtp72Sui6tHHNjH6aG
-         HSTcMP974KoBfw8HC4iGrF7OEYStrFGVbhS+e+WzuwlU9vGUZ6Pm5Q4JO0k/RMfzHtdh
-         drMnGBoSfzLjg5mCHrMHoP2IwniLrAJTPk+vLAkkvnQyH+V0O5JwFea1PgTt7q86X1za
-         vu+A==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=ESW9whCgnGV9p+YC2ix+ds/HrNaZY+gs4iKDXbItfc4=;
+        b=WSxHm6XMr2OwH6Y5ba0oVgzy6YMCi8axonqMqtJ0y5JbWzfnyKiz7zq6GNtsILaFKe
+         UJtdv+ZfXN4w49lJmI//fllD5ClzcDe2d1NCki/4ukE8vJaaPoZ+kuf9ZjWU/XWwp18x
+         i7NYk8XznDwT+0wfRO8DMuIQw5I4MV+36HPrJmGRCm4qF5QPpy6XxnfPTEdfCPxG2IA0
+         m9nwVV3hcKIMO0qEOHbB/HYVkoSBOWdBxm0gq14iyXVkUgqSNRTTuwi1SAmkgs9jUDiA
+         s5u7fzgQjMMsCrZU0yzEaxRFSL0J2rUenYXzwUhRr8hD9Fl9dG1BXeu1EAJ69vEDXnzA
+         bE/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dRyowT6gTIb4QO2+P+iSXhCJpHu/zkdk4wf9TddCngs=;
-        b=BwT4QNPT0546Ys0ZnCjqVOExr3hE+xu4qWMADoxCzzjaBfBZGML37bFgU7NbrabnP1
-         od2+vJmiHmpX7oV9bv176rfCqzNm59uM9l+40izRGwCGsjYFHiefzCnyao89caT2zlcy
-         s+D/njdckgHDAeIto+ezE2bvJuDcMsXPpqhcmRozqMvblMmfHbtYdZ5TVFTCoTRZsY/2
-         OKKFEbxN8nmkhvhx5ieSEmI8PUHfORFjku+zD8nAHvs7ESzfPXkIaFkt6gFt4cETGOAr
-         kJWdwjScDIEW4wKUh8lmI/8vrAKXkyyIbxaEaGxOSV1CfM6TAr61N+nNfPLNfPotVqaU
-         Yt6g==
-X-Gm-Message-State: APf1xPCpYkiDhBceOHZ1kRkePMTDpFLlzz9ND7LJ31dqrLHR93LNXhAI
-        stMf1wkjRpWj5DpjnkAwSh8=
-X-Google-Smtp-Source: AH8x225LO9mfzLJovqkdTjMArGWFezirpQYJNScdUdn97+Q1gFZ7doqdBVBTCRzI/M7Dbl1HTFQsIg==
-X-Received: by 10.28.21.136 with SMTP id 130mr4057867wmv.152.1518464264733;
-        Mon, 12 Feb 2018 11:37:44 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y90sm18178436wrc.24.2018.02.12.11.37.43
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=ESW9whCgnGV9p+YC2ix+ds/HrNaZY+gs4iKDXbItfc4=;
+        b=fnKoYLcoxwZxYp5Z5S6laac1bS+v8tlZF+hdl7qFt5gonbGtHS0Wc9Iiratj5uBEuP
+         VcHHLr0LsZHczNMdcdW+X5FascKzfhVPxHWE8D0qcBeNSjWG9TBLS1OHx+QUr/heTqGC
+         nRleDm7ikqqh9jV+VE5ioTtj/0zfXkOhUjZAMWLYwmdxE6rxgiS0P+kPoe/1Za0f2pHs
+         oDl4i+yExCRJ5qtp1/cc8yPz78Dka9J/Cu1mzVRXiKu42AqdW6gkhQtVUe1wt61eqhCm
+         EghsVgdfr7saOsBlp6WdXsaFNfliqiP+j7U9T9eRjiru2e9t8+C8mqhrCTPOAHEY+9Y1
+         GBjw==
+X-Gm-Message-State: APf1xPCPdJUixFVTozKEFwzoJw8hchpb99bixbQ/Kh32etYAT3SHH03w
+        vl1k1OmncPb6bsm0TXahDCu1EA==
+X-Google-Smtp-Source: AH8x224yhSoJOMZJz24UGnHu1hTVXPaTxf4qZKmfhoILT42avs1kQSEUNTr+3eG3szbkZkyYzvnaJQ==
+X-Received: by 2002:a17:902:f:: with SMTP id 15-v6mr11614801pla.419.1518464649042;
+        Mon, 12 Feb 2018 11:44:09 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id u9sm6724288pgb.11.2018.02.12.11.44.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 11:37:44 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        matthew.k.gumbel@intel.com
-Subject: Re: [PATCH 2/2] worktree: add: change to new worktree directory before running hook
-References: <20180210010132.33629-1-lars.schneider@autodesk.com>
-        <20180212031526.40039-1-sunshine@sunshineco.com>
-        <20180212031526.40039-3-sunshine@sunshineco.com>
-Date:   Mon, 12 Feb 2018 11:37:43 -0800
-In-Reply-To: <20180212031526.40039-3-sunshine@sunshineco.com> (Eric Sunshine's
-        message of "Sun, 11 Feb 2018 22:15:26 -0500")
-Message-ID: <xmqq7erit2wo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Mon, 12 Feb 2018 11:44:08 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     sunshine@sunshineco.com
+Cc:     artagnon@gmail.com, avarab@gmail.com, git@vger.kernel.org,
+        gitster@pobox.com, mina86@mina86.com, mst@kernel.org,
+        pbonzini@redhat.com, sbeller@google.com, viktorin@rehivetech.com,
+        zxq_yx_007@163.com
+Subject: [PATCH] send-email: error out when relogin delay is missing
+Date:   Mon, 12 Feb 2018 11:44:04 -0800
+Message-Id: <20180212194404.66863-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
+In-Reply-To: <CAPig+cRyx1KHJMn97mNy_BmX1D+cGEqVUT6x3Bw+tmsUOE3J+w@mail.gmail.com>
+References: <CAPig+cRyx1KHJMn97mNy_BmX1D+cGEqVUT6x3Bw+tmsUOE3J+w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+When the batch size is neither configured nor given on the command
+line, but the relogin delay is given, then the current code ignores
+the relogin delay setting.
 
-> Although "git worktree add" learned to run the 'post-checkout' hook in
-> ade546be47 (worktree: invoke post-checkout hook, 2017-12-07), it
-> neglects to change to the directory of the newly-created worktree
-> before running the hook. Instead, the hook is run within the directory
-> from which the "git worktree add" command itself was invoked, which
-> effectively neuters the hook since it knows nothing about the new
-> worktree directory.
->
-> Fix this by changing to the new worktree's directory before running
-> the hook, and adjust the tests to verify that the hook is indeed run
-> within the correct directory.
+This is unsafe as there was some intention when setting the batch size.
+One workaround would be to just assume a batch size of 1 as a default.
+This however may be bad UX, as then the user may wonder why it is sending
+slowly without apparent batching.
 
-I like the approach taken by this replacement better.  Just to make
-sure I understand the basic idea, let me rephrase what these two
-patches are doing:
+Error out for now instead of potentially confusing the user.
+As 5453b83bdf (send-email: --batch-size to work around some SMTP
+server limit, 2017-05-21) lays out, we rather want to not have this
+interface anyway and would rather want to react on the server throttling
+dynamically.
 
- - "path" that is made absolute in this step is where the new
-   worktree is created, i.e. the top-level of the working tree in
-   the new worktree.  We chdir there and then run the hook script.
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ git-send-email.perl | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- - Even though we often see hooks executed inside .git/ directory,
-   for post-checkout, the top-level of the working tree is the right
-   place, as that is where the hook is run by "git checkout" (which
-   does the "cd to the toplevel" thing upfront and then runs hooks
-   without doing anything special) and "git clone" (which goes to
-   the newly created repository's working tree by calling
-   setup.c::setup_work_tree() before builtin/clone.c::checkout(),
-   which may call post-checkout hook).
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 340b5c8482..f7913f7c2c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -379,6 +379,10 @@ unless ($rc) {
+ die __("Cannot run git format-patch from outside a repository\n")
+ 	if $format_patch and not $repo;
  
-I wonder if we need to clear existing GIT_DIR/GIT_WORK_TREE from the
-environment, though.  When a user with a funny configuration (where
-these two environment variables are pointing at unusual places) uses
-"git worktree add" to create another worktree for the repository, it
-would not be sufficient to chdir to defeat them that are appropriate
-for the original, and not for the new, worktree, would it?
++die __("`batch-size` and `relogin` must be specified together " .
++	"(via command-line or configuration option)\n")
++	if defined $relogin_delay and not defined $batch_size;
++
+ # Now, let's fill any that aren't set in with defaults:
+ 
+ sub read_config {
+-- 
+2.15.1.433.g936d1b9894.dirty
+
