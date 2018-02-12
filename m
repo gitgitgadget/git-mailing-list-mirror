@@ -8,131 +8,148 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 742CF1F576
-	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14EC41F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933040AbeBLIKD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 03:10:03 -0500
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:58626
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932987AbeBLIIz (ORCPT
+        id S933038AbeBLIKC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 03:10:02 -0500
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:51922
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932990AbeBLIIz (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 03:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1518422934;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=2xe69z5iKE31cXc/818zjaVf6+t795AD5yqhu7s5aDk=;
-        b=Eue+FaIJe9b0NfjoGQLqgIF8hqSrW7pEHf4xZyOVJHvmY0HgvpK6kH+K7VcNd8b4
-        KTC/ZBGYP/2OvmHmRoESyiptGRZ1liwN9sfKa89mW+MiQVWC/21erDSBqW7xv5R1/Dt
-        AYjH5dQYkhBq5uyBIyn9WI11Xy4sln9oYD5I8ga8=
+        bh=ibSU5LGfBe3FGyznhbQ1x01RdYYxFvGZ99GQMpXWkrg=;
+        b=CAvnMxvQUDTE0J55w+T6pbfySUVufDWsWOrsZ9o7MjKOltWW+x6fpja1N0D5kehP
+        wWW7g70jS6oxrUxGvPXJiZu2SXm8kMMEV0DA5xA1SNxjmMjTIdHW0dgaTMeEzpqInWb
+        S8eCF0t1WaCUWbmEmoH9NK+BvVIBHI9Nb/OwAPKg=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020161890f435c-c3044984-d9aa-4aaf-90e3-1affa109b3b3-000000@eu-west-1.amazonses.com>
+Message-ID: <01020161890f4357-05e636bc-8b44-425b-a252-ff2341f91cdd-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
 References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 12/23] cat-file: start reusing populate_value()
+Subject: [PATCH v3 14/23] ref_filter: add is_atom_used function
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Mon, 12 Feb 2018 08:08:54 +0000
-X-SES-Outgoing: 2018.02.12-54.240.7.19
+X-SES-Outgoing: 2018.02.12-54.240.7.20
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move logic related to getting object info from cat-file to ref-filter.
-It will help to reuse whole formatting logic from ref-filter further.
+Delete all items related to split_on_whitespace from ref-filter
+and add new function for handling the logic.
+Now cat-file could invoke that function to implementing its logic.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- builtin/cat-file.c | 17 ++++-------------
- ref-filter.c       | 20 ++++++++++++++++++++
- ref-filter.h       |  1 +
- 3 files changed, 25 insertions(+), 13 deletions(-)
+ builtin/cat-file.c |  8 +++-----
+ ref-filter.c       | 17 +++++++++++++++--
+ ref-filter.h       | 10 +++-------
+ 3 files changed, 21 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 0c362828ad81e..6db57e3533806 100644
+index 6db57e3533806..3a49b55a1cc2e 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -285,21 +285,12 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+@@ -382,8 +382,7 @@ static int batch_objects(struct batch_options *opt)
+ {
  	struct strbuf buf = STRBUF_INIT;
- 	struct ref_array_item item = {0};
+ 	struct expand_data data;
+-	int save_warning;
+-	int retval = 0;
++	int save_warning, is_rest, retval = 0;
  
--	if (!data->skip_object_info &&
--	    sha1_object_info_extended(data->oid.hash, &data->info,
--				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
--		printf("%s missing\n",
--		       obj_name ? obj_name : oid_to_hex(&data->oid));
--		fflush(stdout);
--		return;
--	}
--
- 	item.oid = data->oid;
--	item.type = data->type;
--	item.size = data->size;
--	item.disk_size = data->disk_size;
- 	item.rest = data->rest;
--	item.delta_base_oid = &data->delta_base_oid;
-+	item.objectname = obj_name;
-+
-+	if (populate_value(&item))
-+		return;
+ 	if (!opt->format.format)
+ 		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
+@@ -395,8 +394,6 @@ static int batch_objects(struct batch_options *opt)
+ 	memset(&data, 0, sizeof(data));
+ 	opt->format.cat_file_data = &data;
+ 	verify_ref_format(&opt->format);
+-	if (opt->cmdmode)
+-		data.split_on_whitespace = 1;
  
- 	strbuf_expand(&buf, opt->format.format, expand_format, &item);
- 	strbuf_addch(&buf, '\n');
+ 	if (opt->all_objects) {
+ 		struct object_info empty = OBJECT_INFO_INIT;
+@@ -435,9 +432,10 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	save_warning = warn_on_object_refname_ambiguity;
+ 	warn_on_object_refname_ambiguity = 0;
++	is_rest = opt->cmdmode || is_atom_used(&opt->format, "rest");
+ 
+ 	while (strbuf_getline(&buf, stdin) != EOF) {
+-		if (data.split_on_whitespace) {
++		if (is_rest) {
+ 			/*
+ 			 * Split at first whitespace, tying off the beginning
+ 			 * of the string and saving the remainder (or NULL) in
 diff --git a/ref-filter.c b/ref-filter.c
-index d09ec1bde6d54..3f92a27d98b6c 100644
+index 34a54db168265..4adeea6aad0da 100644
 --- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -1403,6 +1403,23 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 	return show_ref(&atom->u.refname, ref->refname);
+@@ -493,8 +493,6 @@ static int parse_ref_filter_atom(const struct ref_format *format,
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atom[i].name, "symref"))
+ 		need_symref = 1;
+-	if (cat_file_info && !strcmp(valid_atom[i].name, "rest"))
+-		cat_file_info->split_on_whitespace = 1;
+ 	return at;
  }
  
-+static int check_and_fill_for_cat(struct ref_array_item *ref)
+@@ -730,6 +728,21 @@ static const char *find_next(const char *cp)
+ 	return NULL;
+ }
+ 
++/* Search for atom in given format. */
++int is_atom_used(const struct ref_format *format, const char *atom)
 +{
-+	if (!cat_file_info->skip_object_info &&
-+	    sha1_object_info_extended(ref->oid.hash, &cat_file_info->info,
-+				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
-+		const char *e = ref->objectname;
-+		printf("%s missing\n", e ? e : oid_to_hex(&ref->oid));
-+		fflush(stdout);
-+		return -1;
++	const char *cp, *sp;
++	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
++		const char *ep = strchr(sp, ')');
++		int atom_len = ep - sp - 2;
++		sp += 2;
++		if (atom_len == strlen(atom) && !memcmp(sp, atom, atom_len))
++			return 1;
++		cp = ep + 1;
 +	}
-+	ref->type = cat_file_info->type;
-+	ref->size = cat_file_info->size;
-+	ref->disk_size = cat_file_info->disk_size;
-+	ref->delta_base_oid = &cat_file_info->delta_base_oid;
 +	return 0;
 +}
 +
  /*
-  * Parse the object referred by ref, and grab needed value.
-  * Return 0 if everything was successful, -1 otherwise.
-@@ -1424,6 +1441,9 @@ int populate_value(struct ref_array_item *ref)
- 			ref->symref = "";
- 	}
- 
-+	if (cat_file_info && check_and_fill_for_cat(ref))
-+		return -1;
-+
- 	/* Fill in specials first */
- 	for (i = 0; i < used_atom_cnt; i++) {
- 		struct used_atom *atom = &used_atom[i];
+  * Make sure the format string is well formed, and parse out
+  * the used atoms.
 diff --git a/ref-filter.h b/ref-filter.h
-index 87b026b8b76d0..5c6e019998716 100644
+index 5c6e019998716..fffc443726e28 100644
 --- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -45,6 +45,7 @@ struct ref_array_item {
- 	off_t disk_size;
+@@ -86,13 +86,6 @@ struct expand_data {
  	const char *rest;
- 	struct object_id *delta_base_oid;
-+	const char *objectname;
- 	char refname[FLEX_ARRAY];
- };
+ 	struct object_id delta_base_oid;
  
+-	/*
+-	 * Whether to split the input on whitespace before feeding it to
+-	 * get_sha1; this is decided during the mark_query phase based on
+-	 * whether we have a %(rest) token in our format.
+-	 */
+-	int split_on_whitespace;
+-
+ 	/*
+ 	 * After a mark_query run, this object_info is set up to be
+ 	 * passed to sha1_object_info_extended. It will point to the data
+@@ -186,4 +179,7 @@ void pretty_print_ref(const char *name, const unsigned char *sha1,
+ /* Fill the values of request and prepare all data for final string creation */
+ int populate_value(struct ref_array_item *ref);
+ 
++/* Search for atom in given format. */
++int is_atom_used(const struct ref_format *format, const char *atom);
++
+ #endif /*  REF_FILTER_H  */
 
 --
 https://github.com/git/git/pull/452
