@@ -2,68 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7B681F576
-	for <e@80x24.org>; Mon, 12 Feb 2018 08:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3461F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 08:09:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932977AbeBLIIq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 03:08:46 -0500
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:34593 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932876AbeBLIIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 03:08:43 -0500
-Received: by mail-wr0-f174.google.com with SMTP id m5so2130496wrg.1
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 00:08:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=QGzpClwNG9XszcRytkVEADSEjZ5wj5k8ssPlCcGplSQ=;
-        b=PGIStpj6fUlrsTXUt1lBbL1UbqYL7toFR1XWjjhttk1vveJ0eoq669c7m0YaJ4K9NO
-         YXYrx2ZsQSdenmUWu/chbErHQteiAKGy2h2bCaEByz587/Adtz9+QVWZBp6bwdRN693C
-         rq3LIWMyAkPT4vCodroeF0LWdksURQxikuh2wrpRVOlRxdC3ZKQDJ/8lCS/pvE1lu0hw
-         gl94M4sVUTfv9pPDO05BB9S8CvLcesCHJcWIi6kE9zt4anhTOCUeG3gVuP0Y+kOZnCsP
-         P4UyzarOSCw7W5F/95IEXzr5HTpSoXfjtiI14D7JMV9+OlL6OPqh/M/6jfG6c8Qzx+10
-         +jdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QGzpClwNG9XszcRytkVEADSEjZ5wj5k8ssPlCcGplSQ=;
-        b=c6M4xqjIALvHl3M4Cjz+PKO13YlGCJyupsh60Q1N+5B6N64h2JjFHba+7FLmnTeqqN
-         n4B4C5fJFYW9UdCnY9DcWPUcmW8qF95n2Z+HCXfJ8WoiVty9Z0Pkoxb2R0u5y34g2dTZ
-         uch1g+6YLcvJ5CcJUAZCGAk+hGa1HWh58+GnClu9tiHHIy4Kqz474srHl0XS54lKYYVi
-         DrHZruoAdmHREtQEVgqzi62emaHCC8EZiIiyMRvu0sSwLacO0lsdxTANkf2+0NXl+pwP
-         07fvYQKRpobNIngi4aUx3mRsVwCVu2h3x1415/yPEtbvrQAg+Lyeirenz6g5MzXuzME/
-         4aEw==
-X-Gm-Message-State: APf1xPD6VCOn6CT+vTMXCi9FoogKhtOD/G/x4Rw/0Oa9L1cyb++k8L+P
-        x05iVsPOE6xkaDCguoRF4SYjDrHYDEPRU+VfOS/JYA==
-X-Google-Smtp-Source: AH8x227SbNvQ1IEMsR4rj1IAqA4EbRRdYuPFdJpWBhtw53piu8d5vj8/YjCaFdUVhx6wSCsVXIVuXewQASSpQz187s4=
-X-Received: by 10.223.176.201 with SMTP id j9mr2628489wra.210.1518422921771;
- Mon, 12 Feb 2018 00:08:41 -0800 (PST)
+        id S933007AbeBLIJA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 03:09:00 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:48918
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932979AbeBLIIz (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 03:08:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1518422934;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=JxaorqxvP61g7dNeFDDENo1m1QvLP+cXDqhX+18RohU=;
+        b=VLxj2S1jgkMtxgIGj2KFmfHbfkgumeiWhOzzQPB0irojXp2s1njGjXv1ZhIm1Ezs
+        EGsg2wOYtCTr6/vAt3tdMJO3Ab8GjxmJLt4oDH7LAWM4/eVMB5f1sLIAED/TDqfP6WP
+        yCc4kmM1FkUBBePoCgXT7aKfOdRafHIbPSosDPPg=
+From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <01020161890f432e-07d6260a-0100-4859-af1c-2cdf8da76829-000000@eu-west-1.amazonses.com>
+In-Reply-To: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
+References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v3 03/23] cat-file: reuse struct ref_format
 MIME-Version: 1.0
-Received: by 10.223.155.17 with HTTP; Mon, 12 Feb 2018 00:08:41 -0800 (PST)
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Mon, 12 Feb 2018 11:08:41 +0300
-Message-ID: <CAL21Bm=M73qePzz0Kz1sZRJa8rK+Ddac3ARf4Lu6HRr-NGSKPg@mail.gmail.com>
-Subject: [PATCH v3 0/23] cat-file: reuse formatting logic from ref-filter
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 12 Feb 2018 08:08:54 +0000
+X-SES-Outgoing: 2018.02.12-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The main idea of the patch is to get rid of using custom formatting in
-cat-file and start using general one from ref-filter.
-Additional bonus is that cat-file becomes to support many new
-formatting commands like %(if), %(color), %(committername) etc.
+Start using ref_format struct instead of simple char*.
+Need that for further reusing of formatting logic from ref-filter.
 
-Updates since last review:
-In [PATCH v3 16/23] ref-filter: make cat_file_info independent
-is_cat flag is hidden into global cat_file_info variable
+Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored by: Jeff King <peff@peff.net>
+---
+ builtin/cat-file.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-Also make some minor refactoring.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index f5fa4fd75af26..98fc5ec069a49 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -13,15 +13,16 @@
+ #include "tree-walk.h"
+ #include "sha1-array.h"
+ #include "packfile.h"
++#include "ref-filter.h"
+ 
+ struct batch_options {
++	struct ref_format format;
+ 	int enabled;
+ 	int follow_symlinks;
+ 	int print_contents;
+ 	int buffer_output;
+ 	int all_objects;
+ 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
+-	const char *format;
+ };
+ 
+ static const char *force_path;
+@@ -348,7 +349,7 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 		return;
+ 	}
+ 
+-	strbuf_expand(&buf, opt->format, expand_format, data);
++	strbuf_expand(&buf, opt->format.format, expand_format, data);
+ 	strbuf_addch(&buf, '\n');
+ 	batch_write(opt, buf.buf, buf.len);
+ 	strbuf_release(&buf);
+@@ -441,8 +442,8 @@ static int batch_objects(struct batch_options *opt)
+ 	int save_warning;
+ 	int retval = 0;
+ 
+-	if (!opt->format)
+-		opt->format = "%(objectname) %(objecttype) %(objectsize)";
++	if (!opt->format.format)
++		opt->format.format = "%(objectname) %(objecttype) %(objectsize)";
+ 
+ 	/*
+ 	 * Expand once with our special mark_query flag, which will prime the
+@@ -451,7 +452,7 @@ static int batch_objects(struct batch_options *opt)
+ 	 */
+ 	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+-	strbuf_expand(&buf, opt->format, expand_format, &data);
++	strbuf_expand(&buf, opt->format.format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	if (opt->cmdmode)
+ 		data.split_on_whitespace = 1;
+@@ -543,7 +544,7 @@ static int batch_option_callback(const struct option *opt,
+ 
+ 	bo->enabled = 1;
+ 	bo->print_contents = !strcmp(opt->long_name, "batch");
+-	bo->format = arg;
++	bo->format.format = arg;
+ 
+ 	return 0;
+ }
+@@ -552,7 +553,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ {
+ 	int opt = 0;
+ 	const char *exp_type = NULL, *obj_name = NULL;
+-	struct batch_options batch = {0};
++	struct batch_options batch = { REF_FORMAT_INIT };
+ 	int unknown_type = 0;
+ 
+ 	const struct option options[] = {
+
+--
+https://github.com/git/git/pull/452
