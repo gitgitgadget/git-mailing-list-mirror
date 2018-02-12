@@ -2,113 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D17D21F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 20:31:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E041F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 20:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753010AbeBLUba (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 15:31:30 -0500
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35087 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750822AbeBLUb3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 15:31:29 -0500
-Received: by mail-qt0-f194.google.com with SMTP id g14so1132069qti.2
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 12:31:29 -0800 (PST)
+        id S1753260AbeBLUhW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 15:37:22 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51660 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753011AbeBLUhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 15:37:21 -0500
+Received: by mail-wm0-f67.google.com with SMTP id r71so11993935wmd.1
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 12:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=YiVfXkuiiFmGHfvbBkFBKjhNl2lj6ELuEybXjEXNeB8=;
-        b=aHzqvxFhFZ7/IcaUvBEjOfsmjg3DZNHc4ZbqJxxe14deYb078tE71s104UuARqkvZ1
-         YmS4naC/sBAY/b81AHsvwTKfzIRvkBf78K2wmayWgvLVY0dw2UGf7Bqrbcum5tQ+Sz20
-         Z1cPeTvoHJkP3Ek3Entq9OSjAuDej1k1feCUlBxJO1lf8yc1ODqM7cdPBDXSfhd9jXEU
-         vocGfxdHGy999vvx7EYbtcChkEhr4p7aqnNT/Kx5dJbn3CdVQVs17doxKd3C/vvxH3qV
-         SKkUocygquEtNtfhZUb5ryeN6/VLRnVDCy749cVbiv/5qAZQAq52DrnYIpt1WHA9wmYV
-         xtDQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=5XhfJkT4iyL0fgJYqhcAa82qMDyGmCgJV8QLGvzNbhM=;
+        b=ZxxKgKYMEFZm68BpPoh7DIR65YdYc+9eOdckSHguE++yN0WtJ8fTI4yQSPhxBYBY+k
+         hJBJWOKnpGmkcdPfpZ6nIgzh2fs3VOYvNM4azpIsiP5Isa6ocU6fu4zFGijbIhJras5B
+         X0uq6y+xnqJ0b3FY9sMzW14ySyBnT7WEhH5zkwgZk5ufn/Exb+C1UcybzHbNkQWMwuqU
+         dF9oFQQCXtDP0Yuns9hrTXztpTXSCAwC+i1cb/coH7tTeTdcA+ce7OUEZ322I6EmOO4m
+         DLcx+9lM8DFhzJwS+KZpHLXq1sIYLVXZmiE6pQdRyj5F9lEV/FG/g7b0bTIY4ynZMN5t
+         e8lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=YiVfXkuiiFmGHfvbBkFBKjhNl2lj6ELuEybXjEXNeB8=;
-        b=lNxckhLwhTupgjzYmvut+lzK8gQ+43lj44ld/uxFx+075IIp0KsSRyqBSDms1iiQRy
-         48U7DZW6lgSTEziomzwvIuktXK05e6MTdw/udOEpEc9UwuqCO3H0rrQlZnzA+DbSWYaN
-         ayhjKO2MJnPPqUI3oek/N1wCQsDH+nZ783B+PbosisnQVOSv7LAXSMJlMZZb+jBGmyYP
-         xWOTWTmCYz4iXo42MCA8/LzEZYwEXGQMmGzpHXq6nYviQNV0SiBvgtxrvIAyzFEthJ3V
-         68ESvKAXT8E4HhkVYBvWCsuwskHz7g9yqYAIj6rHNbDwyF3PD5uk//yG5BNpjbFg2eqM
-         J9mg==
-X-Gm-Message-State: APf1xPD7WjUi8K6XUvfskE7MyvunpB4yRoBJAwGt7JMYnK+gTtcSNUSi
-        8CX8MP5LDC8wgAkcsI0HMZ7JRcn1/5+sQcPSnlvrnw==
-X-Google-Smtp-Source: AH8x224oEqJ8mnn1RQZqvml7oyFmkQAoM41tTEVf8GAC0qvL34oGz5TUkSswZjVxAG7jJ0oqEfK7CRgQzzEL56mj+Ds=
-X-Received: by 10.200.51.100 with SMTP id u33mr15241286qta.127.1518467489207;
- Mon, 12 Feb 2018 12:31:29 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5XhfJkT4iyL0fgJYqhcAa82qMDyGmCgJV8QLGvzNbhM=;
+        b=Rps8FGqhbmtpoibX9FZJauYWgPYZOZnHwCf3T7tE8iPnQs3/jhhdxLZubC/j9yDaA+
+         yhwHnz4L277p81vi8Fct3pvYZSLOFPFA9ce/nXknNh7FO98f88ICsqpv8Qgs1PMizRvv
+         FsgwRUZnbuWcnPe+j/7uchEV7kd47G+Gl102GbD9WalCCUsQ7qmu1aVLyPpTBny5QP/w
+         4evt7fpse8pFBwqyLf2mpgqlCywbWdOqVtTj8/nkuYn4TbTsLEErC2SfDgV7ju5GhS+F
+         tHjz3/4gx+d/wLhZkxsSCXCTSH8KD8vFUm2kl5+YfpGAZFVuC2nfk3Oaapgzz1JjHb5D
+         g60w==
+X-Gm-Message-State: APf1xPArN44yt0FPBmOPUt8fqIZP7/9mL5+0h6mctdnP3CDu+5RW07rp
+        FfqSSDhkl0Mg6kUPpZBBxl4=
+X-Google-Smtp-Source: AH8x224YXXvCzMzC+21qvESgZhVAzUMpijoVIpGgvsaDwGCuWDPAR7YSrdMwE27Ns5lAKqxDzbxIAg==
+X-Received: by 10.28.38.133 with SMTP id m127mr4306513wmm.40.1518467839629;
+        Mon, 12 Feb 2018 12:37:19 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p5sm8349862wmf.13.2018.02.12.12.37.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Feb 2018 12:37:18 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        peff@peff.net, jonathantanmy@google.com, sbeller@google.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v3 07/14] commit-graph: update graph-head during write
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
+        <xmqqeflqt4st.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 12 Feb 2018 12:37:17 -0800
+In-Reply-To: <xmqqeflqt4st.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 12 Feb 2018 10:56:50 -0800")
+Message-ID: <xmqqwozirlky.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 12:31:28 -0800 (PST)
-In-Reply-To: <xmqq7erit2wo.fsf@gitster-ct.c.googlers.com>
-References: <20180210010132.33629-1-lars.schneider@autodesk.com>
- <20180212031526.40039-1-sunshine@sunshineco.com> <20180212031526.40039-3-sunshine@sunshineco.com>
- <xmqq7erit2wo.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Feb 2018 15:31:28 -0500
-X-Google-Sender-Auth: mlnUy8LjWFkT40tRUobh1doRHuE
-Message-ID: <CAPig+cQ6Tq3J=bS8ymDqiXqUvoUiP59T=FGZgMw2FOAx0vyo=Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] worktree: add: change to new worktree directory
- before running hook
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->> Fix this by changing to the new worktree's directory before running
->> the hook, and adjust the tests to verify that the hook is indeed run
->> within the correct directory.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Derrick Stolee <stolee@gmail.com> writes:
 >
-> I like the approach taken by this replacement better.  Just to make
-> sure I understand the basic idea, let me rephrase what these two
-> patches are doing:
+>> It is possible to have multiple commit graph files in a pack directory,
+>> but only one is important at a time. Use a 'graph_head' file to point
+>> to the important file. Teach git-commit-graph to write 'graph_head' upon
+>> writing a new commit graph file.
 >
->  - "path" that is made absolute in this step is where the new
->    worktree is created, i.e. the top-level of the working tree in
->    the new worktree.  We chdir there and then run the hook script.
+> Why this design, instead of what "repack -a" would do, iow, if there
+> always is a singleton that is the only one that matters, shouldn't
+> the creation of that latest singleton just clear the older ones
+> before it returns control?
 
-Sorry for misleading. The "absolute path" stuff in this patch is
-unnecessary; it's probably just left-over from Lars's proposal which
-did need to make it absolute when setting GIT_WORK_TREE, and I likely
-didn't think hard enough to realize that it doesn't need to be
-absolute just for chdir(). I'll drop the unnecessary
-absolute_pathdup() in the re-roll.
+Note that I am not complaining---I am just curious why we want to
+expose this "there is one relevant one but we keep irrelevant ones
+we usually do not look at and need to be garbage collected" to end
+users, and also expect readers of the series, resulting code and
+docs would have the same puzzled feeling.
 
-(The hook path in patch 1/2, on the other hand, does need to be made
-absolute since find_hook() returns a relative path before we've
-chdir()'d into the new worktree.)
 
->  - Even though we often see hooks executed inside .git/ directory,
->    for post-checkout, the top-level of the working tree is the right
->    place, as that is where the hook is run by "git checkout" [...]
-
-Patch 1/2's commit message is a bit sloppy in its description of this.
-I'll tighten it up in the re-roll.
-
-I'm also not fully convinced that these new overloads of run_hook_*()
-are warranted since it's hard to imagine any other case when they
-would be useful. It may make sense just to have builtin/worktree.c run
-the hook itself for this one-off case.
-
-> I wonder if we need to clear existing GIT_DIR/GIT_WORK_TREE from the
-> environment, though.  When a user with a funny configuration (where
-> these two environment variables are pointing at unusual places) uses
-> "git worktree add" to create another worktree for the repository, it
-> would not be sufficient to chdir to defeat them that are appropriate
-> for the original, and not for the new, worktree, would it?
-
-Good point. I'll look into sanitizing the environment.
