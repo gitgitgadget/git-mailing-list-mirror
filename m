@@ -8,28 +8,28 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBD9C1F576
-	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2676C1F576
+	for <e@80x24.org>; Mon, 12 Feb 2018 08:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933047AbeBLIKR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 03:10:17 -0500
-Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:48922
+        id S933045AbeBLIKQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 03:10:16 -0500
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:48924
         "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932982AbeBLIIz (ORCPT
+        by vger.kernel.org with ESMTP id S932981AbeBLIIz (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 03:08:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1518422934;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=hASNHaMdulQ4FLdsHLONDbIf2fBttkfj0ZZHpdjvI1A=;
-        b=Rq1fr4L2ehDqiVuiEyHLpdZu2dpS5Z/Y+H0+tkbPZtZgglI0WTPwKwkVV5XO/wNB
-        m4/a7KwikLvs6flUhxneVyGbd0rQ4Ua0/7bbvhF53k8abMHHyAdtaAlI2XwluD9se6P
-        Y0DIaMPugXP3z3vFYr3aRVD77HErjzlvZ6/tc7TE=
+        bh=zE+x3PsTit2wZUkfjMiZxE1BIcsJyhid1gquDkYpPRU=;
+        b=W7Nr2/qe27I3sLQ/5pyZyu8nHka8kUA7g4Pq62n1P1v6+voEf6DYRyh43O9nWM9I
+        0UaLGWYuP/tFyGJcvHXpljsujNM9pukyAGnElBSQGt2t1yd5oFmgtOxGMEIBtxnsR3l
+        D3tWFeJ3eZN8w7xjSeAIWJCLegFUfoqR26NfdUG0=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020161890f4353-44cc5f60-0e42-492a-9d7f-0f6f1c7b3501-000000@eu-west-1.amazonses.com>
+Message-ID: <01020161890f4388-f6427c9d-2be6-4628-afc9-bfaeb58b1ebe-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
 References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3 13/23] ref-filter: get rid of mark_atom_in_object_info()
+Subject: [PATCH v3 22/23] cat-file: tests for new atoms added
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -41,101 +41,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove mark_atom_in_object_info() and create same logic
-in terms of ref-filter style.
+Add some tests for new formatting atoms from ref-filter.
+Some of new atoms are supported automatically,
+some of them are expanded into empty string
+(because they are useless for some types of objects),
+some of them could be supported later in other patches.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored by: Jeff King <peff@peff.net>
 ---
- ref-filter.c | 45 +++++++++++++++++++++------------------------
- 1 file changed, 21 insertions(+), 24 deletions(-)
+ t/t1006-cat-file.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 3f92a27d98b6c..34a54db168265 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -255,13 +255,29 @@ static void objectname_atom_parser(const struct ref_format *format, struct used_
- static void objectsize_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
- {
- 	if (!arg)
--		; /* default to normal object size */
-+		cat_file_info->info.sizep = &cat_file_info->size;
- 	else if (!strcmp(arg, "disk"))
- 		cat_file_info->info.disk_sizep = &cat_file_info->disk_size;
- 	else
- 		die(_("urecognized %%(objectsize) argument: %s"), arg);
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index b19f332694620..e72fcaf0e02c5 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -20,6 +20,19 @@ maybe_remove_timestamp () {
+     fi
  }
  
-+static void objecttype_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+{
-+	if (!arg)
-+		cat_file_info->info.typep = &cat_file_info->type;
-+	else
-+		die(_("urecognized %%(objecttype) argument: %s"), arg);
++test_atom () {
++    name=$1
++    sha1=$2
++    atoms=$3
++    expected=$4
++
++    test_expect_success "$name" '
++	echo "$expected" >expect &&
++	echo $sha1 | git cat-file --batch-check="$atoms" >actual &&
++	test_cmp expect actual
++    '
 +}
 +
-+static void deltabase_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
-+{
-+	if (!arg)
-+		cat_file_info->info.delta_base_sha1 = cat_file_info->delta_base_oid.hash;
-+	else
-+		die(_("urecognized %%(deltabase) argument: %s"), arg);
-+}
+ run_tests () {
+     type=$1
+     sha1=$2
+@@ -119,6 +132,13 @@ $content"
+ 	maybe_remove_timestamp "$(cat actual.full)" $no_ts >actual &&
+ 	test_cmp expect actual
+     '
 +
- static void refname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
- {
- 	refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
-@@ -384,10 +400,10 @@ static struct valid_atom {
- 
- static struct valid_atom valid_cat_file_atom[] = {
- 	{ "objectname" },
--	{ "objecttype" },
-+	{ "objecttype", FIELD_STR, objecttype_atom_parser },
- 	{ "objectsize", FIELD_ULONG, objectsize_atom_parser },
- 	{ "rest" },
--	{ "deltabase" },
-+	{ "deltabase", FIELD_STR, deltabase_atom_parser },
- };
- 
- #define REF_FORMATTING_STATE_INIT  { 0, NULL }
-@@ -411,25 +427,6 @@ struct atom_value {
- 	struct used_atom *atom;
- };
- 
--static int is_atom(const char *atom, const char *s, int slen)
--{
--	int alen = strlen(atom);
--	return alen == slen && !memcmp(atom, s, alen);
--}
--
--static void mark_atom_in_object_info(const char *atom, int len,
--				    struct expand_data *data)
--{
--	if (is_atom("objecttype", atom, len))
--		data->info.typep = &data->type;
--	else if (is_atom("objectsize", atom, len))
--		data->info.sizep = &data->size;
--	else if (is_atom("rest", atom, len))
--		data->split_on_whitespace = 1;
--	else if (is_atom("deltabase", atom, len))
--		data->info.delta_base_sha1 = data->delta_base_oid.hash;
--}
--
- /*
-  * Used to parse format string and sort specifiers
-  */
-@@ -496,8 +493,8 @@ static int parse_ref_filter_atom(const struct ref_format *format,
- 		need_tagged = 1;
- 	if (!strcmp(valid_atom[i].name, "symref"))
- 		need_symref = 1;
--	if (cat_file_info)
--		mark_atom_in_object_info(atom, atom_len, cat_file_info);
-+	if (cat_file_info && !strcmp(valid_atom[i].name, "rest"))
-+		cat_file_info->split_on_whitespace = 1;
- 	return at;
++    for atom in refname parent body trailers upstream push symref flag
++    do
++	test_atom "Check %($atom) gives empty output" "$sha1" "%($atom)" ""
++    done
++
++    test_atom "Check %(HEAD) gives only one space as output" "$sha1" '%(HEAD)' ' '
  }
  
+ hello_content="Hello World"
+@@ -140,6 +160,12 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 	test_cmp expect actual
+ '
+ 
++shortname=`echo $hello_sha1 | sed 's/^.\{0\}\(.\{7\}\).*/\1/'`
++test_atom 'Check format option %(objectname:short) works' "$hello_sha1" '%(objectname:short)' "$shortname"
++
++test_atom 'Check format option %(align) is not broken' \
++    "$hello_sha1" "%(align:8)%(objecttype)%(end)%(objectname)" "blob    $hello_sha1"
++
+ tree_sha1=$(git write-tree)
+ tree_size=33
+ tree_pretty_content="100644 blob $hello_sha1	hello"
+@@ -157,6 +183,17 @@ $commit_message"
+ 
+ run_tests 'commit' $commit_sha1 $commit_size "$commit_content" "$commit_content" 1
+ 
++test_atom "Check format option %(if) is not broken" "$commit_sha1" \
++    "%(if)%(author)%(then)%(objectname)%(end)" "$commit_sha1"
++test_atom "Check %(tree) works for commit" "$commit_sha1" "%(tree)" "$tree_sha1"
++test_atom "Check %(numparent) works for commit" "$commit_sha1" "%(numparent)" "0"
++test_atom "Check %(authorname) works for commit" "$commit_sha1" "%(authorname)" "$GIT_AUTHOR_NAME"
++test_atom "Check %(authoremail) works for commit" "$commit_sha1" "%(authoremail)" "<$GIT_AUTHOR_EMAIL>"
++test_atom "Check %(committername) works for commit" "$commit_sha1" "%(committername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(committeremail) works for commit" "$commit_sha1" "%(committeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for commit" "$commit_sha1" "%(subject)" "$commit_message"
++test_atom "Check %(contents) works for commit" "$commit_sha1" "%(contents)" "$commit_message"
++
+ tag_header_without_timestamp="object $hello_sha1
+ type blob
+ tag hellotag
+@@ -171,6 +208,17 @@ tag_size=$(strlen "$tag_content")
+ 
+ run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
+ 
++test_atom "Check %(object) works for tag" "$tag_sha1" "%(object)" "$hello_sha1"
++test_atom "Check %(type) works for tag" "$tag_sha1" "%(type)" "blob"
++test_atom "Check %(tag) works for tag" "$tag_sha1" "%(tag)" "hellotag"
++test_atom "Check %(taggername) works for tag" "$tag_sha1" "%(taggername)" "$GIT_COMMITTER_NAME"
++test_atom "Check %(taggeremail) works for tag" "$tag_sha1" "%(taggeremail)" "<$GIT_COMMITTER_EMAIL>"
++test_atom "Check %(subject) works for tag" "$tag_sha1" "%(subject)" "$tag_description"
++test_atom "Check %(contents) works for tag" "$tag_sha1" "%(contents)" "$tag_description"
++
++test_atom "Check %(color) gives no additional output" "$sha1" \
++    "%(objectname) %(color:green) %(objecttype)" "$sha1  $type"
++
+ test_expect_success \
+     "Reach a blob from a tag pointing to it" \
+     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
 
 --
 https://github.com/git/git/pull/452
