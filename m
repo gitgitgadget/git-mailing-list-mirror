@@ -7,88 +7,98 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5234E1F404
-	for <e@80x24.org>; Mon, 12 Feb 2018 21:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E22661F404
+	for <e@80x24.org>; Mon, 12 Feb 2018 21:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932411AbeBLVoM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 16:44:12 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:39868 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932204AbeBLVoL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 16:44:11 -0500
-Received: by mail-wr0-f193.google.com with SMTP id w77so2191954wrc.6;
-        Mon, 12 Feb 2018 13:44:10 -0800 (PST)
+        id S932321AbeBLVsd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 16:48:33 -0500
+Received: from mail-wr0-f175.google.com ([209.85.128.175]:34161 "EHLO
+        mail-wr0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932109AbeBLVsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 16:48:32 -0500
+Received: by mail-wr0-f175.google.com with SMTP id m5so4637121wrg.1
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 13:48:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EjnoQXyHqRJiq7mAL5/+p+qhHjUon9mUH9stNjmjFf8=;
-        b=vY2DSy3wztAdrThldmw9UK1HfKlf5TGDj/osHyOvcIU1wYnumJfNKIRusRsMWipYhe
-         T70vkk7ztwXMQh2qM2ct76PB8T6ox+gIj/P5YaEp89IN/CQ6HnB9Xsvj/oCT2lwXjxiW
-         zqb39t3yPzAbVMnWmArF2/TLNcA1TolR44taQEqNp+FlJM7zXo80+UpVjwPXMOuXWaRJ
-         cmfWZg4hI7rXhLMes4kFbwoAVTobjLPUv2JrtzJrfJFqg8EghyljOeAe9VY5ts2jKvUU
-         Y5y97zCGGytI3OVQAtF4ZncTdXXomsMCVsJ/KSMLP5Zp3ei0DF94AnqSdqN/cEgU3Ctt
-         Vy+g==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=UGMpsVE8Xg2DMp81nNo4Dv18q1p5dUDSDYtwftxy/D4=;
+        b=oEdAZywkusveCkFZEDP70ZFH01qL7wUQx5uL42S1Agh5L1zEVOR1YPQGG8SeE+BDkd
+         eOllg8HCGaTElpuPZ2tOdgEynvInEss8/fINPpn3TNsZBxpYm47PRBZklmHvFChE9MFq
+         4V9KoGL59HLookh8oNGFQoxAR6Lj0fBLbaaXhOKujbbCCuvSzQ4UZNOyzh4wFwjRzLf0
+         7l7qWYOYkt30Q2tYkbwt0nGseV2QPl2hUEztchJIeurxYR6Am00Bxx2Z+/Ijq2Phks8g
+         o4M0HvPatUYQIHXgEypl8ST+vsAi826XbJxG1EXcnAW5J4ubPK/vpmqO5SKl/hc8U8/X
+         Obzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=EjnoQXyHqRJiq7mAL5/+p+qhHjUon9mUH9stNjmjFf8=;
-        b=B9Knh2O20ru2/v6Bz/qWK8ZfiVC1fkgBnf/9mrKNJzrWpN/0hjMKJBfCJnm1udEPHk
-         mkmY4lqZRpI+qNxaUabmvulX7yxUs7SZWSESGAW8k0j4ObaoP4eN1bYHVeFfB5inZ/cp
-         bVXMCemf4NQ61mCNM6YADxX3fZe3ye3o0gwXNm06WawlKiXeTL+DlpSg3lnzjU7F6Czy
-         8S/0Wt/8xLiHph87voESS3v2dv+nIhot7wHQXd/6dBY3nigzsFHQ+lFSjZVHqYBOKOhd
-         ylfqD2eP/cfjRhrNKalulmoGImMpDLuSY44JkLFofW+WgnSyXBWh5+s32DfOynDjFtJX
-         aH3w==
-X-Gm-Message-State: APf1xPCcimgcPXD9hwUJj+kvAUCXgEPlsSTF1Gj8lm/UPoi26a8KWmwa
-        7tkVrwGG/U1fvpEDcdrppqU=
-X-Google-Smtp-Source: AH8x224EoGAsrZb2VmYeWwL9Xvhr1YW8rsDXw1vkHv1qSH+S5Yq2Tmct6GqBXcWCNKNgk7VvXK+AyA==
-X-Received: by 10.223.135.18 with SMTP id a18mr10638968wra.126.1518471849173;
-        Mon, 12 Feb 2018 13:44:09 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=UGMpsVE8Xg2DMp81nNo4Dv18q1p5dUDSDYtwftxy/D4=;
+        b=S06TTSaitFnvZx8XTH41/mh0fVqEqjt/YHb3b0wRCt6pgzOQ8Ci4B2JcjAS+PaEd45
+         WRSyWeGiBcUCKJg08CzfAZvoKONhuYjBp0MtRvWiQHa/AUJT5B0B0MGugHD8oW18D+qN
+         Kz9Mwr00pqBMl+JxFlRk28pv3k6rbbIpOKIwM9+p+qs3DMmgo7nnekLT8E7qMsPOYA2b
+         QQh/PgUj96yEdl4S7eHB9dCwmIOK4eM9WrC7Web0tT9U5cLFHU7rCKN1N0CNeVRpwHQI
+         sz6y7B3YKsZT6s1MqRT43ozQGIL677wV2SjMRpSG+MAb8Zl4jSShgGhxMZVQvohLIgVN
+         Qmew==
+X-Gm-Message-State: APf1xPBO0BN61/Ija21G8Ylqeo11w0IfaLKGoJN0zQbfT66XBJHMAizI
+        Mh1Wex7oKG3L1kOBLvNwpoM=
+X-Google-Smtp-Source: AH8x2255HvECiRBFCsjoGt3i/RBu0e/Isz8aEOJQhi7RKHr2rL+Ukfs9/QUqsuQIq7IC5foJy4/8Ow==
+X-Received: by 10.223.197.13 with SMTP id q13mr10305462wrf.235.1518472111203;
+        Mon, 12 Feb 2018 13:48:31 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k125sm14648453wmd.48.2018.02.12.13.44.08
+        by smtp.gmail.com with ESMTPSA id d5sm10319354wra.72.2018.02.12.13.48.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 13:44:08 -0800 (PST)
+        Mon, 12 Feb 2018 13:48:30 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
-        Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: linux-next: unnecessary merge in the v4l-dvb tree
-References: <20180213080036.3bf3a908@canb.auug.org.au>
-        <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
-        <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
-Date:   Mon, 12 Feb 2018 13:44:07 -0800
-In-Reply-To: <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
-        (Linus Torvalds's message of "Mon, 12 Feb 2018 13:37:04 -0800")
-Message-ID: <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru to object store
+References: <20180205235508.216277-1-sbeller@google.com>
+        <20180205235508.216277-4-sbeller@google.com>
+        <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
+        <xmqqsha5sywh.fsf@gitster-ct.c.googlers.com>
+        <212094a6-f1bd-c4cd-01f9-e819a701cfac@web.de>
+Date:   Mon, 12 Feb 2018 13:48:29 -0800
+In-Reply-To: <212094a6-f1bd-c4cd-01f9-e819a701cfac@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Mon, 12 Feb 2018 22:40:20 +0100")
+Message-ID: <xmqqbmgtswuq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> Maybe we could just tell people to have something like
+> Am 12.02.2018 um 22:04 schrieb Junio C Hamano:
+>> Stefan Beller <sbeller@google.com> writes:
+>> 
+>>> I thought it may be a helpful
+>>> for merging this series with the rest of the evolved code base which
+>>> may make use of one of the converted functions. So instead of fixing
+>>> that new instance manually, cocinelle could do that instead.
+>> 
+>> Having the .cocci used for the conversion *somewhere* would indeed
+>> be helpful, as it allows me to (1) try reproducing this patch by
+>> somebody else using the file and following the steps in order to
+>> audit this patch and (2) catch new places that need to be migrated
+>> in in-flight topics.
+>> 
+>> But placing it in contrib/coccinelle/ has other side effects.
 >
->        git config --global alias.update pull --ff-only
->
-> and use that for "try to update to upstream".
+> Running "make coccicheck" takes longer.  What other downsides are
+> there?
 
-I guess our mails crossed.  I admit that I indeed wondered why you
-were not giving your usual "downstream shouldn't do pointless pull
-from upstream" briefly but focused too much on how to tweak the
-default without thinking through.
-
-But I wonder why "update to upstream" is merging a signed tag in the
-first place.  Wouldn't downstream's "try to keep up with" pull be
-grabbing from branch tips, not tags?
-
-
-
-
+Once the global variable packed_git has been migrated out of
+existence, no new code that relies on it would be referring to that
+global variable.  If coccicheck finds something, the suggested rewrite 
+would be turning an unrelated packed_git (which may not even be the
+right type) to a reference to a field in a global variable, that
+would certainly be wrong.
