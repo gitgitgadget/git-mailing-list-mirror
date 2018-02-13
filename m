@@ -2,139 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBB191F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 00:53:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59D261F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 01:22:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933027AbeBMAxC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 19:53:02 -0500
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:39466 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932838AbeBMAxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 19:53:01 -0500
-Received: by mail-qk0-f173.google.com with SMTP id z197so3799799qkb.6
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 16:53:01 -0800 (PST)
+        id S933054AbeBMBWr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 20:22:47 -0500
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:37143 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933027AbeBMBWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 20:22:46 -0500
+Received: by mail-pl0-f67.google.com with SMTP id ay8so5862434plb.4
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:22:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VX08cjX8MgBKLq4/QLuRSGJDey3YSI29Bdv5Xkzf0po=;
-        b=o3T4LqSYjbYFwwdkDzZbWiDxvwFNTplMLBfW5smuO0HfEDY8vsp1GNJ81GvZcmSSaz
-         1yXOo+P5YCs3kh2rg6+vS3tOg5MMWfJfB5kovMBrzwwhj68O8+luMrGm7/ZE3/+NGG+v
-         Zl2bcKnlqaY2DBLpWnbgQ+mHkBYwu9QHlT3gvI2Fg6MILkg6ua0/0D4uM1/MuRy3gWaA
-         T76IVQY3IrD3u7/M32WJ9bOlUT/agr4zBQNjdub4fk9clUNDp/L9qV+wGVEcFUy28Xs7
-         331XmRjD3Bgbx8ZbkCvWFcc/cPpIRo8zdFuaYE0xOo7b+3nghXCJRrDPGmC1NiSNyBly
-         wFsA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=4gFdr6bocb0sUBrp7RnpzLoTsObLUhz6VuC/tpJAewE=;
+        b=nNuQFD0u189ULTje1aEcbHtD30eCmO0uz925gtgft/0yQ+N3aQ8pQC5PSkiJYCbYIP
+         PxpYjQbtrD3CBytq9y9BQusWZyKZ7Y2ns9t20cgp7ez0rTtvFBNNO1nfVG+DCB0roo4l
+         V8bkQUvgRIPvPrdEZBED17Ky2NZIiRZJPddDmGUgS1VG7uz5EW29qHfIviOtz+gSeCmm
+         GnwGHWofUPVHuti6HyZ5d9EFTv9rg4OgD4WfQ8hoG8x414JIZu4GNUxAoLqP8FCpy86q
+         Qc5xmhrYnDkl83wk3CHCpsV34AzkXMpVrqh0IOnmODU2p3I/D/rfn8yneoQQqstzdOGP
+         9ZWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VX08cjX8MgBKLq4/QLuRSGJDey3YSI29Bdv5Xkzf0po=;
-        b=SF4pz2iouOFYODq1RG0kd4ineAkq+IHoYqO2e7ZjezpZfv6s3RDFm46lHlRSETCtyY
-         vLJkYLc00IVkPtWwO+D2gOW+1xFh2BmurTMqqdwhG2U4L9SkeE8uPJxPAvqpJMV08M48
-         MJF3yb/ip/1MdFPtuYPTaLlW29rsQ7h9O8f4mDE+oJ5N2TD3btX7z8UnBPyuZzrg6xlf
-         JFBUMRj5uK++N8AllHVrOpJ4ietJ4vHlCCDNkPGDSIkTIKySb3vDWasbWT6teV7E0J4d
-         7l3CCDf08Y7eilZRHuyByc+yNk3AXlVK2oF44JAYhfg9lAtlG9FrRnN9Ow0Fybh9Z+Sj
-         cR0Q==
-X-Gm-Message-State: APf1xPAJu15H73r5K5TurUjIqzI7TmtjXJxpsWgJ4WkebD7QhKNueupq
-        HUwxAJXJq6rAd55b5787TluHFrR1p/rO6K+O36uqQgRT
-X-Google-Smtp-Source: AH8x227Y0iK0uPuCDHLzSIf/oGhYOv6hlY0ohLTehz9YFLepupEsQJ5NbeaWq82CcAsKrx/ZjNguBdp/+1PK74XkvJw=
-X-Received: by 10.55.49.74 with SMTP id x71mr17327345qkx.133.1518483181122;
- Mon, 12 Feb 2018 16:53:01 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.200.28.137 with HTTP; Mon, 12 Feb 2018 16:52:20 -0800 (PST)
-In-Reply-To: <5f712f6e-ecb4-db85-02de-b48be1bf1f44@pannous.com>
-References: <76c2d8b6-b001-8ae5-4e66-fdeed4a1190a@pannous.com> <5f712f6e-ecb4-db85-02de-b48be1bf1f44@pannous.com>
-From:   Andrew Ardill <andrew.ardill@gmail.com>
-Date:   Tue, 13 Feb 2018 11:52:20 +1100
-Message-ID: <CAH5451=YvnrjWreagLMCjMuGTgc-mfoL-MncRrda1PXuEQSCiA@mail.gmail.com>
-Subject: Re: please change stash
-To:     Karsten Fluegge <info@pannous.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=4gFdr6bocb0sUBrp7RnpzLoTsObLUhz6VuC/tpJAewE=;
+        b=aWas82Pc5bA+ndliXqi1faBIIhOxFx/KazJ/ENqV0K9t+iK+lKsjW2Yo1LyvwDQKXM
+         J6j6U6saa56HgTmcOzwc02ypHVYhA+sQ3GakPRrLfS2A90+erT5mOQOEJ4Ww8Zb1DSsF
+         IToS8WweOUZV3iRefbIXW68uLmty+vKfglrI2n/vcK7+hCQOns02BlYyN3YPyXhMglbs
+         aihRavakLVz4g6eoLbVnEfyHJeErP9dowJg5G/65f5t3ygJoD5rd2FL4QARGmA8ma90r
+         vfIc4/36J/W4kheN9kJzsRLzAYX+27CFBGlDAeTVvMVrnzZyCZ2C6mCusyI90+msLC8i
+         iMeg==
+X-Gm-Message-State: APf1xPApJEx2Bz3Ta85YX89SZCuFZlqKCH8MgpUfdLdL5OqiNx3usYRN
+        bO0O8IzAWvtEyM9j51ZYRDZy9A==
+X-Google-Smtp-Source: AH8x227lqb19YuBccOciqlr058UK4jtrrwd0fP1nqxNT5xJMuaYe6bhKwG3PGB9qK0Vop2fBiTdeCQ==
+X-Received: by 2002:a17:902:522:: with SMTP id 31-v6mr3437812plf.122.1518484965472;
+        Mon, 12 Feb 2018 17:22:45 -0800 (PST)
+Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
+        by smtp.gmail.com with ESMTPSA id j12sm50194464pfa.95.2018.02.12.17.22.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Feb 2018 17:22:44 -0800 (PST)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
+        jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH 00/26] Moving global state into the repository object (part 1)
+Date:   Mon, 12 Feb 2018 17:22:15 -0800
+Message-Id: <20180213012241.187007-1-sbeller@google.com>
+X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Karsten,
+This is a real take on the first part of the recent RFC[1].
 
-> Normal git tooling creates different files file.ORIG file.LOCAL
-> file.REMOTE in case of conflicts.
+Jonathan Tan suggested[2] that "sha1_loose_object_info to handle arbitrary repositories"
+might be a good breaking point for a first part at that RFC at patch 38.
+This series is smaller and contains only 26 patches as the patches in the big
+RFC were slightly out of order.
 
-Which tools are you referring to here? Can you give a short sequence
-of commands that show what you mean?
+I developed this series partly by writing patches, but mostly by cherrypicking
+from that RFC on top of current master. I noticed no external conflicts apart
+from one addition to the repositories _INIT macro, which was easy to resolve.
 
-> However `git stash pop` manipulates your files directly resulting in
-> lines like:
->
-> <<<<<<< Updated upstream
->
->>>>>>>> Stashed changes
->
-> This can seriously corrupt files and workflows.
+Comments in the early range of that RFC were on 003 where Junio pointed out
+that the coccinelle patch ought to be not in contrib/coccinelle, so I put it
+in a sub directory there, as 'make coccicheck' doesn't traverse subdirs.
 
-This looks like a normal merge conflict. I suspect that you are using
-tools that know how to deal with this format when it used the merge
-conflict markers, but maybe not the equivalent markers you get when
-popping a conflicting stash.
+brian had a questoin on patch 25 in the RFC, but that seemed to resolve itself
+without any suggestion to include into this series[3].
 
-To demonstrate, here is a short script:
+Duy suggested that we shall not use the repository blindly, but should carefully
+examine whether to pass on an object store or the refstore or such[4], which 
+I agree with if it makes sense. This series unfortunately has an issue with that
+as I would not want to pass down the `ignore_env` flag separately from the object
+store, so I made all functions that only take the object store to have the raw
+object store as the first parameter, and others using the full repository.
 
-git init test
-cd test
-echo "base file" >test
-git commit -m "base file"
-git add test
-git commit -m "base file"
-git checkout -b conflict_branch
-echo "conflicting file" >test
-git commit -am "conflict file"
-git checkout master
-echo "updated file" >test
-git commit -am "updated file"
-git merge conflict_branch
+Eric Sunshine brought up memory leaks with the RFC, and I would think to
+have plugged all holes.
 
+[1] https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com/
+[2] https://public-inbox.org/git/20180207143300.ce1c39ca07f6a0d64fe0e7ca@google.com/
+[3] https://public-inbox.org/git/20180206011940.GD7904@genre.crustytoothpaste.net/
+[4] https://public-inbox.org/git/CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com/
 
-This merge fails, and the file 'test' looks like this:
+Thanks,
+Stefan
 
-<<<<<<< HEAD
-updated file
-=======
-conflicting file
->>>>>>> conflict_branch
+Jonathan Nieder (8):
+  pack: move prepare_packed_git_run_once to object store
+  pack: move approximate object count to object store
+  sha1_file: add repository argument to sha1_file_name
+  sha1_file: add repository argument to map_sha1_file
+  sha1_file: allow stat_sha1_file to handle arbitrary repositories
+  sha1_file: allow open_sha1_file to handle arbitrary repositories
+  sha1_file: allow map_sha1_file_1 to handle arbitrary repositories
+  sha1_file: allow sha1_loose_object_info to handle arbitrary
+    repositories
 
-As you can see, this sequence of actions doesn't result in 3 different files.
+Stefan Beller (18):
+  repository: introduce raw object store field
+  object-store: move alt_odb_list and alt_odb_tail to object store
+  object-store: free alt_odb_list
+  object-store: move packed_git and packed_git_mru to object store
+  object-store: close all packs upon clearing the object store
+  sha1_file: add raw_object_store argument to alt_odb_usable
+  sha1_file: add repository argument to link_alt_odb_entry
+  sha1_file: add repository argument to read_info_alternates
+  sha1_file: add repository argument to link_alt_odb_entries
+  sha1_file: add repository argument to prepare_alt_odb
+  sha1_file: allow link_alt_odb_entries to handle arbitrary repositories
+  sha1_file: allow prepare_alt_odb to handle arbitrary repositories
+  sha1_file: add repository argument to stat_sha1_file
+  sha1_file: add repository argument to open_sha1_file
+  sha1_file: add repository argument to map_sha1_file_1
+  sha1_file: add repository argument to sha1_loose_object_info
+  sha1_file: allow sha1_file_name to handle arbitrary repositories
+  sha1_file: allow map_sha1_file to handle arbitrary repositories
 
-The merge conflict format is a relatively old one, and lots of tools
-know how to use it in different ways (such as the tool you are using,
-I presume) but say this was to be changed for the stash operation -
-what would you propose replace it?
-Some options might be to:
-- instead of placing the conflicts in the original file, place the
-different conflicting versions into different files
-- warn when adding/committing/pushing files with conflict markers in them
-- teach the tool you are using to handle the stash conflict markers in
-a nicer way
+ builtin/am.c                                    |   2 +-
+ builtin/clone.c                                 |   2 +-
+ builtin/count-objects.c                         |   6 +-
+ builtin/fetch.c                                 |   2 +-
+ builtin/fsck.c                                  |  13 ++-
+ builtin/gc.c                                    |   4 +-
+ builtin/grep.c                                  |   2 +-
+ builtin/index-pack.c                            |   1 +
+ builtin/merge.c                                 |   2 +-
+ builtin/pack-objects.c                          |  21 ++--
+ builtin/pack-redundant.c                        |   6 +-
+ builtin/receive-pack.c                          |   3 +-
+ cache.h                                         |  46 ++------
+ contrib/coccinelle/refactoring/packed_git.cocci |   7 ++
+ environment.c                                   |   5 +-
+ fast-import.c                                   |   6 +-
+ http-backend.c                                  |   6 +-
+ http-push.c                                     |   1 +
+ http-walker.c                                   |   4 +-
+ http.c                                          |   6 +-
+ mru.h                                           |   1 +
+ object-store.h                                  |  75 +++++++++++++
+ object.c                                        |  26 +++++
+ pack-bitmap.c                                   |   4 +-
+ pack-check.c                                    |   1 +
+ pack-revindex.c                                 |   1 +
+ packfile.c                                      |  64 +++++------
+ packfile.h                                      |   2 +-
+ path.c                                          |   2 +-
+ reachable.c                                     |   1 +
+ repository.c                                    |  17 ++-
+ repository.h                                    |   7 +-
+ server-info.c                                   |   6 +-
+ sha1_file.c                                     | 135 +++++++++++++-----------
+ sha1_name.c                                     |  11 +-
+ streaming.c                                     |   5 +-
+ 36 files changed, 321 insertions(+), 182 deletions(-)
+ create mode 100644 contrib/coccinelle/refactoring/packed_git.cocci
+ create mode 100644 object-store.h
 
-Some of these may be possible to do with little work.
-This link[0] on stack overflow deals with creating separate files, and
-it looks like it might work for stash pop conflicts.
-This one[1] shows how to create hooks that catch any conflicts that
-are being committed, and would also probably work with stash
-conflicts.
+-- 
+2.16.1.73.ga2c3e9663f.dirty
 
-Teaching the tool to handle stash conflicts, or making any of the
-above changes to the base distribution of git would be significantly
-harder, but maybe this can help you in the meantime.
-
-Regards,
-
-Andrew Ardill
-
-[0] https://stackoverflow.com/questions/47512337/configure-git-to-create-multiple-files-for-merge-conflicts
-[1] https://stackoverflow.com/questions/24213948/prevent-file-with-merge-conflicts-from-getting-committed-in-git
