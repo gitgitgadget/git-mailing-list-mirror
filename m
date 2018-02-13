@@ -2,79 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30BB51F576
-	for <e@80x24.org>; Tue, 13 Feb 2018 07:34:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 202861F576
+	for <e@80x24.org>; Tue, 13 Feb 2018 07:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933563AbeBMHef (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 02:34:35 -0500
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:44089 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933468AbeBMHee (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 02:34:34 -0500
-Received: by mail-qt0-f179.google.com with SMTP id f18so2606806qth.11
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 23:34:34 -0800 (PST)
+        id S933579AbeBMHvr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 02:51:47 -0500
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33763 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933463AbeBMHvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 02:51:45 -0500
+Received: by mail-wm0-f68.google.com with SMTP id x4so12052909wmc.0
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 23:51:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=+xh6zmwQlpEBKmsNIipt0y1WgEgp7BUJZCkPSNuif1M=;
-        b=BDRqve+j1QvprzYQOH1yXeT2NVpBjuZpbOGOnZaW2jfOwFWKEUd0hgB2ExV2GzJTyf
-         afyFkI2wDACkkTcEjcG6GV4cm+pniB+WppDEzTPdmZUJGlwY5f10zm5evGduNIawdr4O
-         0/8ro8BOQeMvkhifmSSf89LvfMs5W2qBfZV5lQbNX4dF0Or3zD37wXMz1Ckx3dvATxUu
-         SZWvzb7/plkRuVE8sEF2VK2tOMOCiMBm4UxPhIBSdhN2kWrdDce8TUaYVPrgTIx3RaBk
-         OOLPyCCNMkOD8eIPbyKtBteQOI/159MwuBaYtOwv8FQsOv2WnVKUhLPLOnXtDb8KSfPH
-         4kHg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fM8iPJRcE+y8NnkKi1MkbBBnSjbmVTNLi6vmdUHp/o0=;
+        b=qVDReT6kQdmo8FCfYefsICJITWz/bhl8QKUePA+2PpI5vqnZBrhzjhpYRTCI5OJkAJ
+         ucAwHnh8Q2Ql0NC1BhrfqNuuR/fb85RfZqBP2uh4XZVunT8sgMItMYFfP3vA/Q8RNV2Z
+         W7nFVQhyu+Abi7ScxLHLK+QcDj4NZ5DmxwxCyR+QDvZKHnDuaACq941KOQMm028D9f4H
+         3d70dBj72WvpqwPqxsbxvy2ENj2VH8kuP8YhIdYFz4414x/bexuxsDPA2D9PhILx3F9+
+         bzAz/a6hBZ+/8JJrJj0y83ymPHM5q7u+1xzRnkFX48gBNTaA9yXEywPkrdgJAO/JKYA0
+         y7Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=+xh6zmwQlpEBKmsNIipt0y1WgEgp7BUJZCkPSNuif1M=;
-        b=tTd8vRAWPaBv1ypHPz3QAjnAFGLQkzqCFf7PP+JYVvFD1tt3RwWgHJiJ7HQHc/Mb1m
-         tcx77HyJ2LM4fz0YJOOMMZrx5kspk/ePszdk+5jeAiST7es1eH5JgJ97vwD0qXWFBfln
-         A5sDr0sMXUU4ogxeMlKPvkG2og9AcajnEZR1kKsmkNQWssREIOp7NbboTHCtEGfEXGFl
-         djeEuAqD/09uwWnuIB6f5HNu3olPrfrrp+ck3Gt3QHATEM6drtlNr36zfFHeVyG2+/aS
-         lJ/pXTfQViQN+br7QPdf0PE9GfQQJnx9g6dHHPVLpepaCxAwnTPl/yWOnJIB7yDeJiim
-         fIMw==
-X-Gm-Message-State: APf1xPCGv2MfdA+q0c9NI/B5AlQDIs3uznxzTqBWjLFMbnvs3FYxgdJo
-        2AXY06nUucfON0qOaOdp+t/aF4TIVEHaSHuv7AY=
-X-Google-Smtp-Source: AH8x227+RJxxjt3mveRK6Zcl3NKxtObM3NfiEBPIVny85xnmD7LORdZLfVSLUk10gf7+LH7EEdyfKs/du1Q/YLkQDsM=
-X-Received: by 10.200.55.87 with SMTP id p23mr508765qtb.282.1518507273591;
- Mon, 12 Feb 2018 23:34:33 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fM8iPJRcE+y8NnkKi1MkbBBnSjbmVTNLi6vmdUHp/o0=;
+        b=KTfgzKMazYYfnVTnN5tQzRsLr8e3NlbwtUSMkTn5+D0aTHvB9PfrO3RyEIhBWx68QJ
+         xWU/CJ1c+ONn9Pjuo4KWnRtagO/0jL8B6wkZIOkfJafHA/SSnw/Z2yqxoWAKDEToLXmZ
+         jm/DBoy7EHsrfaGzMmEQ2c8uVZ2ljRgQ9Jll4S/SK1OMw9k/7kLN6N3KSBtGonNGRQB5
+         ZOrsQBOdNSyqZWN8x/HhAOnT2i6hCyxRHMQ47RlsE6z7Wzt6Yuvr8MAorxf+ZLrP5NDQ
+         nK2j+2hQ738Zg9bTlRIczW2+tGx+Sg60MZ3b4OHxmEAWDvFT5x1CG8Az+vrjeROItPY8
+         SR8Q==
+X-Gm-Message-State: APf1xPDoLlVxYjymLm2npi30OPyb1sx1qv3Agv6n+mO4oqGDO/joA6rz
+        EAnxxsd2KnxCNcA/VI31bws=
+X-Google-Smtp-Source: AH8x225Q+1+h0pze5j2w0tJHHpM4DzWzLhQSjjjPFtnswNspph9PVTTu1xIZO676DVG42jcoH080xg==
+X-Received: by 10.28.192.24 with SMTP id q24mr449710wmf.149.1518508303776;
+        Mon, 12 Feb 2018 23:51:43 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p21sm5692646wmc.28.2018.02.12.23.51.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Feb 2018 23:51:43 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
+References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
+        <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
+        <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+Date:   Mon, 12 Feb 2018 23:51:42 -0800
+In-Reply-To: <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Tue, 13 Feb 2018 01:58:19 +0000")
+Message-ID: <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 23:34:33 -0800 (PST)
-In-Reply-To: <b24e2f26-d5e4-d17d-04d1-1bd12eaf9faa@kdbg.org>
-References: <20180210010132.33629-1-lars.schneider@autodesk.com>
- <20180212031526.40039-1-sunshine@sunshineco.com> <20180212031526.40039-3-sunshine@sunshineco.com>
- <b24e2f26-d5e4-d17d-04d1-1bd12eaf9faa@kdbg.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 13 Feb 2018 02:34:33 -0500
-X-Google-Sender-Auth: Rs7OhUpYImPRObTErLbMnsd-XSo
-Message-ID: <CAPig+cQH+a0UwN9Kqen0gmWbTwZZWTVtsPjDKqzw+U7t2Uk-LA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] worktree: add: change to new worktree directory
- before running hook
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git List <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        "Gumbel, Matthew K" <matthew.k.gumbel@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 2:27 AM, Johannes Sixt <j6t@kdbg.org> wrote:
-> Am 12.02.2018 um 04:15 schrieb Eric Sunshine:
->> +               echo $_z40 $(git rev-parse HEAD) 1 &&
->> +               echo $(pwd)/gumby
->
-> $(pwd) is here and in the other tests correct. $PWD would be wrong on
-> Windows. Thanks for being considerate.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-Thanks for the confirmation. I'm always a bit leery of using "pwd" in
-tests due to Windows concerns; doubly so since I don't have a Windows
-installation on which to test it.
+> I must admit that I didn't think about the effect of the useless
+> "| sort" on the exit status!  What I saw was: a process that
+> received no input, sorted nothing and produced no output - pretty
+> much the definition of useless! ;-)
+
+I am not sure what you mean by "receive no input, sort nothing and
+produce no output".
+
+Ahh, OK, this is a funny one.  I think the original meant to do
+
+	grep ... | grep -v ... | sort >actual
+
+but it did
+
+	grep ... | grep -v ... >actual | sort
+
+instead by mistake.
+
+And we have two possible "fixes" for that mistake.  Either removing
+"|sort" (and replace its only effect, which is to hide brittleness
+of relying on exit status of the second grep, with something else)
+to declare that we do care about the order multiple warning messages
+are given by the last test in the script (by the way, the script is
+t5536, not t5556; the patch needs to be retitled), or keeping the "|
+sort" and move the redirection into ">actual" to the correct place,
+which is to follow through the intention of having that "sort" on
+the pipeline in the first place.  I somewhat favor the former in
+this particular case myself, but the preference is not a very strong
+one.
+
+Thanks.
+
