@@ -2,110 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EC4D1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 00:36:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E22D21F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 00:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932954AbeBMAgM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 19:36:12 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:40526 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932904AbeBMAgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 19:36:11 -0500
-Received: by mail-wm0-f66.google.com with SMTP id v123so13071587wmd.5
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 16:36:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JIk7Sa4isVvs89wRkXPortpsAVVmEjJ3OrzE9JpN7W8=;
-        b=cRKWHpQYKB6KyrHKcHW4QH/AzhEciduDyZpYfIceh0J3XPz36KqL9gB4Yz0tKu1yl8
-         tD8APEloEEQkwC8qyzbodOnYa1hyWLzZQSOmk6p4g3tHESR/lp4hZspVIH0rim2J1b3x
-         FNTWi861OgDviIcrKSHANB1k5GbScSX0Jzs42j0ht4F7SJ1mhKjdcPt/uWpj+mDiBpo1
-         3f7SL0EN+HmEUbuIkN2F/Ul97sBiIGANJa5Uu4WJ9QlROYI1Piawsf2g5mtsKhxYcL1m
-         L2HhytEt1dlPuYcaAvW3BMhZwspaCvAa2KxDpe34ptdh1bkHVCRfncEHV/jH21VnAPuX
-         QZ7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JIk7Sa4isVvs89wRkXPortpsAVVmEjJ3OrzE9JpN7W8=;
-        b=n2UFAmK1UbGPWQThhGyi/M2w+hbZMOARgayZ1OfHytqpS7EVU1KwxpcOW7WDhWMLUk
-         gQAIA59lGVJLTyxH1Dode4RVqqxFrzfs8QQsgQIq4X3zH3Y0bzqcXTUOeDGUp8aofVdD
-         WWzbC7Bo3xF9wEN2zAJSsn2ar8WNvoaZM6Uy7lPJw4LrUTdcg2CpYidS8JL/fv2xuwNr
-         TlTXcB2y0+BDC7STkQBKfi1HhNXfaepelJtdZChyiJqGVPyi630Z57AaTAfsmtAStymg
-         fwWE+HpVJHzQwy0fB4eFhE6ZLHRHI2G9pJZZSLSQfmEz8cLLiHES7DcaJiKCzOoQj4Yl
-         8WpQ==
-X-Gm-Message-State: APf1xPC2mS+A6Nq4i8ziPGU1oB/5/9PG5klIm+ERcuwLhsSle7e0VWot
-        q3a1Dp8diIZy+bxRW9+gEv8=
-X-Google-Smtp-Source: AH8x224KY9xwSQAmZnn3qfniAS+9MD5OLmt3wpg0E/VEew79O7qJgyRapurNJcNvVKpAAOzVFzEgcg==
-X-Received: by 10.28.199.201 with SMTP id x192mr219049wmf.45.1518482169942;
-        Mon, 12 Feb 2018 16:36:09 -0800 (PST)
-Received: from localhost.localdomain (x4db19afd.dyn.telefonica.de. [77.177.154.253])
-        by smtp.gmail.com with ESMTPSA id d73sm8484566wma.25.2018.02.12.16.36.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Feb 2018 16:36:09 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t6300-for-each-ref: fix "more than one quoting style" tests
-Date:   Tue, 13 Feb 2018 01:36:01 +0100
-Message-Id: <20180213003601.7396-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.1.181.g4b60b0bfb6
+        id S932967AbeBMAgg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 19:36:36 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:33162 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932877AbeBMAgf (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 19:36:35 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 19CA660987;
+        Tue, 13 Feb 2018 00:36:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1518482193;
+        bh=1dS6065vaGI42HWhmFUm99953OuxY0w84l5nJGVotOA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yzZdoBPdRT3N/1CgSPq+OHPLshLO7pAZzYfI4sZGSw6XwGNIS2dj+DZSHHGhablc1
+         ZJyVcGrsGy0vZaef/v6jCEMDUbDeHLe4gWNu2TZV1kJwid67sCIqtjSiTeZjR7oszJ
+         cARK2kg3mYAFyzWLieHRPhdBX8yX6wGatDRIncs0bS7GRSW4Hra/sa6yCwMMm5C5pk
+         8lztvB4g9SoaVq00l5nFlPSioqdBhXsfFrpxMgvpPYQOmPfHkrkMEc3yJsXGiotxUW
+         M6PCtpgfdzdlNclGyn/+hkLK82D7fbRQhPoYdizNCraHnC/D/UdC/caAKEQ/s7Pm14
+         yvtSU3OVoGXFjaXc62jTt7pYuBOYj4nBoFzo38s/jNQtraLQL6QKfiwhujXsFXsRZU
+         rU+S0Lp3AZHYqHQHo1UBpHqTiBYTkrbsfh8Cj94TaYem9V45GFBn1GuUTAdudbPFuW
+         azsiHGAr/7NwQIlCB/yq7hap8LhfhI6njxkjgEur7X69aGaIRV/
+Date:   Tue, 13 Feb 2018 00:36:25 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jonas Thiem <jonas@thiem.email>
+Cc:     git@vger.kernel.org
+Subject: Re: Question about rebasing - unexpected result, can't figure out why
+Message-ID: <20180213003624.GC1022467@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonas Thiem <jonas@thiem.email>, git@vger.kernel.org
+References: <44e87a5a-b2be-f3f5-ac98-6831e056152d@thiem.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="11Y7aswkeuHtSBEs"
+Content-Disposition: inline
+In-Reply-To: <44e87a5a-b2be-f3f5-ac98-6831e056152d@thiem.email>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.15.0-rc8-amd64)
+User-Agent: Mutt/1.9.3 (2018-01-21)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git for-each-ref' should error out when invoked with more than one
-quoting style options.  The tests checking this have two issues:
 
-  - They run 'git for-each-ref' upstream of a pipe, hiding its exit
-    code, thus don't actually checking that 'git for-each-ref' exits
-    with error code.
+--11Y7aswkeuHtSBEs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  - They check the error message in a rather roundabout way.
+On Sat, Feb 10, 2018 at 09:47:57PM +0100, Jonas Thiem wrote:
+> =3D=3D Why did I expect that =3D=3D
+>=20
+> Of course after the client rebase, C3.txt should be gone (since it's
+> gone at the original last commit of the client branch).
+>=20
+> But since it still exists in the server branch at the final commit,
+> after rebasing & reapplying that onto the master, shouldn't it be put
+> back in? Also, I would expect C3 -> C4 -> C10 as the complete chain of
+> commits of the remaining server branch to be attached at the end, not
+> just C4 -> C10...
+>=20
+> Does git somehow detect C3 would be applied twice? Doesn't the commit
+> hash of C3 change after it is rebased? So how exactly would it figure
+> that out? I'm really unsure about what is going on.
 
-Ensure that 'git for-each-ref' exits with an error code using the
-'test_must_fail' helper function, and check its error message by
-grepping its saved standard error.
+Yes.  The git rebase documentation says, "Note that any commits in HEAD
+which introduce the same textual changes as a commit in HEAD..<upstream>
+are omitted (i.e., a patch already accepted upstream with a different
+commit message or timestamp will be skipped)."
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+If you want to be very explicit about replaying these commits, you can
+say "git rebase --onto master $(git merge-base master HEAD)", in which
+case C3 will be replayed.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-Those tests were like this since ancient times, c9ecf4f12a
-(for-each-ref: Fix quoting style constants., 2007-12-06).
+--11Y7aswkeuHtSBEs
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.4 (GNU/Linux)
 
- t/t6300-for-each-ref.sh | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqCMwgACgkQv1NdgR9S
+9ovkpQ//VqeNbMKRmC7d7kn6kEmFKpfctMkq4aS23lyl9FjqpiknwM4hPelexziz
+zHUTayDFxK/8ck9RuTe4prfYSUprHZ+q+s9H1MvUz44zlTPaMLFiCJfbONgCP4B3
+O346K2KLZpbeYyepOUPD3N7YiP0b8+ciTMc2K60arvPDLiMJJMDuUYp8479+/DXX
+bYoczqle5AXjaaRtpFq9IVjjFd+/+SpiruSwQgnZ2zx82T47ipH4yak8zrvJvCWg
+4E6RIAF0grdqy07aJrEXsF6aCRiEaFm5fZZWD/bH85UmY37JuMkA9RxTxitqDoHv
+7uKDRcmdIS6q91bOrnH/vl5jOVupv60hn1Ih52q29UkFMH5DSFHosbFaSgJtE7Ku
+YT/O1W7D7OoHT5Odr1gt4fQ6SucU2eGihpuV3gLNNu6MmqD57INP+Q6XZJyNsiQW
+j2RKPLl7q7yc9foyRxnCtdMyh6jCReF2/IWC7dukXOfbm3cSCJgVsUjB5/MGngOA
+m/ezp/DHmnVWOpws0d17UtXytfg1+Nw5z0cEI6Z3rOGfGyVZeJlHjDTRnfrus3Pr
+nd7I6u+gZpwaJdY5k5/Sa+fhJ6EEA9UOU3t/Q7HtqKjvC3Kbp0bpvUpgZYli13hk
+QCB9MfzOHFPPCOOZRvzdck+EHPh419lkWXu27Us6weRfBEK73Fg=
+=FMLG
+-----END PGP SIGNATURE-----
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index c128dfc579..295d1475bd 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -373,11 +373,8 @@ test_expect_success 'Quoting style: tcl' '
- 
- for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
- 	test_expect_success "more than one quoting style: $i" "
--		git for-each-ref $i 2>&1 | (read line &&
--		case \$line in
--		\"error: more than one quoting style\"*) : happy;;
--		*) false
--		esac)
-+		test_must_fail git for-each-ref $i 2>err &&
-+		grep '^error: more than one quoting style' err
- 	"
- done
- 
--- 
-2.16.1.181.g4b60b0bfb6
-
+--11Y7aswkeuHtSBEs--
