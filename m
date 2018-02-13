@@ -2,150 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 116771F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 17:06:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E84411F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 17:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965181AbeBMRGu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 12:06:50 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:37270 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964869AbeBMRGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 12:06:48 -0500
-Received: by mail-pl0-f65.google.com with SMTP id ay8so6929330plb.4
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 09:06:48 -0800 (PST)
+        id S965398AbeBMRIw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 12:08:52 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54444 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965425AbeBMRIs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 12:08:48 -0500
+Received: by mail-wm0-f67.google.com with SMTP id i186so17359493wmi.4
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 09:08:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JcKwZU6LQLbNTo6F22w18RxAquUDVt1I+DMMJJezT6c=;
-        b=UQHmF5+p6Xl33zFhNRxArRDFPBd6bw4G4CjA4od0GCQVn7j5Ze+I6ordRUdNLqTmU8
-         o3bMlQ0z7fPzt+4MbATLfsTFDu+qEsJ1kRuxLQY+8tXytwNPAi0+Fws5XdUxJoQ8Q5RF
-         Ot2Abj2wfTbq5RLAeywubjbnpz15g/ko/bUaUXTOeG7av5GfJeIOeSav3sdw0wwVS8aM
-         iO3t/+l8wVTUArPFbt0ybdKnQKmCzigcmm6YCyML/PBR1udDdViqZ807E5V9nOVU5IVK
-         N2DBo1rTtvgauH5qhqWcoebbsayOWLgyvPn3kLOCgN+I9NmCoSWThvs1oxWsQKYsPg9Y
-         ADug==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=M8yzVF6GpHzy4mA9boc+iSRFniJzaGy+Xp4FH/KTt00=;
+        b=qEUHXcYta3yJ+s1g3PSC5S/7C6dkvzZqNA3jxe6cP9bK5D2QpUudkMPTGzlJ/TK0C4
+         C6MM8o1TAosB1dyUmRIW3nneo9qqUniq/lE2qh7L6zVhiT7+0wEgEW8Asn6d3QISqklC
+         s9wGGoHtenopCZjMz/brRpW33I/RjYCTFuz94NsaOkF5Wqr7utpDFgvMhnmstPY6IyOB
+         oyFnyW7wCQEoi8+EDAMTW4FrJItfmtkxXJpIo+ksAWqbvQijCWE4UTKm1dHwQc+bWYNa
+         Z81Knv4QpZ1ef+2NKYTAQJ32cnjz5O2N8jLNWXTGtexDEGm3soOJyxxs04I7O75VsXnB
+         gtaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JcKwZU6LQLbNTo6F22w18RxAquUDVt1I+DMMJJezT6c=;
-        b=ZtzX80xCA+k7oeR9CGHwSVXev3S5IlJS9higHtJqjwvICXxRU8auMkg1GeBEVKl1Qh
-         UTt0SDgHUi4UCa8fRMy2qFsxtWRgYRlnZmwtRCGeVtJrFc5A9wd0hm4MGZTnnUchakA7
-         6gp+ZgKh3Thlfbyemh6a3RbRD4Di7qnkMy/gAEuN/DBJAQEdgjvj5psv1i/JLhROW3EX
-         q9GLG075Q6IRRCyve3GNZtEDX7CRjAgu+dNyFLduS2bjPdKovobfe/qCu4G1V/YOF4DB
-         SwoBXSsm5npDoSs2qPCZ76+6e8FbkcUJwDuUjBvL1RA5Vett2lHy+3+jFLD3AXY8eQ2I
-         txAg==
-X-Gm-Message-State: APf1xPCx9rUe6x6pjR8zx6hDtMfrEy/XVBkUuMaFgZwHzYHDYJyu0KV4
-        UPLvRovxgTek3b9fDcK9mcTjIw==
-X-Google-Smtp-Source: AH8x226XXKhWWI/sCTB2iqjbdOrgsi7JkBjEA69oK3Twh+zx4v1Uy9w1ik3MrRVjTJq7nLB994dl4w==
-X-Received: by 2002:a17:902:34a:: with SMTP id 68-v6mr1767930pld.276.1518541607719;
-        Tue, 13 Feb 2018 09:06:47 -0800 (PST)
-Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id o63sm36739448pfa.101.2018.02.13.09.06.46
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=M8yzVF6GpHzy4mA9boc+iSRFniJzaGy+Xp4FH/KTt00=;
+        b=kajZy6Z5RFmr3XDRo7HT4HRdRYuV/rAE7FQ/WkECpBaGse163LogWhoRqBAMCcIdmt
+         0/w44ufJnypqgV7m9+78OpsDsFGOLGhk/bGzBlpjJ69Wf8R+x+XsY0QzkXW7CoHJrvOA
+         Ulykb+H0pO2ieolE7QUi3G5Rj9oyLEl1YV1iO9Ydagc0Sgf/b1W64sLaRtySY5jYbZ+i
+         TrVQlq47Pz8Q05bNLGZUnsslM9WiRddDC6+QHwC3jgtjOdYB/UUtuqDdaA8ClgkAEAEa
+         EYTxR4JUXJFIptYgV0IQGyWFuvIMnte5RJKfjHDc+EaFvG98hvHy4ezFsH4V2vyk7Vjd
+         mThQ==
+X-Gm-Message-State: APf1xPDcLy5tzU06njoONSkx3GyVj4PCpHTyTMRk8oXXIh0uCMAWRd8J
+        1BkJRtHg2dFYpDKliyabTnNw36Z+
+X-Google-Smtp-Source: AH8x225t769QBlMG1aVe/LDWxKzkLs3vVgc66IVtABzs9eHPAmxKxhXyYlG+hdWpZBST0WPV8Efhcg==
+X-Received: by 10.28.144.20 with SMTP id s20mr1984222wmd.149.1518541726323;
+        Tue, 13 Feb 2018 09:08:46 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q12sm12430237wrg.37.2018.02.13.09.08.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 09:06:46 -0800 (PST)
-Date:   Tue, 13 Feb 2018 09:06:45 -0800
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v3 22/35] upload-pack: support shallow requests
-Message-ID: <20180213170645.GC209601@google.com>
-References: <20180125235838.138135-1-bmwill@google.com>
- <20180207011312.189834-1-bmwill@google.com>
- <20180207011312.189834-23-bmwill@google.com>
- <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
+        Tue, 13 Feb 2018 09:08:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
+References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
+        <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
+        <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+        <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
+        <20180213100437.15685-1-szeder.dev@gmail.com>
+Date:   Tue, 13 Feb 2018 09:08:44 -0800
+In-Reply-To: <20180213100437.15685-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Tue, 13 Feb 2018 11:04:37 +0100")
+Message-ID: <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kauMhgP4Gjm=yVKSDGh0-WMSpNVCJRamfjnANyO5SWXTQ@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/07, Stefan Beller wrote:
-> On Tue, Feb 6, 2018 at 5:12 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Add the 'shallow' feature to the protocol version 2 command 'fetch'
-> > which indicates that the server supports shallow clients and deepen
-> > requets.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  Documentation/technical/protocol-v2.txt |  67 +++++++++++++++-
-> >  serve.c                                 |   2 +-
-> >  t/t5701-git-serve.sh                    |   2 +-
-> >  upload-pack.c                           | 138 +++++++++++++++++++++++---------
-> >  upload-pack.h                           |   3 +
-> >  5 files changed, 173 insertions(+), 39 deletions(-)
-> >
-> > diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> > index 4d5096dae..fedeb6b77 100644
-> > --- a/Documentation/technical/protocol-v2.txt
-> > +++ b/Documentation/technical/protocol-v2.txt
-> > @@ -201,12 +201,42 @@ packet-lines:
-> >         to its base by position in pack rather than by an oid.  That is,
-> >         they can read OBJ_OFS_DELTA (ake type 6) in a packfile.
-> >
-> > +    shallow <oid>
-> > +       A client must notify the server of all objects for which it only
-> 
-> s/all objects/all commits/ for preciseness
-> 
-> > +       has shallow copies of (meaning that it doesn't have the parents
-> > +       of a commit) by supplying a 'shallow <oid>' line for each such
-> > +       object so that the serve is aware of the limitations of the
-> > +       client's history.
-> > +
-> > +    deepen <depth>
-> > +       Request that the fetch/clone should be shallow having a commit depth of
-> > +       <depth> relative to the remote side.
-> 
-> What does depth mean? number of commits, or number of edges?
-> Are there any special numbers (-1, 0, 1, max int) ?
-> 
-> From reading ahead: "Cannot be used with deepen-since, but
-> can be combined with deepen-relative" ?
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-It just uses the current logic, which has no documentation on any of
-that so...I'm not really sure?
+> A third possible fix, which is also in the "we don't care about the
+> order of multiple warning messages" camp and has a nice looking
+> diffstat, would be something like this:
 
-> 
-> 
-> > +
-> > +    deepen-relative
-> > +       Requests that the semantics of the "deepen" command be changed
-> > +       to indicate that the depth requested is relative to the clients
-> > +       current shallow boundary, instead of relative to the remote
-> > +       refs.
-> > +
-> > +    deepen-since <timestamp>
-> > +       Requests that the shallow clone/fetch should be cut at a
-> > +       specific time, instead of depth.  Internally it's equivalent of
-> > +       doing "rev-list --max-age=<timestamp>". Cannot be used with
-> > +       "deepen".
-> > +
-> > +    deepen-not <rev>
-> > +       Requests that the shallow clone/fetch should be cut at a
-> > +       specific revision specified by '<rev>', instead of a depth.
-> > +       Internally it's equivalent of doing "rev-list --not <rev>".
-> > +       Cannot be used with "deepen", but can be used with
-> > +       "deepen-since".
-> 
-> What happens if those are given in combination?
+Hmph, we are running a "git fetch" locally and observing the error
+output from both "fetch" and its counterpart "upload-pack", aren't
+we?  The "fetch" instances that are run with test_must_fail are
+expected to stop talking to "upload-pack" by detecting an error and
+severe the connection abruptly---depending on the relative timing
+between the processes, the other side may try to read and diagnose
+"the remote end hung up unexpectedly", no?  
 
-Should act as an AND, it uses the old logic and there isn't very much
-documentation on that...
+I think "grep -v" filtering is an attempt to protect the test from
+getting confused by that output, but is it safe not to worry about
+it these days?
 
--- 
-Brandon Williams
+> diff --git a/t/t5536-fetch-conflicts.sh b/t/t5536-fetch-conflicts.sh
+> index 2e42cf3316..91f28c2f78 100755
+> --- a/t/t5536-fetch-conflicts.sh
+> +++ b/t/t5536-fetch-conflicts.sh
+> @@ -18,14 +18,6 @@ setup_repository () {
+>  	)
+>  }
+>  
+> -verify_stderr () {
+> -	cat >expected &&
+> -	# We're not interested in the error
+> -	# "fatal: The remote end hung up unexpectedly":
+> -	test_i18ngrep -E '^(fatal|warning):' <error | grep -v 'hung up' >actual | sort &&
+> -	test_i18ncmp expected actual
+> -}
+> -
+>  test_expect_success 'setup' '
+>  	git commit --allow-empty -m "Initial" &&
+>  	git branch branch1 &&
+> @@ -48,9 +40,7 @@ test_expect_success 'fetch conflict: config vs. config' '
+>  		"+refs/heads/branch2:refs/remotes/origin/branch1" && (
+>  		cd ccc &&
+>  		test_must_fail git fetch origin 2>error &&
+> -		verify_stderr <<-\EOF
+> -		fatal: Cannot fetch both refs/heads/branch1 and refs/heads/branch2 to refs/remotes/origin/branch1
+> -		EOF
+> +		test_i18ngrep "fatal: Cannot fetch both refs/heads/branch1 and refs/heads/branch2 to refs/remotes/origin/branch1" error
+>  	)
+>  '
