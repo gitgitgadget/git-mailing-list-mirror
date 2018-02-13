@@ -6,31 +6,30 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68D0D1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 12:28:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BCDB1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 12:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935010AbeBMM2M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 07:28:12 -0500
-Received: from cpanel2.indieserve.net ([199.212.143.6]:37534 "EHLO
+        id S935075AbeBMMlz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 07:41:55 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:40516 "EHLO
         cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934971AbeBMM2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 07:28:11 -0500
-Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:37330 helo=localhost.localdomain)
+        with ESMTP id S934971AbeBMMly (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 07:41:54 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:37808 helo=localhost.localdomain)
         by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.89_1)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1elZgw-0006Tk-9l; Tue, 13 Feb 2018 07:28:10 -0500
-Date:   Tue, 13 Feb 2018 07:28:08 -0500 (EST)
+        id 1elZuD-0001lJ-VC; Tue, 13 Feb 2018 07:41:54 -0500
+Date:   Tue, 13 Feb 2018 07:41:50 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
-To:     Christian Couder <christian.couder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing list <git@vger.kernel.org>
-Subject: Re: totally confused as to what "git bisect skip" is supposed to
- do
-In-Reply-To: <CAP8UFD03TDGBU3t3+m2OmhyJt6sNcPhMZ2ejzufX3x-_1EEDHA@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1802130712260.15482@localhost.localdomain>
-References: <alpine.LFD.2.21.1802091431360.10982@localhost.localdomain> <xmqqo9kyvthx.fsf@gitster-ct.c.googlers.com> <alpine.LFD.2.21.1802120522580.17810@localhost.localdomain> <CAP8UFD03TDGBU3t3+m2OmhyJt6sNcPhMZ2ejzufX3x-_1EEDHA@mail.gmail.com>
+To:     Philip Oakley <philipoakley@iee.org>
+cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: "git bisect run make" adequate to locate first unbuildable
+ commit?
+In-Reply-To: <7135CFE5288C49EEA02785C1F407B46D@PhilipOakley>
+Message-ID: <alpine.LFD.2.21.1802130734550.16343@localhost.localdomain>
+References: <alpine.LFD.2.21.1802090817550.6248@android-a172fe96dd584b41> <9803DEA99A6545F7A3F9A3CE08FE2263@PhilipOakley> <alpine.LFD.2.21.1802091553290.17104@localhost.localdomain> <7135CFE5288C49EEA02785C1F407B46D@PhilipOakley>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -49,79 +48,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 12 Feb 2018, Christian Couder wrote:
+On Fri, 9 Feb 2018, Philip Oakley wrote:
 
-> On Mon, Feb 12, 2018 at 11:44 AM, Robert P. J. Day
-> <rpjday@crashcourse.ca> wrote:
-> > On Fri, 9 Feb 2018, Junio C Hamano wrote:
+> From: "Robert P. J. Day" <rpjday@crashcourse.ca>
+> > On Fri, 9 Feb 2018, Philip Oakley, CEng MIET wrote:
+> (apologies for using the fancy letters after the name ID...)
 > >
-> >> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+> >> From: "Robert P. J. Day" <rpjday@crashcourse.ca>
+> >> >
+> >> > writing a short tutorial on "git bisect" and, all the details
+> >> > of special exit code 125 aside, if one wanted to locate the
+> >> > first unbuildable commit, would it be sufficient to just run?
+> >> >
+> >> >  $ git bisect run make
+> >> >
+> >> > as i read it, make returns either 0, 1 or 2 so there doesn't
+> >> > appear to be any possibility of weirdness with clashing with a
+> >> > 125 exit code. am i overlooking some subtle detail here i
+> >> > should be aware of? thanks.
+> >> >
+> >> > rday
 > >>
-> >> >   i'm confused ... why, after skipping a good chunk in the interval
-> >> > [v4.13,v4.14], do i still have exactly 7300 revisions to bisect? what
-> >> > am i so hopelessly misunderstanding here?
-> >>
-> >> Are you really "skipping" a chunk in the interval?
-> >>
-> >> I thought that "git bisect skip" is a way for you to respond, when
-> >> "git bisect" gave you a commit to test, saying "sorry, I cannot test
-> >> that exact version, please offer me something else to test".  And
-> >> each time you say that, you are not narrowing the search space in
-> >> any way, so it is understandable that the numver of candidate bad
-> >> commits will not decrease.
+> >> In the spirit of pedanticism, one should also clarify the word
+> >> "first", in that it's not a linear search for _an_ unbuildable
+> >> commit, but that one is looking for the transition between an
+> >> unbroken sequence of unbuildable commits, which transitions to
+> >> buildable commits, and its the transition that is sought. (there
+> >> could be many random unbuildable commits within a sequence in
+> >> some folks' processes!)
 > >
-> >   this might be an issue of terminology, then, as "man git-bisect"
-> > clearly suggests you can skip a range:
+> >  quite so, i should have been more precise.
 > >
-> >     You can also skip a range of commits, instead of just one
-> >     commit, using range notation. For example:
-> >
-> >            $ git bisect skip v2.5..v2.6
-> >
-> >     This tells the bisect process that no commit after v2.5, up to
-> >     and including v2.6, should be tested.
+> > rday
 >
-> Yeah, I think this is kind of a terminology related.
->
-> First when git bisect says "Bisecting: XXX revisions left to test
-> after this" it doesn't mean that all those revisions left will
-> actually be tested, as git bisect's purpose is to avoid testing as
-> many revisions as possible.
->
-> So the XXX revisions are actually the revisions that possibly
-> contain the first bad commit.
->
-> And, as Junio wrote, when you tell git bisect that you cannot test
-> some revisions, it doesn't mean that those revisions cannot contain
-> the first bad commit.
->
-> > my issue (if this is indeed an issue) is that if i select to skip
-> > a sizable range of commits to test, should that not result in git
-> > bisect telling me it now has far fewer revisions to test? if i, in
-> > fact, manage to "disqualify" a number of commits from testing, is
-> > there no visual confirmation that i now have fewer commits to
-> > test?
->
-> I hope that the above clarification I gave is enough, but maybe the
-> following will help you.
->
-> If you cannot test let's say 20 commits because there is build
-> problem in those commits, and in the end Git tells you that the
-> first bad commit could be any of 3 commits, 2 of them that were
-> previously marked with skip, then you could still, if you wanted,
-> fix those commits, so that they can be built and test them.
->
-> So yeah if we only talk about the current bisection, the skipped
-> commits will not be tested, but if we talk about completely
-> finishing the bisection and finding the first bad commit, then those
-> commits could still be tested.
+> The other two things that may be happening (in the wider bisect
+> discussion) that I've heard of are:
 
-  ok, i'll give this more thought later in the week when i have the
-time, but is there a simple expression (using "gitrevisions") that
-defines the set of revisions to be tested by bisection if i define the
-search space between <GOOD> and <BAD>?
+> 1. there may be feature branches that bypass the known good starting
+>    commit, which can cause understanding issues as those side
+>    branches that predate the start point are also considered
+>    potential bu commits.
 
-  consider the following history:
+  ... snip ...
+
+  sorry, i should have replied to this post since my last post
+directly addresses this scenario -- i believe this is precisely what
+you were suggesting:
 
                ... 50000 commits ... (feature branch)
              /                      ^
@@ -129,18 +101,18 @@ search space between <GOOD> and <BAD>?
            v                          \
   A  <--  B <-- <GOOD> <-- D <-- E <-- F <-- <BAD>
 
-so imagine branching at B, creating a massively lengthy feature
-branch, and merging it back to master at F. now imagine i know "GOOD"
-is a good revision, and "BAD" is broken. according to the above, the
-offending commit could be any of D, E, or any of the 50,000 commits on
-the feature branch, correct? so if i had the above commit history,
-would:
 
-  $ git bisect start <BAD> <GOOD>
+i'm still curious ... if one doesn't get into skipping, what is the
+"git rev-list" command to identify all of the possible revisions to be
+tested here? isn't it just:
 
-tell me i have 50,002 revisions to test? am i making sense here?
+  $ git rev-list <BAD> ^<GOOD>
+
+or was there somthing more subtle i was missing? sorry if someone
+already explained this, i'll go back later and read the replies in
+more excruciating detail.
 
 rday
 
-p.s. i suspect i should RTFS to see exactly how git bisect does its
-work.
+p.s. i'll take a closer look at the "--bisect*" options to "git
+rev-list" shortly.
