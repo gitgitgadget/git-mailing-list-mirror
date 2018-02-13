@@ -2,100 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB6B1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 12:13:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68D0D1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 12:28:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935099AbeBMMNs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 07:13:48 -0500
-Received: from mail-ot0-f177.google.com ([74.125.82.177]:43233 "EHLO
-        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935103AbeBMMNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 07:13:46 -0500
-Received: by mail-ot0-f177.google.com with SMTP id q12so17087514otg.10
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 04:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=09UoHKTZkwQzV1AwfgUiZBfOWoeQm8jF+jSTriJtUrI=;
-        b=FfHMpjQWJJizzHB1v6TFj4OHPTnCGTSEdDeZiqpQzAG2f49xY/WQkdTrbcenljXdlv
-         c10ZyDPi1kj8EsP/+Jq3VRgVF1OB5J+u7nhWwasl2t+SOgMU1KQIdYleZjJo6TvI0prs
-         Krc/f9+oHjhJl+e/ulALrHup3BdRqkQQ4lSi3UtjnvOHYqbiSsT8nEVCvy1sybqN3vLa
-         qs9dIR8LTj2BsUg+6wR9RV16XUNUwV9QCiAo55/Fkfa+NumDutWWSIMuzO2vZgyTv51U
-         7BqAh2jVRaqNBg+fZlyUil0IZAy/kIaEaG6kRlAJKHed1LEUtKZG6oq49zQz4/X/cFEj
-         UTlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=09UoHKTZkwQzV1AwfgUiZBfOWoeQm8jF+jSTriJtUrI=;
-        b=RuDVCsWSuws8Dn8TXlGXozrbMzSLT19Ti+N6eIgnyPsHsshpzA6oOIri7wf6uaoiFE
-         mRBZRsejtdt+TTlAFf4pB7ikuCvCwFqLUj2ZZuZ1A9ehZ+lOhxvnSRVm08O4rqQRoG21
-         f7ir6eW1T1ICpqvgJGFA82pm0N5yWy/TyvrOJrxVEuiRSawKq0eRySnMjfcEUXStqrF6
-         v+eb62vzPZ5uLkyw/AKet77eu0my7WPGKtfNBmQ+w2FtQzYGRjws297f/P2/nyZ2OFXk
-         HF1DAaSagH8CrLG5if2LpJ+d/yNo3CObSxFYuJCnZ8vIDLln2/B2c0eT14fytdzUOHjU
-         Lr/g==
-X-Gm-Message-State: APf1xPBVwHxVuxqZbaH2pv8GteMOEe09DgHHJ8PHvaEPgWEjESFaHqUs
-        y6IsqsQDRNHbYUqFlBtYyUJL47uxu+eW9SgwP30=
-X-Google-Smtp-Source: AH8x224tBSuolndBw1sTMkveoJkhCCgyOvrffAucN6yLIfUbn13EsiE8CdSV5yhJ5ESTufECguOCQNbE/I5L9PLpyCs=
-X-Received: by 10.157.73.162 with SMTP id g34mr726048otf.301.1518524025679;
- Tue, 13 Feb 2018 04:13:45 -0800 (PST)
+        id S935010AbeBMM2M (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 07:28:12 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:37534 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934971AbeBMM2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 07:28:11 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:37330 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1elZgw-0006Tk-9l; Tue, 13 Feb 2018 07:28:10 -0500
+Date:   Tue, 13 Feb 2018 07:28:08 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: totally confused as to what "git bisect skip" is supposed to
+ do
+In-Reply-To: <CAP8UFD03TDGBU3t3+m2OmhyJt6sNcPhMZ2ejzufX3x-_1EEDHA@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1802130712260.15482@localhost.localdomain>
+References: <alpine.LFD.2.21.1802091431360.10982@localhost.localdomain> <xmqqo9kyvthx.fsf@gitster-ct.c.googlers.com> <alpine.LFD.2.21.1802120522580.17810@localhost.localdomain> <CAP8UFD03TDGBU3t3+m2OmhyJt6sNcPhMZ2ejzufX3x-_1EEDHA@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Tue, 13 Feb 2018 04:13:15 -0800 (PST)
-In-Reply-To: <20180213114903.GA21015@ash>
-References: <20180213012241.187007-1-sbeller@google.com> <20180213114903.GA21015@ash>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 13 Feb 2018 19:13:15 +0700
-Message-ID: <CACsJy8C8+VnjrhEh3o36GUttZXmfiKxqjzS=2LzmfZKQjogojQ@mail.gmail.com>
-Subject: Re: [PATCH 00/26] Moving global state into the repository object
- (part 1)
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 6:49 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Feb 12, 2018 at 05:22:15PM -0800, Stefan Beller wrote:
->> This is a real take on the first part of the recent RFC[1].
->>
->> ...
->>
->> Duy suggested that we shall not use the repository blindly, but
->> should carefully examine whether to pass on an object store or the
->> refstore or such[4], which I agree with if it makes sense. This
->> series unfortunately has an issue with that as I would not want to
->> pass down the `ignore_env` flag separately from the object store, so
->> I made all functions that only take the object store to have the raw
->> object store as the first parameter, and others using the full
->> repository.
+On Mon, 12 Feb 2018, Christian Couder wrote:
+
+> On Mon, Feb 12, 2018 at 11:44 AM, Robert P. J. Day
+> <rpjday@crashcourse.ca> wrote:
+> > On Fri, 9 Feb 2018, Junio C Hamano wrote:
+> >
+> >> "Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+> >>
+> >> >   i'm confused ... why, after skipping a good chunk in the interval
+> >> > [v4.13,v4.14], do i still have exactly 7300 revisions to bisect? what
+> >> > am i so hopelessly misunderstanding here?
+> >>
+> >> Are you really "skipping" a chunk in the interval?
+> >>
+> >> I thought that "git bisect skip" is a way for you to respond, when
+> >> "git bisect" gave you a commit to test, saying "sorry, I cannot test
+> >> that exact version, please offer me something else to test".  And
+> >> each time you say that, you are not narrowing the search space in
+> >> any way, so it is understandable that the numver of candidate bad
+> >> commits will not decrease.
+> >
+> >   this might be an issue of terminology, then, as "man git-bisect"
+> > clearly suggests you can skip a range:
+> >
+> >     You can also skip a range of commits, instead of just one
+> >     commit, using range notation. For example:
+> >
+> >            $ git bisect skip v2.5..v2.6
+> >
+> >     This tells the bisect process that no commit after v2.5, up to
+> >     and including v2.6, should be tested.
 >
-> Second proposal :) How about you store ignore_env in raw_object_store?
-> This would not be the first time an object has some configuration
-> passed in at construction time. And it has a "constructor" now,
-> raw_object_store_init() (I probably should merge _setup in it too)
+> Yeah, I think this is kind of a terminology related.
+>
+> First when git bisect says "Bisecting: XXX revisions left to test
+> after this" it doesn't mean that all those revisions left will
+> actually be tested, as git bisect's purpose is to avoid testing as
+> many revisions as possible.
+>
+> So the XXX revisions are actually the revisions that possibly
+> contain the first bad commit.
+>
+> And, as Junio wrote, when you tell git bisect that you cannot test
+> some revisions, it doesn't mean that those revisions cannot contain
+> the first bad commit.
+>
+> > my issue (if this is indeed an issue) is that if i select to skip
+> > a sizable range of commits to test, should that not result in git
+> > bisect telling me it now has far fewer revisions to test? if i, in
+> > fact, manage to "disqualify" a number of commits from testing, is
+> > there no visual confirmation that i now have fewer commits to
+> > test?
+>
+> I hope that the above clarification I gave is enough, but maybe the
+> following will help you.
+>
+> If you cannot test let's say 20 commits because there is build
+> problem in those commits, and in the end Git tells you that the
+> first bad commit could be any of 3 commits, 2 of them that were
+> previously marked with skip, then you could still, if you wanted,
+> fix those commits, so that they can be built and test them.
+>
+> So yeah if we only talk about the current bisection, the skipped
+> commits will not be tested, but if we talk about completely
+> finishing the bisection and finding the first bad commit, then those
+> commits could still be tested.
 
-A bit more on this configuration parameters. Down the road I think we
-need something like this anyway to delete global config vars like
-packed_git_window_size, delta_base_cache_limit...  Either all these
-end up in raw_object_store, or raw_object_store holds a link to
-"struct config_set".
+  ok, i'll give this more thought later in the week when i have the
+time, but is there a simple expression (using "gitrevisions") that
+defines the set of revisions to be tested by bisection if i define the
+search space between <GOOD> and <BAD>?
 
-The ignore_env specifically though looks to me like a stop gap
-solution until everything goes through repo_init() first. At that
-point we don't have to delay getenv() anymore. We can getenv() all at
-repo_init() then pass them in raw_object_store and ignore_env should
-be gone. So sticking it inside raw_object_store _temporarily_ does not
-sound so bad.
--- 
-Duy
+  consider the following history:
+
+               ... 50000 commits ... (feature branch)
+             /                      ^
+            /                        \
+           v                          \
+  A  <--  B <-- <GOOD> <-- D <-- E <-- F <-- <BAD>
+
+so imagine branching at B, creating a massively lengthy feature
+branch, and merging it back to master at F. now imagine i know "GOOD"
+is a good revision, and "BAD" is broken. according to the above, the
+offending commit could be any of D, E, or any of the 50,000 commits on
+the feature branch, correct? so if i had the above commit history,
+would:
+
+  $ git bisect start <BAD> <GOOD>
+
+tell me i have 50,002 revisions to test? am i making sense here?
+
+rday
+
+p.s. i suspect i should RTFS to see exactly how git bisect does its
+work.
