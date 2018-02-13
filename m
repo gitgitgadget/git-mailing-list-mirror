@@ -7,84 +7,87 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793331F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 17:57:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 270191F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 18:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965390AbeBMR5T (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 12:57:19 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:39522 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965158AbeBMR5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 12:57:18 -0500
-Received: by mail-wm0-f65.google.com with SMTP id b21so17565580wme.4
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 09:57:17 -0800 (PST)
+        id S965408AbeBMSKu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 13:10:50 -0500
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:55729 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965286AbeBMSKt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 13:10:49 -0500
+Received: by mail-wm0-f45.google.com with SMTP id a84so6423625wmi.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 10:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=k/URmF4It2YRFvRGJY+/5ah+ZEl9VPgz+6efSdk+hUA=;
-        b=TPzbfdudMncyZZm7zZtfiK8tqHTxcLjQuvRpjqWQDlm9u57pzEVSeGHN9BEi5fypPQ
-         q5F3pGt0SjehsPecXlwZzZdRp9g0dpy+nPt3ZxcT2jpsbhvw0w6KgmVWD9APL5DywArb
-         ECEKXl8+zzVAdLN73nOm2sL8XIfV35mfB66RQpMibk94tpdj83bEQihZ+FktVoLQ36uh
-         K+oihxIcaXbFSX2/NSHfj8G1jKeDT3r35hFRl5VQZ1JO5wW9OoJFibqSaSFxSiROmumr
-         I/VNhQ+WZtcPgxX1ii0hqT4cJsMRAlLH3AoxqedFQv2hpirDwONn3VpzHQToC8mY7GUH
-         oK8A==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=3ESUvtq2qtitUFw48zz1RRWH8ebF/+1Dt9jlVmJaTjg=;
+        b=cFeFiOb3hVAb6RmQ5dQqcPSR7zFFX6Av38w6JTkf9w/QPpYX2+feyTC/LlELgvCYJA
+         5u1ua6SB3gxZ27BNE8KR06Qz74Hu0lyVbduWCtdlCAdVgtCG/8fvm4Zi2Vm+tmb54qkJ
+         lzo6Ph71E6jAcIeJnMPrkxTLea7zs6j8rDDS2mXNFXcZxaAuB4k2YPn0T9i4ZOsBOxN/
+         3cc4Y2PoIieE1eSNQt37/dybx40P+x8/RWRSfaxoyqLbjPPbvKbCB4hvmi1YW6wa0XKB
+         yyscx7ShWQgRvEM0Yb++iqp425PBuQx7UJxoNYr3/pzhBi9F8REaiNzvBts93S/TmbXF
+         3F8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=k/URmF4It2YRFvRGJY+/5ah+ZEl9VPgz+6efSdk+hUA=;
-        b=eJTJdQ6sf4lUxrpK8/9oz0IPpCbYhQE9dQjI+kDc8Dsm5cE9uep6DOEpWhat93gxII
-         VqW/DCj5nWjaUZVUAYeDr3pKgxDPDXIyyuq7UQw2t1YXRu0kEQVaK++dHpw+nbSecuyp
-         y0l3paC03HStUKZYGBrxQHz4fqDLBTLr1yUI6k6EdWLRLKWjkVgbn09vr64wNBj6k1ir
-         I7E58xA6sjmYrc5iQOpD8C6iar+bRxfEYA5leqzxmRHemmhP71twFPzLucWeRtWs5aSk
-         TmC9QzAx2bYAXi7gY2D4uCj8w3xDpObwDhMN4UzkApAZexOyFcgp2tOxA7bjGVRApiQD
-         9Rxw==
-X-Gm-Message-State: APf1xPCVorvvO9WjhUgZ/eIGt1S/iQbv83cWmSt+JCpyD0jCmL+LOhiq
-        jtwInuwfUV73SY6oR66W72s=
-X-Google-Smtp-Source: AH8x226Nw5P2adTKlJ6sGDmWrVMq7i64IY0Pz8+X2dvqc52hGhff/7KKwG66HSysEDR/+B+2cyqW6A==
-X-Received: by 10.28.177.215 with SMTP id a206mr537511wmf.145.1518544636683;
-        Tue, 13 Feb 2018 09:57:16 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=3ESUvtq2qtitUFw48zz1RRWH8ebF/+1Dt9jlVmJaTjg=;
+        b=jt8AOmaKRTqMtSKs8s+yvwc+1MCzh5HGeln1/LFMHgAMzsDa0nukUBVAi3ugqQo+xK
+         s7FQsYK7m+cpQNy9lEFCpk4OFw7tDhDtJFFacsHTghE9f5K+uFXcBeCO1vVVNPpeWcQF
+         j0XCfhtRMeRsewM+6WjTCt4PRQedHI56x0TalkzP/ZqHdoGYgzljiQJMC9UzJhq2cuMQ
+         glKMK16WKvm4TPM3ta9rL3aY7SAZW3Mw6Czyq0g0ylFpwZG9AIuD7rI2OEmXma13Sxih
+         s99AkU/Gxx9KjS+/bAdxhff+IWFXUpPwcpMZ36vbj45xdtPFp+spyIOir3UiWDLYhWKI
+         5+lw==
+X-Gm-Message-State: APf1xPCBeVQ56R9uYSZRX7zMTN+GAkEkZl1WnwsNK8aP8Ld7JiLIU2oB
+        0PxMLvvEGellwlN+itjt2qs=
+X-Google-Smtp-Source: AH8x2274yaiLyugSur8+hn0kT+gSpWMqQpV50TTl4a34fWJSxhkKIWN7HUBuky0bhp77RRHsy/lCHA==
+X-Received: by 10.28.62.203 with SMTP id l194mr1938685wma.121.1518545447574;
+        Tue, 13 Feb 2018 10:10:47 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 123sm10425099wmt.31.2018.02.13.09.57.15
+        by smtp.gmail.com with ESMTPSA id t14sm9178691wmc.23.2018.02.13.10.10.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 09:57:15 -0800 (PST)
+        Tue, 13 Feb 2018 10:10:46 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ben Peart <benpeart@microsoft.com>,
-        Alex Vandiver <alexmv@dropbox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] dir.c: ignore paths containing .git when invalidating untracked cache
-References: <20180204093823.3671-1-pclouds@gmail.com>
-        <20180207092141.4312-1-pclouds@gmail.com>
-        <20180207092141.4312-2-pclouds@gmail.com>
-        <c755e388-89a5-fc0f-f872-16fd5d5686b0@gmail.com>
-        <CACsJy8AHa6QDmWu7TFjgW7m0pHysYkZq_WJ1QOVBVYaT4XdL4Q@mail.gmail.com>
-Date:   Tue, 13 Feb 2018 09:57:14 -0800
-In-Reply-To: <CACsJy8AHa6QDmWu7TFjgW7m0pHysYkZq_WJ1QOVBVYaT4XdL4Q@mail.gmail.com>
-        (Duy Nguyen's message of "Tue, 13 Feb 2018 17:00:50 +0700")
-Message-ID: <xmqqinb0rcw5.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
+References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
+        <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
+        <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
+        <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
+        <20180213100437.15685-1-szeder.dev@gmail.com>
+        <xmqqr2porf4z.fsf@gitster-ct.c.googlers.com>
+        <20180213172603.GA10062@sigill.intra.peff.net>
+Date:   Tue, 13 Feb 2018 10:10:45 -0800
+In-Reply-To: <20180213172603.GA10062@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 13 Feb 2018 12:26:04 -0500")
+Message-ID: <xmqqeflorc9m.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> It's very tempting considering that the amount of changes is much
-> smaller. But I think we should go with my version. The hope is when a
-> _new_ call site appears, the author would think twice before passing
-> zero or one to the safe_path argument.
+> If I understand Gábor's patch correctly, it is using test_i18ngrep for
+> the specific lines we care about so that we don't have to worry about
+> other cruft lines that may or may not appear (including the hangup one).
+>
+> The downside is that we would not notice if a _new_ error message
+> (beyond the ones we expect and the one we were explicitly ignoring)
+> appeared. IMHO that's probably fine.
 
-Wouldn't it be a better API if the author of new callsite does not
-have to think twice and can instead rely on the called function
-untracked_cache_invalidate_path() to always do the right thing?
-
-
+Ah, OK, I didn't notice how the multi-line one was handled.  Unable
+to notice new error messages and undisturbed by possible "hung up"
+messages are the sides of the same coin---I myself am unsure if it
+is a good trade-off, but I'm inclined to defer to judgment of two
+people ;-)
