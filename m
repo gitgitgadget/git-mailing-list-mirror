@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2434C1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 578D61F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933099AbeBMBXx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 20:23:53 -0500
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:46937 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933215AbeBMBXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 20:23:07 -0500
-Received: by mail-pl0-f68.google.com with SMTP id x2so1873456plr.13
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:23:06 -0800 (PST)
+        id S933138AbeBMBX4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 20:23:56 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:39867 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933053AbeBMBWz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 20:22:55 -0500
+Received: by mail-pl0-f65.google.com with SMTP id s13so2266514plq.6
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:22:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=1Gz7KLzKkeW8I+UXD6iX8mkb+fIDvyHMcc+7cvMNuIo=;
-        b=JhQSbFHVPUiC8dXsnGlAX3s4lUgrnOF3af9fDrf3cx1u+/+fjFPoHscghnD0vCYJzB
-         +O3TaMNYjK08JlhSDnbgCwvimlt7UA9wwGEYjR+Gdc2lG3xkPMdgiWJJLk6KZ50qUqFU
-         mvg86TsIi0ib5toaJoVWA1l2R10E1C1bQCDJWLd0jDl86r/TyMGUa34YgLZw+n0RN8j/
-         ABmQe9jotJl9pT9qb9cxm8DanGB5a+I1/hSzV4ENBiKjbNBM4avKFKnt2epjZFHCA8/5
-         pS1RvVByvE1xs25SUWKFB5JWRDPB1KbsX4dg6x0kJIAGAe4rpNPqljxzA72a4eWAI6sP
-         +y4Q==
+        bh=ZsXWXpYXbPcttkvsU5/cRPqchZvuoXRh2Vc5UNZtO2U=;
+        b=QaGLAhcc3eeAO33K4pZHjgRtT83g3dHa5KamPFhBDJb9ln2UdvYMobN7vm8dX5MfrR
+         Fo6TKK1XynHngVjXXk8qNPvNKry1LT7JVO382TDUPZkC0Eos2pyDvXWQMi/nmwZ+GIkX
+         MxWnnzKEXlxZD2LVkpz7E4RPLRWVMta3JrxC4fSUPA/Nh8z+XCO4aFpY1zJlVs91vJ+m
+         j4CgBDxDcrp+gPD3kXfBcO5klGv8ar+0GPme6Z+4LFvRF0bO9mNgjY9o0U5Z1V0x3Vw5
+         Ebj5UVd1wIsgZupIHsjAWcBJnzgx9zvweqLp4h8VQI92WH+e+UuQqmLmp3aOSmw6cC9J
+         /dng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=1Gz7KLzKkeW8I+UXD6iX8mkb+fIDvyHMcc+7cvMNuIo=;
-        b=HL9mmf+cJI8hncrQh5vt90rkH8lUh2WUZc7vt2D+fOj93dLhvm+OyTIOQW10UznrgP
-         hEIoV3f6DfMwIHlkPecL1w2U7bST0p0kxTHG3j+Q/5qxdW0nOchDdrtluDDO1hFz2PYB
-         xwuZWXbMsnZJW4SFh9f4Ywpy5DWO+OTBESwcZZDoCYYhM5JE9YaWqL5ez4wlhRN0HqJJ
-         e6EV8dP52YhadTX/DeCUMETHIvgXtOEWtMplH48IxD09OlHryW8MOWx2a5vuAb6hgJHP
-         tclMw7D9gRPZDJAA6y8hSMss33FBRE8z9wQ/LOVblUah6cqeYay03fKjMvvq6SA7wNhG
-         QAQw==
-X-Gm-Message-State: APf1xPDNCZviIFwshIaWg/D5O50VU2Cju6K2RUsfh5MjsNIe9zE2w4lp
-        GcAx2Q32cQbysD5/G2kI2Al3aQ==
-X-Google-Smtp-Source: AH8x227IDRAH2bkt40/6TF83HNav0kBsi2dt1jR6/ZhFrsXGVmetqkrlBoEQb3GOTW2YEzg6ILY7Dw==
-X-Received: by 2002:a17:902:860b:: with SMTP id f11-v6mr12598758plo.135.1518484986018;
-        Mon, 12 Feb 2018 17:23:06 -0800 (PST)
+        bh=ZsXWXpYXbPcttkvsU5/cRPqchZvuoXRh2Vc5UNZtO2U=;
+        b=Ea4tlPQZWJ9WvCI8nKAsTjWfVs59EBG0uEZC1PYc27Url77HWovLePgKMc8oUmvHvT
+         m4ilfCrouaLuvnmrapzujX+A6166z6TuHlsz4ThrdV1dduDRaaavaMRsVLbFweKIpLFj
+         Tgxl+mlA6s6aZy8zv/mwh9qpFptnqBJFnQXImQkp1qA0N8YEQYmMyVBme3kW5EWJtEY9
+         eHYheJerfLLP5uPJ1MRCRzSJUOxEqQu0eBhyzU+HZkCrvh6ZjH5yLUZhGPq0x6fDt1Wh
+         +srmn/yfj2HWV1kTYsODmd9WTcVb1iz1/9PwAFAnNGIkExD6Pd3ASDsBbSFJAtUUSVkO
+         ezSA==
+X-Gm-Message-State: APf1xPALFAIdKa2G5vZBOmqmtRKVjwbB7B7eDQy5LRGOoMKhG4Vp0GpY
+        SetLaAqhqReqwr899sMpIohRDsfAr9k=
+X-Google-Smtp-Source: AH8x2248ZL92H5Ve9YaD6AAVFrFG6QmT/cvctuqSAMt/WzH7pGbUrVkd8+saVT8Hri04SBSMBb4TDQ==
+X-Received: by 2002:a17:902:a5c5:: with SMTP id t5-v6mr12531258plq.160.1518484974889;
+        Mon, 12 Feb 2018 17:22:54 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id 4sm7270961pfn.174.2018.02.12.17.23.05
+        by smtp.gmail.com with ESMTPSA id e82sm70193pfk.114.2018.02.12.17.22.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 17:23:05 -0800 (PST)
+        Mon, 12 Feb 2018 17:22:54 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
-        jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 13/26] sha1_file: allow link_alt_odb_entries to handle arbitrary repositories
-Date:   Mon, 12 Feb 2018 17:22:28 -0800
-Message-Id: <20180213012241.187007-14-sbeller@google.com>
+        jonathantanmy@google.com, Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 06/26] pack: move prepare_packed_git_run_once to object store
+Date:   Mon, 12 Feb 2018 17:22:21 -0800
+Message-Id: <20180213012241.187007-7-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
 In-Reply-To: <20180213012241.187007-1-sbeller@google.com>
 References: <20180213012241.187007-1-sbeller@google.com>
@@ -64,140 +64,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Actually this also allows read_info_alternates and link_alt_odb_entry to
-handle arbitrary repositories, but link_alt_odb_entries is the most
-interesting function in this set of functions, hence the commit subject.
+From: Jonathan Nieder <jrnieder@gmail.com>
 
-These functions span a strongly connected component in the function
-graph, i.e. the recursive call chain might look like
+Each repository's object store can be initialized independently, so
+they must not share a run_once variable.
 
-  -> link_alt_odb_entries
-    -> link_alt_odb_entry
-      -> read_info_alternates
-        -> link_alt_odb_entries
-
-That is why we need to convert all these functions at the same time.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- cache.h     |  4 ++++
- sha1_file.c | 36 ++++++++++++++++--------------------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ object-store.h | 8 +++++++-
+ packfile.c     | 7 +++----
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 70518e24ce..09d37cb651 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1590,6 +1590,10 @@ struct alternate_object_database {
- 	char loose_objects_subdir_seen[256];
- 	struct oid_array loose_objects_cache;
+diff --git a/object-store.h b/object-store.h
+index 8778ab9685..9fd109fa9c 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -20,8 +20,14 @@ struct raw_object_store {
  
+ 	struct alternate_object_database *alt_odb_list;
+ 	struct alternate_object_database **alt_odb_tail;
++
 +	/*
-+	 * Path to the alternative object store. If this is a relative path,
-+	 * it is relative to the current working directory.
++	 * Whether packed_git has already been populated with this repository's
++	 * packs.
 +	 */
- 	char path[FLEX_ARRAY];
++	unsigned packed_git_initialized : 1;
  };
- extern char *compute_alternate_path(const char *path, struct strbuf *err);
-diff --git a/sha1_file.c b/sha1_file.c
-index d7f271fe6e..d18ce3aeba 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -394,11 +394,10 @@ static int alt_odb_usable(struct raw_object_store *o,
-  * SHA1, an extra slash for the first level indirection, and the
-  * terminating NUL.
-  */
--#define read_info_alternates(r, rb, d) read_info_alternates_##r(rb, d)
--static void read_info_alternates_the_repository(const char *relative_base,
--						int depth);
--#define link_alt_odb_entry(r, e, rb, d, n) link_alt_odb_entry_##r(e, rb, d, n)
--static int link_alt_odb_entry_the_repository(const char *entry,
-+static void read_info_alternates(struct repository *r,
-+				 const char *relative_base,
-+				 int depth);
-+static int link_alt_odb_entry(struct repository *r, const char *entry,
- 	const char *relative_base, int depth, const char *normalized_objdir)
- {
- 	struct alternate_object_database *ent;
-@@ -424,7 +423,7 @@ static int link_alt_odb_entry_the_repository(const char *entry,
- 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
- 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+-#define RAW_OBJECT_STORE_INIT { NULL, NULL, MRU_INIT, NULL, NULL }
++#define RAW_OBJECT_STORE_INIT { NULL, NULL, MRU_INIT, NULL, NULL, 0 }
  
--	if (!alt_odb_usable(&the_repository->objects, &pathbuf, normalized_objdir)) {
-+	if (!alt_odb_usable(&r->objects, &pathbuf, normalized_objdir)) {
- 		strbuf_release(&pathbuf);
- 		return -1;
- 	}
-@@ -432,12 +431,12 @@ static int link_alt_odb_entry_the_repository(const char *entry,
- 	ent = alloc_alt_odb(pathbuf.buf);
+ void raw_object_store_clear(struct raw_object_store *o);
  
- 	/* add the alternate entry */
--	*the_repository->objects.alt_odb_tail = ent;
--	the_repository->objects.alt_odb_tail = &(ent->next);
-+	*r->objects.alt_odb_tail = ent;
-+	r->objects.alt_odb_tail = &(ent->next);
- 	ent->next = NULL;
- 
- 	/* recursively add alternates */
--	read_info_alternates(the_repository, pathbuf.buf, depth + 1);
-+	read_info_alternates(r, pathbuf.buf, depth + 1);
- 
- 	strbuf_release(&pathbuf);
- 	return 0;
-@@ -472,12 +471,8 @@ static const char *parse_alt_odb_entry(const char *string,
- 	return end;
+diff --git a/packfile.c b/packfile.c
+index 2ce1b2cef7..c107fce171 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -873,12 +873,11 @@ static void prepare_packed_git_mru(void)
+ 		mru_append(&the_repository->objects.packed_git_mru, p);
  }
  
--#define link_alt_odb_entries(r, a, s, rb, d) \
--	link_alt_odb_entries_##r(a, s, rb, d)
--static void link_alt_odb_entries_the_repository(const char *alt,
--						int sep,
--						const char *relative_base,
--						int depth)
-+static void link_alt_odb_entries(struct repository *r, const char *alt,
-+				 int sep, const char *relative_base, int depth)
+-static int prepare_packed_git_run_once = 0;
+ void prepare_packed_git(void)
  {
- 	struct strbuf objdirbuf = STRBUF_INIT;
- 	struct strbuf entry = STRBUF_INIT;
-@@ -491,7 +486,7 @@ static void link_alt_odb_entries_the_repository(const char *alt,
+ 	struct alternate_object_database *alt;
+ 
+-	if (prepare_packed_git_run_once)
++	if (the_repository->objects.packed_git_initialized)
  		return;
- 	}
- 
--	strbuf_add_absolute_path(&objdirbuf, get_object_directory());
-+	strbuf_add_absolute_path(&objdirbuf, r->objects.objectdir);
- 	if (strbuf_normalize_path(&objdirbuf) < 0)
- 		die("unable to normalize object directory: %s",
- 		    objdirbuf.buf);
-@@ -500,15 +495,16 @@ static void link_alt_odb_entries_the_repository(const char *alt,
- 		alt = parse_alt_odb_entry(alt, sep, &entry);
- 		if (!entry.len)
- 			continue;
--		link_alt_odb_entry(the_repository, entry.buf,
-+		link_alt_odb_entry(r, entry.buf,
- 				   relative_base, depth, objdirbuf.buf);
- 	}
- 	strbuf_release(&entry);
- 	strbuf_release(&objdirbuf);
+ 	prepare_packed_git_one(get_object_directory(), 1);
+ 	prepare_alt_odb();
+@@ -886,13 +885,13 @@ void prepare_packed_git(void)
+ 		prepare_packed_git_one(alt->path, 0);
+ 	rearrange_packed_git();
+ 	prepare_packed_git_mru();
+-	prepare_packed_git_run_once = 1;
++	the_repository->objects.packed_git_initialized = 1;
  }
  
--static void read_info_alternates_the_repository(const char *relative_base,
--						int depth)
-+static void read_info_alternates(struct repository *r,
-+				 const char *relative_base,
-+				 int depth)
+ void reprepare_packed_git(void)
  {
- 	char *path;
- 	struct strbuf buf = STRBUF_INIT;
-@@ -520,7 +516,7 @@ static void read_info_alternates_the_repository(const char *relative_base,
- 		return;
- 	}
- 
--	link_alt_odb_entries(the_repository, buf.buf, '\n', relative_base, depth);
-+	link_alt_odb_entries(r, buf.buf, '\n', relative_base, depth);
- 	strbuf_release(&buf);
- 	free(path);
+ 	approximate_object_count_valid = 0;
+-	prepare_packed_git_run_once = 0;
++	the_repository->objects.packed_git_initialized = 0;
+ 	prepare_packed_git();
  }
+ 
 -- 
 2.16.1.73.ga2c3e9663f.dirty
 
