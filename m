@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CDE91F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 612A21F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933223AbeBMBXI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 20:23:08 -0500
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:40164 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933187AbeBMBXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 20:23:03 -0500
-Received: by mail-pg0-f67.google.com with SMTP id g2so8741642pgn.7
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:23:03 -0800 (PST)
+        id S933227AbeBMBXJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 20:23:09 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:40157 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933195AbeBMBXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 20:23:00 -0500
+Received: by mail-pg0-f65.google.com with SMTP id g2so8741575pgn.7
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:23:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qKamZyk6bt3ArxzFisbDy4JSaINArkkbqGCJ5LjxMjI=;
-        b=T5WeX6UY5ZxNgi3KCra/fbH/CJ3fzFXWvpofHG70FEomgVTaQEWNN9ac3DT/2zUq2F
-         BnYfkS4QMlhH/T933dUOgB1VwxmkNc8eYZterIOLv0V2ghWV4g/AHPVBiw4nNg1Nus/X
-         EnzAXXVxccLPqXbd869fCqU4nwrn9z/6ntR2C7Rh4huBkGGLEWtLIfpdYBoWFuCBnhcY
-         +3xIART4U9cFCLDpuN9BLOAkpf2r/wMobQPYeT5Ky9eWc0OO857DK0uMgiPaBunjb9ZN
-         TuVuh8ClPaft32Kvf4tNULd7L8oBceZAbzF2ubIytaXe4ylp+2oIxDKuDrPkXK5RoB6w
-         WGxg==
+        bh=kNkndn0MwId8ZY2asApu4/5pA6V/Ol+btX9btRkbd78=;
+        b=H/wBr9JX6a5MScFixmimOtGCl/WhRfqK0dG7spfp+aohgvWqM5sY8gd2WBnFBFbbS+
+         yTuaKnfAvuUCiQwFCZG4YjTOcokW2bENB/49ln/+nnT8/GDvdR2ZxNvxWvsdjFNKZaKv
+         VMle9rthcCin9joO45+62iJszuWsd5TxyM7+8Q5WcZ3DBOt8JT/Wcfbj8Rij/6aZcElK
+         hHW4K5MnPdnTlZTATzkHrU4q9rFUCfn4NlQhZs8EELq3kT1OgriYXGkakp4C2u6MFhdn
+         D3dv2YKxB7e9hMrvOM6/ALbuATbIfcJSE0u2EJHELTwKFnQ35zEgHbdpbKZM8ZgEY2y7
+         cWAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qKamZyk6bt3ArxzFisbDy4JSaINArkkbqGCJ5LjxMjI=;
-        b=JB1cuLRpzbt6SX23mKVjULMNLbX1ki+nqh7TTNuRDZoX7pIt+ns9h6GimPhETZ888S
-         ogBiy1rr+1x2xNF4S65LS3z/nFcZB+GKxtVJu9bXC5RVF4T9pxv2c9rlqXap2/r/UW6g
-         JEIUUhLpTP+qd/FFMXTk+mG2hObSt8nvhnlXsqQ8Y1QiJRe/BbwHVMdtYJDtTh38JFFS
-         /hhtTdAvN85rC8Iw1LQT4cHRC+vWRplP1vvRYXnjOeZT99Ib0oHN9LzbZKRo/7MUBJV6
-         zpChpbJaZEa4lnYZOqH9jE87eaGnoAACx+A+STNnnjkp7mf2dcrFSvXRFWxmsn/DfMQB
-         irLw==
-X-Gm-Message-State: APf1xPDTcJfPpDyrvHQYlACn66ray/SlZxdBVzj6nQ8T5Yn/05O4RSMC
-        XMlqB6agvg3WKIHMNjGMAiixGZG8uj4=
-X-Google-Smtp-Source: AH8x227g/VJ/AAy2ZP7NPko7dmvCkViO3hoY5Ez494XivCw3dbkZ/aD7lvgJ1q9IJDQNWgv6IpnHCg==
-X-Received: by 10.101.69.67 with SMTP id x3mr10785408pgr.69.1518484982933;
-        Mon, 12 Feb 2018 17:23:02 -0800 (PST)
+        bh=kNkndn0MwId8ZY2asApu4/5pA6V/Ol+btX9btRkbd78=;
+        b=RD2K1kovr1lHd5tqgy1YUec68vFz5WfOOidJvEVzEgGC1ADjfP5wCGhQ0Yz/IwqiS2
+         pheHo7TcaNdJT8xhRx1B8lOln/g+9wM/GtW10hNfYPvIAGMJD0kj/grVcGqJMqszkjfF
+         oQt98oydLdb2PwZ93eACVJ3psakI2IHdD6FzsIOZ70QiMNs+HgrD63iAVSAPxkctV07f
+         JGNdmQ29L+GbLlK9zJUFU7t+2Bfwc/F8frN7Hul5oHybMD5vc1QBBNjV8N0HxcXoo+as
+         npEhILj9cPTA4/zpmELj8k6xR68SK/N0P3BmvcCaO2f8WM+aYBbF9Kz1MQcTkc8wKrun
+         99BQ==
+X-Gm-Message-State: APf1xPAzMkV1GAL0wjpLWURW0q3p7odVohZIHhc7az1C8wfAkffAChCM
+        XZTMBtvdNuwn/kNJaZtVnvGTXw==
+X-Google-Smtp-Source: AH8x224kDZOHBpPeMQdJmNnW9jGs0bembJp775u3fX1iXdVxHUl4P2UAJbSPyrKUxCBdR9K4aad1YA==
+X-Received: by 10.98.198.1 with SMTP id m1mr13180620pfg.90.1518484979996;
+        Mon, 12 Feb 2018 17:22:59 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id i86sm2115476pfj.89.2018.02.12.17.23.02
+        by smtp.gmail.com with ESMTPSA id e12sm26970891pgu.48.2018.02.12.17.22.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 17:23:02 -0800 (PST)
+        Mon, 12 Feb 2018 17:22:59 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
         jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 11/26] sha1_file: add repository argument to link_alt_odb_entries
-Date:   Mon, 12 Feb 2018 17:22:26 -0800
-Message-Id: <20180213012241.187007-12-sbeller@google.com>
+Subject: [PATCH 09/26] sha1_file: add repository argument to link_alt_odb_entry
+Date:   Mon, 12 Feb 2018 17:22:24 -0800
+Message-Id: <20180213012241.187007-10-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
 In-Reply-To: <20180213012241.187007-1-sbeller@google.com>
 References: <20180213012241.187007-1-sbeller@google.com>
@@ -64,72 +64,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-See previous patch for explanation.
+Add a repository argument to allow the link_alt_odb_entry caller to be
+more specific about which repository to act on. This is a small
+mechanical change; it doesn't change the implementation to handle
+repositories other than the_repository yet.
+
+Since the implementation does not yet work with other repositories,
+use a wrapper macro to enforce that the caller passes in
+the_repository as the first argument. It would be more appealing to
+use BUILD_ASSERT_OR_ZERO to enforce this, but that doesn't work
+because it requires a compile-time constant and common compilers like
+gcc 4.8.4 do not consider "r == the_repository" a compile-time
+constant.
+
+This and the following three patches add repository arguments to
+link_alt_odb_entry, read_info_alternates, link_alt_odb_entries
+and prepare_alt_odb. Three out of the four functions are found
+in a recursive call chain, calling each other, and one of them
+accesses the repositories `objectdir` (which was migrated; it
+was an obvious choice) and `ignore_env` (which we need to keep in
+the repository struct for clarify); hence we will pass through the
+repository unlike just the object store object + the ignore_env flag.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ sha1_file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 4fdfdd945a..b090f403d8 100644
+index d25b68a8fb..7dc5f690e2 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -471,8 +471,12 @@ static const char *parse_alt_odb_entry(const char *string,
- 	return end;
- }
- 
--static void link_alt_odb_entries(const char *alt, int sep,
--				 const char *relative_base, int depth)
-+#define link_alt_odb_entries(r, a, s, rb, d) \
-+	link_alt_odb_entries_##r(a, s, rb, d)
-+static void link_alt_odb_entries_the_repository(const char *alt,
-+						int sep,
-+						const char *relative_base,
-+						int depth)
+@@ -394,8 +394,9 @@ static int alt_odb_usable(struct raw_object_store *o,
+  * terminating NUL.
+  */
+ static void read_info_alternates(const char * relative_base, int depth);
+-static int link_alt_odb_entry(const char *entry, const char *relative_base,
+-	int depth, const char *normalized_objdir)
++#define link_alt_odb_entry(r, e, rb, d, n) link_alt_odb_entry_##r(e, rb, d, n)
++static int link_alt_odb_entry_the_repository(const char *entry,
++	const char *relative_base, int depth, const char *normalized_objdir)
  {
- 	struct strbuf objdirbuf = STRBUF_INIT;
- 	struct strbuf entry = STRBUF_INIT;
-@@ -515,7 +519,7 @@ static void read_info_alternates_the_repository(const char *relative_base,
- 		return;
+ 	struct alternate_object_database *ent;
+ 	struct strbuf pathbuf = STRBUF_INIT;
+@@ -492,7 +493,8 @@ static void link_alt_odb_entries(const char *alt, int sep,
+ 		alt = parse_alt_odb_entry(alt, sep, &entry);
+ 		if (!entry.len)
+ 			continue;
+-		link_alt_odb_entry(entry.buf, relative_base, depth, objdirbuf.buf);
++		link_alt_odb_entry(the_repository, entry.buf,
++				   relative_base, depth, objdirbuf.buf);
  	}
- 
--	link_alt_odb_entries(buf.buf, '\n', relative_base, depth);
-+	link_alt_odb_entries(the_repository, buf.buf, '\n', relative_base, depth);
- 	strbuf_release(&buf);
- 	free(path);
- }
-@@ -569,7 +573,8 @@ void add_to_alternates_file(const char *reference)
- 		if (commit_lock_file(&lock))
- 			die_errno("unable to move new alternates file into place");
- 		if (the_repository->objects.alt_odb_tail)
--			link_alt_odb_entries(reference, '\n', NULL, 0);
-+			link_alt_odb_entries(the_repository, reference,
-+					     '\n', NULL, 0);
- 	}
- 	free(alts);
- }
-@@ -582,7 +587,8 @@ void add_to_alternates_memory(const char *reference)
- 	 */
- 	prepare_alt_odb();
- 
--	link_alt_odb_entries(reference, '\n', NULL, 0);
-+	link_alt_odb_entries(the_repository, reference,
-+			     '\n', NULL, 0);
- }
- 
- /*
-@@ -685,7 +691,8 @@ void prepare_alt_odb(void)
- 
- 	the_repository->objects.alt_odb_tail =
- 			&the_repository->objects.alt_odb_list;
--	link_alt_odb_entries(alt, PATH_SEP, NULL, 0);
-+	link_alt_odb_entries(the_repository, alt,
-+			     PATH_SEP, NULL, 0);
- 
- 	read_info_alternates(the_repository, get_object_directory(), 0);
- }
+ 	strbuf_release(&entry);
+ 	strbuf_release(&objdirbuf);
 -- 
 2.16.1.73.ga2c3e9663f.dirty
 
