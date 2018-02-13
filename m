@@ -2,128 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2031F1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 20:42:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DD2D1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 21:58:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965761AbeBMUmr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 15:42:47 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:36564 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752344AbeBMUmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 15:42:46 -0500
-Received: by mail-yw0-f180.google.com with SMTP id t129so13238432ywc.3
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 12:42:46 -0800 (PST)
+        id S965898AbeBMV6A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 16:58:00 -0500
+Received: from mail-pl0-f41.google.com ([209.85.160.41]:38880 "EHLO
+        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965871AbeBMV56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 16:57:58 -0500
+Received: by mail-pl0-f41.google.com with SMTP id h10so705471plt.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 13:57:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2GSysmzhSdc3LpgiPKazNxdRgBi0XYdt1H3vMhPA+Sc=;
-        b=O1vSLfI0SDg7g/FPk/1Pi/68w03SsjXEPnb/DF+U6+aqKUCZ6m7L0l6amW13+4F3LP
-         HVEBw0VctS1nFXq+QzkvJKakx0b4WJduDics63Z28BnGpw8TEMPKQITQx0RE4z0vhTbR
-         3F4OLEAsj6bwPlxkXdELZHyhHS1SfjUXpUyP4ZA0Wm7RqwOwSoP/pNH+GHcXMtrnuD0k
-         MCI6pOnIinY3HVXf5OscFyEbrl9r458HiRYJk/Bz43YoE0PKSGSSRX2lUcRiIOeoIP44
-         H9fycnSGD/03xF/3U7ihuzJUiRCbKScuRQu8cjD0VmUGZKyQWmMsgGHSW/vhFNzlFa0P
-         be9g==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Qu8baorJU48anTkrAQ1vVkPGggrUEgOMcyEhxnjy7Nc=;
+        b=ZLnfB9AxxEhUm/puagddyM4LgDsI5htUbc+HR/oFg2ckKTBTbVymF3RATYHdLzpgf8
+         QAGvPWZO4FSp3+wKTQfYD87YKZpi9dfgRA0ktQ6gNibdaeonkiWuCD881jZdcBj3PNHM
+         OFj1jNAb9aPWHampILugW/dRn6+m9/gncFyEy7Z9pVox80Chs0QaEYEBWFs6oHzhP4zJ
+         yXhUVZWOwGeItLlyTWAidrzOhjvoVlV/QhSj9pf6uJVF3nMoYBMs2BXV+vitbjAdcJXW
+         UaEUFBdpSvA893xhCCIXdbCKxytcSCJ830vnx2qOQqNEOFSd1QnWlqf6weQGoq5LYVkV
+         It8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2GSysmzhSdc3LpgiPKazNxdRgBi0XYdt1H3vMhPA+Sc=;
-        b=fbg2PmVk8w1JBmwv4WzroGt8Kie0x+WdcS96fxLREhCviqFfU2+U1NT2wVUnNAShaM
-         C96il7vVpiOEaV836ayf2xz0HEJc+j6MX61RLg/3ZMaolz2M8oj2G+hFlJdwGETPX/od
-         qEoAOdYszc1MPekP9JF4lIEMyU/bzp/dYse/yjHMri2n2zXZL3Nvgnx8gh0Hu7PQEQRI
-         NfqRMgNdyckDUOUyzcu+X4VRcs7BcOtjMcgSYQ2OCEyj3jjcSr5G/Aso7iw3VvJMfnSe
-         sHWCHkIpFWb5Up3TluEmwfxqNCf2PkNGU7ANk6pj2LLKT7cLqTnXSQhwLQOGRwYavnnY
-         Gqeg==
-X-Gm-Message-State: APf1xPBXBqg0Dx553/WMbvrhgjIIHdnBiQOzKeKW8SIOJv6BhIrZjc+s
-        T2booZ4EZX47Q9+v0ztDmcYnmBAZKdnBjVkQ6qHKnQ==
-X-Google-Smtp-Source: AH8x224Kd4RgKwEdqy7ml0pEIOB2VoR0DjSaGX/JM/pFugJIbJmjciRhsYsLj69qfpKCf7I67CW4xROBa2CzabQvHxM=
-X-Received: by 10.37.101.11 with SMTP id z11mr1718131ybb.201.1518554565989;
- Tue, 13 Feb 2018 12:42:45 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.207.203 with HTTP; Tue, 13 Feb 2018 12:42:45 -0800 (PST)
-In-Reply-To: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
-References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 13 Feb 2018 12:42:45 -0800
-Message-ID: <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
-Subject: Re: git-rebase --undo-skip proposal
-To:     Psidium Guajava <psiidium@gmail.com>,
-        Paul Tan <pyokagan@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Qu8baorJU48anTkrAQ1vVkPGggrUEgOMcyEhxnjy7Nc=;
+        b=LvvmjcEOlamAH+zgE6QfQ5TmKkzYeKflhMvXKwV0kBZ+REGe1nOTbLWTxQNiFFJ8PJ
+         9eSlOfE4iFo2KhXcyR8iZM7LOp2prAVXhqZmrfVsbdAupI6yjSqMZhGGbguHhlMelHSU
+         lZ1Y6kewiz3QOgolyP0mEEV8jiGXdoDIxxnGjIJAVCC1Sv0GDS8kqKypJOAbSfrM+TTu
+         5loKDULQHN2hOQmevPeCYcCLKpcMfZbxERopQ7ds6331kEBC0HeDdVj9B0oh8zjnCrN4
+         dPV/aJxd71gLNvjV1brvRVwGmlZuBtKciaupWcNYKsh7U4Q2bRpgtmACVr1idU0b4qyA
+         SHuQ==
+X-Gm-Message-State: APf1xPAgeinlMNb5PB2cepgq8dSPhzG/dtOqPIeDiWKS1KhwiFG8snCD
+        KRvvZvhYKjLLpqIfD7j+4+qkwy1Nbj4=
+X-Google-Smtp-Source: AH8x2262/kN96R8sWONJv6mOnwkqK/06y5gP4GZk+hBFyJ9oxzOtDIKF8hJlrf+412s5xXoT2QxMbw==
+X-Received: by 2002:a17:902:2843:: with SMTP id e61-v6mr2415871plb.260.1518559078173;
+        Tue, 13 Feb 2018 13:57:58 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id s67sm4590800pfg.104.2018.02.13.13.57.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Feb 2018 13:57:56 -0800 (PST)
+Date:   Tue, 13 Feb 2018 13:57:55 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        gitster@pobox.com, peff@peff.net, sbeller@google.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v3 05/14] commit-graph: implement 'git-commit-graph
+ write'
+Message-Id: <20180213135755.85944f875fdca85b6d4db9a3@google.com>
+In-Reply-To: <1518122258-157281-6-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-6-git-send-email-dstolee@microsoft.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
-> Hello git community,
->
-> I'd like to add a new feature in git-rebase: --undo-skip.
-> But first, I'd like to consult with the experts if it would be
-> beneficial for the project and if my line of tought is correct.
->
-> Imagine that you are working on a feature for a long time, but there
-> are multiple bug fixes happening at `master` branch at the same time.
-> After lots of commits on both ends, you decide to rebase your changes
-> on top of the current `master` branch.
-> After lots of conflict resolution steps, you mistakenly call
-> `git-rebase --skip` instead of `git-rebase --continue`, thus losing a
-> commit of your work, and possibly inserting bugs in your project.
-> The only solution for this right now would be to abort the current
-> rebase and start over.
->
-> It seems that a feature like this have been requested once on the mail list [1].
->
-> I propose the existence of --undo-skip on git-rebase's `$action` domain.
->
-> How I fixed it when that happened with me was (just after running the
-> wrong skip):
->
-> 1. I figured I was making a rebase that used `git-am` as a backend.
-> 2. In the rebase-apply directory I searched for the patch file with
-> the change I just skipped.
-> 3. Found the `rebase-apply/next` file.
-> 4. Wrote the number of the patch I skipped - 1 in rebase-apply/next.
-> 5. run `git rebase --skip` again on the repository.
->
-> This made the lost patch appear again and I could `--continue` it this time.
+On Thu,  8 Feb 2018 15:37:29 -0500
+Derrick Stolee <stolee@gmail.com> wrote:
 
-I think this could also be done with "git rebase --edit-todo", which brings
-up the right file in your editor.
+> +test_expect_success 'setup full repo' '
+> +	rm -rf .git &&
+> +	mkdir full &&
+> +	cd full &&
+> +	git init &&
+> +	packdir=".git/objects/pack"'
 
-> I propose the addition of an action `--undo-skip`, that could be
-> called only after a wrongfully called `--skip`.
-> `git rebase --undo-skip`.
-> I would implemented it to do programatically what I did by hand when
-> that happened with me.
->
-> Here are my questions for you:
-> 1. Would this be beneficial for the users?
-
-I guess it is.
-
-> 2. For `rebase--am`, I would need to change `git-rebase--am.sh` file, correct?
-> 3. Can I assume `builtin/am.c` will always store its information on
-> `$state_dir/next` and `$state_dir/$patchnumbers`?
-> 4. How hard would it be to add that logic for `rebase--interactive`
-> and `rebase--merge` backends?
-
-cc'd Johannes who is currently working on revamping rebase.
-
->
-> Also, a little unrelated with this issue:
-> 5. What happened to the rewrite of rebase in C [2]? I couldn't find
-> any information after 2016.
->
-> [1] https://public-inbox.org/git/201311011522.44631.thomas@koch.ro/
-> [2] https://public-inbox.org/git/1457779597-6918-1-git-send-email-pyokagan@gmail.com/
-
-cc'd Paul Tan, maybe he recalls the situation.
+Thanks for simplifying the repo generated in the test. One more style
+nit: the final apostrophe goes onto its own line.
