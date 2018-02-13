@@ -2,91 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDBBB1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 19:57:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51F4C1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 20:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965624AbeBMT5T (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 14:57:19 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:37143 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965589AbeBMT5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 14:57:18 -0500
-Received: by mail-wm0-f67.google.com with SMTP id v71so18127035wmv.2
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 11:57:18 -0800 (PST)
+        id S965696AbeBMUPh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 15:15:37 -0500
+Received: from mail-it0-f66.google.com ([209.85.214.66]:40071 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965610AbeBMUPg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 15:15:36 -0500
+Received: by mail-it0-f66.google.com with SMTP id v186so7106761itc.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 12:15:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HOoxUhAq7M5DFUKYQEKIF+EhUWcwAUZ1/PO0XChGLb8=;
-        b=dcal3QluPA565CIS5Em0nnHKuFdj2C8Itej0So/qoeL2FsczAovxZ0J8F/JFVFqZ8j
-         95mR0M5KpX/9MpZwVFk96q6FfJmZgu/8XaRHw8nWom3g8c3nlswMWd80qTTyU2Badv2c
-         hUUAmedLZCwPbTumS+yNc2RA4V/AnlFlLdwEQEt4f0NnHYVw4KKn15F9aUlg9//tpVY/
-         GQ8rSKpxwpxToRuhhICykI9XWJyPusYmkX4NWFpmjflBZ7+QvVFjUL12svkBzjkb4447
-         3PtzfDtDaC5HnV1WBjPLEOHFQdylCVSXubE5SVnDhNlq8UBG0RyAT/AGzUpzdY/xYAxH
-         cLdw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8N84gX6Ifmk4NNuSGAPjDHmoCp+rX8CNBE+/0UoyOMU=;
+        b=btq+k1p8PdJh/xkhU8+cB4JXZ7AKJxryx9Jy8vAZFrf1F+4FmcJqBL00kP+pXgSlwU
+         cQz7IZpKKcRKWipVaBsRZIZgihGJTIxjlCiB9rCkkIHPsVAXTp5hiEJWWI4VDhIjq8Lr
+         a2VXJDpoEXKvCG44ACZ/zCogtRqANmRhAodLMfRbHaSkC6Yxd7rO+cHANu+N0SxJF98M
+         azewy3mkx2ZLBw+e0tbMBl3wao/4nsrQAagZ9xaVwkkCfHNH3TkaAeGhNRJWR8+AqpsO
+         XcbTJ5oRYjh365sBMoFVb70I+dMrH6ezQrBBxrVPMESVuQAJpHa+zyPW6YK5kS25SYUN
+         OC5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HOoxUhAq7M5DFUKYQEKIF+EhUWcwAUZ1/PO0XChGLb8=;
-        b=dSGmKbvfD4g4M5w2zayOzUdMwQ24yghZ628FIR8NKivsVsTsZdxIQUaH2jxA6nwr6G
-         iMIl/5THPJmc/2UnIp+PMZmHe0ViBVUYqLsuz2mYa8Z2oChsJZfvWq1KsaBi9gKKEdtf
-         tQl4Mo5yQvEb+vVaXx8ms0DXESn8ad1lMF/5tBICE/Q2OE8IzpBi29UqofJIrkda+zgl
-         EbigRE7pQ/K8aAsnzMtTwEzi5NxeUis61XHsSoMQd+YSegWhOX/1kImE+rT4cNS7z1E/
-         Wij4Vpv3zNuMSooMFW3557R7gchtj+0KXk7HYMX6pUAQd23Ky5VlO6SLaEuMBptVndCg
-         Y88Q==
-X-Gm-Message-State: APf1xPCNqp5WX8TKW3uJd/HzULxmCkYzIJGMX0lUMoRQ0u7P1/j2QOwa
-        e6oFZyQ1ok/6Gen6lssTmJA=
-X-Google-Smtp-Source: AH8x227IbWyVusKYxiHz4mjtY9WSfoHWsDC5HDFrUcLi8w5H4i/00EgNQS6XtHDnoB+/GyBgfpqAdQ==
-X-Received: by 10.28.156.67 with SMTP id f64mr2377020wme.11.1518551837371;
-        Tue, 13 Feb 2018 11:57:17 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u20sm5974943wrg.13.2018.02.13.11.57.16
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8N84gX6Ifmk4NNuSGAPjDHmoCp+rX8CNBE+/0UoyOMU=;
+        b=tB+QpznfIQFQ9+J/6ygwXaYFi4arzSvnKhX+v3hCbvBU72dzoH8kxSUXlOo3u/w08s
+         xu1HBDuiMyFDcI0Lg8Llq5Jqp5mSmPa1XFCOfqvFVHnTl5evB66Wp762hYw6LgGs27Q3
+         leH69s3W96H85P3MVZvQJylJTBhLTh0lX0vXR2ABWrqTMNJywHvf5pYnc8w2tkXG5r1e
+         NL2/Oe2gLOc8qSmz+sCnYItw9RA0cnRi9WHFLAO+zra2xKCUjIGBqRZwJ+dbpUK1+EcK
+         bZDHdJUMBULXc+QWV7Gkq3sIXHoKBEOVa7YlB8XME1Uju5qaDbDg8XPXSVUYlBxI/XeN
+         L7Rw==
+X-Gm-Message-State: APf1xPBdSte81jmoWbARPAEHFF55RYaFMrKeLspKkZOTE86Vp+oslO7f
+        yiiMbGRiL5QAVbGcvh6xfciRbA==
+X-Google-Smtp-Source: AH8x226fk4cj5tKSCOGXoxz4R7Ywt6R3IaiGRCRf6TwUh6Q0+Hk5K6Rzp5aiVYXD0fzIHjdBYST66w==
+X-Received: by 10.36.125.8 with SMTP id b8mr3081398itc.149.1518552936053;
+        Tue, 13 Feb 2018 12:15:36 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id m203sm304050ioa.30.2018.02.13.12.15.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 11:57:16 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
+        Tue, 13 Feb 2018 12:15:35 -0800 (PST)
+Date:   Tue, 13 Feb 2018 12:15:34 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, l.s.r@web.de, stolee@gmail.com
 Subject: Re: [PATCH v2 0/2] Refactor hash search with fanout table
+Message-Id: <20180213121534.1c7b42109d40a9c41d0e8f0a@google.com>
+In-Reply-To: <xmqqvaf0psrn.fsf@gitster-ct.c.googlers.com>
 References: <cover.1517609773.git.jonathantanmy@google.com>
         <cover.1518546891.git.jonathantanmy@google.com>
-Date:   Tue, 13 Feb 2018 11:57:16 -0800
-In-Reply-To: <cover.1518546891.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Tue, 13 Feb 2018 10:39:37 -0800")
-Message-ID: <xmqqvaf0psrn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        <xmqqvaf0psrn.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Tue, 13 Feb 2018 11:57:16 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Updates from v1:
->  - use uint32_t so that we can operate on packfiles of up to 4G objects
->    (this also means that I had to change the signature of the function)
->  - don't hide types
->
-> Derrick: you'll need to slightly change your patch to use the new API.
-> As for find_abbrev_len_for_pack(), that's a good idea - I didn't do it
-> in this set but it definitely should be done.
->
-> Jonathan Tan (2):
->   packfile: remove GIT_DEBUG_LOOKUP log statements
->   packfile: refactor hash search with fanout table
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>=20
+> > Updates from v1:
+> >  - use uint32_t so that we can operate on packfiles of up to 4G objects
+> >    (this also means that I had to change the signature of the function)
+> >  - don't hide types
+> >
+> > Derrick: you'll need to slightly change your patch to use the new API.
+> > As for find_abbrev_len_for_pack(), that's a good idea - I didn't do it
+> > in this set but it definitely should be done.
+> >
+> > Jonathan Tan (2):
+> >   packfile: remove GIT_DEBUG_LOOKUP log statements
+> >   packfile: refactor hash search with fanout table
+>=20
+> Hmm, is this meant to replace the topic that was merged to 'next'
+> last week?
 
-Hmm, is this meant to replace the topic that was merged to 'next'
-last week?
+Yes - Ren=E9 pointed out [1] that V1 of my patch series (which you merged
+to 'next') does not handle packfiles of more than 2G pack entries, so I
+sent out a new version. Yes, this replaces jt/binsearch-with-fanout.
+Sorry for not being clearer.
 
->
->  packfile.c    | 29 ++++-------------------------
->  sha1-lookup.c | 28 ++++++++++++++++++++++++++++
->  sha1-lookup.h | 22 ++++++++++++++++++++++
->  3 files changed, 54 insertions(+), 25 deletions(-)
+[1] https://public-inbox.org/git/cfbde137-dbac-8796-f49f-2a543303d33a@web.d=
+e/
