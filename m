@@ -2,77 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB3F1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 02:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F30B1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 03:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933203AbeBMCYC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 21:24:02 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33166 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933132AbeBMCYB (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Feb 2018 21:24:01 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 302F260987;
-        Tue, 13 Feb 2018 02:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1518488640;
-        bh=oRy9sMKJzq1sMyaxBa9fiOd8i3gNLmt/Cu1QcHa/5Nw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=1NIm8+N2GefteGrqf5iSUIx3lEwrlYpsMvgTD7E3Wpqz6nUvsq8OzUA66Sfvorofd
-         ePxUbuRbS/Zv894mI9fx9yZPH8v0/J53gWcpdiFkMgELfkY4BWu2OhZ/THCopU5jWY
-         QgGeI6Nx9AAA1vJ7JgJMewnwlu1Pr4UR8AbZ6wRGdhCPiy/DDhrXFGUccBOMsmOAud
-         1nUnTytObhYC5M+q+jnTuAMpv9bdHzNsUPQicL/hidyrGeOFSO9rzSBhxOjT+Rd0t4
-         nVtyvjWP3wvwGe4iE1wl3sob4Y3klPzLuTo89mfRZZlDTM7FgXFn23cRTB5JWeFzti
-         EEMw0q3KvT820HR6HhjpidlJhGXZi9vcXB7GOgoXCFXtG3+2dlf4j3NBgu0o/29A9q
-         gvco75ECa0gU7KXYkzrtViTLycA+48Rae3t5PuwFreGuWyGOx2OAcfo2qmR+NrPQWe
-         75HdgHi07d6MxS8EEFFnfaMn4dm+SllukJonIHnyump0Io7QK+9
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] docs/interpret-trailers: fix agreement error
-Date:   Tue, 13 Feb 2018 02:23:52 +0000
-Message-Id: <20180213022352.23742-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.16.1.101.gde0f0111ea
-In-Reply-To: <20180208025614.872885-1-sandals@crustytoothpaste.net>
-References: <20180208025614.872885-1-sandals@crustytoothpaste.net>
+        id S933416AbeBMDzp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 22:55:45 -0500
+Received: from mail-qt0-f182.google.com ([209.85.216.182]:45156 "EHLO
+        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933025AbeBMDzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 22:55:44 -0500
+Received: by mail-qt0-f182.google.com with SMTP id x27so2178627qtm.12
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 19:55:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ZczFAo3J3K3HjqgO48qlgX9S+Vsz+nbFhRdi46JxO5g=;
+        b=C9JugHOOM1x2kL/v1/czJ6NgeqRPgGWgCnTEQJBzL/5q4kANoGhOwrAhbZ4hc4F6VM
+         T6ESYNscdfgNkelkoGxUvMyuHFHTlSQXgvSIof5v3OhHCvHygvhRnpvzEJ2y8JMb3oh5
+         QM3CHd6yxbi7hP+kmYstX4C5TUh0nXrbvlBgMhJcTtYo5m++J9UlYqLf3QlZKbj1XtxN
+         1yZEl8DGKLgybCAXu24Uf5U7jlO2ZewOAs7fAWUAQ8XFKGR3S4wglTxJIVUAULC8eLBL
+         fEwvarV6asq0+U07RMSFhWA8BO1OIFh8JrZzDlbJgGidjBpGH0p1SRybhQIfHKOEMgB6
+         MLRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ZczFAo3J3K3HjqgO48qlgX9S+Vsz+nbFhRdi46JxO5g=;
+        b=SvxxPdlSAgF51gnE+1/YAmpPYQEdDeQhvhN8WZvbRZrrdfehJrd+yuHQCyMikuq3SZ
+         2pIH1xqwRWw5OzHjub2xg2NyWx7imTzLpV+0LcwsPOq+j6f76r5lodnvI0CqJiTgZo6J
+         +fNgNvoWP66nh81lAw/DjcNu7s9K5D0kU9wPX3RSTK+rsElkGuA8o1IZ83cTvs3SldTv
+         lAQXkuzBRQfvMqqZV8iLZlqq2DCdvc6wdOLO921naSMrPeURSv+VVaFAKeb6GDJZnYlt
+         eLyPXimfhHsY3tG+zNR7pM8ctmGZz1mleZbPBLIBHl9ZGMsivoJU49dIQxMTfuuXg7t9
+         SgDQ==
+X-Gm-Message-State: APf1xPBMegveDftWLWQ2jZsVcKwfBXskZYli+39dwVt1oFNn4CG7v3IW
+        Tlx6jjYS70sxECyrRxcTmPfhqhfxzNT3+G0CoTA=
+X-Google-Smtp-Source: AH8x224ZKbCAngPS/Et8zA2+l5lQ6X6zeVBtWTJDmTYzDDT/NEqGtkZr4YuqLKyP/k/IvVxKe1JCKCJfGOsKmdwmSAg=
+X-Received: by 10.200.51.100 with SMTP id u33mr16936502qta.127.1518494143716;
+ Mon, 12 Feb 2018 19:55:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 19:55:42 -0800 (PST)
+In-Reply-To: <20180213014130.190374-1-sbeller@google.com>
+References: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
+ <20180213014130.190374-1-sbeller@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Feb 2018 22:55:42 -0500
+X-Google-Sender-Auth: 5IGM0Or1DCJpduwVPbQnlJdaHls
+Message-ID: <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the description of git interpret-trailers, we describe "a group…of
-lines" that have certain characteristics.  Ensure both options
-describing this group use a singular verb for parallelism.
+On Mon, Feb 12, 2018 at 8:41 PM, Stefan Beller <sbeller@google.com> wrote:
+> Add documentation explaining the functions in color.h.
+> While at it, migrate the function `color_set` into grep.c,
+> where the only callers are.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> diff --git a/color.h b/color.h
+> @@ -76,22 +76,46 @@ int git_color_config(const char *var, const char *value, void *cb);
+> +/*
+> + * Output the formatted string in the specified color (and then reset to normal
+> + * color so subsequent output is uncolored). Omits the color encapsulation if
+> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+> + * the color.  BUG: The `color_print_strbuf` prints the given pre-formatted
+> + * strbuf instead, up to its first NUL character.
+> + */
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/git-interpret-trailers.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+"`color_print_strbuf` prints the given pre-formatted strbuf (BUG: but
+only up to the first NUL character)."
 
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index 9dd19a1dd9..ff446f15f7 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -51,7 +51,7 @@ with only spaces at the end of the commit message part, one blank line
- will be added before the new trailer.
- 
- Existing trailers are extracted from the input message by looking for
--a group of one or more lines that (i) are all trailers, or (ii) contains at
-+a group of one or more lines that (i) is all trailers, or (ii) contains at
- least one Git-generated or user-configured trailer and consists of at
- least 25% trailers.
- The group must be preceded by one or more empty (or whitespace-only) lines.
+Probably not worth a re-roll is Junio can amend it locally.
