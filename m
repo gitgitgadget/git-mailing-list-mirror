@@ -2,84 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DD2D1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 21:58:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58CFA1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 22:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965898AbeBMV6A (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 16:58:00 -0500
-Received: from mail-pl0-f41.google.com ([209.85.160.41]:38880 "EHLO
-        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965871AbeBMV56 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 16:57:58 -0500
-Received: by mail-pl0-f41.google.com with SMTP id h10so705471plt.5
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 13:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Qu8baorJU48anTkrAQ1vVkPGggrUEgOMcyEhxnjy7Nc=;
-        b=ZLnfB9AxxEhUm/puagddyM4LgDsI5htUbc+HR/oFg2ckKTBTbVymF3RATYHdLzpgf8
-         QAGvPWZO4FSp3+wKTQfYD87YKZpi9dfgRA0ktQ6gNibdaeonkiWuCD881jZdcBj3PNHM
-         OFj1jNAb9aPWHampILugW/dRn6+m9/gncFyEy7Z9pVox80Chs0QaEYEBWFs6oHzhP4zJ
-         yXhUVZWOwGeItLlyTWAidrzOhjvoVlV/QhSj9pf6uJVF3nMoYBMs2BXV+vitbjAdcJXW
-         UaEUFBdpSvA893xhCCIXdbCKxytcSCJ830vnx2qOQqNEOFSd1QnWlqf6weQGoq5LYVkV
-         It8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Qu8baorJU48anTkrAQ1vVkPGggrUEgOMcyEhxnjy7Nc=;
-        b=LvvmjcEOlamAH+zgE6QfQ5TmKkzYeKflhMvXKwV0kBZ+REGe1nOTbLWTxQNiFFJ8PJ
-         9eSlOfE4iFo2KhXcyR8iZM7LOp2prAVXhqZmrfVsbdAupI6yjSqMZhGGbguHhlMelHSU
-         lZ1Y6kewiz3QOgolyP0mEEV8jiGXdoDIxxnGjIJAVCC1Sv0GDS8kqKypJOAbSfrM+TTu
-         5loKDULQHN2hOQmevPeCYcCLKpcMfZbxERopQ7ds6331kEBC0HeDdVj9B0oh8zjnCrN4
-         dPV/aJxd71gLNvjV1brvRVwGmlZuBtKciaupWcNYKsh7U4Q2bRpgtmACVr1idU0b4qyA
-         SHuQ==
-X-Gm-Message-State: APf1xPAgeinlMNb5PB2cepgq8dSPhzG/dtOqPIeDiWKS1KhwiFG8snCD
-        KRvvZvhYKjLLpqIfD7j+4+qkwy1Nbj4=
-X-Google-Smtp-Source: AH8x2262/kN96R8sWONJv6mOnwkqK/06y5gP4GZk+hBFyJ9oxzOtDIKF8hJlrf+412s5xXoT2QxMbw==
-X-Received: by 2002:a17:902:2843:: with SMTP id e61-v6mr2415871plb.260.1518559078173;
-        Tue, 13 Feb 2018 13:57:58 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id s67sm4590800pfg.104.2018.02.13.13.57.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 13:57:56 -0800 (PST)
-Date:   Tue, 13 Feb 2018 13:57:55 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        gitster@pobox.com, peff@peff.net, sbeller@google.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v3 05/14] commit-graph: implement 'git-commit-graph
- write'
-Message-Id: <20180213135755.85944f875fdca85b6d4db9a3@google.com>
-In-Reply-To: <1518122258-157281-6-git-send-email-dstolee@microsoft.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-6-git-send-email-dstolee@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S965993AbeBMWWu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 17:22:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51406 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S965935AbeBMWWt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 17:22:49 -0500
+Received: (qmail 31565 invoked by uid 109); 13 Feb 2018 22:22:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 13 Feb 2018 22:22:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23950 invoked by uid 111); 13 Feb 2018 22:23:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 13 Feb 2018 17:23:33 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Feb 2018 17:22:47 -0500
+Date:   Tue, 13 Feb 2018 17:22:47 -0500
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t6300-for-each-ref: fix "more than one quoting style"
+ tests
+Message-ID: <20180213222247.GA18401@sigill.intra.peff.net>
+References: <20180213003601.7396-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180213003601.7396-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu,  8 Feb 2018 15:37:29 -0500
-Derrick Stolee <stolee@gmail.com> wrote:
+On Tue, Feb 13, 2018 at 01:36:01AM +0100, SZEDER Gábor wrote:
 
-> +test_expect_success 'setup full repo' '
-> +	rm -rf .git &&
-> +	mkdir full &&
-> +	cd full &&
-> +	git init &&
-> +	packdir=".git/objects/pack"'
+> 'git for-each-ref' should error out when invoked with more than one
+> quoting style options.  The tests checking this have two issues:
+> 
+>   - They run 'git for-each-ref' upstream of a pipe, hiding its exit
+>     code, thus don't actually checking that 'git for-each-ref' exits
+>     with error code.
+> 
+>   - They check the error message in a rather roundabout way.
+> 
+> Ensure that 'git for-each-ref' exits with an error code using the
+> 'test_must_fail' helper function, and check its error message by
+> grepping its saved standard error.
 
-Thanks for simplifying the repo generated in the test. One more style
-nit: the final apostrophe goes onto its own line.
+Yeah, this looks much nicer than the original.
+
+>  for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+>  	test_expect_success "more than one quoting style: $i" "
+> -		git for-each-ref $i 2>&1 | (read line &&
+> -		case \$line in
+> -		\"error: more than one quoting style\"*) : happy;;
+> -		*) false
+> -		esac)
+> +		test_must_fail git for-each-ref $i 2>err &&
+> +		grep '^error: more than one quoting style' err
+
+I suspect in the long run this ought to be test_i18ngrep, but since it's
+not localized yet, it makes sense to stop here with this patch.
+
+-Peff
