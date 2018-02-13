@@ -3,102 +3,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 202861F576
-	for <e@80x24.org>; Tue, 13 Feb 2018 07:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99D071F576
+	for <e@80x24.org>; Tue, 13 Feb 2018 09:57:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933579AbeBMHvr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 02:51:47 -0500
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33763 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933463AbeBMHvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 02:51:45 -0500
-Received: by mail-wm0-f68.google.com with SMTP id x4so12052909wmc.0
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 23:51:45 -0800 (PST)
+        id S934294AbeBMJ5y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 04:57:54 -0500
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:44674 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933872AbeBMJ5v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 04:57:51 -0500
+Received: by mail-ot0-f177.google.com with SMTP id l5so16791797otj.11
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 01:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fM8iPJRcE+y8NnkKi1MkbBBnSjbmVTNLi6vmdUHp/o0=;
-        b=qVDReT6kQdmo8FCfYefsICJITWz/bhl8QKUePA+2PpI5vqnZBrhzjhpYRTCI5OJkAJ
-         ucAwHnh8Q2Ql0NC1BhrfqNuuR/fb85RfZqBP2uh4XZVunT8sgMItMYFfP3vA/Q8RNV2Z
-         W7nFVQhyu+Abi7ScxLHLK+QcDj4NZ5DmxwxCyR+QDvZKHnDuaACq941KOQMm028D9f4H
-         3d70dBj72WvpqwPqxsbxvy2ENj2VH8kuP8YhIdYFz4414x/bexuxsDPA2D9PhILx3F9+
-         bzAz/a6hBZ+/8JJrJj0y83ymPHM5q7u+1xzRnkFX48gBNTaA9yXEywPkrdgJAO/JKYA0
-         y7Dw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VSUrzAARTHpQ7pCawElLcx9nmi7lKuC05cua9tPiOI8=;
+        b=i9v6duLihaJYj0LkuuHbNXDC9B0xNY3DbacSNdM341eAUAeYjBPsIsGhsXjreAR2lM
+         FloV4D5CI9B2nmZAyEk+LhO/UT56jLmMMojZ41tEVusbkPeon6+W9IF8MKex4SSNDDgk
+         5BuVvZN5s6f0OiBLH4iXhwWQnhRFX0Wf/+L9F0y0qUo5R664iJcR7kHoEtQ9NcfFGdyx
+         a0efzFgQh+ijQYVyc4Usj2v0GUdtguGC6VFNcVSpkaazBc+t9yOwygCFPRZ+psP/KWW/
+         jWgCFutokok5BuzjrgzEG8s8Mz7v8Qo0ZqcYbtGzVl4QurqqOr/t6+h4hXidzgRfKw5T
+         cJ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fM8iPJRcE+y8NnkKi1MkbBBnSjbmVTNLi6vmdUHp/o0=;
-        b=KTfgzKMazYYfnVTnN5tQzRsLr8e3NlbwtUSMkTn5+D0aTHvB9PfrO3RyEIhBWx68QJ
-         xWU/CJ1c+ONn9Pjuo4KWnRtagO/0jL8B6wkZIOkfJafHA/SSnw/Z2yqxoWAKDEToLXmZ
-         jm/DBoy7EHsrfaGzMmEQ2c8uVZ2ljRgQ9Jll4S/SK1OMw9k/7kLN6N3KSBtGonNGRQB5
-         ZOrsQBOdNSyqZWN8x/HhAOnT2i6hCyxRHMQ47RlsE6z7Wzt6Yuvr8MAorxf+ZLrP5NDQ
-         nK2j+2hQ738Zg9bTlRIczW2+tGx+Sg60MZ3b4OHxmEAWDvFT5x1CG8Az+vrjeROItPY8
-         SR8Q==
-X-Gm-Message-State: APf1xPDoLlVxYjymLm2npi30OPyb1sx1qv3Agv6n+mO4oqGDO/joA6rz
-        EAnxxsd2KnxCNcA/VI31bws=
-X-Google-Smtp-Source: AH8x225Q+1+h0pze5j2w0tJHHpM4DzWzLhQSjjjPFtnswNspph9PVTTu1xIZO676DVG42jcoH080xg==
-X-Received: by 10.28.192.24 with SMTP id q24mr449710wmf.149.1518508303776;
-        Mon, 12 Feb 2018 23:51:43 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p21sm5692646wmc.28.2018.02.12.23.51.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 23:51:43 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] t5556: replace test_i18ngrep with a simple grep
-References: <d0e6c6cf-7166-bef6-f179-c4e6acf7b0ac@ramsayjones.plus.com>
-        <xmqq3726t11d.fsf@gitster-ct.c.googlers.com>
-        <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
-Date:   Mon, 12 Feb 2018 23:51:42 -0800
-In-Reply-To: <69c7dc21-fb52-5982-f7d8-04518d06db6c@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Tue, 13 Feb 2018 01:58:19 +0000")
-Message-ID: <xmqqvaf1qqcx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VSUrzAARTHpQ7pCawElLcx9nmi7lKuC05cua9tPiOI8=;
+        b=cno5j2EXHUOiFg1u65pZNJgdWglvCUfVc5G+jeLk8I5cS/rBj6L5m3WkjRDPfBKf1t
+         uNDcdzEpKewvlXZyUYzAjuWqtiiOf+RhArC/VirOfEJACIi3nkd5RSAAgABY+c/xa24X
+         kN80VV/WVwk7KvXqGu+8od6YATViyrJYu88PW2uaYUwRzIH+hTDuG5cn7axAo68uWvIB
+         FHLbdPgyKN3w+CY2EbFhHnRN0bmhuUNXOCUqpcpC6hIzbzNloHesFTQTco25C/8a45jl
+         saml5KHTlG2EXTqliVkU47QP9gQqnhMJkZzUKrHLVoqGejbydUcvQ7I5fgbYAVQsVoGM
+         UW7g==
+X-Gm-Message-State: APf1xPBXhM5hSsRBZZHvVVWCDgdSpQZboXnTlLhYBTlfzX+dY3B51rJB
+        V8qt5LAwr6xEZYb4nEHJB1KVpDAqno3d7aelguI=
+X-Google-Smtp-Source: AH8x2257LFf5+tOLkxT9VLZadDkV2JnSB8g91DAMs8KEVTyoSdwVZqcON0rHhNz4JzDQxUUx/sZRBW/oCNoX9fw1rHc=
+X-Received: by 10.157.14.67 with SMTP id n3mr425057otd.337.1518515871357; Tue,
+ 13 Feb 2018 01:57:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.25.140 with HTTP; Tue, 13 Feb 2018 01:57:20 -0800 (PST)
+In-Reply-To: <d1371a6c-2b30-515a-372e-4fea9bc09c43@gmail.com>
+References: <20180205195619.31064-1-benpeart@microsoft.com>
+ <20180205215805.GA90084@google.com> <6fb43664-7546-7865-0488-8ed6292d77a6@gmail.com>
+ <CACsJy8DLP=j-h3knwX9zOpejAfUbv1YJwfB-iw4476oy0hTfxg@mail.gmail.com>
+ <0039c71c-cefd-4950-aa7c-ffbb7cf66e49@gmail.com> <CACsJy8A2=tWpiBOBxmTLHXm6bvjGCdoDEuJEy7PewvnzEQi2Qg@mail.gmail.com>
+ <d1371a6c-2b30-515a-372e-4fea9bc09c43@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 13 Feb 2018 16:57:20 +0700
+Message-ID: <CACsJy8BWh=e6_Sz20djd5ixxm_Pwa43OHNzXrBatm14k0P+qxQ@mail.gmail.com>
+Subject: Re: [PATCH v1] dir.c: don't flag the index as dirty for changes to
+ the untracked cache
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Tue, Feb 13, 2018 at 12:57 AM, Ben Peart <peartben@gmail.com> wrote:
+>> Another case that could touches a lot of directories over time is
+>> switch trees (e.g. "git checkout master" then "checkout next" or worse
+>> "checkout v1.0").
+>
+>
+> You're example above makes me wonder if you understand what my patch is
+> doing.  If the index is flagged as dirty for _any_ reason, the entire index
+> is written to disk with the latest information - including the updated
+> untracked cache and all other extensions.  So in your checkout examples
+> above, the index will still get written to disk with the updated untracked
+> cache extension.  There would be zero change in behavior or performance.
+> The _only_ time the index is not written to disk after my patch is if there
+> were no other changes to the index.  In my experience, that is only status
+> calls.
 
-> I must admit that I didn't think about the effect of the useless
-> "| sort" on the exit status!  What I saw was: a process that
-> received no input, sorted nothing and produced no output - pretty
-> much the definition of useless! ;-)
+The untracked cache is updated and does get written down, but it's not
+"repaired" unless you have called read_directory() before the index is
+written. Though paths that hit untracked_cache_invalidate_path() will
+continue on slow path until you call read_directory() and write down.
+I don't think "git checkout" calls read_directory. There are some
+commands, like "git add", that update the index and call
+read_directory() at the same time. So yes I was wrong, the untracked
+cache can be repaired sometimes, not never repaired.
 
-I am not sure what you mean by "receive no input, sort nothing and
-produce no output".
-
-Ahh, OK, this is a funny one.  I think the original meant to do
-
-	grep ... | grep -v ... | sort >actual
-
-but it did
-
-	grep ... | grep -v ... >actual | sort
-
-instead by mistake.
-
-And we have two possible "fixes" for that mistake.  Either removing
-"|sort" (and replace its only effect, which is to hide brittleness
-of relying on exit status of the second grep, with something else)
-to declare that we do care about the order multiple warning messages
-are given by the last test in the script (by the way, the script is
-t5536, not t5556; the patch needs to be retitled), or keeping the "|
-sort" and move the redirection into ">actual" to the correct place,
-which is to follow through the intention of having that "sort" on
-the pipeline in the first place.  I somewhat favor the former in
-this particular case myself, but the preference is not a very strong
-one.
-
-Thanks.
-
+We do try to improve performance at "git checkout" and a couple other
+"slow" commands though (e.g. repair cache tree), perhaps we can do the
+same for untracked cache. Though the cost of updating untracked cache
+is potentially much higher than cache tree.
+-- 
+Duy
