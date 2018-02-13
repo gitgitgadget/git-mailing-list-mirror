@@ -2,99 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A12901F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 22:41:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6BCF1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 22:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965987AbeBMWlR convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 13 Feb 2018 17:41:17 -0500
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61637 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S965942AbeBMWlP (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Feb 2018 17:41:15 -0500
-X-AuditID: 1207440f-ab7ff70000000ab0-f7-5a836988470c
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 89.3A.02736.989638A5; Tue, 13 Feb 2018 17:41:13 -0500 (EST)
-Received: from mail-io0-f172.google.com (mail-io0-f172.google.com [209.85.223.172])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w1DMfB4l020094
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 17:41:12 -0500
-Received: by mail-io0-f172.google.com with SMTP id d13so23069634iog.5
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:41:11 -0800 (PST)
-X-Gm-Message-State: APf1xPCNK3qX5BUV6fbfokRnPoOriTBS9h9hInBI9fRs9RQlv6rjscza
-        R5btJDP0NLYcR5s4dt+LYK5gDJ1zpAs6Y07QVQ4=
-X-Google-Smtp-Source: AH8x225oTZqqRgCqFCw1rJ5eTMH+4NSM8hJ8fjebeOeh1vyoGeyf3OT+XmP95mOKWlwXKJ6+VfXswbRObXsxXTIB1FI=
-X-Received: by 10.107.27.138 with SMTP id b132mr3181012iob.205.1518561670927;
- Tue, 13 Feb 2018 14:41:10 -0800 (PST)
-MIME-Version: 1.0
-Reply-To: mhagger@alum.mit.edu
-Received: by 10.79.158.73 with HTTP; Tue, 13 Feb 2018 14:41:10 -0800 (PST)
-In-Reply-To: <CAOmC-AnXD=eSphS=TK4v72tSYDYEV2cgu_EsP4kgNGR=7yre8w@mail.gmail.com>
-References: <CAOmC-AncOZfAwowXLjwDbL9Bdx1+=RbXsrd72LzEBd2W-=LAQg@mail.gmail.com>
- <20180213160824.GA5203@sigill.intra.peff.net> <CAGZ79kYXStMQCxnVjpV7n7miZEDAw4moR+0JksgTaRqHJwgSqw@mail.gmail.com>
- <CAOmC-AnXD=eSphS=TK4v72tSYDYEV2cgu_EsP4kgNGR=7yre8w@mail.gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Tue, 13 Feb 2018 23:41:10 +0100
-X-Gmail-Original-Message-ID: <CAMy9T_FHhXMJTTHR3jg-SGab-1Rgy3FScMxeCUcUjnPfCZEJiw@mail.gmail.com>
-Message-ID: <CAMy9T_FHhXMJTTHR3jg-SGab-1Rgy3FScMxeCUcUjnPfCZEJiw@mail.gmail.com>
-Subject: Re: make git diff output easier to read - use better diff heuristics
-To:     =?UTF-8?B?zqPPgM+Nz4HOv8+CIM6SzrHOts6xzq/Ov8+C?= 
-        <sbazaios@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqNuZ2RxlMGW/vkXXlW4mB0aPz5vk
-        AhijuGxSUnMyy1KL9O0SuDL+PFzNUnCeu+JZ+13mBsYDnF2MnBwSAiYSG9deYuti5OIQEtjB
-        JLH26zsWkISQwFMmiTlf6yES/YwSszb0sXcxcgB1lEusmuwN0Vwkcf7yMjYIu1TizfPT7CA2
-        r4CgxMmZT6DmyEm82nCDEcL2klg7pwMszikQKDH/dTMzxPweJokpX1aAFbEJ6Eos6mlmArFZ
-        BFQlPl5+ywqxIFHifvNGZogFARJ3598AqxEW8JU4sGQm2GIRAU+JJzObmEHuZBZIlVjwrx4k
-        zCygKdG6/Tc7hK0tsWzha+YJjKKzkJw6C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+bl
-        pRbpmujlZpbopaaUbmKExAL/Dsau9TKHGAU4GJV4eDe8aooSYk0sK67MPcQoycGkJMrL/B8o
-        xJeUn1KZkVicEV9UmpNafIhRgoNZSYQ34T5QjjclsbIqtSgfJiXNwaIkzqu+RN1PSCA9sSQ1
-        OzW1ILUIJivDwaEkweuS0RwlJFiUmp5akZaZU4KQZuLgBBnOAzRcGKSGt7ggMbc4Mx0if4rR
-        nuPbrAdtzBx/9oLIb9OeA8kbL163MQux5OXnpUqJ815MB2oTAGnLKM2DmwxLc68YxYEeFeZN
-        AxnOA0yRcLNfAa1lAlqrq90IsrYkESEl1cC4fMvCw+t2Z0Z6MXrHTrhwsWitwMrwwoInvKk3
-        tTcxRy4NXVrTs09o9cENH3P5U2yvZ/zSrF1dNmmSToTs/Hmce6OZ/jO8X7b2R4f8STaf7wpV
-        z+Q+fJ0/IapQObplhg7zwWfvGW8ftovXstp3nrXk46TDx1fcsbZimPLtZdr2mTPu7H+7jedZ
-        tRJLcUaioRZzUXEiABl4jz1OAwAA
+        id S965988AbeBMWtc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 17:49:32 -0500
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:42804 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965942AbeBMWtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 17:49:31 -0500
+Received: by mail-pg0-f52.google.com with SMTP id y8so943883pgr.9
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:49:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=RpmGAbDR70iWp4cF2j7DUEl/+I1/ZrveohNEJim8jbI=;
+        b=YtjSVhZG8n2j5JDdX2r9d67ZngCjuRBBLhSxulC7pNfPX2dF8mr1hI2i7Te3LafEjy
+         DjDfxP3Q1ENssjxk1mfvIbAGVGmNqLiiXol2qrqB+8sdg5dnx0dWC67HZ1gU1OE98h5Z
+         ugksuI9IVNng1XpQOjMwkg55lIrOz9Aee6Mq1XYwfVQ5I08sP1Zm9+9vswGTrJtNWSgG
+         yUBBrsXP/k2idBTNL3/7+OvaZyKdfFZEIl1+HpPrPrrViNwaE+OXoQ9tnT3L4oCSqY3y
+         w70ZY/RddEGvaR/zdKrsMA9KZohI+npHl3yKxAvFfTMNskmbyGrBeOfgAgX3UJCNGo/5
+         sW7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=RpmGAbDR70iWp4cF2j7DUEl/+I1/ZrveohNEJim8jbI=;
+        b=gWV2V9QLoq6X1/KTsBmKVKvnlD8GiqcH8++gk7rlWhQdFoKqUoqdJ2lB2fBfVILvwC
+         qoM0yOb7kkr2WZ2gdKyvhebXGWimQ7aw+sfzMs54WEV6z3pNm+ZVBZgFRIU85dMNmPJL
+         x4P9FCCTkE0jjCGst5MSod2Aln1NttThYpOjKgsyMwpassfyhX9TDM4kpq8nDJeChnrh
+         +jOtLlmD6xuNFbiTfvM8C1wDhjBN/DHJz/gxTmTpt1B8d2D0PzIKejrFTstSHJsECeuD
+         PRH1CSjme/ZxuptpU0o8esPAJQvrcngZ60ARmT0YuCDeWdW+admHsZl2xhV/urKhauIS
+         JImw==
+X-Gm-Message-State: APf1xPB0Wq0LBPuCl0CZb5dziIq6uHYqKK6y428RVf8pSt+uPJUXygHF
+        PM9+yyRQdyjtEiIAicNOythvrQ==
+X-Google-Smtp-Source: AH8x225/aLUjXMb4bLJ63J4ZvhN9xSTnMJgIXW6UlCOem/WZYEOO0bSez7KmrNk533LwBF7OFO44OQ==
+X-Received: by 10.99.67.133 with SMTP id q127mr2182802pga.365.1518562170992;
+        Tue, 13 Feb 2018 14:49:30 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id y63sm10832273pff.90.2018.02.13.14.49.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Feb 2018 14:49:30 -0800 (PST)
+Date:   Tue, 13 Feb 2018 14:49:29 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        gitster@pobox.com, peff@peff.net, sbeller@google.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v3 08/14] commit-graph: implement 'git-commit-graph
+ clear'
+Message-Id: <20180213144929.174b7e3304ab592d2f8c0aea@google.com>
+In-Reply-To: <1518122258-157281-9-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-9-git-send-email-dstolee@microsoft.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 7:25 PM, Σπύρος Βαζαίος <sbazaios@gmail.com> wrote:
-> While I din't have the experience to express an opinion on this
-> matter, I have to say that the --no-indent-heuristic that Jeff
-> suggested worked great.
-> There were more than a handful of cases that this issue happened in my
-> diff file (all were the same: #endif followed by #ifdef).
-> Oh, and the language is C indeed.
+On Thu,  8 Feb 2018 15:37:32 -0500
+Derrick Stolee <stolee@gmail.com> wrote:
 
-The "indent heuristic" algorithm that Git now uses by default is
-nothing more than that—a heuristic—so it can be fooled. It bases its
-decision on the locations of blank lines and the indentations of
-non-blank lines. In the vast majority of cases it gives the same or
-better results than the old algorithm, but there are some cases, like
-yours, where it gives aesthetically less pleasing (though still
-correct) results.
+> Teach Git to delete the current 'graph_head' file and the commit graph
+> it references. This is a good safety valve if somehow the file is
+> corrupted and needs to be recalculated. Since the commit graph is a
+> summary of contents already in the ODB, it can be regenerated.
 
-The algorithm usually handles C code well, but it tends to be confused
-by preprocessor directives, because they are not indented like typical
-code. It might be possible to tweak the weights to get it to handle
-preprocessor directives better, but that causes it to do worse on
-other, more common things like Python code (where blocks are preceded
-but not followed by a line with lesser indentation).
+Spelling of graph-head (hyphen, not underscore).
 
-Doing significantly better probably would require some amount of
-language-awareness, but that's a bigger job than I was willing to take
-on.
+I'm not sure of the usefulness of this feature - if the graph is indeed
+corrupt, the user can just be instructed to delete graph-head (not even
+the commit graph it references, since when we create a new graph-head,
+--delete-expired will take care of deleting the old one).
 
-Michael
+>  extern char *get_graph_head_filename(const char *pack_dir);
+> +extern struct object_id *get_graph_head_hash(const char *pack_dir,
+> +					     struct object_id *hash);
+>  extern char* get_commit_graph_filename_hash(const char *pack_dir,
+>  					    struct object_id *hash);
+
+This file is starting to need documentation - in particular, the
+difference between get_graph_head_hash() and
+get_commit_graph_filename_hash() is not clear.
