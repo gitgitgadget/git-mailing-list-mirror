@@ -2,115 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B1131F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 19:23:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA161F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 19:26:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965586AbeBMTXG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 14:23:06 -0500
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:44562 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965313AbeBMTXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 14:23:05 -0500
-Received: by mail-yw0-f178.google.com with SMTP id y65so1873419ywg.11
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 11:23:05 -0800 (PST)
+        id S965594AbeBMT01 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 14:26:27 -0500
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:34951 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965315AbeBMT00 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 14:26:26 -0500
+Received: by mail-oi0-f67.google.com with SMTP id e15so14723518oiy.2
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 11:26:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+5WrPJNOigj3pjUoUOJC/ZpdQx96iUq7aD8ILhQUdIg=;
-        b=T9pddz0qgqiA06LeiPbhiNLJ3j8teARGM4/9S+wAcKU/ePzOkaZwGSG4XNZu9l8yD/
-         egOGXYojr3WXoUFBrEuH4NJuCITTuWxrctAQM5vh6TzjUPbhPxZy0CGZpcuE1qbXhvM4
-         qhaWiOY9c/W/lET3QW+AzbdCNi73kIXzSk6q1D8iUGiJ8a7z0lEJNH6wpehdxoUMYZiD
-         3s27ndovysROFlaCRiAgCdCNNEH/hdfEdOpVpszxtfugN2ohzjXWW01KSLPnQ/j9bh+a
-         H1AE+KBTxjOxD4CyM7B6z33ACZfEA/AR7363EkpKt4sMtxj3dn/2zpy3Adk7P1RkB2dJ
-         gsNQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FVkoS3M5/rsk77Tno4/LzXswJPdWC0elBAiE7UJ9dX8=;
+        b=f2YL5a5fXYpLFrDAqf1GNkwO/G4sC0dqgDf+CLKC/zIbC7yKmLLptlb75xZovOyYey
+         IxM6spZuZK+FGkBTTcGnqMLdkiuZ8tPVxDsTKibxM3FK7LHeWYTd+ZuA3Fs6AyTThJsg
+         GFmrXTQ9wIHANL95WXh35KJXtWZjmwQFA1IsfpoH8V6rnRgaL0bbwU9UOLJywmdG9ZMN
+         iUqUtetGnxABAFPvV/JAIqZybJFyZeqnS2FCJZwkiD0CMeN7mGfNuz5qxvdAJsb9+1IM
+         dls44TSX9BRL73AkDDNcVtUikONxubuMZP9wPwA2hidB7VTdlrau53xgDKkHLDR5P4IG
+         sPqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+5WrPJNOigj3pjUoUOJC/ZpdQx96iUq7aD8ILhQUdIg=;
-        b=lxRKnEutphUmwWiI/hGWpvMHxKJbz3jhizt4O5TcXsv0sZRzkPlOri5oxgimIXYk4f
-         ucJ1T9+2bz1VzfDQR38NaDKXmoO1fe5LVEiNgbSSUnKdCPpOhP0v9qwxsB9GMiplV4I1
-         WjO3cFCeb7qoO/V7F2ajy+VYeFSD/FiHRJr1kxHIFJykc5GCfS3mpWRBhp1k7gHH46th
-         O068SoLodMjneZnDruF5W1Jezaljq1DiDl/6+qSe9okOICdngLQvVcxZtzDx/Uja25a9
-         nCLE+18a5pGCkw5EiNEbEdgQi+Y5ubjy4US2Zt0Ty7DE4/O+jT8dxXhj0CphEzRC3SIR
-         fGyg==
-X-Gm-Message-State: APf1xPA4scdzkotdEhA+UKxx3YvZmvHfKLOHsqNqamR0ysYuO8qFuS/W
-        vEo/E5hWk6sc6UqX/Qru+bnnT7R6NLWlY/FipWlOuQ==
-X-Google-Smtp-Source: AH8x224pNdxb8FJEJbGb/Q20l7DiEG+zxCPnFvkVzZx7A0++VsEhdTy2VbLpcRqanpM2Qfp+G4mWKYBSZCbdazNw2c4=
-X-Received: by 10.37.180.65 with SMTP id c1mr1570572ybg.438.1518549784805;
- Tue, 13 Feb 2018 11:23:04 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.37.207.203 with HTTP; Tue, 13 Feb 2018 11:23:04 -0800 (PST)
-In-Reply-To: <xmqq7ergra2y.fsf@gitster-ct.c.googlers.com>
-References: <20180213012241.187007-1-sbeller@google.com> <20180213114903.GA21015@ash>
- <CACsJy8C8+VnjrhEh3o36GUttZXmfiKxqjzS=2LzmfZKQjogojQ@mail.gmail.com>
- <CAGZ79kbmAkN5EpW1hzW-FFdR74c-qXJc5aKZX0ff9bU0gxMRqQ@mail.gmail.com> <xmqq7ergra2y.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 13 Feb 2018 11:23:04 -0800
-Message-ID: <CAGZ79kZOq+_NOOabBUtPJ_zKNb_vdais70F6VzVFoSn5B5A4fQ@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FVkoS3M5/rsk77Tno4/LzXswJPdWC0elBAiE7UJ9dX8=;
+        b=GwgZ+8Q2Am5EwfXItLYxwMjcLLFzxWw0v1CXI1Deg+cEZ8aMVmniF7MB2Wn+ipPhct
+         JcYHcPdc1eKqU97ZfUp2jMUh7lEIJnevvv7SLNjx7DPzmNosYs+kxXHVpZEs7WQMd7nF
+         vn/yryXOE3XY0HH22vE0DjX0ZDiRV3KaTzaJlvuTingyknYhgFJ6nfHppT0mYpkdgisl
+         q6CeF0NzgxLkyelmcrsreeLUej/eruWLG9Brs6PiPESal/yx4UMs9D5GZB3zh7mf1I21
+         Odiuh0vOwCqb/8qtT4KQdAwO1GGGVF1rwkWqG+GIG25Sfux7JrLu/3dZ21I5BoEUw4lQ
+         LfMA==
+X-Gm-Message-State: APf1xPCdGDcXG/xkW80hehnyUYGZlkajNZyC5j1UCBXluZIowVOIxqbt
+        vmSdnqzlMbME65jtbVrPn5az49yx
+X-Google-Smtp-Source: AH8x2247e2x4cfYPABaU7jadPEuZ402UwH3gA0rM94t6r7yCzICZUHeGL8D5BpksT2mjczh5A/u9UA==
+X-Received: by 10.202.0.144 with SMTP id 138mr1427437oia.331.1518549985449;
+        Tue, 13 Feb 2018 11:26:25 -0800 (PST)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id x47sm6604548oth.62.2018.02.13.11.26.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Feb 2018 11:26:24 -0800 (PST)
+Date:   Tue, 13 Feb 2018 11:26:21 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com,
+        sunshine@sunshineco.com, jonathantanmy@google.com
 Subject: Re: [PATCH 00/26] Moving global state into the repository object
  (part 1)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <20180213192621.GC42272@aiede.svl.corp.google.com>
+References: <20180213012241.187007-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180213012241.187007-1-sbeller@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 10:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Hi,
+
+Stefan Beller wrote:
+
+> This is a real take on the first part of the recent RFC[1].
 >
->> Oh, that is an interesting perspective. Here is how I arrived at the opposite
->> conclusion initially: Searching for 'ignore_env' shows that we care about it
->> as well for the index and graft paths, which are not the object store, hence
->> it would be better kept in the repository. (The alternative would be to
->> duplicate it into the raw object store, but I do not like data duplication)
->>
->> But maybe it is better to duplicate this one bit instead of passing through
->> a larger scoped object.
->
-> If a larger scoped repository refers to a smaller scoped
-> object-store, is there still a need to duplicate that bit, instead
-> of referring to the bit the smaller scoped one has when asking about
-> the bit in the larger scoped one?
+> Jonathan Tan suggested[2] that "sha1_loose_object_info to handle arbitrary repositories"
+> might be a good breaking point for a first part at that RFC at patch 38.
+> This series is smaller and contains only 26 patches as the patches in the big
+> RFC were slightly out of order.
 
-No (in theory). But in practice it may be worthwhile:
+Thanks.  This looks like a nice reviewable series, so I'm happy to see
+it broken out.
 
-    "What's the value of this ref?"
+[...]
+> Comments in the early range of that RFC were on 003 where Junio pointed out
+> that the coccinelle patch ought to be not in contrib/coccinelle, so I put it
+> in a sub directory there, as 'make coccicheck' doesn't traverse subdirs.
 
-    "Oh let me check the ignore_env bit that happens
-    to live in the object store first."
+Can you say a little more about this?  Was the problem that the
+semantic patch wasn't idempotent, that it was too slow to run, or
+something else?
 
-would be super confusing to me.
+If we're including the semantic patch for reference but never running
+it, I think I'd prefer it to go in the commit message.  But if it's
+useful to run then we should make it idempotent so it can go in
+contrib/coccinelle.
 
-> I am not sure if these "do not look at environment variables" is an
-> attribute of these entities---it sounds more like an attribute for
-> each invocation of an operation, i.e. "I want to learn where the
-> index is but would ignore GIT_INDEX environment for this particular
-> query." and "What's the value of this ref?  Please honor the
-> common-dir environment during this query".
+[...]
+> Duy suggested that we shall not use the repository blindly, but should carefully
+> examine whether to pass on an object store or the refstore or such[4], which
+> I agree with if it makes sense. This series unfortunately has an issue with that
+> as I would not want to pass down the `ignore_env` flag separately from the object
+> store, so I made all functions that only take the object store to have the raw
+> object store as the first parameter, and others using the full repository.
 
-That sounds like we want to have a configset struct eventually.
+I think I want to push back on this a little.
 
-For now the ignore_env bit lives in the repository, as that helps
-when working with submodules, when reading its comments.
-Unfortunately 359efeffc1 (repository: introduce the repository
-object, 2017-06-22) did not reason about the existence of the ignore_env
-flag in its commit message.
+The advantage of a function taking e.g. an object_store as an argument
+instead of a repository is that it increases its flexibility, since it
+allows callers that do not have access to a repository to call it.  The
+disadvantage is also that it increases the flexibility without any
+callers benefitting from that:
 
-> So from that point of view, it may not matter where the "bit" lives,
-> among repository, object-store, or ref-store.
+ 1. It ties us to assumptions from today.  If e.g. an object access in
+    the future starts relying on some other information from the
+    repository (e.g. its config) then we'd have to either add a
+    back-pointer from the object store to its repository or add
+    additional arguments for that additional data at that point.
 
-It matters on the scale of confusing the developer?
+    If all callers already have a repository, it is simpler to pass
+    that repository as context so that we have the flexibility to make
+    more use of it later.
 
-Stefan
+ 2. It complicates the caller.  Instead of consistently passing the
+    same repository argument as context to functions that access that
+    repository, the caller would have to pull out relevant fields like
+    the object store from it.
+
+ 3. It prevents us from making opportunistic use of other information
+    from the repository, such as its name for use in error messages.
+
+In lower-level funcitons that need to be usable by callers without a
+repository (e.g. to find packfiles in an alternate) it makes sense to
+not pass a repository, but without such a use case in mind I don't
+think it needs to be a general goal.
+
+To put it another way, most callers do not *care* whether they are
+working with a repository's object store, ref database, or some other
+aspect of the repository.  They just know they want to e.g. read an
+object from this repository.
+
+It's similar to how FILE * works: some operations rely on the buffer
+the FILE * manages and some other operations only rely on the
+underlying file descriptor, but using the FILE * consistently provides
+a clean abstraction that generally makes life easier.
+
+> Eric Sunshine brought up memory leaks with the RFC, and I would think to
+> have plugged all holes.
+
+Yay, thank you!
+
+I'll try to find time to look at the patches in detail soon, but no
+promises (i.e. if someone else reviews them first, then even better
+;-)).
+
+Sincerely,
+Jonathan
