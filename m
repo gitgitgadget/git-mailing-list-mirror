@@ -2,94 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20B0A1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 22:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A12901F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 22:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966003AbeBMWi4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 17:38:56 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:37933 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965942AbeBMWiz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 17:38:55 -0500
-Received: by mail-pg0-f65.google.com with SMTP id l24so932131pgc.5
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AfBmDXOufAjo4iE7MJaT/J3VwBoP5ecs+Dj9gyuVemY=;
-        b=RpkFpFo0Sg1urGsfqxomAHDU275Imc8hJ+KKedLf2zK1XPDGrfduzokGVVWS6CrOpX
-         /yyQPa4GI1NhQoxeRyhzWssxQhibdEJcOyqyNrnt1nnIYVzl0U0tuzD0TqEj3+B/6nVQ
-         6/dILqWdNNrLlAOLyuRqceobO5RdQmxXy3QUBiz2fbA3s3ZhU+feLX8CVw1Tvknoo+Mf
-         GxldsoG6xXwRPHqWlno2yJScYEQNvMYQbKMx50ypWmUoUqL5Zznm1SBwX7ed+EkjmbTT
-         41AazYa7APiDlmyKTfxc6226J6QHTwBSaI3xpBCqORs1iCIzYUgf9vBO1ucuR0PguUkN
-         WjtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AfBmDXOufAjo4iE7MJaT/J3VwBoP5ecs+Dj9gyuVemY=;
-        b=G97rc7brbazQ4j9PqID26v4QgP5LFRcxQ0Sk1aIj2Ns+/UCDird7UjEqDBpjZWTnRW
-         LOd/cVNJLTMjNcN9qqm2LuLTF9xQDHl4yjOA+8zei/Nb+PdqJm/uoAB6e86Y8Epyh4F4
-         DauHErPG+u77TM6kUt5jmnl4diRvMFAYOJc+zanQdcqrb6sBJRYI7THAe3c15LpssKF3
-         ZdR6yoCPWdjVzLz9Ov4P/3keRHbxX65dZIFUaPKhDrpUm4kuO7oeDdre4ydF+wPGA2Fi
-         pMtoHC8HTFsFU8CuUVqq4yTSojuAgnyqkIMtJ+M7PIrvM0+KCRvPeDai8S1V/gdK1BfX
-         UDbQ==
-X-Gm-Message-State: APf1xPBC6NLrWHOB8w2t1X6GNrsZyNM1yTbKjxku3i0QW/i65do0R/JU
-        asHdqZYfm8wVdhwsS6fyAXChOLuqIXk=
-X-Google-Smtp-Source: AH8x225YN6E1AoUESbyysgTd4XcR1hJAs9bt55F6Z14nfKqqNdhtwKXJ06j3g3c0C4/1elGckcEDSA==
-X-Received: by 10.98.137.213 with SMTP id n82mr2664739pfk.175.1518561535153;
-        Tue, 13 Feb 2018 14:38:55 -0800 (PST)
-Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
-        by smtp.gmail.com with ESMTPSA id p14sm25441655pgu.7.2018.02.13.14.38.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 14:38:54 -0800 (PST)
-Date:   Tue, 13 Feb 2018 14:38:53 -0800
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
-        gitster@pobox.com, peff@peff.net, sbeller@google.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH v3 07/14] commit-graph: update graph-head during write
-Message-Id: <20180213143853.00cbd0fd2a17131beb2e08b7@google.com>
-In-Reply-To: <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
-        <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
-X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S965987AbeBMWlR convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 13 Feb 2018 17:41:17 -0500
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:61637 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S965942AbeBMWlP (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Feb 2018 17:41:15 -0500
+X-AuditID: 1207440f-ab7ff70000000ab0-f7-5a836988470c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 89.3A.02736.989638A5; Tue, 13 Feb 2018 17:41:13 -0500 (EST)
+Received: from mail-io0-f172.google.com (mail-io0-f172.google.com [209.85.223.172])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id w1DMfB4l020094
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 17:41:12 -0500
+Received: by mail-io0-f172.google.com with SMTP id d13so23069634iog.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:41:11 -0800 (PST)
+X-Gm-Message-State: APf1xPCNK3qX5BUV6fbfokRnPoOriTBS9h9hInBI9fRs9RQlv6rjscza
+        R5btJDP0NLYcR5s4dt+LYK5gDJ1zpAs6Y07QVQ4=
+X-Google-Smtp-Source: AH8x225oTZqqRgCqFCw1rJ5eTMH+4NSM8hJ8fjebeOeh1vyoGeyf3OT+XmP95mOKWlwXKJ6+VfXswbRObXsxXTIB1FI=
+X-Received: by 10.107.27.138 with SMTP id b132mr3181012iob.205.1518561670927;
+ Tue, 13 Feb 2018 14:41:10 -0800 (PST)
+MIME-Version: 1.0
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.79.158.73 with HTTP; Tue, 13 Feb 2018 14:41:10 -0800 (PST)
+In-Reply-To: <CAOmC-AnXD=eSphS=TK4v72tSYDYEV2cgu_EsP4kgNGR=7yre8w@mail.gmail.com>
+References: <CAOmC-AncOZfAwowXLjwDbL9Bdx1+=RbXsrd72LzEBd2W-=LAQg@mail.gmail.com>
+ <20180213160824.GA5203@sigill.intra.peff.net> <CAGZ79kYXStMQCxnVjpV7n7miZEDAw4moR+0JksgTaRqHJwgSqw@mail.gmail.com>
+ <CAOmC-AnXD=eSphS=TK4v72tSYDYEV2cgu_EsP4kgNGR=7yre8w@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Tue, 13 Feb 2018 23:41:10 +0100
+X-Gmail-Original-Message-ID: <CAMy9T_FHhXMJTTHR3jg-SGab-1Rgy3FScMxeCUcUjnPfCZEJiw@mail.gmail.com>
+Message-ID: <CAMy9T_FHhXMJTTHR3jg-SGab-1Rgy3FScMxeCUcUjnPfCZEJiw@mail.gmail.com>
+Subject: Re: make git diff output easier to read - use better diff heuristics
+To:     =?UTF-8?B?zqPPgM+Nz4HOv8+CIM6SzrHOts6xzq/Ov8+C?= 
+        <sbazaios@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqNuZ2RxlMGW/vkXXlW4mB0aPz5vk
+        AhijuGxSUnMyy1KL9O0SuDL+PFzNUnCeu+JZ+13mBsYDnF2MnBwSAiYSG9deYuti5OIQEtjB
+        JLH26zsWkISQwFMmiTlf6yES/YwSszb0sXcxcgB1lEusmuwN0Vwkcf7yMjYIu1TizfPT7CA2
+        r4CgxMmZT6DmyEm82nCDEcL2klg7pwMszikQKDH/dTMzxPweJokpX1aAFbEJ6Eos6mlmArFZ
+        BFQlPl5+ywqxIFHifvNGZogFARJ3598AqxEW8JU4sGQm2GIRAU+JJzObmEHuZBZIlVjwrx4k
+        zCygKdG6/Tc7hK0tsWzha+YJjKKzkJw6C0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+bl
+        pRbpmujlZpbopaaUbmKExAL/Dsau9TKHGAU4GJV4eDe8aooSYk0sK67MPcQoycGkJMrL/B8o
+        xJeUn1KZkVicEV9UmpNafIhRgoNZSYQ34T5QjjclsbIqtSgfJiXNwaIkzqu+RN1PSCA9sSQ1
+        OzW1ILUIJivDwaEkweuS0RwlJFiUmp5akZaZU4KQZuLgBBnOAzRcGKSGt7ggMbc4Mx0if4rR
+        nuPbrAdtzBx/9oLIb9OeA8kbL163MQux5OXnpUqJ815MB2oTAGnLKM2DmwxLc68YxYEeFeZN
+        AxnOA0yRcLNfAa1lAlqrq90IsrYkESEl1cC4fMvCw+t2Z0Z6MXrHTrhwsWitwMrwwoInvKk3
+        tTcxRy4NXVrTs09o9cENH3P5U2yvZ/zSrF1dNmmSToTs/Hmce6OZ/jO8X7b2R4f8STaf7wpV
+        z+Q+fJ0/IapQObplhg7zwWfvGW8ftovXstp3nrXk46TDx1fcsbZimPLtZdr2mTPu7H+7jedZ
+        tRJLcUaioRZzUXEiABl4jz1OAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu,  8 Feb 2018 15:37:31 -0500
-Derrick Stolee <stolee@gmail.com> wrote:
+On Tue, Feb 13, 2018 at 7:25 PM, Σπύρος Βαζαίος <sbazaios@gmail.com> wrote:
+> While I din't have the experience to express an opinion on this
+> matter, I have to say that the --no-indent-heuristic that Jeff
+> suggested worked great.
+> There were more than a handful of cases that this issue happened in my
+> diff file (all were the same: #endif followed by #ifdef).
+> Oh, and the language is C indeed.
 
-> It is possible to have multiple commit graph files in a pack directory,
-> but only one is important at a time. Use a 'graph_head' file to point
-> to the important file. Teach git-commit-graph to write 'graph_head' upon
-> writing a new commit graph file.
+The "indent heuristic" algorithm that Git now uses by default is
+nothing more than that—a heuristic—so it can be fooled. It bases its
+decision on the locations of blank lines and the indentations of
+non-blank lines. In the vast majority of cases it gives the same or
+better results than the old algorithm, but there are some cases, like
+yours, where it gives aesthetically less pleasing (though still
+correct) results.
 
-You should probably include the rationale for a special "graph_head"
-file that you describe here [1] in the commit message.
+The algorithm usually handles C code well, but it tends to be confused
+by preprocessor directives, because they are not indented like typical
+code. It might be possible to tweak the weights to get it to handle
+preprocessor directives better, but that causes it to do worse on
+other, more common things like Python code (where blocks are preceded
+but not followed by a line with lesser indentation).
 
-[1] https://public-inbox.org/git/99543db0-26e4-8daa-a580-b618497e48ba@gmail.com/
+Doing significantly better probably would require some amount of
+language-awareness, but that's a bigger job than I was willing to take
+on.
 
-> +char *get_graph_head_filename(const char *pack_dir)
-> +{
-> +	struct strbuf fname = STRBUF_INIT;
-> +	strbuf_addstr(&fname, pack_dir);
-> +	strbuf_addstr(&fname, "/graph-head");
-> +	return strbuf_detach(&fname, 0);
-
-NULL, not 0.
-
-> +}
+Michael
