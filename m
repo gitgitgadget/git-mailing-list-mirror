@@ -2,86 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6631F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 22:27:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20B0A1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 22:38:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965949AbeBMW1g (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 17:27:36 -0500
-Received: from mail-qk0-f180.google.com ([209.85.220.180]:46512 "EHLO
-        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965900AbeBMW1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 17:27:35 -0500
-Received: by mail-qk0-f180.google.com with SMTP id g129so9845760qkb.13
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:27:35 -0800 (PST)
+        id S966003AbeBMWi4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 17:38:56 -0500
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:37933 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965942AbeBMWiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 17:38:55 -0500
+Received: by mail-pg0-f65.google.com with SMTP id l24so932131pgc.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 14:38:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gnustavo-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=c1b0V+gsOheO3KXOXNiEW6c6T5Wv1zMQAQkQPc8O2BI=;
-        b=fuoK2POmchBHqlV8bJNCW92LGP9D3fOE2ERVGWE2mxdA/WXrUeqLivX8N+Tvd51cSi
-         FkaoQp7gzUh4CgLQhLPV1jCVtY6Wtisorzmnfejhivm4JzQJiR5yd0+KFqUTwWAr1q5v
-         GO55uOBsOJgqsWf5FWEGDsBLEZHmHAZatxR/qJvXpMfBh6L/glhhIXLKL+k+xNjFJe6Q
-         kK2pmXE9db1m43Bk4Ok0IlPjYztC/sAf2zCA7DDvKA/7UW1IliI/xJr1CPAdphAkq74K
-         obX4cWB6hNOCjz85NP3Gaae8C68BX5VyyiixQKJAitZE1qvmUdVyF2IDUaDFRa/9pafq
-         YcKA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=AfBmDXOufAjo4iE7MJaT/J3VwBoP5ecs+Dj9gyuVemY=;
+        b=RpkFpFo0Sg1urGsfqxomAHDU275Imc8hJ+KKedLf2zK1XPDGrfduzokGVVWS6CrOpX
+         /yyQPa4GI1NhQoxeRyhzWssxQhibdEJcOyqyNrnt1nnIYVzl0U0tuzD0TqEj3+B/6nVQ
+         6/dILqWdNNrLlAOLyuRqceobO5RdQmxXy3QUBiz2fbA3s3ZhU+feLX8CVw1Tvknoo+Mf
+         GxldsoG6xXwRPHqWlno2yJScYEQNvMYQbKMx50ypWmUoUqL5Zznm1SBwX7ed+EkjmbTT
+         41AazYa7APiDlmyKTfxc6226J6QHTwBSaI3xpBCqORs1iCIzYUgf9vBO1ucuR0PguUkN
+         WjtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=c1b0V+gsOheO3KXOXNiEW6c6T5Wv1zMQAQkQPc8O2BI=;
-        b=Jhqy7vK3W9cZhgON+z9LqAPdM1H0cnAq8KDSbwY4UK1dfgVWTDx++AbPCvg1yCE1oc
-         vnyoRm1Nq8X0WUi2iSidtbGbKl5K/Hi2uc4a0F+BkFjbIJUd23LwIUkk8nsQS6/wvrf/
-         Ajnk4RkL6JJRC32SK9eKbAKhpAqiRBfBQ6EvMjmXUd6YiS7xZaPyKWAM3sB5cakxll4E
-         DgeWfP2MGgMvMfZAtAcn2HfifRMsnelzBFUpfCixT38i1nqkVpmcNiQJh4OIi5W+ecAN
-         /isbow11inu10P1L0ob0mt2q7vVevGoxhSV5fBPOp3WRaFKjG38E5t7hoauZrJB7MX98
-         8+6Q==
-X-Gm-Message-State: APf1xPAlSariwmH8AGYIdPPM6A0U5lHkmkRY8RQwLcqDdrFapTOsv78/
-        JIkYCE68def8YIjQeaL6p21AFsCjDJ7jXzYQFoOx9kuuaEI=
-X-Google-Smtp-Source: AH8x225FItFdNnh02ClizRVUDovC4strigtvpQZUlAB9Aspy7l1lcQYAJ3kuviHtlF/qTcXoM6XoSq4a8Sz6G45Io5Y=
-X-Received: by 10.55.24.34 with SMTP id j34mr4165266qkh.294.1518560854267;
- Tue, 13 Feb 2018 14:27:34 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.140.107.230 with HTTP; Tue, 13 Feb 2018 14:27:13 -0800 (PST)
-From:   Gustavo Chaves <gustavo@gnustavo.com>
-Date:   Tue, 13 Feb 2018 20:27:13 -0200
-Message-ID: <CAPx58qqv84+i0JbdsVzFqWB=bRDecWHxss8frD4=nWOsFj-NPg@mail.gmail.com>
-Subject: Why git-revert doesn't invoke the pre-commit and the commit-msg hooks?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=AfBmDXOufAjo4iE7MJaT/J3VwBoP5ecs+Dj9gyuVemY=;
+        b=G97rc7brbazQ4j9PqID26v4QgP5LFRcxQ0Sk1aIj2Ns+/UCDird7UjEqDBpjZWTnRW
+         LOd/cVNJLTMjNcN9qqm2LuLTF9xQDHl4yjOA+8zei/Nb+PdqJm/uoAB6e86Y8Epyh4F4
+         DauHErPG+u77TM6kUt5jmnl4diRvMFAYOJc+zanQdcqrb6sBJRYI7THAe3c15LpssKF3
+         ZdR6yoCPWdjVzLz9Ov4P/3keRHbxX65dZIFUaPKhDrpUm4kuO7oeDdre4ydF+wPGA2Fi
+         pMtoHC8HTFsFU8CuUVqq4yTSojuAgnyqkIMtJ+M7PIrvM0+KCRvPeDai8S1V/gdK1BfX
+         UDbQ==
+X-Gm-Message-State: APf1xPBC6NLrWHOB8w2t1X6GNrsZyNM1yTbKjxku3i0QW/i65do0R/JU
+        asHdqZYfm8wVdhwsS6fyAXChOLuqIXk=
+X-Google-Smtp-Source: AH8x225YN6E1AoUESbyysgTd4XcR1hJAs9bt55F6Z14nfKqqNdhtwKXJ06j3g3c0C4/1elGckcEDSA==
+X-Received: by 10.98.137.213 with SMTP id n82mr2664739pfk.175.1518561535153;
+        Tue, 13 Feb 2018 14:38:55 -0800 (PST)
+Received: from twelve3.svl.corp.google.com ([2620:0:100e:422:ffac:c1d4:4bf7:bb93])
+        by smtp.gmail.com with ESMTPSA id p14sm25441655pgu.7.2018.02.13.14.38.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Feb 2018 14:38:54 -0800 (PST)
+Date:   Tue, 13 Feb 2018 14:38:53 -0800
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, git@jeffhostetler.com,
+        gitster@pobox.com, peff@peff.net, sbeller@google.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v3 07/14] commit-graph: update graph-head during write
+Message-Id: <20180213143853.00cbd0fd2a17131beb2e08b7@google.com>
+In-Reply-To: <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+        <1518122258-157281-8-git-send-email-dstolee@microsoft.com>
+X-Mailer: Sylpheed 3.6.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using strace I noticed that git-revert invokes only two hooks:
-- prepare-commit-msg
-- post-commit
+On Thu,  8 Feb 2018 15:37:31 -0500
+Derrick Stolee <stolee@gmail.com> wrote:
 
-But git-commit invoke these four:
-- pre-commit
-- prepare-commit-msg
-- commit-msg
-- post-commit
+> It is possible to have multiple commit graph files in a pack directory,
+> but only one is important at a time. Use a 'graph_head' file to point
+> to the important file. Teach git-commit-graph to write 'graph_head' upon
+> writing a new commit graph file.
 
-Since git-revert produces a commit, why doesn't it invoke the same
-hooks as git-commit?
+You should probably include the rationale for a special "graph_head"
+file that you describe here [1] in the commit message.
 
-I couldn't find any discussing about this in the list or elsewhere. So
-I'm asking here.
+[1] https://public-inbox.org/git/99543db0-26e4-8daa-a580-b618497e48ba@gmail.com/
 
-I ended up researching this when I was implementing a hook to detect
-and deny commits which revert merge-commits, since they are
-troublesome (https://www.kernel.org/pub/software/scm/git/docs/howto/revert-a-faulty-merge.html).
-I tried to implement it as a commit-msg hook to search for the string
-"This reverts commit SHA-1" in the commit message. But git-revert
-doesn't invoke the commit-msg hook.
+> +char *get_graph_head_filename(const char *pack_dir)
+> +{
+> +	struct strbuf fname = STRBUF_INIT;
+> +	strbuf_addstr(&fname, pack_dir);
+> +	strbuf_addstr(&fname, "/graph-head");
+> +	return strbuf_detach(&fname, 0);
 
-So, for now I implemented my check as a pre-receive hook. But I find
-it useful to have all pre-receive checks implemented also as a
-pre-commit or a commit-msg hook so that I can detect problems at
-commit time instead of only at push time.
+NULL, not 0.
 
--- 
-Gustavo Chaves
+> +}
