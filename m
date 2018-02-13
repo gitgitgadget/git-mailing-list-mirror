@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15891F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E0E21F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 01:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933233AbeBMBXQ (ORCPT <rfc822;e@80x24.org>);
+        id S933164AbeBMBXp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 20:23:45 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:43117 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933161AbeBMBXQ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Feb 2018 20:23:16 -0500
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:38821 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933195AbeBMBXP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 20:23:15 -0500
-Received: by mail-pg0-f66.google.com with SMTP id l24so2708473pgc.5
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:23:15 -0800 (PST)
+Received: by mail-pl0-f66.google.com with SMTP id f4so5854358plr.10
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:23:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GRevDkERx7jOdqGtG/UP6J54m+EB3oM8Bt6vEHkFzSs=;
-        b=Xhw1OVsQLcMka3/VvaTql80d4ECY4Zz0QpH3nuRh5mCxBm2RCpZdrBEC0DCmbEDpgi
-         9ySiZsxhEAh6KSXH/KUqkuJSG/OIjQ9sgkbYzwYKhyEPG8AAWTo0PEONQH6VX9vQT4RF
-         WZd/GkLUoJWGOukhqVJW17T50lo6z/DaTbuSszFbSDX8/mrfV7hCUv+kag5ELk2rakjB
-         MrRhS/GlWBUDGUufcluh0fRcD4BqqH5UCUhR0WpDGPNzes1hPxmjiYBkRj2Y1ebXB1VS
-         MI7JVf/85SY4UwoHP5868v0/timZKhU6ZHTU1Ktx9dy1nLqQDtQ2yJodNSOdyKqxzs6V
-         R8Iw==
+        bh=dzoS4xK8zztpDsqIF16rsB0Xz1Ko7u4bxRkGLpvP5CI=;
+        b=wV8VtNeAioz06nRh8Kdu1zNZttgs7cf3XW2D+Bi43bNl0bV9KcCChP5PHLB87c7bua
+         zSmCQv6gfkgYvVFK9YFal8vjwHxHAxmkMtHRIn5Y7xjPP7ZCfk3zZPk4Aka64U7ngcnR
+         juljaZ7SV+C3layTQ8eN/LAJoUoQWRJ+QZvEqwAQB4xc1Gp43gE4WLteguCKlRN5tnAp
+         eT4Co4Wh1pq0+zqZ9A6p+8OMI6Wjwil7PCs1v100MfTFzU4VrwvknMjAjzFpUQzG6n/K
+         atLbk/yy51nDuMgsQOyyd2vYSZIAgs8NTFVkBOcbJDb938UZ+tJeo1VIagPhcEcaVZKH
+         yXzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GRevDkERx7jOdqGtG/UP6J54m+EB3oM8Bt6vEHkFzSs=;
-        b=ucbYA0aCcbolzdd3j7u8IMhCry+DjSmobSRe/X4jVY5r17eJjgAKCzbTDSL2W1Rsft
-         9YOt2Yw6lcqg/7x9ina76DBAW9HWbN+nAzFcDqh8Vzbq9lE0xp0ODRj5YsPfAzR7ssoW
-         mjVVfbdo62Gt6gZeXyqIQvLjVjGYtJJA9kDOP+OqlSQWVHeg6gSXz3fQzE4eu0GIsNYQ
-         CH5tMVojcY5edA78bqj69AJbIljS2PbGzix2bdgPlMEKkW9mj7lXFutV8hmPjmmhdUGu
-         NtYgoVNqWbrdikl8KHkc4kBXdX79pYXKslBwsrKq5dVQ10S7H1Rqo77c4Q506MwoSoSy
-         MyMw==
-X-Gm-Message-State: APf1xPC7tBqCzE4HI1OlXAqTAk0aueYK1E0m8vud3jYkJwa4BFwkcUYb
-        rGgeOkkJXSOU2Xxaa9Q7Iji6ujqYbB8=
-X-Google-Smtp-Source: AH8x2279IZxxiFH7h1woUwVZpra4cOjUDwxM2qDHwZVwyidO5PDW/BWctJkXWcsMcETjB17SoyOBEQ==
-X-Received: by 10.99.177.4 with SMTP id r4mr10685619pgf.245.1518484994464;
-        Mon, 12 Feb 2018 17:23:14 -0800 (PST)
+        bh=dzoS4xK8zztpDsqIF16rsB0Xz1Ko7u4bxRkGLpvP5CI=;
+        b=NvFe6s8jzduDBg0BaItS5XzDXTSXj1d0+omvo5yleXFuCRWsQ1wOdJACu02KroLuOs
+         n5t+gEeLFLPdVA3+J8l72/aaEV7z7Xvm4VAzlgdLWPMHbDf60D1rbYx2dIoFaysTpWJJ
+         N/MZf+q+fk7HDpfpmnLq68TwwqjpRFhHaoCeaAgFNQgK+kKIHHtq4GYALntAsLWMuO/J
+         BxIsDELUjjwI4Im0egDdaJlQWOQstNIJGOSMHCLTKKRin04ow6kZWE3O7gDFVf7he8nQ
+         BBbieOrMMmFx60FZA07mi0aGILq8blCFTaGpnegdFnWXSpO3bq3vNVnv9ZYm5S1yjGB7
+         8Rlw==
+X-Gm-Message-State: APf1xPDHP9HsIbJ9VxDRZrnL1gUCnPrsTkyzVU9q9KM8kVBymvXKmZbr
+        je/xLg4Psp+B9C/GUFvcnYhJE6hNJC0=
+X-Google-Smtp-Source: AH8x224W44agfgeGS2AP+es+dWYIzIHpDhAvrG4NHh1ifJjNKIIon+EGSaWrQhZj6azDVudMrkBDsg==
+X-Received: by 2002:a17:902:8601:: with SMTP id f1-v6mr12550763plo.380.1518484995978;
+        Mon, 12 Feb 2018 17:23:15 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id o63sm31638654pfa.101.2018.02.12.17.23.12
+        by smtp.gmail.com with ESMTPSA id w70sm30391217pfa.187.2018.02.12.17.23.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 17:23:12 -0800 (PST)
+        Mon, 12 Feb 2018 17:23:15 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
         jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 17/26] sha1_file: add repository argument to open_sha1_file
-Date:   Mon, 12 Feb 2018 17:22:32 -0800
-Message-Id: <20180213012241.187007-18-sbeller@google.com>
+Subject: [PATCH 18/26] sha1_file: add repository argument to map_sha1_file_1
+Date:   Mon, 12 Feb 2018 17:22:33 -0800
+Message-Id: <20180213012241.187007-19-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
 In-Reply-To: <20180213012241.187007-1-sbeller@google.com>
 References: <20180213012241.187007-1-sbeller@google.com>
@@ -64,7 +64,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a repository argument to allow the open_sha1_file caller to be
+Add a repository argument to allow the map_sha1_file_1 caller to be
 more specific about which repository to act on. This is a small
 mechanical change; it doesn't change the implementation to handle
 repositories other than the_repository yet.
@@ -75,33 +75,45 @@ repository other than the_repository at compile time.
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_file.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sha1_file.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/sha1_file.c b/sha1_file.c
-index 1d81bafe56..e9e01fb471 100644
+index e9e01fb471..f706526bc2 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -899,7 +899,9 @@ static int stat_sha1_file_the_repository(const unsigned char *sha1,
-  * Like stat_sha1_file(), but actually open the object and return the
-  * descriptor. See the caveats on the "path" parameter above.
+@@ -930,9 +930,10 @@ static int open_sha1_file_the_repository(const unsigned char *sha1,
+  * Map the loose object at "path" if it is not NULL, or the path found by
+  * searching for a loose object named "sha1".
   */
--static int open_sha1_file(const unsigned char *sha1, const char **path)
-+#define open_sha1_file(r, s, p) open_sha1_file_##r(s, p)
-+static int open_sha1_file_the_repository(const unsigned char *sha1,
-+					 const char **path)
+-static void *map_sha1_file_1(const char *path,
+-			     const unsigned char *sha1,
+-			     unsigned long *size)
++#define map_sha1_file_1(r, p, s, si) map_sha1_file_1_##r(p, s, si)
++static void *map_sha1_file_1_the_repository(const char *path,
++					    const unsigned char *sha1,
++					    unsigned long *size)
  {
+ 	void *map;
  	int fd;
- 	struct alternate_object_database *alt;
-@@ -938,7 +940,7 @@ static void *map_sha1_file_1(const char *path,
- 	if (path)
- 		fd = git_open(path);
- 	else
--		fd = open_sha1_file(sha1, &path);
-+		fd = open_sha1_file(the_repository, sha1, &path);
- 	map = NULL;
- 	if (fd >= 0) {
- 		struct stat st;
+@@ -961,7 +962,7 @@ static void *map_sha1_file_1(const char *path,
+ 
+ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+ {
+-	return map_sha1_file_1(NULL, sha1, size);
++	return map_sha1_file_1(the_repository, NULL, sha1, size);
+ }
+ 
+ static int unpack_sha1_short_header(git_zstream *stream,
+@@ -2173,7 +2174,7 @@ int read_loose_object(const char *path,
+ 
+ 	*contents = NULL;
+ 
+-	map = map_sha1_file_1(path, NULL, &mapsize);
++	map = map_sha1_file_1(the_repository, path, NULL, &mapsize);
+ 	if (!map) {
+ 		error_errno("unable to mmap %s", path);
+ 		goto out;
 -- 
 2.16.1.73.ga2c3e9663f.dirty
 
