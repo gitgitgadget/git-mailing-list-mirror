@@ -7,166 +7,253 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59D261F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 01:22:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 432851F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 01:22:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933054AbeBMBWr (ORCPT <rfc822;e@80x24.org>);
+        id S933109AbeBMBWt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 20:22:49 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33654 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933053AbeBMBWr (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Feb 2018 20:22:47 -0500
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:37143 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933027AbeBMBWq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 20:22:46 -0500
-Received: by mail-pl0-f67.google.com with SMTP id ay8so5862434plb.4
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:22:46 -0800 (PST)
+Received: by mail-pg0-f66.google.com with SMTP id g12so358742pgs.0
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 17:22:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=4gFdr6bocb0sUBrp7RnpzLoTsObLUhz6VuC/tpJAewE=;
-        b=nNuQFD0u189ULTje1aEcbHtD30eCmO0uz925gtgft/0yQ+N3aQ8pQC5PSkiJYCbYIP
-         PxpYjQbtrD3CBytq9y9BQusWZyKZ7Y2ns9t20cgp7ez0rTtvFBNNO1nfVG+DCB0roo4l
-         V8bkQUvgRIPvPrdEZBED17Ky2NZIiRZJPddDmGUgS1VG7uz5EW29qHfIviOtz+gSeCmm
-         GnwGHWofUPVHuti6HyZ5d9EFTv9rg4OgD4WfQ8hoG8x414JIZu4GNUxAoLqP8FCpy86q
-         Qc5xmhrYnDkl83wk3CHCpsV34AzkXMpVrqh0IOnmODU2p3I/D/rfn8yneoQQqstzdOGP
-         9ZWg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KyCwQYQvBg4hpPWdMmM/8GC4yDUp3t8mBieZKYRcXjI=;
+        b=uAsrggOufYBNiLTRUdi8qC6uvBNlTYTeFkhcCFN4S0cU02DWNLK1pd+K59BJvdZ4pX
+         3dirUfLD1LPbfosGcL+uAV51j0vem1cBMbXch1ljhV0NDSFxE7FTvc7BKMisDSSyyiFt
+         C5yzi/jGnlZF5IF37LmJSbSwZ+FUvTTnhFfFTyy6+mN3zbRSvsb0E4+P/EmRXW3UjgwC
+         07mKyEkTUhjeyaHox5gTvBXubvMdzdYlSR4LXzzzwvTg0QKAw6NkPU0l2um1wwV+u4O9
+         3lRsBl1XYyucw3JmPg034g8t/ZCJil27m1el7dxtq7tD3ub7AuVXDn7daBkliqdx1Dj6
+         t5Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4gFdr6bocb0sUBrp7RnpzLoTsObLUhz6VuC/tpJAewE=;
-        b=aWas82Pc5bA+ndliXqi1faBIIhOxFx/KazJ/ENqV0K9t+iK+lKsjW2Yo1LyvwDQKXM
-         J6j6U6saa56HgTmcOzwc02ypHVYhA+sQ3GakPRrLfS2A90+erT5mOQOEJ4Ww8Zb1DSsF
-         IToS8WweOUZV3iRefbIXW68uLmty+vKfglrI2n/vcK7+hCQOns02BlYyN3YPyXhMglbs
-         aihRavakLVz4g6eoLbVnEfyHJeErP9dowJg5G/65f5t3ygJoD5rd2FL4QARGmA8ma90r
-         vfIc4/36J/W4kheN9kJzsRLzAYX+27CFBGlDAeTVvMVrnzZyCZ2C6mCusyI90+msLC8i
-         iMeg==
-X-Gm-Message-State: APf1xPApJEx2Bz3Ta85YX89SZCuFZlqKCH8MgpUfdLdL5OqiNx3usYRN
-        bO0O8IzAWvtEyM9j51ZYRDZy9A==
-X-Google-Smtp-Source: AH8x227lqb19YuBccOciqlr058UK4jtrrwd0fP1nqxNT5xJMuaYe6bhKwG3PGB9qK0Vop2fBiTdeCQ==
-X-Received: by 2002:a17:902:522:: with SMTP id 31-v6mr3437812plf.122.1518484965472;
-        Mon, 12 Feb 2018 17:22:45 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KyCwQYQvBg4hpPWdMmM/8GC4yDUp3t8mBieZKYRcXjI=;
+        b=G9eF6VXic4hdqNIK8VzK5TYVu6beumE+wRGpzkNmz+Ejr0lTNmcfKJcs9fy0XLc3z0
+         V4REARngxzFWp6rh884BDDmHKZjHBdcuU+A7aJnQUyaAc/hfoZLicw094icCxpipRgdj
+         gGe27jff56AI8fTtpG3s/QUp5c6IarirT0FP93glN5ic+mJPaQtX6TttWTYs+/Rxe4bD
+         4bOk7umWhVst22kxyHrfJ8i0G51nXcYSF4/qGk0ZmJPgHI5+xxjjYk21KUMPEoNcgJM5
+         vonWgaSk0IjQIs9SMYVkDSDkXkOUu9VL+aqMvQCBqywDS9RsPdTWvaeSvDxoKiD+cAtS
+         0MHQ==
+X-Gm-Message-State: APf1xPBSxRVyBJAwTmDvnmudikzPMaMpALKFrlC7zQg1UES8ILdSPbnV
+        4Djeu9TWG9PT9Q7n9pZ01p07Lt9H+c8=
+X-Google-Smtp-Source: AH8x2246OiajHSqbRo60VfL45CyzSysZBBvzMYJnxnRQQmnBMbn/ygKdjNZTY/rVmw/igOZ1oHZFhw==
+X-Received: by 10.99.49.84 with SMTP id x81mr10568507pgx.371.1518484966920;
+        Mon, 12 Feb 2018 17:22:46 -0800 (PST)
 Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id j12sm50194464pfa.95.2018.02.12.17.22.44
+        by smtp.gmail.com with ESMTPSA id 10sm11802743pfo.69.2018.02.12.17.22.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Feb 2018 17:22:44 -0800 (PST)
+        Mon, 12 Feb 2018 17:22:46 -0800 (PST)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com, sunshine@sunshineco.com,
-        jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 00/26] Moving global state into the repository object (part 1)
-Date:   Mon, 12 Feb 2018 17:22:15 -0800
-Message-Id: <20180213012241.187007-1-sbeller@google.com>
+        jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 01/26] repository: introduce raw object store field
+Date:   Mon, 12 Feb 2018 17:22:16 -0800
+Message-Id: <20180213012241.187007-2-sbeller@google.com>
 X-Mailer: git-send-email 2.16.1.73.ga2c3e9663f.dirty
+In-Reply-To: <20180213012241.187007-1-sbeller@google.com>
+References: <20180213012241.187007-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a real take on the first part of the recent RFC[1].
+The raw object store field will contain any objects needed for
+access to objects in a given repository.
 
-Jonathan Tan suggested[2] that "sha1_loose_object_info to handle arbitrary repositories"
-might be a good breaking point for a first part at that RFC at patch 38.
-This series is smaller and contains only 26 patches as the patches in the big
-RFC were slightly out of order.
+This patch introduces the raw object store and populates it with the
+`objectdir`, which used to be part of the repository struct.
 
-I developed this series partly by writing patches, but mostly by cherrypicking
-from that RFC on top of current master. I noticed no external conflicts apart
-from one addition to the repositories _INIT macro, which was easy to resolve.
+As the struct gains members, we'll also populate the function to clear
+the memory for these members.
 
-Comments in the early range of that RFC were on 003 where Junio pointed out
-that the coccinelle patch ought to be not in contrib/coccinelle, so I put it
-in a sub directory there, as 'make coccicheck' doesn't traverse subdirs.
+In a later we'll introduce a struct object_parser, that will complement
+the object parsing in a repository struct: The raw object parser is the
+layer that will provide access to raw object content, while the higher
+level object parser code will parse raw objects and keeps track of
+parenthood and other object relationships using 'struct object'.
+For now only add the lower level to the repository struct.
 
-brian had a questoin on patch 25 in the RFC, but that seemed to resolve itself
-without any suggestion to include into this series[3].
-
-Duy suggested that we shall not use the repository blindly, but should carefully
-examine whether to pass on an object store or the refstore or such[4], which 
-I agree with if it makes sense. This series unfortunately has an issue with that
-as I would not want to pass down the `ignore_env` flag separately from the object
-store, so I made all functions that only take the object store to have the raw
-object store as the first parameter, and others using the full repository.
-
-Eric Sunshine brought up memory leaks with the RFC, and I would think to
-have plugged all holes.
-
-[1] https://public-inbox.org/git/20180205235508.216277-1-sbeller@google.com/
-[2] https://public-inbox.org/git/20180207143300.ce1c39ca07f6a0d64fe0e7ca@google.com/
-[3] https://public-inbox.org/git/20180206011940.GD7904@genre.crustytoothpaste.net/
-[4] https://public-inbox.org/git/CACsJy8CGgekpX4cZkyyTSPrj87uQVKZSOL7fyT__P2dh_1LmVQ@mail.gmail.com/
-
-Thanks,
-Stefan
-
-Jonathan Nieder (8):
-  pack: move prepare_packed_git_run_once to object store
-  pack: move approximate object count to object store
-  sha1_file: add repository argument to sha1_file_name
-  sha1_file: add repository argument to map_sha1_file
-  sha1_file: allow stat_sha1_file to handle arbitrary repositories
-  sha1_file: allow open_sha1_file to handle arbitrary repositories
-  sha1_file: allow map_sha1_file_1 to handle arbitrary repositories
-  sha1_file: allow sha1_loose_object_info to handle arbitrary
-    repositories
-
-Stefan Beller (18):
-  repository: introduce raw object store field
-  object-store: move alt_odb_list and alt_odb_tail to object store
-  object-store: free alt_odb_list
-  object-store: move packed_git and packed_git_mru to object store
-  object-store: close all packs upon clearing the object store
-  sha1_file: add raw_object_store argument to alt_odb_usable
-  sha1_file: add repository argument to link_alt_odb_entry
-  sha1_file: add repository argument to read_info_alternates
-  sha1_file: add repository argument to link_alt_odb_entries
-  sha1_file: add repository argument to prepare_alt_odb
-  sha1_file: allow link_alt_odb_entries to handle arbitrary repositories
-  sha1_file: allow prepare_alt_odb to handle arbitrary repositories
-  sha1_file: add repository argument to stat_sha1_file
-  sha1_file: add repository argument to open_sha1_file
-  sha1_file: add repository argument to map_sha1_file_1
-  sha1_file: add repository argument to sha1_loose_object_info
-  sha1_file: allow sha1_file_name to handle arbitrary repositories
-  sha1_file: allow map_sha1_file to handle arbitrary repositories
-
- builtin/am.c                                    |   2 +-
- builtin/clone.c                                 |   2 +-
- builtin/count-objects.c                         |   6 +-
- builtin/fetch.c                                 |   2 +-
- builtin/fsck.c                                  |  13 ++-
- builtin/gc.c                                    |   4 +-
- builtin/grep.c                                  |   2 +-
- builtin/index-pack.c                            |   1 +
- builtin/merge.c                                 |   2 +-
- builtin/pack-objects.c                          |  21 ++--
- builtin/pack-redundant.c                        |   6 +-
- builtin/receive-pack.c                          |   3 +-
- cache.h                                         |  46 ++------
- contrib/coccinelle/refactoring/packed_git.cocci |   7 ++
- environment.c                                   |   5 +-
- fast-import.c                                   |   6 +-
- http-backend.c                                  |   6 +-
- http-push.c                                     |   1 +
- http-walker.c                                   |   4 +-
- http.c                                          |   6 +-
- mru.h                                           |   1 +
- object-store.h                                  |  75 +++++++++++++
- object.c                                        |  26 +++++
- pack-bitmap.c                                   |   4 +-
- pack-check.c                                    |   1 +
- pack-revindex.c                                 |   1 +
- packfile.c                                      |  64 +++++------
- packfile.h                                      |   2 +-
- path.c                                          |   2 +-
- reachable.c                                     |   1 +
- repository.c                                    |  17 ++-
- repository.h                                    |   7 +-
- server-info.c                                   |   6 +-
- sha1_file.c                                     | 135 +++++++++++++-----------
- sha1_name.c                                     |  11 +-
- streaming.c                                     |   5 +-
- 36 files changed, 321 insertions(+), 182 deletions(-)
- create mode 100644 contrib/coccinelle/refactoring/packed_git.cocci
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin/grep.c |  2 +-
+ environment.c  |  5 +++--
+ object-store.h | 15 +++++++++++++++
+ object.c       |  5 +++++
+ path.c         |  2 +-
+ repository.c   | 17 +++++++++++++----
+ repository.h   |  7 ++++---
+ 7 files changed, 42 insertions(+), 11 deletions(-)
  create mode 100644 object-store.h
 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 3ca4ac80d8..0f0c195705 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -432,7 +432,7 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
+ 	 * object.
+ 	 */
+ 	grep_read_lock();
+-	add_to_alternates_memory(submodule.objectdir);
++	add_to_alternates_memory(submodule.objects.objectdir);
+ 	grep_read_unlock();
+ 
+ 	if (oid) {
+diff --git a/environment.c b/environment.c
+index 63ac38a46f..5d7ffb3a3f 100644
+--- a/environment.c
++++ b/environment.c
+@@ -13,6 +13,7 @@
+ #include "refs.h"
+ #include "fmt-merge-msg.h"
+ #include "commit.h"
++#include "object-store.h"
+ 
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
+@@ -242,9 +243,9 @@ const char *get_git_work_tree(void)
+ 
+ char *get_object_directory(void)
+ {
+-	if (!the_repository->objectdir)
++	if (!the_repository->objects.objectdir)
+ 		BUG("git environment hasn't been setup");
+-	return the_repository->objectdir;
++	return the_repository->objects.objectdir;
+ }
+ 
+ int odb_mkstemp(struct strbuf *template, const char *pattern)
+diff --git a/object-store.h b/object-store.h
+new file mode 100644
+index 0000000000..cf35760ceb
+--- /dev/null
++++ b/object-store.h
+@@ -0,0 +1,15 @@
++#ifndef OBJECT_STORE_H
++#define OBJECT_STORE_H
++
++struct raw_object_store {
++	/*
++	 * Path to the repository's object store.
++	 * Cannot be NULL after initialization.
++	 */
++	char *objectdir;
++};
++#define RAW_OBJECT_STORE_INIT { NULL }
++
++void raw_object_store_clear(struct raw_object_store *o);
++
++#endif /* OBJECT_STORE_H */
+diff --git a/object.c b/object.c
+index 0afdfd19b7..9b5b65e189 100644
+--- a/object.c
++++ b/object.c
+@@ -445,3 +445,8 @@ void clear_commit_marks_all(unsigned int flags)
+ 			obj->flags &= ~flags;
+ 	}
+ }
++
++void raw_object_store_clear(struct raw_object_store *o)
++{
++	free(o->objectdir);
++}
+diff --git a/path.c b/path.c
+index da8b655730..81a42d9115 100644
+--- a/path.c
++++ b/path.c
+@@ -382,7 +382,7 @@ static void adjust_git_path(const struct repository *repo,
+ 		strbuf_splice(buf, 0, buf->len,
+ 			      repo->index_file, strlen(repo->index_file));
+ 	else if (dir_prefix(base, "objects"))
+-		replace_dir(buf, git_dir_len + 7, repo->objectdir);
++		replace_dir(buf, git_dir_len + 7, repo->objects.objectdir);
+ 	else if (git_hooks_path && dir_prefix(base, "hooks"))
+ 		replace_dir(buf, git_dir_len + 5, git_hooks_path);
+ 	else if (repo->different_commondir)
+diff --git a/repository.c b/repository.c
+index f66fcb1342..bd2ad578de 100644
+--- a/repository.c
++++ b/repository.c
+@@ -1,11 +1,18 @@
+ #include "cache.h"
+ #include "repository.h"
++#include "object-store.h"
+ #include "config.h"
+ #include "submodule-config.h"
+ 
+ /* The main repository */
+ static struct repository the_repo = {
+-	NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &the_index, &hash_algos[GIT_HASH_SHA1], 0, 0
++	NULL, NULL,
++	RAW_OBJECT_STORE_INIT,
++	NULL, NULL, NULL,
++	NULL, NULL, NULL,
++	&the_index,
++	&hash_algos[GIT_HASH_SHA1],
++	0, 0
+ };
+ struct repository *the_repository = &the_repo;
+ 
+@@ -42,8 +49,8 @@ static void repo_setup_env(struct repository *repo)
+ 						    !repo->ignore_env);
+ 	free(repo->commondir);
+ 	repo->commondir = strbuf_detach(&sb, NULL);
+-	free(repo->objectdir);
+-	repo->objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
++	free(repo->objects.objectdir);
++	repo->objects.objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
+ 					    "objects", !repo->ignore_env);
+ 	free(repo->graft_file);
+ 	repo->graft_file = git_path_from_env(GRAFT_ENVIRONMENT, repo->commondir,
+@@ -209,12 +216,14 @@ void repo_clear(struct repository *repo)
+ {
+ 	FREE_AND_NULL(repo->gitdir);
+ 	FREE_AND_NULL(repo->commondir);
+-	FREE_AND_NULL(repo->objectdir);
+ 	FREE_AND_NULL(repo->graft_file);
+ 	FREE_AND_NULL(repo->index_file);
+ 	FREE_AND_NULL(repo->worktree);
+ 	FREE_AND_NULL(repo->submodule_prefix);
+ 
++	raw_object_store_clear(&repo->objects);
++	memset(&repo->objects, 0, sizeof(repo->objects));
++
+ 	if (repo->config) {
+ 		git_configset_clear(repo->config);
+ 		FREE_AND_NULL(repo->config);
+diff --git a/repository.h b/repository.h
+index 0329e40c7f..1f8bc7a7cf 100644
+--- a/repository.h
++++ b/repository.h
+@@ -1,6 +1,8 @@
+ #ifndef REPOSITORY_H
+ #define REPOSITORY_H
+ 
++#include "object-store.h"
++
+ struct config_set;
+ struct index_state;
+ struct submodule_cache;
+@@ -21,10 +23,9 @@ struct repository {
+ 	char *commondir;
+ 
+ 	/*
+-	 * Path to the repository's object store.
+-	 * Cannot be NULL after initialization.
++	 * Holds any information related to the object store.
+ 	 */
+-	char *objectdir;
++	struct raw_object_store objects;
+ 
+ 	/*
+ 	 * Path to the repository's graft file.
 -- 
 2.16.1.73.ga2c3e9663f.dirty
 
