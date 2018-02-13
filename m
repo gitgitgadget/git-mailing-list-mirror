@@ -2,85 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F30B1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 03:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0AA41F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 04:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933416AbeBMDzp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Feb 2018 22:55:45 -0500
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:45156 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933025AbeBMDzo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Feb 2018 22:55:44 -0500
-Received: by mail-qt0-f182.google.com with SMTP id x27so2178627qtm.12
-        for <git@vger.kernel.org>; Mon, 12 Feb 2018 19:55:44 -0800 (PST)
+        id S933405AbeBMEjX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Feb 2018 23:39:23 -0500
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:32866 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933378AbeBMEjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Feb 2018 23:39:22 -0500
+Received: by mail-wm0-f53.google.com with SMTP id x4so11529252wmc.0
+        for <git@vger.kernel.org>; Mon, 12 Feb 2018 20:39:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ZczFAo3J3K3HjqgO48qlgX9S+Vsz+nbFhRdi46JxO5g=;
-        b=C9JugHOOM1x2kL/v1/czJ6NgeqRPgGWgCnTEQJBzL/5q4kANoGhOwrAhbZ4hc4F6VM
-         T6ESYNscdfgNkelkoGxUvMyuHFHTlSQXgvSIof5v3OhHCvHygvhRnpvzEJ2y8JMb3oh5
-         QM3CHd6yxbi7hP+kmYstX4C5TUh0nXrbvlBgMhJcTtYo5m++J9UlYqLf3QlZKbj1XtxN
-         1yZEl8DGKLgybCAXu24Uf5U7jlO2ZewOAs7fAWUAQ8XFKGR3S4wglTxJIVUAULC8eLBL
-         fEwvarV6asq0+U07RMSFhWA8BO1OIFh8JrZzDlbJgGidjBpGH0p1SRybhQIfHKOEMgB6
-         MLRQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CTXMf4MO+cOe2MU/o11CCGePk4Q8DB9iuif9szhzClQ=;
+        b=SCUksRsPNym7Ia1UqEG8IAcc/8Qk/4jFc7nVwPcVD+SkqodJnjZsXcx+Ge+xeLvZGB
+         2EyopP4oR8iplW8cgIGG/bxCRThdH7raL6H857E+fcigcktyvopw+AKgc9HdsjJcGyH7
+         GPc/P/g4oLDV33ZVkuI3vHZMCTvA3tu7/EYdfYaBL3mQ4Zb4v2ajT9L05BWKUF191iUk
+         Rb4PQRFpIZhLQjRA1UiyHS9FYhHz035kTyx4FWOMosMm+CqQ2V5yMqkZdUqBxl1pYyTp
+         hOJHA7RgpAKsw18oY+302mp3ku8J90NG014+nBMnIx31yrRAqo4zpx2Ec/9RG8Cj7dYh
+         gVOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ZczFAo3J3K3HjqgO48qlgX9S+Vsz+nbFhRdi46JxO5g=;
-        b=SvxxPdlSAgF51gnE+1/YAmpPYQEdDeQhvhN8WZvbRZrrdfehJrd+yuHQCyMikuq3SZ
-         2pIH1xqwRWw5OzHjub2xg2NyWx7imTzLpV+0LcwsPOq+j6f76r5lodnvI0CqJiTgZo6J
-         +fNgNvoWP66nh81lAw/DjcNu7s9K5D0kU9wPX3RSTK+rsElkGuA8o1IZ83cTvs3SldTv
-         lAQXkuzBRQfvMqqZV8iLZlqq2DCdvc6wdOLO921naSMrPeURSv+VVaFAKeb6GDJZnYlt
-         eLyPXimfhHsY3tG+zNR7pM8ctmGZz1mleZbPBLIBHl9ZGMsivoJU49dIQxMTfuuXg7t9
-         SgDQ==
-X-Gm-Message-State: APf1xPBMegveDftWLWQ2jZsVcKwfBXskZYli+39dwVt1oFNn4CG7v3IW
-        Tlx6jjYS70sxECyrRxcTmPfhqhfxzNT3+G0CoTA=
-X-Google-Smtp-Source: AH8x224ZKbCAngPS/Et8zA2+l5lQ6X6zeVBtWTJDmTYzDDT/NEqGtkZr4YuqLKyP/k/IvVxKe1JCKCJfGOsKmdwmSAg=
-X-Received: by 10.200.51.100 with SMTP id u33mr16936502qta.127.1518494143716;
- Mon, 12 Feb 2018 19:55:43 -0800 (PST)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CTXMf4MO+cOe2MU/o11CCGePk4Q8DB9iuif9szhzClQ=;
+        b=ugFsg9niv0Qk8NCC4UfzKhz5iIbpvWKLLnWYmYUUosGKpXV85dH0zBRJuOp5bpwevs
+         etFZo7x4MVRV9kZ0iUpcwZ2g+syU6Fw9DL3c74TkBlXwJurA2BOf6egG+d0QOl18gFHi
+         WxR0P4EKdGhrGfiDJRlzoS4T4AGfr9Q8H+rCYVzhRlHXQ6vAfFJYerO35uE51/c24pWp
+         X7NGhZNQtiWZ9yuwKfZsCsT8Ps+DWPZIt/8V7ceE8o3WZ3g8Ommfezuuu1gqYWU2CCWQ
+         RHwVtqdnb9kLuFtt7BcC8ujYs7YcbtcvuCn1tK2roDyC+hsXpXWkTnhNzOQ7fk/uaxfN
+         LgAw==
+X-Gm-Message-State: APf1xPBy+P+0PCZ9fjpd6fqjQFuCobFQc4r7lYWeqzufqlKrVsAHXW/+
+        9hUxyRZLOjFob4QC5ATplOMOVYNJYJQVB3uZy/A=
+X-Google-Smtp-Source: AH8x226DujhQQTWZoZtswV9z4VLPNrG0jAPmCkdYvf+KdB7MlRvAs/Yv9qLE/yXFG01arL6WAM6y1U0aeKqmnsAHfSo=
+X-Received: by 10.80.211.7 with SMTP id g7mr393445edh.76.1518496761191; Mon,
+ 12 Feb 2018 20:39:21 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.128.40 with HTTP; Mon, 12 Feb 2018 19:55:42 -0800 (PST)
-In-Reply-To: <20180213014130.190374-1-sbeller@google.com>
-References: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
- <20180213014130.190374-1-sbeller@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Feb 2018 22:55:42 -0500
-X-Google-Sender-Auth: 5IGM0Or1DCJpduwVPbQnlJdaHls
-Message-ID: <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
-Subject: Re: [PATCH] color.h: document and modernize header
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Received: by 10.80.149.220 with HTTP; Mon, 12 Feb 2018 20:39:00 -0800 (PST)
+In-Reply-To: <nycvar.QRO.7.76.6.1802122121230.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+ <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+ <874lmqirma.fsf@javad.com> <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+ <87zi4edbp3.fsf@javad.com> <nycvar.QRO.7.76.6.1802122121230.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 12 Feb 2018 20:39:00 -0800
+Message-ID: <CA+P7+xqKPbwt-KeYTKadM3bHDkU3m0WiezKeVu75TyftBSEYDA@mail.gmail.com>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Sergey Organov <sorganov@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 8:41 PM, Stefan Beller <sbeller@google.com> wrote:
-> Add documentation explaining the functions in color.h.
-> While at it, migrate the function `color_set` into grep.c,
-> where the only callers are.
+On Mon, Feb 12, 2018 at 12:39 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Sergey,
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> diff --git a/color.h b/color.h
-> @@ -76,22 +76,46 @@ int git_color_config(const char *var, const char *value, void *cb);
-> +/*
-> + * Output the formatted string in the specified color (and then reset to normal
-> + * color so subsequent output is uncolored). Omits the color encapsulation if
-> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
-> + * the color.  BUG: The `color_print_strbuf` prints the given pre-formatted
-> + * strbuf instead, up to its first NUL character.
-> + */
+> On Mon, 12 Feb 2018, Sergey Organov wrote:
+>> > Have a look at https://github.com/git/git/pull/447, especially the
+>> > latest commit in there which is an early version of the deprecation I
+>> > intend to bring about.
+>>
+>> You shouldn't want a deprecation at all should you have re-used
+>> --preserve-merges in the first place, and I still don't see why you
+>> haven't.
+>
+> Keep repeating it, and it won't become truer.
+>
+> If you break formats, you break scripts. Git has *so* many users, there
+> are very likely some who script *every* part of it.
+>
+> We simply cannot do that.
+>
+> What we can is deprecate designs which we learned on the way were not only
+> incomplete from the get-go, but bad overall and hard (or impossible) to
+> fix. Like --preserve-merges.
+>
+> Or for that matter like the design you proposed, to use --first-parent for
+> --recreate-merges. Or to use --first-parent for some --recreate-merges,
+> surprising users in very bad ways when it is not used (or when it is
+> used). I get the impression that you still think it would be a good idea,
+> even if it should be obvious that it is not.
 
-"`color_print_strbuf` prints the given pre-formatted strbuf (BUG: but
-only up to the first NUL character)."
+If we consider the addition of new todo list elements as "user
+breaking", then yes this change would be user-script breaking.
 
-Probably not worth a re-roll is Junio can amend it locally.
+Since we did not originally spell out that todo-list items are subject
+to enhancement by addition of operations in the future, scripts are
+likely not designed to allow addition of new elements.
+
+Thus, adding recreate-merges, and deprecating preserve-merges, seems
+to me to be the correct action to take here.
+
+One could argue that users should have expected new todo list elements
+to be added in the future and thus design their scripts to cope with
+such a thing. If you can convincingly argue this, then I don't
+necessarily see it as a complete user breaking change to fix
+preserve-merges in order to allow it to handle re-ordering properly..
+
+I think I lean towards agreeing with Johannes, and that adding
+recreate-merges and removing preserve-merges is the better solution.
+
+Thanks,
+Jake
