@@ -2,113 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A748C1F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 20:23:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA7DA1F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 20:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965705AbeBMUXB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 15:23:01 -0500
-Received: from mail-io0-f194.google.com ([209.85.223.194]:41375 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965610AbeBMUXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 15:23:00 -0500
-Received: by mail-io0-f194.google.com with SMTP id f4so22685452ioh.8
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 12:23:00 -0800 (PST)
+        id S965895AbeBMUfg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 15:35:36 -0500
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39332 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965634AbeBMUfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 15:35:33 -0500
+Received: by mail-wm0-f67.google.com with SMTP id b21so18255212wme.4
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 12:35:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DChTPlxn5JAy8QYLbS2OwMPsxu9XYsq2sXg9H7k8ly0=;
-        b=Y9pRki34+HgaL4wBZLCqFgs57/p2n0EiGnn1auCeh6M4CTa9Ccwcxl6/AtOnjXXS9v
-         aBhaYUpNmwDRZVZQLgJzvBusyImFGJYMFPAMwnIp6nFc55XDUktjsUL8R2V0NR7+htxY
-         9I0WKU5Wp/VJQv4PZ6nRZddX8/H+kATFi6BC7kxbcePgm2aF0s/bKkbfUPh8yy4Bo3v9
-         fMHUZV004RuTdjjsHPDgSM8K4PWvJipFJbjyQTwbhFj+FNgbUAC+vkpOZ8MQSbfOR3Rr
-         Sfnxbhk6s/cxcY68Pv3CsjWbDtD2yT4xzvp3Fxf+oYsIMXGxhWIc+h7ub3B+E54EjSL/
-         4Z6w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=beGhHXI5EBsqVwZqv09yXxSdzJ/+srzXt+e22XC2nNE=;
+        b=OmqhumfiNyQoCXFAI2J76TccBvM1dSJC8SkmVPjlwCGg3B9JSMBFVqSfUmBbRenm7e
+         3vQSmGAG7/OKY9H/KPfFinmVxBFa+EOVbU/e1CFaT2FNnJiQwtzuaXpPzyVndAPozjMt
+         B8SXqjbW9eTDlxK7GcLG4rPbE3GF+10R6NbtDm9XbZlj/BN5izQymdv933k/9sTUnUty
+         24J38f2kH+i//2Z4zo7QcL2XKR/BweonKst/jzvZMAWUBKoeoGJsIgxSvtPIcqfIrSWi
+         nU5ywjZ5LqewdtgRTgyYeFP4BAoz+kEMB3L+50s+1vozeeJmVrogx7FLffqGkt2aqYFs
+         egCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DChTPlxn5JAy8QYLbS2OwMPsxu9XYsq2sXg9H7k8ly0=;
-        b=fN9ne73RgMkvBseer+a+Fr4Cl3i47g4HYyzqGJz+lkXbf7rOrGVwi5lzz7gisWspjm
-         2QFPWpxCue7PIICuVx7OfEXvCWUp1UKDeAfyol22dDMUEZNn2KWh54XmckAwOgd3bq37
-         xLUGNYhqCtJGzOVBpbGx+z7JNaTlsBrvbWodmyIlHuRrLNkYSi33SMx/9zEVOLcBjryK
-         5KLxrlkKOlHgtw/8FnAP9pKiOHO8omLXWdpj4i+JrmIlUmv0igsT8PCk4iUJbKI4okT1
-         UE6DYWWE6APscCVtI4Qp7IMmbUjGGLZpAoYPCvi51PWV5ee/aK2BkWUoyZnKuEXDNsYX
-         9ZEQ==
-X-Gm-Message-State: APf1xPDEhDk77/u56NFV2RvsiD4aahJTounY7Ct7gfAu0NJIqGR1yyLP
-        kw9SR6O3eJ2W/OSuej4VHoyvLk3PXnAtAMzPy9bGo/8a
-X-Google-Smtp-Source: AH8x224JRbcBv242B98L0gNVyXlSmCp39r4Q1XwjxM1iNBvhMh2tBvENSk2Jpi6Y5ygdwqThX3kHGpSRo5LwzJ3vHYg=
-X-Received: by 10.107.24.70 with SMTP id 67mr2751228ioy.15.1518553380131; Tue,
- 13 Feb 2018 12:23:00 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=beGhHXI5EBsqVwZqv09yXxSdzJ/+srzXt+e22XC2nNE=;
+        b=CxDN6V/DDYzackJ11iGSt1N1cRgwiJj13cV/bLXjb/8WeqP+B2/jslf4e5nZE2iFA6
+         xuhFzRAi1hldJp1ahs5BFsBPUkWG5tyyfS0RAuRxHzWzn49N912OkNKwYJ0QibZFMjfh
+         u0HjUmv4+/tRYFablhXK+i4RR2+tWV15P7zDAVZXnLx2lP2hWGYu3oGtOdWpY7Cr9/5+
+         jHdVLVuGDZKQ5jmq9HP7YOlQvlRgB+NaMqGPrcbV8Szqvcv19keK4G/fZQRupxBqw2+u
+         cjPTZrR43H9AITxjtOyQNyyZcaxJbznONjrdnH6B+KZp5CdcuVbDjDi5gjezSrWsX+/P
+         uoSA==
+X-Gm-Message-State: APf1xPCowpQzLUfpF8j5CgfKeFvEeyMZuSsy/IMXl34WOa9kIPKyUjLo
+        46B35xPaOMSf3IGR8IlLumo=
+X-Google-Smtp-Source: AH8x224GIJUuwHLK7hyTfhVOcT0j2ihhgddtSD+RMrQsfARApc/isf4oF9Qs+DhffCP4OEdKOQ9uiQ==
+X-Received: by 10.28.38.133 with SMTP id m127mr2214875wmm.40.1518554132284;
+        Tue, 13 Feb 2018 12:35:32 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p5sm11120113wmf.13.2018.02.13.12.35.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Feb 2018 12:35:31 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/4] t3701: add failing test for pathological context lines
+References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+        <20180213104408.9887-3-phillip.wood@talktalk.net>
+Date:   Tue, 13 Feb 2018 12:35:30 -0800
+In-Reply-To: <20180213104408.9887-3-phillip.wood@talktalk.net> (Phillip Wood's
+        message of "Tue, 13 Feb 2018 10:44:06 +0000")
+Message-ID: <xmqqr2popqzx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.2.5.147 with HTTP; Tue, 13 Feb 2018 12:22:59 -0800 (PST)
-From:   Psidium Guajava <psiidium@gmail.com>
-Date:   Tue, 13 Feb 2018 18:22:59 -0200
-Message-ID: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
-Subject: git-rebase --undo-skip proposal
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git community,
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-I'd like to add a new feature in git-rebase: --undo-skip.
-But first, I'd like to consult with the experts if it would be
-beneficial for the project and if my line of tought is correct.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When a hunk is skipped by add -i the offsets of subsequent hunks are
+> not adjusted to account for any missing insertions due to the skipped
+> hunk. Most of the time this does not matter as apply uses the context
+> lines to apply the subsequent hunks in the correct place, however in
+> pathological cases the context lines will match at the now incorrect
+> offset and the hunk will be applied in the wrong place. The offsets of
 
-Imagine that you are working on a feature for a long time, but there
-are multiple bug fixes happening at `master` branch at the same time.
-After lots of commits on both ends, you decide to rebase your changes
-on top of the current `master` branch.
-After lots of conflict resolution steps, you mistakenly call
-`git-rebase --skip` instead of `git-rebase --continue`, thus losing a
-commit of your work, and possibly inserting bugs in your project.
-The only solution for this right now would be to abort the current
-rebase and start over.
+Good.  The --recount "feature" on the receiving end does not have
+enough information to do a job as good as the code sitting at the
+side of producing a patch to be applied, and this goes in the right
+direction.
 
-It seems that a feature like this have been requested once on the mail list [1].
-
-I propose the existence of --undo-skip on git-rebase's `$action` domain.
-
-How I fixed it when that happened with me was (just after running the
-wrong skip):
-
-1. I figured I was making a rebase that used `git-am` as a backend.
-2. In the rebase-apply directory I searched for the patch file with
-the change I just skipped.
-3. Found the `rebase-apply/next` file.
-4. Wrote the number of the patch I skipped - 1 in rebase-apply/next.
-5. run `git rebase --skip` again on the repository.
-
-This made the lost patch appear again and I could `--continue` it this time.
-
-I propose the addition of an action `--undo-skip`, that could be
-called only after a wrongfully called `--skip`.
-`git rebase --undo-skip`.
-I would implemented it to do programatically what I did by hand when
-that happened with me.
-
-Here are my questions for you:
-1. Would this be beneficial for the users?
-2. For `rebase--am`, I would need to change `git-rebase--am.sh` file, correct?
-3. Can I assume `builtin/am.c` will always store its information on
-`$state_dir/next` and `$state_dir/$patchnumbers`?
-4. How hard would it be to add that logic for `rebase--interactive`
-and `rebase--merge` backends?
-
-Also, a little unrelated with this issue:
-5. What happened to the rewrite of rebase in C [2]? I couldn't find
-any information after 2016.
-
-[1] https://public-inbox.org/git/201311011522.44631.thomas@koch.ro/
-[2] https://public-inbox.org/git/1457779597-6918-1-git-send-email-pyokagan@gmail.com/
-
-
-Best Regards,
-Gabriel Borges
