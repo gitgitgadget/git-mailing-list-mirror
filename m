@@ -2,85 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30C511F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 14:23:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA9311F404
+	for <e@80x24.org>; Tue, 13 Feb 2018 15:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935289AbeBMOXy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 09:23:54 -0500
-Received: from mx2.suse.de ([195.135.220.15]:48815 "EHLO mx2.suse.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933555AbeBMOXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 09:23:51 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 9955BADD5;
-        Tue, 13 Feb 2018 14:23:49 +0000 (UTC)
-Subject: Re: "git submodule" vs "git subtree" vs "repo" vs "git subdir" ... ?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
-        Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1802130746360.16738@localhost.localdomain>
-From:   Nicolas Morey-Chaisemartin <NMoreyChaisemartin@suse.de>
-Message-ID: <338901fc-6dc8-2684-c116-393e603f85e9@suse.de>
-Date:   Tue, 13 Feb 2018 15:23:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101
- Thunderbird/58.0
+        id S965130AbeBMPGS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 10:06:18 -0500
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:43713 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965037AbeBMPGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 10:06:17 -0500
+Received: by mail-wr0-f173.google.com with SMTP id b52so18903992wrd.10
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 07:06:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=wTHVTFrm1Vzp6m0XVcerivX90ug4InYubngMDmVA5QE=;
+        b=oAAX0Ski3h8Wl8+U1Nb3lkeiaDabH4u8b3x8Gooym/9v0b8tJFckRDpg/YJk+PvDFV
+         fYgOsPgzHBTy+akL3f9MiNb2nMLxnMchT4Ab4ENV+1VxTUTgbVVCBJtmtIhF0wTITGQN
+         BebH/tIH/xyX8COXffP74HLPxK+HfHkvn5ZSKi4yI5sxLUgXGxHUVxizzq/tYl5iE0mt
+         /GXunCjGsHogAr3DKr7VjsRM7/IMgbaX8T49MvtPj/dg54o/NKNzOCqHDcAhG5hRLho5
+         5JfWTnow7P1OaEMSQVCUCzqdM7IM5SFt0LWzH3GNOeympKCdhvIRjNM5CgaUIT6OtxAF
+         AtDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=wTHVTFrm1Vzp6m0XVcerivX90ug4InYubngMDmVA5QE=;
+        b=L/LwjnldDmUp5yEhe9bzmswUhFv9gr4A5xqLSLD0Bnd2+SiaTIStYZguDg1tShCd0d
+         U6EDJYmkN+bPNVGo9FZCLJNKIaPoHEN0W8M0zx6f6lW2fxU5H2fhoHwqgLA9bk3FCUsL
+         XYbqn0iikcrrHigluIEezZFLVlg3yrzt8bSAN0QJXz6kwe6jOivWHiivNN4/Vog0TIg9
+         P3c54jOlXHvnQrwGfRb3MLb4AWDbdf5qpneGhdxfhiJ0QOvOdFkcYV36N0qW1xzFuxxx
+         zrSaaH2h+M5jSR90V+0/z+9xC5/d1xBxpaq8tf5w2I9tsriIwzn2Z2e/Tn9eTRB+7GZY
+         CxbA==
+X-Gm-Message-State: APf1xPBkUbW8HbtddEjipuqt2i02LecxlI8jR3VLdKqXjlI+L94qPDo0
+        Njqkn2rpWSOdoRG0B6izpG8V2w0+dPZ9TtBCgvDCBA==
+X-Google-Smtp-Source: AH8x224kghJ4sG12PJihzN3PhnmaYFZQhEemoRJk21uxVpFcMBs2OoUKAQK77/L8rQQIsHQG6XYqh7XIeJBaXiGgs9o=
+X-Received: by 10.223.173.18 with SMTP id p18mr1667061wrc.29.1518534376146;
+ Tue, 13 Feb 2018 07:06:16 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <alpine.LFD.2.21.1802130746360.16738@localhost.localdomain>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Received: by 10.223.197.5 with HTTP; Tue, 13 Feb 2018 07:06:15 -0800 (PST)
+From:   =?UTF-8?B?zqPPgM+Nz4HOv8+CIM6SzrHOts6xzq/Ov8+C?= 
+        <sbazaios@gmail.com>
+Date:   Tue, 13 Feb 2018 17:06:15 +0200
+Message-ID: <CAOmC-AncOZfAwowXLjwDbL9Bdx1+=RbXsrd72LzEBd2W-=LAQg@mail.gmail.com>
+Subject: make git diff output easier to read - use better diff heuristics
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi, I've came across an issue when using the git diff command. In
+particular the diff is different to what the svn diff produces. While
+both being correct the output of the svn diff is easier to understand
+than the git diff one. See the following issue on github where I
+initially reported the issue:
 
+https://github.com/git-for-windows/git/issues/1494
 
-Le 13/02/2018 à 14:06, Robert P. J. Day a écrit :
->   looking for general opinions ... i am (frighteningly :-) teaching a
-> git course later this week, and one of the topics on the list is git
-> submodules, which was specifically requested by the client as their
-> idea of how to start incorporating child repos in new projects.
->
->   however, given the number of articles written about the drawbacks
-> with submodules, i wanted to throw in a section about "git subtree" as
-> well, even though (as discussed earlier) there is some minor dispute
-> as to whether "git subtree" is part of "core" git, but i'm not going
-> to let that stop me.
-
-I've dealt with a large number of submodules and subtrees in the last years so here are my 2 cents.
-The first question to ask is the most important one:
-Do the repos really need to be split at all.
-
-In a previous life, we started with one repo per "small projects", each containing a couple of binaries or libs.
-Everything was put together through submodules.
-After way too long to admit, we realized that it was just not worth it. We had to deal with so many corner cases in CI and other things for a no real gain.
-The reality is git works perfectly with bigger projects and smart enough that people working on two different "subprojects" don't create any conflict.
-So we started merging a lot of it back into the main repo and that was it.
-
-I see some advantages submodules have other subtrees:
-- It's slightly easier to in a subproject when using submodule than with subtree (at least for git newcomers).
-Once you made sure your submodule is on a branch, you just go into it and work in a standard git.
-When using subtree, you have to know you're in a subtree and to your subtree push/pull to resync with someone working directly in the subproject.
-At the time conflict in subtrees were sometimes a bit weird and created history full of merge.
-
-- submodules are great when working with huge subrepo.
-We have a repository than had among its submodule: linux, gcc, gdb, glibc.
-This means a real lot of code/files and commits.
-Subtree would work but you'd endup with a humongous repo and as expected everything is slowed down.
-
-- submodules work well when you are moving between versions and branches of a subproject.
-Let me clarify with an example:
-We had a repo that had ffmpeg as a submodule with a large patch series from us.
-We would regularly create a new branch in the subrepo with all our patches on top of a new ffmpeg upstream release.
-And simply point the top project to this SHA1. And it worked great.
-I wouldn't risk doing that kind of things with subtree. I may be wrong here (I haven't tried it to be honest) the the push/pull approach doesn't seem to fit
- the idea of moving from a SHA1 to a seemingly unrelated one.
-
-Now that I'm working with reasonable repo sizes again, and linear history, I mostly stick with subtrees.
-
-Nicolas
+I have Included a picture to better illustrate the problem. What do
+you think? Is it possible to make git diff output similar to svn diff
+regarding this issue?
