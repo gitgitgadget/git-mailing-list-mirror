@@ -2,108 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3FB91F576
-	for <e@80x24.org>; Tue, 13 Feb 2018 10:44:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBF991F576
+	for <e@80x24.org>; Tue, 13 Feb 2018 11:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934237AbeBMKod (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 05:44:33 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:44098 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934031AbeBMKoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 05:44:23 -0500
-Received: from lindisfarne.localdomain ([92.22.21.220])
-        by smtp.talktalk.net with SMTP
-        id lY4NeT0Dyr5N9lY4UeMF1g; Tue, 13 Feb 2018 10:44:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1518518662;
-        bh=D1K7PeCUFP5pTlRjtiRvNLTj1yMbH6hAkTZ6gQ+/PtE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=bxs6tZoXdabptPlG70WJV8uCpu5CfOmVgVD3bwpvleV7PdsuJ3MzFzFXjzS2blQJS
-         nilWrRdNVJYS6u3lNOpxJPHwYyYWI4i/JcR0sSP8ft9nbtkuOZrXhWIbBn1Xp5S7Mk
-         U855IVXZv/FEvVlI24LTRZPK9PtSOT2JcrHgPQvg=
-X-Originating-IP: [92.22.21.220]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=M9M9E24s c=1 sm=1 tr=0 a=VSxTZYxioCnvaH7igEU67w==:117
- a=VSxTZYxioCnvaH7igEU67w==:17 a=evINK-nbAAAA:8 a=oZ4-CATJh8xiw80YYYkA:9
- a=gLAPGeZHsaOxALxc:21 a=6VszVuB5Kd0x5fGZ:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 2/4] t3701: add failing test for pathological context lines
-Date:   Tue, 13 Feb 2018 10:44:06 +0000
-Message-Id: <20180213104408.9887-3-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.16.1
-In-Reply-To: <20180213104408.9887-1-phillip.wood@talktalk.net>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfNR7JzisyBvKFCCUs+CWAowm/8Qlu+xMInVfO06ruI+gIqOxIhN6CHZuFevq4Hxl+10DNmuQ6YON+04wIleXylaoQGXRR+VPvb+lGgYyVWOzcC334AUJ
- wNe7YPoy7diynSK3ueaSQvdR5SAugwE4iIrwpxe9eThNKHdW2xKn4NOwzZZ3AICGJjSkG8YA2JsMLav9HO9w1v94wcQaF0+tXUkqLKaJS92bcGABnC9VhGs9
+        id S934409AbeBMLTX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 06:19:23 -0500
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:38678 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934226AbeBMLTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 06:19:22 -0500
+Received: by mail-pl0-f66.google.com with SMTP id m19so1582834pls.5
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 03:19:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tKfZBdXlQTiEbcb7DqbVBz56gZ2nXmoD0Cuh4gQFlPU=;
+        b=iGZ/7dF09mxUWKr+rc1kwG6CqQkDnUy2tvzpCvjoRPqYxJSs2P1DjCgnwiGlpmW/vH
+         oW2tidMosVzyRzNn8cC3XA2W708FFDnQNcnX41z0JkkkxiCnqSTdySHOi50P9w1kkgZ/
+         f89tFnita9Jd3Hij8L97mTKcp0i4jYnFd/QzNJOfwHfr1rC3Zyfrl3l1quVvqvjj+B9F
+         c5kWXnY18OHJWglIAnr1EGyJf0Ln2kE9wOEO+c1qdFs6prE7p0FaYl9zI25PnClT9xuY
+         KK7MrCgTdSzhMQA03LvRUHMquRQsiymAKQn5IAWZGRpIbAGCVJpzTjuYIxY789pPxCmb
+         ohMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tKfZBdXlQTiEbcb7DqbVBz56gZ2nXmoD0Cuh4gQFlPU=;
+        b=UxawE4nej3MlDLCOltDFKdQUS3p3y/cH6exJaZQh24TrwyjvRdZ8FDjhahT2/GMj39
+         EmMt8oQIIYcStKPJVL1wGkjWFca0QNqJsDhfu1E60ApbEK9Cy/ze72Ec1dCscLwBVbZc
+         83YphTXbXyUUH1bK26UMMJiUGZbYHlvhIspg+g9S1qf8xArpnoGoI28OU4VbCBoFauKg
+         6cqy9e6+ktX7X17Y7pW5ZdVFzLC4yIt3gGns836y6f5ELbKdOn61u48dESIZED+iDHuG
+         UuXkPERjh1AHDmoZqGLfJDnQNEGU24goVYPDc5soU7dwdS6KHrY1HMlEckWTSVuIgTJo
+         3KEg==
+X-Gm-Message-State: APf1xPC3fJLitQ1Na54ubph3VQcEVbKMCKgxCCbT+GXGgBYPUNDrRPsu
+        sdbHpzMcuEi9ga0Umt2jNPScunRUq16ta0+cUphXcqjO
+X-Google-Smtp-Source: AH8x224BDytowmJqe8XOUv2MVxOs4YSeLkFYN8m4AyumDeuV/ZHpt8PopcJwXcldLSnE5oEb4gUzCOmRZYL4ly5PeMw=
+X-Received: by 2002:a17:902:6b05:: with SMTP id o5-v6mr798687plk.179.1518520762127;
+ Tue, 13 Feb 2018 03:19:22 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.100.163.48 with HTTP; Tue, 13 Feb 2018 03:19:21 -0800 (PST)
+In-Reply-To: <CACsJy8BPy_D4pg3n+c6eL_W=9eqeA++V4TOhp3PgOo_++YGhVw@mail.gmail.com>
+References: <450ff45707b58d6796d55cd594b50686e5d62fc2.1518365675.git.martin.agren@gmail.com>
+ <ad9a12af60cdc6ff747337c4116fe41860f82701.1518365675.git.martin.agren@gmail.com>
+ <CACsJy8BPy_D4pg3n+c6eL_W=9eqeA++V4TOhp3PgOo_++YGhVw@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 13 Feb 2018 12:19:21 +0100
+Message-ID: <CAN0heSoDA1bAupV1ZNAF_2K6Op9tM6QGJFCC8RT8WkgQO_EQZg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] config: respect `pager.config` in list/get-mode only
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 13 February 2018 at 11:25, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Feb 11, 2018 at 11:40 PM, Martin =C3=85gren <martin.agren@gmail.c=
+om> wrote:
+>> Similar to de121ffe5 (tag: respect `pager.tag` in list-mode only,
+>> 2017-08-02), use the DELAY_PAGER_CONFIG-mechanism to only respect
+>> `pager.config` when we are listing or "get"ing config.
+>>
+>> Some getters give at most one line of output, but it is much easier to
+>> document and understand that we page all of --get[-*] and --list, than
+>> to divide the (current and future) getters into "pages" and "doesn't".
+>
+> I realize modern pagers like 'less' can automatically exit if the
+> output is less than a screen. But are we sure it's true for all
+> pagers? It would be annoying to have a pager waiting for me to exit
+> when I only want to check one config item out (which prints one line).
+> Trading one-time convenience at reading the manual with constantly
+> pressing 'q' does not seem justified.
 
-When a hunk is skipped by add -i the offsets of subsequent hunks are
-not adjusted to account for any missing insertions due to the skipped
-hunk. Most of the time this does not matter as apply uses the context
-lines to apply the subsequent hunks in the correct place, however in
-pathological cases the context lines will match at the now incorrect
-offset and the hunk will be applied in the wrong place. The offsets of
-hunks following an edited hunk that has had the number of insertions
-or deletions changed also need to be updated in the same way. Add
-failing tests to demonstrate this.
+Well, there was one recent instance of a misconfigured LESS causing the
+pager not to quit automatically [1]. Your "Trading"-sentence does argue
+nicely for rethinking my approach here.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3701-add-interactive.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+A tweaked behavior could be documented as something like:
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 058698df6a4a9811b9db84fb5900472c47c61798..6838698a1382b24724cfbd3be04a7054489b94af 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -541,4 +541,34 @@ test_expect_success 'status ignores dirty submodules (except HEAD)' '
- 	! grep dirty-otherwise output
- '
- 
-+test_expect_success 'set up pathological context' '
-+	git reset --hard &&
-+	test_write_lines a a a a a a a a a a a >a &&
-+	git add a &&
-+	git commit -m a &&
-+	test_write_lines c b a a a a a a a b a a a a >a &&
-+	test_write_lines     a a a a a a a b a a a a >expected-1 &&
-+	test_write_lines   b a a a a a a a b a a a a >expected-2 &&
-+	write_script editor <<-\EOF
-+	sed /^+c/d "$1" >"$1.tmp"
-+	mv "$1.tmp" "$1"
-+	EOF
-+'
-+
-+test_expect_failure 'add -p works with pathological context lines' '
-+	git reset &&
-+	printf "%s\n" n y |
-+	git add -p &&
-+	git cat-file blob :a > actual &&
-+	test_cmp expected-1 actual
-+'
-+
-+test_expect_failure 'add -p patch editing works with pathological context lines' '
-+	git reset &&
-+	printf "%s\n" e y |
-+	GIT_EDITOR=./editor git add -p &&
-+	git cat-file blob :a > actual &&
-+	test_cmp expected-2 actual
-+'
-+
- test_done
--- 
-2.16.1
+    `pager.config` is only respected when listing configuration, i.e.,
+    when using `--list` or any of the `--get-*` which may return
+    multiple results.
 
+Maybe it doesn't look to complicated after all. I'd rather not give any
+ideas about how we only page if there *are* more than one line of
+result, i.e., that we'd examine the result before turning on the pager.
+I think I've avoided that misconception here.
+
+Thanks
+Martin
+
+[1] https://public-inbox.org/git/2412A603-4382-4AF5-97D0-D16D5FAAFE28@eluvi=
+o.com/
