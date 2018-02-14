@@ -2,107 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 549121F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 17:48:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC731F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 17:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161396AbeBNRr7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 12:47:59 -0500
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:44797 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161300AbeBNRr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 12:47:58 -0500
-Received: by mail-qt0-f174.google.com with SMTP id f18so8698272qth.11
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:47:57 -0800 (PST)
+        id S1161564AbeBNR6l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 12:58:41 -0500
+Received: from mail-yw0-f177.google.com ([209.85.161.177]:44673 "EHLO
+        mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161247AbeBNR6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 12:58:40 -0500
+Received: by mail-yw0-f177.google.com with SMTP id y65so4151453ywg.11
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:58:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=GGH4rW0LUaS9/XNoagG6T5G7h6qIavbj3XycmpeLDyc=;
-        b=DcZZWsQS54kaqlw2/U4lDuPmO7b6+3zx08TtyvzkmHgayP0JBbfKKniQA8pl1rRWgq
-         Vmiwcbw2ESWnBKYoSoZKhwC/tl+zozEl9YMnaTLY8Y/zJJTRN3bR8fJV5mF00u6H9p3p
-         oE3AG03XafsGR5lB3tJXxfiznEU8EJlzGeB3PwdDLAdcrhgPRNyjx4nPMQs6kQNU+qYl
-         lpLaQZU9sTBfzJ5EgKMFHelCZijuLASJl8Mf6z2669lX2317pPDRyqkwnoTVWudUI2wD
-         PurhfPe5RuADTN4Bpllo+rGq8gy85PPTh0HtJnjrz3COgXpAZyGeLiNQaFlmMjpckFyx
-         c0mw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=W5P3pk7VDhDG836RriGki9Gpgs0rtQQvj73lQbaBxZE=;
+        b=N0QCSg7Vq0BPk5f2S9JBw6XdNI2fqlsj1ebIqFZNYucUi1Ifpv19w+yxWD0eU+LrNf
+         4/vqUvVi9FDz0RtU1GY5YQuvTTZNK+pHD95XV5h6M5IKE1xgdQMwOkPTKcrw9aUZu6i1
+         Kd53t+hOuYGI2Hv2q5VsrRXNgTwJV9+D8IzeJu/xWlPY/jnBBLEzgLJsUiKHhGZ7pkk6
+         WpqyaTdMje28pXnOAYEKRvsyyLVUSoC1h8RLIajZrk08c5Yu/D6ryAiogx5rlTrpOtQG
+         9xUaJd4LPLom9Phfdf4uXEL4iEqL6riLLF4Hnhy07NQPgBytWk4V9eIspoW0pUmHIaiE
+         beZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=GGH4rW0LUaS9/XNoagG6T5G7h6qIavbj3XycmpeLDyc=;
-        b=tv9HbaCjljYXc2fKN7hqkpSQWvYGOKjpWlwJyqXwYkJ6XoublQod7j+a33FSzhQApW
-         rywFl2nRx+81XbVcxPf3/ebHfZmIrRJ3BIbsiw7cThEG43EEtIuz3NJCvp0VZErvBeb+
-         Avn/QMvd+/u9OfcfH0scY5GNGiQu+ARSIyU6Rb5OBOlwFEZ00xzhciG6w0xfQyIP7Kkz
-         W++8brYvpbvxNeP1Ctvdn56gQUzZFcBlN4YQ4IzNKDjrcU+hdUMsSUzZgwJOnbTktEAp
-         ChlI8CPpjiC19b3/QNHOiVNUI+waDzycVwyHEF3HDwTM0bt/SAfb0tSw4Yy6bWsnLYXl
-         xEXA==
-X-Gm-Message-State: APf1xPD8Fq0PLV2iGQZOrE1V4ZgpwZbWANyCmxb9Gsc+XQGaUBb9Mid7
-        85Ou5IubMv2JYCvaUiJuD5N1oBab
-X-Google-Smtp-Source: AH8x224MPGzPsCIvz3ZUeG8jm2jDZb6fW65r24RrRNdVkwCXHiDRZ+WVd980r79xeVt6jSSqK7Orgw==
-X-Received: by 10.237.37.196 with SMTP id y4mr9388752qtc.182.1518630477085;
-        Wed, 14 Feb 2018 09:47:57 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id c26sm10259867qtg.38.2018.02.14.09.47.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Feb 2018 09:47:56 -0800 (PST)
-Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
- <8f014e98-8360-785c-fc5d-0664466057fb@gmail.com>
- <xmqqy3jvo57n.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7259deac-1d9b-fb01-e8dc-3ad7fdd8ecee@gmail.com>
-Date:   Wed, 14 Feb 2018 12:47:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=W5P3pk7VDhDG836RriGki9Gpgs0rtQQvj73lQbaBxZE=;
+        b=iuC+0vSWmoJNS0Di8W0I2LqhLds40Nw4JdsksajaOYgIxKTsTo36XEYVALlcuIlZfk
+         gTFpnfpGGJOeB2AcjujfXngEpCCFIn1/790P9JhPFosqj0wOTSL0AuO7CfTpQHW6FMdq
+         XSCtQBFC5BuK3If/XO1eSDHEXB6tvAsiMobY6AdwRC7QDGaSUdVaLKX0zrtlNlj8xeDD
+         iu2TmYmjlPf/MxwEyfhZcn+cjggeF3yLxGYv8arQKokdDW4USNqrok+z+eqcPSpKJXei
+         hIxqLtsLMx4M+pMCUFy/DpwAf+8fwlTU7eAzZJzxiwGDQPXqFu0zkorw7eCHGRUQPTZ7
+         85fg==
+X-Gm-Message-State: APf1xPAZ13MWn26Ei++bT1jQosfrcJi3+QRyhFElVt8fFTs2RhFXTU85
+        ryPzfNZJXy1iqlfr8PJSBgzjU38zb0fWshPDslod2A==
+X-Google-Smtp-Source: AH8x225lcTtCUoAWx80mPd1+IQKXuw1Jx1ucfI9ZQ3OHQlwYs9QfBR4i9J6aoKpqiSx/UG2scmsxG2k7ATwQT2avgB4=
+X-Received: by 10.37.180.65 with SMTP id c1mr35948ybg.438.1518631119842; Wed,
+ 14 Feb 2018 09:58:39 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3jvo57n.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 09:58:39
+ -0800 (PST)
+In-Reply-To: <CAPig+cQwzSVkapkRxFOn7DSVJ8hCXnuCciPQdFaZnFEq=VKCuA@mail.gmail.com>
+References: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
+ <20180213014130.190374-1-sbeller@google.com> <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
+ <CAPig+cQwzSVkapkRxFOn7DSVJ8hCXnuCciPQdFaZnFEq=VKCuA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 14 Feb 2018 09:58:39 -0800
+Message-ID: <CAGZ79kZRJcEH8XGXSqWRZn7GHr6w-ep7V=WK9SytAFNro=d5PQ@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 2/14/2018 12:23 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On Tue, Feb 13, 2018 at 11:23 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Feb 12, 2018 at 10:55 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> On Mon, Feb 12, 2018 at 8:41 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> + * Output the formatted string in the specified color (and then reset to normal
+>>> + * color so subsequent output is uncolored). Omits the color encapsulation if
+>>> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+>>> + * the color.  BUG: The `color_print_strbuf` prints the given pre-formatted
+>>> + * strbuf instead, up to its first NUL character.
+>>
+>> "`color_print_strbuf` prints the given pre-formatted strbuf (BUG: but
+>> only up to the first NUL character)."
+>>
+>> Probably not worth a re-roll is Junio can amend it locally.
 >
->> There have been a few "What's cooking" emails since I submitted v1 of
->> "Serialized Git Commit Graph" and it has not appeared with a tracking
->> branch. Is this a mistake, or is it something about the state of the
->> review?
-> The latter.
->
-> Once I pick up a topic and have it in 'pu', I'd be committing to
-> carrying it and keeping it up-to-date, while dealing with possible
-> conflicts with other topics.  As I do not have infinite bandwidth, I
-> try not to chase targets that are still moving too rapidly, which in
-> turn means that a hot topic everybody is excited by its goal will
-> take more rerolls than other topics before hitting 'pu', because it
-> gets more good suggestions and it takes time for its patches to stop
-> morphing a lot.
+> By the way, thanks for the patience in the face of the nit-picking
+> this patch has undergone.
 
-Thanks for clarifying. That makes sense.
+In retrospect it is clear why we have so much nitpicking here
+as it adds documentation to a part of git that is rather non-essential. ;-)
 
-> The discussion in the last and current rounds gave me an impression
-> that some stuff (e.g. "graph-head") are still likely to change quite
-> a lot during the review-response cycle.  Is everybody happy with the
-> latest set of patches or are there issues raised already in the
-> review that are better addressed before we start making it interact
-> with other topics in flight?
-
-To avoid causing a tangent in this thread, I'll send a message on the v3 
-thread summarizing what I plan to do for v4 and ask for consensus on 
-that approach before I do.
-
-Thanks,
--Stolee
+Thanks for bearing with my inability to write perfect code on the first try.
