@@ -2,104 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D045A1FAE2
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7CF51F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:31:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161971AbeBNS2O (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:28:14 -0500
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:37638 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161778AbeBNS2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 13:28:11 -0500
-Received: by mail-wm0-f66.google.com with SMTP id v71so23686382wmv.2
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 10:28:10 -0800 (PST)
+        id S1161915AbeBNSbe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:31:34 -0500
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:34323 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161897AbeBNSbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 13:31:33 -0500
+Received: by mail-wm0-f52.google.com with SMTP id j21so18957643wmh.1
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 10:31:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AZuHE1i+d75uJXK9WT0Wlc+J6TqTqVBZ8p1v893Rulw=;
-        b=jYsfplk+YGCbl6flYvY2Xs54EfsyJ8I1d9L8FLzD7fnv6SZoN/C/ishWAxHaBbdKVL
-         s2NSGPSamJIBXM5V6QO+khpbkw/5etnNnIi2VPw4BniY57g0yMWxrbVthUyWrJ9dNVyb
-         Sjjos2foaeagtOnju0i2cPkVm21bGW8EFcqsyKK36oOOH2oaAZ6w3ISM+Zmc4rh/doKQ
-         EHwB6SaSWoB9yTp0u7s7UssQncXg8ljfhKcBJSPWXHS64Q53twiGx7HjzszhUtYugbZK
-         17e4k45FWQdvfitytZuD3jdUgUFiFuVY/Lxh8W5X8qfM6G90DhB+PaFhQIyv0gKxd1H9
-         XZYg==
+        h=reply-to:to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=XAQA9BFZk1uwhHd3Q9YQITLB7W6wU5An8M4pt2ULHik=;
+        b=EHnkyvRPTSZvpkptmK1NG4BPW9pWRYdrHuP+kY4t7u72n7EpcFDaxBbnRoPwTfGaK2
+         FSwLrwaG8tFZFgwUJpvcQRLkRqep2xIXTcuE8pPFwIbj6l/jXVq1tU4rfmaG//oa2Pz9
+         DEykgQNTkMTm9U+2SJE6ENwCuL8lEVFahqRF3cirCQYC76JfIuKd4R5iHp2k8whOyI/Q
+         hDSk3SpefEtxI/kp6hKoJVQwv4efCwuaPo4htZ4dWHTEztzPW8ui4vDlEZqmU5iq9kSM
+         aGnhauUI0GKj9VO6jmq+y7aK6UD9eFT1Dzyo4O4n7Ps8rw51KoM2mEcDiW97QIqpbtmM
+         sTeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=AZuHE1i+d75uJXK9WT0Wlc+J6TqTqVBZ8p1v893Rulw=;
-        b=Ha1ST4qmVBCxJmaw247n2yuMnOHqFbxH/2Z+vGMP63+GP17XP/6rWAZMZysUv7TOBG
-         xvDIWXeyyivQZS/y1c3UbZdI+lUnXjTvbzpmD7JQ8TaUW9jo89OuDUkJVcr5ZcXie+ZC
-         UbDyXxsaPWrkjIBIRPFPHohSdR4ypk6fiULwTSlQjExb+vNUWbSwkZHaEk12s0ntyFpd
-         mViG9DRQtn4R2YJw8/eT6RZAdbkizmetMITavWe6OuaZvAsILrS7rKzjWe5UIVf6PP8V
-         ekg7QiS3FEnM5MZ+YT/OZqXdWTtz/PYd71+1rpphIK8gPvplJGi8QcdaByP8b6qcU0eA
-         tD8g==
-X-Gm-Message-State: APf1xPDkokSpfJUfQiu8Pnf/DrfqKalOaMv8J5LYEd/8AxsjjX6y0Lao
-        ApuYzMU5QpHuBqgLuWwfSDk=
-X-Google-Smtp-Source: AH8x224jVQbFUHD579s/kZ2FR+TXi8k1VkTaQ6JSkCmMOUVXNkPVYO7ckB6NKpZNu8iuZ3MUm+E0Nw==
-X-Received: by 10.28.21.136 with SMTP id 130mr10139wmv.152.1518632889375;
-        Wed, 14 Feb 2018 10:28:09 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k5sm7059353wmg.47.2018.02.14.10.28.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 10:28:08 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <benpeart@microsoft.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1] fsmonitor: update documentation to remove reference to invalid config settings
-References: <20180214154130.111708-1-benpeart@microsoft.com>
-Date:   Wed, 14 Feb 2018 10:28:08 -0800
-In-Reply-To: <20180214154130.111708-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 14 Feb 2018 10:41:30 -0500")
-Message-ID: <xmqq7erfo287.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:reply-to:to:from:subject:message-id:date
+         :user-agent:mime-version:content-language:content-transfer-encoding;
+        bh=XAQA9BFZk1uwhHd3Q9YQITLB7W6wU5An8M4pt2ULHik=;
+        b=Da4zv4icezsqTNw19u9uT9+wbzHXgtkxjHyfTZ6Xjz1CQ7mD60sVlCbzR2shxMx6Rt
+         WlSrwUFwQuIuZL5nzcIQ431DV7kGV0FyXHRyqFMpLvK3MFvtaU/37e3fCqVdCpY6znwL
+         i7zORJ6RRuxj1ENK6S72HGhf4HbUB0lZp+8Dn2GiJRtmYCIGkWDVMnOqGJff3sOQdH41
+         IaieUph23jzPG07UoyDhUvMWXyQeEdUq1vRLKw6jkkOciJRYm3dCx0dB4ODvcTPxe7U4
+         qKfvOUzofA2bLoyp4Ab6wCrtvtP2vJuzlxZgLE0V0fFEZHBP7FbVtdXqX+guGTA5uIi2
+         iFiQ==
+X-Gm-Message-State: APf1xPDI0Bq5yylXSWgN1R+k99VpQGuXP7rgUwBjaYtXxER5QjPIckhe
+        BTZg5T+ypMj45CuyM1Y3u/apdw==
+X-Google-Smtp-Source: AH8x226rWHVhGGwBk/i/XGjvn5Nrq02Aksed9cZxhPrVxOQ1rn0dxyhBVlk5JmHiriiQDMkvjxNXIQ==
+X-Received: by 10.28.40.198 with SMTP id o189mr1640wmo.141.1518633091679;
+        Wed, 14 Feb 2018 10:31:31 -0800 (PST)
+Received: from venice.bhome (94-38-17-252.adsl-ull.clienti.tiscali.it. [94.38.17.252])
+        by smtp.googlemail.com with ESMTPSA id r68sm1749946wmr.14.2018.02.14.10.31.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Feb 2018 10:31:30 -0800 (PST)
+Reply-To: kreijack@inwind.it
+To:     git@vger.kernel.org, Goffredo Baroncelli <kreijack@gmail.com>
+From:   Goffredo Baroncelli <kreijack@gmail.com>
+Subject: "git add" with several pathspecS and one doesn't match
+Message-ID: <d5e4138e-d5d6-3a84-a222-8d0170a52ccb@gmail.com>
+Date:   Wed, 14 Feb 2018 19:31:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <benpeart@microsoft.com> writes:
+Hi All,
 
-> Remove the reference to setting core.fsmonitor to `true` (or `false`) as those
-> are not valid settings.
->
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
+I am facing this issue: I am ADDing some file with several pathspec, and one of these fails. The results is that no file is added at all.
 
-Thanks.  It is a bit embarrassing that nobody caught it for this
-long.  Will apply.
+Simple test case:
 
->
-> Notes:
->     Base Ref: master
->     Web-Diff: https://github.com/benpeart/git/commit/4b7ec2c11e
->     Checkout: git fetch https://github.com/benpeart/git fsmonitor_docs-v1 && git checkout 4b7ec2c11e
->
->  Documentation/git-update-index.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index bdb0342593..ad2383d7ed 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -484,8 +484,8 @@ the `core.fsmonitor` configuration variable (see
->  linkgit:git-config[1]) than using the `--fsmonitor` option to
->  `git update-index` in each repository, especially if you want to do so
->  across all repositories you use, because you can set the configuration
-> -variable to `true` (or `false`) in your `$HOME/.gitconfig` just once
-> -and have it affect all repositories you touch.
-> +variable in your `$HOME/.gitconfig` just once and have it affect all
-> +repositories you touch.
->  
->  When the `core.fsmonitor` configuration variable is changed, the
->  file system monitor is added to or removed from the index the next time
->
-> base-commit: e7e80778e705ea3f9332c634781d6d0f8c6eab64
+$ git init .
+$ touch 123.txt
+$ git add "*.txt" "*.doc"
+fatal: pathspec '*.doc' did not match any files
+$ git status
+[...]
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	123.txt
+[...]
+
+
+Results: no file is added
+Expected results: the files which match any pathspec should be added
+
+Looking at the code, git works properly:
+
+from builtins/add.c, near line 500
+[...]
+		for (i = 0; i < pathspec.nr; i++) {
+			const char *path = pathspec.items[i].match;
+			if (pathspec.items[i].magic & PATHSPEC_EXCLUDE)
+				continue;
+			if (!seen[i] && path[0] &&
+			    ((pathspec.items[i].magic &
+			      (PATHSPEC_GLOB | PATHSPEC_ICASE)) ||
+			     !file_exists(path))) {
+				if (ignore_missing) {
+					int dtype = DT_UNKNOWN;
+					if (is_excluded(&dir, &the_index, path, &dtype))
+						dir_add_ignored(&dir, &the_index,
+								path, pathspec.items[i].len);
+				} else
+					die(_("pathspec '%s' did not match any files"),
+					    pathspec.items[i].original);
+			}
+		}
+
+
+It seems that if any pathspec doesn't match, all add action fails. Which is the rationale of this choice ? I would expect that an error message would be printed, but the matched files would be added.
+
+My use case is the following: I use "git" as backup system, and I do something like:
+$ git add paths/*.doc 
+$ git add paths/*.pdf
+$ git commit -m "bla bla"
+
+I know that git is not the best method for that, however we have a lot of files which are moved between different directories, and git seems to handle this job quite nicely. 
+Unfortunately the filesystem is quite slow and quite huge, so I would prefer to do a single "git add", in order to avoid to traverse all the filesystem more times. But this would not work because if one pathspce fails, it prevents all other pathspecs to success.
+
+
+Please put me in CC because I am not subscribed.
+
+
+BR
+G.Baroncelli
+
+
+-- 
+gpg @keyserver.linux.it: Goffredo Baroncelli <kreijackATinwind.it>
+Key fingerprint BBF5 1610 0B64 DAC6 5F7D  17B2 0EDA 9B37 8B82 E0B5
