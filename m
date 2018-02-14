@@ -2,177 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C26FF1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 12:53:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85FF91F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 13:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967764AbeBNMxY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 07:53:24 -0500
-Received: from mail-ua0-f195.google.com ([209.85.217.195]:33400 "EHLO
-        mail-ua0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967589AbeBNMxX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 07:53:23 -0500
-Received: by mail-ua0-f195.google.com with SMTP id p12so13604501uad.0
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 04:53:23 -0800 (PST)
+        id S967842AbeBNNWU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 08:22:20 -0500
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:39743 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967798AbeBNNWT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 08:22:19 -0500
+Received: by mail-pg0-f48.google.com with SMTP id w17so1922665pgv.6
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 05:22:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=op4x7hgthfF4qYFz/jT6Yr0CInL3900Pyq2KHHO9IX4=;
-        b=IOVQ6GCTzRS+zOzEPBrfF41zqW13dhWVNHoBe3BWTdlQTkSswABzLu4enR/qv/tJg1
-         gj0H2RDTt+dcoYq6WND1rU0XZQuvjTA7tdacMreBNA06gwrG2goD07FWwpvfXOTY4uKb
-         X90Gq8B8LG6bdjjP5tCQP9cy6JHi8k7heZGF07efQzGocP6htoXYXt8wD0dZNpBz4fT0
-         LxMqPENWirSHzWEIbD+8ySZCJ7p6J6d24WLMsFgjLorc0142oP1dnrrt7BCoSNyL4xdp
-         W8Ur568K9Ve+YNwJYu5/9cZ6PHENWOG3netfhmGmq0TZW3elmjQH1IusKKmPFnvadRv/
-         rJvA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=zWjtV8UlZg8GYrGFIXBUpxKRFP7DNZhbjd4nyEicMhA=;
+        b=NdeS2JYfYqV5UGlkQUtU7oVp72GtyxE7jAfjnQAJwAFzr7woFP9PjVSEQORpZkpM/T
+         Sh4dX8Rq6iFslSrXeIDh52Qq85ZlprdfHc8IHHD2WoEAIrvClqXdn1quSpPTwocd0mtj
+         hYceMK1Fe0fFie2WmAsCDBp4Xk/QgMYyAK8hgcKBffYUYohmv4tPhpPp/U5m5IWLRZAd
+         SwFSXNcSpbiOgwiDKCImw6ta/CqKvgS7qChsBGbJ2YjLfEAsQW+Tl1+/BCDY00FojWXO
+         lQrD99xqnLsbtdsbuBVsF9s5z5isBCk6w2VsWlgf5fLLBfHhdoSab4Vx9WrbrcnAEF4i
+         1rOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=op4x7hgthfF4qYFz/jT6Yr0CInL3900Pyq2KHHO9IX4=;
-        b=bHBEPz/aIrgkn6gx30uCaBJDgA/+hRLrK+v4zeLXvzv7qmDPeWIFrluzODlTs/hWGZ
-         p+myOnY6CsBJr2hGKd7pU50fKTI5c0wMr0FoaFhFvKmk8MPfSqDnFQ6J4GFfKYxr1DsO
-         Qy5APBiVhgyugLEAZ2qmB3WyajevgzpdiLppaPZrZSgav7yRk88WE2i63LakghtJFCth
-         slpDOvUi+ZtR/T1/8/T1cieSU7+Ug/xacB1blxqyqJ+u1uyEtTcWdj3otvNpbHqUHneW
-         tvrMcTVEeIGzFCJXDep9LH0B9sjFCpOBc9RfRVv7hZwm9L6zh52hQ/N34g0igWEOz/qb
-         qC9w==
-X-Gm-Message-State: APf1xPADTR2iVCH/BuomaT1mUGhH/7tp996+uAaFpgy4s4UvAfu9df9s
-        uiA91gJaOta4gfTa1sU4+46bhIZE6n5soMelnTrmzg==
-X-Google-Smtp-Source: AH8x225tFbojVtslT5oHz6xoi2/8BgS9qSWf6WovZOqJUIb7oJor8hKE4cF0UDu1R3mvP/ImYsHso0z6a4NGIJ2jOiI=
-X-Received: by 10.176.5.66 with SMTP id 60mr4359994uax.180.1518612802599; Wed,
- 14 Feb 2018 04:53:22 -0800 (PST)
-MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Wed, 14 Feb 2018 04:53:22 -0800 (PST)
-In-Reply-To: <20180209110221.27224-7-pclouds@gmail.com>
-References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com>
- <20180209110221.27224-7-pclouds@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 14 Feb 2018 13:53:22 +0100
-Message-ID: <CAM0VKjmFEyr4qHdc1qfW0M_RZ7cM9bCfsn-M4Rapzt6CPhZE1g@mail.gmail.com>
-Subject: Re: [PATCH v3 06/42] completion: use __gitcomp_builtin in _git_am
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=zWjtV8UlZg8GYrGFIXBUpxKRFP7DNZhbjd4nyEicMhA=;
+        b=TcBb3Uofyt4AQZuncdMUJOz1+dVSHPvcKmJWH1XyczncGV4eQ9f025lu1+9BPCVRx3
+         TjW1opw97+65t89yJBkrgEA8oBawk6VMfyqFL2q6t9DQO20j01ISVwRJXBNHU170fqTA
+         4gR4gJ3odz3s2HBwNVBJTPSaSzKtytSCnCx4SZtRYrD4ljgyHG5tJrgUdm8jhGlNq0nU
+         BWxeiL9HMl9Ep/fBa7w9vy/Ut/jtVH1I+aaVWg6bPwn4EEHYzHElKRwAGI9huyXDMx5T
+         GugaJlZ7bAd+Q8o/V43Qer/qc9lOEfYQCztmCZf2uK6x0/+8lNa5fWXYikohoQsH+b8/
+         rITQ==
+X-Gm-Message-State: APf1xPAXxZ9ImTgoOQ4A1wCKBQ5dl14w0NNHjqZv5fhgFbmqLE1SfGkx
+        6KnTGVxpUhUJSfD0rbOAd4E=
+X-Google-Smtp-Source: AH8x225esH6v/EAM8BBZHH6lrTY8cxZ+xDDFaL+GY4V7ZIkDz7QPkcKkLS1xq7VLelfeEAu/YdviFQ==
+X-Received: by 10.98.36.81 with SMTP id r78mr4757155pfj.196.1518614538571;
+        Wed, 14 Feb 2018 05:22:18 -0800 (PST)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id x8sm35718653pfk.123.2018.02.14.05.22.15
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Feb 2018 05:22:18 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v6 5/7] convert: add 'working-tree-encoding' attribute
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20180210094852.GB11525@tor.lan>
+Date:   Wed, 14 Feb 2018 14:22:13 +0100
+Cc:     Lars Schneider <lars.schneider@autodesk.com>, git@vger.kernel.org,
+        gitster@pobox.com, j6t@kdbg.org, sunshine@sunshineco.com,
+        peff@peff.net, ramsay@ramsayjones.plus.com,
+        Johannes.Schindelin@gmx.de
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <E13489D5-5BED-4C30-A153-4146822C3DC6@gmail.com>
+References: <20180209132830.55385-1-lars.schneider@autodesk.com> <20180209132830.55385-6-lars.schneider@autodesk.com> <20180210094852.GB11525@tor.lan>
+To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 9, 2018 at 12:01 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> The new completable options are:
->
-> --directory
-> --exclude
-> --gpg-sign
-> --include
-> --keep-cr
-> --keep-non-patch
-> --message-id
-> --no-keep-cr
-> --patch-format
-> --quiet
-> --reject
-> --resolvemsg=3D
->
-> In-progress options like --continue will be part of --git-completion-help=
-er
-> then filtered out by _git_am() unless the operation is in progress. This
-> helps keep marking of these operations in just one place.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  contrib/completion/git-completion.bash | 11 ++++-------
->  parse-options.h                        |  4 ++--
->  rerere.h                               |  3 ++-
->  3 files changed, 8 insertions(+), 10 deletions(-)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 1e0bd835fe..eba482eb9c 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1105,12 +1105,13 @@ __git_count_arguments ()
->  }
->
->  __git_whitespacelist=3D"nowarn warn error error-all fix"
-> +__git_am_inprogress_options=3D"--skip --continue --resolved --abort"
->
->  _git_am ()
->  {
->         __git_find_repo_path
->         if [ -d "$__git_repo_path"/rebase-apply ]; then
-> -               __gitcomp "--skip --continue --resolved --abort"
-> +               __gitcomp "$__git_am_inprogress_options"
->                 return
->         fi
->         case "$cur" in
-> @@ -1119,12 +1120,8 @@ _git_am ()
->                 return
->                 ;;
->         --*)
-> -               __gitcomp "
-> -                       --3way --committer-date-is-author-date --ignore-d=
-ate
-> -                       --ignore-whitespace --ignore-space-change
-> -                       --interactive --keep --no-utf8 --signoff --utf8
-> -                       --whitespace=3D --scissors
-> -                       "
-> +               __gitcomp_builtin am "--no-utf8" \
-> +                       "$__git_am_inprogress_options"
->                 return
->         esac
->  }
-> diff --git a/parse-options.h b/parse-options.h
-> index 3c32401736..009cd863e5 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -144,8 +144,8 @@ struct option {
->  #define OPT_STRING_LIST(s, l, v, a, h) \
->                                     { OPTION_CALLBACK, (s), (l), (v), (a)=
-, \
->                                       (h), 0, &parse_opt_string_list }
-> -#define OPT_UYN(s, l, v, h)         { OPTION_CALLBACK, (s), (l), (v), NU=
-LL, \
-> -                                     (h), PARSE_OPT_NOARG, &parse_opt_te=
-rtiary }
-> +#define OPT_UYN(s, l, v, h, f)      { OPTION_CALLBACK, (s), (l), (v), NU=
-LL, \
-> +                                     (h), PARSE_OPT_NOARG|(f), &parse_op=
-t_tertiary }
->  #define OPT_DATE(s, l, v, h) \
->         { OPTION_CALLBACK, (s), (l), (v), N_("time"),(h), 0,    \
->           parse_opt_approxidate_cb }
 
-Shouldn't this hunk go into a commit of its own?  Or at least it would
-deserve a mention in the commit message.
+> On 10 Feb 2018, at 10:48, Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>=20
+> On Fri, Feb 09, 2018 at 02:28:28PM +0100, lars.schneider@autodesk.com =
+wrote:
+>> From: Lars Schneider <larsxschneider@gmail.com>
+>>=20
+>> ...
+>>=20
+>> +Please note that using the `working-tree-encoding` attribute may =
+have a
+>> +number of pitfalls:
+>> +
+>> +- Git clients that do not support the `working-tree-encoding` =
+attribute
+>=20
+> A client to Git ?
+> Or may be "third party Git implementations"
+
+OK, I'll go with "Third party Git implementations".
 
 
-> diff --git a/rerere.h b/rerere.h
-> index c2961feaaa..5e5a312e4c 100644
-> --- a/rerere.h
-> +++ b/rerere.h
-> @@ -37,6 +37,7 @@ extern void rerere_clear(struct string_list *);
->  extern void rerere_gc(struct string_list *);
->
->  #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
-> -       N_("update the index with reused conflict resolution if possible"=
-))
-> +       N_("update the index with reused conflict resolution if possible"=
-), \
-> +       PARSE_OPT_NOCOMPLETE)
->
->  #endif
-> --
-> 2.16.1.207.gedba492059
->
+>>=20
+>> +As an example, use the following attributes if your '*.proj' files =
+are
+>> +UTF-16 encoded with byte order mark (BOM) and you want Git to =
+perform
+>> +automatic line ending conversion based on your platform.
+>> +
+>> +------------------------
+>> +*.proj		text working-tree-encoding=3DUTF-16
+>> +------------------------
+>> +
+>> +Use the following attributes if your '*.proj' files are UTF-16 =
+little
+>> +endian encoded without BOM and you want Git to use Windows line =
+endings
+>> +in the working directory. Please note, it is highly recommended to
+>> +explicitly define the line endings with `eol` if the =
+`working-tree-encoding`
+>> +attribute is used to avoid ambiguity.
+>> +
+>> +------------------------
+>> +*.proj 		working-tree-encoding=3DUTF-16LE text eol=3DCRLF
+>> +------------------------
+>> +
+>> +You can get a list of all available encodings on your platform with =
+the
+>> +following command:
+>=20
+> One question:
+> +*.proj		text working-tree-encoding=3DUTF-16
+> vs
+> *.proj 		working-tree-encoding=3DUTF-16LE text eol=3DCRLF
+>=20
+> Technically the order of attributes doesn't matter, but that is not =
+what we
+> want to demonstrate here and now.
+> I would probably move the "text" attribute to the end of the line.
+> So that readers don't start to wonder if the order is important.
+
+I agree in general. However, I would move "text" to the beginning to be
+consistent with the gitattribute pattern above. OK?
+
+
+>>=20
+>> +	if (has_prohibited_utf_bom(enc->name, src, src_len)) {
+>> +		const char *error_msg =3D _(
+>> +			"BOM is prohibited for '%s' if encoded as %s");
+>> +		const char *advise_msg =3D _(
+>> +			"You told Git to treat '%s' as %s. A byte order =
+mark "
+>> +			"(BOM) is prohibited with this encoding. Either =
+use "
+>> +			"%.6s as working tree encoding or remove the BOM =
+from the "
+>> +			"file.");
+>=20
+> "You told Git" is probly right from Gits point of view, and advises =
+are really helpfull.
+> But what should the user do about it ?
+> Could we give a better advise ?
+>=20
+>=20
+> "A byte order mark (BOM) is prohibited with %s.
+> Please remove the BOM from the file %s=20
+> or use "%s as working-tree-encoding"
+>=20
+> I would probably suspect that a tool wrote the BOM, and that is
+> good and can or should not be changed by a user.
+>=20
+> So a simply message like this could be the preferred (and only)
+> solution for a user:
+> "A byte order mark (BOM) is prohibited with %s.
+> Please use "%s as working-tree-encoding"
+
+OK. I like the last one!
+
+
+> (And why %.6s and not simply %s ?)
+
+The encodings is UTF-16LE, UTF-16BE, UTF-32LE, or UTF-32BE.
+I just use the first 6 characters to print the encoding that
+allows BOMs (UTF-16 or UTF-32). I'll add a comment to explain=20
+the trickery in the code!
+
+Thanks,
+Lars=
