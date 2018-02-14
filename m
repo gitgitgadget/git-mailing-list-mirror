@@ -2,115 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A48D11F576
-	for <e@80x24.org>; Wed, 14 Feb 2018 09:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 061201F576
+	for <e@80x24.org>; Wed, 14 Feb 2018 10:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966925AbeBNJhW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 04:37:22 -0500
-Received: from mail-ot0-f174.google.com ([74.125.82.174]:34215 "EHLO
-        mail-ot0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966693AbeBNJhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 04:37:21 -0500
-Received: by mail-ot0-f174.google.com with SMTP id l10so19857328oth.1
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 01:37:21 -0800 (PST)
+        id S967075AbeBNKK5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 05:10:57 -0500
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:34761 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967046AbeBNKK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 05:10:56 -0500
+Received: by mail-wr0-f182.google.com with SMTP id m5so9492543wrg.1
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 02:10:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=YlhHSxK8C2mLKJ2kNxgW7qT2F19X7M9DSzg8iOaWOq4=;
-        b=JW8/13jYuYMt3/IuskpLZxCAI01xaWcsPsOvV1mDH7ovEXWP5nOuHU7yn3bIfOhlom
-         CBQYNEYmu5YIVXAttpLYsf3i7nPkk1ADsYTtSF0FLSYv84q3PtVtemH46ZxZgfn8CuE4
-         6imHbrm/Jc4MoWUtlwBe6cM2hO95abbeAcSa9Tew3trtMOAxJlzYnH0YEROCRUaC1Jkh
-         ievq0zZY/1ph8PMWP4yA9n3NIw0/2IB9bSt1vmhZ6Fit1mGmU0j8uiRR1+0mvJ306VcG
-         w6/k4/O6rhN+Kv6EQjG5OaOqw2B6V51AKKhOZo+SASXOFDgNvdOeUtbxom9PSfMm2V4Y
-         4Slw==
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-disposition:user-agent;
+        bh=zAFeDIvZr+SkjbCuuRRQ39YGqRuC26tHbTP4kxGNoE4=;
+        b=NCs7e0580upq4u+PyPJVev/4EAogxtj92RnPevl1STvV8Voonsr31cwvu02ca7OLsq
+         H21ZK78qcKo/q/0z6vjiDEs4eGXLeXJQtEsKEi6Fz9Ghl0inNsqmhm3XMWkiX2Z+BhaY
+         7fmRr3/I5tP85sK9lAZca28us7bnY3upTUJr6CHiVv60CPiLt5khkhxWJtYG6mB38ZPu
+         rPgaNODzsE8m/Idq+Zu4qC8/VXp9MOEpb8krsyUrA6ew9vCVEvcjK7C/ZYKqSEuqcAEe
+         UB7KJZxm1YuTQLfnClP0HKHOGGOoX3nk4pYRk3ApI/Jl5JhFzFEQtA+VZCxPNV/XFvQu
+         Ipww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YlhHSxK8C2mLKJ2kNxgW7qT2F19X7M9DSzg8iOaWOq4=;
-        b=EUIWNGIi3+x2LohcCrvcJoHPWGx94SsDJj1dvj3BM/azHkR0xxBWpuoMf5Yy3643Ll
-         /6Peob4PDfziUBdgE4WuasF2KCcfQC3uDmn0E9+EgIme54+IJQTaKV9P2yRr+jVVxder
-         FGY8uBWLkJ7FkaUOS5qItYVbEglchrtNF8M3aXueqvAOeV5X1HLGXAmhg+TDh8yBfULz
-         TIriobYVphEkwBJNfTltZMKCgIAvtIyUZKlbWvmWtsArgGbpnEc1OtJmXgIOLRT7mwni
-         pAS0eiAlKy0c0HGCkJ8FeHOgn+eG0sBvA0YfRWCQPMhTZlufI50btk5J5p03OtyYiKp7
-         eU4Q==
-X-Gm-Message-State: APf1xPAc/VizS7p1MhPqATAi9z5GtqQlJnjgb0ECtBdAqvjYPLdTcSaK
-        bxpcAOjSngDUA5HOr/KYJgO54gNFonH0BdMvmAE=
-X-Google-Smtp-Source: AH8x225F+aiJ5a7Z8A3ZvSKB5+W0uoWFtjwjyEyPICKc9eB/AaV+qtJjq3e71SLODPGQwsdXcXOe0ajTslfFTvoEKJ0=
-X-Received: by 10.157.2.8 with SMTP id 8mr3195582otb.106.1518601040825; Wed,
- 14 Feb 2018 01:37:20 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
+         :mime-version:content-disposition:user-agent;
+        bh=zAFeDIvZr+SkjbCuuRRQ39YGqRuC26tHbTP4kxGNoE4=;
+        b=mLv0Vk1Ak+7860TaNN/IIgzDMUIPyxEYyLycanbe6+vOyQqi0+ryH/lRn4r0CQEw82
+         ydxKVLZFT9vMKlmRDbzjEDK/PWHC7JTcp1asuBlwk+8ThsmpaHSgAXEE/Pwxb8UKqveL
+         XGPuAQ6g5LQVIpw7oYsSk7m0Mp/LlK/6qOv1p5yIRCm4fnYbZ00fPcq3/Som4wkk797g
+         /2shU3XTs9wXe04QZsyRNT3FQn2bpjOLx/N1z0C7Cb2BsYWaRUdeZGNce1x1OTMKcX9U
+         MYL47ilUUkTcCh5U+p3b8aR7Q2bt2THd1JNwxzMGV8+XuAIsrirvhPVS0BL2OeqQf+oM
+         bU7A==
+X-Gm-Message-State: APf1xPBGLVThjiw+4ASS94OHLSf2GpXYA22pmk+8qju81Yxy+mS5xE8A
+        2uUmQmJATW163g8Wj6fXRbBKh9o+
+X-Google-Smtp-Source: AH8x226tOdCcHzfCs9nvKBgAVW3yZ6RDP+banaJGfqaa5hIA71XGzzHsto0q/TWQzz4x4+OWFFl16Q==
+X-Received: by 10.223.208.141 with SMTP id y13mr3666456wrh.13.1518603055478;
+        Wed, 14 Feb 2018 02:10:55 -0800 (PST)
+Received: from localhost (bzq-109-65-157-28.red.bezeqint.net. [109.65.157.28])
+        by smtp.gmail.com with ESMTPSA id c18sm7161002wmd.18.2018.02.14.02.10.54
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Feb 2018 02:10:54 -0800 (PST)
+Date:   Wed, 14 Feb 2018 12:10:19 +0200
+From:   Doron Behar <doron.behar@gmail.com>
+To:     git@vger.kernel.org
+Subject: [BUG] git init doesn't respect `--template` like configuration
+ variable init.templateDir and $GIT_TEMPLATE_DIR
+Message-ID: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
+Mail-Followup-To: git@vger.kernel.org
 MIME-Version: 1.0
-Received: by 10.74.25.140 with HTTP; Wed, 14 Feb 2018 01:36:50 -0800 (PST)
-In-Reply-To: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
-References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 14 Feb 2018 16:36:50 +0700
-Message-ID: <CACsJy8ASyntVwHfES_Rk4Fj6ftQC+moFd1gwgB3rzYhpdYOX9A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="rprondd7snfpffeu"
+Content-Disposition: inline
+User-Agent: NeoMutt/20171215
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 14, 2018 at 8:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * nd/parseopt-completion (2018-02-09) 42 commits
->  - git-completion.bash: add GIT_COMPLETION_OPTIONS=all config
->  - completion: use __gitcomp_builtin in _git_worktree
->  - completion: use __gitcomp_builtin in _git_tag
->  - completion: use __gitcomp_builtin in _git_status
->  - completion: use __gitcomp_builtin in _git_show_branch
->  - completion: use __gitcomp_builtin in _git_rm
->  - completion: use __gitcomp_builtin in _git_revert
->  - completion: use __gitcomp_builtin in _git_reset
->  - completion: use __gitcomp_builtin in _git_replace
->  - remote: force completing --mirror= instead of --mirror
->  - completion: use __gitcomp_builtin in _git_remote
->  - completion: use __gitcomp_builtin in _git_push
->  - completion: use __gitcomp_builtin in _git_pull
->  - completion: use __gitcomp_builtin in _git_notes
->  - completion: use __gitcomp_builtin in _git_name_rev
->  - completion: use __gitcomp_builtin in _git_mv
->  - completion: use __gitcomp_builtin in _git_merge_base
->  - completion: use __gitcomp_builtin in _git_merge
->  - completion: use __gitcomp_builtin in _git_ls_remote
->  - completion: use __gitcomp_builtin in _git_ls_files
->  - completion: use __gitcomp_builtin in _git_init
->  - completion: use __gitcomp_builtin in _git_help
->  - completion: use __gitcomp_builtin in _git_grep
->  - completion: use __gitcomp_builtin in _git_gc
->  - completion: use __gitcomp_builtin in _git_fsck
->  - completion: use __gitcomp_builtin in _git_fetch
->  - completion: use __gitcomp_builtin in _git_difftool
->  - completion: use __gitcomp_builtin in _git_describe
->  - completion: use __gitcomp_builtin in _git_config
->  - completion: use __gitcomp_builtin in _git_commit
->  - completion: use __gitcomp_builtin in _git_clone
->  - completion: use __gitcomp_builtin in _git_clean
->  - completion: use __gitcomp_builtin in _git_cherry_pick
->  - completion: use __gitcomp_builtin in _git_checkout
->  - completion: use __gitcomp_builtin in _git_branch
->  - completion: use __gitcomp_builtin in _git_apply
->  - completion: use __gitcomp_builtin in _git_am
->  - completion: use __gitcomp_builtin in _git_add
->  - git-completion.bash: introduce __gitcomp_builtin
->  - parse-options: let OPT__FORCE take optional flags argument
->  - parse-options: add OPT_xxx_F() variants
->  - parse-options: support --git-completion-helper
->
->  Will see another reroll.
->  cf. <CACsJy8BoPxbt=hqAd9fS7MLiF33FVtAk0=Fr_q7UgYy1YvEg0w@mail.gmail.com>
 
-Well, the next reroll would just drop 42/42, which may be easier for
-you to do it yourself. I don't think I can work out what all
-git-completion.bash needs to rewrite 42/42 in a couple days.
--- 
-Duy
+--rprondd7snfpffeu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+
+The title says it all.
+
+If I run `git init --template=~/path/to/my/template` I get the following
+message:
+
+	warning: templates not found ~/path/to/my/template
+
+But, if I run:
+
+	$ env GIT_TEMPLATE_DIR=~/path/to/my/template git init
+
+I don't get a warning and the template is used just fine.
+
+If I configure the configuration variable `init.templateDir` to
+`~/path/to/my/template` and run `git init` I don't get a warning and the
+template is used just fine.
+
+
+
+--rprondd7snfpffeu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQHKBAEBCAA0FiEEl8KuRJYyNM8farE0MRjsiMS8FJQFAlqECwgWHGRvcm9uLmJl
+aGFyQGdtYWlsLmNvbQAKCRAxGOyIxLwUlFD3C/4pXMwJLewz1hd6KKXQytUOPWlW
+TX7JEPVb90X7BxlRWG899jkNtMqDPTcdEc4/jZBdh9WNdgKRVvm5vs+CR9BYlBol
+TOoRQ2tH9iHvJjZEkj2VmlzrJ4RTIpiWPNuU03ukoaoDpi+bgQdZX9AW5Z7SiOEL
+IT7cdosRoUF2fstOXuJZPbgd/ozWU389x2OHCNrdOOZJL9JTMt6rTLCvR2jaB8HF
+dYcbF2e2HWI6c6O5zfKeIUfmBthMV0qEJ7V7QX00aG+d1q2BuXPPX5wiITfOAsj8
+lCDAxb8WZ3svNciwoFimge2/PMoKcDtOZmyVPoOAuQKutWl41dT5YewNClFnj/p5
+8GrepsPKtN6xoxjyOSfl/KORP87JuZhMh2EKygmmAAbXrN1Etwv0Cio9HHYFHGgI
+GWZJQvTF+Us0/+k4Gl654dHBwX6thv6acnZz3pCtV3jDzlrB0GcB3kIkZqDdNND5
+BmsXsbY1kF24H+C/QQR7e4CaAnoZUwkG23kaPH4=
+=LFy3
+-----END PGP SIGNATURE-----
+
+--rprondd7snfpffeu--
