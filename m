@@ -2,92 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 005F41F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 05:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96EF01F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 05:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751035AbeBNFHC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 00:07:02 -0500
-Received: from mail-it0-f48.google.com ([209.85.214.48]:38861 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750797AbeBNFHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 00:07:01 -0500
-Received: by mail-it0-f48.google.com with SMTP id k6so13570296ita.3
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 21:07:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mmBryuVYhcRV5rfBAbqqxS320biU0wc+xP3pdYzrdKk=;
-        b=bK9z1dq6Kb5hHQ8CrR3IgpqaW9QCrDFC9EvaEmEiHH+VijkV5tDgyoL5TEy38ClJjK
-         hp/zxkLE01Zb/LAa7MTCgVxsQnZ3rc8JH08jw004zJymCLGkF1cdwO3t7smzvFFIwiHp
-         SvfiIN7SoETW+iWU5W64XHgH/qFdJKSlWQSciTt1KG1clIrMkF9DiRk47HdHKVNcS4xC
-         OATua4C/09QLmm5pVFm5/INhovAU5lRwIuNxVx+UqNX3grujDu/knNDlb70k9qbbPBRZ
-         FMQtsYZRpbjjkZ75BJdaV9f8PbrBoxuGCES5kWCCZWknTuHAPQmhfecWx+yyI7Xhitvn
-         u6rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mmBryuVYhcRV5rfBAbqqxS320biU0wc+xP3pdYzrdKk=;
-        b=aeUKgUC88AO9nMAgX5aHDnf3sPWv18Geu5IDZZuvzmlKNLaccMrFyA8MRPSjzOH+36
-         Y+ixON2EVpf+7LUFU6KtoiHf+4AfCd1J/20p2ypGgJtI+mBrnhCewjyX1Yh2mS1PAwH4
-         fcs6/PUuH/ax+cdC58yxvUZQ4A+l83rqO4XZYJHRFpFujqjkr3YjXB+KM90FG/MV1SV+
-         n3PuSt60RE26XQrSqdN+C4UWdThSee9nRRoaxf4320JOgfSjr9Oj04RvIZZlOxQduvIl
-         pm3Mcwr9N/5OM50HjrRHBMaEFlbxQaoQZlXu03ZFd0JrfOypAXV5mI4IuBOstyHAFCbH
-         WN4A==
-X-Gm-Message-State: APf1xPCC9pvdtxV5WmhC+p1cK75yN9QlVD6DAH90o4CQCrHQuCASeisT
-        +ZRd3N5E9ybazWEPo9+8VgcGwLT7BgpG4Q2ETDcI6HPJ
-X-Google-Smtp-Source: AH8x224DcUnnrI4kMHvwUkaDhHAUP3PTqrpvFBwcd71NyFlMzHNV1Y7T4Yc//YPsSniUims2L6PorHdxnDsBYyZmjF4=
-X-Received: by 10.36.86.134 with SMTP id o128mr4301494itb.56.1518584820801;
- Tue, 13 Feb 2018 21:07:00 -0800 (PST)
+        id S1754154AbeBNFln (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 00:41:43 -0500
+Received: from mail.javad.com ([54.86.164.124]:42711 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753275AbeBNFle (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 00:41:34 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id BF3723E8C4;
+        Wed, 14 Feb 2018 05:41:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518586894;
+        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
+        h=Received:From:To:Subject;
+        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
+         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
+         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1elpox-0003W9-N5; Wed, 14 Feb 2018 08:41:31 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?=C3=98yvind_R=C3=B8nnin?= =?utf-8?Q?gstad?= 
+        <ronningstad@gmail.com>, git@vger.kernel.org,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+        <87k1vpqq85.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802071818240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <1518044326.7000.4.camel@gmail.com>
+        <xmqqpo5g5qd3.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1802081317320.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Wed, 14 Feb 2018 08:41:31 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1802081317320.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Thu, 8 Feb 2018 13:34:18 +0100
+        (STD)")
+Message-ID: <87vaf03z78.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.197.136 with HTTP; Tue, 13 Feb 2018 21:06:40 -0800 (PST)
-From:   Ciro Santilli <ciro.santilli@gmail.com>
-Date:   Wed, 14 Feb 2018 05:06:40 +0000
-Message-ID: <CAFXrp_cP-WaXO27VV1OcVakfmDX0b6M62Qz1j4XRCbtQJzFfnw@mail.gmail.com>
-Subject: Can we make git clone --recurse-submodules --shallow-submodules work
- for commits that are not on tags or branches
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a git repo with large submodules, notably the Linux kernel, and
-shallow clone saves a lot of time.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+[...]
+> Just to give you one concrete example: when I recently rebased some
+> patches (no reording or dropping involved here!) and one of the picks
+> failed with merge conflicts, I realized that that particular commit
+> introduced incorrect formatting and fixed that right away (verifying that
+> no other commits introduced incorrect formatting, of course).
+>
+> With your new cute idea to magically cherry-pick -m1, this change would
+> have been magically dropped from the subsequent merge commits!
 
-However, QEMU is also a submodule, which I don't control, and QEMU has
-submodules which don't point to commits that are not on any tag or
-branch, so:
+You put it as if the problem you describe is unsolvable short of getting
+back to your favorite blind re-merge. Do you really believe it?
 
- git clone --recurse-submodules --shallow-submodules git://git.qemu.org/qemu.git
+I thought it's obvious that I originally meant "cherry-pick -m1" to be
+an explanation facility, a proof of concept, not the final answer to all
+the problems of history editing. It's a nice base for actually
+approaching these problems though, unlike blind re-merge currently being
+used, the latter having no potential.
 
-currently fails with:
+The fact that bare naked "cherry-pick -m1" doesn't do what is often[1]
+required in such cases neither voids the general idea of reproducing
+merge-the-result, nor does it make current re-merge approach less
+broken.
 
-error: Server does not allow request for unadvertised object
-22ead3e0bfdb87516656453336160e0a37b066bf
-Fetched in submodule path 'capstone', but it did not contain
-22ead3e0bfdb87516656453336160e0a37b066bf. Direct fetching of that
-commit failed.
+[1] Please take into consideration that it's _not always_ the case that
+one needs a change made to a side-branch to actually propagate to the
+main-line over the merge (think "merge -x ours", or something similar
+but not that simple), and then it's rather the cute idea to blindly
+re-merge that will wreak havoc, as in a lot of other cases.
 
-on git 2.16.1.
-
-Furthermore, I reproduce this locally with direct filesystem clones:
-https://github.com/cirosantilli/test-git-web-interface/blob/15335d3002a3e64fc5756b69fb832a733aa63fb9/shallow-submodule.sh#L158
-and on GitHub, so I'm guessing it is not just the settings for a
-specific server?
-
-Would it be possible to make that work, or are there fundamental
-reasons why it is not possible?
-
-Here is my use case repo, at the point of the ugly workaround I'm
-having to do: https://github.com/cirosantilli/linux-kernel-module-cheat/blob/a14c95346cfd9d2e7b2e475b0981aa71d819c20b/configure#L23
-
-Some more context:
-https://stackoverflow.com/questions/2144406/git-shallow-submodules/47374702#47374702
-
-This would make some embedded people happy.
+-- Sergey
