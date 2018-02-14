@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE141F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB58D1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162415AbeBNSyG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:54:06 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37050 "EHLO
+        id S1162361AbeBNSyF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:54:05 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38966 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1162342AbeBNSwh (ORCPT
+        by vger.kernel.org with ESMTP id S1162345AbeBNSwh (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 14 Feb 2018 13:52:37 -0500
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EIm5f7011989;
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EInBTF002752;
         Wed, 14 Feb 2018 10:52:08 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2g1xgry8kb-1;
-        Wed, 14 Feb 2018 10:52:07 -0800
+        by mx0a-00153501.pphosted.com with ESMTP id 2g1yfs779s-2;
+        Wed, 14 Feb 2018 10:52:08 -0800
 Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 0641C225963B;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 9A602225EB9D;
         Wed, 14 Feb 2018 10:52:07 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id F16B12CDEB7;
-        Wed, 14 Feb 2018 10:52:06 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id 8799F2CDEB4;
+        Wed, 14 Feb 2018 10:52:07 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v8 10/29] directory rename detection: tests for handling overwriting untracked files
-Date:   Wed, 14 Feb 2018 10:51:47 -0800
-Message-Id: <20180214185206.15492-11-newren@gmail.com>
+Subject: [PATCH v8 21/29] merge-recursive: check for file level conflicts then get new name
+Date:   Wed, 14 Feb 2018 10:51:58 -0800
+Message-Id: <20180214185206.15492-22-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.232.g28d5be9217
 In-Reply-To: <20180214185206.15492-1-newren@gmail.com>
 References: <20180214185206.15492-1-newren@gmail.com>
@@ -47,7 +47,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-02-14_08:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1711220000 definitions=main-1802140219
@@ -56,417 +56,350 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Before trying to apply directory renames to paths within the given
+directories, we want to make sure that there aren't conflicts at the
+file level either.  If there aren't any, then get the new name from
+any directory renames.
+
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6043-merge-rename-directories.sh | 367 ++++++++++++++++++++++++++++++=
-++++++
- 1 file changed, 367 insertions(+)
+ merge-recursive.c                   | 174 ++++++++++++++++++++++++++++++=
+++++--
+ strbuf.c                            |  16 ++++
+ strbuf.h                            |  16 ++++
+ t/t6043-merge-rename-directories.sh |   2 +-
+ 4 files changed, 199 insertions(+), 9 deletions(-)
 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 92f0d62f60..efe9c9a98e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1519,6 +1519,91 @@ static void remove_hashmap_entries(struct hashmap =
+*dir_renames,
+ 	string_list_clear(items_to_remove, 0);
+ }
+=20
++/*
++ * See if there is a directory rename for path, and if there are any fil=
+e
++ * level conflicts for the renamed location.  If there is a rename and
++ * there are no conflicts, return the new name.  Otherwise, return NULL.
++ */
++static char *handle_path_level_conflicts(struct merge_options *o,
++					 const char *path,
++					 struct dir_rename_entry *entry,
++					 struct hashmap *collisions,
++					 struct tree *tree)
++{
++	char *new_path =3D NULL;
++	struct collision_entry *collision_ent;
++	int clean =3D 1;
++	struct strbuf collision_paths =3D STRBUF_INIT;
++
++	/*
++	 * entry has the mapping of old directory name to new directory name
++	 * that we want to apply to path.
++	 */
++	new_path =3D apply_dir_rename(entry, path);
++
++	if (!new_path) {
++		/* This should only happen when entry->non_unique_new_dir set */
++		if (!entry->non_unique_new_dir)
++			BUG("entry->non_unqiue_dir not set and !new_path");
++		output(o, 1, _("CONFLICT (directory rename split): "
++			       "Unclear where to place %s because directory "
++			       "%s was renamed to multiple other directories, "
++			       "with no destination getting a majority of the "
++			       "files."),
++		       path, entry->dir);
++		clean =3D 0;
++		return NULL;
++	}
++
++	/*
++	 * The caller needs to have ensured that it has pre-populated
++	 * collisions with all paths that map to new_path.  Do a quick check
++	 * to ensure that's the case.
++	 */
++	collision_ent =3D collision_find_entry(collisions, new_path);
++	if (collision_ent =3D=3D NULL)
++		BUG("collision_ent is NULL");
++
++	/*
++	 * Check for one-sided add/add/.../add conflicts, i.e.
++	 * where implicit renames from the other side doing
++	 * directory rename(s) can affect this side of history
++	 * to put multiple paths into the same location.  Warn
++	 * and bail on directory renames for such paths.
++	 */
++	if (collision_ent->reported_already) {
++		clean =3D 0;
++	} else if (tree_has_path(tree, new_path)) {
++		collision_ent->reported_already =3D 1;
++		strbuf_add_separated_string_list(&collision_paths, ", ",
++						 &collision_ent->source_files);
++		output(o, 1, _("CONFLICT (implicit dir rename): Existing "
++			       "file/dir at %s in the way of implicit "
++			       "directory rename(s) putting the following "
++			       "path(s) there: %s."),
++		       new_path, collision_paths.buf);
++		clean =3D 0;
++	} else if (collision_ent->source_files.nr > 1) {
++		collision_ent->reported_already =3D 1;
++		strbuf_add_separated_string_list(&collision_paths, ", ",
++						 &collision_ent->source_files);
++		output(o, 1, _("CONFLICT (implicit dir rename): Cannot map "
++			       "more than one path to %s; implicit directory "
++			       "renames tried to put these paths there: %s"),
++		       new_path, collision_paths.buf);
++		clean =3D 0;
++	}
++
++	/* Free memory we no longer need */
++	strbuf_release(&collision_paths);
++	if (!clean && new_path) {
++		free(new_path);
++		return NULL;
++	}
++
++	return new_path;
++}
++
+ /*
+  * There are a couple things we want to do at the directory level:
+  *   1. Check for both sides renaming to the same thing, in order to avo=
+id
+@@ -1798,6 +1883,59 @@ static void compute_collisions(struct hashmap *col=
+lisions,
+ 	}
+ }
+=20
++static char *check_for_directory_rename(struct merge_options *o,
++					const char *path,
++					struct tree *tree,
++					struct hashmap *dir_renames,
++					struct hashmap *dir_rename_exclusions,
++					struct hashmap *collisions,
++					int *clean_merge)
++{
++	char *new_path =3D NULL;
++	struct dir_rename_entry *entry =3D check_dir_renamed(path, dir_renames)=
+;
++	struct dir_rename_entry *oentry =3D NULL;
++
++	if (!entry)
++		return new_path;
++
++	/*
++	 * This next part is a little weird.  We do not want to do an
++	 * implicit rename into a directory we renamed on our side, because
++	 * that will result in a spurious rename/rename(1to2) conflict.  An
++	 * example:
++	 *   Base commit: dumbdir/afile, otherdir/bfile
++	 *   Side 1:      smrtdir/afile, otherdir/bfile
++	 *   Side 2:      dumbdir/afile, dumbdir/bfile
++	 * Here, while working on Side 1, we could notice that otherdir was
++	 * renamed/merged to dumbdir, and change the diff_filepair for
++	 * otherdir/bfile into a rename into dumbdir/bfile.  However, Side
++	 * 2 will notice the rename from dumbdir to smrtdir, and do the
++	 * transitive rename to move it from dumbdir/bfile to
++	 * smrtdir/bfile.  That gives us bfile in dumbdir vs being in
++	 * smrtdir, a rename/rename(1to2) conflict.  We really just want
++	 * the file to end up in smrtdir.  And the way to achieve that is
++	 * to not let Side1 do the rename to dumbdir, since we know that is
++	 * the source of one of our directory renames.
++	 *
++	 * That's why oentry and dir_rename_exclusions is here.
++	 *
++	 * As it turns out, this also prevents N-way transient rename
++	 * confusion; See testcases 9c and 9d of t6043.
++	 */
++	oentry =3D dir_rename_find_entry(dir_rename_exclusions, entry->new_dir.=
+buf);
++	if (oentry) {
++		output(o, 1, _("WARNING: Avoiding applying %s -> %s rename "
++			       "to %s, because %s itself was renamed."),
++		       entry->dir, entry->new_dir.buf, path, entry->new_dir.buf);
++	} else {
++		new_path =3D handle_path_level_conflicts(o, path, entry,
++						       collisions, tree);
++		*clean_merge &=3D (new_path !=3D NULL);
++	}
++
++	return new_path;
++}
++
+ /*
+  * Get information of all renames which occurred in 'pairs', making use =
+of
+  * any implicit directory renames inferred from the other side of histor=
+y.
+@@ -1808,11 +1946,13 @@ static void compute_collisions(struct hashmap *co=
+llisions,
+ static struct string_list *get_renames(struct merge_options *o,
+ 				       struct diff_queue_struct *pairs,
+ 				       struct hashmap *dir_renames,
++				       struct hashmap *dir_rename_exclusions,
+ 				       struct tree *tree,
+ 				       struct tree *o_tree,
+ 				       struct tree *a_tree,
+ 				       struct tree *b_tree,
+-				       struct string_list *entries)
++				       struct string_list *entries,
++				       int *clean_merge)
+ {
+ 	int i;
+ 	struct hashmap collisions;
+@@ -1827,11 +1967,22 @@ static struct string_list *get_renames(struct mer=
+ge_options *o,
+ 		struct string_list_item *item;
+ 		struct rename *re;
+ 		struct diff_filepair *pair =3D pairs->queue[i];
++		char *new_path; /* non-NULL only with directory renames */
+=20
+-		if (pair->status !=3D 'R') {
++		if (pair->status =3D=3D 'D') {
++			diff_free_filepair(pair);
++			continue;
++		}
++		new_path =3D check_for_directory_rename(o, pair->two->path, tree,
++						      dir_renames,
++						      dir_rename_exclusions,
++						      &collisions,
++						      clean_merge);
++		if (pair->status !=3D 'R' && !new_path) {
+ 			diff_free_filepair(pair);
+ 			continue;
+ 		}
++
+ 		re =3D xmalloc(sizeof(*re));
+ 		re->processed =3D 0;
+ 		re->pair =3D pair;
+@@ -2149,7 +2300,7 @@ static int handle_renames(struct merge_options *o,
+ {
+ 	struct diff_queue_struct *head_pairs, *merge_pairs;
+ 	struct hashmap *dir_re_head, *dir_re_merge;
+-	int clean;
++	int clean =3D 1;
+=20
+ 	ri->head_renames =3D NULL;
+ 	ri->merge_renames =3D NULL;
+@@ -2168,13 +2319,20 @@ static int handle_renames(struct merge_options *o=
+,
+ 					 dir_re_merge, merge);
+=20
+ 	ri->head_renames  =3D get_renames(o, head_pairs,
+-					dir_re_merge, head,
+-					common, head, merge, entries);
++					dir_re_merge, dir_re_head, head,
++					common, head, merge, entries,
++					&clean);
++	if (clean < 0)
++		goto cleanup;
+ 	ri->merge_renames =3D get_renames(o, merge_pairs,
+-					dir_re_head, merge,
+-					 common, head, merge, entries);
+-	clean =3D process_renames(o, ri->head_renames, ri->merge_renames);
++					dir_re_head, dir_re_merge, merge,
++					common, head, merge, entries,
++					&clean);
++	if (clean < 0)
++		goto cleanup;
++	clean &=3D process_renames(o, ri->head_renames, ri->merge_renames);
+=20
++cleanup:
+ 	/*
+ 	 * Some cleanup is deferred until cleanup_renames() because the
+ 	 * data structures are still needed and referenced in
+diff --git a/strbuf.c b/strbuf.c
+index 1df674e919..113e751d63 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "refs.h"
++#include "string-list.h"
+ #include "utf8.h"
+=20
+ int starts_with(const char *str, const char *prefix)
+@@ -163,6 +164,21 @@ struct strbuf **strbuf_split_buf(const char *str, si=
+ze_t slen,
+ 	return ret;
+ }
+=20
++void strbuf_add_separated_string_list(struct strbuf *str,
++				      const char *sep,
++				      struct string_list *slist)
++{
++	struct string_list_item *item;
++	int sep_needed =3D 0;
++
++	for_each_string_list_item(item, slist) {
++		if (sep_needed)
++			strbuf_addstr(str, sep);
++		strbuf_addstr(str, item->string);
++		sep_needed =3D 1;
++	}
++}
++
+ void strbuf_list_free(struct strbuf **sbs)
+ {
+ 	struct strbuf **s =3D sbs;
+diff --git a/strbuf.h b/strbuf.h
+index 14c8c10d66..e2e9e5be22 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -1,6 +1,8 @@
+ #ifndef STRBUF_H
+ #define STRBUF_H
+=20
++struct string_list;
++
+ /**
+  * strbuf's are meant to be used with all the usual C string and memory
+  * APIs. Given that the length of the buffer is known, it's often better=
+ to
+@@ -528,6 +530,20 @@ static inline struct strbuf **strbuf_split(const str=
+uct strbuf *sb,
+ 	return strbuf_split_max(sb, terminator, 0);
+ }
+=20
++/*
++ * Adds all strings of a string list to the strbuf, separated by the giv=
+en
++ * separator.  For example, if sep is
++ *   ', '
++ * and slist contains
++ *   ['element1', 'element2', ..., 'elementN'],
++ * then write:
++ *   'element1, element2, ..., elementN'
++ * to str.  If only one element, just write "element1" to str.
++ */
++extern void strbuf_add_separated_string_list(struct strbuf *str,
++					     const char *sep,
++					     struct string_list *slist);
++
+ /**
+  * Free a NULL-terminated list of strbufs (for example, the return
+  * values of the strbuf_split*() functions).
 diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
 irectories.sh
-index cbbb949014..a6cd38336c 100755
+index 8ea9ec49bc..b24562b849 100755
 --- a/t/t6043-merge-rename-directories.sh
 +++ b/t/t6043-merge-rename-directories.sh
-@@ -2879,4 +2879,371 @@ test_expect_failure '9g-check: Renamed directory =
-that only contained immediate s
- #   side of history for any implicit directory renames.
- ########################################################################=
-###
+@@ -489,7 +489,7 @@ test_expect_success '2a-setup: Directory split into t=
+wo on one side, with equal
+ 	)
+ '
 =20
-+########################################################################=
-###
-+# SECTION 10: Handling untracked files
-+#
-+# unpack_trees(), upon which the recursive merge algorithm is based, abo=
-rts
-+# the operation if untracked or dirty files would be deleted or overwrit=
-ten
-+# by the merge.  Unfortunately, unpack_trees() does not understand renam=
-es,
-+# and if it doesn't abort, then it muddies up the working directory befo=
-re
-+# we even get to the point of detecting renames, so we need some special
-+# handling, at least in the case of directory renames.
-+########################################################################=
-###
-+
-+# Testcase 10a, Overwrite untracked: normal rename/delete
-+#   Commit O: z/{b,c_1}
-+#   Commit A: z/b + untracked z/c + untracked z/d
-+#   Commit B: z/{b,d_1}
-+#   Expected: Aborted Merge +
-+#       ERROR_MSG(untracked working tree files would be overwritten by m=
-erge)
-+
-+test_expect_success '10a-setup: Overwrite untracked with normal rename/d=
-elete' '
-+	test_create_repo 10a &&
-+	(
-+		cd 10a &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git rm z/c &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z/c z/d &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_success '10a-check: Overwrite untracked with normal rename/d=
-elete' '
-+	(
-+		cd 10a &&
-+
-+		git checkout A^0 &&
-+		echo very >z/c &&
-+		echo important >z/d &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "The following untracked working tree files would be ove=
-rwritten by merge" err &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 1 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 4 out &&
-+
-+		echo very >expect &&
-+		test_cmp expect z/c &&
-+
-+		echo important >expect &&
-+		test_cmp expect z/d &&
-+
-+		git rev-parse HEAD:z/b >actual &&
-+		git rev-parse O:z/b >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 10b, Overwrite untracked: dir rename + delete
-+#   Commit O: z/{b,c_1}
-+#   Commit A: y/b + untracked y/{c,d,e}
-+#   Commit B: z/{b,d_1,e}
-+#   Expected: Failed Merge; y/b + untracked y/c + untracked y/d on disk =
-+
-+#             z/c_1 -> z/d_1 rename recorded at stage 3 for y/d +
-+#       ERROR_MSG(refusing to lose untracked file at 'y/d')
-+
-+test_expect_success '10b-setup: Overwrite untracked with dir rename + de=
-lete' '
-+	test_create_repo 10b &&
-+	(
-+		cd 10b &&
-+
-+		mkdir z &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git rm z/c &&
-+		git mv z/ y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv z/c z/d &&
-+		echo e >z/e &&
-+		git add z/e &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '10b-check: Overwrite untracked with dir rename + de=
-lete' '
-+	(
-+		cd 10b &&
-+
-+		git checkout A^0 &&
-+		echo very >y/c &&
-+		echo important >y/d &&
-+		echo contents >y/e &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "CONFLICT (rename/delete).*Version B\^0 of y/d left in t=
-ree at y/d~B\^0" out &&
-+		test_i18ngrep "Error: Refusing to lose untracked file at y/e; writing =
-to y/e~B\^0 instead" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 2 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 5 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/b :3:y/d :3:y/e &&
-+		git rev-parse >expect \
-+			O:z/b  O:z/c  B:z/e &&
-+		test_cmp expect actual &&
-+
-+		echo very >expect &&
-+		test_cmp expect y/c &&
-+
-+		echo important >expect &&
-+		test_cmp expect y/d &&
-+
-+		echo contents >expect &&
-+		test_cmp expect y/e
-+	)
-+'
-+
-+# Testcase 10c, Overwrite untracked: dir rename/rename(1to2)
-+#   Commit O: z/{a,b}, x/{c,d}
-+#   Commit A: y/{a,b}, w/c, x/d + different untracked y/c
-+#   Commit B: z/{a,b,c}, x/d
-+#   Expected: Failed Merge; y/{a,b} + x/d + untracked y/c +
-+#             CONFLICT(rename/rename) x/c -> w/c vs y/c +
-+#             y/c~B^0 +
-+#             ERROR_MSG(Refusing to lose untracked file at y/c)
-+
-+test_expect_success '10c-setup: Overwrite untracked with dir rename/rena=
-me(1to2)' '
-+	test_create_repo 10c &&
-+	(
-+		cd 10c &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >z/b &&
-+		echo c >x/c &&
-+		echo d >x/d &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		mkdir w &&
-+		git mv x/c w/c &&
-+		git mv z/ y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/c z/ &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '10c-check: Overwrite untracked with dir rename/rena=
-me(1to2)' '
-+	(
-+		cd 10c &&
-+
-+		git checkout A^0 &&
-+		echo important >y/c &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "Refusing to lose untracked file at y/c; adding as y/c~B=
-\^0 instead" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 6 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 3 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/a :0:y/b :0:x/d :1:x/c :2:w/c :3:y/c &&
-+		git rev-parse >expect \
-+			 O:z/a  O:z/b  O:x/d  O:x/c  O:x/c  O:x/c &&
-+		test_cmp expect actual &&
-+
-+		git hash-object y/c~B^0 >actual &&
-+		git rev-parse O:x/c >expect &&
-+		test_cmp expect actual &&
-+
-+		echo important >expect &&
-+		test_cmp expect y/c
-+	)
-+'
-+
-+# Testcase 10d, Delete untracked w/ dir rename/rename(2to1)
-+#   Commit O: z/{a,b,c_1},        x/{d,e,f_2}
-+#   Commit A: y/{a,b},            x/{d,e,f_2,wham_1} + untracked y/wham
-+#   Commit B: z/{a,b,c_1,wham_2}, y/{d,e}
-+#   Expected: Failed Merge; y/{a,b,d,e} + untracked y/{wham,wham~B^0,wha=
-m~HEAD}+
-+#             CONFLICT(rename/rename) z/c_1 vs x/f_2 -> y/wham
-+#             ERROR_MSG(Refusing to lose untracked file at y/wham)
-+
-+test_expect_success '10d-setup: Delete untracked with dir rename/rename(=
-2to1)' '
-+	test_create_repo 10d &&
-+	(
-+		cd 10d &&
-+
-+		mkdir z x &&
-+		echo a >z/a &&
-+		echo b >z/b &&
-+		echo c >z/c &&
-+		echo d >x/d &&
-+		echo e >x/e &&
-+		echo f >x/f &&
-+		git add z x &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z/c x/wham &&
-+		git mv z/ y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		git mv x/f z/wham &&
-+		git mv x/ y/ &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '10d-check: Delete untracked with dir rename/rename(=
-2to1)' '
-+	(
-+		cd 10d &&
-+
-+		git checkout A^0 &&
-+		echo important >y/wham &&
-+
-+		test_must_fail git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep "CONFLICT (rename/rename)" out &&
-+		test_i18ngrep "Refusing to lose untracked file at y/wham" out &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 6 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 2 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 4 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/a :0:y/b :0:y/d :0:y/e :2:y/wham :3:y/wham &&
-+		git rev-parse >expect \
-+			 O:z/a  O:z/b  O:x/d  O:x/e  O:z/c     O:x/f &&
-+		test_cmp expect actual &&
-+
-+		test_must_fail git rev-parse :1:y/wham &&
-+
-+		echo important >expect &&
-+		test_cmp expect y/wham &&
-+
-+		git hash-object >actual \
-+			y/wham~B^0 y/wham~HEAD &&
-+		git rev-parse >expect \
-+			O:x/f      O:z/c &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+# Testcase 10e, Does git complain about untracked file that's not in the=
- way?
-+#   Commit O: z/{a,b}
-+#   Commit A: y/{a,b} + untracked z/c
-+#   Commit B: z/{a,b,c}
-+#   Expected: y/{a,b,c} + untracked z/c
-+
-+test_expect_success '10e-setup: Does git complain about untracked file t=
-hat is not really in the way?' '
-+	test_create_repo 10e &&
-+	(
-+		cd 10e &&
-+
-+		mkdir z &&
-+		echo a >z/a &&
-+		echo b >z/b &&
-+		git add z &&
-+		test_tick &&
-+		git commit -m "O" &&
-+
-+		git branch O &&
-+		git branch A &&
-+		git branch B &&
-+
-+		git checkout A &&
-+		git mv z/ y/ &&
-+		test_tick &&
-+		git commit -m "A" &&
-+
-+		git checkout B &&
-+		echo c >z/c &&
-+		git add z/c &&
-+		test_tick &&
-+		git commit -m "B"
-+	)
-+'
-+
-+test_expect_failure '10e-check: Does git complain about untracked file t=
-hat is not really in the way?' '
-+	(
-+		cd 10e &&
-+
-+		git checkout A^0 &&
-+		mkdir z &&
-+		echo random >z/c &&
-+
-+		git merge -s recursive B^0 >out 2>err &&
-+		test_i18ngrep ! "following untracked working tree files would be overw=
-ritten by merge" err &&
-+
-+		git ls-files -s >out &&
-+		test_line_count =3D 3 out &&
-+		git ls-files -u >out &&
-+		test_line_count =3D 0 out &&
-+		git ls-files -o >out &&
-+		test_line_count =3D 3 out &&
-+
-+		git rev-parse >actual \
-+			:0:y/a :0:y/b :0:y/c &&
-+		git rev-parse >expect \
-+			 O:z/a  O:z/b  B:z/c &&
-+		test_cmp expect actual &&
-+
-+		echo random >expect &&
-+		test_cmp expect z/c
-+	)
-+'
-+
- test_done
+-test_expect_failure '2a-check: Directory split into two on one side, wit=
+h equal numbers of paths' '
++test_expect_success '2a-check: Directory split into two on one side, wit=
+h equal numbers of paths' '
+ 	(
+ 		cd 2a &&
+=20
 --=20
 2.16.1.232.g28d5be9217
 
