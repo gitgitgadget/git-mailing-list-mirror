@@ -7,88 +7,122 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5734F1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:12:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE9751F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162763AbeBNTMK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:12:10 -0500
-Received: from mail-yw0-f174.google.com ([209.85.161.174]:36070 "EHLO
+        id S1162785AbeBNTSR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:18:17 -0500
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:44848 "EHLO
         mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162665AbeBNTMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:12:09 -0500
-Received: by mail-yw0-f174.google.com with SMTP id t129so15517712ywc.3
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:12:08 -0800 (PST)
+        with ESMTP id S1162700AbeBNTSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:18:12 -0500
+Received: by mail-yw0-f174.google.com with SMTP id y65so4332083ywg.11
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:18:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=8ovLYNIvxuziLw5ixVMhpur49hnEJk0X0BcCLjwMJ8w=;
-        b=D+pnUQpHtXMnhQ25+ktbi/haOLSWI+NI7KO3ItNjAzVo9boLnaI6UiY30KXvzkQ+NR
-         5I+ZZqR7s+Knz4lOULEnmjZKCctt5SOh8yPtn6RaGqQWwKos95jd5uhkUXabNoe3A5U/
-         8OgPZhlKEvc9JrWRssO7SlGqK9yed9haVTuJ2mPecxBYaNu0KV4flskbTuAZn68HzMYJ
-         YY9eJBWou+fKTt9OQO6OD9sMBTcfCVVJbFaEAY7aUozLfCtziNerLlY9/b6PWjeHuv4g
-         s546FbZXZCff5D05AYlxtFQg4KBM52uZ1OrMVqvFzVn8rNfr2wIc/KlMAplJOFGL4sQ/
-         BELA==
+        bh=G8R8OCN2NQ8AX8quxfq/9A3zH+OLD/NF69zJAj8ShqM=;
+        b=nwsGtZvECVXTfzjD6hI1yOVhNM10BmNVoIHM6duNq/wOpb7Gz42pU+3ir36E6ny12G
+         EjCuJi9sWD4iCvjRZX/8FEH0Nssve88CbX1FsEiUmOsQM+SM8TEjNUJvC+6eOJcya68K
+         HQP06vxMvlzQcPn7g4YbOG2wgbYFZnWei6vPpJLhhIgCjqBJYLmr2YU5nGOSYai/Wjs4
+         itz+Ez8GOp7cKncZC42tgaiuufbRVyzatkQxJbVwDyg6IQfRsO0FJY1oqk/kPeQtL+xv
+         4UYHmcZeHgya4zrir9ifDrQMln9SY3kXP9MuKkp06dMD0imcH4hWa9V19XA9buYW8EbM
+         cvPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=8ovLYNIvxuziLw5ixVMhpur49hnEJk0X0BcCLjwMJ8w=;
-        b=mn/IHityIJewIGhSLB9moSNBh4FtuUpBrZta7bT4nMSIv+LctnrdO5DgMSfzZ7WXVy
-         NUsNMSHKz0AnZCVjhEh9YM3X7XdKdUrKGdUE3dB4finRvozkPPIX2suJttCwv4wldfVI
-         wnh1C/Az6SoaB0vl2lTlrtR0TldKKIlU7KBtXiurGjeKgsnNCcuWBzI6G1o7JvYXxYd5
-         hD8Z6b67IIC6P0qh8y1nGnBCaAq9ISNMbp3Pyp0uSTBa6MyZUqIGHkHFRF25nrbiAI82
-         Xdf8i4W2qnZd4TYAxwzaKMHRpmEIAQGnxarjp9VmTQbyRTPNMuJovS7zukK8r+Y3ba30
-         /tnQ==
-X-Gm-Message-State: APf1xPC0hgIVLwykEACiO8H/uHxXFz3CF5czammrDZOy/gEJ7q9JDk9x
-        hAyk6qrSPp2Po+LmSgxupo53UCc6izArdl7rqwqWtA==
-X-Google-Smtp-Source: AH8x225yKagcENBSaTVJXF9iFi5B9gkuG/kxzf0p9RecXOtce/bvOQNsn0VJoTYePUlusoIHnsdP06OiaU3AYq/eYlA=
-X-Received: by 10.129.86.139 with SMTP id k133mr204049ywb.253.1518635528218;
- Wed, 14 Feb 2018 11:12:08 -0800 (PST)
+        bh=G8R8OCN2NQ8AX8quxfq/9A3zH+OLD/NF69zJAj8ShqM=;
+        b=UzzkpJgFL458LRTgd7u+9bC0u7NAHoH02HSRn1IreRlJ0mLO13JkMZ2z583ixPQ5pg
+         B615yUk++/ZALth7KxZ651ZT+Tzy7e/SQc8+2wgW675zrQXgkz/r9T7fhM8PUtlF0bVf
+         1NTS1qlxdjTqwNpc60jxmcadLk3Ji8PlGsWfwqDhQE/RU8YrVVbS8BpEjovz9wuIGxf6
+         cFKxe0ubrgC6CIYcQ8si7KFZ7U9ssHlazpCh21gIYEkvBpo8yvDryUKTU1tOng7pMpYE
+         6Hqzz1tk91EGAX0qECznedfrO8v1v/3sBspg1seaamv3Uk59JrCqMM9l2HEK+2x6H+3n
+         etuA==
+X-Gm-Message-State: APf1xPBjrS+nyPnnaLCEVv4Q+DivUP1y06t7NrWXX+uTs5NX2nACCsjE
+        nnEPyNOlsU5d8My9e99D+6R3xYyvP6fjVDLEAuCPCw==
+X-Google-Smtp-Source: AH8x226ONXpJK3r6S2sK/aYFG/4+2Y98fC7vBPcsZHzWHIIMfIeTPe2+j+YA1mKiHSSIsUyXed0Z+iRZdyi/X6YT89U=
+X-Received: by 10.37.37.87 with SMTP id l84mr253561ybl.386.1518635891544; Wed,
+ 14 Feb 2018 11:18:11 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 11:12:07
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 11:18:11
  -0800 (PST)
-In-Reply-To: <alpine.LFD.2.21.1802131927310.17903@localhost.localdomain>
-References: <alpine.LFD.2.21.1802131927310.17903@localhost.localdomain>
+In-Reply-To: <CAFXrp_cP-WaXO27VV1OcVakfmDX0b6M62Qz1j4XRCbtQJzFfnw@mail.gmail.com>
+References: <CAFXrp_cP-WaXO27VV1OcVakfmDX0b6M62Qz1j4XRCbtQJzFfnw@mail.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Feb 2018 11:12:07 -0800
-Message-ID: <CAGZ79kZ1yYXToC_WvW8e93zvajkw06e8BT_FcJUXWtFBK3Xe4w@mail.gmail.com>
-Subject: Re: should "--recurse-submodule" be "--recurse-submodules"?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
+Date:   Wed, 14 Feb 2018 11:18:11 -0800
+Message-ID: <CAGZ79ka6UXKyVLmdLg_M5-sB1x96g8FRzRZy=ENy5aJBQf9_QA@mail.gmail.com>
+Subject: Re: Can we make git clone --recurse-submodules --shallow-submodules
+ work for commits that are not on tags or branches
+To:     Ciro Santilli <ciro.santilli@gmail.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 4:30 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+On Tue, Feb 13, 2018 at 9:06 PM, Ciro Santilli <ciro.santilli@gmail.com> wrote:
+> I have a git repo with large submodules, notably the Linux kernel, and
+> shallow clone saves a lot of time.
 >
->   also just noticed the following:
+> However, QEMU is also a submodule, which I don't control, and QEMU has
+> submodules which don't point to commits that are not on any tag or
+> branch, so:
 >
-> Documentation/RelNotes/2.13.0.txt:489: * A few commands that recently learned the "--recurse-submodule"
-> Documentation/RelNotes/2.12.0.txt:226: * "git push --dry-run --recurse-submodule=on-demand" wasn't
-> Documentation/RelNotes/2.11.1.txt:27: * "git push --dry-run --recurse-submodule=on-demand" wasn't
-> t/t5531-deep-submodule-push.sh:366:             git push --recurse-submodule=check origin master
-> t/t5572-pull-submodule.sh:45:test_expect_success 'pull --recurse-submodule setup' '
+>  git clone --recurse-submodules --shallow-submodules git://git.qemu.org/qemu.git
 >
->   should some of those be corrected?
+> currently fails with:
+>
+> error: Server does not allow request for unadvertised object
+> 22ead3e0bfdb87516656453336160e0a37b066bf
+> Fetched in submodule path 'capstone', but it did not contain
+> 22ead3e0bfdb87516656453336160e0a37b066bf. Direct fetching of that
+> commit failed.
+>
+> on git 2.16.1.
 
-I get the same list via
-  git grep -- --recurse-submodule |grep -v -- --recurse-submodules
-so there is no missing piece left.
+In theory this should be easy. :)
 
-As you can see, the first 3 are Documentation, and the other 2 are tests,
-the actual code is always --recurse-submodules (with an s!).
+In practice not so much, unfortunately. This is because cloning will just obtain
+the latest tip of a branch (usually master). There is no mechanism in clone
+to specify the exact sha1 that is wanted.
 
-Fixing the docs as well as t5572 has the impact of "just fixing typos"
-(though that is specifically valuable for command line options where
-exact spelling matters)
+The wire protocol supports for asking exact sha1s, so that should be covered.
+(Caveat: it only works if the server operator enables
+uploadpack.allowReachableSHA1InWant which github has not AFAICT)
 
-The fix in 5531 is an actual bugfix in the test suite, which
-went unnoticed as the test itself did not fail.
+git-fetch allows to fetch arbitrary sha1, so as a workaround you can run a fetch
+after the recursive clone by using "git submodule update" as that will use
+fetches after the initial clone.
 
-The test did not fail because git autocompleted the command
-line option silently. But that is not what we want to test there.
 
+> Furthermore, I reproduce this locally with direct filesystem clones:
+> https://github.com/cirosantilli/test-git-web-interface/blob/15335d3002a3e64fc5756b69fb832a733aa63fb9/shallow-submodule.sh#L158
+> and on GitHub, so I'm guessing it is not just the settings for a
+> specific server?
+>
+> Would it be possible to make that work, or are there fundamental
+> reasons why it is not possible?
+
+The wire protocol allows for it, so it should be possible fundamentally.
+There is a redesign of the wire protocol going on currently, which
+could allow for a new fetch mode that allows having just one
+connection, which would only negotiate on the superproject and
+infer the submodule parts from the superproject.
+
+
+> Here is my use case repo, at the point of the ugly workaround I'm
+> having to do: https://github.com/cirosantilli/linux-kernel-module-cheat/blob/a14c95346cfd9d2e7b2e475b0981aa71d819c20b/configure#L23
+>
+> Some more context:
+> https://stackoverflow.com/questions/2144406/git-shallow-submodules/47374702#47374702
+>
+> This would make some embedded people happy.
+
+Yes, a lot of submodule users would be happy if that
+issue is solved.
+
+Thanks for reporting,
 Stefan
