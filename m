@@ -2,96 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38FB01F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:37:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9CB1FAE2
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163065AbeBNThI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:37:08 -0500
-Received: from mail-wr0-f179.google.com ([209.85.128.179]:38731 "EHLO
-        mail-wr0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1163004AbeBNThH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:37:07 -0500
-Received: by mail-wr0-f179.google.com with SMTP id n7so1111468wrn.5
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:37:06 -0800 (PST)
+        id S1163117AbeBNToj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:44:39 -0500
+Received: from mail-yw0-f175.google.com ([209.85.161.175]:42575 "EHLO
+        mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162994AbeBNToi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:44:38 -0500
+Received: by mail-yw0-f175.google.com with SMTP id e65so7029018ywh.9
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RSVunph0aGcxOXqTpo8kJoAzht8x+NRRxxTOm3BgeZI=;
-        b=FWU4wWy8aT8NuKSCpHFSmH9wWZrEqTGn83PQPlN8JTxiOVTwVePLrwozeDlfnsCukI
-         uPvz/pcpAyJx8IHDlhDBlXlLxx0ywp2/fTKYJwFH2fM7ODvwEkfxByVrCpiw44BKh275
-         jVVU+nfXZQk81nqdOd9MGeqenPsZ+GpD2UZSigcT1KC7TTgBcQEqqPc0+Sq4U3dLhyXs
-         xNj+hMeSYQICB4jaQCsBW19b1oPSz730f4mwm837dehqDV4skfHCDIRA1Fl9PsXdJzNy
-         VCiyKtQPqOlrYEZCV05Cu6mLv7/Dxq8cZLoHRL3O0KxeTQrLKviAP03ZEL4rMsZAq51N
-         QDiw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kbR443RIFKSPc66T8zazRjayWpwAqWD00WvVVwA/WjY=;
+        b=AcA23WPboxiZFzdskVmfyfJRorwj+OniP71xFlzVuNi0l7HFL5WrrU5tI3M11ykGan
+         ZqItcxX68AB5BMuk1xIzq8Ca+GUSKxqTj9PtYJEJP42/QsuVeQ2yDqzCW7OkhFaOC4on
+         zDwjQJHGrPgdYf1gx6CLTzMg/DnEllu5gv3Po5xg3dYhSlbc0ELwVtzbx8rmYv4+uoFo
+         CJqwsYD8ejMuo74Wy3sSpcpEFAroMYvQXOWwVldnEeMSlAnbz+NttrZ00JdB1krgZpiX
+         pwE3m4EjV6JGNLVH7iHS+qg7dPEnH2fV6FWYSZirXyNvje6Abgsfo9ZKzi5VBC1LFJta
+         f4fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RSVunph0aGcxOXqTpo8kJoAzht8x+NRRxxTOm3BgeZI=;
-        b=AaVB2gMHDUuafF2ScCQSdEvDrKynevG1EfoJ/9uA1NeR1GC4i+rsGr4hF285s7KnPu
-         MlCl5eIVoRQLwdg4vpnAxDVc5/BBm3+qZRdbHQdAU5HzKd96RwiECgQfcnTVvkQYqHDF
-         9zRtGRMr0Nl1YQ75DAUM9kG+zlU035zPWsvowoBKuRzA89OI9zEZuVY/t6vodsZhyjYU
-         /c0aFOjZo2ymWHi1UYIxHsosy3SUPWaI8TMa/Gn/5UJlooDRazYItXxbjofy/cub72BO
-         C/3i8y43wn+jcN+kUKQQsu2skb2LnsP+jgn4rh9gqjvFksynqqZi3bLixyRFJjcNvmmk
-         ORTA==
-X-Gm-Message-State: APf1xPCcdwsFu1wZ9ve02gTMCdTQIm3ZvHmh1aug4jxGA0nMocYiOcn+
-        vKzYgoiwjU9ZlAFJm5sk3wo=
-X-Google-Smtp-Source: AH8x226uh0LqhyrEY6lJTZ0KrmdUtxZh/bmS3azZL8KSPOismtIB6hKL2n1du3CZhtHZUosgIfJNhw==
-X-Received: by 10.223.201.147 with SMTP id f19mr292496wrh.61.1518637025501;
-        Wed, 14 Feb 2018 11:37:05 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e15sm9583648wmh.39.2018.02.14.11.37.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 11:37:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] Correct mispellings of ".gitmodule" to ".gitmodules"
-References: <alpine.LFD.2.21.1802131907480.17291@localhost.localdomain>
-Date:   Wed, 14 Feb 2018 11:37:03 -0800
-In-Reply-To: <alpine.LFD.2.21.1802131907480.17291@localhost.localdomain>
-        (Robert P. J. Day's message of "Tue, 13 Feb 2018 19:09:31 -0500
-        (EST)")
-Message-ID: <xmqqpo57mkgw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kbR443RIFKSPc66T8zazRjayWpwAqWD00WvVVwA/WjY=;
+        b=oRfi2lh3Xh5WLAyC/oOPL39tBqFHFGzaIl4UxCEUMFmdtBT10HdsXjNSIVlGllvBJy
+         4lWNa24c3RYz0kLHEhWwOO2imTPWlYXV+gYY4p79H+bFhhNjGfXzp5zpz8nHUQHjGdOG
+         +wNSZeI0vPt3Z9vRknPrj7JPgZLnbR3IOafK78+w36wrqtk148LOdQoi5zKXzmDsRm+/
+         gabiiO7pz6MnIrxYX8rwON0L0q+bx/32ksQ5xbgMdPleRblF7rPxUqjLjQdp9awXkIlf
+         eEDXOTDukKXZwwfs6wyb3KFe2/JnhmeoW+GT+53nVmYj2Mk2LukICHgSOHEjBexksqne
+         6rvg==
+X-Gm-Message-State: APf1xPCxGysac9fyJQ7VtolLwazuWJAb/nFP39KiTKtpeslHMAEycp0p
+        w1lyvjZqUGWQnjc983v91vIPTuB7hQ0NcQpXdRfMlQ==
+X-Google-Smtp-Source: AH8x226sL0wNRrYRmq8UvKyGGaMtpH+yM5EftQQSE+54RmR74oqbT5PA0wtkvkR2TYT1q5EHBC3xEldPxCW1Pf9LzH0=
+X-Received: by 10.13.221.19 with SMTP id g19mr273568ywe.249.1518637478045;
+ Wed, 14 Feb 2018 11:44:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 11:44:37
+ -0800 (PST)
+In-Reply-To: <20180214185206.15492-1-newren@gmail.com>
+References: <20180214185206.15492-1-newren@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 14 Feb 2018 11:44:37 -0800
+Message-ID: <CAGZ79kZCOafZWSjz1x15K1LvEbwiMibY-mj_Lia6J_B3jg0-4g@mail.gmail.com>
+Subject: Re: [PATCH v8 00/29] Add directory rename detection to git
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert P. J. Day" <rpjday@crashcourse.ca> writes:
+On Wed, Feb 14, 2018 at 10:51 AM, Elijah Newren <newren@gmail.com> wrote:
+> This patchset introduces directory rename detection to merge-recursive.  See
+>   https://public-inbox.org/git/20171110190550.27059-1-newren@gmail.com/
+> for the first series (including design considerations, etc.)  This series
+> continues to depend on en/merge-recursive-fixes in next, at least
+> contextually.  For the curious, follow-up series and comments can also be
+> found at
+>   https://public-inbox.org/git/20171120220209.15111-1-newren@gmail.com/
+>   https://public-inbox.org/git/20171121080059.32304-1-newren@gmail.com/
+>   https://public-inbox.org/git/20171129014237.32570-1-newren@gmail.com/
+>   https://public-inbox.org/git/20171228041352.27880-1-newren@gmail.com/
+>   https://public-inbox.org/git/20180105202711.24311-1-newren@gmail.com/
+>   https://public-inbox.org/git/20180130232533.25846-1-newren@gmail.com/
+>
+> Also, as a reminder, this series fixes a few bugs somewhat as a side effect:
+>   * a bug causing dirty files involved in a rename to be overwritten
+>   * a few memory leaks
+>
+> Changes since v7 (full tbdiff follows below):
+>   * Added Stefan's Reviewed-by.
+>   * Squashed commits introducing new hash structs and associated functions
+>     into the commit that used them to avoid unused function
+>     warnings/errors.
+>   * Added or clarified a number of comments where things were unclear
+>   * Minor stuff:
+>     * Style (and typo) fixes for commit message and comments
+>     * Avoiding casting with hash initialization function
+>     * s/malloc/xmalloc/
+>     * struct assignment
+>     * s/20/GIT_MAX_RAWSZ/
 
-> There are a small number of misspellings, ".gitmodule", scattered
-> throughout the code base, correct them ... no apparent functional
-> changes.
->
->  Documentation/technical/api-submodule-config.txt | 2 +-
->  contrib/subtree/git-subtree.txt                  | 2 +-
->  submodule-config.c                               | 4 ++--
->  t/t5526-fetch-submodules.sh                      | 2 +-
->  4 files changed, 5 insertions(+), 5 deletions(-)
->
-> Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
->
-> ---
->
->   can't believe i forgot to sign my own patch. le *sigh* ...
->
-> diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+Even the interdiff has Stefan's Reviewed-by.
 
-Just for future reference, the diffstat and summary comes _after_
-the three-dash line, before which is your sign-off, and after which
-you can have additional comment like "can't believe...".
-
-No need to resend, as I can remove the cruft from the log message
-while queuing.
-
-Thanks.  The patch looks good.  Will queue.
+Thanks for being persistent,
+Stefan
