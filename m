@@ -2,104 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0DB1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 14:53:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2EA1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 15:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031136AbeBNOxG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 09:53:06 -0500
-Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:34366 "EHLO
-        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1031003AbeBNOxC (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Feb 2018 09:53:02 -0500
-Received: from resomta-po-09v.sys.comcast.net ([96.114.154.233])
-        by resqmta-po-03v.sys.comcast.net with ESMTP
-        id lyQ5eorJbKVVzlyQfeu2vB; Wed, 14 Feb 2018 14:53:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1518619981;
-        bh=u+bTujUnmTXkdRsFagYbw3gXzrVd5vnoBF/1+/9IVMY=;
-        h=Received:Received:From:To:Subject:Date:Message-ID:MIME-Version:
-         Content-Type;
-        b=PtWabxRei5yiB42wpNJTBM4woNTZISr0Mr5UwBe/dMNDI3OrxA746ongmsS8Uj3qK
-         olpQzB7B5UNHQggheUoA0eV2/hnf3/3Sjhytamuvj1Kg52xgSwTEPueG7mp2IzJpyb
-         uig9Ot1s3k80MDLXKJGUI2E34nFdbqKRRKh0b7As2EVeQEFXcY5J6NY1DmWf8lxfK0
-         fAOI262bEo7uxhEpAwByQD4DqM98shH6ejM9XziNX9nq4zwd1BJSSY6GajDZHreZN0
-         LL+l9RIqPWW2x2PliIMMFXCM5JmDD1C7IZGLixzBDWQcA7h/No1uuqV5CDrrQVP0C/
-         vqoiEkKESKsSw==
-Received: from jjlt2 ([IPv6:2601:648:8400:5992:ccba:8df6:759a:6e31])
-        by resomta-po-09v.sys.comcast.net with SMTP
-        id lyQeexwqkfjk5lyQfejl7f; Wed, 14 Feb 2018 14:53:01 +0000
-From:   <greenwood9@comcast.net>
-To:     <git@vger.kernel.org>
-References: 
-In-Reply-To: 
-Subject: RE: git-bashe.exe fails to launch
-Date:   Wed, 14 Feb 2018 06:53:00 -0800
-Message-ID: <015801d3a5a3$82bea1e0$883be5a0$@comcast.net>
+        id S1031138AbeBNO7x (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 09:59:53 -0500
+Received: from mail-io0-f179.google.com ([209.85.223.179]:37801 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030737AbeBNO7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 09:59:49 -0500
+Received: by mail-io0-f179.google.com with SMTP id t126so2169145iof.4
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 06:59:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vcZS4+lI3EiN69D9Y4mO1HtNAxUGLdnlfTUV4cLNXGM=;
+        b=NtHngZoZVHATl6FHKjX2Gzdb1cYdYDbNlO73vWFZ00qwUyATIaWSQGeGedsjX521K5
+         2W/mVxlZbzo/Z0hNVz9uDW6x4NVXrDf+x3xhHK1uNSpQ6PB7QrOKA85ibMiFPtLawnoM
+         +pJzBh6IjaSTB/TD22cWtYGruo4kZZ9TozU69J578Ymn3F4MR95EOxUsBjKRN0ACBbv/
+         zrd/azvMfaW6B+I3lakwxBn1V1X4YZDujSjrfc48t5++Sh+6N8v+McCvUafmdZh7NacC
+         mnNJ16DbKwmcojNbCXc5B4vinSZCWai017KL+7kS2DcDcLl4diQaupeNv9eEMJu8kfNy
+         C3WA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vcZS4+lI3EiN69D9Y4mO1HtNAxUGLdnlfTUV4cLNXGM=;
+        b=YT+fM+hHaiuNuOYU66Ncjf+2xxnufpNmKS8NK+6Wpq+nStaUz0fXh3KA086xJ6g9RV
+         hSH1yzjXXktaz666Z55c5IdUl9TnoxgUR2BYDikF5OmIhHuZaOvEI0A4biLeCxzWdf4Q
+         GXYhgUGjlwH1FTmmpHBYmB6hBH2IPgSc0C9ZIA+RyrEvtuJsH1mAw06dvz0Pt04+7wij
+         NMn2sZgJdxTefSAjWWhJ4iiFvpIab0gxloXHli10miuEdsPX35n0zD66KuRAtnj/iqFy
+         7OSDL2kUaeRIfqhLytmFxyAudimxDaaXxuLvgff1uT+LEOKXoe3i0ononcA1kuixwscC
+         OhWw==
+X-Gm-Message-State: APf1xPCBRJWuEdXYEIctxwg/nJVwvOUCFhLe9aFv5UqsmmNLEdKJv7RA
+        rgvxg+R7muiZEn8EEwESVT2IdN8/sOlPhn8ygis=
+X-Google-Smtp-Source: AH8x224fRkgtx0UOkote0QmiSikHC5KiFMo1QmmZAY1/v7Tb+ot6mVcm9kxDGljFdxzUYko2HUbN5GDa40TicQBxGCM=
+X-Received: by 10.107.184.10 with SMTP id i10mr5925848iof.283.1518620389095;
+ Wed, 14 Feb 2018 06:59:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGrfzFasiwJxvm8YCH7rBZg3YAaOaP0R6oA
-Content-Language: en-us
-X-CMAE-Envelope: MS4wfDIDg4GRIsuOgp7MDbWl5yPPqTFAkDzgVfyi30tUIvDrESi2DcCm4gkH/Ychbp/drZHtN576It47RLU/RAC43nlKTCFplwVRQoEJuZZ2IYQQz0/FCMv6
- e/c1lK/N/mOhM6fN/sUBY48ttdGGwPm0smQ=
+Received: by 10.107.47.11 with HTTP; Wed, 14 Feb 2018 06:59:28 -0800 (PST)
+In-Reply-To: <1515177413-12526-1-git-send-email-git@matthieu-moy.fr>
+References: <1515092151-14423-1-git-send-email-git@matthieu-moy.fr> <1515177413-12526-1-git-send-email-git@matthieu-moy.fr>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 14 Feb 2018 15:59:28 +0100
+Message-ID: <CACBZZX7xC37W5+MLtYSrBaPawh+QfOSqci_rFOp_ukVi4fp6Gg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] send-email: add and use a local copy of Mail::Address
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
+        Thomas Adam <thomas@xteddy.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This appears to be covered by =
-https://github.com/git-for-windows/git/issues/1473.  In particular, =
-avih's comment about git-bash working without a .minttyrc file applies =
-to me.  Apologize for the noise; should have fully reading bug reporting =
-instructions.
+On Fri, Jan 5, 2018 at 7:36 PM, Matthieu Moy <git@matthieu-moy.fr> wrote:
 
------Original Message-----
-From: greenwood9@comcast.net [mailto:greenwood9@comcast.net]=20
-Sent: Wednesday, February 14, 2018 6:45 AM
-To: 'git@vger.kernel.org' <git@vger.kernel.org>
-Subject: git-bashe.exe fails to launch
+>  create mode 100644 perl/Git/FromCPAN/Mail/Address.pm
+>  create mode 100755 perl/Git/Mail/Address.pm
 
-Resending as Plain Text.
-
-After upgrading to 2.16.1.windows.4, I have been unable to launch =
-=E2=80=9CC:\Program Files\Git\git-bash.exe=E2=80=9D from installed =
-shortcut or from command line (cmd).  In both cases, the bash console =
-flashes and closes immediately.
-
-I am able to invoke =E2=80=9CC:\Program Files\Git\bin\bash.exe=E2=80=9D =
-from the command line, in which case I appear to have full git =
-functionality.
-
-I have tried uninstalling and reinstalling a number of times to no =
-effect.
-
-Comparing a failing launch to a working launch on another computer using =
-Process Explorer, the problem may be related to HarddiskVolume3.  This =
-error shows up near the end of the failing launch.  Note the odd quote =
-and =E2=80=9CI=E2=80=9D at the end of the path.
-
-High Resolution Date & Time:     2/14/2018 6:14:13.7853585 AM Event =
-Class:       File System
-Operation:         CreateFile
-Result:  INVALID PARAMETER
-Path:     \Device\HarddiskVolume3=E1=BC=BD
-TID:       13904
-Duration:           0.0000095
-Desired Access: Generic Read
-Disposition:       Open
-Options:             Synchronous IO Non-Alert, Non-Directory File, =
-Complete If Oplocked, Open By ID
-Attributes:         n/a
-ShareMode:      Read, Write, Delete
-AllocationSize:  n/a
-
-This is my first post to this mailing list.  Please let me know if I =
-need to register somewhere to see replies.
-
+I didn't notice this in my initial review, but just now when it's
+landed in master and it's shiny-green in my terminal, this file should
+be 644, not 755.
