@@ -2,109 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 785FE1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 22:22:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 719401F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 22:41:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031825AbeBNWW3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 17:22:29 -0500
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:45292 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031793AbeBNWWV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 17:22:21 -0500
-Received: by mail-wr0-f193.google.com with SMTP id h9so1466817wre.12
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 14:22:20 -0800 (PST)
+        id S1031848AbeBNWlT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 17:41:19 -0500
+Received: from mail-yw0-f173.google.com ([209.85.161.173]:40161 "EHLO
+        mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031527AbeBNWlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 17:41:18 -0500
+Received: by mail-yw0-f173.google.com with SMTP id y186so8012813ywf.7
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 14:41:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VqSnYHpm6zr+C/p0+JzjtWuXq+cFsEbxHn6ymr1w11Y=;
-        b=WLaoWdp1lUikCYaaZCyTgE9fg9FVqPfGpEKQQLtF1eBiyniXoPSe4XaW0kl1yvDLbh
-         vn5W2D1IS3UYV1+yNpwy78C6SF1jlQwf29csLoFai7IdVHAq5opBlkOSRVoEvjfNxQpL
-         h18QF8wDeBAlIsp1jss/GbORlaHHzfQWNyyChulF7rACdt83Y1shbl61sI9JQJFyQvsc
-         ef/SFCj52xI6FZkTliR8b+CGH+aiUcdDZPak2Nn12NNuG+6d5TXlS3EC7bEEW7EtAdDC
-         RJAwGddvyDVy6Ikr7X2naX3MORQ78mCmWyv08dRXR1YiK3a2h8JIYVq5ixXH8kG0uZ5k
-         dGwA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LrGt4gNpU6g9glsBae+Iu96PkpHDPsLFi1ba51nHDIM=;
+        b=iCb4/wy94c5QD4c021QiFin+ZjBNYkhJVv7jeHnZUFaLDdAOXcb00QnZTXz6+tjQGn
+         GNzZGdQYWedkM9QT45l+uiAblJXcrMi+QYzaywJ4UvoJ1oDC9KRUrwZDUjwbGsaP5CRk
+         jyIIXs/y8F5nN65pOwBsF8bK0eaKlaD088XENRKoqfaYqyKNDYiZ4VhLWfIAn4xWB85u
+         7gkgbxSAZuXZQHiCy/M1AaK5KpACOPYCPLJuZTDYSLY+V72ssoOAZQvYTJ57ck9Lt7nN
+         KblTAhLov4SxNFQBs2yNIubJTjvrI2/goGTWEmS26uY6Kr3d8fETLgmFnn+n1EG4roLc
+         3pgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VqSnYHpm6zr+C/p0+JzjtWuXq+cFsEbxHn6ymr1w11Y=;
-        b=FlpRkRAoD1ePnhDkW87HOL3ov15IJ0QX0762zGMLzp48WV1M0x2DVh1R84jH1JTsi1
-         Qz8/7YvcPBtT9lyWqmuKZWt2gXm99+OfNlf79sxN+TVFvujCRnbQdem3BEWFHbZsT0ON
-         11zCi39zVGuvJ3aBN5nRwlXWuZA2qRZ6teuPw/K7ICwCV+VWxmnY4sVftHuPFTEWs6yU
-         M1YZ33tZucNOtHlqa6WJnAN2tNzL7rrNfI5LMouVkouH5FIb9HOTO1VT3CJmpjGOXb0T
-         HJN5ekmij0ksKzPY9bCyeu+0vrbJYR04c4lo4aHMAh9L8NDPtAc6EQSC5VFuID9Lk0lH
-         1zAg==
-X-Gm-Message-State: APf1xPA6d6fvcb/1vcOwvLdRom4OURELUTXaCvetOzAPTI6P+y/598rU
-        59t4Zai7ZdbCFRVs7uolHkvCX/QE
-X-Google-Smtp-Source: AH8x227+CQKWzB40tGPNh6aHzeNZTpe0A3jUco5Ms6gyatiAe0oFbnXa0RlU88PrjeKe9bjPs5kCjA==
-X-Received: by 10.223.208.208 with SMTP id z16mr658308wrh.46.1518646939434;
-        Wed, 14 Feb 2018 14:22:19 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a14sm13191356wrf.22.2018.02.14.14.22.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Feb 2018 14:22:18 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, Petr Baudis <pasky@ucw.cz>,
-        Benoit Bourbie <bbourbie@slb.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jari Aalto <jari.aalto@cante.net>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-        Marcus Griep <marcus@griep.us>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 8/8] perl: hard-depend on the File::{Temp,Spec} modules
-Date:   Wed, 14 Feb 2018 22:21:46 +0000
-Message-Id: <20180214222146.10655-9-avarab@gmail.com>
-X-Mailer: git-send-email 2.15.1.424.g9478a66081
-In-Reply-To: <20180214222146.10655-1-avarab@gmail.com>
-References: <20180214222146.10655-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LrGt4gNpU6g9glsBae+Iu96PkpHDPsLFi1ba51nHDIM=;
+        b=TeA4UnixUyuYVgmQUIksfEAlg8+BLy2yZhRNPdjKiof8TIxWDcCa3BiNcawbt8Dexi
+         /neRBmGlnblnRgSsCZBbQujl4ZYJHEmbpE9ya6IOV6dO/wlxqpi/e0ZQNyxjRXiaxWCR
+         SgxDlSLZh/8pp2oiOBrb3zKvdqzl3pB+FSsa87BBNCXhsq1BYUVfgdlcz2BNhVhT3R3w
+         fPZEbufdLGUGLM2FzJJsT4B/gySJ3QzFcjTfRNl3IIDzQqdCiEAnjuyiudYGqCQNOTrH
+         Cb1o9PnG/qwF0num7ELda/EBMomgGzBquuf7L+vonAhKOdcFoagN+SwlSEtZMNEtvIJg
+         hN4w==
+X-Gm-Message-State: APf1xPBaG7bAtYnlckRkrO0KdEeARSkb4iliVyqrW+fixYrVZ20yVrME
+        rvHvIO0crmc66uS0YF7kKBbFtr+BMXm5glIrtDap4g==
+X-Google-Smtp-Source: AH8x226KdCucxEMHd+d3lmVI4xjzJzjokvx3MNkhie+yVj/JbeDR5jt6It+tMR97otbzKRHXBYEa8VtDAq8VrhXZFhs=
+X-Received: by 10.37.180.65 with SMTP id c1mr626378ybg.438.1518648077181; Wed,
+ 14 Feb 2018 14:41:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 14:41:16
+ -0800 (PST)
+In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
+References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 14 Feb 2018 14:41:16 -0800
+Message-ID: <CAGZ79ka7b_+o3p9P5oGmCoh6dJdqYx6Rwv=fetKavcgBhztgSw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/37] removal of some c++ keywords
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since my d48b284183 ("perl: bump the required Perl version to 5.8 from
-5.6.[21]", 2010-09-24), we've depended on 5.8, so there's no reason to
-conditionally require File::Temp and File::Spec anymore. They were
-first released with perl versions v5.6.1 and 5.00405, respectively.
+On Wed, Feb 14, 2018 at 10:59 AM, Brandon Williams <bmwill@google.com> wrote:
+> One person was interested enough for me to go back through and also
+> rename all the paired 'old' variables to match the new names for the
+> variables which were named 'new'.
 
-This code was originally added in c14c8ceb13 ("Git.pm: Make File::Spec
-and File::Temp requirement lazy", 2008-08-15), presumably to make
-Git.pm work on 5.6.0.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- perl/Git.pm | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 8e02ee2cca..221e827e83 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -1324,8 +1324,9 @@ sub _temp_cache {
- }
- 
- sub _verify_require {
--	eval { require File::Temp; require File::Spec; };
--	$@ and throw Error::Simple($@);
-+	require File::Temp;
-+	require File::Spec;
-+	return;
- }
- 
- =item temp_reset ( FILEHANDLE )
--- 
-2.15.1.424.g9478a66081
-
+The patches are:
+Reviewed-by: Stefan Beller <sbeller@google.com>
+(apart from the 'this' nit Junio had)
