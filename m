@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A225F1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 23:04:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F68C1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 23:46:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031929AbeBNXEE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 18:04:04 -0500
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:42470 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031852AbeBNXED (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 18:04:03 -0500
-Received: by mail-pg0-f42.google.com with SMTP id y8so2751108pgr.9
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 15:04:03 -0800 (PST)
+        id S1032032AbeBNXqe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 18:46:34 -0500
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:41688 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031901AbeBNXqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 18:46:33 -0500
+Received: by mail-pg0-f66.google.com with SMTP id t4so2836048pgp.8
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 15:46:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=jX30lOZkXYHEyV3+Wlzx79VHebULIu4jI+FZZr9bbsA=;
-        b=lRXQ6YTo2+FDBXH7tL6x0FGxrE++WvFoTVvctq5tRFEPnHsBZuWono9ph64FSNxe1x
-         CMv7KL6MRH3G3ikTAv4s/CTVEZUNNT8ssFZcp4YRMppjrv/CnFbbY8v1iQXG+9nn42I+
-         16mckIn3F1P1S+9YdlRflE4sJigaCNQP4c+4vXW88PUCca7lb5I50jZCissm88tWnhRf
-         vEdb6jl6CNFzGrfS4JnKTbPDqpPwM2uIxDXO82u+9NB7qD9yywIn9VxMJe+q5H/bSwCq
-         p7MhGkyYZceAwpYeJKOkkENO7i4VunQA7dEWdS/96FslJg3bUmvEDK9DFyhv9xXaWruV
-         sQNw==
+        bh=FHeQtjmTuYrgyhrnVi+GVCECLpGbL8sv6iNKbwJQ/g0=;
+        b=hW888nGD2GaxTiXv1r8FKfzvYFMCU5H0LJLHmd3r98nOa2+/aqeZj/YX3ZvPGBfD0w
+         Cn8xNGbUP+1lFYYpbU2w548984EEHyu/cq/8kVM/pCx237pcvWpaup4Y+Nz4dkHhsyMC
+         AlQMA3C3hrAQuN7V1ZV7/TnQ+uR7xNhEIzLQ5lMD1gXvWCx7puXGXugmVBmhZ+Y5HrmZ
+         ABIISVe+QwLUmx+pW2g2wN0l0zBHfdAoe29VYj0Efd6vi6KAztV1lTysBsQycuKWdQo5
+         ivGSweQvwnFkVW1XHjoOspzr0pvHT5BxFvWq/Se/1DVCiDvT8yAd94LxIx89+0uz8JV3
+         cTPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=jX30lOZkXYHEyV3+Wlzx79VHebULIu4jI+FZZr9bbsA=;
-        b=i4EyarYQHA40zoCfutecIbiNmc9lGe9q7e4mvBA4RZt8OEm9RUgke7cdY0k0vI9rNr
-         KKajbmOECHWNWoO6wnh/findiegzHV6iCJhljhrdIRnN9gYmb8CYeCFu50RENVTGDF40
-         UVN/LmVu6lZ8ivjnXoLPxyCafxghUJNv1y/nZPccAJ8RUG0fp9Qf45G0uCUD+FS3FjK3
-         y4YOWqF34ygSchn2pfNpLpFTDl9gctag6OYIReo7UaLvD8Mpgi+9WXuOVqVtNa+KU9w2
-         wUqXFXKLcrBxrexwTeK+YnsAjYI8PGo08wJu5fLAGRK+DRnInblMfzQ9O5sQCMdjCnWi
-         GdQQ==
-X-Gm-Message-State: APf1xPCiuRbS/abKoYmadzpV976JF8tQp6RYGOW1T55tMXigUfDVYSxp
-        qYxHjwhAYpfKhZdVb5p5wo4=
-X-Google-Smtp-Source: AH8x2256FhLnP9taPDDxnU7d317OUIl5XNE0jNuOcbLFLR4rDu1LEuRBHfzoAF5y/BVN4/zXp78chA==
-X-Received: by 10.99.113.7 with SMTP id m7mr474208pgc.403.1518649442844;
-        Wed, 14 Feb 2018 15:04:02 -0800 (PST)
+        bh=FHeQtjmTuYrgyhrnVi+GVCECLpGbL8sv6iNKbwJQ/g0=;
+        b=qKM5DAjFURhm3FdZQB6X+dzyacjRSy5HhuIeWoY4LEYk+CmogheC189hl2+eTm5q3R
+         t0b8sr8ZVzsMcTrElEPh2XfnRVxsQR/0JuPJ33iQvVMQ00jg2J+sn48vPHMJESfA3yKk
+         0GkrXacQ3wYNQUlvnJ7ivn0z8IhOGyDEUTVik4ZOkzdpCNTlZFLYLPRWT3iNc3uM5FQv
+         UZFUPhIIZAspElPLfqHyHWXWtrWNaLWUcBS09MzEQQOyxjPzEPVtbMcGEJMamxvhz++O
+         TVxm+flhioYkTLZKTv/yiP/9WPIi+nerjNZoWnGHqdNX2PZOGx6dX6tpR6kY1vhO8Lp8
+         Flng==
+X-Gm-Message-State: APf1xPDKpXUiKT4vm8L1sbxOUwU+S9zLNmwOq9TlVwq79DCNFL3w2Ihg
+        ZkkUa/6hVZqYQz23HnNoD4cYZfx0
+X-Google-Smtp-Source: AH8x224g/81B9V3FuHWKRqpTl8r++vrsUvHeDh8bd/d8yITGdr67FvSCN8DliBarGEp9fYuC98bGhA==
+X-Received: by 10.101.64.74 with SMTP id h10mr565974pgp.200.1518651993016;
+        Wed, 14 Feb 2018 15:46:33 -0800 (PST)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id p4sm33880544pgn.81.2018.02.14.15.04.01
+        by smtp.gmail.com with ESMTPSA id u13sm39539068pfd.169.2018.02.14.15.46.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 15:04:02 -0800 (PST)
-Date:   Wed, 14 Feb 2018 15:03:59 -0800
+        Wed, 14 Feb 2018 15:46:32 -0800 (PST)
+Date:   Wed, 14 Feb 2018 15:46:30 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -62,15 +62,15 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jari Aalto <jari.aalto@cante.net>,
         Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
         Marcus Griep <marcus@griep.us>
-Subject: Re: [PATCH 4/8] perl: update our ancient copy of Error.pm
-Message-ID: <20180214230359.GD136185@aiede.svl.corp.google.com>
+Subject: Re: [PATCH 5/8] perl: update our copy of Mail::Address
+Message-ID: <20180214234630.GE136185@aiede.svl.corp.google.com>
 References: <20180214222146.10655-1-avarab@gmail.com>
- <20180214222146.10655-5-avarab@gmail.com>
+ <20180214222146.10655-6-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180214222146.10655-5-avarab@gmail.com>
+In-Reply-To: <20180214222146.10655-6-avarab@gmail.com>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -79,35 +79,29 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason wrote:
 
-> The Error.pm shipped with Git as a fallback if there was no Error.pm
-> on the system was released in April 2006, there's been dozens of
-> releases since then, the latest at August 7, 2017, let's update to
-> that.
+> Update our copy of Mail::Address from 2.19 (Aug 22, 2017) to 2.20 (Jan
+> 23, 2018). This should be a trivial update[1] but it seems the version
+> Matthieu Moy imported in bd869f67b9 ("send-email: add and use a local
+> copy of Mail::Address", 2018-01-05) doesn't correspond to any 2.19
+> version found on the CPAN. From the comment at the top of the file it
+> looks like some OS version with the POD stripped, and with different
+> indentation.
 
-Comma splices:
- s/, there's/. There's/
- s/, let's/. Let's/
+Were there changes other than the POD stripping?
 
-The one piece of information I was curious about that this (quite clear,
-thank you) commit message is missing is what changed in the intervening
-time.  Is this just about keeping up with upstream to make it easy to
-keep up later, or has upstream made any useful changes?  E.g. did any
-API or behaviors get better?
+> Let's instead use the upstream version as-is, and without copyright
+> notices stripped. Like Error.pm this doesn't cleanly pass --check, so
+> add a .gitattributes file to ignore the errors.
+>
+> 1. https://metacpan.org/diff/file?target=MARKOV/MailTools-2.20/lib%2FMail%2FAddress.pod&source=MARKOV%2FMailTools-2.19%2Flib%2FMail%2FAddress.pod
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  perl/Git/FromCPAN/Mail/.gitattributes |   1 +
+>  perl/Git/FromCPAN/Mail/Address.pm     | 436 +++++++++++++---------------------
+>  2 files changed, 163 insertions(+), 274 deletions(-)
+>  create mode 100644 perl/Git/FromCPAN/Mail/.gitattributes
 
-Related: do we have to worry about in-tree users taking advantage of
-improved API and packagers forgetting to add a dependency on the new
-version?  Do we declare the minimal required Error.pm version somewhere
-(e.g. in the INSTALL file)?
+Yikes re the stripped POD with license notice. Thanks for fixing it.
 
-[...]
->  perl/Git/FromCPAN/.gitattributes |   1 +
->  perl/Git/FromCPAN/Error.pm       | 296 +++++++++++++++++++++++++++++++++------
->  2 files changed, 256 insertions(+), 41 deletions(-)
->  create mode 100644 perl/Git/FromCPAN/.gitattributes
-
-Most of the added lines are documentation, so this diffstat doesn't look
-half-bad.
-
-Thanks for writing it.
-
-Jonathan
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
