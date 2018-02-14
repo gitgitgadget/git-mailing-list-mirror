@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 284051F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D19041F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162525AbeBNTBR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:01:17 -0500
-Received: from mail-ua0-f201.google.com ([209.85.217.201]:46533 "EHLO
-        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162506AbeBNTBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:12 -0500
-Received: by mail-ua0-f201.google.com with SMTP id k4so15481902uad.13
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:12 -0800 (PST)
+        id S1162529AbeBNTBV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:01:21 -0500
+Received: from mail-yw0-f202.google.com ([209.85.161.202]:37223 "EHLO
+        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162516AbeBNTBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:01:15 -0500
+Received: by mail-yw0-f202.google.com with SMTP id e129so2871612ywb.4
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=PeB2J24wPDzeQjlfU5SBQceXOJj/z6L/xvwQc4+IbAU=;
-        b=X0lkcYyB1mqQRpNy6yXa8JYiiO9wNtQOYjRb+wMDnQzxyJdFhUAwrRZ1Pbnt+EDLxo
-         QSmCxbvLE1OgOt4cjtY/2MnCnf1ah8tqsiKXQFycR8upC03ub5lF7tTlRsCMgeLIZCWT
-         fke+6LUkAKkUFntKJ3GQBSBMxUF/4/9R4wF/X234fbYxTfsXkVpWcjIjSOQN7rK204us
-         e/JGJ8MCDBVxfmEa/VRFhWN1Uq+k8h8Ni9Z+jgNhzhe5MDIFi3BXPOcX6iBz1zAVoNNA
-         UksD4xBAbSFNtnjvfbiL5mAB3EOHV34hYQgHTIQpeeiPfKTFUNP1+8mDA/oFw/NM3BOZ
-         2Bkg==
+        bh=82xlf5P5n7axzPfS9Z9oNiG2AakgeFTv23JkymXF7/k=;
+        b=AigU9i7IFsrjVRxiHfjHdzOb4Keme6SLiTbp3TceYJsB1VwoES1Ltnfitwl/zV/XeU
+         KUWL85+L9VEcZWB7HJQQXTZ+oDa2/FGSGb6ADyzH5jDKG2RSrloHAb5SWi6xuw6SCWFD
+         EtYMFA048P7v1oSuMH+aGiO0DFY78OFF+AsJz5v6P3ludODSdfDp8sUIbGIfdqXnXH0M
+         pTEp0SViSx/KNYU/5hEEtENROIhz2in7P2ArdKf64spm0emJz+LPy0y1MhkOOlUb0cwY
+         lZw/tdPB9dXnFjLQcjaC+aaclNOIIRfZ9r6B7opzWxbKoODbD11B8/H6zYrezZLpckZ3
+         JzpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=PeB2J24wPDzeQjlfU5SBQceXOJj/z6L/xvwQc4+IbAU=;
-        b=LJ+vfMHz6ZXuF0TjY4ieY0AHc4buhLSMBiEpBWaB9ZD7YnOBAXN4iX2M4/YcOt8UX3
-         k6MTwWbFy8ZzfwAd1VauT9gkcM39/MtIKvpRvgwXLP6O6J3FWfmGp+/XxApODZQwrYRy
-         PKQhhiy547hXUhU6dlRGcKwhgYmq0LeGTCAR4g0ODFWOhMKFYkjiOIYy3KujnFyXAvr1
-         R6H4OjmiFw43T1mgJkrd3U+rnr3Rsr9TzH1FmMf3knywnpQvr+hN1cwaV4MpoufHYJPW
-         wMsikhhusRVqzCCF4iigDHcM9pyfpXkWn4Y6P624PVkHQCsy+yho/Q0/5f4YviWDNUs2
-         hcrw==
-X-Gm-Message-State: APf1xPDlYxlUyVDuVXs7/PGzLcB1qXvriZQPozIMtUIcSH9x+yXTbdOx
-        WJzUDq5W/yxyDrfWH94HB+11f4i0T+jVvKvC536ai5m5S4QXxQ6j6ntPcoHMiPeqcxWQp7ZJrVj
-        CzlVIaP8gfIHg9AiKnFDBfilNYnsMe6G9pDAR3KDstP8JnPIvCPT7gWLgMg==
-X-Google-Smtp-Source: AH8x226ylyB6KyJOMOlBASY5FaXOidb1HFIlfxazgPryvYf7vrOsTALE3nzau6b4nfgg2DzFNcQHJBAZErY=
+        bh=82xlf5P5n7axzPfS9Z9oNiG2AakgeFTv23JkymXF7/k=;
+        b=GSva9L6+MwtbmUj1GdOn8NzMrbRxseHRk7pfa57qlBJkjPkI24+DFrYMUDt8QZxt7z
+         GzohGhBatLojOMY0LrAC0D4vYBmTJxLHUGxxVCIBvqOQZT3Ik9dNYiVeb7cnfpMMBheF
+         sRNMK9FzvcdIEb+qboSVBejMHc7TQTjvx8/sqDHL9f7KcowMN0i+aOsmfEfYPzNzGcq4
+         uXZeQPc/Xf8OoFfDfCsUdAGHAmz2fgULEa6ih9dNZhiehCGeq62XkTprEqK6qMf3y5b/
+         7Rf2TvkkxDkmwe5gu7jbULHi+rZzybGFZDhDkcZyJutuw9kzxw0dtHTOzO84j2j+URM+
+         10bA==
+X-Gm-Message-State: APf1xPDrXjzOWoH/hLG1AfHYNgdMDkxeBds7aTOtnLCFPat/CgapqhkS
+        J6L5APZyYoJI7gW5dyKfLeTbWOVcPuf3ZxRV3Rv8lauZCB2bHe+AXTidcM56z2GUclUYxSNKVoz
+        YTkih+IICTYi7Xldk6cFjm4zDysQeuk52ibm73PVqzdt0Urq6DeDzudn2KA==
+X-Google-Smtp-Source: AH8x225F5TaE0MmQrhBsVQhmIGkWtyJhb4jKKf6FhHsgsB7F+cpk5CQm5krzFfxD/YeFFX0+zGF6rRGoei0=
 MIME-Version: 1.0
-X-Received: by 10.176.0.162 with SMTP id 31mr2773868uaj.84.1518634871967; Wed,
- 14 Feb 2018 11:01:11 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:33 -0800
+X-Received: by 10.37.214.210 with SMTP id n201mr1249807ybg.23.1518634874690;
+ Wed, 14 Feb 2018 11:01:14 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:34 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-12-bmwill@google.com>
+Message-Id: <20180214185959.221906-13-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 11/37] pack-redundant: rename 'new' variables
+Subject: [PATCH v2 12/37] reflog: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,110 +68,38 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/pack-redundant.c | 54 ++++++++++++++++++++--------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ builtin/reflog.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index aaa813632..991e1bb76 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -48,17 +48,17 @@ static inline void llist_item_put(struct llist_item *item)
- 
- static inline struct llist_item *llist_item_get(void)
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 223372531..ac3dcd7a5 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -289,20 +289,20 @@ static int should_expire_reflog_ent(struct object_id *ooid, struct object_id *no
+ 				    const char *message, void *cb_data)
  {
--	struct llist_item *new;
-+	struct llist_item *new_item;
- 	if ( free_nodes ) {
--		new = free_nodes;
-+		new_item = free_nodes;
- 		free_nodes = free_nodes->next;
- 	} else {
- 		int i = 1;
--		ALLOC_ARRAY(new, BLKSIZE);
-+		ALLOC_ARRAY(new_item, BLKSIZE);
- 		for (; i < BLKSIZE; i++)
--			llist_item_put(&new[i]);
-+			llist_item_put(&new_item[i]);
+ 	struct expire_reflog_policy_cb *cb = cb_data;
+-	struct commit *old, *new;
++	struct commit *old_commit, *new_commit;
+ 
+ 	if (timestamp < cb->cmd.expire_total)
+ 		return 1;
+ 
+-	old = new = NULL;
++	old_commit = new_commit = NULL;
+ 	if (cb->cmd.stalefix &&
+-	    (!keep_entry(&old, ooid) || !keep_entry(&new, noid)))
++	    (!keep_entry(&old_commit, ooid) || !keep_entry(&new_commit, noid)))
+ 		return 1;
+ 
+ 	if (timestamp < cb->cmd.expire_unreachable) {
+ 		if (cb->unreachable_expire_kind == UE_ALWAYS)
+ 			return 1;
+-		if (unreachable(cb, old, ooid) || unreachable(cb, new, noid))
++		if (unreachable(cb, old_commit, ooid) || unreachable(cb, new_commit, noid))
+ 			return 1;
  	}
--	return new;
-+	return new_item;
- }
  
- static void llist_free(struct llist *list)
-@@ -80,26 +80,26 @@ static inline void llist_init(struct llist **list)
- static struct llist * llist_copy(struct llist *list)
- {
- 	struct llist *ret;
--	struct llist_item *new, *old, *prev;
-+	struct llist_item *new_item, *old_item, *prev;
- 
- 	llist_init(&ret);
- 
- 	if ((ret->size = list->size) == 0)
- 		return ret;
- 
--	new = ret->front = llist_item_get();
--	new->sha1 = list->front->sha1;
-+	new_item = ret->front = llist_item_get();
-+	new_item->sha1 = list->front->sha1;
- 
--	old = list->front->next;
--	while (old) {
--		prev = new;
--		new = llist_item_get();
--		prev->next = new;
--		new->sha1 = old->sha1;
--		old = old->next;
-+	old_item = list->front->next;
-+	while (old_item) {
-+		prev = new_item;
-+		new_item = llist_item_get();
-+		prev->next = new_item;
-+		new_item->sha1 = old_item->sha1;
-+		old_item = old_item->next;
- 	}
--	new->next = NULL;
--	ret->back = new;
-+	new_item->next = NULL;
-+	ret->back = new_item;
- 
- 	return ret;
- }
-@@ -108,24 +108,24 @@ static inline struct llist_item *llist_insert(struct llist *list,
- 					      struct llist_item *after,
- 					       const unsigned char *sha1)
- {
--	struct llist_item *new = llist_item_get();
--	new->sha1 = sha1;
--	new->next = NULL;
-+	struct llist_item *new_item = llist_item_get();
-+	new_item->sha1 = sha1;
-+	new_item->next = NULL;
- 
- 	if (after != NULL) {
--		new->next = after->next;
--		after->next = new;
-+		new_item->next = after->next;
-+		after->next = new_item;
- 		if (after == list->back)
--			list->back = new;
-+			list->back = new_item;
- 	} else {/* insert in front */
- 		if (list->size == 0)
--			list->back = new;
-+			list->back = new_item;
- 		else
--			new->next = list->front;
--		list->front = new;
-+			new_item->next = list->front;
-+		list->front = new_item;
- 	}
- 	list->size++;
--	return new;
-+	return new_item;
- }
- 
- static inline struct llist_item *llist_insert_back(struct llist *list,
 -- 
 2.16.1.291.g4437f3f132-goog
 
