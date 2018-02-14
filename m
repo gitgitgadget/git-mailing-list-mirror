@@ -3,220 +3,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B2A61F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9971F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:15:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161757AbeBNSMw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:12:52 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52678 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161664AbeBNSMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 13:12:48 -0500
-Received: by mail-wm0-f67.google.com with SMTP id j199so12284463wmj.2;
-        Wed, 14 Feb 2018 10:12:47 -0800 (PST)
+        id S1161781AbeBNSPR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:15:17 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:46229 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161741AbeBNSPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 13:15:15 -0500
+Received: by mail-qk0-f176.google.com with SMTP id g129so13243169qkb.13
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 10:15:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=9ieVfPoNoT9MEys5knC+HMdjx8ZVwIu0pylRiRxzUEc=;
-        b=IaoAmTkinu/s0a4SkIn3nThvR5kt33UewrQk/CcIC2FFYly9bzwyZNWkrYHbxHX6mY
-         aRrbucBg7vqrZSCQlyzuP1fEJxn5rNeEgfLe0wvLUFIYhR24TE3r+4RG9o1tbcIM8V73
-         4RATrSPdtwQL+XTqAHhgoxjPRNNS9aWxl5aUi6+nH2CmTcMsjPOH2WTiny8r6wcUNg0l
-         XcjqIyphB0BnCCVqZjR7i6tNlRDyanVFyo1lxScw3q5/RBqYNZeIZP5xmnpbSSv502Pk
-         JdrbE/9R5SgcUa6FKGk1cs5gSTGLb2ApQU/JARJHUNd8y/FEeIKNRcVKOyXaPMxUazm3
-         gNLw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=6CWTI2S/nG45wq4JLub3g6UDtwvXOIMbyi2hDkwWpwk=;
+        b=A72SNYGsOP7jth+DfJX3meb2/yQeM9s9233OqfvsMvJjJV30uwisu8VXsZdDiOR+DE
+         RPaO1w1g6FinJSbNNpI90Z1l0wlholFjxXSnCV75qKNZXm04g8Nu3QkbEZ0tJszlIm+f
+         OyX7CToN7PHwAq4x9/IkWN8soRKuspr/ffoALRZViiOY46KUBb237/ni5JysJn3c+1pU
+         8L8/uxU7dKoeOrodmJ6IGYur2QRjyqjaJuAFDHAGpSKUX+G66dbVapsnNjdI+Ls3zsVD
+         juU9P0vsZPx6qITG+K6rlDfgBbCZ2z/u2EFg8G7IAWwF5Z+vqudqVE/rDrw9H9yjuscH
+         j7lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=9ieVfPoNoT9MEys5knC+HMdjx8ZVwIu0pylRiRxzUEc=;
-        b=qnDsQa6drh44nIf5H8DH/XfQa1q8YeFvdrocUgrLP7DetA+6yYevliPIWjRvFn40YF
-         otiGd90vQE4c/KcBAytQLnh1taRZt2bN3wDWIGA3x2uLMIeOV+sLfTY+OvUeoYrNzCuM
-         JXHZed0cYcIU3UKZQUt8XJOy1MRRry8afa+RntslqAywhWcJTeD+N34LHT8SNBlI3YVq
-         2H5MsVfnELiIK4xYggvrJy36PhvqJxyNh3X1g68qGIrI/iMfdMkKYM86T28QjzUSmtgT
-         tjp/Tfsz/5NOoyA9drTPi1wePH9s0dTkI19WIjn681qJIV98oRT5PBbaJw1DDlOUEulu
-         0qAA==
-X-Gm-Message-State: APf1xPB18A7vLDmlF+BCV33VvGcckAsf/YmcOa6EAAmG+hK0SCtyHGkr
-        wydvj93zGEBqJGWciqqmNzw=
-X-Google-Smtp-Source: AH8x227N6kJI4xBdlc31tnHh1qgMpVFrgK6NXMrM2LmwOki9dUw3tGuuljjR7gpv/c6mcmDIYLkO4Q==
-X-Received: by 10.28.216.149 with SMTP id p143mr75292wmg.140.1518631965688;
-        Wed, 14 Feb 2018 10:12:45 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z1sm13821131wre.25.2018.02.14.10.12.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 10:12:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Mauro Carvalho Chehab <mchehab@osg.samsung.com>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: linux-next: unnecessary merge in the v4l-dvb tree
-References: <20180213080036.3bf3a908@canb.auug.org.au>
-        <CA+55aFwM0vy+pw-Xv=gA19ULMwAXNPhdO3qR5A3hkMrZKJFNSQ@mail.gmail.com>
-        <CA+55aFzxsNxgKD1uGZQCiib+=+wCMSa0=B+Ye3Zi-u6kpz8Vrg@mail.gmail.com>
-        <xmqqfu65sx20.fsf@gitster-ct.c.googlers.com>
-        <CA+55aFwTp8gg70sHXqOgR01Liv5c8nnfUP0yTdwpkh-rg+2EMA@mail.gmail.com>
-        <xmqqzi4drczv.fsf@gitster-ct.c.googlers.com>
-        <20180212222157.0a3bd472@vento.lan>
-        <xmqqmv0crepg.fsf@gitster-ct.c.googlers.com>
-        <CA+55aFxkYTeY9h=VHFXi=gbXsnsHCRMAVZ9=1_EsFGSqr0sj9g@mail.gmail.com>
-Date:   Wed, 14 Feb 2018 10:12:44 -0800
-In-Reply-To: <CA+55aFxkYTeY9h=VHFXi=gbXsnsHCRMAVZ9=1_EsFGSqr0sj9g@mail.gmail.com>
-        (Linus Torvalds's message of "Tue, 13 Feb 2018 09:33:02 -0800")
-Message-ID: <xmqqfu63o2xv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=6CWTI2S/nG45wq4JLub3g6UDtwvXOIMbyi2hDkwWpwk=;
+        b=nraVib1aRotjRAiDVHRsdz9TBCNO/zv+rd51FGHU0QXQeBhjqHAodDtCsfzKmr7aya
+         2KEwXnGDZ7Rk06VXHkp8YLRDWJjMyqvkTgt6hyQ9Nze9ojBxSCEnXeuKUXYIZMf4uIIS
+         X/lGnVQIvSoX0WQNjDEwfSREPJYHvaomGv7Cl1Vvq21mYcVgJTJR9/qBpMjajSOmsrJ9
+         vORmH9w42ovBsx/ZhZU1YnUeqBIGKtd2/2DZU9+xk29f7mrRvXqrWpc72vf5ViZfEN13
+         AyhRj1LoKxXivLCDzEg0JCG7lSHmm7srvigqqwHFR/S+fCCUNvDreIo0MhqQ9mBKqSZ/
+         Po3g==
+X-Gm-Message-State: APf1xPDQwhtOQhPdsJQIcGDsqR9WyHTr74KzGjji+piv2jKHIBoBMh7u
+        8xmScHKzg0HjrHLi0EGWuVo=
+X-Google-Smtp-Source: AH8x2246j5jTBZV4UT+CWMjT8t9OF4GqoWXOOzg0I8KdLQCrZ3vaaqUyHLsbFFyjuurofTiTWr5KOA==
+X-Received: by 10.55.217.73 with SMTP id u70mr8632021qki.223.1518632114854;
+        Wed, 14 Feb 2018 10:15:14 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id a1sm942387qtb.74.2018.02.14.10.15.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Feb 2018 10:15:14 -0800 (PST)
+Subject: Re: [PATCH v3 00/14] Serialized Git Commit Graph
+From:   Derrick Stolee <stolee@gmail.com>
+To:     git@vger.kernel.org
+Cc:     dstolee@microsoft.com, git@jeffhostetler.com, gitster@pobox.com,
+        peff@peff.net, jonathantanmy@google.com, sbeller@google.com,
+        szeder.dev@gmail.com
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+ <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+Message-ID: <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+Date:   Wed, 14 Feb 2018 13:15:12 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+There has been a lot of interesting discussion on this topic. Some of 
+that involves some decently significant changes from v3, so I wanted to 
+summarize my understanding of the feedback and seek out more feedback 
+from reviewers before rolling v4.
 
-> On Tue, Feb 13, 2018 at 9:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> That makes me wonder if another heuristic I floated earlier is more
->> appropriate.  When merging a tag object T, if refs/tags/T exists and
->> it is that tag object, then an updated "merge" would default to "--ff";
->> otherwise, it would keep the current default of creating a merge even
->> when we could fast-forward, in order to record that tag T in the
->> resulting history.
->
-> Oooh. Yes, that sounds like the right thing to do.
->
-> So the "no fast-forward" logic would trigger only if the name we used
-> for merging is one of the temporary ones (ie .git/{FETCH,MERGE}_HEAD),
-> not if the mentioned tag is already a normal tag reference.
->
-> Then it's very explicitly about "don't lose the signing information".
->
-> I'd still have to teach people to use "--only-ff" if they don't do the
-> "fetch and merge" model but literally just do  "git pull upstream
-> vX.Y", but at least the case Mauro describes would automatically just
-> DTRT.
->
-> Me likey.
-
-The implementation cannot exactly be "did the user give FETCH_HEAD
-or v4.16-rc1 from the command line?", because we'd want to catch it
-when Mauro says "git fetch linus && git merge v4.16-rc1" and behave
-identically as "git pull linus v4.16-rc1" (and the latter internally
-gets turned into "git merge FETCH_HEAD").
-
-So, instead, we read the "tag" line from the tag object to learn the
-tagname T, see if refs/tags/T exists and points at that object, to
-see if we are Mauro who follows your tags, or if we are you who
-fetch and merge contributors' "for-linus" signed tag (which I am
-assuming you won't contaminate your refs/tags/ hierarchy with).
-
-There are a few fallouts in the testsuite if we go this route.  I am
-not quite decided if I like the approach.
-
- builtin/merge.c          | 42 ++++++++++++++++++++++++++++++++++++++----
- t/t6200-fmt-merge-msg.sh |  2 +-
- t/t7600-merge.sh         |  2 +-
- 3 files changed, 40 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 30264cfd7c..45c7916505 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -33,6 +33,7 @@
- #include "sequencer.h"
- #include "string-list.h"
- #include "packfile.h"
-+#include "tag.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -1125,6 +1126,42 @@ static struct commit_list *collect_parents(struct commit *head_commit,
- 	return remoteheads;
- }
- 
-+static int merging_a_throwaway_tag(struct commit *commit)
-+{
-+	const char *tag_ref;
-+	struct object_id oid;
-+
-+	/* Are we merging a tag? */
-+	if (!merge_remote_util(commit) ||
-+	    !merge_remote_util(commit)->obj ||
-+	    merge_remote_util(commit)->obj->type != OBJ_TAG)
-+		return 0;
-+
-+	/*
-+	 * Now we know we are merging a tag object.  Are we downstream
-+	 * and following the tags from upstream?  If so, we must have
-+	 * the tag object pointed at by "refs/tags/$T" where $T is the
-+	 * tagname recorded in the tag object.  We want to allow such
-+	 * a "just to catch up" merge to fast-forward.
-+	 */
-+	tag_ref = xstrfmt("refs/tags/%s",
-+			  ((struct tag *)merge_remote_util(commit)->obj)->tag);
-+
-+	if (!read_ref(tag_ref, &oid) &&
-+	    !oidcmp(&oid, &merge_remote_util(commit)->obj->oid))
-+		return 0;
-+
-+	/*
-+	 * Otherwise, we are playing an integrator's role, making a
-+	 * merge with a throw-away tag from a contributor with
-+	 * something like "git pull $contributor $signed_tag".
-+	 * We want to forbid such a merge from fast-forwarding
-+	 * by default; otherwise we would not keep the signature
-+	 * anywhere.
-+	 */
-+	return 1;
-+}
-+
- int cmd_merge(int argc, const char **argv, const char *prefix)
- {
- 	struct object_id result_tree, stash, head_oid;
-@@ -1322,10 +1359,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			    oid_to_hex(&commit->object.oid));
- 		setenv(buf.buf, merge_remote_util(commit)->name, 1);
- 		strbuf_reset(&buf);
--		if (fast_forward != FF_ONLY &&
--		    merge_remote_util(commit) &&
--		    merge_remote_util(commit)->obj &&
--		    merge_remote_util(commit)->obj->type == OBJ_TAG)
-+		if (fast_forward != FF_ONLY && merging_a_throwaway_tag(commit))
- 			fast_forward = FF_NO;
- 	}
- 
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index 2e2fb0e957..a54a52aaa4 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -512,7 +512,7 @@ test_expect_success 'merge-msg with "merging" an annotated tag' '
- 
- 	test_when_finished "git reset --hard" &&
- 	annote=$(git rev-parse annote) &&
--	git merge --no-commit $annote &&
-+	git merge --no-commit --no-ff $annote &&
- 	{
- 		cat <<-EOF
- 		Merge tag '\''$annote'\''
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index dfde6a675a..28a1c43ca7 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -718,7 +718,7 @@ test_expect_success GPG 'merge --no-edit tag should skip editor' '
- 	git tag -f -s -m "A newer commit" signed &&
- 	git reset --hard c0 &&
- 
--	EDITOR=false git merge --no-edit signed &&
-+	EDITOR=false git merge --no-edit --no-ff signed &&
- 	git rev-parse signed^0 >expect &&
- 	git rev-parse HEAD^2 >actual &&
- 	test_cmp expect actual
+If we have consensus on these topics, then I'll re-roll on Friday, Feb 
+16th. Please let me know if you are planning on reviewing v3 and need 
+more time than that.
 
 
+* Graph Storage:
 
+     - Move the graph files to a different directory than the "pack" 
+directory. Currently considering ".git/objects/info"
+
+     - Change the "--pack-dir" command-line arguments to "--object-dir" 
+arguments.
+
+     - Keep a "graph_head" file, but expand on the reasons (as discussed 
+[1]) in the commit message.
+
+     - Adjust "graph_head" and the "--graph-id" argument to use a full 
+filename (assuming based in {object-dir}/info/).
+
+     - Remove "pack_dir" from struct commit_graph and 
+load_commit_graph_one().
+
+     - Drop "git commit-graph clear" subcommand.
+
+
+* Graph format:
+
+     - remove redundant hash type & length bytes in favor of a combined 
+type/length enum byte.
+
+     - emphasize the fact that the file can contain chunk ids unknown to 
+Git and will be ignored on read. Also fix the read code to not die() on 
+unknown chunk ids.
+
+     - Don't write the large-edge chunk if it is going to be empty. 
+Modify tests to verify this.
+
+
+* Tests:
+
+     - Format (last apostrophe on new line)
+
+     - Bug check (--stdin-commits should limit by reachability)
+
+
+* Other style fixes.
+
+
+[1] 
+https://public-inbox.org/git/99543db0-26e4-8daa-a580-b618497e48ba@gmail.com/
