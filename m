@@ -2,92 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05A2A1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 01:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96D661F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 01:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966364AbeBNB06 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 20:26:58 -0500
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:34328 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966298AbeBNB05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 20:26:57 -0500
-Received: by mail-wr0-f170.google.com with SMTP id m5so8370406wrg.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 17:26:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=mg0OWKO/WGXmViE2o7caC6S0o8n0Yd18p3/LUYiB5us=;
-        b=ek0mCFhHjjEzFrne+Rg+Mbmuxxr/VHc8EJ+aMWfr+n2vA+pFG2TxMY6FayK3yS1hiX
-         Wl3TRgjvdwB/EbsfQEBUcQ0+56apJKsB+Jbk1eL0/bhb8g3rmDY/xDsgZ/TKKtZfoDFo
-         Q+fBnujPc77AjZNBO9kSmDOkbzp9HKl+RqPpCjf6LSRcik3jF80cINpyILwrsgZFH0E/
-         4dCuT71m+x/ZUBp++Chhcfj2O+2PttxA/hlNV43IeDo8A/+g2K8ggEyn0XCk/oU7xqnK
-         RjXG4dNdMmxXUXJbLx2BlMqZkBYQ4pGK/1LlceajamPl4DpL+LwoQb9qadpTK8SzGEcA
-         FWVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=mg0OWKO/WGXmViE2o7caC6S0o8n0Yd18p3/LUYiB5us=;
-        b=l9ilbNmggm/9zxDMJh035kc/In9P0YM+gdtXb2tKi+fs2LBGfecI82fdITlINWjtcv
-         kwDQkLoKL3Te6LLk0gAEwwxO8y+4raqaIeBVH0qtWTz+xWCaIEr6XrJgR7Tqwht1doDH
-         Z61AP3NFOKcLBn57psieDRPTPqpxJnorfdIxdHvPI2sedl0GIP2MoyvCr9m9KhDag7fE
-         Pk82BREclHAHgD2qFjDkv1tuM6fWRGL6RNpdMDq0+lOdTNTEsg5Ru7OxBjpEQz/bpQH5
-         NvMzQ2ju9LzVRn+531G7uCxLNyEwcr88Qlj6DnRip0QQu1+ypVfzUYgmB0c6bGKhbl6V
-         BzNA==
-X-Gm-Message-State: APf1xPDb/wtB014mLzMp4l1n0YTl6x65bPzDLmkC9YjBKC06uSWcsDom
-        iTb2L0cvQvU5qqXaT0Fth94=
-X-Google-Smtp-Source: AH8x224BOEbWgU8WgO2P3qhqvfEuzaIfzoroowJBaeA0ivF/Gpzm0/ge9WTZqFJbGx0nlYID3+2+oA==
-X-Received: by 10.223.186.15 with SMTP id o15mr3000324wrg.101.1518571615608;
-        Tue, 13 Feb 2018 17:26:55 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z78sm8007016wrc.53.2018.02.13.17.26.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 17:26:54 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 003/194] object-store: move packed_git and packed_git_mru to object store
-References: <20180205235508.216277-1-sbeller@google.com>
-        <20180205235508.216277-4-sbeller@google.com>
-        <xmqqsha9vmqt.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kacD5Bevw==v3fbyWmz0FiDDM5ypkYuxHxbXJM62FX40w@mail.gmail.com>
-        <xmqqsha5sywh.fsf@gitster-ct.c.googlers.com>
-        <212094a6-f1bd-c4cd-01f9-e819a701cfac@web.de>
-        <xmqqbmgtswuq.fsf@gitster-ct.c.googlers.com>
-        <8b8f6e8c-9077-793b-81d7-8769eee31e66@web.de>
-Date:   Tue, 13 Feb 2018 17:26:53 -0800
-In-Reply-To: <8b8f6e8c-9077-793b-81d7-8769eee31e66@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 13 Feb 2018 19:52:33 +0100")
-Message-ID: <xmqqeflopdia.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        id S966375AbeBNBfX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 20:35:23 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51670 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S966311AbeBNBfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 20:35:22 -0500
+Received: (qmail 10813 invoked by uid 109); 14 Feb 2018 01:35:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Feb 2018 01:35:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26164 invoked by uid 111); 14 Feb 2018 01:36:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 13 Feb 2018 20:36:06 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Feb 2018 20:35:20 -0500
+Date:   Tue, 13 Feb 2018 20:35:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     Leo Gaspard <leo@gaspard.io>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Joey Hess <id@joeyh.name>, git@vger.kernel.org,
+        Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Fetch-hooks
+Message-ID: <20180214013520.GA25188@sigill.intra.peff.net>
+References: <871af155-a159-2a29-2e48-74e7a98b60d4@gaspard.io>
+ <87bmgzmbsk.fsf@evledraar.gmail.com>
+ <fa470be4-75fb-76ed-ed93-5c10fcfb8842@gaspard.io>
+ <87po5dbz1a.fsf@evledraar.gmail.com>
+ <20180209223011.GA24578@sigill.intra.peff.net>
+ <87e7c3b8-3b3c-1cb0-9b11-e4bf3044e539@gaspard.io>
+ <20180210001317.GA26856@sigill.intra.peff.net>
+ <3de8dec0-12c9-56e2-5902-97755f78ab50@gaspard.io>
+ <20180210122131.GB21843@sigill.intra.peff.net>
+ <5abf8565-1aa1-c101-83a7-90781682bc7a@gaspard.io>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <5abf8565-1aa1-c101-83a7-90781682bc7a@gaspard.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On Sat, Feb 10, 2018 at 07:36:47PM +0100, Leo Gaspard wrote:
 
-> A short semantic patch with a limited time of usefulness and possible
-> side-effects can easily be included in a commit message, of course..
+> Hmm... would this also drown the remote.<name>.fetch map? Also, I think
+> this behavior could be emulated with fetch and fetchTagsTo, and it would
+> look like:
+> [remote "my-remote"]
+>     fetch = +refs/heads/*:refs/remotes/my-remote/heads/*
+>     fetchTagsTo = refs/remotes/my-remote/tags/*
+> The remaining issue being to teach the lookup side to look for tags in
+> all the remote-tag namespaces (and the fact it's a breaking change).
 
-Yeah, I think that is Jonathan's favourite approach as well, and I
-do not have problem with that.  This transition spatch is unlike the
-"avoid strbuf_addf when we do not have to use it" one, in that there
-is a definite cut-over where the old way becomes an invalid C code
-and compilers can help us spot unconverted places (as opposed to a
-valid but unwanted way that can come into the codebase after one
-round of code cleaning is done, which is a useful thing to catch
-with the "make coccicheck" target).
+Right, I think fetching into the right spots is the easy part. Designing
+the new lookup rules is the tricky part.
 
+If you're really interested in the gory details, here's a very old
+discussion on it:
+
+  https://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
+
+I think there may have been some more concrete proposals after that, but
+that's what I was able to dig up quickly.
+
+> That said, actually I just noticed an issue in the “add a
+> remote.<name>.fetch option to fetch to refs/quarantine then have the
+> post-fetch hook do the work”: it means if I run `git pull`, then:
+>  1. The remote references will be pulled to refs/quarantine/...
+>  2. The post-fetch hook will copy the accepted ones to refs/remotes/...
+>  3. The `git merge FETCH_HEAD` called by pull will merge FETCH_HEAD into
+> local branches... and so merge from refs/quarantine.
+
+Good point. You can't munge FETCH_HEAD by playing with refspecs.
+
+I am starting to come around to the idea that "pre-fetch" might be the
+best way to do what you want. Not to rewrite refs, but perhaps to simply
+reject them. In the same way that we allow pre-receive to reject pushed
+refs (both are, after all, the final check on admitting new history into
+the repository, just in opposite directions).
+
+> So, when thinking about it, I'm back to thinking the proper hook
+> interface should be the one of the tweak-fetch hook, but its
+> implementation should make it not go crazy on remote servers. And so
+> that the implementation should do all this refs/quarantine wizardry
+> inside git itself.
+
+So does anybody actually want to be able to adjust the refs as they pass
+through? It really sounds like you just want to be able to reject or not
+reject the fetch. And that rejecting would be the uncommon case, so it's
+OK to just abort the whole operation and expect the user to figure it
+out.
+
+-Peff
