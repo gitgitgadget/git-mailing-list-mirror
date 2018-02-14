@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE94E1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 284051F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162522AbeBNTBN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:01:13 -0500
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:54008 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162516AbeBNTBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:10 -0500
-Received: by mail-oi0-f74.google.com with SMTP id 24so11369409oir.20
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:09 -0800 (PST)
+        id S1162525AbeBNTBR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:01:17 -0500
+Received: from mail-ua0-f201.google.com ([209.85.217.201]:46533 "EHLO
+        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162506AbeBNTBM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:01:12 -0500
+Received: by mail-ua0-f201.google.com with SMTP id k4so15481902uad.13
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=FajR2nxp8FE79hibvzctvVq2xRKEQ86x/idjCIOHvbI=;
-        b=hdNlSEv0S0kSWoTUCuK7q3cyvWXDyxaGGqoleACcZPQXDK83j2cTW72SsV9jKlCwSM
-         ORyuREia1r87eAoLy2JqCAWhsxr6kFY7iDjPj9QL8iW3FeG4er8KnPIMAxvGAocWc3MH
-         mFbZMLRMG40e+9e+fUnN+3uqnD9a9sHWTT9b3PbHNJzWKFKJW9R2gA2YqLRMwa/pUi48
-         dLgay03tbYK51No7gONMzmQSAS9eSYpv1VvLk/VVlu2sy/TTMqYs/JVSpStM+dA5MvFR
-         Aq5NsMfJYbRBZMBqdCtMbpuXtC4QrszH08Irk1yN2/6Y3ESeuHVKgG+P421f+d2DzjsB
-         6M5Q==
+        bh=PeB2J24wPDzeQjlfU5SBQceXOJj/z6L/xvwQc4+IbAU=;
+        b=X0lkcYyB1mqQRpNy6yXa8JYiiO9wNtQOYjRb+wMDnQzxyJdFhUAwrRZ1Pbnt+EDLxo
+         QSmCxbvLE1OgOt4cjtY/2MnCnf1ah8tqsiKXQFycR8upC03ub5lF7tTlRsCMgeLIZCWT
+         fke+6LUkAKkUFntKJ3GQBSBMxUF/4/9R4wF/X234fbYxTfsXkVpWcjIjSOQN7rK204us
+         e/JGJ8MCDBVxfmEa/VRFhWN1Uq+k8h8Ni9Z+jgNhzhe5MDIFi3BXPOcX6iBz1zAVoNNA
+         UksD4xBAbSFNtnjvfbiL5mAB3EOHV34hYQgHTIQpeeiPfKTFUNP1+8mDA/oFw/NM3BOZ
+         2Bkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=FajR2nxp8FE79hibvzctvVq2xRKEQ86x/idjCIOHvbI=;
-        b=byJp3+BxIVC8AL9v9FlxHPRoBC/2ATMa0EXGBkHSt7TYrWfv7o9b5bWdpQ1nbcyYQO
-         1IX+Z9iPlDTYZvS4MjWwmeSmNTXjm+x9fhUkka+0JD3Oc7Z+OaW8Xzb2/uFVCA2AxiiX
-         iFOxErplpOQQfAaCGERi4/qla+gLv88zBHLUJah7499vldFiOclRh9D/0tM0cOGfzhZZ
-         hSgTtmcshIjW7Ta7AjjJPigZQLv6uvTUBcPE7iYL3WDX9s5k9D12WN/hFYwaryxcMvth
-         TShwqOnAuPNKTUdNz1Jayl3ss0kG8O3s17F/nC1U0iqQb+j0DT1cwTMZsgO+c/QcZDaF
-         H5Qg==
-X-Gm-Message-State: APf1xPD6pLwl165lf2GW/ygvpoXkvCM3bwXq0Uxig8hFVROV+glVMyj9
-        cXMJ9+5LHVJXj8w7oPRbVl+COBZ4KH3VEmmqV9QvNZC5rYgC7fwv3ZZau9sNu0ZFBRk7iJaIugg
-        yA1vM260Le+AM8B6/OBLC676ciBZcC9w7Fak8Nq0M8jVs+O+6vwO3BTQ7Xw==
-X-Google-Smtp-Source: AH8x224eJKac478+cy+Z6ECEzWlQxpJ5puTRz1qzftv5MLc2qshX/WTXcn0F4rHzD0bnT+SRXfUvVeEeIH0=
+        bh=PeB2J24wPDzeQjlfU5SBQceXOJj/z6L/xvwQc4+IbAU=;
+        b=LJ+vfMHz6ZXuF0TjY4ieY0AHc4buhLSMBiEpBWaB9ZD7YnOBAXN4iX2M4/YcOt8UX3
+         k6MTwWbFy8ZzfwAd1VauT9gkcM39/MtIKvpRvgwXLP6O6J3FWfmGp+/XxApODZQwrYRy
+         PKQhhiy547hXUhU6dlRGcKwhgYmq0LeGTCAR4g0ODFWOhMKFYkjiOIYy3KujnFyXAvr1
+         R6H4OjmiFw43T1mgJkrd3U+rnr3Rsr9TzH1FmMf3knywnpQvr+hN1cwaV4MpoufHYJPW
+         wMsikhhusRVqzCCF4iigDHcM9pyfpXkWn4Y6P624PVkHQCsy+yho/Q0/5f4YviWDNUs2
+         hcrw==
+X-Gm-Message-State: APf1xPDlYxlUyVDuVXs7/PGzLcB1qXvriZQPozIMtUIcSH9x+yXTbdOx
+        WJzUDq5W/yxyDrfWH94HB+11f4i0T+jVvKvC536ai5m5S4QXxQ6j6ntPcoHMiPeqcxWQp7ZJrVj
+        CzlVIaP8gfIHg9AiKnFDBfilNYnsMe6G9pDAR3KDstP8JnPIvCPT7gWLgMg==
+X-Google-Smtp-Source: AH8x226ylyB6KyJOMOlBASY5FaXOidb1HFIlfxazgPryvYf7vrOsTALE3nzau6b4nfgg2DzFNcQHJBAZErY=
 MIME-Version: 1.0
-X-Received: by 10.157.51.148 with SMTP id u20mr12132otc.77.1518634869320; Wed,
- 14 Feb 2018 11:01:09 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:32 -0800
+X-Received: by 10.176.0.162 with SMTP id 31mr2773868uaj.84.1518634871967; Wed,
+ 14 Feb 2018 11:01:11 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:33 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-11-bmwill@google.com>
+Message-Id: <20180214185959.221906-12-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 10/37] help: rename 'new' variables
+Subject: [PATCH v2 11/37] pack-redundant: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,30 +68,110 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/help.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/pack-redundant.c | 54 ++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index d3c8fc408..598867cfe 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -194,11 +194,11 @@ static void do_add_man_viewer_info(const char *name,
- 				   size_t len,
- 				   const char *value)
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index aaa813632..991e1bb76 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -48,17 +48,17 @@ static inline void llist_item_put(struct llist_item *item)
+ 
+ static inline struct llist_item *llist_item_get(void)
  {
--	struct man_viewer_info_list *new;
--	FLEX_ALLOC_MEM(new, name, name, len);
--	new->info = xstrdup(value);
--	new->next = man_viewer_info_list;
--	man_viewer_info_list = new;
-+	struct man_viewer_info_list *new_man_viewer;
-+	FLEX_ALLOC_MEM(new_man_viewer, name, name, len);
-+	new_man_viewer->info = xstrdup(value);
-+	new_man_viewer->next = man_viewer_info_list;
-+	man_viewer_info_list = new_man_viewer;
+-	struct llist_item *new;
++	struct llist_item *new_item;
+ 	if ( free_nodes ) {
+-		new = free_nodes;
++		new_item = free_nodes;
+ 		free_nodes = free_nodes->next;
+ 	} else {
+ 		int i = 1;
+-		ALLOC_ARRAY(new, BLKSIZE);
++		ALLOC_ARRAY(new_item, BLKSIZE);
+ 		for (; i < BLKSIZE; i++)
+-			llist_item_put(&new[i]);
++			llist_item_put(&new_item[i]);
+ 	}
+-	return new;
++	return new_item;
  }
  
- static int add_man_viewer_path(const char *name,
+ static void llist_free(struct llist *list)
+@@ -80,26 +80,26 @@ static inline void llist_init(struct llist **list)
+ static struct llist * llist_copy(struct llist *list)
+ {
+ 	struct llist *ret;
+-	struct llist_item *new, *old, *prev;
++	struct llist_item *new_item, *old_item, *prev;
+ 
+ 	llist_init(&ret);
+ 
+ 	if ((ret->size = list->size) == 0)
+ 		return ret;
+ 
+-	new = ret->front = llist_item_get();
+-	new->sha1 = list->front->sha1;
++	new_item = ret->front = llist_item_get();
++	new_item->sha1 = list->front->sha1;
+ 
+-	old = list->front->next;
+-	while (old) {
+-		prev = new;
+-		new = llist_item_get();
+-		prev->next = new;
+-		new->sha1 = old->sha1;
+-		old = old->next;
++	old_item = list->front->next;
++	while (old_item) {
++		prev = new_item;
++		new_item = llist_item_get();
++		prev->next = new_item;
++		new_item->sha1 = old_item->sha1;
++		old_item = old_item->next;
+ 	}
+-	new->next = NULL;
+-	ret->back = new;
++	new_item->next = NULL;
++	ret->back = new_item;
+ 
+ 	return ret;
+ }
+@@ -108,24 +108,24 @@ static inline struct llist_item *llist_insert(struct llist *list,
+ 					      struct llist_item *after,
+ 					       const unsigned char *sha1)
+ {
+-	struct llist_item *new = llist_item_get();
+-	new->sha1 = sha1;
+-	new->next = NULL;
++	struct llist_item *new_item = llist_item_get();
++	new_item->sha1 = sha1;
++	new_item->next = NULL;
+ 
+ 	if (after != NULL) {
+-		new->next = after->next;
+-		after->next = new;
++		new_item->next = after->next;
++		after->next = new_item;
+ 		if (after == list->back)
+-			list->back = new;
++			list->back = new_item;
+ 	} else {/* insert in front */
+ 		if (list->size == 0)
+-			list->back = new;
++			list->back = new_item;
+ 		else
+-			new->next = list->front;
+-		list->front = new;
++			new_item->next = list->front;
++		list->front = new_item;
+ 	}
+ 	list->size++;
+-	return new;
++	return new_item;
+ }
+ 
+ static inline struct llist_item *llist_insert_back(struct llist *list,
 -- 
 2.16.1.291.g4437f3f132-goog
 
