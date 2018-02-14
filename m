@@ -2,261 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 690731F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:02:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 094D21F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162607AbeBNTCs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:02:48 -0500
-Received: from mail-ua0-f201.google.com ([209.85.217.201]:38157 "EHLO
-        mail-ua0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162506AbeBNTBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:18 -0500
-Received: by mail-ua0-f201.google.com with SMTP id 104so15456088uat.5
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:18 -0800 (PST)
+        id S1162671AbeBNTHF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:07:05 -0500
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:41908 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162470AbeBNTHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:07:05 -0500
+Received: by mail-vk0-f53.google.com with SMTP id g186so13519778vkd.8
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:07:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=DgH2C/uZZmzPbn+UOuXAnBkZzWMgCiQPVtkni7wG6UY=;
-        b=ZpNfhMPBaRL53w/awYYYi8Ja8FpcUvVXNKW+y6NN76RhgY4k21O52NVhw4bgsRtCWK
-         K82j1wSyktSQfQOxKFqTiW8rOy8tHt2g8GBfUQDgEixKFIto8hHFzaDE2cyZYROm3lHt
-         Ot9OGsg4Ql+CIf3vaLB+8edovHB6Bkv1NfCyKeVjjYbXQhvGP8GHjbkCBkKzTDuyMGlT
-         g6e0YAeDDWlHup0GBAD0EEWXyXQPmKWgXdwHniZBJfQTjkgCZVVlATu0c0/k02sDjcHV
-         nUeWL816uaYpbdz4jA7rA5yZnBdVIEJawZ9VMHQR8a5flD+6WkbzFtY7cdEZSj11JHvk
-         5yXA==
+        bh=JHHnEHy5lre/omBWo94qoJN5mJo1RLjZDAKllqlc83M=;
+        b=RjxpnJFwCnYGTSAXs6863EsWAYGyU5BCn77nTBHWZmZw57i2p8h05nKaRKeF8/tCoS
+         /G7qPKkHMYmP9IRVov9+t8Yk+hTyFzIVR1awuqwWNPMrfZKZWUeqXQBiBR+65kqvzUY2
+         LoHdNNXLpWD7y7CfFgcPaw6aeVDsr1ssbOoAnIWVymVTPlqnxrxGGb5g24Eah4pTohxL
+         q2v5r4ZKlteIcqQQ1Xkg2FcEnPzQQaow3AK3u9LnhilD3XHXgGvirda9M01Bpwx8qNcU
+         voewQbqbRAhgVGp0wzn4oz4RP4oau/47oW1+vH57kEOdXR6IQDGJWCHD3pQcmX3q+Bx5
+         HEcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=DgH2C/uZZmzPbn+UOuXAnBkZzWMgCiQPVtkni7wG6UY=;
-        b=jFdnCJQmAb55NDEhul9E84Lsa2TOZv0iXhZi/KG3FISP9P+RAJvDKTumYjTzqcHlAT
-         BA6+rhY/19XYsDIMBg2znNbxVMLGnnbSOeqvqxHw+fQnP5lyFxV+nK/3jSbq5j0xBLbT
-         auKUVqrZkYPPF7OXuUGjKlTypGIKa0TT6b7qr6GsjWlNSy0HXbFz2eStnpHe2yDlcNqY
-         krdZFmr3B7DMyaspIyjrtgYncZuomXxxhMS6RrA2kUX12vkd8N7xyUe8D2aO0TrsVSG4
-         LJF8aWh8OGDRoDaLj/KBQX5clHBsAWi+x4AjkSNlsNi5nPCEhCaFg9WVfJZMBWhARVc6
-         K1WQ==
-X-Gm-Message-State: APf1xPAiMFuiOb9VNv5ZR0JRuvVnKb3WQl4ABNl55DLcj1vBVptdIM7P
-        FyZj6E0nF9N2bZySA63KPoNpVmfxJD+YMau+6BCv20YJSv5tVjAIkh6SWPozNCRaVzeW5CXW2X7
-        XrTT+Op66owK0W1hhW/lWj13yRYY+hvbjHRafRJaDDiwZhgMtWXSe/nPkVg==
-X-Google-Smtp-Source: AH8x225AZK0b/4blghN0L90V1bB9vxI/ezj8El60ctzo+KXa5PNUriJzqffKpzEPamgfJ3ttV8f47BBX/g8=
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JHHnEHy5lre/omBWo94qoJN5mJo1RLjZDAKllqlc83M=;
+        b=tTnsjBej9xzWucILX0amgtrFUxQbgPSeOcaMpUXsHY1dIiJQaFSbon/ogrA42UL1Bl
+         fink2DVRMNEZG51dY/evDCHvmhA/r2Hs1HRoXGZyCj37OcictzBlBSdJ+ESOVLhDdISA
+         so4h1RdqCK0r05P+dGQwXc1Kl0ycqQith1hWb8QZ6dxcJN4IC7Ciryc1/UVxT2W4Z1Jm
+         EQtxqj/WdG03X4+XO78aymkvYMJu2AtgFKbBAcwpY3sCK8ePZTEUuqhI4TH/rxpp9diz
+         QWLeTtHMkQ4+go4eLsdOFvvIUs9cS2xMwhUXJRyBIsVpeyh10lpcfIJzHN5QlT/52inq
+         UrXQ==
+X-Gm-Message-State: APf1xPBwzuvtZQLi29yMRAERoPjP7Taqsk9YhWBiDmUsEaGEj3CjoQwz
+        twjsgOMIggAvckiA9nf33k9iXVnoMpvUUr/kZT0ALQ==
+X-Google-Smtp-Source: AH8x226Vsgkc/dAAnhnM53NXktLIo4KP58n+GywzhYb04PMY1/TXRogAX9nmyAQVyg/mybkEJKY8s2psctFsQy62vhk=
+X-Received: by 10.31.217.193 with SMTP id q184mr251076vkg.75.1518635224227;
+ Wed, 14 Feb 2018 11:07:04 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.31.128.8 with SMTP id b8mr2866001vkd.62.1518634877470; Wed,
- 14 Feb 2018 11:01:17 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:35 -0800
-In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-14-bmwill@google.com>
-References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
-X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 13/37] remote: rename 'new' variables
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
-        pclouds@gmail.com, Brandon Williams <bmwill@google.com>
+Received: by 10.176.1.33 with HTTP; Wed, 14 Feb 2018 11:07:03 -0800 (PST)
+In-Reply-To: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
+References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 14 Feb 2018 11:07:03 -0800
+Message-ID: <CABPp-BEdAgpLMYW=i6ABzWHuqQvJcXDJ-6u-VuFAtU8sxiLvHA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename C++ keyword in order to bring the codebase closer to being able
-to be compiled with a C++ compiler.
+On Tue, Feb 13, 2018 at 5:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- builtin/remote.c | 66 ++++++++++++++++++++++++------------------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+> * en/rename-directory-detection (2018-01-31) 31 commits
+>  - merge-recursive: ensure we write updates for directory-renamed file
+>  - merge-recursive: avoid spurious rename/rename conflict from dir renames
+>  - directory rename detection: new testcases showcasing a pair of bugs
+>  - merge-recursive: fix remaining directory rename + dirty overwrite cases
+>  - merge-recursive: fix overwriting dirty files involved in renames
+>  - merge-recursive: avoid clobbering untracked files with directory renames
+>  - merge-recursive: apply necessary modifications for directory renames
+>  - merge-recursive: when comparing files, don't include trees
+>  - merge-recursive: check for file level conflicts then get new name
+>  - merge-recursive: add computation of collisions due to dir rename & merging
+>  - merge-recursive: add a new hashmap for storing file collisions
+>  - merge-recursive: check for directory level conflicts
+>  - merge-recursive: add get_directory_renames()
+>  - merge-recursive: make a helper function for cleanup for handle_renames
+>  - merge-recursive: add a new hashmap for storing directory renames
+>  - merge-recursive: split out code for determining diff_filepairs
+>  - merge-recursive: make !o->detect_rename codepath more obvious
+>  - merge-recursive: fix leaks of allocated renames and diff_filepairs
+>  - merge-recursive: introduce new functions to handle rename logic
+>  - merge-recursive: move the get_renames() function
+>  - directory rename detection: tests for handling overwriting dirty files
+>  - directory rename detection: tests for handling overwriting untracked files
+>  - directory rename detection: miscellaneous testcases to complete coverage
+>  - directory rename detection: testcases exploring possibly suboptimal merges
+>  - directory rename detection: more involved edge/corner testcases
+>  - directory rename detection: testcases checking which side did the rename
+>  - directory rename detection: files/directories in the way of some renames
+>  - directory rename detection: partially renamed directory testcase/discussion
+>  - directory rename detection: testcases to avoid taking detection too far
+>  - directory rename detection: directory splitting testcases
+>  - directory rename detection: basic testcases
+>  (this branch uses en/merge-recursive-fixes.)
+>
+>  Rename detection logic in "diff" family that is used in "merge" has
+>  learned to guess when all of x/a, x/b and x/c have moved to z/a,
+>  z/b and z/c, it is likely that x/d added in the meantime would also
+>  want to move to z/d by taking the hint that the entire directory
+>  'x' moved to 'z'.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index d95bf904c..6487d92ab 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -322,7 +322,7 @@ static void read_branches(void)
- 
- struct ref_states {
- 	struct remote *remote;
--	struct string_list new, stale, tracked, heads, push;
-+	struct string_list new_refs, stale, tracked, heads, push;
- 	int queried;
- };
- 
-@@ -337,12 +337,12 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 			die(_("Could not get fetch map for refspec %s"),
- 				states->remote->fetch_refspec[i]);
- 
--	states->new.strdup_strings = 1;
-+	states->new_refs.strdup_strings = 1;
- 	states->tracked.strdup_strings = 1;
- 	states->stale.strdup_strings = 1;
- 	for (ref = fetch_map; ref; ref = ref->next) {
- 		if (!ref->peer_ref || !ref_exists(ref->peer_ref->name))
--			string_list_append(&states->new, abbrev_branch(ref->name));
-+			string_list_append(&states->new_refs, abbrev_branch(ref->name));
- 		else
- 			string_list_append(&states->tracked, abbrev_branch(ref->name));
- 	}
-@@ -356,7 +356,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	free_refs(stale_refs);
- 	free_refs(fetch_map);
- 
--	string_list_sort(&states->new);
-+	string_list_sort(&states->new_refs);
- 	string_list_sort(&states->tracked);
- 	string_list_sort(&states->stale);
- 
-@@ -546,8 +546,8 @@ static int add_branch_for_removal(const char *refname,
- }
- 
- struct rename_info {
--	const char *old;
--	const char *new;
-+	const char *old_name;
-+	const char *new_name;
- 	struct string_list *remote_branches;
- };
- 
-@@ -560,7 +560,7 @@ static int read_remote_branches(const char *refname,
- 	int flag;
- 	const char *symref;
- 
--	strbuf_addf(&buf, "refs/remotes/%s/", rename->old);
-+	strbuf_addf(&buf, "refs/remotes/%s/", rename->old_name);
- 	if (starts_with(refname, buf.buf)) {
- 		item = string_list_append(rename->remote_branches, xstrdup(refname));
- 		symref = resolve_ref_unsafe(refname, RESOLVE_REF_READING,
-@@ -615,36 +615,36 @@ static int mv(int argc, const char **argv)
- 	if (argc != 3)
- 		usage_with_options(builtin_remote_rename_usage, options);
- 
--	rename.old = argv[1];
--	rename.new = argv[2];
-+	rename.old_name = argv[1];
-+	rename.new_name = argv[2];
- 	rename.remote_branches = &remote_branches;
- 
--	oldremote = remote_get(rename.old);
-+	oldremote = remote_get(rename.old_name);
- 	if (!remote_is_configured(oldremote, 1))
--		die(_("No such remote: %s"), rename.old);
-+		die(_("No such remote: %s"), rename.old_name);
- 
--	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
-+	if (!strcmp(rename.old_name, rename.new_name) && oldremote->origin != REMOTE_CONFIG)
- 		return migrate_file(oldremote);
- 
--	newremote = remote_get(rename.new);
-+	newremote = remote_get(rename.new_name);
- 	if (remote_is_configured(newremote, 1))
--		die(_("remote %s already exists."), rename.new);
-+		die(_("remote %s already exists."), rename.new_name);
- 
--	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
-+	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new_name);
- 	if (!valid_fetch_refspec(buf.buf))
--		die(_("'%s' is not a valid remote name"), rename.new);
-+		die(_("'%s' is not a valid remote name"), rename.new_name);
- 
- 	strbuf_reset(&buf);
--	strbuf_addf(&buf, "remote.%s", rename.old);
--	strbuf_addf(&buf2, "remote.%s", rename.new);
-+	strbuf_addf(&buf, "remote.%s", rename.old_name);
-+	strbuf_addf(&buf2, "remote.%s", rename.new_name);
- 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
- 		return error(_("Could not rename config section '%s' to '%s'"),
- 				buf.buf, buf2.buf);
- 
- 	strbuf_reset(&buf);
--	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
-+	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
- 	git_config_set_multivar(buf.buf, NULL, NULL, 1);
--	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
-+	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
- 	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
- 		char *ptr;
- 
-@@ -655,8 +655,8 @@ static int mv(int argc, const char **argv)
- 			refspec_updated = 1;
- 			strbuf_splice(&buf2,
- 				      ptr-buf2.buf + strlen(":refs/remotes/"),
--				      strlen(rename.old), rename.new,
--				      strlen(rename.new));
-+				      strlen(rename.old_name), rename.new_name,
-+				      strlen(rename.new_name));
- 		} else
- 			warning(_("Not updating non-default fetch refspec\n"
- 				  "\t%s\n"
-@@ -670,10 +670,10 @@ static int mv(int argc, const char **argv)
- 	for (i = 0; i < branch_list.nr; i++) {
- 		struct string_list_item *item = branch_list.items + i;
- 		struct branch_info *info = item->util;
--		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
-+		if (info->remote_name && !strcmp(info->remote_name, rename.old_name)) {
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
--			git_config_set(buf.buf, rename.new);
-+			git_config_set(buf.buf, rename.new_name);
- 		}
- 	}
- 
-@@ -703,8 +703,8 @@ static int mv(int argc, const char **argv)
- 			continue;
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
--		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addf(&buf2, "remote: renamed %s to %s",
- 				item->string, buf.buf);
-@@ -718,12 +718,12 @@ static int mv(int argc, const char **argv)
- 			continue;
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
--		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addstr(&buf2, item->util);
--		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old),
--				rename.new, strlen(rename.new));
-+		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old_name),
-+				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf3);
- 		strbuf_addf(&buf3, "remote: renamed %s to %s",
- 				item->string, buf.buf);
-@@ -822,7 +822,7 @@ static void clear_push_info(void *util, const char *string)
- 
- static void free_remote_ref_states(struct ref_states *states)
- {
--	string_list_clear(&states->new, 0);
-+	string_list_clear(&states->new_refs, 0);
- 	string_list_clear(&states->stale, 1);
- 	string_list_clear(&states->tracked, 0);
- 	string_list_clear(&states->heads, 0);
-@@ -907,7 +907,7 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- 	if (states->queried) {
- 		const char *fmt = "%s";
- 		const char *arg = "";
--		if (string_list_has_string(&states->new, name)) {
-+		if (string_list_has_string(&states->new_refs, name)) {
- 			fmt = _(" new (next fetch will store in remotes/%s)");
- 			arg = states->remote->name;
- 		} else if (string_list_has_string(&states->tracked, name))
-@@ -1176,7 +1176,7 @@ static int show(int argc, const char **argv)
- 
- 		/* remote branch info */
- 		info.width = 0;
--		for_each_string_list(&states.new, add_remote_to_show_info, &info);
-+		for_each_string_list(&states.new_refs, add_remote_to_show_info, &info);
- 		for_each_string_list(&states.tracked, add_remote_to_show_info, &info);
- 		for_each_string_list(&states.stale, add_remote_to_show_info, &info);
- 		if (info.list->nr)
--- 
-2.16.1.291.g4437f3f132-goog
-
+When you write release notes for this series, you may want to consider
+also calling out one or more of the bugs that were fixed as a side
+effect:
+  * a bug causing dirty files involved in a rename to be overwritten
+during merge
+  * a few memory leaks
+I added a reminder about these two fixes in the cover letter for my
+latest (and possibly last?) roll of the series that I just sent out.
