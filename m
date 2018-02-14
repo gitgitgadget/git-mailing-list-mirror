@@ -2,117 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68C6F1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5734F1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:12:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162745AbeBNTLX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:11:23 -0500
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:43430 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162681AbeBNTLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:11:22 -0500
-Received: by mail-qk0-f179.google.com with SMTP id i184so16908599qkf.10
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:11:21 -0800 (PST)
+        id S1162763AbeBNTMK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:12:10 -0500
+Received: from mail-yw0-f174.google.com ([209.85.161.174]:36070 "EHLO
+        mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162665AbeBNTMJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:12:09 -0500
+Received: by mail-yw0-f174.google.com with SMTP id t129so15517712ywc.3
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:12:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=efrRPQlUinX4c+5YGEY8rZZi02SQiBF70SibBXrG+3c=;
-        b=TaFDNX2oEQwIW7xX6fF7v3DxMY9YDWO1y6z9Cv0AmEBB4nDGstUOqM3NbBGOcM7TYf
-         fE4699UnNwJTqPP+XLKdD/9Kft7GeygVfMcFDyRDHoU7i8r6qRK0l3++irdysWs9zqoS
-         YzE1l1bBWeZ3Pt6pK1676aCSRrcowrUaVEnCxMrxu0KgNH8PgnEEg8xxDn+KZg1YM+lD
-         4OY9NCLpBLCHBRC79SNW9bHPIJvcNuivoIK3Dv660Ot09af4EnFMafMFiuKeGoNH5UCq
-         +ZOWRvT3PRuB3H54E5JQ0P8dHtRPhDPz6ACjMsz6JUWrRMKGQXaykC8MABIsev+9Uzld
-         J11w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8ovLYNIvxuziLw5ixVMhpur49hnEJk0X0BcCLjwMJ8w=;
+        b=D+pnUQpHtXMnhQ25+ktbi/haOLSWI+NI7KO3ItNjAzVo9boLnaI6UiY30KXvzkQ+NR
+         5I+ZZqR7s+Knz4lOULEnmjZKCctt5SOh8yPtn6RaGqQWwKos95jd5uhkUXabNoe3A5U/
+         8OgPZhlKEvc9JrWRssO7SlGqK9yed9haVTuJ2mPecxBYaNu0KV4flskbTuAZn68HzMYJ
+         YY9eJBWou+fKTt9OQO6OD9sMBTcfCVVJbFaEAY7aUozLfCtziNerLlY9/b6PWjeHuv4g
+         s546FbZXZCff5D05AYlxtFQg4KBM52uZ1OrMVqvFzVn8rNfr2wIc/KlMAplJOFGL4sQ/
+         BELA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=efrRPQlUinX4c+5YGEY8rZZi02SQiBF70SibBXrG+3c=;
-        b=qEmVUlkGd4eLmvvwwgyEgl21lf+SsWZ/0S6sbwa3RASaHlMHPEhY7oswpyRjzK3Xaa
-         tpeI9fGohqtk686iyBuWCWRwY/RcCK/pJ9QffQ+3pxSrC2HX2rJpzXNTZV0gOOQJpqy4
-         rM6fzD9e/BO2haDT9OZ1gL68YwGk/nPwuTFTjulJb3iuzKri6xq3bY+/aTC7PDc6yMNc
-         xhZIdP5nW/BhHVLzv9Ks86BL4Bjtx6k8smUyx8ZJmWKX0NTapDjAvkheUjF4HLkuKydV
-         nT4UokjZJrtCBWV2lpmtyiJrF6em/ttKabVMvOM1+iZIOBgG3Vpu3WrQ/tKyAZEKotzg
-         rPJw==
-X-Gm-Message-State: APf1xPDhQiAJMgecOqLTm1BJkcCzvvyzy+pG38767Bq9uEtfoZA9fqGO
-        HbgSyPb8ywrfDBElAJG/PH8=
-X-Google-Smtp-Source: AH8x224m/AS/oph5/kllbhBdY36UvvTCDrBNpokzENhx/EoRfR2l3+2keU8ud8d8EU00lZHk+W0Wlg==
-X-Received: by 10.55.203.67 with SMTP id d64mr132994qkj.210.1518635481324;
-        Wed, 14 Feb 2018 11:11:21 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
-        by smtp.gmail.com with ESMTPSA id s12sm1549700qtk.88.2018.02.14.11.11.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Feb 2018 11:11:20 -0800 (PST)
-Subject: Re: [PATCH v3 00/14] Serialized Git Commit Graph
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
- <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
- <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
- <CAGZ79kbMURmVhnaP4rdho9TpzZ=K+ySkQGgW8TD0x+KgJkqirA@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <84ad10eb-4db1-4a3e-9030-6a53283d9877@gmail.com>
-Date:   Wed, 14 Feb 2018 14:11:19 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.6.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8ovLYNIvxuziLw5ixVMhpur49hnEJk0X0BcCLjwMJ8w=;
+        b=mn/IHityIJewIGhSLB9moSNBh4FtuUpBrZta7bT4nMSIv+LctnrdO5DgMSfzZ7WXVy
+         NUsNMSHKz0AnZCVjhEh9YM3X7XdKdUrKGdUE3dB4finRvozkPPIX2suJttCwv4wldfVI
+         wnh1C/Az6SoaB0vl2lTlrtR0TldKKIlU7KBtXiurGjeKgsnNCcuWBzI6G1o7JvYXxYd5
+         hD8Z6b67IIC6P0qh8y1nGnBCaAq9ISNMbp3Pyp0uSTBa6MyZUqIGHkHFRF25nrbiAI82
+         Xdf8i4W2qnZd4TYAxwzaKMHRpmEIAQGnxarjp9VmTQbyRTPNMuJovS7zukK8r+Y3ba30
+         /tnQ==
+X-Gm-Message-State: APf1xPC0hgIVLwykEACiO8H/uHxXFz3CF5czammrDZOy/gEJ7q9JDk9x
+        hAyk6qrSPp2Po+LmSgxupo53UCc6izArdl7rqwqWtA==
+X-Google-Smtp-Source: AH8x225yKagcENBSaTVJXF9iFi5B9gkuG/kxzf0p9RecXOtce/bvOQNsn0VJoTYePUlusoIHnsdP06OiaU3AYq/eYlA=
+X-Received: by 10.129.86.139 with SMTP id k133mr204049ywb.253.1518635528218;
+ Wed, 14 Feb 2018 11:12:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbMURmVhnaP4rdho9TpzZ=K+ySkQGgW8TD0x+KgJkqirA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 11:12:07
+ -0800 (PST)
+In-Reply-To: <alpine.LFD.2.21.1802131927310.17903@localhost.localdomain>
+References: <alpine.LFD.2.21.1802131927310.17903@localhost.localdomain>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 14 Feb 2018 11:12:07 -0800
+Message-ID: <CAGZ79kZ1yYXToC_WvW8e93zvajkw06e8BT_FcJUXWtFBK3Xe4w@mail.gmail.com>
+Subject: Re: should "--recurse-submodule" be "--recurse-submodules"?
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 2/14/2018 1:27 PM, Stefan Beller wrote:
-> On Wed, Feb 14, 2018 at 10:15 AM, Derrick Stolee <stolee@gmail.com> wrote:
->> There has been a lot of interesting discussion on this topic. Some of that
->> involves some decently significant changes from v3, so I wanted to summarize
->> my understanding of the feedback and seek out more feedback from reviewers
->> before rolling v4.
->>
->> If we have consensus on these topics, then I'll re-roll on Friday, Feb 16th.
->> Please let me know if you are planning on reviewing v3 and need more time
->> than that.
->>
->>
->> * Graph Storage:
->>
->>      - Move the graph files to a different directory than the "pack"
->> directory. Currently considering ".git/objects/info"
-> In my copy of git there is already a file
+On Tue, Feb 13, 2018 at 4:30 PM, Robert P. J. Day <rpjday@crashcourse.ca> wrote:
 >
->    $ cat .git/objects/info/packs
->    P pack-8fdfd126aa8c2a868baf1f89788b07b79a4d365b.pack
+>   also just noticed the following:
 >
-> which seems to be in line with the information provided in
-> 'man gitrepository-layout':
->      objects/info
->             Additional information about the object store is
->             recorded in this directory.
+> Documentation/RelNotes/2.13.0.txt:489: * A few commands that recently learned the "--recurse-submodule"
+> Documentation/RelNotes/2.12.0.txt:226: * "git push --dry-run --recurse-submodule=on-demand" wasn't
+> Documentation/RelNotes/2.11.1.txt:27: * "git push --dry-run --recurse-submodule=on-demand" wasn't
+> t/t5531-deep-submodule-push.sh:366:             git push --recurse-submodule=check origin master
+> t/t5572-pull-submodule.sh:45:test_expect_success 'pull --recurse-submodule setup' '
 >
-> The commit graph files are not exactly "additional info about the
-> object store" but rather "about the objects". Close enough IMO.
->
-> Stefan
+>   should some of those be corrected?
 
-Thanks for the tip [1]. I was unfamiliar with it because it doesn't 
-exist in repos that don't repack.
+I get the same list via
+  git grep -- --recurse-submodule |grep -v -- --recurse-submodules
+so there is no missing piece left.
 
-[1] 
-https://git-scm.com/docs/gitrepository-layout/2.12.0#gitrepository-layout-objectsinfopacks
+As you can see, the first 3 are Documentation, and the other 2 are tests,
+the actual code is always --recurse-submodules (with an s!).
+
+Fixing the docs as well as t5572 has the impact of "just fixing typos"
+(though that is specifically valuable for command line options where
+exact spelling matters)
+
+The fix in 5531 is an actual bugfix in the test suite, which
+went unnoticed as the test itself did not fail.
+
+The test did not fail because git autocompleted the command
+line option silently. But that is not what we want to test there.
+
+Stefan
