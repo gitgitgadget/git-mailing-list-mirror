@@ -2,68 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4A31F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 17:31:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5EC81F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 17:35:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161220AbeBNRbt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 12:31:49 -0500
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54501 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161026AbeBNRbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 12:31:47 -0500
-Received: by mail-wm0-f67.google.com with SMTP id o189so4429510wme.4
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:31:47 -0800 (PST)
+        id S1161293AbeBNRfG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 12:35:06 -0500
+Received: from mail-wr0-f169.google.com ([209.85.128.169]:45937 "EHLO
+        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161214AbeBNRfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 12:35:04 -0500
+Received: by mail-wr0-f169.google.com with SMTP id h9so738898wre.12
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:35:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AHe9IkSSpnLlrWNDonSDyYzKIZNUF/qmiDMOCWyXf9I=;
-        b=bO7pJ3naz4no0jlQfeDsVUbpkmVZFBp3CP0kj7cibNil7EzUYHxO+15MXIWjhpvexv
-         8P4591Ojhmbnhxu/tQ2q0+7qkA2h9QWxmzAJb9AsBbVBO/CClhoZ7jYfugEo9Q2h0Y7N
-         154r2Xy1iD3gEIBY2qfAYL1K5pXB0wyWP6KAwc4T6F5HRV0IJ00oH+1uHIGJpA3Y/2w6
-         AoVFnTfON4rbG5ncMX+cVBvmnX6sDNkRrm8l9f8BMsoidxxl/HV0lwyOIP5s9phSMBbT
-         doySC5EOfGe+yyFu0jNxsVFfC/AXEPN433XrXTUErwr1itz++FaoiCY/JkBY8in9aqaI
-         aR+Q==
+        bh=HKFZEMF+N5EiFAetRrj1Bki9arJIEHT1elV6v8rhzNQ=;
+        b=OoJzpW/QnWeC1SUdtnNTAsMmJTtqs2edXZdXI/6C/XGtUK3EXjgpB6Ns02Kz4AC0XZ
+         DjZvr9L2EioM4tuT5+4h+3aAw4yOQQlqZzqEw0vYAMrU9OZNYyTXT8D/LDbjJOOFYX4Z
+         dcKQAnrdDqh6i+FgmYlMwdEpMgR2Qm5gLmVxGhO/GmQJqbJ3Y8YzgWIhZmMHXy52vGj7
+         8g53tVhufT5IE8cuAux/fvctETGzd6Nw9LTOavzgWdyvA9w7lCmBNaiJEnNqiuzAfaXi
+         w5p1sof5CnAc6TQB+x22qz6tCQWkZAGtZUn4Q1Zn2XOtLlWi5eWhuKRiFJC2Q8G4iIPO
+         ZJzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AHe9IkSSpnLlrWNDonSDyYzKIZNUF/qmiDMOCWyXf9I=;
-        b=qS/jXBN0jMUE3XkZjPAPLMqEaJVZZykmRRKNP+yGP1769E81PNImPkgmmq1uPG5OMF
-         F4zGBw0wXtrP0mbXseGu90257IQlH8t9q43U4wHG3pFF/YEJEun1xszLQJkrelIEaUG8
-         7rzDYvownFZduZWdrRtpuinIzQTOXCcnRxJ4sp6NuNotaDjjLnpLvehR/DdNt8TLeN2q
-         /S3iv7cdC7m86aUor1bSexghiG+8LMJdUVG0860azARmnLL/njq93tCLXsMBHOQnScmp
-         PgHtXxy34+/wvsHAf5i7mBYd1mNlukCBixGH28WzfcxO3eGR//TnzSSoBpMB48PCXPL2
-         +oYA==
-X-Gm-Message-State: APf1xPCl/nnCSiMnHMh+ruewN99r+r4ISQCF93oSVli3uwQFPryfNrsn
-        dlkg8wQRoylXsoOeXr4C6Ny3mvBMGzY=
-X-Google-Smtp-Source: AH8x227U6RPit33LypnWK8FJsg1V/GBYDfsx90N3ioDEOMnVoh525f4+qg2x/KUUCz+PI36hc89M3g==
-X-Received: by 10.28.43.66 with SMTP id r63mr232993wmr.30.1518629506218;
-        Wed, 14 Feb 2018 09:31:46 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e7sm1828815wrd.17.2018.02.14.09.31.45
+        bh=HKFZEMF+N5EiFAetRrj1Bki9arJIEHT1elV6v8rhzNQ=;
+        b=rKjEUb6yPgam0o8pq8Vcd1e1LGRz/e7gVreNqfkvDq33g+NfKDZIOJh+Y5DsdivGEi
+         oAw/wt+XLB8lTymfKlhWoSqqAU8M5huHxftKs7jlNNbL8Jxcs9uC5lOjXyp2qm8QXHLr
+         C5vRnRtBE6rrWo0IqYmN4WhboO7iqOiyYItKC+/CIW9aHA1A4vIls17bZEDVgMoWckmZ
+         +3pxLB593mzRq5wI9SrwbOlYVPpvNlYYNq7igRHTr/ZnJMVXqMP1+QvBb9jalp/9hDf6
+         MhrbwYeqr+jBAlW5ej4AfmKxyZ021uKu5dKNBIXRSSYgohEixmFnM20j9prbCLsE8JD9
+         d8dA==
+X-Gm-Message-State: APf1xPDQ72qK2jUhFqXH22fae7wsNFbrN1ZB2Z3m0IjecKQQXBZxwt/T
+        +Gx3xTArisEyl/lo/1ko3w4=
+X-Google-Smtp-Source: AH8x227byAh/bKL4cCzjZz45IFSVHjoQFfNircsVuQ52cWpce/F2rW5lA0wNC25p2lXPvAd18b6JrA==
+X-Received: by 10.223.159.77 with SMTP id f13mr5182956wrg.196.1518629702543;
+        Wed, 14 Feb 2018 09:35:02 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 30sm11622312wrz.85.2018.02.14.09.35.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 09:31:45 -0800 (PST)
+        Wed, 14 Feb 2018 09:35:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Andreas Kalz <andreas-kalz@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Bug? Error during commit
-References: <trinity-cb66d9d6-9035-4c98-948e-6857a7bd4de2-1517838396145@3c-app-gmx-bs16>
-        <trinity-5e3c4029-b348-4bd5-9337-215808436a12-1517838482997@3c-app-gmx-bs16>
-        <CACsJy8CGQ4ynYFT0mY1DfcGGdzwP36eonMvr-kEZazX_82ag2Q@mail.gmail.com>
-        <20180207204520.GA31757@sigill.intra.peff.net>
-        <CACsJy8C72Gv4D46tOmgTqi=8aHVG7D=yZR2F7VPLRcm1e_jTYg@mail.gmail.com>
-        <20180210121607.GA21843@sigill.intra.peff.net>
-Date:   Wed, 14 Feb 2018 09:31:44 -0800
-In-Reply-To: <20180210121607.GA21843@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 10 Feb 2018 07:16:07 -0500")
-Message-ID: <xmqqsha3o4u7.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH 3/7] worktree move: new command
+References: <20180124095357.19645-1-pclouds@gmail.com>
+        <20180124095357.19645-4-pclouds@gmail.com>
+        <CAPig+cQeQRppb2y4YyQnqWWnCO0TXE-PjfTAhxakCJNk45ec1w@mail.gmail.com>
+        <CAPig+cRYL6-jEgsQoiQokNSd0zq5zoFkMHBA0Vp9kqa0LvMnsA@mail.gmail.com>
+        <CACsJy8A+zMTC2N8Y0Ua-KyLF6Wp2oHL=8mbsSXck6mKZGG=37g@mail.gmail.com>
+        <20180206021313.GA26323@sigill.intra.peff.net>
+        <CAN0heSofAfuXEUKcfF00ni_a7nAKJYySF_UEnNTL8+nHiBzw-A@mail.gmail.com>
+        <CACsJy8BjFex==2UQV6-k4_rTnBijJOzBAOmtNmZopc87U19Jmg@mail.gmail.com>
+        <CAN0heSpxcm1a9KN3etWAD5Vc_gkabQmEppa_1P4soZSZOnP8pg@mail.gmail.com>
+        <20180213002758.GA9274@duynguyen.dek-tpc.internal>
+        <20180214031614.GC25188@sigill.intra.peff.net>
+        <CACsJy8B9dRshT2RUhnNLbnwTY0VdVdKP9A_YGxwiqqAyMN_OAg@mail.gmail.com>
+Date:   Wed, 14 Feb 2018 09:35:01 -0800
+In-Reply-To: <CACsJy8B9dRshT2RUhnNLbnwTY0VdVdKP9A_YGxwiqqAyMN_OAg@mail.gmail.com>
+        (Duy Nguyen's message of "Wed, 14 Feb 2018 16:07:12 +0700")
+Message-ID: <xmqqo9kro4oq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,41 +81,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Here's the patch to make "show -B --stat" work. I'll give some more
-> thought to whether this is a good idea and prepare a series.
+> On Wed, Feb 14, 2018 at 10:16 AM, Jeff King <peff@peff.net> wrote:
+>> Hmm. That is not too bad, but somehow it feels funny to me to be
+>> polluting each test script with these annotations. And to be driving it
+>> from inside the test scripts.
+>>
+>> It seems like:
+>>
+>>   make SANITIZE=leak test GIT_SKIP_TESTS="$(cat known-leaky)"
+>>
+>> would be sufficient.
 >
-> One downside is that in the common case it causes us to look up each
-> object twice (once to get its size, and then again to load the content).
-> I wonder if we should have a function for "read this object, unless it's
-> over N bytes, in which case just tell me the size". That's weirdly
-> specific, but I think pretty much every user of core.bigfilethreshold
-> would want it.
+> And all new test files are considered leak-free by default? I like that!
 
-After reading through "git grep" hits for the global variable, I
-think it makes sense to have such a helper with a good name without
-configurable N (just use big_file_threshold that is global).  The
-user of the interface either punt on size like this caller, or
-would switch to the streaming interface.
+Sounds good ;-)
 
 >
-> ---
-> diff --git a/diffcore-break.c b/diffcore-break.c
-> index c64359f489..35f5b50bcc 100644
-> --- a/diffcore-break.c
-> +++ b/diffcore-break.c
-> @@ -61,6 +61,13 @@ static int should_break(struct diff_filespec *src,
->  	    !oidcmp(&src->oid, &dst->oid))
->  		return 0; /* they are the same */
->  
-> +	if (diff_populate_filespec(src, CHECK_SIZE_ONLY) ||
-> +	    diff_populate_filespec(dst, CHECK_SIZE_ONLY))
-> +		return 0; /* error but caught downstream */
-> +
-> +	if (src->size > big_file_threshold || dst->size > big_file_threshold)
-> +		return 0; /* too big to be worth computation */
-> +
->  	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
->  		return 0; /* error but caught downstream */
->  
+>> And updating the list would just be:
+>>
+>>   # assume we're using prove, which will keep running after failure,
+>>   # and will record the results for us to parse (using "--state=").
+>>   # Otherwise use "make -k" and grep in t/test-results.
+>>   make SANITIZE=leak test
+>>   (cd t && prove --dry --state=failed) |
+>>   perl -lne '/^(t[0-9]{4})-.*.sh$/ and print $1' |
+>>   sort >known-leaky
+>>
+>> That would update both now-passing and now-failing tests. Presumably
+>> we'd keep it checked in, so "git diff" would show you the changes.
+
+Sounds good, too.
