@@ -2,113 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85B871F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 00:30:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4F81F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 00:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966224AbeBNAa4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 19:30:56 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33621 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966180AbeBNAaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Feb 2018 19:30:55 -0500
-Received: by mail-wm0-f65.google.com with SMTP id x4so15429234wmc.0
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 16:30:55 -0800 (PST)
+        id S966310AbeBNAi0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 19:38:26 -0500
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:44622 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966207AbeBNAiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 19:38:24 -0500
+Received: by mail-oi0-f68.google.com with SMTP id b3so15291804oib.11
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 16:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0MWu3jtxQ9+o5gVRmcld5Z4P8/KysleiluBHCFuKo/8=;
-        b=dbnRT8QdsQqzkM9PHWzleMkVWerB+MvXqNeRT6FEmYng40S62SreM6H2wq4DNin02o
-         j6YH0THaCv2dnJeAVPw7Rzh8a9QAARC5rsq/KxKyRjzOxYUfeQKPSjQ1VMbYaZ3eaF7e
-         wteEDiRub8XG4EID0kcNYDdv9EGppmONscJotnwAh5Ktj+lE3w0/wvGU8ksAO2zkfhXX
-         7+975BCBHlJGQguermnnkBn/zC1wh6iA7d5wWQIYhkF+klkaQuwv/26hPNscBArjxyl5
-         Qudt5s+BjeKWiknqRVw4qVaiSJUJPgcLQSN9TCKeCv97k/ZtAPp6CU5tOLLCrXvsiqy8
-         sxnA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MtFbXizrV9mfBCFyxK4pbBKOdJY/eyQucGm6W+4QHNI=;
+        b=UNq7r4RWzmBT/VgUXneX+T1fculLTtTJ7JXqV2JyOl26KtVOym6T+qNNf/xpRIPQDU
+         5baGwFIj+g5fq0Jhoo5eGuo+pPgryK8aNM3AuiUYjZkMyMzmmu5xe577ftIx3jXZqatK
+         tjyD/+tHJP/MwdNEkIHd8c2EGOwSt/oDzzHJZlbmIQqt2dggE0Y7PW1qp8xPc4+agKVM
+         bgYrmYjyPW2rXL0LXA5xvjKGRyg5dVfO5CR3UHW2LLQ+afaQwoKNfnF8Ht5ET5LzDTnr
+         WxeSZtK/QxLocb/6hEfGnVHpNGFCAJbmjIRo4uvdixHD3L8CNu7mf/BB+7OiEOuiS+5j
+         ORxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0MWu3jtxQ9+o5gVRmcld5Z4P8/KysleiluBHCFuKo/8=;
-        b=GQz5/XqRQ6maBG9IVH5fmcnUXzso1Ykk2tAuinUPKgjDywBe1IL1TMvPBaqZW0WARq
-         Z9ZK+ZFPv2tSOPC9ISQkWHB7ePt76loPScAfo2/ENQMdwM8+S0+EmrvOk1fR15tIjgWC
-         WTr+31ttXtYrQwksM4FjHQJiL8oa5ILFpbZLj8A74FVRZdtOYKoVfFnwvcx+Qw11cibi
-         hN8XpDoK6MTkzj7NOU+nRF6eWjr13Tme6jvLzOEfYcvlIzTm2QemLr58+6tEX1GUcdeY
-         EcSezJzGCSNYBHs/86PHsXtp8FvHwcH046CAR1VrSN+95YF6hfqyjPtILB1JElFM9n+b
-         +OXw==
-X-Gm-Message-State: APf1xPC0AKuLnVZiMpqimN5vY3IEt/T0j6pzdT86W5vZ2ofJa6I+BGDM
-        OEubDC0OjPKV5PZVHSv+lLs=
-X-Google-Smtp-Source: AH8x225T8q3fx7THTRI9vCJSWkUVXRZ4AHmLEBHmrIS/rLVg+yvbeYR0JvPtEmHcrMquRr4TrLDkJg==
-X-Received: by 10.28.68.4 with SMTP id r4mr2776947wma.94.1518568254098;
-        Tue, 13 Feb 2018 16:30:54 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id r70sm10204643wmg.30.2018.02.13.16.30.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Feb 2018 16:30:53 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MtFbXizrV9mfBCFyxK4pbBKOdJY/eyQucGm6W+4QHNI=;
+        b=N9FCubZ+oHWOcPY6zWhQXg/ajat8W+3ctj0PBsWzTYBJYEU8VWK3OukgMz+ikWqja3
+         cjTt0vMkWgo0jqPswcm3r2JGoJJm7YXrCP+2o7UNtTSjfI5EcLtLEohNjVwDi3XgETVj
+         7719l3DOtS6dLmjKtvNEagM0peeUVSDJdmcRkgSnh3AAXIiHTaBEe3S2VB8IPQCfNH7O
+         fQvp7jKVbAoWe+ThfaAaHt0uukgX7TPpmSVoZ91ggefk3RnMO9BhqYC89HJcdo2jBsz/
+         1PVg/tEnJSHacQxWMaYwEDaN8jJAql4Ytmz8dVleELDvyAldp1qLUNwjjLzWM6aQkdK4
+         x4IA==
+X-Gm-Message-State: APf1xPA4YdRj8oizTKNCKWr+Ra1qO5zq6yrn5Ac3t7ajBSxHnxIv0t0i
+        FXc2xR08bW6J93J76Sm6aBvMj4v1mHMIF1TElIj5gg==
+X-Google-Smtp-Source: AH8x225ovDTeMLNiZAa08PRy1pMVq/OuV0HMVcwfx2QbeifM8yRXRrq//1QRFdHJMCnH7WdYV2AaChYDXsfRH/I4gyE=
+X-Received: by 10.202.76.207 with SMTP id z198mr2139512oia.183.1518568703919;
+ Tue, 13 Feb 2018 16:38:23 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.74.25.140 with HTTP; Tue, 13 Feb 2018 16:37:53 -0800 (PST)
+In-Reply-To: <20180213012241.187007-15-sbeller@google.com>
+References: <20180213012241.187007-1-sbeller@google.com> <20180213012241.187007-15-sbeller@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 14 Feb 2018 07:37:53 +0700
+Message-ID: <CACsJy8DmXrO9bxv10DsDpSWxm2BiZwwfhso4=ZRQs_xhrpAgfg@mail.gmail.com>
+Subject: Re: [PATCH 14/26] sha1_file: allow prepare_alt_odb to handle
+ arbitrary repositories
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 00/26] Moving global state into the repository object (part 1)
-References: <20180213012241.187007-1-sbeller@google.com>
-        <20180213114903.GA21015@ash>
-        <CACsJy8C8+VnjrhEh3o36GUttZXmfiKxqjzS=2LzmfZKQjogojQ@mail.gmail.com>
-        <CAGZ79kbmAkN5EpW1hzW-FFdR74c-qXJc5aKZX0ff9bU0gxMRqQ@mail.gmail.com>
-        <xmqq7ergra2y.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZOq+_NOOabBUtPJ_zKNb_vdais70F6VzVFoSn5B5A4fQ@mail.gmail.com>
-        <xmqqzi4cptsa.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kY4bFHAYeVn_8jBKp+kNzCs+juaa0Lp=Tx=SZK_HtDQHg@mail.gmail.com>
-Date:   Tue, 13 Feb 2018 16:30:52 -0800
-In-Reply-To: <CAGZ79kY4bFHAYeVn_8jBKp+kNzCs+juaa0Lp=Tx=SZK_HtDQHg@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 13 Feb 2018 11:43:04 -0800")
-Message-ID: <xmqqmv0cpg3n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Which is why I'd strongly consider having it only in the repository
-> object as that is the largest-scoped thing we'd want. e.g. submodules
-> should care about environment variables differently:
+On Tue, Feb 13, 2018 at 8:22 AM, Stefan Beller <sbeller@google.com> wrote:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  object-store.h |  3 +--
+>  sha1_file.c    | 21 +++++++++++----------
+>  2 files changed, 12 insertions(+), 12 deletions(-)
 >
->     GIT_WORK_TREE=~/mysuperproject git checkout \
->             --recurse-submodules master
+> diff --git a/object-store.h b/object-store.h
+> index d96a16edd1..add1d4e27c 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -61,7 +61,6 @@ struct packed_git {
+>         char pack_name[FLEX_ARRAY]; /* more */
+>  };
 >
->  So with such a command in mind, the environment variable would
-> only apply to the superproject and the nested submodules should
-> ignore the env, but compute their paths off the superproject, i.e.
-> the superproject repository, not its object store?
+> -#define prepare_alt_odb(r) prepare_alt_odb_##r()
+> -extern void prepare_alt_odb_the_repository(void);
+> +void prepare_alt_odb(struct repository *r);
+>
+>  #endif /* OBJECT_STORE_H */
+> diff --git a/sha1_file.c b/sha1_file.c
+> index d18ce3aeba..f046d560f8 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -677,21 +677,22 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+>         return r;
+>  }
+>
+> -void prepare_alt_odb_the_repository(void)
+> +void prepare_alt_odb(struct repository *r)
+>  {
+> -       const char *alt;
+> -
+> -       if (the_repository->objects.alt_odb_tail)
+> +       if (r->objects.alt_odb_tail)
+>                 return;
+>
+> -       alt = getenv(ALTERNATE_DB_ENVIRONMENT);
+> +       r->objects.alt_odb_tail = &r->objects.alt_odb_list;
+> +
+> +       if (!r->ignore_env) {
+> +               const char *alt = getenv(ALTERNATE_DB_ENVIRONMENT);
 
-In the longer term endgame state, what is in the repository object
-cannot just be a simple "do we honor environment variable" bit
-anymore.  
+If one day the majority of git moves to use 'struct repository', then
+ALTERNATE_DB_ENVIRONMENT is always ignored because ignore_env is
+always true. I think if you ignore_env, then you still need to get
+this "alt" from  'struct raw_object_store' (or 'struct repository').
 
-It will be more like "we may (or may not) look at environment when
-we create a repository object", i.e. a bit passed to repo_init()
-constructor, and from then on, the repository object knows where the
-object store and its alternates are, where the top of the working
-tree is, where the repository (i.e. the directory that has "refs/"
-in it) is, what "worktree" of the repository we are talking about by
-itself.  There is no need for a bit "do we or do we not look at
-environment?" that needs to be consulted at runtime, which is quite
-a round-about thing.
+Since you get lots of getenv() in repo_setup_env(), I think this
+getenv(ALTERNATE_DB_ENVIRONMENT) belongs there too. Then here, if
+ignore_env is true, you read r->objects.alt or something instead of
+doing getenv().
 
-In your example, the repository object that represents the
-superproject will pay attention to GIT_WORK_TREE environment when it
-is consturcted, and repository objects dynamically constructed while
-the command "recurse-submodules" through them will be constructed
-with their "where is the top of my working tree?" set appropriately.
-They won't be storing "when figuring out where my working tree is,
-do not pay attention to GIT_WORK_TREE environment variable" bit.
+I really want to kill this getenv() in this code, which is basically
+delayed initialization because we haven't done proper init on
+the_repo. I realize that it cannot be done earlier, when
+prepare_alt_odb() does not even have a  'struct repository *' to work
+with. Would it be ok if I contributed a patch on top of your series to
+basically do repo_init(&the_repo) for all builtin/external commands
+(and fix all the bugs that come with it)? Then we would not need
+ignore_env here anymore.
 
+> +               if (!alt)
+> +                       alt = "";
+>
+> -       the_repository->objects.alt_odb_tail =
+> -                       &the_repository->objects.alt_odb_list;
+> -       link_alt_odb_entries(the_repository, alt,
+> -                            PATH_SEP, NULL, 0);
+> +               link_alt_odb_entries(r, alt, PATH_SEP, NULL, 0);
+> +       }
+>
+> -       read_info_alternates(the_repository, get_object_directory(), 0);
+> +       read_info_alternates(r, r->objects.objectdir, 0);
+>  }
+>
+>  /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+> --
+> 2.16.1.73.ga2c3e9663f.dirty
+>
+
+
+
+-- 
+Duy
