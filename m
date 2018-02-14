@@ -2,116 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9F221F404
-	for <e@80x24.org>; Tue, 13 Feb 2018 23:56:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C321D1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 00:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966137AbeBMX4v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Feb 2018 18:56:51 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33180 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S966108AbeBMX4u (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Feb 2018 18:56:50 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e6b3:18ff:fe98:41a3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8B6416096E;
-        Tue, 13 Feb 2018 23:56:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1518566207;
-        bh=gkqpPeOB857mM+FCaHNrLKZJFHRu6Y7Upi9i1Mf6mNE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=n6I9PjSqdXdax3APQR0dk6Z5xDee6N6VVfsb8HBO5bhyROMSM3hoREPZoJucWkXI2
-         atgaC4eqFut9/ySiAI/l5C++6Y87c+MfLzq+KtFl3bgzyZPoaLDQ86nPSLZt3qsBDA
-         7/Yh66ZMUVnZVSkxdgKl2RvlojCYe41AmvU33f3zy8zbB0alZ/Ywe0l9+7jEwDLFaF
-         SDNIUw1pgWLrNtCiddhtumSgWo9Wv4cqwD9RpWBwcabsz/gUKxFq6IKBBROeJi6CXN
-         CA1NMDf3llCh4c1twrO3BL15EIec67tqpu0hztYqbZSh4BWlCFG7h1y2vJL/rSC0LA
-         g1ky4zTkD+8Sp4QCYMM1n81L5vQSNLvhmgdMNWuQnfYnmuaB34idrFPvS4D2CTN46+
-         mhj8at44qXtsTiVsH3xA/etgqfcaKQrPlJgAkjP+UezIpFcuu1l7l/te7TeBp2d/Ru
-         Xw7svGOAqsVY+GQI7k0klpz6+0NA6479q6m2fzsOd0y2OGjgcWn
-Date:   Tue, 13 Feb 2018 23:56:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/4] Correct offsets of hunks when one is skipped
-Message-ID: <20180213235642.GD1022467@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git Mailing List <git@vger.kernel.org>
-References: <20180213104408.9887-1-phillip.wood@talktalk.net>
+        id S966203AbeBNAJe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Feb 2018 19:09:34 -0500
+Received: from cpanel2.indieserve.net ([199.212.143.6]:45448 "EHLO
+        cpanel2.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966137AbeBNAJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Feb 2018 19:09:34 -0500
+Received: from cpec03f0ed08c7f-cm68b6fcf980b0.cpe.net.cable.rogers.com ([174.118.92.171]:52536 helo=localhost.localdomain)
+        by cpanel2.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89_1)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1elkdh-0005Jo-5u
+        for git@vger.kernel.org; Tue, 13 Feb 2018 19:09:33 -0500
+Date:   Tue, 13 Feb 2018 19:09:31 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: [PATCH v2] Correct mispellings of ".gitmodule" to ".gitmodules"
+Message-ID: <alpine.LFD.2.21.1802131907480.17291@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kA1LkgxZ0NN7Mz3A"
-Content-Disposition: inline
-In-Reply-To: <20180213104408.9887-1-phillip.wood@talktalk.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.15.0-rc8-amd64)
-User-Agent: Mutt/1.9.3 (2018-01-21)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=US-ASCII
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel2.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel2.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel2.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There are a small number of misspellings, ".gitmodule", scattered
+throughout the code base, correct them ... no apparent functional
+changes.
 
---kA1LkgxZ0NN7Mz3A
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ Documentation/technical/api-submodule-config.txt | 2 +-
+ contrib/subtree/git-subtree.txt                  | 2 +-
+ submodule-config.c                               | 4 ++--
+ t/t5526-fetch-submodules.sh                      | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-On Tue, Feb 13, 2018 at 10:44:04AM +0000, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->=20
-> While working on a patch series to stage selected lines from a hunk
-> without having to edit it I got worried that subsequent patches would
-> be applied in the wrong place which lead to this series to correct the
-> offsets of hunks following those that are skipped or edited.
->=20
-> Phillip Wood (4):
->   add -i: add function to format hunk header
->   t3701: add failing test for pathological context lines
->   add -p: Adjust offsets of subsequent hunks when one is skipped
->   add -p: calculate offset delta for edited patches
->=20
->  git-add--interactive.perl  | 93 +++++++++++++++++++++++++++++++++++-----=
-------
->  t/t3701-add-interactive.sh | 30 +++++++++++++++
->  2 files changed, 102 insertions(+), 21 deletions(-)
+Signed-off-by: Robert P. J. Day <rpjday@crashcourse.ca>
 
-This looks reasonably sane to me.  I really like that you managed to
-produce failing tests for this situation.  I know pathological cases
-like this have bit GCC in the past, so it's good that you fixed this.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+---
 
---kA1LkgxZ0NN7Mz3A
-Content-Type: application/pgp-signature; name="signature.asc"
+  can't believe i forgot to sign my own patch. le *sigh* ...
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.4 (GNU/Linux)
+diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+index 3dce003fd..ee907c4a8 100644
+--- a/Documentation/technical/api-submodule-config.txt
++++ b/Documentation/technical/api-submodule-config.txt
+@@ -4,7 +4,7 @@ submodule config cache API
+ The submodule config cache API allows to read submodule
+ configurations/information from specified revisions. Internally
+ information is lazily read into a cache that is used to avoid
+-unnecessary parsing of the same .gitmodule files. Lookups can be done by
++unnecessary parsing of the same .gitmodules files. Lookups can be done by
+ submodule path or name.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlqDezkACgkQv1NdgR9S
-9otItA//YysCTzNa/P2J0mGUGgDXHiz4nVuitJInfZYSUT7Gpg8woZi4k+0yXqsW
-xGFcmVkGzFmXux5kgTTGYHtFkaFUO3bZhK1DKqMYUOicPZnUsFoVVPqqhKYT4lSl
-LJz75gvwJ9q2qsYFo59D1j+HPsgUv2jUdnfbbavvr6igMjndXaWUgbLlYcqMaPV9
-33MgNfuV5ODBMWtTRftRwhPTmrYiXW6h0K/BLI1iazgSA7m5wNbQhEz5id6nOEmA
-T3djsBy2pzvbp29fxyZqY7pwSVo+u5gUZo5AiJMt/QfiKvHx5eGWEKtdodHaiadG
-97JSYR6fF8jDFHT9Sib50RxEiAHlocKcm6re2WwdYn7tsjoBuLEcVKDGabsw+f+U
-KUjaGIoSqHvzyx49LynA38uzkYBPeykrroZRZvuQulgivFweJYxk9jEbq86cPoV0
-wv1KJpalhwLqSSiiBLZPEPHHslb4tqrJF3t7SYNS5M3K4XTAykeFjsEWEfVeCwsw
-KPjsKjNTtIv1A4yAO3ecWW2ajD2AlWQQCu9a0jyt5C0Uh0IWKGkBW4dpfD3h4/2A
-pHmkVjB6h4vbukEyenhech/raG2RsUa5f0ipaaiZcHC3eBoDMnmeTAdJjdAjjbP5
-wqb0NeyfWNd4y1IonKG9IKKNy19p9ubb/zqky/P2STRHTHzBx/w=
-=7ozL
------END PGP SIGNATURE-----
+ Usage
+diff --git a/contrib/subtree/git-subtree.txt b/contrib/subtree/git-subtree.txt
+index 60d76cddd..352deda69 100644
+--- a/contrib/subtree/git-subtree.txt
++++ b/contrib/subtree/git-subtree.txt
+@@ -28,7 +28,7 @@ as a subdirectory of your application.
 
---kA1LkgxZ0NN7Mz3A--
+ Subtrees are not to be confused with submodules, which are meant for
+ the same task. Unlike submodules, subtrees do not need any special
+-constructions (like .gitmodule files or gitlinks) be present in
++constructions (like .gitmodules files or gitlinks) be present in
+ your repository, and do not force end-users of your
+ repository to do anything special or to understand how subtrees
+ work. A subtree is just a subdirectory that can be
+diff --git a/submodule-config.c b/submodule-config.c
+index 2aa8a1747..602ba8ca8 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -9,7 +9,7 @@
+ /*
+  * submodule cache lookup structure
+  * There is one shared set of 'struct submodule' entries which can be
+- * looked up by their sha1 blob id of the .gitmodule file and either
++ * looked up by their sha1 blob id of the .gitmodules file and either
+  * using path or name as key.
+  * for_path stores submodule entries with path as key
+  * for_name stores submodule entries with name as key
+@@ -91,7 +91,7 @@ static void submodule_cache_clear(struct submodule_cache *cache)
+ 	/*
+ 	 * We iterate over the name hash here to be symmetric with the
+ 	 * allocation of struct submodule entries. Each is allocated by
+-	 * their .gitmodule blob sha1 and submodule name.
++	 * their .gitmodules blob sha1 and submodule name.
+ 	 */
+ 	hashmap_iter_init(&cache->for_name, &iter);
+ 	while ((entry = hashmap_iter_next(&iter)))
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index a552ad4ea..74486c73b 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -485,7 +485,7 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+ 	)
+ '
+
+-test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .gitmodule entry" '
++test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .gitmodules entry" '
+ 	(
+ 		cd downstream &&
+ 		git fetch --recurse-submodules
+
+rday
+
+-- 
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                        http://crashcourse.ca
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
