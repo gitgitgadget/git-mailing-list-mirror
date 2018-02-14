@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF44E1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:52:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02BC61F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:52:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162366AbeBNSws (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:52:48 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38962 "EHLO
+        id S1162249AbeBNSwu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:52:50 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38960 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1162339AbeBNSwg (ORCPT
+        by vger.kernel.org with ESMTP id S1162338AbeBNSwg (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 14 Feb 2018 13:52:36 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EInD7v002757;
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EInD7u002757;
         Wed, 14 Feb 2018 10:52:08 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2g1yfs77a0-1;
-        Wed, 14 Feb 2018 10:52:08 -0800
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id DC928225EF54;
+        by mx0a-00153501.pphosted.com with ESMTP id 2g1yfs779t-2;
+        Wed, 14 Feb 2018 10:52:07 -0800
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 7F0DC225EBBE;
         Wed, 14 Feb 2018 10:52:07 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id D61A82CDEB4;
+        by smtp.yojoe.local (Postfix) with ESMTP id 789A32CDEB4;
         Wed, 14 Feb 2018 10:52:07 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v8 26/29] merge-recursive: fix remaining directory rename + dirty overwrite cases
-Date:   Wed, 14 Feb 2018 10:52:03 -0800
-Message-Id: <20180214185206.15492-27-newren@gmail.com>
+Subject: [PATCH v8 19/29] merge-recursive: check for directory level conflicts
+Date:   Wed, 14 Feb 2018 10:51:56 -0800
+Message-Id: <20180214185206.15492-20-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.232.g28d5be9217
 In-Reply-To: <20180214185206.15492-1-newren@gmail.com>
 References: <20180214185206.15492-1-newren@gmail.com>
@@ -56,130 +56,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Before trying to apply directory renames to paths within the given
+directories, we want to make sure that there aren't conflicts at the
+directory level.  There will be additional checks at the individual
+file level too, which will be added later.
+
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                   | 25 ++++++++++++++++++++++---
- t/t6043-merge-rename-directories.sh |  8 ++++----
- 2 files changed, 26 insertions(+), 7 deletions(-)
+ merge-recursive.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++
+ 1 file changed, 119 insertions(+)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 4532b982a4..6ff54c0e86 100644
+index aca4acdfcb..a9f1579d22 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1323,11 +1323,22 @@ static int handle_file(struct merge_options *o,
+@@ -1394,6 +1394,15 @@ static struct diff_queue_struct *get_diffpairs(str=
+uct merge_options *o,
+ 	return ret;
+ }
 =20
- 	add =3D filespec_from_entry(&other, dst_entry, stage ^ 1);
- 	if (add) {
-+		int ren_src_was_dirty =3D was_dirty(o, rename->path);
- 		char *add_name =3D unique_path(o, rename->path, other_branch);
- 		if (update_file(o, 0, &add->oid, add->mode, add_name))
- 			return -1;
-=20
--		remove_file(o, 0, rename->path, 0);
-+		if (ren_src_was_dirty) {
-+			output(o, 1, _("Refusing to lose dirty file at %s"),
-+			       rename->path);
-+		}
-+		/*
-+		 * Because the double negatives somehow keep confusing me...
-+		 *    1) update_wd iff !ren_src_was_dirty.
-+		 *    2) no_wd iff !update_wd
-+		 *    3) so, no_wd =3D=3D !!ren_src_was_dirty =3D=3D ren_src_was_dirty
-+		 */
-+		remove_file(o, 0, rename->path, ren_src_was_dirty);
- 		dst_name =3D unique_path(o, rename->path, cur_branch);
- 	} else {
- 		if (dir_in_way(rename->path, !o->call_depth, 0)) {
-@@ -1465,7 +1476,10 @@ static int conflict_rename_rename_2to1(struct merg=
-e_options *o,
- 		char *new_path2 =3D unique_path(o, path, ci->branch2);
- 		output(o, 1, _("Renaming %s to %s and %s to %s instead"),
- 		       a->path, new_path1, b->path, new_path2);
--		if (would_lose_untracked(path))
-+		if (was_dirty(o, path))
-+			output(o, 1, _("Refusing to lose dirty file at %s"),
-+			       path);
-+		else if (would_lose_untracked(path))
- 			/*
- 			 * Only way we get here is if both renames were from
- 			 * a directory rename AND user had an untracked file
-@@ -2074,6 +2088,7 @@ static void apply_directory_rename_modifications(st=
-ruct merge_options *o,
++static int tree_has_path(struct tree *tree, const char *path)
++{
++	unsigned char hashy[GIT_MAX_RAWSZ];
++	unsigned int mode_o;
++
++	return !get_tree_entry(tree->object.oid.hash, path,
++			       hashy, &mode_o);
++}
++
+ static void get_renamed_dir_portion(const char *old_path, const char *ne=
+w_path,
+ 				    char **old_dir, char **new_dir)
  {
- 	struct string_list_item *item;
- 	int stage =3D (tree =3D=3D a_tree ? 2 : 3);
-+	int update_wd;
+@@ -1449,6 +1458,112 @@ static void get_renamed_dir_portion(const char *o=
+ld_path, const char *new_path,
+ 	}
+ }
 =20
- 	/*
- 	 * In all cases where we can do directory rename detection,
-@@ -2084,7 +2099,11 @@ static void apply_directory_rename_modifications(s=
-truct merge_options *o,
- 	 * saying the file would have been overwritten), but it might
- 	 * be dirty, though.
- 	 */
--	remove_file(o, 1, pair->two->path, 0 /* no_wd */);
-+	update_wd =3D !was_dirty(o, pair->two->path);
-+	if (!update_wd)
-+		output(o, 1, _("Refusing to lose dirty file at %s"),
-+		       pair->two->path);
-+	remove_file(o, 1, pair->two->path, !update_wd);
++static void remove_hashmap_entries(struct hashmap *dir_renames,
++				   struct string_list *items_to_remove)
++{
++	int i;
++	struct dir_rename_entry *entry;
++
++	for (i =3D 0; i < items_to_remove->nr; i++) {
++		entry =3D items_to_remove->items[i].util;
++		hashmap_remove(dir_renames, entry, NULL);
++	}
++	string_list_clear(items_to_remove, 0);
++}
++
++/*
++ * There are a couple things we want to do at the directory level:
++ *   1. Check for both sides renaming to the same thing, in order to avo=
+id
++ *      implicit renaming of files that should be left in place.  (See
++ *      testcase 6b in t6043 for details.)
++ *   2. Prune directory renames if there are still files left in the
++ *      the original directory.  These represent a partial directory ren=
+ame,
++ *      i.e. a rename where only some of the files within the directory
++ *      were renamed elsewhere.  (Technically, this could be done earlie=
+r
++ *      in get_directory_renames(), except that would prevent us from
++ *      doing the previous check and thus failing testcase 6b.)
++ *   3. Check for rename/rename(1to2) conflicts (at the directory level)=
+.
++ *      In the future, we could potentially record this info as well and
++ *      omit reporting rename/rename(1to2) conflicts for each path withi=
+n
++ *      the affected directories, thus cleaning up the merge output.
++ *   NOTE: We do NOT check for rename/rename(2to1) conflicts at the
++ *         directory level, because merging directories is fine.  If it
++ *         causes conflicts for files within those merged directories, t=
+hen
++ *         that should be detected at the individual path level.
++ */
++static void handle_directory_level_conflicts(struct merge_options *o,
++					     struct hashmap *dir_re_head,
++					     struct tree *head,
++					     struct hashmap *dir_re_merge,
++					     struct tree *merge)
++{
++	struct hashmap_iter iter;
++	struct dir_rename_entry *head_ent;
++	struct dir_rename_entry *merge_ent;
++
++	struct string_list remove_from_head =3D STRING_LIST_INIT_NODUP;
++	struct string_list remove_from_merge =3D STRING_LIST_INIT_NODUP;
++
++	hashmap_iter_init(dir_re_head, &iter);
++	while ((head_ent =3D hashmap_iter_next(&iter))) {
++		merge_ent =3D dir_rename_find_entry(dir_re_merge, head_ent->dir);
++		if (merge_ent &&
++		    !head_ent->non_unique_new_dir &&
++		    !merge_ent->non_unique_new_dir &&
++		    !strbuf_cmp(&head_ent->new_dir, &merge_ent->new_dir)) {
++			/* 1. Renamed identically; remove it from both sides */
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util =3D head_ent;
++			strbuf_release(&head_ent->new_dir);
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util =3D merge_ent;
++			strbuf_release(&merge_ent->new_dir);
++		} else if (tree_has_path(head, head_ent->dir)) {
++			/* 2. This wasn't a directory rename after all */
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util =3D head_ent;
++			strbuf_release(&head_ent->new_dir);
++		}
++	}
++
++	remove_hashmap_entries(dir_re_head, &remove_from_head);
++	remove_hashmap_entries(dir_re_merge, &remove_from_merge);
++
++	hashmap_iter_init(dir_re_merge, &iter);
++	while ((merge_ent =3D hashmap_iter_next(&iter))) {
++		head_ent =3D dir_rename_find_entry(dir_re_head, merge_ent->dir);
++		if (tree_has_path(merge, merge_ent->dir)) {
++			/* 2. This wasn't a directory rename after all */
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util =3D merge_ent;
++		} else if (head_ent &&
++			   !head_ent->non_unique_new_dir &&
++			   !merge_ent->non_unique_new_dir) {
++			/* 3. rename/rename(1to2) */
++			/*
++			 * We can assume it's not rename/rename(1to1) because
++			 * that was case (1), already checked above.  So we
++			 * know that head_ent->new_dir and merge_ent->new_dir
++			 * are different strings.
++			 */
++			output(o, 1, _("CONFLICT (rename/rename): "
++				       "Rename directory %s->%s in %s. "
++				       "Rename directory %s->%s in %s"),
++			       head_ent->dir, head_ent->new_dir.buf, o->branch1,
++			       head_ent->dir, merge_ent->new_dir.buf, o->branch2);
++			string_list_append(&remove_from_head,
++					   head_ent->dir)->util =3D head_ent;
++			strbuf_release(&head_ent->new_dir);
++			string_list_append(&remove_from_merge,
++					   merge_ent->dir)->util =3D merge_ent;
++			strbuf_release(&merge_ent->new_dir);
++		}
++	}
++
++	remove_hashmap_entries(dir_re_head, &remove_from_head);
++	remove_hashmap_entries(dir_re_merge, &remove_from_merge);
++}
++
+ static struct hashmap *get_directory_renames(struct diff_queue_struct *p=
+airs,
+ 					     struct tree *tree)
+ {
+@@ -1910,6 +2025,10 @@ static int handle_renames(struct merge_options *o,
+ 	dir_re_head =3D get_directory_renames(head_pairs, head);
+ 	dir_re_merge =3D get_directory_renames(merge_pairs, merge);
 =20
- 	/* Find or create a new re->dst_entry */
- 	item =3D string_list_lookup(entries, new_path);
-diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
-irectories.sh
-index b94ba066fe..33e2649824 100755
---- a/t/t6043-merge-rename-directories.sh
-+++ b/t/t6043-merge-rename-directories.sh
-@@ -3370,7 +3370,7 @@ test_expect_success '11b-setup: Avoid losing dirty =
-file involved in directory re
- 	)
- '
-=20
--test_expect_failure '11b-check: Avoid losing dirty file involved in dire=
-ctory rename' '
-+test_expect_success '11b-check: Avoid losing dirty file involved in dire=
-ctory rename' '
- 	(
- 		cd 11b &&
-=20
-@@ -3512,7 +3512,7 @@ test_expect_success '11d-setup: Avoid losing not-up=
-todate with rename + D/F conf
- 	)
- '
-=20
--test_expect_failure '11d-check: Avoid losing not-uptodate with rename + =
-D/F conflict' '
-+test_expect_success '11d-check: Avoid losing not-uptodate with rename + =
-D/F conflict' '
- 	(
- 		cd 11d &&
-=20
-@@ -3591,7 +3591,7 @@ test_expect_success '11e-setup: Avoid deleting not-=
-uptodate with dir rename/rena
- 	)
- '
-=20
--test_expect_failure '11e-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(1to2)/add' '
-+test_expect_success '11e-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(1to2)/add' '
- 	(
- 		cd 11e &&
-=20
-@@ -3667,7 +3667,7 @@ test_expect_success '11f-setup: Avoid deleting not-=
-uptodate with dir rename/rena
- 	)
- '
-=20
--test_expect_failure '11f-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(2to1)' '
-+test_expect_success '11f-check: Avoid deleting not-uptodate with dir ren=
-ame/rename(2to1)' '
- 	(
- 		cd 11f &&
-=20
++	handle_directory_level_conflicts(o,
++					 dir_re_head, head,
++					 dir_re_merge, merge);
++
+ 	ri->head_renames  =3D get_renames(o, head_pairs, head,
+ 					 common, head, merge, entries);
+ 	ri->merge_renames =3D get_renames(o, merge_pairs, merge,
 --=20
 2.16.1.232.g28d5be9217
 
