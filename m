@@ -7,36 +7,36 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 073B21F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0D8D1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162365AbeBNSwr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:52:47 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37044 "EHLO
+        id S1162362AbeBNSwp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:52:45 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37026 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1162336AbeBNSwg (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Feb 2018 13:52:36 -0500
+        by vger.kernel.org with ESMTP id S1162322AbeBNSwe (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Feb 2018 13:52:34 -0500
 Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EIm4H6011929;
-        Wed, 14 Feb 2018 10:52:08 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w1EIm45k011919;
+        Wed, 14 Feb 2018 10:52:07 -0800
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2g1xgry8kf-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2g1xgry8k9-1;
         Wed, 14 Feb 2018 10:52:07 -0800
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 77A8C225EBBC;
-        Wed, 14 Feb 2018 10:52:07 -0800 (PST)
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id C697A225960C;
+        Wed, 14 Feb 2018 10:52:06 -0800 (PST)
 Received: from newren2-linux.yojoe.local (newren2-linux.dyn.yojoe.local [10.100.68.32])
-        by smtp.yojoe.local (Postfix) with ESMTP id 67A432CDE88;
-        Wed, 14 Feb 2018 10:52:07 -0800 (PST)
+        by smtp.yojoe.local (Postfix) with ESMTP id BAEF42CDE88;
+        Wed, 14 Feb 2018 10:52:06 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v8 18/29] merge-recursive: add get_directory_renames()
-Date:   Wed, 14 Feb 2018 10:51:55 -0800
-Message-Id: <20180214185206.15492-19-newren@gmail.com>
+Subject: [PATCH v8 05/29] directory rename detection: files/directories in the way of some renames
+Date:   Wed, 14 Feb 2018 10:51:42 -0800
+Message-Id: <20180214185206.15492-6-newren@gmail.com>
 X-Mailer: git-send-email 2.16.1.232.g28d5be9217
 In-Reply-To: <20180214185206.15492-1-newren@gmail.com>
 References: <20180214185206.15492-1-newren@gmail.com>
@@ -47,7 +47,7 @@ X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2018-02-14_08:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=15 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
  mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1711220000 definitions=main-1802140219
@@ -56,332 +56,385 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This populates a set of directory renames for us.  The set of directory
-renames is not yet used, but will be in subsequent commits.
-
-Note that the use of a string_list for possible_new_dirs in the new
-dir_rename_entry struct implies an O(n^2) algorithm; however, in practice
-I expect the number of distinct directories that files were renamed into
-from a single original directory to be O(1).  My guess is that n has a
-mode of 1 and a mean of less than 2, so, for now, string_list seems good
-enough for possible_new_dirs.
-
 Reviewed-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c | 224 ++++++++++++++++++++++++++++++++++++++++++++++++=
-+++++-
- merge-recursive.h |  18 +++++
- 2 files changed, 239 insertions(+), 3 deletions(-)
+ t/t6043-merge-rename-directories.sh | 330 ++++++++++++++++++++++++++++++=
+++++++
+ 1 file changed, 330 insertions(+)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index be20660527..aca4acdfcb 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -49,6 +49,44 @@ static unsigned int path_hash(const char *path)
- 	return ignore_case ? strihash(path) : strhash(path);
- }
+diff --git a/t/t6043-merge-rename-directories.sh b/t/t6043-merge-rename-d=
+irectories.sh
+index 713ad2b75e..b469c807c2 100755
+--- a/t/t6043-merge-rename-directories.sh
++++ b/t/t6043-merge-rename-directories.sh
+@@ -850,4 +850,334 @@ test_expect_success '4a-check: Directory split, wit=
+h original directory still pr
+ #   detection.)  But, sadly, see testcase 8b.
+ ########################################################################=
+###
 =20
-+static struct dir_rename_entry *dir_rename_find_entry(struct hashmap *ha=
-shmap,
-+						      char *dir)
-+{
-+	struct dir_rename_entry key;
 +
-+	if (dir =3D=3D NULL)
-+		return NULL;
-+	hashmap_entry_init(&key, strhash(dir));
-+	key.dir =3D dir;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
++########################################################################=
+###
++# SECTION 5: Files/directories in the way of subset of to-be-renamed pat=
+hs
++#
++# Implicitly renaming files due to a detected directory rename could run
++# into problems if there are files or directories in the way of the path=
+s
++# we want to rename.  Explore such cases in this section.
++########################################################################=
+###
 +
-+static int dir_rename_cmp(const void *unused_cmp_data,
-+			  const void *entry,
-+			  const void *entry_or_key,
-+			  const void *unused_keydata)
-+{
-+	const struct dir_rename_entry *e1 =3D entry;
-+	const struct dir_rename_entry *e2 =3D entry_or_key;
++# Testcase 5a, Merge directories, other side adds files to original and =
+target
++#   Commit O: z/{b,c},       y/d
++#   Commit A: z/{b,c,e_1,f}, y/{d,e_2}
++#   Commit B: y/{b,c,d}
++#   Expected: z/e_1, y/{b,c,d,e_2,f} + CONFLICT warning
++#   NOTE: While directory rename detection is active here causing z/f to
++#         become y/f, we did not apply this for z/e_1 because that would
++#         give us an add/add conflict for y/e_1 vs y/e_2.  This problem =
+with
++#         this add/add, is that both versions of y/e are from the same s=
+ide
++#         of history, giving us no way to represent this conflict in the
++#         index.
 +
-+	return strcmp(e1->dir, e2->dir);
-+}
++test_expect_success '5a-setup: Merge directories, other side adds files =
+to original and target' '
++	test_create_repo 5a &&
++	(
++		cd 5a &&
 +
-+static void dir_rename_init(struct hashmap *map)
-+{
-+	hashmap_init(map, dir_rename_cmp, NULL, 0);
-+}
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		mkdir y &&
++		echo d >y/d &&
++		git add z y &&
++		test_tick &&
++		git commit -m "O" &&
 +
-+static void dir_rename_entry_init(struct dir_rename_entry *entry,
-+				  char *directory)
-+{
-+	hashmap_entry_init(entry, strhash(directory));
-+	entry->dir =3D directory;
-+	entry->non_unique_new_dir =3D 0;
-+	strbuf_init(&entry->new_dir, 0);
-+	string_list_init(&entry->possible_new_dirs, 0);
-+}
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
- static void flush_output(struct merge_options *o)
- {
- 	if (o->buffer_output < 2 && o->obuf.len) {
-@@ -1356,6 +1394,169 @@ static struct diff_queue_struct *get_diffpairs(st=
-ruct merge_options *o,
- 	return ret;
- }
-=20
-+static void get_renamed_dir_portion(const char *old_path, const char *ne=
-w_path,
-+				    char **old_dir, char **new_dir)
-+{
-+	char *end_of_old, *end_of_new;
-+	int old_len, new_len;
++		git checkout A &&
++		echo e1 >z/e &&
++		echo f >z/f &&
++		echo e2 >y/e &&
++		git add z/e z/f y/e &&
++		test_tick &&
++		git commit -m "A" &&
 +
-+	*old_dir =3D NULL;
-+	*new_dir =3D NULL;
++		git checkout B &&
++		git mv z/b y/ &&
++		git mv z/c y/ &&
++		rmdir z &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
 +
-+	/*
-+	 * For
-+	 *    "a/b/c/d/e/foo.c" -> "a/b/some/thing/else/e/foo.c"
-+	 * the "e/foo.c" part is the same, we just want to know that
-+	 *    "a/b/c/d" was renamed to "a/b/some/thing/else"
-+	 * so, for this example, this function returns "a/b/c/d" in
-+	 * *old_dir and "a/b/some/thing/else" in *new_dir.
-+	 *
-+	 * Also, if the basename of the file changed, we don't care.  We
-+	 * want to know which portion of the directory, if any, changed.
-+	 */
-+	end_of_old =3D strrchr(old_path, '/');
-+	end_of_new =3D strrchr(new_path, '/');
++test_expect_failure '5a-check: Merge directories, other side adds files =
+to original and target' '
++	(
++		cd 5a &&
 +
-+	if (end_of_old =3D=3D NULL || end_of_new =3D=3D NULL)
-+		return;
-+	while (*--end_of_new =3D=3D *--end_of_old &&
-+	       end_of_old !=3D old_path &&
-+	       end_of_new !=3D new_path)
-+		; /* Do nothing; all in the while loop */
-+	/*
-+	 * We've found the first non-matching character in the directory
-+	 * paths.  That means the current directory we were comparing
-+	 * represents the rename.  Move end_of_old and end_of_new back
-+	 * to the full directory name.
-+	 */
-+	if (*end_of_old =3D=3D '/')
-+		end_of_old++;
-+	if (*end_of_old !=3D '/')
-+		end_of_new++;
-+	end_of_old =3D strchr(end_of_old, '/');
-+	end_of_new =3D strchr(end_of_new, '/');
++		git checkout A^0 &&
 +
-+	/*
-+	 * It may have been the case that old_path and new_path were the same
-+	 * directory all along.  Don't claim a rename if they're the same.
-+	 */
-+	old_len =3D end_of_old - old_path;
-+	new_len =3D end_of_new - new_path;
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT.*implicit dir rename" out &&
 +
-+	if (old_len !=3D new_len || strncmp(old_path, new_path, old_len)) {
-+		*old_dir =3D xstrndup(old_path, old_len);
-+		*new_dir =3D xstrndup(new_path, new_len);
-+	}
-+}
++		git ls-files -s >out &&
++		test_line_count =3D 6 out &&
++		git ls-files -u >out &&
++		test_line_count =3D 0 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 1 out &&
 +
-+static struct hashmap *get_directory_renames(struct diff_queue_struct *p=
-airs,
-+					     struct tree *tree)
-+{
-+	struct hashmap *dir_renames;
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *entry;
-+	int i;
++		git rev-parse >actual \
++			:0:y/b :0:y/c :0:y/d :0:y/e :0:z/e :0:y/f &&
++		git rev-parse >expect \
++			 O:z/b  O:z/c  O:y/d  A:y/e  A:z/e  A:z/f &&
++		test_cmp expect actual
++	)
++'
 +
-+	/*
-+	 * Typically, we think of a directory rename as all files from a
-+	 * certain directory being moved to a target directory.  However,
-+	 * what if someone first moved two files from the original
-+	 * directory in one commit, and then renamed the directory
-+	 * somewhere else in a later commit?  At merge time, we just know
-+	 * that files from the original directory went to two different
-+	 * places, and that the bulk of them ended up in the same place.
-+	 * We want each directory rename to represent where the bulk of the
-+	 * files from that directory end up; this function exists to find
-+	 * where the bulk of the files went.
-+	 *
-+	 * The first loop below simply iterates through the list of file
-+	 * renames, finding out how often each directory rename pair
-+	 * possibility occurs.
-+	 */
-+	dir_renames =3D xmalloc(sizeof(struct hashmap));
-+	dir_rename_init(dir_renames);
-+	for (i =3D 0; i < pairs->nr; ++i) {
-+		struct string_list_item *item;
-+		int *count;
-+		struct diff_filepair *pair =3D pairs->queue[i];
-+		char *old_dir, *new_dir;
++# Testcase 5b, Rename/delete in order to get add/add/add conflict
++#   (Related to testcase 8d; these may appear slightly inconsistent to u=
+sers;
++#    Also related to testcases 7d and 7e)
++#   Commit O: z/{b,c,d_1}
++#   Commit A: y/{b,c,d_2}
++#   Commit B: z/{b,c,d_1,e}, y/d_3
++#   Expected: y/{b,c,e}, CONFLICT(add/add: y/d_2 vs. y/d_3)
++#   NOTE: If z/d_1 in commit B were to be involved in dir rename detecti=
+on, as
++#         we normaly would since z/ is being renamed to y/, then this wo=
+uld be
++#         a rename/delete (z/d_1 -> y/d_1 vs. deleted) AND an add/add/ad=
+d
++#         conflict of y/d_1 vs. y/d_2 vs. y/d_3.  Add/add/add is not
++#         representable in the index, so the existence of y/d_3 needs to
++#         cause us to bail on directory rename detection for that path, =
+falling
++#         back to git behavior without the directory rename detection.
 +
-+		/* File not part of directory rename if it wasn't renamed */
-+		if (pair->status !=3D 'R')
-+			continue;
++test_expect_success '5b-setup: Rename/delete in order to get add/add/add=
+ conflict' '
++	test_create_repo 5b &&
++	(
++		cd 5b &&
 +
-+		get_renamed_dir_portion(pair->one->path, pair->two->path,
-+					&old_dir,        &new_dir);
-+		if (!old_dir)
-+			/* Directory didn't change at all; ignore this one. */
-+			continue;
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		echo d1 >z/d &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
 +
-+		entry =3D dir_rename_find_entry(dir_renames, old_dir);
-+		if (!entry) {
-+			entry =3D xmalloc(sizeof(struct dir_rename_entry));
-+			dir_rename_entry_init(entry, old_dir);
-+			hashmap_put(dir_renames, entry);
-+		} else {
-+			free(old_dir);
-+		}
-+		item =3D string_list_lookup(&entry->possible_new_dirs, new_dir);
-+		if (!item) {
-+			item =3D string_list_insert(&entry->possible_new_dirs,
-+						  new_dir);
-+			item->util =3D xcalloc(1, sizeof(int));
-+		} else {
-+			free(new_dir);
-+		}
-+		count =3D item->util;
-+		*count +=3D 1;
-+	}
++		git branch O &&
++		git branch A &&
++		git branch B &&
 +
-+	/*
-+	 * For each directory with files moved out of it, we find out which
-+	 * target directory received the most files so we can declare it to
-+	 * be the "winning" target location for the directory rename.  This
-+	 * winner gets recorded in new_dir.  If there is no winner
-+	 * (multiple target directories received the same number of files),
-+	 * we set non_unique_new_dir.  Once we've determined the winner (or
-+	 * that there is no winner), we no longer need possible_new_dirs.
-+	 */
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((entry =3D hashmap_iter_next(&iter))) {
-+		int max =3D 0;
-+		int bad_max =3D 0;
-+		char *best =3D NULL;
++		git checkout A &&
++		git rm z/d &&
++		git mv z y &&
++		echo d2 >y/d &&
++		git add y/d &&
++		test_tick &&
++		git commit -m "A" &&
 +
-+		for (i =3D 0; i < entry->possible_new_dirs.nr; i++) {
-+			int *count =3D entry->possible_new_dirs.items[i].util;
++		git checkout B &&
++		mkdir y &&
++		echo d3 >y/d &&
++		echo e >z/e &&
++		git add y/d z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
 +
-+			if (*count =3D=3D max)
-+				bad_max =3D max;
-+			else if (*count > max) {
-+				max =3D *count;
-+				best =3D entry->possible_new_dirs.items[i].string;
-+			}
-+		}
-+		if (bad_max =3D=3D max)
-+			entry->non_unique_new_dir =3D 1;
-+		else {
-+			assert(entry->new_dir.len =3D=3D 0);
-+			strbuf_addstr(&entry->new_dir, best);
-+		}
-+		/*
-+		 * The relevant directory sub-portion of the original full
-+		 * filepaths were xstrndup'ed before inserting into
-+		 * possible_new_dirs, and instead of manually iterating the
-+		 * list and free'ing each, just lie and tell
-+		 * possible_new_dirs that it did the strdup'ing so that it
-+		 * will free them for us.
-+		 */
-+		entry->possible_new_dirs.strdup_strings =3D 1;
-+		string_list_clear(&entry->possible_new_dirs, 1);
-+	}
++test_expect_failure '5b-check: Rename/delete in order to get add/add/add=
+ conflict' '
++	(
++		cd 5b &&
 +
-+	return dir_renames;
-+}
++		git checkout A^0 &&
 +
- /*
-  * Get information of all renames which occurred in 'pairs', making use =
-of
-  * any implicit directory renames inferred from the other side of histor=
-y.
-@@ -1667,8 +1868,21 @@ struct rename_info {
- 	struct string_list *merge_renames;
- };
-=20
--static void initial_cleanup_rename(struct diff_queue_struct *pairs)
-+static void initial_cleanup_rename(struct diff_queue_struct *pairs,
-+				   struct hashmap *dir_renames)
- {
-+	struct hashmap_iter iter;
-+	struct dir_rename_entry *e;
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (add/add).* y/d" out &&
 +
-+	hashmap_iter_init(dir_renames, &iter);
-+	while ((e =3D hashmap_iter_next(&iter))) {
-+		free(e->dir);
-+		strbuf_release(&e->new_dir);
-+		/* possible_new_dirs already cleared in get_directory_renames */
-+	}
-+	hashmap_free(dir_renames, 1);
-+	free(dir_renames);
++		git ls-files -s >out &&
++		test_line_count =3D 5 out &&
++		git ls-files -u >out &&
++		test_line_count =3D 2 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 1 out &&
 +
- 	free(pairs->queue);
- 	free(pairs);
- }
-@@ -1681,6 +1895,7 @@ static int handle_renames(struct merge_options *o,
- 			  struct rename_info *ri)
- {
- 	struct diff_queue_struct *head_pairs, *merge_pairs;
-+	struct hashmap *dir_re_head, *dir_re_merge;
- 	int clean;
-=20
- 	ri->head_renames =3D NULL;
-@@ -1692,6 +1907,9 @@ static int handle_renames(struct merge_options *o,
- 	head_pairs =3D get_diffpairs(o, common, head);
- 	merge_pairs =3D get_diffpairs(o, common, merge);
-=20
-+	dir_re_head =3D get_directory_renames(head_pairs, head);
-+	dir_re_merge =3D get_directory_renames(merge_pairs, merge);
++		git rev-parse >actual \
++			:0:y/b :0:y/c :0:y/e :2:y/d :3:y/d &&
++		git rev-parse >expect \
++			 O:z/b  O:z/c  B:z/e  A:y/d  B:y/d &&
++		test_cmp expect actual &&
 +
- 	ri->head_renames  =3D get_renames(o, head_pairs, head,
- 					 common, head, merge, entries);
- 	ri->merge_renames =3D get_renames(o, merge_pairs, merge,
-@@ -1703,8 +1921,8 @@ static int handle_renames(struct merge_options *o,
- 	 * data structures are still needed and referenced in
- 	 * process_entry().  But there are a few things we can free now.
- 	 */
--	initial_cleanup_rename(head_pairs);
--	initial_cleanup_rename(merge_pairs);
-+	initial_cleanup_rename(head_pairs, dir_re_head);
-+	initial_cleanup_rename(merge_pairs, dir_re_merge);
-=20
- 	return clean;
- }
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 80d69d1401..fe64c78de4 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -29,6 +29,24 @@ struct merge_options {
- 	struct string_list df_conflict_file_set;
- };
-=20
-+/*
-+ * For dir_rename_entry, directory names are stored as a full path from =
++		test_must_fail git rev-parse :1:y/d &&
++		test_path_is_file y/d
++	)
++'
++
++# Testcase 5c, Transitive rename would cause rename/rename/rename/add/ad=
+d/add
++#   (Directory rename detection would result in transitive rename vs.
++#    rename/rename(1to2) and turn it into a rename/rename(1to3).  Furthe=
+r,
++#    rename paths conflict with separate adds on the other side)
++#   (Related to testcases 3b and 7c)
++#   Commit O: z/{b,c}, x/d_1
++#   Commit A: y/{b,c,d_2}, w/d_1
++#   Commit B: z/{b,c,d_1,e}, w/d_3, y/d_4
++#   Expected: A mess, but only a rename/rename(1to2)/add/add mess.  Use =
 the
-+ * toplevel of the repository and do not include a trailing '/'.  Also:
-+ *
-+ *   dir:                original name of directory being renamed
-+ *   non_unique_new_dir: if true, could not determine new_dir
-+ *   new_dir:            final name of directory being renamed
-+ *   possible_new_dirs:  temporary used to help determine new_dir; see c=
-omments
-+ *                       in get_directory_renames() for details
-+ */
-+struct dir_rename_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	char *dir;
-+	unsigned non_unique_new_dir:1;
-+	struct strbuf new_dir;
-+	struct string_list possible_new_dirs;
-+};
++#             presence of y/d_4 in B to avoid doing transitive rename of
++#             x/d_1 -> z/d_1 -> y/d_1, so that the only paths we have at
++#             y/d are y/d_2 and y/d_4.  We still do the move from z/e to=
+ y/e,
++#             though, because it doesn't have anything in the way.
 +
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
++test_expect_success '5c-setup: Transitive rename would cause rename/rena=
+me/rename/add/add/add' '
++	test_create_repo 5c &&
++	(
++		cd 5c &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		mkdir x &&
++		echo d1 >x/d &&
++		git add z x &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z y &&
++		echo d2 >y/d &&
++		git add y/d &&
++		git mv x w &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		git mv x/d z/ &&
++		mkdir w &&
++		mkdir y &&
++		echo d3 >w/d &&
++		echo d4 >y/d &&
++		echo e >z/e &&
++		git add w/ y/ z/e &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '5c-check: Transitive rename would cause rename/rena=
+me/rename/add/add/add' '
++	(
++		cd 5c &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (rename/rename).*x/d.*w/d.*z/d" out &&
++		test_i18ngrep "CONFLICT (add/add).* y/d" out &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 9 out &&
++		git ls-files -u >out &&
++		test_line_count =3D 6 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 3 out &&
++
++		git rev-parse >actual \
++			:0:y/b :0:y/c :0:y/e &&
++		git rev-parse >expect \
++			 O:z/b  O:z/c  B:z/e &&
++		test_cmp expect actual &&
++
++		test_must_fail git rev-parse :1:y/d &&
++		git rev-parse >actual \
++			:2:w/d :3:w/d :1:x/d :2:y/d :3:y/d :3:z/d &&
++		git rev-parse >expect \
++			 O:x/d  B:w/d  O:x/d  A:y/d  B:y/d  O:x/d &&
++		test_cmp expect actual &&
++
++		git hash-object >actual \
++			w/d~HEAD w/d~B^0 z/d &&
++		git rev-parse >expect \
++			O:x/d    B:w/d   O:x/d &&
++		test_cmp expect actual &&
++		test_path_is_missing x/d &&
++		test_path_is_file y/d &&
++		grep -q "<<<<" y/d  # conflict markers should be present
++	)
++'
++
++# Testcase 5d, Directory/file/file conflict due to directory rename
++#   Commit O: z/{b,c}
++#   Commit A: y/{b,c,d_1}
++#   Commit B: z/{b,c,d_2,f}, y/d/e
++#   Expected: y/{b,c,d/e,f}, z/d_2, CONFLICT(file/directory), y/d_1~HEAD
++#   Note: The fact that y/d/ exists in B makes us bail on directory rena=
+me
++#         detection for z/d_2, but that doesn't prevent us from applying=
+ the
++#         directory rename detection for z/f -> y/f.
++
++test_expect_success '5d-setup: Directory/file/file conflict due to direc=
+tory rename' '
++	test_create_repo 5d &&
++	(
++		cd 5d &&
++
++		mkdir z &&
++		echo b >z/b &&
++		echo c >z/c &&
++		git add z &&
++		test_tick &&
++		git commit -m "O" &&
++
++		git branch O &&
++		git branch A &&
++		git branch B &&
++
++		git checkout A &&
++		git mv z y &&
++		echo d1 >y/d &&
++		git add y/d &&
++		test_tick &&
++		git commit -m "A" &&
++
++		git checkout B &&
++		mkdir -p y/d &&
++		echo e >y/d/e &&
++		echo d2 >z/d &&
++		echo f >z/f &&
++		git add y/d/e z/d z/f &&
++		test_tick &&
++		git commit -m "B"
++	)
++'
++
++test_expect_failure '5d-check: Directory/file/file conflict due to direc=
+tory rename' '
++	(
++		cd 5d &&
++
++		git checkout A^0 &&
++
++		test_must_fail git merge -s recursive B^0 >out &&
++		test_i18ngrep "CONFLICT (file/directory).*y/d" out &&
++
++		git ls-files -s >out &&
++		test_line_count =3D 6 out &&
++		git ls-files -u >out &&
++		test_line_count =3D 1 out &&
++		git ls-files -o >out &&
++		test_line_count =3D 2 out &&
++
++		git rev-parse >actual \
++			:0:y/b :0:y/c :0:z/d :0:y/f :2:y/d :0:y/d/e &&
++		git rev-parse >expect \
++			 O:z/b  O:z/c  B:z/d  B:z/f  A:y/d  B:y/d/e &&
++		test_cmp expect actual &&
++
++		git hash-object y/d~HEAD >actual &&
++		git rev-parse A:y/d >expect &&
++		test_cmp expect actual
++	)
++'
++
++########################################################################=
+###
++# Rules suggested by section 5:
++#
++#   If a subset of to-be-renamed files have a file or directory in the w=
+ay,
++#   "turn off" the directory rename for those specific sub-paths, fallin=
+g
++#   back to old handling.  But, sadly, see testcases 8a and 8b.
++########################################################################=
+###
++
+ test_done
 --=20
 2.16.1.232.g28d5be9217
 
