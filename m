@@ -2,141 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA8091F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 18:21:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 238111F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 18:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161852AbeBNSV4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 13:21:56 -0500
-Received: from mail-yw0-f180.google.com ([209.85.161.180]:35724 "EHLO
-        mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161827AbeBNSVx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 13:21:53 -0500
-Received: by mail-yw0-f180.google.com with SMTP id d77so3296764ywb.2
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 10:21:52 -0800 (PST)
+        id S1161962AbeBNSYJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 13:24:09 -0500
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:44302 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161820AbeBNSYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 13:24:06 -0500
+Received: by mail-wr0-f195.google.com with SMTP id v65so898037wrc.11
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 10:24:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LJ4X1ySpNTqU8t+YJTL0z0+S6ASp8tUVAsChKFGUwVY=;
-        b=DQ5n/JlT5iqfnuVpuNLYbSx1klGK2nRfRoSq+Cro8zellP8t2Zny09C7KInyyldcdk
-         WGNxHLWQX4ZAjQP3wuV1oilWSkV2V89dv99XHt8RcVTy5rkBH+zb0nHKpaADXAVza2z6
-         aWT9jHR21i/61LaBCsfhYzy0piKj+fXssCtdJaHTDoJUi4I4gLX5Twvi6xL653i1+KZp
-         dpTufI66TqWy31s41elaLn551N7avLHcCy37svqK6g0/bDctnOeI5rqAPbdQMrc29QPv
-         9YQkdPi78bKygBBOSM8hAIo3hq0FaIhCGzbYKRp3pqYOQI4Ndx30KlIXBB7ocwty+PzE
-         Da6A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=T9c3EeQPwCVfsApJm+qB8W310XwBipuNIkWZDh9wy2U=;
+        b=o0ydD07stWNa9DQmrjT+oSr+BqjxWMEe5lpNhDgOMdVxTV0gkFldw0eFbSW76gDm/L
+         R40twQMmSmU9nw7Z/+sWkClgq2kAqWLehwgwPSPrW68Z9Ig13O+rsA/lEs7z4IsIsqnt
+         f00Ik1C6i64nIGSJE3FTeX346ZyLahL1HdAeXD9e1wTZ5ePB/hbX//M98iekPiZsVENC
+         7J8iHHtmRiaRo1klfgAWDssyHaEEABFd0ULs3QXO4QkOEcJ8gnm+E7TuTMqMFXKB48Tt
+         llkqbsddMg0n5rMpOYjdriGvN0LgeFB3UCh7njUtvbpzQbHsTnwofMDhBXyXZrPext1M
+         zDNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LJ4X1ySpNTqU8t+YJTL0z0+S6ASp8tUVAsChKFGUwVY=;
-        b=GI1Tn01ZdcEHVB8qCGkmy/2yG8lmdxeCMb1XyXJ9fDlvH5L0hqPD9hHmf1wYCnjivK
-         VldMKtjoPwk6weWaK+8R8FSltDhrMgPiArxe9EOZ+VRKLfICz8yGU7C/LjIQ23clSl3K
-         j7w96WvmqE262Kn139o1ICPYlBLUMBFr0cIXtzX1U29+9VJ0EZV+Qc8DrGL8fOjjMk/C
-         4PHSeyAnBdP0X6I7LuSLwFv8s4RJ1KeiB5ZRI6g69jn3cZHrYAZLPlCzhgvbA+V8jm85
-         vdXIABAUdBt6wFiDFQNAyTGhiD1QgiHKv3spPt4sb/BOwOeoOTHfDCM/bY58c8Q2LWYa
-         Rlvg==
-X-Gm-Message-State: APf1xPCKnjIi5p9VPkPewyCz2U5EFElVVeY64YwbnZAqZ/QFhsRrDyjW
-        fnqw5Ya07X4JwsJAL6Q3Cujci/C3O/DBjKWiaESibw==
-X-Google-Smtp-Source: AH8x226Tf1eHWqnuQDYOor5GPmlNVilZm6n8koX2nNS6vAHc7ejd1ShUgnkaZD099RrPUWnf8mb/DTgK5AvetjFGWr8=
-X-Received: by 10.37.37.87 with SMTP id l84mr117498ybl.386.1518632511960; Wed,
- 14 Feb 2018 10:21:51 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=T9c3EeQPwCVfsApJm+qB8W310XwBipuNIkWZDh9wy2U=;
+        b=Qbg0zGF+t6f2risgN/wYGeDUyEeqMDGFoE43fvxb4aHt3CTxpFK/ODsJ9ZQJN2sZQF
+         I5ZHvNJKdzSLYj9v9ITXbgfkgV3SYrcJ2EEsmDJtPNF9KqjyY9zzdTdxRvFlFsjyQCz0
+         BRzZg+Nx3W31wAtvIdtgq8Sf/NjpiDGS1ruO/mKHfoepQB50H8khYP51EqrWs7sqK0hA
+         BYjcBe27stwBfQZcmOZ4aosat3DnfMoo4YUra8flhjpVBmJii9AwOby6f/R0G06b5slZ
+         ntkMmb6IGTpUWc+/PzUMLcoV3Uil0E7QRVqzmUoityiNuuOS3h6E6122tyQgoxB5ZHAd
+         OFXw==
+X-Gm-Message-State: APf1xPCTiAuMhyf/4bgeFuMMK6SzQkDhYDK8M1KcM7Li4weFuq6WUYbA
+        P6BQ7hV1WMZ920vl2TpNs77nTg9YAZ0=
+X-Google-Smtp-Source: AH8x224FbpNiG8R2p7SbJkt06OTx6Q1nsMdoafzpauK6e8r5ukFnO1tvRPjAyQDLHpiLifvplFyiNQ==
+X-Received: by 10.223.153.215 with SMTP id y81mr123156wrb.144.1518632644094;
+        Wed, 14 Feb 2018 10:24:04 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x190sm12828286wme.27.2018.02.14.10.24.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Feb 2018 10:24:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, doron.behar@gmail.com
+Subject: Re: [PATCH 1/2] parse-options: expand $HOME on filename options
+References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
+        <20180214105149.28896-1-pclouds@gmail.com>
+        <20180214140557.GA27850@sigill.intra.peff.net>
+Date:   Wed, 14 Feb 2018 10:24:02 -0800
+In-Reply-To: <20180214140557.GA27850@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 14 Feb 2018 09:05:58 -0500")
+Message-ID: <xmqqbmgro2f1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a25:cfcb:0:0:0:0:0 with HTTP; Wed, 14 Feb 2018 10:21:51
- -0800 (PST)
-In-Reply-To: <20180214181149.GB139458@google.com>
-References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com> <20180214181149.GB139458@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Feb 2018 10:21:51 -0800
-Message-ID: <CAGZ79kZCBSzz9mW-2xKcq=2YRzyqvdktYe7ncKhsKRQizXndSg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 14, 2018 at 10:11 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 02/13, Junio C Hamano wrote:
->>
->> * bw/c-plus-plus (2018-01-30) 37 commits
->>  - replace: rename 'new' variables
->>  - trailer: rename 'template' variables
->>  - tempfile: rename 'template' variables
->>  - wrapper: rename 'template' variables
->>  - environment: rename 'namespace' variables
->>  - diff: rename 'template' variables
->>  - environment: rename 'template' variables
->>  - init-db: rename 'template' variables
->>  - unpack-trees: rename 'new' variables
->>  - trailer: rename 'new' variables
->>  - submodule: rename 'new' variables
->>  - split-index: rename 'new' variables
->>  - remote: rename 'new' variables
->>  - ref-filter: rename 'new' variables
->>  - read-cache: rename 'new' variables
->>  - line-log: rename 'new' variables
->>  - imap-send: rename 'new' variables
->>  - http: rename 'new' variables
->>  - entry: rename 'new' variables
->>  - diffcore-delta: rename 'new' variables
->>  - diff: rename 'new' variables
->>  - diff-lib: rename 'new' variable
->>  - commit: rename 'new' variables
->>  - combine-diff: rename 'new' variables
->>  - remote: rename 'new' variables
->>  - reflog: rename 'new' variables
->>  - pack-redundant: rename 'new' variables
->>  - help: rename 'new' variables
->>  - checkout: rename 'new' variables
->>  - apply: rename 'new' variables
->>  - apply: rename 'try' variables
->>  - diff: rename 'this' variables
->>  - rev-parse: rename 'this' variable
->>  - pack-objects: rename 'this' variables
->>  - blame: rename 'this' variables
->>  - object: rename function 'typename' to 'type_name'
->>  - object_info: change member name from 'typename' to 'type_name'
->>
->>  I do not mind refraining from using these keywords in a foreign
->>  language in our codebase too much, but at the same time, renaming
->>  must be done a bit more thoughtfully.  When the original uses 'new'
->>  together with and in contrast to 'old', renaming 'new' must be done
->>  while preserving the pairing (which may involve renaming 'old' as
->>  well), for example.
->>
->>  Backburnered, i.e. will drop if other topics start to conflict with
->>  it, but will accept rerolls.
+Jeff King <peff@peff.net> writes:
+
+>> Support $HOME expansion for all filename options. There are about seven
+>> of them.
 >
-> I was under the impression that people didn't care too much about this
-> (which is a shame but that's an opinion :).
+> I think this probably makes sense.
+>
+>>  parse-options.c | 9 ++++++---
+>>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> Should this be mentioned in the comment documenting OPT_FILENAME()?
 
-I care, so you are free to change your opinion. :)
+Perhaps.  I think all mention of "$HOME expansion" should be
+replaced with "tilde expansion", though.  I first thought we are
+expanding any environment variable and $HOME is merely an example of
+it when I read the title and the log message, before seeing that the
+patch just adds a call to expand_user_path().
 
-> If people were more
-> interested in a change like this then I'd be happy to go back through
-> and rename the 'old' variables too.
+Other than that, looks good.  Thanks for a quick enhancement and a
+review.
 
-Quoting Duy from a neighboring refactor thread:
-
-  My stand is a bit more aggressive. We should try to achieve better
-  [clean code] if possible. But if it makes [Brandon's] life hell, it's not
-  worth doing. Converting to ['C++' compatible] is already a step
-  forward. Actually if it discourages him from finishing this work, it's
-  already not worth doing.
-
-:-)
-
-https://public-inbox.org/git/CACsJy8CPKESE8atc_eWdNVknQYp9T6ebwKwCdzLHyaFKH2BnZA@mail.gmail.com/
-
-So if you can pick up the work to even make it consistent with old/new
-variable names, this would be huge!
-
-Thanks,
-Stefan
+>> diff --git a/parse-options.c b/parse-options.c
+>> index d265a756b5..c33f14c74e 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -38,10 +38,13 @@ static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
+>>  
+>>  static void fix_filename(const char *prefix, const char **file)
+>>  {
+>> -	if (!file || !*file || !prefix || is_absolute_path(*file)
+>> -	    || !strcmp("-", *file))
+>> +	if (!file || !*file || is_absolute_path(*file) ||
+>> +	    !strcmp("-", *file))
+>>  		return;
+>> -	*file = prefix_filename(prefix, *file);
+>> +	if (**file == '~')
+>> +		*file = expand_user_path(*file, 0);
+>> +	else if (prefix)
+>> +		*file = prefix_filename(prefix, *file);
+>>  }
+>
+> I thought at first this needed a final "else" clause, because we don't
+> assign to *file if we have neither a prefix nor a user-path. But that's
+> what the callers expect (and we are similarly a noop if we hit the first
+> conditional). So this looks right.
+>
+> -Peff
