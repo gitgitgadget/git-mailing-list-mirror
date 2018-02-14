@@ -2,112 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 094D21F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68C6F1F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162671AbeBNTHF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:07:05 -0500
-Received: from mail-vk0-f53.google.com ([209.85.213.53]:41908 "EHLO
-        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162470AbeBNTHF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:07:05 -0500
-Received: by mail-vk0-f53.google.com with SMTP id g186so13519778vkd.8
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:07:04 -0800 (PST)
+        id S1162745AbeBNTLX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:11:23 -0500
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:43430 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162681AbeBNTLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:11:22 -0500
+Received: by mail-qk0-f179.google.com with SMTP id i184so16908599qkf.10
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JHHnEHy5lre/omBWo94qoJN5mJo1RLjZDAKllqlc83M=;
-        b=RjxpnJFwCnYGTSAXs6863EsWAYGyU5BCn77nTBHWZmZw57i2p8h05nKaRKeF8/tCoS
-         /G7qPKkHMYmP9IRVov9+t8Yk+hTyFzIVR1awuqwWNPMrfZKZWUeqXQBiBR+65kqvzUY2
-         LoHdNNXLpWD7y7CfFgcPaw6aeVDsr1ssbOoAnIWVymVTPlqnxrxGGb5g24Eah4pTohxL
-         q2v5r4ZKlteIcqQQ1Xkg2FcEnPzQQaow3AK3u9LnhilD3XHXgGvirda9M01Bpwx8qNcU
-         voewQbqbRAhgVGp0wzn4oz4RP4oau/47oW1+vH57kEOdXR6IQDGJWCHD3pQcmX3q+Bx5
-         HEcg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=efrRPQlUinX4c+5YGEY8rZZi02SQiBF70SibBXrG+3c=;
+        b=TaFDNX2oEQwIW7xX6fF7v3DxMY9YDWO1y6z9Cv0AmEBB4nDGstUOqM3NbBGOcM7TYf
+         fE4699UnNwJTqPP+XLKdD/9Kft7GeygVfMcFDyRDHoU7i8r6qRK0l3++irdysWs9zqoS
+         YzE1l1bBWeZ3Pt6pK1676aCSRrcowrUaVEnCxMrxu0KgNH8PgnEEg8xxDn+KZg1YM+lD
+         4OY9NCLpBLCHBRC79SNW9bHPIJvcNuivoIK3Dv660Ot09af4EnFMafMFiuKeGoNH5UCq
+         +ZOWRvT3PRuB3H54E5JQ0P8dHtRPhDPz6ACjMsz6JUWrRMKGQXaykC8MABIsev+9Uzld
+         J11w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JHHnEHy5lre/omBWo94qoJN5mJo1RLjZDAKllqlc83M=;
-        b=tTnsjBej9xzWucILX0amgtrFUxQbgPSeOcaMpUXsHY1dIiJQaFSbon/ogrA42UL1Bl
-         fink2DVRMNEZG51dY/evDCHvmhA/r2Hs1HRoXGZyCj37OcictzBlBSdJ+ESOVLhDdISA
-         so4h1RdqCK0r05P+dGQwXc1Kl0ycqQith1hWb8QZ6dxcJN4IC7Ciryc1/UVxT2W4Z1Jm
-         EQtxqj/WdG03X4+XO78aymkvYMJu2AtgFKbBAcwpY3sCK8ePZTEUuqhI4TH/rxpp9diz
-         QWLeTtHMkQ4+go4eLsdOFvvIUs9cS2xMwhUXJRyBIsVpeyh10lpcfIJzHN5QlT/52inq
-         UrXQ==
-X-Gm-Message-State: APf1xPBwzuvtZQLi29yMRAERoPjP7Taqsk9YhWBiDmUsEaGEj3CjoQwz
-        twjsgOMIggAvckiA9nf33k9iXVnoMpvUUr/kZT0ALQ==
-X-Google-Smtp-Source: AH8x226Vsgkc/dAAnhnM53NXktLIo4KP58n+GywzhYb04PMY1/TXRogAX9nmyAQVyg/mybkEJKY8s2psctFsQy62vhk=
-X-Received: by 10.31.217.193 with SMTP id q184mr251076vkg.75.1518635224227;
- Wed, 14 Feb 2018 11:07:04 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=efrRPQlUinX4c+5YGEY8rZZi02SQiBF70SibBXrG+3c=;
+        b=qEmVUlkGd4eLmvvwwgyEgl21lf+SsWZ/0S6sbwa3RASaHlMHPEhY7oswpyRjzK3Xaa
+         tpeI9fGohqtk686iyBuWCWRwY/RcCK/pJ9QffQ+3pxSrC2HX2rJpzXNTZV0gOOQJpqy4
+         rM6fzD9e/BO2haDT9OZ1gL68YwGk/nPwuTFTjulJb3iuzKri6xq3bY+/aTC7PDc6yMNc
+         xhZIdP5nW/BhHVLzv9Ks86BL4Bjtx6k8smUyx8ZJmWKX0NTapDjAvkheUjF4HLkuKydV
+         nT4UokjZJrtCBWV2lpmtyiJrF6em/ttKabVMvOM1+iZIOBgG3Vpu3WrQ/tKyAZEKotzg
+         rPJw==
+X-Gm-Message-State: APf1xPDhQiAJMgecOqLTm1BJkcCzvvyzy+pG38767Bq9uEtfoZA9fqGO
+        HbgSyPb8ywrfDBElAJG/PH8=
+X-Google-Smtp-Source: AH8x224m/AS/oph5/kllbhBdY36UvvTCDrBNpokzENhx/EoRfR2l3+2keU8ud8d8EU00lZHk+W0Wlg==
+X-Received: by 10.55.203.67 with SMTP id d64mr132994qkj.210.1518635481324;
+        Wed, 14 Feb 2018 11:11:21 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id s12sm1549700qtk.88.2018.02.14.11.11.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Feb 2018 11:11:20 -0800 (PST)
+Subject: Re: [PATCH v3 00/14] Serialized Git Commit Graph
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <1517348383-112294-1-git-send-email-dstolee@microsoft.com>
+ <1518122258-157281-1-git-send-email-dstolee@microsoft.com>
+ <4d1ee202-7d79-d73c-6e05-d0fc85db943c@gmail.com>
+ <CAGZ79kbMURmVhnaP4rdho9TpzZ=K+ySkQGgW8TD0x+KgJkqirA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <84ad10eb-4db1-4a3e-9030-6a53283d9877@gmail.com>
+Date:   Wed, 14 Feb 2018 14:11:19 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Received: by 10.176.1.33 with HTTP; Wed, 14 Feb 2018 11:07:03 -0800 (PST)
-In-Reply-To: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
-References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 14 Feb 2018 11:07:03 -0800
-Message-ID: <CABPp-BEdAgpLMYW=i6ABzWHuqQvJcXDJ-6u-VuFAtU8sxiLvHA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kbMURmVhnaP4rdho9TpzZ=K+ySkQGgW8TD0x+KgJkqirA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 13, 2018 at 5:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> * en/rename-directory-detection (2018-01-31) 31 commits
->  - merge-recursive: ensure we write updates for directory-renamed file
->  - merge-recursive: avoid spurious rename/rename conflict from dir renames
->  - directory rename detection: new testcases showcasing a pair of bugs
->  - merge-recursive: fix remaining directory rename + dirty overwrite cases
->  - merge-recursive: fix overwriting dirty files involved in renames
->  - merge-recursive: avoid clobbering untracked files with directory renames
->  - merge-recursive: apply necessary modifications for directory renames
->  - merge-recursive: when comparing files, don't include trees
->  - merge-recursive: check for file level conflicts then get new name
->  - merge-recursive: add computation of collisions due to dir rename & merging
->  - merge-recursive: add a new hashmap for storing file collisions
->  - merge-recursive: check for directory level conflicts
->  - merge-recursive: add get_directory_renames()
->  - merge-recursive: make a helper function for cleanup for handle_renames
->  - merge-recursive: add a new hashmap for storing directory renames
->  - merge-recursive: split out code for determining diff_filepairs
->  - merge-recursive: make !o->detect_rename codepath more obvious
->  - merge-recursive: fix leaks of allocated renames and diff_filepairs
->  - merge-recursive: introduce new functions to handle rename logic
->  - merge-recursive: move the get_renames() function
->  - directory rename detection: tests for handling overwriting dirty files
->  - directory rename detection: tests for handling overwriting untracked files
->  - directory rename detection: miscellaneous testcases to complete coverage
->  - directory rename detection: testcases exploring possibly suboptimal merges
->  - directory rename detection: more involved edge/corner testcases
->  - directory rename detection: testcases checking which side did the rename
->  - directory rename detection: files/directories in the way of some renames
->  - directory rename detection: partially renamed directory testcase/discussion
->  - directory rename detection: testcases to avoid taking detection too far
->  - directory rename detection: directory splitting testcases
->  - directory rename detection: basic testcases
->  (this branch uses en/merge-recursive-fixes.)
+
+On 2/14/2018 1:27 PM, Stefan Beller wrote:
+> On Wed, Feb 14, 2018 at 10:15 AM, Derrick Stolee <stolee@gmail.com> wrote:
+>> There has been a lot of interesting discussion on this topic. Some of that
+>> involves some decently significant changes from v3, so I wanted to summarize
+>> my understanding of the feedback and seek out more feedback from reviewers
+>> before rolling v4.
+>>
+>> If we have consensus on these topics, then I'll re-roll on Friday, Feb 16th.
+>> Please let me know if you are planning on reviewing v3 and need more time
+>> than that.
+>>
+>>
+>> * Graph Storage:
+>>
+>>      - Move the graph files to a different directory than the "pack"
+>> directory. Currently considering ".git/objects/info"
+> In my copy of git there is already a file
 >
->  Rename detection logic in "diff" family that is used in "merge" has
->  learned to guess when all of x/a, x/b and x/c have moved to z/a,
->  z/b and z/c, it is likely that x/d added in the meantime would also
->  want to move to z/d by taking the hint that the entire directory
->  'x' moved to 'z'.
+>    $ cat .git/objects/info/packs
+>    P pack-8fdfd126aa8c2a868baf1f89788b07b79a4d365b.pack
+>
+> which seems to be in line with the information provided in
+> 'man gitrepository-layout':
+>      objects/info
+>             Additional information about the object store is
+>             recorded in this directory.
+>
+> The commit graph files are not exactly "additional info about the
+> object store" but rather "about the objects". Close enough IMO.
+>
+> Stefan
 
-When you write release notes for this series, you may want to consider
-also calling out one or more of the bugs that were fixed as a side
-effect:
-  * a bug causing dirty files involved in a rename to be overwritten
-during merge
-  * a few memory leaks
-I added a reminder about these two fixes in the cover letter for my
-latest (and possibly last?) roll of the series that I just sent out.
+Thanks for the tip [1]. I was unfamiliar with it because it doesn't 
+exist in repos that don't repack.
+
+[1] 
+https://git-scm.com/docs/gitrepository-layout/2.12.0#gitrepository-layout-objectsinfopacks
