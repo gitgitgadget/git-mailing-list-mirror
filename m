@@ -2,174 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B93021F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 15:35:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D57B31F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 15:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031501AbeBNPfa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 10:35:30 -0500
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:38266 "EHLO
-        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031287AbeBNPf3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 10:35:29 -0500
-Received: by mail-vk0-f48.google.com with SMTP id z9so13097858vkd.5
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 07:35:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HGQZVVJ2zm8AE3NHkT2wjy4CfEzEmVT5/9E07H3ucS8=;
-        b=oD+/Fe0vg0HZ7uiOV+N51J06wAr0Z+AutL7do4FNbvdCsG5UqDcfNfHLpBwaqUKQYx
-         HjmtuNjrDlLSg6fU4j/uyByh8IWv/9Ek6LH6WUn70TOnHbq2T4KWf5UlY/Dw3ZFNnL0Q
-         2KJPP3OvuhPJlihdJ4XftXHjY32FFChf1Heax3KG0EoBQvQiwpWu/yFNdRmNbdD7CUGV
-         CU7RxkTev/Oq8kSk87fWrrYRh4MlMkCWmc42DkVHS0opFB4Ejcfc85Ukh8CPmroX7cyi
-         HAwDnfUUnVJyuz28GmF0EVY/Lk7QwUgrL3MbZPeZGHYQ3DfcoEBzuzFEcmHuMwLTsyoz
-         4guw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HGQZVVJ2zm8AE3NHkT2wjy4CfEzEmVT5/9E07H3ucS8=;
-        b=Cewe9AHUke8pmoQcCw0QOqhF2hZX4BAU08D8wnISFIYKUThs4B94lSMeULtZTJuMZS
-         wPRXYKOH5GY2i/fV8LMa1PP9q0i6E6655TUUjNCNBxJb0ETvU56Gm+rcX4M2x9KK+mgo
-         yZmzl786ea8qgk5QY21IPqrM7XlRuALhUJEgDgxlDGMYIhNfC/SRDMIgofH/vkN6hkQv
-         BoF08IHdwWcMuIf6XgrwZUNWloVW/3Z2OUs50f0cnwjPqtJsYd7VJ87KrHcOJnkev0X9
-         Dfrtryn/KoFWyqw84Vk46WL0Tmn7FUIIwkxzQCrWxaUUdxAEqXvPHri113GIhw5hvWsC
-         WOpA==
-X-Gm-Message-State: APf1xPAjzCsijnkI5wYRXrQeQJ8sm3cRxMyH83ht0i28MwxfllChrSx7
-        DFfnS7Hy4L29bVqDAxOjwR7xuL+fz7jgygZ6y2I=
-X-Google-Smtp-Source: AH8x2278vDZXH5AMC5mEL+XCD7GbZRtdxTznXYmIKIELrB5NfK3Mpm63jULgUSUwefIEWKWySLQhcfRotVI3rfql7P4=
-X-Received: by 10.31.161.20 with SMTP id k20mr5019713vke.82.1518622528620;
- Wed, 14 Feb 2018 07:35:28 -0800 (PST)
+        id S1031659AbeBNPmB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 10:42:01 -0500
+Received: from mail-bl2nam02on0092.outbound.protection.outlook.com ([104.47.38.92]:51584
+        "EHLO NAM02-BL2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1031640AbeBNPl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 10:41:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=NLOWDBRp0nnylq20psOmkeDHWaLX0m3+lhD8p9jQ6CM=;
+ b=DMkrBPNBigt2zaOIGwgHp8w3Gvded1i9Clk+i3DefGkNP1kns449trpCh6dWicJFaW5wsCuAjd1ab6rl4+osJBwb2BBo3fsoIUGjzQ3rVUiKoMLjZGbVcSFvAiyU3Ty7KDhAJG+EzIc9yNKDQcZeok6WIU+O35BFOTTFP1quxAE=
+Received: from localhost.localdomain (70.33.148.227) by
+ DM5PR2101MB0902.namprd21.prod.outlook.com (2603:10b6:4:a7::31) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.527.2; Wed, 14 Feb 2018 15:41:57 +0000
+From:   Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Ben Peart <benpeart@microsoft.com>
+Subject: [PATCH v1] fsmonitor: update documentation to remove reference to invalid config settings
+Date:   Wed, 14 Feb 2018 10:41:30 -0500
+Message-Id: <20180214154130.111708-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.15.0.windows.1
 MIME-Version: 1.0
-Received: by 10.176.32.12 with HTTP; Wed, 14 Feb 2018 07:35:28 -0800 (PST)
-In-Reply-To: <20180209110221.27224-5-pclouds@gmail.com>
-References: <20180131110547.20577-1-pclouds@gmail.com> <20180209110221.27224-1-pclouds@gmail.com>
- <20180209110221.27224-5-pclouds@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 14 Feb 2018 16:35:28 +0100
-Message-ID: <CAM0VKjk17VgGAHr8jJXft4twij61KPLUDYSeHm6TXttksynd8Q@mail.gmail.com>
-Subject: Re: [PATCH v3 04/42] git-completion.bash: introduce __gitcomp_builtin
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [70.33.148.227]
+X-ClientProxiedBy: BN6PR08CA0096.namprd08.prod.outlook.com
+ (2603:10b6:404:b6::34) To DM5PR2101MB0902.namprd21.prod.outlook.com
+ (2603:10b6:4:a7::31)
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: 9b9106c9-ee14-4ffd-a069-08d573c17b0e
+X-Microsoft-Antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4604075)(4534165)(4627221)(201703031133081)(201702281549075)(2017052603307)(7193020);SRVR:DM5PR2101MB0902;
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB0902;3:M7eYn4GHiXKWqVMLz/vqrpq9zKI30LtPJeds52WTRxoZLGXwi2W28xHjYIeq1GzlozcRDsq2B1aKxZjeVTkI4y6PdhPXkzdLH4ceRBGV0TpSDCWgCLVj/4SUOwfOxigF2lfz/TuSpWQbQ/5JPNwW/HYVWG7tb4Sv/qOwmlgflhEmIZvNdTMUQLj2smyUDBgQ/DdOO28xbfiD/tWdeILdT4sJI0Lcg4jaJAY72rUNXrudoCzRMMIADRAwATv64cIZ;25:4o0BImlmJlIQvApj08ocMA3ygWwz7SU5f/I6G3LfmN79A1nki3ymbwd2rdQS1kQxv4LU8kK+W2orYdQGV4a0GC5+969mlbhZ9vgYDKgTzzz5pSFul1gSPxkSDNXTmVWTTREtAWdi055OkuYtbvUEfPQuOZbv2ylMhWIPHBnKd5MXXa35BMDB5a836QaZf6JrMnudUluhdDn6NXSJolh/LSIiV7o+8sjuHkBDfexm9050O3wQ/gN736PRRzmiOTZxmsbvlueYdg1RN5gBhj09xC3Q9ErLgtQ3OYJepp5kzL+SRLPY7p/a/3Ao0b3cV/9wY8fWas+riUwK8ZM5+upKeA==;31:2El1OVCU+klnrApVGUZng3ujA0qsMwQqabMBJbjivPTE8l332Go+Fb7kSv7MuKUFySHrigGv9l2FvilBy6NsLuzl+T/GOL8KuWrFS8DvQKm4bw4CVflnkWip3ooQMFkfZE22unEcG46TlBuUdXOZoz3a7b6Z+5UwqCRf67Oh/6zmzB7mOKxfEaAXPTlCyGzMskoA1vEtxQN0XLuAsVVt1rDSDdIDEbJEtHc6uSwoO7Y=
+X-MS-TrafficTypeDiagnostic: DM5PR2101MB0902:
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB0902;20:5sm9T2Lj8Uf3ObOcxDHLXExDCOYOvtcxvbuyVOeJb74Mq4IsnO66vKGKE6fQ20ztGo2T3qiwDJwoSXuZrCUw6sLmTxVGbLo6laBrT0PgzOGNlJIPYbxLuj3Lq5+O80eiAf46n3fSu5MitBkgkzCvYnl3aRNXXBvXfyq50p5mSMyKpo7tRUE+y/6i+XDS6prDWjss74XS7RF+bqvVxtcg4a/dvWtA8BwigsUBAm1bqVgbzBbmbHJ95CQxCDs6CLpaukkAGI7949/nrWJqwzHi82mT0ahLHPHmSftFRlv+HslvydqhhfY7aHaFAU4VlnqlG1LA+eB0jIinRe8tokhnFxvYDjYy4hyUHLxnzSe9int+SFXmQBEbe3OMT6uuAF8h00/dm/Sqnu5vZjubNX0tk+vLxAzAjDBI1HUQk5iTvMEgU9oKu6N5NGvBaCrK9qtVZNsP81J+9i+TmTBzV+gvvbxSY02LWHPSAX/t2IYC/2kjILdsCZRifrpNXpsv70it;4:XyqRdEJk5+5wbbuTDiT2/GMfMTh6hkEbLWZ7opKpKdKWd9T1HARRvBRqnaJKVBuuhemtL9oSoOJsq7x9rhVDpdoWSuyh9IKL/9p8JENbHUUw8zA4+boQkfLZHRHVIb1GMdzp/rtiQDM9MJpvi4L6ujJoPxqEeF9wwGtftFGVxmua7E6u0YifhQ40cya4Fu7klR5VzUQvAQKO2TdNUc/WSmb+JvFH+bzvbcA5jRbjrhv7fO9Bz62UgyrM+0KCCEJsp2xYSrl885s31LXgXJrUEHPE4nQ1EzIbo28Y5B7XnXicaSc2OqXxhxpcoTY+w6sR5tAJRgpnOSVCNLTARtNcBYLKopSgyxnRi0HczguxrAViE3a7cVE6gQOGKskf9IvG
+X-Microsoft-Antispam-PRVS: <DM5PR2101MB09025404A3C89EB311212090F4F50@DM5PR2101MB0902.namprd21.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(28532068793085)(89211679590171)(166708455590820);
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(8211001016)(61425038)(6040501)(2401047)(8121501046)(5005006)(10201501046)(93006095)(93001095)(3002001)(3231101)(944501161)(6055026)(61426038)(61427038)(6041288)(20161123564045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123558120)(20161123560045)(6072148)(201708071742011);SRVR:DM5PR2101MB0902;BCL:0;PCL:0;RULEID:;SRVR:DM5PR2101MB0902;
+X-Forefront-PRVS: 0583A86C08
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(6069001)(39860400002)(376002)(396003)(346002)(39380400002)(366004)(199004)(189003)(966005)(8936002)(6306002)(59450400001)(6346003)(50226002)(6666003)(2906002)(48376002)(50466002)(72206003)(105586002)(5660300001)(4326008)(6506007)(106356001)(53936002)(6486002)(1076002)(386003)(26005)(22452003)(3846002)(10290500003)(8676002)(107886003)(6512007)(81156014)(81166006)(6116002)(66066001)(86612001)(68736007)(51416003)(15650500001)(52116002)(478600001)(36756003)(16586007)(16526019)(316002)(7736002)(575784001)(305945005)(8656006)(25786009)(47776003)(10090500001)(97736004)(186003)(22906009);DIR:OUT;SFP:1102;SCL:1;SRVR:DM5PR2101MB0902;H:localhost.localdomain;FPR:;SPF:None;PTR:InfoNoRecords;A:1;MX:1;LANG:en;
+Received-SPF: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DM5PR2101MB0902;23:tNTDdByepsQzWcJ61W8Myha/V9skRKIfPaG7Wnp?=
+ =?us-ascii?Q?W5Eqc1c59lyfzHk2h8EXpwJxKT/DuubDQzfKj7out0nBCzKOma5U1t1MRKE1?=
+ =?us-ascii?Q?CmLVsFeI7tpVDylEHMApVjiPRI26QAxwfGKfHLs/lC5Qk06JvhuM9QKhKgS2?=
+ =?us-ascii?Q?G2Kt/CeFRmlnUzUkVMui/2br5FpPoBMcco0jOUOiqkQUbQCsDg/N3oX+zjAV?=
+ =?us-ascii?Q?zxIb3OxXAuP2ckhu1JxHbMcqetWyNfjYOpVb3/WaLj5vhusfkWdKWikw0hh2?=
+ =?us-ascii?Q?E7qCn0ihDfFdzdyz0mMou1ZeJOBbLc6BMaJbtibQSy4qlzAVXfyzOtjfS/11?=
+ =?us-ascii?Q?PipMV1/4xGdVm1bKnGwg7UgpR0cnRREEl73Q5uFyh7FNsvRM874u3cLQtvpg?=
+ =?us-ascii?Q?Pa4FUOhsGrTAMBgqCcbdzOMIc+8pkSG84XqJVS9b1MCDy5JKXLFZTSoTnyTM?=
+ =?us-ascii?Q?3qxzehjeGjKbl6C7yf2PXguoLyVvnYiyNe8xOHcNUxzvoR75iLT2jEBN4iq5?=
+ =?us-ascii?Q?VxxW7fgqOwRSblKdqFIvlcK/eMUejJi0e/x8tjWP3RKVp9jpeMqJHANzRtip?=
+ =?us-ascii?Q?u5K+VuB8sK7i6jq0cdrJlycXV9Li6B0xyyODsCwNuRdh7PknTEB6ruTCMrW1?=
+ =?us-ascii?Q?JyGH+2Bq9jk9mhNUpMI7lpz/EWU9CTvJmaosZsZwmiPHOGAivI97iuy+CNTo?=
+ =?us-ascii?Q?l6AH8my4q8CSfVwyqIkmw19HgIN/yscwzvXq50ePRtoQFmtrENvaEUra1qmh?=
+ =?us-ascii?Q?90BnrEBeJeopPeoM6XqDRTUYDfecsFu4xGKXx/ZqjJKW5NDqroczzqbxrGYz?=
+ =?us-ascii?Q?4EpsyK2aHwqLoY0F4LmFANxHh8qY0Y9BaFdsXTm9A4vO7MfpH7UiEL80jbfP?=
+ =?us-ascii?Q?ZItmdxxIfk4jGfnTo2fQOZTjUYKqPMtpV2+6CsZFmkNfz7/9sCGfF9CnPho9?=
+ =?us-ascii?Q?g0UVPKWLU2aKuqTzqIxw/nvh/xGuCx2Gy+p+h8iEAVpS2Tz7ni1FsuFh9FV3?=
+ =?us-ascii?Q?R+dDjK1YfkfVWZtuKiLxtNLOMS8s+WdzJu14Z4IYnBXhvdM99cYT6WsChe5M?=
+ =?us-ascii?Q?/mR5jbme+BW/xXnUn/LM5MIsl/NDECeE45jD74S+9myJZYLzsCUFV0YkaIF8?=
+ =?us-ascii?Q?su1gjfWI5Mw+KNlmQ2GxmJaza+sHz4VC4A4Rm6UV3VlKwPbrEVRtvM34KliE?=
+ =?us-ascii?Q?1VsCdhtmqCm7Ln7m+h5cNC8W+Wc4eAHKoPFEHdJ42rJP54WYF9QhXa0UPe1T?=
+ =?us-ascii?Q?xpy19FQU/Nylz+tK5KW2vEt9jTabLIsZoZ/vqqfUS9apYM/jIQ+/WN2r7gS+?=
+ =?us-ascii?Q?Ud3wx5++fA+cmLTh9oDFfvAjLdEspWPEfwedaYgQNcbTLaiHF3ASWRUi39l0?=
+ =?us-ascii?Q?W9Ngn5w=3D=3D?=
+X-Microsoft-Exchange-Diagnostics: 1;DM5PR2101MB0902;6:WU3c0Al9GgsVPNHjkHASK4mXnWbt+A9vFajHnzxppmZhpP0/7Uv4voTYyH9Wz79bv8dsdRhkyswH9MS4IxOjPsD45JH5g6gUUDBEgqwlzGjDfFWP2L+KsdkcfEk9L+Eqx5olSq5Ve9DIS3pOQ5pa+8CFXF/9zYB1xhODnnfCo8pnk6buZqrE2W9A8O7c/NG3ioehPr0H9mV+G97KKQgmg4REZKEKSTZJ0Ag1Zcxf2WGznHeWojfEW3usAXvdGDDrV903UvX92eJ5W32mRTC4PLVgoZxwrT4iOeZ2K0YvHMXk9KZbsresN6tL457swHMuDqdMcTiGTFMmx+J/czTfuh6RPR3sAE2JzwK+kO7Hx3o=;5:TOBrziwvrMEN2HqITQP6iWeFjZCG7vcMmoMOFrV5aSKQ1SGOYXUImLHB3VJqrtHOwcPM51sQVjr87blt1qZFXD35wd8xZ4F1q7VqujSdOnzCdU/bzoMy5vrHr6Uq79uf+c+/d+vBkDf/qujHq335Tfc9okfW80Dgtkie7sT/Rb0=;24:76r2+cbqa8fpO2b8I5I+xK/TjRSBh+DdMsdRoWkdNE5sXu4n16BSxJwMz58bv7UeqxpfjUS4rCg22Xu8my6HWTEL2YybyAwN3hb4HKCD3sc=;7:CheeCilvDcrBG/ADS7W3cnd6JaqxWNHo8OEfC7UV2uU1kJM2G9cUkhBZbviaEwYzSJKFCWnv8R6JbXRrmgSLr8CyYWMVliFFw9CKcHZDpZzvagaweVvj1vgCw+pI3vYdITU4/jSzh0Mw44Ippnpkx+PXU7hL1ModC2AXtE+2sDlDufWdldZTexqdnTL0UluYkWBokIcKyTYMuh6xcqQiKgBZZWjffF2gHEr48xAPFl+6zdFFCn1HE/a82GdBS3G+
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2018 15:41:57.0609
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9b9106c9-ee14-4ffd-a069-08d573c17b0e
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR2101MB0902
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for working on this.  I anticipated that the completion script
-lack some options, but wow, I didn't expect that there are so many
-missing.
+Remove the reference to setting core.fsmonitor to `true` (or `false`) as those
+are not valid settings.
 
-On Fri, Feb 9, 2018 at 12:01 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> This is a __gitcomp wrapper that will execute
->
->     git ... --git-completion-helper
->
-> to get the list of completable options. The call will be made only
-> once and cached to avoid performance issues, especially on Windows.
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
 
-Nit: the call will be made every time; 'git ... --git-completion-helper'
-will be executed only once.
+Notes:
+    Base Ref: master
+    Web-Diff: https://github.com/benpeart/git/commit/4b7ec2c11e
+    Checkout: git fetch https://github.com/benpeart/git fsmonitor_docs-v1 && git checkout 4b7ec2c11e
 
-> __gitcomp_builtin() allows callers to change its output a bit by adding
-> some more options, or removing some.
->
-> - Current --git-completion-helper for example does not output --no-foo
->   form, this has to be added manually by __gitcomp_builtin() callers
->   when necessary
->
-> - Some options from --git-completion-helper should only be available in
->   certain conditions (e.g. --continue and friends). __gitcomp_builtin()
->   callers can remove them if the conditions are not met.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  contrib/completion/git-completion.bash | 33 ++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 3683c772c5..85e7f26328 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -280,6 +280,39 @@ __gitcomp ()
->         esac
->  }
->
-> +# This function is equivalent to
-> +#
-> +#    __gitcomp "$(git xxx --git-completion-helper) ..."
-> +#
-> +# except that the output is cached. Accept 1-3 arguments:
-> +# 1: the git command to execute, this is also the cache key
-> +# 2: extra options to be added on top (e.g. negative forms)
-> +# 3: options to be excluded
-> +__gitcomp_builtin ()
+ Documentation/git-update-index.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Please excuse the bikeshed at v3, but I don't like the name of this
-function.  It indicates that it completes builtins, but it completes
-options of builtins, and even then only the options of those using parse
-options.  Furthermore, the '__gitcomp' prefix is usually used for
-functions that merely put words into COMPREPLY, but this function does a
-whole lot more (getting the options from builtins, include and exclude
-options, caching).
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index bdb0342593..ad2383d7ed 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -484,8 +484,8 @@ the `core.fsmonitor` configuration variable (see
+ linkgit:git-config[1]) than using the `--fsmonitor` option to
+ `git update-index` in each repository, especially if you want to do so
+ across all repositories you use, because you can set the configuration
+-variable to `true` (or `false`) in your `$HOME/.gitconfig` just once
+-and have it affect all repositories you touch.
++variable in your `$HOME/.gitconfig` just once and have it affect all
++repositories you touch.
+ 
+ When the `core.fsmonitor` configuration variable is changed, the
+ file system monitor is added to or removed from the index the next time
 
-Alas I don't have any great name; __git_complete_options is better,
-because it uses the right function name prefix, but only slightly
-better, because it can't generally be used to complete options, as it
-won't work with scripts or with builtins not using parse options (though
-with time more scripts will be turned into builtins and more builtins
-will use parse options).  I'm not sure it's that match better to make it
-worth changing fourty-odd patches.
+base-commit: e7e80778e705ea3f9332c634781d6d0f8c6eab64
+-- 
+2.15.0.windows.1
 
-> +{
-> +       # spaces must be replaced with underscore for multi-word
-> +       # commands, e.g. "git remote add" becomes remote_add.
-> +       local cmd=3D"$1"
-
-The alternative would be 'command subcommand', i.e. keeping that space,
-and in that case we could spare the ${cmd/_/ } in this function, and
-could even say '__gitcomp "$(git $1 --git-completion-helper)" in the
-equivalent example above; OTOH we would need quoting on all callsites
-with subcommands.  Again, I'm not sure it's worth it.
-
-> +       local incl=3D"$2"
-> +       local excl=3D"$3"
-> +
-> +       local var=3D__gitcomp_builtin_"${cmd/-/_}"
-> +       local options
-> +       eval "options=3D\$$var"
-> +
-> +       if [ -z "$options" ]; then
-> +               # leading and trailing spaces are significant to make
-> +               # option removal work correctly.
-> +               options=3D" $(__git ${cmd/_/ } --git-completion-helper) $=
-incl "
-> +               for i in $excl; do
-> +                       options=3D"${options/ $i / }"
-> +               done
-> +               eval "$var=3D\"$options\""
-> +       fi
-> +
-> +       __gitcomp "$options"
-> +}
-> +
->  # Variation of __gitcomp_nl () that appends to the existing list of
->  # completion candidates, COMPREPLY.
->  __gitcomp_nl_append ()
-> --
-> 2.16.1.207.gedba492059
->
