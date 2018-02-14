@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5EC81F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 17:35:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549121F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 17:48:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161293AbeBNRfG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 12:35:06 -0500
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:45937 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161214AbeBNRfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 12:35:04 -0500
-Received: by mail-wr0-f169.google.com with SMTP id h9so738898wre.12
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:35:03 -0800 (PST)
+        id S1161396AbeBNRr7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 12:47:59 -0500
+Received: from mail-qt0-f174.google.com ([209.85.216.174]:44797 "EHLO
+        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161300AbeBNRr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 12:47:58 -0500
+Received: by mail-qt0-f174.google.com with SMTP id f18so8698272qth.11
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 09:47:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HKFZEMF+N5EiFAetRrj1Bki9arJIEHT1elV6v8rhzNQ=;
-        b=OoJzpW/QnWeC1SUdtnNTAsMmJTtqs2edXZdXI/6C/XGtUK3EXjgpB6Ns02Kz4AC0XZ
-         DjZvr9L2EioM4tuT5+4h+3aAw4yOQQlqZzqEw0vYAMrU9OZNYyTXT8D/LDbjJOOFYX4Z
-         dcKQAnrdDqh6i+FgmYlMwdEpMgR2Qm5gLmVxGhO/GmQJqbJ3Y8YzgWIhZmMHXy52vGj7
-         8g53tVhufT5IE8cuAux/fvctETGzd6Nw9LTOavzgWdyvA9w7lCmBNaiJEnNqiuzAfaXi
-         w5p1sof5CnAc6TQB+x22qz6tCQWkZAGtZUn4Q1Zn2XOtLlWi5eWhuKRiFJC2Q8G4iIPO
-         ZJzA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=GGH4rW0LUaS9/XNoagG6T5G7h6qIavbj3XycmpeLDyc=;
+        b=DcZZWsQS54kaqlw2/U4lDuPmO7b6+3zx08TtyvzkmHgayP0JBbfKKniQA8pl1rRWgq
+         Vmiwcbw2ESWnBKYoSoZKhwC/tl+zozEl9YMnaTLY8Y/zJJTRN3bR8fJV5mF00u6H9p3p
+         oE3AG03XafsGR5lB3tJXxfiznEU8EJlzGeB3PwdDLAdcrhgPRNyjx4nPMQs6kQNU+qYl
+         lpLaQZU9sTBfzJ5EgKMFHelCZijuLASJl8Mf6z2669lX2317pPDRyqkwnoTVWudUI2wD
+         PurhfPe5RuADTN4Bpllo+rGq8gy85PPTh0HtJnjrz3COgXpAZyGeLiNQaFlmMjpckFyx
+         c0mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HKFZEMF+N5EiFAetRrj1Bki9arJIEHT1elV6v8rhzNQ=;
-        b=rKjEUb6yPgam0o8pq8Vcd1e1LGRz/e7gVreNqfkvDq33g+NfKDZIOJh+Y5DsdivGEi
-         oAw/wt+XLB8lTymfKlhWoSqqAU8M5huHxftKs7jlNNbL8Jxcs9uC5lOjXyp2qm8QXHLr
-         C5vRnRtBE6rrWo0IqYmN4WhboO7iqOiyYItKC+/CIW9aHA1A4vIls17bZEDVgMoWckmZ
-         +3pxLB593mzRq5wI9SrwbOlYVPpvNlYYNq7igRHTr/ZnJMVXqMP1+QvBb9jalp/9hDf6
-         MhrbwYeqr+jBAlW5ej4AfmKxyZ021uKu5dKNBIXRSSYgohEixmFnM20j9prbCLsE8JD9
-         d8dA==
-X-Gm-Message-State: APf1xPDQ72qK2jUhFqXH22fae7wsNFbrN1ZB2Z3m0IjecKQQXBZxwt/T
-        +Gx3xTArisEyl/lo/1ko3w4=
-X-Google-Smtp-Source: AH8x227byAh/bKL4cCzjZz45IFSVHjoQFfNircsVuQ52cWpce/F2rW5lA0wNC25p2lXPvAd18b6JrA==
-X-Received: by 10.223.159.77 with SMTP id f13mr5182956wrg.196.1518629702543;
-        Wed, 14 Feb 2018 09:35:02 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 30sm11622312wrz.85.2018.02.14.09.35.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 09:35:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH 3/7] worktree move: new command
-References: <20180124095357.19645-1-pclouds@gmail.com>
-        <20180124095357.19645-4-pclouds@gmail.com>
-        <CAPig+cQeQRppb2y4YyQnqWWnCO0TXE-PjfTAhxakCJNk45ec1w@mail.gmail.com>
-        <CAPig+cRYL6-jEgsQoiQokNSd0zq5zoFkMHBA0Vp9kqa0LvMnsA@mail.gmail.com>
-        <CACsJy8A+zMTC2N8Y0Ua-KyLF6Wp2oHL=8mbsSXck6mKZGG=37g@mail.gmail.com>
-        <20180206021313.GA26323@sigill.intra.peff.net>
-        <CAN0heSofAfuXEUKcfF00ni_a7nAKJYySF_UEnNTL8+nHiBzw-A@mail.gmail.com>
-        <CACsJy8BjFex==2UQV6-k4_rTnBijJOzBAOmtNmZopc87U19Jmg@mail.gmail.com>
-        <CAN0heSpxcm1a9KN3etWAD5Vc_gkabQmEppa_1P4soZSZOnP8pg@mail.gmail.com>
-        <20180213002758.GA9274@duynguyen.dek-tpc.internal>
-        <20180214031614.GC25188@sigill.intra.peff.net>
-        <CACsJy8B9dRshT2RUhnNLbnwTY0VdVdKP9A_YGxwiqqAyMN_OAg@mail.gmail.com>
-Date:   Wed, 14 Feb 2018 09:35:01 -0800
-In-Reply-To: <CACsJy8B9dRshT2RUhnNLbnwTY0VdVdKP9A_YGxwiqqAyMN_OAg@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 14 Feb 2018 16:07:12 +0700")
-Message-ID: <xmqqo9kro4oq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2.50 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=GGH4rW0LUaS9/XNoagG6T5G7h6qIavbj3XycmpeLDyc=;
+        b=tv9HbaCjljYXc2fKN7hqkpSQWvYGOKjpWlwJyqXwYkJ6XoublQod7j+a33FSzhQApW
+         rywFl2nRx+81XbVcxPf3/ebHfZmIrRJ3BIbsiw7cThEG43EEtIuz3NJCvp0VZErvBeb+
+         Avn/QMvd+/u9OfcfH0scY5GNGiQu+ARSIyU6Rb5OBOlwFEZ00xzhciG6w0xfQyIP7Kkz
+         W++8brYvpbvxNeP1Ctvdn56gQUzZFcBlN4YQ4IzNKDjrcU+hdUMsSUzZgwJOnbTktEAp
+         ChlI8CPpjiC19b3/QNHOiVNUI+waDzycVwyHEF3HDwTM0bt/SAfb0tSw4Yy6bWsnLYXl
+         xEXA==
+X-Gm-Message-State: APf1xPD8Fq0PLV2iGQZOrE1V4ZgpwZbWANyCmxb9Gsc+XQGaUBb9Mid7
+        85Ou5IubMv2JYCvaUiJuD5N1oBab
+X-Google-Smtp-Source: AH8x224MPGzPsCIvz3ZUeG8jm2jDZb6fW65r24RrRNdVkwCXHiDRZ+WVd980r79xeVt6jSSqK7Orgw==
+X-Received: by 10.237.37.196 with SMTP id y4mr9388752qtc.182.1518630477085;
+        Wed, 14 Feb 2018 09:47:57 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id c26sm10259867qtg.38.2018.02.14.09.47.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Feb 2018 09:47:56 -0800 (PST)
+Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
+ <8f014e98-8360-785c-fc5d-0664466057fb@gmail.com>
+ <xmqqy3jvo57n.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <7259deac-1d9b-fb01-e8dc-3ad7fdd8ecee@gmail.com>
+Date:   Wed, 14 Feb 2018 12:47:55 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqy3jvo57n.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Wed, Feb 14, 2018 at 10:16 AM, Jeff King <peff@peff.net> wrote:
->> Hmm. That is not too bad, but somehow it feels funny to me to be
->> polluting each test script with these annotations. And to be driving it
->> from inside the test scripts.
->>
->> It seems like:
->>
->>   make SANITIZE=leak test GIT_SKIP_TESTS="$(cat known-leaky)"
->>
->> would be sufficient.
+
+On 2/14/2018 12:23 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 >
-> And all new test files are considered leak-free by default? I like that!
-
-Sounds good ;-)
-
+>> There have been a few "What's cooking" emails since I submitted v1 of
+>> "Serialized Git Commit Graph" and it has not appeared with a tracking
+>> branch. Is this a mistake, or is it something about the state of the
+>> review?
+> The latter.
 >
->> And updating the list would just be:
->>
->>   # assume we're using prove, which will keep running after failure,
->>   # and will record the results for us to parse (using "--state=").
->>   # Otherwise use "make -k" and grep in t/test-results.
->>   make SANITIZE=leak test
->>   (cd t && prove --dry --state=failed) |
->>   perl -lne '/^(t[0-9]{4})-.*.sh$/ and print $1' |
->>   sort >known-leaky
->>
->> That would update both now-passing and now-failing tests. Presumably
->> we'd keep it checked in, so "git diff" would show you the changes.
+> Once I pick up a topic and have it in 'pu', I'd be committing to
+> carrying it and keeping it up-to-date, while dealing with possible
+> conflicts with other topics.  As I do not have infinite bandwidth, I
+> try not to chase targets that are still moving too rapidly, which in
+> turn means that a hot topic everybody is excited by its goal will
+> take more rerolls than other topics before hitting 'pu', because it
+> gets more good suggestions and it takes time for its patches to stop
+> morphing a lot.
 
-Sounds good, too.
+Thanks for clarifying. That makes sense.
+
+> The discussion in the last and current rounds gave me an impression
+> that some stuff (e.g. "graph-head") are still likely to change quite
+> a lot during the review-response cycle.  Is everybody happy with the
+> latest set of patches or are there issues raised already in the
+> review that are better addressed before we start making it interact
+> with other topics in flight?
+
+To avoid causing a tangent in this thread, I'll send a message on the v3 
+thread summarizing what I plan to do for v4 and ask for consensus on 
+that approach before I do.
+
+Thanks,
+-Stolee
