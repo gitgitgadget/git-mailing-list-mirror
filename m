@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD40F1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED2A81F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162533AbeBNTB3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:01:29 -0500
-Received: from mail-vk0-f73.google.com ([209.85.213.73]:41865 "EHLO
-        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162515AbeBNTB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:26 -0500
-Received: by mail-vk0-f73.google.com with SMTP id b195so13507194vkf.8
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:26 -0800 (PST)
+        id S1162544AbeBNTBe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:01:34 -0500
+Received: from mail-ot0-f201.google.com ([74.125.82.201]:40501 "EHLO
+        mail-ot0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162515AbeBNTBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:01:31 -0500
+Received: by mail-ot0-f201.google.com with SMTP id w4so13189772ote.7
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=PV80UhM/vl67TihZYI1dHBQq9DHXk+iar/Bdi6dHn7g=;
-        b=gQS/3s9Dejpal0lMlohao7UQqrYfFD9qs5z/ETUOAZy5/83eqmAQ7luzkXUn81s5k5
-         +Ma862g5gPE3WWq3098FabYsRuOxo7CXD1PGERrapYP4FnYY+XaGJt5M+42txYSF2Sk0
-         byvA3LiWpfXT0xpzxcVzKEsSSkWEeCF3v2EqdaCb/hfJQ0Ex7RCVJbKwJ/5px+Dy0Gv1
-         KD7oRl8qWXnaBTDWVvTqpgdvmUCbm015r3pUBXBo08diLWcZ58okTmh5/9uwc8yUmuXU
-         j6Qzglku/+fwqYvPeDKrhBG+GS/1bRwf6NX8ps6CKmPx2NKB9CHFGRVpN/Nz3snqpMHA
-         tTdQ==
+        bh=XHLjYwAdW+gWjfP3qHupSoSP+/W/VD7wj1ksK52yEVw=;
+        b=EkdHH4XVs5aCovZW7T9oygY+LDk+cBvDYXmt+bxX8gsoEPSl1MDNlcF77msdqDS953
+         Uqo1z2PEMKhIH4qICPaJusgYYzv0W7kevVmwbe9E7vNPXJIDN1H9+mHKZvDapd8sJmZk
+         Z732CERrPumOoWD1jy9+36NbBvZ5/2vsSce45muRi6U8i6ynt+CErevEig2ezmseJZDy
+         jNvhST8v0kGATjYAoTYNrRG5byvTelE1JAQVjAyICjMXFW90rkjLpOyenzXwUZkupyGG
+         +YJNQtWEm4DN2A00TPy4itVruVObOCp7D4WIC9cbkJxlXObj1xxUw0YMkuQQ/kzhn9M7
+         Knew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=PV80UhM/vl67TihZYI1dHBQq9DHXk+iar/Bdi6dHn7g=;
-        b=LK8HB87jjceQGlKM2QMl1DWplHDb+B6NQOpbdiZ9iB/N98uQQkgdUjB9k8C/0RFDZ2
-         O5WHQ5H6P5AO5eItGhq9GQHsvI42Hg4sqkEgY8wd1BwwYN8Nmgzzy4N0aJmB5Qaxu4Om
-         qKgYDumSgKkNzctpa1tjFk8f8Wk4vSR8G7TNCmGs89O05Xc29fNHk7qBnG+abAMSXb2D
-         3oQ7l6NFoH6QWX/t8JBA2/K7Mi5hfMV1EKs+e23n0lMXesugBkrDqVtjnpStOR1vNP9k
-         WQsmg2b88Bjq8tT/jyFSbGFJFMHEucgppKV8797BFfdVgqqDPjBRCBY8ZksH0/I/nvBC
-         95SA==
-X-Gm-Message-State: APf1xPDILJHBjbaNWjZE8o6R46aEvZ8mC5VYOtjfYEhlZrUfzcqrqEeQ
-        4oyjBXddYgxCM5GPe2g79ufufBR8Rr5h2LaWnW3AkhyECAqUxL2G39STt+pm3ggMthrzGnkxJuU
-        jPp6064g+SSwEB5bbeJmtPG6RZqNus54tkAgSrD44xo6ZPGH+OMHvJHDhYA==
-X-Google-Smtp-Source: AH8x226KawJVxjOWeTJ0U7/CeDMdqG4FwPrtLdFfgrtZGH5vRBsrWyu4JaogHwMmzQ0zRVMq+uW9zJpPb0c=
+        bh=XHLjYwAdW+gWjfP3qHupSoSP+/W/VD7wj1ksK52yEVw=;
+        b=VZIYFScMsCqkVz3zbRS3LtM2EdRN7BisQCFrzuCL0OQwThvZ3bABunRLC+HeBktDzh
+         /GW23Eviy3BGI2q5LVSHjrlTT0xg44bZQuZMKA76UxPGt+4rHFsqtu0DmKTR2nx5KMLP
+         oj92kGlIMmzu/6WnExX91+OxFjFXVDx/qjDsAxjd8GYDpYGBuOR3nxhfrQMmTIxdN4FD
+         l3f4SA2CmOmotCtSvjM4ZyN/0BtDVHKm7qU7mtDQbX4jhNZPkiMZLgb6xW2mzIz6AzVk
+         XeMCMxD0rzFtW2LeLYjYJDzVOjp7TQiIyWh1VWDTPvWNA4UkUClc+HVq7zt63IKLaTyj
+         FTbg==
+X-Gm-Message-State: APf1xPCP0UdBuYy8LrXaGdj3mMBoHMjshlk0D/JqU4GmN3wya9VsEnil
+        JhE8YHlEpuMLjIE7rOwk2Tgsa3gjCB5ewW9KcYNO0fpYc1sOPP0NomKIuCHakmx3trV2+ccN1Yc
+        O8/sR9tbm9kCQrRPltKeSkh+SPVkGiLbEkW98Fga7a5pAKPeIuWOIT/SspA==
+X-Google-Smtp-Source: AH8x2243DC5C/kGMRg1b4cuBuFYxZ9yM56jctatULr8eItBtfODLWcfTlUO/gd+0nm39HM4hj5qsJpDtz80=
 MIME-Version: 1.0
-X-Received: by 10.31.158.137 with SMTP id h131mr2842481vke.94.1518634885343;
- Wed, 14 Feb 2018 11:01:25 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:38 -0800
+X-Received: by 10.202.104.15 with SMTP id d15mr49518oic.4.1518634890787; Wed,
+ 14 Feb 2018 11:01:30 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:40 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-17-bmwill@google.com>
+Message-Id: <20180214185959.221906-19-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 16/37] diff-lib: rename 'new' variable
+Subject: [PATCH v2 18/37] diffcore-delta: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,105 +68,58 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- diff-lib.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ diffcore-delta.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/diff-lib.c b/diff-lib.c
-index 8104603a3..261ce13d6 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -302,7 +302,7 @@ static int get_stat_data(const struct cache_entry *ce,
- }
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index ebe70fb06..c83d45a04 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -48,16 +48,16 @@ struct spanhash_top {
  
- static void show_new_file(struct rev_info *revs,
--			  const struct cache_entry *new,
-+			  const struct cache_entry *new_file,
- 			  int cached, int match_missing)
+ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
  {
- 	const struct object_id *oid;
-@@ -313,16 +313,16 @@ static void show_new_file(struct rev_info *revs,
- 	 * New file in the index: it might actually be different in
- 	 * the working tree.
- 	 */
--	if (get_stat_data(new, &oid, &mode, cached, match_missing,
-+	if (get_stat_data(new_file, &oid, &mode, cached, match_missing,
- 	    &dirty_submodule, &revs->diffopt) < 0)
- 		return;
+-	struct spanhash_top *new;
++	struct spanhash_top *new_spanhash;
+ 	int i;
+ 	int osz = 1 << orig->alloc_log2;
+ 	int sz = osz << 1;
  
--	diff_index_show_file(revs, "+", new, oid, !is_null_oid(oid), mode, dirty_submodule);
-+	diff_index_show_file(revs, "+", new_file, oid, !is_null_oid(oid), mode, dirty_submodule);
+-	new = xmalloc(st_add(sizeof(*orig),
++	new_spanhash = xmalloc(st_add(sizeof(*orig),
+ 			     st_mult(sizeof(struct spanhash), sz)));
+-	new->alloc_log2 = orig->alloc_log2 + 1;
+-	new->free = INITIAL_FREE(new->alloc_log2);
+-	memset(new->data, 0, sizeof(struct spanhash) * sz);
++	new_spanhash->alloc_log2 = orig->alloc_log2 + 1;
++	new_spanhash->free = INITIAL_FREE(new_spanhash->alloc_log2);
++	memset(new_spanhash->data, 0, sizeof(struct spanhash) * sz);
+ 	for (i = 0; i < osz; i++) {
+ 		struct spanhash *o = &(orig->data[i]);
+ 		int bucket;
+@@ -65,11 +65,11 @@ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
+ 			continue;
+ 		bucket = o->hashval & (sz - 1);
+ 		while (1) {
+-			struct spanhash *h = &(new->data[bucket++]);
++			struct spanhash *h = &(new_spanhash->data[bucket++]);
+ 			if (!h->cnt) {
+ 				h->hashval = o->hashval;
+ 				h->cnt = o->cnt;
+-				new->free--;
++				new_spanhash->free--;
+ 				break;
+ 			}
+ 			if (sz <= bucket)
+@@ -77,7 +77,7 @@ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
+ 		}
+ 	}
+ 	free(orig);
+-	return new;
++	return new_spanhash;
  }
  
- static int show_modified(struct rev_info *revs,
--			 const struct cache_entry *old,
--			 const struct cache_entry *new,
-+			 const struct cache_entry *old_entry,
-+			 const struct cache_entry *new_entry,
- 			 int report_missing,
- 			 int cached, int match_missing)
- {
-@@ -330,47 +330,47 @@ static int show_modified(struct rev_info *revs,
- 	const struct object_id *oid;
- 	unsigned dirty_submodule = 0;
- 
--	if (get_stat_data(new, &oid, &mode, cached, match_missing,
-+	if (get_stat_data(new_entry, &oid, &mode, cached, match_missing,
- 			  &dirty_submodule, &revs->diffopt) < 0) {
- 		if (report_missing)
--			diff_index_show_file(revs, "-", old,
--					     &old->oid, 1, old->ce_mode,
-+			diff_index_show_file(revs, "-", old_entry,
-+					     &old_entry->oid, 1, old_entry->ce_mode,
- 					     0);
- 		return -1;
- 	}
- 
- 	if (revs->combine_merges && !cached &&
--	    (oidcmp(oid, &old->oid) || oidcmp(&old->oid, &new->oid))) {
-+	    (oidcmp(oid, &old_entry->oid) || oidcmp(&old_entry->oid, &new_entry->oid))) {
- 		struct combine_diff_path *p;
--		int pathlen = ce_namelen(new);
-+		int pathlen = ce_namelen(new_entry);
- 
- 		p = xmalloc(combine_diff_path_size(2, pathlen));
- 		p->path = (char *) &p->parent[2];
- 		p->next = NULL;
--		memcpy(p->path, new->name, pathlen);
-+		memcpy(p->path, new_entry->name, pathlen);
- 		p->path[pathlen] = 0;
- 		p->mode = mode;
- 		oidclr(&p->oid);
- 		memset(p->parent, 0, 2 * sizeof(struct combine_diff_parent));
- 		p->parent[0].status = DIFF_STATUS_MODIFIED;
--		p->parent[0].mode = new->ce_mode;
--		oidcpy(&p->parent[0].oid, &new->oid);
-+		p->parent[0].mode = new_entry->ce_mode;
-+		oidcpy(&p->parent[0].oid, &new_entry->oid);
- 		p->parent[1].status = DIFF_STATUS_MODIFIED;
--		p->parent[1].mode = old->ce_mode;
--		oidcpy(&p->parent[1].oid, &old->oid);
-+		p->parent[1].mode = old_entry->ce_mode;
-+		oidcpy(&p->parent[1].oid, &old_entry->oid);
- 		show_combined_diff(p, 2, revs->dense_combined_merges, revs);
- 		free(p);
- 		return 0;
- 	}
- 
--	oldmode = old->ce_mode;
--	if (mode == oldmode && !oidcmp(oid, &old->oid) && !dirty_submodule &&
-+	oldmode = old_entry->ce_mode;
-+	if (mode == oldmode && !oidcmp(oid, &old_entry->oid) && !dirty_submodule &&
- 	    !revs->diffopt.flags.find_copies_harder)
- 		return 0;
- 
- 	diff_change(&revs->diffopt, oldmode, mode,
--		    &old->oid, oid, 1, !is_null_oid(oid),
--		    old->name, 0, dirty_submodule);
-+		    &old_entry->oid, oid, 1, !is_null_oid(oid),
-+		    old_entry->name, 0, dirty_submodule);
- 	return 0;
- }
- 
+ static struct spanhash_top *add_spanhash(struct spanhash_top *top,
 -- 
 2.16.1.291.g4437f3f132-goog
 
