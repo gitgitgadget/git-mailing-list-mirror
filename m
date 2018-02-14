@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCE211F576
-	for <e@80x24.org>; Wed, 14 Feb 2018 10:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20CA41F576
+	for <e@80x24.org>; Wed, 14 Feb 2018 10:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967195AbeBNKv7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 05:51:59 -0500
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:43855 "EHLO
+        id S967204AbeBNKwE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 05:52:04 -0500
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:34488 "EHLO
         mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967114AbeBNKv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 05:51:58 -0500
-Received: by mail-pl0-f65.google.com with SMTP id f4so8315421plr.10
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 02:51:58 -0800 (PST)
+        with ESMTP id S967114AbeBNKwD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 05:52:03 -0500
+Received: by mail-pl0-f65.google.com with SMTP id bd10so3482783plb.1
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 02:52:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HnWSns3iA0+hhnvraGdT8pQR5HpqlDo/+6zk3du53go=;
-        b=S8aEGZ47uM+G2gwVfcEXvfXE62ipR3jDCPq0uOiYy6p4QHCc3axagfsS8+iD9q8R7G
-         Yh0lRqiFgNpXpsQm3UW40ji2AjcUFQy5AhnLMlGF3cRvieE7RXPsBo5j1cevSL2ERTIH
-         1PI/lQ712SQfWLkWsCKoUpLpLx67QNDoEYUXyVOZduDiE6U+kDTIkIQcMV6KcMKOH0xv
-         tF+3hY06MJ+prOgQNzuAn+mgnNOpbuJudtRHezr52pLoggGzRo/zvHcSOWwyRNoBFa1q
-         eFwBofEkN53030UamsmVYopXwKtluR6nMS45CvUwg4CDuIvYiDI5CvRqFI2Vwz2ieBrB
-         mVxQ==
+        bh=Sjh1TXvTpzBepfPa8qHHE/B72iVv4Q29VflgTpg235U=;
+        b=qPqZLayvooYlmK81P5Ni0g6AL1NFqnPDzu2fTY3VG9+kmHKXVCVIqNoxtDhsyEVVs9
+         6UxOLXKxYBN3tymFoeKEOVpYcHp3CfjX46SdBj+1+N409DoHIzYMjZX2qxBEKt7NugQW
+         Q5ThI6FqGXtog8cwU3g9E3aW2Uf7b1v5c848ghwp6jWAt7T3/znsiVA6ptR7OE3BDD5k
+         ff0BYDeFa9Czp935gDRshVxcWIqGDWMzYAestWtdGvodKxzw53VtTF45k23SyBuNbW4z
+         2RuCQ9h56IbTJOoGLqmKdBQC85vDv9z4DXi8rl2KDWTCmmknEImXgTwZB61PI5D73C8E
+         Fcbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HnWSns3iA0+hhnvraGdT8pQR5HpqlDo/+6zk3du53go=;
-        b=kxVx1Guiq8mlvpneMZMQAf8Uu3adX3OnT1BxxxmLazyFtyGMlsC8uOzfX4lUYu6A2B
-         Kre9AQSg514RgdaIacbf4l1RxLU5V0+nRE0z59hiUmxZqApAsh9uNadbwEMjPuO7v/Er
-         duNimcaHTfoWe9eBu85hfeq8NTx2etFq2/EpvS9xL3eTPvdb+oeCdj2L8hCzds/A975l
-         ju53vWsG8wmCVa7hcFyfth5Ixcw5/UtkHQRUzw37wPRtpp0t0X25iLxxOW1Iv0tVCmOg
-         dOOmuAj9kC+tS+8KnLgfnqZ8n3YfbV/a255GFoE8iysm2MljRi8IbGlyhEfiwtAe8eJS
-         JCaQ==
-X-Gm-Message-State: APf1xPCZDNvT2Az7cb/yOV7SDZpHC/q0uD58SZRwiW7tfz26Bufs803A
-        aCqH2mdkX0S0qu4PDlahAlwaFw==
-X-Google-Smtp-Source: AH8x225R1uv/ddH5z/+dQS7c502oPRVav89zRyW2J6J5QqRTueMbVJQpSxqGDavMkd1rMwIq1C92Ww==
-X-Received: by 2002:a17:902:bcc1:: with SMTP id o1-v6mr4023289pls.78.1518605517592;
-        Wed, 14 Feb 2018 02:51:57 -0800 (PST)
+        bh=Sjh1TXvTpzBepfPa8qHHE/B72iVv4Q29VflgTpg235U=;
+        b=hE3se2AcjkctPSnSRfRARhE4p5sXOZmpbF1iGF3jpoSA26HbEgJew+FWenkO/cnUcT
+         xDOs9DDSbyPJ3zRidG3/80ycb/RIxyPRNWHaa6R8hTZcemVWh2oHjq2ukKLXdpaalrND
+         XvXuDle3RzWLXxyzNzGlfq5G1b2qY6HxgUEtk1BvY8T63mAd81HbLhoZ7E2CbnUdWQN+
+         B3DTL7HNlM6Uc3yXsVbWNn31sHIfRKV2MBdj7bnmMmafURn012eLIlqBo88BONH8jqmh
+         48+/E3pX9xW/Tsovk090UHsI6TWCiSzsyF55T5rl8Tbce9ZLOrrT7BGeVrEOAKQTHNhl
+         rtwg==
+X-Gm-Message-State: APf1xPBOqfNw8DoH9Z2vbnsccE+06TNLZMDpFLYi77j3KyPrQFMPEAvK
+        LckOLZ25EuCDDqGDpxEPDi8a3Q==
+X-Google-Smtp-Source: AH8x2270ISgKj7jJNYFUDP+2HSBMdU2wF+X7FMYvm10u0rAOVdrHS3gJZZMkhwGg7C81Z+1FlZKY8g==
+X-Received: by 2002:a17:902:10d:: with SMTP id 13-v6mr4033941plb.266.1518605522546;
+        Wed, 14 Feb 2018 02:52:02 -0800 (PST)
 Received: from ash ([171.232.93.137])
-        by smtp.gmail.com with ESMTPSA id r13sm30295524pgq.25.2018.02.14.02.51.54
+        by smtp.gmail.com with ESMTPSA id m140sm9723142pfd.73.2018.02.14.02.51.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Feb 2018 02:51:56 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 14 Feb 2018 17:51:52 +0700
+        Wed, 14 Feb 2018 02:52:01 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 14 Feb 2018 17:51:57 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     doron.behar@gmail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/2] parse-options: expand $HOME on filename options
-Date:   Wed, 14 Feb 2018 17:51:48 +0700
-Message-Id: <20180214105149.28896-1-pclouds@gmail.com>
+Subject: [PATCH 2/2] init-db: change --template type to OPTION_FILENAME
+Date:   Wed, 14 Feb 2018 17:51:49 +0700
+Message-Id: <20180214105149.28896-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.16.1.435.g8f24da2e1a
-In-Reply-To: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
+In-Reply-To: <20180214105149.28896-1-pclouds@gmail.com>
 References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
+ <20180214105149.28896-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,41 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When you specify "--path ~/foo", the shell will automatically expand
-~/foo to $HOME/foo before it's passed to git. The expansion is not done
-on "--path=~/foo". An experienced user sees the difference but it could
-still be confusing for others (especially when tab-completion still
-works on --path=~/foo).
+OPTION_FILENAME has some magic behind the scene, like prefixing which is
+useless for init-db. The $HOME expansion though does come handy and
+makes --template more consistent with the rest (both env and config var
+get $HOME expansion).
 
-Support $HOME expansion for all filename options. There are about seven
-of them.
-
+Noticed-by: Doron Behar <doron.behar@gmail.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- parse-options.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ builtin/init-db.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/parse-options.c b/parse-options.c
-index d265a756b5..c33f14c74e 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -38,10 +38,13 @@ static int get_arg(struct parse_opt_ctx_t *p, const struct option *opt,
- 
- static void fix_filename(const char *prefix, const char **file)
- {
--	if (!file || !*file || !prefix || is_absolute_path(*file)
--	    || !strcmp("-", *file))
-+	if (!file || !*file || is_absolute_path(*file) ||
-+	    !strcmp("-", *file))
- 		return;
--	*file = prefix_filename(prefix, *file);
-+	if (**file == '~')
-+		*file = expand_user_path(*file, 0);
-+	else if (prefix)
-+		*file = prefix_filename(prefix, *file);
- }
- 
- static int opt_command_mode_error(const struct option *opt,
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 68ff4ad75a..d6bd9f19cb 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -473,8 +473,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	const char *template_dir = NULL;
+ 	unsigned int flags = 0;
+ 	const struct option init_db_options[] = {
+-		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
+-				N_("directory from which templates will be used")),
++		{ OPTION_FILENAME, 0, "template", &template_dir,
++			N_("template-directory"),
++			N_("directory from which templates will be used")},
+ 		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
+ 				N_("create a bare repository"), 1),
+ 		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
 -- 
 2.16.1.435.g8f24da2e1a
 
