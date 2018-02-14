@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F37241F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:02:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 635B01F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162584AbeBNTCL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:02:11 -0500
-Received: from mail-yw0-f201.google.com ([209.85.161.201]:36835 "EHLO
-        mail-yw0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162565AbeBNTBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:55 -0500
-Received: by mail-yw0-f201.google.com with SMTP id w130so4925856ywa.3
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:55 -0800 (PST)
+        id S1162582AbeBNTCK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:02:10 -0500
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:35682 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162574AbeBNTCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:02:03 -0500
+Received: by mail-qk0-f202.google.com with SMTP id q185so20050361qke.2
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:02:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=glHKQ0bvVAt+7/PF2trem9ONQbj58N8M6jdAhZd2vc8=;
-        b=K36nkEBvVWDTQzFcuV1mSTBBah24cKtjNqNYLc1Dw2+L2A9cWbcO/zU0yZZzdUB8S1
-         qOnwiWMKW7GlmjJcmPYDm3EcWl2uQMm0zR3Vq7TqjECH2yE0rjfZzSxym91mZRB4Mnq0
-         +Zi8n6dM5wqC63xSFD2H7muckAXWuQj3CFNCju9gxhJevRvL66xTXlpePTmpflETfmAk
-         f8Sfn0hdahldGEQd0vWjizCwfKyl281plEVdlg0ckzVTgBXOxu3j+4XOzwBkozruA8T0
-         xjQmwCnyhCm1tQqA5AVnKvpc9THAO1BzBHYt0NstP5RSdC6gDwfUl4ZeUCeCUw5sGE88
-         ZHNw==
+        bh=xIlshMkPEILCFE+m5bQ4z4FtXIVvtb6cCINrITclyPw=;
+        b=qHFzEPvhJvMYu2AjOLNk3u/vxwtM0btq0Q/ya3qI1EX7/S1TH0U1B8r+OxGeCUShkV
+         sJi8cIME5gj3ZrARG4OVG2bqZCsv0elmKjwTjatcc05vf9j06I9pSEL6FfNzPivw96S2
+         wdcY+X67pgb5DjPNNHiWoUCVKEldBgLJ7WRNMuMDSaLBwcv0wUKGA9CluAkQVbdbs5Fi
+         QWVN2ArvG7AAWHgBIm9K3y1MbomvvAO1mOH5+xwW/6nT3Ikxf5mBSiOrE9MhTZ5hKzH3
+         ySKo2YAh5KGC5gq90nGSggBnk60hA6YfaftgiWD3gsX4zeMgv4OahGCd+ArcOruKhKNR
+         zCoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=glHKQ0bvVAt+7/PF2trem9ONQbj58N8M6jdAhZd2vc8=;
-        b=jpw5YApm350+DWbrmxQyaeSS4ZEK7ZX+gCsMfTTf2CVYOV/7dGqOd8rQYBJAS7Ken6
-         oMQN74/fRRkn/arHHZg91rj8OYOWLQFVajY/MjyaLaycOvQjTHreQjYbxnu5G7G2cmjD
-         rXTRrE4p2iOkdSrufgcNSBqrHlNgcprtthkV0UT3gidVTEj5/YDtND3boO7yk2YRbS1/
-         BG/3udQ3fZwQIFZx8Wl/Jr267FriM4QhOv7t6OG2JtKLlonHBmgfLGPVRquj6GdkIKVo
-         Be3kxNgVLhblTCaTdXii43PQFo/26uI1DyQc7fe4ZU82e8f7jy0kPNwXuVw8UwDYQh3d
-         Kg6Q==
-X-Gm-Message-State: APf1xPC1vTA47IrUKXvupAeQMGJSmn59x61rfBKKCQWiNU3VaWTlcyUp
-        iKM91XHJkZ/Kf1sxaLL1FrFU+JPtvuTbYLm7mA6SYFVd5oMbMnCt45JI2B7dq8Z4aaGWPfy7i1I
-        gfm/F931NSfscSkeU3+DTbocMmJsgquhYVLqiI4uiYO15TnmodWlBia494Q==
-X-Google-Smtp-Source: AH8x226gTbloPUe6pgKWncJREE47t3JsWIXTMs2a23rLYQTnRFy3e5ZpP4vko1kjTmq+K67zgWJcVXtSRVA=
+        bh=xIlshMkPEILCFE+m5bQ4z4FtXIVvtb6cCINrITclyPw=;
+        b=ClDq/6LjCRJeamIX+jUZC9pAssmD3tOGCAiQjmK8Nfga4L4N55vq9bBQQP+GVLtMfZ
+         6IGd8bjEZdo2ztRTX5dlv8fpmLvMcBv2FjXmuQa1fQEavqg7hwqW2WyT3eRTfTOVbhQG
+         JYkBHtjhBMBYP4PQ+As6bMBJFwyiwUNO4Tb9TemUhu4t4eb2B6RR+jWRxWM9V1RGz8Hk
+         7jUxONlckY9L9ki+Ribngor9BPETHKoF1nUY7CEReCXpwibraC4jCwtwwclE/TR8NSmq
+         t0PuF8C1HZT7u9a83xxQLr9mRqDe/7Ez2vRq14UB+YLWRhlKGenXBixd3gV8XTLjTVgm
+         PGpA==
+X-Gm-Message-State: APf1xPCGxwgtDgN/MiK2Ehdyq+TH2UGZuUBQse2W4JQPAvk2w5M4xBSk
+        S+NdZO8qIhBoPrVjHjsK3QmyI2KrU4Z2gz0YjEWWZ5dJW9XKUiyiK2b6k3zXw54RqHeanlhfSaI
+        7k9RyKSD2Gy3A8PQWzlBakYlR09WHK+EF6zOdzAoiriharsqXSK4zlugwyQ==
+X-Google-Smtp-Source: AH8x225ucuKa+Uy0ygIKZ6ZU4Z4guy1F13Xqjjjhc7a3usG/GD2ZvUHXGtkg33XDtVJXjn8Ho550DiP32jk=
 MIME-Version: 1.0
-X-Received: by 10.37.211.145 with SMTP id e139mr3050586ybf.32.1518634914670;
- Wed, 14 Feb 2018 11:01:54 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:49 -0800
+X-Received: by 10.200.33.162 with SMTP id 31mr28864qty.27.1518634922971; Wed,
+ 14 Feb 2018 11:02:02 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:52 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-28-bmwill@google.com>
+Message-Id: <20180214185959.221906-31-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 27/37] submodule: rename 'new' variables
+Subject: [PATCH v2 30/37] init-db: rename 'template' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,142 +68,90 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 30 +++++++++++++++---------------
- submodule.h |  2 +-
- 2 files changed, 16 insertions(+), 16 deletions(-)
+ builtin/init-db.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index cd18400e8..12a2503fd 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -590,7 +590,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule)
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index c9b7946ba..68ff4ad75 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -24,11 +24,11 @@ static int init_is_bare_repository = 0;
+ static int init_shared_repository = -1;
+ static const char *init_db_template_dir;
+ 
+-static void copy_templates_1(struct strbuf *path, struct strbuf *template,
++static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
+ 			     DIR *dir)
  {
--	const struct object_id *old = the_hash_algo->empty_tree, *new = the_hash_algo->empty_tree;
-+	const struct object_id *old_oid = the_hash_algo->empty_tree, *new_oid = the_hash_algo->empty_tree;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -605,9 +605,9 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		goto done;
+ 	size_t path_baselen = path->len;
+-	size_t template_baselen = template->len;
++	size_t template_baselen = template_path->len;
+ 	struct dirent *de;
  
- 	if (left)
--		old = one;
-+		old_oid = one;
- 	if (right)
--		new = two;
-+		new_oid = two;
+ 	/* Note: if ".git/hooks" file exists in the repository being
+@@ -44,12 +44,12 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template,
+ 		int exists = 0;
  
- 	cp.git_cmd = 1;
- 	cp.dir = path;
-@@ -630,7 +630,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		argv_array_pushf(&cp.args, "--dst-prefix=%s%s/",
- 				 o->b_prefix, path);
- 	}
--	argv_array_push(&cp.args, oid_to_hex(old));
-+	argv_array_push(&cp.args, oid_to_hex(old_oid));
- 	/*
- 	 * If the submodule has modified content, we will diff against the
- 	 * work tree, under the assumption that the user has asked for the
-@@ -638,7 +638,7 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 	 * haven't yet been committed to the submodule yet.
- 	 */
- 	if (!(dirty_submodule & DIRTY_SUBMODULE_MODIFIED))
--		argv_array_push(&cp.args, oid_to_hex(new));
-+		argv_array_push(&cp.args, oid_to_hex(new_oid));
+ 		strbuf_setlen(path, path_baselen);
+-		strbuf_setlen(template, template_baselen);
++		strbuf_setlen(template_path, template_baselen);
  
- 	prepare_submodule_repo_env(&cp.env_array);
- 	if (start_command(&cp))
-@@ -1578,8 +1578,8 @@ static void submodule_reset_index(const char *path)
-  * pass NULL for old or new respectively.
-  */
- int submodule_move_head(const char *path,
--			 const char *old,
--			 const char *new,
-+			 const char *old_head,
-+			 const char *new_head,
- 			 unsigned flags)
- {
- 	int ret = 0;
-@@ -1600,7 +1600,7 @@ int submodule_move_head(const char *path,
- 	else
- 		error_code_ptr = NULL;
+ 		if (de->d_name[0] == '.')
+ 			continue;
+ 		strbuf_addstr(path, de->d_name);
+-		strbuf_addstr(template, de->d_name);
++		strbuf_addstr(template_path, de->d_name);
+ 		if (lstat(path->buf, &st_git)) {
+ 			if (errno != ENOENT)
+ 				die_errno(_("cannot stat '%s'"), path->buf);
+@@ -57,36 +57,36 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template,
+ 		else
+ 			exists = 1;
  
--	if (old && !is_submodule_populated_gently(path, error_code_ptr))
-+	if (old_head && !is_submodule_populated_gently(path, error_code_ptr))
- 		return 0;
+-		if (lstat(template->buf, &st_template))
+-			die_errno(_("cannot stat template '%s'"), template->buf);
++		if (lstat(template_path->buf, &st_template))
++			die_errno(_("cannot stat template '%s'"), template_path->buf);
  
- 	sub = submodule_from_path(&null_oid, path);
-@@ -1608,14 +1608,14 @@ int submodule_move_head(const char *path,
- 	if (!sub)
- 		die("BUG: could not get submodule information for '%s'", path);
- 
--	if (old && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
-+	if (old_head && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
- 		/* Check if the submodule has a dirty index. */
- 		if (submodule_has_dirty_index(sub))
- 			return error(_("submodule '%s' has dirty index"), path);
- 	}
- 
- 	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
--		if (old) {
-+		if (old_head) {
- 			if (!submodule_uses_gitfile(path))
- 				absorb_git_dir_into_superproject("", path,
- 					ABSORB_GITDIR_RECURSE_SUBMODULES);
-@@ -1629,7 +1629,7 @@ int submodule_move_head(const char *path,
- 			submodule_reset_index(path);
+ 		if (S_ISDIR(st_template.st_mode)) {
+-			DIR *subdir = opendir(template->buf);
++			DIR *subdir = opendir(template_path->buf);
+ 			if (!subdir)
+-				die_errno(_("cannot opendir '%s'"), template->buf);
++				die_errno(_("cannot opendir '%s'"), template_path->buf);
+ 			strbuf_addch(path, '/');
+-			strbuf_addch(template, '/');
+-			copy_templates_1(path, template, subdir);
++			strbuf_addch(template_path, '/');
++			copy_templates_1(path, template_path, subdir);
+ 			closedir(subdir);
  		}
- 
--		if (old && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
-+		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
- 			char *gitdir = xstrfmt("%s/modules/%s",
- 				    get_git_common_dir(), sub->name);
- 			connect_work_tree_and_git_dir(path, gitdir);
-@@ -1658,9 +1658,9 @@ int submodule_move_head(const char *path,
- 		argv_array_push(&cp.args, "-m");
- 
- 	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
--		argv_array_push(&cp.args, old ? old : EMPTY_TREE_SHA1_HEX);
-+		argv_array_push(&cp.args, old_head ? old_head : EMPTY_TREE_SHA1_HEX);
- 
--	argv_array_push(&cp.args, new ? new : EMPTY_TREE_SHA1_HEX);
-+	argv_array_push(&cp.args, new_head ? new_head : EMPTY_TREE_SHA1_HEX);
- 
- 	if (run_command(&cp)) {
- 		ret = -1;
-@@ -1668,7 +1668,7 @@ int submodule_move_head(const char *path,
+ 		else if (exists)
+ 			continue;
+ 		else if (S_ISLNK(st_template.st_mode)) {
+ 			struct strbuf lnk = STRBUF_INIT;
+-			if (strbuf_readlink(&lnk, template->buf, 0) < 0)
+-				die_errno(_("cannot readlink '%s'"), template->buf);
++			if (strbuf_readlink(&lnk, template_path->buf, 0) < 0)
++				die_errno(_("cannot readlink '%s'"), template_path->buf);
+ 			if (symlink(lnk.buf, path->buf))
+ 				die_errno(_("cannot symlink '%s' '%s'"),
+ 					  lnk.buf, path->buf);
+ 			strbuf_release(&lnk);
+ 		}
+ 		else if (S_ISREG(st_template.st_mode)) {
+-			if (copy_file(path->buf, template->buf, st_template.st_mode))
++			if (copy_file(path->buf, template_path->buf, st_template.st_mode))
+ 				die_errno(_("cannot copy '%s' to '%s'"),
+-					  template->buf, path->buf);
++					  template_path->buf, path->buf);
+ 		}
+ 		else
+-			error(_("ignoring template %s"), template->buf);
++			error(_("ignoring template %s"), template_path->buf);
  	}
+ }
  
- 	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
--		if (new) {
-+		if (new_head) {
- 			child_process_init(&cp);
- 			/* also set the HEAD accordingly */
- 			cp.git_cmd = 1;
-@@ -1677,7 +1677,7 @@ int submodule_move_head(const char *path,
- 
- 			prepare_submodule_repo_env(&cp.env_array);
- 			argv_array_pushl(&cp.args, "update-ref", "HEAD",
--					 "--no-deref", new, NULL);
-+					 "--no-deref", new_head, NULL);
- 
- 			if (run_command(&cp)) {
- 				ret = -1;
-diff --git a/submodule.h b/submodule.h
-index b9b7ef003..9589f1312 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -117,7 +117,7 @@ int submodule_to_gitdir(struct strbuf *buf, const char *submodule);
- #define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
- extern int submodule_move_head(const char *path,
- 			       const char *old,
--			       const char *new,
-+			       const char *new_head,
- 			       unsigned flags);
- 
- /*
 -- 
 2.16.1.291.g4437f3f132-goog
 
