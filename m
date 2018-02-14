@@ -2,129 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96EF01F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 05:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7D3A1F576
+	for <e@80x24.org>; Wed, 14 Feb 2018 07:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754154AbeBNFln (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 00:41:43 -0500
-Received: from mail.javad.com ([54.86.164.124]:42711 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753275AbeBNFle (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 00:41:34 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id BF3723E8C4;
-        Wed, 14 Feb 2018 05:41:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1518586894;
-        bh=iNdyQVaopyVP+qHXILd2Tfu+DqrkRM2Jgqx4hgZgpjs=; l=1612;
-        h=Received:From:To:Subject;
-        b=MWeWNg6GnQgZpdIhtNEMqSNQx4NqOAylkjigWrlHD5XZeLhc8U4M8+EszKtFtpuWh
-         OYjLxalOdgEgZ7irVI3NG15mdUFV+6D6bY6QGNYpLPO7iK+sIhLtklzfKXtsn/7rel
-         pkI0bgJ2m71fiXBdRoLwLM5EsOasvYlUxyClwiHs=
-Authentication-Results: mail.javad.com;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (mail.javad.com: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1elpox-0003W9-N5; Wed, 14 Feb 2018 08:41:31 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?=C3=98yvind_R=C3=B8nnin?= =?utf-8?Q?gstad?= 
-        <ronningstad@gmail.com>, git@vger.kernel.org,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
-References: <cover.1516225925.git.johannes.schindelin@gmx.de>
-        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
-        <87k1vpqq85.fsf@javad.com>
-        <nycvar.QRO.7.76.6.1802071818240.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        <1518044326.7000.4.camel@gmail.com>
-        <xmqqpo5g5qd3.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1802081317320.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-Date:   Wed, 14 Feb 2018 08:41:31 +0300
-In-Reply-To: <nycvar.QRO.7.76.6.1802081317320.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
-        (Johannes Schindelin's message of "Thu, 8 Feb 2018 13:34:18 +0100
-        (STD)")
-Message-ID: <87vaf03z78.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1754505AbeBNHXy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 02:23:54 -0500
+Received: from mail-qk0-f176.google.com ([209.85.220.176]:46847 "EHLO
+        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754470AbeBNHXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 02:23:54 -0500
+Received: by mail-qk0-f176.google.com with SMTP id g129so11010461qkb.13
+        for <git@vger.kernel.org>; Tue, 13 Feb 2018 23:23:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=cpD7pB/MxgjbyVckT4ICIrazDbRt7wGmwjXu9HSsh0s=;
+        b=DhXVXMPw6MJZMqKJx41tNTrF5itlCOuVoH42l7RBPSEC7TYxTtDKJPV126aOWuNTX0
+         GQOcK7cVcsKwPdHYr+NBQgfkqN9+2tNN45FfTxGdeiSw0FbuDbqr1i6zqkucDVGWzZT3
+         7JCXKrdhg18NpiwAtpetEnqCYWLjBzJHe0lU/AToZXnQPnE0QQkkERIEUK7XnAejzBk5
+         Et5/tEmjNOTFx0DZZTqNGHQ48r0XxuSiMCSEfvf1NxRf2cr9QlNaPEWLIjMRicSaKBC0
+         NIJ+VDz5X28gGgeSglEYdiJpnEUIULJnPHucf2Y/OxS3hvgxDPPrIzicrIW2n8llhZh9
+         +fWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=cpD7pB/MxgjbyVckT4ICIrazDbRt7wGmwjXu9HSsh0s=;
+        b=R6aIsWP3BgheaxyZIond7hRzy6LZv6t6kwS7teJSpI2+pyc1rvgTpRY2e5o8XX5Sqm
+         vnULVj8+9YVh+71M5OG+V2qAd/veu2+UFgzoNLxjFrN2znw6sKUyeHIWfOjyvYEOPO4B
+         lZ6SEOY0Osjuswav9gM0GYx7+OKtYQBMykd+bZX7Sh708j33J/g2rmeuULEyTliSSOqL
+         x/t336P80UYiRfEWXu+gfexgXPJEMJWPBwf537+0l9yIvRooqnnKI5WY48fhGM4pTGCs
+         Q2+fykeM7g8Ofja/qetgoymPGLwQvmc2/K/4MUyRJ/QAaMCIPDoawSCv9sbtQ01saGOt
+         5Biw==
+X-Gm-Message-State: APf1xPAG8zEXICmFDJ3JH/yFyMGScaN3RX8Schbk1XMvcEwKLpT452rU
+        eeOqrQkX1MmmJQh3iO3CHt3lUMESLUJ/SNIafD8=
+X-Google-Smtp-Source: AH8x227Z5s1+mH+xQLqJBoUhKzS6wvo6iHty/gspcwRZj9eS69Cl3XzqYww4ybEG5GQfJR5B9N/GnM6vN1lRIqXBGmo=
+X-Received: by 10.55.221.76 with SMTP id n73mr5761732qki.53.1518593033295;
+ Tue, 13 Feb 2018 23:23:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.128.40 with HTTP; Tue, 13 Feb 2018 23:23:52 -0800 (PST)
+In-Reply-To: <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
+References: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
+ <20180213014130.190374-1-sbeller@google.com> <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 14 Feb 2018 02:23:52 -0500
+X-Google-Sender-Auth: sn9YFFBGi-UdKKawKsNUquuR9kQ
+Message-ID: <CAPig+cQwzSVkapkRxFOn7DSVJ8hCXnuCciPQdFaZnFEq=VKCuA@mail.gmail.com>
+Subject: Re: [PATCH] color.h: document and modernize header
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-[...]
-> Just to give you one concrete example: when I recently rebased some
-> patches (no reording or dropping involved here!) and one of the picks
-> failed with merge conflicts, I realized that that particular commit
-> introduced incorrect formatting and fixed that right away (verifying that
-> no other commits introduced incorrect formatting, of course).
+On Mon, Feb 12, 2018 at 10:55 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, Feb 12, 2018 at 8:41 PM, Stefan Beller <sbeller@google.com> wrote:
+>> + * Output the formatted string in the specified color (and then reset to normal
+>> + * color so subsequent output is uncolored). Omits the color encapsulation if
+>> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
+>> + * the color.  BUG: The `color_print_strbuf` prints the given pre-formatted
+>> + * strbuf instead, up to its first NUL character.
 >
-> With your new cute idea to magically cherry-pick -m1, this change would
-> have been magically dropped from the subsequent merge commits!
+> "`color_print_strbuf` prints the given pre-formatted strbuf (BUG: but
+> only up to the first NUL character)."
+>
+> Probably not worth a re-roll is Junio can amend it locally.
 
-You put it as if the problem you describe is unsolvable short of getting
-back to your favorite blind re-merge. Do you really believe it?
-
-I thought it's obvious that I originally meant "cherry-pick -m1" to be
-an explanation facility, a proof of concept, not the final answer to all
-the problems of history editing. It's a nice base for actually
-approaching these problems though, unlike blind re-merge currently being
-used, the latter having no potential.
-
-The fact that bare naked "cherry-pick -m1" doesn't do what is often[1]
-required in such cases neither voids the general idea of reproducing
-merge-the-result, nor does it make current re-merge approach less
-broken.
-
-[1] Please take into consideration that it's _not always_ the case that
-one needs a change made to a side-branch to actually propagate to the
-main-line over the merge (think "merge -x ours", or something similar
-but not that simple), and then it's rather the cute idea to blindly
-re-merge that will wreak havoc, as in a lot of other cases.
-
--- Sergey
+By the way, thanks for the patience in the face of the nit-picking
+this patch has undergone.
