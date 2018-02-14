@@ -2,76 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 684C61F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 14:08:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5C261F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 14:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030573AbeBNOIM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 09:08:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:52030 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1030448AbeBNOIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 09:08:11 -0500
-Received: (qmail 17138 invoked by uid 109); 14 Feb 2018 14:08:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Feb 2018 14:08:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28808 invoked by uid 111); 14 Feb 2018 14:08:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Feb 2018 09:08:55 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Feb 2018 09:08:09 -0500
-Date:   Wed, 14 Feb 2018 09:08:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, doron.behar@gmail.com
-Subject: Re: [PATCH 2/2] init-db: change --template type to OPTION_FILENAME
-Message-ID: <20180214140808.GB27850@sigill.intra.peff.net>
-References: <20180214101019.gaenosifgq3wx2nm@NUC.localdomain>
- <20180214105149.28896-1-pclouds@gmail.com>
- <20180214105149.28896-2-pclouds@gmail.com>
+        id S1030490AbeBNOKw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 09:10:52 -0500
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:43143 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030397AbeBNOKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 09:10:50 -0500
+Received: by mail-qk0-f177.google.com with SMTP id i184so15671380qkf.10
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 06:10:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=Bq22qrRGuQpzZT4Gz/3xCZCp4qVQJsWwvFmfcQ69b5w=;
+        b=jSmc4gdCTEKlFWOAFHhVGqPY679a68S3v006sM441faiu69ikWr9UXqJfX0sdQRzHb
+         SOcJyrpI7dRS0CbCNLyN3Z7Lo6Rn4qLblGptWQKjyWnm6NOaIH965oE4MCeB5RjofL6c
+         UahdrTvzYapBBazxBiOJZvYUmppZEmdNZ+QbcvRkMDdsXqvjGMnss5P63rhxIqLt2Oqz
+         aSrDrR4k0apWyvxSmePYewjP75NJCKzkgePgDh3XpCxdYsfO+6e/Vil4h8YqX5GxHry9
+         vjz7nnNuNzW+YBelFKucIjVFc0hCxiGS/EYSMz55M8deD1oby5aPU3Zn02BWAIdSC88M
+         mGXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Bq22qrRGuQpzZT4Gz/3xCZCp4qVQJsWwvFmfcQ69b5w=;
+        b=BZZDshPG46fGslFZEpWbLUkFVVNwGQPStu4hcrwbsCOLnFPRLPQyV8p08+q5PhvBFF
+         FlMGRL5oRwGyh53+Ip4Ns2SvnaaOQ8NBNz8gPKq8LlnUurDuAAAtYqc4iwrVX253oFT1
+         MrnnAi0ubrsuzEsMoDsE18A4bk6L/ZQ4ezOb8ZCrTh+646R5pxbrCWynyRXoi1LwK8IS
+         aXs9NGrmRc7K8Dr92P8Tpg49OwpvD4VOmmz4hRLppJCWA7Mne7bEklkoSrnmnYyakunp
+         ZPWu8RRAwQBztaKXbuTqQEP7f+ILfbE7fR70McE2tNjkpXFA11rrHEUTYWbCVRSxaVsx
+         gUQg==
+X-Gm-Message-State: APf1xPDu2Hbfg6TzZ7r9IMxqbKBQoXM+v6KQ0A7Mv/TWO12OTo/0oFno
+        qabLJvisM2nWBFXblnymoDsgcmHd
+X-Google-Smtp-Source: AH8x227BK2qYWsop2w/fDRmapK26n7QoXz3sXW/6JVnqK0kul7NnN+j70gMgO1xtEdNsBCJZoS7tzw==
+X-Received: by 10.55.220.197 with SMTP id v188mr7850114qki.147.1518617448860;
+        Wed, 14 Feb 2018 06:10:48 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:c4e6:7a22:56f1:df04? ([2001:4898:8010:0:ae1c:7a22:56f1:df04])
+        by smtp.gmail.com with ESMTPSA id g11sm8790216qkb.73.2018.02.14.06.10.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Feb 2018 06:10:48 -0800 (PST)
+Subject: Re: What's cooking in git.git (Feb 2018, #02; Tue, 13)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8f014e98-8360-785c-fc5d-0664466057fb@gmail.com>
+Date:   Wed, 14 Feb 2018 09:10:46 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <xmqq8tbwpcdv.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180214105149.28896-2-pclouds@gmail.com>
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 14, 2018 at 05:51:49PM +0700, Nguyễn Thái Ngọc Duy wrote:
+On 2/13/2018 8:51 PM, Junio C Hamano wrote:
+> Here are the topics that have been cooking.  Commits prefixed with
+> '-' are only in 'pu' (proposed updates) while commits prefixed with
+> '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> the integration branches, but I am still holding onto them.
+>
+> You can find the changes described here in the integration branches
+> of the repositories listed at
+>
+>      http://git-blame.blogspot.com/p/git-public-repositories.html
+>
+> --------------------------------------------------
 
-> OPTION_FILENAME has some magic behind the scene, like prefixing which is
-> useless for init-db. The $HOME expansion though does come handy and
-> makes --template more consistent with the rest (both env and config var
-> get $HOME expansion).
+Hi Junio,
 
-Yep, makes sense.
+There have been a few "What's cooking" emails since I submitted v1 of 
+"Serialized Git Commit Graph" and it has not appeared with a tracking 
+branch. Is this a mistake, or is it something about the state of the review?
 
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 68ff4ad75a..d6bd9f19cb 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -473,8 +473,9 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
->  	const char *template_dir = NULL;
->  	unsigned int flags = 0;
->  	const struct option init_db_options[] = {
-> -		OPT_STRING(0, "template", &template_dir, N_("template-directory"),
-> -				N_("directory from which templates will be used")),
-> +		{ OPTION_FILENAME, 0, "template", &template_dir,
-> +			N_("template-directory"),
-> +			N_("directory from which templates will be used")},
+Thanks,
+-Stolee
 
-It's a shame we can't use the slightly more readable OPT_FILENAME(), but
-it forces the use of "file" for the argument name. I wonder if it really
-ought to be OPT_PATH(), and say "path", which would work more
-universally.
+[1] 
+https://public-inbox.org/git/20180125140231.65604-1-dstolee@microsoft.com/
+     Patch v1, Jan 25
 
-At any rate, I'm fine with this until somebody feels like fiddling with
-the macros.
+[2] 
+https://public-inbox.org/git/1517348383-112294-1-git-send-email-dstolee@microsoft.com/
+     Patch v2, Jan 30
 
--Peff
+[3] 
+https://public-inbox.org/git/1518122258-157281-1-git-send-email-dstolee@microsoft.com/
+     Patch v3, Feb 8
