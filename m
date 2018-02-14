@@ -2,79 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7D3A1F576
-	for <e@80x24.org>; Wed, 14 Feb 2018 07:23:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D46781F576
+	for <e@80x24.org>; Wed, 14 Feb 2018 08:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754505AbeBNHXy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 02:23:54 -0500
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:46847 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754470AbeBNHXy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 02:23:54 -0500
-Received: by mail-qk0-f176.google.com with SMTP id g129so11010461qkb.13
-        for <git@vger.kernel.org>; Tue, 13 Feb 2018 23:23:53 -0800 (PST)
+        id S1754548AbeBNIAg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 03:00:36 -0500
+Received: from mail-ua0-f174.google.com ([209.85.217.174]:42279 "EHLO
+        mail-ua0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754530AbeBNIAg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 03:00:36 -0500
+Received: by mail-ua0-f174.google.com with SMTP id 47so13171987uau.9
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 00:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=cpD7pB/MxgjbyVckT4ICIrazDbRt7wGmwjXu9HSsh0s=;
-        b=DhXVXMPw6MJZMqKJx41tNTrF5itlCOuVoH42l7RBPSEC7TYxTtDKJPV126aOWuNTX0
-         GQOcK7cVcsKwPdHYr+NBQgfkqN9+2tNN45FfTxGdeiSw0FbuDbqr1i6zqkucDVGWzZT3
-         7JCXKrdhg18NpiwAtpetEnqCYWLjBzJHe0lU/AToZXnQPnE0QQkkERIEUK7XnAejzBk5
-         Et5/tEmjNOTFx0DZZTqNGHQ48r0XxuSiMCSEfvf1NxRf2cr9QlNaPEWLIjMRicSaKBC0
-         NIJ+VDz5X28gGgeSglEYdiJpnEUIULJnPHucf2Y/OxS3hvgxDPPrIzicrIW2n8llhZh9
-         +fWw==
+        bh=qR3z8hx/T4FM3oUOSdd8gKo1uy/+huXRbeBxtfBG73E=;
+        b=piQadBC+bjDoCSsSmetYwBeR9wZPCBxRy/rTcpZHOsZGQyNh6K04aJ5UUzJNpL9YLK
+         t2AN4+io+mxPnuBbpC6XQKE3SWCZx4xI+SqGOQqbcOWm/eIhlyIpNM81wxAd0nWz1usj
+         mqYt+C/QfepYgZTLGvzOxFsGRnH7pwZIt061DQq9W2d0tiPnVeZN9FPh/WlZJncyhNaA
+         HCxnFjwWh0lNkkDh3l8vxM6O059kIzzUqOQ49yAi8c6gQ0pTSSTwh589PNYq+JFYqnqq
+         Q3FBjOYhFKVonegK0ftd5OlC/ItOH9NTouWjAxR3C0+cWpnOomHo3dRhm1r113FLGSCK
+         0eSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=cpD7pB/MxgjbyVckT4ICIrazDbRt7wGmwjXu9HSsh0s=;
-        b=R6aIsWP3BgheaxyZIond7hRzy6LZv6t6kwS7teJSpI2+pyc1rvgTpRY2e5o8XX5Sqm
-         vnULVj8+9YVh+71M5OG+V2qAd/veu2+UFgzoNLxjFrN2znw6sKUyeHIWfOjyvYEOPO4B
-         lZ6SEOY0Osjuswav9gM0GYx7+OKtYQBMykd+bZX7Sh708j33J/g2rmeuULEyTliSSOqL
-         x/t336P80UYiRfEWXu+gfexgXPJEMJWPBwf537+0l9yIvRooqnnKI5WY48fhGM4pTGCs
-         Q2+fykeM7g8Ofja/qetgoymPGLwQvmc2/K/4MUyRJ/QAaMCIPDoawSCv9sbtQ01saGOt
-         5Biw==
-X-Gm-Message-State: APf1xPAG8zEXICmFDJ3JH/yFyMGScaN3RX8Schbk1XMvcEwKLpT452rU
-        eeOqrQkX1MmmJQh3iO3CHt3lUMESLUJ/SNIafD8=
-X-Google-Smtp-Source: AH8x227Z5s1+mH+xQLqJBoUhKzS6wvo6iHty/gspcwRZj9eS69Cl3XzqYww4ybEG5GQfJR5B9N/GnM6vN1lRIqXBGmo=
-X-Received: by 10.55.221.76 with SMTP id n73mr5761732qki.53.1518593033295;
- Tue, 13 Feb 2018 23:23:53 -0800 (PST)
+        bh=qR3z8hx/T4FM3oUOSdd8gKo1uy/+huXRbeBxtfBG73E=;
+        b=CEPbPvfhIaMDPzBnGfRlLdjfYI/UzJTLqIwTcIo/YU155Rb05cYPRuqe1tuNYBQwIh
+         td5rEH40ixNXXVTLPLA9bUMrk2VAH3AD2GfJezzaO0UqfZzpYXRHW2zZ2FxjyjTzzQYb
+         DmedgTTh5X4sjc64iDjGLKCDjcIFx01Pb69YFcwhn+PEqBDb76Alx6UzCz+1sXATOtHX
+         KuCevjYLoysXqiiNo/0iI/B58eSD7l8JUdgcPVK9xF0VvVtPk3oU1F1yjdfruHhDJVj3
+         Jyzn4R4YTuqGgxh4NX0uLpLGk382kAWoMxYyJTfik47h1qWSCVnlcydeTUGlT9Gm14w9
+         1kzg==
+X-Gm-Message-State: APf1xPAubhWMU5r0DyjpWJWU+5oTRBzH1rrVKbQXvqO/Jnb+3msfhPTU
+        Gi1TYF0P3qAIOJlhRhdpw08e/1WG6nb3Z1kVlzQ=
+X-Google-Smtp-Source: AH8x224SKEw6vAOh2Po34iT1CfLdPMkiswzJfy9Ouqg9jTOwi1eTOA3v/TfaZGFkg5eTXwak/i79EMRw3gUv22xETzQ=
+X-Received: by 10.159.40.70 with SMTP id c64mr3696654uac.165.1518595234961;
+ Wed, 14 Feb 2018 00:00:34 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.12.128.40 with HTTP; Tue, 13 Feb 2018 23:23:52 -0800 (PST)
-In-Reply-To: <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
-References: <CAPig+cRUr=dJgaG2-aRArswQXXZEExQah4k17+HkiB+sZHORYQ@mail.gmail.com>
- <20180213014130.190374-1-sbeller@google.com> <CAPig+cSQecUr5+QkSWNHbzUeViTA7KjLdcjLZmfhK5hT-fuKfA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 14 Feb 2018 02:23:52 -0500
-X-Google-Sender-Auth: sn9YFFBGi-UdKKawKsNUquuR9kQ
-Message-ID: <CAPig+cQwzSVkapkRxFOn7DSVJ8hCXnuCciPQdFaZnFEq=VKCuA@mail.gmail.com>
-Subject: Re: [PATCH] color.h: document and modernize header
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Received: by 10.31.11.72 with HTTP; Wed, 14 Feb 2018 00:00:14 -0800 (PST)
+In-Reply-To: <CACsJy8DYwvNGSWBP-2RNUn9xLBHUGtW1D7EuEYn7q_5f-N9Kvg@mail.gmail.com>
+References: <20180204093823.3671-1-pclouds@gmail.com> <20180207092141.4312-1-pclouds@gmail.com>
+ <20180207092141.4312-2-pclouds@gmail.com> <c755e388-89a5-fc0f-f872-16fd5d5686b0@gmail.com>
+ <CACsJy8AHa6QDmWu7TFjgW7m0pHysYkZq_WJ1QOVBVYaT4XdL4Q@mail.gmail.com>
+ <xmqqinb0rcw5.fsf@gitster-ct.c.googlers.com> <CACsJy8DYwvNGSWBP-2RNUn9xLBHUGtW1D7EuEYn7q_5f-N9Kvg@mail.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 14 Feb 2018 00:00:14 -0800
+X-Google-Sender-Auth: dtmHtvUfrz09epOEAqeUnKYY7Wo
+Message-ID: <CAPc5daU5qjoKkqTvy-xUUP9VAE5KWy0B+CqpujSrabp8MtzqPg@mail.gmail.com>
+Subject: Re: [PATCH v2] dir.c: ignore paths containing .git when invalidating
+ untracked cache
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ben Peart <benpeart@microsoft.com>,
+        Alex Vandiver <alexmv@dropbox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 12, 2018 at 10:55 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Feb 12, 2018 at 8:41 PM, Stefan Beller <sbeller@google.com> wrote:
->> + * Output the formatted string in the specified color (and then reset to normal
->> + * color so subsequent output is uncolored). Omits the color encapsulation if
->> + * `color` is NULL. The `color_fprintf_ln` prints a new line after resetting
->> + * the color.  BUG: The `color_print_strbuf` prints the given pre-formatted
->> + * strbuf instead, up to its first NUL character.
->
-> "`color_print_strbuf` prints the given pre-formatted strbuf (BUG: but
-> only up to the first NUL character)."
->
-> Probably not worth a re-roll is Junio can amend it locally.
+On Tue, Feb 13, 2018 at 5:24 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> I am worried that always doing the right thing may carry performance
+> penalty (this is based purely on reading verify_path() code, no actual
+> benchmarking). For safety, you can always set safe_path to zero. But
+> if you do a lot of invalidation and something starts to slow down,
+> then you can consider setting safe_path to 1 (if it's actually safe to
+> do so).
 
-By the way, thanks for the patience in the face of the nit-picking
-this patch has undergone.
+Fair enough. Thanks for articulating the reasoning.
