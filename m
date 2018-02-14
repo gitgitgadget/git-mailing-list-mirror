@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D19041F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B3621F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162529AbeBNTBV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 14:01:21 -0500
-Received: from mail-yw0-f202.google.com ([209.85.161.202]:37223 "EHLO
-        mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162516AbeBNTBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:15 -0500
-Received: by mail-yw0-f202.google.com with SMTP id e129so2871612ywb.4
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:15 -0800 (PST)
+        id S1162537AbeBNTB0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:01:26 -0500
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:39217 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162515AbeBNTBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 14:01:23 -0500
+Received: by mail-vk0-f74.google.com with SMTP id p2so13521694vke.6
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=82xlf5P5n7axzPfS9Z9oNiG2AakgeFTv23JkymXF7/k=;
-        b=AigU9i7IFsrjVRxiHfjHdzOb4Keme6SLiTbp3TceYJsB1VwoES1Ltnfitwl/zV/XeU
-         KUWL85+L9VEcZWB7HJQQXTZ+oDa2/FGSGb6ADyzH5jDKG2RSrloHAb5SWi6xuw6SCWFD
-         EtYMFA048P7v1oSuMH+aGiO0DFY78OFF+AsJz5v6P3ludODSdfDp8sUIbGIfdqXnXH0M
-         pTEp0SViSx/KNYU/5hEEtENROIhz2in7P2ArdKf64spm0emJz+LPy0y1MhkOOlUb0cwY
-         lZw/tdPB9dXnFjLQcjaC+aaclNOIIRfZ9r6B7opzWxbKoODbD11B8/H6zYrezZLpckZ3
-         JzpA==
+        bh=eNAk7xwef+uDY4x9+c84lcLUtu9T/RFFSSBX+LZWdV0=;
+        b=N1dzzc8Yk1Im2cPMH3IydjYj8BGVZAahoCQgYV/aqR5JOAGVIi4J9YKESBHcA3FqYd
+         YEFQa6kORWmbRFXfogUQ1M9OJm+Wwef/9kMRQpg3rYSOSlZzCqe6O6LTWOIVsXUewVn6
+         IW4uxhC26Yyc/pOkXJj2H+uwroR4tNKRIIEZphV8hZC16bqBBOcim6VMKz0+mnUqHoQS
+         X2e/jdj7ZALgrh4awUXzwMgdbF2sf1qrvGHf8H9fz+mZ6vMxVRtfbBxTGeluzWq5tsOp
+         Bvv8R3jeBGg5msSX01AXKB+5PLhpC3vUL+YQZEMnMIxE266wY4fG4cWJ8zxuoFhxZLUU
+         7CEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=82xlf5P5n7axzPfS9Z9oNiG2AakgeFTv23JkymXF7/k=;
-        b=GSva9L6+MwtbmUj1GdOn8NzMrbRxseHRk7pfa57qlBJkjPkI24+DFrYMUDt8QZxt7z
-         GzohGhBatLojOMY0LrAC0D4vYBmTJxLHUGxxVCIBvqOQZT3Ik9dNYiVeb7cnfpMMBheF
-         sRNMK9FzvcdIEb+qboSVBejMHc7TQTjvx8/sqDHL9f7KcowMN0i+aOsmfEfYPzNzGcq4
-         uXZeQPc/Xf8OoFfDfCsUdAGHAmz2fgULEa6ih9dNZhiehCGeq62XkTprEqK6qMf3y5b/
-         7Rf2TvkkxDkmwe5gu7jbULHi+rZzybGFZDhDkcZyJutuw9kzxw0dtHTOzO84j2j+URM+
-         10bA==
-X-Gm-Message-State: APf1xPDrXjzOWoH/hLG1AfHYNgdMDkxeBds7aTOtnLCFPat/CgapqhkS
-        J6L5APZyYoJI7gW5dyKfLeTbWOVcPuf3ZxRV3Rv8lauZCB2bHe+AXTidcM56z2GUclUYxSNKVoz
-        YTkih+IICTYi7Xldk6cFjm4zDysQeuk52ibm73PVqzdt0Urq6DeDzudn2KA==
-X-Google-Smtp-Source: AH8x225F5TaE0MmQrhBsVQhmIGkWtyJhb4jKKf6FhHsgsB7F+cpk5CQm5krzFfxD/YeFFX0+zGF6rRGoei0=
+        bh=eNAk7xwef+uDY4x9+c84lcLUtu9T/RFFSSBX+LZWdV0=;
+        b=peLiRu74+XuaQPXWLyMM1t8eUOY6KYxI5i0H18c8duWa98Y+oCExJsQSXPdhm0OzO2
+         9aL0oR6eGQnmjxcSFkzZYA793aH2pD+j5lyXD12mw+l+VxUr1fsx/7pmINET6QKtYo6M
+         ZeoGB4h5WObSoZyCeFVQbU3AdJELdmzpfyUuuH4/N/+ScmCgdm+RmQ9xZ6b25DRqVCFO
+         S2S3rz0oFVS6SUUEYQJrY6E5nhIokPoA8iuaZyrWHz3vKYOVYBRYY4qBjyN53iXCodcA
+         Ub6MGiTHPnPsrKQFdRZ8VAxuciYYRrehGWNbisOO/sz9CJZo68NBzo3lczjnQkBM12fm
+         i7eQ==
+X-Gm-Message-State: APf1xPClIP/mdHpEpO519W0MxaUPXa85umcLXiJdtN+r9HHDzKWRHWBA
+        Y+XcGPvcbvVElzezSEZ9Gw0infzxEdea4/KaoevCVgjTKMhiavvn2SB/Pj6kHTh5dvzvZsOclqy
+        zcnf0NfoQKAZrZ7K7kA170IIpRYV8qZ6A/pcL+igMLdo9gr8moRFkRsrCTw==
+X-Google-Smtp-Source: AH8x227iFqDbMtVZM3hn/IMzmLQcWiv0Xy1puPYq9+HUAwSUVHJCbZFr8yT88BtL1VmxSVCTBunc1QNxcjo=
 MIME-Version: 1.0
-X-Received: by 10.37.214.210 with SMTP id n201mr1249807ybg.23.1518634874690;
- Wed, 14 Feb 2018 11:01:14 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:34 -0800
+X-Received: by 10.176.80.203 with SMTP id d11mr2796731uaa.102.1518634882733;
+ Wed, 14 Feb 2018 11:01:22 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:37 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-13-bmwill@google.com>
+Message-Id: <20180214185959.221906-16-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 12/37] reflog: rename 'new' variables
+Subject: [PATCH v2 15/37] commit: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,38 +68,54 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/reflog.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ commit.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 223372531..ac3dcd7a5 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -289,20 +289,20 @@ static int should_expire_reflog_ent(struct object_id *ooid, struct object_id *no
- 				    const char *message, void *cb_data)
- {
- 	struct expire_reflog_policy_cb *cb = cb_data;
--	struct commit *old, *new;
-+	struct commit *old_commit, *new_commit;
+diff --git a/commit.c b/commit.c
+index cd9ace105..874b6e510 100644
+--- a/commit.c
++++ b/commit.c
+@@ -861,19 +861,19 @@ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+ 	commit_list_insert(in->item, &ret);
  
- 	if (timestamp < cb->cmd.expire_total)
- 		return 1;
+ 	for (i = in->next; i; i = i->next) {
+-		struct commit_list *new = NULL, *end = NULL;
++		struct commit_list *new_commits = NULL, *end = NULL;
  
--	old = new = NULL;
-+	old_commit = new_commit = NULL;
- 	if (cb->cmd.stalefix &&
--	    (!keep_entry(&old, ooid) || !keep_entry(&new, noid)))
-+	    (!keep_entry(&old_commit, ooid) || !keep_entry(&new_commit, noid)))
- 		return 1;
- 
- 	if (timestamp < cb->cmd.expire_unreachable) {
- 		if (cb->unreachable_expire_kind == UE_ALWAYS)
- 			return 1;
--		if (unreachable(cb, old, ooid) || unreachable(cb, new, noid))
-+		if (unreachable(cb, old_commit, ooid) || unreachable(cb, new_commit, noid))
- 			return 1;
+ 		for (j = ret; j; j = j->next) {
+ 			struct commit_list *bases;
+ 			bases = get_merge_bases(i->item, j->item);
+-			if (!new)
+-				new = bases;
++			if (!new_commits)
++				new_commits = bases;
+ 			else
+ 				end->next = bases;
+ 			for (k = bases; k; k = k->next)
+ 				end = k;
+ 		}
+-		ret = new;
++		ret = new_commits;
  	}
+ 	return ret;
+ }
+@@ -1617,11 +1617,11 @@ struct commit *get_merge_parent(const char *name)
+ struct commit_list **commit_list_append(struct commit *commit,
+ 					struct commit_list **next)
+ {
+-	struct commit_list *new = xmalloc(sizeof(struct commit_list));
+-	new->item = commit;
+-	*next = new;
+-	new->next = NULL;
+-	return &new->next;
++	struct commit_list *new_commit = xmalloc(sizeof(struct commit_list));
++	new_commit->item = commit;
++	*next = new_commit;
++	new_commit->next = NULL;
++	return &new_commit->next;
+ }
  
+ const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
 -- 
 2.16.1.291.g4437f3f132-goog
 
