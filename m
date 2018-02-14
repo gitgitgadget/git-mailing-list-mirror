@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73BAD1F404
-	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D32971F404
+	for <e@80x24.org>; Wed, 14 Feb 2018 19:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162547AbeBNTBg (ORCPT <rfc822;e@80x24.org>);
+        id S1162550AbeBNTBj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 14:01:39 -0500
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:52643 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162541AbeBNTBg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Feb 2018 14:01:36 -0500
-Received: from mail-oi0-f73.google.com ([209.85.218.73]:46941 "EHLO
-        mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162541AbeBNTBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 14:01:34 -0500
-Received: by mail-oi0-f73.google.com with SMTP id 16so11380594oin.13
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:33 -0800 (PST)
+Received: by mail-vk0-f74.google.com with SMTP id o17so8439147vke.19
+        for <git@vger.kernel.org>; Wed, 14 Feb 2018 11:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=p4nCmXWPSy3lzpAUdgrTAYK7YiRjeRxjk+uErjJa0Lc=;
-        b=P4iaJCujue5PR2O7YakipByKCvZVjkJwUc5J64h+3ncS0wPdKBhQ1KJGbbgpq1qykB
-         BqNd80momGhSEP+uLfZWfbn4Ru80JvuyTDD94y/RgJjUPCL8uyTo/DeF72s8wSpcoo7w
-         tRaD6kJWiDJjXmEFFQ1prtFNplRUiBe114NM0rcGgHgjtZHL9TgFWXLZDAbZY9d4NfLS
-         Rb438qpKFKp4M5GDBE9TyrTgw9aSbUJHoOD3L1BfYMv/kJkPIVeCcgzlZTYvZAqtp6n6
-         dVIQmf0k3qv1xMI+VD6y3TanNSuTNL8f/S/L45f7o5GuUx1cy9+uuTn68kPHXaRRbMr2
-         sQZg==
+        bh=c+wnFIUlU1j7ERxDDg0nOjdIjr0KdzCZ5cHV4LSyAb8=;
+        b=F/Ik6gAQLUn4SkTUGnYnlUX+xp8TkG2mDZTALOPVPP5V8VjkTDRSY9jMwr+odiN6Tf
+         PU8nlAffLTGf3kjNm0vA/bb+PxrEWzoyhC7fQfYrHwI7Aa5DBD2oxyn9T9uV1O3lxI3N
+         qWlGRI9m50ekEi+KfpO+aaQTAudIiYa/mWbec9tHyLJD5szgD6FaJN8J7rF31E0/9K75
+         TmPRwCp06nx8itBDBuUIUiWf0//OoiB+/ZgugkolXPRBrjiX1a/a3M5sz5BLot8q/V3T
+         VlJ2ZEVecLPaXonkp8mp7YGRb6QKSyBbWTk34VAu4IMIUQnohc2mch12d+j5AjeEBRm5
+         h2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=p4nCmXWPSy3lzpAUdgrTAYK7YiRjeRxjk+uErjJa0Lc=;
-        b=BrRSOYTHSZDXMTUkgOLJCPW/f/kjyyxWOKEXSr4s7TmdIY3ucIVSh8FA2gtDFIcZlL
-         NCZB4ZWO4F/Ysc1wYebb4G7mx+LAULbnjDf0JyMWcJ3eKgIUVKPuHhfxz40lBxyScbiJ
-         IZlguKI7a/4pbUfQwgDouNyNGqRHGX4c8D33vIhjBGLvN8sfyguiNwuN8QXcgtYRPTe6
-         4IPCruty37jx6Rko+bPjGrhSnKywMLmXMKmqExiFuk8RUnyodprN75kX2niC3EYGxUY4
-         XSaFsqcASWCQrLnTE6IGM7LSWxdhyU1cun4/ZzJw3vD3/4T5+iK48BsQ8Hy4jgk+C6W3
-         1H+g==
-X-Gm-Message-State: APf1xPD/L6YsK8KGk0BWIdTYpOQVUC9n00OqonGqIgt5QsXrY52a0e9m
-        3Pp9/qPQ9Flohdszl6rvAhrvOPzJA1zvrL08PyQm/UtZuXeMEH5qJSd3dEjF1ZtxB6sCNYrdY1P
-        7/tlHtZDcwEYBQe3s2K52AZvYHQqHvm6Itnh5KxzSpIUY16I61nFyra/VGw==
-X-Google-Smtp-Source: AH8x224DnFjsKRb4vTBafSBhs4BIINeZFAaFTHV1DZh98qdRW0B9iBLU3x6DhpozGmH2DlfKIOYPwN1Pay0=
+        bh=c+wnFIUlU1j7ERxDDg0nOjdIjr0KdzCZ5cHV4LSyAb8=;
+        b=Skfc+wdAIMR+0LYNzuIvyb6XxZbX37mP0Qo1N8yCpEdECRfyhmmnsqQsD8ximdrrpb
+         fKMi8ABNtNoj0fW3oyTsRoVFHD3kpQIGF47OZGzOOA0jetbPUl/fL4K+G1z302pGVoGy
+         FyGU3TnwLLHoi2SC8LICoAealwsB5bcHhs2XkSV9VpAWtmm1vqNI0edUfpt3RRtymDbm
+         cgQNEvj4CPqDCr2Grd/5xYlLZfqSPINuqF8yUwuZscex/+iSTPZ2Heb/rpfGA9t1XEKR
+         BO7bEfhcUKlxsqsx/ezf3vd5he784Xkag0HAWt708e7zOQsHGyx/EAVksfwoNOBnPPye
+         dNGg==
+X-Gm-Message-State: APf1xPBVpm4o7/Jbn5BZ96g1K/tJ1MgrEtXWKLgJvET2odDLeeCcdvvt
+        M6ZjvSHIguH2msQoJhBfJTel/1XqJjVFf47J9oo4gf32Pr2uLv6yLWr/iJyM1+48x//k0R4HGmi
+        2drmaHh1uLII45UjYK4XbtxuD7UazLaKXdOKBqGm87CpSp13UVuON45iXNw==
+X-Google-Smtp-Source: AH8x226VrE4rPfYc4qF+IpkcTD74TGPWaYXzbDSGPD1R+Pg4MUnjLEekwDR+FAWwcxiKlNwTP1mrgZfBqt8=
 MIME-Version: 1.0
-X-Received: by 10.157.38.8 with SMTP id a8mr13545otb.87.1518634893338; Wed, 14
- Feb 2018 11:01:33 -0800 (PST)
-Date:   Wed, 14 Feb 2018 10:59:41 -0800
+X-Received: by 10.31.211.6 with SMTP id k6mr2737369vkg.103.1518634896156; Wed,
+ 14 Feb 2018 11:01:36 -0800 (PST)
+Date:   Wed, 14 Feb 2018 10:59:42 -0800
 In-Reply-To: <20180214185959.221906-1-bmwill@google.com>
-Message-Id: <20180214185959.221906-20-bmwill@google.com>
+Message-Id: <20180214185959.221906-21-bmwill@google.com>
 References: <20180129223728.30569-1-bmwill@google.com> <20180214185959.221906-1-bmwill@google.com>
 X-Mailer: git-send-email 2.16.1.109.g93438bbb9.dirty
-Subject: [PATCH v2 19/37] entry: rename 'new' variables
+Subject: [PATCH v2 20/37] http: rename 'new' variables
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     j6t@kdbg.org, sbeller@google.com, avarab@gmail.com,
@@ -68,119 +68,33 @@ to be compiled with a C++ compiler.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- entry.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ http.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index 30211447a..6c33112ae 100644
---- a/entry.c
-+++ b/entry.c
-@@ -85,12 +85,12 @@ static int create_file(const char *path, unsigned int mode)
- static void *read_blob_entry(const struct cache_entry *ce, unsigned long *size)
+diff --git a/http.c b/http.c
+index 597771271..41cfa41a9 100644
+--- a/http.c
++++ b/http.c
+@@ -1194,14 +1194,14 @@ static struct fill_chain *fill_cfg;
+ 
+ void add_fill_function(void *data, int (*fill)(void *))
  {
- 	enum object_type type;
--	void *new = read_sha1_file(ce->oid.hash, &type, size);
-+	void *blob_data = read_sha1_file(ce->oid.hash, &type, size);
- 
--	if (new) {
-+	if (blob_data) {
- 		if (type == OBJ_BLOB)
--			return new;
--		free(new);
-+			return blob_data;
-+		free(blob_data);
- 	}
- 	return NULL;
+-	struct fill_chain *new = xmalloc(sizeof(*new));
++	struct fill_chain *new_fill = xmalloc(sizeof(*new_fill));
+ 	struct fill_chain **linkp = &fill_cfg;
+-	new->data = data;
+-	new->fill = fill;
+-	new->next = NULL;
++	new_fill->data = data;
++	new_fill->fill = fill;
++	new_fill->next = NULL;
+ 	while (*linkp)
+ 		linkp = &(*linkp)->next;
+-	*linkp = new;
++	*linkp = new_fill;
  }
-@@ -256,7 +256,7 @@ static int write_entry(struct cache_entry *ce,
- 	unsigned int ce_mode_s_ifmt = ce->ce_mode & S_IFMT;
- 	struct delayed_checkout *dco = state->delayed_checkout;
- 	int fd, ret, fstat_done = 0;
--	char *new;
-+	char *new_blob;
- 	struct strbuf buf = STRBUF_INIT;
- 	unsigned long size;
- 	ssize_t wrote;
-@@ -276,8 +276,8 @@ static int write_entry(struct cache_entry *ce,
  
- 	switch (ce_mode_s_ifmt) {
- 	case S_IFLNK:
--		new = read_blob_entry(ce, &size);
--		if (!new)
-+		new_blob = read_blob_entry(ce, &size);
-+		if (!new_blob)
- 			return error("unable to read sha1 file of %s (%s)",
- 				     path, oid_to_hex(&ce->oid));
- 
-@@ -288,8 +288,8 @@ static int write_entry(struct cache_entry *ce,
- 		if (!has_symlinks || to_tempfile)
- 			goto write_file_entry;
- 
--		ret = symlink(new, path);
--		free(new);
-+		ret = symlink(new_blob, path);
-+		free(new_blob);
- 		if (ret)
- 			return error_errno("unable to create symlink %s", path);
- 		break;
-@@ -300,11 +300,11 @@ static int write_entry(struct cache_entry *ce,
- 		 * bother reading it at all.
- 		 */
- 		if (dco && dco->state == CE_RETRY) {
--			new = NULL;
-+			new_blob = NULL;
- 			size = 0;
- 		} else {
--			new = read_blob_entry(ce, &size);
--			if (!new)
-+			new_blob = read_blob_entry(ce, &size);
-+			if (!new_blob)
- 				return error("unable to read sha1 file of %s (%s)",
- 					     path, oid_to_hex(&ce->oid));
- 		}
-@@ -313,18 +313,18 @@ static int write_entry(struct cache_entry *ce,
- 		 * Convert from git internal format to working tree format
- 		 */
- 		if (dco && dco->state != CE_NO_DELAY) {
--			ret = async_convert_to_working_tree(ce->name, new,
-+			ret = async_convert_to_working_tree(ce->name, new_blob,
- 							    size, &buf, dco);
- 			if (ret && string_list_has_string(&dco->paths, ce->name)) {
--				free(new);
-+				free(new_blob);
- 				goto delayed;
- 			}
- 		} else
--			ret = convert_to_working_tree(ce->name, new, size, &buf);
-+			ret = convert_to_working_tree(ce->name, new_blob, size, &buf);
- 
- 		if (ret) {
--			free(new);
--			new = strbuf_detach(&buf, &newsize);
-+			free(new_blob);
-+			new_blob = strbuf_detach(&buf, &newsize);
- 			size = newsize;
- 		}
- 		/*
-@@ -336,15 +336,15 @@ static int write_entry(struct cache_entry *ce,
- 	write_file_entry:
- 		fd = open_output_fd(path, ce, to_tempfile);
- 		if (fd < 0) {
--			free(new);
-+			free(new_blob);
- 			return error_errno("unable to create file %s", path);
- 		}
- 
--		wrote = write_in_full(fd, new, size);
-+		wrote = write_in_full(fd, new_blob, size);
- 		if (!to_tempfile)
- 			fstat_done = fstat_output(fd, state, &st);
- 		close(fd);
--		free(new);
-+		free(new_blob);
- 		if (wrote < 0)
- 			return error("unable to write file %s", path);
- 		break;
+ void fill_active_slots(void)
 -- 
 2.16.1.291.g4437f3f132-goog
 
