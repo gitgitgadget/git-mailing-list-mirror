@@ -2,100 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 617131F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 00:18:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BEFC1F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 00:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032236AbeBOAS3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 19:18:29 -0500
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:42068 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032127AbeBOAS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 19:18:28 -0500
-Received: by mail-pg0-f65.google.com with SMTP id y8so2886662pgr.9
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 16:18:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5rcO2mAo1jTB6wDW9GA++Zue4KMXsRvA7QBqsXKL9Ig=;
-        b=gtIo7trXtk/gh+ijU8k1+0/fabj53oKhTpnMtVU11ajlpXSjjaMAxUJf76Tuti3PmE
-         /s8uIgZm0nqll8WiopwuvryxZxUJXZYLLPcLf18M/1DzoYCWhCPi4bfVeCSuPWo/FXac
-         er9CBeUFZa/juWykW9Adm5tK2sWs3ide7i4Gz/OZx6yazaBIa3aYrsSccJhGtW78zXDb
-         l4HndJ2PMQbNGZNy0ExljTj+olgVES0B0QiourjQEtRry81ZhJvYh+HLDaRPuIijZUXG
-         JRZqU0W69EybEsrV2tzqQNCCnPYRcpFNmMUdPgislGjrRtocSZSGeFCPP/7t9l6myFNr
-         IprA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=5rcO2mAo1jTB6wDW9GA++Zue4KMXsRvA7QBqsXKL9Ig=;
-        b=OreVkVqQ1lEEFftcm0fR0gSGXEX1dMfpODuaLrI/oO+q/ZoQ5Wwr68wXf5AruyeAA0
-         zLKRD2J7klS/SUqhrMBgcLI5ghIyyalw4KV23WY9abL3OQZ6EV6dIb9wXP/a43g9PG96
-         fW21d9DXCFbfIsL/9BZ+uyHe1368b1rpZX2xFLYS10LC3Ji4xnf8EqzWfFs1ZTPQRp5u
-         wji0Nbzp2MgADAYRaxVNg8vM/3dBPwIrBGsdEulRpXphLbnkRpu4sJe18FV42r5NrYgf
-         Q5feK9xaeJHVHh5VS8kUwflMekw1+uJsgG8xwh5GVWvcKWPjU6mVVnMCynyKSENAuSPL
-         F0sQ==
-X-Gm-Message-State: APf1xPD0Wjw+/4F3jeayiWSlRVG94WpS3cyrxKbz+tQWCwrAtS/gXmUO
-        95eUbDxC1m0nRNtfax2jPPZ6YlmmveE=
-X-Google-Smtp-Source: AH8x225H3iLYnG7lH/wPR06WDUjJP1lTe+5EStmG7AY8z+oBYe49usgkTfKyfB3Sv2y9FOXlP7IajA==
-X-Received: by 10.98.98.194 with SMTP id w185mr791970pfb.9.1518653907678;
-        Wed, 14 Feb 2018 16:18:27 -0800 (PST)
-Received: from localhost ([2620:0:100e:422:2d12:5719:3437:fdb7])
-        by smtp.gmail.com with ESMTPSA id e18sm29493236pgr.3.2018.02.14.16.18.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Feb 2018 16:18:27 -0800 (PST)
-From:   Stefan Beller <sbeller@google.com>
+        id S1032283AbeBOA3d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 19:29:33 -0500
+Received: from mout.gmx.net ([212.227.17.21]:49309 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1032127AbeBOA3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 19:29:30 -0500
+Received: from MININT-TB4PCE7.southpacific.corp.microsoft.com
+ ([37.201.195.115]) by mail.gmx.com (mrgmx101 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 0M0LtB-1eVh6X2sOr-00ud4N; Thu, 15 Feb 2018 01:29:24 +0100
+Date:   Thu, 15 Feb 2018 01:29:23 +0100 (STD)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@MININT-6BKU6QN.europe.corp.microsoft.com
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/1] Documentation/git-status: clarify status table for porcelain mode
-Date:   Wed, 14 Feb 2018 16:18:12 -0800
-Message-Id: <20180215001812.135304-2-sbeller@google.com>
-X-Mailer: git-send-email 2.16.1.291.g4437f3f132-goog
-In-Reply-To: <20180215001812.135304-1-sbeller@google.com>
-References: <20180215001812.135304-1-sbeller@google.com>
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] Teach `git apply` to accept Subversion-generated diffs
+Message-ID: <cover.1518654532.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ng80sG0TV2qMt2KEbHMI9LcPYCrWAkjlaOgnx28DduO5LkViCg+
+ B+UU60jIoexq0auD+9oDrGhjC6Ovxwqsk6r5CIA/YRsXV57OYiGnDyuEVOZjTjrxTwIbBtv
+ Rq8LdKccwXhMvNWxMygFVWk4p6ey1hsKTb77NB39fg3gWLEr9e1GhHJHhFJygxumLowC2vk
+ FXSJEuo04RDW3pEhKSwBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X6Cn42DFpBU=:cZAPagf9P6mjkamRwPpy+B
+ 5cavweNR9mICbph2UMQQrUJLw0JICbakyWk3VTyhfZXP4pfFkO6eXem6bGKhgaqYNObREXRwD
+ zUdqBa1sIHw8fMdWhpZiACvKciu942rydEiWNnGZ4mXkHTMbYfVYSOWDCNHSm+mtlxf05H6IW
+ nqUkaTpWWU7ssfwblGRl3v1cT+OFMpCBoAxNRZYPXRqEsAA9fCkidnMtNQOkzAyL33D5FUPTF
+ 97zO+eVWS3Gx/1MLYaV5F4N2nl894kS+IVr4DCm3ag8V6+CKU28v1kW97r3ob0UY37zhBHvRo
+ TbifnNHEzFL/Lo0+V90bSi7Bm/jPXLBeRHChiu1Mcfh9KyqNSMKM1HsbuZGoIkwHI7Umex9Tf
+ TY03P2ZGd9647/DCDFLjpGXcKJKsVhATb9PLlOC8P3f8Bt8x05R8DWqd3SA4LkRZ/YHxK+/Yo
+ oDFbx41Ab1aUy1pzXRQpnbyMR7FkfFSm+Ff6O5Rd3hSOuyCEbf2nFv5QRLf0wVj+RB9FyDYke
+ AA9pQk4H7OGLb/sjD+Cy2i2MBjEooRn5ldTx5yL5QYtLUa8n14QJNQtUBJKkFiN97AZPUu/l1
+ Pq73vGyK2VY2cHA3jWoMWLofH78Vg5x3oNTpfBwTb01N8AHbjEzxUusruHKDOzA8d/ijR/TFa
+ g/+xdti9nXYV0+wikKe6FMN4Fp6TQZgvIFrHuMEqqa5BKOkwwH8cs/kZNCMyInk3Gd/JXT5Cg
+ HsUbs3i5qPl4/1tH6YZ9Q2q4E0dAXUvZ0kNiDlj2twgAJhVTqwTs//TdBjmDkVk82GFk9wJvi
+ aHyvESH8AXBcOJX6n9QsTLlzCTr4TUgmthy99NLxfO31OQDtJo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is possible to have the output ' A' from 'git status --porcelain'
-by adding a file using the '--intend-to-add' flag.  Make this clear by
-adding the pattern in the table of the documentation.
+They are accepted already, almost. With one exception: the ---/+++ lines
+contain not only the file names, but continue with a TAB and then the
+revision (or "working copy" or "nonexistent") in parenthesis.
 
-However the mode 'DM' (deleted in the index, modified in the working tree)
-is not possible in the non-merge case in which the file only shows
-as 'D ' (and adding it back to the worktree would show an additional line
-of an '??' untracked file). It is also not possible in the merge case as
-then the mode involves a 'U' on one side of the merge.
-Remove that pattern.
+We already handle these lines, except in the case of /dev/null. Let's handle
+the case gracefully where the diff contains a "--- /dev/null" line with a
+trailing comment.
 
-Reported-by: Ross Light <light@google.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/git-status.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+This contribution came in via Pull Request to Git for Windows, from a first
+time contributor! Yes!
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index 72bfb87f66..de69035cca 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -184,10 +184,10 @@ in which case `XY` are `!!`.
- 
-     X          Y     Meaning
-     -------------------------------------------------
--              [MD]   not updated
-+             [AMD]   not updated
-     M        [ MD]   updated in index
-     A        [ MD]   added to index
--    D         [ M]   deleted from index
-+    D                deleted from index
-     R        [ MD]   renamed in index
-     C        [ MD]   copied in index
-     [MARC]           index and work tree matches
+
+Johannes Schindelin (1):
+  apply: demonstrate a problem applying svn diffs
+
+Tatyana Krasnukha (1):
+  apply: handle Subversion diffs with /dev/null gracefully
+
+ apply.c                          |  2 +-
+ t/t4135-apply-weird-filenames.sh | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
+
+
+base-commit: b2e45c695d09f6a31ce09347ae0a5d2cdfe9dd4e
+Published-As: https://github.com/dscho/git/releases/tag/apply-svn-diff-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git apply-svn-diff-v1
 -- 
-2.16.1.291.g4437f3f132-goog
+2.16.1.windows.1
 
