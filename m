@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCE9C1F576
-	for <e@80x24.org>; Thu, 15 Feb 2018 10:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 599311F576
+	for <e@80x24.org>; Thu, 15 Feb 2018 10:27:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755458AbeBOKUx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 05:20:53 -0500
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34162 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755390AbeBOKUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 05:20:52 -0500
-Received: by mail-wm0-f65.google.com with SMTP id j21so469190wmh.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:20:51 -0800 (PST)
+        id S1755300AbeBOK1n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 05:27:43 -0500
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:33118 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751151AbeBOK1m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 05:27:42 -0500
+Received: by mail-wr0-f173.google.com with SMTP id s5so2812901wra.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:27:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=P1ClNCw7KuiRcVfdd5vEHuqovwuBDlim5n3Lvb5vwzY=;
-        b=BGHDobQX93eM3vJyX8ygWhOYWreaS1D9akX96RYElDBBeNnVnXIoEE5kx8uJ20fNtN
-         EC+wgJ2hES44oG6TzNLYJT9LU2T2DBdw/zaWq15hw7VYRzOT2jBxX29Z/kLRWUZv0kbw
-         xpU0+Qtw5CjeCfj9X+573msTWmGRApmICxZZBPoGHd6xIUPULde32Fu0JU7TqVArrB06
-         J4rq/UwIvgtiGjNPB+hMSYwMPocImVsHfGOr+dvyPfvHOs0Q/ru0bPJRROwIk21wiqqV
-         g+Yf1oe/BtNox9//svKH0SJC6z8L7v66bbJD+u32YpDWl8LczKNokCH+loaEjVCiD35z
-         uP0w==
+        bh=5SuJikjVf4YBT50Xs2pCRMzlJ1CJHnSi2AfoMYyC3j0=;
+        b=Y2K+pWAVaX2THjsY4ZPRHGBfd4a0Z2MiUxo295zDhC7fFMQjQSBKjRu4y873nV1wgs
+         vxBtG2nvpv6rOdIsLIQcbIdhGInNNh3kiIiSUhcoeggR4vzOOiTU037Iys11mxzZhMgu
+         HYUP3iFH/4fzxHZkWlMdmIN8BquoXBw4mvur/mvizqpfJllHj0XSiUxmws7FtP1e7OIa
+         q0atocD7zqc7evgSlEVQlBGM2zUYd99YtItQE1fQCsQ02imyx7Fj/rIGB1yE6Kf1fKLf
+         jBeQLQB4Ax5+bqh+Zxd/kIA5zX1ApkDajppThkvXty61VzRXKTDvfggB+zSxiCMU/jVp
+         XQ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=P1ClNCw7KuiRcVfdd5vEHuqovwuBDlim5n3Lvb5vwzY=;
-        b=OWZp204ScbOsJfF2LQF6TtS9mWzt3G8IZmbJxS0jOmX8rbL6FRaJu2BBJ1+kWZj/R9
-         27JRTCo6JW9kgLPB1iQIjPnuVB8r6MqaVPcInD3/Y5rVBa7YuJRy7kH5dcpke9uOB3xU
-         Eb7KUbBX6ByrwSI9cTjMaetQ6vOqU1Yub0/lxqZ2I7fcSUpNEJV7/ZTnvYPz6qQjSGvh
-         mAQF/HZJVeZlckC0bQNQ2zls6zZArCc5jvS1B8NFFSb712kXnm8UF7tev/5XI9NVypvi
-         k5nwecL6taIfLQoBEzTQ2G9nu5zD67pFERE3gJdz9g7V8NbFXdsfMxg1XYpCGbzzXFB+
-         EFug==
-X-Gm-Message-State: APf1xPC8mLbLfgKeqF+X3CDoIJn0fkbbxx/w9ZeKlrceWMxdScldP/Du
-        +5xlEpwvZDKuljmRhBOVBX16oB0XjzmHn4ShvOY=
-X-Google-Smtp-Source: AH8x2279HMNRqv6uNL4HYbXMpspHKPmThP5WjYuezjhBeKZ8VnBzrdIWI5YTP9paFxn7xvyppm6kGCgjS3HC3ODUqAI=
-X-Received: by 10.28.71.77 with SMTP id u74mr1518397wma.150.1518690051058;
- Thu, 15 Feb 2018 02:20:51 -0800 (PST)
+        bh=5SuJikjVf4YBT50Xs2pCRMzlJ1CJHnSi2AfoMYyC3j0=;
+        b=C3ddfr3FdCm+5mnNYx4pEylyBLVo8pU9weoWz2bziOWszODfNDYjVUnATijw1jhrk6
+         tJuNgLKlZOlo2vcPfJfLSveU3P30Fxgif7DFkvRqQ1ODolq1C6QsalvhlaAwhNtxTULV
+         ZQxxv+8R6qMcsWKr4S7nF6pubdEHFXUdbG4Kudgu6041GLxPa7mrZ7ThCjchdXQT76G7
+         nDCuZpktm4gs+4Smt9PeHsPvK2crJB4f5rLugLXlsEblvypHiJa0T7i+vDQjQ3cODbp2
+         6Aw3oMpNkIz5DSalaTABEnILWDlaF1qGvh8Jg9f446j8KnODmyzqkWQpfzYJtU1CeGgM
+         jJwQ==
+X-Gm-Message-State: APf1xPCbXnJ5oXCvnoS89oQVGLOm04BGwualGn1H6dQ2QkANhTTumc7V
+        YDi3bkChp7EzYOOPMlfjT32AzCbkfpxVqfZX6+FUNA==
+X-Google-Smtp-Source: AH8x227T6JslQchXFE6NW3ccHq1Mzgcswdhc1RWaBvi9MNf2JKm0N+F+o6Q/qI77K86OzP17PO7ih2Ez8F9HTbiuqvE=
+X-Received: by 10.223.135.65 with SMTP id 1mr1957309wrz.238.1518690461398;
+ Thu, 15 Feb 2018 02:27:41 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 02:20:50 -0800 (PST)
-In-Reply-To: <20180215054945.GL18780@sigill.intra.peff.net>
+Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 02:27:40 -0800 (PST)
+In-Reply-To: <20180215055158.GM18780@sigill.intra.peff.net>
 References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
- <01020161890f4357-05e636bc-8b44-425b-a252-ff2341f91cdd-000000@eu-west-1.amazonses.com>
- <20180215054945.GL18780@sigill.intra.peff.net>
+ <01020161890f435c-80fa0ef3-afaf-45b7-84a7-28e2bb66f320-000000@eu-west-1.amazonses.com>
+ <20180215055158.GM18780@sigill.intra.peff.net>
 From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
         <olyatelezhnaya@gmail.com>
-Date:   Thu, 15 Feb 2018 13:20:50 +0300
-Message-ID: <CAL21Bm=7R2URkaRVCbM-T3Yxeq-S+E6Pq_ECSiBk_yJf9D1rag@mail.gmail.com>
-Subject: Re: [PATCH v3 14/23] ref_filter: add is_atom_used function
+Date:   Thu, 15 Feb 2018 13:27:40 +0300
+Message-ID: <CAL21BmmvOHFve7FRfnRKuzsEm+Hkwo5AZUmqWrM-tmcbcLTSFQ@mail.gmail.com>
+Subject: Re: [PATCH v3 15/23] cat-file: move skip_object_info into ref-filter
 To:     Jeff King <peff@peff.net>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -64,43 +64,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2018-02-15 8:49 GMT+03:00 Jeff King <peff@peff.net>:
+2018-02-15 8:51 GMT+03:00 Jeff King <peff@peff.net>:
 > On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 >
->> Delete all items related to split_on_whitespace from ref-filter
->> and add new function for handling the logic.
->> Now cat-file could invoke that function to implementing its logic.
+>> Move logic related to skip_object_info into ref-filter,
+>> so that cat-file does not use that field at all.
 >
-> OK, this is a good direction. I think in a more compact series we'd
-> avoid moving the split-on-whitespace bits over to ref-filter in the
-> first place, and have two commits:
+> I think this is going the wrong way. ref-filter should always do as
+> little work as possible to fulfill the request. So it should skip the
+> object_info call whenever it can. And then any callers who want to make
+> sure that the object exists can do so (as long as the formatting code
+> tells them whether it looked up the object or not).
 >
->  - one early in the series adding is_atom_used()
->
->  - one late in the series switching cat-file over to is_atom_used() as
->    part of the conversion to ref-filter
->
->> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
->> index 6db57e3533806..3a49b55a1cc2e 100644
->> --- a/builtin/cat-file.c
->> +++ b/builtin/cat-file.c
->> @@ -382,8 +382,7 @@ static int batch_objects(struct batch_options *opt)
->>  {
->>       struct strbuf buf = STRBUF_INIT;
->>       struct expand_data data;
->> -     int save_warning;
->> -     int retval = 0;
->> +     int save_warning, is_rest, retval = 0;
->
-> Try to avoid reformatting existing code that you're not otherwise
-> touching, as it makes the diff noisier. Just adding "int is_rest" would
-> make this easier to review.
->
-> I also think the variable name should probably still be
-> "split_on_whitespace". It's set based on whether we saw a "%(rest)"
-> atom, but ultimately we'll use it to decide whether to split.
+> And then ref-filter doesn't have to know about this skip_object_info
+> flag at all.
 
-OK, I will fix that.
+Your message looks contradictory to me.
+I agree that ref-filter should do as least as it's possible, and that
+is the main reason why I put this code there. Moreover, I think that
+it's a good idea to implement that variable not only for cat-file, but
+for all ref-filter callers. And I think that it's a task of ref-filter
+to check whether the object exists or not (or - whether the ref is
+valid or not). But I am not sure that I need to solve that moment in
+current patch. It sounds like another separate task.
 
 >
 > -Peff
