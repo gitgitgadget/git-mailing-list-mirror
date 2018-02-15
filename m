@@ -2,133 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4523D1F404
-	for <e@80x24.org>; Thu, 15 Feb 2018 02:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97C241F404
+	for <e@80x24.org>; Thu, 15 Feb 2018 04:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032557AbeBOCO1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Feb 2018 21:14:27 -0500
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:45958 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032447AbeBOCO0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Feb 2018 21:14:26 -0500
-Received: by mail-wr0-f196.google.com with SMTP id q16so46533wrf.12
-        for <git@vger.kernel.org>; Wed, 14 Feb 2018 18:14:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iMpHuW2X/Qtn8oL5GL9KLKaRuLKMlQa6pfqYkyVA6kc=;
-        b=vU5t8sJdAGMAgxRQoIS5WYIKX42sJWKmESa9jsA9t7+6+VwdLo5CdjBX/bX4rr5lSe
-         n5kV0IPlls7u2TAAj75Kg+5y5lB0qu9q+/nE0dvJaGWHrE3nKV9mdpHsWNrErjMNJvu8
-         q8h9Z20xN1w0RpwwDoSUB3RdLTwqQ9f8i6Oow012q6AinDwInYWY/bKc+psNsCVWiqu3
-         K4x5bGtwP3bPUMBTxG0meoXqzdib9AeA0PnC2c2q7f7dKJx59xc4FY3B+FQvGMfDocAe
-         JQdpL+rtwiVEQi9aDpxKZWRbE75YygJVrMr54l1pgnCrxX+k6p86DoJ4hRmb3TQ+Ixx1
-         CJMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iMpHuW2X/Qtn8oL5GL9KLKaRuLKMlQa6pfqYkyVA6kc=;
-        b=b+QCxujso8bJwEiVl8prEYhWByhdYo0m3EKn66TX+5WD7mTnggPoGxkt2WGTsjjccv
-         WuCChp1tu6Xz2vbAsO49Nkxj0vXG6LHEbaD3LfhsmXspnRjn7NDzdYeCWdhAjtlDf3jD
-         iSGaLFHkvczERXLWrvJmxA/TILH0uehYwvF7j4wxRsHaUdYrnzkR0ID5GSoQteBym9q8
-         GBJ4OtqhnKNWQ8aTWW4eIUeBT2EFcCURikMDIGv9du+0IEWAD0vPwLmjS0NH5mO2CnYQ
-         NtITuZeyub6Boi35Gc154zyR513jZt2fz3pdyYc/xDofxYaBmzIkGWoouU26wfa8haRe
-         eNUw==
-X-Gm-Message-State: APf1xPABBMuHg5iV1UoeVtm8FZbVLS0YEesU8oEllQ/9FGuUdBGI5pwk
-        60EPEVsrWDwv0pJpWTETRlQIPw==
-X-Google-Smtp-Source: AH8x227dKH5vHk2Qq8sTrAOcotgf7CV0emueQJhNUBtatzZKNeUpE+kTzKVrJ6c15l8kgc+Ti/GbBw==
-X-Received: by 10.223.190.141 with SMTP id i13mr987020wrh.211.1518660864875;
-        Wed, 14 Feb 2018 18:14:24 -0800 (PST)
-Received: from localhost.localdomain (x4db2793a.dyn.telefonica.de. [77.178.121.58])
-        by smtp.gmail.com with ESMTPSA id k125sm24464438wmd.48.2018.02.14.18.14.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Feb 2018 18:14:24 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] Makefile: generate Git(3pm) as dependency of the 'doc' and 'man' targets
-Date:   Thu, 15 Feb 2018 03:14:10 +0100
-Message-Id: <20180215021410.14045-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.16.1.354.g266d823471
+        id S966475AbeBOE2W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Feb 2018 23:28:22 -0500
+Received: from mail.javad.com ([54.86.164.124]:38522 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754214AbeBOE2V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Feb 2018 23:28:21 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 6A6A83E89E;
+        Thu, 15 Feb 2018 04:28:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518668900;
+        bh=Pr6hH1vEMypvkJOJFJXBKBMbitgA8UNX/UKpwlzjL2U=; l=1067;
+        h=Received:From:To:Subject;
+        b=rohZnawDZ5XnClrE1Krji0F+PvGOOHg+60zByk6L7sVOKq1Qawkf6PmqZ7pVYk9yg
+         0Q/jsSpBZ1RWlOEHJGRewqQm2KJLALhyVWCt7hqD21mtbWsjc+qTozfNxXqqpoT5vE
+         1rnHyruqyPUoj5ch48fqYgcgGG/E5r1S4yxvEsXc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518668900;
+        bh=Pr6hH1vEMypvkJOJFJXBKBMbitgA8UNX/UKpwlzjL2U=; l=1067;
+        h=Received:From:To:Subject;
+        b=rohZnawDZ5XnClrE1Krji0F+PvGOOHg+60zByk6L7sVOKq1Qawkf6PmqZ7pVYk9yg
+         0Q/jsSpBZ1RWlOEHJGRewqQm2KJLALhyVWCt7hqD21mtbWsjc+qTozfNxXqqpoT5vE
+         1rnHyruqyPUoj5ch48fqYgcgGG/E5r1S4yxvEsXc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518668900;
+        bh=Pr6hH1vEMypvkJOJFJXBKBMbitgA8UNX/UKpwlzjL2U=; l=1067;
+        h=Received:From:To:Subject;
+        b=rohZnawDZ5XnClrE1Krji0F+PvGOOHg+60zByk6L7sVOKq1Qawkf6PmqZ7pVYk9yg
+         0Q/jsSpBZ1RWlOEHJGRewqQm2KJLALhyVWCt7hqD21mtbWsjc+qTozfNxXqqpoT5vE
+         1rnHyruqyPUoj5ch48fqYgcgGG/E5r1S4yxvEsXc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1518668900;
+        bh=Pr6hH1vEMypvkJOJFJXBKBMbitgA8UNX/UKpwlzjL2U=; l=1067;
+        h=Received:From:To:Subject;
+        b=rohZnawDZ5XnClrE1Krji0F+PvGOOHg+60zByk6L7sVOKq1Qawkf6PmqZ7pVYk9yg
+         0Q/jsSpBZ1RWlOEHJGRewqQm2KJLALhyVWCt7hqD21mtbWsjc+qTozfNxXqqpoT5vE
+         1rnHyruqyPUoj5ch48fqYgcgGG/E5r1S4yxvEsXc=
+Authentication-Results: mail.javad.com;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (mail.javad.com: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1emB9e-0005Ly-FE; Thu, 15 Feb 2018 07:28:18 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH 5/8] rebase: introduce the --recreate-merges option
+References: <cover.1516225925.git.johannes.schindelin@gmx.de>
+        <71c42d6d3bb240d90071d5afdde81d1293fdf0ab.1516225925.git.johannes.schindelin@gmx.de>
+        <874lmqirma.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802102357510.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <874lmmerdu.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802122118420.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        <87bmgt8k2k.fsf@javad.com>
+        <nycvar.QRO.7.76.6.1802150207170.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+Date:   Thu, 15 Feb 2018 07:28:18 +0300
+In-Reply-To: <nycvar.QRO.7.76.6.1802150207170.35@ZVAVAG-6OXH6DA.rhebcr.pbec.zvpebfbsg.pbz>
+        (Johannes Schindelin's message of "Thu, 15 Feb 2018 02:08:02 +0100
+        (STD)")
+Message-ID: <87eflmzxjx.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since commit 20d2a30f8f (Makefile: replace perl/Makefile.PL with
-simple make rules, 2017-12-10), the Git(3pm) man page is only
-generated as an indirect dependency of the 'install-doc' and
-'install-man' Makefile targets.  Consequently, if someone runs 'make
-man && sudo make install-man' (or their 'doc' counterparts), then
-Git(3pm) will be generated as root, and the resulting root-owned files
-and directories will in turn cause the next user-run 'make clean' to
-fail.  This was not an issue in the past, because Git(3pm) was
-generated when 'make all' descended into 'perl/', which is usually not
-run as root.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-List Git(3pm) as a dependency of the 'doc' and 'man' Makefile targets,
-too, so it gets generated by targets that are usually built as
-ordinary users.
+> Hi,
+>
+> On Tue, 13 Feb 2018, Sergey Organov wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > The wording is poor either way, but you are also not a native speaker so
+>> > we have to rely on, say, Eric to help us out here.
+>> 
+>> Likely, but why didn't you keep original wording from --preserve-merges?
+>> Do you feel it's somehow poor either?
+>
+> Yes, I felt it is poor, especially when --recreate-merges is present, that
+> is indeed why I changed it.
 
-While at it, add 'install-man-perl' to the list of .PHONY targets.
+So, how about this (yeah, I noticed the option now got arguments, but
+please, tweak this to the new implementation yourself):
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- Makefile | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+--recreate-merges::
+	Recreate merge commits instead of flattening the history. Merge
+	conflict resolutions or manual amendments to merge commits are
+	not preserved. 
 
-diff --git a/Makefile b/Makefile
-index 5bcd83ddf3..8d2bf4de59 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2214,13 +2214,15 @@ $(VCSSVN_LIB): $(VCSSVN_OBJS)
- 
- export DEFAULT_EDITOR DEFAULT_PAGER
- 
--.PHONY: doc man html info pdf
--doc:
-+.PHONY: doc man man-perl html info pdf
-+doc: man-perl
- 	$(MAKE) -C Documentation all
- 
--man:
-+man: man-perl
- 	$(MAKE) -C Documentation man
- 
-+man-perl: perl/build/man/man3/Git.3pm
-+
- html:
- 	$(MAKE) -C Documentation html
- 
-@@ -2618,7 +2620,7 @@ endif
- 	done && \
- 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
- 
--.PHONY: install-gitweb install-doc install-man install-html install-info install-pdf
-+.PHONY: install-gitweb install-doc install-man install-man-perl install-html install-info install-pdf
- .PHONY: quick-install-doc quick-install-man quick-install-html
- install-gitweb:
- 	$(MAKE) -C gitweb install
-@@ -2629,7 +2631,7 @@ install-doc: install-man-perl
- install-man: install-man-perl
- 	$(MAKE) -C Documentation install-man
- 
--install-man-perl: perl/build/man/man3/Git.3pm
-+install-man-perl: man-perl
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mandir_SQ)/man3'
- 	(cd perl/build/man/man3 && $(TAR) cf - .) | \
- 	(cd '$(DESTDIR_SQ)$(mandir_SQ)/man3' && umask 022 && $(TAR) xof -)
--- 
-2.16.1.354.g266d823471
+-p::
+--preserve-merges::
+	(deprecated) This option is similar to --recreate-merges. It has
+        no proper support for interactive mode and thus is deprecated.
+        Use '--recreate-merges' instead.
 
+
+-- Sergey
