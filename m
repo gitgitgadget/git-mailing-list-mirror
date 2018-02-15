@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51E521F576
-	for <e@80x24.org>; Thu, 15 Feb 2018 10:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4E2A1F576
+	for <e@80x24.org>; Thu, 15 Feb 2018 10:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755382AbeBOKLn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Feb 2018 05:11:43 -0500
-Received: from mail-ot0-f194.google.com ([74.125.82.194]:33040 "EHLO
-        mail-ot0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751002AbeBOKLm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Feb 2018 05:11:42 -0500
-Received: by mail-ot0-f194.google.com with SMTP id q9so22947021oti.0
-        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:11:41 -0800 (PST)
+        id S1755414AbeBOKNy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Feb 2018 05:13:54 -0500
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38753 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755310AbeBOKNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Feb 2018 05:13:51 -0500
+Received: by mail-wm0-f51.google.com with SMTP id 141so26752522wme.3
+        for <git@vger.kernel.org>; Thu, 15 Feb 2018 02:13:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Msm4vL2mTgHinkmKuHlb0YEtb7mZzmnQN2XQwpM8PeU=;
-        b=OM2sWLu7VdQD5MROx1rJLMM1L3PAzpShCEFpnCD7CDMC8qoF5xp/8ZHpEGXORHZ8EA
-         5DgBzL/H2a7IPN4eI5AlQyJyjzFfcV26ZHlywVRqVSWcowVnzXCLALRhu2YGxqyVATzY
-         8+L7anJWIidlWjCHLnQKDSEl0N1Y2pvI3okcs40ep0ypj09S4U2SeQ7S4tOwCMwWXHYT
-         8v3iziiaRfBTq5bX02yG+EZGVqAgzVb9W2DG4l5ejBXgrIv3Na13ThXyGNvbIWoMs71b
-         ccZIwRLLr2r0eGic7ZZ3YhctKU2LCxZt4ftuYIqWnBre37EOLNpjgKQsmoX8cTU4hpJS
-         517A==
+        bh=MvOZkyKrzYP2hwFPFGFjWW65oQoa9fLlM6vqelMOXAQ=;
+        b=H1Tr5JCP4+9clRfokBH7uR7lCrT+7gaxk8EFO8aZdDeEqW5fDPBU8Lf/BN3hKG44WJ
+         AhMLJsXKIwyF6gFm5+1ziY9zH9FNMPHXDlAqLxd8f78Q55wAKFUASy0+3Zl6HrOyM3AS
+         ow0IzwPMutgcE86Iqlhk9oLhQJrVX0vYM71JRbvl9UMFO5xPxZzZQJYnr7TMeMaIpk9g
+         QjJbMeVBQ6DYOQ2hrejJIoArSr2gwcA9AsrNtQri15EXescMuOWu5u+t44WZPBIgid3S
+         Dy09GRq5aMygiP2DLdRefF0TiA62AxpM2mCYZTqeZJbvnuG1wCM4Ppf6D2fTyjGLcevd
+         Uv/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Msm4vL2mTgHinkmKuHlb0YEtb7mZzmnQN2XQwpM8PeU=;
-        b=f5pXbu1CNmq40uvzV3IfxaLUzT12g7J9rfAA/Rn3yWHvnddCf98A7Fw7FMqhNwhc39
-         QGaiMYjl8YiFNgUbkqbTH/nDJt7ZLFoPFWbW68ZBQ012siidRg6GT6Ntenya155Y9UpB
-         p1RX/dcRD/OXnbLqo0LQt7Rv3N6xZ95r+Smb0Xk/zm3YsbtwXaofaQK4fi6uIbPd4mWu
-         59pKxlkBqKlD3+7pcMm39CPhWBm2sUFF4A72GOLpoPdOkr4C3kBNMNQ3MYV7VdjkSS4v
-         0y6n5nyzA3tT7hTJjLSFceLUYNpiJ3zBQj9lBuIZ87TDr97XHocGNhF3xs4/yrZFNP9O
-         ZqYQ==
-X-Gm-Message-State: APf1xPCVOnsuIQp6Ey+DuJsu7PiRp/9igI/ZdzFCCqX1gqwO7zwtSdrQ
-        M/OAVZ/1tSTlwMAOfKlK6VUM4MafaDOeO+nDp+o=
-X-Google-Smtp-Source: AH8x224Oy/rPRcoZ7HyfLdPVoFkdJE7LcYcEjRmIV6Lls94NcVSoYOqo6/IOXuugw8lOmdTPaT+C2Qqf7ZmJ61DESUc=
-X-Received: by 10.157.46.50 with SMTP id q47mr1466828otb.109.1518689501616;
- Thu, 15 Feb 2018 02:11:41 -0800 (PST)
+        bh=MvOZkyKrzYP2hwFPFGFjWW65oQoa9fLlM6vqelMOXAQ=;
+        b=EBzphms735qfF6CN+VoaPcrNYtyZnAYRnVjVC27q1aJSmQFG/vlHiVQddJQAzMoW2L
+         nSe1Fj33W2UGyyLACXzFwd1Rm6H3FJXEqM/1Eef0gjfIHmC9Ho3pB+gJOjc0bJepf67E
+         cEyvrtHT5WTWEjAWpskvRymK8STsxZwDuxezBrQJhFlnzZjWiXn/nO1M74O5AuvpD3sY
+         dEF+/kv0kE2gKNAa90FF2gMZzawrVYCHTPftCPJanjRPkuiCmYozsFheZJZ+emmiTYEw
+         SBEH5jhm2I0RLaop8geNs1/g4CYKzrn9hNSzsro81asbPcBGKsQwFraRmHO9Yb9Zmlci
+         SATA==
+X-Gm-Message-State: APf1xPDRo9WyuQZq+167KVi4GmDygkF+a6PSCFORX9RPEVDPeld4yn8I
+        LEqlzLskKqwCK8ULafwyaYVOCNWCD3bSn51CxGs=
+X-Google-Smtp-Source: AH8x225syFYBEY8byfFCTRj/Sv+AYbMNb35e50AEr3cayBXCvM/68UjbAfIDVsoQjjfs9f9bCuJK9bS9lBxMuhb0/mc=
+X-Received: by 10.28.182.86 with SMTP id g83mr1528913wmf.75.1518689630280;
+ Thu, 15 Feb 2018 02:13:50 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.157.0.2 with HTTP; Thu, 15 Feb 2018 02:11:41 -0800 (PST)
-In-Reply-To: <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
-References: <CAEWZXo7KiRWK7ddyZgQKs=F+sHY7TtFsXTMXyE-57=FRr6kf6w@mail.gmail.com>
- <CAGZ79kZf1UKsBEJXuwAH+EWr+ZKj-FE8DuBvcM2nJeNhLEA4CQ@mail.gmail.com>
-From:   Paul Tan <pyokagan@gmail.com>
-Date:   Thu, 15 Feb 2018 18:11:41 +0800
-Message-ID: <CACRoPnROrHbdOf_dCbYhGXSnqM4gowj_s50RcH+8vWgU+deCdw@mail.gmail.com>
-Subject: Re: git-rebase --undo-skip proposal
-To:     Psidium Guajava <psiidium@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>, jacob.keller@gmail.com
+Received: by 10.223.155.17 with HTTP; Thu, 15 Feb 2018 02:13:49 -0800 (PST)
+In-Reply-To: <20180215054018.GI18780@sigill.intra.peff.net>
+References: <01020161890f4236-47989eb4-c19f-4282-9084-9d4f90c2ebeb-000000@eu-west-1.amazonses.com>
+ <01020161890f435d-05435bc4-30da-41c4-8bb2-37dcccb4a413-000000@eu-west-1.amazonses.com>
+ <20180215054018.GI18780@sigill.intra.peff.net>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 15 Feb 2018 13:13:49 +0300
+Message-ID: <CAL21Bm=+MAEfPRVKjp=3ktTHJLp=0Qf4rfLZNPGP4YfZRd2T6Q@mail.gmail.com>
+Subject: Re: [PATCH v3 09/23] cat-file: start use ref_array_item struct
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Gabriel,
-
-On Wed, Feb 14, 2018 at 4:42 AM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Feb 13, 2018 at 12:22 PM, Psidium Guajava <psiidium@gmail.com> wrote:
->>
->> Also, a little unrelated with this issue:
->> 5. What happened to the rewrite of rebase in C [2]? I couldn't find
->> any information after 2016.
->>
->> [1] https://public-inbox.org/git/201311011522.44631.thomas@koch.ro/
->> [2] https://public-inbox.org/git/1457779597-6918-1-git-send-email-pyokagan@gmail.com/
+2018-02-15 8:40 GMT+03:00 Jeff King <peff@peff.net>:
+> On Mon, Feb 12, 2018 at 08:08:54AM +0000, Olga Telezhnaya wrote:
 >
-> cc'd Paul Tan, maybe he recalls the situation.
+>> Moving from using expand_data to ref_array_item structure.
+>> That helps us to reuse functions from ref-filter easier.
+>
+> This one feels weird. The point of a ref_array_item is for the caller to
+> feed data into the ref-filter formatting code (usually that data comes
+> from an earlier call to filter_refs(), but in the new cat-file we'd
+> presumably feed single items).
+>
+> But here we're adding a bunch of fields for items that we'd expect the
+> format code to compute itself.
 
-It was discarded in favor of Johannes' rebase-helper approach, and I
-think parts of it are already in master. There's probably room for
-help there.
+It would be changed later, it's just the addition of new structure
+that we have never used in cat-file before.
 
-I haven't had time to keep track of Git development, hence my
-inactivity. Sorry about that.
-
-Regards,
-Paul
+>
+> -Peff
